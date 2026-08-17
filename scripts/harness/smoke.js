@@ -226,7 +226,12 @@ const waitForPalette = async (page, ms = 6000) => {
             }
         })
     }, resolve)), [deadA, deadB]);
-    await page.reload({ waitUntil: 'networkidle0' });
+    // waitUntil:'load', not 'networkidle0': the two seeded invalid hosts make
+    // the rows' chrome-extension://_favicon requests never settle in the
+    // offline DinD sandbox, so a network-idle wait would time out even though
+    // the page and the dead-view behavior under test are fully ready. The
+    // favicon-fetch console noise is already allowlisted by watch().
+    await page.reload({ waitUntil: 'load' });
     await sleep(900);
     const deadRowsOf = () => page.evaluate(([a, b]) => {
         const pressed = document.querySelector('#dead-list .dead-mark-filter-btn[aria-pressed="true"]');
