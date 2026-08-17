@@ -241,6 +241,9 @@ python3 scripts/package.py         # → tmp/vBookmarks_<version>.zip
 - **Dead-marked list stays in sync with the toolbar filter**: switching the toolbar between 全部 / 受限 / 死链 (All / Blocked / Dead) filters the result rows correctly again (仅受限 / 仅死链 used to be swapped), the marked list no longer echoes rows the active filter hides, and it renders after the result rows.
 - **Imported backups no longer double-count "Previously marked"**: an import restores `deadMarks` and the last-scan cache as-is and the residue count derives from the §2.4 natural-residue rule — marks the restored scan verdicts dead/blocked ride their result rows and are never counted again as marks, so the All counter no longer doubles.
 - **↑/↓ keyboard navigation crosses the result list and the residue marked list**: the "已标注" heading between the two sibling lists no longer blocks arrow-key travel, and the crossing works from a result row's inline buttons too; single-list views (tree/search/recent/stats/dupes) are unaffected.
+- **Selection-toolbar counts, wide-row timestamps, consistent verdict colours**: the batch-selection toolbar shows live category counts (All = dead + blocked + previously-marked), wide rows show each bookmark's detection time on the right, and dead (red) vs blocked (amber) now colour the pills, the mark buttons and the tree overlay alike.
+- **Mark-status filter and status pills actually apply**: the 已标注/未标注 filter had an inert dataset key that left it filtering nothing — it now really filters the result rows and the marked list; marked flags render filled, and status pills share a uniform width aligned with the timestamps.
+- **Scan cancel/restart races fixed**: cancelling or re-starting a scan while it is still in its asynchronous setup window (a cold-start resume, a second start, or a cancel landing before launch) no longer double-launches the scan, leaks the marker-PAC proxy session, or lets a cancelled run write a result cache — "cancel never happened" now holds regardless of timing.
 
 #### Added
 
@@ -248,6 +251,7 @@ python3 scripts/package.py         # → tmp/vBookmarks_<version>.zip
 - **Mark-status filter on a second toolbar**: alongside the category filter, a second toolbar filters the view by mark status (已标注 / 未标注), applied to the result rows and the residue marked list together — 未标注 hides the residue list, since every residue row is marked. The batch/selection scopes (mark-all, delete-all, select-all/invert) all follow the visible set, and the two filters stay orthogonal.
 - **Result sorting**: a sort dropdown (Detection time — the per-row scan timestamp, default; Folder path; Mark time — a per-mark timestamp persisted alongside the marks) reorders the result rows and the residue list together. Sorting applies once a scan has finished only — a live scan keeps progressive tree order so rows never jump mid-scan — and old backups without timestamps fall back to the stable stored key order.
 - **Amber reading for marked / blocked rows** (4.1.0 task-1 A6/D1): a row's mark toggle that is already marked — or whose verdict is blocked (受限) — renders in the warning amber (same as the blocked pill) instead of the neutral accent, and the tree-view dead × overlay on marked bookmarks is amber too, so "restricted" reads apart from a dead-only row.
+- **Clear scan results**: a button resets the last dead-link scan (the ⚑ marks are kept as "previously marked") and re-raises the rescan banner, so you can start over without losing your marks.
 
 ### v4.0.6
 
