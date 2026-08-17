@@ -1323,15 +1323,21 @@ export function initViewDead(ctx = {}) {
         } catch (e) {
             lastScan = null;
         }
-        invalidateResultRows(); // 新缓存 → 结果行重算
-        if (lastScan && lastScan.results)
-            refreshOverlays();
-        // The tab badge is now the scan's dead+blocked count — a finished run
-        // always re-evaluates it, even when no mark was affected (the scan's
-        // verdict alone can change the number).
-        views.updateBadges();
-        if (views.isActive('dead'))
-            render();
+        // 审计 D2: re-join against the live tree before any repaint — bookmarks
+        // removed/added while the scan ran must not resurface as ghost rows,
+        // and the tab badge derives from this same join (allResultRows).
+        chrome.bookmarks.getTree(t => {
+            treeItems = new Map(scannableItems(t).map(item => [item.id, item]));
+            invalidateResultRows(); // 新缓存 + 新 join → 结果行重算
+            if (lastScan && lastScan.results)
+                refreshOverlays();
+            // The tab badge is now the scan's dead+blocked count — a finished
+            // run always re-evaluates it, even when no mark was affected (the
+            // scan's verdict alone can change the number).
+            views.updateBadges();
+            if (views.isActive('dead'))
+                render();
+        });
     };
 
     if (chrome.storage && chrome.storage.onChanged)
@@ -1419,7 +1425,11 @@ export function initViewDead(ctx = {}) {
     const scheduleRender = () => {
         clearTimeout(refreshTimer);
         refreshTimer = setTimeout(() => {
-            if (views.isActive('dead') && lastScan && !live) {
+            // 审计 D1: no `lastScan` in the gate — the marks-only view (上次
+            // 标注, no scan cache yet) must re-join too, or a removed marked
+            // bookmark lingers as a zombie row whose ⚑ toggle would re-persist
+            // the already-deleted id into deadMarks.
+            if (views.isActive('dead') && !live) {
                 // re-join against the live tree, then repaint
                 chrome.bookmarks.getTree(t => {
                     treeItems = new Map(scannableItems(t).map(item => [item.id, item]));

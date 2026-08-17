@@ -2416,6 +2416,44 @@ describe('marks + overlay (§5.5c)', () => {
         expect(chrome.bookmarks.getTreeCalls).toBeGreaterThan(getTreeCalls);
         expect($list.innerHTML).toContain('Gone (restored)');
     });
+
+    it('marks-only view: a removed bookmark\'s row disappears with the debounce (D1)', () => {
+        // 审计 D1: the scheduleRender gate used to require lastScan, so the
+        // 上次标注 view (no scan cache yet) never re-rendered on bookmark
+        // events — the removed row lingered as a zombie whose ⚑ toggle could
+        // re-persist the already-deleted id into deadMarks.
+        const ctx = setup({ storeData: { deadMarks: '["12","13"]' } });
+        const { chrome, $list, store } = ctx;
+        ctx.def().activate();
+        expect($list.innerHTML).toContain('id="dead-item-12"');
+        expect($list.innerHTML).toContain('id="dead-item-13"');
+        // backend truth: 12 is gone (splice it out of the tree double)
+        ctx.treeData[0].children[0].children.splice(1, 1);
+        chrome.bookmarks.fire('onRemoved', '12');
+        tick(300);
+        expect($list.innerHTML).not.toContain('id="dead-item-12"');
+        expect($list.innerHTML).toContain('id="dead-item-13"');
+        expect(JSON.parse(store.get('deadMarks'))).toEqual(['13']);
+    });
+
+    it('a bookmark deleted mid-scan stays gone when the run finishes (D2)', () => {
+        // 审计 D2: onCacheWritten used to render the fresh verdicts against
+        // the STALE treeItems join — a bookmark removed while the SW was
+        // still probing came back as a ghost row (and skewed the badge).
+        const ctx = setup({});
+        const { chrome, $list, def } = ctx;
+        ctx.def().activate();
+        publishBlob(ctx, blobOf()); // scanning starts
+        ctx.treeData[0].children[0].children.splice(1, 1);
+        chrome.bookmarks.fire('onRemoved', '12');
+        finishScan(ctx, {
+            '11': { status: 'ok', code: 200 },
+            '12': { status: 'dead', code: 404 }, // probed before the removal landed
+            '13': { status: 'ok', code: 200 }
+        });
+        expect($list.innerHTML).not.toContain('id="dead-item-12"');
+        expect(def().badge()).toBe(0);
+    });
 });
 
 describe('row interactions (§3.5)', () => {
