@@ -31,7 +31,7 @@ const TREE = [
     ] }
 ];
 
-const makeChrome = ({ storage = {}, proxy = {}, asyncGetTree = false } = {}) => {
+const makeChrome = ({ storage = {}, proxy = {}, asyncGetTree = false, asyncStorageGet = false } = {}) => {
     const local = { ...storage };
     const calls = { fetch: [], pacSet: 0, pacCleared: 0, onChanged: [] };
     const c = {
@@ -48,12 +48,17 @@ const makeChrome = ({ storage = {}, proxy = {}, asyncGetTree = false } = {}) => 
         storage: {
             local: {
                 get(keys, cb) {
+                    // The snapshot is taken NOW (real chrome.storage semantics),
+                    // but asyncStorageGet defers the callback a microtask so a
+                    // test can land a cancel inside resumeIfNeeded's/resume's
+                    // read window — the gap the generation guard exists for.
                     const out = {};
                     const list = typeof keys === 'string' ? [keys] : keys;
                     for (const k of list)
                         if (k in local)
                             out[k] = local[k];
-                    cb(out);
+                    if (asyncStorageGet) Promise.resolve().then(() => cb(out));
+                    else cb(out);
                 },
                 set(obj, cb) {
                     Object.assign(local, obj);
@@ -267,6 +272,60 @@ describe('dead-scan SW runner (v4 task-4 #16)', () => {
         expect(local[DEAD_LAST_KEY]).toBeDefined();
         expect(Object.keys(JSON.parse(local[DEAD_LAST_KEY]).results).sort())
             .toEqual(['11', '12', '13']);
+    });
+
+    it('a cancel landing before the cold-start blob read resolves never resurrects the run (D3)', async () => {
+        // 审计 D3: resumeIfNeeded's storageGet snapshots the blob but resolves
+        // a tick later; a cancel in that gap bumped gen + dropped the blob,
+        // yet the stale snapshot used to start() a full fresh scan anyway.
+        const prior = {
+            state: 'scanning', done: 1, total: 3, ts: Date.now(),
+            items: ['11', '12', '13'],
+            results: { '11': { status: 'ok', code: 200 } },
+            proxy: { active: false, gate: '' }
+        };
+        const { chrome, local } = makeChrome({
+            storage: { [DEAD_SCAN_KEY]: JSON.stringify(prior) },
+            asyncStorageGet: true
+        });
+        globalThis.chrome = chrome;
+        let fetched = 0;
+        globalThis.fetch = () => { fetched++; return Promise.resolve({ status: 200 }); };
+        const runner = createDeadScanRunner();
+        runner.start();                                 // resumeIfNeeded: blob read in flight
+        runner.onMessage({ type: DEAD_SCAN_MSG.cancel }); // lands BEFORE the read resolves
+        await flush();
+        expect(fetched).toBe(0);
+        expect(local[DEAD_SCAN_KEY]).toBeUndefined();   // the blob stays dropped
+        expect(local[DEAD_LAST_KEY]).toBeUndefined();   // no cache — the run never happened
+        expect(runner._state().running).toBe(false);
+    });
+
+    it('a cancel landing before the resume re-launch read resolves stays cancelled (D3)', async () => {
+        // Same window one level up: a paused blob, the page sends resume, and
+        // the cancel arrives while resume's blob read is still in flight.
+        const prior = {
+            state: 'paused', done: 1, total: 3, ts: Date.now(),
+            items: ['11', '12', '13'],
+            results: { '11': { status: 'ok', code: 200 } },
+            proxy: { active: false, gate: '' }
+        };
+        const { chrome, local } = makeChrome({
+            storage: { [DEAD_SCAN_KEY]: JSON.stringify(prior) },
+            asyncStorageGet: true
+        });
+        globalThis.chrome = chrome;
+        let fetched = 0;
+        globalThis.fetch = () => { fetched++; return Promise.resolve({ status: 200 }); };
+        const runner = createDeadScanRunner();
+        runner.start(); // cold-start resume read in flight (deferred)
+        runner.onMessage({ type: DEAD_SCAN_MSG.resume }); // resume read queued behind it
+        runner.onMessage({ type: DEAD_SCAN_MSG.cancel }); // beats both reads
+        await flush();
+        expect(fetched).toBe(0);
+        expect(local[DEAD_SCAN_KEY]).toBeUndefined();
+        expect(local[DEAD_LAST_KEY]).toBeUndefined();
+        expect(runner._state().running).toBe(false);
     });
 
     it('a stale live blob (older than a day) is left alone', async () => {

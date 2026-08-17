@@ -297,7 +297,13 @@ export function createDeadScanRunner() {
         }
         // No live session: the SW was restarted while the blob sat paused —
         // resume means "scan the published remainder".
+        const myGen = gen;
         storageGet(DEAD_SCAN_KEY, data => {
+            // 审计 D3: a cancel (or a fresh start) landing during this async
+            // read must win — without the generation check the stale blob
+            // below would resurrect a scan the user already cancelled.
+            if (gen !== myGen)
+                return;
             const raw = data[DEAD_SCAN_KEY];
             if (!raw)
                 return;
@@ -352,7 +358,13 @@ export function createDeadScanRunner() {
     // MV3 cold start: a fresh live blob means the SW died mid-run — continue
     // from the published remainder (a paused blob stays paused).
     const resumeIfNeeded = () => {
+        const myGen = gen;
         storageGet(DEAD_SCAN_KEY, data => {
+            // 审计 D3: same guard as resume() — a cancel that landed while
+            // this read was in flight bumped the generation (and dropped the
+            // blob); the captured stale snapshot must not bring the run back.
+            if (gen !== myGen)
+                return;
             const raw = data[DEAD_SCAN_KEY];
             if (!raw || session)
                 return;
