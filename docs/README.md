@@ -216,6 +216,11 @@ python3 scripts/package.py         # → tmp/vBookmarks_<version>.zip
 
 - **Favicon cache quota race**: the byte budget is now enforced asynchronously, so a burst of concurrent fetches can no longer push the cache past the limit before the eviction runs.
 - **Favicon discovery edge cases**: site icons served as `application/octet-stream` (common on plain CDNs/static hosts) are now recognized by magic-byte sniffing instead of being rejected; page-HTML reads are capped at 200 KB; a host already cached no longer gets re-fetched when a placeholder renders before the storage hydrate lands; oversized session-only icons are capped in memory; and `<link>` extraction now honors `<base href>` and skips commented-out icon declarations.
+- **Disabling icon fetch no longer punishes hosts**: hosts whose fetch is aborted mid-flight by switching "Fetch missing site icons" off no longer get stamped with a 24 h failure marker — one toggle used to silence a batch of never-actually-failing hosts for a day.
+- **Backup-import write safety**: a failing settings write (quota or a transient error) now alerts clearly and skips the page reload instead of surfacing half-applied settings with no feedback; imported icon-cache entries are validated one by one (must be a `data:image/` payload ≤ 96 KB), so a hand-edited backup can no longer bypass the cache budget.
+- **No more zombie rows in the dead-link view**: the marks-only "past marks" view (no scan run yet) now re-joins on bookmark events too — a deleted bookmark's row disappears at once and its ⚑ can no longer re-persist the deleted id; a bookmark deleted while a scan is running no longer resurfaces as a ghost row when the run finishes.
+- **Cancelling a scan is final**: a cancel landing while a cold-start resume / resume re-launch is still reading its state can no longer resurrect the cancelled run from a stale snapshot.
+- **Announcement and "What's new" banners are keyboard-reachable**: both new banners joined the managed Tab ring, the announcement's dismiss button is reachable, and Esc dismisses the announcement outright (same mark-as-seen semantics as its ×) — keyboard-only users could previously never get rid of it.
 
 #### Changed
 
@@ -229,7 +234,7 @@ python3 scripts/package.py         # → tmp/vBookmarks_<version>.zip
 - Store publishing supports a trusted-tester grey release (`TRUSTED_TESTERS`); `DEFAULT_PUBLISH` restores a full rollout.
 - `loadDotenv` accepts inline comments (`KEY=value # note`).
 - Bookmarklet behavior verified in a real-browser harness (`verify-bmlet.js`).
-- Test suite at **69 files / 2254 cases**, all green.
+- Test suite at **70 files / 2301 cases**, all green.
 
 ### v4.0.7
 
