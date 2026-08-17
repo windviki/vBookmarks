@@ -287,4 +287,41 @@ describe('initAnnounce wiring', () => {
         await initAnnounce({ store, $, chrome: { runtime: { getManifest: () => ({ version: '4.0.6' }) } }, _m, channel: 'popup', donationShowing: false, openNewTab, now });
         expect(bannerEl.hidden).toBe(true);
     });
+
+    it('a stale cache refetches with If-None-Match; a 304 refreshes only the timestamp', async () => {
+        const { store, bannerEl, $, openNewTab } = boot({
+            [ANN_CACHE_KEY]: { ts: -ANN_TTL_MS, etag: 'W/"abc"', data: cacheWith(sampleMsg) } // expired vs now()=2000
+        });
+        const fetchImpl = vi.fn(() => Promise.resolve({
+            status: 304, ok: false,
+            json: async () => { throw new Error('no body on 304'); },
+            headers: { get: () => null }
+        }));
+        await initAnnounce({ store, $, chrome: { runtime: { getManifest: () => ({ version: '4.0.8' }) } }, _m, channel: 'popup', donationShowing: false, openNewTab, fetchImpl, now });
+        expect(fetchImpl).toHaveBeenCalledTimes(1);
+        expect(fetchImpl.mock.calls[0][1].headers['If-None-Match']).toBe('W/"abc"');
+        const cache = store.get(ANN_CACHE_KEY);
+        expect(cache.ts).toBe(2000); // timestamp refreshed → next TTL window skips the fetch
+        expect(cache.etag).toBe('W/"abc"'); // etag + payload untouched
+        expect(cache.data).toEqual(cacheWith(sampleMsg));
+        expect(bannerEl.hidden).toBe(false); // the kept payload still renders
+    });
+
+    it('a stale cache without an etag sends no conditional header; a 200 stores payload + fresh etag', async () => {
+        const { store, bannerEl, $, openNewTab } = boot({
+            [ANN_CACHE_KEY]: { ts: -ANN_TTL_MS, data: cacheWith(sampleMsg) }
+        });
+        const newMsg = { ...sampleMsg, id: 'v409-whats-new', textKey: 'announceV409Text' };
+        const fetchImpl = vi.fn(() => Promise.resolve({
+            status: 200, ok: true,
+            json: async () => ({ version: 1, messages: [newMsg] }),
+            headers: { get: k => (k === 'etag' ? 'W/"new"' : null) }
+        }));
+        await initAnnounce({ store, $, chrome: { runtime: { getManifest: () => ({ version: '4.0.8' }) } }, _m, channel: 'popup', donationShowing: false, openNewTab, fetchImpl, now });
+        expect(fetchImpl.mock.calls[0][1].headers).toEqual({}); // no etag cached → unconditional GET
+        const cache = store.get(ANN_CACHE_KEY);
+        expect(cache.ts).toBe(2000);
+        expect(cache.etag).toBe('W/"new"');
+        expect(bannerEl.innerHTML).toContain('announceV409Text'); // the fresh payload renders
+    });
 });
