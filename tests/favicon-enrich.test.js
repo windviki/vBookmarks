@@ -1059,6 +1059,70 @@ describe('initFaviconEnrich — cache layer', () => {
         await tick();
         expect(fetches).toBe(0);
     });
+
+    it('a failed marker past the 24h quiet window retries the host (and re-stamps the failure)', async () => {
+        const T0 = 1700000000000;
+        let fetches = 0;
+        const storage = makeStorageArea({
+            [FAVICON_IDX_KEY]: idxV3({ 'noicon.example': { f: 1, t: T0 - 25 * 3600 * 1000 } })
+        });
+        const fetchImpl = makeFetch([[/.*/, () => { fetches++; return { ok: false, status: 404 }; }]]);
+        const en = initFaviconEnrich({
+            doc: makeDoc(),
+            faviconService: makeFavService(),
+            isEnabled: () => true,
+            fallbackEnabled: () => false,
+            fetchImpl,
+            ImageCtor: makeFakeImage(),
+            chromeImpl: { storage: { local: storage } },
+            now: () => T0
+        });
+        await en._hydrateDone;
+        en.onPlaceholder(makePlaceholderImg('https://noicon.example/'));
+        await tick();
+        await tick();
+        await tick();
+        expect(fetches).toBeGreaterThan(0); // the expired marker no longer suppresses
+        en.flushIndex();
+        expect(storage.data[FAVICON_IDX_KEY]).toContain('noicon.example'); // fresh failure stamped
+    });
+
+    it('a success entry past the 30d TTL re-fetches and replaces the stale icon', async () => {
+        const T0 = 1700000000000;
+        let fetches = 0;
+        const storage = makeStorageArea({
+            [`${FAVICON_DATA_PREFIX}github.com`]: PNG_DATA_URL,
+            [FAVICON_IDX_KEY]: idxV3({ 'github.com': { t: T0 - 31 * 24 * 3600 * 1000, s: PNG_DATA_URL.length } })
+        });
+        // The re-fetch returns a DIFFERENT icon (ICO) so a stale-serve is
+        // distinguishable from a real refresh in the storage assertion below.
+        const fetchImpl = makeFetch([[/\/favicon\.ico$/, () => {
+            fetches++;
+            return {
+                ok: true, status: 200,
+                arrayBuffer: async () => ICO_BYTES.buffer,
+                headers: { get: () => null }
+            };
+        }]]);
+        const en = initFaviconEnrich({
+            doc: makeDoc(),
+            faviconService: makeFavService(),
+            isEnabled: () => true,
+            fallbackEnabled: () => false,
+            fetchImpl,
+            ImageCtor: makeFakeImage(),
+            chromeImpl: { storage: { local: storage } },
+            now: () => T0
+        });
+        await en._hydrateDone;
+        en.onPlaceholder(makePlaceholderImg('https://github.com/'));
+        await tick();
+        await tick();
+        await tick();
+        expect(fetches).toBeGreaterThan(0); // stale success is NOT served from cache
+        expect(storage.data[`${FAVICON_DATA_PREFIX}github.com`])
+            .toMatch(/^data:image\/x-icon;base64,/); // refreshed payload replaced it
+    });
 });
 
 describe('initFaviconEnrich — queue + eviction', () => {
@@ -1383,6 +1447,43 @@ describe('initFaviconEnrich — setEnabled / onChanged', () => {
         await tick();
         await tick();
         expect(fetchImpl.calls.length).toBe(0);
+    });
+
+    it('an in-flight abort never stamps the 24h failure marker (F1)', async () => {
+        // The fetch hangs until the enricher aborts it — mirroring a slow
+        // favicon.ico that is still in flight when the user disables icons.
+        const fetchImpl = makeFetch([[/\/favicon\.ico$/, (url, opts) => new Promise((resolve, reject) => {
+            const fail = () => reject(new Error('AbortError: The operation was aborted'));
+            if (opts.signal.aborted) fail();
+            else opts.signal.addEventListener('abort', fail, { once: true });
+        })]]);
+        const en = initFaviconEnrich({
+            doc: makeDoc(),
+            faviconService: makeFavService(),
+            isEnabled: () => true,
+            fallbackEnabled: () => false,
+            fetchImpl,
+            ImageCtor: makeFakeImage(),
+            chromeImpl: { storage: { local: makeStorageArea() } },
+            now: nextNow
+        });
+        await en._hydrateDone;
+        en.onPlaceholder(makePlaceholderImg('https://github.com/'));
+        await tick(); // let the first fetch go out
+        expect(fetchImpl.calls.length).toBeGreaterThan(0);
+        en.setEnabled(false); // aborts the in-flight discover mid-flight
+        await tick();
+        await tick();
+        await tick();
+        // The abort must not be misread as "host has no icon".
+        const entry = en.getCache().get('github.com');
+        expect(entry && entry.f).toBeFalsy();
+        // Re-enabling lets the host retry immediately (no bogus suppression).
+        en.setEnabled(true);
+        fetchImpl.calls.length = 0;
+        en.onPlaceholder(makePlaceholderImg('https://github.com/'));
+        await tick();
+        expect(fetchImpl.calls.length).toBeGreaterThan(0);
     });
 
     it('clears the in-memory cache when the index is removed (options cache clear)', async () => {

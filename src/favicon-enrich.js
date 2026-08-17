@@ -812,6 +812,14 @@ export function initFaviconEnrich(ctx = {}) {
         }
         try {
             const result = await discover(item.host, item.pageUrl, signal);
+            // setEnabled(false) aborts in-flight items mid-discover; each
+            // layer swallows the abort and returns null, which must NOT be
+            // mistaken for "host has no icon" — otherwise a simple disable
+            // stamps a 24h failure marker on hosts that were never tried.
+            if (item.aborted || signal.aborted) {
+                clearEnriching(item.anchors);
+                return;
+            }
             if (result && result.dataUrl) {
                 writeEntry(item.host, result.dataUrl);
                 hotSwap(item.host, result.dataUrl);
@@ -820,7 +828,8 @@ export function initFaviconEnrich(ctx = {}) {
                 clearEnriching(item.anchors);
             }
         } catch (_) {
-            writeFailed(item.host);
+            if (!item.aborted && !signal.aborted)
+                writeFailed(item.host);
             clearEnriching(item.anchors);
         } finally {
             queue.delete(item.host);
