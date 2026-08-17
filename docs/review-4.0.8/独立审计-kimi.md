@@ -210,6 +210,6 @@
 
 **验证**:全量 `npm run test:run` 70 套件 / 2301 例全绿(2284 → 2301，净增 17);`npm run lint` 零告警;`scripts/i18n.py verify` 0 错误(27 条菜单长度警告为既有，未涨——回应对照 §3 的门禁提示)。双语 README 的 v4.0.8 changelog 修复节已补六条并把用例数刷为 70/2301;AGENTS.md(keyboard/favicon-enrich/view-dead/dead-scan-sw/options 五行)与 docs/keyboard-model.md(§4 层 3、§7 矩阵横幅行)同步。
 
-**未做**:Docker harness(scripts/harness/run.sh,verify-keyboard.js §7 等)本机环境未跑——发布前建议在 Docker 环境补一轮真浏览器门禁。
+**未做**:本附录落盘时 Docker harness 尚未跑；后续已在同目录《低优先级收尾-修复记录.md》中补完整 `scripts/harness/run.sh` 并全绿。
 
 **后续低优先级收尾**：本附录之后，低档项按《低优先级收尾-修复记录.md》完成 F2/F7/F8、O3-O7/O9-O13、I1、D5-D7/D9-D13/D15、B4（注释）、T4-T8 的落地与测试；维持原处置的仅剩 O8、D8、B2/B5 与 4.1.0 候选（F3/F4/F5/F6/D14/D16、B4 去留）。

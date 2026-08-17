@@ -77,8 +77,23 @@ const SEED = `
 
     const pageErrors = [];
     const watch = page => {
-        page.on('pageerror', e => pageErrors.push(`pageerror: ${e.message}`));
-        page.on('console', m => { if (m.type() === 'error') pageErrors.push(`console: ${m.text()}`); });
+        // The offline DinD sandbox makes the favicon pipeline (and the real
+        // seeded bookmark hosts) emit expected network failures — "Failed to
+        // load resource: net::… / 4xx / 5xx" is Chromium's own resource log,
+        // not an extension console.error. Same allowlist as smoke.js / shots.
+        page.on('pageerror', e => {
+            const msg = e.message || '';
+            if (msg.includes('Failed to load resource') || msg.includes('net::') || msg.includes('Refused to'))
+                return;
+            pageErrors.push(`pageerror: ${msg}`);
+        });
+        page.on('console', m => {
+            if (m.type() !== 'error') return;
+            const txt = m.text() || '';
+            if (txt.includes('Failed to load resource') || txt.includes('net::') || txt.includes('Refused to'))
+                return;
+            pageErrors.push(`console: ${txt}`);
+        });
     };
 
     await sleep(2000);
@@ -356,32 +371,41 @@ const SEED = `
     // --- dead (cached scan renders two result rows + TWO toolbar rungs) ---
     // v4 task-4 #13: the proxy strip sits above the scan toolbar and each
     // toolbar is its own arrow rung in visual order (keyboard-model §2.5):
-    // strip ↓ → proxy strip → scan toolbar → rows, and back up in reverse.
+    // strip ↓ → proxy strip → scan toolbar → mark toolbar → rows, and back
+    // up in reverse. The idle dead view stacks THREE .vbm-toolbar rungs here
+    // (proxy strip / scan toolbar / mark-status toolbar); with a scan cache
+    // present the scan toolbar's first enabled control is Clear-scan, and the
+    // next rung is the mark-status filter's first button.
     await page.click('#view-tab-dead'); await sleep(700);
     await page.keyboard.press('ArrowDown'); await sleep(250);
     check('dead ↓ from strip: the proxy strip rung', await $(() =>
         document.activeElement && document.activeElement.classList.contains('dead-proxy-add')),
         await activeDesc());
     await page.keyboard.press('ArrowDown'); await sleep(250);
-    // the scan toolbar's control order is scan-time → rescan → filter
-    // (counts inline on the filter buttons), so the first rung control
-    // below the proxy strip is the rescan button
-    check('dead proxy strip ↓: the scan toolbar rung (rescan)', await $(() =>
-        document.activeElement && document.activeElement.classList.contains('dead-rescan')),
+    check('dead proxy strip ↓: the scan toolbar rung (clear scan)', await $(() =>
+        document.activeElement && document.activeElement.classList.contains('dead-clear-scan')),
+        await activeDesc());
+    await page.keyboard.press('ArrowDown'); await sleep(250);
+    check('dead scan toolbar ↓: the mark-status toolbar rung', await $(() =>
+        document.activeElement && document.activeElement.classList.contains('dead-mark-filter-btn')),
         await activeDesc());
     await page.keyboard.press('ArrowDown'); await sleep(250);
     st = await activeLiIndex('#dead-list');
-    check('dead toolbar ↓: first result row', st.idx === 0, JSON.stringify(st));
+    check('dead mark toolbar ↓: first result row', st.idx === 0, JSON.stringify(st));
     await page.keyboard.press('ArrowDown'); await sleep(200);
     st = await activeLiIndex('#dead-list');
     check('dead ↓: next row', st.idx === 1, JSON.stringify(st));
     await page.keyboard.press('ArrowUp'); await sleep(200);
     await page.keyboard.press('ArrowUp'); await sleep(200);
-    check('dead ↑ past top: the lowest toolbar rung', await $(() =>
-        document.activeElement && !!document.activeElement.closest('.dead-toolbar')),
+    check('dead ↑ past top: the lowest toolbar rung (mark filter)', await $(() =>
+        document.activeElement && document.activeElement.classList.contains('dead-mark-filter-btn')),
         await activeDesc());
     await page.keyboard.press('ArrowUp'); await sleep(200);
-    check('dead toolbar ↑: the proxy strip rung', await $(() =>
+    check('dead mark toolbar ↑: the scan toolbar rung', await $(() =>
+        document.activeElement && document.activeElement.classList.contains('dead-clear-scan')),
+        await activeDesc());
+    await page.keyboard.press('ArrowUp'); await sleep(200);
+    check('dead scan toolbar ↑: the proxy strip rung', await $(() =>
         document.activeElement && !!document.activeElement.closest('.dead-proxy-strip')),
         await activeDesc());
     await page.keyboard.press('ArrowUp'); await sleep(200);

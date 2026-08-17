@@ -11,7 +11,7 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
 // popup scripts can land a beat late, which turned a robust open into a
 // spurious gate failure at the 900ms mark. Polling keeps the assertion (the
 // palette MUST open) while tolerating load timing.
-const waitForPalette = async (page, ms = 6000) => {
+const waitForPalette = async (page, ms = 15000) => {
     const t0 = Date.now();
     while (Date.now() - t0 < ms) {
         const s = await page.evaluate(() => ({
@@ -332,6 +332,13 @@ const waitForPalette = async (page, ms = 6000) => {
     // 2f. Final polish: the global palette command's wake-up paths — the
     // ?palette=1 query (fallback popup window) and the pendingPaletteOpen
     // session flag (chrome.action.openPopup path) both auto-open the palette.
+    // Pin the master switch back on: the classic-chrome section above toggled
+    // it off and, under DinD load, its later remove+reload can still be
+    // settling when this step begins — an off switch would make both wake-up
+    // paths correctly refuse to open and turn a load-timing flake into a
+    // false gate failure. waitForPalette's generous poll window (15s) covers
+    // the slow store.ready init under DinD load.
+    await page.evaluate(() => chrome.storage.local.set({ paletteEnabled: '1' }));
     await page.goto(`chrome-extension://${extId}/pages/popup.html?palette=1`, { waitUntil: 'networkidle0' });
     const paletteViaQuery = await waitForPalette(page);
     console.log('palette via ?palette=1:', JSON.stringify(paletteViaQuery));
