@@ -2,7 +2,7 @@
 
 > 2026-08-15 · 实施版，所有决策已定稿（§15），无开放项。
 > v2 打磨：DDG 服务级熔断与代理兜底（§3.3/§3.4）；存储改为按 host 分键 + 索引，写开放大、爆炸边缘 case、淘汰管理全部明确（§5）。
-> v3/v4 更新（4.0.8，替代早期已实现的单一家 DDG 聚合层）：第三方聚合兜底改为**内置服务商列表 + 按服务商独立熔断 + 自动故障转移**（§3.4）——`favicon-run` 首选、`duckduckgo` 兜底；检测到某服务商不可达即跳闸并切换下一候选，**不重复尝试**。2026-08 实测 favicon.run：已知站点 200+真实 PNG；**未知/无图标域名 HTTP 500 干净失败**（DDG 对未知域名返回 200+自家占位，不可判定）。各家判定差异封装为**一致行为接口**（`url` + `interpret`）。其余链路（L1/L2/L3）与缓存/预算机制不变。
+> v3/v4 更新（4.0.8，替代早期已实现的单一家 DDG 聚合层）：第三方聚合兜底改为**内置服务商列表 + 按服务商独立熔断 + 自动故障转移**（§3.4）——`favicon-run` 首选、`icon.horse` 居中、`duckduckgo` 兜底；检测到某服务商不可达即跳闸并切换下一候选，**不重复尝试**。2026-08 实测 favicon.run：已知站点 200+真实 PNG；**未知/无图标域名 HTTP 500 干净失败**（DDG 对未知域名返回 200+自家占位，不可判定）。各家判定差异封装为**一致行为接口**（`url` + `interpret`）。其余链路（L1/L2/L3）与缓存/预算机制不变。
 > v5 更新（4.0.8 独立审计低优先级收尾）：L2 的 `<link>` 候选上限 5 个，坏 `data:` 候选跳过继续（支持 base64 与百分号编码两种 data URL）；选项页清除图标缓存补确认与空缓存反馈；备份导出/导入排除运行时 `vbmDeadScan` 活动日志；存储横条改用 `getBytesInUse` 真实计费并防抖刷新（§3.2/§5.4）。
 > 前置：[`docs/favicon-补全方案.md`](favicon-补全方案.md)（根因 + 真实 Chromium 实测 + 同类扩展调研）。
 > 本文是「补全缺失的网站图标」作为 vBookmarks **原生功能**的唯一实施依据：模块边界、代码契约、存储形状、选项 UI、测试与提交步骤均精确到文件与函数。
@@ -74,7 +74,7 @@ tree-render / search / palette / recent 渲染 <img _favicon>
       L2  fetch 书签页 HTML (5s) → 提取 <link> 图标声明 → fetch 图标 (3s)
       L3  代理接力（死链扫描代理会话在线时）：addProxyMarker 重试 L1/L2，
           熔断中的服务商也经代理补试一次  (3s/5s/3s)          （§3.3）
-      L4  第三方聚合兜底——内置服务商列表逐家尝试（favicon-run → duckduckgo），
+      L4  第三方聚合兜底——内置服务商列表逐家尝试（favicon-run → icon.horse → duckduckgo），
           按服务商独立熔断 + 自动故障转移  (各家 3s)          （§3.4）
           ★ 仅 faviconEnrichAgg 开——**最终手段**，直连+代理都失败才兜底
   → 成功：校验 → 解码验证 → 按 host 写缓存 → 热替换 anchors 内的默认 SVG → 采样反色
@@ -102,7 +102,7 @@ tree-render / search / palette / recent 渲染 <img _favicon>
 | L1 | `GET https://<host>/favicon.ico` | 3s | 经典路径，实测 github/MDN/cloudflare 可用 | faviconEnrich |
 | L2 | `GET <pageUrl>`（书签本身的 URL）→ 提取 `<link>` → `GET <iconUrl>` | 5s + 3s | 非标准路径（`/icon.svg`、CDN、apple-touch-icon） | faviconEnrich |
 | L3 | `addProxyMarker` 重试 L1、L2；熔断中的服务商也经代理补试一次 | 3s + 5s + 3s | 直连不可达但用户代理可达（区域/ISP 限制，**含服务商本身被区域的场景**） | faviconEnrich + 死链代理会话在线 |
-| L4 | 内置服务商列表逐家尝试：`favicon-run`（`GET https://favicon.run/favicon?domain=<host>&sz=32`）→ `duckduckgo`（`GET https://icons.duckduckgo.com/ip3/<host>.ico`） | 各家 3s | **最终手段**——直连+代理都失败才兜底（站点 403/反爬）；按服务商独立熔断 + 故障转移（§3.4） | faviconEnrich + faviconEnrichAgg |
+| L4 | 内置服务商列表逐家尝试：`favicon-run`（`GET https://favicon.run/favicon?domain=<host>&sz=32`）→ `icon.horse`（`GET https://icon.horse/icon/<host>`）→ `duckduckgo`（`GET https://icons.duckduckgo.com/ip3/<host>.ico`） | 各家 3s | **最终手段**——直连+代理都失败才兜底（站点 403/反爬）；按服务商独立熔断 + 故障转移（§3.4） | faviconEnrich + faviconEnrichAgg |
 
 **链规则**：逐层串行，任一层产出**通过校验**的图标即短路返回；任一层抛错/超时/校验失败即落到下一层；全部落空写 failed 标记。
 
@@ -157,6 +157,7 @@ const proxyRelayAvailable = async () => {
 // 一致行为接口：上层链只认 url(host) + interpret(outcome)，不感知各家差异。
 const AGG_PROVIDERS = [
     { id: 'favicon-run', url: h => `https://favicon.run/favicon?domain=${h}&sz=32` },
+    { id: 'icon-horse',  url: h => `https://icon.horse/icon/${h}` },
     { id: 'duckduckgo',  url: h => `https://icons.duckduckgo.com/ip3/${h}.ico` },
 ];
 ```
@@ -166,9 +167,10 @@ const AGG_PROVIDERS = [
 | 服务商 | 已知站点 | 未知/无图标域名 | 其他 |
 |---|---|---|---|
 | favicon-run | 200+真实 PNG（github/stackoverflow/wikipedia/iana.org；`sz` 精确控尺寸） | **HTTP 500 干净失败**（example.com 等） | CORS 开放 + Cloudflare CDN 缓存 + 30 并发无限流 |
+| icon-horse | 隐私取向、按域名返回真实图标 | **404 干净失败**（无占位歧义） | 低冲突中间家（审计 F5） |
 | duckduckgo | 200+真实 ICO（github） | **200+自家占位图**（不可判定） | 老牌、较稳定 |
 
-**为什么服务商列表 + 故障转移**：单一服务商可能整体不可达（区域/ISP 限制），也可能未来被限流/下线。列表让「favicon-run 首选（干净失败语义）」与「duckduckgo 兜底（老牌稳定）」互补：favicon-run 查不到（500）→ 故障转移到 duckduckgo 再试；favicon-run 整体不可达 → 跳过它直接走 duckduckgo。这正是「从一开始就考虑服务商未来不可用」的应对——单家失效只是跳到列表内下一家，全列表失效才落默认 SVG。
+**为什么服务商列表 + 故障转移**：单一服务商可能整体不可达（区域/ISP 限制），也可能未来被限流/下线。列表让「favicon-run 首选（干净失败语义）」→「icon.horse 居中（隐私取向、404 干净失败）」→「duckduckgo 兜底（老牌稳定）」互补：favicon-run 查不到（500）→ 故障转移到 icon.horse 再试；icon.horse 查不到（404）→ 故障转移到 duckduckgo。这正是「从一开始就考虑服务商未来不可用」的应对——单家失效只是跳到列表内下一家，全列表失效才落默认 SVG。
 
 **服务商接口（一致行为）**：`interpret(outcome)` 把各家不同语义归一为三种结果，上层链只根据这三种结果行动：
 
@@ -181,6 +183,7 @@ const AGG_PROVIDERS = [
 各家 `interpret` 的实现差异（差异在接口内，上层无感知）：
 
 - **favicon-run**：`!networkOk → 'unreachable'`；`2xx && image/* → 'icon'`；**非 2xx（500/404）→ 'no-icon'**（干净失败、可判定，不会假成功）。
+- **icon-horse**：`!networkOk → 'unreachable'`；`2xx && image/* → 'icon'`；非 2xx（含 404）→ `'no-icon'`（无占位歧义）。
 - **duckduckgo**：`!networkOk → 'unreachable'`；`2xx → 'icon'`（**接受未知域名 200+自家占位**的不可判定，作为列表最后一层兜底）；非 2xx → `'no-icon'`。
 
 **按服务商熔断（不重复尝试不可达服务）**：
@@ -301,6 +304,7 @@ chrome.storage.local:
   "v": 3,                          // 形状版本：v3 起按服务商独立熔断（down 表）（旧 v1 索引 hydrate 时重建，仅丢熔断窗口，图标数据键不丢）
   "down": {                        // 各第三方服务商直连熔断截止 ts（§3.4）：跳闸的服务商在冷却期内被跳过并切下一家
     "favicon-run": 0,
+    "icon-horse": 0,
     "duckduckgo": 0
   },
   "hosts": {
@@ -377,11 +381,11 @@ chrome.storage.local:
 | 键 | 默认 | 含义 |
 |---|---|---|
 | `faviconEnrich` | **开** | 主开关：占位图触发 L1/L2（+L3 代理接力 + L4 第三方聚合兜底）补全 |
-| `faviconEnrichAgg` | **开** | 子开关：追加 L4 第三方聚合兜底——内置服务商列表（favicon-run → duckduckgo）逐家尝试 + 按服务商熔断 + 故障转移（§3.4）。键名直取「聚合兜底」语义（favicon 补全随 4.0.8 首发，无历史包袱） |
+| `faviconEnrichAgg` | **开** | 子开关：追加 L4 第三方聚合兜底——内置服务商列表（favicon-run → icon.horse → duckduckgo）逐家尝试 + 按服务商熔断 + 故障转移（§3.4）。键名直取「聚合兜底」语义（favicon 补全随 4.0.8 首发，无历史包袱） |
 
 - 入 `store.js` 的 `KNOWN_KEYS`（**不进 SYNC_KEYS**——与 faviconContrast 同区同模型；是否联网取图标是设备级网络偏好，不跨设备同步）。缓存的动态 host 键与索引键**不入** KNOWN_KEYS（它们不是设置，且由 enricher 自管）。
 - **主开关默认开的理由**：请求只发往用户自己收藏的网站（等同于访问），无第三方，用户已明确反馈「很多默认图标」——开箱即受益。
-- **聚合兜底默认开的理由**：直连抓不到图标的站点（403/反爬/无 `/favicon.ico`）仍占相当比例，默认开能让这些站点也得到图标，开箱受益最大化；隐私触达（把域名发给 favicon.run / DuckDuckGo）在选项 hint 里明说，介意者可一键关闭。
+- **聚合兜底默认开的理由**：直连抓不到图标的站点（403/反爬/无 `/favicon.ico`）仍占相当比例，默认开能让这些站点也得到图标，开箱受益最大化；隐私触达（把域名发给 favicon.run / icon.horse / DuckDuckGo）在选项 hint 里明说，介意者可一键关闭。
 
 ### 6.2 选项页 UI（Icons 组，`favicon-contrast` 行之后）
 
@@ -402,7 +406,7 @@ chrome.storage.local:
 | `optionFaviconEnrich` | Fetch missing site icons | 补全缺失的网站图标 |
 | `optionFaviconEnrichHint` | For bookmarked sites Chrome has no cached icon for, fetch the real icon directly from the site (/favicon.ico, then the page's declared icons). Requests only go to sites you bookmarked. | 对 Chrome 尚未缓存图标的收藏网站，直接从站点获取真实图标（/favicon.ico → 页面图标声明）。请求只发往你已收藏的网站。 |
 | `optionFaviconEnrichAgg` | Third-party icon fallback | 用第三方图标服务兜底 |
-| `optionFaviconEnrichAggHint` | When direct fetching fails, look the icon up by domain from a built-in list of third-party icon services (favicon.run, then DuckDuckGo). A service found unreachable is skipped and the next one is tried — it is not retried for 6 hours. | 直连获取失败时，从内置第三方图标服务按域名取图（favicon.run → DuckDuckGo 自动切换）。检测到某服务不可达时切换下一家，6 小时内不再重复尝试该服务。 |
+| `optionFaviconEnrichAggHint` | When direct fetching fails, look the icon up by domain from a built-in list of third-party icon services (favicon.run → icon.horse → DuckDuckGo). A service found unreachable is skipped and the next one is tried — it is not retried for 6 hours. | 直连获取失败时，从内置第三方图标服务按域名取图（favicon.run → icon.horse → DuckDuckGo 自动切换）。检测到某服务不可达时切换下一家，6 小时内不再重复尝试该服务。 |
 | `optionFaviconCacheClear` | Clear icon cache | 清除图标缓存 |
 | `optionFaviconCacheCleared` | Icon cache cleared. Icons will be re-fetched on next open. | 图标缓存已清除，将在下次打开时重新补全。 |
 
@@ -477,7 +481,7 @@ chrome.storage.local:
 ### `tests/favicon-enrich.test.js`（新，ESM 直导 + globalThis 注入，仿 favicon-fallback.test.js）
 
 - **发现链**：L1 命中短路（L2 不发请求）；L1 404 → L2 解析 `<link>` 命中；L2 无声明 → L3 代理接力（session 标记 + deadProxyServer 双条件满足时带 `__vbm_px=1` 重试 L1/L2）；L3 失败/代理不在线 → L4（fallbackEnabled=true 才发，服务商列表）；全失败 → failed 标记。
-- **服务商故障转移（核心）**：favicon-run 网络错误/超时 → **跳闸 favicon-run** → **自动切 duckduckgo** 再试，成功则用它；favicon-run 返回 500（可达但 host 无图标）→ **不熔断**，**故障转移**到 duckduckgo；duckduckgo 200 → 接受为图标（占位不可判定，最后一层兜底）；favicon-run 200+PNG → 短路，duckduckgo 不发请求。
+- **服务商故障转移（核心）**：favicon-run 网络错误/超时 → **跳闸 favicon-run** → **自动切 icon.horse** 再试；favicon-run 返回 500（可达但 host 无图标）→ **不熔断**，**故障转移**到 icon.horse；icon.horse 404 → 故障转移到 duckduckgo；duckduckgo 200 → 接受为图标（占位不可判定，最后一层兜底）；任一家 2xx+image → 短路，后续服务商不发请求。
 - **按服务商熔断（不重复尝试）**：某服务商跳闸后，后续 host 的遍历**跳过**它（断言 fetch 不再发往该服务商）；`down[<id>]` 持久化到索引、重 hydrate 后仍生效；到期后放行一次探测、仍失败则重新跳闸；**跳闸 + 代理在线 → 该服务商经 L3 的 `addProxyMarker` 补试一次**；跳闸 + 无代理 → 直接切下一家/落 failed。各家熔断互相独立（favicon-run 跳闸不影响 duckduckgo）。
 - **favicon-run 语义**：返回 200+`image/png`（`sz=32`）→ 校验通过按成功缓存；返回 500/404 → 不落熔断、故障转移（干净失败，不产生假成功缓存）；返回非图片（异常 200+HTML）→ 校验拒绝。
 - **校验**：200+`text/html` 拒绝；>200KB 拒绝；魔数不符拒绝；Image 解码 `naturalWidth=0` 拒绝；`data:` href 的 `<link>` 直接采用。

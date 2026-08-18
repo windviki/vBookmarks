@@ -18,6 +18,7 @@ import {
     providerUrl,
     interpretFaviconRun,
     interpretDuckDuckGo,
+    interpretIconHorse,
     MAX_HTML_BYTES,
     SESSION_ONLY_CAP,
     MAX_L2_CANDIDATES
@@ -39,6 +40,7 @@ const PNG_DATA_URL = `data:image/png;base64,${bytesToBase64(PNG_BYTES)}`;
 
 // Provider lookup helpers (mirror the provider list — no copied URL strings).
 const FR = host => providerUrl('favicon-run', host);
+const IH = host => providerUrl('icon-horse', host);
 const DDG = host => providerUrl('duckduckgo', host);
 
 // A fake Image constructor that "loads" any data URL (naturalWidth = 1).
@@ -108,7 +110,7 @@ const makeFavService = () => {
 };
 
 // A minimal element double for the hot-swap anchor.
-const makeAnchor = () => {
+const makeAnchor = (rect = null) => {
     const svg = {
         tagName: 'SVG',
         classList: {
@@ -128,6 +130,9 @@ const makeAnchor = () => {
             const i = this.children.indexOf(oldEl);
             if (i >= 0) this.children[i] = newEl;
             else this.children.push(newEl);
+        },
+        getBoundingClientRect() {
+            return rect || { left: 0, right: 0, top: 0, bottom: 0, width: 0, height: 0 };
         }
     };
     svg.parentNode = anchor;
@@ -142,6 +147,7 @@ const makePlaceholderImg = (pageUrl) => ({
 
 // Minimal document double (createElement for the hot-swap img).
 const makeDoc = () => ({
+    defaultView: { innerWidth: 400, innerHeight: 600 },
     createElement: tag => ({
         tagName: tag.toUpperCase(),
         className: '',
@@ -157,7 +163,7 @@ const makeDoc = () => ({
 // A v3 index fixture (the current shape: per-provider down table + hosts).
 const idxV3 = (hosts = {}, down = {}) => JSON.stringify({
     v: 3,
-    down: { 'favicon-run': 0, 'duckduckgo': 0, ...down },
+    down: { 'favicon-run': 0, 'icon-horse': 0, 'duckduckgo': 0, ...down },
     hosts
 });
 
@@ -334,12 +340,13 @@ describe('validateAndEncode', () => {
 });
 
 describe('provider interpret contracts', () => {
-    it('AGG_PROVIDERS order is favicon-run first, duckduckgo last', () => {
-        expect(AGG_PROVIDERS.map(p => p.id)).toEqual(['favicon-run', 'duckduckgo']);
+    it('AGG_PROVIDERS order is favicon-run → icon.horse → duckduckgo', () => {
+        expect(AGG_PROVIDERS.map(p => p.id)).toEqual(['favicon-run', 'icon-horse', 'duckduckgo']);
     });
 
     it('providerUrl resolves each id to its lookup URL', () => {
         expect(FR('example.com')).toBe('https://favicon.run/favicon?domain=example.com&sz=32');
+        expect(IH('example.com')).toBe('https://icon.horse/icon/example.com');
         expect(DDG('example.com')).toBe('https://icons.duckduckgo.com/ip3/example.com.ico');
         expect(providerUrl('nope', 'example.com')).toBeNull();
     });
@@ -372,6 +379,22 @@ describe('provider interpret contracts', () => {
 
     it('duckduckgo: non-2xx → no-icon', () => {
         expect(interpretDuckDuckGo({ ok: false, status: 404, headers: { get: () => null } }, true)).toBe('no-icon');
+    });
+
+    it('icon-horse: network error/timeout → unreachable', () => {
+        expect(interpretIconHorse(null, false)).toBe('unreachable');
+    });
+
+    it('icon-horse: 2xx + image content-type → icon', () => {
+        expect(interpretIconHorse({ ok: true, headers: { get: () => 'image/png' } }, true)).toBe('icon');
+    });
+
+    it('icon-horse: 2xx + text/html → no-icon (no placeholder ambiguity)', () => {
+        expect(interpretIconHorse({ ok: true, headers: { get: () => 'text/html' } }, true)).toBe('no-icon');
+    });
+
+    it('icon-horse: HTTP 404 → no-icon', () => {
+        expect(interpretIconHorse({ ok: false, status: 404, headers: { get: () => null } }, true)).toBe('no-icon');
     });
 });
 
@@ -1141,6 +1164,42 @@ describe('initFaviconEnrich — cache layer', () => {
         expect(fetches).toBe(0);
     });
 
+    it('adds the favicon-pop shake class only when the icon slot is in view', async () => {
+        const storage = makeStorageArea({
+            [`${FAVICON_DATA_PREFIX}github.com`]: PNG_DATA_URL,
+            [FAVICON_IDX_KEY]: idxV3({ 'github.com': { t: Date.now(), s: PNG_DATA_URL.length } })
+        });
+        const en = initFaviconEnrich({
+            doc: makeDoc(),
+            faviconService: makeFavService(),
+            isEnabled: () => true,
+            fallbackEnabled: () => false,
+            fetchImpl: makeFetch([[/.*/, { ok: false, status: 404 }]]),
+            ImageCtor: makeFakeImage(),
+            chromeImpl: { storage: { local: storage } },
+            now: nextNow
+        });
+        await en._hydrateDone;
+
+        const visibleAnchor = makeAnchor({ left: 0, right: 20, top: 0, bottom: 20, width: 20, height: 20 });
+        const visibleImg = {
+            src: `chrome-extension://test/_favicon/?pageUrl=${encodeURIComponent('https://github.com/')}&size=32`,
+            parentNode: visibleAnchor
+        };
+        en.onPlaceholder(visibleImg);
+        const visibleEl = visibleAnchor.children[visibleAnchor.children.length - 1];
+        expect(visibleEl.className).toBe('favicon-enriched favicon-pop');
+
+        const offAnchor = makeAnchor({ left: 0, right: 20, top: 9999, bottom: 10019, width: 20, height: 20 });
+        const offImg = {
+            src: `chrome-extension://test/_favicon/?pageUrl=${encodeURIComponent('https://github.com/')}&size=32`,
+            parentNode: offAnchor
+        };
+        en.onPlaceholder(offImg);
+        const offEl = offAnchor.children[offAnchor.children.length - 1];
+        expect(offEl.className).toBe('favicon-enriched');
+    });
+
     it('a failed marker (within 24h) suppresses requests', async () => {
         let fetches = 0;
         const storage = makeStorageArea({
@@ -1668,14 +1727,14 @@ describe('index parse + rebuild', () => {
 
     it('emptyIdx has the v3 shape (per-provider down table)', () => {
         expect(emptyIdx().v).toBe(3);
-        expect(emptyIdx().down).toEqual({ 'favicon-run': 0, 'duckduckgo': 0 });
+        expect(emptyIdx().down).toEqual({ 'favicon-run': 0, 'icon-horse': 0, 'duckduckgo': 0 });
         expect(emptyIdx().hosts).toEqual({});
     });
 
     it('parseIdx normalizes a v3 index: missing provider defaults to 0, stale provider dropped', () => {
         const idx = parseIdx(JSON.stringify({ v: 3, down: { 'duckduckgo': 123, 'ghost': 456 }, hosts: { 'a.example': { t: 1, s: 2 } } }));
         expect(idx).not.toBeNull();
-        expect(idx.down).toEqual({ 'favicon-run': 0, 'duckduckgo': 123 });   // missing→0, ghost dropped
+        expect(idx.down).toEqual({ 'favicon-run': 0, 'icon-horse': 0, 'duckduckgo': 123 });   // missing→0, ghost dropped
         expect(idx.hosts['a.example']).toEqual({ t: 1, s: 2 });
     });
 
@@ -1683,7 +1742,7 @@ describe('index parse + rebuild', () => {
         const idx = parseIdx(JSON.stringify({ v: 1, ddgDownUntil: 999, hosts: { 'ok.example': { t: 1, s: 2 }, 'no.example': { f: 1, t: 3 } } }));
         expect(idx).not.toBeNull();
         expect(idx.v).toBe(3);
-        expect(idx.down).toEqual({ 'favicon-run': 0, 'duckduckgo': 0 });     // breaker window reset
+        expect(idx.down).toEqual({ 'favicon-run': 0, 'icon-horse': 0, 'duckduckgo': 0 });     // breaker window reset
         // Both success and failed markers survive the migration.
         expect(idx.hosts['ok.example']).toEqual({ t: 1, s: 2 });
         expect(idx.hosts['no.example']).toEqual({ f: 1, t: 3 });

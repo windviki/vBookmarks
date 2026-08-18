@@ -7,14 +7,16 @@
  * REAL icon from the user's own bookmarked site (the same origin the user
  * already bookmarked), validates it, caches it per host, and hot-swaps the
  * default SVG back to a real `<img>`. An opt-in, breaker-guarded LAST resort
- * is a built-in list of third-party aggregators (favicon.run → DuckDuckGo),
+ * is a built-in list of third-party aggregators (favicon.run → icon.horse →
+ * DuckDuckGo),
  * each with an independent breaker and automatic failover; a dead-scan proxy
  * session (when one is live) relays the direct attempts for region-limited
  * sites.
  *
  * Design contract (docs/favicon-补全设计.md):
  *   - Discovery chain L1-L4: /favicon.ico → page <link> → proxy relay →
- *     provider-list fallback. Any layer producing a valid icon short-circuits.
+ *     provider-list fallback (direct → proxied-direct → providers). Any layer
+ *     producing a valid icon short-circuits.
  *   - Icon validation: res.ok + byteLength ≤ 200KB + type sniff by magic
  *     number + Image decode (naturalWidth > 0). Bad data never cached.
  *   - Cache: per-host key `vbmFavicon:<host>` = data URL + one index key
@@ -82,8 +84,19 @@ export const interpretDuckDuckGo = (res, networkOk) => {
     return 'no-icon';
 };
 
+export const interpretIconHorse = (res, networkOk) => {
+    if (!networkOk)
+        return 'unreachable';
+    // icon.horse returns real icons with an image content-type and a clean
+    // 404 for unknown domains — no placeholder ambiguity.
+    if (res && res.ok && isImageContentType(res.headers ? res.headers.get('content-type') : null))
+        return 'icon';
+    return 'no-icon';
+};
+
 export const AGG_PROVIDERS = [
     { id: 'favicon-run', url: h => `https://favicon.run/favicon?domain=${h}&sz=32`, interpret: interpretFaviconRun },
+    { id: 'icon-horse',  url: h => `https://icon.horse/icon/${h}`,                  interpret: interpretIconHorse },
     { id: 'duckduckgo',  url: h => `https://icons.duckduckgo.com/ip3/${h}.ico`,      interpret: interpretDuckDuckGo },
 ];
 
@@ -886,6 +899,34 @@ export function initFaviconEnrich(ctx = {}) {
             faviconService.applyContrast(el);
     };
 
+    // A replaced icon gets the little "break out of the old icon" shake only
+    // when its slot is on screen; off-screen rows swap quietly.
+    const inViewport = el => {
+        // The placeholder <img> in tests (and sometimes in real re-renders)
+        // has no layout box of its own yet; its favicon slot anchor is the
+        // element that actually carries the icon geometry.
+        let rectEl = el;
+        if (rectEl && typeof rectEl.getBoundingClientRect !== 'function')
+            rectEl = rectEl.parentNode;
+        if (!rectEl || typeof rectEl.getBoundingClientRect !== 'function')
+            return false;
+        const r = rectEl.getBoundingClientRect();
+        if (!r || r.width <= 0 || r.height <= 0)
+            return false;
+        const vw = doc && doc.defaultView ? doc.defaultView.innerWidth : 0;
+        const vh = doc && doc.defaultView ? doc.defaultView.innerHeight : 0;
+        return r.top < vh && r.bottom > 0 && r.left < vw && r.right > 0;
+    };
+    const makeEnrichedImg = (dataUrl, pop) => {
+        const el = doc.createElement('img');
+        el.src = dataUrl;
+        el.width = 16;
+        el.height = 16;
+        el.alt = '';
+        el.className = pop ? 'favicon-enriched favicon-pop' : 'favicon-enriched';
+        el.addEventListener('load', () => registerEnriched(el), { once: true });
+        return el;
+    };
     const hotSwap = (host, dataUrl) => {
         const item = queue.get(host);
         if (!item)
@@ -896,14 +937,7 @@ export function initFaviconEnrich(ctx = {}) {
             const svg = anchor.querySelector('svg.vbm-icon-doc');
             if (!svg)
                 continue;
-            const el = doc.createElement('img');
-            el.src = dataUrl;
-            el.width = 16;
-            el.height = 16;
-            el.alt = '';
-            el.className = 'favicon-enriched';
-            el.addEventListener('load', () => registerEnriched(el), { once: true });
-            anchor.replaceChild(el, svg);
+            anchor.replaceChild(makeEnrichedImg(dataUrl, inViewport(svg)), svg);
         }
     };
 
@@ -956,14 +990,7 @@ export function initFaviconEnrich(ctx = {}) {
     const injectImg = (img, dataUrl) => {
         if (!img || !img.parentNode)
             return;
-        const el = doc.createElement('img');
-        el.src = dataUrl;
-        el.width = 16;
-        el.height = 16;
-        el.alt = '';
-        el.className = 'favicon-enriched';
-        el.addEventListener('load', () => registerEnriched(el), { once: true });
-        img.parentNode.replaceChild(el, img);
+        img.parentNode.replaceChild(makeEnrichedImg(dataUrl, inViewport(img)), img);
     };
 
     const enqueue = (host, pageUrl, img) => {
