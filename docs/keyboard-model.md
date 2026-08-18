@@ -202,11 +202,11 @@ ring now agree.
 
 ### 2.6 Context menus
 
-All seven menus are keyboard-bound — bookmark, folder, search-history,
-history-row, dupes-group, palette-command (the last also joins the §5 Tab
-ring's menu containers) **and the separator menu** (its lone "remove
-separator" entry used to be keyboard-unreachable — that was the reported
-bug; the "unbound by design" exception is gone). `↑`/`↓` walk items,
+All eight menus are keyboard-bound — bookmark, folder, search-history,
+history-row, dupes-group, palette-command, **view-tab** (the last two also
+join the §5 Tab ring's menu containers) **and the separator menu** (its lone
+"remove separator" entry used to be keyboard-unreachable — that was the
+reported bug; the "unbound by design" exception is gone). `↑`/`↓` walk items,
 skipping separators and hidden entries, and wrap around **on every
 platform** (the old macOS no-wrap exception is deleted); `Home`/`End` jump
 to the first/last enabled item. Confirm/cancel mirrors the dropdown.js
@@ -215,6 +215,11 @@ focused enabled item, close the menu, focus returns to the owning row;
 `←` (LTR; RTL `→`) = `Esc` **cancel** — close without executing, focus
 returns to the owning row. Confirming while the bare menu **container**
 holds focus (no item chosen yet) or on a greyed (disabled) item is a no-op.
+Row menus open from the keyboard with the row model's dedicated key —
+`→` (LTR) / `←` (RTL) on a leaf row — and with the platform-standard
+**ContextMenu key** or **Shift+F10** on any row. On the tab strip `→`/`←`
+are already assigned to tab switching, so the view-tab menu uses the two
+dedicated keys (**ContextMenu** / **Shift+F10**) while focus is on a tab.
 One exception stays: a menu opened from the **palette** (the
 palette-command edit/delete menu) returns focus to the palette's input box,
 its real keyboard anchor, and the palette stays open. New focus law (4.0.1):
@@ -350,8 +355,9 @@ endpoint moves to the next surviving rung.
 
 | Setting | Effect on the model |
 |---|---|
-| `showViewTabs` off (`body.no-view-tabs`) | `↑`-past-top and box `↓` retarget: box ⇄ [toolbar] ⇄ list (focusTop/focusDown/focusListExit read the flag live; the toolbar rung survives — it belongs to the view, not the strip). Strip keys don't exist; `Alt+1…9` and the palette still reach every view. |
-| One feature view disabled (`showRecentBookmarks` / `showStatsView` / `showDeadView` / `showDupesView`) | No tab, activation refused, `Alt+N` indexes the visible set. A remembered startup view that is now disabled falls back to the tree. |
+| `showViewTabs` off (`body.no-view-tabs`) | `↑`-past-top and box `↓` retarget: box ⇄ [toolbar] ⇄ list (focusTop/focusDown/focusListExit read the flag live; the toolbar rung survives — it belongs to the view, not the strip). Strip keys don't exist; `Alt+1…9` and the palette still reach every view. Entering a non-tree view this way shows a toast naming the view and the Esc / command-palette route back to the tree. |
+| One feature view hidden (`showRecentBookmarks` / `showStatsView` / `showDeadView` / `showDupesView` off) | No tab, activation refused, `Alt+N` indexes the visible set, and the palette Go command for that view no longer renders (4.0.8). A remembered startup view that is now hidden falls back to the tree. |
+| One feature view disabled (`disableRecentView` / `disableStatsView` / `disableDeadView` / `disableDupesView`) | Same runtime effect as hidden — no tab, no `Alt+N`, no palette entry, activation refused — plus the options page greys out that view's *Show …* option until it is re-enabled. |
 | `quickAddEnabled` off | Header `→` chain: box → tools; `←` chain: tools → box. Tab cycle skips it. |
 | `showToolButton` off (or palette off, which hides it) | `→` from quick-add is a no-op; Tab cycle skips it. |
 | Classic experience (all three off at once) | Header is the bare box: `→` inert, `↓` straight into the list — the v3 chain, exactly what the option promises. |

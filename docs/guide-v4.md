@@ -209,8 +209,10 @@ Every new surface in 4.0 can be switched off. **The fastest route**: the *Restor
 
 | You want | Setting (options page → *Views* group, unless noted) |
 |---|---|
-| No tab strip — one tree + `Ctrl+F` search (the 3.x layout) | Turn off **Show view tabs** (`showViewTabs`). Tree and search remain the only views, shortcuts unchanged |
+| No tab strip — one tree + `Ctrl+F` search (the 3.x layout) | Turn off **Show view tabs** (`showViewTabs`). Tree and search remain the only views, shortcuts unchanged; jumping into a non-tree view then shows a toast with the Esc / command-palette way back to the tree |
 | An even quieter strip | Individually hide Stats/Dead/Duplicates (`showStatsView`/`showDeadView`/`showDupesView`) or Recent (`showRecentBookmarks`) — the tab, its `Alt+number` jump and its palette command all disappear |
+| Hide one view on the fly | Right-click a feature-view tab → **Hide** (or press **ContextMenu** / **Shift+F10** on the tab) — same as unchecking that view's *Show …* option. The tab, its `Alt+number` jump and its palette command all disappear. Tree and Search tabs are fixed, so the tab bar always keeps at least two icons |
+| Disable a view entirely | Right-click a feature-view tab → **Disable**, or use the options page: each *Show … view* row has an **Enabled/Disabled** state and an **Enable/Disable** button. Disabled greys out that show option and removes every entry point and function of the view until re-enabled |
 | No command palette | Turn off **Enable the command palette** (`paletteEnabled`) — `Ctrl/Cmd+K` and the global wake-up both stand down |
 | No quick-add star or tool button | Turn off `quickAddEnabled` / `showToolButton` in the Views group |
 | No "Bookmark this page" in the page's right-click menu | Turn off **Page context-menu quick-add** (`quickAddContextMenu`) — the entry disappears from every page on the fly |
