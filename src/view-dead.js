@@ -118,7 +118,7 @@
 import { filterScannable, collectDead, statusLabel } from './dead-links.js';
 import { parseProxyServer, formatProxyServer, DEFAULT_PROXY_TEST_URL, proxyPermission, requestProxyPermission, proxyControllable, testProxyReachable } from './dead-proxy.js';
 import { DEAD_SCAN_KEY, DEAD_LAST_KEY, DEAD_SCAN_MSG } from './dead-scan-sw.js';
-import { VIEW_ICONS, FLAG_ICON, TRASH_ICON, CHEVRON_ICON } from './icons.js';
+import { VIEW_ICONS, FLAG_ICON, FLAG_X_ICON, TRASH_ICON, CHEVRON_ICON, REDO_ICON, LIST_X_ICON, SELECT_ICON } from './icons.js';
 import { makeRiskBanner, RISK_HELP_URL } from './risk-banner.js';
 import { initDropdowns } from './dropdown.js';
 import { htmlspecialchars } from './escape.js';
@@ -490,15 +490,17 @@ export function initViewDead(ctx = {}) {
     const renderToolbar = () => {
         // vbm-toolbar: keyboard.js's Tab cycle picks the controls up as
         // stops between the tab strip and the list rows (final polish).
-        let html = '<div class="dead-toolbar vbm-toolbar">';
+        const iconBtn = (cls, icon, labelKey) => {
+            const label = _m(labelKey);
+            return `<button class="${cls}" title="${htmlspecialchars(label)}" ` +
+                `aria-label="${htmlspecialchars(label)}">${icon}</button>`;
+        };
         if (live) {
             // scanning/paused share the toolbar; the toggle button and the
             // paused tag split them. Real <button>s: Tab-reachable and
             // Enter/Space-fireable like the other dead-toolbar controls.
+            let html = '<div class="dead-toolbar dead-scan-toolbar vbm-toolbar">';
             const paused = live.state === 'paused';
-            // v4 task-4 #17: the label is the bare done/total counter (the
-            // full sentence moves to title/aria-label) so a progress tick
-            // never truncates it — the bar carries the visual ratio.
             const full = _m('deadChecking', [`${live.done}`, `${live.total}`]);
             html += `<progress class="dead-progress" value="${live.done}" max="${Math.max(live.total, 1)}"></progress>` +
                 (paused ? `<span class="dead-paused-tag">${_m('deadPaused')}</span>` : '') +
@@ -506,133 +508,90 @@ export function initViewDead(ctx = {}) {
                 `<button class="dead-pause">${_m(paused ? 'deadResume' : 'deadPause')}</button>` +
                 `<button class="dead-cancel">${_m('deadCancel')}</button>`;
             html += '</div>';
-            // 扫描中不渲染第二工具条：标记状态过滤与排序都是完成态（idle）控制，
-            // live 的渐进树序不参与 deadSort，过滤器也不作用于 liveRows。
             return html;
-        } else {
-            if (selecting) {
-                // v4 task-3 #4: the batch bar replaces every idle control
-                // while the mode is on — the scan/filter buttons come back
-                // on exit. Action buttons disable on an empty selection.
-                html += `<span class="select-count">${_m('selectCount', `${selected.size}`)}</span>` +
-                    `<button class="dead-select-all">${_m('selectAll')}</button>` +
-                    `<button class="dead-select-invert">${_m('selectInvert')}</button>` +
-                    `<button class="dead-select-clear">${_m('selectClear')}</button>` +
-                    `<button class="dead-mark-selected"${selected.size ? '' : ' disabled'}>${_m('deadMarkSelected')}</button>` +
-                    `<button class="dead-unmark-selected"${selected.size ? '' : ' disabled'}>${_m('deadUnmarkSelected')}</button>` +
-                    `<button class="dead-delete-selected"${selected.size ? '' : ' disabled'}>${_m('deadDeleteSelected')}</button>` +
-                    `<button class="dead-select-exit">${_m('selectModeExit')}</button>`;
-                html += '</div>';
-                return html;
-            }
-            // Unmark-all is NOT gated on a result list: marks are the user's
-            // persistent intent (survive a cancelled scan — the run's abort
-            // must not wipe them), so the clearing entry has to exist even
-            // when no scan results are on screen (a first scan cancelled
-            // before finishing leaves marked ids with no row to unmark on).
-            if (deadMarks.size)
-                html += `<button class="dead-unmark-all">${_m('deadUnmarkAll')}</button>`;
-            // 清除扫描结果：紧跟在清空所有标记之后。清空本次扫描判定后，已标注
-            // 项划归"过去标注"分类；顶部"重新检测"横幅重新显示。
-            if (lastScan)
-                html += `<button class="dead-clear-scan">${_m('deadClearScan')}</button>`;
+        }
+        if (selecting) {
+            // v4 task-3 #4: the batch bar replaces every idle control
+            // while the mode is on — the scan/filter buttons come back
+            // on exit. Action buttons disable on an empty selection.
+            let html = '<div class="dead-toolbar dead-scan-toolbar vbm-toolbar">';
+            html += `<span class="select-count">${_m('selectCount', `${selected.size}`)}</span>` +
+                `<button class="dead-select-all">${_m('selectAll')}</button>` +
+                `<button class="dead-select-invert">${_m('selectInvert')}</button>` +
+                `<button class="dead-select-clear">${_m('selectClear')}</button>` +
+                `<button class="dead-mark-selected"${selected.size ? '' : ' disabled'}>${_m('deadMarkSelected')}</button>` +
+                `<button class="dead-unmark-selected"${selected.size ? '' : ' disabled'}>${_m('deadUnmarkSelected')}</button>` +
+                `<button class="dead-delete-selected"${selected.size ? '' : ' disabled'}>${_m('deadDeleteSelected')}</button>` +
+                `<button class="dead-select-exit">${_m('selectModeExit')}</button>`;
+            html += '</div>';
+            return html;
+        }
+
+        // Idle: three stacked toolbars (each a .vbm-toolbar = its own
+        // keyboard rung). They render as one visual block — CSS drops the
+        // inner separators and keeps only the bottom border.
+        let html = '';
+        const rows = allResultRows();
+        const filteredN = resultRows().length;
+        const markedCount = markedRows().length;
+
+        // Row 1 — detection toolbar: last-scan time (time only), rescan,
+        // clear scan results. Rescan is also the way back after a cancelled
+        // scan with marks and no cached run.
+        if (lastScan || deadMarks.size) {
+            html += '<div class="dead-toolbar dead-scan-toolbar vbm-toolbar">';
             if (lastScan) {
                 const time = new Date(lastScan.ts).toLocaleString();
-                html += `<span class="dead-last">${_m('deadLastScanAt', time)} · ${lastScan.scannedCount}</span>`;
-                // Rescan rides the timestamp, not the result rows: a clean
-                // scan (zero dead rows) must still offer the way back into
-                // a fresh run (f5bc7cb had stranded the button inside the
-                // rows branch, leaving no in-view rescan after a clean scan).
+                html += `<span class="dead-last">${_m('deadLastScanAt', time)}</span>`;
             }
-            // …and the same way back has to exist for a cancelled scan whose
-            // marks now fill the list (the bottom start row is gone there, so
-            // the toolbar's rescan is the only entry into a fresh run).
             if (lastScan || deadMarks.size)
-                html += `<button class="dead-rescan">${_m('deadRescan')}</button>`;
-            const rows = allResultRows();
-            // mark-all / select-mode act on the FILTERED row set (markAll
-            // reads resultRows(), the selection prunes against it), so they
-            // key off the filtered count; delete-all and select-all share
-            // selectableRows() (audit D5). The filter segment stays keyed off
-            // the UNFILTERED count, so the way back remains reachable.
-            const filteredN = resultRows().length;
-            // The marked segment counts the UNCOVERED marks (markedRows), not
-            // the raw deadMarks set: a mark the scan verdicts dead/blocked
-            // already rides its result row, so using deadMarks.size would
-            // double-count it in 全部 (= result rows + marks).
-            const markedCount = markedRows().length;
+                html += iconBtn('dead-rescan', REDO_ICON, 'deadRescan');
+            if (lastScan)
+                html += iconBtn('dead-clear-scan', LIST_X_ICON, 'deadClearScan');
+            html += '</div>';
+        }
+
+        // Row 2 — mark toolbar: dead filter, mark all, clear all marks,
+        // delete all, selection mode. Same gating as the old single toolbar.
+        {
+            let row = '';
             if (lastScan && (rows.length || deadMarks.size)) {
-                // dead-filter and the old dead-summary merge: each segment
-                // button carries its own count ("全部 28 · 仅死链 20 · 仅受限 0 ·
-                // 上次标注 5"), so the two situations read at a glance instead
-                // of as a separate summary line. Order: unmark-all (whenever
-                // marks exist) → scan-time → rescan → filter → mark-all →
-                // delete-all → select-mode.
+                row += '<span class="dead-filter" role="group">';
                 const deadN = rows.filter(r => r.result.status === 'dead').length;
-                html += '<span class="dead-filter" role="group">';
-                // v4 task-4 #1: pressed state = aria-pressed only (the
-                // 'active' class is context-menu.js's menu-open marker —
-                // clearMenu strips it body-wide on click/focus).
-                // 全部 = 本次扫描结果 (死链 + 受限) + 未覆盖标注 三者之和 —
-                // 用户方案: "全部的计数应该包含以上三个分类的和, 而不仅是
-                // 本次扫描之后的计数", 即 全部 = 死链 + 受限 + 标注。标注只算
-                // 未被本次结果覆盖的残留 (markedCount), 一个 id 不会既算结果
-                // 又算标注。
                 for (const [value, key, count] of [
                     ['all', 'deadFilterAll', rows.length + markedCount],
                     ['dead', 'deadFilterDead', deadN],
                     ['blocked', 'deadFilterBlocked', rows.length - deadN],
-                    // "上次标注": the uncovered marks — a mark the scan verdicts
-                    // dead/blocked rides its result row and is never counted
-                    // here again; the residue is what the segment shows.
                     ['marked', 'deadFilterMarked', markedCount]
                 ])
-                    html += `<button class="dead-filter-btn" data-filter="${value}" aria-pressed="${filter === value}">${_m(key)} ${count}</button>`;
-                html += '</span>';
-                // mark-all: result rows only — a marked-only view has none to
-                // batch-mark (the batch bar handles those), and under the
-                // 已标注 mark filter every visible result row is already
-                // marked, so "mark all" would be a no-op confirm (审计 F2).
+                    row += `<button class="dead-filter-btn" data-filter="${value}" aria-pressed="${filter === value}">${_m(key)} ${count}</button>`;
+                row += '</span>';
                 if (filteredN && markFilter !== 'marked')
-                    html += `<button class="dead-mark-all">${_m('deadMarkAll')}</button>`;
+                    row += iconBtn('dead-mark-all', FLAG_ICON, 'deadMarkAll');
             }
-            // Batch delete-all: deletes every VISIBLE row (selectableRows()).
-            // In 全部 that includes the uncovered-mark residue below the
-            // results — "delete all" and "select all" must mean the same set
-            // (audit D5). 仅死链/仅受限 narrow to that category; the
-            // marked-only view deletes the visible marks. Rendered only when
-            // the target set is non-empty — a danger button that clicks into
-            // nothing must not appear.
+            if (deadMarks.size)
+                row += iconBtn('dead-unmark-all', FLAG_X_ICON, 'deadUnmarkAll');
             if (selectableRows().length)
-                html += `<button class="dead-delete-all">${_m('deadDeleteAllBtn')}</button>`;
-            // v4 task-3 #4: selection mode entry — OUTSIDE the result-gated
-            // block, so the marked-only view (a cancelled scan with marks,
-            // or the 上次标注 filter) still gets the batch bar: the marked
-            // rows are selectable members there and the batch mark/unmark/
-            // delete ops are the only way to work them in bulk. Mark-all/
-            // delete-all stay gated on the filtered RESULT count above
-            // (marked-only view hides them).
+                row += iconBtn('dead-delete-all', TRASH_ICON, 'deadDeleteAllBtn');
             if (selectableRows().length)
-                html += `<button class="dead-select-mode">${_m('selectModeEnter')}</button>`;
+                row += iconBtn('dead-select-mode', SELECT_ICON, 'selectModeEnter');
+            if (row)
+                html += `<div class="dead-toolbar dead-mark-toolbar vbm-toolbar">${row}</div>`;
         }
-        html += '</div>';
-        // 标注状态筛选 + 排序（第二工具条，独立 .vbm-toolbar = 独立键盘 rung，
-        // 与主工具条并列）。仅空闲态：selecting / live 已在上方 early-return。
-        // gating = 有可见行可过滤/排序才渲染（审计 F1）：有标记（残留列表）或
-        // 有结果行时出现；仅"有缓存但 0 死链 0 标记"的纯空态下不渲染无意义的
-        // 工具条（下方是 deadNone 空态，没有行）。全新空态同理不渲染。
-        if (deadMarks.size || (lastScan && allResultRows().length)) {
+
+        // Row 3 — status toolbar: mark-status filter + detection-time sort.
+        // This is the old second toolbar, unchanged except for its row class.
+        if (deadMarks.size || (lastScan && rows.length)) {
             const counts = markStatusCounts();
-            html += '<div class="dead-toolbar dead-mark-toolbar vbm-toolbar">';
-            html += '<span class="dead-mark-filter" role="group">';
+            let row = '<span class="dead-mark-filter" role="group">';
             for (const [value, key] of MARK_FILTERS) {
                 const n = value === 'marked' ? counts.marked
                     : value === 'unmarked' ? counts.unmarked : counts.all;
-                html += `<button class="dead-mark-filter-btn" data-markfilter="${value}" aria-pressed="${markFilter === value}">${_m(key)} ${n}</button>`;
+                row += `<button class="dead-mark-filter-btn" data-markfilter="${value}" aria-pressed="${markFilter === value}">${_m(key)} ${n}</button>`;
             }
-            html += '</span>';
-            html += dropdownHtml('dead-sort', 'deadSortLabel', DEAD_SORT_OPTS, deadSort);
-            html += '</div>';
+            row += '</span>';
+            row += dropdownHtml('dead-sort', 'deadSortLabel', DEAD_SORT_OPTS, deadSort);
+            html += `<div class="dead-toolbar dead-status-toolbar vbm-toolbar">${row}</div>`;
         }
         return html;
     };

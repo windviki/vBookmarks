@@ -89,6 +89,37 @@ export const TRASH_ICON =
     '<path d="M4.4 4.5l.6 8.1a1.2 1.2 0 0 0 1.2 1.1h3.6a1.2 1.2 0 0 0 1.2-1.1l.6-8.1"/>' +
     '</svg>';
 
+// Dead-view toolbar glyphs (4.0.8): redo, list-with-x, flag-with-x and
+// selection-mode. Same 16px grid / 1.5px stroke / currentColor recipe.
+export const REDO_ICON =
+    '<svg class="vbm-icon vbm-icon-redo" width="16" height="16" viewBox="0 0 16 16" ' +
+    'fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+    '<path d="M13.8 6.2H6a3.8 3.8 0 0 0 0 7.6h2.2"/>' +
+    '<polyline points="11 3.2 13.8 6.2 11 9.2"/>' +
+    '</svg>';
+
+export const LIST_X_ICON =
+    '<svg class="vbm-icon vbm-icon-list-x" width="16" height="16" viewBox="0 0 16 16" ' +
+    'fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+    '<path d="M2.5 4.2h11M2.5 8h11M2.5 11.8h6"/>' +
+    '<path d="M11.6 10.8l3.2 3.2M14.8 10.8l-3.2 3.2"/>' +
+    '</svg>';
+
+export const FLAG_X_ICON =
+    '<svg class="vbm-icon vbm-icon-flag-x" width="16" height="16" viewBox="0 0 16 16" ' +
+    'fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+    '<line x1="3.5" y1="1.5" x2="3.5" y2="14.5"/>' +
+    '<path d="M3.5 2.5h7.6l-1.8 2.1 1.8 2.1H3.5"/>' +
+    '<path d="M11.8 10.8l3 3M14.8 10.8l-3 3"/>' +
+    '</svg>';
+
+export const SELECT_ICON =
+    '<svg class="vbm-icon vbm-icon-select" width="16" height="16" viewBox="0 0 16 16" ' +
+    'fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+    '<rect x="2.6" y="2.6" width="10.8" height="10.8" rx="2"/>' +
+    '<polyline points="5.4 8 7.1 9.7 10.6 6.2"/>' +
+    '</svg>';
+
 // Folder twisty glyph (chevron-right; CSS rotates it 90° on .open rows and
 // mirrors it for RTL). Lives inside <b class="twisty"> in folder rows —
 // smaller optical size than the tile icons, so the stroke reads lighter.

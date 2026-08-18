@@ -3506,10 +3506,57 @@ body.panel-mode #dead-list .vbm-row .row-badge-slot {
     color: var(--vbm-fg-selected);
 }
 
-/* 标注状态筛选（第二工具条）：与主工具条并列的独立 .vbm-toolbar（独立键盘
-   rung）。分段外观复用 dead-filter 的 segmented-recipe；两工具条各带
-   border-bottom（base .dead-toolbar），零 margin 堆叠 → 分隔线上下对称
-   （主工具条线 / 第二工具条线 / 列表前各一条线，无单侧空隙）。 */
+/* 4.0.8 死链工具栏重排：代理条下方固定三行——检测行 / 标注行 / 状态行。
+   每行仍是一个 .vbm-toolbar（键盘 rung 不合并），但中间不画分隔线，视觉上
+   是一个三行工具栏块；底部保留一条线与列表分隔（代理条自带 border-bottom，
+   首行不再叠加）。 */
+.dead-toolbar.dead-scan-toolbar,
+.dead-toolbar.dead-mark-toolbar {
+    border-bottom: 0;
+}
+.dead-toolbar.dead-status-toolbar {
+    border-bottom: 1px solid var(--vbm-border);
+}
+.dead-toolbar.dead-scan-toolbar .dead-last {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.dead-toolbar.dead-mark-toolbar .dead-filter,
+.dead-toolbar.dead-status-toolbar .dead-mark-filter {
+    margin-inline-end: auto; /* left group fills; icon buttons pin to the right */
+}
+
+/* Icon-only toolbar buttons (detection/mark rows): the original i18n copy
+   stays as title/aria-label, so keyboard/mouse hover still names the action. */
+.dead-toolbar button.dead-rescan,
+.dead-toolbar button.dead-clear-scan,
+.dead-toolbar button.dead-mark-all,
+.dead-toolbar button.dead-unmark-all,
+.dead-toolbar button.dead-delete-all,
+.dead-toolbar button.dead-select-mode {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    padding: 0;
+    flex: none;
+}
+.dead-toolbar button.dead-rescan .vbm-icon,
+.dead-toolbar button.dead-clear-scan .vbm-icon,
+.dead-toolbar button.dead-mark-all .vbm-icon,
+.dead-toolbar button.dead-unmark-all .vbm-icon,
+.dead-toolbar button.dead-delete-all .vbm-icon,
+.dead-toolbar button.dead-select-mode .vbm-icon {
+    width: 16px;
+    height: 16px;
+}
+
+/* 标注状态筛选（第二/状态工具条）：与检测/标注工具条并列的独立
+   .vbm-toolbar（独立键盘 rung）。分段外观复用 dead-filter 的
+   segmented-recipe。 */
 .dead-toolbar.dead-mark-toolbar {
     margin-top: 0;
 }

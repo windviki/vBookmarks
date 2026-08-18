@@ -1824,15 +1824,17 @@ describe('清除扫描结果 + 开始扫描显示条件 (4.0.7 二轮)', () => {
         }
     });
 
-    it('清除扫描结果按钮：有扫描缓存时渲染在清空所有标记之后；无缓存不渲染', () => {
+    it('清除扫描结果按钮：检测行内排在重新检测之后；无缓存不渲染', () => {
         const ctx = setup({ storeData: { deadLastScan: CACHE, deadMarks: '["12"]' } });
         const { $list } = ctx;
         ctx.def().activate();
         const html = $list.innerHTML;
-        const u = html.indexOf('class="dead-unmark-all"');
+        const r = html.indexOf('class="dead-rescan"');
         const c = html.indexOf('class="dead-clear-scan"');
-        expect(u).toBeGreaterThan(-1);
-        expect(c).toBeGreaterThan(u); // 紧随清空所有标记之后
+        const u = html.indexOf('class="dead-unmark-all"');
+        expect(r).toBeGreaterThan(-1);
+        expect(c).toBeGreaterThan(r); // 检测行：上次扫描 → 重新检测 → 清除扫描结果
+        expect(u).toBeGreaterThan(c); // 标注行在检测行之后
         // 无扫描缓存 → 按钮不渲染（仅无历史数据时才有"开始扫描"入口）
         const fresh = setup({});
         fresh.def().activate();
