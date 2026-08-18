@@ -3124,6 +3124,14 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
     height: 22px;
     padding: 0;
     flex: none;
+    border: 0;
+    border-radius: var(--vbm-radius);
+    background: transparent;
+    color: var(--vbm-accent);
+    cursor: pointer;
+}
+.dupes-toolbar button.dupes-select-mode:hover {
+    background: var(--vbm-bg-hover);
 }
 .dupes-toolbar button.dupes-select-mode .vbm-icon {
     width: 16px;
@@ -3380,6 +3388,14 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
     padding-inline-start: 8px;
 }
 
+/* 4.0.8: group-head's clean-rest ✓ aligns with the toolbar right edge too.
+   .row-btn default end margin is 4px; 4px group-head end padding makes the
+   button's right edge sit 8px from the container — the same column as the
+   member rows' floating delete and the toolbar's select-mode icon. */
+.dupes-group .group-head {
+    padding-inline-end: 4px;
+}
+
 #dupes-list ul li.dupes-member a {
     flex: 1;
     min-width: 0;
@@ -3458,6 +3474,7 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
 .row-badge-slot {
     display: inline-flex;
     align-items: center;
+    justify-content: flex-end; /* pill 右缘贴齐槽右缘，行内 pill 列对齐 */
     /* 默认无固定宽度：pill 贴内容长度（窄视口 & 其他视图的裸 slot 不存在）。 */
     max-width: 100%;
     overflow: hidden;
@@ -3876,10 +3893,13 @@ body.panel-mode #dead-list .vbm-row .row-badge-slot {
 }
 
 /* 4.0.8 死链行右侧 icon 与工具栏右缘对齐：工具栏右缘距容器 8px（toolbar
-   padding 4px 8px），行内最右一个 row-btn 的右缘原本只有 4px（.row-btn
-   margin-inline-end 4px）——补到 8px，让行内图标整体左移与工具栏图标
-   竖直对齐（浮动的 hover 按钮与常驻的 marked 按钮同一右缘）。 */
-#dead-list ul li.vbm-row > .row-btn:last-child {
+   padding 4px 8px）。行内最右一个 row-btn（删除）右缘补到 8px，与工具栏
+   最右 icon（选择模式）对齐；倒数右二（标记）补到 8px，与工具栏右二
+   （删除全部）对齐——两者都是 20px 按钮 + 8px 端距，正好落在工具栏
+   22px icon + 6px gap 的同一右缘列上（浮动的 hover 按钮与常驻的 marked
+   按钮同一右缘）。 */
+#dead-list ul li.vbm-row > .row-btn:last-child,
+#dead-list ul li.vbm-row > .row-btn:nth-last-child(2) {
     margin-inline-end: 8px;
 }
 
