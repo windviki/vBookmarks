@@ -424,11 +424,21 @@ white-space: nowrap;
 	flex-direction: column;
 	gap: .5em;
 }
-.options-list li > #dead-proxy-edit-row,
-.options-list li > #dead-proxy-action-row{
+.options-list li > #dead-proxy-edit-row{
 	display: flex;
 	align-items: center;
 	gap: 1em;
+}
+.options-list li > #dead-proxy-action-row{
+	display: flex;
+	flex-wrap: wrap; /* small screens: buttons wrap instead of stretching the row */
+	align-items: center;
+	gap: .5em 1em;
+}
+.options-list li > #dead-proxy-action-row > code{
+	flex: 1 1 12em;
+	min-width: 0;
+	overflow-wrap: anywhere;
 }
 .options-list li > #dead-proxy-edit-row > span{
 	flex: none;
@@ -442,7 +452,7 @@ white-space: nowrap;
 	margin-__MSG_@@bidi_start_edge__: 0;
 }
 .options-list li > #dead-proxy-action-row > button#dead-proxy-server-clear{
-	margin-inline-start: auto; /* pin Clear to the card's right edge */
+	margin-inline-start: auto; /* pin Clear to the card's right edge; wraps with the row when narrow */
 }
 /* Result line under the row: failures read as danger, success as the green
    success token (paper's accent is vermilion — too close to the danger red). */
