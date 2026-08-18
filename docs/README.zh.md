@@ -225,6 +225,7 @@ python3 scripts/package.py         # → tmp/vBookmarks_<版本>.zip
 - **选项页低优先级打磨**：存储横条改用 `getBytesInUse` 按真实计费统计，并对连续写入做 300ms 防抖；`deadMarks/deadMarkTimes` 归入"扫描/标注数据"段；清空图标缓存与清空统计一样先确认，空缓存时也有反馈；备份文件名标注 `-with-icons/-no-icons`，且导出/导入都会剔除运行时 `vbmDeadScan` 日志；头部 GitHub 链接指向项目仓库，版本链接与 changelog 都固定到 `docs/README.md`，标题行的 `header-since` 改为合法标记。
 - **死链视图低优先级打磨**：第二工具条的"全部"改叫"任意状态"，与分类工具条的"全部"区分；检测时间排序下没有 per-row ts 的旧行排在最后；无缓存但有标注被"未标注"筛选隐藏时显示"换分段"提示而非首次扫描 CTA；状态药丸的裸 "0" 改为 "—"；"删除全部"与"全选"在"全部"视图下作用域一致（结果行 + 可见的过去标注行）。
 - **扫描竞态补齐**：旧 start 链的收尾只会拆除本代安装的 PAC，不再误拆新扫描的代理会话；侧栏开着时导入写入 `deadMarks/deadMarkTimes` 会即时反映到死链视图。
+- **中文输入法回车不再误开首条搜索结果**：顶部搜索栏中，中文/日文输入法上屏候选的 Enter 现在交还输入法。此前它被当作普通 Enter，会聚焦并点击首条结果；若结果行在点击前已被重渲染，popup 自身会被导航到该书签 URL（内网域名会表现为 `chrome-error://chromewebdata/` 的 DNS 错误页）。
 
 #### 变更
 
@@ -238,7 +239,8 @@ python3 scripts/package.py         # → tmp/vBookmarks_<版本>.zip
 - 商店发布支持测试用户灰度（`TRUSTED_TESTERS`）；`DEFAULT_PUBLISH` 恢复全量发布。
 - `loadDotenv` 支持行内注释（`KEY=value # 说明`）。
 - bookmarklet 行为在真实浏览器 harness 中验证（`verify-bmlet.js`）。
-- 测试套件 70 个文件 / 2328 个用例全绿。
+- 新增搜索栏 IME 回车回归问题的控制台探针（`scripts/console/probe-ime-enter.js`）。
+- 测试套件 70 个文件 / 2356 个用例全绿。
 
 ### v4.0.7
 

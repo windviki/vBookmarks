@@ -225,6 +225,7 @@ python3 scripts/package.py         # → tmp/vBookmarks_<version>.zip
 - **Options-page low-priority polish**: the storage bar measures with `getBytesInUse` and debounces burst writes (300 ms); `deadMarks/deadMarkTimes` are counted in the scan/mark segment; clearing the icon cache now confirms first and gives feedback when empty; backup filenames say `-with-icons`/`-no-icons`; backup export/import drops the runtime `vbmDeadScan` journal; the header GitHub link goes to the project repo, changelog links point at `docs/README.md` explicitly, and the header subtitle is valid markup.
 - **Dead-link view low-priority polish**: the second toolbar's "All" now reads "Any status" to disambiguate the two counters; rows without a per-row timestamp sort last under detection-time sorting; a hidden-by-filter marks-only view shows the "try another segment" hint instead of the first-scan call-to-action; the bare status pill "0" renders as "—"; and "Delete all" now covers the same visible set as "Select all" in the All view (result rows plus uncovered past marks).
 - **Scan race hardening**: a stale start chain tears down only its own generation's PAC, so it can no longer strip the proxy session from a newer scan; and an import rewriting `deadMarks/deadMarkTimes` while the side panel is open is reflected in the dead-link view immediately.
+- **IME composition Enter no longer opens the first search result**: in the top search bar, the Enter that commits a Chinese/Japanese IME candidate now stays with the IME. Previously it was treated as a normal Enter and focused/clicked the first result; if the row was re-rendered before the click, the popup itself navigated to that bookmark's URL (an internal host could surface as a `chrome-error://chromewebdata/` DNS error page).
 
 #### Changed
 
@@ -238,7 +239,8 @@ python3 scripts/package.py         # → tmp/vBookmarks_<version>.zip
 - Store publishing supports a trusted-tester grey release (`TRUSTED_TESTERS`); `DEFAULT_PUBLISH` restores a full rollout.
 - `loadDotenv` accepts inline comments (`KEY=value # note`).
 - Bookmarklet behavior verified in a real-browser harness (`verify-bmlet.js`).
-- Test suite at **70 files / 2328 cases**, all green.
+- Console probe added for the search-bar IME-Enter regression (`scripts/console/probe-ime-enter.js`).
+- Test suite at **70 files / 2356 cases**, all green.
 
 ### v4.0.7
 
