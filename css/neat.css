@@ -3206,9 +3206,17 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
 /* v4.1 visual fix: 选择模式复选框不贴容器左缘。与去重侧同法——在行容器上补
    8px padding-inline-start（死链行正常态由 a::before 的 16px 引导槽提供留白，
    这里只作用于选中态的行）。复选框/成员内容随之右移 8px，与去重复选框左缘
-   对齐，也与其他视图的引导留白一致。 */
+   对齐，也与其他视图的引导留白一致。
+   4.0.8: 选择模式下 row-btn 不渲染，行容器补 4px padding-inline-end，并去掉
+   锚点自身的 4px end margin —— pill/路径右缘距 popup 边缘保持 4px，与窄模式
+   （.row-path margin-inline-end:4px）及其他视图的右侧留白一致。 */
 #dead-list ul.selecting li.vbm-row {
     padding-inline-start: 8px;
+    padding-inline-end: 4px;
+}
+
+#dead-list ul.selecting li.vbm-row > a {
+    margin-inline-end: 0;
 }
 
 /* v4.1 fix: 正常态的引导留白由 a::before 的 16px 槽提供;选择模式下该槽
