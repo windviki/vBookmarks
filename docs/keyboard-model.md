@@ -356,7 +356,7 @@ endpoint moves to the next surviving rung.
 | Setting | Effect on the model |
 |---|---|
 | `showViewTabs` off (`body.no-view-tabs`) | `↑`-past-top and box `↓` retarget: box ⇄ [toolbar] ⇄ list (focusTop/focusDown/focusListExit read the flag live; the toolbar rung survives — it belongs to the view, not the strip). Strip keys don't exist; `Alt+1…9` and the palette still reach every view. Entering a non-tree view this way shows a toast naming the view and the Esc / command-palette route back to the tree. |
-| One feature view hidden (`showRecentBookmarks` / `showStatsView` / `showDeadView` / `showDupesView` off) | No tab, activation refused, `Alt+N` indexes the visible set, and the palette Go command for that view no longer renders (4.0.8). A remembered startup view that is now hidden falls back to the tree. |
+| One feature view hidden (`showRecentBookmarks` / `showStatsView` / `showDeadView` / `showDupesView` off) | No tab, `Alt+N` indexes the visible set; the view remains activatable through the palette Go command and entering it shows the return-path toast (its tab is not visible). A remembered startup view that is now hidden falls back to the tree. |
 | One feature view disabled (`disableRecentView` / `disableStatsView` / `disableDeadView` / `disableDupesView`) | Same runtime effect as hidden — no tab, no `Alt+N`, no palette entry, activation refused — plus the options page greys out that view's *Show …* option until it is re-enabled. |
 | `quickAddEnabled` off | Header `→` chain: box → tools; `←` chain: tools → box. Tab cycle skips it. |
 | `showToolButton` off (or palette off, which hides it) | `→` from quick-add is a no-op; Tab cycle skips it. |

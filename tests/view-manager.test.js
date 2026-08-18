@@ -320,13 +320,14 @@ describe('hide and disable (tab context menu backing)', () => {
         expect(tabs().map(t => t.id)).toContain('view-tab-recent');
     });
 
-    it('hideViewTab writes the show setting off and makes a feature view unavailable', () => {
+    it('hideViewTab writes the show setting off but keeps the view palette-available', () => {
         const { views, addRecent, store, tabs } = setup({});
         addRecent({ showKey: 'showRecentBookmarks', disableKey: 'disableRecentView' });
         expect(tabs()).toHaveLength(3);
         expect(views.hideViewTab('recent')).toBe(true);
         expect(store.get('showRecentBookmarks')).toBe('');
-        expect(views.isAvailable('recent')).toBe(false);
+        expect(views.isAvailable('recent')).toBe(true);
+        expect(views.activate('recent')).toBe(true);
         expect(tabs().map(t => t.id)).not.toContain('view-tab-recent');
     });
 
@@ -341,22 +342,25 @@ describe('hide and disable (tab context menu backing)', () => {
         expect(store.get('showRecentBookmarks', '1')).toBe('1');
     });
 
-    it('tree/search are always preserved and never hideable/disableable', () => {
-        const { views, tabs, store } = setup({});
+    it('tree/search Hide becomes the hide-tab-bar shortcut only when they are the last two tabs', () => {
+        const { views, tabs, store, byId } = setup({});
         expect(tabs()).toHaveLength(2);
-        expect(views.viewMenuState('tree')).toEqual({ canHide: false, canDisable: false });
-        expect(views.viewMenuState('search')).toEqual({ canHide: false, canDisable: false });
-        expect(views.hideViewTab('tree')).toBe(false);
+        expect(views.viewMenuState('tree')).toEqual({ canHide: true, canDisable: false });
+        expect(views.viewMenuState('search')).toEqual({ canHide: true, canDisable: false });
+        expect(views.hideViewTab('tree')).toBe(true);
+        expect(store.get('showViewTabs')).toBe('');
+        expect(byId['view-tabs'].classList.contains('no-view-tabs')).toBe(false); // class lives on body
+        expect(document.body.classList.contains('no-view-tabs')).toBe(true);
         expect(views.disableView('tree')).toBe(false);
-        expect(store.get('showTreeView')).toBeUndefined();
-        expect(tabs()).toHaveLength(2);
+        expect(tabs()).toHaveLength(2); // tabs stay rendered; the strip is CSS-hidden
     });
 
-    it('viewMenuState exposes hide and disable for visible feature views', () => {
+    it('viewMenuState: feature views hide/disable; tree Hide disabled once other tabs exist', () => {
         const { views, addRecent, tabs } = setup({});
         addRecent({ showKey: 'showRecentBookmarks', disableKey: 'disableRecentView' });
         expect(tabs()).toHaveLength(3);
         expect(views.viewMenuState('tree')).toEqual({ canHide: false, canDisable: false });
+        expect(views.viewMenuState('search')).toEqual({ canHide: false, canDisable: false });
         expect(views.viewMenuState('recent')).toEqual({ canHide: true, canDisable: true });
     });
 
@@ -372,6 +376,21 @@ describe('hide and disable (tab context menu backing)', () => {
         treeTab._dispatched.length = 0;
         byId['view-tabs'].trigger('keydown', { key: 'F10' });
         expect(treeTab._dispatched).toHaveLength(0);
+    });
+
+    it('toasts a return hint when entering a hidden view via palette (strip visible)', () => {
+        const toasts = [];
+        const { views, addRecent } = setup({ toastAction: msg => toasts.push(msg) });
+        addRecent({ showKey: 'showRecentBookmarks', disableKey: 'disableRecentView' });
+        views.hideViewTab('recent');
+        expect(toasts).toHaveLength(0);
+        views.activate('recent');
+        expect(toasts).toHaveLength(1);
+        expect(toasts[0]).toContain('viewHiddenTabsHint');
+        expect(toasts[0]).toContain('Recent');
+        expect(toasts[0]).toContain('Esc');
+        views.activate('tree');
+        expect(toasts).toHaveLength(1); // returning to tree never toasts
     });
 
     it('toasts a return hint when entering a non-tree view with the tab strip hidden', () => {
@@ -417,12 +436,16 @@ describe('activate', () => {
         expect(store.setCalls).toEqual([]);
     });
 
-    it('refuses unknown and hidden views', () => {
-        const { views, addRecent } = setup({});
-        expect(views.activate('nope')).toBe(false);
-        addRecent({ hidden: true });
-        expect(views.activate('recent')).toBe(false);
-        expect(views.activeId()).toBe('tree');
+    it('refuses unknown and disabled views, but hidden views stay activatable', () => {
+        const hidden = setup({});
+        expect(hidden.views.activate('nope')).toBe(false);
+        hidden.addRecent({ hidden: true });
+        expect(hidden.views.activate('recent')).toBe(true); // hidden ≠ disabled
+
+        const disabled = setup({ storeData: { disableRecentView: '1' } });
+        disabled.addRecent({ showKey: 'showRecentBookmarks', disableKey: 'disableRecentView' });
+        expect(disabled.views.activate('recent')).toBe(false);
+        expect(disabled.views.activeId()).toBe('tree');
     });
 
     it('re-registering an existing id merges the definition', () => {

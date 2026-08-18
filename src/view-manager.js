@@ -109,8 +109,9 @@ export function initViewManager(ctx = {}) {
     // disabled (disableXxxView). The structural tree and search tabs are
     // ALWAYS preserved — they are the base pair, so the tab bar can never
     // drop below two icons and no min-count guard is needed anywhere.
-    // `hidden` = the view cannot be activated and every entry point must
-    // disappear (tab, Alt+number, palette).
+    // `hidden` = the view has no tab and no Alt+number entry, but it stays
+    // activatable through the command palette. `disabled` is the only fully
+    // forbidden state (no tab, no shortcut, no palette, activation refused).
     const VIEW_SHOW_KEYS = {
         recent: 'showRecentBookmarks',
         stats: 'showStatsView',
@@ -163,10 +164,11 @@ export function initViewManager(ctx = {}) {
         renderTabs();
         updateBadges();
         placeIndicator();
-        // The active view may have become hidden/disabled from the options
-        // page while the panel sat open — never leave a hidden section active.
+        // The active view may have become disabled from the options page
+        // while the panel sat open — never leave a disabled section active.
+        // Hidden-but-not-disabled views stay activatable through the palette.
         const def = byId[activeId];
-        if (def && def.hidden) {
+        if (def && def.disabled) {
             const first = visibleViews()[0];
             if (first && first.id !== activeId)
                 activate(first.id, { keepFocus: true });
@@ -174,14 +176,22 @@ export function initViewManager(ctx = {}) {
     };
 
     const visibleViews = () => registry.filter(v => !v.hidden);
-    const availableViews = () => registry.filter(v => !v.hidden);
+    // Available = activatable. Hidden views (showXxx off) stay available via
+    // the command palette; disabled views are the only fully forbidden ones.
+    const availableViews = () => registry.filter(v => !v.disabled);
 
     // The tab-context-menu contract (context-menu.js calls these through
-    // neat.js's lazy ctx.viewMenu). Tree/search are never hideable or
-    // disableable; feature views are both while their tab is visible.
+    // neat.js's lazy ctx.viewMenu). Tree/search tabs are fixed; their Hide
+    // item is the "hide the whole tab strip" shortcut and is only offered
+    // when they are the last two tabs standing. Feature views hide/disable
+    // themselves while their tab is visible.
     const canHideTab = id => {
         const def = byId[id];
-        return !!def && !!def.tabEl && !!def.showKey;
+        if (!def || !def.tabEl)
+            return false;
+        if (def.id === 'tree' || def.id === 'search')
+            return visibleViews().length === 2;
+        return !!def.showKey;
     };
     const canDisableView = id => {
         const def = byId[id];
@@ -197,6 +207,14 @@ export function initViewManager(ctx = {}) {
         const def = byId[id];
         if (!def || !canHideTab(id))
             return false;
+        if (def.id === 'tree' || def.id === 'search') {
+            // Only tree + search remain: the tab's Hide item stands for the
+            // options-page "Show view tabs" switch — hide the whole strip.
+            store.set('showViewTabs', '');
+            body.classList.add('no-view-tabs');
+            focusDefault(def);
+            return true;
+        }
         if (def.showKey)
             store.set(def.showKey, '');
         refreshViewState();
@@ -878,7 +896,9 @@ export function initViewManager(ctx = {}) {
 
     const activate = (id, opts = {}) => {
         const def = byId[id];
-        if (!def || def.hidden)
+        // Hidden views keep working through the command palette; disabled
+        // views are the only activation-refused state.
+        if (!def || def.disabled)
             return false;
         if (activeId === id)
             return true;
@@ -938,11 +958,13 @@ export function initViewManager(ctx = {}) {
         placeIndicator();
         const isFirstActivation = firstActivation;
         announce(def);
-        // 4.0.8: with the tab strip hidden, a shortcut/palette jump into a
-        // non-tree view leaves no visible way back — one toast names the view
-        // and the Esc / command-palette route home. Startup activation stays
-        // quiet (the same firstActivation gate as announce).
-        if (!isFirstActivation && !tabsVisible() && id !== 'tree') {
+        // 4.0.8: entering a view whose tab is not visible — either the whole
+        // tab strip is off, or the view itself is hidden (palette entry) —
+        // leaves no visible way back. One toast names the view and the
+        // Esc / command-palette route home. Startup activation stays quiet
+        // (the same firstActivation gate as announce).
+        if (!isFirstActivation && id !== 'tree'
+            && (!tabsVisible() || !def.tabEl)) {
             const label = _m(def.titleKey) || def.id;
             showToast(_m('viewHiddenTabsHint', [label, 'Esc']) || label);
         }
@@ -1192,7 +1214,7 @@ export function initViewManager(ctx = {}) {
         showItemPath: () => !!store.get('showItemPath', '1'),
         isAvailable: id => {
             const def = byId[id];
-            return !!def && !def.hidden;
+            return !!def && !def.disabled;
         },
         availableViews,
         viewMenuState,

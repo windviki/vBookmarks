@@ -1735,7 +1735,7 @@ describe('settings toggle commands (round-4 item 2)', () => {
 // pure logic (validation, storage, matching, execution dispatch) has its own
 // suite in palette-commands.test.js.
 describe('view availability filters Go commands (4.0.8)', () => {
-    it('hides the slash command of a hidden feature view', () => {
+    it('hides the slash command of a disabled feature view', () => {
         const { type, rowClasses, results } = setup({
             views: { isAvailable: id => id !== 'recent' }
         });
