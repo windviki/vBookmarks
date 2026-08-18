@@ -109,7 +109,7 @@ export const FLAG_X_ICON =
     '<svg class="vbm-icon vbm-icon-flag-x" width="16" height="16" viewBox="0 0 16 16" ' +
     'fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
     '<line x1="3.5" y1="1.5" x2="3.5" y2="14.5"/>' +
-    '<path d="M3.5 2.5h7.6l-1.8 2.1 1.8 2.1H3.5"/>' +
+    '<path d="M3.5 2.5h7.6l-1.8 2.1 1.8 2.1H3.5" fill="currentColor" stroke="currentColor"/>' +
     '<path d="M11.8 10.8l3 3M14.8 10.8l-3 3"/>' +
     '</svg>';
 

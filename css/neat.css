@@ -2684,9 +2684,11 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
 
 .announce-banner {
     display: flex;
-    align-items: baseline;
+    align-items: center;
     flex-wrap: wrap;
     gap: 2px 8px;
+    max-width: 100%;
+    box-sizing: border-box;
     margin: 4px 8px 6px;
     padding: 5px 8px;
     border: 1px solid var(--vbm-accent);
@@ -2703,10 +2705,12 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
 }
 
 .announce-banner .announce-text {
+    flex: 1 1 auto;
     min-width: 0;
 }
 
 .announce-banner .announce-link {
+    flex: none;
     color: var(--vbm-accent);
     font-weight: 600;
     text-decoration: none;
@@ -2719,6 +2723,7 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
 
 .announce-banner .announce-dismiss {
     flex: none;
+    align-self: center;
     width: 18px;
     height: 18px;
     margin-inline-start: auto;
@@ -3157,7 +3162,7 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
    going flat). The dropdown trigger is its own bordered control, so it
    joins the exclusion list (its (0,2,0) rules would otherwise lose to this
    (0,3,1) one). */
-.dupes-toolbar button:not(.dupes-apply-all):not(.dupes-apply-selected):not(.vbm-dropdown-trigger) {
+.dupes-toolbar button:not(.dupes-apply-all):not(.dupes-apply-selected):not(.vbm-dropdown-trigger):not(.dupes-select-mode) {
     border: 0;
     border-radius: var(--vbm-radius);
     background: transparent;
@@ -3978,7 +3983,7 @@ body.panel-mode #dead-list .vbm-row .row-badge-slot {
     cursor: default;
 }
 
-body.vbm-btn-alt .dupes-toolbar button:not(.dupes-apply-all):not(.dupes-apply-selected):not(.vbm-dropdown-trigger),
+body.vbm-btn-alt .dupes-toolbar button:not(.dupes-apply-all):not(.dupes-apply-selected):not(.vbm-dropdown-trigger):not(.dupes-select-mode),
 body.vbm-btn-alt .dead-toolbar button:not(.dead-filter-btn):not(.dead-mark-filter-btn):not(.dead-delete-all):not(.dead-delete-selected),
 body.vbm-btn-alt .dead-proxy-strip button:not(.dead-proxy-remove):not(.dead-proxy-hide) {
     border: 1px solid var(--vbm-accent);
