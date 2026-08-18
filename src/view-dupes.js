@@ -897,6 +897,8 @@ export function initViewDupes(ctx = {}) {
         container: $('view-dupes'),
         listEl: $list,
         hidden: !store.get('showDupesView', '1'), // showDupesView → tab visibility
+        showKey: 'showDupesView',
+        disableKey: 'disableDupesView',
         typeAhead: false,
         badge: () => groups.length,
         activate: ({ preset } = {}) => {

@@ -259,6 +259,10 @@ export function initPalette(ctx = {}) {
         });
     };
     const goView = id => () => views.activate(id);
+    // 4.0.8: hidden/disabled views must not appear as palette commands.
+    // tree/search are structural and only their TAB can be hidden, so they
+    // stay available (their tab is gone but the view still works).
+    const viewAvailable = id => !views || !views.isAvailable || views.isAvailable(id);
     // Round-4 (item 2) direct switches. setTheme mirrors the options page's
     // theme <select>: store.set persists through the mirror, the localStorage
     // copy keeps store.js's synchronous pre-fill correct on the next popup
@@ -311,9 +315,9 @@ export function initPalette(ctx = {}) {
         { slash: 'new', aliases: [], name: () => _m('paletteCmdNewBookmark'), fn: newBookmarkFromTab },
         { slash: 'folder', aliases: ['mkdir'], name: () => _m('paletteCmdNewFolder'), fn: () => actions.addNewBookmarkNode(rootFolderId, 'bottom', '', '') },
         { slash: 'session', aliases: ['save'], keepOpen: true, name: () => _m('paletteCmdSaveSession'), fn: saveWindowSession },
-        { slash: 'tree', aliases: ['home'], name: () => _m('paletteCmdGoTree'), fn: goView('tree') },
+        { slash: 'tree', aliases: ['home'], view: 'tree', name: () => _m('paletteCmdGoTree'), fn: goView('tree') },
         {
-            slash: 'search', aliases: ['find'], keepOpen: true, name: () => _m('paletteCmdGoSearch'),
+            slash: 'search', aliases: ['find'], keepOpen: true, view: 'search', name: () => _m('paletteCmdGoSearch'),
             fn: rest => {
                 close();
                 if (rest)
@@ -322,10 +326,10 @@ export function initPalette(ctx = {}) {
                     views.activate('search');
             }
         },
-        { slash: 'recent', aliases: ['latest'], name: () => _m('paletteCmdGoRecent'), fn: goView('recent') },
-        { slash: 'stats', aliases: ['visits'], name: () => _m('paletteCmdGoStats'), fn: goView('stats') },
-        { slash: 'dead', aliases: ['broken'], name: () => _m('paletteCmdGoDead'), fn: goView('dead') },
-        { slash: 'dupes', aliases: ['dedup'], name: () => _m('paletteCmdGoDupes'), fn: goView('dupes') },
+        { slash: 'recent', aliases: ['latest'], view: 'recent', name: () => _m('paletteCmdGoRecent'), fn: goView('recent') },
+        { slash: 'stats', aliases: ['visits'], view: 'stats', name: () => _m('paletteCmdGoStats'), fn: goView('stats') },
+        { slash: 'dead', aliases: ['broken'], view: 'dead', name: () => _m('paletteCmdGoDead'), fn: goView('dead') },
+        { slash: 'dupes', aliases: ['dedup'], view: 'dupes', name: () => _m('paletteCmdGoDupes'), fn: goView('dupes') },
         { slash: 'theme', aliases: [], keepOpen: true, name: () => _m('paletteCmdTheme'), fn: themeFromRest },
         { slash: 'dark', aliases: [], name: () => _m('optionThemeDark'), fn: switchTheme('dark') },
         { slash: 'light', aliases: [], name: () => _m('optionThemeLight'), fn: switchTheme('light') },
@@ -506,6 +510,10 @@ export function initPalette(ctx = {}) {
         for (let pass = 0; pass < 2; pass++) {
             for (let i = 0, l = commands.length; i < l; i++) {
                 const cmd = commands[i];
+                // 4.0.8: a hidden/disabled view's Go command never renders,
+                // in either slash or plain mode.
+                if (cmd.view && !viewAvailable(cmd.view))
+                    continue;
                 const name = cmd.name();
                 const slash = slashMode && slashHit(cmd);
                 if ((pass === 0 && slash) || (pass === 1 && !slash && nameHit(name)))
@@ -523,6 +531,11 @@ export function initPalette(ctx = {}) {
         // prefix-matches their slash/aliases, plain mode fuzzy-matches the
         // display name, and the slash rest rides along as the parameter.
         for (const cmd of sortCustoms(customs)) {
+            // 4.0.8: a custom view-preset command for a hidden/disabled view
+            // is an entry point too — hide it with the view it targets.
+            if (cmd.action && cmd.action.type === 'view-preset'
+                && cmd.action.view && !viewAvailable(cmd.action.view))
+                continue;
             const hit = slashMode
                 ? matchCustom(cmd, slashWord)
                 : (!q || window.VBMFuzzy.score(q, cmd.name));
@@ -572,7 +585,15 @@ export function initPalette(ctx = {}) {
         }
         // Slash mode with zero matching commands offers the same closure —
         // here the word is the future slash by construction.
-        if (slashMode && slashWord && !rows.length && SLASH_RE.test(slashWord))
+        // A hidden/disabled view's slash name must not offer the
+        // save-as-command closure either (the slash is a built-in view Go
+        // command, just unavailable right now). `/secret` still reaches the
+        // closure — it is a reserved internal entry, never a rendered command.
+        const unavailableViewSlash = slashMode && slashWord && commands.some(cmd =>
+            cmd.view && !viewAvailable(cmd.view)
+            && slashNames(cmd).some(s => s === slashWord));
+        if (slashMode && slashWord && !rows.length && SLASH_RE.test(slashWord)
+            && !unavailableViewSlash)
             addRow({
                 kind: 'command',
                 name: _m('paletteCmdSaveAsCommand', `/${slashWord}`),

@@ -147,6 +147,48 @@ const $ = id => document.getElementById(id);
         await bindSettingsList(contextMenuSettings);
         await bindSettingsList(toolsSettings);
         await bindSettingsList(statsSettings);
+        // 4.0.8: the enable/disable control for the four feature views.
+        // Disabled = the view's show option is greyed out and the view is
+        // treated as hidden by the popup (no tab, no shortcut, no palette
+        // entry). Tree and Search are always preserved, so no min-tab guard
+        // is needed here.
+        const FEATURE_VIEW_OPTIONS = [
+            { showId: 'show-recent-bookmarks', disableKey: 'disableRecentView', stateId: 'recent-view-state', toggleId: 'recent-view-toggle' },
+            { showId: 'show-stats-view', disableKey: 'disableStatsView', stateId: 'stats-view-state', toggleId: 'stats-view-toggle' },
+            { showId: 'show-dead-view', disableKey: 'disableDeadView', stateId: 'dead-view-state', toggleId: 'dead-view-toggle' },
+            { showId: 'show-dupes-view', disableKey: 'disableDupesView', stateId: 'dupes-view-state', toggleId: 'dupes-view-toggle' }
+        ];
+        const disabledFlags = {};
+        const isViewDisabled = async disableKey => {
+            if (!(disableKey in disabledFlags))
+                disabledFlags[disableKey] = toBool(await getSetting(disableKey, ''));
+            return disabledFlags[disableKey];
+        };
+        const refreshViewOptionStates = async () => {
+            for (const key of Object.keys(disabledFlags))
+                delete disabledFlags[key];
+            for (const opt of FEATURE_VIEW_OPTIONS) {
+                const disabled = await isViewDisabled(opt.disableKey);
+                const box = $(opt.showId);
+                const state = $(opt.stateId);
+                const toggle = $(opt.toggleId);
+                if (box)
+                    box.disabled = disabled; // the show option follows the enable/disable state
+                if (state)
+                    state.textContent = __m(disabled ? 'viewStateDisabled' : 'viewStateEnabled');
+                if (toggle)
+                    toggle.textContent = __m(disabled ? 'viewEnable' : 'viewDisable');
+            }
+        };
+        for (const opt of FEATURE_VIEW_OPTIONS) {
+            $(opt.toggleId).addEventListener('click', async () => {
+                const disabled = await isViewDisabled(opt.disableKey);
+                await setSetting(opt.disableKey, disabled ? '' : '1');
+                delete disabledFlags[opt.disableKey];
+                await refreshViewOptionStates();
+            });
+        }
+        await refreshViewOptionStates();
         // favicon enrich (4.0.8): the aggregate-fallback sub-switch only makes
         // sense while the master is on — grey it out when the master is off
         // (visual demotion, no ambiguous "child on, parent off" state).

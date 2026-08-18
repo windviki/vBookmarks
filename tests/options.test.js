@@ -896,6 +896,70 @@ describe('options.js dead-scan clamps + reset', () => {
     });
 });
 
+describe('view hide/disable controls (4.0.8)', () => {
+    it('options.html adds status+button rows for feature view show options', () => {
+        for (const id of ['show-recent-bookmarks', 'show-stats-view', 'show-dead-view', 'show-dupes-view'])
+            expect(optionsHtml).toContain(`id="${id}"`);
+        for (const id of ['recent-view-state', 'recent-view-toggle',
+            'stats-view-state', 'stats-view-toggle',
+            'dead-view-state', 'dead-view-toggle',
+            'dupes-view-state', 'dupes-view-toggle'])
+            expect(optionsHtml).toContain(`id="${id}"`);
+        expect(optionsHtml).toContain('view-option-row');
+        // tree/search are structural and always preserved — no per-view show option for them
+        expect(optionsHtml).not.toContain('id="show-tree-view"');
+        expect(optionsHtml).not.toContain('id="show-search-view"');
+    });
+
+    it('defaults feature views to enabled with their show checkboxes enabled', async () => {
+        const sb = createSandbox();
+        await sb.start();
+        for (const id of ['show-recent-bookmarks', 'show-stats-view', 'show-dead-view', 'show-dupes-view']) {
+            expect(sb.elements[id].checked).toBe(true);
+            expect(sb.elements[id].disabled).toBe(false);
+        }
+        for (const id of ['recent-view-state', 'stats-view-state', 'dead-view-state', 'dupes-view-state'])
+            expect(sb.elements[id].textContent).toBe('viewStateEnabled');
+        for (const id of ['recent-view-toggle', 'stats-view-toggle', 'dead-view-toggle', 'dupes-view-toggle'])
+            expect(sb.elements[id].textContent).toBe('viewDisable');
+    });
+
+    it('disabling a view writes its disable key and greys out its show option', async () => {
+        const sb = createSandbox();
+        await sb.start();
+        await sb.elements['stats-view-toggle'].fire('click');
+        expect(sb.localData.disableStatsView).toBe('1');
+        expect(sb.elements['show-stats-view'].disabled).toBe(true);
+        expect(sb.elements['stats-view-state'].textContent).toBe('viewStateDisabled');
+        expect(sb.elements['stats-view-toggle'].textContent).toBe('viewEnable');
+
+        await sb.elements['stats-view-toggle'].fire('click');
+        expect(sb.localData.disableStatsView).toBe('');
+        expect(sb.elements['show-stats-view'].disabled).toBe(false);
+        expect(sb.elements['stats-view-state'].textContent).toBe('viewStateEnabled');
+        expect(sb.elements['stats-view-toggle'].textContent).toBe('viewDisable');
+    });
+
+    it('keeps the feature-view show checkbox disabled only while that view is disabled', async () => {
+        const sb = createSandbox({
+            chromeLocalData: {
+                showRecentBookmarks: '',
+                showStatsView: '1',
+                showDeadView: '1',
+                showDupesView: '1',
+                disableStatsView: '1'
+            }
+        });
+        await sb.start();
+        // disabled view: show option greyed out
+        expect(sb.elements['show-stats-view'].disabled).toBe(true);
+        // hidden-but-enabled view: checkbox available for re-enable
+        expect(sb.elements['show-recent-bookmarks'].disabled).toBe(false);
+        // other visible feature views: available
+        expect(sb.elements['show-dead-view'].disabled).toBe(false);
+    });
+});
+
 describe('classic-experience preset (v4 task-3 #20 + issue #49)', () => {
     it('turns off every v4-only switch including the quick-add page context menu', async () => {
         const sb = createSandbox(); // fresh storage → all default ON

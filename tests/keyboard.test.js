@@ -325,6 +325,25 @@ const setup = (opts = {}) => {
         paletteCmdMenu.lastElementChild = pcmItem2;
     }
 
+    // 4.0.8: the view-tab right-click menu gets the same contextKeyDown
+    // binding; omitted entirely when opts.noViewTabMenu (guard coverage)
+    let viewTabMenu = null;
+    let vtmItem1 = null;
+    let vtmItem2 = null;
+    if (!opts.noViewTabMenu) {
+        viewTabMenu = el('MENU', 'view-tab-context-menu');
+        vtmItem1 = el('DIV', 'view-tab-hide');
+        vtmItem1.classList.add('menu-item');
+        vtmItem2 = el('DIV', 'view-tab-disable');
+        vtmItem2.classList.add('menu-item');
+        vtmItem1.nextElementSibling = vtmItem2;
+        vtmItem2.previousElementSibling = vtmItem1;
+        for (const n of [vtmItem1, vtmItem2])
+            n.parentNode = viewTabMenu;
+        viewTabMenu.firstElementChild = vtmItem1;
+        viewTabMenu.lastElementChild = vtmItem2;
+    }
+
     const actionCalls = [];
     const actions = {};
     for (const name of ['editBookmarkFolder', 'deleteBookmark', 'deleteBookmarks'])
@@ -375,6 +394,8 @@ const setup = (opts = {}) => {
         menus.searchHistoryMenu = searchHistoryMenu;
     if (paletteCmdMenu)
         menus.paletteCmdMenu = paletteCmdMenu;
+    if (viewTabMenu)
+        menus.viewTabMenu = viewTabMenu;
     // issue #48 follow-up: the collapsed-flyout API for the keyboard branches.
     // Recording double — openSubmenuFor returns a settable flyout element
     // (each entry may carry `_submenu`), closeSubmenu parks it, submenuOpen
@@ -487,6 +508,7 @@ const setup = (opts = {}) => {
         bookmarkMenu, folderMenu, separatorMenu, menus,
         searchHistoryMenu, shmItem1, shmItem2,
         paletteCmdMenu, pcmItem1, pcmItem2,
+        viewTabMenu, vtmItem1, vtmItem2,
         quickAddBtn, toolBtn,
         treeUl, f1, b11, b12, b2, f3, b31, b4, f5, r1, r2,
         item1, hr, item2, marker,
@@ -498,7 +520,7 @@ const setup = (opts = {}) => {
 
 describe('module API', () => {
     it('returns the four handlers and binds every listener', () => {
-        const { keyboard, tree, results, bookmarkMenu, folderMenu, separatorMenu, paletteCmdMenu, doc } = setup({});
+        const { keyboard, tree, results, bookmarkMenu, folderMenu, separatorMenu, paletteCmdMenu, viewTabMenu, doc } = setup({});
         expect(typeof keyboard.treeKeyDown).toBe('function');
         expect(typeof keyboard.treeKeyUp).toBe('function');
         expect(typeof keyboard.contextKeyDown).toBe('function');
@@ -512,6 +534,7 @@ describe('module API', () => {
         expect(folderMenu._listeners.keydown).toHaveLength(1);
         expect(separatorMenu._listeners.keydown).toHaveLength(1); // 4.0.1: bound like every other menu
         expect(paletteCmdMenu._listeners.keydown).toHaveLength(1); // K7: bound like the other menus
+        expect(viewTabMenu._listeners.keydown).toHaveLength(1); // 4.0.8: view-tab menu ↑↓/Enter/Esc
         expect(doc._listeners.keydown).toHaveLength(3); // capture ESC + bubbling Ctrl+F + Tab cycle
     });
 });
@@ -1164,6 +1187,35 @@ describe('treeKeyDown — ArrowRight/ArrowLeft', () => {
         expect(b2.link._dispatched[0].type).toBe('contextmenu');
         expect(b2.link._dispatched[0].clientX).toBe(120);
         expect(b2.link._dispatched[0].clientY).toBe(30);
+    });
+
+    it('ContextMenu key on a leaf row dispatches a contextmenu at its right edge', () => {
+        const { tree, b2, doc } = setup({});
+        b2.link._rect = { left: 20, right: 120, top: 10, bottom: 30 };
+        doc.activeElement = b2.link;
+        const ev = makeEvent({ key: 'ContextMenu', target: b2.link });
+        fire(tree, 'keydown', ev);
+        expect(ev.defaultPrevented).toBe(true);
+        expect(b2.link._dispatched).toHaveLength(1);
+        expect(b2.link._dispatched[0].type).toBe('contextmenu');
+        expect(b2.link._dispatched[0].clientX).toBe(120);
+        expect(b2.link._dispatched[0].clientY).toBe(30);
+    });
+
+    it('Shift+F10 on a leaf row dispatches a contextmenu; plain F10 does not', () => {
+        const { tree, b2, doc } = setup({});
+        b2.link._rect = { left: 20, right: 120, top: 10, bottom: 30 };
+        doc.activeElement = b2.link;
+        const evShift = makeEvent({ key: 'F10', shiftKey: true, target: b2.link });
+        fire(tree, 'keydown', evShift);
+        expect(evShift.defaultPrevented).toBe(true);
+        expect(b2.link._dispatched).toHaveLength(1);
+        expect(b2.link._dispatched[0].type).toBe('contextmenu');
+        b2.link._dispatched.length = 0;
+        const evPlain = makeEvent({ key: 'F10', target: b2.link });
+        fire(tree, 'keydown', evPlain);
+        expect(evPlain.defaultPrevented).toBe(false);
+        expect(b2.link._dispatched).toHaveLength(0);
     });
 
     it('ArrowLeft on a leaf row (rtl) dispatches a contextmenu at its left edge', () => {

@@ -373,6 +373,33 @@ export function initKeyboard(ctx = {}) {
                 }
             }
                 break;
+            case 'ContextMenu':
+            case 'F10': {
+                // Dedicated context-menu keys (Shift+F10 on Windows/Linux,
+                // the ContextMenu key where present). The row model's
+                // dedicated key is →; these two work everywhere rows do.
+                if (keyValue === 'F10' && !e.shiftKey)
+                    return;
+                e.preventDefault();
+                const target = e.target;
+                if (!target || !target.dispatchEvent)
+                    return;
+                const rect = target.getBoundingClientRect
+                    ? target.getBoundingClientRect() : null;
+                const clientX = rect ? rect.right : 0;
+                const clientY = rect ? rect.bottom : 0;
+                const event = new MouseEvent('contextmenu', {
+                    bubbles: true,
+                    cancelable: true,
+                    view: window,
+                    clientX,
+                    clientY,
+                    pageX: clientX,
+                    pageY: clientY
+                });
+                target.dispatchEvent(event);
+                break;
+            }
             case 'ArrowRight': // right (left for RTL)
             {
                 e.preventDefault();
@@ -887,6 +914,11 @@ export function initKeyboard(ctx = {}) {
     // without it the edit/delete rows were unreachable by keys.
     if (menus.paletteCmdMenu)
         menus.paletteCmdMenu.addEventListener('keydown', contextKeyDown);
+    // 4.0.8: the view-tab menu gets the same ↑↓/Enter/Space/Esc support.
+    // The tab strip's own →/← keep their tab-switch semantics; the menu's
+    // arrow protocol only applies once the menu is open and focused.
+    if (menus.viewTabMenu)
+        menus.viewTabMenu.addEventListener('keydown', contextKeyDown);
     // issue #48 follow-up: the collapsed-group flyouts walk like any menu
     // (their ←/→/Esc handling is the submenu branch of contextKeyDown).
     if (menus.folderTabGroupSubmenu)
@@ -954,7 +986,7 @@ export function initKeyboard(ctx = {}) {
     const allMenus = [
         menus.bookmarkMenu, menus.folderMenu, menus.separatorMenu,
         menus.searchHistoryMenu, menus.histRowMenu, menus.dupesGroupMenu,
-        menus.paletteCmdMenu,
+        menus.paletteCmdMenu, menus.viewTabMenu,
         // issue #48 follow-up: the collapsed-group flyouts count as open menus
         // for the document-level Escape / Tab layering.
         menus.folderTabGroupSubmenu, menus.folderSortSubmenu,

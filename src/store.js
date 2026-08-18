@@ -51,6 +51,10 @@
         'autoResizePopup',
         // v4 task-2: view layer (slice A)
         'activeView', 'viewState', 'showViewTabs', 'showItemPath',
+        // per-view tab visibility (feature views + the structural tree/search tabs)
+        'showRecentBookmarks', 'showStatsView', 'showDeadView', 'showDupesView',
+        // 4.0.8: per-view disable switches (feature views only)
+        'disableRecentView', 'disableStatsView', 'disableDeadView', 'disableDupesView',
         // v4 task-3: remember-last-view / tab badges / classic-experience
         // feature switches (items 6, 18, 20)
         'rememberView', 'showTabBadges', 'paletteEnabled', 'quickAddEnabled', 'showToolButton',
@@ -167,6 +171,13 @@
         set(key, value) {
             mirror[key] = value;
             schedulePersist(key, value);
+        },
+        // Update the mirror WITHOUT persisting. chrome.storage.onChanged
+        // listeners (view-manager, …) use this to keep the in-memory mirror
+        // fresh when another page (options) wrote storage — no write-back,
+        // no event loop.
+        adopt(key, value) {
+            mirror[key] = value;
         },
         // Mirror + persistent removal
         remove(key) {

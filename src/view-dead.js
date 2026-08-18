@@ -1797,6 +1797,8 @@ export function initViewDead(ctx = {}) {
         container: $('view-dead'),
         listEl: $list,
         hidden: !store.get('showDeadView', '1'), // showDeadView → tab visibility
+        showKey: 'showDeadView',
+        disableKey: 'disableDeadView',
         typeAhead: false,
         // Tab badge = the last scan's discovered dead+blocked rows (not the
         // manual marks count) — the same "discovered count" semantics as the

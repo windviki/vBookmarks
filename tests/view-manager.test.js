@@ -68,6 +68,7 @@ const setup = (opts = {}) => {
             dataset: {},
             _attrs: {},
             _listeners: {},
+            _dispatched: [],
             hidden: false,
             tabIndex: 0,
             focused: false,
@@ -117,6 +118,19 @@ const setup = (opts = {}) => {
             },
             click() {
                 this.trigger('click');
+            },
+            dispatchEvent(ev) {
+                this._dispatched.push(ev);
+                return true;
+            },
+            getBoundingClientRect() {
+                return this._rect || {
+                    left: this.offsetLeft,
+                    right: this.offsetLeft + this.offsetWidth,
+                    top: 0,
+                    bottom: 20,
+                    width: this.offsetWidth
+                };
             },
             focus() {
                 this.focused = true;
@@ -181,6 +195,14 @@ const setup = (opts = {}) => {
     };
     globalThis.document = doc;
     globalThis.window = {};
+    // view-manager.js's tab-strip ContextMenu/F10 path constructs a
+    // synthetic contextmenu MouseEvent (the same recipe keyboard.js uses).
+    globalThis.MouseEvent = class {
+        constructor(type, init = {}) {
+            this.type = type;
+            Object.assign(this, init);
+        }
+    };
     globalThis.chrome = {
         i18n: {
             getMessage: (key, subs) =>
@@ -206,7 +228,8 @@ const setup = (opts = {}) => {
         isPanel: !!opts.isPanel,
         rtl: !!opts.rtl,
         clearMenu: opts.noClearMenu ? undefined : () => clearMenuCalls.push(1),
-        getRememberState: opts.getRememberState
+        getRememberState: opts.getRememberState,
+        toastAction: opts.toastAction
     });
 
     const fireDoc = (type, ev) => {
@@ -286,6 +309,81 @@ describe('startup + tab rendering', () => {
         // registered after startup as hidden: still not restorable
         addRecent({ hidden: true });
         expect(views.activeId()).toBe('tree');
+    });
+});
+
+describe('hide and disable (tab context menu backing)', () => {
+    it('a feature view with a showKey hides when the show setting is off', () => {
+        const { views, addRecent, tabs } = setup({});
+        addRecent({ showKey: 'showRecentBookmarks' });
+        expect(views.isAvailable('recent')).toBe(true);
+        expect(tabs().map(t => t.id)).toContain('view-tab-recent');
+    });
+
+    it('hideViewTab writes the show setting off and makes a feature view unavailable', () => {
+        const { views, addRecent, store, tabs } = setup({});
+        addRecent({ showKey: 'showRecentBookmarks', disableKey: 'disableRecentView' });
+        expect(tabs()).toHaveLength(3);
+        expect(views.hideViewTab('recent')).toBe(true);
+        expect(store.get('showRecentBookmarks')).toBe('');
+        expect(views.isAvailable('recent')).toBe(false);
+        expect(tabs().map(t => t.id)).not.toContain('view-tab-recent');
+    });
+
+    it('disableView makes a feature view hidden even while its show option stays on', () => {
+        const { views, addRecent, store, tabs } = setup({});
+        addRecent({ showKey: 'showRecentBookmarks', disableKey: 'disableRecentView' });
+        expect(views.disableView('recent')).toBe(true);
+        expect(store.get('disableRecentView')).toBe('1');
+        expect(views.isAvailable('recent')).toBe(false);
+        expect(tabs().map(t => t.id)).not.toContain('view-tab-recent');
+        // show option remains on: re-enabling would bring the tab straight back
+        expect(store.get('showRecentBookmarks', '1')).toBe('1');
+    });
+
+    it('tree/search are always preserved and never hideable/disableable', () => {
+        const { views, tabs, store } = setup({});
+        expect(tabs()).toHaveLength(2);
+        expect(views.viewMenuState('tree')).toEqual({ canHide: false, canDisable: false });
+        expect(views.viewMenuState('search')).toEqual({ canHide: false, canDisable: false });
+        expect(views.hideViewTab('tree')).toBe(false);
+        expect(views.disableView('tree')).toBe(false);
+        expect(store.get('showTreeView')).toBeUndefined();
+        expect(tabs()).toHaveLength(2);
+    });
+
+    it('viewMenuState exposes hide and disable for visible feature views', () => {
+        const { views, addRecent, tabs } = setup({});
+        addRecent({ showKey: 'showRecentBookmarks', disableKey: 'disableRecentView' });
+        expect(tabs()).toHaveLength(3);
+        expect(views.viewMenuState('tree')).toEqual({ canHide: false, canDisable: false });
+        expect(views.viewMenuState('recent')).toEqual({ canHide: true, canDisable: true });
+    });
+
+    it('opens the tab context menu from the dedicated ContextMenu / Shift+F10 keys', () => {
+        const { byId, tabs, addRecent } = setup({});
+        addRecent({ showKey: 'showRecentBookmarks', disableKey: 'disableRecentView' });
+        const treeTab = tabs()[0];
+        byId['view-tabs'].trigger('keydown', { key: 'ContextMenu' });
+        expect(treeTab._dispatched.map(e => e.type)).toContain('contextmenu');
+        treeTab._dispatched.length = 0;
+        byId['view-tabs'].trigger('keydown', { key: 'F10', shiftKey: true });
+        expect(treeTab._dispatched.map(e => e.type)).toContain('contextmenu');
+        treeTab._dispatched.length = 0;
+        byId['view-tabs'].trigger('keydown', { key: 'F10' });
+        expect(treeTab._dispatched).toHaveLength(0);
+    });
+
+    it('toasts a return hint when entering a non-tree view with the tab strip hidden', () => {
+        const toasts = [];
+        const { views } = setup({ storeData: { showViewTabs: '' }, toastAction: msg => toasts.push(msg) });
+        expect(views.activate('search')).toBe(true);
+        expect(toasts).toHaveLength(1);
+        expect(toasts[0]).toContain('viewHiddenTabsHint');
+        expect(toasts[0]).toContain('Search');
+        expect(toasts[0]).toContain('Esc');
+        views.activate('tree');
+        expect(toasts).toHaveLength(1); // returning to tree never toasts
     });
 });
 
@@ -735,14 +833,15 @@ describe('keyboard registration (lists/listOf)', () => {
     it('exposes the list containers of visible views with their type-ahead flag', () => {
         const { views, byId, addRecent, makeEl } = setup({});
         const recent = addRecent({ typeAhead: false });
-        views.register({ // hidden view: registered but no tab, no list binding
+        views.register({ // hidden view: no tab, but its list keeps a binding
             id: 'dead', titleKey: 'viewDead', icon: '<svg/>',
-            container: makeEl(), listEl: makeEl(), hidden: true
+            container: makeEl(), listEl: makeEl(), hidden: true, typeAhead: false
         });
         expect(views.lists()).toEqual([
             { id: 'tree', el: byId.tree, typeAhead: true, onKey: null },
             { id: 'search', el: byId.results, typeAhead: true, onKey: null },
-            { id: 'recent', el: recent.listEl, typeAhead: false, onKey: null }
+            { id: 'recent', el: recent.listEl, typeAhead: false, onKey: null },
+            { id: 'dead', el: views.views().find(v => v.id === 'dead').listEl, typeAhead: false, onKey: null }
         ]);
         expect(views.listOf(byId.tree).id).toBe('tree');
         expect(views.listOf(byId.results).id).toBe('search');

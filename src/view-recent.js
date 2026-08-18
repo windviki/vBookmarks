@@ -336,6 +336,8 @@ export function initViewRecent(ctx = {}) {
         container: $('view-recent'),
         listEl: $list,
         hidden: !enabled(), // showRecentBookmarks → tab visibility (§5.3 迁移)
+        showKey: 'showRecentBookmarks',
+        disableKey: 'disableRecentView',
         typeAhead: false,
         activate: () => {
             probePermission(); // the grant may have landed while away

@@ -421,12 +421,16 @@ const setup = (opts = {}) => {
             this.activateCalls.push(id);
             return true;
         },
+        // 4.0.8: hidden/disabled views report false here; palette commands
+        // for them never render.
+        isAvailable: () => true,
         // K13: opt-in focusActive recorder — close()'s focus handback falls
         // back to the ACTIVE view's anchor when the tree row is hidden.
         ...(opts.withFocusActive ? {
             focusActiveCalls: 0,
             focusActive() { this.focusActiveCalls++; }
-        } : {})
+        } : {}),
+        ...(opts.views || {})
     };
     const search = {
         runCalls: [],
@@ -1730,6 +1734,53 @@ describe('settings toggle commands (round-4 item 2)', () => {
 // execute, save-as closure, gone-folder prompt, customMenu hand-off); the
 // pure logic (validation, storage, matching, execution dispatch) has its own
 // suite in palette-commands.test.js.
+describe('view availability filters Go commands (4.0.8)', () => {
+    it('hides the slash command of a hidden feature view', () => {
+        const { type, rowClasses, results } = setup({
+            views: { isAvailable: id => id !== 'recent' }
+        });
+        type('/recent');
+        expect(rowClasses()).toEqual(['palette-empty']);
+        expect(results._appended.some(li => String(li._innerHTML).includes('Go to Recent'))).toBe(false);
+    });
+
+    it('keeps structural tree/search commands available even when only their tab is hidden', () => {
+        const { type, rowClasses } = setup({
+            views: { isAvailable: id => id === 'tree' || id === 'search' }
+        });
+        type('/tree');
+        expect(rowClasses().length).toBeGreaterThan(0);
+        expect(rowClasses()[0]).toContain('palette-command');
+    });
+
+    it('does not offer the save-as-command closure for a hidden view slash', () => {
+        const { type, results } = setup({
+            views: { isAvailable: id => id !== 'dead' }
+        });
+        type('/dead');
+        expect(results._appended.some(li => String(li._innerHTML).includes('Save'))).toBe(false);
+    });
+
+    it('still offers the save-as-command closure for an unknown slash', () => {
+        const { type, results } = setup({});
+        type('/newcmd');
+        expect(results._appended.some(li => String(li._innerHTML).includes('Save'))).toBe(true);
+    });
+
+    it('hides custom view-preset commands for unavailable views', () => {
+        const cmd = {
+            id: 'c1', name: 'Clean dead', slash: 'clean', aliases: [],
+            action: { type: 'view-preset', view: 'dead' }
+        };
+        const { type, results } = setup({
+            storeSeed: { paletteCustomCommands: JSON.stringify([cmd]) },
+            views: { isAvailable: id => id !== 'dead' }
+        });
+        type('/clean');
+        expect(results._appended.some(li => String(li._innerHTML).includes('Clean dead'))).toBe(false);
+    });
+});
+
 describe('custom commands (v4 task-4 #6)', () => {
     const CUSTOMS = [
         {

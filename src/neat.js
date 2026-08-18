@@ -368,7 +368,18 @@ import { shouldHighlightUnsynced, shouldRememberState } from './settings.js';
         // The extension zoom factor (body[data-zoom] CSS zoom): the menu
         // container itself is zoom:1 while #search is a zoomed body> child,
         // so positionMenu scales the search-bar clamp up to viewport space.
-        get zoomLevel() { return store.get('zoom') ? parseInt(store.get('zoom'), 10) / 100 : 1; }
+        get zoomLevel() { return store.get('zoom') ? parseInt(store.get('zoom'), 10) / 100 : 1; },
+        // 4.0.8: the view-tab right-click menu (hide / disable). The view
+        // manager owns the settings and the ≥2-tabs invariant; the menu only
+        // asks for the current tab state and dispatches the action. `views`
+        // is declared below — lazy getter, TDZ-safe on user events.
+        get viewMenu() {
+            return {
+                prepare: id => views.viewMenuState(id),
+                hide: id => views.hideViewTab(id),
+                disable: id => views.disableView(id)
+            };
+        }
     });
 
     // v4 task-2 slice C: the dead view's × overlay re-lays itself after
@@ -389,7 +400,10 @@ import { shouldHighlightUnsynced, shouldRememberState } from './settings.js';
         clearMenu: menus.clearMenu,
         // The "记住之前的状态" flag: view-manager's focusSpot capture/persist/
         // restore follow it, the same way tree-view's focusID restore does.
-        getRememberState: () => rememberState
+        getRememberState: () => rememberState,
+        // 4.0.8: the hidden-tab-strip view hint rides the undo toast bar.
+        // undo is declared below — lazy getter, only read on activation.
+        get toastAction() { return undo.toastAction; }
     });
 
     // Search lives in src/search.js (P1): it owns searchMode, the flat fuzzy

@@ -640,6 +640,8 @@ export function initViewStats(ctx = {}) {
         container: $('view-stats'),
         listEl: $list,
         hidden: !store.get('showStatsView', '1'), // showStatsView → tab visibility
+        showKey: 'showStatsView',
+        disableKey: 'disableStatsView',
         typeAhead: false,
         badge: () => rows.length,
         activate: () => {

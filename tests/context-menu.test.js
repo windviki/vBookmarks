@@ -134,6 +134,12 @@ const setup = (opts = {}) => {
     const paletteCmdMenu = el('MENU', 'palette-cmd-context-menu');
     el('DIV', 'palette-cmd-edit');
     el('DIV', 'palette-cmd-delete');
+    // 4.0.8: the view-tab right-click menu + its items (labels at init)
+    const viewTabMenu = el('MENU', 'view-tab-context-menu');
+    const viewTabHide = el('DIV', 'view-tab-hide');
+    viewTabHide.classList.add('menu-item');
+    const viewTabDisable = el('DIV', 'view-tab-disable');
+    viewTabDisable.classList.add('menu-item');
     // issue #48 follow-up: the collapsed tab-group / sort submenus + entries.
     // Mirror the pages' markup: entries are .menu-item.has-submenu carrying a
     // data-submenu id; the flyouts are sibling <menu class="submenu"> whose
@@ -225,8 +231,8 @@ const setup = (opts = {}) => {
     // All the <menu> elements (parent menus + submenu flyouts) for the
     // document.querySelectorAll('menu[type=context]') walk in visibleMenu().
     const allMenus = [bookmarkMenu, folderMenu, separatorMenu, searchHistoryMenu,
-        histRowMenu, dupesGroupMenu, paletteCmdMenu, folderTabGroupSubmenu,
-        folderSortSubmenu, bookmarkTabGroupSubmenu];
+        histRowMenu, dupesGroupMenu, paletteCmdMenu, viewTabMenu,
+        folderTabGroupSubmenu, folderSortSubmenu, bookmarkTabGroupSubmenu];
     globalThis.document = {
         getElementById: id => byId[id] || null,
         querySelectorAll: sel => (sel === 'menu[type=context]' ? allMenus : []),
@@ -320,7 +326,9 @@ const setup = (opts = {}) => {
         // tab-group off, sort on).
         get collapseTabGroupMenu() { return !!opts.collapseTabGroupMenu; },
         get collapseSortMenu() { return opts.collapseSortMenu === undefined ? true : !!opts.collapseSortMenu; },
-        get zoomLevel() { return opts.zoomLevel || 1; }
+        get zoomLevel() { return opts.zoomLevel || 1; },
+        // 4.0.8: view-tab menu dispatch (view-manager owns the settings)
+        get viewMenu() { return opts.viewMenu; }
     });
 
     // A bookmark row: <li id="neat-tree-item-42" data-parentid="1"><a href><i>title</i></a></li>
@@ -411,19 +419,24 @@ const setup = (opts = {}) => {
         item.classList.add('menu-item');
         return item;
     };
+    const makeViewTab = (id = 'recent') => {
+        const tab = el('BUTTON', `view-tab-${id}`);
+        tab.classList.add('view-tab');
+        return tab;
+    };
     const openOn = (target, evProps = {}) =>
         fire(body, 'contextmenu', makeEvent({ target, pageX: 50, pageY: 60, clientY: 60, ...evProps }));
 
     return {
         menus, byId, el, body, tree, results, viewLists,
         bookmarkMenu, folderMenu, separatorMenu, searchHistoryMenu, histRowMenu, dupesGroupMenu,
-        paletteCmdMenu,
+        paletteCmdMenu, viewTabMenu, viewTabHide, viewTabDisable,
         folderTabGroupSubmenu, folderSortSubmenu, bookmarkTabGroupSubmenu,
         folderTabGroupEntry, folderSortEntry, bookmarkTabGroupEntry,
         chrome: chromeStub, actionCalls, sortCalls, sortFolderCalls, revealCalls,
         groupDialogCalls, groupPickCalls,
         makeBookmarkRow, makeFolderRow, makeSeparatorRow, makeHistoryRow,
-        makeStatsHistRow, makeDupesGroupHead, makeLinkFolderRow, menuItem, openOn,
+        makeStatsHistRow, makeDupesGroupHead, makeLinkFolderRow, menuItem, makeViewTab, openOn,
         fireWindow: (type, ev) => {
             for (const fn of (windowListeners[type] || []))
                 fn(ev);
@@ -452,13 +465,71 @@ describe('module API', () => {
                 'dupesGroupMenu', 'folderMenu', 'folderSortSubmenu', 'folderTabGroupSubmenu',
                 'histRowMenu', 'openSubmenuFor', 'paletteCmdMenu', 'searchHistoryMenu',
                 'separatorMenu', 'submenuOpen', 'submenuParentEntry', 'switchBookmarkMenu',
-                'toggleSubmenuFor']);
+                'toggleSubmenuFor', 'viewTabMenu']);
         // issue #48 follow-up: the flyout API is callable
         expect(typeof menus.openSubmenuFor).toBe('function');
         expect(typeof menus.closeSubmenu).toBe('function');
         expect(typeof menus.toggleSubmenuFor).toBe('function');
         expect(typeof menus.submenuOpen).toBe('function');
         expect(menus.submenuOpen()).toBe(false);
+    });
+});
+
+describe('view-tab context menu', () => {
+    it('opens the view-tab menu for a tab and sets item availability', () => {
+        const calls = [];
+        const { openOn, makeViewTab, viewTabMenu, viewTabHide, viewTabDisable } = setup({
+            viewMenu: {
+                prepare: id => id === 'tree'
+                    ? { canHide: false, canDisable: false }
+                    : { canHide: true, canDisable: true },
+                hide: id => calls.push(['hide', id]),
+                disable: id => calls.push(['disable', id])
+            }
+        });
+        // tree/search: hide may be disabled by the ≥2-tabs invariant, disable never shown
+        const treeTab = makeViewTab('tree');
+        openOn(treeTab);
+        expect(viewTabMenu.style.opacity).toBe('1');
+        expect(viewTabHide.classList.contains('disabled')).toBe(true);
+        expect(viewTabDisable.style.display).toBe('none');
+
+        const recentTab = makeViewTab('recent');
+        openOn(recentTab);
+        expect(viewTabHide.classList.contains('disabled')).toBe(false);
+        expect(viewTabDisable.style.display).toBe('block');
+    });
+
+    it('dispatches hide and disable through the injected viewMenu', () => {
+        const calls = [];
+        const { openOn, makeViewTab, viewTabMenu, viewTabHide, viewTabDisable } = setup({
+            viewMenu: {
+                prepare: () => ({ canHide: true, canDisable: true }),
+                hide: id => calls.push(['hide', id]),
+                disable: id => calls.push(['disable', id])
+            }
+        });
+        const tab = makeViewTab('stats');
+        openOn(tab);
+        fire(viewTabMenu, 'mouseup', makeEvent({ button: 0, target: viewTabHide }));
+        expect(calls).toEqual([['hide', 'stats']]);
+        openOn(tab);
+        fire(viewTabMenu, 'mouseup', makeEvent({ button: 0, target: viewTabDisable }));
+        expect(calls).toEqual([['hide', 'stats'], ['disable', 'stats']]);
+    });
+
+    it('does not dispatch a disabled hide item', () => {
+        const calls = [];
+        const { openOn, makeViewTab, viewTabMenu, viewTabHide } = setup({
+            viewMenu: {
+                prepare: () => ({ canHide: false, canDisable: false }),
+                hide: id => calls.push(['hide', id]),
+                disable: id => calls.push(['disable', id])
+            }
+        });
+        openOn(makeViewTab('search'));
+        fire(viewTabMenu, 'mouseup', makeEvent({ button: 0, target: viewTabHide }));
+        expect(calls).toEqual([]);
     });
 });
 

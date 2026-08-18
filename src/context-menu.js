@@ -24,6 +24,9 @@
  * menu (open×3 + bookmark-it, #10); and a dupes group head gets a group
  * menu (apply-dedup / expand-collapse, #16) instead of the folder menu
  * the span walk-up used to land on.
+ * 4.0.8 adds the view-tab menu (hide / disable): right-clicking a tab
+ * dispatches through neat.js's lazy ctx.viewMenu, so view-manager owns
+ * every setting write and the ≥2-tabs invariant.
  *
  * initContextMenu(ctx) is called once by neat.js BEFORE initSearch: search
  * needs menus.switchBookmarkMenu at init time (a restored query calls it
@@ -68,6 +71,8 @@ export function initContextMenu(ctx = {}) {
     const $dupesGroupContextMenu = $('dupes-group-context-menu');
     // v4 task-4 #6: the palette custom-command row menu (edit / delete)
     const $paletteCmdContextMenu = $('palette-cmd-context-menu');
+    // 4.0.8: the view-tab right-click menu (hide / disable)
+    const $viewTabContextMenu = $('view-tab-context-menu');
     const $results = $('results');
     // Collapsed tab-group / sort submenus (issue #48 follow-up): body-level
     // sibling menus whose items are dispatched by the same handlers as their
@@ -239,6 +244,11 @@ export function initContextMenu(ctx = {}) {
             $paletteCmdContextMenu.style.left = '-999px';
             $paletteCmdContextMenu.style.opacity = '0';
             $paletteCmdContextMenu.style.transform = 'scale(.98)';
+        }
+        if ($viewTabContextMenu) {
+            $viewTabContextMenu.style.left = '-999px';
+            $viewTabContextMenu.style.opacity = '0';
+            $viewTabContextMenu.style.transform = 'scale(.98)';
         }
         // The root-folder disabled states are per-open (root vs non-root);
         // drop them all here so they can never leak across unrelated menu
@@ -704,6 +714,40 @@ export function initContextMenu(ctx = {}) {
         if (el.tagName !== 'A' && el.tagName !== 'SPAN' && el.closest) {
             const nearest = el.closest('a, span');
             if (nearest) el = nearest;
+        }
+        // 4.0.8: right-clicking a view tab opens the tab menu (hide /
+        // disable) instead of falling through to the no-row branch. The
+        // view-manager owns the settings and the ≥2-tabs invariant; the menu
+        // only asks it for labels/availability and dispatches the action.
+        const viewTab = el.closest ? el.closest('.view-tab') : null;
+        if (viewTab) {
+            if (!ctx.viewMenu || !$viewTabContextMenu) {
+                clearMenu(e);
+                return;
+            }
+            const viewId = (viewTab.id || '').replace('view-tab-', '');
+            const state = ctx.viewMenu.prepare(viewId);
+            if (!state) {
+                clearMenu(e);
+                return;
+            }
+            clearMenu(e);
+            currentContext = viewTab;
+            ownerInfo = null;
+            const hideItem = $('view-tab-hide');
+            if (hideItem) {
+                hideItem.textContent = _m('viewTabHide') || 'Hide';
+                hideItem.classList.toggle('disabled', !state.canHide);
+            }
+            const disableItem = $('view-tab-disable');
+            if (disableItem) {
+                disableItem.textContent = _m('viewTabDisable') || 'Disable';
+                disableItem.style.display = state.canDisable ? 'block' : 'none';
+                disableItem.classList.toggle('disabled', !state.canDisable);
+            }
+            positionMenu($viewTabContextMenu, { left: e.pageX, top: e.pageY, clientY: e.clientY }, 'cursor');
+            $viewTabContextMenu.focus();
+            return;
         }
         // Round-6 item: menus belong to list ROWS. The walk-up above happily
         // lands on spans outside any row — the view-tab strip (right-clicking
@@ -1458,6 +1502,45 @@ export function initContextMenu(ctx = {}) {
         $paletteCmdContextMenu.addEventListener('contextmenu', menuBackgroundReposition($paletteCmdContextMenu));
     }
 
+    // 4.0.8: the view-tab menu (hide / disable). currentContext is the tab
+    // button; dispatch goes through neat.js's lazy ctx.viewMenu so the view
+    // manager owns every setting write and the ≥2-tabs invariant.
+    if ($viewTabContextMenu) {
+        $('view-tab-hide').textContent = _m('viewTabHide') || 'Hide';
+        $('view-tab-disable').textContent = _m('viewTabDisable') || 'Disable';
+    }
+    const viewTabContextHandler = e => {
+        if (!currentContext)
+            return;
+        const el = e.target;
+        if (!el.classList || !el.classList.contains('menu-item'))
+            return;
+        if (el.classList.contains('disabled'))
+            return;
+        const viewId = (currentContext.id || '').replace('view-tab-', '');
+        // Close FIRST (menu focus law): focus returns to the tab before the
+        // action re-renders the tab strip (hide/disable removes the tab).
+        clearMenu();
+        if (!viewId || !ctx.viewMenu)
+            return;
+        switch (el.id) {
+            case 'view-tab-hide':
+                ctx.viewMenu.hide(viewId);
+                break;
+            case 'view-tab-disable':
+                ctx.viewMenu.disable(viewId);
+                break;
+        }
+    };
+    if ($viewTabContextMenu) {
+        $viewTabContextMenu.addEventListener('mouseup', e => {
+            e.stopPropagation();
+            if (e.button === 0 || (os === 'mac' && e.button === 1))
+                viewTabContextHandler(e);
+        });
+        $viewTabContextMenu.addEventListener('contextmenu', menuBackgroundReposition($viewTabContextMenu));
+    }
+
     // v4 task-3 #11: the positional add-* entries + their separators, as one
     // set — hidden for every row outside the tree view (open-time flat rule)
     // and by switchBookmarkMenu (search.js's search-active toggle, kept for
@@ -1498,6 +1581,8 @@ export function initContextMenu(ctx = {}) {
         dupesGroupMenu: $dupesGroupContextMenu || null,
         // v4 task-4 #6: palette custom-command row menu
         paletteCmdMenu: $paletteCmdContextMenu || null,
+        // 4.0.8: view-tab right-click menu (may be absent in minimal tests)
+        viewTabMenu: $viewTabContextMenu || null,
         // issue #48 follow-up: the collapsed-group flyouts (may be absent in
         // minimal test setups — consumers null-check) and their open/close API
         // (used by the keyboard layer for →/←/Enter and the two-level Esc).

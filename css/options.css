@@ -347,6 +347,25 @@ h2{
 .options-list li:has(> button#export-settings) > small{
 	flex-basis: 100%;
 }
+/* 4.0.8 view hide/disable rows: the show-checkbox label takes the leading
+   flex slot, the status text follows it, and the enable/disable button pins
+   to the row's end — same alignment as the stats-clear / backup rows. */
+.options-list li.view-option-row{
+display: flex;
+align-items: center;
+gap: .75em;
+}
+.options-list li.view-option-row > label{
+flex: 1;
+}
+.options-list li.view-option-row .view-state{
+opacity: .75;
+white-space: nowrap;
+}
+.options-list li.view-option-row .view-toggle{
+margin-__MSG_@@bidi_start_edge__: 0;
+white-space: nowrap;
+}
 .options-list li button span{
 	font-weight: normal;
 }

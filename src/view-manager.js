@@ -17,6 +17,10 @@
  *                 scroll persistence, default focus target)
  *   hidden      — optional; hidden views keep their registration but render
  *                 no tab and refuse activation (showRecentBookmarks off)
+ *   showKey     — optional setting key for feature-view visibility (the
+ *                 existing showXxxView option). Tree/search never hide.
+ *   disableKey  — optional setting key (feature views only): disabled views
+ *                 are hidden AND their options-page show option greys out.
  *   typeAhead   — optional, default true; list views without type-ahead
  *                 (dead/dupes) set false so letter keys stay view-local
  *   persistScroll — optional; scrollTop saved into the `viewState` JSON key
@@ -72,6 +76,13 @@ export function initViewManager(ctx = {}) {
     // focusSpot capture/persist/restore below, the same way it gates the
     // tree's focusID and scroll restore.
     const remember = ctx.getRememberState || (() => true);
+    // The undo toast bar (neat.js injects it lazily — undo inits after the
+    // view manager). Used for the hidden-tab-strip view hint below.
+    const showToast = (...args) => {
+        const fn = ctx.toastAction;
+        if (fn)
+            fn(...args);
+    };
 
     const $tabs = $('view-tabs');
     const $announce = $('view-announce');
@@ -93,7 +104,118 @@ export function initViewManager(ctx = {}) {
     const tabsVisible = () => !!store.get('showViewTabs', '1');
     body.classList.toggle('no-view-tabs', !tabsVisible());
 
+    // --- View visibility state (4.0.8: hide/disable right-click menu) ---------
+    // Feature views can be hidden (the existing showXxxView option) or
+    // disabled (disableXxxView). The structural tree and search tabs are
+    // ALWAYS preserved — they are the base pair, so the tab bar can never
+    // drop below two icons and no min-count guard is needed anywhere.
+    // `hidden` = the view cannot be activated and every entry point must
+    // disappear (tab, Alt+number, palette).
+    const VIEW_SHOW_KEYS = {
+        recent: 'showRecentBookmarks',
+        stats: 'showStatsView',
+        dead: 'showDeadView',
+        dupes: 'showDupesView'
+    };
+    const VIEW_DISABLE_KEYS = {
+        recent: 'disableRecentView',
+        stats: 'disableStatsView',
+        dead: 'disableDeadView',
+        dupes: 'disableDupesView'
+    };
+    const WATCHED_VIEW_KEYS = Object.keys(VIEW_SHOW_KEYS).map(id => VIEW_SHOW_KEYS[id])
+        .concat(Object.keys(VIEW_DISABLE_KEYS).map(id => VIEW_DISABLE_KEYS[id]));
+    // Options pages write directly to chrome.storage; an open side panel must
+    // follow live. Store the latest values here and feed every decision below
+    // through this table so a storage.onChanged event updates the UI without
+    // waiting for a store mirror overlay (which never comes mid-session).
+    const liveViewSettings = {};
+
+    const viewSetting = (key, defaultValue) => {
+        if (key in liveViewSettings)
+            return liveViewSettings[key];
+        return store.get(key, defaultValue);
+    };
+    const viewSettingOn = key => !!viewSetting(key, '1');
+    const viewDisabled = def => !!def.disableKey && viewSetting(def.disableKey, '') === '1';
+
+    // Recompute def.hidden / def.disabled from the live settings. Views
+    // without keys (test doubles) keep their declared `hidden` flag as the
+    // static truth, so minimal setups don't need the key maps.
+    const syncViewState = def => {
+        if (def.id === 'tree' || def.id === 'search') {
+            def.disabled = false;
+            def.hidden = false;
+            return;
+        }
+        def.disabled = viewDisabled(def);
+        if (def.disabled) {
+            def.hidden = true;
+            return;
+        }
+        if (def.showKey)
+            def.hidden = !viewSettingOn(def.showKey);
+    };
+
+    const refreshViewState = () => {
+        for (let i = 0, l = registry.length; i < l; i++)
+            syncViewState(registry[i]);
+        renderTabs();
+        updateBadges();
+        placeIndicator();
+        // The active view may have become hidden/disabled from the options
+        // page while the panel sat open — never leave a hidden section active.
+        const def = byId[activeId];
+        if (def && def.hidden) {
+            const first = visibleViews()[0];
+            if (first && first.id !== activeId)
+                activate(first.id, { keepFocus: true });
+        }
+    };
+
     const visibleViews = () => registry.filter(v => !v.hidden);
+    const availableViews = () => registry.filter(v => !v.hidden);
+
+    // The tab-context-menu contract (context-menu.js calls these through
+    // neat.js's lazy ctx.viewMenu). Tree/search are never hideable or
+    // disableable; feature views are both while their tab is visible.
+    const canHideTab = id => {
+        const def = byId[id];
+        return !!def && !!def.tabEl && !!def.showKey;
+    };
+    const canDisableView = id => {
+        const def = byId[id];
+        return !!def && !!def.tabEl && !!def.disableKey && !def.disabled;
+    };
+    const focusFirstVisibleTab = () => {
+        const tabs = visibleViews();
+        const first = tabs[0];
+        if (first && first.tabEl)
+            first.tabEl.focus();
+    };
+    const hideViewTab = id => {
+        const def = byId[id];
+        if (!def || !canHideTab(id))
+            return false;
+        if (def.showKey)
+            store.set(def.showKey, '');
+        refreshViewState();
+        focusFirstVisibleTab();
+        return true;
+    };
+    const disableView = id => {
+        if (!canDisableView(id))
+            return false;
+        const def = byId[id];
+        store.set(def.disableKey, '1');
+        refreshViewState();
+        focusFirstVisibleTab();
+        return true;
+    };
+    const viewMenuState = id => ({
+        canHide: canHideTab(id),
+        canDisable: canDisableView(id)
+    });
 
     const placeIndicator = () => {
         const indicator = $tabs.querySelector('.tab-indicator');
@@ -130,6 +252,11 @@ export function initViewManager(ctx = {}) {
 
     const renderTabs = () => {
         $tabs.innerHTML = '';
+        // Clear every tab reference first: a view that just became hidden
+        // must not keep a stale `.tabEl` (the tab-context-menu can-hide
+        // guard consults it).
+        for (let i = 0, l = registry.length; i < l; i++)
+            registry[i].tabEl = null;
         const views = visibleViews();
         for (let i = 0, l = views.length; i < l; i++) {
             const def = views[i];
@@ -213,8 +340,14 @@ export function initViewManager(ctx = {}) {
     };
 
     const register = def => {
+        // Views register with a static `hidden` flag; real view modules add
+        // showKey/disableKey and refreshViewState() recomputes the effective
+        // state from storage. Test doubles without keys keep their static
+        // `hidden` flag as the single source of truth.
+        syncViewState(def);
         if (byId[def.id]) {
             Object.assign(byId[def.id], def);
+            syncViewState(byId[def.id]);
             bindFocusMarker(byId[def.id]);
             renderTabs();
             return byId[def.id];
@@ -803,7 +936,16 @@ export function initViewManager(ctx = {}) {
             v.tabEl.tabIndex = on ? 0 : -1;
         }
         placeIndicator();
+        const isFirstActivation = firstActivation;
         announce(def);
+        // 4.0.8: with the tab strip hidden, a shortcut/palette jump into a
+        // non-tree view leaves no visible way back — one toast names the view
+        // and the Esc / command-palette route home. Startup activation stays
+        // quiet (the same firstActivation gate as announce).
+        if (!isFirstActivation && !tabsVisible() && id !== 'tree') {
+            const label = _m(def.titleKey) || def.id;
+            showToast(_m('viewHiddenTabsHint', [label, 'Esc']) || label);
+        }
         // Tab badges re-evaluate on every switch — activation hooks are the
         // moment views (re)compute their counts (dupes groups, stats rows),
         // and immediate counts (dead marks) stay fresh across views.
@@ -838,7 +980,12 @@ export function initViewManager(ctx = {}) {
     // entry carries its type-ahead capability (tree/search only per spec) and
     // the view-local key consumer (M/R/K — docs/plan-4.0.0/v4task-2-list.md §2.3),
     // which keyboard.js consults before the type-ahead branch.
-    const lists = () => visibleViews()
+    // Keyboard list bindings cover every registered list container, so a
+    // view that is enabled/disabled live (options page while the side panel
+    // is open) never misses its keydown/keyup handlers after the fact. Hidden
+    // lists can't take focus (their sections are hidden), so the extra
+    // bindings are inert until the view becomes available again.
+    const lists = () => registry
         .filter(v => v.listEl)
         .map(v => ({ id: v.id, el: v.listEl, typeAhead: v.typeAhead !== false, onKey: v.onKey || null }));
     const listOf = el => {
@@ -855,6 +1002,32 @@ export function initViewManager(ctx = {}) {
         const views = visibleViews();
         if (!views.length)
             return;
+        // Dedicated context-menu keys open the tab menu from the keyboard.
+        // →/← stay assigned to tab switching, so the row model's generic
+        // →-opens-menu rule is intentionally NOT applied on the tab strip;
+        // these two keys are the remaining standard menu keys.
+        if (e.key === 'ContextMenu' || (e.key === 'F10' && e.shiftKey)) {
+            e.preventDefault();
+            const def = byId[activeId];
+            const tab = def && def.tabEl;
+            if (tab && tab.dispatchEvent) {
+                const rect = tab.getBoundingClientRect
+                    ? tab.getBoundingClientRect() : null;
+                const clientX = rect ? Math.max(0, rect.left + rect.width / 2) : 0;
+                const clientY = rect ? rect.bottom : 0;
+                const event = new MouseEvent('contextmenu', {
+                    bubbles: true,
+                    cancelable: true,
+                    view: window,
+                    clientX,
+                    clientY,
+                    pageX: clientX,
+                    pageY: clientY
+                });
+                tab.dispatchEvent(event);
+            }
+            return;
+        }
         const idx = views.findIndex(v => v.id === activeId);
         switch (e.key) {
             case 'ArrowLeft':
@@ -938,6 +1111,36 @@ export function initViewManager(ctx = {}) {
     };
     const pathOf = id => pathMap[id] || '';
 
+    // --- Live storage sync ------------------------------------------------------
+    // show*/disable* view keys are written by the options page (and by the
+    // tab context menu through this module). An open side panel must follow
+    // live: update the local mirror copy, re-sync every ViewDef and re-render
+    // the tab strip. The listener is registered after every function it calls
+    // is defined, and before the structural registrations so a startup storm
+    // can't race the initial render.
+    if (typeof chrome !== 'undefined' && chrome.storage && chrome.storage.onChanged) {
+        chrome.storage.onChanged.addListener((changes, area) => {
+            if (area !== 'local' || !changes)
+                return;
+            let touched = false;
+            for (let i = 0, l = WATCHED_VIEW_KEYS.length; i < l; i++) {
+                const key = WATCHED_VIEW_KEYS[i];
+                if (Object.prototype.hasOwnProperty.call(changes, key)) {
+                    const value = changes[key].newValue;
+                    // Keep the store mirror fresh for every other module
+                    // (view-recent's enabled(), etc.) without writing the
+                    // same value back to storage.
+                    if (store.adopt)
+                        store.adopt(key, value);
+                    liveViewSettings[key] = value;
+                    touched = true;
+                }
+            }
+            if (touched)
+                refreshViewState();
+        });
+    }
+
     // --- Structural views + startup --------------------------------------------
     register({
         id: 'tree', titleKey: 'viewTree', icon: VIEW_ICONS.tree,
@@ -986,6 +1189,14 @@ export function initViewManager(ctx = {}) {
         buildPathMap,
         pathOf,
         updateBadges,
-        showItemPath: () => !!store.get('showItemPath', '1')
+        showItemPath: () => !!store.get('showItemPath', '1'),
+        isAvailable: id => {
+            const def = byId[id];
+            return !!def && !def.hidden;
+        },
+        availableViews,
+        viewMenuState,
+        hideViewTab,
+        disableView
     };
 }
