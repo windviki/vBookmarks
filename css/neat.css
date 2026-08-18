@@ -3862,6 +3862,14 @@ body.panel-mode #dead-list .vbm-row .row-badge-slot {
     visibility: visible;
 }
 
+/* 4.0.8 死链行右侧 icon 与工具栏右缘对齐：工具栏右缘距容器 8px（toolbar
+   padding 4px 8px），行内最右一个 row-btn 的右缘原本只有 4px（.row-btn
+   margin-inline-end 4px）——补到 8px，让行内图标整体左移与工具栏图标
+   竖直对齐（浮动的 hover 按钮与常驻的 marked 按钮同一右缘）。 */
+#dead-list ul li.vbm-row > .row-btn:last-child {
+    margin-inline-end: 8px;
+}
+
 #dead-list .row-btn.dead-mark-btn.marked .vbm-icon-flag path {
     fill: currentColor;
 }
