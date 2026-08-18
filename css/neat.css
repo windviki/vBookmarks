@@ -3094,6 +3094,37 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
     white-space: nowrap;
 }
 
+/* 4.0.8 去重工具栏重排：单一工具栏拆为两行（每行仍是一个 .vbm-toolbar =
+   独立键盘 rung），中间无分隔线，视觉上是一个两行工具栏块；底部保留一条线
+   与列表分隔。第一行：两个下拉 + 选项开关；第二行：统计信息 + 全部应用 +
+   选择模式 icon。 */
+.dupes-toolbar.dupes-controls-toolbar {
+    border-bottom: 0;
+}
+.dupes-toolbar.dupes-actions-toolbar {
+    border-bottom: 1px solid var(--vbm-border);
+}
+.dupes-controls-toolbar .dupes-scheme {
+    margin-inline-start: auto; /* dropdowns left, switch right */
+}
+.dupes-actions-toolbar .dupes-summary {
+    margin-inline-start: 0;
+    margin-inline-end: auto; /* summary left, primary actions right */
+}
+.dupes-toolbar button.dupes-select-mode {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    padding: 0;
+    flex: none;
+}
+.dupes-toolbar button.dupes-select-mode .vbm-icon {
+    width: 16px;
+    height: 16px;
+}
+
 .dupes-toolbar .dupes-apply-all {
     border: 0;
     border-radius: var(--vbm-radius);

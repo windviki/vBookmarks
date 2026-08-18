@@ -73,7 +73,7 @@
  */
 
 import { findDupes, pickKeeper, planDeletion } from './dupes.js';
-import { VIEW_ICONS, CHECK_ICON, CHEVRON_ICON } from './icons.js';
+import { VIEW_ICONS, CHECK_ICON, CHEVRON_ICON, SELECT_ICON } from './icons.js';
 import { initDropdowns } from './dropdown.js';
 import { makeRiskBanner, RISK_HELP_URL } from './risk-banner.js';
 import { htmlspecialchars } from './escape.js';
@@ -297,7 +297,15 @@ export function initViewDupes(ctx = {}) {
                 `<span class="vbm-dropdown-value">${_m(curKey)}</span>${CHEVRON_ICON}</button>` +
                 `<ul id="${cls}-listbox" class="vbm-dropdown-list" role="listbox" aria-label="${_m(labelKey)}" hidden>` + opts + '</ul></div>';
         };
-        let html = '<div class="dupes-toolbar vbm-toolbar">';
+        // 4.0.8: idle toolbar is two stacked .vbm-toolbar rows (each row a
+        // keyboard rung) with no separator between them — one visual block.
+        const selectLabel = _m('selectModeEnter');
+        const selectBtn = groups.length
+            ? `<button class="dupes-select-mode" title="${htmlspecialchars(selectLabel)}" ` +
+              `aria-label="${htmlspecialchars(selectLabel)}">${SELECT_ICON}</button>`
+            : '';
+        // Row 1 — controls: strategy dropdown + scope dropdown + scheme switch.
+        let html = '<div class="dupes-toolbar dupes-controls-toolbar vbm-toolbar">';
         html += dropdownHtml('dupes-strategy', 'dupesStrategyOldest',
             // §5.4 联动: no visit data exists while statsEnabled is off —
             // grey out keep-most-visited instead of silently picking oldest.
@@ -307,12 +315,14 @@ export function initViewDupes(ctx = {}) {
             [['all', 'dupesScopeAll'], ['bar', 'dupesScopeBar']],
             scope());
         html += `<label class="dupes-scheme"><input type="checkbox"${ignoreScheme() ? ' checked' : ''}>${_m('dupesIgnoreScheme')}</label>`;
+        html += '</div>';
+        // Row 2 — summary + primary actions: X groups / Y duplicates, apply all,
+        // selection mode (icon-only, tooltip reuses the original i18n copy).
+        html += '<div class="dupes-toolbar dupes-actions-toolbar vbm-toolbar">';
         html += `<span class="dupes-summary">${_m('dupesPreviewSummary', [`${groups.length}`, `${doomed}`])}</span>`;
         html += `<button class="dupes-apply-all"${doomed ? '' : ' disabled'}>` +
             _m('dupesApplyAll', `${doomed}`) + '</button>';
-        // v4 task-3 #5: selection mode entry — only with groups on screen
-        if (groups.length)
-            html += `<button class="dupes-select-mode">${_m('selectModeEnter')}</button>`;
+        html += selectBtn;
         html += '</div>';
         return html;
     };
