@@ -572,6 +572,19 @@ describe('input listeners', () => {
         expect(s.isActive()).toBe(true);
     });
 
+    it('ignores IME composition Enter (keyCode 229 / isComposing) and never opens the first result', () => {
+        const { els } = setup({});
+        const input = els['search-input'];
+        input.value = 'ii'; // composition text, not the committed query
+        input.selectionEnd = 2;
+        const resultLink = makeEl();
+        els.results._qs['ul>li:first-child a'] = resultLink;
+        input.trigger('keydown', { key: 'Enter', isComposing: true, keyCode: 229 });
+        expect(resultLink.focused).toBe(false);
+        // IME Enter must stay with the IME: no focus jump, no synthetic click.
+        expect(resultLink.dispatched).toBeUndefined();
+    });
+
     it('Escape with a query records + clears the box but keeps the results and the view (two-level, §3.2)', () => {
         const { s, els, store, viewCalls } = setup({});
         type(els, 'git');

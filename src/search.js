@@ -592,6 +592,13 @@ export function initSearch(ctx = {}) {
     });
 
     searchInput.addEventListener('keydown', e => {
+        // IME composition Enter: while a Chinese/Japanese IME is committing a
+        // candidate, Chrome fires keydown with e.isComposing === true and
+        // (on macOS) keyCode 229. The input value is still the composition
+        // text, not the committed query — this Enter must stay with the IME,
+        // never trigger the first-result open below.
+        if (e.isComposing || e.keyCode === 229)
+            return;
         if (e.key === 'ArrowDown' && searchInput.value.length === searchInput.selectionEnd) { // down
             e.preventDefault();
             if (searchMode) {
@@ -632,6 +639,15 @@ export function initSearch(ctx = {}) {
                 if (item) {
                     item.focus();
                     setTimeout(() => {
+                        // If the results re-rendered before the timer fired
+                        // (IME commit, a fast input event), `item` is no
+                        // longer in the DOM. Dispatching a click on a detached
+                        // anchor cannot reach the delegated bookmarkHandler,
+                        // so nobody calls preventDefault() and the click's
+                        // default action navigates the popup itself to the
+                        // bookmark URL. Skip it.
+                        if (item.isConnected === false)
+                            return;
                         let event = new MouseEvent("click", {
                             bubbles: true,
                             cancelable: true,
