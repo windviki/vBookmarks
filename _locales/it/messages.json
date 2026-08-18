@@ -875,7 +875,12 @@
     "message": "Icona di fallback di terze parti"
   },
   "optionFaviconEnrichAggHint": {
-    "message": "Quando il recupero diretto fallisce, cerca l'icona tramite il dominio in un elenco integrato di servizi icona di terze parti (favicon.run, poi DuckDuckGo). Un servizio trovato irraggiungibile viene saltato e si prova il successivo — non viene ritentato per 6 ore."
+    "message": "Quando il recupero diretto fallisce, cerca l'icona per dominio in un elenco integrato di servizi di icone di terze parti ($providers$). Un servizio non raggiungibile viene saltato e si prova il successivo; non viene ritentato per 6 ore.",
+    "placeholders": {
+      "providers": {
+        "content": "$1"
+      }
+    }
   },
   "optionFaviconBackup": {
     "message": "Includi la cache delle icone nei backup"

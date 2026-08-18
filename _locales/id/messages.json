@@ -875,7 +875,12 @@
     "message": "Cadangan ikon pihak ketiga"
   },
   "optionFaviconEnrichAggHint": {
-    "message": "Saat pengambilan langsung gagal, cari ikon berdasarkan domain dari daftar bawaan layanan ikon pihak ketiga (favicon.run, lalu DuckDuckGo). Layanan yang tidak dapat dijangkau akan dilewati dan layanan berikutnya dicoba — layanan tersebut tidak akan dicoba ulang selama 6 jam."
+    "message": "Jika pengambilan langsung gagal, cari ikon berdasarkan domain dari daftar bawaan layanan ikon pihak ketiga ($providers$). Layanan yang tidak dapat dijangkau akan dilewati dan layanan berikutnya dicoba — layanan tersebut tidak dicoba ulang selama 6 jam.",
+    "placeholders": {
+      "providers": {
+        "content": "$1"
+      }
+    }
   },
   "optionFaviconBackup": {
     "message": "Sertakan cache ikon dalam cadangan"

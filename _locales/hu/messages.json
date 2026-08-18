@@ -875,7 +875,12 @@
     "message": "Harmadik féltől származó ikon-tartalék"
   },
   "optionFaviconEnrichAggHint": {
-    "message": "Ha a közvetlen lekérés sikertelen, a beépített, harmadik féltől származó ikonszolgáltatások listájából a domain alapján keresi meg az ikont (favicon.run, majd DuckDuckGo). Ha egy szolgáltatás elérhetetlen, kihagyja, és a következőt próbálja ki – ezt a szolgáltatást 6 órán keresztül nem próbálja újra."
+    "message": "Ha a közvetlen letöltés sikertelen, a rendszer a tartomány alapján keresi az ikont a beépített harmadik féltől származó ikonszolgáltatók listájában ($providers$). Az elérhetetlen szolgáltatást kihagyja, és a következőt próbálja ki – 6 órán keresztül nem próbálkozik újra vele.",
+    "placeholders": {
+      "providers": {
+        "content": "$1"
+      }
+    }
   },
   "optionFaviconBackup": {
     "message": "Ikon-gyorsítótár belefoglalása a biztonsági mentésekbe"

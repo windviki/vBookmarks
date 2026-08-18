@@ -875,7 +875,12 @@
     "message": "Awaryjne ikony z zewnętrznych usług"
   },
   "optionFaviconEnrichAggHint": {
-    "message": "Gdy bezpośrednie pobieranie ikony się nie powiedzie, ikona jest wyszukiwana po domenie na wbudowanej liście zewnętrznych usług ikon (najpierw favicon.run, potem DuckDuckGo). Usługa nieosiągalna jest pomijana, a następna jest próbowana — przez 6 godzin nie będzie ponawiana."
+    "message": "Gdy bezpośrednie pobieranie nie powiedzie się, ikona jest wyszukiwana według domeny z wbudowanej listy usług zewnętrznych ($providers$). Usługa niedostępna jest pomijana i wypróbowywana jest następna — ponowna próba nie jest podejmowana przez 6 godzin.",
+    "placeholders": {
+      "providers": {
+        "content": "$1"
+      }
+    }
   },
   "optionFaviconBackup": {
     "message": "Uwzględnij pamięć podręczną ikon w kopiach zapasowych"

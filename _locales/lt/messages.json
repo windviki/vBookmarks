@@ -875,7 +875,12 @@
     "message": "Trečiosios šalies atsarginis piktogramų šaltinis"
   },
   "optionFaviconEnrichAggHint": {
-    "message": "Kai tiesioginis nuskaitymas nepavyksta, piktogramos ieškomos pagal domeną iš integruoto trečiųjų šalių piktogramų paslaugų sąrašo (favicon.run, tada DuckDuckGo). Nepasiekiama paslauga praleidžiama ir bandoma kita – ji nebandoma iš naujo 6 valandas."
+    "message": "Kai tiesioginis gavimas nepavyksta, piktogramos ieškoma pagal domeną iš įtaisyto trečiųjų šalių piktogramų paslaugų sąrašo ($providers$). Nepasiekiama paslauga praleidžiama ir bandoma kita – ji nebandoma iš naujo 6 valandas.",
+    "placeholders": {
+      "providers": {
+        "content": "$1"
+      }
+    }
   },
   "optionFaviconBackup": {
     "message": "Įtraukti piktogramų talpyklą į atsargines kopijas"

@@ -875,7 +875,12 @@
     "message": "Kolmannen osapuolen varakuvakkeet"
   },
   "optionFaviconEnrichAggHint": {
-    "message": "Kun suora nouto epäonnistuu, hae kuvake verkkotunnuksen perusteella sisäänrakennetusta kolmannen osapuolen kuvakepalveluiden luettelosta (favicon.run, sitten DuckDuckGo). Tavoittamattomaksi havaittu palvelu ohitetaan ja seuraavaa yritetään — sitä ei yritetä uudelleen 6 tuntiin."
+    "message": "Jos suora haku epäonnistuu, hae kuvaketta verkkotunnuksen perusteella sisäänrakennetusta kolmannen osapuolen kuvakepalveluiden luettelosta ($providers$). Tavoittamattomaksi havaittu palvelu ohitetaan ja seuraavaa yritetään — sitä ei yritetä uudelleen 6 tuntiin.",
+    "placeholders": {
+      "providers": {
+        "content": "$1"
+      }
+    }
   },
   "optionFaviconBackup": {
     "message": "Sisällytä favicon-välimuisti varmuuskopioihin"

@@ -875,7 +875,12 @@
     "message": "Fallback für Drittanbieter-Icons"
   },
   "optionFaviconEnrichAggHint": {
-    "message": "Wenn das direkte Abrufen fehlschlägt, wird das Symbol anhand der Domain aus einer integrierten Liste von Drittanbieter-Icon-Diensten nachgeschlagen (zuerst favicon.run, dann DuckDuckGo). Ein nicht erreichbarer Dienst wird übersprungen und der nächste versucht – er wird für 6 Stunden nicht erneut versucht."
+    "message": "Wenn der direkte Abruf fehlschlägt, wird das Symbol anhand der Domain aus einer integrierten Liste von Drittanbieter-Icon-Diensten gesucht ($providers$). Ein als unerreichbar erkannter Dienst wird übersprungen und der nächste versucht – für 6 Stunden wird er nicht erneut versucht.",
+    "placeholders": {
+      "providers": {
+        "content": "$1"
+      }
+    }
   },
   "optionFaviconBackup": {
     "message": "Favicon-Cache in Backups einbeziehen"

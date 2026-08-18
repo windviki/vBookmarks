@@ -875,7 +875,12 @@
     "message": "Respaldo de iconos de terceros"
   },
   "optionFaviconEnrichAggHint": {
-    "message": "Cuando la obtención directa falla, busca el icono por dominio en una lista integrada de servicios de iconos de terceros (favicon.run y luego DuckDuckGo). Un servicio que se encuentre inaccesible se omite y se prueba el siguiente; no se reintentará durante 6 horas."
+    "message": "Cuando la descarga directa falla, se busca el icono por dominio en una lista integrada de servicios de iconos de terceros ($providers$). Un servicio inaccesible se omite y se prueba el siguiente; no se reintenta durante 6 horas.",
+    "placeholders": {
+      "providers": {
+        "content": "$1"
+      }
+    }
   },
   "optionFaviconBackup": {
     "message": "Incluir caché de iconos en las copias de seguridad"

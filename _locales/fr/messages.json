@@ -875,7 +875,12 @@
     "message": "Repli vers icône tierce"
   },
   "optionFaviconEnrichAggHint": {
-    "message": "Lorsque la récupération directe échoue, rechercher l'icône par domaine dans une liste intégrée de services d'icônes tiers (favicon.run, puis DuckDuckGo). Un service injoignable est ignoré et le suivant est tenté — il ne sera pas réessayé pendant 6 heures."
+    "message": "Lorsque la récupération directe échoue, l'icône est recherchée par domaine dans une liste intégrée de services d'icônes tiers ($providers$). Un service inaccessible est ignoré et le suivant est tenté ; aucune nouvelle tentative n'est effectuée pendant 6 heures.",
+    "placeholders": {
+      "providers": {
+        "content": "$1"
+      }
+    }
   },
   "optionFaviconBackup": {
     "message": "Inclure le cache d'icônes dans les sauvegardes"

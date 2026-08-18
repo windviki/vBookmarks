@@ -788,7 +788,12 @@ const $ = id => document.getElementById(id);
         document.getElementById('option-favicon-enrich').innerText = __m('optionFaviconEnrich');
         document.getElementById('option-favicon-enrich-hint').innerText = __m('optionFaviconEnrichHint');
         document.getElementById('option-favicon-enrich-ddg').innerText = __m('optionFaviconEnrichAgg');
-        document.getElementById('option-favicon-enrich-ddg-hint').innerText = __m('optionFaviconEnrichAggHint');
+        // The provider list is passed as a substitution — changing the list
+        // (src/favicon-enrich.js AGG_PROVIDERS) only needs this one line, not
+        // a retranslation of every locale string.
+        const aggProviderHint = ['favicon.run', 'icon.horse', 'DuckDuckGo'].join(' → ');
+        document.getElementById('option-favicon-enrich-ddg-hint').innerText =
+            __m('optionFaviconEnrichAggHint', aggProviderHint);
         document.getElementById('option-favicon-backup').innerText = __m('optionFaviconBackup');
         document.getElementById('option-favicon-backup-hint').innerText = __m('optionFaviconBackupHint');
         document.getElementById('favicon-cache-clear').innerText = __m('optionFaviconCacheClear');

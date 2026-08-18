@@ -875,7 +875,12 @@
     "message": "Kolmanda osapoole ikooni varu"
   },
   "optionFaviconEnrichAggHint": {
-    "message": "Kui otsene laadimine ebaõnnestub, otsitakse ikooni domeeni järgi sisseehitatud kolmanda osapoole ikooniteenuste loendist (favicon.run, seejärel DuckDuckGo). Kättesaamatuks osutunud teenus jäetakse vahele ja proovitakse järgmist — seda ei proovita uuesti 6 tunni jooksul."
+    "message": "Kui otsene hankimine ebaõnnestub, otsitakse ikooni üles domeeni järgi sisseehitatud kolmandate osapoolte ikooniteenuste loendist ($providers$). Kättesaamatu teenus jäetakse vahele ja proovitakse järgmist — seda ei proovita uuesti 6 tunni jooksul.",
+    "placeholders": {
+      "providers": {
+        "content": "$1"
+      }
+    }
   },
   "optionFaviconBackup": {
     "message": "Kaasa ikoonide vahemälu varukoopiatesse"

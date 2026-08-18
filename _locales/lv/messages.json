@@ -875,7 +875,12 @@
     "message": "Trešās puses ikonu rezerves"
   },
   "optionFaviconEnrichAggHint": {
-    "message": "Ja tiešā izgūšana neizdodas, ikona tiek meklēta pēc domēna iebūvētajā trešās puses ikonu pakalpojumu sarakstā (favicon.run, pēc tam DuckDuckGo). Ja pakalpojums izrādās nesasniedzams, to izlaiž un izmēģina nākamo — to atkārtoti nemēģina 6 stundu laikā."
+    "message": "Ja tieša iegūšana neizdodas, ikona tiek uzmeklēta pēc domēna no iebūvētā trešo pušu ikonu pakalpojumu saraksta ($providers$). Nesasniedzams pakalpojums tiek izlaists un tiek mēģināts nākamais — tas netiek atkārtoti mēģināts 6 stundas.",
+    "placeholders": {
+      "providers": {
+        "content": "$1"
+      }
+    }
   },
   "optionFaviconBackup": {
     "message": "Iekļaut ikonu kešu dublējumos"

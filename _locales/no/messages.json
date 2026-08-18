@@ -875,7 +875,12 @@
     "message": "Ikonfallback fra tredjepart"
   },
   "optionFaviconEnrichAggHint": {
-    "message": "Når direkte henting mislykkes, slås ikonet opp på domenet fra en innebygd liste over tredjeparts ikontjenester (favicon.run, deretter DuckDuckGo). En tjeneste som ikke kan nås, hoppes over og neste prøves — den forsøkes ikke på nytt på 6 timer."
+    "message": "Når direkte henting mislykkes, slås ikonet opp etter domene fra en innebygd liste over tredjeparts ikontjenester ($providers$). En utilgjengelig tjeneste hoppes over, og den neste prøves — den blir ikke forsøkt på nytt på 6 timer.",
+    "placeholders": {
+      "providers": {
+        "content": "$1"
+      }
+    }
   },
   "optionFaviconBackup": {
     "message": "Inkluder ikonbuffer i sikkerhetskopier"

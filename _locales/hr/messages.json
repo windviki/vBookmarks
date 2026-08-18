@@ -875,7 +875,12 @@
     "message": "Rezervna ikona treće strane"
   },
   "optionFaviconEnrichAggHint": {
-    "message": "Kada izravno dohvaćanje ne uspije, potražite ikonu prema domeni na ugrađenom popisu usluga ikona trećih strana (favicon.run, zatim DuckDuckGo). Nedostupna usluga se preskače i isprobava se sljedeća — ne pokušava se ponovno tijekom 6 sati."
+    "message": "Kada izravno dohvaćanje ne uspije, ikona se traži po domeni iz ugrađenog popisa servisa trećih strana za ikone ($providers$). Servis koji se pokaže nedostupnim se preskače i pokušava se sljedeći — ne pokušava se ponovno 6 sati.",
+    "placeholders": {
+      "providers": {
+        "content": "$1"
+      }
+    }
   },
   "optionFaviconBackup": {
     "message": "Uključi predmemoriju ikona u sigurnosne kopije"

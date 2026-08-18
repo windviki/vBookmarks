@@ -875,7 +875,12 @@
     "message": "타사 아이콘 폴백"
   },
   "optionFaviconEnrichAggHint": {
-    "message": "직접 가져오기에 실패하면 기본 제공되는 타사 아이콘 서비스 목록(favicon.run, 그다음 DuckDuckGo)에서 도메인별로 아이콘을 찾습니다. 연결할 수 없는 서비스는 건너뛰고 다음 서비스를 시도하며, 해당 서비스는 6시간 동안 다시 시도되지 않습니다."
+    "message": "직접 가져오기가 실패하면, 내장된 타사 아이콘 서비스 목록($providers$)에서 도메인으로 아이콘을 조회합니다. 연결할 수 없는 서비스는 건너뛰고 다음 서비스를 시도하며, 6시간 동안 다시 시도하지 않습니다.",
+    "placeholders": {
+      "providers": {
+        "content": "$1"
+      }
+    }
   },
   "optionFaviconBackup": {
     "message": "백업에 아이콘 캐시 포함"

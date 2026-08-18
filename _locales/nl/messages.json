@@ -875,7 +875,12 @@
     "message": "Terugvalpictogram van derde partij"
   },
   "optionFaviconEnrichAggHint": {
-    "message": "Wanneer rechtstreeks ophalen mislukt, wordt het pictogram op basis van het domein opgezocht via een ingebouwde lijst van pictogramdiensten van derden (eerst favicon.run, daarna DuckDuckGo). Een onbereikbaar gebleken dienst wordt overgeslagen en de volgende wordt geprobeerd — deze wordt 6 uur lang niet opnieuw geprobeerd."
+    "message": "Wanneer direct ophalen mislukt, wordt het pictogram op basis van het domein opgezocht via een ingebouwde lijst van externe pictogramservices ($providers$). Een service die onbereikbaar blijkt, wordt overgeslagen en de volgende wordt geprobeerd — deze wordt gedurende 6 uur niet opnieuw geprobeerd.",
+    "placeholders": {
+      "providers": {
+        "content": "$1"
+      }
+    }
   },
   "optionFaviconBackup": {
     "message": "Pictogramcache opnemen in back-ups"

@@ -875,7 +875,12 @@
     "message": "Tredjepartsikon som reserv"
   },
   "optionFaviconEnrichAggHint": {
-    "message": "Om direkt hämtning misslyckas, slås ikonen upp per domän från en inbyggd lista över tredjeparts-ikontjänster (favicon.run, sedan DuckDuckGo). En tjänst som inte går att nå hoppas över och nästa testas — den onåbara tjänsten kontaktas inte igen på 6 timmar."
+    "message": "När direkt hämtning misslyckas slås ikonen upp efter domän i en inbyggd lista med tredjeparts-ikontjänster ($providers$). En onåbar tjänst hoppas över och nästa i listan anropas — den anropas inte igen på 6 timmar.",
+    "placeholders": {
+      "providers": {
+        "content": "$1"
+      }
+    }
   },
   "optionFaviconBackup": {
     "message": "Inkludera ikoncache i säkerhetskopior"

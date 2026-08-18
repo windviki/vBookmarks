@@ -872,7 +872,12 @@
     "message": "Fallback de ícone de terceiros"
   },
   "optionFaviconEnrichAggHint": {
-    "message": "Quando a busca direta falhar, procure o ícone pelo domínio em uma lista integrada de serviços de ícones de terceiros (favicon.run e, em seguida, DuckDuckGo). Um serviço considerado inacessível é ignorado e o próximo é tentado — ele não será tentado novamente por 6 horas."
+    "message": "Quando a busca direta falha, o ícone é buscado por domínio em uma lista integrada de serviços de ícones de terceiros ($providers$). Um serviço inacessível é ignorado e o próximo é tentado — sem nova tentativa por 6 horas.",
+    "placeholders": {
+      "providers": {
+        "content": "$1"
+      }
+    }
   },
   "optionFaviconBackup": {
     "message": "Incluir cache de ícones nos backups"

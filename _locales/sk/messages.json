@@ -875,7 +875,12 @@
     "message": "Záložné ikony tretích strán"
   },
   "optionFaviconEnrichAggHint": {
-    "message": "Keď priame načítanie zlyhá, ikona sa vyhľadá podľa domény vo vstavanom zozname služieb tretích strán na vyhľadávanie ikon (najprv favicon.run, potom DuckDuckGo). Ak je služba nedostupná, preskočí sa a skúsi sa ďalšia – takáto služba sa znova neskúša 6 hodín."
+    "message": "Keď priame získavanie zlyhá, ikona sa vyhľadá podľa domény v zabudovanom zozname služieb tretích strán ($providers$). Nedostupná služba sa preskočí a vyskúša sa ďalšia – znova sa nebude skúšať 6 hodín.",
+    "placeholders": {
+      "providers": {
+        "content": "$1"
+      }
+    }
   },
   "optionFaviconBackup": {
     "message": "Zahrnúť vyrovnávaciu pamäť ikon do záloh"

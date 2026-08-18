@@ -875,7 +875,12 @@
     "message": "Dự phòng biểu tượng từ bên thứ ba"
   },
   "optionFaviconEnrichAggHint": {
-    "message": "Khi tải trực tiếp thất bại, tra cứu biểu tượng theo tên miền từ danh sách tích hợp các dịch vụ biểu tượng bên thứ ba (favicon.run, sau đó là DuckDuckGo). Dịch vụ không truy cập được sẽ bị bỏ qua và thử dịch vụ tiếp theo; dịch vụ đó sẽ không được thử lại trong 6 giờ."
+    "message": "Khi tải trực tiếp thất bại, hãy tra cứu biểu tượng theo tên miền từ danh sách tích hợp các dịch vụ biểu tượng của bên thứ ba ($providers$). Dịch vụ không truy cập được sẽ bị bỏ qua và thử dịch vụ tiếp theo — dịch vụ đó sẽ không được thử lại trong 6 giờ.",
+    "placeholders": {
+      "providers": {
+        "content": "$1"
+      }
+    }
   },
   "optionFaviconBackup": {
     "message": "Bao gồm cache biểu tượng trong bản sao lưu"

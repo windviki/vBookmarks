@@ -864,7 +864,12 @@
     "message": "第三方圖示後備方案"
   },
   "optionFaviconEnrichAggHint": {
-    "message": "當直接擷取失敗時，會從內建的第三方圖示服務清單（favicon.run，接著是 DuckDuckGo）按網域查詢圖示。無法連線的服務會被略過並嘗試下一個——六小時內不會重新嘗試該服務。"
+    "message": "當直接取得圖示失敗時，會從內建的第三方圖示服務清單按網域查找。依序嘗試 $providers$。無法連線的服務會被跳過並嘗試下一家；該服務 6 小時內不會重試。",
+    "placeholders": {
+      "providers": {
+        "content": "$1"
+      }
+    }
   },
   "optionFaviconBackup": {
     "message": "備份時包含圖示快取"
