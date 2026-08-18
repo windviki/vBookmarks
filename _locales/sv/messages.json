@@ -332,6 +332,17 @@
       }
     }
   },
+  "viewHiddenTabsHint": {
+    "message": "Du är i vyn $view$. Tryck på $back$ eller använd kommandopaletten för att återgå till trädet.",
+    "placeholders": {
+      "view": {
+        "content": "$1"
+      },
+      "back": {
+        "content": "$2"
+      }
+    }
+  },
   "deadProxyAdd": {
     "message": "Lägg till proxyserver för döda länkar"
   },
@@ -752,9 +763,6 @@
   "optionDeadScanTimeout": {
     "message": "Timeout för sökning döda länkar i sekunder (2-30)"
   },
-  "optionHighlightUnsynced": {
-    "message": "Markera osynkroniserade bokmärken"
-  },
   "optionOnlyShowBookmarkBar": {
     "message": "Visa endast bokmärken i bokmärkesfältet"
   },
@@ -802,6 +810,9 @@
   },
   "optionShowSyncStatus": {
     "message": "Visa synkroniseringsstatusindikatorer"
+  },
+  "optionHighlightUnsynced": {
+    "message": "Dämpa osynkroniserade bokmärken"
   },
   "optionShowViewTabs": {
     "message": "Visa vyflikar under sökrutan"
@@ -1628,6 +1639,24 @@
         "content": "$1"
       }
     }
+  },
+  "viewStateEnabled": {
+    "message": "Aktiverad"
+  },
+  "viewStateDisabled": {
+    "message": "Inaktiverad"
+  },
+  "viewEnable": {
+    "message": "Aktivera"
+  },
+  "viewDisable": {
+    "message": "Inaktivera"
+  },
+  "viewTabHide": {
+    "message": "Dölj"
+  },
+  "viewTabDisable": {
+    "message": "Inaktivera"
   },
   "viewTree": {
     "message": "Träd"

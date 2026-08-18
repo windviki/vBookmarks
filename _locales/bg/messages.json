@@ -332,6 +332,17 @@
       }
     }
   },
+  "viewHiddenTabsHint": {
+    "message": "Вие сте в изгледа $view$. Натиснете $back$ или използвайте командната палитра, за да се върнете към дървото.",
+    "placeholders": {
+      "view": {
+        "content": "$1"
+      },
+      "back": {
+        "content": "$2"
+      }
+    }
+  },
   "deadProxyAdd": {
     "message": "Добавяне на прокси сървър за проверки за мъртви връзки"
   },
@@ -752,9 +763,6 @@
   "optionDeadScanTimeout": {
     "message": "Таймаут на сканиране за мъртви връзки в секунди (2-30)"
   },
-  "optionHighlightUnsynced": {
-    "message": "Осветяване на несинхронизирани отметки"
-  },
   "optionOnlyShowBookmarkBar": {
     "message": "Показване само на отметки от лентата с отметки"
   },
@@ -802,6 +810,9 @@
   },
   "optionShowSyncStatus": {
     "message": "Показване на индикатори за статус на синхронизация"
+  },
+  "optionHighlightUnsynced": {
+    "message": "Затъмняване на несинхронизираните отметки"
   },
   "optionShowViewTabs": {
     "message": "Покажи разделите за изглед под полето за търсене"
@@ -1628,6 +1639,24 @@
         "content": "$1"
       }
     }
+  },
+  "viewStateEnabled": {
+    "message": "Включено"
+  },
+  "viewStateDisabled": {
+    "message": "Изключено"
+  },
+  "viewEnable": {
+    "message": "Включи"
+  },
+  "viewDisable": {
+    "message": "Изключи"
+  },
+  "viewTabHide": {
+    "message": "Скрий"
+  },
+  "viewTabDisable": {
+    "message": "Изключи"
   },
   "viewTree": {
     "message": "Дърво"

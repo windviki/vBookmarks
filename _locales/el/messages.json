@@ -332,6 +332,17 @@
       }
     }
   },
+  "viewHiddenTabsHint": {
+    "message": "Βρίσκεστε στην προβολή $view$. Πατήστε $back$ ή χρησιμοποιήστε την παλέτα εντολών για να επιστρέψετε στο δέντρο.",
+    "placeholders": {
+      "view": {
+        "content": "$1"
+      },
+      "back": {
+        "content": "$2"
+      }
+    }
+  },
   "deadProxyAdd": {
     "message": "Προσθήκη διακομιστή μεσολάβησης για ελέγχους νεκρών συνδέσμων"
   },
@@ -758,9 +769,6 @@
   "optionDeadScanTimeout": {
     "message": "Χρονικό όριο σάρωσης νεκρών συνδέσμων σε δευτερόλεπτα (2-30)"
   },
-  "optionHighlightUnsynced": {
-    "message": "Επισήμανση μη συγχρονισμένων σελιδοδεικτών"
-  },
   "optionOnlyShowBookmarkBar": {
     "message": "Εμφάνιση μόνο σελιδοδεικτών στη Γραμμή Σελιδοδεικτών"
   },
@@ -808,6 +816,9 @@
   },
   "optionShowSyncStatus": {
     "message": "Εμφάνιση δεικτών κατάστασης συγχρονισμού"
+  },
+  "optionHighlightUnsynced": {
+    "message": "Να θαμπώνουν οι μη συγχρονισμένοι σελιδοδείκτες"
   },
   "optionShowViewTabs": {
     "message": "Εμφάνιση καρτελών προβολής κάτω από το πλαίσιο αναζήτησης"
@@ -1634,6 +1645,24 @@
         "content": "$1"
       }
     }
+  },
+  "viewStateEnabled": {
+    "message": "Ενεργοποιημένο"
+  },
+  "viewStateDisabled": {
+    "message": "Απενεργοποιημένο"
+  },
+  "viewEnable": {
+    "message": "Ενεργοποίηση"
+  },
+  "viewDisable": {
+    "message": "Απενεργοποίηση"
+  },
+  "viewTabHide": {
+    "message": "Απόκρυψη"
+  },
+  "viewTabDisable": {
+    "message": "Απενεργοποίηση"
   },
   "viewTree": {
     "message": "Δέντρο"

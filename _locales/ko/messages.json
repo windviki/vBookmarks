@@ -332,6 +332,17 @@
       }
     }
   },
+  "viewHiddenTabsHint": {
+    "message": "현재 $view$ 보기에 있습니다. $back$를 누르거나 명령 팔레트를 사용해 트리로 돌아가세요.",
+    "placeholders": {
+      "view": {
+        "content": "$1"
+      },
+      "back": {
+        "content": "$2"
+      }
+    }
+  },
   "deadProxyAdd": {
     "message": "죽은 링크 확인용 프록시 서버 추가"
   },
@@ -752,9 +763,6 @@
   "optionDeadScanTimeout": {
     "message": "데드 링크 스캔 타임아웃 (초) (2-30)"
   },
-  "optionHighlightUnsynced": {
-    "message": "동기화되지 않은 북마크 강조 표시"
-  },
   "optionOnlyShowBookmarkBar": {
     "message": "북마크 막대의 북마크만 표시"
   },
@@ -802,6 +810,9 @@
   },
   "optionShowSyncStatus": {
     "message": "동기화 상태 표시기 표시"
+  },
+  "optionHighlightUnsynced": {
+    "message": "동기화되지 않은 북마크를 흐리게 표시"
   },
   "optionShowViewTabs": {
     "message": "검색 상자 아래에 보기 탭 표시"
@@ -1628,6 +1639,24 @@
         "content": "$1"
       }
     }
+  },
+  "viewStateEnabled": {
+    "message": "활성화됨"
+  },
+  "viewStateDisabled": {
+    "message": "비활성화됨"
+  },
+  "viewEnable": {
+    "message": "활성화"
+  },
+  "viewDisable": {
+    "message": "비활성화"
+  },
+  "viewTabHide": {
+    "message": "숨기기"
+  },
+  "viewTabDisable": {
+    "message": "비활성화"
   },
   "viewTree": {
     "message": "트리"

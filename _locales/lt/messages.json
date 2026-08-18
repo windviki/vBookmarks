@@ -332,6 +332,17 @@
       }
     }
   },
+  "viewHiddenTabsHint": {
+    "message": "Jūs esate $view$ rodinyje. Paspauskite $back$ arba naudokite komandų skydelį, kad grįžtumėte į medį.",
+    "placeholders": {
+      "view": {
+        "content": "$1"
+      },
+      "back": {
+        "content": "$2"
+      }
+    }
+  },
   "deadProxyAdd": {
     "message": "Pridėti tarpinį serverį negyvų nuorodų tikrinimui"
   },
@@ -752,9 +763,6 @@
   "optionDeadScanTimeout": {
     "message": "Neveikiančių nuorodų nuskaitymo skirtasis laikas sekundėmis (2–30)"
   },
-  "optionHighlightUnsynced": {
-    "message": "Paryškinti nesinchronizuotas žymeles"
-  },
   "optionOnlyShowBookmarkBar": {
     "message": "Rodyti tik žymeles žymelių juostoje"
   },
@@ -802,6 +810,9 @@
   },
   "optionShowSyncStatus": {
     "message": "Rodyti sinchronizavimo būklės indikatorius"
+  },
+  "optionHighlightUnsynced": {
+    "message": "Pritemdyti nesinchronizuotas žymes"
   },
   "optionShowViewTabs": {
     "message": "Rodyti rodinių skirtukus po paieškos lauku"
@@ -1628,6 +1639,24 @@
         "content": "$1"
       }
     }
+  },
+  "viewStateEnabled": {
+    "message": "Įjungta"
+  },
+  "viewStateDisabled": {
+    "message": "Išjungta"
+  },
+  "viewEnable": {
+    "message": "Įjungti"
+  },
+  "viewDisable": {
+    "message": "Išjungti"
+  },
+  "viewTabHide": {
+    "message": "Slėpti"
+  },
+  "viewTabDisable": {
+    "message": "Išjungti"
   },
   "viewTree": {
     "message": "Medis"

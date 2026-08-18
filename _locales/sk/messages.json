@@ -332,6 +332,17 @@
       }
     }
   },
+  "viewHiddenTabsHint": {
+    "message": "Ste v zobrazení $view$. Stlačte $back$ alebo použite paletu príkazov na návrat do stromu.",
+    "placeholders": {
+      "view": {
+        "content": "$1"
+      },
+      "back": {
+        "content": "$2"
+      }
+    }
+  },
   "deadProxyAdd": {
     "message": "Pridať proxy server pre kontroly nefunkčných odkazov"
   },
@@ -752,9 +763,6 @@
   "optionDeadScanTimeout": {
     "message": "Časový limit skenovania mŕtvych odkazov v sekundách (2-30)"
   },
-  "optionHighlightUnsynced": {
-    "message": "Zvýrazniť nesynchronizované záložky"
-  },
   "optionOnlyShowBookmarkBar": {
     "message": "Zobraziť len záložky v lište záložiek"
   },
@@ -802,6 +810,9 @@
   },
   "optionShowSyncStatus": {
     "message": "Zobraziť indikátory stavu synchronizácie"
+  },
+  "optionHighlightUnsynced": {
+    "message": "Stlmiť nesynchronizované záložky"
   },
   "optionShowViewTabs": {
     "message": "Zobraziť karty zobrazenia pod vyhľadávacím poľom"
@@ -1628,6 +1639,24 @@
         "content": "$1"
       }
     }
+  },
+  "viewStateEnabled": {
+    "message": "Povolené"
+  },
+  "viewStateDisabled": {
+    "message": "Zakázané"
+  },
+  "viewEnable": {
+    "message": "Povoliť"
+  },
+  "viewDisable": {
+    "message": "Zakázať"
+  },
+  "viewTabHide": {
+    "message": "Skryť"
+  },
+  "viewTabDisable": {
+    "message": "Zakázať"
   },
   "viewTree": {
     "message": "Strom"

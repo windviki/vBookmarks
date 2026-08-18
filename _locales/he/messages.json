@@ -332,6 +332,17 @@
       }
     }
   },
+  "viewHiddenTabsHint": {
+    "message": "אתה נמצא בתצוגת $view$. לחץ על $back$ או השתמש בלוח הפקודות כדי לחזור לעץ.",
+    "placeholders": {
+      "view": {
+        "content": "$1"
+      },
+      "back": {
+        "content": "$2"
+      }
+    }
+  },
   "deadProxyAdd": {
     "message": "הוסף שרת פרוקסי לבדיקות קישורים שבורים"
   },
@@ -752,9 +763,6 @@
   "optionDeadScanTimeout": {
     "message": "זמן קצוב לסריקת קישורים מתים בשניות (2-30)"
   },
-  "optionHighlightUnsynced": {
-    "message": "הדגש סימניות שאינן מסונכרנות"
-  },
   "optionOnlyShowBookmarkBar": {
     "message": "הצג רק סימניות בסרגל הסימניות"
   },
@@ -802,6 +810,9 @@
   },
   "optionShowSyncStatus": {
     "message": "הצג מחווני מצב סנכרון"
+  },
+  "optionHighlightUnsynced": {
+    "message": "עמעם סימניות לא מסונכרנות"
   },
   "optionShowViewTabs": {
     "message": "הצג לשוניות תצוגה מתחת לתיבת החיפוש"
@@ -1628,6 +1639,24 @@
         "content": "$1"
       }
     }
+  },
+  "viewStateEnabled": {
+    "message": "מופעל"
+  },
+  "viewStateDisabled": {
+    "message": "מושבת"
+  },
+  "viewEnable": {
+    "message": "הפעל"
+  },
+  "viewDisable": {
+    "message": "השבת"
+  },
+  "viewTabHide": {
+    "message": "הסתר"
+  },
+  "viewTabDisable": {
+    "message": "השבת"
   },
   "viewTree": {
     "message": "עץ"

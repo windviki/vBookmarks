@@ -332,6 +332,17 @@
       }
     }
   },
+  "viewHiddenTabsHint": {
+    "message": "Te afli în vizualizarea $view$. Apasă $back$ sau folosește paleta de comenzi pentru a reveni la arbore.",
+    "placeholders": {
+      "view": {
+        "content": "$1"
+      },
+      "back": {
+        "content": "$2"
+      }
+    }
+  },
   "deadProxyAdd": {
     "message": "Adaugă un server proxy pentru verificarea linkurilor moarte"
   },
@@ -752,9 +763,6 @@
   "optionDeadScanTimeout": {
     "message": "Timeout scanare linkuri moarte în secunde (2-30)"
   },
-  "optionHighlightUnsynced": {
-    "message": "Evidențiați semnele de carte nesincronizate"
-  },
   "optionOnlyShowBookmarkBar": {
     "message": "Afișează doar semne de carte în Bara de Semne de Carte"
   },
@@ -802,6 +810,9 @@
   },
   "optionShowSyncStatus": {
     "message": "Afișați indicatorii de stare a sincronizării"
+  },
+  "optionHighlightUnsynced": {
+    "message": "Atenuează marcajele nesincronizate"
   },
   "optionShowViewTabs": {
     "message": "Afișează filele de vizualizare sub caseta de căutare"
@@ -1628,6 +1639,24 @@
         "content": "$1"
       }
     }
+  },
+  "viewStateEnabled": {
+    "message": "Activat"
+  },
+  "viewStateDisabled": {
+    "message": "Dezactivat"
+  },
+  "viewEnable": {
+    "message": "Activează"
+  },
+  "viewDisable": {
+    "message": "Dezactivează"
+  },
+  "viewTabHide": {
+    "message": "Ascunde"
+  },
+  "viewTabDisable": {
+    "message": "Dezactivează"
   },
   "viewTree": {
     "message": "Arbore"

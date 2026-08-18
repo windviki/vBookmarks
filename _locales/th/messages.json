@@ -332,6 +332,17 @@
       }
     }
   },
+  "viewHiddenTabsHint": {
+    "message": "คุณอยู่ในมุมมอง $view$ กด $back$ หรือใช้จานคำสั่งเพื่อกลับไปยังแผนผัง",
+    "placeholders": {
+      "view": {
+        "content": "$1"
+      },
+      "back": {
+        "content": "$2"
+      }
+    }
+  },
   "deadProxyAdd": {
     "message": "เพิ่มพร็อกซีเซิร์ฟเวอร์สำหรับตรวจสอบลิงก์เสีย"
   },
@@ -752,9 +763,6 @@
   "optionDeadScanTimeout": {
     "message": "หมดเวลาสแกนลิงก์เสียเป็นวินาที (2-30)"
   },
-  "optionHighlightUnsynced": {
-    "message": "ไฮไลต์ที่คั่นหน้าที่ยังไม่ซิงค์"
-  },
   "optionOnlyShowBookmarkBar": {
     "message": "แสดงเฉพาะที่คั่นหน้าในแถบที่คั่นหน้า"
   },
@@ -802,6 +810,9 @@
   },
   "optionShowSyncStatus": {
     "message": "แสดงตัวบ่งชี้สถานะการซิงค์"
+  },
+  "optionHighlightUnsynced": {
+    "message": "ทำให้บุ๊กมาร์กที่ไม่ซิงก์มืดลง"
   },
   "optionShowViewTabs": {
     "message": "แสดงแท็บมุมมองใต้ช่องค้นหา"
@@ -1628,6 +1639,24 @@
         "content": "$1"
       }
     }
+  },
+  "viewStateEnabled": {
+    "message": "เปิดใช้งาน"
+  },
+  "viewStateDisabled": {
+    "message": "ปิดใช้งาน"
+  },
+  "viewEnable": {
+    "message": "เปิดใช้งาน"
+  },
+  "viewDisable": {
+    "message": "ปิดใช้งาน"
+  },
+  "viewTabHide": {
+    "message": "ซ่อน"
+  },
+  "viewTabDisable": {
+    "message": "ปิดใช้งาน"
   },
   "viewTree": {
     "message": "ต้นไม้"

@@ -332,6 +332,17 @@
       }
     }
   },
+  "viewHiddenTabsHint": {
+    "message": "Jūs atrodaties $view$ skatā. Nospiediet $back$ vai izmantojiet komandu paleti, lai atgrieztos kokā.",
+    "placeholders": {
+      "view": {
+        "content": "$1"
+      },
+      "back": {
+        "content": "$2"
+      }
+    }
+  },
   "deadProxyAdd": {
     "message": "Pievienot starpniekserveri bojātu saišu pārbaudei"
   },
@@ -752,9 +763,6 @@
   "optionDeadScanTimeout": {
     "message": "Nedarbojošos saišu skenēšanas taimauts sekundēs (2-30)"
   },
-  "optionHighlightUnsynced": {
-    "message": "Izcelt nesinhronizētās grāmatzīmes"
-  },
   "optionOnlyShowBookmarkBar": {
     "message": "Rādīt tikai grāmatzīmes grāmatzīmju joslā"
   },
@@ -802,6 +810,9 @@
   },
   "optionShowSyncStatus": {
     "message": "Rādīt sinhronizācijas statusa indikatorus"
+  },
+  "optionHighlightUnsynced": {
+    "message": "Aptumšot nesinhronizētās grāmatzīmes"
   },
   "optionShowViewTabs": {
     "message": "Rādīt skatu cilnes zem meklēšanas lodziņa"
@@ -1628,6 +1639,24 @@
         "content": "$1"
       }
     }
+  },
+  "viewStateEnabled": {
+    "message": "Iespējots"
+  },
+  "viewStateDisabled": {
+    "message": "Atspējots"
+  },
+  "viewEnable": {
+    "message": "Iespējot"
+  },
+  "viewDisable": {
+    "message": "Atspējot"
+  },
+  "viewTabHide": {
+    "message": "Slēpt"
+  },
+  "viewTabDisable": {
+    "message": "Atspējot"
   },
   "viewTree": {
     "message": "Koks"

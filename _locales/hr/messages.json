@@ -332,6 +332,17 @@
       }
     }
   },
+  "viewHiddenTabsHint": {
+    "message": "Nalazite se u prikazu $view$. Pritisnite $back$ ili upotrijebite paletu naredbi za povratak na stablo.",
+    "placeholders": {
+      "view": {
+        "content": "$1"
+      },
+      "back": {
+        "content": "$2"
+      }
+    }
+  },
   "deadProxyAdd": {
     "message": "Dodaj proxy poslužitelj za provjeru mrtvih veza"
   },
@@ -752,9 +763,6 @@
   "optionDeadScanTimeout": {
     "message": "Vremensko ograničenje skeniranja mrtvih poveznica u sekundama (2-30)"
   },
-  "optionHighlightUnsynced": {
-    "message": "Istakni nesinkronizirane oznake"
-  },
   "optionOnlyShowBookmarkBar": {
     "message": "Prikaži samo oznake u traci oznaka"
   },
@@ -802,6 +810,9 @@
   },
   "optionShowSyncStatus": {
     "message": "Prikaži indikatore statusa sinkronizacije"
+  },
+  "optionHighlightUnsynced": {
+    "message": "Zatamni nesinkronizirane oznake"
   },
   "optionShowViewTabs": {
     "message": "Prikaži kartice prikaza ispod okvira za pretraživanje"
@@ -1628,6 +1639,24 @@
         "content": "$1"
       }
     }
+  },
+  "viewStateEnabled": {
+    "message": "Omogućeno"
+  },
+  "viewStateDisabled": {
+    "message": "Onemogućeno"
+  },
+  "viewEnable": {
+    "message": "Omogući"
+  },
+  "viewDisable": {
+    "message": "Onemogući"
+  },
+  "viewTabHide": {
+    "message": "Sakrij"
+  },
+  "viewTabDisable": {
+    "message": "Onemogući"
   },
   "viewTree": {
     "message": "Stablo"

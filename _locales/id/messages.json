@@ -332,6 +332,17 @@
       }
     }
   },
+  "viewHiddenTabsHint": {
+    "message": "Anda sedang dalam tampilan $view$. Tekan $back$ atau gunakan palet perintah untuk kembali ke pohon.",
+    "placeholders": {
+      "view": {
+        "content": "$1"
+      },
+      "back": {
+        "content": "$2"
+      }
+    }
+  },
   "deadProxyAdd": {
     "message": "Tambahkan server proxy untuk pemeriksaan tautan mati"
   },
@@ -752,9 +763,6 @@
   "optionDeadScanTimeout": {
     "message": "Batas waktu pemindaian tautan mati dalam detik (2-30)"
   },
-  "optionHighlightUnsynced": {
-    "message": "Sorot markah yang belum disinkronisasi"
-  },
   "optionOnlyShowBookmarkBar": {
     "message": "Hanya tampilkan markah di Bilah Markah"
   },
@@ -802,6 +810,9 @@
   },
   "optionShowSyncStatus": {
     "message": "Tampilkan indikator status sinkronisasi"
+  },
+  "optionHighlightUnsynced": {
+    "message": "Redupkan bookmark yang tidak tersinkronisasi"
   },
   "optionShowViewTabs": {
     "message": "Tampilkan tab tampilan di bawah kotak pencarian"
@@ -1628,6 +1639,24 @@
         "content": "$1"
       }
     }
+  },
+  "viewStateEnabled": {
+    "message": "Aktif"
+  },
+  "viewStateDisabled": {
+    "message": "Nonaktif"
+  },
+  "viewEnable": {
+    "message": "Aktifkan"
+  },
+  "viewDisable": {
+    "message": "Nonaktifkan"
+  },
+  "viewTabHide": {
+    "message": "Sembunyikan"
+  },
+  "viewTabDisable": {
+    "message": "Nonaktifkan"
   },
   "viewTree": {
     "message": "Pohon"

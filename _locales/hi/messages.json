@@ -332,6 +332,17 @@
       }
     }
   },
+  "viewHiddenTabsHint": {
+    "message": "आप $view$ दृश्य में हैं। ट्री पर लौटने के लिए $back$ दबाएँ या कमांड पैलेट का उपयोग करें।",
+    "placeholders": {
+      "view": {
+        "content": "$1"
+      },
+      "back": {
+        "content": "$2"
+      }
+    }
+  },
   "deadProxyAdd": {
     "message": "डेड-लिंक जाँच के लिए प्रॉक्सी सर्वर जोड़ें"
   },
@@ -752,9 +763,6 @@
   "optionDeadScanTimeout": {
     "message": "मृत-लिंक स्कैन टाइमआउट सेकंड में (2-30)"
   },
-  "optionHighlightUnsynced": {
-    "message": "असिंक बुकमार्क को हाइलाइट करें"
-  },
   "optionOnlyShowBookmarkBar": {
     "message": "केवल बुकमार्क बार में बुकमार्क दिखाएं"
   },
@@ -802,6 +810,9 @@
   },
   "optionShowSyncStatus": {
     "message": "सिंक स्थिति संकेतक दिखाएं"
+  },
+  "optionHighlightUnsynced": {
+    "message": "सिंक न किए गए बुकमार्क मंद करें"
   },
   "optionShowViewTabs": {
     "message": "खोज बॉक्स के नीचे दृश्य टैब दिखाएं"
@@ -1628,6 +1639,24 @@
         "content": "$1"
       }
     }
+  },
+  "viewStateEnabled": {
+    "message": "सक्षम"
+  },
+  "viewStateDisabled": {
+    "message": "अक्षम"
+  },
+  "viewEnable": {
+    "message": "सक्षम करें"
+  },
+  "viewDisable": {
+    "message": "अक्षम करें"
+  },
+  "viewTabHide": {
+    "message": "छिपाएँ"
+  },
+  "viewTabDisable": {
+    "message": "अक्षम करें"
   },
   "viewTree": {
     "message": "पेड़"

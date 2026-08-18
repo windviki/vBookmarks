@@ -331,6 +331,17 @@
       }
     }
   },
+  "viewHiddenTabsHint": {
+    "message": "Се наоѓате во прегледот $view$. Притиснете $back$ или користете ја командната палета за да се вратите во дрвото.",
+    "placeholders": {
+      "view": {
+        "content": "$1"
+      },
+      "back": {
+        "content": "$2"
+      }
+    }
+  },
   "deadProxyAdd": {
     "message": "Додај прокси сервер за проверка на мртви врски"
   },
@@ -751,9 +762,6 @@
   "optionDeadScanTimeout": {
     "message": "Време на истек при скенирање на мртви врски во секунди (2-30)"
   },
-  "optionHighlightUnsynced": {
-    "message": "Означи несинхронизирани обележувачи"
-  },
   "optionOnlyShowBookmarkBar": {
     "message": "Прикажи само обележувачи од лентата со обележувачи"
   },
@@ -801,6 +809,9 @@
   },
   "optionShowSyncStatus": {
     "message": "Прикажи индикатори за статус на синхронизација"
+  },
+  "optionHighlightUnsynced": {
+    "message": "Затемни несинхронизирани обележувачи"
   },
   "optionShowViewTabs": {
     "message": "Прикажи ги картичките за приказ под полето за пребарување"
@@ -1627,6 +1638,24 @@
         "content": "$1"
       }
     }
+  },
+  "viewStateEnabled": {
+    "message": "Овозможено"
+  },
+  "viewStateDisabled": {
+    "message": "Оневозможено"
+  },
+  "viewEnable": {
+    "message": "Овозможи"
+  },
+  "viewDisable": {
+    "message": "Оневозможи"
+  },
+  "viewTabHide": {
+    "message": "Скриј"
+  },
+  "viewTabDisable": {
+    "message": "Оневозможи"
   },
   "viewTree": {
     "message": "Дрво"

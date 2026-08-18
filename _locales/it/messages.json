@@ -332,6 +332,17 @@
       }
     }
   },
+  "viewHiddenTabsHint": {
+    "message": "Sei nella vista $view$. Premi $back$ o usa la tavolozza dei comandi per tornare all'albero.",
+    "placeholders": {
+      "view": {
+        "content": "$1"
+      },
+      "back": {
+        "content": "$2"
+      }
+    }
+  },
   "deadProxyAdd": {
     "message": "Aggiungi un server proxy per i controlli dei link morti"
   },
@@ -752,9 +763,6 @@
   "optionDeadScanTimeout": {
     "message": "Timeout scansione link morti in secondi (2-30)"
   },
-  "optionHighlightUnsynced": {
-    "message": "Evidenzia segnalibri non sincronizzati"
-  },
   "optionOnlyShowBookmarkBar": {
     "message": "Mostra solo i segnalibri nella barra dei segnalibri"
   },
@@ -802,6 +810,9 @@
   },
   "optionShowSyncStatus": {
     "message": "Mostra indicatori di sincronizzazione"
+  },
+  "optionHighlightUnsynced": {
+    "message": "Oscura i segnalibri non sincronizzati"
   },
   "optionShowViewTabs": {
     "message": "Mostra schede vista sotto la casella di ricerca"
@@ -1628,6 +1639,24 @@
         "content": "$1"
       }
     }
+  },
+  "viewStateEnabled": {
+    "message": "Abilitato"
+  },
+  "viewStateDisabled": {
+    "message": "Disabilitato"
+  },
+  "viewEnable": {
+    "message": "Abilita"
+  },
+  "viewDisable": {
+    "message": "Disabilita"
+  },
+  "viewTabHide": {
+    "message": "Nascondi"
+  },
+  "viewTabDisable": {
+    "message": "Disabilita"
   },
   "viewTree": {
     "message": "Albero"

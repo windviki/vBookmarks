@@ -332,6 +332,17 @@
       }
     }
   },
+  "viewHiddenTabsHint": {
+    "message": "現在 $view$ ビューを表示中です。ツリーに戻るには、$back$ を押すか、コマンドパレットを使用してください。",
+    "placeholders": {
+      "view": {
+        "content": "$1"
+      },
+      "back": {
+        "content": "$2"
+      }
+    }
+  },
   "deadProxyAdd": {
     "message": "リンク切れチェック用のプロキシサーバーを追加"
   },
@@ -752,9 +763,6 @@
   "optionDeadScanTimeout": {
     "message": "デッドリンクスキャンのタイムアウト秒数 (2-30)"
   },
-  "optionHighlightUnsynced": {
-    "message": "未同期のブックマークをハイライト"
-  },
   "optionOnlyShowBookmarkBar": {
     "message": "ブックマークバーのブックマークのみを表示する"
   },
@@ -802,6 +810,9 @@
   },
   "optionShowSyncStatus": {
     "message": "同期ステータスインジケーターを表示"
+  },
+  "optionHighlightUnsynced": {
+    "message": "未同期ブックマークを暗く表示"
   },
   "optionShowViewTabs": {
     "message": "検索ボックスの下にビュータブを表示"
@@ -1628,6 +1639,24 @@
         "content": "$1"
       }
     }
+  },
+  "viewStateEnabled": {
+    "message": "有効"
+  },
+  "viewStateDisabled": {
+    "message": "無効"
+  },
+  "viewEnable": {
+    "message": "有効にする"
+  },
+  "viewDisable": {
+    "message": "無効にする"
+  },
+  "viewTabHide": {
+    "message": "非表示"
+  },
+  "viewTabDisable": {
+    "message": "無効化"
   },
   "viewTree": {
     "message": "ツリー"

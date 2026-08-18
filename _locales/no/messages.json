@@ -332,6 +332,17 @@
       }
     }
   },
+  "viewHiddenTabsHint": {
+    "message": "Du er i $view$-visningen. Trykk $back$ eller bruk kommandopaletten for å gå tilbake til treet.",
+    "placeholders": {
+      "view": {
+        "content": "$1"
+      },
+      "back": {
+        "content": "$2"
+      }
+    }
+  },
   "deadProxyAdd": {
     "message": "Legg til en proxy-server for sjekk av døde lenker"
   },
@@ -752,9 +763,6 @@
   "optionDeadScanTimeout": {
     "message": "Dødlenke-skann tidsavbrudd i sekunder (2-30)"
   },
-  "optionHighlightUnsynced": {
-    "message": "Fremhev ikke-synkroniserte bokmerker"
-  },
   "optionOnlyShowBookmarkBar": {
     "message": "Vis kun bokmerker i Bokmerkefeltet"
   },
@@ -802,6 +810,9 @@
   },
   "optionShowSyncStatus": {
     "message": "Vis synkroniseringsstatusindikatorer"
+  },
+  "optionHighlightUnsynced": {
+    "message": "Demp usynkroniserte bokmerker"
   },
   "optionShowViewTabs": {
     "message": "Vis visningsfaner under søkeboksen"
@@ -1628,6 +1639,24 @@
         "content": "$1"
       }
     }
+  },
+  "viewStateEnabled": {
+    "message": "Aktivert"
+  },
+  "viewStateDisabled": {
+    "message": "Deaktivert"
+  },
+  "viewEnable": {
+    "message": "Aktiver"
+  },
+  "viewDisable": {
+    "message": "Deaktiver"
+  },
+  "viewTabHide": {
+    "message": "Skjul"
+  },
+  "viewTabDisable": {
+    "message": "Deaktiver"
   },
   "viewTree": {
     "message": "Tre"

@@ -332,6 +332,17 @@
       }
     }
   },
+  "viewHiddenTabsHint": {
+    "message": "A(z) $view$ nézetben van. A fához való visszatéréshez nyomja meg a(z) $back$ gombot, vagy használja a parancspalettát.",
+    "placeholders": {
+      "view": {
+        "content": "$1"
+      },
+      "back": {
+        "content": "$2"
+      }
+    }
+  },
   "deadProxyAdd": {
     "message": "Proxykiszolgáló hozzáadása a hibás linkek ellenőrzéséhez"
   },
@@ -752,9 +763,6 @@
   "optionDeadScanTimeout": {
     "message": "Holt hivatkozás vizsgálat időtúllépés másodpercben (2-30)"
   },
-  "optionHighlightUnsynced": {
-    "message": "Szinkronizálatlan könyvjelzők kiemelése"
-  },
   "optionOnlyShowBookmarkBar": {
     "message": "Csak a könyvjelzők megjelenítése a Könyvjelzőlécen"
   },
@@ -802,6 +810,9 @@
   },
   "optionShowSyncStatus": {
     "message": "Szinkronizálási állapotjelzők megjelenítése"
+  },
+  "optionHighlightUnsynced": {
+    "message": "Szinkronizálatlan könyvjelzők halványítása"
   },
   "optionShowViewTabs": {
     "message": "Nézetfülek megjelenítése a keresőmező alatt"
@@ -1628,6 +1639,24 @@
         "content": "$1"
       }
     }
+  },
+  "viewStateEnabled": {
+    "message": "Engedélyezve"
+  },
+  "viewStateDisabled": {
+    "message": "Letiltva"
+  },
+  "viewEnable": {
+    "message": "Engedélyezés"
+  },
+  "viewDisable": {
+    "message": "Letiltás"
+  },
+  "viewTabHide": {
+    "message": "Elrejtés"
+  },
+  "viewTabDisable": {
+    "message": "Letiltás"
   },
   "viewTree": {
     "message": "Fa"

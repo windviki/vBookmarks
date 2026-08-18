@@ -332,6 +332,17 @@
       }
     }
   },
+  "viewHiddenTabsHint": {
+    "message": "$view$ görünümündesiniz. Ağaca dönmek için $back$ tuşuna basın veya komut paletini kullanın.",
+    "placeholders": {
+      "view": {
+        "content": "$1"
+      },
+      "back": {
+        "content": "$2"
+      }
+    }
+  },
   "deadProxyAdd": {
     "message": "Ölü bağlantı kontrolleri için bir proxy sunucusu ekle"
   },
@@ -752,9 +763,6 @@
   "optionDeadScanTimeout": {
     "message": "Ölü bağlantı tarama zaman aşımı (saniye) (2-30)"
   },
-  "optionHighlightUnsynced": {
-    "message": "Senkronize edilmemiş yer imlerini vurgula"
-  },
   "optionOnlyShowBookmarkBar": {
     "message": "Sadece yer imleri çubuğundaki yer imlerini göster"
   },
@@ -802,6 +810,9 @@
   },
   "optionShowSyncStatus": {
     "message": "Senkronizasyon durumu göstergelerini göster"
+  },
+  "optionHighlightUnsynced": {
+    "message": "Senkronize edilmemiş yer imlerini karart"
   },
   "optionShowViewTabs": {
     "message": "Arama kutusunun altında görünüm sekmelerini göster"
@@ -1628,6 +1639,24 @@
         "content": "$1"
       }
     }
+  },
+  "viewStateEnabled": {
+    "message": "Etkin"
+  },
+  "viewStateDisabled": {
+    "message": "Devre dışı"
+  },
+  "viewEnable": {
+    "message": "Etkinleştir"
+  },
+  "viewDisable": {
+    "message": "Devre dışı bırak"
+  },
+  "viewTabHide": {
+    "message": "Gizle"
+  },
+  "viewTabDisable": {
+    "message": "Devre dışı bırak"
   },
   "viewTree": {
     "message": "Ağaç"

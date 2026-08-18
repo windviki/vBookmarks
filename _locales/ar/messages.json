@@ -332,6 +332,17 @@
       }
     }
   },
+  "viewHiddenTabsHint": {
+    "message": "أنت في العرض $view$. اضغط على $back$ أو استخدم لوحة الأوامر للعودة إلى الشجرة.",
+    "placeholders": {
+      "view": {
+        "content": "$1"
+      },
+      "back": {
+        "content": "$2"
+      }
+    }
+  },
   "deadProxyAdd": {
     "message": "أضف خادم وكيل لفحوصات الروابط المعطلة"
   },
@@ -752,9 +763,6 @@
   "optionDeadScanTimeout": {
     "message": "مهلة فحص الروابط المعطلة بالثواني (2-30)"
   },
-  "optionHighlightUnsynced": {
-    "message": "إبراز العلامات المرجعية غير المتزامنة"
-  },
   "optionOnlyShowBookmarkBar": {
     "message": "إظهار العلامات المرجعية في شريط العلامات المرجعية فقط"
   },
@@ -802,6 +810,9 @@
   },
   "optionShowSyncStatus": {
     "message": "إظهار مؤشرات حالة المزامنة"
+  },
+  "optionHighlightUnsynced": {
+    "message": "تعتيم الإشارات المرجعية غير المتزامنة"
   },
   "optionShowViewTabs": {
     "message": "إظهار علامات تبويب العرض أسفل مربع البحث"
@@ -1628,6 +1639,24 @@
         "content": "$1"
       }
     }
+  },
+  "viewStateEnabled": {
+    "message": "مفعّل"
+  },
+  "viewStateDisabled": {
+    "message": "معطّل"
+  },
+  "viewEnable": {
+    "message": "تفعيل"
+  },
+  "viewDisable": {
+    "message": "تعطيل"
+  },
+  "viewTabHide": {
+    "message": "إخفاء"
+  },
+  "viewTabDisable": {
+    "message": "تعطيل"
   },
   "viewTree": {
     "message": "الشجرة"

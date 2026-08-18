@@ -332,6 +332,17 @@
       }
     }
   },
+  "viewHiddenTabsHint": {
+    "message": "Sie befinden sich in der $view$-Ansicht. Drücken Sie $back$ oder verwenden Sie die Befehlspalette, um zum Baum zurückzukehren.",
+    "placeholders": {
+      "view": {
+        "content": "$1"
+      },
+      "back": {
+        "content": "$2"
+      }
+    }
+  },
   "deadProxyAdd": {
     "message": "Proxyserver für Tote-Links-Prüfungen hinzufügen"
   },
@@ -752,9 +763,6 @@
   "optionDeadScanTimeout": {
     "message": "Zeitüberschreitung für Dead-Link-Scans in Sekunden (2-30)"
   },
-  "optionHighlightUnsynced": {
-    "message": "Nicht synchronisierte Lesezeichen hervorheben"
-  },
   "optionOnlyShowBookmarkBar": {
     "message": "Nur Lesezeichen in Lesezeichenleiste anzeigen"
   },
@@ -802,6 +810,9 @@
   },
   "optionShowSyncStatus": {
     "message": "Synchronisierungsstatus anzeigen"
+  },
+  "optionHighlightUnsynced": {
+    "message": "Nicht synchronisierte Lesezeichen ausgrauen"
   },
   "optionShowViewTabs": {
     "message": "Ansichtsregister unterhalb des Suchfelds anzeigen"
@@ -1628,6 +1639,24 @@
         "content": "$1"
       }
     }
+  },
+  "viewStateEnabled": {
+    "message": "Aktiviert"
+  },
+  "viewStateDisabled": {
+    "message": "Deaktiviert"
+  },
+  "viewEnable": {
+    "message": "Aktivieren"
+  },
+  "viewDisable": {
+    "message": "Deaktivieren"
+  },
+  "viewTabHide": {
+    "message": "Ausblenden"
+  },
+  "viewTabDisable": {
+    "message": "Deaktivieren"
   },
   "viewTree": {
     "message": "Baum"

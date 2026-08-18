@@ -332,6 +332,17 @@
       }
     }
   },
+  "viewHiddenTabsHint": {
+    "message": "Olete $view$ vaates. Puu juurde naasmiseks vajutage $back$ või kasutage käsupaletti.",
+    "placeholders": {
+      "view": {
+        "content": "$1"
+      },
+      "back": {
+        "content": "$2"
+      }
+    }
+  },
   "deadProxyAdd": {
     "message": "Lisa puhverserver surnud linkide kontrollimiseks"
   },
@@ -752,9 +763,6 @@
   "optionDeadScanTimeout": {
     "message": "Surnud linkide skannimise ajalõpp sekundites (2-30)"
   },
-  "optionHighlightUnsynced": {
-    "message": "Esile kütta sünkroniseerimata järjehoidjad"
-  },
   "optionOnlyShowBookmarkBar": {
     "message": "Kuva ainult järjehoidjad järjehoidjade ribal"
   },
@@ -802,6 +810,9 @@
   },
   "optionShowSyncStatus": {
     "message": "Näita sünkroniseerimise oleku indikaatoreid"
+  },
+  "optionHighlightUnsynced": {
+    "message": "Tuhmista sünkroonimata järjehoidjad"
   },
   "optionShowViewTabs": {
     "message": "Näita vaatekaarte otsingukasti all"
@@ -1628,6 +1639,24 @@
         "content": "$1"
       }
     }
+  },
+  "viewStateEnabled": {
+    "message": "Lubatud"
+  },
+  "viewStateDisabled": {
+    "message": "Keelatud"
+  },
+  "viewEnable": {
+    "message": "Luba"
+  },
+  "viewDisable": {
+    "message": "Keela"
+  },
+  "viewTabHide": {
+    "message": "Peida"
+  },
+  "viewTabDisable": {
+    "message": "Keela"
   },
   "viewTree": {
     "message": "Puu"

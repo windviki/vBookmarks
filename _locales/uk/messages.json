@@ -332,6 +332,17 @@
       }
     }
   },
+  "viewHiddenTabsHint": {
+    "message": "Ви перебуваєте у перегляді $view$. Натисніть $back$ або скористайтеся палітрою команд, щоб повернутися до дерева.",
+    "placeholders": {
+      "view": {
+        "content": "$1"
+      },
+      "back": {
+        "content": "$2"
+      }
+    }
+  },
   "deadProxyAdd": {
     "message": "Додати проксі-сервер для перевірки мертвих посилань"
   },
@@ -752,9 +763,6 @@
   "optionDeadScanTimeout": {
     "message": "Час очікування сканування мертвих посилань (сек., 2-30)"
   },
-  "optionHighlightUnsynced": {
-    "message": "Підсвічувати несинхронізовані закладки"
-  },
   "optionOnlyShowBookmarkBar": {
     "message": "Показувати тільки закладки з панелі закладок"
   },
@@ -802,6 +810,9 @@
   },
   "optionShowSyncStatus": {
     "message": "Показувати індикатори стану синхронізації"
+  },
+  "optionHighlightUnsynced": {
+    "message": "Затемнити несинхронізовані закладки"
   },
   "optionShowViewTabs": {
     "message": "Показувати вкладки видів під рядком пошуку"
@@ -1628,6 +1639,24 @@
         "content": "$1"
       }
     }
+  },
+  "viewStateEnabled": {
+    "message": "Увімкнено"
+  },
+  "viewStateDisabled": {
+    "message": "Вимкнено"
+  },
+  "viewEnable": {
+    "message": "Увімкнути"
+  },
+  "viewDisable": {
+    "message": "Вимкнути"
+  },
+  "viewTabHide": {
+    "message": "Сховати"
+  },
+  "viewTabDisable": {
+    "message": "Вимкнути"
   },
   "viewTree": {
     "message": "Дерево"

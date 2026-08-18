@@ -332,6 +332,17 @@
       }
     }
   },
+  "viewHiddenTabsHint": {
+    "message": "Jesteś w widoku $view$. Naciśnij $back$ lub użyj palety poleceń, aby wrócić do drzewa.",
+    "placeholders": {
+      "view": {
+        "content": "$1"
+      },
+      "back": {
+        "content": "$2"
+      }
+    }
+  },
   "deadProxyAdd": {
     "message": "Dodaj serwer proxy do sprawdzania martwych linków"
   },
@@ -752,9 +763,6 @@
   "optionDeadScanTimeout": {
     "message": "Limit czasu skanowania martwych linków w sekundach (2-30)"
   },
-  "optionHighlightUnsynced": {
-    "message": "Podświetl niesynchronizowane zakładki"
-  },
   "optionOnlyShowBookmarkBar": {
     "message": "Pokaż tylko zakładki na pasku zakładek"
   },
@@ -802,6 +810,9 @@
   },
   "optionShowSyncStatus": {
     "message": "Pokaż wskaźniki statusu synchronizacji"
+  },
+  "optionHighlightUnsynced": {
+    "message": "Przyciemniaj niezsynchronizowane zakładki"
   },
   "optionShowViewTabs": {
     "message": "Pokaż karty widoków pod polem wyszukiwania"
@@ -1628,6 +1639,24 @@
         "content": "$1"
       }
     }
+  },
+  "viewStateEnabled": {
+    "message": "Włączone"
+  },
+  "viewStateDisabled": {
+    "message": "Wyłączone"
+  },
+  "viewEnable": {
+    "message": "Włącz"
+  },
+  "viewDisable": {
+    "message": "Wyłącz"
+  },
+  "viewTabHide": {
+    "message": "Ukryj"
+  },
+  "viewTabDisable": {
+    "message": "Wyłącz"
   },
   "viewTree": {
     "message": "Drzewo"

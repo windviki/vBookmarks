@@ -332,6 +332,17 @@
       }
     }
   },
+  "viewHiddenTabsHint": {
+    "message": "আপনি $view$ ভিউতে আছেন। ট্রিতে ফিরে যেতে $back$ চাপুন বা কমান্ড প্যালেট ব্যবহার করুন।",
+    "placeholders": {
+      "view": {
+        "content": "$1"
+      },
+      "back": {
+        "content": "$2"
+      }
+    }
+  },
   "deadProxyAdd": {
     "message": "ডেড-লিংক পরীক্ষার জন্য একটি প্রক্সি সার্ভার যোগ করুন"
   },
@@ -752,9 +763,6 @@
   "optionDeadScanTimeout": {
     "message": "মৃত লিঙ্ক স্ক্যান টাইমআউট সেকেন্ডে (২-৩০)"
   },
-  "optionHighlightUnsynced": {
-    "message": "আনসিন্ক বুকমার্ক হাইলাইট করুন"
-  },
   "optionOnlyShowBookmarkBar": {
     "message": "শুধু বুকমার্ক বারে বুকমার্ক দেখান"
   },
@@ -802,6 +810,9 @@
   },
   "optionShowSyncStatus": {
     "message": "সিঙ্ক স্ট্যাটাস ইনডিকেটর দেখান"
+  },
+  "optionHighlightUnsynced": {
+    "message": "সিঙ্কহীন বুকমার্ক ম্লান করুন"
   },
   "optionShowViewTabs": {
     "message": "অনুসন্ধান বক্সের নীচে দৃশ্য ট্যাব দেখান"
@@ -1628,6 +1639,24 @@
         "content": "$1"
       }
     }
+  },
+  "viewStateEnabled": {
+    "message": "সক্রিয়"
+  },
+  "viewStateDisabled": {
+    "message": "নিষ্ক্রিয়"
+  },
+  "viewEnable": {
+    "message": "সক্রিয় করুন"
+  },
+  "viewDisable": {
+    "message": "নিষ্ক্রিয় করুন"
+  },
+  "viewTabHide": {
+    "message": "লুকান"
+  },
+  "viewTabDisable": {
+    "message": "নিষ্ক্রিয় করুন"
   },
   "viewTree": {
     "message": "ট্রি"

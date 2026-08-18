@@ -332,6 +332,17 @@
       }
     }
   },
+  "viewHiddenTabsHint": {
+    "message": "Olet $view$-näkymässä. Paina $back$ tai käytä komentopalettia palataksesi puuhun.",
+    "placeholders": {
+      "view": {
+        "content": "$1"
+      },
+      "back": {
+        "content": "$2"
+      }
+    }
+  },
   "deadProxyAdd": {
     "message": "Lisää välityspalvelin kuolleiden linkkien tarkistuksia varten"
   },
@@ -752,9 +763,6 @@
   "optionDeadScanTimeout": {
     "message": "Kuolleen linkin skannauksen aikakatkaisu sekunteina (2-30)"
   },
-  "optionHighlightUnsynced": {
-    "message": "Korosta synkronoimattomat kirjanmerkit"
-  },
   "optionOnlyShowBookmarkBar": {
     "message": "Näytä vain kirjanmerkit Kirjanmerkkipalkissa"
   },
@@ -802,6 +810,9 @@
   },
   "optionShowSyncStatus": {
     "message": "Näytä synkronointitilan ilmaisimet"
+  },
+  "optionHighlightUnsynced": {
+    "message": "Himmennä synkronoimattomat kirjanmerkit"
   },
   "optionShowViewTabs": {
     "message": "Näytä näkymävälilehdet hakukentän alla"
@@ -1628,6 +1639,24 @@
         "content": "$1"
       }
     }
+  },
+  "viewStateEnabled": {
+    "message": "Käytössä"
+  },
+  "viewStateDisabled": {
+    "message": "Ei käytössä"
+  },
+  "viewEnable": {
+    "message": "Ota käyttöön"
+  },
+  "viewDisable": {
+    "message": "Poista käytöstä"
+  },
+  "viewTabHide": {
+    "message": "Piilota"
+  },
+  "viewTabDisable": {
+    "message": "Poista käytöstä"
   },
   "viewTree": {
     "message": "Puu"

@@ -331,6 +331,17 @@
       }
     }
   },
+  "viewHiddenTabsHint": {
+    "message": "Você está na visualização $view$. Pressione $back$ ou use a paleta de comandos para retornar à árvore.",
+    "placeholders": {
+      "view": {
+        "content": "$1"
+      },
+      "back": {
+        "content": "$2"
+      }
+    }
+  },
   "deadProxyAdd": {
     "message": "Adicionar um servidor proxy para verificação de links quebrados"
   },
@@ -749,9 +760,6 @@
   "optionDeadScanTimeout": {
     "message": "Tempo limite de verificação de links mortos em segundos (2-30)"
   },
-  "optionHighlightUnsynced": {
-    "message": "Destacar favoritos não sincronizados"
-  },
   "optionOnlyShowBookmarkBar": {
     "message": "Mostrar apenas favoritos da barra de favoritos"
   },
@@ -799,6 +807,9 @@
   },
   "optionShowSyncStatus": {
     "message": "Mostrar indicadores de status de sincronização"
+  },
+  "optionHighlightUnsynced": {
+    "message": "Esmaecer favoritos não sincronizados"
   },
   "optionShowViewTabs": {
     "message": "Mostrar abas de visualização abaixo da caixa de pesquisa"
@@ -1624,6 +1635,24 @@
         "content": "$1"
       }
     }
+  },
+  "viewStateEnabled": {
+    "message": "Ativado"
+  },
+  "viewStateDisabled": {
+    "message": "Desativado"
+  },
+  "viewEnable": {
+    "message": "Ativar"
+  },
+  "viewDisable": {
+    "message": "Desativar"
+  },
+  "viewTabHide": {
+    "message": "Ocultar"
+  },
+  "viewTabDisable": {
+    "message": "Desativar"
   },
   "viewTree": {
     "message": "Árvore"

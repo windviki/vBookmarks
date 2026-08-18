@@ -753,7 +753,7 @@
     "message": "死链扫描超时秒数 (2-30)"
   },
   "optionHighlightUnsynced": {
-    "message": "高亮未同步的书签"
+    "message": "变淡显示未同步的书签"
   },
   "optionOnlyShowBookmarkBar": {
     "message": "仅显示书签栏中的书签"
@@ -1629,6 +1629,24 @@
       }
     }
   },
+  "viewStateEnabled": {
+    "message": "已经启用"
+  },
+  "viewStateDisabled": {
+    "message": "已经禁用"
+  },
+  "viewEnable": {
+    "message": "启用"
+  },
+  "viewDisable": {
+    "message": "禁用"
+  },
+  "viewTabHide": {
+    "message": "隐藏"
+  },
+  "viewTabDisable": {
+    "message": "禁用"
+  },
   "viewTree": {
     "message": "树"
   },
@@ -1640,5 +1658,16 @@
   },
   "optionDeadProxyStripHint": {
     "message": "关闭后将在死链视图中隐藏该提示；代理服务器仍可在此处配置，且已保存的服务器始终会在该视图中显示其管理行。"
+  },
+  "viewHiddenTabsHint": {
+    "message": "当前位于$view$视图，你可以通过 $back$ 键或命令面板回到树视图。",
+    "placeholders": {
+      "view": {
+        "content": "$1"
+      },
+      "back": {
+        "content": "$2"
+      }
+    }
   }
 }

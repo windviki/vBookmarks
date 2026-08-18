@@ -332,6 +332,17 @@
       }
     }
   },
+  "viewHiddenTabsHint": {
+    "message": "U bevindt zich in de $view$-weergave. Druk op $back$ of gebruik het opdrachtpalet om terug te keren naar de boom.",
+    "placeholders": {
+      "view": {
+        "content": "$1"
+      },
+      "back": {
+        "content": "$2"
+      }
+    }
+  },
   "deadProxyAdd": {
     "message": "Proxyserver toevoegen voor dode-linkcontroles"
   },
@@ -752,9 +763,6 @@
   "optionDeadScanTimeout": {
     "message": "Dode-link scan time-out in seconden (2-30)"
   },
-  "optionHighlightUnsynced": {
-    "message": "Niet-gesynchroniseerde bladwijzers markeren"
-  },
   "optionOnlyShowBookmarkBar": {
     "message": "Alleen bladwijzers in bladwijzerbalk tonen"
   },
@@ -802,6 +810,9 @@
   },
   "optionShowSyncStatus": {
     "message": "Synchronisatiestatusindicatoren tonen"
+  },
+  "optionHighlightUnsynced": {
+    "message": "Niet-gesynchroniseerde bladwijzers dimmen"
   },
   "optionShowViewTabs": {
     "message": "Weergavetabbladen onder het zoekvak tonen"
@@ -1628,6 +1639,24 @@
         "content": "$1"
       }
     }
+  },
+  "viewStateEnabled": {
+    "message": "Ingeschakeld"
+  },
+  "viewStateDisabled": {
+    "message": "Uitgeschakeld"
+  },
+  "viewEnable": {
+    "message": "Inschakelen"
+  },
+  "viewDisable": {
+    "message": "Uitschakelen"
+  },
+  "viewTabHide": {
+    "message": "Verbergen"
+  },
+  "viewTabDisable": {
+    "message": "Uitschakelen"
   },
   "viewTree": {
     "message": "Boom"

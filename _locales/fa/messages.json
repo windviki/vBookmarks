@@ -332,6 +332,17 @@
       }
     }
   },
+  "viewHiddenTabsHint": {
+    "message": "شما در نمای $view$ هستید. برای بازگشت به درخت، دکمه $back$ را فشار دهید یا از پالت فرمان استفاده کنید.",
+    "placeholders": {
+      "view": {
+        "content": "$1"
+      },
+      "back": {
+        "content": "$2"
+      }
+    }
+  },
   "deadProxyAdd": {
     "message": "افزودن سرور پروکسی برای بررسی لینک‌های خراب"
   },
@@ -752,9 +763,6 @@
   "optionDeadScanTimeout": {
     "message": "مهلت اسکن لینک مرده بر حسب ثانیه (۲-۳۰)"
   },
-  "optionHighlightUnsynced": {
-    "message": "برجسته کردن نشانک‌های همگام‌سازی نشده"
-  },
   "optionOnlyShowBookmarkBar": {
     "message": "فقط نشانک‌های نوار نشانک‌ها را نشان بده"
   },
@@ -802,6 +810,9 @@
   },
   "optionShowSyncStatus": {
     "message": "نمایش شاخص‌های وضعیت همگام‌سازی"
+  },
+  "optionHighlightUnsynced": {
+    "message": "کمرنگ کردن نشانک‌های همگام‌نشده"
   },
   "optionShowViewTabs": {
     "message": "نمایش تب‌های نما در زیر کادر جستجو"
@@ -1628,6 +1639,24 @@
         "content": "$1"
       }
     }
+  },
+  "viewStateEnabled": {
+    "message": "فعال"
+  },
+  "viewStateDisabled": {
+    "message": "غیرفعال"
+  },
+  "viewEnable": {
+    "message": "فعال کردن"
+  },
+  "viewDisable": {
+    "message": "غیرفعال کردن"
+  },
+  "viewTabHide": {
+    "message": "مخفی کردن"
+  },
+  "viewTabDisable": {
+    "message": "غیرفعال کردن"
   },
   "viewTree": {
     "message": "درخت"

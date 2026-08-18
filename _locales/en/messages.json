@@ -792,7 +792,7 @@
     "message": "Show sync status indicators"
   },
   "optionHighlightUnsynced": {
-    "message": "Highlight unsynced bookmarks"
+    "message": "Dim unsynced bookmarks"
   },
   "optionAutoRefreshSync": {
     "message": "Auto-refresh sync status"
@@ -921,6 +921,24 @@
         "content": "$1"
       }
     }
+  },
+  "viewStateEnabled": {
+    "message": "Enabled"
+  },
+  "viewStateDisabled": {
+    "message": "Disabled"
+  },
+  "viewEnable": {
+    "message": "Enable"
+  },
+  "viewDisable": {
+    "message": "Disable"
+  },
+  "viewTabHide": {
+    "message": "Hide"
+  },
+  "viewTabDisable": {
+    "message": "Disable"
   },
   "sortFolderContents": {
     "message": "Sort Folder Contents"
@@ -1820,6 +1838,17 @@
     "placeholders": {
       "1": {
         "content": "$1"
+      }
+    }
+  },
+  "viewHiddenTabsHint": {
+    "message": "You're in the $view$ view. Press $back$ or use the command palette to return to the tree.",
+    "placeholders": {
+      "view": {
+        "content": "$1"
+      },
+      "back": {
+        "content": "$2"
       }
     }
   }

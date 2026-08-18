@@ -332,6 +332,17 @@
       }
     }
   },
+  "viewHiddenTabsHint": {
+    "message": "Bạn đang ở chế độ $view$. Nhấn $back$ hoặc dùng bảng lệnh để quay lại cây.",
+    "placeholders": {
+      "view": {
+        "content": "$1"
+      },
+      "back": {
+        "content": "$2"
+      }
+    }
+  },
   "deadProxyAdd": {
     "message": "Thêm máy chủ proxy để kiểm tra liên kết hỏng"
   },
@@ -752,9 +763,6 @@
   "optionDeadScanTimeout": {
     "message": "Thời gian chờ quét liên kết chết (giây) (2-30)"
   },
-  "optionHighlightUnsynced": {
-    "message": "Tô sáng dấu trang chưa đồng bộ"
-  },
   "optionOnlyShowBookmarkBar": {
     "message": "Chỉ hiển thị dấu trang trong Thanh Dấu Trang"
   },
@@ -802,6 +810,9 @@
   },
   "optionShowSyncStatus": {
     "message": "Hiển thị chỉ báo trạng thái đồng bộ"
+  },
+  "optionHighlightUnsynced": {
+    "message": "Làm mờ dấu trang chưa đồng bộ"
   },
   "optionShowViewTabs": {
     "message": "Hiển thị các tab chế độ xem bên dưới ô tìm kiếm"
@@ -1628,6 +1639,24 @@
         "content": "$1"
       }
     }
+  },
+  "viewStateEnabled": {
+    "message": "Đã bật"
+  },
+  "viewStateDisabled": {
+    "message": "Đã tắt"
+  },
+  "viewEnable": {
+    "message": "Bật"
+  },
+  "viewDisable": {
+    "message": "Tắt"
+  },
+  "viewTabHide": {
+    "message": "Ẩn"
+  },
+  "viewTabDisable": {
+    "message": "Tắt"
   },
   "viewTree": {
     "message": "Cây"

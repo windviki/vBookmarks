@@ -332,6 +332,17 @@
       }
     }
   },
+  "viewHiddenTabsHint": {
+    "message": "Вы находитесь в представлении $view$. Нажмите $back$ или используйте палитру команд, чтобы вернуться к дереву.",
+    "placeholders": {
+      "view": {
+        "content": "$1"
+      },
+      "back": {
+        "content": "$2"
+      }
+    }
+  },
   "deadProxyAdd": {
     "message": "Добавить прокси-сервер для проверки битых ссылок"
   },
@@ -752,9 +763,6 @@
   "optionDeadScanTimeout": {
     "message": "Тайм-аут сканирования битых ссылок в секундах (2-30)"
   },
-  "optionHighlightUnsynced": {
-    "message": "Подсвечивать несинхронизированные закладки"
-  },
   "optionOnlyShowBookmarkBar": {
     "message": "Показывать только закладки в панели закладок"
   },
@@ -802,6 +810,9 @@
   },
   "optionShowSyncStatus": {
     "message": "Показывать индикаторы синхронизации"
+  },
+  "optionHighlightUnsynced": {
+    "message": "Затемнять несинхронизированные закладки"
   },
   "optionShowViewTabs": {
     "message": "Показывать вкладки видов под строкой поиска"
@@ -1628,6 +1639,24 @@
         "content": "$1"
       }
     }
+  },
+  "viewStateEnabled": {
+    "message": "Включено"
+  },
+  "viewStateDisabled": {
+    "message": "Отключено"
+  },
+  "viewEnable": {
+    "message": "Включить"
+  },
+  "viewDisable": {
+    "message": "Отключить"
+  },
+  "viewTabHide": {
+    "message": "Скрыть"
+  },
+  "viewTabDisable": {
+    "message": "Отключить"
   },
   "viewTree": {
     "message": "Дерево"
