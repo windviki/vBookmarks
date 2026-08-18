@@ -73,7 +73,7 @@
  */
 
 import { findDupes, pickKeeper, planDeletion } from './dupes.js';
-import { VIEW_ICONS, CHECK_ICON, CHEVRON_ICON, SELECT_ICON } from './icons.js';
+import { VIEW_ICONS, CHECK_ICON, CHEVRON_ICON, SELECT_ICON, TRASH_ICON } from './icons.js';
 import { initDropdowns } from './dropdown.js';
 import { makeRiskBanner, RISK_HELP_URL } from './risk-banner.js';
 import { htmlspecialchars } from './escape.js';
@@ -372,6 +372,8 @@ export function initViewDupes(ctx = {}) {
                     rightText: (showPath && path) ? path : '',
                     subText: (showPath && path) ? `${path} · ${fullTime}` : fullTime
                 }) +
+                `<button class="row-btn dupes-member-del" aria-label="${_m('rowActionDelete')}" ` +
+                `title="${_m('rowActionDelete')}">${TRASH_ICON}</button>` +
                 '</li>';
         }
         return html;
@@ -731,6 +733,21 @@ export function initViewDupes(ctx = {}) {
             const group = groups.find(g => g.key === (li && li.dataset.key));
             if (group)
                 cleanGroup(group);
+            return;
+        }
+        // 4.0.8: per-member floating delete — directly removes this one
+        // bookmark. The onRemoved listener regroups + re-renders, so a
+        // 2-item group disappears entirely and the toolbar stats update in
+        // real time; keeperOf falls back to the strategy pick if the deleted
+        // row was the current keeper.
+        const memberDel = closest('.dupes-member-del');
+        if (memberDel) {
+            e.preventDefault();
+            e.stopPropagation();
+            const li = memberDel.closest('li');
+            const id = li && li.dataset.nodeId;
+            if (id)
+                actions.deleteBookmark(id);
             return;
         }
         const radio = closest('.keeper-radio');

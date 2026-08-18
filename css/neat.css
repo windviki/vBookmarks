@@ -3383,6 +3383,19 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
 #dupes-list ul li.dupes-member a {
     flex: 1;
     min-width: 0;
+    margin-inline-end: 4px;
+}
+
+/* 4.0.8: member rows carry the same floating delete button recipe as the
+   dead view's row actions — hidden until hover/focus-within, danger red.
+   The rightmost button aligns with the toolbar's rightmost icon (select
+   mode): toolbar right edge is 8px from the container, so the last row-btn
+   gets an 8px end margin instead of the default 4px. */
+#dupes-list ul li.dupes-member > .row-btn:last-child {
+    margin-inline-end: 8px;
+}
+#dupes-list .row-btn.dupes-member-del {
+    color: var(--vbm-danger);
 }
 
 .keeper-radio {

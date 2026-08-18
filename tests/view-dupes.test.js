@@ -203,9 +203,13 @@ const setup = (opts = {}) => {
         capture(id) { this.captureCalls.push(id); },
         showToast(msg) { this.toastCalls.push(msg); }
     };
+    const actions = opts.actions || {
+        deleteBookmarkCalls: [],
+        deleteBookmark(id) { this.deleteBookmarkCalls.push(id); }
+    };
 
     const viewDupes = initViewDupes({
-        store, views, treeRender, separatorManager, treeView, dialogs, undo,
+        store, views, treeRender, separatorManager, treeView, dialogs, undo, actions,
         // Slice D: counts come from the visit-stats store; statsOff doubles
         // as the statsEnabled-off switch (most-visited greys out).
         visitStats: opts.visitStats || {
@@ -229,7 +233,7 @@ const setup = (opts = {}) => {
 
     return {
         viewDupes, $list, $container, doc, chrome: chromeStub, store, views,
-        treeRender, separatorManager, treeView, dialogs, undo, treeData,
+        treeRender, separatorManager, treeView, dialogs, undo, actions, treeData,
         def: () => views.def, fire, clickOn
     };
 };
@@ -386,6 +390,34 @@ describe('render (docs/plan-4.0.0/v4task-2-list.md §3.6)', () => {
         expect($list.innerHTML).toContain('<li class="empty-state" role="listitem"><i>dupesNone</i></li>');
         expect($list.innerHTML).toContain('disabled');
         expect($list.innerHTML).toContain('dupesApplyAll[0]');
+    });
+
+    it('renders a hover delete button on every member row (dead-view recipe)', () => {
+        const { $list, def } = setup({ pathOf: () => '' });
+        def().activate();
+        const html = $list.innerHTML;
+        expect(html.match(/class="row-btn dupes-member-del"/g)).toHaveLength(3);
+        expect(html.match(/aria-label="rowActionDelete"/g)).toHaveLength(3);
+        expect(html).toContain('vbm-icon-trash');
+    });
+
+    it('clicking a member delete button dispatches actions.deleteBookmark and stops the row click', () => {
+        const { def, actions, clickOn } = setup({});
+        def().activate();
+        const li = { dataset: { nodeId: '11', key: 'https://a.com' } };
+        const btn = {
+            closest(sel) {
+                if (sel === '.dupes-member-del')
+                    return this;
+                if (sel === 'li')
+                    return li;
+                return null;
+            }
+        };
+        const ev = clickOn(btn);
+        expect(ev.prevented).toBe(1);
+        expect(ev.stopped).toBe(1);
+        expect(actions.deleteBookmarkCalls).toEqual(['11']);
     });
 });
 
