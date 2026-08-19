@@ -84,7 +84,11 @@
 ```
 
 - 组头：颜色圆点（`.tab-group-dot.tg-{color}`）、标题（无标题回退 `tabGroupUntitled`）、
-  创建时间（`tabGroupCreatedAt` 元数据）、数量 pill、保存为书签文件夹按钮。
+  创建时间（`tabGroupCreatedAt` 元数据）、数量 pill，以及 5 个常显操作按钮：
+  激活组（聚焦第一个标签页）、重命名组（复用 `GroupDialog` 改标题/颜色）、
+  保存为书签文件夹、睡眠整组、关闭整组。
+- 折叠/展开同步到浏览器：本地 `collapsed` 集在每次刷新时由 `chrome.tabGroups.TabGroup.collapsed`
+  重建；用户折叠/展开/全部折叠/全部展开时同时调用 `chrome.tabGroups.update`。
 - 组创建时间：Chrome 不暴露组创建时间。视图维护 `tabGroupMeta`（storage.local JSON）
   记录首次观察到该 group id 的时间；刷新时补记。显示为相对时间或绝对日期。
 - 普通行复用 `treeRender.generateBookmarkHTML` 生成书签风格行（favicon/标题/URL 提示），
