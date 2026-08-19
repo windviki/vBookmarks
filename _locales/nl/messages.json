@@ -505,6 +505,9 @@
   "tabGroupsColorBorderHint": {
     "message": "Voegt een gekleurde linkerrand toe aan de kop- en lidrijen van elke tabbladgroep, zodat de groepskleur in één oogopslag zichtbaar is. De kleurstip blijft standaard aan. Standaard uit."
   },
+  "tabGroupsBookmarked": {
+    "message": "Bladwijzers"
+  },
   "deadProxyAdd": {
     "message": "Proxyserver toevoegen voor dode-linkcontroles"
   },

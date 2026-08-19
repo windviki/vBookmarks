@@ -505,6 +505,9 @@
   "tabGroupsColorBorderHint": {
     "message": "Añade un borde izquierdo de color a la cabecera y a las filas de miembros de cada grupo de pestañas para que el color del grupo se vea de un vistazo. El punto de color permanece activado por defecto. Desactivado por defecto."
   },
+  "tabGroupsBookmarked": {
+    "message": "Marcado"
+  },
   "deadProxyAdd": {
     "message": "Añadir un servidor proxy para comprobar enlaces rotos"
   },

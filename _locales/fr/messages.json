@@ -505,6 +505,9 @@
   "tabGroupsColorBorderHint": {
     "message": "Ajoute une bordure gauche colorée à l'en-tête et aux lignes des membres de chaque groupe d'onglets pour que la couleur du groupe soit visible d'un coup d'œil. Le point de couleur reste activé par défaut. Désactivé par défaut."
   },
+  "tabGroupsBookmarked": {
+    "message": "Ajouté aux favoris"
+  },
   "deadProxyAdd": {
     "message": "Ajouter un serveur proxy pour les vérifications de liens morts"
   },

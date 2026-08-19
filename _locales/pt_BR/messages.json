@@ -504,6 +504,9 @@
   "tabGroupsColorBorderHint": {
     "message": "Adiciona uma borda esquerda colorida ao cabeçalho e às linhas de membros de cada grupo de abas, para que a cor do grupo seja visível de relance. O ponto colorido permanece ativado por padrão. Desativado por padrão."
   },
+  "tabGroupsBookmarked": {
+    "message": "Adicionado aos favoritos"
+  },
   "deadProxyAdd": {
     "message": "Adicionar um servidor proxy para verificação de links quebrados"
   },

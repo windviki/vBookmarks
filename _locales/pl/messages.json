@@ -505,6 +505,9 @@
   "tabGroupsColorBorderHint": {
     "message": "Dodaje kolorową krawędź po lewej stronie nagłówka i wierszy członków każdej grupy kart, aby kolor grupy był widoczny na pierwszy rzut oka. Kropka koloru pozostaje domyślnie włączona. Domyślnie wyłączone."
   },
+  "tabGroupsBookmarked": {
+    "message": "Zapisane"
+  },
   "deadProxyAdd": {
     "message": "Dodaj serwer proxy do sprawdzania martwych linków"
   },

@@ -505,6 +505,9 @@
   "tabGroupsColorBorderHint": {
     "message": "Pievieno krāsainu kreiso malu katras cilnes grupas galvenei un dalībnieku rindām, lai grupas krāsa būtu redzama uzreiz. Krāsu punkts paliek ieslēgts pēc noklusējuma. Pēc noklusējuma izslēgts."
   },
+  "tabGroupsBookmarked": {
+    "message": "Atzīmēts"
+  },
   "deadProxyAdd": {
     "message": "Pievienot starpniekserveri bojātu saišu pārbaudei"
   },

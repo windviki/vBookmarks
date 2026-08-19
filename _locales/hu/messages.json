@@ -505,6 +505,9 @@
   "tabGroupsColorBorderHint": {
     "message": "Színes bal szegélyt ad a csoport fejlécéhez és tagjaihoz, így a csoportszín első pillantásra látható. A színpötty alapértelmezetten be van kapcsolva. Alapértelmezetten ki van kapcsolva."
   },
+  "tabGroupsBookmarked": {
+    "message": "Könyvjelzőzve"
+  },
   "deadProxyAdd": {
     "message": "Proxykiszolgáló hozzáadása a hibás linkek ellenőrzéséhez"
   },

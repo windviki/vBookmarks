@@ -505,6 +505,9 @@
   "tabGroupsColorBorderHint": {
     "message": "Přidá barevný levý okraj k hlavičce a řádkům členů každé skupiny karet, aby byla barva skupiny vidět na první pohled. Barevná tečka zůstává ve výchozím stavu zapnutá. Ve výchozím stavu vypnuto."
   },
+  "tabGroupsBookmarked": {
+    "message": "Záložky"
+  },
   "deadProxyAdd": {
     "message": "Přidat proxy server pro kontroly nefunkčních odkazů"
   },

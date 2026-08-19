@@ -505,6 +505,9 @@
   "tabGroupsColorBorderHint": {
     "message": "Prideda spalvotą kairįjį kraštą prie kiekvienos skirtukų grupės antraštės ir narių eilučių, kad grupės spalva būtų matoma iš karto. Spalvotas taškas lieka įjungtas pagal numatytuosius nustatymus. Išjungta pagal numatytuosius nustatymus."
   },
+  "tabGroupsBookmarked": {
+    "message": "Pažymėta"
+  },
   "deadProxyAdd": {
     "message": "Pridėti tarpinį serverį negyvų nuorodų tikrinimui"
   },

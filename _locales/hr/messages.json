@@ -505,6 +505,9 @@
   "tabGroupsColorBorderHint": {
     "message": "Dodaje obojeni lijevi rub zaglavlja i redaka članova svake grupe kartica kako bi se boja grupe vidjela na prvi pogled. Točka boje ostaje uključena prema zadanim postavkama. Isključeno prema zadanim postavkama."
   },
+  "tabGroupsBookmarked": {
+    "message": "Označeno"
+  },
   "deadProxyAdd": {
     "message": "Dodaj proxy poslužitelj za provjeru mrtvih veza"
   },

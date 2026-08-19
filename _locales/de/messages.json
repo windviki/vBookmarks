@@ -505,6 +505,9 @@
   "tabGroupsColorBorderHint": {
     "message": "Fügt jeder Tab-Gruppe einen farbigen linken Rand an Kopf- und Mitgliedszeilen hinzu, sodass die Gruppenfarbe auf einen Blick erkennbar ist. Der Farbpunkt bleibt standardmäßig aktiviert. Standardmäßig deaktiviert."
   },
+  "tabGroupsBookmarked": {
+    "message": "Lesezeichen"
+  },
   "deadProxyAdd": {
     "message": "Proxyserver für Tote-Links-Prüfungen hinzufügen"
   },

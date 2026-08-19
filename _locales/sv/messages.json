@@ -505,6 +505,9 @@
   "tabGroupsColorBorderHint": {
     "message": "Lägger till en färgad vänsterkant på varje tabbgrupps rubrik- och medlemsrader så att gruppfärgen syns direkt. Färgpricken förblir aktiverad som standard. Avaktiverad som standard."
   },
+  "tabGroupsBookmarked": {
+    "message": "Bokmärkt"
+  },
   "deadProxyAdd": {
     "message": "Lägg till proxyserver för döda länkar"
   },

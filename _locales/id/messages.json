@@ -505,6 +505,9 @@
   "tabGroupsColorBorderHint": {
     "message": "Menambahkan tepi kiri berwarna pada header grup tab dan baris anggotanya agar warna grup terlihat sekilas. Titik warna tetap aktif secara default. Nonaktif secara default."
   },
+  "tabGroupsBookmarked": {
+    "message": "Ditandai"
+  },
   "deadProxyAdd": {
     "message": "Tambahkan server proxy untuk pemeriksaan tautan mati"
   },

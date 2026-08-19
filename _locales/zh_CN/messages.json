@@ -1877,5 +1877,8 @@
   },
   "tabGroupsColorBorderHint": {
     "message": "为每个标签组的组头和成员行添加同色左边线，让分组颜色一目了然。颜色圆点默认仍然保留。默认关闭。"
+  },
+  "tabGroupsBookmarked": {
+    "message": "已收藏"
   }
 }

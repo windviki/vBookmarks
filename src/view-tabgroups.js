@@ -16,7 +16,7 @@
  * dropping callbacks.
  */
 
-import { VIEW_ICONS, STAR_ICON, SELECT_ICON, FOLDER_ICON, EDIT_ICON, SLEEP_ICON, ACTIVATE_ICON, TRASH_ICON, REDO_ICON, COLLAPSE_ALL_ICON, EXPAND_ALL_ICON } from './icons.js';
+import { VIEW_ICONS, STAR_ICON, STAR_ICON_FILLED, SELECT_ICON, FOLDER_ICON, EDIT_ICON, SLEEP_ICON, ACTIVATE_ICON, TRASH_ICON, REDO_ICON, COLLAPSE_ALL_ICON, EXPAND_ALL_ICON } from './icons.js';
 import { htmlspecialchars } from './escape.js';
 import { parkRowFocus, unparkRowFocus, parkToolbarFocus, restoreToolbarFocus } from './list-focus.js';
 import { saveSession, sessionFolderName, tabsToBookmarks } from './session.js';
@@ -57,6 +57,7 @@ export function initViewTabGroups(ctx = {}) {
     let selecting = false;
     const selected = new Set();   // tab ids
     const collapsed = new Set();  // group ids
+    let bookmarkedUrls = new Set(); // tab URLs that already exist as bookmarks
     let dragTabId = null;
 
     const groupById = id => groups.find(g => String(g.id) === String(id));
@@ -64,6 +65,23 @@ export function initViewTabGroups(ctx = {}) {
     // Chrome reports groupId: -1 for tabs that are NOT grouped; every
     // truthiness check must treat -1 as "no group".
     const isGrouped = tab => !!tab && !!tab.groupId && tab.groupId !== -1;
+
+    // Walk the bookmark tree once per refresh and remember which URLs are
+    // already bookmarked. Row state (filled/outline star) reads this set.
+    const collectBookmarkedUrls = tree => {
+        const urls = new Set();
+        const walk = nodes => {
+            for (let i = 0, l = (nodes || []).length; i < l; i++) {
+                const node = nodes[i];
+                if (node.children)
+                    walk(node.children);
+                else if (node.url)
+                    urls.add(node.url);
+            }
+        };
+        walk(tree || []);
+        return urls;
+    };
 
     // --- Data -----------------------------------------------------------------
     const queryGroups = (windowId, cb) => {
@@ -97,7 +115,12 @@ export function initViewTabGroups(ctx = {}) {
                 views.updateBadges();
                 if (!views.isActive('tabgroups'))
                     return;
-                render();
+                chrome.bookmarks.getTree(tree => {
+                    if (token !== refreshToken)
+                        return;
+                    bookmarkedUrls = collectBookmarkedUrls(tree);
+                    render();
+                });
             });
         });
     };
@@ -183,15 +206,24 @@ export function initViewTabGroups(ctx = {}) {
         const tid = String(tab.id);
         const isCurrent = String(tab.id) === String(currentTabId);
         const inGroup = isGrouped(tab);
+        const isSelected = selected.has(tid);
+        const bookmarked = bookmarkedUrls.has(tab.url || '');
         const addLabel = _m('tabGroupsAddBookmark');
+        const bookmarkedLabel = _m('tabGroupsBookmarked');
         const currentLabel = _m('tabGroupsCurrentTab');
         const extras = `data-tab-id="${tid}" data-url="${htmlspecialchars(tab.url || '')}"`;
         const badge = isCurrent ? [{ text: currentLabel, cls: 'current' }] : [];
         const groupColor = inGroup ? ((groupById(tab.groupId) || {}).color || 'grey') : '';
-        const rowClass = `vbm-row tabgroups-row${isCurrent ? ' tabgroups-current' : ''}${inGroup ? ` grouped tg-${groupColor}` : ''}`;
+        const rowClass = `vbm-row tabgroups-row${isCurrent ? ' tabgroups-current' : ''}${inGroup ? ` grouped tg-${groupColor}` : ''}${isSelected ? ' sel' : ''}`;
+        // Bookmark state follows the stats-view recipe: already-bookmarked
+        // tabs show a filled, always-visible star; unbookmarked tabs get the
+        // hover-revealed outline star button.
+        const starHtml = bookmarked
+            ? `<span class="tabgroups-star" aria-label="${htmlspecialchars(bookmarkedLabel)}" title="${htmlspecialchars(bookmarkedLabel)}">${STAR_ICON_FILLED}</span>`
+            : `<button class="row-btn tabgroups-add-bookmark tabgroups-add-btn" aria-label="${htmlspecialchars(addLabel)}" title="${htmlspecialchars(addLabel)}">${STAR_ICON}</button>`;
         return `<li class="${rowClass}" id="tabgroups-item-${tid}" role="listitem" data-tab-id="${tid}"${inGroup ? ` data-group-id="${String(tab.groupId)}"` : ''}>` +
             treeRender.generateBookmarkHTML(tab.title || tab.url || _m('noTitle'), tab.url || '', extras, null, null, { badge }) +
-            `<button class="row-btn tabgroups-add-bookmark" aria-label="${htmlspecialchars(addLabel)}" title="${htmlspecialchars(addLabel)}">${STAR_ICON}</button>` +
+            starHtml +
             '</li>';
     };
 
@@ -251,14 +283,20 @@ export function initViewTabGroups(ctx = {}) {
             return;
         chrome.bookmarks.search({ url: tab.url }, existing => {
             if (existing && existing.length) {
+                bookmarkedUrls.add(tab.url);
                 undo.showToast(_m('quickAdded'));
+                if (views.isActive('tabgroups'))
+                    render();
                 return;
             }
             const parentId = rootFolderId();
             chrome.bookmarks.create({ title: tab.title || tab.url, url: tab.url, parentId }, created => {
                 if (!created || created.id === undefined || created.id === null)
                     return;
+                bookmarkedUrls.add(tab.url);
                 onChanged();
+                if (views.isActive('tabgroups'))
+                    render();
                 chrome.bookmarks.get(parentId, nodes => {
                     const folderName = (nodes && nodes.length) ? (nodes[0].title || '') : '';
                     undo.showToast(_m('quickAddedTo', folderName));
@@ -635,6 +673,11 @@ export function initViewTabGroups(ctx = {}) {
         for (const ev of ['onCreated', 'onRemoved', 'onUpdated', 'onMoved']) {
             if (chrome.tabGroups && chrome.tabGroups[ev] && chrome.tabGroups[ev].addListener)
                 chrome.tabGroups[ev].addListener(scheduleRefresh);
+        }
+        // Bookmarked state (filled/outline star) follows the bookmark tree.
+        for (const ev of ['onCreated', 'onRemoved', 'onChanged']) {
+            if (chrome.bookmarks && chrome.bookmarks[ev] && chrome.bookmarks[ev].addListener)
+                chrome.bookmarks[ev].addListener(scheduleRefresh);
         }
     };
     bindChromeEvents();

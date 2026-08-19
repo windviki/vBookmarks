@@ -1836,5 +1836,8 @@
   },
   "tabGroupsColorBorderHint": {
     "message": "為每個分頁群組的標題及成員列加上左側顏色邊框，方便一眼辨識群組顏色。顏色圓點預設保持開啟。此選項預設為關閉。"
+  },
+  "tabGroupsBookmarked": {
+    "message": "已加入書籤"
   }
 }

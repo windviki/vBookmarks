@@ -505,6 +505,9 @@
   "tabGroupsColorBorderHint": {
     "message": "各タブグループのヘッダーとメンバー行に色付きの左端を追加し、グループの色が一目でわかるようにします。カラードットはデフォルトでオンです。デフォルトではオフです。"
   },
+  "tabGroupsBookmarked": {
+    "message": "ブックマーク済み"
+  },
   "deadProxyAdd": {
     "message": "リンク切れチェック用のプロキシサーバーを追加"
   },

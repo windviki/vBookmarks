@@ -2034,5 +2034,9 @@
   "tabGroupsColorBorderHint": {
     "message": "Adds a colored left edge to each tab group's header and member rows so the group color reads at a glance. The color dot stays on by default. Off by default.",
     "description": "Tooltip for the group-color-border checkbox in the tab groups view."
+  },
+  "tabGroupsBookmarked": {
+    "message": "Bookmarked",
+    "description": "Accessible label of the always-visible filled star on tab rows that are already bookmarked."
   }
 }

@@ -505,6 +505,9 @@
   "tabGroupsColorBorderHint": {
     "message": "Lisab igale vahekaardirühma päisele ja liikmeridadele värvilise vasaku serva, nii et rühma värv on kohe nähtav. Värvipunkt jääb vaikimisi sisse. Vaikimisi väljas."
   },
+  "tabGroupsBookmarked": {
+    "message": "Järjehoidjad"
+  },
   "deadProxyAdd": {
     "message": "Lisa puhverserver surnud linkide kontrollimiseks"
   },

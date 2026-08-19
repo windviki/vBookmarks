@@ -505,6 +505,9 @@
   "tabGroupsColorBorderHint": {
     "message": "Legger til en farget venstrekant på hver fanegruppes overskrift og medlemsrader, slik at gruppefargen er synlig med et blikk. Fargeprikken forblir på som standard. Av som standard."
   },
+  "tabGroupsBookmarked": {
+    "message": "Bokmerket"
+  },
   "deadProxyAdd": {
     "message": "Legg til en proxy-server for sjekk av døde lenker"
   },

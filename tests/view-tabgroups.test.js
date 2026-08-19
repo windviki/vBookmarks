@@ -189,7 +189,12 @@ const setup = (opts = {}) => {
             searchCalls: [],
             createCalls: [],
             getCalls: [],
+            getTreeCalls: 0,
             _existing: opts.existingBookmarks || [],
+            getTree(cb) {
+                this.getTreeCalls++;
+                cb(opts.bookmarkTree || []);
+            },
             search(query, cb) {
                 this.searchCalls.push(query);
                 cb(this._existing.slice());
@@ -528,6 +533,36 @@ describe('bookmark integration', () => {
         expect(chrome.bookmarks.createCalls[0].url).toBe('https://t1.example/');
         expect(undo.toastCalls).toHaveLength(1);
         expect(undo.toastCalls[0]).toBe('quickAddedTo[folder-2]');
+    });
+
+    it('renders a filled always-visible star for already-bookmarked tabs', () => {
+        const { def, $list } = setup({
+            bookmarkTree: [{ id: '0', title: '', children: [{ id: '1', title: 'Bar', children: [
+                { id: '11', title: 'T1', url: 'https://t1.example/' }
+            ] }] }]
+        });
+        def().activate();
+        const html = $list.innerHTML;
+        expect(html).toContain('tabgroups-star');
+        expect(html).toContain('vbm-icon-star-filled');
+        // unbookmarked tab 4 keeps the hover-revealed add button
+        expect(html).toContain('tabgroups-add-btn');
+        expect(html).toContain('vbm-icon-star');
+    });
+
+    it('flips an unbookmarked row to the filled star after quick-add', () => {
+        const { def, $list, clickOn, closestOf } = setup({});
+        def().activate();
+        expect($list.innerHTML).not.toContain('tabgroups-star');
+        const li = { dataset: { tabId: '1' }, classList: makeClassList() };
+        const btn = { classList: makeClassList(), closest: sel => sel === 'li' ? li : (sel === '.tabgroups-add-bookmark' ? btn : null) };
+        clickOn(btn);
+        const html = $list.innerHTML;
+        const row1 = html.slice(html.indexOf('id="tabgroups-item-1"'), html.indexOf('id="tabgroups-group-g1"'));
+        expect(row1).toContain('tabgroups-star');
+        expect(row1).not.toContain('tabgroups-add-btn');
+        // other unbookmarked rows keep the add button
+        expect(html).toContain('tabgroups-add-btn');
     });
 
     it('add selected to bookmark folder opens the folder picker and creates in the picked folder', async () => {

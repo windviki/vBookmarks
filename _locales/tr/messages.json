@@ -505,6 +505,9 @@
   "tabGroupsColorBorderHint": {
     "message": "Her sekme grubunun başlığına ve üye satırlarına renkli bir sol kenarlık ekler, böylece grup rengi bir bakışta okunur. Renk noktası varsayılan olarak açık kalır. Varsayılan olarak kapalıdır."
   },
+  "tabGroupsBookmarked": {
+    "message": "Yer imlerine eklendi"
+  },
   "deadProxyAdd": {
     "message": "Ölü bağlantı kontrolleri için bir proxy sunucusu ekle"
   },

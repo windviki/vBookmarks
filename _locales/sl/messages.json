@@ -505,6 +505,9 @@
   "tabGroupsColorBorderHint": {
     "message": "Doda barvni levi rob glavi in vrsticam članov vsake skupine zavihkov, da je barva skupine vidna na prvi pogled. Barvna pika ostane privzeto vklopljena. Privzeto izklopljeno."
   },
+  "tabGroupsBookmarked": {
+    "message": "Zaznamek"
+  },
   "deadProxyAdd": {
     "message": "Dodaj proxy strežnik za preverjanje mrtvih povezav"
   },

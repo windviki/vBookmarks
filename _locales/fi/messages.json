@@ -505,6 +505,9 @@
   "tabGroupsColorBorderHint": {
     "message": "Lisää värillisen vasemman reunan kunkin välilehtiryhmän otsikkoon ja jäsenriveihin, jotta ryhmän väri näkyy yhdellä silmäyksellä. Väripiste pysyy oletuksena päällä. Oletuksena pois päältä."
   },
+  "tabGroupsBookmarked": {
+    "message": "Tallennettu"
+  },
   "deadProxyAdd": {
     "message": "Lisää välityspalvelin kuolleiden linkkien tarkistuksia varten"
   },

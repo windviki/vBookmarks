@@ -3590,6 +3590,33 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
 #tabgroups-list ul.color-enhanced li.tabgroups-row.grouped {
     box-shadow: inset 3px 0 0 var(--tg-color, transparent);
 }
+
+/* Bookmark state follows the stats-view recipe exactly: an always-visible
+   filled ★ for already-bookmarked tabs, and a hover-revealed hollow ☆ for
+   the rest. Both share the same 20px centered slot so the columns align. */
+#tabgroups-list .tabgroups-star {
+    flex: none;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    margin-inline-end: 4px;
+    color: var(--vbm-accent);
+}
+#tabgroups-list .tabgroups-add-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    border: 0;
+    border-radius: 4px;
+    color: var(--vbm-danger);
+}
+#tabgroups-list .tabgroups-add-btn:hover {
+    background: var(--vbm-bg-hover);
+}
 .tabgroups-toolbar .select-count {
     font-weight: 500;
     white-space: nowrap;

@@ -505,6 +505,9 @@
   "tabGroupsColorBorderHint": {
     "message": "Aggiunge un bordo colorato sul lato sinistro dell'intestazione e delle righe dei membri di ogni gruppo di schede, così il colore del gruppo è visibile a colpo d'occhio. Il punto colorato rimane attivo per impostazione predefinita. Disattivato per impostazione predefinita."
   },
+  "tabGroupsBookmarked": {
+    "message": "Aggiunto ai segnalibri"
+  },
   "deadProxyAdd": {
     "message": "Aggiungi un server proxy per i controlli dei link morti"
   },

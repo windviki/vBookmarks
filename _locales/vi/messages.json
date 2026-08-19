@@ -505,6 +505,9 @@
   "tabGroupsColorBorderHint": {
     "message": "Thêm viền trái màu cho tiêu đề và các hàng thành viên của mỗi nhóm tab để dễ nhận biết màu nhóm. Chấm màu vẫn bật mặc định. Tắt theo mặc định."
   },
+  "tabGroupsBookmarked": {
+    "message": "Đã đánh dấu"
+  },
   "deadProxyAdd": {
     "message": "Thêm máy chủ proxy để kiểm tra liên kết hỏng"
   },

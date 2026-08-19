@@ -505,6 +505,9 @@
   "tabGroupsColorBorderHint": {
     "message": "Adaugă o margine stângă colorată la antetul fiecărui grup de file și la rândurile membrilor, astfel încât culoarea grupului să fie vizibilă dintr-o privire. Punctul de culoare rămâne activat implicit. Dezactivat implicit."
   },
+  "tabGroupsBookmarked": {
+    "message": "Marcate"
+  },
   "deadProxyAdd": {
     "message": "Adaugă un server proxy pentru verificarea linkurilor moarte"
   },
