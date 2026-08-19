@@ -499,6 +499,12 @@
   "tabGroupsSyncCollapseHint": {
     "message": "Kui märgitud, siis selle vaate grupi ahendamine või laiendamine uuendab ka brauseri vahekaartide gruppi. Vaikimisi välja lülitatud, et vaate voltimine jääks kohalikuks."
   },
+  "tabGroupsColorBorder": {
+    "message": "Kuva rühma värvi ääris"
+  },
+  "tabGroupsColorBorderHint": {
+    "message": "Lisab igale vahekaardirühma päisele ja liikmeridadele värvilise vasaku serva, nii et rühma värv on kohe nähtav. Värvipunkt jääb vaikimisi sisse. Vaikimisi väljas."
+  },
   "deadProxyAdd": {
     "message": "Lisa puhverserver surnud linkide kontrollimiseks"
   },

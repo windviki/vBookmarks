@@ -499,6 +499,12 @@
   "tabGroupsSyncCollapseHint": {
     "message": "Quando marcado, recolher ou expandir um grupo nesta visualização também atualiza o grupo de abas do navegador. Desativado por padrão para que o recolhimento da visualização permaneça local."
   },
+  "tabGroupsColorBorder": {
+    "message": "Mostrar borda colorida do grupo"
+  },
+  "tabGroupsColorBorderHint": {
+    "message": "Adiciona uma borda esquerda colorida ao cabeçalho e às linhas dos membros de cada grupo de abas, para que a cor do grupo seja visível de relance. O ponto colorido permanece ativado por padrão. Desativado por padrão."
+  },
   "deadProxyAdd": {
     "message": "Adicionar um servidor proxy para verificações de links quebrados"
   },

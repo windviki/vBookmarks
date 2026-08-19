@@ -499,6 +499,12 @@
   "tabGroupsSyncCollapseHint": {
     "message": "Ha be van jelölve, a csoport összecsukása vagy kibontása ebben a nézetben frissíti a böngésző lapcsoportját is. Alapértelmezés szerint ki van kapcsolva, így a nézet összecsukása helyi marad."
   },
+  "tabGroupsColorBorder": {
+    "message": "Csoportszín szegély megjelenítése"
+  },
+  "tabGroupsColorBorderHint": {
+    "message": "Színes bal szegélyt ad a csoport fejlécéhez és tagjaihoz, így a csoportszín első pillantásra látható. A színpötty alapértelmezetten be van kapcsolva. Alapértelmezetten ki van kapcsolva."
+  },
   "deadProxyAdd": {
     "message": "Proxykiszolgáló hozzáadása a hibás linkek ellenőrzéséhez"
   },

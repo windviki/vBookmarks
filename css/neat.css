@@ -3554,11 +3554,17 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
     margin-inline-end: auto;
     white-space: nowrap;
 }
-.tabgroups-toolbar .tabgroups-sync-collapse {
+.tabgroups-toolbar .tabgroups-options {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-inline-end: auto;
+    flex-wrap: wrap;
+}
+.tabgroups-toolbar .tabgroups-options label {
     display: flex;
     align-items: center;
     gap: 3px;
-    margin-inline-end: auto;
     cursor: pointer;
     white-space: nowrap;
 }
@@ -3574,6 +3580,15 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
 .tabgroups-toolbar button.tabgroups-icon-btn .vbm-icon {
     width: 16px;
     height: 16px;
+}
+
+/* Enhanced group-color edge (toolbar option, default off): a 3px left edge
+   in the group color runs down the group header and its member rows. The
+   box-shadow is inset so it never pushes or overlaps the row content; the
+   color dot stays as the default indicator. */
+#tabgroups-list ul.color-enhanced li.tabgroups-group,
+#tabgroups-list ul.color-enhanced li.tabgroups-row.grouped {
+    box-shadow: inset 3px 0 0 var(--tg-color, transparent);
 }
 .tabgroups-toolbar .select-count {
     font-weight: 500;

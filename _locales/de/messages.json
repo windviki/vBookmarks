@@ -499,6 +499,12 @@
   "tabGroupsSyncCollapseHint": {
     "message": "Wenn aktiviert, wird das Zusammen- oder Aufklappen einer Gruppe in dieser Ansicht auch auf die Browser-Tab-Gruppe übertragen. Standardmäßig deaktiviert, sodass das Falten der Ansicht lokal bleibt."
   },
+  "tabGroupsColorBorder": {
+    "message": "Gruppenfarbe als Rahmen anzeigen"
+  },
+  "tabGroupsColorBorderHint": {
+    "message": "Fügt jeder Tab-Gruppe einen farbigen linken Rand an Kopf- und Mitgliedszeilen hinzu, sodass die Gruppenfarbe auf einen Blick erkennbar ist. Der Farbpunkt bleibt standardmäßig aktiviert. Standardmäßig deaktiviert."
+  },
   "deadProxyAdd": {
     "message": "Proxyserver für Tote-Links-Prüfungen hinzufügen"
   },

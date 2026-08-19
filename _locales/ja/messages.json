@@ -499,6 +499,12 @@
   "tabGroupsSyncCollapseHint": {
     "message": "勾选后，在此视图中折叠或展开分组也会更新浏览器标签组。默认关闭，以便视图折叠保持本地状态。"
   },
+  "tabGroupsColorBorder": {
+    "message": "グループの色の境界線を表示"
+  },
+  "tabGroupsColorBorderHint": {
+    "message": "各タブグループのヘッダーとメンバー行に色付きの左端を追加し、グループの色が一目でわかるようにします。カラードットはデフォルトでオンです。デフォルトではオフです。"
+  },
   "deadProxyAdd": {
     "message": "リンク切れチェック用のプロキシサーバーを追加"
   },

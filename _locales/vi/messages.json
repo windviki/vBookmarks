@@ -499,6 +499,12 @@
   "tabGroupsSyncCollapseHint": {
     "message": "Khi được chọn, việc thu gọn hoặc mở rộng một nhóm trong chế độ xem này cũng cập nhật nhóm tab của trình duyệt. Tắt theo mặc định để việc gấp chế độ xem chỉ mang tính cục bộ."
   },
+  "tabGroupsColorBorder": {
+    "message": "Hiển thị viền màu nhóm"
+  },
+  "tabGroupsColorBorderHint": {
+    "message": "Thêm viền trái màu cho tiêu đề và các hàng thành viên của mỗi nhóm tab để dễ nhận biết màu nhóm. Chấm màu vẫn bật mặc định. Tắt theo mặc định."
+  },
   "deadProxyAdd": {
     "message": "Thêm máy chủ proxy để kiểm tra liên kết hỏng"
   },

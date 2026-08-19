@@ -499,6 +499,12 @@
   "tabGroupsSyncCollapseHint": {
     "message": "Gdy zaznaczone, zwijanie lub rozwijanie grupy w tym widoku aktualizuje również grupę kart w przeglądarce. Domyślnie wyłączone, aby zwijanie widoku pozostało lokalne."
   },
+  "tabGroupsColorBorder": {
+    "message": "Pokaż kolorową ramkę grupy"
+  },
+  "tabGroupsColorBorderHint": {
+    "message": "Dodaje kolorową krawędź po lewej stronie nagłówka i wierszy członków każdej grupy kart, aby kolor grupy był widoczny na pierwszy rzut oka. Kropka koloru pozostaje domyślnie włączona. Domyślnie wyłączone."
+  },
   "deadProxyAdd": {
     "message": "Dodaj serwer proxy do sprawdzania martwych linków"
   },

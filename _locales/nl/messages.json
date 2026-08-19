@@ -499,6 +499,12 @@
   "tabGroupsSyncCollapseHint": {
     "message": "Wanneer aangevinkt, wordt het in- of uitklappen van een groep in deze weergave ook toegepast op de browsertabgroep. Standaard uit, zodat het inklappen in de weergave lokaal blijft."
   },
+  "tabGroupsColorBorder": {
+    "message": "Toon groepskleurborder"
+  },
+  "tabGroupsColorBorderHint": {
+    "message": "Voegt een gekleurde linkerrand toe aan de kop- en lidrijen van elke tabbladgroep, zodat de groepskleur in één oogopslag zichtbaar is. De kleurstip blijft standaard aan. Standaard uit."
+  },
   "deadProxyAdd": {
     "message": "Proxyserver toevoegen voor dode-linkcontroles"
   },

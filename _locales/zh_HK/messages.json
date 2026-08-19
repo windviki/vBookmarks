@@ -1830,5 +1830,11 @@
   },
   "tabGroupsSyncCollapseHint": {
     "message": "勾選後，在此檢視中摺疊或展開群組亦會更新瀏覽器分頁群組。預設關閉，以保持檢視摺疊僅限本機。"
+  },
+  "tabGroupsColorBorder": {
+    "message": "顯示群組顏色邊框"
+  },
+  "tabGroupsColorBorderHint": {
+    "message": "為每個分頁群組的標題及成員列加上左側顏色邊框，方便一眼辨識群組顏色。顏色圓點預設保持開啟。此選項預設為關閉。"
   }
 }

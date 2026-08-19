@@ -499,6 +499,12 @@
   "tabGroupsSyncCollapseHint": {
     "message": "Ko je označeno, zrušitev ali razširitev skupine v tem pogledu posodobi tudi skupino zavihkov v brskalniku. Privzeto izklopljeno, da zlaganje pogleda ostane lokalno."
   },
+  "tabGroupsColorBorder": {
+    "message": "Pokaži barvno obrobo skupine"
+  },
+  "tabGroupsColorBorderHint": {
+    "message": "Doda barvni levi rob glavi in vrsticam članov vsake skupine zavihkov, da je barva skupine vidna na prvi pogled. Barvna pika ostane privzeto vklopljena. Privzeto izklopljeno."
+  },
   "deadProxyAdd": {
     "message": "Dodaj proxy strežnik za preverjanje mrtvih povezav"
   },

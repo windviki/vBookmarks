@@ -362,6 +362,38 @@ describe('render', () => {
     });
 });
 
+describe('group color edge option', () => {
+    it('renders the group color option in the toolbar and defaults off', () => {
+        const { def, $list } = setup({});
+        def().activate();
+        const html = $list.innerHTML;
+        expect(html).toContain('tabgroups-color-border-input');
+        expect(html).toContain('tabGroupsColorBorder');
+        expect(html).not.toContain('color-enhanced');
+    });
+
+    it('adds the colored edge to group rows only when the option is on', () => {
+        const { def, $list } = setup({ storeData: { tabGroupsColorBorder: '1' } });
+        def().activate();
+        const html = $list.innerHTML;
+        expect(html).toContain('class="color-enhanced"');
+        expect(html).toContain('tabgroups-group tg-blue');
+        expect(html).toContain('grouped tg-blue');
+        // ungrouped tab 1 carries no tg-* group color class
+        expect(html).not.toMatch(/tabgroups-item-1[^>]*grouped tg-/);
+    });
+
+    it('change event persists the option and re-renders the list', () => {
+        const { def, $list, store, fire } = setup({});
+        def().activate();
+        expect($list.innerHTML).not.toContain('color-enhanced');
+        const target = { classList: { contains: c => c === 'tabgroups-color-border-input' }, checked: true, closest: () => null };
+        fire('change', { target });
+        expect(store._data.tabGroupsColorBorder).toBe('1');
+        expect($list.innerHTML).toContain('color-enhanced');
+    });
+});
+
 describe('selection mode', () => {
     it('enters and exits through toolbar buttons and Esc', () => {
         const { def, $list, fire, clickOn, closestOf } = setup({});

@@ -499,6 +499,12 @@
   "tabGroupsSyncCollapseHint": {
     "message": "Ja atzīmēts, grupas sakļaušana vai izvēršana šajā skatā atjaunina arī pārlūka cilņu grupu. Pēc noklusējuma izslēgts, lai skata sakļaušana paliktu lokāla."
   },
+  "tabGroupsColorBorder": {
+    "message": "Rādīt grupas krāsas apmali"
+  },
+  "tabGroupsColorBorderHint": {
+    "message": "Pievieno krāsainu kreiso malu katras cilnes grupas galvenei un dalībnieku rindām, lai grupas krāsa būtu redzama uzreiz. Krāsu punkts paliek ieslēgts pēc noklusējuma. Pēc noklusējuma izslēgts."
+  },
   "deadProxyAdd": {
     "message": "Pievienot starpniekserveri bojātu saišu pārbaudei"
   },

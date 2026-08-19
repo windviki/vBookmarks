@@ -499,6 +499,12 @@
   "tabGroupsSyncCollapseHint": {
     "message": "Lorsque coché, le repli ou le dépliage d'un groupe dans cette vue met également à jour le groupe d'onglets du navigateur. Désactivé par défaut pour que le repli de la vue reste local."
   },
+  "tabGroupsColorBorder": {
+    "message": "Afficher la bordure de couleur du groupe"
+  },
+  "tabGroupsColorBorderHint": {
+    "message": "Ajoute une bordure gauche colorée à l'en-tête et aux lignes des membres de chaque groupe d'onglets pour que la couleur du groupe soit visible d'un coup d'œil. Le point de couleur reste activé par défaut. Désactivé par défaut."
+  },
   "deadProxyAdd": {
     "message": "Ajouter un serveur proxy pour les vérifications de liens morts"
   },

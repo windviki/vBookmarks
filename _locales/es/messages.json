@@ -499,6 +499,12 @@
   "tabGroupsSyncCollapseHint": {
     "message": "Al marcar esta opción, contraer o expandir un grupo en esta vista también actualiza el grupo de pestañas del navegador. Desactivado por defecto para que el plegado de la vista permanezca local."
   },
+  "tabGroupsColorBorder": {
+    "message": "Mostrar borde de color del grupo"
+  },
+  "tabGroupsColorBorderHint": {
+    "message": "Añade un borde izquierdo de color a la cabecera y a las filas de miembros de cada grupo de pestañas para que el color del grupo se vea de un vistazo. El punto de color permanece activado por defecto. Desactivado por defecto."
+  },
   "deadProxyAdd": {
     "message": "Añadir un servidor proxy para comprobar enlaces rotos"
   },

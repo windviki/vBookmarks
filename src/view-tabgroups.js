@@ -42,6 +42,9 @@ export function initViewTabGroups(ctx = {}) {
     // Collapse/expand sync (toolbar option, default OFF): when off, folding
     // groups in the view is local-only and never updates chrome.tabGroups.
     const syncCollapse = () => !!store.get('tabGroupsSyncCollapse', '');
+    // Enhanced group-color edge (toolbar option, default OFF): when on, each
+    // group's header and member rows get a 3px left edge in the group color.
+    const colorBorder = () => !!store.get('tabGroupsColorBorder', '');
 
     // --- State ----------------------------------------------------------------
     let refreshToken = 0;   // monotonic refresh generation: stale async
@@ -135,6 +138,8 @@ export function initViewTabGroups(ctx = {}) {
         // mode icon right).
         const syncLabel = _m('tabGroupsSyncCollapse');
         const syncHint = _m('tabGroupsSyncCollapseHint');
+        const colorLabel = _m('tabGroupsColorBorder');
+        const colorHint = _m('tabGroupsColorBorderHint');
         return '<div class="tabgroups-toolbar tabgroups-controls-toolbar vbm-toolbar">' +
             `<span class="tabgroups-summary">${_m('tabGroupsSummary', [`${tabs.length}`, `${groups.length}`])}</span>` +
             iconBtn('tabgroups-refresh', REDO_ICON, 'tabGroupsToolbarRefresh') +
@@ -142,9 +147,14 @@ export function initViewTabGroups(ctx = {}) {
             iconBtn('tabgroups-expand-all', EXPAND_ALL_ICON, 'tabGroupsExpandAll') +
             '</div>' +
             '<div class="tabgroups-toolbar tabgroups-actions-toolbar vbm-toolbar">' +
+            `<span class="tabgroups-options" role="group" aria-label="${htmlspecialchars(_m('tabGroupOptions'))}">` +
             `<label class="tabgroups-sync-collapse" title="${htmlspecialchars(syncHint)}">` +
             `<input type="checkbox" class="tabgroups-sync-collapse-input"${syncCollapse() ? ' checked' : ''}>` +
             `<span>${htmlspecialchars(syncLabel)}</span></label>` +
+            `<label class="tabgroups-color-border" title="${htmlspecialchars(colorHint)}">` +
+            `<input type="checkbox" class="tabgroups-color-border-input"${colorBorder() ? ' checked' : ''}>` +
+            `<span>${htmlspecialchars(colorLabel)}</span></label>` +
+            '</span>' +
             iconBtn('tabgroups-select-mode', SELECT_ICON, 'selectModeEnter') +
             '</div>';
     };
@@ -155,7 +165,7 @@ export function initViewTabGroups(ctx = {}) {
         const title = group.title || _m('tabGroupUntitled');
         const color = group.color || 'grey';
         const saveLabel = _m('tabGroupsSaveFolder');
-        return `<li class="tabgroups-group${selecting && memberTabs.every(t => selected.has(String(t.id))) ? ' sel' : ''}" id="tabgroups-group-${gid}" data-group-id="${gid}">` +
+        return `<li class="tabgroups-group tg-${htmlspecialchars(color)}${selecting && memberTabs.every(t => selected.has(String(t.id))) ? ' sel' : ''}" id="tabgroups-group-${gid}" data-group-id="${gid}">` +
             `<span class="tabgroups-group-head" tabindex="-1" role="button" aria-expanded="${isCollapsed ? 'false' : 'true'}" title="${htmlspecialchars(title)}">` +
             `<span class="chevron${isCollapsed ? ' collapsed' : ''}"></span>` +
             `<span class="tab-group-dot tg-${htmlspecialchars(color)}"></span>` +
@@ -177,7 +187,8 @@ export function initViewTabGroups(ctx = {}) {
         const currentLabel = _m('tabGroupsCurrentTab');
         const extras = `data-tab-id="${tid}" data-url="${htmlspecialchars(tab.url || '')}"`;
         const badge = isCurrent ? [{ text: currentLabel, cls: 'current' }] : [];
-        const rowClass = `vbm-row tabgroups-row${isCurrent ? ' tabgroups-current' : ''}${inGroup ? ' grouped' : ''}`;
+        const groupColor = inGroup ? ((groupById(tab.groupId) || {}).color || 'grey') : '';
+        const rowClass = `vbm-row tabgroups-row${isCurrent ? ' tabgroups-current' : ''}${inGroup ? ` grouped tg-${groupColor}` : ''}`;
         return `<li class="${rowClass}" id="tabgroups-item-${tid}" role="listitem" data-tab-id="${tid}"${inGroup ? ` data-group-id="${String(tab.groupId)}"` : ''}>` +
             treeRender.generateBookmarkHTML(tab.title || tab.url || _m('noTitle'), tab.url || '', extras, null, null, { badge }) +
             `<button class="row-btn tabgroups-add-bookmark" aria-label="${htmlspecialchars(addLabel)}" title="${htmlspecialchars(addLabel)}">${STAR_ICON}</button>` +
@@ -195,7 +206,8 @@ export function initViewTabGroups(ctx = {}) {
         if (!tabs.length) {
             html += `<ul role="list"><li class="empty-state" role="listitem"><i>${_m('tabGroupsViewEmpty')}</i></li></ul>`;
         } else {
-            html += `<ul role="list"${selecting ? ' class="selecting"' : ''}>`;
+            const ulClass = [selecting ? 'selecting' : '', colorBorder() ? 'color-enhanced' : ''].filter(Boolean).join(' ');
+            html += `<ul role="list"${ulClass ? ` class="${ulClass}"` : ''}>`;
             const seenGroups = new Set();
             for (let i = 0, l = tabs.length; i < l; i++) {
                 const tab = tabs[i];
@@ -632,9 +644,12 @@ export function initViewTabGroups(ctx = {}) {
         if (t && t.classList && t.classList.contains('tabgroups-sync-collapse-input')) {
             store.set('tabGroupsSyncCollapse', t.checked ? '1' : '');
             // No re-render needed for a settings checkbox; the next collapse
-            // action reads the new value. But keep the checkbox state obvious.
-            if (t.closest && t.closest('.tabgroups-sync-collapse'))
-                return;
+            // action reads the new value.
+            return;
+        }
+        if (t && t.classList && t.classList.contains('tabgroups-color-border-input')) {
+            store.set('tabGroupsColorBorder', t.checked ? '1' : '');
+            render(); // the group edges need a re-render to apply/remove
         }
     });
 

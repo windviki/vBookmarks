@@ -499,6 +499,12 @@
   "tabGroupsSyncCollapseHint": {
     "message": "Når markeret, opdaterer sammenklapning eller udvidelse af en gruppe i denne visning også browserens fanegruppe. Fravalgt som standard, så visningens foldning forbliver lokal."
   },
+  "tabGroupsColorBorder": {
+    "message": "Vis gruppens farvekant"
+  },
+  "tabGroupsColorBorderHint": {
+    "message": "Tilføjer en farvet venstre kant til hver fanegruppes overskrift og medlemsrækker, så gruppens farve kan ses ved et øjekast. Farveprikken forbliver som standard slået til. Slået fra som standard."
+  },
   "deadProxyAdd": {
     "message": "Tilføj en proxyserver til død-link-tjek"
   },

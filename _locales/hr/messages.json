@@ -499,6 +499,12 @@
   "tabGroupsSyncCollapseHint": {
     "message": "Kada je označeno, sažimanje ili proširivanje grupe u ovom prikazu također ažurira grupu kartica u pregledniku. Isključeno prema zadanim postavkama kako bi sažimanje prikaza ostalo lokalno."
   },
+  "tabGroupsColorBorder": {
+    "message": "Prikaži obrub boje grupe"
+  },
+  "tabGroupsColorBorderHint": {
+    "message": "Dodaje obojeni lijevi rub zaglavlja i redaka članova svake grupe kartica kako bi se boja grupe vidjela na prvi pogled. Točka boje ostaje uključena prema zadanim postavkama. Isključeno prema zadanim postavkama."
+  },
   "deadProxyAdd": {
     "message": "Dodaj proxy poslužitelj za provjeru mrtvih veza"
   },

@@ -499,6 +499,12 @@
   "tabGroupsSyncCollapseHint": {
     "message": "Pokud je zaškrtnuto, sbalení nebo rozbalení skupiny v tomto zobrazení také aktualizuje skupinu karet v prohlížeči. Ve výchozím nastavení vypnuto, takže sbalení zůstává lokální."
   },
+  "tabGroupsColorBorder": {
+    "message": "Zobrazit barevný okraj skupiny"
+  },
+  "tabGroupsColorBorderHint": {
+    "message": "Přidá barevný levý okraj k hlavičce a řádkům členů každé skupiny karet, aby byla barva skupiny vidět na první pohled. Barevná tečka zůstává ve výchozím stavu zapnutá. Ve výchozím stavu vypnuto."
+  },
   "deadProxyAdd": {
     "message": "Přidat proxy server pro kontroly nefunkčních odkazů"
   },

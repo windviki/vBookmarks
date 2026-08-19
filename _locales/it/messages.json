@@ -499,6 +499,12 @@
   "tabGroupsSyncCollapseHint": {
     "message": "Se selezionato, comprimere o espandere un gruppo in questa vista aggiorna anche il gruppo di schede del browser. Disattivato per impostazione predefinita, così la piegatura della vista rimane locale."
   },
+  "tabGroupsColorBorder": {
+    "message": "Mostra bordo colore gruppo"
+  },
+  "tabGroupsColorBorderHint": {
+    "message": "Aggiunge un bordo colorato sul lato sinistro dell'intestazione e delle righe dei membri di ogni gruppo di schede, così il colore del gruppo è visibile a colpo d'occhio. Il punto colorato rimane attivo per impostazione predefinita. Disattivato per impostazione predefinita."
+  },
   "deadProxyAdd": {
     "message": "Aggiungi un server proxy per i controlli dei link morti"
   },

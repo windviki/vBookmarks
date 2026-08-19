@@ -499,6 +499,12 @@
   "tabGroupsSyncCollapseHint": {
     "message": "När markerad uppdateras även webbläsarens flikgrupp när en grupp fälls ihop eller expanderas i denna vy. Av som standard så att vikningen förblir lokal."
   },
+  "tabGroupsColorBorder": {
+    "message": "Visa gruppfärgsram"
+  },
+  "tabGroupsColorBorderHint": {
+    "message": "Lägger till en färgad vänsterkant på varje tabbgrupps rubrik- och medlemsrader så att gruppfärgen syns direkt. Färgpricken förblir aktiverad som standard. Avaktiverad som standard."
+  },
   "deadProxyAdd": {
     "message": "Lägg till proxyserver för döda länkar"
   },

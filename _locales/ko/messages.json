@@ -499,6 +499,12 @@
   "tabGroupsSyncCollapseHint": {
     "message": "선택하면 이 보기에서 그룹을 접거나 펼칠 때 브라우저 탭 그룹도 업데이트됩니다. 기본적으로 꺼져 있어 보기 접기가 로컬에 유지됩니다."
   },
+  "tabGroupsColorBorder": {
+    "message": "그룹 색상 테두리 표시"
+  },
+  "tabGroupsColorBorderHint": {
+    "message": "각 탭 그룹의 헤더와 구성원 행에 색상 왼쪽 테두리를 추가하여 그룹 색상을 한눈에 확인할 수 있습니다. 색상 점은 기본적으로 켜져 있으며, 이 옵션은 기본적으로 꺼져 있습니다."
+  },
   "deadProxyAdd": {
     "message": "죽은 링크 확인용 프록시 서버 추가"
   },

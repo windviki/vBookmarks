@@ -499,6 +499,12 @@
   "tabGroupsSyncCollapseHint": {
     "message": "Kai pažymėta, grupės sutraukimas ar išskleidimas šiame rodinyje taip pat atnaujina naršyklės skirtukų grupę. Pagal nutylėjimą išjungta, kad rodinio lankstymas liktų vietinis."
   },
+  "tabGroupsColorBorder": {
+    "message": "Rodyti grupės spalvos kraštą"
+  },
+  "tabGroupsColorBorderHint": {
+    "message": "Prideda spalvotą kairįjį kraštą prie kiekvienos skirtukų grupės antraštės ir narių eilučių, kad grupės spalva būtų matoma iš karto. Spalvotas taškas lieka įjungtas pagal numatytuosius nustatymus. Išjungta pagal numatytuosius nustatymus."
+  },
   "deadProxyAdd": {
     "message": "Pridėti tarpinį serverį negyvų nuorodų tikrinimui"
   },

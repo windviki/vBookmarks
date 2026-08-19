@@ -2026,5 +2026,13 @@
   "tabGroupsSyncCollapseHint": {
     "message": "When checked, collapsing or expanding a group in this view also updates the browser tab group. Off by default so view folding stays local.",
     "description": "Tooltip for the collapse-sync checkbox in the tab groups view."
+  },
+  "tabGroupsColorBorder": {
+    "message": "Show group color border",
+    "description": "Toolbar checkbox in the tab groups view: when checked, each tab group's rows get a colored left edge matching the group color."
+  },
+  "tabGroupsColorBorderHint": {
+    "message": "Adds a colored left edge to each tab group's header and member rows so the group color reads at a glance. The color dot stays on by default. Off by default.",
+    "description": "Tooltip for the group-color-border checkbox in the tab groups view."
   }
 }

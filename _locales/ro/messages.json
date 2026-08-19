@@ -499,6 +499,12 @@
   "tabGroupsSyncCollapseHint": {
     "message": "Când este bifat, colapsarea sau extinderea unui grup în această vizualizare actualizează și grupul de file din browser. Dezactivat implicit, astfel încât plierea vizualizării rămâne locală."
   },
+  "tabGroupsColorBorder": {
+    "message": "Afișează chenarul colorat al grupului"
+  },
+  "tabGroupsColorBorderHint": {
+    "message": "Adaugă o margine stângă colorată la antetul fiecărui grup de file și la rândurile membrilor, astfel încât culoarea grupului să fie vizibilă dintr-o privire. Punctul de culoare rămâne activat implicit. Dezactivat implicit."
+  },
   "deadProxyAdd": {
     "message": "Adaugă un server proxy pentru verificarea linkurilor moarte"
   },
