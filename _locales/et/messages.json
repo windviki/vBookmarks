@@ -546,6 +546,18 @@
   "tabGroupsCurrentWindow": {
     "message": "Praegune aken"
   },
+  "tabGroupsReopenGroup": {
+    "message": "Ava vahekaartide rühm uuesti"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "Kustuta suletud vahekaartide rühm"
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "Ahenda aken"
+  },
+  "tabGroupsExpandWindow": {
+    "message": "Laienda aken"
+  },
   "deadProxyAdd": {
     "message": "Lisa puhverserver surnud linkide kontrollimiseks"
   },

@@ -1918,5 +1918,17 @@
   },
   "tabGroupsCurrentWindow": {
     "message": "当前窗口"
+  },
+  "tabGroupsReopenGroup": {
+    "message": "重新打开标签组"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "删除关闭的标签组"
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "收起窗口"
+  },
+  "tabGroupsExpandWindow": {
+    "message": "展开窗口"
   }
 }

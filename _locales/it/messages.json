@@ -546,6 +546,18 @@
   "tabGroupsCurrentWindow": {
     "message": "Finestra corrente"
   },
+  "tabGroupsReopenGroup": {
+    "message": "Riapri gruppo di schede"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "Elimina gruppo di schede chiuso"
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "Comprimi finestra"
+  },
+  "tabGroupsExpandWindow": {
+    "message": "Espandi finestra"
+  },
   "deadProxyAdd": {
     "message": "Aggiungi un server proxy per i controlli dei link morti"
   },

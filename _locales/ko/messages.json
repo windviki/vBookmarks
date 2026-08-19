@@ -546,6 +546,18 @@
   "tabGroupsCurrentWindow": {
     "message": "현재 창"
   },
+  "tabGroupsReopenGroup": {
+    "message": "탭 그룹 다시 열기"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "닫힌 탭 그룹 삭제"
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "창 축소"
+  },
+  "tabGroupsExpandWindow": {
+    "message": "창 확대"
+  },
   "deadProxyAdd": {
     "message": "죽은 링크 확인용 프록시 서버 추가"
   },

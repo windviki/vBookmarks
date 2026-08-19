@@ -546,6 +546,18 @@
   "tabGroupsCurrentWindow": {
     "message": "Текущее окно"
   },
+  "tabGroupsReopenGroup": {
+    "message": "Повторно открыть группу вкладок"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "Удалить закрытую группу вкладок"
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "Свернуть окно"
+  },
+  "tabGroupsExpandWindow": {
+    "message": "Развернуть окно"
+  },
   "deadProxyAdd": {
     "message": "Добавить прокси-сервер для проверки битых ссылок"
   },

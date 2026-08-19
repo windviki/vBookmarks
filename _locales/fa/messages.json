@@ -546,6 +546,18 @@
   "tabGroupsCurrentWindow": {
     "message": "پنجره فعلی"
   },
+  "tabGroupsReopenGroup": {
+    "message": "بازگشایی گروه برگه‌ها"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "حذف گروه برگه بسته‌شده"
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "جمع کردن پنجره"
+  },
+  "tabGroupsExpandWindow": {
+    "message": "باز کردن پنجره"
+  },
   "deadProxyAdd": {
     "message": "افزودن سرور پروکسی برای بررسی لینک‌های خراب"
   },

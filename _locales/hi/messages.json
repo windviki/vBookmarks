@@ -546,6 +546,18 @@
   "tabGroupsCurrentWindow": {
     "message": "वर्तमान विंडो"
   },
+  "tabGroupsReopenGroup": {
+    "message": "टैब समूह फिर से खोलें"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "बंद टैब समूह हटाएं"
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "विंडो संक्षिप्त करें"
+  },
+  "tabGroupsExpandWindow": {
+    "message": "विंडो विस्तृत करें"
+  },
   "deadProxyAdd": {
     "message": "डेड-लिंक जाँच के लिए प्रॉक्सी सर्वर जोड़ें"
   },

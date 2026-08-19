@@ -546,6 +546,18 @@
   "tabGroupsCurrentWindow": {
     "message": "Aktuális ablak"
   },
+  "tabGroupsReopenGroup": {
+    "message": "Lapcsoport újranyitása"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "Bezárt lapcsoport törlése"
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "Ablak összecsukása"
+  },
+  "tabGroupsExpandWindow": {
+    "message": "Ablak kibontása"
+  },
   "deadProxyAdd": {
     "message": "Proxykiszolgáló hozzáadása a hibás linkek ellenőrzéséhez"
   },

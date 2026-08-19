@@ -546,6 +546,18 @@
   "tabGroupsCurrentWindow": {
     "message": "Trenutno okno"
   },
+  "tabGroupsReopenGroup": {
+    "message": "Znova odpri skupino zavihkov"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "Izbriši zaprto skupino zavihkov"
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "Strni okno"
+  },
+  "tabGroupsExpandWindow": {
+    "message": "Razširi okno"
+  },
   "deadProxyAdd": {
     "message": "Dodaj proxy strežnik za preverjanje mrtvih povezav"
   },

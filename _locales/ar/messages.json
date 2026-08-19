@@ -546,6 +546,18 @@
   "tabGroupsCurrentWindow": {
     "message": "النافذة الحالية"
   },
+  "tabGroupsReopenGroup": {
+    "message": "إعادة فتح مجموعة التبويبات"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "حذف مجموعة التبويبات المغلقة"
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "طي النافذة"
+  },
+  "tabGroupsExpandWindow": {
+    "message": "توسيع النافذة"
+  },
   "deadProxyAdd": {
     "message": "أضف خادم وكيل لفحوصات الروابط المعطلة"
   },

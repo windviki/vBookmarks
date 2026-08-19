@@ -546,6 +546,18 @@
   "tabGroupsCurrentWindow": {
     "message": "Ventana actual"
   },
+  "tabGroupsReopenGroup": {
+    "message": "Reabrir grupo de pestañas"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "Eliminar grupo de pestañas cerrado"
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "Contraer ventana"
+  },
+  "tabGroupsExpandWindow": {
+    "message": "Expandir ventana"
+  },
   "deadProxyAdd": {
     "message": "Añadir un servidor proxy para comprobar enlaces rotos"
   },

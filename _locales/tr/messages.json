@@ -546,6 +546,18 @@
   "tabGroupsCurrentWindow": {
     "message": "Geçerli pencere"
   },
+  "tabGroupsReopenGroup": {
+    "message": "Sekme grubunu yeniden aç"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "Kapatılan sekme grubunu sil"
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "Pencereyi daralt"
+  },
+  "tabGroupsExpandWindow": {
+    "message": "Pencereyi genişlet"
+  },
   "deadProxyAdd": {
     "message": "Ölü bağlantı kontrolleri için bir proxy sunucusu ekle"
   },

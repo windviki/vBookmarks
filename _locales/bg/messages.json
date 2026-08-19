@@ -546,6 +546,18 @@
   "tabGroupsCurrentWindow": {
     "message": "Текущ прозорец"
   },
+  "tabGroupsReopenGroup": {
+    "message": "Отвори отново групата с раздели"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "Изтрий затворената група с раздели"
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "Свиване на прозореца"
+  },
+  "tabGroupsExpandWindow": {
+    "message": "Разгъване на прозореца"
+  },
   "deadProxyAdd": {
     "message": "Добавяне на прокси сървър за проверки за мъртви връзки"
   },

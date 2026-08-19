@@ -546,6 +546,18 @@
   "tabGroupsCurrentWindow": {
     "message": "Cửa sổ hiện tại"
   },
+  "tabGroupsReopenGroup": {
+    "message": "Mở lại nhóm tab"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "Xóa nhóm tab đã đóng"
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "Thu gọn cửa sổ"
+  },
+  "tabGroupsExpandWindow": {
+    "message": "Mở rộng cửa sổ"
+  },
   "deadProxyAdd": {
     "message": "Thêm máy chủ proxy để kiểm tra liên kết hỏng"
   },

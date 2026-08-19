@@ -546,6 +546,18 @@
   "tabGroupsCurrentWindow": {
     "message": "Gjeldende vindu"
   },
+  "tabGroupsReopenGroup": {
+    "message": "Åpne fanegruppen på nytt"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "Slett lukket fanegruppe"
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "Skjul vindu"
+  },
+  "tabGroupsExpandWindow": {
+    "message": "Utvid vindu"
+  },
   "deadProxyAdd": {
     "message": "Legg til en proxy-server for sjekk av døde lenker"
   },

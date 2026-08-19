@@ -546,6 +546,18 @@
   "tabGroupsCurrentWindow": {
     "message": "חלון נוכחי"
   },
+  "tabGroupsReopenGroup": {
+    "message": "פתח מחדש קבוצת כרטיסיות"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "מחק קבוצת כרטיסיות סגורה"
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "כווץ חלון"
+  },
+  "tabGroupsExpandWindow": {
+    "message": "הרחב חלון"
+  },
   "deadProxyAdd": {
     "message": "הוסף שרת פרוקסי לבדיקות קישורים שבורים"
   },

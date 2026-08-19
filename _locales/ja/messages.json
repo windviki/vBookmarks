@@ -546,6 +546,18 @@
   "tabGroupsCurrentWindow": {
     "message": "現在のウィンドウ"
   },
+  "tabGroupsReopenGroup": {
+    "message": "タブグループを再度開く"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "閉じたタブグループを削除"
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "ウィンドウを折りたたむ"
+  },
+  "tabGroupsExpandWindow": {
+    "message": "ウィンドウを展開"
+  },
   "deadProxyAdd": {
     "message": "リンク切れチェック用のプロキシサーバーを追加"
   },

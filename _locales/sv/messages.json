@@ -546,6 +546,18 @@
   "tabGroupsCurrentWindow": {
     "message": "Aktuellt fönster"
   },
+  "tabGroupsReopenGroup": {
+    "message": "Öppna flikgrupp igen"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "Ta bort stängd flikgrupp"
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "Minimera fönster"
+  },
+  "tabGroupsExpandWindow": {
+    "message": "Expandera fönster"
+  },
   "deadProxyAdd": {
     "message": "Lägg till proxyserver för döda länkar"
   },

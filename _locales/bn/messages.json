@@ -546,6 +546,18 @@
   "tabGroupsCurrentWindow": {
     "message": "বর্তমান উইন্ডো"
   },
+  "tabGroupsReopenGroup": {
+    "message": "ট্যাব গ্রুপ পুনরায় খুলুন"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "বন্ধ ট্যাব গ্রুপ মুছুন"
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "উইন্ডো সঙ্কুচিত করুন"
+  },
+  "tabGroupsExpandWindow": {
+    "message": "উইন্ডো প্রসারিত করুন"
+  },
   "deadProxyAdd": {
     "message": "ডেড-লিংক পরীক্ষার জন্য একটি প্রক্সি সার্ভার যোগ করুন"
   },

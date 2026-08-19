@@ -545,6 +545,18 @@
   "tabGroupsCurrentWindow": {
     "message": "Тековен прозорец"
   },
+  "tabGroupsReopenGroup": {
+    "message": "Повторно отвори група јазичиња"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "Избриши затворена група јазичиња"
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "Собери прозорец"
+  },
+  "tabGroupsExpandWindow": {
+    "message": "Рашири прозорец"
+  },
   "deadProxyAdd": {
     "message": "Додај прокси сервер за проверка на мртви врски"
   },

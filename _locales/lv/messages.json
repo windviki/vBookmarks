@@ -546,6 +546,18 @@
   "tabGroupsCurrentWindow": {
     "message": "Pašreizējais logs"
   },
+  "tabGroupsReopenGroup": {
+    "message": "Atvērt cilņu grupu"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "Dzēst aizvērto cilņu grupu"
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "Sakļaut logu"
+  },
+  "tabGroupsExpandWindow": {
+    "message": "Izvērst logu"
+  },
   "deadProxyAdd": {
     "message": "Pievienot starpniekserveri bojātu saišu pārbaudei"
   },

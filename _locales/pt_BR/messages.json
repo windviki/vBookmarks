@@ -545,6 +545,18 @@
   "tabGroupsCurrentWindow": {
     "message": "Janela atual"
   },
+  "tabGroupsReopenGroup": {
+    "message": "Reabrir grupo de abas"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "Excluir grupo de abas fechado"
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "Recolher janela"
+  },
+  "tabGroupsExpandWindow": {
+    "message": "Expandir janela"
+  },
   "deadProxyAdd": {
     "message": "Adicionar um servidor proxy para verificação de links quebrados"
   },

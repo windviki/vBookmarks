@@ -3617,6 +3617,52 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
 #tabgroups-list .tabgroups-add-btn:hover {
     background: var(--vbm-bg-hover);
 }
+/* The rightmost row action is close-tab: danger red and flush with the
+   group-head / dead / dupes 8px right-edge rhythm. */
+#tabgroups-list ul li.tabgroups-row > .row-btn.tabgroups-close-tab {
+    margin-inline-end: 8px;
+    color: var(--vbm-danger);
+}
+
+/* Closed tab-group rows: saved records, not live browser groups. Same
+   height/right-edge rhythm as a group head, but no chevron. */
+#tabgroups-list ul li.tabgroups-closed-group .tabgroups-closed-head {
+    display: flex;
+    align-items: center;
+    height: var(--vbm-row-h);
+    padding-inline-start: 8px;
+    padding-inline-end: 4px;
+    outline: 0;
+}
+#tabgroups-list ul li.tabgroups-closed-group .tabgroups-closed-head:hover {
+    background-color: var(--vbm-bg-hover);
+}
+#tabgroups-list ul li.tabgroups-closed-group .tabgroups-closed-head:focus {
+    color: var(--vbm-fg-selected);
+    background-color: var(--vbm-bg-selected);
+    outline: 2px solid var(--vbm-focus-ring);
+    outline-offset: -2px;
+}
+#tabgroups-list ul li.tabgroups-closed-group .tabgroups-group-title {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-weight: 500;
+}
+#tabgroups-list ul li.tabgroups-closed-group .count-pill {
+    background: var(--vbm-bg-selected);
+    color: var(--vbm-fg-selected);
+    margin-inline-end: 4px;
+}
+#tabgroups-list ul li.tabgroups-closed-group .row-btn {
+    visibility: visible;
+    color: var(--vbm-accent);
+}
+#tabgroups-list ul li.tabgroups-closed-group .row-btn.tabgroups-closed-delete {
+    color: var(--vbm-danger);
+}
 
 /* Window section heading: stronger than the group sections and separated
    from the previous window by a hairline. Non-focusable (em/b only — the
@@ -3635,6 +3681,23 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
 #tabgroups-list ul li.tabgroups-window-head em {
     font-style: normal;
     font-weight: 700;
+}
+#tabgroups-list ul li.tabgroups-window-head .tabgroups-window-collapse {
+    visibility: visible;
+    color: var(--vbm-muted);
+}
+#tabgroups-list ul li.tabgroups-window-head .tabgroups-window-collapse .vbm-icon {
+    transform: rotate(90deg);
+    transition: transform .12s ease;
+}
+#tabgroups-list ul li.tabgroups-window-head .tabgroups-window-collapse.collapsed .vbm-icon {
+    transform: rotate(0deg);
+}
+.rtl #tabgroups-list ul li.tabgroups-window-head .tabgroups-window-collapse .vbm-icon {
+    transform: rotate(-90deg);
+}
+.rtl #tabgroups-list ul li.tabgroups-window-head .tabgroups-window-collapse.collapsed .vbm-icon {
+    transform: rotate(0deg);
 }
 #tabgroups-list ul li.tabgroups-window-head b.tabgroups-window-current {
     font-weight: 500;

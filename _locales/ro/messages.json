@@ -546,6 +546,18 @@
   "tabGroupsCurrentWindow": {
     "message": "Fereastra curentă"
   },
+  "tabGroupsReopenGroup": {
+    "message": "Redeschide grupul de file"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "Șterge grupul de file închis"
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "Restrânge fereastra"
+  },
+  "tabGroupsExpandWindow": {
+    "message": "Extinde fereastra"
+  },
   "deadProxyAdd": {
     "message": "Adaugă un server proxy pentru verificarea linkurilor moarte"
   },

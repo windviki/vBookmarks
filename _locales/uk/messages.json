@@ -546,6 +546,18 @@
   "tabGroupsCurrentWindow": {
     "message": "Поточне вікно"
   },
+  "tabGroupsReopenGroup": {
+    "message": "Повторно відкрити групу вкладок"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "Видалити закриту групу вкладок"
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "Згорнути вікно"
+  },
+  "tabGroupsExpandWindow": {
+    "message": "Розгорнути вікно"
+  },
   "deadProxyAdd": {
     "message": "Додати проксі-сервер для перевірки мертвих посилань"
   },

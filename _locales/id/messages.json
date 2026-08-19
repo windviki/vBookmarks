@@ -546,6 +546,18 @@
   "tabGroupsCurrentWindow": {
     "message": "Jendela saat ini"
   },
+  "tabGroupsReopenGroup": {
+    "message": "Buka kembali grup tab"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "Hapus grup tab yang ditutup"
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "Ciutkan jendela"
+  },
+  "tabGroupsExpandWindow": {
+    "message": "Perluas jendela"
+  },
   "deadProxyAdd": {
     "message": "Tambahkan server proxy untuk pemeriksaan tautan mati"
   },

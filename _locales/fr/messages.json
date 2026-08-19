@@ -546,6 +546,18 @@
   "tabGroupsCurrentWindow": {
     "message": "Fenêtre actuelle"
   },
+  "tabGroupsReopenGroup": {
+    "message": "Rouvrir le groupe d'onglets"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "Supprimer le groupe fermé"
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "Réduire la fenêtre"
+  },
+  "tabGroupsExpandWindow": {
+    "message": "Agrandir la fenêtre"
+  },
   "deadProxyAdd": {
     "message": "Ajouter un serveur proxy pour les vérifications de liens morts"
   },

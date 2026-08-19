@@ -16,7 +16,7 @@
  * dropping callbacks.
  */
 
-import { VIEW_ICONS, STAR_ICON, STAR_ICON_FILLED, SELECT_ICON, FOLDER_ICON, EDIT_ICON, SLEEP_ICON, ACTIVATE_ICON, TRASH_ICON, REDO_ICON, COLLAPSE_ALL_ICON, EXPAND_ALL_ICON, PIN_ICON } from './icons.js';
+import { VIEW_ICONS, STAR_ICON, STAR_ICON_FILLED, SELECT_ICON, FOLDER_ICON, EDIT_ICON, SLEEP_ICON, ACTIVATE_ICON, TRASH_ICON, REDO_ICON, COLLAPSE_ALL_ICON, EXPAND_ALL_ICON, PIN_ICON, CHEVRON_ICON } from './icons.js';
 import { htmlspecialchars } from './escape.js';
 import { parkRowFocus, unparkRowFocus, parkToolbarFocus, restoreToolbarFocus } from './list-focus.js';
 import { saveSession, sessionFolderName, tabsToBookmarks } from './session.js';
@@ -58,8 +58,25 @@ export function initViewTabGroups(ctx = {}) {
     let selecting = false;
     const selected = new Set();   // tab ids
     const collapsed = new Set();  // group ids
+    const collapsedWindows = new Set(); // window ids (view-local folding)
     let bookmarkedUrls = new Set(); // tab URLs that already exist as bookmarks
+    let closedRecords = [];       // saved closed tab groups (our own records)
     let dragTabId = null;
+
+    const CLOSED_GROUPS_KEY = 'tabGroupsClosed';
+    const readClosedGroups = () => {
+        try {
+            const list = JSON.parse(store.get(CLOSED_GROUPS_KEY, '') || '[]');
+            return Array.isArray(list) ? list : [];
+        } catch (e) {
+            return [];
+        }
+    };
+    const writeClosedGroups = list => {
+        try {
+            store.set(CLOSED_GROUPS_KEY, JSON.stringify(list));
+        } catch (e) { /* best-effort */ }
+    };
 
     const groupById = id => groups.find(g => String(g.id) === String(id));
     const tabById = id => tabs.find(t => String(t.id) === String(id));
@@ -148,6 +165,7 @@ export function initViewTabGroups(ctx = {}) {
                 for (const g of groups)
                     if (g.collapsed)
                         collapsed.add(String(g.id));
+                closedRecords = readClosedGroups();
                 views.updateBadges();
                 if (!views.isActive('tabgroups'))
                     return;
@@ -258,14 +276,34 @@ export function initViewTabGroups(ctx = {}) {
         // Bookmark state follows the stats-view recipe: already-bookmarked
         // tabs show a filled, always-visible star; unbookmarked tabs get the
         // hover-revealed outline star button.
+        const closeLabel = _m('tabGroupsSelectClose');
         const starHtml = bookmarked
             ? `<span class="tabgroups-star" aria-label="${htmlspecialchars(bookmarkedLabel)}" title="${htmlspecialchars(bookmarkedLabel)}">${STAR_ICON_FILLED}</span>`
             : `<button class="row-btn tabgroups-add-bookmark tabgroups-add-btn" aria-label="${htmlspecialchars(addLabel)}" title="${htmlspecialchars(addLabel)}">${STAR_ICON}</button>`;
+        // The rightmost hover action is close-tab (delete); bookmark keeps
+        // its slot to the left of it.
+        const closeBtn = `<button class="row-btn tabgroups-close-tab" aria-label="${htmlspecialchars(closeLabel)}" title="${htmlspecialchars(closeLabel)}">${TRASH_ICON}</button>`;
         return `<li class="${rowClass}" id="tabgroups-item-${tid}" role="listitem" data-tab-id="${tid}"${inGroup ? ` data-group-id="${String(tab.groupId)}"` : ''}>` +
             treeRender.generateBookmarkHTML(tab.title || tab.url || _m('noTitle'), tab.url || '', extras, null, null, { badge }) +
             statusIcons +
             starHtml +
+            closeBtn +
             '</li>';
+    };
+
+    const closedGroupHtml = record => {
+        const color = record.color || 'grey';
+        const title = record.title || _m('tabGroupUntitled');
+        const openLabel = _m('tabGroupsReopenGroup');
+        const deleteLabel = _m('tabGroupsDeleteClosedGroup');
+        return `<li class="tabgroups-closed-group tg-${htmlspecialchars(color)}" data-closed-id="${htmlspecialchars(record.id)}">` +
+            `<span class="tabgroups-closed-head" tabindex="-1" role="button">` +
+            `<span class="tab-group-dot tg-${htmlspecialchars(color)}"></span>` +
+            `<span class="tabgroups-group-title" dir="auto">${htmlspecialchars(title)}</span>` +
+            `<span class="count-pill" aria-label="${htmlspecialchars(_m('tabGroupsGroupCount', `${(record.tabs || []).length}`))}">${(record.tabs || []).length}</span>` +
+            `<button class="row-btn tabgroups-closed-open" aria-label="${htmlspecialchars(openLabel)}" title="${htmlspecialchars(openLabel)}">${ACTIVATE_ICON}</button>` +
+            `<button class="row-btn tabgroups-closed-delete" aria-label="${htmlspecialchars(deleteLabel)}" title="${htmlspecialchars(deleteLabel)}">${TRASH_ICON}</button>` +
+            '</span></li>';
     };
 
     const render = () => {
@@ -284,8 +322,12 @@ export function initViewTabGroups(ctx = {}) {
 
             const windowHead = (win, idx) => {
                 const label = _m('tabGroupsWindow', [`${idx + 1}`]);
+                const isCollapsed = collapsedWindows.has(String(win.id));
+                const toggleLabel = _m(isCollapsed ? 'tabGroupsExpandWindow' : 'tabGroupsCollapseWindow');
                 const current = win.focused ? `<b class="tabgroups-window-current">${_m('tabGroupsCurrentWindow')}</b>` : '';
-                return `<li class="tabgroups-window-head" role="presentation"><em>${htmlspecialchars(label)}</em>${current}</li>`;
+                return `<li class="tabgroups-window-head" data-window-id="${String(win.id)}">` +
+                    `<button class="row-btn tabgroups-window-collapse${isCollapsed ? ' collapsed' : ''}" aria-label="${htmlspecialchars(toggleLabel)}" title="${htmlspecialchars(toggleLabel)}">${CHEVRON_ICON}</button>` +
+                    `<em>${htmlspecialchars(label)}</em>${current}</li>`;
             };
             const sectionHead = labelKey =>
                 `<li class="tabgroups-section-head" role="presentation"><em>${_m(labelKey)}</em></li>`;
@@ -300,13 +342,14 @@ export function initViewTabGroups(ctx = {}) {
             for (let wi = 0, wl = windows.length; wi < wl; wi++) {
                 const win = windows[wi];
                 html += windowHead(win, wi);
+                if (collapsedWindows.has(String(win.id)))
+                    continue;
 
                 // Open groups and ungrouped tabs render INTERLEAVED in the
                 // browser's actual tab order (drag sorting reorders that
                 // order). Closed (collapsed) groups leave the inline flow
                 // and anchor to the bottom of their window section.
                 const seenGroups = new Set();
-                const closedGroups = [];
                 for (let i = 0, l = win.tabs.length; i < l; i++) {
                     const tab = win.tabs[i];
                     if (!isGrouped(tab)) {
@@ -324,18 +367,16 @@ export function initViewTabGroups(ctx = {}) {
                     seenGroups.add(gid);
                     const memberTabs = win.tabs.filter(t => String(t.groupId) === gid)
                         .sort((a, b) => (a.index || 0) - (b.index || 0));
-                    if (collapsed.has(gid)) {
-                        closedGroups.push({ group, memberTabs });
-                    } else {
-                        html += groupBlock({ group, memberTabs });
-                    }
+                    // Collapsed groups stay inline in tab order (they are not
+                    // closed — their tabs still exist in the browser).
+                    html += groupBlock({ group, memberTabs });
                 }
+            }
 
-                if (closedGroups.length) {
-                    html += sectionHead('tabGroupsClosedGroups');
-                    for (const entry of closedGroups)
-                        html += groupHeadHtml(entry.group, entry.memberTabs);
-                }
+            if (closedRecords.length) {
+                html += sectionHead('tabGroupsClosedGroups');
+                for (const record of closedRecords)
+                    html += closedGroupHtml(record);
             }
             html += '</ul>';
         }
@@ -551,6 +592,7 @@ export function initViewTabGroups(ctx = {}) {
     };
 
     const closeGroup = groupId => {
+        const group = groupById(groupId);
         const ids = tabs.filter(t => String(t.groupId) === String(groupId)).map(t => t.id);
         if (!ids.length)
             return;
@@ -559,6 +601,18 @@ export function initViewTabGroups(ctx = {}) {
             button1: `<strong>${_m('delete')}</strong>`,
             button2: _m('nope'),
             fn1: () => {
+                // A closed group is NOT deleted: keep a local record so the
+                // group can be reopened later from the closed-groups section.
+                const record = {
+                    id: `cg_${Date.now().toString(36)}`,
+                    title: group ? group.title || '' : '',
+                    color: group ? group.color || 'grey' : 'grey',
+                    savedAt: Date.now(),
+                    tabs: tabs.filter(t => String(t.groupId) === String(groupId))
+                        .sort((a, b) => (a.index || 0) - (b.index || 0))
+                        .map(t => ({ title: t.title || '', url: t.url || '' }))
+                };
+                writeClosedGroups([...readClosedGroups(), record]);
                 send({ type: TAB_GROUP_MSG.tabsClose, tabIds: ids });
                 scheduleRefresh();
             }
@@ -609,6 +663,36 @@ export function initViewTabGroups(ctx = {}) {
         if (!ids.length)
             return;
         send({ type: TAB_GROUP_MSG.tabsMoveNewWindow, tabIds: ids }, () => refresh());
+    };
+
+    const restoreClosedGroup = recordId => {
+        const record = closedRecords.find(r => String(r.id) === String(recordId));
+        if (!record)
+            return;
+        const urls = (record.tabs || []).map(t => t.url).filter(Boolean);
+        if (!urls.length) {
+            writeClosedGroups(closedRecords.filter(r => String(r.id) !== String(recordId)));
+            closedRecords = readClosedGroups();
+            if (views.isActive('tabgroups'))
+                render();
+            return;
+        }
+        writeClosedGroups(closedRecords.filter(r => String(r.id) !== String(recordId)));
+        closedRecords = readClosedGroups();
+        send({
+            type: TAB_GROUP_MSG.openNew,
+            urls,
+            title: record.title || '',
+            color: record.color || 'grey'
+        });
+        scheduleRefresh();
+    };
+
+    const deleteClosedGroup = recordId => {
+        writeClosedGroups(closedRecords.filter(r => String(r.id) !== String(recordId)));
+        closedRecords = readClosedGroups();
+        if (views.isActive('tabgroups'))
+            render();
     };
 
     // --- Selection mode + tab batch actions ---------------------------------------
@@ -952,6 +1036,19 @@ export function initViewTabGroups(ctx = {}) {
             expandAll();
             return;
         }
+        if (closest('.tabgroups-window-collapse')) {
+            e.preventDefault();
+            const li = closest('.tabgroups-window-collapse').closest('li');
+            const winId = li && li.dataset.windowId;
+            if (!winId)
+                return;
+            if (collapsedWindows.has(winId))
+                collapsedWindows.delete(winId);
+            else
+                collapsedWindows.add(winId);
+            render();
+            return;
+        }
         // Selection mode: row/group clicks toggle membership.
         if (selecting) {
             const rowLi = closest('li');
@@ -983,6 +1080,15 @@ export function initViewTabGroups(ctx = {}) {
                     return;
                 }
             }
+            return;
+        }
+        const closeTabBtn = closest('.tabgroups-close-tab');
+        if (closeTabBtn) {
+            e.preventDefault();
+            e.stopPropagation();
+            const li = closeTabBtn.closest('li');
+            if (li && li.dataset.tabId)
+                closeTabById(li.dataset.tabId);
             return;
         }
         const addBtn = closest('.tabgroups-add-bookmark');
@@ -1028,6 +1134,24 @@ export function initViewTabGroups(ctx = {}) {
             const li = closeGroupBtn.closest('li');
             if (li && li.dataset.groupId)
                 closeGroup(li.dataset.groupId);
+            return;
+        }
+        const closedOpen = closest('.tabgroups-closed-open');
+        if (closedOpen) {
+            e.preventDefault();
+            e.stopPropagation();
+            const li = closedOpen.closest('li');
+            if (li && li.dataset.closedId)
+                restoreClosedGroup(li.dataset.closedId);
+            return;
+        }
+        const closedDelete = closest('.tabgroups-closed-delete');
+        if (closedDelete) {
+            e.preventDefault();
+            e.stopPropagation();
+            const li = closedDelete.closest('li');
+            if (li && li.dataset.closedId)
+                deleteClosedGroup(li.dataset.closedId);
             return;
         }
         const saveBtn = closest('.tabgroups-group-save');
@@ -1322,6 +1446,8 @@ export function initViewTabGroups(ctx = {}) {
         toggleGroup: toggleGroupCollapsed,
         isCollapsed: gid => collapsed.has(String(gid)),
         ungroupGroup,
-        moveGroupToNewWindow
+        moveGroupToNewWindow,
+        restoreClosedGroup,
+        deleteClosedGroup
     };
 }

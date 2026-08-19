@@ -546,6 +546,18 @@
   "tabGroupsCurrentWindow": {
     "message": "Nykyinen ikkuna"
   },
+  "tabGroupsReopenGroup": {
+    "message": "Avaa välilehtiryhmä uudelleen"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "Poista suljettu välilehtiryhmä"
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "Kutista ikkuna"
+  },
+  "tabGroupsExpandWindow": {
+    "message": "Laajenna ikkuna"
+  },
   "deadProxyAdd": {
     "message": "Lisää välityspalvelin kuolleiden linkkien tarkistuksia varten"
   },

@@ -546,6 +546,18 @@
   "tabGroupsCurrentWindow": {
     "message": "Aktuální okno"
   },
+  "tabGroupsReopenGroup": {
+    "message": "Znovu otevřít skupinu karet"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "Smazat zavřenou skupinu karet"
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "Sbalit okno"
+  },
+  "tabGroupsExpandWindow": {
+    "message": "Rozbalit okno"
+  },
   "deadProxyAdd": {
     "message": "Přidat proxy server pro kontroly nefunkčních odkazů"
   },

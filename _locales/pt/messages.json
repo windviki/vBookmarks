@@ -546,6 +546,18 @@
   "tabGroupsCurrentWindow": {
     "message": "Janela atual"
   },
+  "tabGroupsReopenGroup": {
+    "message": "Reabrir grupo de guias"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "Excluir grupo de guias fechado"
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "Recolher janela"
+  },
+  "tabGroupsExpandWindow": {
+    "message": "Expandir janela"
+  },
   "deadProxyAdd": {
     "message": "Adicionar um servidor proxy para verificações de links quebrados"
   },

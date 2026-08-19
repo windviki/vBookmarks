@@ -2087,5 +2087,21 @@
   "tabGroupsCurrentWindow": {
     "message": "Current window",
     "description": "Badge on the window section heading that contains the popup."
+  },
+  "tabGroupsReopenGroup": {
+    "message": "Reopen tab group",
+    "description": "Button on a closed tab group row: reopens its tabs as a group."
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "Delete closed tab group",
+    "description": "Button on a closed tab group row: removes the saved record."
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "Collapse window",
+    "description": "Window-head toggle in the tab groups view: folds the window section."
+  },
+  "tabGroupsExpandWindow": {
+    "message": "Expand window",
+    "description": "Window-head toggle in the tab groups view: unfolds the window section."
   }
 }

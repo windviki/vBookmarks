@@ -546,6 +546,18 @@
   "tabGroupsCurrentWindow": {
     "message": "Trenutni prozor"
   },
+  "tabGroupsReopenGroup": {
+    "message": "Ponovno otvori grupu kartica"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "Izbriši zatvorenu grupu kartica"
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "Sažmi prozor"
+  },
+  "tabGroupsExpandWindow": {
+    "message": "Proširi prozor"
+  },
   "deadProxyAdd": {
     "message": "Dodaj proxy poslužitelj za provjeru mrtvih veza"
   },

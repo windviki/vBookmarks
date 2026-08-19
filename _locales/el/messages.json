@@ -546,6 +546,18 @@
   "tabGroupsCurrentWindow": {
     "message": "Τρέχον παράθυρο"
   },
+  "tabGroupsReopenGroup": {
+    "message": "Επανάνοιγμα ομάδας καρτελών"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "Διαγραφή κλειστής ομάδας καρτελών"
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "Σύμπτυξη παραθύρου"
+  },
+  "tabGroupsExpandWindow": {
+    "message": "Επέκταση παραθύρου"
+  },
   "deadProxyAdd": {
     "message": "Προσθήκη διακομιστή μεσολάβησης για ελέγχους νεκρών συνδέσμων"
   },

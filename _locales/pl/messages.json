@@ -546,6 +546,18 @@
   "tabGroupsCurrentWindow": {
     "message": "Bieżące okno"
   },
+  "tabGroupsReopenGroup": {
+    "message": "Ponownie otwórz grupę kart"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "Usuń zamkniętą grupę kart"
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "Zwiń okno"
+  },
+  "tabGroupsExpandWindow": {
+    "message": "Rozwiń okno"
+  },
   "deadProxyAdd": {
     "message": "Dodaj serwer proxy do sprawdzania martwych linków"
   },

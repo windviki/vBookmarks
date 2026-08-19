@@ -392,6 +392,51 @@ describe('render', () => {
     });
 });
 
+describe('closed groups and window folding', () => {
+    it('close group saves a closed record before closing its tabs', () => {
+        const { def, chrome, dialogs, store, clickOn, closestOf } = setup({});
+        def().activate();
+        const li = { dataset: { groupId: 'g1' }, classList: makeClassList() };
+        const btn = { classList: makeClassList(), closest: sel => sel === 'li' ? li : (sel === '.tabgroups-group-close' ? btn : null) };
+        clickOn(btn);
+        dialogs.ConfirmDialog.openCalls[0].fn1();
+        expect(store._data.tabGroupsClosed).toBeDefined();
+        const records = JSON.parse(store._data.tabGroupsClosed);
+        expect(records).toHaveLength(1);
+        expect(records[0].title).toBe('Dev');
+        expect(records[0].tabs).toHaveLength(2);
+        expect(chrome.runtime.sendMessageCalls).toEqual([{ type: 'vbm-tabs-close', tabIds: [2, 3] }]);
+    });
+
+    it('restore closed group sends openNew and drops the saved record', () => {
+        const record = { id: 'cg_1', title: 'Dev', color: 'blue', tabs: [{ url: 'https://a/', title: 'A' }, { url: 'https://b/', title: 'B' }] };
+        const { def, chrome, store, viewTabGroups } = setup({ storeData: { tabGroupsClosed: JSON.stringify([record]) } });
+        def().activate();
+        viewTabGroups.restoreClosedGroup('cg_1');
+        expect(chrome.runtime.sendMessageCalls).toEqual([
+            { type: 'vbm-tab-group-open-new', urls: ['https://a/', 'https://b/'], title: 'Dev', color: 'blue' }
+        ]);
+        expect(store._data.tabGroupsClosed).toBe('[]');
+    });
+
+    it('window head toggle folds and unfolds that window section', () => {
+        const { def, $list, clickOn, closestOf } = setup({
+            windows: [
+                { id: 1, focused: true, tabs: [makeTab(1, 0, { active: true })] },
+                { id: 2, focused: false, tabs: [makeTab(10, 0)] }
+            ]
+        });
+        def().activate();
+        const winHead = { dataset: { windowId: '1' }, classList: makeClassList() };
+        const btn = { classList: makeClassList(), closest: sel => sel === '.tabgroups-window-collapse' ? btn : (sel === 'li' ? winHead : null) };
+        clickOn(btn);
+        expect($list.innerHTML).not.toContain('id="tabgroups-item-1"');
+        expect($list.innerHTML).toContain('id="tabgroups-item-10"');
+        clickOn(btn);
+        expect($list.innerHTML).toContain('id="tabgroups-item-1"');
+    });
+});
+
 describe('multi-window rendering', () => {
     it('renders a window section per window with current window first', () => {
         const { def, $list } = setup({

@@ -546,6 +546,18 @@
   "tabGroupsCurrentWindow": {
     "message": "Huidig venster"
   },
+  "tabGroupsReopenGroup": {
+    "message": "Tabgroep heropenen"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "Gesloten tabgroep verwijderen"
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "Venster samenvouwen"
+  },
+  "tabGroupsExpandWindow": {
+    "message": "Venster uitvouwen"
+  },
   "deadProxyAdd": {
     "message": "Proxyserver toevoegen voor dode-linkcontroles"
   },

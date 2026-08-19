@@ -546,6 +546,18 @@
   "tabGroupsCurrentWindow": {
     "message": "Dabartinis langas"
   },
+  "tabGroupsReopenGroup": {
+    "message": "Atidaryti skirtukų grupę"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "Ištrinti uždarą skirtukų grupę"
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "Sutraukti langą"
+  },
+  "tabGroupsExpandWindow": {
+    "message": "Išplėsti langą"
+  },
   "deadProxyAdd": {
     "message": "Pridėti tarpinį serverį negyvų nuorodų tikrinimui"
   },

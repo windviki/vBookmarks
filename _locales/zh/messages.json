@@ -1877,5 +1877,17 @@
   },
   "tabGroupsCurrentWindow": {
     "message": "当前窗口"
+  },
+  "tabGroupsReopenGroup": {
+    "message": "重新打开标签页组"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "删除已关闭的标签页组"
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "折叠窗口"
+  },
+  "tabGroupsExpandWindow": {
+    "message": "展开窗口"
   }
 }

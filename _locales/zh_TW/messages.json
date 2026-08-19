@@ -1877,5 +1877,17 @@
   },
   "tabGroupsCurrentWindow": {
     "message": "目前視窗"
+  },
+  "tabGroupsReopenGroup": {
+    "message": "重新開啟分頁群組"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "刪除已關閉的分頁群組"
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "收合視窗"
+  },
+  "tabGroupsExpandWindow": {
+    "message": "展開視窗"
   }
 }

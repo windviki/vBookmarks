@@ -546,6 +546,18 @@
   "tabGroupsCurrentWindow": {
     "message": "Aktuelles Fenster"
   },
+  "tabGroupsReopenGroup": {
+    "message": "Tab-Gruppe erneut öffnen"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "Geschlossene Tab-Gruppe löschen"
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "Fenster einklappen"
+  },
+  "tabGroupsExpandWindow": {
+    "message": "Fenster erweitern"
+  },
   "deadProxyAdd": {
     "message": "Proxyserver für Tote-Links-Prüfungen hinzufügen"
   },

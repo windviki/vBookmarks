@@ -546,6 +546,18 @@
   "tabGroupsCurrentWindow": {
     "message": "หน้าต่างปัจจุบัน"
   },
+  "tabGroupsReopenGroup": {
+    "message": "เปิดกลุ่มแท็บอีกครั้ง"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "ลบกลุ่มแท็บที่ปิดแล้ว"
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "ย่อหน้าต่าง"
+  },
+  "tabGroupsExpandWindow": {
+    "message": "ขยายหน้าต่าง"
+  },
   "deadProxyAdd": {
     "message": "เพิ่มพร็อกซีเซิร์ฟเวอร์สำหรับตรวจสอบลิงก์เสีย"
   },
