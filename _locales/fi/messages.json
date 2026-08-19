@@ -561,6 +561,12 @@
   "tabGroupsClearClosedGroups": {
     "message": "Tyhjennä kaikki"
   },
+  "tabGroupsClosedOpenTab": {
+    "message": "Avaa uudessa välilehdessä"
+  },
+  "tabGroupsRemoveClosedTab": {
+    "message": "Poista tallennetusta ryhmästä"
+  },
   "deadProxyAdd": {
     "message": "Lisää välityspalvelin kuolleiden linkkien tarkistuksia varten"
   },

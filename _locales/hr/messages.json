@@ -561,6 +561,12 @@
   "tabGroupsClearClosedGroups": {
     "message": "Očisti sve"
   },
+  "tabGroupsClosedOpenTab": {
+    "message": "Otvori u novoj kartici"
+  },
+  "tabGroupsRemoveClosedTab": {
+    "message": "Ukloni iz spremljene grupe"
+  },
   "deadProxyAdd": {
     "message": "Dodaj proxy poslužitelj za provjeru mrtvih veza"
   },

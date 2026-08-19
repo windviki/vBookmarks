@@ -561,6 +561,12 @@
   "tabGroupsClearClosedGroups": {
     "message": "Alles wissen"
   },
+  "tabGroupsClosedOpenTab": {
+    "message": "Openen in nieuw tabblad"
+  },
+  "tabGroupsRemoveClosedTab": {
+    "message": "Verwijderen uit opgeslagen groep"
+  },
   "deadProxyAdd": {
     "message": "Proxyserver toevoegen voor dode-linkcontroles"
   },

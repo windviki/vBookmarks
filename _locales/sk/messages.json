@@ -561,6 +561,12 @@
   "tabGroupsClearClosedGroups": {
     "message": "Vymazať všetko"
   },
+  "tabGroupsClosedOpenTab": {
+    "message": "Otvoriť na novej karte"
+  },
+  "tabGroupsRemoveClosedTab": {
+    "message": "Odstrániť z uloženej skupiny"
+  },
   "deadProxyAdd": {
     "message": "Pridať proxy server pre kontroly nefunkčných odkazov"
   },

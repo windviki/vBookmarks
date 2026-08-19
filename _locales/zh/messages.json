@@ -1892,5 +1892,11 @@
   },
   "tabGroupsClearClosedGroups": {
     "message": "全部清除"
+  },
+  "tabGroupsClosedOpenTab": {
+    "message": "在新标签页中打开"
+  },
+  "tabGroupsRemoveClosedTab": {
+    "message": "从已保存的组中移除"
   }
 }

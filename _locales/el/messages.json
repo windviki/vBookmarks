@@ -561,6 +561,12 @@
   "tabGroupsClearClosedGroups": {
     "message": "Εκκαθάριση όλων"
   },
+  "tabGroupsClosedOpenTab": {
+    "message": "Άνοιγμα σε νέα καρτέλα"
+  },
+  "tabGroupsRemoveClosedTab": {
+    "message": "Αφαίρεση από αποθηκευμένη ομάδα"
+  },
   "deadProxyAdd": {
     "message": "Προσθήκη διακομιστή μεσολάβησης για ελέγχους νεκρών συνδέσμων"
   },

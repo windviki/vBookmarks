@@ -1933,5 +1933,11 @@
   },
   "tabGroupsClearClosedGroups": {
     "message": "清空"
+  },
+  "tabGroupsClosedOpenTab": {
+    "message": "在新标签页打开"
+  },
+  "tabGroupsRemoveClosedTab": {
+    "message": "从已保存组移除"
   }
 }

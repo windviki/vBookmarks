@@ -561,6 +561,12 @@
   "tabGroupsClearClosedGroups": {
     "message": "مسح الكل"
   },
+  "tabGroupsClosedOpenTab": {
+    "message": "فتح في تبويب جديد"
+  },
+  "tabGroupsRemoveClosedTab": {
+    "message": "إزالة من المجموعة المحفوظة"
+  },
   "deadProxyAdd": {
     "message": "أضف خادم وكيل لفحوصات الروابط المعطلة"
   },

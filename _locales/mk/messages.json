@@ -560,6 +560,12 @@
   "tabGroupsClearClosedGroups": {
     "message": "Исчисти сè"
   },
+  "tabGroupsClosedOpenTab": {
+    "message": "Отвори во ново јазиче"
+  },
+  "tabGroupsRemoveClosedTab": {
+    "message": "Отстрани од зачуваната група"
+  },
   "deadProxyAdd": {
     "message": "Додај прокси сервер за проверка на мртви врски"
   },

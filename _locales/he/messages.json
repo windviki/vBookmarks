@@ -561,6 +561,12 @@
   "tabGroupsClearClosedGroups": {
     "message": "נקה הכל"
   },
+  "tabGroupsClosedOpenTab": {
+    "message": "פתח בכרטיסייה חדשה"
+  },
+  "tabGroupsRemoveClosedTab": {
+    "message": "הסר מהקבוצה השמורה"
+  },
   "deadProxyAdd": {
     "message": "הוסף שרת פרוקסי לבדיקות קישורים שבורים"
   },

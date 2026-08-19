@@ -561,6 +561,12 @@
   "tabGroupsClearClosedGroups": {
     "message": "すべてクリア"
   },
+  "tabGroupsClosedOpenTab": {
+    "message": "新しいタブで開く"
+  },
+  "tabGroupsRemoveClosedTab": {
+    "message": "保存済みグループから削除"
+  },
   "deadProxyAdd": {
     "message": "リンク切れチェック用のプロキシサーバーを追加"
   },

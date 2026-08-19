@@ -561,6 +561,12 @@
   "tabGroupsClearClosedGroups": {
     "message": "Bersihkan semua"
   },
+  "tabGroupsClosedOpenTab": {
+    "message": "Buka di tab baru"
+  },
+  "tabGroupsRemoveClosedTab": {
+    "message": "Hapus dari grup tersimpan"
+  },
   "deadProxyAdd": {
     "message": "Tambahkan server proxy untuk pemeriksaan tautan mati"
   },

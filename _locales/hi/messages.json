@@ -561,6 +561,12 @@
   "tabGroupsClearClosedGroups": {
     "message": "सभी साफ़ करें"
   },
+  "tabGroupsClosedOpenTab": {
+    "message": "नए टैब में खोलें"
+  },
+  "tabGroupsRemoveClosedTab": {
+    "message": "सहेजे गए समूह से हटाएँ"
+  },
   "deadProxyAdd": {
     "message": "डेड-लिंक जाँच के लिए प्रॉक्सी सर्वर जोड़ें"
   },

@@ -561,6 +561,12 @@
   "tabGroupsClearClosedGroups": {
     "message": "Kustuta kõik"
   },
+  "tabGroupsClosedOpenTab": {
+    "message": "Ava uuel vahelehel"
+  },
+  "tabGroupsRemoveClosedTab": {
+    "message": "Eemalda salvestatud grupist"
+  },
   "deadProxyAdd": {
     "message": "Lisa puhverserver surnud linkide kontrollimiseks"
   },

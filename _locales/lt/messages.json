@@ -561,6 +561,12 @@
   "tabGroupsClearClosedGroups": {
     "message": "Išvalyti visus"
   },
+  "tabGroupsClosedOpenTab": {
+    "message": "Atidaryti naujoje kortelėje"
+  },
+  "tabGroupsRemoveClosedTab": {
+    "message": "Pašalinti iš išsaugotos grupės"
+  },
   "deadProxyAdd": {
     "message": "Pridėti tarpinį serverį negyvų nuorodų tikrinimui"
   },

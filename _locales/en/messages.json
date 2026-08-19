@@ -2107,5 +2107,13 @@
   "tabGroupsClearClosedGroups": {
     "message": "Clear all",
     "description": "Button on the closed tab groups section heading: removes all saved closed-group records."
+  },
+  "tabGroupsClosedOpenTab": {
+    "message": "Open in new tab",
+    "description": "Hover action on a saved tab inside a closed tab group row."
+  },
+  "tabGroupsRemoveClosedTab": {
+    "message": "Remove from saved group",
+    "description": "Hover action on a saved tab inside a closed tab group row: removes that tab from the saved record."
   }
 }

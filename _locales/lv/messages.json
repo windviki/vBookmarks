@@ -561,6 +561,12 @@
   "tabGroupsClearClosedGroups": {
     "message": "Notīrīt visu"
   },
+  "tabGroupsClosedOpenTab": {
+    "message": "Atvērt jaunā cilnē"
+  },
+  "tabGroupsRemoveClosedTab": {
+    "message": "Noņemt no saglabātās grupas"
+  },
   "deadProxyAdd": {
     "message": "Pievienot starpniekserveri bojātu saišu pārbaudei"
   },

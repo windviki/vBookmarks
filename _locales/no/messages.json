@@ -561,6 +561,12 @@
   "tabGroupsClearClosedGroups": {
     "message": "Tøm alle"
   },
+  "tabGroupsClosedOpenTab": {
+    "message": "Åpne i ny fane"
+  },
+  "tabGroupsRemoveClosedTab": {
+    "message": "Fjern fra lagret gruppe"
+  },
   "deadProxyAdd": {
     "message": "Legg til en proxy-server for sjekk av døde lenker"
   },

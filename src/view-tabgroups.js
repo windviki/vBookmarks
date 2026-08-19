@@ -60,6 +60,7 @@ export function initViewTabGroups(ctx = {}) {
     const selected = new Set();   // tab ids
     const collapsed = new Set();  // group ids
     const collapsedWindows = new Set(); // window ids (view-local folding)
+    const expandedClosed = new Set();   // closed-record ids (view-local expand)
     let bookmarkedUrls = new Set(); // tab URLs that already exist as bookmarks
     let closedRecords = [];       // saved closed tab groups (our own records)
     let dragTabId = null;
@@ -301,15 +302,29 @@ export function initViewTabGroups(ctx = {}) {
             '</li>';
     };
 
+    const closedTabHtml = (record, tab, idx) => {
+        const title = tab.title || tab.url || _m('noTitle');
+        const extras = `data-closed-id="${htmlspecialchars(record.id)}" data-closed-tab="${idx}"`;
+        const addLabel = _m('tabGroupsAddBookmark');
+        const removeLabel = _m('tabGroupsRemoveClosedTab');
+        return `<li class="vbm-row tabgroups-closed-tab" data-closed-id="${htmlspecialchars(record.id)}" data-closed-tab="${idx}">` +
+            treeRender.generateBookmarkHTML(title, tab.url || '', extras, null, null, {}) +
+            `<button class="row-btn tabgroups-closed-add-bookmark" aria-label="${htmlspecialchars(addLabel)}" title="${htmlspecialchars(addLabel)}">${STAR_ICON}</button>` +
+            `<button class="row-btn tabgroups-closed-remove-tab" aria-label="${htmlspecialchars(removeLabel)}" title="${htmlspecialchars(removeLabel)}">${TRASH_ICON}</button>` +
+            '</li>';
+    };
+
     const closedGroupHtml = record => {
         const color = record.color || 'grey';
         const title = record.title || _m('tabGroupUntitled');
+        const isExpanded = expandedClosed.has(String(record.id));
         const openLabel = _m('tabGroupsReopenGroup');
         const deleteLabel = _m('tabGroupsDeleteClosedGroup');
         const closedAt = relTimeLabel(record.savedAt || 0, _m);
         const closedAtFull = new Date(record.savedAt || 0).toLocaleString();
-        return `<li class="tabgroups-closed-group tg-${htmlspecialchars(color)}" data-closed-id="${htmlspecialchars(record.id)}">` +
-            `<span class="tabgroups-closed-head" tabindex="-1" role="button">` +
+        let html = `<li class="tabgroups-closed-group tg-${htmlspecialchars(color)}" data-closed-id="${htmlspecialchars(record.id)}">` +
+            `<span class="tabgroups-closed-head" tabindex="-1" role="button" aria-expanded="${isExpanded ? 'true' : 'false'}">` +
+            `<span class="chevron${isExpanded ? '' : ' collapsed'}"></span>` +
             `<span class="tab-group-dot tg-${htmlspecialchars(color)}"></span>` +
             `<span class="tabgroups-group-title" dir="auto">${htmlspecialchars(title)}</span>` +
             `<span class="tabgroups-closed-meta" title="${htmlspecialchars(closedAtFull)}">${htmlspecialchars(closedAt)}</span>` +
@@ -317,6 +332,12 @@ export function initViewTabGroups(ctx = {}) {
             `<button class="row-btn tabgroups-closed-open" aria-label="${htmlspecialchars(openLabel)}" title="${htmlspecialchars(openLabel)}">${ACTIVATE_ICON}</button>` +
             `<button class="row-btn tabgroups-closed-delete" aria-label="${htmlspecialchars(deleteLabel)}" title="${htmlspecialchars(deleteLabel)}">${TRASH_ICON}</button>` +
             '</span></li>';
+        if (isExpanded) {
+            const tabs = record.tabs || [];
+            for (let i = 0; i < tabs.length; i++)
+                html += closedTabHtml(record, tabs[i], i);
+        }
+        return html;
     };
 
     const render = () => {
@@ -706,6 +727,46 @@ export function initViewTabGroups(ctx = {}) {
         closedRecords = readClosedGroups().sort((a, b) => (b.savedAt || 0) - (a.savedAt || 0));
         if (views.isActive('tabgroups'))
             render();
+    };
+
+    const removeClosedTab = (recordId, idx) => {
+        const record = closedRecords.find(r => String(r.id) === String(recordId));
+        if (!record)
+            return;
+        const tabs = (record.tabs || []).slice();
+        tabs.splice(idx, 1);
+        if (!tabs.length) {
+            persistClosedGroups(closedRecords.filter(r => String(r.id) !== String(recordId)));
+        } else {
+            const updated = { ...record, tabs };
+            persistClosedGroups(closedRecords.map(r => String(r.id) === String(recordId) ? updated : r));
+        }
+        closedRecords = readClosedGroups().sort((a, b) => (b.savedAt || 0) - (a.savedAt || 0));
+        if (views.isActive('tabgroups'))
+            render();
+    };
+
+    const addClosedTabToBookmarks = (recordId, idx) => {
+        const record = closedRecords.find(r => String(r.id) === String(recordId));
+        const tab = record && record.tabs && record.tabs[idx];
+        if (!tab || !bookmarkableUrl(tab.url))
+            return;
+        chrome.bookmarks.search({ url: tab.url }, existing => {
+            if (existing && existing.length) {
+                undo.showToast(_m('quickAdded'));
+                return;
+            }
+            const parentId = rootFolderId();
+            chrome.bookmarks.create({ title: tab.title || tab.url, url: tab.url, parentId }, created => {
+                if (!created || created.id === undefined || created.id === null)
+                    return;
+                onChanged();
+                chrome.bookmarks.get(parentId, nodes => {
+                    const folderName = (nodes && nodes.length) ? (nodes[0].title || '') : '';
+                    undo.showToast(_m('quickAddedTo', folderName));
+                });
+            });
+        });
     };
 
     const clearClosedGroups = () => {
@@ -1171,6 +1232,24 @@ export function initViewTabGroups(ctx = {}) {
             clearClosedGroups();
             return;
         }
+        const closedAddBookmark = closest('.tabgroups-closed-add-bookmark');
+        if (closedAddBookmark) {
+            e.preventDefault();
+            e.stopPropagation();
+            const li = closedAddBookmark.closest('li');
+            if (li && li.dataset.closedId)
+                addClosedTabToBookmarks(li.dataset.closedId, parseInt(li.dataset.closedTab, 10) || 0);
+            return;
+        }
+        const closedRemoveTab = closest('.tabgroups-closed-remove-tab');
+        if (closedRemoveTab) {
+            e.preventDefault();
+            e.stopPropagation();
+            const li = closedRemoveTab.closest('li');
+            if (li && li.dataset.closedId)
+                removeClosedTab(li.dataset.closedId, parseInt(li.dataset.closedTab, 10) || 0);
+            return;
+        }
         const closedDelete = closest('.tabgroups-closed-delete');
         if (closedDelete) {
             e.preventDefault();
@@ -1178,6 +1257,20 @@ export function initViewTabGroups(ctx = {}) {
             const li = closedDelete.closest('li');
             if (li && li.dataset.closedId)
                 deleteClosedGroup(li.dataset.closedId);
+            return;
+        }
+        const closedHead = closest('.tabgroups-closed-head');
+        if (closedHead) {
+            e.preventDefault();
+            const li = closedHead.closest('li');
+            if (li && li.dataset.closedId) {
+                const cid = li.dataset.closedId;
+                if (expandedClosed.has(cid))
+                    expandedClosed.delete(cid);
+                else
+                    expandedClosed.add(cid);
+                render();
+            }
             return;
         }
         const saveBtn = closest('.tabgroups-group-save');
@@ -1203,6 +1296,14 @@ export function initViewTabGroups(ctx = {}) {
             const tab = tabById(anchor.dataset.tabId);
             if (tab)
                 chrome.tabs.update(tab.id, { active: true });
+            return;
+        }
+        if (anchor && anchor.dataset && anchor.dataset.closedId) {
+            e.preventDefault();
+            const record = closedRecords.find(r => String(r.id) === String(anchor.dataset.closedId));
+            const tab = record && record.tabs && record.tabs[parseInt(anchor.dataset.closedTab, 10) || 0];
+            if (tab && tab.url && chrome.tabs.create)
+                chrome.tabs.create({ url: tab.url, active: false });
             return;
         }
     });
@@ -1475,6 +1576,7 @@ export function initViewTabGroups(ctx = {}) {
         moveGroupToNewWindow,
         restoreClosedGroup,
         deleteClosedGroup,
-        clearClosedGroups
+        clearClosedGroups,
+        removeClosedTab
     };
 }

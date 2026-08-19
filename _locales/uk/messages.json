@@ -561,6 +561,12 @@
   "tabGroupsClearClosedGroups": {
     "message": "Очистити все"
   },
+  "tabGroupsClosedOpenTab": {
+    "message": "Відкрити в новій вкладці"
+  },
+  "tabGroupsRemoveClosedTab": {
+    "message": "Видалити зі збереженої групи"
+  },
   "deadProxyAdd": {
     "message": "Додати проксі-сервер для перевірки мертвих посилань"
   },

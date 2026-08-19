@@ -561,6 +561,12 @@
   "tabGroupsClearClosedGroups": {
     "message": "پاک کردن همه"
   },
+  "tabGroupsClosedOpenTab": {
+    "message": "باز کردن در برگه جدید"
+  },
+  "tabGroupsRemoveClosedTab": {
+    "message": "حذف از گروه ذخیره‌شده"
+  },
   "deadProxyAdd": {
     "message": "افزودن سرور پروکسی برای بررسی لینک‌های خراب"
   },

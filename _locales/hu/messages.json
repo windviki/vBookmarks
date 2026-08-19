@@ -561,6 +561,12 @@
   "tabGroupsClearClosedGroups": {
     "message": "Összes törlése"
   },
+  "tabGroupsClosedOpenTab": {
+    "message": "Megnyitás új lapon"
+  },
+  "tabGroupsRemoveClosedTab": {
+    "message": "Eltávolítás a mentett csoportból"
+  },
   "deadProxyAdd": {
     "message": "Proxykiszolgáló hozzáadása a hibás linkek ellenőrzéséhez"
   },

@@ -561,6 +561,12 @@
   "tabGroupsClearClosedGroups": {
     "message": "Șterge tot"
   },
+  "tabGroupsClosedOpenTab": {
+    "message": "Deschide în filă nouă"
+  },
+  "tabGroupsRemoveClosedTab": {
+    "message": "Elimină din grupul salvat"
+  },
   "deadProxyAdd": {
     "message": "Adaugă un server proxy pentru verificarea linkurilor moarte"
   },

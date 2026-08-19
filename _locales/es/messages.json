@@ -561,6 +561,12 @@
   "tabGroupsClearClosedGroups": {
     "message": "Borrar todo"
   },
+  "tabGroupsClosedOpenTab": {
+    "message": "Abrir en nueva pestaña"
+  },
+  "tabGroupsRemoveClosedTab": {
+    "message": "Quitar del grupo guardado"
+  },
   "deadProxyAdd": {
     "message": "Añadir un servidor proxy para comprobar enlaces rotos"
   },

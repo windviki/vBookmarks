@@ -561,6 +561,12 @@
   "tabGroupsClearClosedGroups": {
     "message": "ล้างทั้งหมด"
   },
+  "tabGroupsClosedOpenTab": {
+    "message": "เปิดในแท็บใหม่"
+  },
+  "tabGroupsRemoveClosedTab": {
+    "message": "ลบออกจากกลุ่มที่บันทึกไว้"
+  },
   "deadProxyAdd": {
     "message": "เพิ่มพร็อกซีเซิร์ฟเวอร์สำหรับตรวจสอบลิงก์เสีย"
   },

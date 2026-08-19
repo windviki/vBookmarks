@@ -561,6 +561,12 @@
   "tabGroupsClearClosedGroups": {
     "message": "Xóa tất cả"
   },
+  "tabGroupsClosedOpenTab": {
+    "message": "Mở trong tab mới"
+  },
+  "tabGroupsRemoveClosedTab": {
+    "message": "Xóa khỏi nhóm đã lưu"
+  },
   "deadProxyAdd": {
     "message": "Thêm máy chủ proxy để kiểm tra liên kết hỏng"
   },

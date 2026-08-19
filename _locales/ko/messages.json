@@ -561,6 +561,12 @@
   "tabGroupsClearClosedGroups": {
     "message": "모두 지우기"
   },
+  "tabGroupsClosedOpenTab": {
+    "message": "새 탭에서 열기"
+  },
+  "tabGroupsRemoveClosedTab": {
+    "message": "저장된 그룹에서 제거"
+  },
   "deadProxyAdd": {
     "message": "죽은 링크 확인용 프록시 서버 추가"
   },

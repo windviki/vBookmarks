@@ -561,6 +561,12 @@
   "tabGroupsClearClosedGroups": {
     "message": "Rensa alla"
   },
+  "tabGroupsClosedOpenTab": {
+    "message": "Öppna i ny flik"
+  },
+  "tabGroupsRemoveClosedTab": {
+    "message": "Ta bort från sparad grupp"
+  },
   "deadProxyAdd": {
     "message": "Lägg till proxyserver för döda länkar"
   },
