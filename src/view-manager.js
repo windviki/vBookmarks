@@ -966,6 +966,9 @@ export function initViewManager(ctx = {}) {
         if (!isFirstActivation && id !== 'tree'
             && (!tabsVisible() || !def.tabEl)) {
             const label = _m(def.titleKey) || def.id;
+            // Single argument on purpose: the toast is a pure hint, so it is
+            // intentionally buttonless (undo.js's toastAction hides the
+            // button on a falsy label — a blank button would silently undo).
             showToast(_m('viewHiddenTabsHint', [label, 'Esc']) || label);
         }
         // Tab badges re-evaluate on every switch — activation hooks are the

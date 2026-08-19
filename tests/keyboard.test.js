@@ -762,7 +762,7 @@ describe('Tab region cycle (§2.1)', () => {
     // toastAction) joins the ring at its visual spot — the fixed bottom bar,
     // after the list rows — whenever it is up (`hidden` off is the visibility
     // signal; the 8s auto-hide drops the stop again).
-    const toastEnv = hidden => {
+    const toastEnv = (hidden, buttonHidden = false) => {
         const refs = {};
         const env = setup({
             views: ({ tree, el }) => {
@@ -771,6 +771,7 @@ describe('Tab region cycle (§2.1)', () => {
                 const toast = el('DIV', 'undo-toast');
                 toast.hidden = hidden;
                 refs.toastBtn = el('BUTTON', 'undo-toast-button');
+                refs.toastBtn.hidden = buttonHidden;
                 refs.tabs = el('DIV', 'view-tabs');
                 refs.tabBtn = el('BUTTON', 'view-tab-tree');
                 refs.tabBtn.parentNode = refs.tabs;
@@ -801,6 +802,16 @@ describe('Tab region cycle (§2.1)', () => {
 
     it('a hidden undo toast stays out of the ring', () => {
         const { doc, fireDoc, searchInput, tree, f1 } = toastEnv(true);
+        tree._qs[ROW_SEL] = f1.link;
+        f1.link.focus();
+        fireDoc('keydown', makeEvent({ key: 'Tab' }));
+        expect(doc.activeElement).toBe(searchInput); // straight wrap-around
+    });
+
+    it('a visible toast with a HIDDEN button (buttonless hint) contributes no stop', () => {
+        // undo.js's text-only toastAction (the hidden-view return hint) hides
+        // the button outright — a hidden stop would Tab-focus nothing.
+        const { doc, fireDoc, searchInput, tree, f1 } = toastEnv(false, true);
         tree._qs[ROW_SEL] = f1.link;
         f1.link.focus();
         fireDoc('keydown', makeEvent({ key: 'Tab' }));
@@ -957,6 +968,19 @@ describe('Tab region cycle (§2.1)', () => {
         fireDoc('keydown', ev);
         expect(ev.defaultPrevented).toBe(false);
         expect(doc.activeElement).toBe(pcmItem1);
+    });
+
+    it('does nothing inside the view-tab menu either (4.0.8: it joined menuContainers)', () => {
+        // While the tab menu is open, Tab/Shift+Tab stay trapped in the menu
+        // like every other context menu — they must not walk the ring.
+        const { doc, fireDoc, vtmItem1 } = tabEnv();
+        vtmItem1.focus();
+        const ev = makeEvent({ key: 'Tab' });
+        fireDoc('keydown', ev);
+        expect(ev.defaultPrevented).toBe(false);
+        expect(doc.activeElement).toBe(vtmItem1);
+        fireDoc('keydown', makeEvent({ key: 'Tab', shiftKey: true }));
+        expect(doc.activeElement).toBe(vtmItem1);
     });
 
     it('does nothing while the palette is open', () => {

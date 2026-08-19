@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeAll } from 'vitest';
+import { describe, it, expect, beforeAll, vi } from 'vitest';
 
 // search.js touches page globals (document/window/chrome) only inside
 // initSearch, so the real module imports cleanly in node once the globals
@@ -583,6 +583,48 @@ describe('input listeners', () => {
         expect(resultLink.focused).toBe(false);
         // IME Enter must stay with the IME: no focus jump, no synthetic click.
         expect(resultLink.dispatched).toBeUndefined();
+    });
+
+    it('Enter clicks the focused first result after 30ms when it is still connected', () => {
+        const { els } = setup({});
+        const input = els['search-input'];
+        input.value = 'git';
+        input.selectionEnd = 3;
+        const resultLink = makeEl(); // isConnected undefined ≠ false: attached
+        els.results._qs['ul>li:first-child a'] = resultLink;
+        vi.useFakeTimers();
+        try {
+            input.trigger('keydown', { key: 'Enter' });
+            expect(resultLink.focused).toBe(true);
+            vi.advanceTimersByTime(30);
+            expect(resultLink.dispatched).toHaveLength(1);
+            expect(resultLink.dispatched[0].type).toBe('click');
+        } finally {
+            vi.useRealTimers();
+        }
+    });
+
+    it('skips the synthetic click when the first result detached before the 30ms timer fired', () => {
+        const { els } = setup({});
+        const input = els['search-input'];
+        input.value = 'git';
+        input.selectionEnd = 3;
+        const resultLink = makeEl();
+        els.results._qs['ul>li:first-child a'] = resultLink;
+        vi.useFakeTimers();
+        try {
+            input.trigger('keydown', { key: 'Enter' });
+            expect(resultLink.focused).toBe(true);
+            // The results re-rendered before the timer fired (IME commit, a
+            // fast input event) — the captured anchor is no longer in the DOM.
+            resultLink.isConnected = false;
+            vi.advanceTimersByTime(30);
+            // A click on a detached anchor cannot reach the delegated
+            // bookmarkHandler; its default action would navigate the popup.
+            expect(resultLink.dispatched).toBeUndefined();
+        } finally {
+            vi.useRealTimers();
+        }
     });
 
     it('Escape with a query records + clears the box but keeps the results and the view (two-level, §3.2)', () => {

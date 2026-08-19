@@ -396,3 +396,54 @@ describe('toastAction (v4 task-3 #14)', () => {
         expect(timeouts).toEqual([]);
     });
 });
+
+describe('buttonless toastAction (text-only hint — the hidden-view return hint)', () => {
+    it('hides the button and a click does NOT run undo', async () => {
+        const { undo, els, chrome } = setup({ subTrees: { '5': BOOKMARK_NODE } });
+        undo.capture('5'); // something undoable — must NOT be consumed
+        undo.toastAction("You're in the Recent view. Press Esc to return.");
+        expect(els['undo-toast-text'].textContent)
+            .toBe("You're in the Recent view. Press Esc to return.");
+        expect(els['undo-toast'].hidden).toBe(false); // the bar shows
+        expect(els['undo-toast-button'].hidden).toBe(true); // …without a button
+        expect(timeouts).toHaveLength(1);
+        expect(timeouts[0][1]).toBe(8000);
+        await els['undo-toast-button'].listeners.click();
+        expect(chrome.bookmarks.createCalls).toEqual([]); // undo never ran
+        expect(undo.canUndo()).toBe(true); // the stack entry survived
+    });
+
+    it('a labeled toastAction shows the button and fires the action', async () => {
+        const { undo, els, chrome } = setup({ subTrees: { '5': BOOKMARK_NODE } });
+        undo.capture('5');
+        let ran = 0;
+        undo.toastAction('hint', 'act', () => { ran++; });
+        expect(els['undo-toast-button'].hidden).toBe(false);
+        expect(els['undo-toast-button'].textContent).toBe('act');
+        await els['undo-toast-button'].listeners.click();
+        expect(ran).toBe(1);
+        expect(chrome.bookmarks.createCalls).toEqual([]);
+    });
+
+    it('showToast after a buttonless toastAction re-shows the button with the Undo label', async () => {
+        const { undo, els, chrome } = setup({ subTrees: { '5': BOOKMARK_NODE } });
+        undo.capture('5');
+        undo.toastAction('hint only');
+        expect(els['undo-toast-button'].hidden).toBe(true);
+        undo.showToast('Deleted GH');
+        expect(els['undo-toast-button'].hidden).toBe(false);
+        expect(els['undo-toast-button'].textContent).toBe('undoAction');
+        await els['undo-toast-button'].listeners.click();
+        expect(chrome.bookmarks.createCalls).toHaveLength(1); // real undo ran
+    });
+
+    it('a later buttonless toastAction clears a pending action', async () => {
+        const { undo, els } = setup({});
+        let ran = 0;
+        undo.toastAction('hint', 'act', () => { ran++; });
+        undo.toastAction('hint only'); // hides the button, drops the action
+        expect(els['undo-toast-button'].hidden).toBe(true);
+        await els['undo-toast-button'].listeners.click();
+        expect(ran).toBe(0);
+    });
+});

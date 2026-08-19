@@ -702,6 +702,13 @@ export function initPalette(ctx = {}) {
         render();
     });
     $input.addEventListener('keydown', e => {
+        // IME composition guard (same as search.js): while a Chinese/Japanese
+        // IME is committing a candidate, Chrome fires keydown with
+        // e.isComposing === true and (on macOS) keyCode 229. Those keys —
+        // including the committing Enter and the candidate-picking arrows —
+        // belong to the IME, never to the selection/execution below.
+        if (e.isComposing || e.keyCode === 229)
+            return;
         switch (e.key) {
             case 'ArrowDown':
                 e.preventDefault();

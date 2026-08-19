@@ -531,6 +531,42 @@ describe('view-tab context menu', () => {
         fire(viewTabMenu, 'mouseup', makeEvent({ button: 0, target: viewTabHide }));
         expect(calls).toEqual([]);
     });
+
+    it('marks the tab .active on open — the document Esc layer\'s menu-open signal', () => {
+        // keyboard.js's capture Esc only dismisses a menu when some element
+        // carries .active AND a menu is visible; without the marker the Esc
+        // fell through to escapeToTree/window.close with the menu still open.
+        const { openOn, makeViewTab, viewTabMenu } = setup({
+            viewMenu: {
+                prepare: () => ({ canHide: true, canDisable: true }),
+                hide: () => {},
+                disable: () => {}
+            }
+        });
+        const tab = makeViewTab('recent');
+        openOn(tab);
+        expect(viewTabMenu.style.opacity).toBe('1');
+        expect(tab.classList.contains('active')).toBe(true);
+    });
+
+    it('closeMenu (keyboard cancel) drops the marker and refocuses the tab; clearMenu(e) drops it too', () => {
+        const { openOn, makeViewTab, menus, el } = setup({
+            viewMenu: {
+                prepare: () => ({ canHide: true, canDisable: true }),
+                hide: () => {},
+                disable: () => {}
+            }
+        });
+        const tab = makeViewTab('recent');
+        openOn(tab);
+        menus.closeMenu();
+        expect(tab.classList.contains('active')).toBe(false);
+        expect(tab.focused).toBe(true); // the tab is the menu's owner
+        openOn(tab);
+        expect(tab.classList.contains('active')).toBe(true);
+        menus.clearMenu(makeEvent({ target: el('DIV') }));
+        expect(tab.classList.contains('active')).toBe(false);
+    });
 });
 
 describe('clearMenu', () => {

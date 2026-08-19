@@ -48,8 +48,11 @@
  *                  toast bar with a custom button that runs onAction instead
  *                  of undo() (one shot — a later showToast/toastAction or the
  *                  auto-hide clears the pending action). Used by the tree
- *                  view's "target is outside the bookmarks bar" hint.
- *                  Missing toast DOM makes it a no-op.
+ *                  view's "target is outside the bookmarks bar" hint. A falsy
+ *                  buttonLabel renders a text-only hint with the button
+ *                  hidden (the view-manager's hidden-view return hint) — a
+ *                  blank button would silently undo on click. Missing toast
+ *                  DOM makes it a no-op.
  *
  * No neatools here: plain getElementById / DOM calls, and i18n goes straight
  * through chrome.i18n.getMessage like every other popup module.
@@ -157,8 +160,12 @@ export function initUndo(ctx = {}) {
         pendingAction = null;
         if (toastText)
             toastText.textContent = message;
-        if (toastButton)
+        if (toastButton) {
+            // A buttonless toastAction may have hidden the button — the undo
+            // toast always brings it back with the Undo label.
+            toastButton.hidden = false;
             toastButton.textContent = _m('undoAction');
+        }
         toast.hidden = false;
         clearTimeout(toastTimer);
         toastTimer = setTimeout(hideToast, TOAST_MS);
@@ -166,11 +173,19 @@ export function initUndo(ctx = {}) {
     const toastAction = (message, buttonLabel, onAction) => {
         if (!toast)
             return;
-        pendingAction = typeof onAction === 'function' ? onAction : null;
+        // A falsy label means a text-only hint (the view-manager's
+        // hidden-view return hint): the button hides outright — a blank
+        // button's click would fall through to undo() below and silently
+        // undo a deletion.
+        const buttonless = !buttonLabel;
+        pendingAction = buttonless || typeof onAction !== 'function' ? null : onAction;
         if (toastText)
             toastText.textContent = message;
-        if (toastButton)
-            toastButton.textContent = buttonLabel;
+        if (toastButton) {
+            toastButton.hidden = buttonless;
+            if (!buttonless)
+                toastButton.textContent = buttonLabel;
+        }
         toast.hidden = false;
         clearTimeout(toastTimer);
         toastTimer = setTimeout(hideToast, TOAST_MS);
@@ -178,6 +193,10 @@ export function initUndo(ctx = {}) {
     if (toastButton) {
         toastButton.textContent = _m('undoAction');
         toastButton.addEventListener('click', async () => {
+            // Defense in depth: a hidden (buttonless hint) button carries no
+            // action — never fall through to undo().
+            if (toastButton.hidden)
+                return;
             const action = pendingAction;
             pendingAction = null;
             if (action) {

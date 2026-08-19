@@ -1140,7 +1140,7 @@ export function initKeyboard(ctx = {}) {
     const menuContainers = [
         menus.bookmarkMenu, menus.folderMenu, menus.separatorMenu,
         menus.searchHistoryMenu, menus.histRowMenu, menus.dupesGroupMenu,
-        menus.paletteCmdMenu,
+        menus.paletteCmdMenu, menus.viewTabMenu,
         // issue #48 follow-up: the collapsed-group flyouts keep Tab trapped
         // too (their items are Tab stops only while the flyout is open).
         menus.folderTabGroupSubmenu, menus.folderSortSubmenu,
@@ -1274,11 +1274,13 @@ export function initKeyboard(ctx = {}) {
         // is a transient bar fixed to the bottom edge — its button joins the
         // ring as the last stop while the bar is up (the `hidden` attribute
         // is the visibility signal; the 8s auto-hide drops the stop again).
-        // Never an arrow rung: the arrow chain stays stable either way.
+        // Never an arrow rung: the arrow chain stays stable either way. A
+        // buttonless hint toast (toastAction without a label hides the
+        // button) contributes NO stop.
         const toast = $('undo-toast');
         if (toast && !toast.hidden) {
             const toastBtn = $('undo-toast-button');
-            if (toastBtn && !toastBtn.disabled && tabVisible(toastBtn))
+            if (toastBtn && !toastBtn.hidden && !toastBtn.disabled && tabVisible(toastBtn))
                 stops.push(toastBtn);
         }
         if (!stops.length)

@@ -107,6 +107,11 @@ describe('参数化 i18n 文案的真实替换结果 (en)', () => {
         expect(_m('dupesApplyAll', '3')).toBe('Apply all (3)');
         expect(_m('deadStartHint', '42')).toBe('Start scanning 42 bookmarks');
     });
+
+    it('隐藏视图返回提示 ($view$/$back$ 双占位符, 无按钮 toast 的文案)', () => {
+        expect(_m('viewHiddenTabsHint', ['Recent', 'Esc']))
+            .toBe("You're in the Recent view. Press Esc or use the command palette to return to the tree.");
+    });
 });
 
 describe('makeI18n 边界', () => {

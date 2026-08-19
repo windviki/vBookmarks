@@ -734,6 +734,12 @@ export function initContextMenu(ctx = {}) {
             clearMenu(e);
             currentContext = viewTab;
             ownerInfo = null;
+            // The .active marker is the document Esc layer's "a menu is open"
+            // signal (keyboard.js reads body.querySelector('.active') together
+            // with anyMenuVisible()) and closeMenu's focus-return target —
+            // same contract as the row branch below. clearMenu(e) above
+            // already dropped any stale marker.
+            viewTab.classList.add('active');
             const hideItem = $('view-tab-hide');
             if (hideItem) {
                 hideItem.textContent = _m('viewTabHide') || 'Hide';

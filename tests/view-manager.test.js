@@ -404,6 +404,48 @@ describe('hide and disable (tab context menu backing)', () => {
         views.activate('tree');
         expect(toasts).toHaveLength(1); // returning to tree never toasts
     });
+
+    it('the return hint is a single-argument call — the buttonless-toast contract', () => {
+        // undo.js's toastAction hides the button on a falsy label; the hint
+        // must stay message-only (a blank button would silently run undo()).
+        const calls = [];
+        const { views, addRecent } = setup({ toastAction: (...args) => calls.push(args) });
+        addRecent({ showKey: 'showRecentBookmarks', disableKey: 'disableRecentView' });
+        views.hideViewTab('recent');
+        views.activate('recent');
+        expect(calls).toHaveLength(1);
+        expect(calls[0]).toHaveLength(1); // message only — no label/action args
+        expect(calls[0][0]).toContain('viewHiddenTabsHint');
+    });
+
+    it('hiding the ACTIVE view keeps it active (hidden ≠ disabled), strip/aria end state sane', () => {
+        const { views, addRecent, tabs, indicator } = setup({});
+        addRecent({ showKey: 'showRecentBookmarks', disableKey: 'disableRecentView' });
+        views.activate('recent');
+        expect(views.activeId()).toBe('recent');
+        views.hideViewTab('recent');
+        // refreshViewState only yanks a DISABLED active view — a hidden one
+        // stays active (palette routes back to it).
+        expect(views.activeId()).toBe('recent');
+        expect(views.isActive('recent')).toBe(true);
+        // the strip re-renders without the hidden tab: no selected tab, the
+        // indicator parks (no tab to underline).
+        expect(tabs().map(t => t.id)).toEqual(['view-tab-tree', 'view-tab-search']);
+        expect(tabs().every(t => t.getAttribute('aria-selected') === 'false')).toBe(true);
+        expect(indicator().style.opacity).toBe('0');
+    });
+
+    it('disabling the ACTIVE view switches to the first visible view', () => {
+        const { views, addRecent, tabs, byId } = setup({});
+        addRecent({ showKey: 'showRecentBookmarks', disableKey: 'disableRecentView' });
+        views.activate('recent');
+        views.disableView('recent');
+        expect(views.activeId()).toBe('tree'); // first visible takes over
+        expect(byId['view-tree'].hidden).toBe(false);
+        expect(tabs().map(t => t.id)).toEqual(['view-tab-tree', 'view-tab-search']);
+        expect(tabs()[0].getAttribute('aria-selected')).toBe('true');
+        expect(tabs()[0].tabIndex).toBe(0);
+    });
 });
 
 describe('activate', () => {
@@ -1158,6 +1200,24 @@ describe('Ctrl/Cmd/Alt+number direct jump (§3.4, v4 task-4 #10)', () => {
         expect(ctx.views.activeId()).toBe('search');
         key(ctx, '1', { alt: true });
         expect(ctx.views.activeId()).toBe('tree');
+    });
+
+    it('numbering compacts over a hidden middle view (visible-set indexing)', () => {
+        const ctx = setup({});
+        ctx.addRecent({ showKey: 'showRecentBookmarks', disableKey: 'disableRecentView' });
+        ctx.views.register({
+            id: 'stats', titleKey: 'viewStats', icon: '<svg/>',
+            container: ctx.makeEl(), listEl: ctx.makeEl()
+        });
+        // Visible set: tree, search, stats — the hidden recent holds no number.
+        ctx.views.hideViewTab('recent');
+        const ev = key(ctx, '3', { alt: true });
+        expect(ev.defaultPrevented).toBe(true);
+        expect(ctx.views.activeId()).toBe('stats');
+        key(ctx, '2', { ctrl: true });
+        expect(ctx.views.activeId()).toBe('search');
+        // 4 is out of range now — no jump, no preventDefault
+        expect(key(ctx, '4', { alt: true }).defaultPrevented).toBe(false);
     });
 
     it('ignores out-of-range digits, modifier combos and plain digits', () => {

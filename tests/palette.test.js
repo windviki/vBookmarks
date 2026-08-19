@@ -1048,6 +1048,21 @@ describe('execution', () => {
         expect(actions.openBookmarkCalls).toEqual(['https://mail.google.com/']);
     });
 
+    it('ignores IME composition keys (isComposing / keyCode 229) — Enter never executes, arrows never move', () => {
+        // Same guard as search.js: the committing Enter and the candidate-
+        // picking arrows belong to the IME, not to the palette.
+        const { palette, input, actions, keydown, type, selectedIndex } = setup({});
+        palette.open();
+        type('gmail');
+        const before = selectedIndex();
+        const ev = keydown(input, { key: 'Enter', isComposing: true, keyCode: 229 });
+        expect(actions.openBookmarkCalls).toEqual([]);
+        expect(palette.isOpen()).toBe(true); // the Enter stayed with the IME
+        expect(ev.defaultPrevented).toBe(false); // not even swallowed
+        keydown(input, { key: 'ArrowDown', isComposing: true, keyCode: 229 });
+        expect(selectedIndex()).toBe(before);
+    });
+
     it('Enter on a bookmark opens it in the current tab and closes', () => {
         const { palette, input, actions, keydown, type } = setup({});
         palette.open();
