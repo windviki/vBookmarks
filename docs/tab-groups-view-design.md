@@ -1,8 +1,8 @@
 # 标签组视图（Tab Groups View）设计文档
 
 > 分支：`feature/tab-groups-view`（worktree）
-> 目标版本：待定（不随 4.0.8 发布）
-> 基线：`1274acf`（master, 4.0.8）
+> 目标版本：4.0.9
+> 基线：`1274acf`（master, 4.0.8）；开发后版本号已升至 4.0.9
 
 ## 1. 目标
 
