@@ -82,6 +82,7 @@ const MSGS = {
     paletteCmdSaveSession: 'Save window tabs as folder',
     paletteCmdGoTree: 'Go to Tree view',
     paletteCmdGoSearch: 'Go to Search view',
+    paletteCmdGoTabGroups: 'Go to Tab groups view',
     paletteCmdGoRecent: 'Go to Recent view',
     paletteCmdGoStats: 'Go to Stats view',
     paletteCmdGoDead: 'Go to Dead links view',
@@ -119,7 +120,7 @@ const MSGS = {
 const COMMAND_MSGS = [
     MSGS.paletteCmdQuickAdd, MSGS.paletteCmdNewBookmark, MSGS.paletteCmdNewFolder,
     MSGS.paletteCmdSaveSession, MSGS.paletteCmdGoTree,
-    MSGS.paletteCmdGoSearch, MSGS.paletteCmdGoRecent, MSGS.paletteCmdGoStats,
+    MSGS.paletteCmdGoSearch, MSGS.paletteCmdGoTabGroups, MSGS.paletteCmdGoRecent, MSGS.paletteCmdGoStats,
     MSGS.paletteCmdGoDead, MSGS.paletteCmdGoDupes,
     MSGS.paletteCmdTheme,
     MSGS.optionThemeDark, MSGS.optionThemeLight, MSGS.optionThemeInk, MSGS.optionThemePaper,

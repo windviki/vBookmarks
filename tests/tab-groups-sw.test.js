@@ -10,9 +10,10 @@ import { pickGroupColor, cleanGroupTitle, TAB_GROUP_COLORS } from '../src/tab-gr
 // synchronously so the countdown logic is exercised deterministically.
 
 const realChrome = globalThis.chrome;
+const flush = () => new Promise(resolve => setTimeout(resolve, 0));
 
 const makeChrome = ({ noTabGroups = false } = {}) => {
-    const calls = { created: [], grouped: [], updated: [], got: [] };
+    const calls = { created: [], grouped: [], updated: [], got: [], moved: [], removed: [], discarded: [], gotTabs: [] };
     let nextId = 100;
     const c = {
         runtime: {
@@ -37,6 +38,36 @@ const makeChrome = ({ noTabGroups = false } = {}) => {
                 if (cb)
                     cb(tab);
                 return tab;
+            },
+            get(id, cb) {
+                calls.gotTabs.push(id);
+                if (c._getTabError) {
+                    c.runtime.lastError = { message: c._getTabError };
+                    cb();
+                    c.runtime.lastError = null;
+                    return;
+                }
+                cb({ id, windowId: c._tabWindow || 1 });
+            },
+            move(id, props, cb) {
+                calls.moved.push([id, props]);
+                if (c._moveError) {
+                    c.runtime.lastError = { message: c._moveError };
+                    cb();
+                    c.runtime.lastError = null;
+                    return;
+                }
+                cb({ id, windowId: props.windowId });
+            },
+            remove(ids, cb) {
+                calls.removed.push(ids);
+                if (cb)
+                    cb();
+            },
+            discard(id, cb) {
+                calls.discarded.push(id);
+                if (cb)
+                    cb({ id, discarded: true });
             }
         },
         tabGroups: undefined
@@ -235,6 +266,81 @@ describe('tab-groups SW opener', () => {
         // unrelated messages are ignored
         listener({ type: 'something-else' });
         expect(calls.created).toHaveLength(1);
+    });
+});
+
+describe('tab-groups SW batch tab management (tab-groups view)', () => {
+    it('groupExistingIntoNew creates copies and groups moveIds + copies into a new group', async () => {
+        const { chrome, calls } = makeChrome();
+        globalThis.chrome = chrome;
+        createTabGroupOpener().groupExistingIntoNew(
+            [4, 5],
+            [{ url: 'http://a/', title: 'A' }, { url: 'http://b/' }],
+            'Dev', 'blue', 1
+        );
+        await flush();
+        expect(calls.created).toHaveLength(2);
+        // copies are background tabs in the requested window
+        expect(calls.created[0]).toEqual({ url: 'http://a/', active: false, windowId: 1 });
+        expect(calls.created[1]).toEqual({ url: 'http://b/', active: false, windowId: 1 });
+        // moveIds come first, then the copy ids
+        expect(calls.grouped).toEqual([{ tabIds: [4, 5, '100', '101'] }]);
+        expect(calls.updated).toEqual([['group-1', { title: 'Dev', color: 'blue' }]]);
+    });
+
+    it('groupExistingIntoNew still creates copies when the tab-group APIs are missing', async () => {
+        const { chrome, calls } = makeChrome({ noTabGroups: true });
+        globalThis.chrome = chrome;
+        createTabGroupOpener().groupExistingIntoNew([4], [{ url: 'http://a/' }], 'Dev', 'blue', 1);
+        await flush();
+        expect(calls.created).toHaveLength(1);
+        expect(calls.grouped).toHaveLength(0);
+        expect(calls.updated).toHaveLength(0);
+    });
+
+    it('groupExistingIntoExisting moves moveIds into the group window and joins them', async () => {
+        const { chrome, calls } = makeChrome();
+        globalThis.chrome = chrome;
+        // existing tab 4 lives in window 9, group g1 lives in window 7
+        chrome._tabWindow = 9;
+        createTabGroupOpener().groupExistingIntoExisting([4], [{ url: 'http://a/' }], 'g1');
+        await flush();
+        expect(calls.got).toEqual(['g1']);
+        expect(calls.gotTabs).toEqual([4]);
+        expect(calls.moved).toEqual([[4, { windowId: 7, index: -1 }]]);
+        expect(calls.created[0].windowId).toBe(7);
+        expect(calls.grouped).toEqual([{ tabIds: [4, '100'], groupId: 'g1' }]);
+        expect(calls.updated).toHaveLength(0);
+    });
+
+    it('closeTabs and discardTabs call the tab APIs', () => {
+        const { chrome, calls } = makeChrome();
+        globalThis.chrome = chrome;
+        const opener = createTabGroupOpener();
+        opener.closeTabs([4, 5]);
+        expect(calls.removed).toEqual([[4, 5]]);
+        opener.closeTabs([]);
+        expect(calls.removed).toHaveLength(1);
+        opener.discardTabs([7]);
+        expect(calls.discarded).toEqual([7]);
+    });
+
+    it('start wires the tab-batch messages to their handlers', async () => {
+        const { chrome, calls } = makeChrome();
+        globalThis.chrome = chrome;
+        const opener = createTabGroupOpener();
+        opener.start();
+        const [listener] = chrome.runtime.onMessage.fns;
+        listener({ type: TAB_GROUP_MSG.tabsClose, tabIds: [4] });
+        expect(calls.removed).toEqual([[4]]);
+        listener({ type: TAB_GROUP_MSG.tabsDiscard, tabIds: [5] });
+        expect(calls.discarded).toEqual([5]);
+        listener({ type: TAB_GROUP_MSG.tabsNewGroup, moveIds: [4], copyTabs: [{ url: 'http://a/' }], title: 'T', color: 'red', windowId: 1 });
+        await flush();
+        expect(calls.updated).toEqual([['group-1', { title: 'T', color: 'red' }]]);
+        listener({ type: TAB_GROUP_MSG.tabsOpenInto, moveIds: [4], copyTabs: [], groupId: 'g1' });
+        await flush();
+        expect(calls.got).toEqual(['g1']);
     });
 });
 

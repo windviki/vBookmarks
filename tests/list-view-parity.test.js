@@ -30,7 +30,7 @@ describe('list-view hover/selected parity (item 7b)', () => {
     it('every list view rows get the tree hover background', () => {
         const body = ruleBody(
             neatCss,
-            '#recent-list ul li a:hover,\n#dupes-list ul li a:hover,\n#dead-list ul li a:hover,\n#stats-list ul li a:hover');
+            '#recent-list ul li a:hover,\n#tabgroups-list ul li a:hover,\n#dupes-list ul li a:hover,\n#dead-list ul li a:hover,\n#stats-list ul li a:hover');
         expect(body).toContain('background-color: var(--vbm-bg-hover)');
         // …and the tree/search panes carry the same rule
         const treeBody = ruleBody(neatCss, '#results ul li a:hover,\n#tree ul li a:hover,\n#tree ul li > span:hover');
@@ -38,13 +38,15 @@ describe('list-view hover/selected parity (item 7b)', () => {
     });
 
     it('every list view rows get the tree selected colors on active/focus', () => {
+        expect(neatCss).toContain('#tabgroups-list ul li a:active,');
+        expect(neatCss).toContain('#tabgroups-list ul li a.active,');
         expect(neatCss).toContain('#stats-list ul li a:active,');
         expect(neatCss).toContain('#stats-list ul li a.active,');
         // the focus-ring rule (the selected-colors group also ends with
         // `#stats-list ul li a:focus {`, so anchor on the full ring selector)
         const body = ruleBody(
             neatCss,
-            '#recent-list ul li a:focus,\n#dupes-list ul li a:focus,\n#dead-list ul li a:focus,\n#stats-list ul li a:focus {');
+            '#recent-list ul li a:focus,\n#tabgroups-list ul li a:focus,\n#dupes-list ul li a:focus,\n#dead-list ul li a:focus,\n#stats-list ul li a:focus {');
         expect(body).toContain('outline: 2px solid var(--vbm-focus-ring)');
     });
 

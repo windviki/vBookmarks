@@ -169,7 +169,7 @@ describe('scrollbar-contract: 固定槽 flex:none (D)', () => {
 
     it('the 16px ::before placeholder slot is fixed in tree/results and every list view', () => {
         assertProps(neatCss, '#tree ul li a::before,\n#results ul li a::before {', ['flex: none', 'width: 16px']);
-        assertProps(neatCss, '#recent-list ul li a::before,\n#dupes-list ul li a::before,\n#dead-list ul li a::before,\n#stats-list ul li a::before {', ['flex: none', 'width: 16px']);
+        assertProps(neatCss, '#recent-list ul li a::before,\n#tabgroups-list ul li a::before,\n#dupes-list ul li a::before,\n#dead-list ul li a::before,\n#stats-list ul li a::before {', ['flex: none', 'width: 16px']);
     });
 
     it('header chrome and row controls are fixed-width', () => {
