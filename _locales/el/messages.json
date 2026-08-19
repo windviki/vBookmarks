@@ -380,9 +380,6 @@
       }
     }
   },
-  "tabGroupsGroupCreatedUnknown": {
-    "message": "Άγνωστος χρόνος δημιουργίας"
-  },
   "tabGroupsCurrentTab": {
     "message": "Τρέχουσα καρτέλα"
   },

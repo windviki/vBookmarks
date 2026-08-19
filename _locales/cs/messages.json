@@ -380,9 +380,6 @@
       }
     }
   },
-  "tabGroupsGroupCreatedUnknown": {
-    "message": "Čas vytvoření neznámý"
-  },
   "tabGroupsCurrentTab": {
     "message": "Aktivní karta"
   },

@@ -380,9 +380,6 @@
       }
     }
   },
-  "tabGroupsGroupCreatedUnknown": {
-    "message": "作成時刻不明"
-  },
   "tabGroupsCurrentTab": {
     "message": "現在のタブ"
   },

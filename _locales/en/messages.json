@@ -1894,9 +1894,6 @@
       }
     }
   },
-  "tabGroupsGroupCreatedUnknown": {
-    "message": "Created time unknown"
-  },
   "tabGroupsCurrentTab": {
     "message": "Current tab"
   },

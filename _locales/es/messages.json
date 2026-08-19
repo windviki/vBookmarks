@@ -380,9 +380,6 @@
       }
     }
   },
-  "tabGroupsGroupCreatedUnknown": {
-    "message": "Hora de creación desconocida"
-  },
   "tabGroupsCurrentTab": {
     "message": "Pestaña actual"
   },

@@ -380,9 +380,6 @@
       }
     }
   },
-  "tabGroupsGroupCreatedUnknown": {
-    "message": "Час створення невідомий"
-  },
   "tabGroupsCurrentTab": {
     "message": "Поточна вкладка"
   },

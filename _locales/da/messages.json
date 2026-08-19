@@ -380,9 +380,6 @@
       }
     }
   },
-  "tabGroupsGroupCreatedUnknown": {
-    "message": "Oprettelsestid ukendt"
-  },
   "tabGroupsCurrentTab": {
     "message": "Aktuel fane"
   },

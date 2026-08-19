@@ -9,7 +9,7 @@
 在弹窗视图体系（`src/view-manager.js`）中，于搜索视图之后新增一个 **标签组视图（tabgroups）**，
 作为浏览器标签页与书签结合的管理界面：
 
-1. 展示当前浏览器窗口的所有标签页；已加入 Chrome 标签组的按组展示（组标题、创建时间、颜色），
+1. 展示当前浏览器窗口的所有标签页；已加入 Chrome 标签组的按组展示（组标题、颜色），
    未成组标签按浏览器标签页顺序忠实呈现。
 2. 提供类似去重视图的选择模式，可对组内/组外标签进行批量操作：组成新标签组、打开到已有标签组、
    关闭、睡眠。其中“组成新标签组 / 打开到已有标签组”提供对话框选项：对已属于某标签组的选中标签，
@@ -69,7 +69,6 @@
       <span class="chevron"></span>
       <span class="tab-group-dot tg-blue"></span>
       <span class="tabgroups-group-title">组标题</span>
-      <span class="tabgroups-group-meta">创建时间</span>
       <span class="count-pill">N</span>
       <button class="row-btn tabgroups-group-save" title="保存为书签文件夹">FOLDER</button>
     </span>
@@ -84,13 +83,11 @@
 ```
 
 - 组头：颜色圆点（`.tab-group-dot.tg-{color}`）、标题（无标题回退 `tabGroupUntitled`）、
-  创建时间（`tabGroupCreatedAt` 元数据）、数量 pill，以及 5 个常显操作按钮：
+  数量 pill，以及 5 个常显操作按钮：
   激活组（聚焦第一个标签页）、重命名组（复用 `GroupDialog` 改标题/颜色）、
   保存为书签文件夹、睡眠整组、关闭整组。
 - 折叠/展开同步到浏览器：本地 `collapsed` 集在每次刷新时由 `chrome.tabGroups.TabGroup.collapsed`
   重建；用户折叠/展开/全部折叠/全部展开时同时调用 `chrome.tabGroups.update`。
-- 组创建时间：Chrome 不暴露组创建时间。视图维护 `tabGroupMeta`（storage.local JSON）
-  记录首次观察到该 group id 的时间；刷新时补记。显示为相对时间或绝对日期。
 - 普通行复用 `treeRender.generateBookmarkHTML` 生成书签风格行（favicon/标题/URL 提示），
   但不带 `data-node-id`；锚点带 `data-tab-id` 与 `data-url`。
 - 行尾悬浮按钮：`tabgroups-add-bookmark`（STAR_ICON），点击把该 tab 一键加入
@@ -222,7 +219,6 @@
   `tabGroupsSelectSleep`、`tabGroupsSelectSaveFolder`。
 - `tabGroupsCopyMoveDialog`、`tabGroupsCopyMoveCopy`、`tabGroupsCopyMoveMove`。
 - `tabGroupsConfirmClose`、`tabGroupsConfirmSleep`、`tabGroupsConfirmBookmarks`。
-- `tabGroupCreatedUnknown`（缺省创建时间显示）。
 - `bookmarkFolderPickDialogTitle`、`bookmarkFolderNoFolders`。
 
 ## 12. 测试
@@ -255,7 +251,7 @@
 ## 14. 验收清单
 
 - [ ] 视图出现在搜索之后；隐藏/禁用/选项页实时生效；tab 右键菜单可 Hide/Disable。
-- [ ] 组头显示标题/颜色/创建时间；未分组按 tab 顺序展示。
+- [ ] 组头显示标题/颜色；未分组按 tab 顺序展示。
 - [ ] 选择模式可批量：新组、打开到组（复制/移动确认）、关闭、睡眠。
 - [ ] 选中标签可添加到指定书签文件夹；行悬浮加书签可用。
 - [ ] 组保存为书签文件夹后，文件夹右键“打开到新标签组”恢复颜色/标题。

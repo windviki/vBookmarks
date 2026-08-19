@@ -380,9 +380,6 @@
       }
     }
   },
-  "tabGroupsGroupCreatedUnknown": {
-    "message": "Nieznany czas utworzenia"
-  },
   "tabGroupsCurrentTab": {
     "message": "Bieżąca karta"
   },

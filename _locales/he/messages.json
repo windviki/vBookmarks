@@ -380,9 +380,6 @@
       }
     }
   },
-  "tabGroupsGroupCreatedUnknown": {
-    "message": "זמן יצירה לא ידוע"
-  },
   "tabGroupsCurrentTab": {
     "message": "הטאב הנוכחי"
   },

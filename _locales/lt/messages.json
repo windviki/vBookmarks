@@ -380,9 +380,6 @@
       }
     }
   },
-  "tabGroupsGroupCreatedUnknown": {
-    "message": "Sukūrimo laikas nežinomas"
-  },
   "tabGroupsCurrentTab": {
     "message": "Dabartinis skirtukas"
   },

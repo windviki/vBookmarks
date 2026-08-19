@@ -380,9 +380,6 @@
       }
     }
   },
-  "tabGroupsGroupCreatedUnknown": {
-    "message": "Skapad tid okänd"
-  },
   "tabGroupsCurrentTab": {
     "message": "Aktuell flik"
   },

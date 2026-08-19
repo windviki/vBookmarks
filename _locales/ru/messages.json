@@ -380,9 +380,6 @@
       }
     }
   },
-  "tabGroupsGroupCreatedUnknown": {
-    "message": "Время создания неизвестно"
-  },
   "tabGroupsCurrentTab": {
     "message": "Текущая вкладка"
   },

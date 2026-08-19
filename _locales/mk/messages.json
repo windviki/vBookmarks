@@ -379,9 +379,6 @@
       }
     }
   },
-  "tabGroupsGroupCreatedUnknown": {
-    "message": "Времето на создавање е непознато"
-  },
   "tabGroupsCurrentTab": {
     "message": "Тековно јазиче"
   },

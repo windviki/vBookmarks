@@ -3404,6 +3404,7 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
 }
 
 .dupes-group .count-pill,
+.tabgroups-group .count-pill,
 .vbm-row .row-badge {
     flex: none;
     min-width: 14px;
@@ -3521,6 +3522,16 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
 }
 .tabgroups-toolbar:empty { display: none; }
 
+/* Selection mode is two stacked .vbm-toolbar rows (each row its own keyboard
+   rung): row 1 selects, row 2 acts. No separator between the two — one
+   visual block, the dupes recipe. */
+.tabgroups-toolbar.tabgroups-select-toolbar {
+    border-bottom: 0;
+}
+.tabgroups-toolbar.tabgroups-actions-toolbar {
+    border-bottom: 1px solid var(--vbm-border);
+}
+
 .tabgroups-toolbar button {
     border: 0;
     border-radius: var(--vbm-radius);
@@ -3557,11 +3568,6 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
 .tabgroups-toolbar .select-count {
     font-weight: 500;
     white-space: nowrap;
-}
-.tabgroups-toolbar .tabgroups-copy-move-note {
-    flex-basis: 100%;
-    color: var(--vbm-muted);
-    font-style: italic;
 }
 .tabgroups-toolbar .tabgroups-close-selected { color: var(--vbm-danger); }
 
@@ -3606,17 +3612,6 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
     text-overflow: ellipsis;
     white-space: nowrap;
     font-weight: 500;
-}
-.tabgroups-group .tabgroups-group-meta {
-    flex: none;
-    margin-inline-start: 8px;
-    margin-inline-end: 8px;
-    color: var(--vbm-muted);
-    font-size: 11px;
-    white-space: nowrap;
-    max-width: 42%;
-    overflow: hidden;
-    text-overflow: ellipsis;
 }
 .tabgroups-group .count-pill {
     background: var(--vbm-bg-selected);

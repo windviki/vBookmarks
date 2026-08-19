@@ -380,9 +380,6 @@
       }
     }
   },
-  "tabGroupsGroupCreatedUnknown": {
-    "message": "Luontiaika tuntematon"
-  },
   "tabGroupsCurrentTab": {
     "message": "Nykyinen välilehti"
   },

@@ -380,9 +380,6 @@
       }
     }
   },
-  "tabGroupsGroupCreatedUnknown": {
-    "message": "निर्माण समय अज्ञात"
-  },
   "tabGroupsCurrentTab": {
     "message": "वर्तमान टैब"
   },

@@ -380,9 +380,6 @@
       }
     }
   },
-  "tabGroupsGroupCreatedUnknown": {
-    "message": "Oluşturulma zamanı bilinmiyor"
-  },
   "tabGroupsCurrentTab": {
     "message": "Geçerli sekme"
   },

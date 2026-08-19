@@ -39,7 +39,6 @@ export function initViewTabGroups(ctx = {}) {
     const $list = $('tabgroups-list');
 
     const rootFolderId = () => store.get('quickAddFolderId', '1') || '1';
-    const META_KEY = 'tabGroupMeta';
 
     // --- State ----------------------------------------------------------------
     let refreshToken = 0;   // monotonic refresh generation: stale async
@@ -59,50 +58,6 @@ export function initViewTabGroups(ctx = {}) {
     // Chrome reports groupId: -1 for tabs that are NOT grouped; every
     // truthiness check must treat -1 as "no group".
     const isGrouped = tab => !!tab && !!tab.groupId && tab.groupId !== -1;
-
-    const readMeta = () => {
-        try {
-            return JSON.parse(store.get(META_KEY, '') || '{}');
-        } catch (e) {
-            return {};
-        }
-    };
-    const writeMeta = meta => {
-        try {
-            store.set(META_KEY, JSON.stringify(meta));
-        } catch (e) { /* best-effort metadata */ }
-    };
-    const firstSeenOf = groupId => {
-        const entry = readMeta()[`${groupId}`];
-        return entry && entry.firstSeenAt ? entry.firstSeenAt : null;
-    };
-    const recordFirstSeen = () => {
-        const meta = readMeta();
-        let changed = false;
-        const now = Date.now();
-        for (const g of groups) {
-            if (!meta[`${g.id}`] || !meta[`${g.id}`].firstSeenAt) {
-                meta[`${g.id}`] = { ...(meta[`${g.id}`] || {}), firstSeenAt: now };
-                changed = true;
-            }
-        }
-        if (changed)
-            writeMeta(meta);
-    };
-    // Drop first-seen entries for groups that no longer exist in this window.
-    // Chrome group ids are session-scoped, so old entries are only dead weight.
-    const pruneGroupMeta = () => {
-        const alive = new Set(groups.map(g => String(g.id)));
-        const meta = readMeta();
-        let changed = false;
-        for (const id of Object.keys(meta))
-            if (!alive.has(id)) {
-                delete meta[id];
-                changed = true;
-            }
-        if (changed)
-            writeMeta(meta);
-    };
 
     // --- Data -----------------------------------------------------------------
     const queryGroups = (windowId, cb) => {
@@ -133,8 +88,6 @@ export function initViewTabGroups(ctx = {}) {
                 for (const g of groups)
                     if (g.collapsed)
                         collapsed.add(String(g.id));
-                recordFirstSeen();
-                pruneGroupMeta();
                 views.updateBadges();
                 if (!views.isActive('tabgroups'))
                     return;
@@ -148,20 +101,23 @@ export function initViewTabGroups(ctx = {}) {
         if (selecting) {
             const sel = selected.size;
             const hasSel = sel > 0;
-            const groupedSel = tabs.filter(t => selected.has(String(t.id)) && isGrouped(t)).length;
-            return '<div class="tabgroups-toolbar selecting-bar vbm-toolbar">' +
+            // Two-row batch bar, the dupes recipe: row 1 is selection-only
+            // (count + all/invert/clear + exit), row 2 is the batch actions.
+            // Each row is its own .vbm-toolbar keyboard rung.
+            return '<div class="tabgroups-toolbar tabgroups-select-toolbar selecting-bar vbm-toolbar">' +
                 `<span class="select-count">${_m('selectCount', `${sel}`)}</span>` +
                 `<button class="tabgroups-select-all">${_m('selectAll')}</button>` +
                 `<button class="tabgroups-select-invert">${_m('selectInvert')}</button>` +
                 `<button class="tabgroups-select-clear">${_m('selectClear')}</button>` +
+                `<button class="tabgroups-select-exit">${_m('selectModeExit')}</button>` +
+                '</div>' +
+                '<div class="tabgroups-toolbar tabgroups-actions-toolbar selecting-bar vbm-toolbar">' +
                 `<button class="tabgroups-new-group"${hasSel ? '' : ' disabled'}>${_m('tabGroupsSelectNewGroup')}</button>` +
                 `<button class="tabgroups-open-into"${hasSel ? '' : ' disabled'}>${_m('tabGroupsSelectOpenInto')}</button>` +
                 `<button class="tabgroups-add-bookmarks"${hasSel ? '' : ' disabled'}>${_m('tabGroupsSelectAddBookmarks')}</button>` +
                 `<button class="tabgroups-save-folder"${hasSel ? '' : ' disabled'}>${_m('tabGroupsSelectSaveFolder')}</button>` +
-                `<button class="tabgroups-close-selected"${hasSel ? '' : ' disabled'}>${_m('tabGroupsSelectClose')}</button>` +
                 `<button class="tabgroups-sleep-selected"${hasSel ? '' : ' disabled'}>${_m('tabGroupsSelectSleep')}</button>` +
-                `<button class="tabgroups-select-exit">${_m('selectModeExit')}</button>` +
-                `<span class="tabgroups-copy-move-note"${groupedSel ? '' : ' hidden'}>${_m('tabGroupsCopyMoveDialog')}</span>` +
+                `<button class="tabgroups-close-selected"${hasSel ? '' : ' disabled'}>${_m('tabGroupsSelectClose')}</button>` +
                 '</div>';
         }
         const label = _m('selectModeEnter');
@@ -180,15 +136,12 @@ export function initViewTabGroups(ctx = {}) {
         const isCollapsed = collapsed.has(gid);
         const title = group.title || _m('tabGroupUntitled');
         const color = group.color || 'grey';
-        const firstSeen = firstSeenOf(group.id);
-        const created = firstSeen ? new Date(firstSeen).toLocaleString() : _m('tabGroupsGroupCreatedUnknown');
         const saveLabel = _m('tabGroupsSaveFolder');
         return `<li class="tabgroups-group${selecting && memberTabs.every(t => selected.has(String(t.id))) ? ' sel' : ''}" id="tabgroups-group-${gid}" data-group-id="${gid}">` +
             `<span class="tabgroups-group-head" tabindex="-1" role="button" aria-expanded="${isCollapsed ? 'false' : 'true'}" title="${htmlspecialchars(title)}">` +
             `<span class="chevron${isCollapsed ? ' collapsed' : ''}"></span>` +
             `<span class="tab-group-dot tg-${htmlspecialchars(color)}"></span>` +
             `<span class="tabgroups-group-title" dir="auto">${htmlspecialchars(title)}</span>` +
-            `<span class="tabgroups-group-meta" title="${htmlspecialchars(created)}">${htmlspecialchars(created)}</span>` +
             `<span class="count-pill" aria-label="${htmlspecialchars(_m('tabGroupsGroupCount', `${memberTabs.length}`))}">${memberTabs.length}</span>` +
             `<button class="row-btn tabgroups-group-activate" aria-label="${htmlspecialchars(_m('tabGroupsActivateGroup'))}" title="${htmlspecialchars(_m('tabGroupsActivateGroup'))}">${ACTIVATE_ICON}</button>` +
             `<button class="row-btn tabgroups-group-rename" aria-label="${htmlspecialchars(_m('tabGroupsRenameGroup'))}" title="${htmlspecialchars(_m('tabGroupsRenameGroup'))}">${EDIT_ICON}</button>` +

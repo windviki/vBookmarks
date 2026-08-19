@@ -380,9 +380,6 @@
       }
     }
   },
-  "tabGroupsGroupCreatedUnknown": {
-    "message": "Data di creazione sconosciuta"
-  },
   "tabGroupsCurrentTab": {
     "message": "Scheda corrente"
   },

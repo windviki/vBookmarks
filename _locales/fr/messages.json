@@ -380,9 +380,6 @@
       }
     }
   },
-  "tabGroupsGroupCreatedUnknown": {
-    "message": "Date de création inconnue"
-  },
   "tabGroupsCurrentTab": {
     "message": "Onglet actuel"
   },

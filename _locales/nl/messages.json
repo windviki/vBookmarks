@@ -380,9 +380,6 @@
       }
     }
   },
-  "tabGroupsGroupCreatedUnknown": {
-    "message": "Aanmaaktijd onbekend"
-  },
   "tabGroupsCurrentTab": {
     "message": "Huidig tabblad"
   },

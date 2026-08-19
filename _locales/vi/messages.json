@@ -380,9 +380,6 @@
       }
     }
   },
-  "tabGroupsGroupCreatedUnknown": {
-    "message": "Không rõ thời gian tạo"
-  },
   "tabGroupsCurrentTab": {
     "message": "Tab hiện tại"
   },

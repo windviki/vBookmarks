@@ -1753,9 +1753,6 @@
       }
     }
   },
-  "tabGroupsGroupCreatedUnknown": {
-    "message": "创建时间未知"
-  },
   "tabGroupsCurrentTab": {
     "message": "当前标签"
   },

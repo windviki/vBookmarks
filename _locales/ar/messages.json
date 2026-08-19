@@ -380,9 +380,6 @@
       }
     }
   },
-  "tabGroupsGroupCreatedUnknown": {
-    "message": "وقت الإنشاء غير معروف"
-  },
   "tabGroupsCurrentTab": {
     "message": "التبويب الحالي"
   },

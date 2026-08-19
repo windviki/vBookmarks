@@ -380,9 +380,6 @@
       }
     }
   },
-  "tabGroupsGroupCreatedUnknown": {
-    "message": "Времето на създаване е неизвестно"
-  },
   "tabGroupsCurrentTab": {
     "message": "Текущ раздел"
   },

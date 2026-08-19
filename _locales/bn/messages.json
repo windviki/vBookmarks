@@ -380,9 +380,6 @@
       }
     }
   },
-  "tabGroupsGroupCreatedUnknown": {
-    "message": "নির্মাণের সময় অজানা"
-  },
   "tabGroupsCurrentTab": {
     "message": "বর্তমান ট্যাব"
   },

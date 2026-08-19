@@ -380,9 +380,6 @@
       }
     }
   },
-  "tabGroupsGroupCreatedUnknown": {
-    "message": "ไม่ทราบเวลาสร้าง"
-  },
   "tabGroupsCurrentTab": {
     "message": "แท็บปัจจุบัน"
   },

@@ -380,9 +380,6 @@
       }
     }
   },
-  "tabGroupsGroupCreatedUnknown": {
-    "message": "Waktu pembuatan tidak diketahui"
-  },
   "tabGroupsCurrentTab": {
     "message": "Tab saat ini"
   },

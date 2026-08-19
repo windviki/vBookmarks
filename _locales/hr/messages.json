@@ -380,9 +380,6 @@
       }
     }
   },
-  "tabGroupsGroupCreatedUnknown": {
-    "message": "Vrijeme stvaranja nepoznato"
-  },
   "tabGroupsCurrentTab": {
     "message": "Trenutna kartica"
   },

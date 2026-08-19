@@ -380,9 +380,6 @@
       }
     }
   },
-  "tabGroupsGroupCreatedUnknown": {
-    "message": "Létrehozás ideje ismeretlen"
-  },
   "tabGroupsCurrentTab": {
     "message": "Aktuális lap"
   },

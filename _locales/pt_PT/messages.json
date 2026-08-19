@@ -379,9 +379,6 @@
       }
     }
   },
-  "tabGroupsGroupCreatedUnknown": {
-    "message": "Hora de criação desconhecida"
-  },
   "tabGroupsCurrentTab": {
     "message": "Separador atual"
   },

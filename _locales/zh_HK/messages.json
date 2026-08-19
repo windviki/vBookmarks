@@ -1712,9 +1712,6 @@
       }
     }
   },
-  "tabGroupsGroupCreatedUnknown": {
-    "message": "建立時間不詳"
-  },
   "tabGroupsCurrentTab": {
     "message": "目前分頁"
   },
