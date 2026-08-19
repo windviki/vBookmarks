@@ -362,17 +362,19 @@ describe('view registration', () => {
 });
 
 describe('render', () => {
-    it('renders sections: open groups, then ungrouped tabs in tab order', () => {
+    it('renders ungrouped tabs and open groups in actual tab order', () => {
         const { def, $list } = setup({});
         def().activate();
         const html = $list.innerHTML;
-        // Sections appear in order: open groups first, then ungrouped tabs.
-        expect(html.indexOf('tabGroupsOpenGroups')).toBeLessThan(html.indexOf('tabGroupsUngroupedTabs'));
-        // group g1 appears before its two members; members are in tab order.
+        // Open groups and ungrouped tabs are interleaved in browser order:
+        // tab1 (ungrouped) before group g1, group members 2/3, then tab4.
+        expect(html.indexOf('tabgroups-item-1')).toBeLessThan(html.indexOf('data-group-id="g1"'));
         expect(html.indexOf('data-group-id="g1"')).toBeLessThan(html.indexOf('tabgroups-item-2'));
         expect(html.indexOf('tabgroups-item-2')).toBeLessThan(html.indexOf('tabgroups-item-3'));
-        // ungrouped tabs keep their relative tab-strip order.
-        expect(html.indexOf('tabgroups-item-1')).toBeLessThan(html.indexOf('tabgroups-item-4'));
+        expect(html.indexOf('tabgroups-item-3')).toBeLessThan(html.indexOf('tabgroups-item-4'));
+        // no open/ungrouped section headings in the inline flow
+        expect(html).not.toContain('tabGroupsOpenGroups');
+        expect(html).not.toContain('tabGroupsUngroupedTabs');
         // group header content: title, color, count, save action
         expect(html).toContain('Dev');
         expect(html).toContain('tg-blue');

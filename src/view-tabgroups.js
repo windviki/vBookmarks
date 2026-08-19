@@ -301,22 +301,21 @@ export function initViewTabGroups(ctx = {}) {
                 const win = windows[wi];
                 html += windowHead(win, wi);
 
-                // Within a window keep the three logical sections, each in
-                // browser tab order: opened groups, closed groups, ungrouped
-                // tabs.
+                // Open groups and ungrouped tabs render INTERLEAVED in the
+                // browser's actual tab order (drag sorting reorders that
+                // order). Closed (collapsed) groups leave the inline flow
+                // and anchor to the bottom of their window section.
                 const seenGroups = new Set();
-                const openGroups = [];
                 const closedGroups = [];
-                const ungroupedTabs = [];
                 for (let i = 0, l = win.tabs.length; i < l; i++) {
                     const tab = win.tabs[i];
                     if (!isGrouped(tab)) {
-                        ungroupedTabs.push(tab);
+                        html += tabRowHtml(tab);
                         continue;
                     }
                     const group = groupById(tab.groupId);
                     if (!group) {
-                        ungroupedTabs.push(tab);
+                        html += tabRowHtml(tab);
                         continue;
                     }
                     const gid = String(group.id);
@@ -325,23 +324,17 @@ export function initViewTabGroups(ctx = {}) {
                     seenGroups.add(gid);
                     const memberTabs = win.tabs.filter(t => String(t.groupId) === gid)
                         .sort((a, b) => (a.index || 0) - (b.index || 0));
-                    (collapsed.has(gid) ? closedGroups : openGroups).push({ group, memberTabs });
+                    if (collapsed.has(gid)) {
+                        closedGroups.push({ group, memberTabs });
+                    } else {
+                        html += groupBlock({ group, memberTabs });
+                    }
                 }
 
-                if (openGroups.length) {
-                    html += sectionHead('tabGroupsOpenGroups');
-                    for (const entry of openGroups)
-                        html += groupBlock(entry);
-                }
                 if (closedGroups.length) {
                     html += sectionHead('tabGroupsClosedGroups');
                     for (const entry of closedGroups)
                         html += groupHeadHtml(entry.group, entry.memberTabs);
-                }
-                if (ungroupedTabs.length) {
-                    html += sectionHead('tabGroupsUngroupedTabs');
-                    for (const tab of ungroupedTabs)
-                        html += tabRowHtml(tab);
                 }
             }
             html += '</ul>';
