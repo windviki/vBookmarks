@@ -614,7 +614,19 @@ export function initFaviconEnrich(ctx = {}) {
             ctrl.abort();
         else if (signal && signal.addEventListener)
             signal.addEventListener('abort', onOuter, { once: true });
-        const p = fetchImpl(url, { signal: ctrl.signal, redirect: 'follow' });
+        // credentials:'omit' is explicit even though it is fetch's cross-origin
+        // default: an extension page with <all_urls> host permissions must
+        // never let Chrome attach ambient HTTP-auth credentials to these
+        // favicon probes — a 401 with WWW-Authenticate can otherwise surface
+        // a browser login prompt from inside the popup (a bookmark whose site
+        // uses Basic Auth, e.g. roundpic.com). cache:'no-store' keeps the
+        // probe from writing the page into the browser cache.
+        const p = fetchImpl(url, {
+            signal: ctrl.signal,
+            redirect: 'follow',
+            credentials: 'omit',
+            cache: 'no-store'
+        });
         return p.finally(() => {
             clearTimeout(timer);
             if (signal && signal.removeEventListener)

@@ -46,6 +46,26 @@ import { shouldHighlightUnsynced, shouldRememberState } from './settings.js';
     // contextmenu listener both coexist — ours always wins.
     window.document.body.addEventListener('contextmenu', e => e.preventDefault());
 
+    // Safety net: a bookmark-row <a class="tree-item-link"> must never
+    // navigate the popup itself. The delegated row handlers open bookmarks via
+    // chrome.tabs/actions; the anchor's default navigation is only useful
+    // when those handlers miss — and a missed synthetic click (the class of
+    // bug behind the 4.0.8 IME-Enter fix) would otherwise load the bookmarked
+    // site inside the popup. For an auth-protected site that means Chrome's
+    // login prompt appears "out of nowhere" in the popup. Capture-phase on
+    // <body>, so it runs before any delegated handler; those handlers keep
+    // working and their own preventDefault stays harmless.
+    window.document.body.addEventListener('click', e => {
+        const t = e && e.target;
+        if (!t || !t.closest)
+            return;
+        const a = t.closest('a.tree-item-link');
+        // Prevent every tree-item-link default, including javascript: rows —
+        // bookmarkHandler/actions always drive the actual open/execute path.
+        if (a)
+            e.preventDefault();
+    }, true);
+
     // Default-favicon fallback (4.0.2): swap Chrome's flat-gray no-favicon
     // placeholder bitmap for the theme-following DEFAULT_BOOKMARK_ICON.
     // Installed before any rows render (the store.ready block below) so the

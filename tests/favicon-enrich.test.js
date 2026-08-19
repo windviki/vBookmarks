@@ -564,6 +564,34 @@ describe('initFaviconEnrich — discovery chain', () => {
         expect(fetchImpl.calls.some(c => c.url.endsWith('icon-6.png'))).toBe(false);
     });
 
+    it('direct probes are sent with credentials:omit + cache:no-store (auth sites cannot raise a login prompt)', async () => {
+        const fetchImpl = makeFetch([
+            [/\/favicon\.ico$/, notFound()],
+            [/^https:\/\/example\.com\/$/, { ok: false, status: 401, arrayBuffer: async () => new ArrayBuffer(0), headers: { get: () => 'text/plain' } }]
+        ]);
+        const en = initFaviconEnrich({
+            doc: makeDoc(),
+            faviconService: makeFavService(),
+            isEnabled: () => true,
+            fallbackEnabled: () => false,
+            fetchImpl,
+            ImageCtor: makeFakeImage(),
+            chromeImpl: { storage: { local: makeStorageArea() } },
+            now: nextNow
+        });
+        await en._hydrateDone;
+        en.onPlaceholder(makePlaceholderImg('https://example.com/'));
+        await tick();
+        await tick();
+        const direct = fetchImpl.calls.filter(c =>
+            c.url === 'https://example.com/favicon.ico' || c.url === 'https://example.com/');
+        expect(direct.length).toBeGreaterThanOrEqual(1);
+        for (const c of direct) {
+            expect(c.opts.credentials).toBe('omit');
+            expect(c.opts.cache).toBe('no-store');
+        }
+    });
+
     it('L1/L2 fail → L4 reached; favicon-run 200+PNG short-circuits (duckduckgo not called)', async () => {
         const fetchImpl = makeFetch([
             [/\/favicon\.ico$/, notFound()],

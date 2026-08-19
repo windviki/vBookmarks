@@ -90,6 +90,17 @@ describe('neat.js boot wiring (pre-store.ready)', () => {
         const guards = body._listeners['contextmenu'] || [];
         expect(guards).toHaveLength(1);
 
+        // the bookmark-row click guard is capture-phase on <body>: a left
+        // click on a tree-item-link must never navigate the popup itself
+        const clickGuards = body._listeners['click'] || [];
+        expect(clickGuards.length).toBeGreaterThanOrEqual(1);
+        let prevented = 0;
+        clickGuards[0]({
+            target: { closest: sel => sel === 'a.tree-item-link' ? { href: 'https://x.test/' } : null },
+            preventDefault() { prevented++; }
+        });
+        expect(prevented).toBe(1);
+
         // favicon fallback installed against the document, wired with the
         // contrast-service context (lazy getters — no store access here)
         expect(initFaviconFallback).toHaveBeenCalledTimes(1);
