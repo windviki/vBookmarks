@@ -86,7 +86,15 @@
 
         const popupWidth = await getSetting('popupWidth', '');
         if (popupWidth) {
-            document.body.style.width = `${parseInt(popupWidth)}px`;
+            const width = parseInt(popupWidth);
+            document.body.style.width = `${width}px`;
+            // The popup window is sized from the ROOT element, not body —
+            // same rule as the width drag handler in resize.js. Without this,
+            // a restored/imported width only shrinks the body while the window
+            // keeps its initial width, and right-aligned banner controls
+            // (donation "Don't show again", announce ×) sit outside the
+            // visible viewport on the first open after an import.
+            document.documentElement.style.width = `${width}px`;
         }
     }
 

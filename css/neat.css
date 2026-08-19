@@ -170,6 +170,13 @@ body {
     overflow: hidden;
     width: 320px;
     height: 600px;
+    /* Body is the containing block for #container and the absolute banners:
+       when a restored/imported popupWidth is narrower than the initial
+       viewport (first open after an options import), #container must track
+       BODY width — otherwise right-aligned banner controls (donation
+       "Don't show again", announce ×) lay out against the wider viewport and
+       get clipped by body's overflow:hidden. */
+    position: relative;
 }
 
 /* The hidden attribute must win over any author display rule — without this,
@@ -368,7 +375,7 @@ body.linux input {
 
 #donation-card {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     gap: 8px;
     padding: 8px 10px;
     font: menu;
@@ -377,13 +384,16 @@ body.linux input {
 
 #donation-heart {
     flex: none;
-    margin-top: 2px;
+    margin: 0;
     color: var(--vbm-accent);
 }
 
 #information-text {
+    flex: 1 1 auto;
     color: var(--vbm-muted);
     min-width: 0;
+    overflow-wrap: break-word;
+    word-break: break-word;
 }
 
 #new-version-text {
@@ -415,6 +425,7 @@ body.linux input {
 
 #donation-actions {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     gap: 6px;
     margin-top: 6px;
@@ -424,6 +435,7 @@ body.linux input {
     font: inherit;
     cursor: pointer;
     border-radius: 6px;
+    white-space: nowrap;
 }
 
 #donation-go {

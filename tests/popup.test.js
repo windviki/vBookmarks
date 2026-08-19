@@ -36,8 +36,10 @@ const createSandbox = ({
         body.classList.add('panel-mode');
 
     const docListeners = {};
+    const documentElement = { style: {} };
     const document = {
         body,
+        documentElement,
         addEventListener(type, fn) {
             (docListeners[type] = docListeners[type] || []).push(fn);
         }
@@ -119,7 +121,7 @@ const createSandbox = ({
     };
 
     return {
-        window, document, body, chrome, store,
+        window, document, documentElement, body, chrome, store,
         sessionData, sessionSetCalls, panelBehaviorCalls, setSettingCalls,
         intervals, clearedIntervals, settingsData,
         fireWin, fireDoc
@@ -204,6 +206,9 @@ describe('plain popup mode', () => {
         await flushMicrotasks();
         expect(sb.body.style.height).toBe('420px');
         expect(sb.body.style.width).toBe('350px');
+        // The popup window is sized from the root element, so the restored
+        // width also lands there (first-open clipping fix).
+        expect(sb.document.documentElement.style.width).toBe('350px');
     });
 
     it('clamps a stored height above 600 and persists the clamped value', async () => {
