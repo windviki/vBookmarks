@@ -3657,6 +3657,12 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
     display: flex;
     align-items: center;
 }
+/* Tree-view alignment: grouped rows are children of the group head. The
+   24px step makes a member row's icon left edge land exactly on the group
+   head's title left edge (40px), the same rule the tree uses. */
+#tabgroups-list ul li.tabgroups-row.grouped {
+    padding-inline-start: 24px;
+}
 #tabgroups-list ul li.tabgroups-row > a {
     flex: 1;
     min-width: 0;
@@ -3680,6 +3686,11 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
 #tabgroups-list ul.selecting li.vbm-row {
     padding-inline-start: 8px;
     padding-inline-end: 4px;
+}
+/* Checkboxes stay on the 8px axis for every row; only the grouped row's
+   CONTENT gets the tree step so members read as children of the group head. */
+#tabgroups-list ul.selecting li.tabgroups-row.grouped > a {
+    margin-inline-start: 24px;
 }
 #tabgroups-list ul.selecting li.vbm-row > a { margin-inline-end: 0; }
 #tabgroups-list ul.selecting li.vbm-row > a::before { content: none; }

@@ -430,6 +430,22 @@ describe('selection mode', () => {
         clickOn({ closest: closestOf({ li }) });
         expect($list.innerHTML).toContain('selectCount[0]');
     });
+
+    it('group head checkbox selects all members when partial, and clears when all selected', () => {
+        const { def, $list, clickOn, closestOf } = setup({});
+        def().activate();
+        clickOn({ closest: closestOf({ '.tabgroups-select-mode': { classList: makeClassList() } }) });
+        // select one member only (partial)
+        clickOn({ closest: closestOf({ li: { dataset: { tabId: '2' }, classList: makeClassList() } }) });
+        expect($list.innerHTML).toContain('selectCount[1]');
+        // group head click with a partial selection selects the whole group
+        const groupLi = { dataset: { groupId: 'g1' }, classList: makeClassList() };
+        clickOn({ closest: closestOf({ li: groupLi }) });
+        expect($list.innerHTML).toContain('selectCount[2]');
+        // clicking again clears the whole group (all-selected -> none)
+        clickOn({ closest: closestOf({ li: groupLi }) });
+        expect($list.innerHTML).toContain('selectCount[0]');
+    });
 });
 
 describe('tab batch actions', () => {
