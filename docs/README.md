@@ -9,9 +9,9 @@ vBookmarks
 
 [Available on WebStore](https://chrome.google.com/webstore/detail/vbookmarks/odhjcodnoebmndcihdedenkmdmklpihb) · [HomePage](http://windviki.github.com/vBookmarks/)
 
-**vBookmarks turns your bookmark pile into a fast, keyboard-first workspace.** One click on the toolbar icon opens a six-view manager that lives in the popup (or Chrome's side panel — your choice): the familiar folder tree, instant fuzzy search, a Recently Added timeline, visit statistics, a dead-link scanner, and a duplicate cleaner. Everything is reachable from the keyboard, every delete is undoable, and nothing ever leaves your browser — no accounts, no telemetry, no build-step black box, just plain JavaScript you can read.
+**vBookmarks turns your bookmark pile into a fast, keyboard-first workspace.** One click on the toolbar icon opens a seven-view manager that lives in the popup (or Chrome's side panel — your choice): the familiar folder tree, instant fuzzy search, a tab-groups view, a Recently Added timeline, visit statistics, a dead-link scanner, and a duplicate cleaner. Everything is reachable from the keyboard, every delete is undoable, and nothing ever leaves your browser — no accounts, no telemetry, no build-step black box, just plain JavaScript you can read.
 
-- **Six views, one popup** — Tree / Search / Recent / Stats / Dead links / Duplicates, switched from an icon tab strip or with `Alt+1…6`.
+- **Seven views, one popup** — Tree / Search / Tab groups / Recent / Stats / Dead links / Duplicates, switched from an icon tab strip or with `Alt+1…7`.
 - **A maintenance crew for your library** — scan for dead links with pause & resume, deduplicate with six keep-strategies and undoable batch cleaning, save a whole window of tabs as a session folder.
 - **Keyboard-first for real** — every view is fully operable without a mouse: arrows, `Enter`, `F2` rename, `Delete`, view shortcuts, and a `Ctrl/Cmd+K` command palette.
 - **Fast and quiet** — fzf-style fuzzy search with match highlighting (CJK-friendly), omnibox search (`*` + Space), and sync-status indicators that stay out of your way.
@@ -35,12 +35,12 @@ Licensed under the [MIT License](http://www.opensource.org/licenses/mit-license.
 
 # What's new in 4.0
 
-4.0 is the largest release in the project's history. It rebuilds the popup around a **view system** — six specialized views behind an icon tab strip — while keeping the classic tree experience one setting away.
+4.0 is the largest release in the project's history. It rebuilds the popup around a **view system** — seven specialized views behind an icon tab strip — while keeping the classic tree experience one setting away.
 
 ## The view system
 
-- **Six views**: **Tree** (the classic), **Search**, **Recent**, **Stats**, **Dead links**, **Duplicates**. The icon tab strip shows live count badges (dead marks, dupe groups, tracked pages) and can be hidden per view (Stats/Dead/Duplicates) or entirely for the classic single-pane layout.
-- **One keyboard model everywhere** — the tree's mature semantics (arrows, `Home`/`End`, `PageUp`/`PageDown`, `Enter`, `F2`, `Delete`, type-ahead) now work identically in every list view; `↑` past the first row steps up to the tab strip, then the search box; the strip itself is arrow/Home/End navigable with roving tabindex and RTL awareness; `Alt+1…6` jumps straight to a view (portable across Chrome and Edge, which reserves `Ctrl+1…8` for its own tabs).
+- **Seven views**: **Tree** (the classic), **Search**, **Tab groups**, **Recent**, **Stats**, **Dead links**, **Duplicates**. The icon tab strip shows live count badges (dead marks, dupe groups, tracked pages) and can be hidden per view (Stats/Dead/Duplicates) or entirely for the classic single-pane layout.
+- **One keyboard model everywhere** — the tree's mature semantics (arrows, `Home`/`End`, `PageUp`/`PageDown`, `Enter`, `F2`, `Delete`, type-ahead) now work identically in every list view; `↑` past the first row steps up to the tab strip, then the search box; the strip itself is arrow/Home/End navigable with roving tabindex and RTL awareness; `Alt+1…7` jumps straight to a view (portable across Chrome and Edge, which reserves `Ctrl+1…8` for its own tabs).
 - **Layered `Esc`** — context menu → command palette → view-level action (e.g. pausing a scan) → clear search → back to tree → close, always peeling one layer at a time.
 - **Popup vs panel** — both reopen on the view you left (the popup via the default-on *remember the last view* switch — turn it off for the classic always-tree boot), and the side panel is ready to become your always-on bookmark workspace.
 
