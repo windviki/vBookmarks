@@ -89,6 +89,27 @@ export const TRASH_ICON =
     '<path d="M4.4 4.5l.6 8.1a1.2 1.2 0 0 0 1.2 1.1h3.6a1.2 1.2 0 0 0 1.2-1.1l.6-8.1"/>' +
     '</svg>';
 
+// Tab-groups view row/group actions (16px line grid, same recipe).
+export const EDIT_ICON =
+    '<svg class="vbm-icon vbm-icon-edit" width="16" height="16" viewBox="0 0 16 16" ' +
+    'fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+    '<path d="M2.5 13.5h11"/>' +
+    '<path d="M9.2 2.9a1.5 1.5 0 0 1 2.1 2.1l-5.6 5.6-2.7.6.6-2.7z"/>' +
+    '</svg>';
+
+export const SLEEP_ICON =
+    '<svg class="vbm-icon vbm-icon-sleep" width="16" height="16" viewBox="0 0 16 16" ' +
+    'fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+    '<path d="M10.5 2.2a5.5 5.5 0 0 0-6.9 6.9 4.5 4.5 0 1 0 6.9-6.9z"/>' +
+    '</svg>';
+
+export const ACTIVATE_ICON =
+    '<svg class="vbm-icon vbm-icon-activate" width="16" height="16" viewBox="0 0 16 16" ' +
+    'fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+    '<circle cx="8" cy="8" r="5.6"/>' +
+    '<polyline points="8 5.4 8 8 10.2 9.6"/>' +
+    '</svg>';
+
 // Dead-view toolbar glyphs (4.0.8): redo, list-with-x, flag-with-x and
 // selection-mode. Same 16px grid / 1.5px stroke / currentColor recipe.
 export const REDO_ICON =

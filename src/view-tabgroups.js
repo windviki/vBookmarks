@@ -16,7 +16,7 @@
  * dropping callbacks.
  */
 
-import { VIEW_ICONS, STAR_ICON, SELECT_ICON, FOLDER_ICON } from './icons.js';
+import { VIEW_ICONS, STAR_ICON, SELECT_ICON, FOLDER_ICON, EDIT_ICON, SLEEP_ICON, ACTIVATE_ICON, TRASH_ICON } from './icons.js';
 import { htmlspecialchars } from './escape.js';
 import { parkRowFocus, unparkRowFocus, parkToolbarFocus, restoreToolbarFocus } from './list-focus.js';
 import { saveSession, sessionFolderName, tabsToBookmarks } from './session.js';
@@ -104,6 +104,12 @@ export function initViewTabGroups(ctx = {}) {
             currentTabId = tabs.find(t => t.active) ? tabs.find(t => t.active).id : (tabs[0] && tabs[0].id);
             queryGroups(currentWindowId, groupList => {
                 groups = groupList || [];
+                // Keep the list folding in sync with the browser's own
+                // collapsed state (chrome.tabGroups.TabGroup.collapsed).
+                collapsed.clear();
+                for (const g of groups)
+                    if (g.collapsed)
+                        collapsed.add(String(g.id));
                 recordFirstSeen();
                 views.updateBadges();
                 if (!views.isActive('tabgroups'))
@@ -160,7 +166,11 @@ export function initViewTabGroups(ctx = {}) {
             `<span class="tabgroups-group-title" dir="auto">${htmlspecialchars(title)}</span>` +
             `<span class="tabgroups-group-meta">${htmlspecialchars(created)}</span>` +
             `<span class="count-pill" aria-label="${htmlspecialchars(_m('tabGroupsGroupCount', `${memberTabs.length}`))}">${memberTabs.length}</span>` +
+            `<button class="row-btn tabgroups-group-activate" aria-label="${htmlspecialchars(_m('tabGroupsActivateGroup'))}" title="${htmlspecialchars(_m('tabGroupsActivateGroup'))}">${ACTIVATE_ICON}</button>` +
+            `<button class="row-btn tabgroups-group-rename" aria-label="${htmlspecialchars(_m('tabGroupsRenameGroup'))}" title="${htmlspecialchars(_m('tabGroupsRenameGroup'))}">${EDIT_ICON}</button>` +
             `<button class="row-btn tabgroups-group-save" aria-label="${htmlspecialchars(saveLabel)}" title="${htmlspecialchars(saveLabel)}">${FOLDER_ICON}</button>` +
+            `<button class="row-btn tabgroups-group-sleep" aria-label="${htmlspecialchars(_m('tabGroupsSleepGroup'))}" title="${htmlspecialchars(_m('tabGroupsSleepGroup'))}">${SLEEP_ICON}</button>` +
+            `<button class="row-btn tabgroups-group-close" aria-label="${htmlspecialchars(_m('tabGroupsCloseGroup'))}" title="${htmlspecialchars(_m('tabGroupsCloseGroup'))}">${TRASH_ICON}</button>` +
             '</span></li>';
     };
 
@@ -332,6 +342,67 @@ export function initViewTabGroups(ctx = {}) {
         });
     };
 
+    // --- Per-group management (all synced to the browser) ---------------------------
+    const activateGroup = groupId => {
+        const group = groupById(groupId);
+        if (!group)
+            return;
+        const member = tabs.filter(t => String(t.groupId) === String(group.id))
+            .sort((a, b) => (a.index || 0) - (b.index || 0))[0];
+        if (member && chrome.tabs.update)
+            chrome.tabs.update(member.id, { active: true });
+    };
+
+    const renameGroup = groupId => {
+        const group = groupById(groupId);
+        if (!group)
+            return;
+        dialogs.GroupDialog.open({
+            dialog: _m('tabGroupsRenameDialog'),
+            title: group.title || '',
+            color: group.color || 'grey',
+            onConfirm: (title, color) => {
+                if (chrome.tabGroups && chrome.tabGroups.update) {
+                    chrome.tabGroups.update(group.id, { title, color }, () => {
+                        if (chrome.runtime.lastError)
+                            return;
+                        refresh();
+                    });
+                }
+            }
+        });
+    };
+
+    const closeGroup = groupId => {
+        const ids = tabs.filter(t => String(t.groupId) === String(groupId)).map(t => t.id);
+        if (!ids.length)
+            return;
+        dialogs.ConfirmDialog.open({
+            dialog: _m('tabGroupsConfirmClose', `${ids.length}`),
+            button1: `<strong>${_m('delete')}</strong>`,
+            button2: _m('nope'),
+            fn1: () => {
+                send({ type: TAB_GROUP_MSG.tabsClose, tabIds: ids });
+                scheduleRefresh();
+            }
+        });
+    };
+
+    const sleepGroup = groupId => {
+        const ids = tabs.filter(t => String(t.groupId) === String(groupId)).map(t => t.id);
+        if (!ids.length)
+            return;
+        dialogs.ConfirmDialog.open({
+            dialog: _m('tabGroupsConfirmSleep', `${ids.length}`),
+            button1: `<strong>${_m('tabGroupsSelectSleep')}</strong>`,
+            button2: _m('nope'),
+            fn1: () => {
+                send({ type: TAB_GROUP_MSG.tabsDiscard, tabIds: ids });
+                scheduleRefresh();
+            }
+        });
+    };
+
     // --- Selection mode + tab batch actions ---------------------------------------
     const setSelecting = on => {
         selecting = on;
@@ -456,22 +527,48 @@ export function initViewTabGroups(ctx = {}) {
         });
     };
 
-    const toggleGroupCollapsed = groupId => {
-        if (collapsed.has(groupId))
-            collapsed.delete(groupId);
+    const setGroupCollapsed = (groupId, shouldCollapse) => {
+        if (shouldCollapse)
+            collapsed.add(String(groupId));
         else
-            collapsed.add(groupId);
+            collapsed.delete(String(groupId));
         render();
+        const group = groupById(groupId);
+        if (group && chrome.tabGroups && chrome.tabGroups.update) {
+            chrome.tabGroups.update(group.id, { collapsed: shouldCollapse }, () => {
+                if (chrome.runtime.lastError)
+                    return;
+                scheduleRefresh();
+            });
+        }
+    };
+
+    const toggleGroupCollapsed = groupId => {
+        setGroupCollapsed(groupId, !collapsed.has(String(groupId)));
     };
 
     const collapseAll = () => {
         for (const g of groups)
             collapsed.add(String(g.id));
         render();
+        for (const g of groups) {
+            if (chrome.tabGroups && chrome.tabGroups.update) {
+                chrome.tabGroups.update(g.id, { collapsed: true }, () => {
+                    void chrome.runtime.lastError;
+                });
+            }
+        }
     };
     const expandAll = () => {
         collapsed.clear();
         render();
+        for (const g of groups) {
+            if (chrome.tabGroups && chrome.tabGroups.update) {
+                chrome.tabGroups.update(g.id, { collapsed: false }, () => {
+                    void chrome.runtime.lastError;
+                });
+            }
+        }
     };
 
     // --- Events ------------------------------------------------------------------
@@ -622,6 +719,42 @@ export function initViewTabGroups(ctx = {}) {
             const li = addBtn.closest('li');
             if (li && li.dataset.tabId)
                 addTabToBookmarks(li.dataset.tabId);
+            return;
+        }
+        const activateBtn = closest('.tabgroups-group-activate');
+        if (activateBtn) {
+            e.preventDefault();
+            e.stopPropagation();
+            const li = activateBtn.closest('li');
+            if (li && li.dataset.groupId)
+                activateGroup(li.dataset.groupId);
+            return;
+        }
+        const renameBtn = closest('.tabgroups-group-rename');
+        if (renameBtn) {
+            e.preventDefault();
+            e.stopPropagation();
+            const li = renameBtn.closest('li');
+            if (li && li.dataset.groupId)
+                renameGroup(li.dataset.groupId);
+            return;
+        }
+        const sleepGroupBtn = closest('.tabgroups-group-sleep');
+        if (sleepGroupBtn) {
+            e.preventDefault();
+            e.stopPropagation();
+            const li = sleepGroupBtn.closest('li');
+            if (li && li.dataset.groupId)
+                sleepGroup(li.dataset.groupId);
+            return;
+        }
+        const closeGroupBtn = closest('.tabgroups-group-close');
+        if (closeGroupBtn) {
+            e.preventDefault();
+            e.stopPropagation();
+            const li = closeGroupBtn.closest('li');
+            if (li && li.dataset.groupId)
+                closeGroup(li.dataset.groupId);
             return;
         }
         const saveBtn = closest('.tabgroups-group-save');

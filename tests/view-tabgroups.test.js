@@ -162,6 +162,7 @@ const setup = (opts = {}) => {
         },
         tabGroups: {
             queryCalls: [],
+            updateCalls: [],
             _groups: opts.groups || [
                 makeGroup('g1', 'Dev', 'blue')
             ],
@@ -169,6 +170,11 @@ const setup = (opts = {}) => {
                 this.queryCalls.push(queryInfo);
                 if (cb)
                     cb(this._groups.slice());
+            },
+            update(id, props, cb) {
+                this.updateCalls.push([id, props]);
+                if (cb)
+                    cb({ id, ...props });
             },
             onCreated: { addListener(fn) { this.fn = fn; } },
             onRemoved: { addListener(fn) { this.fn = fn; } },
@@ -502,6 +508,82 @@ describe('bookmark integration', () => {
         const meta = JSON.parse(store._data.tabGroupFolderMeta || '{}');
         expect(meta.bm_1 && meta.bm_1.color).toBe('blue');
         expect(undo.toastCalls[0]).toBe('tabGroupsGroupSavedToFolder[2|Dev]');
+    });
+});
+
+describe('group management (browser-synced)', () => {
+    it('group head renders activate/rename/save/sleep/close actions', () => {
+        const { def, $list } = setup({});
+        def().activate();
+        const html = $list.innerHTML;
+        expect(html).toContain('tabgroups-group-activate');
+        expect(html).toContain('tabgroups-group-rename');
+        expect(html).toContain('tabgroups-group-save');
+        expect(html).toContain('tabgroups-group-sleep');
+        expect(html).toContain('tabgroups-group-close');
+        expect(html).toContain('tabGroupsActivateGroup');
+        expect(html).toContain('tabGroupsCloseGroup');
+    });
+
+    it('activate group focuses the first member tab', () => {
+        const { def, chrome, clickOn, closestOf } = setup({});
+        def().activate();
+        const li = { dataset: { groupId: 'g1' }, classList: makeClassList() };
+        const btn = { classList: makeClassList(), closest: sel => sel === 'li' ? li : (sel === '.tabgroups-group-activate' ? btn : null) };
+        clickOn(btn);
+        expect(chrome.tabs.updateCalls).toEqual([[2, { active: true }]]);
+    });
+
+    it('rename group opens the group dialog and updates the browser group', () => {
+        const { def, chrome, dialogs, clickOn, closestOf } = setup({});
+        def().activate();
+        const li = { dataset: { groupId: 'g1' }, classList: makeClassList() };
+        const btn = { classList: makeClassList(), closest: sel => sel === 'li' ? li : (sel === '.tabgroups-group-rename' ? btn : null) };
+        clickOn(btn);
+        expect(dialogs.GroupDialog.openCalls).toHaveLength(1);
+        expect(dialogs.GroupDialog.openCalls[0].dialog).toBe('tabGroupsRenameDialog');
+        expect(dialogs.GroupDialog.openCalls[0].title).toBe('Dev');
+        expect(dialogs.GroupDialog.openCalls[0].color).toBe('blue');
+        dialogs.GroupDialog.openCalls[0].onConfirm('Renamed', 'red');
+        expect(chrome.tabGroups.updateCalls).toEqual([['g1', { title: 'Renamed', color: 'red' }]]);
+    });
+
+    it('close group confirms then sends vbm-tabs-close with every member id', () => {
+        const { def, chrome, dialogs, clickOn, closestOf } = setup({});
+        def().activate();
+        const li = { dataset: { groupId: 'g1' }, classList: makeClassList() };
+        const btn = { classList: makeClassList(), closest: sel => sel === 'li' ? li : (sel === '.tabgroups-group-close' ? btn : null) };
+        clickOn(btn);
+        expect(dialogs.ConfirmDialog.openCalls).toHaveLength(1);
+        dialogs.ConfirmDialog.openCalls[0].fn1();
+        expect(chrome.runtime.sendMessageCalls).toEqual([{ type: 'vbm-tabs-close', tabIds: [2, 3] }]);
+    });
+
+    it('sleep group confirms then sends vbm-tabs-discard with every member id', () => {
+        const { def, chrome, dialogs, clickOn, closestOf } = setup({});
+        def().activate();
+        const li = { dataset: { groupId: 'g1' }, classList: makeClassList() };
+        const btn = { classList: makeClassList(), closest: sel => sel === 'li' ? li : (sel === '.tabgroups-group-sleep' ? btn : null) };
+        clickOn(btn);
+        dialogs.ConfirmDialog.openCalls[0].fn1();
+        expect(chrome.runtime.sendMessageCalls).toEqual([{ type: 'vbm-tabs-discard', tabIds: [2, 3] }]);
+    });
+
+    it('collapse/expand updates the browser group collapsed state', () => {
+        const { def, chrome, clickOn, closestOf } = setup({});
+        def().activate();
+        const li = { dataset: { groupId: 'g1' }, classList: makeClassList() };
+        const head = { classList: makeClassList(), closest: sel => sel === 'li' ? li : (sel === '.tabgroups-group-head' ? head : null) };
+        clickOn(head);
+        expect(chrome.tabGroups.updateCalls).toEqual([['g1', { collapsed: true }]]);
+    });
+
+    it('refresh seeds collapsed state from the browser groups', () => {
+        const { def, $list } = setup({ groups: [makeGroup('g1', 'Dev', 'blue', { collapsed: true })] });
+        def().activate();
+        // collapsed group hides its member rows
+        expect($list.innerHTML).not.toContain('tabgroups-item-2');
+        expect($list.innerHTML).toContain('collapsed');
     });
 });
 

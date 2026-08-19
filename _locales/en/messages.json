@@ -1981,5 +1981,25 @@
   "paletteCmdGoTabGroups": {
     "message": "Go to Tab groups view",
     "description": "Command palette entry: switch to the tab groups view (slash alias /tabgroups, /groups)."
+  },
+  "tabGroupsActivateGroup": {
+    "message": "Activate tab group",
+    "description": "Group-head action in the tab groups view: focuses the group's first tab."
+  },
+  "tabGroupsRenameGroup": {
+    "message": "Rename tab group",
+    "description": "Group-head action in the tab groups view: opens the title/color dialog for the group."
+  },
+  "tabGroupsRenameDialog": {
+    "message": "Rename tab group",
+    "description": "Heading of the tab-group dialog when opened from the tab groups view to rename a group."
+  },
+  "tabGroupsCloseGroup": {
+    "message": "Close tab group",
+    "description": "Group-head action in the tab groups view: closes every tab of the group."
+  },
+  "tabGroupsSleepGroup": {
+    "message": "Sleep tab group",
+    "description": "Group-head action in the tab groups view: discards every tab of the group."
   }
 }

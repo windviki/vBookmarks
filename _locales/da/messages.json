@@ -466,6 +466,21 @@
   "paletteCmdGoTabGroups": {
     "message": "Go to Tab groups view"
   },
+  "tabGroupsActivateGroup": {
+    "message": "Activate tab group"
+  },
+  "tabGroupsRenameGroup": {
+    "message": "Rename tab group"
+  },
+  "tabGroupsRenameDialog": {
+    "message": "Rename tab group"
+  },
+  "tabGroupsCloseGroup": {
+    "message": "Close tab group"
+  },
+  "tabGroupsSleepGroup": {
+    "message": "Sleep tab group"
+  },
   "deadProxyAdd": {
     "message": "Tilføj en proxyserver til død-link-tjek"
   },

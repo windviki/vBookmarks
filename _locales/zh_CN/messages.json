@@ -1838,5 +1838,20 @@
   },
   "paletteCmdGoTabGroups": {
     "message": "转到标签组视图"
+  },
+  "tabGroupsActivateGroup": {
+    "message": "激活标签组"
+  },
+  "tabGroupsRenameGroup": {
+    "message": "重命名标签组"
+  },
+  "tabGroupsRenameDialog": {
+    "message": "重命名标签组"
+  },
+  "tabGroupsCloseGroup": {
+    "message": "关闭标签组"
+  },
+  "tabGroupsSleepGroup": {
+    "message": "睡眠标签组"
   }
 }

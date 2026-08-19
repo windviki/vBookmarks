@@ -3627,6 +3627,9 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
     visibility: visible;
     color: var(--vbm-accent);
 }
+.tabgroups-group .tabgroups-group-head .row-btn.tabgroups-group-close {
+    color: var(--vbm-danger);
+}
 
 /* Tab rows: the anchor fills the row; the hover bookmark button keeps the
    .row-btn slot. Current tab gets a small accent pill. */
