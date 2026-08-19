@@ -42,6 +42,9 @@ export function initViewTabGroups(ctx = {}) {
     const META_KEY = 'tabGroupMeta';
 
     // --- State ----------------------------------------------------------------
+    let refreshToken = 0;   // monotonic refresh generation: stale async
+                            // tabs/tabGroups callbacks must never overwrite
+                            // a newer refresh
     let tabs = [];          // chrome.tabs.Tab[] of the current window, index order
     let groups = [];        // chrome.tabGroups.TabGroup[] of the current window
     let currentWindowId = null;
@@ -86,6 +89,20 @@ export function initViewTabGroups(ctx = {}) {
         if (changed)
             writeMeta(meta);
     };
+    // Drop first-seen entries for groups that no longer exist in this window.
+    // Chrome group ids are session-scoped, so old entries are only dead weight.
+    const pruneGroupMeta = () => {
+        const alive = new Set(groups.map(g => String(g.id)));
+        const meta = readMeta();
+        let changed = false;
+        for (const id of Object.keys(meta))
+            if (!alive.has(id)) {
+                delete meta[id];
+                changed = true;
+            }
+        if (changed)
+            writeMeta(meta);
+    };
 
     // --- Data -----------------------------------------------------------------
     const queryGroups = (windowId, cb) => {
@@ -96,13 +113,19 @@ export function initViewTabGroups(ctx = {}) {
     };
 
     const refresh = () => {
+        const token = ++refreshToken;
         chrome.tabs.query({ currentWindow: true }, tabList => {
+            if (token !== refreshToken)
+                return; // a newer refresh started — drop this stale read
             tabs = (tabList || []).slice().sort((a, b) => (a.index || 0) - (b.index || 0));
             currentWindowId = tabs.length
                 ? tabs[0].windowId
                 : ((chrome.windows && chrome.windows.WINDOW_ID_CURRENT) || 1);
-            currentTabId = tabs.find(t => t.active) ? tabs.find(t => t.active).id : (tabs[0] && tabs[0].id);
+            const activeTab = tabs.find(t => t.active);
+            currentTabId = activeTab ? activeTab.id : (tabs[0] && tabs[0].id);
             queryGroups(currentWindowId, groupList => {
+                if (token !== refreshToken)
+                    return;
                 groups = groupList || [];
                 // Keep the list folding in sync with the browser's own
                 // collapsed state (chrome.tabGroups.TabGroup.collapsed).
@@ -111,6 +134,7 @@ export function initViewTabGroups(ctx = {}) {
                     if (g.collapsed)
                         collapsed.add(String(g.id));
                 recordFirstSeen();
+                pruneGroupMeta();
                 views.updateBadges();
                 if (!views.isActive('tabgroups'))
                     return;
@@ -159,12 +183,12 @@ export function initViewTabGroups(ctx = {}) {
         const firstSeen = firstSeenOf(group.id);
         const created = firstSeen ? new Date(firstSeen).toLocaleString() : _m('tabGroupsGroupCreatedUnknown');
         const saveLabel = _m('tabGroupsSaveFolder');
-        return `<li class="tabgroups-group${selecting && memberTabs.every(t => selected.has(String(t.id))) ? ' sel' : ''}" data-group-id="${gid}">` +
-            `<span class="tabgroups-group-head" tabindex="-1" role="button" aria-expanded="${isCollapsed ? 'false' : 'true'}">` +
+        return `<li class="tabgroups-group${selecting && memberTabs.every(t => selected.has(String(t.id))) ? ' sel' : ''}" id="tabgroups-group-${gid}" data-group-id="${gid}">` +
+            `<span class="tabgroups-group-head" tabindex="-1" role="button" aria-expanded="${isCollapsed ? 'false' : 'true'}" title="${htmlspecialchars(title)}">` +
             `<span class="chevron${isCollapsed ? ' collapsed' : ''}"></span>` +
             `<span class="tab-group-dot tg-${htmlspecialchars(color)}"></span>` +
             `<span class="tabgroups-group-title" dir="auto">${htmlspecialchars(title)}</span>` +
-            `<span class="tabgroups-group-meta">${htmlspecialchars(created)}</span>` +
+            `<span class="tabgroups-group-meta" title="${htmlspecialchars(created)}">${htmlspecialchars(created)}</span>` +
             `<span class="count-pill" aria-label="${htmlspecialchars(_m('tabGroupsGroupCount', `${memberTabs.length}`))}">${memberTabs.length}</span>` +
             `<button class="row-btn tabgroups-group-activate" aria-label="${htmlspecialchars(_m('tabGroupsActivateGroup'))}" title="${htmlspecialchars(_m('tabGroupsActivateGroup'))}">${ACTIVATE_ICON}</button>` +
             `<button class="row-btn tabgroups-group-rename" aria-label="${htmlspecialchars(_m('tabGroupsRenameGroup'))}" title="${htmlspecialchars(_m('tabGroupsRenameGroup'))}">${EDIT_ICON}</button>` +
@@ -244,7 +268,7 @@ export function initViewTabGroups(ctx = {}) {
             return;
         chrome.bookmarks.search({ url: tab.url }, existing => {
             if (existing && existing.length) {
-                undo.showToast(_m('quickAddedTo', existing[0].title || ''));
+                undo.showToast(_m('quickAdded'));
                 return;
             }
             const parentId = rootFolderId();
@@ -257,6 +281,36 @@ export function initViewTabGroups(ctx = {}) {
                     undo.showToast(_m('quickAddedTo', folderName));
                 });
             });
+        });
+    };
+
+    const closeTabById = tabId => {
+        const tab = tabById(tabId);
+        if (!tab)
+            return;
+        dialogs.ConfirmDialog.open({
+            dialog: _m('tabGroupsConfirmClose', '1'),
+            button1: `<strong>${_m('delete')}</strong>`,
+            button2: _m('nope'),
+            fn1: () => {
+                send({ type: TAB_GROUP_MSG.tabsClose, tabIds: [tab.id] });
+                scheduleRefresh();
+            }
+        });
+    };
+
+    const sleepTabById = tabId => {
+        const tab = tabById(tabId);
+        if (!tab)
+            return;
+        dialogs.ConfirmDialog.open({
+            dialog: _m('tabGroupsConfirmSleep', '1'),
+            button1: `<strong>${_m('tabGroupsSelectSleep')}</strong>`,
+            button2: _m('nope'),
+            fn1: () => {
+                send({ type: TAB_GROUP_MSG.tabsDiscard, tabIds: [tab.id] });
+                scheduleRefresh();
+            }
         });
     };
 
@@ -324,6 +378,7 @@ export function initViewTabGroups(ctx = {}) {
                 savedAt: Date.now(),
                 sourceGroupId: group.id
             });
+            onChanged();
             undo.showToast(_m('tabGroupsGroupSavedToFolder', [`${count}`, folderName]));
         });
     };
@@ -337,8 +392,10 @@ export function initViewTabGroups(ctx = {}) {
         }
         const folderName = sessionFolderName(new Date(), _m('sessionFolderName'));
         saveSession({ rootFolderId: rootFolderId(), folderName, tabs: bookmarkTabs }).then(({ count }) => {
-            if (count)
+            if (count) {
+                onChanged();
                 undo.showToast(_m('sessionSaved', `${count}`));
+            }
         });
     };
 
@@ -579,7 +636,7 @@ export function initViewTabGroups(ctx = {}) {
     };
 
     const bindChromeEvents = () => {
-        for (const ev of ['onCreated', 'onRemoved', 'onMoved', 'onUpdated', 'onActivated']) {
+        for (const ev of ['onCreated', 'onRemoved', 'onMoved', 'onUpdated', 'onActivated', 'onAttached', 'onDetached']) {
             if (chrome.tabs && chrome.tabs[ev] && chrome.tabs[ev].addListener)
                 chrome.tabs[ev].addListener(scheduleRefresh);
         }
@@ -822,18 +879,30 @@ export function initViewTabGroups(ctx = {}) {
                 render();
                 return;
             }
+            if (k === 'F2') {
+                e.preventDefault();
+                e.stopImmediatePropagation();
+                renameGroup(gid);
+                return;
+            }
             const isRtl = !!(document.body && document.body.classList && document.body.classList.contains('rtl'));
             const expand = (k === ' ' || k === 'Enter' || k === (isRtl ? 'ArrowLeft' : 'ArrowRight')) && isCollapsed;
             const collapse = (k === ' ' || k === 'Enter' || k === (isRtl ? 'ArrowRight' : 'ArrowLeft')) && !isCollapsed;
             if (expand || collapse) {
                 e.preventDefault();
                 e.stopPropagation();
-                if (expand)
-                    collapsed.delete(gid);
-                else
-                    collapsed.add(gid);
-                render();
+                // Sync the folded state to the browser group too (same
+                // path as the click handler — the keyboard must not be a
+                // local-only shortcut).
+                setGroupCollapsed(gid, collapse);
             }
+            return;
+        }
+        // F2 on a tab row is a no-op here, but it must never fall through
+        // to keyboard.js's bookmark-rename path (the row is not a bookmark).
+        if (e.key === 'F2') {
+            e.preventDefault();
+            e.stopImmediatePropagation();
             return;
         }
         // Tab-row Space in selection mode toggles the row (click parity).
@@ -852,15 +921,29 @@ export function initViewTabGroups(ctx = {}) {
         }
     }, true);
 
-    // Right-clicks on tab rows must never open the bookmark context menu
-    // (the row is not a bookmark). Suppress the row menu; the tab context
-    // menu can be added later without touching the body-level logic.
-    $list.addEventListener('contextmenu', e => {
+    // Delete on a tab row must not reach keyboard.js's bookmark-delete
+    // handler (the row is not a bookmark). In selection mode Delete closes
+    // the selected tabs; otherwise it closes the focused tab. Both paths
+    // confirm first — tab close has no undo.
+    $list.addEventListener('keyup', e => {
+        if (e.key !== 'Delete')
+            return;
         const closest = (e.target && e.target.closest) ? e.target.closest.bind(e.target) : () => null;
-        if (closest('li.tabgroups-row, li.tabgroups-group')) {
-            e.preventDefault();
-            e.stopPropagation();
+        let rowLi = closest('li.tabgroups-row');
+        if (!rowLi && e.target === $list && $list.querySelector) {
+            const marked = $list.querySelector('.focus');
+            rowLi = marked && marked.closest ? marked.closest('li.tabgroups-row') : null;
         }
+        if (!rowLi)
+            return;
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        if (selecting && selected.size) {
+            closeSelected();
+            return;
+        }
+        if (rowLi.dataset && rowLi.dataset.tabId)
+            closeTabById(rowLi.dataset.tabId);
     });
 
     // --- Drag sorting (chrome.tabs.move) ---------------------------------------
@@ -948,6 +1031,23 @@ export function initViewTabGroups(ctx = {}) {
         refresh,
         setSelecting,
         selectedTabs,
-        isSelecting: () => selecting
+        isSelecting: () => selecting,
+        // Lazy context-menu dispatch (context-menu.js reads these through
+        // neat.js's ctx.tabGroupsMenu getter).
+        activateTab: tabId => {
+            const tab = tabById(tabId);
+            if (tab && chrome.tabs.update)
+                chrome.tabs.update(tab.id, { active: true });
+        },
+        addBookmark: addTabToBookmarks,
+        closeTab: closeTabById,
+        sleepTab: sleepTabById,
+        activateGroup,
+        renameGroup,
+        saveGroupToBookmarks,
+        closeGroup,
+        sleepGroup,
+        toggleGroup: toggleGroupCollapsed,
+        isCollapsed: gid => collapsed.has(String(gid))
     };
 }

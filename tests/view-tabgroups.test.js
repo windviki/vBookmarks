@@ -511,6 +511,61 @@ describe('bookmark integration', () => {
     });
 });
 
+describe('keyboard safety (tab rows are not bookmarks)', () => {
+    it('group head li carries an id for focus memory', () => {
+        const { def, $list } = setup({});
+        def().activate();
+        expect($list.innerHTML).toContain('id="tabgroups-group-g1"');
+    });
+
+    it('F2 on a tab row stops propagation and never reaches the bookmark rename path', () => {
+        const { def, fire, closestOf } = setup({});
+        def().activate();
+        const li = { dataset: { tabId: '1' }, classList: makeClassList() };
+        const ev = {
+            key: 'F2',
+            target: { closest: closestOf({ li }) },
+            prevented: 0,
+            stoppedImmediate: 0,
+            preventDefault() { this.prevented++; },
+            stopImmediatePropagation() { this.stoppedImmediate++; }
+        };
+        fire('keydown', ev);
+        expect(ev.prevented).toBe(1);
+        expect(ev.stoppedImmediate).toBe(1);
+    });
+
+    it('F2 on a group head opens the rename dialog', () => {
+        const { def, dialogs, fire, closestOf } = setup({});
+        def().activate();
+        const li = { dataset: { groupId: 'g1' }, classList: makeClassList() };
+        const head = { classList: makeClassList(), closest: sel => sel === 'li' ? li : (sel === '.tabgroups-group-head' ? head : null) };
+        fire('keydown', {
+            key: 'F2',
+            target: head,
+            preventDefault() {},
+            stopImmediatePropagation() {}
+        });
+        expect(dialogs.GroupDialog.openCalls).toHaveLength(1);
+        expect(dialogs.GroupDialog.openCalls[0].dialog).toBe('tabGroupsRenameDialog');
+    });
+
+    it('Delete on a tab row confirms and sends a single-tab close', () => {
+        const { def, chrome, dialogs, fire, closestOf } = setup({});
+        def().activate();
+        const li = { dataset: { tabId: '1' }, classList: makeClassList() };
+        fire('keyup', {
+            key: 'Delete',
+            target: { closest: closestOf({ 'li.tabgroups-row': li }) },
+            preventDefault() {},
+            stopImmediatePropagation() {}
+        });
+        expect(dialogs.ConfirmDialog.openCalls).toHaveLength(1);
+        dialogs.ConfirmDialog.openCalls[0].fn1();
+        expect(chrome.runtime.sendMessageCalls).toEqual([{ type: 'vbm-tabs-close', tabIds: [1] }]);
+    });
+});
+
 describe('group management (browser-synced)', () => {
     it('group head renders activate/rename/save/sleep/close actions', () => {
         const { def, $list } = setup({});
