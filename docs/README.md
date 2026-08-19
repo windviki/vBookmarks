@@ -206,7 +206,8 @@ python3 scripts/package.py         # → tmp/vBookmarks_<version>.zip
 
 #### New
 
-- **Real site icons for bookmarks Chrome hasn't cached**: this release fetches the actual site icon for bookmarks the browser has no cached image for — direct from the site first, then through a built-in third-party icon fallback list (favicon.run → icon.horse → DuckDuckGo) guarded by a per-provider circuit breaker and failover; while a dead-link proxy session is active, discovery re-runs through the proxy. The enriched cache is capped by a dynamic byte budget that halves-and-evicts under pressure. New Icons-group controls: "Fetch missing site icons" (on by default), "Third-party icon fallback" (also on by default), and a "Clear icon cache" action.
+- **Real site icons for bookmarks Chrome hasn't cached**: this release fetches the actual site icon for bookmarks the browser has no cached image for — direct from the site first, then through a built-in third-party icon fallback list (favicon.run → icon.horse → DuckDuckGo) guarded by a per-provider circuit breaker and failover; while a dead-link proxy session is active, discovery re-runs through the proxy. The enriched cache is capped by a dynamic byte budget that halves-and-evicts under pressure. New Icons-group controls: "Fetch missing site icons" (on by default), "Third-party icon fallback" (also on by default), and a "Clear icon cache" action. Freshly fetched icons swap in with a subtle pop animation (silenced under reduced motion), and letter-avatar placeholders a fallback service returns for unknown domains are recognized by pixel fingerprint and skipped — the chain fails over instead of caching a gray letter tile for 30 days.
+- **Hide or disable views right from the tab strip**: right-click a feature-view tab (or press `ContextMenu`/`Shift+F10` on it) — **Hide** collapses the tab away like unchecking its *Show … view* option: the `Alt+number` jump goes, the palette command stays, and entering a hidden view from the palette shows a return-path toast; **Disable** greys out the show option and removes every entry point until re-enabled (each *Show … view* row in the options *Views* group carries the same Enabled/Disabled state). Hiding the Tree or Search tab hides the whole strip, and `Alt+number` numbering compacts over the visible set.
 - **Options page regrouped into 15 sections**: the overloaded Views group split into View display / Icons / Context menus / Tools / Statistics, so every area has breathing room.
 - **Storage usage bar**: the Icons group now shows how much of the storage quota icons, bookmark scan/mark data, settings and the free space each take (with a byte-formatted legend), updating live as data changes.
 - **Header GitHub / Homepage links and version number** in the top-right corner of the options page.
@@ -226,12 +227,16 @@ python3 scripts/package.py         # → tmp/vBookmarks_<version>.zip
 - **Dead-link view low-priority polish**: the second toolbar's "All" now reads "Any status" to disambiguate the two counters; rows without a per-row timestamp sort last under detection-time sorting; a hidden-by-filter marks-only view shows the "try another segment" hint instead of the first-scan call-to-action; the bare status pill "0" renders as "—"; and "Delete all" now covers the same visible set as "Select all" in the All view (result rows plus uncovered past marks).
 - **Scan race hardening**: a stale start chain tears down only its own generation's PAC, so it can no longer strip the proxy session from a newer scan; and an import rewriting `deadMarks/deadMarkTimes` while the side panel is open is reflected in the dead-link view immediately.
 - **IME composition Enter no longer opens the first search result**: in the top search bar, the Enter that commits a Chinese/Japanese IME candidate now stays with the IME. Previously it was treated as a normal Enter and focused/clicked the first result; if the row was re-rendered before the click, the popup itself navigated to that bookmark's URL (an internal host could surface as a `chrome-error://chromewebdata/` DNS error page).
+- **Global palette wake-up no longer self-closes on cold opens**: `Ctrl/Cmd+Shift+K` from another page could open the popup with the palette instantly closing again while the window's focus was still settling — the palette now waits for the popup to report focus before opening.
+- **IME composition Enter ignored in the command palette too**: the palette input gets the same composition guard as the search bar, so the Enter committing an IME candidate no longer executes the highlighted row.
 
 #### Changed
 
 - **In-product announcement banner**: the version-gate banner became a local "What's new" banner fired exactly once by the version gate on the 4.x → 4.0.8 crossing — no network, no dismiss; the remote announce feed (toggled by "Show in-product announcements") still runs as its network-dependent complement. The v4.0.8 banner announces this favicon-enhanced release and links the v4 guide and the changelog.
 - **Options-page polish**: trailing hints no longer sit far below their controls; list buttons share one visual weight with the page's other buttons; the storage bar gained a used/total overview row, distinct segment colors, per-segment share legend and keyboard-reachable tooltips; destructive actions (clear cache / clear stats / import / reset) render in the warning danger style; the header wraps gracefully at narrow widths.
 - **Third-party icon fallback and icon-cache backups are on by default**, so new users get working icons for sites Chrome can't reach directly and full-fidelity backups out of the box.
+- **Dead-link view toolbar rebuilt**: the idle controls are now three stacked icon rows — detection (last-scan time, rescan, clear, verdict filter), marks (mark/unmark-all, delete-all, select) and status (mark filter + sort) — every icon button titled, right edges column-aligned, and the clear-marks glyph is now a solid flag.
+- **Duplicates view toolbar rebuilt**: two aligned rows (strategy/scope/scheme; summary + apply-all + select) with an icon-only select-mode entry, plus a per-member delete on member rows (revealed on hover/focus) that regroups live — deleting one copy of a 2-member group dissolves the group, and deleting the pinned keeper falls back to the strategy pick.
 
 #### Engineering
 
@@ -240,7 +245,7 @@ python3 scripts/package.py         # → tmp/vBookmarks_<version>.zip
 - `loadDotenv` accepts inline comments (`KEY=value # note`).
 - Bookmarklet behavior verified in a real-browser harness (`verify-bmlet.js`).
 - Console probe added for the search-bar IME-Enter regression (`scripts/console/probe-ime-enter.js`).
-- Test suite at **70 files / 2356 cases**, all green.
+- Test suite at **70 files / 2394 cases**, all green.
 
 ### v4.0.7
 

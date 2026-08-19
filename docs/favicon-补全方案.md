@@ -109,7 +109,7 @@ bookmark URL → tree-render.getFaviconUrl → chrome-extension://ID/_favicon/?p
 |---|---|---|
 | 直连 `https://host/favicon.ico` | github/MDN/cloudflare 200+真实 ICO；example.com 404（正确）；stackoverflow 403 | **主来源**，同源隐私好 |
 | favicon.run `/favicon?domain=X&sz=32` | 2026-08 实测：github/stackoverflow/wikipedia/iana.org 200+真实 PNG（`sz` 精确控尺寸）；**未知或无图标域名（example.com 等）→ HTTP 500 干净失败**；CORS 开放 + Cloudflare CDN 缓存 + 30 并发无限流 | **聚合兜底首选**（内置服务商列表第一位，见设计文档 §3.4） |
-| icon.horse `icon.horse/icon/X` | 隐私取向、按域名返回真实图标；未知/无图标域名 404 干净失败（审计 F5 的低冲突中间家） | 聚合兜底第二位 |
+| icon.horse `icon.horse/icon/X` | 隐私取向、按域名返回真实图标；**2026-08 实测推翻此前的 404 假设：未知/无图标域名返回 200 + 字母占位图（256×256 字母砖，按域名首字母确定性生成）**——经参考探针（`<L>-vbmref.invalid`）+ 像素指纹识别占位后降级 no-icon 继续故障转移（审计 F5 的低冲突中间家） | 聚合兜底第二位 |
 | DDG `icons.duckduckgo.com/ip3/X.ico` | 可用，返回真实 ICO（与 github 一致） | 聚合兜底第三位（前两家不可用/无图标时切换；未知域名返回 200+自家占位，不可判定） |
 | Google s2 `s2/favicons?domain=X` | 返回小 PNG（~519B） | 备选 |
 | plus.google.com/_/favicon | 返回 HTML（不可用） | 弃用 |

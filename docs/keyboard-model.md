@@ -136,8 +136,10 @@ naive layout correspondence makes them a **rung** of the vertical chain
 (revised in the final polish — they used to be Tab-only territory, which
 left the arrow chain inconsistent with the Tab ring). A view may stack
 **several** toolbars (v4 task-4 #13: the dead view's proxy strip above its
-scan toolbar) — each is then its own rung in visual (DOM) order, and a rung
-without an enabled control is skipped transparently:
+scan toolbar; 4.0.8 stacks the dead idle state as three icon toolbars —
+detection / mark / status — and the dupes idle state as two) — each is
+then its own rung in visual (DOM) order, and a rung without an enabled
+control is skipped transparently:
 
 - **Entering**: strip `↓` lands on the **topmost** rung's first enabled
   control; `↑` past the list's first row lands on the **lowest** rung's
@@ -193,7 +195,8 @@ without an enabled control is skipped transparently:
   *(view-manager `bindFocusMarker`,
   keyboard.js rung ↓; gate in verify-keyboard.js + tests/view-manager and
   tests/keyboard)*
-- **Inline row controls** (the dupes keeper radio, the dead ⚑/× buttons)
+- **Inline row controls** (the dupes keeper radio and per-member delete
+  button, the dead ⚑/× buttons)
   are not the rung: when one holds focus (mouse click), `↑`/`↓` walk rows
   relative to its owning row, and `↑` past the top takes the §2.1 crossing.
 
@@ -383,7 +386,7 @@ unreachable by `Tab`.
 | Strip model (§2.3) | `view-manager.js` strip keydown + focusEdgeRow (view-scoped Home/End) | `tests/view-manager.test.js`, verify §2.2 |
 | List contract (§2.4) | `keyboard.js` treeKeyDown/treeKeyUp; dupes overrides in `view-dupes.js`; history in `search.js` | `tests/keyboard.test.js`, `tests/view-dupes.test.js`, `tests/search.test.js` (the search-history rows), verify §2.2c/§4.3b |
 | Toolbar rung (§2.5) | `view-manager.js` focusToolbar/focusListExit; `keyboard.js` non-row branch of treeKeyDown; focus restore in the three views' render(); the dropdown protocol in `dropdown.js` + `view-dupes.js` (strategy/scope) | `tests/view-manager.test.js` (rung describe), `tests/keyboard.test.js` (item-7b + §2.5), `tests/dropdown.test.js` (protocol), verify §2.2c |
-| Menus (§2.6) | `keyboard.js` contextKeyDown + `context-menu.js` closeMenu/refocusOwner | `tests/keyboard.test.js`, `tests/context-menu.test.js` (all seven menus, wrap + Home/End + confirm/cancel, dispatch refocus) |
+| Menus (§2.6) | `keyboard.js` contextKeyDown + `context-menu.js` closeMenu/refocusOwner | `tests/keyboard.test.js`, `tests/context-menu.test.js` (all eight menus, wrap + Home/End + confirm/cancel, dispatch refocus) |
 | Dual zone (§3) | `search.js` box/history keydown | `tests/search.test.js`, verify §4.3/§4.3b |
 | Esc cake (§4) | `keyboard.js` document capture handlers + `view-manager.js` onEscapeActive/escapeToTree + view `onEscape` hooks | `tests/keyboard.test.js` (Esc layering), view suites; Chrome-side popup-close suppression documented in `docs/cdp-escape-limitation.md` |
 | Tab ring (§5) | `keyboard.js` tabCycle | `tests/keyboard.test.js` (Tab region cycle), verify §2.1 |

@@ -1484,7 +1484,7 @@
   },
   "optionFaviconEnrichAgg": {
     "message": "Third-party icon fallback",
-    "description": "Options checkbox (Views group): sub-switch enabling the built-in list of third-party icon services (favicon.run, then DuckDuckGo) as a last-resort fallback when direct fetching fails."
+    "description": "Options checkbox (Views group): sub-switch enabling the built-in list of third-party icon services (favicon.run, then icon.horse, then DuckDuckGo) as a last-resort fallback when direct fetching fails."
   },
   "optionFaviconEnrichAggHint": {
     "message": "When direct fetching fails, look the icon up by domain from a built-in list of third-party icon services ($providers$). A service found unreachable is skipped and the next one is tried — it is not retried for 6 hours.",

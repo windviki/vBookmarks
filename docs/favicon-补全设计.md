@@ -2,7 +2,7 @@
 
 > 2026-08-15 · 实施版，所有决策已定稿（§15），无开放项。
 > v2 打磨：DDG 服务级熔断与代理兜底（§3.3/§3.4）；存储改为按 host 分键 + 索引，写开放大、爆炸边缘 case、淘汰管理全部明确（§5）。
-> v3/v4 更新（4.0.8，替代早期已实现的单一家 DDG 聚合层）：第三方聚合兜底改为**内置服务商列表 + 按服务商独立熔断 + 自动故障转移**（§3.4）——`favicon-run` 首选、`icon.horse` 居中、`duckduckgo` 兜底；检测到某服务商不可达即跳闸并切换下一候选，**不重复尝试**。2026-08 实测 favicon.run：已知站点 200+真实 PNG；**未知/无图标域名 HTTP 500 干净失败**（DDG 对未知域名返回 200+自家占位，不可判定）。各家判定差异封装为**一致行为接口**（`url` + `interpret`）。其余链路（L1/L2/L3）与缓存/预算机制不变。
+> v3/v4 更新（4.0.8，替代早期已实现的单一家 DDG 聚合层）：第三方聚合兜底改为**内置服务商列表 + 按服务商独立熔断 + 自动故障转移**（§3.4）——`favicon-run` 首选、`icon.horse` 居中、`duckduckgo` 兜底；检测到某服务商不可达即跳闸并切换下一候选，**不重复尝试**。2026-08 实测 favicon.run：已知站点 200+真实 PNG；**未知/无图标域名 HTTP 500 干净失败**（DDG 对未知域名返回 200+自家占位，不可判定）。各家判定差异封装为**一致行为接口**（`url` + `interpret`）。2026-08-19 实测补正：**icon.horse 对未知/无图标域名同样返回 200 + 字母占位图**（256×256 字母砖，按域名首字母确定性生成，同字母任意域名字节一致），推翻此前的「404 干净失败」假设——为此 icon-horse 条目增设占位探针钩子（§3.4）：`'icon'` 判定且四步验证通过后，按 `placeholderProbeUrl`（`https://icon.horse/icon/<首字母>-vbmref.invalid`）抓参考占位图，与候选做像素指纹比对（复用 favicon-fallback 的 `sampleIcon` FNV-1a 采样，同尺寸 + 同哈希 = 占位），命中即降级 `'no-icon'` 继续故障转移，占位图绝不进 30 天成功缓存；探针按字母缓存（每字母每会话一次）、任何探针故障一律放行（fail-open，不触熔断）。其余链路（L1/L2/L3）与缓存/预算机制不变。
 > v5 更新（4.0.8 独立审计低优先级收尾）：L2 的 `<link>` 候选上限 5 个，坏 `data:` 候选跳过继续（支持 base64 与百分号编码两种 data URL）；选项页清除图标缓存补确认与空缓存反馈；备份导出/导入排除运行时 `vbmDeadScan` 活动日志；存储横条改用 `getBytesInUse` 真实计费并防抖刷新（§3.2/§5.4）。
 > 前置：[`docs/favicon-补全方案.md`](favicon-补全方案.md)（根因 + 真实 Chromium 实测 + 同类扩展调研）。
 > 本文是「补全缺失的网站图标」作为 vBookmarks **原生功能**的唯一实施依据：模块边界、代码契约、存储形状、选项 UI、测试与提交步骤均精确到文件与函数。
@@ -167,10 +167,10 @@ const AGG_PROVIDERS = [
 | 服务商 | 已知站点 | 未知/无图标域名 | 其他 |
 |---|---|---|---|
 | favicon-run | 200+真实 PNG（github/stackoverflow/wikipedia/iana.org；`sz` 精确控尺寸） | **HTTP 500 干净失败**（example.com 等） | CORS 开放 + Cloudflare CDN 缓存 + 30 并发无限流 |
-| icon-horse | 隐私取向、按域名返回真实图标 | **404 干净失败**（无占位歧义） | 低冲突中间家（审计 F5） |
+| icon-horse | 隐私取向、按域名返回真实图标 | **200 + 字母占位图**（2026-08 实测；按首字母确定性生成，占位探针 + 像素指纹降级 no-icon） | 低冲突中间家（审计 F5） |
 | duckduckgo | 200+真实 ICO（github） | **200+自家占位图**（不可判定） | 老牌、较稳定 |
 
-**为什么服务商列表 + 故障转移**：单一服务商可能整体不可达（区域/ISP 限制），也可能未来被限流/下线。列表让「favicon-run 首选（干净失败语义）」→「icon.horse 居中（隐私取向、404 干净失败）」→「duckduckgo 兜底（老牌稳定）」互补：favicon-run 查不到（500）→ 故障转移到 icon.horse 再试；icon.horse 查不到（404）→ 故障转移到 duckduckgo。这正是「从一开始就考虑服务商未来不可用」的应对——单家失效只是跳到列表内下一家，全列表失效才落默认 SVG。
+**为什么服务商列表 + 故障转移**：单一服务商可能整体不可达（区域/ISP 限制），也可能未来被限流/下线。列表让「favicon-run 首选（干净失败语义）」→「icon.horse 居中（隐私取向；字母占位经指纹识别降级）」→「duckduckgo 兜底（老牌稳定）」互补：favicon-run 查不到（500）→ 故障转移到 icon.horse 再试；icon.horse 查不到（200 字母占位被指纹判 no-icon）→ 故障转移到 duckduckgo。这正是「从一开始就考虑服务商未来不可用」的应对——单家失效只是跳到列表内下一家，全列表失效才落默认 SVG。
 
 **服务商接口（一致行为）**：`interpret(outcome)` 把各家不同语义归一为三种结果，上层链只根据这三种结果行动：
 
@@ -183,7 +183,7 @@ const AGG_PROVIDERS = [
 各家 `interpret` 的实现差异（差异在接口内，上层无感知）：
 
 - **favicon-run**：`!networkOk → 'unreachable'`；`2xx && image/* → 'icon'`；**非 2xx（500/404）→ 'no-icon'**（干净失败、可判定，不会假成功）。
-- **icon-horse**：`!networkOk → 'unreachable'`；`2xx && image/* → 'icon'`；非 2xx（含 404）→ `'no-icon'`（无占位歧义）。
+- **icon-horse**：`!networkOk → 'unreachable'`；`2xx && image/* → 'icon'`；非 2xx → `'no-icon'`。**注意：未知域名并不返回非 2xx，而是 200 + 字母占位图**——`'icon'` 判定之后须经占位探针 + 像素指纹复检（见文首 v3/v4 更新注），命中降级 `'no-icon'`。
 - **duckduckgo**：`!networkOk → 'unreachable'`；`2xx → 'icon'`（**接受未知域名 200+自家占位**的不可判定，作为列表最后一层兜底）；非 2xx → `'no-icon'`。
 
 **按服务商熔断（不重复尝试不可达服务）**：
@@ -259,6 +259,8 @@ export function initFaviconFallback(doc = document, ctx = {}) {
 - **缓存命中 failed（24h 内）**：**return false**，不入队、不请求。
 
 ### 4.3 热替换与反色登记（补全完成时）
+
+热替换的观感：换入的 `<img>` 带 0.18s 淡入；仅当该行**在视口内**（`inViewport`）再加 0.38s 的 `.favicon-pop` 轻弹动画，视口外静默换图；`prefers-reduced-motion` 下一律无动画（neat.css 的 reduce 块覆盖 `.favicon-enriched`/`.favicon-pop`）。
 
 ```js
 // 校验+解码通过，dataUrl 已写缓存：
