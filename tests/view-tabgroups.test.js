@@ -932,7 +932,7 @@ describe('group management (browser-synced)', () => {
         const { def, chrome, viewTabGroups } = setup({});
         def().activate();
         viewTabGroups.ungroupGroup('g1');
-        expect(chrome.tabs.ungroupCalls).toEqual([[2, 3]]);
+        expect(chrome.tabs.ungroupCalls).toEqual([2, 3]);
     });
 
     it('refresh seeds collapsed state from the browser groups', () => {

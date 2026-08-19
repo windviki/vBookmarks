@@ -101,7 +101,7 @@ export function initViewTabGroups(ctx = {}) {
         if (chrome.windows && chrome.windows.getAll) {
             chrome.windows.getAll({ populate: true }, wins => {
                 const all = (wins || [])
-                    .filter(w => w && w.tabs && w.tabs.length)
+                    .filter(w => w && w.tabs && w.tabs.length && (!w.type || w.type === 'normal'))
                     .map(w => ({
                         id: w.id,
                         focused: !!w.focused,
@@ -587,7 +587,15 @@ export function initViewTabGroups(ctx = {}) {
             return;
         const finish = () => scheduleRefresh();
         if (chrome.tabs.ungroup) {
-            chrome.tabs.ungroup(ids, () => finish());
+            // One tab at a time: the array form is MV3-only, and a
+            // one-by-one chain works on every Chrome version we support.
+            let pending = ids.length;
+            for (const id of ids) {
+                chrome.tabs.ungroup(id, () => {
+                    if (--pending === 0)
+                        finish();
+                });
+            }
         } else {
             // Ungroup API unavailable — best effort, refresh to show the
             // browser's actual state.
@@ -729,6 +737,7 @@ export function initViewTabGroups(ctx = {}) {
             fn1: () => {
                 send({ type: TAB_GROUP_MSG.tabsClose, tabIds: ids });
                 setSelecting(false);
+                scheduleRefresh();
             }
         });
     };
@@ -1248,8 +1257,9 @@ export function initViewTabGroups(ctx = {}) {
         if (dragTabId && targetLi && targetLi.dataset && targetLi.dataset.tabId
             && String(targetLi.dataset.tabId) !== String(dragTabId)) {
             const targetTab = tabById(targetLi.dataset.tabId);
+            const targetWindowId = targetTab ? targetTab.windowId : currentWindowId;
             if (chrome.tabs.move)
-                chrome.tabs.move(Number(dragTabId), { windowId: currentWindowId, index: targetTab ? targetTab.index : -1 });
+                chrome.tabs.move(Number(dragTabId), { windowId: targetWindowId, index: targetTab ? targetTab.index : -1 });
         }
         dragTabId = null;
         clearDragClasses();
