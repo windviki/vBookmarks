@@ -624,8 +624,17 @@ describe('group management (browser-synced)', () => {
         expect(chrome.runtime.sendMessageCalls).toEqual([{ type: 'vbm-tabs-discard', tabIds: [2, 3] }]);
     });
 
-    it('collapse/expand updates the browser group collapsed state', () => {
+    it('collapse/expand is local-only by default (sync option off)', () => {
         const { def, chrome, clickOn, closestOf } = setup({});
+        def().activate();
+        const li = { dataset: { groupId: 'g1' }, classList: makeClassList() };
+        const head = { classList: makeClassList(), closest: sel => sel === 'li' ? li : (sel === '.tabgroups-group-head' ? head : null) };
+        clickOn(head);
+        expect(chrome.tabGroups.updateCalls).toEqual([]);
+    });
+
+    it('collapse/expand syncs to the browser when the sync option is on', () => {
+        const { def, chrome, clickOn, closestOf } = setup({ storeData: { tabGroupsSyncCollapse: '1' } });
         def().activate();
         const li = { dataset: { groupId: 'g1' }, classList: makeClassList() };
         const head = { classList: makeClassList(), closest: sel => sel === 'li' ? li : (sel === '.tabgroups-group-head' ? head : null) };

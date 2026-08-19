@@ -493,6 +493,12 @@
   "tabGroupsMenuSaveFolder": {
     "message": "Salvar como pasta de favoritos"
   },
+  "tabGroupsSyncCollapse": {
+    "message": "Sincronizar recolhimento com o navegador"
+  },
+  "tabGroupsSyncCollapseHint": {
+    "message": "Quando marcado, recolher ou expandir um grupo nesta visualização também atualiza o grupo de abas do navegador. Desativado por padrão para que o recolhimento da visualização permaneça local."
+  },
   "deadProxyAdd": {
     "message": "Adicionar um servidor proxy para verificações de links quebrados"
   },

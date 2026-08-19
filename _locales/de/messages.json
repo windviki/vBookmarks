@@ -493,6 +493,12 @@
   "tabGroupsMenuSaveFolder": {
     "message": "Als Lesezeichenordner speichern"
   },
+  "tabGroupsSyncCollapse": {
+    "message": "Mit Browser synchronisieren"
+  },
+  "tabGroupsSyncCollapseHint": {
+    "message": "Wenn aktiviert, wird das Zusammen- oder Aufklappen einer Gruppe in dieser Ansicht auch auf die Browser-Tab-Gruppe übertragen. Standardmäßig deaktiviert, sodass das Falten der Ansicht lokal bleibt."
+  },
   "deadProxyAdd": {
     "message": "Proxyserver für Tote-Links-Prüfungen hinzufügen"
   },

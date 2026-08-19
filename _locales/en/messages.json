@@ -2018,5 +2018,13 @@
   "tabGroupsMenuSaveFolder": {
     "message": "Save as bookmark folder",
     "description": "Tab group context-menu item in the tab groups view: saves the group as a bookmark folder."
+  },
+  "tabGroupsSyncCollapse": {
+    "message": "Sync collapse with browser",
+    "description": "Toolbar checkbox in the tab groups view: when checked, collapsing/expanding groups in the view also collapses/expands the browser tab groups."
+  },
+  "tabGroupsSyncCollapseHint": {
+    "message": "When checked, collapsing or expanding a group in this view also updates the browser tab group. Off by default so view folding stays local.",
+    "description": "Tooltip for the collapse-sync checkbox in the tab groups view."
   }
 }

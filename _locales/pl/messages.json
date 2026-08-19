@@ -493,6 +493,12 @@
   "tabGroupsMenuSaveFolder": {
     "message": "Zapisz jako folder zakładek"
   },
+  "tabGroupsSyncCollapse": {
+    "message": "Synchronizuj zwijanie z przeglądarką"
+  },
+  "tabGroupsSyncCollapseHint": {
+    "message": "Gdy zaznaczone, zwijanie lub rozwijanie grupy w tym widoku aktualizuje również grupę kart w przeglądarce. Domyślnie wyłączone, aby zwijanie widoku pozostało lokalne."
+  },
   "deadProxyAdd": {
     "message": "Dodaj serwer proxy do sprawdzania martwych linków"
   },

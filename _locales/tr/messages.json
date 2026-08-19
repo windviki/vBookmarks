@@ -493,6 +493,12 @@
   "tabGroupsMenuSaveFolder": {
     "message": "Yer imi klasörü olarak kaydet"
   },
+  "tabGroupsSyncCollapse": {
+    "message": "Tarayıcıyla senkronize daralt"
+  },
+  "tabGroupsSyncCollapseHint": {
+    "message": "İşaretlendiğinde, bu görünümde bir grubu daraltmak veya genişletmek tarayıcı sekme grubunu da günceller. Varsayılan olarak kapalıdır, böylece görünüm katlaması yerel kalır."
+  },
   "deadProxyAdd": {
     "message": "Ölü bağlantı kontrolleri için bir proxy sunucusu ekle"
   },

@@ -493,6 +493,12 @@
   "tabGroupsMenuSaveFolder": {
     "message": "Simpan sebagai folder markah"
   },
+  "tabGroupsSyncCollapse": {
+    "message": "Sinkronkan lipatan dengan browser"
+  },
+  "tabGroupsSyncCollapseHint": {
+    "message": "Jika dicentang, melipat atau membuka grup di tampilan ini juga memperbarui grup tab browser. Nonaktif secara default agar lipatan tampilan tetap lokal."
+  },
   "deadProxyAdd": {
     "message": "Tambahkan server proxy untuk pemeriksaan tautan mati"
   },

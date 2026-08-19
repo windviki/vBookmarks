@@ -493,6 +493,12 @@
   "tabGroupsMenuSaveFolder": {
     "message": "Salva come cartella di segnalibri"
   },
+  "tabGroupsSyncCollapse": {
+    "message": "Sincronizza compressione con browser"
+  },
+  "tabGroupsSyncCollapseHint": {
+    "message": "Se selezionato, comprimere o espandere un gruppo in questa vista aggiorna anche il gruppo di schede del browser. Disattivato per impostazione predefinita, così la piegatura della vista rimane locale."
+  },
   "deadProxyAdd": {
     "message": "Aggiungi un server proxy per i controlli dei link morti"
   },

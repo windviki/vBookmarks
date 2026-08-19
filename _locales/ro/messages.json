@@ -493,6 +493,12 @@
   "tabGroupsMenuSaveFolder": {
     "message": "Salvează ca dosar"
   },
+  "tabGroupsSyncCollapse": {
+    "message": "Sincronizează colapsarea cu browserul"
+  },
+  "tabGroupsSyncCollapseHint": {
+    "message": "Când este bifat, colapsarea sau extinderea unui grup în această vizualizare actualizează și grupul de file din browser. Dezactivat implicit, astfel încât plierea vizualizării rămâne locală."
+  },
   "deadProxyAdd": {
     "message": "Adaugă un server proxy pentru verificarea linkurilor moarte"
   },

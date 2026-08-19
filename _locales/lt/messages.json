@@ -493,6 +493,12 @@
   "tabGroupsMenuSaveFolder": {
     "message": "Išsaugoti kaip aplanką"
   },
+  "tabGroupsSyncCollapse": {
+    "message": "Sinchronizuoti sutraukimą su naršykle"
+  },
+  "tabGroupsSyncCollapseHint": {
+    "message": "Kai pažymėta, grupės sutraukimas ar išskleidimas šiame rodinyje taip pat atnaujina naršyklės skirtukų grupę. Pagal nutylėjimą išjungta, kad rodinio lankstymas liktų vietinis."
+  },
   "deadProxyAdd": {
     "message": "Pridėti tarpinį serverį negyvų nuorodų tikrinimui"
   },

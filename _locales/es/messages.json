@@ -493,6 +493,12 @@
   "tabGroupsMenuSaveFolder": {
     "message": "Guardar como carpeta"
   },
+  "tabGroupsSyncCollapse": {
+    "message": "Sincronizar colapso con el navegador"
+  },
+  "tabGroupsSyncCollapseHint": {
+    "message": "Al marcar esta opción, contraer o expandir un grupo en esta vista también actualiza el grupo de pestañas del navegador. Desactivado por defecto para que el plegado de la vista permanezca local."
+  },
   "deadProxyAdd": {
     "message": "Añadir un servidor proxy para comprobar enlaces rotos"
   },

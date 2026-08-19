@@ -493,6 +493,12 @@
   "tabGroupsMenuSaveFolder": {
     "message": "Mentés könyvjelzőmappaként"
   },
+  "tabGroupsSyncCollapse": {
+    "message": "Szinkronizálás a böngészővel"
+  },
+  "tabGroupsSyncCollapseHint": {
+    "message": "Ha be van jelölve, a csoport összecsukása vagy kibontása ebben a nézetben frissíti a böngésző lapcsoportját is. Alapértelmezés szerint ki van kapcsolva, így a nézet összecsukása helyi marad."
+  },
   "deadProxyAdd": {
     "message": "Proxykiszolgáló hozzáadása a hibás linkek ellenőrzéséhez"
   },

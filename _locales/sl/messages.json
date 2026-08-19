@@ -493,6 +493,12 @@
   "tabGroupsMenuSaveFolder": {
     "message": "Shrani kot mapo zaznamkov"
   },
+  "tabGroupsSyncCollapse": {
+    "message": "Sinhroniziraj zrušitev z brskalnikom"
+  },
+  "tabGroupsSyncCollapseHint": {
+    "message": "Ko je označeno, zrušitev ali razširitev skupine v tem pogledu posodobi tudi skupino zavihkov v brskalniku. Privzeto izklopljeno, da zlaganje pogleda ostane lokalno."
+  },
   "deadProxyAdd": {
     "message": "Dodaj proxy strežnik za preverjanje mrtvih povezav"
   },

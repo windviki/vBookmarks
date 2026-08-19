@@ -493,6 +493,12 @@
   "tabGroupsMenuSaveFolder": {
     "message": "Salvesta kaustana"
   },
+  "tabGroupsSyncCollapse": {
+    "message": "Sünkrooni ahendamine brauseriga"
+  },
+  "tabGroupsSyncCollapseHint": {
+    "message": "Kui märgitud, siis selle vaate grupi ahendamine või laiendamine uuendab ka brauseri vahekaartide gruppi. Vaikimisi välja lülitatud, et vaate voltimine jääks kohalikuks."
+  },
   "deadProxyAdd": {
     "message": "Lisa puhverserver surnud linkide kontrollimiseks"
   },

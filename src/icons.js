@@ -111,6 +111,22 @@ export const ACTIVATE_ICON =
     '<polyline points="9.5 4 13.5 8 9.5 12"/>' +
     '</svg>';
 
+// Tab-groups view toolbar glyphs: fold all / unfold all (double chevrons
+// stacked so "all" reads as two rows, not one).
+export const COLLAPSE_ALL_ICON =
+    '<svg class="vbm-icon vbm-icon-collapse-all" width="16" height="16" viewBox="0 0 16 16" ' +
+    'fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+    '<polyline points="4 9 8 5 12 9"/>' +
+    '<polyline points="4 13 8 9 12 13"/>' +
+    '</svg>';
+
+export const EXPAND_ALL_ICON =
+    '<svg class="vbm-icon vbm-icon-expand-all" width="16" height="16" viewBox="0 0 16 16" ' +
+    'fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+    '<polyline points="4 5 8 9 12 5"/>' +
+    '<polyline points="4 9 8 13 12 9"/>' +
+    '</svg>';
+
 // Dead-view toolbar glyphs (4.0.8): redo, list-with-x, flag-with-x and
 // selection-mode. Same 16px grid / 1.5px stroke / currentColor recipe.
 export const REDO_ICON =

@@ -493,6 +493,12 @@
   "tabGroupsMenuSaveFolder": {
     "message": "שמור כתיקיית סימניות"
   },
+  "tabGroupsSyncCollapse": {
+    "message": "סנכרון קיפול עם הדפדפן"
+  },
+  "tabGroupsSyncCollapseHint": {
+    "message": "כאשר מסומן, קיפול או הרחבה של קבוצה בתצוגה זו מעדכן גם את קבוצת הטאבים בדפדפן. כבוי כברירת מחדל כך שהקיפול בתצוגה נשאר מקומי."
+  },
   "deadProxyAdd": {
     "message": "הוסף שרת פרוקסי לבדיקות קישורים שבורים"
   },

@@ -493,6 +493,12 @@
   "tabGroupsMenuSaveFolder": {
     "message": "Lưu dưới dạng thư mục dấu trang"
   },
+  "tabGroupsSyncCollapse": {
+    "message": "Đồng bộ thu gọn với trình duyệt"
+  },
+  "tabGroupsSyncCollapseHint": {
+    "message": "Khi được chọn, việc thu gọn hoặc mở rộng một nhóm trong chế độ xem này cũng cập nhật nhóm tab của trình duyệt. Tắt theo mặc định để việc gấp chế độ xem chỉ mang tính cục bộ."
+  },
   "deadProxyAdd": {
     "message": "Thêm máy chủ proxy để kiểm tra liên kết hỏng"
   },

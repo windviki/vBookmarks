@@ -3522,10 +3522,11 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
 }
 .tabgroups-toolbar:empty { display: none; }
 
-/* Selection mode is two stacked .vbm-toolbar rows (each row its own keyboard
-   rung): row 1 selects, row 2 acts. No separator between the two — one
-   visual block, the dupes recipe. */
-.tabgroups-toolbar.tabgroups-select-toolbar {
+/* Idle and selection modes each use two stacked .vbm-toolbar rows (each row
+   its own keyboard rung): row 1 selects/controls, row 2 acts. No separator
+   between the two — one visual block, the dupes/dead recipe. */
+.tabgroups-toolbar.tabgroups-select-toolbar,
+.tabgroups-toolbar.tabgroups-controls-toolbar {
     border-bottom: 0;
 }
 .tabgroups-toolbar.tabgroups-actions-toolbar {
@@ -3549,10 +3550,19 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
     outline-offset: -2px;
 }
 .tabgroups-toolbar .tabgroups-summary {
-    margin-inline-start: auto;
+    margin-inline-start: 0;
+    margin-inline-end: auto;
     white-space: nowrap;
 }
-.tabgroups-toolbar button.tabgroups-select-mode {
+.tabgroups-toolbar .tabgroups-sync-collapse {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    margin-inline-end: auto;
+    cursor: pointer;
+    white-space: nowrap;
+}
+.tabgroups-toolbar button.tabgroups-icon-btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -3561,7 +3571,7 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
     padding: 0;
     flex: none;
 }
-.tabgroups-toolbar button.tabgroups-select-mode .vbm-icon {
+.tabgroups-toolbar button.tabgroups-icon-btn .vbm-icon {
     width: 16px;
     height: 16px;
 }

@@ -493,6 +493,12 @@
   "tabGroupsMenuSaveFolder": {
     "message": "Uložit jako složku záložek"
   },
+  "tabGroupsSyncCollapse": {
+    "message": "Synchronizovat sbalení s prohlížečem"
+  },
+  "tabGroupsSyncCollapseHint": {
+    "message": "Pokud je zaškrtnuto, sbalení nebo rozbalení skupiny v tomto zobrazení také aktualizuje skupinu karet v prohlížeči. Ve výchozím nastavení vypnuto, takže sbalení zůstává lokální."
+  },
   "deadProxyAdd": {
     "message": "Přidat proxy server pro kontroly nefunkčních odkazů"
   },

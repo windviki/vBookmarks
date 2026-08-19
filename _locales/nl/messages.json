@@ -493,6 +493,12 @@
   "tabGroupsMenuSaveFolder": {
     "message": "Opslaan als bladwijzermap"
   },
+  "tabGroupsSyncCollapse": {
+    "message": "Synchroniseer inklappen met browser"
+  },
+  "tabGroupsSyncCollapseHint": {
+    "message": "Wanneer aangevinkt, wordt het in- of uitklappen van een groep in deze weergave ook toegepast op de browsertabgroep. Standaard uit, zodat het inklappen in de weergave lokaal blijft."
+  },
   "deadProxyAdd": {
     "message": "Proxyserver toevoegen voor dode-linkcontroles"
   },

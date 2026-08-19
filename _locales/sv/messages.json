@@ -493,6 +493,12 @@
   "tabGroupsMenuSaveFolder": {
     "message": "Spara som bokmärkesmapp"
   },
+  "tabGroupsSyncCollapse": {
+    "message": "Synka ihopfällning med webbläsaren"
+  },
+  "tabGroupsSyncCollapseHint": {
+    "message": "När markerad uppdateras även webbläsarens flikgrupp när en grupp fälls ihop eller expanderas i denna vy. Av som standard så att vikningen förblir lokal."
+  },
   "deadProxyAdd": {
     "message": "Lägg till proxyserver för döda länkar"
   },

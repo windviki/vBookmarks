@@ -493,6 +493,12 @@
   "tabGroupsMenuSaveFolder": {
     "message": "حفظ كمجلد علامات مرجعية"
   },
+  "tabGroupsSyncCollapse": {
+    "message": "مزامنة الطي مع المتصفح"
+  },
+  "tabGroupsSyncCollapseHint": {
+    "message": "عند التحديد، يؤدي طي مجموعة أو توسيعها في هذا العرض إلى تحديث مجموعة علامات تبويب المتصفح أيضًا. معطّل افتراضيًا ليبقى طي العرض محليًا."
+  },
   "deadProxyAdd": {
     "message": "أضف خادم وكيل لفحوصات الروابط المعطلة"
   },

@@ -493,6 +493,12 @@
   "tabGroupsMenuSaveFolder": {
     "message": "Tallenna kirjanmerkkeinä"
   },
+  "tabGroupsSyncCollapse": {
+    "message": "Synkronoi selaimen kanssa"
+  },
+  "tabGroupsSyncCollapseHint": {
+    "message": "Kun valittu, ryhmän kutistaminen tai laajentaminen tässä näkymässä päivittää myös selaimen välilehtiryhmän. Oletuksena pois päältä, jotta näkymän taitto pysyy paikallisena."
+  },
   "deadProxyAdd": {
     "message": "Lisää välityspalvelin kuolleiden linkkien tarkistuksia varten"
   },

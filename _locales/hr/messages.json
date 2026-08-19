@@ -493,6 +493,12 @@
   "tabGroupsMenuSaveFolder": {
     "message": "Spremi kao mapu oznaka"
   },
+  "tabGroupsSyncCollapse": {
+    "message": "Sinkroniziraj sažimanje s preglednikom"
+  },
+  "tabGroupsSyncCollapseHint": {
+    "message": "Kada je označeno, sažimanje ili proširivanje grupe u ovom prikazu također ažurira grupu kartica u pregledniku. Isključeno prema zadanim postavkama kako bi sažimanje prikaza ostalo lokalno."
+  },
   "deadProxyAdd": {
     "message": "Dodaj proxy poslužitelj za provjeru mrtvih veza"
   },

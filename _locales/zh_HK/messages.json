@@ -1824,5 +1824,11 @@
   },
   "tabGroupsMenuSaveFolder": {
     "message": "儲存為書籤資料夾"
+  },
+  "tabGroupsSyncCollapse": {
+    "message": "與瀏覽器同步摺疊"
+  },
+  "tabGroupsSyncCollapseHint": {
+    "message": "勾選後，在此檢視中摺疊或展開群組亦會更新瀏覽器分頁群組。預設關閉，以保持檢視摺疊僅限本機。"
   }
 }

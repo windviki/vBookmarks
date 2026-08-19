@@ -493,6 +493,12 @@
   "tabGroupsMenuSaveFolder": {
     "message": "Saglabāt kā mapi"
   },
+  "tabGroupsSyncCollapse": {
+    "message": "Sinhronizēt sakļaušanu ar pārlūku"
+  },
+  "tabGroupsSyncCollapseHint": {
+    "message": "Ja atzīmēts, grupas sakļaušana vai izvēršana šajā skatā atjaunina arī pārlūka cilņu grupu. Pēc noklusējuma izslēgts, lai skata sakļaušana paliktu lokāla."
+  },
   "deadProxyAdd": {
     "message": "Pievienot starpniekserveri bojātu saišu pārbaudei"
   },

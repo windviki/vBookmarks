@@ -492,6 +492,12 @@
   "tabGroupsMenuSaveFolder": {
     "message": "Guardar como pasta de marcadores"
   },
+  "tabGroupsSyncCollapse": {
+    "message": "Sincronizar recolhimento com o navegador"
+  },
+  "tabGroupsSyncCollapseHint": {
+    "message": "Quando marcado, recolher ou expandir um grupo nesta vista também atualiza o grupo de separadores do navegador. Desativado por predefinição para que a dobragem da vista permaneça local."
+  },
   "deadProxyAdd": {
     "message": "Adicionar um servidor proxy para verificações de links mortos"
   },

@@ -493,6 +493,12 @@
   "tabGroupsMenuSaveFolder": {
     "message": "Gem som bogmærkemappe"
   },
+  "tabGroupsSyncCollapse": {
+    "message": "Synkroniser sammenklap med browser"
+  },
+  "tabGroupsSyncCollapseHint": {
+    "message": "Når markeret, opdaterer sammenklapning eller udvidelse af en gruppe i denne visning også browserens fanegruppe. Fravalgt som standard, så visningens foldning forbliver lokal."
+  },
   "deadProxyAdd": {
     "message": "Tilføj en proxyserver til død-link-tjek"
   },

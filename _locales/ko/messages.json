@@ -493,6 +493,12 @@
   "tabGroupsMenuSaveFolder": {
     "message": "북마크 폴더로 저장"
   },
+  "tabGroupsSyncCollapse": {
+    "message": "브라우저와 접기 동기화"
+  },
+  "tabGroupsSyncCollapseHint": {
+    "message": "선택하면 이 보기에서 그룹을 접거나 펼칠 때 브라우저 탭 그룹도 업데이트됩니다. 기본적으로 꺼져 있어 보기 접기가 로컬에 유지됩니다."
+  },
   "deadProxyAdd": {
     "message": "죽은 링크 확인용 프록시 서버 추가"
   },

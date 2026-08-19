@@ -493,6 +493,12 @@
   "tabGroupsMenuSaveFolder": {
     "message": "Uložiť ako priečinok záložiek"
   },
+  "tabGroupsSyncCollapse": {
+    "message": "Synchronizovať zbalenie s prehliadačom"
+  },
+  "tabGroupsSyncCollapseHint": {
+    "message": "Ak je začiarknuté, zbalenie alebo rozbalenie skupiny v tomto zobrazení aktualizuje aj skupinu kariet v prehliadači. Vypnuté štandardne, aby skladanie v zobrazení zostalo lokálne."
+  },
   "deadProxyAdd": {
     "message": "Pridať proxy server pre kontroly nefunkčných odkazov"
   },

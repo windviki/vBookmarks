@@ -493,6 +493,12 @@
   "tabGroupsMenuSaveFolder": {
     "message": "Enregistrer comme dossier"
   },
+  "tabGroupsSyncCollapse": {
+    "message": "Synchroniser le repli avec le navigateur"
+  },
+  "tabGroupsSyncCollapseHint": {
+    "message": "Lorsque coché, le repli ou le dépliage d'un groupe dans cette vue met également à jour le groupe d'onglets du navigateur. Désactivé par défaut pour que le repli de la vue reste local."
+  },
   "deadProxyAdd": {
     "message": "Ajouter un serveur proxy pour les vérifications de liens morts"
   },

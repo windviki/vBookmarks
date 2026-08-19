@@ -16,7 +16,7 @@
  * dropping callbacks.
  */
 
-import { VIEW_ICONS, STAR_ICON, SELECT_ICON, FOLDER_ICON, EDIT_ICON, SLEEP_ICON, ACTIVATE_ICON, TRASH_ICON } from './icons.js';
+import { VIEW_ICONS, STAR_ICON, SELECT_ICON, FOLDER_ICON, EDIT_ICON, SLEEP_ICON, ACTIVATE_ICON, TRASH_ICON, REDO_ICON, COLLAPSE_ALL_ICON, EXPAND_ALL_ICON } from './icons.js';
 import { htmlspecialchars } from './escape.js';
 import { parkRowFocus, unparkRowFocus, parkToolbarFocus, restoreToolbarFocus } from './list-focus.js';
 import { saveSession, sessionFolderName, tabsToBookmarks } from './session.js';
@@ -39,6 +39,9 @@ export function initViewTabGroups(ctx = {}) {
     const $list = $('tabgroups-list');
 
     const rootFolderId = () => store.get('quickAddFolderId', '1') || '1';
+    // Collapse/expand sync (toolbar option, default OFF): when off, folding
+    // groups in the view is local-only and never updates chrome.tabGroups.
+    const syncCollapse = () => !!store.get('tabGroupsSyncCollapse', '');
 
     // --- State ----------------------------------------------------------------
     let refreshToken = 0;   // monotonic refresh generation: stale async
@@ -97,6 +100,12 @@ export function initViewTabGroups(ctx = {}) {
     };
 
     // --- Rendering --------------------------------------------------------------
+    const iconBtn = (cls, icon, labelKey) => {
+        const label = _m(labelKey);
+        return `<button class="${cls} tabgroups-icon-btn" title="${htmlspecialchars(label)}" ` +
+            `aria-label="${htmlspecialchars(label)}">${icon}</button>`;
+    };
+
     const renderToolbar = () => {
         if (selecting) {
             const sel = selected.size;
@@ -120,14 +129,23 @@ export function initViewTabGroups(ctx = {}) {
                 `<button class="tabgroups-close-selected"${hasSel ? '' : ' disabled'}>${_m('tabGroupsSelectClose')}</button>` +
                 '</div>';
         }
-        const label = _m('selectModeEnter');
+        // Idle toolbar: two stacked .vbm-toolbar rows (the dead/dupes
+        // recipe). Row 1 = view controls (summary left, refresh/fold icons
+        // right); row 2 = view options (collapse-sync checkbox left, select
+        // mode icon right).
+        const syncLabel = _m('tabGroupsSyncCollapse');
+        const syncHint = _m('tabGroupsSyncCollapseHint');
         return '<div class="tabgroups-toolbar tabgroups-controls-toolbar vbm-toolbar">' +
-            `<button class="tabgroups-refresh">${_m('tabGroupsToolbarRefresh')}</button>` +
-            `<button class="tabgroups-collapse-all">${_m('tabGroupsCollapseAll')}</button>` +
-            `<button class="tabgroups-expand-all">${_m('tabGroupsExpandAll')}</button>` +
             `<span class="tabgroups-summary">${_m('tabGroupsSummary', [`${tabs.length}`, `${groups.length}`])}</span>` +
-            `<button class="tabgroups-select-mode" title="${htmlspecialchars(label)}" ` +
-            `aria-label="${htmlspecialchars(label)}">${SELECT_ICON}</button>` +
+            iconBtn('tabgroups-refresh', REDO_ICON, 'tabGroupsToolbarRefresh') +
+            iconBtn('tabgroups-collapse-all', COLLAPSE_ALL_ICON, 'tabGroupsCollapseAll') +
+            iconBtn('tabgroups-expand-all', EXPAND_ALL_ICON, 'tabGroupsExpandAll') +
+            '</div>' +
+            '<div class="tabgroups-toolbar tabgroups-actions-toolbar vbm-toolbar">' +
+            `<label class="tabgroups-sync-collapse" title="${htmlspecialchars(syncHint)}">` +
+            `<input type="checkbox" class="tabgroups-sync-collapse-input"${syncCollapse() ? ' checked' : ''}>` +
+            `<span>${htmlspecialchars(syncLabel)}</span></label>` +
+            iconBtn('tabgroups-select-mode', SELECT_ICON, 'selectModeEnter') +
             '</div>';
     };
 
@@ -543,6 +561,11 @@ export function initViewTabGroups(ctx = {}) {
         else
             collapsed.delete(String(groupId));
         render();
+        // Only write through to the browser when the toolbar option is on.
+        // Default OFF: view folding stays local (a refresh restores the
+        // browser's own collapsed state).
+        if (!syncCollapse())
+            return;
         const group = groupById(groupId);
         if (group && chrome.tabGroups && chrome.tabGroups.update) {
             chrome.tabGroups.update(group.id, { collapsed: shouldCollapse }, () => {
@@ -561,6 +584,8 @@ export function initViewTabGroups(ctx = {}) {
         for (const g of groups)
             collapsed.add(String(g.id));
         render();
+        if (!syncCollapse())
+            return;
         for (const g of groups) {
             if (chrome.tabGroups && chrome.tabGroups.update) {
                 chrome.tabGroups.update(g.id, { collapsed: true }, () => {
@@ -572,6 +597,8 @@ export function initViewTabGroups(ctx = {}) {
     const expandAll = () => {
         collapsed.clear();
         render();
+        if (!syncCollapse())
+            return;
         for (const g of groups) {
             if (chrome.tabGroups && chrome.tabGroups.update) {
                 chrome.tabGroups.update(g.id, { collapsed: false }, () => {
@@ -599,6 +626,17 @@ export function initViewTabGroups(ctx = {}) {
         }
     };
     bindChromeEvents();
+
+    $list.addEventListener('change', e => {
+        const t = e.target;
+        if (t && t.classList && t.classList.contains('tabgroups-sync-collapse-input')) {
+            store.set('tabGroupsSyncCollapse', t.checked ? '1' : '');
+            // No re-render needed for a settings checkbox; the next collapse
+            // action reads the new value. But keep the checkbox state obvious.
+            if (t.closest && t.closest('.tabgroups-sync-collapse'))
+                return;
+        }
+    });
 
     $list.addEventListener('click', e => {
         const closest = (e.target && e.target.closest) ? e.target.closest.bind(e.target) : () => null;

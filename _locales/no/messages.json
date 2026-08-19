@@ -493,6 +493,12 @@
   "tabGroupsMenuSaveFolder": {
     "message": "Lagre som mappe"
   },
+  "tabGroupsSyncCollapse": {
+    "message": "Synkroniser kollaps med nettleser"
+  },
+  "tabGroupsSyncCollapseHint": {
+    "message": "Når merket av, vil kollaps eller utvidelse av en gruppe i denne visningen også oppdatere nettleserens fanegruppe. Av som standard, slik at visningsfoldingen forblir lokal."
+  },
   "deadProxyAdd": {
     "message": "Legg til en proxy-server for sjekk av døde lenker"
   },

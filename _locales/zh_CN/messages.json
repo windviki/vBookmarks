@@ -1865,5 +1865,11 @@
   },
   "tabGroupsMenuSaveFolder": {
     "message": "保存为书签文件夹"
+  },
+  "tabGroupsSyncCollapse": {
+    "message": "展开折叠同步到浏览器"
+  },
+  "tabGroupsSyncCollapseHint": {
+    "message": "选中后，在视图内折叠或展开标签组会同步更新浏览器标签组。默认关闭，视图内的折叠只保留在本地。"
   }
 }
