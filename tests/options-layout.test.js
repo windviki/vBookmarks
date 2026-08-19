@@ -24,14 +24,18 @@ const count = (haystack, needle) => haystack.split(needle).length - 1;
 
 describe('options page group structure (round-6 item 5, v4 task-3 #17 merge)', () => {
     it('flows the merged card sections through .options-grid', () => {
-        // general / views / palette custom commands (v4 task-4 #6) / sync /
-        // accessibility / custom icon / separators / sorting (issue #33) /
-        // custom styles / dead scan / backup+reset — advanced-options merged in.
-        expect(count(optionsHtml, '<section class="options-group">')).toBe(15);
+        // general / views / per-view groups (tree/search/tab-groups-placeholder/
+        // recent/stats/dead/dupes) / icons / context menu / tools / palette /
+        // sync / accessibility / custom icon / separators / sorting /
+        // custom styles / backup+reset — advanced-options merged in.
+        expect(count(optionsHtml, '<section class="options-group">')).toBe(19);
+        expect(count(optionsHtml, '<section class="options-group" hidden>')).toBe(1);
         expect(optionsHtml).toContain('<main class="options-grid">');
-        for (const id of ['general', 'views-options', 'icons-options', 'context-menu-options', 'tools-options',
-                'stats-options', 'palette-cmd-options', 'sync-options', 'accessibility',
-                'custom-icon', 'separator-options', 'sort-options', 'custom-styles', 'dead-scan-options', 'backup-options'])
+        for (const id of ['general', 'views-options', 'tree-options', 'search-options', 'tabgroups-options',
+                'recent-options', 'stats-options', 'dead-scan-options', 'dupes-options',
+                'icons-options', 'context-menu-options', 'tools-options',
+                'palette-cmd-options', 'sync-options', 'accessibility',
+                'custom-icon', 'separator-options', 'sort-options', 'custom-styles', 'backup-options'])
             expect(optionsHtml).toContain(`<h2 id="${id}">`);
     });
 
@@ -82,20 +86,45 @@ describe('options page group structure (round-6 item 5, v4 task-3 #17 merge)', (
         expect(advancedHtml).not.toContain('<fieldset>');
     });
 
-    it('splits the v4 feature switches across their own groups (views/icon/menu/tools/stats)', () => {
+    it('splits the per-view options into their own groups in view order', () => {
         const bodyOf = id => {
             const s = optionsHtml.split('<section class="options-group">').find(x => x.includes(`<h2 id="${id}">`));
             return s.slice(0, s.indexOf('</section>'));
         };
-        // Views now carries ONLY display items
+        // Views carries ONLY display items
         const views = bodyOf('views-options');
-        for (const id of ['show-view-tabs', 'remember-view', 'show-tab-badges', 'show-item-path',
-                'show-recent-bookmarks', 'show-stats-view', 'show-dead-view', 'show-dupes-view', 'recent-count'])
+        for (const id of ['show-view-tabs', 'remember-view', 'show-tab-badges', 'show-item-path'])
             expect(views).toContain(`id="${id}"`);
-        for (const id of ['palette-enabled', 'quick-add-enabled', 'quick-add-context-menu',
-                'show-tool-button', 'classic-experience', 'favicon-contrast', 'favicon-enrich'])
+        for (const id of ['show-recent-bookmarks', 'show-stats-view', 'show-dead-view', 'show-dupes-view',
+                'recent-count', 'only-show-bmbar', 'search-after-enter'])
             expect(views).not.toContain(`id="${id}"`);
-        // each non-Views switch lives in its own group
+        // Tree: the bookmarks-bar scope setting moved out of General
+        const tree = bodyOf('tree-options');
+        expect(tree).toContain('id="only-show-bmbar"');
+        // Search: searchAfterEnter moved out of General
+        const search = bodyOf('search-options');
+        expect(search).toContain('id="search-after-enter"');
+        // General no longer carries the per-view settings
+        const general = bodyOf('general');
+        expect(general).not.toContain('id="only-show-bmbar"');
+        expect(general).not.toContain('id="search-after-enter"');
+        // Recent group owns the show switch + recent count
+        const recent = bodyOf('recent-options');
+        for (const id of ['show-recent-bookmarks', 'recent-count'])
+            expect(recent).toContain(`id="${id}"`);
+        // Stats group owns its show switch + data controls
+        const stats = bodyOf('stats-options');
+        for (const id of ['show-stats-view', 'stats-enabled', 'stats-clear', 'search-history-enabled'])
+            expect(stats).toContain(`id="${id}"`);
+        // Dead group owns its show switch + scan/proxy controls
+        const dead = bodyOf('dead-scan-options');
+        for (const id of ['show-dead-view', 'dead-proxy-server-input', 'dead-proxy-strip-visible',
+                'dead-scan-concurrency', 'dead-scan-timeout'])
+            expect(dead).toContain(`id="${id}"`);
+        // Dupes group owns its show switch
+        const dupes = bodyOf('dupes-options');
+        expect(dupes).toContain('id="show-dupes-view"');
+        // Each non-Views switch lives in its own group
         const icons = bodyOf('icons-options');
         for (const id of ['favicon-contrast', 'favicon-enrich', 'favicon-enrich-ddg', 'favicon-cache-clear'])
             expect(icons).toContain(`id="${id}"`);
@@ -105,9 +134,20 @@ describe('options page group structure (round-6 item 5, v4 task-3 #17 merge)', (
         const tools = bodyOf('tools-options');
         for (const id of ['palette-enabled', 'quick-add-enabled', 'show-tool-button', 'classic-experience', 'classic-experience-hint'])
             expect(tools).toContain(`id="${id}"`);
-        const stats = bodyOf('stats-options');
-        for (const id of ['stats-enabled', 'stats-clear', 'search-history-enabled'])
-            expect(stats).toContain(`id="${id}"`);
+    });
+
+    it('orders per-view groups before icons and the rest', () => {
+        const order = ['general', 'views-options', 'tree-options', 'search-options', 'tabgroups-options',
+            'recent-options', 'stats-options', 'dead-scan-options', 'dupes-options',
+            'icons-options', 'context-menu-options', 'tools-options', 'palette-cmd-options',
+            'sync-options', 'accessibility', 'custom-icon', 'separator-options', 'sort-options',
+            'custom-styles', 'backup-options'];
+        let prev = -1;
+        for (const id of order) {
+            const idx = optionsHtml.indexOf(`<h2 id="${id}">`);
+            expect(idx, `${id} is present`).toBeGreaterThan(prev);
+            prev = idx;
+        }
     });
 
     it('carries the Sorting group (issue #33) after Separators', () => {

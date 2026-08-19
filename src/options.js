@@ -61,8 +61,6 @@ const $ = id => document.getElementById(id);
             // v4 task-2 (§5.7): non-empty folder delete confirmation, default on
             { id: 'confirm-delete-folder', key: 'confirmDeleteFolder', defaultValue: '1', inverted: false },
             { id: 'remember-prev-state', key: 'dontRememberState', defaultValue: '', inverted: true },
-            { id: 'only-show-bmbar', key: 'onlyShowBMBar', defaultValue: '', inverted: false },
-            { id: 'search-after-enter', key: 'searchAfterEnter', defaultValue: '', inverted: false },
             { id: 'auto-resize-popup', key: 'autoResizePopup', defaultValue: 'true', inverted: false },
             { id: 'open-in-side-panel', key: 'openInSidePanel', defaultValue: '', inverted: false },
             // 4.0.8: remote announcements (docs/announce.json) — on by default;
@@ -72,6 +70,19 @@ const $ = id => document.getElementById(id);
 
         // Initialize general settings
         await bindSettingsList(generalSettings);
+
+        // Per-view settings groups (4.0.8 options reorganization): after the
+        // General and Views groups, each view owns its specific options in
+        // tab order — tree / search / (tab groups in 4.0.9) / recent /
+        // stats / dead / dupes. Groups without options stay hidden placeholders.
+        const treeSettings = [
+            // v3 carry-over: the popup shows only the bookmarks bar subtree.
+            { id: 'only-show-bmbar', key: 'onlyShowBMBar', defaultValue: '', inverted: false }
+        ];
+        const searchSettings = [
+            // v3 carry-over: rank/search only after Enter, not on every keystroke.
+            { id: 'search-after-enter', key: 'searchAfterEnter', defaultValue: '', inverted: false }
+        ];
 
         // Configuration for sync settings
         const syncSettings = [
@@ -91,13 +102,15 @@ const $ = id => document.getElementById(id);
             { id: 'remember-view', key: 'rememberView', defaultValue: '1', inverted: false },
             // v4 task-3 #18: compulsive mode — no count badges on the tabs
             { id: 'show-tab-badges', key: 'showTabBadges', defaultValue: '1', inverted: false },
-            { id: 'show-item-path', key: 'showItemPath', defaultValue: '1', inverted: false },
-            { id: 'show-recent-bookmarks', key: 'showRecentBookmarks', defaultValue: '1', inverted: false },
-            // third-round: the other list views get the same per-view
-            // visibility switch recent already had — a hidden view drops its
-            // tab and every entry point (Ctrl+number, palette) until re-enabled
-            { id: 'show-stats-view', key: 'showStatsView', defaultValue: '1', inverted: false },
-            { id: 'show-dead-view', key: 'showDeadView', defaultValue: '1', inverted: false },
+            { id: 'show-item-path', key: 'showItemPath', defaultValue: '1', inverted: false }
+        ];
+        const recentSettings = [
+            { id: 'show-recent-bookmarks', key: 'showRecentBookmarks', defaultValue: '1', inverted: false }
+        ];
+        const deadSettings = [
+            { id: 'show-dead-view', key: 'showDeadView', defaultValue: '1', inverted: false }
+        ];
+        const dupesSettings = [
             { id: 'show-dupes-view', key: 'showDupesView', defaultValue: '1', inverted: false }
         ];
         // Icons: favicon contrast service + favicon enrichment (4.0.8, docs/
@@ -134,15 +147,21 @@ const $ = id => document.getElementById(id);
             { id: 'quick-add-enabled', key: 'quickAddEnabled', defaultValue: '1', inverted: false },
             { id: 'show-tool-button', key: 'showToolButton', defaultValue: '1', inverted: false }
         ];
-        // Statistics: the visit-stats master switch + search history (the two
-        // data-collection surfaces stay side by side, like dead scan).
+        // Statistics: the per-view show switch + the visit-stats master switch
+        // + search history (the data-collection surfaces stay together).
         const statsSettings = [
+            { id: 'show-stats-view', key: 'showStatsView', defaultValue: '1', inverted: false },
             // v4 task-2 slice D (§5.4/§7): master switch for visit stats —
             // off means zero writes (collection stops immediately)
             { id: 'stats-enabled', key: 'statsEnabled', defaultValue: '1', inverted: false },
             { id: 'search-history-enabled', key: 'searchHistoryEnabled', defaultValue: '1', inverted: false }
         ];
         await bindSettingsList(viewSettings);
+        await bindSettingsList(treeSettings);
+        await bindSettingsList(searchSettings);
+        await bindSettingsList(recentSettings);
+        await bindSettingsList(deadSettings);
+        await bindSettingsList(dupesSettings);
         await bindSettingsList(iconsSettings);
         await bindSettingsList(contextMenuSettings);
         await bindSettingsList(toolsSettings);
@@ -751,8 +770,15 @@ const $ = id => document.getElementById(id);
         // 4.0.8: remote announcements (docs/announce.json) privacy switch
         document.getElementById('option-announce-enabled').innerText = __m('optionAnnounceEnabled');
         document.getElementById('option-announce-enabled-hint').innerText = __m('optionAnnounceEnabledHint');
-        // View groups (4.0.8: the one Views group split into five)
+        // View groups (4.0.8 options reorganization): General / Views, then
+        // per-view groups in tab order (tree/search/tab groups/recent/stats/
+        // dead/dupes), then Icons and the rest. Tab groups is a hidden
+        // placeholder until its 4.0.9 options land.
         document.getElementById('views-options').innerText = __m('optionsGroupViews');
+        document.getElementById('tree-options').innerText = __m('viewTree');
+        document.getElementById('search-options').innerText = __m('viewSearch');
+        document.getElementById('recent-options').innerText = __m('viewRecent');
+        document.getElementById('dupes-options').innerText = __m('viewDupes');
         document.getElementById('icons-options').innerText = __m('optionsGroupIcons');
         document.getElementById('context-menu-options').innerText = __m('optionsGroupContextMenu');
         document.getElementById('tools-options').innerText = __m('optionsGroupTools');

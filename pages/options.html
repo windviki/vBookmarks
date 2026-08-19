@@ -43,8 +43,7 @@
     <li><label><input type="checkbox" id="confirm-open-folder" aria-labelledby="option-confirm-open-folder"><span id="option-confirm-open-folder"></span></label></li>
     <li><label><input type="checkbox" id="confirm-delete-folder" aria-labelledby="option-confirm-delete-folder"><span id="option-confirm-delete-folder"></span></label></li>
     <li><label><input type="checkbox" id="remember-prev-state" aria-labelledby="option-remember-prev-state"><span id="option-remember-prev-state"></span></label></li>
-    <li><label><input type="checkbox" id="only-show-bmbar" aria-labelledby="option-only-show-bmbar"><span id="option-only-show-bmbar"></span></label></li>
-    <li><label><input type="checkbox" id="search-after-enter" aria-labelledby="option-search-after-enter"><span id="option-search-after-enter"></span></label></li>
+
     <li><label><input type="checkbox" id="auto-resize-popup" aria-labelledby="option-auto-resize-popup"><span id="option-auto-resize-popup"></span></label></li>
     <li id="open-in-side-panel-item"><label><input type="checkbox" id="open-in-side-panel" aria-labelledby="option-open-in-side-panel"><span id="option-open-in-side-panel"></span></label></li>
     <li><label><span id="option-theme"></span> <select id="theme-select" aria-labelledby="option-theme"><option id="option-theme-auto" value="auto"></option><option id="option-theme-light" value="light"></option><option id="option-theme-dark" value="dark"></option><option id="option-theme-ink" value="ink"></option><option id="option-theme-paper" value="paper"></option></select></label></li>
@@ -58,11 +57,66 @@
     <li><label><input type="checkbox" id="remember-view" aria-labelledby="option-remember-view"><span id="option-remember-view"></span></label></li>
     <li><label><input type="checkbox" id="show-tab-badges" aria-labelledby="option-show-tab-badges"><span id="option-show-tab-badges"></span></label></li>
     <li><label><input type="checkbox" id="show-item-path" aria-labelledby="option-show-item-path"><span id="option-show-item-path"></span></label></li>
+
+</ul>
+</section>
+<section class="options-group">
+<h2 id="tree-options"></h2>
+<ul class="options-list">
+    <li><label><input type="checkbox" id="only-show-bmbar" aria-labelledby="option-only-show-bmbar"><span id="option-only-show-bmbar"></span></label></li>
+</ul>
+</section>
+<section class="options-group">
+<h2 id="search-options"></h2>
+<ul class="options-list">
+    <li><label><input type="checkbox" id="search-after-enter" aria-labelledby="option-search-after-enter"><span id="option-search-after-enter"></span></label></li>
+</ul>
+</section>
+<section class="options-group" hidden>
+<h2 id="tabgroups-options"></h2>
+<ul class="options-list"></ul>
+</section>
+<section class="options-group">
+<h2 id="recent-options"></h2>
+<ul class="options-list">
     <li class="view-option-row"><label class="view-option-label"><input type="checkbox" id="show-recent-bookmarks" aria-labelledby="option-show-recent-bookmarks"><span id="option-show-recent-bookmarks"></span></label><span class="view-state" id="recent-view-state"></span><button type="button" class="view-toggle" id="recent-view-toggle"></button></li>
-    <li class="view-option-row"><label class="view-option-label"><input type="checkbox" id="show-stats-view" aria-labelledby="option-show-stats-view"><span id="option-show-stats-view"></span></label><span class="view-state" id="stats-view-state"></span><button type="button" class="view-toggle" id="stats-view-toggle"></button></li>
-    <li class="view-option-row"><label class="view-option-label"><input type="checkbox" id="show-dead-view" aria-labelledby="option-show-dead-view"><span id="option-show-dead-view"></span></label><span class="view-state" id="dead-view-state"></span><button type="button" class="view-toggle" id="dead-view-toggle"></button></li>
-    <li class="view-option-row"><label class="view-option-label"><input type="checkbox" id="show-dupes-view" aria-labelledby="option-show-dupes-view"><span id="option-show-dupes-view"></span></label><span class="view-state" id="dupes-view-state"></span><button type="button" class="view-toggle" id="dupes-view-toggle"></button></li>
     <li><label><span id="option-recent-count"></span> <select id="recent-count" aria-labelledby="option-recent-count"><option value="10">10</option><option value="20">20</option><option value="50">50</option><option value="100">100</option></select></label></li>
+</ul>
+</section>
+<section class="options-group">
+<h2 id="stats-options"></h2>
+<ul class="options-list">
+    <li class="view-option-row"><label class="view-option-label"><input type="checkbox" id="show-stats-view" aria-labelledby="option-show-stats-view"><span id="option-show-stats-view"></span></label><span class="view-state" id="stats-view-state"></span><button type="button" class="view-toggle" id="stats-view-toggle"></button></li>
+    <li><label><input type="checkbox" id="stats-enabled" aria-labelledby="option-stats-enabled"><span id="option-stats-enabled"></span></label> <button id="stats-clear" type="button" class="danger"></button></li>
+    <li><label><input type="checkbox" id="search-history-enabled" aria-labelledby="option-search-history"><span id="option-search-history"></span></label><small id="option-search-history-hint"></small></li>
+</ul>
+</section>
+<section class="options-group">
+<h2 id="dead-scan-options"></h2>
+<ul class="options-list">
+    <li class="view-option-row"><label class="view-option-label"><input type="checkbox" id="show-dead-view" aria-labelledby="option-show-dead-view"><span id="option-show-dead-view"></span></label><span class="view-state" id="dead-view-state"></span><button type="button" class="view-toggle" id="dead-view-toggle"></button></li>
+    <li>
+        <div id="dead-proxy-edit-row">
+            <span id="option-dead-proxy-server"></span>
+            <input type="text" id="dead-proxy-server-input" aria-labelledby="option-dead-proxy-server" aria-describedby="dead-proxy-server-hint" spellcheck="false" placeholder="127.0.0.1:7890">
+        </div>
+        <div id="dead-proxy-action-row">
+            <button type="button" id="dead-proxy-server-save"></button>
+            <code id="dead-proxy-server-value"></code>
+            <button type="button" id="dead-proxy-server-clear"></button>
+        </div>
+        <small id="dead-proxy-server-hint"></small>
+        <span id="dead-proxy-server-error"></span>
+    </li>
+    <li><label><input type="checkbox" id="dead-proxy-strip-visible"> <span id="option-dead-proxy-strip"></span></label><small id="dead-proxy-strip-hint"></small></li>
+    <li><label><span id="option-dead-scan-concurrency"></span> <input type="number" min="1" max="16" step="1" id="dead-scan-concurrency" aria-labelledby="option-dead-scan-concurrency"></label></li>
+    <li><label><span id="option-dead-scan-timeout"></span> <input type="number" min="2" max="30" step="1" id="dead-scan-timeout" aria-labelledby="option-dead-scan-timeout"></label></li>
+</ul>
+</section>
+<section class="options-group">
+<h2 id="dupes-options"></h2>
+<ul class="options-list">
+    <li class="view-option-row"><label class="view-option-label"><input type="checkbox" id="show-dupes-view" aria-labelledby="option-show-dupes-view"><span id="option-show-dupes-view"></span></label><span class="view-state" id="dupes-view-state"></span><button type="button" class="view-toggle" id="dupes-view-toggle"></button></li>
 </ul>
 </section>
 <section class="options-group">
@@ -102,13 +156,6 @@
     <li><label><input type="checkbox" id="quick-add-enabled" aria-labelledby="option-quick-add-enabled"><span id="option-quick-add-enabled"></span></label></li>
     <li><label><input type="checkbox" id="show-tool-button" aria-labelledby="option-show-tool-button"><span id="option-show-tool-button"></span></label></li>
     <li><button id="classic-experience" type="button"></button><small id="classic-experience-hint"></small></li>
-</ul>
-</section>
-<section class="options-group">
-<h2 id="stats-options"></h2>
-<ul class="options-list">
-    <li><label><input type="checkbox" id="stats-enabled" aria-labelledby="option-stats-enabled"><span id="option-stats-enabled"></span></label> <button id="stats-clear" type="button" class="danger"></button></li>
-    <li><label><input type="checkbox" id="search-history-enabled" aria-labelledby="option-search-history"><span id="option-search-history"></span></label><small id="option-search-history-hint"></small></li>
 </ul>
 </section>
 <section class="options-group">
@@ -190,27 +237,6 @@
         <br>
         <textarea id="userstyle"></textarea>
     </li>
-</ul>
-</section>
-<section class="options-group">
-<h2 id="dead-scan-options"></h2>
-<ul class="options-list">
-    <li>
-        <div id="dead-proxy-edit-row">
-            <span id="option-dead-proxy-server"></span>
-            <input type="text" id="dead-proxy-server-input" aria-labelledby="option-dead-proxy-server" aria-describedby="dead-proxy-server-hint" spellcheck="false" placeholder="127.0.0.1:7890">
-        </div>
-        <div id="dead-proxy-action-row">
-            <button type="button" id="dead-proxy-server-save"></button>
-            <code id="dead-proxy-server-value"></code>
-            <button type="button" id="dead-proxy-server-clear"></button>
-        </div>
-        <small id="dead-proxy-server-hint"></small>
-        <span id="dead-proxy-server-error"></span>
-    </li>
-    <li><label><input type="checkbox" id="dead-proxy-strip-visible"> <span id="option-dead-proxy-strip"></span></label><small id="dead-proxy-strip-hint"></small></li>
-    <li><label><span id="option-dead-scan-concurrency"></span> <input type="number" min="1" max="16" step="1" id="dead-scan-concurrency" aria-labelledby="option-dead-scan-concurrency"></label></li>
-    <li><label><span id="option-dead-scan-timeout"></span> <input type="number" min="2" max="30" step="1" id="dead-scan-timeout" aria-labelledby="option-dead-scan-timeout"></label></li>
 </ul>
 </section>
 <section class="options-group">
