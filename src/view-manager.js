@@ -113,12 +113,14 @@ export function initViewManager(ctx = {}) {
     // activatable through the command palette. `disabled` is the only fully
     // forbidden state (no tab, no shortcut, no palette, activation refused).
     const VIEW_SHOW_KEYS = {
+        tabgroups: 'showTabGroupsView',
         recent: 'showRecentBookmarks',
         stats: 'showStatsView',
         dead: 'showDeadView',
         dupes: 'showDupesView'
     };
     const VIEW_DISABLE_KEYS = {
+        tabgroups: 'disableTabGroupsView',
         recent: 'disableRecentView',
         stats: 'disableStatsView',
         dead: 'disableDeadView',

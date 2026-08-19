@@ -96,6 +96,7 @@ const $ = id => document.getElementById(id);
             // third-round: the other list views get the same per-view
             // visibility switch recent already had — a hidden view drops its
             // tab and every entry point (Ctrl+number, palette) until re-enabled
+            { id: 'show-tab-groups-view', key: 'showTabGroupsView', defaultValue: '1', inverted: false },
             { id: 'show-stats-view', key: 'showStatsView', defaultValue: '1', inverted: false },
             { id: 'show-dead-view', key: 'showDeadView', defaultValue: '1', inverted: false },
             { id: 'show-dupes-view', key: 'showDupesView', defaultValue: '1', inverted: false }
@@ -154,6 +155,7 @@ const $ = id => document.getElementById(id);
         // is needed here.
         const FEATURE_VIEW_OPTIONS = [
             { showId: 'show-recent-bookmarks', disableKey: 'disableRecentView', stateId: 'recent-view-state', toggleId: 'recent-view-toggle' },
+            { showId: 'show-tab-groups-view', disableKey: 'disableTabGroupsView', stateId: 'tabgroups-view-state', toggleId: 'tabgroups-view-toggle' },
             { showId: 'show-stats-view', disableKey: 'disableStatsView', stateId: 'stats-view-state', toggleId: 'stats-view-toggle' },
             { showId: 'show-dead-view', disableKey: 'disableDeadView', stateId: 'dead-view-state', toggleId: 'dead-view-toggle' },
             { showId: 'show-dupes-view', disableKey: 'disableDupesView', stateId: 'dupes-view-state', toggleId: 'dupes-view-toggle' }
@@ -762,6 +764,7 @@ const $ = id => document.getElementById(id);
         document.getElementById('option-show-tab-badges').innerText = __m('optionShowTabBadges');
         document.getElementById('option-show-item-path').innerText = __m('optionShowItemPath');
         document.getElementById('option-show-recent-bookmarks').innerText = __m('optionShowRecentBookmarks');
+        document.getElementById('option-show-tab-groups-view').innerText = __m('optionShowTabGroupsView');
         document.getElementById('option-show-stats-view').innerText = __m('optionShowStatsView');
         document.getElementById('option-show-dead-view').innerText = __m('optionShowDeadView');
         document.getElementById('option-show-dupes-view').innerText = __m('optionShowDupesView');

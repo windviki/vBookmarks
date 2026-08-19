@@ -343,6 +343,129 @@
       }
     }
   },
+  "viewTabGroups": {
+    "message": "Groupes d'onglets"
+  },
+  "optionShowTabGroupsView": {
+    "message": "Afficher l'onglet de vue des groupes d'onglets"
+  },
+  "tabGroupsViewEmpty": {
+    "message": "Aucun onglet dans cette fenêtre"
+  },
+  "tabGroupsToolbarRefresh": {
+    "message": "Actualiser"
+  },
+  "tabGroupsCollapseAll": {
+    "message": "Tout réduire"
+  },
+  "tabGroupsExpandAll": {
+    "message": "Tout développer"
+  },
+  "tabGroupsSummary": {
+    "message": "$tabs$ tabs · $groups$ groups",
+    "placeholders": {
+      "tabs": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsGroupCount": {
+    "message": "$count$ tabs",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsGroupCreatedUnknown": {
+    "message": "Date de création inconnue"
+  },
+  "tabGroupsCurrentTab": {
+    "message": "Onglet actuel"
+  },
+  "tabGroupsAddBookmark": {
+    "message": "Ajouter cet onglet aux favoris"
+  },
+  "tabGroupsSaveFolder": {
+    "message": "Enregistrer le groupe d'onglets comme dossier de favoris"
+  },
+  "tabGroupsGroupSavedToFolder": {
+    "message": "Saved $count$ tabs to $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsBookmarksAdded": {
+    "message": "Added $count$ bookmark(s) to $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsSelectNewGroup": {
+    "message": "Nouveau groupe d'onglets"
+  },
+  "tabGroupsSelectOpenInto": {
+    "message": "Ouvrir dans un groupe d'onglets existant…"
+  },
+  "tabGroupsSelectSaveFolder": {
+    "message": "Enregistrer comme dossier de favoris"
+  },
+  "tabGroupsSelectClose": {
+    "message": "Fermer"
+  },
+  "tabGroupsSelectSleep": {
+    "message": "Mettre en veille"
+  },
+  "tabGroupsCopyMoveDialog": {
+    "message": "Les onglets sélectionnés appartiennent déjà à un groupe d'onglets. Voulez-vous les copier (ouvrir dans un nouvel emplacement) ou les déplacer (retirer de leur groupe actuel) ?"
+  },
+  "tabGroupsCopyMoveCopy": {
+    "message": "Copier"
+  },
+  "tabGroupsCopyMoveMove": {
+    "message": "Déplacer"
+  },
+  "tabGroupsConfirmClose": {
+    "message": "Close $count$ tabs?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsConfirmSleep": {
+    "message": "Sleep $count$ tabs?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "bookmarkFolderPickDialogTitle": {
+    "message": "Ajouter au dossier de favoris"
+  },
+  "bookmarkFolderNoFolders": {
+    "message": "Aucun dossier de favoris"
+  },
+  "tabGroupsSelectAddBookmarks": {
+    "message": "Ajouter au dossier de favoris…"
+  },
+  "paletteCmdGoTabGroups": {
+    "message": "Go to Tab groups view"
+  },
   "deadProxyAdd": {
     "message": "Ajouter un serveur proxy pour les vérifications de liens morts"
   },

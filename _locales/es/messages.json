@@ -343,6 +343,129 @@
       }
     }
   },
+  "viewTabGroups": {
+    "message": "Grupos de pestañas"
+  },
+  "optionShowTabGroupsView": {
+    "message": "Mostrar la pestaña de vista de grupos de pestañas"
+  },
+  "tabGroupsViewEmpty": {
+    "message": "No hay pestañas en esta ventana"
+  },
+  "tabGroupsToolbarRefresh": {
+    "message": "Actualizar"
+  },
+  "tabGroupsCollapseAll": {
+    "message": "Contraer todo"
+  },
+  "tabGroupsExpandAll": {
+    "message": "Expandir todo"
+  },
+  "tabGroupsSummary": {
+    "message": "$tabs$ tabs · $groups$ groups",
+    "placeholders": {
+      "tabs": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsGroupCount": {
+    "message": "$count$ tabs",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsGroupCreatedUnknown": {
+    "message": "Hora de creación desconocida"
+  },
+  "tabGroupsCurrentTab": {
+    "message": "Pestaña actual"
+  },
+  "tabGroupsAddBookmark": {
+    "message": "Añadir esta pestaña a marcadores"
+  },
+  "tabGroupsSaveFolder": {
+    "message": "Guardar grupo de pestañas como carpeta de marcadores"
+  },
+  "tabGroupsGroupSavedToFolder": {
+    "message": "Saved $count$ tabs to $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsBookmarksAdded": {
+    "message": "Added $count$ bookmark(s) to $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsSelectNewGroup": {
+    "message": "Nuevo grupo de pestañas"
+  },
+  "tabGroupsSelectOpenInto": {
+    "message": "Abrir en un grupo de pestañas existente…"
+  },
+  "tabGroupsSelectSaveFolder": {
+    "message": "Guardar como carpeta de marcadores"
+  },
+  "tabGroupsSelectClose": {
+    "message": "Cerrar"
+  },
+  "tabGroupsSelectSleep": {
+    "message": "Suspender"
+  },
+  "tabGroupsCopyMoveDialog": {
+    "message": "Las pestañas seleccionadas ya pertenecen a un grupo de pestañas. ¿Copiarlas (abrir en un lugar nuevo) o moverlas (quitarlas de su grupo actual)?"
+  },
+  "tabGroupsCopyMoveCopy": {
+    "message": "Copiar"
+  },
+  "tabGroupsCopyMoveMove": {
+    "message": "Mover"
+  },
+  "tabGroupsConfirmClose": {
+    "message": "Close $count$ tabs?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsConfirmSleep": {
+    "message": "Sleep $count$ tabs?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "bookmarkFolderPickDialogTitle": {
+    "message": "Añadir a carpeta de marcadores"
+  },
+  "bookmarkFolderNoFolders": {
+    "message": "No hay carpetas de marcadores"
+  },
+  "tabGroupsSelectAddBookmarks": {
+    "message": "Añadir a carpeta de marcadores…"
+  },
+  "paletteCmdGoTabGroups": {
+    "message": "Go to Tab groups view"
+  },
   "deadProxyAdd": {
     "message": "Añadir un servidor proxy para comprobar enlaces rotos"
   },

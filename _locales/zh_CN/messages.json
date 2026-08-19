@@ -1715,5 +1715,128 @@
         "content": "$2"
       }
     }
+  },
+  "viewTabGroups": {
+    "message": "标签组"
+  },
+  "optionShowTabGroupsView": {
+    "message": "显示标签组视图标签页"
+  },
+  "tabGroupsViewEmpty": {
+    "message": "此窗口没有标签页"
+  },
+  "tabGroupsToolbarRefresh": {
+    "message": "刷新"
+  },
+  "tabGroupsCollapseAll": {
+    "message": "全部折叠"
+  },
+  "tabGroupsExpandAll": {
+    "message": "全部展开"
+  },
+  "tabGroupsSummary": {
+    "message": "$tabs$ 个标签页 · $groups$ 个标签组",
+    "placeholders": {
+      "tabs": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsGroupCount": {
+    "message": "$count$ 个标签页",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsGroupCreatedUnknown": {
+    "message": "创建时间未知"
+  },
+  "tabGroupsCurrentTab": {
+    "message": "当前标签"
+  },
+  "tabGroupsAddBookmark": {
+    "message": "收藏此标签页"
+  },
+  "tabGroupsSaveFolder": {
+    "message": "将标签组保存为书签文件夹"
+  },
+  "tabGroupsGroupSavedToFolder": {
+    "message": "已将 $count$ 个标签页保存到 $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsBookmarksAdded": {
+    "message": "已将 $count$ 个书签添加到 $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsSelectNewGroup": {
+    "message": "新建标签组"
+  },
+  "tabGroupsSelectOpenInto": {
+    "message": "打开到已有标签组…"
+  },
+  "tabGroupsSelectSaveFolder": {
+    "message": "保存为书签文件夹"
+  },
+  "tabGroupsSelectClose": {
+    "message": "关闭"
+  },
+  "tabGroupsSelectSleep": {
+    "message": "睡眠"
+  },
+  "tabGroupsCopyMoveDialog": {
+    "message": "选中的标签页中有已属于标签组的标签。是复制（在新位置重新打开）还是移动（从原标签组移出）？"
+  },
+  "tabGroupsCopyMoveCopy": {
+    "message": "复制"
+  },
+  "tabGroupsCopyMoveMove": {
+    "message": "移动"
+  },
+  "tabGroupsConfirmClose": {
+    "message": "关闭 $count$ 个标签页？",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsConfirmSleep": {
+    "message": "睡眠 $count$ 个标签页？",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "bookmarkFolderPickDialogTitle": {
+    "message": "添加到书签文件夹"
+  },
+  "bookmarkFolderNoFolders": {
+    "message": "没有书签文件夹"
+  },
+  "tabGroupsSelectAddBookmarks": {
+    "message": "添加到书签文件夹…"
+  },
+  "paletteCmdGoTabGroups": {
+    "message": "转到标签组视图"
   }
 }

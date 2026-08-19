@@ -343,6 +343,129 @@
       }
     }
   },
+  "viewTabGroups": {
+    "message": "ট্যাব গ্রুপ"
+  },
+  "optionShowTabGroupsView": {
+    "message": "ট্যাব গ্রুপ ভিউ ট্যাব দেখান"
+  },
+  "tabGroupsViewEmpty": {
+    "message": "এই উইন্ডোতে কোনো ট্যাব নেই"
+  },
+  "tabGroupsToolbarRefresh": {
+    "message": "রিফ্রেশ"
+  },
+  "tabGroupsCollapseAll": {
+    "message": "সব ভাঁজ করুন"
+  },
+  "tabGroupsExpandAll": {
+    "message": "সব প্রসারিত করুন"
+  },
+  "tabGroupsSummary": {
+    "message": "$tabs$ tabs · $groups$ groups",
+    "placeholders": {
+      "tabs": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsGroupCount": {
+    "message": "$count$ tabs",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsGroupCreatedUnknown": {
+    "message": "তৈরির সময় অজানা"
+  },
+  "tabGroupsCurrentTab": {
+    "message": "বর্তমান ট্যাব"
+  },
+  "tabGroupsAddBookmark": {
+    "message": "এই ট্যাব বুকমার্ক করুন"
+  },
+  "tabGroupsSaveFolder": {
+    "message": "ট্যাব গ্রুপকে বুকমার্ক ফোল্ডার হিসেবে সংরক্ষণ করুন"
+  },
+  "tabGroupsGroupSavedToFolder": {
+    "message": "Saved $count$ tabs to $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsBookmarksAdded": {
+    "message": "Added $count$ bookmark(s) to $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsSelectNewGroup": {
+    "message": "নতুন ট্যাব গ্রুপ"
+  },
+  "tabGroupsSelectOpenInto": {
+    "message": "বিদ্যমান ট্যাব গ্রুপে খুলুন…"
+  },
+  "tabGroupsSelectSaveFolder": {
+    "message": "বুকমার্ক ফোল্ডার হিসেবে সংরক্ষণ করুন"
+  },
+  "tabGroupsSelectClose": {
+    "message": "বন্ধ করুন"
+  },
+  "tabGroupsSelectSleep": {
+    "message": "স্লিপ"
+  },
+  "tabGroupsCopyMoveDialog": {
+    "message": "নির্বাচিত ট্যাবগুলো ইতিমধ্যে একটি ট্যাব গ্রুপের অন্তর্ভুক্ত। এগুলো কপি করুন (নতুন স্থানে খুলুন) বা সরান (বর্তমান গ্রুপ থেকে সরিয়ে ফেলুন)?"
+  },
+  "tabGroupsCopyMoveCopy": {
+    "message": "কপি"
+  },
+  "tabGroupsCopyMoveMove": {
+    "message": "সরান"
+  },
+  "tabGroupsConfirmClose": {
+    "message": "Close $count$ tabs?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsConfirmSleep": {
+    "message": "Sleep $count$ tabs?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "bookmarkFolderPickDialogTitle": {
+    "message": "বুকমার্ক ফোল্ডারে যোগ করুন"
+  },
+  "bookmarkFolderNoFolders": {
+    "message": "কোনো বুকমার্ক ফোল্ডার নেই"
+  },
+  "tabGroupsSelectAddBookmarks": {
+    "message": "বুকমার্ক ফোল্ডারে যোগ করুন…"
+  },
+  "paletteCmdGoTabGroups": {
+    "message": "Go to Tab groups view"
+  },
   "deadProxyAdd": {
     "message": "ডেড-লিংক পরীক্ষার জন্য একটি প্রক্সি সার্ভার যোগ করুন"
   },

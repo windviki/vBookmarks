@@ -160,5 +160,9 @@ export const VIEW_ICONS = {
         '<path d="M9.8 6.2a2.6 2.6 0 0 1 3.7 0l.6.6a2.6 2.6 0 0 1-3.7 3.7"/>'),
     dupes: viewIcon('dupes',
         '<rect x="5.3" y="5.3" width="8" height="8" rx="1.3"/>' +
-        '<path d="M10.7 5.3V3.7a1.33 1.33 0 0 0-1.34-1.33H4a1.33 1.33 0 0 0-1.33 1.33v5.34A1.33 1.33 0 0 0 4 10.37h1.3"/>')
+        '<path d="M10.7 5.3V3.7a1.33 1.33 0 0 0-1.34-1.33H4a1.33 1.33 0 0 0-1.33 1.33v5.34A1.33 1.33 0 0 0 4 10.37h1.3"/>'),
+    tabgroups: viewIcon('tabgroups',
+        '<rect x="2.5" y="3" width="11" height="10" rx="1.5"/>' +
+        '<path d="M6 3h4a2 2 0 0 1 2 2v5.5"/>' +
+        '<circle cx="8" cy="8" r="1.4"/>')
 };

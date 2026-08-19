@@ -343,6 +343,129 @@
       }
     }
   },
+  "viewTabGroups": {
+    "message": "Fanegrupper"
+  },
+  "optionShowTabGroupsView": {
+    "message": "Vis fanen til fanegruppevisning"
+  },
+  "tabGroupsViewEmpty": {
+    "message": "Ingen faner i dette vindue"
+  },
+  "tabGroupsToolbarRefresh": {
+    "message": "Opdater"
+  },
+  "tabGroupsCollapseAll": {
+    "message": "Sammenfold alle"
+  },
+  "tabGroupsExpandAll": {
+    "message": "Udvid alle"
+  },
+  "tabGroupsSummary": {
+    "message": "$tabs$ tabs · $groups$ groups",
+    "placeholders": {
+      "tabs": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsGroupCount": {
+    "message": "$count$ tabs",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsGroupCreatedUnknown": {
+    "message": "Oprettelsestidspunkt ukendt"
+  },
+  "tabGroupsCurrentTab": {
+    "message": "Aktuel fane"
+  },
+  "tabGroupsAddBookmark": {
+    "message": "Bogmærk denne fane"
+  },
+  "tabGroupsSaveFolder": {
+    "message": "Gem fanegruppe som bogmærkemappe"
+  },
+  "tabGroupsGroupSavedToFolder": {
+    "message": "Saved $count$ tabs to $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsBookmarksAdded": {
+    "message": "Added $count$ bookmark(s) to $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsSelectNewGroup": {
+    "message": "Ny fanegruppe"
+  },
+  "tabGroupsSelectOpenInto": {
+    "message": "Åbn i eksisterende fanegruppe…"
+  },
+  "tabGroupsSelectSaveFolder": {
+    "message": "Gem som bogmærkemappe"
+  },
+  "tabGroupsSelectClose": {
+    "message": "Luk"
+  },
+  "tabGroupsSelectSleep": {
+    "message": "Dvale"
+  },
+  "tabGroupsCopyMoveDialog": {
+    "message": "De valgte faner tilhører allerede en fanegruppe. Kopier dem (åbn på en ny placering) eller flyt dem (fjern fra deres nuværende gruppe)?"
+  },
+  "tabGroupsCopyMoveCopy": {
+    "message": "Kopier"
+  },
+  "tabGroupsCopyMoveMove": {
+    "message": "Flyt"
+  },
+  "tabGroupsConfirmClose": {
+    "message": "Close $count$ tabs?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsConfirmSleep": {
+    "message": "Sleep $count$ tabs?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "bookmarkFolderPickDialogTitle": {
+    "message": "Tilføj til bogmærkemappe"
+  },
+  "bookmarkFolderNoFolders": {
+    "message": "Ingen bogmærkemapper"
+  },
+  "tabGroupsSelectAddBookmarks": {
+    "message": "Tilføj til bogmærkemappe…"
+  },
+  "paletteCmdGoTabGroups": {
+    "message": "Go to Tab groups view"
+  },
   "deadProxyAdd": {
     "message": "Tilføj en proxyserver til død-link-tjek"
   },

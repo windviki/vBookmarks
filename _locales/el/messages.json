@@ -343,6 +343,129 @@
       }
     }
   },
+  "viewTabGroups": {
+    "message": "Ομάδες καρτελών"
+  },
+  "optionShowTabGroupsView": {
+    "message": "Εμφάνιση της καρτέλας προβολής ομάδων καρτελών"
+  },
+  "tabGroupsViewEmpty": {
+    "message": "Δεν υπάρχουν καρτέλες σε αυτό το παράθυρο"
+  },
+  "tabGroupsToolbarRefresh": {
+    "message": "Ανανέωση"
+  },
+  "tabGroupsCollapseAll": {
+    "message": "Σύμπτυξη όλων"
+  },
+  "tabGroupsExpandAll": {
+    "message": "Ανάπτυξη όλων"
+  },
+  "tabGroupsSummary": {
+    "message": "$tabs$ tabs · $groups$ groups",
+    "placeholders": {
+      "tabs": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsGroupCount": {
+    "message": "$count$ tabs",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsGroupCreatedUnknown": {
+    "message": "Άγνωστος χρόνος δημιουργίας"
+  },
+  "tabGroupsCurrentTab": {
+    "message": "Τρέχουσα καρτέλα"
+  },
+  "tabGroupsAddBookmark": {
+    "message": "Προσθήκη σελιδοδείκτη σε αυτήν την καρτέλα"
+  },
+  "tabGroupsSaveFolder": {
+    "message": "Αποθήκευση ομάδας καρτελών ως φάκελο σελιδοδεικτών"
+  },
+  "tabGroupsGroupSavedToFolder": {
+    "message": "Saved $count$ tabs to $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsBookmarksAdded": {
+    "message": "Added $count$ bookmark(s) to $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsSelectNewGroup": {
+    "message": "Νέα ομάδα καρτελών"
+  },
+  "tabGroupsSelectOpenInto": {
+    "message": "Άνοιγμα σε υπάρχουσα ομάδα καρτελών…"
+  },
+  "tabGroupsSelectSaveFolder": {
+    "message": "Αποθήκευση ως φάκελο σελιδοδεικτών"
+  },
+  "tabGroupsSelectClose": {
+    "message": "Κλείσιμο"
+  },
+  "tabGroupsSelectSleep": {
+    "message": "Αναστολή"
+  },
+  "tabGroupsCopyMoveDialog": {
+    "message": "Οι επιλεγμένες καρτέλες ανήκουν ήδη σε μια ομάδα καρτελών. Να τις αντιγράψω (άνοιγμα σε νέα θέση) ή να τις μετακινήσω (αφαίρεση από την τρέχουσα ομάδα);"
+  },
+  "tabGroupsCopyMoveCopy": {
+    "message": "Αντιγραφή"
+  },
+  "tabGroupsCopyMoveMove": {
+    "message": "Μετακίνηση"
+  },
+  "tabGroupsConfirmClose": {
+    "message": "Close $count$ tabs?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsConfirmSleep": {
+    "message": "Sleep $count$ tabs?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "bookmarkFolderPickDialogTitle": {
+    "message": "Προσθήκη σε φάκελο σελιδοδεικτών"
+  },
+  "bookmarkFolderNoFolders": {
+    "message": "Δεν υπάρχουν φάκελοι σελιδοδεικτών"
+  },
+  "tabGroupsSelectAddBookmarks": {
+    "message": "Προσθήκη σε φάκελο σελιδοδεικτών…"
+  },
+  "paletteCmdGoTabGroups": {
+    "message": "Go to Tab groups view"
+  },
   "deadProxyAdd": {
     "message": "Προσθήκη διακομιστή μεσολάβησης για ελέγχους νεκρών συνδέσμων"
   },

@@ -343,6 +343,129 @@
       }
     }
   },
+  "viewTabGroups": {
+    "message": "مجموعات التبويبات"
+  },
+  "optionShowTabGroupsView": {
+    "message": "إظهار تبويب عرض مجموعات التبويبات"
+  },
+  "tabGroupsViewEmpty": {
+    "message": "لا توجد تبويبات في هذه النافذة"
+  },
+  "tabGroupsToolbarRefresh": {
+    "message": "تحديث"
+  },
+  "tabGroupsCollapseAll": {
+    "message": "طي الكل"
+  },
+  "tabGroupsExpandAll": {
+    "message": "توسيع الكل"
+  },
+  "tabGroupsSummary": {
+    "message": "$tabs$ tabs · $groups$ groups",
+    "placeholders": {
+      "tabs": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsGroupCount": {
+    "message": "$count$ tabs",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsGroupCreatedUnknown": {
+    "message": "وقت الإنشاء غير معروف"
+  },
+  "tabGroupsCurrentTab": {
+    "message": "التبويب الحالي"
+  },
+  "tabGroupsAddBookmark": {
+    "message": "إضافة هذا التبويب إلى الإشارات المرجعية"
+  },
+  "tabGroupsSaveFolder": {
+    "message": "حفظ مجموعة التبويبات كمجلد إشارات مرجعية"
+  },
+  "tabGroupsGroupSavedToFolder": {
+    "message": "Saved $count$ tabs to $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsBookmarksAdded": {
+    "message": "Added $count$ bookmark(s) to $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsSelectNewGroup": {
+    "message": "مجموعة تبويبات جديدة"
+  },
+  "tabGroupsSelectOpenInto": {
+    "message": "فتح في مجموعة تبويبات موجودة…"
+  },
+  "tabGroupsSelectSaveFolder": {
+    "message": "حفظ كمجلد إشارات مرجعية"
+  },
+  "tabGroupsSelectClose": {
+    "message": "إغلاق"
+  },
+  "tabGroupsSelectSleep": {
+    "message": "إسبات"
+  },
+  "tabGroupsCopyMoveDialog": {
+    "message": "التبويبات المحددة تنتمي بالفعل إلى مجموعة تبويبات. هل تريد نسخها (فتحها في مكان جديد) أو نقلها (إزالتها من مجموعتها الحالية)؟"
+  },
+  "tabGroupsCopyMoveCopy": {
+    "message": "نسخ"
+  },
+  "tabGroupsCopyMoveMove": {
+    "message": "نقل"
+  },
+  "tabGroupsConfirmClose": {
+    "message": "Close $count$ tabs?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsConfirmSleep": {
+    "message": "Sleep $count$ tabs?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "bookmarkFolderPickDialogTitle": {
+    "message": "إضافة إلى مجلد الإشارات المرجعية"
+  },
+  "bookmarkFolderNoFolders": {
+    "message": "لا توجد مجلدات إشارات مرجعية"
+  },
+  "tabGroupsSelectAddBookmarks": {
+    "message": "إضافة إلى مجلد الإشارات المرجعية…"
+  },
+  "paletteCmdGoTabGroups": {
+    "message": "Go to Tab groups view"
+  },
   "deadProxyAdd": {
     "message": "أضف خادم وكيل لفحوصات الروابط المعطلة"
   },

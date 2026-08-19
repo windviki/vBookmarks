@@ -343,6 +343,129 @@
       }
     }
   },
+  "viewTabGroups": {
+    "message": "Tab-Gruppen"
+  },
+  "optionShowTabGroupsView": {
+    "message": "Tab-Gruppen-Ansicht als Tab anzeigen"
+  },
+  "tabGroupsViewEmpty": {
+    "message": "Keine Tabs in diesem Fenster"
+  },
+  "tabGroupsToolbarRefresh": {
+    "message": "Aktualisieren"
+  },
+  "tabGroupsCollapseAll": {
+    "message": "Alle einklappen"
+  },
+  "tabGroupsExpandAll": {
+    "message": "Alle ausklappen"
+  },
+  "tabGroupsSummary": {
+    "message": "$tabs$ tabs · $groups$ groups",
+    "placeholders": {
+      "tabs": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsGroupCount": {
+    "message": "$count$ tabs",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsGroupCreatedUnknown": {
+    "message": "Erstellungszeit unbekannt"
+  },
+  "tabGroupsCurrentTab": {
+    "message": "Aktueller Tab"
+  },
+  "tabGroupsAddBookmark": {
+    "message": "Tab als Lesezeichen speichern"
+  },
+  "tabGroupsSaveFolder": {
+    "message": "Tab-Gruppe als Lesezeichenordner speichern"
+  },
+  "tabGroupsGroupSavedToFolder": {
+    "message": "Saved $count$ tabs to $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsBookmarksAdded": {
+    "message": "Added $count$ bookmark(s) to $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsSelectNewGroup": {
+    "message": "Neue Tab-Gruppe"
+  },
+  "tabGroupsSelectOpenInto": {
+    "message": "In vorhandener Tab-Gruppe öffnen…"
+  },
+  "tabGroupsSelectSaveFolder": {
+    "message": "Als Lesezeichenordner speichern"
+  },
+  "tabGroupsSelectClose": {
+    "message": "Schließen"
+  },
+  "tabGroupsSelectSleep": {
+    "message": "Schlafen legen"
+  },
+  "tabGroupsCopyMoveDialog": {
+    "message": "Ausgewählte Tabs gehören bereits zu einer Tab-Gruppe. Möchten Sie sie kopieren (an einem neuen Ort öffnen) oder verschieben (aus ihrer aktuellen Gruppe entfernen)?"
+  },
+  "tabGroupsCopyMoveCopy": {
+    "message": "Kopieren"
+  },
+  "tabGroupsCopyMoveMove": {
+    "message": "Verschieben"
+  },
+  "tabGroupsConfirmClose": {
+    "message": "Close $count$ tabs?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsConfirmSleep": {
+    "message": "Sleep $count$ tabs?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "bookmarkFolderPickDialogTitle": {
+    "message": "Zu Lesezeichenordner hinzufügen"
+  },
+  "bookmarkFolderNoFolders": {
+    "message": "Keine Lesezeichenordner"
+  },
+  "tabGroupsSelectAddBookmarks": {
+    "message": "Zu Lesezeichenordner hinzufügen…"
+  },
+  "paletteCmdGoTabGroups": {
+    "message": "Go to Tab groups view"
+  },
   "deadProxyAdd": {
     "message": "Proxyserver für Tote-Links-Prüfungen hinzufügen"
   },

@@ -343,6 +343,129 @@
       }
     }
   },
+  "viewTabGroups": {
+    "message": "Skupiny karet"
+  },
+  "optionShowTabGroupsView": {
+    "message": "Zobrazit kartu zobrazení skupin karet"
+  },
+  "tabGroupsViewEmpty": {
+    "message": "V tomto okně nejsou žádné karty"
+  },
+  "tabGroupsToolbarRefresh": {
+    "message": "Obnovit"
+  },
+  "tabGroupsCollapseAll": {
+    "message": "Sbalit vše"
+  },
+  "tabGroupsExpandAll": {
+    "message": "Rozbalit vše"
+  },
+  "tabGroupsSummary": {
+    "message": "$tabs$ tabs · $groups$ groups",
+    "placeholders": {
+      "tabs": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsGroupCount": {
+    "message": "$count$ tabs",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsGroupCreatedUnknown": {
+    "message": "Čas vytvoření neznámý"
+  },
+  "tabGroupsCurrentTab": {
+    "message": "Aktuální karta"
+  },
+  "tabGroupsAddBookmark": {
+    "message": "Přidat kartu do záložek"
+  },
+  "tabGroupsSaveFolder": {
+    "message": "Uložit skupinu karet jako složku záložek"
+  },
+  "tabGroupsGroupSavedToFolder": {
+    "message": "Saved $count$ tabs to $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsBookmarksAdded": {
+    "message": "Added $count$ bookmark(s) to $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsSelectNewGroup": {
+    "message": "Nová skupina karet"
+  },
+  "tabGroupsSelectOpenInto": {
+    "message": "Otevřít v existující skupině karet…"
+  },
+  "tabGroupsSelectSaveFolder": {
+    "message": "Uložit jako složku záložek"
+  },
+  "tabGroupsSelectClose": {
+    "message": "Zavřít"
+  },
+  "tabGroupsSelectSleep": {
+    "message": "Uspat"
+  },
+  "tabGroupsCopyMoveDialog": {
+    "message": "Vybrané karty již patří do skupiny karet. Chcete je zkopírovat (otevřít na novém místě) nebo přesunout (odebrat z aktuální skupiny)?"
+  },
+  "tabGroupsCopyMoveCopy": {
+    "message": "Kopírovat"
+  },
+  "tabGroupsCopyMoveMove": {
+    "message": "Přesunout"
+  },
+  "tabGroupsConfirmClose": {
+    "message": "Close $count$ tabs?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsConfirmSleep": {
+    "message": "Sleep $count$ tabs?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "bookmarkFolderPickDialogTitle": {
+    "message": "Přidat do složky záložek"
+  },
+  "bookmarkFolderNoFolders": {
+    "message": "Žádné složky záložek"
+  },
+  "tabGroupsSelectAddBookmarks": {
+    "message": "Přidat do složky záložek…"
+  },
+  "paletteCmdGoTabGroups": {
+    "message": "Go to Tab groups view"
+  },
   "deadProxyAdd": {
     "message": "Přidat proxy server pro kontroly nefunkčních odkazů"
   },

@@ -343,6 +343,129 @@
       }
     }
   },
+  "viewTabGroups": {
+    "message": "Tab groups"
+  },
+  "optionShowTabGroupsView": {
+    "message": "Show the tab groups view tab"
+  },
+  "tabGroupsViewEmpty": {
+    "message": "No tabs in this window"
+  },
+  "tabGroupsToolbarRefresh": {
+    "message": "Refresh"
+  },
+  "tabGroupsCollapseAll": {
+    "message": "Collapse all"
+  },
+  "tabGroupsExpandAll": {
+    "message": "Expand all"
+  },
+  "tabGroupsSummary": {
+    "message": "$tabs$ tabs · $groups$ groups",
+    "placeholders": {
+      "tabs": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsGroupCount": {
+    "message": "$count$ tabs",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsGroupCreatedUnknown": {
+    "message": "Created time unknown"
+  },
+  "tabGroupsCurrentTab": {
+    "message": "Current tab"
+  },
+  "tabGroupsAddBookmark": {
+    "message": "Bookmark this tab"
+  },
+  "tabGroupsSaveFolder": {
+    "message": "Save tab group as bookmark folder"
+  },
+  "tabGroupsGroupSavedToFolder": {
+    "message": "Saved $count$ tabs to $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsBookmarksAdded": {
+    "message": "Added $count$ bookmark(s) to $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsSelectNewGroup": {
+    "message": "New tab group"
+  },
+  "tabGroupsSelectOpenInto": {
+    "message": "Open in existing tab group…"
+  },
+  "tabGroupsSelectSaveFolder": {
+    "message": "Save as bookmark folder"
+  },
+  "tabGroupsSelectClose": {
+    "message": "Close"
+  },
+  "tabGroupsSelectSleep": {
+    "message": "Sleep"
+  },
+  "tabGroupsCopyMoveDialog": {
+    "message": "Selected tabs already belong to a tab group. Copy them (open in a new place) or move them (remove from their current group)?"
+  },
+  "tabGroupsCopyMoveCopy": {
+    "message": "Copy"
+  },
+  "tabGroupsCopyMoveMove": {
+    "message": "Move"
+  },
+  "tabGroupsConfirmClose": {
+    "message": "Close $count$ tabs?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsConfirmSleep": {
+    "message": "Sleep $count$ tabs?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "bookmarkFolderPickDialogTitle": {
+    "message": "Add to bookmark folder"
+  },
+  "bookmarkFolderNoFolders": {
+    "message": "No bookmark folders"
+  },
+  "tabGroupsSelectAddBookmarks": {
+    "message": "Add to bookmark folder…"
+  },
+  "paletteCmdGoTabGroups": {
+    "message": "Go to Tab groups view"
+  },
   "deadProxyAdd": {
     "message": "Legg til en proxy-server for sjekk av døde lenker"
   },
