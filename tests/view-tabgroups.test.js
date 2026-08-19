@@ -126,6 +126,7 @@ const setup = (opts = {}) => {
             moveCalls: [],
             removeCalls: [],
             discardCalls: [],
+            ungroupCalls: [],
             _tabs: opts.tabs || [
                 makeTab(1, 0, { active: true }),
                 makeTab(2, 1, { groupId: 'g1' }),
@@ -155,6 +156,11 @@ const setup = (opts = {}) => {
                 this.discardCalls.push(id);
                 if (cb)
                     cb({ id, discarded: true });
+            },
+            ungroup(id, cb) {
+                this.ungroupCalls.push(id);
+                if (cb)
+                    cb();
             },
             onCreated: { addListener(fn) { this.fn = fn; } },
             onRemoved: { addListener(fn) { this.fn = fn; } },
@@ -394,6 +400,34 @@ describe('pinned and sleeping tab state', () => {
         viewTabGroups.togglePinned('1');
         expect(chrome.tabs.updateCalls).toEqual([[1, { pinned: true }]]);
     });
+
+    it('pinning a grouped tab removes it from its group first', () => {
+        const { def, chrome, viewTabGroups } = setup({});
+        def().activate();
+        viewTabGroups.togglePinned('2');
+        expect(chrome.tabs.ungroupCalls).toEqual([2]);
+        expect(chrome.tabs.updateCalls).toEqual([[2, { pinned: true }]]);
+    });
+
+    it('grouping a pinned tab unpins it before the group action', async () => {
+        const { def, chrome, dialogs, clickOn, closestOf } = setup({
+            tabs: [
+                makeTab(1, 0, { active: true }),
+                makeTab(2, 1, { pinned: true }),
+                makeTab(3, 2)
+            ]
+        });
+        def().activate();
+        clickOn({ closest: closestOf({ '.tabgroups-select-mode': { classList: makeClassList() } }) });
+        clickOn({ closest: closestOf({ li: { dataset: { tabId: '2' }, classList: makeClassList() } }) });
+        clickOn({ closest: closestOf({ '.tabgroups-new-group': { classList: makeClassList() } }) });
+        dialogs.GroupDialog.openCalls[0].onConfirm('PinnedGroup', 'blue');
+        await flush();
+        // pinned tab was unpinned before the SW group message went out
+        expect(chrome.tabs.updateCalls).toEqual([[2, { pinned: false }]]);
+        expect(chrome.runtime.sendMessageCalls).toHaveLength(1);
+        expect(chrome.runtime.sendMessageCalls[0].moveIds).toEqual([2]);
+    });
 });
 
 describe('idle toolbar', () => {
@@ -514,7 +548,7 @@ describe('selection mode', () => {
 });
 
 describe('tab batch actions', () => {
-    it('new group sends vbm-tabs-new-group with ungrouped tabs moved', () => {
+    it('new group sends vbm-tabs-new-group with ungrouped tabs moved', async () => {
         const { def, chrome, dialogs, clickOn, closestOf } = setup({});
         def().activate();
         clickOn({ closest: closestOf({ '.tabgroups-select-mode': { classList: makeClassList() } }) });
@@ -524,6 +558,7 @@ describe('tab batch actions', () => {
         const openOpts = dialogs.GroupDialog.openCalls[0];
         expect(openOpts.title).toBe('tabGroupUntitled');
         openOpts.onConfirm('Work', 'red');
+        await flush();
         expect(chrome.runtime.sendMessageCalls).toHaveLength(1);
         expect(chrome.runtime.sendMessageCalls[0]).toEqual({
             type: 'vbm-tabs-new-group',
@@ -535,7 +570,7 @@ describe('tab batch actions', () => {
         });
     });
 
-    it('new group with a grouped selected tab asks copy-or-move, then sends copy specs', () => {
+    it('new group with a grouped selected tab asks copy-or-move, then sends copy specs', async () => {
         const { def, chrome, dialogs, clickOn, closestOf } = setup({});
         def().activate();
         clickOn({ closest: closestOf({ '.tabgroups-select-mode': { classList: makeClassList() } }) });
@@ -546,6 +581,7 @@ describe('tab batch actions', () => {
         dialogs.CopyMoveDialog.openCalls[0].onCopy();
         expect(dialogs.GroupDialog.openCalls).toHaveLength(1);
         dialogs.GroupDialog.openCalls[0].onConfirm('CopyGroup', 'green');
+        await flush();
         expect(chrome.runtime.sendMessageCalls).toHaveLength(1);
         expect(chrome.runtime.sendMessageCalls[0]).toEqual({
             type: 'vbm-tabs-new-group',

@@ -107,8 +107,8 @@ export const EDIT_ICON =
 export const SLEEP_ICON =
     '<svg class="vbm-icon vbm-icon-sleep" width="16" height="16" viewBox="0 0 16 16" ' +
     'fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
-    '<path d="M10.8 2.3a5.6 5.6 0 0 0-7 7 4.7 4.7 0 1 0 7-7z"/>' +
-    '<path d="M8.2 9.6l1.4 1.8H7.8"/>' +
+    '<path d="M10.6 2.3a5.5 5.5 0 0 0-6.8 6.8 4.5 4.5 0 1 0 6.8-6.8z"/>' +
+    '<path d="M7.2 8.6h2.4l-2.4 2.8h2.4"/>' +
     '</svg>';
 
 export const ACTIVATE_ICON =

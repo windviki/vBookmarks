@@ -3707,6 +3707,10 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
 #tabgroups-list ul li.tabgroups-row {
     display: flex;
     align-items: center;
+    /* Same right-edge rhythm as the group head: last icon/button ends 8px
+       from the container (4px row padding + 4px control margin), matching
+       dead/dupes rows and their toolbars. */
+    padding-inline-end: 4px;
 }
 /* Tree-view alignment: grouped rows are children of the group head. The
    24px step makes a member row's icon left edge land exactly on the group

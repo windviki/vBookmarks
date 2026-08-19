@@ -314,11 +314,26 @@ export function initViewTabGroups(ctx = {}) {
         const tab = tabById(tabId);
         if (!tab)
             return;
-        chrome.tabs.update(tab.id, { pinned: !tab.pinned }, () => {
-            if (chrome.runtime.lastError)
-                return;
-            scheduleRefresh();
-        });
+        const shouldPin = !tab.pinned;
+        const finish = () => {
+            if (chrome.tabs.update) {
+                chrome.tabs.update(tab.id, { pinned: shouldPin }, () => {
+                    if (chrome.runtime.lastError)
+                        return;
+                    scheduleRefresh();
+                });
+            }
+        };
+        // Pinning a tab removes it from its tab group first (Chrome keeps
+        // the two states mutually exclusive).
+        if (shouldPin && isGrouped(tab)) {
+            if (chrome.tabs.ungroup)
+                chrome.tabs.ungroup(tab.id, () => finish());
+            else
+                finish();
+        } else {
+            finish();
+        }
     };
 
     const closeTabById = tabId => {
@@ -527,9 +542,25 @@ export function initViewTabGroups(ctx = {}) {
         });
     };
 
-    const send = msg => {
+    const send = (msg, cb) => {
         if (chrome.runtime && chrome.runtime.sendMessage)
-            chrome.runtime.sendMessage(msg);
+            chrome.runtime.sendMessage(msg, cb || (() => {}));
+    };
+
+    // Chrome keeps pinned tabs and tab groups mutually exclusive: before a
+    // tab can be grouped it must be unpinned. Resolves when every requested
+    // tab is unpinned (or the API is unavailable).
+    const unpinTabs = tabsToUnpin => {
+        const list = (tabsToUnpin || []).filter(Boolean);
+        if (!list.length)
+            return Promise.resolve();
+        return Promise.all(list.map(t => new Promise(resolve => {
+            if (!chrome.tabs.update) {
+                resolve();
+                return;
+            }
+            chrome.tabs.update(t.id, { pinned: false }, () => resolve());
+        })));
     };
 
     const newGroup = copyMode => {
@@ -553,16 +584,20 @@ export function initViewTabGroups(ctx = {}) {
             title: defaultTitle,
             color: pickGroupColor(defaultTitle),
             onConfirm: (title, color) => {
-                send({
-                    type: TAB_GROUP_MSG.tabsNewGroup,
-                    moveIds,
-                    copyTabs,
-                    title,
-                    color,
-                    windowId: currentWindowId
-                });
                 setSelecting(false);
-                scheduleRefresh();
+                // Joining a group cancels pin state — unpin the tabs that
+                // will actually be moved before the service worker groups
+                // them, then refresh only after the SW reports completion.
+                unpinTabs(sel.filter(t => !(copyMode && isGrouped(t)) && t.pinned)).then(() => {
+                    send({
+                        type: TAB_GROUP_MSG.tabsNewGroup,
+                        moveIds,
+                        copyTabs,
+                        title,
+                        color,
+                        windowId: currentWindowId
+                    }, () => refresh());
+                });
             }
         });
     };
@@ -579,9 +614,10 @@ export function initViewTabGroups(ctx = {}) {
             dialogs.GroupPickDialog.open({
                 groups: groupList || [],
                 onPick: groupId => {
-                    send({ type: TAB_GROUP_MSG.tabsOpenInto, moveIds, copyTabs, groupId });
                     setSelecting(false);
-                    scheduleRefresh();
+                    unpinTabs(sel.filter(t => !(copyMode && isGrouped(t)) && t.pinned)).then(() => {
+                        send({ type: TAB_GROUP_MSG.tabsOpenInto, moveIds, copyTabs, groupId }, () => refresh());
+                    });
                 }
             });
         };

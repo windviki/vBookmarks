@@ -210,45 +210,56 @@ export function createTabGroupOpener() {
     };
 
     // Group existing (and copied) tabs into a NEW named/colored group.
-    const groupExistingIntoNew = (moveIds, copyTabs, title, color, windowId) => {
+    const groupExistingIntoNew = (moveIds, copyTabs, title, color, windowId, done) => {
+        const finish = () => { if (done) done(); };
         if (!canGroup()) {
             // Still honor the copy half of the user's choice.
-            createCopies(copyTabs, windowId);
+            createCopies(copyTabs, windowId).then(finish);
             return;
         }
         createCopies(copyTabs, windowId).then(copyIds => {
             const ids = [].concat(moveIds || [], copyIds);
-            if (!ids.length)
+            if (!ids.length) {
+                finish();
                 return;
+            }
             chrome.tabs.group({ tabIds: ids }, groupId => {
-                if (chrome.runtime.lastError)
+                if (chrome.runtime.lastError) {
+                    finish();
                     return;
+                }
                 chrome.tabGroups.update(groupId, {
                     title: title || '',
                     color: color || 'grey'
-                });
+                }, finish);
             });
         });
     };
 
     // Add existing (and copied) tabs to an EXISTING group. `moveIds` are
     // first moved into the group's window (if needed), then grouped.
-    const groupExistingIntoExisting = (moveIds, copyTabs, groupId) => {
+    const groupExistingIntoExisting = (moveIds, copyTabs, groupId, done) => {
+        const finish = () => { if (done) done(); };
         if (!canGroup()) {
-            createCopies(copyTabs);
+            createCopies(copyTabs).then(finish);
             return;
         }
         chrome.tabGroups.get(groupId, group => {
-            if (chrome.runtime.lastError || !group)
+            if (chrome.runtime.lastError || !group) {
+                finish();
                 return;
+            }
             const windowId = group.windowId;
             moveTabsToWindow(moveIds, windowId).then(movedIds => {
                 createCopies(copyTabs, windowId).then(copyIds => {
                     const ids = [].concat(movedIds, copyIds);
-                    if (!ids.length)
+                    if (!ids.length) {
+                        finish();
                         return;
+                    }
                     chrome.tabs.group({ tabIds: ids, groupId }, () => {
                         void chrome.runtime.lastError;
+                        finish();
                     });
                 });
             });
@@ -269,17 +280,23 @@ export function createTabGroupOpener() {
         }
     };
 
-    const onMessage = msg => {
+    const onMessage = (msg, sender, sendResponse) => {
         if (!msg || !msg.type)
             return;
         if (msg.type === TAB_GROUP_MSG.openNew)
             openNewGroup(msg.urls, msg.title, msg.color);
         else if (msg.type === TAB_GROUP_MSG.openInto)
             openIntoGroup(msg.urls, msg.groupId);
-        else if (msg.type === TAB_GROUP_MSG.tabsNewGroup)
-            groupExistingIntoNew(msg.moveIds, msg.copyTabs, msg.title, msg.color, msg.windowId);
-        else if (msg.type === TAB_GROUP_MSG.tabsOpenInto)
-            groupExistingIntoExisting(msg.moveIds, msg.copyTabs, msg.groupId);
+        else if (msg.type === TAB_GROUP_MSG.tabsNewGroup) {
+            groupExistingIntoNew(msg.moveIds, msg.copyTabs, msg.title, msg.color, msg.windowId,
+                () => { if (sendResponse) sendResponse({ ok: true }); });
+            return true; // async completion: refresh the view when grouping landed
+        }
+        else if (msg.type === TAB_GROUP_MSG.tabsOpenInto) {
+            groupExistingIntoExisting(msg.moveIds, msg.copyTabs, msg.groupId,
+                () => { if (sendResponse) sendResponse({ ok: true }); });
+            return true;
+        }
         else if (msg.type === TAB_GROUP_MSG.tabsClose)
             closeTabs(msg.tabIds);
         else if (msg.type === TAB_GROUP_MSG.tabsDiscard)
