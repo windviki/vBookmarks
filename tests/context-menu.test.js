@@ -465,7 +465,7 @@ describe('module API', () => {
                 'dupesGroupMenu', 'folderMenu', 'folderSortSubmenu', 'folderTabGroupSubmenu',
                 'histRowMenu', 'openSubmenuFor', 'paletteCmdMenu', 'searchHistoryMenu',
                 'separatorMenu', 'submenuOpen', 'submenuParentEntry', 'switchBookmarkMenu',
-                'toggleSubmenuFor', 'viewTabMenu']);
+                'tabGroupMenu', 'tabRowMenu', 'toggleSubmenuFor', 'viewTabMenu']);
         // issue #48 follow-up: the flyout API is callable
         expect(typeof menus.openSubmenuFor).toBe('function');
         expect(typeof menus.closeSubmenu).toBe('function');

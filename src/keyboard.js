@@ -986,6 +986,7 @@ export function initKeyboard(ctx = {}) {
     const allMenus = [
         menus.bookmarkMenu, menus.folderMenu, menus.separatorMenu,
         menus.searchHistoryMenu, menus.histRowMenu, menus.dupesGroupMenu,
+        menus.tabRowMenu, menus.tabGroupMenu,
         menus.paletteCmdMenu, menus.viewTabMenu,
         // issue #48 follow-up: the collapsed-group flyouts count as open menus
         // for the document-level Escape / Tab layering.
@@ -1140,6 +1141,7 @@ export function initKeyboard(ctx = {}) {
     const menuContainers = [
         menus.bookmarkMenu, menus.folderMenu, menus.separatorMenu,
         menus.searchHistoryMenu, menus.histRowMenu, menus.dupesGroupMenu,
+        menus.tabRowMenu, menus.tabGroupMenu,
         menus.paletteCmdMenu,
         // issue #48 follow-up: the collapsed-group flyouts keep Tab trapped
         // too (their items are Tab stops only while the flyout is open).

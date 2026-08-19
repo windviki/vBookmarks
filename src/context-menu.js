@@ -73,6 +73,10 @@ export function initContextMenu(ctx = {}) {
     const $paletteCmdContextMenu = $('palette-cmd-context-menu');
     // 4.0.8: the view-tab right-click menu (hide / disable)
     const $viewTabContextMenu = $('view-tab-context-menu');
+    // Tab groups view: tab-row and group-head menus (absent in minimal
+    // test setups → null-check everywhere).
+    const $tabRowContextMenu = $('tab-row-context-menu');
+    const $tabGroupContextMenu = $('tabgroup-context-menu');
     const $results = $('results');
     // Collapsed tab-group / sort submenus (issue #48 follow-up): body-level
     // sibling menus whose items are dispatched by the same handlers as their
@@ -98,7 +102,7 @@ export function initContextMenu(ctx = {}) {
     // replacement row; the list container element itself is never swapped.
     let ownerInfo = null;
     // Every scrollable list a row menu can open on (ownerInfo capture).
-    const LIST_SEL = '#tree, #results, #recent-list, #stats-list, #dead-list, ' +
+    const LIST_SEL = '#tree, #results, #recent-list, #tabgroups-list, #stats-list, #dead-list, ' +
         '#dupes-list, #search-history-area, #palette-results';
 
     // v4 task-2: unified row-id extraction — data-node-id first (the row id
@@ -249,6 +253,16 @@ export function initContextMenu(ctx = {}) {
             $viewTabContextMenu.style.left = '-999px';
             $viewTabContextMenu.style.opacity = '0';
             $viewTabContextMenu.style.transform = 'scale(.98)';
+        }
+        if ($tabRowContextMenu) {
+            $tabRowContextMenu.style.left = '-999px';
+            $tabRowContextMenu.style.opacity = '0';
+            $tabRowContextMenu.style.transform = 'scale(.98)';
+        }
+        if ($tabGroupContextMenu) {
+            $tabGroupContextMenu.style.left = '-999px';
+            $tabGroupContextMenu.style.opacity = '0';
+            $tabGroupContextMenu.style.transform = 'scale(.98)';
         }
         // The root-folder disabled states are per-open (root vs non-root);
         // drop them all here so they can never leak across unrelated menu
@@ -793,6 +807,7 @@ export function initContextMenu(ctx = {}) {
         // dedup (label names keeper + doomed count, resolved live) and
         // expand/collapse (label follows the current state).
         const groupHead = el.closest('.group-head');
+        const tabGroupHead = el.closest('.tabgroups-group-head');
         // v4 task-4 #6: a palette CUSTOM command row is no bookmark/folder —
         // its slim menu (edit/delete) dispatches through ctx.paletteMenu
         // with the row's data-cc-id.
@@ -815,6 +830,23 @@ export function initContextMenu(ctx = {}) {
                 cleanSep.style.display = hint ? 'block' : 'none';
             $('dupes-group-toggle').textContent =
                 _m(ctx.dupesMenu.isCollapsed(key) ? 'dupesGroupExpand' : 'dupesGroupCollapse');
+        } else if (tabGroupHead && tabGroupHead.parentNode && tabGroupHead.parentNode.classList
+            && tabGroupHead.parentNode.classList.contains('tabgroups-group')
+            && $tabGroupContextMenu && ctx.tabGroupsMenu) {
+            // Tab groups view: a group head gets its own menu (activate /
+            // rename / collapse / save / sleep / close). The collapse label
+            // follows the current state; dispatch reads data-group-id.
+            el = tabGroupHead;
+            menu = $tabGroupContextMenu;
+            const gid = tabGroupHead.parentNode.dataset.groupId;
+            $('tabgroup-collapse').textContent =
+                _m(ctx.tabGroupsMenu.isCollapsed(gid) ? 'tabGroupsExpandGroup' : 'tabGroupsCollapseGroup');
+        } else if (row.classList && row.classList.contains('tabgroups-row')
+            && $tabRowContextMenu && ctx.tabGroupsMenu) {
+            // Tab groups view: a tab row is not a bookmark — its own menu
+            // (activate / bookmark / sleep / close) instead of the bookmark
+            // menu whose entries would act on a bogus id.
+            menu = $tabRowContextMenu;
         // v4 task-3 #10: an UNBOOKMARKED stats-history row has no bookmark
         // id, so the bookmark menu would act on a bogus id (it used to be
         // swallowed at the list level). Its slim menu: open×3 via the row
@@ -1479,6 +1511,93 @@ export function initContextMenu(ctx = {}) {
         $dupesGroupContextMenu.addEventListener('contextmenu', menuBackgroundReposition($dupesGroupContextMenu));
     }
 
+    // Tab groups view: tab-row menu. currentContext is the row anchor (or
+    // span); its closest li carries data-tab-id.
+    const tabRowContextHandler = e => {
+        if (!currentContext)
+            return;
+        const el = e.target;
+        if (!el.classList.contains('menu-item'))
+            return;
+        const li = currentContext.closest ? currentContext.closest('li') : currentContext.parentNode;
+        const tabId = li && li.dataset && li.dataset.tabId;
+        // Close FIRST (menu focus law): focus returns to the owning row
+        // before the action runs or opens a dialog.
+        clearMenu();
+        if (!tabId)
+            return;
+        switch (el.id) {
+            case 'tab-row-activate':
+                ctx.tabGroupsMenu.activateTab(tabId);
+                break;
+            case 'tab-row-add-bookmark':
+                ctx.tabGroupsMenu.addBookmark(tabId);
+                break;
+            case 'tab-row-sleep':
+                ctx.tabGroupsMenu.sleepTab(tabId);
+                break;
+            case 'tab-row-close':
+                ctx.tabGroupsMenu.closeTab(tabId);
+                break;
+        }
+    };
+    if ($tabRowContextMenu) {
+        $tabRowContextMenu.addEventListener('mouseup', e => {
+            e.stopPropagation();
+            if (e.button === 0 || (os === 'mac' && e.button === 1))
+                tabRowContextHandler(e);
+        });
+        $tabRowContextMenu.addEventListener('contextmenu', menuBackgroundReposition($tabRowContextMenu));
+        $tabRowContextMenu.addEventListener('click', e => {
+            e.stopPropagation();
+        });
+    }
+
+    // Tab groups view: group-head menu. currentContext is the group-head
+    // span; its parent li carries data-group-id.
+    const tabGroupContextHandler = e => {
+        if (!currentContext)
+            return;
+        const el = e.target;
+        if (!el.classList.contains('menu-item'))
+            return;
+        const gid = currentContext.parentNode.dataset.groupId;
+        clearMenu();
+        if (!gid)
+            return;
+        switch (el.id) {
+            case 'tabgroup-activate':
+                ctx.tabGroupsMenu.activateGroup(gid);
+                break;
+            case 'tabgroup-rename':
+                ctx.tabGroupsMenu.renameGroup(gid);
+                break;
+            case 'tabgroup-collapse':
+                ctx.tabGroupsMenu.toggleGroup(gid);
+                break;
+            case 'tabgroup-save-folder':
+                ctx.tabGroupsMenu.saveGroupToBookmarks(gid);
+                break;
+            case 'tabgroup-sleep':
+                ctx.tabGroupsMenu.sleepGroup(gid);
+                break;
+            case 'tabgroup-close':
+                ctx.tabGroupsMenu.closeGroup(gid);
+                break;
+        }
+    };
+    if ($tabGroupContextMenu) {
+        $tabGroupContextMenu.addEventListener('mouseup', e => {
+            e.stopPropagation();
+            if (e.button === 0 || (os === 'mac' && e.button === 1))
+                tabGroupContextHandler(e);
+        });
+        $tabGroupContextMenu.addEventListener('contextmenu', menuBackgroundReposition($tabGroupContextMenu));
+        $tabGroupContextMenu.addEventListener('click', e => {
+            e.stopPropagation();
+        });
+    }
+
     // v4 task-4 #6: the palette custom-command row menu. currentContext is
     // the row li (it carries data-cc-id); the dispatch rides palette.js's
     // customMenu (lazy getter on neat.js's ctx — palette inits after menus).
@@ -1598,6 +1717,8 @@ export function initContextMenu(ctx = {}) {
         paletteCmdMenu: $paletteCmdContextMenu || null,
         // 4.0.8: view-tab right-click menu (may be absent in minimal tests)
         viewTabMenu: $viewTabContextMenu || null,
+        tabRowMenu: $tabRowContextMenu || null,
+        tabGroupMenu: $tabGroupContextMenu || null,
         // issue #48 follow-up: the collapsed-group flyouts (may be absent in
         // minimal test setups — consumers null-check) and their open/close API
         // (used by the keyboard layer for →/←/Enter and the two-level Esc).

@@ -243,7 +243,17 @@ import { shouldHighlightUnsynced, shouldRememberState } from './settings.js';
         'tab-group-color-label': 'tabGroupColorLabel',
         'tab-group-dialog-button': 'save',
         'tab-group-dialog-cancel-button': 'nope',
-        'tab-group-pick-cancel-button': 'nope'
+        'tab-group-pick-cancel-button': 'nope',
+        // Tab groups view: tab-row and group context-menu items
+        'tab-row-activate': 'tabGroupsActivateTab',
+        'tab-row-add-bookmark': 'tabGroupsMenuAddBookmark',
+        'tab-row-sleep': 'tabGroupsSelectSleep',
+        'tab-row-close': 'tabGroupsSelectClose',
+        'tabgroup-activate': 'tabGroupsActivateGroup',
+        'tabgroup-rename': 'tabGroupsRenameGroup',
+        'tabgroup-save-folder': 'tabGroupsMenuSaveFolder',
+        'tabgroup-sleep': 'tabGroupsSleepGroup',
+        'tabgroup-close': 'tabGroupsCloseGroup'
     }).forEach(([id, msg]) => {
         const el = $(id);
         if (el)
@@ -353,6 +363,23 @@ import { shouldHighlightUnsynced, shouldRememberState } from './settings.js';
                 isCollapsed: key => viewDupes.isCollapsed(key),
                 cleanGroup: key => viewDupes.cleanGroup(key),
                 toggleGroup: key => viewDupes.toggleGroup(key)
+            };
+        },
+        // Tab groups view: tab-row / group-head context menus (lazy — the
+        // view module inits below; menu handlers run only on user events).
+        get tabGroupsMenu() {
+            return {
+                activateTab: id => viewTabGroups.activateTab(id),
+                addBookmark: id => viewTabGroups.addBookmark(id),
+                closeTab: id => viewTabGroups.closeTab(id),
+                sleepTab: id => viewTabGroups.sleepTab(id),
+                activateGroup: id => viewTabGroups.activateGroup(id),
+                renameGroup: id => viewTabGroups.renameGroup(id),
+                saveGroupToBookmarks: id => viewTabGroups.saveGroupToBookmarks(id),
+                closeGroup: id => viewTabGroups.closeGroup(id),
+                sleepGroup: id => viewTabGroups.sleepGroup(id),
+                toggleGroup: id => viewTabGroups.toggleGroup(id),
+                isCollapsed: id => viewTabGroups.isCollapsed(id)
             };
         },
         // v4 task-4 #6: the palette custom-command row menu (edit/delete)
@@ -786,6 +813,10 @@ import { shouldHighlightUnsynced, shouldRememberState } from './settings.js';
         menus.histRowMenu.addEventListener('mousemove', contextMouseMove);
     if (menus.dupesGroupMenu)
         menus.dupesGroupMenu.addEventListener('mousemove', contextMouseMove);
+    if (menus.tabRowMenu)
+        menus.tabRowMenu.addEventListener('mousemove', contextMouseMove);
+    if (menus.tabGroupMenu)
+        menus.tabGroupMenu.addEventListener('mousemove', contextMouseMove);
     // issue #48 follow-up: the collapsed-group flyouts highlight/focus their
     // items on hover too. contextMouseOut is deliberately NOT bound to them —
     // a mouseout to a hidden flyout would strand focus there.
@@ -809,6 +840,10 @@ import { shouldHighlightUnsynced, shouldRememberState } from './settings.js';
         menus.histRowMenu.addEventListener('mouseout', contextMouseOut);
     if (menus.dupesGroupMenu)
         menus.dupesGroupMenu.addEventListener('mouseout', contextMouseOut);
+    if (menus.tabRowMenu)
+        menus.tabRowMenu.addEventListener('mouseout', contextMouseOut);
+    if (menus.tabGroupMenu)
+        menus.tabGroupMenu.addEventListener('mouseout', contextMouseOut);
 
     // Reset separators — CSS-driven since v4.1: .separator-row + .separator-line
     // use absolute positioning (left:0 / right:8px) that auto-adapts to any width.

@@ -2001,5 +2001,25 @@
   "tabGroupsSleepGroup": {
     "message": "Sleep tab group",
     "description": "Group-head action in the tab groups view: discards every tab of the group."
+  },
+  "tabGroupsActivateTab": {
+    "message": "Activate tab",
+    "description": "Tab row context-menu item in the tab groups view: focuses the tab."
+  },
+  "tabGroupsCollapseGroup": {
+    "message": "Collapse group",
+    "description": "Tab group context-menu item in the tab groups view."
+  },
+  "tabGroupsExpandGroup": {
+    "message": "Expand group",
+    "description": "Tab group context-menu item in the tab groups view."
+  },
+  "tabGroupsMenuAddBookmark": {
+    "message": "Bookmark tab",
+    "description": "Tab row context-menu item in the tab groups view: bookmarks the tab."
+  },
+  "tabGroupsMenuSaveFolder": {
+    "message": "Save as bookmark folder",
+    "description": "Tab group context-menu item in the tab groups view: saves the group as a bookmark folder."
   }
 }

@@ -1853,5 +1853,20 @@
   },
   "tabGroupsSleepGroup": {
     "message": "睡眠标签组"
+  },
+  "tabGroupsActivateTab": {
+    "message": "激活标签页"
+  },
+  "tabGroupsCollapseGroup": {
+    "message": "折叠标签组"
+  },
+  "tabGroupsExpandGroup": {
+    "message": "展开标签组"
+  },
+  "tabGroupsMenuAddBookmark": {
+    "message": "收藏标签页"
+  },
+  "tabGroupsMenuSaveFolder": {
+    "message": "保存为书签文件夹"
   }
 }

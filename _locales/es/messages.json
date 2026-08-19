@@ -481,6 +481,21 @@
   "tabGroupsSleepGroup": {
     "message": "Sleep tab group"
   },
+  "tabGroupsActivateTab": {
+    "message": "Activate tab"
+  },
+  "tabGroupsCollapseGroup": {
+    "message": "Collapse group"
+  },
+  "tabGroupsExpandGroup": {
+    "message": "Expand group"
+  },
+  "tabGroupsMenuAddBookmark": {
+    "message": "Bookmark tab"
+  },
+  "tabGroupsMenuSaveFolder": {
+    "message": "Save as bookmark folder"
+  },
   "deadProxyAdd": {
     "message": "Añadir un servidor proxy para comprobar enlaces rotos"
   },
