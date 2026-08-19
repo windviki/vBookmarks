@@ -508,6 +508,18 @@
   "tabGroupsBookmarked": {
     "message": "Отметени"
   },
+  "tabGroupsPinned": {
+    "message": "Закачен раздел"
+  },
+  "tabGroupsDiscarded": {
+    "message": "Заспал раздел"
+  },
+  "tabGroupsPinTab": {
+    "message": "Закачи раздел"
+  },
+  "tabGroupsUnpinTab": {
+    "message": "Откачи раздел"
+  },
   "deadProxyAdd": {
     "message": "Добавяне на прокси сървър за проверки за мъртви връзки"
   },

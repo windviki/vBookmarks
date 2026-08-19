@@ -508,6 +508,18 @@
   "tabGroupsBookmarked": {
     "message": "Aggiunto ai segnalibri"
   },
+  "tabGroupsPinned": {
+    "message": "Scheda bloccata"
+  },
+  "tabGroupsDiscarded": {
+    "message": "Scheda in sospensione"
+  },
+  "tabGroupsPinTab": {
+    "message": "Blocca scheda"
+  },
+  "tabGroupsUnpinTab": {
+    "message": "Sblocca scheda"
+  },
   "deadProxyAdd": {
     "message": "Aggiungi un server proxy per i controlli dei link morti"
   },

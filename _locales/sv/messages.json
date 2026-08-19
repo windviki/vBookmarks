@@ -508,6 +508,18 @@
   "tabGroupsBookmarked": {
     "message": "Bokmärkt"
   },
+  "tabGroupsPinned": {
+    "message": "Fäst flik"
+  },
+  "tabGroupsDiscarded": {
+    "message": "Vilande flik"
+  },
+  "tabGroupsPinTab": {
+    "message": "Fäst flik"
+  },
+  "tabGroupsUnpinTab": {
+    "message": "Lossa flik"
+  },
   "deadProxyAdd": {
     "message": "Lägg till proxyserver för döda länkar"
   },

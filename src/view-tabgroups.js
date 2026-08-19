@@ -16,7 +16,7 @@
  * dropping callbacks.
  */
 
-import { VIEW_ICONS, STAR_ICON, STAR_ICON_FILLED, SELECT_ICON, FOLDER_ICON, EDIT_ICON, SLEEP_ICON, ACTIVATE_ICON, TRASH_ICON, REDO_ICON, COLLAPSE_ALL_ICON, EXPAND_ALL_ICON } from './icons.js';
+import { VIEW_ICONS, STAR_ICON, STAR_ICON_FILLED, SELECT_ICON, FOLDER_ICON, EDIT_ICON, SLEEP_ICON, ACTIVATE_ICON, TRASH_ICON, REDO_ICON, COLLAPSE_ALL_ICON, EXPAND_ALL_ICON, PIN_ICON } from './icons.js';
 import { htmlspecialchars } from './escape.js';
 import { parkRowFocus, unparkRowFocus, parkToolbarFocus, restoreToolbarFocus } from './list-focus.js';
 import { saveSession, sessionFolderName, tabsToBookmarks } from './session.js';
@@ -203,13 +203,22 @@ export function initViewTabGroups(ctx = {}) {
         const inGroup = isGrouped(tab);
         const isSelected = selected.has(tid);
         const bookmarked = bookmarkedUrls.has(tab.url || '');
+        const pinned = !!tab.pinned;
+        const discarded = !!tab.discarded;
         const addLabel = _m('tabGroupsAddBookmark');
         const bookmarkedLabel = _m('tabGroupsBookmarked');
         const currentLabel = _m('tabGroupsCurrentTab');
+        const pinnedLabel = _m('tabGroupsPinned');
+        const discardedLabel = _m('tabGroupsDiscarded');
         const extras = `data-tab-id="${tid}" data-url="${htmlspecialchars(tab.url || '')}"`;
         const badge = isCurrent ? [{ text: currentLabel, cls: 'current' }] : [];
         const groupColor = inGroup ? ((groupById(tab.groupId) || {}).color || 'grey') : '';
-        const rowClass = `vbm-row tabgroups-row${isCurrent ? ' tabgroups-current' : ''}${inGroup ? ` grouped tg-${groupColor}` : ''}${isSelected ? ' sel' : ''}`;
+        const rowClass = `vbm-row tabgroups-row${isCurrent ? ' tabgroups-current' : ''}${inGroup ? ` grouped tg-${groupColor}` : ''}${isSelected ? ' sel' : ''}${pinned ? ' pinned' : ''}${discarded ? ' discarded' : ''}`;
+        // Status icons sit left of the bookmark star; pinned and discarded
+        // both have their own glyph so the tab state reads at a glance.
+        const statusIcons =
+            (pinned ? `<span class="tabgroups-status-icon pinned" aria-label="${htmlspecialchars(pinnedLabel)}" title="${htmlspecialchars(pinnedLabel)}">${PIN_ICON}</span>` : '') +
+            (discarded ? `<span class="tabgroups-status-icon discarded" aria-label="${htmlspecialchars(discardedLabel)}" title="${htmlspecialchars(discardedLabel)}">${SLEEP_ICON}</span>` : '');
         // Bookmark state follows the stats-view recipe: already-bookmarked
         // tabs show a filled, always-visible star; unbookmarked tabs get the
         // hover-revealed outline star button.
@@ -218,6 +227,7 @@ export function initViewTabGroups(ctx = {}) {
             : `<button class="row-btn tabgroups-add-bookmark tabgroups-add-btn" aria-label="${htmlspecialchars(addLabel)}" title="${htmlspecialchars(addLabel)}">${STAR_ICON}</button>`;
         return `<li class="${rowClass}" id="tabgroups-item-${tid}" role="listitem" data-tab-id="${tid}"${inGroup ? ` data-group-id="${String(tab.groupId)}"` : ''}>` +
             treeRender.generateBookmarkHTML(tab.title || tab.url || _m('noTitle'), tab.url || '', extras, null, null, { badge }) +
+            statusIcons +
             starHtml +
             '</li>';
     };
@@ -297,6 +307,17 @@ export function initViewTabGroups(ctx = {}) {
                     undo.showToast(_m('quickAddedTo', folderName));
                 });
             });
+        });
+    };
+
+    const togglePinned = tabId => {
+        const tab = tabById(tabId);
+        if (!tab)
+            return;
+        chrome.tabs.update(tab.id, { pinned: !tab.pinned }, () => {
+            if (chrome.runtime.lastError)
+                return;
+            scheduleRefresh();
         });
     };
 
@@ -596,6 +617,7 @@ export function initViewTabGroups(ctx = {}) {
             fn1: () => {
                 send({ type: TAB_GROUP_MSG.tabsDiscard, tabIds: ids });
                 setSelecting(false);
+                scheduleRefresh();
             }
         });
     };
@@ -1097,6 +1119,11 @@ export function initViewTabGroups(ctx = {}) {
             if (tab && chrome.tabs.update)
                 chrome.tabs.update(tab.id, { active: true });
         },
+        isPinned: tabId => {
+            const tab = tabById(tabId);
+            return !!(tab && tab.pinned);
+        },
+        togglePinned,
         addBookmark: addTabToBookmarks,
         closeTab: closeTabById,
         sleepTab: sleepTabById,

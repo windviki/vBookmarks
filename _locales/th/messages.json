@@ -508,6 +508,18 @@
   "tabGroupsBookmarked": {
     "message": "บุ๊กมาร์กแล้ว"
   },
+  "tabGroupsPinned": {
+    "message": "แท็บที่ปักหมุด"
+  },
+  "tabGroupsDiscarded": {
+    "message": "แท็บที่หลับ"
+  },
+  "tabGroupsPinTab": {
+    "message": "ปักหมุดแท็บ"
+  },
+  "tabGroupsUnpinTab": {
+    "message": "เลิกปักหมุดแท็บ"
+  },
   "deadProxyAdd": {
     "message": "เพิ่มพร็อกซีเซิร์ฟเวอร์สำหรับตรวจสอบลิงก์เสีย"
   },

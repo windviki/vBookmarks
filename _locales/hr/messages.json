@@ -508,6 +508,18 @@
   "tabGroupsBookmarked": {
     "message": "Označeno"
   },
+  "tabGroupsPinned": {
+    "message": "Prikvačena kartica"
+  },
+  "tabGroupsDiscarded": {
+    "message": "Uspavana kartica"
+  },
+  "tabGroupsPinTab": {
+    "message": "Prikvači karticu"
+  },
+  "tabGroupsUnpinTab": {
+    "message": "Otpkači karticu"
+  },
   "deadProxyAdd": {
     "message": "Dodaj proxy poslužitelj za provjeru mrtvih veza"
   },

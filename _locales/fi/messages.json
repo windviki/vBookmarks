@@ -508,6 +508,18 @@
   "tabGroupsBookmarked": {
     "message": "Tallennettu"
   },
+  "tabGroupsPinned": {
+    "message": "Kiinnitetty välilehti"
+  },
+  "tabGroupsDiscarded": {
+    "message": "Nukkuva välilehti"
+  },
+  "tabGroupsPinTab": {
+    "message": "Kiinnitä välilehti"
+  },
+  "tabGroupsUnpinTab": {
+    "message": "Irrota välilehti"
+  },
   "deadProxyAdd": {
     "message": "Lisää välityspalvelin kuolleiden linkkien tarkistuksia varten"
   },

@@ -508,6 +508,18 @@
   "tabGroupsBookmarked": {
     "message": "Marcado"
   },
+  "tabGroupsPinned": {
+    "message": "Pestaña fijada"
+  },
+  "tabGroupsDiscarded": {
+    "message": "Pestaña en reposo"
+  },
+  "tabGroupsPinTab": {
+    "message": "Fijar pestaña"
+  },
+  "tabGroupsUnpinTab": {
+    "message": "Desfijar pestaña"
+  },
   "deadProxyAdd": {
     "message": "Añadir un servidor proxy para comprobar enlaces rotos"
   },

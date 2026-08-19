@@ -508,6 +508,18 @@
   "tabGroupsBookmarked": {
     "message": "Đã đánh dấu"
   },
+  "tabGroupsPinned": {
+    "message": "Tab đã ghim"
+  },
+  "tabGroupsDiscarded": {
+    "message": "Tab ngủ"
+  },
+  "tabGroupsPinTab": {
+    "message": "Ghim tab"
+  },
+  "tabGroupsUnpinTab": {
+    "message": "Bỏ ghim tab"
+  },
   "deadProxyAdd": {
     "message": "Thêm máy chủ proxy để kiểm tra liên kết hỏng"
   },

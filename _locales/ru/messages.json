@@ -508,6 +508,18 @@
   "tabGroupsBookmarked": {
     "message": "В закладках"
   },
+  "tabGroupsPinned": {
+    "message": "Закреплённая вкладка"
+  },
+  "tabGroupsDiscarded": {
+    "message": "Спящая вкладка"
+  },
+  "tabGroupsPinTab": {
+    "message": "Закрепить вкладку"
+  },
+  "tabGroupsUnpinTab": {
+    "message": "Открепить вкладку"
+  },
   "deadProxyAdd": {
     "message": "Добавить прокси-сервер для проверки битых ссылок"
   },

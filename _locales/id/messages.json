@@ -508,6 +508,18 @@
   "tabGroupsBookmarked": {
     "message": "Ditandai"
   },
+  "tabGroupsPinned": {
+    "message": "Tab disematkan"
+  },
+  "tabGroupsDiscarded": {
+    "message": "Tab tidur"
+  },
+  "tabGroupsPinTab": {
+    "message": "Sematkan tab"
+  },
+  "tabGroupsUnpinTab": {
+    "message": "Lepas sematan tab"
+  },
   "deadProxyAdd": {
     "message": "Tambahkan server proxy untuk pemeriksaan tautan mati"
   },

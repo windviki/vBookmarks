@@ -508,6 +508,18 @@
   "tabGroupsBookmarked": {
     "message": "Lesezeichen"
   },
+  "tabGroupsPinned": {
+    "message": "Angehefteter Tab"
+  },
+  "tabGroupsDiscarded": {
+    "message": "Schlafender Tab"
+  },
+  "tabGroupsPinTab": {
+    "message": "Tab anheften"
+  },
+  "tabGroupsUnpinTab": {
+    "message": "Tab lösen"
+  },
   "deadProxyAdd": {
     "message": "Proxyserver für Tote-Links-Prüfungen hinzufügen"
   },

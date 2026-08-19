@@ -508,6 +508,18 @@
   "tabGroupsBookmarked": {
     "message": "Zaznamek"
   },
+  "tabGroupsPinned": {
+    "message": "Pripeti zavihek"
+  },
+  "tabGroupsDiscarded": {
+    "message": "Speči zavihek"
+  },
+  "tabGroupsPinTab": {
+    "message": "Pripni zavihek"
+  },
+  "tabGroupsUnpinTab": {
+    "message": "Odpni zavihek"
+  },
   "deadProxyAdd": {
     "message": "Dodaj proxy strežnik za preverjanje mrtvih povezav"
   },

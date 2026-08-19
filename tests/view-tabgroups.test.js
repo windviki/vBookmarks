@@ -90,6 +90,8 @@ const makeTab = (id, index, props = {}) => ({
     url: props.url || `https://t${id}.example/`,
     active: !!props.active,
     groupId: props.groupId || -1,
+    pinned: !!props.pinned,
+    discarded: !!props.discarded,
     ...props
 });
 
@@ -364,6 +366,33 @@ describe('render', () => {
         const { def, $list } = setup({ tabs: [] });
         def().activate();
         expect($list.innerHTML).toContain('tabGroupsViewEmpty');
+    });
+});
+
+describe('pinned and sleeping tab state', () => {
+    it('renders status icons and classes for pinned and discarded tabs', () => {
+        const { def, $list } = setup({
+            tabs: [
+                makeTab(1, 0, { active: true, pinned: true }),
+                makeTab(2, 1, { discarded: true }),
+                makeTab(3, 2)
+            ]
+        });
+        def().activate();
+        const html = $list.innerHTML;
+        expect(html).toMatch(/tabgroups-row[^"]*pinned/);
+        expect(html).toMatch(/tabgroups-row[^"]*discarded/);
+        expect(html).toContain('tabgroups-status-icon pinned');
+        expect(html).toContain('tabgroups-status-icon discarded');
+        expect(html).toContain('tabGroupsPinned');
+        expect(html).toContain('tabGroupsDiscarded');
+    });
+
+    it('togglePinned updates the browser tab pinned state', () => {
+        const { def, chrome, viewTabGroups } = setup({});
+        def().activate();
+        viewTabGroups.togglePinned('1');
+        expect(chrome.tabs.updateCalls).toEqual([[1, { pinned: true }]]);
     });
 });
 

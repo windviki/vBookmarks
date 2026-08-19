@@ -507,6 +507,18 @@
   "tabGroupsBookmarked": {
     "message": "Adicionado aos favoritos"
   },
+  "tabGroupsPinned": {
+    "message": "Guia fixada"
+  },
+  "tabGroupsDiscarded": {
+    "message": "Guia adormecida"
+  },
+  "tabGroupsPinTab": {
+    "message": "Fixar guia"
+  },
+  "tabGroupsUnpinTab": {
+    "message": "Desafixar guia"
+  },
   "deadProxyAdd": {
     "message": "Adicionar um servidor proxy para verificação de links quebrados"
   },

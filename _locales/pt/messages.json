@@ -508,6 +508,18 @@
   "tabGroupsBookmarked": {
     "message": "Adicionado aos favoritos"
   },
+  "tabGroupsPinned": {
+    "message": "Aba fixada"
+  },
+  "tabGroupsDiscarded": {
+    "message": "Aba suspensa"
+  },
+  "tabGroupsPinTab": {
+    "message": "Fixar aba"
+  },
+  "tabGroupsUnpinTab": {
+    "message": "Desafixar aba"
+  },
   "deadProxyAdd": {
     "message": "Adicionar um servidor proxy para verificações de links quebrados"
   },

@@ -508,6 +508,18 @@
   "tabGroupsBookmarked": {
     "message": "বুকমার্ক করা হয়েছে"
   },
+  "tabGroupsPinned": {
+    "message": "পিন করা ট্যাব"
+  },
+  "tabGroupsDiscarded": {
+    "message": "সুপ্ত ট্যাব"
+  },
+  "tabGroupsPinTab": {
+    "message": "ট্যাব পিন করুন"
+  },
+  "tabGroupsUnpinTab": {
+    "message": "ট্যাব আনপিন করুন"
+  },
   "deadProxyAdd": {
     "message": "ডেড-লিংক পরীক্ষার জন্য একটি প্রক্সি সার্ভার যোগ করুন"
   },

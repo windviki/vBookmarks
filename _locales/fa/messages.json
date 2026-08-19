@@ -508,6 +508,18 @@
   "tabGroupsBookmarked": {
     "message": "نشانشده"
   },
+  "tabGroupsPinned": {
+    "message": "برگه سنجاق‌شده"
+  },
+  "tabGroupsDiscarded": {
+    "message": "برگه خواب"
+  },
+  "tabGroupsPinTab": {
+    "message": "سنجاق کردن برگه"
+  },
+  "tabGroupsUnpinTab": {
+    "message": "برداشتن سنجاق برگه"
+  },
   "deadProxyAdd": {
     "message": "افزودن سرور پروکسی برای بررسی لینک‌های خراب"
   },

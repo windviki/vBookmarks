@@ -508,6 +508,18 @@
   "tabGroupsBookmarked": {
     "message": "Marcate"
   },
+  "tabGroupsPinned": {
+    "message": "Filă fixată"
+  },
+  "tabGroupsDiscarded": {
+    "message": "Filă adormită"
+  },
+  "tabGroupsPinTab": {
+    "message": "Fixare filă"
+  },
+  "tabGroupsUnpinTab": {
+    "message": "Anulare fixare filă"
+  },
   "deadProxyAdd": {
     "message": "Adaugă un server proxy pentru verificarea linkurilor moarte"
   },

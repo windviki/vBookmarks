@@ -1839,5 +1839,17 @@
   },
   "tabGroupsBookmarked": {
     "message": "已收藏"
+  },
+  "tabGroupsPinned": {
+    "message": "已固定标签页"
+  },
+  "tabGroupsDiscarded": {
+    "message": "休眠标签页"
+  },
+  "tabGroupsPinTab": {
+    "message": "固定标签页"
+  },
+  "tabGroupsUnpinTab": {
+    "message": "取消固定标签页"
   }
 }

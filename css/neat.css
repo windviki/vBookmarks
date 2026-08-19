@@ -3617,6 +3617,30 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
 #tabgroups-list .tabgroups-add-btn:hover {
     background: var(--vbm-bg-hover);
 }
+
+/* Tab state icons (pinned / sleeping) sit left of the bookmark star. */
+#tabgroups-list .tabgroups-status-icon {
+    flex: none;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    margin-inline-end: 4px;
+    color: var(--vbm-muted);
+}
+#tabgroups-list .tabgroups-status-icon.pinned { color: var(--vbm-accent); }
+#tabgroups-list .tabgroups-status-icon.discarded { color: var(--vbm-warning); }
+
+/* Sleeping tabs read as inactive: dimmed title in italic. The row chrome
+   stays full-strength so actions remain discoverable. */
+#tabgroups-list li.tabgroups-row.discarded > a.tree-item-link {
+    opacity: .55;
+}
+#tabgroups-list li.tabgroups-row.discarded > a.tree-item-link i {
+    font-style: italic;
+}
 .tabgroups-toolbar .select-count {
     font-weight: 500;
     white-space: nowrap;

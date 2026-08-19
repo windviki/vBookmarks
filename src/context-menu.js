@@ -844,9 +844,13 @@ export function initContextMenu(ctx = {}) {
         } else if (row.classList && row.classList.contains('tabgroups-row')
             && $tabRowContextMenu && ctx.tabGroupsMenu) {
             // Tab groups view: a tab row is not a bookmark — its own menu
-            // (activate / bookmark / sleep / close) instead of the bookmark
-            // menu whose entries would act on a bogus id.
+            // (activate / pin / bookmark / sleep / close) instead of the
+            // bookmark menu whose entries would act on a bogus id.
             menu = $tabRowContextMenu;
+            const tabId = row.dataset.tabId;
+            const pinItem = $('tab-row-pin');
+            if (pinItem && tabId)
+                pinItem.textContent = _m(ctx.tabGroupsMenu.isPinned(tabId) ? 'tabGroupsUnpinTab' : 'tabGroupsPinTab');
         // v4 task-3 #10: an UNBOOKMARKED stats-history row has no bookmark
         // id, so the bookmark menu would act on a bogus id (it used to be
         // swallowed at the list level). Its slim menu: open×3 via the row
@@ -1529,6 +1533,9 @@ export function initContextMenu(ctx = {}) {
         switch (el.id) {
             case 'tab-row-activate':
                 ctx.tabGroupsMenu.activateTab(tabId);
+                break;
+            case 'tab-row-pin':
+                ctx.tabGroupsMenu.togglePinned(tabId);
                 break;
             case 'tab-row-add-bookmark':
                 ctx.tabGroupsMenu.addBookmark(tabId);

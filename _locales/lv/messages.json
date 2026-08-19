@@ -508,6 +508,18 @@
   "tabGroupsBookmarked": {
     "message": "Atzīmēts"
   },
+  "tabGroupsPinned": {
+    "message": "Piesprausta cilne"
+  },
+  "tabGroupsDiscarded": {
+    "message": "Miega cilne"
+  },
+  "tabGroupsPinTab": {
+    "message": "Piespraust cilni"
+  },
+  "tabGroupsUnpinTab": {
+    "message": "Atspraust cilni"
+  },
   "deadProxyAdd": {
     "message": "Pievienot starpniekserveri bojātu saišu pārbaudei"
   },

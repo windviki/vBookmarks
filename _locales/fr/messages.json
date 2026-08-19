@@ -508,6 +508,18 @@
   "tabGroupsBookmarked": {
     "message": "Ajouté aux favoris"
   },
+  "tabGroupsPinned": {
+    "message": "Onglet épinglé"
+  },
+  "tabGroupsDiscarded": {
+    "message": "Onglet en veille"
+  },
+  "tabGroupsPinTab": {
+    "message": "Épingler l'onglet"
+  },
+  "tabGroupsUnpinTab": {
+    "message": "Désépingler l'onglet"
+  },
   "deadProxyAdd": {
     "message": "Ajouter un serveur proxy pour les vérifications de liens morts"
   },

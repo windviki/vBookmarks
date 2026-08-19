@@ -507,6 +507,18 @@
   "tabGroupsBookmarked": {
     "message": "Marcado"
   },
+  "tabGroupsPinned": {
+    "message": "Separador afixado"
+  },
+  "tabGroupsDiscarded": {
+    "message": "Separador em repouso"
+  },
+  "tabGroupsPinTab": {
+    "message": "Afixar separador"
+  },
+  "tabGroupsUnpinTab": {
+    "message": "Desafixar separador"
+  },
   "deadProxyAdd": {
     "message": "Adicionar um servidor proxy para verificações de links mortos"
   },

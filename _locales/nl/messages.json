@@ -508,6 +508,18 @@
   "tabGroupsBookmarked": {
     "message": "Bladwijzers"
   },
+  "tabGroupsPinned": {
+    "message": "Vastgezette tab"
+  },
+  "tabGroupsDiscarded": {
+    "message": "Slapende tab"
+  },
+  "tabGroupsPinTab": {
+    "message": "Tab vastzetten"
+  },
+  "tabGroupsUnpinTab": {
+    "message": "Tab losmaken"
+  },
   "deadProxyAdd": {
     "message": "Proxyserver toevoegen voor dode-linkcontroles"
   },

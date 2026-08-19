@@ -89,6 +89,13 @@ export const TRASH_ICON =
     '<path d="M4.4 4.5l.6 8.1a1.2 1.2 0 0 0 1.2 1.1h3.6a1.2 1.2 0 0 0 1.2-1.1l.6-8.1"/>' +
     '</svg>';
 
+// Tab-groups view status glyph: pinned tab (push-pin).
+export const PIN_ICON =
+    '<svg class="vbm-icon vbm-icon-pin" width="16" height="16" viewBox="0 0 16 16" ' +
+    'fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+    '<path d="M6 7.2v4.3L4.8 13h6.4L10 11.5V7.2l3.2-3.2H2.8L6 7.2z"/>' +
+    '</svg>';
+
 // Tab-groups view row/group actions (16px line grid, same recipe).
 export const EDIT_ICON =
     '<svg class="vbm-icon vbm-icon-edit" width="16" height="16" viewBox="0 0 16 16" ' +

@@ -508,6 +508,18 @@
   "tabGroupsBookmarked": {
     "message": "تمت الإشارة المرجعية"
   },
+  "tabGroupsPinned": {
+    "message": "علامة تبويب مثبتة"
+  },
+  "tabGroupsDiscarded": {
+    "message": "علامة تبويب نائمة"
+  },
+  "tabGroupsPinTab": {
+    "message": "تثبيت علامة التبويب"
+  },
+  "tabGroupsUnpinTab": {
+    "message": "إلغاء تثبيت علامة التبويب"
+  },
   "deadProxyAdd": {
     "message": "أضف خادم وكيل لفحوصات الروابط المعطلة"
   },

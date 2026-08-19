@@ -508,6 +508,18 @@
   "tabGroupsBookmarked": {
     "message": "Záložky"
   },
+  "tabGroupsPinned": {
+    "message": "Pripnutá karta"
+  },
+  "tabGroupsDiscarded": {
+    "message": "Spustená karta"
+  },
+  "tabGroupsPinTab": {
+    "message": "Pripnúť kartu"
+  },
+  "tabGroupsUnpinTab": {
+    "message": "Odpnúť kartu"
+  },
   "deadProxyAdd": {
     "message": "Pridať proxy server pre kontroly nefunkčných odkazov"
   },

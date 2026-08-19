@@ -508,6 +508,18 @@
   "tabGroupsBookmarked": {
     "message": "Pažymėta"
   },
+  "tabGroupsPinned": {
+    "message": "Prisegta skirtukas"
+  },
+  "tabGroupsDiscarded": {
+    "message": "Miegantis skirtukas"
+  },
+  "tabGroupsPinTab": {
+    "message": "Prisegti skirtuką"
+  },
+  "tabGroupsUnpinTab": {
+    "message": "Atsegti skirtuką"
+  },
   "deadProxyAdd": {
     "message": "Pridėti tarpinį serverį negyvų nuorodų tikrinimui"
   },

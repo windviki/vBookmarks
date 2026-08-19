@@ -370,6 +370,8 @@ import { shouldHighlightUnsynced, shouldRememberState } from './settings.js';
         get tabGroupsMenu() {
             return {
                 activateTab: id => viewTabGroups.activateTab(id),
+                isPinned: id => viewTabGroups.isPinned(id),
+                togglePinned: id => viewTabGroups.togglePinned(id),
                 addBookmark: id => viewTabGroups.addBookmark(id),
                 closeTab: id => viewTabGroups.closeTab(id),
                 sleepTab: id => viewTabGroups.sleepTab(id),

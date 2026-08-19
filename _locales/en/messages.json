@@ -2038,5 +2038,21 @@
   "tabGroupsBookmarked": {
     "message": "Bookmarked",
     "description": "Accessible label of the always-visible filled star on tab rows that are already bookmarked."
+  },
+  "tabGroupsPinned": {
+    "message": "Pinned tab",
+    "description": "Status icon aria/tooltip on pinned tab rows in the tab groups view."
+  },
+  "tabGroupsDiscarded": {
+    "message": "Sleeping tab",
+    "description": "Status icon aria/tooltip on discarded (sleeping) tab rows in the tab groups view."
+  },
+  "tabGroupsPinTab": {
+    "message": "Pin tab",
+    "description": "Tab row context-menu item in the tab groups view."
+  },
+  "tabGroupsUnpinTab": {
+    "message": "Unpin tab",
+    "description": "Tab row context-menu item in the tab groups view."
   }
 }

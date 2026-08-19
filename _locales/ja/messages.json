@@ -508,6 +508,18 @@
   "tabGroupsBookmarked": {
     "message": "ブックマーク済み"
   },
+  "tabGroupsPinned": {
+    "message": "固定タブ"
+  },
+  "tabGroupsDiscarded": {
+    "message": "スリープタブ"
+  },
+  "tabGroupsPinTab": {
+    "message": "タブを固定"
+  },
+  "tabGroupsUnpinTab": {
+    "message": "タブの固定を解除"
+  },
   "deadProxyAdd": {
     "message": "リンク切れチェック用のプロキシサーバーを追加"
   },

@@ -508,6 +508,18 @@
   "tabGroupsBookmarked": {
     "message": "Könyvjelzőzve"
   },
+  "tabGroupsPinned": {
+    "message": "Rögzített lap"
+  },
+  "tabGroupsDiscarded": {
+    "message": "Alvó lap"
+  },
+  "tabGroupsPinTab": {
+    "message": "Lap rögzítése"
+  },
+  "tabGroupsUnpinTab": {
+    "message": "Lap rögzítésének feloldása"
+  },
   "deadProxyAdd": {
     "message": "Proxykiszolgáló hozzáadása a hibás linkek ellenőrzéséhez"
   },

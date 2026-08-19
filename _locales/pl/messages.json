@@ -508,6 +508,18 @@
   "tabGroupsBookmarked": {
     "message": "Zapisane"
   },
+  "tabGroupsPinned": {
+    "message": "Przypięta karta"
+  },
+  "tabGroupsDiscarded": {
+    "message": "Uśpiona karta"
+  },
+  "tabGroupsPinTab": {
+    "message": "Przypnij kartę"
+  },
+  "tabGroupsUnpinTab": {
+    "message": "Odepnij kartę"
+  },
   "deadProxyAdd": {
     "message": "Dodaj serwer proxy do sprawdzania martwych linków"
   },

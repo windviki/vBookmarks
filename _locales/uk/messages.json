@@ -508,6 +508,18 @@
   "tabGroupsBookmarked": {
     "message": "Збережено"
   },
+  "tabGroupsPinned": {
+    "message": "Закріплена вкладка"
+  },
+  "tabGroupsDiscarded": {
+    "message": "Спляча вкладка"
+  },
+  "tabGroupsPinTab": {
+    "message": "Закріпити вкладку"
+  },
+  "tabGroupsUnpinTab": {
+    "message": "Відкріпити вкладку"
+  },
   "deadProxyAdd": {
     "message": "Додати проксі-сервер для перевірки мертвих посилань"
   },

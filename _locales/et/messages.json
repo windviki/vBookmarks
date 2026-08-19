@@ -508,6 +508,18 @@
   "tabGroupsBookmarked": {
     "message": "Järjehoidjad"
   },
+  "tabGroupsPinned": {
+    "message": "Kinnitatud vaheleht"
+  },
+  "tabGroupsDiscarded": {
+    "message": "Uinuv vaheleht"
+  },
+  "tabGroupsPinTab": {
+    "message": "Kinnita vaheleht"
+  },
+  "tabGroupsUnpinTab": {
+    "message": "Vabasta vaheleht"
+  },
   "deadProxyAdd": {
     "message": "Lisa puhverserver surnud linkide kontrollimiseks"
   },

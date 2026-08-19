@@ -1839,5 +1839,17 @@
   },
   "tabGroupsBookmarked": {
     "message": "已加入書籤"
+  },
+  "tabGroupsPinned": {
+    "message": "已釘選分頁"
+  },
+  "tabGroupsDiscarded": {
+    "message": "休眠分頁"
+  },
+  "tabGroupsPinTab": {
+    "message": "釘選分頁"
+  },
+  "tabGroupsUnpinTab": {
+    "message": "取消釘選分頁"
   }
 }

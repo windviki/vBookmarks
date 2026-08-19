@@ -508,6 +508,18 @@
   "tabGroupsBookmarked": {
     "message": "Bokmerket"
   },
+  "tabGroupsPinned": {
+    "message": "Festet fane"
+  },
+  "tabGroupsDiscarded": {
+    "message": "Sovende fane"
+  },
+  "tabGroupsPinTab": {
+    "message": "Fest fane"
+  },
+  "tabGroupsUnpinTab": {
+    "message": "Løsne fane"
+  },
   "deadProxyAdd": {
     "message": "Legg til en proxy-server for sjekk av døde lenker"
   },

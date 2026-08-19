@@ -508,6 +508,18 @@
   "tabGroupsBookmarked": {
     "message": "बुकमार्क किया गया"
   },
+  "tabGroupsPinned": {
+    "message": "पिन किया गया टैब"
+  },
+  "tabGroupsDiscarded": {
+    "message": "स्लीपिंग टैब"
+  },
+  "tabGroupsPinTab": {
+    "message": "टैब पिन करें"
+  },
+  "tabGroupsUnpinTab": {
+    "message": "टैब अनपिन करें"
+  },
   "deadProxyAdd": {
     "message": "डेड-लिंक जाँच के लिए प्रॉक्सी सर्वर जोड़ें"
   },

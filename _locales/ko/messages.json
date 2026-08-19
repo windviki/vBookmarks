@@ -508,6 +508,18 @@
   "tabGroupsBookmarked": {
     "message": "북마크됨"
   },
+  "tabGroupsPinned": {
+    "message": "고정된 탭"
+  },
+  "tabGroupsDiscarded": {
+    "message": "휴면 탭"
+  },
+  "tabGroupsPinTab": {
+    "message": "탭 고정"
+  },
+  "tabGroupsUnpinTab": {
+    "message": "탭 고정 해제"
+  },
   "deadProxyAdd": {
     "message": "죽은 링크 확인용 프록시 서버 추가"
   },

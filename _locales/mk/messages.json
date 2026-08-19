@@ -507,6 +507,18 @@
   "tabGroupsBookmarked": {
     "message": "Обележано"
   },
+  "tabGroupsPinned": {
+    "message": "Закачена картичка"
+  },
+  "tabGroupsDiscarded": {
+    "message": "Заспана картичка"
+  },
+  "tabGroupsPinTab": {
+    "message": "Закачи картичка"
+  },
+  "tabGroupsUnpinTab": {
+    "message": "Откачи картичка"
+  },
   "deadProxyAdd": {
     "message": "Додај прокси сервер за проверка на мртви врски"
   },

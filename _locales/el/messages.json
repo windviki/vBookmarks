@@ -508,6 +508,18 @@
   "tabGroupsBookmarked": {
     "message": "Προστέθηκε στα σελιδοδείκτες"
   },
+  "tabGroupsPinned": {
+    "message": "Καρφιτσωμένη καρτέλα"
+  },
+  "tabGroupsDiscarded": {
+    "message": "Καρτέλα σε αναστολή"
+  },
+  "tabGroupsPinTab": {
+    "message": "Καρφίτσωμα καρτέλας"
+  },
+  "tabGroupsUnpinTab": {
+    "message": "Ξεκαρφίτσωμα καρτέλας"
+  },
   "deadProxyAdd": {
     "message": "Προσθήκη διακομιστή μεσολάβησης για ελέγχους νεκρών συνδέσμων"
   },

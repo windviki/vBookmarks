@@ -508,6 +508,18 @@
   "tabGroupsBookmarked": {
     "message": "סומן"
   },
+  "tabGroupsPinned": {
+    "message": "לשונית מוצמדת"
+  },
+  "tabGroupsDiscarded": {
+    "message": "לשונית רדומה"
+  },
+  "tabGroupsPinTab": {
+    "message": "הצמד לשונית"
+  },
+  "tabGroupsUnpinTab": {
+    "message": "בטל הצמדת לשונית"
+  },
   "deadProxyAdd": {
     "message": "הוסף שרת פרוקסי לבדיקות קישורים שבורים"
   },
