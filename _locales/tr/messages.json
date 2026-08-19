@@ -344,25 +344,25 @@
     }
   },
   "viewTabGroups": {
-    "message": "Tab groups"
+    "message": "Sekme grupları"
   },
   "optionShowTabGroupsView": {
-    "message": "Show the tab groups view tab"
+    "message": "Sekme grupları görünüm sekmesini göster"
   },
   "tabGroupsViewEmpty": {
-    "message": "No tabs in this window"
+    "message": "Bu pencerede sekme yok"
   },
   "tabGroupsToolbarRefresh": {
-    "message": "Refresh"
+    "message": "Yenile"
   },
   "tabGroupsCollapseAll": {
-    "message": "Collapse all"
+    "message": "Tümünü daralt"
   },
   "tabGroupsExpandAll": {
-    "message": "Expand all"
+    "message": "Tümünü genişlet"
   },
   "tabGroupsSummary": {
-    "message": "$tabs$ tabs · $groups$ groups",
+    "message": "$tabs$ sekme · $groups$ grup",
     "placeholders": {
       "tabs": {
         "content": "$1"
@@ -373,7 +373,7 @@
     }
   },
   "tabGroupsGroupCount": {
-    "message": "$count$ tabs",
+    "message": "$count$ sekme",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -381,19 +381,19 @@
     }
   },
   "tabGroupsGroupCreatedUnknown": {
-    "message": "Created time unknown"
+    "message": "Oluşturulma zamanı bilinmiyor"
   },
   "tabGroupsCurrentTab": {
-    "message": "Current tab"
+    "message": "Geçerli sekme"
   },
   "tabGroupsAddBookmark": {
-    "message": "Bookmark this tab"
+    "message": "Bu sekmeyi yer imlerine ekle"
   },
   "tabGroupsSaveFolder": {
-    "message": "Save tab group as bookmark folder"
+    "message": "Sekme grubunu yer imi klasörü olarak kaydet"
   },
   "tabGroupsGroupSavedToFolder": {
-    "message": "Saved $count$ tabs to $folder$",
+    "message": "$count$ sekme $folder$ konumuna kaydedildi",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -404,7 +404,7 @@
     }
   },
   "tabGroupsBookmarksAdded": {
-    "message": "Added $count$ bookmark(s) to $folder$",
+    "message": "$count$ yer imi $folder$ konumuna eklendi",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -415,31 +415,31 @@
     }
   },
   "tabGroupsSelectNewGroup": {
-    "message": "New tab group"
+    "message": "Yeni sekme grubu"
   },
   "tabGroupsSelectOpenInto": {
-    "message": "Open in existing tab group…"
+    "message": "Mevcut sekme grubunda aç…"
   },
   "tabGroupsSelectSaveFolder": {
-    "message": "Save as bookmark folder"
+    "message": "Yer imi klasörü olarak kaydet"
   },
   "tabGroupsSelectClose": {
-    "message": "Close"
+    "message": "Kapat"
   },
   "tabGroupsSelectSleep": {
-    "message": "Sleep"
+    "message": "Uyut"
   },
   "tabGroupsCopyMoveDialog": {
-    "message": "Selected tabs already belong to a tab group. Copy them (open in a new place) or move them (remove from their current group)?"
+    "message": "Seçili sekmeler zaten bir sekme grubuna ait. Kopyalamak (yeni bir yerde aç) veya taşımak (mevcut gruptan kaldırmak) ister misiniz?"
   },
   "tabGroupsCopyMoveCopy": {
-    "message": "Copy"
+    "message": "Kopyala"
   },
   "tabGroupsCopyMoveMove": {
-    "message": "Move"
+    "message": "Taşı"
   },
   "tabGroupsConfirmClose": {
-    "message": "Close $count$ tabs?",
+    "message": "$count$ sekme kapatılsın mı?",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -447,7 +447,7 @@
     }
   },
   "tabGroupsConfirmSleep": {
-    "message": "Sleep $count$ tabs?",
+    "message": "$count$ sekme uyutulsun mu?",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -455,46 +455,46 @@
     }
   },
   "bookmarkFolderPickDialogTitle": {
-    "message": "Add to bookmark folder"
+    "message": "Yer imi klasörüne ekle"
   },
   "bookmarkFolderNoFolders": {
-    "message": "No bookmark folders"
+    "message": "Yer imi klasörü yok"
   },
   "tabGroupsSelectAddBookmarks": {
-    "message": "Add to bookmark folder…"
+    "message": "Yer imi klasörüne ekle…"
   },
   "paletteCmdGoTabGroups": {
-    "message": "Go to Tab groups view"
+    "message": "Sekme grupları görünümüne git"
   },
   "tabGroupsActivateGroup": {
-    "message": "Activate tab group"
+    "message": "Sekme grubunu etkinleştir"
   },
   "tabGroupsRenameGroup": {
-    "message": "Rename tab group"
+    "message": "Sekme grubunu yeniden adlandır"
   },
   "tabGroupsRenameDialog": {
-    "message": "Rename tab group"
+    "message": "Sekme grubunu yeniden adlandır"
   },
   "tabGroupsCloseGroup": {
-    "message": "Close tab group"
+    "message": "Sekme grubunu kapat"
   },
   "tabGroupsSleepGroup": {
-    "message": "Sleep tab group"
+    "message": "Sekme grubunu uyut"
   },
   "tabGroupsActivateTab": {
-    "message": "Activate tab"
+    "message": "Sekmeyi etkinleştir"
   },
   "tabGroupsCollapseGroup": {
-    "message": "Collapse group"
+    "message": "Grubu daralt"
   },
   "tabGroupsExpandGroup": {
-    "message": "Expand group"
+    "message": "Grubu genişlet"
   },
   "tabGroupsMenuAddBookmark": {
-    "message": "Bookmark tab"
+    "message": "Sekmeyi yer imlerine ekle"
   },
   "tabGroupsMenuSaveFolder": {
-    "message": "Save as bookmark folder"
+    "message": "Yer imi klasörü olarak kaydet"
   },
   "deadProxyAdd": {
     "message": "Ölü bağlantı kontrolleri için bir proxy sunucusu ekle"

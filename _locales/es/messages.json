@@ -362,7 +362,7 @@
     "message": "Expandir todo"
   },
   "tabGroupsSummary": {
-    "message": "$tabs$ tabs · $groups$ groups",
+    "message": "$tabs$ pestañas · $groups$ grupos",
     "placeholders": {
       "tabs": {
         "content": "$1"
@@ -373,7 +373,7 @@
     }
   },
   "tabGroupsGroupCount": {
-    "message": "$count$ tabs",
+    "message": "$count$ pestañas",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -387,13 +387,13 @@
     "message": "Pestaña actual"
   },
   "tabGroupsAddBookmark": {
-    "message": "Añadir esta pestaña a marcadores"
+    "message": "Marcar esta pestaña"
   },
   "tabGroupsSaveFolder": {
     "message": "Guardar grupo de pestañas como carpeta de marcadores"
   },
   "tabGroupsGroupSavedToFolder": {
-    "message": "Saved $count$ tabs to $folder$",
+    "message": "Se guardaron $count$ pestañas en $folder$",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -404,7 +404,7 @@
     }
   },
   "tabGroupsBookmarksAdded": {
-    "message": "Added $count$ bookmark(s) to $folder$",
+    "message": "Se añadieron $count$ marcador(es) a $folder$",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -418,7 +418,7 @@
     "message": "Nuevo grupo de pestañas"
   },
   "tabGroupsSelectOpenInto": {
-    "message": "Abrir en un grupo de pestañas existente…"
+    "message": "Abrir en grupo de pestañas existente…"
   },
   "tabGroupsSelectSaveFolder": {
     "message": "Guardar como carpeta de marcadores"
@@ -439,7 +439,7 @@
     "message": "Mover"
   },
   "tabGroupsConfirmClose": {
-    "message": "Close $count$ tabs?",
+    "message": "¿Cerrar $count$ pestañas?",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -447,7 +447,7 @@
     }
   },
   "tabGroupsConfirmSleep": {
-    "message": "Sleep $count$ tabs?",
+    "message": "¿Suspender $count$ pestañas?",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -464,37 +464,37 @@
     "message": "Añadir a carpeta de marcadores…"
   },
   "paletteCmdGoTabGroups": {
-    "message": "Go to Tab groups view"
+    "message": "Ir a la vista de grupos de pestañas"
   },
   "tabGroupsActivateGroup": {
-    "message": "Activate tab group"
+    "message": "Activar grupo"
   },
   "tabGroupsRenameGroup": {
-    "message": "Rename tab group"
+    "message": "Renombrar grupo"
   },
   "tabGroupsRenameDialog": {
-    "message": "Rename tab group"
+    "message": "Renombrar grupo de pestañas"
   },
   "tabGroupsCloseGroup": {
-    "message": "Close tab group"
+    "message": "Cerrar grupo"
   },
   "tabGroupsSleepGroup": {
-    "message": "Sleep tab group"
+    "message": "Suspender grupo"
   },
   "tabGroupsActivateTab": {
-    "message": "Activate tab"
+    "message": "Activar pestaña"
   },
   "tabGroupsCollapseGroup": {
-    "message": "Collapse group"
+    "message": "Contraer grupo"
   },
   "tabGroupsExpandGroup": {
-    "message": "Expand group"
+    "message": "Expandir grupo"
   },
   "tabGroupsMenuAddBookmark": {
-    "message": "Bookmark tab"
+    "message": "Marcar pestaña"
   },
   "tabGroupsMenuSaveFolder": {
-    "message": "Save as bookmark folder"
+    "message": "Guardar como carpeta"
   },
   "deadProxyAdd": {
     "message": "Añadir un servidor proxy para comprobar enlaces rotos"

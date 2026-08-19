@@ -344,25 +344,25 @@
     }
   },
   "viewTabGroups": {
-    "message": "Tab groups"
+    "message": "Tabgroepen"
   },
   "optionShowTabGroupsView": {
-    "message": "Show the tab groups view tab"
+    "message": "Toon het tabblad voor tabgroepenweergave"
   },
   "tabGroupsViewEmpty": {
-    "message": "No tabs in this window"
+    "message": "Geen tabbladen in dit venster"
   },
   "tabGroupsToolbarRefresh": {
-    "message": "Refresh"
+    "message": "Vernieuwen"
   },
   "tabGroupsCollapseAll": {
-    "message": "Collapse all"
+    "message": "Alles samenvouwen"
   },
   "tabGroupsExpandAll": {
-    "message": "Expand all"
+    "message": "Alles uitvouwen"
   },
   "tabGroupsSummary": {
-    "message": "$tabs$ tabs · $groups$ groups",
+    "message": "$tabs$ tabbladen · $groups$ groepen",
     "placeholders": {
       "tabs": {
         "content": "$1"
@@ -373,7 +373,7 @@
     }
   },
   "tabGroupsGroupCount": {
-    "message": "$count$ tabs",
+    "message": "$count$ tabbladen",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -381,19 +381,19 @@
     }
   },
   "tabGroupsGroupCreatedUnknown": {
-    "message": "Created time unknown"
+    "message": "Aanmaaktijd onbekend"
   },
   "tabGroupsCurrentTab": {
-    "message": "Current tab"
+    "message": "Huidig tabblad"
   },
   "tabGroupsAddBookmark": {
-    "message": "Bookmark this tab"
+    "message": "Dit tabblad bladwijzer maken"
   },
   "tabGroupsSaveFolder": {
-    "message": "Save tab group as bookmark folder"
+    "message": "Tabgroep opslaan als bladwijzermap"
   },
   "tabGroupsGroupSavedToFolder": {
-    "message": "Saved $count$ tabs to $folder$",
+    "message": "$count$ tabbladen opgeslagen in $folder$",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -404,7 +404,7 @@
     }
   },
   "tabGroupsBookmarksAdded": {
-    "message": "Added $count$ bookmark(s) to $folder$",
+    "message": "$count$ bladwijzer(s) toegevoegd aan $folder$",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -415,31 +415,31 @@
     }
   },
   "tabGroupsSelectNewGroup": {
-    "message": "New tab group"
+    "message": "Nieuwe tabgroep"
   },
   "tabGroupsSelectOpenInto": {
-    "message": "Open in existing tab group…"
+    "message": "Openen in bestaande tabgroep…"
   },
   "tabGroupsSelectSaveFolder": {
-    "message": "Save as bookmark folder"
+    "message": "Opslaan als bladwijzermap"
   },
   "tabGroupsSelectClose": {
-    "message": "Close"
+    "message": "Sluiten"
   },
   "tabGroupsSelectSleep": {
-    "message": "Sleep"
+    "message": "Slaap"
   },
   "tabGroupsCopyMoveDialog": {
-    "message": "Selected tabs already belong to a tab group. Copy them (open in a new place) or move them (remove from their current group)?"
+    "message": "Geselecteerde tabbladen behoren al tot een tabgroep. Kopiëren (openen op een nieuwe plek) of verplaatsen (verwijderen uit huidige groep)?"
   },
   "tabGroupsCopyMoveCopy": {
-    "message": "Copy"
+    "message": "Kopiëren"
   },
   "tabGroupsCopyMoveMove": {
-    "message": "Move"
+    "message": "Verplaatsen"
   },
   "tabGroupsConfirmClose": {
-    "message": "Close $count$ tabs?",
+    "message": "$count$ tabbladen sluiten?",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -447,7 +447,7 @@
     }
   },
   "tabGroupsConfirmSleep": {
-    "message": "Sleep $count$ tabs?",
+    "message": "$count$ tabbladen in slaapstand?",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -455,46 +455,46 @@
     }
   },
   "bookmarkFolderPickDialogTitle": {
-    "message": "Add to bookmark folder"
+    "message": "Toevoegen aan bladwijzermap"
   },
   "bookmarkFolderNoFolders": {
-    "message": "No bookmark folders"
+    "message": "Geen bladwijzermappen"
   },
   "tabGroupsSelectAddBookmarks": {
-    "message": "Add to bookmark folder…"
+    "message": "Toevoegen aan bladwijzermap…"
   },
   "paletteCmdGoTabGroups": {
-    "message": "Go to Tab groups view"
+    "message": "Naar tabgroepenweergave"
   },
   "tabGroupsActivateGroup": {
-    "message": "Activate tab group"
+    "message": "Tabgroep activeren"
   },
   "tabGroupsRenameGroup": {
-    "message": "Rename tab group"
+    "message": "Tabgroep hernoemen"
   },
   "tabGroupsRenameDialog": {
-    "message": "Rename tab group"
+    "message": "Tabgroep hernoemen"
   },
   "tabGroupsCloseGroup": {
-    "message": "Close tab group"
+    "message": "Tabgroep sluiten"
   },
   "tabGroupsSleepGroup": {
-    "message": "Sleep tab group"
+    "message": "Tabgroep in slaapstand"
   },
   "tabGroupsActivateTab": {
-    "message": "Activate tab"
+    "message": "Tabblad activeren"
   },
   "tabGroupsCollapseGroup": {
-    "message": "Collapse group"
+    "message": "Groep samenvouwen"
   },
   "tabGroupsExpandGroup": {
-    "message": "Expand group"
+    "message": "Groep uitvouwen"
   },
   "tabGroupsMenuAddBookmark": {
-    "message": "Bookmark tab"
+    "message": "Tabblad bladwijzer maken"
   },
   "tabGroupsMenuSaveFolder": {
-    "message": "Save as bookmark folder"
+    "message": "Opslaan als bladwijzermap"
   },
   "deadProxyAdd": {
     "message": "Proxyserver toevoegen voor dode-linkcontroles"

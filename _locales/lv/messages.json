@@ -344,25 +344,25 @@
     }
   },
   "viewTabGroups": {
-    "message": "Tab groups"
+    "message": "Cilnes grupas"
   },
   "optionShowTabGroupsView": {
-    "message": "Show the tab groups view tab"
+    "message": "Rādīt cilnes grupu skata cilni"
   },
   "tabGroupsViewEmpty": {
-    "message": "No tabs in this window"
+    "message": "Šajā logā nav cilņu"
   },
   "tabGroupsToolbarRefresh": {
-    "message": "Refresh"
+    "message": "Atjaunināt"
   },
   "tabGroupsCollapseAll": {
-    "message": "Collapse all"
+    "message": "Sakļaut visu"
   },
   "tabGroupsExpandAll": {
-    "message": "Expand all"
+    "message": "Izvērst visu"
   },
   "tabGroupsSummary": {
-    "message": "$tabs$ tabs · $groups$ groups",
+    "message": "$tabs$ cilnes · $groups$ grupas",
     "placeholders": {
       "tabs": {
         "content": "$1"
@@ -373,7 +373,7 @@
     }
   },
   "tabGroupsGroupCount": {
-    "message": "$count$ tabs",
+    "message": "$count$ cilnes",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -381,19 +381,19 @@
     }
   },
   "tabGroupsGroupCreatedUnknown": {
-    "message": "Created time unknown"
+    "message": "Izveides laiks nav zināms"
   },
   "tabGroupsCurrentTab": {
-    "message": "Current tab"
+    "message": "Pašreizējā cilne"
   },
   "tabGroupsAddBookmark": {
-    "message": "Bookmark this tab"
+    "message": "Pievienot šo cilni grāmatzīmēm"
   },
   "tabGroupsSaveFolder": {
-    "message": "Save tab group as bookmark folder"
+    "message": "Saglabāt cilnes grupu kā grāmatzīmju mapi"
   },
   "tabGroupsGroupSavedToFolder": {
-    "message": "Saved $count$ tabs to $folder$",
+    "message": "Saglabātas $count$ cilnes mapē $folder$",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -404,7 +404,7 @@
     }
   },
   "tabGroupsBookmarksAdded": {
-    "message": "Added $count$ bookmark(s) to $folder$",
+    "message": "Pievienotas $count$ grāmatzīmes(-u) mapē $folder$",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -415,31 +415,31 @@
     }
   },
   "tabGroupsSelectNewGroup": {
-    "message": "New tab group"
+    "message": "Jauna cilnes grupa"
   },
   "tabGroupsSelectOpenInto": {
-    "message": "Open in existing tab group…"
+    "message": "Atvērt esošā cilnes grupā…"
   },
   "tabGroupsSelectSaveFolder": {
-    "message": "Save as bookmark folder"
+    "message": "Saglabāt kā grāmatzīmju mapi"
   },
   "tabGroupsSelectClose": {
-    "message": "Close"
+    "message": "Aizvērt"
   },
   "tabGroupsSelectSleep": {
-    "message": "Sleep"
+    "message": "Apturēt"
   },
   "tabGroupsCopyMoveDialog": {
-    "message": "Selected tabs already belong to a tab group. Copy them (open in a new place) or move them (remove from their current group)?"
+    "message": "Atlasītās cilnes jau pieder cilnes grupai. Kopēt tās (atvērt jaunā vietā) vai pārvietot (noņemt no pašreizējās grupas)?"
   },
   "tabGroupsCopyMoveCopy": {
-    "message": "Copy"
+    "message": "Kopēt"
   },
   "tabGroupsCopyMoveMove": {
-    "message": "Move"
+    "message": "Pārvietot"
   },
   "tabGroupsConfirmClose": {
-    "message": "Close $count$ tabs?",
+    "message": "Aizvērt $count$ cilnes?",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -447,7 +447,7 @@
     }
   },
   "tabGroupsConfirmSleep": {
-    "message": "Sleep $count$ tabs?",
+    "message": "Apturēt $count$ cilnes?",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -455,46 +455,46 @@
     }
   },
   "bookmarkFolderPickDialogTitle": {
-    "message": "Add to bookmark folder"
+    "message": "Pievienot grāmatzīmju mapei"
   },
   "bookmarkFolderNoFolders": {
-    "message": "No bookmark folders"
+    "message": "Nav grāmatzīmju mapju"
   },
   "tabGroupsSelectAddBookmarks": {
-    "message": "Add to bookmark folder…"
+    "message": "Pievienot grāmatzīmju mapei…"
   },
   "paletteCmdGoTabGroups": {
-    "message": "Go to Tab groups view"
+    "message": "Doties uz cilnes grupu skatu"
   },
   "tabGroupsActivateGroup": {
-    "message": "Activate tab group"
+    "message": "Aktivizēt grupu"
   },
   "tabGroupsRenameGroup": {
-    "message": "Rename tab group"
+    "message": "Pārdēvēt grupu"
   },
   "tabGroupsRenameDialog": {
-    "message": "Rename tab group"
+    "message": "Pārdēvēt cilnes grupu"
   },
   "tabGroupsCloseGroup": {
-    "message": "Close tab group"
+    "message": "Aizvērt grupu"
   },
   "tabGroupsSleepGroup": {
-    "message": "Sleep tab group"
+    "message": "Apturēt grupu"
   },
   "tabGroupsActivateTab": {
-    "message": "Activate tab"
+    "message": "Aktivizēt cilni"
   },
   "tabGroupsCollapseGroup": {
-    "message": "Collapse group"
+    "message": "Sakļaut grupu"
   },
   "tabGroupsExpandGroup": {
-    "message": "Expand group"
+    "message": "Izvērst grupu"
   },
   "tabGroupsMenuAddBookmark": {
-    "message": "Bookmark tab"
+    "message": "Grāmatzīme"
   },
   "tabGroupsMenuSaveFolder": {
-    "message": "Save as bookmark folder"
+    "message": "Saglabāt kā mapi"
   },
   "deadProxyAdd": {
     "message": "Pievienot starpniekserveri bojātu saišu pārbaudei"

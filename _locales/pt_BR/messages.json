@@ -343,25 +343,25 @@
     }
   },
   "viewTabGroups": {
-    "message": "Tab groups"
+    "message": "Grupos de abas"
   },
   "optionShowTabGroupsView": {
-    "message": "Show the tab groups view tab"
+    "message": "Mostrar a aba de visualização de grupos de abas"
   },
   "tabGroupsViewEmpty": {
-    "message": "No tabs in this window"
+    "message": "Nenhuma aba nesta janela"
   },
   "tabGroupsToolbarRefresh": {
-    "message": "Refresh"
+    "message": "Atualizar"
   },
   "tabGroupsCollapseAll": {
-    "message": "Collapse all"
+    "message": "Recolher tudo"
   },
   "tabGroupsExpandAll": {
-    "message": "Expand all"
+    "message": "Expandir tudo"
   },
   "tabGroupsSummary": {
-    "message": "$tabs$ tabs · $groups$ groups",
+    "message": "$tabs$ abas · $groups$ grupos",
     "placeholders": {
       "tabs": {
         "content": "$1"
@@ -372,7 +372,7 @@
     }
   },
   "tabGroupsGroupCount": {
-    "message": "$count$ tabs",
+    "message": "$count$ abas",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -380,19 +380,19 @@
     }
   },
   "tabGroupsGroupCreatedUnknown": {
-    "message": "Created time unknown"
+    "message": "Hora de criação desconhecida"
   },
   "tabGroupsCurrentTab": {
-    "message": "Current tab"
+    "message": "Aba atual"
   },
   "tabGroupsAddBookmark": {
-    "message": "Bookmark this tab"
+    "message": "Adicionar aos favoritos esta aba"
   },
   "tabGroupsSaveFolder": {
-    "message": "Save tab group as bookmark folder"
+    "message": "Salvar grupo de abas como pasta de favoritos"
   },
   "tabGroupsGroupSavedToFolder": {
-    "message": "Saved $count$ tabs to $folder$",
+    "message": "Salvas $count$ abas em $folder$",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -403,7 +403,7 @@
     }
   },
   "tabGroupsBookmarksAdded": {
-    "message": "Added $count$ bookmark(s) to $folder$",
+    "message": "Adicionados $count$ favorito(s) a $folder$",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -414,31 +414,31 @@
     }
   },
   "tabGroupsSelectNewGroup": {
-    "message": "New tab group"
+    "message": "Novo grupo de abas"
   },
   "tabGroupsSelectOpenInto": {
-    "message": "Open in existing tab group…"
+    "message": "Abrir em grupo de abas existente…"
   },
   "tabGroupsSelectSaveFolder": {
-    "message": "Save as bookmark folder"
+    "message": "Salvar como pasta de favoritos"
   },
   "tabGroupsSelectClose": {
-    "message": "Close"
+    "message": "Fechar"
   },
   "tabGroupsSelectSleep": {
-    "message": "Sleep"
+    "message": "Adormecer"
   },
   "tabGroupsCopyMoveDialog": {
-    "message": "Selected tabs already belong to a tab group. Copy them (open in a new place) or move them (remove from their current group)?"
+    "message": "As abas selecionadas já pertencem a um grupo de abas. Copiá-las (abrir em novo local) ou movê-las (remover do grupo atual)?"
   },
   "tabGroupsCopyMoveCopy": {
-    "message": "Copy"
+    "message": "Copiar"
   },
   "tabGroupsCopyMoveMove": {
-    "message": "Move"
+    "message": "Mover"
   },
   "tabGroupsConfirmClose": {
-    "message": "Close $count$ tabs?",
+    "message": "Fechar $count$ abas?",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -446,7 +446,7 @@
     }
   },
   "tabGroupsConfirmSleep": {
-    "message": "Sleep $count$ tabs?",
+    "message": "Adormecer $count$ abas?",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -454,46 +454,46 @@
     }
   },
   "bookmarkFolderPickDialogTitle": {
-    "message": "Add to bookmark folder"
+    "message": "Adicionar à pasta de favoritos"
   },
   "bookmarkFolderNoFolders": {
-    "message": "No bookmark folders"
+    "message": "Nenhuma pasta de favoritos"
   },
   "tabGroupsSelectAddBookmarks": {
-    "message": "Add to bookmark folder…"
+    "message": "Adicionar à pasta de favoritos…"
   },
   "paletteCmdGoTabGroups": {
-    "message": "Go to Tab groups view"
+    "message": "Ir para a visualização de grupos de abas"
   },
   "tabGroupsActivateGroup": {
-    "message": "Activate tab group"
+    "message": "Ativar grupo de abas"
   },
   "tabGroupsRenameGroup": {
-    "message": "Rename tab group"
+    "message": "Renomear grupo de abas"
   },
   "tabGroupsRenameDialog": {
-    "message": "Rename tab group"
+    "message": "Renomear grupo de abas"
   },
   "tabGroupsCloseGroup": {
-    "message": "Close tab group"
+    "message": "Fechar grupo de abas"
   },
   "tabGroupsSleepGroup": {
-    "message": "Sleep tab group"
+    "message": "Adormecer grupo de abas"
   },
   "tabGroupsActivateTab": {
-    "message": "Activate tab"
+    "message": "Ativar aba"
   },
   "tabGroupsCollapseGroup": {
-    "message": "Collapse group"
+    "message": "Recolher grupo"
   },
   "tabGroupsExpandGroup": {
-    "message": "Expand group"
+    "message": "Expandir grupo"
   },
   "tabGroupsMenuAddBookmark": {
-    "message": "Bookmark tab"
+    "message": "Adicionar aos favoritos"
   },
   "tabGroupsMenuSaveFolder": {
-    "message": "Save as bookmark folder"
+    "message": "Salvar como pasta de favoritos"
   },
   "deadProxyAdd": {
     "message": "Adicionar um servidor proxy para verificação de links quebrados"

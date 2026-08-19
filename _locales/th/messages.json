@@ -344,25 +344,25 @@
     }
   },
   "viewTabGroups": {
-    "message": "Tab groups"
+    "message": "กลุ่มแท็บ"
   },
   "optionShowTabGroupsView": {
-    "message": "Show the tab groups view tab"
+    "message": "แสดงแท็บมุมมองกลุ่มแท็บ"
   },
   "tabGroupsViewEmpty": {
-    "message": "No tabs in this window"
+    "message": "ไม่มีแท็บในหน้าต่างนี้"
   },
   "tabGroupsToolbarRefresh": {
-    "message": "Refresh"
+    "message": "รีเฟรช"
   },
   "tabGroupsCollapseAll": {
-    "message": "Collapse all"
+    "message": "ย่อทั้งหมด"
   },
   "tabGroupsExpandAll": {
-    "message": "Expand all"
+    "message": "ขยายทั้งหมด"
   },
   "tabGroupsSummary": {
-    "message": "$tabs$ tabs · $groups$ groups",
+    "message": "$tabs$ แท็บ · $groups$ กลุ่ม",
     "placeholders": {
       "tabs": {
         "content": "$1"
@@ -373,7 +373,7 @@
     }
   },
   "tabGroupsGroupCount": {
-    "message": "$count$ tabs",
+    "message": "$count$ แท็บ",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -381,19 +381,19 @@
     }
   },
   "tabGroupsGroupCreatedUnknown": {
-    "message": "Created time unknown"
+    "message": "ไม่ทราบเวลาสร้าง"
   },
   "tabGroupsCurrentTab": {
-    "message": "Current tab"
+    "message": "แท็บปัจจุบัน"
   },
   "tabGroupsAddBookmark": {
-    "message": "Bookmark this tab"
+    "message": "บุ๊กมาร์กแท็บนี้"
   },
   "tabGroupsSaveFolder": {
-    "message": "Save tab group as bookmark folder"
+    "message": "บันทึกกลุ่มแท็บเป็นโฟลเดอร์บุ๊กมาร์ก"
   },
   "tabGroupsGroupSavedToFolder": {
-    "message": "Saved $count$ tabs to $folder$",
+    "message": "บันทึก $count$ แท็บไปยัง $folder$",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -404,7 +404,7 @@
     }
   },
   "tabGroupsBookmarksAdded": {
-    "message": "Added $count$ bookmark(s) to $folder$",
+    "message": "เพิ่มบุ๊กมาร์ก $count$ รายการไปยัง $folder$",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -415,31 +415,31 @@
     }
   },
   "tabGroupsSelectNewGroup": {
-    "message": "New tab group"
+    "message": "กลุ่มแท็บใหม่"
   },
   "tabGroupsSelectOpenInto": {
-    "message": "Open in existing tab group…"
+    "message": "เปิดในกลุ่มแท็บที่มีอยู่…"
   },
   "tabGroupsSelectSaveFolder": {
-    "message": "Save as bookmark folder"
+    "message": "บันทึกเป็นโฟลเดอร์บุ๊กมาร์ก"
   },
   "tabGroupsSelectClose": {
-    "message": "Close"
+    "message": "ปิด"
   },
   "tabGroupsSelectSleep": {
-    "message": "Sleep"
+    "message": "พัก"
   },
   "tabGroupsCopyMoveDialog": {
-    "message": "Selected tabs already belong to a tab group. Copy them (open in a new place) or move them (remove from their current group)?"
+    "message": "แท็บที่เลือกอยู่ในกลุ่มแท็บแล้ว ต้องการคัดลอก (เปิดในตำแหน่งใหม่) หรือย้าย (นำออกจากกลุ่มปัจจุบัน) หรือไม่?"
   },
   "tabGroupsCopyMoveCopy": {
-    "message": "Copy"
+    "message": "คัดลอก"
   },
   "tabGroupsCopyMoveMove": {
-    "message": "Move"
+    "message": "ย้าย"
   },
   "tabGroupsConfirmClose": {
-    "message": "Close $count$ tabs?",
+    "message": "ปิด $count$ แท็บ?",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -447,7 +447,7 @@
     }
   },
   "tabGroupsConfirmSleep": {
-    "message": "Sleep $count$ tabs?",
+    "message": "พัก $count$ แท็บ?",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -455,46 +455,46 @@
     }
   },
   "bookmarkFolderPickDialogTitle": {
-    "message": "Add to bookmark folder"
+    "message": "เพิ่มไปยังโฟลเดอร์บุ๊กมาร์ก"
   },
   "bookmarkFolderNoFolders": {
-    "message": "No bookmark folders"
+    "message": "ไม่มีโฟลเดอร์บุ๊กมาร์ก"
   },
   "tabGroupsSelectAddBookmarks": {
-    "message": "Add to bookmark folder…"
+    "message": "เพิ่มไปยังโฟลเดอร์บุ๊กมาร์ก…"
   },
   "paletteCmdGoTabGroups": {
-    "message": "Go to Tab groups view"
+    "message": "ไปที่มุมมองกลุ่มแท็บ"
   },
   "tabGroupsActivateGroup": {
-    "message": "Activate tab group"
+    "message": "เปิดใช้งานกลุ่มแท็บ"
   },
   "tabGroupsRenameGroup": {
-    "message": "Rename tab group"
+    "message": "เปลี่ยนชื่อกลุ่มแท็บ"
   },
   "tabGroupsRenameDialog": {
-    "message": "Rename tab group"
+    "message": "เปลี่ยนชื่อกลุ่มแท็บ"
   },
   "tabGroupsCloseGroup": {
-    "message": "Close tab group"
+    "message": "ปิดกลุ่มแท็บ"
   },
   "tabGroupsSleepGroup": {
-    "message": "Sleep tab group"
+    "message": "พักกลุ่มแท็บ"
   },
   "tabGroupsActivateTab": {
-    "message": "Activate tab"
+    "message": "เปิดใช้งานแท็บ"
   },
   "tabGroupsCollapseGroup": {
-    "message": "Collapse group"
+    "message": "ย่อกลุ่ม"
   },
   "tabGroupsExpandGroup": {
-    "message": "Expand group"
+    "message": "ขยายกลุ่ม"
   },
   "tabGroupsMenuAddBookmark": {
-    "message": "Bookmark tab"
+    "message": "บุ๊กมาร์กแท็บ"
   },
   "tabGroupsMenuSaveFolder": {
-    "message": "Save as bookmark folder"
+    "message": "บันทึกเป็นโฟลเดอร์บุ๊กมาร์ก"
   },
   "deadProxyAdd": {
     "message": "เพิ่มพร็อกซีเซิร์ฟเวอร์สำหรับตรวจสอบลิงก์เสีย"

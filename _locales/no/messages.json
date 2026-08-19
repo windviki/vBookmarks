@@ -344,25 +344,25 @@
     }
   },
   "viewTabGroups": {
-    "message": "Tab groups"
+    "message": "Fanegrupper"
   },
   "optionShowTabGroupsView": {
-    "message": "Show the tab groups view tab"
+    "message": "Vis fanen for fanegruppevisning"
   },
   "tabGroupsViewEmpty": {
-    "message": "No tabs in this window"
+    "message": "Ingen faner i dette vinduet"
   },
   "tabGroupsToolbarRefresh": {
-    "message": "Refresh"
+    "message": "Oppdater"
   },
   "tabGroupsCollapseAll": {
-    "message": "Collapse all"
+    "message": "Skjul alle"
   },
   "tabGroupsExpandAll": {
-    "message": "Expand all"
+    "message": "Vis alle"
   },
   "tabGroupsSummary": {
-    "message": "$tabs$ tabs · $groups$ groups",
+    "message": "$tabs$ faner · $groups$ grupper",
     "placeholders": {
       "tabs": {
         "content": "$1"
@@ -373,7 +373,7 @@
     }
   },
   "tabGroupsGroupCount": {
-    "message": "$count$ tabs",
+    "message": "$count$ faner",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -381,19 +381,19 @@
     }
   },
   "tabGroupsGroupCreatedUnknown": {
-    "message": "Created time unknown"
+    "message": "Opprettelsestid ukjent"
   },
   "tabGroupsCurrentTab": {
-    "message": "Current tab"
+    "message": "Gjeldende fane"
   },
   "tabGroupsAddBookmark": {
-    "message": "Bookmark this tab"
+    "message": "Bokmerk denne fanen"
   },
   "tabGroupsSaveFolder": {
-    "message": "Save tab group as bookmark folder"
+    "message": "Lagre fanegruppe som bokmerkemappe"
   },
   "tabGroupsGroupSavedToFolder": {
-    "message": "Saved $count$ tabs to $folder$",
+    "message": "Lagret $count$ faner i $folder$",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -404,7 +404,7 @@
     }
   },
   "tabGroupsBookmarksAdded": {
-    "message": "Added $count$ bookmark(s) to $folder$",
+    "message": "La til $count$ bokmerke(r) i $folder$",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -415,31 +415,31 @@
     }
   },
   "tabGroupsSelectNewGroup": {
-    "message": "New tab group"
+    "message": "Ny fanegruppe"
   },
   "tabGroupsSelectOpenInto": {
-    "message": "Open in existing tab group…"
+    "message": "Åpne i eksisterende fanegruppe…"
   },
   "tabGroupsSelectSaveFolder": {
-    "message": "Save as bookmark folder"
+    "message": "Lagre som bokmerkemappe"
   },
   "tabGroupsSelectClose": {
-    "message": "Close"
+    "message": "Lukk"
   },
   "tabGroupsSelectSleep": {
-    "message": "Sleep"
+    "message": "Hvil"
   },
   "tabGroupsCopyMoveDialog": {
-    "message": "Selected tabs already belong to a tab group. Copy them (open in a new place) or move them (remove from their current group)?"
+    "message": "Valgte faner tilhører allerede en fanegruppe. Kopiere dem (åpne på nytt sted) eller flytte dem (fjerne fra gjeldende gruppe)?"
   },
   "tabGroupsCopyMoveCopy": {
-    "message": "Copy"
+    "message": "Kopier"
   },
   "tabGroupsCopyMoveMove": {
-    "message": "Move"
+    "message": "Flytt"
   },
   "tabGroupsConfirmClose": {
-    "message": "Close $count$ tabs?",
+    "message": "Lukke $count$ faner?",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -447,7 +447,7 @@
     }
   },
   "tabGroupsConfirmSleep": {
-    "message": "Sleep $count$ tabs?",
+    "message": "Hvile $count$ faner?",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -455,46 +455,46 @@
     }
   },
   "bookmarkFolderPickDialogTitle": {
-    "message": "Add to bookmark folder"
+    "message": "Legg til i bokmerkemappe"
   },
   "bookmarkFolderNoFolders": {
-    "message": "No bookmark folders"
+    "message": "Ingen bokmerkemapper"
   },
   "tabGroupsSelectAddBookmarks": {
-    "message": "Add to bookmark folder…"
+    "message": "Legg til i bokmerkemappe…"
   },
   "paletteCmdGoTabGroups": {
-    "message": "Go to Tab groups view"
+    "message": "Gå til fanegruppevisning"
   },
   "tabGroupsActivateGroup": {
-    "message": "Activate tab group"
+    "message": "Aktiver gruppe"
   },
   "tabGroupsRenameGroup": {
-    "message": "Rename tab group"
+    "message": "Gi nytt navn"
   },
   "tabGroupsRenameDialog": {
-    "message": "Rename tab group"
+    "message": "Gi nytt navn til fanegruppe"
   },
   "tabGroupsCloseGroup": {
-    "message": "Close tab group"
+    "message": "Lukk gruppe"
   },
   "tabGroupsSleepGroup": {
-    "message": "Sleep tab group"
+    "message": "Hvil gruppe"
   },
   "tabGroupsActivateTab": {
-    "message": "Activate tab"
+    "message": "Aktiver fane"
   },
   "tabGroupsCollapseGroup": {
-    "message": "Collapse group"
+    "message": "Skjul gruppe"
   },
   "tabGroupsExpandGroup": {
-    "message": "Expand group"
+    "message": "Vis gruppe"
   },
   "tabGroupsMenuAddBookmark": {
-    "message": "Bookmark tab"
+    "message": "Bokmerk fane"
   },
   "tabGroupsMenuSaveFolder": {
-    "message": "Save as bookmark folder"
+    "message": "Lagre som mappe"
   },
   "deadProxyAdd": {
     "message": "Legg til en proxy-server for sjekk av døde lenker"

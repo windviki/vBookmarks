@@ -344,25 +344,25 @@
     }
   },
   "viewTabGroups": {
-    "message": "Tab groups"
+    "message": "קבוצות טאבים"
   },
   "optionShowTabGroupsView": {
-    "message": "Show the tab groups view tab"
+    "message": "הצג את תצוגת קבוצות הטאבים"
   },
   "tabGroupsViewEmpty": {
-    "message": "No tabs in this window"
+    "message": "אין טאבים בחלון זה"
   },
   "tabGroupsToolbarRefresh": {
-    "message": "Refresh"
+    "message": "רענן"
   },
   "tabGroupsCollapseAll": {
-    "message": "Collapse all"
+    "message": "כווץ הכל"
   },
   "tabGroupsExpandAll": {
-    "message": "Expand all"
+    "message": "הרחב הכל"
   },
   "tabGroupsSummary": {
-    "message": "$tabs$ tabs · $groups$ groups",
+    "message": "$tabs$ טאבים · $groups$ קבוצות",
     "placeholders": {
       "tabs": {
         "content": "$1"
@@ -373,7 +373,7 @@
     }
   },
   "tabGroupsGroupCount": {
-    "message": "$count$ tabs",
+    "message": "$count$ טאבים",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -381,19 +381,19 @@
     }
   },
   "tabGroupsGroupCreatedUnknown": {
-    "message": "Created time unknown"
+    "message": "זמן יצירה לא ידוע"
   },
   "tabGroupsCurrentTab": {
-    "message": "Current tab"
+    "message": "הטאב הנוכחי"
   },
   "tabGroupsAddBookmark": {
-    "message": "Bookmark this tab"
+    "message": "הוסף טאב זה לסימניות"
   },
   "tabGroupsSaveFolder": {
-    "message": "Save tab group as bookmark folder"
+    "message": "שמור קבוצת טאבים כתיקיית סימניות"
   },
   "tabGroupsGroupSavedToFolder": {
-    "message": "Saved $count$ tabs to $folder$",
+    "message": "נשמרו $count$ טאבים אל $folder$",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -404,7 +404,7 @@
     }
   },
   "tabGroupsBookmarksAdded": {
-    "message": "Added $count$ bookmark(s) to $folder$",
+    "message": "נוספו $count$ סימניות אל $folder$",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -415,31 +415,31 @@
     }
   },
   "tabGroupsSelectNewGroup": {
-    "message": "New tab group"
+    "message": "קבוצת טאבים חדשה"
   },
   "tabGroupsSelectOpenInto": {
-    "message": "Open in existing tab group…"
+    "message": "פתח בקבוצת טאבים קיימת…"
   },
   "tabGroupsSelectSaveFolder": {
-    "message": "Save as bookmark folder"
+    "message": "שמור כתיקיית סימניות"
   },
   "tabGroupsSelectClose": {
-    "message": "Close"
+    "message": "סגור"
   },
   "tabGroupsSelectSleep": {
-    "message": "Sleep"
+    "message": "הרדם"
   },
   "tabGroupsCopyMoveDialog": {
-    "message": "Selected tabs already belong to a tab group. Copy them (open in a new place) or move them (remove from their current group)?"
+    "message": "הטאבים שנבחרו כבר שייכים לקבוצת טאבים. להעתיק אותם (לפתוח במקום חדש) או להעביר אותם (להסיר מהקבוצה הנוכחית)?"
   },
   "tabGroupsCopyMoveCopy": {
-    "message": "Copy"
+    "message": "העתק"
   },
   "tabGroupsCopyMoveMove": {
-    "message": "Move"
+    "message": "העבר"
   },
   "tabGroupsConfirmClose": {
-    "message": "Close $count$ tabs?",
+    "message": "לסגור $count$ טאבים?",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -447,7 +447,7 @@
     }
   },
   "tabGroupsConfirmSleep": {
-    "message": "Sleep $count$ tabs?",
+    "message": "להרדים $count$ טאבים?",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -455,46 +455,46 @@
     }
   },
   "bookmarkFolderPickDialogTitle": {
-    "message": "Add to bookmark folder"
+    "message": "הוסף לתיקיית סימניות"
   },
   "bookmarkFolderNoFolders": {
-    "message": "No bookmark folders"
+    "message": "אין תיקיות סימניות"
   },
   "tabGroupsSelectAddBookmarks": {
-    "message": "Add to bookmark folder…"
+    "message": "הוסף לתיקיית סימניות…"
   },
   "paletteCmdGoTabGroups": {
-    "message": "Go to Tab groups view"
+    "message": "עבור לתצוגת קבוצות הטאבים"
   },
   "tabGroupsActivateGroup": {
-    "message": "Activate tab group"
+    "message": "הפעל קבוצת טאבים"
   },
   "tabGroupsRenameGroup": {
-    "message": "Rename tab group"
+    "message": "שנה שם קבוצת טאבים"
   },
   "tabGroupsRenameDialog": {
-    "message": "Rename tab group"
+    "message": "שנה שם קבוצת טאבים"
   },
   "tabGroupsCloseGroup": {
-    "message": "Close tab group"
+    "message": "סגור קבוצת טאבים"
   },
   "tabGroupsSleepGroup": {
-    "message": "Sleep tab group"
+    "message": "הרדם קבוצת טאבים"
   },
   "tabGroupsActivateTab": {
-    "message": "Activate tab"
+    "message": "הפעל טאב"
   },
   "tabGroupsCollapseGroup": {
-    "message": "Collapse group"
+    "message": "כווץ קבוצה"
   },
   "tabGroupsExpandGroup": {
-    "message": "Expand group"
+    "message": "הרחב קבוצה"
   },
   "tabGroupsMenuAddBookmark": {
-    "message": "Bookmark tab"
+    "message": "הוסף טאב לסימניות"
   },
   "tabGroupsMenuSaveFolder": {
-    "message": "Save as bookmark folder"
+    "message": "שמור כתיקיית סימניות"
   },
   "deadProxyAdd": {
     "message": "הוסף שרת פרוקסי לבדיקות קישורים שבורים"

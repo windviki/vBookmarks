@@ -362,7 +362,7 @@
     "message": "Rozbalit vše"
   },
   "tabGroupsSummary": {
-    "message": "$tabs$ tabs · $groups$ groups",
+    "message": "$tabs$ karet · $groups$ skupin",
     "placeholders": {
       "tabs": {
         "content": "$1"
@@ -373,7 +373,7 @@
     }
   },
   "tabGroupsGroupCount": {
-    "message": "$count$ tabs",
+    "message": "$count$ karet",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -384,16 +384,16 @@
     "message": "Čas vytvoření neznámý"
   },
   "tabGroupsCurrentTab": {
-    "message": "Aktuální karta"
+    "message": "Aktivní karta"
   },
   "tabGroupsAddBookmark": {
-    "message": "Přidat kartu do záložek"
+    "message": "Přidat tuto kartu do záložek"
   },
   "tabGroupsSaveFolder": {
     "message": "Uložit skupinu karet jako složku záložek"
   },
   "tabGroupsGroupSavedToFolder": {
-    "message": "Saved $count$ tabs to $folder$",
+    "message": "Uloženo $count$ karet do $folder$",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -404,7 +404,7 @@
     }
   },
   "tabGroupsBookmarksAdded": {
-    "message": "Added $count$ bookmark(s) to $folder$",
+    "message": "Přidáno $count$ záložek do $folder$",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -439,7 +439,7 @@
     "message": "Přesunout"
   },
   "tabGroupsConfirmClose": {
-    "message": "Close $count$ tabs?",
+    "message": "Zavřít $count$ karet?",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -447,7 +447,7 @@
     }
   },
   "tabGroupsConfirmSleep": {
-    "message": "Sleep $count$ tabs?",
+    "message": "Uspat $count$ karet?",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -464,37 +464,37 @@
     "message": "Přidat do složky záložek…"
   },
   "paletteCmdGoTabGroups": {
-    "message": "Go to Tab groups view"
+    "message": "Přejít na zobrazení skupin karet"
   },
   "tabGroupsActivateGroup": {
-    "message": "Activate tab group"
+    "message": "Aktivovat skupinu"
   },
   "tabGroupsRenameGroup": {
-    "message": "Rename tab group"
+    "message": "Přejmenovat skupinu"
   },
   "tabGroupsRenameDialog": {
-    "message": "Rename tab group"
+    "message": "Přejmenovat skupinu karet"
   },
   "tabGroupsCloseGroup": {
-    "message": "Close tab group"
+    "message": "Zavřít skupinu"
   },
   "tabGroupsSleepGroup": {
-    "message": "Sleep tab group"
+    "message": "Uspat skupinu"
   },
   "tabGroupsActivateTab": {
-    "message": "Activate tab"
+    "message": "Aktivovat kartu"
   },
   "tabGroupsCollapseGroup": {
-    "message": "Collapse group"
+    "message": "Sbalit skupinu"
   },
   "tabGroupsExpandGroup": {
-    "message": "Expand group"
+    "message": "Rozbalit skupinu"
   },
   "tabGroupsMenuAddBookmark": {
-    "message": "Bookmark tab"
+    "message": "Přidat do záložek"
   },
   "tabGroupsMenuSaveFolder": {
-    "message": "Save as bookmark folder"
+    "message": "Uložit jako složku záložek"
   },
   "deadProxyAdd": {
     "message": "Přidat proxy server pro kontroly nefunkčních odkazů"

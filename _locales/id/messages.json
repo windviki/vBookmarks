@@ -344,25 +344,25 @@
     }
   },
   "viewTabGroups": {
-    "message": "Tab groups"
+    "message": "Grup tab"
   },
   "optionShowTabGroupsView": {
-    "message": "Show the tab groups view tab"
+    "message": "Tampilkan tab tampilan grup tab"
   },
   "tabGroupsViewEmpty": {
-    "message": "No tabs in this window"
+    "message": "Tidak ada tab di jendela ini"
   },
   "tabGroupsToolbarRefresh": {
-    "message": "Refresh"
+    "message": "Muat ulang"
   },
   "tabGroupsCollapseAll": {
-    "message": "Collapse all"
+    "message": "Ciutkan semua"
   },
   "tabGroupsExpandAll": {
-    "message": "Expand all"
+    "message": "Perluas semua"
   },
   "tabGroupsSummary": {
-    "message": "$tabs$ tabs · $groups$ groups",
+    "message": "$tabs$ tab · $groups$ grup",
     "placeholders": {
       "tabs": {
         "content": "$1"
@@ -373,7 +373,7 @@
     }
   },
   "tabGroupsGroupCount": {
-    "message": "$count$ tabs",
+    "message": "$count$ tab",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -381,19 +381,19 @@
     }
   },
   "tabGroupsGroupCreatedUnknown": {
-    "message": "Created time unknown"
+    "message": "Waktu pembuatan tidak diketahui"
   },
   "tabGroupsCurrentTab": {
-    "message": "Current tab"
+    "message": "Tab saat ini"
   },
   "tabGroupsAddBookmark": {
-    "message": "Bookmark this tab"
+    "message": "Buat markah tab ini"
   },
   "tabGroupsSaveFolder": {
-    "message": "Save tab group as bookmark folder"
+    "message": "Simpan grup tab sebagai folder markah"
   },
   "tabGroupsGroupSavedToFolder": {
-    "message": "Saved $count$ tabs to $folder$",
+    "message": "Disimpan $count$ tab ke $folder$",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -404,7 +404,7 @@
     }
   },
   "tabGroupsBookmarksAdded": {
-    "message": "Added $count$ bookmark(s) to $folder$",
+    "message": "Ditambahkan $count$ markah ke $folder$",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -415,31 +415,31 @@
     }
   },
   "tabGroupsSelectNewGroup": {
-    "message": "New tab group"
+    "message": "Grup tab baru"
   },
   "tabGroupsSelectOpenInto": {
-    "message": "Open in existing tab group…"
+    "message": "Buka di grup tab yang ada…"
   },
   "tabGroupsSelectSaveFolder": {
-    "message": "Save as bookmark folder"
+    "message": "Simpan sebagai folder markah"
   },
   "tabGroupsSelectClose": {
-    "message": "Close"
+    "message": "Tutup"
   },
   "tabGroupsSelectSleep": {
-    "message": "Sleep"
+    "message": "Tidur"
   },
   "tabGroupsCopyMoveDialog": {
-    "message": "Selected tabs already belong to a tab group. Copy them (open in a new place) or move them (remove from their current group)?"
+    "message": "Tab yang dipilih sudah termasuk dalam grup tab. Salin (buka di tempat baru) atau pindahkan (hapus dari grup saat ini)?"
   },
   "tabGroupsCopyMoveCopy": {
-    "message": "Copy"
+    "message": "Salin"
   },
   "tabGroupsCopyMoveMove": {
-    "message": "Move"
+    "message": "Pindah"
   },
   "tabGroupsConfirmClose": {
-    "message": "Close $count$ tabs?",
+    "message": "Tutup $count$ tab?",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -447,7 +447,7 @@
     }
   },
   "tabGroupsConfirmSleep": {
-    "message": "Sleep $count$ tabs?",
+    "message": "Tidurkan $count$ tab?",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -455,46 +455,46 @@
     }
   },
   "bookmarkFolderPickDialogTitle": {
-    "message": "Add to bookmark folder"
+    "message": "Tambahkan ke folder markah"
   },
   "bookmarkFolderNoFolders": {
-    "message": "No bookmark folders"
+    "message": "Tidak ada folder markah"
   },
   "tabGroupsSelectAddBookmarks": {
-    "message": "Add to bookmark folder…"
+    "message": "Tambahkan ke folder markah…"
   },
   "paletteCmdGoTabGroups": {
-    "message": "Go to Tab groups view"
+    "message": "Buka tampilan Grup tab"
   },
   "tabGroupsActivateGroup": {
-    "message": "Activate tab group"
+    "message": "Aktifkan grup tab"
   },
   "tabGroupsRenameGroup": {
-    "message": "Rename tab group"
+    "message": "Ubah nama grup tab"
   },
   "tabGroupsRenameDialog": {
-    "message": "Rename tab group"
+    "message": "Ubah nama grup tab"
   },
   "tabGroupsCloseGroup": {
-    "message": "Close tab group"
+    "message": "Tutup grup tab"
   },
   "tabGroupsSleepGroup": {
-    "message": "Sleep tab group"
+    "message": "Tidurkan grup tab"
   },
   "tabGroupsActivateTab": {
-    "message": "Activate tab"
+    "message": "Aktifkan tab"
   },
   "tabGroupsCollapseGroup": {
-    "message": "Collapse group"
+    "message": "Ciutkan grup"
   },
   "tabGroupsExpandGroup": {
-    "message": "Expand group"
+    "message": "Perluas grup"
   },
   "tabGroupsMenuAddBookmark": {
-    "message": "Bookmark tab"
+    "message": "Markah tab"
   },
   "tabGroupsMenuSaveFolder": {
-    "message": "Save as bookmark folder"
+    "message": "Simpan sebagai folder markah"
   },
   "deadProxyAdd": {
     "message": "Tambahkan server proxy untuk pemeriksaan tautan mati"

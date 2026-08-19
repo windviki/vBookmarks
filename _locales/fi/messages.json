@@ -344,25 +344,25 @@
     }
   },
   "viewTabGroups": {
-    "message": "Tab groups"
+    "message": "Välilehtiryhmät"
   },
   "optionShowTabGroupsView": {
-    "message": "Show the tab groups view tab"
+    "message": "Näytä välilehtiryhmien näkymä"
   },
   "tabGroupsViewEmpty": {
-    "message": "No tabs in this window"
+    "message": "Ei välilehtiä tässä ikkunassa"
   },
   "tabGroupsToolbarRefresh": {
-    "message": "Refresh"
+    "message": "Päivitä"
   },
   "tabGroupsCollapseAll": {
-    "message": "Collapse all"
+    "message": "Kutista kaikki"
   },
   "tabGroupsExpandAll": {
-    "message": "Expand all"
+    "message": "Laajenna kaikki"
   },
   "tabGroupsSummary": {
-    "message": "$tabs$ tabs · $groups$ groups",
+    "message": "$tabs$ välilehteä · $groups$ ryhmää",
     "placeholders": {
       "tabs": {
         "content": "$1"
@@ -373,7 +373,7 @@
     }
   },
   "tabGroupsGroupCount": {
-    "message": "$count$ tabs",
+    "message": "$count$ välilehteä",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -381,19 +381,19 @@
     }
   },
   "tabGroupsGroupCreatedUnknown": {
-    "message": "Created time unknown"
+    "message": "Luontiaika tuntematon"
   },
   "tabGroupsCurrentTab": {
-    "message": "Current tab"
+    "message": "Nykyinen välilehti"
   },
   "tabGroupsAddBookmark": {
-    "message": "Bookmark this tab"
+    "message": "Lisää tämä välilehti kirjanmerkkeihin"
   },
   "tabGroupsSaveFolder": {
-    "message": "Save tab group as bookmark folder"
+    "message": "Tallenna välilehtiryhmä kirjanmerkkeinä"
   },
   "tabGroupsGroupSavedToFolder": {
-    "message": "Saved $count$ tabs to $folder$",
+    "message": "Tallennettu $count$ välilehteä kohteeseen $folder$",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -404,7 +404,7 @@
     }
   },
   "tabGroupsBookmarksAdded": {
-    "message": "Added $count$ bookmark(s) to $folder$",
+    "message": "Lisätty $count$ kirjanmerkkiä kohteeseen $folder$",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -415,31 +415,31 @@
     }
   },
   "tabGroupsSelectNewGroup": {
-    "message": "New tab group"
+    "message": "Uusi välilehtiryhmä"
   },
   "tabGroupsSelectOpenInto": {
-    "message": "Open in existing tab group…"
+    "message": "Avaa olemassa olevassa ryhmässä…"
   },
   "tabGroupsSelectSaveFolder": {
-    "message": "Save as bookmark folder"
+    "message": "Tallenna kirjanmerkkeinä"
   },
   "tabGroupsSelectClose": {
-    "message": "Close"
+    "message": "Sulje"
   },
   "tabGroupsSelectSleep": {
-    "message": "Sleep"
+    "message": "Nuku"
   },
   "tabGroupsCopyMoveDialog": {
-    "message": "Selected tabs already belong to a tab group. Copy them (open in a new place) or move them (remove from their current group)?"
+    "message": "Valitut välilehdet kuuluvat jo välilehtiryhmään. Kopioidaanko ne (avataan uuteen paikkaan) vai siirretäänkö ne (poistetaan nykyisestä ryhmästä)?"
   },
   "tabGroupsCopyMoveCopy": {
-    "message": "Copy"
+    "message": "Kopioi"
   },
   "tabGroupsCopyMoveMove": {
-    "message": "Move"
+    "message": "Siirrä"
   },
   "tabGroupsConfirmClose": {
-    "message": "Close $count$ tabs?",
+    "message": "Suljetaanko $count$ välilehteä?",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -447,7 +447,7 @@
     }
   },
   "tabGroupsConfirmSleep": {
-    "message": "Sleep $count$ tabs?",
+    "message": "Nukutetaanko $count$ välilehteä?",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -455,46 +455,46 @@
     }
   },
   "bookmarkFolderPickDialogTitle": {
-    "message": "Add to bookmark folder"
+    "message": "Lisää kirjanmerkkeihin"
   },
   "bookmarkFolderNoFolders": {
-    "message": "No bookmark folders"
+    "message": "Ei kirjanmerkkejä"
   },
   "tabGroupsSelectAddBookmarks": {
-    "message": "Add to bookmark folder…"
+    "message": "Lisää kirjanmerkkeihin…"
   },
   "paletteCmdGoTabGroups": {
-    "message": "Go to Tab groups view"
+    "message": "Siirry välilehtiryhmien näkymään"
   },
   "tabGroupsActivateGroup": {
-    "message": "Activate tab group"
+    "message": "Aktivoi ryhmä"
   },
   "tabGroupsRenameGroup": {
-    "message": "Rename tab group"
+    "message": "Nimeä ryhmä"
   },
   "tabGroupsRenameDialog": {
-    "message": "Rename tab group"
+    "message": "Nimeä välilehtiryhmä"
   },
   "tabGroupsCloseGroup": {
-    "message": "Close tab group"
+    "message": "Sulje ryhmä"
   },
   "tabGroupsSleepGroup": {
-    "message": "Sleep tab group"
+    "message": "Nukuta ryhmä"
   },
   "tabGroupsActivateTab": {
-    "message": "Activate tab"
+    "message": "Aktivoi välilehti"
   },
   "tabGroupsCollapseGroup": {
-    "message": "Collapse group"
+    "message": "Kutista ryhmä"
   },
   "tabGroupsExpandGroup": {
-    "message": "Expand group"
+    "message": "Laajenna ryhmä"
   },
   "tabGroupsMenuAddBookmark": {
-    "message": "Bookmark tab"
+    "message": "Lisää kirjanmerkki"
   },
   "tabGroupsMenuSaveFolder": {
-    "message": "Save as bookmark folder"
+    "message": "Tallenna kirjanmerkkeinä"
   },
   "deadProxyAdd": {
     "message": "Lisää välityspalvelin kuolleiden linkkien tarkistuksia varten"

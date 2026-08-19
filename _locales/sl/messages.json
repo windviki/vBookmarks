@@ -344,25 +344,25 @@
     }
   },
   "viewTabGroups": {
-    "message": "Tab groups"
+    "message": "Zavihki"
   },
   "optionShowTabGroupsView": {
-    "message": "Show the tab groups view tab"
+    "message": "Prikaži zavihek pogleda zavihkov"
   },
   "tabGroupsViewEmpty": {
-    "message": "No tabs in this window"
+    "message": "V tem oknu ni zavihkov"
   },
   "tabGroupsToolbarRefresh": {
-    "message": "Refresh"
+    "message": "Osveži"
   },
   "tabGroupsCollapseAll": {
-    "message": "Collapse all"
+    "message": "Strni vse"
   },
   "tabGroupsExpandAll": {
-    "message": "Expand all"
+    "message": "Razširi vse"
   },
   "tabGroupsSummary": {
-    "message": "$tabs$ tabs · $groups$ groups",
+    "message": "$tabs$ zavihkov · $groups$ skupin",
     "placeholders": {
       "tabs": {
         "content": "$1"
@@ -373,7 +373,7 @@
     }
   },
   "tabGroupsGroupCount": {
-    "message": "$count$ tabs",
+    "message": "$count$ zavihkov",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -381,19 +381,19 @@
     }
   },
   "tabGroupsGroupCreatedUnknown": {
-    "message": "Created time unknown"
+    "message": "Čas ustvarjanja neznan"
   },
   "tabGroupsCurrentTab": {
-    "message": "Current tab"
+    "message": "Trenutni zavihek"
   },
   "tabGroupsAddBookmark": {
-    "message": "Bookmark this tab"
+    "message": "Dodaj med zaznamke"
   },
   "tabGroupsSaveFolder": {
-    "message": "Save tab group as bookmark folder"
+    "message": "Shrani skupino zavihkov kot mapo zaznamkov"
   },
   "tabGroupsGroupSavedToFolder": {
-    "message": "Saved $count$ tabs to $folder$",
+    "message": "Shranjenih $count$ zavihkov v $folder$",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -404,7 +404,7 @@
     }
   },
   "tabGroupsBookmarksAdded": {
-    "message": "Added $count$ bookmark(s) to $folder$",
+    "message": "Dodanih $count$ zaznamkov v $folder$",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -415,31 +415,31 @@
     }
   },
   "tabGroupsSelectNewGroup": {
-    "message": "New tab group"
+    "message": "Nova skupina zavihkov"
   },
   "tabGroupsSelectOpenInto": {
-    "message": "Open in existing tab group…"
+    "message": "Odpri v obstoječi skupini zavihkov…"
   },
   "tabGroupsSelectSaveFolder": {
-    "message": "Save as bookmark folder"
+    "message": "Shrani kot mapo zaznamkov"
   },
   "tabGroupsSelectClose": {
-    "message": "Close"
+    "message": "Zapri"
   },
   "tabGroupsSelectSleep": {
-    "message": "Sleep"
+    "message": "Uspavaj"
   },
   "tabGroupsCopyMoveDialog": {
-    "message": "Selected tabs already belong to a tab group. Copy them (open in a new place) or move them (remove from their current group)?"
+    "message": "Izbrani zavihki že pripadajo skupini zavihkov. Jih kopiram (odprem na novem mestu) ali premaknem (odstranim iz trenutne skupine)?"
   },
   "tabGroupsCopyMoveCopy": {
-    "message": "Copy"
+    "message": "Kopiraj"
   },
   "tabGroupsCopyMoveMove": {
-    "message": "Move"
+    "message": "Premakni"
   },
   "tabGroupsConfirmClose": {
-    "message": "Close $count$ tabs?",
+    "message": "Zaprem $count$ zavihkov?",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -447,7 +447,7 @@
     }
   },
   "tabGroupsConfirmSleep": {
-    "message": "Sleep $count$ tabs?",
+    "message": "Uspavam $count$ zavihkov?",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -455,46 +455,46 @@
     }
   },
   "bookmarkFolderPickDialogTitle": {
-    "message": "Add to bookmark folder"
+    "message": "Dodaj v mapo zaznamkov"
   },
   "bookmarkFolderNoFolders": {
-    "message": "No bookmark folders"
+    "message": "Ni map zaznamkov"
   },
   "tabGroupsSelectAddBookmarks": {
-    "message": "Add to bookmark folder…"
+    "message": "Dodaj v mapo zaznamkov…"
   },
   "paletteCmdGoTabGroups": {
-    "message": "Go to Tab groups view"
+    "message": "Pojdi na pogled zavihkov"
   },
   "tabGroupsActivateGroup": {
-    "message": "Activate tab group"
+    "message": "Aktiviraj skupino zavihkov"
   },
   "tabGroupsRenameGroup": {
-    "message": "Rename tab group"
+    "message": "Preimenuj skupino zavihkov"
   },
   "tabGroupsRenameDialog": {
-    "message": "Rename tab group"
+    "message": "Preimenuj skupino zavihkov"
   },
   "tabGroupsCloseGroup": {
-    "message": "Close tab group"
+    "message": "Zapri skupino zavihkov"
   },
   "tabGroupsSleepGroup": {
-    "message": "Sleep tab group"
+    "message": "Uspavaj skupino zavihkov"
   },
   "tabGroupsActivateTab": {
-    "message": "Activate tab"
+    "message": "Aktiviraj zavihek"
   },
   "tabGroupsCollapseGroup": {
-    "message": "Collapse group"
+    "message": "Strni skupino"
   },
   "tabGroupsExpandGroup": {
-    "message": "Expand group"
+    "message": "Razširi skupino"
   },
   "tabGroupsMenuAddBookmark": {
-    "message": "Bookmark tab"
+    "message": "Dodaj med zaznamke"
   },
   "tabGroupsMenuSaveFolder": {
-    "message": "Save as bookmark folder"
+    "message": "Shrani kot mapo zaznamkov"
   },
   "deadProxyAdd": {
     "message": "Dodaj proxy strežnik za preverjanje mrtvih povezav"

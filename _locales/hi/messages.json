@@ -344,25 +344,25 @@
     }
   },
   "viewTabGroups": {
-    "message": "Tab groups"
+    "message": "टैब समूह"
   },
   "optionShowTabGroupsView": {
-    "message": "Show the tab groups view tab"
+    "message": "टैब समूह दृश्य टैब दिखाएँ"
   },
   "tabGroupsViewEmpty": {
-    "message": "No tabs in this window"
+    "message": "इस विंडो में कोई टैब नहीं"
   },
   "tabGroupsToolbarRefresh": {
-    "message": "Refresh"
+    "message": "रीफ़्रेश करें"
   },
   "tabGroupsCollapseAll": {
-    "message": "Collapse all"
+    "message": "सभी संक्षिप्त करें"
   },
   "tabGroupsExpandAll": {
-    "message": "Expand all"
+    "message": "सभी विस्तारित करें"
   },
   "tabGroupsSummary": {
-    "message": "$tabs$ tabs · $groups$ groups",
+    "message": "$tabs$ टैब · $groups$ समूह",
     "placeholders": {
       "tabs": {
         "content": "$1"
@@ -373,7 +373,7 @@
     }
   },
   "tabGroupsGroupCount": {
-    "message": "$count$ tabs",
+    "message": "$count$ टैब",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -381,19 +381,19 @@
     }
   },
   "tabGroupsGroupCreatedUnknown": {
-    "message": "Created time unknown"
+    "message": "निर्माण समय अज्ञात"
   },
   "tabGroupsCurrentTab": {
-    "message": "Current tab"
+    "message": "वर्तमान टैब"
   },
   "tabGroupsAddBookmark": {
-    "message": "Bookmark this tab"
+    "message": "इस टैब को बुकमार्क करें"
   },
   "tabGroupsSaveFolder": {
-    "message": "Save tab group as bookmark folder"
+    "message": "टैब समूह को बुकमार्क फ़ोल्डर के रूप में सहेजें"
   },
   "tabGroupsGroupSavedToFolder": {
-    "message": "Saved $count$ tabs to $folder$",
+    "message": "$count$ टैब $folder$ में सहेजे गए",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -404,7 +404,7 @@
     }
   },
   "tabGroupsBookmarksAdded": {
-    "message": "Added $count$ bookmark(s) to $folder$",
+    "message": "$count$ बुकमार्क $folder$ में जोड़े गए",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -415,31 +415,31 @@
     }
   },
   "tabGroupsSelectNewGroup": {
-    "message": "New tab group"
+    "message": "नया टैब समूह"
   },
   "tabGroupsSelectOpenInto": {
-    "message": "Open in existing tab group…"
+    "message": "मौजूदा टैब समूह में खोलें…"
   },
   "tabGroupsSelectSaveFolder": {
-    "message": "Save as bookmark folder"
+    "message": "बुकमार्क फ़ोल्डर के रूप में सहेजें"
   },
   "tabGroupsSelectClose": {
-    "message": "Close"
+    "message": "बंद करें"
   },
   "tabGroupsSelectSleep": {
-    "message": "Sleep"
+    "message": "स्लीप"
   },
   "tabGroupsCopyMoveDialog": {
-    "message": "Selected tabs already belong to a tab group. Copy them (open in a new place) or move them (remove from their current group)?"
+    "message": "चयनित टैब पहले से ही एक टैब समूह से संबंधित हैं। उन्हें कॉपी करें (नई जगह में खोलें) या स्थानांतरित करें (वर्तमान समूह से हटाएँ)?"
   },
   "tabGroupsCopyMoveCopy": {
-    "message": "Copy"
+    "message": "कॉपी करें"
   },
   "tabGroupsCopyMoveMove": {
-    "message": "Move"
+    "message": "स्थानांतरित करें"
   },
   "tabGroupsConfirmClose": {
-    "message": "Close $count$ tabs?",
+    "message": "$count$ टैब बंद करें?",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -447,7 +447,7 @@
     }
   },
   "tabGroupsConfirmSleep": {
-    "message": "Sleep $count$ tabs?",
+    "message": "$count$ टैब स्लीप करें?",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -455,46 +455,46 @@
     }
   },
   "bookmarkFolderPickDialogTitle": {
-    "message": "Add to bookmark folder"
+    "message": "बुकमार्क फ़ोल्डर में जोड़ें"
   },
   "bookmarkFolderNoFolders": {
-    "message": "No bookmark folders"
+    "message": "कोई बुकमार्क फ़ोल्डर नहीं"
   },
   "tabGroupsSelectAddBookmarks": {
-    "message": "Add to bookmark folder…"
+    "message": "बुकमार्क फ़ोल्डर में जोड़ें…"
   },
   "paletteCmdGoTabGroups": {
-    "message": "Go to Tab groups view"
+    "message": "टैब समूह दृश्य पर जाएँ"
   },
   "tabGroupsActivateGroup": {
-    "message": "Activate tab group"
+    "message": "टैब समूह सक्रिय करें"
   },
   "tabGroupsRenameGroup": {
-    "message": "Rename tab group"
+    "message": "टैब समूह का नाम बदलें"
   },
   "tabGroupsRenameDialog": {
-    "message": "Rename tab group"
+    "message": "टैब समूह का नाम बदलें"
   },
   "tabGroupsCloseGroup": {
-    "message": "Close tab group"
+    "message": "टैब समूह बंद करें"
   },
   "tabGroupsSleepGroup": {
-    "message": "Sleep tab group"
+    "message": "टैब समूह स्लीप करें"
   },
   "tabGroupsActivateTab": {
-    "message": "Activate tab"
+    "message": "टैब सक्रिय करें"
   },
   "tabGroupsCollapseGroup": {
-    "message": "Collapse group"
+    "message": "समूह संक्षिप्त करें"
   },
   "tabGroupsExpandGroup": {
-    "message": "Expand group"
+    "message": "समूह विस्तारित करें"
   },
   "tabGroupsMenuAddBookmark": {
-    "message": "Bookmark tab"
+    "message": "टैब बुकमार्क करें"
   },
   "tabGroupsMenuSaveFolder": {
-    "message": "Save as bookmark folder"
+    "message": "बुकमार्क फ़ोल्डर के रूप में सहेजें"
   },
   "deadProxyAdd": {
     "message": "डेड-लिंक जाँच के लिए प्रॉक्सी सर्वर जोड़ें"

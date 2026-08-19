@@ -344,25 +344,25 @@
     }
   },
   "viewTabGroups": {
-    "message": "Tab groups"
+    "message": "Nhóm tab"
   },
   "optionShowTabGroupsView": {
-    "message": "Show the tab groups view tab"
+    "message": "Hiển thị tab chế độ xem nhóm tab"
   },
   "tabGroupsViewEmpty": {
-    "message": "No tabs in this window"
+    "message": "Không có tab nào trong cửa sổ này"
   },
   "tabGroupsToolbarRefresh": {
-    "message": "Refresh"
+    "message": "Làm mới"
   },
   "tabGroupsCollapseAll": {
-    "message": "Collapse all"
+    "message": "Thu gọn tất cả"
   },
   "tabGroupsExpandAll": {
-    "message": "Expand all"
+    "message": "Mở rộng tất cả"
   },
   "tabGroupsSummary": {
-    "message": "$tabs$ tabs · $groups$ groups",
+    "message": "$tabs$ tab · $groups$ nhóm",
     "placeholders": {
       "tabs": {
         "content": "$1"
@@ -373,7 +373,7 @@
     }
   },
   "tabGroupsGroupCount": {
-    "message": "$count$ tabs",
+    "message": "$count$ tab",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -381,19 +381,19 @@
     }
   },
   "tabGroupsGroupCreatedUnknown": {
-    "message": "Created time unknown"
+    "message": "Không rõ thời gian tạo"
   },
   "tabGroupsCurrentTab": {
-    "message": "Current tab"
+    "message": "Tab hiện tại"
   },
   "tabGroupsAddBookmark": {
-    "message": "Bookmark this tab"
+    "message": "Đánh dấu tab này"
   },
   "tabGroupsSaveFolder": {
-    "message": "Save tab group as bookmark folder"
+    "message": "Lưu nhóm tab dưới dạng thư mục dấu trang"
   },
   "tabGroupsGroupSavedToFolder": {
-    "message": "Saved $count$ tabs to $folder$",
+    "message": "Đã lưu $count$ tab vào $folder$",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -404,7 +404,7 @@
     }
   },
   "tabGroupsBookmarksAdded": {
-    "message": "Added $count$ bookmark(s) to $folder$",
+    "message": "Đã thêm $count$ dấu trang vào $folder$",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -415,31 +415,31 @@
     }
   },
   "tabGroupsSelectNewGroup": {
-    "message": "New tab group"
+    "message": "Nhóm tab mới"
   },
   "tabGroupsSelectOpenInto": {
-    "message": "Open in existing tab group…"
+    "message": "Mở trong nhóm tab hiện có…"
   },
   "tabGroupsSelectSaveFolder": {
-    "message": "Save as bookmark folder"
+    "message": "Lưu dưới dạng thư mục dấu trang"
   },
   "tabGroupsSelectClose": {
-    "message": "Close"
+    "message": "Đóng"
   },
   "tabGroupsSelectSleep": {
-    "message": "Sleep"
+    "message": "Ngủ"
   },
   "tabGroupsCopyMoveDialog": {
-    "message": "Selected tabs already belong to a tab group. Copy them (open in a new place) or move them (remove from their current group)?"
+    "message": "Các tab đã chọn thuộc về một nhóm tab. Bạn muốn sao chép (mở ở vị trí mới) hay di chuyển (xóa khỏi nhóm hiện tại)?"
   },
   "tabGroupsCopyMoveCopy": {
-    "message": "Copy"
+    "message": "Sao chép"
   },
   "tabGroupsCopyMoveMove": {
-    "message": "Move"
+    "message": "Di chuyển"
   },
   "tabGroupsConfirmClose": {
-    "message": "Close $count$ tabs?",
+    "message": "Đóng $count$ tab?",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -447,7 +447,7 @@
     }
   },
   "tabGroupsConfirmSleep": {
-    "message": "Sleep $count$ tabs?",
+    "message": "Cho $count$ tab ngủ?",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -455,46 +455,46 @@
     }
   },
   "bookmarkFolderPickDialogTitle": {
-    "message": "Add to bookmark folder"
+    "message": "Thêm vào thư mục dấu trang"
   },
   "bookmarkFolderNoFolders": {
-    "message": "No bookmark folders"
+    "message": "Không có thư mục dấu trang"
   },
   "tabGroupsSelectAddBookmarks": {
-    "message": "Add to bookmark folder…"
+    "message": "Thêm vào thư mục dấu trang…"
   },
   "paletteCmdGoTabGroups": {
-    "message": "Go to Tab groups view"
+    "message": "Đi tới chế độ xem Nhóm tab"
   },
   "tabGroupsActivateGroup": {
-    "message": "Activate tab group"
+    "message": "Kích hoạt nhóm tab"
   },
   "tabGroupsRenameGroup": {
-    "message": "Rename tab group"
+    "message": "Đổi tên nhóm tab"
   },
   "tabGroupsRenameDialog": {
-    "message": "Rename tab group"
+    "message": "Đổi tên nhóm tab"
   },
   "tabGroupsCloseGroup": {
-    "message": "Close tab group"
+    "message": "Đóng nhóm tab"
   },
   "tabGroupsSleepGroup": {
-    "message": "Sleep tab group"
+    "message": "Cho nhóm tab ngủ"
   },
   "tabGroupsActivateTab": {
-    "message": "Activate tab"
+    "message": "Kích hoạt tab"
   },
   "tabGroupsCollapseGroup": {
-    "message": "Collapse group"
+    "message": "Thu gọn nhóm"
   },
   "tabGroupsExpandGroup": {
-    "message": "Expand group"
+    "message": "Mở rộng nhóm"
   },
   "tabGroupsMenuAddBookmark": {
-    "message": "Bookmark tab"
+    "message": "Đánh dấu tab"
   },
   "tabGroupsMenuSaveFolder": {
-    "message": "Save as bookmark folder"
+    "message": "Lưu dưới dạng thư mục dấu trang"
   },
   "deadProxyAdd": {
     "message": "Thêm máy chủ proxy để kiểm tra liên kết hỏng"

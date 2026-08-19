@@ -344,25 +344,25 @@
     }
   },
   "viewTabGroups": {
-    "message": "Tab groups"
+    "message": "Группы вкладок"
   },
   "optionShowTabGroupsView": {
-    "message": "Show the tab groups view tab"
+    "message": "Показывать вкладку просмотра групп вкладок"
   },
   "tabGroupsViewEmpty": {
-    "message": "No tabs in this window"
+    "message": "Нет вкладок в этом окне"
   },
   "tabGroupsToolbarRefresh": {
-    "message": "Refresh"
+    "message": "Обновить"
   },
   "tabGroupsCollapseAll": {
-    "message": "Collapse all"
+    "message": "Свернуть все"
   },
   "tabGroupsExpandAll": {
-    "message": "Expand all"
+    "message": "Развернуть все"
   },
   "tabGroupsSummary": {
-    "message": "$tabs$ tabs · $groups$ groups",
+    "message": "$tabs$ вкладок · $groups$ групп",
     "placeholders": {
       "tabs": {
         "content": "$1"
@@ -373,7 +373,7 @@
     }
   },
   "tabGroupsGroupCount": {
-    "message": "$count$ tabs",
+    "message": "$count$ вкладок",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -381,19 +381,19 @@
     }
   },
   "tabGroupsGroupCreatedUnknown": {
-    "message": "Created time unknown"
+    "message": "Время создания неизвестно"
   },
   "tabGroupsCurrentTab": {
-    "message": "Current tab"
+    "message": "Текущая вкладка"
   },
   "tabGroupsAddBookmark": {
-    "message": "Bookmark this tab"
+    "message": "Добавить в закладки"
   },
   "tabGroupsSaveFolder": {
-    "message": "Save tab group as bookmark folder"
+    "message": "Сохранить группу вкладок как папку закладок"
   },
   "tabGroupsGroupSavedToFolder": {
-    "message": "Saved $count$ tabs to $folder$",
+    "message": "Сохранено $count$ вкладок в $folder$",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -404,7 +404,7 @@
     }
   },
   "tabGroupsBookmarksAdded": {
-    "message": "Added $count$ bookmark(s) to $folder$",
+    "message": "Добавлено $count$ закладок в $folder$",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -415,31 +415,31 @@
     }
   },
   "tabGroupsSelectNewGroup": {
-    "message": "New tab group"
+    "message": "Новая группа вкладок"
   },
   "tabGroupsSelectOpenInto": {
-    "message": "Open in existing tab group…"
+    "message": "Открыть в существующей группе…"
   },
   "tabGroupsSelectSaveFolder": {
-    "message": "Save as bookmark folder"
+    "message": "Сохранить как папку закладок"
   },
   "tabGroupsSelectClose": {
-    "message": "Close"
+    "message": "Закрыть"
   },
   "tabGroupsSelectSleep": {
-    "message": "Sleep"
+    "message": "Усыпить"
   },
   "tabGroupsCopyMoveDialog": {
-    "message": "Selected tabs already belong to a tab group. Copy them (open in a new place) or move them (remove from their current group)?"
+    "message": "Выбранные вкладки уже принадлежат группе вкладок. Скопировать их (открыть в новом месте) или переместить (удалить из текущей группы)?"
   },
   "tabGroupsCopyMoveCopy": {
-    "message": "Copy"
+    "message": "Копировать"
   },
   "tabGroupsCopyMoveMove": {
-    "message": "Move"
+    "message": "Переместить"
   },
   "tabGroupsConfirmClose": {
-    "message": "Close $count$ tabs?",
+    "message": "Закрыть $count$ вкладок?",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -447,7 +447,7 @@
     }
   },
   "tabGroupsConfirmSleep": {
-    "message": "Sleep $count$ tabs?",
+    "message": "Усыпить $count$ вкладок?",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -455,46 +455,46 @@
     }
   },
   "bookmarkFolderPickDialogTitle": {
-    "message": "Add to bookmark folder"
+    "message": "Добавить в папку закладок"
   },
   "bookmarkFolderNoFolders": {
-    "message": "No bookmark folders"
+    "message": "Нет папок закладок"
   },
   "tabGroupsSelectAddBookmarks": {
-    "message": "Add to bookmark folder…"
+    "message": "Добавить в папку закладок…"
   },
   "paletteCmdGoTabGroups": {
-    "message": "Go to Tab groups view"
+    "message": "Перейти к просмотру групп вкладок"
   },
   "tabGroupsActivateGroup": {
-    "message": "Activate tab group"
+    "message": "Активировать группу"
   },
   "tabGroupsRenameGroup": {
-    "message": "Rename tab group"
+    "message": "Переименовать группу"
   },
   "tabGroupsRenameDialog": {
-    "message": "Rename tab group"
+    "message": "Переименовать группу вкладок"
   },
   "tabGroupsCloseGroup": {
-    "message": "Close tab group"
+    "message": "Закрыть группу"
   },
   "tabGroupsSleepGroup": {
-    "message": "Sleep tab group"
+    "message": "Усыпить группу"
   },
   "tabGroupsActivateTab": {
-    "message": "Activate tab"
+    "message": "Активировать вкладку"
   },
   "tabGroupsCollapseGroup": {
-    "message": "Collapse group"
+    "message": "Свернуть группу"
   },
   "tabGroupsExpandGroup": {
-    "message": "Expand group"
+    "message": "Развернуть группу"
   },
   "tabGroupsMenuAddBookmark": {
-    "message": "Bookmark tab"
+    "message": "В закладки"
   },
   "tabGroupsMenuSaveFolder": {
-    "message": "Save as bookmark folder"
+    "message": "Сохранить как папку"
   },
   "deadProxyAdd": {
     "message": "Добавить прокси-сервер для проверки битых ссылок"

@@ -344,25 +344,25 @@
     }
   },
   "viewTabGroups": {
-    "message": "Tab groups"
+    "message": "Grupe kartica"
   },
   "optionShowTabGroupsView": {
-    "message": "Show the tab groups view tab"
+    "message": "Prikaži karticu prikaza grupa kartica"
   },
   "tabGroupsViewEmpty": {
-    "message": "No tabs in this window"
+    "message": "Nema kartica u ovom prozoru"
   },
   "tabGroupsToolbarRefresh": {
-    "message": "Refresh"
+    "message": "Osvježi"
   },
   "tabGroupsCollapseAll": {
-    "message": "Collapse all"
+    "message": "Sažmi sve"
   },
   "tabGroupsExpandAll": {
-    "message": "Expand all"
+    "message": "Proširi sve"
   },
   "tabGroupsSummary": {
-    "message": "$tabs$ tabs · $groups$ groups",
+    "message": "$tabs$ kartica · $groups$ grupa",
     "placeholders": {
       "tabs": {
         "content": "$1"
@@ -373,7 +373,7 @@
     }
   },
   "tabGroupsGroupCount": {
-    "message": "$count$ tabs",
+    "message": "$count$ kartica",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -381,19 +381,19 @@
     }
   },
   "tabGroupsGroupCreatedUnknown": {
-    "message": "Created time unknown"
+    "message": "Vrijeme stvaranja nepoznato"
   },
   "tabGroupsCurrentTab": {
-    "message": "Current tab"
+    "message": "Trenutna kartica"
   },
   "tabGroupsAddBookmark": {
-    "message": "Bookmark this tab"
+    "message": "Dodaj ovu karticu u oznake"
   },
   "tabGroupsSaveFolder": {
-    "message": "Save tab group as bookmark folder"
+    "message": "Spremi grupu kartica kao mapu oznaka"
   },
   "tabGroupsGroupSavedToFolder": {
-    "message": "Saved $count$ tabs to $folder$",
+    "message": "Spremljeno $count$ kartica u $folder$",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -404,7 +404,7 @@
     }
   },
   "tabGroupsBookmarksAdded": {
-    "message": "Added $count$ bookmark(s) to $folder$",
+    "message": "Dodano $count$ oznaka u $folder$",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -415,31 +415,31 @@
     }
   },
   "tabGroupsSelectNewGroup": {
-    "message": "New tab group"
+    "message": "Nova grupa kartica"
   },
   "tabGroupsSelectOpenInto": {
-    "message": "Open in existing tab group…"
+    "message": "Otvori u postojećoj grupi kartica…"
   },
   "tabGroupsSelectSaveFolder": {
-    "message": "Save as bookmark folder"
+    "message": "Spremi kao mapu oznaka"
   },
   "tabGroupsSelectClose": {
-    "message": "Close"
+    "message": "Zatvori"
   },
   "tabGroupsSelectSleep": {
-    "message": "Sleep"
+    "message": "Uspavaj"
   },
   "tabGroupsCopyMoveDialog": {
-    "message": "Selected tabs already belong to a tab group. Copy them (open in a new place) or move them (remove from their current group)?"
+    "message": "Odabrane kartice već pripadaju grupi kartica. Kopirati ih (otvoriti na novom mjestu) ili premjestiti (ukloniti iz trenutne grupe)?"
   },
   "tabGroupsCopyMoveCopy": {
-    "message": "Copy"
+    "message": "Kopiraj"
   },
   "tabGroupsCopyMoveMove": {
-    "message": "Move"
+    "message": "Premjesti"
   },
   "tabGroupsConfirmClose": {
-    "message": "Close $count$ tabs?",
+    "message": "Zatvoriti $count$ kartica?",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -447,7 +447,7 @@
     }
   },
   "tabGroupsConfirmSleep": {
-    "message": "Sleep $count$ tabs?",
+    "message": "Uspavati $count$ kartica?",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -455,46 +455,46 @@
     }
   },
   "bookmarkFolderPickDialogTitle": {
-    "message": "Add to bookmark folder"
+    "message": "Dodaj u mapu oznaka"
   },
   "bookmarkFolderNoFolders": {
-    "message": "No bookmark folders"
+    "message": "Nema mapa oznaka"
   },
   "tabGroupsSelectAddBookmarks": {
-    "message": "Add to bookmark folder…"
+    "message": "Dodaj u mapu oznaka…"
   },
   "paletteCmdGoTabGroups": {
-    "message": "Go to Tab groups view"
+    "message": "Idi na prikaz grupa kartica"
   },
   "tabGroupsActivateGroup": {
-    "message": "Activate tab group"
+    "message": "Aktiviraj grupu"
   },
   "tabGroupsRenameGroup": {
-    "message": "Rename tab group"
+    "message": "Preimenuj grupu"
   },
   "tabGroupsRenameDialog": {
-    "message": "Rename tab group"
+    "message": "Preimenuj grupu kartica"
   },
   "tabGroupsCloseGroup": {
-    "message": "Close tab group"
+    "message": "Zatvori grupu"
   },
   "tabGroupsSleepGroup": {
-    "message": "Sleep tab group"
+    "message": "Uspavaj grupu"
   },
   "tabGroupsActivateTab": {
-    "message": "Activate tab"
+    "message": "Aktiviraj karticu"
   },
   "tabGroupsCollapseGroup": {
-    "message": "Collapse group"
+    "message": "Sažmi grupu"
   },
   "tabGroupsExpandGroup": {
-    "message": "Expand group"
+    "message": "Proširi grupu"
   },
   "tabGroupsMenuAddBookmark": {
-    "message": "Bookmark tab"
+    "message": "Dodaj u oznake"
   },
   "tabGroupsMenuSaveFolder": {
-    "message": "Save as bookmark folder"
+    "message": "Spremi kao mapu oznaka"
   },
   "deadProxyAdd": {
     "message": "Dodaj proxy poslužitelj za provjeru mrtvih veza"

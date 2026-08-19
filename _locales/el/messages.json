@@ -359,10 +359,10 @@
     "message": "Σύμπτυξη όλων"
   },
   "tabGroupsExpandAll": {
-    "message": "Ανάπτυξη όλων"
+    "message": "Επέκταση όλων"
   },
   "tabGroupsSummary": {
-    "message": "$tabs$ tabs · $groups$ groups",
+    "message": "$tabs$ καρτέλες · $groups$ ομάδες",
     "placeholders": {
       "tabs": {
         "content": "$1"
@@ -373,7 +373,7 @@
     }
   },
   "tabGroupsGroupCount": {
-    "message": "$count$ tabs",
+    "message": "$count$ καρτέλες",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -393,7 +393,7 @@
     "message": "Αποθήκευση ομάδας καρτελών ως φάκελο σελιδοδεικτών"
   },
   "tabGroupsGroupSavedToFolder": {
-    "message": "Saved $count$ tabs to $folder$",
+    "message": "Αποθηκεύτηκαν $count$ καρτέλες στον $folder$",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -404,7 +404,7 @@
     }
   },
   "tabGroupsBookmarksAdded": {
-    "message": "Added $count$ bookmark(s) to $folder$",
+    "message": "Προστέθηκαν $count$ σελιδοδείκτες στον $folder$",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -439,7 +439,7 @@
     "message": "Μετακίνηση"
   },
   "tabGroupsConfirmClose": {
-    "message": "Close $count$ tabs?",
+    "message": "Κλείσιμο $count$ καρτελών;",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -447,7 +447,7 @@
     }
   },
   "tabGroupsConfirmSleep": {
-    "message": "Sleep $count$ tabs?",
+    "message": "Αναστολή $count$ καρτελών;",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -464,37 +464,37 @@
     "message": "Προσθήκη σε φάκελο σελιδοδεικτών…"
   },
   "paletteCmdGoTabGroups": {
-    "message": "Go to Tab groups view"
+    "message": "Μετάβαση στην προβολή ομάδων καρτελών"
   },
   "tabGroupsActivateGroup": {
-    "message": "Activate tab group"
+    "message": "Ενεργοποίηση ομάδας"
   },
   "tabGroupsRenameGroup": {
-    "message": "Rename tab group"
+    "message": "Μετονομασία ομάδας"
   },
   "tabGroupsRenameDialog": {
-    "message": "Rename tab group"
+    "message": "Μετονομασία ομάδας καρτελών"
   },
   "tabGroupsCloseGroup": {
-    "message": "Close tab group"
+    "message": "Κλείσιμο ομάδας"
   },
   "tabGroupsSleepGroup": {
-    "message": "Sleep tab group"
+    "message": "Αναστολή ομάδας"
   },
   "tabGroupsActivateTab": {
-    "message": "Activate tab"
+    "message": "Ενεργοποίηση καρτέλας"
   },
   "tabGroupsCollapseGroup": {
-    "message": "Collapse group"
+    "message": "Σύμπτυξη ομάδας"
   },
   "tabGroupsExpandGroup": {
-    "message": "Expand group"
+    "message": "Επέκταση ομάδας"
   },
   "tabGroupsMenuAddBookmark": {
-    "message": "Bookmark tab"
+    "message": "Σελιδοδείκτης καρτέλας"
   },
   "tabGroupsMenuSaveFolder": {
-    "message": "Save as bookmark folder"
+    "message": "Αποθήκευση ως φάκελο σελιδοδεικτών"
   },
   "deadProxyAdd": {
     "message": "Προσθήκη διακομιστή μεσολάβησης για ελέγχους νεκρών συνδέσμων"

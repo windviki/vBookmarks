@@ -347,7 +347,7 @@
     "message": "Tab-Gruppen"
   },
   "optionShowTabGroupsView": {
-    "message": "Tab-Gruppen-Ansicht als Tab anzeigen"
+    "message": "Tab-Gruppen-Ansicht anzeigen"
   },
   "tabGroupsViewEmpty": {
     "message": "Keine Tabs in diesem Fenster"
@@ -362,7 +362,7 @@
     "message": "Alle ausklappen"
   },
   "tabGroupsSummary": {
-    "message": "$tabs$ tabs · $groups$ groups",
+    "message": "$tabs$ Tabs · $groups$ Gruppen",
     "placeholders": {
       "tabs": {
         "content": "$1"
@@ -373,7 +373,7 @@
     }
   },
   "tabGroupsGroupCount": {
-    "message": "$count$ tabs",
+    "message": "$count$ Tabs",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -387,13 +387,13 @@
     "message": "Aktueller Tab"
   },
   "tabGroupsAddBookmark": {
-    "message": "Tab als Lesezeichen speichern"
+    "message": "Diesen Tab als Lesezeichen speichern"
   },
   "tabGroupsSaveFolder": {
     "message": "Tab-Gruppe als Lesezeichenordner speichern"
   },
   "tabGroupsGroupSavedToFolder": {
-    "message": "Saved $count$ tabs to $folder$",
+    "message": "$count$ Tabs in $folder$ gespeichert",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -404,7 +404,7 @@
     }
   },
   "tabGroupsBookmarksAdded": {
-    "message": "Added $count$ bookmark(s) to $folder$",
+    "message": "$count$ Lesezeichen zu $folder$ hinzugefügt",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -418,7 +418,7 @@
     "message": "Neue Tab-Gruppe"
   },
   "tabGroupsSelectOpenInto": {
-    "message": "In vorhandener Tab-Gruppe öffnen…"
+    "message": "In bestehender Tab-Gruppe öffnen…"
   },
   "tabGroupsSelectSaveFolder": {
     "message": "Als Lesezeichenordner speichern"
@@ -427,7 +427,7 @@
     "message": "Schließen"
   },
   "tabGroupsSelectSleep": {
-    "message": "Schlafen legen"
+    "message": "Schlafen"
   },
   "tabGroupsCopyMoveDialog": {
     "message": "Ausgewählte Tabs gehören bereits zu einer Tab-Gruppe. Möchten Sie sie kopieren (an einem neuen Ort öffnen) oder verschieben (aus ihrer aktuellen Gruppe entfernen)?"
@@ -439,7 +439,7 @@
     "message": "Verschieben"
   },
   "tabGroupsConfirmClose": {
-    "message": "Close $count$ tabs?",
+    "message": "$count$ Tabs schließen?",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -447,7 +447,7 @@
     }
   },
   "tabGroupsConfirmSleep": {
-    "message": "Sleep $count$ tabs?",
+    "message": "$count$ Tabs schlafen legen?",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -464,37 +464,37 @@
     "message": "Zu Lesezeichenordner hinzufügen…"
   },
   "paletteCmdGoTabGroups": {
-    "message": "Go to Tab groups view"
+    "message": "Zur Tab-Gruppen-Ansicht wechseln"
   },
   "tabGroupsActivateGroup": {
-    "message": "Activate tab group"
+    "message": "Tab-Gruppe aktivieren"
   },
   "tabGroupsRenameGroup": {
-    "message": "Rename tab group"
+    "message": "Tab-Gruppe umbenennen"
   },
   "tabGroupsRenameDialog": {
-    "message": "Rename tab group"
+    "message": "Tab-Gruppe umbenennen"
   },
   "tabGroupsCloseGroup": {
-    "message": "Close tab group"
+    "message": "Tab-Gruppe schließen"
   },
   "tabGroupsSleepGroup": {
-    "message": "Sleep tab group"
+    "message": "Tab-Gruppe schlafen legen"
   },
   "tabGroupsActivateTab": {
-    "message": "Activate tab"
+    "message": "Tab aktivieren"
   },
   "tabGroupsCollapseGroup": {
-    "message": "Collapse group"
+    "message": "Gruppe einklappen"
   },
   "tabGroupsExpandGroup": {
-    "message": "Expand group"
+    "message": "Gruppe ausklappen"
   },
   "tabGroupsMenuAddBookmark": {
-    "message": "Bookmark tab"
+    "message": "Tab als Lesezeichen"
   },
   "tabGroupsMenuSaveFolder": {
-    "message": "Save as bookmark folder"
+    "message": "Als Lesezeichenordner speichern"
   },
   "deadProxyAdd": {
     "message": "Proxyserver für Tote-Links-Prüfungen hinzufügen"

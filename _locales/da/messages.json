@@ -347,7 +347,7 @@
     "message": "Fanegrupper"
   },
   "optionShowTabGroupsView": {
-    "message": "Vis fanen til fanegruppevisning"
+    "message": "Vis fanen Fanegrupper"
   },
   "tabGroupsViewEmpty": {
     "message": "Ingen faner i dette vindue"
@@ -356,13 +356,13 @@
     "message": "Opdater"
   },
   "tabGroupsCollapseAll": {
-    "message": "Sammenfold alle"
+    "message": "Skjul alle"
   },
   "tabGroupsExpandAll": {
-    "message": "Udvid alle"
+    "message": "Vis alle"
   },
   "tabGroupsSummary": {
-    "message": "$tabs$ tabs · $groups$ groups",
+    "message": "$tabs$ faner · $groups$ grupper",
     "placeholders": {
       "tabs": {
         "content": "$1"
@@ -373,7 +373,7 @@
     }
   },
   "tabGroupsGroupCount": {
-    "message": "$count$ tabs",
+    "message": "$count$ faner",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -381,7 +381,7 @@
     }
   },
   "tabGroupsGroupCreatedUnknown": {
-    "message": "Oprettelsestidspunkt ukendt"
+    "message": "Oprettelsestid ukendt"
   },
   "tabGroupsCurrentTab": {
     "message": "Aktuel fane"
@@ -393,7 +393,7 @@
     "message": "Gem fanegruppe som bogmærkemappe"
   },
   "tabGroupsGroupSavedToFolder": {
-    "message": "Saved $count$ tabs to $folder$",
+    "message": "Gemte $count$ faner i $folder$",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -404,7 +404,7 @@
     }
   },
   "tabGroupsBookmarksAdded": {
-    "message": "Added $count$ bookmark(s) to $folder$",
+    "message": "Tilføjede $count$ bogmærke(r) til $folder$",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -427,10 +427,10 @@
     "message": "Luk"
   },
   "tabGroupsSelectSleep": {
-    "message": "Dvale"
+    "message": "Slumre"
   },
   "tabGroupsCopyMoveDialog": {
-    "message": "De valgte faner tilhører allerede en fanegruppe. Kopier dem (åbn på en ny placering) eller flyt dem (fjern fra deres nuværende gruppe)?"
+    "message": "Markerede faner tilhører allerede en fanegruppe. Kopier dem (åbn på et nyt sted) eller flyt dem (fjern fra deres nuværende gruppe)?"
   },
   "tabGroupsCopyMoveCopy": {
     "message": "Kopier"
@@ -439,7 +439,7 @@
     "message": "Flyt"
   },
   "tabGroupsConfirmClose": {
-    "message": "Close $count$ tabs?",
+    "message": "Luk $count$ faner?",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -447,7 +447,7 @@
     }
   },
   "tabGroupsConfirmSleep": {
-    "message": "Sleep $count$ tabs?",
+    "message": "Slumre $count$ faner?",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -464,37 +464,37 @@
     "message": "Tilføj til bogmærkemappe…"
   },
   "paletteCmdGoTabGroups": {
-    "message": "Go to Tab groups view"
+    "message": "Gå til visning af fanegrupper"
   },
   "tabGroupsActivateGroup": {
-    "message": "Activate tab group"
+    "message": "Aktivér fanegruppe"
   },
   "tabGroupsRenameGroup": {
-    "message": "Rename tab group"
+    "message": "Omdøb fanegruppe"
   },
   "tabGroupsRenameDialog": {
-    "message": "Rename tab group"
+    "message": "Omdøb fanegruppe"
   },
   "tabGroupsCloseGroup": {
-    "message": "Close tab group"
+    "message": "Luk fanegruppe"
   },
   "tabGroupsSleepGroup": {
-    "message": "Sleep tab group"
+    "message": "Slumre fanegruppe"
   },
   "tabGroupsActivateTab": {
-    "message": "Activate tab"
+    "message": "Aktivér fane"
   },
   "tabGroupsCollapseGroup": {
-    "message": "Collapse group"
+    "message": "Skjul gruppe"
   },
   "tabGroupsExpandGroup": {
-    "message": "Expand group"
+    "message": "Vis gruppe"
   },
   "tabGroupsMenuAddBookmark": {
-    "message": "Bookmark tab"
+    "message": "Bogmærk fane"
   },
   "tabGroupsMenuSaveFolder": {
-    "message": "Save as bookmark folder"
+    "message": "Gem som bogmærkemappe"
   },
   "deadProxyAdd": {
     "message": "Tilføj en proxyserver til død-link-tjek"

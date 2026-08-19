@@ -356,13 +356,13 @@
     "message": "রিফ্রেশ"
   },
   "tabGroupsCollapseAll": {
-    "message": "সব ভাঁজ করুন"
+    "message": "সব সংকুচিত করুন"
   },
   "tabGroupsExpandAll": {
     "message": "সব প্রসারিত করুন"
   },
   "tabGroupsSummary": {
-    "message": "$tabs$ tabs · $groups$ groups",
+    "message": "$tabs$ ট্যাব · $groups$ গ্রুপ",
     "placeholders": {
       "tabs": {
         "content": "$1"
@@ -373,7 +373,7 @@
     }
   },
   "tabGroupsGroupCount": {
-    "message": "$count$ tabs",
+    "message": "$count$ ট্যাব",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -381,7 +381,7 @@
     }
   },
   "tabGroupsGroupCreatedUnknown": {
-    "message": "তৈরির সময় অজানা"
+    "message": "নির্মাণের সময় অজানা"
   },
   "tabGroupsCurrentTab": {
     "message": "বর্তমান ট্যাব"
@@ -390,10 +390,10 @@
     "message": "এই ট্যাব বুকমার্ক করুন"
   },
   "tabGroupsSaveFolder": {
-    "message": "ট্যাব গ্রুপকে বুকমার্ক ফোল্ডার হিসেবে সংরক্ষণ করুন"
+    "message": "ট্যাব গ্রুপ বুকমার্ক ফোল্ডার হিসেবে সংরক্ষণ করুন"
   },
   "tabGroupsGroupSavedToFolder": {
-    "message": "Saved $count$ tabs to $folder$",
+    "message": "$count$ ট্যাব $folder$-এ সংরক্ষিত হয়েছে",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -404,7 +404,7 @@
     }
   },
   "tabGroupsBookmarksAdded": {
-    "message": "Added $count$ bookmark(s) to $folder$",
+    "message": "$count$ বুকমার্ক $folder$-এ যোগ হয়েছে",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -430,7 +430,7 @@
     "message": "স্লিপ"
   },
   "tabGroupsCopyMoveDialog": {
-    "message": "নির্বাচিত ট্যাবগুলো ইতিমধ্যে একটি ট্যাব গ্রুপের অন্তর্ভুক্ত। এগুলো কপি করুন (নতুন স্থানে খুলুন) বা সরান (বর্তমান গ্রুপ থেকে সরিয়ে ফেলুন)?"
+    "message": "নির্বাচিত ট্যাবগুলো ইতিমধ্যে একটি ট্যাব গ্রুপের অন্তর্গত। সেগুলো কপি করুন (নতুন জায়গায় খুলুন) বা সরান (বর্তমান গ্রুপ থেকে সরান)?"
   },
   "tabGroupsCopyMoveCopy": {
     "message": "কপি"
@@ -439,7 +439,7 @@
     "message": "সরান"
   },
   "tabGroupsConfirmClose": {
-    "message": "Close $count$ tabs?",
+    "message": "$count$ ট্যাব বন্ধ করবেন?",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -447,7 +447,7 @@
     }
   },
   "tabGroupsConfirmSleep": {
-    "message": "Sleep $count$ tabs?",
+    "message": "$count$ ট্যাব স্লিপ করবেন?",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -464,37 +464,37 @@
     "message": "বুকমার্ক ফোল্ডারে যোগ করুন…"
   },
   "paletteCmdGoTabGroups": {
-    "message": "Go to Tab groups view"
+    "message": "ট্যাব গ্রুপ ভিউতে যান"
   },
   "tabGroupsActivateGroup": {
-    "message": "Activate tab group"
+    "message": "ট্যাব গ্রুপ সক্রিয় করুন"
   },
   "tabGroupsRenameGroup": {
-    "message": "Rename tab group"
+    "message": "ট্যাব গ্রুপের নাম পরিবর্তন করুন"
   },
   "tabGroupsRenameDialog": {
-    "message": "Rename tab group"
+    "message": "ট্যাব গ্রুপের নাম পরিবর্তন করুন"
   },
   "tabGroupsCloseGroup": {
-    "message": "Close tab group"
+    "message": "ট্যাব গ্রুপ বন্ধ করুন"
   },
   "tabGroupsSleepGroup": {
-    "message": "Sleep tab group"
+    "message": "ট্যাব গ্রুপ স্লিপ করুন"
   },
   "tabGroupsActivateTab": {
-    "message": "Activate tab"
+    "message": "ট্যাব সক্রিয় করুন"
   },
   "tabGroupsCollapseGroup": {
-    "message": "Collapse group"
+    "message": "গ্রুপ সংকুচিত করুন"
   },
   "tabGroupsExpandGroup": {
-    "message": "Expand group"
+    "message": "গ্রুপ প্রসারিত করুন"
   },
   "tabGroupsMenuAddBookmark": {
-    "message": "Bookmark tab"
+    "message": "ট্যাব বুকমার্ক করুন"
   },
   "tabGroupsMenuSaveFolder": {
-    "message": "Save as bookmark folder"
+    "message": "বুকমার্ক ফোল্ডার হিসেবে সংরক্ষণ"
   },
   "deadProxyAdd": {
     "message": "ডেড-লিংক পরীক্ষার জন্য একটি প্রক্সি সার্ভার যোগ করুন"

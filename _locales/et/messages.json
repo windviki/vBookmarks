@@ -344,25 +344,25 @@
     }
   },
   "viewTabGroups": {
-    "message": "Tab groups"
+    "message": "Vahekaartide rühmad"
   },
   "optionShowTabGroupsView": {
-    "message": "Show the tab groups view tab"
+    "message": "Kuva vahekaartide rühmade vaade"
   },
   "tabGroupsViewEmpty": {
-    "message": "No tabs in this window"
+    "message": "Selles aknas pole vahekaarte"
   },
   "tabGroupsToolbarRefresh": {
-    "message": "Refresh"
+    "message": "Värskenda"
   },
   "tabGroupsCollapseAll": {
-    "message": "Collapse all"
+    "message": "Ahenda kõik"
   },
   "tabGroupsExpandAll": {
-    "message": "Expand all"
+    "message": "Laienda kõik"
   },
   "tabGroupsSummary": {
-    "message": "$tabs$ tabs · $groups$ groups",
+    "message": "$tabs$ vahekaarti · $groups$ rühma",
     "placeholders": {
       "tabs": {
         "content": "$1"
@@ -373,7 +373,7 @@
     }
   },
   "tabGroupsGroupCount": {
-    "message": "$count$ tabs",
+    "message": "$count$ vahekaarti",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -381,19 +381,19 @@
     }
   },
   "tabGroupsGroupCreatedUnknown": {
-    "message": "Created time unknown"
+    "message": "Loomise aeg teadmata"
   },
   "tabGroupsCurrentTab": {
-    "message": "Current tab"
+    "message": "Praegune vahekaart"
   },
   "tabGroupsAddBookmark": {
-    "message": "Bookmark this tab"
+    "message": "Lisa see vahekaart järjehoidjatesse"
   },
   "tabGroupsSaveFolder": {
-    "message": "Save tab group as bookmark folder"
+    "message": "Salvesta vahekaartide rühm järjehoidjate kaustana"
   },
   "tabGroupsGroupSavedToFolder": {
-    "message": "Saved $count$ tabs to $folder$",
+    "message": "Salvestatud $count$ vahekaarti kausta $folder$",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -404,7 +404,7 @@
     }
   },
   "tabGroupsBookmarksAdded": {
-    "message": "Added $count$ bookmark(s) to $folder$",
+    "message": "Lisatud $count$ järjehoidja(t) kausta $folder$",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -415,31 +415,31 @@
     }
   },
   "tabGroupsSelectNewGroup": {
-    "message": "New tab group"
+    "message": "Uus vahekaartide rühm"
   },
   "tabGroupsSelectOpenInto": {
-    "message": "Open in existing tab group…"
+    "message": "Ava olemasolevas vahekaartide rühmas…"
   },
   "tabGroupsSelectSaveFolder": {
-    "message": "Save as bookmark folder"
+    "message": "Salvesta järjehoidjate kaustana"
   },
   "tabGroupsSelectClose": {
-    "message": "Close"
+    "message": "Sulge"
   },
   "tabGroupsSelectSleep": {
-    "message": "Sleep"
+    "message": "Uinuta"
   },
   "tabGroupsCopyMoveDialog": {
-    "message": "Selected tabs already belong to a tab group. Copy them (open in a new place) or move them (remove from their current group)?"
+    "message": "Valitud vahekaardid kuuluvad juba vahekaartide rühma. Kas kopeerida need (avada uues kohas) või teisaldada (eemaldada praegusest rühmast)?"
   },
   "tabGroupsCopyMoveCopy": {
-    "message": "Copy"
+    "message": "Kopeeri"
   },
   "tabGroupsCopyMoveMove": {
-    "message": "Move"
+    "message": "Teisalda"
   },
   "tabGroupsConfirmClose": {
-    "message": "Close $count$ tabs?",
+    "message": "Sulgeda $count$ vahekaarti?",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -447,7 +447,7 @@
     }
   },
   "tabGroupsConfirmSleep": {
-    "message": "Sleep $count$ tabs?",
+    "message": "Uinutada $count$ vahekaarti?",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -455,46 +455,46 @@
     }
   },
   "bookmarkFolderPickDialogTitle": {
-    "message": "Add to bookmark folder"
+    "message": "Lisa järjehoidjate kausta"
   },
   "bookmarkFolderNoFolders": {
-    "message": "No bookmark folders"
+    "message": "Järjehoidjate kaustu pole"
   },
   "tabGroupsSelectAddBookmarks": {
-    "message": "Add to bookmark folder…"
+    "message": "Lisa järjehoidjate kausta…"
   },
   "paletteCmdGoTabGroups": {
-    "message": "Go to Tab groups view"
+    "message": "Mine vahekaartide rühmade vaatesse"
   },
   "tabGroupsActivateGroup": {
-    "message": "Activate tab group"
+    "message": "Aktiveeri rühm"
   },
   "tabGroupsRenameGroup": {
-    "message": "Rename tab group"
+    "message": "Nimeta rühm ümber"
   },
   "tabGroupsRenameDialog": {
-    "message": "Rename tab group"
+    "message": "Nimeta vahekaartide rühm ümber"
   },
   "tabGroupsCloseGroup": {
-    "message": "Close tab group"
+    "message": "Sulge rühm"
   },
   "tabGroupsSleepGroup": {
-    "message": "Sleep tab group"
+    "message": "Uinuta rühm"
   },
   "tabGroupsActivateTab": {
-    "message": "Activate tab"
+    "message": "Aktiveeri vahekaart"
   },
   "tabGroupsCollapseGroup": {
-    "message": "Collapse group"
+    "message": "Ahenda rühm"
   },
   "tabGroupsExpandGroup": {
-    "message": "Expand group"
+    "message": "Laienda rühm"
   },
   "tabGroupsMenuAddBookmark": {
-    "message": "Bookmark tab"
+    "message": "Lisa järjehoidjatesse"
   },
   "tabGroupsMenuSaveFolder": {
-    "message": "Save as bookmark folder"
+    "message": "Salvesta kaustana"
   },
   "deadProxyAdd": {
     "message": "Lisa puhverserver surnud linkide kontrollimiseks"

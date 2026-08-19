@@ -1676,25 +1676,25 @@
     }
   },
   "viewTabGroups": {
-    "message": "Tab groups"
+    "message": "标签页组"
   },
   "optionShowTabGroupsView": {
-    "message": "Show the tab groups view tab"
+    "message": "显示标签页组视图标签页"
   },
   "tabGroupsViewEmpty": {
-    "message": "No tabs in this window"
+    "message": "此窗口中没有标签页"
   },
   "tabGroupsToolbarRefresh": {
-    "message": "Refresh"
+    "message": "刷新"
   },
   "tabGroupsCollapseAll": {
-    "message": "Collapse all"
+    "message": "全部折叠"
   },
   "tabGroupsExpandAll": {
-    "message": "Expand all"
+    "message": "全部展开"
   },
   "tabGroupsSummary": {
-    "message": "$tabs$ tabs · $groups$ groups",
+    "message": "$tabs$ 个标签页 · $groups$ 个组",
     "placeholders": {
       "tabs": {
         "content": "$1"
@@ -1705,7 +1705,7 @@
     }
   },
   "tabGroupsGroupCount": {
-    "message": "$count$ tabs",
+    "message": "$count$ 个标签页",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -1713,19 +1713,19 @@
     }
   },
   "tabGroupsGroupCreatedUnknown": {
-    "message": "Created time unknown"
+    "message": "创建时间未知"
   },
   "tabGroupsCurrentTab": {
-    "message": "Current tab"
+    "message": "当前标签页"
   },
   "tabGroupsAddBookmark": {
-    "message": "Bookmark this tab"
+    "message": "收藏此标签页"
   },
   "tabGroupsSaveFolder": {
-    "message": "Save tab group as bookmark folder"
+    "message": "将标签页组保存为书签文件夹"
   },
   "tabGroupsGroupSavedToFolder": {
-    "message": "Saved $count$ tabs to $folder$",
+    "message": "已保存 $count$ 个标签页到 $folder$",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -1736,7 +1736,7 @@
     }
   },
   "tabGroupsBookmarksAdded": {
-    "message": "Added $count$ bookmark(s) to $folder$",
+    "message": "已添加 $count$ 个书签到 $folder$",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -1747,31 +1747,31 @@
     }
   },
   "tabGroupsSelectNewGroup": {
-    "message": "New tab group"
+    "message": "新建标签页组"
   },
   "tabGroupsSelectOpenInto": {
-    "message": "Open in existing tab group…"
+    "message": "在现有标签页组中打开…"
   },
   "tabGroupsSelectSaveFolder": {
-    "message": "Save as bookmark folder"
+    "message": "保存为书签文件夹"
   },
   "tabGroupsSelectClose": {
-    "message": "Close"
+    "message": "关闭"
   },
   "tabGroupsSelectSleep": {
-    "message": "Sleep"
+    "message": "休眠"
   },
   "tabGroupsCopyMoveDialog": {
-    "message": "Selected tabs already belong to a tab group. Copy them (open in a new place) or move them (remove from their current group)?"
+    "message": "所选标签页已属于某个标签页组。要复制（在新位置打开）还是移动（从当前组移除）？"
   },
   "tabGroupsCopyMoveCopy": {
-    "message": "Copy"
+    "message": "复制"
   },
   "tabGroupsCopyMoveMove": {
-    "message": "Move"
+    "message": "移动"
   },
   "tabGroupsConfirmClose": {
-    "message": "Close $count$ tabs?",
+    "message": "关闭 $count$ 个标签页？",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -1779,7 +1779,7 @@
     }
   },
   "tabGroupsConfirmSleep": {
-    "message": "Sleep $count$ tabs?",
+    "message": "休眠 $count$ 个标签页？",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -1787,45 +1787,45 @@
     }
   },
   "bookmarkFolderPickDialogTitle": {
-    "message": "Add to bookmark folder"
+    "message": "添加到书签文件夹"
   },
   "bookmarkFolderNoFolders": {
-    "message": "No bookmark folders"
+    "message": "没有书签文件夹"
   },
   "tabGroupsSelectAddBookmarks": {
-    "message": "Add to bookmark folder…"
+    "message": "添加到书签文件夹…"
   },
   "paletteCmdGoTabGroups": {
-    "message": "Go to Tab groups view"
+    "message": "转到标签页组视图"
   },
   "tabGroupsActivateGroup": {
-    "message": "Activate tab group"
+    "message": "激活标签页组"
   },
   "tabGroupsRenameGroup": {
-    "message": "Rename tab group"
+    "message": "重命名标签页组"
   },
   "tabGroupsRenameDialog": {
-    "message": "Rename tab group"
+    "message": "重命名标签页组"
   },
   "tabGroupsCloseGroup": {
-    "message": "Close tab group"
+    "message": "关闭标签页组"
   },
   "tabGroupsSleepGroup": {
-    "message": "Sleep tab group"
+    "message": "休眠标签页组"
   },
   "tabGroupsActivateTab": {
-    "message": "Activate tab"
+    "message": "激活标签页"
   },
   "tabGroupsCollapseGroup": {
-    "message": "Collapse group"
+    "message": "折叠组"
   },
   "tabGroupsExpandGroup": {
-    "message": "Expand group"
+    "message": "展开组"
   },
   "tabGroupsMenuAddBookmark": {
-    "message": "Bookmark tab"
+    "message": "收藏标签页"
   },
   "tabGroupsMenuSaveFolder": {
-    "message": "Save as bookmark folder"
+    "message": "保存为书签文件夹"
   }
 }

@@ -343,25 +343,25 @@
     }
   },
   "viewTabGroups": {
-    "message": "Tab groups"
+    "message": "Групи на јазичиња"
   },
   "optionShowTabGroupsView": {
-    "message": "Show the tab groups view tab"
+    "message": "Прикажи го приказот на групи на јазичиња"
   },
   "tabGroupsViewEmpty": {
-    "message": "No tabs in this window"
+    "message": "Нема јазичиња во овој прозорец"
   },
   "tabGroupsToolbarRefresh": {
-    "message": "Refresh"
+    "message": "Освежи"
   },
   "tabGroupsCollapseAll": {
-    "message": "Collapse all"
+    "message": "Собери ги сите"
   },
   "tabGroupsExpandAll": {
-    "message": "Expand all"
+    "message": "Рашири ги сите"
   },
   "tabGroupsSummary": {
-    "message": "$tabs$ tabs · $groups$ groups",
+    "message": "$tabs$ јазичиња · $groups$ групи",
     "placeholders": {
       "tabs": {
         "content": "$1"
@@ -372,7 +372,7 @@
     }
   },
   "tabGroupsGroupCount": {
-    "message": "$count$ tabs",
+    "message": "$count$ јазичиња",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -380,19 +380,19 @@
     }
   },
   "tabGroupsGroupCreatedUnknown": {
-    "message": "Created time unknown"
+    "message": "Времето на создавање е непознато"
   },
   "tabGroupsCurrentTab": {
-    "message": "Current tab"
+    "message": "Тековно јазиче"
   },
   "tabGroupsAddBookmark": {
-    "message": "Bookmark this tab"
+    "message": "Обележи го ова јазиче"
   },
   "tabGroupsSaveFolder": {
-    "message": "Save tab group as bookmark folder"
+    "message": "Зачувај ја групата јазичиња како папка со обележувачи"
   },
   "tabGroupsGroupSavedToFolder": {
-    "message": "Saved $count$ tabs to $folder$",
+    "message": "Зачувани $count$ јазичиња во $folder$",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -403,7 +403,7 @@
     }
   },
   "tabGroupsBookmarksAdded": {
-    "message": "Added $count$ bookmark(s) to $folder$",
+    "message": "Додадени $count$ обележувач(и) во $folder$",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -414,31 +414,31 @@
     }
   },
   "tabGroupsSelectNewGroup": {
-    "message": "New tab group"
+    "message": "Нова група јазичиња"
   },
   "tabGroupsSelectOpenInto": {
-    "message": "Open in existing tab group…"
+    "message": "Отвори во постоечка група јазичиња…"
   },
   "tabGroupsSelectSaveFolder": {
-    "message": "Save as bookmark folder"
+    "message": "Зачувај како папка со обележувачи"
   },
   "tabGroupsSelectClose": {
-    "message": "Close"
+    "message": "Затвори"
   },
   "tabGroupsSelectSleep": {
-    "message": "Sleep"
+    "message": "Замри"
   },
   "tabGroupsCopyMoveDialog": {
-    "message": "Selected tabs already belong to a tab group. Copy them (open in a new place) or move them (remove from their current group)?"
+    "message": "Избраните јазичиња веќе припаѓаат на група јазичиња. Дали сакате да ги копирате (отворете ги на ново место) или да ги преместите (отстранете ги од тековната група)?"
   },
   "tabGroupsCopyMoveCopy": {
-    "message": "Copy"
+    "message": "Копирај"
   },
   "tabGroupsCopyMoveMove": {
-    "message": "Move"
+    "message": "Премести"
   },
   "tabGroupsConfirmClose": {
-    "message": "Close $count$ tabs?",
+    "message": "Затвори $count$ јазичиња?",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -446,7 +446,7 @@
     }
   },
   "tabGroupsConfirmSleep": {
-    "message": "Sleep $count$ tabs?",
+    "message": "Замри $count$ јазичиња?",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -454,46 +454,46 @@
     }
   },
   "bookmarkFolderPickDialogTitle": {
-    "message": "Add to bookmark folder"
+    "message": "Додај во папка со обележувачи"
   },
   "bookmarkFolderNoFolders": {
-    "message": "No bookmark folders"
+    "message": "Нема папки со обележувачи"
   },
   "tabGroupsSelectAddBookmarks": {
-    "message": "Add to bookmark folder…"
+    "message": "Додај во папка со обележувачи…"
   },
   "paletteCmdGoTabGroups": {
-    "message": "Go to Tab groups view"
+    "message": "Оди до приказот на групи на јазичиња"
   },
   "tabGroupsActivateGroup": {
-    "message": "Activate tab group"
+    "message": "Активирај група јазичиња"
   },
   "tabGroupsRenameGroup": {
-    "message": "Rename tab group"
+    "message": "Преименувај група јазичиња"
   },
   "tabGroupsRenameDialog": {
-    "message": "Rename tab group"
+    "message": "Преименувај група јазичиња"
   },
   "tabGroupsCloseGroup": {
-    "message": "Close tab group"
+    "message": "Затвори група јазичиња"
   },
   "tabGroupsSleepGroup": {
-    "message": "Sleep tab group"
+    "message": "Замри група јазичиња"
   },
   "tabGroupsActivateTab": {
-    "message": "Activate tab"
+    "message": "Активирај јазиче"
   },
   "tabGroupsCollapseGroup": {
-    "message": "Collapse group"
+    "message": "Собери група"
   },
   "tabGroupsExpandGroup": {
-    "message": "Expand group"
+    "message": "Рашири група"
   },
   "tabGroupsMenuAddBookmark": {
-    "message": "Bookmark tab"
+    "message": "Обележи јазиче"
   },
   "tabGroupsMenuSaveFolder": {
-    "message": "Save as bookmark folder"
+    "message": "Зачувај како папка со обележувачи"
   },
   "deadProxyAdd": {
     "message": "Додај прокси сервер за проверка на мртви врски"

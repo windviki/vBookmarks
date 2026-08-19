@@ -344,25 +344,25 @@
     }
   },
   "viewTabGroups": {
-    "message": "Tab groups"
+    "message": "Flikgrupper"
   },
   "optionShowTabGroupsView": {
-    "message": "Show the tab groups view tab"
+    "message": "Visa flikgruppsvyn"
   },
   "tabGroupsViewEmpty": {
-    "message": "No tabs in this window"
+    "message": "Inga flikar i detta fönster"
   },
   "tabGroupsToolbarRefresh": {
-    "message": "Refresh"
+    "message": "Uppdatera"
   },
   "tabGroupsCollapseAll": {
-    "message": "Collapse all"
+    "message": "Fäll ihop alla"
   },
   "tabGroupsExpandAll": {
-    "message": "Expand all"
+    "message": "Expandera alla"
   },
   "tabGroupsSummary": {
-    "message": "$tabs$ tabs · $groups$ groups",
+    "message": "$tabs$ flikar · $groups$ grupper",
     "placeholders": {
       "tabs": {
         "content": "$1"
@@ -373,7 +373,7 @@
     }
   },
   "tabGroupsGroupCount": {
-    "message": "$count$ tabs",
+    "message": "$count$ flikar",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -381,19 +381,19 @@
     }
   },
   "tabGroupsGroupCreatedUnknown": {
-    "message": "Created time unknown"
+    "message": "Skapad tid okänd"
   },
   "tabGroupsCurrentTab": {
-    "message": "Current tab"
+    "message": "Aktuell flik"
   },
   "tabGroupsAddBookmark": {
-    "message": "Bookmark this tab"
+    "message": "Bokmärk denna flik"
   },
   "tabGroupsSaveFolder": {
-    "message": "Save tab group as bookmark folder"
+    "message": "Spara flikgrupp som bokmärkesmapp"
   },
   "tabGroupsGroupSavedToFolder": {
-    "message": "Saved $count$ tabs to $folder$",
+    "message": "Sparade $count$ flikar i $folder$",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -404,7 +404,7 @@
     }
   },
   "tabGroupsBookmarksAdded": {
-    "message": "Added $count$ bookmark(s) to $folder$",
+    "message": "Lade till $count$ bokmärke(n) i $folder$",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -415,31 +415,31 @@
     }
   },
   "tabGroupsSelectNewGroup": {
-    "message": "New tab group"
+    "message": "Ny flikgrupp"
   },
   "tabGroupsSelectOpenInto": {
-    "message": "Open in existing tab group…"
+    "message": "Öppna i befintlig flikgrupp…"
   },
   "tabGroupsSelectSaveFolder": {
-    "message": "Save as bookmark folder"
+    "message": "Spara som bokmärkesmapp"
   },
   "tabGroupsSelectClose": {
-    "message": "Close"
+    "message": "Stäng"
   },
   "tabGroupsSelectSleep": {
-    "message": "Sleep"
+    "message": "Vila"
   },
   "tabGroupsCopyMoveDialog": {
-    "message": "Selected tabs already belong to a tab group. Copy them (open in a new place) or move them (remove from their current group)?"
+    "message": "Valda flikar tillhör redan en flikgrupp. Kopiera dem (öppna på ny plats) eller flytta dem (ta bort från nuvarande grupp)?"
   },
   "tabGroupsCopyMoveCopy": {
-    "message": "Copy"
+    "message": "Kopiera"
   },
   "tabGroupsCopyMoveMove": {
-    "message": "Move"
+    "message": "Flytta"
   },
   "tabGroupsConfirmClose": {
-    "message": "Close $count$ tabs?",
+    "message": "Stänga $count$ flikar?",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -447,7 +447,7 @@
     }
   },
   "tabGroupsConfirmSleep": {
-    "message": "Sleep $count$ tabs?",
+    "message": "Vila $count$ flikar?",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -455,46 +455,46 @@
     }
   },
   "bookmarkFolderPickDialogTitle": {
-    "message": "Add to bookmark folder"
+    "message": "Lägg till i bokmärkesmapp"
   },
   "bookmarkFolderNoFolders": {
-    "message": "No bookmark folders"
+    "message": "Inga bokmärkesmappar"
   },
   "tabGroupsSelectAddBookmarks": {
-    "message": "Add to bookmark folder…"
+    "message": "Lägg till i bokmärkesmapp…"
   },
   "paletteCmdGoTabGroups": {
-    "message": "Go to Tab groups view"
+    "message": "Gå till flikgruppsvyn"
   },
   "tabGroupsActivateGroup": {
-    "message": "Activate tab group"
+    "message": "Aktivera grupp"
   },
   "tabGroupsRenameGroup": {
-    "message": "Rename tab group"
+    "message": "Byt namn på grupp"
   },
   "tabGroupsRenameDialog": {
-    "message": "Rename tab group"
+    "message": "Byt namn på flikgrupp"
   },
   "tabGroupsCloseGroup": {
-    "message": "Close tab group"
+    "message": "Stäng grupp"
   },
   "tabGroupsSleepGroup": {
-    "message": "Sleep tab group"
+    "message": "Vila grupp"
   },
   "tabGroupsActivateTab": {
-    "message": "Activate tab"
+    "message": "Aktivera flik"
   },
   "tabGroupsCollapseGroup": {
-    "message": "Collapse group"
+    "message": "Fäll ihop grupp"
   },
   "tabGroupsExpandGroup": {
-    "message": "Expand group"
+    "message": "Expandera grupp"
   },
   "tabGroupsMenuAddBookmark": {
-    "message": "Bookmark tab"
+    "message": "Bokmärk flik"
   },
   "tabGroupsMenuSaveFolder": {
-    "message": "Save as bookmark folder"
+    "message": "Spara som bokmärkesmapp"
   },
   "deadProxyAdd": {
     "message": "Lägg till proxyserver för döda länkar"

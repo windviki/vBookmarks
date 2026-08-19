@@ -343,25 +343,25 @@
     }
   },
   "viewTabGroups": {
-    "message": "Tab groups"
+    "message": "Grupos de separadores"
   },
   "optionShowTabGroupsView": {
-    "message": "Show the tab groups view tab"
+    "message": "Mostrar o separador de vista de grupos de separadores"
   },
   "tabGroupsViewEmpty": {
-    "message": "No tabs in this window"
+    "message": "Sem separadores nesta janela"
   },
   "tabGroupsToolbarRefresh": {
-    "message": "Refresh"
+    "message": "Atualizar"
   },
   "tabGroupsCollapseAll": {
-    "message": "Collapse all"
+    "message": "Recolher tudo"
   },
   "tabGroupsExpandAll": {
-    "message": "Expand all"
+    "message": "Expandir tudo"
   },
   "tabGroupsSummary": {
-    "message": "$tabs$ tabs · $groups$ groups",
+    "message": "$tabs$ separadores · $groups$ grupos",
     "placeholders": {
       "tabs": {
         "content": "$1"
@@ -372,7 +372,7 @@
     }
   },
   "tabGroupsGroupCount": {
-    "message": "$count$ tabs",
+    "message": "$count$ separadores",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -380,19 +380,19 @@
     }
   },
   "tabGroupsGroupCreatedUnknown": {
-    "message": "Created time unknown"
+    "message": "Hora de criação desconhecida"
   },
   "tabGroupsCurrentTab": {
-    "message": "Current tab"
+    "message": "Separador atual"
   },
   "tabGroupsAddBookmark": {
-    "message": "Bookmark this tab"
+    "message": "Adicionar este separador aos marcadores"
   },
   "tabGroupsSaveFolder": {
-    "message": "Save tab group as bookmark folder"
+    "message": "Guardar grupo de separadores como pasta de marcadores"
   },
   "tabGroupsGroupSavedToFolder": {
-    "message": "Saved $count$ tabs to $folder$",
+    "message": "Guardados $count$ separadores em $folder$",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -403,7 +403,7 @@
     }
   },
   "tabGroupsBookmarksAdded": {
-    "message": "Added $count$ bookmark(s) to $folder$",
+    "message": "Adicionados $count$ marcador(es) a $folder$",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -414,31 +414,31 @@
     }
   },
   "tabGroupsSelectNewGroup": {
-    "message": "New tab group"
+    "message": "Novo grupo de separadores"
   },
   "tabGroupsSelectOpenInto": {
-    "message": "Open in existing tab group…"
+    "message": "Abrir no grupo de separadores existente…"
   },
   "tabGroupsSelectSaveFolder": {
-    "message": "Save as bookmark folder"
+    "message": "Guardar como pasta de marcadores"
   },
   "tabGroupsSelectClose": {
-    "message": "Close"
+    "message": "Fechar"
   },
   "tabGroupsSelectSleep": {
-    "message": "Sleep"
+    "message": "Adormecer"
   },
   "tabGroupsCopyMoveDialog": {
-    "message": "Selected tabs already belong to a tab group. Copy them (open in a new place) or move them (remove from their current group)?"
+    "message": "Os separadores selecionados já pertencem a um grupo de separadores. Pretende copiá-los (abrir num novo local) ou movê-los (remover do grupo atual)?"
   },
   "tabGroupsCopyMoveCopy": {
-    "message": "Copy"
+    "message": "Copiar"
   },
   "tabGroupsCopyMoveMove": {
-    "message": "Move"
+    "message": "Mover"
   },
   "tabGroupsConfirmClose": {
-    "message": "Close $count$ tabs?",
+    "message": "Fechar $count$ separadores?",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -446,7 +446,7 @@
     }
   },
   "tabGroupsConfirmSleep": {
-    "message": "Sleep $count$ tabs?",
+    "message": "Adormecer $count$ separadores?",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -454,46 +454,46 @@
     }
   },
   "bookmarkFolderPickDialogTitle": {
-    "message": "Add to bookmark folder"
+    "message": "Adicionar à pasta de marcadores"
   },
   "bookmarkFolderNoFolders": {
-    "message": "No bookmark folders"
+    "message": "Sem pastas de marcadores"
   },
   "tabGroupsSelectAddBookmarks": {
-    "message": "Add to bookmark folder…"
+    "message": "Adicionar à pasta de marcadores…"
   },
   "paletteCmdGoTabGroups": {
-    "message": "Go to Tab groups view"
+    "message": "Ir para a vista de grupos de separadores"
   },
   "tabGroupsActivateGroup": {
-    "message": "Activate tab group"
+    "message": "Ativar grupo de separadores"
   },
   "tabGroupsRenameGroup": {
-    "message": "Rename tab group"
+    "message": "Renomear grupo de separadores"
   },
   "tabGroupsRenameDialog": {
-    "message": "Rename tab group"
+    "message": "Renomear grupo de separadores"
   },
   "tabGroupsCloseGroup": {
-    "message": "Close tab group"
+    "message": "Fechar grupo de separadores"
   },
   "tabGroupsSleepGroup": {
-    "message": "Sleep tab group"
+    "message": "Adormecer grupo de separadores"
   },
   "tabGroupsActivateTab": {
-    "message": "Activate tab"
+    "message": "Ativar separador"
   },
   "tabGroupsCollapseGroup": {
-    "message": "Collapse group"
+    "message": "Recolher grupo"
   },
   "tabGroupsExpandGroup": {
-    "message": "Expand group"
+    "message": "Expandir grupo"
   },
   "tabGroupsMenuAddBookmark": {
-    "message": "Bookmark tab"
+    "message": "Adicionar aos marcadores"
   },
   "tabGroupsMenuSaveFolder": {
-    "message": "Save as bookmark folder"
+    "message": "Guardar como pasta de marcadores"
   },
   "deadProxyAdd": {
     "message": "Adicionar um servidor proxy para verificações de links mortos"

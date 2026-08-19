@@ -344,25 +344,25 @@
     }
   },
   "viewTabGroups": {
-    "message": "Tab groups"
+    "message": "Grupy kart"
   },
   "optionShowTabGroupsView": {
-    "message": "Show the tab groups view tab"
+    "message": "Pokaż kartę widoku grup kart"
   },
   "tabGroupsViewEmpty": {
-    "message": "No tabs in this window"
+    "message": "Brak kart w tym oknie"
   },
   "tabGroupsToolbarRefresh": {
-    "message": "Refresh"
+    "message": "Odśwież"
   },
   "tabGroupsCollapseAll": {
-    "message": "Collapse all"
+    "message": "Zwiń wszystko"
   },
   "tabGroupsExpandAll": {
-    "message": "Expand all"
+    "message": "Rozwiń wszystko"
   },
   "tabGroupsSummary": {
-    "message": "$tabs$ tabs · $groups$ groups",
+    "message": "$tabs$ kart · $groups$ grup",
     "placeholders": {
       "tabs": {
         "content": "$1"
@@ -373,7 +373,7 @@
     }
   },
   "tabGroupsGroupCount": {
-    "message": "$count$ tabs",
+    "message": "$count$ kart",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -381,19 +381,19 @@
     }
   },
   "tabGroupsGroupCreatedUnknown": {
-    "message": "Created time unknown"
+    "message": "Nieznany czas utworzenia"
   },
   "tabGroupsCurrentTab": {
-    "message": "Current tab"
+    "message": "Bieżąca karta"
   },
   "tabGroupsAddBookmark": {
-    "message": "Bookmark this tab"
+    "message": "Dodaj tę kartę do zakładek"
   },
   "tabGroupsSaveFolder": {
-    "message": "Save tab group as bookmark folder"
+    "message": "Zapisz grupę kart jako folder zakładek"
   },
   "tabGroupsGroupSavedToFolder": {
-    "message": "Saved $count$ tabs to $folder$",
+    "message": "Zapisano $count$ kart do $folder$",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -404,7 +404,7 @@
     }
   },
   "tabGroupsBookmarksAdded": {
-    "message": "Added $count$ bookmark(s) to $folder$",
+    "message": "Dodano $count$ zakładek do $folder$",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -415,31 +415,31 @@
     }
   },
   "tabGroupsSelectNewGroup": {
-    "message": "New tab group"
+    "message": "Nowa grupa kart"
   },
   "tabGroupsSelectOpenInto": {
-    "message": "Open in existing tab group…"
+    "message": "Otwórz w istniejącej grupie kart…"
   },
   "tabGroupsSelectSaveFolder": {
-    "message": "Save as bookmark folder"
+    "message": "Zapisz jako folder zakładek"
   },
   "tabGroupsSelectClose": {
-    "message": "Close"
+    "message": "Zamknij"
   },
   "tabGroupsSelectSleep": {
-    "message": "Sleep"
+    "message": "Uśpij"
   },
   "tabGroupsCopyMoveDialog": {
-    "message": "Selected tabs already belong to a tab group. Copy them (open in a new place) or move them (remove from their current group)?"
+    "message": "Wybrane karty już należą do grupy kart. Skopiować je (otworzyć w nowym miejscu) czy przenieść (usunąć z bieżącej grupy)?"
   },
   "tabGroupsCopyMoveCopy": {
-    "message": "Copy"
+    "message": "Kopiuj"
   },
   "tabGroupsCopyMoveMove": {
-    "message": "Move"
+    "message": "Przenieś"
   },
   "tabGroupsConfirmClose": {
-    "message": "Close $count$ tabs?",
+    "message": "Zamknąć $count$ kart?",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -447,7 +447,7 @@
     }
   },
   "tabGroupsConfirmSleep": {
-    "message": "Sleep $count$ tabs?",
+    "message": "Uśpić $count$ kart?",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -455,46 +455,46 @@
     }
   },
   "bookmarkFolderPickDialogTitle": {
-    "message": "Add to bookmark folder"
+    "message": "Dodaj do folderu zakładek"
   },
   "bookmarkFolderNoFolders": {
-    "message": "No bookmark folders"
+    "message": "Brak folderów zakładek"
   },
   "tabGroupsSelectAddBookmarks": {
-    "message": "Add to bookmark folder…"
+    "message": "Dodaj do folderu zakładek…"
   },
   "paletteCmdGoTabGroups": {
-    "message": "Go to Tab groups view"
+    "message": "Przejdź do widoku grup kart"
   },
   "tabGroupsActivateGroup": {
-    "message": "Activate tab group"
+    "message": "Aktywuj grupę kart"
   },
   "tabGroupsRenameGroup": {
-    "message": "Rename tab group"
+    "message": "Zmień nazwę grupy kart"
   },
   "tabGroupsRenameDialog": {
-    "message": "Rename tab group"
+    "message": "Zmień nazwę grupy kart"
   },
   "tabGroupsCloseGroup": {
-    "message": "Close tab group"
+    "message": "Zamknij grupę kart"
   },
   "tabGroupsSleepGroup": {
-    "message": "Sleep tab group"
+    "message": "Uśpij grupę kart"
   },
   "tabGroupsActivateTab": {
-    "message": "Activate tab"
+    "message": "Aktywuj kartę"
   },
   "tabGroupsCollapseGroup": {
-    "message": "Collapse group"
+    "message": "Zwiń grupę"
   },
   "tabGroupsExpandGroup": {
-    "message": "Expand group"
+    "message": "Rozwiń grupę"
   },
   "tabGroupsMenuAddBookmark": {
-    "message": "Bookmark tab"
+    "message": "Dodaj kartę do zakładek"
   },
   "tabGroupsMenuSaveFolder": {
-    "message": "Save as bookmark folder"
+    "message": "Zapisz jako folder zakładek"
   },
   "deadProxyAdd": {
     "message": "Dodaj serwer proxy do sprawdzania martwych linków"

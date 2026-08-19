@@ -362,7 +362,7 @@
     "message": "توسيع الكل"
   },
   "tabGroupsSummary": {
-    "message": "$tabs$ tabs · $groups$ groups",
+    "message": "$tabs$ تبويبات · $groups$ مجموعات",
     "placeholders": {
       "tabs": {
         "content": "$1"
@@ -373,7 +373,7 @@
     }
   },
   "tabGroupsGroupCount": {
-    "message": "$count$ tabs",
+    "message": "$count$ تبويبات",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -387,13 +387,13 @@
     "message": "التبويب الحالي"
   },
   "tabGroupsAddBookmark": {
-    "message": "إضافة هذا التبويب إلى الإشارات المرجعية"
+    "message": "إضافة علامة مرجعية لهذا التبويب"
   },
   "tabGroupsSaveFolder": {
-    "message": "حفظ مجموعة التبويبات كمجلد إشارات مرجعية"
+    "message": "حفظ مجموعة التبويبات كمجلد علامات مرجعية"
   },
   "tabGroupsGroupSavedToFolder": {
-    "message": "Saved $count$ tabs to $folder$",
+    "message": "تم حفظ $count$ تبويبات في $folder$",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -404,7 +404,7 @@
     }
   },
   "tabGroupsBookmarksAdded": {
-    "message": "Added $count$ bookmark(s) to $folder$",
+    "message": "تمت إضافة $count$ علامة (علامات) مرجعية إلى $folder$",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -421,7 +421,7 @@
     "message": "فتح في مجموعة تبويبات موجودة…"
   },
   "tabGroupsSelectSaveFolder": {
-    "message": "حفظ كمجلد إشارات مرجعية"
+    "message": "حفظ كمجلد علامات مرجعية"
   },
   "tabGroupsSelectClose": {
     "message": "إغلاق"
@@ -439,7 +439,7 @@
     "message": "نقل"
   },
   "tabGroupsConfirmClose": {
-    "message": "Close $count$ tabs?",
+    "message": "إغلاق $count$ تبويبات؟",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -447,7 +447,7 @@
     }
   },
   "tabGroupsConfirmSleep": {
-    "message": "Sleep $count$ tabs?",
+    "message": "إسبات $count$ تبويبات؟",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -455,46 +455,46 @@
     }
   },
   "bookmarkFolderPickDialogTitle": {
-    "message": "إضافة إلى مجلد الإشارات المرجعية"
+    "message": "إضافة إلى مجلد العلامات المرجعية"
   },
   "bookmarkFolderNoFolders": {
-    "message": "لا توجد مجلدات إشارات مرجعية"
+    "message": "لا توجد مجلدات علامات مرجعية"
   },
   "tabGroupsSelectAddBookmarks": {
-    "message": "إضافة إلى مجلد الإشارات المرجعية…"
+    "message": "إضافة إلى مجلد العلامات المرجعية…"
   },
   "paletteCmdGoTabGroups": {
-    "message": "Go to Tab groups view"
+    "message": "الانتقال إلى عرض مجموعات التبويبات"
   },
   "tabGroupsActivateGroup": {
-    "message": "Activate tab group"
+    "message": "تفعيل مجموعة التبويبات"
   },
   "tabGroupsRenameGroup": {
-    "message": "Rename tab group"
+    "message": "إعادة تسمية مجموعة التبويبات"
   },
   "tabGroupsRenameDialog": {
-    "message": "Rename tab group"
+    "message": "إعادة تسمية مجموعة التبويبات"
   },
   "tabGroupsCloseGroup": {
-    "message": "Close tab group"
+    "message": "إغلاق مجموعة التبويبات"
   },
   "tabGroupsSleepGroup": {
-    "message": "Sleep tab group"
+    "message": "إسبات مجموعة التبويبات"
   },
   "tabGroupsActivateTab": {
-    "message": "Activate tab"
+    "message": "تفعيل التبويب"
   },
   "tabGroupsCollapseGroup": {
-    "message": "Collapse group"
+    "message": "طي المجموعة"
   },
   "tabGroupsExpandGroup": {
-    "message": "Expand group"
+    "message": "توسيع المجموعة"
   },
   "tabGroupsMenuAddBookmark": {
-    "message": "Bookmark tab"
+    "message": "إضافة علامة مرجعية للتبويب"
   },
   "tabGroupsMenuSaveFolder": {
-    "message": "Save as bookmark folder"
+    "message": "حفظ كمجلد علامات مرجعية"
   },
   "deadProxyAdd": {
     "message": "أضف خادم وكيل لفحوصات الروابط المعطلة"

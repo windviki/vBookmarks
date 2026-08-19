@@ -344,25 +344,25 @@
     }
   },
   "viewTabGroups": {
-    "message": "Tab groups"
+    "message": "Skirtukų grupės"
   },
   "optionShowTabGroupsView": {
-    "message": "Show the tab groups view tab"
+    "message": "Rodyti skirtukų grupių rodinį"
   },
   "tabGroupsViewEmpty": {
-    "message": "No tabs in this window"
+    "message": "Šiame lange nėra skirtukų"
   },
   "tabGroupsToolbarRefresh": {
-    "message": "Refresh"
+    "message": "Atnaujinti"
   },
   "tabGroupsCollapseAll": {
-    "message": "Collapse all"
+    "message": "Sutraukti viską"
   },
   "tabGroupsExpandAll": {
-    "message": "Expand all"
+    "message": "Išskleisti viską"
   },
   "tabGroupsSummary": {
-    "message": "$tabs$ tabs · $groups$ groups",
+    "message": "$tabs$ skirtukų · $groups$ grupės",
     "placeholders": {
       "tabs": {
         "content": "$1"
@@ -373,7 +373,7 @@
     }
   },
   "tabGroupsGroupCount": {
-    "message": "$count$ tabs",
+    "message": "$count$ skirtukų",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -381,19 +381,19 @@
     }
   },
   "tabGroupsGroupCreatedUnknown": {
-    "message": "Created time unknown"
+    "message": "Sukūrimo laikas nežinomas"
   },
   "tabGroupsCurrentTab": {
-    "message": "Current tab"
+    "message": "Dabartinis skirtukas"
   },
   "tabGroupsAddBookmark": {
-    "message": "Bookmark this tab"
+    "message": "Įtraukti skirtuką į žymes"
   },
   "tabGroupsSaveFolder": {
-    "message": "Save tab group as bookmark folder"
+    "message": "Išsaugoti skirtukų grupę kaip žymių aplanką"
   },
   "tabGroupsGroupSavedToFolder": {
-    "message": "Saved $count$ tabs to $folder$",
+    "message": "Išsaugota $count$ skirtukų į $folder$",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -404,7 +404,7 @@
     }
   },
   "tabGroupsBookmarksAdded": {
-    "message": "Added $count$ bookmark(s) to $folder$",
+    "message": "Pridėta $count$ žymė(-ės) į $folder$",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -415,31 +415,31 @@
     }
   },
   "tabGroupsSelectNewGroup": {
-    "message": "New tab group"
+    "message": "Nauja skirtukų grupė"
   },
   "tabGroupsSelectOpenInto": {
-    "message": "Open in existing tab group…"
+    "message": "Atidaryti esamoje skirtukų grupėje…"
   },
   "tabGroupsSelectSaveFolder": {
-    "message": "Save as bookmark folder"
+    "message": "Išsaugoti kaip žymių aplanką"
   },
   "tabGroupsSelectClose": {
-    "message": "Close"
+    "message": "Uždaryti"
   },
   "tabGroupsSelectSleep": {
-    "message": "Sleep"
+    "message": "Užmigdyti"
   },
   "tabGroupsCopyMoveDialog": {
-    "message": "Selected tabs already belong to a tab group. Copy them (open in a new place) or move them (remove from their current group)?"
+    "message": "Pasirinkti skirtukai jau priklauso skirtukų grupei. Kopijuoti juos (atidaryti naujoje vietoje) ar perkelti (pašalinti iš dabartinės grupės)?"
   },
   "tabGroupsCopyMoveCopy": {
-    "message": "Copy"
+    "message": "Kopijuoti"
   },
   "tabGroupsCopyMoveMove": {
-    "message": "Move"
+    "message": "Perkelti"
   },
   "tabGroupsConfirmClose": {
-    "message": "Close $count$ tabs?",
+    "message": "Uždaryti $count$ skirtukų?",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -447,7 +447,7 @@
     }
   },
   "tabGroupsConfirmSleep": {
-    "message": "Sleep $count$ tabs?",
+    "message": "Užmigdyti $count$ skirtukų?",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -455,46 +455,46 @@
     }
   },
   "bookmarkFolderPickDialogTitle": {
-    "message": "Add to bookmark folder"
+    "message": "Pridėti prie žymių aplanko"
   },
   "bookmarkFolderNoFolders": {
-    "message": "No bookmark folders"
+    "message": "Nėra žymių aplankų"
   },
   "tabGroupsSelectAddBookmarks": {
-    "message": "Add to bookmark folder…"
+    "message": "Pridėti prie žymių aplanko…"
   },
   "paletteCmdGoTabGroups": {
-    "message": "Go to Tab groups view"
+    "message": "Eiti į skirtukų grupių rodinį"
   },
   "tabGroupsActivateGroup": {
-    "message": "Activate tab group"
+    "message": "Aktyvinti grupę"
   },
   "tabGroupsRenameGroup": {
-    "message": "Rename tab group"
+    "message": "Pervadinti grupę"
   },
   "tabGroupsRenameDialog": {
-    "message": "Rename tab group"
+    "message": "Pervadinti skirtukų grupę"
   },
   "tabGroupsCloseGroup": {
-    "message": "Close tab group"
+    "message": "Uždaryti grupę"
   },
   "tabGroupsSleepGroup": {
-    "message": "Sleep tab group"
+    "message": "Užmigdyti grupę"
   },
   "tabGroupsActivateTab": {
-    "message": "Activate tab"
+    "message": "Aktyvinti skirtuką"
   },
   "tabGroupsCollapseGroup": {
-    "message": "Collapse group"
+    "message": "Sutraukti grupę"
   },
   "tabGroupsExpandGroup": {
-    "message": "Expand group"
+    "message": "Išskleisti grupę"
   },
   "tabGroupsMenuAddBookmark": {
-    "message": "Bookmark tab"
+    "message": "Įtraukti į žymes"
   },
   "tabGroupsMenuSaveFolder": {
-    "message": "Save as bookmark folder"
+    "message": "Išsaugoti kaip aplanką"
   },
   "deadProxyAdd": {
     "message": "Pridėti tarpinį serverį negyvų nuorodų tikrinimui"

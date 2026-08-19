@@ -344,25 +344,25 @@
     }
   },
   "viewTabGroups": {
-    "message": "Tab groups"
+    "message": "Grupuri de file"
   },
   "optionShowTabGroupsView": {
-    "message": "Show the tab groups view tab"
+    "message": "Afișează fila de vizualizare a grupurilor de file"
   },
   "tabGroupsViewEmpty": {
-    "message": "No tabs in this window"
+    "message": "Nicio filă în această fereastră"
   },
   "tabGroupsToolbarRefresh": {
-    "message": "Refresh"
+    "message": "Reîmprospătează"
   },
   "tabGroupsCollapseAll": {
-    "message": "Collapse all"
+    "message": "Restrânge tot"
   },
   "tabGroupsExpandAll": {
-    "message": "Expand all"
+    "message": "Extinde tot"
   },
   "tabGroupsSummary": {
-    "message": "$tabs$ tabs · $groups$ groups",
+    "message": "$tabs$ file · $groups$ grupuri",
     "placeholders": {
       "tabs": {
         "content": "$1"
@@ -373,7 +373,7 @@
     }
   },
   "tabGroupsGroupCount": {
-    "message": "$count$ tabs",
+    "message": "$count$ file",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -381,19 +381,19 @@
     }
   },
   "tabGroupsGroupCreatedUnknown": {
-    "message": "Created time unknown"
+    "message": "Timp de creare necunoscut"
   },
   "tabGroupsCurrentTab": {
-    "message": "Current tab"
+    "message": "Filă curentă"
   },
   "tabGroupsAddBookmark": {
-    "message": "Bookmark this tab"
+    "message": "Adaugă fila la marcaje"
   },
   "tabGroupsSaveFolder": {
-    "message": "Save tab group as bookmark folder"
+    "message": "Salvează grupul de file ca dosar de marcaje"
   },
   "tabGroupsGroupSavedToFolder": {
-    "message": "Saved $count$ tabs to $folder$",
+    "message": "Salvate $count$ file în $folder$",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -404,7 +404,7 @@
     }
   },
   "tabGroupsBookmarksAdded": {
-    "message": "Added $count$ bookmark(s) to $folder$",
+    "message": "Adăugate $count$ marcaj(e) în $folder$",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -415,31 +415,31 @@
     }
   },
   "tabGroupsSelectNewGroup": {
-    "message": "New tab group"
+    "message": "Grup de file nou"
   },
   "tabGroupsSelectOpenInto": {
-    "message": "Open in existing tab group…"
+    "message": "Deschide în grupul de file existent…"
   },
   "tabGroupsSelectSaveFolder": {
-    "message": "Save as bookmark folder"
+    "message": "Salvează ca dosar de marcaje"
   },
   "tabGroupsSelectClose": {
-    "message": "Close"
+    "message": "Închide"
   },
   "tabGroupsSelectSleep": {
-    "message": "Sleep"
+    "message": "Adormire"
   },
   "tabGroupsCopyMoveDialog": {
-    "message": "Selected tabs already belong to a tab group. Copy them (open in a new place) or move them (remove from their current group)?"
+    "message": "Filele selectate aparțin deja unui grup de file. Vrei să le copiezi (deschide într-un loc nou) sau să le muți (elimină din grupul curent)?"
   },
   "tabGroupsCopyMoveCopy": {
-    "message": "Copy"
+    "message": "Copiază"
   },
   "tabGroupsCopyMoveMove": {
-    "message": "Move"
+    "message": "Mută"
   },
   "tabGroupsConfirmClose": {
-    "message": "Close $count$ tabs?",
+    "message": "Închizi $count$ file?",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -447,7 +447,7 @@
     }
   },
   "tabGroupsConfirmSleep": {
-    "message": "Sleep $count$ tabs?",
+    "message": "Adormi $count$ file?",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -455,46 +455,46 @@
     }
   },
   "bookmarkFolderPickDialogTitle": {
-    "message": "Add to bookmark folder"
+    "message": "Adaugă la dosarul de marcaje"
   },
   "bookmarkFolderNoFolders": {
-    "message": "No bookmark folders"
+    "message": "Niciun dosar de marcaje"
   },
   "tabGroupsSelectAddBookmarks": {
-    "message": "Add to bookmark folder…"
+    "message": "Adaugă la dosarul de marcaje…"
   },
   "paletteCmdGoTabGroups": {
-    "message": "Go to Tab groups view"
+    "message": "Mergi la vizualizarea grupurilor de file"
   },
   "tabGroupsActivateGroup": {
-    "message": "Activate tab group"
+    "message": "Activează grupul"
   },
   "tabGroupsRenameGroup": {
-    "message": "Rename tab group"
+    "message": "Redenumește grupul"
   },
   "tabGroupsRenameDialog": {
-    "message": "Rename tab group"
+    "message": "Redenumește grupul de file"
   },
   "tabGroupsCloseGroup": {
-    "message": "Close tab group"
+    "message": "Închide grupul"
   },
   "tabGroupsSleepGroup": {
-    "message": "Sleep tab group"
+    "message": "Adormire grup"
   },
   "tabGroupsActivateTab": {
-    "message": "Activate tab"
+    "message": "Activează fila"
   },
   "tabGroupsCollapseGroup": {
-    "message": "Collapse group"
+    "message": "Restrânge grupul"
   },
   "tabGroupsExpandGroup": {
-    "message": "Expand group"
+    "message": "Extinde grupul"
   },
   "tabGroupsMenuAddBookmark": {
-    "message": "Bookmark tab"
+    "message": "Marcaj filă"
   },
   "tabGroupsMenuSaveFolder": {
-    "message": "Save as bookmark folder"
+    "message": "Salvează ca dosar"
   },
   "deadProxyAdd": {
     "message": "Adaugă un server proxy pentru verificarea linkurilor moarte"

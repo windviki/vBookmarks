@@ -344,25 +344,25 @@
     }
   },
   "viewTabGroups": {
-    "message": "Tab groups"
+    "message": "Групи раздели"
   },
   "optionShowTabGroupsView": {
-    "message": "Show the tab groups view tab"
+    "message": "Показване на раздела за групи раздели"
   },
   "tabGroupsViewEmpty": {
-    "message": "No tabs in this window"
+    "message": "Няма раздели в този прозорец"
   },
   "tabGroupsToolbarRefresh": {
-    "message": "Refresh"
+    "message": "Опресни"
   },
   "tabGroupsCollapseAll": {
-    "message": "Collapse all"
+    "message": "Свий всички"
   },
   "tabGroupsExpandAll": {
-    "message": "Expand all"
+    "message": "Разгъни всички"
   },
   "tabGroupsSummary": {
-    "message": "$tabs$ tabs · $groups$ groups",
+    "message": "$tabs$ раздела · $groups$ групи",
     "placeholders": {
       "tabs": {
         "content": "$1"
@@ -373,7 +373,7 @@
     }
   },
   "tabGroupsGroupCount": {
-    "message": "$count$ tabs",
+    "message": "$count$ раздела",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -381,19 +381,19 @@
     }
   },
   "tabGroupsGroupCreatedUnknown": {
-    "message": "Created time unknown"
+    "message": "Времето на създаване е неизвестно"
   },
   "tabGroupsCurrentTab": {
-    "message": "Current tab"
+    "message": "Текущ раздел"
   },
   "tabGroupsAddBookmark": {
-    "message": "Bookmark this tab"
+    "message": "Отбележи този раздел"
   },
   "tabGroupsSaveFolder": {
-    "message": "Save tab group as bookmark folder"
+    "message": "Запази групата раздели като папка с отметки"
   },
   "tabGroupsGroupSavedToFolder": {
-    "message": "Saved $count$ tabs to $folder$",
+    "message": "Запазени $count$ раздела в $folder$",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -404,7 +404,7 @@
     }
   },
   "tabGroupsBookmarksAdded": {
-    "message": "Added $count$ bookmark(s) to $folder$",
+    "message": "Добавени $count$ отметки в $folder$",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -415,31 +415,31 @@
     }
   },
   "tabGroupsSelectNewGroup": {
-    "message": "New tab group"
+    "message": "Нова група раздели"
   },
   "tabGroupsSelectOpenInto": {
-    "message": "Open in existing tab group…"
+    "message": "Отвори в съществуваща група…"
   },
   "tabGroupsSelectSaveFolder": {
-    "message": "Save as bookmark folder"
+    "message": "Запази като папка с отметки"
   },
   "tabGroupsSelectClose": {
-    "message": "Close"
+    "message": "Затвори"
   },
   "tabGroupsSelectSleep": {
-    "message": "Sleep"
+    "message": "Приспи"
   },
   "tabGroupsCopyMoveDialog": {
-    "message": "Selected tabs already belong to a tab group. Copy them (open in a new place) or move them (remove from their current group)?"
+    "message": "Избраните раздели вече принадлежат към група. Да ги копирате ли (отваряне на ново място) или да ги преместите (премахване от текущата група)?"
   },
   "tabGroupsCopyMoveCopy": {
-    "message": "Copy"
+    "message": "Копирай"
   },
   "tabGroupsCopyMoveMove": {
-    "message": "Move"
+    "message": "Премести"
   },
   "tabGroupsConfirmClose": {
-    "message": "Close $count$ tabs?",
+    "message": "Да се затворят ли $count$ раздела?",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -447,7 +447,7 @@
     }
   },
   "tabGroupsConfirmSleep": {
-    "message": "Sleep $count$ tabs?",
+    "message": "Да се приспят ли $count$ раздела?",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -455,46 +455,46 @@
     }
   },
   "bookmarkFolderPickDialogTitle": {
-    "message": "Add to bookmark folder"
+    "message": "Добавяне към папка с отметки"
   },
   "bookmarkFolderNoFolders": {
-    "message": "No bookmark folders"
+    "message": "Няма папки с отметки"
   },
   "tabGroupsSelectAddBookmarks": {
-    "message": "Add to bookmark folder…"
+    "message": "Добави към папка с отметки…"
   },
   "paletteCmdGoTabGroups": {
-    "message": "Go to Tab groups view"
+    "message": "Към изгледа на групи раздели"
   },
   "tabGroupsActivateGroup": {
-    "message": "Activate tab group"
+    "message": "Активирай групата"
   },
   "tabGroupsRenameGroup": {
-    "message": "Rename tab group"
+    "message": "Преименувай групата"
   },
   "tabGroupsRenameDialog": {
-    "message": "Rename tab group"
+    "message": "Преименуване на група раздели"
   },
   "tabGroupsCloseGroup": {
-    "message": "Close tab group"
+    "message": "Затвори групата"
   },
   "tabGroupsSleepGroup": {
-    "message": "Sleep tab group"
+    "message": "Приспи групата"
   },
   "tabGroupsActivateTab": {
-    "message": "Activate tab"
+    "message": "Активирай раздела"
   },
   "tabGroupsCollapseGroup": {
-    "message": "Collapse group"
+    "message": "Свий групата"
   },
   "tabGroupsExpandGroup": {
-    "message": "Expand group"
+    "message": "Разгъни групата"
   },
   "tabGroupsMenuAddBookmark": {
-    "message": "Bookmark tab"
+    "message": "Отбележи раздела"
   },
   "tabGroupsMenuSaveFolder": {
-    "message": "Save as bookmark folder"
+    "message": "Запази като папка"
   },
   "deadProxyAdd": {
     "message": "Добавяне на прокси сървър за проверки за мъртви връзки"

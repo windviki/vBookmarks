@@ -344,25 +344,25 @@
     }
   },
   "viewTabGroups": {
-    "message": "Tab groups"
+    "message": "탭 그룹"
   },
   "optionShowTabGroupsView": {
-    "message": "Show the tab groups view tab"
+    "message": "탭 그룹 보기 탭 표시"
   },
   "tabGroupsViewEmpty": {
-    "message": "No tabs in this window"
+    "message": "이 창에 탭이 없습니다"
   },
   "tabGroupsToolbarRefresh": {
-    "message": "Refresh"
+    "message": "새로 고침"
   },
   "tabGroupsCollapseAll": {
-    "message": "Collapse all"
+    "message": "모두 접기"
   },
   "tabGroupsExpandAll": {
-    "message": "Expand all"
+    "message": "모두 펼치기"
   },
   "tabGroupsSummary": {
-    "message": "$tabs$ tabs · $groups$ groups",
+    "message": "$tabs$개 탭 · $groups$개 그룹",
     "placeholders": {
       "tabs": {
         "content": "$1"
@@ -373,7 +373,7 @@
     }
   },
   "tabGroupsGroupCount": {
-    "message": "$count$ tabs",
+    "message": "$count$개 탭",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -381,19 +381,19 @@
     }
   },
   "tabGroupsGroupCreatedUnknown": {
-    "message": "Created time unknown"
+    "message": "생성 시간 알 수 없음"
   },
   "tabGroupsCurrentTab": {
-    "message": "Current tab"
+    "message": "현재 탭"
   },
   "tabGroupsAddBookmark": {
-    "message": "Bookmark this tab"
+    "message": "이 탭 북마크"
   },
   "tabGroupsSaveFolder": {
-    "message": "Save tab group as bookmark folder"
+    "message": "탭 그룹을 북마크 폴더로 저장"
   },
   "tabGroupsGroupSavedToFolder": {
-    "message": "Saved $count$ tabs to $folder$",
+    "message": "$count$개 탭을 $folder$에 저장했습니다",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -404,7 +404,7 @@
     }
   },
   "tabGroupsBookmarksAdded": {
-    "message": "Added $count$ bookmark(s) to $folder$",
+    "message": "$count$개 북마크를 $folder$에 추가했습니다",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -415,31 +415,31 @@
     }
   },
   "tabGroupsSelectNewGroup": {
-    "message": "New tab group"
+    "message": "새 탭 그룹"
   },
   "tabGroupsSelectOpenInto": {
-    "message": "Open in existing tab group…"
+    "message": "기존 탭 그룹에서 열기…"
   },
   "tabGroupsSelectSaveFolder": {
-    "message": "Save as bookmark folder"
+    "message": "북마크 폴더로 저장"
   },
   "tabGroupsSelectClose": {
-    "message": "Close"
+    "message": "닫기"
   },
   "tabGroupsSelectSleep": {
-    "message": "Sleep"
+    "message": "절전"
   },
   "tabGroupsCopyMoveDialog": {
-    "message": "Selected tabs already belong to a tab group. Copy them (open in a new place) or move them (remove from their current group)?"
+    "message": "선택한 탭이 이미 탭 그룹에 속해 있습니다. 복사(새 위치에서 열기)하시겠습니까, 아니면 이동(현재 그룹에서 제거)하시겠습니까?"
   },
   "tabGroupsCopyMoveCopy": {
-    "message": "Copy"
+    "message": "복사"
   },
   "tabGroupsCopyMoveMove": {
-    "message": "Move"
+    "message": "이동"
   },
   "tabGroupsConfirmClose": {
-    "message": "Close $count$ tabs?",
+    "message": "$count$개 탭을 닫을까요?",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -447,7 +447,7 @@
     }
   },
   "tabGroupsConfirmSleep": {
-    "message": "Sleep $count$ tabs?",
+    "message": "$count$개 탭을 절전 모드로 전환할까요?",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -455,46 +455,46 @@
     }
   },
   "bookmarkFolderPickDialogTitle": {
-    "message": "Add to bookmark folder"
+    "message": "북마크 폴더에 추가"
   },
   "bookmarkFolderNoFolders": {
-    "message": "No bookmark folders"
+    "message": "북마크 폴더가 없습니다"
   },
   "tabGroupsSelectAddBookmarks": {
-    "message": "Add to bookmark folder…"
+    "message": "북마크 폴더에 추가…"
   },
   "paletteCmdGoTabGroups": {
-    "message": "Go to Tab groups view"
+    "message": "탭 그룹 보기로 이동"
   },
   "tabGroupsActivateGroup": {
-    "message": "Activate tab group"
+    "message": "탭 그룹 활성화"
   },
   "tabGroupsRenameGroup": {
-    "message": "Rename tab group"
+    "message": "탭 그룹 이름 바꾸기"
   },
   "tabGroupsRenameDialog": {
-    "message": "Rename tab group"
+    "message": "탭 그룹 이름 바꾸기"
   },
   "tabGroupsCloseGroup": {
-    "message": "Close tab group"
+    "message": "탭 그룹 닫기"
   },
   "tabGroupsSleepGroup": {
-    "message": "Sleep tab group"
+    "message": "탭 그룹 절전"
   },
   "tabGroupsActivateTab": {
-    "message": "Activate tab"
+    "message": "탭 활성화"
   },
   "tabGroupsCollapseGroup": {
-    "message": "Collapse group"
+    "message": "그룹 접기"
   },
   "tabGroupsExpandGroup": {
-    "message": "Expand group"
+    "message": "그룹 펼치기"
   },
   "tabGroupsMenuAddBookmark": {
-    "message": "Bookmark tab"
+    "message": "탭 북마크"
   },
   "tabGroupsMenuSaveFolder": {
-    "message": "Save as bookmark folder"
+    "message": "북마크 폴더로 저장"
   },
   "deadProxyAdd": {
     "message": "죽은 링크 확인용 프록시 서버 추가"

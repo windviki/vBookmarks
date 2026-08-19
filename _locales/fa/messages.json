@@ -344,25 +344,25 @@
     }
   },
   "viewTabGroups": {
-    "message": "Tab groups"
+    "message": "گروههای برگه"
   },
   "optionShowTabGroupsView": {
-    "message": "Show the tab groups view tab"
+    "message": "نمایش برگهٔ نمای گروههای برگه"
   },
   "tabGroupsViewEmpty": {
-    "message": "No tabs in this window"
+    "message": "هیچ برگهای در این پنجره نیست"
   },
   "tabGroupsToolbarRefresh": {
-    "message": "Refresh"
+    "message": "تازهسازی"
   },
   "tabGroupsCollapseAll": {
-    "message": "Collapse all"
+    "message": "جمع کردن همه"
   },
   "tabGroupsExpandAll": {
-    "message": "Expand all"
+    "message": "باز کردن همه"
   },
   "tabGroupsSummary": {
-    "message": "$tabs$ tabs · $groups$ groups",
+    "message": "$tabs$ برگه · $groups$ گروه",
     "placeholders": {
       "tabs": {
         "content": "$1"
@@ -373,7 +373,7 @@
     }
   },
   "tabGroupsGroupCount": {
-    "message": "$count$ tabs",
+    "message": "$count$ برگه",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -381,19 +381,19 @@
     }
   },
   "tabGroupsGroupCreatedUnknown": {
-    "message": "Created time unknown"
+    "message": "زمان ایجاد نامشخص"
   },
   "tabGroupsCurrentTab": {
-    "message": "Current tab"
+    "message": "برگهٔ فعلی"
   },
   "tabGroupsAddBookmark": {
-    "message": "Bookmark this tab"
+    "message": "نشانکگذاری این برگه"
   },
   "tabGroupsSaveFolder": {
-    "message": "Save tab group as bookmark folder"
+    "message": "ذخیرهٔ گروه برگه بهعنوان پوشهٔ نشانک"
   },
   "tabGroupsGroupSavedToFolder": {
-    "message": "Saved $count$ tabs to $folder$",
+    "message": "$count$ برگه در $folder$ ذخیره شد",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -404,7 +404,7 @@
     }
   },
   "tabGroupsBookmarksAdded": {
-    "message": "Added $count$ bookmark(s) to $folder$",
+    "message": "$count$ نشانک به $folder$ اضافه شد",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -415,31 +415,31 @@
     }
   },
   "tabGroupsSelectNewGroup": {
-    "message": "New tab group"
+    "message": "گروه برگهٔ جدید"
   },
   "tabGroupsSelectOpenInto": {
-    "message": "Open in existing tab group…"
+    "message": "باز کردن در گروه برگهٔ موجود…"
   },
   "tabGroupsSelectSaveFolder": {
-    "message": "Save as bookmark folder"
+    "message": "ذخیره بهعنوان پوشهٔ نشانک"
   },
   "tabGroupsSelectClose": {
-    "message": "Close"
+    "message": "بستن"
   },
   "tabGroupsSelectSleep": {
-    "message": "Sleep"
+    "message": "خواب"
   },
   "tabGroupsCopyMoveDialog": {
-    "message": "Selected tabs already belong to a tab group. Copy them (open in a new place) or move them (remove from their current group)?"
+    "message": "برگههای انتخابشده قبلاً به یک گروه برگه تعلق دارند. آیا آنها را کپی کنید (در مکان جدید باز کنید) یا منتقل کنید (از گروه فعلی حذف شوند)؟"
   },
   "tabGroupsCopyMoveCopy": {
-    "message": "Copy"
+    "message": "کپی"
   },
   "tabGroupsCopyMoveMove": {
-    "message": "Move"
+    "message": "انتقال"
   },
   "tabGroupsConfirmClose": {
-    "message": "Close $count$ tabs?",
+    "message": "$count$ برگه بسته شود؟",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -447,7 +447,7 @@
     }
   },
   "tabGroupsConfirmSleep": {
-    "message": "Sleep $count$ tabs?",
+    "message": "$count$ برگه به خواب رود؟",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -455,46 +455,46 @@
     }
   },
   "bookmarkFolderPickDialogTitle": {
-    "message": "Add to bookmark folder"
+    "message": "افزودن به پوشهٔ نشانک"
   },
   "bookmarkFolderNoFolders": {
-    "message": "No bookmark folders"
+    "message": "هیچ پوشهٔ نشانکی وجود ندارد"
   },
   "tabGroupsSelectAddBookmarks": {
-    "message": "Add to bookmark folder…"
+    "message": "افزودن به پوشهٔ نشانک…"
   },
   "paletteCmdGoTabGroups": {
-    "message": "Go to Tab groups view"
+    "message": "رفتن به نمای گروههای برگه"
   },
   "tabGroupsActivateGroup": {
-    "message": "Activate tab group"
+    "message": "فعالسازی گروه برگه"
   },
   "tabGroupsRenameGroup": {
-    "message": "Rename tab group"
+    "message": "تغییر نام گروه برگه"
   },
   "tabGroupsRenameDialog": {
-    "message": "Rename tab group"
+    "message": "تغییر نام گروه برگه"
   },
   "tabGroupsCloseGroup": {
-    "message": "Close tab group"
+    "message": "بستن گروه برگه"
   },
   "tabGroupsSleepGroup": {
-    "message": "Sleep tab group"
+    "message": "خواب گروه برگه"
   },
   "tabGroupsActivateTab": {
-    "message": "Activate tab"
+    "message": "فعالسازی برگه"
   },
   "tabGroupsCollapseGroup": {
-    "message": "Collapse group"
+    "message": "جمع کردن گروه"
   },
   "tabGroupsExpandGroup": {
-    "message": "Expand group"
+    "message": "باز کردن گروه"
   },
   "tabGroupsMenuAddBookmark": {
-    "message": "Bookmark tab"
+    "message": "نشانکگذاری برگه"
   },
   "tabGroupsMenuSaveFolder": {
-    "message": "Save as bookmark folder"
+    "message": "ذخیره بهعنوان پوشهٔ نشانک"
   },
   "deadProxyAdd": {
     "message": "افزودن سرور پروکسی برای بررسی لینک‌های خراب"

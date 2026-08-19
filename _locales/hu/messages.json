@@ -344,25 +344,25 @@
     }
   },
   "viewTabGroups": {
-    "message": "Tab groups"
+    "message": "Lapcsoportok"
   },
   "optionShowTabGroupsView": {
-    "message": "Show the tab groups view tab"
+    "message": "Lapcsoportok nézetének megjelenítése"
   },
   "tabGroupsViewEmpty": {
-    "message": "No tabs in this window"
+    "message": "Nincs lap ebben az ablakban"
   },
   "tabGroupsToolbarRefresh": {
-    "message": "Refresh"
+    "message": "Frissítés"
   },
   "tabGroupsCollapseAll": {
-    "message": "Collapse all"
+    "message": "Összecsukás"
   },
   "tabGroupsExpandAll": {
-    "message": "Expand all"
+    "message": "Kinyitás"
   },
   "tabGroupsSummary": {
-    "message": "$tabs$ tabs · $groups$ groups",
+    "message": "$tabs$ lap · $groups$ csoport",
     "placeholders": {
       "tabs": {
         "content": "$1"
@@ -373,7 +373,7 @@
     }
   },
   "tabGroupsGroupCount": {
-    "message": "$count$ tabs",
+    "message": "$count$ lap",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -381,19 +381,19 @@
     }
   },
   "tabGroupsGroupCreatedUnknown": {
-    "message": "Created time unknown"
+    "message": "Létrehozás ideje ismeretlen"
   },
   "tabGroupsCurrentTab": {
-    "message": "Current tab"
+    "message": "Aktuális lap"
   },
   "tabGroupsAddBookmark": {
-    "message": "Bookmark this tab"
+    "message": "Lap könyvjelzőzése"
   },
   "tabGroupsSaveFolder": {
-    "message": "Save tab group as bookmark folder"
+    "message": "Lapcsoport mentése könyvjelzőmappaként"
   },
   "tabGroupsGroupSavedToFolder": {
-    "message": "Saved $count$ tabs to $folder$",
+    "message": "$count$ lap mentve: $folder$",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -404,7 +404,7 @@
     }
   },
   "tabGroupsBookmarksAdded": {
-    "message": "Added $count$ bookmark(s) to $folder$",
+    "message": "$count$ könyvjelző hozzáadva: $folder$",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -415,31 +415,31 @@
     }
   },
   "tabGroupsSelectNewGroup": {
-    "message": "New tab group"
+    "message": "Új lapcsoport"
   },
   "tabGroupsSelectOpenInto": {
-    "message": "Open in existing tab group…"
+    "message": "Megnyitás meglévő lapcsoportban…"
   },
   "tabGroupsSelectSaveFolder": {
-    "message": "Save as bookmark folder"
+    "message": "Mentés könyvjelzőmappaként"
   },
   "tabGroupsSelectClose": {
-    "message": "Close"
+    "message": "Bezárás"
   },
   "tabGroupsSelectSleep": {
-    "message": "Sleep"
+    "message": "Alvás"
   },
   "tabGroupsCopyMoveDialog": {
-    "message": "Selected tabs already belong to a tab group. Copy them (open in a new place) or move them (remove from their current group)?"
+    "message": "A kijelölt lapok már egy lapcsoporthoz tartoznak. Másolja őket (megnyitás új helyen) vagy mozgassa (eltávolítás a jelenlegi csoportból)?"
   },
   "tabGroupsCopyMoveCopy": {
-    "message": "Copy"
+    "message": "Másolás"
   },
   "tabGroupsCopyMoveMove": {
-    "message": "Move"
+    "message": "Mozgatás"
   },
   "tabGroupsConfirmClose": {
-    "message": "Close $count$ tabs?",
+    "message": "Bezárja a(z) $count$ lapot?",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -447,7 +447,7 @@
     }
   },
   "tabGroupsConfirmSleep": {
-    "message": "Sleep $count$ tabs?",
+    "message": "Alvó állapotba helyezi a(z) $count$ lapot?",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -455,46 +455,46 @@
     }
   },
   "bookmarkFolderPickDialogTitle": {
-    "message": "Add to bookmark folder"
+    "message": "Hozzáadás könyvjelzőmappához"
   },
   "bookmarkFolderNoFolders": {
-    "message": "No bookmark folders"
+    "message": "Nincs könyvjelzőmappa"
   },
   "tabGroupsSelectAddBookmarks": {
-    "message": "Add to bookmark folder…"
+    "message": "Hozzáadás könyvjelzőmappához…"
   },
   "paletteCmdGoTabGroups": {
-    "message": "Go to Tab groups view"
+    "message": "Ugrás a lapcsoportok nézetére"
   },
   "tabGroupsActivateGroup": {
-    "message": "Activate tab group"
+    "message": "Lapcsoport aktiválása"
   },
   "tabGroupsRenameGroup": {
-    "message": "Rename tab group"
+    "message": "Lapcsoport átnevezése"
   },
   "tabGroupsRenameDialog": {
-    "message": "Rename tab group"
+    "message": "Lapcsoport átnevezése"
   },
   "tabGroupsCloseGroup": {
-    "message": "Close tab group"
+    "message": "Lapcsoport bezárása"
   },
   "tabGroupsSleepGroup": {
-    "message": "Sleep tab group"
+    "message": "Lapcsoport alvó állapotba"
   },
   "tabGroupsActivateTab": {
-    "message": "Activate tab"
+    "message": "Lap aktiválása"
   },
   "tabGroupsCollapseGroup": {
-    "message": "Collapse group"
+    "message": "Csoport összecsukása"
   },
   "tabGroupsExpandGroup": {
-    "message": "Expand group"
+    "message": "Csoport kinyitása"
   },
   "tabGroupsMenuAddBookmark": {
-    "message": "Bookmark tab"
+    "message": "Lap könyvjelzőzése"
   },
   "tabGroupsMenuSaveFolder": {
-    "message": "Save as bookmark folder"
+    "message": "Mentés könyvjelzőmappaként"
   },
   "deadProxyAdd": {
     "message": "Proxykiszolgáló hozzáadása a hibás linkek ellenőrzéséhez"

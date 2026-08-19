@@ -344,25 +344,25 @@
     }
   },
   "viewTabGroups": {
-    "message": "Tab groups"
+    "message": "Skupiny kariet"
   },
   "optionShowTabGroupsView": {
-    "message": "Show the tab groups view tab"
+    "message": "Zobraziť kartu zobrazenia skupín kariet"
   },
   "tabGroupsViewEmpty": {
-    "message": "No tabs in this window"
+    "message": "V tomto okne nie sú žiadne karty"
   },
   "tabGroupsToolbarRefresh": {
-    "message": "Refresh"
+    "message": "Obnoviť"
   },
   "tabGroupsCollapseAll": {
-    "message": "Collapse all"
+    "message": "Zbaliť všetko"
   },
   "tabGroupsExpandAll": {
-    "message": "Expand all"
+    "message": "Rozbaliť všetko"
   },
   "tabGroupsSummary": {
-    "message": "$tabs$ tabs · $groups$ groups",
+    "message": "$tabs$ kariet · $groups$ skupín",
     "placeholders": {
       "tabs": {
         "content": "$1"
@@ -373,7 +373,7 @@
     }
   },
   "tabGroupsGroupCount": {
-    "message": "$count$ tabs",
+    "message": "$count$ kariet",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -381,19 +381,19 @@
     }
   },
   "tabGroupsGroupCreatedUnknown": {
-    "message": "Created time unknown"
+    "message": "Čas vytvorenia neznámy"
   },
   "tabGroupsCurrentTab": {
-    "message": "Current tab"
+    "message": "Aktuálna karta"
   },
   "tabGroupsAddBookmark": {
-    "message": "Bookmark this tab"
+    "message": "Pridať túto kartu do záložiek"
   },
   "tabGroupsSaveFolder": {
-    "message": "Save tab group as bookmark folder"
+    "message": "Uložiť skupinu kariet ako priečinok záložiek"
   },
   "tabGroupsGroupSavedToFolder": {
-    "message": "Saved $count$ tabs to $folder$",
+    "message": "Uložené $count$ kariet do $folder$",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -404,7 +404,7 @@
     }
   },
   "tabGroupsBookmarksAdded": {
-    "message": "Added $count$ bookmark(s) to $folder$",
+    "message": "Pridané $count$ záložiek do $folder$",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -415,31 +415,31 @@
     }
   },
   "tabGroupsSelectNewGroup": {
-    "message": "New tab group"
+    "message": "Nová skupina kariet"
   },
   "tabGroupsSelectOpenInto": {
-    "message": "Open in existing tab group…"
+    "message": "Otvoriť v existujúcej skupine kariet…"
   },
   "tabGroupsSelectSaveFolder": {
-    "message": "Save as bookmark folder"
+    "message": "Uložiť ako priečinok záložiek"
   },
   "tabGroupsSelectClose": {
-    "message": "Close"
+    "message": "Zavrieť"
   },
   "tabGroupsSelectSleep": {
-    "message": "Sleep"
+    "message": "Uspať"
   },
   "tabGroupsCopyMoveDialog": {
-    "message": "Selected tabs already belong to a tab group. Copy them (open in a new place) or move them (remove from their current group)?"
+    "message": "Vybrané karty už patria do skupiny kariet. Chcete ich skopírovať (otvoriť na novom mieste) alebo presunúť (odstrániť z aktuálnej skupiny)?"
   },
   "tabGroupsCopyMoveCopy": {
-    "message": "Copy"
+    "message": "Kopírovať"
   },
   "tabGroupsCopyMoveMove": {
-    "message": "Move"
+    "message": "Presunúť"
   },
   "tabGroupsConfirmClose": {
-    "message": "Close $count$ tabs?",
+    "message": "Zavrieť $count$ kariet?",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -447,7 +447,7 @@
     }
   },
   "tabGroupsConfirmSleep": {
-    "message": "Sleep $count$ tabs?",
+    "message": "Uspať $count$ kariet?",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -455,46 +455,46 @@
     }
   },
   "bookmarkFolderPickDialogTitle": {
-    "message": "Add to bookmark folder"
+    "message": "Pridať do priečinka záložiek"
   },
   "bookmarkFolderNoFolders": {
-    "message": "No bookmark folders"
+    "message": "Žiadne priečinky záložiek"
   },
   "tabGroupsSelectAddBookmarks": {
-    "message": "Add to bookmark folder…"
+    "message": "Pridať do priečinka záložiek…"
   },
   "paletteCmdGoTabGroups": {
-    "message": "Go to Tab groups view"
+    "message": "Prejsť na zobrazenie skupín kariet"
   },
   "tabGroupsActivateGroup": {
-    "message": "Activate tab group"
+    "message": "Aktivovať skupinu kariet"
   },
   "tabGroupsRenameGroup": {
-    "message": "Rename tab group"
+    "message": "Premenovať skupinu kariet"
   },
   "tabGroupsRenameDialog": {
-    "message": "Rename tab group"
+    "message": "Premenovať skupinu kariet"
   },
   "tabGroupsCloseGroup": {
-    "message": "Close tab group"
+    "message": "Zavrieť skupinu kariet"
   },
   "tabGroupsSleepGroup": {
-    "message": "Sleep tab group"
+    "message": "Uspať skupinu kariet"
   },
   "tabGroupsActivateTab": {
-    "message": "Activate tab"
+    "message": "Aktivovať kartu"
   },
   "tabGroupsCollapseGroup": {
-    "message": "Collapse group"
+    "message": "Zbaliť skupinu"
   },
   "tabGroupsExpandGroup": {
-    "message": "Expand group"
+    "message": "Rozbaliť skupinu"
   },
   "tabGroupsMenuAddBookmark": {
-    "message": "Bookmark tab"
+    "message": "Pridať kartu do záložiek"
   },
   "tabGroupsMenuSaveFolder": {
-    "message": "Save as bookmark folder"
+    "message": "Uložiť ako priečinok záložiek"
   },
   "deadProxyAdd": {
     "message": "Pridať proxy server pre kontroly nefunkčných odkazov"

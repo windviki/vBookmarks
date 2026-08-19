@@ -362,7 +362,7 @@
     "message": "Tout développer"
   },
   "tabGroupsSummary": {
-    "message": "$tabs$ tabs · $groups$ groups",
+    "message": "$tabs$ onglets · $groups$ groupes",
     "placeholders": {
       "tabs": {
         "content": "$1"
@@ -373,7 +373,7 @@
     }
   },
   "tabGroupsGroupCount": {
-    "message": "$count$ tabs",
+    "message": "$count$ onglets",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -393,7 +393,7 @@
     "message": "Enregistrer le groupe d'onglets comme dossier de favoris"
   },
   "tabGroupsGroupSavedToFolder": {
-    "message": "Saved $count$ tabs to $folder$",
+    "message": "$count$ onglets enregistrés dans $folder$",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -404,7 +404,7 @@
     }
   },
   "tabGroupsBookmarksAdded": {
-    "message": "Added $count$ bookmark(s) to $folder$",
+    "message": "$count$ favori(s) ajouté(s) à $folder$",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -430,7 +430,7 @@
     "message": "Mettre en veille"
   },
   "tabGroupsCopyMoveDialog": {
-    "message": "Les onglets sélectionnés appartiennent déjà à un groupe d'onglets. Voulez-vous les copier (ouvrir dans un nouvel emplacement) ou les déplacer (retirer de leur groupe actuel) ?"
+    "message": "Les onglets sélectionnés appartiennent déjà à un groupe d'onglets. Voulez-vous les copier (ouvrir à un nouvel emplacement) ou les déplacer (les retirer de leur groupe actuel) ?"
   },
   "tabGroupsCopyMoveCopy": {
     "message": "Copier"
@@ -439,7 +439,7 @@
     "message": "Déplacer"
   },
   "tabGroupsConfirmClose": {
-    "message": "Close $count$ tabs?",
+    "message": "Fermer $count$ onglets ?",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -447,7 +447,7 @@
     }
   },
   "tabGroupsConfirmSleep": {
-    "message": "Sleep $count$ tabs?",
+    "message": "Mettre en veille $count$ onglets ?",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -464,37 +464,37 @@
     "message": "Ajouter au dossier de favoris…"
   },
   "paletteCmdGoTabGroups": {
-    "message": "Go to Tab groups view"
+    "message": "Aller à la vue des groupes d'onglets"
   },
   "tabGroupsActivateGroup": {
-    "message": "Activate tab group"
+    "message": "Activer le groupe"
   },
   "tabGroupsRenameGroup": {
-    "message": "Rename tab group"
+    "message": "Renommer le groupe"
   },
   "tabGroupsRenameDialog": {
-    "message": "Rename tab group"
+    "message": "Renommer le groupe d'onglets"
   },
   "tabGroupsCloseGroup": {
-    "message": "Close tab group"
+    "message": "Fermer le groupe"
   },
   "tabGroupsSleepGroup": {
-    "message": "Sleep tab group"
+    "message": "Mettre le groupe en veille"
   },
   "tabGroupsActivateTab": {
-    "message": "Activate tab"
+    "message": "Activer l'onglet"
   },
   "tabGroupsCollapseGroup": {
-    "message": "Collapse group"
+    "message": "Réduire le groupe"
   },
   "tabGroupsExpandGroup": {
-    "message": "Expand group"
+    "message": "Développer le groupe"
   },
   "tabGroupsMenuAddBookmark": {
-    "message": "Bookmark tab"
+    "message": "Ajouter aux favoris"
   },
   "tabGroupsMenuSaveFolder": {
-    "message": "Save as bookmark folder"
+    "message": "Enregistrer comme dossier"
   },
   "deadProxyAdd": {
     "message": "Ajouter un serveur proxy pour les vérifications de liens morts"

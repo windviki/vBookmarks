@@ -344,25 +344,25 @@
     }
   },
   "viewTabGroups": {
-    "message": "Tab groups"
+    "message": "Gruppi di schede"
   },
   "optionShowTabGroupsView": {
-    "message": "Show the tab groups view tab"
+    "message": "Mostra la scheda della vista gruppi di schede"
   },
   "tabGroupsViewEmpty": {
-    "message": "No tabs in this window"
+    "message": "Nessuna scheda in questa finestra"
   },
   "tabGroupsToolbarRefresh": {
-    "message": "Refresh"
+    "message": "Aggiorna"
   },
   "tabGroupsCollapseAll": {
-    "message": "Collapse all"
+    "message": "Comprimi tutto"
   },
   "tabGroupsExpandAll": {
-    "message": "Expand all"
+    "message": "Espandi tutto"
   },
   "tabGroupsSummary": {
-    "message": "$tabs$ tabs · $groups$ groups",
+    "message": "$tabs$ schede · $groups$ gruppi",
     "placeholders": {
       "tabs": {
         "content": "$1"
@@ -373,7 +373,7 @@
     }
   },
   "tabGroupsGroupCount": {
-    "message": "$count$ tabs",
+    "message": "$count$ schede",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -381,19 +381,19 @@
     }
   },
   "tabGroupsGroupCreatedUnknown": {
-    "message": "Created time unknown"
+    "message": "Data di creazione sconosciuta"
   },
   "tabGroupsCurrentTab": {
-    "message": "Current tab"
+    "message": "Scheda corrente"
   },
   "tabGroupsAddBookmark": {
-    "message": "Bookmark this tab"
+    "message": "Aggiungi questa scheda ai segnalibri"
   },
   "tabGroupsSaveFolder": {
-    "message": "Save tab group as bookmark folder"
+    "message": "Salva gruppo di schede come cartella di segnalibri"
   },
   "tabGroupsGroupSavedToFolder": {
-    "message": "Saved $count$ tabs to $folder$",
+    "message": "Salvate $count$ schede in $folder$",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -404,7 +404,7 @@
     }
   },
   "tabGroupsBookmarksAdded": {
-    "message": "Added $count$ bookmark(s) to $folder$",
+    "message": "Aggiunti $count$ segnalibri a $folder$",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -415,31 +415,31 @@
     }
   },
   "tabGroupsSelectNewGroup": {
-    "message": "New tab group"
+    "message": "Nuovo gruppo di schede"
   },
   "tabGroupsSelectOpenInto": {
-    "message": "Open in existing tab group…"
+    "message": "Apri in gruppo di schede esistente…"
   },
   "tabGroupsSelectSaveFolder": {
-    "message": "Save as bookmark folder"
+    "message": "Salva come cartella di segnalibri"
   },
   "tabGroupsSelectClose": {
-    "message": "Close"
+    "message": "Chiudi"
   },
   "tabGroupsSelectSleep": {
-    "message": "Sleep"
+    "message": "Sospendi"
   },
   "tabGroupsCopyMoveDialog": {
-    "message": "Selected tabs already belong to a tab group. Copy them (open in a new place) or move them (remove from their current group)?"
+    "message": "Le schede selezionate appartengono già a un gruppo di schede. Copiarle (aprirle in una nuova posizione) o spostarle (rimuoverle dal gruppo attuale)?"
   },
   "tabGroupsCopyMoveCopy": {
-    "message": "Copy"
+    "message": "Copia"
   },
   "tabGroupsCopyMoveMove": {
-    "message": "Move"
+    "message": "Sposta"
   },
   "tabGroupsConfirmClose": {
-    "message": "Close $count$ tabs?",
+    "message": "Chiudere $count$ schede?",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -447,7 +447,7 @@
     }
   },
   "tabGroupsConfirmSleep": {
-    "message": "Sleep $count$ tabs?",
+    "message": "Sospendere $count$ schede?",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -455,46 +455,46 @@
     }
   },
   "bookmarkFolderPickDialogTitle": {
-    "message": "Add to bookmark folder"
+    "message": "Aggiungi alla cartella di segnalibri"
   },
   "bookmarkFolderNoFolders": {
-    "message": "No bookmark folders"
+    "message": "Nessuna cartella di segnalibri"
   },
   "tabGroupsSelectAddBookmarks": {
-    "message": "Add to bookmark folder…"
+    "message": "Aggiungi alla cartella di segnalibri…"
   },
   "paletteCmdGoTabGroups": {
-    "message": "Go to Tab groups view"
+    "message": "Vai alla vista gruppi di schede"
   },
   "tabGroupsActivateGroup": {
-    "message": "Activate tab group"
+    "message": "Attiva gruppo di schede"
   },
   "tabGroupsRenameGroup": {
-    "message": "Rename tab group"
+    "message": "Rinomina gruppo di schede"
   },
   "tabGroupsRenameDialog": {
-    "message": "Rename tab group"
+    "message": "Rinomina gruppo di schede"
   },
   "tabGroupsCloseGroup": {
-    "message": "Close tab group"
+    "message": "Chiudi gruppo di schede"
   },
   "tabGroupsSleepGroup": {
-    "message": "Sleep tab group"
+    "message": "Sospendi gruppo di schede"
   },
   "tabGroupsActivateTab": {
-    "message": "Activate tab"
+    "message": "Attiva scheda"
   },
   "tabGroupsCollapseGroup": {
-    "message": "Collapse group"
+    "message": "Comprimi gruppo"
   },
   "tabGroupsExpandGroup": {
-    "message": "Expand group"
+    "message": "Espandi gruppo"
   },
   "tabGroupsMenuAddBookmark": {
-    "message": "Bookmark tab"
+    "message": "Aggiungi scheda ai segnalibri"
   },
   "tabGroupsMenuSaveFolder": {
-    "message": "Save as bookmark folder"
+    "message": "Salva come cartella di segnalibri"
   },
   "deadProxyAdd": {
     "message": "Aggiungi un server proxy per i controlli dei link morti"

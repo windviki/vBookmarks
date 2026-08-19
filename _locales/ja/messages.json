@@ -344,25 +344,25 @@
     }
   },
   "viewTabGroups": {
-    "message": "Tab groups"
+    "message": "タブグループ"
   },
   "optionShowTabGroupsView": {
-    "message": "Show the tab groups view tab"
+    "message": "タブグループビュータブを表示"
   },
   "tabGroupsViewEmpty": {
-    "message": "No tabs in this window"
+    "message": "このウィンドウにタブはありません"
   },
   "tabGroupsToolbarRefresh": {
-    "message": "Refresh"
+    "message": "更新"
   },
   "tabGroupsCollapseAll": {
-    "message": "Collapse all"
+    "message": "すべて折りたたむ"
   },
   "tabGroupsExpandAll": {
-    "message": "Expand all"
+    "message": "すべて展開"
   },
   "tabGroupsSummary": {
-    "message": "$tabs$ tabs · $groups$ groups",
+    "message": "$tabs$ タブ · $groups$ グループ",
     "placeholders": {
       "tabs": {
         "content": "$1"
@@ -373,7 +373,7 @@
     }
   },
   "tabGroupsGroupCount": {
-    "message": "$count$ tabs",
+    "message": "$count$ タブ",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -381,19 +381,19 @@
     }
   },
   "tabGroupsGroupCreatedUnknown": {
-    "message": "Created time unknown"
+    "message": "作成時刻不明"
   },
   "tabGroupsCurrentTab": {
-    "message": "Current tab"
+    "message": "現在のタブ"
   },
   "tabGroupsAddBookmark": {
-    "message": "Bookmark this tab"
+    "message": "このタブをブックマーク"
   },
   "tabGroupsSaveFolder": {
-    "message": "Save tab group as bookmark folder"
+    "message": "タブグループをブックマークフォルダーとして保存"
   },
   "tabGroupsGroupSavedToFolder": {
-    "message": "Saved $count$ tabs to $folder$",
+    "message": "$count$ タブを $folder$ に保存しました",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -404,7 +404,7 @@
     }
   },
   "tabGroupsBookmarksAdded": {
-    "message": "Added $count$ bookmark(s) to $folder$",
+    "message": "$count$ 件のブックマークを $folder$ に追加しました",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -415,31 +415,31 @@
     }
   },
   "tabGroupsSelectNewGroup": {
-    "message": "New tab group"
+    "message": "新しいタブグループ"
   },
   "tabGroupsSelectOpenInto": {
-    "message": "Open in existing tab group…"
+    "message": "既存のタブグループで開く…"
   },
   "tabGroupsSelectSaveFolder": {
-    "message": "Save as bookmark folder"
+    "message": "ブックマークフォルダーとして保存"
   },
   "tabGroupsSelectClose": {
-    "message": "Close"
+    "message": "閉じる"
   },
   "tabGroupsSelectSleep": {
-    "message": "Sleep"
+    "message": "スリープ"
   },
   "tabGroupsCopyMoveDialog": {
-    "message": "Selected tabs already belong to a tab group. Copy them (open in a new place) or move them (remove from their current group)?"
+    "message": "選択したタブは既にタブグループに属しています。コピー（新しい場所で開く）または移動（現在のグループから削除）しますか？"
   },
   "tabGroupsCopyMoveCopy": {
-    "message": "Copy"
+    "message": "コピー"
   },
   "tabGroupsCopyMoveMove": {
-    "message": "Move"
+    "message": "移動"
   },
   "tabGroupsConfirmClose": {
-    "message": "Close $count$ tabs?",
+    "message": "$count$ タブを閉じますか？",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -447,7 +447,7 @@
     }
   },
   "tabGroupsConfirmSleep": {
-    "message": "Sleep $count$ tabs?",
+    "message": "$count$ タブをスリープしますか？",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -455,46 +455,46 @@
     }
   },
   "bookmarkFolderPickDialogTitle": {
-    "message": "Add to bookmark folder"
+    "message": "ブックマークフォルダーに追加"
   },
   "bookmarkFolderNoFolders": {
-    "message": "No bookmark folders"
+    "message": "ブックマークフォルダーがありません"
   },
   "tabGroupsSelectAddBookmarks": {
-    "message": "Add to bookmark folder…"
+    "message": "ブックマークフォルダーに追加…"
   },
   "paletteCmdGoTabGroups": {
-    "message": "Go to Tab groups view"
+    "message": "タブグループビューへ移動"
   },
   "tabGroupsActivateGroup": {
-    "message": "Activate tab group"
+    "message": "タブグループをアクティブ化"
   },
   "tabGroupsRenameGroup": {
-    "message": "Rename tab group"
+    "message": "タブグループ名を変更"
   },
   "tabGroupsRenameDialog": {
-    "message": "Rename tab group"
+    "message": "タブグループ名を変更"
   },
   "tabGroupsCloseGroup": {
-    "message": "Close tab group"
+    "message": "タブグループを閉じる"
   },
   "tabGroupsSleepGroup": {
-    "message": "Sleep tab group"
+    "message": "タブグループをスリープ"
   },
   "tabGroupsActivateTab": {
-    "message": "Activate tab"
+    "message": "タブをアクティブ化"
   },
   "tabGroupsCollapseGroup": {
-    "message": "Collapse group"
+    "message": "グループを折りたたむ"
   },
   "tabGroupsExpandGroup": {
-    "message": "Expand group"
+    "message": "グループを展開"
   },
   "tabGroupsMenuAddBookmark": {
-    "message": "Bookmark tab"
+    "message": "タブをブックマーク"
   },
   "tabGroupsMenuSaveFolder": {
-    "message": "Save as bookmark folder"
+    "message": "ブックマークフォルダーとして保存"
   },
   "deadProxyAdd": {
     "message": "リンク切れチェック用のプロキシサーバーを追加"
