@@ -667,7 +667,7 @@ export function initContextMenu(ctx = {}) {
     // Round-3 item 3: the feature-view lists follow the same contract —
     // scrolling the content or moving focus into the list dismisses an open
     // menu (previously only the tree/results/palette panes did).
-    for (const id of ['recent-list', 'stats-list', 'dead-list', 'dupes-list', 'search-history-area']) {
+    for (const id of ['recent-list', 'tabgroups-list', 'stats-list', 'dead-list', 'dupes-list', 'search-history-area']) {
         const listEl = $(id);
         if (listEl) {
             listEl.addEventListener('scroll', scrollDismiss);
