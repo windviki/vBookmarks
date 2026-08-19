@@ -96,7 +96,7 @@ describe('scrollbar-contract: 滚动容器横向裁剪 (A)', () => {
     });
 
     it('a consolidated overflow-x:hidden guard rule exists (end of file wins the cascade)', () => {
-        const body = ruleBody(neatCss, '#tree,\n#results,\n#recent-list,\n#dupes-list,\n#dead-list,\n#stats-list,\n#search-history-area,\n#palette-results {');
+        const body = ruleBody(neatCss, '#tree,\n#results,\n#recent-list,\n#tabgroups-list,\n#dupes-list,\n#dead-list,\n#stats-list,\n#search-history-area,\n#palette-results {');
         expect(body).toContain('overflow-x: hidden');
     });
 
@@ -110,8 +110,8 @@ describe('scrollbar-contract: 纵向滚动保留 (B)', () => {
         expect(ruleBody(neatCss, '#results,\n#tree {')).toContain('overflow: auto');
     });
 
-    it('the four list panes keep overflow:auto (vertical)', () => {
-        expect(ruleBody(neatCss, '#recent-list,\n#dupes-list,\n#dead-list,\n#stats-list {')).toContain('overflow: auto');
+    it('the list-view panes keep overflow:auto (vertical)', () => {
+        expect(ruleBody(neatCss, '#recent-list,\n#tabgroups-list,\n#dupes-list,\n#dead-list,\n#stats-list {')).toContain('overflow: auto');
     });
 
     it('search-history and palette keep overflow-y:auto (vertical)', () => {

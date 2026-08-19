@@ -22,7 +22,7 @@ describe('list-view hover/selected parity (item 7b)', () => {
     it('every list view container shares the pane chrome', () => {
         const body = ruleBody(
             neatCss,
-            '#recent-list,\n#dupes-list,\n#dead-list,\n#stats-list {');
+            '#recent-list,\n#tabgroups-list,\n#dupes-list,\n#dead-list,\n#stats-list {');
         expect(body).toContain('overflow: auto');
         expect(body).toContain('background-color: var(--vbm-bg)');
     });

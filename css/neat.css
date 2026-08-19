@@ -2406,6 +2406,7 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
    focus ring are identical across every list view and the tree. */
 
 #recent-list,
+#tabgroups-list,
 #dupes-list,
 #dead-list,
 #stats-list {
@@ -4464,6 +4465,7 @@ body.panel-mode #stats-list ul li.vbm-row > a.tree-item-link .row-badge.time {
 #tree,
 #results,
 #recent-list,
+#tabgroups-list,
 #dupes-list,
 #dead-list,
 #stats-list,
