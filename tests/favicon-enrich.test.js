@@ -19,6 +19,7 @@ import {
     interpretFaviconRun,
     interpretDuckDuckGo,
     interpretIconHorse,
+    iconHorseProbeUrl,
     MAX_HTML_BYTES,
     SESSION_ONLY_CAP,
     MAX_L2_CANDIDATES
@@ -385,16 +386,29 @@ describe('provider interpret contracts', () => {
         expect(interpretIconHorse(null, false)).toBe('unreachable');
     });
 
-    it('icon-horse: 2xx + image content-type → icon', () => {
+    it('icon-horse: 2xx + image content-type → icon (real icon OR avatar — the probe decides)', () => {
         expect(interpretIconHorse({ ok: true, headers: { get: () => 'image/png' } }, true)).toBe('icon');
     });
 
-    it('icon-horse: 2xx + text/html → no-icon (no placeholder ambiguity)', () => {
+    it('icon-horse: 2xx + text/html → no-icon', () => {
         expect(interpretIconHorse({ ok: true, headers: { get: () => 'text/html' } }, true)).toBe('no-icon');
     });
 
     it('icon-horse: HTTP 404 → no-icon', () => {
         expect(interpretIconHorse({ ok: false, status: 404, headers: { get: () => null } }, true)).toBe('no-icon');
+    });
+
+    it('only icon-horse carries a placeholder probe; [a-z0-9] first chars only', () => {
+        // The avatar is deterministic per FIRST character — the probe asks for
+        // a guaranteed-unknown .invalid name starting with the same character.
+        expect(iconHorseProbeUrl('example.com')).toBe('https://icon.horse/icon/e-vbmref.invalid');
+        expect(iconHorseProbeUrl('9zz.example')).toBe('https://icon.horse/icon/9-vbmref.invalid');
+        // A non [a-z0-9] first char (IPv6 literal) → no probe (fail open).
+        expect(iconHorseProbeUrl('[::1]')).toBeNull();
+        const byId = id => AGG_PROVIDERS.find(p => p.id === id);
+        expect(byId('icon-horse').placeholderProbeUrl).toBe(iconHorseProbeUrl);
+        expect(byId('favicon-run').placeholderProbeUrl).toBeUndefined();
+        expect(byId('duckduckgo').placeholderProbeUrl).toBeUndefined();
     });
 });
 
@@ -1088,6 +1102,174 @@ describe('initFaviconEnrich — per-provider breaker + failover', () => {
         expect(fetchImpl.calls.some(c => /__vbm_px=1/.test(c.url))).toBe(false);  // no proxy
         expect(frCalls).toBe(0);       // skipped
         expect(ddgCalls).toBe(1);      // next provider used
+    });
+});
+
+describe('initFaviconEnrich — icon.horse avatar probe', () => {
+    beforeEach(() => { seq = 0; });
+
+    // A second tiny payload whose data URL differs from PNG_BYTES's — stands
+    // in for a REAL icon next to PNG_BYTES's avatar tile.
+    const REAL_ICON_BYTES = (() => {
+        const b = PNG_BYTES.slice();
+        b[b.length - 5] ^= 0xff;
+        return b;
+    })();
+    const AVATAR_URL = `data:image/png;base64,${bytesToBase64(PNG_BYTES)}`;
+    const REAL_ICON_URL = `data:image/png;base64,${bytesToBase64(REAL_ICON_BYTES)}`;
+    const AVATAR_FP = { w: 16, h: 16, hash: 1111 };
+    const REAL_FP = { w: 16, h: 16, hash: 2222 };
+
+    // A faviconService whose sampleIcon fingerprints PER SRC — the avatar
+    // payload and the real payload read as different images (anything else
+    // fails to decode → null), stubbed the same way as contrast registration.
+    const makeFingerprintService = () => ({
+        statsBySrc: new Map(),
+        sampleIcon: img => (img.src === AVATAR_URL ? AVATAR_FP
+            : img.src === REAL_ICON_URL ? REAL_FP : null),
+        applyContrast: () => {}
+    });
+
+    const enrichWith = (fetchImpl, storage = makeStorageArea()) => initFaviconEnrich({
+        doc: makeDoc(),
+        faviconService: makeFingerprintService(),
+        isEnabled: () => true,
+        fallbackEnabled: () => true,
+        fetchImpl,
+        ImageCtor: makeFakeImage(),
+        chromeImpl: { storage: { local: storage } },
+        now: nextNow
+    });
+
+    // Drain the discovery chain incl. the probe's image-decode macrotasks
+    // (candidate validate → probe fetch+validate → two fingerprints ≈ 4 loads).
+    const flushChain = async () => { for (let i = 0; i < 12; i++) await tick(); };
+
+    const deadPage = { ok: false, status: 403, arrayBuffer: async () => new ArrayBuffer(0), headers: { get: () => null } };
+    const fr500 = { ok: false, status: 500, arrayBuffer: async () => new ArrayBuffer(0), headers: { get: () => null } };
+
+    it('avatar candidate matching the probe → no-icon: DDG tried, then the 24h failed marker (never a 30d success)', async () => {
+        const probe = iconHorseProbeUrl('zzz-fake.example');   // …/z-vbmref.invalid
+        const storage = makeStorageArea();
+        const fetchImpl = makeFetch([
+            [/\/favicon\.ico$/, notFound()],
+            [/^https:\/\/zzz-fake\.example\/$/, deadPage],
+            [/favicon\.run/, fr500],
+            [/vbmref\.invalid$/, pngResponse(PNG_BYTES)],   // the probe: the reference avatar
+            [/icon\.horse/, pngResponse(PNG_BYTES)],        // the candidate: the SAME avatar bytes
+            [/duckduckgo/, notFound()]
+        ]);
+        const en = enrichWith(fetchImpl, storage);
+        await en._hydrateDone;
+        en.onPlaceholder(makePlaceholderImg('https://zzz-fake.example/'));
+        await flushChain();
+        expect(fetchImpl.calls.some(c => c.url === IH('zzz-fake.example'))).toBe(true);   // candidate fetched
+        expect(fetchImpl.calls.filter(c => c.url === probe)).toHaveLength(1);             // probed once
+        expect(fetchImpl.calls.some(c => c.url === DDG('zzz-fake.example'))).toBe(true);  // failed over
+        const entry = en.getCache().get('zzz-fake.example');
+        expect(entry && entry.f).toBe(1);                    // 24h failed marker…
+        expect(entry && entry.d).toBeUndefined();            // …not a success entry
+        expect(storage.data[`${FAVICON_DATA_PREFIX}zzz-fake.example`]).toBeUndefined();
+        en.flushIndex();
+        expect(storage.data[FAVICON_IDX_KEY]).toContain('zzz-fake.example');
+        expect(en.getIdx().down['icon-horse']).toBe(0);      // a clean failover never trips the breaker
+    });
+
+    it('real icon from icon.horse (probe fingerprint differs) → accepted, DDG never called', async () => {
+        const fetchImpl = makeFetch([
+            [/\/favicon\.ico$/, notFound()],
+            [/^https:\/\/real\.example\/$/, deadPage],
+            [/favicon\.run/, fr500],
+            [/vbmref\.invalid$/, pngResponse(PNG_BYTES)],        // probe: the avatar tile
+            [/icon\.horse/, pngResponse(REAL_ICON_BYTES)],       // candidate: a REAL icon
+            [/duckduckgo/, () => { throw new Error('DDG must not be called'); }]
+        ]);
+        const en = enrichWith(fetchImpl);
+        await en._hydrateDone;
+        const img = makePlaceholderImg('https://real.example/');
+        en.onPlaceholder(img);
+        await flushChain();
+        expect(en.getCache().get('real.example').d).toBe(REAL_ICON_URL);
+        expect(fetchImpl.calls.some(c => /duckduckgo/.test(c.url))).toBe(false);
+        expect(img.parentNode.children[0].tagName).toBe('IMG');   // hot-swapped
+    });
+
+    it('probe fetch failure fails OPEN: the avatar candidate is accepted, no breaker trip', async () => {
+        const fetchImpl = makeFetch([
+            [/\/favicon\.ico$/, notFound()],
+            [/^https:\/\/open\.example\/$/, deadPage],
+            [/favicon\.run/, fr500],
+            [/vbmref\.invalid$/, () => { throw new TypeError('probe unreachable'); }],
+            [/icon\.horse/, pngResponse(PNG_BYTES)],   // candidate: the avatar bytes
+            [/duckduckgo/, () => { throw new Error('DDG must not be called'); }]
+        ]);
+        const en = enrichWith(fetchImpl);
+        await en._hydrateDone;
+        en.onPlaceholder(makePlaceholderImg('https://open.example/'));
+        await flushChain();
+        // Fail open = the unguarded behavior: the candidate is accepted.
+        expect(en.getCache().get('open.example').d).toBe(AVATAR_URL);
+        expect(en.getIdx().down['icon-horse']).toBe(0);   // probe trouble never trips the breaker
+        expect(fetchImpl.calls.some(c => /duckduckgo/.test(c.url))).toBe(false);
+    });
+
+    it('same-letter hosts share ONE probe fetch per session', async () => {
+        const probe = iconHorseProbeUrl('zzz-one.example');
+        expect(probe).toBe(iconHorseProbeUrl('zzz-two.example'));   // same letter → same reference tile
+        const fetchImpl = makeFetch([
+            [/\/favicon\.ico$/, notFound()],
+            [/^https:\/\/zzz-(one|two)\.example\/$/, deadPage],
+            [/favicon\.run/, fr500],
+            [/vbmref\.invalid$/, pngResponse(PNG_BYTES)],
+            [/icon\.horse/, pngResponse(PNG_BYTES)],
+            [/duckduckgo/, notFound()]
+        ]);
+        const en = enrichWith(fetchImpl);
+        await en._hydrateDone;
+        en.onPlaceholder(makePlaceholderImg('https://zzz-one.example/'));
+        en.onPlaceholder(makePlaceholderImg('https://zzz-two.example/'));
+        await flushChain();
+        expect(fetchImpl.calls.filter(c => c.url === probe)).toHaveLength(1);   // ONE probe for both hosts
+        expect(en.getCache().get('zzz-one.example').f).toBe(1);
+        expect(en.getCache().get('zzz-two.example').f).toBe(1);
+    });
+
+    it('providers without the hook never probe — a favicon.run win and a duckduckgo win both skip vbmref', async () => {
+        const fetchImpl = makeFetch([
+            [/\/favicon\.ico$/, notFound()],
+            [/^https:\/\/(fr-win|ddg-win)\.example\/$/, deadPage],
+            [/favicon\.run\/favicon\?domain=fr-win/, pngResponse()],   // favicon.run wins host 1
+            [/favicon\.run/, fr500],
+            [/icon\.horse\/icon\/ddg-win/, notFound()],                // icon.horse clean-404 for host 2
+            [/duckduckgo/, pngResponse()]                              // duckduckgo wins host 2
+        ]);
+        const en = enrichWith(fetchImpl);
+        await en._hydrateDone;
+        en.onPlaceholder(makePlaceholderImg('https://fr-win.example/'));
+        en.onPlaceholder(makePlaceholderImg('https://ddg-win.example/'));
+        await flushChain();
+        expect(fetchImpl.calls.some(c => c.url === FR('fr-win.example'))).toBe(true);
+        expect(fetchImpl.calls.some(c => c.url === DDG('ddg-win.example'))).toBe(true);
+        expect(fetchImpl.calls.some(c => /vbmref/.test(c.url))).toBe(false);   // no probe, ever
+        expect(en.getCache().get('fr-win.example').d).toBeTruthy();
+        expect(en.getCache().get('ddg-win.example').d).toBeTruthy();
+    });
+
+    it('a host whose first char is not [a-z0-9] skips the probe and fails open', async () => {
+        // An IPv6 literal host starts with '[' — no letter probe exists for it.
+        const fetchImpl = makeFetch([
+            [/\/favicon\.ico$/, notFound()],
+            [/^http:\/\/\[::1\]\/$/, deadPage],
+            [/favicon\.run/, fr500],
+            [/icon\.horse/, pngResponse(PNG_BYTES)],   // candidate (avatar bytes)
+            [/duckduckgo/, () => { throw new Error('DDG must not be called'); }]
+        ]);
+        const en = enrichWith(fetchImpl);
+        await en._hydrateDone;
+        en.onPlaceholder(makePlaceholderImg('http://[::1]/'));
+        await flushChain();
+        expect(fetchImpl.calls.some(c => /vbmref/.test(c.url))).toBe(false);   // no probe issued
+        expect(en.getCache().get('[::1]').d).toBe(AVATAR_URL);                 // fail open = accept
     });
 });
 

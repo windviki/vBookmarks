@@ -8,10 +8,12 @@
  * already bookmarked), validates it, caches it per host, and hot-swaps the
  * default SVG back to a real `<img>`. An opt-in, breaker-guarded LAST resort
  * is a built-in list of third-party aggregators (favicon.run → icon.horse →
- * DuckDuckGo),
- * each with an independent breaker and automatic failover; a dead-scan proxy
- * session (when one is live) relays the direct attempts for region-limited
- * sites.
+ * DuckDuckGo), each with an independent breaker and automatic failover; a
+ * dead-scan proxy session (when one is live) relays the direct attempts for
+ * region-limited sites. icon.horse never 404s — an unknown host gets a
+ * deterministic per-first-letter avatar tile — so its 'icon' verdicts pass a
+ * pixel-fingerprint guard against a per-letter probe avatar before they are
+ * accepted (placeholderProbeUrl, below).
  *
  * Design contract (docs/favicon-补全设计.md):
  *   - Discovery chain L1-L4: /favicon.ico → page <link> → proxy relay →
@@ -63,6 +65,16 @@ export const CONCURRENCY = 6;
 //                   to the next provider.
 //   'unreachable' — the request never reached the provider (network error /
 //                   timeout) → trip that provider's breaker for 6h, fail over.
+// A provider whose "no icon" answer is indistinguishable from a real icon at
+// the HTTP level also carries placeholderProbeUrl(host) → the URL of a
+// guaranteed-unknown name whose response IS the provider's placeholder.
+// icon.horse answers EVERY host with 200 + image/png (verified 2026-08): a
+// real icon for known hosts, a gray letter-avatar tile keyed by the host's
+// FIRST character for unknown ones — no 404, no marking header, and
+// ?fallback=404 changes nothing. tryL4 pixel-fingerprints the validated
+// candidate against the probe avatar and flips a match to 'no-icon'. Only
+// icon.horse needs the hook: favicon.run fails clean (500) and DuckDuckGo is
+// the documented, accepted last resort.
 export const interpretFaviconRun = (res, networkOk) => {
     if (!networkOk)
         return 'unreachable';
@@ -87,16 +99,27 @@ export const interpretDuckDuckGo = (res, networkOk) => {
 export const interpretIconHorse = (res, networkOk) => {
     if (!networkOk)
         return 'unreachable';
-    // icon.horse returns real icons with an image content-type and a clean
-    // 404 for unknown domains — no placeholder ambiguity.
+    // icon.horse never 404s: an unknown host gets 200 + image/png — the
+    // letter-avatar tile. 'icon' here means "real icon OR avatar"; the
+    // placeholder probe in tryL4 fingerprints the difference.
     if (res && res.ok && isImageContentType(res.headers ? res.headers.get('content-type') : null))
         return 'icon';
     return 'no-icon';
 };
 
+// icon.horse's letter-avatar probe: the avatar is deterministic per FIRST
+// CHARACTER of the host, so `<L>-vbmref.invalid` (a .invalid name that can
+// never have a real icon) yields the reference tile every <L>… host shares.
+// A non [a-z0-9] first char (e.g. an IPv6 literal) → null: no probe, the
+// caller fails open.
+export const iconHorseProbeUrl = host => {
+    const first = String(host || '').charAt(0);
+    return /^[a-z0-9]$/.test(first) ? `https://icon.horse/icon/${first}-vbmref.invalid` : null;
+};
+
 export const AGG_PROVIDERS = [
     { id: 'favicon-run', url: h => `https://favicon.run/favicon?domain=${h}&sz=32`, interpret: interpretFaviconRun },
-    { id: 'icon-horse',  url: h => `https://icon.horse/icon/${h}`,                  interpret: interpretIconHorse },
+    { id: 'icon-horse',  url: h => `https://icon.horse/icon/${h}`,                  interpret: interpretIconHorse, placeholderProbeUrl: iconHorseProbeUrl },
     { id: 'duckduckgo',  url: h => `https://icons.duckduckgo.com/ip3/${h}.ico`,      interpret: interpretDuckDuckGo },
 ];
 
@@ -772,6 +795,68 @@ export function initFaviconEnrich(ctx = {}) {
         } catch (_) { return null; }
     };
 
+    // --- icon.horse letter-avatar probe (L4 placeholder guard) -----------------
+    // Fingerprint a data URL's pixels through favicon-fallback's own sampler
+    // (canvas → FNV-1a — the hash primitive is NOT duplicated here). The img
+    // decodes through the same injected ImageCtor validateAndEncode uses, so
+    // tests stub it exactly like the validation/contrast paths. Any gap (no
+    // service, no decode, no canvas) resolves null → callers fail open.
+    const fingerprintDataUrl = dataUrl => new Promise(resolve => {
+        if (!ImageCtor || !faviconService || typeof faviconService.sampleIcon !== 'function')
+            return resolve(null);
+        const img = new ImageCtor();
+        img.onload = () => {
+            let fp = null;
+            try { fp = faviconService.sampleIcon(img); } catch (_) { fp = null; }
+            resolve(fp && typeof fp.hash === 'number' ? { w: fp.w, h: fp.h, hash: fp.hash } : null);
+        };
+        img.onerror = () => resolve(null);
+        img.src = dataUrl;
+    });
+
+    // Fetch + fingerprint the reference avatar for the host's first letter,
+    // cached as a Promise so N same-letter hosts cost ONE probe fetch per
+    // session (a resolved-null result is cached too — it fails open).
+    const avatarProbes = new Map();   // letter → Promise<{w,h,hash}|null>
+    const avatarProbe = (provider, host, signal) => {
+        const letter = host.charAt(0);
+        let probe = avatarProbes.get(letter);
+        if (!probe) {
+            const url = provider.placeholderProbeUrl(host);
+            probe = !url ? Promise.resolve(null) : (async () => {
+                try {
+                    const res = await fetchWithTimeout(url, 3000, signal);
+                    const valid = await validateAndEncode(res, { Image: ImageCtor });
+                    return valid ? await fingerprintDataUrl(valid.dataUrl) : null;
+                } catch (_) {
+                    return null;   // probe trouble → fail open
+                }
+            })();
+            avatarProbes.set(letter, probe);
+        }
+        return probe;
+    };
+
+    // true = the candidate IS the provider's placeholder avatar (identical
+    // dimensions + identical pixel hash). The probe is consulted first and
+    // the candidate is only decoded when the probe succeeded — every probe
+    // gap fails OPEN (accept the candidate: the worst case is the unguarded
+    // behavior), and the provider's breaker is never touched here.
+    const matchesPlaceholderProbe = async (provider, host, candidateDataUrl, signal) => {
+        try {
+            const probeFp = await avatarProbe(provider, host, signal);
+            if (!probeFp)
+                return false;
+            const candidateFp = await fingerprintDataUrl(candidateDataUrl);
+            if (!candidateFp)
+                return false;
+            return probeFp.w === candidateFp.w && probeFp.h === candidateFp.h
+                && probeFp.hash === candidateFp.hash;
+        } catch (_) {
+            return false;
+        }
+    };
+
     // L4: built-in third-party aggregator list (final means, per-provider
     // breaker + failover, docs §3.4).
     const tryL4 = async (host, signal) => {
@@ -801,8 +886,18 @@ export function initFaviconEnrich(ctx = {}) {
                 // success short-circuits the chain; failure counts as a
                 // no-icon for this provider and we fail over.
                 const valid = res ? await validateAndEncode(res, { Image: ImageCtor }) : null;
-                if (valid)
+                if (valid) {
+                    // A provider with a placeholder hook (icon.horse) may have
+                    // served its letter avatar, not a real icon: fingerprint-
+                    // compare against the per-letter probe. A match flips the
+                    // outcome to no-icon — fail over, and the avatar never
+                    // reaches the 30-day success cache. Probe trouble fails
+                    // OPEN (accept) and never trips the breaker.
+                    if (typeof p.placeholderProbeUrl === 'function'
+                        && await matchesPlaceholderProbe(p, host, valid.dataUrl, signal))
+                        continue;
                     return valid;
+                }
             }
             // outcome === 'no-icon' (or a validation failure) → fail over.
         }
