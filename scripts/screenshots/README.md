@@ -15,7 +15,8 @@ scripts/screenshots/
 ├── shots-i18n.js       # 7 UI languages × 15 surfaces, light theme
 ├── shots-palette.js    # palette + recent/stats/dupes/dead views
 ├── shots-guide.js      # guide-only states for docs/guide-v4*.md
-└── shots-tabgroups.js  # tab-group menus & dialogs, SW-side verified
+└── shots-tabgroups.js       # tab-group menus & dialogs, SW-side verified
+└── shots-tabgroups-view.js   # tab-groups view: tabs/groups, selection, group menu
 ```
 
 ## Usage
@@ -36,6 +37,7 @@ tmp/shots/
 ├── i18n/<lang>-<surface>.png            # shots-i18n — 7 languages × 15 surfaces
 ├── states/NN-<name>.png                 # shots.js (01-13) + shots-palette (14-22)
 ├── tabgroups/NN-<name>.png              # shots-tabgroups (30-33)
+├── tabgroups-view/NN-<name>.png          # shots-tabgroups-view (34-36)
 ├── guide/<name>.png                     # shots-guide
 ├── smoke/                               # harness smoke.js diagnostic shots
 ├── verify-menu/                         # verify-menu-overflow/collapse captures

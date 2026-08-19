@@ -22,6 +22,8 @@
 #                      new-group dialog (title + 9 colors), the existing-group
 #                      picker, plus functional assertions that the SW actually
 #                      forms the group / joins it (popup-closing-safe)
+#   shots-tabgroups-view.js — the tab-groups VIEW (4.0.9): current-window
+#                      tabs + groups, selection mode, group-head context menu
 #
 # Usage: scripts/screenshots/run.sh
 set -euo pipefail
@@ -38,12 +40,12 @@ mkdir -p "$CTX/vBookmarks" "$OUT"
 (cd "$REPO_ROOT" && tar cf - --exclude=./.git --exclude=./node_modules --exclude=./tmp --exclude=./.env --exclude=./.claude --exclude=./.env.example .) \
     | tar xf - -C "$CTX/vBookmarks"
 cp "$REPO_ROOT"/scripts/harness/{Dockerfile,smoke.js,verify-keyboard.js,verify-scrollbars.js,verify-menu-overflow.js,verify-menu-collapse.js,verify-menu-extreme.js} "$CTX/"
-cp "$REPO_ROOT"/scripts/screenshots/{shots.js,shots-matrix.js,shots-i18n.js,shots-palette.js,shots-guide.js,shots-tabgroups.js} "$CTX/"
+cp "$REPO_ROOT"/scripts/screenshots/{shots.js,shots-matrix.js,shots-i18n.js,shots-palette.js,shots-guide.js,shots-tabgroups.js,shots-tabgroups-view.js} "$CTX/"
 cp -r "$REPO_ROOT"/scripts/harness/diag "$CTX/diag"
 
 docker build -q -t "$IMAGE" "$CTX" >/dev/null
 
-for suite in shots.js shots-matrix.js shots-i18n.js shots-palette.js shots-guide.js shots-tabgroups.js; do
+for suite in shots.js shots-matrix.js shots-i18n.js shots-palette.js shots-guide.js shots-tabgroups.js shots-tabgroups-view.js; do
     name="vbm-shots-$$-${suite%.js}"
     docker rm -f "$name" >/dev/null 2>&1 || true
     docker create --name "$name" "$IMAGE" node "/work/$suite" >/dev/null
