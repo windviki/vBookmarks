@@ -785,6 +785,64 @@ describe('keyboard safety (tab rows are not bookmarks)', () => {
     });
 });
 
+describe('keyboard arrows on group heads and grouped rows', () => {
+    it('forward arrow expands a collapsed group; back arrow collapses an open group', () => {
+        const { def, $list, fire, doc } = setup({
+            groups: [makeGroup('g1', 'Dev', 'blue', { collapsed: true })]
+        });
+        doc.body.classList.remove('rtl');
+        def().activate();
+        expect($list.innerHTML).not.toContain('tabgroups-item-2');
+        const head = {
+            classList: makeClassList(['tabgroups-group-head']),
+            closest: sel => sel === 'li' ? { dataset: { groupId: 'g1' } } : null,
+            dispatchEvent() {},
+            getBoundingClientRect() { return { right: 10, bottom: 20 }; }
+        };
+        fire('keydown', { key: 'ArrowRight', target: head, preventDefault() {}, stopPropagation() {}, stopImmediatePropagation() {} });
+        expect($list.innerHTML).toContain('tabgroups-item-2');
+        fire('keydown', { key: 'ArrowLeft', target: head, preventDefault() {}, stopPropagation() {}, stopImmediatePropagation() {} });
+        expect($list.innerHTML).not.toContain('tabgroups-item-2');
+    });
+
+    it('forward arrow on an open group opens the group context menu', () => {
+        const { def, fire, doc } = setup({});
+        doc.body.classList.remove('rtl');
+        def().activate();
+        const RealMouseEvent = globalThis.MouseEvent;
+        globalThis.MouseEvent = class {
+            constructor(type, opts) { this.type = type; Object.assign(this, opts); }
+        };
+        let dispatched = null;
+        const head = {
+            classList: makeClassList(['tabgroups-group-head']),
+            closest: sel => sel === 'li' ? { dataset: { groupId: 'g1' } } : null,
+            dispatchEvent(ev) { dispatched = ev; },
+            getBoundingClientRect() { return { right: 10, bottom: 20 }; }
+        };
+        fire('keydown', { key: 'ArrowRight', target: head, preventDefault() {}, stopPropagation() {}, stopImmediatePropagation() {} });
+        globalThis.MouseEvent = RealMouseEvent;
+        expect(dispatched && dispatched.type).toBe('contextmenu');
+    });
+
+    it('back arrow on a grouped member row focuses its group head', () => {
+        const { def, $list, fire, doc } = setup({});
+        doc.body.classList.remove('rtl');
+        def().activate();
+        const fakeHead = { focused: false, focus() { this.focused = true; } };
+        $list.querySelector = sel => sel === '#tabgroups-group-g1 .tabgroups-group-head' ? fakeHead : null;
+        const rowLi = { dataset: { tabId: '2', groupId: 'g1' }, classList: makeClassList() };
+        fire('keydown', {
+            key: 'ArrowLeft',
+            target: { closest: sel => sel === 'li.tabgroups-row' ? rowLi : null },
+            preventDefault() {},
+            stopPropagation() {},
+            stopImmediatePropagation() {}
+        });
+        expect(fakeHead.focused).toBe(true);
+    });
+});
+
 describe('group management (browser-synced)', () => {
     it('group head renders activate/rename/save/sleep/close actions', () => {
         const { def, $list } = setup({});

@@ -1093,16 +1093,48 @@ export function initViewTabGroups(ctx = {}) {
                 return;
             }
             const isRtl = !!(document.body && document.body.classList && document.body.classList.contains('rtl'));
-            const expand = (k === ' ' || k === 'Enter' || k === (isRtl ? 'ArrowLeft' : 'ArrowRight')) && isCollapsed;
-            const collapse = (k === ' ' || k === 'Enter' || k === (isRtl ? 'ArrowRight' : 'ArrowLeft')) && !isCollapsed;
-            if (expand || collapse) {
+            const forward = k === (isRtl ? 'ArrowLeft' : 'ArrowRight');
+            const back = k === (isRtl ? 'ArrowRight' : 'ArrowLeft');
+            if (k === ' ' || k === 'Enter') {
                 e.preventDefault();
                 e.stopPropagation();
-                // Sync the folded state to the browser group too (same
-                // path as the click handler — the keyboard must not be a
-                // local-only shortcut).
-                setGroupCollapsed(gid, collapse);
+                setGroupCollapsed(gid, !isCollapsed);
+                return;
             }
+            if (forward && isCollapsed) {
+                // Closed group + forward arrow: expand it (tree-folder rule).
+                e.preventDefault();
+                e.stopPropagation();
+                setGroupCollapsed(gid, false);
+                return;
+            }
+            if (forward) {
+                // Open group + forward arrow: open the group context menu at
+                // the head's edge (the generic row rule, now that folding is
+                // no longer the forward action on an already-open group).
+                e.preventDefault();
+                e.stopPropagation();
+                if (head.dispatchEvent && typeof MouseEvent !== 'undefined') {
+                    const rect = head.getBoundingClientRect
+                        ? head.getBoundingClientRect() : null;
+                    head.dispatchEvent(new MouseEvent('contextmenu', {
+                        bubbles: true,
+                        cancelable: true,
+                        ...(typeof window !== 'undefined' ? { view: window } : {}),
+                        clientX: rect ? rect.right : 0,
+                        clientY: rect ? rect.bottom : 0
+                    }));
+                }
+                return;
+            }
+            if (back && !isCollapsed) {
+                // Open group + back arrow: collapse it.
+                e.preventDefault();
+                e.stopPropagation();
+                setGroupCollapsed(gid, true);
+            }
+            // Collapsed group + back arrow: no structural parent in this view
+            // (the window head is a non-focusable section separator).
             return;
         }
         // F2 on a tab row is a no-op here, but it must never fall through
@@ -1111,6 +1143,24 @@ export function initViewTabGroups(ctx = {}) {
             e.preventDefault();
             e.stopImmediatePropagation();
             return;
+        }
+        // Structural back-arrow for grouped tab rows (keyboard-model §2.4,
+        // the dupes-member rule): ← (RTL →) jumps to the owning group head.
+        // The forward arrow keeps keyboard.js's default context-menu open.
+        const rowLi = e.target && e.target.closest ? e.target.closest('li.tabgroups-row') : null;
+        if (rowLi && rowLi.dataset && rowLi.dataset.groupId) {
+            const isRtl = !!(document.body && document.body.classList && document.body.classList.contains('rtl'));
+            const back = (e.key === 'ArrowLeft') !== isRtl;
+            if (back) {
+                e.preventDefault();
+                e.stopPropagation();
+                const head = $list.querySelector
+                    ? $list.querySelector(`#tabgroups-group-${rowLi.dataset.groupId} .tabgroups-group-head`)
+                    : null;
+                if (head && head.focus)
+                    head.focus();
+                return;
+            }
         }
         // Tab-row Space in selection mode toggles the row (click parity).
         if (selecting && e.key === ' ') {
