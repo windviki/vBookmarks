@@ -2198,6 +2198,10 @@ body.no-view-tabs #view-tabs {
     .view-enter {
         animation: none;
     }
+    .favicon-enriched,
+    .favicon-enriched.favicon-pop {
+        animation: none;
+    }
 }
 
 .visually-hidden {
@@ -3583,13 +3587,11 @@ body.panel-mode #dead-list .vbm-row .row-badge-slot {
 /* 4.0.8 死链工具栏重排：代理条下方固定三行——检测行 / 标注行 / 状态行。
    每行仍是一个 .vbm-toolbar（键盘 rung 不合并），但中间不画分隔线，视觉上
    是一个三行工具栏块；底部保留一条线与列表分隔（代理条自带 border-bottom，
-   首行不再叠加）。 */
-.dead-toolbar.dead-scan-toolbar,
-.dead-toolbar.dead-mark-toolbar {
+   首行不再叠加）。分隔按相邻关系判定而不是按行类名：只有后面还跟着另一行
+   .dead-toolbar 时才去掉底线——单独成条的 live 扫描条、选择模式批量条（两者
+   复用 dead-scan-toolbar 类）以及干净扫描后只剩一行的检测行都保有底部分隔线。 */
+.dead-toolbar:has(+ .dead-toolbar) {
     border-bottom: 0;
-}
-.dead-toolbar.dead-status-toolbar {
-    border-bottom: 1px solid var(--vbm-border);
 }
 .dead-toolbar.dead-scan-toolbar .dead-last {
     flex: 1 1 auto;
@@ -3628,13 +3630,9 @@ body.panel-mode #dead-list .vbm-row .row-badge-slot {
     height: 16px;
 }
 
-/* 标注状态筛选（第二/状态工具条）：与检测/标注工具条并列的独立
-   .vbm-toolbar（独立键盘 rung）。分段外观复用 dead-filter 的
-   segmented-recipe。 */
-.dead-toolbar.dead-mark-toolbar {
-    margin-top: 0;
-}
-
+/* 标注状态筛选段（第三行/状态工具条 dead-status-toolbar 内）：与检测/标注
+   工具条并列的独立 .vbm-toolbar（独立键盘 rung）。分段外观复用 dead-filter
+   的 segmented-recipe。 */
 .dead-toolbar .dead-mark-filter {
     display: inline-flex;
     border: 1px solid var(--vbm-border);

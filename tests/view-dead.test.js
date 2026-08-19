@@ -1204,6 +1204,88 @@ describe('filter + batch marks (§5.5c)', () => {
     });
 });
 
+describe('idle three-row toolbar structure (4.0.8 死链工具栏重排)', () => {
+    // A cached scan (12 dead / 13 blocked) plus one mark renders every idle
+    // row: row 1 detection (last-scan time / rescan / clear-scan), row 2 mark
+    // (category filter segment + mark/unmark/delete-all + select mode),
+    // row 3 status (mark-status segment + detection-time sort).
+    const CACHE = JSON.stringify({
+        ts: 1700000000000, scannedCount: 2,
+        results: {
+            '12': { status: 'dead', code: 404 },
+            '13': { status: 'blocked', code: 404 }
+        }
+    });
+    // Slices $list.innerHTML into its .dead-toolbar row divs in DOM order
+    // (the risk banners and the .dead-proxy-strip carry other classes and
+    // never match the row marker).
+    const ROW_MARK = '<div class="dead-toolbar ';
+    const rowSlices = html => {
+        const starts = [];
+        let i = -1;
+        while ((i = html.indexOf(ROW_MARK, i + 1)) !== -1)
+            starts.push(i);
+        return starts.map((s, k) =>
+            html.slice(s, k + 1 < starts.length ? starts[k + 1] : html.length));
+    };
+
+    it('renders detection / mark / status rows in DOM order, each its own .vbm-toolbar rung', () => {
+        const ctx = setup({ storeData: { deadLastScan: CACHE, deadMarks: '["12"]' } });
+        ctx.def().activate();
+        const rows = rowSlices(ctx.$list.innerHTML);
+        expect(rows).toHaveLength(3);
+        expect(rows[0]).toContain('dead-toolbar dead-scan-toolbar vbm-toolbar');
+        expect(rows[1]).toContain('dead-toolbar dead-mark-toolbar vbm-toolbar');
+        expect(rows[2]).toContain('dead-toolbar dead-status-toolbar vbm-toolbar');
+    });
+
+    it('assigns every control to its row', () => {
+        const ctx = setup({ storeData: { deadLastScan: CACHE, deadMarks: '["12"]' } });
+        ctx.def().activate();
+        const rows = rowSlices(ctx.$list.innerHTML);
+        // Row 1 — detection: last-scan time, rescan, clear scan results
+        expect(rows[0]).toContain('class="dead-last"');
+        expect(rows[0]).toContain('class="dead-rescan"');
+        expect(rows[0]).toContain('class="dead-clear-scan"');
+        expect(rows[0]).not.toContain('dead-filter-btn');
+        expect(rows[0]).not.toContain('dead-mark-filter-btn');
+        // Row 2 — mark: the dead/blocked category filter segment + the
+        // mark-all / unmark-all / delete-all / select-mode icon buttons
+        expect(rows[1]).toContain('class="dead-filter" role="group"');
+        expect(rows[1].match(/class="dead-filter-btn"/g)).toHaveLength(4);
+        expect(rows[1]).toContain('class="dead-mark-all"');
+        expect(rows[1]).toContain('class="dead-unmark-all"');
+        expect(rows[1]).toContain('class="dead-delete-all"');
+        expect(rows[1]).toContain('class="dead-select-mode"');
+        expect(rows[1]).not.toContain('dead-mark-filter-btn');
+        // Row 3 — status: the mark-status filter segment + the sort dropdown
+        expect(rows[2]).toContain('class="dead-mark-filter" role="group"');
+        expect(rows[2].match(/class="dead-mark-filter-btn"/g)).toHaveLength(3);
+        expect(rows[2]).toContain('class="vbm-dropdown dead-sort"');
+        expect(rows[2]).not.toContain('class="dead-filter"');
+    });
+
+    it('icon buttons carry a non-empty title/aria-label pair sourced from their _m keys (iconBtn contract)', () => {
+        const ctx = setup({ storeData: { deadLastScan: CACHE, deadMarks: '["12"]' } });
+        ctx.def().activate();
+        const html = ctx.$list.innerHTML;
+        for (const [cls, key] of [
+            ['dead-rescan', 'deadRescan'],
+            ['dead-clear-scan', 'deadClearScan'],
+            ['dead-mark-all', 'deadMarkAll'],
+            ['dead-unmark-all', 'deadUnmarkAll'],
+            ['dead-delete-all', 'deadDeleteAllBtn'],
+            ['dead-select-mode', 'selectModeEnter']
+        ]) {
+            const m = html.match(
+                new RegExp(`<button class="${cls}" title="([^"]+)" aria-label="([^"]+)">`));
+            expect(m, cls).toBeTruthy();
+            expect(m[1], cls).toBe(key);
+            expect(m[2], cls).toBe(key);
+        }
+    });
+});
+
 describe('mark-status filter + sort (4.0.7 死链视图增强)', () => {
     // 11 ok · 12 dead · 13 blocked；marks 11+12 → 残留标注只有 11（12 骑结果行）。
     const CACHE = JSON.stringify({

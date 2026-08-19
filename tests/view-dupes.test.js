@@ -421,6 +421,136 @@ describe('render (docs/plan-4.0.0/v4task-2-list.md §3.6)', () => {
     });
 });
 
+describe('two-row toolbar structure (4.0.8 去重工具栏重排)', () => {
+    // Slices $list.innerHTML into its .dupes-toolbar row divs in DOM order
+    // (the selecting bar's class differs and the risk banner never matches).
+    const ROW_MARK = '<div class="dupes-toolbar ';
+    const rowSlices = html => {
+        const starts = [];
+        let i = -1;
+        while ((i = html.indexOf(ROW_MARK, i + 1)) !== -1)
+            starts.push(i);
+        return starts.map((s, k) =>
+            html.slice(s, k + 1 < starts.length ? starts[k + 1] : html.length));
+    };
+
+    it('renders the controls row then the actions row, each its own .vbm-toolbar rung', () => {
+        const { $list, def } = setup({});
+        def().activate();
+        const rows = rowSlices($list.innerHTML);
+        expect(rows).toHaveLength(2);
+        expect(rows[0]).toContain('dupes-toolbar dupes-controls-toolbar vbm-toolbar');
+        expect(rows[1]).toContain('dupes-toolbar dupes-actions-toolbar vbm-toolbar');
+    });
+
+    it('assigns every control to its row (row 1: strategy/scope/scheme; row 2: summary/apply-all/select)', () => {
+        const { $list, def } = setup({});
+        def().activate();
+        const rows = rowSlices($list.innerHTML);
+        // Row 1 — controls: strategy dropdown + scope dropdown + scheme switch
+        expect(rows[0]).toContain('class="vbm-dropdown dupes-strategy"');
+        expect(rows[0]).toContain('class="vbm-dropdown dupes-scope"');
+        expect(rows[0]).toContain('class="dupes-scheme"');
+        expect(rows[0]).not.toContain('dupes-summary');
+        expect(rows[0]).not.toContain('dupes-apply-all');
+        expect(rows[0]).not.toContain('dupes-select-mode');
+        // Row 2 — summary + primary actions
+        expect(rows[1]).toContain('class="dupes-summary"');
+        expect(rows[1]).toContain('dupesPreviewSummary[1|2]');
+        expect(rows[1]).toContain('class="dupes-apply-all"');
+        expect(rows[1]).toContain('class="dupes-select-mode"');
+        expect(rows[1]).not.toContain('dupes-strategy');
+        expect(rows[1]).not.toContain('dupes-scheme');
+    });
+
+    it('the icon-only select-mode button carries its label as a non-empty title/aria-label pair', () => {
+        const { $list, def } = setup({});
+        def().activate();
+        const m = $list.innerHTML.match(
+            /<button class="dupes-select-mode" title="([^"]+)" aria-label="([^"]+)">/);
+        expect(m).toBeTruthy();
+        expect(m[1]).toBe('selectModeEnter');
+        expect(m[2]).toBe('selectModeEnter');
+    });
+});
+
+describe('per-member floating delete (4.0.8)', () => {
+    // The member-del dispatch is covered in the render describe above; these
+    // cover what the deletion does to the GROUP after the backend removal
+    // lands (mutated tree + onRemoved → 300ms debounced regroup).
+    const memberDelClick = (ctx, id) => {
+        const li = { dataset: { nodeId: id, key: 'https://a.com' } };
+        return ctx.clickOn({
+            closest(sel) {
+                if (sel === '.dupes-member-del')
+                    return this;
+                if (sel === 'li')
+                    return li;
+                return null;
+            }
+        });
+    };
+    const checkedRow = html =>
+        html.split('keeper-radio checked')[0].match(/dupes-item-(\d+)(?!.*dupes-item)/)[1];
+
+    it('deleting one member of a 2-member group dissolves the group and recomputes the toolbar counts', () => {
+        // one URL, exactly two copies (hash variant normalizes away)
+        const ctx = setup({ tree: [{ id: '0', title: '', children: [
+            { id: '1', title: 'Bar', children: [
+                { id: '11', parentId: '1', title: 'A one', url: 'https://a.com/', dateAdded: 100 },
+                { id: '12', parentId: '1', title: 'A two', url: 'https://a.com/#x', dateAdded: 200 }
+            ] }
+        ] }] });
+        const { $list, def, actions, chrome, treeData } = ctx;
+        def().activate();
+        expect($list.innerHTML).toContain('dupesPreviewSummary[1|1]');
+        expect($list.innerHTML).toContain('dupesApplyAll[1]');
+        memberDelClick(ctx, '12');
+        expect(actions.deleteBookmarkCalls).toEqual(['12']);
+        // the removal lands in the backend; onRemoved replays the regroup
+        treeData[0].children[0].children =
+            treeData[0].children[0].children.filter(n => n.id !== '12');
+        chrome.bookmarks.onRemoved.fn('12', {});
+        tick(300);
+        // findDupes keeps only size>1: the group is gone, the toolbar
+        // summary/apply-all recompute to zero and the empty state shows
+        expect($list.innerHTML).toContain('dupesNone');
+        expect($list.innerHTML).toContain('dupesPreviewSummary[0|0]');
+        expect($list.innerHTML).toContain('dupesApplyAll[0]');
+        expect($list.innerHTML).not.toContain('id="dupes-item-11"');
+    });
+
+    it('deleting the pinned keeper falls back to the strategy pick', () => {
+        // default tree: a.com ×3 (11 oldest, 15 mid, 21 newest)
+        const ctx = setup({});
+        const { $list, def, actions, chrome, treeData } = ctx;
+        def().activate();
+        // pin 15 as keeper by hand
+        ctx.clickOn({
+            closest: sel => (sel === '.keeper-radio'
+                ? { closest: () => ({ dataset: { nodeId: '15', key: 'https://a.com' } }) }
+                : null)
+        });
+        expect(checkedRow($list.innerHTML)).toBe('15');
+        expect($list.innerHTML).toContain('dupesPreviewSummary[1|2]');
+        // delete the pinned keeper through its own floating delete
+        memberDelClick(ctx, '15');
+        expect(actions.deleteBookmarkCalls).toEqual(['15']);
+        treeData[0].children[0].children[1].children = []; // folder 14 empties
+        chrome.bookmarks.onRemoved.fn('15', {});
+        tick(300);
+        const html = $list.innerHTML;
+        // keeperOf: the pinned id is gone from the regrouped items → the
+        // strategy (keep-oldest) picks 11; the group lives on with 21 doomed
+        expect(checkedRow(html)).toBe('11');
+        expect(html).toContain('id="dupes-item-11"');
+        expect(html).toContain('id="dupes-item-21"');
+        expect(html).not.toContain('id="dupes-item-15"');
+        expect(html).toContain('dupesPreviewSummary[1|1]');
+        expect(html).toContain('dupesApplyAll[1]');
+    });
+});
+
 describe('keeper strategies (§5.6b)', () => {
     it('keep-newest keeps the latest copy', () => {
         const { $list, def } = setup({ storeData: { dupesStrategy: 'keep-newest' } });

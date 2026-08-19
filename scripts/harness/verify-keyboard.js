@@ -368,44 +368,53 @@ const SEED = `
     check('stats toolbar ↑: tab strip',
         await focusedTab() === 'view-tab-stats', await activeDesc());
 
-    // --- dead (cached scan renders two result rows + TWO toolbar rungs) ---
-    // v4 task-4 #13: the proxy strip sits above the scan toolbar and each
-    // toolbar is its own arrow rung in visual order (keyboard-model §2.5):
-    // strip ↓ → proxy strip → scan toolbar → mark toolbar → rows, and back
-    // up in reverse. The idle dead view stacks THREE .vbm-toolbar rungs here
-    // (proxy strip / scan toolbar / mark-status toolbar); with a scan cache
-    // present the scan toolbar's first enabled control is Clear-scan, and the
-    // next rung is the mark-status filter's first button.
+    // --- dead (cached scan renders two result rows + FOUR rungs) ---
+    // v4 task-4 #13: the proxy strip sits above the toolbars and each is its
+    // own arrow rung in visual order (keyboard-model §2.5). 4.0.8 (4f9e97b)
+    // stacks the idle toolbar as THREE .vbm-toolbar rows — detection
+    // (last-scan / rescan / clear-scan), mark (category filter + batch
+    // icons), status (mark-status filter + sort) — so the chain is: strip ↓
+    // → proxy strip → detection row → mark row → status row → rows, and back
+    // up in reverse. Every rung crossing lands on that rung's FIRST enabled
+    // control.
     await page.click('#view-tab-dead'); await sleep(700);
     await page.keyboard.press('ArrowDown'); await sleep(250);
     check('dead ↓ from strip: the proxy strip rung', await $(() =>
         document.activeElement && document.activeElement.classList.contains('dead-proxy-add')),
         await activeDesc());
     await page.keyboard.press('ArrowDown'); await sleep(250);
-    check('dead proxy strip ↓: the scan toolbar rung (clear scan)', await $(() =>
-        document.activeElement && document.activeElement.classList.contains('dead-clear-scan')),
+    check('dead proxy strip ↓: the detection row rung (rescan)', await $(() =>
+        document.activeElement && document.activeElement.classList.contains('dead-rescan')),
         await activeDesc());
     await page.keyboard.press('ArrowDown'); await sleep(250);
-    check('dead scan toolbar ↓: the mark-status toolbar rung', await $(() =>
+    check('dead detection row ↓: the mark row rung (category filter)', await $(() =>
+        document.activeElement && document.activeElement.classList.contains('dead-filter-btn')),
+        await activeDesc());
+    await page.keyboard.press('ArrowDown'); await sleep(250);
+    check('dead mark row ↓: the status row rung (mark-status filter)', await $(() =>
         document.activeElement && document.activeElement.classList.contains('dead-mark-filter-btn')),
         await activeDesc());
     await page.keyboard.press('ArrowDown'); await sleep(250);
     st = await activeLiIndex('#dead-list');
-    check('dead mark toolbar ↓: first result row', st.idx === 0, JSON.stringify(st));
+    check('dead status row ↓: first result row', st.idx === 0, JSON.stringify(st));
     await page.keyboard.press('ArrowDown'); await sleep(200);
     st = await activeLiIndex('#dead-list');
     check('dead ↓: next row', st.idx === 1, JSON.stringify(st));
     await page.keyboard.press('ArrowUp'); await sleep(200);
     await page.keyboard.press('ArrowUp'); await sleep(200);
-    check('dead ↑ past top: the lowest toolbar rung (mark filter)', await $(() =>
+    check('dead ↑ past top: the lowest toolbar rung (status row)', await $(() =>
         document.activeElement && document.activeElement.classList.contains('dead-mark-filter-btn')),
         await activeDesc());
     await page.keyboard.press('ArrowUp'); await sleep(200);
-    check('dead mark toolbar ↑: the scan toolbar rung', await $(() =>
-        document.activeElement && document.activeElement.classList.contains('dead-clear-scan')),
+    check('dead status row ↑: the mark row rung', await $(() =>
+        document.activeElement && document.activeElement.classList.contains('dead-filter-btn')),
         await activeDesc());
     await page.keyboard.press('ArrowUp'); await sleep(200);
-    check('dead scan toolbar ↑: the proxy strip rung', await $(() =>
+    check('dead mark row ↑: the detection row rung', await $(() =>
+        document.activeElement && document.activeElement.classList.contains('dead-rescan')),
+        await activeDesc());
+    await page.keyboard.press('ArrowUp'); await sleep(200);
+    check('dead detection row ↑: the proxy strip rung', await $(() =>
         document.activeElement && !!document.activeElement.closest('.dead-proxy-strip')),
         await activeDesc());
     await page.keyboard.press('ArrowUp'); await sleep(200);
@@ -449,12 +458,17 @@ const SEED = `
     check('K14: ↑ still leaves the field through the rung walk (tab strip)',
         await focusedTab() === 'view-tab-dead', await activeDesc());
 
-    // --- dupes: the toolbar rung — the strategy/scope custom dropdowns
-    // (dropdown.js: trigger ↓ opens, ↑ walks the rung; →/Enter picks, ←/Esc
-    // cancels), then head ⇄ members, member ← returns, head ←/→ folds ---
+    // --- dupes: TWO toolbar rungs — row 1 (.dupes-controls-toolbar:
+    // strategy/scope custom dropdowns + scheme checkbox), row 2
+    // (.dupes-actions-toolbar: summary span + apply-all + select-mode) ---
+    // ←/→ rove WITHIN one rung and wrap at its edge; ↓/↑ cross rungs and
+    // land on the target rung's first enabled control (keyboard-model §2.5).
+    // The dropdowns keep their protocol (dropdown.js: trigger ↓ opens,
+    // →/Enter picks, ←/Esc cancels), then head ⇄ members, member ← returns,
+    // head ←/→ folds ---
     await page.click('#view-tab-dupes'); await sleep(900);
     await page.keyboard.press('ArrowDown'); await sleep(250);
-    check('dupes ↓ from strip: the toolbar rung (strategy dropdown)', await $(() =>
+    check('dupes ↓ from strip: the controls rung (strategy dropdown)', await $(() =>
         document.activeElement && !!document.activeElement.closest('.vbm-dropdown.dupes-strategy')),
         await activeDesc());
     await page.keyboard.press('ArrowRight'); await sleep(200);
@@ -466,22 +480,37 @@ const SEED = `
         document.activeElement && document.activeElement.type === 'checkbox'),
         await activeDesc());
     await page.keyboard.press('ArrowRight'); await sleep(200);
-    check('dupes toolbar →: apply-all button', await $(() =>
+    check('dupes controls rung → wraps at the row edge: back to the strategy dropdown', await $(() =>
+        document.activeElement && !!document.activeElement.closest('.vbm-dropdown.dupes-strategy')),
+        await activeDesc());
+    // a closed dropdown trigger's ↓ opens its listbox instead of crossing —
+    // walk back to the checkbox (a plain control) to cross down a rung
+    await page.keyboard.press('ArrowRight'); await sleep(150);
+    await page.keyboard.press('ArrowRight'); await sleep(150);
+    check('dupes toolbar →→: back on the scheme checkbox', await $(() =>
+        document.activeElement && document.activeElement.type === 'checkbox'),
+        await activeDesc());
+    await page.keyboard.press('ArrowDown'); await sleep(250);
+    check('dupes controls rung ↓: the actions rung (apply-all)', await $(() =>
+        document.activeElement && document.activeElement.classList.contains('dupes-apply-all')),
+        await activeDesc());
+    await page.keyboard.press('ArrowRight'); await sleep(200);
+    check('dupes actions rung →: select-mode button', await $(() =>
+        document.activeElement && document.activeElement.classList.contains('dupes-select-mode')),
+        await activeDesc());
+    await page.keyboard.press('ArrowRight'); await sleep(200);
+    check('dupes actions rung → wraps at the row edge: back to apply-all', await $(() =>
         document.activeElement && document.activeElement.classList.contains('dupes-apply-all')),
         await activeDesc());
     await page.keyboard.press('ArrowDown'); await sleep(250);
-    check('dupes toolbar ↓: group head focused', await $(() =>
+    check('dupes actions rung ↓: group head focused', await $(() =>
         document.activeElement && document.activeElement.classList.contains('group-head')),
         await activeDesc());
     await page.keyboard.press('ArrowUp'); await sleep(200);
-    check('dupes head ↑ past top: back to the toolbar rung', await $(() =>
-        document.activeElement && !!document.activeElement.closest('.vbm-dropdown.dupes-strategy')),
+    check('dupes head ↑ past top: the LOWEST rung (actions row, apply-all)', await $(() =>
+        document.activeElement && document.activeElement.classList.contains('dupes-apply-all')),
         await activeDesc());
-    // walk the rung off the dropdown (→→→ to the apply-all button), then ↓
-    // into the list — the dropdown trigger's own ↓ opens its list instead
-    await page.keyboard.press('ArrowRight'); await sleep(150);
-    await page.keyboard.press('ArrowRight'); await sleep(150);
-    await page.keyboard.press('ArrowRight'); await sleep(150);
+    // ↓ from the actions rung enters the rows: head → first member
     await page.keyboard.press('ArrowDown'); await sleep(250);
     await page.keyboard.press('ArrowDown'); await sleep(200);
     st = await activeLiIndex('#dupes-list');
@@ -548,10 +577,11 @@ const SEED = `
     // to let the listbox option steal the `.focus` row marker — the toolbar's
     // ↓ then targeted the HIDDEN option (querySelector('.focus')) and the
     // button area could no longer enter the rows. After the open/close above,
-    // the →→→ apply-all ↓ walk must STILL land on the group head.
+    // the →→ checkbox, ↓ actions rung, ↓ rows walk must STILL land on the
+    // group head.
     await page.keyboard.press('ArrowRight'); await sleep(150);
     await page.keyboard.press('ArrowRight'); await sleep(150);
-    await page.keyboard.press('ArrowRight'); await sleep(150);
+    await page.keyboard.press('ArrowDown'); await sleep(250);
     await page.keyboard.press('ArrowDown'); await sleep(250);
     check('dupes rung ↓ still enters the rows after the dropdown was open/closed (marker-steal gate)', await $(() =>
         document.activeElement && document.activeElement.classList.contains('group-head')),

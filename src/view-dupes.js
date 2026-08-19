@@ -62,7 +62,9 @@
  * ctx.treeRender       — tree-render.js API (generateBookmarkHTML)
  * ctx.separatorManager — isSeparator filtering
  * ctx.treeView         — revealInTree + bookmarkHandler (click/auxclick open)
- * ctx.actions          — (unused directly; Delete rides keyboard.js)
+ * ctx.actions          — openBookmarkNewTab (risk-banner help link) and
+ *                        deleteBookmark (4.0.8 per-member floating delete);
+ *                        keyboard Delete still rides keyboard.js
  * ctx.dialogs          — ConfirmDialog for the batch deletions
  * ctx.undo             — capture/showToast for the serial deletion chain
  * ctx.visitStats       — slice D: initVisitStats API (countOf/enabled); the
