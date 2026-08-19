@@ -161,8 +161,6 @@ export function initViewTabGroups(ctx = {}) {
         // mode icon right).
         const syncLabel = _m('tabGroupsSyncCollapse');
         const syncHint = _m('tabGroupsSyncCollapseHint');
-        const colorLabel = _m('tabGroupsColorBorder');
-        const colorHint = _m('tabGroupsColorBorderHint');
         return '<div class="tabgroups-toolbar tabgroups-controls-toolbar vbm-toolbar">' +
             `<span class="tabgroups-summary">${_m('tabGroupsSummary', [`${tabs.length}`, `${groups.length}`])}</span>` +
             iconBtn('tabgroups-refresh', REDO_ICON, 'tabGroupsToolbarRefresh') +
@@ -174,9 +172,6 @@ export function initViewTabGroups(ctx = {}) {
             `<label class="tabgroups-sync-collapse" title="${htmlspecialchars(syncHint)}">` +
             `<input type="checkbox" class="tabgroups-sync-collapse-input"${syncCollapse() ? ' checked' : ''}>` +
             `<span>${htmlspecialchars(syncLabel)}</span></label>` +
-            `<label class="tabgroups-color-border" title="${htmlspecialchars(colorHint)}">` +
-            `<input type="checkbox" class="tabgroups-color-border-input"${colorBorder() ? ' checked' : ''}>` +
-            `<span>${htmlspecialchars(colorLabel)}</span></label>` +
             '</span>' +
             iconBtn('tabgroups-select-mode', SELECT_ICON, 'selectModeEnter') +
             '</div>';
@@ -679,6 +674,24 @@ export function initViewTabGroups(ctx = {}) {
             if (chrome.bookmarks && chrome.bookmarks[ev] && chrome.bookmarks[ev].addListener)
                 chrome.bookmarks[ev].addListener(scheduleRefresh);
         }
+        // Options-page writes to these keys must reach an open side panel
+        // live (the view-manager already does this for show/disable keys).
+        if (chrome.storage && chrome.storage.onChanged) {
+            chrome.storage.onChanged.addListener((changes, area) => {
+                if (area !== 'local' || !changes)
+                    return;
+                let touched = false;
+                for (const key of ['tabGroupsColorBorder', 'tabGroupsSyncCollapse']) {
+                    if (Object.prototype.hasOwnProperty.call(changes, key)) {
+                        if (store.adopt)
+                            store.adopt(key, changes[key].newValue);
+                        touched = true;
+                    }
+                }
+                if (touched && views.isActive('tabgroups'))
+                    render();
+            });
+        }
     };
     bindChromeEvents();
 
@@ -689,10 +702,6 @@ export function initViewTabGroups(ctx = {}) {
             // No re-render needed for a settings checkbox; the next collapse
             // action reads the new value.
             return;
-        }
-        if (t && t.classList && t.classList.contains('tabgroups-color-border-input')) {
-            store.set('tabGroupsColorBorder', t.checked ? '1' : '');
-            render(); // the group edges need a re-render to apply/remove
         }
     });
 

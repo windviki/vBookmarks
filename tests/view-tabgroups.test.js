@@ -368,12 +368,12 @@ describe('render', () => {
 });
 
 describe('group color edge option', () => {
-    it('renders the group color option in the toolbar and defaults off', () => {
+    it('keeps the group color option out of the toolbar (it lives in options)', () => {
         const { def, $list } = setup({});
         def().activate();
         const html = $list.innerHTML;
-        expect(html).toContain('tabgroups-color-border-input');
-        expect(html).toContain('tabGroupsColorBorder');
+        expect(html).not.toContain('tabgroups-color-border-input');
+        expect(html).not.toContain('tabGroupsColorBorder');
         expect(html).not.toContain('color-enhanced');
     });
 
@@ -386,16 +386,6 @@ describe('group color edge option', () => {
         expect(html).toContain('grouped tg-blue');
         // ungrouped tab 1 carries no tg-* group color class
         expect(html).not.toMatch(/tabgroups-item-1[^>]*grouped tg-/);
-    });
-
-    it('change event persists the option and re-renders the list', () => {
-        const { def, $list, store, fire } = setup({});
-        def().activate();
-        expect($list.innerHTML).not.toContain('color-enhanced');
-        const target = { classList: { contains: c => c === 'tabgroups-color-border-input' }, checked: true, closest: () => null };
-        fire('change', { target });
-        expect(store._data.tabGroupsColorBorder).toBe('1');
-        expect($list.innerHTML).toContain('color-enhanced');
     });
 });
 

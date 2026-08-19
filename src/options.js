@@ -97,6 +97,7 @@ const $ = id => document.getElementById(id);
             // visibility switch recent already had — a hidden view drops its
             // tab and every entry point (Ctrl+number, palette) until re-enabled
             { id: 'show-tab-groups-view', key: 'showTabGroupsView', defaultValue: '1', inverted: false },
+            { id: 'tabgroups-color-border', key: 'tabGroupsColorBorder', defaultValue: '', inverted: false },
             { id: 'show-stats-view', key: 'showStatsView', defaultValue: '1', inverted: false },
             { id: 'show-dead-view', key: 'showDeadView', defaultValue: '1', inverted: false },
             { id: 'show-dupes-view', key: 'showDupesView', defaultValue: '1', inverted: false }
@@ -765,6 +766,8 @@ const $ = id => document.getElementById(id);
         document.getElementById('option-show-item-path').innerText = __m('optionShowItemPath');
         document.getElementById('option-show-recent-bookmarks').innerText = __m('optionShowRecentBookmarks');
         document.getElementById('option-show-tab-groups-view').innerText = __m('optionShowTabGroupsView');
+        document.getElementById('option-tabgroups-color-border').innerText = __m('tabGroupsColorBorder');
+        document.getElementById('option-tabgroups-color-border-hint').innerText = __m('tabGroupsColorBorderHint');
         document.getElementById('option-show-stats-view').innerText = __m('optionShowStatsView');
         document.getElementById('option-show-dead-view').innerText = __m('optionShowDeadView');
         document.getElementById('option-show-dupes-view').innerText = __m('optionShowDupesView');
