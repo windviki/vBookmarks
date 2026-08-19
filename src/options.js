@@ -102,15 +102,13 @@ const $ = id => document.getElementById(id);
             { id: 'remember-view', key: 'rememberView', defaultValue: '1', inverted: false },
             // v4 task-3 #18: compulsive mode — no count badges on the tabs
             { id: 'show-tab-badges', key: 'showTabBadges', defaultValue: '1', inverted: false },
-            { id: 'show-item-path', key: 'showItemPath', defaultValue: '1', inverted: false }
-        ];
-        const recentSettings = [
-            { id: 'show-recent-bookmarks', key: 'showRecentBookmarks', defaultValue: '1', inverted: false }
-        ];
-        const deadSettings = [
-            { id: 'show-dead-view', key: 'showDeadView', defaultValue: '1', inverted: false }
-        ];
-        const dupesSettings = [
+            { id: 'show-item-path', key: 'showItemPath', defaultValue: '1', inverted: false },
+            // The per-view show switches stay together in Views for unified
+            // control; each view-specific group below only carries its other
+            // behavior options.
+            { id: 'show-recent-bookmarks', key: 'showRecentBookmarks', defaultValue: '1', inverted: false },
+            { id: 'show-stats-view', key: 'showStatsView', defaultValue: '1', inverted: false },
+            { id: 'show-dead-view', key: 'showDeadView', defaultValue: '1', inverted: false },
             { id: 'show-dupes-view', key: 'showDupesView', defaultValue: '1', inverted: false }
         ];
         // Icons: favicon contrast service + favicon enrichment (4.0.8, docs/
@@ -147,10 +145,9 @@ const $ = id => document.getElementById(id);
             { id: 'quick-add-enabled', key: 'quickAddEnabled', defaultValue: '1', inverted: false },
             { id: 'show-tool-button', key: 'showToolButton', defaultValue: '1', inverted: false }
         ];
-        // Statistics: the per-view show switch + the visit-stats master switch
-        // + search history (the data-collection surfaces stay together).
+        // Statistics: the visit-stats master switch + search history (the
+        // data-collection surfaces stay together).
         const statsSettings = [
-            { id: 'show-stats-view', key: 'showStatsView', defaultValue: '1', inverted: false },
             // v4 task-2 slice D (§5.4/§7): master switch for visit stats —
             // off means zero writes (collection stops immediately)
             { id: 'stats-enabled', key: 'statsEnabled', defaultValue: '1', inverted: false },
@@ -159,9 +156,6 @@ const $ = id => document.getElementById(id);
         await bindSettingsList(viewSettings);
         await bindSettingsList(treeSettings);
         await bindSettingsList(searchSettings);
-        await bindSettingsList(recentSettings);
-        await bindSettingsList(deadSettings);
-        await bindSettingsList(dupesSettings);
         await bindSettingsList(iconsSettings);
         await bindSettingsList(contextMenuSettings);
         await bindSettingsList(toolsSettings);

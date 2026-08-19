@@ -28,8 +28,8 @@ describe('options page group structure (round-6 item 5, v4 task-3 #17 merge)', (
         // recent/stats/dead/dupes) / icons / context menu / tools / palette /
         // sync / accessibility / custom icon / separators / sorting /
         // custom styles / backup+reset — advanced-options merged in.
-        expect(count(optionsHtml, '<section class="options-group">')).toBe(19);
-        expect(count(optionsHtml, '<section class="options-group" hidden>')).toBe(1);
+        expect(count(optionsHtml, '<section class="options-group">')).toBe(18);
+        expect(count(optionsHtml, '<section class="options-group" hidden>')).toBe(2);
         expect(optionsHtml).toContain('<main class="options-grid">');
         for (const id of ['general', 'views-options', 'tree-options', 'search-options', 'tabgroups-options',
                 'recent-options', 'stats-options', 'dead-scan-options', 'dupes-options',
@@ -86,17 +86,17 @@ describe('options page group structure (round-6 item 5, v4 task-3 #17 merge)', (
         expect(advancedHtml).not.toContain('<fieldset>');
     });
 
-    it('splits the per-view options into their own groups in view order', () => {
+    it('keeps the per-view show switches together in Views, options in per-view groups', () => {
         const bodyOf = id => {
             const s = optionsHtml.split('<section class="options-group">').find(x => x.includes(`<h2 id="${id}">`));
             return s.slice(0, s.indexOf('</section>'));
         };
-        // Views carries ONLY display items
+        // Views carries the display items AND every per-view show switch.
         const views = bodyOf('views-options');
-        for (const id of ['show-view-tabs', 'remember-view', 'show-tab-badges', 'show-item-path'])
+        for (const id of ['show-view-tabs', 'remember-view', 'show-tab-badges', 'show-item-path',
+                'show-recent-bookmarks', 'show-stats-view', 'show-dead-view', 'show-dupes-view'])
             expect(views).toContain(`id="${id}"`);
-        for (const id of ['show-recent-bookmarks', 'show-stats-view', 'show-dead-view', 'show-dupes-view',
-                'recent-count', 'only-show-bmbar', 'search-after-enter'])
+        for (const id of ['recent-count', 'only-show-bmbar', 'search-after-enter'])
             expect(views).not.toContain(`id="${id}"`);
         // Tree: the bookmarks-bar scope setting moved out of General
         const tree = bodyOf('tree-options');
@@ -108,22 +108,25 @@ describe('options page group structure (round-6 item 5, v4 task-3 #17 merge)', (
         const general = bodyOf('general');
         expect(general).not.toContain('id="only-show-bmbar"');
         expect(general).not.toContain('id="search-after-enter"');
-        // Recent group owns the show switch + recent count
+        // Recent group owns only the recent-count behavior option
         const recent = bodyOf('recent-options');
-        for (const id of ['show-recent-bookmarks', 'recent-count'])
-            expect(recent).toContain(`id="${id}"`);
-        // Stats group owns its show switch + data controls
+        expect(recent).toContain('id="recent-count"');
+        expect(recent).not.toContain('id="show-recent-bookmarks"');
+        // Stats group owns the data controls, not the show switch
         const stats = bodyOf('stats-options');
-        for (const id of ['show-stats-view', 'stats-enabled', 'stats-clear', 'search-history-enabled'])
+        for (const id of ['stats-enabled', 'stats-clear', 'search-history-enabled'])
             expect(stats).toContain(`id="${id}"`);
-        // Dead group owns its show switch + scan/proxy controls
+        expect(stats).not.toContain('id="show-stats-view"');
+        // Dead group owns the scan/proxy controls, not the show switch
         const dead = bodyOf('dead-scan-options');
-        for (const id of ['show-dead-view', 'dead-proxy-server-input', 'dead-proxy-strip-visible',
+        for (const id of ['dead-proxy-server-input', 'dead-proxy-strip-visible',
                 'dead-scan-concurrency', 'dead-scan-timeout'])
             expect(dead).toContain(`id="${id}"`);
-        // Dupes group owns its show switch
-        const dupes = bodyOf('dupes-options');
-        expect(dupes).toContain('id="show-dupes-view"');
+        expect(dead).not.toContain('id="show-dead-view"');
+        // Dupes has no behavior options yet — the group stays a hidden placeholder
+        const dupes = optionsHtml.split('<section class="options-group" hidden>').find(x => x.includes('<h2 id="dupes-options">'));
+        expect(dupes).toBeTruthy();
+        expect(dupes).not.toContain('id="show-dupes-view"');
         // Each non-Views switch lives in its own group
         const icons = bodyOf('icons-options');
         for (const id of ['favicon-contrast', 'favicon-enrich', 'favicon-enrich-ddg', 'favicon-cache-clear'])
