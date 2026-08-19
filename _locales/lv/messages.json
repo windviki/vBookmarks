@@ -558,6 +558,9 @@
   "tabGroupsExpandWindow": {
     "message": "Izvērst logu"
   },
+  "tabGroupsClearClosedGroups": {
+    "message": "Notīrīt visu"
+  },
   "deadProxyAdd": {
     "message": "Pievienot starpniekserveri bojātu saišu pārbaudei"
   },

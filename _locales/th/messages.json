@@ -558,6 +558,9 @@
   "tabGroupsExpandWindow": {
     "message": "ขยายหน้าต่าง"
   },
+  "tabGroupsClearClosedGroups": {
+    "message": "ล้างทั้งหมด"
+  },
   "deadProxyAdd": {
     "message": "เพิ่มพร็อกซีเซิร์ฟเวอร์สำหรับตรวจสอบลิงก์เสีย"
   },

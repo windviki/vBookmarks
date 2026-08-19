@@ -1889,5 +1889,8 @@
   },
   "tabGroupsExpandWindow": {
     "message": "展開視窗"
+  },
+  "tabGroupsClearClosedGroups": {
+    "message": "全部清除"
   }
 }

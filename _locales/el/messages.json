@@ -558,6 +558,9 @@
   "tabGroupsExpandWindow": {
     "message": "Επέκταση παραθύρου"
   },
+  "tabGroupsClearClosedGroups": {
+    "message": "Εκκαθάριση όλων"
+  },
   "deadProxyAdd": {
     "message": "Προσθήκη διακομιστή μεσολάβησης για ελέγχους νεκρών συνδέσμων"
   },

@@ -558,6 +558,9 @@
   "tabGroupsExpandWindow": {
     "message": "Rozbaliť okno"
   },
+  "tabGroupsClearClosedGroups": {
+    "message": "Vymazať všetko"
+  },
   "deadProxyAdd": {
     "message": "Pridať proxy server pre kontroly nefunkčných odkazov"
   },

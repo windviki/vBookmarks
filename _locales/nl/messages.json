@@ -558,6 +558,9 @@
   "tabGroupsExpandWindow": {
     "message": "Venster uitvouwen"
   },
+  "tabGroupsClearClosedGroups": {
+    "message": "Alles wissen"
+  },
   "deadProxyAdd": {
     "message": "Proxyserver toevoegen voor dode-linkcontroles"
   },

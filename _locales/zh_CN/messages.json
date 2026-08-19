@@ -1930,5 +1930,8 @@
   },
   "tabGroupsExpandWindow": {
     "message": "展开窗口"
+  },
+  "tabGroupsClearClosedGroups": {
+    "message": "清空"
   }
 }

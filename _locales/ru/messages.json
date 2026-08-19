@@ -558,6 +558,9 @@
   "tabGroupsExpandWindow": {
     "message": "Развернуть окно"
   },
+  "tabGroupsClearClosedGroups": {
+    "message": "Очистить все"
+  },
   "deadProxyAdd": {
     "message": "Добавить прокси-сервер для проверки битых ссылок"
   },

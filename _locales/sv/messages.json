@@ -558,6 +558,9 @@
   "tabGroupsExpandWindow": {
     "message": "Expandera fönster"
   },
+  "tabGroupsClearClosedGroups": {
+    "message": "Rensa alla"
+  },
   "deadProxyAdd": {
     "message": "Lägg till proxyserver för döda länkar"
   },

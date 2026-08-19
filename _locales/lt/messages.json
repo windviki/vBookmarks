@@ -558,6 +558,9 @@
   "tabGroupsExpandWindow": {
     "message": "Išplėsti langą"
   },
+  "tabGroupsClearClosedGroups": {
+    "message": "Išvalyti visus"
+  },
   "deadProxyAdd": {
     "message": "Pridėti tarpinį serverį negyvų nuorodų tikrinimui"
   },

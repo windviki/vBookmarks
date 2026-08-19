@@ -558,6 +558,9 @@
   "tabGroupsExpandWindow": {
     "message": "Laajenna ikkuna"
   },
+  "tabGroupsClearClosedGroups": {
+    "message": "Tyhjennä kaikki"
+  },
   "deadProxyAdd": {
     "message": "Lisää välityspalvelin kuolleiden linkkien tarkistuksia varten"
   },

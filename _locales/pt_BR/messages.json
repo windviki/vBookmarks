@@ -557,6 +557,9 @@
   "tabGroupsExpandWindow": {
     "message": "Expandir janela"
   },
+  "tabGroupsClearClosedGroups": {
+    "message": "Limpar tudo"
+  },
   "deadProxyAdd": {
     "message": "Adicionar um servidor proxy para verificação de links quebrados"
   },

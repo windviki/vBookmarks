@@ -558,6 +558,9 @@
   "tabGroupsExpandWindow": {
     "message": "توسيع النافذة"
   },
+  "tabGroupsClearClosedGroups": {
+    "message": "مسح الكل"
+  },
   "deadProxyAdd": {
     "message": "أضف خادم وكيل لفحوصات الروابط المعطلة"
   },

@@ -2103,5 +2103,9 @@
   "tabGroupsExpandWindow": {
     "message": "Expand window",
     "description": "Window-head toggle in the tab groups view: unfolds the window section."
+  },
+  "tabGroupsClearClosedGroups": {
+    "message": "Clear all",
+    "description": "Button on the closed tab groups section heading: removes all saved closed-group records."
   }
 }

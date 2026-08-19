@@ -558,6 +558,9 @@
   "tabGroupsExpandWindow": {
     "message": "Espandi finestra"
   },
+  "tabGroupsClearClosedGroups": {
+    "message": "Cancella tutto"
+  },
   "deadProxyAdd": {
     "message": "Aggiungi un server proxy per i controlli dei link morti"
   },

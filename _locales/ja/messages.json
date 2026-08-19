@@ -558,6 +558,9 @@
   "tabGroupsExpandWindow": {
     "message": "ウィンドウを展開"
   },
+  "tabGroupsClearClosedGroups": {
+    "message": "すべてクリア"
+  },
   "deadProxyAdd": {
     "message": "リンク切れチェック用のプロキシサーバーを追加"
   },

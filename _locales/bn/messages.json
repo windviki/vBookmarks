@@ -558,6 +558,9 @@
   "tabGroupsExpandWindow": {
     "message": "উইন্ডো প্রসারিত করুন"
   },
+  "tabGroupsClearClosedGroups": {
+    "message": "সব মুছুন"
+  },
   "deadProxyAdd": {
     "message": "ডেড-লিংক পরীক্ষার জন্য একটি প্রক্সি সার্ভার যোগ করুন"
   },

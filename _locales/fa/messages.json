@@ -558,6 +558,9 @@
   "tabGroupsExpandWindow": {
     "message": "باز کردن پنجره"
   },
+  "tabGroupsClearClosedGroups": {
+    "message": "پاک کردن همه"
+  },
   "deadProxyAdd": {
     "message": "افزودن سرور پروکسی برای بررسی لینک‌های خراب"
   },

@@ -557,6 +557,9 @@
   "tabGroupsExpandWindow": {
     "message": "Рашири прозорец"
   },
+  "tabGroupsClearClosedGroups": {
+    "message": "Исчисти сè"
+  },
   "deadProxyAdd": {
     "message": "Додај прокси сервер за проверка на мртви врски"
   },

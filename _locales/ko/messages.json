@@ -558,6 +558,9 @@
   "tabGroupsExpandWindow": {
     "message": "창 확대"
   },
+  "tabGroupsClearClosedGroups": {
+    "message": "모두 지우기"
+  },
   "deadProxyAdd": {
     "message": "죽은 링크 확인용 프록시 서버 추가"
   },

@@ -558,6 +558,9 @@
   "tabGroupsExpandWindow": {
     "message": "Utvid vindu"
   },
+  "tabGroupsClearClosedGroups": {
+    "message": "Tøm alle"
+  },
   "deadProxyAdd": {
     "message": "Legg til en proxy-server for sjekk av døde lenker"
   },

@@ -3663,6 +3663,37 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
 #tabgroups-list ul li.tabgroups-closed-group .row-btn.tabgroups-closed-delete {
     color: var(--vbm-danger);
 }
+#tabgroups-list ul li.tabgroups-closed-group .tabgroups-closed-meta {
+    flex: none;
+    margin-inline-start: 8px;
+    margin-inline-end: 8px;
+    color: var(--vbm-muted);
+    font-size: 11px;
+    white-space: nowrap;
+}
+#tabgroups-list ul li.tabgroups-closed-section-head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+#tabgroups-list ul li.tabgroups-closed-section-head .tabgroups-closed-clear {
+    margin-inline-start: auto;
+    margin-inline-end: 8px;
+    border: 0;
+    border-radius: var(--vbm-radius);
+    background: transparent;
+    color: var(--vbm-accent);
+    font-size: 11px;
+    padding: 2px 6px;
+    cursor: pointer;
+}
+#tabgroups-list ul li.tabgroups-closed-section-head .tabgroups-closed-clear:hover {
+    background: var(--vbm-bg-hover);
+}
+#tabgroups-list ul li.tabgroups-closed-section-head .tabgroups-closed-clear:focus-visible {
+    outline: 2px solid var(--vbm-focus-ring);
+    outline-offset: -2px;
+}
 
 /* Window section heading: stronger than the group sections and separated
    from the previous window by a hairline. Non-focusable (em/b only — the

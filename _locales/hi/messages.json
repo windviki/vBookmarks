@@ -558,6 +558,9 @@
   "tabGroupsExpandWindow": {
     "message": "विंडो विस्तृत करें"
   },
+  "tabGroupsClearClosedGroups": {
+    "message": "सभी साफ़ करें"
+  },
   "deadProxyAdd": {
     "message": "डेड-लिंक जाँच के लिए प्रॉक्सी सर्वर जोड़ें"
   },

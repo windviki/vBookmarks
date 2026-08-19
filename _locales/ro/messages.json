@@ -558,6 +558,9 @@
   "tabGroupsExpandWindow": {
     "message": "Extinde fereastra"
   },
+  "tabGroupsClearClosedGroups": {
+    "message": "Șterge tot"
+  },
   "deadProxyAdd": {
     "message": "Adaugă un server proxy pentru verificarea linkurilor moarte"
   },

@@ -20,6 +20,7 @@ import { VIEW_ICONS, STAR_ICON, STAR_ICON_FILLED, SELECT_ICON, FOLDER_ICON, EDIT
 import { htmlspecialchars } from './escape.js';
 import { parkRowFocus, unparkRowFocus, parkToolbarFocus, restoreToolbarFocus } from './list-focus.js';
 import { saveSession, sessionFolderName, tabsToBookmarks } from './session.js';
+import { relTimeLabel } from './tree-render.js';
 import { pickGroupColor, saveTabGroupFolderMeta } from './tab-group-utils.js';
 import { TAB_GROUP_MSG } from './tab-groups-sw.js';
 
@@ -76,6 +77,14 @@ export function initViewTabGroups(ctx = {}) {
         try {
             store.set(CLOSED_GROUPS_KEY, JSON.stringify(list));
         } catch (e) { /* best-effort */ }
+    };
+    // Newest first, capped at 10 records (same cap as search history).
+    const persistClosedGroups = list => {
+        const capped = (list || []).slice()
+            .sort((a, b) => (b.savedAt || 0) - (a.savedAt || 0))
+            .slice(0, 10);
+        writeClosedGroups(capped);
+        return capped;
     };
 
     const groupById = id => groups.find(g => String(g.id) === String(id));
@@ -165,7 +174,8 @@ export function initViewTabGroups(ctx = {}) {
                 for (const g of groups)
                     if (g.collapsed)
                         collapsed.add(String(g.id));
-                closedRecords = readClosedGroups();
+                closedRecords = readClosedGroups()
+                    .sort((a, b) => (b.savedAt || 0) - (a.savedAt || 0));
                 views.updateBadges();
                 if (!views.isActive('tabgroups'))
                     return;
@@ -296,10 +306,13 @@ export function initViewTabGroups(ctx = {}) {
         const title = record.title || _m('tabGroupUntitled');
         const openLabel = _m('tabGroupsReopenGroup');
         const deleteLabel = _m('tabGroupsDeleteClosedGroup');
+        const closedAt = relTimeLabel(record.savedAt || 0, _m);
+        const closedAtFull = new Date(record.savedAt || 0).toLocaleString();
         return `<li class="tabgroups-closed-group tg-${htmlspecialchars(color)}" data-closed-id="${htmlspecialchars(record.id)}">` +
             `<span class="tabgroups-closed-head" tabindex="-1" role="button">` +
             `<span class="tab-group-dot tg-${htmlspecialchars(color)}"></span>` +
             `<span class="tabgroups-group-title" dir="auto">${htmlspecialchars(title)}</span>` +
+            `<span class="tabgroups-closed-meta" title="${htmlspecialchars(closedAtFull)}">${htmlspecialchars(closedAt)}</span>` +
             `<span class="count-pill" aria-label="${htmlspecialchars(_m('tabGroupsGroupCount', `${(record.tabs || []).length}`))}">${(record.tabs || []).length}</span>` +
             `<button class="row-btn tabgroups-closed-open" aria-label="${htmlspecialchars(openLabel)}" title="${htmlspecialchars(openLabel)}">${ACTIVATE_ICON}</button>` +
             `<button class="row-btn tabgroups-closed-delete" aria-label="${htmlspecialchars(deleteLabel)}" title="${htmlspecialchars(deleteLabel)}">${TRASH_ICON}</button>` +
@@ -329,8 +342,6 @@ export function initViewTabGroups(ctx = {}) {
                     `<button class="row-btn tabgroups-window-collapse${isCollapsed ? ' collapsed' : ''}" aria-label="${htmlspecialchars(toggleLabel)}" title="${htmlspecialchars(toggleLabel)}">${CHEVRON_ICON}</button>` +
                     `<em>${htmlspecialchars(label)}</em>${current}</li>`;
             };
-            const sectionHead = labelKey =>
-                `<li class="tabgroups-section-head" role="presentation"><em>${_m(labelKey)}</em></li>`;
             const groupBlock = ({ group, memberTabs }) => {
                 let out = groupHeadHtml(group, memberTabs);
                 if (!collapsed.has(String(group.id)))
@@ -374,7 +385,9 @@ export function initViewTabGroups(ctx = {}) {
             }
 
             if (closedRecords.length) {
-                html += sectionHead('tabGroupsClosedGroups');
+                const clearLabel = _m('tabGroupsClearClosedGroups');
+                html += `<li class="tabgroups-section-head tabgroups-closed-section-head"><em>${_m('tabGroupsClosedGroups')}</em>` +
+                    `<button class="tabgroups-closed-clear" title="${htmlspecialchars(clearLabel)}" aria-label="${htmlspecialchars(clearLabel)}">${htmlspecialchars(clearLabel)}</button></li>`;
                 for (const record of closedRecords)
                     html += closedGroupHtml(record);
             }
@@ -612,7 +625,7 @@ export function initViewTabGroups(ctx = {}) {
                         .sort((a, b) => (a.index || 0) - (b.index || 0))
                         .map(t => ({ title: t.title || '', url: t.url || '' }))
                 };
-                writeClosedGroups([...readClosedGroups(), record]);
+                persistClosedGroups([...readClosedGroups(), record]);
                 send({ type: TAB_GROUP_MSG.tabsClose, tabIds: ids });
                 scheduleRefresh();
             }
@@ -671,14 +684,14 @@ export function initViewTabGroups(ctx = {}) {
             return;
         const urls = (record.tabs || []).map(t => t.url).filter(Boolean);
         if (!urls.length) {
-            writeClosedGroups(closedRecords.filter(r => String(r.id) !== String(recordId)));
-            closedRecords = readClosedGroups();
+            persistClosedGroups(closedRecords.filter(r => String(r.id) !== String(recordId)));
+            closedRecords = readClosedGroups().sort((a, b) => (b.savedAt || 0) - (a.savedAt || 0));
             if (views.isActive('tabgroups'))
                 render();
             return;
         }
-        writeClosedGroups(closedRecords.filter(r => String(r.id) !== String(recordId)));
-        closedRecords = readClosedGroups();
+        persistClosedGroups(closedRecords.filter(r => String(r.id) !== String(recordId)));
+        closedRecords = readClosedGroups().sort((a, b) => (b.savedAt || 0) - (a.savedAt || 0));
         send({
             type: TAB_GROUP_MSG.openNew,
             urls,
@@ -689,8 +702,15 @@ export function initViewTabGroups(ctx = {}) {
     };
 
     const deleteClosedGroup = recordId => {
-        writeClosedGroups(closedRecords.filter(r => String(r.id) !== String(recordId)));
-        closedRecords = readClosedGroups();
+        persistClosedGroups(closedRecords.filter(r => String(r.id) !== String(recordId)));
+        closedRecords = readClosedGroups().sort((a, b) => (b.savedAt || 0) - (a.savedAt || 0));
+        if (views.isActive('tabgroups'))
+            render();
+    };
+
+    const clearClosedGroups = () => {
+        persistClosedGroups([]);
+        closedRecords = [];
         if (views.isActive('tabgroups'))
             render();
     };
@@ -1145,6 +1165,12 @@ export function initViewTabGroups(ctx = {}) {
                 restoreClosedGroup(li.dataset.closedId);
             return;
         }
+        const closedClear = closest('.tabgroups-closed-clear');
+        if (closedClear) {
+            e.preventDefault();
+            clearClosedGroups();
+            return;
+        }
         const closedDelete = closest('.tabgroups-closed-delete');
         if (closedDelete) {
             e.preventDefault();
@@ -1448,6 +1474,7 @@ export function initViewTabGroups(ctx = {}) {
         ungroupGroup,
         moveGroupToNewWindow,
         restoreClosedGroup,
-        deleteClosedGroup
+        deleteClosedGroup,
+        clearClosedGroups
     };
 }

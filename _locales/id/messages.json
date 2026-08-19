@@ -558,6 +558,9 @@
   "tabGroupsExpandWindow": {
     "message": "Perluas jendela"
   },
+  "tabGroupsClearClosedGroups": {
+    "message": "Bersihkan semua"
+  },
   "deadProxyAdd": {
     "message": "Tambahkan server proxy untuk pemeriksaan tautan mati"
   },

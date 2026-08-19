@@ -419,6 +419,16 @@ describe('closed groups and window folding', () => {
         expect(store._data.tabGroupsClosed).toBe('[]');
     });
 
+    it('clearClosedGroups removes every saved closed record', () => {
+        const record = { id: 'cg_1', title: 'Dev', color: 'blue', savedAt: Date.now(), tabs: [{ url: 'https://a/', title: 'A' }] };
+        const { def, $list, store, viewTabGroups } = setup({ storeData: { tabGroupsClosed: JSON.stringify([record]) } });
+        def().activate();
+        expect($list.innerHTML).toContain('tabgroups-closed-group');
+        viewTabGroups.clearClosedGroups();
+        expect(store._data.tabGroupsClosed).toBe('[]');
+        expect($list.innerHTML).not.toContain('tabgroups-closed-group');
+    });
+
     it('window head toggle folds and unfolds that window section', () => {
         const { def, $list, clickOn, closestOf } = setup({
             windows: [

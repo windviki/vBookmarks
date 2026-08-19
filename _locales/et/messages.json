@@ -558,6 +558,9 @@
   "tabGroupsExpandWindow": {
     "message": "Laienda aken"
   },
+  "tabGroupsClearClosedGroups": {
+    "message": "Kustuta kõik"
+  },
   "deadProxyAdd": {
     "message": "Lisa puhverserver surnud linkide kontrollimiseks"
   },

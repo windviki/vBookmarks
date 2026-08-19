@@ -558,6 +558,9 @@
   "tabGroupsExpandWindow": {
     "message": "Ablak kibontása"
   },
+  "tabGroupsClearClosedGroups": {
+    "message": "Összes törlése"
+  },
   "deadProxyAdd": {
     "message": "Proxykiszolgáló hozzáadása a hibás linkek ellenőrzéséhez"
   },

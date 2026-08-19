@@ -558,6 +558,9 @@
   "tabGroupsExpandWindow": {
     "message": "Mở rộng cửa sổ"
   },
+  "tabGroupsClearClosedGroups": {
+    "message": "Xóa tất cả"
+  },
   "deadProxyAdd": {
     "message": "Thêm máy chủ proxy để kiểm tra liên kết hỏng"
   },
