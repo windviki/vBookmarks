@@ -535,6 +535,17 @@
   "tabGroupsMoveNewWindow": {
     "message": "Pindah ke jendela baru"
   },
+  "tabGroupsWindow": {
+    "message": "Jendela $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentWindow": {
+    "message": "Jendela saat ini"
+  },
   "deadProxyAdd": {
     "message": "Tambahkan server proxy untuk pemeriksaan tautan mati"
   },

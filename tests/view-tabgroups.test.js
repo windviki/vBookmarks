@@ -219,7 +219,21 @@ const setup = (opts = {}) => {
                     cb([{ id, title: `folder-${id}` }]);
             }
         },
-        windows: { WINDOW_ID_CURRENT: 1 }
+        windows: {
+            WINDOW_ID_CURRENT: 1,
+            getAllCalls: [],
+            getAll(queryInfo, cb) {
+                this.getAllCalls.push(queryInfo);
+                const defaultTabs = opts.tabs || [
+                    makeTab(1, 0, { active: true }),
+                    makeTab(2, 1, { groupId: 'g1' }),
+                    makeTab(3, 2, { groupId: 'g1' }),
+                    makeTab(4, 3)
+                ];
+                const wins = opts.windows || [{ id: 1, focused: true, tabs: defaultTabs }];
+                cb(wins.map(w => ({ ...w, tabs: (w.tabs || []).slice() })));
+            }
+        }
     };
     globalThis.chrome = chromeStub;
 
@@ -373,6 +387,28 @@ describe('render', () => {
         const { def, $list } = setup({ tabs: [] });
         def().activate();
         expect($list.innerHTML).toContain('tabGroupsViewEmpty');
+    });
+});
+
+describe('multi-window rendering', () => {
+    it('renders a window section per window with current window first', () => {
+        const { def, $list } = setup({
+            windows: [
+                { id: 2, focused: false, tabs: [makeTab(10, 0)] },
+                { id: 1, focused: true, tabs: [makeTab(1, 0, { active: true, groupId: 'g1' }), makeTab(2, 1, { groupId: 'g1' })] }
+            ],
+            groups: [makeGroup('g1', 'Dev', 'blue', { windowId: 1 })]
+        });
+        def().activate();
+        const html = $list.innerHTML;
+        expect(html).toContain('tabgroups-window-head');
+        expect(html).toContain('tabGroupsCurrentWindow');
+        expect(html).toContain('tabGroupsWindow[1]');
+        expect(html).toContain('tabGroupsWindow[2]');
+        // focused window (id 1) renders before window 2 even though it was
+        // listed second; group g1 appears before window 2's tab 10.
+        expect(html.indexOf('id="tabgroups-group-g1"')).toBeLessThan(html.indexOf('id="tabgroups-item-10"'));
+        expect(html.indexOf('tabGroupsWindow[1]')).toBeLessThan(html.indexOf('tabGroupsWindow[2]'));
     });
 });
 

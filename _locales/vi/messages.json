@@ -535,6 +535,17 @@
   "tabGroupsMoveNewWindow": {
     "message": "Chuyển nhóm sang cửa sổ mới"
   },
+  "tabGroupsWindow": {
+    "message": "Cửa sổ $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentWindow": {
+    "message": "Cửa sổ hiện tại"
+  },
   "deadProxyAdd": {
     "message": "Thêm máy chủ proxy để kiểm tra liên kết hỏng"
   },

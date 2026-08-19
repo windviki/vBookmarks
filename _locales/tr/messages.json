@@ -535,6 +535,17 @@
   "tabGroupsMoveNewWindow": {
     "message": "Grubu yeni pencereye taşı"
   },
+  "tabGroupsWindow": {
+    "message": "Pencere $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentWindow": {
+    "message": "Geçerli pencere"
+  },
   "deadProxyAdd": {
     "message": "Ölü bağlantı kontrolleri için bir proxy sunucusu ekle"
   },

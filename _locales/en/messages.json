@@ -2074,5 +2074,18 @@
   "tabGroupsMoveNewWindow": {
     "message": "Move group to new window",
     "description": "Group context-menu item: move every tab of the group to a new window."
+  },
+  "tabGroupsWindow": {
+    "message": "Window $1$",
+    "description": "Window section heading in the tab groups view.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentWindow": {
+    "message": "Current window",
+    "description": "Badge on the window section heading that contains the popup."
   }
 }

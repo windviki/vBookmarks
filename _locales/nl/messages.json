@@ -535,6 +535,17 @@
   "tabGroupsMoveNewWindow": {
     "message": "Groep naar nieuw venster"
   },
+  "tabGroupsWindow": {
+    "message": "Venster $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentWindow": {
+    "message": "Huidig venster"
+  },
   "deadProxyAdd": {
     "message": "Proxyserver toevoegen voor dode-linkcontroles"
   },

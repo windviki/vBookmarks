@@ -535,6 +535,17 @@
   "tabGroupsMoveNewWindow": {
     "message": "Flytta grupp till nytt fönster"
   },
+  "tabGroupsWindow": {
+    "message": "Fönster $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentWindow": {
+    "message": "Aktuellt fönster"
+  },
   "deadProxyAdd": {
     "message": "Lägg till proxyserver för döda länkar"
   },

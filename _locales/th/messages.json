@@ -535,6 +535,17 @@
   "tabGroupsMoveNewWindow": {
     "message": "ย้ายกลุ่มไปหน้าต่างใหม่"
   },
+  "tabGroupsWindow": {
+    "message": "หน้าต่าง $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentWindow": {
+    "message": "หน้าต่างปัจจุบัน"
+  },
   "deadProxyAdd": {
     "message": "เพิ่มพร็อกซีเซิร์ฟเวอร์สำหรับตรวจสอบลิงก์เสีย"
   },

@@ -535,6 +535,17 @@
   "tabGroupsMoveNewWindow": {
     "message": "Přesunout do nového okna"
   },
+  "tabGroupsWindow": {
+    "message": "Okno $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentWindow": {
+    "message": "Aktuální okno"
+  },
   "deadProxyAdd": {
     "message": "Přidat proxy server pro kontroly nefunkčních odkazů"
   },

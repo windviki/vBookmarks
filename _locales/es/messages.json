@@ -535,6 +535,17 @@
   "tabGroupsMoveNewWindow": {
     "message": "Mover a nueva ventana"
   },
+  "tabGroupsWindow": {
+    "message": "Ventana $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentWindow": {
+    "message": "Ventana actual"
+  },
   "deadProxyAdd": {
     "message": "Añadir un servidor proxy para comprobar enlaces rotos"
   },

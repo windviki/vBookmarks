@@ -1866,5 +1866,16 @@
   },
   "tabGroupsMoveNewWindow": {
     "message": "移至新窗口"
+  },
+  "tabGroupsWindow": {
+    "message": "窗口 $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentWindow": {
+    "message": "当前窗口"
   }
 }

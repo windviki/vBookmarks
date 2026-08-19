@@ -535,6 +535,17 @@
   "tabGroupsMoveNewWindow": {
     "message": "Teisalda rühm uude aknasse"
   },
+  "tabGroupsWindow": {
+    "message": "Aken $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentWindow": {
+    "message": "Praegune aken"
+  },
   "deadProxyAdd": {
     "message": "Lisa puhverserver surnud linkide kontrollimiseks"
   },

@@ -535,6 +535,17 @@
   "tabGroupsMoveNewWindow": {
     "message": "Premjesti grupu u novi prozor"
   },
+  "tabGroupsWindow": {
+    "message": "Prozor $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentWindow": {
+    "message": "Trenutni prozor"
+  },
   "deadProxyAdd": {
     "message": "Dodaj proxy poslužitelj za provjeru mrtvih veza"
   },

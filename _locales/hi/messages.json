@@ -535,6 +535,17 @@
   "tabGroupsMoveNewWindow": {
     "message": "समूह को नई विंडो में ले जाएँ"
   },
+  "tabGroupsWindow": {
+    "message": "विंडो $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentWindow": {
+    "message": "वर्तमान विंडो"
+  },
   "deadProxyAdd": {
     "message": "डेड-लिंक जाँच के लिए प्रॉक्सी सर्वर जोड़ें"
   },

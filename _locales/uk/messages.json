@@ -535,6 +535,17 @@
   "tabGroupsMoveNewWindow": {
     "message": "У нове вікно"
   },
+  "tabGroupsWindow": {
+    "message": "Вікно $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentWindow": {
+    "message": "Поточне вікно"
+  },
   "deadProxyAdd": {
     "message": "Додати проксі-сервер для перевірки мертвих посилань"
   },

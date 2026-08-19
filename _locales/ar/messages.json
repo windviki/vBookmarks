@@ -535,6 +535,17 @@
   "tabGroupsMoveNewWindow": {
     "message": "نقل المجموعة لنافذة جديدة"
   },
+  "tabGroupsWindow": {
+    "message": "النافذة $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentWindow": {
+    "message": "النافذة الحالية"
+  },
   "deadProxyAdd": {
     "message": "أضف خادم وكيل لفحوصات الروابط المعطلة"
   },

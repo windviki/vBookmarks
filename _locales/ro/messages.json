@@ -535,6 +535,17 @@
   "tabGroupsMoveNewWindow": {
     "message": "Mută grupul în fereastră nouă"
   },
+  "tabGroupsWindow": {
+    "message": "Fereastră $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentWindow": {
+    "message": "Fereastra curentă"
+  },
   "deadProxyAdd": {
     "message": "Adaugă un server proxy pentru verificarea linkurilor moarte"
   },

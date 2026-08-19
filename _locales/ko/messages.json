@@ -535,6 +535,17 @@
   "tabGroupsMoveNewWindow": {
     "message": "새 창으로 이동"
   },
+  "tabGroupsWindow": {
+    "message": "창 $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentWindow": {
+    "message": "현재 창"
+  },
   "deadProxyAdd": {
     "message": "죽은 링크 확인용 프록시 서버 추가"
   },

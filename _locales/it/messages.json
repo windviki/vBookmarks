@@ -535,6 +535,17 @@
   "tabGroupsMoveNewWindow": {
     "message": "Sposta gruppo in nuova finestra"
   },
+  "tabGroupsWindow": {
+    "message": "Finestra $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentWindow": {
+    "message": "Finestra corrente"
+  },
   "deadProxyAdd": {
     "message": "Aggiungi un server proxy per i controlli dei link morti"
   },

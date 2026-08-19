@@ -535,6 +535,17 @@
   "tabGroupsMoveNewWindow": {
     "message": "Pārvietot grupu uz jaunu logu"
   },
+  "tabGroupsWindow": {
+    "message": "Logs $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentWindow": {
+    "message": "Pašreizējais logs"
+  },
   "deadProxyAdd": {
     "message": "Pievienot starpniekserveri bojātu saišu pārbaudei"
   },

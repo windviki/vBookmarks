@@ -218,21 +218,26 @@ export function createTabGroupOpener() {
             createCopies(copyTabs, windowId).then(finish);
             return;
         }
-        createCopies(copyTabs, windowId).then(copyIds => {
-            const ids = [].concat(moveIds || [], copyIds);
-            if (!ids.length) {
-                finish();
-                return;
-            }
-            chrome.tabs.group({ tabIds: ids }, groupId => {
-                if (chrome.runtime.lastError) {
+        // Tabs can only be grouped inside one window: first move existing
+        // tabs into the target window (the current window for "new group"),
+        // then group them together with any copies.
+        moveTabsToWindow(moveIds, windowId).then(movedIds => {
+            createCopies(copyTabs, windowId).then(copyIds => {
+                const ids = [].concat(movedIds, copyIds);
+                if (!ids.length) {
                     finish();
                     return;
                 }
-                chrome.tabGroups.update(groupId, {
-                    title: title || '',
-                    color: color || 'grey'
-                }, finish);
+                chrome.tabs.group({ tabIds: ids }, groupId => {
+                    if (chrome.runtime.lastError) {
+                        finish();
+                        return;
+                    }
+                    chrome.tabGroups.update(groupId, {
+                        title: title || '',
+                        color: color || 'grey'
+                    }, finish);
+                });
             });
         });
     };

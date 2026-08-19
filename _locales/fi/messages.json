@@ -535,6 +535,17 @@
   "tabGroupsMoveNewWindow": {
     "message": "Siirrä ryhmä uuteen ikkunaan"
   },
+  "tabGroupsWindow": {
+    "message": "Ikkuna $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentWindow": {
+    "message": "Nykyinen ikkuna"
+  },
   "deadProxyAdd": {
     "message": "Lisää välityspalvelin kuolleiden linkkien tarkistuksia varten"
   },

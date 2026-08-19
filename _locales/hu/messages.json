@@ -535,6 +535,17 @@
   "tabGroupsMoveNewWindow": {
     "message": "Csoport új ablakba"
   },
+  "tabGroupsWindow": {
+    "message": "$1$. ablak",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentWindow": {
+    "message": "Aktuális ablak"
+  },
   "deadProxyAdd": {
     "message": "Proxykiszolgáló hozzáadása a hibás linkek ellenőrzéséhez"
   },

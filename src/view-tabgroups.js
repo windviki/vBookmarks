@@ -50,8 +50,9 @@ export function initViewTabGroups(ctx = {}) {
     let refreshToken = 0;   // monotonic refresh generation: stale async
                             // tabs/tabGroups callbacks must never overwrite
                             // a newer refresh
-    let tabs = [];          // chrome.tabs.Tab[] of the current window, index order
-    let groups = [];        // chrome.tabGroups.TabGroup[] of the current window
+    let windows = [];       // [{ id, focused, tabs }] sorted: current first
+    let tabs = [];          // flat chrome.tabs.Tab[] across every window
+    let groups = [];        // chrome.tabGroups.TabGroup[] across every window
     let currentWindowId = null;
     let currentTabId = null;
     let selecting = false;
@@ -84,25 +85,60 @@ export function initViewTabGroups(ctx = {}) {
     };
 
     // --- Data -----------------------------------------------------------------
-    const queryGroups = (windowId, cb) => {
+    const queryAllGroups = cb => {
         if (chrome.tabGroups && chrome.tabGroups.query)
-            chrome.tabGroups.query({ windowId }, cb);
+            chrome.tabGroups.query({}, cb);
         else
             cb([]);
     };
 
+    const sortTabs = list => (list || []).slice().sort((a, b) => (a.index || 0) - (b.index || 0));
+
+    // Read every normal browser window with its populated tabs, sorted with
+    // the current window first. Fallback: the pre-existing current-window
+    // tabs.query path (old Chrome / minimal tests).
+    const readWindows = cb => {
+        if (chrome.windows && chrome.windows.getAll) {
+            chrome.windows.getAll({ populate: true }, wins => {
+                const all = (wins || [])
+                    .filter(w => w && w.tabs && w.tabs.length)
+                    .map(w => ({
+                        id: w.id,
+                        focused: !!w.focused,
+                        tabs: sortTabs(w.tabs)
+                    }))
+                    .sort((a, b) => {
+                        if (a.focused && !b.focused)
+                            return -1;
+                        if (!a.focused && b.focused)
+                            return 1;
+                        return Number(a.id) - Number(b.id);
+                    });
+                cb(all.length ? all : []);
+            });
+            return;
+        }
+        chrome.tabs.query({ currentWindow: true }, tabList => {
+            const tabs = sortTabs(tabList);
+            const id = tabs.length ? tabs[0].windowId
+                : ((chrome.windows && chrome.windows.WINDOW_ID_CURRENT) || 1);
+            cb([{ id, focused: true, tabs }]);
+        });
+    };
+
     const refresh = () => {
         const token = ++refreshToken;
-        chrome.tabs.query({ currentWindow: true }, tabList => {
+        readWindows(winList => {
             if (token !== refreshToken)
                 return; // a newer refresh started — drop this stale read
-            tabs = (tabList || []).slice().sort((a, b) => (a.index || 0) - (b.index || 0));
-            currentWindowId = tabs.length
-                ? tabs[0].windowId
+            windows = winList;
+            tabs = windows.flatMap(w => w.tabs.map(t => ({ ...t, _windowId: t.windowId || w.id })));
+            const focused = windows.find(w => w.focused) || windows[0];
+            currentWindowId = focused ? focused.id
                 : ((chrome.windows && chrome.windows.WINDOW_ID_CURRENT) || 1);
             const activeTab = tabs.find(t => t.active);
             currentTabId = activeTab ? activeTab.id : (tabs[0] && tabs[0].id);
-            queryGroups(currentWindowId, groupList => {
+            queryAllGroups(groupList => {
                 if (token !== refreshToken)
                     return;
                 groups = groupList || [];
@@ -246,34 +282,11 @@ export function initViewTabGroups(ctx = {}) {
             const ulClass = [selecting ? 'selecting' : '', colorBorder() ? 'color-enhanced' : ''].filter(Boolean).join(' ');
             html += `<ul role="list"${ulClass ? ` class="${ulClass}"` : ''}>`;
 
-            // Three logical sections, each in browser tab order:
-            //   opened groups (expanded, members visible)
-            //   closed groups (collapsed, only the header shows)
-            //   ungrouped tabs
-            const seenGroups = new Set();
-            const openGroups = [];
-            const closedGroups = [];
-            const ungroupedTabs = [];
-            for (let i = 0, l = tabs.length; i < l; i++) {
-                const tab = tabs[i];
-                if (!isGrouped(tab)) {
-                    ungroupedTabs.push(tab);
-                    continue;
-                }
-                const group = groupById(tab.groupId);
-                if (!group) {
-                    ungroupedTabs.push(tab);
-                    continue;
-                }
-                const gid = String(group.id);
-                if (seenGroups.has(gid))
-                    continue;
-                seenGroups.add(gid);
-                const memberTabs = tabs.filter(t => String(t.groupId) === gid)
-                    .sort((a, b) => (a.index || 0) - (b.index || 0));
-                (collapsed.has(gid) ? closedGroups : openGroups).push({ group, memberTabs });
-            }
-
+            const windowHead = (win, idx) => {
+                const label = _m('tabGroupsWindow', [`${idx + 1}`]);
+                const current = win.focused ? `<b class="tabgroups-window-current">${_m('tabGroupsCurrentWindow')}</b>` : '';
+                return `<li class="tabgroups-window-head" role="presentation"><em>${htmlspecialchars(label)}</em>${current}</li>`;
+            };
             const sectionHead = labelKey =>
                 `<li class="tabgroups-section-head" role="presentation"><em>${_m(labelKey)}</em></li>`;
             const groupBlock = ({ group, memberTabs }) => {
@@ -284,20 +297,52 @@ export function initViewTabGroups(ctx = {}) {
                 return out;
             };
 
-            if (openGroups.length) {
-                html += sectionHead('tabGroupsOpenGroups');
-                for (const entry of openGroups)
-                    html += groupBlock(entry);
-            }
-            if (closedGroups.length) {
-                html += sectionHead('tabGroupsClosedGroups');
-                for (const entry of closedGroups)
-                    html += groupHeadHtml(entry.group, entry.memberTabs);
-            }
-            if (ungroupedTabs.length) {
-                html += sectionHead('tabGroupsUngroupedTabs');
-                for (const tab of ungroupedTabs)
-                    html += tabRowHtml(tab);
+            for (let wi = 0, wl = windows.length; wi < wl; wi++) {
+                const win = windows[wi];
+                html += windowHead(win, wi);
+
+                // Within a window keep the three logical sections, each in
+                // browser tab order: opened groups, closed groups, ungrouped
+                // tabs.
+                const seenGroups = new Set();
+                const openGroups = [];
+                const closedGroups = [];
+                const ungroupedTabs = [];
+                for (let i = 0, l = win.tabs.length; i < l; i++) {
+                    const tab = win.tabs[i];
+                    if (!isGrouped(tab)) {
+                        ungroupedTabs.push(tab);
+                        continue;
+                    }
+                    const group = groupById(tab.groupId);
+                    if (!group) {
+                        ungroupedTabs.push(tab);
+                        continue;
+                    }
+                    const gid = String(group.id);
+                    if (seenGroups.has(gid))
+                        continue;
+                    seenGroups.add(gid);
+                    const memberTabs = win.tabs.filter(t => String(t.groupId) === gid)
+                        .sort((a, b) => (a.index || 0) - (b.index || 0));
+                    (collapsed.has(gid) ? closedGroups : openGroups).push({ group, memberTabs });
+                }
+
+                if (openGroups.length) {
+                    html += sectionHead('tabGroupsOpenGroups');
+                    for (const entry of openGroups)
+                        html += groupBlock(entry);
+                }
+                if (closedGroups.length) {
+                    html += sectionHead('tabGroupsClosedGroups');
+                    for (const entry of closedGroups)
+                        html += groupHeadHtml(entry.group, entry.memberTabs);
+                }
+                if (ungroupedTabs.length) {
+                    html += sectionHead('tabGroupsUngroupedTabs');
+                    for (const tab of ungroupedTabs)
+                        html += tabRowHtml(tab);
+                }
             }
             html += '</ul>';
         }

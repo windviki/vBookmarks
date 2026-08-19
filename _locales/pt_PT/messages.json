@@ -534,6 +534,17 @@
   "tabGroupsMoveNewWindow": {
     "message": "Mover grupo para nova janela"
   },
+  "tabGroupsWindow": {
+    "message": "Janela $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentWindow": {
+    "message": "Janela atual"
+  },
   "deadProxyAdd": {
     "message": "Adicionar um servidor proxy para verificações de links mortos"
   },

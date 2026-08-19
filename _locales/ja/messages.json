@@ -535,6 +535,17 @@
   "tabGroupsMoveNewWindow": {
     "message": "新しいウィンドウに移動"
   },
+  "tabGroupsWindow": {
+    "message": "ウィンドウ $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentWindow": {
+    "message": "現在のウィンドウ"
+  },
   "deadProxyAdd": {
     "message": "リンク切れチェック用のプロキシサーバーを追加"
   },

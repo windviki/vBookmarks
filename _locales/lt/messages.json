@@ -535,6 +535,17 @@
   "tabGroupsMoveNewWindow": {
     "message": "Perkelti grupę į naują langą"
   },
+  "tabGroupsWindow": {
+    "message": "Langas $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentWindow": {
+    "message": "Dabartinis langas"
+  },
   "deadProxyAdd": {
     "message": "Pridėti tarpinį serverį negyvų nuorodų tikrinimui"
   },

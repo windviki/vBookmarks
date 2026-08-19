@@ -535,6 +535,17 @@
   "tabGroupsMoveNewWindow": {
     "message": "העבר קבוצה לחלון חדש"
   },
+  "tabGroupsWindow": {
+    "message": "חלון $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentWindow": {
+    "message": "חלון נוכחי"
+  },
   "deadProxyAdd": {
     "message": "הוסף שרת פרוקסי לבדיקות קישורים שבורים"
   },

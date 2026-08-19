@@ -535,6 +535,17 @@
   "tabGroupsMoveNewWindow": {
     "message": "В новое окно"
   },
+  "tabGroupsWindow": {
+    "message": "Окно $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentWindow": {
+    "message": "Текущее окно"
+  },
   "deadProxyAdd": {
     "message": "Добавить прокси-сервер для проверки битых ссылок"
   },
