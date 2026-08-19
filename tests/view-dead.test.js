@@ -2900,6 +2900,64 @@ describe('selection mode (v4 task-3 #4)', () => {
         expect($list.innerHTML).not.toContain('dead-del-btn');
         expect($list.innerHTML).toContain('id="dead-item-12"'); // 行仍在 (可选择成员)
     });
+
+    it('keyboard entry focuses the selection bar first control; keyboard exit restores the select button', () => {
+        const ctx = setup({ storeData: { deadLastScan: CACHE } });
+        const { $list, doc } = ctx;
+        ctx.def().activate();
+
+        // The real DOM swap drops focus to <body> when the old button is
+        // removed; model it so the new focus transition has to recover it.
+        const desc = Object.getOwnPropertyDescriptor($list, 'innerHTML');
+        Object.defineProperty($list, 'innerHTML', {
+            configurable: true,
+            get: desc.get,
+            set(v) { desc.set.call(this, v); doc.activeElement = null; }
+        });
+
+        const first = { disabled: false, focus() { doc.activeElement = this; } };
+        const bar = { querySelectorAll: sel => sel === 'button, select, input' ? [first] : [] };
+        $list.querySelector = sel =>
+            sel === '.dead-toolbar.dead-scan-toolbar.vbm-toolbar' ? bar : null;
+        ctx.clickOn({ closest: sel => (sel === '.dead-select-mode' ? {} : null) });
+        expect($list.innerHTML).toContain('dead-select-all');
+        expect(doc.activeElement).toBe(first);
+
+        const selectBtn = { focus() { doc.activeElement = this; } };
+        $list.querySelector = sel => sel === '.dead-select-mode' ? selectBtn : null;
+        ctx.clickOn({ closest: sel => (sel === '.dead-select-exit' ? {} : null) });
+        expect($list.innerHTML).toContain('dead-select-mode');
+        expect($list.innerHTML).not.toContain('class="selecting"');
+        expect(doc.activeElement).toBe(selectBtn);
+    });
+
+    it('Esc from the selection toolbar returns focus to the restored select button', () => {
+        const ctx = setup({ storeData: { deadLastScan: CACHE } });
+        const { $list, doc, def } = ctx;
+        def().activate();
+
+        const desc = Object.getOwnPropertyDescriptor($list, 'innerHTML');
+        Object.defineProperty($list, 'innerHTML', {
+            configurable: true,
+            get: desc.get,
+            set(v) { desc.set.call(this, v); doc.activeElement = null; }
+        });
+
+        const first = { disabled: false, focus() { doc.activeElement = this; } };
+        const bar = { querySelectorAll: sel => sel === 'button, select, input' ? [first] : [] };
+        $list.querySelector = sel =>
+            sel === '.dead-toolbar.dead-scan-toolbar.vbm-toolbar' ? bar : null;
+        ctx.clickOn({ closest: sel => (sel === '.dead-select-mode' ? {} : null) });
+        expect(doc.activeElement).toBe(first);
+
+        // Focus is on a control of the selection toolbar when Esc fires.
+        doc.activeElement = { closest: sel => sel === '.vbm-toolbar' ? {} : null };
+        const selectBtn = { focus() { doc.activeElement = this; } };
+        $list.querySelector = sel => sel === '.dead-select-mode' ? selectBtn : null;
+        expect(def().onEscape()).toBe(true);
+        expect($list.innerHTML).toContain('dead-select-mode');
+        expect(doc.activeElement).toBe(selectBtn);
+    });
 });
 
 // Final polish (keyboard-model §2.5): the view no longer walks the filter

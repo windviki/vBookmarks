@@ -204,6 +204,15 @@ export function initViewDead(ctx = {}) {
     // v4 task-4 #8: select-mode Space toggles the focused row and render()
     // swaps the list — park the row id so focus returns to it afterwards.
     let pendingRowFocus = null;
+    // Selection-mode focus transitions (4.0.8): when the 选择 button is
+    // activated, the old toolbar is swapped away and the browser drops focus
+    // to <body>. Render() parks the old control but its class is gone in the
+    // new toolbar, so restoreToolbarFocus fails and the generic fallback
+    // would strand the user on the view tab. Instead, after entering
+    // selection mode focus the selection bar's first enabled control (the
+    // first button), and after exiting focus the restored 选择 entry button —
+    // the closest thing to the control that just disappeared.
+    let selectionFocus = null; // 'first' | 'entry' | null
     // The marked-view tooltip banner (markedBannerHtml): a session-level
     // dismiss (×) — same semantics as the risk banner's ×, the hint
     // reappears on the next popup open / re-entry into the marked-only view.
@@ -767,6 +776,31 @@ export function initViewDead(ctx = {}) {
             '</div>';
     };
 
+    // Selection-mode focus helpers. The selection bar's first button is the
+    // first enabled control of the selecting toolbar; the idle entry to
+    // focus after exit is the 选择 button that re-enters the mode.
+    const focusSelectionBarFirst = () => {
+        if (typeof $list.querySelector !== 'function')
+            return;
+        const bar = $list.querySelector('.dead-toolbar.dead-scan-toolbar.vbm-toolbar');
+        if (!bar || typeof bar.querySelectorAll !== 'function')
+            return;
+        const controls = bar.querySelectorAll('button, select, input');
+        for (let i = 0, l = controls.length; i < l; i++) {
+            if (!controls[i].disabled) {
+                controls[i].focus();
+                return;
+            }
+        }
+    };
+    const focusSelectModeButton = () => {
+        if (typeof $list.querySelector !== 'function')
+            return;
+        const btn = $list.querySelector('.dead-select-mode');
+        if (btn && btn.focus)
+            btn.focus();
+    };
+
     const render = () => {
         if (selecting) {
             // prune members whose rows vanished (tree change / filter) BEFORE
@@ -873,6 +907,16 @@ export function initViewDead(ctx = {}) {
             const a = row && row.querySelector('a');
             if (a)
                 a.focus();
+        }
+        // Selection-mode toolbar transitions: after the swap the old button
+        // class is gone, so restoreToolbarFocus above has no target. This
+        // runs AFTER pendingRowFocus so an explicit row park still wins.
+        if (selectionFocus === 'first') {
+            selectionFocus = null;
+            focusSelectionBarFirst();
+        } else if (selectionFocus === 'entry') {
+            selectionFocus = null;
+            focusSelectModeButton();
         }
         // Cancelling a scan re-renders the toolbar from live (pause/cancel)
         // to idle: the parked control (e.g. .dead-cancel) no longer exists,
@@ -1114,10 +1158,16 @@ export function initViewDead(ctx = {}) {
     };
 
     // --- Selection mode (v4 task-3 #4) -----------------------------------------
-    const setSelecting = on => {
+    // `focus` names the post-render focus transition: 'first' focuses the
+    // selection bar's first enabled control (activation of 选择); 'entry'
+    // focuses the restored 选择 button (exit). null keeps render()'s generic
+    // park/restore behavior (row Space toggle, Esc on a row, post-delete exit).
+    const setSelecting = (on, focus = null) => {
         selecting = on;
         if (!on)
             selected.clear();
+        if (focus)
+            selectionFocus = focus;
         render();
     };
 
@@ -1580,12 +1630,12 @@ export function initViewDead(ctx = {}) {
         // v4 task-3 #4: selection mode controls + row-toggle clicks
         if (closest('.dead-select-mode')) {
             e.preventDefault();
-            setSelecting(true);
+            setSelecting(true, 'first');
             return;
         }
         if (closest('.dead-select-exit')) {
             e.preventDefault();
-            setSelecting(false);
+            setSelecting(false, 'entry');
             return;
         }
         if (closest('.dead-select-all')) {
@@ -1823,7 +1873,13 @@ export function initViewDead(ctx = {}) {
             // v4 task-3 #4: while selecting, Esc leaves the mode (the
             // selection goes with it) — before any scan semantics.
             if (selecting) {
-                setSelecting(false);
+                // Esc is a keyboard exit: if the focus sat in the selection
+                // toolbar (the area that just changed), return it to the
+                // restored 选择 button; a row-focused Esc keeps the row
+                // through render()'s park/restore path.
+                const ae = document.activeElement;
+                const inToolbar = ae && ae.closest ? ae.closest('.vbm-toolbar') : null;
+                setSelecting(false, inToolbar ? 'entry' : null);
                 return true;
             }
             // The marked-view tooltip banner is transient too — Esc dismisses

@@ -123,7 +123,11 @@ Structural overrides, additive only:
   is re-parked on the replacement row/head after the re-render). `Enter`
   keeps its activation semantics (dupes head still folds, member rows still
   open). Outside selection mode `Space` is unchanged: activate a dead row,
-  fold a dupes head.
+  fold a dupes head. 4.0.8: entering selection mode from the 选择 button
+  moves focus to the batch bar's first enabled control; exiting through the
+  batch bar's exit button, or `Esc` while a toolbar control is focused,
+  returns focus to the restored 选择 button (a row-focused `Esc` keeps the
+  row through the park/restore path).
 - **Search history rows** (§3): `↑`/`↓` walk, `Enter` reruns, `Delete`
   removes, `→` opens the row menu.
 - **Dead/Stats/Duplicates letter keys** stay view-local (`M` mark, `R`

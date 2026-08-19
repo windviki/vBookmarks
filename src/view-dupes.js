@@ -149,6 +149,11 @@ export function initViewDupes(ctx = {}) {
     // v4 task-4 #8: same park-and-restore for a select-mode Space toggle
     // fired from a member row (the toggle re-renders, replacing the row).
     let pendingMemberFocus = null;
+    // Selection-mode focus transitions (4.0.8): activating the 选择 button
+    // swaps the toolbar away and would drop focus to <body>. Focus the
+    // selection bar's first enabled control on entry, and the restored 选择
+    // entry button on exit — the same law as the dead view's selection mode.
+    let selectionFocus = null; // 'first' | 'entry' | null
 
     const strategy = () => store.get('dupesStrategy', 'keep-oldest') || 'keep-oldest';
     const scope = () => store.get('dupesScope', 'all') || 'all';
@@ -385,6 +390,29 @@ export function initViewDupes(ctx = {}) {
     // (final polish / 4.0.1 focus law). v4 task-4 #14: the shared toolbar
     // selector includes the risk banner's controls.
 
+    // Selection-mode focus helpers (see view-dead.js).
+    const focusSelectionBarFirst = () => {
+        if (typeof $list.querySelector !== 'function')
+            return;
+        const bar = $list.querySelector('.dupes-toolbar.selecting-bar.vbm-toolbar');
+        if (!bar || typeof bar.querySelectorAll !== 'function')
+            return;
+        const controls = bar.querySelectorAll('button, select, input');
+        for (let i = 0, l = controls.length; i < l; i++) {
+            if (!controls[i].disabled) {
+                controls[i].focus();
+                return;
+            }
+        }
+    };
+    const focusSelectModeButton = () => {
+        if (typeof $list.querySelector !== 'function')
+            return;
+        const btn = $list.querySelector('.dupes-select-mode');
+        if (btn && btn.focus)
+            btn.focus();
+    };
+
     const render = () => {
         if (selecting) {
             // prune selected keys whose group vanished (regroup) BEFORE the
@@ -438,6 +466,14 @@ export function initViewDupes(ctx = {}) {
             const a = row && row.querySelector('a');
             if (a)
                 a.focus();
+        }
+        // Selection-mode toolbar transitions (after the explicit parks above).
+        if (selectionFocus === 'first') {
+            selectionFocus = null;
+            focusSelectionBarFirst();
+        } else if (selectionFocus === 'entry') {
+            selectionFocus = null;
+            focusSelectModeButton();
         }
     };
 
@@ -526,10 +562,16 @@ export function initViewDupes(ctx = {}) {
     };
 
     // --- Selection mode (v4 task-3 #5) -----------------------------------------
-    const setSelecting = on => {
+    // `focus` names the post-render focus transition: 'first' focuses the
+    // selection bar's first enabled control (activation of 选择); 'entry'
+    // focuses the restored 选择 button (exit). null keeps render()'s generic
+    // park/restore behavior (row Space toggle, Esc on a row, post-apply exit).
+    const setSelecting = (on, focus = null) => {
         selecting = on;
         if (!on)
             selected.clear();
+        if (focus)
+            selectionFocus = focus;
         render();
     };
 
@@ -673,12 +715,12 @@ export function initViewDupes(ctx = {}) {
         // v4 task-3 #5: selection mode controls + group-toggle clicks
         if (closest('.dupes-select-mode')) {
             e.preventDefault();
-            setSelecting(true);
+            setSelecting(true, 'first');
             return;
         }
         if (closest('.dupes-select-exit')) {
             e.preventDefault();
-            setSelecting(false);
+            setSelecting(false, 'entry');
             return;
         }
         if (closest('.dupes-select-all')) {
@@ -963,7 +1005,11 @@ export function initViewDupes(ctx = {}) {
         onEscape: () => {
             if (!selecting)
                 return false;
-            setSelecting(false);
+            // Keyboard exit: toolbar focus returns to the restored 选择
+            // button; a row-focused Esc keeps the row via the park path.
+            const ae = document.activeElement;
+            const inToolbar = ae && ae.closest ? ae.closest('.vbm-toolbar') : null;
+            setSelecting(false, inToolbar ? 'entry' : null);
             return true;
         },
         onKey

@@ -1372,6 +1372,65 @@ describe('selection mode (v4 task-3 #5)', () => {
         expect($list.innerHTML).not.toContain('class="selecting"');
     });
 
+    it('keyboard entry focuses the selection bar first control; keyboard exit restores the select button', () => {
+        const ctx = setup({});
+        const { $list, doc, def } = ctx;
+        def().activate();
+
+        // The real DOM swap drops focus to <body> when the old button is
+        // removed; model it so the new focus transition has to recover it.
+        // ($list.innerHTML is a plain data property in this suite's double,
+        // not the accessor pair the dead-list double uses.)
+        let html = $list.innerHTML;
+        Object.defineProperty($list, 'innerHTML', {
+            configurable: true,
+            get: () => html,
+            set(v) { html = v; doc.activeElement = null; }
+        });
+
+        const first = { disabled: false, focus() { doc.activeElement = this; } };
+        const bar = { querySelectorAll: sel => sel === 'button, select, input' ? [first] : [] };
+        $list.querySelector = sel =>
+            sel === '.dupes-toolbar.selecting-bar.vbm-toolbar' ? bar : null;
+        ctx.clickOn({ closest: sel => (sel === '.dupes-select-mode' ? {} : null) });
+        expect($list.innerHTML).toContain('dupes-select-all');
+        expect(doc.activeElement).toBe(first);
+
+        const selectBtn = { focus() { doc.activeElement = this; } };
+        $list.querySelector = sel => sel === '.dupes-select-mode' ? selectBtn : null;
+        ctx.clickOn({ closest: sel => (sel === '.dupes-select-exit' ? {} : null) });
+        expect($list.innerHTML).toContain('dupes-select-mode');
+        expect($list.innerHTML).not.toContain('class="selecting"');
+        expect(doc.activeElement).toBe(selectBtn);
+    });
+
+    it('Esc from the selection toolbar returns focus to the restored select button', () => {
+        const ctx = setup({});
+        const { $list, doc, def } = ctx;
+        def().activate();
+
+        let html = $list.innerHTML;
+        Object.defineProperty($list, 'innerHTML', {
+            configurable: true,
+            get: () => html,
+            set(v) { html = v; doc.activeElement = null; }
+        });
+
+        const first = { disabled: false, focus() { doc.activeElement = this; } };
+        const bar = { querySelectorAll: sel => sel === 'button, select, input' ? [first] : [] };
+        $list.querySelector = sel =>
+            sel === '.dupes-toolbar.selecting-bar.vbm-toolbar' ? bar : null;
+        ctx.clickOn({ closest: sel => (sel === '.dupes-select-mode' ? {} : null) });
+        expect(doc.activeElement).toBe(first);
+
+        doc.activeElement = { closest: sel => sel === '.vbm-toolbar' ? {} : null };
+        const selectBtn = { focus() { doc.activeElement = this; } };
+        $list.querySelector = sel => sel === '.dupes-select-mode' ? selectBtn : null;
+        expect(def().onEscape()).toBe(true);
+        expect($list.innerHTML).toContain('dupes-select-mode');
+        expect(doc.activeElement).toBe(selectBtn);
+    });
+
     it('the CSS contract: group heads get checkboxes, × and radios hide', () => {
         const neatCss = fs.readFileSync(new URL('../css/neat.css', import.meta.url), 'utf8');
         expect(neatCss).toContain('#dupes-list ul.selecting li.dupes-group .group-head::before');
