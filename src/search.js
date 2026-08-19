@@ -567,6 +567,9 @@ export function initSearch(ctx = {}) {
     searchInput.addEventListener('input', () => {
         updateClearBtn();
         if (!searchInput.value.length) {
+            // Clearing the box from any view must also clear the persisted
+            // query (quitSearchMode only does so while search mode is on).
+            store.set('searchQuery', '');
             // keep focus on input
             // do not restore focus to item
             quitSearchMode(true);
@@ -580,6 +583,12 @@ export function initSearch(ctx = {}) {
     // tree-refocus; the explicit focus() below is the intended target).
     searchClearBtn.addEventListener('click', () => {
         searchInput.value = '';
+        // Clear the persisted query UNCONDITIONALLY. quitSearchMode() only
+        // clears it while search mode is active; the × button is global
+        // chrome and can be clicked from any other view (e.g. tab groups)
+        // while a query still lives in the box. Without this the old
+        // searchQuery survives and the next popup open restores it.
+        store.set('searchQuery', '');
         updateClearBtn();
         // Abandoning the search: clear the results pane too, so an
         // UNCONSUMED query leaves no trace (it was not recorded, so the

@@ -367,6 +367,47 @@ describe('render', () => {
     });
 });
 
+describe('idle toolbar', () => {
+    it('renders two rows with summary, icon buttons and the sync option', () => {
+        const { def, $list } = setup({});
+        def().activate();
+        const html = $list.innerHTML;
+        expect(html).toContain('tabgroups-controls-toolbar');
+        expect(html).toContain('tabgroups-actions-toolbar');
+        expect(html).toContain('tabgroups-summary');
+        expect(html).toContain('tabgroups-refresh tabgroups-icon-btn');
+        expect(html).toContain('tabgroups-collapse-all tabgroups-icon-btn');
+        expect(html).toContain('tabgroups-expand-all tabgroups-icon-btn');
+        expect(html).toContain('tabgroups-sync-collapse-input');
+        expect(html).not.toContain('checked');
+        expect(html).toContain('selectModeEnter');
+    });
+
+    it('sync checkbox change persists the setting', () => {
+        const { def, $list, store, fire } = setup({});
+        def().activate();
+        const target = { classList: { contains: c => c === 'tabgroups-sync-collapse-input' }, checked: true };
+        fire('change', { target });
+        expect(store._data.tabGroupsSyncCollapse).toBe('1');
+    });
+
+    it('collapse-all / expand-all only sync browser groups when the option is on', () => {
+        const off = setup({});
+        off.def().activate();
+        off.clickOn({ closest: off.closestOf({ '.tabgroups-collapse-all': { classList: makeClassList() } }) });
+        expect(off.chrome.tabGroups.updateCalls).toEqual([]);
+        off.clickOn({ closest: off.closestOf({ '.tabgroups-expand-all': { classList: makeClassList() } }) });
+        expect(off.chrome.tabGroups.updateCalls).toEqual([]);
+
+        const on = setup({ storeData: { tabGroupsSyncCollapse: '1' } });
+        on.def().activate();
+        on.clickOn({ closest: on.closestOf({ '.tabgroups-collapse-all': { classList: makeClassList() } }) });
+        expect(on.chrome.tabGroups.updateCalls).toEqual([['g1', { collapsed: true }]]);
+        on.clickOn({ closest: on.closestOf({ '.tabgroups-expand-all': { classList: makeClassList() } }) });
+        expect(on.chrome.tabGroups.updateCalls).toEqual([['g1', { collapsed: true }], ['g1', { collapsed: false }]]);
+    });
+});
+
 describe('group color edge option', () => {
     it('keeps the group color option out of the toolbar (it lives in options)', () => {
         const { def, $list } = setup({});

@@ -531,6 +531,18 @@ describe('input listeners', () => {
         expect(calls.switchBookmarkMenu).toEqual([true, false]);
     });
 
+    it('clear button outside search mode still clears the persisted query (tab-groups regression)', () => {
+        const { s, els, store } = setup({});
+        // Simulate the tab-groups-view state: a query was typed earlier, the
+        // user switched away (search mode off) and now clicks the header ×.
+        els['search-input'].value = 'git';
+        store.set('searchQuery', 'git');
+        els['search-clear'].trigger('click');
+        expect(els['search-input'].value).toBe('');
+        expect(store.get('searchQuery')).toBe('');
+        expect(s.isActive()).toBe(false);
+    });
+
     it('clear button wipes the query, exits search mode and refocuses the input', () => {
         const { s, els, store, viewCalls } = setup({});
         type(els, 'git');
