@@ -251,6 +251,8 @@ import { shouldHighlightUnsynced, shouldRememberState } from './settings.js';
         'tab-row-close': 'tabGroupsSelectClose',
         'tabgroup-activate': 'tabGroupsActivateGroup',
         'tabgroup-rename': 'tabGroupsRenameGroup',
+        'tabgroup-move-new-window': 'tabGroupsMoveNewWindow',
+        'tabgroup-ungroup': 'tabGroupsUngroupGroup',
         'tabgroup-save-folder': 'tabGroupsMenuSaveFolder',
         'tabgroup-sleep': 'tabGroupsSleepGroup',
         'tabgroup-close': 'tabGroupsCloseGroup'
@@ -381,7 +383,9 @@ import { shouldHighlightUnsynced, shouldRememberState } from './settings.js';
                 closeGroup: id => viewTabGroups.closeGroup(id),
                 sleepGroup: id => viewTabGroups.sleepGroup(id),
                 toggleGroup: id => viewTabGroups.toggleGroup(id),
-                isCollapsed: id => viewTabGroups.isCollapsed(id)
+                isCollapsed: id => viewTabGroups.isCollapsed(id),
+                ungroupGroup: id => viewTabGroups.ungroupGroup(id),
+                moveGroupToNewWindow: id => viewTabGroups.moveGroupToNewWindow(id)
             };
         },
         // v4 task-4 #6: the palette custom-command row menu (edit/delete)

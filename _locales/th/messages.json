@@ -520,6 +520,21 @@
   "tabGroupsUnpinTab": {
     "message": "เลิกปักหมุดแท็บ"
   },
+  "tabGroupsOpenGroups": {
+    "message": "เปิดกลุ่มแท็บ"
+  },
+  "tabGroupsClosedGroups": {
+    "message": "กลุ่มแท็บที่ปิด"
+  },
+  "tabGroupsUngroupedTabs": {
+    "message": "แท็บที่ไม่ได้จัดกลุ่ม"
+  },
+  "tabGroupsUngroupGroup": {
+    "message": "แยกกลุ่มแท็บ"
+  },
+  "tabGroupsMoveNewWindow": {
+    "message": "ย้ายกลุ่มไปหน้าต่างใหม่"
+  },
   "deadProxyAdd": {
     "message": "เพิ่มพร็อกซีเซิร์ฟเวอร์สำหรับตรวจสอบลิงก์เสีย"
   },

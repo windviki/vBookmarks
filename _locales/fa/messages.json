@@ -520,6 +520,21 @@
   "tabGroupsUnpinTab": {
     "message": "برداشتن سنجاق برگه"
   },
+  "tabGroupsOpenGroups": {
+    "message": "گروه‌های باز تب"
+  },
+  "tabGroupsClosedGroups": {
+    "message": "گروه‌های بسته تب"
+  },
+  "tabGroupsUngroupedTabs": {
+    "message": "تب‌های بدون گروه"
+  },
+  "tabGroupsUngroupGroup": {
+    "message": "حذف گروه تب"
+  },
+  "tabGroupsMoveNewWindow": {
+    "message": "انتقال گروه به پنجره جدید"
+  },
   "deadProxyAdd": {
     "message": "افزودن سرور پروکسی برای بررسی لینک‌های خراب"
   },

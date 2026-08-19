@@ -348,16 +348,17 @@ describe('view registration', () => {
 });
 
 describe('render', () => {
-    it('renders group headers and ungrouped rows in tab order', () => {
+    it('renders sections: open groups, then ungrouped tabs in tab order', () => {
         const { def, $list } = setup({});
         def().activate();
         const html = $list.innerHTML;
-        // group g1 appears before its two members; ungrouped tabs 1 and 4
-        // keep their tab-strip positions (tab 1 before the group, tab 4 after)
-        expect(html.indexOf('tabgroups-item-1')).toBeLessThan(html.indexOf('data-group-id="g1"'));
+        // Sections appear in order: open groups first, then ungrouped tabs.
+        expect(html.indexOf('tabGroupsOpenGroups')).toBeLessThan(html.indexOf('tabGroupsUngroupedTabs'));
+        // group g1 appears before its two members; members are in tab order.
         expect(html.indexOf('data-group-id="g1"')).toBeLessThan(html.indexOf('tabgroups-item-2'));
         expect(html.indexOf('tabgroups-item-2')).toBeLessThan(html.indexOf('tabgroups-item-3'));
-        expect(html.indexOf('tabgroups-item-3')).toBeLessThan(html.indexOf('tabgroups-item-4'));
+        // ungrouped tabs keep their relative tab-strip order.
+        expect(html.indexOf('tabgroups-item-1')).toBeLessThan(html.indexOf('tabgroups-item-4'));
         // group header content: title, color, count, save action
         expect(html).toContain('Dev');
         expect(html).toContain('tg-blue');
@@ -654,7 +655,8 @@ describe('bookmark integration', () => {
         const btn = { classList: makeClassList(), closest: sel => sel === 'li' ? li : (sel === '.tabgroups-add-bookmark' ? btn : null) };
         clickOn(btn);
         const html = $list.innerHTML;
-        const row1 = html.slice(html.indexOf('id="tabgroups-item-1"'), html.indexOf('id="tabgroups-group-g1"'));
+        const rowStart = html.indexOf('id="tabgroups-item-1"');
+        const row1 = html.slice(rowStart, html.indexOf('</li>', rowStart));
         expect(row1).toContain('tabgroups-star');
         expect(row1).not.toContain('tabgroups-add-btn');
         // other unbookmarked rows keep the add button
@@ -819,6 +821,22 @@ describe('group management (browser-synced)', () => {
         const head = { classList: makeClassList(), closest: sel => sel === 'li' ? li : (sel === '.tabgroups-group-head' ? head : null) };
         clickOn(head);
         expect(chrome.tabGroups.updateCalls).toEqual([['g1', { collapsed: true }]]);
+    });
+
+    it('moveGroupToNewWindow sends every member to a new window via SW', () => {
+        const { def, chrome, viewTabGroups } = setup({});
+        def().activate();
+        viewTabGroups.moveGroupToNewWindow('g1');
+        expect(chrome.runtime.sendMessageCalls).toEqual([
+            { type: 'vbm-tabs-move-new-window', tabIds: [2, 3] }
+        ]);
+    });
+
+    it('ungroupGroup removes the group but keeps the tabs', () => {
+        const { def, chrome, viewTabGroups } = setup({});
+        def().activate();
+        viewTabGroups.ungroupGroup('g1');
+        expect(chrome.tabs.ungroupCalls).toEqual([[2, 3]]);
     });
 
     it('refresh seeds collapsed state from the browser groups', () => {

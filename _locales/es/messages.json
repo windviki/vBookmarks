@@ -520,6 +520,21 @@
   "tabGroupsUnpinTab": {
     "message": "Desfijar pestaña"
   },
+  "tabGroupsOpenGroups": {
+    "message": "Grupos de pestañas abiertos"
+  },
+  "tabGroupsClosedGroups": {
+    "message": "Grupos de pestañas cerrados"
+  },
+  "tabGroupsUngroupedTabs": {
+    "message": "Pestañas sin agrupar"
+  },
+  "tabGroupsUngroupGroup": {
+    "message": "Desagrupar pestañas"
+  },
+  "tabGroupsMoveNewWindow": {
+    "message": "Mover a nueva ventana"
+  },
   "deadProxyAdd": {
     "message": "Añadir un servidor proxy para comprobar enlaces rotos"
   },

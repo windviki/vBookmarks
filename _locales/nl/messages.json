@@ -520,6 +520,21 @@
   "tabGroupsUnpinTab": {
     "message": "Tab losmaken"
   },
+  "tabGroupsOpenGroups": {
+    "message": "Open tabgroepen"
+  },
+  "tabGroupsClosedGroups": {
+    "message": "Gesloten tabgroepen"
+  },
+  "tabGroupsUngroupedTabs": {
+    "message": "Niet-gegroepeerde tabbladen"
+  },
+  "tabGroupsUngroupGroup": {
+    "message": "Groep opheffen"
+  },
+  "tabGroupsMoveNewWindow": {
+    "message": "Groep naar nieuw venster"
+  },
   "deadProxyAdd": {
     "message": "Proxyserver toevoegen voor dode-linkcontroles"
   },

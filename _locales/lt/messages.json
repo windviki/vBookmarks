@@ -520,6 +520,21 @@
   "tabGroupsUnpinTab": {
     "message": "Atsegti skirtuką"
   },
+  "tabGroupsOpenGroups": {
+    "message": "Atidarytos skirtukų grupės"
+  },
+  "tabGroupsClosedGroups": {
+    "message": "Uždarytos skirtukų grupės"
+  },
+  "tabGroupsUngroupedTabs": {
+    "message": "Negrupuoti skirtukai"
+  },
+  "tabGroupsUngroupGroup": {
+    "message": "Išgrupuoti skirtukus"
+  },
+  "tabGroupsMoveNewWindow": {
+    "message": "Perkelti grupę į naują langą"
+  },
   "deadProxyAdd": {
     "message": "Pridėti tarpinį serverį negyvų nuorodų tikrinimui"
   },

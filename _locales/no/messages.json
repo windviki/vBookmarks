@@ -520,6 +520,21 @@
   "tabGroupsUnpinTab": {
     "message": "Løsne fane"
   },
+  "tabGroupsOpenGroups": {
+    "message": "Åpne fanegrupper"
+  },
+  "tabGroupsClosedGroups": {
+    "message": "Lukkede fanegrupper"
+  },
+  "tabGroupsUngroupedTabs": {
+    "message": "Ugrupperte faner"
+  },
+  "tabGroupsUngroupGroup": {
+    "message": "Opphev gruppering"
+  },
+  "tabGroupsMoveNewWindow": {
+    "message": "Flytt gruppe til nytt vindu"
+  },
   "deadProxyAdd": {
     "message": "Legg til en proxy-server for sjekk av døde lenker"
   },

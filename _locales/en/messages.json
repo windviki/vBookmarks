@@ -2054,5 +2054,25 @@
   "tabGroupsUnpinTab": {
     "message": "Unpin tab",
     "description": "Tab row context-menu item in the tab groups view."
+  },
+  "tabGroupsOpenGroups": {
+    "message": "Open tab groups",
+    "description": "Section heading in the tab groups view for expanded groups."
+  },
+  "tabGroupsClosedGroups": {
+    "message": "Closed tab groups",
+    "description": "Section heading in the tab groups view for collapsed groups."
+  },
+  "tabGroupsUngroupedTabs": {
+    "message": "Ungrouped tabs",
+    "description": "Section heading in the tab groups view for tabs without a group."
+  },
+  "tabGroupsUngroupGroup": {
+    "message": "Ungroup tabs",
+    "description": "Group context-menu item: remove the group but keep its tabs."
+  },
+  "tabGroupsMoveNewWindow": {
+    "message": "Move group to new window",
+    "description": "Group context-menu item: move every tab of the group to a new window."
   }
 }

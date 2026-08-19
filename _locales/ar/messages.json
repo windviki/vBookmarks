@@ -520,6 +520,21 @@
   "tabGroupsUnpinTab": {
     "message": "إلغاء تثبيت علامة التبويب"
   },
+  "tabGroupsOpenGroups": {
+    "message": "مجموعات التبويبات المفتوحة"
+  },
+  "tabGroupsClosedGroups": {
+    "message": "مجموعات التبويبات المغلقة"
+  },
+  "tabGroupsUngroupedTabs": {
+    "message": "تبويبات غير مجمعة"
+  },
+  "tabGroupsUngroupGroup": {
+    "message": "إلغاء تجميع التبويبات"
+  },
+  "tabGroupsMoveNewWindow": {
+    "message": "نقل المجموعة لنافذة جديدة"
+  },
   "deadProxyAdd": {
     "message": "أضف خادم وكيل لفحوصات الروابط المعطلة"
   },

@@ -45,7 +45,8 @@ export const TAB_GROUP_MSG = {
     tabsNewGroup: 'vbm-tabs-new-group',
     tabsOpenInto: 'vbm-tabs-open-into',
     tabsClose: 'vbm-tabs-close',
-    tabsDiscard: 'vbm-tabs-discard'
+    tabsDiscard: 'vbm-tabs-discard',
+    tabsMoveNewWindow: 'vbm-tabs-move-new-window'
 };
 
 export function createTabGroupOpener() {
@@ -280,6 +281,51 @@ export function createTabGroupOpener() {
         }
     };
 
+    // Move a tab group to a fresh window. Chrome has no direct "move
+    // group" API, so the whole member set is moved with tabs.move and the
+    // new window's initial blank tab is closed afterwards.
+    const moveTabsToNewWindow = (tabIds, done) => {
+        const finish = () => { if (done) done(); };
+        const ids = tabIds || [];
+        if (!ids.length) {
+            finish();
+            return;
+        }
+        if (!chrome.windows || !chrome.windows.create) {
+            finish();
+            return;
+        }
+        chrome.windows.create({ focused: true }, win => {
+            if (chrome.runtime.lastError || !win) {
+                finish();
+                return;
+            }
+            const move = () => {
+                if (!chrome.tabs.move) {
+                    finish();
+                    return;
+                }
+                chrome.tabs.move(ids, { windowId: win.id, index: -1 }, () => {
+                    void chrome.runtime.lastError;
+                    // Best-effort cleanup of the new window's initial tab.
+                    if (chrome.tabs.query) {
+                        chrome.tabs.query({ windowId: win.id }, tabs => {
+                            const keep = new Set(ids.map(String));
+                            for (const t of tabs || []) {
+                                if (!keep.has(String(t.id)) && chrome.tabs.remove)
+                                    chrome.tabs.remove(t.id);
+                            }
+                            finish();
+                        });
+                    } else {
+                        finish();
+                    }
+                });
+            };
+            move();
+        });
+    };
+
     const onMessage = (msg, sender, sendResponse) => {
         if (!msg || !msg.type)
             return;
@@ -301,6 +347,11 @@ export function createTabGroupOpener() {
             closeTabs(msg.tabIds);
         else if (msg.type === TAB_GROUP_MSG.tabsDiscard)
             discardTabs(msg.tabIds);
+        else if (msg.type === TAB_GROUP_MSG.tabsMoveNewWindow) {
+            moveTabsToNewWindow(msg.tabIds,
+                () => { if (sendResponse) sendResponse({ ok: true }); });
+            return true;
+        }
     };
 
     const start_ = () => {
@@ -319,6 +370,7 @@ export function createTabGroupOpener() {
         groupExistingIntoNew,
         groupExistingIntoExisting,
         closeTabs,
-        discardTabs
+        discardTabs,
+        moveTabsToNewWindow
     };
 }

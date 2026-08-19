@@ -520,6 +520,21 @@
   "tabGroupsUnpinTab": {
     "message": "탭 고정 해제"
   },
+  "tabGroupsOpenGroups": {
+    "message": "열린 탭 그룹"
+  },
+  "tabGroupsClosedGroups": {
+    "message": "닫힌 탭 그룹"
+  },
+  "tabGroupsUngroupedTabs": {
+    "message": "그룹화되지 않은 탭"
+  },
+  "tabGroupsUngroupGroup": {
+    "message": "그룹 해제"
+  },
+  "tabGroupsMoveNewWindow": {
+    "message": "새 창으로 이동"
+  },
   "deadProxyAdd": {
     "message": "죽은 링크 확인용 프록시 서버 추가"
   },

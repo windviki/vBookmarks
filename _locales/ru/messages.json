@@ -520,6 +520,21 @@
   "tabGroupsUnpinTab": {
     "message": "Открепить вкладку"
   },
+  "tabGroupsOpenGroups": {
+    "message": "Открытые группы вкладок"
+  },
+  "tabGroupsClosedGroups": {
+    "message": "Закрытые группы вкладок"
+  },
+  "tabGroupsUngroupedTabs": {
+    "message": "Несгруппированные вкладки"
+  },
+  "tabGroupsUngroupGroup": {
+    "message": "Разгруппировать"
+  },
+  "tabGroupsMoveNewWindow": {
+    "message": "В новое окно"
+  },
   "deadProxyAdd": {
     "message": "Добавить прокси-сервер для проверки битых ссылок"
   },

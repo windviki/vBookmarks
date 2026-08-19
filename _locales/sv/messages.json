@@ -520,6 +520,21 @@
   "tabGroupsUnpinTab": {
     "message": "Lossa flik"
   },
+  "tabGroupsOpenGroups": {
+    "message": "Öppna flikgrupper"
+  },
+  "tabGroupsClosedGroups": {
+    "message": "Stängda flikgrupper"
+  },
+  "tabGroupsUngroupedTabs": {
+    "message": "Ogrupade flikar"
+  },
+  "tabGroupsUngroupGroup": {
+    "message": "Avgruppera flikar"
+  },
+  "tabGroupsMoveNewWindow": {
+    "message": "Flytta grupp till nytt fönster"
+  },
   "deadProxyAdd": {
     "message": "Lägg till proxyserver för döda länkar"
   },

@@ -520,6 +520,21 @@
   "tabGroupsUnpinTab": {
     "message": "Lepas sematan tab"
   },
+  "tabGroupsOpenGroups": {
+    "message": "Grup tab terbuka"
+  },
+  "tabGroupsClosedGroups": {
+    "message": "Grup tab ditutup"
+  },
+  "tabGroupsUngroupedTabs": {
+    "message": "Tab tanpa grup"
+  },
+  "tabGroupsUngroupGroup": {
+    "message": "Lepaskan grup"
+  },
+  "tabGroupsMoveNewWindow": {
+    "message": "Pindah ke jendela baru"
+  },
   "deadProxyAdd": {
     "message": "Tambahkan server proxy untuk pemeriksaan tautan mati"
   },

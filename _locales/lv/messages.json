@@ -520,6 +520,21 @@
   "tabGroupsUnpinTab": {
     "message": "Atspraust cilni"
   },
+  "tabGroupsOpenGroups": {
+    "message": "Atvērtās cilņu grupas"
+  },
+  "tabGroupsClosedGroups": {
+    "message": "Aizvērtās cilņu grupas"
+  },
+  "tabGroupsUngroupedTabs": {
+    "message": "Negrupētās cilnes"
+  },
+  "tabGroupsUngroupGroup": {
+    "message": "Atgrupēt cilnes"
+  },
+  "tabGroupsMoveNewWindow": {
+    "message": "Pārvietot grupu uz jaunu logu"
+  },
   "deadProxyAdd": {
     "message": "Pievienot starpniekserveri bojātu saišu pārbaudei"
   },

@@ -520,6 +520,21 @@
   "tabGroupsUnpinTab": {
     "message": "Irrota välilehti"
   },
+  "tabGroupsOpenGroups": {
+    "message": "Avoimet välilehtiryhmät"
+  },
+  "tabGroupsClosedGroups": {
+    "message": "Suljetut välilehtiryhmät"
+  },
+  "tabGroupsUngroupedTabs": {
+    "message": "Ryhmittelemättömät välilehdet"
+  },
+  "tabGroupsUngroupGroup": {
+    "message": "Poista ryhmitys"
+  },
+  "tabGroupsMoveNewWindow": {
+    "message": "Siirrä ryhmä uuteen ikkunaan"
+  },
   "deadProxyAdd": {
     "message": "Lisää välityspalvelin kuolleiden linkkien tarkistuksia varten"
   },

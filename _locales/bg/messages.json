@@ -520,6 +520,21 @@
   "tabGroupsUnpinTab": {
     "message": "Откачи раздел"
   },
+  "tabGroupsOpenGroups": {
+    "message": "Отворени групи раздели"
+  },
+  "tabGroupsClosedGroups": {
+    "message": "Затворени групи раздели"
+  },
+  "tabGroupsUngroupedTabs": {
+    "message": "Негрупирани раздели"
+  },
+  "tabGroupsUngroupGroup": {
+    "message": "Разгрупирай раздели"
+  },
+  "tabGroupsMoveNewWindow": {
+    "message": "Премести в нов прозорец"
+  },
   "deadProxyAdd": {
     "message": "Добавяне на прокси сървър за проверки за мъртви връзки"
   },

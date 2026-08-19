@@ -520,6 +520,21 @@
   "tabGroupsUnpinTab": {
     "message": "टैब अनपिन करें"
   },
+  "tabGroupsOpenGroups": {
+    "message": "खुले टैब समूह"
+  },
+  "tabGroupsClosedGroups": {
+    "message": "बंद टैब समूह"
+  },
+  "tabGroupsUngroupedTabs": {
+    "message": "असमूहीकृत टैब"
+  },
+  "tabGroupsUngroupGroup": {
+    "message": "टैब असमूहीकृत करें"
+  },
+  "tabGroupsMoveNewWindow": {
+    "message": "समूह को नई विंडो में ले जाएँ"
+  },
   "deadProxyAdd": {
     "message": "डेड-लिंक जाँच के लिए प्रॉक्सी सर्वर जोड़ें"
   },

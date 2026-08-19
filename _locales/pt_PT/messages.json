@@ -519,6 +519,21 @@
   "tabGroupsUnpinTab": {
     "message": "Desafixar separador"
   },
+  "tabGroupsOpenGroups": {
+    "message": "Grupos de separadores abertos"
+  },
+  "tabGroupsClosedGroups": {
+    "message": "Grupos de separadores fechados"
+  },
+  "tabGroupsUngroupedTabs": {
+    "message": "Separadores não agrupados"
+  },
+  "tabGroupsUngroupGroup": {
+    "message": "Desagrupar separadores"
+  },
+  "tabGroupsMoveNewWindow": {
+    "message": "Mover grupo para nova janela"
+  },
   "deadProxyAdd": {
     "message": "Adicionar um servidor proxy para verificações de links mortos"
   },

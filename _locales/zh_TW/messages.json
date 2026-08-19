@@ -1851,5 +1851,20 @@
   },
   "tabGroupsUnpinTab": {
     "message": "取消釘選分頁"
+  },
+  "tabGroupsOpenGroups": {
+    "message": "開啟的標籤頁群組"
+  },
+  "tabGroupsClosedGroups": {
+    "message": "已關閉的標籤頁群組"
+  },
+  "tabGroupsUngroupedTabs": {
+    "message": "未分組的標籤頁"
+  },
+  "tabGroupsUngroupGroup": {
+    "message": "取消分組"
+  },
+  "tabGroupsMoveNewWindow": {
+    "message": "移至新視窗"
   }
 }

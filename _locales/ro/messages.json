@@ -520,6 +520,21 @@
   "tabGroupsUnpinTab": {
     "message": "Anulare fixare filă"
   },
+  "tabGroupsOpenGroups": {
+    "message": "Grupuri de file deschise"
+  },
+  "tabGroupsClosedGroups": {
+    "message": "Grupuri de file închise"
+  },
+  "tabGroupsUngroupedTabs": {
+    "message": "File negrupate"
+  },
+  "tabGroupsUngroupGroup": {
+    "message": "Degrupează filele"
+  },
+  "tabGroupsMoveNewWindow": {
+    "message": "Mută grupul în fereastră nouă"
+  },
   "deadProxyAdd": {
     "message": "Adaugă un server proxy pentru verificarea linkurilor moarte"
   },

@@ -520,6 +520,21 @@
   "tabGroupsUnpinTab": {
     "message": "Ξεκαρφίτσωμα καρτέλας"
   },
+  "tabGroupsOpenGroups": {
+    "message": "Ανοιχτές ομάδες καρτελών"
+  },
+  "tabGroupsClosedGroups": {
+    "message": "Κλειστές ομάδες καρτελών"
+  },
+  "tabGroupsUngroupedTabs": {
+    "message": "Μη ομαδοποιημένες καρτέλες"
+  },
+  "tabGroupsUngroupGroup": {
+    "message": "Κατάργηση ομαδοποίησης"
+  },
+  "tabGroupsMoveNewWindow": {
+    "message": "Μετακίνηση σε νέο παράθυρο"
+  },
   "deadProxyAdd": {
     "message": "Προσθήκη διακομιστή μεσολάβησης για ελέγχους νεκρών συνδέσμων"
   },

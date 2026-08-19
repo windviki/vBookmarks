@@ -520,6 +520,21 @@
   "tabGroupsUnpinTab": {
     "message": "Sblocca scheda"
   },
+  "tabGroupsOpenGroups": {
+    "message": "Gruppi di schede aperti"
+  },
+  "tabGroupsClosedGroups": {
+    "message": "Gruppi di schede chiusi"
+  },
+  "tabGroupsUngroupedTabs": {
+    "message": "Schede non raggruppate"
+  },
+  "tabGroupsUngroupGroup": {
+    "message": "Separa schede"
+  },
+  "tabGroupsMoveNewWindow": {
+    "message": "Sposta gruppo in nuova finestra"
+  },
   "deadProxyAdd": {
     "message": "Aggiungi un server proxy per i controlli dei link morti"
   },

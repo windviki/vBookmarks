@@ -520,6 +520,21 @@
   "tabGroupsUnpinTab": {
     "message": "タブの固定を解除"
   },
+  "tabGroupsOpenGroups": {
+    "message": "開いているタブグループ"
+  },
+  "tabGroupsClosedGroups": {
+    "message": "閉じたタブグループ"
+  },
+  "tabGroupsUngroupedTabs": {
+    "message": "グループ化されていないタブ"
+  },
+  "tabGroupsUngroupGroup": {
+    "message": "グループ解除"
+  },
+  "tabGroupsMoveNewWindow": {
+    "message": "新しいウィンドウに移動"
+  },
   "deadProxyAdd": {
     "message": "リンク切れチェック用のプロキシサーバーを追加"
   },

@@ -520,6 +520,21 @@
   "tabGroupsUnpinTab": {
     "message": "בטל הצמדת לשונית"
   },
+  "tabGroupsOpenGroups": {
+    "message": "קבוצות לשוניות פתוחות"
+  },
+  "tabGroupsClosedGroups": {
+    "message": "קבוצות לשוניות סגורות"
+  },
+  "tabGroupsUngroupedTabs": {
+    "message": "לשוניות ללא קבוצה"
+  },
+  "tabGroupsUngroupGroup": {
+    "message": "בטל קיבוץ"
+  },
+  "tabGroupsMoveNewWindow": {
+    "message": "העבר קבוצה לחלון חדש"
+  },
   "deadProxyAdd": {
     "message": "הוסף שרת פרוקסי לבדיקות קישורים שבורים"
   },

@@ -520,6 +520,21 @@
   "tabGroupsUnpinTab": {
     "message": "Désépingler l'onglet"
   },
+  "tabGroupsOpenGroups": {
+    "message": "Groupes d'onglets ouverts"
+  },
+  "tabGroupsClosedGroups": {
+    "message": "Groupes d'onglets fermés"
+  },
+  "tabGroupsUngroupedTabs": {
+    "message": "Onglets non groupés"
+  },
+  "tabGroupsUngroupGroup": {
+    "message": "Dissocier les onglets"
+  },
+  "tabGroupsMoveNewWindow": {
+    "message": "Déplacer vers une nouvelle fenêtre"
+  },
   "deadProxyAdd": {
     "message": "Ajouter un serveur proxy pour les vérifications de liens morts"
   },

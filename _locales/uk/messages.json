@@ -520,6 +520,21 @@
   "tabGroupsUnpinTab": {
     "message": "Відкріпити вкладку"
   },
+  "tabGroupsOpenGroups": {
+    "message": "Відкриті групи вкладок"
+  },
+  "tabGroupsClosedGroups": {
+    "message": "Закриті групи вкладок"
+  },
+  "tabGroupsUngroupedTabs": {
+    "message": "Незгруповані вкладки"
+  },
+  "tabGroupsUngroupGroup": {
+    "message": "Розгрупувати вкладки"
+  },
+  "tabGroupsMoveNewWindow": {
+    "message": "У нове вікно"
+  },
   "deadProxyAdd": {
     "message": "Додати проксі-сервер для перевірки мертвих посилань"
   },

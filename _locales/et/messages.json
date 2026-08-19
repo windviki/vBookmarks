@@ -520,6 +520,21 @@
   "tabGroupsUnpinTab": {
     "message": "Vabasta vaheleht"
   },
+  "tabGroupsOpenGroups": {
+    "message": "Avatud vahekaardirühmad"
+  },
+  "tabGroupsClosedGroups": {
+    "message": "Suletud vahekaardirühmad"
+  },
+  "tabGroupsUngroupedTabs": {
+    "message": "Rühmitamata vahekaardid"
+  },
+  "tabGroupsUngroupGroup": {
+    "message": "Eralda vahekaardid"
+  },
+  "tabGroupsMoveNewWindow": {
+    "message": "Teisalda rühm uude aknasse"
+  },
   "deadProxyAdd": {
     "message": "Lisa puhverserver surnud linkide kontrollimiseks"
   },

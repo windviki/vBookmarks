@@ -520,6 +520,21 @@
   "tabGroupsUnpinTab": {
     "message": "Bỏ ghim tab"
   },
+  "tabGroupsOpenGroups": {
+    "message": "Nhóm tab đang mở"
+  },
+  "tabGroupsClosedGroups": {
+    "message": "Nhóm tab đã đóng"
+  },
+  "tabGroupsUngroupedTabs": {
+    "message": "Tab chưa nhóm"
+  },
+  "tabGroupsUngroupGroup": {
+    "message": "Tách nhóm tab"
+  },
+  "tabGroupsMoveNewWindow": {
+    "message": "Chuyển nhóm sang cửa sổ mới"
+  },
   "deadProxyAdd": {
     "message": "Thêm máy chủ proxy để kiểm tra liên kết hỏng"
   },

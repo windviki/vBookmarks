@@ -519,6 +519,21 @@
   "tabGroupsUnpinTab": {
     "message": "Desafixar guia"
   },
+  "tabGroupsOpenGroups": {
+    "message": "Grupos de guias abertos"
+  },
+  "tabGroupsClosedGroups": {
+    "message": "Grupos de guias fechados"
+  },
+  "tabGroupsUngroupedTabs": {
+    "message": "Guias não agrupadas"
+  },
+  "tabGroupsUngroupGroup": {
+    "message": "Desagrupar guias"
+  },
+  "tabGroupsMoveNewWindow": {
+    "message": "Mover grupo para nova janela"
+  },
   "deadProxyAdd": {
     "message": "Adicionar um servidor proxy para verificação de links quebrados"
   },

@@ -520,6 +520,21 @@
   "tabGroupsUnpinTab": {
     "message": "Tab lösen"
   },
+  "tabGroupsOpenGroups": {
+    "message": "Offene Tab-Gruppen"
+  },
+  "tabGroupsClosedGroups": {
+    "message": "Geschlossene Tab-Gruppen"
+  },
+  "tabGroupsUngroupedTabs": {
+    "message": "Nicht gruppierte Tabs"
+  },
+  "tabGroupsUngroupGroup": {
+    "message": "Gruppierung aufheben"
+  },
+  "tabGroupsMoveNewWindow": {
+    "message": "Gruppe in neues Fenster verschieben"
+  },
   "deadProxyAdd": {
     "message": "Proxyserver für Tote-Links-Prüfungen hinzufügen"
   },

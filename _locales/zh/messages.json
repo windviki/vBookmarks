@@ -1851,5 +1851,20 @@
   },
   "tabGroupsUnpinTab": {
     "message": "取消固定标签页"
+  },
+  "tabGroupsOpenGroups": {
+    "message": "打开的标签页组"
+  },
+  "tabGroupsClosedGroups": {
+    "message": "已关闭的标签页组"
+  },
+  "tabGroupsUngroupedTabs": {
+    "message": "未分组的标签页"
+  },
+  "tabGroupsUngroupGroup": {
+    "message": "取消分组"
+  },
+  "tabGroupsMoveNewWindow": {
+    "message": "移至新窗口"
   }
 }

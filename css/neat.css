@@ -3618,6 +3618,19 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
     background: var(--vbm-bg-hover);
 }
 
+/* Section headings inside the tab groups list: non-focusable labels that
+   split open groups / closed groups / ungrouped tabs. */
+#tabgroups-list ul li.tabgroups-section-head {
+    padding: 6px 8px 2px;
+    color: var(--vbm-muted);
+    font-size: 11px;
+    font-style: normal;
+}
+#tabgroups-list ul li.tabgroups-section-head em {
+    font-style: normal;
+    font-weight: 600;
+}
+
 /* Tab state icons (pinned / sleeping) sit left of the bookmark star. */
 #tabgroups-list .tabgroups-status-icon {
     flex: none;

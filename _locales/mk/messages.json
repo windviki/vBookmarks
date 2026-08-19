@@ -519,6 +519,21 @@
   "tabGroupsUnpinTab": {
     "message": "Откачи картичка"
   },
+  "tabGroupsOpenGroups": {
+    "message": "Отворени групи јазичиња"
+  },
+  "tabGroupsClosedGroups": {
+    "message": "Затворени групи јазичиња"
+  },
+  "tabGroupsUngroupedTabs": {
+    "message": "Негрупирани јазичиња"
+  },
+  "tabGroupsUngroupGroup": {
+    "message": "Разгрупирај група"
+  },
+  "tabGroupsMoveNewWindow": {
+    "message": "Премести во нов прозорец"
+  },
   "deadProxyAdd": {
     "message": "Додај прокси сервер за проверка на мртви врски"
   },

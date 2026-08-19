@@ -520,6 +520,21 @@
   "tabGroupsUnpinTab": {
     "message": "Odpni zavihek"
   },
+  "tabGroupsOpenGroups": {
+    "message": "Odprte skupine zavihkov"
+  },
+  "tabGroupsClosedGroups": {
+    "message": "Zaprte skupine zavihkov"
+  },
+  "tabGroupsUngroupedTabs": {
+    "message": "Nerazvrščeni zavihki"
+  },
+  "tabGroupsUngroupGroup": {
+    "message": "Razdruži zavihke"
+  },
+  "tabGroupsMoveNewWindow": {
+    "message": "Premakni skupino v novo okno"
+  },
   "deadProxyAdd": {
     "message": "Dodaj proxy strežnik za preverjanje mrtvih povezav"
   },

@@ -245,29 +245,59 @@ export function initViewTabGroups(ctx = {}) {
         } else {
             const ulClass = [selecting ? 'selecting' : '', colorBorder() ? 'color-enhanced' : ''].filter(Boolean).join(' ');
             html += `<ul role="list"${ulClass ? ` class="${ulClass}"` : ''}>`;
+
+            // Three logical sections, each in browser tab order:
+            //   opened groups (expanded, members visible)
+            //   closed groups (collapsed, only the header shows)
+            //   ungrouped tabs
             const seenGroups = new Set();
+            const openGroups = [];
+            const closedGroups = [];
+            const ungroupedTabs = [];
             for (let i = 0, l = tabs.length; i < l; i++) {
                 const tab = tabs[i];
-                if (isGrouped(tab)) {
-                    const group = groupById(tab.groupId);
-                    if (!group) {
-                        html += tabRowHtml(tab);
-                        continue;
-                    }
-                    const gid = String(group.id);
-                    if (seenGroups.has(gid))
-                        continue;
-                    seenGroups.add(gid);
-                    const memberTabs = tabs.filter(t => String(t.groupId) === gid)
-                        .sort((a, b) => (a.index || 0) - (b.index || 0));
-                    html += groupHeadHtml(group, memberTabs);
-                    if (!collapsed.has(gid)) {
-                        for (const mt of memberTabs)
-                            html += tabRowHtml(mt);
-                    }
-                } else {
-                    html += tabRowHtml(tab);
+                if (!isGrouped(tab)) {
+                    ungroupedTabs.push(tab);
+                    continue;
                 }
+                const group = groupById(tab.groupId);
+                if (!group) {
+                    ungroupedTabs.push(tab);
+                    continue;
+                }
+                const gid = String(group.id);
+                if (seenGroups.has(gid))
+                    continue;
+                seenGroups.add(gid);
+                const memberTabs = tabs.filter(t => String(t.groupId) === gid)
+                    .sort((a, b) => (a.index || 0) - (b.index || 0));
+                (collapsed.has(gid) ? closedGroups : openGroups).push({ group, memberTabs });
+            }
+
+            const sectionHead = labelKey =>
+                `<li class="tabgroups-section-head" role="presentation"><em>${_m(labelKey)}</em></li>`;
+            const groupBlock = ({ group, memberTabs }) => {
+                let out = groupHeadHtml(group, memberTabs);
+                if (!collapsed.has(String(group.id)))
+                    for (const mt of memberTabs)
+                        out += tabRowHtml(mt);
+                return out;
+            };
+
+            if (openGroups.length) {
+                html += sectionHead('tabGroupsOpenGroups');
+                for (const entry of openGroups)
+                    html += groupBlock(entry);
+            }
+            if (closedGroups.length) {
+                html += sectionHead('tabGroupsClosedGroups');
+                for (const entry of closedGroups)
+                    html += groupHeadHtml(entry.group, entry.memberTabs);
+            }
+            if (ungroupedTabs.length) {
+                html += sectionHead('tabGroupsUngroupedTabs');
+                for (const tab of ungroupedTabs)
+                    html += tabRowHtml(tab);
             }
             html += '</ul>';
         }
@@ -510,6 +540,29 @@ export function initViewTabGroups(ctx = {}) {
                 scheduleRefresh();
             }
         });
+    };
+
+    // 取消分组：把组内标签打散回普通标签页（组实体消失，标签页保留）。
+    const ungroupGroup = groupId => {
+        const ids = tabs.filter(t => String(t.groupId) === String(groupId)).map(t => t.id);
+        if (!ids.length)
+            return;
+        const finish = () => scheduleRefresh();
+        if (chrome.tabs.ungroup) {
+            chrome.tabs.ungroup(ids, () => finish());
+        } else {
+            // Ungroup API unavailable — best effort, refresh to show the
+            // browser's actual state.
+            finish();
+        }
+    };
+
+    // 移动整组到新窗口：SW 创建新窗口并搬移全部成员，完成后刷新。
+    const moveGroupToNewWindow = groupId => {
+        const ids = tabs.filter(t => String(t.groupId) === String(groupId)).map(t => t.id);
+        if (!ids.length)
+            return;
+        send({ type: TAB_GROUP_MSG.tabsMoveNewWindow, tabIds: ids }, () => refresh());
     };
 
     // --- Selection mode + tab batch actions ---------------------------------------
@@ -1169,6 +1222,8 @@ export function initViewTabGroups(ctx = {}) {
         closeGroup,
         sleepGroup,
         toggleGroup: toggleGroupCollapsed,
-        isCollapsed: gid => collapsed.has(String(gid))
+        isCollapsed: gid => collapsed.has(String(gid)),
+        ungroupGroup,
+        moveGroupToNewWindow
     };
 }

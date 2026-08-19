@@ -520,6 +520,21 @@
   "tabGroupsUnpinTab": {
     "message": "Sabitlemeyi kaldır"
   },
+  "tabGroupsOpenGroups": {
+    "message": "Açık sekme grupları"
+  },
+  "tabGroupsClosedGroups": {
+    "message": "Kapalı sekme grupları"
+  },
+  "tabGroupsUngroupedTabs": {
+    "message": "Gruplanmamış sekmeler"
+  },
+  "tabGroupsUngroupGroup": {
+    "message": "Grupları çöz"
+  },
+  "tabGroupsMoveNewWindow": {
+    "message": "Grubu yeni pencereye taşı"
+  },
   "deadProxyAdd": {
     "message": "Ölü bağlantı kontrolleri için bir proxy sunucusu ekle"
   },

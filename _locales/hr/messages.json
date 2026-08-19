@@ -520,6 +520,21 @@
   "tabGroupsUnpinTab": {
     "message": "Otpkači karticu"
   },
+  "tabGroupsOpenGroups": {
+    "message": "Otvorene grupe kartica"
+  },
+  "tabGroupsClosedGroups": {
+    "message": "Zatvorene grupe kartica"
+  },
+  "tabGroupsUngroupedTabs": {
+    "message": "Negrupirane kartice"
+  },
+  "tabGroupsUngroupGroup": {
+    "message": "Razgrupiraj kartice"
+  },
+  "tabGroupsMoveNewWindow": {
+    "message": "Premjesti grupu u novi prozor"
+  },
   "deadProxyAdd": {
     "message": "Dodaj proxy poslužitelj za provjeru mrtvih veza"
   },

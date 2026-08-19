@@ -520,6 +520,21 @@
   "tabGroupsUnpinTab": {
     "message": "Lap rögzítésének feloldása"
   },
+  "tabGroupsOpenGroups": {
+    "message": "Megnyitott lapcsoportok"
+  },
+  "tabGroupsClosedGroups": {
+    "message": "Bezárt lapcsoportok"
+  },
+  "tabGroupsUngroupedTabs": {
+    "message": "Csoportosítatlan lapok"
+  },
+  "tabGroupsUngroupGroup": {
+    "message": "Csoportosítás megszüntetése"
+  },
+  "tabGroupsMoveNewWindow": {
+    "message": "Csoport új ablakba"
+  },
   "deadProxyAdd": {
     "message": "Proxykiszolgáló hozzáadása a hibás linkek ellenőrzéséhez"
   },

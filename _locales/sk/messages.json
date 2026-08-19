@@ -520,6 +520,21 @@
   "tabGroupsUnpinTab": {
     "message": "Odpnúť kartu"
   },
+  "tabGroupsOpenGroups": {
+    "message": "Otvorené skupiny kariet"
+  },
+  "tabGroupsClosedGroups": {
+    "message": "Zatvorené skupiny kariet"
+  },
+  "tabGroupsUngroupedTabs": {
+    "message": "Nezoskupené karty"
+  },
+  "tabGroupsUngroupGroup": {
+    "message": "Zrušiť zoskupenie"
+  },
+  "tabGroupsMoveNewWindow": {
+    "message": "Presunúť do nového okna"
+  },
   "deadProxyAdd": {
     "message": "Pridať proxy server pre kontroly nefunkčných odkazov"
   },

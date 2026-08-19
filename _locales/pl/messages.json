@@ -520,6 +520,21 @@
   "tabGroupsUnpinTab": {
     "message": "Odepnij kartę"
   },
+  "tabGroupsOpenGroups": {
+    "message": "Otwórz grupy kart"
+  },
+  "tabGroupsClosedGroups": {
+    "message": "Zamknięte grupy kart"
+  },
+  "tabGroupsUngroupedTabs": {
+    "message": "Karty bez grupy"
+  },
+  "tabGroupsUngroupGroup": {
+    "message": "Rozgrupuj karty"
+  },
+  "tabGroupsMoveNewWindow": {
+    "message": "Przenieś grupę do nowego okna"
+  },
   "deadProxyAdd": {
     "message": "Dodaj serwer proxy do sprawdzania martwych linków"
   },

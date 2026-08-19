@@ -1582,6 +1582,12 @@ export function initContextMenu(ctx = {}) {
             case 'tabgroup-collapse':
                 ctx.tabGroupsMenu.toggleGroup(gid);
                 break;
+            case 'tabgroup-move-new-window':
+                ctx.tabGroupsMenu.moveGroupToNewWindow(gid);
+                break;
+            case 'tabgroup-ungroup':
+                ctx.tabGroupsMenu.ungroupGroup(gid);
+                break;
             case 'tabgroup-save-folder':
                 ctx.tabGroupsMenu.saveGroupToBookmarks(gid);
                 break;
