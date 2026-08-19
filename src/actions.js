@@ -1,6 +1,6 @@
 import { uuidFast } from './separators.js';
 import { TREE_INDENT } from './tree-render.js';
-import { pickGroupColor } from './tab-group-utils.js';
+import { pickGroupColor, readTabGroupFolderMeta } from './tab-group-utils.js';
 
 /**
  * Popup action layer (P1 module extracted from neat.js).
@@ -460,14 +460,20 @@ export function initActions(ctx = {}) {
         // chrome.tabs.create callbacks, so the group never formed. groupColor
         // is optional; the deterministic pickGroupColor(groupTitle) is the
         // default, so the one-click path and the dialog path share one call.
-        openBookmarksInGroup: (urls, groupTitle, groupColor) => {
+        openBookmarksInGroup: (urls, groupTitle, groupColor, folderId) => {
             const urlsLen = urls.length;
+            // Tab-groups view: a bookmark folder saved from a tab group
+            // carries its original title/color in storage — restore those
+            // so "open all in new tab group" recreates the group as it was.
+            const meta = folderId ? readTabGroupFolderMeta(store, folderId) : null;
+            const effectiveTitle = meta && meta.title ? meta.title : groupTitle;
+            const effectiveColor = meta && meta.color ? meta.color : (groupColor || pickGroupColor(groupTitle));
             const open = () => {
                 chrome.runtime.sendMessage({
                     type: 'vbm-tab-group-open-new',
                     urls: urls,
-                    title: groupTitle,
-                    color: groupColor || pickGroupColor(groupTitle)
+                    title: effectiveTitle,
+                    color: effectiveColor
                 });
             };
             if (!dontConfirmOpenFolder && urlsLen > openBookmarksLimit) {

@@ -51,7 +51,7 @@
  * helpers: plain getElementById/classList only (neatools'
  * Array.map(c => c.url, children).clean() is inlined as map + filter).
  */
-import { cleanGroupTitle, pickGroupColor } from './tab-group-utils.js';
+import { cleanGroupTitle, pickGroupColor, readTabGroupFolderMeta } from './tab-group-utils.js';
 
 export function initContextMenu(ctx = {}) {
     const $ = id => document.getElementById(id);
@@ -1114,6 +1114,9 @@ export function initContextMenu(ctx = {}) {
         const groupTitle = rowGroupTitle();
         const li = currentContext.parentNode;
         const id = rowId(li);
+        // Tab-groups view: a folder saved from a tab group carries extra
+        // meta (original title/color) for the open-in-group actions.
+        const folderMeta = ctx.store ? readTabGroupFolderMeta(ctx.store, id) : null;
         // Close FIRST (the 4.0.1 menu focus law — see the bookmark handler):
         // the owning row retakes focus before the async dispatch below opens
         // any dialog or triggers a re-render.
@@ -1196,15 +1199,27 @@ export function initContextMenu(ctx = {}) {
                 case 'open-bookmarks-in-group': {
                     if (noURLS)
                         return;
-                    actions.openBookmarksInGroup(urls, groupTitle);
+                    if (folderMeta && (folderMeta.title || folderMeta.color)) {
+                        // Saved from a tab group: restore the original
+                        // title/color (meta read in actions via folderId).
+                        actions.openBookmarksInGroup(urls,
+                            folderMeta.title || groupTitle,
+                            folderMeta.color || undefined,
+                            id);
+                    } else {
+                        actions.openBookmarksInGroup(urls, groupTitle);
+                    }
                     break;
                 }
                 case 'open-bookmarks-in-group-setup': {
                     if (noURLS)
                         return;
                     dialogs.GroupDialog.open({
-                        title: groupTitle,
-                        color: pickGroupColor(groupTitle),
+                        title: (folderMeta && folderMeta.title) || groupTitle,
+                        color: (folderMeta && folderMeta.color) || pickGroupColor(groupTitle),
+                        // No folderId on confirm: the dialog's edited title/
+                        // color win over the stored meta (which was only a
+                        // prefill, not a straitjacket).
                         onConfirm: (t, c) => actions.openBookmarksInGroup(urls, t, c)
                     });
                     break;

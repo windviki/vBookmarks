@@ -1,5 +1,5 @@
 /**
- * Tab-group opener service-worker runner (P3.4 hardening).
+ * Tab-group + tab-batch service-worker runner (P3.4 hardening + tab-groups view).
  *
  * The folder/bookmark "open as a tab group" pipeline used to live in the
  * popup page: it created tabs (first one `active: true`) and grouped them
@@ -15,12 +15,24 @@
  *   window that owns `groupId` and add the new tabs to that existing group
  *   (a tab can only join a group in its own window).
  *
+ * The tab-groups view adds batch tab management messages. They run here for
+ * the same reason: close/discard/group operations may close the popup's own
+ * tab mid-flight, and a service worker outlives it.
+ *
+ * - `vbm-tabs-new-group` { moveIds, copyTabs, title, color, windowId } —
+ *   create copies for `copyTabs` (already-grouped tabs the user chose to
+ *   copy), then group `moveIds` + the copies into one new named/colored
+ *   group.
+ * - `vbm-tabs-open-into` { moveIds, copyTabs, groupId } — same, but the
+ *   tabs are added to an existing group (moving `moveIds` into the group's
+ *   window first when they live elsewhere).
+ * - `vbm-tabs-close` { tabIds } — close the selected tabs.
+ * - `vbm-tabs-discard` { tabIds } — discard (sleep) the selected tabs.
+ *
  * Degradation: on Chrome too old for `chrome.tabs.group`/`chrome.tabGroups`
- * both messages fall back to a plain batch-open (no error, no group); an
- * `open-into` whose group is gone (window closed between query and open)
- * degrades the same way via the lastError guard, and a window that closes
- * after the get makes the creates fail with a window lastError — retried
- * once without windowId, again a plain open.
+ * both open-* messages fall back to a plain batch-open; the tab-batch
+ * messages still close/discard, and grouping ones no-op (copies are still
+ * created so the user's tabs are never lost).
  *
  * The module only touches the chrome global inside functions, so tests
  * inject a double on globalThis before createTabGroupOpener() (same recipe
@@ -29,7 +41,11 @@
 
 export const TAB_GROUP_MSG = {
     openNew: 'vbm-tab-group-open-new',
-    openInto: 'vbm-tab-group-open-into'
+    openInto: 'vbm-tab-group-open-into',
+    tabsNewGroup: 'vbm-tabs-new-group',
+    tabsOpenInto: 'vbm-tabs-open-into',
+    tabsClose: 'vbm-tabs-close',
+    tabsDiscard: 'vbm-tabs-discard'
 };
 
 export function createTabGroupOpener() {
@@ -130,6 +146,129 @@ export function createTabGroupOpener() {
         });
     };
 
+    // --- Batch tab management (tab-groups view) ----------------------------
+    // Promise wrappers around the callback APIs keep the mixed create/move/
+    // group chains readable and deterministic under the test doubles.
+
+    const createCopy = (spec, windowId) => new Promise(resolve => {
+        chrome.tabs.create({
+            url: spec.url,
+            active: false,
+            ...(windowId ? { windowId } : {})
+        }, tab => {
+            if (!chrome.runtime.lastError && tab)
+                resolve(tab.id);
+            else
+                resolve(null);
+        });
+    });
+
+    const createCopies = (copyTabs, windowId) => {
+        const specs = copyTabs || [];
+        return specs.reduce((chain, spec) =>
+            chain.then(ids => createCopy(spec, windowId).then(id => {
+                if (id)
+                    ids.push(id);
+                return ids;
+            })), Promise.resolve([]));
+    };
+
+    // Move one existing tab into a window (used before adding it to an
+    // existing group in another window). Returns its id when it stays valid,
+    // or null when the tab is gone.
+    const moveTabToWindow = (tabId, windowId) => new Promise(resolve => {
+        chrome.tabs.get(tabId, tab => {
+            if (chrome.runtime.lastError || !tab) {
+                resolve(null);
+                return;
+            }
+            if (tab.windowId === windowId) {
+                resolve(tabId);
+                return;
+            }
+            if (!chrome.tabs.move) {
+                resolve(tabId); // no move API — the later tabs.group decides
+                return;
+            }
+            chrome.tabs.move(tabId, { windowId, index: -1 }, moved => {
+                if (!chrome.runtime.lastError && moved)
+                    resolve(moved.id);
+                else
+                    resolve(tabId); // group may still accept or degrade
+            });
+        });
+    });
+
+    const moveTabsToWindow = (tabIds, windowId) => {
+        const ids = tabIds || [];
+        return ids.reduce((chain, id) =>
+            chain.then(out => moveTabToWindow(id, windowId).then(moved => {
+                if (moved)
+                    out.push(moved);
+                return out;
+            })), Promise.resolve([]));
+    };
+
+    // Group existing (and copied) tabs into a NEW named/colored group.
+    const groupExistingIntoNew = (moveIds, copyTabs, title, color, windowId) => {
+        if (!canGroup()) {
+            // Still honor the copy half of the user's choice.
+            createCopies(copyTabs, windowId);
+            return;
+        }
+        createCopies(copyTabs, windowId).then(copyIds => {
+            const ids = [].concat(moveIds || [], copyIds);
+            if (!ids.length)
+                return;
+            chrome.tabs.group({ tabIds: ids }, groupId => {
+                if (chrome.runtime.lastError)
+                    return;
+                chrome.tabGroups.update(groupId, {
+                    title: title || '',
+                    color: color || 'grey'
+                });
+            });
+        });
+    };
+
+    // Add existing (and copied) tabs to an EXISTING group. `moveIds` are
+    // first moved into the group's window (if needed), then grouped.
+    const groupExistingIntoExisting = (moveIds, copyTabs, groupId) => {
+        if (!canGroup()) {
+            createCopies(copyTabs);
+            return;
+        }
+        chrome.tabGroups.get(groupId, group => {
+            if (chrome.runtime.lastError || !group)
+                return;
+            const windowId = group.windowId;
+            moveTabsToWindow(moveIds, windowId).then(movedIds => {
+                createCopies(copyTabs, windowId).then(copyIds => {
+                    const ids = [].concat(movedIds, copyIds);
+                    if (!ids.length)
+                        return;
+                    chrome.tabs.group({ tabIds: ids, groupId }, () => {
+                        void chrome.runtime.lastError;
+                    });
+                });
+            });
+        });
+    };
+
+    const closeTabs = tabIds => {
+        const ids = tabIds || [];
+        if (ids.length)
+            chrome.tabs.remove(ids);
+    };
+
+    const discardTabs = tabIds => {
+        const ids = tabIds || [];
+        for (let i = 0; i < ids.length; i++) {
+            if (chrome.tabs.discard)
+                chrome.tabs.discard(ids[i]);
+        }
+    };
+
     const onMessage = msg => {
         if (!msg || !msg.type)
             return;
@@ -137,6 +276,14 @@ export function createTabGroupOpener() {
             openNewGroup(msg.urls, msg.title, msg.color);
         else if (msg.type === TAB_GROUP_MSG.openInto)
             openIntoGroup(msg.urls, msg.groupId);
+        else if (msg.type === TAB_GROUP_MSG.tabsNewGroup)
+            groupExistingIntoNew(msg.moveIds, msg.copyTabs, msg.title, msg.color, msg.windowId);
+        else if (msg.type === TAB_GROUP_MSG.tabsOpenInto)
+            groupExistingIntoExisting(msg.moveIds, msg.copyTabs, msg.groupId);
+        else if (msg.type === TAB_GROUP_MSG.tabsClose)
+            closeTabs(msg.tabIds);
+        else if (msg.type === TAB_GROUP_MSG.tabsDiscard)
+            discardTabs(msg.tabIds);
     };
 
     const start_ = () => {
@@ -147,5 +294,14 @@ export function createTabGroupOpener() {
     };
 
     // start() is what background.js calls; the rest is test surface.
-    return { start: start_, onMessage, openNewGroup, openIntoGroup };
+    return {
+        start: start_,
+        onMessage,
+        openNewGroup,
+        openIntoGroup,
+        groupExistingIntoNew,
+        groupExistingIntoExisting,
+        closeTabs,
+        discardTabs
+    };
 }

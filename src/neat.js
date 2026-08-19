@@ -16,6 +16,7 @@ import { initViewDupes } from './view-dupes.js';
 import { initViewDead } from './view-dead.js';
 import { initVisitStats } from './visit-stats.js';
 import { initViewStats } from './view-stats.js';
+import { initViewTabGroups } from './view-tabgroups.js';
 import { markPopupOpen } from './visit-stats-sw.js';
 import { initFaviconFallback } from './favicon-fallback.js';
 import { initFaviconEnrich } from './favicon-enrich.js';
@@ -327,6 +328,9 @@ import { shouldHighlightUnsynced, shouldRememberState } from './settings.js';
         tree: $tree,
         os,
         rtl,
+        // Tab-groups view: folder → tab-group meta lookup (read lazily at
+        // menu dispatch time; initContextMenu runs before actions/dialogs).
+        get store() { return store; },
         get actions() { return actions; },
         get dialogs() { return dialogs; },
         // v4 task-2: "Reveal in tree" menu dispatch — treeView inits far
@@ -588,6 +592,21 @@ import { shouldHighlightUnsynced, shouldRememberState } from './settings.js';
     // and only runs while the tab is active; treeView is already initialized
     // above, so direct injection is safe. visitStats/undo serve the
     // history-permission banner (grant → one-shot import → toast).
+    // Tab groups view (docs/tab-groups-view-design.md): browser tabs + tab
+    // groups + bookmarks. Registered BEFORE recent so the tab order becomes
+    // tree / search / tabgroups / recent / stats / dead / dupes.
+    const viewTabGroups = initViewTabGroups({
+        store,
+        views,
+        treeRender,
+        treeView,
+        dialogs,
+        undo,
+        onChanged: () => chrome.bookmarks.getTree(treeView.generateTree),
+        // 第五轮项3: re-lay the dead-mark × overlays after every re-render.
+        onRowsRendered: () => deadOverlayRefresh()
+    });
+
     initViewRecent({
         store,
         views,
@@ -658,6 +677,7 @@ import { shouldHighlightUnsynced, shouldRememberState } from './settings.js';
     // push the count through views.updateBadges).
     viewStats.refresh();
     viewDupes.refresh();
+    viewTabGroups.refresh();
 
     // Popup reopen "where I was": restore the last focus spot (a list row /
     // header button / toolbar control / view tab) once all views are
