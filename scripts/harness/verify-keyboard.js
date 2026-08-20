@@ -147,7 +147,9 @@ const SEED = `
         roving: (document.querySelector('#view-tabs [aria-selected="true"]') || {}).tabIndex,
         others: [...document.querySelectorAll('#view-tabs [aria-selected="false"]')].every(b => b.tabIndex === -1)
     }));
-    check('TabStrip: 6 tabs', tabs.count === 6, String(tabs.count));
+    // 4.0.9: the tab-groups view sits between search and recent — seven tabs
+    // (tree / search / tabgroups / recent / stats / dead / dupes).
+    check('TabStrip: 7 tabs', tabs.count === 7, String(tabs.count));
     check('TabStrip: tree active on boot', tabs.active === 'view-tab-tree', tabs.active);
     check('TabStrip: roving tabindex (active=0, rest=-1)', tabs.roving === 0 && tabs.others);
     check('List: tree rows exist', await $(() => document.querySelectorAll('#tree li').length > 0));
@@ -163,14 +165,23 @@ const SEED = `
     check('→: focus tree→search', await focusedTab() === 'view-tab-search', await focusedTab());
     check('→: auto-activates the view', await selectedTab() === 'view-tab-search');
     await page.keyboard.press('ArrowRight'); await sleep(300);
-    check('→: search→recent', await focusedTab() === 'view-tab-recent');
-    await page.keyboard.press('Home'); await sleep(300);
+    check('→: search→tabgroups', await focusedTab() === 'view-tab-tabgroups', await focusedTab());
+    await page.keyboard.press('Home'); await sleep(400);
     // 4.0.1 (item e): strip Home/End are view-scoped — Home focuses the
-    // CURRENT view's first row (recent is active here), never the first tab.
-    check('Home: view-scoped → recent first row', await $(() => {
+    // CURRENT view's first row (tabgroups is active here), never the first
+    // tab. 4.0.9: that first row is the WINDOW SECTION HEAD, a focusable
+    // role=button fold row (it used to be a non-focusable label with a
+    // chevron button, so Home skipped it).
+    check('Home: view-scoped → tabgroups first row (window head row)', await $(() => {
         const el = document.activeElement;
-        return !!el && !!el.closest('#recent-list');
+        return !!el && !!el.closest('#tabgroups-list')
+            && el.classList.contains('tabgroups-window-head-row')
+            && el.getAttribute('role') === 'button';
     }), await $(() => document.activeElement && (document.activeElement.id || document.activeElement.className)));
+    await page.keyboard.press('Escape'); await sleep(200); // back to the strip layer
+    await page.click('#view-tab-tabgroups'); await sleep(300);
+    await page.keyboard.press('ArrowRight'); await sleep(300);
+    check('→: tabgroups→recent', await focusedTab() === 'view-tab-recent', await focusedTab());
     await page.click('#view-tab-tree'); await sleep(300);
     // ↓ from the strip enters the active view's list (first row takes focus)
     await page.keyboard.press('ArrowDown'); await sleep(400);
@@ -318,6 +329,73 @@ const SEED = `
     st = await activeLiIndex('#tree');
     check('tree Home: first row', st.idx === 0, JSON.stringify(st));
 
+    // --- tab groups (4.0.9): three nesting levels — window section head →
+    // group head → tab row — all speaking the same arrow protocol, plus the
+    // view's two toolbar rungs (controls: refresh/fold-all; actions: the
+    // collapse-sync switch + select mode). The window head is a focusable
+    // role=button ROW: its whole width folds, Space/Enter fold it, → opens a
+    // folded one and ← folds an open one; the remaining arrows are swallowed
+    // (there is no window menu, and the generic row rule would open the
+    // FOLDER menu on it).
+    await page.click('#view-tab-tabgroups'); await sleep(900);
+    await page.keyboard.press('ArrowDown'); await sleep(300);
+    check('tabgroups ↓ from strip: the controls toolbar rung (refresh)', await $(() =>
+        document.activeElement && document.activeElement.classList.contains('tabgroups-refresh')),
+        await activeDesc());
+    await page.keyboard.press('ArrowRight'); await sleep(200);
+    check('tabgroups controls rung →: collapse-all', await $(() =>
+        document.activeElement && document.activeElement.classList.contains('tabgroups-collapse-all')),
+        await activeDesc());
+    await page.keyboard.press('ArrowDown'); await sleep(250);
+    check('tabgroups controls rung ↓: the actions rung (sync switch)', await $(() =>
+        document.activeElement && !!document.activeElement.closest('.tabgroups-actions-toolbar')),
+        await activeDesc());
+    await page.keyboard.press('ArrowDown'); await sleep(300);
+    check('tabgroups actions rung ↓: the window section head row', await $(() =>
+        document.activeElement && document.activeElement.classList.contains('tabgroups-window-head-row')),
+        await activeDesc());
+    const tgRows = () => $(() => document.querySelectorAll('#tabgroups-list li.tabgroups-row').length);
+    const tgBefore = await tgRows();
+    check('tabgroups: the window section is expanded by default (current window)',
+        tgBefore > 0, String(tgBefore));
+    await page.keyboard.press('ArrowLeft'); await sleep(300);
+    check('tabgroups window head ←: folds the window (rows unmounted)',
+        await tgRows() === 0, String(await tgRows()));
+    check('tabgroups window head: keeps focus + aria-expanded=false after folding', await $(() =>
+        document.activeElement && document.activeElement.classList.contains('tabgroups-window-head-row')
+        && document.activeElement.getAttribute('aria-expanded') === 'false'),
+        await activeDesc());
+    await page.keyboard.press('ArrowRight'); await sleep(350);
+    check('tabgroups window head →: opens it again',
+        await tgRows() === tgBefore, `${await tgRows()} vs ${tgBefore}`);
+    await page.keyboard.press('ArrowDown'); await sleep(250);
+    check('tabgroups window head ↓: the first row below it', await $(() => {
+        const el = document.activeElement;
+        return !!el && !!el.closest('#tabgroups-list li.tabgroups-row, #tabgroups-list li.tabgroups-group');
+    }), await activeDesc());
+    await page.keyboard.press('ArrowUp'); await sleep(250);
+    check('tabgroups ↑: back to the window head row', await $(() =>
+        document.activeElement && document.activeElement.classList.contains('tabgroups-window-head-row')),
+        await activeDesc());
+    await page.keyboard.press('ArrowUp'); await sleep(250);
+    check('tabgroups window head ↑: the lowest toolbar rung', await $(() =>
+        document.activeElement && !!document.activeElement.closest('.tabgroups-actions-toolbar')),
+        await activeDesc());
+    // A tab row's ← walks to its structural parent: the group head for a
+    // grouped row, the window head for an ungrouped one.
+    await page.evaluate(() => {
+        const row = document.querySelector('#tabgroups-list li.tabgroups-row:not(.grouped) a');
+        if (row) row.focus();
+    });
+    await sleep(200);
+    check('tabgroups ungrouped row ←: setup (row focused)', await $(() =>
+        document.activeElement && !!document.activeElement.closest('li.tabgroups-row')),
+        await activeDesc());
+    await page.keyboard.press('ArrowLeft'); await sleep(300);
+    check('tabgroups ungrouped row ←: walks up to the window head row', await $(() =>
+        document.activeElement && document.activeElement.classList.contains('tabgroups-window-head-row')),
+        await activeDesc());
+
     // --- recent (the §2.1 memory walk left a remembered row here, so the
     // strip's ↓ restores THAT row instead of the first — by design; Home
     // then re-anchors the walk at the top) ---
@@ -368,30 +446,38 @@ const SEED = `
     check('stats toolbar ↑: tab strip',
         await focusedTab() === 'view-tab-stats', await activeDesc());
 
-    // --- dead (cached scan renders two result rows + TWO toolbar rungs) ---
-    // v4 task-4 #13: the proxy strip sits above the scan toolbar and each
-    // toolbar is its own arrow rung in visual order (keyboard-model §2.5):
-    // strip ↓ → proxy strip → scan toolbar → mark toolbar → rows, and back
-    // up in reverse. The idle dead view stacks THREE .vbm-toolbar rungs here
-    // (proxy strip / scan toolbar / mark-status toolbar); with a scan cache
-    // present the scan toolbar's first enabled control is Clear-scan, and the
-    // next rung is the mark-status filter's first button.
+    // --- dead (cached scan renders two result rows + FOUR toolbar rungs) ---
+    // v4 task-4 #13 + 4.0.8: the proxy strip sits above three stacked
+    // .vbm-toolbar rows, and each row is its own arrow rung in visual order
+    // (keyboard-model §2.5). The real stack with a scan cache present:
+    //   proxy strip   → .dead-proxy-add
+    //   detection     → .dead-rescan   (the last-scan time is a span, not a
+    //                                   control, so rescan is the first stop)
+    //   marks         → .dead-filter-btn (the verdict filter's first button)
+    //   status        → .dead-mark-filter-btn
+    //   rows
+    // …and ↑ walks the same four rungs in reverse (focusListExit enters at
+    // the LOWEST rung = status).
     await page.click('#view-tab-dead'); await sleep(700);
     await page.keyboard.press('ArrowDown'); await sleep(250);
     check('dead ↓ from strip: the proxy strip rung', await $(() =>
         document.activeElement && document.activeElement.classList.contains('dead-proxy-add')),
         await activeDesc());
     await page.keyboard.press('ArrowDown'); await sleep(250);
-    check('dead proxy strip ↓: the scan toolbar rung (clear scan)', await $(() =>
-        document.activeElement && document.activeElement.classList.contains('dead-clear-scan')),
+    check('dead proxy strip ↓: the detection toolbar rung (rescan)', await $(() =>
+        document.activeElement && document.activeElement.classList.contains('dead-rescan')),
         await activeDesc());
     await page.keyboard.press('ArrowDown'); await sleep(250);
-    check('dead scan toolbar ↓: the mark-status toolbar rung', await $(() =>
+    check('dead detection toolbar ↓: the marks toolbar rung (verdict filter)', await $(() =>
+        document.activeElement && document.activeElement.classList.contains('dead-filter-btn')),
+        await activeDesc());
+    await page.keyboard.press('ArrowDown'); await sleep(250);
+    check('dead marks toolbar ↓: the status toolbar rung (mark filter)', await $(() =>
         document.activeElement && document.activeElement.classList.contains('dead-mark-filter-btn')),
         await activeDesc());
     await page.keyboard.press('ArrowDown'); await sleep(250);
     st = await activeLiIndex('#dead-list');
-    check('dead mark toolbar ↓: first result row', st.idx === 0, JSON.stringify(st));
+    check('dead status toolbar ↓: first result row', st.idx === 0, JSON.stringify(st));
     await page.keyboard.press('ArrowDown'); await sleep(200);
     st = await activeLiIndex('#dead-list');
     check('dead ↓: next row', st.idx === 1, JSON.stringify(st));
@@ -401,11 +487,15 @@ const SEED = `
         document.activeElement && document.activeElement.classList.contains('dead-mark-filter-btn')),
         await activeDesc());
     await page.keyboard.press('ArrowUp'); await sleep(200);
-    check('dead mark toolbar ↑: the scan toolbar rung', await $(() =>
-        document.activeElement && document.activeElement.classList.contains('dead-clear-scan')),
+    check('dead status toolbar ↑: the marks toolbar rung', await $(() =>
+        document.activeElement && document.activeElement.classList.contains('dead-filter-btn')),
         await activeDesc());
     await page.keyboard.press('ArrowUp'); await sleep(200);
-    check('dead scan toolbar ↑: the proxy strip rung', await $(() =>
+    check('dead marks toolbar ↑: the detection toolbar rung', await $(() =>
+        document.activeElement && document.activeElement.classList.contains('dead-rescan')),
+        await activeDesc());
+    await page.keyboard.press('ArrowUp'); await sleep(200);
+    check('dead detection toolbar ↑: the proxy strip rung', await $(() =>
         document.activeElement && !!document.activeElement.closest('.dead-proxy-strip')),
         await activeDesc());
     await page.keyboard.press('ArrowUp'); await sleep(200);
@@ -465,23 +555,38 @@ const SEED = `
     check('dupes toolbar →: scheme checkbox', await $(() =>
         document.activeElement && document.activeElement.type === 'checkbox'),
         await activeDesc());
+    // 4.0.8: the idle dupes toolbar is TWO rungs — controls (strategy /
+    // scope / scheme) and actions (apply-all / select-mode; the summary is a
+    // span, not a control). → wraps inside a rung (4.0.1 P1: a bounded fixed
+    // set cycles), ↓ steps to the next rung, and only the LAST rung's ↓
+    // enters the rows.
     await page.keyboard.press('ArrowRight'); await sleep(200);
-    check('dupes toolbar →: apply-all button', await $(() =>
-        document.activeElement && document.activeElement.classList.contains('dupes-apply-all')),
+    check('dupes controls rung →: wraps back to the strategy dropdown', await $(() =>
+        document.activeElement && !!document.activeElement.closest('.vbm-dropdown.dupes-strategy')),
+        await activeDesc());
+    // step off the dropdown trigger before ↓ — on a trigger ↓ opens its list
+    // (dropdown.js), which is a different contract than the rung walk
+    await page.keyboard.press('ArrowRight'); await sleep(150);
+    await page.keyboard.press('ArrowRight'); await sleep(150);
+    check('dupes controls rung: parked on the scheme checkbox', await $(() =>
+        document.activeElement && document.activeElement.type === 'checkbox'),
         await activeDesc());
     await page.keyboard.press('ArrowDown'); await sleep(250);
-    check('dupes toolbar ↓: group head focused', await $(() =>
+    check('dupes controls rung ↓: the actions rung (apply-all)', await $(() =>
+        document.activeElement && document.activeElement.classList.contains('dupes-apply-all')),
+        await activeDesc());
+    await page.keyboard.press('ArrowRight'); await sleep(200);
+    check('dupes actions rung →: the select-mode button', await $(() =>
+        document.activeElement && document.activeElement.classList.contains('dupes-select-mode')),
+        await activeDesc());
+    await page.keyboard.press('ArrowDown'); await sleep(250);
+    check('dupes actions rung ↓: group head focused', await $(() =>
         document.activeElement && document.activeElement.classList.contains('group-head')),
         await activeDesc());
     await page.keyboard.press('ArrowUp'); await sleep(200);
-    check('dupes head ↑ past top: back to the toolbar rung', await $(() =>
-        document.activeElement && !!document.activeElement.closest('.vbm-dropdown.dupes-strategy')),
+    check('dupes head ↑ past top: back to the LOWEST toolbar rung (apply-all)', await $(() =>
+        document.activeElement && document.activeElement.classList.contains('dupes-apply-all')),
         await activeDesc());
-    // walk the rung off the dropdown (→→→ to the apply-all button), then ↓
-    // into the list — the dropdown trigger's own ↓ opens its list instead
-    await page.keyboard.press('ArrowRight'); await sleep(150);
-    await page.keyboard.press('ArrowRight'); await sleep(150);
-    await page.keyboard.press('ArrowRight'); await sleep(150);
     await page.keyboard.press('ArrowDown'); await sleep(250);
     await page.keyboard.press('ArrowDown'); await sleep(200);
     st = await activeLiIndex('#dupes-list');
@@ -548,10 +653,11 @@ const SEED = `
     // to let the listbox option steal the `.focus` row marker — the toolbar's
     // ↓ then targeted the HIDDEN option (querySelector('.focus')) and the
     // button area could no longer enter the rows. After the open/close above,
-    // the →→→ apply-all ↓ walk must STILL land on the group head.
+    // walking off the dropdown (→→ to the scheme checkbox) and stepping down
+    // through the actions rung must STILL land on the group head.
     await page.keyboard.press('ArrowRight'); await sleep(150);
     await page.keyboard.press('ArrowRight'); await sleep(150);
-    await page.keyboard.press('ArrowRight'); await sleep(150);
+    await page.keyboard.press('ArrowDown'); await sleep(250);
     await page.keyboard.press('ArrowDown'); await sleep(250);
     check('dupes rung ↓ still enters the rows after the dropdown was open/closed (marker-steal gate)', await $(() =>
         document.activeElement && document.activeElement.classList.contains('group-head')),
