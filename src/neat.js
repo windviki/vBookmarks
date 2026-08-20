@@ -600,7 +600,8 @@ import { shouldHighlightUnsynced, shouldRememberState } from './settings.js';
         onRowsRendered: () => deadOverlayRefresh(),
         // v4 task-3 #14: the onlyShowBMBar reveal guard toasts through the
         // undo bar's generic action toast (undo inits above, plain value).
-        toastAction: undo.toastAction
+        toastAction: undo.toastAction,
+        dismissToast: undo.dismissToast
     });
 
     // Recent view (v4 task-2 切片 B): the old in-tree recent section becomes

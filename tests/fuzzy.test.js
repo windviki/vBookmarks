@@ -134,6 +134,17 @@ describe('fuzzy.js rank()', () => {
         expect(results.map(r => r.id)).toEqual(['2', '1']);
     });
 
+    it('prefers a tighter subsequence when both are partial matches', () => {
+        // "123" matches both; the dotted-IP hit is visually closer to the
+        // query than one scattered across a long path.
+        const results = rank('123', [
+            item('ip', '', '10.200.31.0', 100),
+            item('path', '', 'vs1-something2/version3.html', 100)
+        ]);
+        expect(results.map(r => r.id)).toEqual(['ip', 'path']);
+        expect(results[0].score).toBeGreaterThan(results[1].score);
+    });
+
     it('ranks 10k items without algorithmic blowup (perf smoke)', () => {
         const items = [];
         for (let i = 0; i < 10000; i++) {

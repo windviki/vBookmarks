@@ -229,7 +229,8 @@ const setup = (opts = {}) => {
         rtl: !!opts.rtl,
         clearMenu: opts.noClearMenu ? undefined : () => clearMenuCalls.push(1),
         getRememberState: opts.getRememberState,
-        toastAction: opts.toastAction
+        toastAction: opts.toastAction,
+        dismissToast: opts.dismissToast
     });
 
     const fireDoc = (type, ev) => {
@@ -403,6 +404,23 @@ describe('hide and disable (tab context menu backing)', () => {
         expect(toasts[0]).toContain('Esc');
         views.activate('tree');
         expect(toasts).toHaveLength(1); // returning to tree never toasts
+    });
+
+    it('switching to another view dismisses a lingering toast', () => {
+        const toasts = [];
+        let dismissed = 0;
+        const { views, addRecent } = setup({
+            toastAction: msg => toasts.push(msg),
+            dismissToast: () => dismissed++
+        });
+        addRecent({ showKey: 'showRecentBookmarks', disableKey: 'disableRecentView' });
+        dismissed = 0; // isolate from the startup activation's dismiss
+        views.hideViewTab('recent');
+        views.activate('recent');
+        expect(toasts).toHaveLength(1);
+        expect(dismissed).toBe(1); // entering the view dismissed any old toast before the new hint
+        views.activate('tree');
+        expect(dismissed).toBe(2); // the outgoing view's toast is dismissed
     });
 
     it('the return hint is a single-argument call — the buttonless-toast contract', () => {

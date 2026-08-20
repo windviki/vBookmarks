@@ -83,6 +83,13 @@ export function initViewManager(ctx = {}) {
         if (fn)
             fn(...args);
     };
+    // Any view switch dismisses a transient toast (undo/hint) — a hint that
+    // belongs to the outgoing view must not linger over the incoming one.
+    const dismissToast = () => {
+        const fn = ctx.dismissToast;
+        if (fn)
+            fn();
+    };
 
     const $tabs = $('view-tabs');
     const $announce = $('view-announce');
@@ -902,6 +909,10 @@ export function initViewManager(ctx = {}) {
             return false;
         if (activeId === id)
             return true;
+        // A toast belongs to the view it was raised on; switching away
+        // dismisses it (undo/hint alike — the undo action is one-shot and
+        // already lost when showToast/hideToast re-armed the bar).
+        dismissToast();
         // Round-3 consistency: an open context menu points at a row of the
         // outgoing view — never let it float over the incoming one (pointer
         // paths already clear it through the body-click binding).

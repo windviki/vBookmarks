@@ -209,5 +209,5 @@ export function initUndo(ctx = {}) {
         });
     }
 
-    return { capture, undo, canUndo, peek, showToast, toastAction };
+    return { capture, undo, canUndo, peek, showToast, toastAction, dismissToast: hideToast };
 }

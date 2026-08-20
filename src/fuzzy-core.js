@@ -98,6 +98,11 @@ const scoreLower = (query, text, textLower) => {
             score += 8;
     }
     score -= positions[0];
+    // Span penalty: when every matched char is otherwise equal, a tighter
+    // subsequence (smaller distance between the first and last hit) is the
+    // more likely intent. "123" then ranks 10.200.31.0 above
+    // vs1-something2/version3.html even though both are tier-3 hits.
+    score -= positions[qlen - 1] - positions[0];
     return { score: score, positions: positions };
 };
 
