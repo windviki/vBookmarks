@@ -332,7 +332,10 @@ export function initPalette(ctx = {}) {
         const ua = typeof navigator !== 'undefined' ? (navigator.userAgent || '') : '';
         const uaData = typeof navigator !== 'undefined' ? navigator.userAgentData : null;
         const platform = (uaData && uaData.platform) || (typeof navigator !== 'undefined' ? navigator.platform : '') || '';
-        const language = typeof navigator !== 'undefined' ? (navigator.language || '') : '';
+        // The UI language follows the live override (i18n-live patches
+        // getUILanguage); navigator.language is only the browser default and
+        // would show the wrong code after /lang switched to another locale.
+        const language = window.VBMI18N ? window.VBMI18N.currentLang() : chrome.i18n.getUILanguage();
         const mf = chrome.runtime.getManifest();
         const channel = document.body.classList.contains('panel-mode') ? 'sidepanel' : 'popup';
         const cache = store ? readCache(store) : null;

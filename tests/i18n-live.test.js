@@ -55,11 +55,18 @@ describe('i18n-live', () => {
         expect(chrome.i18n.getMessage('missing', [])).toBe('orig:missing');
     });
 
-    it('exposes supportedLangs and currentLang without a cached override', () => {
+    it('exposes supportedLangs, currentLang and selectedLang without a cached override', () => {
         const { window } = evaluate({});
         expect(window.VBMI18N.supportedLangs).toContain('zh_CN');
         expect(window.VBMI18N.supportedLangs).toContain('en');
         expect(window.VBMI18N.currentLang()).toBe('en');
+        expect(window.VBMI18N.selectedLang()).toBe('auto');
+    });
+
+    it('selectedLang returns the cached override code', () => {
+        const { window } = evaluate({ vbmI18nLang: 'zh_CN', vbmI18nDict: JSON.stringify({}) });
+        expect(window.VBMI18N.currentLang()).toBe('zh_CN');
+        expect(window.VBMI18N.selectedLang()).toBe('zh_CN');
     });
 
     it('setLang rejects invalid codes', async () => {
@@ -77,5 +84,35 @@ describe('i18n-live', () => {
         expect(localStorage.getItem('uiLanguage')).toBe('es');
         expect(window._storeData.uiLanguage).toBe('es');
         expect(chrome.i18n.getMessage).toBeDefined();
+    });
+
+    it("setLang('auto') clears the override and writes an empty store value", async () => {
+        const { window, localStorage } = evaluate({
+            vbmI18nLang: 'es',
+            vbmI18nDict: JSON.stringify({}),
+            uiLanguage: 'es'
+        });
+        await expect(window.VBMI18N.setLang('auto')).resolves.toBe(true);
+        expect(localStorage.getItem('vbmI18nLang')).toBeNull();
+        expect(localStorage.getItem('vbmI18nDict')).toBeNull();
+        expect(localStorage.getItem('uiLanguage')).toBeNull();
+        expect(window._storeData.uiLanguage).toBe('');
+    });
+
+    it('applies an imported storage-only uiLanguage after store.ready', async () => {
+        const dict = { hello: { message: 'Hola' } };
+        const fetchImpl = async url => ({ ok: true, json: async () => dict });
+        const store = {
+            _data: { uiLanguage: 'es' },
+            get: (k, d) => (k in store._data ? store._data[k] : d),
+            set(k, v) { store._data[k] = v; },
+            ready: Promise.resolve()
+        };
+        const { window, localStorage } = evaluate({}, { store, fetchImpl });
+        await new Promise(resolve => setTimeout(resolve, 0));
+        expect(localStorage.getItem('vbmI18nLang')).toBe('es');
+        expect(localStorage.getItem('uiLanguage')).toBe('es');
+        expect(JSON.parse(localStorage.getItem('vbmI18nDict'))).toEqual(dict);
+        expect(window._storeData).toBeUndefined();
     });
 });

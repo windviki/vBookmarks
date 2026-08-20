@@ -789,6 +789,10 @@
   "optionLanguage": {
     "message": "语言"
   },
+  "optionLanguageAuto": {
+    "message": "自动"
+  },
+
   "optionLanguageHint": {
     "message": "切换语言后会重新加载本页面。"
   },

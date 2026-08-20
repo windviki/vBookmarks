@@ -18,6 +18,7 @@
     const LANG_KEY = 'uiLanguage';
     const LANG_CACHE = 'vbmI18nLang';
     const DICT_CACHE = 'vbmI18nDict';
+    const AUTO_LANG = 'auto';
 
     // Every directory shipped under _locales/. `_` is the on-disk separator.
     const SUPPORTED_LANGS = [
@@ -42,7 +43,7 @@
         }
     };
 
-    // Resolve the current language: explicit override first, then Chrome's
+    // Resolve the effective language: explicit override first, then Chrome's
     // UI language when it is one of the shipped locales, else en.
     const currentLang = () => {
         const cached = normalize(cacheLang());
@@ -50,6 +51,12 @@
             return cached;
         const ui = normalize(chrome.i18n.getUILanguage ? chrome.i18n.getUILanguage() : 'en');
         return SUPPORTED_LANGS.includes(ui) ? ui : 'en';
+    };
+    // The dropdown's selection: the explicit override, or 'auto' when the
+    // extension follows the browser UI language.
+    const selectedLang = () => {
+        const cached = normalize(cacheLang());
+        return (cached && SUPPORTED_LANGS.includes(cached)) ? cached : AUTO_LANG;
     };
 
     const originalGetMessage = chrome.i18n.getMessage.bind(chrome.i18n);
@@ -103,11 +110,39 @@
         return data;
     };
 
+    // Imported settings may carry uiLanguage in chrome.storage.local without
+    // the localStorage cache (options import -> reload). Once store.ready
+    // resolves, fetch and apply the locale so the import is honored; the
+    // applied fetch writes the localStorage cache and reloads once.
+    if (typeof window.store !== 'undefined' && window.store.ready && !cacheLang()) {
+        window.store.ready.then(() => {
+            const storedLang = normalize(window.store.get(LANG_KEY, '') || '');
+            if (storedLang && storedLang !== AUTO_LANG && SUPPORTED_LANGS.includes(storedLang)) {
+                window.VBMI18N.setLang(storedLang);
+            }
+        });
+    }
+
     window.VBMI18N = {
         currentLang,
+        selectedLang,
         supportedLangs: SUPPORTED_LANGS,
         setLang: async code => {
             const lang = normalize(code);
+            // 'auto' clears the override and follows the browser UI language.
+            if (lang === AUTO_LANG) {
+                localStorage.removeItem(DICT_CACHE);
+                localStorage.removeItem(LANG_CACHE);
+                localStorage.removeItem(LANG_KEY);
+                if (typeof window.store !== 'undefined' && window.store.set) {
+                    window.store.set(LANG_KEY, '');
+                } else if (typeof chrome !== 'undefined' && chrome.storage && chrome.storage.local) {
+                    chrome.storage.local.set({ [LANG_KEY]: '' });
+                }
+                if (typeof location !== 'undefined' && typeof location.reload === 'function')
+                    location.reload();
+                return true;
+            }
             if (!SUPPORTED_LANGS.includes(lang))
                 return false;
             try {

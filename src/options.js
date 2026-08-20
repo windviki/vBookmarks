@@ -64,10 +64,14 @@ const $ = id => document.getElementById(id);
                     return code;
                 }
             };
-            langSelect.innerHTML = window.VBMI18N.supportedLangs
-                .map(code => `<option value="${code}">${code} — ${langName(code)}</option>`)
-                .join('');
-            langSelect.value = window.VBMI18N.currentLang;
+            // 'auto' = follow the browser UI language. Code + native name is
+            // the compact option label; the meta charset keeps the separator
+            // UTF-8 clean.
+            langSelect.innerHTML = `<option value="auto">auto — ${_m('optionLanguageAuto')}</option>` +
+                window.VBMI18N.supportedLangs
+                    .map(code => `<option value="${code}">${code} — ${langName(code)}</option>`)
+                    .join('');
+            langSelect.value = window.VBMI18N.selectedLang();
             langSelect.addEventListener('change', async () => {
                 const previous = langSelect.value;
                 const ok = await window.VBMI18N.setLang(langSelect.value);
