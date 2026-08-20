@@ -1132,6 +1132,100 @@ menu[type=context] hr {
     filter: brightness(1.08);
 }
 
+/* Version dialog (/version): a compact metadata card with the same
+   footer close bar as the command palette — Esc kbd hint included. The copy
+   button is the dialog's primary action; Tab cycles copy ⇄ close via
+   keyboard.js's dialog Tab trap (dialogs.activeEl returns #version-dialog). */
+.needVersion #cover {
+    left: 0;
+    opacity: 1;
+}
+
+.needVersion #version-dialog {
+    top: 40px;
+    opacity: 1;
+    pointer-events: auto;
+}
+
+#version-dialog {
+    --dialog-content-width: min(400px, 100%);
+}
+
+#version-dialog-text {
+    text-align: center;
+}
+
+#version-dialog-meta {
+    margin: 8px 0 0;
+    padding: 8px 10px;
+    border: 1px solid var(--vbm-border);
+    border-radius: 6px;
+    background: var(--vbm-bg);
+    font-size: 11px;
+    line-height: 1.5;
+    box-sizing: border-box;
+    max-height: 240px;
+    overflow-y: auto;
+    -webkit-user-select: text;
+    user-select: text;
+}
+
+.version-meta-row {
+    display: flex;
+    gap: 8px;
+    padding: 1px 0;
+}
+
+.version-meta-row dt {
+    flex: none;
+    width: 110px;
+    color: var(--vbm-muted);
+}
+
+.version-meta-row dd {
+    flex: 1 1 auto;
+    min-width: 0;
+    margin: 0;
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+
+#version-dialog .buttons {
+    margin-top: 8px;
+}
+
+#version-dialog-close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    width: 100%;
+    margin: 8px 0 0;
+    padding: 4px 8px;
+    border: 0;
+    border-top: 1px solid var(--vbm-border);
+    border-radius: 0 0 var(--vbm-radius) var(--vbm-radius);
+    background: transparent;
+    color: var(--vbm-muted);
+    font-size: 11px;
+    cursor: pointer;
+}
+
+#version-dialog-close:hover {
+    background: var(--vbm-bg-hover);
+    color: var(--vbm-fg);
+}
+
+#version-dialog-close kbd {
+    font-family: inherit;
+    font-size: 10px;
+    line-height: 1.4;
+    padding: 0 4px;
+    border: 1px solid var(--vbm-border);
+    border-radius: 3px;
+    color: var(--vbm-muted);
+}
+
 .dialog pre {
     white-space: pre-line;
     margin: 0;

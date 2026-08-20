@@ -90,6 +90,8 @@ import { htmlspecialchars } from './escape.js';
 import { highlightTitlePositions } from './tree-render.js';
 import { SeparatorManager } from './separators.js';
 import { md5 } from './md5.js';
+import { collectVersionMeta } from './version-info.js';
+import { readCache, firstAnnouncement, parseSeen } from './announce.js';
 
 export function initPalette(ctx = {}) {
     const $ = id => document.getElementById(id);
@@ -305,6 +307,41 @@ export function initPalette(ctx = {}) {
         store.set('showViewTabs', on ? '1' : '');
         document.body.classList.toggle('no-view-tabs', !on);
     };
+    // /version: collect extension/announce/browser metadata and open it in a
+    // modal (dialogs.VersionDialog). The palette closes first; dialogs.js
+    // remembers the focus invoker and keyboard.js's dialog layers pick the
+    // modal up automatically.
+    const openVersionDialog = () => {
+        // Hand back to the palette opener before the modal opens, so the
+        // dialog's own close/Esc restores focus there.
+        close({ back: true });
+        const ua = typeof navigator !== 'undefined' ? (navigator.userAgent || '') : '';
+        const uaData = typeof navigator !== 'undefined' ? navigator.userAgentData : null;
+        const platform = (uaData && uaData.platform) || (typeof navigator !== 'undefined' ? navigator.platform : '') || '';
+        const language = typeof navigator !== 'undefined' ? (navigator.language || '') : '';
+        const mf = chrome.runtime.getManifest();
+        const channel = document.body.classList.contains('panel-mode') ? 'sidepanel' : 'popup';
+        const cache = store ? readCache(store) : null;
+        const msg = cache && cache.data ? firstAnnouncement(cache.data, {
+            version: mf.version,
+            channel,
+            seen: parseSeen(store.get('vbmAnnounceSeen'))
+        }) : null;
+        const announce = msg
+            ? (msg.textKey ? _m(msg.textKey) : (msg.textFallback && msg.textFallback.en) || '')
+            : '';
+        const meta = collectVersionMeta({
+            version: mf.version,
+            announce,
+            channel,
+            userAgent: ua,
+            platform,
+            language,
+            manifestVersion: parseInt(mf.manifest_version, 10) || 3
+        });
+        if (dialogs && dialogs.VersionDialog)
+            dialogs.VersionDialog.open(meta);
+    };
     // v4 task-4 #5: the cleaned table — 17 commands (round-5 added the four
     // direct theme switches), one slash name plus at most one memorable alias
     // each. PALETTE_RESERVED (palette-commands.js) carries every slash +
@@ -336,6 +373,7 @@ export function initPalette(ctx = {}) {
         { slash: 'ink', aliases: [], name: () => _m('optionThemeInk'), fn: switchTheme('ink') },
         { slash: 'paper', aliases: [], name: () => _m('optionThemePaper'), fn: switchTheme('paper') },
         { slash: 'tabs', aliases: [], name: () => _m('paletteCmdToggleViewTabs'), fn: toggleViewTabs },
+        { slash: 'version', aliases: [], name: () => _m('paletteCmdVersion'), fn: openVersionDialog },
         { slash: 'options', aliases: ['settings'], name: () => _m('paletteCmdOptions'), fn: () => chrome.runtime.openOptionsPage() }
     ];
     // All slash forms of a command — the canonical name plus its aliases.

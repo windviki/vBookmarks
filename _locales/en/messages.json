@@ -633,6 +633,50 @@
     "description": "Command palette: label of the visible footer button that closes the panel (the keyboard path is Esc).",
     "message": "Close"
   },
+  "paletteCmdVersion": {
+    "message": "Version info",
+    "description": "Command palette entry (slash command /version) that opens a dialog with extension, announce and browser metadata."
+  },
+  "versionDialogTitle": {
+    "message": "vBookmarks $version$",
+    "description": "Title of the /version dialog.",
+    "placeholders": {
+      "version": {
+        "content": "$1"
+      }
+    }
+  },
+  "versionDialogCopy": {
+    "message": "Copy info"
+  },
+  "versionDialogCopied": {
+    "message": "Copied"
+  },
+  "versionMetaVersion": {
+    "message": "Extension version"
+  },
+  "versionMetaAnnounce": {
+    "message": "What's new"
+  },
+  "versionMetaAnnounceNone": {
+    "message": "No announcement loaded"
+  },
+  "versionMetaBrowser": {
+    "message": "Browser"
+  },
+  "versionMetaOS": {
+    "message": "OS"
+  },
+  "versionMetaChannel": {
+    "message": "Channel"
+  },
+  "versionMetaLanguage": {
+    "message": "Language"
+  },
+  "versionMetaUserAgent": {
+    "message": "User agent"
+  },
+
   "paletteCmdDead": {
     "description": "Command palette entry that switches the panel into dead-link scan mode (slash command /dead).",
     "message": "Find dead links"

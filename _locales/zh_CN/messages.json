@@ -890,6 +890,48 @@
   "paletteClose": {
     "message": "关闭"
   },
+  "paletteCmdVersion": {
+    "message": "版本信息"
+  },
+  "versionDialogTitle": {
+    "message": "vBookmarks $version$",
+    "placeholders": {
+      "version": {
+        "content": "$1"
+      }
+    }
+  },
+  "versionDialogCopy": {
+    "message": "复制信息"
+  },
+  "versionDialogCopied": {
+    "message": "已复制"
+  },
+  "versionMetaVersion": {
+    "message": "扩展版本"
+  },
+  "versionMetaAnnounce": {
+    "message": "本次更新"
+  },
+  "versionMetaAnnounceNone": {
+    "message": "未加载到更新说明"
+  },
+  "versionMetaBrowser": {
+    "message": "浏览器"
+  },
+  "versionMetaOS": {
+    "message": "操作系统"
+  },
+  "versionMetaChannel": {
+    "message": "通道"
+  },
+  "versionMetaLanguage": {
+    "message": "语言"
+  },
+  "versionMetaUserAgent": {
+    "message": "User agent"
+  },
+
   "paletteCmdDead": {
     "message": "检测死链"
   },

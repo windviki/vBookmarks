@@ -359,11 +359,83 @@ export function initDialogs(ctx = {}) {
         return false;
     });
 
+    // Version dialog (/version palette command): a metadata card + copy-to-
+    // clipboard action + the palette-style footer close button (Esc hint).
+    // It is a body-class dialog like the rest, so keyboard.js's Escape layer
+    // and dialog Tab trap pick it up through anyOpen()/activeEl().
+    const VersionDialog = {
+        meta: null,
+        open: meta => {
+            if (!meta) return;
+            rememberInvoker();
+            VersionDialog.meta = meta;
+            const esc = htmlspecialchars;
+            const _v = (key, val) => `<div class="version-meta-row"><dt>${esc(_m(key))}</dt><dd>${esc(val)}</dd></div>`;
+            $('version-dialog-text').textContent = _m('versionDialogTitle', [meta.version]);
+            $('version-dialog-meta').innerHTML = [
+                _v('versionMetaVersion', meta.version),
+                _v('versionMetaAnnounce', meta.announce || _m('versionMetaAnnounceNone')),
+                _v('versionMetaBrowser', `${meta.browser}${meta.browserVersion ? ' ' + meta.browserVersion : ''}`),
+                _v('versionMetaOS', meta.os || ''),
+                _v('versionMetaChannel', meta.channel || ''),
+                _v('versionMetaLanguage', meta.language || ''),
+                _v('versionMetaUserAgent', meta.userAgent || '')
+            ].join('');
+            const copyBtn = $('version-dialog-copy');
+            if (copyBtn) {
+                copyBtn.textContent = _m('versionDialogCopy');
+            }
+            const closeBtn = $('version-dialog-close');
+            if (closeBtn) {
+                closeBtn.innerHTML = `${htmlspecialchars(_m('paletteClose'))} <kbd>Esc</kbd>`;
+                closeBtn.setAttribute('aria-label', _m('paletteClose'));
+            }
+            body.classList.add('needVersion');
+            if (copyBtn)
+                copyBtn.focus();
+        },
+        close: () => {
+            const wasOpen = body.classList.contains('needVersion');
+            body.classList.remove('needVersion');
+            VersionDialog.meta = null;
+            restoreFocus(wasOpen);
+        },
+        copy: async () => {
+            const btn = $('version-dialog-copy');
+            const text = JSON.stringify(VersionDialog.meta, null, 2);
+            try {
+                if (typeof navigator !== 'undefined' && navigator.clipboard && navigator.clipboard.writeText) {
+                    await navigator.clipboard.writeText(text);
+                } else if (typeof document !== 'undefined' && document.body) {
+                    const ta = document.createElement('textarea');
+                    ta.value = text;
+                    document.body.appendChild(ta);
+                    ta.select();
+                    document.execCommand('copy');
+                    ta.remove();
+                }
+                if (btn) {
+                    btn.textContent = _m('versionDialogCopied');
+                    setTimeout(() => {
+                        if (btn && body.classList.contains('needVersion'))
+                            btn.textContent = _m('versionDialogCopy');
+                    }, 1500);
+                }
+            } catch (e) { /* keep the current label */ }
+        }
+    };
+    const versionCopyBtn = $('version-dialog-copy');
+    if (versionCopyBtn)
+        versionCopyBtn.addEventListener('click', () => VersionDialog.copy());
+    const versionCloseBtn = $('version-dialog-close');
+    if (versionCloseBtn)
+        versionCloseBtn.addEventListener('click', () => VersionDialog.close());
+
     // True while any dialog's body class is set (used by the Escape handler)
     const anyOpen = () => body.classList.contains('needConfirm') || body.classList.contains('needEdit') ||
         body.classList.contains('needAlert') || body.classList.contains('needInputName') ||
         body.classList.contains('needSort') || body.classList.contains('needTabGroup') ||
-        body.classList.contains('needGroupPick');
+        body.classList.contains('needGroupPick') || body.classList.contains('needVersion');
 
     // The open dialog's own element — keyboard.js's modal Tab trap cycles
     // within it. Null when nothing is up; precedence mirrors closeDialogs.
@@ -380,6 +452,8 @@ export function initDialogs(ctx = {}) {
             return $('tab-group-dialog');
         if (body.classList.contains('needGroupPick'))
             return $('tab-group-pick-dialog');
+        if (body.classList.contains('needVersion'))
+            return $('version-dialog');
         if (body.classList.contains('needAlert'))
             return $('alert-dialog');
         return null;
@@ -449,10 +523,12 @@ export function initDialogs(ctx = {}) {
             GroupDialog.close(false);
         if (body.classList.contains('needGroupPick'))
             GroupPickDialog.close();
+        if (body.classList.contains('needVersion'))
+            VersionDialog.close();
         if (body.classList.contains('needAlert'))
             AlertDialog.close();
     };
     $('cover').addEventListener('click', closeDialogs);
 
-    return { AlertDialog, ConfirmDialog, EditDialog, NewFolderDialog, SortDialog, GroupDialog, GroupPickDialog, anyOpen, activeEl, closeDialogs };
+    return { AlertDialog, ConfirmDialog, EditDialog, NewFolderDialog, SortDialog, GroupDialog, GroupPickDialog, VersionDialog, anyOpen, activeEl, closeDialogs };
 }

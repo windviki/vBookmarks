@@ -93,6 +93,7 @@ const MSGS = {
     optionThemeInk: 'Ink (dark)',
     optionThemePaper: 'Paper (light)',
     paletteCmdToggleViewTabs: 'Toggle view tabs',
+    paletteCmdVersion: 'Version info',
     paletteCmdOptions: 'Open options page',
     paletteCmdSearchInView: "Search '$1' in Search view",
     paletteCmdSaveAsCommand: "Save '$1' as a custom command",
@@ -109,13 +110,14 @@ const MSGS = {
     noTitle: '(no title)'
 };
 
-// The full command table in order (v4 task-4 #5's cleanup — 17 entries after
-// round-5's four direct theme switches, one slash name plus at most one alias
-// each): create-style commands, session, one Go command per registered view,
-// the parameterized /theme, the four direct theme switches, the /tabs toggle,
-// /options last. The retired /sep (round-4 item 2) and the retired five
-// theme commands + /path (v4 task-4 #5) are gone from the table; the /sep
-// message stays in MSGS so the absence test can assert against it.
+// The full command table in order (v4 task-4 #5's cleanup — 18 entries after
+// round-5's four direct theme switches and 4.0.8's /version, one slash name
+// plus at most one alias each): create-style commands, session, one Go
+// command per registered view, the parameterized /theme, the four direct
+// theme switches, the /tabs toggle, /version, /options last. The retired
+// /sep (round-4 item 2) and the retired five theme commands + /path (v4
+// task-4 #5) are gone from the table; the /sep message stays in MSGS so the
+// absence test can assert against it.
 const COMMAND_MSGS = [
     MSGS.paletteCmdQuickAdd, MSGS.paletteCmdNewBookmark, MSGS.paletteCmdNewFolder,
     MSGS.paletteCmdSaveSession, MSGS.paletteCmdGoTree,
@@ -123,7 +125,7 @@ const COMMAND_MSGS = [
     MSGS.paletteCmdGoDead, MSGS.paletteCmdGoDupes,
     MSGS.paletteCmdTheme,
     MSGS.optionThemeDark, MSGS.optionThemeLight, MSGS.optionThemeInk, MSGS.optionThemePaper,
-    MSGS.paletteCmdToggleViewTabs, MSGS.paletteCmdOptions
+    MSGS.paletteCmdToggleViewTabs, MSGS.paletteCmdVersion, MSGS.paletteCmdOptions
 ];
 
 // chrome.i18n.getMessage double: $1/$2 substitution on top of the table.

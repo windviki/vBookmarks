@@ -78,6 +78,7 @@ const IDS = [
     'tab-group-dialog', 'tab-group-dialog-text', 'tab-group-name',
     'tab-group-dialog-button', 'tab-group-dialog-cancel-button',
     'tab-group-pick-dialog', 'tab-group-pick-text', 'tab-group-pick-list', 'tab-group-pick-cancel-button',
+    'version-dialog', 'version-dialog-text', 'version-dialog-meta', 'version-dialog-copy', 'version-dialog-close',
     'cover'
 ];
 
@@ -351,6 +352,28 @@ describe('closeDialogs / anyOpen', () => {
         expect(d.activeEl()).toBe(els['sort-dialog']);
         d.NewFolderDialog.open('n', () => {});
         expect(d.activeEl()).toBe(els['new-folder-dialog']); // stacked: input-name outranks sort
+    });
+
+    it('VersionDialog opens/renders/closes as a body-class dialog', () => {
+        const d = freshDialogs();
+        d.VersionDialog.open({
+            app: 'vBookmarks', version: '4.0.8', manifestVersion: 3,
+            channel: 'popup', announce: 'favicon-enhanced release',
+            browser: 'Chrome', browserVersion: '124.0.0.0',
+            os: 'macOS', language: 'en', userAgent: 'Mozilla/5.0 Chrome/124.0.0.0'
+        });
+        expect(bodyClasses.contains('needVersion')).toBe(true);
+        expect(d.anyOpen()).toBe(true);
+        expect(d.activeEl()).toBe(els['version-dialog']);
+        expect(els['version-dialog-text'].textContent).toBe('versionDialogTitle');
+        expect(els['version-dialog-meta'].innerHTML).toContain('Chrome 124.0.0.0');
+        expect(els['version-dialog-copy'].textContent).toBe('versionDialogCopy');
+        expect(els['version-dialog-copy'].focused).toBe(true);
+
+        els['version-dialog-close'].trigger('click');
+        expect(bodyClasses.contains('needVersion')).toBe(false);
+        expect(d.anyOpen()).toBe(false);
+        expect(d.activeEl()).toBeNull();
     });
 });
 
