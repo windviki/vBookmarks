@@ -41,6 +41,7 @@ JS_FILES = [
     'src/panel-behavior.js',
     'src/fuzzy.js',
     'src/fuzzy-core.js',
+    'src/i18n-live.js',
     'src/escape.js',
     'src/list-focus.js',
     'src/sort-utils.js',

@@ -786,6 +786,13 @@
   "optionThemePaper": {
     "message": "Paper（浅色）"
   },
+  "optionLanguage": {
+    "message": "语言"
+  },
+  "optionLanguageHint": {
+    "message": "切换语言后会重新加载本页面。"
+  },
+
   "sortFolderContents": {
     "message": "排序文件夹内容"
   },
@@ -893,6 +900,13 @@
   "paletteCmdVersion": {
     "message": "版本信息"
   },
+  "paletteCmdLang": {
+    "message": "切换语言…"
+  },
+  "paletteCmdLangUsage": {
+    "message": "用法：/lang 加语言代码——例如 /lang en、/lang zh_CN、/lang ja。"
+  },
+
   "versionDialogTitle": {
     "message": "vBookmarks $version$",
     "placeholders": {

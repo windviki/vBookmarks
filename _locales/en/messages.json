@@ -629,6 +629,14 @@
   "optionThemePaper": {
     "message": "Paper (light)"
   },
+  "optionLanguage": {
+    "message": "Language",
+    "description": "Options page: UI language dropdown under the theme selector."
+  },
+  "optionLanguageHint": {
+    "message": "Changing the language reloads this page."
+  },
+
   "paletteClose": {
     "description": "Command palette: label of the visible footer button that closes the panel (the keyboard path is Esc).",
     "message": "Close"
@@ -637,6 +645,14 @@
     "message": "Version info",
     "description": "Command palette entry (slash command /version) that opens a dialog with extension, announce and browser metadata."
   },
+  "paletteCmdLang": {
+    "message": "Switch language…",
+    "description": "Command palette entry (slash command /lang) that switches the UI language."
+  },
+  "paletteCmdLangUsage": {
+    "message": "Usage: /lang followed by a locale code — e.g. /lang en, /lang zh_CN, /lang ja."
+  },
+
   "versionDialogTitle": {
     "message": "vBookmarks $version$",
     "description": "Title of the /version dialog.",

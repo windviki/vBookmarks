@@ -51,6 +51,31 @@ const $ = id => document.getElementById(id);
             await setSetting('theme', newTheme);
         });
 
+        // UI language (live i18n override): the list comes from
+        // src/i18n-live.js, which also patches chrome.i18n on the reload.
+        const langSelect = $('language-select');
+        if (langSelect && window.VBMI18N) {
+            const langName = code => {
+                try {
+                    const loc = code.replace(/_/g, '-');
+                    const names = new Intl.DisplayNames([loc], { type: 'language' });
+                    return names.of(loc) || code;
+                } catch (e) {
+                    return code;
+                }
+            };
+            langSelect.innerHTML = window.VBMI18N.supportedLangs
+                .map(code => `<option value="${code}">${code} — ${langName(code)}</option>`)
+                .join('');
+            langSelect.value = window.VBMI18N.currentLang;
+            langSelect.addEventListener('change', async () => {
+                const previous = langSelect.value;
+                const ok = await window.VBMI18N.setLang(langSelect.value);
+                if (!ok)
+                    langSelect.value = previous;
+            });
+        }
+
         // Configuration for general settings
         const generalSettings = [
             { id: 'click-new-tab', key: 'leftClickNewTab', defaultValue: '', inverted: false },
@@ -821,6 +846,8 @@ const $ = id => document.getElementById(id);
         // by src/options-proxy.js — a module, so it can import dead-proxy.js.
         document.getElementById('option-theme').innerText = __m('optionTheme');
         document.getElementById('option-theme-auto').innerText = __m('optionThemeAuto');
+        document.getElementById('option-language').innerText = __m('optionLanguage');
+        document.getElementById('option-language-hint').innerText = __m('optionLanguageHint');
         document.getElementById('option-theme-light').innerText = __m('optionThemeLight');
         document.getElementById('option-theme-dark').innerText = __m('optionThemeDark');
         document.getElementById('option-theme-ink').innerText = __m('optionThemeInk');

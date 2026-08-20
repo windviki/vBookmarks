@@ -307,6 +307,20 @@ export function initPalette(ctx = {}) {
         store.set('showViewTabs', on ? '1' : '');
         document.body.classList.toggle('no-view-tabs', !on);
     };
+    // /lang <code>: switch the UI language and reload the page (i18n-live.js
+    // patches chrome.i18n on the next load). Invalid/unknown codes keep the
+    // palette open and show the usage alert.
+    const switchLanguage = rest => {
+        const code = `${rest || ''}`.trim();
+        if (!window.VBMI18N || !code) {
+            dialogs.AlertDialog.open(_m('paletteCmdLangUsage'));
+            return;
+        }
+        window.VBMI18N.setLang(code).then(ok => {
+            if (!ok)
+                dialogs.AlertDialog.open(_m('paletteCmdLangUsage'));
+        });
+    };
     // /version: collect extension/announce/browser metadata and open it in a
     // modal (dialogs.VersionDialog). The palette closes first; dialogs.js
     // remembers the focus invoker and keyboard.js's dialog layers pick the
@@ -374,6 +388,7 @@ export function initPalette(ctx = {}) {
         { slash: 'paper', aliases: [], name: () => _m('optionThemePaper'), fn: switchTheme('paper') },
         { slash: 'tabs', aliases: [], name: () => _m('paletteCmdToggleViewTabs'), fn: toggleViewTabs },
         { slash: 'version', aliases: [], name: () => _m('paletteCmdVersion'), fn: openVersionDialog },
+        { slash: 'lang', aliases: [], keepOpen: true, name: () => _m('paletteCmdLang'), fn: switchLanguage },
         { slash: 'options', aliases: ['settings'], name: () => _m('paletteCmdOptions'), fn: () => chrome.runtime.openOptionsPage() }
     ];
     // All slash forms of a command — the canonical name plus its aliases.
