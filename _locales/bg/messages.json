@@ -970,8 +970,64 @@
   "optionThemePaper": {
     "message": "Хартия (светла)"
   },
+  "optionLanguage": {
+    "message": "Език"
+  },
+  "optionLanguageAuto": {
+    "message": "Автоматично"
+  },
+  "optionLanguageHint": {
+    "message": "Смяната на езика презарежда тази страница."
+  },
   "paletteClose": {
     "message": "Затвори"
+  },
+  "paletteCmdVersion": {
+    "message": "Информация за версията"
+  },
+  "paletteCmdLang": {
+    "message": "Смяна на езика…"
+  },
+  "paletteCmdLangUsage": {
+    "message": "Употреба: /lang, последвано от код на локала — напр. /lang en, /lang zh_CN, /lang ja."
+  },
+  "versionDialogTitle": {
+    "message": "vBookmarks $version$",
+    "placeholders": {
+      "version": {
+        "content": "$1"
+      }
+    }
+  },
+  "versionDialogCopy": {
+    "message": "Копирай информацията"
+  },
+  "versionDialogCopied": {
+    "message": "Копирано"
+  },
+  "versionMetaVersion": {
+    "message": "Версия на разширението"
+  },
+  "versionMetaAnnounce": {
+    "message": "Какво ново"
+  },
+  "versionMetaAnnounceNone": {
+    "message": "Няма заредено обявление"
+  },
+  "versionMetaBrowser": {
+    "message": "Браузър"
+  },
+  "versionMetaOS": {
+    "message": "ОС"
+  },
+  "versionMetaChannel": {
+    "message": "Канал"
+  },
+  "versionMetaLanguage": {
+    "message": "Език"
+  },
+  "versionMetaUserAgent": {
+    "message": "Потребителски агент"
   },
   "optionZoom": {
     "message": "Мащабиране"

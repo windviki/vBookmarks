@@ -970,8 +970,64 @@
   "optionThemePaper": {
     "message": "종이(라이트)"
   },
+  "optionLanguage": {
+    "message": "언어"
+  },
+  "optionLanguageAuto": {
+    "message": "자동"
+  },
+  "optionLanguageHint": {
+    "message": "언어를 변경하면 이 페이지가 새로 고쳐집니다."
+  },
   "paletteClose": {
     "message": "닫기"
+  },
+  "paletteCmdVersion": {
+    "message": "버전 정보"
+  },
+  "paletteCmdLang": {
+    "message": "언어 전환…"
+  },
+  "paletteCmdLangUsage": {
+    "message": "사용법: /lang 다음에 로케일 코드 입력 — 예: /lang en, /lang zh_CN, /lang ja."
+  },
+  "versionDialogTitle": {
+    "message": "vBookmarks $version$",
+    "placeholders": {
+      "version": {
+        "content": "$1"
+      }
+    }
+  },
+  "versionDialogCopy": {
+    "message": "정보 복사"
+  },
+  "versionDialogCopied": {
+    "message": "복사됨"
+  },
+  "versionMetaVersion": {
+    "message": "확장 프로그램 버전"
+  },
+  "versionMetaAnnounce": {
+    "message": "새로운 기능"
+  },
+  "versionMetaAnnounceNone": {
+    "message": "로드된 공지 없음"
+  },
+  "versionMetaBrowser": {
+    "message": "브라우저"
+  },
+  "versionMetaOS": {
+    "message": "OS"
+  },
+  "versionMetaChannel": {
+    "message": "채널"
+  },
+  "versionMetaLanguage": {
+    "message": "언어"
+  },
+  "versionMetaUserAgent": {
+    "message": "사용자 에이전트"
   },
   "optionZoom": {
     "message": "확대/축소"

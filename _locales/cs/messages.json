@@ -970,8 +970,64 @@
   "optionThemePaper": {
     "message": "Paper (světlý)"
   },
+  "optionLanguage": {
+    "message": "Jazyk"
+  },
+  "optionLanguageAuto": {
+    "message": "Automaticky"
+  },
+  "optionLanguageHint": {
+    "message": "Změna jazyka tuto stránku znovu načte."
+  },
   "paletteClose": {
     "message": "Zavřít"
+  },
+  "paletteCmdVersion": {
+    "message": "Informace o verzi"
+  },
+  "paletteCmdLang": {
+    "message": "Přepnout jazyk…"
+  },
+  "paletteCmdLangUsage": {
+    "message": "Použití: /lang následované kódem jazyka – např. /lang en, /lang zh_CN, /lang ja."
+  },
+  "versionDialogTitle": {
+    "message": "vBookmarks $version$",
+    "placeholders": {
+      "version": {
+        "content": "$1"
+      }
+    }
+  },
+  "versionDialogCopy": {
+    "message": "Kopírovat informace"
+  },
+  "versionDialogCopied": {
+    "message": "Zkopírováno"
+  },
+  "versionMetaVersion": {
+    "message": "Verze rozšíření"
+  },
+  "versionMetaAnnounce": {
+    "message": "Co je nového"
+  },
+  "versionMetaAnnounceNone": {
+    "message": "Žádné oznámení načteno"
+  },
+  "versionMetaBrowser": {
+    "message": "Prohlížeč"
+  },
+  "versionMetaOS": {
+    "message": "OS"
+  },
+  "versionMetaChannel": {
+    "message": "Kanál"
+  },
+  "versionMetaLanguage": {
+    "message": "Jazyk"
+  },
+  "versionMetaUserAgent": {
+    "message": "User agent"
   },
   "optionZoom": {
     "message": "Přiblížení"

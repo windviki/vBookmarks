@@ -970,8 +970,64 @@
   "optionThemePaper": {
     "message": "ペーパー (ライト)"
   },
+  "optionLanguage": {
+    "message": "言語"
+  },
+  "optionLanguageAuto": {
+    "message": "自動"
+  },
+  "optionLanguageHint": {
+    "message": "言語を変更すると、このページが再読み込みされます。"
+  },
   "paletteClose": {
     "message": "閉じる"
+  },
+  "paletteCmdVersion": {
+    "message": "バージョン情報"
+  },
+  "paletteCmdLang": {
+    "message": "言語を切り替える…"
+  },
+  "paletteCmdLangUsage": {
+    "message": "使用方法: /lang の後にロケールコードを指定 — 例: /lang en、/lang zh_CN、/lang ja。"
+  },
+  "versionDialogTitle": {
+    "message": "vBookmarks $version$",
+    "placeholders": {
+      "version": {
+        "content": "$1"
+      }
+    }
+  },
+  "versionDialogCopy": {
+    "message": "情報をコピー"
+  },
+  "versionDialogCopied": {
+    "message": "コピーしました"
+  },
+  "versionMetaVersion": {
+    "message": "拡張機能バージョン"
+  },
+  "versionMetaAnnounce": {
+    "message": "新機能"
+  },
+  "versionMetaAnnounceNone": {
+    "message": "お知らせはありません。"
+  },
+  "versionMetaBrowser": {
+    "message": "ブラウザ"
+  },
+  "versionMetaOS": {
+    "message": "OS"
+  },
+  "versionMetaChannel": {
+    "message": "チャンネル"
+  },
+  "versionMetaLanguage": {
+    "message": "言語"
+  },
+  "versionMetaUserAgent": {
+    "message": "ユーザーエージェント"
   },
   "optionZoom": {
     "message": "拡大"

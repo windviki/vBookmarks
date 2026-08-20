@@ -970,8 +970,64 @@
   "optionThemePaper": {
     "message": "Papir (lys)"
   },
+  "optionLanguage": {
+    "message": "Språk"
+  },
+  "optionLanguageAuto": {
+    "message": "Automatisk"
+  },
+  "optionLanguageHint": {
+    "message": "Endring av språk laster denne siden på nytt."
+  },
   "paletteClose": {
     "message": "Lukk"
+  },
+  "paletteCmdVersion": {
+    "message": "Versjonsinfo"
+  },
+  "paletteCmdLang": {
+    "message": "Bytt språk…"
+  },
+  "paletteCmdLangUsage": {
+    "message": "Bruk: /lang etterfulgt av en lokalekode – f.eks. /lang en, /lang zh_CN, /lang ja."
+  },
+  "versionDialogTitle": {
+    "message": "vBookmarks $version$",
+    "placeholders": {
+      "version": {
+        "content": "$1"
+      }
+    }
+  },
+  "versionDialogCopy": {
+    "message": "Kopier info"
+  },
+  "versionDialogCopied": {
+    "message": "Kopiert"
+  },
+  "versionMetaVersion": {
+    "message": "Utvidelsesversjon"
+  },
+  "versionMetaAnnounce": {
+    "message": "Hva er nytt"
+  },
+  "versionMetaAnnounceNone": {
+    "message": "Ingen kunngjøring lastet"
+  },
+  "versionMetaBrowser": {
+    "message": "Nettleser"
+  },
+  "versionMetaOS": {
+    "message": "OS"
+  },
+  "versionMetaChannel": {
+    "message": "Kanal"
+  },
+  "versionMetaLanguage": {
+    "message": "Språk"
+  },
+  "versionMetaUserAgent": {
+    "message": "Brukeragent"
   },
   "optionZoom": {
     "message": "Zoom"

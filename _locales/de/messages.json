@@ -970,8 +970,64 @@
   "optionThemePaper": {
     "message": "Papier (hell)"
   },
+  "optionLanguage": {
+    "message": "Sprache"
+  },
+  "optionLanguageAuto": {
+    "message": "Automatisch"
+  },
+  "optionLanguageHint": {
+    "message": "Beim Ändern der Sprache wird diese Seite neu geladen."
+  },
   "paletteClose": {
     "message": "Schließen"
+  },
+  "paletteCmdVersion": {
+    "message": "Versionsinfo"
+  },
+  "paletteCmdLang": {
+    "message": "Sprache wechseln…"
+  },
+  "paletteCmdLangUsage": {
+    "message": "Verwendung: /lang gefolgt von einem Gebietsschema-Code — z. B. /lang en, /lang zh_CN, /lang ja."
+  },
+  "versionDialogTitle": {
+    "message": "vBookmarks $version$",
+    "placeholders": {
+      "version": {
+        "content": "$1"
+      }
+    }
+  },
+  "versionDialogCopy": {
+    "message": "Info kopieren"
+  },
+  "versionDialogCopied": {
+    "message": "Kopiert"
+  },
+  "versionMetaVersion": {
+    "message": "Erweiterungsversion"
+  },
+  "versionMetaAnnounce": {
+    "message": "Neuigkeiten"
+  },
+  "versionMetaAnnounceNone": {
+    "message": "Keine Ankündigung geladen"
+  },
+  "versionMetaBrowser": {
+    "message": "Browser"
+  },
+  "versionMetaOS": {
+    "message": "Betriebssystem"
+  },
+  "versionMetaChannel": {
+    "message": "Kanal"
+  },
+  "versionMetaLanguage": {
+    "message": "Sprache"
+  },
+  "versionMetaUserAgent": {
+    "message": "User-Agent"
   },
   "optionZoom": {
     "message": "Zoom"

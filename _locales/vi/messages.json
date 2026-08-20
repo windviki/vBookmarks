@@ -970,8 +970,64 @@
   "optionThemePaper": {
     "message": "Giấy (sáng)"
   },
+  "optionLanguage": {
+    "message": "Ngôn ngữ"
+  },
+  "optionLanguageAuto": {
+    "message": "Tự động"
+  },
+  "optionLanguageHint": {
+    "message": "Đổi ngôn ngữ sẽ tải lại trang này."
+  },
   "paletteClose": {
     "message": "Đóng"
+  },
+  "paletteCmdVersion": {
+    "message": "Thông tin phiên bản"
+  },
+  "paletteCmdLang": {
+    "message": "Chuyển ngôn ngữ…"
+  },
+  "paletteCmdLangUsage": {
+    "message": "Cách dùng: /lang theo sau là mã ngôn ngữ — ví dụ: /lang en, /lang zh_CN, /lang ja."
+  },
+  "versionDialogTitle": {
+    "message": "vBookmarks $version$",
+    "placeholders": {
+      "version": {
+        "content": "$1"
+      }
+    }
+  },
+  "versionDialogCopy": {
+    "message": "Sao chép thông tin"
+  },
+  "versionDialogCopied": {
+    "message": "Đã sao chép"
+  },
+  "versionMetaVersion": {
+    "message": "Phiên bản tiện ích"
+  },
+  "versionMetaAnnounce": {
+    "message": "Có gì mới"
+  },
+  "versionMetaAnnounceNone": {
+    "message": "Không có thông báo nào"
+  },
+  "versionMetaBrowser": {
+    "message": "Trình duyệt"
+  },
+  "versionMetaOS": {
+    "message": "Hệ điều hành"
+  },
+  "versionMetaChannel": {
+    "message": "Kênh"
+  },
+  "versionMetaLanguage": {
+    "message": "Ngôn ngữ"
+  },
+  "versionMetaUserAgent": {
+    "message": "User agent"
   },
   "optionZoom": {
     "message": "Thu phóng"

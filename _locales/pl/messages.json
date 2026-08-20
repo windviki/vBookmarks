@@ -970,8 +970,64 @@
   "optionThemePaper": {
     "message": "Papier (jasny)"
   },
+  "optionLanguage": {
+    "message": "Język"
+  },
+  "optionLanguageAuto": {
+    "message": "Automatyczny"
+  },
+  "optionLanguageHint": {
+    "message": "Zmiana języka spowoduje przeładowanie tej strony."
+  },
   "paletteClose": {
     "message": "Zamknij"
+  },
+  "paletteCmdVersion": {
+    "message": "Informacje o wersji"
+  },
+  "paletteCmdLang": {
+    "message": "Przełącz język…"
+  },
+  "paletteCmdLangUsage": {
+    "message": "Użycie: /lang z kodem locale — np. /lang en, /lang zh_CN, /lang ja."
+  },
+  "versionDialogTitle": {
+    "message": "vBookmarks $version$",
+    "placeholders": {
+      "version": {
+        "content": "$1"
+      }
+    }
+  },
+  "versionDialogCopy": {
+    "message": "Kopiuj informacje"
+  },
+  "versionDialogCopied": {
+    "message": "Skopiowano"
+  },
+  "versionMetaVersion": {
+    "message": "Wersja rozszerzenia"
+  },
+  "versionMetaAnnounce": {
+    "message": "Co nowego"
+  },
+  "versionMetaAnnounceNone": {
+    "message": "Nie załadowano ogłoszenia"
+  },
+  "versionMetaBrowser": {
+    "message": "Przeglądarka"
+  },
+  "versionMetaOS": {
+    "message": "System operacyjny"
+  },
+  "versionMetaChannel": {
+    "message": "Kanał"
+  },
+  "versionMetaLanguage": {
+    "message": "Język"
+  },
+  "versionMetaUserAgent": {
+    "message": "User agent"
   },
   "optionZoom": {
     "message": "Powiększenie"

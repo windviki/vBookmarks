@@ -970,8 +970,64 @@
   "optionThemePaper": {
     "message": "Papir (svijetlo)"
   },
+  "optionLanguage": {
+    "message": "Jezik"
+  },
+  "optionLanguageAuto": {
+    "message": "Automatski"
+  },
+  "optionLanguageHint": {
+    "message": "Promjena jezika ponovno učitava ovu stranicu."
+  },
   "paletteClose": {
     "message": "Zatvori"
+  },
+  "paletteCmdVersion": {
+    "message": "Informacije o verziji"
+  },
+  "paletteCmdLang": {
+    "message": "Promijeni jezik…"
+  },
+  "paletteCmdLangUsage": {
+    "message": "Upotreba: /lang nakon čega slijedi kôd jezika — npr. /lang en, /lang zh_CN, /lang ja."
+  },
+  "versionDialogTitle": {
+    "message": "vBookmarks $version$",
+    "placeholders": {
+      "version": {
+        "content": "$1"
+      }
+    }
+  },
+  "versionDialogCopy": {
+    "message": "Kopiraj informacije"
+  },
+  "versionDialogCopied": {
+    "message": "Kopirano"
+  },
+  "versionMetaVersion": {
+    "message": "Verzija proširenja"
+  },
+  "versionMetaAnnounce": {
+    "message": "Što je novo"
+  },
+  "versionMetaAnnounceNone": {
+    "message": "Nema učitane najave"
+  },
+  "versionMetaBrowser": {
+    "message": "Preglednik"
+  },
+  "versionMetaOS": {
+    "message": "Operacijski sustav"
+  },
+  "versionMetaChannel": {
+    "message": "Kanal"
+  },
+  "versionMetaLanguage": {
+    "message": "Jezik"
+  },
+  "versionMetaUserAgent": {
+    "message": "Korisnički agent"
   },
   "optionZoom": {
     "message": "Zumiranje"

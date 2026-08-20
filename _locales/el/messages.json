@@ -976,8 +976,64 @@
   "optionThemePaper": {
     "message": "Χαρτί (φωτεινό)"
   },
+  "optionLanguage": {
+    "message": "Γλώσσα"
+  },
+  "optionLanguageAuto": {
+    "message": "Αυτόματη"
+  },
+  "optionLanguageHint": {
+    "message": "Η αλλαγή γλώσσας επαναφορτώνει αυτή τη σελίδα."
+  },
   "paletteClose": {
     "message": "Κλείσιμο"
+  },
+  "paletteCmdVersion": {
+    "message": "Πληροφορίες έκδοσης"
+  },
+  "paletteCmdLang": {
+    "message": "Αλλαγή γλώσσας…"
+  },
+  "paletteCmdLangUsage": {
+    "message": "Χρήση: /lang ακολουθούμενο από έναν κωδικό τοπικών ρυθμίσεων — π.χ. /lang en, /lang zh_CN, /lang ja."
+  },
+  "versionDialogTitle": {
+    "message": "vBookmarks $version$",
+    "placeholders": {
+      "version": {
+        "content": "$1"
+      }
+    }
+  },
+  "versionDialogCopy": {
+    "message": "Αντιγραφή πληροφοριών"
+  },
+  "versionDialogCopied": {
+    "message": "Αντιγράφηκε"
+  },
+  "versionMetaVersion": {
+    "message": "Έκδοση επέκτασης"
+  },
+  "versionMetaAnnounce": {
+    "message": "Τι νέο υπάρχει"
+  },
+  "versionMetaAnnounceNone": {
+    "message": "Δεν φορτώθηκε καμία ανακοίνωση"
+  },
+  "versionMetaBrowser": {
+    "message": "Πρόγραμμα περιήγησης"
+  },
+  "versionMetaOS": {
+    "message": "Λειτουργικό σύστημα"
+  },
+  "versionMetaChannel": {
+    "message": "Κανάλι"
+  },
+  "versionMetaLanguage": {
+    "message": "Γλώσσα"
+  },
+  "versionMetaUserAgent": {
+    "message": "Παράγοντας χρήστη"
   },
   "optionZoom": {
     "message": "Μεγέθυνση"

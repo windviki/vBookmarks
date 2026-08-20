@@ -970,8 +970,64 @@
   "optionThemePaper": {
     "message": "Papír (világos)"
   },
+  "optionLanguage": {
+    "message": "Nyelv"
+  },
+  "optionLanguageAuto": {
+    "message": "Automatikus"
+  },
+  "optionLanguageHint": {
+    "message": "A nyelv módosítása újratölti ezt az oldalt."
+  },
   "paletteClose": {
     "message": "Bezárás"
+  },
+  "paletteCmdVersion": {
+    "message": "Verzióinformáció"
+  },
+  "paletteCmdLang": {
+    "message": "Nyelvváltás…"
+  },
+  "paletteCmdLangUsage": {
+    "message": "Használat: /lang, majd egy területi kód — pl. /lang en, /lang zh_CN, /lang ja."
+  },
+  "versionDialogTitle": {
+    "message": "vBookmarks $version$",
+    "placeholders": {
+      "version": {
+        "content": "$1"
+      }
+    }
+  },
+  "versionDialogCopy": {
+    "message": "Adatok másolása"
+  },
+  "versionDialogCopied": {
+    "message": "Másolva"
+  },
+  "versionMetaVersion": {
+    "message": "Bővítmény verziója"
+  },
+  "versionMetaAnnounce": {
+    "message": "Újdonságok"
+  },
+  "versionMetaAnnounceNone": {
+    "message": "Nincs betöltött közlemény"
+  },
+  "versionMetaBrowser": {
+    "message": "Böngésző"
+  },
+  "versionMetaOS": {
+    "message": "Operációs rendszer"
+  },
+  "versionMetaChannel": {
+    "message": "Csatorna"
+  },
+  "versionMetaLanguage": {
+    "message": "Nyelv"
+  },
+  "versionMetaUserAgent": {
+    "message": "Felhasználói ügynök"
   },
   "optionZoom": {
     "message": "Nagyítás"

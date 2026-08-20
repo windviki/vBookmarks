@@ -970,8 +970,64 @@
   "optionThemePaper": {
     "message": "کاغذ (روشن)"
   },
+  "optionLanguage": {
+    "message": "زبان"
+  },
+  "optionLanguageAuto": {
+    "message": "خودکار"
+  },
+  "optionLanguageHint": {
+    "message": "تغییر زبان باعث بارگذاری مجدد این صفحه میشود."
+  },
   "paletteClose": {
     "message": "بستن"
+  },
+  "paletteCmdVersion": {
+    "message": "اطلاعات نسخه"
+  },
+  "paletteCmdLang": {
+    "message": "تغییر زبان…"
+  },
+  "paletteCmdLangUsage": {
+    "message": "کاربرد: /lang و سپس کد زبان، مانند: /lang en، /lang zh_CN، /lang ja."
+  },
+  "versionDialogTitle": {
+    "message": "vBookmarks $version$",
+    "placeholders": {
+      "version": {
+        "content": "$1"
+      }
+    }
+  },
+  "versionDialogCopy": {
+    "message": "کپی اطلاعات"
+  },
+  "versionDialogCopied": {
+    "message": "کپی شد"
+  },
+  "versionMetaVersion": {
+    "message": "نسخه افزونه"
+  },
+  "versionMetaAnnounce": {
+    "message": "تازهها"
+  },
+  "versionMetaAnnounceNone": {
+    "message": "اطلاعیهای بارگذاری نشده است"
+  },
+  "versionMetaBrowser": {
+    "message": "مرورگر"
+  },
+  "versionMetaOS": {
+    "message": "سیستم عامل"
+  },
+  "versionMetaChannel": {
+    "message": "کانال"
+  },
+  "versionMetaLanguage": {
+    "message": "زبان"
+  },
+  "versionMetaUserAgent": {
+    "message": "عامل کاربر"
   },
   "optionZoom": {
     "message": "بزرگنمایی"

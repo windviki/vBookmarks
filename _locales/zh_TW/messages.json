@@ -959,8 +959,64 @@
   "optionThemePaper": {
     "message": "紙色（淺色）"
   },
+  "optionLanguage": {
+    "message": "語言"
+  },
+  "optionLanguageAuto": {
+    "message": "自動"
+  },
+  "optionLanguageHint": {
+    "message": "變更語言會重新載入此頁面。"
+  },
   "paletteClose": {
     "message": "關閉"
+  },
+  "paletteCmdVersion": {
+    "message": "版本資訊"
+  },
+  "paletteCmdLang": {
+    "message": "切換語言…"
+  },
+  "paletteCmdLangUsage": {
+    "message": "用法：/lang 後接語言代碼，例如 /lang en、/lang zh_CN、/lang ja。"
+  },
+  "versionDialogTitle": {
+    "message": "vBookmarks $version$",
+    "placeholders": {
+      "version": {
+        "content": "$1"
+      }
+    }
+  },
+  "versionDialogCopy": {
+    "message": "複製資訊"
+  },
+  "versionDialogCopied": {
+    "message": "已複製"
+  },
+  "versionMetaVersion": {
+    "message": "擴充功能版本"
+  },
+  "versionMetaAnnounce": {
+    "message": "更新內容"
+  },
+  "versionMetaAnnounceNone": {
+    "message": "暫無更新說明"
+  },
+  "versionMetaBrowser": {
+    "message": "瀏覽器"
+  },
+  "versionMetaOS": {
+    "message": "作業系統"
+  },
+  "versionMetaChannel": {
+    "message": "更新通道"
+  },
+  "versionMetaLanguage": {
+    "message": "語言"
+  },
+  "versionMetaUserAgent": {
+    "message": "使用者代理"
   },
   "optionZoom": {
     "message": "縮放"

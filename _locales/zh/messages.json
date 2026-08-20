@@ -959,8 +959,64 @@
   "optionThemePaper": {
     "message": "纸色（浅色）"
   },
+  "optionLanguage": {
+    "message": "语言"
+  },
+  "optionLanguageAuto": {
+    "message": "自动"
+  },
+  "optionLanguageHint": {
+    "message": "切换语言将重新加载此页面。"
+  },
   "paletteClose": {
     "message": "关闭"
+  },
+  "paletteCmdVersion": {
+    "message": "版本信息"
+  },
+  "paletteCmdLang": {
+    "message": "切换语言…"
+  },
+  "paletteCmdLangUsage": {
+    "message": "用法：/lang 后跟区域设置代码，例如 /lang en、/lang zh_CN、/lang ja。"
+  },
+  "versionDialogTitle": {
+    "message": "vBookmarks $version$",
+    "placeholders": {
+      "version": {
+        "content": "$1"
+      }
+    }
+  },
+  "versionDialogCopy": {
+    "message": "复制信息"
+  },
+  "versionDialogCopied": {
+    "message": "已复制"
+  },
+  "versionMetaVersion": {
+    "message": "扩展版本"
+  },
+  "versionMetaAnnounce": {
+    "message": "更新内容"
+  },
+  "versionMetaAnnounceNone": {
+    "message": "暂无更新说明"
+  },
+  "versionMetaBrowser": {
+    "message": "浏览器"
+  },
+  "versionMetaOS": {
+    "message": "操作系统"
+  },
+  "versionMetaChannel": {
+    "message": "渠道"
+  },
+  "versionMetaLanguage": {
+    "message": "语言"
+  },
+  "versionMetaUserAgent": {
+    "message": "用户代理"
   },
   "optionZoom": {
     "message": "缩放"

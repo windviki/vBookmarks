@@ -970,8 +970,64 @@
   "optionThemePaper": {
     "message": "Hârtie (luminos)"
   },
+  "optionLanguage": {
+    "message": "Limbă"
+  },
+  "optionLanguageAuto": {
+    "message": "Automat"
+  },
+  "optionLanguageHint": {
+    "message": "Schimbarea limbii reîncarcă această pagină."
+  },
   "paletteClose": {
     "message": "Închide"
+  },
+  "paletteCmdVersion": {
+    "message": "Informații versiune"
+  },
+  "paletteCmdLang": {
+    "message": "Schimbă limba…"
+  },
+  "paletteCmdLangUsage": {
+    "message": "Utilizare: /lang urmat de un cod de localizare — ex. /lang en, /lang zh_CN, /lang ja."
+  },
+  "versionDialogTitle": {
+    "message": "vBookmarks $version$",
+    "placeholders": {
+      "version": {
+        "content": "$1"
+      }
+    }
+  },
+  "versionDialogCopy": {
+    "message": "Copiază informațiile"
+  },
+  "versionDialogCopied": {
+    "message": "Copiat"
+  },
+  "versionMetaVersion": {
+    "message": "Versiune extensie"
+  },
+  "versionMetaAnnounce": {
+    "message": "Ce e nou"
+  },
+  "versionMetaAnnounceNone": {
+    "message": "Niciun anunț încărcat"
+  },
+  "versionMetaBrowser": {
+    "message": "Browser"
+  },
+  "versionMetaOS": {
+    "message": "Sistem de operare"
+  },
+  "versionMetaChannel": {
+    "message": "Canal"
+  },
+  "versionMetaLanguage": {
+    "message": "Limbă"
+  },
+  "versionMetaUserAgent": {
+    "message": "Agent utilizator"
   },
   "optionZoom": {
     "message": "Zoom"

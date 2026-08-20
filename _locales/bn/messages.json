@@ -970,8 +970,64 @@
   "optionThemePaper": {
     "message": "কাগজ (হালকা)"
   },
+  "optionLanguage": {
+    "message": "ভাষা"
+  },
+  "optionLanguageAuto": {
+    "message": "স্বয়ংক্রিয়"
+  },
+  "optionLanguageHint": {
+    "message": "ভাষা পরিবর্তন করলে এই পৃষ্ঠাটি পুনরায় লোড হবে।"
+  },
   "paletteClose": {
     "message": "বন্ধ"
+  },
+  "paletteCmdVersion": {
+    "message": "সংস্করণ তথ্য"
+  },
+  "paletteCmdLang": {
+    "message": "ভাষা পরিবর্তন করুন…"
+  },
+  "paletteCmdLangUsage": {
+    "message": "ব্যবহার: /lang এর পরে লোকেল কোড দিন — যেমন /lang en, /lang zh_CN, /lang ja।"
+  },
+  "versionDialogTitle": {
+    "message": "vBookmarks $version$",
+    "placeholders": {
+      "version": {
+        "content": "$1"
+      }
+    }
+  },
+  "versionDialogCopy": {
+    "message": "তথ্য কপি করুন"
+  },
+  "versionDialogCopied": {
+    "message": "কপি হয়েছে"
+  },
+  "versionMetaVersion": {
+    "message": "এক্সটেনশন সংস্করণ"
+  },
+  "versionMetaAnnounce": {
+    "message": "নতুন কী আছে"
+  },
+  "versionMetaAnnounceNone": {
+    "message": "কোনো ঘোষণা লোড হয়নি"
+  },
+  "versionMetaBrowser": {
+    "message": "ব্রাউজার"
+  },
+  "versionMetaOS": {
+    "message": "OS"
+  },
+  "versionMetaChannel": {
+    "message": "চ্যানেল"
+  },
+  "versionMetaLanguage": {
+    "message": "ভাষা"
+  },
+  "versionMetaUserAgent": {
+    "message": "ইউজার এজেন্ট"
   },
   "optionZoom": {
     "message": "জুম"

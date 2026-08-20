@@ -970,8 +970,64 @@
   "optionThemePaper": {
     "message": "Papir (svetlo)"
   },
+  "optionLanguage": {
+    "message": "Jezik"
+  },
+  "optionLanguageAuto": {
+    "message": "Samodejno"
+  },
+  "optionLanguageHint": {
+    "message": "Sprememba jezika znova naloži to stran."
+  },
   "paletteClose": {
     "message": "Zapri"
+  },
+  "paletteCmdVersion": {
+    "message": "Informacije o različici"
+  },
+  "paletteCmdLang": {
+    "message": "Preklopi jezik…"
+  },
+  "paletteCmdLangUsage": {
+    "message": "Uporaba: /lang z oznako jezika — npr. /lang en, /lang zh_CN, /lang ja."
+  },
+  "versionDialogTitle": {
+    "message": "vBookmarks $version$",
+    "placeholders": {
+      "version": {
+        "content": "$1"
+      }
+    }
+  },
+  "versionDialogCopy": {
+    "message": "Kopiraj podatke"
+  },
+  "versionDialogCopied": {
+    "message": "Kopirano"
+  },
+  "versionMetaVersion": {
+    "message": "Različica razširitve"
+  },
+  "versionMetaAnnounce": {
+    "message": "Kaj je novega"
+  },
+  "versionMetaAnnounceNone": {
+    "message": "Ni naloženega obvestila"
+  },
+  "versionMetaBrowser": {
+    "message": "Brskalnik"
+  },
+  "versionMetaOS": {
+    "message": "OS"
+  },
+  "versionMetaChannel": {
+    "message": "Kanal"
+  },
+  "versionMetaLanguage": {
+    "message": "Jezik"
+  },
+  "versionMetaUserAgent": {
+    "message": "Uporabniški agent"
   },
   "optionZoom": {
     "message": "Povečava"

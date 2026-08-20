@@ -970,8 +970,64 @@
   "optionThemePaper": {
     "message": "Papier (licht)"
   },
+  "optionLanguage": {
+    "message": "Taal"
+  },
+  "optionLanguageAuto": {
+    "message": "Automatisch"
+  },
+  "optionLanguageHint": {
+    "message": "Het wijzigen van de taal herlaadt deze pagina."
+  },
   "paletteClose": {
     "message": "Sluiten"
+  },
+  "paletteCmdVersion": {
+    "message": "Versie-info"
+  },
+  "paletteCmdLang": {
+    "message": "Taal wijzigen…"
+  },
+  "paletteCmdLangUsage": {
+    "message": "Gebruik: /lang gevolgd door een localecode — bijv. /lang en, /lang zh_CN, /lang ja."
+  },
+  "versionDialogTitle": {
+    "message": "vBookmarks $version$",
+    "placeholders": {
+      "version": {
+        "content": "$1"
+      }
+    }
+  },
+  "versionDialogCopy": {
+    "message": "Info kopiëren"
+  },
+  "versionDialogCopied": {
+    "message": "Gekopieerd"
+  },
+  "versionMetaVersion": {
+    "message": "Extensieversie"
+  },
+  "versionMetaAnnounce": {
+    "message": "Wat is er nieuw"
+  },
+  "versionMetaAnnounceNone": {
+    "message": "Geen aankondiging geladen"
+  },
+  "versionMetaBrowser": {
+    "message": "Browser"
+  },
+  "versionMetaOS": {
+    "message": "Besturingssysteem"
+  },
+  "versionMetaChannel": {
+    "message": "Kanaal"
+  },
+  "versionMetaLanguage": {
+    "message": "Taal"
+  },
+  "versionMetaUserAgent": {
+    "message": "User-agent"
   },
   "optionZoom": {
     "message": "Zoom"

@@ -970,8 +970,64 @@
   "optionThemePaper": {
     "message": "ورق (فاتح)"
   },
+  "optionLanguage": {
+    "message": "اللغة"
+  },
+  "optionLanguageAuto": {
+    "message": "تلقائي"
+  },
+  "optionLanguageHint": {
+    "message": "تغيير اللغة يعيد تحميل هذه الصفحة."
+  },
   "paletteClose": {
     "message": "إغلاق"
+  },
+  "paletteCmdVersion": {
+    "message": "معلومات الإصدار"
+  },
+  "paletteCmdLang": {
+    "message": "تبديل اللغة…"
+  },
+  "paletteCmdLangUsage": {
+    "message": "الاستخدام: /lang متبوعًا برمز اللغة — مثل: /lang en، /lang zh_CN، /lang ja."
+  },
+  "versionDialogTitle": {
+    "message": "vBookmarks $version$",
+    "placeholders": {
+      "version": {
+        "content": "$1"
+      }
+    }
+  },
+  "versionDialogCopy": {
+    "message": "نسخ المعلومات"
+  },
+  "versionDialogCopied": {
+    "message": "تم النسخ"
+  },
+  "versionMetaVersion": {
+    "message": "إصدار الامتداد"
+  },
+  "versionMetaAnnounce": {
+    "message": "ما الجديد"
+  },
+  "versionMetaAnnounceNone": {
+    "message": "لا توجد أخبار محمّلة"
+  },
+  "versionMetaBrowser": {
+    "message": "المتصفح"
+  },
+  "versionMetaOS": {
+    "message": "نظام التشغيل"
+  },
+  "versionMetaChannel": {
+    "message": "القناة"
+  },
+  "versionMetaLanguage": {
+    "message": "اللغة"
+  },
+  "versionMetaUserAgent": {
+    "message": "وكيل المستخدم"
   },
   "optionZoom": {
     "message": "تكبير"

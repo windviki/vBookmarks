@@ -970,8 +970,64 @@
   "optionThemePaper": {
     "message": "Kertas (terang)"
   },
+  "optionLanguage": {
+    "message": "Bahasa"
+  },
+  "optionLanguageAuto": {
+    "message": "Otomatis"
+  },
+  "optionLanguageHint": {
+    "message": "Mengubah bahasa akan memuat ulang halaman ini."
+  },
   "paletteClose": {
     "message": "Tutup"
+  },
+  "paletteCmdVersion": {
+    "message": "Info versi"
+  },
+  "paletteCmdLang": {
+    "message": "Ganti bahasa…"
+  },
+  "paletteCmdLangUsage": {
+    "message": "Penggunaan: /lang diikuti kode lokal — mis. /lang en, /lang zh_CN, /lang ja."
+  },
+  "versionDialogTitle": {
+    "message": "vBookmarks $version$",
+    "placeholders": {
+      "version": {
+        "content": "$1"
+      }
+    }
+  },
+  "versionDialogCopy": {
+    "message": "Salin info"
+  },
+  "versionDialogCopied": {
+    "message": "Tersalin"
+  },
+  "versionMetaVersion": {
+    "message": "Versi ekstensi"
+  },
+  "versionMetaAnnounce": {
+    "message": "Yang baru"
+  },
+  "versionMetaAnnounceNone": {
+    "message": "Tidak ada pengumuman yang dimuat."
+  },
+  "versionMetaBrowser": {
+    "message": "Peramban"
+  },
+  "versionMetaOS": {
+    "message": "OS"
+  },
+  "versionMetaChannel": {
+    "message": "Saluran"
+  },
+  "versionMetaLanguage": {
+    "message": "Bahasa"
+  },
+  "versionMetaUserAgent": {
+    "message": "Agen pengguna"
   },
   "optionZoom": {
     "message": "Perbesar"

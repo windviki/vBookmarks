@@ -970,8 +970,64 @@
   "optionThemePaper": {
     "message": "Paperi (vaalea)"
   },
+  "optionLanguage": {
+    "message": "Kieli"
+  },
+  "optionLanguageAuto": {
+    "message": "Automaattinen"
+  },
+  "optionLanguageHint": {
+    "message": "Kielen vaihtaminen lataa tämän sivun uudelleen."
+  },
   "paletteClose": {
     "message": "Sulje"
+  },
+  "paletteCmdVersion": {
+    "message": "Versiotiedot"
+  },
+  "paletteCmdLang": {
+    "message": "Vaihda kieltä…"
+  },
+  "paletteCmdLangUsage": {
+    "message": "Käyttö: /lang ja sen jälkeen lokaalikoodi — esim. /lang en, /lang zh_CN, /lang ja."
+  },
+  "versionDialogTitle": {
+    "message": "vBookmarks $version$",
+    "placeholders": {
+      "version": {
+        "content": "$1"
+      }
+    }
+  },
+  "versionDialogCopy": {
+    "message": "Kopioi tiedot"
+  },
+  "versionDialogCopied": {
+    "message": "Kopioitu"
+  },
+  "versionMetaVersion": {
+    "message": "Laajennuksen versio"
+  },
+  "versionMetaAnnounce": {
+    "message": "Mitä uutta"
+  },
+  "versionMetaAnnounceNone": {
+    "message": "Tiedotetta ei ole ladattu"
+  },
+  "versionMetaBrowser": {
+    "message": "Selain"
+  },
+  "versionMetaOS": {
+    "message": "Käyttöjärjestelmä"
+  },
+  "versionMetaChannel": {
+    "message": "Kanava"
+  },
+  "versionMetaLanguage": {
+    "message": "Kieli"
+  },
+  "versionMetaUserAgent": {
+    "message": "Käyttäjäagentti"
   },
   "optionZoom": {
     "message": "Zoomaus"

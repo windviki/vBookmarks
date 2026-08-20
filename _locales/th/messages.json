@@ -970,8 +970,64 @@
   "optionThemePaper": {
     "message": "กระดาษ (สว่าง)"
   },
+  "optionLanguage": {
+    "message": "ภาษา"
+  },
+  "optionLanguageAuto": {
+    "message": "อัตโนมัติ"
+  },
+  "optionLanguageHint": {
+    "message": "การเปลี่ยนภาษาจะโหลดหน้านี้ใหม่"
+  },
   "paletteClose": {
     "message": "ปิด"
+  },
+  "paletteCmdVersion": {
+    "message": "ข้อมูลเวอร์ชัน"
+  },
+  "paletteCmdLang": {
+    "message": "เปลี่ยนภาษา…"
+  },
+  "paletteCmdLangUsage": {
+    "message": "การใช้งาน: /lang ตามด้วยรหัส locale — เช่น /lang en, /lang zh_CN, /lang ja."
+  },
+  "versionDialogTitle": {
+    "message": "vBookmarks $version$",
+    "placeholders": {
+      "version": {
+        "content": "$1"
+      }
+    }
+  },
+  "versionDialogCopy": {
+    "message": "คัดลอกข้อมูล"
+  },
+  "versionDialogCopied": {
+    "message": "คัดลอกแล้ว"
+  },
+  "versionMetaVersion": {
+    "message": "เวอร์ชันส่วนขยาย"
+  },
+  "versionMetaAnnounce": {
+    "message": "มีอะไรใหม่"
+  },
+  "versionMetaAnnounceNone": {
+    "message": "ไม่มีประกาศ"
+  },
+  "versionMetaBrowser": {
+    "message": "เบราว์เซอร์"
+  },
+  "versionMetaOS": {
+    "message": "ระบบปฏิบัติการ"
+  },
+  "versionMetaChannel": {
+    "message": "ช่องทาง"
+  },
+  "versionMetaLanguage": {
+    "message": "ภาษา"
+  },
+  "versionMetaUserAgent": {
+    "message": "ยูสเซอร์เอเจนต์"
   },
   "optionZoom": {
     "message": "ซูม"

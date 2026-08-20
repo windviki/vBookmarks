@@ -969,8 +969,64 @@
   "optionThemePaper": {
     "message": "Хартија (светла)"
   },
+  "optionLanguage": {
+    "message": "Јазик"
+  },
+  "optionLanguageAuto": {
+    "message": "Авто"
+  },
+  "optionLanguageHint": {
+    "message": "Промената на јазикот ја вчитува страницата повторно."
+  },
   "paletteClose": {
     "message": "Затвори"
+  },
+  "paletteCmdVersion": {
+    "message": "Информации за верзијата"
+  },
+  "paletteCmdLang": {
+    "message": "Смени јазик…"
+  },
+  "paletteCmdLangUsage": {
+    "message": "Употреба: /lang проследено со код на локализација — на пр. /lang en, /lang zh_CN, /lang ja."
+  },
+  "versionDialogTitle": {
+    "message": "vBookmarks $version$",
+    "placeholders": {
+      "version": {
+        "content": "$1"
+      }
+    }
+  },
+  "versionDialogCopy": {
+    "message": "Копирај информации"
+  },
+  "versionDialogCopied": {
+    "message": "Копирано"
+  },
+  "versionMetaVersion": {
+    "message": "Верзија на додатокот"
+  },
+  "versionMetaAnnounce": {
+    "message": "Што е ново"
+  },
+  "versionMetaAnnounceNone": {
+    "message": "Нема вчитано соопштение"
+  },
+  "versionMetaBrowser": {
+    "message": "Прелистувач"
+  },
+  "versionMetaOS": {
+    "message": "ОС"
+  },
+  "versionMetaChannel": {
+    "message": "Канал"
+  },
+  "versionMetaLanguage": {
+    "message": "Јазик"
+  },
+  "versionMetaUserAgent": {
+    "message": "Кориснички агент"
   },
   "optionZoom": {
     "message": "Зум"

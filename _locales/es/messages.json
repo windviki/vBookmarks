@@ -970,8 +970,64 @@
   "optionThemePaper": {
     "message": "Papel (claro)"
   },
+  "optionLanguage": {
+    "message": "Idioma"
+  },
+  "optionLanguageAuto": {
+    "message": "Automático"
+  },
+  "optionLanguageHint": {
+    "message": "Cambiar el idioma recarga esta página."
+  },
   "paletteClose": {
     "message": "Cerrar"
+  },
+  "paletteCmdVersion": {
+    "message": "Información de la versión"
+  },
+  "paletteCmdLang": {
+    "message": "Cambiar idioma…"
+  },
+  "paletteCmdLangUsage": {
+    "message": "Uso: /lang seguido de un código de idioma; p. ej., /lang en, /lang zh_CN, /lang ja."
+  },
+  "versionDialogTitle": {
+    "message": "vBookmarks $version$",
+    "placeholders": {
+      "version": {
+        "content": "$1"
+      }
+    }
+  },
+  "versionDialogCopy": {
+    "message": "Copiar información"
+  },
+  "versionDialogCopied": {
+    "message": "Copiado"
+  },
+  "versionMetaVersion": {
+    "message": "Versión de la extensión"
+  },
+  "versionMetaAnnounce": {
+    "message": "Novedades"
+  },
+  "versionMetaAnnounceNone": {
+    "message": "No hay ningún anuncio cargado."
+  },
+  "versionMetaBrowser": {
+    "message": "Navegador"
+  },
+  "versionMetaOS": {
+    "message": "Sistema operativo"
+  },
+  "versionMetaChannel": {
+    "message": "Canal"
+  },
+  "versionMetaLanguage": {
+    "message": "Idioma"
+  },
+  "versionMetaUserAgent": {
+    "message": "Agente de usuario"
   },
   "optionZoom": {
     "message": "Zoom"

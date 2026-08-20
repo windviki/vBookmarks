@@ -970,8 +970,64 @@
   "optionThemePaper": {
     "message": "נייר (בהיר)"
   },
+  "optionLanguage": {
+    "message": "שפה"
+  },
+  "optionLanguageAuto": {
+    "message": "אוטומטי"
+  },
+  "optionLanguageHint": {
+    "message": "שינוי השפה יטען מחדש את הדף הזה."
+  },
   "paletteClose": {
     "message": "סגור"
+  },
+  "paletteCmdVersion": {
+    "message": "מידע גרסה"
+  },
+  "paletteCmdLang": {
+    "message": "החלף שפה…"
+  },
+  "paletteCmdLangUsage": {
+    "message": "שימוש: /lang ואחריו קוד שפה — למשל /lang en, /lang zh_CN, /lang ja."
+  },
+  "versionDialogTitle": {
+    "message": "vBookmarks $version$",
+    "placeholders": {
+      "version": {
+        "content": "$1"
+      }
+    }
+  },
+  "versionDialogCopy": {
+    "message": "העתק מידע"
+  },
+  "versionDialogCopied": {
+    "message": "הועתק"
+  },
+  "versionMetaVersion": {
+    "message": "גרסת הרחבה"
+  },
+  "versionMetaAnnounce": {
+    "message": "מה חדש"
+  },
+  "versionMetaAnnounceNone": {
+    "message": "לא נטענה הודעה"
+  },
+  "versionMetaBrowser": {
+    "message": "דפדפן"
+  },
+  "versionMetaOS": {
+    "message": "מערכת הפעלה"
+  },
+  "versionMetaChannel": {
+    "message": "ערוץ"
+  },
+  "versionMetaLanguage": {
+    "message": "שפה"
+  },
+  "versionMetaUserAgent": {
+    "message": "סוכן משתמש"
   },
   "optionZoom": {
     "message": "זום"

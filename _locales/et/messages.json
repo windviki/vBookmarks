@@ -970,8 +970,64 @@
   "optionThemePaper": {
     "message": "Paber (hele)"
   },
+  "optionLanguage": {
+    "message": "Keel"
+  },
+  "optionLanguageAuto": {
+    "message": "Automaatne"
+  },
+  "optionLanguageHint": {
+    "message": "Keele muutmine laadib selle lehe uuesti."
+  },
   "paletteClose": {
     "message": "Sule"
+  },
+  "paletteCmdVersion": {
+    "message": "Versiooniteave"
+  },
+  "paletteCmdLang": {
+    "message": "Vaheta keelt…"
+  },
+  "paletteCmdLangUsage": {
+    "message": "Kasutus: /lang koos lokaali koodiga — nt /lang en, /lang zh_CN, /lang ja."
+  },
+  "versionDialogTitle": {
+    "message": "vBookmarks $version$",
+    "placeholders": {
+      "version": {
+        "content": "$1"
+      }
+    }
+  },
+  "versionDialogCopy": {
+    "message": "Kopeeri teave"
+  },
+  "versionDialogCopied": {
+    "message": "Kopeeritud"
+  },
+  "versionMetaVersion": {
+    "message": "Laienduse versioon"
+  },
+  "versionMetaAnnounce": {
+    "message": "Mis on uut"
+  },
+  "versionMetaAnnounceNone": {
+    "message": "Teadaannet pole laaditud"
+  },
+  "versionMetaBrowser": {
+    "message": "Brauser"
+  },
+  "versionMetaOS": {
+    "message": "OS"
+  },
+  "versionMetaChannel": {
+    "message": "Kanal"
+  },
+  "versionMetaLanguage": {
+    "message": "Keel"
+  },
+  "versionMetaUserAgent": {
+    "message": "Kasutajaagent"
   },
   "optionZoom": {
     "message": "Suum"

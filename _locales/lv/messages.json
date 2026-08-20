@@ -970,8 +970,64 @@
   "optionThemePaper": {
     "message": "Papīrs (gaišs)"
   },
+  "optionLanguage": {
+    "message": "Valoda"
+  },
+  "optionLanguageAuto": {
+    "message": "Automātiski"
+  },
+  "optionLanguageHint": {
+    "message": "Valodas maiņa pārlādē šo lapu."
+  },
   "paletteClose": {
     "message": "Aizvērt"
+  },
+  "paletteCmdVersion": {
+    "message": "Versijas informācija"
+  },
+  "paletteCmdLang": {
+    "message": "Pārslēgt valodu…"
+  },
+  "paletteCmdLangUsage": {
+    "message": "Lietošana: /lang, kam seko lokalizācijas kods — piem., /lang en, /lang zh_CN, /lang ja."
+  },
+  "versionDialogTitle": {
+    "message": "vBookmarks $version$",
+    "placeholders": {
+      "version": {
+        "content": "$1"
+      }
+    }
+  },
+  "versionDialogCopy": {
+    "message": "Kopēt informāciju"
+  },
+  "versionDialogCopied": {
+    "message": "Nokopēts"
+  },
+  "versionMetaVersion": {
+    "message": "Paplašinājuma versija"
+  },
+  "versionMetaAnnounce": {
+    "message": "Jaunumi"
+  },
+  "versionMetaAnnounceNone": {
+    "message": "Nav ielādēts paziņojums"
+  },
+  "versionMetaBrowser": {
+    "message": "Pārlūkprogramma"
+  },
+  "versionMetaOS": {
+    "message": "Operētājsistēma"
+  },
+  "versionMetaChannel": {
+    "message": "Kanāls"
+  },
+  "versionMetaLanguage": {
+    "message": "Valoda"
+  },
+  "versionMetaUserAgent": {
+    "message": "Lietotāja aģents"
   },
   "optionZoom": {
     "message": "Tālummaiņa"

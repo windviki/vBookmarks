@@ -970,8 +970,64 @@
   "optionThemePaper": {
     "message": "कागज़ (हल्का)"
   },
+  "optionLanguage": {
+    "message": "भाषा"
+  },
+  "optionLanguageAuto": {
+    "message": "ऑटो"
+  },
+  "optionLanguageHint": {
+    "message": "भाषा बदलने पर यह पृष्ठ पुनः लोड होगा।"
+  },
   "paletteClose": {
     "message": "बंद करें"
+  },
+  "paletteCmdVersion": {
+    "message": "संस्करण जानकारी"
+  },
+  "paletteCmdLang": {
+    "message": "भाषा बदलें…"
+  },
+  "paletteCmdLangUsage": {
+    "message": "उपयोग: /lang के बाद लोकेल कोड — जैसे /lang en, /lang zh_CN, /lang ja।"
+  },
+  "versionDialogTitle": {
+    "message": "vBookmarks $version$",
+    "placeholders": {
+      "version": {
+        "content": "$1"
+      }
+    }
+  },
+  "versionDialogCopy": {
+    "message": "जानकारी कॉपी करें"
+  },
+  "versionDialogCopied": {
+    "message": "कॉपी हो गया"
+  },
+  "versionMetaVersion": {
+    "message": "एक्सटेंशन संस्करण"
+  },
+  "versionMetaAnnounce": {
+    "message": "नया क्या है"
+  },
+  "versionMetaAnnounceNone": {
+    "message": "कोई घोषणा लोड नहीं हुई"
+  },
+  "versionMetaBrowser": {
+    "message": "ब्राउज़र"
+  },
+  "versionMetaOS": {
+    "message": "ओएस"
+  },
+  "versionMetaChannel": {
+    "message": "चैनल"
+  },
+  "versionMetaLanguage": {
+    "message": "भाषा"
+  },
+  "versionMetaUserAgent": {
+    "message": "यूज़र एजेंट"
   },
   "optionZoom": {
     "message": "ज़ूम"

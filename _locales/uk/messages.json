@@ -970,8 +970,64 @@
   "optionThemePaper": {
     "message": "Папір (світла)"
   },
+  "optionLanguage": {
+    "message": "Мова"
+  },
+  "optionLanguageAuto": {
+    "message": "Авто"
+  },
+  "optionLanguageHint": {
+    "message": "Зміна мови перезавантажує цю сторінку."
+  },
   "paletteClose": {
     "message": "Закрити"
+  },
+  "paletteCmdVersion": {
+    "message": "Інформація про версію"
+  },
+  "paletteCmdLang": {
+    "message": "Змінити мову…"
+  },
+  "paletteCmdLangUsage": {
+    "message": "Використання: /lang, після якого вказується код локалі — напр. /lang en, /lang zh_CN, /lang ja."
+  },
+  "versionDialogTitle": {
+    "message": "vBookmarks $version$",
+    "placeholders": {
+      "version": {
+        "content": "$1"
+      }
+    }
+  },
+  "versionDialogCopy": {
+    "message": "Копіювати інформацію"
+  },
+  "versionDialogCopied": {
+    "message": "Скопійовано"
+  },
+  "versionMetaVersion": {
+    "message": "Версія розширення"
+  },
+  "versionMetaAnnounce": {
+    "message": "Що нового"
+  },
+  "versionMetaAnnounceNone": {
+    "message": "Анонс не завантажено"
+  },
+  "versionMetaBrowser": {
+    "message": "Браузер"
+  },
+  "versionMetaOS": {
+    "message": "ОС"
+  },
+  "versionMetaChannel": {
+    "message": "Канал"
+  },
+  "versionMetaLanguage": {
+    "message": "Мова"
+  },
+  "versionMetaUserAgent": {
+    "message": "Користувацький агент"
   },
   "optionZoom": {
     "message": "Масштаб"

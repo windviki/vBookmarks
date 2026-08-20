@@ -970,8 +970,64 @@
   "optionThemePaper": {
     "message": "Popierius (šviesi)"
   },
+  "optionLanguage": {
+    "message": "Kalba"
+  },
+  "optionLanguageAuto": {
+    "message": "Automatiškai"
+  },
+  "optionLanguageHint": {
+    "message": "Kalbos perjungimas perkrauna šį puslapį."
+  },
   "paletteClose": {
     "message": "Uždaryti"
+  },
+  "paletteCmdVersion": {
+    "message": "Versijos informacija"
+  },
+  "paletteCmdLang": {
+    "message": "Perjungti kalbą…"
+  },
+  "paletteCmdLangUsage": {
+    "message": "Naudojimas: po /lang eina lokalės kodas — pvz., /lang en, /lang zh_CN, /lang ja."
+  },
+  "versionDialogTitle": {
+    "message": "vBookmarks $version$",
+    "placeholders": {
+      "version": {
+        "content": "$1"
+      }
+    }
+  },
+  "versionDialogCopy": {
+    "message": "Kopijuoti informaciją"
+  },
+  "versionDialogCopied": {
+    "message": "Nukopijuota"
+  },
+  "versionMetaVersion": {
+    "message": "Plėtinio versija"
+  },
+  "versionMetaAnnounce": {
+    "message": "Kas naujo"
+  },
+  "versionMetaAnnounceNone": {
+    "message": "Nėra įkeltų pranešimų"
+  },
+  "versionMetaBrowser": {
+    "message": "Naršyklė"
+  },
+  "versionMetaOS": {
+    "message": "OS"
+  },
+  "versionMetaChannel": {
+    "message": "Kanalas"
+  },
+  "versionMetaLanguage": {
+    "message": "Kalba"
+  },
+  "versionMetaUserAgent": {
+    "message": "Vartotojo agentas"
   },
   "optionZoom": {
     "message": "Mastelis"

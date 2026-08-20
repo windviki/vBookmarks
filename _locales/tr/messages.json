@@ -970,8 +970,64 @@
   "optionThemePaper": {
     "message": "Kağıt (açık)"
   },
+  "optionLanguage": {
+    "message": "Dil"
+  },
+  "optionLanguageAuto": {
+    "message": "Otomatik"
+  },
+  "optionLanguageHint": {
+    "message": "Dili değiştirmek bu sayfayı yeniden yükler."
+  },
   "paletteClose": {
     "message": "Kapat"
+  },
+  "paletteCmdVersion": {
+    "message": "Sürüm bilgisi"
+  },
+  "paletteCmdLang": {
+    "message": "Dil değiştir…"
+  },
+  "paletteCmdLangUsage": {
+    "message": "Kullanım: /lang ardından bir yerel ayar kodu — örn. /lang en, /lang zh_CN, /lang ja."
+  },
+  "versionDialogTitle": {
+    "message": "vBookmarks $version$",
+    "placeholders": {
+      "version": {
+        "content": "$1"
+      }
+    }
+  },
+  "versionDialogCopy": {
+    "message": "Bilgileri kopyala"
+  },
+  "versionDialogCopied": {
+    "message": "Kopyalandı"
+  },
+  "versionMetaVersion": {
+    "message": "Uzantı sürümü"
+  },
+  "versionMetaAnnounce": {
+    "message": "Yenilikler"
+  },
+  "versionMetaAnnounceNone": {
+    "message": "Duyuru yüklenmedi"
+  },
+  "versionMetaBrowser": {
+    "message": "Tarayıcı"
+  },
+  "versionMetaOS": {
+    "message": "İşletim sistemi"
+  },
+  "versionMetaChannel": {
+    "message": "Kanal"
+  },
+  "versionMetaLanguage": {
+    "message": "Dil"
+  },
+  "versionMetaUserAgent": {
+    "message": "Kullanıcı aracısı"
   },
   "optionZoom": {
     "message": "Yakınlaştırma"
