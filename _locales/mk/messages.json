@@ -463,7 +463,7 @@
     "message": "Оди до приказот на групи на јазичиња"
   },
   "tabGroupsActivateGroup": {
-    "message": "Активирај група јазичиња"
+    "message": "Оди во група јазичиња"
   },
   "tabGroupsRenameGroup": {
     "message": "Преименувај група јазичиња"
@@ -477,8 +477,11 @@
   "tabGroupsSleepGroup": {
     "message": "Замри група јазичиња"
   },
+  "tabGroupsWakeGroup": {
+    "message": "Разбуди група јазичиња"
+  },
   "tabGroupsActivateTab": {
-    "message": "Активирај јазиче"
+    "message": "Оди на јазиче"
   },
   "tabGroupsCollapseGroup": {
     "message": "Собери група"
@@ -498,14 +501,34 @@
   "tabGroupsSyncCollapseHint": {
     "message": "Кога е означено, собирањето или проширувањето на група во овој приказ исто така го ажурира таб-групата во прелистувачот. Исклучено по дифолт, така што преклопувањето на приказот останува локално."
   },
-  "tabGroupsColorBorder": {
-    "message": "Прикажи обојена граница на групата"
+  "tabGroupsColorStyle": {
+    "message": "Стил на боја на група јазичиња"
   },
-  "tabGroupsColorBorderHint": {
-    "message": "Додава обоена лева ивица на заглавието и редовите на секоја група јазичиња, за бојата на групата да биде видлива на прв поглед. Обоената точка останува вклучена по дифолт. Исклучено по дифолт."
+  "tabGroupsColorStyleHint": {
+    "message": "Исклучено прикажува само точка со боја. Лента на работ црта обоена лента по левиот раб на групата. Линија за поврзување црта обоена линија под точката на групата со ознака по ред, поврзувајќи ја целата група во едно дрво."
+  },
+  "tabGroupsColorStyleOff": {
+    "message": "Исклучено (само точка со боја)"
+  },
+  "tabGroupsColorStyleEdge": {
+    "message": "Лента на работ"
+  },
+  "tabGroupsColorStyleLine": {
+    "message": "Линија за поврзување"
   },
   "tabGroupsBookmarked": {
     "message": "Обележано"
+  },
+  "tabGroupsRemoveBookmark": {
+    "message": "Отстрани обележувач"
+  },
+  "tabGroupsBookmarkRemoved": {
+    "message": "Отстранети $count$ обележувач(и)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsPinned": {
     "message": "Закачена картичка"
@@ -519,11 +542,17 @@
   "tabGroupsUnpinTab": {
     "message": "Откачи картичка"
   },
+  "tabGroupsSleepTab": {
+    "message": "Заспиј јазиче"
+  },
+  "tabGroupsWakeTab": {
+    "message": "Разбуди јазиче"
+  },
   "tabGroupsOpenGroups": {
     "message": "Отворени групи јазичиња"
   },
   "tabGroupsClosedGroups": {
-    "message": "Затворени групи јазичиња"
+    "message": "Неодамна затворени"
   },
   "tabGroupsUngroupedTabs": {
     "message": "Негрупирани јазичиња"
@@ -565,6 +594,15 @@
   },
   "tabGroupsRemoveClosedTab": {
     "message": "Отстрани од зачуваната група"
+  },
+  "tabGroupsClosedTimeLabel": {
+    "message": "Затворено:"
+  },
+  "tabGroupsExpandedExpand": {
+    "message": "Прошири"
+  },
+  "tabGroupsExpandedCollapse": {
+    "message": "Собери"
   },
   "optionTabGroupsClosedLimit": {
     "message": "Историја на затворени јазичиња/групи за чување"

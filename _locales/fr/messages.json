@@ -464,7 +464,7 @@
     "message": "Aller à la vue des groupes d'onglets"
   },
   "tabGroupsActivateGroup": {
-    "message": "Activer le groupe"
+    "message": "Aller au groupe d'onglets"
   },
   "tabGroupsRenameGroup": {
     "message": "Renommer le groupe"
@@ -478,8 +478,11 @@
   "tabGroupsSleepGroup": {
     "message": "Mettre le groupe en veille"
   },
+  "tabGroupsWakeGroup": {
+    "message": "Réveiller le groupe d'onglets"
+  },
   "tabGroupsActivateTab": {
-    "message": "Activer l'onglet"
+    "message": "Aller à l'onglet"
   },
   "tabGroupsCollapseGroup": {
     "message": "Réduire le groupe"
@@ -499,14 +502,34 @@
   "tabGroupsSyncCollapseHint": {
     "message": "Lorsque coché, le repli ou le dépliage d'un groupe dans cette vue met également à jour le groupe d'onglets du navigateur. Désactivé par défaut pour que le repli de la vue reste local."
   },
-  "tabGroupsColorBorder": {
-    "message": "Afficher la bordure de couleur du groupe"
+  "tabGroupsColorStyle": {
+    "message": "Style de couleur du groupe d'onglets"
   },
-  "tabGroupsColorBorderHint": {
-    "message": "Ajoute une bordure gauche colorée à l'en-tête et aux lignes des membres de chaque groupe d'onglets pour que la couleur du groupe soit visible d'un coup d'œil. Le point de couleur reste activé par défaut. Désactivé par défaut."
+  "tabGroupsColorStyleHint": {
+    "message": "Désactivé affiche uniquement le point de couleur. La bande de couleur de bordure trace une bande colorée le long du bord gauche du groupe. La ligne de connexion colorée trace une ligne sous le point du groupe avec une coche par rangée, reliant tout le groupe en un seul arbre."
+  },
+  "tabGroupsColorStyleOff": {
+    "message": "Désactivé (point de couleur uniquement)"
+  },
+  "tabGroupsColorStyleEdge": {
+    "message": "Bande de couleur de bordure"
+  },
+  "tabGroupsColorStyleLine": {
+    "message": "Ligne de connexion colorée"
   },
   "tabGroupsBookmarked": {
     "message": "Ajouté aux favoris"
+  },
+  "tabGroupsRemoveBookmark": {
+    "message": "Supprimer le signet"
+  },
+  "tabGroupsBookmarkRemoved": {
+    "message": "$count$ signet(s) supprimé(s)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsPinned": {
     "message": "Onglet épinglé"
@@ -520,11 +543,17 @@
   "tabGroupsUnpinTab": {
     "message": "Désépingler l'onglet"
   },
+  "tabGroupsSleepTab": {
+    "message": "Mettre l'onglet en veille"
+  },
+  "tabGroupsWakeTab": {
+    "message": "Réveiller l'onglet"
+  },
   "tabGroupsOpenGroups": {
     "message": "Groupes d'onglets ouverts"
   },
   "tabGroupsClosedGroups": {
-    "message": "Groupes d'onglets fermés"
+    "message": "Récemment fermés"
   },
   "tabGroupsUngroupedTabs": {
     "message": "Onglets non groupés"
@@ -566,6 +595,15 @@
   },
   "tabGroupsRemoveClosedTab": {
     "message": "Retirer du groupe enregistré"
+  },
+  "tabGroupsClosedTimeLabel": {
+    "message": "Fermé :"
+  },
+  "tabGroupsExpandedExpand": {
+    "message": "Déplier"
+  },
+  "tabGroupsExpandedCollapse": {
+    "message": "Replier"
   },
   "optionTabGroupsClosedLimit": {
     "message": "Historique des onglets/groupes fermés à conserver"

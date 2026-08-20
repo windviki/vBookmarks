@@ -464,7 +464,7 @@
     "message": "ট্যাব গ্রুপ ভিউতে যান"
   },
   "tabGroupsActivateGroup": {
-    "message": "ট্যাব গ্রুপ সক্রিয় করুন"
+    "message": "ট্যাব গ্রুপে যান"
   },
   "tabGroupsRenameGroup": {
     "message": "ট্যাব গ্রুপের নাম পরিবর্তন করুন"
@@ -478,8 +478,11 @@
   "tabGroupsSleepGroup": {
     "message": "ট্যাব গ্রুপ স্লিপ করুন"
   },
+  "tabGroupsWakeGroup": {
+    "message": "ট্যাব গ্রুপ জাগান"
+  },
   "tabGroupsActivateTab": {
-    "message": "ট্যাব সক্রিয় করুন"
+    "message": "ট্যাবে যান"
   },
   "tabGroupsCollapseGroup": {
     "message": "গ্রুপ সংকুচিত করুন"
@@ -499,14 +502,34 @@
   "tabGroupsSyncCollapseHint": {
     "message": "চেক করলে, এই ভিউতে একটি গ্রুপ ভাঁজ বা প্রসারিত করলে ব্রাউজার ট্যাব গ্রুপও আপডেট হবে। ডিফল্টভাবে বন্ধ থাকে, তাই ভিউ ভাঁজ স্থানীয় থাকে।"
   },
-  "tabGroupsColorBorder": {
-    "message": "গ্রুপ রঙের সীমানা দেখান"
+  "tabGroupsColorStyle": {
+    "message": "ট্যাব গ্রুপের রঙের শৈলী"
   },
-  "tabGroupsColorBorderHint": {
-    "message": "প্রতিটি ট্যাব গ্রুপের হেডার এবং সদস্য সারিতে একটি রঙিন বাম প্রান্ত যোগ করে, যাতে গ্রুপের রঙ এক নজরে বোঝা যায়। রঙের বিন্দুটি ডিফল্টভাবে চালু থাকে। ডিফল্টভাবে বন্ধ থাকে।"
+  "tabGroupsColorStyleHint": {
+    "message": "বন্ধ থাকলে শুধু রঙের বিন্দু দেখায়। এজ কালার ব্যান্ড গ্রুপের বাম প্রান্তে একটি রঙিন স্ট্রিপ আঁকে। কালার কানেক্টর লাইন গ্রুপের বিন্দুর নিচে একটি রঙিন রেখা আঁকে, প্রতিটি সারিতে একটি টিক সহ, পুরো গ্রুপটিকে একটি গাছের মতো যুক্ত করে।"
+  },
+  "tabGroupsColorStyleOff": {
+    "message": "বন্ধ (শুধু রঙের বিন্দু)"
+  },
+  "tabGroupsColorStyleEdge": {
+    "message": "এজ কালার ব্যান্ড"
+  },
+  "tabGroupsColorStyleLine": {
+    "message": "কালার কানেক্টর লাইন"
   },
   "tabGroupsBookmarked": {
     "message": "বুকমার্ক করা হয়েছে"
+  },
+  "tabGroupsRemoveBookmark": {
+    "message": "বুকমার্ক সরান"
+  },
+  "tabGroupsBookmarkRemoved": {
+    "message": "$count$টি বুকমার্ক সরানো হয়েছে",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsPinned": {
     "message": "পিন করা ট্যাব"
@@ -520,11 +543,17 @@
   "tabGroupsUnpinTab": {
     "message": "ট্যাব আনপিন করুন"
   },
+  "tabGroupsSleepTab": {
+    "message": "ট্যাব ঘুমাতে দিন"
+  },
+  "tabGroupsWakeTab": {
+    "message": "ট্যাব জাগান"
+  },
   "tabGroupsOpenGroups": {
     "message": "খোলা ট্যাব গ্রুপ"
   },
   "tabGroupsClosedGroups": {
-    "message": "বন্ধ ট্যাব গ্রুপ"
+    "message": "সম্প্রতি বন্ধ হয়েছে"
   },
   "tabGroupsUngroupedTabs": {
     "message": "গ্রুপবিহীন ট্যাব"
@@ -566,6 +595,15 @@
   },
   "tabGroupsRemoveClosedTab": {
     "message": "সংরক্ষিত গ্রুপ থেকে সরান"
+  },
+  "tabGroupsClosedTimeLabel": {
+    "message": "বন্ধ হয়েছে:"
+  },
+  "tabGroupsExpandedExpand": {
+    "message": "প্রসারিত করুন"
+  },
+  "tabGroupsExpandedCollapse": {
+    "message": "সংকুচিত করুন"
   },
   "optionTabGroupsClosedLimit": {
     "message": "রাখতে হবে বন্ধ ট্যাব/গ্রুপের ইতিহাস"

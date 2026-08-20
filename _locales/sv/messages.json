@@ -464,7 +464,7 @@
     "message": "Gå till flikgruppsvyn"
   },
   "tabGroupsActivateGroup": {
-    "message": "Aktivera grupp"
+    "message": "Gå till flikgrupp"
   },
   "tabGroupsRenameGroup": {
     "message": "Byt namn på grupp"
@@ -478,8 +478,11 @@
   "tabGroupsSleepGroup": {
     "message": "Vila grupp"
   },
+  "tabGroupsWakeGroup": {
+    "message": "Väck flikgrupp"
+  },
   "tabGroupsActivateTab": {
-    "message": "Aktivera flik"
+    "message": "Gå till flik"
   },
   "tabGroupsCollapseGroup": {
     "message": "Fäll ihop grupp"
@@ -499,14 +502,34 @@
   "tabGroupsSyncCollapseHint": {
     "message": "När markerad uppdateras även webbläsarens flikgrupp när en grupp fälls ihop eller expanderas i denna vy. Av som standard så att vikningen förblir lokal."
   },
-  "tabGroupsColorBorder": {
-    "message": "Visa gruppfärgsram"
+  "tabGroupsColorStyle": {
+    "message": "Flikgruppsfärgstil"
   },
-  "tabGroupsColorBorderHint": {
-    "message": "Lägger till en färgad vänsterkant på varje tabbgrupps rubrik- och medlemsrader så att gruppfärgen syns direkt. Färgpricken förblir aktiverad som standard. Avaktiverad som standard."
+  "tabGroupsColorStyleHint": {
+    "message": "Av visar endast färgpunkten. Kantfärgband ritar en färgad remsa längs gruppens vänstra kant. Färganslutningslinje ritar en färgad linje under gruppens punkt med en bock per rad, som binder samman hela gruppen till ett träd."
+  },
+  "tabGroupsColorStyleOff": {
+    "message": "Av (endast färgpunkt)"
+  },
+  "tabGroupsColorStyleEdge": {
+    "message": "Kantfärgband"
+  },
+  "tabGroupsColorStyleLine": {
+    "message": "Färganslutningslinje"
   },
   "tabGroupsBookmarked": {
     "message": "Bokmärkt"
+  },
+  "tabGroupsRemoveBookmark": {
+    "message": "Ta bort bokmärke"
+  },
+  "tabGroupsBookmarkRemoved": {
+    "message": "Tog bort $count$ bokmärke(n)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsPinned": {
     "message": "Fäst flik"
@@ -520,11 +543,17 @@
   "tabGroupsUnpinTab": {
     "message": "Lossa flik"
   },
+  "tabGroupsSleepTab": {
+    "message": "Vila flik"
+  },
+  "tabGroupsWakeTab": {
+    "message": "Väck flik"
+  },
   "tabGroupsOpenGroups": {
     "message": "Öppna flikgrupper"
   },
   "tabGroupsClosedGroups": {
-    "message": "Stängda flikgrupper"
+    "message": "Nyligen stängda"
   },
   "tabGroupsUngroupedTabs": {
     "message": "Ogrupade flikar"
@@ -566,6 +595,15 @@
   },
   "tabGroupsRemoveClosedTab": {
     "message": "Ta bort från sparad grupp"
+  },
+  "tabGroupsClosedTimeLabel": {
+    "message": "Stängd:"
+  },
+  "tabGroupsExpandedExpand": {
+    "message": "Expandera"
+  },
+  "tabGroupsExpandedCollapse": {
+    "message": "Kollapsa"
   },
   "optionTabGroupsClosedLimit": {
     "message": "Antal stängda flikar/grupper att spara"

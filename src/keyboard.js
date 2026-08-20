@@ -935,6 +935,20 @@ export function initKeyboard(ctx = {}) {
     // arrow protocol only applies once the menu is open and focused.
     if (menus.viewTabMenu)
         menus.viewTabMenu.addEventListener('keydown', contextKeyDown);
+    // Tab groups view (4.0.9): its FOUR menus — tab row, group head, closed
+    // record, closed record's tab — were opened by the keyboard (→ /
+    // ContextMenu / Shift+F10 dispatch a contextmenu event and the menu takes
+    // focus) but never bound here, so the focused menu answered no key at all:
+    // ↑↓ could not reach an item, Enter did nothing and Esc fell through to
+    // the document layer. Binding them restores the K7 menu protocol.
+    if (menus.tabRowMenu)
+        menus.tabRowMenu.addEventListener('keydown', contextKeyDown);
+    if (menus.tabGroupMenu)
+        menus.tabGroupMenu.addEventListener('keydown', contextKeyDown);
+    if (menus.tabClosedMenu)
+        menus.tabClosedMenu.addEventListener('keydown', contextKeyDown);
+    if (menus.tabClosedTabMenu)
+        menus.tabClosedTabMenu.addEventListener('keydown', contextKeyDown);
     // issue #48 follow-up: the collapsed-group flyouts walk like any menu
     // (their ←/→/Esc handling is the submenu branch of contextKeyDown).
     if (menus.folderTabGroupSubmenu)
@@ -1003,6 +1017,7 @@ export function initKeyboard(ctx = {}) {
         menus.bookmarkMenu, menus.folderMenu, menus.separatorMenu,
         menus.searchHistoryMenu, menus.histRowMenu, menus.dupesGroupMenu,
         menus.tabRowMenu, menus.tabGroupMenu,
+        menus.tabClosedMenu, menus.tabClosedTabMenu,
         menus.paletteCmdMenu, menus.viewTabMenu,
         // issue #48 follow-up: the collapsed-group flyouts count as open menus
         // for the document-level Escape / Tab layering.
@@ -1158,7 +1173,9 @@ export function initKeyboard(ctx = {}) {
         menus.bookmarkMenu, menus.folderMenu, menus.separatorMenu,
         menus.searchHistoryMenu, menus.histRowMenu, menus.dupesGroupMenu,
         menus.tabRowMenu, menus.tabGroupMenu,
-        menus.paletteCmdMenu,
+        // 4.0.9: the two "recently closed" record menus keep Tab trapped too
+        menus.tabClosedMenu, menus.tabClosedTabMenu,
+        menus.paletteCmdMenu, menus.viewTabMenu,
         // issue #48 follow-up: the collapsed-group flyouts keep Tab trapped
         // too (their items are Tab stops only while the flyout is open).
         menus.folderTabGroupSubmenu, menus.folderSortSubmenu,

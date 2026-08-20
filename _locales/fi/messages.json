@@ -464,7 +464,7 @@
     "message": "Siirry välilehtiryhmien näkymään"
   },
   "tabGroupsActivateGroup": {
-    "message": "Aktivoi ryhmä"
+    "message": "Siirry välilehtiryhmään"
   },
   "tabGroupsRenameGroup": {
     "message": "Nimeä ryhmä"
@@ -478,8 +478,11 @@
   "tabGroupsSleepGroup": {
     "message": "Nukuta ryhmä"
   },
+  "tabGroupsWakeGroup": {
+    "message": "Herätä välilehtiryhmä"
+  },
   "tabGroupsActivateTab": {
-    "message": "Aktivoi välilehti"
+    "message": "Siirry välilehteen"
   },
   "tabGroupsCollapseGroup": {
     "message": "Kutista ryhmä"
@@ -499,14 +502,34 @@
   "tabGroupsSyncCollapseHint": {
     "message": "Kun valittu, ryhmän kutistaminen tai laajentaminen tässä näkymässä päivittää myös selaimen välilehtiryhmän. Oletuksena pois päältä, jotta näkymän taitto pysyy paikallisena."
   },
-  "tabGroupsColorBorder": {
-    "message": "Näytä ryhmän värireuna"
+  "tabGroupsColorStyle": {
+    "message": "Välilehtiryhmän väri tyyli"
   },
-  "tabGroupsColorBorderHint": {
-    "message": "Lisää värillisen vasemman reunan kunkin välilehtiryhmän otsikkoon ja jäsenriveihin, jotta ryhmän väri näkyy yhdellä silmäyksellä. Väripiste pysyy oletuksena päällä. Oletuksena pois päältä."
+  "tabGroupsColorStyleHint": {
+    "message": "Pois näyttää vain väripisteen. Reunaväri piirtää värillisen nauhan ryhmän vasempaan reunaan. Väriyhdistäjä piirtää värillisen viivan ryhmän pisteen alle, yhdistäen koko ryhmän yhdeksi puuksi."
+  },
+  "tabGroupsColorStyleOff": {
+    "message": "Pois (vain väripiste)"
+  },
+  "tabGroupsColorStyleEdge": {
+    "message": "Reunaväri"
+  },
+  "tabGroupsColorStyleLine": {
+    "message": "Väriyhdistäjäviiva"
   },
   "tabGroupsBookmarked": {
     "message": "Tallennettu"
+  },
+  "tabGroupsRemoveBookmark": {
+    "message": "Poista kirjanmerkki"
+  },
+  "tabGroupsBookmarkRemoved": {
+    "message": "Poistettu $count$ kirjanmerkkiä",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsPinned": {
     "message": "Kiinnitetty välilehti"
@@ -520,11 +543,17 @@
   "tabGroupsUnpinTab": {
     "message": "Irrota välilehti"
   },
+  "tabGroupsSleepTab": {
+    "message": "Nukuta välilehti"
+  },
+  "tabGroupsWakeTab": {
+    "message": "Herätä välilehti"
+  },
   "tabGroupsOpenGroups": {
     "message": "Avoimet välilehtiryhmät"
   },
   "tabGroupsClosedGroups": {
-    "message": "Suljetut välilehtiryhmät"
+    "message": "Äskettäin suljetut"
   },
   "tabGroupsUngroupedTabs": {
     "message": "Ryhmittelemättömät välilehdet"
@@ -566,6 +595,15 @@
   },
   "tabGroupsRemoveClosedTab": {
     "message": "Poista tallennetusta ryhmästä"
+  },
+  "tabGroupsClosedTimeLabel": {
+    "message": "Suljettu:"
+  },
+  "tabGroupsExpandedExpand": {
+    "message": "Laajenna"
+  },
+  "tabGroupsExpandedCollapse": {
+    "message": "Kutista"
   },
   "optionTabGroupsClosedLimit": {
     "message": "Säilytettävä suljettujen välilehtien/ryhmien historia"

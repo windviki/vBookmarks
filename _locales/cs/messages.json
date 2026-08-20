@@ -464,7 +464,7 @@
     "message": "Přejít na zobrazení skupin karet"
   },
   "tabGroupsActivateGroup": {
-    "message": "Aktivovat skupinu"
+    "message": "Přejít na skupinu karet"
   },
   "tabGroupsRenameGroup": {
     "message": "Přejmenovat skupinu"
@@ -478,8 +478,11 @@
   "tabGroupsSleepGroup": {
     "message": "Uspat skupinu"
   },
+  "tabGroupsWakeGroup": {
+    "message": "Probudit skupinu karet"
+  },
   "tabGroupsActivateTab": {
-    "message": "Aktivovat kartu"
+    "message": "Přejít na kartu"
   },
   "tabGroupsCollapseGroup": {
     "message": "Sbalit skupinu"
@@ -499,14 +502,34 @@
   "tabGroupsSyncCollapseHint": {
     "message": "Pokud je zaškrtnuto, sbalení nebo rozbalení skupiny v tomto zobrazení také aktualizuje skupinu karet v prohlížeči. Ve výchozím nastavení vypnuto, takže sbalení zůstává lokální."
   },
-  "tabGroupsColorBorder": {
-    "message": "Zobrazit barevný okraj skupiny"
+  "tabGroupsColorStyle": {
+    "message": "Styl barvy skupiny karet"
   },
-  "tabGroupsColorBorderHint": {
-    "message": "Přidá barevný levý okraj k hlavičce a řádkům členů každé skupiny karet, aby byla barva skupiny vidět na první pohled. Barevná tečka zůstává ve výchozím stavu zapnutá. Ve výchozím stavu vypnuto."
+  "tabGroupsColorStyleHint": {
+    "message": "Vypnuto zobrazuje pouze barevnou tečku. Barevný pruh na okraji nakreslí barevný pruh podél levého okraje skupiny. Barevná spojovací čára nakreslí barevnou čáru pod tečkou skupiny se značkou pro každý řádek, čímž spojí celou skupinu do jednoho stromu."
+  },
+  "tabGroupsColorStyleOff": {
+    "message": "Vypnuto (pouze barevná tečka)"
+  },
+  "tabGroupsColorStyleEdge": {
+    "message": "Barevný pruh na okraji"
+  },
+  "tabGroupsColorStyleLine": {
+    "message": "Barevná spojovací čára"
   },
   "tabGroupsBookmarked": {
     "message": "Záložky"
+  },
+  "tabGroupsRemoveBookmark": {
+    "message": "Odebrat záložku"
+  },
+  "tabGroupsBookmarkRemoved": {
+    "message": "Odebráno $count$ záložek",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsPinned": {
     "message": "Připnutá karta"
@@ -520,11 +543,17 @@
   "tabGroupsUnpinTab": {
     "message": "Odepnout kartu"
   },
+  "tabGroupsSleepTab": {
+    "message": "Uspat kartu"
+  },
+  "tabGroupsWakeTab": {
+    "message": "Probudit kartu"
+  },
   "tabGroupsOpenGroups": {
     "message": "Otevřené skupiny karet"
   },
   "tabGroupsClosedGroups": {
-    "message": "Zavřené skupiny karet"
+    "message": "Nedávno zavřené"
   },
   "tabGroupsUngroupedTabs": {
     "message": "Neseskupené karty"
@@ -566,6 +595,15 @@
   },
   "tabGroupsRemoveClosedTab": {
     "message": "Odebrat z uložené skupiny"
+  },
+  "tabGroupsClosedTimeLabel": {
+    "message": "Zavřeno:"
+  },
+  "tabGroupsExpandedExpand": {
+    "message": "Rozbalit"
+  },
+  "tabGroupsExpandedCollapse": {
+    "message": "Sbalit"
   },
   "optionTabGroupsClosedLimit": {
     "message": "Počet zavřených karet/skupin k uchování"

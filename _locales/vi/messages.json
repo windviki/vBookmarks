@@ -464,7 +464,7 @@
     "message": "Đi tới chế độ xem Nhóm tab"
   },
   "tabGroupsActivateGroup": {
-    "message": "Kích hoạt nhóm tab"
+    "message": "Đi tới nhóm tab"
   },
   "tabGroupsRenameGroup": {
     "message": "Đổi tên nhóm tab"
@@ -478,8 +478,11 @@
   "tabGroupsSleepGroup": {
     "message": "Cho nhóm tab ngủ"
   },
+  "tabGroupsWakeGroup": {
+    "message": "Đánh thức nhóm tab"
+  },
   "tabGroupsActivateTab": {
-    "message": "Kích hoạt tab"
+    "message": "Đi tới tab"
   },
   "tabGroupsCollapseGroup": {
     "message": "Thu gọn nhóm"
@@ -499,14 +502,34 @@
   "tabGroupsSyncCollapseHint": {
     "message": "Khi được chọn, việc thu gọn hoặc mở rộng một nhóm trong chế độ xem này cũng cập nhật nhóm tab của trình duyệt. Tắt theo mặc định để việc gấp chế độ xem chỉ mang tính cục bộ."
   },
-  "tabGroupsColorBorder": {
-    "message": "Hiển thị viền màu nhóm"
+  "tabGroupsColorStyle": {
+    "message": "Kiểu màu nhóm tab"
   },
-  "tabGroupsColorBorderHint": {
-    "message": "Thêm viền trái màu cho tiêu đề và các hàng thành viên của mỗi nhóm tab để dễ nhận biết màu nhóm. Chấm màu vẫn bật mặc định. Tắt theo mặc định."
+  "tabGroupsColorStyleHint": {
+    "message": "Tắt chỉ hiển thị chấm màu. Dải màu cạnh vẽ một dải màu dọc theo mép trái của nhóm. Đường nối màu vẽ một đường màu dưới chấm của nhóm với dấu tích cho mỗi hàng, liên kết toàn bộ nhóm thành một cây."
+  },
+  "tabGroupsColorStyleOff": {
+    "message": "Tắt (chỉ chấm màu)"
+  },
+  "tabGroupsColorStyleEdge": {
+    "message": "Dải màu cạnh"
+  },
+  "tabGroupsColorStyleLine": {
+    "message": "Đường nối màu"
   },
   "tabGroupsBookmarked": {
     "message": "Đã đánh dấu"
+  },
+  "tabGroupsRemoveBookmark": {
+    "message": "Xóa dấu trang"
+  },
+  "tabGroupsBookmarkRemoved": {
+    "message": "Đã xóa $count$ dấu trang",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsPinned": {
     "message": "Tab đã ghim"
@@ -520,11 +543,17 @@
   "tabGroupsUnpinTab": {
     "message": "Bỏ ghim tab"
   },
+  "tabGroupsSleepTab": {
+    "message": "Ngủ tab"
+  },
+  "tabGroupsWakeTab": {
+    "message": "Đánh thức tab"
+  },
   "tabGroupsOpenGroups": {
     "message": "Nhóm tab đang mở"
   },
   "tabGroupsClosedGroups": {
-    "message": "Nhóm tab đã đóng"
+    "message": "Đã đóng gần đây"
   },
   "tabGroupsUngroupedTabs": {
     "message": "Tab chưa nhóm"
@@ -566,6 +595,15 @@
   },
   "tabGroupsRemoveClosedTab": {
     "message": "Xóa khỏi nhóm đã lưu"
+  },
+  "tabGroupsClosedTimeLabel": {
+    "message": "Đã đóng:"
+  },
+  "tabGroupsExpandedExpand": {
+    "message": "Mở rộng"
+  },
+  "tabGroupsExpandedCollapse": {
+    "message": "Thu gọn"
   },
   "optionTabGroupsClosedLimit": {
     "message": "Lịch sử tab/nhóm đã đóng cần giữ"

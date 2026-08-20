@@ -464,7 +464,7 @@
     "message": "Ir a la vista de grupos de pestañas"
   },
   "tabGroupsActivateGroup": {
-    "message": "Activar grupo"
+    "message": "Ir al grupo de pestañas"
   },
   "tabGroupsRenameGroup": {
     "message": "Renombrar grupo"
@@ -478,8 +478,11 @@
   "tabGroupsSleepGroup": {
     "message": "Suspender grupo"
   },
+  "tabGroupsWakeGroup": {
+    "message": "Activar grupo de pestañas"
+  },
   "tabGroupsActivateTab": {
-    "message": "Activar pestaña"
+    "message": "Ir a la pestaña"
   },
   "tabGroupsCollapseGroup": {
     "message": "Contraer grupo"
@@ -499,14 +502,34 @@
   "tabGroupsSyncCollapseHint": {
     "message": "Al marcar esta opción, contraer o expandir un grupo en esta vista también actualiza el grupo de pestañas del navegador. Desactivado por defecto para que el plegado de la vista permanezca local."
   },
-  "tabGroupsColorBorder": {
-    "message": "Mostrar borde de color del grupo"
+  "tabGroupsColorStyle": {
+    "message": "Estilo de color del grupo de pestañas"
   },
-  "tabGroupsColorBorderHint": {
-    "message": "Añade un borde izquierdo de color a la cabecera y a las filas de miembros de cada grupo de pestañas para que el color del grupo se vea de un vistazo. El punto de color permanece activado por defecto. Desactivado por defecto."
+  "tabGroupsColorStyleHint": {
+    "message": "Desactivado muestra solo el punto de color. La banda de color en el borde dibuja una franja de color en el borde izquierdo del grupo. La línea de conexión de color dibuja una línea de color debajo del punto del grupo con una marca por fila, uniendo todo el grupo en un árbol."
+  },
+  "tabGroupsColorStyleOff": {
+    "message": "Desactivado (solo punto de color)"
+  },
+  "tabGroupsColorStyleEdge": {
+    "message": "Banda de color en el borde"
+  },
+  "tabGroupsColorStyleLine": {
+    "message": "Línea de conexión de color"
   },
   "tabGroupsBookmarked": {
     "message": "Marcado"
+  },
+  "tabGroupsRemoveBookmark": {
+    "message": "Eliminar marcador"
+  },
+  "tabGroupsBookmarkRemoved": {
+    "message": "Se eliminaron $count$ marcador(es)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsPinned": {
     "message": "Pestaña fijada"
@@ -520,11 +543,17 @@
   "tabGroupsUnpinTab": {
     "message": "Desfijar pestaña"
   },
+  "tabGroupsSleepTab": {
+    "message": "Suspender pestaña"
+  },
+  "tabGroupsWakeTab": {
+    "message": "Activar pestaña"
+  },
   "tabGroupsOpenGroups": {
     "message": "Grupos de pestañas abiertos"
   },
   "tabGroupsClosedGroups": {
-    "message": "Grupos de pestañas cerrados"
+    "message": "Cerrados recientemente"
   },
   "tabGroupsUngroupedTabs": {
     "message": "Pestañas sin agrupar"
@@ -566,6 +595,15 @@
   },
   "tabGroupsRemoveClosedTab": {
     "message": "Quitar del grupo guardado"
+  },
+  "tabGroupsClosedTimeLabel": {
+    "message": "Cerrado:"
+  },
+  "tabGroupsExpandedExpand": {
+    "message": "Expandir"
+  },
+  "tabGroupsExpandedCollapse": {
+    "message": "Contraer"
   },
   "optionTabGroupsClosedLimit": {
     "message": "Historial de pestañas/grupos cerrados a conservar"

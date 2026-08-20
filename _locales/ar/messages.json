@@ -464,7 +464,7 @@
     "message": "الانتقال إلى عرض مجموعات التبويبات"
   },
   "tabGroupsActivateGroup": {
-    "message": "تفعيل مجموعة التبويبات"
+    "message": "الانتقال إلى مجموعة التبويبات"
   },
   "tabGroupsRenameGroup": {
     "message": "إعادة تسمية مجموعة التبويبات"
@@ -478,8 +478,11 @@
   "tabGroupsSleepGroup": {
     "message": "إسبات مجموعة التبويبات"
   },
+  "tabGroupsWakeGroup": {
+    "message": "تنشيط مجموعة التبويبات"
+  },
   "tabGroupsActivateTab": {
-    "message": "تفعيل التبويب"
+    "message": "الانتقال إلى التبويب"
   },
   "tabGroupsCollapseGroup": {
     "message": "طي المجموعة"
@@ -499,14 +502,34 @@
   "tabGroupsSyncCollapseHint": {
     "message": "عند التحديد، يؤدي طي مجموعة أو توسيعها في هذا العرض إلى تحديث مجموعة علامات تبويب المتصفح أيضًا. معطّل افتراضيًا ليبقى طي العرض محليًا."
   },
-  "tabGroupsColorBorder": {
-    "message": "إظهار حدود لون المجموعة"
+  "tabGroupsColorStyle": {
+    "message": "نمط لون مجموعة التبويبات"
   },
-  "tabGroupsColorBorderHint": {
-    "message": "يضيف حافة ملونة على يسار رأس كل مجموعة وصفوف أعضائها بحيث يظهر لون المجموعة في لمحة. تبقى النقطة الملونة مفعّلة افتراضيًا. معطّل افتراضيًا."
+  "tabGroupsColorStyleHint": {
+    "message": "عند إيقاف التشغيل، تظهر نقطة اللون فقط. شريط اللون الحوافي يرسم شريطًا ملونًا على الحافة اليسرى للمجموعة. خط الموصل الملون يرسم خطًا تحت نقطة المجموعة مع علامة لكل صف، مما يربط المجموعة بأكملها في شجرة واحدة."
+  },
+  "tabGroupsColorStyleOff": {
+    "message": "إيقاف (نقطة اللون فقط)"
+  },
+  "tabGroupsColorStyleEdge": {
+    "message": "شريط اللون الحوافي"
+  },
+  "tabGroupsColorStyleLine": {
+    "message": "خط الموصل الملون"
   },
   "tabGroupsBookmarked": {
     "message": "تمت الإشارة المرجعية"
+  },
+  "tabGroupsRemoveBookmark": {
+    "message": "إزالة الإشارة المرجعية"
+  },
+  "tabGroupsBookmarkRemoved": {
+    "message": "تمت إزالة $count$ إشارة مرجعية",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsPinned": {
     "message": "علامة تبويب مثبتة"
@@ -520,11 +543,17 @@
   "tabGroupsUnpinTab": {
     "message": "إلغاء تثبيت علامة التبويب"
   },
+  "tabGroupsSleepTab": {
+    "message": "إسبات التبويب"
+  },
+  "tabGroupsWakeTab": {
+    "message": "تنشيط التبويب"
+  },
   "tabGroupsOpenGroups": {
     "message": "مجموعات التبويبات المفتوحة"
   },
   "tabGroupsClosedGroups": {
-    "message": "مجموعات التبويبات المغلقة"
+    "message": "أُغلقت مؤخرًا"
   },
   "tabGroupsUngroupedTabs": {
     "message": "تبويبات غير مجمعة"
@@ -566,6 +595,15 @@
   },
   "tabGroupsRemoveClosedTab": {
     "message": "إزالة من المجموعة المحفوظة"
+  },
+  "tabGroupsClosedTimeLabel": {
+    "message": "أُغلقت:"
+  },
+  "tabGroupsExpandedExpand": {
+    "message": "توسيع"
+  },
+  "tabGroupsExpandedCollapse": {
+    "message": "طي"
   },
   "optionTabGroupsClosedLimit": {
     "message": "保留已关闭标签页/组的历史记录"

@@ -464,7 +464,7 @@
     "message": "Към изгледа на групи раздели"
   },
   "tabGroupsActivateGroup": {
-    "message": "Активирай групата"
+    "message": "Към групата раздели"
   },
   "tabGroupsRenameGroup": {
     "message": "Преименувай групата"
@@ -478,8 +478,11 @@
   "tabGroupsSleepGroup": {
     "message": "Приспи групата"
   },
+  "tabGroupsWakeGroup": {
+    "message": "Събуди групата раздели"
+  },
   "tabGroupsActivateTab": {
-    "message": "Активирай раздела"
+    "message": "Към раздела"
   },
   "tabGroupsCollapseGroup": {
     "message": "Свий групата"
@@ -499,14 +502,34 @@
   "tabGroupsSyncCollapseHint": {
     "message": "Когато е отметнато, свиването или разгъването на група в този изглед също актуализира групата на разделите в браузъра. Изключено по подразбиране, така че сгъването на изгледа остава локално."
   },
-  "tabGroupsColorBorder": {
-    "message": "Показване на цветна граница на групата"
+  "tabGroupsColorStyle": {
+    "message": "Стил на цвета на групата раздели"
   },
-  "tabGroupsColorBorderHint": {
-    "message": "Добавя цветен ляв ръб към заглавната част и редовете на членовете на всяка група раздели, така че цветът на групата да се вижда на пръв поглед. Цветната точка остава включена по подразбиране. Изключено по подразбиране."
+  "tabGroupsColorStyleHint": {
+    "message": "Изключено показва само цветната точка. Цветна лента по ръба изчертава цветна ивица по левия ръб на групата. Цветна свързваща линия изчертава цветна линия под точката на групата с отметка за всеки ред, свързвайки цялата група в едно дърво."
+  },
+  "tabGroupsColorStyleOff": {
+    "message": "Изключено (само цветна точка)"
+  },
+  "tabGroupsColorStyleEdge": {
+    "message": "Цветна лента по ръба"
+  },
+  "tabGroupsColorStyleLine": {
+    "message": "Цветна свързваща линия"
   },
   "tabGroupsBookmarked": {
     "message": "Отметени"
+  },
+  "tabGroupsRemoveBookmark": {
+    "message": "Премахни отметката"
+  },
+  "tabGroupsBookmarkRemoved": {
+    "message": "Премахнати $count$ отметки",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsPinned": {
     "message": "Закачен раздел"
@@ -520,11 +543,17 @@
   "tabGroupsUnpinTab": {
     "message": "Откачи раздел"
   },
+  "tabGroupsSleepTab": {
+    "message": "Приспи раздела"
+  },
+  "tabGroupsWakeTab": {
+    "message": "Събуди раздела"
+  },
   "tabGroupsOpenGroups": {
     "message": "Отворени групи раздели"
   },
   "tabGroupsClosedGroups": {
-    "message": "Затворени групи раздели"
+    "message": "Наскоро затворени"
   },
   "tabGroupsUngroupedTabs": {
     "message": "Негрупирани раздели"
@@ -566,6 +595,15 @@
   },
   "tabGroupsRemoveClosedTab": {
     "message": "Премахване от запазена група"
+  },
+  "tabGroupsClosedTimeLabel": {
+    "message": "Затворено:"
+  },
+  "tabGroupsExpandedExpand": {
+    "message": "Разгъни"
+  },
+  "tabGroupsExpandedCollapse": {
+    "message": "Свий"
   },
   "optionTabGroupsClosedLimit": {
     "message": "Запазена история на затворени раздели/групи"

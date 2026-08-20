@@ -464,7 +464,7 @@
     "message": "टैब समूह दृश्य पर जाएँ"
   },
   "tabGroupsActivateGroup": {
-    "message": "टैब समूह सक्रिय करें"
+    "message": "टैब समूह पर जाएं"
   },
   "tabGroupsRenameGroup": {
     "message": "टैब समूह का नाम बदलें"
@@ -478,8 +478,11 @@
   "tabGroupsSleepGroup": {
     "message": "टैब समूह स्लीप करें"
   },
+  "tabGroupsWakeGroup": {
+    "message": "टैब समूह जगाएं"
+  },
   "tabGroupsActivateTab": {
-    "message": "टैब सक्रिय करें"
+    "message": "टैब पर जाएं"
   },
   "tabGroupsCollapseGroup": {
     "message": "समूह संक्षिप्त करें"
@@ -499,14 +502,34 @@
   "tabGroupsSyncCollapseHint": {
     "message": "चेक करने पर, इस दृश्य में किसी समूह को संकुचित या विस्तारित करने से ब्राउज़र टैब समूह भी अपडेट होता है। डिफ़ॉल्ट रूप से बंद रहता है ताकि दृश्य का संकुचन स्थानीय रहे।"
   },
-  "tabGroupsColorBorder": {
-    "message": "समूह रंग सीमा दिखाएँ"
+  "tabGroupsColorStyle": {
+    "message": "टैब समूह रंग शैली"
   },
-  "tabGroupsColorBorderHint": {
-    "message": "प्रत्येक टैब समूह के शीर्षक और सदस्य पंक्तियों में रंगीन बायाँ किनारा जोड़ता है ताकि समूह का रंग एक नज़र में दिखे। रंग बिंदु डिफ़ॉल्ट रूप से चालू रहता है। डिफ़ॉल्ट रूप से बंद।"
+  "tabGroupsColorStyleHint": {
+    "message": "बंद करने पर केवल रंग बिंदु दिखता है। एज रंग पट्टी समूह के बाएं किनारे पर रंगीन पट्टी खींचती है। रंग कनेक्टर रेखा समूह के बिंदु के नीचे प्रति पंक्ति एक टिक के साथ रंगीन रेखा खींचती है, पूरे समूह को एक पेड़ में जोड़ती है।"
+  },
+  "tabGroupsColorStyleOff": {
+    "message": "बंद (केवल रंग बिंदु)"
+  },
+  "tabGroupsColorStyleEdge": {
+    "message": "एज रंग पट्टी"
+  },
+  "tabGroupsColorStyleLine": {
+    "message": "रंग कनेक्टर रेखा"
   },
   "tabGroupsBookmarked": {
     "message": "बुकमार्क किया गया"
+  },
+  "tabGroupsRemoveBookmark": {
+    "message": "बुकमार्क हटाएं"
+  },
+  "tabGroupsBookmarkRemoved": {
+    "message": "$count$ बुकमार्क हटाए गए",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsPinned": {
     "message": "पिन किया गया टैब"
@@ -520,11 +543,17 @@
   "tabGroupsUnpinTab": {
     "message": "टैब अनपिन करें"
   },
+  "tabGroupsSleepTab": {
+    "message": "टैब सोएं"
+  },
+  "tabGroupsWakeTab": {
+    "message": "टैब जगाएं"
+  },
   "tabGroupsOpenGroups": {
     "message": "खुले टैब समूह"
   },
   "tabGroupsClosedGroups": {
-    "message": "बंद टैब समूह"
+    "message": "हाल ही में बंद"
   },
   "tabGroupsUngroupedTabs": {
     "message": "असमूहीकृत टैब"
@@ -566,6 +595,15 @@
   },
   "tabGroupsRemoveClosedTab": {
     "message": "सहेजे गए समूह से हटाएँ"
+  },
+  "tabGroupsClosedTimeLabel": {
+    "message": "बंद:"
+  },
+  "tabGroupsExpandedExpand": {
+    "message": "विस्तार करें"
+  },
+  "tabGroupsExpandedCollapse": {
+    "message": "संक्षिप्त करें"
   },
   "optionTabGroupsClosedLimit": {
     "message": "रखने के लिए बंद टैब/समूह इतिहास"

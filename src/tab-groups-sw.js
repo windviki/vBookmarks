@@ -28,6 +28,9 @@
  *   window first when they live elsewhere).
  * - `vbm-tabs-close` { tabIds } — close the selected tabs.
  * - `vbm-tabs-discard` { tabIds } — discard (sleep) the selected tabs.
+ * - `vbm-tabs-wake` { tabIds } — wake sleeping tabs WITHOUT activating them
+ *   (`chrome.tabs.reload`; a discarded tab reloads back into memory and
+ *   stays in place, so the view's filled sleep glyph is a real toggle).
  *
  * Degradation: on Chrome too old for `chrome.tabs.group`/`chrome.tabGroups`
  * both open-* messages fall back to a plain batch-open; the tab-batch
@@ -46,6 +49,7 @@ export const TAB_GROUP_MSG = {
     tabsOpenInto: 'vbm-tabs-open-into',
     tabsClose: 'vbm-tabs-close',
     tabsDiscard: 'vbm-tabs-discard',
+    tabsWake: 'vbm-tabs-wake',
     tabsMoveNewWindow: 'vbm-tabs-move-new-window'
 };
 
@@ -286,6 +290,17 @@ export function createTabGroupOpener() {
         }
     };
 
+    // Wake sleeping tabs in place: reloading a discarded tab brings it back
+    // into memory without activating it (activating would also switch the
+    // user's current tab, which the row's sleep toggle must never do).
+    const wakeTabs = tabIds => {
+        const ids = tabIds || [];
+        for (let i = 0; i < ids.length; i++) {
+            if (chrome.tabs.reload)
+                chrome.tabs.reload(ids[i], {}, () => { void chrome.runtime.lastError; });
+        }
+    };
+
     // Move a tab group to a fresh window. Chrome has no direct "move
     // group" API, so the whole member set is moved with tabs.move and the
     // new window's initial blank tab is closed afterwards.
@@ -352,6 +367,8 @@ export function createTabGroupOpener() {
             closeTabs(msg.tabIds);
         else if (msg.type === TAB_GROUP_MSG.tabsDiscard)
             discardTabs(msg.tabIds);
+        else if (msg.type === TAB_GROUP_MSG.tabsWake)
+            wakeTabs(msg.tabIds);
         else if (msg.type === TAB_GROUP_MSG.tabsMoveNewWindow) {
             moveTabsToNewWindow(msg.tabIds,
                 () => { if (sendResponse) sendResponse({ ok: true }); });
@@ -376,6 +393,7 @@ export function createTabGroupOpener() {
         groupExistingIntoExisting,
         closeTabs,
         discardTabs,
+        wakeTabs,
         moveTabsToNewWindow
     };
 }

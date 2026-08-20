@@ -464,7 +464,7 @@
     "message": "Pojdi na pogled zavihkov"
   },
   "tabGroupsActivateGroup": {
-    "message": "Aktiviraj skupino zavihkov"
+    "message": "Pojdi v skupino zavihkov"
   },
   "tabGroupsRenameGroup": {
     "message": "Preimenuj skupino zavihkov"
@@ -478,8 +478,11 @@
   "tabGroupsSleepGroup": {
     "message": "Uspavaj skupino zavihkov"
   },
+  "tabGroupsWakeGroup": {
+    "message": "Prebudi skupino zavihkov"
+  },
   "tabGroupsActivateTab": {
-    "message": "Aktiviraj zavihek"
+    "message": "Pojdi na zavihek"
   },
   "tabGroupsCollapseGroup": {
     "message": "Strni skupino"
@@ -499,14 +502,34 @@
   "tabGroupsSyncCollapseHint": {
     "message": "Ko je označeno, zrušitev ali razširitev skupine v tem pogledu posodobi tudi skupino zavihkov v brskalniku. Privzeto izklopljeno, da zlaganje pogleda ostane lokalno."
   },
-  "tabGroupsColorBorder": {
-    "message": "Pokaži barvno obrobo skupine"
+  "tabGroupsColorStyle": {
+    "message": "Slog barve skupine zavihkov"
   },
-  "tabGroupsColorBorderHint": {
-    "message": "Doda barvni levi rob glavi in vrsticam članov vsake skupine zavihkov, da je barva skupine vidna na prvi pogled. Barvna pika ostane privzeto vklopljena. Privzeto izklopljeno."
+  "tabGroupsColorStyleHint": {
+    "message": "Izključeno prikaže samo barvno piko. Barvni pas na robu nariše barvni trak ob levem robu skupine. Barvna povezovalna črta nariše barvno črto pod piko skupine s kljukico za vsako vrstico, kar poveže celotno skupino v eno drevo."
+  },
+  "tabGroupsColorStyleOff": {
+    "message": "Izključeno (samo barvna pika)"
+  },
+  "tabGroupsColorStyleEdge": {
+    "message": "Barvni pas na robu"
+  },
+  "tabGroupsColorStyleLine": {
+    "message": "Barvna povezovalna črta"
   },
   "tabGroupsBookmarked": {
     "message": "Zaznamek"
+  },
+  "tabGroupsRemoveBookmark": {
+    "message": "Odstrani zaznamek"
+  },
+  "tabGroupsBookmarkRemoved": {
+    "message": "Odstranjenih $count$ zaznamkov",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsPinned": {
     "message": "Pripeti zavihek"
@@ -520,11 +543,17 @@
   "tabGroupsUnpinTab": {
     "message": "Odpni zavihek"
   },
+  "tabGroupsSleepTab": {
+    "message": "Uspavaj zavihek"
+  },
+  "tabGroupsWakeTab": {
+    "message": "Prebudi zavihek"
+  },
   "tabGroupsOpenGroups": {
     "message": "Odprte skupine zavihkov"
   },
   "tabGroupsClosedGroups": {
-    "message": "Zaprte skupine zavihkov"
+    "message": "Nedavno zaprto"
   },
   "tabGroupsUngroupedTabs": {
     "message": "Nerazvrščeni zavihki"
@@ -566,6 +595,15 @@
   },
   "tabGroupsRemoveClosedTab": {
     "message": "Odstrani iz shranjene skupine"
+  },
+  "tabGroupsClosedTimeLabel": {
+    "message": "Zaprto:"
+  },
+  "tabGroupsExpandedExpand": {
+    "message": "Razširi"
+  },
+  "tabGroupsExpandedCollapse": {
+    "message": "Strni"
   },
   "optionTabGroupsClosedLimit": {
     "message": "Ohranitev zgodovine zaprtih zavihkov/skupin"

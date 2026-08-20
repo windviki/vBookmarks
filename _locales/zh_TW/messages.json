@@ -1796,7 +1796,7 @@
     "message": "前往分頁群組檢視"
   },
   "tabGroupsActivateGroup": {
-    "message": "啟用分頁群組"
+    "message": "前往分頁群組"
   },
   "tabGroupsRenameGroup": {
     "message": "重新命名分頁群組"
@@ -1810,8 +1810,11 @@
   "tabGroupsSleepGroup": {
     "message": "休眠分頁群組"
   },
+  "tabGroupsWakeGroup": {
+    "message": "喚醒分頁群組"
+  },
   "tabGroupsActivateTab": {
-    "message": "啟用分頁"
+    "message": "前往分頁"
   },
   "tabGroupsCollapseGroup": {
     "message": "收合群組"
@@ -1831,14 +1834,34 @@
   "tabGroupsSyncCollapseHint": {
     "message": "勾选后，在此视图中折叠或展开群组也会更新浏览器标签页群组。默认关闭，因此视图折叠仅限本地。"
   },
-  "tabGroupsColorBorder": {
-    "message": "顯示群組色彩邊框"
+  "tabGroupsColorStyle": {
+    "message": "分頁群組色彩樣式"
   },
-  "tabGroupsColorBorderHint": {
-    "message": "為每個分頁群組的標題與成員列加上左側色彩邊框，讓群組顏色一目了然。色彩圓點預設保持開啟。此選項預設為關閉。"
+  "tabGroupsColorStyleHint": {
+    "message": "關閉僅顯示色彩圓點。邊緣色帶會在群組左側繪製彩色條帶。色彩連接線會在群組圓點下方繪製彩色線條，每列一個刻度，將整個群組串聯成樹狀結構。"
+  },
+  "tabGroupsColorStyleOff": {
+    "message": "關閉（僅色彩圓點）"
+  },
+  "tabGroupsColorStyleEdge": {
+    "message": "邊緣色帶"
+  },
+  "tabGroupsColorStyleLine": {
+    "message": "色彩連接線"
   },
   "tabGroupsBookmarked": {
     "message": "已加入書籤"
+  },
+  "tabGroupsRemoveBookmark": {
+    "message": "移除書籤"
+  },
+  "tabGroupsBookmarkRemoved": {
+    "message": "已移除 $count$ 個書籤",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsPinned": {
     "message": "已釘選分頁"
@@ -1852,11 +1875,17 @@
   "tabGroupsUnpinTab": {
     "message": "取消釘選分頁"
   },
+  "tabGroupsSleepTab": {
+    "message": "休眠分頁"
+  },
+  "tabGroupsWakeTab": {
+    "message": "喚醒分頁"
+  },
   "tabGroupsOpenGroups": {
     "message": "開啟的標籤頁群組"
   },
   "tabGroupsClosedGroups": {
-    "message": "已關閉的標籤頁群組"
+    "message": "最近關閉"
   },
   "tabGroupsUngroupedTabs": {
     "message": "未分組的標籤頁"
@@ -1898,6 +1927,15 @@
   },
   "tabGroupsRemoveClosedTab": {
     "message": "從已儲存群組中移除"
+  },
+  "tabGroupsClosedTimeLabel": {
+    "message": "關閉時間："
+  },
+  "tabGroupsExpandedExpand": {
+    "message": "展開"
+  },
+  "tabGroupsExpandedCollapse": {
+    "message": "收合"
   },
   "optionTabGroupsClosedLimit": {
     "message": "保留的已關閉分頁／群組記錄數"

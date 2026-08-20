@@ -464,7 +464,7 @@
     "message": "タブグループビューへ移動"
   },
   "tabGroupsActivateGroup": {
-    "message": "タブグループをアクティブ化"
+    "message": "グループへ移動"
   },
   "tabGroupsRenameGroup": {
     "message": "タブグループ名を変更"
@@ -478,8 +478,11 @@
   "tabGroupsSleepGroup": {
     "message": "タブグループをスリープ"
   },
+  "tabGroupsWakeGroup": {
+    "message": "タブグループを復元"
+  },
   "tabGroupsActivateTab": {
-    "message": "タブをアクティブ化"
+    "message": "タブへ移動"
   },
   "tabGroupsCollapseGroup": {
     "message": "グループを折りたたむ"
@@ -499,14 +502,34 @@
   "tabGroupsSyncCollapseHint": {
     "message": "勾选后，在此视图中折叠或展开分组也会更新浏览器标签组。默认关闭，以便视图折叠保持本地状态。"
   },
-  "tabGroupsColorBorder": {
-    "message": "グループの色の境界線を表示"
+  "tabGroupsColorStyle": {
+    "message": "タブグループの色スタイル"
   },
-  "tabGroupsColorBorderHint": {
-    "message": "各タブグループのヘッダーとメンバー行に色付きの左端を追加し、グループの色が一目でわかるようにします。カラードットはデフォルトでオンです。デフォルトではオフです。"
+  "tabGroupsColorStyleHint": {
+    "message": "オフにすると色ドットのみ表示。エッジカラーバンドはグループの左端に色付きの帯を表示。カラーコネクタ線はグループのドットの下に色付きの線を表示し、行ごとに目盛りを付けてグループ全体を1つのツリーにまとめます。"
+  },
+  "tabGroupsColorStyleOff": {
+    "message": "オフ（色ドットのみ）"
+  },
+  "tabGroupsColorStyleEdge": {
+    "message": "エッジカラーバンド"
+  },
+  "tabGroupsColorStyleLine": {
+    "message": "カラーコネクタ線"
   },
   "tabGroupsBookmarked": {
     "message": "ブックマーク済み"
+  },
+  "tabGroupsRemoveBookmark": {
+    "message": "ブックマークを削除"
+  },
+  "tabGroupsBookmarkRemoved": {
+    "message": "$count$ 件のブックマークを削除しました",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsPinned": {
     "message": "固定タブ"
@@ -520,11 +543,17 @@
   "tabGroupsUnpinTab": {
     "message": "タブの固定を解除"
   },
+  "tabGroupsSleepTab": {
+    "message": "タブをスリープ"
+  },
+  "tabGroupsWakeTab": {
+    "message": "タブを復元"
+  },
   "tabGroupsOpenGroups": {
     "message": "開いているタブグループ"
   },
   "tabGroupsClosedGroups": {
-    "message": "閉じたタブグループ"
+    "message": "最近閉じたグループ"
   },
   "tabGroupsUngroupedTabs": {
     "message": "グループ化されていないタブ"
@@ -566,6 +595,15 @@
   },
   "tabGroupsRemoveClosedTab": {
     "message": "保存済みグループから削除"
+  },
+  "tabGroupsClosedTimeLabel": {
+    "message": "閉じた日時:"
+  },
+  "tabGroupsExpandedExpand": {
+    "message": "展開"
+  },
+  "tabGroupsExpandedCollapse": {
+    "message": "折りたたむ"
   },
   "optionTabGroupsClosedLimit": {
     "message": "保持的已关闭标签页/组历史记录"

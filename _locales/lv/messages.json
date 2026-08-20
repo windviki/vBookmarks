@@ -464,7 +464,7 @@
     "message": "Doties uz cilnes grupu skatu"
   },
   "tabGroupsActivateGroup": {
-    "message": "Aktivizēt grupu"
+    "message": "Pāriet uz grupu"
   },
   "tabGroupsRenameGroup": {
     "message": "Pārdēvēt grupu"
@@ -478,8 +478,11 @@
   "tabGroupsSleepGroup": {
     "message": "Apturēt grupu"
   },
+  "tabGroupsWakeGroup": {
+    "message": "Pamodināt grupu"
+  },
   "tabGroupsActivateTab": {
-    "message": "Aktivizēt cilni"
+    "message": "Pāriet uz cilni"
   },
   "tabGroupsCollapseGroup": {
     "message": "Sakļaut grupu"
@@ -499,14 +502,34 @@
   "tabGroupsSyncCollapseHint": {
     "message": "Ja atzīmēts, grupas sakļaušana vai izvēršana šajā skatā atjaunina arī pārlūka cilņu grupu. Pēc noklusējuma izslēgts, lai skata sakļaušana paliktu lokāla."
   },
-  "tabGroupsColorBorder": {
-    "message": "Rādīt grupas krāsas apmali"
+  "tabGroupsColorStyle": {
+    "message": "Cilņu grupas krāsu stils"
   },
-  "tabGroupsColorBorderHint": {
-    "message": "Pievieno krāsainu kreiso malu katras cilnes grupas galvenei un dalībnieku rindām, lai grupas krāsa būtu redzama uzreiz. Krāsu punkts paliek ieslēgts pēc noklusējuma. Pēc noklusējuma izslēgts."
+  "tabGroupsColorStyleHint": {
+    "message": "Izslēgts rāda tikai krāsu punktu. Malas krāsu josla velk krāsainu svītru gar grupas kreiso malu. Krāsu savienojuma līnija velk krāsainu līniju zem grupas punkta ar atzīmi katrā rindā, savienojot visu grupu vienā kokā."
+  },
+  "tabGroupsColorStyleOff": {
+    "message": "Izslēgts (tikai krāsu punkts)"
+  },
+  "tabGroupsColorStyleEdge": {
+    "message": "Malas krāsu josla"
+  },
+  "tabGroupsColorStyleLine": {
+    "message": "Krāsu savienojuma līnija"
   },
   "tabGroupsBookmarked": {
     "message": "Atzīmēts"
+  },
+  "tabGroupsRemoveBookmark": {
+    "message": "Noņemt grāmatzīmi"
+  },
+  "tabGroupsBookmarkRemoved": {
+    "message": "Noņemtas $count$ grāmatzīme(s)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsPinned": {
     "message": "Piesprausta cilne"
@@ -520,11 +543,17 @@
   "tabGroupsUnpinTab": {
     "message": "Atspraust cilni"
   },
+  "tabGroupsSleepTab": {
+    "message": "Apturēt cilni"
+  },
+  "tabGroupsWakeTab": {
+    "message": "Pamodināt cilni"
+  },
   "tabGroupsOpenGroups": {
     "message": "Atvērtās cilņu grupas"
   },
   "tabGroupsClosedGroups": {
-    "message": "Aizvērtās cilņu grupas"
+    "message": "Nesen aizvērtās"
   },
   "tabGroupsUngroupedTabs": {
     "message": "Negrupētās cilnes"
@@ -566,6 +595,15 @@
   },
   "tabGroupsRemoveClosedTab": {
     "message": "Noņemt no saglabātās grupas"
+  },
+  "tabGroupsClosedTimeLabel": {
+    "message": "Aizvērts:"
+  },
+  "tabGroupsExpandedExpand": {
+    "message": "Izvērst"
+  },
+  "tabGroupsExpandedCollapse": {
+    "message": "Sakļaut"
   },
   "optionTabGroupsClosedLimit": {
     "message": "Saglabājamā slēgto cilņu/grupu vēsture"

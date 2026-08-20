@@ -464,7 +464,7 @@
     "message": "Ir para a visualização de grupos de abas"
   },
   "tabGroupsActivateGroup": {
-    "message": "Ativar grupo de abas"
+    "message": "Ir para grupo de abas"
   },
   "tabGroupsRenameGroup": {
     "message": "Renomear grupo de abas"
@@ -478,8 +478,11 @@
   "tabGroupsSleepGroup": {
     "message": "Suspender grupo de abas"
   },
+  "tabGroupsWakeGroup": {
+    "message": "Ativar grupo de abas"
+  },
   "tabGroupsActivateTab": {
-    "message": "Ativar aba"
+    "message": "Ir para aba"
   },
   "tabGroupsCollapseGroup": {
     "message": "Recolher grupo"
@@ -499,14 +502,34 @@
   "tabGroupsSyncCollapseHint": {
     "message": "Quando marcado, recolher ou expandir um grupo nesta visualização também atualiza o grupo de abas do navegador. Desativado por padrão para que o recolhimento da visualização permaneça local."
   },
-  "tabGroupsColorBorder": {
-    "message": "Mostrar borda colorida do grupo"
+  "tabGroupsColorStyle": {
+    "message": "Estilo de cor do grupo de abas"
   },
-  "tabGroupsColorBorderHint": {
-    "message": "Adiciona uma borda esquerda colorida ao cabeçalho e às linhas dos membros de cada grupo de abas, para que a cor do grupo seja visível de relance. O ponto colorido permanece ativado por padrão. Desativado por padrão."
+  "tabGroupsColorStyleHint": {
+    "message": "Desativado mostra apenas o ponto de cor. A faixa de cor na borda desenha uma faixa colorida na borda esquerda do grupo. A linha de conexão colorida desenha uma linha colorida sob o ponto do grupo com uma marca por linha, unindo todo o grupo em uma árvore."
+  },
+  "tabGroupsColorStyleOff": {
+    "message": "Desativado (apenas ponto de cor)"
+  },
+  "tabGroupsColorStyleEdge": {
+    "message": "Faixa de cor na borda"
+  },
+  "tabGroupsColorStyleLine": {
+    "message": "Linha de conexão colorida"
   },
   "tabGroupsBookmarked": {
     "message": "Adicionado aos favoritos"
+  },
+  "tabGroupsRemoveBookmark": {
+    "message": "Remover marcador"
+  },
+  "tabGroupsBookmarkRemoved": {
+    "message": "$count$ marcador(es) removido(s)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsPinned": {
     "message": "Aba fixada"
@@ -520,11 +543,17 @@
   "tabGroupsUnpinTab": {
     "message": "Desafixar aba"
   },
+  "tabGroupsSleepTab": {
+    "message": "Suspender aba"
+  },
+  "tabGroupsWakeTab": {
+    "message": "Ativar aba"
+  },
   "tabGroupsOpenGroups": {
     "message": "Grupos de guias abertos"
   },
   "tabGroupsClosedGroups": {
-    "message": "Grupos de guias fechados"
+    "message": "Fechados recentemente"
   },
   "tabGroupsUngroupedTabs": {
     "message": "Guias não agrupadas"
@@ -566,6 +595,15 @@
   },
   "tabGroupsRemoveClosedTab": {
     "message": "Remover do grupo salvo"
+  },
+  "tabGroupsClosedTimeLabel": {
+    "message": "Fechado:"
+  },
+  "tabGroupsExpandedExpand": {
+    "message": "Expandir"
+  },
+  "tabGroupsExpandedCollapse": {
+    "message": "Recolher"
   },
   "optionTabGroupsClosedLimit": {
     "message": "Histórico de abas/grupos fechados a manter"

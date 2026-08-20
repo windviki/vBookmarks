@@ -464,7 +464,7 @@
     "message": "Sekme grupları görünümüne git"
   },
   "tabGroupsActivateGroup": {
-    "message": "Sekme grubunu etkinleştir"
+    "message": "Grup sekmesine git"
   },
   "tabGroupsRenameGroup": {
     "message": "Sekme grubunu yeniden adlandır"
@@ -478,8 +478,11 @@
   "tabGroupsSleepGroup": {
     "message": "Sekme grubunu uyut"
   },
+  "tabGroupsWakeGroup": {
+    "message": "Sekme grubunu uyandır"
+  },
   "tabGroupsActivateTab": {
-    "message": "Sekmeyi etkinleştir"
+    "message": "Sekmeye git"
   },
   "tabGroupsCollapseGroup": {
     "message": "Grubu daralt"
@@ -499,14 +502,34 @@
   "tabGroupsSyncCollapseHint": {
     "message": "İşaretlendiğinde, bu görünümde bir grubu daraltmak veya genişletmek tarayıcı sekme grubunu da günceller. Varsayılan olarak kapalıdır, böylece görünüm katlaması yerel kalır."
   },
-  "tabGroupsColorBorder": {
-    "message": "Grup rengi kenarlığını göster"
+  "tabGroupsColorStyle": {
+    "message": "Sekme grubu renk stili"
   },
-  "tabGroupsColorBorderHint": {
-    "message": "Her sekme grubunun başlığına ve üye satırlarına renkli bir sol kenarlık ekler, böylece grup rengi bir bakışta okunur. Renk noktası varsayılan olarak açık kalır. Varsayılan olarak kapalıdır."
+  "tabGroupsColorStyleHint": {
+    "message": "Kapalı, yalnızca renk noktasını gösterir. Kenar renk bandı, grubun sol kenarına renkli bir şerit çizer. Renk bağlantı çizgisi, grubun noktasının altına satır başına bir işaretle renkli bir çizgi çizer ve tüm grubu tek bir ağaç halinde birleştirir."
+  },
+  "tabGroupsColorStyleOff": {
+    "message": "Kapalı (yalnızca renk noktası)"
+  },
+  "tabGroupsColorStyleEdge": {
+    "message": "Kenar renk bandı"
+  },
+  "tabGroupsColorStyleLine": {
+    "message": "Renk bağlantı çizgisi"
   },
   "tabGroupsBookmarked": {
     "message": "Yer imlerine eklendi"
+  },
+  "tabGroupsRemoveBookmark": {
+    "message": "Yer imini kaldır"
+  },
+  "tabGroupsBookmarkRemoved": {
+    "message": "$count$ yer imi kaldırıldı",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsPinned": {
     "message": "Sabitlenmiş sekme"
@@ -520,11 +543,17 @@
   "tabGroupsUnpinTab": {
     "message": "Sabitlemeyi kaldır"
   },
+  "tabGroupsSleepTab": {
+    "message": "Sekmeyi uyut"
+  },
+  "tabGroupsWakeTab": {
+    "message": "Sekmeyi uyandır"
+  },
   "tabGroupsOpenGroups": {
     "message": "Açık sekme grupları"
   },
   "tabGroupsClosedGroups": {
-    "message": "Kapalı sekme grupları"
+    "message": "Son kapatılanlar"
   },
   "tabGroupsUngroupedTabs": {
     "message": "Gruplanmamış sekmeler"
@@ -566,6 +595,15 @@
   },
   "tabGroupsRemoveClosedTab": {
     "message": "Kayıtlı gruptan kaldır"
+  },
+  "tabGroupsClosedTimeLabel": {
+    "message": "Kapatılma:"
+  },
+  "tabGroupsExpandedExpand": {
+    "message": "Genişlet"
+  },
+  "tabGroupsExpandedCollapse": {
+    "message": "Daralt"
   },
   "optionTabGroupsClosedLimit": {
     "message": "Kapatılan sekme/grup geçmişi saklansın"

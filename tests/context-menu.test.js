@@ -217,11 +217,27 @@ const setup = (opts = {}) => {
     el('DIV', 'dupes-group-clean');
     el('HR', 'dupes-group-menu-sep1');
     el('DIV', 'dupes-group-toggle');
+    // Tab-groups view (4.0.9): the four dedicated menus — tab row, group head
+    // and the two "recently closed" record menus. Every branch also needs
+    // ctx.tabGroupsMenu, so their mere presence changes nothing for the other
+    // suites (same contract as the dupes/dead menus above).
+    const tabRowMenu = el('MENU', 'tab-row-context-menu');
+    const tabGroupMenu = el('MENU', 'tabgroup-context-menu');
+    const tabClosedMenu = el('MENU', 'tabgroups-closed-context-menu');
+    const tabClosedTabMenu = el('MENU', 'tabgroups-closed-tab-context-menu');
+    for (const id of ['tab-row-activate', 'tab-row-pin', 'tab-row-add-bookmark',
+        'tab-row-sleep', 'tab-row-close', 'tabgroup-collapse',
+        'tabgroups-closed-reopen', 'tabgroups-closed-toggle', 'tabgroups-closed-forget',
+        'tabgroups-closed-tab-open', 'tabgroups-closed-tab-bookmark',
+        'tabgroups-closed-tab-remove']) {
+        const item = el('DIV', id);
+        item.classList.add('menu-item');
+    }
     const tree = el('DIV', 'tree');
     // round-3 item 3: the feature-view lists get the same scroll/focus
     // menu-dismissal wiring as the tree/results panes
     const viewLists = {};
-    for (const id of ['recent-list', 'stats-list', 'dead-list', 'dupes-list', 'search-history-area'])
+    for (const id of ['recent-list', 'tabgroups-list', 'stats-list', 'dead-list', 'dupes-list', 'search-history-area'])
         viewLists[id] = el('DIV', id);
     const body = el('BODY', 'body');
     body.offsetWidth = opts.bodyWidth === undefined ? 500 : opts.bodyWidth;
@@ -232,6 +248,7 @@ const setup = (opts = {}) => {
     // document.querySelectorAll('menu[type=context]') walk in visibleMenu().
     const allMenus = [bookmarkMenu, folderMenu, separatorMenu, searchHistoryMenu,
         histRowMenu, dupesGroupMenu, paletteCmdMenu, viewTabMenu,
+        tabRowMenu, tabGroupMenu, tabClosedMenu, tabClosedTabMenu,
         folderTabGroupSubmenu, folderSortSubmenu, bookmarkTabGroupSubmenu];
     globalThis.document = {
         getElementById: id => byId[id] || null,
@@ -328,7 +345,9 @@ const setup = (opts = {}) => {
         get collapseSortMenu() { return opts.collapseSortMenu === undefined ? true : !!opts.collapseSortMenu; },
         get zoomLevel() { return opts.zoomLevel || 1; },
         // 4.0.8: view-tab menu dispatch (view-manager owns the settings)
-        get viewMenu() { return opts.viewMenu; }
+        get viewMenu() { return opts.viewMenu; },
+        // Tab-groups view menus (lazy, exactly like the dead/dupes ones)
+        get tabGroupsMenu() { return opts.tabGroupsMenu; }
     });
 
     // A bookmark row: <li id="neat-tree-item-42" data-parentid="1"><a href><i>title</i></a></li>
@@ -419,6 +438,49 @@ const setup = (opts = {}) => {
         item.classList.add('menu-item');
         return item;
     };
+    // Tab-groups view rows: a live tab row, a window section head (a fold
+    // CONTROL, never a menu owner), a closed record head and a closed tab row.
+    const makeTabRow = (tabId = '5') => {
+        const li = el('LI', `tabgroups-item-${tabId}`);
+        li.classList.add('vbm-row', 'tabgroups-row');
+        li.dataset.tabId = tabId;
+        const a = el('A');
+        a.href = 'https://tab.example/';
+        a.parentNode = li;
+        return { li, a };
+    };
+    const makeWindowHead = (windowId = '1') => {
+        const li = el('LI');
+        li.classList.add('tabgroups-window-head');
+        li.dataset.windowId = windowId;
+        const row = el('SPAN');
+        row.classList.add('tabgroups-window-head-row');
+        row.parentNode = li;
+        return { li, row };
+    };
+    const makeClosedGroupHead = (closedId = 'cg_1') => {
+        const li = el('LI');
+        li.classList.add('tabgroups-closed-group');
+        li.dataset.closedId = closedId;
+        const head = el('SPAN');
+        head.classList.add('tabgroups-closed-head');
+        head.parentNode = li;
+        const title = el('SPAN');
+        title.classList.add('tabgroups-group-title');
+        title.parentNode = head;
+        return { li, head, title };
+    };
+    const makeClosedTabRow = (closedId = 'cg_1', idx = '2') => {
+        const li = el('LI');
+        li.classList.add('vbm-row', 'tabgroups-closed-tab');
+        li.dataset.closedId = closedId;
+        li.dataset.closedTab = idx;
+        const a = el('A');
+        a.href = 'https://closed.example/';
+        a.parentNode = li;
+        li._qs.a = a;
+        return { li, a };
+    };
     const makeViewTab = (id = 'recent') => {
         const tab = el('BUTTON', `view-tab-${id}`);
         tab.classList.add('view-tab');
@@ -437,6 +499,8 @@ const setup = (opts = {}) => {
         groupDialogCalls, groupPickCalls,
         makeBookmarkRow, makeFolderRow, makeSeparatorRow, makeHistoryRow,
         makeStatsHistRow, makeDupesGroupHead, makeLinkFolderRow, menuItem, makeViewTab, openOn,
+        tabRowMenu, tabGroupMenu, tabClosedMenu, tabClosedTabMenu,
+        makeTabRow, makeWindowHead, makeClosedGroupHead, makeClosedTabRow,
         fireWindow: (type, ev) => {
             for (const fn of (windowListeners[type] || []))
                 fn(ev);
@@ -465,7 +529,8 @@ describe('module API', () => {
                 'dupesGroupMenu', 'folderMenu', 'folderSortSubmenu', 'folderTabGroupSubmenu',
                 'histRowMenu', 'openSubmenuFor', 'paletteCmdMenu', 'searchHistoryMenu',
                 'separatorMenu', 'submenuOpen', 'submenuParentEntry', 'switchBookmarkMenu',
-                'tabGroupMenu', 'tabRowMenu', 'toggleSubmenuFor', 'viewTabMenu']);
+                'tabClosedMenu', 'tabClosedTabMenu', 'tabGroupMenu', 'tabRowMenu',
+                'toggleSubmenuFor', 'viewTabMenu']);
         // issue #48 follow-up: the flyout API is callable
         expect(typeof menus.openSubmenuFor).toBe('function');
         expect(typeof menus.closeSubmenu).toBe('function');
@@ -2457,6 +2522,159 @@ describe('dupes group-head context menu (v4 task-3 #16)', () => {
             const html = fs.readFileSync(new URL(`../pages/${page}`, import.meta.url), 'utf8');
             expect(html.includes(anchor), page).toBe(true);
             for (const id of ['dupes-group-clean', 'dupes-group-menu-sep1', 'dupes-group-toggle'])
+                expect(html.includes(`id="${id}"`), `${page} ${id}`).toBe(true);
+        }
+    });
+});
+
+describe('tab-groups view menus (4.0.9: state-aware entries)', () => {
+    const tabGroupsStub = (state = {}) => {
+        const calls = [];
+        return {
+            calls,
+            isPinned: () => !!state.pinned,
+            isDiscarded: () => !!state.discarded,
+            isBookmarked: () => !!state.bookmarked,
+            isCollapsed: () => !!state.collapsed,
+            isGroupAsleep: () => !!state.groupAsleep,
+            isClosedExpanded: () => !!state.closedExpanded,
+            closedTabCount: () => (state.closedTabCount === undefined ? 3 : state.closedTabCount),
+            activateTab: id => calls.push(['activateTab', id]),
+            togglePinned: id => calls.push(['togglePinned', id]),
+            addBookmark: id => calls.push(['addBookmark', id]),
+            removeBookmark: id => calls.push(['removeBookmark', id]),
+            sleepTab: id => calls.push(['sleepTab', id]),
+            wakeTab: id => calls.push(['wakeTab', id]),
+            closeTab: id => calls.push(['closeTab', id]),
+            sleepGroup: id => calls.push(['sleepGroup', id]),
+            wakeGroup: id => calls.push(['wakeGroup', id]),
+            restoreClosedGroup: id => calls.push(['restoreClosedGroup', id]),
+            deleteClosedGroup: id => calls.push(['deleteClosedGroup', id]),
+            toggleClosedExpanded: id => calls.push(['toggleClosedExpanded', id]),
+            openClosedTab: (id, idx) => calls.push(['openClosedTab', id, idx]),
+            addClosedTabToBookmarks: (id, idx) => calls.push(['addClosedTabToBookmarks', id, idx]),
+            removeClosedTab: (id, idx) => calls.push(['removeClosedTab', id, idx])
+        };
+    };
+
+    it('a tab row opens the tab-row menu with state-following labels', () => {
+        const s = setup({ tabGroupsMenu: tabGroupsStub({ pinned: true, discarded: true, bookmarked: true }) });
+        s.openOn(s.makeTabRow().a);
+        expect(s.tabRowMenu.style.opacity).toBe('1');
+        expect(s.bookmarkMenu.style.opacity).not.toBe('1');
+        expect(s.byId['tab-row-pin'].textContent).toBe('tabGroupsUnpinTab');
+        expect(s.byId['tab-row-sleep'].textContent).toBe('tabGroupsWakeTab');
+        expect(s.byId['tab-row-add-bookmark'].textContent).toBe('tabGroupsRemoveBookmark');
+    });
+
+    it('…and the opposite state offers the opposite actions', () => {
+        const s = setup({ tabGroupsMenu: tabGroupsStub({}) });
+        s.openOn(s.makeTabRow().a);
+        expect(s.byId['tab-row-pin'].textContent).toBe('tabGroupsPinTab');
+        expect(s.byId['tab-row-sleep'].textContent).toBe('tabGroupsSleepTab');
+        expect(s.byId['tab-row-add-bookmark'].textContent).toBe('tabGroupsMenuAddBookmark');
+    });
+
+    it('the sleep/bookmark entries dispatch the action their label promises', () => {
+        const asleep = tabGroupsStub({ discarded: true, bookmarked: true });
+        const s = setup({ tabGroupsMenu: asleep });
+        s.openOn(s.makeTabRow('9').a);
+        fire(s.tabRowMenu, 'mouseup', makeEvent({ button: 0, target: s.byId['tab-row-sleep'] }));
+        expect(asleep.calls).toEqual([['wakeTab', '9']]);
+        s.openOn(s.makeTabRow('9').a);
+        fire(s.tabRowMenu, 'mouseup', makeEvent({ button: 0, target: s.byId['tab-row-add-bookmark'] }));
+        expect(asleep.calls).toEqual([['wakeTab', '9'], ['removeBookmark', '9']]);
+
+        const awake = tabGroupsStub({});
+        const t = setup({ tabGroupsMenu: awake });
+        t.openOn(t.makeTabRow('4').a);
+        fire(t.tabRowMenu, 'mouseup', makeEvent({ button: 0, target: t.byId['tab-row-sleep'] }));
+        expect(awake.calls).toEqual([['sleepTab', '4']]);
+    });
+
+    it('the window section head opens NO menu (it is a fold control)', () => {
+        const s = setup({ tabGroupsMenu: tabGroupsStub({}) });
+        const { row } = s.makeWindowHead();
+        s.openOn(row);
+        for (const menu of [s.folderMenu, s.bookmarkMenu, s.tabRowMenu, s.tabGroupMenu,
+            s.tabClosedMenu, s.tabClosedTabMenu])
+            expect(menu.style.opacity).not.toBe('1');
+    });
+
+    it('a closed record head opens the closed menu, not the folder menu', () => {
+        const s = setup({ tabGroupsMenu: tabGroupsStub({}) });
+        const { head, title } = s.makeClosedGroupHead();
+        s.openOn(title); // walk-up from a child span
+        expect(s.tabClosedMenu.style.opacity).toBe('1');
+        expect(s.folderMenu.style.opacity).not.toBe('1');
+        expect(head.classList.contains('active')).toBe(true);
+        expect(s.byId['tabgroups-closed-toggle'].textContent).toBe('tabGroupsExpandedExpand');
+    });
+
+    it('the closed menu fold label follows the record and greys out when empty', () => {
+        const open = setup({ tabGroupsMenu: tabGroupsStub({ closedExpanded: true }) });
+        open.openOn(open.makeClosedGroupHead().head);
+        expect(open.byId['tabgroups-closed-toggle'].textContent).toBe('tabGroupsExpandedCollapse');
+        expect(open.byId['tabgroups-closed-toggle'].classList.contains('disabled')).toBe(false);
+        const empty = setup({ tabGroupsMenu: tabGroupsStub({ closedTabCount: 0 }) });
+        empty.openOn(empty.makeClosedGroupHead().head);
+        expect(empty.byId['tabgroups-closed-toggle'].classList.contains('disabled')).toBe(true);
+    });
+
+    it('the closed menu dispatches reopen / fold / forget with the record id', () => {
+        const stub = tabGroupsStub({});
+        const s = setup({ tabGroupsMenu: stub });
+        for (const id of ['tabgroups-closed-reopen', 'tabgroups-closed-toggle', 'tabgroups-closed-forget']) {
+            s.openOn(s.makeClosedGroupHead('cg_7').head);
+            fire(s.tabClosedMenu, 'mouseup', makeEvent({ button: 0, target: s.byId[id] }));
+        }
+        expect(stub.calls).toEqual([
+            ['restoreClosedGroup', 'cg_7'],
+            ['toggleClosedExpanded', 'cg_7'],
+            ['deleteClosedGroup', 'cg_7']
+        ]);
+    });
+
+    it('a saved tab row opens its own menu — no reveal-in-tree, no bookmark menu', () => {
+        const s = setup({ tabGroupsMenu: tabGroupsStub({}) });
+        s.openOn(s.makeClosedTabRow().a);
+        expect(s.tabClosedTabMenu.style.opacity).toBe('1');
+        expect(s.bookmarkMenu.style.opacity).not.toBe('1');
+        expect(s.folderMenu.style.opacity).not.toBe('1');
+    });
+
+    it('…and dispatches open / bookmark / remove with the record id + index', () => {
+        const stub = tabGroupsStub({});
+        const s = setup({ tabGroupsMenu: stub });
+        for (const id of ['tabgroups-closed-tab-open', 'tabgroups-closed-tab-bookmark',
+            'tabgroups-closed-tab-remove']) {
+            s.openOn(s.makeClosedTabRow('cg_2', '3').a);
+            fire(s.tabClosedTabMenu, 'mouseup', makeEvent({ button: 0, target: s.byId[id] }));
+        }
+        expect(stub.calls).toEqual([
+            ['openClosedTab', 'cg_2', 3],
+            ['addClosedTabToBookmarks', 'cg_2', 3],
+            ['removeClosedTab', 'cg_2', 3]
+        ]);
+    });
+
+    it('without the tab-groups API the closed rows fall back to the legacy branches', () => {
+        const s = setup({});
+        s.openOn(s.makeClosedTabRow().a);
+        expect(s.tabClosedTabMenu.style.opacity).not.toBe('1');
+        expect(s.bookmarkMenu.style.opacity).toBe('1');
+    });
+
+    // Wiring contract: both pages carry the two closed menus with every id the
+    // module resolves.
+    it('the closed menus exist in popup.html and sidepanel.html', () => {
+        for (const page of ['popup.html', 'sidepanel.html']) {
+            const html = fs.readFileSync(new URL(`../pages/${page}`, import.meta.url), 'utf8');
+            for (const id of ['tabgroups-closed-context-menu', 'tabgroups-closed-reopen',
+                'tabgroups-closed-toggle', 'tabgroups-closed-menu-sep1', 'tabgroups-closed-forget',
+                'tabgroups-closed-tab-context-menu', 'tabgroups-closed-tab-open',
+                'tabgroups-closed-tab-bookmark', 'tabgroups-closed-tab-menu-sep1',
+                'tabgroups-closed-tab-remove'])
                 expect(html.includes(`id="${id}"`), `${page} ${id}`).toBe(true);
         }
     });

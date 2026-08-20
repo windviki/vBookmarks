@@ -464,7 +464,7 @@
     "message": "Idi na prikaz grupa kartica"
   },
   "tabGroupsActivateGroup": {
-    "message": "Aktiviraj grupu"
+    "message": "Idi na grupu kartica"
   },
   "tabGroupsRenameGroup": {
     "message": "Preimenuj grupu"
@@ -478,8 +478,11 @@
   "tabGroupsSleepGroup": {
     "message": "Uspavaj grupu"
   },
+  "tabGroupsWakeGroup": {
+    "message": "Probudi grupu kartica"
+  },
   "tabGroupsActivateTab": {
-    "message": "Aktiviraj karticu"
+    "message": "Idi na karticu"
   },
   "tabGroupsCollapseGroup": {
     "message": "Sažmi grupu"
@@ -499,14 +502,34 @@
   "tabGroupsSyncCollapseHint": {
     "message": "Kada je označeno, sažimanje ili proširivanje grupe u ovom prikazu također ažurira grupu kartica u pregledniku. Isključeno prema zadanim postavkama kako bi sažimanje prikaza ostalo lokalno."
   },
-  "tabGroupsColorBorder": {
-    "message": "Prikaži obrub boje grupe"
+  "tabGroupsColorStyle": {
+    "message": "Stil boje grupe kartica"
   },
-  "tabGroupsColorBorderHint": {
-    "message": "Dodaje obojeni lijevi rub zaglavlja i redaka članova svake grupe kartica kako bi se boja grupe vidjela na prvi pogled. Točka boje ostaje uključena prema zadanim postavkama. Isključeno prema zadanim postavkama."
+  "tabGroupsColorStyleHint": {
+    "message": "Isključeno prikazuje samo točku u boji. Rubna traka u boji crta obojenu traku duž lijevog ruba grupe. Linija poveznika u boji crta obojenu liniju ispod točke grupe s oznakom za svaki redak, povezujući cijelu grupu u jedno stablo."
+  },
+  "tabGroupsColorStyleOff": {
+    "message": "Isključeno (samo točka u boji)"
+  },
+  "tabGroupsColorStyleEdge": {
+    "message": "Rubna traka u boji"
+  },
+  "tabGroupsColorStyleLine": {
+    "message": "Linija poveznika u boji"
   },
   "tabGroupsBookmarked": {
     "message": "Označeno"
+  },
+  "tabGroupsRemoveBookmark": {
+    "message": "Ukloni zabilješku"
+  },
+  "tabGroupsBookmarkRemoved": {
+    "message": "Uklonjeno $count$ zabilješki",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsPinned": {
     "message": "Prikvačena kartica"
@@ -520,11 +543,17 @@
   "tabGroupsUnpinTab": {
     "message": "Otpkači karticu"
   },
+  "tabGroupsSleepTab": {
+    "message": "Uspavaj karticu"
+  },
+  "tabGroupsWakeTab": {
+    "message": "Probudi karticu"
+  },
   "tabGroupsOpenGroups": {
     "message": "Otvorene grupe kartica"
   },
   "tabGroupsClosedGroups": {
-    "message": "Zatvorene grupe kartica"
+    "message": "Nedavno zatvoreno"
   },
   "tabGroupsUngroupedTabs": {
     "message": "Negrupirane kartice"
@@ -566,6 +595,15 @@
   },
   "tabGroupsRemoveClosedTab": {
     "message": "Ukloni iz spremljene grupe"
+  },
+  "tabGroupsClosedTimeLabel": {
+    "message": "Zatvoreno:"
+  },
+  "tabGroupsExpandedExpand": {
+    "message": "Proširi"
+  },
+  "tabGroupsExpandedCollapse": {
+    "message": "Sažmi"
   },
   "optionTabGroupsClosedLimit": {
     "message": "Zadržano zatvorenih kartica/grupa"

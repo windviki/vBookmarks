@@ -1980,7 +1980,7 @@
     "description": "Command palette entry: switch to the tab groups view (slash alias /tabgroups, /groups)."
   },
   "tabGroupsActivateGroup": {
-    "message": "Activate tab group",
+    "message": "Go to tab group",
     "description": "Group-head action in the tab groups view: focuses the group's first tab."
   },
   "tabGroupsRenameGroup": {
@@ -1999,8 +1999,12 @@
     "message": "Sleep tab group",
     "description": "Group-head action in the tab groups view: discards every tab of the group."
   },
+  "tabGroupsWakeGroup": {
+    "message": "Wake tab group",
+    "description": "Group header control/menu item in the tab groups view: wake every sleeping member."
+  },
   "tabGroupsActivateTab": {
-    "message": "Activate tab",
+    "message": "Go to tab",
     "description": "Tab row context-menu item in the tab groups view: focuses the tab."
   },
   "tabGroupsCollapseGroup": {
@@ -2027,17 +2031,42 @@
     "message": "When checked, collapsing or expanding a group in this view also updates the browser tab group. Off by default so view folding stays local.",
     "description": "Tooltip for the collapse-sync checkbox in the tab groups view."
   },
-  "tabGroupsColorBorder": {
-    "message": "Show group color border",
-    "description": "Toolbar checkbox in the tab groups view: when checked, each tab group's rows get a colored left edge matching the group color."
+  "tabGroupsColorStyle": {
+    "message": "Tab group color style",
+    "description": "Options page (Views group): how a tab group's color is drawn in the tab groups view."
   },
-  "tabGroupsColorBorderHint": {
-    "message": "Adds a colored left edge to each tab group's header and member rows so the group color reads at a glance. The color dot stays on by default. Off by default.",
-    "description": "Tooltip for the group-color-border checkbox in the tab groups view."
+  "tabGroupsColorStyleHint": {
+    "message": "Off shows the color dot only. Edge color band draws a colored strip down the group's left edge. Color connector line draws a colored line under the group's dot with a tick per row, tying the whole group into one tree.",
+    "description": "Hint for the tab group color style selector on the options page."
+  },
+  "tabGroupsColorStyleOff": {
+    "message": "Off (color dot only)",
+    "description": "Tab group color style choice on the options page."
+  },
+  "tabGroupsColorStyleEdge": {
+    "message": "Edge color band",
+    "description": "Tab group color style choice on the options page."
+  },
+  "tabGroupsColorStyleLine": {
+    "message": "Color connector line",
+    "description": "Tab group color style choice on the options page."
   },
   "tabGroupsBookmarked": {
     "message": "Bookmarked",
     "description": "Accessible label of the always-visible filled star on tab rows that are already bookmarked."
+  },
+  "tabGroupsRemoveBookmark": {
+    "message": "Remove bookmark",
+    "description": "Tab row control/menu item in the tab groups view: delete the bookmark(s) for this tab's URL again."
+  },
+  "tabGroupsBookmarkRemoved": {
+    "message": "Removed $count$ bookmark(s)",
+    "description": "Toast after removing a tab's bookmark from the tab groups view.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsPinned": {
     "message": "Pinned tab",
@@ -2055,12 +2084,20 @@
     "message": "Unpin tab",
     "description": "Tab row context-menu item in the tab groups view."
   },
+  "tabGroupsSleepTab": {
+    "message": "Sleep tab",
+    "description": "Tab row control/menu item in the tab groups view: discard the tab (hollow crescent)."
+  },
+  "tabGroupsWakeTab": {
+    "message": "Wake tab",
+    "description": "Tab row control/menu item in the tab groups view: reload a sleeping tab in place (filled crescent)."
+  },
   "tabGroupsOpenGroups": {
     "message": "Open tab groups",
     "description": "Section heading in the tab groups view for expanded groups."
   },
   "tabGroupsClosedGroups": {
-    "message": "Closed tab groups",
+    "message": "Recently closed",
     "description": "Section heading in the tab groups view for collapsed groups."
   },
   "tabGroupsUngroupedTabs": {
@@ -2115,6 +2152,18 @@
   "tabGroupsRemoveClosedTab": {
     "message": "Remove from saved group",
     "description": "Hover action on a saved tab inside a closed tab group row: removes that tab from the saved record."
+  },
+  "tabGroupsClosedTimeLabel": {
+    "message": "Closed:",
+    "description": "Tooltip label before the close time of a recently closed tab in the tab groups view."
+  },
+  "tabGroupsExpandedExpand": {
+    "message": "Expand",
+    "description": "Context-menu item for a recently closed tab group in the tab groups view: show its tabs."
+  },
+  "tabGroupsExpandedCollapse": {
+    "message": "Collapse",
+    "description": "Context-menu item for a recently closed tab group in the tab groups view: hide its tabs."
   },
   "optionTabGroupsClosedLimit": {
     "message": "Closed tab/group history to keep",

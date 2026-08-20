@@ -464,7 +464,7 @@
     "message": "Mergi la vizualizarea grupurilor de file"
   },
   "tabGroupsActivateGroup": {
-    "message": "Activează grupul"
+    "message": "Mergi la grup"
   },
   "tabGroupsRenameGroup": {
     "message": "Redenumește grupul"
@@ -478,8 +478,11 @@
   "tabGroupsSleepGroup": {
     "message": "Adormire grup"
   },
+  "tabGroupsWakeGroup": {
+    "message": "Activează grupul"
+  },
   "tabGroupsActivateTab": {
-    "message": "Activează fila"
+    "message": "Mergi la filă"
   },
   "tabGroupsCollapseGroup": {
     "message": "Restrânge grupul"
@@ -499,14 +502,34 @@
   "tabGroupsSyncCollapseHint": {
     "message": "Când este bifat, colapsarea sau extinderea unui grup în această vizualizare actualizează și grupul de file din browser. Dezactivat implicit, astfel încât plierea vizualizării rămâne locală."
   },
-  "tabGroupsColorBorder": {
-    "message": "Afișează chenarul colorat al grupului"
+  "tabGroupsColorStyle": {
+    "message": "Stilul culorii grupului de file"
   },
-  "tabGroupsColorBorderHint": {
-    "message": "Adaugă o margine stângă colorată la antetul fiecărui grup de file și la rândurile membrilor, astfel încât culoarea grupului să fie vizibilă dintr-o privire. Punctul de culoare rămâne activat implicit. Dezactivat implicit."
+  "tabGroupsColorStyleHint": {
+    "message": "Oprit afișează doar punctul colorat. Banda de culoare pe margine trasează o bandă colorată pe marginea stângă a grupului. Linia de conectare colorată trasează o linie colorată sub punctul grupului, cu o bifă pe rând, legând întregul grup într-un singur arbore."
+  },
+  "tabGroupsColorStyleOff": {
+    "message": "Oprit (doar punctul colorat)"
+  },
+  "tabGroupsColorStyleEdge": {
+    "message": "Bandă de culoare pe margine"
+  },
+  "tabGroupsColorStyleLine": {
+    "message": "Linie de conectare colorată"
   },
   "tabGroupsBookmarked": {
     "message": "Marcate"
+  },
+  "tabGroupsRemoveBookmark": {
+    "message": "Elimină marcajul"
+  },
+  "tabGroupsBookmarkRemoved": {
+    "message": "S-au eliminat $count$ marcaj(e)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsPinned": {
     "message": "Filă fixată"
@@ -520,11 +543,17 @@
   "tabGroupsUnpinTab": {
     "message": "Anulare fixare filă"
   },
+  "tabGroupsSleepTab": {
+    "message": "Adormi fila"
+  },
+  "tabGroupsWakeTab": {
+    "message": "Trezește fila"
+  },
   "tabGroupsOpenGroups": {
     "message": "Grupuri de file deschise"
   },
   "tabGroupsClosedGroups": {
-    "message": "Grupuri de file închise"
+    "message": "Închise recent"
   },
   "tabGroupsUngroupedTabs": {
     "message": "File negrupate"
@@ -566,6 +595,15 @@
   },
   "tabGroupsRemoveClosedTab": {
     "message": "Elimină din grupul salvat"
+  },
+  "tabGroupsClosedTimeLabel": {
+    "message": "Închis:"
+  },
+  "tabGroupsExpandedExpand": {
+    "message": "Extinde"
+  },
+  "tabGroupsExpandedCollapse": {
+    "message": "Restrânge"
   },
   "optionTabGroupsClosedLimit": {
     "message": "Istoricul filelor/grupurilor închise de păstrat"

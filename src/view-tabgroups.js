@@ -2,21 +2,36 @@
  * Tab groups view (docs/tab-groups-view-design.md) — browser tabs + tab groups
  * + bookmarks, living between the search and recent views.
  *
- * Renders the current window's tabs in tab-strip order. Tabs that belong to
- * a Chrome tab group render under a group header (title, color dot, count,
- * first-seen creation time, save-as-bookmark-folder action); ungrouped tabs
- * render as plain rows in the same order. The view offers a dupes-style
- * selection mode for batch tab management: new tab group / open into an
- * existing group (with a copy-vs-move choice for tabs that already belong to
- * a group), close, sleep, and save the selection as a bookmark folder.
- * Each row has a hover bookmark button (the stats-view recipe).
+ * Renders every normal browser window's tabs in tab-strip order, the current
+ * window first. Each window is a foldable section whose WHOLE head row is the
+ * fold control (a focusable role=button row, so the keyboard model reaches it
+ * like a tree folder); the current window is open by default and the others
+ * fold, with an explicit fold/unfold remembered for next time. Tabs that
+ * belong to a Chrome tab group render under a group header (title, color dot,
+ * count, go-to/rename/save/sleep/close actions); ungrouped tabs render as
+ * plain rows in the same order. Every row ends with the same four icon
+ * columns — pin / sleep / bookmark / close — so the columns line up on every
+ * row and in selection mode (where they render as inert state markers): the
+ * pinned glyph unpins, the crescent is hollow while the tab is awake and
+ * filled (click = wake) once it sleeps, and the filled ★ removes the
+ * bookmark again (undo-captured).
+ *
+ * The view offers a dupes-style selection mode for batch tab management: new
+ * tab group / open into an existing group (with a copy-vs-move choice for
+ * tabs that already belong to a group), close, sleep, and save the selection
+ * as a bookmark folder. Entering it opens every fold (a batch bar must show
+ * its candidates) and leaving it restores the previous folds.
+ *
+ * Closed tab groups and closed single tabs are kept as our OWN records
+ * ("recently closed"), so their close time is always known and shown:
+ * relative inline in a narrow popup, absolute on the second line when wide.
  *
  * All tab batch operations are sent to the service worker
  * (src/tab-groups-sw.js) so the popup can close mid-operation without
  * dropping callbacks.
  */
 
-import { VIEW_ICONS, STAR_ICON, STAR_ICON_FILLED, SELECT_ICON, FOLDER_ICON, EDIT_ICON, SLEEP_ICON, ACTIVATE_ICON, TRASH_ICON, REDO_ICON, COLLAPSE_ALL_ICON, EXPAND_ALL_ICON, PIN_ICON, CHEVRON_ICON } from './icons.js';
+import { VIEW_ICONS, STAR_ICON, STAR_ICON_FILLED, SELECT_ICON, FOLDER_ICON, EDIT_ICON, SLEEP_ICON, SLEEP_ICON_FILLED, ACTIVATE_ICON, TRASH_ICON, REDO_ICON, COLLAPSE_ALL_ICON, EXPAND_ALL_ICON, PIN_ICON } from './icons.js';
 import { htmlspecialchars } from './escape.js';
 import { parkRowFocus, unparkRowFocus, parkToolbarFocus, restoreToolbarFocus } from './list-focus.js';
 import { saveSession, sessionFolderName, tabsToBookmarks } from './session.js';
@@ -45,9 +60,20 @@ export function initViewTabGroups(ctx = {}) {
     // Collapse/expand sync (toolbar option, default OFF): when off, folding
     // groups in the view is local-only and never updates chrome.tabGroups.
     const syncCollapse = () => !!store.get('tabGroupsSyncCollapse', '');
-    // Enhanced group-color edge (toolbar option, default OFF): when on, each
-    // group's header and member rows get a 3px left edge in the group color.
-    const colorBorder = () => !!store.get('tabGroupsColorBorder', '');
+    // Group color decoration (options page, default off) — one of three:
+    //   'off'  color dot only (the default);
+    //   'edge' a 3px band in the group color down the header + member rows
+    //          (the original tabGroupsColorBorder switch);
+    //   'line' a color CONNECTOR line under the group head's dot with a
+    //          per-row tick, tying the whole group into one tree.
+    // The legacy boolean key is read as 'edge' so an existing profile keeps
+    // the look it had before the style choice existed.
+    const colorStyle = () => {
+        const v = store.get('tabGroupsColorStyle', '');
+        if (v === 'edge' || v === 'line' || v === 'off')
+            return v;
+        return store.get('tabGroupsColorBorder', '') ? 'edge' : 'off';
+    };
 
     // --- State ----------------------------------------------------------------
     let refreshToken = 0;   // monotonic refresh generation: stale async
@@ -61,11 +87,21 @@ export function initViewTabGroups(ctx = {}) {
     let selecting = false;
     const selected = new Set();   // tab ids
     const collapsed = new Set();  // group ids
-    const collapsedWindows = new Set(); // window ids (view-local folding)
+    const collapsedWindows = new Set(); // window ids folded right now
+    // EXPLICIT window fold choices only (id → true collapsed / false open).
+    // The default is derived per refresh — the current window is open, the
+    // others fold — so a remembered choice is exactly what the user did,
+    // never the default. Without this split a session that folded the other
+    // windows persisted "current window collapsed" as soon as window ids
+    // were reused by a later browser session.
+    const windowChoice = new Map();
     const expandedClosed = new Set();   // closed-record ids (view-local expand)
     let bookmarkedUrls = new Set(); // tab URLs that already exist as bookmarks
     let closedRecords = [];       // saved closed tab groups (our own records)
     let dragTabId = null;
+    // Fold state saved when selection mode opens everything up, restored on
+    // exit (selection mode must show every candidate row).
+    let foldSnapshot = null;
 
     const CLOSED_GROUPS_KEY = 'tabGroupsClosed';
     const UI_STATE_KEY = 'tabGroupsViewState';
@@ -87,8 +123,15 @@ export function initViewTabGroups(ctx = {}) {
         } catch (e) { /* best-effort */ }
     };
     const persistUIState = () => {
+        // Selection mode force-opens every fold (see setSelecting) — writing
+        // that transient state would erase the user's real fold choices.
+        if (selecting)
+            return;
+        const windowChoices = {};
+        for (const [id, folded] of windowChoice)
+            windowChoices[id] = !!folded;
         writeUIState({
-            collapsedWindows: [...collapsedWindows],
+            windowChoices,
             expandedClosed: [...expandedClosed],
             collapsedGroups: [...collapsed]
         });
@@ -205,20 +248,36 @@ export function initViewTabGroups(ctx = {}) {
                         collapsed.add(String(g.id));
 
                 // Restore (or default) the view-local folding state.
-                // Non-current windows fold by default; with remember-state on,
-                // the user's last choice wins. Group folds follow the browser
-                // when sync is on; when sync is off the saved view override
+                // Windows: the CURRENT window is open by default and the
+                // others fold; only an explicit fold/unfold the user
+                // performed is remembered and wins over that default (with
+                // remember-state on). Group folds follow the browser when
+                // sync is on; when sync is off the saved view override
                 // survives refreshes.
                 const uiState = readUIState();
+                // With remember-state ON the persisted choices are the truth;
+                // with it OFF nothing is stored, so THIS session's in-memory
+                // choices must survive the refresh — a tab event fires a
+                // refresh every 300 ms, and rebuilding from an empty state
+                // would undo the fold the user just performed.
+                if (rememberState()) {
+                    windowChoice.clear();
+                    if (uiState.windowChoices && typeof uiState.windowChoices === 'object') {
+                        for (const id of Object.keys(uiState.windowChoices))
+                            windowChoice.set(String(id), !!uiState.windowChoices[id]);
+                    } else if (Array.isArray(uiState.collapsedWindows)) {
+                        // Legacy shape (a flat collapsed list): read every entry
+                        // as an explicit fold so an upgrade keeps the folds.
+                        for (const id of uiState.collapsedWindows)
+                            windowChoice.set(String(id), true);
+                    }
+                }
                 collapsedWindows.clear();
-                const savedWindows = Array.isArray(uiState.collapsedWindows) ? uiState.collapsedWindows : null;
-                if (savedWindows) {
-                    for (const id of savedWindows)
-                        collapsedWindows.add(String(id));
-                } else {
-                    for (const w of windows)
-                        if (!w.focused)
-                            collapsedWindows.add(String(w.id));
+                for (const w of windows) {
+                    const id = String(w.id);
+                    const folded = windowChoice.has(id) ? windowChoice.get(id) : !w.focused;
+                    if (folded)
+                        collapsedWindows.add(id);
                 }
                 expandedClosed.clear();
                 if (Array.isArray(uiState.expandedClosed))
@@ -232,6 +291,13 @@ export function initViewTabGroups(ctx = {}) {
                         else
                             collapsed.delete(gid);
                     }
+                }
+                // Selection mode shows every candidate row: a refresh that
+                // lands mid-selection must not re-fold what setSelecting
+                // opened (tab events fire constantly while selecting).
+                if (selecting) {
+                    collapsed.clear();
+                    collapsedWindows.clear();
                 }
 
                 closedRecords = readClosedGroups()
@@ -307,67 +373,127 @@ export function initViewTabGroups(ctx = {}) {
         const title = group.title || _m('tabGroupUntitled');
         const color = group.color || 'grey';
         const saveLabel = _m('tabGroupsSaveFolder');
+        // Group sleep is a real toggle, like the member rows': every member
+        // asleep → filled glyph + wake, otherwise hollow glyph + sleep.
+        const allAsleep = memberTabs.length > 0 && memberTabs.every(t => !!t.discarded);
+        const sleepLabel = _m(allAsleep ? 'tabGroupsWakeGroup' : 'tabGroupsSleepGroup');
         return `<li class="tabgroups-group tg-${htmlspecialchars(color)}${selecting && memberTabs.every(t => selected.has(String(t.id))) ? ' sel' : ''}" id="tabgroups-group-${gid}" data-group-id="${gid}">` +
             `<span class="tabgroups-group-head" tabindex="-1" role="button" aria-expanded="${isCollapsed ? 'false' : 'true'}" title="${htmlspecialchars(title)}">` +
-            `<span class="chevron${isCollapsed ? ' collapsed' : ''}"></span>` +
+            `<span class="chevron${isCollapsed ? ' collapsed' : ''}" aria-hidden="true"></span>` +
             `<span class="tab-group-dot tg-${htmlspecialchars(color)}"></span>` +
             `<span class="tabgroups-group-title" dir="auto">${htmlspecialchars(title)}</span>` +
             `<span class="count-pill" aria-label="${htmlspecialchars(_m('tabGroupsGroupCount', `${memberTabs.length}`))}">${memberTabs.length}</span>` +
             `<button class="row-btn tabgroups-group-activate" aria-label="${htmlspecialchars(_m('tabGroupsActivateGroup'))}" title="${htmlspecialchars(_m('tabGroupsActivateGroup'))}">${ACTIVATE_ICON}</button>` +
             `<button class="row-btn tabgroups-group-rename" aria-label="${htmlspecialchars(_m('tabGroupsRenameGroup'))}" title="${htmlspecialchars(_m('tabGroupsRenameGroup'))}">${EDIT_ICON}</button>` +
             `<button class="row-btn tabgroups-group-save" aria-label="${htmlspecialchars(saveLabel)}" title="${htmlspecialchars(saveLabel)}">${FOLDER_ICON}</button>` +
-            `<button class="row-btn tabgroups-group-sleep" aria-label="${htmlspecialchars(_m('tabGroupsSleepGroup'))}" title="${htmlspecialchars(_m('tabGroupsSleepGroup'))}">${SLEEP_ICON}</button>` +
+            `<button class="row-btn tabgroups-group-sleep${allAsleep ? ' asleep' : ''}" aria-pressed="${allAsleep}" aria-label="${htmlspecialchars(sleepLabel)}" title="${htmlspecialchars(sleepLabel)}">${allAsleep ? SLEEP_ICON_FILLED : SLEEP_ICON}</button>` +
             `<button class="row-btn tabgroups-group-close" aria-label="${htmlspecialchars(_m('tabGroupsCloseGroup'))}" title="${htmlspecialchars(_m('tabGroupsCloseGroup'))}">${TRASH_ICON}</button>` +
             '</span></li>';
     };
 
-    const tabRowHtml = tab => {
+    // An empty 20px slot: keeps the four row-icon columns (pin / sleep /
+    // bookmark / close) aligned on EVERY row and in both modes, so a row
+    // without a pin or a bookmark does not shift its neighbours' glyphs.
+    const emptySlot = () => '<span class="tabgroups-slot" aria-hidden="true"></span>';
+
+    // The row's trailing icon strip. Non-selection mode renders live
+    // controls (state glyph = click toggles that state); selection mode
+    // renders the SAME four columns as inert state markers, so the row
+    // geometry is identical in both modes (only the batch bar acts there).
+    const rowIcons = tab => {
+        const pinned = !!tab.pinned;
+        const discarded = !!tab.discarded;
+        const bookmarked = bookmarkedUrls.has(tab.url || '');
+        const pinnedLabel = _m('tabGroupsPinned');
+        const discardedLabel = _m('tabGroupsDiscarded');
+        const bookmarkedLabel = _m('tabGroupsBookmarked');
+        if (selecting) {
+            return (pinned
+                ? `<span class="tabgroups-status-icon pinned" aria-label="${htmlspecialchars(pinnedLabel)}" title="${htmlspecialchars(pinnedLabel)}">${PIN_ICON}</span>`
+                : emptySlot()) +
+                (discarded
+                    ? `<span class="tabgroups-status-icon discarded" aria-label="${htmlspecialchars(discardedLabel)}" title="${htmlspecialchars(discardedLabel)}">${SLEEP_ICON_FILLED}</span>`
+                    : emptySlot()) +
+                (bookmarked
+                    ? `<span class="tabgroups-star" aria-label="${htmlspecialchars(bookmarkedLabel)}" title="${htmlspecialchars(bookmarkedLabel)}">${STAR_ICON_FILLED}</span>`
+                    : emptySlot()) +
+                emptySlot();
+        }
+        // Pin: a pinned tab shows the always-visible glyph and one click
+        // unpins it (the state icon IS the action). An unpinned tab keeps
+        // the column reserved — pinning stays a context-menu action.
+        const pinHtml = pinned
+            ? `<button class="row-btn tabgroups-unpin always-on" aria-pressed="true" aria-label="${htmlspecialchars(_m('tabGroupsUnpinTab'))}" title="${htmlspecialchars(_m('tabGroupsUnpinTab'))}">${PIN_ICON}</button>`
+            : emptySlot();
+        // Sleep: hollow crescent = awake (click sleeps), filled = sleeping
+        // (always visible, click wakes the tab in place).
+        const sleepLabel = _m(discarded ? 'tabGroupsWakeTab' : 'tabGroupsSleepTab');
+        const sleepHtml = `<button class="row-btn tabgroups-sleep-tab${discarded ? ' asleep always-on' : ''}" ` +
+            `aria-pressed="${discarded}" aria-label="${htmlspecialchars(sleepLabel)}" title="${htmlspecialchars(sleepLabel)}">` +
+            `${discarded ? SLEEP_ICON_FILLED : SLEEP_ICON}</button>`;
+        // Bookmark state follows the stats-view recipe: an always-visible
+        // filled ★ once bookmarked — clicking it now REMOVES the bookmark
+        // (undo-captured) — and a hover-revealed hollow ☆ otherwise.
+        const starHtml = bookmarked
+            ? `<button class="row-btn tabgroups-remove-bookmark always-on" aria-pressed="true" aria-label="${htmlspecialchars(_m('tabGroupsRemoveBookmark'))}" title="${htmlspecialchars(_m('tabGroupsRemoveBookmark'))}">${STAR_ICON_FILLED}</button>`
+            : `<button class="row-btn tabgroups-add-bookmark tabgroups-add-btn" aria-label="${htmlspecialchars(_m('tabGroupsAddBookmark'))}" title="${htmlspecialchars(_m('tabGroupsAddBookmark'))}">${STAR_ICON}</button>`;
+        // The rightmost hover action is close-tab (delete).
+        const closeLabel = _m('tabGroupsSelectClose');
+        const closeHtml = `<button class="row-btn tabgroups-close-tab" aria-label="${htmlspecialchars(closeLabel)}" title="${htmlspecialchars(closeLabel)}">${TRASH_ICON}</button>`;
+        return pinHtml + sleepHtml + starHtml + closeHtml;
+    };
+
+    const tabRowHtml = (tab, opts = {}) => {
         const tid = String(tab.id);
         const isCurrent = String(tab.id) === String(currentTabId);
         const inGroup = isGrouped(tab);
         const isSelected = selected.has(tid);
-        const bookmarked = bookmarkedUrls.has(tab.url || '');
         const pinned = !!tab.pinned;
         const discarded = !!tab.discarded;
-        const addLabel = _m('tabGroupsAddBookmark');
-        const bookmarkedLabel = _m('tabGroupsBookmarked');
         const currentLabel = _m('tabGroupsCurrentTab');
-        const pinnedLabel = _m('tabGroupsPinned');
-        const discardedLabel = _m('tabGroupsDiscarded');
         const extras = `data-tab-id="${tid}" data-url="${htmlspecialchars(tab.url || '')}"`;
         const badge = isCurrent ? [{ text: currentLabel, cls: 'current' }] : [];
         const groupColor = inGroup ? ((groupById(tab.groupId) || {}).color || 'grey') : '';
-        const rowClass = `vbm-row tabgroups-row${isCurrent ? ' tabgroups-current' : ''}${inGroup ? ` grouped tg-${groupColor}` : ''}${isSelected ? ' sel' : ''}${pinned ? ' pinned' : ''}${discarded ? ' discarded' : ''}`;
-        // Status icons sit left of the bookmark star; pinned and discarded
-        // both have their own glyph so the tab state reads at a glance.
-        const statusIcons =
-            (pinned ? `<span class="tabgroups-status-icon pinned" aria-label="${htmlspecialchars(pinnedLabel)}" title="${htmlspecialchars(pinnedLabel)}">${PIN_ICON}</span>` : '') +
-            (discarded ? `<span class="tabgroups-status-icon discarded" aria-label="${htmlspecialchars(discardedLabel)}" title="${htmlspecialchars(discardedLabel)}">${SLEEP_ICON}</span>` : '');
-        // Bookmark state follows the stats-view recipe: already-bookmarked
-        // tabs show a filled, always-visible star; unbookmarked tabs get the
-        // hover-revealed outline star button.
-        const closeLabel = _m('tabGroupsSelectClose');
-        const starHtml = bookmarked
-            ? `<span class="tabgroups-star" aria-label="${htmlspecialchars(bookmarkedLabel)}" title="${htmlspecialchars(bookmarkedLabel)}">${STAR_ICON_FILLED}</span>`
-            : `<button class="row-btn tabgroups-add-bookmark tabgroups-add-btn" aria-label="${htmlspecialchars(addLabel)}" title="${htmlspecialchars(addLabel)}">${STAR_ICON}</button>`;
-        // The rightmost hover action is close-tab (delete); bookmark keeps
-        // its slot to the left of it.
-        const closeBtn = `<button class="row-btn tabgroups-close-tab" aria-label="${htmlspecialchars(closeLabel)}" title="${htmlspecialchars(closeLabel)}">${TRASH_ICON}</button>`;
-        return `<li class="${rowClass}" id="tabgroups-item-${tid}" role="listitem" data-tab-id="${tid}"${inGroup ? ` data-group-id="${String(tab.groupId)}"` : ''}>` +
+        const rowClass = `vbm-row tabgroups-row${isCurrent ? ' tabgroups-current' : ''}${inGroup ? ` grouped tg-${groupColor}` : ''}${isSelected ? ' sel' : ''}${pinned ? ' pinned' : ''}${discarded ? ' discarded' : ''}${opts.lastMember ? ' tg-last' : ''}`;
+        // Connector-line style: one absolutely positioned element per member
+        // row draws the color trunk under the group head's dot plus the
+        // per-row tick — the tab-tree look. `tg-last` closes the trunk with
+        // an elbow so the group reads as one bracket.
+        const connector = (inGroup && colorStyle() === 'line')
+            ? '<span class="tg-connector" aria-hidden="true"></span>'
+            : '';
+        const winId = tab._windowId || tab.windowId;
+        return `<li class="${rowClass}" id="tabgroups-item-${tid}" role="listitem" data-tab-id="${tid}"` +
+            `${winId !== undefined && winId !== null ? ` data-window-id="${String(winId)}"` : ''}` +
+            `${inGroup ? ` data-group-id="${String(tab.groupId)}"` : ''}>` +
+            connector +
             treeRender.generateBookmarkHTML(tab.title || tab.url || _m('noTitle'), tab.url || '', extras, null, null, { badge }) +
-            statusIcons +
-            starHtml +
-            closeBtn +
+            rowIcons(tab) +
             '</li>';
     };
 
+    // Closed rows carry the time we closed them: the records are OUR own
+    // (written by closeTabById/closeGroup), so savedAt is always available —
+    // no browser API guessing. Narrow popup: relative time inline in the
+    // right slot; wide/panel: the absolute time as the second line's right
+    // half (the dead view's rightText/subRight recipe). A closed GROUP's
+    // member rows inherit the head's time and stay single-line.
     const closedTabHtml = (record, tab, idx) => {
         const title = tab.title || tab.url || _m('noTitle');
         const extras = `data-closed-id="${htmlspecialchars(record.id)}" data-closed-tab="${idx}"`;
         const addLabel = _m('tabGroupsAddBookmark');
         const removeLabel = _m('tabGroupsRemoveClosedTab');
+        const standalone = record.type === 'tab';
+        const savedAt = record.savedAt || 0;
+        const meta = (standalone && savedAt)
+            ? {
+                rightText: relTimeLabel(savedAt, _m),
+                subRight: new Date(savedAt).toLocaleString(),
+                tooltipAppend: `${_m('tabGroupsClosedTimeLabel')} ${new Date(savedAt).toLocaleString()}`
+            }
+            : {};
         return `<li class="vbm-row tabgroups-closed-tab" data-closed-id="${htmlspecialchars(record.id)}" data-closed-tab="${idx}">` +
-            treeRender.generateBookmarkHTML(title, tab.url || '', extras, null, null, {}) +
+            treeRender.generateBookmarkHTML(title, tab.url || '', extras, null, null, meta) +
             `<button class="row-btn tabgroups-closed-add-bookmark" aria-label="${htmlspecialchars(addLabel)}" title="${htmlspecialchars(addLabel)}">${STAR_ICON}</button>` +
             `<button class="row-btn tabgroups-closed-remove-tab" aria-label="${htmlspecialchars(removeLabel)}" title="${htmlspecialchars(removeLabel)}">${TRASH_ICON}</button>` +
             '</li>';
@@ -410,23 +536,40 @@ export function initViewTabGroups(ctx = {}) {
         if (!tabs.length) {
             html += `<ul role="list"><li class="empty-state" role="listitem"><i>${_m('tabGroupsViewEmpty')}</i></li></ul>`;
         } else {
-            const ulClass = [selecting ? 'selecting' : '', colorBorder() ? 'color-enhanced' : ''].filter(Boolean).join(' ');
+            const style = colorStyle();
+            const ulClass = [
+                selecting ? 'selecting' : '',
+                style === 'edge' ? 'color-enhanced' : '',
+                style === 'line' ? 'color-line' : ''
+            ].filter(Boolean).join(' ');
             html += `<ul role="list"${ulClass ? ` class="${ulClass}"` : ''}>`;
 
+            // Window section head: the WHOLE row is the fold control (a
+            // focusable role=button span, so it joins the row keyboard model
+            // exactly like a group head) — the old chevron-only button left
+            // most of the row dead to both mouse and keyboard.
             const windowHead = (win, idx) => {
                 const label = _m('tabGroupsWindow', [`${idx + 1}`]);
                 const isCollapsed = collapsedWindows.has(String(win.id));
                 const toggleLabel = _m(isCollapsed ? 'tabGroupsExpandWindow' : 'tabGroupsCollapseWindow');
                 const current = win.focused ? `<b class="tabgroups-window-current">${_m('tabGroupsCurrentWindow')}</b>` : '';
+                const count = win.tabs.length;
                 return `<li class="tabgroups-window-head" data-window-id="${String(win.id)}">` +
-                    `<button class="row-btn tabgroups-window-collapse${isCollapsed ? ' collapsed' : ''}" aria-label="${htmlspecialchars(toggleLabel)}" title="${htmlspecialchars(toggleLabel)}">${CHEVRON_ICON}</button>` +
-                    `<em>${htmlspecialchars(label)}</em>${current}</li>`;
+                    `<span class="tabgroups-window-head-row" tabindex="-1" role="button" ` +
+                    `aria-expanded="${isCollapsed ? 'false' : 'true'}" ` +
+                    `aria-label="${htmlspecialchars(`${label} · ${toggleLabel}`)}" ` +
+                    `title="${htmlspecialchars(toggleLabel)}">` +
+                    `<span class="chevron${isCollapsed ? ' collapsed' : ''}" aria-hidden="true"></span>` +
+                    `<em>${htmlspecialchars(label)}</em>${current}` +
+                    `<span class="count-pill" aria-label="${htmlspecialchars(_m('tabGroupsGroupCount', `${count}`))}">${count}</span>` +
+                    '</span></li>';
             };
             const groupBlock = ({ group, memberTabs }) => {
                 let out = groupHeadHtml(group, memberTabs);
-                if (!collapsed.has(String(group.id)))
-                    for (const mt of memberTabs)
-                        out += tabRowHtml(mt);
+                if (!collapsed.has(String(group.id))) {
+                    for (let mi = 0; mi < memberTabs.length; mi++)
+                        out += tabRowHtml(memberTabs[mi], { lastMember: mi === memberTabs.length - 1 });
+                }
                 return out;
             };
 
@@ -518,6 +661,46 @@ export function initViewTabGroups(ctx = {}) {
         });
     };
 
+    // The filled ★ is a toggle, not just a state marker: clicking it removes
+    // the bookmark(s) for that tab's URL again. Deletions go through
+    // undo.capture first, so the toast's Undo restores them (the same
+    // contract every other delete in the popup has).
+    const removeTabBookmarks = tabId => {
+        const tab = tabById(tabId);
+        if (!tab || !tab.url)
+            return;
+        chrome.bookmarks.search({ url: tab.url }, existing => {
+            const nodes = (existing || []).filter(n => n && n.id && !n.children);
+            if (!nodes.length) {
+                bookmarkedUrls.delete(tab.url);
+                if (views.isActive('tabgroups'))
+                    render();
+                return;
+            }
+            // Serial capture → remove: a URL may be bookmarked more than
+            // once, and the star can only go hollow when all copies are gone.
+            const step = i => {
+                if (i >= nodes.length) {
+                    bookmarkedUrls.delete(tab.url);
+                    onChanged();
+                    if (views.isActive('tabgroups'))
+                        render();
+                    undo.showToast(_m('tabGroupsBookmarkRemoved', `${nodes.length}`));
+                    return;
+                }
+                // capture() snapshots the subtree for Undo (fire-and-forget,
+                // the P3.3 contract every other delete path uses).
+                if (undo.capture)
+                    undo.capture(nodes[i].id);
+                chrome.bookmarks.remove(nodes[i].id, () => {
+                    void chrome.runtime.lastError;
+                    step(i + 1);
+                });
+            };
+            step(0);
+        });
+    };
+
     const togglePinned = tabId => {
         const tab = tabById(tabId);
         if (!tab)
@@ -584,6 +767,28 @@ export function initViewTabGroups(ctx = {}) {
                 scheduleRefresh();
             }
         });
+    };
+
+    // Waking is non-destructive (the tab reloads in place and stays where it
+    // is), so it runs without a confirmation — unlike sleeping, which throws
+    // away the tab's in-memory state.
+    const wakeTabById = tabId => {
+        const tab = tabById(tabId);
+        if (!tab)
+            return;
+        send({ type: TAB_GROUP_MSG.tabsWake, tabIds: [tab.id] });
+        scheduleRefresh();
+    };
+
+    // The row's sleep glyph is a toggle: asleep → wake, awake → sleep.
+    const toggleTabSleep = tabId => {
+        const tab = tabById(tabId);
+        if (!tab)
+            return;
+        if (tab.discarded)
+            wakeTabById(tabId);
+        else
+            sleepTabById(tabId);
     };
 
     const createBookmark = (folderId, tab) => new Promise(resolve => {
@@ -746,6 +951,28 @@ export function initViewTabGroups(ctx = {}) {
         });
     };
 
+    // Wake every member (no confirmation — reloading in place is reversible).
+    const wakeGroup = groupId => {
+        const ids = tabs.filter(t => String(t.groupId) === String(groupId) && t.discarded).map(t => t.id);
+        if (!ids.length)
+            return;
+        send({ type: TAB_GROUP_MSG.tabsWake, tabIds: ids });
+        scheduleRefresh();
+    };
+
+    // The group head's sleep glyph mirrors the rows': filled (every member
+    // asleep) wakes the group, hollow sleeps it.
+    const isGroupAsleep = groupId => {
+        const member = tabs.filter(t => String(t.groupId) === String(groupId));
+        return member.length > 0 && member.every(t => !!t.discarded);
+    };
+    const toggleGroupSleep = groupId => {
+        if (isGroupAsleep(groupId))
+            wakeGroup(groupId);
+        else
+            sleepGroup(groupId);
+    };
+
     // 取消分组：把组内标签打散回普通标签页（组实体消失，标签页保留）。
     const ungroupGroup = groupId => {
         const ids = tabs.filter(t => String(t.groupId) === String(groupId)).map(t => t.id);
@@ -854,8 +1081,61 @@ export function initViewTabGroups(ctx = {}) {
             render();
     };
 
+    const closedRecordById = recordId =>
+        closedRecords.find(r => String(r.id) === String(recordId)) || null;
+
+    // Open ONE tab of a closed record in a background tab, preferring the
+    // window it was closed in (gone → the current window). Shared by the row
+    // click and the closed-row context menu.
+    const openClosedTab = (recordId, idx) => {
+        const record = closedRecordById(recordId);
+        const tab = record && record.tabs && record.tabs[parseInt(idx, 10) || 0];
+        if (!tab || !tab.url || !chrome.tabs.create)
+            return;
+        const openIn = windowId => chrome.tabs.create({ url: tab.url, active: false, windowId });
+        if (record && record.windowId && chrome.windows && chrome.windows.get) {
+            chrome.windows.get(record.windowId, win => {
+                if (chrome.runtime.lastError || !win)
+                    chrome.tabs.create({ url: tab.url, active: false });
+                else
+                    openIn(record.windowId);
+            });
+        } else {
+            chrome.tabs.create({ url: tab.url, active: false });
+        }
+    };
+
+    const isClosedExpanded = recordId => expandedClosed.has(String(recordId));
+    const toggleClosedExpanded = recordId => {
+        const cid = String(recordId);
+        if (expandedClosed.has(cid))
+            expandedClosed.delete(cid);
+        else
+            expandedClosed.add(cid);
+        persistUIState();
+        render();
+    };
+
     // --- Selection mode + tab batch actions ---------------------------------------
+    // Entering selection mode OPENS every fold (groups and window sections):
+    // a batch bar that cannot see half of its candidates is a trap. The
+    // pre-selection folds are snapshotted and restored on exit, and
+    // persistUIState stands down while selecting so the transient
+    // all-expanded state never overwrites the user's real choices.
     const setSelecting = on => {
+        if (on && !selecting) {
+            foldSnapshot = { groups: [...collapsed], windows: [...collapsedWindows] };
+            collapsed.clear();
+            collapsedWindows.clear();
+        } else if (!on && selecting && foldSnapshot) {
+            collapsed.clear();
+            for (const id of foldSnapshot.groups)
+                collapsed.add(id);
+            collapsedWindows.clear();
+            for (const id of foldSnapshot.windows)
+                collapsedWindows.add(id);
+            foldSnapshot = null;
+        }
         selecting = on;
         if (!on)
             selected.clear();
@@ -1027,6 +1307,56 @@ export function initViewTabGroups(ctx = {}) {
         setGroupCollapsed(groupId, !collapsed.has(String(groupId)));
     };
 
+    // Window folding: the effective set plus the explicit choice that
+    // survives into the next session (see windowChoice).
+    const setWindowCollapsed = (windowId, shouldCollapse) => {
+        const id = String(windowId);
+        if (shouldCollapse)
+            collapsedWindows.add(id);
+        else
+            collapsedWindows.delete(id);
+        windowChoice.set(id, !!shouldCollapse);
+        persistUIState();
+        render();
+    };
+    const toggleWindowCollapsed = windowId =>
+        setWindowCollapsed(windowId, !collapsedWindows.has(String(windowId)));
+    const isWindowCollapsed = windowId => collapsedWindows.has(String(windowId));
+    // Focus a window head by id — the "walk to the structural parent" target
+    // for a collapsed group head and for an ungrouped row (keyboard-model
+    // §2.4's ← rule, one level higher than the group head).
+    const focusWindowHead = windowId => {
+        if (!windowId || !$list.querySelector)
+            return;
+        const rows = $list.querySelectorAll
+            ? $list.querySelectorAll('li.tabgroups-window-head') : [];
+        for (let i = 0; i < rows.length; i++) {
+            if (String(rows[i].dataset && rows[i].dataset.windowId) === String(windowId)) {
+                const target = rows[i].querySelector('.tabgroups-window-head-row');
+                if (target && target.focus)
+                    target.focus();
+                return;
+            }
+        }
+    };
+
+    // Selection helpers shared by the click and keyboard paths: a group head
+    // toggles its members, a window head toggles that window's tabs.
+    const toggleIds = ids => {
+        const allSel = ids.length > 0 && ids.every(id => selected.has(id));
+        for (const id of ids) {
+            if (allSel)
+                selected.delete(id);
+            else
+                selected.add(id);
+        }
+        render();
+    };
+    const toggleGroupSelection = groupId =>
+        toggleIds(tabs.filter(t => String(t.groupId) === String(groupId)).map(t => String(t.id)));
+    const toggleWindowSelection = windowId =>
+        toggleIds(tabs.filter(t => String(t._windowId || t.windowId) === String(windowId)).map(t => String(t.id)));
+
     const collapseAll = () => {
         for (const g of groups)
             collapsed.add(String(g.id));
@@ -1085,7 +1415,7 @@ export function initViewTabGroups(ctx = {}) {
                 if (area !== 'local' || !changes)
                     return;
                 let touched = false;
-                for (const key of ['tabGroupsColorBorder', 'tabGroupsSyncCollapse']) {
+                for (const key of ['tabGroupsColorStyle', 'tabGroupsColorBorder', 'tabGroupsSyncCollapse']) {
                     if (Object.prototype.hasOwnProperty.call(changes, key)) {
                         if (store.adopt)
                             store.adopt(key, changes[key].newValue);
@@ -1198,18 +1528,21 @@ export function initViewTabGroups(ctx = {}) {
             expandAll();
             return;
         }
-        if (closest('.tabgroups-window-collapse')) {
+        // Window section head: the whole row folds/unfolds its window (in
+        // selection mode it toggles every tab of that window instead, the
+        // same rule the group head follows).
+        const winHead = closest('.tabgroups-window-head-row');
+        if (winHead) {
             e.preventDefault();
-            const li = closest('.tabgroups-window-collapse').closest('li');
+            const li = winHead.closest('li');
             const winId = li && li.dataset.windowId;
             if (!winId)
                 return;
-            if (collapsedWindows.has(winId))
-                collapsedWindows.delete(winId);
-            else
-                collapsedWindows.add(winId);
-            persistUIState();
-            render();
+            if (selecting) {
+                toggleWindowSelection(winId);
+                return;
+            }
+            toggleWindowCollapsed(winId);
             return;
         }
         // Selection mode: row/group clicks toggle membership.
@@ -1230,16 +1563,7 @@ export function initViewTabGroups(ctx = {}) {
                 if (rowLi.dataset.groupId) {
                     e.preventDefault();
                     e.stopPropagation();
-                    const gid = rowLi.dataset.groupId;
-                    const memberIds = tabs.filter(t => String(t.groupId) === gid).map(t => String(t.id));
-                    const allSel = memberIds.every(id => selected.has(id));
-                    for (const id of memberIds) {
-                        if (allSel)
-                            selected.delete(id);
-                        else
-                            selected.add(id);
-                    }
-                    render();
+                    toggleGroupSelection(rowLi.dataset.groupId);
                     return;
                 }
             }
@@ -1252,6 +1576,36 @@ export function initViewTabGroups(ctx = {}) {
             const li = closeTabBtn.closest('li');
             if (li && li.dataset.tabId)
                 closeTabById(li.dataset.tabId);
+            return;
+        }
+        // Row sleep toggle: hollow crescent sleeps, filled one wakes.
+        const sleepTabBtn = closest('.tabgroups-sleep-tab');
+        if (sleepTabBtn) {
+            e.preventDefault();
+            e.stopPropagation();
+            const li = sleepTabBtn.closest('li');
+            if (li && li.dataset.tabId)
+                toggleTabSleep(li.dataset.tabId);
+            return;
+        }
+        // The pinned glyph is its own un-pin control.
+        const unpinBtn = closest('.tabgroups-unpin');
+        if (unpinBtn) {
+            e.preventDefault();
+            e.stopPropagation();
+            const li = unpinBtn.closest('li');
+            if (li && li.dataset.tabId)
+                togglePinned(li.dataset.tabId);
+            return;
+        }
+        // The filled ★ removes the bookmark again (undo-captured).
+        const unstarBtn = closest('.tabgroups-remove-bookmark');
+        if (unstarBtn) {
+            e.preventDefault();
+            e.stopPropagation();
+            const li = unstarBtn.closest('li');
+            if (li && li.dataset.tabId)
+                removeTabBookmarks(li.dataset.tabId);
             return;
         }
         const addBtn = closest('.tabgroups-add-bookmark');
@@ -1287,7 +1641,7 @@ export function initViewTabGroups(ctx = {}) {
             e.stopPropagation();
             const li = sleepGroupBtn.closest('li');
             if (li && li.dataset.groupId)
-                sleepGroup(li.dataset.groupId);
+                toggleGroupSleep(li.dataset.groupId);
             return;
         }
         const closeGroupBtn = closest('.tabgroups-group-close');
@@ -1345,15 +1699,8 @@ export function initViewTabGroups(ctx = {}) {
         if (closedHead) {
             e.preventDefault();
             const li = closedHead.closest('li');
-            if (li && li.dataset.closedId) {
-                const cid = li.dataset.closedId;
-                if (expandedClosed.has(cid))
-                    expandedClosed.delete(cid);
-                else
-                    expandedClosed.add(cid);
-                persistUIState();
-                render();
-            }
+            if (li && li.dataset.closedId)
+                toggleClosedExpanded(li.dataset.closedId);
             return;
         }
         const saveBtn = closest('.tabgroups-group-save');
@@ -1383,21 +1730,7 @@ export function initViewTabGroups(ctx = {}) {
         }
         if (anchor && anchor.dataset && anchor.dataset.closedId) {
             e.preventDefault();
-            const record = closedRecords.find(r => String(r.id) === String(anchor.dataset.closedId));
-            const tab = record && record.tabs && record.tabs[parseInt(anchor.dataset.closedTab, 10) || 0];
-            if (!tab || !tab.url || !chrome.tabs.create)
-                return;
-            const openIn = windowId => chrome.tabs.create({ url: tab.url, active: false, windowId });
-            if (record && record.windowId && chrome.windows && chrome.windows.get) {
-                chrome.windows.get(record.windowId, win => {
-                    if (chrome.runtime.lastError || !win)
-                        chrome.tabs.create({ url: tab.url, active: false });
-                    else
-                        openIn(record.windowId);
-                });
-            } else {
-                chrome.tabs.create({ url: tab.url, active: false });
-            }
+            openClosedTab(anchor.dataset.closedId, anchor.dataset.closedTab);
             return;
         }
     });
@@ -1418,9 +1751,56 @@ export function initViewTabGroups(ctx = {}) {
         }
     });
 
-    // Group-header keys, capture phase (the dupes recipe): Space/Enter/←/→
-    // collapse/expand; in selection mode Space toggles the group.
+    // Window/group-header keys, capture phase (the dupes recipe):
+    // Space/Enter/←/→ collapse/expand; in selection mode Space toggles the
+    // whole section. Both heads speak the same protocol, one nesting level
+    // apart (window → group → row).
     $list.addEventListener('keydown', e => {
+        const isRtlNow = () => !!(document.body && document.body.classList
+            && document.body.classList.contains('rtl'));
+        const winHead = (e.target && e.target.classList
+            && e.target.classList.contains('tabgroups-window-head-row'))
+            ? e.target
+            : (e.target && e.target.closest ? e.target.closest('.tabgroups-window-head-row') : null);
+        if (winHead) {
+            const li = winHead.closest('li');
+            const winId = li && li.dataset.windowId;
+            if (!winId)
+                return;
+            const k = e.key;
+            const isCollapsed = isWindowCollapsed(winId);
+            if (k === 'F2') {
+                // Never fall through to keyboard.js's bookmark rename.
+                e.preventDefault();
+                e.stopImmediatePropagation();
+                return;
+            }
+            if (k === ' ' || k === 'Enter') {
+                e.preventDefault();
+                e.stopPropagation();
+                if (selecting)
+                    toggleWindowSelection(winId);
+                else
+                    setWindowCollapsed(winId, !isCollapsed);
+                return;
+            }
+            const forwardW = k === (isRtlNow() ? 'ArrowLeft' : 'ArrowRight');
+            const backW = k === (isRtlNow() ? 'ArrowRight' : 'ArrowLeft');
+            if (forwardW || backW) {
+                // Folded + forward opens, open + back folds; the remaining
+                // combinations are swallowed on purpose — a window head has
+                // no context menu and no structural parent, and letting the
+                // generic row rule run would open the FOLDER menu on it.
+                e.preventDefault();
+                e.stopPropagation();
+                if (forwardW && isCollapsed)
+                    setWindowCollapsed(winId, false);
+                else if (backW && !isCollapsed)
+                    setWindowCollapsed(winId, true);
+                return;
+            }
+            return;
+        }
         const head = (e.target && e.target.classList && e.target.classList.contains('tabgroups-group-head'))
             ? e.target
             : (e.target && e.target.closest ? e.target.closest('.tabgroups-group-head') : null);
@@ -1434,15 +1814,7 @@ export function initViewTabGroups(ctx = {}) {
             if (selecting && k === ' ') {
                 e.preventDefault();
                 e.stopPropagation();
-                const memberIds = tabs.filter(t => String(t.groupId) === gid).map(t => String(t.id));
-                const allSel = memberIds.every(id => selected.has(id));
-                for (const id of memberIds) {
-                    if (allSel)
-                        selected.delete(id);
-                    else
-                        selected.add(id);
-                }
-                render();
+                toggleGroupSelection(gid);
                 return;
             }
             if (k === 'F2') {
@@ -1491,9 +1863,16 @@ export function initViewTabGroups(ctx = {}) {
                 e.preventDefault();
                 e.stopPropagation();
                 setGroupCollapsed(gid, true);
+                return;
             }
-            // Collapsed group + back arrow: no structural parent in this view
-            // (the window head is a non-focusable section separator).
+            if (back) {
+                // Collapsed group + back arrow: up to the structural parent —
+                // the window head is a focusable row now, so the tree model's
+                // "← walks to the parent" holds at every level of this view.
+                e.preventDefault();
+                e.stopPropagation();
+                focusWindowHead((groupById(gid) || {}).windowId);
+            }
             return;
         }
         // F2 on a tab row is a no-op here, but it must never fall through
@@ -1507,10 +1886,9 @@ export function initViewTabGroups(ctx = {}) {
         // the dupes-member rule): ← (RTL →) jumps to the owning group head.
         // The forward arrow keeps keyboard.js's default context-menu open.
         const rowLi = e.target && e.target.closest ? e.target.closest('li.tabgroups-row') : null;
-        if (rowLi && rowLi.dataset && rowLi.dataset.groupId) {
-            const isRtl = !!(document.body && document.body.classList && document.body.classList.contains('rtl'));
-            const back = (e.key === 'ArrowLeft') !== isRtl;
-            if (back) {
+        if (rowLi && rowLi.dataset && (e.key === 'ArrowLeft' || e.key === 'ArrowRight')) {
+            const back = (e.key === 'ArrowLeft') !== isRtlNow();
+            if (back && rowLi.dataset.groupId) {
                 e.preventDefault();
                 e.stopPropagation();
                 const head = $list.querySelector
@@ -1518,6 +1896,13 @@ export function initViewTabGroups(ctx = {}) {
                     : null;
                 if (head && head.focus)
                     head.focus();
+                return;
+            }
+            if (back) {
+                // Ungrouped row: its structural parent is the window head.
+                e.preventDefault();
+                e.stopPropagation();
+                focusWindowHead(rowLi.dataset.windowId);
                 return;
             }
         }
@@ -1662,20 +2047,50 @@ export function initViewTabGroups(ctx = {}) {
         },
         togglePinned,
         addBookmark: addTabToBookmarks,
+        // The row menu's bookmark entry is a toggle like the ★ itself.
+        isBookmarked: tabId => {
+            const tab = tabById(tabId);
+            return !!(tab && bookmarkedUrls.has(tab.url || ''));
+        },
+        removeBookmark: removeTabBookmarks,
         closeTab: closeTabById,
         sleepTab: sleepTabById,
+        wakeTab: wakeTabById,
+        isDiscarded: tabId => {
+            const tab = tabById(tabId);
+            return !!(tab && tab.discarded);
+        },
         activateGroup,
         renameGroup,
         saveGroupToBookmarks,
         closeGroup,
         sleepGroup,
+        wakeGroup,
+        isGroupAsleep,
         toggleGroup: toggleGroupCollapsed,
         isCollapsed: gid => collapsed.has(String(gid)),
         ungroupGroup,
         moveGroupToNewWindow,
+        // Closed-record surface (the closed-row context menus dispatch here;
+        // every entry is state-checked against the live record list).
         restoreClosedGroup,
         deleteClosedGroup,
         clearClosedGroups,
-        removeClosedTab
+        removeClosedTab,
+        openClosedTab,
+        addClosedTabToBookmarks,
+        isClosedExpanded,
+        toggleClosedExpanded,
+        closedRecordType: recordId => {
+            const record = closedRecordById(recordId);
+            return record ? (record.type || 'group') : null;
+        },
+        closedTabCount: recordId => {
+            const record = closedRecordById(recordId);
+            return record ? (record.tabs || []).length : 0;
+        },
+        // Window sections (keyboard/menu parity with the group heads)
+        isWindowCollapsed,
+        toggleWindowCollapsed
     };
 }

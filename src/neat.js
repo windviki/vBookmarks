@@ -255,7 +255,15 @@ import { shouldHighlightUnsynced, shouldRememberState } from './settings.js';
         'tabgroup-ungroup': 'tabGroupsUngroupGroup',
         'tabgroup-save-folder': 'tabGroupsMenuSaveFolder',
         'tabgroup-sleep': 'tabGroupsSleepGroup',
-        'tabgroup-close': 'tabGroupsCloseGroup'
+        'tabgroup-close': 'tabGroupsCloseGroup',
+        // …and the two "recently closed" record menus (labels that depend on
+        // the record's state are re-set at open time by context-menu.js)
+        'tabgroups-closed-reopen': 'tabGroupsReopenGroup',
+        'tabgroups-closed-toggle': 'tabGroupsExpandedExpand',
+        'tabgroups-closed-forget': 'tabGroupsDeleteClosedGroup',
+        'tabgroups-closed-tab-open': 'tabGroupsClosedOpenTab',
+        'tabgroups-closed-tab-bookmark': 'tabGroupsMenuAddBookmark',
+        'tabgroups-closed-tab-remove': 'tabGroupsRemoveClosedTab'
     }).forEach(([id, msg]) => {
         const el = $(id);
         if (el)
@@ -375,17 +383,32 @@ import { shouldHighlightUnsynced, shouldRememberState } from './settings.js';
                 isPinned: id => viewTabGroups.isPinned(id),
                 togglePinned: id => viewTabGroups.togglePinned(id),
                 addBookmark: id => viewTabGroups.addBookmark(id),
+                isBookmarked: id => viewTabGroups.isBookmarked(id),
+                removeBookmark: id => viewTabGroups.removeBookmark(id),
                 closeTab: id => viewTabGroups.closeTab(id),
                 sleepTab: id => viewTabGroups.sleepTab(id),
+                wakeTab: id => viewTabGroups.wakeTab(id),
+                isDiscarded: id => viewTabGroups.isDiscarded(id),
                 activateGroup: id => viewTabGroups.activateGroup(id),
                 renameGroup: id => viewTabGroups.renameGroup(id),
                 saveGroupToBookmarks: id => viewTabGroups.saveGroupToBookmarks(id),
                 closeGroup: id => viewTabGroups.closeGroup(id),
                 sleepGroup: id => viewTabGroups.sleepGroup(id),
+                wakeGroup: id => viewTabGroups.wakeGroup(id),
+                isGroupAsleep: id => viewTabGroups.isGroupAsleep(id),
                 toggleGroup: id => viewTabGroups.toggleGroup(id),
                 isCollapsed: id => viewTabGroups.isCollapsed(id),
                 ungroupGroup: id => viewTabGroups.ungroupGroup(id),
-                moveGroupToNewWindow: id => viewTabGroups.moveGroupToNewWindow(id)
+                moveGroupToNewWindow: id => viewTabGroups.moveGroupToNewWindow(id),
+                // "Recently closed" records (their own two menus)
+                restoreClosedGroup: id => viewTabGroups.restoreClosedGroup(id),
+                deleteClosedGroup: id => viewTabGroups.deleteClosedGroup(id),
+                removeClosedTab: (id, idx) => viewTabGroups.removeClosedTab(id, idx),
+                openClosedTab: (id, idx) => viewTabGroups.openClosedTab(id, idx),
+                addClosedTabToBookmarks: (id, idx) => viewTabGroups.addClosedTabToBookmarks(id, idx),
+                isClosedExpanded: id => viewTabGroups.isClosedExpanded(id),
+                toggleClosedExpanded: id => viewTabGroups.toggleClosedExpanded(id),
+                closedTabCount: id => viewTabGroups.closedTabCount(id)
             };
         },
         // v4 task-4 #6: the palette custom-command row menu (edit/delete)
@@ -635,6 +658,9 @@ import { shouldHighlightUnsynced, shouldRememberState } from './settings.js';
         treeView,
         dialogs,
         undo,
+        // The view's fold memory (windows / groups / expanded closed records)
+        // rides the same remember-state option the tree and view state do.
+        getRememberState: () => rememberState,
         onChanged: () => chrome.bookmarks.getTree(treeView.generateTree),
         // 第五轮项3: re-lay the dead-mark × overlays after every re-render.
         onRowsRendered: () => deadOverlayRefresh()

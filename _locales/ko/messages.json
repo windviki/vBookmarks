@@ -464,7 +464,7 @@
     "message": "탭 그룹 보기로 이동"
   },
   "tabGroupsActivateGroup": {
-    "message": "탭 그룹 활성화"
+    "message": "그룹으로 이동"
   },
   "tabGroupsRenameGroup": {
     "message": "탭 그룹 이름 바꾸기"
@@ -478,8 +478,11 @@
   "tabGroupsSleepGroup": {
     "message": "탭 그룹 절전"
   },
+  "tabGroupsWakeGroup": {
+    "message": "탭 그룹 깨우기"
+  },
   "tabGroupsActivateTab": {
-    "message": "탭 활성화"
+    "message": "탭으로 이동"
   },
   "tabGroupsCollapseGroup": {
     "message": "그룹 접기"
@@ -499,14 +502,34 @@
   "tabGroupsSyncCollapseHint": {
     "message": "선택하면 이 보기에서 그룹을 접거나 펼칠 때 브라우저 탭 그룹도 업데이트됩니다. 기본적으로 꺼져 있어 보기 접기가 로컬에 유지됩니다."
   },
-  "tabGroupsColorBorder": {
-    "message": "그룹 색상 테두리 표시"
+  "tabGroupsColorStyle": {
+    "message": "탭 그룹 색상 스타일"
   },
-  "tabGroupsColorBorderHint": {
-    "message": "각 탭 그룹의 헤더와 구성원 행에 색상 왼쪽 테두리를 추가하여 그룹 색상을 한눈에 확인할 수 있습니다. 색상 점은 기본적으로 켜져 있으며, 이 옵션은 기본적으로 꺼져 있습니다."
+  "tabGroupsColorStyleHint": {
+    "message": "끄면 색상 점만 표시됩니다. 가장자리 색상 띠는 그룹의 왼쪽 가장자리에 색상 줄무늬를 그립니다. 색상 연결선은 그룹 점 아래에 색상 선을 그리고 각 행에 눈금을 표시하여 전체 그룹을 하나의 트리로 연결합니다."
+  },
+  "tabGroupsColorStyleOff": {
+    "message": "끄기 (색상 점만)"
+  },
+  "tabGroupsColorStyleEdge": {
+    "message": "가장자리 색상 띠"
+  },
+  "tabGroupsColorStyleLine": {
+    "message": "색상 연결선"
   },
   "tabGroupsBookmarked": {
     "message": "북마크됨"
+  },
+  "tabGroupsRemoveBookmark": {
+    "message": "북마크 제거"
+  },
+  "tabGroupsBookmarkRemoved": {
+    "message": "$count$개의 북마크가 제거되었습니다",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsPinned": {
     "message": "고정된 탭"
@@ -520,11 +543,17 @@
   "tabGroupsUnpinTab": {
     "message": "탭 고정 해제"
   },
+  "tabGroupsSleepTab": {
+    "message": "탭 절전"
+  },
+  "tabGroupsWakeTab": {
+    "message": "탭 깨우기"
+  },
   "tabGroupsOpenGroups": {
     "message": "열린 탭 그룹"
   },
   "tabGroupsClosedGroups": {
-    "message": "닫힌 탭 그룹"
+    "message": "최근 닫힘"
   },
   "tabGroupsUngroupedTabs": {
     "message": "그룹화되지 않은 탭"
@@ -566,6 +595,15 @@
   },
   "tabGroupsRemoveClosedTab": {
     "message": "저장된 그룹에서 제거"
+  },
+  "tabGroupsClosedTimeLabel": {
+    "message": "닫힘:"
+  },
+  "tabGroupsExpandedExpand": {
+    "message": "펼치기"
+  },
+  "tabGroupsExpandedCollapse": {
+    "message": "접기"
   },
   "optionTabGroupsClosedLimit": {
     "message": "유지할 닫힌 탭/그룹 기록"

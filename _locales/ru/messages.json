@@ -464,7 +464,7 @@
     "message": "Перейти к просмотру групп вкладок"
   },
   "tabGroupsActivateGroup": {
-    "message": "Активировать группу"
+    "message": "Перейти к группе вкладок"
   },
   "tabGroupsRenameGroup": {
     "message": "Переименовать группу"
@@ -478,8 +478,11 @@
   "tabGroupsSleepGroup": {
     "message": "Усыпить группу"
   },
+  "tabGroupsWakeGroup": {
+    "message": "Разбудить группу вкладок"
+  },
   "tabGroupsActivateTab": {
-    "message": "Активировать вкладку"
+    "message": "Перейти к вкладке"
   },
   "tabGroupsCollapseGroup": {
     "message": "Свернуть группу"
@@ -499,14 +502,34 @@
   "tabGroupsSyncCollapseHint": {
     "message": "Если отмечено, свёртывание или развёртывание группы в этом представлении также обновляет группу вкладок браузера. По умолчанию выключено, чтобы сворачивание в представлении оставалось локальным."
   },
-  "tabGroupsColorBorder": {
-    "message": "Показывать цветную границу группы"
+  "tabGroupsColorStyle": {
+    "message": "Стиль цвета группы вкладок"
   },
-  "tabGroupsColorBorderHint": {
-    "message": "Добавляет цветную левую границу к заголовку и строкам участников каждой группы вкладок, чтобы цвет группы был виден с первого взгляда. Цветная точка остаётся включённой по умолчанию. По умолчанию выключено."
+  "tabGroupsColorStyleHint": {
+    "message": "Выкл. показывает только цветную точку. Цветная полоса по краю рисует полосу вдоль левого края группы. Линия-соединитель рисует цветную линию под точкой группы с отметкой на каждую строку, связывая всю группу в одно дерево."
+  },
+  "tabGroupsColorStyleOff": {
+    "message": "Выкл. (только цветная точка)"
+  },
+  "tabGroupsColorStyleEdge": {
+    "message": "Цветная полоса по краю"
+  },
+  "tabGroupsColorStyleLine": {
+    "message": "Линия-соединитель"
   },
   "tabGroupsBookmarked": {
     "message": "В закладках"
+  },
+  "tabGroupsRemoveBookmark": {
+    "message": "Удалить закладку"
+  },
+  "tabGroupsBookmarkRemoved": {
+    "message": "Удалено закладок: $count$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsPinned": {
     "message": "Закреплённая вкладка"
@@ -520,11 +543,17 @@
   "tabGroupsUnpinTab": {
     "message": "Открепить вкладку"
   },
+  "tabGroupsSleepTab": {
+    "message": "Усыпить вкладку"
+  },
+  "tabGroupsWakeTab": {
+    "message": "Разбудить вкладку"
+  },
   "tabGroupsOpenGroups": {
     "message": "Открытые группы вкладок"
   },
   "tabGroupsClosedGroups": {
-    "message": "Закрытые группы вкладок"
+    "message": "Недавно закрытые"
   },
   "tabGroupsUngroupedTabs": {
     "message": "Несгруппированные вкладки"
@@ -566,6 +595,15 @@
   },
   "tabGroupsRemoveClosedTab": {
     "message": "Удалить из сохранённой группы"
+  },
+  "tabGroupsClosedTimeLabel": {
+    "message": "Закрыто:"
+  },
+  "tabGroupsExpandedExpand": {
+    "message": "Развернуть"
+  },
+  "tabGroupsExpandedCollapse": {
+    "message": "Свернуть"
   },
   "optionTabGroupsClosedLimit": {
     "message": "Сохраняемая история закрытых вкладок/групп"

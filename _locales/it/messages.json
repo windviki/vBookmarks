@@ -464,7 +464,7 @@
     "message": "Vai alla vista gruppi di schede"
   },
   "tabGroupsActivateGroup": {
-    "message": "Attiva gruppo di schede"
+    "message": "Vai al gruppo di schede"
   },
   "tabGroupsRenameGroup": {
     "message": "Rinomina gruppo di schede"
@@ -478,8 +478,11 @@
   "tabGroupsSleepGroup": {
     "message": "Sospendi gruppo di schede"
   },
+  "tabGroupsWakeGroup": {
+    "message": "Riattiva gruppo di schede"
+  },
   "tabGroupsActivateTab": {
-    "message": "Attiva scheda"
+    "message": "Vai alla scheda"
   },
   "tabGroupsCollapseGroup": {
     "message": "Comprimi gruppo"
@@ -499,14 +502,34 @@
   "tabGroupsSyncCollapseHint": {
     "message": "Se selezionato, comprimere o espandere un gruppo in questa vista aggiorna anche il gruppo di schede del browser. Disattivato per impostazione predefinita, così la piegatura della vista rimane locale."
   },
-  "tabGroupsColorBorder": {
-    "message": "Mostra bordo colore gruppo"
+  "tabGroupsColorStyle": {
+    "message": "Stile colore gruppo di schede"
   },
-  "tabGroupsColorBorderHint": {
-    "message": "Aggiunge un bordo colorato sul lato sinistro dell'intestazione e delle righe dei membri di ogni gruppo di schede, così il colore del gruppo è visibile a colpo d'occhio. Il punto colorato rimane attivo per impostazione predefinita. Disattivato per impostazione predefinita."
+  "tabGroupsColorStyleHint": {
+    "message": "Off mostra solo il punto colore. La banda colore sul bordo disegna una striscia colorata lungo il bordo sinistro del gruppo. La linea di connessione colore disegna una linea colorata sotto il punto del gruppo con un segno per riga, collegando l'intero gruppo in un albero."
+  },
+  "tabGroupsColorStyleOff": {
+    "message": "Off (solo punto colore)"
+  },
+  "tabGroupsColorStyleEdge": {
+    "message": "Banda colore sul bordo"
+  },
+  "tabGroupsColorStyleLine": {
+    "message": "Linea di connessione colore"
   },
   "tabGroupsBookmarked": {
     "message": "Aggiunto ai segnalibri"
+  },
+  "tabGroupsRemoveBookmark": {
+    "message": "Rimuovi segnalibro"
+  },
+  "tabGroupsBookmarkRemoved": {
+    "message": "Rimossi $count$ segnalibri",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsPinned": {
     "message": "Scheda bloccata"
@@ -520,11 +543,17 @@
   "tabGroupsUnpinTab": {
     "message": "Sblocca scheda"
   },
+  "tabGroupsSleepTab": {
+    "message": "Sospendi scheda"
+  },
+  "tabGroupsWakeTab": {
+    "message": "Riattiva scheda"
+  },
   "tabGroupsOpenGroups": {
     "message": "Gruppi di schede aperti"
   },
   "tabGroupsClosedGroups": {
-    "message": "Gruppi di schede chiusi"
+    "message": "Chiuse di recente"
   },
   "tabGroupsUngroupedTabs": {
     "message": "Schede non raggruppate"
@@ -566,6 +595,15 @@
   },
   "tabGroupsRemoveClosedTab": {
     "message": "Rimuovi dal gruppo salvato"
+  },
+  "tabGroupsClosedTimeLabel": {
+    "message": "Chiuse:"
+  },
+  "tabGroupsExpandedExpand": {
+    "message": "Espandi"
+  },
+  "tabGroupsExpandedCollapse": {
+    "message": "Comprimi"
   },
   "optionTabGroupsClosedLimit": {
     "message": "Cronologia di schede/gruppi chiusi da conservare"

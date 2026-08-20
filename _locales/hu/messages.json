@@ -464,7 +464,7 @@
     "message": "Ugrás a lapcsoportok nézetére"
   },
   "tabGroupsActivateGroup": {
-    "message": "Lapcsoport aktiválása"
+    "message": "Ugrás a lapcsoporthoz"
   },
   "tabGroupsRenameGroup": {
     "message": "Lapcsoport átnevezése"
@@ -478,8 +478,11 @@
   "tabGroupsSleepGroup": {
     "message": "Lapcsoport alvó állapotba"
   },
+  "tabGroupsWakeGroup": {
+    "message": "Lapcsoport ébresztése"
+  },
   "tabGroupsActivateTab": {
-    "message": "Lap aktiválása"
+    "message": "Ugrás a lapra"
   },
   "tabGroupsCollapseGroup": {
     "message": "Csoport összecsukása"
@@ -499,14 +502,34 @@
   "tabGroupsSyncCollapseHint": {
     "message": "Ha be van jelölve, a csoport összecsukása vagy kibontása ebben a nézetben frissíti a böngésző lapcsoportját is. Alapértelmezés szerint ki van kapcsolva, így a nézet összecsukása helyi marad."
   },
-  "tabGroupsColorBorder": {
-    "message": "Csoportszín szegély megjelenítése"
+  "tabGroupsColorStyle": {
+    "message": "Lapcsoport színstílusa"
   },
-  "tabGroupsColorBorderHint": {
-    "message": "Színes bal szegélyt ad a csoport fejlécéhez és tagjaihoz, így a csoportszín első pillantásra látható. A színpötty alapértelmezetten be van kapcsolva. Alapértelmezetten ki van kapcsolva."
+  "tabGroupsColorStyleHint": {
+    "message": "A Ki csak a színpontot mutatja. A Szélsáv színes csíkot rajzol a csoport bal szélére. A Színösszekötő vonal színes vonalat húz a csoport pontja alá, soronként egy jelöléssel, így a teljes csoport egy fává kapcsolódik."
+  },
+  "tabGroupsColorStyleOff": {
+    "message": "Ki (csak színpont)"
+  },
+  "tabGroupsColorStyleEdge": {
+    "message": "Szélsáv"
+  },
+  "tabGroupsColorStyleLine": {
+    "message": "Színösszekötő vonal"
   },
   "tabGroupsBookmarked": {
     "message": "Könyvjelzőzve"
+  },
+  "tabGroupsRemoveBookmark": {
+    "message": "Könyvjelző eltávolítása"
+  },
+  "tabGroupsBookmarkRemoved": {
+    "message": "$count$ könyvjelző eltávolítva",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsPinned": {
     "message": "Rögzített lap"
@@ -520,11 +543,17 @@
   "tabGroupsUnpinTab": {
     "message": "Lap rögzítésének feloldása"
   },
+  "tabGroupsSleepTab": {
+    "message": "Lap elaltatása"
+  },
+  "tabGroupsWakeTab": {
+    "message": "Lap ébresztése"
+  },
   "tabGroupsOpenGroups": {
     "message": "Megnyitott lapcsoportok"
   },
   "tabGroupsClosedGroups": {
-    "message": "Bezárt lapcsoportok"
+    "message": "Legutóbb bezárt"
   },
   "tabGroupsUngroupedTabs": {
     "message": "Csoportosítatlan lapok"
@@ -566,6 +595,15 @@
   },
   "tabGroupsRemoveClosedTab": {
     "message": "Eltávolítás a mentett csoportból"
+  },
+  "tabGroupsClosedTimeLabel": {
+    "message": "Bezárva:"
+  },
+  "tabGroupsExpandedExpand": {
+    "message": "Kibontás"
+  },
+  "tabGroupsExpandedCollapse": {
+    "message": "Összecsukás"
   },
   "optionTabGroupsClosedLimit": {
     "message": "Megőrzendő bezárt lap/csoport előzmények"

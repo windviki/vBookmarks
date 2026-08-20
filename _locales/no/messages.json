@@ -464,7 +464,7 @@
     "message": "Gå til fanegruppevisning"
   },
   "tabGroupsActivateGroup": {
-    "message": "Aktiver gruppe"
+    "message": "Gå til fanegruppe"
   },
   "tabGroupsRenameGroup": {
     "message": "Gi nytt navn"
@@ -478,8 +478,11 @@
   "tabGroupsSleepGroup": {
     "message": "Hvil gruppe"
   },
+  "tabGroupsWakeGroup": {
+    "message": "Vekk fanegruppe"
+  },
   "tabGroupsActivateTab": {
-    "message": "Aktiver fane"
+    "message": "Gå til fane"
   },
   "tabGroupsCollapseGroup": {
     "message": "Skjul gruppe"
@@ -499,14 +502,34 @@
   "tabGroupsSyncCollapseHint": {
     "message": "Når merket av, vil kollaps eller utvidelse av en gruppe i denne visningen også oppdatere nettleserens fanegruppe. Av som standard, slik at visningsfoldingen forblir lokal."
   },
-  "tabGroupsColorBorder": {
-    "message": "Vis gruppefargekant"
+  "tabGroupsColorStyle": {
+    "message": "Farge stil for fanegrupper"
   },
-  "tabGroupsColorBorderHint": {
-    "message": "Legger til en farget venstrekant på hver fanegruppes overskrift og medlemsrader, slik at gruppefargen er synlig med et blikk. Fargeprikken forblir på som standard. Av som standard."
+  "tabGroupsColorStyleHint": {
+    "message": "Av viser kun fargeprikken. Kantfargebånd tegner en farget stripe langs venstre kant av gruppen. Fargeforbindelseslinje tegner en farget linje under gruppens prikk med en hake per rad, og binder hele gruppen til ett tre."
+  },
+  "tabGroupsColorStyleOff": {
+    "message": "Av (kun fargeprikk)"
+  },
+  "tabGroupsColorStyleEdge": {
+    "message": "Kantfargebånd"
+  },
+  "tabGroupsColorStyleLine": {
+    "message": "Fargeforbindelseslinje"
   },
   "tabGroupsBookmarked": {
     "message": "Bokmerket"
+  },
+  "tabGroupsRemoveBookmark": {
+    "message": "Fjern bokmerke"
+  },
+  "tabGroupsBookmarkRemoved": {
+    "message": "Fjernet $count$ bokmerke(r)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsPinned": {
     "message": "Festet fane"
@@ -520,11 +543,17 @@
   "tabGroupsUnpinTab": {
     "message": "Løsne fane"
   },
+  "tabGroupsSleepTab": {
+    "message": "Dvalefane"
+  },
+  "tabGroupsWakeTab": {
+    "message": "Vekk fane"
+  },
   "tabGroupsOpenGroups": {
     "message": "Åpne fanegrupper"
   },
   "tabGroupsClosedGroups": {
-    "message": "Lukkede fanegrupper"
+    "message": "Nylig lukket"
   },
   "tabGroupsUngroupedTabs": {
     "message": "Ugrupperte faner"
@@ -566,6 +595,15 @@
   },
   "tabGroupsRemoveClosedTab": {
     "message": "Fjern fra lagret gruppe"
+  },
+  "tabGroupsClosedTimeLabel": {
+    "message": "Lukket:"
+  },
+  "tabGroupsExpandedExpand": {
+    "message": "Utvid"
+  },
+  "tabGroupsExpandedCollapse": {
+    "message": "Skjul"
   },
   "optionTabGroupsClosedLimit": {
     "message": "Lukket fane/gruppehistorikk å beholde"

@@ -104,11 +104,27 @@ export const EDIT_ICON =
     '<path d="M9.2 2.9a1.5 1.5 0 0 1 2.1 2.1l-5.6 5.6-2.7.6.6-2.7z"/>' +
     '</svg>';
 
+// Sleep (discard) glyph: ONE smooth crescent, nothing else. The outer arc is
+// a plain circle (r 6) and the inner arc is very nearly a half circle
+// (r 4.67, chord 9.23 vs diameter 9.34), so the two arcs meet almost
+// tangentially at the tips — no bump or kink along the curve. The earlier
+// revisions carried a "Z" glyph inside the moon and a shallower inner arc
+// that read as a dent in the middle of the crescent.
+//
+// Two states, one silhouette (the tab-groups view's row/group sleep control):
+// SLEEP_ICON is the hollow (line) form = the tab is awake, click sleeps it;
+// SLEEP_ICON_FILLED is the solid form = the tab is already sleeping, click
+// wakes it. Same recipe as STAR_ICON / STAR_ICON_FILLED.
+const CRESCENT_PATH = 'M13.5 8.93A6 6 0 1 1 6.97 2.4 4.67 4.67 0 0 0 13.5 8.93z';
 export const SLEEP_ICON =
     '<svg class="vbm-icon vbm-icon-sleep" width="16" height="16" viewBox="0 0 16 16" ' +
     'fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
-    '<path d="M13.7 8.4A5.7 5.7 0 1 1 7.6 2.3a4.4 4.4 0 0 0 6.1 6.1z" fill="currentColor" stroke="none"/>' +
-    '<path d="M6.4 8.2h2.9l-2.9 3.3h2.9" fill="none"/>' +
+    `<path d="${CRESCENT_PATH}"/>` +
+    '</svg>';
+export const SLEEP_ICON_FILLED =
+    '<svg class="vbm-icon vbm-icon-sleep vbm-icon-sleep-filled" width="16" height="16" viewBox="0 0 16 16" ' +
+    'fill="currentColor" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+    `<path d="${CRESCENT_PATH}"/>` +
     '</svg>';
 
 export const ACTIVATE_ICON =

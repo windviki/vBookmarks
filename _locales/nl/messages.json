@@ -464,7 +464,7 @@
     "message": "Naar tabgroepenweergave"
   },
   "tabGroupsActivateGroup": {
-    "message": "Tabgroep activeren"
+    "message": "Naar tabbladgroep"
   },
   "tabGroupsRenameGroup": {
     "message": "Tabgroep hernoemen"
@@ -478,8 +478,11 @@
   "tabGroupsSleepGroup": {
     "message": "Tabgroep in slaapstand"
   },
+  "tabGroupsWakeGroup": {
+    "message": "Tabbladgroep activeren"
+  },
   "tabGroupsActivateTab": {
-    "message": "Tabblad activeren"
+    "message": "Naar tabblad"
   },
   "tabGroupsCollapseGroup": {
     "message": "Groep samenvouwen"
@@ -499,14 +502,34 @@
   "tabGroupsSyncCollapseHint": {
     "message": "Wanneer aangevinkt, wordt het in- of uitklappen van een groep in deze weergave ook toegepast op de browsertabgroep. Standaard uit, zodat het inklappen in de weergave lokaal blijft."
   },
-  "tabGroupsColorBorder": {
-    "message": "Toon groepskleurborder"
+  "tabGroupsColorStyle": {
+    "message": "Kleurstijl tabbladgroep"
   },
-  "tabGroupsColorBorderHint": {
-    "message": "Voegt een gekleurde linkerrand toe aan de kop- en lidrijen van elke tabbladgroep, zodat de groepskleur in één oogopslag zichtbaar is. De kleurstip blijft standaard aan. Standaard uit."
+  "tabGroupsColorStyleHint": {
+    "message": "Uit toont alleen de kleurstip. Randkleurband tekent een gekleurde strook langs de linkerrand van de groep. Kleurverbindingslijn tekent een gekleurde lijn onder de stip van de groep met een vinkje per rij, waardoor de hele groep als één boom wordt verbonden."
+  },
+  "tabGroupsColorStyleOff": {
+    "message": "Uit (alleen kleurstip)"
+  },
+  "tabGroupsColorStyleEdge": {
+    "message": "Randkleurband"
+  },
+  "tabGroupsColorStyleLine": {
+    "message": "Kleurverbindingslijn"
   },
   "tabGroupsBookmarked": {
     "message": "Bladwijzers"
+  },
+  "tabGroupsRemoveBookmark": {
+    "message": "Bladwijzer verwijderen"
+  },
+  "tabGroupsBookmarkRemoved": {
+    "message": "$count$ bladwijzer(s) verwijderd",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsPinned": {
     "message": "Vastgezette tab"
@@ -520,11 +543,17 @@
   "tabGroupsUnpinTab": {
     "message": "Tab losmaken"
   },
+  "tabGroupsSleepTab": {
+    "message": "Tabblad slapen"
+  },
+  "tabGroupsWakeTab": {
+    "message": "Tabblad activeren"
+  },
   "tabGroupsOpenGroups": {
     "message": "Open tabgroepen"
   },
   "tabGroupsClosedGroups": {
-    "message": "Gesloten tabgroepen"
+    "message": "Recent gesloten"
   },
   "tabGroupsUngroupedTabs": {
     "message": "Niet-gegroepeerde tabbladen"
@@ -566,6 +595,15 @@
   },
   "tabGroupsRemoveClosedTab": {
     "message": "Verwijderen uit opgeslagen groep"
+  },
+  "tabGroupsClosedTimeLabel": {
+    "message": "Gesloten:"
+  },
+  "tabGroupsExpandedExpand": {
+    "message": "Uitvouwen"
+  },
+  "tabGroupsExpandedCollapse": {
+    "message": "Inklappen"
   },
   "optionTabGroupsClosedLimit": {
     "message": "Te bewaren gesloten tabbladen/groepen"

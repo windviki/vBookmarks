@@ -463,7 +463,7 @@
     "message": "Ir para a vista de grupos de separadores"
   },
   "tabGroupsActivateGroup": {
-    "message": "Ativar grupo de separadores"
+    "message": "Ir para o grupo de separadores"
   },
   "tabGroupsRenameGroup": {
     "message": "Renomear grupo de separadores"
@@ -477,8 +477,11 @@
   "tabGroupsSleepGroup": {
     "message": "Adormecer grupo de separadores"
   },
+  "tabGroupsWakeGroup": {
+    "message": "Ativar grupo de separadores"
+  },
   "tabGroupsActivateTab": {
-    "message": "Ativar separador"
+    "message": "Ir para o separador"
   },
   "tabGroupsCollapseGroup": {
     "message": "Recolher grupo"
@@ -498,14 +501,34 @@
   "tabGroupsSyncCollapseHint": {
     "message": "Quando marcado, recolher ou expandir um grupo nesta vista também atualiza o grupo de separadores do navegador. Desativado por predefinição para que a dobragem da vista permaneça local."
   },
-  "tabGroupsColorBorder": {
-    "message": "Mostrar borda colorida do grupo"
+  "tabGroupsColorStyle": {
+    "message": "Estilo de cor do grupo de separadores"
   },
-  "tabGroupsColorBorderHint": {
-    "message": "Adiciona uma borda esquerda colorida ao cabeçalho e às linhas de membros de cada grupo de separadores, para que a cor do grupo seja visível de relance. O ponto colorido permanece ativado por predefinição. Desativado por predefinição."
+  "tabGroupsColorStyleHint": {
+    "message": "Desativado mostra apenas o ponto de cor. A faixa de cor na borda desenha uma faixa colorida na borda esquerda do grupo. A linha de conector colorida desenha uma linha colorida sob o ponto do grupo com uma marca por linha, unindo todo o grupo numa árvore."
+  },
+  "tabGroupsColorStyleOff": {
+    "message": "Desativado (apenas ponto de cor)"
+  },
+  "tabGroupsColorStyleEdge": {
+    "message": "Faixa de cor na borda"
+  },
+  "tabGroupsColorStyleLine": {
+    "message": "Linha de conector colorida"
   },
   "tabGroupsBookmarked": {
     "message": "Marcado"
+  },
+  "tabGroupsRemoveBookmark": {
+    "message": "Remover marcador"
+  },
+  "tabGroupsBookmarkRemoved": {
+    "message": "$count$ marcador(es) removido(s)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsPinned": {
     "message": "Separador afixado"
@@ -519,11 +542,17 @@
   "tabGroupsUnpinTab": {
     "message": "Desafixar separador"
   },
+  "tabGroupsSleepTab": {
+    "message": "Adormecer separador"
+  },
+  "tabGroupsWakeTab": {
+    "message": "Ativar separador"
+  },
   "tabGroupsOpenGroups": {
     "message": "Grupos de separadores abertos"
   },
   "tabGroupsClosedGroups": {
-    "message": "Grupos de separadores fechados"
+    "message": "Fechados recentemente"
   },
   "tabGroupsUngroupedTabs": {
     "message": "Separadores não agrupados"
@@ -565,6 +594,15 @@
   },
   "tabGroupsRemoveClosedTab": {
     "message": "Remover do grupo guardado"
+  },
+  "tabGroupsClosedTimeLabel": {
+    "message": "Fechado:"
+  },
+  "tabGroupsExpandedExpand": {
+    "message": "Expandir"
+  },
+  "tabGroupsExpandedCollapse": {
+    "message": "Recolher"
   },
   "optionTabGroupsClosedLimit": {
     "message": "Histórico de separadores/grupos fechados a manter"

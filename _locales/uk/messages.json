@@ -464,7 +464,7 @@
     "message": "Перейти до перегляду груп вкладок"
   },
   "tabGroupsActivateGroup": {
-    "message": "Активувати групу вкладок"
+    "message": "Перейти до групи вкладок"
   },
   "tabGroupsRenameGroup": {
     "message": "Перейменувати групу вкладок"
@@ -478,8 +478,11 @@
   "tabGroupsSleepGroup": {
     "message": "Приспати групу вкладок"
   },
+  "tabGroupsWakeGroup": {
+    "message": "Розбудити групу вкладок"
+  },
   "tabGroupsActivateTab": {
-    "message": "Активувати вкладку"
+    "message": "Перейти до вкладки"
   },
   "tabGroupsCollapseGroup": {
     "message": "Згорнути групу"
@@ -499,14 +502,34 @@
   "tabGroupsSyncCollapseHint": {
     "message": "Якщо позначено, згортання або розгортання групи в цьому перегляді також оновлює групу вкладок браузера. Вимкнено за замовчуванням, щоб згортання перегляду залишалося локальним."
   },
-  "tabGroupsColorBorder": {
-    "message": "Показувати кольорову рамку групи"
+  "tabGroupsColorStyle": {
+    "message": "Стиль кольору групи вкладок"
   },
-  "tabGroupsColorBorderHint": {
-    "message": "Додає кольорову ліву межу до заголовка та рядків учасників кожної групи вкладок, щоб колір групи було видно з першого погляду. Кольорова точка залишається увімкненою за замовчуванням. Вимкнено за замовчуванням."
+  "tabGroupsColorStyleHint": {
+    "message": "Вимкнено показує лише кольорову крапку. Смуга по краю малює кольорову смугу вздовж лівого краю групи. Лінія-з'єднувач малює кольорову лінію під крапкою групи з позначкою на кожен рядок, об'єднуючи всю групу в одне дерево."
+  },
+  "tabGroupsColorStyleOff": {
+    "message": "Вимкнено (лише кольорова крапка)"
+  },
+  "tabGroupsColorStyleEdge": {
+    "message": "Кольорова смуга по краю"
+  },
+  "tabGroupsColorStyleLine": {
+    "message": "Лінія-з'єднувач"
   },
   "tabGroupsBookmarked": {
     "message": "Збережено"
+  },
+  "tabGroupsRemoveBookmark": {
+    "message": "Видалити закладку"
+  },
+  "tabGroupsBookmarkRemoved": {
+    "message": "Видалено закладок: $count$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsPinned": {
     "message": "Закріплена вкладка"
@@ -520,11 +543,17 @@
   "tabGroupsUnpinTab": {
     "message": "Відкріпити вкладку"
   },
+  "tabGroupsSleepTab": {
+    "message": "Приспати вкладку"
+  },
+  "tabGroupsWakeTab": {
+    "message": "Розбудити вкладку"
+  },
   "tabGroupsOpenGroups": {
     "message": "Відкриті групи вкладок"
   },
   "tabGroupsClosedGroups": {
-    "message": "Закриті групи вкладок"
+    "message": "Нещодавно закриті"
   },
   "tabGroupsUngroupedTabs": {
     "message": "Незгруповані вкладки"
@@ -566,6 +595,15 @@
   },
   "tabGroupsRemoveClosedTab": {
     "message": "Видалити зі збереженої групи"
+  },
+  "tabGroupsClosedTimeLabel": {
+    "message": "Закрито:"
+  },
+  "tabGroupsExpandedExpand": {
+    "message": "Розгорнути"
+  },
+  "tabGroupsExpandedCollapse": {
+    "message": "Згорнути"
   },
   "optionTabGroupsClosedLimit": {
     "message": "Історія закритих вкладок/груп для збереження"

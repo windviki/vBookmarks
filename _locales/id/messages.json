@@ -464,7 +464,7 @@
     "message": "Buka tampilan Grup tab"
   },
   "tabGroupsActivateGroup": {
-    "message": "Aktifkan grup tab"
+    "message": "Buka grup tab"
   },
   "tabGroupsRenameGroup": {
     "message": "Ubah nama grup tab"
@@ -478,8 +478,11 @@
   "tabGroupsSleepGroup": {
     "message": "Tidurkan grup tab"
   },
+  "tabGroupsWakeGroup": {
+    "message": "Aktifkan grup tab"
+  },
   "tabGroupsActivateTab": {
-    "message": "Aktifkan tab"
+    "message": "Buka tab"
   },
   "tabGroupsCollapseGroup": {
     "message": "Ciutkan grup"
@@ -499,14 +502,34 @@
   "tabGroupsSyncCollapseHint": {
     "message": "Jika dicentang, melipat atau membuka grup di tampilan ini juga memperbarui grup tab browser. Nonaktif secara default agar lipatan tampilan tetap lokal."
   },
-  "tabGroupsColorBorder": {
-    "message": "Tampilkan batas warna grup"
+  "tabGroupsColorStyle": {
+    "message": "Gaya warna grup tab"
   },
-  "tabGroupsColorBorderHint": {
-    "message": "Menambahkan tepi kiri berwarna pada header grup tab dan baris anggotanya agar warna grup terlihat sekilas. Titik warna tetap aktif secara default. Nonaktif secara default."
+  "tabGroupsColorStyleHint": {
+    "message": "Nonaktif hanya menampilkan titik warna. Pita warna tepi menggambar strip berwarna di tepi kiri grup. Garis penghubung warna menggambar garis berwarna di bawah titik grup dengan tanda centang per baris, menghubungkan seluruh grup menjadi satu pohon."
+  },
+  "tabGroupsColorStyleOff": {
+    "message": "Nonaktif (hanya titik warna)"
+  },
+  "tabGroupsColorStyleEdge": {
+    "message": "Pita warna tepi"
+  },
+  "tabGroupsColorStyleLine": {
+    "message": "Garis penghubung warna"
   },
   "tabGroupsBookmarked": {
     "message": "Ditandai"
+  },
+  "tabGroupsRemoveBookmark": {
+    "message": "Hapus penanda"
+  },
+  "tabGroupsBookmarkRemoved": {
+    "message": "Menghapus $count$ penanda",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsPinned": {
     "message": "Tab disematkan"
@@ -520,11 +543,17 @@
   "tabGroupsUnpinTab": {
     "message": "Lepas sematan tab"
   },
+  "tabGroupsSleepTab": {
+    "message": "Tidurkan tab"
+  },
+  "tabGroupsWakeTab": {
+    "message": "Aktifkan tab"
+  },
   "tabGroupsOpenGroups": {
     "message": "Grup tab terbuka"
   },
   "tabGroupsClosedGroups": {
-    "message": "Grup tab ditutup"
+    "message": "Baru ditutup"
   },
   "tabGroupsUngroupedTabs": {
     "message": "Tab tanpa grup"
@@ -566,6 +595,15 @@
   },
   "tabGroupsRemoveClosedTab": {
     "message": "Hapus dari grup tersimpan"
+  },
+  "tabGroupsClosedTimeLabel": {
+    "message": "Ditutup:"
+  },
+  "tabGroupsExpandedExpand": {
+    "message": "Perluas"
+  },
+  "tabGroupsExpandedCollapse": {
+    "message": "Ciutkan"
   },
   "optionTabGroupsClosedLimit": {
     "message": "Riwayat tab/grup yang ditutup untuk disimpan"

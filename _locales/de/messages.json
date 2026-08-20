@@ -464,7 +464,7 @@
     "message": "Zur Tab-Gruppen-Ansicht wechseln"
   },
   "tabGroupsActivateGroup": {
-    "message": "Tab-Gruppe aktivieren"
+    "message": "Zur Tab-Gruppe"
   },
   "tabGroupsRenameGroup": {
     "message": "Tab-Gruppe umbenennen"
@@ -478,8 +478,11 @@
   "tabGroupsSleepGroup": {
     "message": "Tab-Gruppe schlafen legen"
   },
+  "tabGroupsWakeGroup": {
+    "message": "Tab-Gruppe aufwecken"
+  },
   "tabGroupsActivateTab": {
-    "message": "Tab aktivieren"
+    "message": "Zum Tab"
   },
   "tabGroupsCollapseGroup": {
     "message": "Gruppe einklappen"
@@ -499,14 +502,34 @@
   "tabGroupsSyncCollapseHint": {
     "message": "Wenn aktiviert, wird das Zusammen- oder Aufklappen einer Gruppe in dieser Ansicht auch auf die Browser-Tab-Gruppe übertragen. Standardmäßig deaktiviert, sodass das Falten der Ansicht lokal bleibt."
   },
-  "tabGroupsColorBorder": {
-    "message": "Gruppenfarbe als Rahmen anzeigen"
+  "tabGroupsColorStyle": {
+    "message": "Farbstil der Tab-Gruppe"
   },
-  "tabGroupsColorBorderHint": {
-    "message": "Fügt jeder Tab-Gruppe einen farbigen linken Rand an Kopf- und Mitgliedszeilen hinzu, sodass die Gruppenfarbe auf einen Blick erkennbar ist. Der Farbpunkt bleibt standardmäßig aktiviert. Standardmäßig deaktiviert."
+  "tabGroupsColorStyleHint": {
+    "message": "Aus zeigt nur den Farbpunkt. Randfarbband zeichnet einen farbigen Streifen am linken Rand der Gruppe. Farbverbindungslinie zeichnet eine farbige Linie unter dem Punkt der Gruppe mit einem Häkchen pro Zeile und verbindet so die gesamte Gruppe zu einem Baum."
+  },
+  "tabGroupsColorStyleOff": {
+    "message": "Aus (nur Farbpunkt)"
+  },
+  "tabGroupsColorStyleEdge": {
+    "message": "Randfarbband"
+  },
+  "tabGroupsColorStyleLine": {
+    "message": "Farbverbindungslinie"
   },
   "tabGroupsBookmarked": {
     "message": "Lesezeichen"
+  },
+  "tabGroupsRemoveBookmark": {
+    "message": "Lesezeichen entfernen"
+  },
+  "tabGroupsBookmarkRemoved": {
+    "message": "$count$ Lesezeichen entfernt",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsPinned": {
     "message": "Angehefteter Tab"
@@ -520,11 +543,17 @@
   "tabGroupsUnpinTab": {
     "message": "Tab lösen"
   },
+  "tabGroupsSleepTab": {
+    "message": "Tab schlafen legen"
+  },
+  "tabGroupsWakeTab": {
+    "message": "Tab aufwecken"
+  },
   "tabGroupsOpenGroups": {
     "message": "Offene Tab-Gruppen"
   },
   "tabGroupsClosedGroups": {
-    "message": "Geschlossene Tab-Gruppen"
+    "message": "Kürzlich geschlossen"
   },
   "tabGroupsUngroupedTabs": {
     "message": "Nicht gruppierte Tabs"
@@ -566,6 +595,15 @@
   },
   "tabGroupsRemoveClosedTab": {
     "message": "Aus gespeicherter Gruppe entfernen"
+  },
+  "tabGroupsClosedTimeLabel": {
+    "message": "Geschlossen:"
+  },
+  "tabGroupsExpandedExpand": {
+    "message": "Erweitern"
+  },
+  "tabGroupsExpandedCollapse": {
+    "message": "Einklappen"
   },
   "optionTabGroupsClosedLimit": {
     "message": "Zu behaltender Verlauf geschlossener Tabs/Gruppen"

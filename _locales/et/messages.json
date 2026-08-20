@@ -464,7 +464,7 @@
     "message": "Mine vahekaartide rühmade vaatesse"
   },
   "tabGroupsActivateGroup": {
-    "message": "Aktiveeri rühm"
+    "message": "Mine gruppi"
   },
   "tabGroupsRenameGroup": {
     "message": "Nimeta rühm ümber"
@@ -478,8 +478,11 @@
   "tabGroupsSleepGroup": {
     "message": "Uinuta rühm"
   },
+  "tabGroupsWakeGroup": {
+    "message": "Ärata grupp"
+  },
   "tabGroupsActivateTab": {
-    "message": "Aktiveeri vahekaart"
+    "message": "Mine vahelehele"
   },
   "tabGroupsCollapseGroup": {
     "message": "Ahenda rühm"
@@ -499,14 +502,34 @@
   "tabGroupsSyncCollapseHint": {
     "message": "Kui märgitud, siis selle vaate grupi ahendamine või laiendamine uuendab ka brauseri vahekaartide gruppi. Vaikimisi välja lülitatud, et vaate voltimine jääks kohalikuks."
   },
-  "tabGroupsColorBorder": {
-    "message": "Kuva rühma värvi ääris"
+  "tabGroupsColorStyle": {
+    "message": "Vaheleherühma värvistiil"
   },
-  "tabGroupsColorBorderHint": {
-    "message": "Lisab igale vahekaardirühma päisele ja liikmeridadele värvilise vasaku serva, nii et rühma värv on kohe nähtav. Värvipunkt jääb vaikimisi sisse. Vaikimisi väljas."
+  "tabGroupsColorStyleHint": {
+    "message": "Väljas näitab ainult värvipunkti. Servavärviriba tõmbab värvilise riba rühma vasakusse serva. Värviühendusjoon tõmbab värvilise joone rühma punkti alla, igale reale märk, sidudes kogu rühma üheks puuks."
+  },
+  "tabGroupsColorStyleOff": {
+    "message": "Väljas (ainult värvipunkt)"
+  },
+  "tabGroupsColorStyleEdge": {
+    "message": "Servavärviriba"
+  },
+  "tabGroupsColorStyleLine": {
+    "message": "Värviühendusjoon"
   },
   "tabGroupsBookmarked": {
     "message": "Järjehoidjad"
+  },
+  "tabGroupsRemoveBookmark": {
+    "message": "Eemalda järjehoidja"
+  },
+  "tabGroupsBookmarkRemoved": {
+    "message": "Eemaldatud $count$ järjehoidja(t)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsPinned": {
     "message": "Kinnitatud vaheleht"
@@ -520,11 +543,17 @@
   "tabGroupsUnpinTab": {
     "message": "Vabasta vaheleht"
   },
+  "tabGroupsSleepTab": {
+    "message": "Uinuta vaheleht"
+  },
+  "tabGroupsWakeTab": {
+    "message": "Ärata vaheleht"
+  },
   "tabGroupsOpenGroups": {
     "message": "Avatud vahekaardirühmad"
   },
   "tabGroupsClosedGroups": {
-    "message": "Suletud vahekaardirühmad"
+    "message": "Hiljuti suletud"
   },
   "tabGroupsUngroupedTabs": {
     "message": "Rühmitamata vahekaardid"
@@ -566,6 +595,15 @@
   },
   "tabGroupsRemoveClosedTab": {
     "message": "Eemalda salvestatud grupist"
+  },
+  "tabGroupsClosedTimeLabel": {
+    "message": "Suletud:"
+  },
+  "tabGroupsExpandedExpand": {
+    "message": "Laienda"
+  },
+  "tabGroupsExpandedCollapse": {
+    "message": "Ahenda"
   },
   "optionTabGroupsClosedLimit": {
     "message": "Säilitatav suletud vahekaartide/rühmade ajalugu"

@@ -464,7 +464,7 @@
     "message": "Eiti į skirtukų grupių rodinį"
   },
   "tabGroupsActivateGroup": {
-    "message": "Aktyvinti grupę"
+    "message": "Eiti į skirtukų grupę"
   },
   "tabGroupsRenameGroup": {
     "message": "Pervadinti grupę"
@@ -478,8 +478,11 @@
   "tabGroupsSleepGroup": {
     "message": "Užmigdyti grupę"
   },
+  "tabGroupsWakeGroup": {
+    "message": "Pažadinti skirtukų grupę"
+  },
   "tabGroupsActivateTab": {
-    "message": "Aktyvinti skirtuką"
+    "message": "Eiti į skirtuką"
   },
   "tabGroupsCollapseGroup": {
     "message": "Sutraukti grupę"
@@ -499,14 +502,34 @@
   "tabGroupsSyncCollapseHint": {
     "message": "Kai pažymėta, grupės sutraukimas ar išskleidimas šiame rodinyje taip pat atnaujina naršyklės skirtukų grupę. Pagal nutylėjimą išjungta, kad rodinio lankstymas liktų vietinis."
   },
-  "tabGroupsColorBorder": {
-    "message": "Rodyti grupės spalvos kraštą"
+  "tabGroupsColorStyle": {
+    "message": "Skirtukų grupės spalvos stilius"
   },
-  "tabGroupsColorBorderHint": {
-    "message": "Prideda spalvotą kairįjį kraštą prie kiekvienos skirtukų grupės antraštės ir narių eilučių, kad grupės spalva būtų matoma iš karto. Spalvotas taškas lieka įjungtas pagal numatytuosius nustatymus. Išjungta pagal numatytuosius nustatymus."
+  "tabGroupsColorStyleHint": {
+    "message": "Išjungta rodo tik spalvos tašką. Krašto spalvos juosta nubrėžia spalvotą juostą palei grupės kairįjį kraštą. Spalvos jungiamoji linija nubrėžia spalvotą liniją po grupės tašku su brūkšneliu kiekvienai eilutei, sujungdama visą grupę į vieną medį."
+  },
+  "tabGroupsColorStyleOff": {
+    "message": "Išjungta (tik spalvos taškas)"
+  },
+  "tabGroupsColorStyleEdge": {
+    "message": "Krašto spalvos juosta"
+  },
+  "tabGroupsColorStyleLine": {
+    "message": "Spalvos jungiamoji linija"
   },
   "tabGroupsBookmarked": {
     "message": "Pažymėta"
+  },
+  "tabGroupsRemoveBookmark": {
+    "message": "Pašalinti žymę"
+  },
+  "tabGroupsBookmarkRemoved": {
+    "message": "Pašalinta $count$ žymė(-ės)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsPinned": {
     "message": "Prisegta skirtukas"
@@ -520,11 +543,17 @@
   "tabGroupsUnpinTab": {
     "message": "Atsegti skirtuką"
   },
+  "tabGroupsSleepTab": {
+    "message": "Užmigdyti skirtuką"
+  },
+  "tabGroupsWakeTab": {
+    "message": "Pažadinti skirtuką"
+  },
   "tabGroupsOpenGroups": {
     "message": "Atidarytos skirtukų grupės"
   },
   "tabGroupsClosedGroups": {
-    "message": "Uždarytos skirtukų grupės"
+    "message": "Neseniai uždaryta"
   },
   "tabGroupsUngroupedTabs": {
     "message": "Negrupuoti skirtukai"
@@ -566,6 +595,15 @@
   },
   "tabGroupsRemoveClosedTab": {
     "message": "Pašalinti iš išsaugotos grupės"
+  },
+  "tabGroupsClosedTimeLabel": {
+    "message": "Uždaryta:"
+  },
+  "tabGroupsExpandedExpand": {
+    "message": "Išskleisti"
+  },
+  "tabGroupsExpandedCollapse": {
+    "message": "Suskleisti"
   },
   "optionTabGroupsClosedLimit": {
     "message": "Išsaugoti uždarų skirtukų/grupių istoriją"

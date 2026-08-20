@@ -464,7 +464,7 @@
     "message": "עבור לתצוגת קבוצות הטאבים"
   },
   "tabGroupsActivateGroup": {
-    "message": "הפעל קבוצת טאבים"
+    "message": "עבור לקבוצת טאבים"
   },
   "tabGroupsRenameGroup": {
     "message": "שנה שם קבוצת טאבים"
@@ -478,8 +478,11 @@
   "tabGroupsSleepGroup": {
     "message": "הרדם קבוצת טאבים"
   },
+  "tabGroupsWakeGroup": {
+    "message": "הפעל קבוצת טאבים"
+  },
   "tabGroupsActivateTab": {
-    "message": "הפעל טאב"
+    "message": "עבור לטאב"
   },
   "tabGroupsCollapseGroup": {
     "message": "כווץ קבוצה"
@@ -499,14 +502,34 @@
   "tabGroupsSyncCollapseHint": {
     "message": "כאשר מסומן, קיפול או הרחבה של קבוצה בתצוגה זו מעדכן גם את קבוצת הטאבים בדפדפן. כבוי כברירת מחדל כך שהקיפול בתצוגה נשאר מקומי."
   },
-  "tabGroupsColorBorder": {
-    "message": "הצג גבול צבע קבוצה"
+  "tabGroupsColorStyle": {
+    "message": "סגנון צבע קבוצת טאבים"
   },
-  "tabGroupsColorBorderHint": {
-    "message": "מוסיף קצה שמאלי צבעוני לכותרת ולשורות החברות של כל קבוצת כרטיסיות, כך שצבע הקבוצה נראה במבט חטוף. הנקודה הצבעונית נשארת מופעלת כברירת מחדל. כבוי כברירת מחדל."
+  "tabGroupsColorStyleHint": {
+    "message": "כבוי מציג רק נקודת צבע. פס צבע בקצה מצייר רצועה צבעונית לאורך הקצה השמאלי של הקבוצה. קו מחבר צבעוני מצייר קו צבעוני מתחת לנקודת הקבוצה עם סימון לכל שורה, המקשר את כל הקבוצה לעץ אחד."
+  },
+  "tabGroupsColorStyleOff": {
+    "message": "כבוי (נקודת צבע בלבד)"
+  },
+  "tabGroupsColorStyleEdge": {
+    "message": "פס צבע בקצה"
+  },
+  "tabGroupsColorStyleLine": {
+    "message": "קו מחבר צבעוני"
   },
   "tabGroupsBookmarked": {
     "message": "סומן"
+  },
+  "tabGroupsRemoveBookmark": {
+    "message": "הסר סימנייה"
+  },
+  "tabGroupsBookmarkRemoved": {
+    "message": "הוסרו $count$ סימניות",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsPinned": {
     "message": "לשונית מוצמדת"
@@ -520,11 +543,17 @@
   "tabGroupsUnpinTab": {
     "message": "בטל הצמדת לשונית"
   },
+  "tabGroupsSleepTab": {
+    "message": "הרדם טאב"
+  },
+  "tabGroupsWakeTab": {
+    "message": "הפעל טאב"
+  },
   "tabGroupsOpenGroups": {
     "message": "קבוצות לשוניות פתוחות"
   },
   "tabGroupsClosedGroups": {
-    "message": "קבוצות לשוניות סגורות"
+    "message": "נסגרו לאחרונה"
   },
   "tabGroupsUngroupedTabs": {
     "message": "לשוניות ללא קבוצה"
@@ -566,6 +595,15 @@
   },
   "tabGroupsRemoveClosedTab": {
     "message": "הסר מהקבוצה השמורה"
+  },
+  "tabGroupsClosedTimeLabel": {
+    "message": "נסגר:"
+  },
+  "tabGroupsExpandedExpand": {
+    "message": "הרחב"
+  },
+  "tabGroupsExpandedCollapse": {
+    "message": "כווץ"
   },
   "optionTabGroupsClosedLimit": {
     "message": "היסטוריית כרטיסיות/קבוצות סגורות לשמירה"

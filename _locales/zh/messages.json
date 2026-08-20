@@ -1796,7 +1796,7 @@
     "message": "转到标签页组视图"
   },
   "tabGroupsActivateGroup": {
-    "message": "激活标签页组"
+    "message": "转到标签组"
   },
   "tabGroupsRenameGroup": {
     "message": "重命名标签页组"
@@ -1810,8 +1810,11 @@
   "tabGroupsSleepGroup": {
     "message": "休眠标签页组"
   },
+  "tabGroupsWakeGroup": {
+    "message": "唤醒标签组"
+  },
   "tabGroupsActivateTab": {
-    "message": "激活标签页"
+    "message": "转到标签页"
   },
   "tabGroupsCollapseGroup": {
     "message": "折叠组"
@@ -1831,14 +1834,34 @@
   "tabGroupsSyncCollapseHint": {
     "message": "勾选后，在此视图中折叠或展开分组也会更新浏览器标签组。默认关闭，以便视图折叠保持本地状态。"
   },
-  "tabGroupsColorBorder": {
-    "message": "显示分组颜色边框"
+  "tabGroupsColorStyle": {
+    "message": "标签组颜色样式"
   },
-  "tabGroupsColorBorderHint": {
-    "message": "为每个标签组标题和成员行添加彩色左边框，使分组颜色一目了然。颜色圆点默认开启。此选项默认关闭。"
+  "tabGroupsColorStyleHint": {
+    "message": "关闭仅显示颜色点。边缘色带在组左侧绘制彩色条。颜色连接线在组点下方绘制彩色线，每行带刻度，将整个组连成树状。"
+  },
+  "tabGroupsColorStyleOff": {
+    "message": "关闭（仅颜色点）"
+  },
+  "tabGroupsColorStyleEdge": {
+    "message": "边缘色带"
+  },
+  "tabGroupsColorStyleLine": {
+    "message": "颜色连接线"
   },
   "tabGroupsBookmarked": {
     "message": "已收藏"
+  },
+  "tabGroupsRemoveBookmark": {
+    "message": "移除书签"
+  },
+  "tabGroupsBookmarkRemoved": {
+    "message": "已移除 $count$ 个书签",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsPinned": {
     "message": "已固定标签页"
@@ -1852,11 +1875,17 @@
   "tabGroupsUnpinTab": {
     "message": "取消固定标签页"
   },
+  "tabGroupsSleepTab": {
+    "message": "休眠标签页"
+  },
+  "tabGroupsWakeTab": {
+    "message": "唤醒标签页"
+  },
   "tabGroupsOpenGroups": {
     "message": "打开的标签页组"
   },
   "tabGroupsClosedGroups": {
-    "message": "已关闭的标签页组"
+    "message": "最近关闭"
   },
   "tabGroupsUngroupedTabs": {
     "message": "未分组的标签页"
@@ -1898,6 +1927,15 @@
   },
   "tabGroupsRemoveClosedTab": {
     "message": "从已保存的组中移除"
+  },
+  "tabGroupsClosedTimeLabel": {
+    "message": "关闭时间："
+  },
+  "tabGroupsExpandedExpand": {
+    "message": "展开"
+  },
+  "tabGroupsExpandedCollapse": {
+    "message": "折叠"
   },
   "optionTabGroupsClosedLimit": {
     "message": "保留的已关闭标签页/组历史记录"

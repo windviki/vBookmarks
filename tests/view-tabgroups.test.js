@@ -217,6 +217,12 @@ const setup = (opts = {}) => {
                 this.getCalls.push(id);
                 if (cb)
                     cb([{ id, title: `folder-${id}` }]);
+            },
+            removeCalls: [],
+            remove(id, cb) {
+                this.removeCalls.push(id);
+                if (cb)
+                    cb();
             }
         },
         windows: {
@@ -260,6 +266,8 @@ const setup = (opts = {}) => {
 
     const treeRender = {
         generateBookmarkHTML(title, url, extras, id, positions, meta) {
+            if (opts.metaSink)
+                opts.metaSink.push(meta);
             const badges = (meta && meta.badge || [])
                 .filter(b => b && b.text)
                 .map(b => `<span class="row-badge ${b.cls}">${b.text}</span>`).join('');
@@ -295,7 +303,9 @@ const setup = (opts = {}) => {
     };
     const undo = {
         toastCalls: [],
-        showToast(msg) { this.toastCalls.push(msg); }
+        captureCalls: [],
+        showToast(msg) { this.toastCalls.push(msg); },
+        capture(id) { this.captureCalls.push(id); }
     };
 
     const viewTabGroups = initViewTabGroups({
@@ -304,6 +314,7 @@ const setup = (opts = {}) => {
         treeRender,
         dialogs,
         undo,
+        ...(opts.rememberState === undefined ? {} : { getRememberState: () => !!opts.rememberState }),
         ...(opts.onChanged ? { onChanged: opts.onChanged } : {}),
         ...(opts.onRowsRendered ? { onRowsRendered: opts.onRowsRendered } : {})
     });
@@ -429,23 +440,99 @@ describe('closed groups and window folding', () => {
         expect($list.innerHTML).not.toContain('tabgroups-closed-group');
     });
 
-    it('window head toggle folds and unfolds that window section', () => {
-        const { def, $list, clickOn, closestOf } = setup({
+    it('window head row (the whole row) folds and unfolds that window section', () => {
+        const { def, $list, clickOn } = setup({
             windows: [
                 { id: 1, focused: true, tabs: [makeTab(1, 0, { active: true })] },
                 { id: 2, focused: false, tabs: [makeTab(10, 0)] }
             ]
         });
         def().activate();
-        // Non-current windows fold by default.
+        // Non-current windows fold by default; the current one stays open.
         expect($list.innerHTML).toContain('id="tabgroups-item-1"');
         expect($list.innerHTML).not.toContain('id="tabgroups-item-10"');
+        // The fold control is the head ROW, not a chevron button.
+        expect($list.innerHTML).toContain('tabgroups-window-head-row');
+        expect($list.innerHTML).toContain('role="button"');
+        expect($list.innerHTML).not.toContain('tabgroups-window-collapse');
         const winHead = { dataset: { windowId: '1' }, classList: makeClassList() };
-        const btn = { classList: makeClassList(), closest: sel => sel === '.tabgroups-window-collapse' ? btn : (sel === 'li' ? winHead : null) };
-        clickOn(btn);
+        const row = {
+            classList: makeClassList(['tabgroups-window-head-row']),
+            closest: sel => sel === '.tabgroups-window-head-row' ? row : (sel === 'li' ? winHead : null)
+        };
+        clickOn(row);
         expect($list.innerHTML).not.toContain('id="tabgroups-item-1"');
-        clickOn(btn);
+        clickOn(row);
         expect($list.innerHTML).toContain('id="tabgroups-item-1"');
+    });
+
+    it('the current window stays expanded even when a stale fold choice names it', () => {
+        // A previous session folded window 2 only. Window ids are reused
+        // across sessions, so a flat "collapsed" list used to fold whatever
+        // window inherited the id — including the current one.
+        const ui = JSON.stringify({ windowChoices: { 2: true } });
+        const { def, $list } = setup({
+            storeData: { tabGroupsViewState: ui },
+            windows: [
+                { id: 2, focused: true, tabs: [makeTab(20, 0, { active: true, windowId: 2 })] },
+                { id: 3, focused: false, tabs: [makeTab(30, 0, { windowId: 3 })] }
+            ]
+        });
+        def().activate();
+        // The explicit choice still folds window 2 — that is what the user did.
+        expect($list.innerHTML).not.toContain('id="tabgroups-item-20"');
+    });
+
+    it('an explicit unfold of a non-current window survives a refresh', () => {
+        const ui = JSON.stringify({ windowChoices: { 2: false } });
+        const { def, $list } = setup({
+            storeData: { tabGroupsViewState: ui },
+            windows: [
+                { id: 1, focused: true, tabs: [makeTab(1, 0, { active: true })] },
+                { id: 2, focused: false, tabs: [makeTab(10, 0, { windowId: 2 })] }
+            ]
+        });
+        def().activate();
+        expect($list.innerHTML).toContain('id="tabgroups-item-10"');
+    });
+
+    it('an in-session window fold survives a refresh with remember-state off', () => {
+        const { def, $list, viewTabGroups, clickOn } = setup({
+            rememberState: false,
+            windows: [
+                { id: 1, focused: true, tabs: [makeTab(1, 0, { active: true })] }
+            ]
+        });
+        def().activate();
+        const winHead = { dataset: { windowId: '1' }, classList: makeClassList() };
+        const row = {
+            classList: makeClassList(['tabgroups-window-head-row']),
+            closest: sel => sel === '.tabgroups-window-head-row' ? row : (sel === 'li' ? winHead : null)
+        };
+        clickOn(row);
+        expect($list.innerHTML).not.toContain('id="tabgroups-item-1"');
+        // a tab event refreshes every 300ms — the fold must not spring back
+        viewTabGroups.refresh();
+        expect($list.innerHTML).not.toContain('id="tabgroups-item-1"');
+    });
+
+    it('window fold choices persist as an explicit map, never as a default snapshot', () => {
+        const { def, store, clickOn } = setup({
+            windows: [
+                { id: 1, focused: true, tabs: [makeTab(1, 0, { active: true })] },
+                { id: 2, focused: false, tabs: [makeTab(10, 0, { windowId: 2 })] }
+            ]
+        });
+        def().activate();
+        // Nothing folded by hand yet → no window choice recorded.
+        const winHead = { dataset: { windowId: '1' }, classList: makeClassList() };
+        const row = {
+            classList: makeClassList(['tabgroups-window-head-row']),
+            closest: sel => sel === '.tabgroups-window-head-row' ? row : (sel === 'li' ? winHead : null)
+        };
+        clickOn(row);
+        const ui = JSON.parse(store._data.tabGroupsViewState || '{}');
+        expect(ui.windowChoices).toEqual({ 1: true });
     });
 });
 
@@ -485,10 +572,92 @@ describe('pinned and sleeping tab state', () => {
         const html = $list.innerHTML;
         expect(html).toMatch(/tabgroups-row[^"]*pinned/);
         expect(html).toMatch(/tabgroups-row[^"]*discarded/);
-        expect(html).toContain('tabgroups-status-icon pinned');
-        expect(html).toContain('tabgroups-status-icon discarded');
-        expect(html).toContain('tabGroupsPinned');
-        expect(html).toContain('tabGroupsDiscarded');
+        // The state glyphs ARE their own controls: the pinned pin unpins and
+        // the filled crescent wakes (both always visible), while an awake tab
+        // shows the hollow crescent and an unpinned row reserves the slot.
+        expect(html).toContain('tabgroups-unpin always-on');
+        expect(html).toContain('tabGroupsUnpinTab');
+        expect(html).toContain('tabgroups-sleep-tab asleep always-on');
+        expect(html).toContain('tabGroupsWakeTab');
+        expect(html).toContain('tabGroupsSleepTab');
+        expect(html).toContain('tabgroups-slot');
+        expect(html).toContain('vbm-icon-sleep-filled');
+    });
+
+    it('every row renders the same four icon columns (pin / sleep / star / close)', () => {
+        const { def, $list } = setup({
+            tabs: [
+                makeTab(1, 0, { active: true, pinned: true }),
+                makeTab(2, 1)
+            ]
+        });
+        def().activate();
+        const html = $list.innerHTML;
+        const rowOf = id => {
+            const start = html.indexOf(`id="tabgroups-item-${id}"`);
+            return html.slice(start, html.indexOf('</li>', start));
+        };
+        for (const id of [1, 2]) {
+            const row = rowOf(id);
+            const slots = (row.match(/tabgroups-slot|tabgroups-unpin|tabgroups-sleep-tab|tabgroups-add-bookmark|tabgroups-remove-bookmark|tabgroups-close-tab/g) || []);
+            expect(slots).toHaveLength(4);
+        }
+    });
+
+    it('the row sleep control toggles: hollow sleeps (confirmed), filled wakes', () => {
+        const { def, chrome, dialogs, clickOn } = setup({
+            tabs: [
+                makeTab(1, 0, { active: true }),
+                makeTab(2, 1, { discarded: true })
+            ]
+        });
+        def().activate();
+        const press = tabId => {
+            const li = { dataset: { tabId }, classList: makeClassList() };
+            const btn = {
+                classList: makeClassList(['tabgroups-sleep-tab']),
+                closest: sel => sel === 'li' ? li : (sel === '.tabgroups-sleep-tab' ? btn : null)
+            };
+            clickOn(btn);
+        };
+        press('1');
+        expect(dialogs.ConfirmDialog.openCalls).toHaveLength(1);
+        dialogs.ConfirmDialog.openCalls[0].fn1();
+        expect(chrome.runtime.sendMessageCalls).toEqual([{ type: 'vbm-tabs-discard', tabIds: [1] }]);
+        // waking is non-destructive: no confirmation, straight to the SW
+        press('2');
+        expect(dialogs.ConfirmDialog.openCalls).toHaveLength(1);
+        expect(chrome.runtime.sendMessageCalls[1]).toEqual({ type: 'vbm-tabs-wake', tabIds: [2] });
+    });
+
+    it('clicking the pinned glyph unpins that tab', () => {
+        const { def, chrome, clickOn } = setup({
+            tabs: [makeTab(1, 0, { active: true, pinned: true })]
+        });
+        def().activate();
+        const li = { dataset: { tabId: '1' }, classList: makeClassList() };
+        const btn = {
+            classList: makeClassList(['tabgroups-unpin']),
+            closest: sel => sel === 'li' ? li : (sel === '.tabgroups-unpin' ? btn : null)
+        };
+        clickOn(btn);
+        expect(chrome.tabs.updateCalls).toEqual([[1, { pinned: false }]]);
+    });
+
+    it('the group head sleep control follows the members state and toggles', () => {
+        const { def, $list, chrome, viewTabGroups } = setup({
+            tabs: [
+                makeTab(1, 0, { active: true }),
+                makeTab(2, 1, { groupId: 'g1', discarded: true }),
+                makeTab(3, 2, { groupId: 'g1', discarded: true })
+            ]
+        });
+        def().activate();
+        expect($list.innerHTML).toContain('tabgroups-group-sleep asleep');
+        expect($list.innerHTML).toContain('tabGroupsWakeGroup');
+        expect(viewTabGroups.isGroupAsleep('g1')).toBe(true);
+        viewTabGroups.wakeGroup('g1');
+        expect(chrome.runtime.sendMessageCalls).toEqual([{ type: 'vbm-tabs-wake', tabIds: [2, 3] }]);
     });
 
     it('togglePinned updates the browser tab pinned state', () => {
@@ -736,24 +905,46 @@ describe('bookmark integration', () => {
         });
         def().activate();
         const html = $list.innerHTML;
-        expect(html).toContain('tabgroups-star');
+        expect(html).toContain('tabgroups-remove-bookmark always-on');
+        expect(html).toContain('tabGroupsRemoveBookmark');
         expect(html).toContain('vbm-icon-star-filled');
         // unbookmarked tab 4 keeps the hover-revealed add button
         expect(html).toContain('tabgroups-add-btn');
         expect(html).toContain('vbm-icon-star');
     });
 
+    it('clicking the filled star removes the bookmark (undo-captured) and toasts', () => {
+        const { def, chrome, undo, clickOn } = setup({
+            bookmarkTree: [{ id: '0', title: '', children: [{ id: '1', title: 'Bar', children: [
+                { id: '11', title: 'T1', url: 'https://t1.example/' }
+            ] }] }],
+            existingBookmarks: [{ id: '11', title: 'T1', url: 'https://t1.example/' }]
+        });
+        def().activate();
+        const li = { dataset: { tabId: '1' }, classList: makeClassList() };
+        const btn = {
+            classList: makeClassList(['tabgroups-remove-bookmark']),
+            closest: sel => sel === 'li' ? li : (sel === '.tabgroups-remove-bookmark' ? btn : null)
+        };
+        clickOn(btn);
+        expect(undo.captureCalls).toEqual(['11']);
+        expect(chrome.bookmarks.removeCalls).toEqual(['11']);
+        expect(undo.toastCalls[0]).toBe('tabGroupsBookmarkRemoved[1]');
+        // the row falls back to the hover-revealed hollow ☆
+        expect(chrome.bookmarks.removeCalls).toHaveLength(1);
+    });
+
     it('flips an unbookmarked row to the filled star after quick-add', () => {
         const { def, $list, clickOn, closestOf } = setup({});
         def().activate();
-        expect($list.innerHTML).not.toContain('tabgroups-star');
+        expect($list.innerHTML).not.toContain('tabgroups-remove-bookmark');
         const li = { dataset: { tabId: '1' }, classList: makeClassList() };
         const btn = { classList: makeClassList(), closest: sel => sel === 'li' ? li : (sel === '.tabgroups-add-bookmark' ? btn : null) };
         clickOn(btn);
         const html = $list.innerHTML;
         const rowStart = html.indexOf('id="tabgroups-item-1"');
         const row1 = html.slice(rowStart, html.indexOf('</li>', rowStart));
-        expect(row1).toContain('tabgroups-star');
+        expect(row1).toContain('tabgroups-remove-bookmark');
         expect(row1).not.toContain('tabgroups-add-btn');
         // other unbookmarked rows keep the add button
         expect(html).toContain('tabgroups-add-btn');
@@ -896,6 +1087,78 @@ describe('keyboard arrows on group heads and grouped rows', () => {
         fire('keydown', { key: 'ArrowRight', target: head, preventDefault() {}, stopPropagation() {}, stopImmediatePropagation() {} });
         globalThis.MouseEvent = RealMouseEvent;
         expect(dispatched && dispatched.type).toBe('contextmenu');
+    });
+
+    it('Space/Enter on the window head row folds and unfolds it', () => {
+        const { def, $list, fire, doc } = setup({
+            windows: [
+                { id: 1, focused: true, tabs: [makeTab(1, 0, { active: true })] }
+            ]
+        });
+        doc.body.classList.remove('rtl');
+        def().activate();
+        const winHead = { dataset: { windowId: '1' }, classList: makeClassList() };
+        const row = {
+            classList: makeClassList(['tabgroups-window-head-row']),
+            closest: sel => sel === '.tabgroups-window-head-row' ? row : (sel === 'li' ? winHead : null)
+        };
+        const key = k => fire('keydown', {
+            key: k, target: row,
+            preventDefault() { this.prevented = true; },
+            stopPropagation() {},
+            stopImmediatePropagation() {}
+        });
+        key(' ');
+        expect($list.innerHTML).not.toContain('id="tabgroups-item-1"');
+        key('Enter');
+        expect($list.innerHTML).toContain('id="tabgroups-item-1"');
+        // folded + forward opens, open + back folds (the group-head protocol)
+        key('ArrowLeft');
+        expect($list.innerHTML).not.toContain('id="tabgroups-item-1"');
+        key('ArrowRight');
+        expect($list.innerHTML).toContain('id="tabgroups-item-1"');
+        // …and the swallowed combination never falls through to a menu
+        const ev = key('ArrowRight');
+        expect(ev.prevented).toBe(true);
+    });
+
+    it('Space on a window head toggles the window selection while selecting', () => {
+        const { def, $list, fire, clickOn, closestOf, doc } = setup({
+            windows: [
+                { id: 1, focused: true, tabs: [makeTab(1, 0, { active: true }), makeTab(2, 1)] }
+            ]
+        });
+        doc.body.classList.remove('rtl');
+        def().activate();
+        clickOn({ closest: closestOf({ '.tabgroups-select-mode': { classList: makeClassList() } }) });
+        const winHead = { dataset: { windowId: '1' }, classList: makeClassList() };
+        const row = {
+            classList: makeClassList(['tabgroups-window-head-row']),
+            closest: sel => sel === '.tabgroups-window-head-row' ? row : (sel === 'li' ? winHead : null)
+        };
+        fire('keydown', {
+            key: ' ', target: row,
+            preventDefault() {}, stopPropagation() {}, stopImmediatePropagation() {}
+        });
+        expect($list.innerHTML).toContain('selectCount[2]');
+    });
+
+    it('back arrow on an ungrouped row focuses its window head', () => {
+        const { def, $list, fire, doc } = setup({});
+        doc.body.classList.remove('rtl');
+        def().activate();
+        const fakeRow = { focused: false, focus() { this.focused = true; } };
+        const headLi = { dataset: { windowId: '1' }, querySelector: sel => sel === '.tabgroups-window-head-row' ? fakeRow : null };
+        $list.querySelectorAll = sel => sel === 'li.tabgroups-window-head' ? [headLi] : [];
+        const rowLi = { dataset: { tabId: '1', windowId: '1' }, classList: makeClassList() };
+        fire('keydown', {
+            key: 'ArrowLeft',
+            target: { closest: sel => sel === 'li.tabgroups-row' ? rowLi : null },
+            preventDefault() {},
+            stopPropagation() {},
+            stopImmediatePropagation() {}
+        });
+        expect(fakeRow.focused).toBe(true);
     });
 
     it('back arrow on a grouped member row focuses its group head', () => {
@@ -1046,5 +1309,162 @@ describe('drag sorting', () => {
             dataTransfer: {}
         });
         expect(chrome.tabs.moveCalls).toHaveLength(1);
+    });
+});
+
+describe('selection mode folding + row icon parity', () => {
+    it('entering selection mode opens every fold and leaving restores them', () => {
+        const { def, $list, clickOn, closestOf, store } = setup({
+            storeData: { tabGroupsViewState: JSON.stringify({ windowChoices: { 2: true }, collapsedGroups: ['g1'] }) },
+            windows: [
+                { id: 1, focused: true, tabs: [makeTab(1, 0, { active: true, groupId: 'g1' }), makeTab(2, 1, { groupId: 'g1' })] },
+                { id: 2, focused: false, tabs: [makeTab(10, 0, { windowId: 2 })] }
+            ],
+            groups: [makeGroup('g1', 'Dev', 'blue', { windowId: 1 })]
+        });
+        def().activate();
+        // folded group + folded window 2
+        expect($list.innerHTML).not.toContain('id="tabgroups-item-1"');
+        expect($list.innerHTML).not.toContain('id="tabgroups-item-10"');
+        clickOn({ closest: closestOf({ '.tabgroups-select-mode': { classList: makeClassList() } }) });
+        // everything is visible: a batch bar must show its candidates
+        expect($list.innerHTML).toContain('id="tabgroups-item-1"');
+        expect($list.innerHTML).toContain('id="tabgroups-item-10"');
+        // …and the transient all-open state is never persisted
+        const ui = JSON.parse(store._data.tabGroupsViewState || '{}');
+        expect(ui.collapsedGroups).toEqual(['g1']);
+        expect(ui.windowChoices).toEqual({ 2: true });
+        clickOn({ closest: closestOf({ '.tabgroups-select-exit': { classList: makeClassList() } }) });
+        expect($list.innerHTML).not.toContain('id="tabgroups-item-1"');
+        expect($list.innerHTML).not.toContain('id="tabgroups-item-10"');
+    });
+
+    it('a refresh during selection mode keeps the folds open', () => {
+        const { def, $list, clickOn, closestOf, viewTabGroups } = setup({
+            storeData: { tabGroupsViewState: JSON.stringify({ collapsedGroups: ['g1'] }) }
+        });
+        def().activate();
+        clickOn({ closest: closestOf({ '.tabgroups-select-mode': { classList: makeClassList() } }) });
+        expect($list.innerHTML).toContain('id="tabgroups-item-2"');
+        viewTabGroups.refresh();
+        expect($list.innerHTML).toContain('id="tabgroups-item-2"');
+    });
+
+    it('selection-mode rows keep the four icon columns as inert state markers', () => {
+        const { def, $list, clickOn, closestOf } = setup({
+            tabs: [
+                makeTab(1, 0, { active: true, pinned: true }),
+                makeTab(2, 1, { discarded: true })
+            ],
+            bookmarkTree: [{ id: '0', title: '', children: [{ id: '1', title: 'Bar', children: [
+                { id: '11', title: 'T1', url: 'https://t1.example/' }
+            ] }] }]
+        });
+        def().activate();
+        clickOn({ closest: closestOf({ '.tabgroups-select-mode': { classList: makeClassList() } }) });
+        const html = $list.innerHTML;
+        // no live row controls…
+        expect(html).not.toContain('row-btn');
+        // …but the same four columns per row (markers + reserved slots), so
+        // the bookmarked ★ column cannot shift its neighbours' glyphs
+        const rowOf = id => {
+            const start = html.indexOf(`id="tabgroups-item-${id}"`);
+            return html.slice(start, html.indexOf('</li>', start));
+        };
+        for (const id of [1, 2]) {
+            const row = rowOf(id);
+            const slots = (row.match(/tabgroups-slot|tabgroups-status-icon|tabgroups-star/g) || []);
+            expect(slots).toHaveLength(4);
+        }
+        expect(rowOf(1)).toContain('tabgroups-status-icon pinned');
+        expect(rowOf(1)).toContain('tabgroups-star');
+        expect(rowOf(2)).toContain('tabgroups-status-icon discarded');
+    });
+});
+
+describe('group color style', () => {
+    it('defaults to off (color dot only)', () => {
+        const { def, $list } = setup({});
+        def().activate();
+        expect($list.innerHTML).not.toContain('color-enhanced');
+        expect($list.innerHTML).not.toContain('color-line');
+        expect($list.innerHTML).not.toContain('tg-connector');
+    });
+
+    it('edge style marks the list color-enhanced', () => {
+        const { def, $list } = setup({ storeData: { tabGroupsColorStyle: 'edge' } });
+        def().activate();
+        expect($list.innerHTML).toContain('class="color-enhanced"');
+        expect($list.innerHTML).not.toContain('tg-connector');
+    });
+
+    it('the legacy boolean key still reads as the edge style', () => {
+        const { def, $list } = setup({ storeData: { tabGroupsColorBorder: '1' } });
+        def().activate();
+        expect($list.innerHTML).toContain('color-enhanced');
+    });
+
+    it('line style adds a connector per member row and marks the last one', () => {
+        const { def, $list } = setup({ storeData: { tabGroupsColorStyle: 'line' } });
+        def().activate();
+        const html = $list.innerHTML;
+        expect(html).toContain('class="color-line"');
+        // two members in group g1 → two connectors, the second one closing
+        expect((html.match(/tg-connector/g) || [])).toHaveLength(2);
+        expect(html).toContain('tg-last');
+        // ungrouped rows never carry one
+        const start = html.indexOf('id="tabgroups-item-4"');
+        expect(html.slice(start, html.indexOf('</li>', start))).not.toContain('tg-connector');
+    });
+});
+
+describe('recently closed records', () => {
+    const record = () => ({
+        id: 'ct_1',
+        type: 'tab',
+        title: 'Closed one',
+        url: 'https://closed.example/',
+        windowId: 1,
+        savedAt: Date.UTC(2024, 0, 2, 3, 4, 5),
+        tabs: [{ title: 'Closed one', url: 'https://closed.example/' }]
+    });
+
+    it('renders the close time inline (narrow) and absolute (wide second line)', () => {
+        const metas = [];
+        const { def } = setup({
+            storeData: { tabGroupsClosed: JSON.stringify([record()]) },
+            metaSink: metas
+        });
+        def().activate();
+        const closedMeta = metas.find(m => m && m.rightText);
+        expect(closedMeta).toBeTruthy();
+        expect(typeof closedMeta.rightText).toBe('string');
+        expect(closedMeta.subRight).toBe(new Date(Date.UTC(2024, 0, 2, 3, 4, 5)).toLocaleString());
+        expect(closedMeta.tooltipAppend).toContain('tabGroupsClosedTimeLabel');
+    });
+
+    it('openClosedTab prefers the window the tab was closed in', () => {
+        const { def, chrome, viewTabGroups } = setup({
+            storeData: { tabGroupsClosed: JSON.stringify([record()]) }
+        });
+        def().activate();
+        chrome.windows.get = (id, cb) => cb({ id });
+        const created = [];
+        chrome.tabs.create = props => created.push(props);
+        viewTabGroups.openClosedTab('ct_1', 0);
+        expect(created).toEqual([{ url: 'https://closed.example/', active: false, windowId: 1 }]);
+    });
+
+    it('exposes the record state the closed context menus need', () => {
+        const { def, viewTabGroups } = setup({
+            storeData: { tabGroupsClosed: JSON.stringify([record()]) }
+        });
+        def().activate();
+        expect(viewTabGroups.closedRecordType('ct_1')).toBe('tab');
+        expect(viewTabGroups.closedTabCount('ct_1')).toBe(1);
+        expect(viewTabGroups.isClosedExpanded('ct_1')).toBe(false);
+        viewTabGroups.toggleClosedExpanded('ct_1');
+        expect(viewTabGroups.isClosedExpanded('ct_1')).toBe(true);
+        expect(viewTabGroups.closedRecordType('nope')).toBe(null);
     });
 });

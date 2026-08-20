@@ -464,7 +464,7 @@
     "message": "رفتن به نمای گروههای برگه"
   },
   "tabGroupsActivateGroup": {
-    "message": "فعالسازی گروه برگه"
+    "message": "رفتن به گروه برگه"
   },
   "tabGroupsRenameGroup": {
     "message": "تغییر نام گروه برگه"
@@ -478,8 +478,11 @@
   "tabGroupsSleepGroup": {
     "message": "خواب گروه برگه"
   },
+  "tabGroupsWakeGroup": {
+    "message": "بیدار کردن گروه برگه"
+  },
   "tabGroupsActivateTab": {
-    "message": "فعالسازی برگه"
+    "message": "رفتن به برگه"
   },
   "tabGroupsCollapseGroup": {
     "message": "جمع کردن گروه"
@@ -499,14 +502,34 @@
   "tabGroupsSyncCollapseHint": {
     "message": "هنگامی که علامت زده شود، جمع یا باز کردن یک گروه در این نما، گروه تب مرورگر را نیز بهروزرسانی میکند. بهطور پیشفرض خاموش است تا جمعشدن نما محلی بماند."
   },
-  "tabGroupsColorBorder": {
-    "message": "نمایش حاشیه رنگی گروه"
+  "tabGroupsColorStyle": {
+    "message": "سبک رنگ گروه برگه"
   },
-  "tabGroupsColorBorderHint": {
-    "message": "یک لبه رنگی به سمت چپ سربرگ هر گروه و ردیف‌های اعضا اضافه می‌کند تا رنگ گروه در یک نگاه قابل تشخیص باشد. نقطه رنگی به طور پیش‌فرض روشن است. به طور پیش‌فرض خاموش است."
+  "tabGroupsColorStyleHint": {
+    "message": "خاموش فقط نقطه رنگ را نشان می‌دهد. نوار رنگ لبه، نوار رنگی را در لبه چپ گروه رسم می‌کند. خط اتصال رنگی، خطی رنگی زیر نقطه گروه با یک تیک در هر ردیف رسم می‌کند و کل گروه را به یک درخت متصل می‌کند."
+  },
+  "tabGroupsColorStyleOff": {
+    "message": "خاموش (فقط نقطه رنگ)"
+  },
+  "tabGroupsColorStyleEdge": {
+    "message": "نوار رنگ لبه"
+  },
+  "tabGroupsColorStyleLine": {
+    "message": "خط اتصال رنگی"
   },
   "tabGroupsBookmarked": {
     "message": "نشانشده"
+  },
+  "tabGroupsRemoveBookmark": {
+    "message": "حذف نشانک"
+  },
+  "tabGroupsBookmarkRemoved": {
+    "message": "$count$ نشانک حذف شد",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsPinned": {
     "message": "برگه سنجاق‌شده"
@@ -520,11 +543,17 @@
   "tabGroupsUnpinTab": {
     "message": "برداشتن سنجاق برگه"
   },
+  "tabGroupsSleepTab": {
+    "message": "خواباندن برگه"
+  },
+  "tabGroupsWakeTab": {
+    "message": "بیدار کردن برگه"
+  },
   "tabGroupsOpenGroups": {
     "message": "گروه‌های باز تب"
   },
   "tabGroupsClosedGroups": {
-    "message": "گروه‌های بسته تب"
+    "message": "بسته‌های اخیر"
   },
   "tabGroupsUngroupedTabs": {
     "message": "تب‌های بدون گروه"
@@ -566,6 +595,15 @@
   },
   "tabGroupsRemoveClosedTab": {
     "message": "حذف از گروه ذخیره‌شده"
+  },
+  "tabGroupsClosedTimeLabel": {
+    "message": "بسته شده:"
+  },
+  "tabGroupsExpandedExpand": {
+    "message": "باز کردن"
+  },
+  "tabGroupsExpandedCollapse": {
+    "message": "جمع کردن"
   },
   "optionTabGroupsClosedLimit": {
     "message": "تاریخچه تب/گروههای بستهشده برای نگهداری"
