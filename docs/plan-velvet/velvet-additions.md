@@ -7,3 +7,195 @@
 - 树视图除了菜单增加添加到暂存区之外，还应该支持：复制/移动到...、复制、剪切、粘贴配对操作，可以快速对单条书签进行复制或者移动操作。复制/移动到...对话框可选复制或者移动操作，然后复用上面提到的文件夹选择器。
 - 树视图提供文件夹上的复制标题和地址的菜单（之前有，已经删除），提供二级菜单可选json，markdown或者文本清单
 - 树视图的在此前/后添加文件夹、添加子文件夹，默认右键菜单折叠（提供选项页选项）。折叠为菜单项：添加文件夹，提供二级菜单：此前，此后，子文件夹
+
+## 问题和方案
+
+> 基线：当前 4.0.8（`manifest.json`）。本节只补细节与决策，不改动上方需求条目。文中「暂存区」均指升级后的最近添加视图（view id 仍为 `recent`，见 0.1）。
+
+### 0. 总体定位
+
+**0.1 视图升级策略**：保留现有 view id `recent`、`#view-recent` 容器、`showRecentBookmarks`/`disableRecentView` 两个设置键不变，仅把视图标题改为「暂存区」，内部拆成「暂存列表（上）+ 最近添加（下）」两个区域。理由：view-manager 的注册、隐藏/禁用、palette `/recent`、`Alt+N`、viewState 记忆全部继续工作，零迁移；下方最近添加的功能仍是原视图的一个子集。
+
+**0.2 暂存区的性质**：暂存区是**书签 id 的本地集合**，只记录「哪些书签待处理」，不复制书签数据、不改变书签树、不影响同步。所有暂存区内部操作（移出、清空、分组、收藏）都只改这个集合；只有「删除」「移动/复制到文件夹」这两个显式动作才触碰书签树。
+
+**0.3 数据与持久化**：新增一个 `chrome.storage.local` 键 `staging`（`store.js` 的 `KNOWN_KEYS` 注册），值为一个 JSON 对象：
+
+```json
+{
+  "items": [ { "id": "书签id", "ts": 1234567890123, "group": "groupId或null" } ],
+  "groups": [ { "id": "g_xxx", "name": "A", "collapsed": false, "createdAt": 1234567890123, "sourceFolderId": "可选" } ],
+  "recentCollapsed": false
+}
+```
+
+- `items` 是暂存列表的唯一数据源；`ts` 为加入时间；`group = null` 表示未分组。
+- `groups` 是虚拟分组；内置「收藏」组使用保留 id `__fav__`，不进 `groups` 数组。
+- 暂存数据存 local 不存 sync（体量可能大、且是设备本地工作台语义）。
+- 读写沿用 store 的 200ms 防抖持久化；写入后 `views.updateBadges()` 更新 tab 徽标（徽标显示暂存条数）。
+
+**0.4 容量与去重**：
+- 同一书签 id 只允许出现一次。重复发送不产生第二条，toast「已在暂存区」；若重复发送的是文件夹，只补入其中尚未在暂存区的书签，并报告「新增 N 条，M 条已在暂存区」。
+- 暂存区硬上限 **500 条**（常量，不做选项）。超过上限时新发送整体拒绝并提示「暂存区已满，请先清理」，不静默截断。
+- 每次树重建（`onTreeGenerated`）或 `chrome.bookmarks.onRemoved` 后修剪：id 已不存在的 item 移除；用户组因此变空则自动删除该组（内置收藏组除外）。书签被移动不影响暂存（id 仍有效，路径标签跟随 pathMap 更新）。
+
+### 1. 文件夹相关（允许发送吗 / 发送过来允许展开吗 / 超大文件夹）
+
+**1.1 文件夹允许发送，但按「扁平化收集」处理**：
+- 发送文件夹 = 递归收集该文件夹下全部**书签**（跳过分隔符与子文件夹节点本身），每个书签作为一条独立 item 进入暂存列表。
+- 同时自动创建一个**虚拟分组**，组名取文件夹标题，`sourceFolderId` 记该文件夹 id；若已存在同 `sourceFolderId` 的分组，则合并进该组，不重复建组。用户手动创建的分组不受影响。
+- 空文件夹（没有任何书签，只有子文件夹或为空）不产生任何 item，toast「该文件夹没有可暂存的书签」。
+- 这样「发送过来的文件夹是否需要展开」问题自然消解：暂存列表**没有文件夹层级**，收到的是一组带组头的扁平书签；组头可折叠/展开，折叠后就是一条「文件夹名 + N 条」的摘要行。
+
+**1.2 暂存区不保存书签树层级**：暂存区只做「书签的临时工作台」。真正的层级只有书签树一份；需要把暂存内容归位时用「移动/复制到文件夹」的文件夹选择器。这样避免在弹窗里维护第二套可编辑树、避免跨根（本地/同步）移动的复杂校验，也避免「暂存区里再嵌套文件夹」的递归语义爆炸。
+
+**1.3 超大文件夹防护**：
+- 发送前先用 `chrome.bookmarks.getSubTree`（或 `getTree` 后定位）计数书签后代数：
+  - 书签数 > **100**：弹确认框「将暂存 N 条书签」，确认后执行；
+  - `当前暂存条数 + N > 500`：直接拒绝并 toast，提示先移出/清空或改为发送子文件夹；不部分截断。
+- 理由：静默截断会让用户误以为整个文件夹已暂存；部分暂存在后续「移动到…」时会造成树被半搬家的危险。
+
+### 2. 视图布局与两区域交互
+
+**2.1 上下区域**：
+- `#view-recent` 内改为两个区域：`#staging-list`（上）与 `#recent-list`（下，沿用现有 id）。
+- 两个区域各自独立滚动（各自是 `div[tabindex]` 滚动容器）。键盘模型上，`listEl` 指向 `#staging-list`（选择模式与主焦点都落在暂存列表），`#recent-list` 作为该视图的附属列表继续参与 ↑/↓ 行导航——`view-manager.lists()` 增加一个 per-view `extraLists` 字段即可（一行级改动），避免升级后最近添加区域丢失既有键盘可达性。
+- 最近添加区域增加一个**区域头**（带折叠箭头 + 「最近添加」标题 + 条数），整区可折叠；折叠状态存 `staging.recentCollapsed`（记忆，跨会话保留）。折叠时只保留区域头，`getRecent` 刷新可跳过（复用现有 inactive skip 思路）。现有时间分组表头（今天/本周/本月/更早）逻辑保持不变。
+
+**2.2 最近添加区域的上箭头**：
+- 每行加 hover 显示按钮 `.staging-add-btn`（向上箭头），点击即把该书签加入暂存列表。
+- 已加入时按钮变为实心/打勾态（`.staged`），再次点击 = 移出暂存（与快速收藏星标的 toggle 心智一致）；变化后有 toast 与 tab 徽标刷新。
+- 该按钮用 `.row-btn` 体系（与死链 ⚑/🗑 同款槽位），保证右缘对齐；非 hover 不显示但槽位恒占。
+
+**2.3 菜单入口**：
+- 「添加到暂存区」进入**书签行右键菜单**（`bookmark-context-menu`），树、搜索结果、最近添加、统计（已收藏行）、死链、去重成员行都可见；无书签 id 的行（搜索历史、统计未收藏历史、去重组头）不显示该项。
+- 文件夹行（树内与搜索结果 link-folder）的**文件夹菜单**也加「添加到暂存区」，走 1.1 的扁平化收集。
+- 书签行菜单项在打开时查询暂存状态：已在暂存区时标签显示「已在暂存区」并置灰；未加入时显示「添加到暂存区」。文件夹行菜单项不做逐条比对（文件夹按扁平集合处理），保持可点击，重复发送只补缺并 toast 汇总。
+
+**2.4 暂存行渲染**：
+- 复用 `treeRender.generateBookmarkHTML`，`data-virtual="1"`（拒绝拖拽），行 id `staging-item-<id>`，`data-node-id` 供 context-menu 统一取 id。
+- 双行布局参照 recent：右槽相对加入时间；第二行 `路径`（沿用 `views.pathOf`，可被 `showItemPath` 关闭）。分组内成员行左缘按组缩进一档（视觉上挂在组头下）。
+- 行右键菜单新增「移出暂存」「收藏/取消收藏」「移动到/复制到…」「删除书签」「在树中定位」；复用 bookmark 菜单的打开/编辑等既有项。
+
+### 3. 暂存列表选择模式（功能定义）
+
+**3.1 模式骨架**：完全复用死链/去重的选择模式既有机制——`selecting` 标志 + `selected` 集合 + 工具条整体切换 + 行点击切换成员 + Space 切换聚焦行 + Esc 退出 + `parkRowFocus`/`parkToolbarFocus` 焦点保持 + `.sel` 视觉。`typeAhead: false`。
+
+**3.2 选择单元与作用域**：
+- 选择单元是**暂存条目（书签）**；`selected` 存书签 id。
+- 组头在非选择模式下点击 = 折叠/展开；在**选择模式下点击组头 = 全选/取消全选该组全部成员**（与去重「组头选择」一致，组头显示全选/半选/未选三态）。折叠的组同样可被组头整体选中。
+- 「全选」作用于**全部暂存条目**（含折叠组内成员），不是仅可见行；「反选」同样以全部条目为全集；「清除选择」只清选择集，不动暂存数据。
+
+**3.3 选择工具条按钮语义**（这是本需求最容易歧义的地方，逐一定义）：
+
+| 按钮 | 作用对象 | 语义 |
+|---|---|---|
+| 全选 / 反选 / 清除选择 | 选择集 | 只改选择集 |
+| 移出暂存 | 已选条目 | 仅从暂存列表移除，书签树不动，toast 可撤销（撤销 = 重新加入） |
+| 收藏 | 已选条目 | 移入内置「收藏」组（见 3.4），书签树不动 |
+| 取消收藏 | 已选条目 | 从「收藏」组移回未分组，书签树不动 |
+| 新建分组… | 已选条目 | 弹出命名对话框，把已选条目从原组/未分组移入新虚拟组 |
+| 移动/复制到… | 已选条目 | 打开文件夹选择器（第 4 节）；移动成功后从暂存移除，复制成功后保留 |
+| 删除所选 | 已选条目 | **删除真实书签**（`chrome.bookmarks.remove` 串行、读 lastError、ConfirmDialog 报实际数量、`undo.capture` 每条 + 单步撤销提示），成功后从暂存移除 |
+| 清空暂存 | 全部条目 | 仅清空暂存列表（含分组），书签树不动，ConfirmDialog 确认 |
+| 退出 | — | 退出选择模式 |
+
+**3.4 「收藏」的定位**：vBookmarks 当前没有书签「收藏」属性，暂存区又不该改书签树，因此把收藏定义为一个**暂存区内的内置虚拟组 `__fav__`**：始终排在最上方、组头带星标、不可重命名/不可删除、支持折叠。收藏/取消收藏 = 在「收藏组」与「未分组」之间移动条目。这样既满足原始按钮列表，又与虚拟分组机制合一，不引入第二套标记系统。
+
+**3.5 虚拟分组细则**：
+- 分组是纯本地组织方式：每个条目最多属于一个组；移动到新组即离开旧组（不复制）。
+- 组头显示：折叠箭头 + 组名 + 条数；右键菜单：展开/折叠、重命名、解散（成员回未分组，组删除）、全选本组（选择模式外也可用）。
+- 未分组条目始终显示在最后（或作为无组头区域）；用户组按 `createdAt` 升序；收藏组置顶。
+- 组折叠状态持久化在组对象 `collapsed` 中。
+- 文件夹发送自动生成的组，若用户手动解散，`sourceFolderId` 随之清除；以后再次发送该文件夹会重新建组。
+
+### 4. 文件夹选择器（新建复用组件）
+
+**4.1 形态**：新增一个 body-class 对话框 `FolderPickerDialog`（放 `src/dialogs.js` 或独立 `src/folder-picker.js`，与 `GroupPickDialog` 同层），并复用一个「移动/复制到…」对话框：
+
+- 调用方打开 `CopyMoveDialog.open({ count, mode: 'move'|'copy'|null, onPick })`；`mode=null` 时对话框顶部显示「复制 / 移动」单选（暂存工具条与树菜单均走此单入口），`mode` 给定时锁定并隐藏单选（保留给未来两个独立按钮的快捷入口）。
+- 下方是**仅文件夹**的树：用 `chrome.bookmarks.getTree` + `treeRender.getEffectiveSubTree` 生成双存储根（书签栏/其他书签/移动端为顶级），只渲染文件夹行，懒加载子文件夹（点击展开 `getChildren`）。
+- 选择目标后：move → 对每个书签 `chrome.bookmarks.move(id, { parentId })`；copy → 逐个 `chrome.bookmarks.create({ parentId, title, url })`（串行，读 lastError）。复制保留原暂存条目；移动成功后移除。
+- 目标为书签当前父文件夹时：move = no-op + toast；copy = 在同一文件夹产生副本（允许）。
+- 完成后 `chrome.bookmarks.getTree(treeView.generateTree)` 刷新树与 pathMap；tab 徽标与暂存列表即时更新。
+- 对话框遵守 modal Tab trap（`dialogs.activeEl` 机制）与 Esc 关闭；大目录树提供顶部过滤输入（可选，作为打磨项）。
+
+**4.2 复用范围**：暂存区「移动/复制到…」、树菜单「复制/移动到…」共用同一个 `CopyMoveDialog`；将来 quick-add 目标文件夹选择、`/add` 参数化创建也可复用底层 FolderPicker。
+
+### 5. 树视图：复制/移动、复制、剪切、粘贴
+
+**5.1 「复制/移动到…」**：树内书签行右键菜单加一项「复制/移动到…」，打开 `CopyMoveDialog`（mode 单选，默认「移动」），对单条书签执行与 4.1 相同的 move/copy。这是**直接完成**的快捷操作，不走内部剪贴板。
+
+**5.2 内部剪贴板（复制/剪切/粘贴配对）**：
+- 新增会话级内部剪贴板（模块内状态即可，不进书签树、不进 storage；popup 关闭即清空）：`{ mode: 'copy'|'cut', id, title }`。
+- 书签行右键菜单：
+  - 「复制」：记录 `{mode:'copy', id}`，toast「已复制：标题」；不改变书签。
+  - 「剪切」：记录 `{mode:'cut', id}`，toast「已剪切，去目标文件夹粘贴（Esc 取消）」；树中该行加 `.cut` 淡化态，直到粘贴/取消/剪贴板被覆盖。
+- 文件夹行右键菜单（树内）动态显示「粘贴到此处」：
+  - 剪贴板为空：不显示。
+  - mode=copy：在目标文件夹末尾 `chrome.bookmarks.create` 复制一份；剪贴板保留（可连续粘贴到多处）。
+  - mode=cut：`chrome.bookmarks.move(id, {parentId})` 到目标文件夹末尾，成功后清空剪贴板；目标为原父文件夹时 no-op 并清空剪贴板。
+- 粘贴后走 `getTree(generateTree)` 刷新；若剪贴板书签已被删除，toast「书签已不存在」并清空剪贴板。
+- 剪贴板仅接受**单条书签**（需求原文就是「单条书签」）；文件夹不提供复制/剪切（文件夹的复制/移动用现有排序/拖拽或「复制/移动到…」的文件夹形态，暂不做文件夹级剪贴板，避免循环移动校验）。
+- Esc 的取消语义：文档 Esc 层在剪贴板为 cut 且无更高层打开时，优先清空剪贴板并移除 `.cut` 标记，再走既有 Esc 链。
+
+**5.3 菜单可用性**：复制/剪切/复制到/移动到/粘贴均只在**树视图内**的 bookmark/folder 菜单出现（与 `POSITIONAL_IDS` 的树内规则一致）；树外列表（recent/stats/dead/dupes/search results）只加「添加到暂存区」与「在树中定位」等无位置语义项。
+
+### 6. 文件夹菜单：复制标题和地址（json / markdown / 文本清单）
+
+**6.1 入口与结构**：文件夹右键菜单加一个 `has-submenu` 折叠项「复制标题和地址 ▸」（子菜单 id 形如 `folder-copy-*`），三个子项：
+- `文本清单`：每个书签两行——第一行标题、第二行 URL，条目间空一行。
+- `Markdown`：每个书签一行 `- [标题](URL)`；标题中的 `[` `]` 等按 Markdown 转义。
+- `JSON`：扁平数组 `[ { "title": "...", "url": "..." }, ... ]`。
+
+**6.2 范围与顺序**：递归收集该文件夹下全部书签（不含分隔符、不含子文件夹节点），深度优先、树序（与 `chrome.bookmarks.getSubTree` 返回顺序一致）。理由：用户复制一个文件夹的标题地址清单，通常就是要「这个文件夹里所有链接」；直接子级场景反而更少。若未来需要「仅直接子级」，可再加一个子项，本期不做。
+
+**6.3 大文件夹防护**：复制前计数；书签数 > **200** 时弹确认框「将复制 N 条书签的清单」，确认后执行。剪贴板写入复用 `actions.copyToClipboard`（`navigator.clipboard.writeText` + 隐藏 textarea 回退）。
+
+**6.4 空文件夹**：与现有 open/sort 的 content-disabled 逻辑一致，无书签时该折叠项置灰（`applyContentDisabled` 增加对 `folder-copy-collapse` 及子菜单项的处理）。
+
+**6.5 与旧实现的差异**：当前 `actions.copyAllTitlesAndUrls`（`TreeText`）只处理单个书签，不是本需求要的文件夹递归清单；新增 `actions.copyFolderTitlesAndUrls(folderId, format)` 独立实现，不动现有单条书签「复制标题和地址」菜单。
+
+### 7. 文件夹菜单：添加文件夹折叠（默认折叠）
+
+**7.1 结构**：文件夹右键菜单把三个「添加文件夹」动作合并为一个 `has-submenu` 折叠项「添加文件夹 ▸」，二级菜单：
+- `此前`（对应现有 `add-folder-before-folder`）
+- `此后`（对应现有 `add-folder-after-folder`）
+- `子文件夹`（对应现有 `add-new-folder`）
+
+折叠关闭时恢复为现有三个平铺条目（与 `collapseSortMenu`/`collapseTabGroupMenu` 同机制）。
+
+**7.2 选项**：新增设置键 `collapseAddFolderMenu`（默认开），选项页「外观/菜单」分组加复选框；`context-menu.js` 的 `applyCollapseState` 按该键切换 `collapse-add-folder` 类，与现有两个折叠项并列。
+
+**7.3 置灰继承**：根文件夹下「此前/此后」仍沿用 `ROOT_DISABLED_IDS` 置灰；「子文件夹」保持可用。折叠项本身在全部子项都置灰时才置灰（根文件夹时仍可展开看到「子文件夹」可用，因此折叠项不置灰，只置灰子项）。
+
+**7.4 键盘/二级菜单**：复用现有 `openSubmenuFor/closeSubmenu/toggleSubmenuFor` + `has-submenu`/`data-submenu` 机制，`contextKeyDown` 的 →/←/Enter/Esc 与 Tab trap 自动覆盖新子菜单（`keyboard.js` 只需把新 `<menu class="submenu">` 纳入绑定）。
+
+### 8. 落地触点清单（结合当前代码）
+
+- `pages/popup.html` / `pages/sidepanel.html`：`#view-recent` 内加 `#staging-list` 容器与最近添加区域头；新增 `CopyMoveDialog` 的 HTML（body-class 对话框）；folder 菜单加两个新 `has-submenu` 项与两个新 `<menu class="submenu">`。
+- `src/view-recent.js`：升级为 `initViewStaging`（或保留文件名改内部实现），注册同一个 `recent` view id；新增暂存 store、分组模型、选择模式、两区域渲染。
+- `src/actions.js`：新增 `copyFolderTitlesAndUrls`、内部剪贴板操作、move/copy 批量执行、暂存增删（或把暂存操作放独立 `src/staging.js` 纯逻辑模块，action 层调用）。
+- `src/context-menu.js`：bookmark/folder 菜单新增项与两个新 submenu；`applyContentDisabled` 覆盖新复制清单项；`applyCollapseState` 覆盖 `collapseAddFolderMenu`。
+- `src/dialogs.js`：新增 `FolderPickerDialog` + `CopyMoveDialog`（或独立 `src/folder-picker.js` 注入）。
+- `src/view-manager.js` / `src/keyboard.js`：暂存视图 `onKey`（R 定位、Space 选择、组头切换）、`.vbm-toolbar` 选择工具条 rung、新子菜单键盘绑定。
+- `src/store.js`：`KNOWN_KEYS` 注册 `staging`、`collapseAddFolderMenu`（`recentCount`/`showRecentBookmarks` 沿用）。
+- `_locales/*`：新增 view 标题、暂存动作/分组/收藏/复制格式/文件夹选择器/剪贴板/确认框等 i18n 键（en 与 zh 系优先，全量 locale 补齐）。
+- 测试：`tests/` 新增 `staging.test.js`（数据模型/去重/上限/修剪/分组）、`folder-copy.test.js`（三种格式）、`clipboard` 与 `CopyMoveDialog` 逻辑测试；`view-recent.test.js` 扩展为两区域与选择模式；`context-menu.test.js` 扩展两个新 submenu 与置灰规则。
+
+### 9. 决策速览表
+
+| 问题 | 决策 |
+|---|---|
+| 视图升级方式 | 保留 `recent` view id 与设置键，标题改为「暂存区」 |
+| 暂存区存什么 | 只存书签 id 的本地集合（`staging` JSON），上限 500，去重，失效修剪 |
+| 文件夹允许发送吗 | 允许，扁平化为书签集合，自动生成同名虚拟分组 |
+| 发送过来允许展开吗 | 无文件夹层级；分组头可折叠，折叠后显示「组名 + N 条」摘要 |
+| 超大文件夹 | 先计数：>100 确认；超 500 上限整体拒绝，不静默截断 |
+| 暂存区支持文件夹层级吗 | 不支持；层级只存在于书签树，归位靠文件夹选择器 |
+| 虚拟分组 | 支持；内置「收藏」组 + 用户组 + 未分组；组头可折叠、可作选择单元 |
+| 收藏/取消收藏 | 暂存区内置「收藏」虚拟组，不改书签树 |
+| 选择模式「删除」 | 删除真实书签（confirm + undo）；「清空」只清暂存本地 |
+| 移动/复制到文件夹 | 新建 CopyMoveDialog + FolderPickerDialog 复用；移动成功移出暂存，复制保留 |
+| 树内复制/剪切/粘贴 | 会话级单条书签剪贴板；copy 可多次粘贴，cut 粘贴后清空 |
+| 文件夹复制清单 | 递归收集，文本/Markdown/JSON 三格式；>200 确认 |
+| 添加文件夹折叠 | 默认折叠为「添加文件夹 ▸（此前/此后/子文件夹）」，选项 `collapseAddFolderMenu` 默认开 |
