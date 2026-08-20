@@ -12,8 +12,9 @@
  *
  * Client model (4.1.0 §4.3):
  *  - cache `vbmAnnounce = { ts, etag, data }`, TTL 6h — no network within TTL
- *  - fetch with If-None-Match + AbortSignal.timeout(4000); 304 refreshes ts;
- *    every failure is silent (offline = no banner, never an error)
+ *  - fetch through the shared GitHub chain (direct → user proxy → mirror
+ *    candidates, src/github-source.js) with If-None-Match + 4s timeouts;
+ *    304 refreshes ts; every failure is silent (offline = no banner)
  *  - filter: version range ∩ channel ∩ once+not-dismissed; array order = priority
  *  - schedule: the donation card wins the same frame; the announcement defers
  *  - dismiss: id into `vbmAnnounceSeen` (cap 100, LRU, once semantics)
@@ -30,6 +31,7 @@
  */
 import { parseVersion, compareVersions } from './version.js';
 import { htmlspecialchars } from './escape.js';
+import { fetchGithubResource } from './github-source.js';
 
 export const ANNOUNCE_URL = 'https://raw.githubusercontent.com/windviki/vBookmarks/master/docs/announce.json';
 export const ANN_CACHE_KEY = 'vbmAnnounce';
@@ -191,24 +193,30 @@ export const announceBannerHtml = (msg, _m) => {
         '</div>';
 };
 
-const fetchAnnounce = async ({ url, etag, fetchImpl }) => {
-    const fetcher = fetchImpl || fetch;
-    try {
-        const res = await fetcher(url, {
-            headers: etag ? { 'If-None-Match': etag } : {},
-            signal: AbortSignal.timeout(ANN_FETCH_TIMEOUT)
-        });
-        if (res.status === 304)
-            return { notModified: true };
-        if (!res.ok)
-            return null;
-        const clean = sanitizeAnnounce(await res.json());
-        if (!clean)
-            return null;
-        return { data: clean, etag: res.headers.get('etag') || '' };
-    } catch (e) {
-        return null; // offline / timeout / bad JSON — silent
-    }
+const fetchAnnounce = async ({ url, etag, fetchImpl, chromeImpl, now }) => {
+    // The shared GitHub fetch chain: direct → user's proxy (when configured)
+    // → github.akams.cn mirror candidates. Every layer is timeout-bounded and
+    // every failure is silent; see src/github-source.js.
+    const got = await fetchGithubResource({
+        url,
+        etag,
+        fetchImpl,
+        chromeImpl,
+        now,
+        validate: async res => {
+            try {
+                return sanitizeAnnounce(await res.json());
+            } catch (e) {
+                return null;
+            }
+        },
+        probeUrl: url
+    });
+    if (!got)
+        return null;
+    if (got.notModified)
+        return { notModified: true };
+    return { data: got.data, etag: got.etag || '' };
 };
 
 export const initAnnounce = async ({ store, $, chrome, _m, channel, donationShowing, localBannerShowing = false, openNewTab, fetchImpl, now }) => {
@@ -220,7 +228,7 @@ export const initAnnounce = async ({ store, $, chrome, _m, channel, donationShow
     const cache = readCache(store);
     let data = cache && cache.data ? cache.data : null;
     if (!announceCacheFresh(cache, nowMs)) {
-        const got = await fetchAnnounce({ url: ANNOUNCE_URL, etag: cache ? cache.etag : null, fetchImpl });
+        const got = await fetchAnnounce({ url: ANNOUNCE_URL, etag: cache ? cache.etag : null, fetchImpl, chromeImpl: chrome, now });
         if (got && got.data) {
             data = got.data;
             store.set(ANN_CACHE_KEY, { ts: nowMs, etag: got.etag || (cache && cache.etag) || null, data });
