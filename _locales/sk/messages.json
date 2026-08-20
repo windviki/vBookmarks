@@ -567,6 +567,9 @@
   "tabGroupsRemoveClosedTab": {
     "message": "Odstrániť z uloženej skupiny"
   },
+  "optionTabGroupsClosedLimit": {
+    "message": "Počet zatvorených kariet/skupín na uchovanie"
+  },
   "deadProxyAdd": {
     "message": "Pridať proxy server pre kontroly nefunkčných odkazov"
   },

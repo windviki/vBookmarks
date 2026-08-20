@@ -567,6 +567,9 @@
   "tabGroupsRemoveClosedTab": {
     "message": "Retirer du groupe enregistré"
   },
+  "optionTabGroupsClosedLimit": {
+    "message": "Historique des onglets/groupes fermés à conserver"
+  },
   "deadProxyAdd": {
     "message": "Ajouter un serveur proxy pour les vérifications de liens morts"
   },

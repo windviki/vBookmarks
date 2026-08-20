@@ -567,6 +567,9 @@
   "tabGroupsRemoveClosedTab": {
     "message": "Noņemt no saglabātās grupas"
   },
+  "optionTabGroupsClosedLimit": {
+    "message": "Saglabājamā slēgto cilņu/grupu vēsture"
+  },
   "deadProxyAdd": {
     "message": "Pievienot starpniekserveri bojātu saišu pārbaudei"
   },

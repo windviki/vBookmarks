@@ -567,6 +567,9 @@
   "tabGroupsRemoveClosedTab": {
     "message": "Видалити зі збереженої групи"
   },
+  "optionTabGroupsClosedLimit": {
+    "message": "Історія закритих вкладок/груп для збереження"
+  },
   "deadProxyAdd": {
     "message": "Додати проксі-сервер для перевірки мертвих посилань"
   },

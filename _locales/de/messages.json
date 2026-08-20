@@ -567,6 +567,9 @@
   "tabGroupsRemoveClosedTab": {
     "message": "Aus gespeicherter Gruppe entfernen"
   },
+  "optionTabGroupsClosedLimit": {
+    "message": "Zu behaltender Verlauf geschlossener Tabs/Gruppen"
+  },
   "deadProxyAdd": {
     "message": "Proxyserver für Tote-Links-Prüfungen hinzufügen"
   },

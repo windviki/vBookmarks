@@ -567,6 +567,9 @@
   "tabGroupsRemoveClosedTab": {
     "message": "Eltávolítás a mentett csoportból"
   },
+  "optionTabGroupsClosedLimit": {
+    "message": "Megőrzendő bezárt lap/csoport előzmények"
+  },
   "deadProxyAdd": {
     "message": "Proxykiszolgáló hozzáadása a hibás linkek ellenőrzéséhez"
   },

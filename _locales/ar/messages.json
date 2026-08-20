@@ -567,6 +567,9 @@
   "tabGroupsRemoveClosedTab": {
     "message": "إزالة من المجموعة المحفوظة"
   },
+  "optionTabGroupsClosedLimit": {
+    "message": "保留已关闭标签页/组的历史记录"
+  },
   "deadProxyAdd": {
     "message": "أضف خادم وكيل لفحوصات الروابط المعطلة"
   },

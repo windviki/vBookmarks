@@ -567,6 +567,9 @@
   "tabGroupsRemoveClosedTab": {
     "message": "Verwijderen uit opgeslagen groep"
   },
+  "optionTabGroupsClosedLimit": {
+    "message": "Te bewaren gesloten tabbladen/groepen"
+  },
   "deadProxyAdd": {
     "message": "Proxyserver toevoegen voor dode-linkcontroles"
   },

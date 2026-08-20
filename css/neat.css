@@ -3811,13 +3811,10 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
 #tabgroups-list .tabgroups-status-icon.pinned { color: var(--vbm-accent); }
 #tabgroups-list .tabgroups-status-icon.discarded { color: var(--vbm-warning); }
 
-/* Sleeping tabs read as inactive: dimmed title in italic. The row chrome
-   stays full-strength so actions remain discoverable. */
+/* Sleeping tabs read as inactive: dimmed only. Closed tabs (the history
+   rows) add italics on top, so the two states stay visually distinct. */
 #tabgroups-list li.tabgroups-row.discarded > a.tree-item-link {
     opacity: .55;
-}
-#tabgroups-list li.tabgroups-row.discarded > a.tree-item-link i {
-    font-style: italic;
 }
 .tabgroups-toolbar .select-count {
     font-weight: 500;

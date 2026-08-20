@@ -567,6 +567,9 @@
   "tabGroupsRemoveClosedTab": {
     "message": "Fjern fra gemt gruppe"
   },
+  "optionTabGroupsClosedLimit": {
+    "message": "Lukket fane/gruppe-historik, der skal beholdes"
+  },
   "deadProxyAdd": {
     "message": "Tilføj en proxyserver til død-link-tjek"
   },

@@ -567,6 +567,9 @@
   "tabGroupsRemoveClosedTab": {
     "message": "সংরক্ষিত গ্রুপ থেকে সরান"
   },
+  "optionTabGroupsClosedLimit": {
+    "message": "রাখতে হবে বন্ধ ট্যাব/গ্রুপের ইতিহাস"
+  },
   "deadProxyAdd": {
     "message": "ডেড-লিংক পরীক্ষার জন্য একটি প্রক্সি সার্ভার যোগ করুন"
   },

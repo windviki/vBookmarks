@@ -567,6 +567,9 @@
   "tabGroupsRemoveClosedTab": {
     "message": "保存済みグループから削除"
   },
+  "optionTabGroupsClosedLimit": {
+    "message": "保持的已关闭标签页/组历史记录"
+  },
   "deadProxyAdd": {
     "message": "リンク切れチェック用のプロキシサーバーを追加"
   },

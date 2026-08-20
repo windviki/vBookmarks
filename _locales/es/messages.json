@@ -567,6 +567,9 @@
   "tabGroupsRemoveClosedTab": {
     "message": "Quitar del grupo guardado"
   },
+  "optionTabGroupsClosedLimit": {
+    "message": "Historial de pestañas/grupos cerrados a conservar"
+  },
   "deadProxyAdd": {
     "message": "Añadir un servidor proxy para comprobar enlaces rotos"
   },

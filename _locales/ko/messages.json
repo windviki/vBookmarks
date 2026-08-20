@@ -567,6 +567,9 @@
   "tabGroupsRemoveClosedTab": {
     "message": "저장된 그룹에서 제거"
   },
+  "optionTabGroupsClosedLimit": {
+    "message": "유지할 닫힌 탭/그룹 기록"
+  },
   "deadProxyAdd": {
     "message": "죽은 링크 확인용 프록시 서버 추가"
   },

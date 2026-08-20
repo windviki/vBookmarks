@@ -567,6 +567,9 @@
   "tabGroupsRemoveClosedTab": {
     "message": "Ta bort från sparad grupp"
   },
+  "optionTabGroupsClosedLimit": {
+    "message": "Antal stängda flikar/grupper att spara"
+  },
   "deadProxyAdd": {
     "message": "Lägg till proxyserver för döda länkar"
   },

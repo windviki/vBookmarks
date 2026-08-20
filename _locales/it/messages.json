@@ -567,6 +567,9 @@
   "tabGroupsRemoveClosedTab": {
     "message": "Rimuovi dal gruppo salvato"
   },
+  "optionTabGroupsClosedLimit": {
+    "message": "Cronologia di schede/gruppi chiusi da conservare"
+  },
   "deadProxyAdd": {
     "message": "Aggiungi un server proxy per i controlli dei link morti"
   },

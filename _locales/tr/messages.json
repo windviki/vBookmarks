@@ -567,6 +567,9 @@
   "tabGroupsRemoveClosedTab": {
     "message": "Kayıtlı gruptan kaldır"
   },
+  "optionTabGroupsClosedLimit": {
+    "message": "Kapatılan sekme/grup geçmişi saklansın"
+  },
   "deadProxyAdd": {
     "message": "Ölü bağlantı kontrolleri için bir proxy sunucusu ekle"
   },

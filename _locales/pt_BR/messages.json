@@ -566,6 +566,9 @@
   "tabGroupsRemoveClosedTab": {
     "message": "Remover do grupo salvo"
   },
+  "optionTabGroupsClosedLimit": {
+    "message": "Histórico de abas/grupos fechados a manter"
+  },
   "deadProxyAdd": {
     "message": "Adicionar um servidor proxy para verificação de links quebrados"
   },

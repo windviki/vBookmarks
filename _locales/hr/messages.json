@@ -567,6 +567,9 @@
   "tabGroupsRemoveClosedTab": {
     "message": "Ukloni iz spremljene grupe"
   },
+  "optionTabGroupsClosedLimit": {
+    "message": "Zadržano zatvorenih kartica/grupa"
+  },
   "deadProxyAdd": {
     "message": "Dodaj proxy poslužitelj za provjeru mrtvih veza"
   },

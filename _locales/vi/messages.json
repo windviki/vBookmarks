@@ -567,6 +567,9 @@
   "tabGroupsRemoveClosedTab": {
     "message": "Xóa khỏi nhóm đã lưu"
   },
+  "optionTabGroupsClosedLimit": {
+    "message": "Lịch sử tab/nhóm đã đóng cần giữ"
+  },
   "deadProxyAdd": {
     "message": "Thêm máy chủ proxy để kiểm tra liên kết hỏng"
   },

@@ -1939,5 +1939,8 @@
   },
   "tabGroupsRemoveClosedTab": {
     "message": "从已保存组移除"
+  },
+  "optionTabGroupsClosedLimit": {
+    "message": "关闭标签/标签组历史保留条数"
   }
 }

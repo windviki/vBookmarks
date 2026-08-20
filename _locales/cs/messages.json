@@ -567,6 +567,9 @@
   "tabGroupsRemoveClosedTab": {
     "message": "Odebrat z uložené skupiny"
   },
+  "optionTabGroupsClosedLimit": {
+    "message": "Počet zavřených karet/skupin k uchování"
+  },
   "deadProxyAdd": {
     "message": "Přidat proxy server pro kontroly nefunkčních odkazů"
   },

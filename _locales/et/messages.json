@@ -567,6 +567,9 @@
   "tabGroupsRemoveClosedTab": {
     "message": "Eemalda salvestatud grupist"
   },
+  "optionTabGroupsClosedLimit": {
+    "message": "Säilitatav suletud vahekaartide/rühmade ajalugu"
+  },
   "deadProxyAdd": {
     "message": "Lisa puhverserver surnud linkide kontrollimiseks"
   },

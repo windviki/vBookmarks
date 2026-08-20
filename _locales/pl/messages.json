@@ -567,6 +567,9 @@
   "tabGroupsRemoveClosedTab": {
     "message": "Usuń z zapisanej grupy"
   },
+  "optionTabGroupsClosedLimit": {
+    "message": "Historia zamkniętych kart/grup do zachowania"
+  },
   "deadProxyAdd": {
     "message": "Dodaj serwer proxy do sprawdzania martwych linków"
   },

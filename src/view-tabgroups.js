@@ -36,6 +36,8 @@ export function initViewTabGroups(ctx = {}) {
     // standard getTree → generateTree chain; optional in tests).
     const onChanged = ctx.onChanged || (() => {});
     const onRowsRendered = ctx.onRowsRendered || (() => {});
+    // Remember-state switch (same option as the tree/search view state).
+    const rememberState = ctx.getRememberState || (() => true);
 
     const $list = $('tabgroups-list');
 
@@ -66,6 +68,31 @@ export function initViewTabGroups(ctx = {}) {
     let dragTabId = null;
 
     const CLOSED_GROUPS_KEY = 'tabGroupsClosed';
+    const UI_STATE_KEY = 'tabGroupsViewState';
+    const readUIState = () => {
+        if (!rememberState())
+            return {};
+        try {
+            const obj = JSON.parse(store.get(UI_STATE_KEY, '') || '{}');
+            return obj && typeof obj === 'object' ? obj : {};
+        } catch (e) {
+            return {};
+        }
+    };
+    const writeUIState = ui => {
+        if (!rememberState())
+            return;
+        try {
+            store.set(UI_STATE_KEY, JSON.stringify(ui));
+        } catch (e) { /* best-effort */ }
+    };
+    const persistUIState = () => {
+        writeUIState({
+            collapsedWindows: [...collapsedWindows],
+            expandedClosed: [...expandedClosed],
+            collapsedGroups: [...collapsed]
+        });
+    };
     const readClosedGroups = () => {
         try {
             const list = JSON.parse(store.get(CLOSED_GROUPS_KEY, '') || '[]');
@@ -79,11 +106,12 @@ export function initViewTabGroups(ctx = {}) {
             store.set(CLOSED_GROUPS_KEY, JSON.stringify(list));
         } catch (e) { /* best-effort */ }
     };
-    // Newest first, capped at 10 records (same cap as search history).
+    // Newest first, capped by the options-page setting (default 10).
     const persistClosedGroups = list => {
+        const limit = Math.max(1, parseInt(store.get('tabGroupsClosedLimit', '10'), 10) || 10);
         const capped = (list || []).slice()
             .sort((a, b) => (b.savedAt || 0) - (a.savedAt || 0))
-            .slice(0, 10);
+            .slice(0, limit);
         writeClosedGroups(capped);
         return capped;
     };
@@ -175,6 +203,37 @@ export function initViewTabGroups(ctx = {}) {
                 for (const g of groups)
                     if (g.collapsed)
                         collapsed.add(String(g.id));
+
+                // Restore (or default) the view-local folding state.
+                // Non-current windows fold by default; with remember-state on,
+                // the user's last choice wins. Group folds follow the browser
+                // when sync is on; when sync is off the saved view override
+                // survives refreshes.
+                const uiState = readUIState();
+                collapsedWindows.clear();
+                const savedWindows = Array.isArray(uiState.collapsedWindows) ? uiState.collapsedWindows : null;
+                if (savedWindows) {
+                    for (const id of savedWindows)
+                        collapsedWindows.add(String(id));
+                } else {
+                    for (const w of windows)
+                        if (!w.focused)
+                            collapsedWindows.add(String(w.id));
+                }
+                expandedClosed.clear();
+                if (Array.isArray(uiState.expandedClosed))
+                    for (const id of uiState.expandedClosed)
+                        expandedClosed.add(String(id));
+                if (!syncCollapse() && Array.isArray(uiState.collapsedGroups)) {
+                    for (const g of groups) {
+                        const gid = String(g.id);
+                        if (uiState.collapsedGroups.indexOf(gid) !== -1)
+                            collapsed.add(gid);
+                        else
+                            collapsed.delete(gid);
+                    }
+                }
+
                 closedRecords = readClosedGroups()
                     .sort((a, b) => (b.savedAt || 0) - (a.savedAt || 0));
                 views.updateBadges();
@@ -409,8 +468,14 @@ export function initViewTabGroups(ctx = {}) {
                 const clearLabel = _m('tabGroupsClearClosedGroups');
                 html += `<li class="tabgroups-section-head tabgroups-closed-section-head"><em>${_m('tabGroupsClosedGroups')}</em>` +
                     `<button class="tabgroups-closed-clear" title="${htmlspecialchars(clearLabel)}" aria-label="${htmlspecialchars(clearLabel)}">${htmlspecialchars(clearLabel)}</button></li>`;
-                for (const record of closedRecords)
-                    html += closedGroupHtml(record);
+                for (const record of closedRecords) {
+                    if (record.type === 'tab') {
+                        const tab = (record.tabs && record.tabs[0]) || { title: record.title || '', url: record.url || '' };
+                        html += closedTabHtml(record, tab, 0);
+                    } else {
+                        html += closedGroupHtml(record);
+                    }
+                }
             }
             html += '</ul>';
         }
@@ -488,6 +553,18 @@ export function initViewTabGroups(ctx = {}) {
             button1: `<strong>${_m('delete')}</strong>`,
             button2: _m('nope'),
             fn1: () => {
+                // Remember closed single tabs in the same history list as
+                // closed groups, so they can be reopened in their window.
+                const record = {
+                    id: `ct_${Date.now().toString(36)}`,
+                    type: 'tab',
+                    title: tab.title || '',
+                    url: tab.url || '',
+                    windowId: tab.windowId,
+                    savedAt: Date.now(),
+                    tabs: [{ title: tab.title || '', url: tab.url || '' }]
+                };
+                persistClosedGroups([...readClosedGroups(), record]);
                 send({ type: TAB_GROUP_MSG.tabsClose, tabIds: [tab.id] });
                 scheduleRefresh();
             }
@@ -639,6 +716,7 @@ export function initViewTabGroups(ctx = {}) {
                 // group can be reopened later from the closed-groups section.
                 const record = {
                     id: `cg_${Date.now().toString(36)}`,
+                    type: 'group',
                     title: group ? group.title || '' : '',
                     color: group ? group.color || 'grey' : 'grey',
                     savedAt: Date.now(),
@@ -928,6 +1006,7 @@ export function initViewTabGroups(ctx = {}) {
             collapsed.add(String(groupId));
         else
             collapsed.delete(String(groupId));
+        persistUIState();
         render();
         // Only write through to the browser when the toolbar option is on.
         // Default OFF: view folding stays local (a refresh restores the
@@ -951,6 +1030,7 @@ export function initViewTabGroups(ctx = {}) {
     const collapseAll = () => {
         for (const g of groups)
             collapsed.add(String(g.id));
+        persistUIState();
         render();
         if (!syncCollapse())
             return;
@@ -964,6 +1044,7 @@ export function initViewTabGroups(ctx = {}) {
     };
     const expandAll = () => {
         collapsed.clear();
+        persistUIState();
         render();
         if (!syncCollapse())
             return;
@@ -1127,6 +1208,7 @@ export function initViewTabGroups(ctx = {}) {
                 collapsedWindows.delete(winId);
             else
                 collapsedWindows.add(winId);
+            persistUIState();
             render();
             return;
         }
@@ -1269,6 +1351,7 @@ export function initViewTabGroups(ctx = {}) {
                     expandedClosed.delete(cid);
                 else
                     expandedClosed.add(cid);
+                persistUIState();
                 render();
             }
             return;
@@ -1302,8 +1385,19 @@ export function initViewTabGroups(ctx = {}) {
             e.preventDefault();
             const record = closedRecords.find(r => String(r.id) === String(anchor.dataset.closedId));
             const tab = record && record.tabs && record.tabs[parseInt(anchor.dataset.closedTab, 10) || 0];
-            if (tab && tab.url && chrome.tabs.create)
+            if (!tab || !tab.url || !chrome.tabs.create)
+                return;
+            const openIn = windowId => chrome.tabs.create({ url: tab.url, active: false, windowId });
+            if (record && record.windowId && chrome.windows && chrome.windows.get) {
+                chrome.windows.get(record.windowId, win => {
+                    if (chrome.runtime.lastError || !win)
+                        chrome.tabs.create({ url: tab.url, active: false });
+                    else
+                        openIn(record.windowId);
+                });
+            } else {
                 chrome.tabs.create({ url: tab.url, active: false });
+            }
             return;
         }
     });

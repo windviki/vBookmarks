@@ -567,6 +567,9 @@
   "tabGroupsRemoveClosedTab": {
     "message": "ลบออกจากกลุ่มที่บันทึกไว้"
   },
+  "optionTabGroupsClosedLimit": {
+    "message": "เก็บประวัติแท็บ/กลุ่มที่ปิดไว้"
+  },
   "deadProxyAdd": {
     "message": "เพิ่มพร็อกซีเซิร์ฟเวอร์สำหรับตรวจสอบลิงก์เสีย"
   },

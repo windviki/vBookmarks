@@ -1898,5 +1898,8 @@
   },
   "tabGroupsRemoveClosedTab": {
     "message": "从已保存的组中移除"
+  },
+  "optionTabGroupsClosedLimit": {
+    "message": "保留的已关闭标签页/组历史记录"
   }
 }

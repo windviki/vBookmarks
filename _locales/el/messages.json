@@ -567,6 +567,9 @@
   "tabGroupsRemoveClosedTab": {
     "message": "Αφαίρεση από αποθηκευμένη ομάδα"
   },
+  "optionTabGroupsClosedLimit": {
+    "message": "Ιστορικό κλειστών καρτελών/ομάδων για διατήρηση"
+  },
   "deadProxyAdd": {
     "message": "Προσθήκη διακομιστή μεσολάβησης για ελέγχους νεκρών συνδέσμων"
   },

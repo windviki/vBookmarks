@@ -567,6 +567,9 @@
   "tabGroupsRemoveClosedTab": {
     "message": "حذف از گروه ذخیره‌شده"
   },
+  "optionTabGroupsClosedLimit": {
+    "message": "تاریخچه تب/گروههای بستهشده برای نگهداری"
+  },
   "deadProxyAdd": {
     "message": "افزودن سرور پروکسی برای بررسی لینک‌های خراب"
   },

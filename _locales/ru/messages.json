@@ -567,6 +567,9 @@
   "tabGroupsRemoveClosedTab": {
     "message": "Удалить из сохранённой группы"
   },
+  "optionTabGroupsClosedLimit": {
+    "message": "Сохраняемая история закрытых вкладок/групп"
+  },
   "deadProxyAdd": {
     "message": "Добавить прокси-сервер для проверки битых ссылок"
   },

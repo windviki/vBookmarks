@@ -567,6 +567,9 @@
   "tabGroupsRemoveClosedTab": {
     "message": "Hapus dari grup tersimpan"
   },
+  "optionTabGroupsClosedLimit": {
+    "message": "Riwayat tab/grup yang ditutup untuk disimpan"
+  },
   "deadProxyAdd": {
     "message": "Tambahkan server proxy untuk pemeriksaan tautan mati"
   },

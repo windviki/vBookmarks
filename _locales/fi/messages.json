@@ -567,6 +567,9 @@
   "tabGroupsRemoveClosedTab": {
     "message": "Poista tallennetusta ryhmästä"
   },
+  "optionTabGroupsClosedLimit": {
+    "message": "Säilytettävä suljettujen välilehtien/ryhmien historia"
+  },
   "deadProxyAdd": {
     "message": "Lisää välityspalvelin kuolleiden linkkien tarkistuksia varten"
   },

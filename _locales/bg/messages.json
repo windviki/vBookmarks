@@ -567,6 +567,9 @@
   "tabGroupsRemoveClosedTab": {
     "message": "Премахване от запазена група"
   },
+  "optionTabGroupsClosedLimit": {
+    "message": "Запазена история на затворени раздели/групи"
+  },
   "deadProxyAdd": {
     "message": "Добавяне на прокси сървър за проверки за мъртви връзки"
   },

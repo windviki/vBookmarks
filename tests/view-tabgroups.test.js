@@ -437,11 +437,13 @@ describe('closed groups and window folding', () => {
             ]
         });
         def().activate();
+        // Non-current windows fold by default.
+        expect($list.innerHTML).toContain('id="tabgroups-item-1"');
+        expect($list.innerHTML).not.toContain('id="tabgroups-item-10"');
         const winHead = { dataset: { windowId: '1' }, classList: makeClassList() };
         const btn = { classList: makeClassList(), closest: sel => sel === '.tabgroups-window-collapse' ? btn : (sel === 'li' ? winHead : null) };
         clickOn(btn);
         expect($list.innerHTML).not.toContain('id="tabgroups-item-1"');
-        expect($list.innerHTML).toContain('id="tabgroups-item-10"');
         clickOn(btn);
         expect($list.innerHTML).toContain('id="tabgroups-item-1"');
     });
@@ -462,10 +464,11 @@ describe('multi-window rendering', () => {
         expect(html).toContain('tabGroupsCurrentWindow');
         expect(html).toContain('tabGroupsWindow[1]');
         expect(html).toContain('tabGroupsWindow[2]');
-        // focused window (id 1) renders before window 2 even though it was
-        // listed second; group g1 appears before window 2's tab 10.
-        expect(html.indexOf('id="tabgroups-group-g1"')).toBeLessThan(html.indexOf('id="tabgroups-item-10"'));
         expect(html.indexOf('tabGroupsWindow[1]')).toBeLessThan(html.indexOf('tabGroupsWindow[2]'));
+        // Non-current window 2 folds by default; its tab is hidden until it
+        // is expanded through its window-head toggle.
+        expect(html).toContain('id="tabgroups-group-g1"');
+        expect(html).not.toContain('id="tabgroups-item-10"');
     });
 });
 

@@ -567,6 +567,9 @@
   "tabGroupsRemoveClosedTab": {
     "message": "Elimină din grupul salvat"
   },
+  "optionTabGroupsClosedLimit": {
+    "message": "Istoricul filelor/grupurilor închise de păstrat"
+  },
   "deadProxyAdd": {
     "message": "Adaugă un server proxy pentru verificarea linkurilor moarte"
   },

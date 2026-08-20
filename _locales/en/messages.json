@@ -2115,5 +2115,9 @@
   "tabGroupsRemoveClosedTab": {
     "message": "Remove from saved group",
     "description": "Hover action on a saved tab inside a closed tab group row: removes that tab from the saved record."
+  },
+  "optionTabGroupsClosedLimit": {
+    "message": "Closed tab/group history to keep",
+    "description": "Options-page select in the Views group: how many closed tab/group records the tab groups view remembers."
   }
 }

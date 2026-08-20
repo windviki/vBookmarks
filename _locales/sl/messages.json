@@ -567,6 +567,9 @@
   "tabGroupsRemoveClosedTab": {
     "message": "Odstrani iz shranjene skupine"
   },
+  "optionTabGroupsClosedLimit": {
+    "message": "Ohranitev zgodovine zaprtih zavihkov/skupin"
+  },
   "deadProxyAdd": {
     "message": "Dodaj proxy strežnik za preverjanje mrtvih povezav"
   },

@@ -567,6 +567,9 @@
   "tabGroupsRemoveClosedTab": {
     "message": "Pašalinti iš išsaugotos grupės"
   },
+  "optionTabGroupsClosedLimit": {
+    "message": "Išsaugoti uždarų skirtukų/grupių istoriją"
+  },
   "deadProxyAdd": {
     "message": "Pridėti tarpinį serverį negyvų nuorodų tikrinimui"
   },

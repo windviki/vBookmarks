@@ -230,6 +230,10 @@ const $ = id => document.getElementById(id);
         const recentCount = $('recent-count');
         recentCount.value = await getSetting('recentCount', '20');
         recentCount.addEventListener('change', () => setSetting('recentCount', recentCount.value));
+        // Tab-groups view: closed tab/group history depth.
+        const tabGroupsClosedLimit = $('tabgroups-closed-limit');
+        tabGroupsClosedLimit.value = await getSetting('tabGroupsClosedLimit', '10');
+        tabGroupsClosedLimit.addEventListener('change', () => setSetting('tabGroupsClosedLimit', tabGroupsClosedLimit.value));
 
         // Issue #33: folder-sort options — the same sortOptions key the popup
         // sort dialog reads/writes, so the options page is a persistent editor
@@ -785,6 +789,7 @@ const $ = id => document.getElementById(id);
         document.getElementById('classic-experience').innerText = __m('optionClassicExperience');
         document.getElementById('classic-experience-hint').innerText = __m('optionClassicExperienceHint');
         document.getElementById('option-recent-count').innerText = __m('optionRecentCount');
+        document.getElementById('option-tabgroups-closed-limit').innerText = __m('optionTabGroupsClosedLimit');
         document.getElementById('option-search-history').innerText = __m('optionSearchHistory');
         document.getElementById('option-search-history-hint').innerText = __m('optionSearchHistoryHint');
         document.getElementById('option-stats-enabled').innerText = __m('optionStatsEnabled');
