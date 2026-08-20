@@ -2139,6 +2139,28 @@ describe('search-history context menu (round-4 item 7)', () => {
             expect(menu.style.opacity).not.toBe('1');
     });
 
+    it('opens the history menu when the right-click lands on a child span/svg of the row anchor', () => {
+        const { openOn, makeHistoryRow, el, searchHistoryMenu, folderMenu, bookmarkMenu } = setup({});
+        const { a } = makeHistoryRow('git');
+        const meta = el('SPAN');
+        meta.classList.add('history-meta');
+        meta.parentNode = a;
+        openOn(meta);
+        expect(searchHistoryMenu.style.opacity).toBe('1');
+        for (const menu of [folderMenu, bookmarkMenu])
+            expect(menu.style.opacity).not.toBe('1');
+
+        // An SVG glyph inside that child span (the clock icon's <polyline>)
+        // must climb past the span to the anchor too — the old SPAN-first
+        // closest() opened the folder menu here.
+        const svg = el('svg');
+        svg.parentNode = meta;
+        openOn(svg);
+        expect(searchHistoryMenu.style.opacity).toBe('1');
+        for (const menu of [folderMenu, bookmarkMenu])
+            expect(menu.style.opacity).not.toBe('1');
+    });
+
     it('assigns the item labels at init from the i18n messages', () => {
         const { byId } = setup({});
         expect(byId['search-history-menu-rerun'].textContent).toBe('searchHistoryRerun');

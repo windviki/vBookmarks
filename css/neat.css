@@ -2509,7 +2509,8 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
 #recent-list ul li a *,
 #dupes-list ul li a *,
 #dead-list ul li a *,
-#stats-list ul li a * {
+#stats-list ul li a *,
+#search-history-area ul li a * {
     pointer-events: none;
 }
 

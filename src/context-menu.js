@@ -708,12 +708,29 @@ export function initContextMenu(ctx = {}) {
         if ((el.tagName) === 'HR') {
             el = el.parentNode; //a
         }
-        // Walk up to the nearest a/span when a child element (img, i, div, …)
-        // captured the event — covers recent-view bookmarks and tree rows
-        // whose ::after / favicon / sync-indicator received the click.
-        if (el.tagName !== 'A' && el.tagName !== 'SPAN' && el.closest) {
-            const nearest = el.closest('a, span');
-            if (nearest) el = nearest;
+        // Walk up to the row's actionable element (a/span) when a child
+        // element captured the event — favicon <img>, <i> title, sync
+        // indicator, the search-history row's clock/meta/time, …
+        // Prefer an ANCHOR ancestor first: every anchor row (bookmark /
+        // search result / search-history / stats-history) nests its labels in
+        // an <a>, and a right-click on one of those children must resolve to
+        // that <a>. The previous single `closest('a, span')` call matches the
+        // SPAN itself first, so a `.history-meta` / `.history-time` / clock
+        // <svg> inside a search-history <a> walked only to the SPAN and then
+        // fell into the SPAN→folder-menu branch — right-clicking the right
+        // half of a history row opened the folder menu instead of the
+        // dedicated search-history menu. Only when no anchor ancestor exists
+        // does a SPAN stand in for the row (tree folder rows are `li > span`;
+        // their nested spans are pointer-events:none, so this order is safe).
+        if (el.closest) {
+            const anchor = el.tagName === 'A' ? el : el.closest('a');
+            if (anchor) {
+                el = anchor;
+            } else if (el.tagName !== 'SPAN') {
+                const nearestSpan = el.closest('span');
+                if (nearestSpan)
+                    el = nearestSpan;
+            }
         }
         // 4.0.8: right-clicking a view tab opens the tab menu (hide /
         // disable) instead of falling through to the no-row branch. The
