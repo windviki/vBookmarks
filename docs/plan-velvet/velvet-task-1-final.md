@@ -1,12 +1,13 @@
-# v4.1.0 最终设计方案（融合定稿 · ds 基底 + k3/glm53 两路重审）
+# velvet 最终设计方案（融合定稿 · ds 基底 + k3/glm53 两路重审）
 
-> 基准：[`v4.1.0task-1.md`](v4.1.0task-1.md)（任务清单，`【原文】`为原始想法）、[`v4.1.0task-1-ds.md`](v4.1.0task-1-ds.md)（上轮设计）、[`v4.1.0task-1-k3.md`](v4.1.0task-1-k3.md)（k3 独立定稿）与 [`v4.1.0task-1-glm53.md`](v4.1.0task-1-glm53.md)（glm53 独立定稿）。
+> 基准：[`velvet-task-1.md`](velvet-task-1.md)（任务清单，`【原文】`为原始想法）、[`velvet-task-1-ds.md`](velvet-task-1-ds.md)（上轮设计）、[`velvet-task-1-k3.md`](velvet-task-1-k3.md)（k3 独立定稿）与 [`velvet-task-1-glm53.md`](velvet-task-1-glm53.md)（glm53 独立定稿）。
+> 目标发布版本：原定 4.1.0，目前待定。
 >
 > **本文是两路重审在 ds 基底上的融合定稿**：`k3` 与 `glm53` 各自对 ds 做了独立重审，两者英雄所见略同之处直接采用；关键分歧逐项裁决（见 §0.2 裁决表）。融合原则：**「glm53 定地基，k3 定顶冠」**——视觉体系先用 glm53 的三平面模型 + 4px 网格契约解决「卡片在 light 下可见」的地基问题，再用 k3 的 Calm Instrument 语言与主题签名定顶；功能决策按裁决表逐项采纳。
 >
 > 本文只做设计，不实施。实施切片、回归门禁见 §7。所有数值/选择器以合流后的 4.0.5 代码（66 套件 / 2047 用例 / 388 i18n 键全绿）为准。
 >
-> 4.0.5 已落地、与本文相关的修正（不再列入 4.1.0 待办，各条「现状」已按此刷新）：
+> 4.0.5 已落地、与本文相关的修正（不再列入 velvet 待办，各条「现状」已按此刷新）：
 > ① favicon 反色服务：极端色占比判定（浅色加 `colored < 0.30` 彩色守卫——拦 devconsole 类彩色 logo 误翻，暗色无守卫让 netflix 类深色保色相翻转）+ `invert(1) hue-rotate(180deg)` 保色相翻转 + 观察器守卫修复 + `doc.defaultView.matchMedia` + `storage.onChanged` 直推常驻侧栏（k3 算法 + glm53 动态链合流）。
 > ② 共享模块收敛：`escape.js`（含 `&` 完备化）、`fuzzy-core.js`（omnibox/popup 统一排序）、`list-focus.js`（`rowFocusTarget` 行契约 + `cls+idx` 工具栏恢复）。
 > ③ 焦点律：历史区 focusSpot（`hist:` 键）、树视图 generateTree park/unpark、undo toast 进 Tab 环、viewState 纳入 rememberState 门控。
@@ -27,7 +28,7 @@
 
 ### 0.1 版本主题
 
-**4.1.0 = 「视觉成熟」版本**（k3 与 glm53 一致）。功能面只做四类高价值低成本项（内置命令补全、输入栏实用扩展、独立大屏页、远程公告），主力工程量投向视觉系统的**体系化**：把 4.0 以来零散打磨的成果收敛为一套**有名字、有不变量、可契约测试的设计语言**，并以此语言完成 classic 主题、卡片化、tab 重绘三个视觉里程碑。
+**velvet = 「视觉成熟」版本**（k3 与 glm53 一致）。功能面只做四类高价值低成本项（内置命令补全、输入栏实用扩展、独立大屏页、远程公告），主力工程量投向视觉系统的**体系化**：把 4.0 以来零散打磨的成果收敛为一套**有名字、有不变量、可契约测试的设计语言**，并以此语言完成 classic 主题、卡片化、tab 重绘三个视觉里程碑。
 
 ### 0.2 k3 / glm53 对 ds 的修正与推翻——裁决表
 
@@ -39,7 +40,7 @@
 | F2 | **tab 视觉** | 扁平圆角 tab + 滑动底条 | **分段式软填充、移除底条**（卡片化后底条撞卡边 + 双信号冗余） | 附着式卡片头 tab + 保留滑动指示条（升格卡内顶缘） | **✓ 结构取 glm53 焊接卡（§1.5.1），语言取 k3 分段填充（§1.5.2）**——`.tab-indicator` 删除（移除论证充分）；焊接使 tab 条成为卡片头，零额外空间 |
 | F3 | **主题切换** | `/next-theme` 盲循环 | `/next-theme` | `/theme` 无参 → 主题列表模式 | **✓ glm53**——盲循环无预览无顺序提示；列表模式可发现可预览同成本 |
 | F4 | **公告端点** | Upstash REST + token | **静态 JSON**（raw.githubusercontent） | Upstash REST + 只读 token | **✓ k3**——零密钥、零第三方依赖、零隐私风险、公告走 git PR 评审 |
-| F5 | **计算器** | 进 4.1.0 | **否决**（palette 不是启动器） | 进（手写递归下降 calc.js） | **✓ k3（否决）**——零用户请求；glm53 的安全实现存档作 4.2 参考 |
+| F5 | **计算器** | 进 velvet | **否决**（palette 不是启动器） | 进（手写递归下降 calc.js） | **✓ k3（否决）**——零用户请求；glm53 的安全实现存档作 4.2 参考 |
 | F6 | **`/toggle <view>`** | 进 | 进（C3） | **删除**（面板命令改写隐藏设置与心智模型冲突） | **✓ glm53（删除）** |
 | F7 | **`visited:N` token** | 进 | 保留 | **删除**（visitStats 只计弹窗打开数，语义撑不起过滤词） | **✓ glm53（删除）** |
 | F8 | **B2 开关数** | 三开关 | **一开一序**（hide + order，不搞 top-N） | hide + useCount + sort | **✓ k3**（实质一致，k3 更简洁） |
@@ -47,12 +48,12 @@
 | F10 | **4px 网格契约** | 无 | 间距三档 token（无网格契约） | **4px 基准网格 + design-system.test.js 契约** | **✓ glm53**——把隐式不变量显式化 |
 | F11 | **classic 实现** | 逐元素覆盖表 | **token 级覆盖** | **token 级覆盖** | **✓ 两边一致**——论证完全相同 |
 | F12 | **`/copy`** | `title\|url\|path` | **+ markdown** | `title\|url\|path` | **✓ k3**——markdown `[title](url)` 记笔记高频，同通道零机制 |
-| F13 | **`/open-all`·`/sort`** | 4.2 | **进 4.1.0**（先行版） | 推 4.2 | **✓ k3**——open-all 是结果批量操作零成本先行版 |
+| F13 | **`/open-all`·`/sort`** | 4.2 | **进 velvet**（先行版） | 推 4.2 | **✓ k3**——open-all 是结果批量操作零成本先行版 |
 | F14 | **`#标签` 语法** | 预留 | 删除 | 删除 | **✓ 两边一致**（YAGNI） |
 
 ### 0.3 范围红黑榜（最终版）
 
-**进 4.1.0**：
+**进 velvet**：
 - 视觉：F1 三平面深度模型 + `--vbm-canvas`、F10 4px 基准网格契约、半径阶梯 token（2/4/8/12/pill）+ 同心圆角律、卡片化 + F2 tab 分段重绘（移除底条）、F3 `/theme` 列表模式、classic token 级覆盖（F11）、V5 图标系统（CLOSE/EMPTY/折角圆弧化）、V6 左右缘对齐系统、V7 标记同现 + 场景着色、V8 选项页精细化、V9 最近搜索呼吸空间、V10 CSS 解耦 + options 单源化、状态语言按主题 token 表。
 - 面板：B1 自定义置顶、B2 一开一序、B4 `/panel`·`/popup`、B5 `/onlybar`·`/all`、`/open-all`·`/sort`（F13）。
 - 输入栏：C1 字段过滤 token（site/folder/title/url/dead/blocked 六键）、C2 多词 AND、C3 URL 直开 + `/copy`（含 markdown）。
@@ -60,7 +61,7 @@
 - 侧边栏：E1 独立页（完整壳，隐捐赠卡+快加星）。
 - 工程：F 商店首图自动化。
 
-**不进 4.1.0（另立排期）**：B3 macro/引用、C4 中成本（结果批量操作/作用域搜索/参数化创建）、E2 双栏、`chrome.theme` 跟随、计算器、`/toggle`、`visited:N`、`#标签`、`/next-theme`（用 `/theme` 列表替代）、顶部第三按钮、auto→ink 映射、vim 化、弧形 tab、`/export`、`/pin-tab`、`/duplicate`、`/sync-refresh`。
+**不进 velvet（另立排期）**：B3 macro/引用、C4 中成本（结果批量操作/作用域搜索/参数化创建）、E2 双栏、`chrome.theme` 跟随、计算器、`/toggle`、`visited:N`、`#标签`、`/next-theme`（用 `/theme` 列表替代）、顶部第三按钮、auto→ink 映射、vim 化、弧形 tab、`/export`、`/pin-tab`、`/duplicate`、`/sync-refresh`。
 
 ---
 
@@ -94,7 +95,7 @@ vBookmarks 是「打开即搜索」的高密度工具：400px 弹窗里最多同
 
 ### 1.2 4px 基准网格 + 间距 token【glm53 · F10】
 
-实测当前**主体**行/槽/距指标已在 4px 网格上：行高 28、缩进步进 24、图标槽 20、间隙 4、gutter 8、文本轴 40、动作槽 24。4.1 写成规则：
+实测当前**主体**行/槽/距指标已在 4px 网格上：行高 28、缩进步进 24、图标槽 20、间隙 4、gutter 8、文本轴 40、动作槽 24。velvet 写成规则：
 
 - 一切间距、槽位、行高、内边距取 `4px × n`。
 - **例外（明文登记，豁免清单随清理减表）**：1px 边线/分隔线；2px 指示条/焦点环/焦点环偏移/卡片行内缩等光学微调；行内 1.5px 图标描边；dnd 插入线 3px（现状视觉值）；双行行图标 18px/槽 22px（4.0.5 的视觉甜点，槽 = 图标 + 4px，间隙律不破）；sync 点 6px / dead × 10px 标记尺寸；`--vbm-shell: 6px`（弹窗外缘留白，400px 宽下「有空气又不浪费」的实测甜点）。
@@ -297,7 +298,7 @@ css/
 - `paletteBuiltinOrder: 'table' | 'usage'`（默认 table）：usage 时内置区按 `paletteBuiltinUses`（storage.local，`{cmd: count}`，fn 执行时 +1，200ms 节流写盘）降序。
 - **不搞 Top3 开关**（与 usage 排序语义重叠，组合路径产生未测行为）。
 
-### 2.3 B3 macro / 引用命令（不进 4.1.0，模型保留）
+### 2.3 B3 macro / 引用命令（不进 velvet，模型保留）
 
 维持 ds D4 与数据模型（`{ type:'macro', steps:[{ref, args}] }`、循环检测、8 步上限）。4.2.0 评估。
 
@@ -316,10 +317,10 @@ css/
 
 | 候选 | 决策 | 理由 / 形态 |
 |---|---|---|
-| `/copy title\|url\|path\|markdown` | ✅ 4.1.0 | `clipboardWrite` 已有；markdown = `[title](url)` 记笔记高频 |
-| `/open-all` | ✅ 4.1.0（先行版） | 复用 `actions.openBookmarks`（含 10 项确认阈值） |
-| `/sort` | ✅ 4.1.0 | 打开当前聚焦文件夹的排序对话框，入口已有 |
-| URL 直开 | ✅ 4.1.0 | 平铺查询命中 `^https?://\S+$` 或裸域名 → 首位「打开 URL」行 |
+| `/copy title\|url\|path\|markdown` | ✅ velvet | `clipboardWrite` 已有；markdown = `[title](url)` 记笔记高频 |
+| `/open-all` | ✅ velvet（先行版） | 复用 `actions.openBookmarks`（含 10 项确认阈值） |
+| `/sort` | ✅ velvet | 打开当前聚焦文件夹的排序对话框，入口已有 |
+| URL 直开 | ✅ velvet | 平铺查询命中 `^https?://\S+$` 或裸域名 → 首位「打开 URL」行 |
 | 计算器 / 单位换算 | ❌ 否决（F5） | palette 不是启动器；glm53 递归下降实现存档 4.2 |
 | `/toggle <view>` | ❌ 否决（F6） | 面板命令改写隐藏设置与心智模型冲突 |
 | `/export` / `/pin-tab` / `/duplicate` / `/sync-refresh` | ❌ 否决 | 双通道 / 越界 / 与去重理念相悖 / 安慰剂 |
@@ -329,7 +330,7 @@ css/
 
 ### 2.7 内置命令面板行为一致性（4.0.5 回填）
 
-4.0.5 已修：结果行 tabindex=-1、Tab 两停圈禁、`<mark>` 高亮、row.slash 转义 + aliases 校验、stale `.active` 守卫。4.1.0 新增命令必须走 `palette-commands.js` 既有注册路径（命令表 + i18n + 测试三件套），不得旁路。
+4.0.5 已修：结果行 tabindex=-1、Tab 两停圈禁、`<mark>` 高亮、row.slash 转义 + aliases 校验、stale `.active` 守卫。velvet 新增命令必须走 `palette-commands.js` 既有注册路径（命令表 + i18n + 测试三件套），不得旁路。
 
 ---
 
@@ -367,7 +368,7 @@ css/
 | **URL 直开** | 平铺查询命中 `^https?://\S+$` 或裸域名形态（含 `.` 且无空格）→ 首位「打开 URL」行（earth 图标），Enter 直开；URL 行置顶、书签命中照常列出；与 slash 分支天然不冲突；URL 经校验后交 `chrome.tabs.create`，`javascript:`/`data:` 形态不触发 |
 | **`/copy title\|url\|path\|markdown`** | 作用于当前聚焦行（树/结果/列表行统一经 `rowFocusTarget` 契约取行）；无聚焦行时 disabled 态说明；`markdown` 产出 `[title](url)` |
 
-### 3.4 C4 中成本（不进 4.1.0）
+### 3.4 C4 中成本（不进 velvet）
 
 结果批量操作、作用域搜索、参数化 `/add`。4.2.0 与 macro 合并评估。
 
@@ -389,7 +390,7 @@ css/
   "version": 7,
   "messages": [{
     "id": "v410-whats-new",
-    "minVersion": "4.1.0", "maxVersion": "",
+    "minVersion": "velvet", "maxVersion": "",
     "channel": "all",
     "once": true,
     "display": "banner",
@@ -414,14 +415,14 @@ css/
 - 调度：同帧与捐赠卡冲突时**捐赠卡优先**（本地体验优先于远程公告），公告顺延到下次打开；channel 枚举 `all|popup|sidepanel`（standalone 视同 popup；options 不参与）。
 - 关闭：id 记入 `vbmAnnounceSeen`（上限 100 条 LRU，once 语义），banner × 进既有键盘模型。
 - **隐私开关**：选项页 General 组加 `announceEnabled`（默认开）；关闭则零联网。
-- 4.1.0 之前的三条既有横幅（捐赠/风险/history 权限）不动，公告层是纯增量。
+- velvet 之前的三条既有横幅（捐赠/风险/history 权限）不动，公告层是纯增量。
 - **安全**：`fallback` 纯文本、渲染走 `escapeHtml`（`src/escape.js`）；`display` 只取枚举三值；`text` 上限 500 字符；数组上限 10 条。
 
 ### 4.4 功能引导 tooltip
 
 - 形态：`"kind": "tip"` 的 banner 消息——单行横幅：图标 + 一句文案 + 「试试」动作链接 + ×（`display` 枚举不新增值，渲染复用 banner 通道）。
 - **频率纪律**（写死进 announce.js）：每个 major.minor 至多展示 1 条 tip；同一用户同时存活 tip 至多 1 条；全部 once + dismiss 持久化。违反纪律不得合入。
-- 4.1.0 首发内容：`/theme` 列表与新视觉（与 v410-whats-new 合并为同一条）。
+- velvet 首发内容：`/theme` 列表与新视觉（与 v410-whats-new 合并为同一条）。
 
 ### 4.5 发布流程
 
@@ -441,7 +442,7 @@ css/
 - **入口**：palette `/open [view]`——无参 = 当前视图大屏（六视图均可，dead/dupes/stats 为主场景），视图名复用 tab 既有 i18n；三个重数据视图工具行右端各加 `OPEN_EXTERNAL_ICON` 小按钮（tooltip `openInNewTabTooltip`）。点击 = `chrome.tabs.create`（页面上下文直接调，无需 SW 消息）。
 - **守卫**：popup.js 在 `standalone-mode` 下跳过尺寸恢复/sidePanel heartbeat/`vbm-panel` port；package.py HTML_PAGES 白名单加 standalone；tests/fuzzy.test.js 脚本清单 parity 断言扩展。
 
-### 5.2 E2 双栏（不进 4.1.0，触发条件）
+### 5.2 E2 双栏（不进 velvet，触发条件）
 
 重启触发条件（满足其一再排期）：① 独立页上线后收到 ≥3 条「希望树与列表同屏」反馈；② 侧栏宽度中位数 ≥480px 成常态。届时按 `docs/plan-4.0.0/v4task-2.md:313,393` 的 panel 迁移主线实施。
 

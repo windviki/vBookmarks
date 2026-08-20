@@ -1,12 +1,12 @@
-# v4.1.0 任务清单（调研细化版）
+# velvet 任务清单（调研细化版）
 
-> 版本基线：当前为 **4.0.5**（`manifest.json`/`package.json`）。本清单为 4.1.0 目标。
+> 版本基线：当前为 **4.0.5**（`manifest.json`/`package.json`）。本清单目标发布版本：原定 4.1.0，目前待定。
 > 每条均基于对当前 master（`9866ab9`）的代码调研补全「现状」与「方向」，便于落地时直接定位。
 > 标注「**待决策**」的项属于方案取舍，需在排期时定夺。
 >
-> **落地设计见 [`v4.1.0task-1-ds.md`](v4.1.0task-1-ds.md)**——全部「待决策」项已在其中定案，逐条含决策/现状/设计/实施要点/验收。
+> **落地设计见 [`velvet-task-1-ds.md`](velvet-task-1-ds.md)**——全部「待决策」项已在其中定案，逐条含决策/现状/设计/实施要点/验收。
 >
-> **已落地（相对 4.0.1 基线，不再列入 4.1.0 待办）**：① favicon 默认图标 SVG 化 + 像素指纹回退（4.0.2）；② 删除深色主题 favicon `brightness(1.5)` 滤镜（4.0.2，issue #56）；③ favicon 反色服务（4.0.5，选项 `faviconContrast` 默认开）；④ 死链/去重选择模式复选框留白、去重左缘 8px 内边距、删除类操作统一红色语义（4.0.5）；⑤ 双行行图标 18px/槽 22px/间隙 8px（4.0.5）。各项「现状」均已按当前代码刷新。
+> **已落地（相对 4.0.1 基线，不再列入 velvet 待办）**：① favicon 默认图标 SVG 化 + 像素指纹回退（4.0.2）；② 删除深色主题 favicon `brightness(1.5)` 滤镜（4.0.2，issue #56）；③ favicon 反色服务（4.0.5，选项 `faviconContrast` 默认开）；④ 死链/去重选择模式复选框留白、去重左缘 8px 内边距、删除类操作统一红色语义（4.0.5）；⑤ 双行行图标 18px/槽 22px/间隙 8px（4.0.5）。各项「现状」均已按当前代码刷新。
 
 ---
 
@@ -114,17 +114,17 @@
 
 ## 三、搜索栏与命令面板输入栏扩展
 
-> **vim 化已否决**（v4.1.0 不做、也不作为未来方向）——vBookmarks 是「打开即搜索」模型，vim 的输入/命令模式切换会破坏现有语义；`hjkl`/`gg/G` 等键位映射收益低、与 type-ahead 前缀匹配和 CJK 输入法冲突。改为调研两个输入栏（搜索栏 `#search-input` 与命令面板输入栏 `#palette-input`）的**实用扩展**。
+> **vim 化已否决**（velvet 不做、也不作为未来方向）——vBookmarks 是「打开即搜索」模型，vim 的输入/命令模式切换会破坏现有语义；`hjkl`/`gg/G` 等键位映射收益低、与 type-ahead 前缀匹配和 CJK 输入法冲突。改为调研两个输入栏（搜索栏 `#search-input` 与命令面板输入栏 `#palette-input`）的**实用扩展**。
 
 ### 现状
 - **搜索栏 `#search-input`**：fuzzy 子序列匹配（`fuzzy-core.js`，title/url 双通道、精度 tier 排序、`<mark>` 高亮，`fuzzy.js` 挂 `window.VBMFuzzy`）；搜索历史 MRU（`search.js:57-75`，含相对时间/结果数/清除全部，4.0.5 清空与代理移除等已统一红色语义）；Enter 打开首结果/聚焦、ArrowDown 分流结果/历史（`search.js`）；树内裸字母 = type-ahead 前缀匹配（`keyboard.js:510-564`）；omnibox 与 popup 共用同一 `fuzzy-core` 排序（`search-core.js`）。
 - **命令面板输入栏 `#palette-input`**：slash 命令表（`PALETTE_RESERVED` 17 内置命令 + unique-prefix 匹配，`palette.js:277-280`）+ 自定义命令（`ACTION_TYPES`：open-url / open-url-group / view-preset / url-template，`palette-commands.js:45`）+ 平铺查询桥接行（`paletteCmdSearchInView` → 跳搜索视图）；每个命令至多一个别名；已规划 `/next-theme`、`/panel`、`/popup`、`/onlybar`、`/all`（ds B4/B5/A10）。
 - **两者均无**：字段过滤语法、URL 直开、计算器、结果批量操作、作用域搜索。
 
-### 方向（按「价值/成本」排，低成本项可入 4.1.0，中成本另立排期）
+### 方向（按「价值/成本」排，低成本项可入 velvet，中成本另立排期）
 
 **搜索栏扩展：**
-1. **字段过滤 token**（低成本，推荐入 4.1.0）：在 fuzzy 之前解析前缀 token——`site:域名`、`folder:名`、`title:`、`url:`、`#标签`、`dead:`/`blocked:`（复用死链扫描结果）、`visited:N`（复用 visit-stats）。非 token 部分照常 fuzzy。落地：`fuzzy-core.js` 保持纯函数，`search.js` 加 token 解析层 + `<mark>` 高亮适配。
+1. **字段过滤 token**（低成本，推荐入 velvet）：在 fuzzy 之前解析前缀 token——`site:域名`、`folder:名`、`title:`、`url:`、`#标签`、`dead:`/`blocked:`（复用死链扫描结果）、`visited:N`（复用 visit-stats）。非 token 部分照常 fuzzy。落地：`fuzzy-core.js` 保持纯函数，`search.js` 加 token 解析层 + `<mark>` 高亮适配。
 2. **多词 AND 分段匹配**（低成本）：当前整串子序列匹配；拆词后各词独立子序列 + AND 合并（fzf v2 语义），精度更高、可读。
 3. **搜索结果批量操作**（中成本，4.2.0+）：结果区进选择模式（复用 dead/dupes 的 checkbox 机制）→ 打开全部 / 复制全部 URL / 删除 / 移动到文件夹。低成本先行版：直接「打开全部」「复制全部 URL」两个按钮。
 4. **作用域搜索**（中成本）：树中聚焦某文件夹时搜索限定其子树（结合 `#tree` 焦点上下文）。
@@ -136,7 +136,7 @@
 8. **剪贴板命令**（低成本，ds B6 已列）：`/copy title|url|path`（`clipboardWrite` 权限已有）。
 9. **参数化快速创建**（中成本）：`/add <标题> <url>` 直填（复用 B3 的 `{{rest}}` 思路，不依赖 macro）。
 
-> 具体取舍与落地设计见 [`v4.1.0task-1-ds.md`](v4.1.0task-1-ds.md) §3。
+> 具体取舍与落地设计见 [`velvet-task-1-ds.md`](velvet-task-1-ds.md) §3。
 
 ---
 
@@ -152,7 +152,7 @@
 **零障碍**：`manifest.json` CSP 已放行 `connect-src *`（`:68-71`），`host_permissions <all_urls>`（`:59-61`）——扩展页 fetch 外部端点无需新增权限。当前无任何远程消息/公告拉取代码（grep 仅命中死链探测 fetch，非公告）。
 
 ### 方向
-- **4.1.0 之前**保留当前固定 message 兜底，不回归现有三条横幅。
+- **velvet 之前**保留当前固定 message 兜底，不回归现有三条横幅。
 - 新增远程公告层：upstash REST 拉取 → 本地缓存（`storage.local`）→ **拉取失败静默**（不影响使用）。
 - **每版本发布前注册一条 update-note**，新版本客户端自动拉取并显示。
 - 允许**临时通知推送**（注册一条消息，任意时刻推到所有客户端）。
@@ -186,8 +186,8 @@
 1. 死链 × 覆盖层是否按 blocked/dead 场景着色（§一.6）。
 2. modern 主视图列表区是否圆角框（§一.2）。
 3. hover 按钮右缘对齐基线的取舍（§一.9）。
-4. 命令组 / macro / 引用已有命令是否进 4.1.0（§二.3/4，属较大特性）。
-5. 侧边栏双栏是否进 4.1.0（§五.2，属较大工程）。
+4. 命令组 / macro / 引用已有命令是否进 velvet（§二.3/4，属较大特性）。
+5. 侧边栏双栏是否进 velvet（§五.2，属较大工程）。
 6. 主题「跟随浏览器」的范围（§一.10）。
 7. 状态样式（高亮行全宽/圆角、hover/selected 主题语言、dnd 指示收敛）的取舍（§一.12，随 A2 卡片化定夺）。
-8. 输入栏扩展哪些进 4.1.0（§三，低成本候选 1 字段过滤 / 2 多词 AND / 5 URL 直开 / 6 计算器 / 7 设置开关 / 8 剪贴板）。
+8. 输入栏扩展哪些进 velvet（§三，低成本候选 1 字段过滤 / 2 多词 AND / 5 URL 直开 / 6 计算器 / 7 设置开关 / 8 剪贴板）。

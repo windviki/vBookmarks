@@ -1,6 +1,7 @@
-# v4.1.0 详细设计（DS）
+# velvet 详细设计（DS）
 
-> 版本基线：**4.0.5**（`manifest.json`）。本文是 [`v4.1.0task-1.md`](v4.1.0task-1.md)（调研细化版）的落地设计：逐条给出**决策 → 现状 → 设计 → 实施要点 → 验收**，并把原文档标注的「待决策」项全部定案。
+> 版本基线：**4.0.5**（`manifest.json`）。本文是 [`velvet-task-1.md`](velvet-task-1.md)（调研细化版）的落地设计：逐条给出**决策 → 现状 → 设计 → 实施要点 → 验收**，并把原文档标注的「待决策」项全部定案。
+> 目标发布版本：原定 4.1.0，目前待定。
 >
 > 本文只做设计，不实施。实施顺序、回归清单见 §7。
 >
@@ -19,8 +20,8 @@
 | D1 | §一.6 死链 × 覆盖层是否按 blocked/dead 着色 | ✅ **按场景着色** | 语义与 `.row-badge` 对齐，成本仅一个选择器 + 读取扫描结果 |
 | D2 | §一.2 modern 主视图列表区是否圆角框 | ✅ **做**，卡片式容器（radius 分层 + `.view` 卡片） | 对齐 2025 现代 UI「容器 R 角分割」，与顶部圆角控件形成层次 |
 | D3 | §一.9 hover 按钮右缘对齐 | ✅ **统一右缘槽（槽恒占、零回流）** | 根治跨行/跨视图右缘基线漂移；否决「hover 时动态左移」主方案（见 A9 取舍） |
-| D4 | §二.3/4 命令组 / macro / 引用命令是否进 4.1.0 | ❌ **不进**，仅立数据模型 | 属较大特性，与 4.1.0「视觉精细化」主题不符；先立模型再排期 |
-| D5 | §五.2 侧边栏双栏是否进 4.1.0 | ❌ **不进**（进 §五.1 独立页轻量版） | 双栏是 view-manager 迁移级工程；独立页成本低、可闭环 |
+| D4 | §二.3/4 命令组 / macro / 引用命令是否进 velvet | ❌ **不进**，仅立数据模型 | 属较大特性，与 velvet「视觉精细化」主题不符；先立模型再排期 |
+| D5 | §五.2 侧边栏双栏是否进 velvet | ❌ **不进**（进 §五.1 独立页轻量版） | 双栏是 view-manager 迁移级工程；独立页成本低、可闭环 |
 | D6 | §一.10 主题「跟随浏览器」范围 | ❌ **不做 `chrome.theme` 跟随**；✅ **补 palette 主题循环命令** | 浏览器主题是任意用户主题，映射到 vBookmarks 语义 token 不成立；palette 已具备 `/theme` 入口 |
 
 ### 0.2 新增决策 / 澄清（细化中补齐）
@@ -31,19 +32,19 @@
 | N2 | §一.2 tab 质感 | **否决 macOS/Chrome 弧形过渡 tab**；采用「扁平圆角 tab + 滑动指示条」（popup 窄宽下弧形不可见且与卡片语言冲突） |
 | N3 | §一.2 解耦 | 主题 token 块 + 主题特有规则抽到 `css/themes/`（5 文件）；neat.css 只留通用结构 |
 | N4 | §一.10 快速切换 | 顶部不加第 3 按钮（顶部已拥挤，见 §一.8）；palette 补 `/next-theme` 循环命令 |
-| N5 | §二.5/6 内置命令 | 两项都进 4.1.0：`/panel`、`/popup`（SW 加 onMessage）与 `/onlybar`、`/all`（tree-view 启动常量改运行时读） |
+| N5 | §二.5/6 内置命令 | 两项都进 velvet：`/panel`、`/popup`（SW 加 onMessage）与 `/onlybar`、`/all`（tree-view 启动常量改运行时读） |
 | N6 | §五.1 独立页 | 单页 `pages/standalone.html?view=<view>` + body class；popup.js 尺寸恢复/heartbeat 用 class 守卫跳过 |
 | N7 | §六 webstore 首图 | 新增 `shots-store.js`：puppeteer 关键态截图 → 合成页拼图 → 输出 1400×560 与 1280×800，人工挑选上传 |
 | N8 | §一.3 favicon 反色服务 | **已落地（4.0.5，✓ A13）**：`faviconContrast` 默认开；复用每 src 单次采样，亮色 lum>0.70 / 暗色 lum<0.30 且 sat<0.25 反色 |
-| N9 | §一.11/12 + §三 | **进 4.1.0**：A11 左右缘对齐系统（左缘槽位契约 + 右缘动作槽）、A12 状态样式按主题语言；§三 输入栏扩展只入低成本项（字段过滤 / 多词 AND / URL 直开 / 计算器 / 设置开关 / 剪贴板），vim 化彻底否决 |
+| N9 | §一.11/12 + §三 | **进 velvet**：A11 左右缘对齐系统（左缘槽位契约 + 右缘动作槽）、A12 状态样式按主题语言；§三 输入栏扩展只入低成本项（字段过滤 / 多词 AND / URL 直开 / 计算器 / 设置开关 / 剪贴板），vim 化彻底否决 |
 
-### 0.3 4.1.0 范围红黑榜
+### 0.3 velvet 范围红黑榜
 
-**进 4.1.0**：A1 classic 主题、A2 R 角分层+卡片化+tab 重绘+CSS 解耦、A3 默认图标 SVG **折角优化**（SVG 化本体已落地）、A4 图标化清单（克制版）、A5 标记同现微调、A6 × 按场景着色、A7 选项页精细化、A8 最近搜索呼吸空间、A9 统一右缘槽、A10 `/next-theme`、**A11 左右缘对齐系统**、**A12 状态样式按主题**、B1 自定义置顶、B2 隐藏非自定义+内置 useCount、B4 `/panel`·`/popup`、B5 `/onlybar`·`/all`、**C 输入栏扩展（低成本子集）**、D 横幅 upstash、E1 独立页、F webstore 首图自动化。
+**进 velvet**：A1 classic 主题、A2 R 角分层+卡片化+tab 重绘+CSS 解耦、A3 默认图标 SVG **折角优化**（SVG 化本体已落地）、A4 图标化清单（克制版）、A5 标记同现微调、A6 × 按场景着色、A7 选项页精细化、A8 最近搜索呼吸空间、A9 统一右缘槽、A10 `/next-theme`、**A11 左右缘对齐系统**、**A12 状态样式按主题**、B1 自定义置顶、B2 隐藏非自定义+内置 useCount、B4 `/panel`·`/popup`、B5 `/onlybar`·`/all`、**C 输入栏扩展（低成本子集）**、D 横幅 upstash、E1 独立页、F webstore 首图自动化。
 
 **已落地（✓，不排期）**：A3 SVG 化本体、A3b 删除 `brightness(1.5)` 滤镜、A13 favicon 反色服务、§一.11 的部分左缘留白（8px gutter / 双行行 18px·22px·8px）。
 
-**不进 4.1.0（另立排期）**：B3 macro/引用命令、C 输入栏扩展（中成本：结果批量操作、作用域搜索、参数化创建）、E2 侧边栏双栏、`chrome.theme` 浏览器主题跟随。
+**不进 velvet（另立排期）**：B3 macro/引用命令、C 输入栏扩展（中成本：结果批量操作、作用域搜索、参数化创建）、E2 侧边栏双栏、`chrome.theme` 浏览器主题跟随。
 
 ---
 
@@ -129,9 +130,9 @@ css/themes/
 
 ---
 
-### A3. 默认书签图标 SVG 优化（✓ SVG 化本体已落地，4.1.0 只做折角优化）
+### A3. 默认书签图标 SVG 优化（✓ SVG 化本体已落地，velvet 只做折角优化）
 
-**【现状定位】** **SVG 化已落地（4.0.2）**：`DEFAULT_BOOKMARK_ICON`（`icons.js:41-46`）16px 线稿「文档 + 右上折角」，`favicon-fallback.js` 像素指纹已替换 placeholder。折角 `polyline 9.33 1.33 → 9.33 5.33 → 13.33 5.33` 是**尖折角**，生硬——4.1.0 只优化这一处。**4.0.5 新增** favicon 反色服务（见 A13）：占位图已换 SVG 随主题走，反色只作用于真实 favicon <img>，与 A3 无耦合。
+**【现状定位】** **SVG 化已落地（4.0.2）**：`DEFAULT_BOOKMARK_ICON`（`icons.js:41-46`）16px 线稿「文档 + 右上折角」，`favicon-fallback.js` 像素指纹已替换 placeholder。折角 `polyline 9.33 1.33 → 9.33 5.33 → 13.33 5.33` 是**尖折角**，生硬——velvet 只优化这一处。**4.0.5 新增** favicon 反色服务（见 A13）：占位图已换 SVG 随主题走，反色只作用于真实 favicon <img>，与 A3 无耦合。
 
 **【设计】** 优化折角为**平滑圆角过渡**，保持同一 16px 网格 / 1.5px 描边语言（与 FOLDER_ICON 的圆角笔画一致）。推荐两版候选（落地时截图对比）：
 - **方案 A（推荐）**：折角保留，但把尖折角改为带小圆角的折线——将 `polyline` 拆为 `path` 加 `stroke-linejoin="round"` 已生效的基础上，把折点坐标下移 0.5px 使视觉上不再「刺」，并给折线加 `stroke-linecap="round"`。
@@ -163,7 +164,7 @@ css/themes/
 
 **【决策 → 结果】** 原设计 = 删除 `neat.css:629-645` 整块滤镜（占位图已由 `favicon-fallback.js` 接管为 `DEFAULT_BOOKMARK_ICON` SVG，不受滤镜影响；滤镜只剩过曝真实 favicon 的副作用）。**已在 4.0.2 落地**（commit `7015446`），`neat.css` 现仅留解释注释，无滤镜规则。本条目保留为「已落地」记录，不再排期。
 
-**【后续可选加固（不进 4.1.0）】** 为「favicon-fallback 惰性（无 `_favicon`/canvas）」的边缘场景把滤镜限定到未替换的占位图（`data-vbm-placeholder` 属性选择器）；该边缘在扩展页同源 canvas 下极罕见，默认不做。
+**【后续可选加固（不进 velvet）】** 为「favicon-fallback 惰性（无 `_favicon`/canvas）」的边缘场景把滤镜限定到未替换的占位图（`data-vbm-placeholder` 属性选择器）；该边缘在扩展页同源 canvas 下极罕见，默认不做。
 
 ---
 
@@ -265,7 +266,7 @@ css/themes/
 
 ### A11. 不同行/栏之间的视觉对齐（左右缘系统）
 
-**【决策 N9】** 进 4.1.0。左缘统一「槽位契约」（token 化引导槽 + 图标槽 + 间距），右缘统一「右侧动作槽」（`--row-action-gutter`，无动作槽的行也占等宽槽）；相邻区域 margin/padding 收敛到 `--vbm-gutter` token。
+**【决策 N9】** 进 velvet。左缘统一「槽位契约」（token 化引导槽 + 图标槽 + 间距），右缘统一「右侧动作槽」（`--row-action-gutter`，无动作槽的行也占等宽槽）；相邻区域 margin/padding 收敛到 `--vbm-gutter` token。
 
 **【现状定位与已落地】**
 - 左缘：树/列表文本轴 40px（16 引导 + 20 图标 + 4 距，`neat.css:536-553` 三槽契约）。**4.0.5 已落地部分**：去重组头/成员行补 8px `padding-inline-start`、死链选择模式复选框 8px gutter、双行行图标 18px/槽 22px/间隙 8px。
@@ -285,7 +286,7 @@ css/themes/
 
 ### A12. 状态样式按主题（高亮 / hover / dnd 状态语言）
 
-**【决策 N9】** 进 4.1.0（随 A2 卡片化定稿）。为状态样式建立按主题的「状态语言」，状态规则随 A2 的 `css/themes/` 解耦一并收口。
+**【决策 N9】** 进 velvet（随 A2 卡片化定稿）。为状态样式建立按主题的「状态语言」，状态规则随 A2 的 `css/themes/` 解耦一并收口。
 
 **【现状定位】** 状态全走主题 token：行 hover `--vbm-bg-hover`、selected/focus `--vbm-bg-selected`+`--vbm-fg-selected`、焦点环 `2px solid var(--vbm-focus-ring)`、闪屏 `--vbm-flash`。高亮行**全宽平铺无圆角**；dnd drop 行线 `#drop-overlay.bookmark` = `--vbm-fg` 3px + bg 描边、drop 文件夹高亮 `#drop-overlay.folder` = `--vbm-flash` 底 + accent 边 + **硬编码 2px 半径**（`neat.css:827-831`）；拖拽幽灵 `#bookmark-clone`（mask 淡出）。
 
@@ -332,7 +333,7 @@ css/themes/
 
 **【设计】** 两个正交选项：
 1. `paletteHideBuiltin`（默认关）：开启后 `render()` 过滤内置区，只显示自定义命令 + 搜索结果 + 桥接行（`paletteCmdSearchInView`）。「隐藏非自定义」精确语义：隐藏的是**内置命令区**，搜索结果（书签命中）不算命令，保留。
-2. **内置 useCount**：新增 `paletteBuiltinUses`（storage.local，`{ [cmdName]: count }`），在命令 `fn()` 执行时 `store.set` 递增（每次执行 +1，节流）。启用时内置区可按 useCount 排序（`paletteBuiltinSort: 'table'|'usage'`，默认 table 保序）或可选置顶最常用 3 个（`paletteBuiltinTop3`）。为控制范围，**4.1.0 只做计数 + `usage` 排序选项**，不做更复杂的热度算法。
+2. **内置 useCount**：新增 `paletteBuiltinUses`（storage.local，`{ [cmdName]: count }`），在命令 `fn()` 执行时 `store.set` 递增（每次执行 +1，节流）。启用时内置区可按 useCount 排序（`paletteBuiltinSort: 'table'|'usage'`，默认 table 保序）或可选置顶最常用 3 个（`paletteBuiltinTop3`）。为控制范围，**velvet 只做计数 + `usage` 排序选项**，不做更复杂的热度算法。
 
 **【实施要点】** `palette.js`（render 过滤 + fn 计数钩子）、`store.js`（2 个新 key）、`options.js/html`（2 个开关 + 1 个排序下拉）、`palette-commands.js`（若复用 sortCustoms 的计数逻辑）。
 
@@ -340,9 +341,9 @@ css/themes/
 
 ---
 
-### B3. 命令组 / macro / 引用已有命令（模型，不进 4.1.0）
+### B3. 命令组 / macro / 引用已有命令（模型，不进 velvet）
 
-**【决策 D4】** 不进 4.1.0。自定义命令（v4 task-4 #6，4.0.1 落地至今使用数据未形成），macro 语义（引用内置/自定义、参数传递、防循环）需真实场景验证。**本文立数据模型**，落地时按此实现。
+**【决策 D4】** 不进 velvet。自定义命令（v4 task-4 #6，4.0.1 落地至今使用数据未形成），macro 语义（引用内置/自定义、参数传递、防循环）需真实场景验证。**本文立数据模型**，落地时按此实现。
 
 **【模型】** 在 `palette-commands.js` 的 `ACTION_TYPES`（`open-url/open-url-group/view-preset/url-template`，`:45`）追加：
 ```js
@@ -354,7 +355,7 @@ css/themes/
 - **校验**：`validateCommand` 校验 steps 非空、每步 `ref` 解析为已知命令（内置表 `PALETTE_RESERVED` 或自定义集合），**循环引用检测**（A→B→A 拒绝）；step 数上限（如 8）。
 - **执行**：`executeCustom` 对 macro 逐 step 调用对应 fn（内置走命令表 fn，自定义走 `executeCustom` 递归），`args` 支持 `{{rest}}`（palette 剩余词）与字面量。
 - **选项页**：`options-palette-commands.js` 的 action 表单按 `macro` 渲染 steps 编辑器（每行一个 ref 输入 + 删除）。
-- **依赖**：B3 的 macro 执行器是 B4/B5「内置命令作为 macro 步骤」的前提——但 B4/B5 本身作为独立内置命令项，不需要 macro 就能进 4.1.0。
+- **依赖**：B3 的 macro 执行器是 B4/B5「内置命令作为 macro 步骤」的前提——但 B4/B5 本身作为独立内置命令项，不需要 macro 就能进 velvet。
 
 **【排期建议】** 4.2.0+，与「自定义命令 v2」（参数化、图标）合并评估。
 
@@ -386,14 +387,14 @@ css/themes/
 
 ### B6. 功能扩展盘点（低成本优先）
 
-**【决策】** 下列候选按「价值/成本」给 4.2.0+ 排期，4.1.0 不扩（避免范围膨胀）。低成本候选（可并入 4.1.0 若有余量）：
+**【决策】** 下列候选按「价值/成本」给 4.2.0+ 排期，velvet 不扩（避免范围膨胀）。低成本候选（可并入 velvet 若有余量）：
 - `/copy url|title`：复制当前聚焦书签的 URL/标题（`clipboardWrite` 权限已有）。
 - `/open all`：打开当前文件夹全部（复用 `actions.openBookmarks`）。
 - `/sort`：打开排序对话框（`sortFolderContents` 已有入口）。
 - `/new`：新建书签/文件夹（`/add` 已有，`/folder` 已有——盘点确认已覆盖）。
 - 中成本（另排期）：命令历史 MRU（复用 `searchHistory` 结构）、命令收藏夹、参数化默认值。
 
-**【验收】** 盘点表落地到 docs，若 4.1.0 采纳低成本项则补对应测试。
+**【验收】** 盘点表落地到 docs，若 velvet 采纳低成本项则补对应测试。
 
 ---
 
@@ -406,7 +407,7 @@ css/themes/
 - **命令面板输入栏 `#palette-input`**：slash 命令表（`PALETTE_RESERVED`，unique-prefix）+ 自定义命令（`ACTION_TYPES` 4 类）+ 平铺查询桥接行（`paletteCmdSearchInView`）。
 - **两者均无**：字段过滤语法、URL 直开、计算器、结果批量操作、作用域搜索。
 
-### C1. 搜索栏字段过滤 token（低成本，进 4.1.0）
+### C1. 搜索栏字段过滤 token（低成本，进 velvet）
 
 **【设计】** 在 fuzzy 之前解析前缀 token（`token: 值` 或 `#值`），非 token 部分照常 fuzzy：
 - `site:github.com`（URL 主机）、`folder:工作`（包含文件夹标题）、`title:` / `url:`（限定通道）、`#标签`（保留——当前无标签体系，预留语法）、`dead:` / `blocked:`（复用 `deadLastScan` 结果）、`visited:N`（复用 visit-stats，`>N` 天/次）。
@@ -415,7 +416,7 @@ css/themes/
 
 **【验收】** `search.test.js` 补 token 解析与混合查询断言（`site:github.com work` → 主机过滤 + 词 fuzzy）。
 
-### C2. 多词 AND 分段匹配（低成本，进 4.1.0）
+### C2. 多词 AND 分段匹配（低成本，进 velvet）
 
 **【设计】** 当前整串子序列匹配；拆词后各词独立子序列 + AND 合并（fzf v2 语义），精度更高、可读。
 
@@ -423,7 +424,7 @@ css/themes/
 
 **【验收】** `fuzzy.test.js` 补多词 AND 断言（顺序不敏感、每词都命中才返回）。
 
-### C3. 命令面板低成本扩展（进 4.1.0）
+### C3. 命令面板低成本扩展（进 velvet）
 
 | 项 | 设计 | 实施要点 | 验收 |
 |---|---|---|---|
@@ -432,19 +433,19 @@ css/themes/
 | 设置快捷开关 | `/toggle <view>`（dead/dupes/stats/recent 的 show* 开关） | `palette.js` 命令表 + `view-manager`/`store` | 命令存在 + 开关翻转生效 |
 | 剪贴板 | `/copy title\|url\|path`（聚焦书签） | 复用 `clipboardWrite` + focus 读取 | `palette.test.js` + 剪贴板桩 |
 
-### C4. 中成本（不进 4.1.0，另立排期）
+### C4. 中成本（不进 velvet，另立排期）
 
 - **搜索结果批量操作**：结果区进选择模式（复用 dead/dupes checkbox 机制）→ 打开全部 / 复制全部 URL / 删除 / 移动到文件夹；低成本先行版「打开全部」「复制全部 URL」两按钮。
 - **作用域搜索**：树中聚焦文件夹时搜索限定其子树。
 - **参数化快速创建**：`/add <标题> <url>` 直填（复用 B3 `{{rest}}` 思路，不依赖 macro）。
 
-**【排期建议】** C1/C2/C3 入 4.1.0（低成本）；C4 4.2.0+。
+**【排期建议】** C1/C2/C3 入 velvet（低成本）；C4 4.2.0+。
 
 ---
 
 ## 4. 横幅通知全面重构（upstash 远程公告层）
 
-**【决策】** 进 4.1.0。保留现有固定 message 兜底（捐赠卡 / 风险横幅 / history 权限横幅不回归），**新增远程公告层**：Upstash Redis REST 拉取 → `storage.local` 缓存 → **拉取失败静默**。每版本发布前注册一条 update-note；支持临时通知推送。
+**【决策】** 进 velvet。保留现有固定 message 兜底（捐赠卡 / 风险横幅 / history 权限横幅不回归），**新增远程公告层**：Upstash Redis REST 拉取 → `storage.local` 缓存 → **拉取失败静默**。每版本发布前注册一条 update-note；支持临时通知推送。
 
 **【现状】** 三类横幅文案全部是随扩展打包的 i18n 静态 message（`neat.js:225-261` 捐赠/v4-notice + `risk-banner.js` + `view-recent.js:87-95`）；**CSP 已放行 `connect-src *`**（`manifest.json:68-71`），`host_permissions <all_urls>`（`:59-61`）——fetch 外部端点无需新增权限。upstash 可行性零障碍。
 
@@ -454,14 +455,14 @@ css/themes/
 ```json
 [{
   "id": "2026-08-v410",
-  "minVersion": "4.1.0", "maxVersion": "",
+  "minVersion": "velvet", "maxVersion": "",
   "channel": "all",                 // all | popup | sidepanel | options
   "once": true,
   "dismissKey": "vbmAnnounce202608v410",
   "display": { "type": "banner", "priority": 1 },   // dialog | banner | toast
   "titleKey": "announceV410Title",  // 优先 i18n key（客户端 _m()）
   "textKey": "announceV410Text",
-  "textFallback": { "en": "What's new in 4.1.0…" }  // 拉取兜底（无 key 时）
+  "textFallback": { "en": "What's new in velvet…" }  // 拉取兜底（无 key 时）
 }]
 ```
 多语言策略：**优先 i18n key**（`textKey`/`titleKey`，客户端 `_m()` 翻译，省流量、语言全覆盖）；新发布前把 key 随版本打进 `_locales`，远程只存 key + en fallback。
@@ -490,7 +491,7 @@ css/themes/
 
 ### E1. 复杂视图允许打开独立页面
 
-**【决策 N6】** 进 4.1.0 轻量版：单页 `pages/standalone.html?view=<dead|stats|dupes>`，body `standalone-mode`，隐藏搜索/捐赠/tab 条，尺寸无上限（大屏浏览）。入口：palette 新命令 `/open dead|stats|dupes`。
+**【决策 N6】** 进 velvet 轻量版：单页 `pages/standalone.html?view=<dead|stats|dupes>`，body `standalone-mode`，隐藏搜索/捐赠/tab 条，尺寸无上限（大屏浏览）。入口：palette 新命令 `/open dead|stats|dupes`。
 
 **【现状定位】** manifest 只声明 popup/sidepanel/options 三页（+advanced 重定向）；任何扩展目录文件都可用 `chrome-extension://` URL + `chrome.tabs.create` 打开（现成先例：palette 兜底窗口 `background.js:217-218` `?palette=1`）；`view-dead` 直查 `$('dead-list')`（`view-dead.js:137`）、`view-stats` 查 `$('stats-list')`、`view-dupes` 查 `$('dupes-list')`；`package.py:31-36` HTML_PAGES 白名单需手动加。
 
@@ -506,15 +507,15 @@ css/themes/
 
 **【验收】** ① harness：打开 standalone?view=dead → 零 console 错误、dead 视图渲染、无尺寸恢复副作用；② `popup.test.js`/`panel-behavior.test.js` 补 standalone 守卫断言；③ 截图 `standalone-dead.png`。
 
-### E2. 侧边栏双栏功能（不进 4.1.0）
+### E2. 侧边栏双栏功能（不进 velvet）
 
-**【决策 D5】** 不进 4.1.0。`docs/plan-4.0.0/v4task-2.md:313,393` 已把双栏列为 panel 迁移的主体工程（view-manager 改造 + 各视图容器 grid 化 + 焦点/RTL/键盘遍历适配）。排期 4.2.0+，作为「panel 体验重塑」独立 slice。E1 独立页先积累大屏使用数据，为双栏布局提供依据。
+**【决策 D5】** 不进 velvet。`docs/plan-4.0.0/v4task-2.md:313,393` 已把双栏列为 panel 迁移的主体工程（view-manager 改造 + 各视图容器 grid 化 + 焦点/RTL/键盘遍历适配）。排期 4.2.0+，作为「panel 体验重塑」独立 slice。E1 独立页先积累大屏使用数据，为双栏布局提供依据。
 
 ---
 
 ## 6. WebStore 首图自动化
 
-**【决策 N7】** 进 4.1.0：扩展 `scripts/screenshots/` 套件，新增 `scripts/screenshots/shots-store.js`，按 WebStore 规格从 popup 关键态自动拼图，输出到 `assets/store/`（仍人工挑选 + 手动上传，不自动发布）。
+**【决策 N7】** 进 velvet：扩展 `scripts/screenshots/` 套件，新增 `scripts/screenshots/shots-store.js`，按 WebStore 规格从 popup 关键态自动拼图，输出到 `assets/store/`（仍人工挑选 + 手动上传，不自动发布）。
 
 **【现状定位】** 现有素材（实测尺寸）：`vbookmarks.png` 1400×560（WebStore 首图规格）、`vbookmarks-menu.png` 407×560、`vBookmarks-v4.png` / `-options` / `-sidepanel` 1280×800（手动拼合，`vBookmarks-v4.png` 是「多个视图 + 右键菜单」拼图）。`package.py:137-139` 只把 `vbookmarks.png`/`vbookmarks-menu.png` 打进 zip。截图管线（`scripts/screenshots/`，Docker+puppeteer）产出 `tmp/shots/`，不产出 store 素材。
 

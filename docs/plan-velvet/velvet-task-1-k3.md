@@ -1,11 +1,12 @@
-# v4.1.0 任务清单 · K3 定稿方案
+# velvet 任务清单 · K3 定稿方案
 
 > 版本基线：**4.0.5**（`manifest.json`/`package.json`，含 4.0.5 打磨审计的全部修正）。
-> 本文以 [`v4.1.0task-1.md`](v4.1.0task-1.md) 为基准、以 [`v4.1.0task-1-ds.md`](v4.1.0task-1-ds.md) 为参考稿，独立重审了全部条目：刷新过时「现状」、复核每一处「方向」、对所有未定项作出最终决策。**k3 与 ds 冲突之处以 k3 为准**（差异集中见 §8 对照表）。
+> 目标发布版本：原定 4.1.0，目前待定。
+> 本文以 [`velvet-task-1.md`](velvet-task-1.md) 为基准、以 [`velvet-task-1-ds.md`](velvet-task-1-ds.md) 为参考稿，独立重审了全部条目：刷新过时「现状」、复核每一处「方向」、对所有未定项作出最终决策。**k3 与 ds 冲突之处以 k3 为准**（差异集中见 §8 对照表）。
 >
 > 本文只做设计，不实施。实施切片、回归门禁见 §7。
 >
-> 4.0.5 已落地、与本文相关的修正（不再列入 4.1.0 待办，但各条「现状」已按此刷新）：
+> 4.0.5 已落地、与本文相关的修正（不再列入 velvet 待办，但各条「现状」已按此刷新）：
 > ① favicon 反色服务**重写**——判定从「均值亮度+饱和度」改为**极端色占比**（暗底 `dark>0.55 且 light<0.05` 翻转、亮底 `light>0.60 且 dark<0.15`），滤镜从 `invert(1)` 改为 **`invert(1) hue-rotate(180deg)` 保色相明度翻转**；依据 13 个真实 favicon（澎湃/GitHub/x.com/Netflix/YouTube/雅书/WordPress 等）× 4 主题背景的渲染矩阵定参。auto 主题 OS 级切换经 `matchMedia` 重判、options 开关经 `chrome.storage.onChanged` 直推常驻侧栏。
 > ② 共享模块收敛：`escape.js`（9 份 htmlspecialchars 副本归一）、`fuzzy-core.js`（omnibox 与 popup 统一排序）、`list-focus.js`（4 个 list view 的 park/unpark + 工具栏焦点三件套 + `rowFocusTarget` 行焦点契约）。
 > ③ focusSpot 重开焦点统一恢复 + viewState 行记忆纳入 rememberState 门控；undo toast 进 Tab 环。
@@ -24,8 +25,8 @@
 | D1 | §一.6 死链 × 覆盖层按 blocked/dead 场景着色 | ✅ 做（红/琥珀，与 `.row-badge` 同语义） |
 | D2 | §一.2 modern 主视图列表区圆角卡片 | ✅ 做（几何见 §1.3） |
 | D3 | §一.9 hover 按钮右缘对齐 | ✅ 统一右缘动作槽、槽恒占零回流 |
-| D4 | §二.3/4 macro/引用命令 | ❌ 不进 4.1.0，仅立数据模型（ds B3 模型保留） |
-| D5 | §五.2 侧边栏双栏 | ❌ 不进 4.1.0（触发条件见 §5.2） |
+| D4 | §二.3/4 macro/引用命令 | ❌ 不进 velvet，仅立数据模型（ds B3 模型保留） |
+| D5 | §五.2 侧边栏双栏 | ❌ 不进 velvet（触发条件见 §5.2） |
 | D6 | §一.10 跟随浏览器 `chrome.theme` | ❌ 不做（任意用户主题无法映射语义 token） |
 
 ### 0.2 k3 修改 / 推翻 ds 的项（逐项理由见对应章节）
@@ -36,16 +37,16 @@
 | K2 | classic 实现（N1） | 元素级 `border-radius:0` 覆盖表 | **token 级覆盖**（classic.css 只重定义半径/边框 token + 搜索通栏） | A2 分层 token 落地后，元素级覆盖是双倍维护；token 覆盖一处生效、全主题契约测试可断言 |
 | K3 | A3 默认图标折角 | 方案 A/B 落地时再选 | **选定 B：圆弧角文档** | 与 radius-sm 几何语言同源；不必留两版悬浮 |
 | K4 | A10 auto 深色映射 ink（可选增强） | 低优先级可选 | **否决** | auto 的价值是可预测（跟随 OS 明/暗）；多一个映射分支 = 主题矩阵 ×2 的测试与心智成本，收益是个别口味 |
-| K5 | C3 计算器/单位换算 | 低成本进 4.1.0 | **否决** | palette 是书签命令面板不是启动器；零用户请求，维护与文案成本纯增 |
+| K5 | C3 计算器/单位换算 | 低成本进 velvet | **否决** | palette 是书签命令面板不是启动器；零用户请求，维护与文案成本纯增 |
 | K6 | C1 `#标签` 预留语法 | 预留 | **删除** | 标签体系不存在，预留语法只会写进文档误导用户；YAGNI |
 | K7 | B2 内置命令记忆 | 计数 + 排序 + Top3 三个开关 | **一开一序**：`paletteHideBuiltin` + `paletteBuiltinOrder: table\|usage` | Top3 与 usage 排序语义重叠，三开关互相组合出未测路径 |
 | K8 | §四 横幅远程层 | Upstash REST + 内置只读 token | **静态 JSON**（仓库 `docs/announce.json`，经 `raw.githubusercontent.com` 拉取） | 零密钥、零新依赖、公告进 git 历史即发布流程；书签扩展外呼第三方端点的隐私观感与商店审核风险同步消除 |
 | K9 | E1 独立页形态 | 隐藏搜索/标签条/捐赠的裁剪壳 | **完整应用壳**（只隐捐赠卡；保留搜索与标签条） | 独立页的价值是「清理工作台」，搜索与视图切换正是工作台的高频操作；裁剪壳反而要做更多守卫 |
 | K10 | §二.7 功能盘点 | 待盘点 | 已盘点定案（§2.6）：收 `/copy …\|markdown`、`/open-all`、`/sort` 等，否 `/pin`、`/export`、计算器等 | 见逐条理由 |
 
-### 0.3 4.1.0 范围红黑榜（k3 最终版）
+### 0.3 velvet 范围红黑榜（k3 最终版）
 
-**进 4.1.0**：
+**进 velvet**：
 - 视觉：V1 几何/间距 token 分层、V2 表面卡片化 + tab 分段重绘、V3 四主题材质（modern/ink/paper 个性 + classic token 覆盖）、V4 状态语言按主题、V5 图标系统补齐（CLOSE/EMPTY/折角圆弧化）、V6 左右缘对齐系统、V7 标记同现 + 场景着色、V8 选项页精细化、V9 最近搜索呼吸空间、V10 CSS 主题解耦、`/next-theme`。
 - 面板：B1 自定义置顶、B2 一开一序、B4 `/panel`·`/popup`、B5 `/onlybar`·`/all`。
 - 输入栏：C1 字段过滤 token（修编版）、C2 多词 AND、C3 URL 直开 + `/toggle` + `/copy`。
@@ -53,13 +54,13 @@
 - 侧边栏：E1 独立页（完整壳）。
 - 工程：F 商店首图自动化。
 
-**不进 4.1.0（另立排期）**：B3 macro/引用、C4 中成本（结果批量操作/作用域搜索/参数化创建）、E2 双栏、`chrome.theme` 跟随、计算器、`autoDarkIsInk`。
+**不进 velvet（另立排期）**：B3 macro/引用、C4 中成本（结果批量操作/作用域搜索/参数化创建）、E2 双栏、`chrome.theme` 跟随、计算器、`autoDarkIsInk`。
 
 ---
 
 ## 1. 视觉设计体系（V 系列）
 
-> 4.1.0 的视觉目标不是「再抛一层光」，而是建立一套**有名字、有原则、可断言**的视觉语言。本节是全文核心。
+> velvet 的视觉目标不是「再抛一层光」，而是建立一套**有名字、有原则、可断言**的视觉语言。本节是全文核心。
 
 ### 1.0 语言总纲：Calm Instrument（克制的仪器感）
 
@@ -121,7 +122,7 @@ vBookmarks 是「打开即搜索」的高密度工具：400px 弹窗里最多同
 
 #### 1.4.2 ink ——「仪器 / Instrument」
 
-主旨（现有定义保留并强化）：深蓝黑工作台面 + 电感 indigo accent + 磷光。4.1.0 赋予它三个可识别的签名细节：
+主旨（现有定义保留并强化）：深蓝黑工作台面 + 电感 indigo accent + 磷光。velvet 赋予它三个可识别的签名细节：
 
 1. **磷光晕（phosphor halo）**：焦点环与 active 状态在 ink 下带极轻的外发光——`box-shadow: 0 0 0 1px color-mix(in srgb, var(--vbm-accent) 35%, transparent), 0 0 8px color-mix(in srgb, var(--vbm-accent) 22%, transparent)`。只作用于 focus-visible、active tab、选中行三处，面积克制，像示波器辉光而非霓虹。
 2. **仪器网格底纹**：`body` 背景叠一层 CSS 生成的 1px 网格（双向 `repeating-linear-gradient`，24px 间距，`color-mix(in srgb, var(--vbm-accent) 4%, transparent)`）——纯 CSS、零位图、零请求，`background-attachment: local` 随窗体静止。**面积纪律**：只在 L0 窗体层，不进入卡片与字段内部。
@@ -131,7 +132,7 @@ vBookmarks 是「打开即搜索」的高密度工具：400px 弹窗里最多同
 
 #### 1.4.3 paper ——「纸器 / Stationery」
 
-主旨：宣纸底、墨色字、朱砂印。4.1.0 的三个签名细节：
+主旨：宣纸底、墨色字、朱砂印。velvet 的三个签名细节：
 
 1. **纸纹**：CSS 生成的极轻颗粒——两层 `repeating-conic-gradient` 微斑点（2–3% alpha 暖灰），叠加在 `body` 背景；纯 CSS 零位图。同样只限于 L0 层。
 2. **纸张卡片**：`#views` 卡片在 paper 下是「一页纸」——`bg-elev #fffdf7` + 顶部受光（`linear-gradient(180deg, rgba(255,255,255,.5), transparent 48px)`）+ 暖色发丝边框；半径收为 6px（纸张不追求大圆角）。
@@ -252,7 +253,7 @@ css/
 - `paletteBuiltinOrder: 'table' | 'usage'`（默认 table）：usage 时内置区按 `paletteBuiltinUses`（storage.local，`{cmd: count}`，fn 执行时 +1，200ms 节流写盘）降序。
 - **否决 ds 的 Top3 开关**：与 usage 排序语义重叠，三个开关的组合路径（hide × sort × top3）产生未测行为；要「最常用在前」就是 usage 序本身。
 
-### 2.3 B3 macro / 引用命令（不进 4.1.0，模型保留）
+### 2.3 B3 macro / 引用命令（不进 velvet，模型保留）
 
 维持 ds D4 与数据模型（`{ type:'macro', steps:[{ref, args}] }`、循环检测、8 步上限）。4.2.0 与「自定义命令 v2」合并评估。
 
@@ -271,12 +272,12 @@ css/
 
 | 候选 | 决策 | 理由 / 形态 |
 |---|---|---|
-| `/copy title\|url\|path` | ✅ 4.1.0 | `clipboardWrite` 权限已有；聚焦行取值，含 search 结果行 |
-| `/copy markdown` | ✅ 4.1.0 | `[title](url)` 是记笔记/写文档的高频形态，与 `/copy` 同通道零额外机制 |
-| `/open-all` | ✅ 4.1.0（先行版） | 复用 `actions.openBookmarks`（含 10 项确认阈值），是「结果批量操作」的零成本先行形态 |
-| `/sort` | ✅ 4.1.0 | 打开当前聚焦文件夹的排序对话框，入口已有 |
-| `/toggle <view>` | ✅ 4.1.0 | dead/dupes/stats/recent 的 show* 开关翻转（C3） |
-| `/next-theme` | ✅ 4.1.0 | §1.10 |
+| `/copy title\|url\|path` | ✅ velvet | `clipboardWrite` 权限已有；聚焦行取值，含 search 结果行 |
+| `/copy markdown` | ✅ velvet | `[title](url)` 是记笔记/写文档的高频形态，与 `/copy` 同通道零额外机制 |
+| `/open-all` | ✅ velvet（先行版） | 复用 `actions.openBookmarks`（含 10 项确认阈值），是「结果批量操作」的零成本先行形态 |
+| `/sort` | ✅ velvet | 打开当前聚焦文件夹的排序对话框，入口已有 |
+| `/toggle <view>` | ✅ velvet | dead/dupes/stats/recent 的 show* 开关翻转（C3） |
+| `/next-theme` | ✅ velvet | §1.10 |
 | 计算器/单位换算 | ❌ 否决（K5） | palette 不是启动器；零请求，纯增维护 |
 | `/export` 导出书签 | ❌ 否决 | 选项页备份/导出已覆盖；面板里再做一份是双通道 |
 | `/pin-tab` 固定标签页 | ❌ 否决 | 进入标签页管理领域，定位越界 |
@@ -288,13 +289,13 @@ css/
 
 ### 2.7 内置命令面板行为一致性（4.0.5 回填提醒）
 
-4.0.5 已修：结果行 tabindex=-1、Tab 两停圈禁、`<mark>` 高亮、stale `.active` 守卫。4.1.0 新增命令时**必须**走 `palette-commands.js` 的既有注册路径（命令表 + i18n + 测试三件套），不得旁路——写进实施纪律。
+4.0.5 已修：结果行 tabindex=-1、Tab 两停圈禁、`<mark>` 高亮、stale `.active` 守卫。velvet 新增命令时**必须**走 `palette-commands.js` 的既有注册路径（命令表 + i18n + 测试三件套），不得旁路——写进实施纪律。
 
 ---
 
 ## 3. 输入栏扩展（C 系列，修编版）
 
-### 3.1 C1 搜索字段过滤 token（进 4.1.0，K6 删 #tag）
+### 3.1 C1 搜索字段过滤 token（进 velvet，K6 删 #tag）
 
 **语法**（大小写不敏感，多个 token 之间 AND，token 之后的剩余文本照常 fuzzy）：
 
@@ -312,7 +313,7 @@ css/
 - 解析层是纯函数 `parseQueryTokens(query)`（search.js 上层，fuzzy-core 保持纯净）；`<mark>` 高亮只作用于 fuzzy 剩余词的命中（token 部分不高亮，它是过滤条件不是匹配内容）。
 - C2 多词 AND 先落地，C1 的剩余词复用其分词结果（实施顺序 S14 内先 C2 后 C1）。
 
-### 3.2 C2 多词 AND 分段匹配（进 4.1.0）
+### 3.2 C2 多词 AND 分段匹配（进 velvet）
 
 - `rank()` 对空格分词：各词独立子序列评分，**全部命中**才返回；总分 = 各词分相加 + 连击加成；顺序不敏感。
 - `<mark>` positions 跨词合并（并集排序）。
@@ -327,7 +328,7 @@ css/
 | **`/toggle <view>`** | 翻转 `showDeadView`/`showDupesView`/`showStatsView`/`showRecentBookmarks`；unique-prefix 匹配视图名；执行后 toast 反馈新状态；view-manager 监听既有 onChanged 路径热生效 |
 | **`/copy title\|url\|path\|markdown`** | 作用于当前聚焦行（树/结果/列表行统一经 `rowFocusTarget` 契约取行）；无聚焦行时命令行显示 disabled 态说明；`markdown` 产出 `[title](url)` |
 
-### 3.4 C4 中成本（不进 4.1.0）
+### 3.4 C4 中成本（不进 velvet）
 
 维持 ds：结果批量操作（选择模式复用 dead/dupes 机制）、作用域搜索（聚焦文件夹限定子树）、参数化 `/add`。4.2.0 与 macro 合并评估。
 
@@ -349,7 +350,7 @@ css/
   "version": 7,
   "messages": [{
     "id": "v410-whats-new",
-    "minVersion": "4.1.0", "maxVersion": "",
+    "minVersion": "velvet", "maxVersion": "",
     "channel": "all",
     "once": true,
     "display": "banner",
@@ -371,13 +372,13 @@ css/
 - 过滤：`compareVersions` 版本区间 ∩ channel ∩ once+dismissKey 未记录；多条时按数组序取第一条。
 - 关闭：写入 dismissKey（once 语义），banner 的 × 进既有 banner 键盘模型（keyboard.js 已有 banner 环位）。
 - **隐私开关**：选项页 General 组加 `announceEnabled`（默认开）——「检查更新公告」类开关是此类功能的信任底线；关闭则零联网。
-- 4.1.0 之前的三条既有横幅（捐赠卡/风险横幅/history 权限）**不动**，公告层是纯增量。
+- velvet 之前的三条既有横幅（捐赠卡/风险横幅/history 权限）**不动**，公告层是纯增量。
 
 ### 4.4 功能引导 tooltip（原文档「固定设计好的 tooltip」定案）
 
 - 形态：复用 banner 通道的 `display: "tip"`——单行横幅：图标 + 一句文案 + 「试试」动作链接 + ×。
 - **频率纪律**（写死进 announce.js）：每个版本号（major.minor）至多展示 1 条 tip；同一用户同时存活的 tip 至多 1 条；全部 once + dismiss 持久化。**违反纪律的 tip 不得合入**——工具型扩展的引导以「不打扰」为第一原则。
-- 4.1.0 首发内容：`/next-theme` 与新视觉（与 v410-whats-new 合并为同一条，不叠加）。
+- velvet 首发内容：`/next-theme` 与新视觉（与 v410-whats-new 合并为同一条，不叠加）。
 
 ### 4.5 发布流程
 
@@ -396,9 +397,9 @@ css/
 - **守卫**：`popup.js` 在 `standalone-mode` 下跳过尺寸恢复/sidePanel heartbeat/`vbm-panel` port；`package.py` HTML_PAGES 白名单加 `pages/standalone.html`；`tests/fuzzy.test.js` 的 popup/sidepanel 脚本列表 parity 断言扩展到 standalone。
 - ds 的「隐藏搜索/标签条」被推翻的理由：隐藏意味着要给每个视图模块加「搜索不存在」的守卫分支（search.js 是全局初始化），完整壳反而零守卫；且工作台没有搜索是自断一臂。
 
-### 5.2 E2 双栏（不进 4.1.0，明确触发条件）
+### 5.2 E2 双栏（不进 velvet，明确触发条件）
 
-维持 ds D5。**重启触发条件**（满足其一再排期）：① 独立页上线后收到 ≥3 条「希望树与列表同屏」的用户反馈；② 侧栏宽度中位数数据（可通过 announce 调研或截图分析）显示 ≥480px 成为常态。届时按 `docs/plan-4.0.0/v4task-2.md:313,393` 的 panel 迁移主线实施，不在 4.1.0 嫁接半成品。
+维持 ds D5。**重启触发条件**（满足其一再排期）：① 独立页上线后收到 ≥3 条「希望树与列表同屏」的用户反馈；② 侧栏宽度中位数数据（可通过 announce 调研或截图分析）显示 ≥480px 成为常态。届时按 `docs/plan-4.0.0/v4task-2.md:313,393` 的 panel 迁移主线实施，不在 velvet 嫁接半成品。
 
 ---
 
@@ -408,7 +409,7 @@ css/
 
 - `scripts/screenshots/shots-store.js`：高 DPR（`deviceScaleFactor: 2`）截取关键态 → **合成页拼图**（一个临时 HTML 把多张 `<img>` 按 grid 排版后整页截图，零 canvas 依赖）→ 输出 `assets/store/`。
 - 规格：**1400×560**（strip：tree-light / tree-dark / ink / paper / palette / 右键菜单 横向拼）与 **1280×800**（promo：主 popup + 2–4 视图小图 + 菜单，对齐现有 `vBookmarks-v4.png` 版式）。
-- 视觉素材必须在 **S3/S4 视觉定稿后**拍摄（切片依赖 S12 排在 S3/S4 后）；ink/paper 两版必须出现——它们是 4.1.0 的性格展示。
+- 视觉素材必须在 **S3/S4 视觉定稿后**拍摄（切片依赖 S12 排在 S3/S4 后）；ink/paper 两版必须出现——它们是 velvet 的性格展示。
 - 产出人工挑选、手动上传商店，不接 WebStore API（现状纪律保留）。
 
 ---
@@ -456,7 +457,7 @@ css/
 | `paletteOpenUrl` / `paletteToggle` / `paletteCopy` | C3 命令名 |
 | `searchTokenDeadHint` / `searchTokenStatsHint` | C1 无扫描/无统计数据时的提示行 |
 | `announceEnabled` + `announceEnabledHint` | §4.3 隐私开关 |
-| `announceV410Title` / `announceV410Text` | 4.1.0 发布公告（发版前打进） |
+| `announceV410Title` / `announceV410Text` | velvet 发布公告（发版前打进） |
 | `openInNewTabTooltip` | E1 工具行按钮 tooltip |
 
 ---
@@ -469,7 +470,7 @@ css/
 | classic 实现 | 元素级覆盖表 | token 级覆盖 | §1.4.4（K2） |
 | 默认图标折角 | A/B 待选 | 选定圆弧 | §1.6（K3） |
 | auto→ink 映射 | 可选增强 | 否决 | §1.4.5（K4） |
-| 计算器 | 进 4.1.0 | 否决 | §3.3（K5） |
+| 计算器 | 进 velvet | 否决 | §3.3（K5） |
 | `#标签` 语法 | 预留 | 删除 | §3.1（K6） |
 | B2 开关数 | 3 个 | 2 个（一开一序） | §2.2（K7） |
 | 公告端点 | Upstash + token | 静态 JSON（raw.githubusercontent） | §4.1（K8） |
