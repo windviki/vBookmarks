@@ -843,6 +843,21 @@ describe('keyboard safety (tab rows are not bookmarks)', () => {
     });
 });
 
+describe('row click/auxclick', () => {
+    it('middle-click activates the tab, right-click does not', () => {
+        const { def, chrome, fire, closestOf } = setup({});
+        def().activate();
+        const anchor = { dataset: { tabId: '1' }, classList: makeClassList() };
+        const target = { closest: closestOf({ a: anchor }) };
+        // right-click must be ignored (the context menu owns that button)
+        fire('auxclick', { button: 2, target, preventDefault() {}, stopPropagation() {} });
+        expect(chrome.tabs.updateCalls).toEqual([]);
+        // middle-click still activates
+        fire('auxclick', { button: 1, target, preventDefault() {}, stopPropagation() {} });
+        expect(chrome.tabs.updateCalls).toEqual([[1, { active: true }]]);
+    });
+});
+
 describe('keyboard arrows on group heads and grouped rows', () => {
     it('forward arrow expands a collapsed group; back arrow collapses an open group', () => {
         const { def, $list, fire, doc } = setup({

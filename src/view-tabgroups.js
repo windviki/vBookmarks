@@ -1403,6 +1403,11 @@ export function initViewTabGroups(ctx = {}) {
     });
 
     $list.addEventListener('auxclick', e => {
+        // Only middle-click (button 1) activates a tab row. A right-click
+        // also fires auxclick after the context menu opens — treating it as
+        // an activation made right-click jump to the browser tab.
+        if (e.button !== 1)
+            return;
         const closest = (e.target && e.target.closest) ? e.target.closest.bind(e.target) : () => null;
         const anchor = closest('a');
         if (anchor && anchor.dataset && anchor.dataset.tabId) {
