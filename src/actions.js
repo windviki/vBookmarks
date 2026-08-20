@@ -82,7 +82,7 @@ export function initActions(ctx = {}) {
         const _self1 = this;
         const _fn1 = fn;
         chrome.bookmarks.get(_self1.id, nodeList => {
-            if (!nodeList.length)
+            if (!nodeList || !nodeList.length)
                 return;
             const node = nodeList[0];
             const url = node.url;
@@ -246,7 +246,7 @@ export function initActions(ctx = {}) {
 
     function addNewNode(nodeId, where, newUrl, newTitle, isSeparator) {
         chrome.bookmarks.get(nodeId, nodeList => {
-            if (!nodeList.length)
+            if (!nodeList || !nodeList.length)
                 return;
             const node = nodeList[0];
             // check whether the target node is bookmark or folder
@@ -412,7 +412,7 @@ export function initActions(ctx = {}) {
 
         replaceUrl: (nodeId, newUrl) => {
             chrome.bookmarks.get(nodeId, nodeList => {
-                if (!nodeList.length)
+                if (!nodeList || !nodeList.length)
                     return;
                 const node = nodeList[0];
                 // ensure it is a bookmark
@@ -530,7 +530,7 @@ export function initActions(ctx = {}) {
 
         editBookmarkFolder: id => {
             chrome.bookmarks.get(id, nodeList => {
-                if (!nodeList.length)
+                if (!nodeList || !nodeList.length)
                     return;
                 const node = nodeList[0];
                 const url = node.url;

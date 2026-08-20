@@ -614,6 +614,13 @@ describe('openBookmarksNewWindow', () => {
 });
 
 describe('editBookmarkFolder', () => {
+    it('ignores a failed chrome.bookmarks.get (undefined nodeList, lastError)', () => {
+        const { actions, chrome, calls } = setup({});
+        chrome.bookmarks.get = (id, cb) => cb(undefined);
+        expect(() => actions.editBookmarkFolder('5')).not.toThrow();
+        expect(calls.edit).toHaveLength(0);
+    });
+
     it('opens the bookmark edit dialog and re-renders the row on save', () => {
         const a = makeEl();
         a.style.cssText = 'padding-left: 16px';
