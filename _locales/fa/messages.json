@@ -463,14 +463,20 @@
   "donationGo": {
     "message": "کمک مالی"
   },
+  "donationRate": {
+    "message": "امتیاز دهید"
+  },
+  "donationRateTitle": {
+    "message": "به vBookmarks در فروشگاه وب Chrome امتیاز دهید"
+  },
   "donationLater": {
     "message": "بعداً"
   },
   "donationMessage": {
-    "message": "اگر خوشتان آمد، شاید بتوانید برای توسعه آینده آن کمک مالی کنید. هر مبلغی خوشآمدگویی است."
+    "message": "از آن لذت می‌برید؟ برای پیشبرد آینده‌اش اهدا کنید — یا در فروشگاه امتیاز دهید: هر بازخورد، به‌روزرسانی‌های بعدی را تضمین می‌کند."
   },
   "donationV4Notice": {
-    "message": "v4.0 یک ارتقای اساسی است: تب‌های نما، پالت فرمان، بررسی پیوندهای خراب، پاکسازی موارد تکراری و موارد بیشتر."
+    "message": "vBookmarks نسخه 4.0 یک بازطراحی کامل با طراحی مدرن و پر از ویژگی‌های جدید است."
   },
   "donationV4GuideLink": {
     "message": "راهنمای v4 را بخوانید →"
@@ -1666,17 +1672,6 @@
   },
   "url": {
     "message": "URL"
-  },
-  "versionMessage": {
-    "message": "این VBM جدید $versionNumber$ است! لیست تغییرات اینجاست: $versionTips$",
-    "placeholders": {
-      "versionNumber": {
-        "content": "$1"
-      },
-      "versionTips": {
-        "content": "$2"
-      }
-    }
   },
   "viewDead": {
     "message": "لینک‌های مرده"

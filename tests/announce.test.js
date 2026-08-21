@@ -1,8 +1,8 @@
 import { describe, it, expect, vi } from 'vitest';
 import {
     ANNOUNCE_URL, ANN_CACHE_KEY, ANN_SEEN_KEY, ANN_TTL_MS, ANN_MAX_MESSAGES, ANN_TEXT_MAX, ANN_SEEN_MAX,
-    sanitizeAnnounce, announceMatch, firstAnnouncement, announceCacheFresh, readCache,
-    parseSeen, markAnnounceSeen, announceBannerHtml, initAnnounce
+    sanitizeAnnounce, parseVersionCondition, versionSatisfies, announceMatch, firstAnnouncement,
+    announceCacheFresh, readCache, parseSeen, markAnnounceSeen, announceBannerHtml, initAnnounce
 } from '../src/announce.js';
 
 // Remote announcement layer (4.1.0 §4 decision, built ahead for 4.0.8): pure
@@ -79,6 +79,47 @@ describe('sanitizeAnnounce', () => {
         expect(clean.messages[0].once).toBe(true);
         expect(clean.messages[0].kind).toBe('tip');
     });
+
+    it('keeps a valid version condition, drops a malformed one', () => {
+        const clean = sanitizeAnnounce({ messages: [{ ...sampleMsg, version: '>=4.0.0 <4.1.0' }] });
+        expect(clean.messages[0].version).toBe('>=4.0.0 <4.1.0');
+        expect(sanitizeAnnounce({ messages: [{ ...sampleMsg, version: 'later than 4' }] })).toBeNull();
+        expect(sanitizeAnnounce({ messages: [{ ...sampleMsg, version: '>=garbage' }] })).toBeNull();
+    });
+});
+
+describe('parseVersionCondition / versionSatisfies', () => {
+    it('parses exact, comparator and multi-term conditions', () => {
+        expect(parseVersionCondition('4.0.8')).toEqual([{ op: '=', ver: { major: 4, minor: 0, patch: 8 } }]);
+        expect(parseVersionCondition('>=4.0.0 <4.1.0')).toHaveLength(2);
+        expect(parseVersionCondition('>=4, <5')).toHaveLength(2); // commas separate too
+        expect(parseVersionCondition('==4.0')).toEqual([{ op: '==', ver: { major: 4, minor: 0, patch: 0 } }]);
+    });
+
+    it('rejects empty or malformed conditions', () => {
+        expect(parseVersionCondition('')).toBeNull();
+        expect(parseVersionCondition(null)).toBeNull();
+        expect(parseVersionCondition('=>4')).toBeNull();
+        expect(parseVersionCondition('>=4.x')).toBeNull();
+        expect(parseVersionCondition('4.0.8 beta')).toBeNull();
+    });
+
+    it('a bare token is an exact match on the three segments', () => {
+        expect(versionSatisfies('4.0.8', '4.0.8')).toBe(true);
+        expect(versionSatisfies('4.0.8', '=4.0.8')).toBe(true);
+        expect(versionSatisfies('4.0.9', '4.0.8')).toBe(false);
+        expect(versionSatisfies('4.0.8', '4.0')).toBe(false); // 4.0 = 4.0.0, not a prefix
+    });
+
+    it('comparators combine as a conjunction', () => {
+        expect(versionSatisfies('4.0.8', '>=4.0.8')).toBe(true);
+        expect(versionSatisfies('4.0.8', '>=4.0.7 <4.0.8')).toBe(false);
+        expect(versionSatisfies('4.0.7', '>=4.0.7 <4.0.8')).toBe(true);
+        expect(versionSatisfies('5.1.2', '>4 <6')).toBe(true);
+        expect(versionSatisfies('3.9.9', '<4.0')).toBe(true);
+        expect(versionSatisfies('garbage', '>=4.0.0')).toBe(false);
+        expect(versionSatisfies('4.0.8', 'nonsense')).toBe(false);
+    });
 });
 
 describe('announceMatch / firstAnnouncement', () => {
@@ -89,9 +130,23 @@ describe('announceMatch / firstAnnouncement', () => {
 
     it('stays silent below minVersion and at/above maxVersion (exclusive)', () => {
         const ranged = { ...sampleMsg, minVersion: '4.0.0', maxVersion: '4.1.0' };
+        expect(announceMatch(ranged, { version: '4.0.9', channel: 'popup', seen: [] })).toBe(true);
         expect(announceMatch(ranged, { version: '3.9.9', channel: 'popup', seen: [] })).toBe(false);
         expect(announceMatch(ranged, { version: '4.1.0', channel: 'popup', seen: [] })).toBe(false);
-        expect(announceMatch(ranged, { version: '4.0.9', channel: 'popup', seen: [] })).toBe(true);
+    });
+
+    it('a version condition takes precedence over min/maxVersion', () => {
+        const cond = { ...sampleMsg, version: '>=4.0.8', minVersion: '9.9.9' };
+        expect(announceMatch(cond, { version: '4.0.8', channel: 'popup', seen: [] })).toBe(true);
+        expect(announceMatch({ ...cond, version: '4.0.8' }, { version: '4.0.9', channel: 'popup', seen: [] })).toBe(false);
+        expect(announceMatch({ ...cond, version: '4.0.8' }, { version: '4.0.8', channel: 'popup', seen: [] })).toBe(true);
+    });
+
+    it('no version fields at all targets every version (a general push)', () => {
+        const general = { ...sampleMsg, minVersion: '', maxVersion: '', version: '' };
+        expect(announceMatch(general, { version: '3.9.9', channel: 'popup', seen: [] })).toBe(true);
+        expect(announceMatch(general, { version: '5.0.0', channel: 'popup', seen: [] })).toBe(true);
+        expect(announceMatch(general, { version: '4.0.8', channel: 'popup', seen: ['v408-whats-new'] })).toBe(false);
     });
 
     it('is channel-specific unless channel is all', () => {

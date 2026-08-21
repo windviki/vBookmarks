@@ -463,14 +463,20 @@
   "donationGo": {
     "message": "Пожертвовать"
   },
+  "donationRate": {
+    "message": "Оценить"
+  },
+  "donationRateTitle": {
+    "message": "Оцените vBookmarks в Chrome Web Store"
+  },
   "donationLater": {
     "message": "Позже"
   },
   "donationMessage": {
-    "message": "Если вам это нравится, возможно, вы сможете пожертвовать на его дальнейшее развитие. Приветствуется любая сумма."
+    "message": "Нравится? Пожертвуйте на развитие проекта или оцените в магазине: каждый отзыв помогает выпускать обновления."
   },
   "donationV4Notice": {
-    "message": "v4.0 — это крупное обновление: просмотр вкладок, палитра команд, сканирование битых ссылок, очистка дубликатов и многое другое."
+    "message": "vBookmarks 4.0 — это полностью переработанная версия с современным дизайном и множеством новых функций."
   },
   "donationV4GuideLink": {
     "message": "Читать руководство v4 →"
@@ -1666,17 +1672,6 @@
   },
   "url": {
     "message": "URL"
-  },
-  "versionMessage": {
-    "message": "Это новый VBM $versionNumber$! Список изменений находится здесь: $versionTips$",
-    "placeholders": {
-      "versionNumber": {
-        "content": "$1"
-      },
-      "versionTips": {
-        "content": "$2"
-      }
-    }
   },
   "viewDead": {
     "message": "Битые ссылки"

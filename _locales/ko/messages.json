@@ -463,14 +463,20 @@
   "donationGo": {
     "message": "기부하기"
   },
+  "donationRate": {
+    "message": "평점 남기기"
+  },
+  "donationRateTitle": {
+    "message": "Chrome 웹 스토어에서 vBookmarks 평점 남기기"
+  },
   "donationLater": {
     "message": "나중에"
   },
   "donationMessage": {
-    "message": "마음에 드셨다면 향후 개발을 위해 기부해 주실 수 있습니다. 모든 금액을 환영합니다."
+    "message": "마음에 드시나요? 미래를 위해 기부해 주시거나 스토어에서 평점을 남겨 주세요. 모든 리뷰가 업데이트를 이어갑니다."
   },
   "donationV4Notice": {
-    "message": "v4.0은 주요 업그레이드입니다: 보기 탭, 명령 팔레트, 끊긴 링크 검사, 중복 정리 등이 포함됩니다."
+    "message": "vBookmarks 4.0은 현대적인 디자인과 새로운 기능을 갖춘 완전한 리메이크 버전입니다."
   },
   "donationV4GuideLink": {
     "message": "v4 가이드 읽기 →"
@@ -1666,17 +1672,6 @@
   },
   "url": {
     "message": "URL"
-  },
-  "versionMessage": {
-    "message": "새로운 VBM $versionNumber$입니다! 변경 로그는 여기에 있습니다: $versionTips$",
-    "placeholders": {
-      "versionNumber": {
-        "content": "$1"
-      },
-      "versionTips": {
-        "content": "$2"
-      }
-    }
   },
   "viewDead": {
     "message": "데드 링크"

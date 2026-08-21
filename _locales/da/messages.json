@@ -463,14 +463,20 @@
   "donationGo": {
     "message": "Donér"
   },
+  "donationRate": {
+    "message": "Bedøm"
+  },
+  "donationRateTitle": {
+    "message": "Bedøm vBookmarks i Chrome Webshop"
+  },
   "donationLater": {
     "message": "Senere"
   },
   "donationMessage": {
-    "message": "Hvis du kan lide det, må du kan donere til dets fremtidige udvikling. Ethvert beløb er velkomment."
+    "message": "Nyder du det? Donér for at sikre fremtiden — eller bedøm det i butikken: hver anmeldelse holder opdateringerne i gang."
   },
   "donationV4Notice": {
-    "message": "v4.0 er en stor opgradering: visningsfaner, kommandopalet, scanning af døde links, oprydning af dubletter og meget mere."
+    "message": "vBookmarks 4.0 er en komplet nyfortolkning med et moderne design og fuld af nye funktioner."
   },
   "donationV4GuideLink": {
     "message": "Læs v4-guiden →"
@@ -1666,17 +1672,6 @@
   },
   "url": {
     "message": "URL"
-  },
-  "versionMessage": {
-    "message": "Dette er nyt VBM $versionNumber$! Ændringslog er her: $versionTips$",
-    "placeholders": {
-      "versionNumber": {
-        "content": "$1"
-      },
-      "versionTips": {
-        "content": "$2"
-      }
-    }
   },
   "viewDead": {
     "message": "Døde links"

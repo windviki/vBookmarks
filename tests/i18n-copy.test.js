@@ -91,11 +91,6 @@ describe('参数化 i18n 文案的真实替换结果 (en)', () => {
         expect(_m('paletteCustomUsage', ['1', '100'])).toBe('1 / 100');
     });
 
-    it('捐赠卡版本消息 (双占位符 $versionNumber$/$versionTips$)', () => {
-        expect(_m('versionMessage', ['4.0.1', 'Github']))
-            .toBe('This is new VBM 4.0.1! Changelog is here: Github');
-    });
-
     it('批量工具 toast: 历史导入/去重/死链删除 ($count$)', () => {
         expect(_m('statsHistoryImported', '8')).toBe('Imported past visits for 8 bookmarks');
         expect(_m('dupesDone', '2')).toBe('Removed 2 duplicate bookmarks');

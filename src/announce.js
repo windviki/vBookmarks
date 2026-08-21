@@ -11,11 +11,22 @@
  * already cover the fetch (no manifest change).
  *
  * Client model (4.1.0 §4.3):
- *  - cache `vbmAnnounce = { ts, etag, data }`, TTL 6h — no network within TTL
+ *  - cache `vbmAnnounce = { ts, etag, data }`, TTL 6h — no network within TTL.
+ *    Pulls happen only on popup/panel opens, at most once per TTL window
+ *    (etag-conditional, so a quiet file is a cheap 304): ≤4 hits/day for an
+ *    active user, never a poll loop. Re-pulls are what let a message added to
+ *    the JSON LATER still reach long-installed users — the layer is a push
+ *    channel, not an install-time one-shot.
  *  - fetch through the shared GitHub chain (direct → user proxy → mirror
  *    candidates, src/github-source.js) with If-None-Match + 4s timeouts;
  *    304 refreshes ts; every failure is silent (offline = no banner)
- *  - filter: version range ∩ channel ∩ once+not-dismissed; array order = priority
+ *  - targeting: a message declares its audience with ONE of
+ *      `version`:  a condition string — exact ("4.0.8") or space/comma-
+ *                  separated comparators (">=4.0.0 <4.1.0", "<5", ">4.0.6")
+ *      min/maxVersion: the legacy [min, max) range
+ *      (neither):  every version — a general push (release news, appeals)
+ *    intersected with channel ∩ once+not-dismissed; array order = priority.
+ *    A stale-scope message simply matches nothing — never a wrong-audience push.
  *  - schedule: the donation card wins the same frame; the announcement defers
  *  - dismiss: id into `vbmAnnounceSeen` (cap 100, LRU, once semantics)
  *  - privacy switch `announceEnabled` (default on) — off means zero network
@@ -25,9 +36,10 @@
  * `link` accepts a single { labelKey, url } object (4.1.0 example) or an
  * array of them (4.0.8 needs guide + changelog on one banner).
  *
- * The pure rules (sanitizeAnnounce / announceMatch / firstAnnouncement /
- * announceCacheFresh / parseSeen / markAnnounceSeen / announceBannerHtml) are
- * exported for direct testing; initAnnounce does the fetch + render glue.
+ * The pure rules (sanitizeAnnounce / parseVersionCondition / versionSatisfies /
+ * announceMatch / firstAnnouncement / announceCacheFresh / parseSeen /
+ * markAnnounceSeen / announceBannerHtml) are exported for direct testing;
+ * initAnnounce does the fetch + render glue.
  */
 import { parseVersion, compareVersions } from './version.js';
 import { htmlspecialchars } from './escape.js';
@@ -45,6 +57,49 @@ export const ANN_SEEN_MAX = 100;                // LRU cap
 const CHANNELS = new Set(['all', 'popup', 'sidepanel']);
 const DISPLAYS = new Set(['banner', 'dialog', 'toast']);
 
+// Version-condition DSL (message-level `version` field): a space/comma-
+// separated list of comparators, ALL of which must hold — ">=" "<=" ">" "<"
+// or a bare/"="/"==" token for an exact match. "4.0.8" targets exactly that
+// release; ">=4.0.0 <4.1.0" a half-open range; ">=4.0" everything from 4.0 on.
+const COND_TOKEN = /^(>=|<=|>|<|==|=)?v?(\d+(?:\.\d+){0,2})$/;
+
+// Parse a condition string into [{ op, ver }] terms, or null when malformed —
+// sanitize drops a message whose condition does not parse, so a typo in the
+// JSON can never widen the audience by accident.
+export const parseVersionCondition = cond => {
+    if (typeof cond !== 'string' || !cond.trim())
+        return null;
+    const terms = [];
+    for (const token of cond.trim().split(/[\s,]+/)) {
+        const m = COND_TOKEN.exec(token);
+        if (!m)
+            return null;
+        const ver = parseVersion(m[2]);
+        if (!ver)
+            return null;
+        terms.push({ op: m[1] || '=', ver });
+    }
+    return terms.length ? terms : null;
+};
+
+// Does `version` satisfy the condition string? Garbage on either side → false.
+export const versionSatisfies = (version, cond) => {
+    const current = parseVersion(version);
+    const terms = parseVersionCondition(cond);
+    if (!current || !terms)
+        return false;
+    return terms.every(({ op, ver }) => {
+        const c = compareVersions(current, ver);
+        switch (op) {
+            case '>': return c > 0;
+            case '>=': return c >= 0;
+            case '<': return c < 0;
+            case '<=': return c <= 0;
+            default: return c === 0; // '=', '==', bare → exact match
+        }
+    });
+};
+
 // Validate + sanitize a docs/announce.json payload. Invalid messages are
 // dropped one by one (a malformed entry never kills the whole banner); the
 // payload is rejected outright only when its shape is fundamentally broken.
@@ -59,6 +114,9 @@ export const sanitizeAnnounce = raw => {
             continue;
         if (typeof m.id !== 'string' || !m.id)
             continue;
+        const versionCond = typeof m.version === 'string' && m.version.trim() ? m.version.trim() : '';
+        if (versionCond && !parseVersionCondition(versionCond))
+            continue; // a malformed condition would mistarget — drop the message
         const minVersion = typeof m.minVersion === 'string' ? m.minVersion : '';
         const maxVersion = typeof m.maxVersion === 'string' ? m.maxVersion : '';
         if (minVersion && !parseVersion(minVersion))
@@ -87,6 +145,7 @@ export const sanitizeAnnounce = raw => {
         }
         messages.push({
             id: m.id,
+            version: versionCond,
             minVersion,
             maxVersion,
             channel: m.channel,
@@ -104,23 +163,29 @@ export const sanitizeAnnounce = raw => {
     return { version: typeof raw.version === 'number' ? raw.version : 0, messages };
 };
 
-// Does one message apply to this open? Version range [min, max) ∩ channel ∩
-// (once messages stay dismissed once seen).
+// Does one message apply to this open? Version targeting (a `version`
+// condition when present, else the legacy [min, max) range, else every
+// version — a general push) ∩ channel ∩ (once messages stay dismissed).
 export const announceMatch = (msg, { version, channel, seen }) => {
     if (msg.once && seen.includes(msg.id))
         return false;
     const current = parseVersion(version);
     if (!current)
         return false;
-    if (msg.minVersion) {
-        const min = parseVersion(msg.minVersion);
-        if (!min || compareVersions(current, min) < 0)
+    if (msg.version) {
+        if (!versionSatisfies(version, msg.version))
             return false;
-    }
-    if (msg.maxVersion) {
-        const max = parseVersion(msg.maxVersion);
-        if (!max || compareVersions(current, max) >= 0)
-            return false;
+    } else {
+        if (msg.minVersion) {
+            const min = parseVersion(msg.minVersion);
+            if (!min || compareVersions(current, min) < 0)
+                return false;
+        }
+        if (msg.maxVersion) {
+            const max = parseVersion(msg.maxVersion);
+            if (!max || compareVersions(current, max) >= 0)
+                return false;
+        }
     }
     if (msg.channel !== 'all' && msg.channel !== channel)
         return false;
@@ -174,8 +239,14 @@ export const markAnnounceSeen = (store, id) => {
     store.set(ANN_SEEN_KEY, JSON.stringify(next));
 };
 
-// Banner HTML (risk-banner-style inline, Tab-ring stop). Title/text come from
-// i18n keys, text falling back to textFallback.en; everything is escaped.
+// Banner HTML (risk-banner-style inline, Tab-ring stop). The leading speaker
+// glyph marks the strip as "news" — the visual counterpart of the warm rose
+// donation card. Title/text come from i18n keys, text falling back to
+// textFallback.en; everything dynamic is escaped (the icon is static markup).
+const ANNOUNCE_ICON = '<svg class="announce-icon" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">' +
+    '<path d="M9.5 2.8L5.2 5.3H2.8v5.4h2.4l4.3 2.5z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>' +
+    '<path d="M11.8 5.8a3.4 3.4 0 0 1 0 4.4M13.4 4.2a5.8 5.8 0 0 1 0 7.6" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>';
+
 export const announceBannerHtml = (msg, _m) => {
     const esc = htmlspecialchars;
     const title = msg.titleKey ? _m(msg.titleKey) : '';
@@ -186,7 +257,7 @@ export const announceBannerHtml = (msg, _m) => {
     const linksHtml = (msg.links || []).map(l =>
         `<a class="announce-link" href="${esc(l.url)}">${esc(_m(l.labelKey) || l.labelKey)}</a>`).join(' ');
     const dismissLabel = esc(_m('announceDismiss') || '');
-    return `<div class="announce-banner" role="note">${titleHtml}` +
+    return `<div class="announce-banner" role="note">${ANNOUNCE_ICON}${titleHtml}` +
         `<span class="announce-text">${esc(text)}</span>` +
         (linksHtml ? ` ${linksHtml}` : '') +
         `<button class="announce-dismiss" type="button" aria-label="${dismissLabel}" title="${dismissLabel}">×</button>` +

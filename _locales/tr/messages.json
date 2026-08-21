@@ -463,14 +463,20 @@
   "donationGo": {
     "message": "Bağış Yap"
   },
+  "donationRate": {
+    "message": "Puanla"
+  },
+  "donationRateTitle": {
+    "message": "vBookmarks'ı Chrome Web Mağazası'nda puanlayın"
+  },
   "donationLater": {
     "message": "Sonra"
   },
   "donationMessage": {
-    "message": "Beğendiyseniz, gelecekteki geliştirme için bağış yapmayı düşünebilirsiniz. Her tutar kabul edilir."
+    "message": "Beğeniyor musunuz? Geleceğini desteklemek için bağış yapın — veya mağazada puanlayın: her yorum güncellemelerin devam etmesini sağlar."
   },
   "donationV4Notice": {
-    "message": "v4.0 büyük bir sürüm yükseltmesi: görünüm sekmeleri, komut paleti, ölü bağlantı taraması, yinelenen temizliği ve daha fazlası."
+    "message": "vBookmarks 4.0, modern bir tasarım ve yeni özelliklerle dolu tamamen yeni bir sürümdür."
   },
   "donationV4GuideLink": {
     "message": "v4 rehberini okuyun →"
@@ -1666,17 +1672,6 @@
   },
   "url": {
     "message": "URL"
-  },
-  "versionMessage": {
-    "message": "Bu yeni VBM $versionNumber$! Değişiklik günlüğü burada: $versionTips$",
-    "placeholders": {
-      "versionNumber": {
-        "content": "$1"
-      },
-      "versionTips": {
-        "content": "$2"
-      }
-    }
   },
   "viewDead": {
     "message": "Ölü bağlantılar"

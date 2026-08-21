@@ -463,14 +463,20 @@
   "donationGo": {
     "message": "寄付する"
   },
+  "donationRate": {
+    "message": "評価する"
+  },
+  "donationRateTitle": {
+    "message": "Chrome ウェブストアで vBookmarks を評価"
+  },
   "donationLater": {
     "message": "後で"
   },
   "donationMessage": {
-    "message": "気に入ったら、将来の開発のために寄付してください。どんな金額でも大歓迎です。"
+    "message": "気に入っていただけましたか？寄付で将来を支えるか、ストアで評価してください。すべてのレビューが更新を続けます。"
   },
   "donationV4Notice": {
-    "message": "v4.0 はメジャーアップグレードです: ビュータブ、コマンドパレット、リンク切れスキャン、重複整理など。"
+    "message": "vBookmarks 4.0 はモダンなデザインで全面リニューアルされ、新機能が満載です。"
   },
   "donationV4GuideLink": {
     "message": "v4 ガイドを読む →"
@@ -1666,17 +1672,6 @@
   },
   "url": {
     "message": "URL"
-  },
-  "versionMessage": {
-    "message": "これは新しい VBM $versionNumber$ です! 変更ログはこちら: $versionTips$",
-    "placeholders": {
-      "versionNumber": {
-        "content": "$1"
-      },
-      "versionTips": {
-        "content": "$2"
-      }
-    }
   },
   "viewDead": {
     "message": "デッドリンク"

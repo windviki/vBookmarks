@@ -5,13 +5,13 @@ import {
     donationVisible,
     donationSnoozeKey,
     guideV4UrlFor,
-    DONATION_GRACE_OPENS, DONATION_MAX_KEY, DONATE_SNOOZE, LATER_SNOOZE, DONATION_URL, CHANGELOG_URL
+    DONATION_GRACE_OPENS, DONATION_MAX_KEY, DONATE_SNOOZE, LATER_SNOOZE, DONATION_URL, STORE_URL, CHANGELOG_URL
 } from '../src/donation.js';
 
 // Donation card (v4 gentle-ask model): pure rules + the createDonation DOM
-// wiring (version gate, open-count/grace bookkeeping, the three answer
-// buttons, the v4 upgrade notice). The version helpers come from the REAL
-// src/version.js through donation.js's import.
+// wiring (version gate, open-count/grace bookkeeping, the four answer
+// buttons, the always-on v4 identity line). The version helpers come from
+// the REAL src/version.js through donation.js's import.
 
 const makeStore = (data = {}) => {
     const map = new Map(Object.entries(data));
@@ -24,16 +24,17 @@ const makeStore = (data = {}) => {
 };
 
 const makeEl = (id) => ({
-    id, innerHTML: '', textContent: '', href: '', hidden: false,
+    id, innerHTML: '', textContent: '', href: '', hidden: false, title: '',
     style: { display: '' },
     _listeners: {},
     addEventListener(type, fn) { (this._listeners[type] = this._listeners[type] || []).push(fn); },
     fire(type, ev = {}) { (this._listeners[type] || []).forEach(fn => fn(ev)); }
 });
 
-const DOM_IDS = ['donation', 'new-version-text', 'v4-notice', 'v4-notice-text',
-    'v4-guide-link', 'donation-text', 'donation-go', 'donation-later', 'donation-never',
-    'whats-new', 'whats-new-text', 'whats-new-guide', 'whats-new-changelog'];
+const DOM_IDS = ['donation', 'v4-notice', 'v4-notice-text',
+    'v4-guide-link', 'donation-text', 'donation-go', 'donation-rate', 'donation-rate-text',
+    'donation-later', 'donation-never',
+    'whats-new', 'whats-new-text', 'whats-new-changelog'];
 
 const _m = (key, subs) => key + (subs ? `[${subs.join(',')}]` : '');
 
@@ -118,13 +119,15 @@ describe('createDonation wiring', () => {
         expect(store.get('donationKey')).toBe(DONATION_GRACE_OPENS);
         // the retired 10s-timer key is dropped
         expect(store.map.has('donationCountDown')).toBe(false);
-        // card visible, labels assigned, new-version text from the version message
+        // card visible, labels assigned, the v4 identity line always on
         expect(donation.shouldShow).toBe(true);
         expect(els.donation.style.display).toBe('block');
         expect(els['donation-go'].innerHTML).toBe('donationGo');
-        expect(els['new-version-text'].innerHTML).toBe('versionMessage[4.0.1,Github]');
-        // no v4 notice on a fresh install
-        expect(els['v4-notice'].hidden).toBe(true);
+        expect(els['donation-rate-text'].textContent).toBe('donationRate');
+        expect(els['donation-rate'].title).toBe('donationRateTitle');
+        expect(els['v4-notice'].hidden).toBe(false);
+        expect(els['v4-notice-text'].textContent).toBe('donationV4Notice');
+        expect(els['v4-guide-link'].href).toBe(guideV4UrlFor('en'));
     });
 
     it('a returning user sees the card until an explicit choice, then the counter bumps', () => {
@@ -136,7 +139,7 @@ describe('createDonation wiring', () => {
         expect(store.get('openCount')).toBe(1); // this boot is the first open
     });
 
-    it('a 3.x → 4.x crossing pins the v4 notice + guide link onto the card', () => {
+    it('a 3.x → 4.x crossing shows the card with the v4 identity line + guide link', () => {
         boot({ currentVersion: '3.5.0' }, { version: '4.0.1', lang: 'zh-CN' });
         expect(donation.shouldShow).toBe(true);
         expect(els['v4-notice'].hidden).toBe(false);
@@ -149,7 +152,7 @@ describe('createDonation wiring', () => {
         boot({ currentVersion: '4.0.0', donationFactor: '20', donationKey: '30' });
         // sameOrNewerMinor(4.0.0, 4.0.1) → true → not an upgrade; 20 < 30 → hidden
         expect(donation.shouldShow).toBe(false);
-        expect(els['v4-notice'].hidden).toBe(true);
+        expect(els.donation.style.display).toBe('none');
     });
 
     it('Donate snoozes 800 opens and opens the donation page', () => {
@@ -159,6 +162,15 @@ describe('createDonation wiring', () => {
         expect(store.get('donationKey')).toBe(30 + DONATE_SNOOZE);
         expect(els.donation.style.display).toBe('none');
         expect(openNewTab).toHaveBeenCalledWith(DONATION_URL, true, true);
+    });
+
+    it('Rate it earns the same long snooze and opens the store listing', () => {
+        boot({});
+        els['donation-rate'].fire('click');
+        expect(store.get('donationFactor')).toBe(1);
+        expect(store.get('donationKey')).toBe(30 + DONATE_SNOOZE);
+        expect(els.donation.style.display).toBe('none');
+        expect(openNewTab).toHaveBeenCalledWith(STORE_URL, true, true);
     });
 
     it('Later snoozes 120 opens without opening anything', () => {
@@ -177,20 +189,20 @@ describe('createDonation wiring', () => {
         expect(els.donation.style.display).toBe('none');
     });
 
-    it('the new-version text opens the changelog', () => {
+    it('the v4 guide link routes through openNewTab (popup semantics)', () => {
         boot({});
-        els['new-version-text'].fire('click');
-        expect(openNewTab).toHaveBeenCalledWith(CHANGELOG_URL, true, true);
+        const ev = { preventDefault: vi.fn() };
+        els['v4-guide-link'].fire('click', ev);
+        expect(ev.preventDefault).toHaveBeenCalled();
+        expect(openNewTab).toHaveBeenCalledWith(guideV4UrlFor('en'), true, true);
     });
 
     describe('whats-new (4.0.8 local banner)', () => {
-        it('a 4.x → 4.0.8 crossing shows the banner with version + guide + changelog links', () => {
+        it('a 4.x → 4.0.8 crossing shows the banner with the version summary + changelog link', () => {
             boot({ currentVersion: '4.0.6' }, { version: '4.0.8', lang: 'zh-CN' });
             expect(donation.whatsNewShown).toBe(true);
             expect(els['whats-new'].hidden).toBe(false);
             expect(els['whats-new-text'].textContent).toBe('whatsNewFavicon[4.0.8]');
-            expect(els['whats-new-guide'].textContent).toBe('donationV4GuideLink');
-            expect(els['whats-new-guide'].href).toBe(guideV4UrlFor('zh-CN'));
             expect(els['whats-new-changelog'].textContent).toBe('whatsNewChangelog');
             expect(els['whats-new-changelog'].href).toBe(CHANGELOG_URL);
         });
@@ -214,12 +226,8 @@ describe('createDonation wiring', () => {
             expect(els['whats-new'].hidden).toBe(true);
         });
 
-        it('the guide and changelog links route through openNewTab (popup semantics)', () => {
+        it('the changelog link routes through openNewTab (popup semantics)', () => {
             boot({ currentVersion: '4.0.6' }, { version: '4.0.8', lang: 'en' });
-            const guideEv = { preventDefault: vi.fn() };
-            els['whats-new-guide'].fire('click', guideEv);
-            expect(guideEv.preventDefault).toHaveBeenCalled();
-            expect(openNewTab).toHaveBeenCalledWith(guideV4UrlFor('en'), true, true);
             const changelogEv = { preventDefault: vi.fn() };
             els['whats-new-changelog'].fire('click', changelogEv);
             expect(changelogEv.preventDefault).toHaveBeenCalled();
@@ -231,14 +239,26 @@ describe('createDonation wiring', () => {
 describe('banner markup contract (audit T8)', () => {
     it.each(['popup', 'sidepanel'])('%s.html carries #whats-new/#announce with their interactive children', page => {
         const html = page === 'popup' ? popupHtml : sidepanelHtml;
-        for (const id of ['whats-new', 'whats-new-text', 'whats-new-guide',
-            'whats-new-changelog', 'announce'])
+        for (const id of ['whats-new', 'whats-new-text', 'whats-new-changelog', 'announce'])
             expect(html).toContain(`id="${id}"`);
         expect(html).toMatch(/<div id="whats-new" hidden>/);
         expect(html).toMatch(/<div id="announce" hidden>/);
     });
 
+    it.each(['popup', 'sidepanel'])('%s.html carries the redesigned donation card (rate button, no version line)', page => {
+        const html = page === 'popup' ? popupHtml : sidepanelHtml;
+        for (const id of ['donation-illustration', 'v4-notice', 'v4-notice-text',
+            'v4-guide-link', 'donation-rate', 'donation-rate-text',
+            'donation-go', 'donation-later', 'donation-never'])
+            expect(html).toContain(`id="${id}"`);
+        expect(html).not.toContain('new-version-text'); // no minor version on the card
+    });
+
     it('the whats-new changelog link points at the docs/README.md changelog anchor (audit B3/O13)', () => {
         expect(CHANGELOG_URL).toBe('https://github.com/windviki/vBookmarks/blob/master/docs/README.md#v408');
+    });
+
+    it('the rate button points at the Chrome Web Store listing', () => {
+        expect(STORE_URL).toContain('odhjcodnoebmndcihdedenkmdmklpihb');
     });
 });

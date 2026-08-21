@@ -423,10 +423,10 @@
     "message": "作为分隔线显示的书签的实际标题"
   },
   "donationMessage": {
-    "message": "如果您喜欢它，或许可以为其未来发展捐赠。任何金额都欢迎。"
+    "message": "喜欢它吗？捐赠助力它的未来，或前往商店评分——每条评价都是我们持续更新与进步的动力。"
   },
   "donationV4Notice": {
-    "message": "v4.0 是一次重大升级：视图标签、命令面板、死链扫描、重复清理等诸多变化。"
+    "message": "vBookmarks 4.0 是采用现代化设计的完全重制版本，带来大量新功能。"
   },
   "donationV4GuideLink": {
     "message": "阅读 v4 新特性指南 →"
@@ -792,11 +792,9 @@
   "optionLanguageAuto": {
     "message": "自动"
   },
-
   "optionLanguageHint": {
     "message": "切换语言后会重新加载本页面。"
   },
-
   "sortFolderContents": {
     "message": "排序文件夹内容"
   },
@@ -910,7 +908,6 @@
   "paletteCmdLangUsage": {
     "message": "用法：/lang 加语言代码——例如 /lang en、/lang zh_CN、/lang ja。"
   },
-
   "versionDialogTitle": {
     "message": "vBookmarks $version$",
     "placeholders": {
@@ -949,7 +946,6 @@
   "versionMetaUserAgent": {
     "message": "User agent"
   },
-
   "paletteCmdDead": {
     "message": "检测死链"
   },
@@ -1052,17 +1048,6 @@
   },
   "deleteEllipsis": {
     "message": "删除..."
-  },
-  "versionMessage": {
-    "message": "这是全新的 VBM $versionNumber$！更新日志在此：$versionTips$",
-    "placeholders": {
-      "versionNumber": {
-        "content": "$1"
-      },
-      "versionTips": {
-        "content": "$2"
-      }
-    }
   },
   "addBookmarkBottom": {
     "message": "添加书签至底部"
@@ -1239,6 +1224,12 @@
   },
   "donationGo": {
     "message": "支持一下"
+  },
+  "donationRate": {
+    "message": "去评分"
+  },
+  "donationRateTitle": {
+    "message": "前往 Chrome 应用商店为 vBookmarks 评分"
   },
   "donationLater": {
     "message": "稍后"

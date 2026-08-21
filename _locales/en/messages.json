@@ -425,28 +425,23 @@
   "deleteEllipsis": {
     "message": "Delete..."
   },
-  "versionMessage": {
-    "message": "This is new VBM $versionNumber$! Changelog is here: $versionTips$",
-    "placeholders": {
-      "versionNumber": {
-        "content": "$1"
-      },
-      "versionTips": {
-        "content": "$2"
-      }
-    }
-  },
   "donationMessage": {
-    "message": "If you like it, maybe you can donate for its future development. Any amount is welcome."
+    "message": "Enjoying it? Donate to fuel its future — or rate it on the store: every review keeps the updates coming."
   },
   "donationV4Notice": {
-    "message": "v4.0 is a major upgrade: view tabs, command palette, dead-link scan, duplicate cleanup and more."
+    "message": "vBookmarks 4.0 is a complete remake with a modern design, packed with new features."
   },
   "donationV4GuideLink": {
     "message": "Read the v4 guide →"
   },
   "donationGo": {
     "message": "Donate"
+  },
+  "donationRate": {
+    "message": "Rate it"
+  },
+  "donationRateTitle": {
+    "message": "Rate vBookmarks on the Chrome Web Store"
   },
   "donationLater": {
     "message": "Later"
@@ -637,11 +632,9 @@
     "message": "Auto",
     "description": "Language dropdown option: follow the browser UI language."
   },
-
   "optionLanguageHint": {
     "message": "Changing the language reloads this page."
   },
-
   "paletteClose": {
     "description": "Command palette: label of the visible footer button that closes the panel (the keyboard path is Esc).",
     "message": "Close"
@@ -657,7 +650,6 @@
   "paletteCmdLangUsage": {
     "message": "Usage: /lang followed by a locale code — e.g. /lang en, /lang zh_CN, /lang ja."
   },
-
   "versionDialogTitle": {
     "message": "vBookmarks $version$",
     "description": "Title of the /version dialog.",
@@ -697,7 +689,6 @@
   "versionMetaUserAgent": {
     "message": "User agent"
   },
-
   "paletteCmdDead": {
     "description": "Command palette entry that switches the panel into dead-link scan mode (slash command /dead).",
     "message": "Find dead links"

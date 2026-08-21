@@ -462,14 +462,20 @@
   "donationGo": {
     "message": "Doar"
   },
+  "donationRate": {
+    "message": "Avaliar"
+  },
+  "donationRateTitle": {
+    "message": "Avalie o vBookmarks na Chrome Web Store"
+  },
   "donationLater": {
     "message": "Depois"
   },
   "donationMessage": {
-    "message": "Se você gosta, considere doar para o desenvolvimento futuro. Qualquer valor é bem-vindo."
+    "message": "Está gostando? Doe para garantir seu futuro — ou avalie na loja: cada avaliação mantém as atualizações chegando."
   },
   "donationV4Notice": {
-    "message": "v4.0 é uma grande atualização: abas de visualização, paleta de comandos, verificação de links quebrados, limpeza de duplicados e mais."
+    "message": "O vBookmarks 4.0 é uma reformulação completa com design moderno e cheio de novos recursos."
   },
   "donationV4GuideLink": {
     "message": "Leia o guia da v4 →"
@@ -1662,17 +1668,6 @@
   },
   "url": {
     "message": "URL"
-  },
-  "versionMessage": {
-    "message": "Este é o novo VBM $versionNumber$! Veja as novidades: $versionTips$",
-    "placeholders": {
-      "versionNumber": {
-        "content": "$1"
-      },
-      "versionTips": {
-        "content": "$2"
-      }
-    }
   },
   "viewDead": {
     "message": "Links mortos"

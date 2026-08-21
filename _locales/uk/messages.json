@@ -463,14 +463,20 @@
   "donationGo": {
     "message": "Пожертвувати"
   },
+  "donationRate": {
+    "message": "Оцінити"
+  },
+  "donationRateTitle": {
+    "message": "Оцініть vBookmarks у Chrome Web Store"
+  },
   "donationLater": {
     "message": "Пізніше"
   },
   "donationMessage": {
-    "message": "Якщо вам подобається, можливо, ви можете пожертвувати на його подальший розвиток. Будь-яка сума вітається."
+    "message": "Подобається? Підтримайте проєкт донатом — або оцініть у магазині: кожен відгук сприяє виходу оновлень."
   },
   "donationV4Notice": {
-    "message": "v4.0 — це велике оновлення: вкладки перегляду, палітра команд, перевірка мертвих посилань, видалення дублікатів і не тільки."
+    "message": "vBookmarks 4.0 — це повністю перероблене розширення із сучасним дизайном та безліччю нових функцій."
   },
   "donationV4GuideLink": {
     "message": "Читати посібник до v4 →"
@@ -1666,17 +1672,6 @@
   },
   "url": {
     "message": "URL"
-  },
-  "versionMessage": {
-    "message": "Це новий VBM $versionNumber$! Список змін тут: $versionTips$",
-    "placeholders": {
-      "versionNumber": {
-        "content": "$1"
-      },
-      "versionTips": {
-        "content": "$2"
-      }
-    }
   },
   "viewDead": {
     "message": "Мертві посилання"

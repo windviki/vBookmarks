@@ -452,14 +452,20 @@
   "donationGo": {
     "message": "捐款"
   },
+  "donationRate": {
+    "message": "評分"
+  },
+  "donationRateTitle": {
+    "message": "在 Chrome 網上商店為 vBookmarks 評分"
+  },
   "donationLater": {
     "message": "稍後"
   },
   "donationMessage": {
-    "message": "如果你喜歡這個擴展，請考慮進行捐助。這樣我可以持續改進它的功能並保持開放。"
+    "message": "覺得好用嗎？捐款支持未來開發——或到商店評分：每則評論都能讓更新持續。"
   },
   "donationV4Notice": {
-    "message": "v4.0 是重大升級：檢視分頁、指令面板、失效連結掃描、重複項目清理及更多功能。"
+    "message": "vBookmarks 4.0 是全面重製版本，採用現代設計，並加入多項新功能。"
   },
   "donationV4GuideLink": {
     "message": "閱讀 v4 指南 →"
@@ -1655,17 +1661,6 @@
   },
   "url": {
     "message": "網址"
-  },
-  "versionMessage": {
-    "message": "歡迎使用新版本 $versionNumber$！更新記錄：$versionTips$",
-    "placeholders": {
-      "versionNumber": {
-        "content": "$1"
-      },
-      "versionTips": {
-        "content": "$2"
-      }
-    }
   },
   "viewDead": {
     "message": "失效連結"

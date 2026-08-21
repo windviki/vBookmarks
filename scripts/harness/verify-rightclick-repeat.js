@@ -75,7 +75,7 @@ const SEED = `
 
     const seedPage = await browser.newPage();
     watch(seedPage);
-    await seedPage.goto(`chrome-extension://${extId}/pages/popup.html`, { waitUntil: 'networkidle0' });
+    await seedPage.goto(`chrome-extension://${extId}/pages/popup.html`, { waitUntil: 'load' });
     await sleep(600);
     await seedPage.evaluate(SEED);
     await sleep(600);

@@ -78,7 +78,7 @@ const SEED = `
 
     const seedPage = await browser.newPage();
     watch(seedPage);
-    await seedPage.goto(`chrome-extension://${extId}/pages/popup.html`, { waitUntil: 'networkidle0' });
+    await seedPage.goto(`chrome-extension://${extId}/pages/popup.html`, { waitUntil: 'load' });
     await sleep(600);
     await seedPage.evaluate(SEED);
     await sleep(600);
@@ -91,7 +91,7 @@ const SEED = `
         await page.setViewport({ width: 400, height: 620 });
         if (storePatch) {
             // Apply the settings in the SW context before the popup boots.
-            await page.goto(`chrome-extension://${extId}/pages/options.html`, { waitUntil: 'networkidle0' });
+            await page.goto(`chrome-extension://${extId}/pages/options.html`, { waitUntil: 'load' });
             await page.evaluate(patch => {
                 return chrome.storage.local.set(patch);
             }, storePatch);

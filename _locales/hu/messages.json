@@ -463,14 +463,20 @@
   "donationGo": {
     "message": "Adományozás"
   },
+  "donationRate": {
+    "message": "Értékeld"
+  },
+  "donationRateTitle": {
+    "message": "vBookmarks értékelése a Chrome Web Store-ban"
+  },
   "donationLater": {
     "message": "Később"
   },
   "donationMessage": {
-    "message": "Ha tetszik, talán adományozhat a jövőbeli fejlesztéshez. Bármilyen összeget szívesen fogadunk."
+    "message": "Tetszik? Adományozzon a jövőjéért – vagy értékelje a boltban: minden értékelés új frissítéseket hoz."
   },
   "donationV4Notice": {
-    "message": "A v4.0 jelentős frissítés: nézetfülek, parancspaletta, hibás linkek keresése, ismétlődések tisztítása és még sok más."
+    "message": "A vBookmarks 4.0 teljesen újragondolt, modern dizájnnal és rengeteg új funkcióval."
   },
   "donationV4GuideLink": {
     "message": "Olvasd el a v4-es útmutatót →"
@@ -1666,17 +1672,6 @@
   },
   "url": {
     "message": "URL"
-  },
-  "versionMessage": {
-    "message": "Ez az új VBM $versionNumber$! Változásnapló itt: $versionTips$",
-    "placeholders": {
-      "versionNumber": {
-        "content": "$1"
-      },
-      "versionTips": {
-        "content": "$2"
-      }
-    }
   },
   "viewDead": {
     "message": "Holt hivatkozások"

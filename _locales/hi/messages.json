@@ -463,14 +463,20 @@
   "donationGo": {
     "message": "दान करें"
   },
+  "donationRate": {
+    "message": "रेट करें"
+  },
+  "donationRateTitle": {
+    "message": "Chrome Web Store पर vBookmarks को रेट करें"
+  },
   "donationLater": {
     "message": "बाद में"
   },
   "donationMessage": {
-    "message": "यदि आपको यह पसंद है, तो शायद आप इसके भविष्य के विकास के लिए दान कर सकते हैं। कोई भी राशि स्वागत है।"
+    "message": "पसंद आ रहा है? इसके भविष्य के लिए दान करें — या स्टोर पर रेट करें: हर समीक्षा से अपडेट आते रहते हैं।"
   },
   "donationV4Notice": {
-    "message": "v4.0 एक बड़ा अपग्रेड है: दृश्य टैब, कमांड पैलेट, डेड-लिंक स्कैन, डुप्लिकेट सफाई और अधिक।"
+    "message": "vBookmarks 4.0 आधुनिक डिज़ाइन और नई सुविधाओं से भरा एक पूर्ण रीमेक है।"
   },
   "donationV4GuideLink": {
     "message": "v4 गाइड पढ़ें →"
@@ -1666,17 +1672,6 @@
   },
   "url": {
     "message": "URL"
-  },
-  "versionMessage": {
-    "message": "यह नया VBM $versionNumber$ है! चेंजलॉग यहाँ है: $versionTips$",
-    "placeholders": {
-      "versionNumber": {
-        "content": "$1"
-      },
-      "versionTips": {
-        "content": "$2"
-      }
-    }
   },
   "viewDead": {
     "message": "मृत लिंक"

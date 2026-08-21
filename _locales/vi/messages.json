@@ -463,14 +463,20 @@
   "donationGo": {
     "message": "Quyên góp"
   },
+  "donationRate": {
+    "message": "Đánh giá"
+  },
+  "donationRateTitle": {
+    "message": "Đánh giá vBookmarks trên Chrome Web Store"
+  },
   "donationLater": {
     "message": "Để sau"
   },
   "donationMessage": {
-    "message": "Nếu bạn thích nó, có thể bạn có thể quyên góp cho sự phát triển trong tương lai. Bất kỳ số lượng nào cũng được chào đón."
+    "message": "Bạn thấy thích? Hãy quyên góp để tiếp sức cho tương lai — hoặc đánh giá trên cửa hàng: mỗi đánh giá giúp các bản cập nhật tiếp tục."
   },
   "donationV4Notice": {
-    "message": "v4.0 là bản nâng cấp lớn: tab chế độ xem, bảng lệnh, quét liên kết hỏng, dọn trùng lặp và hơn thế nữa."
+    "message": "vBookmarks 4.0 được thiết kế lại hoàn toàn với giao diện hiện đại, tràn đầy tính năng mới."
   },
   "donationV4GuideLink": {
     "message": "Đọc hướng dẫn v4 →"
@@ -1666,17 +1672,6 @@
   },
   "url": {
     "message": "URL"
-  },
-  "versionMessage": {
-    "message": "Đây là VBM $versionNumber$ mới! Nhật ký thay đổi ở đây: $versionTips$",
-    "placeholders": {
-      "versionNumber": {
-        "content": "$1"
-      },
-      "versionTips": {
-        "content": "$2"
-      }
-    }
   },
   "viewDead": {
     "message": "Liên kết chết"

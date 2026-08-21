@@ -463,14 +463,20 @@
   "donationGo": {
     "message": "تبرع"
   },
+  "donationRate": {
+    "message": "قيّمه"
+  },
+  "donationRateTitle": {
+    "message": "قيّم vBookmarks على متجر Chrome الإلكتروني"
+  },
   "donationLater": {
     "message": "لاحقًا"
   },
   "donationMessage": {
-    "message": "إذا أعجبك، ربما يمكنك التبرع لتطويره المستقبلي. أي مبلغ مرحب به."
+    "message": "هل أعجبك؟ تبرّع لدعم مستقبله، أو قيّمه في المتجر: فكل تقييم يضمن استمرار التحديثات."
   },
   "donationV4Notice": {
-    "message": "الإصدار 4.0 ترقية رئيسية: علامات تبويب العرض، لوحة الأوامر، فحص الروابط المعطلة، تنظيف التكرارات والمزيد."
+    "message": "vBookmarks 4.0 هو إصدار جديد كلياً بتصميم عصري، ومليء بالميزات الجديدة."
   },
   "donationV4GuideLink": {
     "message": "اقرأ دليل v4 ←"
@@ -1666,17 +1672,6 @@
   },
   "url": {
     "message": "URL"
-  },
-  "versionMessage": {
-    "message": "هذا هو VBM الجديد $versionNumber$! سجل التغييرات هنا: $versionTips$",
-    "placeholders": {
-      "versionNumber": {
-        "content": "$1"
-      },
-      "versionTips": {
-        "content": "$2"
-      }
-    }
   },
   "viewDead": {
     "message": "الروابط المعطلة"

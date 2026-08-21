@@ -332,7 +332,7 @@ const sweepViews = async (page, tag, { includePalette, capture = false }) => {
     // ── Seed ──────────────────────────────────────────────────────────────
     const seedPage = await browser.newPage();
     watch(seedPage, 'seed');
-    await seedPage.goto(`chrome-extension://${extId}/pages/popup.html`, { waitUntil: 'networkidle0' });
+    await seedPage.goto(`chrome-extension://${extId}/pages/popup.html`, { waitUntil: 'load' });
     await sleep(600);
     await seedPage.evaluate(SEED);
     await sleep(600);
@@ -353,7 +353,7 @@ const sweepViews = async (page, tag, { includePalette, capture = false }) => {
         // viewport 宽 = body 宽（#container 陷阱）；高度默认 800（防 tab 自身滚动
         // 干扰），Phase B2 用 600 复现 Chrome popup 物理限制场景
         await page.setViewport({ width, height: viewportH });
-        await page.goto(`chrome-extension://${extId}/pages/popup.html`, { waitUntil: 'networkidle0' });
+        await page.goto(`chrome-extension://${extId}/pages/popup.html`, { waitUntil: 'load' });
         await sleep(1200);
         return page;
     };

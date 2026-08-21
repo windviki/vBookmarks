@@ -463,14 +463,20 @@
   "donationGo": {
     "message": "Doneren"
   },
+  "donationRate": {
+    "message": "Beoordeel"
+  },
+  "donationRateTitle": {
+    "message": "Beoordeel vBookmarks in de Chrome Web Store"
+  },
   "donationLater": {
     "message": "Later"
   },
   "donationMessage": {
-    "message": "Als u het leuk vindt, kunt u misschien doneren voor toekomstige ontwikkeling. Elk bedrag is welkom."
+    "message": "Bevalt het je? Doneer om de toekomst te financieren — of beoordeel het in de store: elke recensie zorgt voor nieuwe updates."
   },
   "donationV4Notice": {
-    "message": "v4.0 is een grote upgrade: weergavetabbladen, opdrachtenpalet, scan op dode links, duplicaten opschonen en meer."
+    "message": "vBookmarks 4.0 is een volledige remake met een modern ontwerp en boordevol nieuwe functies."
   },
   "donationV4GuideLink": {
     "message": "Lees de v4-gids →"
@@ -1666,17 +1672,6 @@
   },
   "url": {
     "message": "URL"
-  },
-  "versionMessage": {
-    "message": "Dit is de nieuwe VBM $versionNumber$! Changelog staat hier: $versionTips$",
-    "placeholders": {
-      "versionNumber": {
-        "content": "$1"
-      },
-      "versionTips": {
-        "content": "$2"
-      }
-    }
   },
   "viewDead": {
     "message": "Dode links"

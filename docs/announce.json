@@ -2,8 +2,7 @@
   "version": 1,
   "messages": [{
     "id": "v408-whats-new",
-    "minVersion": "4.0.8",
-    "maxVersion": "",
+    "version": ">=4.0.8",
     "channel": "all",
     "once": true,
     "display": "banner",
@@ -14,13 +13,11 @@
       "en": "v4.0.8 is the favicon-enhanced release: real site icons are fetched automatically for bookmarks Chrome hasn't cached yet."
     },
     "link": [
-      { "labelKey": "donationV4GuideLink", "url": "https://github.com/windviki/vBookmarks/blob/master/docs/guide-v4.md" },
-      { "labelKey": "whatsNewChangelog", "url": "https://github.com/windviki/vBookmarks#v408" }
+      { "labelKey": "whatsNewChangelog", "url": "https://github.com/windviki/vBookmarks/blob/master/docs/README.md#v408" }
     ]
   }, {
     "id": "v407-whats-new",
-    "minVersion": "4.0.7",
-    "maxVersion": "4.0.8",
+    "version": ">=4.0.7 <4.0.8",
     "channel": "all",
     "once": true,
     "display": "banner",
@@ -31,8 +28,7 @@
       "en": "v4.0.7 delivers the fully-featured dead-link view: scan, mark, filter and sort dead and restricted links, with past marks and per-row timestamps."
     },
     "link": [
-      { "labelKey": "donationV4GuideLink", "url": "https://github.com/windviki/vBookmarks/blob/master/docs/guide-v4.md" },
-      { "labelKey": "whatsNewChangelog", "url": "https://github.com/windviki/vBookmarks#v407" }
+      { "labelKey": "whatsNewChangelog", "url": "https://github.com/windviki/vBookmarks/blob/master/docs/README.md#v407" }
     ]
   }]
 }

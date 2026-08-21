@@ -1,8 +1,8 @@
 /**
  * Version parsing + comparison (pure ESM).
  *
- * Every version gate in the extension — the donation "new version" card and
- * 3.x→4.x v4 notice (src/neat.js), the dead/dupes risk banner
+ * Every version gate in the extension — the donation card's re-arm rule
+ * (src/donation.js via src/startup-flags.js), the dead/dupes risk banner
  * (src/risk-banner.js) — decides "did the user cross into a version we want
  * to announce" from the manifest version versus the version recorded on
  * their last run. This module is the single place that reads and compares

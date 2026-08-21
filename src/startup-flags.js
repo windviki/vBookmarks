@@ -6,11 +6,12 @@
  *
  * applyVersionGate: records `currentVersion` and derives the flags for THIS
  * open — newOrUpgrade (a fresh install, or a version jump the same-or-newer-
- * minor check treats as an upgrade), upgradedToV4 (a 3.x → 4.x crossing
- * that pins the v4 notice onto the card) and upgradedToAnnounced (a crossing
- * into the 4.0.8 announce threshold — the local what's-new banner). Patch
- * bumps (4.0 → 4.0.1) stay silent (sameOrNewerMinor), a major/minor bump
- * re-arms.
+ * minor check treats as an upgrade), upgradedToV4 (a 3.x → 4.x crossing — it
+ * suppresses the #whats-new twin on that crossing: the donation card's
+ * always-on v4 identity line already owns the 4.0 story) and
+ * upgradedToAnnounced (a crossing into the 4.0.8 announce threshold — the
+ * local what's-new banner). Patch bumps (4.0 → 4.0.1) stay silent
+ * (sameOrNewerMinor), a major/minor bump re-arms.
  *
  * bumpOpenCount: the running popup-open counter (donationFactor advances
  * against it toward the next ask).

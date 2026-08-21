@@ -66,7 +66,7 @@ const SEED = `
     const extId = new URL(swTarget.url()).hostname;
 
     const seedPage = await browser.newPage();
-    await seedPage.goto(`chrome-extension://${extId}/pages/popup.html`, { waitUntil: 'networkidle0' });
+    await seedPage.goto(`chrome-extension://${extId}/pages/popup.html`, { waitUntil: 'load' });
     await sleep(500);
     await seedPage.evaluate(SEED);
     await sleep(500);
@@ -93,7 +93,7 @@ const SEED = `
         });
         {
             const o = await browser.newPage();
-            await o.goto(`chrome-extension://${extId}/pages/options.html`, { waitUntil: 'networkidle0' });
+            await o.goto(`chrome-extension://${extId}/pages/options.html`, { waitUntil: 'load' });
             await o.evaluate(v => chrome.storage.local.set({
                 collapseSortMenu: '1',
                 collapseTabGroupMenu: v ? '1' : ''

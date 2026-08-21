@@ -366,26 +366,25 @@ body.linux input {
     display: none;
     position: relative;
     margin: 2px 4px 6px;
-    background: var(--vbm-bg-elev);
     z-index: 1;
-    border: 1px solid var(--vbm-border);
+    border: 1px solid color-mix(in srgb, #f43f5e 38%, var(--vbm-border));
     border-radius: var(--vbm-radius);
+    background: linear-gradient(135deg, rgba(244, 63, 94, 0.08), rgba(251, 191, 36, 0.05) 55%, transparent), var(--vbm-bg-elev);
     box-shadow: 0 2px 6px var(--vbm-shadow);
 }
 
 #donation-card {
     display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 8px 10px;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 9px 10px;
     font: menu;
     font-size: 11px;
 }
 
-#donation-heart {
+#donation-illustration {
     flex: none;
-    margin: 0;
-    color: var(--vbm-accent);
+    margin: 1px 0 0;
 }
 
 #information-text {
@@ -396,19 +395,12 @@ body.linux input {
     word-break: break-word;
 }
 
-#new-version-text {
-    color: var(--vbm-accent);
-    margin: 0 0 2px;
-}
-
-/* v4 task-3 #9: the 3.x→4.x upgrade notice inside the donation card —
-   accent-framed so the "what's new" reads before the ask itself. */
+/* The consolidated v4 identity line — the card's permanent header. No minor
+   version number: the statement covers the whole 4.x line. */
 #v4-notice {
-    margin: 0 0 4px;
-    padding: 4px 6px;
-    border: 1px solid var(--vbm-accent);
-    border-radius: 6px;
+    margin: 0 0 3px;
     color: var(--vbm-fg);
+    font-weight: 600;
     line-height: 1.45;
 }
 
@@ -428,7 +420,7 @@ body.linux input {
     flex-wrap: wrap;
     align-items: center;
     gap: 6px;
-    margin-top: 6px;
+    margin-top: 7px;
 }
 
 #donation-actions button {
@@ -440,15 +432,33 @@ body.linux input {
 
 #donation-go {
     padding: 2px 12px;
-    border: 1px solid var(--vbm-accent);
-    background: var(--vbm-accent);
-    color: var(--vbm-accent-fg);
+    border: 1px solid #e23a57;
+    background: #f43f5e;
+    color: #fff;
     font-weight: 600;
 }
 
 #donation-go:hover {
     -webkit-filter: brightness(1.08);
     filter: brightness(1.08);
+}
+
+#donation-rate {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 10px;
+    border: 1px solid color-mix(in srgb, #f59e0b 55%, var(--vbm-border));
+    background: transparent;
+    color: var(--vbm-fg);
+}
+
+#donation-rate svg {
+    color: #f59e0b;
+}
+
+#donation-rate:hover {
+    background: color-mix(in srgb, #f59e0b 12%, transparent);
 }
 
 #donation-later {
@@ -1110,10 +1120,11 @@ menu[type=context] hr {
 
 /* Token focus ring for every dialog action button — dialogs are modal, so a
    keyboard user Tabs straight onto these and the UA's thin auto ring is the
-   only indicator without it. The donation card's three buttons (same modal-
-   like prominence when the card shows) get the identical ring. */
+   only indicator without it. The donation card's buttons (same modal-like
+   prominence when the card shows) get the identical ring. */
 .dialog .buttons button:focus-visible,
 #donation-go:focus-visible,
+#donation-rate:focus-visible,
 #donation-later:focus-visible,
 #donation-never:focus-visible {
     outline: 2px solid var(--vbm-focus-ring);
@@ -2786,9 +2797,11 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
 }
 
 /* Remote announcement banner (4.0.8, src/announce.js — docs/announce.json).
-   A compact accent-framed inline banner in the popup top area; a Tab-ring
-   stop like the risk banner, links + × all focusable. `#announce[hidden]`
-   is required: the flex layout would otherwise override the UA's hidden. */
+   A compact info strip: neutral border + an accent inline-start bar + a
+   speaker glyph, so "news" reads differently from the warm rose donation
+   card at a glance. A Tab-ring stop like the risk banner, links + × all
+   focusable. `#announce[hidden]` is required: the flex layout would
+   otherwise override the UA's hidden. */
 #announce[hidden] {
     display: none;
 }
@@ -2802,13 +2815,21 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
     box-sizing: border-box;
     margin: 4px 8px 6px;
     padding: 5px 8px;
-    border: 1px solid var(--vbm-accent);
+    border: 1px solid var(--vbm-border);
+    border-inline-start: 3px solid var(--vbm-accent);
     border-radius: var(--vbm-radius);
     background: var(--vbm-bg-elev);
     color: var(--vbm-fg);
     font: menu;
     font-size: 11px;
     line-height: 1.45;
+}
+
+.announce-banner .announce-icon,
+#whats-new .announce-icon {
+    flex: none;
+    align-self: center;
+    color: var(--vbm-accent);
 }
 
 .announce-banner .announce-title {
@@ -2860,17 +2881,18 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
 /* 4.0.8 local what's-new banner (#whats-new, src/donation.js): the
    network-independent twin of the remote announce — the version gate fires it
    exactly once on the 4.x → 4.0.8 crossing (recorded currentVersion), so it
-   needs no dismiss and no network. Same accent-framed compact look as the
+   needs no dismiss and no network. Same accent-bar info-strip look as the
    announce. `#whats-new[hidden]` is required: the flex layout would otherwise
    override the UA's hidden. */
 #whats-new {
     display: flex;
     flex-wrap: wrap;
-    align-items: baseline;
+    align-items: center;
     gap: 2px 8px;
     margin: 2px 4px 6px;
     padding: 4px 8px;
-    border: 1px solid var(--vbm-accent);
+    border: 1px solid var(--vbm-border);
+    border-inline-start: 3px solid var(--vbm-accent);
     border-radius: var(--vbm-radius);
     background: var(--vbm-bg-elev);
     color: var(--vbm-fg);

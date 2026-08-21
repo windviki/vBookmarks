@@ -462,14 +462,20 @@
   "donationGo": {
     "message": "Донирај"
   },
+  "donationRate": {
+    "message": "Оценете го"
+  },
+  "donationRateTitle": {
+    "message": "Оценете го vBookmarks на Chrome Web Store"
+  },
   "donationLater": {
     "message": "Подоцна"
   },
   "donationMessage": {
-    "message": "Ако ви се допаѓа, може да донирате за иден развој. Секоја сума е добредојдена."
+    "message": "Уживате? Донирајте за да ја поттикнете неговата иднина — или оценете го во продавницата: секоја рецензија обезбедува континуирани ажурирања."
   },
   "donationV4Notice": {
-    "message": "v4.0 е големо ажурирање: јазичиња за преглед, командна палета, скенирање мртви врски, чистење дупликати и повеќе."
+    "message": "vBookmarks 4.0 е целосна преработка со современ дизајн, исполнета со нови функции."
   },
   "donationV4GuideLink": {
     "message": "Прочитај го водичот за v4 →"
@@ -1665,17 +1671,6 @@
   },
   "url": {
     "message": "Рачно"
-  },
-  "versionMessage": {
-    "message": "Ова е нов VBM $versionNumber$! Промените се тука: $versionTips$",
-    "placeholders": {
-      "versionNumber": {
-        "content": "$1"
-      },
-      "versionTips": {
-        "content": "$2"
-      }
-    }
   },
   "viewDead": {
     "message": "Мртви врски"

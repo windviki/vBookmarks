@@ -105,7 +105,7 @@ const SEED = `
     // Seed, then open the popup fresh so the tree boots with data.
     const seedPage = await browser.newPage();
     watch(seedPage);
-    await seedPage.goto(`chrome-extension://${extId}/pages/popup.html`, { waitUntil: 'networkidle0' });
+    await seedPage.goto(`chrome-extension://${extId}/pages/popup.html`, { waitUntil: 'load' });
     await sleep(600);
     await seedPage.evaluate(SEED);
     await sleep(600);
@@ -118,7 +118,7 @@ const SEED = `
     // tab for real and detach the CDP frame. Stub it out for the harness.
     await page.evaluateOnNewDocument(() => { window.close = () => {}; });
     await page.setViewport({ width: 400, height: 620 });
-    await page.goto(`chrome-extension://${extId}/pages/popup.html`, { waitUntil: 'networkidle0' });
+    await page.goto(`chrome-extension://${extId}/pages/popup.html`, { waitUntil: 'load' });
     await sleep(1500);
     const $ = (fn, ...args) => page.evaluate(fn, ...args);
 
@@ -846,7 +846,7 @@ const SEED = `
         return folder.id;
     });
     check('custom commands seeded into the sync area', !!ccSeed);
-    await page.reload({ waitUntil: 'networkidle0' }); await sleep(1500);
+    await page.reload({ waitUntil: 'load' }); await sleep(1500);
 
     // '/wo': builtin fuzzy hits first, the custom group row last.
     await page.click('#tool-btn'); await sleep(400);
@@ -961,7 +961,7 @@ const SEED = `
     // ====================================================================
     console.log('═══ §7 横幅键盘可达 ═══');
     await $(() => new Promise(r => chrome.storage.local.set({ donationFactor: '9999' }, r)));
-    await page.reload({ waitUntil: 'networkidle0' }); await sleep(1200);
+    await page.reload({ waitUntil: 'load' }); await sleep(1200);
     check('banner up after the seeded reload', await $(() => {
         const d = document.getElementById('donation');
         return !!d && d.style.display !== 'none' && d.offsetHeight > 0;
@@ -971,11 +971,19 @@ const SEED = `
     }));
     await page.focus('#tool-btn'); await sleep(150);
     await page.keyboard.press('Tab'); await sleep(150);
-    check('Tab: tool → banner first control (go)',
+    check('Tab: tool → banner first control (the v4 guide link)',
+        await $(() => document.activeElement && document.activeElement.id === 'v4-guide-link'),
+        await activeDesc());
+    await page.keyboard.press('Tab'); await sleep(150);
+    check('Tab: guide link → go',
         await $(() => document.activeElement && document.activeElement.id === 'donation-go'),
         await activeDesc());
     await page.keyboard.press('Tab'); await sleep(150);
-    check('Tab: go → later',
+    check('Tab: go → rate',
+        await $(() => document.activeElement && document.activeElement.id === 'donation-rate'),
+        await activeDesc());
+    await page.keyboard.press('Tab'); await sleep(150);
+    check('Tab: rate → later',
         await $(() => document.activeElement && document.activeElement.id === 'donation-later'),
         await activeDesc());
     await page.keyboard.press('Tab'); await sleep(150);

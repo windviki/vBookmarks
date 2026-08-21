@@ -63,7 +63,13 @@ const waitForPalette = async (page, ms = 15000) => {
     const page = await browser.newPage();
     watch(page, 'popup');
     await page.setViewport({ width: 400, height: 620 });
-    await page.goto(`chrome-extension://${extId}/pages/popup.html`, { waitUntil: 'networkidle0' });
+    // Every navigation in this script uses waitUntil:'load', never
+    // 'networkidle0': the extension's own background fetch chains (announce
+    // feed, favicon enrichment, sync) can stay in flight past the 30 s
+    // navigation timeout in the offline DinD sandbox — the same reasoning as
+    // the seeded-dead-hosts reload below. The post-navigation sleeps absorb
+    // the async init the assertions depend on.
+    await page.goto(`chrome-extension://${extId}/pages/popup.html`, { waitUntil: 'load' });
     await sleep(1200);
     const stats = await page.evaluate(() => ({
         title: document.title,
@@ -81,13 +87,13 @@ const waitForPalette = async (page, ms = 15000) => {
     const activeViewOf = pg => pg.evaluate(() =>
         (document.querySelector('#view-tabs [aria-selected="true"]') || {}).id);
     await page.evaluate(() => chrome.storage.local.set({ activeView: 'recent' }));
-    await page.reload({ waitUntil: 'networkidle0' });
+    await page.reload({ waitUntil: 'load' });
     await sleep(900);
     const remembered = await activeViewOf(page);
     console.log('rememberView default →', remembered);
     if (remembered !== 'view-tab-recent') errors.push(`rememberView default: got ${remembered}`);
     await page.evaluate(() => chrome.storage.local.set({ rememberView: '' }));
-    await page.reload({ waitUntil: 'networkidle0' });
+    await page.reload({ waitUntil: 'load' });
     await sleep(900);
     const classic = await activeViewOf(page);
     console.log('rememberView off →', classic);
@@ -98,7 +104,7 @@ const waitForPalette = async (page, ms = 15000) => {
     await page.evaluate(() => chrome.storage.local.set({
         quickAddEnabled: '', showToolButton: '', paletteEnabled: '', showViewTabs: ''
     }));
-    await page.reload({ waitUntil: 'networkidle0' });
+    await page.reload({ waitUntil: 'load' });
     await sleep(900);
     const hiddenChrome = await page.evaluate(() => ({
         quickAdd: getComputedStyle(document.getElementById('quick-add-btn')).display === 'none',
@@ -110,60 +116,64 @@ const waitForPalette = async (page, ms = 15000) => {
         errors.push(`classic hiding broken: ${JSON.stringify(hiddenChrome)}`);
     await page.evaluate(() => chrome.storage.local.remove(
         ['quickAddEnabled', 'showToolButton', 'paletteEnabled', 'showViewTabs']));
-    await page.reload({ waitUntil: 'networkidle0' });
+    await page.reload({ waitUntil: 'load' });
     await sleep(900);
 
-    // 2d. v4 task-3 #9: a 3.x→4.x upgrade pins the v4 notice + guide link
-    // onto the donation card (fresh installs never see it).
+    // 2d. The donation card (redesigned): a 3.x→4.x upgrade forces the card
+    // up; the consolidated v4 identity line + guide link head it (no minor
+    // version numbers anywhere on the card), the new illustration renders,
+    // and the store-rating button rides beside Donate.
     await page.evaluate(() => chrome.storage.local.set({ currentVersion: '3.3.0' }));
-    await page.reload({ waitUntil: 'networkidle0' });
+    await page.reload({ waitUntil: 'load' });
     await sleep(900);
     const v4Notice = await page.evaluate(() => ({
         donationShown: document.getElementById('donation').style.display === 'block',
         noticeVisible: !document.getElementById('v4-notice').hidden,
         text: document.getElementById('v4-notice-text').textContent,
-        href: document.getElementById('v4-guide-link').href
+        href: document.getElementById('v4-guide-link').href,
+        rate: (() => { const b = document.getElementById('donation-rate'); return !!b && !!b.querySelector('svg'); })(),
+        illustration: !!document.getElementById('donation-illustration')
     }));
-    console.log('v4 upgrade notice:', JSON.stringify(v4Notice));
-    if (!v4Notice.donationShown || !v4Notice.noticeVisible || !v4Notice.href.includes('guide-v4'))
-        errors.push(`v4 notice broken: ${JSON.stringify(v4Notice)}`);
+    console.log('donation card (v4 upgrade):', JSON.stringify(v4Notice));
+    if (!v4Notice.donationShown || !v4Notice.noticeVisible || !v4Notice.href.includes('guide-v4')
+        || !v4Notice.rate || !v4Notice.illustration || /4\.0\.\d/.test(v4Notice.text))
+        errors.push(`donation card broken: ${JSON.stringify(v4Notice)}`);
     await page.screenshot({ path: '/tmp/shots/smoke/popup-v4-upgrade.png' });
     await page.evaluate(() => chrome.storage.local.remove('currentVersion'));
-    await page.reload({ waitUntil: 'networkidle0' });
+    await page.reload({ waitUntil: 'load' });
     await sleep(900);
 
     // 2d2. 4.0.8 announce banner: the remote announcement layer renders a
-    // cached message offline (the fetch fails silently in DinD), links go to
-    // the guide + changelog, and dismiss records the id in vbmAnnounceSeen.
+    // cached message offline (the fetch fails silently in DinD). The seeded
+    // message dogfoods the minor-version shape: a `version` condition and a
+    // single changelog link (the v4 guide lives on the donation card now).
     // donationDisabled pins the donation card off so it can't defer the banner.
     await page.evaluate(() => chrome.storage.local.set({
         donationDisabled: '1',
         vbmAnnounce: {
             ts: Date.now(), etag: null,
             data: { version: 1, messages: [{
-                id: 'v408-whats-new', minVersion: '4.0.8', maxVersion: '', channel: 'all',
+                id: 'v408-whats-new', version: '>=4.0.8', channel: 'all',
                 once: true, display: 'banner', kind: 'tip',
                 titleKey: 'announceV408Title', textKey: 'announceV408Text',
                 textFallback: { en: 'favicon-enhanced release' },
                 links: [
-                    { labelKey: 'donationV4GuideLink', url: 'https://github.com/windviki/vBookmarks/blob/master/docs/guide-v4.md' },
-                    { labelKey: 'whatsNewChangelog', url: 'https://github.com/windviki/vBookmarks#v408' }
+                    { labelKey: 'whatsNewChangelog', url: 'https://github.com/windviki/vBookmarks/blob/master/docs/README.md#v408' }
                 ]
             }] }
         }
     }));
-    await page.reload({ waitUntil: 'networkidle0' });
+    await page.reload({ waitUntil: 'load' });
     await sleep(900);
     const announce = await page.evaluate(() => ({
         shown: !document.getElementById('announce').hidden,
         text: document.getElementById('announce').textContent,
-        guide: [...document.querySelectorAll('#announce .announce-link')]
-            .map(a => a.href).find(h => h.includes('guide-v4')) || '',
+        icon: !!document.querySelector('#announce .announce-icon'),
         changelog: [...document.querySelectorAll('#announce .announce-link')]
-            .map(a => a.href).find(h => h.includes('#v')) || ''
+            .map(a => a.href).find(h => h.includes('README.md#v')) || ''
     }));
     console.log('announce banner:', JSON.stringify(announce));
-    if (!announce.shown || !announce.guide || !announce.changelog)
+    if (!announce.shown || !announce.icon || !announce.changelog)
         errors.push(`announce banner broken: ${JSON.stringify(announce)}`);
     await page.screenshot({ path: '/tmp/shots/smoke/popup-announce.png' });
     await page.evaluate(() => document.querySelector('#announce .announce-dismiss').click());
@@ -174,29 +184,31 @@ const waitForPalette = async (page, ms = 15000) => {
         errors.push(`announce dismiss not recorded: ${JSON.stringify(seen)}`);
     await page.evaluate(() => chrome.storage.local.remove(
         ['donationDisabled', 'vbmAnnounce', 'vbmAnnounceSeen']));
-    await page.reload({ waitUntil: 'networkidle0' });
+    await page.reload({ waitUntil: 'load' });
     await sleep(900);
 
     // 2d3. 4.0.8 local what's-new banner: the network-independent twin of the
     // remote announce — a 4.x → 4.0.8 crossing (version gate, fires once) shows
     // it even when the raw.githubusercontent.com fetch fails (offline DinD, or
-    // a proxy that blocks it). Guide + changelog links point at the repo docs.
+    // a proxy that blocks it). A minor-release banner carries only the version
+    // summary + the changelog link (docs/README.md anchor, audit B3/O13).
     await page.evaluate(() => chrome.storage.local.set({ currentVersion: '4.0.6' }));
-    await page.reload({ waitUntil: 'networkidle0' });
+    await page.reload({ waitUntil: 'load' });
     await sleep(900);
     const whatsNew = await page.evaluate(() => ({
         shown: !document.getElementById('whats-new').hidden,
         text: document.getElementById('whats-new-text').textContent,
-        guide: document.getElementById('whats-new-guide').href,
+        icon: !!document.querySelector('#whats-new .announce-icon'),
+        guideGone: !document.getElementById('whats-new-guide'),
         changelog: document.getElementById('whats-new-changelog').href
     }));
     console.log('whats-new 4.0.8 banner:', JSON.stringify(whatsNew));
-    if (!whatsNew.shown || !whatsNew.text.includes('favicon')
-        || !whatsNew.guide.includes('guide-v4') || !whatsNew.changelog.includes('#v'))
+    if (!whatsNew.shown || !whatsNew.text.includes('favicon') || !whatsNew.icon
+        || !whatsNew.guideGone || !whatsNew.changelog.includes('README.md#v'))
         errors.push(`whats-new banner broken: ${JSON.stringify(whatsNew)}`);
     await page.screenshot({ path: '/tmp/shots/smoke/popup-whats-new.png' });
     await page.evaluate(() => chrome.storage.local.remove('currentVersion'));
-    await page.reload({ waitUntil: 'networkidle0' });
+    await page.reload({ waitUntil: 'load' });
     await sleep(900);
 
     // 2d3. 4.0.7 死链视图第二工具条：已标注/未标注过滤真实点击生效。真实浏览
@@ -267,7 +279,7 @@ const waitForPalette = async (page, ms = 15000) => {
     await page.evaluate(([a, b]) => new Promise(resolve => chrome.storage.local.remove(
         ['deadFilter', 'deadMarkFilter', 'deadMarks', 'deadLastScan', 'activeView'],
         () => chrome.bookmarks.remove(a, () => chrome.bookmarks.remove(b, resolve)))), [deadA, deadB]);
-    await page.reload({ waitUntil: 'networkidle0' });
+    await page.reload({ waitUntil: 'load' });
     await sleep(900);
 
     // 2e. v4 task-3 #14: with onlyShowBMBar on, "reveal in tree" on a target
@@ -278,7 +290,7 @@ const waitForPalette = async (page, ms = 15000) => {
             { parentId: '2', title: 'Outside BM', url: 'https://outside.example/' },
             n => resolve(n.id))));
     await page.evaluate(() => chrome.storage.local.set({ onlyShowBMBar: '1' }));
-    await page.reload({ waitUntil: 'networkidle0' });
+    await page.reload({ waitUntil: 'load' });
     await sleep(900);
     const treeBefore = await page.evaluate(id =>
         !!document.querySelector(`#tree #neat-tree-item-${id}`), outsideId);
@@ -326,7 +338,7 @@ const waitForPalette = async (page, ms = 15000) => {
     await page.screenshot({ path: '/tmp/shots/smoke/popup-outside-bar-reveal.png' });
     await page.evaluate(id => new Promise(resolve => chrome.bookmarks.remove(id, resolve)), outsideId);
     await page.evaluate(() => chrome.storage.local.remove('onlyShowBMBar'));
-    await page.reload({ waitUntil: 'networkidle0' });
+    await page.reload({ waitUntil: 'load' });
     await sleep(900);
 
     // 2f. Final polish: the global palette command's wake-up paths — the
@@ -339,20 +351,20 @@ const waitForPalette = async (page, ms = 15000) => {
     // false gate failure. waitForPalette's generous poll window (15s) covers
     // the slow store.ready init under DinD load.
     await page.evaluate(() => chrome.storage.local.set({ paletteEnabled: '1' }));
-    await page.goto(`chrome-extension://${extId}/pages/popup.html?palette=1`, { waitUntil: 'networkidle0' });
+    await page.goto(`chrome-extension://${extId}/pages/popup.html?palette=1`, { waitUntil: 'load' });
     const paletteViaQuery = await waitForPalette(page);
     console.log('palette via ?palette=1:', JSON.stringify(paletteViaQuery));
     if (!paletteViaQuery.open || !paletteViaQuery.focused)
         errors.push(`palette=1 wake-up broken: ${JSON.stringify(paletteViaQuery)}`);
     await page.evaluate(() => chrome.storage.session.set({ pendingPaletteOpen: true }));
-    await page.goto(`chrome-extension://${extId}/pages/popup.html`, { waitUntil: 'networkidle0' });
+    await page.goto(`chrome-extension://${extId}/pages/popup.html`, { waitUntil: 'load' });
     const paletteViaFlag = await waitForPalette(page);
     const flagConsumed = await page.evaluate(async () =>
         !(await chrome.storage.session.get('pendingPaletteOpen')).pendingPaletteOpen);
     console.log('palette via session flag:', JSON.stringify({ ...paletteViaFlag, flagConsumed }));
     if (!paletteViaFlag.open || !paletteViaFlag.focused || !flagConsumed)
         errors.push(`pendingPaletteOpen wake-up broken: ${JSON.stringify({ ...paletteViaFlag, flagConsumed })}`);
-    await page.reload({ waitUntil: 'networkidle0' });
+    await page.reload({ waitUntil: 'load' });
     await sleep(900);
 
     // 3. dark mode via emulated prefers-color-scheme (theme=auto default)
@@ -366,7 +378,7 @@ const waitForPalette = async (page, ms = 15000) => {
     const panel = await browser.newPage();
     watch(panel, 'panel');
     await panel.setViewport({ width: 360, height: 700 });
-    await panel.goto(`chrome-extension://${extId}/pages/sidepanel.html`, { waitUntil: 'networkidle0' });
+    await panel.goto(`chrome-extension://${extId}/pages/sidepanel.html`, { waitUntil: 'load' });
     await sleep(800);
     const isPanel = await panel.evaluate(() => document.body.classList.contains('panel-mode'));
     console.log('panel-mode:', isPanel);
@@ -389,7 +401,7 @@ const waitForPalette = async (page, ms = 15000) => {
     // corner — capture the FULL page at the common display resolutions.
     const opts = await browser.newPage();
     watch(opts, 'options');
-    await opts.goto(`chrome-extension://${extId}/pages/options.html`, { waitUntil: 'networkidle0' });
+    await opts.goto(`chrome-extension://${extId}/pages/options.html`, { waitUntil: 'load' });
     await sleep(600);
     const optsStats = await opts.evaluate(() => ({
         themeSelect: !!document.querySelector('#theme-select'),
@@ -412,7 +424,7 @@ const waitForPalette = async (page, ms = 15000) => {
         { name: '4k', width: 3840, height: 2160 }
     ]) {
         await opts.setViewport({ width: res.width, height: res.height });
-        await opts.goto(`chrome-extension://${extId}/pages/options.html`, { waitUntil: 'networkidle0' });
+        await opts.goto(`chrome-extension://${extId}/pages/options.html`, { waitUntil: 'load' });
         await sleep(600);
         await opts.screenshot({ path: `/tmp/shots/smoke/options-${res.name}.png`, fullPage: true });
     }
@@ -420,7 +432,7 @@ const waitForPalette = async (page, ms = 15000) => {
     // 6. the legacy advanced-options URL must forward to the merged page
     const adv = await browser.newPage();
     watch(adv, 'advanced-options');
-    await adv.goto(`chrome-extension://${extId}/pages/advanced-options.html`, { waitUntil: 'networkidle0' });
+    await adv.goto(`chrome-extension://${extId}/pages/advanced-options.html`, { waitUntil: 'load' });
     await sleep(600);
     const advStats = await adv.evaluate(() => ({
         forwarded: window.location.pathname.endsWith('/pages/options.html'),

@@ -463,14 +463,20 @@
   "donationGo": {
     "message": "Δωρεά"
   },
+  "donationRate": {
+    "message": "Βαθμολογήστε το"
+  },
+  "donationRateTitle": {
+    "message": "Βαθμολογήστε το vBookmarks στο Chrome Web Store"
+  },
   "donationLater": {
     "message": "Αργότερα"
   },
   "donationMessage": {
-    "message": "Αν σας αρέσει, ίσως μπορείτε να κάνετε μια δωρεά για μελλοντική ανάπτυξη. Κάθε ποσό είναι ευπρόσδεκτο."
+    "message": "Σας αρέσει; Κάντε δωρεά για να στηρίξετε το μέλλον του — ή βαθμολογήστε το στο κατάστημα: κάθε κριτική διατηρεί τις ενημερώσεις."
   },
   "donationV4Notice": {
-    "message": "Η έκδοση v4.0 είναι μια σημαντική αναβάθμιση: καρτέλες προβολής, παλέτα εντολών, έλεγχος νεκρών συνδέσμων, καθαρισμός διπλοτύπων και άλλα."
+    "message": "Το vBookmarks 4.0 είναι μια πλήρης ανακατασκευή με μοντέρνο σχεδιασμό, γεμάτο νέες δυνατότητες."
   },
   "donationV4GuideLink": {
     "message": "Διαβάστε τον οδηγό v4 →"
@@ -1672,17 +1678,6 @@
   },
   "url": {
     "message": "URL"
-  },
-  "versionMessage": {
-    "message": "Αυτό είναι το νέο VBM $versionNumber$! Το changelog είναι εδώ: $versionTips$",
-    "placeholders": {
-      "versionNumber": {
-        "content": "$1"
-      },
-      "versionTips": {
-        "content": "$2"
-      }
-    }
   },
   "viewDead": {
     "message": "Νεκροί σύνδεσμοι"

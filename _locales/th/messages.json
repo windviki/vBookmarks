@@ -463,14 +463,20 @@
   "donationGo": {
     "message": "บริจาค"
   },
+  "donationRate": {
+    "message": "ให้คะแนน"
+  },
+  "donationRateTitle": {
+    "message": "ให้คะแนน vBookmarks บน Chrome Web Store"
+  },
   "donationLater": {
     "message": "ภายหลัง"
   },
   "donationMessage": {
-    "message": "หากคุณชอบสิ่งนี้ บางทีคุณอาจบริจาคเพื่อการพัฒนาในอนาคต จำนวนเงินใดๆ ก็ต้อนรับ"
+    "message": "ถูกใจไหม? บริจาคเพื่อขับเคลื่อนอนาคตของมัน — หรือให้คะแนนในสโตร์: ทุกรีวิวช่วยให้มีการอัปเดตต่อไป"
   },
   "donationV4Notice": {
-    "message": "v4.0 เป็นอัปเกรดครั้งใหญ่: แท็บมุมมอง, จานคำสั่ง, การสแกนลิงก์เสีย, การล้างรายการซ้ำ และอื่นๆ"
+    "message": "vBookmarks 4.0 คือเวอร์ชันรีเมคเต็มรูปแบบ ด้วยดีไซน์ทันสมัย และฟีเจอร์ใหม่มากมาย"
   },
   "donationV4GuideLink": {
     "message": "อ่านคู่มือ v4 →"
@@ -1666,17 +1672,6 @@
   },
   "url": {
     "message": "URL"
-  },
-  "versionMessage": {
-    "message": "นี่คือ VBM $versionNumber$ ใหม่! บันทึกการเปลี่ยนแปลงอยู่ที่นี่: $versionTips$",
-    "placeholders": {
-      "versionNumber": {
-        "content": "$1"
-      },
-      "versionTips": {
-        "content": "$2"
-      }
-    }
   },
   "viewDead": {
     "message": "ลิงก์เสีย"

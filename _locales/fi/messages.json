@@ -463,14 +463,20 @@
   "donationGo": {
     "message": "Lahjoita"
   },
+  "donationRate": {
+    "message": "Arvioi"
+  },
+  "donationRateTitle": {
+    "message": "Arvioi vBookmarks Chrome Web Store -kaupassa"
+  },
   "donationLater": {
     "message": "Myöhemmin"
   },
   "donationMessage": {
-    "message": "Jos pidät siitä, ehkä voit lahjoittaa tulevaa kehitystä varten. Mikä tahansa summa on tervetullutta."
+    "message": "Pidätkö siitä? Lahjoita tukeaksesi sen tulevaisuutta — tai arvioi se kaupassa: jokainen arvostelu varmistaa päivitysten jatkumisen."
   },
   "donationV4Notice": {
-    "message": "v4.0 on suuri päivitys: välilehtien tarkastelu, komentopaletti, kuolleiden linkkien tarkistus, kaksoiskappaleiden siivous ja paljon muuta."
+    "message": "vBookmarks 4.0 on täysin uusittu versio, jossa on moderni muotoilu ja täynnä uusia ominaisuuksia."
   },
   "donationV4GuideLink": {
     "message": "Lue v4-opas →"
@@ -1666,17 +1672,6 @@
   },
   "url": {
     "message": "URL"
-  },
-  "versionMessage": {
-    "message": "Tämä on uusi VBM $versionNumber$! Muutosloki on täällä: $versionTips$",
-    "placeholders": {
-      "versionNumber": {
-        "content": "$1"
-      },
-      "versionTips": {
-        "content": "$2"
-      }
-    }
   },
   "viewDead": {
     "message": "Kuolleet linkit"

@@ -686,9 +686,9 @@ describe('Tab region cycle (§2.1)', () => {
 
     // keyboard-model §7 (4.0.8): the local what's-new strip and the remote
     // announce banner sit between #donation and the tab strip and join the
-    // ring the same way. whats-new carries two links; announce carries its
-    // link(s) plus the dismiss × button — the dismiss must be keyboard
-    // reachable, otherwise mouse-only users could clear the banner.
+    // ring the same way. whats-new carries its changelog link; announce
+    // carries its link(s) plus the dismiss × button — the dismiss must be
+    // keyboard reachable, otherwise mouse-only users could clear the banner.
     const multiBannerEnv = ({ donation = 'none', whatsNew = 'none', announce = 'none' } = {}) => {
         const refs = {};
         const env = setup({
@@ -700,9 +700,8 @@ describe('Tab region cycle (§2.1)', () => {
                 donationEl._qsa['button, a[href]'] = [];
                 const whatsNewEl = el('DIV', 'whats-new');
                 whatsNewEl.style.display = whatsNew;
-                refs.guide = el('A', 'whats-new-guide');
                 refs.changelog = el('A', 'whats-new-changelog');
-                whatsNewEl._qsa['button, a[href]'] = [refs.guide, refs.changelog];
+                whatsNewEl._qsa['button, a[href]'] = [refs.changelog];
                 const announceEl = el('DIV', 'announce');
                 announceEl.style.display = announce;
                 refs.annLink = el('A', 'announce-link');
@@ -724,12 +723,10 @@ describe('Tab region cycle (§2.1)', () => {
         return { ...env, ...refs };
     };
 
-    it('a visible what\'s-new strip contributes its links between header and strip', () => {
-        const { doc, fireDoc, tool, guide, changelog, tabBtn, tree, f1 } = multiBannerEnv({ whatsNew: 'block' });
+    it('a visible what\'s-new strip contributes its link between header and strip', () => {
+        const { doc, fireDoc, tool, changelog, tabBtn, tree, f1 } = multiBannerEnv({ whatsNew: 'block' });
         tree._qs[ROW_SEL] = f1.link;
         tool.focus();
-        fireDoc('keydown', makeEvent({ key: 'Tab' }));
-        expect(doc.activeElement).toBe(guide);
         fireDoc('keydown', makeEvent({ key: 'Tab' }));
         expect(doc.activeElement).toBe(changelog);
         fireDoc('keydown', makeEvent({ key: 'Tab' }));

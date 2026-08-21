@@ -463,14 +463,20 @@
   "donationGo": {
     "message": "Prispieť"
   },
+  "donationRate": {
+    "message": "Ohodnotiť"
+  },
+  "donationRateTitle": {
+    "message": "Ohodnoťte vBookmarks v Chrome Web Store"
+  },
   "donationLater": {
     "message": "Neskôr"
   },
   "donationMessage": {
-    "message": "Ak sa vám to páči, možno by ste mohli prispejať na jeho budúci vývoj. Akákoľvek suma je vítaná."
+    "message": "Páči sa vám? Prispejte na jej budúcnosť — alebo ju ohodnoťte v obchode: každá recenzia prináša ďalšie aktualizácie."
   },
   "donationV4Notice": {
-    "message": "v4.0 je veľká aktualizácia: karty zobrazení, paleta príkazov, kontrola mŕtvych odkazov, čistenie duplicít a ďalšie."
+    "message": "vBookmarks 4.0 je úplne prepracovaná verzia s moderným dizajnom a množstvom nových funkcií."
   },
   "donationV4GuideLink": {
     "message": "Prečítať si sprievodcu pre v4 →"
@@ -1666,17 +1672,6 @@
   },
   "url": {
     "message": "URL"
-  },
-  "versionMessage": {
-    "message": "Toto je nový VBM $versionNumber$! Zoznam zmien je tu: $versionTips$",
-    "placeholders": {
-      "versionNumber": {
-        "content": "$1"
-      },
-      "versionTips": {
-        "content": "$2"
-      }
-    }
   },
   "viewDead": {
     "message": "Mŕtve odkazy"

@@ -452,14 +452,20 @@
   "donationGo": {
     "message": "捐赠"
   },
+  "donationRate": {
+    "message": "评分"
+  },
+  "donationRateTitle": {
+    "message": "在 Chrome 网上应用商店为 vBookmarks 评分"
+  },
   "donationLater": {
     "message": "稍后"
   },
   "donationMessage": {
-    "message": "如果你喜欢本扩展的话，请考虑进行捐助。这样我可以持续改进它的功能并保持开放。"
+    "message": "喜欢它吗？捐赠助力其未来发展，或在商店评分：每条评论都能让更新持续不断。"
   },
   "donationV4Notice": {
-    "message": "v4.0 是一次重大升级：视图标签页、命令面板、失效链接扫描、重复清理等功能。"
+    "message": "vBookmarks 4.0 是采用现代设计、满载新功能的彻底重制版。"
   },
   "donationV4GuideLink": {
     "message": "阅读 v4 指南 →"
@@ -1655,17 +1661,6 @@
   },
   "url": {
     "message": "网址"
-  },
-  "versionMessage": {
-    "message": "欢迎使用新版本 $versionNumber$！更新记录：$versionTips$",
-    "placeholders": {
-      "versionNumber": {
-        "content": "$1"
-      },
-      "versionTips": {
-        "content": "$2"
-      }
-    }
   },
   "viewDead": {
     "message": "死链"

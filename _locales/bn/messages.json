@@ -463,14 +463,20 @@
   "donationGo": {
     "message": "দান করুন"
   },
+  "donationRate": {
+    "message": "রেট দিন"
+  },
+  "donationRateTitle": {
+    "message": "Chrome ওয়েব স্টোরে vBookmarks-কে রেট দিন"
+  },
   "donationLater": {
     "message": "পরে"
   },
   "donationMessage": {
-    "message": "আপনি যদি এটি পছন্দ করেন, তবে হয়তো আপনি এর ভবিষ্যত উন্নয়নের জন্য দান করতে পারেন। যেকোনো পরিমাণ স্বাগত।"
+    "message": "আনন্দ পাচ্ছেন? এর ভবিষ্যত জ্বালাতে দান করুন — বা স্টোরে রেট দিন: প্রতিটি রিভিউ আপডেট আসতে রাখে।"
   },
   "donationV4Notice": {
-    "message": "v4.0 একটি বড় আপগ্রেড: ভিউ ট্যাব, কমান্ড প্যালেট, ডেড-লিংক স্ক্যান, ডুপ্লিকেট ক্লিনআপ এবং আরও অনেক কিছু।"
+    "message": "vBookmarks 4.0 একটি আধুনিক ডিজাইনসহ সম্পূর্ণ নতুন সংস্করণ, নতুন বৈশিষ্ট্যে ভরপুর।"
   },
   "donationV4GuideLink": {
     "message": "v4 গাইড পড়ুন →"
@@ -1666,17 +1672,6 @@
   },
   "url": {
     "message": "URL"
-  },
-  "versionMessage": {
-    "message": "এটি নতুন VBM $versionNumber$! পরিবর্তন লগ এখানে: $versionTips$",
-    "placeholders": {
-      "versionNumber": {
-        "content": "$1"
-      },
-      "versionTips": {
-        "content": "$2"
-      }
-    }
   },
   "viewDead": {
     "message": "মৃত লিঙ্ক"
