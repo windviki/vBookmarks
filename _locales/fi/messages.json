@@ -907,10 +907,7 @@
     "message": "Kuvakevälimuisti tyhjennetty. Kuvakkeet haetaan uudelleen seuraavalla avauksella."
   },
   "storageUsageIcon": {
-    "message": "Kuvakkeet"
-  },
-  "storageUsageBookmarks": {
-    "message": "Skannaus-/merkintätiedot"
+    "message": "Kuvakkeiden välimuisti"
   },
   "storageUsageOther": {
     "message": "Muu"
@@ -930,7 +927,7 @@
     "message": "Vapaa"
   },
   "storageUsageHint": {
-    "message": "Kirjanmerkkien skannaus-/merkintätietojen, kuvakevälimuistin ja asetusten käyttämä tallennustila. Vapaa tila päivittyy kuvakevälimuistin tyhjentämisen jälkeen."
+    "message": "Vain paikallinen laajennuksen tallennustila (chrome.storage.local, noin 10 megatavun kiintiö): kuvakevälimuisti sekä asetukset ja muut paikalliset tiedot. Synkronoidut asetukset, istuntotiedot ja kirjanmerkkikirjasto eivät sisälly tähän."
   },
   "optionsDonate": {
     "message": "Lahjoita"

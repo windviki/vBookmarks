@@ -146,7 +146,9 @@ export function createVisitStatsCollector() {
     };
 
     const onStorageChanged = (changes, area) => {
-        if (area === 'local' && 'statsEnabled' in changes) {
+        // statsEnabled lives in the sync area since the 2026-08 storage
+        // audit; accept a pre-migration local write too.
+        if ((area === 'sync' || area === 'local') && 'statsEnabled' in changes) {
             const v = changes.statsEnabled.newValue;
             enabled = !!v && v !== 'false';
             if (!enabled) {
@@ -164,7 +166,7 @@ export function createVisitStatsCollector() {
         if (started)
             return;
         started = true;
-        chrome.storage.local.get({ statsEnabled: '1' }, data => {
+        chrome.storage.sync.get({ statsEnabled: '1' }, data => {
             const v = data.statsEnabled;
             enabled = !!v && v !== 'false';
         });

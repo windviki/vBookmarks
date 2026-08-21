@@ -896,10 +896,7 @@
     "message": "图标缓存已清除。下次打开时将重新获取图标。"
   },
   "storageUsageIcon": {
-    "message": "图标"
-  },
-  "storageUsageBookmarks": {
-    "message": "扫描/标记数据"
+    "message": "图标缓存"
   },
   "storageUsageOther": {
     "message": "其他"
@@ -919,7 +916,7 @@
     "message": "可用"
   },
   "storageUsageHint": {
-    "message": "书签扫描/标记数据、图标缓存和设置所占用的存储空间。清除图标缓存后，可用空间会更新。"
+    "message": "仅本地扩展存储（chrome.storage.local，配额约10 MB）：包括图标缓存、设置及其他本地数据。同步设置、会话数据及书签库本身不计入此处。"
   },
   "optionsDonate": {
     "message": "捐赠"

@@ -907,10 +907,7 @@
     "message": "Cache ikon telah dibersihkan. Ikon akan diambil ulang saat dibuka berikutnya."
   },
   "storageUsageIcon": {
-    "message": "Ikon"
-  },
-  "storageUsageBookmarks": {
-    "message": "Data pemindaian/penandaan"
+    "message": "Cache ikon"
   },
   "storageUsageOther": {
     "message": "Lainnya"
@@ -930,7 +927,7 @@
     "message": "Kosong"
   },
   "storageUsageHint": {
-    "message": "Ruang penyimpanan yang digunakan oleh data pemindaian/penandaan bookmark, cache favicon, dan pengaturan. Ruang kosong diperbarui setelah membersihkan cache favicon."
+    "message": "Hanya penyimpanan lokal ekstensi (chrome.storage.local, sekitar 10 MB kuota): cache ikon beserta pengaturan dan data lokal lainnya. Pengaturan tersinkron, data sesi, dan pustaka bookmark tidak dihitung di sini."
   },
   "optionsDonate": {
     "message": "Donasi"

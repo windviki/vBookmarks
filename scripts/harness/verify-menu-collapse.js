@@ -93,7 +93,12 @@ const SEED = `
             // Apply the settings in the SW context before the popup boots.
             await page.goto(`chrome-extension://${extId}/pages/options.html`, { waitUntil: 'load' });
             await page.evaluate(patch => {
-                return chrome.storage.local.set(patch);
+                // collapse*Menu are sync-routed (2026-08 storage audit); drop
+                // any pre-migration local residue so it can't mask the write.
+                return Promise.all([
+                    chrome.storage.sync.set(patch),
+                    chrome.storage.local.remove(Object.keys(patch))
+                ]);
             }, storePatch);
             await page.close();
         }
@@ -208,7 +213,7 @@ const SEED = `
             sortName: gs('sort-folder-by-name'),
             entryVisible: entry && getComputedStyle(entry).display !== 'none',
             // diagnostics
-            stored: await chrome.storage.local.get('collapseSortMenu'),
+            stored: await chrome.storage.sync.get('collapseSortMenu'),
             menuClass: m.className,
             entryDisplay: entry ? getComputedStyle(entry).display : 'missing'
         };

@@ -907,10 +907,7 @@
     "message": "Pictogramcache gewist. Pictogrammen worden bij de volgende opening opnieuw opgehaald."
   },
   "storageUsageIcon": {
-    "message": "Pictogrammen"
-  },
-  "storageUsageBookmarks": {
-    "message": "Scan-/markeergegevens"
+    "message": "Pictogramcache"
   },
   "storageUsageOther": {
     "message": "Overig"
@@ -930,7 +927,7 @@
     "message": "Vrij"
   },
   "storageUsageHint": {
-    "message": "Opslagruimte gebruikt door scan-/markeergegevens van bladwijzers, de pictogrammencache en instellingen. Vrije ruimte wordt bijgewerkt nadat de pictogrammencache is gewist."
+    "message": "Alleen lokale extensieopslag (chrome.storage.local, circa 10 MB quotum): de pictogramcache plus instellingen en andere lokale gegevens. Gesynchroniseerde instellingen, sessiegegevens en de bladwijzerbibliotheek zelf worden hier niet meegeteld."
   },
   "optionsDonate": {
     "message": "Doneren"

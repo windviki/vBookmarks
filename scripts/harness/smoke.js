@@ -92,16 +92,23 @@ const waitForPalette = async (page, ms = 15000) => {
     const remembered = await activeViewOf(page);
     console.log('rememberView default →', remembered);
     if (remembered !== 'view-tab-recent') errors.push(`rememberView default: got ${remembered}`);
-    await page.evaluate(() => chrome.storage.local.set({ rememberView: '' }));
+    // rememberView is sync-routed (2026-08 storage audit) — seed the sync area.
+    await page.evaluate(() => chrome.storage.sync.set({ rememberView: '' }));
     await page.reload({ waitUntil: 'load' });
     await sleep(900);
     const classic = await activeViewOf(page);
     console.log('rememberView off →', classic);
     if (classic !== 'view-tab-tree') errors.push(`rememberView off: got ${classic}`);
-    await page.evaluate(() => chrome.storage.local.remove(['activeView', 'rememberView']));
+    // Clean BOTH areas: sync-routed keys migrate out of local on load, so
+    // a local-only remove would leak the sync copy into later sections.
+    await page.evaluate(() => {
+        chrome.storage.local.remove(['activeView', 'rememberView']);
+        chrome.storage.sync.remove('rememberView');
+    });
 
     // 2c. v4 task-3 #20: the classic-experience switches hide their chrome.
-    await page.evaluate(() => chrome.storage.local.set({
+    // These four switches are sync-routed (2026-08 storage audit).
+    await page.evaluate(() => chrome.storage.sync.set({
         quickAddEnabled: '', showToolButton: '', paletteEnabled: '', showViewTabs: ''
     }));
     await page.reload({ waitUntil: 'load' });
@@ -114,8 +121,11 @@ const waitForPalette = async (page, ms = 15000) => {
     console.log('classic chrome hidden:', JSON.stringify(hiddenChrome));
     if (!hiddenChrome.quickAdd || !hiddenChrome.tool || !hiddenChrome.tabs)
         errors.push(`classic hiding broken: ${JSON.stringify(hiddenChrome)}`);
-    await page.evaluate(() => chrome.storage.local.remove(
-        ['quickAddEnabled', 'showToolButton', 'paletteEnabled', 'showViewTabs']));
+    await page.evaluate(() => {
+        const keys = ['quickAddEnabled', 'showToolButton', 'paletteEnabled', 'showViewTabs'];
+        chrome.storage.local.remove(keys); // pre-migration residue, if any
+        chrome.storage.sync.remove(keys);
+    });
     await page.reload({ waitUntil: 'load' });
     await sleep(900);
 
@@ -225,19 +235,22 @@ const waitForPalette = async (page, ms = 15000) => {
                 b => resolve([a.id, b.id])));
     }));
     const [deadA, deadB] = deadIds;
-    await page.evaluate(([a, b]) => new Promise(resolve => chrome.storage.local.set({
-        activeView: 'dead',
-        deadFilter: 'all',
-        deadMarkFilter: '',
-        deadMarks: JSON.stringify([a]),
-        deadLastScan: JSON.stringify({
-            ts: Date.now(), scannedCount: 2,
-            results: {
-                [a]: { status: 'dead', code: 404 },
-                [b]: { status: 'blocked', code: 403 }
-            }
-        })
-    }, resolve)), [deadA, deadB]);
+    // Area-split seed (2026-08 storage audit): the two filters are
+    // sync-routed, the scan cache / marks / active view stay local.
+    await page.evaluate(([a, b]) => new Promise(resolve => {
+        chrome.storage.sync.set({ deadFilter: 'all', deadMarkFilter: '' }, () =>
+            chrome.storage.local.set({
+                activeView: 'dead',
+                deadMarks: JSON.stringify([a]),
+                deadLastScan: JSON.stringify({
+                    ts: Date.now(), scannedCount: 2,
+                    results: {
+                        [a]: { status: 'dead', code: 404 },
+                        [b]: { status: 'blocked', code: 403 }
+                    }
+                })
+            }, resolve));
+    }), [deadA, deadB]);
     // waitUntil:'load', not 'networkidle0': the two seeded invalid hosts make
     // the rows' chrome-extension://_favicon requests never settle in the
     // offline DinD sandbox, so a network-idle wait would time out even though
@@ -254,10 +267,41 @@ const waitForPalette = async (page, ms = 15000) => {
             pressed: pressed ? pressed.dataset.markfilter : ''
         };
     }, [deadA, deadB]);
-    const deadFilterAll = await deadRowsOf();
+    // Poll for the seeded scan to render instead of trusting the fixed sleep:
+    // the store's sync migration (2026-08 storage audit) added a storage
+    // round-trip before store.ready, and the earlier sections' startup work
+    // (announce chain, favicon enrichment) stretches init under DinD load —
+    // 900 ms proved too tight for the dead view's activate → storage read →
+    // getTree → render chain. Same pattern as waitForPalette above.
+    const waitForDeadRows = async (ms = 15000) => {
+        const t0 = Date.now();
+        while (Date.now() - t0 < ms) {
+            const s = await deadRowsOf();
+            if (s.buttons === 3 && s.a && s.b) return { ...s, waited: Date.now() - t0 };
+            await sleep(250);
+        }
+        return { ...(await deadRowsOf()), waited: Date.now() - t0 };
+    };
+    const deadFilterAll = await waitForDeadRows();
     console.log('dead filter 全部:', JSON.stringify(deadFilterAll));
-    if (deadFilterAll.buttons !== 3 || !deadFilterAll.a || !deadFilterAll.b)
+    if (deadFilterAll.buttons !== 3 || !deadFilterAll.a || !deadFilterAll.b) {
+        // Dump the storage/view state on failure so the next regression is
+        // diagnosable from the gate log alone.
+        const diag = await page.evaluate(() => new Promise(res =>
+            chrome.storage.local.get(null, l => chrome.storage.sync.get(null, sy => res({
+                localKeys: Object.keys(l).sort(), syncKeys: Object.keys(sy).sort(),
+                activeView: l.activeView, deadFilterSync: sy.deadFilter,
+                hasScan: !!l.deadLastScan, deadMarks: l.deadMarks,
+                storeDeadFilter: window.store && window.store.get('deadFilter', 'DEF'),
+                storeScan: !!(window.store && window.store.get('deadLastScan')),
+                viewDeadHidden: document.getElementById('view-dead')?.hidden,
+                deadListHtml: (document.getElementById('dead-list')?.innerHTML || '(none)').slice(0, 400),
+                activeTab: (document.querySelector('#view-tabs [aria-selected="true"]') || {}).id
+            })))));
+        console.log('DEAD DIAG:', JSON.stringify(diag));
         errors.push(`dead second toolbar missing: ${JSON.stringify(deadFilterAll)}`);
+        throw new Error('dead filter section failed — see DEAD DIAG above');
+    }
     await page.evaluate(() => document.querySelector('#dead-list .dead-mark-filter-btn[data-markfilter="marked"]').click());
     await sleep(300);
     const deadFilterMarked = await deadRowsOf();
@@ -276,9 +320,13 @@ const waitForPalette = async (page, ms = 15000) => {
     console.log('dead filter 全部恢复:', JSON.stringify(deadFilterRestore));
     if (!deadFilterRestore.a || !deadFilterRestore.b)
         errors.push(`dead 全部 restore broken: ${JSON.stringify(deadFilterRestore)}`);
-    await page.evaluate(([a, b]) => new Promise(resolve => chrome.storage.local.remove(
-        ['deadFilter', 'deadMarkFilter', 'deadMarks', 'deadLastScan', 'activeView'],
-        () => chrome.bookmarks.remove(a, () => chrome.bookmarks.remove(b, resolve)))), [deadA, deadB]);
+    await page.evaluate(([a, b]) => new Promise(resolve => {
+        const filters = ['deadFilter', 'deadMarkFilter'];
+        chrome.storage.local.remove(
+            filters.concat(['deadMarks', 'deadLastScan', 'activeView']), () =>
+                chrome.storage.sync.remove(filters, () =>
+                    chrome.bookmarks.remove(a, () => chrome.bookmarks.remove(b, resolve))));
+    }), [deadA, deadB]);
     await page.reload({ waitUntil: 'load' });
     await sleep(900);
 
@@ -289,7 +337,8 @@ const waitForPalette = async (page, ms = 15000) => {
         chrome.bookmarks.create(
             { parentId: '2', title: 'Outside BM', url: 'https://outside.example/' },
             n => resolve(n.id))));
-    await page.evaluate(() => chrome.storage.local.set({ onlyShowBMBar: '1' }));
+    // onlyShowBMBar is sync-routed (2026-08 storage audit).
+    await page.evaluate(() => chrome.storage.sync.set({ onlyShowBMBar: '1' }));
     await page.reload({ waitUntil: 'load' });
     await sleep(900);
     const treeBefore = await page.evaluate(id =>
@@ -350,7 +399,7 @@ const waitForPalette = async (page, ms = 15000) => {
         active: (document.querySelector('#view-tabs [aria-selected="true"]') || {}).id,
         rowInTree: !!document.querySelector(`#tree #neat-tree-item-${id}`)
     }), outsideId);
-    const settingAfter = await page.evaluate(() => chrome.storage.local.get('onlyShowBMBar'));
+    const settingAfter = await page.evaluate(() => chrome.storage.sync.get('onlyShowBMBar'));
     console.log('after toast action:', JSON.stringify(revealState), 'setting:', JSON.stringify(settingAfter));
     if (revealState.active !== 'view-tab-tree' || !revealState.rowInTree)
         errors.push(`#14: override reveal broken: ${JSON.stringify(revealState)}`);
@@ -358,7 +407,10 @@ const waitForPalette = async (page, ms = 15000) => {
         errors.push(`#14: onlyShowBMBar setting was rewritten: ${JSON.stringify(settingAfter)}`);
     await page.screenshot({ path: '/tmp/shots/smoke/popup-outside-bar-reveal.png' });
     await page.evaluate(id => new Promise(resolve => chrome.bookmarks.remove(id, resolve)), outsideId);
-    await page.evaluate(() => chrome.storage.local.remove('onlyShowBMBar'));
+    await page.evaluate(() => {
+        chrome.storage.local.remove('onlyShowBMBar');
+        chrome.storage.sync.remove('onlyShowBMBar');
+    });
     await page.reload({ waitUntil: 'load' });
     await sleep(900);
 
@@ -371,7 +423,8 @@ const waitForPalette = async (page, ms = 15000) => {
     // paths correctly refuse to open and turn a load-timing flake into a
     // false gate failure. waitForPalette's generous poll window (15s) covers
     // the slow store.ready init under DinD load.
-    await page.evaluate(() => chrome.storage.local.set({ paletteEnabled: '1' }));
+    // paletteEnabled is sync-routed (2026-08 storage audit).
+    await page.evaluate(() => chrome.storage.sync.set({ paletteEnabled: '1' }));
     await page.goto(`chrome-extension://${extId}/pages/popup.html?palette=1`, { waitUntil: 'load' });
     const paletteViaQuery = await waitForPalette(page);
     console.log('palette via ?palette=1:', JSON.stringify(paletteViaQuery));

@@ -46,8 +46,9 @@ const $ = id => document.getElementById(id);
         themeSelect.addEventListener('change', async () => {
             const newTheme = themeSelect.value;
             document.body.dataset.theme = newTheme;
-            // chrome.storage.local is the single source of truth — store.js
-            // overlays its mirror with it, so a localStorage copy is redundant.
+            // theme is a sync-routed key (2026-08 storage audit): setSetting
+            // persists to chrome.storage.sync and refreshes the store mirror
+            // + the localStorage boot copy the next pre-paint read uses.
             await setSetting('theme', newTheme);
         });
 
@@ -321,17 +322,18 @@ const $ = id => document.getElementById(id);
         // its in-memory map; next render re-fetches (docs/favicon-补全设计.md
         // §5.4).
         // The storage-usage bar (below the button) refreshes after a clear so
-        // the freed space is immediately visible, and tracks icon fetches
+        // the freed space is immediately visible, and tracks storage writes
         // live while the page is open (chrome.storage.onChanged below).
-        // Categorization predicates live in src/storage-usage.js (classic
-        // script, loaded by options.html above) so the census test drives
-        // the same source of truth — "other" is the catch-all that keeps
-        // the totals exact when new keys appear.
+        // 2026-08 storage-audit fix round: the bar was simplified to three
+        // segments — icon cache / other / free. The favicon cache is the only
+        // dataset with a dynamic byte budget, so it is the only segment
+        // managed visually; "other" is the catch-all that keeps the totals
+        // exact when new keys appear. The isIconKey predicate lives in
+        // src/storage-usage.js (classic script, loaded by options.html above)
+        // so the census test drives the same source of truth.
         const isFavKey = window.VBMUsage.isIconKey;
-        const isBookmarkDataKey = window.VBMUsage.isBookmarkDataKey;
         const storageUsageCats = [
             { id: 'icon', label: () => __m('storageUsageIcon') },
-            { id: 'bookmarks', label: () => __m('storageUsageBookmarks') },
             { id: 'other', label: () => __m('storageUsageOther') },
             { id: 'free', label: () => __m('storageUsageFree') }
         ];
@@ -352,34 +354,31 @@ const $ = id => document.getElementById(id);
         };
         const measureUsage = async all => {
             const favKeys = Object.keys(all).filter(isFavKey);
-            const bookmarkKeys = Object.keys(all).filter(isBookmarkDataKey);
-            const otherKeys = Object.keys(all).filter(k => !isFavKey(k) && !isBookmarkDataKey(k));
+            const otherKeys = Object.keys(all).filter(k => !isFavKey(k));
             const rawGbiu = chrome.storage.local.getBytesInUse;
             if (typeof rawGbiu === 'function') {
                 const gbiu = rawGbiu.bind(chrome.storage.local);
                 try {
-                    const [icon, bookmarks, other] = await Promise.all([
+                    const [icon, other] = await Promise.all([
                         favKeys.length ? gbiu(favKeys) : Promise.resolve(0),
-                        bookmarkKeys.length ? gbiu(bookmarkKeys) : Promise.resolve(0),
                         otherKeys.length ? gbiu(otherKeys) : Promise.resolve(0)
                     ]);
-                    return { icon: icon || 0, bookmarks: bookmarks || 0, other: other || 0 };
+                    return { icon: icon || 0, other: other || 0 };
                 } catch (_) { /* fall through to the approximation */ }
             }
             return {
                 icon: approxBytes(favKeys, all),
-                bookmarks: approxBytes(bookmarkKeys, all),
                 other: approxBytes(otherKeys, all)
             };
         };
         const refreshStorageUsage = async () => {
             const all = await chrome.storage.local.get(null);
-            const { icon, bookmarks, other } = await measureUsage(all);
-            const used = icon + bookmarks + other;
+            const { icon, other } = await measureUsage(all);
+            const used = icon + other;
             const quota = chrome.storage.local.QUOTA_BYTES || 10 * 1024 * 1024;
             const free = Math.max(0, quota - used);
             const pct = n => (quota ? Math.round((n / quota) * 1000) / 10 : 0);
-            const sizes = { icon, bookmarks, other, free };
+            const sizes = { icon, other, free };
             // Segments: width + per-segment accessible label + tooltip data.
             // The tooltip reads _usageText/_usagePct off the segment, so the
             // handlers (wired once below) always show the current figures.
@@ -448,11 +447,13 @@ const $ = id => document.getElementById(id);
 
         // Live updates: the background keeps fetching icons (vbmFavicon:*
         // writes into storage.local) while the page is open, so re-measure the
-        // bar whenever a key that feeds it changes. Debounce the full-area
-        // read + stringification — an icon-completion storm while the options
-        // page is open could otherwise rescan MB-scale storage on every key
-        // (audit O3). The clear-cache handler below bypasses the debounce so
-        // freed space shows immediately.
+        // bar whenever local storage changes. Debounce the full-area read +
+        // stringification — an icon-completion storm while the options page
+        // is open could otherwise rescan MB-scale storage on every key
+        // (audit O3). The dead-scan's live journal (vbmDeadScan) is transient
+        // runtime state and excluded from the trigger; the finished scan's
+        // deadLastScan write still refreshes. The clear-cache handler below
+        // bypasses the debounce so freed space shows immediately.
         let usageRefreshTimer = null;
         const scheduleUsageRefresh = () => {
             clearTimeout(usageRefreshTimer);
@@ -470,7 +471,7 @@ const $ = id => document.getElementById(id);
             chrome.storage.onChanged.addListener((changes, area) => {
                 if (area !== 'local') return;
                 const touched = Object.keys(changes || {});
-                if (touched.some(k => isFavKey(k) || isBookmarkDataKey(k)))
+                if (touched.some(k => k !== 'vbmDeadScan'))
                     scheduleUsageRefresh();
             });
         }
@@ -616,9 +617,20 @@ const $ = id => document.getElementById(id);
             // legacy backups that still contain it (audit D7).
             delete backup.local.vbmDeadScan;
             try {
-                await chrome.storage.local.set(backup.local);
-                if (backup.sync)
-                    await chrome.storage.sync.set(backup.sync);
+                // Route the writes by area: keys living in the sync area
+                // (store.syncKeys — expanded in the 2026-08 storage audit)
+                // must land in chrome.storage.sync even when an older backup
+                // still carries them under "local".
+                const syncKeySet = new Set(store.syncKeys);
+                const localObj = {};
+                const syncObj = Object.assign({}, backup.sync || {});
+                for (const k of Object.keys(backup.local)) {
+                    if (syncKeySet.has(k)) syncObj[k] = backup.local[k];
+                    else localObj[k] = backup.local[k];
+                }
+                await chrome.storage.local.set(localObj);
+                if (Object.keys(syncObj).length)
+                    await chrome.storage.sync.set(syncObj);
             } catch (e) {
                 // Quota exceeded or a transient storage failure — without this
                 // catch the await above would reject, the user would get no

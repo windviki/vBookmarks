@@ -326,13 +326,18 @@ if (chrome.contextMenus) {
         run();
     };
     const createQuickAddMenu = () => {
-        chrome.storage.local.get({ quickAddContextMenu: '1' }, data => {
+        // quickAddContextMenu lives in the sync area since the 2026-08
+        // storage audit (small cross-device preference; store.js routes it).
+        chrome.storage.sync.get({ quickAddContextMenu: '1' }, data => {
             applyQuickAddMenu(!!data.quickAddContextMenu && data.quickAddContextMenu !== 'false');
         });
     };
     chrome.runtime.onInstalled.addListener(createQuickAddMenu);
     chrome.storage.onChanged.addListener((changes, area) => {
-        if (area !== 'local' || !('quickAddContextMenu' in changes))
+        // Accept both areas: post-migration writes land in sync, but a
+        // pre-migration local write (older options page mid-upgrade) must
+        // still apply live.
+        if ((area !== 'sync' && area !== 'local') || !('quickAddContextMenu' in changes))
             return;
         // Read the change event's newValue instead of re-reading storage:
         // a fast second flip could settle before the first event's async

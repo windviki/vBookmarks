@@ -907,10 +907,7 @@
     "message": "Predpomnilnik ikon je počiščen. Ikone bodo ob naslednjem odpiranju znova pridobljene."
   },
   "storageUsageIcon": {
-    "message": "Ikone"
-  },
-  "storageUsageBookmarks": {
-    "message": "Podatki pregleda/označevanja"
+    "message": "Predpomnilnik ikon"
   },
   "storageUsageOther": {
     "message": "Drugo"
@@ -930,7 +927,7 @@
     "message": "Prosto"
   },
   "storageUsageHint": {
-    "message": "Prostor, ki ga uporabljajo podatki pregleda/označevanja zaznamkov, predpomnilnik ikon in nastavitve. Prosti prostor se posodobi po čiščenju predpomnilnika ikon."
+    "message": "Samo lokalna shramba razširitve (chrome.storage.local, kvota približno 10 MB): predpomnilnik ikon ter nastavitve in drugi lokalni podatki. Sinhronizirane nastavitve, podatki seje in sama knjižnica zaznamkov se tukaj ne štejejo."
   },
   "optionsDonate": {
     "message": "Doniraj"

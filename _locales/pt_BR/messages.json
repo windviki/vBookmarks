@@ -904,10 +904,7 @@
     "message": "Cache de ícones limpo. Os ícones serão buscados novamente na próxima abertura."
   },
   "storageUsageIcon": {
-    "message": "Ícones"
-  },
-  "storageUsageBookmarks": {
-    "message": "Dados de verificação/marcação"
+    "message": "Cache de ícones"
   },
   "storageUsageOther": {
     "message": "Outros"
@@ -927,7 +924,7 @@
     "message": "Livre"
   },
   "storageUsageHint": {
-    "message": "Espaço de armazenamento usado pelos dados de verificação/marcação de favoritos, pelo cache de ícones e pelas configurações. O espaço livre é atualizado após limpar o cache de ícones."
+    "message": "Somente o armazenamento local da extensão (chrome.storage.local, cota de cerca de 10 MB): o cache de ícones, além das configurações e outros dados locais. As configurações sincronizadas, os dados de sessão e a própria biblioteca de favoritos não são contados aqui."
   },
   "optionsDonate": {
     "message": "Doar"

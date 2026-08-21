@@ -347,14 +347,10 @@ const setup = (opts = {}) => {
     };
     globalThis.chrome = chromeStub;
 
-    // Round-4: the theme commands write localStorage (options-page parity)
-    // and read/flip settings through ctx.store — both get in-memory doubles.
-    const storageData = { ...(opts.localStorageSeed || {}) };
-    globalThis.localStorage = {
-        getItem: k => (k in storageData ? storageData[k] : null),
-        setItem: (k, v) => { storageData[k] = String(v); },
-        removeItem: k => { delete storageData[k]; }
-    };
+    // The theme commands read/flip settings through ctx.store (an in-memory
+    // double). Since the 2026-08 storage audit the theme's localStorage boot
+    // copy is maintained inside store.js, so palette.js never touches
+    // localStorage and no double is installed for it.
     const storeData = { ...(opts.storeSeed || {}) };
     const store = {
         setCalls: [],
@@ -514,7 +510,7 @@ const setup = (opts = {}) => {
     return {
         palette, doc, body, chrome: chromeStub, actions, treeView, views, search,
         quickAddCalls, paletteEl, input, results, clearBtn, closeBtn, tree, el, treeData, dialogs,
-        onChangedCalls, keydown, type, rowClasses, selectedIndex, store, storageData, showMenu
+        onChangedCalls, keydown, type, rowClasses, selectedIndex, store, showMenu
     };
 };
 
@@ -1574,16 +1570,17 @@ describe('session save command (P3.2)', () => {
 // five-pack: the rest words pick the theme by unique prefix ('/theme d' =
 // dark); a bare or unknown rest shows the usage alert (keepOpen, so the
 // panel survives it like /search does). A resolved theme mirrors the options
-// page's theme <select>: store.set + the localStorage pre-fill copy + an
-// immediate body[data-theme] apply, then closes the panel itself.
+// page's theme <select>: store.set (theme is sync-routed since the 2026-08
+// storage audit — store.js refreshes the localStorage boot copy internally,
+// so feature code never writes localStorage) + an immediate
+// body[data-theme] apply, then closes the panel itself.
 describe('the parameterized /theme command (v4 task-4 #5)', () => {
-    it("'/theme dark' writes the store, the localStorage copy and body[data-theme]", () => {
+    it("'/theme dark' writes the store and body[data-theme]", () => {
         const ctx = setup({});
         ctx.palette.open();
         ctx.type('/theme dark');
         ctx.keydown(ctx.input, { key: 'Enter' });
         expect(ctx.store.setCalls).toEqual([['theme', 'dark']]);
-        expect(ctx.storageData.theme).toBe('dark');
         expect(ctx.body.dataset.theme).toBe('dark');
         expect(ctx.palette.isOpen()).toBe(false); // a resolved theme closes the panel
     });
@@ -1642,8 +1639,8 @@ describe('the parameterized /theme command (v4 task-4 #5)', () => {
 // --- Round-5: the four direct theme commands --------------------------------
 // '/dark' '/light' '/ink' '/paper' sit next to the parameterized /theme as
 // no-rest-word shortcuts: Enter applies the theme through the same
-// store/localStorage/body[data-theme] path and closes the panel (a resolved
-// /theme does the same). Names reuse the options page's optionTheme* labels.
+// store/body[data-theme] path and closes the panel (a resolved /theme does
+// the same). Names reuse the options page's optionTheme* labels.
 describe('the direct theme commands (round-5)', () => {
     const CASES = [
         ['/dark', 'dark'], ['/light', 'light'], ['/ink', 'ink'], ['/paper', 'paper']
@@ -1656,7 +1653,6 @@ describe('the direct theme commands (round-5)', () => {
             ctx.type(slash);
             ctx.keydown(ctx.input, { key: 'Enter' });
             expect(ctx.store.setCalls, slash).toEqual([['theme', theme]]);
-            expect(ctx.storageData.theme, slash).toBe(theme);
             expect(ctx.body.dataset.theme, slash).toBe(theme);
             expect(ctx.palette.isOpen(), slash).toBe(false);
         }

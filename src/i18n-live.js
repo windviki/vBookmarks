@@ -117,8 +117,10 @@
         return data;
     };
 
-    // Imported settings may carry uiLanguage in chrome.storage.local without
-    // the localStorage cache (options import -> reload). Once store.ready
+    // Imported settings may carry uiLanguage in chrome.storage without the
+    // localStorage cache (options import -> reload; uiLanguage is a
+    // sync-routed key since the 2026-08 storage audit, so a synced value
+    // arriving on a new device takes the same path). Once store.ready
     // resolves, fetch and apply the locale so the import is honored; the
     // applied fetch writes the localStorage cache and reloads once. When a
     // local override already exists it wins (it is this machine's last

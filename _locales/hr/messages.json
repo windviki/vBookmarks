@@ -907,10 +907,7 @@
     "message": "Predmemorija ikona je očišćena. Ikone će se ponovno dohvatiti pri sljedećem otvaranju."
   },
   "storageUsageIcon": {
-    "message": "Ikone"
-  },
-  "storageUsageBookmarks": {
-    "message": "Podaci skeniranja/označavanja"
+    "message": "Predmemorija ikona"
   },
   "storageUsageOther": {
     "message": "Ostalo"
@@ -930,7 +927,7 @@
     "message": "Slobodno"
   },
   "storageUsageHint": {
-    "message": "Prostor za pohranu koji koriste podaci skeniranja/označavanja zabilješki, predmemorija ikona i postavke. Slobodni prostor osvježava se nakon čišćenja predmemorije ikona."
+    "message": "Samo lokalna pohrana proširenja (chrome.storage.local, kvota od oko 10 MB): predmemorija ikona te postavke i drugi lokalni podaci. Sinkronizirane postavke, podaci sesije i sama biblioteka oznaka ne ubrajaju se ovdje."
   },
   "optionsDonate": {
     "message": "Doniraj"

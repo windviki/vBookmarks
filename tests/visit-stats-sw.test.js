@@ -34,10 +34,11 @@ const makeChromeDouble = (opts = {}) => {
         storage: []
     };
     const localData = { ...(opts.localData || {}) };
+    const syncData = { ...(opts.syncData || {}) };
     const sessionData = { ...(opts.sessionData || {}) };
     const calls = { localSet: [], sessionSet: [], getTree: 0 };
     return {
-        listeners, calls, localData, sessionData,
+        listeners, calls, localData, syncData, sessionData,
         runtime: { lastError: undefined },
         bookmarks: {
             tree: opts.tree || TREE,
@@ -62,6 +63,20 @@ const makeChromeDouble = (opts = {}) => {
                 set(obj, cb) {
                     Object.assign(localData, obj);
                     calls.localSet.push(obj);
+                    if (cb) cb();
+                }
+            },
+            // statsEnabled lives in the sync area since the 2026-08 storage
+            // audit — the collector's start() reads it from here.
+            sync: {
+                get(defaults, cb) {
+                    const out = {};
+                    for (const k of Object.keys(defaults))
+                        out[k] = k in syncData ? syncData[k] : defaults[k];
+                    cb(out);
+                },
+                set(obj, cb) {
+                    Object.assign(syncData, obj);
                     if (cb) cb();
                 }
             },
@@ -207,7 +222,7 @@ describe('navigation counting', () => {
 
 describe('statsEnabled gate (zero-write contract)', () => {
     it('counts nothing when the switch is off at start', async () => {
-        chromeDouble = makeChromeDouble({ localData: { statsEnabled: '' } });
+        chromeDouble = makeChromeDouble({ syncData: { statsEnabled: '' } });
         globalThis.chrome = chromeDouble;
         createVisitStatsCollector().start();
         await flushMicrotasks();
@@ -221,7 +236,7 @@ describe('statsEnabled gate (zero-write contract)', () => {
         await flushMicrotasks();
         navigate('https://b.com/page');
         for (const fn of chromeDouble.listeners.storage)
-            fn({ statsEnabled: { newValue: '' } }, 'local');
+            fn({ statsEnabled: { newValue: '' } }, 'sync');
         vi.advanceTimersByTime(5000);
         expect(chromeDouble.calls.localSet).toEqual([]);
     });

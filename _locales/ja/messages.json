@@ -907,10 +907,7 @@
     "message": "アイコンキャッシュがクリアされました。次回開いたときに再取得されます。"
   },
   "storageUsageIcon": {
-    "message": "アイコン"
-  },
-  "storageUsageBookmarks": {
-    "message": "スキャン/マークデータ"
+    "message": "アイコンキャッシュ"
   },
   "storageUsageOther": {
     "message": "その他"
@@ -930,7 +927,7 @@
     "message": "空き容量"
   },
   "storageUsageHint": {
-    "message": "ブックマークのスキャン/マークデータ、アイコンキャッシュ、設定が使用するストレージ容量です。空き容量はアイコンキャッシュをクリアした後に更新されます。"
+    "message": "ローカル拡張ストレージのみ（chrome.storage.local、約10MBの割り当て）：アイコンキャッシュと設定、その他のローカルデータが含まれます。同期設定、セッションデータ、ブックマークライブラリ自体はここには含まれません。"
   },
   "optionsDonate": {
     "message": "寄付"

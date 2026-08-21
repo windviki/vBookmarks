@@ -907,10 +907,7 @@
     "message": "Đã xóa bộ đệm biểu tượng. Biểu tượng sẽ được tải lại khi mở lần sau."
   },
   "storageUsageIcon": {
-    "message": "Biểu tượng"
-  },
-  "storageUsageBookmarks": {
-    "message": "Dữ liệu quét/đánh dấu"
+    "message": "Bộ nhớ biểu tượng"
   },
   "storageUsageOther": {
     "message": "Khác"
@@ -930,7 +927,7 @@
     "message": "Trống"
   },
   "storageUsageHint": {
-    "message": "Dung lượng lưu trữ được sử dụng bởi dữ liệu quét/đánh dấu dấu trang, bộ nhớ đệm biểu tượng và cài đặt. Dung lượng trống sẽ được cập nhật sau khi xóa bộ nhớ đệm biểu tượng."
+    "message": "Chỉ bộ nhớ mở rộng cục bộ (chrome.storage.local, hạn mức khoảng 10 MB): bộ nhớ biểu tượng cộng với cài đặt và dữ liệu cục bộ khác. Cài đặt đồng bộ, dữ liệu phiên và thư viện dấu trang không được tính ở đây."
   },
   "optionsDonate": {
     "message": "Quyên góp"

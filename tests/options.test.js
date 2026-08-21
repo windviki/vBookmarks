@@ -222,8 +222,10 @@ describe('options.js settings backup', () => {
             // segment keyboard-focusable (tabindex="0" so the tooltip value is
             // reachable without a pointer), and destructive actions marked
             // with .danger (same secondary shape, danger border + text).
+            // 2026-08 storage-audit fix round: the bar is three segments —
+            // icon cache / other / free (the scan/mark segment is gone).
             expect(optionsHtml).toContain('id="storage-usage-summary"');
-            for (const cls of ['usage-icon', 'usage-bookmarks', 'usage-other', 'usage-free'])
+            for (const cls of ['usage-icon', 'usage-other', 'usage-free'])
                 expect(optionsHtml).toContain(`class="usage-seg ${cls}" data-usage="${cls.replace('usage-', '')}" tabindex="0"`);
             for (const id of ['favicon-cache-clear', 'stats-clear', 'import-settings', 'reset-button'])
                 expect(optionsHtml).toMatch(new RegExp(`id="${id}"[^>]*class="danger"`));
@@ -269,23 +271,25 @@ describe('options.js settings backup', () => {
                 expect(sb.elements[id].checked, id).toBe(true);
             expect(sb.elements['favicon-enrich-ddg'].disabled).toBe(false);
 
+            // the favicon switches are sync-routed keys (2026-08 storage
+            // audit): setSetting lands them in chrome.storage.sync
             sb.elements['favicon-enrich'].checked = false;
             await sb.elements['favicon-enrich'].fire('change');
-            expect(sb.localData.faviconEnrich).toBe('');
+            expect(sb.syncData.faviconEnrich).toBe('');
             expect(sb.elements['favicon-enrich-ddg'].disabled).toBe(true);
 
             sb.elements['favicon-enrich'].checked = true;
             await sb.elements['favicon-enrich'].fire('change');
-            expect(sb.localData.faviconEnrich).toBe('1');
+            expect(sb.syncData.faviconEnrich).toBe('1');
             expect(sb.elements['favicon-enrich-ddg'].disabled).toBe(false);
 
             sb.elements['favicon-backup'].checked = false;
             await sb.elements['favicon-backup'].fire('change');
-            expect(sb.localData.faviconBackupInclude).toBe('');
+            expect(sb.syncData.faviconBackupInclude).toBe('');
 
             // restore stored states across reload
             const sb2 = createSandbox({
-                chromeLocalData: {
+                chromeSyncData: {
                     faviconContrast: '', faviconEnrich: '', faviconEnrichAgg: '',
                     faviconBackupInclude: ''
                 }
@@ -302,12 +306,15 @@ describe('options.js settings backup', () => {
     describe('export', () => {
         it('downloads one JSON file with app/version stamp, full local area and only the sync keys', async () => {
             const sb = createSandbox({
-                chromeLocalData: { __migrated_v1: '1', theme: 'dark', zoom: 110 },
+                // theme lives in the sync area since the 2026-08 storage
+                // audit; the local section only carries genuinely local keys
+                chromeLocalData: { __migrated_v1: '1', zoom: 110 },
                 chromeSyncData: {
                     showSyncStatus: 'false',
                     highlightUnsynced: 'true',
                     autoRefreshSync: 'true',
                     syncRefreshInterval: 60,
+                    theme: 'dark',
                     unrelatedKey: 'must-not-leak'
                 }
             });
@@ -320,13 +327,14 @@ describe('options.js settings backup', () => {
             expect(backup.app).toBe('vBookmarks');
             expect(backup.version).toBe('4.0.1');
             expect(typeof backup.exportedAt).toBe('string');
-            expect(backup.local).toEqual({ __migrated_v1: '1', theme: 'dark', zoom: 110 });
+            expect(backup.local).toEqual({ __migrated_v1: '1', zoom: 110 });
             // sync payload is restricted to store.syncKeys
             expect(backup.sync).toEqual({
                 showSyncStatus: 'false',
                 highlightUnsynced: 'true',
                 autoRefreshSync: 'true',
-                syncRefreshInterval: 60
+                syncRefreshInterval: 60,
+                theme: 'dark'
             });
 
             const anchor = sb.created.find(el => el.tagName === 'a');
@@ -340,7 +348,7 @@ describe('options.js settings backup', () => {
             const favKey = 'vbmFavicon:github.com';
             const favIdx = JSON.stringify({ v: 3, down: {}, hosts: { 'github.com': { t: 1, s: 2 } } });
             const seeded = {
-                __migrated_v1: '1', theme: 'dark',
+                __migrated_v1: '1', zoom: 110,
                 [favKey]: 'data:image/png;base64,AAAA',
                 vbmFaviconIdx: favIdx
             };
@@ -349,7 +357,7 @@ describe('options.js settings backup', () => {
             await sb.start();
             await sb.elements['export-settings'].fire('click');
             expect(JSON.parse(await sb.objectURLs[0].text()).local)
-                .toEqual({ __migrated_v1: '1', theme: 'dark', [favKey]: seeded[favKey], vbmFaviconIdx: favIdx });
+                .toEqual({ __migrated_v1: '1', zoom: 110, [favKey]: seeded[favKey], vbmFaviconIdx: favIdx });
             // Switch off: favicon keys stripped from the export to keep it small,
             // and the filename says -no-icons (audit O7).
             sb = createSandbox({ chromeLocalData: { ...seeded } });
@@ -357,7 +365,7 @@ describe('options.js settings backup', () => {
             sb.elements['favicon-backup'].checked = false;
             await sb.elements['export-settings'].fire('click');
             expect(JSON.parse(await sb.objectURLs[0].text()).local)
-                .toEqual({ __migrated_v1: '1', theme: 'dark' });
+                .toEqual({ __migrated_v1: '1', zoom: 110 });
             expect(sb.created.find(el => el.tagName === 'a').download)
                 .toMatch(/-no-icons\.json$/);
         });
@@ -373,7 +381,10 @@ describe('options.js settings backup', () => {
             await sb.start();
             await sb.elements['export-settings'].fire('click');
             const backup = JSON.parse(await sb.objectURLs[0].text());
-            expect(backup.local.theme).toBe('dark');
+            // theme migrated to the sync area at startup (2026-08 storage
+            // audit), so it ships in the sync section, never under local
+            expect(backup.local.theme).toBeUndefined();
+            expect(backup.sync.theme).toBe('dark');
             expect(backup.local.vbmDeadScan).toBeUndefined();
             expect(backup.local['vbmFavicon:github.com']).toBe('data:image/png;base64,AAAA');
         });
@@ -386,7 +397,9 @@ describe('options.js settings backup', () => {
             await pickFile(sb, '{not json');
             expect(sb.alerts).toEqual(['settingsImportInvalid']);
             expect(sb.confirms).toHaveLength(0);
-            expect(sb.localData).toEqual({ __migrated_v1: '1', theme: 'light' });
+            // theme migrated to the sync area at startup; neither area moved
+            expect(sb.localData).toEqual({ __migrated_v1: '1' });
+            expect(sb.syncData).toEqual({ theme: 'light' });
             expect(sb.location.reload).not.toHaveBeenCalled();
         });
 
@@ -425,7 +438,9 @@ describe('options.js settings backup', () => {
             sb.setConfirm(false);
             await pickFile(sb, validBackup());
             expect(sb.confirms).toEqual(['settingsImportConfirm']);
-            expect(sb.localData.theme).toBe('light');
+            // theme migrated to the sync area at startup — and stays 'light'
+            expect(sb.localData.theme).toBeUndefined();
+            expect(sb.syncData.theme).toBe('light');
             expect(sb.syncData.showSyncStatus).toBe('true');
             expect(sb.alerts).toHaveLength(0);
             expect(sb.location.reload).not.toHaveBeenCalled();
@@ -440,9 +455,13 @@ describe('options.js settings backup', () => {
             await pickFile(sb, validBackup({ local: { theme: 'dark', newKey: '1' } }));
 
             expect(sb.confirms).toEqual(['settingsImportConfirm']);
-            // overwritten + added + preserved — no wipe
-            expect(sb.localData).toEqual({ __migrated_v1: '1', theme: 'dark', keepMe: 'x', newKey: '1' });
-            // sync area: backup key overwritten, unmentioned key kept
+            // overwritten + added + preserved — no wipe (theme migrated to
+            // the sync area at startup, so only genuinely local keys remain)
+            expect(sb.localData).toEqual({ __migrated_v1: '1', keepMe: 'x', newKey: '1' });
+            // sync area: backup keys overwritten — theme routed from the
+            // backup's local section into its sync-area home (2026-08
+            // storage audit) — unmentioned key kept
+            expect(sb.syncData.theme).toBe('dark');
             expect(sb.syncData.showSyncStatus).toBe('false');
             expect(sb.syncData.highlightUnsynced).toBe('true');
             expect(sb.alerts).toEqual(['settingsImportDone']);
@@ -461,7 +480,7 @@ describe('options.js settings backup', () => {
                 theme: 'dark',
                 vbmDeadScan: JSON.stringify({ state: 'scanning', done: 200, total: 5000 })
             } }));
-            expect(sb.localData.theme).toBe('dark');
+            expect(sb.syncData.theme).toBe('dark'); // sync-routed on import
             expect(sb.localData.vbmDeadScan).toBeUndefined();
             expect(sb.alerts).toEqual(['settingsImportDone']);
             expect(sb.location.reload).toHaveBeenCalledTimes(1);
@@ -474,7 +493,7 @@ describe('options.js settings backup', () => {
             });
             await sb.start();
             await pickFile(sb, JSON.stringify({ app: 'vBookmarks', local: { theme: 'ink' } }));
-            expect(sb.localData.theme).toBe('ink');
+            expect(sb.syncData.theme).toBe('ink'); // sync-routed on import
             expect(sb.syncData.showSyncStatus).toBe('true');
             expect(sb.alerts).toEqual(['settingsImportDone']);
             expect(sb.location.reload).toHaveBeenCalledTimes(1);
@@ -493,7 +512,7 @@ describe('options.js settings backup', () => {
                 'vbmFavicon:github.com': 'data:image/png;base64,AAAA',
                 vbmFaviconIdx: favIdx
             } }));
-            expect(sb.localData.theme).toBe('dark');
+            expect(sb.syncData.theme).toBe('dark'); // sync-routed on import
             expect(sb.localData['vbmFavicon:github.com']).toBeUndefined();
             expect(sb.localData.vbmFaviconIdx).toBeUndefined();
             expect(sb.alerts).toEqual(['settingsImportDone']);
@@ -513,7 +532,7 @@ describe('options.js settings backup', () => {
                 'vbmFavicon:github.com': 'data:image/png;base64,AAAA',
                 vbmFaviconIdx: favIdx
             } }));
-            expect(sb.localData.theme).toBe('dark');
+            expect(sb.syncData.theme).toBe('dark'); // sync-routed on import
             expect(sb.localData['vbmFavicon:github.com']).toBe('data:image/png;base64,AAAA');
             expect(sb.localData.vbmFaviconIdx).toBe(favIdx);
             expect(sb.alerts).toEqual(['settingsImportDone']);
@@ -537,7 +556,7 @@ describe('options.js settings backup', () => {
                 'vbmFavicon:github.com': 'data:image/png;base64,AAAA',
                 vbmFaviconIdx: '{}'
             } }));
-            expect(sb.localData.theme).toBe('dark');
+            expect(sb.syncData.theme).toBe('dark'); // sync-routed on import
             expect(sb.localData['vbmFavicon:github.com']).toBeUndefined();
             expect(sb.alerts).toEqual(['settingsImportDone']);
             expect(sb.location.reload).toHaveBeenCalledTimes(1);
@@ -552,8 +571,10 @@ describe('options.js settings backup', () => {
             sb.chrome.storage.local.set = async () => { throw new Error('QUOTA_BYTES exceeded'); };
             await pickFile(sb, validBackup({ local: { theme: 'dark' } }));
             expect(sb.alerts).toEqual(['settingsImportError']);
-            expect(sb.localData.theme).toBe('light'); // untouched
-            expect(sb.syncData.showSyncStatus).toBe('true'); // sync write never attempted
+            // theme migrated to the sync area at startup — and stays 'light';
+            // the sync write is never attempted after the local one fails
+            expect(sb.syncData.theme).toBe('light');
+            expect(sb.syncData.showSyncStatus).toBe('true');
             expect(sb.location.reload).not.toHaveBeenCalled();
         });
 
@@ -604,10 +625,12 @@ describe('options.js settings backup', () => {
 });
 
 // Storage-usage bar (v4 Task C): a percentage bar in the Icons group splits
-// chrome.storage.local into icon cache / bookmark data / other / free so the
-// user can decide when to clear the icon cache. 4.0.8 refactor: each segment
-// carries an accessible size label + tooltip data, the legend shows color
-// swatches, and the bar re-measures live on storage.onChanged.
+// chrome.storage.local into icon cache / other / free (2026-08 storage-audit
+// fix round: the scan/mark segment was dropped — the favicon cache is the
+// only dataset with a dynamic byte budget) so the user can decide when to
+// clear the icon cache. 4.0.8 refactor: each segment carries an accessible
+// size label + tooltip data, the legend shows color swatches, and the bar
+// re-measures live on storage.onChanged.
 describe('storage usage bar', () => {
     const iconBytes = sb => {
         const m = (sb.elements['usage-icon']._attributes['aria-label'] || '').match(/storageUsageIcon (\d+(?:\.\d+)?) (B|KB|MB)/);
@@ -620,35 +643,35 @@ describe('storage usage bar', () => {
         const sb = createSandbox({
             chromeLocalData: {
                 __migrated_v1: '1',                                        // other
-                theme: 'dark',                                             // other
+                zoom: '110',                                               // other
                 'vbmFavicon:github.com': 'data:image/png;base64,AAAA',      // icon
                 vbmFaviconIdx: favIdx,                                     // icon
-                deadLastScan: JSON.stringify({ done: 1 }),                 // bookmark data
-                visitStats: '{}'                                           // bookmark data
+                deadLastScan: JSON.stringify({ done: 1 }),                 // other (scan/mark segment gone)
+                visitStats: '{}'                                           // other
             }
         });
         await sb.start();
         // legend: one swatched item per category, colors mirroring the segments
         const legend = legendText(sb);
-        for (const key of ['storageUsageIcon', 'storageUsageBookmarks', 'storageUsageOther', 'storageUsageFree'])
+        for (const key of ['storageUsageIcon', 'storageUsageOther', 'storageUsageFree'])
             expect(legend).toContain(key);
-        for (const sw of ['usage-icon', 'usage-bookmarks', 'usage-other', 'usage-free'])
+        for (const sw of ['usage-icon', 'usage-other', 'usage-free'])
             expect(legend).toContain(`legend-swatch ${sw}`);
         // every segment got a percentage width + an accessible label (10MB quota)
-        for (const id of ['usage-icon', 'usage-bookmarks', 'usage-other', 'usage-free']) {
+        for (const id of ['usage-icon', 'usage-other', 'usage-free']) {
             expect(sb.elements[id].style.width).toMatch(/^\d+(?:\.\d+)?%$/);
             expect(sb.elements[id]._attributes['aria-label']).toMatch(/(B|KB|MB)$/);
             expect(sb.elements[id]._attributes['title']).toBe(sb.elements[id]._attributes['aria-label']);
         }
-        // the bar's aria-label summarizes all four categories
+        // the bar's aria-label summarizes all three categories
         const barLabel = sb.elements['storage-usage-bar']._attributes['aria-label'];
-        for (const key of ['storageUsageIcon', 'storageUsageBookmarks', 'storageUsageOther', 'storageUsageFree'])
+        for (const key of ['storageUsageIcon', 'storageUsageOther', 'storageUsageFree'])
             expect(barLabel).toContain(key);
         // 4.0.9: a summary line answers "used / quota" without hovering, and
         // every legend item also carries its share — never encode data by
         // color alone (chart guidance).
         expect(sb.elements['storage-usage-summary'].textContent).toBe('storageUsageSummary');
-        for (const key of ['storageUsageIcon', 'storageUsageBookmarks', 'storageUsageOther', 'storageUsageFree'])
+        for (const key of ['storageUsageIcon', 'storageUsageOther', 'storageUsageFree'])
             expect(legend).toMatch(new RegExp(`${key} \\d+(\\.\\d+)? (B|KB|MB) \\(\\d+(\\.\\d+)?%\\)`));
     });
 
@@ -702,7 +725,9 @@ describe('storage usage bar', () => {
         await sb.elements['favicon-cache-clear'].fire('click');
         expect(sb.confirms).toHaveLength(0);
         expect(sb.alerts).toEqual(['optionFaviconCacheEmpty']);
-        expect(sb.localData.theme).toBe('dark');
+        // nothing removed — theme (migrated to the sync area at startup)
+        // and the rest of storage stay untouched
+        expect(sb.syncData.theme).toBe('dark');
         expect(sb.localData.vbmFaviconIdx).toBeUndefined();
     });
 
@@ -717,7 +742,8 @@ describe('storage usage bar', () => {
             fn({ 'vbmFavicon:github.com': { newValue: 'data:image/png;base64,AAAA' } }, 'local');
         await new Promise(r => setTimeout(r, 350));
         expect(sb.elements['usage-icon']._attributes['aria-label']).toMatch(/storageUsageIcon \d+ B/);
-        // unrelated local changes (theme via sync never fires local) are ignored
+        // any local change schedules a re-measure now (only the vbmDeadScan
+        // journal is excluded) — the icon figure itself is unaffected
         for (const fn of sb.onChangedListeners) fn({ zoom: { newValue: 110 } }, 'local');
         await new Promise(r => setTimeout(r, 350));
         expect(sb.elements['usage-icon']._attributes['aria-label']).toMatch(/storageUsageIcon \d+ B/);
@@ -744,51 +770,45 @@ describe('storage usage bar', () => {
         await new Promise(r => setTimeout(r, 350));
         expect(fullReads).toBe(1); // the whole burst collapsed into one scan
         expect(sb.elements['usage-icon']._attributes['aria-label']).toMatch(/storageUsageIcon \d+ B/);
-        // unrelated keys never schedule a re-measure
-        for (const fn of sb.onChangedListeners) fn({ zoom: { newValue: 110 } }, 'local');
+        // the dead-scan live journal is the one excluded key: no re-measure
+        for (const fn of sb.onChangedListeners) fn({ vbmDeadScan: { newValue: '{}' } }, 'local');
         await new Promise(r => setTimeout(r, 350));
         expect(fullReads).toBe(1);
+        // any other local change (not just icon keys) schedules one
+        for (const fn of sb.onChangedListeners) fn({ zoom: { newValue: 110 } }, 'local');
+        await new Promise(r => setTimeout(r, 350));
+        expect(fullReads).toBe(2);
     });
 
-    it('counts deadMarks/deadMarkTimes as scan/mark data, not other (audit O4)', async () => {
+    it('counts deadMarks/deadMarkTimes as other — the scan/mark segment is gone (audit O4 revisited)', async () => {
         const sb = createSandbox({
             chromeLocalData: {
-                theme: 'dark',
                 deadMarks: '["12","13"]',
                 deadMarkTimes: '{"12":1700000000000}'
             }
         });
         await sb.start();
+        // the v1 migration flag the real store.js writes rides "other" too
         const expectedBytes = JSON.stringify('["12","13"]').length
-            + JSON.stringify('{"12":1700000000000}').length;
-        expect(sb.elements['usage-bookmarks']._attributes['aria-label'])
-            .toBe(`storageUsageBookmarks ${expectedBytes} B`);
+            + JSON.stringify('{"12":1700000000000}').length
+            + JSON.stringify('1').length; // __migrated_v1
+        expect(sb.elements['usage-other']._attributes['aria-label'])
+            .toBe(`storageUsageOther ${expectedBytes} B`);
     });
 
     it('prefers chrome.storage.local.getBytesInUse for real billed bytes (audit O9)', async () => {
-        const bytesFor = keys => {
-            const first = keys[0] || '';
-            if (first.startsWith('vbmFavicon'))
-                return 100;
-            if (first === 'deadMarks' || first === 'deadMarkTimes'
-                || first === 'deadLastScan' || first === 'vbmDeadScan' || first === 'visitStats')
-                return 200;
-            return 300;
-        };
-        const getBytesInUse = vi.fn(async keys => bytesFor(keys));
+        const getBytesInUse = vi.fn(async keys => (keys[0] || '').startsWith('vbmFavicon') ? 100 : 200);
         const sb = createSandbox({
             chromeLocalData: {
                 'vbmFavicon:github.com': 'data:image/png;base64,AAAA',
-                deadMarks: '["12"]',
-                theme: 'dark'
+                deadMarks: '["12"]' // rides "other" since the bar simplification
             },
             chromeLocalExtras: { getBytesInUse }
         });
         await sb.start();
-        expect(getBytesInUse).toHaveBeenCalledTimes(3);
+        expect(getBytesInUse).toHaveBeenCalledTimes(2); // icon bucket + other bucket
         expect(sb.elements['usage-icon']._attributes['aria-label']).toBe('storageUsageIcon 100 B');
-        expect(sb.elements['usage-bookmarks']._attributes['aria-label']).toBe('storageUsageBookmarks 200 B');
-        expect(sb.elements['usage-other']._attributes['aria-label']).toBe('storageUsageOther 300 B');
+        expect(sb.elements['usage-other']._attributes['aria-label']).toBe('storageUsageOther 200 B');
     });
 });
 
@@ -932,14 +952,15 @@ describe('view hide/disable controls (4.0.8)', () => {
     it('disabling a view writes its disable key and greys out its show option', async () => {
         const sb = createSandbox();
         await sb.start();
+        // the disable*View keys are sync-routed (2026-08 storage audit)
         await sb.elements['stats-view-toggle'].fire('click');
-        expect(sb.localData.disableStatsView).toBe('1');
+        expect(sb.syncData.disableStatsView).toBe('1');
         expect(sb.elements['show-stats-view'].disabled).toBe(true);
         expect(sb.elements['stats-view-state'].textContent).toBe('viewStateDisabled');
         expect(sb.elements['stats-view-toggle'].textContent).toBe('viewEnable');
 
         await sb.elements['stats-view-toggle'].fire('click');
-        expect(sb.localData.disableStatsView).toBe('');
+        expect(sb.syncData.disableStatsView).toBe('');
         expect(sb.elements['show-stats-view'].disabled).toBe(false);
         expect(sb.elements['stats-view-state'].textContent).toBe('viewStateEnabled');
         expect(sb.elements['stats-view-toggle'].textContent).toBe('viewDisable');
@@ -975,9 +996,10 @@ describe('classic-experience preset (v4 task-3 #20 + issue #49)', () => {
 
         await sb.elements['classic-experience'].fire('click');
 
+        // every one of these switches is a sync-routed key (2026-08 storage audit)
         for (const key of ['paletteEnabled', 'quickAddEnabled', 'quickAddContextMenu',
             'showToolButton', 'showViewTabs'])
-            expect(sb.localData[key]).toBe('');
+            expect(sb.syncData[key]).toBe('');
         expect(sb.elements['quick-add-context-menu'].checked).toBe(false);
         expect(sb.elements['palette-enabled'].checked).toBe(false);
         expect(sb.elements['show-tool-button'].checked).toBe(false);
@@ -990,12 +1012,12 @@ describe('classic-experience preset (v4 task-3 #20 + issue #49)', () => {
         // user unchecks the context-menu entry → key flips to '' (off)
         sb.elements['quick-add-context-menu'].checked = false;
         await sb.elements['quick-add-context-menu'].fire('change');
-        expect(sb.localData.quickAddContextMenu).toBe('');
+        expect(sb.syncData.quickAddContextMenu).toBe('');
 
         // re-checks → back to '1'
         sb.elements['quick-add-context-menu'].checked = true;
         await sb.elements['quick-add-context-menu'].fire('change');
-        expect(sb.localData.quickAddContextMenu).toBe('1');
+        expect(sb.syncData.quickAddContextMenu).toBe('1');
     });
 });
 
@@ -1062,7 +1084,7 @@ describe('Sorting group (issue #33)', () => {
         sb.elements['sort-options-folders-first'].checked = true;
         await sb.elements['sort-options-folders-first'].fire('change');
 
-        expect(JSON.parse(sb.localData.sortOptions))
+        expect(JSON.parse(sb.syncData.sortOptions))
             .toEqual({ by: 'title', foldersFirst: true, recursive: true });
     });
 
@@ -1168,17 +1190,18 @@ describe('issue #48 collapse switches (tab-group default off, sort default on)',
         const sb = createSandbox();
         await sb.start();
 
+        // the collapse switches are sync-routed keys (2026-08 storage audit)
         sb.elements['collapse-tab-group-menu'].checked = true;
         await sb.elements['collapse-tab-group-menu'].fire('change');
-        expect(sb.localData.collapseTabGroupMenu).toBe('1');
+        expect(sb.syncData.collapseTabGroupMenu).toBe('1');
 
         sb.elements['collapse-tab-group-menu'].checked = false;
         await sb.elements['collapse-tab-group-menu'].fire('change');
-        expect(sb.localData.collapseTabGroupMenu).toBe('');
+        expect(sb.syncData.collapseTabGroupMenu).toBe('');
 
         sb.elements['collapse-sort-menu'].checked = false;
         await sb.elements['collapse-sort-menu'].fire('change');
-        expect(sb.localData.collapseSortMenu).toBe('');
+        expect(sb.syncData.collapseSortMenu).toBe('');
     });
 
     it('restores a stored on/off state across every value convention', async () => {

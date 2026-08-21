@@ -907,10 +907,7 @@
     "message": "아이콘 캐시가 지워졌습니다. 다음에 열 때 아이콘이 다시 불러와집니다."
   },
   "storageUsageIcon": {
-    "message": "아이콘"
-  },
-  "storageUsageBookmarks": {
-    "message": "스캔/표시 데이터"
+    "message": "아이콘 캐시"
   },
   "storageUsageOther": {
     "message": "기타"
@@ -930,7 +927,7 @@
     "message": "사용 가능"
   },
   "storageUsageHint": {
-    "message": "북마크 스캔/표시 데이터, 아이콘 캐시, 설정에 사용되는 저장 공간입니다. 아이콘 캐시를 지운 후 사용 가능한 공간이 업데이트됩니다."
+    "message": "확장 프로그램 로컬 저장소만 해당(chrome.storage.local, 약 10MB 할당량): 아이콘 캐시와 설정 및 기타 로컬 데이터. 동기화된 설정, 세션 데이터 및 북마크 라이브러리 자체는 여기에 포함되지 않습니다."
   },
   "optionsDonate": {
     "message": "후원"

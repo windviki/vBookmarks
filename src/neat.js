@@ -127,11 +127,14 @@ import { shouldHighlightUnsynced, shouldRememberState } from './settings.js';
     // popup simply reloads on each open and never needed this). Listen
     // directly: remember the pushed value for the getter above and re-decide
     // every cached icon — turning the service off also sweeps the invert
-    // classes it previously applied.
+    // classes it previously applied. The favicon switches live in the sync
+    // area since the 2026-08 storage audit (store.js routes them), so the
+    // listener accepts both areas — a pre-migration local write must still
+    // apply live.
     const wc = window.chrome;
     if (faviconService && wc && wc.storage && wc.storage.onChanged) {
         wc.storage.onChanged.addListener((changes, area) => {
-            if (area !== 'local' || !changes)
+            if ((area !== 'sync' && area !== 'local') || !changes)
                 return;
             if (Object.prototype.hasOwnProperty.call(changes, 'faviconContrast')) {
                 faviconContrastLive = changes.faviconContrast.newValue ?? '1';
@@ -145,6 +148,14 @@ import { shouldHighlightUnsynced, shouldRememberState } from './settings.js';
             // loaded yet (audit F8).
             if (enricher && (Object.prototype.hasOwnProperty.call(changes, 'faviconEnrich')
                 || Object.prototype.hasOwnProperty.call(changes, 'faviconEnrichAgg'))) {
+                // Adopt the pushed values first — the options page writes
+                // through setSetting, which only updates ITS OWN page's
+                // mirror, so a bare store.get here would read a stale value
+                // in an already-open panel.
+                if (Object.prototype.hasOwnProperty.call(changes, 'faviconEnrich'))
+                    store.adopt('faviconEnrich', changes.faviconEnrich.newValue);
+                if (Object.prototype.hasOwnProperty.call(changes, 'faviconEnrichAgg'))
+                    store.adopt('faviconEnrichAgg', changes.faviconEnrichAgg.newValue);
                 enricher.setEnabled(store.get('faviconEnrich', '1') === '1');
             }
         });

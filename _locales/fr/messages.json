@@ -907,10 +907,7 @@
     "message": "Cache d'icônes vidé. Les icônes seront récupérées à la prochaine ouverture."
   },
   "storageUsageIcon": {
-    "message": "Icônes"
-  },
-  "storageUsageBookmarks": {
-    "message": "Données de scan/marquage"
+    "message": "Cache d'icônes"
   },
   "storageUsageOther": {
     "message": "Autres"
@@ -930,7 +927,7 @@
     "message": "Libre"
   },
   "storageUsageHint": {
-    "message": "Espace de stockage utilisé par les données de scan/marquage des signets, le cache d'icônes et les paramètres. L'espace libre est mis à jour après la suppression du cache d'icônes."
+    "message": "Stockage local de l'extension uniquement (chrome.storage.local, quota d'environ 10 Mo) : le cache d'icônes ainsi que les paramètres et autres données locales. Les paramètres synchronisés, les données de session et la bibliothèque de signets elle-même ne sont pas comptés ici."
   },
   "optionsDonate": {
     "message": "Faire un don"

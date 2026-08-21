@@ -338,9 +338,16 @@ const sweepViews = async (page, tag, { includePalette, capture = false }) => {
     await sleep(600);
     await seedPage.close();
 
-    const setPrefs = prefs => worker.evaluate(({ keys, values }) =>
-        chrome.storage.local.set(Object.fromEntries(keys.map((k, i) => [k, values[i]]))),
-        { keys: PREF_KEYS, values: prefs });
+    // Area split (2026-08 storage audit): the sync-routed PREF_KEYS members
+    // must go to chrome.storage.sync — once the store migration has moved a
+    // key, the sync area owns it and later local writes are ignored (and
+    // cleaned as stale residue).
+    const SYNC_PREF_KEYS = new Set(['rememberView', 'onlyShowBMBar', 'showViewTabs', 'showToolButton', 'paletteEnabled']);
+    const setPrefs = prefs => worker.evaluate(({ keys, values, syncKeys }) => {
+        const local = {}, sync = {};
+        keys.forEach((k, i) => (syncKeys.includes(k) ? sync : local)[k] = values[i]);
+        return Promise.all([chrome.storage.local.set(local), chrome.storage.sync.set(sync)]);
+    }, { keys: PREF_KEYS, values: prefs, syncKeys: [...SYNC_PREF_KEYS] });
 
     const basePrefs = ({ width, height, autoResize }) => [
         width, height, autoResize ? '1' : 'false', '', '', '', '1', '1', '1'

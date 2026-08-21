@@ -907,10 +907,7 @@
     "message": "Simge önbelleği temizlendi. Simgeler bir sonraki açılışta yeniden getirilecek."
   },
   "storageUsageIcon": {
-    "message": "Simgeler"
-  },
-  "storageUsageBookmarks": {
-    "message": "Tarama/işaretleme verileri"
+    "message": "Simge önbelleği"
   },
   "storageUsageOther": {
     "message": "Diğer"
@@ -930,7 +927,7 @@
     "message": "Boş"
   },
   "storageUsageHint": {
-    "message": "Yer imi tarama/işaretleme verileri, simge önbelleği ve ayarlar tarafından kullanılan depolama alanı. Simge önbelleği temizlendikten sonra boş alan güncellenir."
+    "message": "Yalnızca yerel uzantı depolaması (chrome.storage.local, yaklaşık 10 MB kota): simge önbelleği ile ayarlar ve diğer yerel veriler. Eşitlenmiş ayarlar, oturum verileri ve yer imi kitaplığının kendisi buraya dahil edilmez."
   },
   "optionsDonate": {
     "message": "Bağış Yap"

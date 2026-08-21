@@ -94,7 +94,11 @@ const SEED = `
         {
             const o = await browser.newPage();
             await o.goto(`chrome-extension://${extId}/pages/options.html`, { waitUntil: 'load' });
-            await o.evaluate(cs => chrome.storage.local.set({ collapseSortMenu: cs ? '1' : '' }), collapseSort);
+            // collapseSortMenu is sync-routed (2026-08 storage audit).
+            await o.evaluate(cs => Promise.all([
+                chrome.storage.sync.set({ collapseSortMenu: cs ? '1' : '' }),
+                chrome.storage.local.remove('collapseSortMenu')
+            ]), collapseSort);
             await o.close();
         }
         await page.evaluateOnNewDocument(() => { window.close = () => {}; });

@@ -907,10 +907,7 @@
     "message": "Ikonu kešatmiņa ir notīrīta. Ikonas tiks atkārtoti iegūtas nākamajā atvēršanas reizē."
   },
   "storageUsageIcon": {
-    "message": "Ikonas"
-  },
-  "storageUsageBookmarks": {
-    "message": "Skenēšanas/atzīmju dati"
+    "message": "Ikonu kešatmiņa"
   },
   "storageUsageOther": {
     "message": "Citi"
@@ -930,7 +927,7 @@
     "message": "Brīvs"
   },
   "storageUsageHint": {
-    "message": "Krātuves vieta, ko izmanto grāmatzīmju skenēšanas/atzīmju dati, ikonu kešatmiņa un iestatījumi. Brīvā vieta tiek atjaunināta pēc ikonu kešatmiņas notīrīšanas."
+    "message": "Tikai vietējā paplašinājuma krātuve (chrome.storage.local, aptuveni 10 MB kvota): ikonu kešatmiņa plus iestatījumi un citi vietējie dati. Sinhronizētie iestatījumi, sesijas dati un paša grāmatzīmju bibliotēka šeit netiek ieskaitīti."
   },
   "optionsDonate": {
     "message": "Ziedot"

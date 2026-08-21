@@ -907,10 +907,7 @@
     "message": "Piktogramų talpykla išvalyta. Piktogramos bus gautos iš naujo kitą kartą atidarius."
   },
   "storageUsageIcon": {
-    "message": "Piktogramos"
-  },
-  "storageUsageBookmarks": {
-    "message": "Skenavimo/žymėjimo duomenys"
+    "message": "Piktogramų talpykla"
   },
   "storageUsageOther": {
     "message": "Kita"
@@ -930,7 +927,7 @@
     "message": "Laisva vieta"
   },
   "storageUsageHint": {
-    "message": "Saugyklos vieta, kurią naudoja žymių skenavimo/žymėjimo duomenys, piktogramų talpykla ir nustatymai. Laisva vieta atnaujinama išvalius piktogramų talpyklą."
+    "message": "Tik vietinė plėtinio saugykla (chrome.storage.local, maždaug 10 MB kvota): piktogramų talpykla, nustatymai ir kiti vietiniai duomenys. Sinchronizuoti nustatymai, sesijos duomenys ir pati žymių biblioteka čia neskaičiuojami."
   },
   "optionsDonate": {
     "message": "Paremkite"

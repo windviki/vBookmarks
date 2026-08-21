@@ -907,10 +907,7 @@
     "message": "Caché de iconos limpiada. Los iconos se volverán a obtener en la próxima apertura."
   },
   "storageUsageIcon": {
-    "message": "Iconos"
-  },
-  "storageUsageBookmarks": {
-    "message": "Datos de escaneo/marcado"
+    "message": "Caché de iconos"
   },
   "storageUsageOther": {
     "message": "Otros"
@@ -930,7 +927,7 @@
     "message": "Libre"
   },
   "storageUsageHint": {
-    "message": "Espacio de almacenamiento utilizado por los datos de escaneo/marcado de marcadores, la caché de iconos y los ajustes. El espacio libre se actualiza después de vaciar la caché de iconos."
+    "message": "Solo almacenamiento local de la extensión (chrome.storage.local, cuota de unos 10 MB): la caché de iconos más la configuración y otros datos locales. La configuración sincronizada, los datos de sesión y la propia biblioteca de marcadores no se cuentan aquí."
   },
   "optionsDonate": {
     "message": "Donar"

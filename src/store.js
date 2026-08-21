@@ -11,8 +11,15 @@
  *    then asynchronously overlaid with chrome.storage.local, which is the
  *    source of truth. `store.ready` resolves once the overlay and the
  *    migration below have finished; pages must gate their init on it.
- *    A second mirror (`getSyncSetting`/`setSyncSetting`) covers the
- *    chrome.storage.sync area for cross-device preferences (SYNC_KEYS).
+ *    A second mirror covers the chrome.storage.sync area (SYNC_KEYS). Access
+ *    is AREA-TRANSPARENT since the 2026-08 storage audit: store.get/set/
+ *    remove/adopt (and the getSetting/setSetting/removeSetting helpers)
+ *    route SYNC_KEYS members to the sync mirror/area automatically, so call
+ *    sites never name an area. localStorage doubles as the synchronous boot
+ *    cache for sync-routed keys (pre-paint theme, synchronous i18n patch) —
+ *    store.set/remove keep those copies fresh; feature code never writes
+ *    localStorage directly. getSyncSetting/setSyncSetting remain as explicit
+ *    sync-mirror accessors.
  *
  * 2. Migration (idempotent) — gated by the `__migrated_v1` flag in
  *    chrome.storage.local. On first run, every known extension key present in
@@ -29,8 +36,9 @@
  * value model); no type conversion happens here.
  *
  * Back-compat async helpers (`getSetting`/`setSetting`/`removeSetting`, used by
- * options.js and popup.js) bypass the mirror and talk to chrome.storage
- * directly; pass useSync=true to use the sync area.
+ * options.js and popup.js) talk to chrome.storage directly; the area is chosen
+ * by SYNC_KEYS membership (the useSync flag still forces sync for back-compat),
+ * and writes to sync-routed keys also refresh the sync mirror + boot copy.
  */
 (() => {
     const MIGRATION_FLAG = '__migrated_v1';
@@ -78,26 +86,88 @@
         // (shared by the sort dialog and the options page Sorting group)
         'sortOptions',
         // version & donation
-        'currentVersion', 'openCount', 'donationKey', 'donationCountDown', 'donationFactor'
+        'currentVersion', 'openCount', 'donationKey', 'donationCountDown', 'donationFactor',
+        // 2026-08 storage-audit census completion (report task P0-1): the
+        // remaining real settings keys that never lived in KNOWN_KEYS. The
+        // pre-fill/migration loops below are null-safe for keys localStorage
+        // never held, so listing them costs nothing and the census
+        // (tests/storage-usage.test.js) now covers every settings key.
+        'statsEnabled', 'openInSidePanel', 'quickAddFolderId', 'announceEnabled',
+        'collapseTabGroupMenu', 'collapseSortMenu',
+        'deadScanConcurrency', 'deadScanTimeout', 'hideDeadProxyStrip', 'deadProxyServer',
+        'donationDisabled', 'vbmBtnAlt',
+        'statsShowUnbookmarked', 'statsSort', 'statsHistoryBannerDismissed', 'statsHistoryImportedAt',
+        'dupesStrategy', 'dupesScope', 'dupesIgnoreScheme',
+        'deadSort', 'deadFilter', 'deadMarkFilter',
+        // 'showSyncStatus' historically lived in localStorage (the other sync
+        // keys were born in the sync area) — listing it lets the v1 migration
+        // hand it to chrome.storage.local, from where the local→sync
+        // migration below moves it to its final home.
+        'showSyncStatus'
     ];
 
-    // Keys that live in chrome.storage.sync (user preferences synced across devices).
-    // Value model: toggles as 'true'/'false' strings (written by options.js),
-    // syncRefreshInterval as a number of seconds. 'showSyncStatus' historically
-    // lived in localStorage and is migrated into the sync area.
-    // v4 task-4 #6: paletteCustomCommands (JSON array string, ≤100 entries)
-    // syncs so a user's palette commands follow them across devices.
-    const SYNC_KEYS = ['showSyncStatus', 'highlightUnsynced', 'autoRefreshSync', 'syncRefreshInterval',
-        'paletteCustomCommands'];
+    // Keys that live in chrome.storage.sync (user preferences synced across
+    // devices). Value model: toggles as '1'/'' or 'true'/'false' strings per
+    // the existing call sites, syncRefreshInterval as a number of seconds.
+    // v4 task-4 #6: paletteCustomCommands (JSON array string, ≤100 entries).
+    //
+    // 2026-08 storage audit (docs/storage-usage-report.md §15): every small,
+    // device-INDEPENDENT preference moved to the sync area. store.get/set/
+    // remove/adopt and the getSetting/setSetting/removeSetting helpers route
+    // these keys transparently, so call sites keep their existing API. A
+    // one-time local→sync migration runs in init() below.
+    //
+    // Deliberately NOT here (stay local):
+    // - bookmark-id-keyed data (bookmark ids are device-local and unstable
+    //   across Chrome sync): quickAddFolderId, separators*, deadMarks*,
+    //   visitStats, focusID;
+    // - oversized values: customIcon (~10-14KB serialized > 8KB/item sync
+    //   limit), userstyle (unbounded CSS);
+    // - device/screen/network state: openInSidePanel, autoResizePopup, zoom,
+    //   popup size/scroll/focus/view state, deadProxyServer, deadScan*;
+    // - privacy/local data: searchHistory; remote caches: vbmAnnounce*,
+    //   vbmGithubMirrors; local bookkeeping: version/donation counters.
+    const SYNC_KEYS = [
+        // sync-status preferences (the original four)
+        'showSyncStatus', 'highlightUnsynced', 'autoRefreshSync', 'syncRefreshInterval',
+        'paletteCustomCommands',
+        // appearance
+        'theme', 'uiLanguage',
+        // general behavior
+        'leftClickNewTab', 'middleClickBgTab', 'closeUnusedFolders', 'bookmarkClickStayOpen',
+        'dontConfirmOpenFolder', 'confirmDeleteFolder', 'dontRememberState',
+        'onlyShowBMBar', 'searchAfterEnter', 'announceEnabled',
+        // views: tab strip, per-view visibility/disable, badges, path labels
+        'showViewTabs', 'rememberView', 'showTabBadges', 'showItemPath',
+        'showRecentBookmarks', 'showStatsView', 'showDeadView', 'showDupesView',
+        'disableRecentView', 'disableStatsView', 'disableDeadView', 'disableDupesView',
+        // feature switches
+        'paletteEnabled', 'quickAddEnabled', 'showToolButton', 'quickAddContextMenu',
+        'collapseTabGroupMenu', 'collapseSortMenu', 'statsEnabled', 'searchHistoryEnabled',
+        // icon handling
+        'faviconContrast', 'faviconEnrich', 'faviconEnrichAgg', 'faviconBackupInclude',
+        // sort/filter/count preferences
+        'recentCount', 'sortOptions',
+        'dupesStrategy', 'dupesScope', 'dupesIgnoreScheme',
+        'deadSort', 'deadFilter', 'deadMarkFilter',
+        'statsSort', 'statsShowUnbookmarked'
+    ];
+    const SYNC_KEY_SET = new Set(SYNC_KEYS);
+    const isSyncKey = key => SYNC_KEY_SET.has(key);
 
     const mirror = {};
     const syncMirror = {};
 
-    // 1a. Synchronous pre-fill from localStorage
+    // 1a. Synchronous pre-fill from localStorage — sync-routed keys pre-fill
+    // the SYNC mirror: localStorage doubles as the synchronous boot cache for
+    // them (popup.js applies the theme before first paint, i18n-live patches
+    // the language synchronously), so their copies are kept fresh by
+    // store.set/remove (audit revision 3 — feature code never writes
+    // localStorage directly; store.js maintains the copies centrally).
     for (const key of KNOWN_KEYS) {
         const value = localStorage.getItem(key);
         if (value !== null && value !== undefined) {
-            mirror[key] = value;
+            (isSyncKey(key) ? syncMirror : mirror)[key] = value;
         }
     }
 
@@ -163,24 +233,58 @@
     };
 
     const store = {
-        // Synchronous read from the mirror
+        // Synchronous read from the mirror (sync-routed keys read the
+        // chrome.storage.sync mirror — transparent to call sites)
         get(key, defaultValue) {
-            return (key in mirror) ? mirror[key] : defaultValue;
+            const m = isSyncKey(key) ? syncMirror : mirror;
+            return (key in m) ? m[key] : defaultValue;
         },
-        // Synchronous mirror write + debounced persistence
+        // Synchronous mirror write + debounced persistence. Sync-routed keys
+        // persist to chrome.storage.sync and refresh the localStorage boot
+        // copy (kept for the pre-fill above).
         set(key, value) {
+            if (isSyncKey(key)) {
+                syncMirror[key] = value;
+                try { localStorage.setItem(key, String(value)); } catch (e) { /* quota/full — boot copy is best-effort */ }
+                scheduleSyncPersist(key, value);
+                return;
+            }
             mirror[key] = value;
             schedulePersist(key, value);
         },
         // Update the mirror WITHOUT persisting. chrome.storage.onChanged
         // listeners (view-manager, …) use this to keep the in-memory mirror
         // fresh when another page (options) wrote storage — no write-back,
-        // no event loop.
+        // no event loop. Sync-routed keys adopt into the sync mirror and
+        // refresh the boot copy.
         adopt(key, value) {
+            if (isSyncKey(key)) {
+                // undefined = the key was removed (onChanged newValue) —
+                // delete so store.get falls back to its default again.
+                if (value === undefined || value === null) {
+                    delete syncMirror[key];
+                    localStorage.removeItem(key);
+                } else {
+                    syncMirror[key] = value;
+                    try { localStorage.setItem(key, String(value)); } catch (e) { /* best-effort */ }
+                }
+                return;
+            }
             mirror[key] = value;
         },
         // Mirror + persistent removal
         remove(key) {
+            if (isSyncKey(key)) {
+                delete syncMirror[key];
+                if (key in syncPendingWrites) {
+                    clearTimeout(syncTimers[key]);
+                    delete syncTimers[key];
+                    delete syncPendingWrites[key];
+                }
+                localStorage.removeItem(key);
+                chrome.storage.sync.remove(key);
+                return;
+            }
             delete mirror[key];
             if (key in pendingWrites) {
                 clearTimeout(timers[key]);
@@ -266,6 +370,10 @@
                 await chrome.storage.local.set(toMigrate);
                 for (const key in toMigrate) {
                     mirror[key] = toMigrate[key];
+                    // Keep the snapshot current too: the local→sync migration
+                    // below reads `data`, so a sync-bound legacy key must be
+                    // visible there in THIS load, not only from the next one.
+                    data[key] = toMigrate[key];
                 }
             }
             // 3. v2 key merge (idempotent, runs on every load): the legacy
@@ -290,19 +398,81 @@
                 await chrome.storage.local.remove('deadProxyTemplate');
                 localStorage.removeItem('deadProxyTemplate');
             }
-            // 1c. Load the sync area into its own mirror
+            // 1c. Load the sync area into its own mirror (overlay: the sync
+            // area is the source of truth over the localStorage pre-fill)
             try {
                 const syncData = await chrome.storage.sync.get(null);
                 for (const key in syncData) {
                     syncMirror[key] = syncData[key];
                 }
-                // 'showSyncStatus' historically lived in localStorage; migrate it
-                // into the sync area once (sync area wins if already set).
-                if (!data[MIGRATION_FLAG] && !('showSyncStatus' in syncData)) {
-                    const legacy = localStorage.getItem('showSyncStatus');
-                    if (legacy !== null && legacy !== undefined) {
-                        syncMirror.showSyncStatus = legacy;
-                        await chrome.storage.sync.set({ showSyncStatus: legacy });
+                // 5. local→sync migration for the keys that moved to the sync
+                // area (idempotent, runs on every load; supersedes the old
+                // showSyncStatus-only migration). The sync area wins when it
+                // already holds a value; otherwise the chrome.storage.local
+                // value is copied up. Local residue is removed only after a
+                // successful sync write — a failed write keeps the local copy
+                // so the next load retries. The localStorage boot copy is
+                // refreshed to the winning value either way (audit revision 3).
+                //
+                // NOTE: localStorage is deliberately NOT a migration source.
+                // Legacy localStorage-only values already reached
+                // chrome.storage.local via the v1 migration above, so a
+                // localStorage fallback would only ever resurrect STALE boot
+                // copies: a key removed from the sync area (another device,
+                // or a page bypassing the store helpers) must stay removed.
+                const toSync = {};
+                const localRemovals = [];   // safe to drop ONLY after a successful sync write
+                const staleRemovals = [];   // sync area already owns the value — always safe
+                for (const key of SYNC_KEYS) {
+                    if (Object.prototype.hasOwnProperty.call(syncData, key)) {
+                        // sync wins; any local residue is stale (it would
+                        // otherwise ride backup exports as a dead key).
+                        if (Object.prototype.hasOwnProperty.call(data, key))
+                            staleRemovals.push(key);
+                        continue;
+                    }
+                    if (Object.prototype.hasOwnProperty.call(data, key)) {
+                        toSync[key] = data[key];
+                        localRemovals.push(key);
+                    }
+                }
+                for (const key in toSync) {
+                    syncMirror[key] = toSync[key];
+                }
+                if (Object.keys(toSync).length) {
+                    try {
+                        await chrome.storage.sync.set(toSync);
+                        staleRemovals.push(...localRemovals);
+                    } catch (error) {
+                        console.warn('store: local→sync migration write failed (will retry next load):', error);
+                    }
+                }
+                if (staleRemovals.length) {
+                    for (const key of staleRemovals) {
+                        delete mirror[key];
+                    }
+                    await chrome.storage.local.remove(staleRemovals);
+                }
+                // Boot-copy hygiene FIRST: a sync key that is in NEITHER the
+                // sync area NOR the just-migrated set, but sits in the
+                // pre-filled syncMirror (i.e. came from the localStorage boot
+                // cache), is a STALE copy — the value was removed after the
+                // copy was written (another device, or an external removal).
+                // Drop it from the mirror and the cache, or the removal would
+                // be silently undone on every load.
+                for (const key of SYNC_KEYS) {
+                    if (Object.prototype.hasOwnProperty.call(syncData, key)
+                        || Object.prototype.hasOwnProperty.call(toSync, key))
+                        continue;
+                    if (Object.prototype.hasOwnProperty.call(syncMirror, key)) {
+                        delete syncMirror[key];
+                        localStorage.removeItem(key);
+                    }
+                }
+                // Then refresh the boot copies to the winning values.
+                for (const key of SYNC_KEYS) {
+                    if (Object.prototype.hasOwnProperty.call(syncMirror, key)) {
+                        try { localStorage.setItem(key, String(syncMirror[key])); } catch (e) { /* best-effort */ }
                     }
                 }
             } catch (error) {
@@ -322,11 +492,17 @@
     window.store = store;
 
     // Back-compat async helpers (same signatures as the old storage.js).
-    // These bypass the mirror and talk to chrome.storage directly.
+    // Keys in SYNC_KEYS route to chrome.storage.sync automatically (the
+    // useSync flag is kept for back-compat and still forces the sync area);
+    // everything else goes to chrome.storage.local. setSetting/removeSetting
+    // on a sync-routed key also refresh the sync mirror and the localStorage
+    // boot copy so pages that read synchronously (store.get pre-paint, the
+    // pre-fill on the next open) never see a stale value.
+    const areaFor = (key, useSync) =>
+        (useSync || isSyncKey(key)) ? chrome.storage.sync : chrome.storage.local;
     window.getSetting = async (key, defaultValue, useSync = false) => {
         try {
-            const storage = useSync ? chrome.storage.sync : chrome.storage.local;
-            const result = await storage.get({ [key]: defaultValue });
+            const result = await areaFor(key, useSync).get({ [key]: defaultValue });
             return result[key];
         } catch (error) {
             console.warn(`Failed to get setting ${key}:`, error);
@@ -336,8 +512,11 @@
 
     window.setSetting = async (key, value, useSync = false) => {
         try {
-            const storage = useSync ? chrome.storage.sync : chrome.storage.local;
-            await storage.set({ [key]: value });
+            await areaFor(key, useSync).set({ [key]: value });
+            if (isSyncKey(key)) {
+                syncMirror[key] = value;
+                try { localStorage.setItem(key, String(value)); } catch (e) { /* best-effort */ }
+            }
         } catch (error) {
             console.warn(`Failed to set setting ${key}:`, error);
         }
@@ -345,8 +524,11 @@
 
     window.removeSetting = async (key, useSync = false) => {
         try {
-            const storage = useSync ? chrome.storage.sync : chrome.storage.local;
-            await storage.remove(key);
+            await areaFor(key, useSync).remove(key);
+            if (isSyncKey(key)) {
+                delete syncMirror[key];
+                localStorage.removeItem(key);
+            }
         } catch (error) {
             console.warn(`Failed to remove setting ${key}:`, error);
         }

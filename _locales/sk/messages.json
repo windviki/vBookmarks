@@ -907,10 +907,7 @@
     "message": "Medzipamäť ikon bola vyčistená. Ikony sa pri ďalšom otvorení znova načítajú."
   },
   "storageUsageIcon": {
-    "message": "Ikony"
-  },
-  "storageUsageBookmarks": {
-    "message": "Údaje skenovania/označovania"
+    "message": "Cache ikon"
   },
   "storageUsageOther": {
     "message": "Ostatné"
@@ -930,7 +927,7 @@
     "message": "Voľné"
   },
   "storageUsageHint": {
-    "message": "Miesto v úložisku používané údajmi skenovania/označovania záložiek, vyrovnávacou pamäťou ikon a nastaveniami. Voľné miesto sa aktualizuje po vyčistení vyrovnávacej pamäte ikon."
+    "message": "Len lokálne úložisko rozšírenia (chrome.storage.local, kvóta približne 10 MB): cache ikon plus nastavenia a iné lokálne údaje. Synchronizované nastavenia, údaje relácie a samotná knižnica záložiek sa tu nezapočítavajú."
   },
   "optionsDonate": {
     "message": "Prispieť"

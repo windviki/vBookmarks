@@ -108,10 +108,17 @@ describe('store.js', () => {
                 }
             });
             await sb.window.store.ready;
-            expect(sb.localData.faviconContrast).toBe('1');
-            expect(sb.localData.faviconEnrich).toBe('');
-            expect(sb.localData.faviconEnrichAgg).toBe('1');
-            expect(sb.localData.faviconBackupInclude).toBe('');
+            // All four are sync-routed (2026-08 storage audit): the v1
+            // migration hands them to chrome.storage.local and the local→sync
+            // migration moves them on to the sync area, cleaning the local
+            // residue after the successful write.
+            expect(sb.syncData.faviconContrast).toBe('1');
+            expect(sb.syncData.faviconEnrich).toBe('');
+            expect(sb.syncData.faviconEnrichAgg).toBe('1');
+            expect(sb.syncData.faviconBackupInclude).toBe('');
+            expect('faviconContrast' in sb.localData).toBe(false);
+            expect('faviconEnrich' in sb.localData).toBe(false);
+            expect('faviconBackupInclude' in sb.localData).toBe(false);
             expect(sb.window.store.get('faviconBackupInclude')).toBe('');
         });
 
@@ -250,14 +257,32 @@ describe('store.js', () => {
     });
 
     describe('back-compat helpers', () => {
-        it('getSetting/setSetting bypass the mirror and support the sync area', async () => {
+        it('getSetting/setSetting route sync keys to the sync area, local keys to local', async () => {
             const sb = createSandbox();
             await sb.window.store.ready;
 
-            await sb.window.setSetting('leftClickNewTab', '1');
-            expect(sb.localData.leftClickNewTab).toBe('1');
-            expect(await sb.window.getSetting('leftClickNewTab', '')).toBe('1');
+            // A SYNC_KEYS member (2026-08 audit routing) lands in
+            // chrome.storage.sync without the caller naming an area…
+            await sb.window.setSetting('theme', 'dark');
+            expect(sb.syncData.theme).toBe('dark');
+            expect(sb.localData.theme).toBeUndefined();
+            expect(await sb.window.getSetting('theme', 'auto')).toBe('dark');
+            // …and refreshes the sync mirror + the localStorage boot copy
+            expect(sb.window.store.get('theme')).toBe('dark');
+            expect(sb.lsData.get('theme')).toBe('dark');
+            // removeSetting drops the sync value, the mirror and the boot copy
+            await sb.window.removeSetting('theme');
+            expect(sb.syncData.theme).toBeUndefined();
+            expect(sb.window.store.get('theme')).toBeUndefined();
+            expect(sb.localStorage.getItem('theme')).toBeNull();
 
+            // A local key stays in chrome.storage.local
+            await sb.window.setSetting('zoom', '110');
+            expect(sb.localData.zoom).toBe('110');
+            expect(sb.syncData.zoom).toBeUndefined();
+            expect(await sb.window.getSetting('zoom', 100)).toBe('110');
+
+            // The useSync flag still forces the sync area for back-compat
             await sb.window.setSetting('showSyncStatus', 'false', true);
             expect(sb.syncData.showSyncStatus).toBe('false');
             expect(await sb.window.getSetting('showSyncStatus', 'true', true)).toBe('false');
@@ -272,7 +297,23 @@ describe('store.js', () => {
             await sb.window.store.ready;
             expect(sb.window.store.syncKeys).toEqual([
                 'showSyncStatus', 'highlightUnsynced', 'autoRefreshSync', 'syncRefreshInterval',
-                'paletteCustomCommands' // v4 task-4 #6: the palette's custom commands sync
+                'paletteCustomCommands', // v4 task-4 #6: the palette's custom commands sync
+                // 2026-08 storage audit: every small device-independent
+                // preference lives in the sync area (transparent routing).
+                'theme', 'uiLanguage',
+                'leftClickNewTab', 'middleClickBgTab', 'closeUnusedFolders', 'bookmarkClickStayOpen',
+                'dontConfirmOpenFolder', 'confirmDeleteFolder', 'dontRememberState',
+                'onlyShowBMBar', 'searchAfterEnter', 'announceEnabled',
+                'showViewTabs', 'rememberView', 'showTabBadges', 'showItemPath',
+                'showRecentBookmarks', 'showStatsView', 'showDeadView', 'showDupesView',
+                'disableRecentView', 'disableStatsView', 'disableDeadView', 'disableDupesView',
+                'paletteEnabled', 'quickAddEnabled', 'showToolButton', 'quickAddContextMenu',
+                'collapseTabGroupMenu', 'collapseSortMenu', 'statsEnabled', 'searchHistoryEnabled',
+                'faviconContrast', 'faviconEnrich', 'faviconEnrichAgg', 'faviconBackupInclude',
+                'recentCount', 'sortOptions',
+                'dupesStrategy', 'dupesScope', 'dupesIgnoreScheme',
+                'deadSort', 'deadFilter', 'deadMarkFilter',
+                'statsSort', 'statsShowUnbookmarked'
             ]);
         });
 
@@ -292,6 +333,23 @@ describe('store.js', () => {
             await sb.window.store.ready;
             expect(sb.syncData.showSyncStatus).toBe('false');
             expect(sb.window.store.getSyncSetting('showSyncStatus', 'true')).toBe('false');
+        });
+
+        it('never resurrects a removed sync key from a stale localStorage boot copy', async () => {
+            // rememberView was turned off (sync ''), then the key was REMOVED
+            // from the sync area (another device, or an external write). The
+            // localStorage boot copy still holds the old value — it must be
+            // treated as stale and dropped, not migrated back up (2026-08
+            // smoke-gate regression: the copy kept resurrecting the removed
+            // key, so rememberView stayed off forever).
+            const sb = createSandbox({
+                localStorageData: { rememberView: '' },
+                chromeLocalData: { __migrated_v1: '1' }
+            });
+            await sb.window.store.ready;
+            expect('rememberView' in sb.syncData).toBe(false);
+            expect(sb.window.store.get('rememberView', '1')).toBe('1');
+            expect(sb.lsData.has('rememberView')).toBe(false);
         });
 
         it('sync area wins over localStorage for showSyncStatus', async () => {

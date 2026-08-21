@@ -266,14 +266,14 @@ export function initPalette(ctx = {}) {
     // stay available (their tab is gone but the view still works).
     const viewAvailable = id => !views || !views.isAvailable || views.isAvailable(id);
     // Round-4 (item 2) direct switches. setTheme mirrors the options page's
-    // theme <select>: store.set persists through the mirror, the localStorage
-    // copy keeps store.js's synchronous pre-fill correct on the next popup
-    // open (the same reason options.js writes it), and body[data-theme]
-    // applies the new theme immediately — the same path popup.js reads on
-    // load, not a second mechanism.
+    // theme <select>: store.set persists through the mirror (theme is a
+    // sync-routed key since the 2026-08 storage audit — store.js also
+    // refreshes the localStorage boot copy the pre-paint pre-fill reads, so
+    // feature code no longer writes localStorage directly), and
+    // body[data-theme] applies the new theme immediately — the same path
+    // popup.js reads on load, not a second mechanism.
     const setTheme = name => () => {
         store.set('theme', name);
-        localStorage.setItem('theme', name);
         document.body.dataset.theme = name;
     };
     // v4 task-4 #5: one parameterized /theme command replaced the

@@ -907,10 +907,7 @@
     "message": "Icon-Cache geleert. Icons werden beim nächsten Öffnen erneut abgerufen."
   },
   "storageUsageIcon": {
-    "message": "Symbole"
-  },
-  "storageUsageBookmarks": {
-    "message": "Scan-/Markierungsdaten"
+    "message": "Symbolcache"
   },
   "storageUsageOther": {
     "message": "Sonstiges"
@@ -930,7 +927,7 @@
     "message": "Frei"
   },
   "storageUsageHint": {
-    "message": "Speicherplatz, der von Scan-/Markierungsdaten für Lesezeichen, dem Icon-Cache und den Einstellungen belegt wird. Freier Speicherplatz wird nach dem Leeren des Icon-Caches aktualisiert."
+    "message": "Nur lokaler Erweiterungsspeicher (chrome.storage.local, etwa 10 MB Kontingent): der Symbolcache sowie Einstellungen und andere lokale Daten. Synchronisierte Einstellungen, Sitzungsdaten und die Lesezeichen-Bibliothek selbst werden hier nicht gezählt."
   },
   "optionsDonate": {
     "message": "Spenden"

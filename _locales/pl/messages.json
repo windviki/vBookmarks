@@ -907,10 +907,7 @@
     "message": "Pamięć podręczna ikon wyczyszczona. Ikony zostaną pobrane ponownie przy następnym otwarciu."
   },
   "storageUsageIcon": {
-    "message": "Ikony"
-  },
-  "storageUsageBookmarks": {
-    "message": "Dane skanowania/oznaczania"
+    "message": "Pamięć podręczna ikon"
   },
   "storageUsageOther": {
     "message": "Inne"
@@ -930,7 +927,7 @@
     "message": "Wolne"
   },
   "storageUsageHint": {
-    "message": "Miejsce zajmowane przez dane skanowania/oznaczania zakładek, pamięć podręczną ikon i ustawienia. Wolne miejsce aktualizuje się po wyczyszczeniu pamięci podręcznej ikon."
+    "message": "Wyłącznie lokalna pamięć rozszerzenia (chrome.storage.local, przydział około 10 MB): pamięć podręczna ikon plus ustawienia i inne dane lokalne. Zsynchronizowane ustawienia, dane sesji i sama biblioteka zakładek nie są tutaj uwzględniane."
   },
   "optionsDonate": {
     "message": "Przekaż darowiznę"

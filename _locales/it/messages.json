@@ -907,10 +907,7 @@
     "message": "Cache icone svuotata. Le icone verranno recuperate alla prossima apertura."
   },
   "storageUsageIcon": {
-    "message": "Icone"
-  },
-  "storageUsageBookmarks": {
-    "message": "Dati di scansione/marcatura"
+    "message": "Cache icone"
   },
   "storageUsageOther": {
     "message": "Altro"
@@ -930,7 +927,7 @@
     "message": "Libero"
   },
   "storageUsageHint": {
-    "message": "Spazio di archiviazione utilizzato dai dati di scansione/marcatura dei segnalibri, dalla cache delle icone e dalle impostazioni. Lo spazio libero viene aggiornato dopo aver svuotato la cache delle icone."
+    "message": "Solo archiviazione locale dell'estensione (chrome.storage.local, quota di circa 10 MB): la cache delle icone più impostazioni e altri dati locali. Le impostazioni sincronizzate, i dati di sessione e la libreria dei segnalibri stessa non vengono conteggiati qui."
   },
   "optionsDonate": {
     "message": "Dona"

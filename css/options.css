@@ -734,8 +734,7 @@ body[data-theme="ink"] .cm-s-default span.cm-attribute { color: #d19a66; }
 	filter: brightness(1.08);
 }
 .usage-icon{ background: var(--vbm-accent); }
-.usage-bookmarks{ background: var(--vbm-success); }
-.usage-other{ background: #d98a2b; }
+.usage-other{ background: var(--vbm-success); }
 .usage-free{ background: var(--vbm-border); }
 
 /* Segment tooltip: a floating tag above the hovered category with its size
@@ -780,8 +779,7 @@ body[data-theme="ink"] .cm-s-default span.cm-attribute { color: #d19a66; }
 	display: inline-block;
 }
 .legend-swatch.usage-icon{ background: var(--vbm-accent); }
-.legend-swatch.usage-bookmarks{ background: var(--vbm-success); }
-.legend-swatch.usage-other{ background: #d98a2b; }
+.legend-swatch.usage-other{ background: var(--vbm-success); }
 .legend-swatch.usage-free{ background: var(--vbm-border); }
 
 

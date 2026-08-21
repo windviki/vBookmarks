@@ -907,10 +907,7 @@
     "message": "Ikoncachen rensad. Ikoner hämtas om vid nästa öppning."
   },
   "storageUsageIcon": {
-    "message": "Ikoner"
-  },
-  "storageUsageBookmarks": {
-    "message": "Skannings-/markeringsdata"
+    "message": "Ikoncache"
   },
   "storageUsageOther": {
     "message": "Övrigt"
@@ -930,7 +927,7 @@
     "message": "Ledigt"
   },
   "storageUsageHint": {
-    "message": "Lagringsutrymme som används av skannings-/markeringsdata för bokmärken, faviconcachen och inställningar. Ledigt utrymme uppdateras efter rensning av faviconcachen."
+    "message": "Endast lokal lagring för tillägget (chrome.storage.local, cirka 10 MB-kvot): ikoncachen plus inställningar och andra lokala data. Synkroniserade inställningar, sessionsdata och själva bokmärkesbiblioteket räknas inte här."
   },
   "optionsDonate": {
     "message": "Donera"

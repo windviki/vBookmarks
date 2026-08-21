@@ -896,10 +896,7 @@
     "message": "圖示快取已清除。圖示將於下次開啟時重新擷取。"
   },
   "storageUsageIcon": {
-    "message": "圖示"
-  },
-  "storageUsageBookmarks": {
-    "message": "掃描／標記資料"
+    "message": "圖示快取"
   },
   "storageUsageOther": {
     "message": "其他"
@@ -919,7 +916,7 @@
     "message": "可用空間"
   },
   "storageUsageHint": {
-    "message": "書籤掃描／標記資料、圖示快取和設定所使用的儲存空間。清除圖示快取後，可用空間會更新。"
+    "message": "僅限本機擴充功能儲存空間（chrome.storage.local，約 10 MB 配額）：包括圖示快取、設定及其他本機資料。已同步的設定、工作階段資料及書籤庫本身不在此計入。"
   },
   "optionsDonate": {
     "message": "捐贈"

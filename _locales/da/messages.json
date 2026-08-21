@@ -907,10 +907,7 @@
     "message": "Ikoncachen er ryddet. Ikonerne hentes igen ved næste åbning."
   },
   "storageUsageIcon": {
-    "message": "Ikoner"
-  },
-  "storageUsageBookmarks": {
-    "message": "Scan-/markeringsdata"
+    "message": "Ikon-cache"
   },
   "storageUsageOther": {
     "message": "Andet"
@@ -930,7 +927,7 @@
     "message": "Ledig"
   },
   "storageUsageHint": {
-    "message": "Lagringsplads brugt af bogmærke-scan/markeringsdata, ikon-cachen og indstillinger. Ledig plads opdateres efter rydning af ikon-cachen."
+    "message": "Kun lokal udvidelseslagring (chrome.storage.local, cirka 10 MB-kvote): ikon-cachen plus indstillinger og andre lokale data. Synkroniserede indstillinger, sessiondata og selve bogmærke-biblioteket tælles ikke med her."
   },
   "optionsDonate": {
     "message": "Donér"

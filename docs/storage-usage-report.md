@@ -410,3 +410,63 @@
 - storage census 扫描范围：`tests/storage-usage.test.js:11-14,111-125`
 - favicon 缓存本地写入：`src/favicon-enrich.js:411,432,502`
 - 语言缓存 localStorage：`src/i18n-live.js:18-20,165-167`
+
+---
+
+# 第三部分：复核修订与本次落地（2026-08-21 整改轮）
+
+> 本部分是对第一、二部分审计结论的复核：纠正其中不准确的判断，并记录本轮按整改计划实际落地的改动。
+
+## 14. 复核修订（推翻/修正前文的结论）
+
+### 修订 1：`customIcon` 不能放入 `chrome.storage.sync`（推翻 §10.1 与任务 8）
+
+- §10.1 估算 customIcon "约 1.4KB，可放 sync" 是按 19×19×4 原始字节算的；实际存储形态是 `JSON.stringify(imageData.data)`（`src/options.js:682`）——1444 个分量的对象字面量 JSON，序列化后约 **10–14KB**，超过 `chrome.storage.sync` 的**单条 8KB**（`QUOTA_BYTES_PER_ITEM`）硬上限。
+- 结论：customIcon 保持 `storage.local`，任务 8 取消。跨设备诉求由设置备份导出/导入覆盖。
+
+### 修订 2：以书签 ID 为键/值的数据不应云同步（推翻 §10.1 相应行）
+
+- 书签 ID 是**设备本地分配**的，Chrome 书签同步不保证跨设备 ID 稳定。因此以下数据同步到另一台设备后指向的是错误节点或成为垃圾数据：
+  - `quickAddFolderId`（值是文件夹 ID）——§10.1 列为高优先级是错误的，保持 local；
+  - `separators`/`separatorTitle`/`separatorURL`/`separatorString`/`separatorcolor`（分隔符按书签 ID 挂载）——§10.1 列为高优先级是错误的，保持 local；
+  - `deadMarks`/`deadMarkTimes`/`visitStats`（键是书签 ID）——印证 §10.2/§10.3 的"不同步"结论，但理由应改为"ID 设备相关 + 体积"，任务 15/16 相应降级为不实施；
+  - `focusID` 同理（本来就在 §10.3）。
+- 推论：任务 15/16 不做；若未来要多端一致，只能以 URL 为键重新设计数据集。
+
+### 修订 3：localStorage 保留为"同步启动镜像"，清理口径调整（修正任务 9/10）
+
+- `popup.js` 在 `store.ready` 之前就用 `store.get('theme')` 做首帧主题（防闪烁），`i18n-live.js` 同样同步读 localStorage 的语言缓存。store.js 的同步预填正是从 localStorage 读取的。
+- 因此任务 10"清空迁移后的 localStorage 旧 key"不可全做：**sync 路由键的 localStorage 副本是首帧启动缓存**，必须保留并保持新鲜；但维护职责收归 store.js（`store.set/remove` 对 sync 键同步刷新 localStorage 副本），特征代码不再直写——任务 9 按此口径落地（移除 `src/palette.js:276` 的直写；`src/options.js` 的 theme 写入改由 setSetting 路由统一刷新启动副本）。
+
+### 修订 4：设备/网络相关设置保持 local（补充 §10.1 边界）
+
+- `openInSidePanel`、`autoResizePopup`（设备形态/屏幕相关）、`deadProxyServer`、`deadScanConcurrency`、`deadScanTimeout`、`hideDeadProxyStrip`（设备网络环境相关）保持 local。
+- `userstyle` 保持 local（自定义 CSS 可能超 sync 单条 8KB，任务 7 的体积策略未做前不同步）。
+- `searchHistory` 保持 local（隐私）；`vbmAnnounceSeen` 不同步（任务 17 价值低，不做）。
+
+## 15. 本轮落地清单（对应 §12 任务编号）
+
+| 任务 | 状态 | 说明 |
+|---|---|---|
+| P0-1 补齐 census | ✅ 部分 | `KNOWN_KEYS` 补齐真实设置键（statsEnabled、deadScan*、openInSidePanel、quickAddFolderId、announceEnabled、collapse*、dupes*/dead*/stats 排序筛选、hideDeadProxyStrip、deadProxyServer、donationDisabled、vbmBtnAlt、statsHistory* 等）；census 测试同步更新 |
+| P0-2 dupesLastResult 分类 | ✅ 消解 | 统计图不再分类（见下），`dupesLastResult` 与其余数据同归"其他"；census tripwire 保留 |
+| P0-3 统计条范围文案 | ✅ | hint 明确"仅 chrome.storage.local 本地扩展存储（约 10MB 配额），不含同步存储/会话存储/书签库本体" |
+| 统计图简化（本轮新增） | ✅ | 横条改为 icon 缓存 / 其他 / 剩余 三段——用户决策：只针对 icon 缓存做可视化管理，不再按类分列 |
+| P1-4 扩展 SYNC_KEYS | ✅ | 约 40 个小偏好键迁入 sync（外观 theme/uiLanguage、通用行为开关、视图显隐/禁用、功能开关、排序/筛选偏好、recentCount、favicon 开关等）；store.get/set/remove/adopt 与 getSetting/setSetting/removeSetting 按键名透明路由，调用点零改动 |
+| P1-5 迁移 | ✅ | store.js init 做一次性 local→sync 迁移：sync 已有值优先；local 值写入 sync 成功后删除 local 残留（sync 已有值时的陈旧 local 残留也一并清理）；localStorage 启动副本按修订 3 保留并刷新；失败时保留 local 兜底下次重试。**实现教训（冒烟门禁抓到）**：迁移不得以 localStorage 为源——v1 迁移已覆盖真正的 legacy 值，localStorage 兜底只会复活陈旧启动副本（某键从 sync 删除后，下次加载又被副本迁回 sync，rememberView 永远保持关闭）；因此 init 增加启动副本卫生清理：sync 区和本次迁移集都没有、仅存在于启动副本的键视为陈旧，从镜像和 localStorage 一并丢弃，删除才能粘住 |
+| P1-6 统一 settings 定义 | ⏸ 不做 | options 各 settings 数组经路由后无需改动；合并为单一配置表收益低于风险 |
+| P1-7 userstyle 同步 | ⏸ 不做 | 修订 4 |
+| P1-8 customIcon 同步 | ❌ 取消 | 修订 1 |
+| P1-9 palette 直写 localStorage | ✅ | 移除，由 store.js 统一维护启动副本 |
+| P1-10 清理 localStorage | ⏸ 收窄 | 按修订 3：sync 键副本保留；旧 key 残留维持现有"至少保留一个主版本作回滚"策略 |
+| P1-11 语言缓存独立管理 | ✅ 已属现状 | `vbmI18nDict`/`vbmI18nLang` 本就不在清理范围，文档已标注 |
+| P1-12/13/14 budget 服务/统一预算/统计性能 | ⏸ 不做 | 超出本版本范围；favicon 预算是目前唯一大缓存控制器，方向偏保守（§5.3），可接受 |
+| P2-15/16/17/18 | ❌ 不做 | 修订 2（ID 设备相关）与修订 4（隐私/价值） |
+
+### 随之调整的调用点
+
+- `src/background.js`：`quickAddContextMenu` 改从 `chrome.storage.sync` 读取，onChanged 监听区域同步调整（`quickAddFolderId` 保持 local）。
+- `src/visit-stats-sw.js`：`statsEnabled` 改从 `chrome.storage.sync` 读取，onChanged 区域调整。
+- `src/view-manager.js`：视图显隐/禁用键的 onChanged 监听同时接受 local/sync 区域。
+- `src/neat.js`：favicon 三个开关的 onChanged 监听同时接受 local/sync 区域。
+- `src/options.js`：设置备份导入按路由拆分 local/sync 写入（旧备份里已迁移键落在 local 段也能正确回到 sync）；统计条三段化。

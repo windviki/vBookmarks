@@ -907,10 +907,7 @@
     "message": "Cache-ul pictogramelor a fost șters. Pictogramele vor fi preluate din nou la următoarea deschidere."
   },
   "storageUsageIcon": {
-    "message": "Icoane"
-  },
-  "storageUsageBookmarks": {
-    "message": "Date de scanare/marcare"
+    "message": "Cache de icoane"
   },
   "storageUsageOther": {
     "message": "Altele"
@@ -930,7 +927,7 @@
     "message": "Liber"
   },
   "storageUsageHint": {
-    "message": "Spațiul de stocare folosit de datele de scanare/marcare a marcajelor, cache-ul de pictograme și setări. Spațiul liber se actualizează după ștergerea cache-ului de pictograme."
+    "message": "Numai stocarea locală a extensiei (chrome.storage.local, cotă de aproximativ 10 MB): cache-ul de icoane plus setările și alte date locale. Setările sincronizate, datele de sesiune și biblioteca de marcaje în sine nu sunt numărate aici."
   },
   "optionsDonate": {
     "message": "Donează"

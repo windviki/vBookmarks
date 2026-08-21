@@ -291,7 +291,8 @@ describe('service worker startup wiring', () => {
     });
 
     it('issue #49: does NOT create the menu when quickAddContextMenu is off', () => {
-        localData.quickAddContextMenu = ''; // off
+        // quickAddContextMenu lives in the sync area (2026-08 storage audit)
+        syncData.quickAddContextMenu = ''; // off
         calls.contextMenusCreate = [];
         listeners.installed.forEach(fn => fn());
         // remove-first still runs (idempotent), but no re-create happens
@@ -314,15 +315,16 @@ describe('service worker startup wiring', () => {
     it('issue #49: a fast on→off flip settles on the final state (no stale storage re-read)', () => {
         // Regression: the handler used to re-read storage asynchronously, so
         // a stale get() callback could re-create the menu after the final
-        // off. localData deliberately still says ON — newValue must win.
-        localData.quickAddContextMenu = '1';
+        // off. The sync area (the key's home since the 2026-08 storage
+        // audit) deliberately still says ON — newValue must win.
+        syncData.quickAddContextMenu = '1';
         calls.contextMenusCreate = [];
         calls.contextMenusRemove = [];
         listeners.storageChanged({ quickAddContextMenu: { newValue: '' } }, 'local');
         expect(calls.contextMenusRemove).toContain('vbm-quick-add');
         expect(calls.contextMenusCreate.some(m => m.id === 'vbm-quick-add')).toBe(false);
         // …and the symmetric race: storage says OFF, the final event says ON
-        localData.quickAddContextMenu = '';
+        syncData.quickAddContextMenu = '';
         listeners.storageChanged({ quickAddContextMenu: { newValue: '1' } }, 'local');
         expect(calls.contextMenusCreate.some(m => m.id === 'vbm-quick-add')).toBe(true);
     });

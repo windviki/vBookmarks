@@ -907,10 +907,7 @@
     "message": "Az ikongyorsítótár törölve. Az ikonok a következő megnyitáskor újra lekérésre kerülnek."
   },
   "storageUsageIcon": {
-    "message": "Ikonok"
-  },
-  "storageUsageBookmarks": {
-    "message": "Vizsgálat/megjelölés adatai"
+    "message": "Ikon-gyorsítótár"
   },
   "storageUsageOther": {
     "message": "Egyéb"
@@ -930,7 +927,7 @@
     "message": "Szabad"
   },
   "storageUsageHint": {
-    "message": "A könyvjelző-vizsgálat/megjelölés adatai, az ikon-gyorsítótár és a beállítások által használt tárhely. A szabad terület az ikon-gyorsítótár törlése után frissül."
+    "message": "Csak a helyi bővítménytár (chrome.storage.local, körülbelül 10 MB kvóta): az ikon-gyorsítótár, valamint a beállítások és egyéb helyi adatok. A szinkronizált beállítások, munkamenet-adatok és a könyvjelzőtár nem számítanak bele."
   },
   "optionsDonate": {
     "message": "Adomány"

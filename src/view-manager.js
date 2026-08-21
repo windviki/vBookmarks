@@ -1156,7 +1156,10 @@ export function initViewManager(ctx = {}) {
     // can't race the initial render.
     if (typeof chrome !== 'undefined' && chrome.storage && chrome.storage.onChanged) {
         chrome.storage.onChanged.addListener((changes, area) => {
-            if (area !== 'local' || !changes)
+            // The watched view keys live in the sync area since the 2026-08
+            // storage audit (store.js routes them); accept a pre-migration
+            // local write too.
+            if ((area !== 'sync' && area !== 'local') || !changes)
                 return;
             let touched = false;
             for (let i = 0, l = WATCHED_VIEW_KEYS.length; i < l; i++) {

@@ -1575,12 +1575,8 @@
     "description": "Alert shown after clearing the favicon cache."
   },
   "storageUsageIcon": {
-    "message": "Icons",
+    "message": "Icon cache",
     "description": "Storage usage bar legend segment: bytes held by the favicon cache."
-  },
-  "storageUsageBookmarks": {
-    "message": "Scan/mark data",
-    "description": "Storage usage bar legend segment: bytes held by bookmark-derived data (dead-link scan, marks, visit stats)."
   },
   "storageUsageOther": {
     "message": "Other",
@@ -1602,7 +1598,7 @@
     "description": "Storage usage bar legend segment: remaining space in chrome.storage.local."
   },
   "storageUsageHint": {
-    "message": "Storage space used by bookmark scan/mark data, the icon cache and settings. Free space updates after clearing the icon cache.",
+    "message": "Local extension storage only (chrome.storage.local, about 10 MB quota): the icon cache plus settings and other local data. Synced settings, session data and the bookmark library itself are not counted here.",
     "description": "Hint under the storage usage bar in the Icons group."
   },
   "optionsDonate": {
