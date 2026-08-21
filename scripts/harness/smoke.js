@@ -503,7 +503,7 @@ const waitForPalette = async (page, ms = 15000) => {
         await opts.screenshot({ path: `/tmp/shots/smoke/options-${res.name}.png`, fullPage: true });
     }
 
-    // 5b. 4.0.9: the favicon gallery page renders the seeded enrichment cache
+    // 5b. 4.0.8: the favicon gallery page renders the seeded enrichment cache
     // (host card + source badge + the bookmark row with its folder path) with
     // zero page errors, and follows the theme. Seed from the OPTIONS page: the
     // popup's own enricher would debounce-rewrite the index from its in-memory

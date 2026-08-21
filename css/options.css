@@ -366,7 +366,7 @@ white-space: nowrap;
 margin-__MSG_@@bidi_start_edge__: 0;
 white-space: nowrap;
 }
-/* 4.0.9 favicon gallery entry: the clear-cache row becomes a flex row so the
+/* 4.0.8 favicon gallery entry: the clear-cache row becomes a flex row so the
    "view refreshed icons" link pins to the row's end. */
 .options-list li.favicon-cache-row{
 display: flex;

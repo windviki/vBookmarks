@@ -4,7 +4,7 @@
  * The gallery is the display-only window onto the favicon-enrichment cache
  * (src/favicon-enrich.js): which hosts got their real icon back, where each
  * icon came from (direct fetch / the user's proxy relay / a third-party
- * provider — recorded as `src` on the index entry since 4.0.9), and which
+ * provider — recorded as `src` on the index entry since 4.0.8), and which
  * bookmarks live on each host (path, dead mark, sync status, visit count).
  *
  * Pure ESM with zero chrome/DOM references — vitest drives it directly.

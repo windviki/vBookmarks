@@ -2111,7 +2111,7 @@ describe('index parse + rebuild', () => {
     });
 });
 
-describe('initFaviconEnrich — source recording (favicon gallery, 4.0.9)', () => {
+describe('initFaviconEnrich — source recording (favicon gallery, 4.0.8)', () => {
     beforeEach(() => { seq = 0; });
 
     const enrichWith = (fetchImpl, storage = makeStorageArea(), fallback = true) => initFaviconEnrich({

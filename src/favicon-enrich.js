@@ -25,7 +25,7 @@
  *     `vbmFaviconIdx` = { v, down, hosts: { host: {t,s,src?}|{f,t} } }.
  *     `src` records where the icon came from — 'direct' (L1/L2), 'proxy'
  *     (L3 relay) or an L4 provider id — for the favicon gallery page
- *     (pages/favicons.html); entries cached before 4.0.9 simply lack it.
+ *     (pages/favicons.html); entries cached before 4.0.8 simply lack it.
  *     Dynamic byte budget = (quota − other features' bytes) × 0.8 (floored,
  *     capped at the real free space), halving eviction when exceeded;
  *     >96KB icons session-only; quota-error emergency eviction.
