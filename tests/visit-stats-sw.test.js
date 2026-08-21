@@ -67,12 +67,19 @@ const makeChromeDouble = (opts = {}) => {
                 }
             },
             // statsEnabled lives in the sync area since the 2026-08 storage
-            // audit — the collector's start() reads it from here.
+            // audit — the collector's start() reads it from here (string
+            // form, with a local fallback when the key is absent; a real
+            // storage area omits missing keys entirely).
             sync: {
-                get(defaults, cb) {
-                    const out = {};
-                    for (const k of Object.keys(defaults))
-                        out[k] = k in syncData ? syncData[k] : defaults[k];
+                get(keys, cb) {
+                    let out;
+                    if (typeof keys === 'string') {
+                        out = keys in syncData ? { [keys]: syncData[keys] } : {};
+                    } else {
+                        out = {};
+                        for (const k of Object.keys(keys))
+                            out[k] = k in syncData ? syncData[k] : keys[k];
+                    }
                     cb(out);
                 },
                 set(obj, cb) {
@@ -223,6 +230,19 @@ describe('navigation counting', () => {
 describe('statsEnabled gate (zero-write contract)', () => {
     it('counts nothing when the switch is off at start', async () => {
         chromeDouble = makeChromeDouble({ syncData: { statsEnabled: '' } });
+        globalThis.chrome = chromeDouble;
+        createVisitStatsCollector().start();
+        await flushMicrotasks();
+        navigate('https://b.com/page');
+        vi.advanceTimersByTime(5000);
+        expect(chromeDouble.calls.localSet).toEqual([]);
+    });
+
+    it('2026-08 review: falls back to the pre-migration local value when sync lacks the key', async () => {
+        // Upgraded profile before the first page open: the local→sync
+        // migration has not run yet, so the sync area is empty — the
+        // collector must honor the pre-migration LOCAL off switch.
+        chromeDouble = makeChromeDouble({ localData: { statsEnabled: '' } });
         globalThis.chrome = chromeDouble;
         createVisitStatsCollector().start();
         await flushMicrotasks();

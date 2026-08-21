@@ -297,9 +297,12 @@
         getSyncSetting(key, defaultValue) {
             return (key in syncMirror) ? syncMirror[key] : defaultValue;
         },
-        // Sync mirror write + debounced persistence to chrome.storage.sync
+        // Sync mirror write + debounced persistence to chrome.storage.sync.
+        // Also refreshes the localStorage boot copy, same convention as
+        // store.set on a sync-routed key.
         setSyncSetting(key, value) {
             syncMirror[key] = value;
+            try { localStorage.setItem(key, String(value)); } catch (e) { /* best-effort */ }
             scheduleSyncPersist(key, value);
         },
         // The sync-area key list, exposed so the options page's settings

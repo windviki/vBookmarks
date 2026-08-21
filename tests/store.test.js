@@ -371,6 +371,8 @@ describe('store.js', () => {
             sb.window.store.setSyncSetting('showSyncStatus', 'true');
             expect(sb.window.store.getSyncSetting('showSyncStatus')).toBe('true');
             expect(sb.syncSetCalls).toHaveLength(0);
+            // boot copy refreshed, same convention as store.set on a sync key
+            expect(sb.lsData.get('showSyncStatus')).toBe('true');
 
             vi.advanceTimersByTime(400);
             expect(sb.syncSetCalls).toHaveLength(0);

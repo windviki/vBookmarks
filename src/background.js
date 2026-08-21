@@ -328,8 +328,19 @@ if (chrome.contextMenus) {
     const createQuickAddMenu = () => {
         // quickAddContextMenu lives in the sync area since the 2026-08
         // storage audit (small cross-device preference; store.js routes it).
-        chrome.storage.sync.get({ quickAddContextMenu: '1' }, data => {
-            applyQuickAddMenu(!!data.quickAddContextMenu && data.quickAddContextMenu !== 'false');
+        // The local→sync migration runs PAGE-side (store.js init), so on the
+        // first SW start after an upgrade the sync value may not exist yet —
+        // fall back to the pre-migration local value, or a user's off switch
+        // would be ignored until the first page open.
+        chrome.storage.sync.get('quickAddContextMenu', data => {
+            if (Object.prototype.hasOwnProperty.call(data, 'quickAddContextMenu')) {
+                const v = data.quickAddContextMenu;
+                applyQuickAddMenu(!!v && v !== 'false');
+                return;
+            }
+            chrome.storage.local.get({ quickAddContextMenu: '1' }, local => {
+                applyQuickAddMenu(!!local.quickAddContextMenu && local.quickAddContextMenu !== 'false');
+            });
         });
     };
     chrome.runtime.onInstalled.addListener(createQuickAddMenu);

@@ -486,6 +486,24 @@ describe('options.js settings backup', () => {
             expect(sb.location.reload).toHaveBeenCalledTimes(1);
         });
 
+        it('2026-08 review: a key in BOTH backup sections keeps the sync-section value', async () => {
+            // Legacy backups can carry a sync-routed key in both sections;
+            // the local copy is usually the older residue, so the sync
+            // section must win on conflict.
+            const sb = createSandbox({
+                chromeLocalData: { __migrated_v1: '1' },
+                chromeSyncData: {}
+            });
+            await sb.start();
+            await pickFile(sb, validBackup({
+                local: { theme: 'dark' },
+                sync: { theme: 'ink' }
+            }));
+            expect(sb.syncData.theme).toBe('ink');
+            expect(sb.localData.theme).toBeUndefined();
+            expect(sb.alerts).toEqual(['settingsImportDone']);
+        });
+
         it('accepts a backup without a sync section', async () => {
             const sb = createSandbox({
                 chromeLocalData: { __migrated_v1: '1' },

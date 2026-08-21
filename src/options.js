@@ -35,9 +35,16 @@ const $ = id => document.getElementById(id);
             }
         };
 
-        // Theme: apply the pre-filled mirror value immediately, then refine
-        // from chrome.storage.local (the source of truth)
+        // Theme: apply the pre-filled mirror value immediately (pre-paint),
+        // then refine from chrome.storage once the store is ready.
         document.body.dataset.theme = store.get('theme', 'auto');
+
+        // Gate every storage read below on the store init: getSetting routes
+        // sync keys to chrome.storage.sync, and the local→sync migration (an
+        // upgraded profile's real values) only completes with store.ready —
+        // reading earlier would show defaults on the first options open after
+        // an upgrade.
+        await store.ready;
 
         const themeSelect = $('theme-select');
         const theme = await getSetting('theme', 'auto');
@@ -620,13 +627,19 @@ const $ = id => document.getElementById(id);
                 // Route the writes by area: keys living in the sync area
                 // (store.syncKeys — expanded in the 2026-08 storage audit)
                 // must land in chrome.storage.sync even when an older backup
-                // still carries them under "local".
+                // still carries them under "local". A key present in BOTH
+                // sections keeps its sync-section value: in a legacy backup
+                // the local copy is usually the older residue.
                 const syncKeySet = new Set(store.syncKeys);
                 const localObj = {};
                 const syncObj = Object.assign({}, backup.sync || {});
                 for (const k of Object.keys(backup.local)) {
-                    if (syncKeySet.has(k)) syncObj[k] = backup.local[k];
-                    else localObj[k] = backup.local[k];
+                    if (syncKeySet.has(k)) {
+                        if (!(k in syncObj))
+                            syncObj[k] = backup.local[k];
+                    } else {
+                        localObj[k] = backup.local[k];
+                    }
                 }
                 await chrome.storage.local.set(localObj);
                 if (Object.keys(syncObj).length)

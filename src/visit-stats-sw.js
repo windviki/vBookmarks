@@ -166,9 +166,20 @@ export function createVisitStatsCollector() {
         if (started)
             return;
         started = true;
-        chrome.storage.sync.get({ statsEnabled: '1' }, data => {
-            const v = data.statsEnabled;
-            enabled = !!v && v !== 'false';
+        // statsEnabled lives in the sync area since the 2026-08 storage
+        // audit; the local→sync migration runs page-side, so on the first SW
+        // start after an upgrade the sync value may not exist yet — fall
+        // back to the pre-migration local value.
+        chrome.storage.sync.get('statsEnabled', data => {
+            if (Object.prototype.hasOwnProperty.call(data, 'statsEnabled')) {
+                const v = data.statsEnabled;
+                enabled = !!v && v !== 'false';
+                return;
+            }
+            chrome.storage.local.get({ statsEnabled: '1' }, local => {
+                const v = local.statsEnabled;
+                enabled = !!v && v !== 'false';
+            });
         });
         rebuildIndex();
         // The index follows every tree mutation; import-end covers bulk adds.

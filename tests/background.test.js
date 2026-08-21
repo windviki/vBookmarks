@@ -50,7 +50,10 @@ const buildChrome = () => {
         if (keys === null || keys === undefined)
             out = { ...data };
         else if (typeof keys === 'string')
-            out = { [keys]: data[keys] };
+            // Real chrome.storage omits missing keys entirely (a present
+            // key with an undefined value is NOT returned) — the SW's
+            // sync→local fallback probes with hasOwnProperty.
+            out = keys in data ? { [keys]: data[keys] } : {};
         else if (Array.isArray(keys)) {
             out = {};
             for (const k of keys)
@@ -298,6 +301,23 @@ describe('service worker startup wiring', () => {
         // remove-first still runs (idempotent), but no re-create happens
         expect(calls.contextMenusRemove).toContain('vbm-quick-add');
         expect(calls.contextMenusCreate.some(m => m.id === 'vbm-quick-add')).toBe(false);
+    });
+
+    it('2026-08 review: falls back to the pre-migration local value when sync lacks the key', () => {
+        // An upgraded profile before the first page open: the local→sync
+        // migration (page-side store.js) has not run yet, so the sync area
+        // is empty — the SW must honor the pre-migration LOCAL value or an
+        // off switch would be ignored for the whole first session.
+        localData.quickAddContextMenu = ''; // off, not yet migrated
+        calls.contextMenusCreate = [];
+        listeners.installed.forEach(fn => fn());
+        expect(calls.contextMenusCreate.some(m => m.id === 'vbm-quick-add')).toBe(false);
+        // …and a sync value wins over a stale local one once migrated
+        syncData.quickAddContextMenu = '1';
+        localData.quickAddContextMenu = '';
+        calls.contextMenusCreate = [];
+        listeners.installed.forEach(fn => fn());
+        expect(calls.contextMenusCreate.some(m => m.id === 'vbm-quick-add')).toBe(true);
     });
 
     it('issue #49: a storage flip off removes the live menu, back on recreates it', () => {

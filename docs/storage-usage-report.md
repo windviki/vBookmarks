@@ -3,11 +3,13 @@
 > 分析范围：只读代码分析，未做任何代码修改。
 > 日期：2026-08-21
 > 对象：`pages/options.html` 的存储占用横条、`src/storage-usage.js`、`src/options.js` 的 `refreshStorageUsage`、`src/favicon-enrich.js` 的字节预算，以及 `src/store.js` 的存储分区。
-> 文档包含两部分：第一部分为当前统计条/存储类型分析；第二部分为全量存储数据分布、云同步差距、迁移问题与改造任务清单。
+> 文档包含三部分。**第一、二部分是历史审计初稿（当时的现状盘点与初步建议）；第三部分（§14 起）是复核修订与最终落地结论——凡第一、二部分与第三部分冲突之处（统计条分段、customIcon/separators/quickAddFolderId 同步建议、任务 8/15/16 等），一律以第三部分为准。** §16 记录了第二轮复核发现的升级兼容性问题及其修复。
 
 ---
 
 ## 1. 结论摘要
+
+> **【历史审计初稿】** 本部分（§1–§8）是整改前的现状分析；其中统计条四段结构、§7 建议等已被第三部分的复核修订与落地取代，冲突处以第三部分为准。
 
 1. **当前统计条统计的是 `chrome.storage.local`，也就是“本地扩展存储”**，不是书签本体、不是 `chrome.storage.sync`、不是 `chrome.storage.session`、也不是 `localStorage`。
 2. 统计条本身是**展示/审计工具**，不是动态控制器。真正做“不让缓存占满配额”的只有 `favicon-enrich.js` 里的 `refreshBudget()`；两者当前没有互相调用，属于两套独立逻辑。
@@ -227,6 +229,7 @@
 
 # 第二部分：全量存储数据分布、云同步差距与改造清单
 
+> **【历史审计初稿】** 本部分的同步建议与任务清单以第三部分 §14–§16 的复核修订为准：§10.1 的 customIcon/separators/quickAddFolderId 同步建议已被推翻，§12 的任务 8/15/16 已取消，§9 的“归属段”已被统计条三段化取代。
 > 本部分在第一部分基础上扩展：逐个盘点当前代码里实际出现的存储 key，从用户体验判断“该不该云同步”，并给出统一迁移与改造任务清单。
 
 ---
@@ -470,3 +473,38 @@
 - `src/view-manager.js`：视图显隐/禁用键的 onChanged 监听同时接受 local/sync 区域。
 - `src/neat.js`：favicon 三个开关的 onChanged 监听同时接受 local/sync 区域。
 - `src/options.js`：设置备份导入按路由拆分 local/sync 写入（旧备份里已迁移键落在 local 段也能正确回到 sync）；统计条三段化。
+
+---
+
+## 16. 第二轮复核：升级兼容性问题与修复（2026-08-21 整改轮·复审）
+
+> 复审在 §15 落地后发现四个升级兼容性问题和一组文档不一致，均已修复（测试同步更新）。
+
+### 16.1 SW 启动早于页面迁移，读到空 sync 区（已修）
+
+- **问题**：local→sync 迁移在 `src/store.js` init（页面脚本）中执行，而 `src/background.js`（`quickAddContextMenu`）与 `src/visit-stats-sw.js`（`statsEnabled`）已改读 `chrome.storage.sync`。老用户升级后若尚未打开任何扩展页面，SW 先启动时 sync 区没有值，两个开关都会按默认值（开）运行，直到第一次页面打开完成迁移——升级后的第一个浏览器会话行为错误。
+- **修复**：两个 SW 调用点改为"先读 sync，键不存在再兜底读 local（迁移前旧值）"。onChanged 监听本就已接受双区域，迁移完成后 sync 写入会实时纠正。
+
+### 16.2 选项页首开可能显示默认设置（已修）
+
+- **问题**：`src/options.js` 的 `initOptions()` 在第 43 行就 `getSetting('theme')` 并随后大量 `bindSettingsList`，而 `await store.ready` 直到约 670 行才出现。`getSetting` 对 sync 路由键直读 sync 区，升级后首次打开选项页时迁移尚未完成，会读到空 sync 区并显示默认值（如 theme 显示 auto 而非用户旧的 dark）。
+- **修复**：首帧主题仍从同步预填读取（防闪烁），随后立即 `await store.ready`，再执行所有 `getSetting`/`bindSettingsList`。
+
+### 16.3 旧备份同键冲突：local 段覆盖 sync 段（已修）
+
+- **问题**：备份导入按 syncKeys 拆分写入时，`backup.local` 里的 sync 键会覆盖 `backup.sync` 段的同键值；旧备份中 local 往往是更旧的残留。
+- **修复**：同键冲突时 sync 段优先（`backup.local` 的 sync 键仅在该键不在 `backup.sync` 时才采用）。
+
+### 16.4 `setSyncSetting()` 未维护启动副本（已修）
+
+- **问题**：`store.set`/`setSetting`/`store.adopt` 对 sync 键都会刷新 localStorage 启动副本，`setSyncSetting()` 没有，与"sync 键统一维护启动副本"的约定不一致（当前唯一调用方 paletteCustomCommands 不需要首帧副本，故无实际影响）。
+- **修复**：`setSyncSetting()` 同步刷新启动副本，行为与其余写入路径一致。
+
+### 16.5 混合版本冲突语义（已知取舍，文档明示）
+
+- 场景：设备 A 已升级（值已迁 sync、local 残留已清），设备 B 仍是旧版本（写入 local）。B 的新改动要等 B 也升级并完成迁移才进 sync；期间 A 端以 sync 旧值为准，B 的改动看起来"被回退"。
+- 结论：sync 优先 + 本地兜底是刻意取舍（否则无法清理 local 残留）。**升级后建议尽快在各设备打开一次扩展页面（popup/options）完成迁移**；不引入时间戳/版本冲突合并（复杂度远超收益，且 chrome.storage.sync 本身也是 last-write-wins）。
+
+### 16.6 文档不一致（已修）
+
+- 第一、二部分已标注"历史审计初稿"并指向第三部分；文档头部说明同步更新。
