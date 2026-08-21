@@ -344,8 +344,10 @@ export function initPalette(ctx = {}) {
             channel,
             seen: parseSeen(store.get('vbmAnnounceSeen'))
         }) : null;
+        // Mirror the banner's fallback (src/announce.js): a textKey that
+        // translates empty (untranslated locale) falls back to English.
         const announce = msg
-            ? (msg.textKey ? _m(msg.textKey) : (msg.textFallback && msg.textFallback.en) || '')
+            ? ((msg.textKey && _m(msg.textKey)) || (msg.textFallback && msg.textFallback.en) || '')
             : '';
         const meta = collectVersionMeta({
             version: mf.version,

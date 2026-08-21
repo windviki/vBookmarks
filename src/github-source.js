@@ -96,7 +96,12 @@ const readProxyServer = async chromeImpl => {
 // Layer 2: the user's own proxy via the marker-PAC mechanism. When a dead
 // scan already installed a PAC session we ride it; otherwise we install a
 // temporary one and tear it down afterwards, so no other tab's traffic is
-// touched and a crashed chain cannot leave proxy residue.
+// touched and a crashed chain cannot leave proxy residue. Note the residue
+// bound: this fetch runs page-side, so closing the popup/panel mid-fetch
+// destroys the context before the finally below runs and the temp PAC stays
+// installed — benign (the marker PAC routes nothing else) and swept by the
+// service worker's cold-start proxy sweep (this chain never sets the
+// vbmProxySession marker, so the sweep treats it as residue).
 const fetchViaProxy = async ({ url, timeoutMs, fetchImpl, chromeImpl, validate }) => {
     const server = await readProxyServer(chromeImpl);
     if (!server)

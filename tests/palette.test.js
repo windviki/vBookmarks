@@ -291,7 +291,7 @@ const setup = (opts = {}) => {
     const treeData = opts.tree || makeTree();
     const tab = 'tab' in opts ? opts.tab : { id: 7, url: 'https://tab.example/', title: 'Tab Title' };
     const chromeStub = {
-        i18n: { getMessage },
+        i18n: { getMessage, getUILanguage: () => 'en' },
         bookmarks: {
             getTreeCalls: 0,
             createCalls: [],
@@ -338,6 +338,7 @@ const setup = (opts = {}) => {
         runtime: {
             lastError: null,
             getURL: p => `chrome-extension://test${p}`,
+            getManifest: () => ({ version: '4.0.8', manifest_version: 3 }),
             openOptionsPageCalls: 0,
             openOptionsPage() {
                 this.openOptionsPageCalls++;
@@ -464,6 +465,13 @@ const setup = (opts = {}) => {
             openCalls: [],
             open(cfg) {
                 this.openCalls.push(cfg);
+            }
+        },
+        // 4.0.8: the /version command's metadata dialog records its meta.
+        VersionDialog: {
+            openCalls: [],
+            open(meta) {
+                this.openCalls.push(meta);
             }
         }
     };
@@ -1743,6 +1751,51 @@ describe('settings toggle commands (round-4 item 2)', () => {
         type('/tabs');
         const row = results._appended.find(li => li._innerHTML.includes(MSGS.paletteCmdToggleViewTabs));
         expect(row._innerHTML).toContain('<span class="palette-slash">/tabs</span>');
+    });
+});
+
+// --- /version metadata dialog (4.0.8) -----------------------------------------
+// The command closes the palette, collects live metadata (manifest, channel,
+// the first matching announcement from the vbmAnnounce cache) and opens
+// dialogs.js's VersionDialog. The announce text mirrors the banner's
+// fallback: a textKey that translates empty yields the English fallback.
+describe('/version command (4.0.8)', () => {
+    const announceMsg = over => ({
+        id: 'v408', version: '>=4.0.8', channel: 'all', once: true,
+        display: 'banner', textKey: 'announceV408Text',
+        textFallback: { en: 'EN fallback text' }, ...over
+    });
+    const seedCache = msg => ({ ts: 1, data: { version: 1, messages: [msg] } });
+    const run = storeSeed => {
+        const ctx = setup({ storeSeed });
+        ctx.palette.open();
+        ctx.type('/version');
+        clickCommandRow(ctx, MSGS.paletteCmdVersion);
+        return ctx;
+    };
+
+    it('opens the dialog with manifest version + the matching announcement text', () => {
+        const ctx = run({ vbmAnnounce: seedCache(announceMsg({})) });
+        expect(ctx.palette.isOpen()).toBe(false);
+        expect(ctx.dialogs.VersionDialog.openCalls).toHaveLength(1);
+        const meta = ctx.dialogs.VersionDialog.openCalls[0];
+        expect(meta.version).toBe('4.0.8');
+        expect(meta.channel).toBe('popup');
+        expect(meta.language).toBe('en');
+        // the textKey resolves through the i18n table (key-echo here)
+        expect(meta.announce).toBe('announceV408Text');
+    });
+
+    it('falls back to the English text when the locale key translates empty', () => {
+        MSGS.announceUntranslated = ''; // a locale missing this key returns ''
+        const ctx = run({ vbmAnnounce: seedCache(announceMsg({ textKey: 'announceUntranslated' })) });
+        expect(ctx.dialogs.VersionDialog.openCalls[0].announce).toBe('EN fallback text');
+        delete MSGS.announceUntranslated;
+    });
+
+    it('no matching announcement yields an empty announce field', () => {
+        const ctx = run({ vbmAnnounce: seedCache(announceMsg({ version: '>=9.0.0' })) });
+        expect(ctx.dialogs.VersionDialog.openCalls[0].announce).toBe('');
     });
 });
 

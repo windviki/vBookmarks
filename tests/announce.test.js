@@ -102,6 +102,12 @@ describe('parseVersionCondition / versionSatisfies', () => {
         expect(parseVersionCondition('=>4')).toBeNull();
         expect(parseVersionCondition('>=4.x')).toBeNull();
         expect(parseVersionCondition('4.0.8 beta')).toBeNull();
+        // fail-closed quirks: anything not exactly "<op><digits>" dies, so a
+        // typo can never widen the audience (verified empirically 2026-08)
+        expect(parseVersionCondition('>=4.0.0,')).toBeNull(); // trailing separator
+        expect(parseVersionCondition('>= 4.0.0')).toBeNull(); // op detached from digits
+        expect(parseVersionCondition('!=4.0.0')).toBeNull(); // unsupported operator
+        expect(parseVersionCondition('4.0.8,')).toBeNull(); // trailing comma on exact
     });
 
     it('a bare token is an exact match on the three segments', () => {

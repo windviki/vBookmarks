@@ -108,6 +108,10 @@ describe('options page group structure (round-6 item 5, v4 task-3 #17 merge)', (
         const general = bodyOf('general');
         expect(general).not.toContain('id="only-show-bmbar"');
         expect(general).not.toContain('id="search-after-enter"');
+        // …but positively owns theme, the 4.0.8 language dropdown and the
+        // announce privacy switch (a moved control fails here now)
+        for (const id of ['theme-select', 'language-select', 'option-language-hint', 'announce-enabled'])
+            expect(general).toContain(`id="${id}"`);
         // Recent group owns only the recent-count behavior option
         const recent = bodyOf('recent-options');
         expect(recent).toContain('id="recent-count"');

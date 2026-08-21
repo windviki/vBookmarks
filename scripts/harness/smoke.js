@@ -322,6 +322,27 @@ const waitForPalette = async (page, ms = 15000) => {
         errors.push(`#14: hint toast broken: ${JSON.stringify(toastState)}`);
     if (toastState.stillRecent !== 'view-tab-recent')
         errors.push(`#14: view switched before the toast action: ${toastState.stillRecent}`);
+    // #14b (audit 4.0.8): any real view switch dismisses a lingering toast —
+    // pins neat.js's dismissToast wiring into initViewManager's ctx (the unit
+    // suites can only cover the view-manager side given the ctx key).
+    await page.evaluate(() => document.getElementById('view-tab-tree').click());
+    await sleep(500);
+    const toastAfterSwitch = await page.evaluate(() => document.getElementById('undo-toast').hidden);
+    if (!toastAfterSwitch) errors.push('#14b: toast survived a manual view switch');
+    // re-trigger the reveal toast for the action assertions below
+    await page.evaluate(() => document.getElementById('view-tab-recent').click());
+    await sleep(500);
+    await page.evaluate(id => {
+        const row = document.querySelector(`#view-recent [data-node-id="${id}"]`)
+            || document.querySelector(`[data-node-id="${id}"]`);
+        (row.querySelector('a') || row).dispatchEvent(
+            new MouseEvent('contextmenu', { bubbles: true, cancelable: true, button: 2 }));
+        document.getElementById('reveal-in-tree').dispatchEvent(
+            new MouseEvent('mouseup', { bubbles: true, cancelable: true, button: 0 }));
+    }, outsideId);
+    await sleep(400);
+    const toastAgain = await page.evaluate(() => !document.getElementById('undo-toast').hidden);
+    if (!toastAgain) errors.push('#14b: reveal toast did not reappear for the action test');
     // pick the action: full tree shows, reveal completes, tree view activates
     await page.evaluate(() => document.getElementById('undo-toast-button').click());
     await sleep(1500);

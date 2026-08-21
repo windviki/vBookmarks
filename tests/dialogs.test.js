@@ -52,6 +52,7 @@ const makeEl = () => ({
         this.focused = true;
     },
     select() {},
+    remove() {},
     appendChild(child) {
         this.children.push(child);
         child.parentNode = this;
@@ -112,8 +113,13 @@ beforeAll(async () => {
     viewSections = [];
     globalThis.document = {
         getElementById: id => els[id] || null,
-        body: { classList: bodyClasses },
+        body: { classList: bodyClasses, appendChild() {} },
         activeElement: null,
+        execCommand() {
+            this._execCommands = this._execCommands || [];
+            this._execCommands.push('copy');
+            return true;
+        },
         createElement: tag => {
             const el = makeEl();
             el.tagName = tag.toUpperCase();
@@ -374,6 +380,77 @@ describe('closeDialogs / anyOpen', () => {
         expect(bodyClasses.contains('needVersion')).toBe(false);
         expect(d.anyOpen()).toBe(false);
         expect(d.activeEl()).toBeNull();
+    });
+
+    it('VersionDialog escapes every interpolated meta value', () => {
+        const d = freshDialogs();
+        d.VersionDialog.open({
+            app: 'vBookmarks', version: '4.0.8', manifestVersion: 3,
+            channel: 'popup', announce: '<script>alert(1)</script>',
+            browser: 'Chrome', browserVersion: '124',
+            os: '<img src=x onerror=alert(1)>', language: 'en',
+            userAgent: '"><script>x</script>'
+        });
+        const html = els['version-dialog-meta'].innerHTML;
+        expect(html).not.toContain('<script>');
+        expect(html).toContain('&lt;script&gt;');
+        expect(html).toContain('&lt;img src=x onerror=alert(1)&gt;');
+        d.VersionDialog.close();
+    });
+
+    it('VersionDialog close button fills the label span and keeps the kbd markup', () => {
+        const d = freshDialogs();
+        // the stub's querySelector matches children by uppercased "tag"
+        const label = makeEl();
+        label.tagName = '.VERSION-CLOSE-LABEL';
+        els['version-dialog-close'].appendChild(label);
+        d.VersionDialog.open({
+            app: 'vBookmarks', version: '4.0.8', manifestVersion: 3,
+            channel: 'popup', announce: '', browser: 'Chrome',
+            browserVersion: '', os: '', language: 'en', userAgent: ''
+        });
+        expect(label.textContent).toBe('paletteClose');
+        expect(els['version-dialog-close'].getAttribute('aria-label')).toBe('paletteClose');
+        // no wholesale innerHTML rewrite — the markup's <kbd>Esc</kbd> survives
+        expect(els['version-dialog-close'].innerHTML).toBe('');
+        d.VersionDialog.close();
+    });
+
+    it('VersionDialog copy falls back to execCommand when writeText rejects', async () => {
+        const d = freshDialogs();
+        Object.defineProperty(globalThis, 'navigator', {
+            configurable: true,
+            value: { clipboard: { writeText: async () => { throw new Error('denied'); } } }
+        });
+        globalThis.document._execCommands = [];
+        d.VersionDialog.open({
+            app: 'vBookmarks', version: '4.0.8', manifestVersion: 3,
+            channel: 'popup', announce: '', browser: 'Chrome',
+            browserVersion: '', os: '', language: 'en', userAgent: ''
+        });
+        await d.VersionDialog.copy();
+        expect(globalThis.document._execCommands).toEqual(['copy']);
+        expect(els['version-dialog-copy'].textContent).toBe('versionDialogCopied');
+        d.VersionDialog.close();
+    });
+
+    it('VersionDialog copy keeps the label when every clipboard path fails', async () => {
+        const d = freshDialogs();
+        Object.defineProperty(globalThis, 'navigator', {
+            configurable: true,
+            value: { clipboard: { writeText: async () => { throw new Error('denied'); } } }
+        });
+        const realExec = globalThis.document.execCommand;
+        globalThis.document.execCommand = () => { throw new Error('no'); };
+        d.VersionDialog.open({
+            app: 'vBookmarks', version: '4.0.8', manifestVersion: 3,
+            channel: 'popup', announce: '', browser: 'Chrome',
+            browserVersion: '', os: '', language: 'en', userAgent: ''
+        });
+        await d.VersionDialog.copy();
+        expect(els['version-dialog-copy'].textContent).toBe('versionDialogCopy');
+        globalThis.document.execCommand = realExec;
+        d.VersionDialog.close();
     });
 });
 

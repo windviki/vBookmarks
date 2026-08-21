@@ -135,13 +135,16 @@ describe('fuzzy.js rank()', () => {
     });
 
     it('prefers a tighter subsequence when both are partial matches', () => {
-        // "123" matches both; the dotted-IP hit is visually closer to the
-        // query than one scattered across a long path.
+        // Both are tier-3 subsequence hits. 'loose' scores higher without the
+        // span penalty (a leading '12' run + boundary bonuses: 61 vs 57), so
+        // this pair REVERSES pre-fix — it pins the span penalty itself. The
+        // doc example (10.200.31.0 vs vs1-something2/version3.html) ranks the
+        // same either way and cannot serve as the regression pin.
         const results = rank('123', [
-            item('ip', '', '10.200.31.0', 100),
-            item('path', '', 'vs1-something2/version3.html', 100)
+            item('tight', '', 'web123', 100),
+            item('loose', '', '12.x......3', 100)
         ]);
-        expect(results.map(r => r.id)).toEqual(['ip', 'path']);
+        expect(results.map(r => r.id)).toEqual(['tight', 'loose']);
         expect(results[0].score).toBeGreaterThan(results[1].score);
     });
 

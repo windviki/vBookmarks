@@ -115,4 +115,71 @@ describe('i18n-live', () => {
         expect(JSON.parse(localStorage.getItem('vbmI18nDict'))).toEqual(dict);
         expect(window._storeData).toBeUndefined();
     });
+
+    it('setLang resolves false and caches nothing when the locale fetch fails', async () => {
+        const fetchImpl = async () => ({ ok: false, json: async () => ({}) });
+        const { window, localStorage } = evaluate({}, { fetchImpl });
+        await expect(window.VBMI18N.setLang('es')).resolves.toBe(false);
+        expect(localStorage.getItem('vbmI18nDict')).toBeNull();
+        expect(localStorage.getItem('vbmI18nLang')).toBeNull();
+        expect(window._storeData).toBeUndefined();
+    });
+
+    it('a corrupt vbmI18nDict self-heals: no patch, cache keys dropped', () => {
+        const { window, localStorage, chrome } = evaluate({
+            vbmI18nLang: 'es',
+            vbmI18nDict: '{not json'
+        });
+        // no patch applied — originals still answer
+        expect(chrome.i18n.getMessage('hello')).toBe('orig:hello');
+        expect(chrome.i18n.getUILanguage()).toBe('en');
+        // both cache keys removed, so the override is not even REPORTED
+        expect(localStorage.getItem('vbmI18nDict')).toBeNull();
+        expect(localStorage.getItem('vbmI18nLang')).toBeNull();
+        expect(window.VBMI18N.currentLang()).toBe('en');
+        expect(window.VBMI18N.selectedLang()).toBe('auto');
+    });
+
+    it("setLang('AUTO') clears the override too — the keyword is case-insensitive", async () => {
+        const { window, localStorage } = evaluate({
+            vbmI18nLang: 'es',
+            vbmI18nDict: JSON.stringify({}),
+            uiLanguage: 'es'
+        });
+        await expect(window.VBMI18N.setLang('AUTO')).resolves.toBe(true);
+        expect(localStorage.getItem('vbmI18nLang')).toBeNull();
+        expect(localStorage.getItem('vbmI18nDict')).toBeNull();
+        expect(window._storeData.uiLanguage).toBe('');
+    });
+
+    it('substitutes multi-item arrays and non-string scalars', () => {
+        const dict = {
+            pair: { message: '$1 and $2', placeholders: {} },
+            named: { message: '$what$ is $n$', placeholders: { what: { content: '$1' }, n: { content: '$2' } } }
+        };
+        const { chrome } = evaluate({
+            vbmI18nLang: 'en',
+            vbmI18nDict: JSON.stringify(dict)
+        });
+        expect(chrome.i18n.getMessage('pair', ['a', 'b'])).toBe('a and b');
+        expect(chrome.i18n.getMessage('named', ['cats', 42])).toBe('cats is 42');
+        expect(chrome.i18n.getMessage('pair', ['only'])).toBe('only and ');
+    });
+
+    it('a local override wins over a divergent imported storage value and reconciles it', async () => {
+        const store = {
+            _data: { uiLanguage: 'fr' }, // imported backup says fr…
+            get: (k, d) => (k in store._data ? store._data[k] : d),
+            set(k, v) { store._data[k] = v; },
+            ready: Promise.resolve()
+        };
+        const { localStorage } = evaluate(
+            { vbmI18nLang: 'es', vbmI18nDict: JSON.stringify({}) }, // …but this machine picked es
+            { store }
+        );
+        await new Promise(resolve => setTimeout(resolve, 0));
+        // no fetch/reload toward fr; storage converges to the local choice
+        expect(store._data.uiLanguage).toBe('es');
+        expect(localStorage.getItem('vbmI18nLang')).toBe('es');
+    });
 });

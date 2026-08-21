@@ -551,6 +551,32 @@ describe('input listeners', () => {
         expect(els['search-input'].focused).toBe(true);
     });
 
+    it('clear button persists the wipe even when search mode is already off (view switched away)', () => {
+        const { s, els, store, viewHooks } = setup({});
+        type(els, 'git');
+        expect(store.get('searchQuery')).toBe('git');
+        // A view switch flips searchMode off but keeps the box's query (the
+        // re-entry contract) — the × button stays visible via has-query, and
+        // quitSearchMode's persist is gated on the now-off mode.
+        viewHooks.search.deactivate();
+        expect(s.isActive()).toBe(false);
+        expect(els['search-input'].value).toBe('git');
+        els['search-clear'].trigger('click');
+        expect(els['search-input'].value).toBe('');
+        // without the unconditional write the stale query restored next open
+        expect(store.get('searchQuery')).toBe('');
+        expect(els.search.classList.contains('has-query')).toBe(false);
+    });
+
+    it('deleting the query text persists the wipe even when search mode is already off', () => {
+        const { s, els, store, viewHooks } = setup({});
+        type(els, 'git');
+        viewHooks.search.deactivate();
+        expect(s.isActive()).toBe(false);
+        type(els, ''); // select-all + delete with the mode off
+        expect(store.get('searchQuery')).toBe('');
+    });
+
     it('a whitespace-only input persists an empty query and quits with the focus restore', () => {
         const { s, els, store, fuzzy, viewCalls } = setup({});
         type(els, 'git');

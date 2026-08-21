@@ -31,6 +31,9 @@
 
     const normalize = code => {
         const s = String(code || '').trim().replace(/-/g, '_');
+        // The 'auto' keyword is case-insensitive (/lang AUTO works too).
+        if (s.toLowerCase() === AUTO_LANG)
+            return AUTO_LANG;
         const found = SUPPORTED_LANGS.find(l => l.toLowerCase() === s.toLowerCase());
         return found || s;
     };
@@ -39,6 +42,10 @@
         try {
             return JSON.parse(localStorage.getItem(DICT_CACHE) || 'null');
         } catch (e) {
+            // Corrupt cache: drop both keys so currentLang/selectedLang fall
+            // back instead of reporting an override that was never applied.
+            localStorage.removeItem(DICT_CACHE);
+            localStorage.removeItem(LANG_CACHE);
             return null;
         }
     };
@@ -113,12 +120,20 @@
     // Imported settings may carry uiLanguage in chrome.storage.local without
     // the localStorage cache (options import -> reload). Once store.ready
     // resolves, fetch and apply the locale so the import is honored; the
-    // applied fetch writes the localStorage cache and reloads once.
-    if (typeof window.store !== 'undefined' && window.store.ready && !cacheLang()) {
+    // applied fetch writes the localStorage cache and reloads once. When a
+    // local override already exists it wins (it is this machine's last
+    // explicit choice) and storage is reconciled to it, so a backup can never
+    // export one language while the UI runs another.
+    if (typeof window.store !== 'undefined' && window.store.ready) {
         window.store.ready.then(() => {
             const storedLang = normalize(window.store.get(LANG_KEY, '') || '');
-            if (storedLang && storedLang !== AUTO_LANG && SUPPORTED_LANGS.includes(storedLang)) {
-                window.VBMI18N.setLang(storedLang);
+            const local = cacheLang();
+            if (!local) {
+                if (storedLang && storedLang !== AUTO_LANG && SUPPORTED_LANGS.includes(storedLang)) {
+                    window.VBMI18N.setLang(storedLang);
+                }
+            } else if (storedLang !== normalize(local) && window.store.set) {
+                window.store.set(LANG_KEY, normalize(local));
             }
         });
     }

@@ -72,11 +72,16 @@ const $ = id => document.getElementById(id);
                     .map(code => `<option value="${code}">${code} — ${langName(code)}</option>`)
                     .join('');
             langSelect.value = window.VBMI18N.selectedLang();
+            // The last APPLIED value, captured before any change event — a
+            // failed setLang (locale fetch error) reverts to this, never to
+            // the just-picked value the change event already reflects.
+            let appliedLang = langSelect.value;
             langSelect.addEventListener('change', async () => {
-                const previous = langSelect.value;
                 const ok = await window.VBMI18N.setLang(langSelect.value);
-                if (!ok)
-                    langSelect.value = previous;
+                if (ok)
+                    appliedLang = langSelect.value;
+                else
+                    langSelect.value = appliedLang;
             });
         }
 

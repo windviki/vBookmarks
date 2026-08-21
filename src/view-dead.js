@@ -909,8 +909,10 @@ export function initViewDead(ctx = {}) {
                 a.focus();
         }
         // Selection-mode toolbar transitions: after the swap the old button
-        // class is gone, so restoreToolbarFocus above has no target. This
-        // runs AFTER pendingRowFocus so an explicit row park still wins.
+        // class is gone, so restoreToolbarFocus above has no target. The two
+        // paths are mutually exclusive in practice (pendingRowFocus is set
+        // only by the Space toggle, which never triggers a mode transition),
+        // so this ordering never competes with the row park above.
         if (selectionFocus === 'first') {
             selectionFocus = null;
             focusSelectionBarFirst();

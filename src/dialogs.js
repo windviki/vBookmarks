@@ -387,7 +387,12 @@ export function initDialogs(ctx = {}) {
             }
             const closeBtn = $('version-dialog-close');
             if (closeBtn) {
-                closeBtn.innerHTML = `${htmlspecialchars(_m('paletteClose'))} <kbd>Esc</kbd>`;
+                // Keep the markup's <kbd>Esc</kbd> intact — fill the label
+                // span like the palette's close bar instead of rewriting
+                // the whole innerHTML.
+                const label = closeBtn.querySelector('.version-close-label');
+                if (label)
+                    label.textContent = _m('paletteClose');
                 closeBtn.setAttribute('aria-label', _m('paletteClose'));
             }
             body.classList.add('needVersion');
@@ -403,25 +408,31 @@ export function initDialogs(ctx = {}) {
         copy: async () => {
             const btn = $('version-dialog-copy');
             const text = JSON.stringify(VersionDialog.meta, null, 2);
-            try {
-                if (typeof navigator !== 'undefined' && navigator.clipboard && navigator.clipboard.writeText) {
+            let done = false;
+            if (typeof navigator !== 'undefined' && navigator.clipboard && navigator.clipboard.writeText) {
+                try {
                     await navigator.clipboard.writeText(text);
-                } else if (typeof document !== 'undefined' && document.body) {
-                    const ta = document.createElement('textarea');
-                    ta.value = text;
-                    document.body.appendChild(ta);
-                    ta.select();
+                    done = true;
+                } catch (e) { /* focus lost etc. — try the execCommand path */ }
+            }
+            if (!done && typeof document !== 'undefined' && document.body) {
+                const ta = document.createElement('textarea');
+                ta.value = text;
+                document.body.appendChild(ta);
+                ta.select();
+                try {
                     document.execCommand('copy');
-                    ta.remove();
-                }
-                if (btn) {
-                    btn.textContent = _m('versionDialogCopied');
-                    setTimeout(() => {
-                        if (btn && body.classList.contains('needVersion'))
-                            btn.textContent = _m('versionDialogCopy');
-                    }, 1500);
-                }
-            } catch (e) { /* keep the current label */ }
+                    done = true;
+                } catch (e) { /* no clipboard path available */ }
+                ta.remove();
+            }
+            if (done && btn) {
+                btn.textContent = _m('versionDialogCopied');
+                setTimeout(() => {
+                    if (btn && body.classList.contains('needVersion'))
+                        btn.textContent = _m('versionDialogCopy');
+                }, 1500);
+            }
         }
     };
     const versionCopyBtn = $('version-dialog-copy');

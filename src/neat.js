@@ -410,6 +410,19 @@ import { shouldHighlightUnsynced, shouldRememberState } from './settings.js';
     // during init, and the hook closures must never hit the TDZ.
     let deadOverlayRefresh = () => {};
 
+    // Undo stack + deletion toast (P3.3) live in src/undo.js. The onChanged
+    // closure only runs after a successful undo — long after initTreeView
+    // below — so the treeView reference is TDZ-safe (same pattern as
+    // sortFolderContents below). Must init before initViewManager: the view
+    // manager's first activation runs inside initViewManager and its
+    // toastAction/dismissToast ctx getters read `undo` — declaring undo any
+    // later would throw a TDZ ReferenceError on that very first switch
+    // (caught by the Docker smoke gate, invisible to the unit suites). Also
+    // must init before initActions, which receives it as ctx.undo.
+    const undo = initUndo({
+        onChanged: () => chrome.bookmarks.getTree(treeView.generateTree)
+    });
+
     // View manager (v4 task-2): the tab strip + view switching layer. Must
     // init before initSearch — the search module maps its mode onto the view
     // state machine at init (saved-query restore activates the search view).
@@ -421,9 +434,12 @@ import { shouldHighlightUnsynced, shouldRememberState } from './settings.js';
         // The "记住之前的状态" flag: view-manager's focusSpot capture/persist/
         // restore follow it, the same way tree-view's focusID restore does.
         getRememberState: () => rememberState,
-        // 4.0.8: the hidden-tab-strip view hint rides the undo toast bar.
-        // undo is declared below — lazy getter, only read on activation.
-        get toastAction() { return undo.toastAction; }
+        // 4.0.8: the hidden-tab-strip view hint rides the undo toast bar,
+        // and any real view switch dismisses a lingering toast (ea78d89).
+        // undo inits above — plain values (the first activation reads
+        // dismissToast synchronously).
+        toastAction: undo.toastAction,
+        dismissToast: undo.dismissToast
     });
 
     // Search lives in src/search.js (P1): it owns searchMode, the flat fuzzy
@@ -479,8 +495,8 @@ import { shouldHighlightUnsynced, shouldRememberState } from './settings.js';
     // executor (src/folder-sort.js) holds the re-entrancy lock, captures the
     // pre-sort order of EVERY level and wires the toast Undo replay — the
     // direct menu items and the sort dialog share this executor, so one lock
-    // covers both entries. undo / treeView are declared below; the sorter only
-    // touches them on user events (TDZ-safe via the lazy getters).
+    // covers both entries. treeView is declared below; the sorter only
+    // touches it on user events (TDZ-safe via the lazy getter).
     const sortFolderContents = createFolderSorter({
         _m,
         get undo() { return undo; },
@@ -490,15 +506,6 @@ import { shouldHighlightUnsynced, shouldRememberState } from './settings.js';
     // Dialogs live in src/dialogs.js (P1); onSort reorders a folder's children,
     // and store lets the sort dialog persist its options (issue #33).
     const dialogs = initDialogs({ onSort: sortFolderContents, store });
-
-    // Undo stack + deletion toast (P3.3) live in src/undo.js. The onChanged
-    // closure only runs after a successful undo — long after initTreeView
-    // below — so the treeView reference is TDZ-safe (same pattern as
-    // sortFolderContents above). Must init before initActions, which
-    // receives it as ctx.undo for the delete paths.
-    const undo = initUndo({
-        onChanged: () => chrome.bookmarks.getTree(treeView.generateTree)
-    });
 
     // v4 task-2 slice D (§5.4): visit statistics — created before the tree
     // view so bookmarkHandler's open hook and the tree-rebuild prune both
@@ -600,8 +607,7 @@ import { shouldHighlightUnsynced, shouldRememberState } from './settings.js';
         onRowsRendered: () => deadOverlayRefresh(),
         // v4 task-3 #14: the onlyShowBMBar reveal guard toasts through the
         // undo bar's generic action toast (undo inits above, plain value).
-        toastAction: undo.toastAction,
-        dismissToast: undo.dismissToast
+        toastAction: undo.toastAction
     });
 
     // Recent view (v4 task-2 切片 B): the old in-tree recent section becomes

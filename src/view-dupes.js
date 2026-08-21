@@ -467,7 +467,10 @@ export function initViewDupes(ctx = {}) {
             if (a)
                 a.focus();
         }
-        // Selection-mode toolbar transitions (after the explicit parks above).
+        // Selection-mode toolbar transitions: after the swap the old button
+        // class is gone, so restoreToolbarFocus above has no target. Mutually
+        // exclusive with pendingMemberFocus in practice (the Space toggle
+        // never triggers a mode transition), so the ordering never competes.
         if (selectionFocus === 'first') {
             selectionFocus = null;
             focusSelectionBarFirst();

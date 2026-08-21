@@ -61,8 +61,9 @@ export const createDonation = ({ store, $, chrome, _m, openNewTab }) => {
     const { newOrUpgrade, upgradedToV4, upgradedToAnnounced } = applyVersionGate(store, mf['version']);
     bumpOpenCount(store);
     if (!store.get('donationKey')) {
-        // New installs get a grace window of ~30 popup opens before the first
-        // ask, so the request comes after real usage value.
+        // New installs: the very first open shows the card once as the
+        // welcome/v4-identity frame (newOrUpgrade), then this seeded key
+        // holds the next ask back for ~30 popup opens of real usage.
         store.set('donationKey', DONATION_GRACE_OPENS);
     }
     store.remove('donationCountDown'); // retired in v4 (was the 10s timer)

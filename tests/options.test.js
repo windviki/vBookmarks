@@ -994,6 +994,51 @@ describe('classic-experience preset (v4 task-3 #20 + issue #49)', () => {
     });
 });
 
+describe('UI language dropdown (4.0.8)', () => {
+    const makeI18nStub = (behavior = {}) => ({
+        selectedLang: () => 'es',
+        supportedLangs: ['en', 'es', 'de', 'it'],
+        setLangCalls: [],
+        async setLang(code) {
+            this.setLangCalls.push(code);
+            return behavior.ok !== undefined ? behavior.ok : true;
+        }
+    });
+
+    it('builds the auto + native-name options and selects the override', async () => {
+        const VBMI18N = makeI18nStub();
+        const sb = createSandbox({ windowExtras: { VBMI18N } });
+        await sb.start();
+        const sel = sb.elements['language-select'];
+        expect(sel.innerHTML).toContain('<option value="auto">');
+        expect(sel.innerHTML).toContain('<option value="es">');
+        expect(sel.value).toBe('es');
+    });
+
+    it('a failed setLang reverts the dropdown to the last APPLIED value', async () => {
+        const VBMI18N = makeI18nStub();
+        VBMI18N.setLang = async function (code) {
+            this.setLangCalls.push(code);
+            return code !== 'it'; // 'it' fails, everything else applies
+        };
+        const sb = createSandbox({ windowExtras: { VBMI18N } });
+        await sb.start();
+        const sel = sb.elements['language-select'];
+
+        // success moves the applied value forward
+        sel.value = 'de';
+        await sel.fire('change');
+        expect(sel.value).toBe('de');
+
+        // failure reverts to THAT applied value, not to the failed pick —
+        // the pre-fix code captured the new value and reverted to itself
+        sel.value = 'it';
+        await sel.fire('change');
+        expect(sel.value).toBe('de');
+        expect(VBMI18N.setLangCalls).toEqual(['de', 'it']);
+    });
+});
+
 describe('Sorting group (issue #33)', () => {
     it('reads sortOptions into the controls and writes changes back', async () => {
         const sb = createSandbox({

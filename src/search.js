@@ -567,6 +567,11 @@ export function initSearch(ctx = {}) {
     searchInput.addEventListener('input', () => {
         updateClearBtn();
         if (!searchInput.value.length) {
+            // Persist the wipe even outside search mode: after a view switch
+            // the box can still hold the query (the re-entry contract) while
+            // searchMode is off — quitSearchMode would skip the write and the
+            // stale query would restore on the next popup open.
+            store.set('searchQuery', '');
             // keep focus on input
             // do not restore focus to item
             quitSearchMode(true);
@@ -581,6 +586,10 @@ export function initSearch(ctx = {}) {
     searchClearBtn.addEventListener('click', () => {
         searchInput.value = '';
         updateClearBtn();
+        // Same unconditional persist as the input handler above: outside
+        // search mode quitSearchMode is a no-op, and without this write the
+        // abandoned query would still restore on the next popup open.
+        store.set('searchQuery', '');
         // Abandoning the search: clear the results pane too, so an
         // UNCONSUMED query leaves no trace (it was not recorded, so the
         // history area has no entry — the results pane must not contradict
