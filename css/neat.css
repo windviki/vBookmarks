@@ -739,18 +739,11 @@ body.linux input {
     object-fit: contain;
 }
 
-/* The enriched <img> (data URL) drops in with a quick fade instead of a hard
-   swap, so the default SVG → real-icon replacement reads as a settle rather
-   than a flicker. When the icon slot is on screen, JS adds .favicon-pop too:
-   a short left-right shake with a slight scale-in — the new icon "breaks out"
-   of the old placeholder. Off-screen rows swap quietly (no animation). */
-.favicon-enriched {
-    animation: favicon-enrich-in .18s ease-out;
-}
-@keyframes favicon-enrich-in {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
+/* The enriched <img> (data URL) drops in INSTANTLY — no fade — so a cached
+   re-injection (re-opening a view) never reads as a vanish-and-reappear
+   flicker. The one-time "break out" shake (.favicon-pop) is added by JS only
+   when a freshly-fetched icon lands in an on-screen slot; off-screen rows and
+   cache-hit re-injections swap quietly with no animation at all. */
 .favicon-enriched.favicon-pop {
     animation: favicon-enrich-pop .38s cubic-bezier(.36, .07, .19, .97);
 }
@@ -2315,7 +2308,6 @@ body.no-view-tabs #view-tabs {
     .view-enter {
         animation: none;
     }
-    .favicon-enriched,
     .favicon-enriched.favicon-pop {
         animation: none;
     }

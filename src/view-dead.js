@@ -181,6 +181,13 @@ export function initViewDead(ctx = {}) {
     let live = null;        // { state, done, total, order:[id…], results:Map }
     let scanStarting = false;
     let lastScan = null;    // { ts, scannedCount, results: {id:{status,code}} }
+    // Dirty flag: true when a state change arrived while the view was
+    // inactive (scan blob/cache/marks/bookmark-tree) and the next activate()
+    // must rebuild the list. Starting true so the first activation renders.
+    // Clearing it in render() is what lets an unchanged re-entry skip the
+    // full innerHTML rebuild — the thing that blanked every _favicon <img>
+    // and caused the re-entry flicker.
+    let needsRender = true;
     let treeItems = new Map(); // id → { id, title, url } of the last render
     // v4 task-4 #1: the filter persists (deadFilter) — reopening the view
     // restores the active segment, same contract as the stats view's
@@ -938,6 +945,7 @@ export function initViewDead(ctx = {}) {
                     tab.focus();
             }
         }
+        needsRender = false;   // the DOM now reflects the current state
     };
 
     // --- Overlay (§5.5c + 第五轮项3) ------------------------------------------
@@ -1298,7 +1306,10 @@ export function initViewDead(ctx = {}) {
     // A published blob replaces the mirror wholesale; raw === undefined (key
     // removed) means the run ended — the deadLastScan change that accompanies
     // a finish renders the fresh cache, a cancel leaves the previous one.
-    const applyBlob = raw => {
+    // FoldBlob is the render-free state fold (activate() uses it directly);
+    // applyBlob adds the repaint decision (render now if on screen, else mark
+    // the view dirty for the next activation).
+    const foldBlob = raw => {
         scanStarting = false;
         if (!raw) {
             live = null;
@@ -1319,8 +1330,13 @@ export function initViewDead(ctx = {}) {
                 live = null; // a corrupt blob renders as "no run"
             }
         }
+    };
+    const applyBlob = raw => {
+        foldBlob(raw);
         if (views.isActive('dead'))
             render();
+        else
+            needsRender = true;
     };
 
     // deadLastScan changed — the SW writes the finished-run snapshot, and
@@ -1353,6 +1369,8 @@ export function initViewDead(ctx = {}) {
             views.updateBadges();
             if (views.isActive('dead'))
                 render();
+            else
+                needsRender = true;
         });
     };
 
@@ -1392,9 +1410,12 @@ export function initViewDead(ctx = {}) {
                 applyBlob(changes[DEAD_SCAN_KEY].newValue);
             if (DEAD_LAST_KEY in changes)
                 onCacheWritten(changes[DEAD_LAST_KEY].newValue);
-            if (marksChanged && !(DEAD_SCAN_KEY in changes || DEAD_LAST_KEY in changes)
-                && views.isActive('dead'))
-                render();
+            if (marksChanged && !(DEAD_SCAN_KEY in changes || DEAD_LAST_KEY in changes)) {
+                if (views.isActive('dead'))
+                    render();
+                else
+                    needsRender = true;
+            }
         });
 
     // Start: one fire-and-forget message; scanStarting guards the window
@@ -1470,6 +1491,10 @@ export function initViewDead(ctx = {}) {
     });
     let refreshTimer = null;
     const scheduleRender = () => {
+        // The bookmark tree changed. Mark the view dirty up front so an
+        // activate() that lands before the debounce still re-joins + repaints;
+        // the debounced callback clears it only when it actually renders.
+        needsRender = true;
         clearTimeout(refreshTimer);
         refreshTimer = setTimeout(() => {
             // 审计 D1: no `lastScan` in the gate — the marks-only view (上次
@@ -1832,12 +1857,18 @@ export function initViewDead(ctx = {}) {
                     startScan();
             };
             const local = chrome.storage && chrome.storage.local;
-            const treeAndRender = () =>
+            const treeAndMaybeRender = () =>
                 chrome.bookmarks.getTree(t => {
                     // the first entry builds the tree-item map the rows join against
                     treeItems = new Map(scannableItems(t).map(item => [item.id, item]));
                     invalidateResultRows(); // tree join 重建 → 结果行重算
-                    render();
+                    // Rebuild the list ONLY when something changed while the
+                    // view was away. Re-entering an unchanged view must leave
+                    // the DOM (and every already-loaded favicon <img>) alone —
+                    // an unconditional innerHTML rebuild is what blanked the
+                    // icons and produced the re-entry flicker.
+                    if (needsRender)
+                        render();
                     // Refresh the tab badge now that lastScan is available: the
                     // activation-time updateBadges ran BEFORE the async storage
                     // read resolved, so a stored scan's badge stayed hidden
@@ -1847,7 +1878,7 @@ export function initViewDead(ctx = {}) {
                     kick();
                 });
             if (!local || !local.get) // unit doubles without storage
-                return treeAndRender();
+                return treeAndMaybeRender();
             local.get([DEAD_SCAN_KEY, DEAD_LAST_KEY], data => {
                 // Fold the cache in raw — marks are never pruned here (nor by
                 // onCacheWritten): residue semantics keep every past mark.
@@ -1857,8 +1888,11 @@ export function initViewDead(ctx = {}) {
                     lastScan = null;
                 }
                 invalidateResultRows(); // 直接读 storage 的缓存同样要失效
-                applyBlob(data[DEAD_SCAN_KEY]);
-                treeAndRender();
+                // Render-free fold: the onChanged listener already marked the
+                // view dirty when the blob changed while inactive, so the
+                // decision below (needsRender) is authoritative.
+                foldBlob(data[DEAD_SCAN_KEY]);
+                treeAndMaybeRender();
             });
         },
         // §5.5d + item 10: Escape toggles pause ⇄ resume while a scan

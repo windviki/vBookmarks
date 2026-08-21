@@ -403,6 +403,56 @@ describe('view registration (§5.5)', () => {
     });
 });
 
+describe('re-entry: unchanged activation must not rebuild the list (favicon flicker)', () => {
+    const cache = JSON.stringify({
+        ts: 1, scannedCount: 2,
+        results: {
+            '12': { status: 'dead', code: 404 },
+            '13': { status: 'blocked', code: 404 }
+        }
+    });
+
+    it('re-activating with nothing changed leaves the DOM untouched', () => {
+        const ctx = setup({ storeData: { deadLastScan: cache } });
+        ctx.def().activate();
+        expect(ctx.$list.innerHTML).toContain('id="dead-item-12"');
+        // The rows (and every already-loaded favicon <img>) are now intact.
+        // Switching away and straight back must not rebuild them.
+        ctx.views.active = false;
+        ctx.views.active = true;
+        ctx.$list._innerHTML = 'INTACT'; // sentinel for "the DOM was not swapped"
+        ctx.def().activate();
+        expect(ctx.$list.innerHTML).toBe('INTACT');
+        expect(ctx.def().badge()).toBe(2); // badge still refreshed
+    });
+
+    it('re-activating after a bookmark change while away re-renders', () => {
+        const ctx = setup({ storeData: { deadLastScan: cache } });
+        ctx.def().activate();
+        ctx.views.active = false;             // switch away
+        ctx.chrome.bookmarks.fire('onCreated'); // tree changed while hidden
+        ctx.views.active = true;              // switch back
+        ctx.$list._innerHTML = 'STALE';
+        ctx.def().activate();
+        expect(ctx.$list.innerHTML).not.toBe('STALE');
+        expect(ctx.$list.innerHTML).toContain('id="dead-item-12"');
+    });
+
+    it('re-activating after a mark change while away re-renders', () => {
+        const ctx = setup({ storeData: { deadLastScan: cache } });
+        ctx.def().activate();
+        ctx.views.active = false;
+        // import/options rewrote the marks while the view was hidden
+        ctx.chrome.storage.onChanged.fire(
+            { deadMarks: { newValue: '["12"]' } }, 'local');
+        ctx.views.active = true;
+        ctx.$list._innerHTML = 'STALE';
+        ctx.def().activate();
+        expect(ctx.$list.innerHTML).not.toBe('STALE');
+        expect(ctx.$list.innerHTML).toContain('id="dead-item-12"');
+    });
+});
+
 describe('empty state + cached results (§5.5a)', () => {
     const rowClick = (ctx, id) => ctx.clickOn({
         closest: sel => (sel === 'li' ? { dataset: { nodeId: id } } : null)
