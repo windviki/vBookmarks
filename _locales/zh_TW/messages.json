@@ -967,8 +967,12 @@
     "description": "Favicon gallery heading of the muted section listing hosts whose icon fetch failed recently."
   },
   "favGalleryFailedHint": {
-    "message": "這些網站會暫停嘗試 24 小時，之後自動重試。",
+    "message": "失敗項目會在 24 小時、3 天、7 天後重試，之後便放棄，直到清除圖示快取。",
     "description": "Favicon gallery hint under the failed-fetch section title."
+  },
+  "favGalleryGaveUp": {
+    "message": "已放棄",
+    "description": "Favicon gallery badge on a failed-strip host whose retries are exhausted (it stays untouched until the icon cache is cleared)."
   },
   "favGalleryOrphan": {
     "message": "此主機上已沒有書籤—圖示會隨快取一併清除。",

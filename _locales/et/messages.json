@@ -978,8 +978,12 @@
     "description": "Favicon gallery heading of the muted section listing hosts whose icon fetch failed recently."
   },
   "favGalleryFailedHint": {
-    "message": "Neid saite proovitakse 24 tunni pärast uuesti automaatselt.",
+    "message": "Ebaõnnestumisi proovitakse uuesti 24 h, 3 päeva ja 7 päeva pärast, seejärel loobutakse, kuni ikoonivahemälu tühjendatakse.",
     "description": "Favicon gallery hint under the failed-fetch section title."
+  },
+  "favGalleryGaveUp": {
+    "message": "Loobutud",
+    "description": "Favicon gallery badge on a failed-strip host whose retries are exhausted (it stays untouched until the icon cache is cleared)."
   },
   "favGalleryOrphan": {
     "message": "Sellel hostil pole ühtegi järjehoidjat — ikoon eemaldatakse koos vahemäluga.",

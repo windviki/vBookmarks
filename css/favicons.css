@@ -432,6 +432,16 @@ body.show-before .fav-card {
     color: var(--vbm-muted);
     font-size: 12px;
 }
+.fav-failed-list li.gave-up {
+    opacity: 0.75;
+}
+.fav-gaveup {
+    font-size: 11px;
+    padding: 0 6px;
+    border-radius: 999px;
+    background: var(--vbm-bg-hover);
+    color: var(--vbm-muted);
+}
 
 /* Empty state */
 .fav-empty {

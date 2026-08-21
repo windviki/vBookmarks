@@ -1502,8 +1502,12 @@
     "description": "Favicon gallery heading of the muted section listing hosts whose icon fetch failed recently."
   },
   "favGalleryFailedHint": {
-    "message": "这些站点会静默 24 小时，之后自动重试。",
+    "message": "失败的站点会在 24 小时、3 天、7 天后各重试一次，仍失败则放弃，直到清空图标缓存后才会重新尝试。",
     "description": "Favicon gallery hint under the failed-fetch section title."
+  },
+  "favGalleryGaveUp": {
+    "message": "已放弃",
+    "description": "Favicon gallery badge on a failed-strip host whose retries are exhausted (it stays untouched until the icon cache is cleared)."
   },
   "favGalleryOrphan": {
     "message": "该站点下已无书签——图标会随缓存一起清除。",

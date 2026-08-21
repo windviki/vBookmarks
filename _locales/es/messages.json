@@ -978,8 +978,12 @@
     "description": "Favicon gallery heading of the muted section listing hosts whose icon fetch failed recently."
   },
   "favGalleryFailedHint": {
-    "message": "Estos sitios se dejan en reposo durante 24 horas y luego se reintentan automáticamente.",
+    "message": "Los fallos se reintentan después de 24 h, 3 días y 7 días, y luego se abandonan hasta que se borre la caché de iconos.",
     "description": "Favicon gallery hint under the failed-fetch section title."
+  },
+  "favGalleryGaveUp": {
+    "message": "Abandonado",
+    "description": "Favicon gallery badge on a failed-strip host whose retries are exhausted (it stays untouched until the icon cache is cleared)."
   },
   "favGalleryOrphan": {
     "message": "No queda ningún marcador en este host: el icono se borra con la caché.",

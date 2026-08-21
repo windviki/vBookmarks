@@ -1646,8 +1646,12 @@
     "description": "Favicon gallery heading of the muted section listing hosts whose icon fetch failed recently."
   },
   "favGalleryFailedHint": {
-    "message": "These sites are quiet for 24 hours, then retried automatically.",
+    "message": "Failures are retried after 24 h, 3 days and 7 days, then given up until the icon cache is cleared.",
     "description": "Favicon gallery hint under the failed-fetch section title."
+  },
+  "favGalleryGaveUp": {
+    "message": "Gave up",
+    "description": "Favicon gallery badge on a failed-strip host whose retries are exhausted (it stays untouched until the icon cache is cleared)."
   },
   "favGalleryOrphan": {
     "message": "No bookmark left on this host — the icon clears with the cache.",

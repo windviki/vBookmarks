@@ -978,8 +978,12 @@
     "description": "Favicon gallery heading of the muted section listing hosts whose icon fetch failed recently."
   },
   "favGalleryFailedHint": {
-    "message": "Tieto stránky majú 24 hodín pokoj a potom sa automaticky skúsia znova.",
+    "message": "Neúspešné pokusy sa opakujú po 24 hodinách, 3 dňoch a 7 dňoch, potom sa vzdajú, kým sa nevymaže vyrovnávacia pamäť ikon.",
     "description": "Favicon gallery hint under the failed-fetch section title."
+  },
+  "favGalleryGaveUp": {
+    "message": "Vzdané",
+    "description": "Favicon gallery badge on a failed-strip host whose retries are exhausted (it stays untouched until the icon cache is cleared)."
   },
   "favGalleryOrphan": {
     "message": "Na tomto hostiteľovi nezostala žiadna záložka – ikona sa vymaže s medzipamäťou.",

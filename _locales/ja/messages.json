@@ -978,8 +978,12 @@
     "description": "Favicon gallery heading of the muted section listing hosts whose icon fetch failed recently."
   },
   "favGalleryFailedHint": {
-    "message": "これらのサイトは24時間試行されず、その後自動的に再試行されます。",
+    "message": "失敗は24時間後、3日後、7日後に再試行され、その後はアイコンキャッシュがクリアされるまで放棄されます。",
     "description": "Favicon gallery hint under the failed-fetch section title."
+  },
+  "favGalleryGaveUp": {
+    "message": "放棄しました",
+    "description": "Favicon gallery badge on a failed-strip host whose retries are exhausted (it stays untouched until the icon cache is cleared)."
   },
   "favGalleryOrphan": {
     "message": "このホストにはブックマークが残っていません。アイコンはキャッシュと一緒に消去されます。",

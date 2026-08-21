@@ -978,8 +978,12 @@
     "description": "Favicon gallery heading of the muted section listing hosts whose icon fetch failed recently."
   },
   "favGalleryFailedHint": {
-    "message": "Šios svetainės 24 valandas netikrinamos, tada automatiškai bandoma iš naujo.",
+    "message": "Nesėkmės bandomos pakartoti po 24 val., 3 dienų ir 7 dienų, tada atsisakoma, kol neišvaloma piktogramų talpykla.",
     "description": "Favicon gallery hint under the failed-fetch section title."
+  },
+  "favGalleryGaveUp": {
+    "message": "Atsisakyta",
+    "description": "Favicon gallery badge on a failed-strip host whose retries are exhausted (it stays untouched until the icon cache is cleared)."
   },
   "favGalleryOrphan": {
     "message": "Šiame hoste nebeliko žymių – piktograma bus išvalyta kartu su podėliu.",

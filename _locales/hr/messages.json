@@ -978,8 +978,12 @@
     "description": "Favicon gallery heading of the muted section listing hosts whose icon fetch failed recently."
   },
   "favGalleryFailedHint": {
-    "message": "Ta se web-mjesta 24 sata ne kontaktiraju, a zatim se automatski ponovno pokušavaju.",
+    "message": "Neuspjeli pokušaji ponavljaju se nakon 24 h, 3 dana i 7 dana, a zatim se odustaje dok se predmemorija ikona ne očisti.",
     "description": "Favicon gallery hint under the failed-fetch section title."
+  },
+  "favGalleryGaveUp": {
+    "message": "Odustano",
+    "description": "Favicon gallery badge on a failed-strip host whose retries are exhausted (it stays untouched until the icon cache is cleared)."
   },
   "favGalleryOrphan": {
     "message": "Na ovom hostu nema više oznaka — ikona se briše s predmemorijom.",

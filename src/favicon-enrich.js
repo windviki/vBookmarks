@@ -42,9 +42,19 @@ import { addProxyMarker } from './dead-proxy.js';
 export const FAVICON_DATA_PREFIX = 'vbmFavicon:';
 export const FAVICON_IDX_KEY = 'vbmFaviconIdx';
 
-// --- Budgets / TTL -----------------------------------------------------------
-export const SUCCESS_TTL_MS = 30 * 24 * 60 * 60 * 1000;   // 30d
-export const FAILED_TTL_MS = 24 * 60 * 60 * 1000;         // 24h
+// --- Budgets / retry policy ---------------------------------------------------
+// 4.0.8 收敛策略: success entries NEVER expire — a fetched icon is served
+// until the byte-budget eviction or an explicit cache clear removes it, so
+// no periodic re-fetch storm ever happens. Failures back off: a failed host
+// is retried after 24h, then 3d, then 7d; the 4th consecutive failure gives
+// up — the marker stays until the cache is cleared. The retry trigger is
+// always a placeholder render (the user actually looking at the row), never
+// a background poll.
+export const RETRY_DELAYS_MS = [
+    24 * 60 * 60 * 1000,                        // 24h
+    3 * 24 * 60 * 60 * 1000,                    // 3d
+    7 * 24 * 60 * 60 * 1000                     // 7d
+];
 export const BREAKER_TTL_MS = 6 * 60 * 60 * 1000;         // 6h
 export const STORAGE_QUOTA_BYTES = 10 * 1024 * 1024;      // chrome.storage.local default quota
 export const BUDGET_FACTOR = 0.8;                          // ceiling = free × factor
@@ -131,6 +141,18 @@ export const AGG_PROVIDERS = [
 export const providerUrl = (id, host) => {
     const p = AGG_PROVIDERS.find(p => p.id === id);
     return p ? p.url(host) : null;
+};
+
+// A failed index/cache entry { f: consecutiveFailures, t: lastFailureTs } →
+// its retry state. gaveUp once the retries behind RETRY_DELAYS_MS are
+// exhausted (initial + 3 = 4 total attempts); otherwise retryAt is the ts the
+// next attempt is allowed at (the caller compares it against its own clock).
+// Exported for the favicon gallery's failed strip.
+export const failedState = meta => {
+    const f = meta && Number.isFinite(meta.f) ? meta.f : 1;
+    if (f > RETRY_DELAYS_MS.length)
+        return { gaveUp: true, retryAt: Infinity, attempts: f };
+    return { gaveUp: false, retryAt: (meta && meta.t || 0) + RETRY_DELAYS_MS[f - 1], attempts: f };
 };
 
 const HTTP_URL = /^https?:\/\//i;
@@ -361,18 +383,12 @@ export function initFaviconEnrich(ctx = {}) {
     const now = ctx.now || (() => Date.now());
 
     // --- Session in-memory cache (hydrated from storage) ---------------------
-    // host → { d: dataUrl, t: ts } success | { f: 1, t: ts } failed
+    // host → { d: dataUrl, t: ts, src? } success | { f: n, t: ts } failed
+    // (n = consecutive failures; the backoff/give-up ladder reads it)
     const cache = new Map();
     let idxData = emptyIdx();
     let hydrated = false;
     let hydrateDone = null;
-
-    const isExpired = (host, ttlMs) => {
-        const e = cache.get(host);
-        if (!e)
-            return false;
-        return now() - e.t >= ttlMs;
-    };
 
     // Bytes actually persisted (data URLs of persisted entries; session-only
     // icons are excluded — they cost nothing in storage). This is what the
@@ -400,14 +416,14 @@ export function initFaviconEnrich(ctx = {}) {
     const persistIdxNow = () => {
         if (!chromeImpl || !chromeImpl.storage || !chromeImpl.storage.local)
             return;
-        // Prune expired failed markers while writing (index converges).
+        // Failed markers are never pruned here: they ARE the backoff/give-up
+        // record — dropping one would read as "never tried" and re-open
+        // fetching for a host that already exhausted its retries.
         const hosts = {};
         for (const [host, e] of cache) {
-            if (e.f && now() - e.t >= FAILED_TTL_MS)
-                continue;
             if (!e.f && e.persist === false)
                 continue;   // session-only (oversized / quota-degraded): no data key to index
-            hosts[host] = e.f ? { f: 1, t: e.t } : { t: e.t, s: e.d ? e.d.length : 0, ...(e.src ? { src: e.src } : {}) };
+            hosts[host] = e.f ? { f: e.f, t: e.t } : { t: e.t, s: e.d ? e.d.length : 0, ...(e.src ? { src: e.src } : {}) };
         }
         idxData.hosts = hosts;
         try {
@@ -442,7 +458,11 @@ export function initFaviconEnrich(ctx = {}) {
     };
 
     const writeFailed = host => {
-        cache.set(host, { f: 1, t: now() });
+        // Consecutive-failure count drives the backoff/give-up ladder — the
+        // previous marker must survive the retry (onPlaceholder no longer
+        // deletes it), or the count would reset to 1 every window.
+        const prev = cache.get(host);
+        cache.set(host, { f: (prev && prev.f ? prev.f : 0) + 1, t: now() });
         persistIdxDebounced();
     };
 
@@ -580,9 +600,10 @@ export function initFaviconEnrich(ctx = {}) {
         // Build the map + reconcile index ↔ data keys.
         for (const [host, meta] of Object.entries(idx.hosts || {})) {
             if (meta.f) {
-                // Failed marker: no data key expected.
-                if (nowMs - meta.t < FAILED_TTL_MS)
-                    cache.set(host, { f: 1, t: meta.t });
+                // Failed marker: no data key expected. Loaded regardless of
+                // age — it is the backoff/give-up record, and dropping an old
+                // one would silently reopen fetching for a given-up host.
+                cache.set(host, { f: meta.f, t: meta.t });
                 continue;
             }
             const dataUrl = all[`${FAVICON_DATA_PREFIX}${host}`];
@@ -945,7 +966,10 @@ export function initFaviconEnrich(ctx = {}) {
         // and short-circuits instead of issuing a redundant fetch.
         await hydrateDone;
         const hit = cache.get(item.host);
-        if (hit && hit.d && !isExpired(item.host, SUCCESS_TTL_MS)) {
+        // Success entries never expire (4.0.8 收敛策略): a cache hit always
+        // hot-swaps. Only budget eviction / an explicit cache clear removes
+        // one — no periodic re-fetch of every cached host.
+        if (hit && hit.d) {
             // hotSwap reads the item back via queue.get — remove only after.
             // Cache hit discovered after the hydrate race: no shake.
             hotSwap(item.host, hit.d, false);
@@ -958,7 +982,7 @@ export function initFaviconEnrich(ctx = {}) {
             // setEnabled(false) aborts in-flight items mid-discover; each
             // layer swallows the abort and returns null, which must NOT be
             // mistaken for "host has no icon" — otherwise a simple disable
-            // stamps a 24h failure marker on hosts that were never tried.
+            // stamps a failure marker on hosts that were never tried.
             if (item.aborted || signal.aborted) {
                 clearEnriching(item.anchors);
                 return;
@@ -1085,19 +1109,19 @@ export function initFaviconEnrich(ctx = {}) {
             return false;
         const entry = cache.get(host);
         if (entry && entry.d) {
-            // Cached success (respect TTL). Hot-swap immediately.
-            if (isExpired(host, SUCCESS_TTL_MS)) {
-                cache.delete(host);
-            } else {
-                injectImg(img, entry.d);
-                return true;
-            }
+            // Cached success — never expires. Hot-swap immediately.
+            injectImg(img, entry.d);
+            return true;
         }
         if (entry && entry.f) {
-            if (isExpired(host, FAILED_TTL_MS))
-                cache.delete(host);   // retry allowed
-            else
-                return false;         // within the 24h quiet window
+            const st = failedState(entry, now());
+            if (st.gaveUp)
+                return false;             // gave up — until the cache is cleared
+            if (now() < st.retryAt)
+                return false;             // inside the backoff quiet window
+            // Backoff elapsed: retry now. The old marker is KEPT so
+            // writeFailed increments its failure count instead of
+            // restarting the ladder at 1.
         }
         enqueue(host, pageUrl, img);
         return false;

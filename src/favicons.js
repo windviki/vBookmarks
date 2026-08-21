@@ -144,8 +144,10 @@ const render = () => {
     failedEl.hidden = !failed.length;
     if (failed.length) {
         $('fav-failed-list').innerHTML = failed.map(f =>
-            `<li><span class="fav-failed-host">${esc(f.host)}</span>`
-            + `<span class="fav-meta">${esc(relTimeLabel(f.ts, _m))}</span></li>`
+            `<li${f.gaveUp ? ' class="gave-up"' : ''}><span class="fav-failed-host">${esc(f.host)}</span>`
+            + `<span class="fav-meta">${esc(relTimeLabel(f.ts, _m))}</span>`
+            + (f.gaveUp ? `<span class="fav-gaveup">${esc(_m('favGalleryGaveUp'))}</span>` : '')
+            + `</li>`
         ).join('');
     }
 };

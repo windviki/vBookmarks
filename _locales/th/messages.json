@@ -978,8 +978,12 @@
     "description": "Favicon gallery heading of the muted section listing hosts whose icon fetch failed recently."
   },
   "favGalleryFailedHint": {
-    "message": "เว็บไซต์เหล่านี้จะหยุดพัก 24 ชั่วโมง แล้วลองใหม่โดยอัตโนมัติ",
+    "message": "ความล้มเหลวจะลองใหม่หลังจาก 24 ชม., 3 วัน และ 7 วัน จากนั้นจะยอมแพ้จนกว่าจะล้างแคชไอคอน",
     "description": "Favicon gallery hint under the failed-fetch section title."
+  },
+  "favGalleryGaveUp": {
+    "message": "ยอมแพ้แล้ว",
+    "description": "Favicon gallery badge on a failed-strip host whose retries are exhausted (it stays untouched until the icon cache is cleared)."
   },
   "favGalleryOrphan": {
     "message": "ไม่มีบุ๊กมาร์กเหลืออยู่ในโฮสต์นี้ — ไอคอนจะถูกล้างพร้อมแคช",

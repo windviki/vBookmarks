@@ -978,8 +978,12 @@
     "description": "Favicon gallery heading of the muted section listing hosts whose icon fetch failed recently."
   },
   "favGalleryFailedHint": {
-    "message": "इन साइटों पर 24 घंटे तक कोई प्रयास नहीं होता, फिर स्वचालित रूप से पुनः प्रयास किया जाता है।",
+    "message": "विफलताओं का 24 घंटे, 3 दिन और 7 दिन बाद पुनः प्रयास किया जाता है, फिर आइकन कैश साफ़ होने तक छोड़ दिया जाता है।",
     "description": "Favicon gallery hint under the failed-fetch section title."
+  },
+  "favGalleryGaveUp": {
+    "message": "छोड़ दिया",
+    "description": "Favicon gallery badge on a failed-strip host whose retries are exhausted (it stays untouched until the icon cache is cleared)."
   },
   "favGalleryOrphan": {
     "message": "इस होस्ट पर कोई बुकमार्क नहीं बचा है — आइकन कैश के साथ साफ़ हो जाता है।",

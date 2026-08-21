@@ -978,8 +978,12 @@
     "description": "Favicon gallery heading of the muted section listing hosts whose icon fetch failed recently."
   },
   "favGalleryFailedHint": {
-    "message": "Bu siteler için 24 saat beklenir, ardından otomatik olarak yeniden denenir.",
+    "message": "Başarısızlıklar 24 saat, 3 gün ve 7 gün sonra yeniden denenir, ardından ikon önbelleği temizlenene kadar vazgeçilir.",
     "description": "Favicon gallery hint under the failed-fetch section title."
+  },
+  "favGalleryGaveUp": {
+    "message": "Vazgeçildi",
+    "description": "Favicon gallery badge on a failed-strip host whose retries are exhausted (it stays untouched until the icon cache is cleared)."
   },
   "favGalleryOrphan": {
     "message": "Bu sitede hiç yer imi kalmadı — simge önbellekle birlikte temizlenir.",

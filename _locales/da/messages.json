@@ -978,8 +978,12 @@
     "description": "Favicon gallery heading of the muted section listing hosts whose icon fetch failed recently."
   },
   "favGalleryFailedHint": {
-    "message": "Disse websteder hviler i 24 timer, hvorefter de automatisk forsøges igen.",
+    "message": "Mislykkede forsøg gentages efter 24 timer, 3 dage og 7 dage, hvorefter de opgives, indtil ikon-cachen ryddes.",
     "description": "Favicon gallery hint under the failed-fetch section title."
+  },
+  "favGalleryGaveUp": {
+    "message": "Opgivet",
+    "description": "Favicon gallery badge on a failed-strip host whose retries are exhausted (it stays untouched until the icon cache is cleared)."
   },
   "favGalleryOrphan": {
     "message": "Intet bogmærke er tilbage på denne vært – ikonet fjernes med cachen.",

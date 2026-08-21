@@ -984,8 +984,12 @@
     "description": "Favicon gallery heading of the muted section listing hosts whose icon fetch failed recently."
   },
   "favGalleryFailedHint": {
-    "message": "Αυτοί οι ιστότοποι μένουν σε αδράνεια για 24 ώρες και στη συνέχεια δοκιμάζονται ξανά αυτόματα.",
+    "message": "Οι αποτυχίες επαναλαμβάνονται μετά από 24 ώρες, 3 ημέρες και 7 ημέρες, και στη συνέχεια εγκαταλείπονται μέχρι να εκκαθαριστεί η προσωρινή μνήμη εικονιδίων.",
     "description": "Favicon gallery hint under the failed-fetch section title."
+  },
+  "favGalleryGaveUp": {
+    "message": "Εγκαταλείφθηκε",
+    "description": "Favicon gallery badge on a failed-strip host whose retries are exhausted (it stays untouched until the icon cache is cleared)."
   },
   "favGalleryOrphan": {
     "message": "Δεν έχει μείνει κανένας σελιδοδείκτης για αυτόν τον ιστότοπο — το εικονίδιο διαγράφεται με την κρυφή μνήμη.",

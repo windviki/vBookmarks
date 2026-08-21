@@ -978,8 +978,12 @@
     "description": "Favicon gallery heading of the muted section listing hosts whose icon fetch failed recently."
   },
   "favGalleryFailedHint": {
-    "message": "이 사이트들은 24시간 동안 시도하지 않으며, 이후 자동으로 다시 시도됩니다.",
+    "message": "실패는 24시간, 3일, 7일 후에 재시도되며, 아이콘 캐시가 지워질 때까지 포기됩니다.",
     "description": "Favicon gallery hint under the failed-fetch section title."
+  },
+  "favGalleryGaveUp": {
+    "message": "포기함",
+    "description": "Favicon gallery badge on a failed-strip host whose retries are exhausted (it stays untouched until the icon cache is cleared)."
   },
   "favGalleryOrphan": {
     "message": "이 호스트에는 남은 북마크가 없습니다. 아이콘은 캐시와 함께 삭제됩니다.",

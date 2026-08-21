@@ -1436,7 +1436,7 @@ describe('initFaviconEnrich — cache layer', () => {
         expect(fetches).toBe(0);
     });
 
-    it('a failed marker past the 24h quiet window retries the host (and re-stamps the failure)', async () => {
+    it('a failed marker past the 24h quiet window retries the host (and increments the failure count)', async () => {
         const T0 = 1700000000000;
         let fetches = 0;
         const storage = makeStorageArea({
@@ -1458,28 +1458,80 @@ describe('initFaviconEnrich — cache layer', () => {
         await tick();
         await tick();
         await tick();
-        expect(fetches).toBeGreaterThan(0); // the expired marker no longer suppresses
+        expect(fetches).toBeGreaterThan(0); // the elapsed window no longer suppresses
         en.flushIndex();
-        expect(storage.data[FAVICON_IDX_KEY]).toContain('noicon.example'); // fresh failure stamped
+        // The retry failure climbs the backoff ladder (f: 1 → 2), not resets.
+        expect(en.getCache().get('noicon.example').f).toBe(2);
+        const idx = parseIdx(storage.data[FAVICON_IDX_KEY]);
+        expect(idx.hosts['noicon.example'].f).toBe(2);
     });
 
-    it('a success entry past the 30d TTL re-fetches and replaces the stale icon', async () => {
+    it('the backoff ladder widens: 2nd failure waits 3d, 3rd waits 7d', async () => {
+        const T0 = 1700000000000;
+        const DAY = 24 * 3600 * 1000;
+        // f=2 (failed twice): the 3d window applies.
+        for (const [f, age, shouldRetry] of [
+            [2, 2 * DAY, false],   // 2d < 3d window → still quiet
+            [2, 4 * DAY, true],    // 4d ≥ 3d window → retry
+            [3, 5 * DAY, false],   // 5d < 7d window → still quiet
+            [3, 8 * DAY, true]     // 8d ≥ 7d window → retry
+        ]) {
+            let fetches = 0;
+            const storage = makeStorageArea({
+                [FAVICON_IDX_KEY]: idxV3({ 'noicon.example': { f, t: T0 - age } })
+            });
+            const en = initFaviconEnrich({
+                doc: makeDoc(),
+                faviconService: makeFavService(),
+                isEnabled: () => true,
+                fallbackEnabled: () => false,
+                fetchImpl: makeFetch([[/.*/, () => { fetches++; return { ok: false, status: 404 }; }]]),
+                ImageCtor: makeFakeImage(),
+                chromeImpl: { storage: { local: storage } },
+                now: () => T0
+            });
+            await en._hydrateDone;
+            en.onPlaceholder(makePlaceholderImg('https://noicon.example/'));
+            await tick(); await tick(); await tick();
+            expect(fetches > 0).toBe(shouldRetry);
+        }
+    });
+
+    it('a host that exhausted its retries is never fetched again (until the cache is cleared)', async () => {
+        const T0 = 1700000000000;
+        let fetches = 0;
+        const storage = makeStorageArea({
+            // f=4 = initial + 3 retries all failed, a year ago — way past any window.
+            [FAVICON_IDX_KEY]: idxV3({ 'noicon.example': { f: 4, t: T0 - 365 * 24 * 3600 * 1000 } })
+        });
+        const en = initFaviconEnrich({
+            doc: makeDoc(),
+            faviconService: makeFavService(),
+            isEnabled: () => true,
+            fallbackEnabled: () => true,
+            fetchImpl: makeFetch([[/.*/, () => { fetches++; return pngResponse(); }]]),
+            ImageCtor: makeFakeImage(),
+            chromeImpl: { storage: { local: storage } },
+            now: () => T0
+        });
+        await en._hydrateDone;
+        const handled = en.onPlaceholder(makePlaceholderImg('https://noicon.example/'));
+        expect(handled).toBe(false);
+        await tick(); await tick();
+        expect(fetches).toBe(0);   // gave up: not a single request
+        // The give-up marker survives an index flush (never pruned).
+        en.flushIndex();
+        expect(parseIdx(storage.data[FAVICON_IDX_KEY]).hosts['noicon.example'].f).toBe(4);
+    });
+
+    it('a cached success NEVER expires — served past 30d with zero requests', async () => {
         const T0 = 1700000000000;
         let fetches = 0;
         const storage = makeStorageArea({
             [`${FAVICON_DATA_PREFIX}github.com`]: PNG_DATA_URL,
-            [FAVICON_IDX_KEY]: idxV3({ 'github.com': { t: T0 - 31 * 24 * 3600 * 1000, s: PNG_DATA_URL.length } })
+            [FAVICON_IDX_KEY]: idxV3({ 'github.com': { t: T0 - 365 * 24 * 3600 * 1000, s: PNG_DATA_URL.length, src: 'direct' } })
         });
-        // The re-fetch returns a DIFFERENT icon (ICO) so a stale-serve is
-        // distinguishable from a real refresh in the storage assertion below.
-        const fetchImpl = makeFetch([[/\/favicon\.ico$/, () => {
-            fetches++;
-            return {
-                ok: true, status: 200,
-                arrayBuffer: async () => ICO_BYTES.buffer,
-                headers: { get: () => null }
-            };
-        }]]);
+        const fetchImpl = makeFetch([[/.*/, () => { fetches++; return pngResponse(); }]]);
         const en = initFaviconEnrich({
             doc: makeDoc(),
             faviconService: makeFavService(),
@@ -1491,13 +1543,35 @@ describe('initFaviconEnrich — cache layer', () => {
             now: () => T0
         });
         await en._hydrateDone;
-        en.onPlaceholder(makePlaceholderImg('https://github.com/'));
-        await tick();
-        await tick();
-        await tick();
-        expect(fetches).toBeGreaterThan(0); // stale success is NOT served from cache
-        expect(storage.data[`${FAVICON_DATA_PREFIX}github.com`])
-            .toMatch(/^data:image\/x-icon;base64,/); // refreshed payload replaced it
+        const img = makePlaceholderImg('https://github.com/');
+        const handled = en.onPlaceholder(img);
+        await tick(); await tick(); await tick();
+        expect(handled).toBe(true);   // cache-hit swap claimed the row
+        expect(fetches).toBe(0);      // …with no network at all
+        expect(storage.data[`${FAVICON_DATA_PREFIX}github.com`]).toBe(PNG_DATA_URL);
+    });
+
+    it('hydrate loads failed markers of any age (they are the give-up record)', async () => {
+        const T0 = 1700000000000;
+        const storage = makeStorageArea({
+            [FAVICON_IDX_KEY]: idxV3({
+                'old-noicon.example': { f: 3, t: T0 - 90 * 24 * 3600 * 1000 },
+                'gave-up.example': { f: 4, t: T0 - 400 * 24 * 3600 * 1000 }
+            })
+        });
+        const en = initFaviconEnrich({
+            doc: makeDoc(),
+            faviconService: makeFavService(),
+            isEnabled: () => true,
+            fallbackEnabled: () => false,
+            fetchImpl: makeFetch([]),
+            ImageCtor: makeFakeImage(),
+            chromeImpl: { storage: { local: storage } },
+            now: () => T0
+        });
+        await en._hydrateDone;
+        expect(en.getCache().get('old-noicon.example')).toEqual({ f: 3, t: T0 - 90 * 24 * 3600 * 1000 });
+        expect(en.getCache().get('gave-up.example')).toEqual({ f: 4, t: T0 - 400 * 24 * 3600 * 1000 });
     });
 });
 

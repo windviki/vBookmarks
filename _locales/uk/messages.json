@@ -978,8 +978,12 @@
     "description": "Favicon gallery heading of the muted section listing hosts whose icon fetch failed recently."
   },
   "favGalleryFailedHint": {
-    "message": "Протягом 24 годин ці сайти не перевіряються, після чого спроба повторюється автоматично.",
+    "message": "Невдалі спроби повторюються через 24 год, 3 дні та 7 днів, після чого припиняються до очищення кешу значків.",
     "description": "Favicon gallery hint under the failed-fetch section title."
+  },
+  "favGalleryGaveUp": {
+    "message": "Спроби припинено",
+    "description": "Favicon gallery badge on a failed-strip host whose retries are exhausted (it stays untouched until the icon cache is cleared)."
   },
   "favGalleryOrphan": {
     "message": "На цьому хості не залишилося закладок — значок видаляється разом із кешем.",

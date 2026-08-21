@@ -978,8 +978,12 @@
     "description": "Favicon gallery heading of the muted section listing hosts whose icon fetch failed recently."
   },
   "favGalleryFailedHint": {
-    "message": "Deze sites worden 24 uur met rust gelaten en daarna automatisch opnieuw geprobeerd.",
+    "message": "Mislukkingen worden na 24 uur, 3 dagen en 7 dagen opnieuw geprobeerd en daarna opgegeven totdat de pictogramcache wordt gewist.",
     "description": "Favicon gallery hint under the failed-fetch section title."
+  },
+  "favGalleryGaveUp": {
+    "message": "Opgegeven",
+    "description": "Favicon gallery badge on a failed-strip host whose retries are exhausted (it stays untouched until the icon cache is cleared)."
   },
   "favGalleryOrphan": {
     "message": "Geen bladwijzer over op deze host — het pictogram verdwijnt met de cache.",

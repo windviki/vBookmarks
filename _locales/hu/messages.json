@@ -978,8 +978,12 @@
     "description": "Favicon gallery heading of the muted section listing hosts whose icon fetch failed recently."
   },
   "favGalleryFailedHint": {
-    "message": "A rendszer 24 órán át kihagyja ezeket a webhelyeket, majd automatikusan újra próbálkozik.",
+    "message": "A sikertelen próbálkozásokat 24 óra, 3 nap és 7 nap múlva megismételjük, majd feladjuk, amíg az ikon-gyorsítótár törlésre nem kerül.",
     "description": "Favicon gallery hint under the failed-fetch section title."
+  },
+  "favGalleryGaveUp": {
+    "message": "Feladva",
+    "description": "Favicon gallery badge on a failed-strip host whose retries are exhausted (it stays untouched until the icon cache is cleared)."
   },
   "favGalleryOrphan": {
     "message": "Ezen a gazdagépen nem maradt könyvjelző – az ikon a gyorsítótárral együtt törlődik.",

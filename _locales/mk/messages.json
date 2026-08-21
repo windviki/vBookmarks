@@ -977,8 +977,12 @@
     "description": "Favicon gallery heading of the muted section listing hosts whose icon fetch failed recently."
   },
   "favGalleryFailedHint": {
-    "message": "Овие сајтови мируваат 24 часа, а потоа автоматски се пробуваат повторно.",
+    "message": "Неуспесите се повторуваат по 24 часа, 3 дена и 7 дена, а потоа се отфрлаат додека не се исчисти кешот на иконите.",
     "description": "Favicon gallery hint under the failed-fetch section title."
+  },
+  "favGalleryGaveUp": {
+    "message": "Откажано",
+    "description": "Favicon gallery badge on a failed-strip host whose retries are exhausted (it stays untouched until the icon cache is cleared)."
   },
   "favGalleryOrphan": {
     "message": "Нема преостанат обележувач на овој домаќин — иконата се брише со кешот.",

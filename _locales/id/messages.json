@@ -978,8 +978,12 @@
     "description": "Favicon gallery heading of the muted section listing hosts whose icon fetch failed recently."
   },
   "favGalleryFailedHint": {
-    "message": "Situs-situs ini didiamkan selama 24 jam, lalu dicoba lagi otomatis.",
+    "message": "Kegagalan dicoba lagi setelah 24 jam, 3 hari, dan 7 hari, kemudian dihentikan hingga cache ikon dibersihkan.",
     "description": "Favicon gallery hint under the failed-fetch section title."
+  },
+  "favGalleryGaveUp": {
+    "message": "Menyerah",
+    "description": "Favicon gallery badge on a failed-strip host whose retries are exhausted (it stays untouched until the icon cache is cleared)."
   },
   "favGalleryOrphan": {
     "message": "Tidak ada bookmark yang tersisa di host ini — ikon akan ikut terhapus bersama cache.",

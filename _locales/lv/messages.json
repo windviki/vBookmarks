@@ -978,8 +978,12 @@
     "description": "Favicon gallery heading of the muted section listing hosts whose icon fetch failed recently."
   },
   "favGalleryFailedHint": {
-    "message": "Šīs vietnes klusē 24 stundas, pēc tam tās mēģina vēlreiz automātiski.",
+    "message": "Neveiksmīgie mēģinājumi tiek atkārtoti pēc 24 stundām, 3 dienām un 7 dienām, pēc tam tie tiek atmesti līdz ikonu kešatmiņas notīrīšanai.",
     "description": "Favicon gallery hint under the failed-fetch section title."
+  },
+  "favGalleryGaveUp": {
+    "message": "Atmests",
+    "description": "Favicon gallery badge on a failed-strip host whose retries are exhausted (it stays untouched until the icon cache is cleared)."
   },
   "favGalleryOrphan": {
     "message": "Šai vietnei vairs nav grāmatzīmju — ikona tiek dzēsta kopā ar kešatmiņu.",

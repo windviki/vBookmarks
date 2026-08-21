@@ -978,8 +978,12 @@
     "description": "Favicon gallery heading of the muted section listing hosts whose icon fetch failed recently."
   },
   "favGalleryFailedHint": {
-    "message": "Các trang này sẽ tạm dừng trong 24 giờ, sau đó tự động thử lại.",
+    "message": "Các lần thất bại sẽ được thử lại sau 24 giờ, 3 ngày và 7 ngày, sau đó bỏ cuộc cho đến khi bộ đệm biểu tượng được xóa.",
     "description": "Favicon gallery hint under the failed-fetch section title."
+  },
+  "favGalleryGaveUp": {
+    "message": "Đã bỏ cuộc",
+    "description": "Favicon gallery badge on a failed-strip host whose retries are exhausted (it stays untouched until the icon cache is cleared)."
   },
   "favGalleryOrphan": {
     "message": "Không còn dấu trang nào trên trang web này — biểu tượng sẽ bị xóa cùng bộ nhớ đệm.",

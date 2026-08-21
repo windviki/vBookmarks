@@ -978,8 +978,12 @@
     "description": "Favicon gallery heading of the muted section listing hosts whose icon fetch failed recently."
   },
   "favGalleryFailedHint": {
-    "message": "لا تُجرى محاولات لهذه المواقع لمدة 24 ساعة، ثم تُعاد المحاولة تلقائيًا.",
+    "message": "تتم إعادة المحاولة بعد 24 ساعة و3 أيام و7 أيام، ثم يُتخلى عنها حتى يتم مسح ذاكرة التخزين المؤقت للأيقونات.",
     "description": "Favicon gallery hint under the failed-fetch section title."
+  },
+  "favGalleryGaveUp": {
+    "message": "تم التخلي عنها",
+    "description": "Favicon gallery badge on a failed-strip host whose retries are exhausted (it stays untouched until the icon cache is cleared)."
   },
   "favGalleryOrphan": {
     "message": "لم يتبقَّ أي إشارة مرجعية على هذا المضيف — ستُمسح الأيقونة مع الذاكرة المؤقتة.",

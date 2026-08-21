@@ -123,9 +123,20 @@ describe('buildGallery', () => {
         expect(cards.some(c => c.host === 'nodata.example')).toBe(false);
     });
 
-    it('collects the failed markers separately, newest first', () => {
-        const { failed } = buildGallery(baseArgs());
-        expect(failed).toEqual([{ host: 'fail.example', ts: 4000 }]);
+    it('collects the failed markers with their backoff state, newest first', () => {
+        const { failed } = buildGallery(baseArgs({
+            idxRaw: JSON.stringify({
+                ...IDX,
+                hosts: {
+                    'fail.example': { f: 1, t: 4000 },
+                    'gaveup.example': { f: 4, t: 3000 }
+                }
+            })
+        }));
+        expect(failed).toEqual([
+            { host: 'fail.example', ts: 4000, attempts: 1, gaveUp: false, retryAt: 4000 + 24 * 3600 * 1000 },
+            { host: 'gaveup.example', ts: 3000, attempts: 4, gaveUp: true, retryAt: Infinity }
+        ]);
     });
 
     it('joins bookmarks by host with path, marks, sync and visits', () => {

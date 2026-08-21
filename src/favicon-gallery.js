@@ -11,7 +11,7 @@
  * Rendering stays in src/favicons.js; this module owns the data shape.
  */
 
-import { parseIdx, AGG_PROVIDERS } from './favicon-enrich.js';
+import { parseIdx, AGG_PROVIDERS, failedState } from './favicon-enrich.js';
 import { buildPathMap } from './tree-render.js';
 
 // Provider display names are brand names — no i18n. Keyed by provider id so a
@@ -96,7 +96,9 @@ const byPathThenTitle = (a, b) => {
  *   cards:  [{ host, dataUrl, ts, bytes, source, kind, bookmarks: [...] }]
  *          (ts desc; a card with no surviving bookmark still renders, marked
  *          `orphan`, so the cache stays explainable after deletions),
- *   failed: [{ host, ts }] (24h failed markers, ts desc),
+ *   failed: [{ host, ts, attempts, gaveUp, retryAt }] (failed markers with
+ *          their backoff state — gaveUp once the 24h/3d/7d retries are
+ *          exhausted; ts desc),
  *   totals: { sites, bookmarks, bytes, byKind: { direct, proxy, agg, legacy } }
  * }
  */
@@ -146,7 +148,10 @@ export const buildGallery = ({ idxRaw, dataByHost = {}, tree = [],
         if (!meta || typeof meta !== 'object')
             continue;
         if (meta.f) {
-            failed.push({ host, ts: meta.t || 0 });
+            // Backoff/give-up state rides along so the page can tell "quiet
+            // window, will retry" from "gave up until the cache is cleared".
+            const st = failedState(meta);
+            failed.push({ host, ts: meta.t || 0, attempts: st.attempts, gaveUp: st.gaveUp, retryAt: st.retryAt });
             continue;
         }
         const dataUrl = dataByHost[host];

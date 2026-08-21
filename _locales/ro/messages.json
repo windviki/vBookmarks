@@ -978,8 +978,12 @@
     "description": "Favicon gallery heading of the muted section listing hosts whose icon fetch failed recently."
   },
   "favGalleryFailedHint": {
-    "message": "Aceste site-uri sunt lăsate în pace 24 de ore, apoi sunt reîncercate automat.",
+    "message": "Eșecurile sunt reîncercate după 24 h, 3 zile și 7 zile, apoi se renunță până când cache-ul de pictograme este golit.",
     "description": "Favicon gallery hint under the failed-fetch section title."
+  },
+  "favGalleryGaveUp": {
+    "message": "Renunțat",
+    "description": "Favicon gallery badge on a failed-strip host whose retries are exhausted (it stays untouched until the icon cache is cleared)."
   },
   "favGalleryOrphan": {
     "message": "Niciun marcaj rămas pe acest host — pictograma se șterge odată cu cache-ul.",

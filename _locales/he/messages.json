@@ -978,8 +978,12 @@
     "description": "Favicon gallery heading of the muted section listing hosts whose icon fetch failed recently."
   },
   "favGalleryFailedHint": {
-    "message": "האתרים האלה נחים במשך 24 שעות, ואז מתבצע ניסיון חוזר אוטומטי.",
+    "message": "מתבצע ניסיון חוזר לכשלים לאחר 24 שעות, 3 ימים ו-7 ימים, ולאחר מכן מוותרים עליהם עד שינוקה מטמון הסמלים.",
     "description": "Favicon gallery hint under the failed-fetch section title."
+  },
+  "favGalleryGaveUp": {
+    "message": "ננטש",
+    "description": "Favicon gallery badge on a failed-strip host whose retries are exhausted (it stays untouched until the icon cache is cleared)."
   },
   "favGalleryOrphan": {
     "message": "לא נותרה סימנייה במארח הזה — הסמל יימחק עם המטמון.",

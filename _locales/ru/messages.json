@@ -978,8 +978,12 @@
     "description": "Favicon gallery heading of the muted section listing hosts whose icon fetch failed recently."
   },
   "favGalleryFailedHint": {
-    "message": "Для этих сайтов повторная попытка выполняется автоматически через 24 часа.",
+    "message": "Повторные попытки выполняются через 24 часа, 3 дня и 7 дней, затем отказ до очистки кэша иконок.",
     "description": "Favicon gallery hint under the failed-fetch section title."
+  },
+  "favGalleryGaveUp": {
+    "message": "Отказано",
+    "description": "Favicon gallery badge on a failed-strip host whose retries are exhausted (it stays untouched until the icon cache is cleared)."
   },
   "favGalleryOrphan": {
     "message": "На этом хосте не осталось закладок — значок очищается вместе с кэшем.",
