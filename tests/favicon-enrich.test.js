@@ -1374,7 +1374,7 @@ describe('initFaviconEnrich — cache layer', () => {
         expect(fetches).toBe(0);
     });
 
-    it('adds the favicon-pop shake class only when the icon slot is in view', async () => {
+    it('a cache-hit re-injection never re-shakes, even when the slot is in view', async () => {
         const storage = makeStorageArea({
             [`${FAVICON_DATA_PREFIX}github.com`]: PNG_DATA_URL,
             [FAVICON_IDX_KEY]: idxV3({ 'github.com': { t: Date.now(), s: PNG_DATA_URL.length } })
@@ -1391,6 +1391,8 @@ describe('initFaviconEnrich — cache layer', () => {
         });
         await en._hydrateDone;
 
+        // In-view slot, cache hit: the icon is re-injected but WITHOUT
+        // favicon-pop — the one-time shake already played on the first fetch.
         const visibleAnchor = makeAnchor({ left: 0, right: 20, top: 0, bottom: 20, width: 20, height: 20 });
         const visibleImg = {
             src: `chrome-extension://test/_favicon/?pageUrl=${encodeURIComponent('https://github.com/')}&size=32`,
@@ -1398,7 +1400,7 @@ describe('initFaviconEnrich — cache layer', () => {
         };
         en.onPlaceholder(visibleImg);
         const visibleEl = visibleAnchor.children[visibleAnchor.children.length - 1];
-        expect(visibleEl.className).toBe('favicon-enriched favicon-pop');
+        expect(visibleEl.className).toBe('favicon-enriched');
 
         const offAnchor = makeAnchor({ left: 0, right: 20, top: 9999, bottom: 10019, width: 20, height: 20 });
         const offImg = {
@@ -1704,6 +1706,30 @@ describe('initFaviconEnrich — hot swap', () => {
         expect(anchor.children[0].tagName).toBe('IMG');
         expect(anchor.children[0].className).toBe('favicon-enriched');
         expect(anchor.children[0].src).toContain('data:image/');
+    });
+
+    it('a fresh fetch into an in-view slot shakes once (favicon-pop)', async () => {
+        const fetchImpl = makeFetch([[/\/favicon\.ico$/, pngResponse()]]);
+        const en = initFaviconEnrich({
+            doc: makeDoc(),
+            faviconService: makeFavService(),
+            isEnabled: () => true,
+            fallbackEnabled: () => false,
+            fetchImpl,
+            ImageCtor: makeFakeImage(),
+            chromeImpl: { storage: { local: makeStorageArea() } },
+            now: nextNow
+        });
+        await en._hydrateDone;
+        const anchor = makeAnchor({ left: 0, right: 20, top: 0, bottom: 20, width: 20, height: 20 });
+        const img = {
+            src: `chrome-extension://test/_favicon/?pageUrl=${encodeURIComponent('https://github.com/')}&size=32`,
+            parentNode: anchor
+        };
+        en.onPlaceholder(img);
+        await tick();
+        await tick();
+        expect(anchor.children[0].className).toBe('favicon-enriched favicon-pop');
     });
 
     it('skips a detached anchor without throwing', async () => {
@@ -2082,5 +2108,86 @@ describe('index parse + rebuild', () => {
         expect(cache.has('orphan.example')).toBe(true);   // orphan data key re-added
         // The reconciled index dropped the stale host.
         expect(en.getIdx().hosts['stale.example']).toBeUndefined();
+    });
+});
+
+describe('initFaviconEnrich — source recording (favicon gallery, 4.0.9)', () => {
+    beforeEach(() => { seq = 0; });
+
+    const enrichWith = (fetchImpl, storage = makeStorageArea(), fallback = true) => initFaviconEnrich({
+        doc: makeDoc(),
+        faviconService: makeFavService(),
+        isEnabled: () => true,
+        fallbackEnabled: () => fallback,
+        fetchImpl,
+        ImageCtor: makeFakeImage(),
+        chromeImpl: { storage: { local: storage } },
+        now: nextNow
+    });
+
+    it('tags an L1 hit as direct and round-trips it through the index', async () => {
+        const storage = makeStorageArea();
+        const en = enrichWith(makeFetch([[/\/favicon\.ico$/, pngResponse()]]), storage);
+        await en._hydrateDone;
+        en.onPlaceholder(makePlaceholderImg('https://github.com/'));
+        await tick(); await tick();
+        expect(en.getCache().get('github.com').src).toBe('direct');
+        en.flushIndex();
+        const idx = parseIdx(storage.data[FAVICON_IDX_KEY]);
+        expect(idx.hosts['github.com'].src).toBe('direct');
+    });
+
+    it('tags an L2 hit as direct too', async () => {
+        const storage = makeStorageArea();
+        const en = enrichWith(makeFetch([
+            [/\/favicon\.ico$/, notFound()],
+            [/^https:\/\/example\.com\/$/, {
+                ok: true,
+                text: async () => '<link rel="icon" type="image/png" sizes="32x32" href="/icon.png">',
+                headers: { get: () => 'text/html' }
+            }],
+            [/\/icon\.png$/, pngResponse()]
+        ]), storage);
+        await en._hydrateDone;
+        en.onPlaceholder(makePlaceholderImg('https://example.com/'));
+        await tick(); await tick();
+        expect(en.getCache().get('example.com').src).toBe('direct');
+    });
+
+    it('tags an L4 provider hit with the provider id', async () => {
+        const storage = makeStorageArea();
+        const en = enrichWith(makeFetch([
+            [/\/favicon\.ico$/, notFound()],
+            [/^https:\/\/example\.com\/$/, notFound()],
+            [/favicon\.run/, { ok: false, status: 500, arrayBuffer: async () => new ArrayBuffer(0), headers: { get: () => null } }],
+            [/icons\.duckduckgo\.com/, pngResponse()]
+        ]), storage);
+        await en._hydrateDone;
+        en.onPlaceholder(makePlaceholderImg('https://example.com/'));
+        await tick(); await tick(); await tick(); await tick(); await tick();
+        expect(en.getCache().get('example.com').src).toBe('duckduckgo');
+        en.flushIndex();
+        const idx = parseIdx(storage.data[FAVICON_IDX_KEY]);
+        expect(idx.hosts['example.com'].src).toBe('duckduckgo');
+    });
+
+    it('hydrate adopts a stored src; legacy entries without one stay source-less', async () => {
+        const storage = makeStorageArea({
+            [`${FAVICON_DATA_PREFIX}new.example`]: PNG_DATA_URL,
+            [`${FAVICON_DATA_PREFIX}old.example`]: PNG_DATA_URL,
+            [FAVICON_IDX_KEY]: idxV3({
+                'new.example': { t: 1700000000000, s: 100, src: 'proxy' },
+                'old.example': { t: 1700000000000, s: 100 }
+            })
+        });
+        const en = enrichWith(makeFetch([]), storage);
+        await en._hydrateDone;
+        expect(en.getCache().get('new.example').src).toBe('proxy');
+        expect(en.getCache().get('old.example').src).toBeUndefined();
+        // A round-trip keeps the legacy entry free of a fabricated source.
+        en.flushIndex();
+        const idx = parseIdx(storage.data[FAVICON_IDX_KEY]);
+        expect(idx.hosts['new.example'].src).toBe('proxy');
+        expect('src' in idx.hosts['old.example']).toBe(false);
     });
 });

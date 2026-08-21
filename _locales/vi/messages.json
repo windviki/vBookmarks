@@ -906,6 +906,93 @@
   "optionFaviconCacheCleared": {
     "message": "Đã xóa bộ đệm biểu tượng. Biểu tượng sẽ được tải lại khi mở lần sau."
   },
+  "favGalleryLink": {
+    "message": "Xem biểu tượng đã làm mới",
+    "description": "Options link (Icons group, right of the Clear icon cache button): opens the favicon gallery page listing the sites whose icons were refetched."
+  },
+  "favGalleryTitle": {
+    "message": "Biểu tượng trang web đã làm mới",
+    "description": "Favicon gallery page title (h1 + document title)."
+  },
+  "favGalleryHint": {
+    "message": "Các biểu tượng vBookmarks đã lấy cho các trang đã đánh dấu mà Chrome chưa lưu vào bộ nhớ đệm — nguồn gốc của từng biểu tượng và dấu trang nào sử dụng nó. Chỉ để hiển thị.",
+    "description": "Subtitle under the favicon gallery title, explaining the page is read-only."
+  },
+  "favGallerySearch": {
+    "message": "Lọc theo trang, tiêu đề hoặc đường dẫn",
+    "description": "Placeholder of the favicon gallery filter input."
+  },
+  "favGalleryAll": {
+    "message": "Tất cả",
+    "description": "Favicon gallery source filter chip: show every source."
+  },
+  "favSrcDirect": {
+    "message": "Trực tiếp",
+    "description": "Favicon gallery source badge: the icon was fetched directly from the site itself."
+  },
+  "favSrcProxy": {
+    "message": "Proxy",
+    "description": "Favicon gallery source badge: the icon was fetched through the user's own proxy relay."
+  },
+  "favSrcLegacy": {
+    "message": "Bộ nhớ đệm trước đó",
+    "description": "Favicon gallery source badge: cached before the source was recorded, so the origin is unknown."
+  },
+  "favGalleryCompare": {
+    "message": "So sánh với biểu tượng giữ chỗ",
+    "description": "Favicon gallery toggle button: switch every icon to the generic placeholder it replaced (before/after comparison)."
+  },
+  "favGalleryShowingBefore": {
+    "message": "Quay lại biểu tượng thật",
+    "description": "Favicon gallery toggle button while the placeholder comparison is shown: switch back to the real fetched icons."
+  },
+  "favGalleryStatSites": {
+    "message": "$n$ trang web",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    },
+    "description": "Favicon gallery stats strip: how many sites have a refreshed icon."
+  },
+  "favGalleryStatBookmarks": {
+    "message": "$n$ dấu trang",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    },
+    "description": "Favicon gallery stats strip: how many bookmarks sit on the refreshed sites."
+  },
+  "favGalleryVisits": {
+    "message": "$n$ lần mở đã ghi nhận",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    },
+    "description": "Favicon gallery tooltip on a bookmark row's visit-count pill."
+  },
+  "favGalleryFailedTitle": {
+    "message": "Đã thử gần đây, không tìm thấy biểu tượng",
+    "description": "Favicon gallery heading of the muted section listing hosts whose icon fetch failed recently."
+  },
+  "favGalleryFailedHint": {
+    "message": "Các trang này sẽ tạm dừng trong 24 giờ, sau đó tự động thử lại.",
+    "description": "Favicon gallery hint under the failed-fetch section title."
+  },
+  "favGalleryOrphan": {
+    "message": "Không còn dấu trang nào trên trang web này — biểu tượng sẽ bị xóa cùng bộ nhớ đệm.",
+    "description": "Favicon gallery note on a card whose host no longer has any bookmark."
+  },
+  "favGalleryEmptyTitle": {
+    "message": "Chưa có biểu tượng làm mới nào",
+    "description": "Favicon gallery empty-state heading."
+  },
+  "favGalleryEmptyText": {
+    "message": "Khi popup gặp một trang đã đánh dấu mà Chrome không có biểu tượng, vBookmarks sẽ tải biểu tượng thực và liệt kê tại đây.",
+    "description": "Favicon gallery empty-state body text."
+  },
   "storageUsageIcon": {
     "message": "Bộ nhớ biểu tượng"
   },

@@ -906,6 +906,93 @@
   "optionFaviconCacheCleared": {
     "message": "Кэш значков очищен. Значки будут загружены заново при следующем открытии."
   },
+  "favGalleryLink": {
+    "message": "Просмотреть обновлённые значки",
+    "description": "Options link (Icons group, right of the Clear icon cache button): opens the favicon gallery page listing the sites whose icons were refetched."
+  },
+  "favGalleryTitle": {
+    "message": "Обновлённые значки сайтов",
+    "description": "Favicon gallery page title (h1 + document title)."
+  },
+  "favGalleryHint": {
+    "message": "Значки, полученные vBookmarks для сайтов из закладок, отсутствовавших в кэше Chrome: откуда взят каждый и какие закладки его используют. Только просмотр.",
+    "description": "Subtitle under the favicon gallery title, explaining the page is read-only."
+  },
+  "favGallerySearch": {
+    "message": "Фильтр по сайту, названию или пути",
+    "description": "Placeholder of the favicon gallery filter input."
+  },
+  "favGalleryAll": {
+    "message": "Все",
+    "description": "Favicon gallery source filter chip: show every source."
+  },
+  "favSrcDirect": {
+    "message": "Прямой",
+    "description": "Favicon gallery source badge: the icon was fetched directly from the site itself."
+  },
+  "favSrcProxy": {
+    "message": "Прокси",
+    "description": "Favicon gallery source badge: the icon was fetched through the user's own proxy relay."
+  },
+  "favSrcLegacy": {
+    "message": "Более ранний кэш",
+    "description": "Favicon gallery source badge: cached before the source was recorded, so the origin is unknown."
+  },
+  "favGalleryCompare": {
+    "message": "Сравнить с заглушкой",
+    "description": "Favicon gallery toggle button: switch every icon to the generic placeholder it replaced (before/after comparison)."
+  },
+  "favGalleryShowingBefore": {
+    "message": "Вернуться к настоящим значкам",
+    "description": "Favicon gallery toggle button while the placeholder comparison is shown: switch back to the real fetched icons."
+  },
+  "favGalleryStatSites": {
+    "message": "Сайтов: $n$",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    },
+    "description": "Favicon gallery stats strip: how many sites have a refreshed icon."
+  },
+  "favGalleryStatBookmarks": {
+    "message": "Закладок: $n$",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    },
+    "description": "Favicon gallery stats strip: how many bookmarks sit on the refreshed sites."
+  },
+  "favGalleryVisits": {
+    "message": "Зафиксированных открытий: $n$",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    },
+    "description": "Favicon gallery tooltip on a bookmark row's visit-count pill."
+  },
+  "favGalleryFailedTitle": {
+    "message": "Недавние попытки — значок не найден",
+    "description": "Favicon gallery heading of the muted section listing hosts whose icon fetch failed recently."
+  },
+  "favGalleryFailedHint": {
+    "message": "Для этих сайтов повторная попытка выполняется автоматически через 24 часа.",
+    "description": "Favicon gallery hint under the failed-fetch section title."
+  },
+  "favGalleryOrphan": {
+    "message": "На этом хосте не осталось закладок — значок очищается вместе с кэшем.",
+    "description": "Favicon gallery note on a card whose host no longer has any bookmark."
+  },
+  "favGalleryEmptyTitle": {
+    "message": "Обновлённых значков пока нет",
+    "description": "Favicon gallery empty-state heading."
+  },
+  "favGalleryEmptyText": {
+    "message": "Когда во всплывающем окне встречается сайт из закладок, для которого в Chrome нет значка, vBookmarks загружает настоящий значок и отображает его здесь.",
+    "description": "Favicon gallery empty-state body text."
+  },
   "storageUsageIcon": {
     "message": "Кэш значков"
   },

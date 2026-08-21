@@ -906,6 +906,93 @@
   "optionFaviconCacheCleared": {
     "message": "Piktogramų talpykla išvalyta. Piktogramos bus gautos iš naujo kitą kartą atidarius."
   },
+  "favGalleryLink": {
+    "message": "Peržiūrėti atnaujintas piktogramas",
+    "description": "Options link (Icons group, right of the Clear icon cache button): opens the favicon gallery page listing the sites whose icons were refetched."
+  },
+  "favGalleryTitle": {
+    "message": "Atnaujintos svetainių piktogramos",
+    "description": "Favicon gallery page title (h1 + document title)."
+  },
+  "favGalleryHint": {
+    "message": "vBookmarks gautos piktogramos žymėtoms svetainėms, kurių „Chrome“ nebuvo podėlyje – čia nurodyta, iš kur kiekviena gauta ir kurios žymės ją naudoja. Tik peržiūrai.",
+    "description": "Subtitle under the favicon gallery title, explaining the page is read-only."
+  },
+  "favGallerySearch": {
+    "message": "Filtruoti pagal svetainę, pavadinimą arba kelią",
+    "description": "Placeholder of the favicon gallery filter input."
+  },
+  "favGalleryAll": {
+    "message": "Visos",
+    "description": "Favicon gallery source filter chip: show every source."
+  },
+  "favSrcDirect": {
+    "message": "Tiesiogiai",
+    "description": "Favicon gallery source badge: the icon was fetched directly from the site itself."
+  },
+  "favSrcProxy": {
+    "message": "Tarpinis serveris",
+    "description": "Favicon gallery source badge: the icon was fetched through the user's own proxy relay."
+  },
+  "favSrcLegacy": {
+    "message": "Ankstesnis podėlis",
+    "description": "Favicon gallery source badge: cached before the source was recorded, so the origin is unknown."
+  },
+  "favGalleryCompare": {
+    "message": "Palyginti su laikina piktograma",
+    "description": "Favicon gallery toggle button: switch every icon to the generic placeholder it replaced (before/after comparison)."
+  },
+  "favGalleryShowingBefore": {
+    "message": "Grįžti prie tikrų piktogramų",
+    "description": "Favicon gallery toggle button while the placeholder comparison is shown: switch back to the real fetched icons."
+  },
+  "favGalleryStatSites": {
+    "message": "$n$ svetainių",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    },
+    "description": "Favicon gallery stats strip: how many sites have a refreshed icon."
+  },
+  "favGalleryStatBookmarks": {
+    "message": "$n$ žymių",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    },
+    "description": "Favicon gallery stats strip: how many bookmarks sit on the refreshed sites."
+  },
+  "favGalleryVisits": {
+    "message": "$n$ užfiksuotų atidarymų",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    },
+    "description": "Favicon gallery tooltip on a bookmark row's visit-count pill."
+  },
+  "favGalleryFailedTitle": {
+    "message": "Neseniai bandyta, piktograma nerasta",
+    "description": "Favicon gallery heading of the muted section listing hosts whose icon fetch failed recently."
+  },
+  "favGalleryFailedHint": {
+    "message": "Šios svetainės 24 valandas netikrinamos, tada automatiškai bandoma iš naujo.",
+    "description": "Favicon gallery hint under the failed-fetch section title."
+  },
+  "favGalleryOrphan": {
+    "message": "Šiame hoste nebeliko žymių – piktograma bus išvalyta kartu su podėliu.",
+    "description": "Favicon gallery note on a card whose host no longer has any bookmark."
+  },
+  "favGalleryEmptyTitle": {
+    "message": "Atnaujintų piktogramų dar nėra",
+    "description": "Favicon gallery empty-state heading."
+  },
+  "favGalleryEmptyText": {
+    "message": "Kai iššokantis langas aptinka žymėtą svetainę, kuriai „Chrome“ neturi piktogramos, vBookmarks parsiunčia tikrąją ir pateikia ją čia.",
+    "description": "Favicon gallery empty-state body text."
+  },
   "storageUsageIcon": {
     "message": "Piktogramų talpykla"
   },

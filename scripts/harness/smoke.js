@@ -503,6 +503,57 @@ const waitForPalette = async (page, ms = 15000) => {
         await opts.screenshot({ path: `/tmp/shots/smoke/options-${res.name}.png`, fullPage: true });
     }
 
+    // 5b. 4.0.9: the favicon gallery page renders the seeded enrichment cache
+    // (host card + source badge + the bookmark row with its folder path) with
+    // zero page errors, and follows the theme. Seed from the OPTIONS page: the
+    // popup's own enricher would debounce-rewrite the index from its in-memory
+    // cache and could race the seed away.
+    const fav = await browser.newPage();
+    watch(fav, 'favicons');
+    await fav.goto(`chrome-extension://${extId}/pages/options.html`, { waitUntil: 'load' });
+    await sleep(400);
+    const favSeed = await fav.evaluate(() => {
+        const icon = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQIHWP4z8DwHwAFgAI/0D8lJQAAAABJRU5ErkJggg==';
+        return new Promise(resolve => {
+            chrome.bookmarks.create({ title: 'Smoke Icon', url: 'http://127.0.0.1:9/smoke' }, bm => {
+                const idx = { v: 3, down: { 'favicon-run': 0, 'icon-horse': 0, 'duckduckgo': 0 },
+                    hosts: { '127.0.0.1:9': { t: Date.now(), s: icon.length, src: 'direct' } } };
+                chrome.storage.local.set({
+                    vbmFaviconIdx: JSON.stringify(idx),
+                    'vbmFavicon:127.0.0.1:9': icon
+                }, () => resolve({ bmId: bm && bm.id }));
+            });
+        });
+    });
+    await fav.goto(`chrome-extension://${extId}/pages/favicons.html`, { waitUntil: 'load' });
+    await sleep(600);
+    const favStats = await fav.evaluate(() => ({
+        cards: document.querySelectorAll('#fav-grid .fav-card').length,
+        host: (document.querySelector('.fav-host') || {}).textContent || '',
+        srcBadge: (document.querySelector('.fav-src') || {}).textContent || '',
+        rows: document.querySelectorAll('.fav-bm').length,
+        path: (document.querySelector('.fav-bm-path') || {}).textContent || '',
+        chips: document.querySelectorAll('.fav-chip').length,
+        stats: (document.getElementById('fav-stats') || {}).textContent || '',
+        theme: document.body.dataset.theme || ''
+    }));
+    console.log('favicons stats:', JSON.stringify(favStats));
+    if (favStats.cards !== 1) errors.push(`favicons: expected 1 card, got ${favStats.cards}`);
+    if (favStats.host !== '127.0.0.1:9') errors.push(`favicons: host card missing: ${favStats.host}`);
+    if (!favStats.srcBadge) errors.push('favicons: source badge missing');
+    if (favStats.rows !== 1 || !favStats.path)
+        errors.push(`favicons: bookmark row/path missing: rows=${favStats.rows} path=${favStats.path}`);
+    if (favStats.chips < 2) errors.push(`favicons: source chips missing: ${favStats.chips}`);
+    if (!favStats.stats) errors.push('favicons: stats strip empty');
+    if (!favStats.theme) errors.push('favicons: theme not applied');
+    await fav.screenshot({ path: '/tmp/shots/smoke/favicons.png' });
+    // Clean up the seed (the gallery itself is display-only).
+    await fav.evaluate(bmId => new Promise(resolve => {
+        chrome.storage.local.remove(['vbmFaviconIdx', 'vbmFavicon:127.0.0.1:9'], () =>
+            chrome.bookmarks.remove(bmId, () => resolve()));
+    }), favSeed.bmId);
+    await fav.close();
+
     // 6. the legacy advanced-options URL must forward to the merged page
     const adv = await browser.newPage();
     watch(adv, 'advanced-options');

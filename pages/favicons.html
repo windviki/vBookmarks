@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="/css/favicons.css">
+<header class="fav-top">
+    <div class="fav-title-row">
+        <img src="/assets/icons/icon.svg" width="28" height="28" alt="">
+        <h1 id="fav-title"></h1>
+        <button id="fav-compare" type="button" aria-pressed="false" hidden></button>
+    </div>
+    <p id="fav-hint" class="fav-hint"></p>
+    <div class="fav-controls" id="fav-controls" hidden>
+        <input id="fav-filter" type="search" results="0" autocomplete="off" spellcheck="false">
+        <div id="fav-chips" class="fav-chips" role="group"></div>
+    </div>
+    <div id="fav-stats" class="fav-stats"></div>
+</header>
+<main id="fav-grid" class="fav-grid"></main>
+<section id="fav-failed" class="fav-failed" hidden>
+    <h2 id="fav-failed-title"></h2>
+    <p id="fav-failed-hint" class="fav-hint"></p>
+    <ul id="fav-failed-list" class="fav-failed-list"></ul>
+</section>
+<div id="fav-empty" class="fav-empty" hidden>
+    <h2 id="fav-empty-title"></h2>
+    <p id="fav-empty-text"></p>
+</div>
+<script src="/src/store.js"></script>
+<script src="/src/i18n-live.js"></script>
+<script type="module" src="/src/favicons.js"></script>

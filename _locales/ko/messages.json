@@ -906,6 +906,93 @@
   "optionFaviconCacheCleared": {
     "message": "아이콘 캐시가 지워졌습니다. 다음에 열 때 아이콘이 다시 불러와집니다."
   },
+  "favGalleryLink": {
+    "message": "새로 고친 아이콘 보기",
+    "description": "Options link (Icons group, right of the Clear icon cache button): opens the favicon gallery page listing the sites whose icons were refetched."
+  },
+  "favGalleryTitle": {
+    "message": "새로 고친 사이트 아이콘",
+    "description": "Favicon gallery page title (h1 + document title)."
+  },
+  "favGalleryHint": {
+    "message": "vBookmarks가 Chrome에 캐시되지 않은 북마크 사이트의 아이콘을 가져왔습니다. 각 아이콘의 출처와 이 아이콘을 사용하는 북마크를 보여 줍니다. 표시 전용입니다.",
+    "description": "Subtitle under the favicon gallery title, explaining the page is read-only."
+  },
+  "favGallerySearch": {
+    "message": "사이트, 제목 또는 경로로 필터링",
+    "description": "Placeholder of the favicon gallery filter input."
+  },
+  "favGalleryAll": {
+    "message": "전체",
+    "description": "Favicon gallery source filter chip: show every source."
+  },
+  "favSrcDirect": {
+    "message": "직접",
+    "description": "Favicon gallery source badge: the icon was fetched directly from the site itself."
+  },
+  "favSrcProxy": {
+    "message": "프록시",
+    "description": "Favicon gallery source badge: the icon was fetched through the user's own proxy relay."
+  },
+  "favSrcLegacy": {
+    "message": "이전 캐시",
+    "description": "Favicon gallery source badge: cached before the source was recorded, so the origin is unknown."
+  },
+  "favGalleryCompare": {
+    "message": "자리 표시자와 비교",
+    "description": "Favicon gallery toggle button: switch every icon to the generic placeholder it replaced (before/after comparison)."
+  },
+  "favGalleryShowingBefore": {
+    "message": "실제 아이콘으로 돌아가기",
+    "description": "Favicon gallery toggle button while the placeholder comparison is shown: switch back to the real fetched icons."
+  },
+  "favGalleryStatSites": {
+    "message": "사이트 $n$개",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    },
+    "description": "Favicon gallery stats strip: how many sites have a refreshed icon."
+  },
+  "favGalleryStatBookmarks": {
+    "message": "북마크 $n$개",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    },
+    "description": "Favicon gallery stats strip: how many bookmarks sit on the refreshed sites."
+  },
+  "favGalleryVisits": {
+    "message": "열어본 기록 $n$회",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    },
+    "description": "Favicon gallery tooltip on a bookmark row's visit-count pill."
+  },
+  "favGalleryFailedTitle": {
+    "message": "최근 시도했지만 아이콘을 찾지 못함",
+    "description": "Favicon gallery heading of the muted section listing hosts whose icon fetch failed recently."
+  },
+  "favGalleryFailedHint": {
+    "message": "이 사이트들은 24시간 동안 시도하지 않으며, 이후 자동으로 다시 시도됩니다.",
+    "description": "Favicon gallery hint under the failed-fetch section title."
+  },
+  "favGalleryOrphan": {
+    "message": "이 호스트에는 남은 북마크가 없습니다. 아이콘은 캐시와 함께 삭제됩니다.",
+    "description": "Favicon gallery note on a card whose host no longer has any bookmark."
+  },
+  "favGalleryEmptyTitle": {
+    "message": "아직 새로 고친 아이콘이 없습니다",
+    "description": "Favicon gallery empty-state heading."
+  },
+  "favGalleryEmptyText": {
+    "message": "팝업이 Chrome에 아이콘이 없는 북마크 사이트를 발견하면, vBookmarks가 실제 아이콘을 가져와 여기에 표시합니다.",
+    "description": "Favicon gallery empty-state body text."
+  },
   "storageUsageIcon": {
     "message": "아이콘 캐시"
   },

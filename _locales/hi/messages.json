@@ -906,6 +906,93 @@
   "optionFaviconCacheCleared": {
     "message": "आइकन कैश साफ़ हो गया। अगली बार खोलने पर आइकन फिर से लाए जाएँगे।"
   },
+  "favGalleryLink": {
+    "message": "अद्यतन आइकन देखें",
+    "description": "Options link (Icons group, right of the Clear icon cache button): opens the favicon gallery page listing the sites whose icons were refetched."
+  },
+  "favGalleryTitle": {
+    "message": "अद्यतन साइट आइकन",
+    "description": "Favicon gallery page title (h1 + document title)."
+  },
+  "favGalleryHint": {
+    "message": "vBookmarks द्वारा उन बुकमार्क की गई साइटों के लिए लाए गए आइकन जिन्हें Chrome ने कैश नहीं किया था — प्रत्येक कहाँ से आया और कौन से बुकमार्क इसे उपयोग करते हैं। केवल प्रदर्शन के लिए।",
+    "description": "Subtitle under the favicon gallery title, explaining the page is read-only."
+  },
+  "favGallerySearch": {
+    "message": "साइट, शीर्षक या पथ से फ़िल्टर करें",
+    "description": "Placeholder of the favicon gallery filter input."
+  },
+  "favGalleryAll": {
+    "message": "सभी",
+    "description": "Favicon gallery source filter chip: show every source."
+  },
+  "favSrcDirect": {
+    "message": "सीधा",
+    "description": "Favicon gallery source badge: the icon was fetched directly from the site itself."
+  },
+  "favSrcProxy": {
+    "message": "प्रॉक्सी",
+    "description": "Favicon gallery source badge: the icon was fetched through the user's own proxy relay."
+  },
+  "favSrcLegacy": {
+    "message": "पिछला कैश",
+    "description": "Favicon gallery source badge: cached before the source was recorded, so the origin is unknown."
+  },
+  "favGalleryCompare": {
+    "message": "प्लेसहोल्डर से तुलना करें",
+    "description": "Favicon gallery toggle button: switch every icon to the generic placeholder it replaced (before/after comparison)."
+  },
+  "favGalleryShowingBefore": {
+    "message": "असली आइकन पर वापस",
+    "description": "Favicon gallery toggle button while the placeholder comparison is shown: switch back to the real fetched icons."
+  },
+  "favGalleryStatSites": {
+    "message": "$n$ साइटें",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    },
+    "description": "Favicon gallery stats strip: how many sites have a refreshed icon."
+  },
+  "favGalleryStatBookmarks": {
+    "message": "$n$ बुकमार्क",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    },
+    "description": "Favicon gallery stats strip: how many bookmarks sit on the refreshed sites."
+  },
+  "favGalleryVisits": {
+    "message": "$n$ बार खोला गया",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    },
+    "description": "Favicon gallery tooltip on a bookmark row's visit-count pill."
+  },
+  "favGalleryFailedTitle": {
+    "message": "हाल ही में प्रयास किया, आइकन नहीं मिला",
+    "description": "Favicon gallery heading of the muted section listing hosts whose icon fetch failed recently."
+  },
+  "favGalleryFailedHint": {
+    "message": "इन साइटों पर 24 घंटे तक कोई प्रयास नहीं होता, फिर स्वचालित रूप से पुनः प्रयास किया जाता है।",
+    "description": "Favicon gallery hint under the failed-fetch section title."
+  },
+  "favGalleryOrphan": {
+    "message": "इस होस्ट पर कोई बुकमार्क नहीं बचा है — आइकन कैश के साथ साफ़ हो जाता है।",
+    "description": "Favicon gallery note on a card whose host no longer has any bookmark."
+  },
+  "favGalleryEmptyTitle": {
+    "message": "अभी तक कोई अद्यतन आइकन नहीं",
+    "description": "Favicon gallery empty-state heading."
+  },
+  "favGalleryEmptyText": {
+    "message": "जब पॉपअप किसी ऐसी बुकमार्क की गई साइट से मिलता है जिसके लिए Chrome के पास आइकन नहीं है, तो vBookmarks असली आइकन लाता है और उसे यहाँ सूचीबद्ध करता है।",
+    "description": "Favicon gallery empty-state body text."
+  },
   "storageUsageIcon": {
     "message": "आइकन कैश"
   },

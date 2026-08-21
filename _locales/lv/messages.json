@@ -906,6 +906,93 @@
   "optionFaviconCacheCleared": {
     "message": "Ikonu kešatmiņa ir notīrīta. Ikonas tiks atkārtoti iegūtas nākamajā atvēršanas reizē."
   },
+  "favGalleryLink": {
+    "message": "Skatīt atjauninātās ikonas",
+    "description": "Options link (Icons group, right of the Clear icon cache button): opens the favicon gallery page listing the sites whose icons were refetched."
+  },
+  "favGalleryTitle": {
+    "message": "Atjauninātās vietņu ikonas",
+    "description": "Favicon gallery page title (h1 + document title)."
+  },
+  "favGalleryHint": {
+    "message": "Ikonas, kuras vBookmarks ielādēja grāmatzīmētām vietnēm, kurām Chrome vēl nebija kešatmiņā — no kurienes katra nāk un kuras grāmatzīmes to izmanto. Tikai skatīšanās.",
+    "description": "Subtitle under the favicon gallery title, explaining the page is read-only."
+  },
+  "favGallerySearch": {
+    "message": "Filtrēt pēc vietnes, nosaukuma vai ceļa",
+    "description": "Placeholder of the favicon gallery filter input."
+  },
+  "favGalleryAll": {
+    "message": "Visas",
+    "description": "Favicon gallery source filter chip: show every source."
+  },
+  "favSrcDirect": {
+    "message": "Tieši",
+    "description": "Favicon gallery source badge: the icon was fetched directly from the site itself."
+  },
+  "favSrcProxy": {
+    "message": "Starpniekserveris",
+    "description": "Favicon gallery source badge: the icon was fetched through the user's own proxy relay."
+  },
+  "favSrcLegacy": {
+    "message": "Vecāka kešatmiņa",
+    "description": "Favicon gallery source badge: cached before the source was recorded, so the origin is unknown."
+  },
+  "favGalleryCompare": {
+    "message": "Salīdzināt ar vietturi",
+    "description": "Favicon gallery toggle button: switch every icon to the generic placeholder it replaced (before/after comparison)."
+  },
+  "favGalleryShowingBefore": {
+    "message": "Atpakaļ uz īstajām ikonām",
+    "description": "Favicon gallery toggle button while the placeholder comparison is shown: switch back to the real fetched icons."
+  },
+  "favGalleryStatSites": {
+    "message": "$n$ vietnes",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    },
+    "description": "Favicon gallery stats strip: how many sites have a refreshed icon."
+  },
+  "favGalleryStatBookmarks": {
+    "message": "$n$ grāmatzīmes",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    },
+    "description": "Favicon gallery stats strip: how many bookmarks sit on the refreshed sites."
+  },
+  "favGalleryVisits": {
+    "message": "Reģistrēti $n$ atvērumi",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    },
+    "description": "Favicon gallery tooltip on a bookmark row's visit-count pill."
+  },
+  "favGalleryFailedTitle": {
+    "message": "Nesen mēģināts, ikona nav atrasta",
+    "description": "Favicon gallery heading of the muted section listing hosts whose icon fetch failed recently."
+  },
+  "favGalleryFailedHint": {
+    "message": "Šīs vietnes klusē 24 stundas, pēc tam tās mēģina vēlreiz automātiski.",
+    "description": "Favicon gallery hint under the failed-fetch section title."
+  },
+  "favGalleryOrphan": {
+    "message": "Šai vietnei vairs nav grāmatzīmju — ikona tiek dzēsta kopā ar kešatmiņu.",
+    "description": "Favicon gallery note on a card whose host no longer has any bookmark."
+  },
+  "favGalleryEmptyTitle": {
+    "message": "Vēl nav atjauninātu ikonu",
+    "description": "Favicon gallery empty-state heading."
+  },
+  "favGalleryEmptyText": {
+    "message": "Kad uznirstošajā logā sastopas grāmatzīmēta vietne, kurai Chrome nav ikonas, vBookmarks ielādē īsto ikonu un parāda to šeit.",
+    "description": "Favicon gallery empty-state body text."
+  },
   "storageUsageIcon": {
     "message": "Ikonu kešatmiņa"
   },

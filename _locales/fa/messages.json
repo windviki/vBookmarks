@@ -906,6 +906,93 @@
   "optionFaviconCacheCleared": {
     "message": "کش آیکون‌ها پاک شد. آیکون‌ها در باز شدن بعدی دوباره دریافت خواهند شد."
   },
+  "favGalleryLink": {
+    "message": "مشاهده آیکنهای بهروزشده",
+    "description": "Options link (Icons group, right of the Clear icon cache button): opens the favicon gallery page listing the sites whose icons were refetched."
+  },
+  "favGalleryTitle": {
+    "message": "آیکنهای بهروزشده سایتها",
+    "description": "Favicon gallery page title (h1 + document title)."
+  },
+  "favGalleryHint": {
+    "message": "آیکنهایی که vBookmarks برای سایتهای نشانکشدهای که Chrome آنها را کش نکرده بود دریافت کرده است — اینکه هرکدام از کجا آمده و کدام نشانکها از آن استفاده میکنند. فقط نمایشی.",
+    "description": "Subtitle under the favicon gallery title, explaining the page is read-only."
+  },
+  "favGallerySearch": {
+    "message": "فیلتر بر اساس سایت، عنوان یا مسیر",
+    "description": "Placeholder of the favicon gallery filter input."
+  },
+  "favGalleryAll": {
+    "message": "همه",
+    "description": "Favicon gallery source filter chip: show every source."
+  },
+  "favSrcDirect": {
+    "message": "مستقیم",
+    "description": "Favicon gallery source badge: the icon was fetched directly from the site itself."
+  },
+  "favSrcProxy": {
+    "message": "پروکسی",
+    "description": "Favicon gallery source badge: the icon was fetched through the user's own proxy relay."
+  },
+  "favSrcLegacy": {
+    "message": "کش قبلی",
+    "description": "Favicon gallery source badge: cached before the source was recorded, so the origin is unknown."
+  },
+  "favGalleryCompare": {
+    "message": "مقایسه با تصویر جایگزین",
+    "description": "Favicon gallery toggle button: switch every icon to the generic placeholder it replaced (before/after comparison)."
+  },
+  "favGalleryShowingBefore": {
+    "message": "بازگشت به آیکنهای واقعی",
+    "description": "Favicon gallery toggle button while the placeholder comparison is shown: switch back to the real fetched icons."
+  },
+  "favGalleryStatSites": {
+    "message": "$n$ سایت",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    },
+    "description": "Favicon gallery stats strip: how many sites have a refreshed icon."
+  },
+  "favGalleryStatBookmarks": {
+    "message": "$n$ نشانک",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    },
+    "description": "Favicon gallery stats strip: how many bookmarks sit on the refreshed sites."
+  },
+  "favGalleryVisits": {
+    "message": "$n$ بار باز شدن ثبتشده",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    },
+    "description": "Favicon gallery tooltip on a bookmark row's visit-count pill."
+  },
+  "favGalleryFailedTitle": {
+    "message": "اخیراً تلاش شد، آیکنی یافت نشد",
+    "description": "Favicon gallery heading of the muted section listing hosts whose icon fetch failed recently."
+  },
+  "favGalleryFailedHint": {
+    "message": "این سایتها به مدت ۲۴ ساعت بررسی نمیشوند و سپس بهطور خودکار دوباره تلاش میشوند.",
+    "description": "Favicon gallery hint under the failed-fetch section title."
+  },
+  "favGalleryOrphan": {
+    "message": "هیچ نشانکی روی این میزبان باقی نمانده است — آیکن همراه با کش پاک میشود.",
+    "description": "Favicon gallery note on a card whose host no longer has any bookmark."
+  },
+  "favGalleryEmptyTitle": {
+    "message": "هنوز هیچ آیکن بهروزشدهای وجود ندارد",
+    "description": "Favicon gallery empty-state heading."
+  },
+  "favGalleryEmptyText": {
+    "message": "هنگامی که پنجره بازشو به سایت نشانکشدهای برسد که Chrome آیکنی برایش ندارد، vBookmarks آیکن واقعی را دریافت و در اینجا فهرست میکند.",
+    "description": "Favicon gallery empty-state body text."
+  },
   "storageUsageIcon": {
     "message": "حافظه پنهان آیکن"
   },

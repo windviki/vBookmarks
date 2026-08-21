@@ -906,6 +906,93 @@
   "optionFaviconCacheCleared": {
     "message": "ล้างแคชไอคอนแล้ว ไอคอนจะถูกดึงใหม่เมื่อเปิดครั้งถัดไป"
   },
+  "favGalleryLink": {
+    "message": "ดูไอคอนที่ดึงมาใหม่",
+    "description": "Options link (Icons group, right of the Clear icon cache button): opens the favicon gallery page listing the sites whose icons were refetched."
+  },
+  "favGalleryTitle": {
+    "message": "ไอคอนเว็บไซต์ที่ดึงมาใหม่",
+    "description": "Favicon gallery page title (h1 + document title)."
+  },
+  "favGalleryHint": {
+    "message": "ไอคอนที่ vBookmarks ดึงมาให้เว็บไซต์ที่บุ๊กมาร์กไว้ซึ่ง Chrome ยังไม่มีในแคช — แสดงที่มาของแต่ละไอคอนและบุ๊กมาร์กที่ใช้งาน หน้านี้สำหรับดูเท่านั้น",
+    "description": "Subtitle under the favicon gallery title, explaining the page is read-only."
+  },
+  "favGallerySearch": {
+    "message": "กรองตามเว็บไซต์ ชื่อ หรือเส้นทาง",
+    "description": "Placeholder of the favicon gallery filter input."
+  },
+  "favGalleryAll": {
+    "message": "ทั้งหมด",
+    "description": "Favicon gallery source filter chip: show every source."
+  },
+  "favSrcDirect": {
+    "message": "ตรง",
+    "description": "Favicon gallery source badge: the icon was fetched directly from the site itself."
+  },
+  "favSrcProxy": {
+    "message": "พร็อกซี",
+    "description": "Favicon gallery source badge: the icon was fetched through the user's own proxy relay."
+  },
+  "favSrcLegacy": {
+    "message": "แคชก่อนหน้า",
+    "description": "Favicon gallery source badge: cached before the source was recorded, so the origin is unknown."
+  },
+  "favGalleryCompare": {
+    "message": "เทียบกับไอคอนแทนที่",
+    "description": "Favicon gallery toggle button: switch every icon to the generic placeholder it replaced (before/after comparison)."
+  },
+  "favGalleryShowingBefore": {
+    "message": "กลับไปที่ไอคอนจริง",
+    "description": "Favicon gallery toggle button while the placeholder comparison is shown: switch back to the real fetched icons."
+  },
+  "favGalleryStatSites": {
+    "message": "$n$ เว็บไซต์",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    },
+    "description": "Favicon gallery stats strip: how many sites have a refreshed icon."
+  },
+  "favGalleryStatBookmarks": {
+    "message": "$n$ บุ๊กมาร์ก",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    },
+    "description": "Favicon gallery stats strip: how many bookmarks sit on the refreshed sites."
+  },
+  "favGalleryVisits": {
+    "message": "บันทึกการเปิด $n$ ครั้ง",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    },
+    "description": "Favicon gallery tooltip on a bookmark row's visit-count pill."
+  },
+  "favGalleryFailedTitle": {
+    "message": "เพิ่งลองแต่ไม่พบไอคอน",
+    "description": "Favicon gallery heading of the muted section listing hosts whose icon fetch failed recently."
+  },
+  "favGalleryFailedHint": {
+    "message": "เว็บไซต์เหล่านี้จะหยุดพัก 24 ชั่วโมง แล้วลองใหม่โดยอัตโนมัติ",
+    "description": "Favicon gallery hint under the failed-fetch section title."
+  },
+  "favGalleryOrphan": {
+    "message": "ไม่มีบุ๊กมาร์กเหลืออยู่ในโฮสต์นี้ — ไอคอนจะถูกล้างพร้อมแคช",
+    "description": "Favicon gallery note on a card whose host no longer has any bookmark."
+  },
+  "favGalleryEmptyTitle": {
+    "message": "ยังไม่มีไอคอนที่ดึงมาใหม่",
+    "description": "Favicon gallery empty-state heading."
+  },
+  "favGalleryEmptyText": {
+    "message": "เมื่อป็อปอัพพบเว็บไซต์ที่บุ๊กมาร์กไว้ซึ่ง Chrome ไม่มีไอคอน vBookmarks จะดึงไอคอนจริงมาแสดงไว้ที่นี่",
+    "description": "Favicon gallery empty-state body text."
+  },
   "storageUsageIcon": {
     "message": "แคชไอคอน"
   },

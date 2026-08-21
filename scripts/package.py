@@ -33,6 +33,7 @@ HTML_PAGES = [
     'pages/sidepanel.html',
     'pages/options.html',
     'pages/advanced-options.html',
+    'pages/favicons.html',
 ]
 
 # JavaScript files referenced by HTML pages (or imported by other modules)
@@ -68,6 +69,8 @@ JS_FILES = [
     'src/palette-commands.js',
     'src/options-palette-commands.js',
     'src/options-proxy.js',
+    'src/favicons.js',
+    'src/favicon-gallery.js',
     'src/dupes.js',
     'src/dead-links.js',
     'src/dead-proxy.js',
@@ -95,6 +98,7 @@ CSS_FILES = [
     'css/neat.css',
     'css/options.css',
     'css/sync-styles.css',
+    'css/favicons.css',
     'vendor/codemirror.css',
 ]
 

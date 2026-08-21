@@ -875,6 +875,7 @@ const $ = id => document.getElementById(id);
         document.getElementById('option-favicon-backup').innerText = __m('optionFaviconBackup');
         document.getElementById('option-favicon-backup-hint').innerText = __m('optionFaviconBackupHint');
         document.getElementById('favicon-cache-clear').innerText = __m('optionFaviconCacheClear');
+        document.getElementById('favicon-gallery-link').innerText = __m('favGalleryLink');
         // The dead-link proxy server row (label/buttons/hint/error) is bound
         // by src/options-proxy.js — a module, so it can import dead-proxy.js.
         document.getElementById('option-theme').innerText = __m('optionTheme');

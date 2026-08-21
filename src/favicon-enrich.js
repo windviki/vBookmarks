@@ -22,7 +22,10 @@
  *   - Icon validation: res.ok + byteLength ≤ 200KB + type sniff by magic
  *     number + Image decode (naturalWidth > 0). Bad data never cached.
  *   - Cache: per-host key `vbmFavicon:<host>` = data URL + one index key
- *     `vbmFaviconIdx` = { v, down, hosts: { host: {t,s}|{f,t} } }.
+ *     `vbmFaviconIdx` = { v, down, hosts: { host: {t,s,src?}|{f,t} } }.
+ *     `src` records where the icon came from — 'direct' (L1/L2), 'proxy'
+ *     (L3 relay) or an L4 provider id — for the favicon gallery page
+ *     (pages/favicons.html); entries cached before 4.0.9 simply lack it.
  *     Dynamic byte budget = (quota − other features' bytes) × 0.8 (floored,
  *     capped at the real free space), halving eviction when exceeded;
  *     >96KB icons session-only; quota-error emergency eviction.
@@ -404,7 +407,7 @@ export function initFaviconEnrich(ctx = {}) {
                 continue;
             if (!e.f && e.persist === false)
                 continue;   // session-only (oversized / quota-degraded): no data key to index
-            hosts[host] = e.f ? { f: 1, t: e.t } : { t: e.t, s: e.d ? e.d.length : 0 };
+            hosts[host] = e.f ? { f: 1, t: e.t } : { t: e.t, s: e.d ? e.d.length : 0, ...(e.src ? { src: e.src } : {}) };
         }
         idxData.hosts = hosts;
         try {
@@ -412,18 +415,18 @@ export function initFaviconEnrich(ctx = {}) {
         } catch (_) { /* session-only degrade */ }
     };
 
-    const writeEntry = (host, dataUrl) => {
+    const writeEntry = (host, dataUrl, source) => {
         const bytes = dataUrl.length;
         if (bytes > MAX_ICON_BYTES) {
             // Oversized: session-only, not persisted.
-            cache.set(host, { d: dataUrl, t: now(), persist: false });
+            cache.set(host, { d: dataUrl, t: now(), persist: false, src: source });
             evictSessionOverCap();
             return;
         }
-        cache.set(host, { d: dataUrl, t: now() });
+        cache.set(host, { d: dataUrl, t: now(), src: source });
         maybeRefreshBudget();
         evictIfOverBudget();
-        idxData.hosts[host] = { t: now(), s: bytes };
+        idxData.hosts[host] = { t: now(), s: bytes, ...(source ? { src: source } : {}) };
         // Write only the data key immediately; the index is coalesced by the
         // 1s debounce — a storm of completions writes the index once, not once
         // per host (the write-amplification the per-host layout exists to
@@ -433,7 +436,7 @@ export function initFaviconEnrich(ctx = {}) {
         if (p && typeof p.catch === 'function') {
             // chrome.storage rejects async on quota error (try/catch can't see
             // it) — trigger the emergency eviction via .catch.
-            p.catch(() => emergencyEvict(host, dataUrl));
+            p.catch(() => emergencyEvict(host, dataUrl, source));
         }
         persistIdxDebounced();
     };
@@ -524,24 +527,24 @@ export function initFaviconEnrich(ctx = {}) {
         }
     };
 
-    const emergencyEvict = (host, dataUrl) => {
+    const emergencyEvict = (host, dataUrl, source) => {
         // Quota error on write: cut the oldest half, retry once; if the retry
         // also fails (other data squeezed the budget), degrade to session-only.
         // The index is written by evictToHalve's debounce (never here) — the
         // retry only re-attempts the data key.
         evictToHalve();
-        idxData.hosts[host] = { t: now(), s: dataUrl.length };
+        idxData.hosts[host] = { t: now(), s: dataUrl.length, ...(source ? { src: source } : {}) };
         const retry = { [`${FAVICON_DATA_PREFIX}${host}`]: dataUrl };
         const rp = chromeImpl.storage.local.set(retry);
         if (rp && typeof rp.catch === 'function') {
             // Still over budget → degrade this entry to session-only.
             rp.catch(() => {
-                cache.set(host, { d: dataUrl, t: now(), persist: false });
+                cache.set(host, { d: dataUrl, t: now(), persist: false, src: source });
                 delete idxData.hosts[host];   // keep the index honest
                 evictSessionOverCap();
             });
         } else {
-            cache.set(host, { d: dataUrl, t: now() });
+            cache.set(host, { d: dataUrl, t: now(), src: source });
         }
     };
 
@@ -584,7 +587,7 @@ export function initFaviconEnrich(ctx = {}) {
             }
             const dataUrl = all[`${FAVICON_DATA_PREFIX}${host}`];
             if (dataUrl) {
-                cache.set(host, { d: dataUrl, t: meta.t || nowMs });
+                cache.set(host, { d: dataUrl, t: meta.t || nowMs, ...(meta.src ? { src: meta.src } : {}) });
             } else {
                 // Index says success but data key is gone → drop the entry.
                 delete idx.hosts[host];
@@ -908,7 +911,7 @@ export function initFaviconEnrich(ctx = {}) {
                     if (typeof p.placeholderProbeUrl === 'function'
                         && await matchesPlaceholderProbe(p, host, valid.dataUrl, signal))
                         continue;
-                    return valid;
+                    return { ...valid, source: p.id };
                 }
             }
             // outcome === 'no-icon' (or a validation failure) → fail over.
@@ -944,7 +947,8 @@ export function initFaviconEnrich(ctx = {}) {
         const hit = cache.get(item.host);
         if (hit && hit.d && !isExpired(item.host, SUCCESS_TTL_MS)) {
             // hotSwap reads the item back via queue.get — remove only after.
-            hotSwap(item.host, hit.d);
+            // Cache hit discovered after the hydrate race: no shake.
+            hotSwap(item.host, hit.d, false);
             clearEnriching(item.anchors);
             queue.delete(item.host);
             return;
@@ -960,8 +964,10 @@ export function initFaviconEnrich(ctx = {}) {
                 return;
             }
             if (result && result.dataUrl) {
-                writeEntry(item.host, result.dataUrl);
-                hotSwap(item.host, result.dataUrl);
+                writeEntry(item.host, result.dataUrl, result.source);
+                // Fresh fetch: this is the one-time "refreshed" moment — shake
+                // (only when the slot is on screen).
+                hotSwap(item.host, result.dataUrl, true);
             } else {
                 writeFailed(item.host);
                 clearEnriching(item.anchors);
@@ -976,16 +982,19 @@ export function initFaviconEnrich(ctx = {}) {
     };
 
     // The chain: L1 direct → L2 direct → L3 proxy relay → L4 provider list.
+    // Every layer tags its hit with the source ('direct' / 'proxy' / provider
+    // id — L4 tags at its own return) so the cache records WHERE the icon came
+    // from for the favicon gallery page (pages/favicons.html).
     const discover = async (host, pageUrl, signal) => {
         const l1 = await tryL1(host, signal);
         if (l1)
-            return l1;
+            return { ...l1, source: 'direct' };
         const l2 = await tryL2(pageUrl, signal);
         if (l2)
-            return l2;
+            return { ...l2, source: 'direct' };
         const l3 = await tryL3(host, pageUrl, signal);
         if (l3)
-            return l3;
+            return { ...l3, source: 'proxy' };
         const l4 = await tryL4(host, signal);
         return l4 || null;
     };
@@ -1007,7 +1016,9 @@ export function initFaviconEnrich(ctx = {}) {
     };
 
     // A replaced icon gets the little "break out of the old icon" shake only
-    // when its slot is on screen; off-screen rows swap quietly.
+    // ONCE — when a freshly-fetched icon lands in an on-screen slot; off-screen
+    // rows swap quietly, and cache-hit re-injections (re-opening a view) never
+    // shake again. The `animate` flag on hotSwap/injectImg encodes that gate.
     const inViewport = el => {
         // The placeholder <img> in tests (and sometimes in real re-renders)
         // has no layout box of its own yet; its favicon slot anchor is the
@@ -1034,7 +1045,7 @@ export function initFaviconEnrich(ctx = {}) {
         el.addEventListener('load', () => registerEnriched(el), { once: true });
         return el;
     };
-    const hotSwap = (host, dataUrl) => {
+    const hotSwap = (host, dataUrl, animate) => {
         const item = queue.get(host);
         if (!item)
             return;
@@ -1044,7 +1055,7 @@ export function initFaviconEnrich(ctx = {}) {
             const svg = anchor.querySelector('svg.vbm-icon-doc');
             if (!svg)
                 continue;
-            anchor.replaceChild(makeEnrichedImg(dataUrl, inViewport(svg)), svg);
+            anchor.replaceChild(makeEnrichedImg(dataUrl, animate && inViewport(svg)), svg);
         }
     };
 
@@ -1097,7 +1108,10 @@ export function initFaviconEnrich(ctx = {}) {
     const injectImg = (img, dataUrl) => {
         if (!img || !img.parentNode)
             return;
-        img.parentNode.replaceChild(makeEnrichedImg(dataUrl, inViewport(img)), img);
+        // Cache-hit re-injection (re-entering a view, or a fresh page load
+        // after hydrate): never shake — the one-time animation already played
+        // when the icon was first fetched. The fade-in stays.
+        img.parentNode.replaceChild(makeEnrichedImg(dataUrl, false), img);
     };
 
     const enqueue = (host, pageUrl, img) => {
