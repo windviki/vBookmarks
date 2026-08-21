@@ -19,7 +19,7 @@
 import { parseVersion, sameOrNewerMinor, crossedInto } from './version.js';
 
 export const V4_THRESHOLD = parseVersion('4.0');
-export const ANNOUNCED_THRESHOLD = parseVersion('4.0.8');
+export const ANNOUNCED_THRESHOLD = parseVersion('4.1.0');
 
 export const applyVersionGate = (store, currentVersion) => {
     let newOrUpgrade = true;

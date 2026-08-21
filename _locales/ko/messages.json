@@ -38,6 +38,12 @@
   "announceV408Title": {
     "message": "v4.0.8의 새로운 기능"
   },
+  "announceV410Title": {
+    "message": "v4.1.0의 새로운 기능"
+  },
+  "announceV410Text": {
+    "message": "v4.1.0에 탭 그룹 보기가 추가되었습니다. 각 창의 탭과 탭 그룹을 북마크 옆에서 관리할 수 있습니다."
+  },
   "announceV408Text": {
     "message": "v4.0.8은 파비콘 강화 버전입니다. Chrome이 아직 캐시하지 않은 북마크의 실제 사이트 아이콘을 자동으로 가져옵니다."
   },
@@ -324,8 +330,8 @@
   "whatsNewChangelog": {
     "message": "변경 로그"
   },
-  "whatsNewFavicon": {
-    "message": "v$1$는 파비콘 강화 버전입니다. Chrome이 캐시하지 않은 사이트 아이콘은 이제 자동으로 가져옵니다.",
+  "whatsNewTabGroups": {
+    "message": "v$1$에 탭 그룹 보기가 추가되었습니다: 모든 창의 탭과 탭 그룹이 북마크 옆에 표시됩니다.",
     "placeholders": {
       "1": {
         "content": "$1"
@@ -342,6 +348,271 @@
         "content": "$2"
       }
     }
+  },
+  "viewTabGroups": {
+    "message": "탭 그룹"
+  },
+  "optionShowTabGroupsView": {
+    "message": "탭 그룹 보기 탭 표시"
+  },
+  "tabGroupsViewEmpty": {
+    "message": "이 창에 탭이 없습니다"
+  },
+  "tabGroupsToolbarRefresh": {
+    "message": "새로 고침"
+  },
+  "tabGroupsCollapseAll": {
+    "message": "모두 접기"
+  },
+  "tabGroupsExpandAll": {
+    "message": "모두 펼치기"
+  },
+  "tabGroupsSummary": {
+    "message": "$tabs$개 탭 · $groups$개 그룹",
+    "placeholders": {
+      "tabs": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsGroupCount": {
+    "message": "$count$개 탭",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentTab": {
+    "message": "현재 탭"
+  },
+  "tabGroupsAddBookmark": {
+    "message": "이 탭 북마크"
+  },
+  "tabGroupsSaveFolder": {
+    "message": "탭 그룹을 북마크 폴더로 저장"
+  },
+  "tabGroupsGroupSavedToFolder": {
+    "message": "$count$개 탭을 $folder$에 저장했습니다",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsBookmarksAdded": {
+    "message": "$count$개 북마크를 $folder$에 추가했습니다",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsSelectNewGroup": {
+    "message": "새 탭 그룹"
+  },
+  "tabGroupsSelectOpenInto": {
+    "message": "기존 탭 그룹에서 열기…"
+  },
+  "tabGroupsSelectSaveFolder": {
+    "message": "북마크 폴더로 저장"
+  },
+  "tabGroupsSelectClose": {
+    "message": "닫기"
+  },
+  "tabGroupsSelectSleep": {
+    "message": "절전"
+  },
+  "tabGroupsCopyMoveDialog": {
+    "message": "선택한 탭이 이미 탭 그룹에 속해 있습니다. 복사(새 위치에서 열기)하시겠습니까, 아니면 이동(현재 그룹에서 제거)하시겠습니까?"
+  },
+  "tabGroupsCopyMoveCopy": {
+    "message": "복사"
+  },
+  "tabGroupsCopyMoveMove": {
+    "message": "이동"
+  },
+  "tabGroupsConfirmClose": {
+    "message": "$count$개 탭을 닫을까요?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsConfirmSleep": {
+    "message": "$count$개 탭을 절전 모드로 전환할까요?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "bookmarkFolderPickDialogTitle": {
+    "message": "북마크 폴더에 추가"
+  },
+  "bookmarkFolderNoFolders": {
+    "message": "북마크 폴더가 없습니다"
+  },
+  "tabGroupsSelectAddBookmarks": {
+    "message": "북마크 폴더에 추가…"
+  },
+  "paletteCmdGoTabGroups": {
+    "message": "탭 그룹 보기로 이동"
+  },
+  "tabGroupsActivateGroup": {
+    "message": "그룹으로 이동"
+  },
+  "tabGroupsRenameGroup": {
+    "message": "탭 그룹 이름 바꾸기"
+  },
+  "tabGroupsRenameDialog": {
+    "message": "탭 그룹 이름 바꾸기"
+  },
+  "tabGroupsCloseGroup": {
+    "message": "탭 그룹 닫기"
+  },
+  "tabGroupsSleepGroup": {
+    "message": "탭 그룹 절전"
+  },
+  "tabGroupsWakeGroup": {
+    "message": "탭 그룹 깨우기"
+  },
+  "tabGroupsActivateTab": {
+    "message": "탭으로 이동"
+  },
+  "tabGroupsCollapseGroup": {
+    "message": "그룹 접기"
+  },
+  "tabGroupsExpandGroup": {
+    "message": "그룹 펼치기"
+  },
+  "tabGroupsMenuAddBookmark": {
+    "message": "탭 북마크"
+  },
+  "tabGroupsMenuSaveFolder": {
+    "message": "북마크 폴더로 저장"
+  },
+  "tabGroupsSyncCollapse": {
+    "message": "브라우저와 접기 동기화"
+  },
+  "tabGroupsSyncCollapseHint": {
+    "message": "선택하면 이 보기에서 그룹을 접거나 펼칠 때 브라우저 탭 그룹도 업데이트됩니다. 기본적으로 꺼져 있어 보기 접기가 로컬에 유지됩니다."
+  },
+  "tabGroupsColorStyle": {
+    "message": "탭 그룹 색상 스타일"
+  },
+  "tabGroupsColorStyleHint": {
+    "message": "끄면 색상 점만 표시됩니다. 가장자리 색상 띠는 그룹의 왼쪽 가장자리에 색상 줄무늬를 그립니다. 색상 연결선은 그룹 점 아래에 색상 선을 그리고 각 행에 눈금을 표시하여 전체 그룹을 하나의 트리로 연결합니다."
+  },
+  "tabGroupsColorStyleOff": {
+    "message": "끄기 (색상 점만)"
+  },
+  "tabGroupsColorStyleEdge": {
+    "message": "가장자리 색상 띠"
+  },
+  "tabGroupsColorStyleLine": {
+    "message": "색상 연결선"
+  },
+  "tabGroupsBookmarked": {
+    "message": "북마크됨"
+  },
+  "tabGroupsRemoveBookmark": {
+    "message": "북마크 제거"
+  },
+  "tabGroupsBookmarkRemoved": {
+    "message": "$count$개의 북마크가 제거되었습니다",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsPinned": {
+    "message": "고정된 탭"
+  },
+  "tabGroupsDiscarded": {
+    "message": "휴면 탭"
+  },
+  "tabGroupsPinTab": {
+    "message": "탭 고정"
+  },
+  "tabGroupsUnpinTab": {
+    "message": "탭 고정 해제"
+  },
+  "tabGroupsSleepTab": {
+    "message": "탭 절전"
+  },
+  "tabGroupsWakeTab": {
+    "message": "탭 깨우기"
+  },
+  "tabGroupsOpenGroups": {
+    "message": "열린 탭 그룹"
+  },
+  "tabGroupsClosedGroups": {
+    "message": "최근 닫힘"
+  },
+  "tabGroupsUngroupedTabs": {
+    "message": "그룹화되지 않은 탭"
+  },
+  "tabGroupsUngroupGroup": {
+    "message": "그룹 해제"
+  },
+  "tabGroupsMoveNewWindow": {
+    "message": "새 창으로 이동"
+  },
+  "tabGroupsWindow": {
+    "message": "창 $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentWindow": {
+    "message": "현재 창"
+  },
+  "tabGroupsReopenGroup": {
+    "message": "탭 그룹 다시 열기"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "닫힌 탭 그룹 삭제"
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "창 축소"
+  },
+  "tabGroupsExpandWindow": {
+    "message": "창 확대"
+  },
+  "tabGroupsClearClosedGroups": {
+    "message": "모두 지우기"
+  },
+  "tabGroupsClosedOpenTab": {
+    "message": "새 탭에서 열기"
+  },
+  "tabGroupsRemoveClosedTab": {
+    "message": "저장된 그룹에서 제거"
+  },
+  "tabGroupsClosedTimeLabel": {
+    "message": "닫힘:"
+  },
+  "tabGroupsExpandedExpand": {
+    "message": "펼치기"
+  },
+  "tabGroupsExpandedCollapse": {
+    "message": "접기"
+  },
+  "optionTabGroupsClosedLimit": {
+    "message": "유지할 닫힌 탭/그룹 기록"
   },
   "deadProxyAdd": {
     "message": "죽은 링크 확인용 프록시 서버 추가"

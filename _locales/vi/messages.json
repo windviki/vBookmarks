@@ -38,6 +38,12 @@
   "announceV408Title": {
     "message": "Có gì mới trong v4.0.8"
   },
+  "announceV410Title": {
+    "message": "v4.1.0 的新功能"
+  },
+  "announceV410Text": {
+    "message": "v4.1.0 新增标签页组视图：每个窗口的标签页和标签页组，可在书签旁管理。"
+  },
   "announceV408Text": {
     "message": "v4.0.8 là bản phát hành tăng cường favicon: biểu tượng trang web thực được tự động tải cho các dấu trang mà Chrome chưa lưu vào bộ nhớ cache."
   },
@@ -324,8 +330,8 @@
   "whatsNewChangelog": {
     "message": "Nhật ký thay đổi"
   },
-  "whatsNewFavicon": {
-    "message": "v$1$ là bản phát hành tăng cường favicon: các biểu tượng trang web mà Chrome chưa lưu vào bộ nhớ đệm giờ sẽ được tự động tải.",
+  "whatsNewTabGroups": {
+    "message": "v$1$ bổ sung chế độ xem Nhóm tab: các tab và nhóm tab của mỗi cửa sổ, bên cạnh dấu trang của bạn.",
     "placeholders": {
       "1": {
         "content": "$1"
@@ -342,6 +348,271 @@
         "content": "$2"
       }
     }
+  },
+  "viewTabGroups": {
+    "message": "Nhóm tab"
+  },
+  "optionShowTabGroupsView": {
+    "message": "Hiển thị tab chế độ xem nhóm tab"
+  },
+  "tabGroupsViewEmpty": {
+    "message": "Không có tab nào trong cửa sổ này"
+  },
+  "tabGroupsToolbarRefresh": {
+    "message": "Làm mới"
+  },
+  "tabGroupsCollapseAll": {
+    "message": "Thu gọn tất cả"
+  },
+  "tabGroupsExpandAll": {
+    "message": "Mở rộng tất cả"
+  },
+  "tabGroupsSummary": {
+    "message": "$tabs$ tab · $groups$ nhóm",
+    "placeholders": {
+      "tabs": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsGroupCount": {
+    "message": "$count$ tab",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentTab": {
+    "message": "Tab hiện tại"
+  },
+  "tabGroupsAddBookmark": {
+    "message": "Đánh dấu tab này"
+  },
+  "tabGroupsSaveFolder": {
+    "message": "Lưu nhóm tab dưới dạng thư mục dấu trang"
+  },
+  "tabGroupsGroupSavedToFolder": {
+    "message": "Đã lưu $count$ tab vào $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsBookmarksAdded": {
+    "message": "Đã thêm $count$ dấu trang vào $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsSelectNewGroup": {
+    "message": "Nhóm tab mới"
+  },
+  "tabGroupsSelectOpenInto": {
+    "message": "Mở trong nhóm tab hiện có…"
+  },
+  "tabGroupsSelectSaveFolder": {
+    "message": "Lưu dưới dạng thư mục dấu trang"
+  },
+  "tabGroupsSelectClose": {
+    "message": "Đóng"
+  },
+  "tabGroupsSelectSleep": {
+    "message": "Ngủ"
+  },
+  "tabGroupsCopyMoveDialog": {
+    "message": "Các tab đã chọn thuộc về một nhóm tab. Bạn muốn sao chép (mở ở vị trí mới) hay di chuyển (xóa khỏi nhóm hiện tại)?"
+  },
+  "tabGroupsCopyMoveCopy": {
+    "message": "Sao chép"
+  },
+  "tabGroupsCopyMoveMove": {
+    "message": "Di chuyển"
+  },
+  "tabGroupsConfirmClose": {
+    "message": "Đóng $count$ tab?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsConfirmSleep": {
+    "message": "Cho $count$ tab ngủ?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "bookmarkFolderPickDialogTitle": {
+    "message": "Thêm vào thư mục dấu trang"
+  },
+  "bookmarkFolderNoFolders": {
+    "message": "Không có thư mục dấu trang"
+  },
+  "tabGroupsSelectAddBookmarks": {
+    "message": "Thêm vào thư mục dấu trang…"
+  },
+  "paletteCmdGoTabGroups": {
+    "message": "Đi tới chế độ xem Nhóm tab"
+  },
+  "tabGroupsActivateGroup": {
+    "message": "Đi tới nhóm tab"
+  },
+  "tabGroupsRenameGroup": {
+    "message": "Đổi tên nhóm tab"
+  },
+  "tabGroupsRenameDialog": {
+    "message": "Đổi tên nhóm tab"
+  },
+  "tabGroupsCloseGroup": {
+    "message": "Đóng nhóm tab"
+  },
+  "tabGroupsSleepGroup": {
+    "message": "Cho nhóm tab ngủ"
+  },
+  "tabGroupsWakeGroup": {
+    "message": "Đánh thức nhóm tab"
+  },
+  "tabGroupsActivateTab": {
+    "message": "Đi tới tab"
+  },
+  "tabGroupsCollapseGroup": {
+    "message": "Thu gọn nhóm"
+  },
+  "tabGroupsExpandGroup": {
+    "message": "Mở rộng nhóm"
+  },
+  "tabGroupsMenuAddBookmark": {
+    "message": "Đánh dấu tab"
+  },
+  "tabGroupsMenuSaveFolder": {
+    "message": "Lưu dưới dạng thư mục dấu trang"
+  },
+  "tabGroupsSyncCollapse": {
+    "message": "Đồng bộ thu gọn với trình duyệt"
+  },
+  "tabGroupsSyncCollapseHint": {
+    "message": "Khi được chọn, việc thu gọn hoặc mở rộng một nhóm trong chế độ xem này cũng cập nhật nhóm tab của trình duyệt. Tắt theo mặc định để việc gấp chế độ xem chỉ mang tính cục bộ."
+  },
+  "tabGroupsColorStyle": {
+    "message": "Kiểu màu nhóm tab"
+  },
+  "tabGroupsColorStyleHint": {
+    "message": "Tắt chỉ hiển thị chấm màu. Dải màu cạnh vẽ một dải màu dọc theo mép trái của nhóm. Đường nối màu vẽ một đường màu dưới chấm của nhóm với dấu tích cho mỗi hàng, liên kết toàn bộ nhóm thành một cây."
+  },
+  "tabGroupsColorStyleOff": {
+    "message": "Tắt (chỉ chấm màu)"
+  },
+  "tabGroupsColorStyleEdge": {
+    "message": "Dải màu cạnh"
+  },
+  "tabGroupsColorStyleLine": {
+    "message": "Đường nối màu"
+  },
+  "tabGroupsBookmarked": {
+    "message": "Đã đánh dấu"
+  },
+  "tabGroupsRemoveBookmark": {
+    "message": "Xóa dấu trang"
+  },
+  "tabGroupsBookmarkRemoved": {
+    "message": "Đã xóa $count$ dấu trang",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsPinned": {
+    "message": "Tab đã ghim"
+  },
+  "tabGroupsDiscarded": {
+    "message": "Tab ngủ"
+  },
+  "tabGroupsPinTab": {
+    "message": "Ghim tab"
+  },
+  "tabGroupsUnpinTab": {
+    "message": "Bỏ ghim tab"
+  },
+  "tabGroupsSleepTab": {
+    "message": "Ngủ tab"
+  },
+  "tabGroupsWakeTab": {
+    "message": "Đánh thức tab"
+  },
+  "tabGroupsOpenGroups": {
+    "message": "Nhóm tab đang mở"
+  },
+  "tabGroupsClosedGroups": {
+    "message": "Đã đóng gần đây"
+  },
+  "tabGroupsUngroupedTabs": {
+    "message": "Tab chưa nhóm"
+  },
+  "tabGroupsUngroupGroup": {
+    "message": "Tách nhóm tab"
+  },
+  "tabGroupsMoveNewWindow": {
+    "message": "Chuyển nhóm sang cửa sổ mới"
+  },
+  "tabGroupsWindow": {
+    "message": "Cửa sổ $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentWindow": {
+    "message": "Cửa sổ hiện tại"
+  },
+  "tabGroupsReopenGroup": {
+    "message": "Mở lại nhóm tab"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "Xóa nhóm tab đã đóng"
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "Thu gọn cửa sổ"
+  },
+  "tabGroupsExpandWindow": {
+    "message": "Mở rộng cửa sổ"
+  },
+  "tabGroupsClearClosedGroups": {
+    "message": "Xóa tất cả"
+  },
+  "tabGroupsClosedOpenTab": {
+    "message": "Mở trong tab mới"
+  },
+  "tabGroupsRemoveClosedTab": {
+    "message": "Xóa khỏi nhóm đã lưu"
+  },
+  "tabGroupsClosedTimeLabel": {
+    "message": "Đã đóng:"
+  },
+  "tabGroupsExpandedExpand": {
+    "message": "Mở rộng"
+  },
+  "tabGroupsExpandedCollapse": {
+    "message": "Thu gọn"
+  },
+  "optionTabGroupsClosedLimit": {
+    "message": "Lịch sử tab/nhóm đã đóng cần giữ"
   },
   "deadProxyAdd": {
     "message": "Thêm máy chủ proxy để kiểm tra liên kết hỏng"

@@ -38,6 +38,12 @@
   "announceV408Title": {
     "message": "Novidades na v4.0.8"
   },
+  "announceV410Title": {
+    "message": "Novidades na v4.1.0"
+  },
+  "announceV410Text": {
+    "message": "A v4.1.0 adiciona a vista de grupos de separadores: os separadores e grupos de separadores de cada janela, geridos ao lado dos seus marcadores."
+  },
   "announceV408Text": {
     "message": "v4.0.8 é a versão melhorada com favicons: os ícones reais dos sites são obtidos automaticamente para marcadores que o Chrome ainda não guardou em cache."
   },
@@ -323,8 +329,8 @@
   "whatsNewChangelog": {
     "message": "Registo de alterações"
   },
-  "whatsNewFavicon": {
-    "message": "v$1$ é a versão com favicons melhorados: os ícones de sites que o Chrome não tinha em cache agora são obtidos automaticamente.",
+  "whatsNewTabGroups": {
+    "message": "v$1$ adiciona a vista de grupos de separadores: os separadores e grupos de separadores de cada janela, ao lado dos seus marcadores.",
     "placeholders": {
       "1": {
         "content": "$1"
@@ -341,6 +347,271 @@
         "content": "$2"
       }
     }
+  },
+  "viewTabGroups": {
+    "message": "Grupos de separadores"
+  },
+  "optionShowTabGroupsView": {
+    "message": "Mostrar o separador de vista de grupos de separadores"
+  },
+  "tabGroupsViewEmpty": {
+    "message": "Sem separadores nesta janela"
+  },
+  "tabGroupsToolbarRefresh": {
+    "message": "Atualizar"
+  },
+  "tabGroupsCollapseAll": {
+    "message": "Recolher tudo"
+  },
+  "tabGroupsExpandAll": {
+    "message": "Expandir tudo"
+  },
+  "tabGroupsSummary": {
+    "message": "$tabs$ separadores · $groups$ grupos",
+    "placeholders": {
+      "tabs": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsGroupCount": {
+    "message": "$count$ separadores",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentTab": {
+    "message": "Separador atual"
+  },
+  "tabGroupsAddBookmark": {
+    "message": "Adicionar este separador aos marcadores"
+  },
+  "tabGroupsSaveFolder": {
+    "message": "Guardar grupo de separadores como pasta de marcadores"
+  },
+  "tabGroupsGroupSavedToFolder": {
+    "message": "Guardados $count$ separadores em $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsBookmarksAdded": {
+    "message": "Adicionados $count$ marcador(es) a $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsSelectNewGroup": {
+    "message": "Novo grupo de separadores"
+  },
+  "tabGroupsSelectOpenInto": {
+    "message": "Abrir no grupo de separadores existente…"
+  },
+  "tabGroupsSelectSaveFolder": {
+    "message": "Guardar como pasta de marcadores"
+  },
+  "tabGroupsSelectClose": {
+    "message": "Fechar"
+  },
+  "tabGroupsSelectSleep": {
+    "message": "Adormecer"
+  },
+  "tabGroupsCopyMoveDialog": {
+    "message": "Os separadores selecionados já pertencem a um grupo de separadores. Pretende copiá-los (abrir num novo local) ou movê-los (remover do grupo atual)?"
+  },
+  "tabGroupsCopyMoveCopy": {
+    "message": "Copiar"
+  },
+  "tabGroupsCopyMoveMove": {
+    "message": "Mover"
+  },
+  "tabGroupsConfirmClose": {
+    "message": "Fechar $count$ separadores?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsConfirmSleep": {
+    "message": "Adormecer $count$ separadores?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "bookmarkFolderPickDialogTitle": {
+    "message": "Adicionar à pasta de marcadores"
+  },
+  "bookmarkFolderNoFolders": {
+    "message": "Sem pastas de marcadores"
+  },
+  "tabGroupsSelectAddBookmarks": {
+    "message": "Adicionar à pasta de marcadores…"
+  },
+  "paletteCmdGoTabGroups": {
+    "message": "Ir para a vista de grupos de separadores"
+  },
+  "tabGroupsActivateGroup": {
+    "message": "Ir para o grupo de separadores"
+  },
+  "tabGroupsRenameGroup": {
+    "message": "Renomear grupo de separadores"
+  },
+  "tabGroupsRenameDialog": {
+    "message": "Renomear grupo de separadores"
+  },
+  "tabGroupsCloseGroup": {
+    "message": "Fechar grupo de separadores"
+  },
+  "tabGroupsSleepGroup": {
+    "message": "Adormecer grupo de separadores"
+  },
+  "tabGroupsWakeGroup": {
+    "message": "Ativar grupo de separadores"
+  },
+  "tabGroupsActivateTab": {
+    "message": "Ir para o separador"
+  },
+  "tabGroupsCollapseGroup": {
+    "message": "Recolher grupo"
+  },
+  "tabGroupsExpandGroup": {
+    "message": "Expandir grupo"
+  },
+  "tabGroupsMenuAddBookmark": {
+    "message": "Adicionar aos marcadores"
+  },
+  "tabGroupsMenuSaveFolder": {
+    "message": "Guardar como pasta de marcadores"
+  },
+  "tabGroupsSyncCollapse": {
+    "message": "Sincronizar recolhimento com o navegador"
+  },
+  "tabGroupsSyncCollapseHint": {
+    "message": "Quando marcado, recolher ou expandir um grupo nesta vista também atualiza o grupo de separadores do navegador. Desativado por predefinição para que a dobragem da vista permaneça local."
+  },
+  "tabGroupsColorStyle": {
+    "message": "Estilo de cor do grupo de separadores"
+  },
+  "tabGroupsColorStyleHint": {
+    "message": "Desativado mostra apenas o ponto de cor. A faixa de cor na borda desenha uma faixa colorida na borda esquerda do grupo. A linha de conector colorida desenha uma linha colorida sob o ponto do grupo com uma marca por linha, unindo todo o grupo numa árvore."
+  },
+  "tabGroupsColorStyleOff": {
+    "message": "Desativado (apenas ponto de cor)"
+  },
+  "tabGroupsColorStyleEdge": {
+    "message": "Faixa de cor na borda"
+  },
+  "tabGroupsColorStyleLine": {
+    "message": "Linha de conector colorida"
+  },
+  "tabGroupsBookmarked": {
+    "message": "Marcado"
+  },
+  "tabGroupsRemoveBookmark": {
+    "message": "Remover marcador"
+  },
+  "tabGroupsBookmarkRemoved": {
+    "message": "$count$ marcador(es) removido(s)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsPinned": {
+    "message": "Separador afixado"
+  },
+  "tabGroupsDiscarded": {
+    "message": "Separador em repouso"
+  },
+  "tabGroupsPinTab": {
+    "message": "Afixar separador"
+  },
+  "tabGroupsUnpinTab": {
+    "message": "Desafixar separador"
+  },
+  "tabGroupsSleepTab": {
+    "message": "Adormecer separador"
+  },
+  "tabGroupsWakeTab": {
+    "message": "Ativar separador"
+  },
+  "tabGroupsOpenGroups": {
+    "message": "Grupos de separadores abertos"
+  },
+  "tabGroupsClosedGroups": {
+    "message": "Fechados recentemente"
+  },
+  "tabGroupsUngroupedTabs": {
+    "message": "Separadores não agrupados"
+  },
+  "tabGroupsUngroupGroup": {
+    "message": "Desagrupar separadores"
+  },
+  "tabGroupsMoveNewWindow": {
+    "message": "Mover grupo para nova janela"
+  },
+  "tabGroupsWindow": {
+    "message": "Janela $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentWindow": {
+    "message": "Janela atual"
+  },
+  "tabGroupsReopenGroup": {
+    "message": "Reabrir grupo de separadores"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "Eliminar grupo de separadores fechado"
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "Recolher janela"
+  },
+  "tabGroupsExpandWindow": {
+    "message": "Expandir janela"
+  },
+  "tabGroupsClearClosedGroups": {
+    "message": "Limpar tudo"
+  },
+  "tabGroupsClosedOpenTab": {
+    "message": "Abrir em novo separador"
+  },
+  "tabGroupsRemoveClosedTab": {
+    "message": "Remover do grupo guardado"
+  },
+  "tabGroupsClosedTimeLabel": {
+    "message": "Fechado:"
+  },
+  "tabGroupsExpandedExpand": {
+    "message": "Expandir"
+  },
+  "tabGroupsExpandedCollapse": {
+    "message": "Recolher"
+  },
+  "optionTabGroupsClosedLimit": {
+    "message": "Histórico de separadores/grupos fechados a manter"
   },
   "deadProxyAdd": {
     "message": "Adicionar um servidor proxy para verificações de links mortos"

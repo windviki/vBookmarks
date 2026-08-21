@@ -197,37 +197,37 @@ describe('createDonation wiring', () => {
         expect(openNewTab).toHaveBeenCalledWith(guideV4UrlFor('en'), true, true);
     });
 
-    describe('whats-new (4.0.8 local banner)', () => {
-        it('a 4.x → 4.0.8 crossing shows the banner with the version summary + changelog link', () => {
-            boot({ currentVersion: '4.0.6' }, { version: '4.0.8', lang: 'zh-CN' });
+    describe('whats-new (4.1.0 local banner)', () => {
+        it('a 4.0.x → 4.1.0 crossing shows the banner with the version summary + changelog link', () => {
+            boot({ currentVersion: '4.0.8' }, { version: '4.1.0', lang: 'zh-CN' });
             expect(donation.whatsNewShown).toBe(true);
             expect(els['whats-new'].hidden).toBe(false);
-            expect(els['whats-new-text'].textContent).toBe('whatsNewFavicon[4.0.8]');
+            expect(els['whats-new-text'].textContent).toBe('whatsNewTabGroups[4.1.0]');
             expect(els['whats-new-changelog'].textContent).toBe('whatsNewChangelog');
             expect(els['whats-new-changelog'].href).toBe(CHANGELOG_URL);
         });
 
-        it('a 3.x → 4.0.8 upgrade keeps whats-new hidden (the v4 notice owns it)', () => {
-            boot({ currentVersion: '3.3.0' }, { version: '4.0.8' });
+        it('a 3.x → 4.1.0 upgrade keeps whats-new hidden (the v4 notice owns it)', () => {
+            boot({ currentVersion: '3.3.0' }, { version: '4.1.0' });
             expect(donation.whatsNewShown).toBe(false);
             expect(els['whats-new'].hidden).toBe(true);
             expect(els['v4-notice'].hidden).toBe(false); // the card carries the story
         });
 
         it('the same version stays hidden', () => {
-            boot({ currentVersion: '4.0.8' }, { version: '4.0.8' });
+            boot({ currentVersion: '4.1.0' }, { version: '4.1.0' });
             expect(donation.whatsNewShown).toBe(false);
             expect(els['whats-new'].hidden).toBe(true);
         });
 
         it('a fresh install (no recorded version) stays hidden', () => {
-            boot({}, { version: '4.0.8' });
+            boot({}, { version: '4.1.0' });
             expect(donation.whatsNewShown).toBe(false);
             expect(els['whats-new'].hidden).toBe(true);
         });
 
         it('the changelog link routes through openNewTab (popup semantics)', () => {
-            boot({ currentVersion: '4.0.6' }, { version: '4.0.8', lang: 'en' });
+            boot({ currentVersion: '4.0.8' }, { version: '4.1.0', lang: 'en' });
             const changelogEv = { preventDefault: vi.fn() };
             els['whats-new-changelog'].fire('click', changelogEv);
             expect(changelogEv.preventDefault).toHaveBeenCalled();
@@ -255,7 +255,7 @@ describe('banner markup contract (audit T8)', () => {
     });
 
     it('the whats-new changelog link points at the docs/README.md changelog anchor (audit B3/O13)', () => {
-        expect(CHANGELOG_URL).toBe('https://github.com/windviki/vBookmarks/blob/master/docs/README.md#v408');
+        expect(CHANGELOG_URL).toBe('https://github.com/windviki/vBookmarks/blob/master/docs/README.md#v410');
     });
 
     it('the rate button points at the Chrome Web Store listing', () => {

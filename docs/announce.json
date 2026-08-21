@@ -1,8 +1,23 @@
 {
   "version": 1,
   "messages": [{
+    "id": "v410-whats-new",
+    "version": ">=4.1.0",
+    "channel": "all",
+    "once": true,
+    "display": "banner",
+    "kind": "tip",
+    "titleKey": "announceV410Title",
+    "textKey": "announceV410Text",
+    "textFallback": {
+      "en": "v4.1.0 adds the Tab groups view: every window's tabs and tab groups, managed next to your bookmarks."
+    },
+    "link": [
+      { "labelKey": "whatsNewChangelog", "url": "https://github.com/windviki/vBookmarks/blob/master/docs/README.md#v410" }
+    ]
+  }, {
     "id": "v408-whats-new",
-    "version": ">=4.0.8",
+    "version": ">=4.0.8 <4.1.0",
     "channel": "all",
     "once": true,
     "display": "banner",

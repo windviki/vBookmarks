@@ -335,6 +335,132 @@ export function initDialogs(ctx = {}) {
         GroupPickDialog.close();
     });
 
+    // Copy-or-move choice dialog for the tab-groups view: before grouping
+    // tabs that already belong to a group, ask whether to copy (open new
+    // tabs) or move (remove from the original group). A cancel button keeps
+    // Esc neutral — unlike ConfirmDialog, whose Esc resolves fn2.
+    const CopyMoveDialog = {
+        open: opts => {
+            if (!opts)
+                return;
+            const textEl = $('copy-move-dialog-text');
+            const moveEl = $('copy-move-move-button');
+            const copyEl = $('copy-move-copy-button');
+            const cancelEl = $('copy-move-cancel-button');
+            if (!textEl || !moveEl || !copyEl || !cancelEl)
+                return;
+            rememberInvoker();
+            CopyMoveDialog.onMove = opts.onMove || (() => {});
+            CopyMoveDialog.onCopy = opts.onCopy || (() => {});
+            textEl.innerHTML = widont(opts.dialog || _m('tabGroupsCopyMoveDialog'));
+            moveEl.innerHTML = `<strong>${htmlspecialchars(_m('tabGroupsCopyMoveMove'))}</strong>`;
+            copyEl.innerHTML = htmlspecialchars(_m('tabGroupsCopyMoveCopy'));
+            cancelEl.innerHTML = htmlspecialchars(_m('nope'));
+            body.classList.add('needCopyMove');
+            moveEl.focus();
+        },
+        close: action => {
+            const wasOpen = body.classList.contains('needCopyMove');
+            body.classList.remove('needCopyMove');
+            if (action === 'move')
+                CopyMoveDialog.onMove();
+            else if (action === 'copy')
+                CopyMoveDialog.onCopy();
+            restoreFocus(wasOpen);
+        },
+        onMove: () => {
+        },
+        onCopy: () => {
+        }
+    };
+    const copyMoveMoveBtn = $('copy-move-move-button');
+    if (copyMoveMoveBtn)
+        copyMoveMoveBtn.addEventListener('click', () => {
+            CopyMoveDialog.close('move');
+        });
+    const copyMoveCopyBtn = $('copy-move-copy-button');
+    if (copyMoveCopyBtn)
+        copyMoveCopyBtn.addEventListener('click', () => {
+            CopyMoveDialog.close('copy');
+        });
+    const copyMoveCancelBtn = $('copy-move-cancel-button');
+    if (copyMoveCancelBtn)
+        copyMoveCancelBtn.addEventListener('click', () => {
+            CopyMoveDialog.close(false);
+        });
+
+    // Bookmark-folder picker for the tab-groups view: lets the user choose
+    // a bookmark folder as the destination for selected tabs. Rendered as a
+    // flat, indented list of folder buttons (the bookmark tree order).
+    const BookmarkFolderPickDialog = {
+        open: opts => {
+            if (!opts)
+                return;
+            rememberInvoker();
+            BookmarkFolderPickDialog.onPick = opts.onPick || (() => {});
+            const textEl = $('bookmark-folder-pick-text');
+            const list = $('bookmark-folder-pick-list');
+            const cancelEl = $('bookmark-folder-pick-cancel-button');
+            if (!textEl || !list || !cancelEl)
+                return;
+            textEl.innerHTML = widont(opts.dialog || _m('bookmarkFolderPickDialogTitle'));
+            list.innerHTML = '';
+            const render = tree => {
+                const folders = [];
+                const walk = (nodes, depth) => {
+                    for (let i = 0, l = (nodes || []).length; i < l; i++) {
+                        const node = nodes[i];
+                        if (!node.children)
+                            continue;
+                        folders.push({ id: node.id, title: node.title || _m('noTitle'), depth });
+                        walk(node.children, depth + 1);
+                    }
+                };
+                const roots = (tree && tree[0] && tree[0].children) ? tree[0].children : (tree || []);
+                walk(roots, 0);
+                if (!folders.length) {
+                    const li = document.createElement('li');
+                    li.className = 'bookmark-folder-pick-empty';
+                    li.textContent = _m('bookmarkFolderNoFolders');
+                    list.appendChild(li);
+                    return;
+                }
+                for (const f of folders) {
+                    const li = document.createElement('li');
+                    const btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.className = 'bookmark-folder-pick-row';
+                    btn.style.paddingInlineStart = `${8 + f.depth * 16}px`;
+                    btn.title = f.title;
+                    btn.textContent = f.title;
+                    btn.addEventListener('click', () => {
+                        BookmarkFolderPickDialog.onPick(f.id);
+                        BookmarkFolderPickDialog.close(false);
+                    });
+                    li.appendChild(btn);
+                    list.appendChild(li);
+                }
+            };
+            chrome.bookmarks.getTree(render);
+            body.classList.add('needFolderPick');
+            cancelEl.focus();
+        },
+        close: wasOpen => {
+            const open = body.classList.contains('needFolderPick');
+            body.classList.remove('needFolderPick');
+            if (wasOpen !== false)
+                return;
+            restoreFocus(open);
+        },
+        onPick: () => {
+        }
+    };
+    const folderPickCancelBtn = $('bookmark-folder-pick-cancel-button');
+    if (folderPickCancelBtn)
+        folderPickCancelBtn.addEventListener('click', () => {
+            BookmarkFolderPickDialog.close(false);
+        });
+
     // Events for dialogs
     $('confirm-dialog-button-1').addEventListener('click', () => {
         ConfirmDialog.fn1();
@@ -446,7 +572,8 @@ export function initDialogs(ctx = {}) {
     const anyOpen = () => body.classList.contains('needConfirm') || body.classList.contains('needEdit') ||
         body.classList.contains('needAlert') || body.classList.contains('needInputName') ||
         body.classList.contains('needSort') || body.classList.contains('needTabGroup') ||
-        body.classList.contains('needGroupPick') || body.classList.contains('needVersion');
+        body.classList.contains('needGroupPick') || body.classList.contains('needVersion') ||
+        body.classList.contains('needCopyMove') || body.classList.contains('needFolderPick');
 
     // The open dialog's own element — keyboard.js's modal Tab trap cycles
     // within it. Null when nothing is up; precedence mirrors closeDialogs.
@@ -465,6 +592,10 @@ export function initDialogs(ctx = {}) {
             return $('tab-group-pick-dialog');
         if (body.classList.contains('needVersion'))
             return $('version-dialog');
+        if (body.classList.contains('needCopyMove'))
+            return $('copy-move-dialog');
+        if (body.classList.contains('needFolderPick'))
+            return $('bookmark-folder-pick-dialog');
         if (body.classList.contains('needAlert'))
             return $('alert-dialog');
         return null;
@@ -536,10 +667,14 @@ export function initDialogs(ctx = {}) {
             GroupPickDialog.close();
         if (body.classList.contains('needVersion'))
             VersionDialog.close();
+        if (body.classList.contains('needCopyMove'))
+            CopyMoveDialog.close(false);
+        if (body.classList.contains('needFolderPick'))
+            BookmarkFolderPickDialog.close(false);
         if (body.classList.contains('needAlert'))
             AlertDialog.close();
     };
     $('cover').addEventListener('click', closeDialogs);
 
-    return { AlertDialog, ConfirmDialog, EditDialog, NewFolderDialog, SortDialog, GroupDialog, GroupPickDialog, VersionDialog, anyOpen, activeEl, closeDialogs };
+    return { AlertDialog, ConfirmDialog, EditDialog, NewFolderDialog, SortDialog, GroupDialog, GroupPickDialog, VersionDialog, CopyMoveDialog, BookmarkFolderPickDialog, anyOpen, activeEl, closeDialogs };
 }

@@ -38,6 +38,12 @@
   "announceV408Title": {
     "message": "Mis on uut versioonis v4.0.8"
   },
+  "announceV410Title": {
+    "message": "Mis on uut versioonis v4.1.0"
+  },
+  "announceV410Text": {
+    "message": "v4.1.0 lisab vahekaartide rühmade vaate: iga akna vahekaardid ja rühmad, hallatud teie järjehoidjate kõrval."
+  },
   "announceV408Text": {
     "message": "v4.0.8 on favicon-täiustusega väljalase: päris saidi ikoonid laaditakse automaatselt järjehoidjatele, mida Chrome pole veel vahemällu salvestanud."
   },
@@ -324,8 +330,8 @@
   "whatsNewChangelog": {
     "message": "Muudatuslogi"
   },
-  "whatsNewFavicon": {
-    "message": "v$1$ on favicon-täiustatud väljaanne: saidi ikoonid, mida Chrome pole vahemällu salvestanud, laaditakse nüüd automaatselt.",
+  "whatsNewTabGroups": {
+    "message": "v$1$ lisab vahekaartide rühmade vaate: iga akna vahekaardid ja vahekaartide rühmad teie järjehoidjate kõrval.",
     "placeholders": {
       "1": {
         "content": "$1"
@@ -342,6 +348,271 @@
         "content": "$2"
       }
     }
+  },
+  "viewTabGroups": {
+    "message": "Vahekaartide rühmad"
+  },
+  "optionShowTabGroupsView": {
+    "message": "Kuva vahekaartide rühmade vaade"
+  },
+  "tabGroupsViewEmpty": {
+    "message": "Selles aknas pole vahekaarte"
+  },
+  "tabGroupsToolbarRefresh": {
+    "message": "Värskenda"
+  },
+  "tabGroupsCollapseAll": {
+    "message": "Ahenda kõik"
+  },
+  "tabGroupsExpandAll": {
+    "message": "Laienda kõik"
+  },
+  "tabGroupsSummary": {
+    "message": "$tabs$ vahekaarti · $groups$ rühma",
+    "placeholders": {
+      "tabs": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsGroupCount": {
+    "message": "$count$ vahekaarti",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentTab": {
+    "message": "Praegune vahekaart"
+  },
+  "tabGroupsAddBookmark": {
+    "message": "Lisa see vahekaart järjehoidjatesse"
+  },
+  "tabGroupsSaveFolder": {
+    "message": "Salvesta vahekaartide rühm järjehoidjate kaustana"
+  },
+  "tabGroupsGroupSavedToFolder": {
+    "message": "Salvestatud $count$ vahekaarti kausta $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsBookmarksAdded": {
+    "message": "Lisatud $count$ järjehoidja(t) kausta $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsSelectNewGroup": {
+    "message": "Uus vahekaartide rühm"
+  },
+  "tabGroupsSelectOpenInto": {
+    "message": "Ava olemasolevas vahekaartide rühmas…"
+  },
+  "tabGroupsSelectSaveFolder": {
+    "message": "Salvesta järjehoidjate kaustana"
+  },
+  "tabGroupsSelectClose": {
+    "message": "Sulge"
+  },
+  "tabGroupsSelectSleep": {
+    "message": "Uinuta"
+  },
+  "tabGroupsCopyMoveDialog": {
+    "message": "Valitud vahekaardid kuuluvad juba vahekaartide rühma. Kas kopeerida need (avada uues kohas) või teisaldada (eemaldada praegusest rühmast)?"
+  },
+  "tabGroupsCopyMoveCopy": {
+    "message": "Kopeeri"
+  },
+  "tabGroupsCopyMoveMove": {
+    "message": "Teisalda"
+  },
+  "tabGroupsConfirmClose": {
+    "message": "Sulgeda $count$ vahekaarti?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsConfirmSleep": {
+    "message": "Uinutada $count$ vahekaarti?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "bookmarkFolderPickDialogTitle": {
+    "message": "Lisa järjehoidjate kausta"
+  },
+  "bookmarkFolderNoFolders": {
+    "message": "Järjehoidjate kaustu pole"
+  },
+  "tabGroupsSelectAddBookmarks": {
+    "message": "Lisa järjehoidjate kausta…"
+  },
+  "paletteCmdGoTabGroups": {
+    "message": "Mine vahekaartide rühmade vaatesse"
+  },
+  "tabGroupsActivateGroup": {
+    "message": "Mine gruppi"
+  },
+  "tabGroupsRenameGroup": {
+    "message": "Nimeta rühm ümber"
+  },
+  "tabGroupsRenameDialog": {
+    "message": "Nimeta vahekaartide rühm ümber"
+  },
+  "tabGroupsCloseGroup": {
+    "message": "Sulge rühm"
+  },
+  "tabGroupsSleepGroup": {
+    "message": "Uinuta rühm"
+  },
+  "tabGroupsWakeGroup": {
+    "message": "Ärata grupp"
+  },
+  "tabGroupsActivateTab": {
+    "message": "Mine vahelehele"
+  },
+  "tabGroupsCollapseGroup": {
+    "message": "Ahenda rühm"
+  },
+  "tabGroupsExpandGroup": {
+    "message": "Laienda rühm"
+  },
+  "tabGroupsMenuAddBookmark": {
+    "message": "Lisa järjehoidjatesse"
+  },
+  "tabGroupsMenuSaveFolder": {
+    "message": "Salvesta kaustana"
+  },
+  "tabGroupsSyncCollapse": {
+    "message": "Sünkrooni ahendamine brauseriga"
+  },
+  "tabGroupsSyncCollapseHint": {
+    "message": "Kui märgitud, siis selle vaate grupi ahendamine või laiendamine uuendab ka brauseri vahekaartide gruppi. Vaikimisi välja lülitatud, et vaate voltimine jääks kohalikuks."
+  },
+  "tabGroupsColorStyle": {
+    "message": "Vaheleherühma värvistiil"
+  },
+  "tabGroupsColorStyleHint": {
+    "message": "Väljas näitab ainult värvipunkti. Servavärviriba tõmbab värvilise riba rühma vasakusse serva. Värviühendusjoon tõmbab värvilise joone rühma punkti alla, igale reale märk, sidudes kogu rühma üheks puuks."
+  },
+  "tabGroupsColorStyleOff": {
+    "message": "Väljas (ainult värvipunkt)"
+  },
+  "tabGroupsColorStyleEdge": {
+    "message": "Servavärviriba"
+  },
+  "tabGroupsColorStyleLine": {
+    "message": "Värviühendusjoon"
+  },
+  "tabGroupsBookmarked": {
+    "message": "Järjehoidjad"
+  },
+  "tabGroupsRemoveBookmark": {
+    "message": "Eemalda järjehoidja"
+  },
+  "tabGroupsBookmarkRemoved": {
+    "message": "Eemaldatud $count$ järjehoidja(t)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsPinned": {
+    "message": "Kinnitatud vaheleht"
+  },
+  "tabGroupsDiscarded": {
+    "message": "Uinuv vaheleht"
+  },
+  "tabGroupsPinTab": {
+    "message": "Kinnita vaheleht"
+  },
+  "tabGroupsUnpinTab": {
+    "message": "Vabasta vaheleht"
+  },
+  "tabGroupsSleepTab": {
+    "message": "Uinuta vaheleht"
+  },
+  "tabGroupsWakeTab": {
+    "message": "Ärata vaheleht"
+  },
+  "tabGroupsOpenGroups": {
+    "message": "Avatud vahekaardirühmad"
+  },
+  "tabGroupsClosedGroups": {
+    "message": "Hiljuti suletud"
+  },
+  "tabGroupsUngroupedTabs": {
+    "message": "Rühmitamata vahekaardid"
+  },
+  "tabGroupsUngroupGroup": {
+    "message": "Eralda vahekaardid"
+  },
+  "tabGroupsMoveNewWindow": {
+    "message": "Teisalda rühm uude aknasse"
+  },
+  "tabGroupsWindow": {
+    "message": "Aken $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentWindow": {
+    "message": "Praegune aken"
+  },
+  "tabGroupsReopenGroup": {
+    "message": "Ava vahekaartide rühm uuesti"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "Kustuta suletud vahekaartide rühm"
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "Ahenda aken"
+  },
+  "tabGroupsExpandWindow": {
+    "message": "Laienda aken"
+  },
+  "tabGroupsClearClosedGroups": {
+    "message": "Kustuta kõik"
+  },
+  "tabGroupsClosedOpenTab": {
+    "message": "Ava uuel vahelehel"
+  },
+  "tabGroupsRemoveClosedTab": {
+    "message": "Eemalda salvestatud grupist"
+  },
+  "tabGroupsClosedTimeLabel": {
+    "message": "Suletud:"
+  },
+  "tabGroupsExpandedExpand": {
+    "message": "Laienda"
+  },
+  "tabGroupsExpandedCollapse": {
+    "message": "Ahenda"
+  },
+  "optionTabGroupsClosedLimit": {
+    "message": "Säilitatav suletud vahekaartide/rühmade ajalugu"
   },
   "deadProxyAdd": {
     "message": "Lisa puhverserver surnud linkide kontrollimiseks"

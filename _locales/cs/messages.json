@@ -38,6 +38,12 @@
   "announceV408Title": {
     "message": "Co je nového ve v4.0.8"
   },
+  "announceV410Title": {
+    "message": "Co je nového ve v4.1.0"
+  },
+  "announceV410Text": {
+    "message": "v4.1.0 přidává zobrazení skupin karet: karty a skupiny karet každého okna, spravované vedle vašich záložek."
+  },
   "announceV408Text": {
     "message": "v4.0.8 je vydání s vylepšenými faviconami: skutečné ikony webů se automaticky načítají pro záložky, které Chrome ještě nemá v mezipaměti."
   },
@@ -324,8 +330,8 @@
   "whatsNewChangelog": {
     "message": "Seznam změn"
   },
-  "whatsNewFavicon": {
-    "message": "v$1$ je verze s vylepšenými faviconami: ikony webů, které Chrome ještě nemá v mezipaměti, se nyní načítají automaticky.",
+  "whatsNewTabGroups": {
+    "message": "v$1$ přidává zobrazení skupin karet: karty a skupiny karet každého okna vedle vašich záložek.",
     "placeholders": {
       "1": {
         "content": "$1"
@@ -342,6 +348,271 @@
         "content": "$2"
       }
     }
+  },
+  "viewTabGroups": {
+    "message": "Skupiny karet"
+  },
+  "optionShowTabGroupsView": {
+    "message": "Zobrazit kartu zobrazení skupin karet"
+  },
+  "tabGroupsViewEmpty": {
+    "message": "V tomto okně nejsou žádné karty"
+  },
+  "tabGroupsToolbarRefresh": {
+    "message": "Obnovit"
+  },
+  "tabGroupsCollapseAll": {
+    "message": "Sbalit vše"
+  },
+  "tabGroupsExpandAll": {
+    "message": "Rozbalit vše"
+  },
+  "tabGroupsSummary": {
+    "message": "$tabs$ karet · $groups$ skupin",
+    "placeholders": {
+      "tabs": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsGroupCount": {
+    "message": "$count$ karet",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentTab": {
+    "message": "Aktivní karta"
+  },
+  "tabGroupsAddBookmark": {
+    "message": "Přidat tuto kartu do záložek"
+  },
+  "tabGroupsSaveFolder": {
+    "message": "Uložit skupinu karet jako složku záložek"
+  },
+  "tabGroupsGroupSavedToFolder": {
+    "message": "Uloženo $count$ karet do $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsBookmarksAdded": {
+    "message": "Přidáno $count$ záložek do $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsSelectNewGroup": {
+    "message": "Nová skupina karet"
+  },
+  "tabGroupsSelectOpenInto": {
+    "message": "Otevřít v existující skupině karet…"
+  },
+  "tabGroupsSelectSaveFolder": {
+    "message": "Uložit jako složku záložek"
+  },
+  "tabGroupsSelectClose": {
+    "message": "Zavřít"
+  },
+  "tabGroupsSelectSleep": {
+    "message": "Uspat"
+  },
+  "tabGroupsCopyMoveDialog": {
+    "message": "Vybrané karty již patří do skupiny karet. Chcete je zkopírovat (otevřít na novém místě) nebo přesunout (odebrat z aktuální skupiny)?"
+  },
+  "tabGroupsCopyMoveCopy": {
+    "message": "Kopírovat"
+  },
+  "tabGroupsCopyMoveMove": {
+    "message": "Přesunout"
+  },
+  "tabGroupsConfirmClose": {
+    "message": "Zavřít $count$ karet?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsConfirmSleep": {
+    "message": "Uspat $count$ karet?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "bookmarkFolderPickDialogTitle": {
+    "message": "Přidat do složky záložek"
+  },
+  "bookmarkFolderNoFolders": {
+    "message": "Žádné složky záložek"
+  },
+  "tabGroupsSelectAddBookmarks": {
+    "message": "Přidat do složky záložek…"
+  },
+  "paletteCmdGoTabGroups": {
+    "message": "Přejít na zobrazení skupin karet"
+  },
+  "tabGroupsActivateGroup": {
+    "message": "Přejít na skupinu karet"
+  },
+  "tabGroupsRenameGroup": {
+    "message": "Přejmenovat skupinu"
+  },
+  "tabGroupsRenameDialog": {
+    "message": "Přejmenovat skupinu karet"
+  },
+  "tabGroupsCloseGroup": {
+    "message": "Zavřít skupinu"
+  },
+  "tabGroupsSleepGroup": {
+    "message": "Uspat skupinu"
+  },
+  "tabGroupsWakeGroup": {
+    "message": "Probudit skupinu karet"
+  },
+  "tabGroupsActivateTab": {
+    "message": "Přejít na kartu"
+  },
+  "tabGroupsCollapseGroup": {
+    "message": "Sbalit skupinu"
+  },
+  "tabGroupsExpandGroup": {
+    "message": "Rozbalit skupinu"
+  },
+  "tabGroupsMenuAddBookmark": {
+    "message": "Přidat do záložek"
+  },
+  "tabGroupsMenuSaveFolder": {
+    "message": "Uložit jako složku záložek"
+  },
+  "tabGroupsSyncCollapse": {
+    "message": "Synchronizovat sbalení s prohlížečem"
+  },
+  "tabGroupsSyncCollapseHint": {
+    "message": "Pokud je zaškrtnuto, sbalení nebo rozbalení skupiny v tomto zobrazení také aktualizuje skupinu karet v prohlížeči. Ve výchozím nastavení vypnuto, takže sbalení zůstává lokální."
+  },
+  "tabGroupsColorStyle": {
+    "message": "Styl barvy skupiny karet"
+  },
+  "tabGroupsColorStyleHint": {
+    "message": "Vypnuto zobrazuje pouze barevnou tečku. Barevný pruh na okraji nakreslí barevný pruh podél levého okraje skupiny. Barevná spojovací čára nakreslí barevnou čáru pod tečkou skupiny se značkou pro každý řádek, čímž spojí celou skupinu do jednoho stromu."
+  },
+  "tabGroupsColorStyleOff": {
+    "message": "Vypnuto (pouze barevná tečka)"
+  },
+  "tabGroupsColorStyleEdge": {
+    "message": "Barevný pruh na okraji"
+  },
+  "tabGroupsColorStyleLine": {
+    "message": "Barevná spojovací čára"
+  },
+  "tabGroupsBookmarked": {
+    "message": "Záložky"
+  },
+  "tabGroupsRemoveBookmark": {
+    "message": "Odebrat záložku"
+  },
+  "tabGroupsBookmarkRemoved": {
+    "message": "Odebráno $count$ záložek",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsPinned": {
+    "message": "Připnutá karta"
+  },
+  "tabGroupsDiscarded": {
+    "message": "Spící karta"
+  },
+  "tabGroupsPinTab": {
+    "message": "Připnout kartu"
+  },
+  "tabGroupsUnpinTab": {
+    "message": "Odepnout kartu"
+  },
+  "tabGroupsSleepTab": {
+    "message": "Uspat kartu"
+  },
+  "tabGroupsWakeTab": {
+    "message": "Probudit kartu"
+  },
+  "tabGroupsOpenGroups": {
+    "message": "Otevřené skupiny karet"
+  },
+  "tabGroupsClosedGroups": {
+    "message": "Nedávno zavřené"
+  },
+  "tabGroupsUngroupedTabs": {
+    "message": "Neseskupené karty"
+  },
+  "tabGroupsUngroupGroup": {
+    "message": "Zrušit seskupení"
+  },
+  "tabGroupsMoveNewWindow": {
+    "message": "Přesunout do nového okna"
+  },
+  "tabGroupsWindow": {
+    "message": "Okno $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentWindow": {
+    "message": "Aktuální okno"
+  },
+  "tabGroupsReopenGroup": {
+    "message": "Znovu otevřít skupinu karet"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "Smazat zavřenou skupinu karet"
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "Sbalit okno"
+  },
+  "tabGroupsExpandWindow": {
+    "message": "Rozbalit okno"
+  },
+  "tabGroupsClearClosedGroups": {
+    "message": "Vymazat vše"
+  },
+  "tabGroupsClosedOpenTab": {
+    "message": "Otevřít na nové kartě"
+  },
+  "tabGroupsRemoveClosedTab": {
+    "message": "Odebrat z uložené skupiny"
+  },
+  "tabGroupsClosedTimeLabel": {
+    "message": "Zavřeno:"
+  },
+  "tabGroupsExpandedExpand": {
+    "message": "Rozbalit"
+  },
+  "tabGroupsExpandedCollapse": {
+    "message": "Sbalit"
+  },
+  "optionTabGroupsClosedLimit": {
+    "message": "Počet zavřených karet/skupin k uchování"
   },
   "deadProxyAdd": {
     "message": "Přidat proxy server pro kontroly nefunkčních odkazů"

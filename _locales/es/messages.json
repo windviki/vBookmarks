@@ -38,6 +38,12 @@
   "announceV408Title": {
     "message": "Novedades de v4.0.8"
   },
+  "announceV410Title": {
+    "message": "Novedades en v4.1.0"
+  },
+  "announceV410Text": {
+    "message": "v4.1.0 añade la vista de grupos de pestañas: las pestañas y grupos de pestañas de cada ventana, gestionados junto a tus marcadores."
+  },
   "announceV408Text": {
     "message": "v4.0.8 es la versión mejorada con favicons: los iconos reales de los sitios se obtienen automáticamente para los marcadores que Chrome aún no ha almacenado en caché."
   },
@@ -324,8 +330,8 @@
   "whatsNewChangelog": {
     "message": "Registro de cambios"
   },
-  "whatsNewFavicon": {
-    "message": "v$1$ es la versión mejorada con favicons: los iconos de sitios que Chrome no ha almacenado en caché ahora se obtienen automáticamente.",
+  "whatsNewTabGroups": {
+    "message": "v$1$ añade la vista de grupos de pestañas: las pestañas y grupos de pestañas de cada ventana, junto a tus marcadores.",
     "placeholders": {
       "1": {
         "content": "$1"
@@ -342,6 +348,271 @@
         "content": "$2"
       }
     }
+  },
+  "viewTabGroups": {
+    "message": "Grupos de pestañas"
+  },
+  "optionShowTabGroupsView": {
+    "message": "Mostrar la pestaña de vista de grupos de pestañas"
+  },
+  "tabGroupsViewEmpty": {
+    "message": "No hay pestañas en esta ventana"
+  },
+  "tabGroupsToolbarRefresh": {
+    "message": "Actualizar"
+  },
+  "tabGroupsCollapseAll": {
+    "message": "Contraer todo"
+  },
+  "tabGroupsExpandAll": {
+    "message": "Expandir todo"
+  },
+  "tabGroupsSummary": {
+    "message": "$tabs$ pestañas · $groups$ grupos",
+    "placeholders": {
+      "tabs": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsGroupCount": {
+    "message": "$count$ pestañas",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentTab": {
+    "message": "Pestaña actual"
+  },
+  "tabGroupsAddBookmark": {
+    "message": "Marcar esta pestaña"
+  },
+  "tabGroupsSaveFolder": {
+    "message": "Guardar grupo de pestañas como carpeta de marcadores"
+  },
+  "tabGroupsGroupSavedToFolder": {
+    "message": "Se guardaron $count$ pestañas en $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsBookmarksAdded": {
+    "message": "Se añadieron $count$ marcador(es) a $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsSelectNewGroup": {
+    "message": "Nuevo grupo de pestañas"
+  },
+  "tabGroupsSelectOpenInto": {
+    "message": "Abrir en grupo de pestañas existente…"
+  },
+  "tabGroupsSelectSaveFolder": {
+    "message": "Guardar como carpeta de marcadores"
+  },
+  "tabGroupsSelectClose": {
+    "message": "Cerrar"
+  },
+  "tabGroupsSelectSleep": {
+    "message": "Suspender"
+  },
+  "tabGroupsCopyMoveDialog": {
+    "message": "Las pestañas seleccionadas ya pertenecen a un grupo de pestañas. ¿Copiarlas (abrir en un lugar nuevo) o moverlas (quitarlas de su grupo actual)?"
+  },
+  "tabGroupsCopyMoveCopy": {
+    "message": "Copiar"
+  },
+  "tabGroupsCopyMoveMove": {
+    "message": "Mover"
+  },
+  "tabGroupsConfirmClose": {
+    "message": "¿Cerrar $count$ pestañas?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsConfirmSleep": {
+    "message": "¿Suspender $count$ pestañas?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "bookmarkFolderPickDialogTitle": {
+    "message": "Añadir a carpeta de marcadores"
+  },
+  "bookmarkFolderNoFolders": {
+    "message": "No hay carpetas de marcadores"
+  },
+  "tabGroupsSelectAddBookmarks": {
+    "message": "Añadir a carpeta de marcadores…"
+  },
+  "paletteCmdGoTabGroups": {
+    "message": "Ir a la vista de grupos de pestañas"
+  },
+  "tabGroupsActivateGroup": {
+    "message": "Ir al grupo de pestañas"
+  },
+  "tabGroupsRenameGroup": {
+    "message": "Renombrar grupo"
+  },
+  "tabGroupsRenameDialog": {
+    "message": "Renombrar grupo de pestañas"
+  },
+  "tabGroupsCloseGroup": {
+    "message": "Cerrar grupo"
+  },
+  "tabGroupsSleepGroup": {
+    "message": "Suspender grupo"
+  },
+  "tabGroupsWakeGroup": {
+    "message": "Activar grupo de pestañas"
+  },
+  "tabGroupsActivateTab": {
+    "message": "Ir a la pestaña"
+  },
+  "tabGroupsCollapseGroup": {
+    "message": "Contraer grupo"
+  },
+  "tabGroupsExpandGroup": {
+    "message": "Expandir grupo"
+  },
+  "tabGroupsMenuAddBookmark": {
+    "message": "Marcar pestaña"
+  },
+  "tabGroupsMenuSaveFolder": {
+    "message": "Guardar como carpeta"
+  },
+  "tabGroupsSyncCollapse": {
+    "message": "Sincronizar colapso con el navegador"
+  },
+  "tabGroupsSyncCollapseHint": {
+    "message": "Al marcar esta opción, contraer o expandir un grupo en esta vista también actualiza el grupo de pestañas del navegador. Desactivado por defecto para que el plegado de la vista permanezca local."
+  },
+  "tabGroupsColorStyle": {
+    "message": "Estilo de color del grupo de pestañas"
+  },
+  "tabGroupsColorStyleHint": {
+    "message": "Desactivado muestra solo el punto de color. La banda de color en el borde dibuja una franja de color en el borde izquierdo del grupo. La línea de conexión de color dibuja una línea de color debajo del punto del grupo con una marca por fila, uniendo todo el grupo en un árbol."
+  },
+  "tabGroupsColorStyleOff": {
+    "message": "Desactivado (solo punto de color)"
+  },
+  "tabGroupsColorStyleEdge": {
+    "message": "Banda de color en el borde"
+  },
+  "tabGroupsColorStyleLine": {
+    "message": "Línea de conexión de color"
+  },
+  "tabGroupsBookmarked": {
+    "message": "Marcado"
+  },
+  "tabGroupsRemoveBookmark": {
+    "message": "Eliminar marcador"
+  },
+  "tabGroupsBookmarkRemoved": {
+    "message": "Se eliminaron $count$ marcador(es)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsPinned": {
+    "message": "Pestaña fijada"
+  },
+  "tabGroupsDiscarded": {
+    "message": "Pestaña en reposo"
+  },
+  "tabGroupsPinTab": {
+    "message": "Fijar pestaña"
+  },
+  "tabGroupsUnpinTab": {
+    "message": "Desfijar pestaña"
+  },
+  "tabGroupsSleepTab": {
+    "message": "Suspender pestaña"
+  },
+  "tabGroupsWakeTab": {
+    "message": "Activar pestaña"
+  },
+  "tabGroupsOpenGroups": {
+    "message": "Grupos de pestañas abiertos"
+  },
+  "tabGroupsClosedGroups": {
+    "message": "Cerrados recientemente"
+  },
+  "tabGroupsUngroupedTabs": {
+    "message": "Pestañas sin agrupar"
+  },
+  "tabGroupsUngroupGroup": {
+    "message": "Desagrupar pestañas"
+  },
+  "tabGroupsMoveNewWindow": {
+    "message": "Mover a nueva ventana"
+  },
+  "tabGroupsWindow": {
+    "message": "Ventana $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentWindow": {
+    "message": "Ventana actual"
+  },
+  "tabGroupsReopenGroup": {
+    "message": "Reabrir grupo de pestañas"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "Eliminar grupo de pestañas cerrado"
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "Contraer ventana"
+  },
+  "tabGroupsExpandWindow": {
+    "message": "Expandir ventana"
+  },
+  "tabGroupsClearClosedGroups": {
+    "message": "Borrar todo"
+  },
+  "tabGroupsClosedOpenTab": {
+    "message": "Abrir en nueva pestaña"
+  },
+  "tabGroupsRemoveClosedTab": {
+    "message": "Quitar del grupo guardado"
+  },
+  "tabGroupsClosedTimeLabel": {
+    "message": "Cerrado:"
+  },
+  "tabGroupsExpandedExpand": {
+    "message": "Expandir"
+  },
+  "tabGroupsExpandedCollapse": {
+    "message": "Contraer"
+  },
+  "optionTabGroupsClosedLimit": {
+    "message": "Historial de pestañas/grupos cerrados a conservar"
   },
   "deadProxyAdd": {
     "message": "Añadir un servidor proxy para comprobar enlaces rotos"

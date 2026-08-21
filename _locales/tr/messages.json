@@ -38,6 +38,12 @@
   "announceV408Title": {
     "message": "v4.0.8'deki yenilikler"
   },
+  "announceV410Title": {
+    "message": "v4.1.0'daki yenilikler"
+  },
+  "announceV410Text": {
+    "message": "v4.1.0, Sekme grupları görünümünü ekler: her pencerenin sekmeleri ve sekme grupları, yer imlerinizin yanında yönetilir."
+  },
   "announceV408Text": {
     "message": "v4.0.8, favicon geliştirmeli sürümdür: Chrome'un henüz önbelleğine almadığı yer imleri için gerçek site simgeleri otomatik olarak alınır."
   },
@@ -324,8 +330,8 @@
   "whatsNewChangelog": {
     "message": "Değişiklik günlüğü"
   },
-  "whatsNewFavicon": {
-    "message": "v$1$ favicon geliştirmeli sürümdür: Chrome'un önbelleğe almadığı site simgeleri artık otomatik olarak getirilir.",
+  "whatsNewTabGroups": {
+    "message": "v$1$, sekme grupları görünümünü ekler: her pencerenin sekmeleri ve sekme grupları, yer imlerinizin yanında.",
     "placeholders": {
       "1": {
         "content": "$1"
@@ -342,6 +348,271 @@
         "content": "$2"
       }
     }
+  },
+  "viewTabGroups": {
+    "message": "Sekme grupları"
+  },
+  "optionShowTabGroupsView": {
+    "message": "Sekme grupları görünüm sekmesini göster"
+  },
+  "tabGroupsViewEmpty": {
+    "message": "Bu pencerede sekme yok"
+  },
+  "tabGroupsToolbarRefresh": {
+    "message": "Yenile"
+  },
+  "tabGroupsCollapseAll": {
+    "message": "Tümünü daralt"
+  },
+  "tabGroupsExpandAll": {
+    "message": "Tümünü genişlet"
+  },
+  "tabGroupsSummary": {
+    "message": "$tabs$ sekme · $groups$ grup",
+    "placeholders": {
+      "tabs": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsGroupCount": {
+    "message": "$count$ sekme",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentTab": {
+    "message": "Geçerli sekme"
+  },
+  "tabGroupsAddBookmark": {
+    "message": "Bu sekmeyi yer imlerine ekle"
+  },
+  "tabGroupsSaveFolder": {
+    "message": "Sekme grubunu yer imi klasörü olarak kaydet"
+  },
+  "tabGroupsGroupSavedToFolder": {
+    "message": "$count$ sekme $folder$ konumuna kaydedildi",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsBookmarksAdded": {
+    "message": "$count$ yer imi $folder$ konumuna eklendi",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsSelectNewGroup": {
+    "message": "Yeni sekme grubu"
+  },
+  "tabGroupsSelectOpenInto": {
+    "message": "Mevcut sekme grubunda aç…"
+  },
+  "tabGroupsSelectSaveFolder": {
+    "message": "Yer imi klasörü olarak kaydet"
+  },
+  "tabGroupsSelectClose": {
+    "message": "Kapat"
+  },
+  "tabGroupsSelectSleep": {
+    "message": "Uyut"
+  },
+  "tabGroupsCopyMoveDialog": {
+    "message": "Seçili sekmeler zaten bir sekme grubuna ait. Kopyalamak (yeni bir yerde aç) veya taşımak (mevcut gruptan kaldırmak) ister misiniz?"
+  },
+  "tabGroupsCopyMoveCopy": {
+    "message": "Kopyala"
+  },
+  "tabGroupsCopyMoveMove": {
+    "message": "Taşı"
+  },
+  "tabGroupsConfirmClose": {
+    "message": "$count$ sekme kapatılsın mı?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsConfirmSleep": {
+    "message": "$count$ sekme uyutulsun mu?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "bookmarkFolderPickDialogTitle": {
+    "message": "Yer imi klasörüne ekle"
+  },
+  "bookmarkFolderNoFolders": {
+    "message": "Yer imi klasörü yok"
+  },
+  "tabGroupsSelectAddBookmarks": {
+    "message": "Yer imi klasörüne ekle…"
+  },
+  "paletteCmdGoTabGroups": {
+    "message": "Sekme grupları görünümüne git"
+  },
+  "tabGroupsActivateGroup": {
+    "message": "Grup sekmesine git"
+  },
+  "tabGroupsRenameGroup": {
+    "message": "Sekme grubunu yeniden adlandır"
+  },
+  "tabGroupsRenameDialog": {
+    "message": "Sekme grubunu yeniden adlandır"
+  },
+  "tabGroupsCloseGroup": {
+    "message": "Sekme grubunu kapat"
+  },
+  "tabGroupsSleepGroup": {
+    "message": "Sekme grubunu uyut"
+  },
+  "tabGroupsWakeGroup": {
+    "message": "Sekme grubunu uyandır"
+  },
+  "tabGroupsActivateTab": {
+    "message": "Sekmeye git"
+  },
+  "tabGroupsCollapseGroup": {
+    "message": "Grubu daralt"
+  },
+  "tabGroupsExpandGroup": {
+    "message": "Grubu genişlet"
+  },
+  "tabGroupsMenuAddBookmark": {
+    "message": "Sekmeyi yer imlerine ekle"
+  },
+  "tabGroupsMenuSaveFolder": {
+    "message": "Yer imi klasörü olarak kaydet"
+  },
+  "tabGroupsSyncCollapse": {
+    "message": "Tarayıcıyla senkronize daralt"
+  },
+  "tabGroupsSyncCollapseHint": {
+    "message": "İşaretlendiğinde, bu görünümde bir grubu daraltmak veya genişletmek tarayıcı sekme grubunu da günceller. Varsayılan olarak kapalıdır, böylece görünüm katlaması yerel kalır."
+  },
+  "tabGroupsColorStyle": {
+    "message": "Sekme grubu renk stili"
+  },
+  "tabGroupsColorStyleHint": {
+    "message": "Kapalı, yalnızca renk noktasını gösterir. Kenar renk bandı, grubun sol kenarına renkli bir şerit çizer. Renk bağlantı çizgisi, grubun noktasının altına satır başına bir işaretle renkli bir çizgi çizer ve tüm grubu tek bir ağaç halinde birleştirir."
+  },
+  "tabGroupsColorStyleOff": {
+    "message": "Kapalı (yalnızca renk noktası)"
+  },
+  "tabGroupsColorStyleEdge": {
+    "message": "Kenar renk bandı"
+  },
+  "tabGroupsColorStyleLine": {
+    "message": "Renk bağlantı çizgisi"
+  },
+  "tabGroupsBookmarked": {
+    "message": "Yer imlerine eklendi"
+  },
+  "tabGroupsRemoveBookmark": {
+    "message": "Yer imini kaldır"
+  },
+  "tabGroupsBookmarkRemoved": {
+    "message": "$count$ yer imi kaldırıldı",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsPinned": {
+    "message": "Sabitlenmiş sekme"
+  },
+  "tabGroupsDiscarded": {
+    "message": "Uyuyan sekme"
+  },
+  "tabGroupsPinTab": {
+    "message": "Sekmeyi sabitle"
+  },
+  "tabGroupsUnpinTab": {
+    "message": "Sabitlemeyi kaldır"
+  },
+  "tabGroupsSleepTab": {
+    "message": "Sekmeyi uyut"
+  },
+  "tabGroupsWakeTab": {
+    "message": "Sekmeyi uyandır"
+  },
+  "tabGroupsOpenGroups": {
+    "message": "Açık sekme grupları"
+  },
+  "tabGroupsClosedGroups": {
+    "message": "Son kapatılanlar"
+  },
+  "tabGroupsUngroupedTabs": {
+    "message": "Gruplanmamış sekmeler"
+  },
+  "tabGroupsUngroupGroup": {
+    "message": "Grupları çöz"
+  },
+  "tabGroupsMoveNewWindow": {
+    "message": "Grubu yeni pencereye taşı"
+  },
+  "tabGroupsWindow": {
+    "message": "Pencere $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentWindow": {
+    "message": "Geçerli pencere"
+  },
+  "tabGroupsReopenGroup": {
+    "message": "Sekme grubunu yeniden aç"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "Kapatılan sekme grubunu sil"
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "Pencereyi daralt"
+  },
+  "tabGroupsExpandWindow": {
+    "message": "Pencereyi genişlet"
+  },
+  "tabGroupsClearClosedGroups": {
+    "message": "Tümünü temizle"
+  },
+  "tabGroupsClosedOpenTab": {
+    "message": "Yeni sekmede aç"
+  },
+  "tabGroupsRemoveClosedTab": {
+    "message": "Kayıtlı gruptan kaldır"
+  },
+  "tabGroupsClosedTimeLabel": {
+    "message": "Kapatılma:"
+  },
+  "tabGroupsExpandedExpand": {
+    "message": "Genişlet"
+  },
+  "tabGroupsExpandedCollapse": {
+    "message": "Daralt"
+  },
+  "optionTabGroupsClosedLimit": {
+    "message": "Kapatılan sekme/grup geçmişi saklansın"
   },
   "deadProxyAdd": {
     "message": "Ölü bağlantı kontrolleri için bir proxy sunucusu ekle"

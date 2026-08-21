@@ -38,6 +38,12 @@
   "announceV408Title": {
     "message": "มีอะไรใหม่ใน v4.0.8"
   },
+  "announceV410Title": {
+    "message": "v4.1.0 的新功能"
+  },
+  "announceV410Text": {
+    "message": "v4.1.0 新增标签页组视图：每个窗口的标签页和标签页组，可在书签旁管理。"
+  },
   "announceV408Text": {
     "message": "v4.0.8 เป็นรุ่นที่ปรับปรุง favicon: ไอคอนเว็บไซต์จริงจะถูกดึงมาโดยอัตโนมัติสำหรับบุ๊กมาร์กที่ Chrome ยังไม่ได้แคชไว้"
   },
@@ -324,8 +330,8 @@
   "whatsNewChangelog": {
     "message": "บันทึกการเปลี่ยนแปลง"
   },
-  "whatsNewFavicon": {
-    "message": "v$1$ เป็นรุ่นปรับปรุง favicon: ไอคอนเว็บไซต์ที่ Chrome ยังไม่ได้แคชจะถูกดึงข้อมูลโดยอัตโนมัติ",
+  "whatsNewTabGroups": {
+    "message": "v$1$ เพิ่มมุมมองกลุ่มแท็บ: แท็บและกลุ่มแท็บของทุกหน้าต่าง ถัดจากที่คั่นหน้าของคุณ",
     "placeholders": {
       "1": {
         "content": "$1"
@@ -342,6 +348,271 @@
         "content": "$2"
       }
     }
+  },
+  "viewTabGroups": {
+    "message": "กลุ่มแท็บ"
+  },
+  "optionShowTabGroupsView": {
+    "message": "แสดงแท็บมุมมองกลุ่มแท็บ"
+  },
+  "tabGroupsViewEmpty": {
+    "message": "ไม่มีแท็บในหน้าต่างนี้"
+  },
+  "tabGroupsToolbarRefresh": {
+    "message": "รีเฟรช"
+  },
+  "tabGroupsCollapseAll": {
+    "message": "ย่อทั้งหมด"
+  },
+  "tabGroupsExpandAll": {
+    "message": "ขยายทั้งหมด"
+  },
+  "tabGroupsSummary": {
+    "message": "$tabs$ แท็บ · $groups$ กลุ่ม",
+    "placeholders": {
+      "tabs": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsGroupCount": {
+    "message": "$count$ แท็บ",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentTab": {
+    "message": "แท็บปัจจุบัน"
+  },
+  "tabGroupsAddBookmark": {
+    "message": "บุ๊กมาร์กแท็บนี้"
+  },
+  "tabGroupsSaveFolder": {
+    "message": "บันทึกกลุ่มแท็บเป็นโฟลเดอร์บุ๊กมาร์ก"
+  },
+  "tabGroupsGroupSavedToFolder": {
+    "message": "บันทึก $count$ แท็บไปยัง $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsBookmarksAdded": {
+    "message": "เพิ่มบุ๊กมาร์ก $count$ รายการไปยัง $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsSelectNewGroup": {
+    "message": "กลุ่มแท็บใหม่"
+  },
+  "tabGroupsSelectOpenInto": {
+    "message": "เปิดในกลุ่มแท็บที่มีอยู่…"
+  },
+  "tabGroupsSelectSaveFolder": {
+    "message": "บันทึกเป็นโฟลเดอร์บุ๊กมาร์ก"
+  },
+  "tabGroupsSelectClose": {
+    "message": "ปิด"
+  },
+  "tabGroupsSelectSleep": {
+    "message": "พัก"
+  },
+  "tabGroupsCopyMoveDialog": {
+    "message": "แท็บที่เลือกอยู่ในกลุ่มแท็บแล้ว ต้องการคัดลอก (เปิดในตำแหน่งใหม่) หรือย้าย (นำออกจากกลุ่มปัจจุบัน) หรือไม่?"
+  },
+  "tabGroupsCopyMoveCopy": {
+    "message": "คัดลอก"
+  },
+  "tabGroupsCopyMoveMove": {
+    "message": "ย้าย"
+  },
+  "tabGroupsConfirmClose": {
+    "message": "ปิด $count$ แท็บ?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsConfirmSleep": {
+    "message": "พัก $count$ แท็บ?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "bookmarkFolderPickDialogTitle": {
+    "message": "เพิ่มไปยังโฟลเดอร์บุ๊กมาร์ก"
+  },
+  "bookmarkFolderNoFolders": {
+    "message": "ไม่มีโฟลเดอร์บุ๊กมาร์ก"
+  },
+  "tabGroupsSelectAddBookmarks": {
+    "message": "เพิ่มไปยังโฟลเดอร์บุ๊กมาร์ก…"
+  },
+  "paletteCmdGoTabGroups": {
+    "message": "ไปที่มุมมองกลุ่มแท็บ"
+  },
+  "tabGroupsActivateGroup": {
+    "message": "ไปที่กลุ่มแท็บ"
+  },
+  "tabGroupsRenameGroup": {
+    "message": "เปลี่ยนชื่อกลุ่มแท็บ"
+  },
+  "tabGroupsRenameDialog": {
+    "message": "เปลี่ยนชื่อกลุ่มแท็บ"
+  },
+  "tabGroupsCloseGroup": {
+    "message": "ปิดกลุ่มแท็บ"
+  },
+  "tabGroupsSleepGroup": {
+    "message": "พักกลุ่มแท็บ"
+  },
+  "tabGroupsWakeGroup": {
+    "message": "ปลุกกลุ่มแท็บ"
+  },
+  "tabGroupsActivateTab": {
+    "message": "ไปที่แท็บ"
+  },
+  "tabGroupsCollapseGroup": {
+    "message": "ย่อกลุ่ม"
+  },
+  "tabGroupsExpandGroup": {
+    "message": "ขยายกลุ่ม"
+  },
+  "tabGroupsMenuAddBookmark": {
+    "message": "บุ๊กมาร์กแท็บ"
+  },
+  "tabGroupsMenuSaveFolder": {
+    "message": "บันทึกเป็นโฟลเดอร์บุ๊กมาร์ก"
+  },
+  "tabGroupsSyncCollapse": {
+    "message": "同步折叠与浏览器"
+  },
+  "tabGroupsSyncCollapseHint": {
+    "message": "勾选后，在此视图中折叠或展开分组也会更新浏览器标签组。默认关闭，以便视图折叠保持本地操作。"
+  },
+  "tabGroupsColorStyle": {
+    "message": "รูปแบบสีของกลุ่มแท็บ"
+  },
+  "tabGroupsColorStyleHint": {
+    "message": "ปิดจะแสดงเฉพาะจุดสี แถบสีขอบจะวาดแถบสีที่ขอบซ้ายของกลุ่ม เส้นเชื่อมสีจะวาดเส้นใต้จุดของกลุ่มพร้อมเครื่องหมายขีดในแต่ละแถว เชื่อมทั้งกลุ่มเป็นต้นไม้เดียว"
+  },
+  "tabGroupsColorStyleOff": {
+    "message": "ปิด (เฉพาะจุดสี)"
+  },
+  "tabGroupsColorStyleEdge": {
+    "message": "แถบสีขอบ"
+  },
+  "tabGroupsColorStyleLine": {
+    "message": "เส้นเชื่อมสี"
+  },
+  "tabGroupsBookmarked": {
+    "message": "บุ๊กมาร์กแล้ว"
+  },
+  "tabGroupsRemoveBookmark": {
+    "message": "ลบบุ๊กมาร์ก"
+  },
+  "tabGroupsBookmarkRemoved": {
+    "message": "ลบบุ๊กมาร์กแล้ว $count$ รายการ",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsPinned": {
+    "message": "แท็บที่ปักหมุด"
+  },
+  "tabGroupsDiscarded": {
+    "message": "แท็บที่หลับ"
+  },
+  "tabGroupsPinTab": {
+    "message": "ปักหมุดแท็บ"
+  },
+  "tabGroupsUnpinTab": {
+    "message": "เลิกปักหมุดแท็บ"
+  },
+  "tabGroupsSleepTab": {
+    "message": "พักแท็บ"
+  },
+  "tabGroupsWakeTab": {
+    "message": "ปลุกแท็บ"
+  },
+  "tabGroupsOpenGroups": {
+    "message": "เปิดกลุ่มแท็บ"
+  },
+  "tabGroupsClosedGroups": {
+    "message": "เพิ่งปิด"
+  },
+  "tabGroupsUngroupedTabs": {
+    "message": "แท็บที่ไม่ได้จัดกลุ่ม"
+  },
+  "tabGroupsUngroupGroup": {
+    "message": "แยกกลุ่มแท็บ"
+  },
+  "tabGroupsMoveNewWindow": {
+    "message": "ย้ายกลุ่มไปหน้าต่างใหม่"
+  },
+  "tabGroupsWindow": {
+    "message": "หน้าต่าง $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentWindow": {
+    "message": "หน้าต่างปัจจุบัน"
+  },
+  "tabGroupsReopenGroup": {
+    "message": "เปิดกลุ่มแท็บอีกครั้ง"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "ลบกลุ่มแท็บที่ปิดแล้ว"
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "ย่อหน้าต่าง"
+  },
+  "tabGroupsExpandWindow": {
+    "message": "ขยายหน้าต่าง"
+  },
+  "tabGroupsClearClosedGroups": {
+    "message": "ล้างทั้งหมด"
+  },
+  "tabGroupsClosedOpenTab": {
+    "message": "เปิดในแท็บใหม่"
+  },
+  "tabGroupsRemoveClosedTab": {
+    "message": "ลบออกจากกลุ่มที่บันทึกไว้"
+  },
+  "tabGroupsClosedTimeLabel": {
+    "message": "ปิดเมื่อ:"
+  },
+  "tabGroupsExpandedExpand": {
+    "message": "ขยาย"
+  },
+  "tabGroupsExpandedCollapse": {
+    "message": "ย่อ"
+  },
+  "optionTabGroupsClosedLimit": {
+    "message": "เก็บประวัติแท็บ/กลุ่มที่ปิดไว้"
   },
   "deadProxyAdd": {
     "message": "เพิ่มพร็อกซีเซิร์ฟเวอร์สำหรับตรวจสอบลิงก์เสีย"

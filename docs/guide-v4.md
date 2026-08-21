@@ -17,7 +17,7 @@
 
 ## 1. The view system
 
-4.0 grows the popup from "one tree" into **six views** behind an icon tab strip:
+4.0 grows the popup from "one tree" into **seven views** behind an icon tab strip (4.1.0 added Tab groups):
 
 ![View tab strip across themes](images/guide/tabs-themes.png)
 
@@ -25,17 +25,18 @@
 |---|---|---|
 | Tree | The classic hierarchical bookmark tree (startup view) | `Alt+1` |
 | Search | Dual-zone search: history on top, results below | `Alt+2` |
-| Recent | Newest bookmarks, grouped Today / This week / This month / Older | `Alt+3` |
-| Stats | Local visit statistics + a recently-visited section | `Alt+4` |
-| Dead links | Dual-channel dead-link scanner with pause/resume | `Alt+5` |
-| Duplicates | Duplicate cleaner with six keeper strategies | `Alt+6` |
+| Tab groups | Every window's tabs and Chrome tab groups, next to your bookmarks | `Alt+3` |
+| Recent | Newest bookmarks, grouped Today / This week / This month / Older | `Alt+4` |
+| Stats | Local visit statistics + a recently-visited section | `Alt+5` |
+| Dead links | Dual-channel dead-link scanner with pause/resume | `Alt+6` |
+| Duplicates | Duplicate cleaner with six keeper strategies | `Alt+7` |
 
-(Jump keys are `Alt+1…6` over the visible views. `Ctrl/Cmd+1…6` is the legacy twin and still works where the browser lets it through — Chrome's popup/side panel — but Edge reserves `Ctrl+1…8` for its own tab switching, so `Alt` is the portable form.)
+(Jump keys are `Alt+1…7` over the visible views. `Ctrl/Cmd+1…7` is the legacy twin and still works where the browser lets it through — Chrome's popup/side panel — but Edge reserves `Ctrl+1…8` for its own tab switching, so `Alt` is the portable form.)
 
 (Tabs carry one 16px line icon per view plus a localized label; on narrow widths the label hides and the icon stays.)
 
 - **Badges**: the count on a tab tracks that view's pressing items (dead marks, dupe groups, tracked pages), refreshed live; turn them off with *Show count badges on the view tabs* (`showTabBadges`).
-- **Visibility**: Settings → the *Views* group hides Stats/Dead/Duplicates individually, or the whole strip — see [§5](#5-getting-the-classic-look-and-feel-back).
+- **Visibility**: Settings → the *Views* group hides (or fully disables) each feature view — Tab groups/Recent/Stats/Dead/Duplicates — individually, or the whole strip — see [§5](#5-getting-the-classic-look-and-feel-back).
 - **Popup vs side panel**: both reopen on the view you left — the popup because *Remember the last active view* (`rememberView`) is on by default (turn it off to always boot on the tree), the side panel (opt-in via `openInSidePanel`, `Alt+Shift+B`) always, ready to be an always-on workspace. Closing the side panel via the toolbar toggle hands control straight back to the popup — the service worker learns of the close instantly (Chrome 142+) or probes with an alarm (114–141). Reopening also restores **where the focus was** — the search box, a header button, a view tab, a toolbar control or the exact list row (gated by *Remember previous state*: with that option off every open starts completely fresh).
 
 ## 2. Full keyboard reference
@@ -49,7 +50,7 @@ Arrow keys walk the popup exactly the way the eye scans it — `↓`/`↑` move 
 ```
 ┌ Header: search box → ☆ quick-add → ⚙ tools ┐  ←/→ walk the row · ↓ to the tabs
 ├ (banner, only while shown — Tab reaches it) ┤
-├ Tab strip: six view tabs                    ┤  ←/→ switch · ↑ box · ↓ next rung
+├ Tab strip: seven view tabs                    ┤  ←/→ switch · ↑ box · ↓ next rung
 ├ Toolbar: atop Stats/Dead/Duplicates         ┤  ←/→ walk controls · ↑ tabs · ↓ list
 ├ List: the active view's rows                ┤  ↑ past the top → toolbar (or tab)
 └─────────────────────────────────────────────┘
@@ -89,7 +90,8 @@ Inside every context menu (all seven are keyboard-bound — the separator menu's
 | `R` | Search/Recent/Dead/Duplicates | **Reveal in tree** |
 | `K` | Duplicates | Pin the focused row as the group's **keeper** |
 | `M` | Dead links | Toggle a **dead mark** (the red ✕ syncs across all views) |
-| `Alt+1…6` | Anywhere outside open dialogs/palette | Jump to the Nth visible view (`Ctrl/Cmd+1…6` is the legacy twin — works on Chrome's popup/panel, but Edge reserves `Ctrl+1…8` for browser-tab switching) |
+| `Alt+1…7` | Anywhere outside open dialogs/palette | Jump to the Nth visible view (`Ctrl/Cmd+1…7` is the legacy twin — works on Chrome's popup/panel, but Edge reserves `Ctrl+1…8` for browser-tab switching) |
+| `Delete` | Tab groups | Close the focused tab (or the selection) — confirm-gated, a tab close has no undo |
 | `Ctrl/Cmd+K` | In the popup | Command palette |
 | `Ctrl/Cmd+Shift+K` | Global (any page) | Raise the popup with the palette open |
 | `Ctrl/Cmd+D` | In the popup | Quick-add the current page (opens the edit dialog if already bookmarked) |
@@ -108,7 +110,7 @@ View switches work even while the search/filter box has focus — only a modal d
 open dropdown (close it, focus back to the trigger) → context menu
              → banner (dismiss = "Later") → command palette
              → view-level action (Dead: pause/resume the scan;
-             Dead/Duplicates: exit selection mode) → clear the search query
+             Tab groups/Dead/Duplicates: exit selection mode) → clear the search query
              → back to the tree → close the popup
 ```
 
@@ -139,7 +141,17 @@ The classic hierarchical tree (startup view). It is where most organizing happen
 - **Bottom zone · results**: leave the view and come back — the query, the results and the scroll position are **all still there**.
 - Related settings: `searchAfterEnter` (search on Enter instead of live), `searchHistoryEnabled` (off = stop recording **and wipe the stored history**).
 
-### 3.2 Recent
+### 3.2 Tab groups
+
+Your whole browser session next to your bookmarks: every window's tabs in real order, grouped tabs nested under their Chrome tab group (color dot/band/line per the *group color style* option), ungrouped tabs as plain rows, the current tab flagged.
+
+- **Row actions**: activate, pin/unpin, sleep/wake, close — from hover buttons, the `→` context menu, or the keyboard. Group heads add rename, move-to-new-window, ungroup, and *save as bookmark folder* (the folder remembers the group's color and title; *open as tab group* restores the look).
+- **Selection mode** batches group-new / open-into-existing / close / sleep over any mix of tabs; selecting already-grouped tabs asks **copy or move** first.
+- **Recently closed groups** sit at the bottom (depth configurable 5–50 in Settings → *Tab groups*): reopen a whole group, or restore / bookmark / forget individual tabs.
+- **Collapse sync**: with the toolbar's sync switch on, folding a group here folds the browser's group too.
+- **Bookmarks bridge**: a tab row's ★ files it into your quick-add folder; selected tabs can be bookmarked into any folder via the folder-picker dialog.
+
+### 3.3 Recent
 
 ![Recent view](images/guide/view-recent.png)
 
@@ -148,7 +160,7 @@ The classic hierarchical tree (startup view). It is where most organizing happen
 - `R` or right-click → *Reveal in tree* jumps to the bookmark's real position. With *Show only the bookmarks bar* on and the target outside the bar, a hint toast explains instead of failing silently — its *Show all and reveal* action shows the full tree for the session and completes the jump.
 - A banner about the history permission may appear: that's the optional one-time import (see §3.3) — enable it or dismiss it; the view works either way.
 
-### 3.3 Stats
+### 3.4 Stats
 
 ![Stats view](images/guide/view-stats.png)
 
@@ -157,7 +169,7 @@ The classic hierarchical tree (startup view). It is where most organizing happen
 - **Recent visits merge into one list**: with history on, bookmarked history rows merge into the main list wearing a solid ★ and their visit count in the pill; the toolbar's **Show unbookmarked** checkbox (`statsShowUnbookmarked`) brings in the rest — one-click ☆ files them, counts come from live visit stats. The row end reads right-to-left: star → count pill → time. First use requests the optional `history` permission — decline and history rows simply never appear.
 - **Privacy switches**: turning off *visit statistics* stops all recording instantly; both the view footer and the options page have a confirm-gated *Clear statistics* button.
 
-### 3.4 Dead links
+### 3.5 Dead links
 
 ![Dead-link view](images/guide/view-dead.png)
 
@@ -175,7 +187,7 @@ The classic hierarchical tree (startup view). It is where most organizing happen
 - **Batch delete**: the toolbar's red *Delete all* removes every row in the current filter — the confirm shows the exact count, and under *All* that includes blocked rows (reachable through your proxy, likely still alive); Undo restores only the most recent deletion. In selection mode *Delete selected* removes just the chosen rows — both run serially through the undo chain and end in one summary toast.
 - **Tuning** (options page → *Dead scan* group): concurrency 1–16 (default 4), timeout 2–30 s (default 8).
 
-### 3.5 Duplicates
+### 3.6 Duplicates
 
 ![Duplicates view](images/guide/view-dupes.png)
 

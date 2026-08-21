@@ -38,6 +38,12 @@
   "announceV408Title": {
     "message": "Kaj je novega v v4.0.8"
   },
+  "announceV410Title": {
+    "message": "Novosti v v4.1.0"
+  },
+  "announceV410Text": {
+    "message": "v4.1.0 dodaja pogled skupin zavihkov: zavihki in skupine zavihkov vsakega okna, upravljani poleg vaših zaznamkov."
+  },
   "announceV408Text": {
     "message": "v4.0.8 je različica z izboljšanimi ikonami: prave ikone spletnih mest se samodejno pridobijo za zaznamke, ki jih Chrome še ni predpomnil."
   },
@@ -324,8 +330,8 @@
   "whatsNewChangelog": {
     "message": "Dnevnik sprememb"
   },
-  "whatsNewFavicon": {
-    "message": "v$1$ je izdaja z izboljšanimi faviconi: ikone spletnih mest, ki jih Chrome ni predpomnil, se zdaj samodejno pridobijo.",
+  "whatsNewTabGroups": {
+    "message": "v$1$ doda pogled skupin zavihkov: zavihki in skupine zavihkov vsakega okna, poleg vaših zaznamkov.",
     "placeholders": {
       "1": {
         "content": "$1"
@@ -342,6 +348,271 @@
         "content": "$2"
       }
     }
+  },
+  "viewTabGroups": {
+    "message": "Zavihki"
+  },
+  "optionShowTabGroupsView": {
+    "message": "Prikaži zavihek pogleda zavihkov"
+  },
+  "tabGroupsViewEmpty": {
+    "message": "V tem oknu ni zavihkov"
+  },
+  "tabGroupsToolbarRefresh": {
+    "message": "Osveži"
+  },
+  "tabGroupsCollapseAll": {
+    "message": "Strni vse"
+  },
+  "tabGroupsExpandAll": {
+    "message": "Razširi vse"
+  },
+  "tabGroupsSummary": {
+    "message": "$tabs$ zavihkov · $groups$ skupin",
+    "placeholders": {
+      "tabs": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsGroupCount": {
+    "message": "$count$ zavihkov",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentTab": {
+    "message": "Trenutni zavihek"
+  },
+  "tabGroupsAddBookmark": {
+    "message": "Dodaj med zaznamke"
+  },
+  "tabGroupsSaveFolder": {
+    "message": "Shrani skupino zavihkov kot mapo zaznamkov"
+  },
+  "tabGroupsGroupSavedToFolder": {
+    "message": "Shranjenih $count$ zavihkov v $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsBookmarksAdded": {
+    "message": "Dodanih $count$ zaznamkov v $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsSelectNewGroup": {
+    "message": "Nova skupina zavihkov"
+  },
+  "tabGroupsSelectOpenInto": {
+    "message": "Odpri v obstoječi skupini zavihkov…"
+  },
+  "tabGroupsSelectSaveFolder": {
+    "message": "Shrani kot mapo zaznamkov"
+  },
+  "tabGroupsSelectClose": {
+    "message": "Zapri"
+  },
+  "tabGroupsSelectSleep": {
+    "message": "Uspavaj"
+  },
+  "tabGroupsCopyMoveDialog": {
+    "message": "Izbrani zavihki že pripadajo skupini zavihkov. Jih kopiram (odprem na novem mestu) ali premaknem (odstranim iz trenutne skupine)?"
+  },
+  "tabGroupsCopyMoveCopy": {
+    "message": "Kopiraj"
+  },
+  "tabGroupsCopyMoveMove": {
+    "message": "Premakni"
+  },
+  "tabGroupsConfirmClose": {
+    "message": "Zaprem $count$ zavihkov?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsConfirmSleep": {
+    "message": "Uspavam $count$ zavihkov?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "bookmarkFolderPickDialogTitle": {
+    "message": "Dodaj v mapo zaznamkov"
+  },
+  "bookmarkFolderNoFolders": {
+    "message": "Ni map zaznamkov"
+  },
+  "tabGroupsSelectAddBookmarks": {
+    "message": "Dodaj v mapo zaznamkov…"
+  },
+  "paletteCmdGoTabGroups": {
+    "message": "Pojdi na pogled zavihkov"
+  },
+  "tabGroupsActivateGroup": {
+    "message": "Pojdi v skupino zavihkov"
+  },
+  "tabGroupsRenameGroup": {
+    "message": "Preimenuj skupino zavihkov"
+  },
+  "tabGroupsRenameDialog": {
+    "message": "Preimenuj skupino zavihkov"
+  },
+  "tabGroupsCloseGroup": {
+    "message": "Zapri skupino zavihkov"
+  },
+  "tabGroupsSleepGroup": {
+    "message": "Uspavaj skupino zavihkov"
+  },
+  "tabGroupsWakeGroup": {
+    "message": "Prebudi skupino zavihkov"
+  },
+  "tabGroupsActivateTab": {
+    "message": "Pojdi na zavihek"
+  },
+  "tabGroupsCollapseGroup": {
+    "message": "Strni skupino"
+  },
+  "tabGroupsExpandGroup": {
+    "message": "Razširi skupino"
+  },
+  "tabGroupsMenuAddBookmark": {
+    "message": "Dodaj med zaznamke"
+  },
+  "tabGroupsMenuSaveFolder": {
+    "message": "Shrani kot mapo zaznamkov"
+  },
+  "tabGroupsSyncCollapse": {
+    "message": "Sinhroniziraj zrušitev z brskalnikom"
+  },
+  "tabGroupsSyncCollapseHint": {
+    "message": "Ko je označeno, zrušitev ali razširitev skupine v tem pogledu posodobi tudi skupino zavihkov v brskalniku. Privzeto izklopljeno, da zlaganje pogleda ostane lokalno."
+  },
+  "tabGroupsColorStyle": {
+    "message": "Slog barve skupine zavihkov"
+  },
+  "tabGroupsColorStyleHint": {
+    "message": "Izključeno prikaže samo barvno piko. Barvni pas na robu nariše barvni trak ob levem robu skupine. Barvna povezovalna črta nariše barvno črto pod piko skupine s kljukico za vsako vrstico, kar poveže celotno skupino v eno drevo."
+  },
+  "tabGroupsColorStyleOff": {
+    "message": "Izključeno (samo barvna pika)"
+  },
+  "tabGroupsColorStyleEdge": {
+    "message": "Barvni pas na robu"
+  },
+  "tabGroupsColorStyleLine": {
+    "message": "Barvna povezovalna črta"
+  },
+  "tabGroupsBookmarked": {
+    "message": "Zaznamek"
+  },
+  "tabGroupsRemoveBookmark": {
+    "message": "Odstrani zaznamek"
+  },
+  "tabGroupsBookmarkRemoved": {
+    "message": "Odstranjenih $count$ zaznamkov",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsPinned": {
+    "message": "Pripeti zavihek"
+  },
+  "tabGroupsDiscarded": {
+    "message": "Speči zavihek"
+  },
+  "tabGroupsPinTab": {
+    "message": "Pripni zavihek"
+  },
+  "tabGroupsUnpinTab": {
+    "message": "Odpni zavihek"
+  },
+  "tabGroupsSleepTab": {
+    "message": "Uspavaj zavihek"
+  },
+  "tabGroupsWakeTab": {
+    "message": "Prebudi zavihek"
+  },
+  "tabGroupsOpenGroups": {
+    "message": "Odprte skupine zavihkov"
+  },
+  "tabGroupsClosedGroups": {
+    "message": "Nedavno zaprto"
+  },
+  "tabGroupsUngroupedTabs": {
+    "message": "Nerazvrščeni zavihki"
+  },
+  "tabGroupsUngroupGroup": {
+    "message": "Razdruži zavihke"
+  },
+  "tabGroupsMoveNewWindow": {
+    "message": "Premakni skupino v novo okno"
+  },
+  "tabGroupsWindow": {
+    "message": "Okno $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentWindow": {
+    "message": "Trenutno okno"
+  },
+  "tabGroupsReopenGroup": {
+    "message": "Znova odpri skupino zavihkov"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "Izbriši zaprto skupino zavihkov"
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "Strni okno"
+  },
+  "tabGroupsExpandWindow": {
+    "message": "Razširi okno"
+  },
+  "tabGroupsClearClosedGroups": {
+    "message": "Počisti vse"
+  },
+  "tabGroupsClosedOpenTab": {
+    "message": "Odpri v novem zavihku"
+  },
+  "tabGroupsRemoveClosedTab": {
+    "message": "Odstrani iz shranjene skupine"
+  },
+  "tabGroupsClosedTimeLabel": {
+    "message": "Zaprto:"
+  },
+  "tabGroupsExpandedExpand": {
+    "message": "Razširi"
+  },
+  "tabGroupsExpandedCollapse": {
+    "message": "Strni"
+  },
+  "optionTabGroupsClosedLimit": {
+    "message": "Ohranitev zgodovine zaprtih zavihkov/skupin"
   },
   "deadProxyAdd": {
     "message": "Dodaj proxy strežnik za preverjanje mrtvih povezav"

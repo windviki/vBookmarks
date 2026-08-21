@@ -38,6 +38,12 @@
   "announceV408Title": {
     "message": "Ce este nou în v4.0.8"
   },
+  "announceV410Title": {
+    "message": "Noutăți în v4.1.0"
+  },
+  "announceV410Text": {
+    "message": "v4.1.0 adaugă vizualizarea Grupuri de file: filele și grupurile de file ale fiecărei ferestre, gestionate lângă marcajele tale."
+  },
   "announceV408Text": {
     "message": "v4.0.8 aduce îmbunătățiri favicon: pictogramele reale ale site-urilor sunt preluate automat pentru marcajele pe care Chrome nu le-a salvat încă în cache."
   },
@@ -324,8 +330,8 @@
   "whatsNewChangelog": {
     "message": "Jurnal de modificări"
   },
-  "whatsNewFavicon": {
-    "message": "v$1$ este versiunea cu favicon îmbunătățit: pictogramele site-urilor pe care Chrome nu le-a pus în cache sunt acum preluate automat.",
+  "whatsNewTabGroups": {
+    "message": "v$1$ adaugă vizualizarea Grupuri de file: filele și grupurile de file din fiecare fereastră, lângă marcajele tale.",
     "placeholders": {
       "1": {
         "content": "$1"
@@ -342,6 +348,271 @@
         "content": "$2"
       }
     }
+  },
+  "viewTabGroups": {
+    "message": "Grupuri de file"
+  },
+  "optionShowTabGroupsView": {
+    "message": "Afișează fila de vizualizare a grupurilor de file"
+  },
+  "tabGroupsViewEmpty": {
+    "message": "Nicio filă în această fereastră"
+  },
+  "tabGroupsToolbarRefresh": {
+    "message": "Reîmprospătează"
+  },
+  "tabGroupsCollapseAll": {
+    "message": "Restrânge tot"
+  },
+  "tabGroupsExpandAll": {
+    "message": "Extinde tot"
+  },
+  "tabGroupsSummary": {
+    "message": "$tabs$ file · $groups$ grupuri",
+    "placeholders": {
+      "tabs": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsGroupCount": {
+    "message": "$count$ file",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentTab": {
+    "message": "Filă curentă"
+  },
+  "tabGroupsAddBookmark": {
+    "message": "Adaugă fila la marcaje"
+  },
+  "tabGroupsSaveFolder": {
+    "message": "Salvează grupul de file ca dosar de marcaje"
+  },
+  "tabGroupsGroupSavedToFolder": {
+    "message": "Salvate $count$ file în $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsBookmarksAdded": {
+    "message": "Adăugate $count$ marcaj(e) în $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsSelectNewGroup": {
+    "message": "Grup de file nou"
+  },
+  "tabGroupsSelectOpenInto": {
+    "message": "Deschide în grupul de file existent…"
+  },
+  "tabGroupsSelectSaveFolder": {
+    "message": "Salvează ca dosar de marcaje"
+  },
+  "tabGroupsSelectClose": {
+    "message": "Închide"
+  },
+  "tabGroupsSelectSleep": {
+    "message": "Adormire"
+  },
+  "tabGroupsCopyMoveDialog": {
+    "message": "Filele selectate aparțin deja unui grup de file. Vrei să le copiezi (deschide într-un loc nou) sau să le muți (elimină din grupul curent)?"
+  },
+  "tabGroupsCopyMoveCopy": {
+    "message": "Copiază"
+  },
+  "tabGroupsCopyMoveMove": {
+    "message": "Mută"
+  },
+  "tabGroupsConfirmClose": {
+    "message": "Închizi $count$ file?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsConfirmSleep": {
+    "message": "Adormi $count$ file?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "bookmarkFolderPickDialogTitle": {
+    "message": "Adaugă la dosarul de marcaje"
+  },
+  "bookmarkFolderNoFolders": {
+    "message": "Niciun dosar de marcaje"
+  },
+  "tabGroupsSelectAddBookmarks": {
+    "message": "Adaugă la dosarul de marcaje…"
+  },
+  "paletteCmdGoTabGroups": {
+    "message": "Mergi la vizualizarea grupurilor de file"
+  },
+  "tabGroupsActivateGroup": {
+    "message": "Mergi la grup"
+  },
+  "tabGroupsRenameGroup": {
+    "message": "Redenumește grupul"
+  },
+  "tabGroupsRenameDialog": {
+    "message": "Redenumește grupul de file"
+  },
+  "tabGroupsCloseGroup": {
+    "message": "Închide grupul"
+  },
+  "tabGroupsSleepGroup": {
+    "message": "Adormire grup"
+  },
+  "tabGroupsWakeGroup": {
+    "message": "Activează grupul"
+  },
+  "tabGroupsActivateTab": {
+    "message": "Mergi la filă"
+  },
+  "tabGroupsCollapseGroup": {
+    "message": "Restrânge grupul"
+  },
+  "tabGroupsExpandGroup": {
+    "message": "Extinde grupul"
+  },
+  "tabGroupsMenuAddBookmark": {
+    "message": "Marcaj filă"
+  },
+  "tabGroupsMenuSaveFolder": {
+    "message": "Salvează ca dosar"
+  },
+  "tabGroupsSyncCollapse": {
+    "message": "Sincronizează colapsarea cu browserul"
+  },
+  "tabGroupsSyncCollapseHint": {
+    "message": "Când este bifat, colapsarea sau extinderea unui grup în această vizualizare actualizează și grupul de file din browser. Dezactivat implicit, astfel încât plierea vizualizării rămâne locală."
+  },
+  "tabGroupsColorStyle": {
+    "message": "Stilul culorii grupului de file"
+  },
+  "tabGroupsColorStyleHint": {
+    "message": "Oprit afișează doar punctul colorat. Banda de culoare pe margine trasează o bandă colorată pe marginea stângă a grupului. Linia de conectare colorată trasează o linie colorată sub punctul grupului, cu o bifă pe rând, legând întregul grup într-un singur arbore."
+  },
+  "tabGroupsColorStyleOff": {
+    "message": "Oprit (doar punctul colorat)"
+  },
+  "tabGroupsColorStyleEdge": {
+    "message": "Bandă de culoare pe margine"
+  },
+  "tabGroupsColorStyleLine": {
+    "message": "Linie de conectare colorată"
+  },
+  "tabGroupsBookmarked": {
+    "message": "Marcate"
+  },
+  "tabGroupsRemoveBookmark": {
+    "message": "Elimină marcajul"
+  },
+  "tabGroupsBookmarkRemoved": {
+    "message": "S-au eliminat $count$ marcaj(e)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsPinned": {
+    "message": "Filă fixată"
+  },
+  "tabGroupsDiscarded": {
+    "message": "Filă adormită"
+  },
+  "tabGroupsPinTab": {
+    "message": "Fixare filă"
+  },
+  "tabGroupsUnpinTab": {
+    "message": "Anulare fixare filă"
+  },
+  "tabGroupsSleepTab": {
+    "message": "Adormi fila"
+  },
+  "tabGroupsWakeTab": {
+    "message": "Trezește fila"
+  },
+  "tabGroupsOpenGroups": {
+    "message": "Grupuri de file deschise"
+  },
+  "tabGroupsClosedGroups": {
+    "message": "Închise recent"
+  },
+  "tabGroupsUngroupedTabs": {
+    "message": "File negrupate"
+  },
+  "tabGroupsUngroupGroup": {
+    "message": "Degrupează filele"
+  },
+  "tabGroupsMoveNewWindow": {
+    "message": "Mută grupul în fereastră nouă"
+  },
+  "tabGroupsWindow": {
+    "message": "Fereastră $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentWindow": {
+    "message": "Fereastra curentă"
+  },
+  "tabGroupsReopenGroup": {
+    "message": "Redeschide grupul de file"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "Șterge grupul de file închis"
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "Restrânge fereastra"
+  },
+  "tabGroupsExpandWindow": {
+    "message": "Extinde fereastra"
+  },
+  "tabGroupsClearClosedGroups": {
+    "message": "Șterge tot"
+  },
+  "tabGroupsClosedOpenTab": {
+    "message": "Deschide în filă nouă"
+  },
+  "tabGroupsRemoveClosedTab": {
+    "message": "Elimină din grupul salvat"
+  },
+  "tabGroupsClosedTimeLabel": {
+    "message": "Închis:"
+  },
+  "tabGroupsExpandedExpand": {
+    "message": "Extinde"
+  },
+  "tabGroupsExpandedCollapse": {
+    "message": "Restrânge"
+  },
+  "optionTabGroupsClosedLimit": {
+    "message": "Istoricul filelor/grupurilor închise de păstrat"
   },
   "deadProxyAdd": {
     "message": "Adaugă un server proxy pentru verificarea linkurilor moarte"

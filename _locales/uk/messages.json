@@ -38,6 +38,12 @@
   "announceV408Title": {
     "message": "Що нового у v4.0.8"
   },
+  "announceV410Title": {
+    "message": "Що нового у v4.1.0"
+  },
+  "announceV410Text": {
+    "message": "v4.1.0 додає перегляд груп вкладок: вкладки та групи вкладок кожного вікна, керовані поруч із вашими закладками."
+  },
   "announceV408Text": {
     "message": "v4.0.8 — це реліз із покращеними фавіконами: справжні іконки сайтів автоматично завантажуються для закладок, які Chrome ще не закешував."
   },
@@ -324,8 +330,8 @@
   "whatsNewChangelog": {
     "message": "Журнал змін"
   },
-  "whatsNewFavicon": {
-    "message": "v$1$ — це версія з покращеною підтримкою favicon: значки сайтів, які Chrome ще не кешував, тепер завантажуються автоматично.",
+  "whatsNewTabGroups": {
+    "message": "v$1$ додає перегляд груп вкладок: вкладки та групи вкладок кожного вікна поруч із вашими закладками.",
     "placeholders": {
       "1": {
         "content": "$1"
@@ -342,6 +348,271 @@
         "content": "$2"
       }
     }
+  },
+  "viewTabGroups": {
+    "message": "Групи вкладок"
+  },
+  "optionShowTabGroupsView": {
+    "message": "Показувати вкладку перегляду груп вкладок"
+  },
+  "tabGroupsViewEmpty": {
+    "message": "Немає вкладок у цьому вікні"
+  },
+  "tabGroupsToolbarRefresh": {
+    "message": "Оновити"
+  },
+  "tabGroupsCollapseAll": {
+    "message": "Згорнути всі"
+  },
+  "tabGroupsExpandAll": {
+    "message": "Розгорнути всі"
+  },
+  "tabGroupsSummary": {
+    "message": "$tabs$ вкладок · $groups$ груп",
+    "placeholders": {
+      "tabs": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsGroupCount": {
+    "message": "$count$ вкладок",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentTab": {
+    "message": "Поточна вкладка"
+  },
+  "tabGroupsAddBookmark": {
+    "message": "Додати вкладку до закладок"
+  },
+  "tabGroupsSaveFolder": {
+    "message": "Зберегти групу вкладок як папку закладок"
+  },
+  "tabGroupsGroupSavedToFolder": {
+    "message": "Збережено $count$ вкладок у $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsBookmarksAdded": {
+    "message": "Додано $count$ закладок у $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsSelectNewGroup": {
+    "message": "Нова група вкладок"
+  },
+  "tabGroupsSelectOpenInto": {
+    "message": "Відкрити в існуючій групі вкладок…"
+  },
+  "tabGroupsSelectSaveFolder": {
+    "message": "Зберегти як папку закладок"
+  },
+  "tabGroupsSelectClose": {
+    "message": "Закрити"
+  },
+  "tabGroupsSelectSleep": {
+    "message": "Приспати"
+  },
+  "tabGroupsCopyMoveDialog": {
+    "message": "Вибрані вкладки вже належать до групи вкладок. Скопіювати їх (відкрити в новому місці) чи перемістити (видалити з поточної групи)?"
+  },
+  "tabGroupsCopyMoveCopy": {
+    "message": "Копіювати"
+  },
+  "tabGroupsCopyMoveMove": {
+    "message": "Перемістити"
+  },
+  "tabGroupsConfirmClose": {
+    "message": "Закрити $count$ вкладок?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsConfirmSleep": {
+    "message": "Приспати $count$ вкладок?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "bookmarkFolderPickDialogTitle": {
+    "message": "Додати до папки закладок"
+  },
+  "bookmarkFolderNoFolders": {
+    "message": "Немає папок закладок"
+  },
+  "tabGroupsSelectAddBookmarks": {
+    "message": "Додати до папки закладок…"
+  },
+  "paletteCmdGoTabGroups": {
+    "message": "Перейти до перегляду груп вкладок"
+  },
+  "tabGroupsActivateGroup": {
+    "message": "Перейти до групи вкладок"
+  },
+  "tabGroupsRenameGroup": {
+    "message": "Перейменувати групу вкладок"
+  },
+  "tabGroupsRenameDialog": {
+    "message": "Перейменувати групу вкладок"
+  },
+  "tabGroupsCloseGroup": {
+    "message": "Закрити групу вкладок"
+  },
+  "tabGroupsSleepGroup": {
+    "message": "Приспати групу вкладок"
+  },
+  "tabGroupsWakeGroup": {
+    "message": "Розбудити групу вкладок"
+  },
+  "tabGroupsActivateTab": {
+    "message": "Перейти до вкладки"
+  },
+  "tabGroupsCollapseGroup": {
+    "message": "Згорнути групу"
+  },
+  "tabGroupsExpandGroup": {
+    "message": "Розгорнути групу"
+  },
+  "tabGroupsMenuAddBookmark": {
+    "message": "Додати вкладку до закладок"
+  },
+  "tabGroupsMenuSaveFolder": {
+    "message": "Зберегти як папку закладок"
+  },
+  "tabGroupsSyncCollapse": {
+    "message": "Синхронізувати згортання з браузером"
+  },
+  "tabGroupsSyncCollapseHint": {
+    "message": "Якщо позначено, згортання або розгортання групи в цьому перегляді також оновлює групу вкладок браузера. Вимкнено за замовчуванням, щоб згортання перегляду залишалося локальним."
+  },
+  "tabGroupsColorStyle": {
+    "message": "Стиль кольору групи вкладок"
+  },
+  "tabGroupsColorStyleHint": {
+    "message": "Вимкнено показує лише кольорову крапку. Смуга по краю малює кольорову смугу вздовж лівого краю групи. Лінія-з'єднувач малює кольорову лінію під крапкою групи з позначкою на кожен рядок, об'єднуючи всю групу в одне дерево."
+  },
+  "tabGroupsColorStyleOff": {
+    "message": "Вимкнено (лише кольорова крапка)"
+  },
+  "tabGroupsColorStyleEdge": {
+    "message": "Кольорова смуга по краю"
+  },
+  "tabGroupsColorStyleLine": {
+    "message": "Лінія-з'єднувач"
+  },
+  "tabGroupsBookmarked": {
+    "message": "Збережено"
+  },
+  "tabGroupsRemoveBookmark": {
+    "message": "Видалити закладку"
+  },
+  "tabGroupsBookmarkRemoved": {
+    "message": "Видалено закладок: $count$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsPinned": {
+    "message": "Закріплена вкладка"
+  },
+  "tabGroupsDiscarded": {
+    "message": "Спляча вкладка"
+  },
+  "tabGroupsPinTab": {
+    "message": "Закріпити вкладку"
+  },
+  "tabGroupsUnpinTab": {
+    "message": "Відкріпити вкладку"
+  },
+  "tabGroupsSleepTab": {
+    "message": "Приспати вкладку"
+  },
+  "tabGroupsWakeTab": {
+    "message": "Розбудити вкладку"
+  },
+  "tabGroupsOpenGroups": {
+    "message": "Відкриті групи вкладок"
+  },
+  "tabGroupsClosedGroups": {
+    "message": "Нещодавно закриті"
+  },
+  "tabGroupsUngroupedTabs": {
+    "message": "Незгруповані вкладки"
+  },
+  "tabGroupsUngroupGroup": {
+    "message": "Розгрупувати вкладки"
+  },
+  "tabGroupsMoveNewWindow": {
+    "message": "У нове вікно"
+  },
+  "tabGroupsWindow": {
+    "message": "Вікно $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentWindow": {
+    "message": "Поточне вікно"
+  },
+  "tabGroupsReopenGroup": {
+    "message": "Повторно відкрити групу вкладок"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "Видалити закриту групу вкладок"
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "Згорнути вікно"
+  },
+  "tabGroupsExpandWindow": {
+    "message": "Розгорнути вікно"
+  },
+  "tabGroupsClearClosedGroups": {
+    "message": "Очистити все"
+  },
+  "tabGroupsClosedOpenTab": {
+    "message": "Відкрити в новій вкладці"
+  },
+  "tabGroupsRemoveClosedTab": {
+    "message": "Видалити зі збереженої групи"
+  },
+  "tabGroupsClosedTimeLabel": {
+    "message": "Закрито:"
+  },
+  "tabGroupsExpandedExpand": {
+    "message": "Розгорнути"
+  },
+  "tabGroupsExpandedCollapse": {
+    "message": "Згорнути"
+  },
+  "optionTabGroupsClosedLimit": {
+    "message": "Історія закритих вкладок/груп для збереження"
   },
   "deadProxyAdd": {
     "message": "Додати проксі-сервер для перевірки мертвих посилань"

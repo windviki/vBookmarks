@@ -60,9 +60,10 @@
         // v4 task-2: view layer (slice A)
         'activeView', 'viewState', 'showViewTabs', 'showItemPath',
         // per-view tab visibility (feature views + the structural tree/search tabs)
-        'showRecentBookmarks', 'showStatsView', 'showDeadView', 'showDupesView',
+        'showRecentBookmarks', 'showStatsView', 'showDeadView', 'showDupesView', 'showTabGroupsView',
         // 4.0.8: per-view disable switches (feature views only)
         'disableRecentView', 'disableStatsView', 'disableDeadView', 'disableDupesView',
+        'disableTabGroupsView',
         // v4 task-3: remember-last-view / tab badges / classic-experience
         // feature switches (items 6, 18, 20)
         'rememberView', 'showTabBadges', 'paletteEnabled', 'quickAddEnabled', 'showToolButton',
@@ -99,6 +100,14 @@
         'statsShowUnbookmarked', 'statsSort', 'statsHistoryBannerDismissed', 'statsHistoryImportedAt',
         'dupesStrategy', 'dupesScope', 'dupesIgnoreScheme',
         'deadSort', 'deadFilter', 'deadMarkFilter',
+        // 4.1.0 tab-groups view: display/behavior/count prefs (sync-routed
+        // below); tabGroupsColorBorder is the retired boolean kept in step
+        // with tabGroupsColorStyle for downgrades.
+        'tabGroupsSyncCollapse', 'tabGroupsColorStyle', 'tabGroupsColorBorder', 'tabGroupsClosedLimit',
+        // tabGroupsClosed (closed-group records) and tabGroupsViewState (per-
+        // device UI collapse state) stay LOCAL like searchHistory/viewState —
+        // they describe this device's tabs, not a cross-device preference.
+        'tabGroupsClosed', 'tabGroupsViewState',
         // 'showSyncStatus' historically lived in localStorage (the other sync
         // keys were born in the sync area) — listing it lets the v1 migration
         // hand it to chrome.storage.local, from where the local→sync
@@ -139,8 +148,9 @@
         'onlyShowBMBar', 'searchAfterEnter', 'announceEnabled',
         // views: tab strip, per-view visibility/disable, badges, path labels
         'showViewTabs', 'rememberView', 'showTabBadges', 'showItemPath',
-        'showRecentBookmarks', 'showStatsView', 'showDeadView', 'showDupesView',
+        'showRecentBookmarks', 'showStatsView', 'showDeadView', 'showDupesView', 'showTabGroupsView',
         'disableRecentView', 'disableStatsView', 'disableDeadView', 'disableDupesView',
+        'disableTabGroupsView',
         // feature switches
         'paletteEnabled', 'quickAddEnabled', 'showToolButton', 'quickAddContextMenu',
         'collapseTabGroupMenu', 'collapseSortMenu', 'statsEnabled', 'searchHistoryEnabled',
@@ -150,7 +160,9 @@
         'recentCount', 'sortOptions',
         'dupesStrategy', 'dupesScope', 'dupesIgnoreScheme',
         'deadSort', 'deadFilter', 'deadMarkFilter',
-        'statsSort', 'statsShowUnbookmarked'
+        'statsSort', 'statsShowUnbookmarked',
+        // 4.1.0 tab-groups view prefs (device-independent)
+        'tabGroupsSyncCollapse', 'tabGroupsColorStyle', 'tabGroupsColorBorder', 'tabGroupsClosedLimit'
     ];
     const SYNC_KEY_SET = new Set(SYNC_KEYS);
     const isSyncKey = key => SYNC_KEY_SET.has(key);

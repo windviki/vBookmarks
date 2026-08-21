@@ -44,6 +44,12 @@
   "announceV408Title": {
     "message": "What's new in v4.0.8"
   },
+  "announceV410Title": {
+    "message": "What's new in v4.1.0"
+  },
+  "announceV410Text": {
+    "message": "v4.1.0 adds the Tab groups view: every window's tabs and tab groups, managed next to your bookmarks."
+  },
   "confirmDeleteFolder": {
     "message": "This folder contains $count$ item(s). You can undo the deletion.",
     "placeholders": {
@@ -1980,8 +1986,8 @@
   "whatsNewChangelog": {
     "message": "Changelog"
   },
-  "whatsNewFavicon": {
-    "message": "v$1$ is the favicon-enhanced release: site icons Chrome hasn't cached are now fetched automatically.",
+  "whatsNewTabGroups": {
+    "message": "v$1$ adds the Tab groups view: every window's tabs and tab groups, next to your bookmarks.",
     "placeholders": {
       "1": {
         "content": "$1"
@@ -1998,5 +2004,318 @@
         "content": "$2"
       }
     }
+  },
+  "viewTabGroups": {
+    "message": "Tab groups",
+    "description": "View tab title for the browser tabs + tab groups view."
+  },
+  "optionShowTabGroupsView": {
+    "message": "Show the tab groups view tab"
+  },
+  "tabGroupsViewEmpty": {
+    "message": "No tabs in this window"
+  },
+  "tabGroupsToolbarRefresh": {
+    "message": "Refresh"
+  },
+  "tabGroupsCollapseAll": {
+    "message": "Collapse all"
+  },
+  "tabGroupsExpandAll": {
+    "message": "Expand all"
+  },
+  "tabGroupsSummary": {
+    "message": "$tabs$ tabs · $groups$ groups",
+    "placeholders": {
+      "tabs": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsGroupCount": {
+    "message": "$count$ tabs",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentTab": {
+    "message": "Current tab"
+  },
+  "tabGroupsAddBookmark": {
+    "message": "Bookmark this tab"
+  },
+  "tabGroupsSaveFolder": {
+    "message": "Save tab group as bookmark folder"
+  },
+  "tabGroupsGroupSavedToFolder": {
+    "message": "Saved $count$ tabs to $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsBookmarksAdded": {
+    "message": "Added $count$ bookmark(s) to $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsSelectNewGroup": {
+    "message": "New tab group"
+  },
+  "tabGroupsSelectOpenInto": {
+    "message": "Open in existing tab group…"
+  },
+  "tabGroupsSelectSaveFolder": {
+    "message": "Save as bookmark folder"
+  },
+  "tabGroupsSelectClose": {
+    "message": "Close"
+  },
+  "tabGroupsSelectSleep": {
+    "message": "Sleep"
+  },
+  "tabGroupsCopyMoveDialog": {
+    "message": "Selected tabs already belong to a tab group. Copy them (open in a new place) or move them (remove from their current group)?"
+  },
+  "tabGroupsCopyMoveCopy": {
+    "message": "Copy"
+  },
+  "tabGroupsCopyMoveMove": {
+    "message": "Move"
+  },
+  "tabGroupsConfirmClose": {
+    "message": "Close $count$ tabs?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsConfirmSleep": {
+    "message": "Sleep $count$ tabs?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "bookmarkFolderPickDialogTitle": {
+    "message": "Add to bookmark folder"
+  },
+  "bookmarkFolderNoFolders": {
+    "message": "No bookmark folders"
+  },
+  "tabGroupsSelectAddBookmarks": {
+    "message": "Add to bookmark folder…",
+    "description": "Selection-mode toolbar button in the tab groups view: adds the selected tabs as bookmarks into a chosen bookmark folder."
+  },
+  "paletteCmdGoTabGroups": {
+    "message": "Go to Tab groups view",
+    "description": "Command palette entry: switch to the tab groups view (slash alias /tabgroups, /groups)."
+  },
+  "tabGroupsActivateGroup": {
+    "message": "Go to tab group",
+    "description": "Group-head action in the tab groups view: focuses the group's first tab."
+  },
+  "tabGroupsRenameGroup": {
+    "message": "Rename tab group",
+    "description": "Group-head action in the tab groups view: opens the title/color dialog for the group."
+  },
+  "tabGroupsRenameDialog": {
+    "message": "Rename tab group",
+    "description": "Heading of the tab-group dialog when opened from the tab groups view to rename a group."
+  },
+  "tabGroupsCloseGroup": {
+    "message": "Close tab group",
+    "description": "Group-head action in the tab groups view: closes every tab of the group."
+  },
+  "tabGroupsSleepGroup": {
+    "message": "Sleep tab group",
+    "description": "Group-head action in the tab groups view: discards every tab of the group."
+  },
+  "tabGroupsWakeGroup": {
+    "message": "Wake tab group",
+    "description": "Group header control/menu item in the tab groups view: wake every sleeping member."
+  },
+  "tabGroupsActivateTab": {
+    "message": "Go to tab",
+    "description": "Tab row context-menu item in the tab groups view: focuses the tab."
+  },
+  "tabGroupsCollapseGroup": {
+    "message": "Collapse group",
+    "description": "Tab group context-menu item in the tab groups view."
+  },
+  "tabGroupsExpandGroup": {
+    "message": "Expand group",
+    "description": "Tab group context-menu item in the tab groups view."
+  },
+  "tabGroupsMenuAddBookmark": {
+    "message": "Bookmark tab",
+    "description": "Tab row context-menu item in the tab groups view: bookmarks the tab."
+  },
+  "tabGroupsMenuSaveFolder": {
+    "message": "Save as bookmark folder",
+    "description": "Tab group context-menu item in the tab groups view: saves the group as a bookmark folder."
+  },
+  "tabGroupsSyncCollapse": {
+    "message": "Sync collapse with browser",
+    "description": "Toolbar checkbox in the tab groups view: when checked, collapsing/expanding groups in the view also collapses/expands the browser tab groups."
+  },
+  "tabGroupsSyncCollapseHint": {
+    "message": "When checked, collapsing or expanding a group in this view also updates the browser tab group. Off by default so view folding stays local.",
+    "description": "Tooltip for the collapse-sync checkbox in the tab groups view."
+  },
+  "tabGroupsColorStyle": {
+    "message": "Tab group color style",
+    "description": "Options page (Views group): how a tab group's color is drawn in the tab groups view."
+  },
+  "tabGroupsColorStyleHint": {
+    "message": "Off shows the color dot only. Edge color band draws a colored strip down the group's left edge. Color connector line draws a colored line under the group's dot with a tick per row, tying the whole group into one tree.",
+    "description": "Hint for the tab group color style selector on the options page."
+  },
+  "tabGroupsColorStyleOff": {
+    "message": "Off (color dot only)",
+    "description": "Tab group color style choice on the options page."
+  },
+  "tabGroupsColorStyleEdge": {
+    "message": "Edge color band",
+    "description": "Tab group color style choice on the options page."
+  },
+  "tabGroupsColorStyleLine": {
+    "message": "Color connector line",
+    "description": "Tab group color style choice on the options page."
+  },
+  "tabGroupsBookmarked": {
+    "message": "Bookmarked",
+    "description": "Accessible label of the always-visible filled star on tab rows that are already bookmarked."
+  },
+  "tabGroupsRemoveBookmark": {
+    "message": "Remove bookmark",
+    "description": "Tab row control/menu item in the tab groups view: delete the bookmark(s) for this tab's URL again."
+  },
+  "tabGroupsBookmarkRemoved": {
+    "message": "Removed $count$ bookmark(s)",
+    "description": "Toast after removing a tab's bookmark from the tab groups view.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsPinned": {
+    "message": "Pinned tab",
+    "description": "Status icon aria/tooltip on pinned tab rows in the tab groups view."
+  },
+  "tabGroupsDiscarded": {
+    "message": "Sleeping tab",
+    "description": "Status icon aria/tooltip on discarded (sleeping) tab rows in the tab groups view."
+  },
+  "tabGroupsPinTab": {
+    "message": "Pin tab",
+    "description": "Tab row context-menu item in the tab groups view."
+  },
+  "tabGroupsUnpinTab": {
+    "message": "Unpin tab",
+    "description": "Tab row context-menu item in the tab groups view."
+  },
+  "tabGroupsSleepTab": {
+    "message": "Sleep tab",
+    "description": "Tab row control/menu item in the tab groups view: discard the tab (hollow crescent)."
+  },
+  "tabGroupsWakeTab": {
+    "message": "Wake tab",
+    "description": "Tab row control/menu item in the tab groups view: reload a sleeping tab in place (filled crescent)."
+  },
+  "tabGroupsOpenGroups": {
+    "message": "Open tab groups",
+    "description": "Section heading in the tab groups view for expanded groups."
+  },
+  "tabGroupsClosedGroups": {
+    "message": "Recently closed",
+    "description": "Section heading in the tab groups view for collapsed groups."
+  },
+  "tabGroupsUngroupedTabs": {
+    "message": "Ungrouped tabs",
+    "description": "Section heading in the tab groups view for tabs without a group."
+  },
+  "tabGroupsUngroupGroup": {
+    "message": "Ungroup tabs",
+    "description": "Group context-menu item: remove the group but keep its tabs."
+  },
+  "tabGroupsMoveNewWindow": {
+    "message": "Move group to new window",
+    "description": "Group context-menu item: move every tab of the group to a new window."
+  },
+  "tabGroupsWindow": {
+    "message": "Window $1$",
+    "description": "Window section heading in the tab groups view.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentWindow": {
+    "message": "Current window",
+    "description": "Badge on the window section heading that contains the popup."
+  },
+  "tabGroupsReopenGroup": {
+    "message": "Reopen tab group",
+    "description": "Button on a closed tab group row: reopens its tabs as a group."
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "Delete closed tab group",
+    "description": "Button on a closed tab group row: removes the saved record."
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "Collapse window",
+    "description": "Window-head toggle in the tab groups view: folds the window section."
+  },
+  "tabGroupsExpandWindow": {
+    "message": "Expand window",
+    "description": "Window-head toggle in the tab groups view: unfolds the window section."
+  },
+  "tabGroupsClearClosedGroups": {
+    "message": "Clear all",
+    "description": "Button on the closed tab groups section heading: removes all saved closed-group records."
+  },
+  "tabGroupsClosedOpenTab": {
+    "message": "Open in new tab",
+    "description": "Hover action on a saved tab inside a closed tab group row."
+  },
+  "tabGroupsRemoveClosedTab": {
+    "message": "Remove from saved group",
+    "description": "Hover action on a saved tab inside a closed tab group row: removes that tab from the saved record."
+  },
+  "tabGroupsClosedTimeLabel": {
+    "message": "Closed:",
+    "description": "Tooltip label before the close time of a recently closed tab in the tab groups view."
+  },
+  "tabGroupsExpandedExpand": {
+    "message": "Expand",
+    "description": "Context-menu item for a recently closed tab group in the tab groups view: show its tabs."
+  },
+  "tabGroupsExpandedCollapse": {
+    "message": "Collapse",
+    "description": "Context-menu item for a recently closed tab group in the tab groups view: hide its tabs."
+  },
+  "optionTabGroupsClosedLimit": {
+    "message": "Closed tab/group history to keep",
+    "description": "Options-page select in the Views group: how many closed tab/group records the tab groups view remembers."
   }
 }

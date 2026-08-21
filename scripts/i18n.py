@@ -550,6 +550,10 @@ def llm_chat(messages, cfg):
             'temperature': 0.2,
             'system': system,
             'messages': [m for m in messages if m['role'] != 'system'],
+            # DeepSeek 的 anthropic 兼容端点默认开启 reasoning（thinking），
+            # 长任务会把全部 max_tokens 花在 thinking 上而不产出 text。
+            # 翻译任务不需要推理——显式禁用，保证输出直接是 JSON 文本。
+            'thinking': {'type': 'disabled'},
         }).encode('utf-8')
         headers = {
             'Content-Type': 'application/json',

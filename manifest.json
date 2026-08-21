@@ -1,6 +1,6 @@
 {
 	"name": "__MSG_extName__",
-	"version": "4.0.8",
+	"version": "4.1.0",
 	"description": "__MSG_extDesc__",
 	"manifest_version": 3,
 	"homepage_url": "https://chrome.google.com/webstore/detail/odhjcodnoebmndcihdedenkmdmklpihb",
@@ -25,8 +25,8 @@
 		"default_path": "pages/sidepanel.html"
 	},
 	"background": {
-        "service_worker": "src/background.js",
-        "type": "module"
+		"service_worker": "src/background.js",
+		"type": "module"
 	},
 	"commands": {
 		"_execute_action": {
@@ -65,29 +65,35 @@
 	"permissions": [
 		"bookmarks",
 		"tabs",
-        "favicon",
-        "storage",
-        "scripting",
-        "sidePanel",
-        "contextMenus",
-        "tabGroups",
-        "alarms",
-        "clipboardWrite",
-        "proxy"
+		"favicon",
+		"storage",
+		"scripting",
+		"sidePanel",
+		"contextMenus",
+		"tabGroups",
+		"alarms",
+		"clipboardWrite",
+		"proxy"
 	],
-    "web_accessible_resources": [{
-        "resources": [ "_favicon/*" ],
-        "matches": ["<all_urls>"]
-    }],
-    "host_permissions": [
+	"web_accessible_resources": [
+		{
+			"resources": [
+				"_favicon/*"
+			],
+			"matches": [
+				"<all_urls>"
+			]
+		}
+	],
+	"host_permissions": [
 		"<all_urls>"
-    ],
-    "optional_permissions": [
-        "history"
-    ],
-    "content_security_policy": {
-        "extension_pages": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src *;"
-    },
+	],
+	"optional_permissions": [
+		"history"
+	],
+	"content_security_policy": {
+		"extension_pages": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src *;"
+	},
 	"minimum_chrome_version": "114.0.0.0",
 	"default_locale": "en",
 	"omnibox": {

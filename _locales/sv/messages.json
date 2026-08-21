@@ -38,6 +38,12 @@
   "announceV408Title": {
     "message": "Nyheter i v4.0.8"
   },
+  "announceV410Title": {
+    "message": "Nyheter i v4.1.0"
+  },
+  "announceV410Text": {
+    "message": "v4.1.0 lägger till vyn Flikgrupper: alla fönsters flikar och flikgrupper, hanterade bredvid dina bokmärken."
+  },
   "announceV408Text": {
     "message": "v4.0.8 är den favicon-förbättrade utgåvan: riktiga webbplatsikoner hämtas automatiskt för bokmärken som Chrome ännu inte har cachat."
   },
@@ -324,8 +330,8 @@
   "whatsNewChangelog": {
     "message": "Ändringslogg"
   },
-  "whatsNewFavicon": {
-    "message": "v$1$ är den favicon-förbättrade versionen: webbplatsikoner som Chrome inte har cachat hämtas nu automatiskt.",
+  "whatsNewTabGroups": {
+    "message": "v$1$ lägger till vy för tabbgrupper: alla fönsters tabbar och tabbgrupper, bredvid dina bokmärken.",
     "placeholders": {
       "1": {
         "content": "$1"
@@ -342,6 +348,271 @@
         "content": "$2"
       }
     }
+  },
+  "viewTabGroups": {
+    "message": "Flikgrupper"
+  },
+  "optionShowTabGroupsView": {
+    "message": "Visa flikgruppsvyn"
+  },
+  "tabGroupsViewEmpty": {
+    "message": "Inga flikar i detta fönster"
+  },
+  "tabGroupsToolbarRefresh": {
+    "message": "Uppdatera"
+  },
+  "tabGroupsCollapseAll": {
+    "message": "Fäll ihop alla"
+  },
+  "tabGroupsExpandAll": {
+    "message": "Expandera alla"
+  },
+  "tabGroupsSummary": {
+    "message": "$tabs$ flikar · $groups$ grupper",
+    "placeholders": {
+      "tabs": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsGroupCount": {
+    "message": "$count$ flikar",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentTab": {
+    "message": "Aktuell flik"
+  },
+  "tabGroupsAddBookmark": {
+    "message": "Bokmärk denna flik"
+  },
+  "tabGroupsSaveFolder": {
+    "message": "Spara flikgrupp som bokmärkesmapp"
+  },
+  "tabGroupsGroupSavedToFolder": {
+    "message": "Sparade $count$ flikar i $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsBookmarksAdded": {
+    "message": "Lade till $count$ bokmärke(n) i $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsSelectNewGroup": {
+    "message": "Ny flikgrupp"
+  },
+  "tabGroupsSelectOpenInto": {
+    "message": "Öppna i befintlig flikgrupp…"
+  },
+  "tabGroupsSelectSaveFolder": {
+    "message": "Spara som bokmärkesmapp"
+  },
+  "tabGroupsSelectClose": {
+    "message": "Stäng"
+  },
+  "tabGroupsSelectSleep": {
+    "message": "Vila"
+  },
+  "tabGroupsCopyMoveDialog": {
+    "message": "Valda flikar tillhör redan en flikgrupp. Kopiera dem (öppna på ny plats) eller flytta dem (ta bort från nuvarande grupp)?"
+  },
+  "tabGroupsCopyMoveCopy": {
+    "message": "Kopiera"
+  },
+  "tabGroupsCopyMoveMove": {
+    "message": "Flytta"
+  },
+  "tabGroupsConfirmClose": {
+    "message": "Stänga $count$ flikar?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsConfirmSleep": {
+    "message": "Vila $count$ flikar?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "bookmarkFolderPickDialogTitle": {
+    "message": "Lägg till i bokmärkesmapp"
+  },
+  "bookmarkFolderNoFolders": {
+    "message": "Inga bokmärkesmappar"
+  },
+  "tabGroupsSelectAddBookmarks": {
+    "message": "Lägg till i bokmärkesmapp…"
+  },
+  "paletteCmdGoTabGroups": {
+    "message": "Gå till flikgruppsvyn"
+  },
+  "tabGroupsActivateGroup": {
+    "message": "Gå till flikgrupp"
+  },
+  "tabGroupsRenameGroup": {
+    "message": "Byt namn på grupp"
+  },
+  "tabGroupsRenameDialog": {
+    "message": "Byt namn på flikgrupp"
+  },
+  "tabGroupsCloseGroup": {
+    "message": "Stäng grupp"
+  },
+  "tabGroupsSleepGroup": {
+    "message": "Vila grupp"
+  },
+  "tabGroupsWakeGroup": {
+    "message": "Väck flikgrupp"
+  },
+  "tabGroupsActivateTab": {
+    "message": "Gå till flik"
+  },
+  "tabGroupsCollapseGroup": {
+    "message": "Fäll ihop grupp"
+  },
+  "tabGroupsExpandGroup": {
+    "message": "Expandera grupp"
+  },
+  "tabGroupsMenuAddBookmark": {
+    "message": "Bokmärk flik"
+  },
+  "tabGroupsMenuSaveFolder": {
+    "message": "Spara som bokmärkesmapp"
+  },
+  "tabGroupsSyncCollapse": {
+    "message": "Synka ihopfällning med webbläsaren"
+  },
+  "tabGroupsSyncCollapseHint": {
+    "message": "När markerad uppdateras även webbläsarens flikgrupp när en grupp fälls ihop eller expanderas i denna vy. Av som standard så att vikningen förblir lokal."
+  },
+  "tabGroupsColorStyle": {
+    "message": "Flikgruppsfärgstil"
+  },
+  "tabGroupsColorStyleHint": {
+    "message": "Av visar endast färgpunkten. Kantfärgband ritar en färgad remsa längs gruppens vänstra kant. Färganslutningslinje ritar en färgad linje under gruppens punkt med en bock per rad, som binder samman hela gruppen till ett träd."
+  },
+  "tabGroupsColorStyleOff": {
+    "message": "Av (endast färgpunkt)"
+  },
+  "tabGroupsColorStyleEdge": {
+    "message": "Kantfärgband"
+  },
+  "tabGroupsColorStyleLine": {
+    "message": "Färganslutningslinje"
+  },
+  "tabGroupsBookmarked": {
+    "message": "Bokmärkt"
+  },
+  "tabGroupsRemoveBookmark": {
+    "message": "Ta bort bokmärke"
+  },
+  "tabGroupsBookmarkRemoved": {
+    "message": "Tog bort $count$ bokmärke(n)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsPinned": {
+    "message": "Fäst flik"
+  },
+  "tabGroupsDiscarded": {
+    "message": "Vilande flik"
+  },
+  "tabGroupsPinTab": {
+    "message": "Fäst flik"
+  },
+  "tabGroupsUnpinTab": {
+    "message": "Lossa flik"
+  },
+  "tabGroupsSleepTab": {
+    "message": "Vila flik"
+  },
+  "tabGroupsWakeTab": {
+    "message": "Väck flik"
+  },
+  "tabGroupsOpenGroups": {
+    "message": "Öppna flikgrupper"
+  },
+  "tabGroupsClosedGroups": {
+    "message": "Nyligen stängda"
+  },
+  "tabGroupsUngroupedTabs": {
+    "message": "Ogrupade flikar"
+  },
+  "tabGroupsUngroupGroup": {
+    "message": "Avgruppera flikar"
+  },
+  "tabGroupsMoveNewWindow": {
+    "message": "Flytta grupp till nytt fönster"
+  },
+  "tabGroupsWindow": {
+    "message": "Fönster $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentWindow": {
+    "message": "Aktuellt fönster"
+  },
+  "tabGroupsReopenGroup": {
+    "message": "Öppna flikgrupp igen"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "Ta bort stängd flikgrupp"
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "Minimera fönster"
+  },
+  "tabGroupsExpandWindow": {
+    "message": "Expandera fönster"
+  },
+  "tabGroupsClearClosedGroups": {
+    "message": "Rensa alla"
+  },
+  "tabGroupsClosedOpenTab": {
+    "message": "Öppna i ny flik"
+  },
+  "tabGroupsRemoveClosedTab": {
+    "message": "Ta bort från sparad grupp"
+  },
+  "tabGroupsClosedTimeLabel": {
+    "message": "Stängd:"
+  },
+  "tabGroupsExpandedExpand": {
+    "message": "Expandera"
+  },
+  "tabGroupsExpandedCollapse": {
+    "message": "Kollapsa"
+  },
+  "optionTabGroupsClosedLimit": {
+    "message": "Antal stängda flikar/grupper att spara"
   },
   "deadProxyAdd": {
     "message": "Lägg till proxyserver för döda länkar"

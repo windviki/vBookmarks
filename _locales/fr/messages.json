@@ -38,6 +38,12 @@
   "announceV408Title": {
     "message": "Nouveautés de v4.0.8"
   },
+  "announceV410Title": {
+    "message": "Nouveautés de v4.1.0"
+  },
+  "announceV410Text": {
+    "message": "v4.1.0 ajoute la vue Groupes d'onglets : les onglets et groupes d'onglets de chaque fenêtre, gérés à côté de vos signets."
+  },
   "announceV408Text": {
     "message": "v4.0.8 est la version avec favicons améliorés : les vraies icônes des sites sont récupérées automatiquement pour les favoris que Chrome n'a pas encore mis en cache."
   },
@@ -324,8 +330,8 @@
   "whatsNewChangelog": {
     "message": "Journal des modifications"
   },
-  "whatsNewFavicon": {
-    "message": "La version v$1$ améliore les favicons : les icônes de sites que Chrome n'a pas encore mises en cache sont désormais récupérées automatiquement.",
+  "whatsNewTabGroups": {
+    "message": "v$1$ ajoute la vue Groupes d'onglets : les onglets et groupes d'onglets de chaque fenêtre, à côté de vos signets.",
     "placeholders": {
       "1": {
         "content": "$1"
@@ -342,6 +348,271 @@
         "content": "$2"
       }
     }
+  },
+  "viewTabGroups": {
+    "message": "Groupes d'onglets"
+  },
+  "optionShowTabGroupsView": {
+    "message": "Afficher l'onglet de vue des groupes d'onglets"
+  },
+  "tabGroupsViewEmpty": {
+    "message": "Aucun onglet dans cette fenêtre"
+  },
+  "tabGroupsToolbarRefresh": {
+    "message": "Actualiser"
+  },
+  "tabGroupsCollapseAll": {
+    "message": "Tout réduire"
+  },
+  "tabGroupsExpandAll": {
+    "message": "Tout développer"
+  },
+  "tabGroupsSummary": {
+    "message": "$tabs$ onglets · $groups$ groupes",
+    "placeholders": {
+      "tabs": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsGroupCount": {
+    "message": "$count$ onglets",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentTab": {
+    "message": "Onglet actuel"
+  },
+  "tabGroupsAddBookmark": {
+    "message": "Ajouter cet onglet aux favoris"
+  },
+  "tabGroupsSaveFolder": {
+    "message": "Enregistrer le groupe d'onglets comme dossier de favoris"
+  },
+  "tabGroupsGroupSavedToFolder": {
+    "message": "$count$ onglets enregistrés dans $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsBookmarksAdded": {
+    "message": "$count$ favori(s) ajouté(s) à $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsSelectNewGroup": {
+    "message": "Nouveau groupe d'onglets"
+  },
+  "tabGroupsSelectOpenInto": {
+    "message": "Ouvrir dans un groupe d'onglets existant…"
+  },
+  "tabGroupsSelectSaveFolder": {
+    "message": "Enregistrer comme dossier de favoris"
+  },
+  "tabGroupsSelectClose": {
+    "message": "Fermer"
+  },
+  "tabGroupsSelectSleep": {
+    "message": "Mettre en veille"
+  },
+  "tabGroupsCopyMoveDialog": {
+    "message": "Les onglets sélectionnés appartiennent déjà à un groupe d'onglets. Voulez-vous les copier (ouvrir à un nouvel emplacement) ou les déplacer (les retirer de leur groupe actuel) ?"
+  },
+  "tabGroupsCopyMoveCopy": {
+    "message": "Copier"
+  },
+  "tabGroupsCopyMoveMove": {
+    "message": "Déplacer"
+  },
+  "tabGroupsConfirmClose": {
+    "message": "Fermer $count$ onglets ?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsConfirmSleep": {
+    "message": "Mettre en veille $count$ onglets ?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "bookmarkFolderPickDialogTitle": {
+    "message": "Ajouter au dossier de favoris"
+  },
+  "bookmarkFolderNoFolders": {
+    "message": "Aucun dossier de favoris"
+  },
+  "tabGroupsSelectAddBookmarks": {
+    "message": "Ajouter au dossier de favoris…"
+  },
+  "paletteCmdGoTabGroups": {
+    "message": "Aller à la vue des groupes d'onglets"
+  },
+  "tabGroupsActivateGroup": {
+    "message": "Aller au groupe d'onglets"
+  },
+  "tabGroupsRenameGroup": {
+    "message": "Renommer le groupe"
+  },
+  "tabGroupsRenameDialog": {
+    "message": "Renommer le groupe d'onglets"
+  },
+  "tabGroupsCloseGroup": {
+    "message": "Fermer le groupe"
+  },
+  "tabGroupsSleepGroup": {
+    "message": "Mettre le groupe en veille"
+  },
+  "tabGroupsWakeGroup": {
+    "message": "Réveiller le groupe d'onglets"
+  },
+  "tabGroupsActivateTab": {
+    "message": "Aller à l'onglet"
+  },
+  "tabGroupsCollapseGroup": {
+    "message": "Réduire le groupe"
+  },
+  "tabGroupsExpandGroup": {
+    "message": "Développer le groupe"
+  },
+  "tabGroupsMenuAddBookmark": {
+    "message": "Ajouter aux favoris"
+  },
+  "tabGroupsMenuSaveFolder": {
+    "message": "Enregistrer comme dossier"
+  },
+  "tabGroupsSyncCollapse": {
+    "message": "Synchroniser le repli avec le navigateur"
+  },
+  "tabGroupsSyncCollapseHint": {
+    "message": "Lorsque coché, le repli ou le dépliage d'un groupe dans cette vue met également à jour le groupe d'onglets du navigateur. Désactivé par défaut pour que le repli de la vue reste local."
+  },
+  "tabGroupsColorStyle": {
+    "message": "Style de couleur du groupe d'onglets"
+  },
+  "tabGroupsColorStyleHint": {
+    "message": "Désactivé affiche uniquement le point de couleur. La bande de couleur de bordure trace une bande colorée le long du bord gauche du groupe. La ligne de connexion colorée trace une ligne sous le point du groupe avec une coche par rangée, reliant tout le groupe en un seul arbre."
+  },
+  "tabGroupsColorStyleOff": {
+    "message": "Désactivé (point de couleur uniquement)"
+  },
+  "tabGroupsColorStyleEdge": {
+    "message": "Bande de couleur de bordure"
+  },
+  "tabGroupsColorStyleLine": {
+    "message": "Ligne de connexion colorée"
+  },
+  "tabGroupsBookmarked": {
+    "message": "Ajouté aux favoris"
+  },
+  "tabGroupsRemoveBookmark": {
+    "message": "Supprimer le signet"
+  },
+  "tabGroupsBookmarkRemoved": {
+    "message": "$count$ signet(s) supprimé(s)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsPinned": {
+    "message": "Onglet épinglé"
+  },
+  "tabGroupsDiscarded": {
+    "message": "Onglet en veille"
+  },
+  "tabGroupsPinTab": {
+    "message": "Épingler l'onglet"
+  },
+  "tabGroupsUnpinTab": {
+    "message": "Désépingler l'onglet"
+  },
+  "tabGroupsSleepTab": {
+    "message": "Mettre l'onglet en veille"
+  },
+  "tabGroupsWakeTab": {
+    "message": "Réveiller l'onglet"
+  },
+  "tabGroupsOpenGroups": {
+    "message": "Groupes d'onglets ouverts"
+  },
+  "tabGroupsClosedGroups": {
+    "message": "Récemment fermés"
+  },
+  "tabGroupsUngroupedTabs": {
+    "message": "Onglets non groupés"
+  },
+  "tabGroupsUngroupGroup": {
+    "message": "Dissocier les onglets"
+  },
+  "tabGroupsMoveNewWindow": {
+    "message": "Déplacer vers une nouvelle fenêtre"
+  },
+  "tabGroupsWindow": {
+    "message": "Fenêtre $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentWindow": {
+    "message": "Fenêtre actuelle"
+  },
+  "tabGroupsReopenGroup": {
+    "message": "Rouvrir le groupe d'onglets"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "Supprimer le groupe fermé"
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "Réduire la fenêtre"
+  },
+  "tabGroupsExpandWindow": {
+    "message": "Agrandir la fenêtre"
+  },
+  "tabGroupsClearClosedGroups": {
+    "message": "Tout effacer"
+  },
+  "tabGroupsClosedOpenTab": {
+    "message": "Ouvrir dans un nouvel onglet"
+  },
+  "tabGroupsRemoveClosedTab": {
+    "message": "Retirer du groupe enregistré"
+  },
+  "tabGroupsClosedTimeLabel": {
+    "message": "Fermé :"
+  },
+  "tabGroupsExpandedExpand": {
+    "message": "Déplier"
+  },
+  "tabGroupsExpandedCollapse": {
+    "message": "Replier"
+  },
+  "optionTabGroupsClosedLimit": {
+    "message": "Historique des onglets/groupes fermés à conserver"
   },
   "deadProxyAdd": {
     "message": "Ajouter un serveur proxy pour les vérifications de liens morts"

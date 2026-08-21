@@ -34,7 +34,7 @@ export const DONATION_URL = 'https://github.com/windviki/vBookmarks/blob/master/
 export const STORE_URL = 'https://chromewebstore.google.com/detail/vbookmarks/odhjcodnoebmndcihdedenkmdmklpihb';
 // Point at the changelog file explicitly, not the repo root: the root anchor
 // breaks the moment a top-level README appears (audit B3/O13).
-export const CHANGELOG_URL = 'https://github.com/windviki/vBookmarks/blob/master/docs/README.md#v408';
+export const CHANGELOG_URL = 'https://github.com/windviki/vBookmarks/blob/master/docs/README.md#v410';
 
 // The ask shows unless permanently disabled, and when this open is an
 // upgrade (newOrUpgrade) OR the accumulated opens have crossed the key.
@@ -134,9 +134,10 @@ export const createDonation = ({ store, $, chrome, _m, openNewTab }) => {
         store.set('donationFactor', parseInt(store.get('donationFactor'), 10) + 1);
     }
 
-    // 4.0.8 local what's-new banner (#whats-new): the network-independent twin
-    // of the remote announce — the version gate fires it exactly once on the
-    // 4.x → 4.0.8 crossing (recorded currentVersion keeps it from re-firing),
+    // 4.0.8's local what's-new banner (#whats-new), re-armed for 4.1.0: the
+    // network-independent twin of the remote announce — the version gate
+    // fires it exactly once on the 4.x → 4.1.0 crossing (recorded
+    // currentVersion keeps it from re-firing),
     // so it needs no dismiss and no network, and stays decoupled from the
     // donation card (donationDisabled never hides it). A 3.x → 4.x upgrade is
     // excluded: the v4 notice on the card already owns that story. A minor-
@@ -146,7 +147,7 @@ export const createDonation = ({ store, $, chrome, _m, openNewTab }) => {
     const whatsNewShown = !!whatsNew && upgradedToAnnounced && !upgradedToV4;
     if (whatsNew) {
         if (whatsNewShown) {
-            $('whats-new-text').textContent = _m('whatsNewFavicon', [mf['version']]);
+            $('whats-new-text').textContent = _m('whatsNewTabGroups', [mf['version']]);
             const changelogLink = $('whats-new-changelog');
             changelogLink.textContent = _m('whatsNewChangelog');
             changelogLink.href = CHANGELOG_URL;

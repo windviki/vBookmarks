@@ -33,6 +33,7 @@
     <div id="views">
         <section id="view-tree" class="view" role="tabpanel" aria-labelledby="view-tab-tree"><div id="tree" tabindex="-1"></div></section>
         <section id="view-search" class="view" role="tabpanel" aria-labelledby="view-tab-search" hidden><div id="search-history-area"></div><div id="results" tabindex="-1"></div></section>
+        <section id="view-tabgroups" class="view" role="tabpanel" aria-labelledby="view-tab-tabgroups" hidden><div id="tabgroups-list" tabindex="-1"></div></section>
         <section id="view-recent" class="view" role="tabpanel" aria-labelledby="view-tab-recent" hidden><div id="recent-list" tabindex="-1"></div></section>
         <section id="view-stats" class="view" role="tabpanel" aria-labelledby="view-tab-stats" hidden><div id="stats-list" tabindex="-1"></div></section>
         <section id="view-dead" class="view" role="tabpanel" aria-labelledby="view-tab-dead" hidden><div id="dead-list" tabindex="-1"></div></section>
@@ -137,6 +138,37 @@
     <hr id="dupes-group-menu-sep1">
     <div id="dupes-group-toggle" class="menu-item" role="menuitem" tabindex="-1"></div>
 </menu>
+<menu id="tab-row-context-menu" type="context" role="menu" tabindex="-1">
+    <div id="tab-row-activate" class="menu-item" role="menuitem" tabindex="-1"></div>
+    <div id="tab-row-pin" class="menu-item" role="menuitem" tabindex="-1"></div>
+    <div id="tab-row-add-bookmark" class="menu-item" role="menuitem" tabindex="-1"></div>
+    <hr id="tab-row-menu-sep1">
+    <div id="tab-row-sleep" class="menu-item" role="menuitem" tabindex="-1"></div>
+    <div id="tab-row-close" class="menu-item" role="menuitem" tabindex="-1"></div>
+</menu>
+<menu id="tabgroup-context-menu" type="context" role="menu" tabindex="-1">
+    <div id="tabgroup-activate" class="menu-item" role="menuitem" tabindex="-1"></div>
+    <div id="tabgroup-rename" class="menu-item" role="menuitem" tabindex="-1"></div>
+    <div id="tabgroup-collapse" class="menu-item" role="menuitem" tabindex="-1"></div>
+    <div id="tabgroup-move-new-window" class="menu-item" role="menuitem" tabindex="-1"></div>
+    <div id="tabgroup-ungroup" class="menu-item" role="menuitem" tabindex="-1"></div>
+    <hr id="tabgroup-menu-sep1">
+    <div id="tabgroup-save-folder" class="menu-item" role="menuitem" tabindex="-1"></div>
+    <div id="tabgroup-sleep" class="menu-item" role="menuitem" tabindex="-1"></div>
+    <div id="tabgroup-close" class="menu-item" role="menuitem" tabindex="-1"></div>
+</menu>
+<menu id="tabgroups-closed-context-menu" type="context" role="menu" tabindex="-1">
+    <div id="tabgroups-closed-reopen" class="menu-item" role="menuitem" tabindex="-1"></div>
+    <div id="tabgroups-closed-toggle" class="menu-item" role="menuitem" tabindex="-1"></div>
+    <hr id="tabgroups-closed-menu-sep1">
+    <div id="tabgroups-closed-forget" class="menu-item" role="menuitem" tabindex="-1"></div>
+</menu>
+<menu id="tabgroups-closed-tab-context-menu" type="context" role="menu" tabindex="-1">
+    <div id="tabgroups-closed-tab-open" class="menu-item" role="menuitem" tabindex="-1"></div>
+    <div id="tabgroups-closed-tab-bookmark" class="menu-item" role="menuitem" tabindex="-1"></div>
+    <hr id="tabgroups-closed-tab-menu-sep1">
+    <div id="tabgroups-closed-tab-remove" class="menu-item" role="menuitem" tabindex="-1"></div>
+</menu>
 <menu id="palette-cmd-context-menu" type="context" role="menu" tabindex="-1">
     <div id="palette-cmd-edit" class="menu-item" role="menuitem" tabindex="-1"></div>
     <div id="palette-cmd-delete" class="menu-item" role="menuitem" tabindex="-1"></div>
@@ -228,6 +260,21 @@
     <ul id="tab-group-pick-list"></ul>
     <div class="buttons">
         <button id="tab-group-pick-cancel-button" type="button"></button>
+    </div>
+</div>
+<div id="copy-move-dialog" class="dialog" role="dialog" aria-modal="true">
+    <p id="copy-move-dialog-text" class="dialog-text"></p>
+    <div class="buttons">
+        <button id="copy-move-move-button" type="button"></button>
+        <button id="copy-move-copy-button" type="button"></button>
+        <button id="copy-move-cancel-button" type="button"></button>
+    </div>
+</div>
+<div id="bookmark-folder-pick-dialog" class="dialog" role="dialog" aria-modal="true">
+    <p id="bookmark-folder-pick-text" class="dialog-text"></p>
+    <ul id="bookmark-folder-pick-list"></ul>
+    <div class="buttons">
+        <button id="bookmark-folder-pick-cancel-button" type="button"></button>
     </div>
 </div>
 <script src="/src/store.js"></script>

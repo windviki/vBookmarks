@@ -82,6 +82,7 @@ const MSGS = {
     paletteCmdSaveSession: 'Save window tabs as folder',
     paletteCmdGoTree: 'Go to Tree view',
     paletteCmdGoSearch: 'Go to Search view',
+    paletteCmdGoTabGroups: 'Go to Tab groups view',
     paletteCmdGoRecent: 'Go to Recent view',
     paletteCmdGoStats: 'Go to Stats view',
     paletteCmdGoDead: 'Go to Dead links view',
@@ -122,7 +123,7 @@ const MSGS = {
 const COMMAND_MSGS = [
     MSGS.paletteCmdQuickAdd, MSGS.paletteCmdNewBookmark, MSGS.paletteCmdNewFolder,
     MSGS.paletteCmdSaveSession, MSGS.paletteCmdGoTree,
-    MSGS.paletteCmdGoSearch, MSGS.paletteCmdGoRecent, MSGS.paletteCmdGoStats,
+    MSGS.paletteCmdGoSearch, MSGS.paletteCmdGoTabGroups, MSGS.paletteCmdGoRecent, MSGS.paletteCmdGoStats,
     MSGS.paletteCmdGoDead, MSGS.paletteCmdGoDupes,
     MSGS.paletteCmdTheme,
     MSGS.optionThemeDark, MSGS.optionThemeLight, MSGS.optionThemeInk, MSGS.optionThemePaper,
@@ -448,7 +449,7 @@ const setup = (opts = {}) => {
         // dialogs.js's anyOpen() contract over the body class set — the
         // palette delegates the modal-layer question to it (no local copy).
         anyOpen: () => ['needConfirm', 'needEdit', 'needAlert', 'needInputName', 'needSort',
-            'needTabGroup', 'needGroupPick'].some(c => body.classList.contains(c)),
+            'needTabGroup', 'needGroupPick', 'needCopyMove', 'needFolderPick'].some(c => body.classList.contains(c)),
         AlertDialog: {
             openCalls: [],
             open(msg) {
@@ -570,7 +571,7 @@ describe('module API + open/close state machine', () => {
     });
 
     it('refuses to open while any dialog class sits on body', () => {
-        for (const cls of ['needConfirm', 'needEdit', 'needAlert', 'needInputName', 'needSort', 'needTabGroup', 'needGroupPick']) {
+        for (const cls of ['needConfirm', 'needEdit', 'needAlert', 'needInputName', 'needSort', 'needTabGroup', 'needGroupPick', 'needCopyMove', 'needFolderPick']) {
             const { palette, chrome, body } = setup({});
             body.classList.add(cls);
             palette.open();

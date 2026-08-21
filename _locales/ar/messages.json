@@ -38,6 +38,12 @@
   "announceV408Title": {
     "message": "ما الجديد في v4.0.8"
   },
+  "announceV410Title": {
+    "message": "ما الجديد في v4.1.0"
+  },
+  "announceV410Text": {
+    "message": "يضيف v4.1.0 عرض مجموعات التبويبات: تبويبات كل نافذة ومجموعاتها، مُدارة بجانب إشاراتك المرجعية."
+  },
   "announceV408Text": {
     "message": "v4.0.8 هو إصدار محسّن للأيقونات: يتم جلب أيقونات المواقع الحقيقية تلقائيًا للإشارات المرجعية التي لم يقم Chrome بتخزينها مؤقتًا بعد."
   },
@@ -324,8 +330,8 @@
   "whatsNewChangelog": {
     "message": "سجل التغييرات"
   },
-  "whatsNewFavicon": {
-    "message": "v$1$ هو الإصدار المحسّن لأيقونات المواقع: يتم الآن جلب أيقونات المواقع التي لم يخزنها Chrome مؤقتًا تلقائيًا.",
+  "whatsNewTabGroups": {
+    "message": "v$1$ يضيف عرض مجموعات التبويبات: تبويبات ومجموعات تبويبات كل نافذة، بجانب إشاراتك المرجعية.",
     "placeholders": {
       "1": {
         "content": "$1"
@@ -342,6 +348,271 @@
         "content": "$2"
       }
     }
+  },
+  "viewTabGroups": {
+    "message": "مجموعات التبويبات"
+  },
+  "optionShowTabGroupsView": {
+    "message": "إظهار تبويب عرض مجموعات التبويبات"
+  },
+  "tabGroupsViewEmpty": {
+    "message": "لا توجد تبويبات في هذه النافذة"
+  },
+  "tabGroupsToolbarRefresh": {
+    "message": "تحديث"
+  },
+  "tabGroupsCollapseAll": {
+    "message": "طي الكل"
+  },
+  "tabGroupsExpandAll": {
+    "message": "توسيع الكل"
+  },
+  "tabGroupsSummary": {
+    "message": "$tabs$ تبويبات · $groups$ مجموعات",
+    "placeholders": {
+      "tabs": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsGroupCount": {
+    "message": "$count$ تبويبات",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentTab": {
+    "message": "التبويب الحالي"
+  },
+  "tabGroupsAddBookmark": {
+    "message": "إضافة علامة مرجعية لهذا التبويب"
+  },
+  "tabGroupsSaveFolder": {
+    "message": "حفظ مجموعة التبويبات كمجلد علامات مرجعية"
+  },
+  "tabGroupsGroupSavedToFolder": {
+    "message": "تم حفظ $count$ تبويبات في $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsBookmarksAdded": {
+    "message": "تمت إضافة $count$ علامة (علامات) مرجعية إلى $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsSelectNewGroup": {
+    "message": "مجموعة تبويبات جديدة"
+  },
+  "tabGroupsSelectOpenInto": {
+    "message": "فتح في مجموعة تبويبات موجودة…"
+  },
+  "tabGroupsSelectSaveFolder": {
+    "message": "حفظ كمجلد علامات مرجعية"
+  },
+  "tabGroupsSelectClose": {
+    "message": "إغلاق"
+  },
+  "tabGroupsSelectSleep": {
+    "message": "إسبات"
+  },
+  "tabGroupsCopyMoveDialog": {
+    "message": "التبويبات المحددة تنتمي بالفعل إلى مجموعة تبويبات. هل تريد نسخها (فتحها في مكان جديد) أو نقلها (إزالتها من مجموعتها الحالية)؟"
+  },
+  "tabGroupsCopyMoveCopy": {
+    "message": "نسخ"
+  },
+  "tabGroupsCopyMoveMove": {
+    "message": "نقل"
+  },
+  "tabGroupsConfirmClose": {
+    "message": "إغلاق $count$ تبويبات؟",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsConfirmSleep": {
+    "message": "إسبات $count$ تبويبات؟",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "bookmarkFolderPickDialogTitle": {
+    "message": "إضافة إلى مجلد العلامات المرجعية"
+  },
+  "bookmarkFolderNoFolders": {
+    "message": "لا توجد مجلدات علامات مرجعية"
+  },
+  "tabGroupsSelectAddBookmarks": {
+    "message": "إضافة إلى مجلد العلامات المرجعية…"
+  },
+  "paletteCmdGoTabGroups": {
+    "message": "الانتقال إلى عرض مجموعات التبويبات"
+  },
+  "tabGroupsActivateGroup": {
+    "message": "الانتقال إلى مجموعة التبويبات"
+  },
+  "tabGroupsRenameGroup": {
+    "message": "إعادة تسمية مجموعة التبويبات"
+  },
+  "tabGroupsRenameDialog": {
+    "message": "إعادة تسمية مجموعة التبويبات"
+  },
+  "tabGroupsCloseGroup": {
+    "message": "إغلاق مجموعة التبويبات"
+  },
+  "tabGroupsSleepGroup": {
+    "message": "إسبات مجموعة التبويبات"
+  },
+  "tabGroupsWakeGroup": {
+    "message": "تنشيط مجموعة التبويبات"
+  },
+  "tabGroupsActivateTab": {
+    "message": "الانتقال إلى التبويب"
+  },
+  "tabGroupsCollapseGroup": {
+    "message": "طي المجموعة"
+  },
+  "tabGroupsExpandGroup": {
+    "message": "توسيع المجموعة"
+  },
+  "tabGroupsMenuAddBookmark": {
+    "message": "إضافة علامة مرجعية للتبويب"
+  },
+  "tabGroupsMenuSaveFolder": {
+    "message": "حفظ كمجلد علامات مرجعية"
+  },
+  "tabGroupsSyncCollapse": {
+    "message": "مزامنة الطي مع المتصفح"
+  },
+  "tabGroupsSyncCollapseHint": {
+    "message": "عند التحديد، يؤدي طي مجموعة أو توسيعها في هذا العرض إلى تحديث مجموعة علامات تبويب المتصفح أيضًا. معطّل افتراضيًا ليبقى طي العرض محليًا."
+  },
+  "tabGroupsColorStyle": {
+    "message": "نمط لون مجموعة التبويبات"
+  },
+  "tabGroupsColorStyleHint": {
+    "message": "عند إيقاف التشغيل، تظهر نقطة اللون فقط. شريط اللون الحوافي يرسم شريطًا ملونًا على الحافة اليسرى للمجموعة. خط الموصل الملون يرسم خطًا تحت نقطة المجموعة مع علامة لكل صف، مما يربط المجموعة بأكملها في شجرة واحدة."
+  },
+  "tabGroupsColorStyleOff": {
+    "message": "إيقاف (نقطة اللون فقط)"
+  },
+  "tabGroupsColorStyleEdge": {
+    "message": "شريط اللون الحوافي"
+  },
+  "tabGroupsColorStyleLine": {
+    "message": "خط الموصل الملون"
+  },
+  "tabGroupsBookmarked": {
+    "message": "تمت الإشارة المرجعية"
+  },
+  "tabGroupsRemoveBookmark": {
+    "message": "إزالة الإشارة المرجعية"
+  },
+  "tabGroupsBookmarkRemoved": {
+    "message": "تمت إزالة $count$ إشارة مرجعية",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsPinned": {
+    "message": "علامة تبويب مثبتة"
+  },
+  "tabGroupsDiscarded": {
+    "message": "علامة تبويب نائمة"
+  },
+  "tabGroupsPinTab": {
+    "message": "تثبيت علامة التبويب"
+  },
+  "tabGroupsUnpinTab": {
+    "message": "إلغاء تثبيت علامة التبويب"
+  },
+  "tabGroupsSleepTab": {
+    "message": "إسبات التبويب"
+  },
+  "tabGroupsWakeTab": {
+    "message": "تنشيط التبويب"
+  },
+  "tabGroupsOpenGroups": {
+    "message": "مجموعات التبويبات المفتوحة"
+  },
+  "tabGroupsClosedGroups": {
+    "message": "أُغلقت مؤخرًا"
+  },
+  "tabGroupsUngroupedTabs": {
+    "message": "تبويبات غير مجمعة"
+  },
+  "tabGroupsUngroupGroup": {
+    "message": "إلغاء تجميع التبويبات"
+  },
+  "tabGroupsMoveNewWindow": {
+    "message": "نقل المجموعة لنافذة جديدة"
+  },
+  "tabGroupsWindow": {
+    "message": "النافذة $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentWindow": {
+    "message": "النافذة الحالية"
+  },
+  "tabGroupsReopenGroup": {
+    "message": "إعادة فتح مجموعة التبويبات"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "حذف مجموعة التبويبات المغلقة"
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "طي النافذة"
+  },
+  "tabGroupsExpandWindow": {
+    "message": "توسيع النافذة"
+  },
+  "tabGroupsClearClosedGroups": {
+    "message": "مسح الكل"
+  },
+  "tabGroupsClosedOpenTab": {
+    "message": "فتح في تبويب جديد"
+  },
+  "tabGroupsRemoveClosedTab": {
+    "message": "إزالة من المجموعة المحفوظة"
+  },
+  "tabGroupsClosedTimeLabel": {
+    "message": "أُغلقت:"
+  },
+  "tabGroupsExpandedExpand": {
+    "message": "توسيع"
+  },
+  "tabGroupsExpandedCollapse": {
+    "message": "طي"
+  },
+  "optionTabGroupsClosedLimit": {
+    "message": "保留已关闭标签页/组的历史记录"
   },
   "deadProxyAdd": {
     "message": "أضف خادم وكيل لفحوصات الروابط المعطلة"

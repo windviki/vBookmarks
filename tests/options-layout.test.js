@@ -24,12 +24,13 @@ const count = (haystack, needle) => haystack.split(needle).length - 1;
 
 describe('options page group structure (round-6 item 5, v4 task-3 #17 merge)', () => {
     it('flows the merged card sections through .options-grid', () => {
-        // general / views / per-view groups (tree/search/tab-groups-placeholder/
-        // recent/stats/dead/dupes) / icons / context menu / tools / palette /
+        // general / views / per-view groups (tree/search/tab-groups/recent/
+        // stats/dead/dupes) / icons / context menu / tools / palette /
         // sync / accessibility / custom icon / separators / sorting /
         // custom styles / backup+reset — advanced-options merged in.
-        expect(count(optionsHtml, '<section class="options-group">')).toBe(18);
-        expect(count(optionsHtml, '<section class="options-group" hidden>')).toBe(2);
+        // 4.1.0: the tab-groups group is live; only dupes stays a placeholder.
+        expect(count(optionsHtml, '<section class="options-group">')).toBe(19);
+        expect(count(optionsHtml, '<section class="options-group" hidden>')).toBe(1);
         expect(optionsHtml).toContain('<main class="options-grid">');
         for (const id of ['general', 'views-options', 'tree-options', 'search-options', 'tabgroups-options',
                 'recent-options', 'stats-options', 'dead-scan-options', 'dupes-options',
@@ -94,7 +95,7 @@ describe('options page group structure (round-6 item 5, v4 task-3 #17 merge)', (
         // Views carries the display items AND every per-view show switch.
         const views = bodyOf('views-options');
         for (const id of ['show-view-tabs', 'remember-view', 'show-tab-badges', 'show-item-path',
-                'show-recent-bookmarks', 'show-stats-view', 'show-dead-view', 'show-dupes-view'])
+                'show-tab-groups-view', 'show-recent-bookmarks', 'show-stats-view', 'show-dead-view', 'show-dupes-view'])
             expect(views).toContain(`id="${id}"`);
         for (const id of ['recent-count', 'only-show-bmbar', 'search-after-enter'])
             expect(views).not.toContain(`id="${id}"`);
@@ -112,10 +113,16 @@ describe('options page group structure (round-6 item 5, v4 task-3 #17 merge)', (
         // announce privacy switch (a moved control fails here now)
         for (const id of ['theme-select', 'language-select', 'option-language-hint', 'announce-enabled'])
             expect(general).toContain(`id="${id}"`);
+        // Tab groups group (4.1.0) owns the color-style + closed-depth options
+        const tabgroups = bodyOf('tabgroups-options');
+        for (const id of ['tabgroups-color-style', 'tabgroups-closed-limit'])
+            expect(tabgroups).toContain(`id="${id}"`);
+        expect(tabgroups).not.toContain('id="show-tab-groups-view"');
         // Recent group owns only the recent-count behavior option
         const recent = bodyOf('recent-options');
         expect(recent).toContain('id="recent-count"');
         expect(recent).not.toContain('id="show-recent-bookmarks"');
+        expect(recent).not.toContain('id="tabgroups-closed-limit"');
         // Stats group owns the data controls, not the show switch
         const stats = bodyOf('stats-options');
         for (const id of ['stats-enabled', 'stats-clear', 'search-history-enabled'])

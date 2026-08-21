@@ -38,6 +38,12 @@
   "announceV408Title": {
     "message": "v4.0.8 的新功能"
   },
+  "announceV410Title": {
+    "message": "v4.1.0 的新功能"
+  },
+  "announceV410Text": {
+    "message": "v4.1.0 新增分頁群組檢視：每個視窗的分頁與分頁群組，可在書籤旁一併管理。"
+  },
   "announceV408Text": {
     "message": "v4.0.8 是網站圖示強化版：會自動為 Chrome 尚未快取的書籤擷取真實網站圖示。"
   },
@@ -324,8 +330,8 @@
   "whatsNewChangelog": {
     "message": "變更紀錄"
   },
-  "whatsNewFavicon": {
-    "message": "v$1$ 為 favicon 增強版：Chrome 尚未快取的網站圖示現在會自動取得。",
+  "whatsNewTabGroups": {
+    "message": "v$1$ 新增「分頁群組」檢視：每個視窗的分頁與分頁群組，與您的書籤並列顯示。",
     "placeholders": {
       "1": {
         "content": "$1"
@@ -1813,5 +1819,270 @@
         "content": "$2"
       }
     }
+  },
+  "viewTabGroups": {
+    "message": "分頁群組"
+  },
+  "optionShowTabGroupsView": {
+    "message": "顯示分頁群組檢視分頁"
+  },
+  "tabGroupsViewEmpty": {
+    "message": "此視窗沒有分頁"
+  },
+  "tabGroupsToolbarRefresh": {
+    "message": "重新整理"
+  },
+  "tabGroupsCollapseAll": {
+    "message": "全部收合"
+  },
+  "tabGroupsExpandAll": {
+    "message": "全部展開"
+  },
+  "tabGroupsSummary": {
+    "message": "$tabs$ 個分頁 · $groups$ 個群組",
+    "placeholders": {
+      "tabs": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsGroupCount": {
+    "message": "$count$ 個分頁",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentTab": {
+    "message": "目前分頁"
+  },
+  "tabGroupsAddBookmark": {
+    "message": "將此分頁加入書籤"
+  },
+  "tabGroupsSaveFolder": {
+    "message": "將分頁群組存為書籤資料夾"
+  },
+  "tabGroupsGroupSavedToFolder": {
+    "message": "已將 $count$ 個分頁存入 $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsBookmarksAdded": {
+    "message": "已將 $count$ 個書籤加入 $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsSelectNewGroup": {
+    "message": "新增分頁群組"
+  },
+  "tabGroupsSelectOpenInto": {
+    "message": "在現有分頁群組中開啟…"
+  },
+  "tabGroupsSelectSaveFolder": {
+    "message": "存為書籤資料夾"
+  },
+  "tabGroupsSelectClose": {
+    "message": "關閉"
+  },
+  "tabGroupsSelectSleep": {
+    "message": "休眠"
+  },
+  "tabGroupsCopyMoveDialog": {
+    "message": "選取的分頁已屬於某個分頁群組。要複製（在新位置開啟）還是移動（從目前群組移除）？"
+  },
+  "tabGroupsCopyMoveCopy": {
+    "message": "複製"
+  },
+  "tabGroupsCopyMoveMove": {
+    "message": "移動"
+  },
+  "tabGroupsConfirmClose": {
+    "message": "關閉 $count$ 個分頁？",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsConfirmSleep": {
+    "message": "休眠 $count$ 個分頁？",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "bookmarkFolderPickDialogTitle": {
+    "message": "加入書籤資料夾"
+  },
+  "bookmarkFolderNoFolders": {
+    "message": "沒有書籤資料夾"
+  },
+  "tabGroupsSelectAddBookmarks": {
+    "message": "加入書籤資料夾…"
+  },
+  "paletteCmdGoTabGroups": {
+    "message": "前往分頁群組檢視"
+  },
+  "tabGroupsActivateGroup": {
+    "message": "前往分頁群組"
+  },
+  "tabGroupsRenameGroup": {
+    "message": "重新命名分頁群組"
+  },
+  "tabGroupsRenameDialog": {
+    "message": "重新命名分頁群組"
+  },
+  "tabGroupsCloseGroup": {
+    "message": "關閉分頁群組"
+  },
+  "tabGroupsSleepGroup": {
+    "message": "休眠分頁群組"
+  },
+  "tabGroupsWakeGroup": {
+    "message": "喚醒分頁群組"
+  },
+  "tabGroupsActivateTab": {
+    "message": "前往分頁"
+  },
+  "tabGroupsCollapseGroup": {
+    "message": "收合群組"
+  },
+  "tabGroupsExpandGroup": {
+    "message": "展開群組"
+  },
+  "tabGroupsMenuAddBookmark": {
+    "message": "將分頁加入書籤"
+  },
+  "tabGroupsMenuSaveFolder": {
+    "message": "存為書籤資料夾"
+  },
+  "tabGroupsSyncCollapse": {
+    "message": "与浏览器同步折叠"
+  },
+  "tabGroupsSyncCollapseHint": {
+    "message": "勾选后，在此视图中折叠或展开群组也会更新浏览器标签页群组。默认关闭，因此视图折叠仅限本地。"
+  },
+  "tabGroupsColorStyle": {
+    "message": "分頁群組色彩樣式"
+  },
+  "tabGroupsColorStyleHint": {
+    "message": "關閉僅顯示色彩圓點。邊緣色帶會在群組左側繪製彩色條帶。色彩連接線會在群組圓點下方繪製彩色線條，每列一個刻度，將整個群組串聯成樹狀結構。"
+  },
+  "tabGroupsColorStyleOff": {
+    "message": "關閉（僅色彩圓點）"
+  },
+  "tabGroupsColorStyleEdge": {
+    "message": "邊緣色帶"
+  },
+  "tabGroupsColorStyleLine": {
+    "message": "色彩連接線"
+  },
+  "tabGroupsBookmarked": {
+    "message": "已加入書籤"
+  },
+  "tabGroupsRemoveBookmark": {
+    "message": "移除書籤"
+  },
+  "tabGroupsBookmarkRemoved": {
+    "message": "已移除 $count$ 個書籤",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsPinned": {
+    "message": "已釘選分頁"
+  },
+  "tabGroupsDiscarded": {
+    "message": "休眠分頁"
+  },
+  "tabGroupsPinTab": {
+    "message": "釘選分頁"
+  },
+  "tabGroupsUnpinTab": {
+    "message": "取消釘選分頁"
+  },
+  "tabGroupsSleepTab": {
+    "message": "休眠分頁"
+  },
+  "tabGroupsWakeTab": {
+    "message": "喚醒分頁"
+  },
+  "tabGroupsOpenGroups": {
+    "message": "開啟的標籤頁群組"
+  },
+  "tabGroupsClosedGroups": {
+    "message": "最近關閉"
+  },
+  "tabGroupsUngroupedTabs": {
+    "message": "未分組的標籤頁"
+  },
+  "tabGroupsUngroupGroup": {
+    "message": "取消分組"
+  },
+  "tabGroupsMoveNewWindow": {
+    "message": "移至新視窗"
+  },
+  "tabGroupsWindow": {
+    "message": "視窗 $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentWindow": {
+    "message": "目前視窗"
+  },
+  "tabGroupsReopenGroup": {
+    "message": "重新開啟分頁群組"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "刪除已關閉的分頁群組"
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "收合視窗"
+  },
+  "tabGroupsExpandWindow": {
+    "message": "展開視窗"
+  },
+  "tabGroupsClearClosedGroups": {
+    "message": "全部清除"
+  },
+  "tabGroupsClosedOpenTab": {
+    "message": "在新分頁中開啟"
+  },
+  "tabGroupsRemoveClosedTab": {
+    "message": "從已儲存群組中移除"
+  },
+  "tabGroupsClosedTimeLabel": {
+    "message": "關閉時間："
+  },
+  "tabGroupsExpandedExpand": {
+    "message": "展開"
+  },
+  "tabGroupsExpandedCollapse": {
+    "message": "收合"
+  },
+  "optionTabGroupsClosedLimit": {
+    "message": "保留的已關閉分頁／群組記錄數"
   }
 }

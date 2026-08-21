@@ -38,6 +38,12 @@
   "announceV408Title": {
     "message": "تازههای v4.0.8"
   },
+  "announceV410Title": {
+    "message": "تازههای نسخه ۴.۱.۰"
+  },
+  "announceV410Text": {
+    "message": "نسخه ۴.۱.۰ نمای گروههای تب را اضافه میکند: تبها و گروههای تب هر پنجره، در کنار نشانکهای شما مدیریت میشوند."
+  },
   "announceV408Text": {
     "message": "v4.0.8 نسخهای با بهبود favicon است: آیکونهای واقعی سایتها بهطور خودکار برای نشانکهایی که Chrome هنوز کش نکرده است، دریافت میشوند."
   },
@@ -324,8 +330,8 @@
   "whatsNewChangelog": {
     "message": "تاریخچه تغییرات"
   },
-  "whatsNewFavicon": {
-    "message": "v$1$ نسخهی بهبودیافتهی فاوآیکون است: آیکونهای سایتهایی که Chrome کش نکرده است، اکنون بهطور خودکار دریافت میشوند.",
+  "whatsNewTabGroups": {
+    "message": "v$1$ نمای گروه‌های تب را اضافه می‌کند: تب‌ها و گروه‌های تب هر پنجره، در کنار نشانک‌های شما.",
     "placeholders": {
       "1": {
         "content": "$1"
@@ -342,6 +348,271 @@
         "content": "$2"
       }
     }
+  },
+  "viewTabGroups": {
+    "message": "گروههای برگه"
+  },
+  "optionShowTabGroupsView": {
+    "message": "نمایش برگهٔ نمای گروههای برگه"
+  },
+  "tabGroupsViewEmpty": {
+    "message": "هیچ برگهای در این پنجره نیست"
+  },
+  "tabGroupsToolbarRefresh": {
+    "message": "تازهسازی"
+  },
+  "tabGroupsCollapseAll": {
+    "message": "جمع کردن همه"
+  },
+  "tabGroupsExpandAll": {
+    "message": "باز کردن همه"
+  },
+  "tabGroupsSummary": {
+    "message": "$tabs$ برگه · $groups$ گروه",
+    "placeholders": {
+      "tabs": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsGroupCount": {
+    "message": "$count$ برگه",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentTab": {
+    "message": "برگهٔ فعلی"
+  },
+  "tabGroupsAddBookmark": {
+    "message": "نشانکگذاری این برگه"
+  },
+  "tabGroupsSaveFolder": {
+    "message": "ذخیرهٔ گروه برگه بهعنوان پوشهٔ نشانک"
+  },
+  "tabGroupsGroupSavedToFolder": {
+    "message": "$count$ برگه در $folder$ ذخیره شد",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsBookmarksAdded": {
+    "message": "$count$ نشانک به $folder$ اضافه شد",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsSelectNewGroup": {
+    "message": "گروه برگهٔ جدید"
+  },
+  "tabGroupsSelectOpenInto": {
+    "message": "باز کردن در گروه برگهٔ موجود…"
+  },
+  "tabGroupsSelectSaveFolder": {
+    "message": "ذخیره بهعنوان پوشهٔ نشانک"
+  },
+  "tabGroupsSelectClose": {
+    "message": "بستن"
+  },
+  "tabGroupsSelectSleep": {
+    "message": "خواب"
+  },
+  "tabGroupsCopyMoveDialog": {
+    "message": "برگههای انتخابشده قبلاً به یک گروه برگه تعلق دارند. آیا آنها را کپی کنید (در مکان جدید باز کنید) یا منتقل کنید (از گروه فعلی حذف شوند)؟"
+  },
+  "tabGroupsCopyMoveCopy": {
+    "message": "کپی"
+  },
+  "tabGroupsCopyMoveMove": {
+    "message": "انتقال"
+  },
+  "tabGroupsConfirmClose": {
+    "message": "$count$ برگه بسته شود؟",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsConfirmSleep": {
+    "message": "$count$ برگه به خواب رود؟",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "bookmarkFolderPickDialogTitle": {
+    "message": "افزودن به پوشهٔ نشانک"
+  },
+  "bookmarkFolderNoFolders": {
+    "message": "هیچ پوشهٔ نشانکی وجود ندارد"
+  },
+  "tabGroupsSelectAddBookmarks": {
+    "message": "افزودن به پوشهٔ نشانک…"
+  },
+  "paletteCmdGoTabGroups": {
+    "message": "رفتن به نمای گروههای برگه"
+  },
+  "tabGroupsActivateGroup": {
+    "message": "رفتن به گروه برگه"
+  },
+  "tabGroupsRenameGroup": {
+    "message": "تغییر نام گروه برگه"
+  },
+  "tabGroupsRenameDialog": {
+    "message": "تغییر نام گروه برگه"
+  },
+  "tabGroupsCloseGroup": {
+    "message": "بستن گروه برگه"
+  },
+  "tabGroupsSleepGroup": {
+    "message": "خواب گروه برگه"
+  },
+  "tabGroupsWakeGroup": {
+    "message": "بیدار کردن گروه برگه"
+  },
+  "tabGroupsActivateTab": {
+    "message": "رفتن به برگه"
+  },
+  "tabGroupsCollapseGroup": {
+    "message": "جمع کردن گروه"
+  },
+  "tabGroupsExpandGroup": {
+    "message": "باز کردن گروه"
+  },
+  "tabGroupsMenuAddBookmark": {
+    "message": "نشانکگذاری برگه"
+  },
+  "tabGroupsMenuSaveFolder": {
+    "message": "ذخیره بهعنوان پوشهٔ نشانک"
+  },
+  "tabGroupsSyncCollapse": {
+    "message": "همگامسازی جمعشدن با مرورگر"
+  },
+  "tabGroupsSyncCollapseHint": {
+    "message": "هنگامی که علامت زده شود، جمع یا باز کردن یک گروه در این نما، گروه تب مرورگر را نیز بهروزرسانی میکند. بهطور پیشفرض خاموش است تا جمعشدن نما محلی بماند."
+  },
+  "tabGroupsColorStyle": {
+    "message": "سبک رنگ گروه برگه"
+  },
+  "tabGroupsColorStyleHint": {
+    "message": "خاموش فقط نقطه رنگ را نشان می‌دهد. نوار رنگ لبه، نوار رنگی را در لبه چپ گروه رسم می‌کند. خط اتصال رنگی، خطی رنگی زیر نقطه گروه با یک تیک در هر ردیف رسم می‌کند و کل گروه را به یک درخت متصل می‌کند."
+  },
+  "tabGroupsColorStyleOff": {
+    "message": "خاموش (فقط نقطه رنگ)"
+  },
+  "tabGroupsColorStyleEdge": {
+    "message": "نوار رنگ لبه"
+  },
+  "tabGroupsColorStyleLine": {
+    "message": "خط اتصال رنگی"
+  },
+  "tabGroupsBookmarked": {
+    "message": "نشانشده"
+  },
+  "tabGroupsRemoveBookmark": {
+    "message": "حذف نشانک"
+  },
+  "tabGroupsBookmarkRemoved": {
+    "message": "$count$ نشانک حذف شد",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsPinned": {
+    "message": "برگه سنجاق‌شده"
+  },
+  "tabGroupsDiscarded": {
+    "message": "برگه خواب"
+  },
+  "tabGroupsPinTab": {
+    "message": "سنجاق کردن برگه"
+  },
+  "tabGroupsUnpinTab": {
+    "message": "برداشتن سنجاق برگه"
+  },
+  "tabGroupsSleepTab": {
+    "message": "خواباندن برگه"
+  },
+  "tabGroupsWakeTab": {
+    "message": "بیدار کردن برگه"
+  },
+  "tabGroupsOpenGroups": {
+    "message": "گروه‌های باز تب"
+  },
+  "tabGroupsClosedGroups": {
+    "message": "بسته‌های اخیر"
+  },
+  "tabGroupsUngroupedTabs": {
+    "message": "تب‌های بدون گروه"
+  },
+  "tabGroupsUngroupGroup": {
+    "message": "حذف گروه تب"
+  },
+  "tabGroupsMoveNewWindow": {
+    "message": "انتقال گروه به پنجره جدید"
+  },
+  "tabGroupsWindow": {
+    "message": "پنجره $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentWindow": {
+    "message": "پنجره فعلی"
+  },
+  "tabGroupsReopenGroup": {
+    "message": "بازگشایی گروه برگه‌ها"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "حذف گروه برگه بسته‌شده"
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "جمع کردن پنجره"
+  },
+  "tabGroupsExpandWindow": {
+    "message": "باز کردن پنجره"
+  },
+  "tabGroupsClearClosedGroups": {
+    "message": "پاک کردن همه"
+  },
+  "tabGroupsClosedOpenTab": {
+    "message": "باز کردن در برگه جدید"
+  },
+  "tabGroupsRemoveClosedTab": {
+    "message": "حذف از گروه ذخیره‌شده"
+  },
+  "tabGroupsClosedTimeLabel": {
+    "message": "بسته شده:"
+  },
+  "tabGroupsExpandedExpand": {
+    "message": "باز کردن"
+  },
+  "tabGroupsExpandedCollapse": {
+    "message": "جمع کردن"
+  },
+  "optionTabGroupsClosedLimit": {
+    "message": "تاریخچه تب/گروههای بستهشده برای نگهداری"
   },
   "deadProxyAdd": {
     "message": "افزودن سرور پروکسی برای بررسی لینک‌های خراب"

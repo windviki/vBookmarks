@@ -89,6 +89,67 @@ export const TRASH_ICON =
     '<path d="M4.4 4.5l.6 8.1a1.2 1.2 0 0 0 1.2 1.1h3.6a1.2 1.2 0 0 0 1.2-1.1l.6-8.1"/>' +
     '</svg>';
 
+// Tab-groups view status glyph: pinned tab (push-pin).
+export const PIN_ICON =
+    '<svg class="vbm-icon vbm-icon-pin" width="16" height="16" viewBox="0 0 16 16" ' +
+    'fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+    '<path d="M6 7.2v4.3L4.8 13h6.4L10 11.5V7.2l3.2-3.2H2.8L6 7.2z"/>' +
+    '</svg>';
+
+// Tab-groups view row/group actions (16px line grid, same recipe).
+export const EDIT_ICON =
+    '<svg class="vbm-icon vbm-icon-edit" width="16" height="16" viewBox="0 0 16 16" ' +
+    'fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+    '<path d="M2.5 13.5h11"/>' +
+    '<path d="M9.2 2.9a1.5 1.5 0 0 1 2.1 2.1l-5.6 5.6-2.7.6.6-2.7z"/>' +
+    '</svg>';
+
+// Sleep (discard) glyph: ONE smooth crescent, nothing else. The outer arc is
+// a plain circle (r 6) and the inner arc is very nearly a half circle
+// (r 4.67, chord 9.23 vs diameter 9.34), so the two arcs meet almost
+// tangentially at the tips — no bump or kink along the curve. The earlier
+// revisions carried a "Z" glyph inside the moon and a shallower inner arc
+// that read as a dent in the middle of the crescent.
+//
+// Two states, one silhouette (the tab-groups view's row/group sleep control):
+// SLEEP_ICON is the hollow (line) form = the tab is awake, click sleeps it;
+// SLEEP_ICON_FILLED is the solid form = the tab is already sleeping, click
+// wakes it. Same recipe as STAR_ICON / STAR_ICON_FILLED.
+const CRESCENT_PATH = 'M13.5 8.93A6 6 0 1 1 6.97 2.4 4.67 4.67 0 0 0 13.5 8.93z';
+export const SLEEP_ICON =
+    '<svg class="vbm-icon vbm-icon-sleep" width="16" height="16" viewBox="0 0 16 16" ' +
+    'fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+    `<path d="${CRESCENT_PATH}"/>` +
+    '</svg>';
+export const SLEEP_ICON_FILLED =
+    '<svg class="vbm-icon vbm-icon-sleep vbm-icon-sleep-filled" width="16" height="16" viewBox="0 0 16 16" ' +
+    'fill="currentColor" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+    `<path d="${CRESCENT_PATH}"/>` +
+    '</svg>';
+
+export const ACTIVATE_ICON =
+    '<svg class="vbm-icon vbm-icon-activate" width="16" height="16" viewBox="0 0 16 16" ' +
+    'fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+    '<path d="M2.5 8h11"/>' +
+    '<polyline points="9.5 4 13.5 8 9.5 12"/>' +
+    '</svg>';
+
+// Tab-groups view toolbar glyphs: fold all / unfold all (double chevrons
+// stacked so "all" reads as two rows, not one).
+export const COLLAPSE_ALL_ICON =
+    '<svg class="vbm-icon vbm-icon-collapse-all" width="16" height="16" viewBox="0 0 16 16" ' +
+    'fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+    '<polyline points="4 9 8 5 12 9"/>' +
+    '<polyline points="4 13 8 9 12 13"/>' +
+    '</svg>';
+
+export const EXPAND_ALL_ICON =
+    '<svg class="vbm-icon vbm-icon-expand-all" width="16" height="16" viewBox="0 0 16 16" ' +
+    'fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+    '<polyline points="4 5 8 9 12 5"/>' +
+    '<polyline points="4 9 8 13 12 9"/>' +
+    '</svg>';
+
 // Dead-view toolbar glyphs (4.0.8): redo, list-with-x, flag-with-x and
 // selection-mode. Same 16px grid / 1.5px stroke / currentColor recipe.
 export const REDO_ICON =
@@ -160,5 +221,9 @@ export const VIEW_ICONS = {
         '<path d="M9.8 6.2a2.6 2.6 0 0 1 3.7 0l.6.6a2.6 2.6 0 0 1-3.7 3.7"/>'),
     dupes: viewIcon('dupes',
         '<rect x="5.3" y="5.3" width="8" height="8" rx="1.3"/>' +
-        '<path d="M10.7 5.3V3.7a1.33 1.33 0 0 0-1.34-1.33H4a1.33 1.33 0 0 0-1.33 1.33v5.34A1.33 1.33 0 0 0 4 10.37h1.3"/>')
+        '<path d="M10.7 5.3V3.7a1.33 1.33 0 0 0-1.34-1.33H4a1.33 1.33 0 0 0-1.33 1.33v5.34A1.33 1.33 0 0 0 4 10.37h1.3"/>'),
+    tabgroups: viewIcon('tabgroups',
+        '<rect x="2.5" y="3" width="11" height="10" rx="1.5"/>' +
+        '<path d="M6 3h4a2 2 0 0 1 2 2v5.5"/>' +
+        '<circle cx="8" cy="8" r="1.4"/>')
 };

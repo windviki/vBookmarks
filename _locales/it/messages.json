@@ -38,6 +38,12 @@
   "announceV408Title": {
     "message": "Novità nella v4.0.8"
   },
+  "announceV410Title": {
+    "message": "Novità in v4.1.0"
+  },
+  "announceV410Text": {
+    "message": "v4.1.0 aggiunge la vista Gruppi di schede: le schede e i gruppi di schede di ogni finestra, gestiti accanto ai tuoi segnalibri."
+  },
   "announceV408Text": {
     "message": "v4.0.8 è la versione con favicon migliorate: le icone reali dei siti vengono recuperate automaticamente per i segnalibri che Chrome non ha ancora memorizzato nella cache."
   },
@@ -324,8 +330,8 @@
   "whatsNewChangelog": {
     "message": "Changelog"
   },
-  "whatsNewFavicon": {
-    "message": "La v$1$ è la versione con favicon migliorate: le icone dei siti non ancora presenti nella cache di Chrome vengono ora recuperate automaticamente.",
+  "whatsNewTabGroups": {
+    "message": "v$1$ aggiunge la vista dei gruppi di schede: le schede e i gruppi di schede di ogni finestra, accanto ai tuoi segnalibri.",
     "placeholders": {
       "1": {
         "content": "$1"
@@ -342,6 +348,271 @@
         "content": "$2"
       }
     }
+  },
+  "viewTabGroups": {
+    "message": "Gruppi di schede"
+  },
+  "optionShowTabGroupsView": {
+    "message": "Mostra la scheda della vista gruppi di schede"
+  },
+  "tabGroupsViewEmpty": {
+    "message": "Nessuna scheda in questa finestra"
+  },
+  "tabGroupsToolbarRefresh": {
+    "message": "Aggiorna"
+  },
+  "tabGroupsCollapseAll": {
+    "message": "Comprimi tutto"
+  },
+  "tabGroupsExpandAll": {
+    "message": "Espandi tutto"
+  },
+  "tabGroupsSummary": {
+    "message": "$tabs$ schede · $groups$ gruppi",
+    "placeholders": {
+      "tabs": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsGroupCount": {
+    "message": "$count$ schede",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentTab": {
+    "message": "Scheda corrente"
+  },
+  "tabGroupsAddBookmark": {
+    "message": "Aggiungi questa scheda ai segnalibri"
+  },
+  "tabGroupsSaveFolder": {
+    "message": "Salva gruppo di schede come cartella di segnalibri"
+  },
+  "tabGroupsGroupSavedToFolder": {
+    "message": "Salvate $count$ schede in $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsBookmarksAdded": {
+    "message": "Aggiunti $count$ segnalibri a $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsSelectNewGroup": {
+    "message": "Nuovo gruppo di schede"
+  },
+  "tabGroupsSelectOpenInto": {
+    "message": "Apri in gruppo di schede esistente…"
+  },
+  "tabGroupsSelectSaveFolder": {
+    "message": "Salva come cartella di segnalibri"
+  },
+  "tabGroupsSelectClose": {
+    "message": "Chiudi"
+  },
+  "tabGroupsSelectSleep": {
+    "message": "Sospendi"
+  },
+  "tabGroupsCopyMoveDialog": {
+    "message": "Le schede selezionate appartengono già a un gruppo di schede. Copiarle (aprirle in una nuova posizione) o spostarle (rimuoverle dal gruppo attuale)?"
+  },
+  "tabGroupsCopyMoveCopy": {
+    "message": "Copia"
+  },
+  "tabGroupsCopyMoveMove": {
+    "message": "Sposta"
+  },
+  "tabGroupsConfirmClose": {
+    "message": "Chiudere $count$ schede?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsConfirmSleep": {
+    "message": "Sospendere $count$ schede?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "bookmarkFolderPickDialogTitle": {
+    "message": "Aggiungi alla cartella di segnalibri"
+  },
+  "bookmarkFolderNoFolders": {
+    "message": "Nessuna cartella di segnalibri"
+  },
+  "tabGroupsSelectAddBookmarks": {
+    "message": "Aggiungi alla cartella di segnalibri…"
+  },
+  "paletteCmdGoTabGroups": {
+    "message": "Vai alla vista gruppi di schede"
+  },
+  "tabGroupsActivateGroup": {
+    "message": "Vai al gruppo di schede"
+  },
+  "tabGroupsRenameGroup": {
+    "message": "Rinomina gruppo di schede"
+  },
+  "tabGroupsRenameDialog": {
+    "message": "Rinomina gruppo di schede"
+  },
+  "tabGroupsCloseGroup": {
+    "message": "Chiudi gruppo di schede"
+  },
+  "tabGroupsSleepGroup": {
+    "message": "Sospendi gruppo di schede"
+  },
+  "tabGroupsWakeGroup": {
+    "message": "Riattiva gruppo di schede"
+  },
+  "tabGroupsActivateTab": {
+    "message": "Vai alla scheda"
+  },
+  "tabGroupsCollapseGroup": {
+    "message": "Comprimi gruppo"
+  },
+  "tabGroupsExpandGroup": {
+    "message": "Espandi gruppo"
+  },
+  "tabGroupsMenuAddBookmark": {
+    "message": "Aggiungi scheda ai segnalibri"
+  },
+  "tabGroupsMenuSaveFolder": {
+    "message": "Salva come cartella di segnalibri"
+  },
+  "tabGroupsSyncCollapse": {
+    "message": "Sincronizza compressione con browser"
+  },
+  "tabGroupsSyncCollapseHint": {
+    "message": "Se selezionato, comprimere o espandere un gruppo in questa vista aggiorna anche il gruppo di schede del browser. Disattivato per impostazione predefinita, così la piegatura della vista rimane locale."
+  },
+  "tabGroupsColorStyle": {
+    "message": "Stile colore gruppo di schede"
+  },
+  "tabGroupsColorStyleHint": {
+    "message": "Off mostra solo il punto colore. La banda colore sul bordo disegna una striscia colorata lungo il bordo sinistro del gruppo. La linea di connessione colore disegna una linea colorata sotto il punto del gruppo con un segno per riga, collegando l'intero gruppo in un albero."
+  },
+  "tabGroupsColorStyleOff": {
+    "message": "Off (solo punto colore)"
+  },
+  "tabGroupsColorStyleEdge": {
+    "message": "Banda colore sul bordo"
+  },
+  "tabGroupsColorStyleLine": {
+    "message": "Linea di connessione colore"
+  },
+  "tabGroupsBookmarked": {
+    "message": "Aggiunto ai segnalibri"
+  },
+  "tabGroupsRemoveBookmark": {
+    "message": "Rimuovi segnalibro"
+  },
+  "tabGroupsBookmarkRemoved": {
+    "message": "Rimossi $count$ segnalibri",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsPinned": {
+    "message": "Scheda bloccata"
+  },
+  "tabGroupsDiscarded": {
+    "message": "Scheda in sospensione"
+  },
+  "tabGroupsPinTab": {
+    "message": "Blocca scheda"
+  },
+  "tabGroupsUnpinTab": {
+    "message": "Sblocca scheda"
+  },
+  "tabGroupsSleepTab": {
+    "message": "Sospendi scheda"
+  },
+  "tabGroupsWakeTab": {
+    "message": "Riattiva scheda"
+  },
+  "tabGroupsOpenGroups": {
+    "message": "Gruppi di schede aperti"
+  },
+  "tabGroupsClosedGroups": {
+    "message": "Chiuse di recente"
+  },
+  "tabGroupsUngroupedTabs": {
+    "message": "Schede non raggruppate"
+  },
+  "tabGroupsUngroupGroup": {
+    "message": "Separa schede"
+  },
+  "tabGroupsMoveNewWindow": {
+    "message": "Sposta gruppo in nuova finestra"
+  },
+  "tabGroupsWindow": {
+    "message": "Finestra $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentWindow": {
+    "message": "Finestra corrente"
+  },
+  "tabGroupsReopenGroup": {
+    "message": "Riapri gruppo di schede"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "Elimina gruppo di schede chiuso"
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "Comprimi finestra"
+  },
+  "tabGroupsExpandWindow": {
+    "message": "Espandi finestra"
+  },
+  "tabGroupsClearClosedGroups": {
+    "message": "Cancella tutto"
+  },
+  "tabGroupsClosedOpenTab": {
+    "message": "Apri in nuova scheda"
+  },
+  "tabGroupsRemoveClosedTab": {
+    "message": "Rimuovi dal gruppo salvato"
+  },
+  "tabGroupsClosedTimeLabel": {
+    "message": "Chiuse:"
+  },
+  "tabGroupsExpandedExpand": {
+    "message": "Espandi"
+  },
+  "tabGroupsExpandedCollapse": {
+    "message": "Comprimi"
+  },
+  "optionTabGroupsClosedLimit": {
+    "message": "Cronologia di schede/gruppi chiusi da conservare"
   },
   "deadProxyAdd": {
     "message": "Aggiungi un server proxy per i controlli dei link morti"

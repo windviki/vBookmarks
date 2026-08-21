@@ -38,6 +38,12 @@
   "announceV408Title": {
     "message": "Kas naujo v4.0.8"
   },
+  "announceV410Title": {
+    "message": "Kas naujo v4.1.0"
+  },
+  "announceV410Text": {
+    "message": "v4.1.0 prideda skirtukų grupių rodinį: kiekvieno lango skirtukai ir jų grupės, valdomi šalia jūsų žymių."
+  },
   "announceV408Text": {
     "message": "v4.0.8 yra patobulintų favicon'ų leidimas: tikros svetainių piktogramos automatiškai gaunamos žymėms, kurių Chrome dar nėra įrašęs į talpyklą."
   },
@@ -324,8 +330,8 @@
   "whatsNewChangelog": {
     "message": "Pakeitimų istorija"
   },
-  "whatsNewFavicon": {
-    "message": "v$1$ yra leidimas su patobulintomis favicon: svetainių piktogramos, kurių nebuvo Chrome talpykloje, dabar atsisiunčiamos automatiškai.",
+  "whatsNewTabGroups": {
+    "message": "v$1$ prideda skirtukų grupių rodinį: kiekvieno lango skirtukai ir skirtukų grupės šalia jūsų žymių.",
     "placeholders": {
       "1": {
         "content": "$1"
@@ -342,6 +348,271 @@
         "content": "$2"
       }
     }
+  },
+  "viewTabGroups": {
+    "message": "Skirtukų grupės"
+  },
+  "optionShowTabGroupsView": {
+    "message": "Rodyti skirtukų grupių rodinį"
+  },
+  "tabGroupsViewEmpty": {
+    "message": "Šiame lange nėra skirtukų"
+  },
+  "tabGroupsToolbarRefresh": {
+    "message": "Atnaujinti"
+  },
+  "tabGroupsCollapseAll": {
+    "message": "Sutraukti viską"
+  },
+  "tabGroupsExpandAll": {
+    "message": "Išskleisti viską"
+  },
+  "tabGroupsSummary": {
+    "message": "$tabs$ skirtukų · $groups$ grupės",
+    "placeholders": {
+      "tabs": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsGroupCount": {
+    "message": "$count$ skirtukų",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentTab": {
+    "message": "Dabartinis skirtukas"
+  },
+  "tabGroupsAddBookmark": {
+    "message": "Įtraukti skirtuką į žymes"
+  },
+  "tabGroupsSaveFolder": {
+    "message": "Išsaugoti skirtukų grupę kaip žymių aplanką"
+  },
+  "tabGroupsGroupSavedToFolder": {
+    "message": "Išsaugota $count$ skirtukų į $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsBookmarksAdded": {
+    "message": "Pridėta $count$ žymė(-ės) į $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsSelectNewGroup": {
+    "message": "Nauja skirtukų grupė"
+  },
+  "tabGroupsSelectOpenInto": {
+    "message": "Atidaryti esamoje skirtukų grupėje…"
+  },
+  "tabGroupsSelectSaveFolder": {
+    "message": "Išsaugoti kaip žymių aplanką"
+  },
+  "tabGroupsSelectClose": {
+    "message": "Uždaryti"
+  },
+  "tabGroupsSelectSleep": {
+    "message": "Užmigdyti"
+  },
+  "tabGroupsCopyMoveDialog": {
+    "message": "Pasirinkti skirtukai jau priklauso skirtukų grupei. Kopijuoti juos (atidaryti naujoje vietoje) ar perkelti (pašalinti iš dabartinės grupės)?"
+  },
+  "tabGroupsCopyMoveCopy": {
+    "message": "Kopijuoti"
+  },
+  "tabGroupsCopyMoveMove": {
+    "message": "Perkelti"
+  },
+  "tabGroupsConfirmClose": {
+    "message": "Uždaryti $count$ skirtukų?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsConfirmSleep": {
+    "message": "Užmigdyti $count$ skirtukų?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "bookmarkFolderPickDialogTitle": {
+    "message": "Pridėti prie žymių aplanko"
+  },
+  "bookmarkFolderNoFolders": {
+    "message": "Nėra žymių aplankų"
+  },
+  "tabGroupsSelectAddBookmarks": {
+    "message": "Pridėti prie žymių aplanko…"
+  },
+  "paletteCmdGoTabGroups": {
+    "message": "Eiti į skirtukų grupių rodinį"
+  },
+  "tabGroupsActivateGroup": {
+    "message": "Eiti į skirtukų grupę"
+  },
+  "tabGroupsRenameGroup": {
+    "message": "Pervadinti grupę"
+  },
+  "tabGroupsRenameDialog": {
+    "message": "Pervadinti skirtukų grupę"
+  },
+  "tabGroupsCloseGroup": {
+    "message": "Uždaryti grupę"
+  },
+  "tabGroupsSleepGroup": {
+    "message": "Užmigdyti grupę"
+  },
+  "tabGroupsWakeGroup": {
+    "message": "Pažadinti skirtukų grupę"
+  },
+  "tabGroupsActivateTab": {
+    "message": "Eiti į skirtuką"
+  },
+  "tabGroupsCollapseGroup": {
+    "message": "Sutraukti grupę"
+  },
+  "tabGroupsExpandGroup": {
+    "message": "Išskleisti grupę"
+  },
+  "tabGroupsMenuAddBookmark": {
+    "message": "Įtraukti į žymes"
+  },
+  "tabGroupsMenuSaveFolder": {
+    "message": "Išsaugoti kaip aplanką"
+  },
+  "tabGroupsSyncCollapse": {
+    "message": "Sinchronizuoti sutraukimą su naršykle"
+  },
+  "tabGroupsSyncCollapseHint": {
+    "message": "Kai pažymėta, grupės sutraukimas ar išskleidimas šiame rodinyje taip pat atnaujina naršyklės skirtukų grupę. Pagal nutylėjimą išjungta, kad rodinio lankstymas liktų vietinis."
+  },
+  "tabGroupsColorStyle": {
+    "message": "Skirtukų grupės spalvos stilius"
+  },
+  "tabGroupsColorStyleHint": {
+    "message": "Išjungta rodo tik spalvos tašką. Krašto spalvos juosta nubrėžia spalvotą juostą palei grupės kairįjį kraštą. Spalvos jungiamoji linija nubrėžia spalvotą liniją po grupės tašku su brūkšneliu kiekvienai eilutei, sujungdama visą grupę į vieną medį."
+  },
+  "tabGroupsColorStyleOff": {
+    "message": "Išjungta (tik spalvos taškas)"
+  },
+  "tabGroupsColorStyleEdge": {
+    "message": "Krašto spalvos juosta"
+  },
+  "tabGroupsColorStyleLine": {
+    "message": "Spalvos jungiamoji linija"
+  },
+  "tabGroupsBookmarked": {
+    "message": "Pažymėta"
+  },
+  "tabGroupsRemoveBookmark": {
+    "message": "Pašalinti žymę"
+  },
+  "tabGroupsBookmarkRemoved": {
+    "message": "Pašalinta $count$ žymė(-ės)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsPinned": {
+    "message": "Prisegta skirtukas"
+  },
+  "tabGroupsDiscarded": {
+    "message": "Miegantis skirtukas"
+  },
+  "tabGroupsPinTab": {
+    "message": "Prisegti skirtuką"
+  },
+  "tabGroupsUnpinTab": {
+    "message": "Atsegti skirtuką"
+  },
+  "tabGroupsSleepTab": {
+    "message": "Užmigdyti skirtuką"
+  },
+  "tabGroupsWakeTab": {
+    "message": "Pažadinti skirtuką"
+  },
+  "tabGroupsOpenGroups": {
+    "message": "Atidarytos skirtukų grupės"
+  },
+  "tabGroupsClosedGroups": {
+    "message": "Neseniai uždaryta"
+  },
+  "tabGroupsUngroupedTabs": {
+    "message": "Negrupuoti skirtukai"
+  },
+  "tabGroupsUngroupGroup": {
+    "message": "Išgrupuoti skirtukus"
+  },
+  "tabGroupsMoveNewWindow": {
+    "message": "Perkelti grupę į naują langą"
+  },
+  "tabGroupsWindow": {
+    "message": "Langas $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentWindow": {
+    "message": "Dabartinis langas"
+  },
+  "tabGroupsReopenGroup": {
+    "message": "Atidaryti skirtukų grupę"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "Ištrinti uždarą skirtukų grupę"
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "Sutraukti langą"
+  },
+  "tabGroupsExpandWindow": {
+    "message": "Išplėsti langą"
+  },
+  "tabGroupsClearClosedGroups": {
+    "message": "Išvalyti visus"
+  },
+  "tabGroupsClosedOpenTab": {
+    "message": "Atidaryti naujoje kortelėje"
+  },
+  "tabGroupsRemoveClosedTab": {
+    "message": "Pašalinti iš išsaugotos grupės"
+  },
+  "tabGroupsClosedTimeLabel": {
+    "message": "Uždaryta:"
+  },
+  "tabGroupsExpandedExpand": {
+    "message": "Išskleisti"
+  },
+  "tabGroupsExpandedCollapse": {
+    "message": "Suskleisti"
+  },
+  "optionTabGroupsClosedLimit": {
+    "message": "Išsaugoti uždarų skirtukų/grupių istoriją"
   },
   "deadProxyAdd": {
     "message": "Pridėti tarpinį serverį negyvų nuorodų tikrinimui"

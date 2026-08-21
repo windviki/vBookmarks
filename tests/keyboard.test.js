@@ -344,6 +344,32 @@ const setup = (opts = {}) => {
         viewTabMenu.lastElementChild = vtmItem2;
     }
 
+    // Tab-groups view (4.1.0): its four menus (tab row / group head / closed
+    // record / closed record tab) get the same contextKeyDown binding —
+    // without it a keyboard-opened menu took focus and answered nothing.
+    const tabGroupsMenus = {};
+    if (!opts.noTabGroupsMenus) {
+        for (const [key, id, itemIds] of [
+            ['tabRowMenu', 'tab-row-context-menu', ['tab-row-activate', 'tab-row-close']],
+            ['tabGroupMenu', 'tabgroup-context-menu', ['tabgroup-activate', 'tabgroup-close']],
+            ['tabClosedMenu', 'tabgroups-closed-context-menu', ['tabgroups-closed-reopen', 'tabgroups-closed-forget']],
+            ['tabClosedTabMenu', 'tabgroups-closed-tab-context-menu', ['tabgroups-closed-tab-open', 'tabgroups-closed-tab-remove']]
+        ]) {
+            const menu = el('MENU', id);
+            const first = el('DIV', itemIds[0]);
+            first.classList.add('menu-item');
+            const last = el('DIV', itemIds[1]);
+            last.classList.add('menu-item');
+            first.nextElementSibling = last;
+            last.previousElementSibling = first;
+            for (const n of [first, last])
+                n.parentNode = menu;
+            menu.firstElementChild = first;
+            menu.lastElementChild = last;
+            tabGroupsMenus[key] = { menu, first, last };
+        }
+    }
+
     const actionCalls = [];
     const actions = {};
     for (const name of ['editBookmarkFolder', 'deleteBookmark', 'deleteBookmarks'])
@@ -396,6 +422,8 @@ const setup = (opts = {}) => {
         menus.paletteCmdMenu = paletteCmdMenu;
     if (viewTabMenu)
         menus.viewTabMenu = viewTabMenu;
+    for (const key of Object.keys(tabGroupsMenus))
+        menus[key] = tabGroupsMenus[key].menu;
     // issue #48 follow-up: the collapsed-flyout API for the keyboard branches.
     // Recording double — openSubmenuFor returns a settable flyout element
     // (each entry may carry `_submenu`), closeSubmenu parks it, submenuOpen
@@ -508,7 +536,7 @@ const setup = (opts = {}) => {
         bookmarkMenu, folderMenu, separatorMenu, menus,
         searchHistoryMenu, shmItem1, shmItem2,
         paletteCmdMenu, pcmItem1, pcmItem2,
-        viewTabMenu, vtmItem1, vtmItem2,
+        viewTabMenu, vtmItem1, vtmItem2, tabGroupsMenus,
         quickAddBtn, toolBtn,
         treeUl, f1, b11, b12, b2, f3, b31, b4, f5, r1, r2,
         item1, hr, item2, marker,
@@ -536,6 +564,40 @@ describe('module API', () => {
         expect(paletteCmdMenu._listeners.keydown).toHaveLength(1); // K7: bound like the other menus
         expect(viewTabMenu._listeners.keydown).toHaveLength(1); // 4.0.8: view-tab menu ↑↓/Enter/Esc
         expect(doc._listeners.keydown).toHaveLength(3); // capture ESC + bubbling Ctrl+F + Tab cycle
+    });
+
+    // 4.1.0 bug fix: the tab-groups view's menus opened by keyboard (→ /
+    // ContextMenu / Shift+F10) took focus but answered no key, because they
+    // were never bound here. All four are bound now, and Tab stays trapped
+    // inside an open one (menuContainers).
+    it('binds the four tab-groups menus and traps Tab inside them', () => {
+        const s = setup({});
+        for (const key of ['tabRowMenu', 'tabGroupMenu', 'tabClosedMenu', 'tabClosedTabMenu']) {
+            const { menu, first, last } = s.tabGroupsMenus[key];
+            expect(menu._listeners.keydown, key).toHaveLength(1);
+            // ↓ from the freshly opened container walks to the first item…
+            // (a freshly opened menu holds focus itself — the K7 entry state)
+            s.doc.activeElement = menu;
+            fire(menu, 'keydown', makeEvent({ key: 'ArrowDown', target: menu }));
+            expect(first.focused, key).toBe(true);
+            // …↑ wraps to the last one (the bounded-set rule)
+            fire(menu, 'keydown', makeEvent({ key: 'ArrowUp', target: first }));
+            expect(last.focused, key).toBe(true);
+            // Esc cancels through closeMenu (the menu focus law)
+            const before = s.closeMenuCalls.length;
+            fire(menu, 'keydown', makeEvent({ key: 'Escape', target: last }));
+            expect(s.closeMenuCalls.length, key).toBe(before + 1);
+            // Tab inside the open menu never leaves for the zone ring
+            const ev = makeEvent({ key: 'Tab', target: first });
+            s.doc.activeElement = first;
+            s.keyboard.tabCycle(ev);
+            expect(ev.defaultPrevented, key).toBeFalsy();
+        }
+    });
+
+    it('tolerates a page without the tab-groups menus (minimal setups)', () => {
+        const s = setup({ noTabGroupsMenus: true });
+        expect(typeof s.keyboard.contextKeyDown).toBe('function');
     });
 });
 

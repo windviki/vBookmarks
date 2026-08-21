@@ -38,6 +38,12 @@
   "announceV408Title": {
     "message": "Τι νέο στην v4.0.8"
   },
+  "announceV410Title": {
+    "message": "Τι νέο υπάρχει στην έκδοση v4.1.0"
+  },
+  "announceV410Text": {
+    "message": "Η έκδοση v4.1.0 προσθέτει την προβολή Ομάδων καρτελών: οι καρτέλες και οι ομάδες καρτελών κάθε παραθύρου, διαχειρίζονται δίπλα στους σελιδοδείκτες σας."
+  },
   "announceV408Text": {
     "message": "Η v4.0.8 είναι η έκδοση με βελτιωμένα favicon: τα πραγματικά εικονίδια ιστότοπων ανακτώνται αυτόματα για σελιδοδείκτες που το Chrome δεν έχει αποθηκεύσει ακόμη στην προσωρινή μνήμη."
   },
@@ -324,8 +330,8 @@
   "whatsNewChangelog": {
     "message": "Αρχείο αλλαγών"
   },
-  "whatsNewFavicon": {
-    "message": "Η έκδοση v$1$ είναι η έκδοση με βελτιωμένα favicon: τα εικονίδια ιστοτόπων που δεν είχε αποθηκεύσει το Chrome στην κρυφή μνήμη ανακτώνται πλέον αυτόματα.",
+  "whatsNewTabGroups": {
+    "message": "Η v$1$ προσθέτει την προβολή ομάδων καρτελών: οι καρτέλες και οι ομάδες καρτελών κάθε παραθύρου, δίπλα στους σελιδοδείκτες σας.",
     "placeholders": {
       "1": {
         "content": "$1"
@@ -342,6 +348,271 @@
         "content": "$2"
       }
     }
+  },
+  "viewTabGroups": {
+    "message": "Ομάδες καρτελών"
+  },
+  "optionShowTabGroupsView": {
+    "message": "Εμφάνιση της καρτέλας προβολής ομάδων καρτελών"
+  },
+  "tabGroupsViewEmpty": {
+    "message": "Δεν υπάρχουν καρτέλες σε αυτό το παράθυρο"
+  },
+  "tabGroupsToolbarRefresh": {
+    "message": "Ανανέωση"
+  },
+  "tabGroupsCollapseAll": {
+    "message": "Σύμπτυξη όλων"
+  },
+  "tabGroupsExpandAll": {
+    "message": "Επέκταση όλων"
+  },
+  "tabGroupsSummary": {
+    "message": "$tabs$ καρτέλες · $groups$ ομάδες",
+    "placeholders": {
+      "tabs": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsGroupCount": {
+    "message": "$count$ καρτέλες",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentTab": {
+    "message": "Τρέχουσα καρτέλα"
+  },
+  "tabGroupsAddBookmark": {
+    "message": "Προσθήκη σελιδοδείκτη σε αυτήν την καρτέλα"
+  },
+  "tabGroupsSaveFolder": {
+    "message": "Αποθήκευση ομάδας καρτελών ως φάκελο σελιδοδεικτών"
+  },
+  "tabGroupsGroupSavedToFolder": {
+    "message": "Αποθηκεύτηκαν $count$ καρτέλες στον $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsBookmarksAdded": {
+    "message": "Προστέθηκαν $count$ σελιδοδείκτες στον $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsSelectNewGroup": {
+    "message": "Νέα ομάδα καρτελών"
+  },
+  "tabGroupsSelectOpenInto": {
+    "message": "Άνοιγμα σε υπάρχουσα ομάδα καρτελών…"
+  },
+  "tabGroupsSelectSaveFolder": {
+    "message": "Αποθήκευση ως φάκελο σελιδοδεικτών"
+  },
+  "tabGroupsSelectClose": {
+    "message": "Κλείσιμο"
+  },
+  "tabGroupsSelectSleep": {
+    "message": "Αναστολή"
+  },
+  "tabGroupsCopyMoveDialog": {
+    "message": "Οι επιλεγμένες καρτέλες ανήκουν ήδη σε μια ομάδα καρτελών. Να τις αντιγράψω (άνοιγμα σε νέα θέση) ή να τις μετακινήσω (αφαίρεση από την τρέχουσα ομάδα);"
+  },
+  "tabGroupsCopyMoveCopy": {
+    "message": "Αντιγραφή"
+  },
+  "tabGroupsCopyMoveMove": {
+    "message": "Μετακίνηση"
+  },
+  "tabGroupsConfirmClose": {
+    "message": "Κλείσιμο $count$ καρτελών;",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsConfirmSleep": {
+    "message": "Αναστολή $count$ καρτελών;",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "bookmarkFolderPickDialogTitle": {
+    "message": "Προσθήκη σε φάκελο σελιδοδεικτών"
+  },
+  "bookmarkFolderNoFolders": {
+    "message": "Δεν υπάρχουν φάκελοι σελιδοδεικτών"
+  },
+  "tabGroupsSelectAddBookmarks": {
+    "message": "Προσθήκη σε φάκελο σελιδοδεικτών…"
+  },
+  "paletteCmdGoTabGroups": {
+    "message": "Μετάβαση στην προβολή ομάδων καρτελών"
+  },
+  "tabGroupsActivateGroup": {
+    "message": "Μετάβαση σε ομάδα καρτελών"
+  },
+  "tabGroupsRenameGroup": {
+    "message": "Μετονομασία ομάδας"
+  },
+  "tabGroupsRenameDialog": {
+    "message": "Μετονομασία ομάδας καρτελών"
+  },
+  "tabGroupsCloseGroup": {
+    "message": "Κλείσιμο ομάδας"
+  },
+  "tabGroupsSleepGroup": {
+    "message": "Αναστολή ομάδας"
+  },
+  "tabGroupsWakeGroup": {
+    "message": "Ενεργοποίηση ομάδας καρτελών"
+  },
+  "tabGroupsActivateTab": {
+    "message": "Μετάβαση σε καρτέλα"
+  },
+  "tabGroupsCollapseGroup": {
+    "message": "Σύμπτυξη ομάδας"
+  },
+  "tabGroupsExpandGroup": {
+    "message": "Επέκταση ομάδας"
+  },
+  "tabGroupsMenuAddBookmark": {
+    "message": "Σελιδοδείκτης καρτέλας"
+  },
+  "tabGroupsMenuSaveFolder": {
+    "message": "Αποθήκευση ως φάκελο σελιδοδεικτών"
+  },
+  "tabGroupsSyncCollapse": {
+    "message": "Συγχρονισμός σύμπτυξης με το πρόγραμμα περιήγησης"
+  },
+  "tabGroupsSyncCollapseHint": {
+    "message": "Όταν είναι επιλεγμένο, η σύμπτυξη ή επέκταση μιας ομάδας σε αυτή την προβολή ενημερώνει επίσης την ομάδα καρτελών του προγράμματος περιήγησης. Απενεργοποιημένο από προεπιλογή, ώστε η αναδίπλωση της προβολής να παραμένει τοπική."
+  },
+  "tabGroupsColorStyle": {
+    "message": "Στυλ χρώματος ομάδας καρτελών"
+  },
+  "tabGroupsColorStyleHint": {
+    "message": "Το Off εμφανίζει μόνο την κουκκίδα χρώματος. Η χρωματική λωρίδα άκρης σχεδιάζει μια χρωματιστή λωρίδα στο αριστερό άκρο της ομάδας. Η γραμμή σύνδεσης χρώματος σχεδιάζει μια χρωματιστή γραμμή κάτω από την κουκκίδα της ομάδας με ένα σημάδι ανά σειρά, συνδέοντας όλη την ομάδα σε ένα δέντρο."
+  },
+  "tabGroupsColorStyleOff": {
+    "message": "Off (μόνο κουκκίδα χρώματος)"
+  },
+  "tabGroupsColorStyleEdge": {
+    "message": "Χρωματική λωρίδα άκρης"
+  },
+  "tabGroupsColorStyleLine": {
+    "message": "Γραμμή σύνδεσης χρώματος"
+  },
+  "tabGroupsBookmarked": {
+    "message": "Προστέθηκε στα σελιδοδείκτες"
+  },
+  "tabGroupsRemoveBookmark": {
+    "message": "Αφαίρεση σελιδοδείκτη"
+  },
+  "tabGroupsBookmarkRemoved": {
+    "message": "Αφαιρέθηκαν $count$ σελιδοδείκτες",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsPinned": {
+    "message": "Καρφιτσωμένη καρτέλα"
+  },
+  "tabGroupsDiscarded": {
+    "message": "Καρτέλα σε αναστολή"
+  },
+  "tabGroupsPinTab": {
+    "message": "Καρφίτσωμα καρτέλας"
+  },
+  "tabGroupsUnpinTab": {
+    "message": "Ξεκαρφίτσωμα καρτέλας"
+  },
+  "tabGroupsSleepTab": {
+    "message": "Αναστολή καρτέλας"
+  },
+  "tabGroupsWakeTab": {
+    "message": "Ενεργοποίηση καρτέλας"
+  },
+  "tabGroupsOpenGroups": {
+    "message": "Ανοιχτές ομάδες καρτελών"
+  },
+  "tabGroupsClosedGroups": {
+    "message": "Πρόσφατα κλειστά"
+  },
+  "tabGroupsUngroupedTabs": {
+    "message": "Μη ομαδοποιημένες καρτέλες"
+  },
+  "tabGroupsUngroupGroup": {
+    "message": "Κατάργηση ομαδοποίησης"
+  },
+  "tabGroupsMoveNewWindow": {
+    "message": "Μετακίνηση σε νέο παράθυρο"
+  },
+  "tabGroupsWindow": {
+    "message": "Παράθυρο $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentWindow": {
+    "message": "Τρέχον παράθυρο"
+  },
+  "tabGroupsReopenGroup": {
+    "message": "Επανάνοιγμα ομάδας καρτελών"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "Διαγραφή κλειστής ομάδας καρτελών"
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "Σύμπτυξη παραθύρου"
+  },
+  "tabGroupsExpandWindow": {
+    "message": "Επέκταση παραθύρου"
+  },
+  "tabGroupsClearClosedGroups": {
+    "message": "Εκκαθάριση όλων"
+  },
+  "tabGroupsClosedOpenTab": {
+    "message": "Άνοιγμα σε νέα καρτέλα"
+  },
+  "tabGroupsRemoveClosedTab": {
+    "message": "Αφαίρεση από αποθηκευμένη ομάδα"
+  },
+  "tabGroupsClosedTimeLabel": {
+    "message": "Κλείσιμο:"
+  },
+  "tabGroupsExpandedExpand": {
+    "message": "Ανάπτυξη"
+  },
+  "tabGroupsExpandedCollapse": {
+    "message": "Σύμπτυξη"
+  },
+  "optionTabGroupsClosedLimit": {
+    "message": "Ιστορικό κλειστών καρτελών/ομάδων για διατήρηση"
   },
   "deadProxyAdd": {
     "message": "Προσθήκη διακομιστή μεσολάβησης για ελέγχους νεκρών συνδέσμων"

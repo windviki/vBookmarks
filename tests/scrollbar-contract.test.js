@@ -96,7 +96,7 @@ describe('scrollbar-contract: 滚动容器横向裁剪 (A)', () => {
     });
 
     it('a consolidated overflow-x:hidden guard rule exists (end of file wins the cascade)', () => {
-        const body = ruleBody(neatCss, '#tree,\n#results,\n#recent-list,\n#dupes-list,\n#dead-list,\n#stats-list,\n#search-history-area,\n#palette-results {');
+        const body = ruleBody(neatCss, '#tree,\n#results,\n#recent-list,\n#tabgroups-list,\n#dupes-list,\n#dead-list,\n#stats-list,\n#search-history-area,\n#palette-results {');
         expect(body).toContain('overflow-x: hidden');
     });
 
@@ -110,8 +110,8 @@ describe('scrollbar-contract: 纵向滚动保留 (B)', () => {
         expect(ruleBody(neatCss, '#results,\n#tree {')).toContain('overflow: auto');
     });
 
-    it('the four list panes keep overflow:auto (vertical)', () => {
-        expect(ruleBody(neatCss, '#recent-list,\n#dupes-list,\n#dead-list,\n#stats-list {')).toContain('overflow: auto');
+    it('the list-view panes keep overflow:auto (vertical)', () => {
+        expect(ruleBody(neatCss, '#recent-list,\n#tabgroups-list,\n#dupes-list,\n#dead-list,\n#stats-list {')).toContain('overflow: auto');
     });
 
     it('search-history and palette keep overflow-y:auto (vertical)', () => {
@@ -169,7 +169,7 @@ describe('scrollbar-contract: 固定槽 flex:none (D)', () => {
 
     it('the 16px ::before placeholder slot is fixed in tree/results and every list view', () => {
         assertProps(neatCss, '#tree ul li a::before,\n#results ul li a::before {', ['flex: none', 'width: 16px']);
-        assertProps(neatCss, '#recent-list ul li a::before,\n#dupes-list ul li a::before,\n#dead-list ul li a::before,\n#stats-list ul li a::before {', ['flex: none', 'width: 16px']);
+        assertProps(neatCss, '#recent-list ul li a::before,\n#tabgroups-list ul li a::before,\n#dupes-list ul li a::before,\n#dead-list ul li a::before,\n#stats-list ul li a::before {', ['flex: none', 'width: 16px']);
     });
 
     it('header chrome and row controls are fixed-width', () => {
@@ -177,7 +177,7 @@ describe('scrollbar-contract: 固定槽 flex:none (D)', () => {
         assertProps(neatCss, '#tool-btn {', ['flex: none', 'width: 30px']);
         assertProps(neatCss, '.view-tab .tab-icon {', ['flex: none']);
         assertProps(neatCss, '.row-btn {', ['flex: none', 'width: 20px']);
-        assertProps(neatCss, '.dupes-group .count-pill,\n.vbm-row .row-badge {', ['flex: none']);
+        assertProps(neatCss, '.dupes-group .count-pill,\n.tabgroups-group .count-pill,\n.vbm-row .row-badge {', ['flex: none']);
         // 前导换行锚定独立规则——`#dupes-list ul.selecting .keeper-radio` 含同子串
         assertProps(neatCss, '\n.keeper-radio {', ['flex: none']);
     });

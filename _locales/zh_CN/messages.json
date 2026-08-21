@@ -404,6 +404,12 @@
   "announceV408Title": {
     "message": "v4.0.8 更新内容"
   },
+  "announceV410Title": {
+    "message": "v4.1.0 新变化"
+  },
+  "announceV410Text": {
+    "message": "v4.1.0 新增标签组视图：在书签旁边直接管理每个窗口的标签页与标签组。"
+  },
   "announceV408Text": {
     "message": "v4.0.8 图标加强版：自动为 Chrome 未缓存的收藏网站拉取真实图标。"
   },
@@ -1827,8 +1833,8 @@
   "whatsNewChangelog": {
     "message": "更新日志"
   },
-  "whatsNewFavicon": {
-    "message": "v$1$ 图标加强版：自动为 Chrome 未缓存的收藏网站拉取真实图标。",
+  "whatsNewTabGroups": {
+    "message": "v$1$ 新增标签组视图：在书签旁边直接查看并管理每个窗口的标签页与标签组。",
     "placeholders": {
       "1": {
         "content": "$1"
@@ -1854,5 +1860,270 @@
         "content": "$2"
       }
     }
+  },
+  "viewTabGroups": {
+    "message": "标签组"
+  },
+  "optionShowTabGroupsView": {
+    "message": "显示标签组视图标签页"
+  },
+  "tabGroupsViewEmpty": {
+    "message": "此窗口没有标签页"
+  },
+  "tabGroupsToolbarRefresh": {
+    "message": "刷新"
+  },
+  "tabGroupsCollapseAll": {
+    "message": "全部折叠"
+  },
+  "tabGroupsExpandAll": {
+    "message": "全部展开"
+  },
+  "tabGroupsSummary": {
+    "message": "$tabs$ 个标签页 · $groups$ 个标签组",
+    "placeholders": {
+      "tabs": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsGroupCount": {
+    "message": "$count$ 个标签页",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentTab": {
+    "message": "当前标签"
+  },
+  "tabGroupsAddBookmark": {
+    "message": "收藏此标签页"
+  },
+  "tabGroupsSaveFolder": {
+    "message": "将标签组保存为书签文件夹"
+  },
+  "tabGroupsGroupSavedToFolder": {
+    "message": "已将 $count$ 个标签页保存到 $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsBookmarksAdded": {
+    "message": "已将 $count$ 个书签添加到 $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsSelectNewGroup": {
+    "message": "新建标签组"
+  },
+  "tabGroupsSelectOpenInto": {
+    "message": "打开到已有标签组…"
+  },
+  "tabGroupsSelectSaveFolder": {
+    "message": "保存为书签文件夹"
+  },
+  "tabGroupsSelectClose": {
+    "message": "关闭"
+  },
+  "tabGroupsSelectSleep": {
+    "message": "睡眠"
+  },
+  "tabGroupsCopyMoveDialog": {
+    "message": "选中的标签页中有已属于标签组的标签。是复制（在新位置重新打开）还是移动（从原标签组移出）？"
+  },
+  "tabGroupsCopyMoveCopy": {
+    "message": "复制"
+  },
+  "tabGroupsCopyMoveMove": {
+    "message": "移动"
+  },
+  "tabGroupsConfirmClose": {
+    "message": "关闭 $count$ 个标签页？",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsConfirmSleep": {
+    "message": "睡眠 $count$ 个标签页？",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "bookmarkFolderPickDialogTitle": {
+    "message": "添加到书签文件夹"
+  },
+  "bookmarkFolderNoFolders": {
+    "message": "没有书签文件夹"
+  },
+  "tabGroupsSelectAddBookmarks": {
+    "message": "添加到书签文件夹…"
+  },
+  "paletteCmdGoTabGroups": {
+    "message": "转到标签组视图"
+  },
+  "tabGroupsActivateGroup": {
+    "message": "转到标签组"
+  },
+  "tabGroupsRenameGroup": {
+    "message": "重命名标签组"
+  },
+  "tabGroupsRenameDialog": {
+    "message": "重命名标签组"
+  },
+  "tabGroupsCloseGroup": {
+    "message": "关闭标签组"
+  },
+  "tabGroupsSleepGroup": {
+    "message": "睡眠标签组"
+  },
+  "tabGroupsWakeGroup": {
+    "message": "唤醒标签组"
+  },
+  "tabGroupsActivateTab": {
+    "message": "转到标签页"
+  },
+  "tabGroupsCollapseGroup": {
+    "message": "折叠标签组"
+  },
+  "tabGroupsExpandGroup": {
+    "message": "展开标签组"
+  },
+  "tabGroupsMenuAddBookmark": {
+    "message": "收藏标签页"
+  },
+  "tabGroupsMenuSaveFolder": {
+    "message": "保存为书签文件夹"
+  },
+  "tabGroupsSyncCollapse": {
+    "message": "展开折叠同步到浏览器"
+  },
+  "tabGroupsSyncCollapseHint": {
+    "message": "选中后，在视图内折叠或展开标签组会同步更新浏览器标签组。默认关闭，视图内的折叠只保留在本地。"
+  },
+  "tabGroupsColorStyle": {
+    "message": "标签组颜色样式"
+  },
+  "tabGroupsColorStyleHint": {
+    "message": "“关闭”仅显示颜色圆点；“靠边颜色条带”在标签组左侧画一条颜色条带；“颜色连接线”在组头圆点下方画竖线、每行带横线，把整个标签组串成一棵树。"
+  },
+  "tabGroupsColorStyleOff": {
+    "message": "关闭（仅颜色圆点）"
+  },
+  "tabGroupsColorStyleEdge": {
+    "message": "靠边颜色条带"
+  },
+  "tabGroupsColorStyleLine": {
+    "message": "颜色连接线"
+  },
+  "tabGroupsBookmarked": {
+    "message": "已收藏"
+  },
+  "tabGroupsRemoveBookmark": {
+    "message": "取消收藏"
+  },
+  "tabGroupsBookmarkRemoved": {
+    "message": "已取消收藏 $count$ 项",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsPinned": {
+    "message": "已固定标签页"
+  },
+  "tabGroupsDiscarded": {
+    "message": "已睡眠标签页"
+  },
+  "tabGroupsPinTab": {
+    "message": "固定标签页"
+  },
+  "tabGroupsUnpinTab": {
+    "message": "取消固定标签页"
+  },
+  "tabGroupsSleepTab": {
+    "message": "睡眠标签页"
+  },
+  "tabGroupsWakeTab": {
+    "message": "唤醒标签页"
+  },
+  "tabGroupsOpenGroups": {
+    "message": "打开的标签组"
+  },
+  "tabGroupsClosedGroups": {
+    "message": "最近关闭"
+  },
+  "tabGroupsUngroupedTabs": {
+    "message": "未分组标签页"
+  },
+  "tabGroupsUngroupGroup": {
+    "message": "取消分组"
+  },
+  "tabGroupsMoveNewWindow": {
+    "message": "移动到新窗口"
+  },
+  "tabGroupsWindow": {
+    "message": "窗口 $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentWindow": {
+    "message": "当前窗口"
+  },
+  "tabGroupsReopenGroup": {
+    "message": "重新打开标签组"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "删除关闭的标签组"
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "收起窗口"
+  },
+  "tabGroupsExpandWindow": {
+    "message": "展开窗口"
+  },
+  "tabGroupsClearClosedGroups": {
+    "message": "清空"
+  },
+  "tabGroupsClosedOpenTab": {
+    "message": "在新标签页打开"
+  },
+  "tabGroupsRemoveClosedTab": {
+    "message": "从已保存组移除"
+  },
+  "tabGroupsClosedTimeLabel": {
+    "message": "关闭时间："
+  },
+  "tabGroupsExpandedExpand": {
+    "message": "展开"
+  },
+  "tabGroupsExpandedCollapse": {
+    "message": "折叠"
+  },
+  "optionTabGroupsClosedLimit": {
+    "message": "关闭标签/标签组历史保留条数"
   }
 }

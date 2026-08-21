@@ -16,6 +16,7 @@ import { initViewDupes } from './view-dupes.js';
 import { initViewDead } from './view-dead.js';
 import { initVisitStats } from './visit-stats.js';
 import { initViewStats } from './view-stats.js';
+import { initViewTabGroups } from './view-tabgroups.js';
 import { markPopupOpen } from './visit-stats-sw.js';
 import { initFaviconFallback } from './favicon-fallback.js';
 import { initFaviconEnrich } from './favicon-enrich.js';
@@ -273,7 +274,27 @@ import { shouldHighlightUnsynced, shouldRememberState } from './settings.js';
         'tab-group-color-label': 'tabGroupColorLabel',
         'tab-group-dialog-button': 'save',
         'tab-group-dialog-cancel-button': 'nope',
-        'tab-group-pick-cancel-button': 'nope'
+        'tab-group-pick-cancel-button': 'nope',
+        // Tab groups view: tab-row and group context-menu items
+        'tab-row-activate': 'tabGroupsActivateTab',
+        'tab-row-add-bookmark': 'tabGroupsMenuAddBookmark',
+        'tab-row-sleep': 'tabGroupsSelectSleep',
+        'tab-row-close': 'tabGroupsSelectClose',
+        'tabgroup-activate': 'tabGroupsActivateGroup',
+        'tabgroup-rename': 'tabGroupsRenameGroup',
+        'tabgroup-move-new-window': 'tabGroupsMoveNewWindow',
+        'tabgroup-ungroup': 'tabGroupsUngroupGroup',
+        'tabgroup-save-folder': 'tabGroupsMenuSaveFolder',
+        'tabgroup-sleep': 'tabGroupsSleepGroup',
+        'tabgroup-close': 'tabGroupsCloseGroup',
+        // …and the two "recently closed" record menus (labels that depend on
+        // the record's state are re-set at open time by context-menu.js)
+        'tabgroups-closed-reopen': 'tabGroupsReopenGroup',
+        'tabgroups-closed-toggle': 'tabGroupsExpandedExpand',
+        'tabgroups-closed-forget': 'tabGroupsDeleteClosedGroup',
+        'tabgroups-closed-tab-open': 'tabGroupsClosedOpenTab',
+        'tabgroups-closed-tab-bookmark': 'tabGroupsMenuAddBookmark',
+        'tabgroups-closed-tab-remove': 'tabGroupsRemoveClosedTab'
     }).forEach(([id, msg]) => {
         const el = $(id);
         if (el)
@@ -358,6 +379,9 @@ import { shouldHighlightUnsynced, shouldRememberState } from './settings.js';
         tree: $tree,
         os,
         rtl,
+        // Tab-groups view: folder → tab-group meta lookup (read lazily at
+        // menu dispatch time; initContextMenu runs before actions/dialogs).
+        get store() { return store; },
         get actions() { return actions; },
         get dialogs() { return dialogs; },
         // v4 task-2: "Reveal in tree" menu dispatch — treeView inits far
@@ -380,6 +404,42 @@ import { shouldHighlightUnsynced, shouldRememberState } from './settings.js';
                 isCollapsed: key => viewDupes.isCollapsed(key),
                 cleanGroup: key => viewDupes.cleanGroup(key),
                 toggleGroup: key => viewDupes.toggleGroup(key)
+            };
+        },
+        // Tab groups view: tab-row / group-head context menus (lazy — the
+        // view module inits below; menu handlers run only on user events).
+        get tabGroupsMenu() {
+            return {
+                activateTab: id => viewTabGroups.activateTab(id),
+                isPinned: id => viewTabGroups.isPinned(id),
+                togglePinned: id => viewTabGroups.togglePinned(id),
+                addBookmark: id => viewTabGroups.addBookmark(id),
+                isBookmarked: id => viewTabGroups.isBookmarked(id),
+                removeBookmark: id => viewTabGroups.removeBookmark(id),
+                closeTab: id => viewTabGroups.closeTab(id),
+                sleepTab: id => viewTabGroups.sleepTab(id),
+                wakeTab: id => viewTabGroups.wakeTab(id),
+                isDiscarded: id => viewTabGroups.isDiscarded(id),
+                activateGroup: id => viewTabGroups.activateGroup(id),
+                renameGroup: id => viewTabGroups.renameGroup(id),
+                saveGroupToBookmarks: id => viewTabGroups.saveGroupToBookmarks(id),
+                closeGroup: id => viewTabGroups.closeGroup(id),
+                sleepGroup: id => viewTabGroups.sleepGroup(id),
+                wakeGroup: id => viewTabGroups.wakeGroup(id),
+                isGroupAsleep: id => viewTabGroups.isGroupAsleep(id),
+                toggleGroup: id => viewTabGroups.toggleGroup(id),
+                isCollapsed: id => viewTabGroups.isCollapsed(id),
+                ungroupGroup: id => viewTabGroups.ungroupGroup(id),
+                moveGroupToNewWindow: id => viewTabGroups.moveGroupToNewWindow(id),
+                // "Recently closed" records (their own two menus)
+                restoreClosedGroup: id => viewTabGroups.restoreClosedGroup(id),
+                deleteClosedGroup: id => viewTabGroups.deleteClosedGroup(id),
+                removeClosedTab: (id, idx) => viewTabGroups.removeClosedTab(id, idx),
+                openClosedTab: (id, idx) => viewTabGroups.openClosedTab(id, idx),
+                addClosedTabToBookmarks: (id, idx) => viewTabGroups.addClosedTabToBookmarks(id, idx),
+                isClosedExpanded: id => viewTabGroups.isClosedExpanded(id),
+                toggleClosedExpanded: id => viewTabGroups.toggleClosedExpanded(id),
+                closedTabCount: id => viewTabGroups.closedTabCount(id)
             };
         },
         // v4 task-4 #6: the palette custom-command row menu (edit/delete)
@@ -626,6 +686,24 @@ import { shouldHighlightUnsynced, shouldRememberState } from './settings.js';
     // and only runs while the tab is active; treeView is already initialized
     // above, so direct injection is safe. visitStats/undo serve the
     // history-permission banner (grant → one-shot import → toast).
+    // Tab groups view (docs/tab-groups-view-design.md): browser tabs + tab
+    // groups + bookmarks. Registered BEFORE recent so the tab order becomes
+    // tree / search / tabgroups / recent / stats / dead / dupes.
+    const viewTabGroups = initViewTabGroups({
+        store,
+        views,
+        treeRender,
+        treeView,
+        dialogs,
+        undo,
+        // The view's fold memory (windows / groups / expanded closed records)
+        // rides the same remember-state option the tree and view state do.
+        getRememberState: () => rememberState,
+        onChanged: () => chrome.bookmarks.getTree(treeView.generateTree),
+        // 第五轮项3: re-lay the dead-mark × overlays after every re-render.
+        onRowsRendered: () => deadOverlayRefresh()
+    });
+
     initViewRecent({
         store,
         views,
@@ -696,6 +774,7 @@ import { shouldHighlightUnsynced, shouldRememberState } from './settings.js';
     // push the count through views.updateBadges).
     viewStats.refresh();
     viewDupes.refresh();
+    viewTabGroups.refresh();
 
     // Popup reopen "where I was": restore the last focus spot (a list row /
     // header button / toolbar control / view tab) once all views are
@@ -804,6 +883,10 @@ import { shouldHighlightUnsynced, shouldRememberState } from './settings.js';
         menus.histRowMenu.addEventListener('mousemove', contextMouseMove);
     if (menus.dupesGroupMenu)
         menus.dupesGroupMenu.addEventListener('mousemove', contextMouseMove);
+    if (menus.tabRowMenu)
+        menus.tabRowMenu.addEventListener('mousemove', contextMouseMove);
+    if (menus.tabGroupMenu)
+        menus.tabGroupMenu.addEventListener('mousemove', contextMouseMove);
     // issue #48 follow-up: the collapsed-group flyouts highlight/focus their
     // items on hover too. contextMouseOut is deliberately NOT bound to them —
     // a mouseout to a hidden flyout would strand focus there.
@@ -827,6 +910,10 @@ import { shouldHighlightUnsynced, shouldRememberState } from './settings.js';
         menus.histRowMenu.addEventListener('mouseout', contextMouseOut);
     if (menus.dupesGroupMenu)
         menus.dupesGroupMenu.addEventListener('mouseout', contextMouseOut);
+    if (menus.tabRowMenu)
+        menus.tabRowMenu.addEventListener('mouseout', contextMouseOut);
+    if (menus.tabGroupMenu)
+        menus.tabGroupMenu.addEventListener('mouseout', contextMouseOut);
 
     // Reset separators — CSS-driven since v4.1: .separator-row + .separator-line
     // use absolute positioning (left:0 / right:8px) that auto-adapts to any width.

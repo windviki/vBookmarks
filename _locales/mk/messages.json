@@ -38,6 +38,12 @@
   "announceV408Title": {
     "message": "Што е ново во v4.0.8"
   },
+  "announceV410Title": {
+    "message": "Што е ново во v4.1.0"
+  },
+  "announceV410Text": {
+    "message": "v4.1.0 додава преглед на групи јазичиња: јазичињата и групите јазичиња на секој прозорец, управувани покрај вашите обележувачи."
+  },
   "announceV408Text": {
     "message": "v4.0.8 е изданието со подобрени favicon-и: вистинските икони на сајтовите автоматски се преземаат за обележувачите што Chrome сè уште не ги кеширал."
   },
@@ -323,8 +329,8 @@
   "whatsNewChangelog": {
     "message": "Евиденција на промени"
   },
-  "whatsNewFavicon": {
-    "message": "v$1$ е издание со подобрени фавикони: иконите на сајтовите што Chrome не ги има кеширано сега автоматски се вчитуваат.",
+  "whatsNewTabGroups": {
+    "message": "v$1$ додава приказ на групи јазичиња: јазичињата и групите јазичиња на секој прозорец, покрај вашите обележувачи.",
     "placeholders": {
       "1": {
         "content": "$1"
@@ -341,6 +347,271 @@
         "content": "$2"
       }
     }
+  },
+  "viewTabGroups": {
+    "message": "Групи на јазичиња"
+  },
+  "optionShowTabGroupsView": {
+    "message": "Прикажи го приказот на групи на јазичиња"
+  },
+  "tabGroupsViewEmpty": {
+    "message": "Нема јазичиња во овој прозорец"
+  },
+  "tabGroupsToolbarRefresh": {
+    "message": "Освежи"
+  },
+  "tabGroupsCollapseAll": {
+    "message": "Собери ги сите"
+  },
+  "tabGroupsExpandAll": {
+    "message": "Рашири ги сите"
+  },
+  "tabGroupsSummary": {
+    "message": "$tabs$ јазичиња · $groups$ групи",
+    "placeholders": {
+      "tabs": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsGroupCount": {
+    "message": "$count$ јазичиња",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentTab": {
+    "message": "Тековно јазиче"
+  },
+  "tabGroupsAddBookmark": {
+    "message": "Обележи го ова јазиче"
+  },
+  "tabGroupsSaveFolder": {
+    "message": "Зачувај ја групата јазичиња како папка со обележувачи"
+  },
+  "tabGroupsGroupSavedToFolder": {
+    "message": "Зачувани $count$ јазичиња во $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsBookmarksAdded": {
+    "message": "Додадени $count$ обележувач(и) во $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsSelectNewGroup": {
+    "message": "Нова група јазичиња"
+  },
+  "tabGroupsSelectOpenInto": {
+    "message": "Отвори во постоечка група јазичиња…"
+  },
+  "tabGroupsSelectSaveFolder": {
+    "message": "Зачувај како папка со обележувачи"
+  },
+  "tabGroupsSelectClose": {
+    "message": "Затвори"
+  },
+  "tabGroupsSelectSleep": {
+    "message": "Замри"
+  },
+  "tabGroupsCopyMoveDialog": {
+    "message": "Избраните јазичиња веќе припаѓаат на група јазичиња. Дали сакате да ги копирате (отворете ги на ново место) или да ги преместите (отстранете ги од тековната група)?"
+  },
+  "tabGroupsCopyMoveCopy": {
+    "message": "Копирај"
+  },
+  "tabGroupsCopyMoveMove": {
+    "message": "Премести"
+  },
+  "tabGroupsConfirmClose": {
+    "message": "Затвори $count$ јазичиња?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsConfirmSleep": {
+    "message": "Замри $count$ јазичиња?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "bookmarkFolderPickDialogTitle": {
+    "message": "Додај во папка со обележувачи"
+  },
+  "bookmarkFolderNoFolders": {
+    "message": "Нема папки со обележувачи"
+  },
+  "tabGroupsSelectAddBookmarks": {
+    "message": "Додај во папка со обележувачи…"
+  },
+  "paletteCmdGoTabGroups": {
+    "message": "Оди до приказот на групи на јазичиња"
+  },
+  "tabGroupsActivateGroup": {
+    "message": "Оди во група јазичиња"
+  },
+  "tabGroupsRenameGroup": {
+    "message": "Преименувај група јазичиња"
+  },
+  "tabGroupsRenameDialog": {
+    "message": "Преименувај група јазичиња"
+  },
+  "tabGroupsCloseGroup": {
+    "message": "Затвори група јазичиња"
+  },
+  "tabGroupsSleepGroup": {
+    "message": "Замри група јазичиња"
+  },
+  "tabGroupsWakeGroup": {
+    "message": "Разбуди група јазичиња"
+  },
+  "tabGroupsActivateTab": {
+    "message": "Оди на јазиче"
+  },
+  "tabGroupsCollapseGroup": {
+    "message": "Собери група"
+  },
+  "tabGroupsExpandGroup": {
+    "message": "Рашири група"
+  },
+  "tabGroupsMenuAddBookmark": {
+    "message": "Обележи јазиче"
+  },
+  "tabGroupsMenuSaveFolder": {
+    "message": "Зачувај како папка со обележувачи"
+  },
+  "tabGroupsSyncCollapse": {
+    "message": "Синхронизирај собирање со прелистувачот"
+  },
+  "tabGroupsSyncCollapseHint": {
+    "message": "Кога е означено, собирањето или проширувањето на група во овој приказ исто така го ажурира таб-групата во прелистувачот. Исклучено по дифолт, така што преклопувањето на приказот останува локално."
+  },
+  "tabGroupsColorStyle": {
+    "message": "Стил на боја на група јазичиња"
+  },
+  "tabGroupsColorStyleHint": {
+    "message": "Исклучено прикажува само точка со боја. Лента на работ црта обоена лента по левиот раб на групата. Линија за поврзување црта обоена линија под точката на групата со ознака по ред, поврзувајќи ја целата група во едно дрво."
+  },
+  "tabGroupsColorStyleOff": {
+    "message": "Исклучено (само точка со боја)"
+  },
+  "tabGroupsColorStyleEdge": {
+    "message": "Лента на работ"
+  },
+  "tabGroupsColorStyleLine": {
+    "message": "Линија за поврзување"
+  },
+  "tabGroupsBookmarked": {
+    "message": "Обележано"
+  },
+  "tabGroupsRemoveBookmark": {
+    "message": "Отстрани обележувач"
+  },
+  "tabGroupsBookmarkRemoved": {
+    "message": "Отстранети $count$ обележувач(и)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsPinned": {
+    "message": "Закачена картичка"
+  },
+  "tabGroupsDiscarded": {
+    "message": "Заспана картичка"
+  },
+  "tabGroupsPinTab": {
+    "message": "Закачи картичка"
+  },
+  "tabGroupsUnpinTab": {
+    "message": "Откачи картичка"
+  },
+  "tabGroupsSleepTab": {
+    "message": "Заспиј јазиче"
+  },
+  "tabGroupsWakeTab": {
+    "message": "Разбуди јазиче"
+  },
+  "tabGroupsOpenGroups": {
+    "message": "Отворени групи јазичиња"
+  },
+  "tabGroupsClosedGroups": {
+    "message": "Неодамна затворени"
+  },
+  "tabGroupsUngroupedTabs": {
+    "message": "Негрупирани јазичиња"
+  },
+  "tabGroupsUngroupGroup": {
+    "message": "Разгрупирај група"
+  },
+  "tabGroupsMoveNewWindow": {
+    "message": "Премести во нов прозорец"
+  },
+  "tabGroupsWindow": {
+    "message": "Прозорец $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentWindow": {
+    "message": "Тековен прозорец"
+  },
+  "tabGroupsReopenGroup": {
+    "message": "Повторно отвори група јазичиња"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "Избриши затворена група јазичиња"
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "Собери прозорец"
+  },
+  "tabGroupsExpandWindow": {
+    "message": "Рашири прозорец"
+  },
+  "tabGroupsClearClosedGroups": {
+    "message": "Исчисти сè"
+  },
+  "tabGroupsClosedOpenTab": {
+    "message": "Отвори во ново јазиче"
+  },
+  "tabGroupsRemoveClosedTab": {
+    "message": "Отстрани од зачуваната група"
+  },
+  "tabGroupsClosedTimeLabel": {
+    "message": "Затворено:"
+  },
+  "tabGroupsExpandedExpand": {
+    "message": "Прошири"
+  },
+  "tabGroupsExpandedCollapse": {
+    "message": "Собери"
+  },
+  "optionTabGroupsClosedLimit": {
+    "message": "Историја на затворени јазичиња/групи за чување"
   },
   "deadProxyAdd": {
     "message": "Додај прокси сервер за проверка на мртви врски"

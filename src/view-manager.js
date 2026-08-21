@@ -120,12 +120,14 @@ export function initViewManager(ctx = {}) {
     // activatable through the command palette. `disabled` is the only fully
     // forbidden state (no tab, no shortcut, no palette, activation refused).
     const VIEW_SHOW_KEYS = {
+        tabgroups: 'showTabGroupsView',
         recent: 'showRecentBookmarks',
         stats: 'showStatsView',
         dead: 'showDeadView',
         dupes: 'showDupesView'
     };
     const VIEW_DISABLE_KEYS = {
+        tabgroups: 'disableTabGroupsView',
         recent: 'disableRecentView',
         stats: 'disableStatsView',
         dead: 'disableDeadView',
@@ -1128,7 +1130,8 @@ export function initViewManager(ctx = {}) {
         if (body.classList.contains('needConfirm') || body.classList.contains('needEdit') ||
             body.classList.contains('needInputName') || body.classList.contains('needSort') ||
             body.classList.contains('needAlert') || body.classList.contains('needTabGroup') ||
-            body.classList.contains('needGroupPick') ||
+            body.classList.contains('needGroupPick') || body.classList.contains('needCopyMove') ||
+            body.classList.contains('needFolderPick') ||
             (paletteEl && !paletteEl.hidden))
             return;
         const views = visibleViews();

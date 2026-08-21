@@ -38,6 +38,12 @@
   "announceV408Title": {
     "message": "Какво ново в v4.0.8"
   },
+  "announceV410Title": {
+    "message": "Какво ново в v4.1.0"
+  },
+  "announceV410Text": {
+    "message": "v4.1.0 добавя изгледа на групи от раздели: разделите и групите от раздели на всеки прозорец, управлявани до вашите отметки."
+  },
   "announceV408Text": {
     "message": "v4.0.8 е версията с подобрени икони на сайтове: реалните икони на сайтовете се извличат автоматично за отметки, които Chrome все още не е кеширал."
   },
@@ -324,8 +330,8 @@
   "whatsNewChangelog": {
     "message": "Дневник на промените"
   },
-  "whatsNewFavicon": {
-    "message": "v$1$ е версията с подобрени икони на сайтове: иконите, които Chrome не е кеширал, вече се извличат автоматично.",
+  "whatsNewTabGroups": {
+    "message": "v$1$ добавя изгледа на групи от раздели: разделите и групите от раздели на всеки прозорец, до вашите отметки.",
     "placeholders": {
       "1": {
         "content": "$1"
@@ -342,6 +348,271 @@
         "content": "$2"
       }
     }
+  },
+  "viewTabGroups": {
+    "message": "Групи раздели"
+  },
+  "optionShowTabGroupsView": {
+    "message": "Показване на раздела за групи раздели"
+  },
+  "tabGroupsViewEmpty": {
+    "message": "Няма раздели в този прозорец"
+  },
+  "tabGroupsToolbarRefresh": {
+    "message": "Опресни"
+  },
+  "tabGroupsCollapseAll": {
+    "message": "Свий всички"
+  },
+  "tabGroupsExpandAll": {
+    "message": "Разгъни всички"
+  },
+  "tabGroupsSummary": {
+    "message": "$tabs$ раздела · $groups$ групи",
+    "placeholders": {
+      "tabs": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsGroupCount": {
+    "message": "$count$ раздела",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentTab": {
+    "message": "Текущ раздел"
+  },
+  "tabGroupsAddBookmark": {
+    "message": "Отбележи този раздел"
+  },
+  "tabGroupsSaveFolder": {
+    "message": "Запази групата раздели като папка с отметки"
+  },
+  "tabGroupsGroupSavedToFolder": {
+    "message": "Запазени $count$ раздела в $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsBookmarksAdded": {
+    "message": "Добавени $count$ отметки в $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsSelectNewGroup": {
+    "message": "Нова група раздели"
+  },
+  "tabGroupsSelectOpenInto": {
+    "message": "Отвори в съществуваща група…"
+  },
+  "tabGroupsSelectSaveFolder": {
+    "message": "Запази като папка с отметки"
+  },
+  "tabGroupsSelectClose": {
+    "message": "Затвори"
+  },
+  "tabGroupsSelectSleep": {
+    "message": "Приспи"
+  },
+  "tabGroupsCopyMoveDialog": {
+    "message": "Избраните раздели вече принадлежат към група. Да ги копирате ли (отваряне на ново място) или да ги преместите (премахване от текущата група)?"
+  },
+  "tabGroupsCopyMoveCopy": {
+    "message": "Копирай"
+  },
+  "tabGroupsCopyMoveMove": {
+    "message": "Премести"
+  },
+  "tabGroupsConfirmClose": {
+    "message": "Да се затворят ли $count$ раздела?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsConfirmSleep": {
+    "message": "Да се приспят ли $count$ раздела?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "bookmarkFolderPickDialogTitle": {
+    "message": "Добавяне към папка с отметки"
+  },
+  "bookmarkFolderNoFolders": {
+    "message": "Няма папки с отметки"
+  },
+  "tabGroupsSelectAddBookmarks": {
+    "message": "Добави към папка с отметки…"
+  },
+  "paletteCmdGoTabGroups": {
+    "message": "Към изгледа на групи раздели"
+  },
+  "tabGroupsActivateGroup": {
+    "message": "Към групата раздели"
+  },
+  "tabGroupsRenameGroup": {
+    "message": "Преименувай групата"
+  },
+  "tabGroupsRenameDialog": {
+    "message": "Преименуване на група раздели"
+  },
+  "tabGroupsCloseGroup": {
+    "message": "Затвори групата"
+  },
+  "tabGroupsSleepGroup": {
+    "message": "Приспи групата"
+  },
+  "tabGroupsWakeGroup": {
+    "message": "Събуди групата раздели"
+  },
+  "tabGroupsActivateTab": {
+    "message": "Към раздела"
+  },
+  "tabGroupsCollapseGroup": {
+    "message": "Свий групата"
+  },
+  "tabGroupsExpandGroup": {
+    "message": "Разгъни групата"
+  },
+  "tabGroupsMenuAddBookmark": {
+    "message": "Отбележи раздела"
+  },
+  "tabGroupsMenuSaveFolder": {
+    "message": "Запази като папка"
+  },
+  "tabGroupsSyncCollapse": {
+    "message": "Синхронизиране на свиването с браузъра"
+  },
+  "tabGroupsSyncCollapseHint": {
+    "message": "Когато е отметнато, свиването или разгъването на група в този изглед също актуализира групата на разделите в браузъра. Изключено по подразбиране, така че сгъването на изгледа остава локално."
+  },
+  "tabGroupsColorStyle": {
+    "message": "Стил на цвета на групата раздели"
+  },
+  "tabGroupsColorStyleHint": {
+    "message": "Изключено показва само цветната точка. Цветна лента по ръба изчертава цветна ивица по левия ръб на групата. Цветна свързваща линия изчертава цветна линия под точката на групата с отметка за всеки ред, свързвайки цялата група в едно дърво."
+  },
+  "tabGroupsColorStyleOff": {
+    "message": "Изключено (само цветна точка)"
+  },
+  "tabGroupsColorStyleEdge": {
+    "message": "Цветна лента по ръба"
+  },
+  "tabGroupsColorStyleLine": {
+    "message": "Цветна свързваща линия"
+  },
+  "tabGroupsBookmarked": {
+    "message": "Отметени"
+  },
+  "tabGroupsRemoveBookmark": {
+    "message": "Премахни отметката"
+  },
+  "tabGroupsBookmarkRemoved": {
+    "message": "Премахнати $count$ отметки",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsPinned": {
+    "message": "Закачен раздел"
+  },
+  "tabGroupsDiscarded": {
+    "message": "Заспал раздел"
+  },
+  "tabGroupsPinTab": {
+    "message": "Закачи раздел"
+  },
+  "tabGroupsUnpinTab": {
+    "message": "Откачи раздел"
+  },
+  "tabGroupsSleepTab": {
+    "message": "Приспи раздела"
+  },
+  "tabGroupsWakeTab": {
+    "message": "Събуди раздела"
+  },
+  "tabGroupsOpenGroups": {
+    "message": "Отворени групи раздели"
+  },
+  "tabGroupsClosedGroups": {
+    "message": "Наскоро затворени"
+  },
+  "tabGroupsUngroupedTabs": {
+    "message": "Негрупирани раздели"
+  },
+  "tabGroupsUngroupGroup": {
+    "message": "Разгрупирай раздели"
+  },
+  "tabGroupsMoveNewWindow": {
+    "message": "Премести в нов прозорец"
+  },
+  "tabGroupsWindow": {
+    "message": "Прозорец $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentWindow": {
+    "message": "Текущ прозорец"
+  },
+  "tabGroupsReopenGroup": {
+    "message": "Отвори отново групата с раздели"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "Изтрий затворената група с раздели"
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "Свиване на прозореца"
+  },
+  "tabGroupsExpandWindow": {
+    "message": "Разгъване на прозореца"
+  },
+  "tabGroupsClearClosedGroups": {
+    "message": "Изчисти всичко"
+  },
+  "tabGroupsClosedOpenTab": {
+    "message": "Отваряне в нов раздел"
+  },
+  "tabGroupsRemoveClosedTab": {
+    "message": "Премахване от запазена група"
+  },
+  "tabGroupsClosedTimeLabel": {
+    "message": "Затворено:"
+  },
+  "tabGroupsExpandedExpand": {
+    "message": "Разгъни"
+  },
+  "tabGroupsExpandedCollapse": {
+    "message": "Свий"
+  },
+  "optionTabGroupsClosedLimit": {
+    "message": "Запазена история на затворени раздели/групи"
   },
   "deadProxyAdd": {
     "message": "Добавяне на прокси сървър за проверки за мъртви връзки"

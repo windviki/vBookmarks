@@ -382,6 +382,7 @@ export function initPalette(ctx = {}) {
                     views.activate('search');
             }
         },
+        { slash: 'tabgroups', aliases: [], view: 'tabgroups', name: () => _m('paletteCmdGoTabGroups'), fn: goView('tabgroups') },
         { slash: 'recent', aliases: ['latest'], view: 'recent', name: () => _m('paletteCmdGoRecent'), fn: goView('recent') },
         { slash: 'stats', aliases: ['visits'], view: 'stats', name: () => _m('paletteCmdGoStats'), fn: goView('stats') },
         { slash: 'dead', aliases: ['broken'], view: 'dead', name: () => _m('paletteCmdGoDead'), fn: goView('dead') },

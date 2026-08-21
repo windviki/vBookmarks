@@ -1,4 +1,4 @@
-// Storage-usage bar visual + numeric audit (4.0.9).
+// Storage-usage bar visual + numeric audit (4.0.8).
 //   empty profile  -> summary reads "Used 0B of 10MB", all used segments 0-wide,
 //                     the bar is the free (--vbm-border) fill.
 //   seeded profile -> icon/bookmarks/other segments carry real widths, the three

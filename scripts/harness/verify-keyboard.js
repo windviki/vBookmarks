@@ -147,7 +147,9 @@ const SEED = `
         roving: (document.querySelector('#view-tabs [aria-selected="true"]') || {}).tabIndex,
         others: [...document.querySelectorAll('#view-tabs [aria-selected="false"]')].every(b => b.tabIndex === -1)
     }));
-    check('TabStrip: 6 tabs', tabs.count === 6, String(tabs.count));
+    // 4.1.0: the tab-groups view sits between search and recent — seven tabs
+    // (tree / search / tabgroups / recent / stats / dead / dupes).
+    check('TabStrip: 7 tabs', tabs.count === 7, String(tabs.count));
     check('TabStrip: tree active on boot', tabs.active === 'view-tab-tree', tabs.active);
     check('TabStrip: roving tabindex (active=0, rest=-1)', tabs.roving === 0 && tabs.others);
     check('List: tree rows exist', await $(() => document.querySelectorAll('#tree li').length > 0));
@@ -163,14 +165,23 @@ const SEED = `
     check('→: focus tree→search', await focusedTab() === 'view-tab-search', await focusedTab());
     check('→: auto-activates the view', await selectedTab() === 'view-tab-search');
     await page.keyboard.press('ArrowRight'); await sleep(300);
-    check('→: search→recent', await focusedTab() === 'view-tab-recent');
-    await page.keyboard.press('Home'); await sleep(300);
+    check('→: search→tabgroups', await focusedTab() === 'view-tab-tabgroups', await focusedTab());
+    await page.keyboard.press('Home'); await sleep(400);
     // 4.0.1 (item e): strip Home/End are view-scoped — Home focuses the
-    // CURRENT view's first row (recent is active here), never the first tab.
-    check('Home: view-scoped → recent first row', await $(() => {
+    // CURRENT view's first row (tabgroups is active here), never the first
+    // tab. 4.1.0: that first row is the WINDOW SECTION HEAD, a focusable
+    // role=button fold row (it used to be a non-focusable label with a
+    // chevron button, so Home skipped it).
+    check('Home: view-scoped → tabgroups first row (window head row)', await $(() => {
         const el = document.activeElement;
-        return !!el && !!el.closest('#recent-list');
+        return !!el && !!el.closest('#tabgroups-list')
+            && el.classList.contains('tabgroups-window-head-row')
+            && el.getAttribute('role') === 'button';
     }), await $(() => document.activeElement && (document.activeElement.id || document.activeElement.className)));
+    await page.keyboard.press('Escape'); await sleep(200); // back to the strip layer
+    await page.click('#view-tab-tabgroups'); await sleep(300);
+    await page.keyboard.press('ArrowRight'); await sleep(300);
+    check('→: tabgroups→recent', await focusedTab() === 'view-tab-recent', await focusedTab());
     await page.click('#view-tab-tree'); await sleep(300);
     // ↓ from the strip enters the active view's list (first row takes focus)
     await page.keyboard.press('ArrowDown'); await sleep(400);
@@ -317,6 +328,73 @@ const SEED = `
     await page.keyboard.press('Home'); await sleep(200);
     st = await activeLiIndex('#tree');
     check('tree Home: first row', st.idx === 0, JSON.stringify(st));
+
+    // --- tab groups (4.1.0): three nesting levels — window section head →
+    // group head → tab row — all speaking the same arrow protocol, plus the
+    // view's two toolbar rungs (controls: refresh/fold-all; actions: the
+    // collapse-sync switch + select mode). The window head is a focusable
+    // role=button ROW: its whole width folds, Space/Enter fold it, → opens a
+    // folded one and ← folds an open one; the remaining arrows are swallowed
+    // (there is no window menu, and the generic row rule would open the
+    // FOLDER menu on it).
+    await page.click('#view-tab-tabgroups'); await sleep(900);
+    await page.keyboard.press('ArrowDown'); await sleep(300);
+    check('tabgroups ↓ from strip: the controls toolbar rung (refresh)', await $(() =>
+        document.activeElement && document.activeElement.classList.contains('tabgroups-refresh')),
+        await activeDesc());
+    await page.keyboard.press('ArrowRight'); await sleep(200);
+    check('tabgroups controls rung →: collapse-all', await $(() =>
+        document.activeElement && document.activeElement.classList.contains('tabgroups-collapse-all')),
+        await activeDesc());
+    await page.keyboard.press('ArrowDown'); await sleep(250);
+    check('tabgroups controls rung ↓: the actions rung (sync switch)', await $(() =>
+        document.activeElement && !!document.activeElement.closest('.tabgroups-actions-toolbar')),
+        await activeDesc());
+    await page.keyboard.press('ArrowDown'); await sleep(300);
+    check('tabgroups actions rung ↓: the window section head row', await $(() =>
+        document.activeElement && document.activeElement.classList.contains('tabgroups-window-head-row')),
+        await activeDesc());
+    const tgRows = () => $(() => document.querySelectorAll('#tabgroups-list li.tabgroups-row').length);
+    const tgBefore = await tgRows();
+    check('tabgroups: the window section is expanded by default (current window)',
+        tgBefore > 0, String(tgBefore));
+    await page.keyboard.press('ArrowLeft'); await sleep(300);
+    check('tabgroups window head ←: folds the window (rows unmounted)',
+        await tgRows() === 0, String(await tgRows()));
+    check('tabgroups window head: keeps focus + aria-expanded=false after folding', await $(() =>
+        document.activeElement && document.activeElement.classList.contains('tabgroups-window-head-row')
+        && document.activeElement.getAttribute('aria-expanded') === 'false'),
+        await activeDesc());
+    await page.keyboard.press('ArrowRight'); await sleep(350);
+    check('tabgroups window head →: opens it again',
+        await tgRows() === tgBefore, `${await tgRows()} vs ${tgBefore}`);
+    await page.keyboard.press('ArrowDown'); await sleep(250);
+    check('tabgroups window head ↓: the first row below it', await $(() => {
+        const el = document.activeElement;
+        return !!el && !!el.closest('#tabgroups-list li.tabgroups-row, #tabgroups-list li.tabgroups-group');
+    }), await activeDesc());
+    await page.keyboard.press('ArrowUp'); await sleep(250);
+    check('tabgroups ↑: back to the window head row', await $(() =>
+        document.activeElement && document.activeElement.classList.contains('tabgroups-window-head-row')),
+        await activeDesc());
+    await page.keyboard.press('ArrowUp'); await sleep(250);
+    check('tabgroups window head ↑: the lowest toolbar rung', await $(() =>
+        document.activeElement && !!document.activeElement.closest('.tabgroups-actions-toolbar')),
+        await activeDesc());
+    // A tab row's ← walks to its structural parent: the group head for a
+    // grouped row, the window head for an ungrouped one.
+    await page.evaluate(() => {
+        const row = document.querySelector('#tabgroups-list li.tabgroups-row:not(.grouped) a');
+        if (row) row.focus();
+    });
+    await sleep(200);
+    check('tabgroups ungrouped row ←: setup (row focused)', await $(() =>
+        document.activeElement && !!document.activeElement.closest('li.tabgroups-row')),
+        await activeDesc());
+    await page.keyboard.press('ArrowLeft'); await sleep(300);
+    check('tabgroups ungrouped row ←: walks up to the window head row', await $(() =>
+        document.activeElement && document.activeElement.classList.contains('tabgroups-window-head-row')),
+        await activeDesc());
 
     // --- recent (the §2.1 memory walk left a remembered row here, so the
     // strip's ↓ restores THAT row instead of the first — by design; Home
@@ -479,6 +557,11 @@ const SEED = `
     check('dupes toolbar →: scheme checkbox', await $(() =>
         document.activeElement && document.activeElement.type === 'checkbox'),
         await activeDesc());
+    // 4.0.8: the idle dupes toolbar is TWO rungs — controls (strategy /
+    // scope / scheme) and actions (apply-all / select-mode; the summary is a
+    // span, not a control). → wraps inside a rung (4.0.1 P1: a bounded fixed
+    // set cycles), ↓ steps to the next rung, and only the LAST rung's ↓
+    // enters the rows.
     await page.keyboard.press('ArrowRight'); await sleep(200);
     check('dupes controls rung → wraps at the row edge: back to the strategy dropdown', await $(() =>
         document.activeElement && !!document.activeElement.closest('.vbm-dropdown.dupes-strategy')),

@@ -9,9 +9,9 @@ vBookmarks
 
 [Available on WebStore](https://chrome.google.com/webstore/detail/vbookmarks/odhjcodnoebmndcihdedenkmdmklpihb) · [HomePage](http://windviki.github.com/vBookmarks/)
 
-**vBookmarks turns your bookmark pile into a fast, keyboard-first workspace.** One click on the toolbar icon opens a six-view manager that lives in the popup (or Chrome's side panel — your choice): the familiar folder tree, instant fuzzy search, a Recently Added timeline, visit statistics, a dead-link scanner, and a duplicate cleaner. Everything is reachable from the keyboard, every delete is undoable, and nothing ever leaves your browser — no accounts, no telemetry, no build-step black box, just plain JavaScript you can read.
+**vBookmarks turns your bookmark pile into a fast, keyboard-first workspace.** One click on the toolbar icon opens a seven-view manager that lives in the popup (or Chrome's side panel — your choice): the familiar folder tree, instant fuzzy search, a tab-groups view, a Recently Added timeline, visit statistics, a dead-link scanner, and a duplicate cleaner. Everything is reachable from the keyboard, every delete is undoable, and nothing ever leaves your browser — no accounts, no telemetry, no build-step black box, just plain JavaScript you can read.
 
-- **Six views, one popup** — Tree / Search / Recent / Stats / Dead links / Duplicates, switched from an icon tab strip or with `Alt+1…6`.
+- **Seven views, one popup** — Tree / Search / Tab groups / Recent / Stats / Dead links / Duplicates, switched from an icon tab strip or with `Alt+1…7`.
 - **A maintenance crew for your library** — scan for dead links with pause & resume, deduplicate with six keep-strategies and undoable batch cleaning, save a whole window of tabs as a session folder.
 - **Keyboard-first for real** — every view is fully operable without a mouse: arrows, `Enter`, `F2` rename, `Delete`, view shortcuts, and a `Ctrl/Cmd+K` command palette.
 - **Fast and quiet** — fzf-style fuzzy search with match highlighting (CJK-friendly), omnibox search (`*` + Space), and sync-status indicators that stay out of your way.
@@ -35,12 +35,12 @@ Licensed under the [MIT License](http://www.opensource.org/licenses/mit-license.
 
 # What's new in 4.0
 
-4.0 is the largest release in the project's history. It rebuilds the popup around a **view system** — six specialized views behind an icon tab strip — while keeping the classic tree experience one setting away.
+4.0 is the largest release in the project's history. It rebuilds the popup around a **view system** — seven specialized views behind an icon tab strip — while keeping the classic tree experience one setting away.
 
 ## The view system
 
-- **Six views**: **Tree** (the classic), **Search**, **Recent**, **Stats**, **Dead links**, **Duplicates**. The icon tab strip shows live count badges (dead marks, dupe groups, tracked pages) and can be hidden per view (Stats/Dead/Duplicates) or entirely for the classic single-pane layout.
-- **One keyboard model everywhere** — the tree's mature semantics (arrows, `Home`/`End`, `PageUp`/`PageDown`, `Enter`, `F2`, `Delete`, type-ahead) now work identically in every list view; `↑` past the first row steps up to the tab strip, then the search box; the strip itself is arrow/Home/End navigable with roving tabindex and RTL awareness; `Alt+1…6` jumps straight to a view (portable across Chrome and Edge, which reserves `Ctrl+1…8` for its own tabs).
+- **Seven views**: **Tree** (the classic), **Search**, **Tab groups**, **Recent**, **Stats**, **Dead links**, **Duplicates**. The icon tab strip shows live count badges (dead marks, dupe groups, tracked pages) and each feature view (Tab groups/Recent/Stats/Dead links/Duplicates) can be hidden — or fully disabled — per view, or the whole strip can go for the classic single-pane layout.
+- **One keyboard model everywhere** — the tree's mature semantics (arrows, `Home`/`End`, `PageUp`/`PageDown`, `Enter`, `F2`, `Delete`, type-ahead) now work identically in every list view; `↑` past the first row steps up to the tab strip, then the search box; the strip itself is arrow/Home/End navigable with roving tabindex and RTL awareness; `Alt+1…7` jumps straight to a view (portable across Chrome and Edge, which reserves `Ctrl+1…8` for its own tabs).
 - **Layered `Esc`** — context menu → command palette → view-level action (e.g. pausing a scan) → clear search → back to tree → close, always peeling one layer at a time.
 - **Popup vs panel** — both reopen on the view you left (the popup via the default-on *remember the last view* switch — turn it off for the classic always-tree boot), and the side panel is ready to become your always-on bookmark workspace.
 
@@ -49,6 +49,14 @@ Licensed under the [MIT License](http://www.opensource.org/licenses/mit-license.
 - The popup search is now a proper view: **history on top, results below**. Both stay on screen together.
 - **Search history** (MRU 10) records what you actually used — pressing `Enter`, opening a result, or leaving the view — with result counts and relative timestamps. Click or press `Enter` to re-run, `Delete` or right-click to remove one or clear all. A setting turns history off (and wipes it) instantly.
 - Leaving and coming back keeps everything: the box, the results, the scroll — no reflow, no re-query.
+
+## Tab groups view
+
+- **Your browser session, one list**: every window's tabs in real tab order — grouped tabs under their Chrome tab group (title, color, member count), ungrouped tabs as plain rows, with the current tab flagged. Collapse a group here and the browser's group collapses too (optional sync switch).
+- **Full tab bookkeeping without leaving the popup**: activate, pin/unpin, sleep/wake, close, drag to reorder — per tab or per group, from the row buttons, the context menus, or the keyboard.
+- **Selection mode for batch work**: group selected tabs into a new group, open them into an existing one, close or sleep them — and when a selection already belongs to a group, choose **copy** (reopen elsewhere) or **move** (leave the old group).
+- **Bookmarks meet tabs**: one click files a tab into your quick-add folder; a whole group saves as a bookmark folder and remembers its color and title, so *open as tab group* later restores it looking the same.
+- **Recently closed groups** live at the bottom (depth configurable 5–50): reopen the whole set, or restore/bookmark/forget individual tabs.
 
 ## Recent view
 
@@ -98,16 +106,16 @@ Licensed under the [MIT License](http://www.opensource.org/licenses/mit-license.
 
 ## Engineering
 
-- **Unit tests** across 50+ Vitest suites, covering every module — including contract tests that pin the row-alignment geometry, the z-index layering table, per-theme badge contrast and the horizontal-scrollbar protection contract (every scrollable pane clips `overflow-x`, text slots ellipsis, fixed slots `flex: none`, zoom rules never alter geometry). The live count is `npm run test:run` output (and the CI badge).
-- **Docker harness**: zero-console-error smoke, a real-browser keyboard/view verification suite (tab-strip keyboard model, focus zones, header-row arrow chain, per-view ↑↓/past-top crossings with the in-list toolbar rungs — the dead view stacks two, custom palette commands end-to-end, banner keyboard reachability, search dual-zone, per-view rendering — 132 hard assertions), a scrollbar matrix probe (screen resolution × browser zoom × in-extension zoom × popup size sweep, no horizontal scrollbar on any pane — 752 assertions), and screenshot suites across 5 themes and 8 UI languages (with an RTL mirroring check).
-- Unified locale tooling (`scripts/i18n.py`): audit, missing-key reports, LLM batch translation, verify gate. Baseline grew from 75 to **345 keys** at 4.0 (**390** as of 4.0.5), all 43 locales aligned.
+- **Unit tests** across 79 Vitest suites, covering every module — including contract tests that pin the row-alignment geometry, the z-index layering table, per-theme badge contrast and the horizontal-scrollbar protection contract (every scrollable pane clips `overflow-x`, text slots ellipsis, fixed slots `flex: none`, zoom rules never alter geometry). The live count is `npm run test:run` output (and the CI badge).
+- **Docker harness**: zero-console-error smoke, a real-browser keyboard/view verification suite (tab-strip keyboard model, focus zones, header-row arrow chain, per-view ↑↓/past-top crossings with the in-list toolbar rungs — the dead view stacks two, custom palette commands end-to-end, banner keyboard reachability, search dual-zone, per-view rendering — 153 hard assertions), a scrollbar matrix probe (screen resolution × browser zoom × in-extension zoom × popup size sweep, no horizontal scrollbar on any pane — 752 assertions), and screenshot suites across 5 themes and 8 UI languages (with an RTL mirroring check).
+- Unified locale tooling (`scripts/i18n.py`): audit, missing-key reports, LLM batch translation, verify gate. Baseline grew from 75 to **345 keys** at 4.0 (**555** as of 4.1.0), all 43 locales aligned.
 - **CI**: GitHub Actions runs the unit suites, the i18n gates and the release packaging on every push and PR.
 - Repository organized for the v4 era: `src/`, `pages/`, `css/`, `assets/`, `scripts/`; obsolete artifacts (old `release/*.crx`, MV2 leftovers) live on in git history.
 
 
 # Feature highlights
 
-1. Six views in one popup: tree, search, recent, stats, dead-link scan, duplicate cleaner.
+1. Seven views in one popup: tree, search, tab groups, recent, stats, dead-link scan, duplicate cleaner.
 2. Bookmark current tab before/after a selected bookmark or folder, or to the top/bottom of a folder.
 3. Add sub-folders, update a bookmark's URL with the current tab, copy title + URL to the clipboard.
 4. Search history with re-run, per-item remove and clear-all — can be disabled (and wiped) in settings.
@@ -127,18 +135,18 @@ Licensed under the [MIT License](http://www.opensource.org/licenses/mit-license.
 # Notes for advanced features
 
 1. **Omnibox search** — type `*` in the address bar, press Space, then enter your keywords.
-2. **Full keyboard support**, identical across all six views (details in the [v4 feature guide](guide-v4.md)):
+2. **Full keyboard support**, identical across all seven views (details in the [v4 feature guide](guide-v4.md)):
    - **↑↓** move selection; **↑** past the first row steps up to the tab strip, then the search box
    - **←→** on the tab strip switch views; **→** on a row opens its context menu, **←** closes it
    - **Enter** / **Space** to open; **Ctrl/Cmd+Enter** to open in a new tab
-   - **Home** / **End**, **PageUp** / **PageDown**; **Alt+1…6** jump to a view directly (`Ctrl/Cmd+1…6` is the legacy twin where the browser allows it)
+   - **Home** / **End**, **PageUp** / **PageDown**; **Alt+1…7** jump to a view directly (`Ctrl/Cmd+1…7` is the legacy twin where the browser allows it)
    - **Delete** to delete (undoable), **F2** to rename, **R** to reveal in tree; **K** pins a keeper in Duplicates, **M** toggles a dead mark
    - Type-ahead filtering in the tree and search views: start typing to find items by name
 3. Middle-click a folder to open all its bookmarks (as a color-coded tab group).
 4. `Ctrl+F` focuses the search field; `Esc` clears the search, dismisses the context menu, pauses a scan, or closes the palette — layered from inner to outer.
 5. **Command palette** (`Ctrl/Cmd+K` inside the popup, `Ctrl/Cmd+Shift+K` globally):
    - Fuzzy-search bookmarks and folders, jump to a folder in the tree, or run slash-commands
-   - Slash-commands: `/recent` `/stats` `/dead` `/dupes` jump to views, `/session` saves the window's tabs, `/options` opens settings, `/theme <name>` switches themes, `/tabs` toggles the strip — plus your own **custom commands** (options page → *Commands* group, or the palette's *Save as a command* row)
+   - Slash-commands: `/tabgroups` `/recent` `/stats` `/dead` `/dupes` jump to views, `/session` saves the window's tabs, `/options` opens settings, `/theme <name>` switches themes, `/tabs` toggles the strip — plus your own **custom commands** (options page → *Commands* group, or the palette's *Save as a command* row)
 6. Drag & drop to rearrange; dragging across synced/local storage is safely blocked with an explanation.
 7. Decide whether the popup closes after opening a bookmark (option in settings).
 8. Show only the Bookmark Bar (option in settings).
@@ -199,6 +207,18 @@ python3 scripts/package.py         # → tmp/vBookmarks_<version>.zip
 
 
 # Changelogs
+
+### v4.1.0
+
+*2026-08-21*
+
+#### New
+
+- **Tab groups view — the seventh view** (between Search and Recent): every window's tabs in real order, grouped tabs nested under their Chrome tab group with title/color/member count, ungrouped tabs as plain rows, the current tab flagged. Group heads fold like tree folders (arrow-key model included), with an optional collapse-sync switch that mirrors the fold into the browser itself.
+- **Tab and group management in place**: activate, pin/unpin, sleep/wake, close, drag-to-reorder across groups and windows; group actions cover rename, activate, close, sleep, ungroup, move to a new window, and *save as bookmark folder* (group color/title are remembered and restored by *open as tab group*). Four dedicated context menus (tab row, group head, closed group, closed tab) join the keyboard menu model.
+- **Selection mode with copy/move semantics**: batch group-into-new-group, open-into-existing-group, close or sleep; selected tabs already in a group prompt a copy-or-move choice. Selected tabs can be bookmarked into a chosen folder via the new folder-picker dialog.
+- **Recently closed groups**: the last N closed groups (configurable 5–50) stay listed with per-tab restore/bookmark/remove and a reopen-all, persisted like search history.
+- **Options**: the tab strip gets the Tab groups show/disable controls like every feature view; the new *Tab groups* options group carries the group-color style (off / edge band / connector line) and the closed-history depth. The palette grows `/tabgroups`, and the what's-new banner mechanism re-arms once for this release.
 
 ### v4.0.8
 

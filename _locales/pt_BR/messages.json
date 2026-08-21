@@ -38,6 +38,12 @@
   "announceV408Title": {
     "message": "Novidades na v4.0.8"
   },
+  "announceV410Title": {
+    "message": "v4.1.0 的新功能"
+  },
+  "announceV410Text": {
+    "message": "v4.1.0 新增标签组视图：每个窗口的标签页和标签组，与您的书签一起管理。"
+  },
   "announceV408Text": {
     "message": "v4.0.8 é o lançamento com favicons aprimorados: ícones reais dos sites são buscados automaticamente para favoritos que o Chrome ainda não armazenou em cache."
   },
@@ -323,8 +329,8 @@
   "whatsNewChangelog": {
     "message": "Histórico de alterações"
   },
-  "whatsNewFavicon": {
-    "message": "v$1$ é a versão com favicons aprimorados: os ícones de sites que o Chrome não tinha em cache agora são buscados automaticamente.",
+  "whatsNewTabGroups": {
+    "message": "v$1$ adiciona a visualização de grupos de abas: as abas e grupos de abas de cada janela, ao lado dos seus favoritos.",
     "placeholders": {
       "1": {
         "content": "$1"
@@ -341,6 +347,271 @@
         "content": "$2"
       }
     }
+  },
+  "viewTabGroups": {
+    "message": "Grupos de abas"
+  },
+  "optionShowTabGroupsView": {
+    "message": "Mostrar a aba de visualização de grupos de abas"
+  },
+  "tabGroupsViewEmpty": {
+    "message": "Nenhuma aba nesta janela"
+  },
+  "tabGroupsToolbarRefresh": {
+    "message": "Atualizar"
+  },
+  "tabGroupsCollapseAll": {
+    "message": "Recolher tudo"
+  },
+  "tabGroupsExpandAll": {
+    "message": "Expandir tudo"
+  },
+  "tabGroupsSummary": {
+    "message": "$tabs$ abas · $groups$ grupos",
+    "placeholders": {
+      "tabs": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsGroupCount": {
+    "message": "$count$ abas",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentTab": {
+    "message": "Aba atual"
+  },
+  "tabGroupsAddBookmark": {
+    "message": "Adicionar aos favoritos esta aba"
+  },
+  "tabGroupsSaveFolder": {
+    "message": "Salvar grupo de abas como pasta de favoritos"
+  },
+  "tabGroupsGroupSavedToFolder": {
+    "message": "Salvas $count$ abas em $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsBookmarksAdded": {
+    "message": "Adicionados $count$ favorito(s) a $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsSelectNewGroup": {
+    "message": "Novo grupo de abas"
+  },
+  "tabGroupsSelectOpenInto": {
+    "message": "Abrir em grupo de abas existente…"
+  },
+  "tabGroupsSelectSaveFolder": {
+    "message": "Salvar como pasta de favoritos"
+  },
+  "tabGroupsSelectClose": {
+    "message": "Fechar"
+  },
+  "tabGroupsSelectSleep": {
+    "message": "Adormecer"
+  },
+  "tabGroupsCopyMoveDialog": {
+    "message": "As abas selecionadas já pertencem a um grupo de abas. Copiá-las (abrir em novo local) ou movê-las (remover do grupo atual)?"
+  },
+  "tabGroupsCopyMoveCopy": {
+    "message": "Copiar"
+  },
+  "tabGroupsCopyMoveMove": {
+    "message": "Mover"
+  },
+  "tabGroupsConfirmClose": {
+    "message": "Fechar $count$ abas?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsConfirmSleep": {
+    "message": "Adormecer $count$ abas?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "bookmarkFolderPickDialogTitle": {
+    "message": "Adicionar à pasta de favoritos"
+  },
+  "bookmarkFolderNoFolders": {
+    "message": "Nenhuma pasta de favoritos"
+  },
+  "tabGroupsSelectAddBookmarks": {
+    "message": "Adicionar à pasta de favoritos…"
+  },
+  "paletteCmdGoTabGroups": {
+    "message": "Ir para a visualização de grupos de abas"
+  },
+  "tabGroupsActivateGroup": {
+    "message": "Ir para grupo de abas"
+  },
+  "tabGroupsRenameGroup": {
+    "message": "Renomear grupo de abas"
+  },
+  "tabGroupsRenameDialog": {
+    "message": "Renomear grupo de abas"
+  },
+  "tabGroupsCloseGroup": {
+    "message": "Fechar grupo de abas"
+  },
+  "tabGroupsSleepGroup": {
+    "message": "Adormecer grupo de abas"
+  },
+  "tabGroupsWakeGroup": {
+    "message": "Ativar grupo de abas"
+  },
+  "tabGroupsActivateTab": {
+    "message": "Ir para aba"
+  },
+  "tabGroupsCollapseGroup": {
+    "message": "Recolher grupo"
+  },
+  "tabGroupsExpandGroup": {
+    "message": "Expandir grupo"
+  },
+  "tabGroupsMenuAddBookmark": {
+    "message": "Adicionar aos favoritos"
+  },
+  "tabGroupsMenuSaveFolder": {
+    "message": "Salvar como pasta de favoritos"
+  },
+  "tabGroupsSyncCollapse": {
+    "message": "Sincronizar recolhimento com o navegador"
+  },
+  "tabGroupsSyncCollapseHint": {
+    "message": "Quando marcado, recolher ou expandir um grupo nesta visão também atualiza o grupo de abas do navegador. Desativado por padrão para que o recolhimento da visão permaneça local."
+  },
+  "tabGroupsColorStyle": {
+    "message": "Estilo de cor do grupo de abas"
+  },
+  "tabGroupsColorStyleHint": {
+    "message": "Desativado mostra apenas o ponto de cor. A faixa de cor na borda desenha uma faixa colorida na borda esquerda do grupo. A linha de conexão colorida desenha uma linha colorida sob o ponto do grupo com uma marca por linha, unindo todo o grupo em uma árvore."
+  },
+  "tabGroupsColorStyleOff": {
+    "message": "Desativado (apenas ponto de cor)"
+  },
+  "tabGroupsColorStyleEdge": {
+    "message": "Faixa de cor na borda"
+  },
+  "tabGroupsColorStyleLine": {
+    "message": "Linha de conexão colorida"
+  },
+  "tabGroupsBookmarked": {
+    "message": "Adicionado aos favoritos"
+  },
+  "tabGroupsRemoveBookmark": {
+    "message": "Remover marcador"
+  },
+  "tabGroupsBookmarkRemoved": {
+    "message": "$count$ marcador(es) removido(s)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsPinned": {
+    "message": "Guia fixada"
+  },
+  "tabGroupsDiscarded": {
+    "message": "Guia adormecida"
+  },
+  "tabGroupsPinTab": {
+    "message": "Fixar guia"
+  },
+  "tabGroupsUnpinTab": {
+    "message": "Desafixar guia"
+  },
+  "tabGroupsSleepTab": {
+    "message": "Suspender aba"
+  },
+  "tabGroupsWakeTab": {
+    "message": "Ativar aba"
+  },
+  "tabGroupsOpenGroups": {
+    "message": "Grupos de guias abertos"
+  },
+  "tabGroupsClosedGroups": {
+    "message": "Fechados recentemente"
+  },
+  "tabGroupsUngroupedTabs": {
+    "message": "Guias não agrupadas"
+  },
+  "tabGroupsUngroupGroup": {
+    "message": "Desagrupar guias"
+  },
+  "tabGroupsMoveNewWindow": {
+    "message": "Mover grupo para nova janela"
+  },
+  "tabGroupsWindow": {
+    "message": "Janela $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentWindow": {
+    "message": "Janela atual"
+  },
+  "tabGroupsReopenGroup": {
+    "message": "Reabrir grupo de abas"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "Excluir grupo de abas fechado"
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "Recolher janela"
+  },
+  "tabGroupsExpandWindow": {
+    "message": "Expandir janela"
+  },
+  "tabGroupsClearClosedGroups": {
+    "message": "Limpar tudo"
+  },
+  "tabGroupsClosedOpenTab": {
+    "message": "Abrir em nova aba"
+  },
+  "tabGroupsRemoveClosedTab": {
+    "message": "Remover do grupo salvo"
+  },
+  "tabGroupsClosedTimeLabel": {
+    "message": "Fechado:"
+  },
+  "tabGroupsExpandedExpand": {
+    "message": "Expandir"
+  },
+  "tabGroupsExpandedCollapse": {
+    "message": "Recolher"
+  },
+  "optionTabGroupsClosedLimit": {
+    "message": "Histórico de abas/grupos fechados a manter"
   },
   "deadProxyAdd": {
     "message": "Adicionar um servidor proxy para verificação de links quebrados"

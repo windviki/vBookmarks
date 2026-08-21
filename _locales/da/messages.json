@@ -38,6 +38,12 @@
   "announceV408Title": {
     "message": "Nyt i v4.0.8"
   },
+  "announceV410Title": {
+    "message": "Nyheder i v4.1.0"
+  },
+  "announceV410Text": {
+    "message": "v4.1.0 tilføjer fanegruppevisningen: alle vinduers faner og fanegrupper, administreret ved siden af dine bogmærker."
+  },
   "announceV408Text": {
     "message": "v4.0.8 er udgivelsen med de forbedrede favicons: rigtige webstedsikoner hentes automatisk for bogmærker, som Chrome endnu ikke har cachelagret."
   },
@@ -324,8 +330,8 @@
   "whatsNewChangelog": {
     "message": "Ændringslog"
   },
-  "whatsNewFavicon": {
-    "message": "v$1$ er en favicon-forbedret version: webstedsikoner, som Chrome ikke har cachet, hentes nu automatisk.",
+  "whatsNewTabGroups": {
+    "message": "v$1$ tilføjer visningen af fanegrupper: alle vinduers faner og fanegrupper, ved siden af dine bogmærker.",
     "placeholders": {
       "1": {
         "content": "$1"
@@ -342,6 +348,271 @@
         "content": "$2"
       }
     }
+  },
+  "viewTabGroups": {
+    "message": "Fanegrupper"
+  },
+  "optionShowTabGroupsView": {
+    "message": "Vis fanen Fanegrupper"
+  },
+  "tabGroupsViewEmpty": {
+    "message": "Ingen faner i dette vindue"
+  },
+  "tabGroupsToolbarRefresh": {
+    "message": "Opdater"
+  },
+  "tabGroupsCollapseAll": {
+    "message": "Skjul alle"
+  },
+  "tabGroupsExpandAll": {
+    "message": "Vis alle"
+  },
+  "tabGroupsSummary": {
+    "message": "$tabs$ faner · $groups$ grupper",
+    "placeholders": {
+      "tabs": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsGroupCount": {
+    "message": "$count$ faner",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentTab": {
+    "message": "Aktuel fane"
+  },
+  "tabGroupsAddBookmark": {
+    "message": "Bogmærk denne fane"
+  },
+  "tabGroupsSaveFolder": {
+    "message": "Gem fanegruppe som bogmærkemappe"
+  },
+  "tabGroupsGroupSavedToFolder": {
+    "message": "Gemte $count$ faner i $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsBookmarksAdded": {
+    "message": "Tilføjede $count$ bogmærke(r) til $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsSelectNewGroup": {
+    "message": "Ny fanegruppe"
+  },
+  "tabGroupsSelectOpenInto": {
+    "message": "Åbn i eksisterende fanegruppe…"
+  },
+  "tabGroupsSelectSaveFolder": {
+    "message": "Gem som bogmærkemappe"
+  },
+  "tabGroupsSelectClose": {
+    "message": "Luk"
+  },
+  "tabGroupsSelectSleep": {
+    "message": "Slumre"
+  },
+  "tabGroupsCopyMoveDialog": {
+    "message": "Markerede faner tilhører allerede en fanegruppe. Kopier dem (åbn på et nyt sted) eller flyt dem (fjern fra deres nuværende gruppe)?"
+  },
+  "tabGroupsCopyMoveCopy": {
+    "message": "Kopier"
+  },
+  "tabGroupsCopyMoveMove": {
+    "message": "Flyt"
+  },
+  "tabGroupsConfirmClose": {
+    "message": "Luk $count$ faner?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsConfirmSleep": {
+    "message": "Slumre $count$ faner?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "bookmarkFolderPickDialogTitle": {
+    "message": "Tilføj til bogmærkemappe"
+  },
+  "bookmarkFolderNoFolders": {
+    "message": "Ingen bogmærkemapper"
+  },
+  "tabGroupsSelectAddBookmarks": {
+    "message": "Tilføj til bogmærkemappe…"
+  },
+  "paletteCmdGoTabGroups": {
+    "message": "Gå til visning af fanegrupper"
+  },
+  "tabGroupsActivateGroup": {
+    "message": "Gå til fanegruppe"
+  },
+  "tabGroupsRenameGroup": {
+    "message": "Omdøb fanegruppe"
+  },
+  "tabGroupsRenameDialog": {
+    "message": "Omdøb fanegruppe"
+  },
+  "tabGroupsCloseGroup": {
+    "message": "Luk fanegruppe"
+  },
+  "tabGroupsSleepGroup": {
+    "message": "Slumre fanegruppe"
+  },
+  "tabGroupsWakeGroup": {
+    "message": "Væk fanegruppe"
+  },
+  "tabGroupsActivateTab": {
+    "message": "Gå til fane"
+  },
+  "tabGroupsCollapseGroup": {
+    "message": "Skjul gruppe"
+  },
+  "tabGroupsExpandGroup": {
+    "message": "Vis gruppe"
+  },
+  "tabGroupsMenuAddBookmark": {
+    "message": "Bogmærk fane"
+  },
+  "tabGroupsMenuSaveFolder": {
+    "message": "Gem som bogmærkemappe"
+  },
+  "tabGroupsSyncCollapse": {
+    "message": "Synkroniser sammenklap med browser"
+  },
+  "tabGroupsSyncCollapseHint": {
+    "message": "Når markeret, opdaterer sammenklapning eller udvidelse af en gruppe i denne visning også browserens fanegruppe. Fravalgt som standard, så visningens foldning forbliver lokal."
+  },
+  "tabGroupsColorStyle": {
+    "message": "Farvestil for fanegrupper"
+  },
+  "tabGroupsColorStyleHint": {
+    "message": "Fra viser kun farveprikken. Kantfarvebånd tegner en farvet stribe ned langs gruppens venstre kant. Farveforbindelseslinje tegner en farvet linje under gruppens prik med en markering pr. række, der binder hele gruppen sammen som ét træ."
+  },
+  "tabGroupsColorStyleOff": {
+    "message": "Fra (kun farveprik)"
+  },
+  "tabGroupsColorStyleEdge": {
+    "message": "Kantfarvebånd"
+  },
+  "tabGroupsColorStyleLine": {
+    "message": "Farveforbindelseslinje"
+  },
+  "tabGroupsBookmarked": {
+    "message": "Bogmærket"
+  },
+  "tabGroupsRemoveBookmark": {
+    "message": "Fjern bogmærke"
+  },
+  "tabGroupsBookmarkRemoved": {
+    "message": "Fjernede $count$ bogmærke(r)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsPinned": {
+    "message": "Fastgjort fane"
+  },
+  "tabGroupsDiscarded": {
+    "message": "Sovende fane"
+  },
+  "tabGroupsPinTab": {
+    "message": "Fastgør fane"
+  },
+  "tabGroupsUnpinTab": {
+    "message": "Frigør fane"
+  },
+  "tabGroupsSleepTab": {
+    "message": "Dvale for fane"
+  },
+  "tabGroupsWakeTab": {
+    "message": "Væk fane"
+  },
+  "tabGroupsOpenGroups": {
+    "message": "Åbne fanegrupper"
+  },
+  "tabGroupsClosedGroups": {
+    "message": "Senest lukket"
+  },
+  "tabGroupsUngroupedTabs": {
+    "message": "Ikke-grupperede faner"
+  },
+  "tabGroupsUngroupGroup": {
+    "message": "Opdel faner"
+  },
+  "tabGroupsMoveNewWindow": {
+    "message": "Flyt gruppe til nyt vindue"
+  },
+  "tabGroupsWindow": {
+    "message": "Vindue $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentWindow": {
+    "message": "Aktuelt vindue"
+  },
+  "tabGroupsReopenGroup": {
+    "message": "Genåbn fanegruppe"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "Slet lukket fanegruppe"
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "Skjul vindue"
+  },
+  "tabGroupsExpandWindow": {
+    "message": "Udvid vindue"
+  },
+  "tabGroupsClearClosedGroups": {
+    "message": "Ryd alle"
+  },
+  "tabGroupsClosedOpenTab": {
+    "message": "Åbn i ny fane"
+  },
+  "tabGroupsRemoveClosedTab": {
+    "message": "Fjern fra gemt gruppe"
+  },
+  "tabGroupsClosedTimeLabel": {
+    "message": "Lukket:"
+  },
+  "tabGroupsExpandedExpand": {
+    "message": "Udvid"
+  },
+  "tabGroupsExpandedCollapse": {
+    "message": "Skjul"
+  },
+  "optionTabGroupsClosedLimit": {
+    "message": "Lukket fane/gruppe-historik, der skal beholdes"
   },
   "deadProxyAdd": {
     "message": "Tilføj en proxyserver til død-link-tjek"

@@ -305,15 +305,18 @@ describe('store.js', () => {
                 'dontConfirmOpenFolder', 'confirmDeleteFolder', 'dontRememberState',
                 'onlyShowBMBar', 'searchAfterEnter', 'announceEnabled',
                 'showViewTabs', 'rememberView', 'showTabBadges', 'showItemPath',
-                'showRecentBookmarks', 'showStatsView', 'showDeadView', 'showDupesView',
+                'showRecentBookmarks', 'showStatsView', 'showDeadView', 'showDupesView', 'showTabGroupsView',
                 'disableRecentView', 'disableStatsView', 'disableDeadView', 'disableDupesView',
+                'disableTabGroupsView',
                 'paletteEnabled', 'quickAddEnabled', 'showToolButton', 'quickAddContextMenu',
                 'collapseTabGroupMenu', 'collapseSortMenu', 'statsEnabled', 'searchHistoryEnabled',
                 'faviconContrast', 'faviconEnrich', 'faviconEnrichAgg', 'faviconBackupInclude',
                 'recentCount', 'sortOptions',
                 'dupesStrategy', 'dupesScope', 'dupesIgnoreScheme',
                 'deadSort', 'deadFilter', 'deadMarkFilter',
-                'statsSort', 'statsShowUnbookmarked'
+                'statsSort', 'statsShowUnbookmarked',
+                // 4.1.0 tab-groups view prefs
+                'tabGroupsSyncCollapse', 'tabGroupsColorStyle', 'tabGroupsColorBorder', 'tabGroupsClosedLimit'
             ]);
         });
 

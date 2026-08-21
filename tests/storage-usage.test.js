@@ -86,7 +86,11 @@ const EXPECTED = {
     customIcon: 'other', currentVersion: 'other',
     openCount: 'other', donationKey: 'other', donationCountDown: 'other',
     donationFactor: 'other', openInSidePanel: 'other', quickAddFolderId: 'other',
-    deadScanConcurrency: 'other', deadScanTimeout: 'other'
+    deadScanConcurrency: 'other', deadScanTimeout: 'other',
+    // 4.1.0 tab-groups view: closed-group records (bounded by
+    // tabGroupsClosedLimit) + per-device UI collapse state — both small,
+    // both local-only (not sync-routed), both "other".
+    tabGroupsClosed: 'other', tabGroupsViewState: 'other'
 };
 
 describe('storage-usage categorization (real src/storage-usage.js)', () => {

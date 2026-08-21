@@ -38,6 +38,12 @@
   "announceV408Title": {
     "message": "Novosti u v4.0.8"
   },
+  "announceV410Title": {
+    "message": "Novosti u v4.1.0"
+  },
+  "announceV410Text": {
+    "message": "v4.1.0 dodaje prikaz grupa kartica: kartice i grupe kartica svakog prozora, upravljane uz vaše zabilješke."
+  },
   "announceV408Text": {
     "message": "v4.0.8 je izdanje s poboljšanim faviconima: stvarne ikone web stranica automatski se dohvaćaju za knjižne oznake koje Chrome još nije predmemorirao."
   },
@@ -324,8 +330,8 @@
   "whatsNewChangelog": {
     "message": "Popis promjena"
   },
-  "whatsNewFavicon": {
-    "message": "v$1$ je izdanje s poboljšanim faviconima: ikone web stranica koje Chrome nije keširao sada se automatski dohvaćaju.",
+  "whatsNewTabGroups": {
+    "message": "v$1$ dodaje prikaz grupa kartica: kartice i grupe kartica svakog prozora, uz vaše zabilješke.",
     "placeholders": {
       "1": {
         "content": "$1"
@@ -342,6 +348,271 @@
         "content": "$2"
       }
     }
+  },
+  "viewTabGroups": {
+    "message": "Grupe kartica"
+  },
+  "optionShowTabGroupsView": {
+    "message": "Prikaži karticu prikaza grupa kartica"
+  },
+  "tabGroupsViewEmpty": {
+    "message": "Nema kartica u ovom prozoru"
+  },
+  "tabGroupsToolbarRefresh": {
+    "message": "Osvježi"
+  },
+  "tabGroupsCollapseAll": {
+    "message": "Sažmi sve"
+  },
+  "tabGroupsExpandAll": {
+    "message": "Proširi sve"
+  },
+  "tabGroupsSummary": {
+    "message": "$tabs$ kartica · $groups$ grupa",
+    "placeholders": {
+      "tabs": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsGroupCount": {
+    "message": "$count$ kartica",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentTab": {
+    "message": "Trenutna kartica"
+  },
+  "tabGroupsAddBookmark": {
+    "message": "Dodaj ovu karticu u oznake"
+  },
+  "tabGroupsSaveFolder": {
+    "message": "Spremi grupu kartica kao mapu oznaka"
+  },
+  "tabGroupsGroupSavedToFolder": {
+    "message": "Spremljeno $count$ kartica u $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsBookmarksAdded": {
+    "message": "Dodano $count$ oznaka u $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsSelectNewGroup": {
+    "message": "Nova grupa kartica"
+  },
+  "tabGroupsSelectOpenInto": {
+    "message": "Otvori u postojećoj grupi kartica…"
+  },
+  "tabGroupsSelectSaveFolder": {
+    "message": "Spremi kao mapu oznaka"
+  },
+  "tabGroupsSelectClose": {
+    "message": "Zatvori"
+  },
+  "tabGroupsSelectSleep": {
+    "message": "Uspavaj"
+  },
+  "tabGroupsCopyMoveDialog": {
+    "message": "Odabrane kartice već pripadaju grupi kartica. Kopirati ih (otvoriti na novom mjestu) ili premjestiti (ukloniti iz trenutne grupe)?"
+  },
+  "tabGroupsCopyMoveCopy": {
+    "message": "Kopiraj"
+  },
+  "tabGroupsCopyMoveMove": {
+    "message": "Premjesti"
+  },
+  "tabGroupsConfirmClose": {
+    "message": "Zatvoriti $count$ kartica?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsConfirmSleep": {
+    "message": "Uspavati $count$ kartica?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "bookmarkFolderPickDialogTitle": {
+    "message": "Dodaj u mapu oznaka"
+  },
+  "bookmarkFolderNoFolders": {
+    "message": "Nema mapa oznaka"
+  },
+  "tabGroupsSelectAddBookmarks": {
+    "message": "Dodaj u mapu oznaka…"
+  },
+  "paletteCmdGoTabGroups": {
+    "message": "Idi na prikaz grupa kartica"
+  },
+  "tabGroupsActivateGroup": {
+    "message": "Idi na grupu kartica"
+  },
+  "tabGroupsRenameGroup": {
+    "message": "Preimenuj grupu"
+  },
+  "tabGroupsRenameDialog": {
+    "message": "Preimenuj grupu kartica"
+  },
+  "tabGroupsCloseGroup": {
+    "message": "Zatvori grupu"
+  },
+  "tabGroupsSleepGroup": {
+    "message": "Uspavaj grupu"
+  },
+  "tabGroupsWakeGroup": {
+    "message": "Probudi grupu kartica"
+  },
+  "tabGroupsActivateTab": {
+    "message": "Idi na karticu"
+  },
+  "tabGroupsCollapseGroup": {
+    "message": "Sažmi grupu"
+  },
+  "tabGroupsExpandGroup": {
+    "message": "Proširi grupu"
+  },
+  "tabGroupsMenuAddBookmark": {
+    "message": "Dodaj u oznake"
+  },
+  "tabGroupsMenuSaveFolder": {
+    "message": "Spremi kao mapu oznaka"
+  },
+  "tabGroupsSyncCollapse": {
+    "message": "Sinkroniziraj sažimanje s preglednikom"
+  },
+  "tabGroupsSyncCollapseHint": {
+    "message": "Kada je označeno, sažimanje ili proširivanje grupe u ovom prikazu također ažurira grupu kartica u pregledniku. Isključeno prema zadanim postavkama kako bi sažimanje prikaza ostalo lokalno."
+  },
+  "tabGroupsColorStyle": {
+    "message": "Stil boje grupe kartica"
+  },
+  "tabGroupsColorStyleHint": {
+    "message": "Isključeno prikazuje samo točku u boji. Rubna traka u boji crta obojenu traku duž lijevog ruba grupe. Linija poveznika u boji crta obojenu liniju ispod točke grupe s oznakom za svaki redak, povezujući cijelu grupu u jedno stablo."
+  },
+  "tabGroupsColorStyleOff": {
+    "message": "Isključeno (samo točka u boji)"
+  },
+  "tabGroupsColorStyleEdge": {
+    "message": "Rubna traka u boji"
+  },
+  "tabGroupsColorStyleLine": {
+    "message": "Linija poveznika u boji"
+  },
+  "tabGroupsBookmarked": {
+    "message": "Označeno"
+  },
+  "tabGroupsRemoveBookmark": {
+    "message": "Ukloni zabilješku"
+  },
+  "tabGroupsBookmarkRemoved": {
+    "message": "Uklonjeno $count$ zabilješki",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsPinned": {
+    "message": "Prikvačena kartica"
+  },
+  "tabGroupsDiscarded": {
+    "message": "Uspavana kartica"
+  },
+  "tabGroupsPinTab": {
+    "message": "Prikvači karticu"
+  },
+  "tabGroupsUnpinTab": {
+    "message": "Otpkači karticu"
+  },
+  "tabGroupsSleepTab": {
+    "message": "Uspavaj karticu"
+  },
+  "tabGroupsWakeTab": {
+    "message": "Probudi karticu"
+  },
+  "tabGroupsOpenGroups": {
+    "message": "Otvorene grupe kartica"
+  },
+  "tabGroupsClosedGroups": {
+    "message": "Nedavno zatvoreno"
+  },
+  "tabGroupsUngroupedTabs": {
+    "message": "Negrupirane kartice"
+  },
+  "tabGroupsUngroupGroup": {
+    "message": "Razgrupiraj kartice"
+  },
+  "tabGroupsMoveNewWindow": {
+    "message": "Premjesti grupu u novi prozor"
+  },
+  "tabGroupsWindow": {
+    "message": "Prozor $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentWindow": {
+    "message": "Trenutni prozor"
+  },
+  "tabGroupsReopenGroup": {
+    "message": "Ponovno otvori grupu kartica"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "Izbriši zatvorenu grupu kartica"
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "Sažmi prozor"
+  },
+  "tabGroupsExpandWindow": {
+    "message": "Proširi prozor"
+  },
+  "tabGroupsClearClosedGroups": {
+    "message": "Očisti sve"
+  },
+  "tabGroupsClosedOpenTab": {
+    "message": "Otvori u novoj kartici"
+  },
+  "tabGroupsRemoveClosedTab": {
+    "message": "Ukloni iz spremljene grupe"
+  },
+  "tabGroupsClosedTimeLabel": {
+    "message": "Zatvoreno:"
+  },
+  "tabGroupsExpandedExpand": {
+    "message": "Proširi"
+  },
+  "tabGroupsExpandedCollapse": {
+    "message": "Sažmi"
+  },
+  "optionTabGroupsClosedLimit": {
+    "message": "Zadržano zatvorenih kartica/grupa"
   },
   "deadProxyAdd": {
     "message": "Dodaj proxy poslužitelj za provjeru mrtvih veza"

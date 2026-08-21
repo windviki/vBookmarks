@@ -38,6 +38,12 @@
   "announceV408Title": {
     "message": "Co nowego w v4.0.8"
   },
+  "announceV410Title": {
+    "message": "Co nowego w v4.1.0"
+  },
+  "announceV410Text": {
+    "message": "v4.1.0 dodaje widok grup kart: karty i grupy kart każdego okna, zarządzane obok zakładek."
+  },
   "announceV408Text": {
     "message": "v4.0.8 to wydanie wzbogacone o ikony favicon: prawdziwe ikony witryn są automatycznie pobierane dla zakładek, których Chrome jeszcze nie zapisał w pamięci podręcznej."
   },
@@ -324,8 +330,8 @@
   "whatsNewChangelog": {
     "message": "Dziennik zmian"
   },
-  "whatsNewFavicon": {
-    "message": "Wersja v$1$ to wydanie z ulepszonymi faviconami: ikony witryn, których Chrome nie buforował, są teraz pobierane automatycznie.",
+  "whatsNewTabGroups": {
+    "message": "v$1$ dodaje widok grup kart: karty i grupy kart każdego okna, obok zakładek.",
     "placeholders": {
       "1": {
         "content": "$1"
@@ -342,6 +348,271 @@
         "content": "$2"
       }
     }
+  },
+  "viewTabGroups": {
+    "message": "Grupy kart"
+  },
+  "optionShowTabGroupsView": {
+    "message": "Pokaż kartę widoku grup kart"
+  },
+  "tabGroupsViewEmpty": {
+    "message": "Brak kart w tym oknie"
+  },
+  "tabGroupsToolbarRefresh": {
+    "message": "Odśwież"
+  },
+  "tabGroupsCollapseAll": {
+    "message": "Zwiń wszystko"
+  },
+  "tabGroupsExpandAll": {
+    "message": "Rozwiń wszystko"
+  },
+  "tabGroupsSummary": {
+    "message": "$tabs$ kart · $groups$ grup",
+    "placeholders": {
+      "tabs": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsGroupCount": {
+    "message": "$count$ kart",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentTab": {
+    "message": "Bieżąca karta"
+  },
+  "tabGroupsAddBookmark": {
+    "message": "Dodaj tę kartę do zakładek"
+  },
+  "tabGroupsSaveFolder": {
+    "message": "Zapisz grupę kart jako folder zakładek"
+  },
+  "tabGroupsGroupSavedToFolder": {
+    "message": "Zapisano $count$ kart do $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsBookmarksAdded": {
+    "message": "Dodano $count$ zakładek do $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsSelectNewGroup": {
+    "message": "Nowa grupa kart"
+  },
+  "tabGroupsSelectOpenInto": {
+    "message": "Otwórz w istniejącej grupie kart…"
+  },
+  "tabGroupsSelectSaveFolder": {
+    "message": "Zapisz jako folder zakładek"
+  },
+  "tabGroupsSelectClose": {
+    "message": "Zamknij"
+  },
+  "tabGroupsSelectSleep": {
+    "message": "Uśpij"
+  },
+  "tabGroupsCopyMoveDialog": {
+    "message": "Wybrane karty już należą do grupy kart. Skopiować je (otworzyć w nowym miejscu) czy przenieść (usunąć z bieżącej grupy)?"
+  },
+  "tabGroupsCopyMoveCopy": {
+    "message": "Kopiuj"
+  },
+  "tabGroupsCopyMoveMove": {
+    "message": "Przenieś"
+  },
+  "tabGroupsConfirmClose": {
+    "message": "Zamknąć $count$ kart?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsConfirmSleep": {
+    "message": "Uśpić $count$ kart?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "bookmarkFolderPickDialogTitle": {
+    "message": "Dodaj do folderu zakładek"
+  },
+  "bookmarkFolderNoFolders": {
+    "message": "Brak folderów zakładek"
+  },
+  "tabGroupsSelectAddBookmarks": {
+    "message": "Dodaj do folderu zakładek…"
+  },
+  "paletteCmdGoTabGroups": {
+    "message": "Przejdź do widoku grup kart"
+  },
+  "tabGroupsActivateGroup": {
+    "message": "Przejdź do grupy kart"
+  },
+  "tabGroupsRenameGroup": {
+    "message": "Zmień nazwę grupy kart"
+  },
+  "tabGroupsRenameDialog": {
+    "message": "Zmień nazwę grupy kart"
+  },
+  "tabGroupsCloseGroup": {
+    "message": "Zamknij grupę kart"
+  },
+  "tabGroupsSleepGroup": {
+    "message": "Uśpij grupę kart"
+  },
+  "tabGroupsWakeGroup": {
+    "message": "Obudź grupę kart"
+  },
+  "tabGroupsActivateTab": {
+    "message": "Przejdź do karty"
+  },
+  "tabGroupsCollapseGroup": {
+    "message": "Zwiń grupę"
+  },
+  "tabGroupsExpandGroup": {
+    "message": "Rozwiń grupę"
+  },
+  "tabGroupsMenuAddBookmark": {
+    "message": "Dodaj kartę do zakładek"
+  },
+  "tabGroupsMenuSaveFolder": {
+    "message": "Zapisz jako folder zakładek"
+  },
+  "tabGroupsSyncCollapse": {
+    "message": "Synchronizuj zwijanie z przeglądarką"
+  },
+  "tabGroupsSyncCollapseHint": {
+    "message": "Gdy zaznaczone, zwijanie lub rozwijanie grupy w tym widoku aktualizuje również grupę kart w przeglądarce. Domyślnie wyłączone, aby zwijanie widoku pozostało lokalne."
+  },
+  "tabGroupsColorStyle": {
+    "message": "Styl koloru grupy kart"
+  },
+  "tabGroupsColorStyleHint": {
+    "message": "Wyłączone pokazuje tylko kropkę koloru. Pasek koloru na krawędzi rysuje kolorowy pasek wzdłuż lewej krawędzi grupy. Linia łącząca kolor rysuje kolorową linię pod kropką grupy z zaznaczeniem na każdy wiersz, łącząc całą grupę w jedno drzewo."
+  },
+  "tabGroupsColorStyleOff": {
+    "message": "Wyłączone (tylko kropka koloru)"
+  },
+  "tabGroupsColorStyleEdge": {
+    "message": "Pasek koloru na krawędzi"
+  },
+  "tabGroupsColorStyleLine": {
+    "message": "Linia łącząca kolor"
+  },
+  "tabGroupsBookmarked": {
+    "message": "Zapisane"
+  },
+  "tabGroupsRemoveBookmark": {
+    "message": "Usuń zakładkę"
+  },
+  "tabGroupsBookmarkRemoved": {
+    "message": "Usunięto $count$ zakładek",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsPinned": {
+    "message": "Przypięta karta"
+  },
+  "tabGroupsDiscarded": {
+    "message": "Uśpiona karta"
+  },
+  "tabGroupsPinTab": {
+    "message": "Przypnij kartę"
+  },
+  "tabGroupsUnpinTab": {
+    "message": "Odepnij kartę"
+  },
+  "tabGroupsSleepTab": {
+    "message": "Uśpij kartę"
+  },
+  "tabGroupsWakeTab": {
+    "message": "Obudź kartę"
+  },
+  "tabGroupsOpenGroups": {
+    "message": "Otwórz grupy kart"
+  },
+  "tabGroupsClosedGroups": {
+    "message": "Ostatnio zamknięte"
+  },
+  "tabGroupsUngroupedTabs": {
+    "message": "Karty bez grupy"
+  },
+  "tabGroupsUngroupGroup": {
+    "message": "Rozgrupuj karty"
+  },
+  "tabGroupsMoveNewWindow": {
+    "message": "Przenieś grupę do nowego okna"
+  },
+  "tabGroupsWindow": {
+    "message": "Okno $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentWindow": {
+    "message": "Bieżące okno"
+  },
+  "tabGroupsReopenGroup": {
+    "message": "Ponownie otwórz grupę kart"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "Usuń zamkniętą grupę kart"
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "Zwiń okno"
+  },
+  "tabGroupsExpandWindow": {
+    "message": "Rozwiń okno"
+  },
+  "tabGroupsClearClosedGroups": {
+    "message": "Wyczyść wszystko"
+  },
+  "tabGroupsClosedOpenTab": {
+    "message": "Otwórz w nowej karcie"
+  },
+  "tabGroupsRemoveClosedTab": {
+    "message": "Usuń z zapisanej grupy"
+  },
+  "tabGroupsClosedTimeLabel": {
+    "message": "Zamknięto:"
+  },
+  "tabGroupsExpandedExpand": {
+    "message": "Rozwiń"
+  },
+  "tabGroupsExpandedCollapse": {
+    "message": "Zwiń"
+  },
+  "optionTabGroupsClosedLimit": {
+    "message": "Historia zamkniętych kart/grup do zachowania"
   },
   "deadProxyAdd": {
     "message": "Dodaj serwer proxy do sprawdzania martwych linków"

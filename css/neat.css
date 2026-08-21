@@ -1292,14 +1292,18 @@ menu[type=context] hr {
    checked dot shows a dialog-surface inner dot + colored ring (and a hovered
    dot scales up slightly); focus-visible keeps the accent ring. */
 .needTabGroup #tab-group-dialog,
-.needGroupPick #tab-group-pick-dialog {
+.needGroupPick #tab-group-pick-dialog,
+.needCopyMove #copy-move-dialog,
+.needFolderPick #bookmark-folder-pick-dialog {
     top: 0;
     opacity: 1;
     pointer-events: auto;
 }
 
 .needTabGroup #cover,
-.needGroupPick #cover {
+.needGroupPick #cover,
+.needCopyMove #cover,
+.needFolderPick #cover {
     left: 0;
     opacity: 1;
 }
@@ -1453,6 +1457,50 @@ menu[type=context] hr {
 }
 
 .tab-group-pick-empty {
+    padding: 10px 8px;
+    color: var(--vbm-muted);
+    text-align: center;
+}
+
+/* --- Copy/move choice + bookmark-folder picker (tab-groups view) --- */
+#copy-move-dialog .dialog-text,
+#bookmark-folder-pick-dialog .dialog-text {
+    font-weight: bold;
+}
+
+#bookmark-folder-pick-list {
+    list-style: none;
+    margin: 0 0 .5em;
+    padding: 0;
+    max-height: 220px;
+    overflow-y: auto;
+}
+
+.bookmark-folder-pick-row {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 6px 8px;
+    border: 0;
+    border-radius: var(--vbm-radius);
+    background: transparent;
+    color: var(--vbm-fg);
+    font: inherit;
+    text-align: start;
+    cursor: pointer;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.bookmark-folder-pick-row:hover,
+.bookmark-folder-pick-row:focus-visible {
+    background: var(--vbm-bg-elev);
+    outline: 2px solid var(--vbm-focus-ring);
+    outline-offset: -1px;
+}
+
+.bookmark-folder-pick-empty {
     padding: 10px 8px;
     color: var(--vbm-muted);
     text-align: center;
@@ -2471,6 +2519,7 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
    focus ring are identical across every list view and the tree. */
 
 #recent-list,
+#tabgroups-list,
 #dupes-list,
 #dead-list,
 #stats-list {
@@ -2486,6 +2535,8 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
 
 #recent-list ul,
 #recent-list ul li,
+#tabgroups-list ul,
+#tabgroups-list ul li,
 #dupes-list ul,
 #dupes-list ul li,
 #dead-list ul,
@@ -2501,6 +2552,7 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
 /* Bookmark rows only — the same 16px twisty placeholder slot the tree and
    results panes give bookmark rows, keeping titles aligned across views. */
 #recent-list ul li a::before,
+#tabgroups-list ul li a::before,
 #dupes-list ul li a::before,
 #dead-list ul li a::before,
 #stats-list ul li a::before {
@@ -2510,6 +2562,7 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
 }
 
 #recent-list ul li a *,
+#tabgroups-list ul li a *,
 #dupes-list ul li a *,
 #dead-list ul li a *,
 #stats-list ul li a *,
@@ -2518,6 +2571,7 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
 }
 
 #recent-list ul li a:hover,
+#tabgroups-list ul li a:hover,
 #dupes-list ul li a:hover,
 #dead-list ul li a:hover,
 #stats-list ul li a:hover {
@@ -2534,6 +2588,7 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
 }
 
 #recent-list ul li a:hover i,
+#tabgroups-list ul li a:hover i,
 #dupes-list ul li a:hover i,
 #dead-list ul li a:hover i,
 #stats-list ul li a:hover i {
@@ -2543,6 +2598,9 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
 #recent-list ul li a:active,
 #recent-list ul li a.active,
 #recent-list ul li a:focus,
+#tabgroups-list ul li a:active,
+#tabgroups-list ul li a.active,
+#tabgroups-list ul li a:focus,
 #dupes-list ul li a:active,
 #dupes-list ul li a.active,
 #dupes-list ul li a:focus,
@@ -2558,6 +2616,7 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
 }
 
 #recent-list ul li a:focus,
+#tabgroups-list ul li a:focus,
 #dupes-list ul li a:focus,
 #dead-list ul li a:focus,
 #stats-list ul li a:focus {
@@ -3470,6 +3529,7 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
 }
 
 .dupes-group .count-pill,
+.tabgroups-group .count-pill,
 .vbm-row .row-badge {
     flex: none;
     min-width: 14px;
@@ -3572,6 +3632,604 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
     border-color: var(--vbm-accent);
     background: var(--vbm-accent);
     box-shadow: inset 0 0 0 2px var(--vbm-bg);
+}
+
+/* === Tab groups view (docs/tab-groups-view-design.md) === */
+.tabgroups-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 8px;
+    border-bottom: 1px solid var(--vbm-border);
+    font-size: 11px;
+    color: var(--vbm-muted);
+    flex-wrap: wrap;
+}
+.tabgroups-toolbar:empty { display: none; }
+
+/* Idle and selection modes each use two stacked .vbm-toolbar rows (each row
+   its own keyboard rung): row 1 selects/controls, row 2 acts. No separator
+   between the two — one visual block, the dupes/dead recipe. */
+.tabgroups-toolbar.tabgroups-select-toolbar,
+.tabgroups-toolbar.tabgroups-controls-toolbar {
+    border-bottom: 0;
+}
+.tabgroups-toolbar.tabgroups-actions-toolbar {
+    border-bottom: 1px solid var(--vbm-border);
+}
+
+.tabgroups-toolbar button {
+    border: 0;
+    border-radius: var(--vbm-radius);
+    background: transparent;
+    color: var(--vbm-accent);
+    font-size: 11px;
+    padding: 2px 6px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+.tabgroups-toolbar button:hover { background: var(--vbm-bg-hover); }
+.tabgroups-toolbar button:disabled { opacity: .5; cursor: default; }
+.tabgroups-toolbar button:focus-visible {
+    outline: 2px solid var(--vbm-focus-ring);
+    outline-offset: -2px;
+}
+.tabgroups-toolbar .tabgroups-summary {
+    margin-inline-start: 0;
+    margin-inline-end: auto;
+    white-space: nowrap;
+}
+.tabgroups-toolbar .tabgroups-options {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-inline-end: auto;
+    flex-wrap: wrap;
+}
+.tabgroups-toolbar .tabgroups-options label {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+.tabgroups-toolbar button.tabgroups-icon-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    padding: 0;
+    flex: none;
+}
+.tabgroups-toolbar button.tabgroups-icon-btn .vbm-icon {
+    width: 16px;
+    height: 16px;
+}
+
+/* Group color decoration — one of two styles (options page, off by default).
+
+   1. Edge band (`color-enhanced`): a 3px left edge in the group color runs
+      down the group header and its member rows. The box-shadow is inset so
+      it never pushes or overlaps the row content.
+   2. Connector line (`color-line`): a wider color TRUNK under the group
+      head's color dot plus one horizontal tick per member row — the
+      tab-tree / tabulator look that ties a whole group together. The trunk
+      lives in the member row's 16px twisty placeholder column (24px…40px),
+      so it never collides with the row favicon.
+   The color dot stays the default indicator in every style. */
+#tabgroups-list ul.color-enhanced li.tabgroups-group,
+#tabgroups-list ul.color-enhanced li.tabgroups-row.grouped {
+    box-shadow: inset 3px 0 0 var(--tg-color, transparent);
+}
+
+/* Connector geometry: the group head's dot spans 24px…34px (8px row padding
+   + 16px chevron), so its center sits at 29px — the trunk is centered there
+   and the tick runs from the trunk to the member row's icon slot at 40px.
+   In selection mode every row's content shifts by the checkbox slot
+   (14px + 6px), so the trunk and tick shift with it. */
+#tabgroups-list ul.color-line {
+    --tg-line-x: 27.5px;   /* trunk inline-start (dot center − half width) */
+    --tg-line-w: 3px;      /* trunk width — wider than the edge band */
+    --tg-tick-w: 12.5px;   /* trunk center → member icon slot */
+}
+#tabgroups-list ul.color-line.selecting {
+    /* + the checkbox slot (14px box + 6px gap) on both the head and the rows */
+    --tg-line-x: 47.5px;
+    --tg-tick-w: 20.5px;
+}
+#tabgroups-list ul.color-line li.tabgroups-row.grouped {
+    position: relative;
+}
+#tabgroups-list ul.color-line li.tabgroups-row.grouped > .tg-connector {
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: var(--tg-line-x);
+    width: var(--tg-tick-w);
+    pointer-events: none;
+}
+/* vertical trunk */
+#tabgroups-list ul.color-line li.tabgroups-row.grouped > .tg-connector::before {
+    content: '';
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: 0;
+    width: var(--tg-line-w);
+    background: var(--tg-color, var(--vbm-border));
+}
+/* per-row tick (the tabulator cross-bar) */
+#tabgroups-list ul.color-line li.tabgroups-row.grouped > .tg-connector::after {
+    content: '';
+    position: absolute;
+    inset-inline-start: 0;
+    top: calc(50% - (var(--tg-line-w) / 2));
+    width: var(--tg-tick-w);
+    height: var(--tg-line-w);
+    background: var(--tg-color, var(--vbm-border));
+    border-start-end-radius: 1px;
+    border-end-end-radius: 1px;
+}
+/* the group's LAST member closes the trunk with an elbow */
+#tabgroups-list ul.color-line li.tabgroups-row.grouped.tg-last > .tg-connector::before {
+    bottom: calc(50% - (var(--tg-line-w) / 2));
+    border-end-start-radius: 1px;
+    border-end-end-radius: 1px;
+}
+/* …and the head grows the trunk's first half so it starts at the dot */
+#tabgroups-list ul.color-line li.tabgroups-group {
+    position: relative;
+}
+#tabgroups-list ul.color-line li.tabgroups-group::after {
+    content: '';
+    position: absolute;
+    inset-inline-start: var(--tg-line-x);
+    top: 50%;
+    bottom: 0;
+    width: var(--tg-line-w);
+    background: var(--tg-color, var(--vbm-border));
+    pointer-events: none;
+}
+/* a collapsed group has no members below it — no dangling trunk (the fold
+   state lives on the head's chevron, so :has() reads it off the row) */
+#tabgroups-list ul.color-line li.tabgroups-group:has(.chevron.collapsed)::after {
+    display: none;
+}
+
+/* Row icon columns (pin / sleep / bookmark / close). Every row renders all
+   four, so the glyph columns line up across rows and between the normal and
+   selection modes; a column without state renders as an empty .tabgroups-slot
+   placeholder. .row-btn keeps its hover reveal (visibility, not display, so
+   the space stays reserved); a state glyph that IS the action (pinned pin,
+   sleeping crescent, bookmarked ★) is always on. */
+#tabgroups-list .tabgroups-slot,
+#tabgroups-list .tabgroups-star {
+    flex: none;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    margin-inline-end: 4px;
+}
+#tabgroups-list .tabgroups-star {
+    color: var(--vbm-accent);
+}
+#tabgroups-list .row-btn.always-on {
+    visibility: visible;
+}
+#tabgroups-list .row-btn.tabgroups-remove-bookmark,
+#tabgroups-list .row-btn.tabgroups-unpin {
+    color: var(--vbm-accent);
+}
+#tabgroups-list .row-btn.tabgroups-sleep-tab.asleep,
+#tabgroups-list .tabgroups-status-icon.discarded {
+    color: var(--vbm-warning);
+}
+#tabgroups-list .tabgroups-add-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    border: 0;
+    border-radius: 4px;
+    color: var(--vbm-danger);
+}
+#tabgroups-list .tabgroups-add-btn:hover {
+    background: var(--vbm-bg-hover);
+}
+/* The rightmost row action is close-tab: danger red. The row's own 4px end
+   padding plus the control's default 4px end margin put its right edge 8px
+   from the container — the SAME column as the group head's close button
+   (4px head padding + 4px margin) and as the toolbars' last icon. An extra
+   4px here used to push every row control one step inside the group head's,
+   so the two icon strips did not line up vertically. */
+#tabgroups-list ul li.tabgroups-row > .row-btn.tabgroups-close-tab {
+    color: var(--vbm-danger);
+}
+
+/* Closed tab-group rows: saved records, not live browser groups. Same
+   height/right-edge rhythm as a group head, but no chevron. */
+#tabgroups-list ul li.tabgroups-closed-group .tabgroups-closed-head {
+    display: flex;
+    align-items: center;
+    height: var(--vbm-row-h);
+    padding-inline-start: 8px;
+    padding-inline-end: 4px;
+    outline: 0;
+}
+#tabgroups-list ul li.tabgroups-closed-group .tabgroups-closed-head:hover {
+    background-color: var(--vbm-bg-hover);
+}
+#tabgroups-list ul li.tabgroups-closed-group .tabgroups-closed-head:focus {
+    color: var(--vbm-fg-selected);
+    background-color: var(--vbm-bg-selected);
+    outline: 2px solid var(--vbm-focus-ring);
+    outline-offset: -2px;
+}
+#tabgroups-list ul li.tabgroups-closed-group .tabgroups-group-title {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-weight: 500;
+}
+#tabgroups-list ul li.tabgroups-closed-group .count-pill {
+    background: var(--vbm-bg-selected);
+    color: var(--vbm-fg-selected);
+    margin-inline-end: 4px;
+}
+#tabgroups-list ul li.tabgroups-closed-group .row-btn {
+    visibility: visible;
+    color: var(--vbm-accent);
+}
+#tabgroups-list ul li.tabgroups-closed-group .row-btn.tabgroups-closed-delete {
+    color: var(--vbm-danger);
+}
+#tabgroups-list ul li.tabgroups-closed-group .tabgroups-closed-meta {
+    flex: none;
+    margin-inline-start: 8px;
+    margin-inline-end: 8px;
+    color: var(--vbm-muted);
+    font-size: 11px;
+    white-space: nowrap;
+}
+#tabgroups-list ul li.tabgroups-closed-section-head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+#tabgroups-list ul li.tabgroups-closed-section-head .tabgroups-closed-clear {
+    margin-inline-start: auto;
+    margin-inline-end: 8px;
+    border: 0;
+    border-radius: var(--vbm-radius);
+    background: transparent;
+    color: var(--vbm-accent);
+    font-size: 11px;
+    padding: 2px 6px;
+    cursor: pointer;
+}
+#tabgroups-list ul li.tabgroups-closed-section-head .tabgroups-closed-clear:hover {
+    background: var(--vbm-bg-hover);
+}
+#tabgroups-list ul li.tabgroups-closed-section-head .tabgroups-closed-clear:focus-visible {
+    outline: 2px solid var(--vbm-focus-ring);
+    outline-offset: -2px;
+}
+
+/* Closed-group rows are history, not live tabs: dim + italic, matching the
+   discarded-tab language. The header keeps enough contrast to stay usable. */
+#tabgroups-list ul li.tabgroups-closed-group .tabgroups-closed-head {
+    opacity: .78;
+}
+#tabgroups-list ul li.tabgroups-closed-group .tabgroups-closed-head .tabgroups-group-title {
+    font-style: italic;
+}
+#tabgroups-list ul li.tabgroups-closed-group .tabgroups-closed-head .chevron {
+    flex: none;
+    width: 16px;
+    text-align: center;
+    color: var(--vbm-muted);
+}
+#tabgroups-list ul li.tabgroups-closed-group .tabgroups-closed-head .chevron::before {
+    content: '▾';
+}
+#tabgroups-list ul li.tabgroups-closed-group .tabgroups-closed-head .chevron.collapsed::before {
+    content: '▸';
+}
+.rtl #tabgroups-list ul li.tabgroups-closed-group .tabgroups-closed-head .chevron.collapsed::before {
+    content: '◂';
+}
+#tabgroups-list ul li.tabgroups-closed-tab {
+    display: flex;
+    align-items: center;
+    /* the shared right-edge rhythm: 4px row padding + 4px control margin */
+    padding-inline-end: 4px;
+}
+#tabgroups-list ul li.tabgroups-closed-tab > a.tree-item-link {
+    flex: 1;
+    min-width: 0;
+    margin-inline-end: 4px;
+    opacity: .55;
+}
+#tabgroups-list ul li.tabgroups-closed-tab > a.tree-item-link i {
+    font-style: italic;
+}
+/* the relative/absolute close-time labels ride the shared .row-path /
+   .row-sub slots (narrow = inline, wide/panel = second line), so they dim
+   with the rest of the history row */
+#tabgroups-list ul li.tabgroups-closed-tab .row-path,
+#tabgroups-list ul li.tabgroups-closed-tab .row-sub {
+    opacity: .8;
+}
+#tabgroups-list ul li.tabgroups-closed-tab .row-btn.tabgroups-closed-remove-tab {
+    color: var(--vbm-danger);
+}
+
+/* Window section heading: stronger than the group sections and separated
+   from the previous window by a hairline. The WHOLE row is the fold control
+   (a focusable role=button span), so it hovers, focuses and answers keys
+   exactly like a group head — the chevron alone used to be the only live
+   target. */
+#tabgroups-list ul li.tabgroups-window-head {
+    display: block;
+    padding: 6px 0 0;
+    color: var(--vbm-fg);
+    font-size: 11px;
+}
+#tabgroups-list ul li.tabgroups-window-head:first-child {
+    padding-top: 2px;
+}
+#tabgroups-list ul li.tabgroups-window-head .tabgroups-window-head-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    height: var(--vbm-row-h);
+    padding-inline-start: 8px;
+    padding-inline-end: 4px;
+    cursor: pointer;
+    outline: 0;
+}
+#tabgroups-list ul li.tabgroups-window-head .tabgroups-window-head-row:hover {
+    background-color: var(--vbm-bg-hover);
+}
+#tabgroups-list ul li.tabgroups-window-head .tabgroups-window-head-row:focus {
+    color: var(--vbm-fg-selected);
+    background-color: var(--vbm-bg-selected);
+    outline: 2px solid var(--vbm-focus-ring);
+    outline-offset: -2px;
+}
+/* Same text chevron as the group / closed-group heads (one fold glyph for
+   all three levels of this view). */
+#tabgroups-list ul li.tabgroups-window-head .chevron {
+    flex: none;
+    width: 16px;
+    text-align: center;
+    color: var(--vbm-muted);
+}
+#tabgroups-list ul li.tabgroups-window-head .chevron::before { content: '▾'; }
+#tabgroups-list ul li.tabgroups-window-head .chevron.collapsed::before { content: '▸'; }
+.rtl #tabgroups-list ul li.tabgroups-window-head .chevron.collapsed::before { content: '◂'; }
+#tabgroups-list ul li.tabgroups-window-head em {
+    flex: 0 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-style: normal;
+    font-weight: 700;
+}
+/* the count pill closes the row on the same right-edge column as the group
+   head's last control (4px row padding + 4px pill margin = 8px) */
+#tabgroups-list ul li.tabgroups-window-head .count-pill {
+    margin-inline-start: auto;
+    margin-inline-end: 4px;
+    background: var(--vbm-bg-selected);
+    color: var(--vbm-fg-selected);
+}
+#tabgroups-list ul li.tabgroups-window-head b.tabgroups-window-current {
+    flex: none;
+    font-weight: 500;
+    font-size: 9px;
+    line-height: 14px;
+    padding: 0 5px;
+    border-radius: 7px;
+    background: var(--vbm-bg-selected);
+    color: var(--vbm-fg-selected);
+}
+
+/* Section headings inside the tab groups list: non-focusable labels that
+   split open groups / closed groups / ungrouped tabs. */
+#tabgroups-list ul li.tabgroups-section-head {
+    padding: 6px 8px 2px;
+    color: var(--vbm-muted);
+    font-size: 11px;
+    font-style: normal;
+}
+#tabgroups-list ul li.tabgroups-section-head em {
+    font-style: normal;
+    font-weight: 600;
+}
+
+/* Tab state icons (pinned / sleeping) sit left of the bookmark star. */
+#tabgroups-list .tabgroups-status-icon {
+    flex: none;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    margin-inline-end: 4px;
+    color: var(--vbm-muted);
+}
+#tabgroups-list .tabgroups-status-icon.pinned { color: var(--vbm-accent); }
+#tabgroups-list .tabgroups-status-icon.discarded { color: var(--vbm-warning); }
+
+/* Sleeping tabs read as inactive: dimmed only. Closed tabs (the history
+   rows) add italics on top, so the two states stay visually distinct. */
+#tabgroups-list li.tabgroups-row.discarded > a.tree-item-link {
+    opacity: .55;
+}
+.tabgroups-toolbar .select-count {
+    font-weight: 500;
+    white-space: nowrap;
+}
+.tabgroups-toolbar .tabgroups-close-selected { color: var(--vbm-danger); }
+
+/* Group header: chevron + color dot + title + created time + count + save. */
+.tabgroups-group .tabgroups-group-head {
+    display: flex;
+    align-items: center;
+    height: var(--vbm-row-h);
+    padding-inline-start: 8px;
+    padding-inline-end: 4px;
+    cursor: pointer;
+    outline: 0;
+}
+.tabgroups-group .tabgroups-group-head:hover { background-color: var(--vbm-bg-hover); }
+.tabgroups-group .tabgroups-group-head:focus {
+    color: var(--vbm-fg-selected);
+    background-color: var(--vbm-bg-selected);
+    outline: 2px solid var(--vbm-focus-ring);
+    outline-offset: -2px;
+}
+.tabgroups-group .chevron {
+    flex: none;
+    width: 16px;
+    text-align: center;
+    color: var(--vbm-muted);
+}
+.tabgroups-group .chevron::before { content: '▾'; }
+.tabgroups-group .chevron.collapsed::before { content: '▸'; }
+.rtl .tabgroups-group .chevron.collapsed::before { content: '◂'; }
+.tabgroups-group .tab-group-dot {
+    flex: none;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--tg-color);
+    margin-inline-end: 6px;
+}
+.tabgroups-group .tabgroups-group-title {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-weight: 500;
+}
+.tabgroups-group .count-pill {
+    background: var(--vbm-bg-selected);
+    color: var(--vbm-fg-selected);
+    margin-inline-end: 4px;
+}
+.tabgroups-group .tabgroups-group-head .row-btn {
+    visibility: visible;
+    color: var(--vbm-accent);
+}
+.tabgroups-group .tabgroups-group-head .row-btn.tabgroups-group-close {
+    color: var(--vbm-danger);
+}
+/* the group sleep control mirrors the rows': filled crescent = every member
+   asleep (click wakes them), and it reads in the sleeping color */
+.tabgroups-group .tabgroups-group-head .row-btn.tabgroups-group-sleep.asleep {
+    color: var(--vbm-warning);
+}
+
+/* Tab rows: the anchor fills the row; the hover bookmark button keeps the
+   .row-btn slot. Current tab gets a small accent pill. */
+#tabgroups-list ul li.tabgroups-row {
+    display: flex;
+    align-items: center;
+    /* Same right-edge rhythm as the group head: last icon/button ends 8px
+       from the container (4px row padding + 4px control margin), matching
+       dead/dupes rows and their toolbars. */
+    padding-inline-end: 4px;
+}
+/* Tree-view alignment: grouped rows are children of the group head. The
+   24px step makes a member row's icon left edge land exactly on the group
+   head's title left edge (40px), the same rule the tree uses. */
+#tabgroups-list ul li.tabgroups-row.grouped {
+    padding-inline-start: 24px;
+}
+#tabgroups-list ul li.tabgroups-row > a {
+    flex: 1;
+    min-width: 0;
+    margin-inline-end: 4px;
+}
+/* The row's LAST icon column keeps the shared 4px control margin: with the
+   row's own 4px end padding its right edge lands 8px from the container —
+   exactly where the group head's last button and the toolbars' last icon sit.
+   (An 8px margin here put every row control 4px inside the head's, which is
+   what made the two icon strips read as misaligned.) */
+#tabgroups-list ul li.tabgroups-row > .row-btn:last-child,
+#tabgroups-list ul li.tabgroups-row > .tabgroups-slot:last-child,
+#tabgroups-list ul li.tabgroups-row > .tabgroups-star:last-child,
+#tabgroups-list ul li.tabgroups-row > .tabgroups-status-icon:last-child {
+    margin-inline-end: 4px;
+}
+#tabgroups-list ul li.tabgroups-row .row-badge.current {
+    background: var(--vbm-accent);
+    color: var(--vbm-accent-fg);
+}
+#tabgroups-list ul li.tabgroups-row.dragging { opacity: .45; }
+#tabgroups-list ul li.tabgroups-row.drag-over {
+    box-shadow: inset 0 2px 0 var(--vbm-accent);
+}
+
+/* Selection mode mirrors the dupes view: checkbox at the inline start,
+   selected rows tint, row buttons hide, and a group head toggles the whole
+   group. */
+#tabgroups-list ul.selecting li.vbm-row {
+    padding-inline-start: 8px;
+    padding-inline-end: 4px;
+}
+/* Checkboxes stay on the 8px axis for every row; only the grouped row's
+   CONTENT gets the tree step so members read as children of the group head. */
+#tabgroups-list ul.selecting li.tabgroups-row.grouped > a {
+    margin-inline-start: 24px;
+}
+#tabgroups-list ul.selecting li.vbm-row > a { margin-inline-end: 0; }
+#tabgroups-list ul.selecting li.vbm-row > a::before { content: none; }
+#tabgroups-list ul.selecting li.vbm-row::before,
+#tabgroups-list ul.selecting li.tabgroups-group .tabgroups-group-head::before {
+    content: '';
+    flex: none;
+    width: 14px;
+    height: 14px;
+    margin-inline-end: 6px;
+    border: 1px solid var(--vbm-muted);
+    border-radius: 3px;
+    align-self: center;
+    background: var(--vbm-bg);
+    box-sizing: border-box;
+}
+#tabgroups-list ul.selecting li.vbm-row.sel::before,
+#tabgroups-list ul.selecting li.tabgroups-group.sel .tabgroups-group-head::before {
+    content: '✓';
+    font-size: 11px;
+    line-height: 13px;
+    text-align: center;
+    color: var(--vbm-accent-fg);
+    background: var(--vbm-accent);
+    border-color: var(--vbm-accent);
+}
+#tabgroups-list ul.selecting li.vbm-row.sel,
+#tabgroups-list ul.selecting li.tabgroups-group.sel .tabgroups-group-head {
+    background-color: var(--vbm-bg-selected);
+}
+/* Selection mode hides the row ACTION buttons (the batch bar acts instead),
+   but the four icon columns stay: the state markers (pin / sleeping / ★) and
+   empty .tabgroups-slot placeholders keep every glyph in the same column as
+   in the normal mode, so entering selection mode never reshuffles the rows. */
+#tabgroups-list ul.selecting .row-btn { display: none; }
+#tabgroups-list ul.selecting li.tabgroups-row > .tabgroups-slot,
+#tabgroups-list ul.selecting li.tabgroups-row > .tabgroups-star,
+#tabgroups-list ul.selecting li.tabgroups-row > .tabgroups-status-icon {
+    display: flex;
 }
 
 /* will-delete preview (§1.3/§3.6): danger tint + strikethrough title */
@@ -4344,6 +5002,7 @@ body.panel-mode #stats-list ul li.vbm-row > a.tree-item-link .row-badge.time {
 #tree,
 #results,
 #recent-list,
+#tabgroups-list,
 #dupes-list,
 #dead-list,
 #stats-list,

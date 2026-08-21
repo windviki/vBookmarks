@@ -38,6 +38,12 @@
   "announceV408Title": {
     "message": "Újdonságok a v4.0.8-ban"
   },
+  "announceV410Title": {
+    "message": "A v4.1.0 újdonságai"
+  },
+  "announceV410Text": {
+    "message": "A v4.1.0 hozzáadja a Lapcsoportok nézetet: minden ablak lapjai és lapcsoportjai, a könyvjelzők mellett kezelve."
+  },
   "announceV408Text": {
     "message": "A v4.0.8 a favicon-támogatással bővített kiadás: a valódi webhelyikonok automatikusan letöltődnek azokhoz a könyvjelzőkhöz, amelyeket a Chrome még nem gyorsítótárazott."
   },
@@ -324,8 +330,8 @@
   "whatsNewChangelog": {
     "message": "Változásnapló"
   },
-  "whatsNewFavicon": {
-    "message": "A v$1$ a továbbfejlesztett favicon-kiadás: a Chrome által nem gyorsítótárazott webhelyikonok mostantól automatikusan letöltődnek.",
+  "whatsNewTabGroups": {
+    "message": "A v$1$ új lapcsoportok nézetet ad: minden ablak lapjai és lapcsoportjai a könyvjelzők mellett.",
     "placeholders": {
       "1": {
         "content": "$1"
@@ -342,6 +348,271 @@
         "content": "$2"
       }
     }
+  },
+  "viewTabGroups": {
+    "message": "Lapcsoportok"
+  },
+  "optionShowTabGroupsView": {
+    "message": "Lapcsoportok nézetének megjelenítése"
+  },
+  "tabGroupsViewEmpty": {
+    "message": "Nincs lap ebben az ablakban"
+  },
+  "tabGroupsToolbarRefresh": {
+    "message": "Frissítés"
+  },
+  "tabGroupsCollapseAll": {
+    "message": "Összecsukás"
+  },
+  "tabGroupsExpandAll": {
+    "message": "Kinyitás"
+  },
+  "tabGroupsSummary": {
+    "message": "$tabs$ lap · $groups$ csoport",
+    "placeholders": {
+      "tabs": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsGroupCount": {
+    "message": "$count$ lap",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentTab": {
+    "message": "Aktuális lap"
+  },
+  "tabGroupsAddBookmark": {
+    "message": "Lap könyvjelzőzése"
+  },
+  "tabGroupsSaveFolder": {
+    "message": "Lapcsoport mentése könyvjelzőmappaként"
+  },
+  "tabGroupsGroupSavedToFolder": {
+    "message": "$count$ lap mentve: $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsBookmarksAdded": {
+    "message": "$count$ könyvjelző hozzáadva: $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsSelectNewGroup": {
+    "message": "Új lapcsoport"
+  },
+  "tabGroupsSelectOpenInto": {
+    "message": "Megnyitás meglévő lapcsoportban…"
+  },
+  "tabGroupsSelectSaveFolder": {
+    "message": "Mentés könyvjelzőmappaként"
+  },
+  "tabGroupsSelectClose": {
+    "message": "Bezárás"
+  },
+  "tabGroupsSelectSleep": {
+    "message": "Alvás"
+  },
+  "tabGroupsCopyMoveDialog": {
+    "message": "A kijelölt lapok már egy lapcsoporthoz tartoznak. Másolja őket (megnyitás új helyen) vagy mozgassa (eltávolítás a jelenlegi csoportból)?"
+  },
+  "tabGroupsCopyMoveCopy": {
+    "message": "Másolás"
+  },
+  "tabGroupsCopyMoveMove": {
+    "message": "Mozgatás"
+  },
+  "tabGroupsConfirmClose": {
+    "message": "Bezárja a(z) $count$ lapot?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsConfirmSleep": {
+    "message": "Alvó állapotba helyezi a(z) $count$ lapot?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "bookmarkFolderPickDialogTitle": {
+    "message": "Hozzáadás könyvjelzőmappához"
+  },
+  "bookmarkFolderNoFolders": {
+    "message": "Nincs könyvjelzőmappa"
+  },
+  "tabGroupsSelectAddBookmarks": {
+    "message": "Hozzáadás könyvjelzőmappához…"
+  },
+  "paletteCmdGoTabGroups": {
+    "message": "Ugrás a lapcsoportok nézetére"
+  },
+  "tabGroupsActivateGroup": {
+    "message": "Ugrás a lapcsoporthoz"
+  },
+  "tabGroupsRenameGroup": {
+    "message": "Lapcsoport átnevezése"
+  },
+  "tabGroupsRenameDialog": {
+    "message": "Lapcsoport átnevezése"
+  },
+  "tabGroupsCloseGroup": {
+    "message": "Lapcsoport bezárása"
+  },
+  "tabGroupsSleepGroup": {
+    "message": "Lapcsoport alvó állapotba"
+  },
+  "tabGroupsWakeGroup": {
+    "message": "Lapcsoport ébresztése"
+  },
+  "tabGroupsActivateTab": {
+    "message": "Ugrás a lapra"
+  },
+  "tabGroupsCollapseGroup": {
+    "message": "Csoport összecsukása"
+  },
+  "tabGroupsExpandGroup": {
+    "message": "Csoport kinyitása"
+  },
+  "tabGroupsMenuAddBookmark": {
+    "message": "Lap könyvjelzőzése"
+  },
+  "tabGroupsMenuSaveFolder": {
+    "message": "Mentés könyvjelzőmappaként"
+  },
+  "tabGroupsSyncCollapse": {
+    "message": "Szinkronizálás a böngészővel"
+  },
+  "tabGroupsSyncCollapseHint": {
+    "message": "Ha be van jelölve, a csoport összecsukása vagy kibontása ebben a nézetben frissíti a böngésző lapcsoportját is. Alapértelmezés szerint ki van kapcsolva, így a nézet összecsukása helyi marad."
+  },
+  "tabGroupsColorStyle": {
+    "message": "Lapcsoport színstílusa"
+  },
+  "tabGroupsColorStyleHint": {
+    "message": "A Ki csak a színpontot mutatja. A Szélsáv színes csíkot rajzol a csoport bal szélére. A Színösszekötő vonal színes vonalat húz a csoport pontja alá, soronként egy jelöléssel, így a teljes csoport egy fává kapcsolódik."
+  },
+  "tabGroupsColorStyleOff": {
+    "message": "Ki (csak színpont)"
+  },
+  "tabGroupsColorStyleEdge": {
+    "message": "Szélsáv"
+  },
+  "tabGroupsColorStyleLine": {
+    "message": "Színösszekötő vonal"
+  },
+  "tabGroupsBookmarked": {
+    "message": "Könyvjelzőzve"
+  },
+  "tabGroupsRemoveBookmark": {
+    "message": "Könyvjelző eltávolítása"
+  },
+  "tabGroupsBookmarkRemoved": {
+    "message": "$count$ könyvjelző eltávolítva",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsPinned": {
+    "message": "Rögzített lap"
+  },
+  "tabGroupsDiscarded": {
+    "message": "Alvó lap"
+  },
+  "tabGroupsPinTab": {
+    "message": "Lap rögzítése"
+  },
+  "tabGroupsUnpinTab": {
+    "message": "Lap rögzítésének feloldása"
+  },
+  "tabGroupsSleepTab": {
+    "message": "Lap elaltatása"
+  },
+  "tabGroupsWakeTab": {
+    "message": "Lap ébresztése"
+  },
+  "tabGroupsOpenGroups": {
+    "message": "Megnyitott lapcsoportok"
+  },
+  "tabGroupsClosedGroups": {
+    "message": "Legutóbb bezárt"
+  },
+  "tabGroupsUngroupedTabs": {
+    "message": "Csoportosítatlan lapok"
+  },
+  "tabGroupsUngroupGroup": {
+    "message": "Csoportosítás megszüntetése"
+  },
+  "tabGroupsMoveNewWindow": {
+    "message": "Csoport új ablakba"
+  },
+  "tabGroupsWindow": {
+    "message": "$1$. ablak",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentWindow": {
+    "message": "Aktuális ablak"
+  },
+  "tabGroupsReopenGroup": {
+    "message": "Lapcsoport újranyitása"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "Bezárt lapcsoport törlése"
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "Ablak összecsukása"
+  },
+  "tabGroupsExpandWindow": {
+    "message": "Ablak kibontása"
+  },
+  "tabGroupsClearClosedGroups": {
+    "message": "Összes törlése"
+  },
+  "tabGroupsClosedOpenTab": {
+    "message": "Megnyitás új lapon"
+  },
+  "tabGroupsRemoveClosedTab": {
+    "message": "Eltávolítás a mentett csoportból"
+  },
+  "tabGroupsClosedTimeLabel": {
+    "message": "Bezárva:"
+  },
+  "tabGroupsExpandedExpand": {
+    "message": "Kibontás"
+  },
+  "tabGroupsExpandedCollapse": {
+    "message": "Összecsukás"
+  },
+  "optionTabGroupsClosedLimit": {
+    "message": "Megőrzendő bezárt lap/csoport előzmények"
   },
   "deadProxyAdd": {
     "message": "Proxykiszolgáló hozzáadása a hibás linkek ellenőrzéséhez"

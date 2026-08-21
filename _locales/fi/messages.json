@@ -38,6 +38,12 @@
   "announceV408Title": {
     "message": "Mitä uutta v4.0.8:ssa"
   },
+  "announceV410Title": {
+    "message": "Uutta v4.1.0:ssa"
+  },
+  "announceV410Text": {
+    "message": "v4.1.0 lisää Välilehtiryhmät-näkymän: jokaisen ikkunan välilehdet ja välilehtiryhmät hallittavissa kirjanmerkkien vieressä."
+  },
   "announceV408Text": {
     "message": "v4.0.8 on favicon-parannettu versio: oikeat sivustokuvakkeet haetaan automaattisesti kirjanmerkeille, joita Chrome ei ole vielä tallentanut välimuistiin."
   },
@@ -324,8 +330,8 @@
   "whatsNewChangelog": {
     "message": "Muutosloki"
   },
-  "whatsNewFavicon": {
-    "message": "v$1$ on favicon-tehostettu versio: Chrome ei ole välimuistiin tallentanut sivustokuvakkeet haetaan nyt automaattisesti.",
+  "whatsNewTabGroups": {
+    "message": "v$1$ lisää välilehtiryhmien näkymän: jokaisen ikkunan välilehdet ja välilehtiryhmät kirjanmerkkiesi vieressä.",
     "placeholders": {
       "1": {
         "content": "$1"
@@ -342,6 +348,271 @@
         "content": "$2"
       }
     }
+  },
+  "viewTabGroups": {
+    "message": "Välilehtiryhmät"
+  },
+  "optionShowTabGroupsView": {
+    "message": "Näytä välilehtiryhmien näkymä"
+  },
+  "tabGroupsViewEmpty": {
+    "message": "Ei välilehtiä tässä ikkunassa"
+  },
+  "tabGroupsToolbarRefresh": {
+    "message": "Päivitä"
+  },
+  "tabGroupsCollapseAll": {
+    "message": "Kutista kaikki"
+  },
+  "tabGroupsExpandAll": {
+    "message": "Laajenna kaikki"
+  },
+  "tabGroupsSummary": {
+    "message": "$tabs$ välilehteä · $groups$ ryhmää",
+    "placeholders": {
+      "tabs": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsGroupCount": {
+    "message": "$count$ välilehteä",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentTab": {
+    "message": "Nykyinen välilehti"
+  },
+  "tabGroupsAddBookmark": {
+    "message": "Lisää tämä välilehti kirjanmerkkeihin"
+  },
+  "tabGroupsSaveFolder": {
+    "message": "Tallenna välilehtiryhmä kirjanmerkkeinä"
+  },
+  "tabGroupsGroupSavedToFolder": {
+    "message": "Tallennettu $count$ välilehteä kohteeseen $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsBookmarksAdded": {
+    "message": "Lisätty $count$ kirjanmerkkiä kohteeseen $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsSelectNewGroup": {
+    "message": "Uusi välilehtiryhmä"
+  },
+  "tabGroupsSelectOpenInto": {
+    "message": "Avaa olemassa olevassa ryhmässä…"
+  },
+  "tabGroupsSelectSaveFolder": {
+    "message": "Tallenna kirjanmerkkeinä"
+  },
+  "tabGroupsSelectClose": {
+    "message": "Sulje"
+  },
+  "tabGroupsSelectSleep": {
+    "message": "Nuku"
+  },
+  "tabGroupsCopyMoveDialog": {
+    "message": "Valitut välilehdet kuuluvat jo välilehtiryhmään. Kopioidaanko ne (avataan uuteen paikkaan) vai siirretäänkö ne (poistetaan nykyisestä ryhmästä)?"
+  },
+  "tabGroupsCopyMoveCopy": {
+    "message": "Kopioi"
+  },
+  "tabGroupsCopyMoveMove": {
+    "message": "Siirrä"
+  },
+  "tabGroupsConfirmClose": {
+    "message": "Suljetaanko $count$ välilehteä?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsConfirmSleep": {
+    "message": "Nukutetaanko $count$ välilehteä?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "bookmarkFolderPickDialogTitle": {
+    "message": "Lisää kirjanmerkkeihin"
+  },
+  "bookmarkFolderNoFolders": {
+    "message": "Ei kirjanmerkkejä"
+  },
+  "tabGroupsSelectAddBookmarks": {
+    "message": "Lisää kirjanmerkkeihin…"
+  },
+  "paletteCmdGoTabGroups": {
+    "message": "Siirry välilehtiryhmien näkymään"
+  },
+  "tabGroupsActivateGroup": {
+    "message": "Siirry välilehtiryhmään"
+  },
+  "tabGroupsRenameGroup": {
+    "message": "Nimeä ryhmä"
+  },
+  "tabGroupsRenameDialog": {
+    "message": "Nimeä välilehtiryhmä"
+  },
+  "tabGroupsCloseGroup": {
+    "message": "Sulje ryhmä"
+  },
+  "tabGroupsSleepGroup": {
+    "message": "Nukuta ryhmä"
+  },
+  "tabGroupsWakeGroup": {
+    "message": "Herätä välilehtiryhmä"
+  },
+  "tabGroupsActivateTab": {
+    "message": "Siirry välilehteen"
+  },
+  "tabGroupsCollapseGroup": {
+    "message": "Kutista ryhmä"
+  },
+  "tabGroupsExpandGroup": {
+    "message": "Laajenna ryhmä"
+  },
+  "tabGroupsMenuAddBookmark": {
+    "message": "Lisää kirjanmerkki"
+  },
+  "tabGroupsMenuSaveFolder": {
+    "message": "Tallenna kirjanmerkkeinä"
+  },
+  "tabGroupsSyncCollapse": {
+    "message": "Synkronoi selaimen kanssa"
+  },
+  "tabGroupsSyncCollapseHint": {
+    "message": "Kun valittu, ryhmän kutistaminen tai laajentaminen tässä näkymässä päivittää myös selaimen välilehtiryhmän. Oletuksena pois päältä, jotta näkymän taitto pysyy paikallisena."
+  },
+  "tabGroupsColorStyle": {
+    "message": "Välilehtiryhmän väri tyyli"
+  },
+  "tabGroupsColorStyleHint": {
+    "message": "Pois näyttää vain väripisteen. Reunaväri piirtää värillisen nauhan ryhmän vasempaan reunaan. Väriyhdistäjä piirtää värillisen viivan ryhmän pisteen alle, yhdistäen koko ryhmän yhdeksi puuksi."
+  },
+  "tabGroupsColorStyleOff": {
+    "message": "Pois (vain väripiste)"
+  },
+  "tabGroupsColorStyleEdge": {
+    "message": "Reunaväri"
+  },
+  "tabGroupsColorStyleLine": {
+    "message": "Väriyhdistäjäviiva"
+  },
+  "tabGroupsBookmarked": {
+    "message": "Tallennettu"
+  },
+  "tabGroupsRemoveBookmark": {
+    "message": "Poista kirjanmerkki"
+  },
+  "tabGroupsBookmarkRemoved": {
+    "message": "Poistettu $count$ kirjanmerkkiä",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsPinned": {
+    "message": "Kiinnitetty välilehti"
+  },
+  "tabGroupsDiscarded": {
+    "message": "Nukkuva välilehti"
+  },
+  "tabGroupsPinTab": {
+    "message": "Kiinnitä välilehti"
+  },
+  "tabGroupsUnpinTab": {
+    "message": "Irrota välilehti"
+  },
+  "tabGroupsSleepTab": {
+    "message": "Nukuta välilehti"
+  },
+  "tabGroupsWakeTab": {
+    "message": "Herätä välilehti"
+  },
+  "tabGroupsOpenGroups": {
+    "message": "Avoimet välilehtiryhmät"
+  },
+  "tabGroupsClosedGroups": {
+    "message": "Äskettäin suljetut"
+  },
+  "tabGroupsUngroupedTabs": {
+    "message": "Ryhmittelemättömät välilehdet"
+  },
+  "tabGroupsUngroupGroup": {
+    "message": "Poista ryhmitys"
+  },
+  "tabGroupsMoveNewWindow": {
+    "message": "Siirrä ryhmä uuteen ikkunaan"
+  },
+  "tabGroupsWindow": {
+    "message": "Ikkuna $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentWindow": {
+    "message": "Nykyinen ikkuna"
+  },
+  "tabGroupsReopenGroup": {
+    "message": "Avaa välilehtiryhmä uudelleen"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "Poista suljettu välilehtiryhmä"
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "Kutista ikkuna"
+  },
+  "tabGroupsExpandWindow": {
+    "message": "Laajenna ikkuna"
+  },
+  "tabGroupsClearClosedGroups": {
+    "message": "Tyhjennä kaikki"
+  },
+  "tabGroupsClosedOpenTab": {
+    "message": "Avaa uudessa välilehdessä"
+  },
+  "tabGroupsRemoveClosedTab": {
+    "message": "Poista tallennetusta ryhmästä"
+  },
+  "tabGroupsClosedTimeLabel": {
+    "message": "Suljettu:"
+  },
+  "tabGroupsExpandedExpand": {
+    "message": "Laajenna"
+  },
+  "tabGroupsExpandedCollapse": {
+    "message": "Kutista"
+  },
+  "optionTabGroupsClosedLimit": {
+    "message": "Säilytettävä suljettujen välilehtien/ryhmien historia"
   },
   "deadProxyAdd": {
     "message": "Lisää välityspalvelin kuolleiden linkkien tarkistuksia varten"

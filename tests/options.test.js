@@ -218,7 +218,7 @@ describe('options.js settings backup', () => {
             // clear-icon-cache button (before the group's closing </ul>).
             expect(optionsHtml.indexOf('id="favicon-cache-clear"')).toBeLessThan(optionsHtml.indexOf('id="storage-usage"'));
             expect(optionsHtml.indexOf('id="storage-usage"')).toBeLessThan(optionsHtml.indexOf('</ul>', optionsHtml.indexOf('id="icons-options"')));
-            // 4.0.9 storage-usage block: summary line above the bar, every
+            // 4.0.8 storage-usage block: summary line above the bar, every
             // segment keyboard-focusable (tabindex="0" so the tooltip value is
             // reachable without a pointer), and destructive actions marked
             // with .danger (same secondary shape, danger border + text).
@@ -685,7 +685,7 @@ describe('storage usage bar', () => {
         const barLabel = sb.elements['storage-usage-bar']._attributes['aria-label'];
         for (const key of ['storageUsageIcon', 'storageUsageOther', 'storageUsageFree'])
             expect(barLabel).toContain(key);
-        // 4.0.9: a summary line answers "used / quota" without hovering, and
+        // 4.0.8: a summary line answers "used / quota" without hovering, and
         // every legend item also carries its share — never encode data by
         // color alone (chart guidance).
         expect(sb.elements['storage-usage-summary'].textContent).toBe('storageUsageSummary');

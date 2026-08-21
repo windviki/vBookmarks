@@ -38,6 +38,12 @@
   "announceV408Title": {
     "message": "Neu in v4.0.8"
   },
+  "announceV410Title": {
+    "message": "Neuerungen in v4.1.0"
+  },
+  "announceV410Text": {
+    "message": "v4.1.0 fügt die Tab-Gruppen-Ansicht hinzu: Tabs und Tab-Gruppen jedes Fensters, verwaltet neben Ihren Lesezeichen."
+  },
   "announceV408Text": {
     "message": "v4.0.8 ist das Release mit verbesserten Favicons: Echte Website-Symbole werden automatisch für Lesezeichen abgerufen, die Chrome noch nicht im Cache hat."
   },
@@ -324,8 +330,8 @@
   "whatsNewChangelog": {
     "message": "Änderungsprotokoll"
   },
-  "whatsNewFavicon": {
-    "message": "v$1$ ist die Version mit verbesserten Favicons: Websymbole, die Chrome nicht gecacht hat, werden nun automatisch abgerufen.",
+  "whatsNewTabGroups": {
+    "message": "v$1$ fügt die Ansicht „Tab-Gruppen“ hinzu: die Tabs und Tab-Gruppen jedes Fensters neben Ihren Lesezeichen.",
     "placeholders": {
       "1": {
         "content": "$1"
@@ -342,6 +348,271 @@
         "content": "$2"
       }
     }
+  },
+  "viewTabGroups": {
+    "message": "Tab-Gruppen"
+  },
+  "optionShowTabGroupsView": {
+    "message": "Tab-Gruppen-Ansicht anzeigen"
+  },
+  "tabGroupsViewEmpty": {
+    "message": "Keine Tabs in diesem Fenster"
+  },
+  "tabGroupsToolbarRefresh": {
+    "message": "Aktualisieren"
+  },
+  "tabGroupsCollapseAll": {
+    "message": "Alle einklappen"
+  },
+  "tabGroupsExpandAll": {
+    "message": "Alle ausklappen"
+  },
+  "tabGroupsSummary": {
+    "message": "$tabs$ Tabs · $groups$ Gruppen",
+    "placeholders": {
+      "tabs": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsGroupCount": {
+    "message": "$count$ Tabs",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentTab": {
+    "message": "Aktueller Tab"
+  },
+  "tabGroupsAddBookmark": {
+    "message": "Diesen Tab als Lesezeichen speichern"
+  },
+  "tabGroupsSaveFolder": {
+    "message": "Tab-Gruppe als Lesezeichenordner speichern"
+  },
+  "tabGroupsGroupSavedToFolder": {
+    "message": "$count$ Tabs in $folder$ gespeichert",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsBookmarksAdded": {
+    "message": "$count$ Lesezeichen zu $folder$ hinzugefügt",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsSelectNewGroup": {
+    "message": "Neue Tab-Gruppe"
+  },
+  "tabGroupsSelectOpenInto": {
+    "message": "In bestehender Tab-Gruppe öffnen…"
+  },
+  "tabGroupsSelectSaveFolder": {
+    "message": "Als Lesezeichenordner speichern"
+  },
+  "tabGroupsSelectClose": {
+    "message": "Schließen"
+  },
+  "tabGroupsSelectSleep": {
+    "message": "Schlafen"
+  },
+  "tabGroupsCopyMoveDialog": {
+    "message": "Ausgewählte Tabs gehören bereits zu einer Tab-Gruppe. Möchten Sie sie kopieren (an einem neuen Ort öffnen) oder verschieben (aus ihrer aktuellen Gruppe entfernen)?"
+  },
+  "tabGroupsCopyMoveCopy": {
+    "message": "Kopieren"
+  },
+  "tabGroupsCopyMoveMove": {
+    "message": "Verschieben"
+  },
+  "tabGroupsConfirmClose": {
+    "message": "$count$ Tabs schließen?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsConfirmSleep": {
+    "message": "$count$ Tabs schlafen legen?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "bookmarkFolderPickDialogTitle": {
+    "message": "Zu Lesezeichenordner hinzufügen"
+  },
+  "bookmarkFolderNoFolders": {
+    "message": "Keine Lesezeichenordner"
+  },
+  "tabGroupsSelectAddBookmarks": {
+    "message": "Zu Lesezeichenordner hinzufügen…"
+  },
+  "paletteCmdGoTabGroups": {
+    "message": "Zur Tab-Gruppen-Ansicht wechseln"
+  },
+  "tabGroupsActivateGroup": {
+    "message": "Zur Tab-Gruppe"
+  },
+  "tabGroupsRenameGroup": {
+    "message": "Tab-Gruppe umbenennen"
+  },
+  "tabGroupsRenameDialog": {
+    "message": "Tab-Gruppe umbenennen"
+  },
+  "tabGroupsCloseGroup": {
+    "message": "Tab-Gruppe schließen"
+  },
+  "tabGroupsSleepGroup": {
+    "message": "Tab-Gruppe schlafen legen"
+  },
+  "tabGroupsWakeGroup": {
+    "message": "Tab-Gruppe aufwecken"
+  },
+  "tabGroupsActivateTab": {
+    "message": "Zum Tab"
+  },
+  "tabGroupsCollapseGroup": {
+    "message": "Gruppe einklappen"
+  },
+  "tabGroupsExpandGroup": {
+    "message": "Gruppe ausklappen"
+  },
+  "tabGroupsMenuAddBookmark": {
+    "message": "Tab als Lesezeichen"
+  },
+  "tabGroupsMenuSaveFolder": {
+    "message": "Als Lesezeichenordner speichern"
+  },
+  "tabGroupsSyncCollapse": {
+    "message": "Mit Browser synchronisieren"
+  },
+  "tabGroupsSyncCollapseHint": {
+    "message": "Wenn aktiviert, wird das Zusammen- oder Aufklappen einer Gruppe in dieser Ansicht auch auf die Browser-Tab-Gruppe übertragen. Standardmäßig deaktiviert, sodass das Falten der Ansicht lokal bleibt."
+  },
+  "tabGroupsColorStyle": {
+    "message": "Farbstil der Tab-Gruppe"
+  },
+  "tabGroupsColorStyleHint": {
+    "message": "Aus zeigt nur den Farbpunkt. Randfarbband zeichnet einen farbigen Streifen am linken Rand der Gruppe. Farbverbindungslinie zeichnet eine farbige Linie unter dem Punkt der Gruppe mit einem Häkchen pro Zeile und verbindet so die gesamte Gruppe zu einem Baum."
+  },
+  "tabGroupsColorStyleOff": {
+    "message": "Aus (nur Farbpunkt)"
+  },
+  "tabGroupsColorStyleEdge": {
+    "message": "Randfarbband"
+  },
+  "tabGroupsColorStyleLine": {
+    "message": "Farbverbindungslinie"
+  },
+  "tabGroupsBookmarked": {
+    "message": "Lesezeichen"
+  },
+  "tabGroupsRemoveBookmark": {
+    "message": "Lesezeichen entfernen"
+  },
+  "tabGroupsBookmarkRemoved": {
+    "message": "$count$ Lesezeichen entfernt",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsPinned": {
+    "message": "Angehefteter Tab"
+  },
+  "tabGroupsDiscarded": {
+    "message": "Schlafender Tab"
+  },
+  "tabGroupsPinTab": {
+    "message": "Tab anheften"
+  },
+  "tabGroupsUnpinTab": {
+    "message": "Tab lösen"
+  },
+  "tabGroupsSleepTab": {
+    "message": "Tab schlafen legen"
+  },
+  "tabGroupsWakeTab": {
+    "message": "Tab aufwecken"
+  },
+  "tabGroupsOpenGroups": {
+    "message": "Offene Tab-Gruppen"
+  },
+  "tabGroupsClosedGroups": {
+    "message": "Kürzlich geschlossen"
+  },
+  "tabGroupsUngroupedTabs": {
+    "message": "Nicht gruppierte Tabs"
+  },
+  "tabGroupsUngroupGroup": {
+    "message": "Gruppierung aufheben"
+  },
+  "tabGroupsMoveNewWindow": {
+    "message": "Gruppe in neues Fenster verschieben"
+  },
+  "tabGroupsWindow": {
+    "message": "Fenster $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentWindow": {
+    "message": "Aktuelles Fenster"
+  },
+  "tabGroupsReopenGroup": {
+    "message": "Tab-Gruppe erneut öffnen"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "Geschlossene Tab-Gruppe löschen"
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "Fenster einklappen"
+  },
+  "tabGroupsExpandWindow": {
+    "message": "Fenster erweitern"
+  },
+  "tabGroupsClearClosedGroups": {
+    "message": "Alle löschen"
+  },
+  "tabGroupsClosedOpenTab": {
+    "message": "In neuem Tab öffnen"
+  },
+  "tabGroupsRemoveClosedTab": {
+    "message": "Aus gespeicherter Gruppe entfernen"
+  },
+  "tabGroupsClosedTimeLabel": {
+    "message": "Geschlossen:"
+  },
+  "tabGroupsExpandedExpand": {
+    "message": "Erweitern"
+  },
+  "tabGroupsExpandedCollapse": {
+    "message": "Einklappen"
+  },
+  "optionTabGroupsClosedLimit": {
+    "message": "Zu behaltender Verlauf geschlossener Tabs/Gruppen"
   },
   "deadProxyAdd": {
     "message": "Proxyserver für Tote-Links-Prüfungen hinzufügen"

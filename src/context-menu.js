@@ -51,7 +51,7 @@
  * helpers: plain getElementById/classList only (neatools'
  * Array.map(c => c.url, children).clean() is inlined as map + filter).
  */
-import { cleanGroupTitle, pickGroupColor } from './tab-group-utils.js';
+import { cleanGroupTitle, pickGroupColor, readTabGroupFolderMeta } from './tab-group-utils.js';
 
 export function initContextMenu(ctx = {}) {
     const $ = id => document.getElementById(id);
@@ -73,6 +73,15 @@ export function initContextMenu(ctx = {}) {
     const $paletteCmdContextMenu = $('palette-cmd-context-menu');
     // 4.0.8: the view-tab right-click menu (hide / disable)
     const $viewTabContextMenu = $('view-tab-context-menu');
+    // Tab groups view: tab-row and group-head menus (absent in minimal
+    // test setups → null-check everywhere).
+    const $tabRowContextMenu = $('tab-row-context-menu');
+    const $tabGroupContextMenu = $('tabgroup-context-menu');
+    // …and the closed ("recently closed") records get their own two menus:
+    // a saved record is neither a bookmark nor a live tab, so the generic
+    // branches offered it nonsense (reveal-in-tree, edit, delete-bookmark).
+    const $tabClosedContextMenu = $('tabgroups-closed-context-menu');
+    const $tabClosedTabContextMenu = $('tabgroups-closed-tab-context-menu');
     const $results = $('results');
     // Collapsed tab-group / sort submenus (issue #48 follow-up): body-level
     // sibling menus whose items are dispatched by the same handlers as their
@@ -98,7 +107,7 @@ export function initContextMenu(ctx = {}) {
     // replacement row; the list container element itself is never swapped.
     let ownerInfo = null;
     // Every scrollable list a row menu can open on (ownerInfo capture).
-    const LIST_SEL = '#tree, #results, #recent-list, #stats-list, #dead-list, ' +
+    const LIST_SEL = '#tree, #results, #recent-list, #tabgroups-list, #stats-list, #dead-list, ' +
         '#dupes-list, #search-history-area, #palette-results';
 
     // v4 task-2: unified row-id extraction — data-node-id first (the row id
@@ -249,6 +258,26 @@ export function initContextMenu(ctx = {}) {
             $viewTabContextMenu.style.left = '-999px';
             $viewTabContextMenu.style.opacity = '0';
             $viewTabContextMenu.style.transform = 'scale(.98)';
+        }
+        if ($tabRowContextMenu) {
+            $tabRowContextMenu.style.left = '-999px';
+            $tabRowContextMenu.style.opacity = '0';
+            $tabRowContextMenu.style.transform = 'scale(.98)';
+        }
+        if ($tabGroupContextMenu) {
+            $tabGroupContextMenu.style.left = '-999px';
+            $tabGroupContextMenu.style.opacity = '0';
+            $tabGroupContextMenu.style.transform = 'scale(.98)';
+        }
+        if ($tabClosedContextMenu) {
+            $tabClosedContextMenu.style.left = '-999px';
+            $tabClosedContextMenu.style.opacity = '0';
+            $tabClosedContextMenu.style.transform = 'scale(.98)';
+        }
+        if ($tabClosedTabContextMenu) {
+            $tabClosedTabContextMenu.style.left = '-999px';
+            $tabClosedTabContextMenu.style.opacity = '0';
+            $tabClosedTabContextMenu.style.transform = 'scale(.98)';
         }
         // The root-folder disabled states are per-open (root vs non-root);
         // drop them all here so they can never leak across unrelated menu
@@ -653,7 +682,7 @@ export function initContextMenu(ctx = {}) {
     // Round-3 item 3: the feature-view lists follow the same contract —
     // scrolling the content or moving focus into the list dismisses an open
     // menu (previously only the tree/results/palette panes did).
-    for (const id of ['recent-list', 'stats-list', 'dead-list', 'dupes-list', 'search-history-area']) {
+    for (const id of ['recent-list', 'tabgroups-list', 'stats-list', 'dead-list', 'dupes-list', 'search-history-area']) {
         const listEl = $(id);
         if (listEl) {
             listEl.addEventListener('scroll', scrollDismiss);
@@ -772,6 +801,13 @@ export function initContextMenu(ctx = {}) {
             $viewTabContextMenu.focus();
             return;
         }
+        // Tab groups view: the window section head is a fold CONTROL, not a
+        // row — its span would otherwise open the folder menu (whose entries
+        // would act on a bogus id). No menu there, ever.
+        if (el.closest && el.closest('.tabgroups-window-head')) {
+            clearMenu(e);
+            return;
+        }
         // Round-6 item: menus belong to list ROWS. The walk-up above happily
         // lands on spans outside any row — the view-tab strip (right-clicking
         // a tab opened the FOLDER menu on the tab-icon span) and the view
@@ -816,6 +852,7 @@ export function initContextMenu(ctx = {}) {
         // dedup (label names keeper + doomed count, resolved live) and
         // expand/collapse (label follows the current state).
         const groupHead = el.closest('.group-head');
+        const tabGroupHead = el.closest('.tabgroups-group-head');
         // v4 task-4 #6: a palette CUSTOM command row is no bookmark/folder —
         // its slim menu (edit/delete) dispatches through ctx.paletteMenu
         // with the row's data-cc-id.
@@ -838,6 +875,59 @@ export function initContextMenu(ctx = {}) {
                 cleanSep.style.display = hint ? 'block' : 'none';
             $('dupes-group-toggle').textContent =
                 _m(ctx.dupesMenu.isCollapsed(key) ? 'dupesGroupExpand' : 'dupesGroupCollapse');
+        } else if (tabGroupHead && tabGroupHead.parentNode && tabGroupHead.parentNode.classList
+            && tabGroupHead.parentNode.classList.contains('tabgroups-group')
+            && $tabGroupContextMenu && ctx.tabGroupsMenu) {
+            // Tab groups view: a group head gets its own menu (activate /
+            // rename / collapse / save / sleep / close). The collapse label
+            // follows the current state; dispatch reads data-group-id.
+            el = tabGroupHead;
+            menu = $tabGroupContextMenu;
+            const gid = tabGroupHead.parentNode.dataset.groupId;
+            $('tabgroup-collapse').textContent =
+                _m(ctx.tabGroupsMenu.isCollapsed(gid) ? 'tabGroupsExpandGroup' : 'tabGroupsCollapseGroup');
+        } else if (row.classList && row.classList.contains('tabgroups-row')
+            && $tabRowContextMenu && ctx.tabGroupsMenu) {
+            // Tab groups view: a tab row is not a bookmark — its own menu
+            // (go to / pin / bookmark / sleep / close) instead of the
+            // bookmark menu whose entries would act on a bogus id. Every
+            // stateful entry's label follows the row's CURRENT state, so the
+            // menu offers the action that actually applies.
+            menu = $tabRowContextMenu;
+            const tabId = row.dataset.tabId;
+            const pinItem = $('tab-row-pin');
+            if (pinItem && tabId)
+                pinItem.textContent = _m(ctx.tabGroupsMenu.isPinned(tabId) ? 'tabGroupsUnpinTab' : 'tabGroupsPinTab');
+            const sleepItem = $('tab-row-sleep');
+            if (sleepItem && tabId)
+                sleepItem.textContent = _m(ctx.tabGroupsMenu.isDiscarded(tabId) ? 'tabGroupsWakeTab' : 'tabGroupsSleepTab');
+            const bmItem = $('tab-row-add-bookmark');
+            if (bmItem && tabId)
+                bmItem.textContent = _m(ctx.tabGroupsMenu.isBookmarked(tabId)
+                    ? 'tabGroupsRemoveBookmark' : 'tabGroupsMenuAddBookmark');
+        } else if (row.classList && row.classList.contains('tabgroups-closed-group')
+            && $tabClosedContextMenu && ctx.tabGroupsMenu) {
+            // A closed tab-group record: reopen / fold / forget. Nothing
+            // about the bookmark tree applies to it.
+            const headEl = el.closest ? el.closest('.tabgroups-closed-head') : null;
+            el = headEl || el;
+            menu = $tabClosedContextMenu;
+            const cid = row.dataset.closedId;
+            const toggleItem = $('tabgroups-closed-toggle');
+            if (toggleItem && cid) {
+                toggleItem.textContent =
+                    _m(ctx.tabGroupsMenu.isClosedExpanded(cid) ? 'tabGroupsExpandedCollapse' : 'tabGroupsExpandedExpand');
+                // A record whose tab list is empty has nothing to unfold.
+                const count = ctx.tabGroupsMenu.closedTabCount(cid);
+                toggleItem.classList.toggle('disabled', !count);
+            }
+        } else if (row.classList && row.classList.contains('tabgroups-closed-tab')
+            && $tabClosedTabContextMenu && ctx.tabGroupsMenu) {
+            // One saved tab inside a closed record (or a closed single tab):
+            // open it in a new tab / bookmark it / drop it from the record.
+            const anchor = el.tagName === 'A' ? el : row.querySelector('a');
+            el = anchor || el;
+            menu = $tabClosedTabContextMenu;
         // v4 task-3 #10: an UNBOOKMARKED stats-history row has no bookmark
         // id, so the bookmark menu would act on a bogus id (it used to be
         // swallowed at the list level). Its slim menu: open×3 via the row
@@ -1137,6 +1227,9 @@ export function initContextMenu(ctx = {}) {
         const groupTitle = rowGroupTitle();
         const li = currentContext.parentNode;
         const id = rowId(li);
+        // Tab-groups view: a folder saved from a tab group carries extra
+        // meta (original title/color) for the open-in-group actions.
+        const folderMeta = ctx.store ? readTabGroupFolderMeta(ctx.store, id) : null;
         // Close FIRST (the 4.0.1 menu focus law — see the bookmark handler):
         // the owning row retakes focus before the async dispatch below opens
         // any dialog or triggers a re-render.
@@ -1219,15 +1312,27 @@ export function initContextMenu(ctx = {}) {
                 case 'open-bookmarks-in-group': {
                     if (noURLS)
                         return;
-                    actions.openBookmarksInGroup(urls, groupTitle);
+                    if (folderMeta && (folderMeta.title || folderMeta.color)) {
+                        // Saved from a tab group: restore the original
+                        // title/color (meta read in actions via folderId).
+                        actions.openBookmarksInGroup(urls,
+                            folderMeta.title || groupTitle,
+                            folderMeta.color || undefined,
+                            id);
+                    } else {
+                        actions.openBookmarksInGroup(urls, groupTitle);
+                    }
                     break;
                 }
                 case 'open-bookmarks-in-group-setup': {
                     if (noURLS)
                         return;
                     dialogs.GroupDialog.open({
-                        title: groupTitle,
-                        color: pickGroupColor(groupTitle),
+                        title: (folderMeta && folderMeta.title) || groupTitle,
+                        color: (folderMeta && folderMeta.color) || pickGroupColor(groupTitle),
+                        // No folderId on confirm: the dialog's edited title/
+                        // color win over the stored meta (which was only a
+                        // prefill, not a straitjacket).
                         onConfirm: (t, c) => actions.openBookmarksInGroup(urls, t, c)
                     });
                     break;
@@ -1487,6 +1592,190 @@ export function initContextMenu(ctx = {}) {
         $dupesGroupContextMenu.addEventListener('contextmenu', menuBackgroundReposition($dupesGroupContextMenu));
     }
 
+    // Tab groups view: tab-row menu. currentContext is the row anchor (or
+    // span); its closest li carries data-tab-id.
+    const tabRowContextHandler = e => {
+        if (!currentContext)
+            return;
+        const el = e.target;
+        if (!el.classList.contains('menu-item'))
+            return;
+        const li = currentContext.closest ? currentContext.closest('li') : currentContext.parentNode;
+        const tabId = li && li.dataset && li.dataset.tabId;
+        // Close FIRST (menu focus law): focus returns to the owning row
+        // before the action runs or opens a dialog.
+        clearMenu();
+        if (!tabId)
+            return;
+        switch (el.id) {
+            case 'tab-row-activate':
+                ctx.tabGroupsMenu.activateTab(tabId);
+                break;
+            case 'tab-row-pin':
+                ctx.tabGroupsMenu.togglePinned(tabId);
+                break;
+            case 'tab-row-add-bookmark':
+                // Same toggle the row's ★ performs (the label said so).
+                if (ctx.tabGroupsMenu.isBookmarked(tabId))
+                    ctx.tabGroupsMenu.removeBookmark(tabId);
+                else
+                    ctx.tabGroupsMenu.addBookmark(tabId);
+                break;
+            case 'tab-row-sleep':
+                if (ctx.tabGroupsMenu.isDiscarded(tabId))
+                    ctx.tabGroupsMenu.wakeTab(tabId);
+                else
+                    ctx.tabGroupsMenu.sleepTab(tabId);
+                break;
+            case 'tab-row-close':
+                ctx.tabGroupsMenu.closeTab(tabId);
+                break;
+        }
+    };
+    if ($tabRowContextMenu) {
+        $tabRowContextMenu.addEventListener('mouseup', e => {
+            e.stopPropagation();
+            if (e.button === 0 || (os === 'mac' && e.button === 1))
+                tabRowContextHandler(e);
+        });
+        $tabRowContextMenu.addEventListener('contextmenu', menuBackgroundReposition($tabRowContextMenu));
+        $tabRowContextMenu.addEventListener('click', e => {
+            e.stopPropagation();
+        });
+    }
+
+    // Tab groups view: group-head menu. currentContext is the group-head
+    // span; its parent li carries data-group-id.
+    const tabGroupContextHandler = e => {
+        if (!currentContext)
+            return;
+        const el = e.target;
+        if (!el.classList.contains('menu-item'))
+            return;
+        const gid = currentContext.parentNode.dataset.groupId;
+        clearMenu();
+        if (!gid)
+            return;
+        switch (el.id) {
+            case 'tabgroup-activate':
+                ctx.tabGroupsMenu.activateGroup(gid);
+                break;
+            case 'tabgroup-rename':
+                ctx.tabGroupsMenu.renameGroup(gid);
+                break;
+            case 'tabgroup-collapse':
+                ctx.tabGroupsMenu.toggleGroup(gid);
+                break;
+            case 'tabgroup-move-new-window':
+                ctx.tabGroupsMenu.moveGroupToNewWindow(gid);
+                break;
+            case 'tabgroup-ungroup':
+                ctx.tabGroupsMenu.ungroupGroup(gid);
+                break;
+            case 'tabgroup-save-folder':
+                ctx.tabGroupsMenu.saveGroupToBookmarks(gid);
+                break;
+            case 'tabgroup-sleep':
+                if (ctx.tabGroupsMenu.isGroupAsleep(gid))
+                    ctx.tabGroupsMenu.wakeGroup(gid);
+                else
+                    ctx.tabGroupsMenu.sleepGroup(gid);
+                break;
+            case 'tabgroup-close':
+                ctx.tabGroupsMenu.closeGroup(gid);
+                break;
+        }
+    };
+    if ($tabGroupContextMenu) {
+        $tabGroupContextMenu.addEventListener('mouseup', e => {
+            e.stopPropagation();
+            if (e.button === 0 || (os === 'mac' && e.button === 1))
+                tabGroupContextHandler(e);
+        });
+        $tabGroupContextMenu.addEventListener('contextmenu', menuBackgroundReposition($tabGroupContextMenu));
+        $tabGroupContextMenu.addEventListener('click', e => {
+            e.stopPropagation();
+        });
+    }
+
+    // Tab groups view: the "recently closed" record menus. A saved record is
+    // history, not a live tab or a bookmark — these two menus carry ONLY the
+    // entries that apply to it, and their labels/availability follow the
+    // record's current state (see the open-time branch above).
+    //
+    // Closed GROUP head: reopen the whole group / fold it / forget it.
+    const tabClosedContextHandler = e => {
+        if (!currentContext)
+            return;
+        const el = e.target;
+        if (!el.classList.contains('menu-item') || el.classList.contains('disabled'))
+            return;
+        const li = currentContext.closest ? currentContext.closest('li') : currentContext.parentNode;
+        const cid = li && li.dataset && li.dataset.closedId;
+        clearMenu();
+        if (!cid || !ctx.tabGroupsMenu)
+            return;
+        switch (el.id) {
+            case 'tabgroups-closed-reopen':
+                ctx.tabGroupsMenu.restoreClosedGroup(cid);
+                break;
+            case 'tabgroups-closed-toggle':
+                ctx.tabGroupsMenu.toggleClosedExpanded(cid);
+                break;
+            case 'tabgroups-closed-forget':
+                ctx.tabGroupsMenu.deleteClosedGroup(cid);
+                break;
+        }
+    };
+    if ($tabClosedContextMenu) {
+        $tabClosedContextMenu.addEventListener('mouseup', e => {
+            e.stopPropagation();
+            if (e.button === 0 || (os === 'mac' && e.button === 1))
+                tabClosedContextHandler(e);
+        });
+        $tabClosedContextMenu.addEventListener('contextmenu', menuBackgroundReposition($tabClosedContextMenu));
+        $tabClosedContextMenu.addEventListener('click', e => {
+            e.stopPropagation();
+        });
+    }
+
+    // One saved tab of a closed record: open it / bookmark it / drop it.
+    const tabClosedTabContextHandler = e => {
+        if (!currentContext)
+            return;
+        const el = e.target;
+        if (!el.classList.contains('menu-item') || el.classList.contains('disabled'))
+            return;
+        const li = currentContext.closest ? currentContext.closest('li') : currentContext.parentNode;
+        const cid = li && li.dataset && li.dataset.closedId;
+        const idx = li && li.dataset ? (parseInt(li.dataset.closedTab, 10) || 0) : 0;
+        clearMenu();
+        if (!cid || !ctx.tabGroupsMenu)
+            return;
+        switch (el.id) {
+            case 'tabgroups-closed-tab-open':
+                ctx.tabGroupsMenu.openClosedTab(cid, idx);
+                break;
+            case 'tabgroups-closed-tab-bookmark':
+                ctx.tabGroupsMenu.addClosedTabToBookmarks(cid, idx);
+                break;
+            case 'tabgroups-closed-tab-remove':
+                ctx.tabGroupsMenu.removeClosedTab(cid, idx);
+                break;
+        }
+    };
+    if ($tabClosedTabContextMenu) {
+        $tabClosedTabContextMenu.addEventListener('mouseup', e => {
+            e.stopPropagation();
+            if (e.button === 0 || (os === 'mac' && e.button === 1))
+                tabClosedTabContextHandler(e);
+        });
+        $tabClosedTabContextMenu.addEventListener('contextmenu', menuBackgroundReposition($tabClosedTabContextMenu));
+        $tabClosedTabContextMenu.addEventListener('click', e => {
+            e.stopPropagation();
+        });
+    }
+
     // v4 task-4 #6: the palette custom-command row menu. currentContext is
     // the row li (it carries data-cc-id); the dispatch rides palette.js's
     // customMenu (lazy getter on neat.js's ctx — palette inits after menus).
@@ -1606,6 +1895,10 @@ export function initContextMenu(ctx = {}) {
         paletteCmdMenu: $paletteCmdContextMenu || null,
         // 4.0.8: view-tab right-click menu (may be absent in minimal tests)
         viewTabMenu: $viewTabContextMenu || null,
+        tabRowMenu: $tabRowContextMenu || null,
+        tabGroupMenu: $tabGroupContextMenu || null,
+        tabClosedMenu: $tabClosedContextMenu || null,
+        tabClosedTabMenu: $tabClosedTabContextMenu || null,
         // issue #48 follow-up: the collapsed-group flyouts (may be absent in
         // minimal test setups — consumers null-check) and their open/close API
         // (used by the keyboard layer for →/←/Enter and the two-level Esc).

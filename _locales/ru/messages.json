@@ -38,6 +38,12 @@
   "announceV408Title": {
     "message": "Что нового в v4.0.8"
   },
+  "announceV410Title": {
+    "message": "Что нового в v4.1.0"
+  },
+  "announceV410Text": {
+    "message": "v4.1.0 добавляет представление «Группы вкладок»: вкладки и группы вкладок каждого окна, управляемые рядом с вашими закладками."
+  },
   "announceV408Text": {
     "message": "v4.0.8 — это выпуск с улучшенными фавиконками: настоящие значки сайтов автоматически загружаются для закладок, которые Chrome ещё не кэшировал."
   },
@@ -324,8 +330,8 @@
   "whatsNewChangelog": {
     "message": "Журнал изменений"
   },
-  "whatsNewFavicon": {
-    "message": "v$1$ — это выпуск с улучшенной поддержкой фавиконок: значки сайтов, отсутствующие в кэше Chrome, теперь подгружаются автоматически.",
+  "whatsNewTabGroups": {
+    "message": "v$1$ добавляет просмотр групп вкладок: вкладки и группы вкладок каждого окна рядом с вашими закладками.",
     "placeholders": {
       "1": {
         "content": "$1"
@@ -342,6 +348,271 @@
         "content": "$2"
       }
     }
+  },
+  "viewTabGroups": {
+    "message": "Группы вкладок"
+  },
+  "optionShowTabGroupsView": {
+    "message": "Показывать вкладку просмотра групп вкладок"
+  },
+  "tabGroupsViewEmpty": {
+    "message": "Нет вкладок в этом окне"
+  },
+  "tabGroupsToolbarRefresh": {
+    "message": "Обновить"
+  },
+  "tabGroupsCollapseAll": {
+    "message": "Свернуть все"
+  },
+  "tabGroupsExpandAll": {
+    "message": "Развернуть все"
+  },
+  "tabGroupsSummary": {
+    "message": "$tabs$ вкладок · $groups$ групп",
+    "placeholders": {
+      "tabs": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsGroupCount": {
+    "message": "$count$ вкладок",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentTab": {
+    "message": "Текущая вкладка"
+  },
+  "tabGroupsAddBookmark": {
+    "message": "Добавить в закладки"
+  },
+  "tabGroupsSaveFolder": {
+    "message": "Сохранить группу вкладок как папку закладок"
+  },
+  "tabGroupsGroupSavedToFolder": {
+    "message": "Сохранено $count$ вкладок в $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsBookmarksAdded": {
+    "message": "Добавлено $count$ закладок в $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsSelectNewGroup": {
+    "message": "Новая группа вкладок"
+  },
+  "tabGroupsSelectOpenInto": {
+    "message": "Открыть в существующей группе…"
+  },
+  "tabGroupsSelectSaveFolder": {
+    "message": "Сохранить как папку закладок"
+  },
+  "tabGroupsSelectClose": {
+    "message": "Закрыть"
+  },
+  "tabGroupsSelectSleep": {
+    "message": "Усыпить"
+  },
+  "tabGroupsCopyMoveDialog": {
+    "message": "Выбранные вкладки уже принадлежат группе вкладок. Скопировать их (открыть в новом месте) или переместить (удалить из текущей группы)?"
+  },
+  "tabGroupsCopyMoveCopy": {
+    "message": "Копировать"
+  },
+  "tabGroupsCopyMoveMove": {
+    "message": "Переместить"
+  },
+  "tabGroupsConfirmClose": {
+    "message": "Закрыть $count$ вкладок?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsConfirmSleep": {
+    "message": "Усыпить $count$ вкладок?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "bookmarkFolderPickDialogTitle": {
+    "message": "Добавить в папку закладок"
+  },
+  "bookmarkFolderNoFolders": {
+    "message": "Нет папок закладок"
+  },
+  "tabGroupsSelectAddBookmarks": {
+    "message": "Добавить в папку закладок…"
+  },
+  "paletteCmdGoTabGroups": {
+    "message": "Перейти к просмотру групп вкладок"
+  },
+  "tabGroupsActivateGroup": {
+    "message": "Перейти к группе вкладок"
+  },
+  "tabGroupsRenameGroup": {
+    "message": "Переименовать группу"
+  },
+  "tabGroupsRenameDialog": {
+    "message": "Переименовать группу вкладок"
+  },
+  "tabGroupsCloseGroup": {
+    "message": "Закрыть группу"
+  },
+  "tabGroupsSleepGroup": {
+    "message": "Усыпить группу"
+  },
+  "tabGroupsWakeGroup": {
+    "message": "Разбудить группу вкладок"
+  },
+  "tabGroupsActivateTab": {
+    "message": "Перейти к вкладке"
+  },
+  "tabGroupsCollapseGroup": {
+    "message": "Свернуть группу"
+  },
+  "tabGroupsExpandGroup": {
+    "message": "Развернуть группу"
+  },
+  "tabGroupsMenuAddBookmark": {
+    "message": "В закладки"
+  },
+  "tabGroupsMenuSaveFolder": {
+    "message": "Сохранить как папку"
+  },
+  "tabGroupsSyncCollapse": {
+    "message": "Синхронизировать свёртывание с браузером"
+  },
+  "tabGroupsSyncCollapseHint": {
+    "message": "Если отмечено, свёртывание или развёртывание группы в этом представлении также обновляет группу вкладок браузера. По умолчанию выключено, чтобы сворачивание в представлении оставалось локальным."
+  },
+  "tabGroupsColorStyle": {
+    "message": "Стиль цвета группы вкладок"
+  },
+  "tabGroupsColorStyleHint": {
+    "message": "Выкл. показывает только цветную точку. Цветная полоса по краю рисует полосу вдоль левого края группы. Линия-соединитель рисует цветную линию под точкой группы с отметкой на каждую строку, связывая всю группу в одно дерево."
+  },
+  "tabGroupsColorStyleOff": {
+    "message": "Выкл. (только цветная точка)"
+  },
+  "tabGroupsColorStyleEdge": {
+    "message": "Цветная полоса по краю"
+  },
+  "tabGroupsColorStyleLine": {
+    "message": "Линия-соединитель"
+  },
+  "tabGroupsBookmarked": {
+    "message": "В закладках"
+  },
+  "tabGroupsRemoveBookmark": {
+    "message": "Удалить закладку"
+  },
+  "tabGroupsBookmarkRemoved": {
+    "message": "Удалено закладок: $count$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsPinned": {
+    "message": "Закреплённая вкладка"
+  },
+  "tabGroupsDiscarded": {
+    "message": "Спящая вкладка"
+  },
+  "tabGroupsPinTab": {
+    "message": "Закрепить вкладку"
+  },
+  "tabGroupsUnpinTab": {
+    "message": "Открепить вкладку"
+  },
+  "tabGroupsSleepTab": {
+    "message": "Усыпить вкладку"
+  },
+  "tabGroupsWakeTab": {
+    "message": "Разбудить вкладку"
+  },
+  "tabGroupsOpenGroups": {
+    "message": "Открытые группы вкладок"
+  },
+  "tabGroupsClosedGroups": {
+    "message": "Недавно закрытые"
+  },
+  "tabGroupsUngroupedTabs": {
+    "message": "Несгруппированные вкладки"
+  },
+  "tabGroupsUngroupGroup": {
+    "message": "Разгруппировать"
+  },
+  "tabGroupsMoveNewWindow": {
+    "message": "В новое окно"
+  },
+  "tabGroupsWindow": {
+    "message": "Окно $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentWindow": {
+    "message": "Текущее окно"
+  },
+  "tabGroupsReopenGroup": {
+    "message": "Повторно открыть группу вкладок"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "Удалить закрытую группу вкладок"
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "Свернуть окно"
+  },
+  "tabGroupsExpandWindow": {
+    "message": "Развернуть окно"
+  },
+  "tabGroupsClearClosedGroups": {
+    "message": "Очистить все"
+  },
+  "tabGroupsClosedOpenTab": {
+    "message": "Открыть в новой вкладке"
+  },
+  "tabGroupsRemoveClosedTab": {
+    "message": "Удалить из сохранённой группы"
+  },
+  "tabGroupsClosedTimeLabel": {
+    "message": "Закрыто:"
+  },
+  "tabGroupsExpandedExpand": {
+    "message": "Развернуть"
+  },
+  "tabGroupsExpandedCollapse": {
+    "message": "Свернуть"
+  },
+  "optionTabGroupsClosedLimit": {
+    "message": "Сохраняемая история закрытых вкладок/групп"
   },
   "deadProxyAdd": {
     "message": "Добавить прокси-сервер для проверки битых ссылок"

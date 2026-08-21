@@ -61,6 +61,7 @@
     <li><label><input type="checkbox" id="remember-view" aria-labelledby="option-remember-view"><span id="option-remember-view"></span></label></li>
     <li><label><input type="checkbox" id="show-tab-badges" aria-labelledby="option-show-tab-badges"><span id="option-show-tab-badges"></span></label></li>
     <li><label><input type="checkbox" id="show-item-path" aria-labelledby="option-show-item-path"><span id="option-show-item-path"></span></label></li>
+    <li class="view-option-row"><label class="view-option-label"><input type="checkbox" id="show-tab-groups-view" aria-labelledby="option-show-tab-groups-view"><span id="option-show-tab-groups-view"></span></label><span class="view-state" id="tabgroups-view-state"></span><button type="button" class="view-toggle" id="tabgroups-view-toggle"></button></li>
     <li class="view-option-row"><label class="view-option-label"><input type="checkbox" id="show-recent-bookmarks" aria-labelledby="option-show-recent-bookmarks"><span id="option-show-recent-bookmarks"></span></label><span class="view-state" id="recent-view-state"></span><button type="button" class="view-toggle" id="recent-view-toggle"></button></li>
     <li class="view-option-row"><label class="view-option-label"><input type="checkbox" id="show-stats-view" aria-labelledby="option-show-stats-view"><span id="option-show-stats-view"></span></label><span class="view-state" id="stats-view-state"></span><button type="button" class="view-toggle" id="stats-view-toggle"></button></li>
     <li class="view-option-row"><label class="view-option-label"><input type="checkbox" id="show-dead-view" aria-labelledby="option-show-dead-view"><span id="option-show-dead-view"></span></label><span class="view-state" id="dead-view-state"></span><button type="button" class="view-toggle" id="dead-view-toggle"></button></li>
@@ -80,9 +81,12 @@
     <li><label><input type="checkbox" id="search-after-enter" aria-labelledby="option-search-after-enter"><span id="option-search-after-enter"></span></label></li>
 </ul>
 </section>
-<section class="options-group" hidden>
+<section class="options-group">
 <h2 id="tabgroups-options"></h2>
-<ul class="options-list"></ul>
+<ul class="options-list">
+    <li><label><span id="option-tabgroups-color-style"></span> <select id="tabgroups-color-style" aria-labelledby="option-tabgroups-color-style"><option value="off" id="tabgroups-color-style-off"></option><option value="edge" id="tabgroups-color-style-edge"></option><option value="line" id="tabgroups-color-style-line"></option></select></label><small id="option-tabgroups-color-style-hint"></small></li>
+    <li><label><span id="option-tabgroups-closed-limit"></span> <select id="tabgroups-closed-limit" aria-labelledby="option-tabgroups-closed-limit"><option value="5">5</option><option value="10">10</option><option value="20">20</option><option value="50">50</option></select></label></li>
+</ul>
 </section>
 <section class="options-group">
 <h2 id="recent-options"></h2>

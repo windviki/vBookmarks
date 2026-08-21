@@ -103,6 +103,20 @@ export function initKeyboard(ctx = {}) {
         return null;
     };
 
+    // Next/previous focusable ROW sibling, skipping LI section separators
+    // that intentionally contain no a/span (e.g. the tab-groups window and
+    // section heads render em/b only so the row walk never lands on them).
+    const nextFocusableRowSibling = (li, dir) => {
+        for (let n = li; (n = dir > 0 ? n.nextElementSibling : n.previousElementSibling);) {
+            if (n.tagName !== 'LI')
+                continue;
+            const focus = n.querySelector && n.querySelector('a, span');
+            if (focus)
+                return focus;
+        }
+        return null;
+    };
+
     // Keyboard navigation
     let keyBuffer = '';
     let keyBufferTimer = null;
@@ -238,9 +252,7 @@ export function initKeyboard(ctx = {}) {
                     if (keyValue !== 'ArrowDown' && keyValue !== 'ArrowUp')
                         return;
                     e.preventDefault();
-                    const sib = keyValue === 'ArrowDown'
-                        ? ownLi.nextElementSibling : ownLi.previousElementSibling;
-                    const target = sib && sib.querySelector ? sib.querySelector('a, span') : null;
+                    const target = nextFocusableRowSibling(ownLi, keyValue === 'ArrowDown' ? 1 : -1);
                     if (target) {
                         target.focus();
                     } else {
@@ -288,50 +300,54 @@ export function initKeyboard(ctx = {}) {
         switch (keyValue) {
             case 'ArrowDown': // down
                 e.preventDefault();
-                const liChild = li.querySelector('ul>li:first-child');
-                // may be an "(Empty)" marker row, which has no focusable element
-                const liChildFocus = liChild ? liChild.querySelector('a, span') : null;
-                let nextLiSpan;
-                if (li.classList.contains('open') && liChildFocus) {
-                    liChildFocus.focus();
-                } else {
-                    let nextLi = li.nextElementSibling;
-                    if (nextLi) {
-                        nextLiSpan = nextLi.querySelector('a, span');
-                        if (nextLiSpan) {
-                            nextLiSpan.focus();
-                        }
-                    } else if (!search.isActive()) {
-                        // 兄弟 <ul> 跨越优先（死链视图双列表）；落空再走原
-                        // tree up-walk（树文件夹 / 单列表视图行为不变）。
-                        const crossed = crossRowUl(li, 1);
-                        if (crossed) {
-                            crossed.focus();
-                        } else {
-                            nextLi = null;
-                            do {
-                                // 双跳越到祖父层；祖先链在 body/html/document 处
-                                // parentNode 为 null（真实 DOM 末行 ↓ 会走到顶层），
-                                // 判空后 li 归 null 终止循环，而不是踩 null 抛错。
-                                li = li && li.parentNode && li.parentNode.parentNode;
-                                if (li)
-                                    nextLi = li.nextElementSibling;
-                                if (nextLi)
-                                    nextLiSpan = nextLi.querySelector('a, span');
-                                if (nextLiSpan) //fixed: pushed down "DOWN" when the focus was at the last node
-                                    nextLiSpan.focus();
-                            } while (li && !nextLi);
-                        }
+                {
+                    const liChild = li.querySelector('ul>li:first-child');
+                    // may be an "(Empty)" marker row, which has no focusable element
+                    const liChildFocus = liChild ? liChild.querySelector('a, span') : null;
+                    if (li.classList.contains('open') && liChildFocus) {
+                        liChildFocus.focus();
+                        break;
                     }
+                    // In-list sibling first (now skipping LI section heads that
+                    // carry no a/span); then the tree's cross-<ul> / ancestor walk.
+                    const nextFocus = nextFocusableRowSibling(li, 1);
+                    if (nextFocus) {
+                        nextFocus.focus();
+                        break;
+                    }
+                    if (search.isActive())
+                        break;
+                    const crossed = crossRowUl(li, 1);
+                    if (crossed) {
+                        crossed.focus();
+                        break;
+                    }
+                    let nextLi = null;
+                    let nextLiSpan = null;
+                    do {
+                        // 双跳越到祖父层；祖先链在 body/html/document 处
+                        // parentNode 为 null（真实 DOM 末行 ↓ 会走到顶层），
+                        // 判空后 li 归 null 终止循环，而不是踩 null 抛错。
+                        li = li && li.parentNode && li.parentNode.parentNode;
+                        if (li)
+                            nextLi = li.nextElementSibling;
+                        if (nextLi)
+                            nextLiSpan = nextLi.querySelector('a, span');
+                        if (nextLiSpan) //fixed: pushed down "DOWN" when the focus was at the last node
+                            nextLiSpan.focus();
+                    } while (li && !nextLi);
                 }
                 break;
             case 'ArrowUp': // up
             {
                 e.preventDefault();
                 let prevLi = li.previousElementSibling;
-                // 非 <li> 的兄弟（死链视图的 .dead-marked-head 分隔 div）不是行：
-                // 归 null，落到 else 分支做兄弟 <ul> 跨越。树视图 <ul> 子元素恒为
-                // <li>，此处不会误伤。
+                // 跳过无 a/span 的 LI 分隔行（窗口/分区标题）；非 <li> 的兄弟
+                //（死链视图的 .dead-marked-head 分隔 div）不是行，归 null 落到
+                // 兄弟 <ul> 跨越。树视图 <ul> 子元素恒为 <li>，此处不会误伤。
+                while (prevLi && prevLi.tagName === 'LI'
+                    && !(prevLi.querySelector && prevLi.querySelector('a, span')))
+                    prevLi = prevLi.previousElementSibling;
                 if (prevLi && prevLi.tagName !== 'LI')
                     prevLi = null;
                 if (prevLi) {
@@ -919,6 +935,20 @@ export function initKeyboard(ctx = {}) {
     // arrow protocol only applies once the menu is open and focused.
     if (menus.viewTabMenu)
         menus.viewTabMenu.addEventListener('keydown', contextKeyDown);
+    // Tab groups view (4.1.0): its FOUR menus — tab row, group head, closed
+    // record, closed record's tab — were opened by the keyboard (→ /
+    // ContextMenu / Shift+F10 dispatch a contextmenu event and the menu takes
+    // focus) but never bound here, so the focused menu answered no key at all:
+    // ↑↓ could not reach an item, Enter did nothing and Esc fell through to
+    // the document layer. Binding them restores the K7 menu protocol.
+    if (menus.tabRowMenu)
+        menus.tabRowMenu.addEventListener('keydown', contextKeyDown);
+    if (menus.tabGroupMenu)
+        menus.tabGroupMenu.addEventListener('keydown', contextKeyDown);
+    if (menus.tabClosedMenu)
+        menus.tabClosedMenu.addEventListener('keydown', contextKeyDown);
+    if (menus.tabClosedTabMenu)
+        menus.tabClosedTabMenu.addEventListener('keydown', contextKeyDown);
     // issue #48 follow-up: the collapsed-group flyouts walk like any menu
     // (their ←/→/Esc handling is the submenu branch of contextKeyDown).
     if (menus.folderTabGroupSubmenu)
@@ -986,6 +1016,8 @@ export function initKeyboard(ctx = {}) {
     const allMenus = [
         menus.bookmarkMenu, menus.folderMenu, menus.separatorMenu,
         menus.searchHistoryMenu, menus.histRowMenu, menus.dupesGroupMenu,
+        menus.tabRowMenu, menus.tabGroupMenu,
+        menus.tabClosedMenu, menus.tabClosedTabMenu,
         menus.paletteCmdMenu, menus.viewTabMenu,
         // issue #48 follow-up: the collapsed-group flyouts count as open menus
         // for the document-level Escape / Tab layering.
@@ -1140,6 +1172,9 @@ export function initKeyboard(ctx = {}) {
     const menuContainers = [
         menus.bookmarkMenu, menus.folderMenu, menus.separatorMenu,
         menus.searchHistoryMenu, menus.histRowMenu, menus.dupesGroupMenu,
+        menus.tabRowMenu, menus.tabGroupMenu,
+        // 4.1.0: the two "recently closed" record menus keep Tab trapped too
+        menus.tabClosedMenu, menus.tabClosedTabMenu,
         menus.paletteCmdMenu, menus.viewTabMenu,
         // issue #48 follow-up: the collapsed-group flyouts keep Tab trapped
         // too (their items are Tab stops only while the flyout is open).

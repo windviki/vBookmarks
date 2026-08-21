@@ -115,7 +115,7 @@ const $ = id => document.getElementById(id);
 
         // Per-view settings groups (4.0.8 options reorganization): after the
         // General and Views groups, each view owns its specific options in
-        // tab order — tree / search / (tab groups in 4.0.9) / recent /
+        // tab order — tree / search / tab groups / recent /
         // stats / dead / dupes. Groups without options stay hidden placeholders.
         const treeSettings = [
             // v3 carry-over: the popup shows only the bookmarks bar subtree.
@@ -149,6 +149,10 @@ const $ = id => document.getElementById(id);
             // control; each view-specific group below only carries its other
             // behavior options.
             { id: 'show-recent-bookmarks', key: 'showRecentBookmarks', defaultValue: '1', inverted: false },
+            // The other list views get the same per-view visibility switch
+            // recent already had — a hidden view drops its tab and the Alt+N
+            // jump until re-enabled (the palette row stays, 4.0.8 semantics).
+            { id: 'show-tab-groups-view', key: 'showTabGroupsView', defaultValue: '1', inverted: false },
             { id: 'show-stats-view', key: 'showStatsView', defaultValue: '1', inverted: false },
             { id: 'show-dead-view', key: 'showDeadView', defaultValue: '1', inverted: false },
             { id: 'show-dupes-view', key: 'showDupesView', defaultValue: '1', inverted: false }
@@ -209,6 +213,7 @@ const $ = id => document.getElementById(id);
         // is needed here.
         const FEATURE_VIEW_OPTIONS = [
             { showId: 'show-recent-bookmarks', disableKey: 'disableRecentView', stateId: 'recent-view-state', toggleId: 'recent-view-toggle' },
+            { showId: 'show-tab-groups-view', disableKey: 'disableTabGroupsView', stateId: 'tabgroups-view-state', toggleId: 'tabgroups-view-toggle' },
             { showId: 'show-stats-view', disableKey: 'disableStatsView', stateId: 'stats-view-state', toggleId: 'stats-view-toggle' },
             { showId: 'show-dead-view', disableKey: 'disableDeadView', stateId: 'dead-view-state', toggleId: 'dead-view-toggle' },
             { showId: 'show-dupes-view', disableKey: 'disableDupesView', stateId: 'dupes-view-state', toggleId: 'dupes-view-toggle' }
@@ -282,6 +287,27 @@ const $ = id => document.getElementById(id);
         const recentCount = $('recent-count');
         recentCount.value = await getSetting('recentCount', '20');
         recentCount.addEventListener('change', () => setSetting('recentCount', recentCount.value));
+        // Tab-groups view: closed tab/group history depth.
+        const tabGroupsClosedLimit = $('tabgroups-closed-limit');
+        tabGroupsClosedLimit.value = await getSetting('tabGroupsClosedLimit', '10');
+        tabGroupsClosedLimit.addEventListener('change', () => setSetting('tabGroupsClosedLimit', tabGroupsClosedLimit.value));
+
+        // Tab-groups view: how a group's color is drawn — off (color dot
+        // only), edge band, or connector line. The legacy boolean
+        // tabGroupsColorBorder is read once as 'edge' so an existing profile
+        // opens the options page on the style it is actually using.
+        const tabGroupsColorStyle = $('tabgroups-color-style');
+        const storedColorStyle = await getSetting('tabGroupsColorStyle', '');
+        const legacyColorBorder = await getSetting('tabGroupsColorBorder', '');
+        tabGroupsColorStyle.value = ['off', 'edge', 'line'].indexOf(storedColorStyle) !== -1
+            ? storedColorStyle
+            : (legacyColorBorder ? 'edge' : 'off');
+        tabGroupsColorStyle.addEventListener('change', () => {
+            setSetting('tabGroupsColorStyle', tabGroupsColorStyle.value);
+            // Keep the retired boolean in step so a downgrade (or any reader
+            // that still checks it) sees the same on/off intent.
+            setSetting('tabGroupsColorBorder', tabGroupsColorStyle.value === 'edge' ? '1' : '');
+        });
 
         // Issue #33: folder-sort options — the same sortOptions key the popup
         // sort dialog reads/writes, so the options page is a persistent editor
@@ -824,11 +850,12 @@ const $ = id => document.getElementById(id);
         document.getElementById('option-announce-enabled-hint').innerText = __m('optionAnnounceEnabledHint');
         // View groups (4.0.8 options reorganization): General / Views, then
         // per-view groups in tab order (tree/search/tab groups/recent/stats/
-        // dead/dupes), then Icons and the rest. Tab groups is a hidden
-        // placeholder until its 4.0.9 options land.
+        // dead/dupes), then Icons and the rest. Tab groups is a real group
+        // since 4.1.0 (color style + closed-history depth).
         document.getElementById('views-options').innerText = __m('optionsGroupViews');
         document.getElementById('tree-options').innerText = __m('viewTree');
         document.getElementById('search-options').innerText = __m('viewSearch');
+        document.getElementById('tabgroups-options').innerText = __m('viewTabGroups');
         document.getElementById('recent-options').innerText = __m('viewRecent');
         document.getElementById('dupes-options').innerText = __m('viewDupes');
         document.getElementById('icons-options').innerText = __m('optionsGroupIcons');
@@ -840,6 +867,12 @@ const $ = id => document.getElementById(id);
         document.getElementById('option-show-tab-badges').innerText = __m('optionShowTabBadges');
         document.getElementById('option-show-item-path').innerText = __m('optionShowItemPath');
         document.getElementById('option-show-recent-bookmarks').innerText = __m('optionShowRecentBookmarks');
+        document.getElementById('option-show-tab-groups-view').innerText = __m('optionShowTabGroupsView');
+        document.getElementById('option-tabgroups-color-style').innerText = __m('tabGroupsColorStyle');
+        document.getElementById('option-tabgroups-color-style-hint').innerText = __m('tabGroupsColorStyleHint');
+        document.getElementById('tabgroups-color-style-off').innerText = __m('tabGroupsColorStyleOff');
+        document.getElementById('tabgroups-color-style-edge').innerText = __m('tabGroupsColorStyleEdge');
+        document.getElementById('tabgroups-color-style-line').innerText = __m('tabGroupsColorStyleLine');
         document.getElementById('option-show-stats-view').innerText = __m('optionShowStatsView');
         document.getElementById('option-show-dead-view').innerText = __m('optionShowDeadView');
         document.getElementById('option-show-dupes-view').innerText = __m('optionShowDupesView');
@@ -857,6 +890,7 @@ const $ = id => document.getElementById(id);
         document.getElementById('classic-experience').innerText = __m('optionClassicExperience');
         document.getElementById('classic-experience-hint').innerText = __m('optionClassicExperienceHint');
         document.getElementById('option-recent-count').innerText = __m('optionRecentCount');
+        document.getElementById('option-tabgroups-closed-limit').innerText = __m('optionTabGroupsClosedLimit');
         document.getElementById('option-search-history').innerText = __m('optionSearchHistory');
         document.getElementById('option-search-history-hint').innerText = __m('optionSearchHistoryHint');
         document.getElementById('option-stats-enabled').innerText = __m('optionStatsEnabled');

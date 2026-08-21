@@ -33,3 +33,40 @@ export const cleanGroupTitle = (text, suffixes = []) => {
     }
     return t;
 };
+
+
+// --- Tab-group → bookmark-folder metadata (tab-groups view) ---------------
+// Chrome does not expose a tab group's creation time or an extension-owned
+// metadata slot, so the tab-groups view persists a small JSON map in
+// storage.local: folderId → { title, color, savedAt, sourceGroupId }. When
+// the user later opens that bookmark folder as a tab group, the folder
+// context menu reads the meta back and restores the title/color instead of
+// re-deriving them from the folder title.
+export const TAB_GROUP_FOLDER_META_KEY = 'tabGroupFolderMeta';
+
+export const readTabGroupFolderMetaMap = store => {
+    try {
+        return JSON.parse(store.get(TAB_GROUP_FOLDER_META_KEY, '') || '{}');
+    } catch (e) {
+        return {};
+    }
+};
+
+export const readTabGroupFolderMeta = (store, folderId) =>
+    (readTabGroupFolderMetaMap(store) || {})[`${folderId}`] || null;
+
+export const saveTabGroupFolderMeta = (store, folderId, meta) => {
+    const map = readTabGroupFolderMetaMap(store);
+    map[`${folderId}`] = { ...(map[`${folderId}`] || {}), ...meta };
+    try {
+        store.set(TAB_GROUP_FOLDER_META_KEY, JSON.stringify(map));
+    } catch (e) { /* best-effort metadata — a storage hiccup must not fail the save */ }
+};
+
+export const forgetTabGroupFolderMeta = (store, folderId) => {
+    const map = readTabGroupFolderMetaMap(store);
+    delete map[`${folderId}`];
+    try {
+        store.set(TAB_GROUP_FOLDER_META_KEY, JSON.stringify(map));
+    } catch (e) { /* best-effort */ }
+};

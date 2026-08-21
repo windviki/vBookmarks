@@ -38,6 +38,12 @@
   "announceV408Title": {
     "message": "v4.0.8の新機能"
   },
+  "announceV410Title": {
+    "message": "v4.1.0 の新機能"
+  },
+  "announceV410Text": {
+    "message": "v4.1.0 では、タブグループビューが追加されました。各ウィンドウのタブとタブグループをブックマークと一緒に管理できます。"
+  },
   "announceV408Text": {
     "message": "v4.0.8はファビコン強化版です。Chromeがまだキャッシュしていないブックマークの実サイトアイコンを自動的に取得します。"
   },
@@ -324,8 +330,8 @@
   "whatsNewChangelog": {
     "message": "変更履歴"
   },
-  "whatsNewFavicon": {
-    "message": "v$1$ はファビコン強化版です。Chromeがキャッシュしていないサイトアイコンは自動的に取得されるようになりました。",
+  "whatsNewTabGroups": {
+    "message": "v$1$ 新增了标签组视图：每个窗口的标签和标签组，与书签并列显示。",
     "placeholders": {
       "1": {
         "content": "$1"
@@ -342,6 +348,271 @@
         "content": "$2"
       }
     }
+  },
+  "viewTabGroups": {
+    "message": "タブグループ"
+  },
+  "optionShowTabGroupsView": {
+    "message": "タブグループビュータブを表示"
+  },
+  "tabGroupsViewEmpty": {
+    "message": "このウィンドウにタブはありません"
+  },
+  "tabGroupsToolbarRefresh": {
+    "message": "更新"
+  },
+  "tabGroupsCollapseAll": {
+    "message": "すべて折りたたむ"
+  },
+  "tabGroupsExpandAll": {
+    "message": "すべて展開"
+  },
+  "tabGroupsSummary": {
+    "message": "$tabs$ タブ · $groups$ グループ",
+    "placeholders": {
+      "tabs": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsGroupCount": {
+    "message": "$count$ タブ",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentTab": {
+    "message": "現在のタブ"
+  },
+  "tabGroupsAddBookmark": {
+    "message": "このタブをブックマーク"
+  },
+  "tabGroupsSaveFolder": {
+    "message": "タブグループをブックマークフォルダーとして保存"
+  },
+  "tabGroupsGroupSavedToFolder": {
+    "message": "$count$ タブを $folder$ に保存しました",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsBookmarksAdded": {
+    "message": "$count$ 件のブックマークを $folder$ に追加しました",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsSelectNewGroup": {
+    "message": "新しいタブグループ"
+  },
+  "tabGroupsSelectOpenInto": {
+    "message": "既存のタブグループで開く…"
+  },
+  "tabGroupsSelectSaveFolder": {
+    "message": "ブックマークフォルダーとして保存"
+  },
+  "tabGroupsSelectClose": {
+    "message": "閉じる"
+  },
+  "tabGroupsSelectSleep": {
+    "message": "スリープ"
+  },
+  "tabGroupsCopyMoveDialog": {
+    "message": "選択したタブは既にタブグループに属しています。コピー（新しい場所で開く）または移動（現在のグループから削除）しますか？"
+  },
+  "tabGroupsCopyMoveCopy": {
+    "message": "コピー"
+  },
+  "tabGroupsCopyMoveMove": {
+    "message": "移動"
+  },
+  "tabGroupsConfirmClose": {
+    "message": "$count$ タブを閉じますか？",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsConfirmSleep": {
+    "message": "$count$ タブをスリープしますか？",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "bookmarkFolderPickDialogTitle": {
+    "message": "ブックマークフォルダーに追加"
+  },
+  "bookmarkFolderNoFolders": {
+    "message": "ブックマークフォルダーがありません"
+  },
+  "tabGroupsSelectAddBookmarks": {
+    "message": "ブックマークフォルダーに追加…"
+  },
+  "paletteCmdGoTabGroups": {
+    "message": "タブグループビューへ移動"
+  },
+  "tabGroupsActivateGroup": {
+    "message": "グループへ移動"
+  },
+  "tabGroupsRenameGroup": {
+    "message": "タブグループ名を変更"
+  },
+  "tabGroupsRenameDialog": {
+    "message": "タブグループ名を変更"
+  },
+  "tabGroupsCloseGroup": {
+    "message": "タブグループを閉じる"
+  },
+  "tabGroupsSleepGroup": {
+    "message": "タブグループをスリープ"
+  },
+  "tabGroupsWakeGroup": {
+    "message": "タブグループを復元"
+  },
+  "tabGroupsActivateTab": {
+    "message": "タブへ移動"
+  },
+  "tabGroupsCollapseGroup": {
+    "message": "グループを折りたたむ"
+  },
+  "tabGroupsExpandGroup": {
+    "message": "グループを展開"
+  },
+  "tabGroupsMenuAddBookmark": {
+    "message": "タブをブックマーク"
+  },
+  "tabGroupsMenuSaveFolder": {
+    "message": "ブックマークフォルダーとして保存"
+  },
+  "tabGroupsSyncCollapse": {
+    "message": "与浏览器同步折叠"
+  },
+  "tabGroupsSyncCollapseHint": {
+    "message": "勾选后，在此视图中折叠或展开分组也会更新浏览器标签组。默认关闭，以便视图折叠保持本地状态。"
+  },
+  "tabGroupsColorStyle": {
+    "message": "タブグループの色スタイル"
+  },
+  "tabGroupsColorStyleHint": {
+    "message": "オフにすると色ドットのみ表示。エッジカラーバンドはグループの左端に色付きの帯を表示。カラーコネクタ線はグループのドットの下に色付きの線を表示し、行ごとに目盛りを付けてグループ全体を1つのツリーにまとめます。"
+  },
+  "tabGroupsColorStyleOff": {
+    "message": "オフ（色ドットのみ）"
+  },
+  "tabGroupsColorStyleEdge": {
+    "message": "エッジカラーバンド"
+  },
+  "tabGroupsColorStyleLine": {
+    "message": "カラーコネクタ線"
+  },
+  "tabGroupsBookmarked": {
+    "message": "ブックマーク済み"
+  },
+  "tabGroupsRemoveBookmark": {
+    "message": "ブックマークを削除"
+  },
+  "tabGroupsBookmarkRemoved": {
+    "message": "$count$ 件のブックマークを削除しました",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsPinned": {
+    "message": "固定タブ"
+  },
+  "tabGroupsDiscarded": {
+    "message": "スリープタブ"
+  },
+  "tabGroupsPinTab": {
+    "message": "タブを固定"
+  },
+  "tabGroupsUnpinTab": {
+    "message": "タブの固定を解除"
+  },
+  "tabGroupsSleepTab": {
+    "message": "タブをスリープ"
+  },
+  "tabGroupsWakeTab": {
+    "message": "タブを復元"
+  },
+  "tabGroupsOpenGroups": {
+    "message": "開いているタブグループ"
+  },
+  "tabGroupsClosedGroups": {
+    "message": "最近閉じたグループ"
+  },
+  "tabGroupsUngroupedTabs": {
+    "message": "グループ化されていないタブ"
+  },
+  "tabGroupsUngroupGroup": {
+    "message": "グループ解除"
+  },
+  "tabGroupsMoveNewWindow": {
+    "message": "新しいウィンドウに移動"
+  },
+  "tabGroupsWindow": {
+    "message": "ウィンドウ $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentWindow": {
+    "message": "現在のウィンドウ"
+  },
+  "tabGroupsReopenGroup": {
+    "message": "タブグループを再度開く"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "閉じたタブグループを削除"
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "ウィンドウを折りたたむ"
+  },
+  "tabGroupsExpandWindow": {
+    "message": "ウィンドウを展開"
+  },
+  "tabGroupsClearClosedGroups": {
+    "message": "すべてクリア"
+  },
+  "tabGroupsClosedOpenTab": {
+    "message": "新しいタブで開く"
+  },
+  "tabGroupsRemoveClosedTab": {
+    "message": "保存済みグループから削除"
+  },
+  "tabGroupsClosedTimeLabel": {
+    "message": "閉じた日時:"
+  },
+  "tabGroupsExpandedExpand": {
+    "message": "展開"
+  },
+  "tabGroupsExpandedCollapse": {
+    "message": "折りたたむ"
+  },
+  "optionTabGroupsClosedLimit": {
+    "message": "保持的已关闭标签页/组历史记录"
   },
   "deadProxyAdd": {
     "message": "リンク切れチェック用のプロキシサーバーを追加"

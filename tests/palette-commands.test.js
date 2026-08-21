@@ -86,9 +86,9 @@ afterEach(() => {
 });
 
 describe('constants', () => {
-    it('PALETTE_RESERVED holds 30 unique words, all slash-conformant', () => {
-        expect(PALETTE_RESERVED).toHaveLength(30);
-        expect(new Set(PALETTE_RESERVED).size).toBe(30);
+    it('PALETTE_RESERVED holds 31 unique words, all slash-conformant', () => {
+        expect(PALETTE_RESERVED).toHaveLength(31);
+        expect(new Set(PALETTE_RESERVED).size).toBe(31);
         for (const w of PALETTE_RESERVED)
             expect(SLASH_RE.test(w), w).toBe(true);
     });

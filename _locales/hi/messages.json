@@ -38,6 +38,12 @@
   "announceV408Title": {
     "message": "v4.0.8 में नया क्या है"
   },
+  "announceV410Title": {
+    "message": "v4.1.0 में नया क्या है"
+  },
+  "announceV410Text": {
+    "message": "v4.1.0 में टैब समूह दृश्य जोड़ा गया है: हर विंडो के टैब और टैब समूह, आपके बुकमार्क के साथ प्रबंधित करें।"
+  },
   "announceV408Text": {
     "message": "v4.0.8 एक favicon-वर्धित रिलीज़ है: Chrome द्वारा अभी तक कैश न किए गए बुकमार्क के लिए वास्तविक साइट आइकन स्वचालित रूप से लाए जाते हैं।"
   },
@@ -324,8 +330,8 @@
   "whatsNewChangelog": {
     "message": "परिवर्तन लॉग"
   },
-  "whatsNewFavicon": {
-    "message": "v$1$ फ़ेविकॉन-वर्धित रिलीज़ है: Chrome द्वारा कैश नहीं किए गए साइट आइकन अब स्वचालित रूप से प्राप्त किए जाते हैं।",
+  "whatsNewTabGroups": {
+    "message": "v$1$ में टैब समूह दृश्य जोड़ा गया: हर विंडो के टैब और टैब समूह, आपके बुकमार्क के बगल में।",
     "placeholders": {
       "1": {
         "content": "$1"
@@ -342,6 +348,271 @@
         "content": "$2"
       }
     }
+  },
+  "viewTabGroups": {
+    "message": "टैब समूह"
+  },
+  "optionShowTabGroupsView": {
+    "message": "टैब समूह दृश्य टैब दिखाएँ"
+  },
+  "tabGroupsViewEmpty": {
+    "message": "इस विंडो में कोई टैब नहीं"
+  },
+  "tabGroupsToolbarRefresh": {
+    "message": "रीफ़्रेश करें"
+  },
+  "tabGroupsCollapseAll": {
+    "message": "सभी संक्षिप्त करें"
+  },
+  "tabGroupsExpandAll": {
+    "message": "सभी विस्तारित करें"
+  },
+  "tabGroupsSummary": {
+    "message": "$tabs$ टैब · $groups$ समूह",
+    "placeholders": {
+      "tabs": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsGroupCount": {
+    "message": "$count$ टैब",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentTab": {
+    "message": "वर्तमान टैब"
+  },
+  "tabGroupsAddBookmark": {
+    "message": "इस टैब को बुकमार्क करें"
+  },
+  "tabGroupsSaveFolder": {
+    "message": "टैब समूह को बुकमार्क फ़ोल्डर के रूप में सहेजें"
+  },
+  "tabGroupsGroupSavedToFolder": {
+    "message": "$count$ टैब $folder$ में सहेजे गए",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsBookmarksAdded": {
+    "message": "$count$ बुकमार्क $folder$ में जोड़े गए",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsSelectNewGroup": {
+    "message": "नया टैब समूह"
+  },
+  "tabGroupsSelectOpenInto": {
+    "message": "मौजूदा टैब समूह में खोलें…"
+  },
+  "tabGroupsSelectSaveFolder": {
+    "message": "बुकमार्क फ़ोल्डर के रूप में सहेजें"
+  },
+  "tabGroupsSelectClose": {
+    "message": "बंद करें"
+  },
+  "tabGroupsSelectSleep": {
+    "message": "स्लीप"
+  },
+  "tabGroupsCopyMoveDialog": {
+    "message": "चयनित टैब पहले से ही एक टैब समूह से संबंधित हैं। उन्हें कॉपी करें (नई जगह में खोलें) या स्थानांतरित करें (वर्तमान समूह से हटाएँ)?"
+  },
+  "tabGroupsCopyMoveCopy": {
+    "message": "कॉपी करें"
+  },
+  "tabGroupsCopyMoveMove": {
+    "message": "स्थानांतरित करें"
+  },
+  "tabGroupsConfirmClose": {
+    "message": "$count$ टैब बंद करें?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsConfirmSleep": {
+    "message": "$count$ टैब स्लीप करें?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "bookmarkFolderPickDialogTitle": {
+    "message": "बुकमार्क फ़ोल्डर में जोड़ें"
+  },
+  "bookmarkFolderNoFolders": {
+    "message": "कोई बुकमार्क फ़ोल्डर नहीं"
+  },
+  "tabGroupsSelectAddBookmarks": {
+    "message": "बुकमार्क फ़ोल्डर में जोड़ें…"
+  },
+  "paletteCmdGoTabGroups": {
+    "message": "टैब समूह दृश्य पर जाएँ"
+  },
+  "tabGroupsActivateGroup": {
+    "message": "टैब समूह पर जाएं"
+  },
+  "tabGroupsRenameGroup": {
+    "message": "टैब समूह का नाम बदलें"
+  },
+  "tabGroupsRenameDialog": {
+    "message": "टैब समूह का नाम बदलें"
+  },
+  "tabGroupsCloseGroup": {
+    "message": "टैब समूह बंद करें"
+  },
+  "tabGroupsSleepGroup": {
+    "message": "टैब समूह स्लीप करें"
+  },
+  "tabGroupsWakeGroup": {
+    "message": "टैब समूह जगाएं"
+  },
+  "tabGroupsActivateTab": {
+    "message": "टैब पर जाएं"
+  },
+  "tabGroupsCollapseGroup": {
+    "message": "समूह संक्षिप्त करें"
+  },
+  "tabGroupsExpandGroup": {
+    "message": "समूह विस्तारित करें"
+  },
+  "tabGroupsMenuAddBookmark": {
+    "message": "टैब बुकमार्क करें"
+  },
+  "tabGroupsMenuSaveFolder": {
+    "message": "बुकमार्क फ़ोल्डर के रूप में सहेजें"
+  },
+  "tabGroupsSyncCollapse": {
+    "message": "ब्राउज़र के साथ संकुचन सिंक करें"
+  },
+  "tabGroupsSyncCollapseHint": {
+    "message": "चेक करने पर, इस दृश्य में किसी समूह को संकुचित या विस्तारित करने से ब्राउज़र टैब समूह भी अपडेट होता है। डिफ़ॉल्ट रूप से बंद रहता है ताकि दृश्य का संकुचन स्थानीय रहे।"
+  },
+  "tabGroupsColorStyle": {
+    "message": "टैब समूह रंग शैली"
+  },
+  "tabGroupsColorStyleHint": {
+    "message": "बंद करने पर केवल रंग बिंदु दिखता है। एज रंग पट्टी समूह के बाएं किनारे पर रंगीन पट्टी खींचती है। रंग कनेक्टर रेखा समूह के बिंदु के नीचे प्रति पंक्ति एक टिक के साथ रंगीन रेखा खींचती है, पूरे समूह को एक पेड़ में जोड़ती है।"
+  },
+  "tabGroupsColorStyleOff": {
+    "message": "बंद (केवल रंग बिंदु)"
+  },
+  "tabGroupsColorStyleEdge": {
+    "message": "एज रंग पट्टी"
+  },
+  "tabGroupsColorStyleLine": {
+    "message": "रंग कनेक्टर रेखा"
+  },
+  "tabGroupsBookmarked": {
+    "message": "बुकमार्क किया गया"
+  },
+  "tabGroupsRemoveBookmark": {
+    "message": "बुकमार्क हटाएं"
+  },
+  "tabGroupsBookmarkRemoved": {
+    "message": "$count$ बुकमार्क हटाए गए",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsPinned": {
+    "message": "पिन किया गया टैब"
+  },
+  "tabGroupsDiscarded": {
+    "message": "स्लीपिंग टैब"
+  },
+  "tabGroupsPinTab": {
+    "message": "टैब पिन करें"
+  },
+  "tabGroupsUnpinTab": {
+    "message": "टैब अनपिन करें"
+  },
+  "tabGroupsSleepTab": {
+    "message": "टैब सोएं"
+  },
+  "tabGroupsWakeTab": {
+    "message": "टैब जगाएं"
+  },
+  "tabGroupsOpenGroups": {
+    "message": "खुले टैब समूह"
+  },
+  "tabGroupsClosedGroups": {
+    "message": "हाल ही में बंद"
+  },
+  "tabGroupsUngroupedTabs": {
+    "message": "असमूहीकृत टैब"
+  },
+  "tabGroupsUngroupGroup": {
+    "message": "टैब असमूहीकृत करें"
+  },
+  "tabGroupsMoveNewWindow": {
+    "message": "समूह को नई विंडो में ले जाएँ"
+  },
+  "tabGroupsWindow": {
+    "message": "विंडो $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentWindow": {
+    "message": "वर्तमान विंडो"
+  },
+  "tabGroupsReopenGroup": {
+    "message": "टैब समूह फिर से खोलें"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "बंद टैब समूह हटाएं"
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "विंडो संक्षिप्त करें"
+  },
+  "tabGroupsExpandWindow": {
+    "message": "विंडो विस्तृत करें"
+  },
+  "tabGroupsClearClosedGroups": {
+    "message": "सभी साफ़ करें"
+  },
+  "tabGroupsClosedOpenTab": {
+    "message": "नए टैब में खोलें"
+  },
+  "tabGroupsRemoveClosedTab": {
+    "message": "सहेजे गए समूह से हटाएँ"
+  },
+  "tabGroupsClosedTimeLabel": {
+    "message": "बंद:"
+  },
+  "tabGroupsExpandedExpand": {
+    "message": "विस्तार करें"
+  },
+  "tabGroupsExpandedCollapse": {
+    "message": "संक्षिप्त करें"
+  },
+  "optionTabGroupsClosedLimit": {
+    "message": "रखने के लिए बंद टैब/समूह इतिहास"
   },
   "deadProxyAdd": {
     "message": "डेड-लिंक जाँच के लिए प्रॉक्सी सर्वर जोड़ें"

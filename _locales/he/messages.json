@@ -38,6 +38,12 @@
   "announceV408Title": {
     "message": "מה חדש ב-v4.0.8"
   },
+  "announceV410Title": {
+    "message": "מה חדש ב-4.1.0"
+  },
+  "announceV410Text": {
+    "message": "v4.1.0 מוסיף תצוגת קבוצות כרטיסיות: הכרטיסיות וקבוצות הכרטיסיות של כל חלון, מנוהלות לצד הסימניות שלך."
+  },
   "announceV408Text": {
     "message": "v4.0.8 היא המהדורה עם שיפור ה-favicon: סמלי אתרים אמיתיים נשלפים אוטומטית עבור סימניות ש-Chrome טרם שמר במטמון."
   },
@@ -324,8 +330,8 @@
   "whatsNewChangelog": {
     "message": "יומן שינויים"
   },
-  "whatsNewFavicon": {
-    "message": "v$1$ היא הגרסה המשופרת ל-favicon: אייקוני אתרים שלא נשמרו במטמון על ידי Chrome מובאים כעת אוטומטית.",
+  "whatsNewTabGroups": {
+    "message": "v$1$ מוסיף את תצוגת קבוצות הכרטיסיות: כל הכרטיסיות וקבוצות הכרטיסיות של כל חלון, לצד הסימניות שלך.",
     "placeholders": {
       "1": {
         "content": "$1"
@@ -342,6 +348,271 @@
         "content": "$2"
       }
     }
+  },
+  "viewTabGroups": {
+    "message": "קבוצות טאבים"
+  },
+  "optionShowTabGroupsView": {
+    "message": "הצג את תצוגת קבוצות הטאבים"
+  },
+  "tabGroupsViewEmpty": {
+    "message": "אין טאבים בחלון זה"
+  },
+  "tabGroupsToolbarRefresh": {
+    "message": "רענן"
+  },
+  "tabGroupsCollapseAll": {
+    "message": "כווץ הכל"
+  },
+  "tabGroupsExpandAll": {
+    "message": "הרחב הכל"
+  },
+  "tabGroupsSummary": {
+    "message": "$tabs$ טאבים · $groups$ קבוצות",
+    "placeholders": {
+      "tabs": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsGroupCount": {
+    "message": "$count$ טאבים",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentTab": {
+    "message": "הטאב הנוכחי"
+  },
+  "tabGroupsAddBookmark": {
+    "message": "הוסף טאב זה לסימניות"
+  },
+  "tabGroupsSaveFolder": {
+    "message": "שמור קבוצת טאבים כתיקיית סימניות"
+  },
+  "tabGroupsGroupSavedToFolder": {
+    "message": "נשמרו $count$ טאבים אל $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsBookmarksAdded": {
+    "message": "נוספו $count$ סימניות אל $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsSelectNewGroup": {
+    "message": "קבוצת טאבים חדשה"
+  },
+  "tabGroupsSelectOpenInto": {
+    "message": "פתח בקבוצת טאבים קיימת…"
+  },
+  "tabGroupsSelectSaveFolder": {
+    "message": "שמור כתיקיית סימניות"
+  },
+  "tabGroupsSelectClose": {
+    "message": "סגור"
+  },
+  "tabGroupsSelectSleep": {
+    "message": "הרדם"
+  },
+  "tabGroupsCopyMoveDialog": {
+    "message": "הטאבים שנבחרו כבר שייכים לקבוצת טאבים. להעתיק אותם (לפתוח במקום חדש) או להעביר אותם (להסיר מהקבוצה הנוכחית)?"
+  },
+  "tabGroupsCopyMoveCopy": {
+    "message": "העתק"
+  },
+  "tabGroupsCopyMoveMove": {
+    "message": "העבר"
+  },
+  "tabGroupsConfirmClose": {
+    "message": "לסגור $count$ טאבים?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsConfirmSleep": {
+    "message": "להרדים $count$ טאבים?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "bookmarkFolderPickDialogTitle": {
+    "message": "הוסף לתיקיית סימניות"
+  },
+  "bookmarkFolderNoFolders": {
+    "message": "אין תיקיות סימניות"
+  },
+  "tabGroupsSelectAddBookmarks": {
+    "message": "הוסף לתיקיית סימניות…"
+  },
+  "paletteCmdGoTabGroups": {
+    "message": "עבור לתצוגת קבוצות הטאבים"
+  },
+  "tabGroupsActivateGroup": {
+    "message": "עבור לקבוצת טאבים"
+  },
+  "tabGroupsRenameGroup": {
+    "message": "שנה שם קבוצת טאבים"
+  },
+  "tabGroupsRenameDialog": {
+    "message": "שנה שם קבוצת טאבים"
+  },
+  "tabGroupsCloseGroup": {
+    "message": "סגור קבוצת טאבים"
+  },
+  "tabGroupsSleepGroup": {
+    "message": "הרדם קבוצת טאבים"
+  },
+  "tabGroupsWakeGroup": {
+    "message": "הפעל קבוצת טאבים"
+  },
+  "tabGroupsActivateTab": {
+    "message": "עבור לטאב"
+  },
+  "tabGroupsCollapseGroup": {
+    "message": "כווץ קבוצה"
+  },
+  "tabGroupsExpandGroup": {
+    "message": "הרחב קבוצה"
+  },
+  "tabGroupsMenuAddBookmark": {
+    "message": "הוסף טאב לסימניות"
+  },
+  "tabGroupsMenuSaveFolder": {
+    "message": "שמור כתיקיית סימניות"
+  },
+  "tabGroupsSyncCollapse": {
+    "message": "סנכרון קיפול עם הדפדפן"
+  },
+  "tabGroupsSyncCollapseHint": {
+    "message": "כאשר מסומן, קיפול או הרחבה של קבוצה בתצוגה זו מעדכן גם את קבוצת הטאבים בדפדפן. כבוי כברירת מחדל כך שהקיפול בתצוגה נשאר מקומי."
+  },
+  "tabGroupsColorStyle": {
+    "message": "סגנון צבע קבוצת טאבים"
+  },
+  "tabGroupsColorStyleHint": {
+    "message": "כבוי מציג רק נקודת צבע. פס צבע בקצה מצייר רצועה צבעונית לאורך הקצה השמאלי של הקבוצה. קו מחבר צבעוני מצייר קו צבעוני מתחת לנקודת הקבוצה עם סימון לכל שורה, המקשר את כל הקבוצה לעץ אחד."
+  },
+  "tabGroupsColorStyleOff": {
+    "message": "כבוי (נקודת צבע בלבד)"
+  },
+  "tabGroupsColorStyleEdge": {
+    "message": "פס צבע בקצה"
+  },
+  "tabGroupsColorStyleLine": {
+    "message": "קו מחבר צבעוני"
+  },
+  "tabGroupsBookmarked": {
+    "message": "סומן"
+  },
+  "tabGroupsRemoveBookmark": {
+    "message": "הסר סימנייה"
+  },
+  "tabGroupsBookmarkRemoved": {
+    "message": "הוסרו $count$ סימניות",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsPinned": {
+    "message": "לשונית מוצמדת"
+  },
+  "tabGroupsDiscarded": {
+    "message": "לשונית רדומה"
+  },
+  "tabGroupsPinTab": {
+    "message": "הצמד לשונית"
+  },
+  "tabGroupsUnpinTab": {
+    "message": "בטל הצמדת לשונית"
+  },
+  "tabGroupsSleepTab": {
+    "message": "הרדם טאב"
+  },
+  "tabGroupsWakeTab": {
+    "message": "הפעל טאב"
+  },
+  "tabGroupsOpenGroups": {
+    "message": "קבוצות לשוניות פתוחות"
+  },
+  "tabGroupsClosedGroups": {
+    "message": "נסגרו לאחרונה"
+  },
+  "tabGroupsUngroupedTabs": {
+    "message": "לשוניות ללא קבוצה"
+  },
+  "tabGroupsUngroupGroup": {
+    "message": "בטל קיבוץ"
+  },
+  "tabGroupsMoveNewWindow": {
+    "message": "העבר קבוצה לחלון חדש"
+  },
+  "tabGroupsWindow": {
+    "message": "חלון $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCurrentWindow": {
+    "message": "חלון נוכחי"
+  },
+  "tabGroupsReopenGroup": {
+    "message": "פתח מחדש קבוצת כרטיסיות"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "מחק קבוצת כרטיסיות סגורה"
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "כווץ חלון"
+  },
+  "tabGroupsExpandWindow": {
+    "message": "הרחב חלון"
+  },
+  "tabGroupsClearClosedGroups": {
+    "message": "נקה הכל"
+  },
+  "tabGroupsClosedOpenTab": {
+    "message": "פתח בכרטיסייה חדשה"
+  },
+  "tabGroupsRemoveClosedTab": {
+    "message": "הסר מהקבוצה השמורה"
+  },
+  "tabGroupsClosedTimeLabel": {
+    "message": "נסגר:"
+  },
+  "tabGroupsExpandedExpand": {
+    "message": "הרחב"
+  },
+  "tabGroupsExpandedCollapse": {
+    "message": "כווץ"
+  },
+  "optionTabGroupsClosedLimit": {
+    "message": "היסטוריית כרטיסיות/קבוצות סגורות לשמירה"
   },
   "deadProxyAdd": {
     "message": "הוסף שרת פרוקסי לבדיקות קישורים שבורים"
