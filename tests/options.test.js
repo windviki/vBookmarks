@@ -8,6 +8,7 @@ import fs from 'node:fs';
 // nothing is copied from the sources under test.
 const storeSource = fs.readFileSync(new URL('../src/store.js', import.meta.url), 'utf8');
 const sortUtilsSource = fs.readFileSync(new URL('../src/sort-utils.js', import.meta.url), 'utf8');
+const storageUsageSource = fs.readFileSync(new URL('../src/storage-usage.js', import.meta.url), 'utf8');
 const optionsSource = fs.readFileSync(new URL('../src/options.js', import.meta.url), 'utf8');
 const optionsHtml = fs.readFileSync(new URL('../pages/options.html', import.meta.url), 'utf8');
 
@@ -126,6 +127,10 @@ const createSandbox = ({
     // 1b. real sort-utils.js → window.VBMSort (options.html loads it as a
     // classic script before options.js, same recipe as dialogs.test.js)
     new Function('window', sortUtilsSource)(window);
+
+    // 1c. real storage-usage.js → window.VBMUsage (options.html loads it
+    // right after sort-utils.js; the storage-usage bar reads its predicates)
+    new Function('window', storageUsageSource)(window);
 
     // 2. real options.js with the remaining page globals stubbed
     const location = { reload: vi.fn() };

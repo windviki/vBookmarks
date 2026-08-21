@@ -323,13 +323,12 @@ const $ = id => document.getElementById(id);
         // The storage-usage bar (below the button) refreshes after a clear so
         // the freed space is immediately visible, and tracks icon fetches
         // live while the page is open (chrome.storage.onChanged below).
-        const isFavKey = k => k === 'vbmFaviconIdx' || k.startsWith('vbmFavicon:');
-        // Bookmark-derived local data: scan cache / live journal / dead marks
-        // and their timestamps / visit stats. The bookmark tree itself lives
-        // in Chrome's bookmarks store, not in storage.local — the bar label
-        // says "scan/mark data" to match (audit O4).
-        const isBookmarkDataKey = k => k === 'deadLastScan' || k === 'vbmDeadScan'
-            || k === 'deadMarks' || k === 'deadMarkTimes' || k === 'visitStats';
+        // Categorization predicates live in src/storage-usage.js (classic
+        // script, loaded by options.html above) so the census test drives
+        // the same source of truth — "other" is the catch-all that keeps
+        // the totals exact when new keys appear.
+        const isFavKey = window.VBMUsage.isIconKey;
+        const isBookmarkDataKey = window.VBMUsage.isBookmarkDataKey;
         const storageUsageCats = [
             { id: 'icon', label: () => __m('storageUsageIcon') },
             { id: 'bookmarks', label: () => __m('storageUsageBookmarks') },

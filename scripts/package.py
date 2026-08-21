@@ -45,6 +45,7 @@ JS_FILES = [
     'src/escape.js',
     'src/list-focus.js',
     'src/sort-utils.js',
+    'src/storage-usage.js',
     'src/neat.js',
     'src/popup.js',
     'src/options.js',

@@ -201,6 +201,10 @@
         // The sync-area key list, exposed so the options page's settings
         // backup exports exactly these keys from chrome.storage.sync
         syncKeys: SYNC_KEYS,
+        // The local-area settings key list, exposed read-only for the
+        // storage-usage census (tests/storage-usage.test.js): a new
+        // KNOWN_KEYS member without a segment decision fails that suite.
+        knownKeys: Object.freeze(KNOWN_KEYS.slice()),
         // Force-flush the debounced pending writes NOW (drag-end persistence:
         // popup pagehide is not guaranteed on close, so a width/height drag
         // ending must not rely on it to reach storage).
