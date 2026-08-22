@@ -65,13 +65,18 @@ const SEED = `
         const page = await browser.newPage();
         watch(page, 'tabgroups-view');
         await page.setViewport({ width: 400, height: 640 });
-        await page.goto(`chrome-extension://${extId}/pages/popup.html`, { waitUntil: 'networkidle0' });
+        // waitUntil 'load', never 'networkidle0' (harness gotcha ③): the
+        // extension's own background fetch chains (announce feed, favicon
+        // enrichment) can stay in flight past the navigation timeout on hosts
+        // where the sandbox actually has outbound network.
+        await page.goto(`chrome-extension://${extId}/pages/popup.html`, { waitUntil: 'load' });
+        await sleep(1200);
         await page.evaluate(() => chrome.storage.local.set({
             currentVersion: chrome.runtime.getManifest().version,
             donationFactor: 1,
             donationKey: 30
         }));
-        await page.reload({ waitUntil: 'networkidle0' });
+        await page.reload({ waitUntil: 'load' });
         await sleep(1000);
         return page;
     };
@@ -388,6 +393,13 @@ const SEED = `
     // (.row-sub) takes over — the same container-query contract the dead view
     // uses. Nothing may overflow horizontally in either width.
     const widthProbe = async (w, shot) => {
+        // The popup body defaults to a fixed 320px (css/neat.css) and only a
+        // stored popupWidth widens it — resizing the VIEWPORT alone leaves the
+        // container at 320 and the ≥480px container query never fires. Persist
+        // the width and reload so the probe exercises the real wide layout.
+        await page.evaluate(width => chrome.storage.local.set({ popupWidth: String(width) }), w);
+        await page.reload({ waitUntil: 'load' });
+        await sleep(900);
         await page.setViewport({ width: w, height: 640 });
         await sleep(700);
         const res = await page.evaluate(() => {

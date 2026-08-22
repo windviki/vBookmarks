@@ -171,6 +171,12 @@
 
 验证：`verify-menu-extreme` 全量重跑结果记录在提交信息。
 
+顺带发现的环境问题（已处理/已记录）：
+
+- smoke.js 的 favicon 画廊段在本机有外网的沙箱里被真实 enrichment 抢跑（expected 1 card, got 3）——已在 smoke 起始处关闭 `faviconEnrich`/`faviconEnrichAgg` 使门禁确定（`cdb7d7d`）。
+- 截图套件仍用 `networkidle0`（与 smoke 的教训相反，见 AGENTS 门禁注意事项③），在有外网但不畅的主机上 30s 导航超时——本次只修了 `shots-tabgroups-view.js`（本特性覆盖套件）；其余 shots-*.js 同待改（记录，未动）。
+- 同套件的宽窄一致性探针只能验窄态：popup body 默认固定 320px（css/neat.css），不调 `popupWidth` 存储时 640px 视口下容器仍是 320，`@container (min-width:480px)` 永不触发——宽态断言在基线上同样失败（既有）。已修：探针先写 `popupWidth` 再 reload，宽窄两态都是真布局。
+
 验证：`npm run test:run` 2638 例全绿（新增 18 例：跨窗口聚焦×3、滚动定位×2、Delete 守卫×2、组头菜单×3、meta×4+prune、文件夹选择器×2、过滤器×8、SW 降级×5——部分共用套件）；`npm run lint` 干净；`i18n.py verify` 0 错误；Docker 全量门禁（smoke + keyboard 153 断言 + scrollbar 752 断言）单独记录于提交时。
 
 设计文档侧的行为变化已在 `docs/tab-groups-view-design.md` §16 登记。
