@@ -1146,7 +1146,11 @@ export function initViewManager(ctx = {}) {
     // Rebuilt from every tree regeneration (neat.js hooks it into tree-view's
     // generateTree); list rows read it synchronously through pathOf.
     const buildPathMap = tree => {
-        pathMap = computePathMap(tree);
+        // H5: computePathMap returns { paths, ids } — the ids feed
+        // visitStats.prune in neat.js's onTreeGenerated without a second walk.
+        const result = computePathMap(tree);
+        pathMap = result.paths;
+        return result;
     };
     const pathOf = id => pathMap[id] || '';
 

@@ -50,15 +50,22 @@ export const TREE_INDENT = 24;
 // for a folder as "where it sits". Pure: no chrome/DOM access, so vitest
 // exercises it directly.
 export const buildPathMap = tree => {
+    // H5: one traversal produces both the id → folder-path map and the set of
+    // live bookmark ids (previously neat.js walked the tree a second time to
+    // collect ids for visitStats.prune). Pure: no chrome/DOM access.
     const paths = {};
+    const ids = new Set();
     const walk = (nodes, ancestors) => {
         if (!nodes)
             return;
         for (let i = 0, l = nodes.length; i < l; i++) {
             const node = nodes[i];
             // the invisible root has no parentId and contributes no title
-            if (typeof node.parentId !== 'undefined')
+            if (typeof node.parentId !== 'undefined') {
                 paths[node.id] = ancestors.join(' / ');
+                if (node.url)
+                    ids.add(node.id);
+            }
             if (node.children) {
                 const title = (node.title || '').trim();
                 const next = (typeof node.parentId !== 'undefined' && title)
@@ -69,7 +76,7 @@ export const buildPathMap = tree => {
         }
     };
     walk(tree || [], []);
-    return paths;
+    return { paths, ids };
 };
 
 // v4 task-2 (docs/plan-4.0.0/v4task-2-list.md §3.3): relative-time buckets for the

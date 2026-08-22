@@ -1335,7 +1335,7 @@ describe('tab badges', () => {
 describe('shared parent-path map (§3.6)', () => {
     it('pathOf reads the map rebuilt by buildPathMap', () => {
         const { views } = setup({});
-        views.buildPathMap([{
+        const result = views.buildPathMap([{
             id: '0', title: '', children: [
                 {
                     id: '1', parentId: '0', title: 'Folder A', children: [
@@ -1349,6 +1349,10 @@ describe('shared parent-path map (§3.6)', () => {
         expect(views.pathOf('1')).toBe('');
         expect(views.pathOf('2')).toBe('');
         expect(views.pathOf('unknown')).toBe('');
+        // H5: the same call returns the bookmark ids for visitStats.prune
+        expect(result.ids.has('11')).toBe(true);
+        expect(result.ids.has('2')).toBe(true);
+        expect(result.ids.has('1')).toBe(false);
     });
 });
 

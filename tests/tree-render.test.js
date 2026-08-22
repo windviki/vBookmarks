@@ -591,7 +591,7 @@ describe('relTimeLabel (shared bucket → label helper)', () => {
 
 describe('buildPathMap (v4 task-2 §3.6)', () => {
     it('maps each node to its ancestor folder path, skipping the invisible root and untitled folders', () => {
-        const map = buildPathMap([{
+        const { paths } = buildPathMap([{
             id: '0', title: '', children: [
                 {
                     id: '1', parentId: '0', title: 'Folder A', children: [
@@ -611,18 +611,39 @@ describe('buildPathMap (v4 task-2 §3.6)', () => {
                 { id: '4', parentId: '0', title: 'Top', url: 'https://t.com/' }
             ]
         }]);
-        expect(map['0']).toBeUndefined(); // invisible root contributes nothing
-        expect(map['1']).toBe(''); // sits at the root
-        expect(map['11']).toBe('Folder A');
-        expect(map['21']).toBe('Folder A'); // untitled folder adds no segment
-        expect(map['31']).toBe('Folder A / Sub B');
-        expect(map['4']).toBe('');
+        expect(paths['0']).toBeUndefined(); // invisible root contributes nothing
+        expect(paths['1']).toBe(''); // sits at the root
+        expect(paths['11']).toBe('Folder A');
+        expect(paths['21']).toBe('Folder A'); // untitled folder adds no segment
+        expect(paths['31']).toBe('Folder A / Sub B');
+        expect(paths['4']).toBe('');
+    });
+
+    it('collects the live bookmark ids in the same walk (H5: feeds visitStats.prune)', () => {
+        const { ids } = buildPathMap([{
+            id: '0', title: '', children: [
+                {
+                    id: '1', parentId: '0', title: 'Folder A', children: [
+                        { id: '11', parentId: '1', title: 'GitHub', url: 'https://x.com/' },
+                        { id: '12', parentId: '1', title: 'Empty' }
+                    ]
+                },
+                { id: '2', parentId: '0', title: 'Top', url: 'https://t.com/' }
+            ]
+        }]);
+        expect(ids.has('11')).toBe(true);
+        expect(ids.has('2')).toBe(true);
+        expect(ids.has('1')).toBe(false); // folders are not bookmark ids
+        expect(ids.has('12')).toBe(false); // url-less nodes are not bookmark ids
+        expect(ids.size).toBe(2);
     });
 
     it('handles empty input', () => {
-        expect(buildPathMap(null)).toEqual({});
-        expect(buildPathMap([])).toEqual({});
-        expect(buildPathMap([{ id: '0', title: '' }])).toEqual({});
+        for (const input of [null, [], [{ id: '0', title: '' }]]) {
+            const { paths, ids } = buildPathMap(input);
+            expect(paths).toEqual({});
+            expect(ids.size).toBe(0);
+        }
     });
 });
 

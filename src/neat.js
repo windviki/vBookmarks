@@ -655,18 +655,10 @@ import { shouldHighlightUnsynced, shouldRememberState } from './settings.js';
         // inits below — the indirection stays a no-op until then);
         // slice D §5.4: and prunes visit stats of deleted bookmarks
         onTreeGenerated: t => {
-            views.buildPathMap(t);
+            // H5: buildPathMap's single traversal already collects the live
+            // bookmark ids — no second walk for visitStats.prune.
+            const { ids } = views.buildPathMap(t);
             deadOverlayRefresh();
-            const ids = new Set();
-            const collect = nodes => {
-                for (let i = 0, l = (nodes || []).length; i < l; i++) {
-                    if (!nodes[i].url)
-                        collect(nodes[i].children);
-                    else
-                        ids.add(nodes[i].id);
-                }
-            };
-            collect(t);
             visitStats.prune(ids);
         },
         // slice D: page-side visit collection — bookmarkHandler funnels
