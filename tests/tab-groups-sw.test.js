@@ -90,6 +90,8 @@ const makeChrome = ({ noTabGroups = false } = {}) => {
     c.windows = {
         createCalls: [],
         removeCalls: [],
+        staleWindows: new Set(),
+        getCalls: [],
         create(props, cb) {
             this.createCalls.push(props);
             c.runtime.lastError = null;
@@ -101,6 +103,19 @@ const makeChrome = ({ noTabGroups = false } = {}) => {
             c.runtime.lastError = null;
             if (cb)
                 cb();
+        },
+        get(id, cb) {
+            this.getCalls.push(id);
+            if (this.staleWindows.has(id)) {
+                c.runtime.lastError = { message: 'No window with id' };
+                if (cb)
+                    cb(null);
+                c.runtime.lastError = null;
+                return;
+            }
+            c.runtime.lastError = null;
+            if (cb)
+                cb({ id });
         }
     };
     // Feature-detect surface: without the tab-group APIs the opener degrades
@@ -158,6 +173,24 @@ describe('tab-groups SW opener', () => {
         expect(calls.created[1].active).toBe(false);
         expect(calls.grouped).toEqual([{ tabIds: ['100', '101'] }]);
         expect(calls.updated).toEqual([['group-1', { title: 'Dev', color: 'blue' }]]);
+    });
+
+    it('a windowId is validated once and passed to every create (restore into the home window)', () => {
+        const { chrome, calls } = makeChrome();
+        globalThis.chrome = chrome;
+        createTabGroupOpener().openNewGroup(['http://a/', 'http://b/'], 'Dev', 'blue', 7);
+        expect(chrome.windows.getCalls).toEqual([7]);
+        expect(calls.created.every(p => p.windowId === 7)).toBe(true);
+    });
+
+    it('a stale windowId degrades to Chrome\'s default window instead of skipping every create', () => {
+        const { chrome, calls } = makeChrome();
+        chrome.windows.staleWindows.add(99);
+        globalThis.chrome = chrome;
+        createTabGroupOpener().openNewGroup(['http://a/', 'http://b/'], 'Dev', 'blue', 99);
+        expect(calls.created).toHaveLength(2);
+        expect(calls.created.every(p => !('windowId' in p))).toBe(true);
+        expect(calls.grouped).toHaveLength(1);
     });
 
     it('defaults the color to grey when none is passed and keeps a blank title legal', () => {

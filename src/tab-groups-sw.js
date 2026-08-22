@@ -67,7 +67,11 @@ export function createTabGroupOpener() {
     };
 
     // Open `urls` as one new tab group titled `title` and colored `color`.
-    const openNewGroup = (urls, title, color) => {
+    // `windowId` (optional, 4.1.0 UX pass D): restore/reopen requests carry
+    // the window the tabs lived in; a stale id (window since closed) falls
+    // back to the window Chrome picks — the reopen must never silently fail
+    // because its home is gone.
+    const openNewGroup = (urls, title, color, windowId) => {
         if (!urls || !urls.length)
             return;
         if (!canGroup()) {
@@ -95,9 +99,27 @@ export function createTabGroupOpener() {
                 });
             });
         };
-        chrome.tabs.create({ url: urls[0], active: true }, onCreated);
-        for (let i = 1; i < urls.length; i++)
-            chrome.tabs.create({ url: urls[i], active: false }, onCreated);
+        const create = (url, active, targetWin) => {
+            if (targetWin !== undefined && targetWin !== null)
+                chrome.tabs.create({ url, active, windowId: targetWin }, onCreated);
+            else
+                chrome.tabs.create({ url, active }, onCreated);
+        };
+        const startOpen = targetWin => {
+            create(urls[0], true, targetWin);
+            for (let i = 1; i < urls.length; i++)
+                create(urls[i], false, targetWin);
+        };
+        // A stale windowId (window closed since the record was written) must
+        // degrade to Chrome's default window, not skip every create —
+        // validate once up front.
+        if (windowId !== undefined && windowId !== null && chrome.windows && chrome.windows.get) {
+            chrome.windows.get(windowId, win => {
+                startOpen(chrome.runtime.lastError || !win ? null : windowId);
+            });
+            return;
+        }
+        startOpen(windowId);
     };
 
     // Open `urls` as tabs added to the existing group `groupId`. Tabs can
@@ -393,7 +415,7 @@ export function createTabGroupOpener() {
         if (!msg || !msg.type)
             return;
         if (msg.type === TAB_GROUP_MSG.openNew)
-            openNewGroup(msg.urls, msg.title, msg.color);
+            openNewGroup(msg.urls, msg.title, msg.color, msg.windowId);
         else if (msg.type === TAB_GROUP_MSG.openInto)
             openIntoGroup(msg.urls, msg.groupId);
         else if (msg.type === TAB_GROUP_MSG.tabsNewGroup) {
