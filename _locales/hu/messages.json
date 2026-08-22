@@ -2442,7 +2442,7 @@
     "message": "Könyvjelzőzés és előkészítés"
   },
   "tabgroupStageAll": {
-    "message": "Teljes csoport könyvjelzőzése és előkészítése"
+    "message": "Könyvjelző és csoportosítás"
   },
   "tabgroupStageConfirm": {
     "message": "Könyvjelzőzi és előkészíti $n$ lapot?",

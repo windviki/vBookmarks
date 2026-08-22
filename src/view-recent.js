@@ -1382,6 +1382,41 @@ export function initViewRecent(ctx = {}) {
     });
     $list.addEventListener('auxclick', treeView.bookmarkHandler);
     $list.addEventListener('keydown', e => {
+        // Head keys (dupes group-head protocol): ←/→/Space/Enter fold a
+        // group/bucket head, or the recently-added section head, when the
+        // head itself holds focus (heads are tabindex=-1 rows of the walk).
+        const headTarget = e.target && e.target.closest
+            ? (e.target.closest('.staging-group-head') || e.target.closest('.staging-bucket-head') ||
+                e.target.closest('#recent-head'))
+            : null;
+        if (headTarget && !selecting && [' ', 'Enter', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
+            const fold = () => {
+                e.preventDefault();
+                e.stopPropagation();
+                headTarget.click();
+            };
+            const isRtl = !!(document.body && document.body.classList
+                && document.body.classList.contains('rtl'));
+            const li = headTarget.closest('li');
+            const collapsedNow = headTarget.getAttribute && headTarget.getAttribute('aria-expanded') === 'false';
+            const expand = (e.key === ' ' || e.key === 'Enter' || e.key === (isRtl ? 'ArrowLeft' : 'ArrowRight')) && collapsedNow;
+            const collapse = (e.key === ' ' || e.key === 'Enter' || e.key === (isRtl ? 'ArrowRight' : 'ArrowLeft')) && !collapsedNow;
+            if (expand || collapse)
+                fold();
+            void li;
+            return;
+        }
+        // Selecting + Space on a group/bucket head selects ALL its members
+        // (the dupes selecting-bar protocol — keyboard parity for the click).
+        if (headTarget && selecting && e.key === ' ') {
+            const headLi = headTarget.closest('li');
+            if (headLi && (headLi.classList.contains('staging-group') || headLi.classList.contains('staging-bucket'))) {
+                e.preventDefault();
+                e.stopPropagation();
+                headTarget.click();
+            }
+            return;
+        }
         if (!selecting || e.key !== ' ')
             return;
         const li = e.target && e.target.closest ? e.target.closest('li.vbm-row') : null;

@@ -971,6 +971,16 @@ export function initViewDead(ctx = {}) {
             if (row)
                 rows.push(row);
         }
+        // velvet staging §2.4: bookmarked staging rows key their DOM id by
+        // the DATA index (the unfav rows share the axis), so the id→row
+        // lookup goes through data-node-id there. Only bookmarked rows
+        // carry the attribute — unbookmarked snapshots have no dead/live
+        // state to paint.
+        if (document.querySelector) {
+            const staged = document.querySelector(`.staging-row[data-node-id="${id}"]`);
+            if (staged)
+                rows.push(staged);
+        }
         return rows;
     };
     const paintOverlay = (li, id) => {

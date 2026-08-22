@@ -2438,7 +2438,7 @@
     "message": "Marcar e colocar em espera"
   },
   "tabgroupStageAll": {
-    "message": "Marcar e colocar todo o grupo em espera"
+    "message": "Marcar e agrupar"
   },
   "tabgroupStageConfirm": {
     "message": "Marcar e colocar $n$ separadores em espera?",

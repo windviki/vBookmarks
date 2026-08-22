@@ -2442,7 +2442,7 @@
     "message": "Segnalibro e area di attesa"
   },
   "tabgroupStageAll": {
-    "message": "Segnalibro e area di attesa per l'intero gruppo"
+    "message": "Segna e raggruppa"
   },
   "tabgroupStageConfirm": {
     "message": "Salvare e mettere in attesa $n$ schede?",

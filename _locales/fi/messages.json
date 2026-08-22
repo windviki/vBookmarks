@@ -2442,7 +2442,7 @@
     "message": "Kirjanmerkitse ja aseta odottamaan"
   },
   "tabgroupStageAll": {
-    "message": "Kirjanmerkitse ja aseta koko ryhmä odottamaan"
+    "message": "Tallenna ja vaiheista ryhmä"
   },
   "tabgroupStageConfirm": {
     "message": "Kirjanmerkitäänkö ja asetetaanko $n$ välilehteä odottamaan?",

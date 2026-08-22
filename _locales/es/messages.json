@@ -2442,7 +2442,7 @@
     "message": "Marcar y poner en espera"
   },
   "tabgroupStageAll": {
-    "message": "Marcar y poner en espera todo el grupo"
+    "message": "Marcar y agrupar"
   },
   "tabgroupStageConfirm": {
     "message": "¿Marcar y poner en espera $n$ pestañas?",

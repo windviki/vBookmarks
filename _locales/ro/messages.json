@@ -2442,7 +2442,7 @@
     "message": "Marchează și pune în așteptare"
   },
   "tabgroupStageAll": {
-    "message": "Marchează și pune în așteptare întregul grup"
+    "message": "Marchează și grupează"
   },
   "tabgroupStageConfirm": {
     "message": "Marcați și puneți în așteptare $n$ file?",

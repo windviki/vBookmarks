@@ -2690,7 +2690,7 @@
     "message": "Bookmark and stage"
   },
   "tabgroupStageAll": {
-    "message": "Bookmark and stage the whole group"
+    "message": "Bookmark and stage group"
   },
   "tabgroupStageConfirm": {
     "message": "Bookmark and stage $n$ tabs?",

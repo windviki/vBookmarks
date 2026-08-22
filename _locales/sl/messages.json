@@ -2442,7 +2442,7 @@
     "message": "Zaznamuj in pripravi"
   },
   "tabgroupStageAll": {
-    "message": "Zaznamuj in pripravi celotno skupino"
+    "message": "Zaznamuj in pripravi skupino"
   },
   "tabgroupStageConfirm": {
     "message": "Zaznamujem in pripravim $n$ zavihkov?",

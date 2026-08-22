@@ -1538,10 +1538,13 @@ menu[type=context] hr {
     cursor: pointer;
 }
 
-.folder-pick-chip:hover,
-.folder-pick-chip:focus-visible {
+.folder-pick-chip:hover {
     border-color: var(--vbm-accent);
-    outline: none;
+}
+
+.folder-pick-chip:focus-visible {
+    outline: 2px solid var(--vbm-focus-ring);
+    outline-offset: -1px;
 }
 
 .folder-pick-chip .vbm-icon {
@@ -1581,6 +1584,298 @@ menu[type=context] hr {
     flex: 1 1 auto;
 }
 
+#bookmark-folder-pick-dialog .buttons button[disabled] {
+    opacity: .5;
+    cursor: default;
+}
+
+.folder-pick-pin-btn {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    padding: 0;
+    border: 0;
+    border-radius: var(--vbm-radius);
+    background: transparent;
+    color: var(--vbm-muted);
+    cursor: pointer;
+    opacity: 0;
+}
+
+#bookmark-folder-pick-list li:hover .folder-pick-pin-btn,
+#bookmark-folder-pick-list li:focus-within .folder-pick-pin-btn,
+.folder-pick-pin-btn.pinned,
+.folder-pick-pin-btn:focus-visible {
+    opacity: 1;
+}
+
+.folder-pick-pin-btn.pinned {
+    color: var(--vbm-accent);
+}
+
+.folder-pick-note {
+    margin: 0 0 6px;
+    color: var(--vbm-muted);
+    font-size: .9em;
+}
+
+/* --- Staging view (velvet staging §2.1/§2.2/§2.4) -----------------------
+   The three heads (recently-added section head, unbookmarked bucket head,
+   named group head) share the dupes group-head recipe: row height, the 8px
+   inline slot, bg-hover hover, the focus protocol; the chevron is the same
+   ▾/▸ glyph pair (◂ under RTL). The count pill reads bg-selected like the
+   dupes/tabgroups pills. */
+.staging-add-btn.staged {
+    color: var(--vbm-accent);
+    visibility: visible;
+}
+
+.staging-section-head,
+.staging-bucket-head,
+.staging-group-head {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    height: var(--vbm-row-h);
+    padding-inline: 8px;
+    font-size: 11px;
+    color: var(--vbm-muted);
+    cursor: pointer;
+    user-select: none;
+    outline: 0;
+}
+
+.staging-section-head:hover,
+.staging-bucket-head:hover,
+.staging-group-head:hover {
+    background: var(--vbm-bg-hover);
+}
+
+.staging-section-head:focus-visible,
+.staging-bucket-head:focus-visible,
+.staging-group-head:focus-visible {
+    color: var(--vbm-fg-selected);
+    background: var(--vbm-bg-selected);
+    outline: 2px solid var(--vbm-focus-ring);
+    outline-offset: -2px;
+}
+
+.staging-section-title {
+    font-weight: 500;
+    color: var(--vbm-fg);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.staging-section-head .chevron,
+.staging-bucket-head .chevron,
+.staging-group-head .chevron {
+    flex: none;
+    width: 16px;
+    text-align: center;
+    color: var(--vbm-muted);
+}
+
+.staging-section-head .chevron::before,
+.staging-bucket-head .chevron::before,
+.staging-group-head .chevron::before {
+    content: '▾';
+}
+
+.staging-section-head .chevron.collapsed::before,
+.staging-bucket-head .chevron.collapsed::before,
+.staging-group-head .chevron.collapsed::before {
+    content: '▸';
+}
+
+.rtl .staging-section-head .chevron.collapsed::before,
+.rtl .staging-bucket-head .chevron.collapsed::before,
+.rtl .staging-group-head .chevron.collapsed::before {
+    content: '◂';
+}
+
+.staging-section-head .count-pill,
+.staging-bucket-head .count-pill,
+.staging-group-head .count-pill {
+    flex: none;
+    background: var(--vbm-bg-selected);
+    color: var(--vbm-fg-selected);
+    border-radius: 999px;
+    padding: 0 6px;
+    font-size: 11px;
+    line-height: 16px;
+}
+
+.staging-bucket-star {
+    flex: none;
+    display: inline-flex;
+    color: var(--vbm-muted);
+}
+
+/* The bucket head's favorite-all rides the trailing slot like the section
+   head's stage-all (a head primary action, always visible). */
+.staging-bucket-head .staging-bucket-fav-all {
+    margin-inline-start: auto;
+    visibility: visible;
+    color: var(--vbm-accent);
+}
+
+.staging-bucket-head .staging-bucket-fav-all:hover {
+    color: var(--vbm-accent);
+}
+
+/* The recent section head's stage-all rides the trailing slot (always
+   visible — a section-head primary action, not a hover reveal). */
+.staging-section-head .recent-stage-all {
+    margin-inline-start: auto;
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    padding: 0;
+    border: 0;
+    border-radius: var(--vbm-radius);
+    background: transparent;
+    color: var(--vbm-accent);
+    cursor: pointer;
+    line-height: 1;
+    visibility: visible;
+}
+
+.staging-section-head .recent-stage-all:hover {
+    background: var(--vbm-bg-hover);
+    color: var(--vbm-fg);
+}
+
+.staging-section-head .recent-stage-all:focus-visible {
+    background: var(--vbm-bg-hover);
+    color: var(--vbm-fg);
+    outline: 2px solid var(--vbm-focus-ring);
+    outline-offset: -2px;
+}
+
+/* Group members share the dupes member rhythm: the 8px slot aligns the
+   row with its head (head = 8px slot + 16px chevron; member = 8px slot +
+   the anchor's 16px lead — the same title axis, one visual group). */
+#staging-items ul li.vbm-row.staging-member {
+    padding-inline-start: 8px;
+}
+
+/* The staging star is always visible (a real state indicator, not a hover
+   action); the inline remove × keeps the hover reveal. */
+.vbm-row .staging-star {
+    visibility: visible;
+}
+
+.vbm-row .staging-star[aria-pressed="true"] {
+    color: var(--vbm-accent);
+}
+
+/* Group-head hover homing (§3.5) — the .row-btn reveal language. */
+.staging-group-head .staging-group-place {
+    margin-inline-start: auto;
+    visibility: hidden;
+}
+
+.staging-group:hover .staging-group-place,
+.staging-group:focus-within .staging-group-place,
+.staging-group-place:focus-visible {
+    visibility: visible;
+}
+
+.staging-group-place:hover {
+    color: var(--vbm-accent);
+}
+
+/* --- Folder picker quick-pick (velvet staging §4.1) --- */
+/* chips row = pins (user order) then LRU recents; the inline pin toggle
+   rides each folder row's end (the .row-btn slot language of the lists). */
+.folder-pick-chips {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px;
+    margin: 0 0 6px;
+}
+
+.folder-pick-chip-label {
+    color: var(--vbm-muted);
+    font-size: .85em;
+    white-space: nowrap;
+}
+
+.folder-pick-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    max-width: 160px;
+    padding: 3px 8px;
+    border: 1px solid var(--vbm-border);
+    border-radius: 999px;
+    background: var(--vbm-bg-elev);
+    color: var(--vbm-fg);
+    font: inherit;
+    font-size: .9em;
+    cursor: pointer;
+}
+
+.folder-pick-chip:hover {
+    border-color: var(--vbm-accent);
+}
+
+.folder-pick-chip:focus-visible {
+    outline: 2px solid var(--vbm-focus-ring);
+    outline-offset: -1px;
+}
+
+.folder-pick-chip .vbm-icon {
+    flex: none;
+}
+
+.folder-pick-chip-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+#bookmark-folder-pick-filter {
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0 0 6px;
+    padding: 5px 8px;
+    border: 1px solid var(--vbm-border);
+    border-radius: var(--vbm-radius);
+    background: var(--vbm-bg-elev);
+    color: var(--vbm-fg);
+    font: inherit;
+}
+
+#bookmark-folder-pick-list li {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+#bookmark-folder-pick-list li .bookmark-folder-pick-row {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+#bookmark-folder-pick-list li .bookmark-folder-pick-empty {
+    flex: 1 1 auto;
+}
+
+#bookmark-folder-pick-dialog .buttons button[disabled] {
+    opacity: .5;
+    cursor: default;
+}
+
 .folder-pick-pin-btn {
     flex: none;
     display: inline-flex;
@@ -1618,10 +1913,6 @@ menu[type=context] hr {
 /* #staging-items opens the workbench region; #recent-head is the foldable
    section divider between the two regions (a non-row element — the ↑/↓
    walk skips it via crossRowUl's non-UL sibling rule). */
-#staging-items ul li.staging-row a i {
-    font-style: normal;
-}
-
 .staging-add-btn.staged {
     color: var(--vbm-accent);
     visibility: visible;
@@ -1779,9 +2070,11 @@ menu[type=context] hr {
     outline: none;
 }
 
-/* Group members indent one notch (the dupes member rhythm). */
+/* Group members share the dupes member rhythm: the 8px slot aligns the
+   row with its head (head = 8px slot + 16px chevron; member = 8px slot +
+   the anchor's 16px lead — the same title axis, one visual group). */
 #staging-items ul li.vbm-row.staging-member {
-    padding-inline-start: 18px;
+    padding-inline-start: 8px;
 }
 
 /* The staging star is always visible (a real state indicator, not a hover
@@ -1813,7 +2106,140 @@ menu[type=context] hr {
 
 .staging-group-assign-row:hover,
 .staging-group-assign-row:focus-visible {
+    background: var(--vbm-bg-hover);
+}
+
+.staging-group-assign-row:focus-visible {
+    outline: 2px solid var(--vbm-focus-ring);
+    outline-offset: -1px;
+}
+
+.staging-group-assign-name {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+#staging-group-assign-list {
+    list-style: none;
+    margin: 0 0 6px;
+    padding: 0;
+    max-height: 180px;
+    overflow-y: auto;
+}
+
+#staging-group-assign-name {
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0 0 6px;
+    padding: 5px 8px;
+    border: 1px solid var(--vbm-border);
+    border-radius: var(--vbm-radius);
     background: var(--vbm-bg-elev);
+    color: var(--vbm-fg);
+    font: inherit;
+}
+
+.staging-group-assign-empty {
+    padding: 10px 8px;
+    color: var(--vbm-muted);
+    text-align: center;
+}
+
+/* The staging/search toolbars ride the dupes/dead/stats chrome: 11px
+   controls, the 6px gap, the 4px 8px padding and the border-bottom that
+   separates the bar from the list. */
+.staging-toolbar,
+.search-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 8px;
+    border-bottom: 1px solid var(--vbm-border);
+    font-size: 11px;
+    color: var(--vbm-muted);
+    flex-wrap: wrap;
+}
+
+.staging-toolbar .staging-summary,
+.search-toolbar .search-result-count {
+    color: var(--vbm-muted);
+    white-space: nowrap;
+}
+
+.staging-toolbar button,
+.search-toolbar button {
+    border: 0;
+    border-radius: var(--vbm-radius);
+    background: transparent;
+    color: var(--vbm-fg);
+    font: inherit;
+    font-size: 11px;
+    padding: 2px 6px;
+    cursor: pointer;
+}
+
+.staging-toolbar button:hover:not([disabled]),
+.search-toolbar button:hover:not([disabled]) {
+    background: var(--vbm-bg-hover);
+}
+
+.staging-toolbar button[disabled],
+.search-toolbar button[disabled] {
+    color: var(--vbm-muted);
+    cursor: default;
+}
+
+/* The three select-mode entry buttons share the dupes select-mode recipe:
+   a 22px accent square. */
+.staging-toolbar .staging-select-mode,
+.search-toolbar .search-select-mode,
+.stats-toolbar .stats-select-mode {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    padding: 0;
+    flex: none;
+    border: 0;
+    border-radius: var(--vbm-radius);
+    background: transparent;
+    color: var(--vbm-accent);
+    cursor: pointer;
+}
+
+.staging-toolbar .staging-select-mode:hover,
+.search-toolbar .search-select-mode:hover,
+.stats-toolbar .stats-select-mode:hover {
+    background: var(--vbm-bg-hover);
+}
+
+/* The group-assign dialog's group rows. */
+.staging-group-assign-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 6px 8px;
+    border: 0;
+    border-radius: var(--vbm-radius);
+    background: transparent;
+    color: var(--vbm-fg);
+    font: inherit;
+    text-align: start;
+    cursor: pointer;
+}
+
+.staging-group-assign-row:hover,
+.staging-group-assign-row:focus-visible {
+    background: var(--vbm-bg-hover);
+}
+
+.staging-group-assign-row:focus-visible {
     outline: 2px solid var(--vbm-focus-ring);
     outline-offset: -1px;
 }
@@ -1912,61 +2338,6 @@ menu[type=context] hr {
 
 .staging-group-place:hover {
     color: var(--vbm-accent);
-}
-
-/* The search view's result-count bar + the stats selection entry share the
-   staging toolbar chrome (velvet staging §3.6/§3.7). */
-.search-toolbar {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 4px 8px;
-    padding: 2px 6px;
-}
-
-.search-toolbar .search-result-count {
-    color: var(--vbm-muted);
-    white-space: nowrap;
-}
-
-.search-toolbar button {
-    border: 0;
-    border-radius: 4px;
-    background: transparent;
-    color: var(--vbm-fg);
-    font: inherit;
-    font-size: .9em;
-    padding: 3px 6px;
-    cursor: pointer;
-}
-
-.search-toolbar button:hover:not([disabled]),
-.search-toolbar button:focus-visible {
-    background: var(--vbm-bg-elev);
-    outline: none;
-}
-
-.search-toolbar button[disabled] {
-    color: var(--vbm-muted);
-    cursor: default;
-}
-
-.search-toolbar .search-select-mode {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 22px;
-    height: 22px;
-    padding: 0;
-}
-
-.stats-toolbar .stats-select-mode {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 22px;
-    height: 22px;
-    padding: 0;
 }
 
 /* The cut bookmark's faded state (velvet staging §5.2): stays until the
@@ -3621,6 +3992,8 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
 .dead-toolbar button:focus-visible,
 .dead-proxy-strip button:focus-visible,
 .stats-toolbar button:focus-visible,
+.staging-toolbar button:focus-visible,
+.search-toolbar button:focus-visible,
 #search-history-clear:focus-visible {
     outline: 2px solid var(--vbm-focus-ring);
     outline-offset: -2px;
