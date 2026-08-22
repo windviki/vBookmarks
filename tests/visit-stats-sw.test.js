@@ -126,42 +126,65 @@ const navigate = url => {
 };
 
 describe('start + index', () => {
-    it('builds the URL index from the tree at start and re-hooks listeners', () => {
+    it('defers the full-tree index read until the first navigation (P1-3)', () => {
         const c = createVisitStatsCollector();
         c.start();
-        expect(chromeDouble.calls.getTree).toBe(1);
+        expect(chromeDouble.calls.getTree).toBe(0); // no eager tree read
         expect(chromeDouble.listeners.tabs.onUpdated).toHaveLength(1);
         expect(chromeDouble.listeners.storage).toHaveLength(1);
         // a second start() is a no-op (SW re-entry safety)
         c.start();
+        expect(chromeDouble.calls.getTree).toBe(0);
+        // the first URL navigation builds the index on demand
+        navigate('https://b.com/page');
         expect(chromeDouble.calls.getTree).toBe(1);
+        vi.advanceTimersByTime(2000);
+        expect(statsBlob()['21'].c).toBe(1);
     });
 
-    it('rebuilds the index on bookmark events', () => {
+    it('rebuilds the index on bookmark events (lazily after start)', () => {
         createVisitStatsCollector().start();
-        expect(chromeDouble.calls.getTree).toBe(1);
+        expect(chromeDouble.calls.getTree).toBe(0);
         chromeDouble.listeners.bookmarks.onCreated();
-        expect(chromeDouble.calls.getTree).toBe(2);
+        expect(chromeDouble.calls.getTree).toBe(1);
     });
 
     // review 05-S5: onMoved is debounced — a recursive folder sort fires one
     // onMoved per moved node and must not rebuild the whole index per move.
     it('debounces a burst of onMoved events into one index rebuild', () => {
         createVisitStatsCollector().start();
-        expect(chromeDouble.calls.getTree).toBe(1);
+        expect(chromeDouble.calls.getTree).toBe(0);
         for (let i = 0; i < 20; i++)
             chromeDouble.listeners.bookmarks.onMoved();
         vi.advanceTimersByTime(299);
-        expect(chromeDouble.calls.getTree).toBe(1); // still settling
+        expect(chromeDouble.calls.getTree).toBe(0); // still settling
         vi.advanceTimersByTime(1);
-        expect(chromeDouble.calls.getTree).toBe(2); // one rebuild for the burst
+        expect(chromeDouble.calls.getTree).toBe(1); // one rebuild for the burst
         // a later, isolated move rebuilds again after its own quiet window
         chromeDouble.listeners.bookmarks.onMoved();
         vi.advanceTimersByTime(300);
-        expect(chromeDouble.calls.getTree).toBe(3);
+        expect(chromeDouble.calls.getTree).toBe(2);
     });
 });
 
+    it('coalesces concurrent first navigations into one lazy getTree (P1-3)', async () => {
+        createVisitStatsCollector().start();
+        // Make the tree read async for this test — a URL-navigation storm
+        // arriving before the first build resolves must not fan out.
+        const orig = chromeDouble.bookmarks.getTree.bind(chromeDouble.bookmarks);
+        let releaseTree = null;
+        chromeDouble.bookmarks.getTree = cb => {
+            chromeDouble.calls.getTree++;
+            releaseTree = () => orig(cb);
+        };
+        navigate('https://b.com/page');
+        navigate('https://b.com/page');
+        expect(chromeDouble.calls.getTree).toBe(1); // one build, two waiters
+        releaseTree();
+        await flushMicrotasks();
+        vi.advanceTimersByTime(2000);
+        expect(statsBlob()['21'].c).toBe(2); // both hits counted after the build
+    });
 describe('navigation counting', () => {
     it('counts a navigation to a bookmarked URL and flushes after 2s', () => {
         createVisitStatsCollector().start();

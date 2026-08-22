@@ -62,9 +62,14 @@ export function createVisitStatsCollector() {
     let rebuildTimer = null;
     let enabled = true;         // statsEnabled mirror (default on)
     let started = false;
+    let indexReady = false;     // P1-3: the tree read is lazy — cold start
+                                // never pays a full bookmarks.getTree
+    let indexLoading = false;   // one in-flight lazy build; URL-navigation
+                                // storms coalesce into a single getTree
+    const indexWaiters = [];
 
     // --- Bookmark URL index -------------------------------------------------
-    const rebuildIndex = () => {
+    const rebuildIndex = cb => {
         chrome.bookmarks.getTree(tree => {
             const idx = new Map();
             const walk = nodes => {
@@ -81,6 +86,28 @@ export function createVisitStatsCollector() {
             };
             walk(tree);
             urlIndex = idx;
+            indexReady = true;
+            if (cb)
+                cb();
+        });
+    };
+
+    // P1-3: run cb once the index is ready — starting the lazy build on the
+    // first waiter and queueing concurrent waiters behind the one getTree.
+    const ensureIndex = cb => {
+        if (indexReady) {
+            cb();
+            return;
+        }
+        indexWaiters.push(cb);
+        if (indexLoading)
+            return;
+        indexLoading = true;
+        rebuildIndex(() => {
+            indexLoading = false;
+            const waiters = indexWaiters.splice(0, indexWaiters.length);
+            for (const fn of waiters)
+                fn();
         });
     };
 
@@ -119,23 +146,30 @@ export function createVisitStatsCollector() {
     const countVisit = url => {
         if (!enabled)
             return;
-        const ids = urlIndex.get(url);
-        if (!ids)
-            return;
-        chrome.storage.session.get({ [POPUP_OPENS_KEY]: {} }, data => {
-            const marks = data[POPUP_OPENS_KEY] || {};
-            const ts = marks[url];
-            if (ts && Date.now() - ts < DEDUPE_MS)
-                return; // the page-side collector already counted this open
-            const now = Date.now();
-            for (let i = 0, l = ids.length; i < l; i++) {
-                const cur = pending.get(ids[i]) || { n: 0, t: 0 };
-                cur.n += 1;
-                cur.t = now;
-                pending.set(ids[i], cur);
-            }
-            scheduleFlush();
-        });
+        const match = () => {
+            const ids = urlIndex.get(url);
+            if (!ids)
+                return;
+            chrome.storage.session.get({ [POPUP_OPENS_KEY]: {} }, data => {
+                const marks = data[POPUP_OPENS_KEY] || {};
+                const ts = marks[url];
+                if (ts && Date.now() - ts < DEDUPE_MS)
+                    return; // the page-side collector already counted this open
+                const now = Date.now();
+                for (let i = 0, l = ids.length; i < l; i++) {
+                    const cur = pending.get(ids[i]) || { n: 0, t: 0 };
+                    cur.n += 1;
+                    cur.t = now;
+                    pending.set(ids[i], cur);
+                }
+                scheduleFlush();
+            });
+        };
+        // P1-3: first URL navigation after a cold start builds the index on
+        // demand; the SW boot itself never reads the whole tree up front.
+        // Concurrent navigations during the first build coalesce behind the
+        // one getTree (no per-event full-tree reads).
+        ensureIndex(match);
     };
 
     const onUpdated = (tabId, changeInfo) => {
@@ -181,7 +215,8 @@ export function createVisitStatsCollector() {
                 enabled = !!v && v !== 'false';
             });
         });
-        rebuildIndex();
+        // P1-3: NO eager rebuildIndex() here — the index builds lazily on
+        // the first URL navigation (or on the first bookmark event below).
         // The index follows every tree mutation; import-end covers bulk adds.
         // onMoved is debounced (same trailing-timer pattern as the flush): a
         // recursive folder sort fires one onMoved per moved node, and wiring
