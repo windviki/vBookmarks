@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeAll, afterAll } from 'vitest';
+import { describe, it, expect, vi, beforeAll, afterAll } from 'vitest';
 import { htmlspecialchars } from '../src/escape.js';
 
 // view-tabgroups.js touches page globals only inside initViewTabGroups and
@@ -112,6 +112,11 @@ const setup = (opts = {}) => {
     };
     globalThis.document = doc;
 
+    // Per-event listener capture for the throttling tests (H9 follow-up).
+    const tabsListeners = {};
+    const tabGroupsListeners = {};
+    const bookmarksListeners = {};
+
     const chromeStub = {
         i18n: {
             getMessage: (key, subs) => {
@@ -163,11 +168,13 @@ const setup = (opts = {}) => {
                 if (cb)
                     cb();
             },
-            onCreated: { addListener(fn) { this.fn = fn; } },
-            onRemoved: { addListener(fn) { this.fn = fn; } },
-            onMoved: { addListener(fn) { this.fn = fn; } },
-            onUpdated: { addListener(fn) { this.fn = fn; } },
-            onActivated: { addListener(fn) { this.fn = fn; } }
+            onCreated: { addListener(fn) { (tabsListeners.onCreated = tabsListeners.onCreated || []).push(fn); } },
+            onRemoved: { addListener(fn) { (tabsListeners.onRemoved = tabsListeners.onRemoved || []).push(fn); } },
+            onMoved: { addListener(fn) { (tabsListeners.onMoved = tabsListeners.onMoved || []).push(fn); } },
+            onUpdated: { addListener(fn) { (tabsListeners.onUpdated = tabsListeners.onUpdated || []).push(fn); } },
+            onActivated: { addListener(fn) { (tabsListeners.onActivated = tabsListeners.onActivated || []).push(fn); } },
+            onAttached: { addListener(fn) { (tabsListeners.onAttached = tabsListeners.onAttached || []).push(fn); } },
+            onDetached: { addListener(fn) { (tabsListeners.onDetached = tabsListeners.onDetached || []).push(fn); } }
         },
         tabGroups: {
             queryCalls: [],
@@ -185,10 +192,10 @@ const setup = (opts = {}) => {
                 if (cb)
                     cb({ id, ...props });
             },
-            onCreated: { addListener(fn) { this.fn = fn; } },
-            onRemoved: { addListener(fn) { this.fn = fn; } },
-            onUpdated: { addListener(fn) { this.fn = fn; } },
-            onMoved: { addListener(fn) { this.fn = fn; } }
+            onCreated: { addListener(fn) { (tabGroupsListeners.onCreated = tabGroupsListeners.onCreated || []).push(fn); } },
+            onRemoved: { addListener(fn) { (tabGroupsListeners.onRemoved = tabGroupsListeners.onRemoved || []).push(fn); } },
+            onUpdated: { addListener(fn) { (tabGroupsListeners.onUpdated = tabGroupsListeners.onUpdated || []).push(fn); } },
+            onMoved: { addListener(fn) { (tabGroupsListeners.onMoved = tabGroupsListeners.onMoved || []).push(fn); } }
         },
         runtime: {
             sendMessageCalls: [],
@@ -224,7 +231,10 @@ const setup = (opts = {}) => {
                 this.removeCalls.push(id);
                 if (cb)
                     cb();
-            }
+            },
+            onCreated: { addListener(fn) { (bookmarksListeners.onCreated = bookmarksListeners.onCreated || []).push(fn); } },
+            onRemoved: { addListener(fn) { (bookmarksListeners.onRemoved = bookmarksListeners.onRemoved || []).push(fn); } },
+            onChanged: { addListener(fn) { (bookmarksListeners.onChanged = bookmarksListeners.onChanged || []).push(fn); } }
         },
         windows: {
             WINDOW_ID_CURRENT: 1,
@@ -351,7 +361,8 @@ const setup = (opts = {}) => {
     return {
         viewTabGroups, $list, byId, doc, chrome: chromeStub, store, views,
         treeRender, dialogs, undo,
-        def: () => views.def, fire, clickOn, closestOf
+        def: () => views.def, fire, clickOn, closestOf,
+        tabsListeners, tabGroupsListeners, bookmarksListeners
     };
 };
 
@@ -390,6 +401,59 @@ describe('view registration', () => {
         expect(chrome.tabGroups.queryCalls).toEqual([]);   // no group query
         expect(chrome.windows.getAllCalls).toEqual([]);    // no window read
         expect(chrome.bookmarks.getTreeCalls).toBe(0);     // no tree/render
+    });
+
+    it('inactive: title/order events never touch the badge (H9 follow-up)', () => {
+        vi.useFakeTimers();
+        try {
+            const ctx = setup({ active: false });
+            for (const ev of ['onUpdated', 'onMoved', 'onActivated', 'onAttached', 'onDetached'])
+                for (const fn of (ctx.tabsListeners[ev] || []))
+                    fn();
+            for (const ev of ['onCreated', 'onRemoved', 'onUpdated', 'onMoved'])
+                for (const fn of (ctx.tabGroupsListeners[ev] || []))
+                    fn();
+            for (const ev of ['onCreated', 'onRemoved', 'onChanged'])
+                for (const fn of (ctx.bookmarksListeners[ev] || []))
+                    fn();
+            vi.advanceTimersByTime(3000);
+            expect(ctx.chrome.tabs.queryCalls).toHaveLength(0);
+            expect(ctx.views.updateBadgesCalls).toBe(0);
+        } finally {
+            vi.useRealTimers();
+        }
+    });
+
+    it('inactive: only count-affecting tab events refresh, at the 1 s cadence (H9 follow-up)', () => {
+        vi.useFakeTimers();
+        try {
+            const ctx = setup({ active: false, tabs: [makeTab(1, 0, { active: true })] });
+            ctx.tabsListeners.onCreated[0]();
+            vi.advanceTimersByTime(999);
+            expect(ctx.chrome.tabs.queryCalls).toHaveLength(0); // still inside the 1 s window
+            vi.advanceTimersByTime(1);
+            expect(ctx.chrome.tabs.queryCalls).toEqual([{}]);  // count-only query
+            expect(ctx.chrome.windows.getAllCalls).toEqual([]);
+            expect(ctx.views.updateBadgesCalls).toBe(1);
+        } finally {
+            vi.useRealTimers();
+        }
+    });
+
+    it('active: render-input events keep the 300 ms refresh cadence (H9 follow-up)', () => {
+        vi.useFakeTimers();
+        try {
+            const ctx = setup({ active: true });
+            ctx.tabsListeners.onUpdated[0]();
+            vi.advanceTimersByTime(299);
+            expect(ctx.chrome.windows.getAllCalls).toHaveLength(0);
+            vi.advanceTimersByTime(1);
+            // active refresh is a FULL refresh (windows + groups + tree)
+            expect(ctx.chrome.windows.getAllCalls.length).toBeGreaterThan(0);
+            expect(ctx.chrome.tabGroups.queryCalls.length).toBeGreaterThan(0);
+        } finally {
+            vi.useRealTimers();
+        }
     });
 });
 

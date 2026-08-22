@@ -1507,25 +1507,49 @@ export function initViewTabGroups(ctx = {}) {
     };
 
     // --- Events ------------------------------------------------------------------
+    // H9 follow-up (4.1.0 收尾): the 300 ms debounce is for ACTIVE re-renders
+    // (title/order/active-marker churn). The inactive path only serves the
+    // tab-count badge, whose count changes on tabs.onCreated/onRemoved alone
+    // — every other event is skipped while inactive, and the inactive poll
+    // itself slows to 1 s, so background title storms stop paying
+    // chrome.tabs.query every 300 ms.
+    const ACTIVE_REFRESH_MS = 300;
+    const INACTIVE_REFRESH_MS = 1000;
     let refreshTimer = null;
     const scheduleRefresh = () => {
         clearTimeout(refreshTimer);
-        refreshTimer = setTimeout(refresh, 300);
+        refreshTimer = setTimeout(refresh,
+            views.isActive('tabgroups') ? ACTIVE_REFRESH_MS : INACTIVE_REFRESH_MS);
+    };
+    // Render-input events (title/order/active/group/bookmark changes): only
+    // the ACTIVE view needs a re-render; the inactive badge count never
+    // changes from these.
+    const scheduleActiveRefresh = () => {
+        if (!views.isActive('tabgroups'))
+            return;
+        clearTimeout(refreshTimer);
+        refreshTimer = setTimeout(refresh, ACTIVE_REFRESH_MS);
     };
 
     const bindChromeEvents = () => {
-        for (const ev of ['onCreated', 'onRemoved', 'onMoved', 'onUpdated', 'onActivated', 'onAttached', 'onDetached']) {
+        // Count-affecting tab events drive the inactive badge too.
+        for (const ev of ['onCreated', 'onRemoved']) {
             if (chrome.tabs && chrome.tabs[ev] && chrome.tabs[ev].addListener)
                 chrome.tabs[ev].addListener(scheduleRefresh);
         }
+        // Everything else is render input: active view only.
+        for (const ev of ['onMoved', 'onUpdated', 'onActivated', 'onAttached', 'onDetached']) {
+            if (chrome.tabs && chrome.tabs[ev] && chrome.tabs[ev].addListener)
+                chrome.tabs[ev].addListener(scheduleActiveRefresh);
+        }
         for (const ev of ['onCreated', 'onRemoved', 'onUpdated', 'onMoved']) {
             if (chrome.tabGroups && chrome.tabGroups[ev] && chrome.tabGroups[ev].addListener)
-                chrome.tabGroups[ev].addListener(scheduleRefresh);
+                chrome.tabGroups[ev].addListener(scheduleActiveRefresh);
         }
         // Bookmarked state (filled/outline star) follows the bookmark tree.
         for (const ev of ['onCreated', 'onRemoved', 'onChanged']) {
             if (chrome.bookmarks && chrome.bookmarks[ev] && chrome.bookmarks[ev].addListener)
-                chrome.bookmarks[ev].addListener(scheduleRefresh);
+                chrome.bookmarks[ev].addListener(scheduleActiveRefresh);
         }
         // Options-page writes to these keys must reach an open side panel
         // live (the view-manager already does this for show/disable keys).
