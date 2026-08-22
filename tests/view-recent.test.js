@@ -1162,3 +1162,263 @@ describe('staging groups + bucket + inline actions (velvet staging ST4)', () => 
         expect(viewRecent.api.isGroupCollapsed('g1')).toBe(false);
     });
 });
+
+describe('staging selection mode + group homing (velvet staging ST5)', () => {
+    const undoOn = () => ({
+        toastCalls: [], actionCalls: [],
+        showToast(msg) { this.toastCalls.push(msg); },
+        toastAction(msg, label, fn) { this.actionCalls.push([msg, label, fn]); }
+    });
+
+    it('idle toolbar offers the select-mode entry; entering swaps to the two rungs', () => {
+        const { viewRecent, $list } = setup({});
+        viewRecent.api.addItems([{ id: null, url: 'http://h/', title: 'H' }]);
+        expect($list.innerHTML).toContain('staging-select-mode');
+        expect($list.innerHTML).toContain('stagingCount[1]');
+        viewRecent.api.setSelecting(true);
+        const html = $list.innerHTML;
+        expect(html).toContain('staging-select-toolbar');
+        expect(html).toContain('staging-actions-toolbar');
+        expect(html).toContain('class="selecting"');
+        expect(html).toContain('li class="vbm-row staging-row');
+        expect(html).not.toContain('staging-star'); // row buttons leave the DOM
+        // exit restores the idle bar and clears the set
+        viewRecent.api.setSelecting(false);
+        expect($list.innerHTML).toContain('staging-select-mode');
+        expect(viewRecent.api.selectedUrls()).toEqual([]);
+    });
+
+    it('row click and Space toggle membership; group/bucket heads select all', () => {
+        const { viewRecent, $list, click, def } = setup({});
+        def().activate();
+        viewRecent.api.addItems([
+            { id: null, url: 'http://h1/', title: 'H1' },
+            { id: null, url: 'http://h2/', title: 'H2' },
+            { id: '5', url: 'http://k/', title: 'K' }
+        ]);
+        viewRecent.api.setSelecting(true);
+        const liAt = url => ({ dataset: { url } });
+        click({ preventDefault() {}, stopPropagation() {}, target: { closest: sel => (sel === 'li' ? liAt('http://h1/') : null) } });
+        expect(viewRecent.api.selectedUrls()).toEqual(['http://h1/']);
+        click({ preventDefault() {}, stopPropagation() {}, target: { closest: sel => (sel === 'li' ? liAt('http://h1/') : null) } });
+        expect(viewRecent.api.selectedUrls()).toEqual([]);
+        // bucket head selects all bucket members (h1+h2, not the loose k)
+        click({
+            preventDefault() {}, stopPropagation() {},
+            target: {
+                closest: sel => (sel === '.staging-bucket' ? { dataset: {} }
+                    : (sel === '.staging-group' ? null
+                        : (sel === 'li' ? null : null)))
+            }
+        });
+        expect(viewRecent.api.selectedUrls().sort()).toEqual(['http://h1/', 'http://h2/']);
+        // Space on a row toggles it
+        const keydown = $list._listeners.keydown[$list._listeners.keydown.length - 1];
+        keydown({
+            key: ' ', preventDefault() {}, stopPropagation() {},
+            target: { closest: sel => (sel === 'li.vbm-row' ? { dataset: { url: 'http://k/' } } : null) }
+        });
+        expect(viewRecent.api.selectedUrls().sort()).toEqual(['http://h1/', 'http://h2/', 'http://k/']);
+    });
+
+    it('select-all / invert / clear operate on the whole item set', () => {
+        const { viewRecent, click } = setup({});
+        viewRecent.api.addItems([
+            { id: null, url: 'http://h1/', title: 'H1' },
+            { id: '5', url: 'http://k/', title: 'K' }
+        ]);
+        viewRecent.api.setSelecting(true);
+        const press = cls => click({
+            preventDefault() {}, stopPropagation() {},
+            target: { closest: sel => (sel === cls ? { x: 1 } : (sel === '.vbm-toolbar' ? { t: 1 } : null)) }
+        });
+        press('.staging-select-all');
+        expect(viewRecent.api.selectedUrls().length).toBe(2);
+        press('.staging-select-invert');
+        expect(viewRecent.api.selectedUrls().length).toBe(0);
+        press('.staging-select-all');
+        press('.staging-select-clear');
+        expect(viewRecent.api.selectedUrls().length).toBe(0);
+    });
+
+    it('unfavSelected: real removes, items fall back to unfav and stay; undo restores', () => {
+        const undo = undoOn();
+        const ctx = setup({ undo });
+        const { viewRecent, chrome } = ctx;
+        const removes = [];
+        chrome.bookmarks.remove = (id, cb) => { removes.push(id); cb(); };
+        chrome.bookmarks.create = (opts, cb) => cb({ id: 'r1', url: opts.url, title: opts.title });
+        chrome.bookmarks.getTree = cb => cb([]);
+        viewRecent.api.addItems([{ id: '7', url: 'http://a/', title: 'A', parentId: '2' }]);
+        viewRecent.api.setSelecting(true);
+        ctx.click({
+            preventDefault() {}, stopPropagation() {},
+            target: { closest: sel => (sel === 'li' ? { dataset: { url: 'http://a/' } } : null) }
+        });
+        ctx.click({
+            preventDefault() {}, stopPropagation() {},
+            target: { closest: sel => (sel === '.staging-unfav' ? {} : (sel === '.vbm-toolbar' ? {} : null)) }
+        });
+        expect(removes).toEqual(['7']);
+        expect(viewRecent.api.state().items[0].id).toBeNull();
+        expect(viewRecent.api.state().items).toHaveLength(1);
+        expect(undo.actionCalls.length).toBe(1);
+        // undo re-creates and re-anchors
+        undo.actionCalls[0][2]();
+        expect(viewRecent.api.state().items[0].id).toBe('r1');
+    });
+
+    it('removeSelected leaves the tree alone and undo re-adds snapshots', () => {
+        const undo = undoOn();
+        const ctx = setup({ undo });
+        const { viewRecent, chrome } = ctx;
+        const removes = [];
+        chrome.bookmarks.remove = (id, cb) => { removes.push(id); cb(); };
+        viewRecent.api.addItems([{ id: null, url: 'http://x/', title: 'X', ts: 42, group: null }]);
+        viewRecent.api.setSelecting(true);
+        ctx.click({
+            preventDefault() {}, stopPropagation() {},
+            target: { closest: sel => (sel === 'li' ? { dataset: { url: 'http://x/' } } : null) }
+        });
+        ctx.click({
+            preventDefault() {}, stopPropagation() {},
+            target: { closest: sel => (sel === '.staging-remove' ? {} : (sel === '.vbm-toolbar' ? {} : null)) }
+        });
+        expect(removes).toEqual([]); // tree untouched
+        expect(viewRecent.api.state().items).toHaveLength(0);
+        expect(undo.actionCalls.length).toBe(1);
+        undo.actionCalls[0][2]();
+        expect(viewRecent.api.state().items).toEqual([
+            { id: null, url: 'http://x/', title: 'X', ts: 42, group: null }
+        ]);
+    });
+
+    it('assignSelected moves the selection into a (new) group via the dialog', () => {
+        const assignCalls = [];
+        const dialogs = {
+            StagingGroupAssignDialog: {
+                open(opts) {
+                    assignCalls.push(opts.groups);
+                    // simulate picking "new group Tools"
+                    opts.onAssign(null, 'Tools');
+                }
+            }
+        };
+        const ctx = setup({ dialogs });
+        const { viewRecent } = ctx;
+        viewRecent.api.addItems([
+            { id: null, url: 'http://h1/', title: 'H1' },
+            { id: '5', url: 'http://k/', title: 'K' }
+        ]);
+        viewRecent.api.setSelecting(true);
+        ctx.click({
+            preventDefault() {}, stopPropagation() {},
+            target: { closest: sel => (sel === 'li' ? { dataset: { url: 'http://h1/' } } : null) }
+        });
+        ctx.click({
+            preventDefault() {}, stopPropagation() {},
+            target: { closest: sel => (sel === '.staging-assign' ? {} : (sel === '.vbm-toolbar' ? {} : null)) }
+        });
+        const state = viewRecent.api.state();
+        expect(state.groups.map(g => g.name)).toEqual(['Tools']);
+        expect(state.items.find(i => i.url === 'http://h1/').group).toBe(state.groups[0].id);
+        expect(state.items.find(i => i.url === 'http://k/').group).toBeNull();
+    });
+
+    it('moveCopySelected opens the picker with dual-state note; move homes items', () => {
+        const picks = [];
+        const dialogs = {
+            BookmarkFolderPickDialog: {
+                open(opts) {
+                    picks.push({ mode: opts.mode, hasUnfav: opts.hasUnfav });
+                    opts.onPick('33', 'move');
+                }
+            },
+            ConfirmDialog: { open: opts => opts.fn1() }
+        };
+        const ctx = setup({ dialogs });
+        const { viewRecent, chrome } = ctx;
+        const moves = [];
+        chrome.bookmarks.move = (id, dest, cb) => { moves.push([id, dest]); cb(); };
+        chrome.bookmarks.create = (opts, cb) => cb({ id: 'c1', url: opts.url });
+        chrome.bookmarks.getTree = cb => cb([]);
+        viewRecent.api.addItems([
+            { id: '7', url: 'http://a/', title: 'A' },
+            { id: null, url: 'http://h/', title: 'H' }
+        ]);
+        viewRecent.api.setSelecting(true);
+        ctx.click({
+            preventDefault() {}, stopPropagation() {},
+            target: { closest: sel => (sel === 'li' ? { dataset: { url: 'http://a/' } } : null) }
+        });
+        ctx.click({
+            preventDefault() {}, stopPropagation() {},
+            target: { closest: sel => (sel === 'li' ? { dataset: { url: 'http://h/' } } : null) }
+        });
+        ctx.click({
+            preventDefault() {}, stopPropagation() {},
+            target: { closest: sel => (sel === '.staging-movecopy' ? {} : (sel === '.vbm-toolbar' ? {} : null)) }
+        });
+        expect(picks).toEqual([{ mode: null, hasUnfav: true }]);
+        // bookmarked moved (id 7), unbookmarked created into the target —
+        // both LEFT the staging area (homing completes the mission)
+        expect(moves).toEqual([['7', { parentId: '33' }]]);
+        expect(viewRecent.api.state().items).toHaveLength(0);
+    });
+
+    it('saveGroupToFolder homes a whole group through the picker', () => {
+        const picks = [];
+        const dialogs = {
+            BookmarkFolderPickDialog: { open(opts) { picks.push(opts); opts.onPick('9', 'move'); } },
+            ConfirmDialog: { open: opts => opts.fn1() }
+        };
+        const ctx = setup({ dialogs });
+        const { viewRecent, chrome } = ctx;
+        chrome.bookmarks.move = (id, dest, cb) => cb();
+        chrome.bookmarks.create = (opts, cb) => cb({ id: 'c2', url: opts.url });
+        chrome.bookmarks.getTree = cb => cb([]);
+        viewRecent.api.addItems([
+            { id: '7', url: 'http://a/', title: 'A' },
+            { id: null, url: 'http://h/', title: 'H' }
+        ]);
+        const state = viewRecent.api.state();
+        state.groups.push({ id: 'g1', name: 'Tools', collapsed: false, createdAt: 1, sourceFolderId: null, sourceTabGroup: null });
+        state.items.forEach(it => { it.group = 'g1'; });
+        viewRecent.api.saveGroupToFolder('g1');
+        expect(picks).toHaveLength(1);
+        expect(viewRecent.api.state().items).toHaveLength(0); // all homed
+        expect(viewRecent.api.state().groups).toHaveLength(0); // empty group dissolved
+    });
+
+    it('clearStaging asks for confirmation and empties everything', () => {
+        const undo = undoOn();
+        const confirms = [];
+        const dialogs = {
+            ConfirmDialog: { open: opts => { confirms.push(opts.dialog); opts.fn1(); } }
+        };
+        const ctx = setup({ undo, dialogs });
+        const { viewRecent, store } = ctx;
+        viewRecent.api.addItems([{ id: null, url: 'http://x/', title: 'X' }]);
+        viewRecent.api.setSelecting(true);
+        ctx.click({
+            preventDefault() {}, stopPropagation() {},
+            target: { closest: sel => (sel === '.staging-clear-all' ? {} : (sel === '.vbm-toolbar' ? {} : null)) }
+        });
+        expect(confirms).toEqual(['stagingClearConfirm']);
+        expect(viewRecent.api.state().items).toHaveLength(0);
+        expect(JSON.parse(store.get('staging')).items).toHaveLength(0);
+        expect(undo.toastCalls).toContain('stagingCleared');
+    });
+
+    it('Esc exits selection mode through the view onEscape', () => {
+        const ctx = setup({});
+        const { viewRecent, def } = ctx;
+        viewRecent.api.addItems([{ id: null, url: 'http://x/', title: 'X' }]);
+        viewRecent.api.setSelecting(true);
+        expect(viewRecent.api.isSelecting()).toBe(true);
+        expect(def().onEscape()).toBe(true);
+        expect(viewRecent.api.isSelecting()).toBe(false);
+        // with nothing transient left, Esc falls through
+        expect(def().onEscape()).toBe(false);
+    });
+});

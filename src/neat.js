@@ -741,8 +741,10 @@ import { deferIdle, mark as perfMark } from './idle.js';
         treeView,
         visitStats,
         undo,
-        // >100-folder send confirm
+        // >100-folder send confirm / delete-clear confirms
         get dialogs() { return dialogs; },
+        // selection-mode open actions (10-item confirm lives inside actions)
+        get actions() { return actions; },
         // 第五轮项3: re-lay the dead-mark × overlays after every re-render
         // (activate + the onCreated/onRemoved debounced refresh).
         onRowsRendered: () => deadOverlayRefresh()

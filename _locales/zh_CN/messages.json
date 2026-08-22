@@ -2352,5 +2352,76 @@
   },
   "groupCopyToFolder": {
     "message": "复制到文件夹…"
+  },
+  "stagingCount": {
+    "message": "已暂存 $n$ 条",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingMoveCopy": {
+    "message": "移动/复制到…"
+  },
+  "stagingMoveDone": {
+    "message": "已归位 $n$ 条",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingCopyDone": {
+    "message": "已复制 $n$ 条",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingMoveConfirm": {
+    "message": "将 $n$ 条移动到所选文件夹?",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingDeleteConfirm": {
+    "message": "删除 $n$ 条?未收藏的条目只会移出暂存区。",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingDeleted": {
+    "message": "已删除 $n$ 个书签",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingRemovedCount": {
+    "message": "已从暂存区移出 $n$ 条",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingClear": {
+    "message": "清空暂存"
+  },
+  "stagingClearConfirm": {
+    "message": "清空整个暂存区?不会改动书签树。"
+  },
+  "stagingCleared": {
+    "message": "暂存区已清空"
+  },
+  "groupPlaceTooltip": {
+    "message": "将此分组保存到文件夹…"
   }
 }

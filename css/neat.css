@@ -1852,6 +1852,68 @@ menu[type=context] hr {
     text-align: center;
 }
 
+/* The staging view's idle/selection toolbars share the .vbm-toolbar chrome
+   (one Tab rung each; the selection bar is two). */
+.staging-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px 8px;
+    padding: 2px 6px;
+}
+
+.staging-toolbar .staging-summary {
+    color: var(--vbm-muted);
+    white-space: nowrap;
+}
+
+.staging-toolbar button {
+    border: 0;
+    border-radius: 4px;
+    background: transparent;
+    color: var(--vbm-fg);
+    font: inherit;
+    font-size: .9em;
+    padding: 3px 6px;
+    cursor: pointer;
+}
+
+.staging-toolbar button:hover:not([disabled]),
+.staging-toolbar button:focus-visible {
+    background: var(--vbm-bg-elev);
+    outline: none;
+}
+
+.staging-toolbar button[disabled] {
+    color: var(--vbm-muted);
+    cursor: default;
+}
+
+.staging-select-mode {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    padding: 0;
+}
+
+/* Group-head hover homing (§3.5) — the .row-btn reveal language. */
+.staging-group-head .staging-group-place {
+    margin-inline-start: auto;
+    visibility: hidden;
+}
+
+.staging-group:hover .staging-group-place,
+.staging-group:focus-within .staging-group-place,
+.staging-group-place:focus-visible {
+    visibility: visible;
+}
+
+.staging-group-place:hover {
+    color: var(--vbm-accent);
+}
+
 .bookmark-folder-pick-empty {
     padding: 10px 8px;
     color: var(--vbm-muted);
@@ -3745,6 +3807,9 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
    inline start (::before joins the flex row), the selected state fills it
    and tints the row; the row action buttons + keeper radios hide so every
    row click toggles membership. The batch bar shares the toolbar chrome. */
+#staging-list ul.selecting li.vbm-row::before,
+#staging-list ul.selecting li.staging-group .group-head::before,
+#staging-list ul.selecting li.staging-bucket .staging-bucket-head::before,
 #dead-list ul.selecting li.vbm-row::before,
 #dupes-list ul.selecting li.dupes-group .group-head::before {
     content: '';
@@ -3771,6 +3836,11 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
     padding-inline-end: 4px;
 }
 
+#staging-list ul.selecting li.vbm-row {
+    padding-inline-start: 8px;
+    padding-inline-end: 4px;
+}
+
 #dead-list ul.selecting li.vbm-row > a {
     margin-inline-end: 0;
 }
@@ -3782,6 +3852,13 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
     content: none;
 }
 
+#staging-list ul.selecting li.vbm-row > a::before {
+    content: none;
+}
+
+#staging-list ul.selecting li.vbm-row.sel::before,
+#staging-list ul.selecting li.staging-group.sel .group-head::before,
+#staging-list ul.selecting li.staging-bucket.sel .staging-bucket-head::before,
 #dead-list ul.selecting li.vbm-row.sel::before,
 #dupes-list ul.selecting li.dupes-group.sel .group-head::before {
     content: '✓';
@@ -3794,6 +3871,9 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
 }
 
 #dead-list ul.selecting li.vbm-row.sel,
+#staging-list ul.selecting li.vbm-row.sel,
+#staging-list ul.selecting li.staging-group.sel .group-head,
+#staging-list ul.selecting li.staging-bucket.sel .staging-bucket-head,
 #dupes-list ul.selecting li.dupes-group.sel .group-head {
     background-color: var(--vbm-bg-selected);
 }

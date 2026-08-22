@@ -2546,5 +2546,76 @@
   },
   "groupCopyToFolder": {
     "message": "Copy to folder…"
+  },
+  "stagingCount": {
+    "message": "$n$ staged",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingMoveCopy": {
+    "message": "Move/copy to…"
+  },
+  "stagingMoveDone": {
+    "message": "Moved $n$ item(s) home",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingCopyDone": {
+    "message": "Copied $n$ item(s)",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingMoveConfirm": {
+    "message": "Move $n$ item(s) to the chosen folder?",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingDeleteConfirm": {
+    "message": "Delete $n$ item(s)? Unbookmarked ones just leave the staging area.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingDeleted": {
+    "message": "Deleted $n$ bookmark(s)",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingRemovedCount": {
+    "message": "Removed $n$ item(s) from the staging area",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingClear": {
+    "message": "Clear staging"
+  },
+  "stagingClearConfirm": {
+    "message": "Clear the whole staging area? The bookmark tree is not touched."
+  },
+  "stagingCleared": {
+    "message": "Staging area cleared"
+  },
+  "groupPlaceTooltip": {
+    "message": "Save this group to a folder…"
   }
 }
