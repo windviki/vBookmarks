@@ -111,6 +111,10 @@
         // written via TAB_GROUP_FOLDER_META_KEY so the census's literal scan
         // can't see it) is likewise local: it is keyed by bookmark folder id.
         'tabGroupsClosed', 'tabGroupsViewState', 'tabGroupFolderMeta',
+        // velvet staging feature: the staging workbench dataset (device-local
+        // by design — bookmark ids and bulk snapshots) and the folder-picker
+        // quick-pick rosters (pin list + LRU recents, both bookmark-id keyed).
+        'staging', 'folderPickPins', 'folderPickRecents',
         // 'showSyncStatus' historically lived in localStorage (the other sync
         // keys were born in the sync area) — listing it lets the v1 migration
         // hand it to chrome.storage.local, from where the local→sync
@@ -132,7 +136,8 @@
     // Deliberately NOT here (stay local):
     // - bookmark-id-keyed data (bookmark ids are device-local and unstable
     //   across Chrome sync): quickAddFolderId, separators*, deadMarks*,
-    //   visitStats, focusID;
+    //   visitStats, focusID, staging (bulk url/title snapshots may exceed
+    //   the sync size limits anyway), folderPickPins/folderPickRecents;
     // - oversized values: customIcon (~10-14KB serialized > 8KB/item sync
     //   limit), userstyle (unbounded CSS);
     // - device/screen/network state: openInSidePanel, autoResizePopup, zoom,
@@ -155,8 +160,9 @@
         'disableRecentView', 'disableStatsView', 'disableDeadView', 'disableDupesView',
         'disableTabGroupsView',
         // feature switches
+        // feature switches
         'paletteEnabled', 'quickAddEnabled', 'showToolButton', 'quickAddContextMenu',
-        'collapseTabGroupMenu', 'collapseSortMenu', 'statsEnabled', 'searchHistoryEnabled',
+        'collapseTabGroupMenu', 'collapseSortMenu', 'collapseAddFolderMenu', 'statsEnabled', 'searchHistoryEnabled',
         // icon handling
         'faviconContrast', 'faviconEnrich', 'faviconEnrichAgg', 'faviconBackupInclude',
         // sort/filter/count preferences

@@ -309,7 +309,7 @@ describe('store.js', () => {
                 'disableRecentView', 'disableStatsView', 'disableDeadView', 'disableDupesView',
                 'disableTabGroupsView',
                 'paletteEnabled', 'quickAddEnabled', 'showToolButton', 'quickAddContextMenu',
-                'collapseTabGroupMenu', 'collapseSortMenu', 'statsEnabled', 'searchHistoryEnabled',
+                'collapseTabGroupMenu', 'collapseSortMenu', 'collapseAddFolderMenu', 'statsEnabled', 'searchHistoryEnabled',
                 'faviconContrast', 'faviconEnrich', 'faviconEnrichAgg', 'faviconBackupInclude',
                 'recentCount', 'sortOptions',
                 'dupesStrategy', 'dupesScope', 'dupesIgnoreScheme',
