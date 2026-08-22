@@ -486,13 +486,45 @@ describe('activate', () => {
         expect(indicator().style.transform).toBe('translateX(100px)');
     });
 
+    it('clamps the indicator to the strip so a last-tab rounding overflow cannot widen the popup (4.0.8 report)', () => {
+        const { views, tabs, indicator, byId, makeEl } = setup({});
+        views.register({
+            id: 'dupes', titleKey: 'viewDupes', icon: '<svg/>',
+            container: makeEl(), listEl: makeEl()
+        });
+        const strip = byId['view-tabs'];
+        strip.clientWidth = 519;
+        const dupesTab = tabs().find(t => t.id === 'view-tab-dupes');
+        // offsetLeft/offsetWidth are rounded independently by the browser —
+        // on a fractional-DPR layout their sum (433 + 87) overshoots the
+        // strip's true right edge (519) by 1px. The indicator used to ride
+        // that overshoot out of the strip, and the absolutely-positioned 1px
+        // overflow propagated to the document scroll width, which Chrome
+        // uses to size the popup window (the dupes tab is the strip's last,
+        // so only the dupes view widened the popup by 1px).
+        dupesTab.offsetLeft = 433;
+        dupesTab.offsetWidth = 87;
+        expect(views.activate('dupes')).toBe(true);
+        expect(indicator().style.transform).toBe('translateX(433px)');
+        expect(indicator().style.width).toBe('86px'); // clamped to 519 - 433
+        // a mid-strip tab keeps its full width (no clamp when it fits)
+        const treeTab = tabs().find(t => t.id === 'view-tab-tree');
+        treeTab.offsetLeft = 100;
+        treeTab.offsetWidth = 64;
+        expect(views.activate('tree')).toBe(true);
+        expect(indicator().style.width).toBe('64px');
+        // degenerate: a tab fully past the strip floors at 0, never negative
+        dupesTab.offsetLeft = 520;
+        expect(views.activate('dupes')).toBe(true);
+        expect(indicator().style.width).toBe('0px');
+    });
+
     it('activating the current view is a no-op returning true', () => {
         const { views, store } = setup({});
         const calls = [];
         views.attach('tree', { deactivate: () => calls.push('deactivate') });
         store.setCalls = [];
-        expect(views.activate('tree')).toBe(true);
-        expect(calls).toEqual([]);
+        expect(views.activate('tree')).toBe(true);        expect(calls).toEqual([]);
         expect(store.setCalls).toEqual([]);
     });
 
