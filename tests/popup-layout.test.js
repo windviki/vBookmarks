@@ -44,6 +44,17 @@ describe('view tab strip responsiveness (fourth-round item 1)', () => {
     it('no unconditional panel-mode label rule survives (the query governs)', () => {
         expect(neatCss).not.toContain('body.panel-mode .view-tab .tab-label');
     });
+
+    it('the number badge collapses below a 56px tab (ultra-narrow de-crowding)', () => {
+        // 4.1.0 P1: at the 320px popup floor with many views enabled each
+        // tab is ~45px — icon+badge overlap. The badge drops out below 56px
+        // regardless of the showTabBadges option; the label query (112px)
+        // stays the wider tier: icon+label+badge → icon+badge → icon-only.
+        const query = neatCss.match(/@container \(max-width: 56px\) \{([^@]*)\}/);
+        expect(query, 'per-tab 56px container query exists').toBeTruthy();
+        expect(query[1]).toContain('.view-tab .tab-badge');
+        expect(query[1]).toContain('display: none');
+    });
 });
 
 describe('search field with overlaid clear button (fourth-round item 3)', () => {

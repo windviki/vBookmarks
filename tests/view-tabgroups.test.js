@@ -1920,3 +1920,17 @@ describe('escaping + stale-tab guards (4.1.0 merge review)', () => {
         expect(typeof seen[0]).toBe('function');
     });
 });
+
+describe('narrow-width de-crowding contracts (4.1.0 P1, CSS)', () => {
+    it('the current-tab text pill hides below a 400px container — the row tint carries the meaning', async () => {
+        const fs = (await import('node:fs')).default;
+        const neatCss = fs.readFileSync(new URL('../css/neat.css', import.meta.url), 'utf8');
+        const query = neatCss.match(/@container \(max-width: 400px\) \{([^}]*)\}/);
+        expect(query, '400px container query exists').toBeTruthy();
+        expect(query[1]).toContain('#tabgroups-list .row-badge.current');
+        expect(query[1]).toContain('display: none');
+        // …and the compensating tint exists on the row itself
+        expect(neatCss).toContain('li.tabgroups-row.tabgroups-current {');
+        expect(neatCss).toContain('color-mix(in srgb, var(--vbm-accent) 8%, transparent)');
+    });
+});

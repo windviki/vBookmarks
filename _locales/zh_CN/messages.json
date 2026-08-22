@@ -1899,7 +1899,8 @@
     }
   },
   "tabGroupsCurrentTab": {
-    "message": "当前标签"
+    "message": "当前",
+    "description": "Compact pill on the row of the tab that is active in its window (the row tint + pill together mark it)."
   },
   "tabGroupsAddBookmark": {
     "message": "收藏此标签页"

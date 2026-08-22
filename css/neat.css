@@ -2298,6 +2298,18 @@ body.no-view-tabs #view-tabs {
     }
 }
 
+/* 超窄收级（4.1.0 P1）：tab 自身宽度不足时先收数字徽标——icon+badge 在
+   ~56px 以下开始互相挤压重叠（7 个视图 tab 挤在 320px 最窄 popup 时每
+   个仅 ~45px）。与 showTabBadges 选项无关：选项关闭时徽标本就不渲染，
+   这里是宽度驱动的收级，宽度恢复后徽标自动回来；aria-label 不受影响。
+   断点放在 label(112px) 之下，形成 3 档渐进：icon+label+badge →
+   icon+badge → icon-only。 */
+@container (max-width: 56px) {
+    .view-tab .tab-badge {
+        display: none;
+    }
+}
+
 /* Badge dot (dead marks / dupe groups): danger token + on-danger count */
 .view-tab .tab-badge {
     flex: none;
@@ -4286,6 +4298,14 @@ li.tabgroups-row.tabgroups-current {
 #tabgroups-list ul li.tabgroups-row .row-badge.current {
     background: var(--vbm-accent);
     color: var(--vbm-accent-fg);
+}
+/* 超窄（4.1.0 P1）：≤400px 容器宽收起当前标签的文字徽标，把右缘让给
+   标题与四列图标——当前标签的定位信号由行的 accent 淡染
+   （li.tabgroups-current）承担，语义不丢失。恢复宽度后徽标自动回来。 */
+@container (max-width: 400px) {
+    #tabgroups-list .row-badge.current {
+        display: none;
+    }
 }
 #tabgroups-list ul li.tabgroups-row.dragging { opacity: .45; }
 #tabgroups-list ul li.tabgroups-row.drag-over {

@@ -2044,7 +2044,8 @@
     }
   },
   "tabGroupsCurrentTab": {
-    "message": "Current tab"
+    "message": "Current",
+    "description": "Compact pill on the row of the tab that is active in its window (the row tint + pill together mark it)."
   },
   "tabGroupsAddBookmark": {
     "message": "Bookmark this tab"
