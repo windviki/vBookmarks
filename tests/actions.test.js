@@ -244,7 +244,7 @@ const setup = (opts = {}) => {
         globalThis.window.syncManager = opts.syncManager;
     const store = makeStore(opts.storeData || {});
     const calls = {
-        confirm: [], edit: [], newFolder: [],
+        confirm: [], edit: [], newFolder: [], folderPick: [],
         bmHTML: [], folderHTML: [], sepHTML: [], genHTML: [],
         sepAdd: [], sepRemove: []
     };
@@ -254,6 +254,7 @@ const setup = (opts = {}) => {
         store,
         dialogs: {
             ConfirmDialog: { open: o => calls.confirm.push(o) },
+            BookmarkFolderPickDialog: { open: o => calls.folderPick.push(o) },
             EditDialog: { open: o => calls.edit.push(o) },
             NewFolderDialog: {
                 open: (name, cb) => {
@@ -311,7 +312,11 @@ describe('module API', () => {
             'openBookmarks', 'openBookmarksInGroup', 'openInExistingTabGroup',
             'openBookmarksNewWindow',
             'editBookmarkFolder', 'deleteBookmark', 'deleteBookmarks',
-            'addSeparator', 'deleteSeparator'
+            'addSeparator', 'deleteSeparator',
+            // velvet staging §5: the internal clipboard + single copy/move
+            'setClipBookmark', 'cancelClipBookmark', 'hasClipBookmark',
+            'hasCutClipboard', 'pasteClipBookmarkInto', 'copyMoveBookmarkTo',
+            'reapplyCutState'
         ];
         for (const name of names)
             expect(typeof actions[name], name).toBe('function');
@@ -1215,5 +1220,85 @@ describe('separator actions', () => {
             ['removeTree', '30'],
             ['toast', 'deletedBookmark[]']
         ]);
+    });
+});
+
+describe('internal clipboard (velvet staging §5.2)', () => {
+    it('copy/cut record the session clipboard; cut marks the tree row', () => {
+        const { actions, els, ops } = setup({});
+        expect(actions.hasClipBookmark()).toBe(false);
+        actions.setClipBookmark('copy', '42', 'Title');
+        expect(actions.hasClipBookmark()).toBe(true);
+        expect(actions.hasCutClipboard()).toBe(false);
+        expect(ops.some(o => o[0] === 'toast' && String(o[1]).includes('copiedToast'))).toBe(true);
+        // cut paints #neat-tree-item-42 with .cut
+        const row = { classList: null };
+        void row;
+        actions.setClipBookmark('cut', '42', 'Title');
+        expect(actions.hasCutClipboard()).toBe(true);
+        actions.cancelClipBookmark();
+        expect(actions.hasCutClipboard()).toBe(false);
+    });
+
+    it('paste moves on cut (consuming) and copies on copy (keeping)', () => {
+        const { actions, chrome, ops } = setup({});
+        const moves = [];
+        const creates = [];
+        chrome.bookmarks.move = (id, dest, cb) => { moves.push([id, dest]); cb(); };
+        chrome.bookmarks.create = (opts, cb) => { creates.push(opts); cb({ id: 'n1' }); };
+        chrome.bookmarks.get = (id, cb) => cb([{ id: '42', parentId: '1', title: 'T', url: 'http://t/' }]);
+        chrome.bookmarks.getTree = cb => cb([]);
+        // cut → paste moves and consumes
+        actions.setClipBookmark('cut', '42', 'T');
+        actions.pasteClipBookmarkInto('9');
+        expect(moves).toEqual([['42', { parentId: '9' }]]);
+        expect(actions.hasClipBookmark()).toBe(false);
+        // copy → paste creates and keeps
+        actions.setClipBookmark('copy', '42', 'T');
+        actions.pasteClipBookmarkInto('9');
+        expect(creates).toEqual([{ parentId: '9', title: 'T', url: 'http://t/' }]);
+        expect(actions.hasClipBookmark()).toBe(true);
+        void ops;
+    });
+
+    it('pasting a cut onto its own parent clears the clipboard as a no-op', () => {
+        const { actions, chrome } = setup({});
+        const moves = [];
+        chrome.bookmarks.move = (id, dest, cb) => { moves.push([id, dest]); cb(); };
+        chrome.bookmarks.get = (id, cb) => cb([{ id: '42', parentId: '9', title: 'T', url: 'http://t/' }]);
+        actions.setClipBookmark('cut', '42', 'T');
+        actions.pasteClipBookmarkInto('9');
+        expect(moves).toEqual([]); // no move call at all
+        expect(actions.hasClipBookmark()).toBe(false);
+    });
+
+    it('pasting a deleted bookmark toasts and clears', () => {
+        const { actions, chrome, ops } = setup({});
+        chrome.bookmarks.get = (id, cb) => cb([]);
+        actions.setClipBookmark('copy', '42', 'T');
+        actions.pasteClipBookmarkInto('9');
+        expect(actions.hasClipBookmark()).toBe(false);
+        expect(ops.some(o => o[0] === 'toast' && String(o[1]).includes('pasteGone'))).toBe(true);
+    });
+
+    it('copyMoveBookmarkTo opens the three-button picker and runs the action', () => {
+        const { actions, chrome, calls } = setup({});
+        chrome.bookmarks.get = (id, cb) => cb([{ id: '42', parentId: '1', title: 'T', url: 'http://t/' }]);
+        const moves = [];
+        const creates = [];
+        chrome.bookmarks.move = (id, dest, cb) => { moves.push([id, dest]); cb(); };
+        chrome.bookmarks.create = (opts, cb) => { creates.push(opts); cb({ id: 'n' }); };
+        chrome.bookmarks.getTree = cb => cb([]);
+        actions.copyMoveBookmarkTo('42');
+        expect(calls.folderPick).toHaveLength(1);
+        expect(calls.folderPick[0].mode).toBeNull();
+        // "move" lands a real move into the picked folder
+        calls.folderPick[0].onPick('33', 'move');
+        expect(moves).toEqual([['42', { parentId: '33' }]]);
+        // "copy" creates the copy instead
+        calls.folderPick.length = 0;
+        actions.copyMoveBookmarkTo('42');
+        calls.folderPick[0].onPick('33', 'copy');
+        expect(creates).toEqual([{ parentId: '33', title: 'T', url: 'http://t/' }]);
     });
 });

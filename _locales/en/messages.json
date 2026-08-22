@@ -2617,5 +2617,39 @@
   },
   "groupPlaceTooltip": {
     "message": "Save this group to a folder…"
+  },
+  "copyBookmark": {
+    "message": "Copy"
+  },
+  "cutBookmark": {
+    "message": "Cut"
+  },
+  "copyMoveTo": {
+    "message": "Copy/move to…"
+  },
+  "pasteHere": {
+    "message": "Paste here"
+  },
+  "copiedToast": {
+    "message": "Copied: $t$",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
+  },
+  "cutToast": {
+    "message": "Cut: $t$ — paste into a target folder (Esc cancels)",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
+  },
+  "pasteDone": {
+    "message": "Pasted"
+  },
+  "pasteGone": {
+    "message": "The bookmark no longer exists — clipboard cleared"
   }
 }

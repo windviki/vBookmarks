@@ -238,6 +238,12 @@ import { deferIdle, mark as perfMark } from './idle.js';
         'remove-separator': 'removeSeparator',
         'add-folder-separator': 'addSeparator',
         'copy-title-and-url': 'copyTitleAndUrl',
+        // velvet staging §5: the internal clipboard entries (paste label
+        // shows only on tree folders with a loaded clipboard)
+        'copy-bookmark': 'copyBookmark',
+        'cut-bookmark': 'cutBookmark',
+        'copy-move-to': 'copyMoveTo',
+        'paste-here': 'pasteHere',
         // 'copy-all-titles-and-urls' : 'copyAllTitlesAndUrls',
         'replace-url': 'replaceUrl',
         'folder-window': 'openBookmarks',
@@ -622,6 +628,9 @@ import { deferIdle, mark as perfMark } from './idle.js';
         dialogs,
         search,
         separatorManager,
+        // velvet staging §5: the clipboard pastes refresh the tree — treeView
+        // inits below, the getter defers to event time (TDZ-safe)
+        get generateTree() { return treeView.generateTree; },
         generateBookmarkHTML: treeRender.generateBookmarkHTML,
         generateFolderHTML: treeRender.generateFolderHTML,
         generateSeparatorHTML: treeRender.generateSeparatorHTML,
@@ -692,6 +701,8 @@ import { deferIdle, mark as perfMark } from './idle.js';
             deadOverlayRefresh();
             visitStats.prune(ids);
             stagingTreeSync(t, snapshot);
+            if (actions.reapplyCutState)
+                actions.reapplyCutState();
             perfMark('tree-generated');
         },
         // slice D: page-side visit collection — bookmarkHandler funnels

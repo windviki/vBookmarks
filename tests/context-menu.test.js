@@ -222,7 +222,8 @@ const setup = (opts = {}) => {
     for (const stageItem of ['hist-row-stage', 'add-to-staging', 'staging-remove-item', 'staging-fav-toggle', 'staging-group-assign'])
         el('DIV', stageItem).classList.add('menu-item');
     // the bookmark-menu id-dependent entries the unfav-staging-row rule hides
-    for (const bmId of ['bookmark-edit', 'bookmark-delete', 'copy-title-and-url'])
+    for (const bmId of ['bookmark-edit', 'bookmark-delete', 'copy-title-and-url',
+        'copy-move-to', 'copy-bookmark', 'cut-bookmark', 'paste-here'])
         el('DIV', bmId).classList.add('menu-item');
     // v4 task-3 #16: the dupes group-head menu items (open-time labels)
     el('DIV', 'dupes-group-clean');
@@ -316,13 +317,16 @@ const setup = (opts = {}) => {
         'addNewBookmarkNode', 'copyAllTitlesAndUrls', 'replaceUrl', 'openBookmarks',
         'openBookmarksInGroup', 'openInExistingTabGroup', 'openBookmarksNewWindow',
         'editBookmarkFolder', 'deleteBookmark',
-        'deleteBookmarks', 'addSeparator', 'deleteSeparator'])
+        'deleteBookmarks', 'addSeparator', 'deleteSeparator',
+        // velvet staging §5: the tree clipboard trio
+        'setClipBookmark', 'copyMoveBookmarkTo', 'pasteClipBookmarkInto'])
         actions[name] = (...args) => {
             actionCalls.push([name, ...args]);
             // 4.0.1: lets a test observe the menu/focus state DURING the action
             if (opts.onAction)
                 opts.onAction(name, args);
         };
+    actions.hasClipBookmark = () => !!opts.clipboard;
     const sortCalls = [];
     // P3.4: GroupDialog (title+color before opening a new group) and
     // GroupPickDialog (existing-group picker) are recorded doubles.
@@ -2992,5 +2996,45 @@ describe('staging group menu + staging-row entries (velvet staging §3.5/§2.4)'
         expect(staging.calls).toEqual([
             ['remove', 'http://s1/'], ['fav', 'http://s1/'], ['assign', ['http://s1/']]
         ]);
+    });
+});
+
+describe('tree clipboard entries (velvet staging §5)', () => {
+    it('copy/cut dispatch through the actions clipboard; copy-move-to follows', () => {
+        const ctx = setup({});
+        for (const id of ['copy-bookmark', 'cut-bookmark', 'copy-move-to']) {
+            ctx.openOn(ctx.makeBookmarkRow('42').a);
+            fire(ctx.bookmarkMenu, 'mouseup', makeEvent({ button: 0, target: ctx.menuItem(id) }));
+        }
+        const names = ctx.actionCalls.map(c => c[0]);
+        expect(names).toEqual(['setClipBookmark', 'setClipBookmark', 'copyMoveBookmarkTo']);
+        expect(ctx.actionCalls[0][1]).toBe('copy');
+        expect(ctx.actionCalls[1][1]).toBe('cut');
+    });
+
+    it('paste-here shows on tree folders only while the clipboard holds a bookmark', () => {
+        const loaded = setup({ clipboard: true });
+        loaded.openOn(loaded.makeFolderRow('7').span);
+        expect(loaded.byId['paste-here'].style.display).toBe('block');
+        const empty = setup({ clipboard: false });
+        empty.openOn(empty.makeFolderRow('7').span);
+        expect(empty.byId['paste-here'].style.display).toBe('none');
+        // dispatch pastes into the folder id
+        const ctx2 = setup({ clipboard: true });
+        ctx2.openOn(ctx2.makeFolderRow('7').span);
+        fire(ctx2.folderMenu, 'mouseup', makeEvent({ button: 0, target: ctx2.menuItem('paste-here') }));
+        expect(ctx2.actionCalls.some(c => c[0] === 'pasteClipBookmarkInto' && c[1] === '7')).toBe(true);
+    });
+
+    it('copy/cut follow the positional tree-visibility rule', () => {
+        const ctx = setup({});
+        ctx.openOn(ctx.makeBookmarkRow('42').a);
+        expect(ctx.byId['copy-bookmark'].style.display).toBe('block');
+        expect(ctx.byId['cut-bookmark'].style.display).toBe('block');
+        // switchBookmarkMenu(true) disables the positional set (search mode:
+        // a results row is never a tree row)
+        ctx.menus.switchBookmarkMenu(true);
+        expect(ctx.byId['copy-bookmark'].style.display).toBe('none');
+        expect(ctx.byId['cut-bookmark'].style.display).toBe('none');
     });
 });

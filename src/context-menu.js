@@ -1123,8 +1123,18 @@ export function initContextMenu(ctx = {}) {
         }
         // issue #33: refresh the direct sort items' labels when the folder
         // menu is about to show (recursive suffix follows the sortOptions).
-        if (menu === $folderContextMenu)
+        if (menu === $folderContextMenu) {
             updateSortLabels();
+            // velvet staging §5.2: "Paste here" rides the TREE folder menu
+            // only (outside the tree there is no target-folder semantics),
+            // and only while the clipboard holds a bookmark.
+            const pasteItem = $('paste-here');
+            if (pasteItem) {
+                const actions = ctx.actions;
+                const inTree = el.parentNode && (el.parentNode.id || '').startsWith('neat-tree-item-');
+                pasteItem.style.display = (inTree && actions && actions.hasClipBookmark()) ? 'block' : 'none';
+            }
+        }
         if (menu) {
             currentContext = el;
             // Capture the owner row's identity NOW — a view re-render under
@@ -1267,6 +1277,16 @@ export function initContextMenu(ctx = {}) {
                     ctx.staging.openGroupAssign([li.dataset.url]);
                 break;
             }
+            // velvet staging §5: the internal clipboard + single-item copy/move
+            case 'copy-bookmark':
+                actions.setClipBookmark('copy', id, groupTitle);
+                break;
+            case 'cut-bookmark':
+                actions.setClipBookmark('cut', id, groupTitle);
+                break;
+            case 'copy-move-to':
+                actions.copyMoveBookmarkTo(id);
+                break;
             // velvet staging §2.3: send this bookmark to the staging area.
             // The authoritative node comes from the tree (the anchor href
             // is display-escaped); a URL already staged rides addItems'
@@ -1503,6 +1523,11 @@ export function initContextMenu(ctx = {}) {
                 case 'add-folder-to-staging':
                     if (ctx.staging)
                         ctx.staging.sendFolder(id);
+                    break;
+                // velvet staging §5.2: paste the clipboard bookmark at this
+                // folder's end (copy keeps the clipboard, cut consumes it).
+                case 'paste-here':
+                    actions.pasteClipBookmarkInto(id);
                     break;
                 // issue #33: direct sort actions run with the persisted
                 // sortOptions (foldersFirst/recursive), only the key flips.
@@ -2052,7 +2077,10 @@ export function initContextMenu(ctx = {}) {
         'add-bookmark-before-bookmark', 'add-bookmark-after-bookmark',
         'bookmark-context-menu-sep1', 'add-folder-before-bookmark',
         'add-folder-after-bookmark', 'bookmark-context-menu-sep2',
-        'add-separator', 'bookmark-context-menu-sep3'
+        'add-separator', 'bookmark-context-menu-sep3',
+        // velvet staging §5.3: copy/cut are TREE-ONLY entries (the clipboard
+        // is position-to-position); the list buys the tree-visibility rule.
+        'copy-bookmark', 'cut-bookmark'
     ];
     const setPositionalItems = visible => {
         for (let i = 0; i < POSITIONAL_IDS.length; i++) {

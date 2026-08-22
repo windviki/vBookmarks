@@ -50,6 +50,7 @@ export function initActions(ctx = {}) {
     // P3.3: deletions capture an undo snapshot and toast afterwards; without
     // an injected undo API (tests, defensive) they stay plain silent deletes.
     const undo = ctx.undo || { capture() {}, showToast() {} };
+    const toast = msg => undo.showToast(msg);
 
     // ++++++++ added by windviki@gmail.com ++++++++
     // 拷贝发生在 chrome.bookmarks.get 的异步回调里，早已脱离用户手势上下
@@ -291,6 +292,122 @@ export function initActions(ctx = {}) {
     const dontConfirmOpenFolder = !!store.get('dontConfirmOpenFolder');
     const bookmarkClickStayOpen = !!store.get('bookmarkClickStayOpen');
     const openBookmarksLimit = 10;
+    // --- Session-scoped internal clipboard (velvet staging §5.2) -----------
+    // One bookmark at a time, position-to-position quick moves. Lives in
+    // this module's closure ONLY (never storage, never the tree): popup and
+    // sidepanel keep their own — the workbench semantics are per-window.
+    // cut paints the source row with .cut until paste/cancel/overwrite.
+    let clipBookmark = null; // { mode: 'copy'|'cut', id, title }
+    // treeView inits after actions in neat.js — a lazy getter bridges the TDZ
+    const refreshTree = () => {
+        if (ctx.generateTree)
+            chrome.bookmarks.getTree(ctx.generateTree);
+    };
+    const treeRowOf = id => {
+        const row = document.getElementById('neat-tree-item-' + id);
+        return row || null;
+    };
+    const clearCutMark = () => {
+        if (!document.querySelectorAll)
+            return;
+        for (const row of document.querySelectorAll('.cut'))
+            row.classList.remove('cut');
+    };
+    const reapplyCutState = () => {
+        clearCutMark();
+        if (clipBookmark && clipBookmark.mode === 'cut') {
+            const row = treeRowOf(clipBookmark.id);
+            if (row && row.classList)
+                row.classList.add('cut');
+        }
+    };
+    const setClipBookmark = (mode, id, title) => {
+        clipBookmark = { mode, id, title };
+        reapplyCutState();
+        toast(_m(mode === 'cut' ? 'cutToast' : 'copiedToast', title || ''));
+    };
+    const cancelClipBookmark = () => {
+        clipBookmark = null;
+        clearCutMark();
+    };
+    const hasCutClipboard = () => !!(clipBookmark && clipBookmark.mode === 'cut');
+    const hasClipBookmark = () => !!clipBookmark;
+    // Paste into a folder row: copy keeps the clipboard (multi-paste), cut
+    // consumes it (and no-ops onto the original parent).
+    const pasteClipBookmarkInto = folderId => {
+        if (!clipBookmark)
+            return;
+        const clip = clipBookmark;
+        chrome.bookmarks.get(clip.id, nodes => {
+            if (!nodes || !nodes.length || chrome.runtime.lastError) {
+                toast(_m('pasteGone'));
+                cancelClipBookmark();
+                return;
+            }
+            const node = nodes[0];
+            if (clip.mode === 'cut') {
+                if (node.parentId === folderId) {
+                    // same parent: nothing to do — clear and move on
+                    cancelClipBookmark();
+                    return;
+                }
+                chrome.bookmarks.move(clip.id, { parentId: folderId }, () => {
+                    if (chrome.runtime.lastError)
+                        return;
+                    clipBookmark = null;
+                    clearCutMark();
+                    refreshTree();
+                    toast(_m('pasteDone'));
+                });
+            } else {
+                chrome.bookmarks.create({
+                    parentId: folderId,
+                    title: node.title,
+                    url: node.url
+                }, () => {
+                    refreshTree();
+                    toast(_m('pasteDone'));
+                });
+            }
+        });
+    };
+    // "Copy/move to…" — the picker completes a single-item move/copy (§5.1).
+    const copyMoveBookmarkTo = id => {
+        if (!dialogs || !dialogs.BookmarkFolderPickDialog)
+            return;
+        chrome.bookmarks.get(id, nodes => {
+            if (!nodes || !nodes.length)
+                return;
+            const node = nodes[0];
+            dialogs.BookmarkFolderPickDialog.open({
+                mode: null,
+                onPick: (folderId, action) => {
+                    if (action === 'copy') {
+                        chrome.bookmarks.create({
+                            parentId: folderId,
+                            title: node.title,
+                            url: node.url
+                        }, () => {
+                            refreshTree();
+                            toast(_m('stagingCopyDone', '1'));
+                        });
+                    } else {
+                        if (node.parentId === folderId) {
+                            toast(_m('pasteDone'));
+                            return;
+                        }
+                        chrome.bookmarks.move(id, { parentId: folderId }, () => {
+                            if (chrome.runtime.lastError)
+                                return;
+                            refreshTree();
+                            toast(_m('stagingMoveDone', '1'));
+                        });
+                    }
+                }
+            });
+        });
+    };
+
     const actions = {
         openBookmark: url => {
             chrome.tabs.query({
@@ -687,6 +804,14 @@ export function initActions(ctx = {}) {
     // actions.addSeparator / actions.deleteSeparator.
     actions.addSeparator = addSeparator;
     actions.deleteSeparator = deleteSeparator;
+    // velvet staging §5: the internal clipboard + single-item copy/move
+    actions.setClipBookmark = setClipBookmark;
+    actions.cancelClipBookmark = cancelClipBookmark;
+    actions.hasClipBookmark = hasClipBookmark;
+    actions.hasCutClipboard = hasCutClipboard;
+    actions.pasteClipBookmarkInto = pasteClipBookmarkInto;
+    actions.copyMoveBookmarkTo = copyMoveBookmarkTo;
+    actions.reapplyCutState = reapplyCutState;
 
     return actions;
 }

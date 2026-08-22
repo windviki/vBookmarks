@@ -1914,6 +1914,13 @@ menu[type=context] hr {
     color: var(--vbm-accent);
 }
 
+/* The cut bookmark's faded state (velvet staging §5.2): stays until the
+   paste lands, Esc cancels or the clipboard is overwritten. */
+#tree li.cut > a,
+#tree li.cut > span {
+    opacity: .45;
+}
+
 .bookmark-folder-pick-empty {
     padding: 10px 8px;
     color: var(--vbm-muted);

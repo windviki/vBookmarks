@@ -1119,7 +1119,14 @@ export function initKeyboard(ctx = {}) {
         // (e.g. aborting a dead-link scan), then the search query clear
         // (two-level in the search view, docs/plan-4.0.0/v4task-2-list.md §2.3), then
         // the browser-style "back to tree", then window.close.
-        if (views.onEscapeActive()) {
+        // velvet staging §5.2: with a CUT clipboard pending and nothing above it
+// open (dialogs/menus/palette all returned by now), Esc cancels the cut —
+// then the chain continues on the next press.
+if (actions.hasCutClipboard && actions.hasCutClipboard()) {
+    actions.cancelClipBookmark();
+    return;
+}
+if (views.onEscapeActive()) {
             return;
         }
         if (search.escape ? search.escape() : (search.isActive() || search.input.value)) {

@@ -2423,5 +2423,39 @@
   },
   "groupPlaceTooltip": {
     "message": "将此分组保存到文件夹…"
+  },
+  "copyBookmark": {
+    "message": "复制"
+  },
+  "cutBookmark": {
+    "message": "剪切"
+  },
+  "copyMoveTo": {
+    "message": "复制/移动到…"
+  },
+  "pasteHere": {
+    "message": "粘贴到此处"
+  },
+  "copiedToast": {
+    "message": "已复制:$t$",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
+  },
+  "cutToast": {
+    "message": "已剪切:$t$ —— 去目标文件夹粘贴(Esc 取消)",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
+  },
+  "pasteDone": {
+    "message": "已粘贴"
+  },
+  "pasteGone": {
+    "message": "书签已不存在,剪贴板已清空"
   }
 }
