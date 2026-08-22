@@ -96,6 +96,32 @@ describe('getFaviconUrl', () => {
         expect(tr.getFaviconUrl('http://x.com/a b?q="1"')).toBe(
             'chrome-extension://test/_favicon/?pageUrl=http%3A%2F%2Fx.com%2Fa+b%3Fq%3D%221%22&size=32');
     });
+
+    it('matches URLSearchParams byte-for-byte on a tricky-URL corpus (H3)', () => {
+        const tr = setup();
+        const corpus = [
+            'http://e.com/',
+            'http://x.com/a b?q="1"',
+            "https://example.org/path with spaces/файл?q=a+b&x=!*'()~#%25",
+            'chrome-extension://foo/bar',
+            'javascript:void(0)',
+            'https://例子.测试/路径?查询=值#锚',
+            'http://a.com/?q=1&r=2',
+            'https://b.com/café?x=ümlaut',
+            "http://c.com/[brackets]?q={curly}|pipe\\back^tick`tick",
+            '<https://d.com/tag>&"quote"\'apos',
+            'http://e.com/%20encoded%20space',
+            'https://f.com/emoji/🔖?x=🎉',
+            'https://g.com/?q=percent%25and%2Bplus',
+            'ftp://h.com/file name.txt'
+        ];
+        for (const url of corpus) {
+            const ref = new URL(chrome.runtime.getURL('/_favicon/'));
+            ref.searchParams.set('pageUrl', url);
+            ref.searchParams.set('size', '32');
+            expect(tr.getFaviconUrl(url)).toBe(ref.toString());
+        }
+    });
 });
 
 describe('highlightTitlePositions', () => {

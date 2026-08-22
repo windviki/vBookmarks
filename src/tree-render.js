@@ -142,10 +142,17 @@ export function initTreeRender(ctx = {}) {
     const _m = chrome.i18n.getMessage;
 
     const getFaviconUrl = (url) => {
-        const favUrl = new URL(chrome.runtime.getURL("/_favicon/"));
-        favUrl.searchParams.set("pageUrl", url);
-        favUrl.searchParams.set("size", "32");
-        return favUrl.toString();
+        // H3: precomputed base + manual serialization — no per-row URL object.
+        // Must stay byte-identical to URLSearchParams (guarded by the corpus
+        // test): form serialization differs from encodeURIComponent in space
+        // ('+' vs '%20') and in ! ' ( ) ~ (percent-encoded by the WHATWG
+        // urlencoded set, left literal by encodeURIComponent) — both fixed
+        // below.
+        const base = chrome.runtime.getURL("/_favicon/");
+        const pageUrl = encodeURIComponent(url)
+            .replace(/%20/g, '+')
+            .replace(/[!'()~]/g, c => `%${c.charCodeAt(0).toString(16).toUpperCase()}`);
+        return `${base}?pageUrl=${pageUrl}&size=32`;
     };
 
     const generateBookmarkHTML = (title, url, extras, bookmarkId, titlePositions, meta) => {
