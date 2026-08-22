@@ -677,6 +677,24 @@ describe('multi-window rendering', () => {
         expect(html).toContain('id="tabgroups-group-g1"');
         expect(html).not.toContain('id="tabgroups-item-10"');
     });
+
+    it('exactly one window carries the current pill even when none reports focused', () => {
+        // No focused window (another app holds the OS focus, side-panel
+        // usage): currentWindowId falls back to windows[0], and the pill
+        // keys on that — win.focused alone used to make the badge vanish.
+        const { def, $list } = setup({
+            windows: [
+                { id: 3, focused: false, tabs: [makeTab(1, 0, { active: true })] },
+                { id: 4, focused: false, tabs: [makeTab(9, 0, { windowId: 4 })] }
+            ]
+        });
+        def().activate();
+        const html = $list.innerHTML;
+        expect((html.match(/tabgroups-window-current/g) || [])).toHaveLength(1);
+        const pillAt = html.indexOf('tabgroups-window-current');
+        expect(html.indexOf('data-window-id="3"')).toBeLessThan(pillAt);
+        expect(pillAt).toBeLessThan(html.indexOf('data-window-id="4"'));
+    });
 });
 
 describe('pinned and sleeping tab state', () => {

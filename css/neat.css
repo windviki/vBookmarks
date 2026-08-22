@@ -4123,21 +4123,33 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
 }
 /* the count pill closes the row on the same right-edge column as the group
    head's last control (4px row padding + 4px pill margin = 8px) */
-#tabgroups-list ul li.tabgroups-window-head .count-pill {
-    margin-inline-start: auto;
-    margin-inline-end: 4px;
-    background: var(--vbm-bg-selected);
-    color: var(--vbm-fg-selected);
-}
+/* the current-window pill pins to the row's right zone next to the count
+   pill (the same position the current-TAB badge takes on its row) and uses
+   the badge's accent tokens — one "current" language across both levels */
 #tabgroups-list ul li.tabgroups-window-head b.tabgroups-window-current {
     flex: none;
+    margin-inline-start: auto;
     font-weight: 500;
     font-size: 9px;
     line-height: 14px;
     padding: 0 5px;
     border-radius: 7px;
+    background: var(--vbm-accent);
+    color: var(--vbm-accent-fg);
+}
+#tabgroups-list ul li.tabgroups-window-head .count-pill {
+    margin-inline-start: 4px;
+    margin-inline-end: 4px;
     background: var(--vbm-bg-selected);
     color: var(--vbm-fg-selected);
+}
+/* 当前标签行：克制高亮（4.1.0 判断：做）。accent 8% 淡染整行（li 一层，
+   anchor 保持透明 → 标题区与图标区同一层色），行尾「当前」pill 仍在。
+   有意不带 #tabgroups-list 前缀——specificity 低于 hover/focus 规则，
+   悬浮与键盘选中照常盖色。窄弹窗隐藏文字徽标后（超窄断点），这层
+   淡染就是当前标签的定位信号。 */
+li.tabgroups-row.tabgroups-current {
+    background: color-mix(in srgb, var(--vbm-accent) 8%, transparent);
 }
 
 /* Section headings inside the tab groups list: non-focusable labels that

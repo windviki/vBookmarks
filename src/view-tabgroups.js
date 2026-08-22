@@ -621,7 +621,15 @@ export function initViewTabGroups(ctx = {}) {
                 // Folds are inert while filtering — a find never hides hits.
                 const isCollapsed = !needle && collapsedWindows.has(String(win.id));
                 const toggleLabel = _m(isCollapsed ? 'tabGroupsExpandWindow' : 'tabGroupsCollapseWindow');
-                const current = win.focused ? `<b class="tabgroups-window-current">${_m('tabGroupsCurrentWindow')}</b>` : '';
+                // The current-window pill keys on currentWindowId (which
+                // falls back to the first window when the browser reports no
+                // focused window), so EXACTLY one section is always marked —
+                // win.focused alone made the badge flicker away. It sits in
+                // the row's right zone next to the count pill, styled like
+                // the current-TAB badge (4.1.0 consistency pass).
+                const current = String(win.id) === String(currentWindowId)
+                    ? `<b class="tabgroups-window-current">${_m('tabGroupsCurrentWindow')}</b>`
+                    : '';
                 return `<li class="tabgroups-window-head" data-window-id="${String(win.id)}">` +
                     `<span class="tabgroups-window-head-row" tabindex="-1" role="button" ` +
                     `aria-expanded="${isCollapsed ? 'false' : 'true'}" ` +
