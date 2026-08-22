@@ -1,7 +1,7 @@
 # 标签组视图（4.1.0）审计报告
 
 > 审计日期：2026-08-22 · 对象：`v4.0.8..HEAD`（合入的 4.1.0 功能，即标签组视图 `src/view-tabgroups.js` 及其全部支撑改动）
-> 依据：`docs/tab-groups-view-design.md`（含 §15 打磨轮）逐条核对契约；对照 2025–2026 顶级标签管理工具（Chrome 原生标签组/Tab Search、Tab Manager Plus、Workona、Session Buddy、Toby、OneTab、Sidebery）的功能与设计。
+> 依据：`docs/plan-4.1.0/tab-groups-view-design.md`（含 §15 打磨轮）逐条核对契约；对照 2025–2026 顶级标签管理工具（Chrome 原生标签组/Tab Search、Tab Manager Plus、Workona、Session Buddy、Toby、OneTab、Sidebery）的功能与设计。
 > 审计方式：核心模块 `src/view-tabgroups.js`（2107 行）逐行人工审计 + 支撑改动（SW/菜单/对话框/键盘/CSS/两页 HTML）专项审计 + 竞品功能对标。审计时全量 2608 例单测、`i18n.py verify`、ESLint 均绿。
 
 ---
@@ -31,7 +31,7 @@
 - **组元信息**（`tab-group-utils.js` 的 `tabGroupFolderMeta`）：组存为书签文件夹时记住标题/颜色，文件夹右键"打开到新标签组"时恢复。
 - 组颜色样式三态（off/edge/line，line 为连接线）、浏览器折叠同步开关、拖拽排序、键盘层三级协议与菜单绑定、视图隐藏/禁用全链路。
 
-## 2. 设计契约核对（docs/tab-groups-view-design.md）
+## 2. 设计契约核对（docs/plan-4.1.0/tab-groups-view-design.md）
 
 | 设计项 | 实现 | 结论 |
 |---|---|---|
@@ -179,4 +179,4 @@
 
 验证：`npm run test:run` 2638 例全绿；`npm run lint` 干净；`i18n.py verify` 0 错误；Docker 全量门禁终验（2026-08-22，HEAD=013629a 前的全部代码）**ALL PASS**：smoke（NO PAGE ERRORS，favicons 段 1 card 稳定）、verify-keyboard、verify-scrollbars（752 断言）、verify-menu-overflow/collapse/extreme/overlong/rightclick-repeat（menu-extreme 81 断言全过——含此前挂掉的 7 例）。`shots-tabgroups-view` 套件 34–44 号图全过（含修复后的真宽窄两态断言）。
 
-设计文档侧的行为变化已在 `docs/tab-groups-view-design.md` §16 登记。
+设计文档侧的行为变化已在 `docs/plan-4.1.0/tab-groups-view-design.md` §16 登记。

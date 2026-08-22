@@ -1,6 +1,6 @@
 /**
  * Storage-usage bar categorization (2026-08 audit extraction; simplified in
- * the 2026-08 storage-audit fix round, docs/storage-usage-report.md §15).
+ * the 2026-08 storage-audit fix round, docs/review-4.0.8/storage-usage-report.md §15).
  *
  * Classic script exposing window.VBMUsage — loaded by pages/options.html
  * before options.js (options.js is a classic script and cannot import ESM).

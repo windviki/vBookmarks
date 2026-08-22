@@ -1,5 +1,5 @@
 /**
- * Missing-favicon enrichment (4.0.6, docs/favicon-补全设计.md).
+ * Missing-favicon enrichment (4.0.6, docs/plan-4.0.8/favicon-补全设计.md).
  *
  * Chrome's `_favicon` API only serves icons Chrome itself has cached — for
  * bookmarks imported / never visited, it answers with a placeholder that
@@ -15,7 +15,7 @@
  * pixel-fingerprint guard against a per-letter probe avatar before they are
  * accepted (placeholderProbeUrl, below).
  *
- * Design contract (docs/favicon-补全设计.md):
+ * Design contract (docs/plan-4.0.8/favicon-补全设计.md):
  *   - Discovery chain L1-L4: /favicon.ico → page <link> → proxy relay →
  *     provider-list fallback (direct → proxied-direct → providers). Any layer
  *     producing a valid icon short-circuits.

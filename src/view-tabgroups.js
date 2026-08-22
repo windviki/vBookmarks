@@ -1,5 +1,5 @@
 /**
- * Tab groups view (docs/tab-groups-view-design.md) — browser tabs + tab groups
+ * Tab groups view (docs/plan-4.1.0/tab-groups-view-design.md) — browser tabs + tab groups
  * + bookmarks, living between the search and recent views.
  *
  * Renders every normal browser window's tabs in tab-strip order, the current

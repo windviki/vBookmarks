@@ -123,7 +123,7 @@
     // the existing call sites, syncRefreshInterval as a number of seconds.
     // v4 task-4 #6: paletteCustomCommands (JSON array string, ≤100 entries).
     //
-    // 2026-08 storage audit (docs/storage-usage-report.md §15): every small,
+    // 2026-08 storage audit (docs/review-4.0.8/storage-usage-report.md §15): every small,
     // device-INDEPENDENT preference moved to the sync area. store.get/set/
     // remove/adopt and the getSetting/setSetting/removeSetting helpers route
     // these keys transparently, so call sites keep their existing API. A

@@ -1,4 +1,4 @@
-// vBookmarks performance probe — docs/build-and-performance-plan.md §3.7
+// vBookmarks performance probe — docs/plan-4.1.0/build-and-performance-plan.md §3.7
 // Runs inside zenika/alpine-chrome:with-puppeteer with the extension at /ext
 // (source root, or the built dist/ tree when launched via perf-run.sh --dist).
 //

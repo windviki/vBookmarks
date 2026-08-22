@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * vBookmarks dist build — 4.1.0（docs/build-and-performance-plan.md §2.5）
+ * vBookmarks dist build — 4.1.0（docs/plan-4.1.0/build-and-performance-plan.md §2.5）
  *
  *   ESM 入口：esbuild bundle → Terser(minify, module:true) → dist 同名同路径
  *   经典脚本：Terser(minify, module:false, 不 bundle) → dist 同名同路径

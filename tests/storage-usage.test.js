@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import fs from 'node:fs';
 
 // Storage-usage bar census (2026-08 audit; simplified in the storage-audit
-// fix round, docs/storage-usage-report.md §15): the options-page bar splits
+// fix round, docs/review-4.0.8/storage-usage-report.md §15): the options-page bar splits
 // chrome.storage.local into icon / other / free. "other" is a catch-all, so
 // totals are always exact. This suite is the tripwire that forces a segment
 // decision whenever a new storage key appears:

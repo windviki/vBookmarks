@@ -119,7 +119,7 @@ import { deferIdle, mark as perfMark } from './idle.js';
 
     // Flush any debounced index write when the page goes away — a failed
     // marker (or a success whose index write is still coalescing) must not be
-    // lost to a quick popup close (docs/favicon-补全设计.md §5.1 "pagehide 前
+    // lost to a quick popup close (docs/plan-4.0.8/favicon-补全设计.md §5.1 "pagehide 前
     // flush"). Best-effort: pagehide is not guaranteed on every close path,
     // and a lost marker only costs one re-fetch next open.
     window.addEventListener('pagehide', () => {
@@ -699,7 +699,7 @@ import { deferIdle, mark as perfMark } from './idle.js';
     // and only runs while the tab is active; treeView is already initialized
     // above, so direct injection is safe. visitStats/undo serve the
     // history-permission banner (grant → one-shot import → toast).
-    // Tab groups view (docs/tab-groups-view-design.md): browser tabs + tab
+    // Tab groups view (docs/plan-4.1.0/tab-groups-view-design.md): browser tabs + tab
     // groups + bookmarks. Registered BEFORE recent so the tab order becomes
     // tree / search / tabgroups / recent / stats / dead / dupes.
     const viewTabGroups = initViewTabGroups({

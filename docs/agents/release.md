@@ -7,7 +7,7 @@
 Since 4.1.0 the release form is `dist/` (esbuild bundle + Terser minify, same-path structure — the dev flow stays build-free):
 
 ```bash
-npm run build            # dist/ + build-time self-checks (fails on contract breaks; see docs/build-and-performance-plan.md §3.1)
+npm run build            # dist/ + build-time self-checks (fails on contract breaks; see docs/plan-4.1.0/build-and-performance-plan.md §3.1)
 npm run package          # build + zip from dist/ → tmp/vBookmarks_<version>.zip
 python3 scripts/package.py --root dist    # zip from an existing dist/ (no rebuild)
 python3 scripts/package.py --output x.zip # custom output path

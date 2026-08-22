@@ -23,7 +23,7 @@
 #                 root (dev form). Requires `npm run build` first — this is
 #                 the ONLY gate that catches bundle/minify breaks of the
 #                 app-shell load order / global contracts (see
-#                 docs/build-and-performance-plan.md §3.3).
+#                 docs/plan-4.1.0/build-and-performance-plan.md §3.3).
 SMOKE_ONLY=0
 DIST_MODE=0
 PERF_MODE=0

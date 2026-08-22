@@ -31,7 +31,7 @@ import argparse
 # Seeds: classicJs + esmEntries = the 15 JS files that exist in a dist build.
 # Source-root mode: resolve_js_imports() below re-expands the full module graph
 # (134 files). Dist mode: bundles contain no imports, so nothing is added
-# (78 files). See docs/build-and-performance-plan.md §2.4 / §2.6.
+# (78 files). See docs/plan-4.1.0/build-and-performance-plan.md §2.4 / §2.6.
 
 def load_runtime_files():
     path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'runtime-files.json')

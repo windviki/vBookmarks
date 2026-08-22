@@ -157,8 +157,8 @@ const $ = id => document.getElementById(id);
             { id: 'show-dead-view', key: 'showDeadView', defaultValue: '1', inverted: false },
             { id: 'show-dupes-view', key: 'showDupesView', defaultValue: '1', inverted: false }
         ];
-        // Icons: favicon contrast service + favicon enrichment (4.0.8, docs/
-        // favicon-补全设计.md) — the per-site icon pipeline, one group.
+        // Icons: favicon contrast service + favicon enrichment (4.0.8,
+        // docs/plan-4.0.8/favicon-补全设计.md) — the per-site icon pipeline, one group.
         const iconsSettings = [
             // favicon 反色服务（4.0.5 起）：亮/暗主题下偏白/偏黑的单色 icon
             // 反色，默认开启。每个 icon 只在加载时采样一次，零滚动开销。
@@ -352,7 +352,7 @@ const $ = id => document.getElementById(id);
 
         // Clear the favicon cache (per-host data keys + the index). The open
         // popup/panel hears the index removal via storage.onChanged and drops
-        // its in-memory map; next render re-fetches (docs/favicon-补全设计.md
+        // its in-memory map; next render re-fetches (docs/plan-4.0.8/favicon-补全设计.md
         // §5.4).
         // The storage-usage bar (below the button) refreshes after a clear so
         // the freed space is immediately visible, and tracks storage writes
@@ -582,7 +582,7 @@ const $ = id => document.getElementById(id);
             // The favicon cache (per-host data keys + the index) is local,
             // MB-scale base64. The Icons group's "include icon cache" switch
             // (default ON) controls whether it ships in a settings backup
-            // (docs/favicon-补全设计.md §5.4); turning it off strips the keys
+            // (docs/plan-4.0.8/favicon-补全设计.md §5.4); turning it off strips the keys
             // to keep the backup small.
             if (!$('favicon-backup').checked) {
                 for (const k of Object.keys(localData)) {
