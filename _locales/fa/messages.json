@@ -457,6 +457,32 @@
       }
     }
   },
+  "tabGroupsClosedToast": {
+    "message": "$count$ برگه بسته شد"
+  },
+  "tabGroupsSleptToast": {
+    "message": "$count$ برگه به خواب رفت"
+  },
+  "tabGroupsReopenAction": {
+    "message": "بازگشایی"
+  },
+  "tabGroupsWakeAction": {
+    "message": "بیدار کردن"
+  },
+  "tabGroupsRecordDeletedToast": {
+    "message": "رکورد بسته حذف شد"
+  },
+  "tabGroupsClosedTabRemovedToast": {
+    "message": "از رکورد بسته حذف شد"
+  },
+  "tabGroupsClearedToast": {
+    "message": "$count$ رکورد بسته پاک شد",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
   "bookmarkFolderPickDialogTitle": {
     "message": "افزودن به پوشهٔ نشانک"
   },

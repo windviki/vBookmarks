@@ -457,6 +457,32 @@
       }
     }
   },
+  "tabGroupsClosedToast": {
+    "message": "S-au închis $count$ filă(fi)"
+  },
+  "tabGroupsSleptToast": {
+    "message": "S-au adormit $count$ filă(fi)"
+  },
+  "tabGroupsReopenAction": {
+    "message": "Redeschide"
+  },
+  "tabGroupsWakeAction": {
+    "message": "Trezește"
+  },
+  "tabGroupsRecordDeletedToast": {
+    "message": "Înregistrarea închisă a fost eliminată"
+  },
+  "tabGroupsClosedTabRemovedToast": {
+    "message": "Eliminat din înregistrarea închisă"
+  },
+  "tabGroupsClearedToast": {
+    "message": "S-au șters $count$ înregistrare(i) închise",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
   "bookmarkFolderPickDialogTitle": {
     "message": "Adaugă la dosarul de marcaje"
   },

@@ -457,6 +457,32 @@
       }
     }
   },
+  "tabGroupsClosedToast": {
+    "message": "$count$টি ট্যাব বন্ধ হয়েছে"
+  },
+  "tabGroupsSleptToast": {
+    "message": "$count$টি ট্যাব ঘুমিয়ে রাখা হয়েছে"
+  },
+  "tabGroupsReopenAction": {
+    "message": "পুনরায় খুলুন"
+  },
+  "tabGroupsWakeAction": {
+    "message": "জাগান"
+  },
+  "tabGroupsRecordDeletedToast": {
+    "message": "বন্ধ রেকর্ডটি মুছে ফেলা হয়েছে"
+  },
+  "tabGroupsClosedTabRemovedToast": {
+    "message": "বন্ধ রেকর্ড থেকে সরানো হয়েছে"
+  },
+  "tabGroupsClearedToast": {
+    "message": "$count$টি বন্ধ রেকর্ড মুছে ফেলা হয়েছে",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
   "bookmarkFolderPickDialogTitle": {
     "message": "বুকমার্ক ফোল্ডারে যোগ করুন"
   },

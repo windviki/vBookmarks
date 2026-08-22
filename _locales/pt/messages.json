@@ -457,6 +457,32 @@
       }
     }
   },
+  "tabGroupsClosedToast": {
+    "message": "Fechadas $count$ aba(s)"
+  },
+  "tabGroupsSleptToast": {
+    "message": "$count$ aba(s) colocadas em repouso"
+  },
+  "tabGroupsReopenAction": {
+    "message": "Reabrir"
+  },
+  "tabGroupsWakeAction": {
+    "message": "Ativar"
+  },
+  "tabGroupsRecordDeletedToast": {
+    "message": "Registro fechado removido"
+  },
+  "tabGroupsClosedTabRemovedToast": {
+    "message": "Removido do registro fechado"
+  },
+  "tabGroupsClearedToast": {
+    "message": "Limpados $count$ registro(s) fechado(s)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
   "bookmarkFolderPickDialogTitle": {
     "message": "Adicionar à pasta de favoritos"
   },

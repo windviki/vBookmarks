@@ -322,8 +322,12 @@ const setup = (opts = {}) => {
     };
     const undo = {
         toastCalls: [],
+        toastActionCalls: [],
         captureCalls: [],
         showToast(msg) { this.toastCalls.push(msg); },
+        toastAction(message, buttonLabel, onAction) {
+            this.toastActionCalls.push({ message, buttonLabel, onAction });
+        },
         capture(id) { this.captureCalls.push(id); }
     };
 
@@ -489,19 +493,31 @@ describe('render', () => {
 });
 
 describe('closed groups and window folding', () => {
-    it('close group saves a closed record before closing its tabs', () => {
-        const { def, chrome, dialogs, store, clickOn, closestOf } = setup({});
+    it('close group saves a closed record before closing its tabs (no confirm, toast regrets)', () => {
+        const { def, chrome, dialogs, store, clickOn, closestOf, undo } = setup({});
         def().activate();
         const li = { dataset: { groupId: 'g1' }, classList: makeClassList() };
         const btn = { classList: makeClassList(), closest: sel => sel === 'li' ? li : (sel === '.tabgroups-group-close' ? btn : null) };
         clickOn(btn);
-        dialogs.ConfirmDialog.openCalls[0].fn1();
+        // single-group close runs immediately — no dialog tax (4.1.0 UX pass)
+        expect(dialogs.ConfirmDialog.openCalls).toHaveLength(0);
         expect(store._data.tabGroupsClosed).toBeDefined();
         const records = JSON.parse(store._data.tabGroupsClosed);
         expect(records).toHaveLength(1);
         expect(records[0].title).toBe('Dev');
         expect(records[0].tabs).toHaveLength(2);
         expect(chrome.runtime.sendMessageCalls).toEqual([{ type: 'vbm-tabs-close', tabIds: [2, 3] }]);
+        // the toast carries the reopen regret action
+        expect(undo.toastActionCalls).toHaveLength(1);
+        expect(undo.toastActionCalls[0].message).toBe('tabGroupsClosedToast[2]');
+        expect(undo.toastActionCalls[0].buttonLabel).toBe('tabGroupsReopenAction');
+        undo.toastActionCalls[0].onAction();
+        expect(chrome.runtime.sendMessageCalls[1]).toEqual({
+            type: 'vbm-tab-group-open-new',
+            urls: ['https://t2.example/', 'https://t3.example/'],
+            title: 'Dev',
+            color: 'blue'
+        });
     });
 
     it('restore closed group sends openNew and drops the saved record', () => {
@@ -694,8 +710,8 @@ describe('pinned and sleeping tab state', () => {
         }
     });
 
-    it('the row sleep control toggles: hollow sleeps (confirmed), filled wakes', () => {
-        const { def, chrome, dialogs, clickOn } = setup({
+    it('the row sleep control toggles: hollow sleeps (direct + toast), filled wakes', () => {
+        const { def, chrome, dialogs, undo, clickOn } = setup({
             tabs: [
                 makeTab(1, 0, { active: true }),
                 makeTab(2, 1, { discarded: true })
@@ -711,13 +727,17 @@ describe('pinned and sleeping tab state', () => {
             clickOn(btn);
         };
         press('1');
-        expect(dialogs.ConfirmDialog.openCalls).toHaveLength(1);
-        dialogs.ConfirmDialog.openCalls[0].fn1();
+        expect(dialogs.ConfirmDialog.openCalls).toHaveLength(0);
         expect(chrome.runtime.sendMessageCalls).toEqual([{ type: 'vbm-tabs-discard', tabIds: [1] }]);
+        expect(undo.toastActionCalls).toHaveLength(1);
+        expect(undo.toastActionCalls[0].buttonLabel).toBe('tabGroupsWakeAction');
+        // the toast's Wake button wakes the just-slept tab
+        undo.toastActionCalls[0].onAction();
+        expect(chrome.runtime.sendMessageCalls[1]).toEqual({ type: 'vbm-tabs-wake', tabIds: [1] });
         // waking is non-destructive: no confirmation, straight to the SW
         press('2');
-        expect(dialogs.ConfirmDialog.openCalls).toHaveLength(1);
-        expect(chrome.runtime.sendMessageCalls[1]).toEqual({ type: 'vbm-tabs-wake', tabIds: [2] });
+        expect(dialogs.ConfirmDialog.openCalls).toHaveLength(0);
+        expect(chrome.runtime.sendMessageCalls[2]).toEqual({ type: 'vbm-tabs-wake', tabIds: [2] });
     });
 
     it('clicking the pinned glyph unpins that tab', () => {
@@ -949,26 +969,41 @@ describe('tab batch actions', () => {
         });
     });
 
-    it('close selected confirms then sends vbm-tabs-close', () => {
+    it('close selected (many) confirms then sends vbm-tabs-close', () => {
         const { def, chrome, dialogs, clickOn, closestOf } = setup({});
         def().activate();
         clickOn({ closest: closestOf({ '.tabgroups-select-mode': { classList: makeClassList() } }) });
         clickOn({ closest: closestOf({ li: { dataset: { tabId: '1' }, classList: makeClassList() } }) });
+        clickOn({ closest: closestOf({ li: { dataset: { tabId: '4' }, classList: makeClassList() } }) });
         clickOn({ closest: closestOf({ '.tabgroups-close-selected': { classList: makeClassList() } }) });
         expect(dialogs.ConfirmDialog.openCalls).toHaveLength(1);
         dialogs.ConfirmDialog.openCalls[0].fn1();
         expect(chrome.runtime.sendMessageCalls).toHaveLength(1);
-        expect(chrome.runtime.sendMessageCalls[0]).toEqual({ type: 'vbm-tabs-close', tabIds: [1] });
+        expect(chrome.runtime.sendMessageCalls[0]).toEqual({ type: 'vbm-tabs-close', tabIds: [1, 4] });
     });
 
-    it('sleep selected confirms then sends vbm-tabs-discard', () => {
+    it('close selected with ONE tab skips the confirm and runs the single-op path', () => {
+        const { def, chrome, dialogs, undo, clickOn, closestOf } = setup({});
+        def().activate();
+        clickOn({ closest: closestOf({ '.tabgroups-select-mode': { classList: makeClassList() } }) });
+        clickOn({ closest: closestOf({ li: { dataset: { tabId: '1' }, classList: makeClassList() } }) });
+        clickOn({ closest: closestOf({ '.tabgroups-close-selected': { classList: makeClassList() } }) });
+        expect(dialogs.ConfirmDialog.openCalls).toHaveLength(0);
+        expect(chrome.runtime.sendMessageCalls[0]).toEqual({ type: 'vbm-tabs-close', tabIds: [1] });
+        // the record + toast regret come from the single-tab close path
+        expect(undo.toastActionCalls).toHaveLength(1);
+        expect(undo.toastActionCalls[0].buttonLabel).toBe('tabGroupsReopenAction');
+    });
+
+    it('sleep selected (many) confirms then sends vbm-tabs-discard', () => {
         const { def, chrome, dialogs, clickOn, closestOf } = setup({});
         def().activate();
         clickOn({ closest: closestOf({ '.tabgroups-select-mode': { classList: makeClassList() } }) });
         clickOn({ closest: closestOf({ li: { dataset: { tabId: '1' }, classList: makeClassList() } }) });
+        clickOn({ closest: closestOf({ li: { dataset: { tabId: '4' }, classList: makeClassList() } }) });
         clickOn({ closest: closestOf({ '.tabgroups-sleep-selected': { classList: makeClassList() } }) });
         dialogs.ConfirmDialog.openCalls[0].fn1();
-        expect(chrome.runtime.sendMessageCalls[0]).toEqual({ type: 'vbm-tabs-discard', tabIds: [1] });
+        expect(chrome.runtime.sendMessageCalls[0]).toEqual({ type: 'vbm-tabs-discard', tabIds: [1, 4] });
     });
 });
 
@@ -1108,8 +1143,8 @@ describe('keyboard safety (tab rows are not bookmarks)', () => {
         expect(dialogs.GroupDialog.openCalls[0].dialog).toBe('tabGroupsRenameDialog');
     });
 
-    it('Delete on a tab row confirms and sends a single-tab close', () => {
-        const { def, chrome, dialogs, fire, closestOf } = setup({});
+    it('Delete on a tab row closes it directly (record + toast regret)', () => {
+        const { def, chrome, dialogs, undo, fire, closestOf } = setup({});
         def().activate();
         const li = { dataset: { tabId: '1' }, classList: makeClassList() };
         fire('keyup', {
@@ -1118,9 +1153,10 @@ describe('keyboard safety (tab rows are not bookmarks)', () => {
             preventDefault() {},
             stopImmediatePropagation() {}
         });
-        expect(dialogs.ConfirmDialog.openCalls).toHaveLength(1);
-        dialogs.ConfirmDialog.openCalls[0].fn1();
+        expect(dialogs.ConfirmDialog.openCalls).toHaveLength(0);
         expect(chrome.runtime.sendMessageCalls).toEqual([{ type: 'vbm-tabs-close', tabIds: [1] }]);
+        expect(undo.toastActionCalls).toHaveLength(1);
+        expect(undo.toastActionCalls[0].buttonLabel).toBe('tabGroupsReopenAction');
     });
 });
 
@@ -1506,25 +1542,28 @@ describe('group management (browser-synced)', () => {
         expect(chrome.tabGroups.updateCalls).toEqual([['g1', { title: 'Renamed', color: 'red' }]]);
     });
 
-    it('close group confirms then sends vbm-tabs-close with every member id', () => {
-        const { def, chrome, dialogs, clickOn, closestOf } = setup({});
+    it('close group (single) sends vbm-tabs-close directly with every member id', () => {
+        const { def, chrome, dialogs, undo, clickOn, closestOf } = setup({});
         def().activate();
         const li = { dataset: { groupId: 'g1' }, classList: makeClassList() };
         const btn = { classList: makeClassList(), closest: sel => sel === 'li' ? li : (sel === '.tabgroups-group-close' ? btn : null) };
         clickOn(btn);
-        expect(dialogs.ConfirmDialog.openCalls).toHaveLength(1);
-        dialogs.ConfirmDialog.openCalls[0].fn1();
+        expect(dialogs.ConfirmDialog.openCalls).toHaveLength(0);
         expect(chrome.runtime.sendMessageCalls).toEqual([{ type: 'vbm-tabs-close', tabIds: [2, 3] }]);
+        expect(undo.toastActionCalls).toHaveLength(1);
+        expect(undo.toastActionCalls[0].buttonLabel).toBe('tabGroupsReopenAction');
     });
 
-    it('sleep group confirms then sends vbm-tabs-discard with every member id', () => {
-        const { def, chrome, dialogs, clickOn, closestOf } = setup({});
+    it('sleep group (single) sends vbm-tabs-discard directly with every member id', () => {
+        const { def, chrome, dialogs, undo, clickOn, closestOf } = setup({});
         def().activate();
         const li = { dataset: { groupId: 'g1' }, classList: makeClassList() };
         const btn = { classList: makeClassList(), closest: sel => sel === 'li' ? li : (sel === '.tabgroups-group-sleep' ? btn : null) };
         clickOn(btn);
-        dialogs.ConfirmDialog.openCalls[0].fn1();
+        expect(dialogs.ConfirmDialog.openCalls).toHaveLength(0);
         expect(chrome.runtime.sendMessageCalls).toEqual([{ type: 'vbm-tabs-discard', tabIds: [2, 3] }]);
+        expect(undo.toastActionCalls).toHaveLength(1);
+        expect(undo.toastActionCalls[0].buttonLabel).toBe('tabGroupsWakeAction');
     });
 
     it('collapse/expand is local-only by default (sync option off)', () => {

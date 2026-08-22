@@ -457,6 +457,32 @@
       }
     }
   },
+  "tabGroupsClosedToast": {
+    "message": "Uždaryta $count$ skirtukų"
+  },
+  "tabGroupsSleptToast": {
+    "message": "Užmigdyti $count$ skirtukai"
+  },
+  "tabGroupsReopenAction": {
+    "message": "Atidaryti"
+  },
+  "tabGroupsWakeAction": {
+    "message": "Pažadinti"
+  },
+  "tabGroupsRecordDeletedToast": {
+    "message": "Pašalintas uždarytas įrašas"
+  },
+  "tabGroupsClosedTabRemovedToast": {
+    "message": "Pašalinta iš uždarytų įrašų"
+  },
+  "tabGroupsClearedToast": {
+    "message": "Išvalyta $count$ uždarytų įrašų",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
   "bookmarkFolderPickDialogTitle": {
     "message": "Pridėti prie žymių aplanko"
   },

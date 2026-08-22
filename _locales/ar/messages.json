@@ -457,6 +457,32 @@
       }
     }
   },
+  "tabGroupsClosedToast": {
+    "message": "أغلق $count$ علامة تبويب"
+  },
+  "tabGroupsSleptToast": {
+    "message": "وضع $count$ علامة تبويب في وضع السكون"
+  },
+  "tabGroupsReopenAction": {
+    "message": "إعادة فتح"
+  },
+  "tabGroupsWakeAction": {
+    "message": "إيقاظ"
+  },
+  "tabGroupsRecordDeletedToast": {
+    "message": "تمت إزالة السجل المغلق"
+  },
+  "tabGroupsClosedTabRemovedToast": {
+    "message": "تمت الإزالة من السجل المغلق"
+  },
+  "tabGroupsClearedToast": {
+    "message": "تم مسح $count$ سجل مغلق",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
   "bookmarkFolderPickDialogTitle": {
     "message": "إضافة إلى مجلد العلامات المرجعية"
   },

@@ -457,6 +457,32 @@
       }
     }
   },
+  "tabGroupsClosedToast": {
+    "message": "Закрито вкладок: $count$"
+  },
+  "tabGroupsSleptToast": {
+    "message": "Переведено в режим сну вкладок: $count$"
+  },
+  "tabGroupsReopenAction": {
+    "message": "Відкрити знову"
+  },
+  "tabGroupsWakeAction": {
+    "message": "Розбудити"
+  },
+  "tabGroupsRecordDeletedToast": {
+    "message": "Видалено запис про закриття"
+  },
+  "tabGroupsClosedTabRemovedToast": {
+    "message": "Видалено з запису про закриття"
+  },
+  "tabGroupsClearedToast": {
+    "message": "Очищено записів про закриття: $count$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
   "bookmarkFolderPickDialogTitle": {
     "message": "Додати до папки закладок"
   },

@@ -457,6 +457,32 @@
       }
     }
   },
+  "tabGroupsClosedToast": {
+    "message": "Zaprto $count$ zavihkov"
+  },
+  "tabGroupsSleptToast": {
+    "message": "Uspavano $count$ zavihkov"
+  },
+  "tabGroupsReopenAction": {
+    "message": "Ponovno odpri"
+  },
+  "tabGroupsWakeAction": {
+    "message": "Prebudi"
+  },
+  "tabGroupsRecordDeletedToast": {
+    "message": "Odstranjen zapis o zaprtih"
+  },
+  "tabGroupsClosedTabRemovedToast": {
+    "message": "Odstranjeno iz zapisa o zaprtih"
+  },
+  "tabGroupsClearedToast": {
+    "message": "Počiščeno $count$ zapisov o zaprtih",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
   "bookmarkFolderPickDialogTitle": {
     "message": "Dodaj v mapo zaznamkov"
   },

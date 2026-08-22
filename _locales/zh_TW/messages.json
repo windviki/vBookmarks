@@ -1928,6 +1928,32 @@
       }
     }
   },
+  "tabGroupsClosedToast": {
+    "message": "已關閉 $count$ 個分頁"
+  },
+  "tabGroupsSleptToast": {
+    "message": "已休眠 $count$ 個分頁"
+  },
+  "tabGroupsReopenAction": {
+    "message": "重新開啟"
+  },
+  "tabGroupsWakeAction": {
+    "message": "喚醒"
+  },
+  "tabGroupsRecordDeletedToast": {
+    "message": "已移除關閉記錄"
+  },
+  "tabGroupsClosedTabRemovedToast": {
+    "message": "已從關閉記錄中移除"
+  },
+  "tabGroupsClearedToast": {
+    "message": "已清除 $count$ 筆關閉記錄",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
   "bookmarkFolderPickDialogTitle": {
     "message": "加入書籤資料夾"
   },

@@ -457,6 +457,32 @@
       }
     }
   },
+  "tabGroupsClosedToast": {
+    "message": "Menutup $count$ tab"
+  },
+  "tabGroupsSleptToast": {
+    "message": "Menidurkan $count$ tab"
+  },
+  "tabGroupsReopenAction": {
+    "message": "Buka lagi"
+  },
+  "tabGroupsWakeAction": {
+    "message": "Bangunkan"
+  },
+  "tabGroupsRecordDeletedToast": {
+    "message": "Catatan tertutup dihapus"
+  },
+  "tabGroupsClosedTabRemovedToast": {
+    "message": "Dihapus dari catatan tertutup"
+  },
+  "tabGroupsClearedToast": {
+    "message": "Menghapus $count$ catatan tertutup",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
   "bookmarkFolderPickDialogTitle": {
     "message": "Tambahkan ke folder markah"
   },

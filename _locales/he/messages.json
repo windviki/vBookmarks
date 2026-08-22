@@ -457,6 +457,32 @@
       }
     }
   },
+  "tabGroupsClosedToast": {
+    "message": "נסגרו $count$ לשוניות"
+  },
+  "tabGroupsSleptToast": {
+    "message": "הועמדו $count$ לשוניות במצב שינה"
+  },
+  "tabGroupsReopenAction": {
+    "message": "פתח מחדש"
+  },
+  "tabGroupsWakeAction": {
+    "message": "הער"
+  },
+  "tabGroupsRecordDeletedToast": {
+    "message": "הרשומה הסגורה הוסרה"
+  },
+  "tabGroupsClosedTabRemovedToast": {
+    "message": "הוסר מהרשומה הסגורה"
+  },
+  "tabGroupsClearedToast": {
+    "message": "נוקו $count$ רשומות סגורות",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
   "bookmarkFolderPickDialogTitle": {
     "message": "הוסף לתיקיית סימניות"
   },

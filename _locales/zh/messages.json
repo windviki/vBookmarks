@@ -1928,6 +1928,32 @@
       }
     }
   },
+  "tabGroupsClosedToast": {
+    "message": "已关闭 $count$ 个标签页"
+  },
+  "tabGroupsSleptToast": {
+    "message": "已休眠 $count$ 个标签页"
+  },
+  "tabGroupsReopenAction": {
+    "message": "重新打开"
+  },
+  "tabGroupsWakeAction": {
+    "message": "唤醒"
+  },
+  "tabGroupsRecordDeletedToast": {
+    "message": "已移除关闭记录"
+  },
+  "tabGroupsClosedTabRemovedToast": {
+    "message": "已从关闭记录中移除"
+  },
+  "tabGroupsClearedToast": {
+    "message": "已清除 $count$ 条关闭记录",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
   "bookmarkFolderPickDialogTitle": {
     "message": "添加到书签文件夹"
   },

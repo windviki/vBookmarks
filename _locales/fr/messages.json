@@ -457,6 +457,32 @@
       }
     }
   },
+  "tabGroupsClosedToast": {
+    "message": "$count$ onglet(s) fermé(s)"
+  },
+  "tabGroupsSleptToast": {
+    "message": "$count$ onglet(s) mis en veille"
+  },
+  "tabGroupsReopenAction": {
+    "message": "Rouvrir"
+  },
+  "tabGroupsWakeAction": {
+    "message": "Réveiller"
+  },
+  "tabGroupsRecordDeletedToast": {
+    "message": "Enregistrement fermé supprimé"
+  },
+  "tabGroupsClosedTabRemovedToast": {
+    "message": "Retiré de l'enregistrement fermé"
+  },
+  "tabGroupsClearedToast": {
+    "message": "$count$ enregistrement(s) fermé(s) effacé(s)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
   "bookmarkFolderPickDialogTitle": {
     "message": "Ajouter au dossier de favoris"
   },

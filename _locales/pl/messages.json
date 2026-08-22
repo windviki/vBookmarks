@@ -457,6 +457,32 @@
       }
     }
   },
+  "tabGroupsClosedToast": {
+    "message": "Zamknięto $count$ kartę(karty)"
+  },
+  "tabGroupsSleptToast": {
+    "message": "Uśpiono $count$ kartę(karty)"
+  },
+  "tabGroupsReopenAction": {
+    "message": "Otwórz ponownie"
+  },
+  "tabGroupsWakeAction": {
+    "message": "Obudź"
+  },
+  "tabGroupsRecordDeletedToast": {
+    "message": "Usunięto zamknięty rekord"
+  },
+  "tabGroupsClosedTabRemovedToast": {
+    "message": "Usunięto z zamkniętych rekordów"
+  },
+  "tabGroupsClearedToast": {
+    "message": "Wyczyszczono $count$ zamkniętych rekordów",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
   "bookmarkFolderPickDialogTitle": {
     "message": "Dodaj do folderu zakładek"
   },

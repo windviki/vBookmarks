@@ -457,6 +457,32 @@
       }
     }
   },
+  "tabGroupsClosedToast": {
+    "message": "Suletud $count$ vahelehte"
+  },
+  "tabGroupsSleptToast": {
+    "message": "Pandud $count$ vahelehte magama"
+  },
+  "tabGroupsReopenAction": {
+    "message": "Ava uuesti"
+  },
+  "tabGroupsWakeAction": {
+    "message": "Ärata"
+  },
+  "tabGroupsRecordDeletedToast": {
+    "message": "Suletud kirje eemaldatud"
+  },
+  "tabGroupsClosedTabRemovedToast": {
+    "message": "Eemaldatud suletud kirjest"
+  },
+  "tabGroupsClearedToast": {
+    "message": "Tühjendatud $count$ suletud kirjet",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
   "bookmarkFolderPickDialogTitle": {
     "message": "Lisa järjehoidjate kausta"
   },

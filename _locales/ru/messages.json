@@ -457,6 +457,32 @@
       }
     }
   },
+  "tabGroupsClosedToast": {
+    "message": "Закрыто вкладок: $count$"
+  },
+  "tabGroupsSleptToast": {
+    "message": "Переведено в режим сна вкладок: $count$"
+  },
+  "tabGroupsReopenAction": {
+    "message": "Открыть"
+  },
+  "tabGroupsWakeAction": {
+    "message": "Разбудить"
+  },
+  "tabGroupsRecordDeletedToast": {
+    "message": "Запись удалена"
+  },
+  "tabGroupsClosedTabRemovedToast": {
+    "message": "Удалено из закрытых записей"
+  },
+  "tabGroupsClearedToast": {
+    "message": "Очищено записей: $count$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
   "bookmarkFolderPickDialogTitle": {
     "message": "Добавить в папку закладок"
   },

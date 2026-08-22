@@ -457,6 +457,32 @@
       }
     }
   },
+  "tabGroupsClosedToast": {
+    "message": "Zatvorené karty: $count$"
+  },
+  "tabGroupsSleptToast": {
+    "message": "Uspaté karty: $count$"
+  },
+  "tabGroupsReopenAction": {
+    "message": "Otvoriť znova"
+  },
+  "tabGroupsWakeAction": {
+    "message": "Prebudiť"
+  },
+  "tabGroupsRecordDeletedToast": {
+    "message": "Záznam zatvorenia odstránený"
+  },
+  "tabGroupsClosedTabRemovedToast": {
+    "message": "Odstránené zo záznamu zatvorenia"
+  },
+  "tabGroupsClearedToast": {
+    "message": "Vymazané záznamy zatvorenia: $count$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
   "bookmarkFolderPickDialogTitle": {
     "message": "Pridať do priečinka záložiek"
   },

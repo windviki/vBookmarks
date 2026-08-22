@@ -457,6 +457,32 @@
       }
     }
   },
+  "tabGroupsClosedToast": {
+    "message": "Stängde $count$ flik(ar)"
+  },
+  "tabGroupsSleptToast": {
+    "message": "Lade $count$ flik(ar) i vila"
+  },
+  "tabGroupsReopenAction": {
+    "message": "Öppna igen"
+  },
+  "tabGroupsWakeAction": {
+    "message": "Väck"
+  },
+  "tabGroupsRecordDeletedToast": {
+    "message": "Tog bort den stängda posten"
+  },
+  "tabGroupsClosedTabRemovedToast": {
+    "message": "Tog bort från den stängda posten"
+  },
+  "tabGroupsClearedToast": {
+    "message": "Rensade $count$ stängda post(er)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
   "bookmarkFolderPickDialogTitle": {
     "message": "Lägg till i bokmärkesmapp"
   },

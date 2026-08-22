@@ -457,6 +457,32 @@
       }
     }
   },
+  "tabGroupsClosedToast": {
+    "message": "$count$ 件のタブを閉じました"
+  },
+  "tabGroupsSleptToast": {
+    "message": "$count$ 件のタブをスリープしました"
+  },
+  "tabGroupsReopenAction": {
+    "message": "再度開く"
+  },
+  "tabGroupsWakeAction": {
+    "message": "スリープ解除"
+  },
+  "tabGroupsRecordDeletedToast": {
+    "message": "閉じた記録を削除しました"
+  },
+  "tabGroupsClosedTabRemovedToast": {
+    "message": "閉じた記録から削除しました"
+  },
+  "tabGroupsClearedToast": {
+    "message": "$count$ 件の閉じた記録を消去しました",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
   "bookmarkFolderPickDialogTitle": {
     "message": "ブックマークフォルダーに追加"
   },

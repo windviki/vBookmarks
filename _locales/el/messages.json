@@ -457,6 +457,32 @@
       }
     }
   },
+  "tabGroupsClosedToast": {
+    "message": "Έκλεισαν $count$ καρτέλα(ες)"
+  },
+  "tabGroupsSleptToast": {
+    "message": "Τέθηκαν σε αναστολή $count$ καρτέλα(ες)"
+  },
+  "tabGroupsReopenAction": {
+    "message": "Άνοιγμα ξανά"
+  },
+  "tabGroupsWakeAction": {
+    "message": "Ενεργοποίηση"
+  },
+  "tabGroupsRecordDeletedToast": {
+    "message": "Αφαιρέθηκε η κλειστή εγγραφή"
+  },
+  "tabGroupsClosedTabRemovedToast": {
+    "message": "Αφαιρέθηκε από την κλειστή εγγραφή"
+  },
+  "tabGroupsClearedToast": {
+    "message": "Εκκαθαρίστηκαν $count$ κλειστές εγγραφές",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
   "bookmarkFolderPickDialogTitle": {
     "message": "Προσθήκη σε φάκελο σελιδοδεικτών"
   },

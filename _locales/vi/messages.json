@@ -457,6 +457,32 @@
       }
     }
   },
+  "tabGroupsClosedToast": {
+    "message": "Đã đóng $count$ tab"
+  },
+  "tabGroupsSleptToast": {
+    "message": "Đã đưa $count$ tab vào chế độ ngủ"
+  },
+  "tabGroupsReopenAction": {
+    "message": "Mở lại"
+  },
+  "tabGroupsWakeAction": {
+    "message": "Đánh thức"
+  },
+  "tabGroupsRecordDeletedToast": {
+    "message": "Đã xóa bản ghi đã đóng"
+  },
+  "tabGroupsClosedTabRemovedToast": {
+    "message": "Đã xóa khỏi bản ghi đã đóng"
+  },
+  "tabGroupsClearedToast": {
+    "message": "Đã xóa $count$ bản ghi đã đóng",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
   "bookmarkFolderPickDialogTitle": {
     "message": "Thêm vào thư mục dấu trang"
   },

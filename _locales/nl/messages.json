@@ -457,6 +457,32 @@
       }
     }
   },
+  "tabGroupsClosedToast": {
+    "message": "$count$ tabbladen gesloten"
+  },
+  "tabGroupsSleptToast": {
+    "message": "$count$ tabbladen in slaap gezet"
+  },
+  "tabGroupsReopenAction": {
+    "message": "Heropenen"
+  },
+  "tabGroupsWakeAction": {
+    "message": "Activeren"
+  },
+  "tabGroupsRecordDeletedToast": {
+    "message": "Gesloten record verwijderd"
+  },
+  "tabGroupsClosedTabRemovedToast": {
+    "message": "Verwijderd uit gesloten record"
+  },
+  "tabGroupsClearedToast": {
+    "message": "$count$ gesloten records gewist",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
   "bookmarkFolderPickDialogTitle": {
     "message": "Toevoegen aan bladwijzermap"
   },

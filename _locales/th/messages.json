@@ -457,6 +457,32 @@
       }
     }
   },
+  "tabGroupsClosedToast": {
+    "message": "ปิดแท็บ $count$ แล้ว"
+  },
+  "tabGroupsSleptToast": {
+    "message": "พักแท็บ $count$ แล้ว"
+  },
+  "tabGroupsReopenAction": {
+    "message": "เปิดใหม่"
+  },
+  "tabGroupsWakeAction": {
+    "message": "ปลุก"
+  },
+  "tabGroupsRecordDeletedToast": {
+    "message": "ลบบันทึกที่ปิดแล้ว"
+  },
+  "tabGroupsClosedTabRemovedToast": {
+    "message": "ลบออกจากบันทึกที่ปิดแล้ว"
+  },
+  "tabGroupsClearedToast": {
+    "message": "ล้างบันทึกที่ปิดแล้ว $count$ รายการ",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
   "bookmarkFolderPickDialogTitle": {
     "message": "เพิ่มไปยังโฟลเดอร์บุ๊กมาร์ก"
   },

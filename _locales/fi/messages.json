@@ -457,6 +457,32 @@
       }
     }
   },
+  "tabGroupsClosedToast": {
+    "message": "Suljettiin $count$ välilehteä"
+  },
+  "tabGroupsSleptToast": {
+    "message": "Asetettiin $count$ välilehteä lepotilaan"
+  },
+  "tabGroupsReopenAction": {
+    "message": "Avaa uudelleen"
+  },
+  "tabGroupsWakeAction": {
+    "message": "Herätä"
+  },
+  "tabGroupsRecordDeletedToast": {
+    "message": "Poistettiin suljettu tietue"
+  },
+  "tabGroupsClosedTabRemovedToast": {
+    "message": "Poistettiin suljetusta tietueesta"
+  },
+  "tabGroupsClearedToast": {
+    "message": "Tyhjennettiin $count$ suljettua tietuetta",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
   "bookmarkFolderPickDialogTitle": {
     "message": "Lisää kirjanmerkkeihin"
   },

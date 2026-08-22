@@ -1969,6 +1969,39 @@
       }
     }
   },
+  "tabGroupsClosedToast": {
+    "message": "已关闭 $count$ 个标签页",
+    "description": "Toast after closing a single tab or tab group; the action button reopens it."
+  },
+  "tabGroupsSleptToast": {
+    "message": "已休眠 $count$ 个标签页",
+    "description": "Toast after sleeping a single tab or tab group; the action button wakes it."
+  },
+  "tabGroupsReopenAction": {
+    "message": "重新打开",
+    "description": "Toast action button: reopens the just-closed tab or tab group."
+  },
+  "tabGroupsWakeAction": {
+    "message": "唤醒",
+    "description": "Toast action button: wakes the just-slept tab(s)."
+  },
+  "tabGroupsRecordDeletedToast": {
+    "message": "已删除关闭记录",
+    "description": "Toast after deleting one recently-closed record; Undo restores it."
+  },
+  "tabGroupsClosedTabRemovedToast": {
+    "message": "已从记录中移除",
+    "description": "Toast after removing one tab from a closed record; Undo restores it."
+  },
+  "tabGroupsClearedToast": {
+    "message": "已清空 $count$ 条关闭记录",
+    "description": "Toast after clearing all recently-closed records; Undo restores the whole list.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
   "bookmarkFolderPickDialogTitle": {
     "message": "添加到书签文件夹"
   },

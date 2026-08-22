@@ -457,6 +457,32 @@
       }
     }
   },
+  "tabGroupsClosedToast": {
+    "message": "Chiuse $count$ scheda/e"
+  },
+  "tabGroupsSleptToast": {
+    "message": "Messe in pausa $count$ scheda/e"
+  },
+  "tabGroupsReopenAction": {
+    "message": "Riapri"
+  },
+  "tabGroupsWakeAction": {
+    "message": "Riprendi"
+  },
+  "tabGroupsRecordDeletedToast": {
+    "message": "Record chiuso rimosso"
+  },
+  "tabGroupsClosedTabRemovedToast": {
+    "message": "Rimosso dal record chiuso"
+  },
+  "tabGroupsClearedToast": {
+    "message": "Cancellati $count$ record chiusi",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
   "bookmarkFolderPickDialogTitle": {
     "message": "Aggiungi alla cartella di segnalibri"
   },

@@ -2114,6 +2114,39 @@
       }
     }
   },
+  "tabGroupsClosedToast": {
+    "message": "Closed $count$ tab(s)",
+    "description": "Toast after closing a single tab or tab group; the action button reopens it."
+  },
+  "tabGroupsSleptToast": {
+    "message": "Put $count$ tab(s) to sleep",
+    "description": "Toast after sleeping a single tab or tab group; the action button wakes it."
+  },
+  "tabGroupsReopenAction": {
+    "message": "Reopen",
+    "description": "Toast action button: reopens the just-closed tab or tab group."
+  },
+  "tabGroupsWakeAction": {
+    "message": "Wake",
+    "description": "Toast action button: wakes the just-slept tab(s)."
+  },
+  "tabGroupsRecordDeletedToast": {
+    "message": "Removed the closed record",
+    "description": "Toast after deleting one recently-closed record; Undo restores it."
+  },
+  "tabGroupsClosedTabRemovedToast": {
+    "message": "Removed from the closed record",
+    "description": "Toast after removing one tab from a closed record; Undo restores it."
+  },
+  "tabGroupsClearedToast": {
+    "message": "Cleared $count$ closed record(s)",
+    "description": "Toast after clearing all recently-closed records; Undo restores the whole list.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
   "bookmarkFolderPickDialogTitle": {
     "message": "Add to bookmark folder"
   },

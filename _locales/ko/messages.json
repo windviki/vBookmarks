@@ -457,6 +457,32 @@
       }
     }
   },
+  "tabGroupsClosedToast": {
+    "message": "$count$개 탭 닫힘"
+  },
+  "tabGroupsSleptToast": {
+    "message": "$count$개 탭 절전 모드로 전환"
+  },
+  "tabGroupsReopenAction": {
+    "message": "다시 열기"
+  },
+  "tabGroupsWakeAction": {
+    "message": "깨우기"
+  },
+  "tabGroupsRecordDeletedToast": {
+    "message": "닫힘 기록 삭제됨"
+  },
+  "tabGroupsClosedTabRemovedToast": {
+    "message": "닫힘 기록에서 제거됨"
+  },
+  "tabGroupsClearedToast": {
+    "message": "$count$개 닫힘 기록 삭제됨",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
   "bookmarkFolderPickDialogTitle": {
     "message": "북마크 폴더에 추가"
   },

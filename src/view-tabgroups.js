@@ -46,7 +46,7 @@ export function initViewTabGroups(ctx = {}) {
     const views = ctx.views;
     const treeRender = ctx.treeRender;
     const dialogs = ctx.dialogs;
-    const undo = ctx.undo || { showToast: () => {} };
+    const undo = ctx.undo || { showToast: () => {}, toastAction: () => {} };
     // Tree invalidation after a quick-add bookmark (neat.js injects the
     // standard getTree → generateTree chain; optional in tests).
     const onChanged = ctx.onChanged || (() => {});
@@ -796,46 +796,43 @@ export function initViewTabGroups(ctx = {}) {
         }
     };
 
+    // Single-item destructive/stateful operations run WITHOUT a confirm —
+    // the toast + action button is the regret path (4.1.0 UX pass: one-item
+    // confirms made every click pay a dialog tax; the dialogs stay on the
+    // BATCH bar, where the blast radius justifies them).
     const closeTabById = tabId => {
         const tab = tabById(tabId);
         if (!tab)
             return;
-        dialogs.ConfirmDialog.open({
-            dialog: _m('tabGroupsConfirmClose', '1'),
-            button1: `<strong>${_m('delete')}</strong>`,
-            button2: _m('nope'),
-            fn1: () => {
-                // Remember closed single tabs in the same history list as
-                // closed groups, so they can be reopened in their window.
-                const record = {
-                    id: `ct_${Date.now().toString(36)}`,
-                    type: 'tab',
-                    title: tab.title || '',
-                    url: tab.url || '',
-                    windowId: tab.windowId,
-                    savedAt: Date.now(),
-                    tabs: [{ title: tab.title || '', url: tab.url || '' }]
-                };
-                persistClosedGroups([...readClosedGroups(), record]);
-                send({ type: TAB_GROUP_MSG.tabsClose, tabIds: [tab.id] });
-                scheduleRefresh();
-            }
-        });
+        // Remember closed single tabs in the same history list as
+        // closed groups, so they can be reopened in their window.
+        const record = {
+            id: `ct_${Date.now().toString(36)}`,
+            type: 'tab',
+            title: tab.title || '',
+            url: tab.url || '',
+            windowId: tab.windowId,
+            savedAt: Date.now(),
+            tabs: [{ title: tab.title || '', url: tab.url || '' }]
+        };
+        persistClosedGroups([...readClosedGroups(), record]);
+        // Keep the in-memory mirror in step: the toast's Reopen callback may
+        // fire before the 300 ms-debounced refresh reloads the list.
+        closedRecords = readClosedGroups().sort((a, b) => (b.savedAt || 0) - (a.savedAt || 0));
+        send({ type: TAB_GROUP_MSG.tabsClose, tabIds: [tab.id] });
+        undo.toastAction(_m('tabGroupsClosedToast', '1'), _m('tabGroupsReopenAction'),
+            () => restoreClosedGroup(record.id));
+        scheduleRefresh();
     };
 
     const sleepTabById = tabId => {
         const tab = tabById(tabId);
         if (!tab)
             return;
-        dialogs.ConfirmDialog.open({
-            dialog: _m('tabGroupsConfirmSleep', '1'),
-            button1: `<strong>${_m('tabGroupsSelectSleep')}</strong>`,
-            button2: _m('nope'),
-            fn1: () => {
-                send({ type: TAB_GROUP_MSG.tabsDiscard, tabIds: [tab.id] });
-                scheduleRefresh();
-            }
-        });
+        send({ type: TAB_GROUP_MSG.tabsDiscard, tabIds: [tab.id] });
+        undo.toastAction(_m('tabGroupsSleptToast', '1'), _m('tabGroupsWakeAction'),
+            () => wakeTabById(tab.id));
+        scheduleRefresh();
     };
 
     // Waking is non-destructive (the tab reloads in place and stays where it
@@ -977,46 +974,39 @@ export function initViewTabGroups(ctx = {}) {
 
     const closeGroup = groupId => {
         const group = groupById(groupId);
-        const ids = tabs.filter(t => String(t.groupId) === String(groupId)).map(t => t.id);
+        const groupTabs = tabs.filter(t => String(t.groupId) === String(groupId));
+        const ids = groupTabs.map(t => t.id);
         if (!ids.length)
             return;
-        dialogs.ConfirmDialog.open({
-            dialog: _m('tabGroupsConfirmClose', `${ids.length}`),
-            button1: `<strong>${_m('delete')}</strong>`,
-            button2: _m('nope'),
-            fn1: () => {
-                // A closed group is NOT deleted: keep a local record so the
-                // group can be reopened later from the closed-groups section.
-                const record = {
-                    id: `cg_${Date.now().toString(36)}`,
-                    type: 'group',
-                    title: group ? group.title || '' : '',
-                    color: group ? group.color || 'grey' : 'grey',
-                    savedAt: Date.now(),
-                    tabs: tabs.filter(t => String(t.groupId) === String(groupId))
-                        .sort((a, b) => (a.index || 0) - (b.index || 0))
-                        .map(t => ({ title: t.title || '', url: t.url || '' }))
-                };
-                persistClosedGroups([...readClosedGroups(), record]);
-                send({ type: TAB_GROUP_MSG.tabsClose, tabIds: ids });
-                scheduleRefresh();
-            }
-        });
+        // A closed group is NOT deleted: keep a local record so the
+        // group can be reopened later from the closed-groups section —
+        // and the toast's Reopen button jumps straight there.
+        const record = {
+            id: `cg_${Date.now().toString(36)}`,
+            type: 'group',
+            title: group ? group.title || '' : '',
+            color: group ? group.color || 'grey' : 'grey',
+            savedAt: Date.now(),
+            tabs: groupTabs
+                .sort((a, b) => (a.index || 0) - (b.index || 0))
+                .map(t => ({ title: t.title || '', url: t.url || '' }))
+        };
+        persistClosedGroups([...readClosedGroups(), record]);
+        closedRecords = readClosedGroups().sort((a, b) => (b.savedAt || 0) - (a.savedAt || 0));
+        send({ type: TAB_GROUP_MSG.tabsClose, tabIds: ids });
+        undo.toastAction(_m('tabGroupsClosedToast', `${ids.length}`), _m('tabGroupsReopenAction'),
+            () => restoreClosedGroup(record.id));
+        scheduleRefresh();
     };
 
     const sleepGroup = groupId => {
         const ids = tabs.filter(t => String(t.groupId) === String(groupId)).map(t => t.id);
         if (!ids.length)
             return;
-        dialogs.ConfirmDialog.open({
-            dialog: _m('tabGroupsConfirmSleep', `${ids.length}`),
-            button1: `<strong>${_m('tabGroupsSelectSleep')}</strong>`,
-            button2: _m('nope'),
-            fn1: () => {
-                send({ type: TAB_GROUP_MSG.tabsDiscard, tabIds: ids });
-                scheduleRefresh();
-            }
-        });
+        send({ type: TAB_GROUP_MSG.tabsDiscard, tabIds: ids });
+        undo.toastAction(_m('tabGroupsSleptToast', `${ids.length}`), _m('tabGroupsWakeAction'),
+            () => wakeGroup(groupId));
+        scheduleRefresh();
     };
 
     // Wake every member (no confirmation — reloading in place is reversible).
@@ -1097,8 +1087,19 @@ export function initViewTabGroups(ctx = {}) {
     };
 
     const deleteClosedGroup = recordId => {
+        const record = closedRecords.find(r => String(r.id) === String(recordId));
+        if (!record)
+            return;
         persistClosedGroups(closedRecords.filter(r => String(r.id) !== String(recordId)));
         closedRecords = readClosedGroups().sort((a, b) => (b.savedAt || 0) - (a.savedAt || 0));
+        // Regret path: put the exact record back where it was.
+        undo.toastAction(_m('tabGroupsRecordDeletedToast'), _m('undoAction'),
+            () => {
+                persistClosedGroups([...readClosedGroups(), record]);
+                closedRecords = readClosedGroups().sort((a, b) => (b.savedAt || 0) - (a.savedAt || 0));
+                if (views.isActive('tabgroups'))
+                    render();
+            });
         if (views.isActive('tabgroups'))
             render();
     };
@@ -1108,12 +1109,33 @@ export function initViewTabGroups(ctx = {}) {
         if (!record)
             return;
         const tabs = (record.tabs || []).slice();
-        tabs.splice(idx, 1);
+        const removed = tabs.splice(idx, 1)[0];
         if (!tabs.length) {
             persistClosedGroups(closedRecords.filter(r => String(r.id) !== String(recordId)));
         } else {
             const updated = { ...record, tabs };
             persistClosedGroups(closedRecords.map(r => String(r.id) === String(recordId) ? updated : r));
+        }
+        closedRecords = readClosedGroups().sort((a, b) => (b.savedAt || 0) - (a.savedAt || 0));
+        if (removed)
+            undo.toastAction(_m('tabGroupsClosedTabRemovedToast'), _m('undoAction'),
+                () => removeClosedTabUndo(recordId, idx, removed));
+        if (views.isActive('tabgroups'))
+            render();
+    };
+
+    // Undo for removeClosedTab: re-insert the tab at its old index (or
+    // resurrect the whole record when the removal emptied it).
+    const removeClosedTabUndo = (recordId, idx, removed) => {
+        const record = closedRecords.find(r => String(r.id) === String(recordId));
+        if (!record) {
+            persistClosedGroups([...readClosedGroups(),
+                { ...record, tabs: [removed], savedAt: record.savedAt || Date.now() }]);
+        } else {
+            const tabs = (record.tabs || []).slice();
+            tabs.splice(Math.min(idx, tabs.length), 0, removed);
+            persistClosedGroups(closedRecords.map(r => String(r.id) === String(recordId)
+                ? { ...r, tabs } : r));
         }
         closedRecords = readClosedGroups().sort((a, b) => (b.savedAt || 0) - (a.savedAt || 0));
         if (views.isActive('tabgroups'))
@@ -1149,13 +1171,22 @@ export function initViewTabGroups(ctx = {}) {
         // The records are the ONLY way to reopen a closed group from here —
         // clearing them is destructive, so it confirms like the view's other
         // destructive batch actions (the 4.1.0 audit found this unguarded).
+        // The toast's Undo restores the whole list afterwards.
         dialogs.ConfirmDialog.open({
             dialog: _m('tabGroupsConfirmClearClosed'),
             button1: `<strong>${_m('delete')}</strong>`,
             button2: _m('nope'),
             fn1: () => {
+                const snapshot = closedRecords.slice();
                 persistClosedGroups([]);
                 closedRecords = [];
+                undo.toastAction(_m('tabGroupsClearedToast', `${snapshot.length}`), _m('undoAction'),
+                    () => {
+                        persistClosedGroups(snapshot);
+                        closedRecords = readClosedGroups().sort((a, b) => (b.savedAt || 0) - (a.savedAt || 0));
+                        if (views.isActive('tabgroups'))
+                            render();
+                    });
                 if (views.isActive('tabgroups'))
                     render();
             }
@@ -1357,10 +1388,19 @@ export function initViewTabGroups(ctx = {}) {
             openPicker(groups);
     };
 
+    // Batch close/sleep: a SELECTION of many justifies the confirm; a
+    // selection of one behaves like the single-item buttons above (direct +
+    // toast regret), so a misclick never costs two dialogs.
     const closeSelected = () => {
-        const ids = selectedTabs().map(t => t.id);
+        const sel = selectedTabs();
+        const ids = sel.map(t => t.id);
         if (!ids.length)
             return;
+        if (ids.length === 1) {
+            setSelecting(false);
+            closeTabById(ids[0]);
+            return;
+        }
         dialogs.ConfirmDialog.open({
             dialog: _m('tabGroupsConfirmClose', `${ids.length}`),
             button1: `<strong>${_m('delete')}</strong>`,
@@ -1374,9 +1414,15 @@ export function initViewTabGroups(ctx = {}) {
     };
 
     const sleepSelected = () => {
-        const ids = selectedTabs().map(t => t.id);
+        const sel = selectedTabs();
+        const ids = sel.map(t => t.id);
         if (!ids.length)
             return;
+        if (ids.length === 1) {
+            setSelecting(false);
+            sleepTabById(ids[0]);
+            return;
+        }
         dialogs.ConfirmDialog.open({
             dialog: _m('tabGroupsConfirmSleep', `${ids.length}`),
             button1: `<strong>${_m('tabGroupsSelectSleep')}</strong>`,

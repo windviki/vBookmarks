@@ -456,6 +456,32 @@
       }
     }
   },
+  "tabGroupsClosedToast": {
+    "message": "Затворени $count$ јазичиња"
+  },
+  "tabGroupsSleptToast": {
+    "message": "Ставени $count$ јазичиња во сон"
+  },
+  "tabGroupsReopenAction": {
+    "message": "Отвори повторно"
+  },
+  "tabGroupsWakeAction": {
+    "message": "Разбуди"
+  },
+  "tabGroupsRecordDeletedToast": {
+    "message": "Отстранет затворениот запис"
+  },
+  "tabGroupsClosedTabRemovedToast": {
+    "message": "Отстрането од затворениот запис"
+  },
+  "tabGroupsClearedToast": {
+    "message": "Исчистени $count$ затворени записи",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
   "bookmarkFolderPickDialogTitle": {
     "message": "Додај во папка со обележувачи"
   },

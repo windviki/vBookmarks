@@ -457,6 +457,32 @@
       }
     }
   },
+  "tabGroupsClosedToast": {
+    "message": "Aizvērtas $count$ cilne(s)"
+  },
+  "tabGroupsSleptToast": {
+    "message": "Iemidzinātas $count$ cilne(s)"
+  },
+  "tabGroupsReopenAction": {
+    "message": "Atvērt vēlreiz"
+  },
+  "tabGroupsWakeAction": {
+    "message": "Pamodināt"
+  },
+  "tabGroupsRecordDeletedToast": {
+    "message": "Noņemts slēgtais ieraksts"
+  },
+  "tabGroupsClosedTabRemovedToast": {
+    "message": "Noņemts no slēgtā ieraksta"
+  },
+  "tabGroupsClearedToast": {
+    "message": "Notīrīti $count$ slēgtie ieraksti",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
   "bookmarkFolderPickDialogTitle": {
     "message": "Pievienot grāmatzīmju mapei"
   },

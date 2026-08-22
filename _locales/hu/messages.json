@@ -457,6 +457,32 @@
       }
     }
   },
+  "tabGroupsClosedToast": {
+    "message": "$count$ lap bezárva"
+  },
+  "tabGroupsSleptToast": {
+    "message": "$count$ lap elaltatva"
+  },
+  "tabGroupsReopenAction": {
+    "message": "Újranyitás"
+  },
+  "tabGroupsWakeAction": {
+    "message": "Ébresztés"
+  },
+  "tabGroupsRecordDeletedToast": {
+    "message": "A bezárt rekord eltávolítva"
+  },
+  "tabGroupsClosedTabRemovedToast": {
+    "message": "Eltávolítva a bezárt rekordból"
+  },
+  "tabGroupsClearedToast": {
+    "message": "$count$ bezárt rekord törölve",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
   "bookmarkFolderPickDialogTitle": {
     "message": "Hozzáadás könyvjelzőmappához"
   },

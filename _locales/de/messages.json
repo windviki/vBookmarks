@@ -457,6 +457,32 @@
       }
     }
   },
+  "tabGroupsClosedToast": {
+    "message": "$count$ Tabs geschlossen"
+  },
+  "tabGroupsSleptToast": {
+    "message": "$count$ Tabs schlafen gelegt"
+  },
+  "tabGroupsReopenAction": {
+    "message": "Wieder öffnen"
+  },
+  "tabGroupsWakeAction": {
+    "message": "Aufwecken"
+  },
+  "tabGroupsRecordDeletedToast": {
+    "message": "Geschlossenen Eintrag entfernt"
+  },
+  "tabGroupsClosedTabRemovedToast": {
+    "message": "Aus geschlossenem Eintrag entfernt"
+  },
+  "tabGroupsClearedToast": {
+    "message": "$count$ geschlossene Einträge gelöscht",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
   "bookmarkFolderPickDialogTitle": {
     "message": "Zu Lesezeichenordner hinzufügen"
   },

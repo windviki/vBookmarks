@@ -456,6 +456,32 @@
       }
     }
   },
+  "tabGroupsClosedToast": {
+    "message": "Fechou $count$ separador(es)"
+  },
+  "tabGroupsSleptToast": {
+    "message": "Pôs $count$ separador(es) a dormir"
+  },
+  "tabGroupsReopenAction": {
+    "message": "Reabrir"
+  },
+  "tabGroupsWakeAction": {
+    "message": "Ativar"
+  },
+  "tabGroupsRecordDeletedToast": {
+    "message": "Registo fechado removido"
+  },
+  "tabGroupsClosedTabRemovedToast": {
+    "message": "Removido do registo fechado"
+  },
+  "tabGroupsClearedToast": {
+    "message": "Limpou $count$ registo(s) fechado(s)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
   "bookmarkFolderPickDialogTitle": {
     "message": "Adicionar à pasta de marcadores"
   },

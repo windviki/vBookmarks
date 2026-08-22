@@ -457,6 +457,32 @@
       }
     }
   },
+  "tabGroupsClosedToast": {
+    "message": "Zatvoreno $count$ kartica"
+  },
+  "tabGroupsSleptToast": {
+    "message": "Uspavano $count$ kartica"
+  },
+  "tabGroupsReopenAction": {
+    "message": "Ponovno otvori"
+  },
+  "tabGroupsWakeAction": {
+    "message": "Probudi"
+  },
+  "tabGroupsRecordDeletedToast": {
+    "message": "Uklonjen zatvoreni zapis"
+  },
+  "tabGroupsClosedTabRemovedToast": {
+    "message": "Uklonjeno iz zatvorenog zapisa"
+  },
+  "tabGroupsClearedToast": {
+    "message": "Očišćeno $count$ zatvorenih zapisa",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
   "bookmarkFolderPickDialogTitle": {
     "message": "Dodaj u mapu oznaka"
   },

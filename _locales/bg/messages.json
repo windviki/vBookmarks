@@ -457,6 +457,32 @@
       }
     }
   },
+  "tabGroupsClosedToast": {
+    "message": "Затворени $count$ раздела"
+  },
+  "tabGroupsSleptToast": {
+    "message": "Приспани $count$ раздела"
+  },
+  "tabGroupsReopenAction": {
+    "message": "Отвори отново"
+  },
+  "tabGroupsWakeAction": {
+    "message": "Събуди"
+  },
+  "tabGroupsRecordDeletedToast": {
+    "message": "Премахнат записът от затворените"
+  },
+  "tabGroupsClosedTabRemovedToast": {
+    "message": "Премахнат от записа на затворените"
+  },
+  "tabGroupsClearedToast": {
+    "message": "Изчистени $count$ записа от затворените",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
   "bookmarkFolderPickDialogTitle": {
     "message": "Добавяне към папка с отметки"
   },

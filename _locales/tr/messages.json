@@ -457,6 +457,32 @@
       }
     }
   },
+  "tabGroupsClosedToast": {
+    "message": "$count$ sekme kapatıldı"
+  },
+  "tabGroupsSleptToast": {
+    "message": "$count$ sekme uyutuldu"
+  },
+  "tabGroupsReopenAction": {
+    "message": "Yeniden aç"
+  },
+  "tabGroupsWakeAction": {
+    "message": "Uyandır"
+  },
+  "tabGroupsRecordDeletedToast": {
+    "message": "Kapalı kayıt silindi"
+  },
+  "tabGroupsClosedTabRemovedToast": {
+    "message": "Kapalı kayıttan kaldırıldı"
+  },
+  "tabGroupsClearedToast": {
+    "message": "$count$ kapalı kayıt temizlendi",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
   "bookmarkFolderPickDialogTitle": {
     "message": "Yer imi klasörüne ekle"
   },

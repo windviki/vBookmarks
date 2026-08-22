@@ -457,6 +457,32 @@
       }
     }
   },
+  "tabGroupsClosedToast": {
+    "message": "Lukket $count$ fane(r)"
+  },
+  "tabGroupsSleptToast": {
+    "message": "Satt $count$ fane(r) i dvale"
+  },
+  "tabGroupsReopenAction": {
+    "message": "Åpne igjen"
+  },
+  "tabGroupsWakeAction": {
+    "message": "Vekk"
+  },
+  "tabGroupsRecordDeletedToast": {
+    "message": "Fjernet den lukkede posten"
+  },
+  "tabGroupsClosedTabRemovedToast": {
+    "message": "Fjernet fra den lukkede posten"
+  },
+  "tabGroupsClearedToast": {
+    "message": "Tømte $count$ lukkede post(er)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
   "bookmarkFolderPickDialogTitle": {
     "message": "Legg til i bokmerkemappe"
   },
