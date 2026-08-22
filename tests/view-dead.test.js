@@ -284,7 +284,7 @@ const setup = (opts = {}) => {
     });
 
     return {
-        viewDead, $list, $container, $tree, $results, $recent, $dupes, $stats, doc, chrome: chromeStub,
+        viewDead, $list, $container, $tree, $results, $recent, $dupes, $stats, doc, byId, chrome: chromeStub,
         store, views, treeRender, separatorManager, treeView, actions, dialogs, undo,
         treeData, winListeners, def: () => views.def, fire, clickOn
     };
@@ -2496,10 +2496,17 @@ describe('marks + overlay (§5.5c)', () => {
         const liPlain = makeLi('neat-tree-item-11', '11');
         const liLegacy = makeLi('results-item-13', ''); // prefix-strip fallback
         const ctx = setup({ treeLis: [liMarked, liPlain], storeData: { deadMarks: '["12","13"]' } });
+        // H6: targeted by-id updates — register the rows the way the real DOM
+        // exposes them
+        ctx.byId['neat-tree-item-12'] = liMarked;
+        ctx.byId['neat-tree-item-11'] = liPlain;
+        ctx.byId['results-item-13'] = liLegacy;
         ctx.$results._lis = [liLegacy];
         // 第五轮项3: dupes/stats lists joined the overlay set
         const liDupes = makeLi('dupes-item-12', '12');
         const liStats = makeLi('stats-item-13', '13');
+        ctx.byId['dupes-item-12'] = liDupes;
+        ctx.byId['stats-item-13'] = liStats;
         ctx.$dupes._lis = [liDupes];
         ctx.$stats._lis = [liStats];
         ctx.viewDead.refreshOverlays();
@@ -2522,6 +2529,8 @@ describe('marks + overlay (§5.5c)', () => {
         const liDead = makeLi('results-item-12', '12');
         const liBlocked = makeLi('results-item-13', '13');
         const ctx = setup({ treeLis: [liDead, liBlocked] });
+        ctx.byId['results-item-12'] = liDead;
+        ctx.byId['results-item-13'] = liBlocked;
         ctx.$results._lis = [liDead, liBlocked];
         finishScan(ctx, {
             '12': { status: 'dead', code: 404 },
@@ -2545,8 +2554,18 @@ describe('marks + overlay (§5.5c)', () => {
         // 用户场景: 旧标注残留, 当前无扫描结果 → 无 verdict 可查 → 默认红.
         const li = makeLi('neat-tree-item-12', '12');
         const ctx = setup({ treeLis: [li], storeData: { deadMarks: '["12"]' } });
+        ctx.byId['neat-tree-item-12'] = li;
         ctx.viewDead.refreshOverlays();
         expect(li._fav.children.map(c => c.className)).toEqual(['dead-indicator']);
+    });
+
+    it('fast path: no marks and no stale indicator → zero DOM lookups (H6)', () => {
+        const ctx = setup({});
+        const orig = ctx.doc.getElementById;
+        let lookups = 0;
+        ctx.doc.getElementById = id => { lookups++; return orig(id); };
+        ctx.viewDead.refreshOverlays();
+        expect(lookups).toBe(0);
     });
 
     it('an all-healthy rescan keeps every past mark as residue (过去标注, §2.4)', () => {

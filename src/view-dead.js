@@ -956,42 +956,75 @@ export function initViewDead(ctx = {}) {
     // ctx hook (neat.js wires them all to this function); the tree goes
     // through onTreeGenerated, which tree-view fires AFTER the innerHTML
     // swap (item 3's first-paint fix).
-    const LISTS = ['tree', 'results', 'recent-list', 'dupes-list', 'stats-list'];
-    const rowIdOf = li =>
-        (li.dataset && li.dataset.nodeId) ||
-        li.id.replace(/^(neat-tree|neat-recent|results|recent|dead|dupes)-item-/, '');
+    // H6: overlay re-layout is targeted — per marked id via getElementById,
+    // plus removal for ids that were overlaid but are no longer marked. No
+    // whole-list walk; a fast return when nothing is marked and no stale
+    // indicator exists anywhere in the page.
+    // One bookmark id can own rows in several lists at once (tree + results +
+    // recent + dupes + stats), so every matching row is painted.
+    const OVERLAY_ROW_PREFIXES = ['neat-tree-item-', 'results-item-', 'recent-item-', 'dupes-item-', 'stats-item-'];
+    let overlaidIds = new Set();
+    const overlayRows = id => {
+        const rows = [];
+        for (let i = 0, l = OVERLAY_ROW_PREFIXES.length; i < l; i++) {
+            const row = document.getElementById(OVERLAY_ROW_PREFIXES[i] + id);
+            if (row)
+                rows.push(row);
+        }
+        return rows;
+    };
+    const paintOverlay = (li, id) => {
+        const fav = li.querySelector ? li.querySelector('.favicon-container') : null;
+        if (!fav)
+            return false;
+        // 死链=红（默认），受限=橙：按该 id 在本次扫描中的 verdict 着色
+        // （残留标记无 verdict / 老备份 → 红，与残留行 badge 同规则）。
+        const verdict = lastScan && lastScan.results && lastScan.results[id];
+        const blocked = verdict && verdict.status === 'blocked';
+        const cls = `dead-indicator${blocked ? ' blocked' : ''}`;
+        const existing = fav.querySelector('.dead-indicator');
+        if (existing)
+            existing.className = cls; // verdict 可能随新扫描变化
+        else {
+            const span = document.createElement('span');
+            span.className = cls;
+            span.textContent = '×';
+            fav.appendChild(span);
+        }
+        return true;
+    };
     const refreshOverlays = () => {
-        for (const listId of LISTS) {
-            const list = $(listId);
-            if (!list || !list.querySelectorAll)
+        const hasStale = document.querySelector
+            ? !!document.querySelector('.dead-indicator')
+            : false;
+        if (deadMarks.size === 0 && overlaidIds.size === 0 && !hasStale)
+            return;
+        const touched = new Set();
+        for (const id of deadMarks) {
+            const rows = overlayRows(id);
+            if (!rows.length)
                 continue;
-            const lis = list.querySelectorAll('li');
-            for (let i = 0, l = lis.length; i < l; i++) {
-                const li = lis[i];
+            let painted = false;
+            for (const li of rows) {
+                if (paintOverlay(li, id))
+                    painted = true;
+            }
+            if (painted)
+                touched.add(id);
+        }
+        for (const id of overlaidIds) {
+            if (deadMarks.has(id))
+                continue;
+            for (const li of overlayRows(id)) {
                 const fav = li.querySelector ? li.querySelector('.favicon-container') : null;
                 if (!fav)
                     continue;
-                const id = rowIdOf(li);
-                // 死链=红（默认），受限=橙：按该 id 在本次扫描中的 verdict 着色
-                // （残留标记无 verdict / 老备份 → 红，与残留行 badge 同规则）。
-                const verdict = lastScan && lastScan.results && lastScan.results[id];
-                const blocked = verdict && verdict.status === 'blocked';
-                const cls = `dead-indicator${blocked ? ' blocked' : ''}`;
                 const existing = fav.querySelector('.dead-indicator');
-                if (deadMarks.has(id)) {
-                    if (existing)
-                        existing.className = cls; // verdict 可能随新扫描变化
-                    else {
-                        const span = document.createElement('span');
-                        span.className = cls;
-                        span.textContent = '×';
-                        fav.appendChild(span);
-                    }
-                } else if (existing && existing.parentNode) {
+                if (existing && existing.parentNode)
                     existing.parentNode.removeChild(existing);
-                }
             }
         }
+        overlaidIds = touched;
     };
 
     // --- Marks ------------------------------------------------------------------
