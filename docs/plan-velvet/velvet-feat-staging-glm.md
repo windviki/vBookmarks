@@ -190,7 +190,7 @@ tab 不是书签，暂存区收条目（url/title）天然兼容——互通动�
 | 打开为标签组 | 2 | 已选条目 | `actions.openBookmarksInGroup`（SW 管线，popup 关闭不掉单） |
 | 收藏 | 2 | 适用项：未收藏条目 | **真实建书签**：逐条 `chrome.bookmarks.create` 进 `quickAddFolderId`（快加星/stats 历史行星同语义；建前查 url 索引，树内已存在同 URL 则直接锚定不重复建——与快加星去重一致）。条目升为已收藏态、**留在暂存区**（待继续归位组织）。toast「已收藏 N 条」+ undo 单步（逐条 capture，撤销 = 全部移除新建书签） |
 | 取消收藏 | 2 | 适用项：已收藏条目 | **真实删书签**：逐条 `chrome.bookmarks.remove`（读 lastError）。条目**留在暂存区**、落档为未收藏态（id=null，快照仍在）——工作台不弄丢你正在整理的东西，后悔可再收藏或最终移出。toast「已取消收藏 N 条」+ undo 单步（capture 恢复书签并重链） |
-| 新建分组… | 2 | 已选条目 | 弹出命名对话框（NewFolderDialog 模式复用，dialogs.js:127-150），把已选条目从原组/未分组移入新虚拟组（纯本地，不动树） |
+| 分组… | 2 | 已选条目 | 弹出**分组指派对话框** `#staging-group-assign-dialog`（迭代 C：正文 = 既有分组按钮列表（组名 + 条数，点击即选）+ 分隔线 + 新分组名输入 + 确定/取消；body-class 对话框照登 `anyOpen`/`closeDialogs`/`#cover` 三件套），把已选条目从原组/未分组/「未收藏」桶移入目标组（新组随建；纯本地，不动树） |
 | 移动/复制到… | 2 | 已选条目 | 打开文件夹选择器（第 4 节）。**已收藏条目**：move = 真实 `chrome.bookmarks.move`（>10 条确认，见 §3.0 注 4），成功后条目**离开暂存区**（归位即完成使命）；copy = 真实 `create` 副本到目标（原书签原位不动，条目留在暂存区）。**未收藏条目**：move/copy 均等价于「**收藏到指定文件夹**」（create 到目标；move 后条目离开、copy 后留下——与已收藏条目同律），这正是收藏默认夹之外的精确落点通道 |
 | 删除所选 | 2 | 适用项：已收藏条目 | **删除真实书签 + 条目离场**（`chrome.bookmarks.remove` 串行、读 lastError、ConfirmDialog 报实际数量、`undo.capture` 每条 + 单步撤销，撤销同时恢复书签与暂存条目）。选中集中的未收藏条目：无树可删，等价「移出暂存」（toast 分别计数） |
 | 移出暂存 | 2 | 已选条目 | 仅从暂存列表移除，树不动，toast 可撤销（撤销 = 按 url/title/group/ts 快照重新加入） |
@@ -335,14 +335,14 @@ tab 不是书签，暂存区收条目（url/title）天然兼容——互通动�
 - `AGENTS.md` + `docs/agents/modules.md`：view-recent.js 行升级描述、context-menu/dialogs/store/actions 行同步（实施时）。
 - 测试：`tests/` 新增 `staging.test.js`（纯模型全逻辑：双态/URL 去重/重链落档/分组/未收藏桶推导/lastSeenTs）、`folder-copy.test.js`（三格式）、`clipboard.test.js`；扩展 `view-recent.test.js`（双区域/选择模式/组头/混合选择/**persistScroll 首例断言**/onChanged/onCreated 重链）、`dialogs.test.js`（picker 扩展 + close 正规化 + 双态副文案 + 快选 chips/pin/recents 与惰性修剪 + 分组指派对话框）、`context-menu.test.js`（新项/新 submenu/置灰/折叠/文件夹粘贴显隐/历史行入口）、`keyboard.test.js`（新绑定）、`view-tabgroups.test.js`（收藏并暂存 + id 返回兼容）、`view-stats.test.js`（历史行暂存入口 + 选择模式）、`search.test.js`（选择模式 + Esc 层级顺序）、`actions.test.js`（收藏/取消收藏批量执行 + undo 组装）；harness `verify-keyboard.js` 补暂存视图行步行与选择模式断言（Docker 门禁）。
 
-### 9. 决策速览表（迭代 B 更新）
+### 9. 决策速览表（迭代 B/C 更新）
 
 | 问题 | 决策 |
 |---|---|
 | 视图升级方式 | 保留 `recent` view id 与设置键，标题改为「暂存区」；palette `/recent` 加 alias `staging` |
 | 暂存区存什么 | 双态条目（`id` 非空=已收藏 / `null`=未收藏，恒带 url/title 快照）；上限 500；**URL 为唯一性键**；local 区不进 sync；census 归 `'other'` |
 | 「不改书签树」的边界 | **只约束发送动作**；暂存区内的整理动作（收藏/取消收藏/移动/复制/删除）全部真实生效 |
-| 收藏/取消收藏 | **真实树操作**：收藏 = create 进 `quickAddFolderId`（url 去重锚定，与快加星/stats 历史行星同语义）；取消收藏 = remove，条目**落档留场**（未收藏态，可再收藏）；本地 `fav` 标记与 `__unfav__` 合成桶删除 |
+| 收藏/取消收藏 | **真实树操作**：收藏 = create 进 `quickAddFolderId`（url 去重锚定，与快加星/stats 历史行星同语义）；取消收藏 = remove，条目**落档留场**（未收藏态，可再收藏）；本地 `fav` 标记删除；「未收藏」合成桶经迭代 C 以真实态收件箱身份恢复（见下） |
 | 生效模型 | **立即生效 + 分层防护**（高频低危 = toast/撤销；删除与清空 = ConfirmDialog；批量移动 >10 = 确认）；「统一应用」否决（§3.0 四条依据） |
 | 条目离场出口 | 仅三个显式动作：移动归位 / 删除 / 移出·清空；收藏态翻转与复制永远留场 |
 | 树事件同步 | onCreated 重链（url 命中则升已收藏）；onChanged 更新快照；onRemoved 修剪（重链或落档，**不删条目**）；onMoved 不动；url 索引复用 `buildTreeSnapshot` |
@@ -372,7 +372,7 @@ tab 不是书签，暂存区收条目（url/title）天然兼容——互通动�
 - 发送/状态：`stagingAdd`、`stagingAdded`、`stagingAlready`、`stagingAddedSummary`（新增 $n$ 条，$m$ 条已在暂存区）、`stagingFull`、`stagingFolderEmpty`、`stagingConfirmFolder`、`recentStageAll`。
 - 暂存动作：`stagingRemove`、`stagingRemoved`、`stagingFav`（收藏）、`stagingFavDone`（已收藏 $n$ 条，含跳过数）、`stagingUnfav`（取消收藏）、`stagingUnfavDone`（已取消收藏 $n$ 条）、`stagingClear`、`stagingClearConfirm`、`stagingDeleteConfirm`（含 undo 单步提示，参照 `undoSingleStepNote` 复用）、`stagingMoveDone`/`stagingCopyDone`（含数量参数）、`stagingMoveConfirm`（>10 条确认）。
 - 条目态：`stagingFromHistory`（未收藏条目 subText「来自历史」）、`stagingRowFav`/`stagingRowUnfav`（行内星标 title，随态切换）。
-- 分组：`stagingGroupNew`、`stagingGroupRename`、`stagingGroupDissolve`、`stagingGroupSelectAll`、`stagingGroupNamePrompt`、`groupSaveToFolder`（保存到文件夹…）、`groupCopyToFolder`（复制到文件夹…）、`groupPlaceTooltip`（归位）。
+- 分组：`stagingGroupNew`、`stagingGroupRename`、`stagingGroupDissolve`、`stagingGroupSelectAll`、`stagingGroupNamePrompt`、`stagingGroupAssign`（分组…：工具条/行右键入口 + 指派对话框标题与按钮）、`groupSaveToFolder`（保存到文件夹…）、`groupCopyToFolder`（复制到文件夹…）、`groupPlaceTooltip`（归位）。
 - 未收藏桶：`stagingBucketFavAll`（收藏全部）、`stagingNew`（新 $n$）。
 - 文件夹选择器：`folderPickMoveHere`、`folderPickCopyHere`、`folderPickFilter`、`folderPickFavNote`（未收藏条目将收藏到此处）、`folderPickPinned`（已 pin 区标）、`folderPickRecent`（最近区标）、`pinFolder`/`unpinFolder`（行内 pin 按钮 title）。
 - 树剪贴板：`copyBookmark`、`cutBookmark`、`pasteHere`、`copiedToast`/`cutToast`/`pasteDone`/`pasteGone`。
@@ -415,7 +415,7 @@ tab 不是书签，暂存区收条目（url/title）天然兼容——互通动�
 | ST9 | 搜索 + stats 视图选择模式（工具条 + 动作 + Esc/适用项降级） | ST1 |
 | ST10 | i18n 55 键全流程 + AGENTS.md/docs 同步 + harness 断言收尾 | 全部 |
 
-### 14. 同类产品调研备忘（迭代 B，支撑 §3.0/§3.7 裁决）
+### 14. 同类产品调研备忘（迭代 B，支撑 §3.0/§3.8 裁决）
 
 - **Raindrop.io**：Unsorted 内建收件箱（保存不选集合 → 落 Unsorted，事后整理）；多选工具条批量 move/tag/delete；删除进 Trash 集合可恢复。「先收集后整理」证实暂存区的产品价值；其批量动作全部立即生效 + Trash 兜底，无「统一应用」层。
 - **Gmail / Google Photos / Material 3 selection**：长按/勾选进入选择模式 → 上下文工具条（transform 而非弹层，保持空间稳定）→ 点动作**立即生效** → 底部 toast + Undo。M3 规范明文：contextual action bar 持续存在直到动作发生——与我们的双 rung 工具条同构。
