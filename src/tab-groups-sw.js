@@ -161,10 +161,21 @@ export function createTabGroupOpener() {
             active: false,
             ...(windowId ? { windowId } : {})
         }, tab => {
-            if (!chrome.runtime.lastError && tab)
+            if (!chrome.runtime.lastError && tab) {
                 resolve(tab.id);
-            else
-                resolve(null);
+                return;
+            }
+            // The target window may have closed between the message and this
+            // create — retry once in the current window so a copy the user
+            // asked for is never silently lost (the header's promise).
+            const err = chrome.runtime.lastError;
+            if (windowId && err && /window/i.test(err.message || '')) {
+                chrome.tabs.create({ url: spec.url, active: false }, retry => {
+                    resolve(!chrome.runtime.lastError && retry ? retry.id : null);
+                });
+                return;
+            }
+            resolve(null);
         });
     });
 
@@ -256,6 +267,13 @@ export function createTabGroupOpener() {
         }
         chrome.tabGroups.get(groupId, group => {
             if (chrome.runtime.lastError || !group) {
+                // The group vanished between the pick and this run — degrade
+                // the copies to a plain batch-open (the openIntoGroup
+                // contract) so the user's tabs are never dropped; existing
+                // moveIds simply stay where they are.
+                const copyUrls = (copyTabs || []).map(t => t && t.url).filter(Boolean);
+                if (copyUrls.length)
+                    plainOpen(copyUrls);
                 finish();
                 return;
             }
@@ -279,14 +297,16 @@ export function createTabGroupOpener() {
     const closeTabs = tabIds => {
         const ids = tabIds || [];
         if (ids.length)
-            chrome.tabs.remove(ids);
+            // The view's snapshot can be 300 ms stale — a vanished tab must
+            // never surface as an unhandled rejection (wakeTabs' contract).
+            chrome.tabs.remove(ids, () => { void chrome.runtime.lastError; });
     };
 
     const discardTabs = tabIds => {
         const ids = tabIds || [];
         for (let i = 0; i < ids.length; i++) {
             if (chrome.tabs.discard)
-                chrome.tabs.discard(ids[i]);
+                chrome.tabs.discard(ids[i], () => { void chrome.runtime.lastError; });
         }
     };
 
@@ -320,29 +340,52 @@ export function createTabGroupOpener() {
                 finish();
                 return;
             }
-            const move = () => {
-                if (!chrome.tabs.move) {
+            if (!chrome.tabs.move) {
+                finish();
+                return;
+            }
+            // Best-effort cleanup of the new window's initial blank tab.
+            const cleanupBlank = () => {
+                if (!chrome.tabs.query) {
                     finish();
                     return;
                 }
-                chrome.tabs.move(ids, { windowId: win.id, index: -1 }, () => {
-                    void chrome.runtime.lastError;
-                    // Best-effort cleanup of the new window's initial tab.
-                    if (chrome.tabs.query) {
-                        chrome.tabs.query({ windowId: win.id }, tabs => {
-                            const keep = new Set(ids.map(String));
-                            for (const t of tabs || []) {
-                                if (!keep.has(String(t.id)) && chrome.tabs.remove)
-                                    chrome.tabs.remove(t.id);
-                            }
-                            finish();
-                        });
-                    } else {
-                        finish();
+                chrome.tabs.query({ windowId: win.id }, tabs => {
+                    const keep = new Set(ids.map(String));
+                    for (const t of tabs || []) {
+                        if (!keep.has(String(t.id)) && chrome.tabs.remove)
+                            chrome.tabs.remove(t.id, () => { void chrome.runtime.lastError; });
                     }
+                    finish();
                 });
             };
-            move();
+            chrome.tabs.move(ids, { windowId: win.id, index: -1 }, () => {
+                if (!chrome.runtime.lastError) {
+                    cleanupBlank();
+                    return;
+                }
+                // One stale id fails the WHOLE array call — retry per tab so
+                // the live ones still move; if nothing moved at all, close
+                // the fresh window so it never flashes empty.
+                let movedAny = false;
+                const step = i => {
+                    if (i >= ids.length) {
+                        if (!movedAny && chrome.windows.remove) {
+                            chrome.windows.remove(win.id, () => { void chrome.runtime.lastError; });
+                            finish();
+                            return;
+                        }
+                        cleanupBlank();
+                        return;
+                    }
+                    chrome.tabs.move(ids[i], { windowId: win.id, index: -1 }, () => {
+                        if (!chrome.runtime.lastError)
+                            movedAny = true;
+                        step(i + 1);
+                    });
+                };
+                step(0);
+            });
         });
     };
 

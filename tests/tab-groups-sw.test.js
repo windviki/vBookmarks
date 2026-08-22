@@ -35,6 +35,9 @@ const makeChrome = ({ noTabGroups = false } = {}) => {
                     c.runtime.lastError = null;
                     return undefined;
                 }
+                // a fresh call's callback never sees a stale lastError left
+                // over from a nested (synchronous) caller
+                c.runtime.lastError = null;
                 if (cb)
                     cb(tab);
                 return tab;
@@ -47,30 +50,58 @@ const makeChrome = ({ noTabGroups = false } = {}) => {
                     c.runtime.lastError = null;
                     return;
                 }
+                c.runtime.lastError = null;
                 cb({ id, windowId: c._tabWindow || 1 });
             },
             move(id, props, cb) {
                 calls.moved.push([id, props]);
-                if (c._moveError) {
-                    c.runtime.lastError = { message: c._moveError };
+                const err = typeof c._moveError === 'function' ? c._moveError(id) : c._moveError;
+                if (err) {
+                    c.runtime.lastError = { message: err };
                     cb();
                     c.runtime.lastError = null;
                     return;
                 }
+                c.runtime.lastError = null;
                 cb({ id, windowId: props.windowId });
+            },
+            query(queryInfo, cb) {
+                (calls.queried = calls.queried || []).push(queryInfo);
+                // The fresh window's initial blank tab (never one of the
+                // moved ids, so the cleanup pass removes it).
+                c.runtime.lastError = null;
+                cb([{ id: 'blank-1', windowId: queryInfo.windowId }]);
             },
             remove(ids, cb) {
                 calls.removed.push(ids);
+                c.runtime.lastError = null;
                 if (cb)
                     cb();
             },
             discard(id, cb) {
                 calls.discarded.push(id);
+                c.runtime.lastError = null;
                 if (cb)
                     cb({ id, discarded: true });
             }
         },
         tabGroups: undefined
+    };
+    c.windows = {
+        createCalls: [],
+        removeCalls: [],
+        create(props, cb) {
+            this.createCalls.push(props);
+            c.runtime.lastError = null;
+            if (cb)
+                cb({ id: 42 });
+        },
+        remove(id, cb) {
+            this.removeCalls.push(id);
+            c.runtime.lastError = null;
+            if (cb)
+                cb();
+        }
     };
     // Feature-detect surface: without the tab-group APIs the opener degrades
     // to a plain batch-open.
@@ -341,6 +372,86 @@ describe('tab-groups SW batch tab management (tab-groups view)', () => {
         listener({ type: TAB_GROUP_MSG.tabsOpenInto, moveIds: [4], copyTabs: [], groupId: 'g1' });
         await flush();
         expect(calls.got).toEqual(['g1']);
+    });
+
+    it('groupExistingIntoExisting plain-opens the copies when the group vanished', async () => {
+        const { chrome, calls } = makeChrome();
+        globalThis.chrome = chrome;
+        chrome.runtime.lastError = { message: 'No group with id g1.' };
+        createTabGroupOpener().groupExistingIntoExisting([4], [{ url: 'http://a/' }, { url: 'http://b/' }], 'g1');
+        await flush();
+        // Degrade contract of openIntoGroup: the copies are still opened
+        // (first active), the existing moveIds are simply left alone.
+        expect(calls.created).toHaveLength(2);
+        expect(calls.created[0].active).toBe(true);
+        expect(calls.created[0].windowId).toBeUndefined();
+        expect(calls.moved).toHaveLength(0);
+        expect(calls.grouped).toHaveLength(0);
+    });
+
+    it('createCopies retries in the current window when the target window closed mid-run', async () => {
+        const { chrome, calls } = makeChrome();
+        globalThis.chrome = chrome;
+        // Window-targeted creates fail with a window error; the retry
+        // without a windowId must succeed so no copy is silently lost.
+        chrome._failCreate = props => props.windowId ? 'No window with id: 99.' : null;
+        createTabGroupOpener().groupExistingIntoNew([4], [{ url: 'http://a/' }], 'T', 'red', 99);
+        await flush();
+        expect(calls.created).toHaveLength(2);
+        expect(calls.created[1].windowId).toBeUndefined();
+        // the failed first create consumed id 100, the retry landed as 101
+        expect(calls.grouped).toEqual([{ tabIds: [4, '101'] }]);
+    });
+
+    it('moveTabsToNewWindow retries per tab when the batch move fails', async () => {
+        const { chrome, calls } = makeChrome();
+        globalThis.chrome = chrome;
+        // The array call fails (one stale id fails the whole batch); the
+        // per-tab retries succeed.
+        chrome._moveError = id => Array.isArray(id) ? 'No tab with id: 5.' : null;
+        let finished = false;
+        createTabGroupOpener().moveTabsToNewWindow([4, 5], () => { finished = true; });
+        await flush();
+        expect(chrome.windows.createCalls).toHaveLength(1);
+        expect(calls.moved[0]).toEqual([[4, 5], { windowId: 42, index: -1 }]);
+        expect(calls.moved.slice(1)).toEqual([[4, { windowId: 42, index: -1 }], [5, { windowId: 42, index: -1 }]]);
+        // the fresh window's blank tab is cleaned up, the window stays
+        expect(calls.removed).toEqual(['blank-1']);
+        expect(chrome.windows.removeCalls).toHaveLength(0);
+        expect(finished).toBe(true);
+    });
+
+    it('moveTabsToNewWindow closes the fresh window when nothing could move', async () => {
+        const { chrome, calls } = makeChrome();
+        globalThis.chrome = chrome;
+        chrome._moveError = () => 'No tab with id.';
+        let finished = false;
+        createTabGroupOpener().moveTabsToNewWindow([4, 5], () => { finished = true; });
+        await flush();
+        // No blank-tab cleanup on the failure path (the window is gone) —
+        // just the window removal so it never flashes empty.
+        expect(chrome.windows.removeCalls).toEqual([42]);
+        expect(calls.removed).toHaveLength(0);
+        expect(finished).toBe(true);
+    });
+
+    it('closeTabs and discardTabs pass a lastError-swallowing callback', () => {
+        const { chrome, calls } = makeChrome();
+        globalThis.chrome = chrome;
+        const seen = [];
+        const origRemove = chrome.tabs.remove.bind(chrome.tabs);
+        const origDiscard = chrome.tabs.discard.bind(chrome.tabs);
+        chrome.tabs.remove = (ids, cb) => { seen.push(cb); origRemove(ids, cb); };
+        chrome.tabs.discard = (id, cb) => { seen.push(cb); origDiscard(id, cb); };
+        const opener = createTabGroupOpener();
+        opener.closeTabs([4, 5]);
+        opener.discardTabs([7]);
+        // a stale snapshot id must never surface as an unhandled rejection
+        expect(seen).toHaveLength(2);
+        for (const cb of seen)
+            expect(typeof cb).toBe('function');
+        expect(calls.removed).toEqual([[4, 5]]);
+        expect(calls.discarded).toEqual([7]);
     });
 });
 
