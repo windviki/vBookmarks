@@ -618,6 +618,18 @@ describe('keeper strategies (§5.6b)', () => {
         rowOfChecked = html.split('keeper-radio checked')[0].match(/dupes-item-(\d+)(?!.*dupes-item)/);
         expect(rowOfChecked[1]).toBe('15'); // the pin, not the strategy default 11
     });
+
+    it('strategy switch re-renders with the NEW keeper — the per-render memo never goes stale (H7)', () => {
+        const ctx = setup({ storeData: { dupesStrategy: 'keep-newest' } });
+        const { $list, def } = ctx;
+        def().activate();
+        const rowOf = html => html.split('keeper-radio checked')[0].match(/dupes-item-(\d+)(?!.*dupes-item)/)[1];
+        expect(rowOf($list.innerHTML)).toBe('21'); // keep-newest default
+        // the dropdown onSelect path is persist + refresh (regroup → render):
+        // the memo must be rebuilt from the new strategy, not the old render
+        def().activate({ preset: { strategy: 'keep-oldest' } });
+        expect(rowOf($list.innerHTML)).toBe('11'); // keep-oldest default
+    });
 });
 
 describe('scope + ignoreScheme (§5.6c)', () => {

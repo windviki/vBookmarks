@@ -249,7 +249,13 @@ export function initViewDupes(ctx = {}) {
         visitCountOf: id => visitStats.countOf(id)
     });
 
-    const keeperOf = group => {
+    // H7: per-render keeper memo. pickKeeper/planDeletion are pure over
+    // (group, strategy, keeperCtx) — compute each keeper ONCE per render pass
+    // instead of once per call site (toolbar, every group row, the confirm
+    // paths all read the same keeper). The memo dies with the groups
+    // reference it was built from (refresh() reassigns groups → rebuild).
+    let keeperByGroup = null; // { groups, map } — null when not rendered yet
+    const computeKeeper = group => {
         const pinned = keepers.get(group.key);
         if (pinned) {
             // refresh() re-flattens the tree, so the pinned reference goes
@@ -259,6 +265,14 @@ export function initViewDupes(ctx = {}) {
                 return still;
         }
         return pickKeeper(group, strategy(), keeperCtx());
+    };
+    const keeperOf = group => {
+        if (keeperByGroup && keeperByGroup.groups === groups) {
+            const memo = keeperByGroup.map.get(group.key);
+            if (memo !== undefined)
+                return memo;
+        }
+        return computeKeeper(group);
     };
 
     const doomedCount = () =>
@@ -414,6 +428,11 @@ export function initViewDupes(ctx = {}) {
     };
 
     const render = () => {
+        // H7: one strategy pass per render — every later keeperOf/planDeletion
+        // read within this pass serves the memo.
+        keeperByGroup = { groups, map: new Map() };
+        for (const g of groups)
+            keeperByGroup.map.set(g.key, computeKeeper(g));
         if (selecting) {
             // prune selected keys whose group vanished (regroup) BEFORE the
             // toolbar counts them
