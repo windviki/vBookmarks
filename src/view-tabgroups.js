@@ -248,6 +248,20 @@ export function initViewTabGroups(ctx = {}) {
 
     const refresh = () => {
         const token = ++refreshToken;
+        if (!views.isActive('tabgroups')) {
+            // H9: count-only — the badge reads tabs.length, and the heavy
+            // queries (queryAllGroups / readClosedGroups) plus the fold-state
+            // reconciliation are render inputs the inactive view doesn't
+            // need. tabs.onUpdated storms in background windows no longer pay
+            // two full query rounds every 300 ms.
+            chrome.tabs.query({}, tabList => {
+                if (token !== refreshToken)
+                    return;
+                tabs = tabList || [];
+                views.updateBadges();
+            });
+            return;
+        }
         readWindows(winList => {
             if (token !== refreshToken)
                 return; // a newer refresh started — drop this stale read

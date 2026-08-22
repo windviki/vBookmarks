@@ -379,6 +379,18 @@ describe('view registration', () => {
         def().activate();
         expect(def().badge()).toBe(4);
     });
+
+    it('inactive refresh is count-only: badge updates, heavy queries skipped (H9)', () => {
+        const ctx = setup({ active: false, tabs: [makeTab(1, 0, { active: true }), makeTab(2, 1)] });
+        const { def, chrome, viewTabGroups } = ctx;
+        viewTabGroups.refresh();
+        // the stub's query callback is synchronous — badge already updated
+        expect(def().badge()).toBe(2);
+        expect(chrome.tabs.queryCalls).toEqual([{}]);
+        expect(chrome.tabGroups.queryCalls).toEqual([]);   // no group query
+        expect(chrome.windows.getAllCalls).toEqual([]);    // no window read
+        expect(chrome.bookmarks.getTreeCalls).toBe(0);     // no tree/render
+    });
 });
 
 describe('render', () => {
