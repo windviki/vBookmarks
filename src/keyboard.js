@@ -1307,6 +1307,20 @@ export function initKeyboard(ctx = {}) {
             : null;
         if (rowStop)
             stops.push(rowStop);
+        // 4.1.0: an in-list SECTION heading action (the tab-groups view's
+        // "recently closed" clear-all, living below the rows) joins at its
+        // visual spot — after the row stop. Arrow nav reaches it as an
+        // inline row control (↑/↓ walk the owning li's row siblings), so
+        // the two zones exchange focus through it. A Tab stop, never an
+        // arrow rung (§7).
+        if (container && container.querySelectorAll) {
+            const sectionBtns = container.querySelectorAll('.vbm-section-head button');
+            for (let i = 0, l = sectionBtns.length; i < l; i++) {
+                const c = sectionBtns[i];
+                if (!c.disabled && tabVisible(c))
+                    stops.push(c);
+            }
+        }
         // keyboard-model §7: the undo toast (undo.js showToast/toastAction)
         // is a transient bar fixed to the bottom edge — its button joins the
         // ring as the last stop while the bar is up (the `hidden` attribute

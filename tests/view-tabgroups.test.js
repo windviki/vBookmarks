@@ -1396,14 +1396,31 @@ describe('toolbar instant filter (4.1.0 audit P1)', () => {
         expect($list.innerHTML).toContain('class="tabgroups-expand-all tabgroups-icon-btn" title="tabGroupsExpandAll" aria-label="tabGroupsExpandAll" disabled');
     });
 
-    it('renders the clear-closed toolbar icon only while records exist', () => {
+    it('renders the clear-closed icon on the section heading only while records exist', () => {
         const record = { id: 'cg_1', title: 'Dev', color: 'blue', savedAt: Date.now(), tabs: [{ url: 'https://a/', title: 'A' }] };
         const withRec = setup({ storeData: { tabGroupsClosed: JSON.stringify([record]) } });
         withRec.def().activate();
         expect(withRec.$list.innerHTML).toContain('tabgroups-closed-clear');
+        // the action moved to the "recently closed" heading row (4.1.0: the
+        // toolbar placement read as "clear the filter")
+        expect(withRec.$list.innerHTML).toContain('vbm-section-head');
         const without = setup({});
         without.def().activate();
         expect(without.$list.innerHTML).not.toContain('tabgroups-closed-clear');
+    });
+
+    it('the filter gets a trailing-edge clear × once it holds text; clicking it clears the filter', () => {
+        const { def, $list, fire, clickOn } = setup({});
+        def().activate();
+        expect($list.innerHTML).not.toContain('tabgroups-filter-clear');
+        typeFilter(fire, 'git');
+        expect($list.innerHTML).toContain('tabgroups-filter-clear');
+        const btn = { classList: makeClassList(), closest: sel => sel === '.tabgroups-filter-clear' ? btn : null };
+        clickOn(btn);
+        expect($list.innerHTML).not.toContain('tabgroups-filter-clear');
+        expect($list.innerHTML).toContain('tabgroups-filter-input');
+        // every tab is back in the flow — the filter text is gone
+        expect($list.innerHTML).toContain('>Tab 4<');
     });
 });
 

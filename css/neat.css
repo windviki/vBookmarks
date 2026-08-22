@@ -3928,12 +3928,24 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
 /* The toolbar's instant tab filter (4.1.0 audit P1): title/URL substring
    match over the open tabs. Lives in the second toolbar rung between the
    options cluster and the icon buttons; the keyboard model's K14 rule
-   already owns its caret keys (←/→/Home/End), ↑/↓ leave via the rung walk. */
+   already owns its caret keys (←/→/Home/End), ↑/↓ leave via the rung walk.
+   The field wrapper + trailing-edge × mirror the header search box's
+   #search-field/#search-clear recipe (4.1.0: Esc was the only implicit
+   clear — a visible affordance beats a hidden one). */
+.tabgroups-toolbar .tabgroups-filter-field {
+    position: relative;
+    flex: 1;
+    min-width: 60px;
+    display: flex;
+    align-items: center;
+}
 .tabgroups-toolbar .tabgroups-filter-input {
     flex: 1;
     min-width: 60px;
     height: 22px;
     padding: 0 6px;
+    /* trailing room so typed text never runs under the clear glyph */
+    padding-inline-end: 22px;
     border: 1px solid var(--vbm-border);
     border-radius: var(--vbm-radius);
     background: var(--vbm-bg);
@@ -3949,10 +3961,55 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
 .tabgroups-toolbar .tabgroups-filter-input::placeholder {
     color: var(--vbm-muted);
 }
-/* The clear-closed icon is destructive — the danger color, same as the
-   selection bar's close-selected button. */
-.tabgroups-toolbar button.tabgroups-closed-clear {
+.tabgroups-toolbar button.tabgroups-filter-clear {
+    position: absolute;
+    inset-inline-end: 4px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    color: var(--vbm-muted);
+    cursor: pointer;
+}
+.tabgroups-toolbar button.tabgroups-filter-clear:hover {
+    background: var(--vbm-bg-hover);
+    color: var(--vbm-fg);
+}
+.tabgroups-toolbar button.tabgroups-filter-clear:focus-visible {
+    outline: 2px solid var(--vbm-focus-ring);
+    outline-offset: -1px;
+}
+/* The clear-closed action lives on the "recently closed" heading row now
+   (4.1.0: the toolbar placement read as "clear the filter" — next to its
+   own section the scope is unambiguous). Destructive: danger token, same
+   as the selection bar's close-selected button. */
+.tabgroups-section-head button.tabgroups-closed-clear {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    margin-inline-start: auto;
+    border: 0;
+    border-radius: var(--vbm-radius);
+    background: transparent;
     color: var(--vbm-danger);
+    cursor: pointer;
+}
+.tabgroups-section-head button.tabgroups-closed-clear:hover {
+    background: var(--vbm-bg-hover);
+}
+.tabgroups-section-head button.tabgroups-closed-clear:focus-visible {
+    outline: 2px solid var(--vbm-focus-ring);
+    outline-offset: -2px;
 }
 
 /* Closed-group rows are history, not live tabs: dim + italic, matching the

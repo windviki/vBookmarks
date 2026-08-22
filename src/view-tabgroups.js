@@ -387,11 +387,11 @@ export function initViewTabGroups(ctx = {}) {
         // Idle toolbar: two stacked .vbm-toolbar rows (the dead/dupes
         // recipe). Row 1 = view controls (summary left, refresh/fold icons
         // right); row 2 = view options (collapse-sync checkbox left, then
-        // the instant tab filter, and on the right the clear-closed icon —
-        // only while records exist — plus the select-mode icon).
+        // the instant tab filter; the select-mode icon right).
         const syncLabel = _m('tabGroupsSyncCollapse');
         const syncHint = _m('tabGroupsSyncCollapseHint');
         const filterLabel = _m('tabGroupsFilterPlaceholder');
+        const filterClearLabel = _m('searchClear');
         return '<div class="tabgroups-toolbar tabgroups-controls-toolbar vbm-toolbar">' +
             `<span class="tabgroups-summary">${_m('tabGroupsSummary', [`${tabs.length}`, `${groups.length}`])}</span>` +
             iconBtn('tabgroups-refresh', REDO_ICON, 'tabGroupsToolbarRefresh') +
@@ -406,12 +406,19 @@ export function initViewTabGroups(ctx = {}) {
             `<input type="checkbox" class="tabgroups-sync-collapse-input"${syncCollapse() ? ' checked' : ''}>` +
             `<span>${htmlspecialchars(syncLabel)}</span></label>` +
             '</span>' +
+            // The instant filter carries a trailing-edge clear × (the header
+            // search box recipe) while it holds text — Esc was the only
+            // implicit clear before, and a visible affordance beats a
+            // hidden one.
+            `<span class="tabgroups-filter-field">` +
             `<input type="text" class="tabgroups-filter-input" placeholder="${htmlspecialchars(filterLabel)}" ` +
             `aria-label="${htmlspecialchars(filterLabel)}" value="${htmlspecialchars(filterText)}">` +
-            // The clear-closed action lives in the toolbar (not the section
-            // head) so the keyboard model can reach it — a button inside a
-            // plain LI was mouse-only (4.1.0 audit M5).
-            (closedRecords.length ? iconBtn('tabgroups-closed-clear', TRASH_ICON, 'tabGroupsClearClosedGroups') : '') +
+            (filterText
+                ? `<button class="tabgroups-filter-clear" aria-label="${htmlspecialchars(filterClearLabel)}" title="${htmlspecialchars(filterClearLabel)}">` +
+                  '<svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M4.5 4.5l7 7M11.5 4.5l-7 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>' +
+                  '</button>'
+                : '') +
+            `</span>` +
             iconBtn('tabgroups-select-mode', SELECT_ICON, 'selectModeEnter') +
             '</div>';
     };
@@ -680,8 +687,16 @@ export function initViewTabGroups(ctx = {}) {
 
             // The closed-record section is history, not open tabs — it stays
             // out of the filter's scope (hidden while a filter is active).
+            // Its heading row carries the clear-all action on the right
+            // (4.1.0: the toolbar placement read as "clear the filter" —
+            // here the scope is unambiguous; the li gets .vbm-section-head
+            // so the button joins the keyboard model's Tab ring, and ↑/↓
+            // cross between the open-tab zone and this zone through it).
             if (!needle && closedRecords.length) {
-                html += `<li class="tabgroups-section-head tabgroups-closed-section-head"><em>${_m('tabGroupsClosedGroups')}</em></li>`;
+                html += `<li class="tabgroups-section-head tabgroups-closed-section-head vbm-section-head">` +
+                    `<em>${_m('tabGroupsClosedGroups')}</em>` +
+                    iconBtn('tabgroups-closed-clear', TRASH_ICON, 'tabGroupsClearClosedGroups') +
+                    `</li>`;
                 for (const record of closedRecords) {
                     if (record.type === 'tab') {
                         const tab = (record.tabs && record.tabs[0]) || { title: record.title || '', url: record.url || '' };
@@ -1653,6 +1668,19 @@ export function initViewTabGroups(ctx = {}) {
 
     $list.addEventListener('click', e => {
         const closest = (e.target && e.target.closest) ? e.target.closest.bind(e.target) : () => null;
+        // The filter's trailing-edge ×: clears and hands focus back to the
+        // input (the re-render drops the × itself, so the toolbar restore
+        // has nothing to land on — an explicit focus keeps the flow going).
+        const filterClear = closest('.tabgroups-filter-clear');
+        if (filterClear) {
+            e.preventDefault();
+            filterText = '';
+            render();
+            const input = $list.querySelector ? $list.querySelector('.tabgroups-filter-input') : null;
+            if (input && input.focus)
+                input.focus();
+            return;
+        }
         // Toolbar controls
         if (closest('.tabgroups-select-mode')) {
             e.preventDefault();
