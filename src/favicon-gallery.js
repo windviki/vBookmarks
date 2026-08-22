@@ -106,7 +106,7 @@ export const buildGallery = ({ idxRaw, dataByHost = {}, tree = [],
     deadMarks = [], deadMarkTimes = {}, syncStatus = {}, visitStats = {} } = {}) => {
     const idx = typeof idxRaw === 'string' ? parseIdx(idxRaw) : idxRaw;
     const hosts = (idx && idx.hosts) || {};
-    const pathMap = buildPathMap(tree);
+    const { paths: pathMap } = buildPathMap(tree); // H5: { paths, ids }
     const markSet = new Set(safeParse(deadMarks, []));
     const markTimes = safeParse(deadMarkTimes, {});
 
