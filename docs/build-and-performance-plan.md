@@ -10,7 +10,7 @@
 
 ## 0. 结论摘要
 
-1. **收益来源要分三层看：bundle（文件数与依赖图）> minify（体积）> 经典脚本拼接（仅文件数，一期不做）。** 4.1.0 实测 popup 每次打开加载 **59 个 JS 文件 / 1134.6 KiB 源码**，改造后 **7 个文件 / 286.6 KiB（-74.7%）**；service worker 从 11 文件 / 119.0 KiB 降到 **1 文件 / 26.6 KiB（-77.6%）**。商店 zip 从 1120.5 KB 降到 842.1 KB（-24.8%），zip 内 JS 字节 -69.6%。
+1. **收益来源要分三层看：bundle（文件数与依赖图）> minify（体积）> 经典脚本拼接（仅文件数，一期不做）。** 4.1.0 实测 popup 每次打开加载 **59 个 JS 文件 / 1134.6 KiB 源码**，改造后 **7 个文件 / 286.6 KiB（-74.7%）**；service worker 从 11 文件 / 119.0 KiB 降到 **1 文件 / 26.6 KiB（-77.6%）**。商店 zip 从 1130.3 KB 降到 850.2 KB（-24.8%），zip 内 JS 字节 -69.6%（zip 绝对值随非 JS 内容快照浮动约 ±1%，以附录 A 最新复测为准）。
 2. **架构沿用「同路径入口打包」**：6 个 ESM 入口在 `dist/` 中产出同名同路径的单文件 bundle，HTML / manifest / 源码一行不改，开发态与发布态并存。这是回归面最小的方案。
 3. **压缩器维持 Terser，但认清它的真实贡献**：在 esbuild bundle 产物上，Terser 仅比 esbuild 自带 minify 再省约 0.8%（neat 入口 271.3 vs 273.5 KiB，实测）。保留 Terser 是因为已验证、体积最优、需求既定；若未来要简化工具链，esbuild 单工具方案是已量化代价的退路（§2.3）。
 4. **经典脚本拼接（Phase 1B）4.1.0 复测结论不变：拼接与分开压缩字节数完全相同**（popup 集合 13.3 = 13.3 KiB），收益只有每页少 1–4 个本地文件请求。默认不启用，启动判据见 §2.8。
@@ -207,7 +207,7 @@ for (const file of files.classicJs) {
 
 1. `dist/manifest.json` 的 `background.service_worker` 指向的文件存在。
 2. 6 个 bundle 无 `import ... from` / `export ... from` / `import(` 残留（自包含）。
-3. 全局契约属性名逐一出现：`store`/`getSetting`/`setSetting`/`removeSetting`/`VBMI18N`/`VBMSort`/`syncManager`/`VBMUsage`/`CodeMirror`/`VBMFuzzy`。注意 **Terser 会把 `(window => {...})(window)` 的形参 mangle 成短名**（产物里是 `e.VBMSort=...`），所以检查的是**属性名字符串**是否出现，而非字面 `window.X=`。
+3. 全局契约属性名逐一出现：`store`/`getSetting`/`setSetting`/`removeSetting`/`VBMI18N`/`VBMSort`/`syncManager`/`VBMUsage`/`CodeMirror`/`VBMFuzzy`。注意 **Terser 会把 `(window => {...})(window)` 的形参 mangle 成短名**（产物里是 `e.VBMSort=...`），所以检查的是**属性名字符串**是否出现，而非字面 `window.X=`。（字符串检查是近似手段——产物里的字符串字面量理论上可造成误报/漏报——它只是第一道静态防线，最终裁决以 §3.3 的 dist 真机冒烟为准。）
 4. 被 bundle 吞掉的内部模块不得存在于 dist（`dist/src/actions.js`、`dist/src/palette.js` 等 56 个文件不应存在——dist 的 `src/` 下恰好只有 14 个 JS：8 经典 + 6 入口，加 `vendor/codemirror.js` 共 15）。
 5. `_locales/` 全目录、`assets/icons/*`、`pages/*.html`、`css/*` 完整。
 6. dist 总文件数与 zip 预算（78 文件 ±0）打印出来供肉眼核对。
@@ -232,11 +232,11 @@ for (const file of files.classicJs) {
     "package:src": "python3 scripts/package.py",                  // 旧行为保留，供对照
     "package:edge": "npm run build && python3 scripts/package.py --root dist --target edge"
   },
-  "devDependencies": { "esbuild": "^0.28.2", "terser": "^5.50.0" }
+  "devDependencies": { "esbuild": "0.28.2", "terser": "5.50.0" }
 }
 ```
 
-- esbuild/terser 目前只是传递依赖（vitest 带入），必须升格为显式 devDependency，否则 `npm ci --omit=...` 或依赖树变动会让构建突然缺包。
+- **依赖现状修正（评审复测发现）**：esbuild 是传递依赖（vitest→vite，已在锁文件），但 **terser 5.50.0 是 dry-run 期间临时安装、未进 package-lock**（extraneous），`npm ci` 会直接丢包——升格为显式 devDependency 是实施第一步而非防患措施。实施采用精确锁定 `esbuild@0.28.2` / `terser@5.50.0`（`--save-exact`），避免构建产物随小版本漂移。
 - Node 版本：CI 已固定 node 20（`.github/workflows/ci.yml`），esbuild 0.28 要求 Node ≥ 18，无需变更加注 `engines`。
 - `.gitignore` 增加 `dist/`；本地 dry-run 目录继续走 `tmp/`（已忽略）。
 
@@ -252,6 +252,7 @@ for (const file of files.classicJs) {
 4. 不产出 sourcemap 进 zip（包体与审核考虑）；如排查 dist 疑难，临时给 build.mjs 加 `--maps` 本地生成即可，不进 CI/发布链。
 5. 不做控制流混淆等压缩花活（商店审核可读性 + 调试成本）。
 6. 单元测试不迁移到 dist 上跑——vitest 永远跑源码，dist 的正确性由「同源构建 + 静态自检 + 真机冒烟」三层保证（§3）。
+7. 不保留代码内 license 注释（Terser `format.comments:false`）：商店包内含 `license.txt`，公开源码仓库保留完整注释可作参照；如未来审核政策要求，再改为 `comments:/^!/` 保留 `/*!` 头注释。
 
 ---
 
@@ -276,7 +277,7 @@ npm run lint       # eslint src tests
 
 - 用法：`scripts/harness/run.sh --dist [--smoke-only]`；前置条件是 `dist/` 已构建（没有则报错退出，提示先 `npm run build`）。
 - 实现：打包上下文时把 `dist/` 的内容（而不是仓库根）tar 进镜像的扩展目录，其余层（smoke/keyboard/scrollbar/menu 各 verify 脚本）原样复用——它们驱动的是扩展页面行为，与被加载的代码形态无关。
-- 价值：这是唯一能抓住「bundle 后初始化顺序/全局契约被破坏」的自动化关卡（单元测试不覆盖 app shell 的加载期崩溃，AGENTS.md 已记录该教训）。全量 harness 在 dist 上跑一遍，等于把 153 项键盘断言 + 752 项滚动条断言 + 菜单矩阵同时变成 dist 的回归网。
+- 价值：这是唯一能抓住「bundle 后初始化顺序/全局契约被破坏」的自动化关卡（单元测试不覆盖 app shell 的加载期崩溃，AGENTS.md 已记录该教训）。全量 harness 在 dist 上跑一遍，等于把 153 项键盘断言 + 752 项滚动条断言 + 菜单矩阵同时变成 dist 的回归网。（实施时顺带把 `scripts/harness/run.sh:11` 头部注释里过时的键盘断言数 132 修正为 153，与 AGENTS.md 口径一致。）
 
 ### 3.4 CI 集成（`.github/workflows/ci.yml`）
 
@@ -318,6 +319,7 @@ npm run lint       # eslint src tests
 2. **探针脚本 `scripts/harness/perf-popup.js`（新增）**：在 Docker 真机里用 CDP 的 Performance 域采集——分别加载源码根与 dist，各录 10 次 popup 冷打开与树重建，输出 `Scripting / Rendering / Painting` 三段耗时表。复用 harness 既有约定（`window.close` stub、种子 URL 用 `127.0.0.1:9` 快失败地址、导航用 `waitUntil:'load'`）。
 3. **SW 冷启动**：`chrome://serviceworker-internals` 或 CDP 录制 SW 启动耗时，源码 vs dist 各 10 次。
 4. **结果回填**：所有数据贴回本文档附录 A，作为方案 B 各 tier 的验收基线。
+5. **口径说明**：headless 环境的绝对数值只作参考，本方案所有对比均取「源码 vs dist」「优化前后」的相对差值；不预设数字，无显著变化即回滚或降级（§4.6）。
 
 ---
 
@@ -354,7 +356,7 @@ npm run lint       # eslint src tests
 | H5 | `buildPathMap` 一次遍历同时产出 path 与有效 id 集合（返回值扩展为 `{ paths, ids }`），`neat.js` 的 collect walk 删除 | 每次树重建省一遍全树遍历 | 低。同步改 `visitStats.prune` 调用方与 view-manager 套件 |
 | H6 | `refreshOverlays` 快速返回：`deadMarks.size === 0` 且页面无 `.dead-indicator` 时直接 return；有标记时按 id 定点 `getElementById` 更新，不遍历全列表 | 无标记时零开销；有标记时 O(marks) | 低。回归五个列表（tree/results/recent/dead/dupes）的 × 叠加；跑 view-dead 套件 |
 | H7 | `view-dupes.render()` 先算 `keeperByGroup = new Map(...)`，renderToolbar/renderGroup/删除确认全部读它 | 大重复组集不再成倍重复策略计算 | 低。回归选择模式、手动 pin keeper、策略切换；跑 view-dupes 套件 |
-| H9 | `refresh()` 未激活路径改为 count-only：只 `chrome.tabs.query({})` 取数更新徽章，跳过 `queryAllGroups`/`readClosedGroups`/折叠态对账（这些本来就是 render 输入，未激活不需要） | 视图未激活时事件风暴的常数项砍掉大半；后台标签页狂刷标题时不再每 300 ms 白跑 | 低。徽章计数契约不变；跑 view-tabgroups 套件，真机冒烟观察切视图后首渲染仍正确 |
+| H9 | `refresh()` 未激活路径改为 count-only：只 `chrome.tabs.query({})` 取数更新徽章，跳过 `queryAllGroups`/`readClosedGroups`/折叠态对账（这些本来就是 render 输入，未激活不需要） | 视图未激活时事件风暴的常数项砍掉大半；后台标签页狂刷标题时不再每 300 ms 白跑 | 低。徽章计数契约不变；跑 view-tabgroups 套件，真机冒烟观察切视图后首渲染仍正确。后续（不阻塞本次）：徽章计数可再降频——`chrome.tabs.query` 仍每 300 ms 一次，可改为 1s 防抖或仅 tab 增删/激活时更新 |
 
 ### 4.4 P1 结构性优化（4.1.0 尽力项，做不完顺延 4.1.x；各自独立评审）
 
@@ -383,7 +385,7 @@ P0+P1 完成后在基准 profile 复测，若「数千行的树/死链/重复列
 |---|---|---|
 | M1 构建管线 | runtime-files.json、build.mjs（含自检）、package.py `--root`、package.json/.gitignore、devDeps 升格 | **必须** |
 | M2 门禁平移 | run.sh `--dist`、CI 三处更新、发布流程文档更新、dist 手动冒烟矩阵过一遍 | **必须** |
-| M3 性能 P0 | H1–H7 + H9，逐项独立 commit + 单测 + 冒烟 | **必须** |
+| M3 性能 P0 | H1–H7 + H9，逐项独立 commit + 单测 + 冒烟 | **必须**（若 4.1.0 时间紧：H1/H3/H5/H6/H7/H9 低风险必做，H2/H4 属中风险交互改动可顺延 4.1.x） |
 | M4 实测与决策 | perf-popup.js 探针、基线/对比数据回填；据此决定 P1 各项、P2、Phase 1B 的去留 | 尽力（数据必须有；P1 顺延则进 4.1.x） |
 
 落地 Checklist（执行时按序勾）：
@@ -394,7 +396,7 @@ P0+P1 完成后在基准 profile 复测，若「数千行的树/死链/重复列
 4. 改 `scripts/package.py`（§2.6：`--root`、清单来自 JSON、种子集合 = 15 文件、输出仍写仓库 `tmp/`）。
 5. 改 `package.json` scripts、`.gitignore` 加 `dist/`。
 6. `npm run test:run && npm run lint` 全绿。
-7. `npm run build`（自检通过），`python3 scripts/package.py`（源码直出仍 134 文件）与 `npm run package`（dist 出包 78 文件 / 约 842 KB）双向核对。
+7. `npm run build`（自检通过），`python3 scripts/package.py`（源码直出仍 134 文件）与 `npm run package`（dist 出包 78 文件 / 约 850 KB）双向核对。
 8. `scripts/harness/run.sh --dist --smoke-only` 过；发版前 `run.sh --dist` 全量过。
 9. dist Load unpacked 过 §3.6 手动冒烟矩阵。
 10. 按 §4.3 逐项落 P0（每项：commit → `npm test` → 冒烟 → 下一项）。
@@ -445,11 +447,12 @@ Phase 1B 复测（拼接后再压，与分开压完全相同）：
 
 压缩器对比（neat bundle）：Terser 271.3 KiB vs esbuild minify 273.5 KiB（+0.8%）
 
-zip 实测（package.py 同口径 collect + deflate-9）：
-  源码直出：134 文件 / 71 JS / JS 1309.7 KiB / zip 1120.5 KB
-  dist 出包： 78 文件 / 15 JS / JS  398.1 KiB / zip  842.1 KB
+zip 实测（package.py 同口径 collect + deflate 默认级别；实测 level 6 与 level 9 结果相同）：
+  源码直出：134 文件 / 71 JS / JS 1309.7 KiB / zip 1130.3 KB
+  dist 出包： 78 文件 / 15 JS / JS  398.1 KiB / zip  850.2 KB
   变化：JS 字节 -69.6%，zip -24.8%
   （dist 出包要求 §2.6 的种子集合改造先行，否则 38 个内部模块报 missing）
+  （复测时点：2026-08-22 HEAD 64c5e0b；较初稿的 1120.5/842.1 差异来自非 JS 内容快照，JS 字节与文件数口径完全一致）
 ```
 
 性能实测基线：待 M4 按 §3.7 方法录取后回填（popup 冷打开 / 树重建 / SW 冷启动，源码 vs dist 各 10 次）。
