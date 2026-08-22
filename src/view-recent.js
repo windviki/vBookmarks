@@ -1403,6 +1403,8 @@ export function initViewRecent(ctx = {}) {
     // Consumed by keyboard.js before the type-ahead gate; recent registers
     // typeAhead:false, so letters never reach the keyBuffer here.
     const onKey = e => {
+        if (selecting)
+            return false; // selection owns the keys (dead/dupes law)
         if (e.key !== 'r' && e.key !== 'R')
             return false;
         const item = document.activeElement;
