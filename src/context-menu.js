@@ -1887,6 +1887,11 @@ export function initContextMenu(ctx = {}) {
             case 'tab-row-close':
                 ctx.tabGroupsMenu.closeTab(tabId);
                 break;
+            // velvet staging §2.5: resolve-or-create the bookmark, then stage
+            case 'tab-row-stage':
+                if (ctx.tabGroupsMenu.stageTabById)
+                    ctx.tabGroupsMenu.stageTabById(tabId);
+                break;
         }
     };
     if ($tabRowContextMenu) {
@@ -1931,6 +1936,12 @@ export function initContextMenu(ctx = {}) {
                 break;
             case 'tabgroup-save-folder':
                 ctx.tabGroupsMenu.saveGroupToBookmarks(gid);
+                break;
+            // velvet staging §2.5: bookmark the whole group and stage it as
+            // one sourceTabGroup group (>10 confirm lives in the view)
+            case 'tabgroup-stage-all':
+                if (ctx.tabGroupsMenu.stageTabGroup)
+                    ctx.tabGroupsMenu.stageTabGroup(gid);
                 break;
             case 'tabgroup-sleep':
                 if (ctx.tabGroupsMenu.isGroupAsleep(gid))
@@ -2006,6 +2017,9 @@ export function initContextMenu(ctx = {}) {
         const li = currentContext.closest ? currentContext.closest('li') : currentContext.parentNode;
         const cid = li && li.dataset && li.dataset.closedId;
         const idx = li && li.dataset ? (parseInt(li.dataset.closedTab, 10) || 0) : 0;
+        // velvet staging §2.5: the recorded tab's url leaves with the row —
+        // captured before clearMenu nulls currentContext.
+        const closedTabUrl = currentContext.href || '';
         clearMenu();
         if (!cid || !ctx.tabGroupsMenu)
             return;
@@ -2019,6 +2033,14 @@ export function initContextMenu(ctx = {}) {
             case 'tabgroups-closed-tab-remove':
                 ctx.tabGroupsMenu.removeClosedTab(cid, idx);
                 break;
+            // velvet staging §2.5: stage the recorded tab (id-less snapshot
+            // unless the URL is already a bookmark). The url was captured
+            // BEFORE clearMenu (currentContext is null by now).
+            case 'tabgroups-closed-tab-stage': {
+                if (ctx.staging && closedTabUrl)
+                    ctx.staging.addItems([{ id: null, url: closedTabUrl, title: '' }]);
+                break;
+            }
         }
     };
     if ($tabClosedTabContextMenu) {

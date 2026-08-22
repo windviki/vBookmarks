@@ -2494,5 +2494,36 @@
   },
   "optionCollapseAddFolderMenuHint": {
     "message": "把文件夹右键菜单的三个添加文件夹条目(此前/此后/子文件夹)合并为一个二级菜单条目。"
+  },
+  "tabRowStage": {
+    "message": "收藏并暂存"
+  },
+  "tabgroupStageAll": {
+    "message": "整组收藏并暂存"
+  },
+  "tabgroupStageConfirm": {
+    "message": "收藏并暂存 $n$ 个标签页?",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "x": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabgroupStageNone": {
+    "message": "该组没有可收藏的标签页"
+  },
+  "stagedToast": {
+    "message": "已暂存 $n$ 个标签页为分组「$t$」",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "t": {
+        "content": "$2"
+      }
+    }
   }
 }

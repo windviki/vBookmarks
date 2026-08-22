@@ -2688,5 +2688,36 @@
   },
   "optionCollapseAddFolderMenuHint": {
     "message": "Merge the three add-folder entries (before/after/inside) into one submenu entry on folder right-clicks."
+  },
+  "tabRowStage": {
+    "message": "Bookmark and stage"
+  },
+  "tabgroupStageAll": {
+    "message": "Bookmark and stage the whole group"
+  },
+  "tabgroupStageConfirm": {
+    "message": "Bookmark and stage $n$ tabs?",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "x": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabgroupStageNone": {
+    "message": "No bookmarkable tabs in this group"
+  },
+  "stagedToast": {
+    "message": "Staged $n$ tab(s) as the group “$t$”",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "t": {
+        "content": "$2"
+      }
+    }
   }
 }

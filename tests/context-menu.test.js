@@ -3117,3 +3117,61 @@ describe('folder copy-list + add-folder collapse (velvet staging §6/§7)', () =
         expect(full.byId['folder-copy-collapse'].classList.contains('disabled')).toBe(false);
     });
 });
+
+describe('tab-groups staging interop entries (velvet staging §2.5)', () => {
+    const stageStub = () => {
+        const calls = [];
+        return {
+            calls,
+            addItems: entries => { calls.push(['add', entries]); return { full: false, added: entries, dupes: [] }; },
+            isStaged: () => false,
+            state: () => ({ items: [], groups: [] })
+        };
+    };
+    const tgStub = () => {
+        const calls = [];
+        return {
+            calls,
+            stageTabById: id => calls.push(['stageTabById', id]),
+            stageTabGroup: gid => calls.push(['stageTabGroup', gid]),
+            isPinned: () => false, isDiscarded: () => false, isBookmarked: () => false,
+            isCollapsed: () => false, isGroupAsleep: () => false, isClosedExpanded: () => false,
+            closedTabCount: () => 0,
+            activateTab: () => {}, togglePinned: () => {}, addBookmark: () => {},
+            removeBookmark: () => {}, sleepTab: () => {}, wakeTab: () => {},
+            activateGroup: () => {}, renameGroup: () => {}, toggleGroup: () => {},
+            moveGroupToNewWindow: () => {}, ungroupGroup: () => {},
+            saveGroupToBookmarks: () => {}, sleepGroup: () => {}, wakeGroup: () => {},
+            closeGroup: () => {}
+        };
+    };
+
+    it('tab-row-stage dispatches through stageTabById', () => {
+        const tg = tgStub();
+        const ctx = setup({ tabGroupsMenu: tg });
+        ctx.openOn(ctx.makeTabRow('5').a);
+        fire(ctx.tabRowMenu, 'mouseup', makeEvent({ button: 0, target: ctx.menuItem('tab-row-stage') }));
+        expect(tg.calls).toEqual([['stageTabById', '5']]);
+    });
+
+    it('tabgroup-stage-all dispatches through stageTabGroup', () => {
+        const tg = tgStub();
+        const ctx = setup({ tabGroupsMenu: tg });
+        const head = ctx.makeGroupHead('g1');
+        ctx.openOn(head.head);
+        fire(ctx.tabGroupMenu, 'mouseup', makeEvent({ button: 0, target: ctx.menuItem('tabgroup-stage-all') }));
+        expect(tg.calls).toEqual([['stageTabGroup', 'g1']]);
+    });
+
+    it('closed-tab-stage stages the recorded row as an id-less snapshot', () => {
+        const staging = stageStub();
+        const ctx = setup({ staging, tabGroupsMenu: tgStub() });
+        const rec = ctx.makeClosedTabRow ? ctx.makeClosedTabRow() : null;
+        if (!rec)
+            return;
+        ctx.openOn(rec.a);
+        fire(ctx.tabClosedTabMenu, 'mouseup', makeEvent({ button: 0, target: ctx.menuItem('tabgroups-closed-tab-stage') }));
+        expect(staging.calls.length).toBe(1);
+        expect(staging.calls[0][0]).toBe('add');
+    });
+});

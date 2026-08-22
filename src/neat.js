@@ -309,6 +309,10 @@ import { deferIdle, mark as perfMark } from './idle.js';
         'tab-row-add-bookmark': 'tabGroupsMenuAddBookmark',
         'tab-row-sleep': 'tabGroupsSelectSleep',
         'tab-row-close': 'tabGroupsSelectClose',
+        // velvet staging §2.5: bookmark-and-stage entries
+        'tab-row-stage': 'tabRowStage',
+        'tabgroups-closed-tab-stage': 'tabRowStage',
+        'tabgroup-stage-all': 'tabgroupStageAll',
         'tabgroup-activate': 'tabGroupsActivateGroup',
         'tabgroup-rename': 'tabGroupsRenameGroup',
         'tabgroup-collapse': 'tabGroupsCollapseGroup',
@@ -449,6 +453,8 @@ import { deferIdle, mark as perfMark } from './idle.js';
         // view module inits below; menu handlers run only on user events).
         get tabGroupsMenu() {
             return {
+                stageTabById: id => viewTabGroups.stageTabById(id),
+                stageTabGroup: gid => viewTabGroups.stageTabGroup(gid),
                 activateTab: id => viewTabGroups.activateTab(id),
                 isPinned: id => viewTabGroups.isPinned(id),
                 togglePinned: id => viewTabGroups.togglePinned(id),
@@ -744,6 +750,8 @@ import { deferIdle, mark as perfMark } from './idle.js';
         treeView,
         dialogs,
         undo,
+        // velvet staging §2.5: the bookmark-and-stage interop
+        get staging() { return viewRecent.api; },
         // The view's fold memory (windows / groups / expanded closed records)
         // rides the same remember-state option the tree and view state do.
         getRememberState: () => rememberState,
