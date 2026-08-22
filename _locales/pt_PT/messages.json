@@ -2435,13 +2435,13 @@
     "message": "Fundir as três entradas de adicionar pasta (antes/depois/dentro) num submenu ao clicar com o botão direito numa pasta."
   },
   "tabRowStage": {
-    "message": "Marcar e colocar em espera"
+    "message": "Marcar e preparar"
   },
   "tabgroupStageAll": {
-    "message": "Marcar e agrupar"
+    "message": "Marcar e preparar grupo"
   },
   "tabgroupStageConfirm": {
-    "message": "Marcar e colocar $n$ separadores em espera?",
+    "message": "Marcar e preparar $n$ separadores?",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -2472,5 +2472,13 @@
   },
   "deleteSelected": {
     "message": "Eliminar selecionados"
+  },
+  "recentStageGroup": {
+    "message": "Enviar $t$ para a área de preparação",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
   }
 }

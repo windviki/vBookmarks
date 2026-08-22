@@ -2439,13 +2439,13 @@
     "message": "Voeg de drie map-toevoegen-items (vóór/na/binnen) samen tot één submenu-item bij rechtsklik op mappen."
   },
   "tabRowStage": {
-    "message": "Bladwijzer en klaarzetten"
+    "message": "Bladwijzer en podium"
   },
   "tabgroupStageAll": {
-    "message": "Bladwijzer en groeperen"
+    "message": "Bladwijzer en podiumgroep"
   },
   "tabgroupStageConfirm": {
-    "message": "$n$ tabbladen als bladwijzer en klaarzetten?",
+    "message": "Bladwijzer en podium $n$ tabbladen?",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -2476,5 +2476,13 @@
   },
   "deleteSelected": {
     "message": "Geselecteerde verwijderen"
+  },
+  "recentStageGroup": {
+    "message": "Stuur $t$ naar het staginggebied",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
   }
 }

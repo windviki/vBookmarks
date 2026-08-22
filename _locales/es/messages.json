@@ -2439,13 +2439,13 @@
     "message": "Fusiona las tres entradas de añadir carpeta (antes/después/dentro) en una subentrada al hacer clic derecho en una carpeta."
   },
   "tabRowStage": {
-    "message": "Marcar y poner en espera"
+    "message": "Marcar y escenificar"
   },
   "tabgroupStageAll": {
-    "message": "Marcar y agrupar"
+    "message": "Marcar y escenificar grupo"
   },
   "tabgroupStageConfirm": {
-    "message": "¿Marcar y poner en espera $n$ pestañas?",
+    "message": "¿Marcar y escenificar $n$ pestañas?",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -2476,5 +2476,13 @@
   },
   "deleteSelected": {
     "message": "Eliminar seleccionados"
+  },
+  "recentStageGroup": {
+    "message": "Enviar $t$ al área de preparación",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
   }
 }

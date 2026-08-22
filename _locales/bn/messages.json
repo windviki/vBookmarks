@@ -2439,13 +2439,13 @@
     "message": "ফোল্ডারে ডান-ক্লিকে তিনটি ফোল্ডার যোগ করার এন্ট্রি (আগে/পরে/ভিতরে) একটি সাবমেনু এন্ট্রিতে একীভূত করুন।"
   },
   "tabRowStage": {
-    "message": "বুকমার্ক ও স্টেজ করুন"
+    "message": "বুকমার্ক ও স্টেজ"
   },
   "tabgroupStageAll": {
-    "message": "পুরো গ্রুপ বুকমার্ক ও স্টেজ করুন"
+    "message": "গ্রুপ বুকমার্ক ও স্টেজ"
   },
   "tabgroupStageConfirm": {
-    "message": "$n$টি ট্যাব বুকমার্ক ও স্টেজ করবেন?",
+    "message": "$n$ ট্যাব বুকমার্ক ও স্টেজ করবেন?",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -2476,5 +2476,13 @@
   },
   "deleteSelected": {
     "message": "নির্বাচিত মুছুন"
+  },
+  "recentStageGroup": {
+    "message": "Send $t$ to the staging area",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
   }
 }

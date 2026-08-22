@@ -2439,13 +2439,13 @@
     "message": "سه ورودی افزودن پوشه (قبل/بعد/داخل) را در کلیک راست روی پوشه در یک زیرمنو ادغام کنید."
   },
   "tabRowStage": {
-    "message": "نشانک‌گذاری و انتظار"
+    "message": "نشانک و مرحله"
   },
   "tabgroupStageAll": {
-    "message": "نشانک‌گذاری و انتظار کل گروه"
+    "message": "نشانک و مرحله گروه"
   },
   "tabgroupStageConfirm": {
-    "message": "$n$ برگه نشانک‌گذاری و در انتظار قرار گیرد؟",
+    "message": "نشانک و مرحله $n$ برگه؟",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -2476,5 +2476,13 @@
   },
   "deleteSelected": {
     "message": "حذف انتخاب‌شده"
+  },
+  "recentStageGroup": {
+    "message": "ارسال $t$ به منطقه موقت",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
   }
 }

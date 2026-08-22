@@ -2442,10 +2442,10 @@
     "message": "ブックマークしてステージ"
   },
   "tabgroupStageAll": {
-    "message": "グループ全体をブックマーク保管"
+    "message": "グループをブックマークしてステージ"
   },
   "tabgroupStageConfirm": {
-    "message": "$n$個のタブをブックマークしてステージしますか？",
+    "message": "$n$ 個のタブをブックマークしてステージしますか？",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -2476,5 +2476,13 @@
   },
   "deleteSelected": {
     "message": "選択した項目を削除"
+  },
+  "recentStageGroup": {
+    "message": "$t$ をステージングエリアに送る",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
   }
 }

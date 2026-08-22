@@ -2435,13 +2435,13 @@
     "message": "Mesclar as três entradas de adicionar pasta (antes/depois/dentro) em uma única entrada de submenu ao clicar com o botão direito em uma pasta."
   },
   "tabRowStage": {
-    "message": "Favoritar e colocar na área"
+    "message": "Marcar e encenar"
   },
   "tabgroupStageAll": {
-    "message": "Agrupar e encenar"
+    "message": "Marcar e encenar grupo"
   },
   "tabgroupStageConfirm": {
-    "message": "Favoritar e colocar $n$ abas na área?",
+    "message": "Marcar e encenar $n$ abas?",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -2472,5 +2472,13 @@
   },
   "deleteSelected": {
     "message": "Excluir selecionados"
+  },
+  "recentStageGroup": {
+    "message": "Enviar $t$ para a área de preparação",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
   }
 }

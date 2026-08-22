@@ -2442,7 +2442,7 @@
     "message": "收藏并暂存"
   },
   "tabgroupStageAll": {
-    "message": "收藏并暂存整个组"
+    "message": "收藏并暂存组"
   },
   "tabgroupStageConfirm": {
     "message": "收藏并暂存 $n$ 个标签页？",
@@ -2476,5 +2476,13 @@
   },
   "deleteSelected": {
     "message": "删除所选"
+  },
+  "recentStageGroup": {
+    "message": "将 $t$ 发送到暂存区",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
   }
 }

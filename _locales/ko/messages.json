@@ -2439,13 +2439,13 @@
     "message": "폴더 우클릭 시 세 개의 폴더 추가 항목(앞/뒤/안)을 하나의 하위 메뉴로 통합합니다."
   },
   "tabRowStage": {
-    "message": "북마크 및 준비"
+    "message": "북마크 및 스테이지"
   },
   "tabgroupStageAll": {
-    "message": "전체 그룹 북마크 및 준비"
+    "message": "그룹 북마크 및 스테이지"
   },
   "tabgroupStageConfirm": {
-    "message": "$n$개 탭을 북마크하고 준비할까요?",
+    "message": "$n$개 탭을 북마크하고 스테이지에 추가할까요?",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -2476,5 +2476,13 @@
   },
   "deleteSelected": {
     "message": "선택 항목 삭제"
+  },
+  "recentStageGroup": {
+    "message": "$t$을(를) 스테이징 영역으로 보내기",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
   }
 }

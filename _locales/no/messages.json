@@ -2439,13 +2439,13 @@
     "message": "Slå sammen de tre legg-til-mappe-oppføringene (før/etter/inni) til én undermenyoppføring ved høyreklikk på mapper."
   },
   "tabRowStage": {
-    "message": "Bokmerk og kø"
+    "message": "Bokmerk og scene"
   },
   "tabgroupStageAll": {
-    "message": "Bokmerk og kø hele gruppen"
+    "message": "Bokmerk og scene gruppe"
   },
   "tabgroupStageConfirm": {
-    "message": "Bokmerk og kø $n$ faner?",
+    "message": "Bokmerk og scene $n$ faner?",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -2476,5 +2476,13 @@
   },
   "deleteSelected": {
     "message": "Slett valgte"
+  },
+  "recentStageGroup": {
+    "message": "Send $t$ til staging-området",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
   }
 }

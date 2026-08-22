@@ -2439,13 +2439,13 @@
     "message": "Unisci le tre voci di aggiunta cartella (prima/dopo/dentro) in una sola voce di sottomenu al clic destro su cartella."
   },
   "tabRowStage": {
-    "message": "Segnalibro e area di attesa"
+    "message": "Segna e metti in scena"
   },
   "tabgroupStageAll": {
-    "message": "Segna e raggruppa"
+    "message": "Segna e metti in scena gruppo"
   },
   "tabgroupStageConfirm": {
-    "message": "Salvare e mettere in attesa $n$ schede?",
+    "message": "Segnare e mettere in scena $n$ schede?",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -2476,5 +2476,13 @@
   },
   "deleteSelected": {
     "message": "Elimina selezionati"
+  },
+  "recentStageGroup": {
+    "message": "Invia $t$ all'area di staging",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
   }
 }

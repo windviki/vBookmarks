@@ -2530,5 +2530,13 @@
   },
   "deleteSelected": {
     "message": "删除所选"
+  },
+  "recentStageGroup": {
+    "message": "将$t$发送到暂存区",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
   }
 }

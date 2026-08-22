@@ -2439,13 +2439,13 @@
     "message": "Połącz trzy pozycje dodawania folderu (przed/po/wewnątrz) w jeden podmenu przy prawym kliknięciu na folder."
   },
   "tabRowStage": {
-    "message": "Zakładka i poczekalnia"
+    "message": "Zapisz i odłóż"
   },
   "tabgroupStageAll": {
-    "message": "Zakładka i scena grupy"
+    "message": "Zapisz i odłóż grupę"
   },
   "tabgroupStageConfirm": {
-    "message": "Dodać do zakładek i poczekalni $n$ kart?",
+    "message": "Zapisać i odłożyć $n$ kart?",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -2476,5 +2476,13 @@
   },
   "deleteSelected": {
     "message": "Usuń zaznaczone"
+  },
+  "recentStageGroup": {
+    "message": "Wyślij $t$ do obszaru roboczego",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
   }
 }

@@ -2439,13 +2439,13 @@
     "message": "Gộp ba mục thêm thư mục (trước/sau/trong) thành một mục con khi nhấp chuột phải vào thư mục."
   },
   "tabRowStage": {
-    "message": "Đánh dấu và xếp"
+    "message": "Đánh dấu và lưu"
   },
   "tabgroupStageAll": {
-    "message": "Đánh dấu và xếp toàn bộ nhóm"
+    "message": "Đánh dấu và lưu nhóm"
   },
   "tabgroupStageConfirm": {
-    "message": "Đánh dấu và xếp $n$ tab?",
+    "message": "Đánh dấu và lưu $n$ tab?",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -2476,5 +2476,13 @@
   },
   "deleteSelected": {
     "message": "Xóa mục đã chọn"
+  },
+  "recentStageGroup": {
+    "message": "将 $t$ 发送到暂存区",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
   }
 }

@@ -1151,7 +1151,8 @@ menu[type=context] hr {
     pointer-events: auto;
 }
 
-#version-dialog {
+#version-dialog,
+#bookmark-folder-pick-dialog {
     --dialog-content-width: min(400px, 100%);
 }
 
@@ -1472,7 +1473,7 @@ menu[type=context] hr {
     list-style: none;
     margin: 0 0 .5em;
     padding: 0;
-    max-height: 220px;
+    max-height: 260px;
     overflow-y: auto;
 }
 
@@ -1507,14 +1508,23 @@ menu[type=context] hr {
 }
 
 /* --- Folder picker quick-pick (velvet staging §4.1) --- */
-/* chips row = pins (user order) then LRU recents; the inline pin toggle
-   rides each folder row's end (the .row-btn slot language of the lists). */
+/* chips row = pins (user order) then LRU recents on a recessed strip; the
+   inline pin toggle rides each folder row's end (the .row-btn slot
+   language). [hidden] must win over the flex display (same specificity —
+   the author rule would otherwise leave an empty strip visible). */
 .folder-pick-chips {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     gap: 4px;
-    margin: 0 0 6px;
+    margin: 0 0 8px;
+    padding: 4px 6px;
+    border-radius: var(--vbm-radius);
+    background: var(--vbm-bg);
+}
+
+.folder-pick-chips[hidden] {
+    display: none;
 }
 
 .folder-pick-chip-label {
@@ -1560,24 +1570,46 @@ menu[type=context] hr {
 #bookmark-folder-pick-filter {
     width: 100%;
     box-sizing: border-box;
-    margin: 0 0 6px;
-    padding: 5px 8px;
+    height: 24px;
+    margin: 0 0 8px;
+    padding: 0 8px;
     border: 1px solid var(--vbm-border);
     border-radius: var(--vbm-radius);
-    background: var(--vbm-bg-elev);
+    background: var(--vbm-bg);
     color: var(--vbm-fg);
     font: inherit;
+    font-size: 11px;
+}
+
+#bookmark-folder-pick-filter:focus-visible {
+    outline: 2px solid var(--vbm-focus-ring);
+    outline-offset: -1px;
 }
 
 #bookmark-folder-pick-list li {
     display: flex;
-    align-items: center;
-    gap: 2px;
+    align-items: stretch;
 }
 
 #bookmark-folder-pick-list li .bookmark-folder-pick-row {
     flex: 1 1 auto;
     min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+#bookmark-folder-pick-list .bookmark-folder-pick-row .vbm-icon-folder {
+    flex: none;
+    width: 16px;
+    height: 16px;
+    color: var(--vbm-accent);
+}
+
+.bookmark-folder-pick-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 #bookmark-folder-pick-list li .bookmark-folder-pick-empty {
@@ -1794,14 +1826,23 @@ menu[type=context] hr {
 }
 
 /* --- Folder picker quick-pick (velvet staging §4.1) --- */
-/* chips row = pins (user order) then LRU recents; the inline pin toggle
-   rides each folder row's end (the .row-btn slot language of the lists). */
+/* chips row = pins (user order) then LRU recents on a recessed strip; the
+   inline pin toggle rides each folder row's end (the .row-btn slot
+   language). [hidden] must win over the flex display (same specificity —
+   the author rule would otherwise leave an empty strip visible). */
 .folder-pick-chips {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     gap: 4px;
-    margin: 0 0 6px;
+    margin: 0 0 8px;
+    padding: 4px 6px;
+    border-radius: var(--vbm-radius);
+    background: var(--vbm-bg);
+}
+
+.folder-pick-chips[hidden] {
+    display: none;
 }
 
 .folder-pick-chip-label {
@@ -1847,24 +1888,46 @@ menu[type=context] hr {
 #bookmark-folder-pick-filter {
     width: 100%;
     box-sizing: border-box;
-    margin: 0 0 6px;
-    padding: 5px 8px;
+    height: 24px;
+    margin: 0 0 8px;
+    padding: 0 8px;
     border: 1px solid var(--vbm-border);
     border-radius: var(--vbm-radius);
-    background: var(--vbm-bg-elev);
+    background: var(--vbm-bg);
     color: var(--vbm-fg);
     font: inherit;
+    font-size: 11px;
+}
+
+#bookmark-folder-pick-filter:focus-visible {
+    outline: 2px solid var(--vbm-focus-ring);
+    outline-offset: -1px;
 }
 
 #bookmark-folder-pick-list li {
     display: flex;
-    align-items: center;
-    gap: 2px;
+    align-items: stretch;
 }
 
 #bookmark-folder-pick-list li .bookmark-folder-pick-row {
     flex: 1 1 auto;
     min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+#bookmark-folder-pick-list .bookmark-folder-pick-row .vbm-icon-folder {
+    flex: none;
+    width: 16px;
+    height: 16px;
+    color: var(--vbm-accent);
+}
+
+.bookmark-folder-pick-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 #bookmark-folder-pick-list li .bookmark-folder-pick-empty {
@@ -2148,9 +2211,10 @@ menu[type=context] hr {
     text-align: center;
 }
 
-/* The staging/search toolbars ride the dupes/dead/stats chrome: 11px
-   controls, the 6px gap, the 4px 8px padding and the border-bottom that
-   separates the bar from the list. */
+/* The staging/search toolbars ride the tabgroups/dupes/dead chrome: 11px
+   accent controls, the 6px gap, the 4px 8px padding. In the two-rung
+   selection layout the FIRST row drops its border-bottom (one visual
+   block, the tabgroups selecting-bar recipe). */
 .staging-toolbar,
 .search-toolbar {
     display: flex;
@@ -2161,6 +2225,17 @@ menu[type=context] hr {
     font-size: 11px;
     color: var(--vbm-muted);
     flex-wrap: wrap;
+}
+
+.staging-toolbar.staging-select-toolbar,
+.staging-toolbar.staging-actions-toolbar,
+.search-toolbar.search-select-toolbar {
+    border-bottom: 0;
+}
+
+.staging-toolbar.staging-actions-toolbar,
+.search-toolbar.search-select-toolbar:last-of-type {
+    border-bottom: 1px solid var(--vbm-border);
 }
 
 .staging-toolbar .staging-summary,
@@ -2174,11 +2249,12 @@ menu[type=context] hr {
     border: 0;
     border-radius: var(--vbm-radius);
     background: transparent;
-    color: var(--vbm-fg);
+    color: var(--vbm-accent);
     font: inherit;
     font-size: 11px;
     padding: 2px 6px;
     cursor: pointer;
+    white-space: nowrap;
 }
 
 .staging-toolbar button:hover:not([disabled]),
@@ -2186,10 +2262,16 @@ menu[type=context] hr {
     background: var(--vbm-bg-hover);
 }
 
-.staging-toolbar button[disabled],
-.search-toolbar button[disabled] {
-    color: var(--vbm-muted);
+.staging-toolbar button:disabled,
+.search-toolbar button:disabled {
+    opacity: .5;
     cursor: default;
+}
+
+.staging-toolbar button:focus-visible,
+.search-toolbar button:focus-visible {
+    outline: 2px solid var(--vbm-focus-ring);
+    outline-offset: -2px;
 }
 
 /* The three select-mode entry buttons share the dupes select-mode recipe:
@@ -2209,6 +2291,34 @@ menu[type=context] hr {
     background: transparent;
     color: var(--vbm-accent);
     cursor: pointer;
+}
+
+/* The stats selection bar's text buttons join the same accent recipe (the
+   seg/clear rules above only cover the idle toolbar's own controls). */
+.stats-toolbar.stats-select-toolbar button {
+    border: 0;
+    border-radius: var(--vbm-radius);
+    background: transparent;
+    color: var(--vbm-accent);
+    font: inherit;
+    font-size: 11px;
+    padding: 2px 6px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.stats-toolbar.stats-select-toolbar button:hover:not([disabled]) {
+    background: var(--vbm-bg-hover);
+}
+
+.stats-toolbar.stats-select-toolbar button:disabled {
+    opacity: .5;
+    cursor: default;
+}
+
+.stats-toolbar.stats-select-toolbar button:focus-visible {
+    outline: 2px solid var(--vbm-focus-ring);
+    outline-offset: -2px;
 }
 
 .staging-toolbar .staging-select-mode:hover,
@@ -3534,6 +3644,29 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
     padding-top: 2px;
 }
 
+/* A time-bucket head's hover stage button (velvet staging: the per-bucket
+   send) — the row-btn square, revealed on head hover, docked to the head's
+   trailing edge so every stage glyph in the view shares one right axis. */
+.recent-group-head {
+    position: relative;
+}
+
+.recent-group-head .recent-group-stage {
+    position: absolute;
+    inset-inline-end: 4px;
+    top: 2px;
+    visibility: hidden;
+}
+
+.recent-group-head:hover .recent-group-stage,
+.recent-group-head .recent-group-stage:focus-visible {
+    visibility: visible;
+}
+
+.recent-group-head .recent-group-stage:hover {
+    color: var(--vbm-accent);
+}
+
 /* Search-history area (top half of #view-search): a muted head row with a
    "clear all" text button, then one row per past query. The area caps at
    40% of the view height and scrolls on its own so a full 10-entry history
@@ -4324,6 +4457,15 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
     color: var(--vbm-accent-fg);
     background: var(--vbm-accent);
     border-color: var(--vbm-accent);
+}
+
+/* Indeterminate head state (§3.2 tri-state): some-but-not-all members in —
+   an accent box with a centered dash (the native checkbox indeterminate
+   glyph, drawn as the box's own background gradient). */
+#staging-list ul.selecting li.staging-group.some .group-head::before,
+#staging-list ul.selecting li.staging-bucket.some .staging-bucket-head::before {
+    border-color: var(--vbm-accent);
+    background: linear-gradient(var(--vbm-accent), var(--vbm-accent)) center / 8px 1.5px no-repeat, var(--vbm-bg);
 }
 
 #dead-list ul.selecting li.vbm-row.sel,

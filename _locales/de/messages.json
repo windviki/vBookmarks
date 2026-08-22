@@ -2439,13 +2439,13 @@
     "message": "Die drei Ordner-hinzufügen-Einträge (vor/nach/in) bei Rechtsklick auf Ordner zu einem Untermenüeintrag zusammenfassen."
   },
   "tabRowStage": {
-    "message": "Lesezeichen und bereitstellen"
+    "message": "Lesezeichen & Bühne"
   },
   "tabgroupStageAll": {
-    "message": "Gruppe vormerken"
+    "message": "Gruppe speichern & Bühne"
   },
   "tabgroupStageConfirm": {
-    "message": "$n$ Tabs als Lesezeichen speichern und bereitstellen?",
+    "message": "$n$ Tabs speichern & Bühne?",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -2476,5 +2476,13 @@
   },
   "deleteSelected": {
     "message": "Ausgewählte löschen"
+  },
+  "recentStageGroup": {
+    "message": "$t$ an den Staging-Bereich senden",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
   }
 }

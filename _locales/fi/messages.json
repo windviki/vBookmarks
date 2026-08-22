@@ -2439,13 +2439,13 @@
     "message": "Yhdistä kolme kansion lisäysvalintaa (ennen/jälkeen/sisään) yhdeksi alivalikoksi kansion hiiren kakkospainikkeella."
   },
   "tabRowStage": {
-    "message": "Kirjanmerkitse ja aseta odottamaan"
+    "message": "Lisää kirjanmerkki ja jono"
   },
   "tabgroupStageAll": {
-    "message": "Tallenna ja vaiheista ryhmä"
+    "message": "Lisää ryhmä kirjanmerkiksi ja jonoon"
   },
   "tabgroupStageConfirm": {
-    "message": "Kirjanmerkitäänkö ja asetetaanko $n$ välilehteä odottamaan?",
+    "message": "Lisätäänkö $n$ välilehteä kirjanmerkiksi ja jonoon?",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -2476,5 +2476,13 @@
   },
   "deleteSelected": {
     "message": "Poista valitut"
+  },
+  "recentStageGroup": {
+    "message": "Lähetä $t$ esikatselualueelle",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
   }
 }

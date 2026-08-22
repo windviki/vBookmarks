@@ -2442,7 +2442,7 @@
     "message": "Uložiť a pripraviť"
   },
   "tabgroupStageAll": {
-    "message": "Uložiť a pripraviť celú skupinu"
+    "message": "Uložiť a pripraviť skupinu"
   },
   "tabgroupStageConfirm": {
     "message": "Uložiť a pripraviť $n$ kariet?",
@@ -2476,5 +2476,13 @@
   },
   "deleteSelected": {
     "message": "Odstrániť vybrané"
+  },
+  "recentStageGroup": {
+    "message": "Odoslať $t$ do dočasnej oblasti",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
   }
 }

@@ -2439,13 +2439,13 @@
     "message": "Combină cele trei intrări de adăugare folder (înainte/după/în interior) într-o singură intrare de submeniu la clic dreapta pe folder."
   },
   "tabRowStage": {
-    "message": "Marchează și pune în așteptare"
+    "message": "Marchează și plasează"
   },
   "tabgroupStageAll": {
-    "message": "Marchează și grupează"
+    "message": "Marchează și plasează grupul"
   },
   "tabgroupStageConfirm": {
-    "message": "Marcați și puneți în așteptare $n$ file?",
+    "message": "Marchezi și plasezi $n$ file?",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -2476,5 +2476,13 @@
   },
   "deleteSelected": {
     "message": "Ștergeți selecția"
+  },
+  "recentStageGroup": {
+    "message": "Trimiteți $t$ în zona de pregătire",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
   }
 }

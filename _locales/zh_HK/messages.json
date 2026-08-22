@@ -2439,10 +2439,10 @@
     "message": "在資料夾右鍵選單中，將三個新增資料夾項目（之前／之後／內部）合併為一個子選單項目。"
   },
   "tabRowStage": {
-    "message": "加入書籤並暫存"
+    "message": "書籤並暫存"
   },
   "tabgroupStageAll": {
-    "message": "將整個群組加入書籤並暫存"
+    "message": "書籤並暫存群組"
   },
   "tabgroupStageConfirm": {
     "message": "將 $n$ 個分頁加入書籤並暫存？",
@@ -2476,5 +2476,13 @@
   },
   "deleteSelected": {
     "message": "刪除所選"
+  },
+  "recentStageGroup": {
+    "message": "將 $t$ 傳送至暫存區",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
   }
 }

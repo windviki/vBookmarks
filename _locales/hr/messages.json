@@ -2439,13 +2439,13 @@
     "message": "Spoji tri unosa za dodavanje mape (prije/poslije/unutar) u jedan podizbornik pri desnom kliku na mapu."
   },
   "tabRowStage": {
-    "message": "Označi i pripremi"
+    "message": "Dodaj u oznake i pozornicu"
   },
   "tabgroupStageAll": {
-    "message": "Označi i pripremi cijelu grupu"
+    "message": "Dodaj grupu u oznake i pozornicu"
   },
   "tabgroupStageConfirm": {
-    "message": "Označiti i pripremiti $n$ kartica?",
+    "message": "Dodati $n$ kartica u oznake i pozornicu?",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -2476,5 +2476,13 @@
   },
   "deleteSelected": {
     "message": "Obriši odabrano"
+  },
+  "recentStageGroup": {
+    "message": "Pošalji $t$ u pripremno područje",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
   }
 }

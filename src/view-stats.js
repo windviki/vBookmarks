@@ -415,6 +415,9 @@ export function initViewStats(ctx = {}) {
                     // aligned with the unbookmarked rows' ☆ (hollow star) at
                     // the line end — one glyph, two states.
                     `<span class="stats-star" aria-label="${_m('statsHistoryBookmarked')}">${STAR_ICON_FILLED}</span>` +
+                    // the same hover stage toggle the unbookmarked rows carry
+                    // (both row kinds end with star + plane columns aligned)
+                    stageBtnHtml(row) +
                     '</li>';
             } else {
                 html += `<li class="vbm-row stats-hist-row${sel ? ' sel' : ''}" role="listitem" data-url="${encodeURIComponent(row.url)}">` +
@@ -805,12 +808,18 @@ export function initViewStats(ctx = {}) {
             e.preventDefault();
             e.stopPropagation();
             const api = ctx.stagingApi;
-            const h = histRows[parseInt(stageBtn.dataset.histIdx, 10)];
-            if (api && h && h.url) {
-                if (api.isStaged(h.url))
-                    api.removeByUrl(h.url);
-                else
-                    api.addItems([{ id: null, url: h.url, title: h.title }]);
+            // Both row kinds carry data-url; bookmarked rows also carry the
+            // node id (the staged entry anchors), history rows go id-less.
+            const li = closest('li');
+            const urlAttr = li && li.dataset ? li.dataset.url : '';
+            const url = urlAttr ? decodeURIComponent(urlAttr) : '';
+            if (api && url) {
+                if (api.isStaged(url)) {
+                    api.removeByUrl(url);
+                } else {
+                    const i = li.querySelector ? li.querySelector('i') : null;
+                    api.addItems([{ id: (li.dataset && li.dataset.nodeId) || null, url, title: i ? i.textContent : '' }]);
+                }
                 render();
             }
             return;

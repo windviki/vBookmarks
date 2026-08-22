@@ -2115,7 +2115,7 @@ describe('narrow-width de-crowding contracts (4.1.0 P1, CSS)', () => {
     });
 });
 
-describe('staging interop (velvet staging §2.5)', () => {
+describe('staging interop (velvet staging §2.5, pure-snapshot revision)', () => {
     const stagingApi = () => {
         const calls = [];
         return {
@@ -2129,49 +2129,41 @@ describe('staging interop (velvet staging §2.5)', () => {
         };
     };
 
-    it('stageTabById resolves or creates the tree anchor, then stages it', () => {
+    it('stageTabById sends a PURE snapshot — no bookmark search/create at all', () => {
         const staging = stagingApi();
         const ctx = setup({ stagingApi: staging });
-        const found = [{ id: '77', url: 'https://t1.example/' }]; // tab 1's URL
+        const searches = [];
         const creates = [];
-        ctx.chrome.bookmarks.search = (q, cb) => cb(found.splice(0, 1).length ? [{ id: '77', url: q.url }] : []);
-        ctx.chrome.bookmarks.create = (props, cb) => { creates.push(props); cb({ id: 'n1', ...props }); };
-        ctx.viewTabGroups.refresh(); // seed tabs
-        // tab 1's URL exists in the tree → anchored, no create
+        ctx.chrome.bookmarks.search = q => { searches.push(q); };
+        ctx.chrome.bookmarks.create = (props, cb) => { creates.push(props); cb({ id: 'x', ...props }); };
+        ctx.viewTabGroups.refresh();
         ctx.viewTabGroups.stageTabById('1');
-        expect(staging.calls).toEqual([['add', [{ id: '77', url: 'https://t1.example/', title: 'Tab 1' }], undefined]]);
-        expect(ctx.chrome.bookmarks.createCalls.length).toBe(0);
-        // tab 4's URL is nowhere → create into the quick-add folder, then stage
-        ctx.viewTabGroups.stageTabById('4');
-        expect(staging.calls).toHaveLength(2);
-        expect(staging.calls[1][1][0].id).toBe('n1');
-        expect(staging.calls[1][1][0].url).toBe('https://t4.example/');
-        expect(creates).toEqual([{ title: 'Tab 4', url: 'https://t4.example/', parentId: '1' }]);
+        // id-null snapshot, tree untouched
+        expect(staging.calls).toEqual([['add', [{ id: null, url: 'https://t1.example/', title: 'Tab 1' }], undefined]]);
+        expect(searches).toEqual([]);
+        expect(creates).toEqual([]);
     });
 
-    it('stageTabGroup collects bookmarkable members into a sourceTabGroup group', () => {
+    it('stageTabGroup sends the whole group as one sourceTabGroup batch', () => {
         const staging = stagingApi();
         const ctx = setup({ stagingApi: staging });
-        ctx.chrome.bookmarks.search = (q, cb) => cb([]);
-        ctx.chrome.bookmarks.create = (props, cb) => cb({ id: 'c' + Math.random(), ...props });
+        ctx.chrome.bookmarks.search = () => {};
+        ctx.chrome.bookmarks.create = (props, cb) => cb({ id: 'x', ...props });
         ctx.viewTabGroups.refresh();
-        // group g1 holds tabs 2+3 (both bookmarkable)
         ctx.viewTabGroups.stageTabGroup('g1', 'Work');
         expect(staging.calls).toHaveLength(1);
-        const [tag, entries, opts] = staging.calls[0];
+        const [tag, entries] = staging.calls[0];
         expect(tag).toBe('add');
         expect(entries.map(e => e.url).sort()).toEqual(['https://t2.example/', 'https://t3.example/']);
-        expect(entries.every(e => e.id)).toBe(true); // all created + anchored
-        void opts;
+        expect(entries.every(e => e.id === null)).toBe(true); // pure snapshots
     });
 
-    it('resolveTabBookmark keeps the classic addTabToBookmarks flow intact (id-return compat)', () => {
+    it('the classic ★ addTabToBookmarks flow is unchanged', () => {
         const ctx = setup({});
         const creates = [];
         ctx.chrome.bookmarks.search = (q, cb) => cb([]);
         ctx.chrome.bookmarks.create = (props, cb) => { creates.push(props); cb({ id: 'n9', ...props }); };
         ctx.viewTabGroups.refresh();
-        // the ★ path (addTabToBookmarks) still works — it toasts the folder
         ctx.viewTabGroups.addBookmark('2');
         expect(creates).toHaveLength(1);
         expect(creates[0].url).toBe('https://t2.example/');

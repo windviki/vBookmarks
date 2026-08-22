@@ -2438,13 +2438,13 @@
     "message": "Спој ги трите записи за додавање папка (пред/по/внатре) во еден подмени при десен клик на папка."
   },
   "tabRowStage": {
-    "message": "Обележи и подготви"
+    "message": "Обележи и постави"
   },
   "tabgroupStageAll": {
-    "message": "Обележи и групирај"
+    "message": "Обележи и постави група"
   },
   "tabgroupStageConfirm": {
-    "message": "Да обележам и подготвам $n$ јазичиња?",
+    "message": "Обележи и постави $n$ јазичиња?",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -2475,5 +2475,13 @@
   },
   "deleteSelected": {
     "message": "Избриши избрани"
+  },
+  "recentStageGroup": {
+    "message": "Испрати $t$ во просторот за подготвка",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
   }
 }

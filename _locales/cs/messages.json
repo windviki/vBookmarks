@@ -2439,13 +2439,13 @@
     "message": "Sloučit tři položky přidání složky (před/po/uvnitř) do jedné podnabídky při kliknutí pravým tlačítkem na složku."
   },
   "tabRowStage": {
-    "message": "Záložka a připravit"
+    "message": "Uložit a připravit"
   },
   "tabgroupStageAll": {
-    "message": "Záložka a připravit celou skupinu"
+    "message": "Uložit a připravit skupinu"
   },
   "tabgroupStageConfirm": {
-    "message": "Záložka a připravit $n$ karet?",
+    "message": "Uložit a připravit $n$ karet?",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -2476,5 +2476,13 @@
   },
   "deleteSelected": {
     "message": "Smazat vybrané"
+  },
+  "recentStageGroup": {
+    "message": "Odeslat $t$ do připravované oblasti",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
   }
 }

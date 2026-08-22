@@ -2439,13 +2439,13 @@
     "message": "Sujungti tris aplanko pridėjimo elementus (prieš/po/viduje) į vieną submeniu elementą, kai dešiniuoju pelės klavišu spustelite aplanką."
   },
   "tabRowStage": {
-    "message": "Žymėti ir paruošti"
+    "message": "Žymėti ir į sceną"
   },
   "tabgroupStageAll": {
-    "message": "Žymėti ir paruošti visą grupę"
+    "message": "Žymėti ir į sceną grupę"
   },
   "tabgroupStageConfirm": {
-    "message": "Žymėti ir paruošti $n$ skirtukų?",
+    "message": "Žymėti ir į sceną $n$ skirtukus?",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -2476,5 +2476,13 @@
   },
   "deleteSelected": {
     "message": "Ištrinti pasirinktus"
+  },
+  "recentStageGroup": {
+    "message": "Siųsti $t$ į paruošimo sritį",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
   }
 }

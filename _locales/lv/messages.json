@@ -2439,13 +2439,13 @@
     "message": "Apvienot trīs mapes pievienošanas ierakstus (pirms/pēc/iekšā) vienā apakšizvēlnē, ar peles labo pogu noklikšķinot uz mapes."
   },
   "tabRowStage": {
-    "message": "Grāmatzīme un sagatavošana"
+    "message": "Grāmatzīme un skatuve"
   },
   "tabgroupStageAll": {
-    "message": "Grāmatzīme un sagatavot grupu"
+    "message": "Grāmatzīme un skatuve grupai"
   },
   "tabgroupStageConfirm": {
-    "message": "Grāmatzīme un sagatavot $n$ cilnes?",
+    "message": "Grāmatzīmēt un novietot $n$ cilnes?",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -2476,5 +2476,13 @@
   },
   "deleteSelected": {
     "message": "Dzēst atlasītos"
+  },
+  "recentStageGroup": {
+    "message": "Nosūtīt $t$ uz sagatavošanas zonu",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
   }
 }

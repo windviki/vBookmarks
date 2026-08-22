@@ -2439,13 +2439,13 @@
     "message": "Fusionner les trois entrées d'ajout de dossier (avant/après/dans) en une seule entrée de sous-menu lors d'un clic droit sur un dossier."
   },
   "tabRowStage": {
-    "message": "Marquer et mettre en attente"
+    "message": "Marquer et mettre en scène"
   },
   "tabgroupStageAll": {
-    "message": "Groupe : marquer et attente"
+    "message": "Marquer et mettre en scène le groupe"
   },
   "tabgroupStageConfirm": {
-    "message": "Mettre en signet et mettre en attente $n$ onglets ?",
+    "message": "Marquer et mettre en scène $n$ onglets ?",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -2476,5 +2476,13 @@
   },
   "deleteSelected": {
     "message": "Supprimer la sélection"
+  },
+  "recentStageGroup": {
+    "message": "Envoyer $t$ vers la zone de préparation",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
   }
 }

@@ -2476,5 +2476,13 @@
   },
   "deleteSelected": {
     "message": "चयनित हटाएं"
+  },
+  "recentStageGroup": {
+    "message": "Send $t$ को स्टेजिंग क्षेत्र में भेजें",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
   }
 }

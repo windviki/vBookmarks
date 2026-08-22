@@ -2439,13 +2439,13 @@
     "message": "Ühenda kolm kausta-lisamise kirjet (enne/pärast/sees) üheks alammenüüks kausta paremklõpsul."
   },
   "tabRowStage": {
-    "message": "Järjehoidja ja ooteala"
+    "message": "Järjesta ja salvesta"
   },
   "tabgroupStageAll": {
-    "message": "Järjehoidja ja ooteala kogu grupp"
+    "message": "Salvesta ja järjesta grupp"
   },
   "tabgroupStageConfirm": {
-    "message": "Järjehoidja ja ooteala $n$ vahekaarti?",
+    "message": "Salvesta ja järjesta $n$ vahelehte?",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -2476,5 +2476,13 @@
   },
   "deleteSelected": {
     "message": "Kustuta valitud"
+  },
+  "recentStageGroup": {
+    "message": "Saada $t$ ootealale",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
   }
 }

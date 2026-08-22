@@ -2439,13 +2439,13 @@
     "message": "אחד את שלוש רשומות הוספת התיקייה (לפני/אחרי/בתוך) לרשומת תפריט משנה אחת בלחיצה ימנית על תיקייה."
   },
   "tabRowStage": {
-    "message": "סמן והמתן"
+    "message": "סמן ושמור"
   },
   "tabgroupStageAll": {
-    "message": "סמן והמתן את כל הקבוצה"
+    "message": "סמן ושמור קבוצה"
   },
   "tabgroupStageConfirm": {
-    "message": "לסמן ולהמתין $n$ לשוניות?",
+    "message": "לסמן ולשמור $n$ לשוניות?",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -2476,5 +2476,13 @@
   },
   "deleteSelected": {
     "message": "מחק נבחרים"
+  },
+  "recentStageGroup": {
+    "message": "שלח את $t$ לאזור ההכנה",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
   }
 }

@@ -331,17 +331,23 @@ export function initViewRecent(ctx = {}) {
             (staged ? STAGE_ICON_DONE : STAGE_ICON) + '</button>';
     };
 
+    // Per-time-bucket urls of the last recent render — the bucket heads'
+    // stage buttons read them (group membership is fixed at render time).
+    let recentGroupUrls = [[], [], [], []];
+
     const renderRecentRows = items => {
         let html = '<ul role="list" id="recent-list">';
         let count = 0;
         let lastGroup = -1;
         const now = Date.now();
         const showPath = views.showItemPath();
+        const groupUrls = [[], [], [], []];
         for (let i = 0, l = items.length; i < l; i++) {
             const d = items[i];
             if (!d.url || separatorManager.isSeparator(d.title, d.url))
                 continue;
             count++;
+            groupUrls[groupIndex(d.dateAdded || 0, now)].push({ id: d.id, url: d.url, title: d.title });
             const path = views.pathOf(d.id);
             // §3.3: narrow right slot = relative time; wide second line =
             // `路径 · 绝对时间` (the path half follows showItemPath).
@@ -354,7 +360,12 @@ export function initViewRecent(ctx = {}) {
             // bookmark. Empty groups never appear.
             const g = groupIndex(d.dateAdded || 0, now);
             const groupHead = (g !== lastGroup)
-                ? `<div class="recent-group-head" role="presentation">${_m(GROUP_KEYS[g])}</div>`
+                ? `<div class="recent-group-head" role="presentation">${_m(GROUP_KEYS[g])}` +
+                  (selecting ? '' :
+                    `<button type="button" class="row-btn recent-group-stage" tabindex="-1" ` +
+                    `data-recent-group="${g}" aria-label="${htmlspecialchars(_m('recentStageGroup', _m(GROUP_KEYS[g])))}" ` +
+                    `title="${htmlspecialchars(_m('recentStageGroup', _m(GROUP_KEYS[g])))}">${STAGE_ICON}</button>`) +
+                  `</div>`
                 : '';
             lastGroup = g;
             html += `<li class="vbm-row${groupHead ? ' has-head' : ''}" id="recent-item-${d.id}" role="listitem" ` +
@@ -372,6 +383,7 @@ export function initViewRecent(ctx = {}) {
         if (!count)
             html += `<li class="empty-state" role="listitem"><i>${_m('recentEmpty')}</i></li>`;
         html += '</ul>';
+        recentGroupUrls = groupUrls;
         return { html, count };
     };
 
@@ -1363,6 +1375,15 @@ export function initViewRecent(ctx = {}) {
             const gid = li && li.dataset && li.dataset.groupId;
             if (gid)
                 toggleGroupFold(gid);
+            return;
+        }
+        if (closest('.recent-group-stage')) {
+            e.preventDefault();
+            e.stopPropagation();
+            const btn = closest('.recent-group-stage');
+            const g = parseInt(btn.dataset ? btn.dataset.recentGroup : '', 10);
+            if (!isNaN(g) && recentGroupUrls[g] && recentGroupUrls[g].length)
+                addItems(recentGroupUrls[g]);
             return;
         }
         if (closest('.recent-stage-all')) {

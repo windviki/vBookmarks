@@ -2439,13 +2439,13 @@
     "message": "A három mappahozzáadás-bejegyzés (elé/mögé/belül) egy almenübe vonása a mappa jobb egérgombos menüjében."
   },
   "tabRowStage": {
-    "message": "Könyvjelzőzés és előkészítés"
+    "message": "Könyvjelző és színpad"
   },
   "tabgroupStageAll": {
-    "message": "Könyvjelző és csoportosítás"
+    "message": "Csoport könyvjelzőzése és színpadra"
   },
   "tabgroupStageConfirm": {
-    "message": "Könyvjelzőzi és előkészíti $n$ lapot?",
+    "message": "Könyvjelzőzze és színpadra tegye a(z) $n$ lapot?",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -2476,5 +2476,13 @@
   },
   "deleteSelected": {
     "message": "Kijelöltek törlése"
+  },
+  "recentStageGroup": {
+    "message": "Küldés a $t$ előkészítő területre",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
   }
 }

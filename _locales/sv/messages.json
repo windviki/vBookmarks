@@ -2439,13 +2439,13 @@
     "message": "Slå samman de tre lägg-till-mapp-posterna (före/efter/inuti) till en undermenypost vid högerklick på mappar."
   },
   "tabRowStage": {
-    "message": "Bokmärk och köa"
+    "message": "Bokmärk och scen"
   },
   "tabgroupStageAll": {
-    "message": "Bokmärk och köa hela gruppen"
+    "message": "Bokmärk och scen grupp"
   },
   "tabgroupStageConfirm": {
-    "message": "Bokmärk och köa $n$ flikar?",
+    "message": "Bokmärk och scen $n$ flikar?",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -2476,5 +2476,13 @@
   },
   "deleteSelected": {
     "message": "Ta bort markerade"
+  },
+  "recentStageGroup": {
+    "message": "Skicka $t$ till mellanlagringsområdet",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
   }
 }

@@ -2445,7 +2445,7 @@
     "message": "Zaznamuj in pripravi skupino"
   },
   "tabgroupStageConfirm": {
-    "message": "Zaznamujem in pripravim $n$ zavihkov?",
+    "message": "Zaznamuj in pripravi $n$ zavihkov?",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -2476,5 +2476,13 @@
   },
   "deleteSelected": {
     "message": "Izbriši izbrano"
+  },
+  "recentStageGroup": {
+    "message": "Pošlji $t$ v pripravljalno območje",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
   }
 }

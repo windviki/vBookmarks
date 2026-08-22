@@ -654,7 +654,7 @@ describe('coarse time sections (第四轮项8)', () => {
         id: `${id}`, parentId: '1', title: `t${id}`, url: `http://h${id}/`, dateAdded: ts
     });
     const heads = html =>
-        [...html.matchAll(/<div class="recent-group-head" role="presentation">(\w+)<\/div>/g)]
+        [...html.matchAll(/<div class="recent-group-head" role="presentation">(\w+)(?:<button[\s\S]*?<\/button>)?<\/div>/g)]
             .map(m => m[1]);
 
     it('segments the desc list into 今天/本周/本月/更早, one header per group', () => {
@@ -726,14 +726,19 @@ describe('coarse time sections (第四轮项8)', () => {
         expect($list.innerHTML).not.toContain('recent-group-head');
     });
 
-    it('headers are non-interactive: presentational, no focusable/clickable markup', () => {
+    it('headers are non-interactive: presentational; only the hover stage button inside', () => {
         const { $list, def } = setup({ recentItems: [mk(1, NOW)] });
         def().activate();
-        const m = $list.innerHTML.match(/<div class="recent-group-head"[^>]*>[^<]*<\/div>/);
+        const m = $list.innerHTML.match(/<div class="recent-group-head"[^>]*>/);
         expect(m).not.toBe(null);
         expect(m[0]).toContain('role="presentation"');
-        expect(m[0]).not.toContain('tabindex');
+        expect(m[0]).not.toContain('tabindex'); // the head itself never joins the Tab ring
         expect(m[0]).not.toMatch(/<[as][\s>]/); // no a/span: keys & clicks skip it
+        // velvet staging: the per-bucket send button is mouse-only by design
+        // (tabindex -1, revealed on head hover)
+        const btn = $list.innerHTML.match(/<button[^>]*class="row-btn recent-group-stage"[^>]*>/);
+        expect(btn).not.toBe(null);
+        expect(btn[0]).toContain('tabindex="-1"');
     });
 });
 
@@ -1425,5 +1430,33 @@ describe('staging selection mode + group homing (velvet staging ST5)', () => {
         expect(viewRecent.api.isSelecting()).toBe(false);
         // with nothing transient left, Esc falls through
         expect(def().onEscape()).toBe(false);
+    });
+});
+describe('per-bucket stage buttons (velvet staging UX round)', () => {
+    const DAY = 86400000;
+    const NOW2 = Date.now();
+    const bucketClick = (ctx, g) => ctx.click({
+        preventDefault() {}, stopPropagation() {},
+        target: { closest: sel => (sel === '.recent-group-stage'
+            ? { dataset: { recentGroup: String(g) } }
+            : null) }
+    });
+
+    it('renders a hover stage button per non-empty bucket head and sends that bucket only', () => {
+        const ctx = setup({
+            recentItems: [
+                { id: '1', parentId: '1', title: 'today', url: 'http://today/', dateAdded: NOW2 },
+                { id: '2', parentId: '1', title: 'week', url: 'http://week/', dateAdded: NOW2 - 3 * DAY }
+            ]
+        });
+        ctx.def().activate();
+        const html = ctx.$list.innerHTML;
+        expect((html.match(/recent-group-stage/g) || []).length).toBe(2); // today + week buckets
+        // click the "week" bucket → only its item stages
+        bucketClick(ctx, 1);
+        expect(ctx.viewRecent.api.state().items.map(i => i.url)).toEqual(['http://week/']);
+        // the "today" bucket stages its own
+        bucketClick(ctx, 0);
+        expect(ctx.viewRecent.api.state().items.map(i => i.url).sort()).toEqual(['http://today/', 'http://week/']);
     });
 });

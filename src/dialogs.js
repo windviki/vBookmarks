@@ -14,7 +14,7 @@
  */
 import { pickGroupColor } from './tab-group-utils.js';
 import { htmlspecialchars } from './escape.js';
-import { PIN_ICON, CLOCK_ICON } from './icons.js';
+import { PIN_ICON, CLOCK_ICON, FOLDER_ICON } from './icons.js';
 import {
     readIdList, writeIdList, recordRecent, togglePin, pruneIds, chipsModel
 } from './folder-pick.js';
@@ -481,6 +481,11 @@ export function initDialogs(ctx = {}) {
                 const valid = new Set(folders.map(f => f.id));
                 let pins = readIdList(store ? store.get('folderPickPins') : null);
                 let recents = readIdList(store ? store.get('folderPickRecents') : null);
+                if (!recents.length && store) {
+                    const quick = store.get('quickAddFolderId', '1');
+                    if (valid.has(quick))
+                        recents = [quick];
+                }
                 const prunedPins = pruneIds(pins, valid);
                 const prunedRecents = pruneIds(recents, valid);
                 if (store && (prunedPins.changed || prunedRecents.changed)) {
@@ -508,7 +513,12 @@ export function initDialogs(ctx = {}) {
                     btn.className = 'bookmark-folder-pick-row';
                     btn.style.paddingInlineStart = `${8 + f.depth * 16}px`;
                     btn.title = f.path;
-                    btn.textContent = f.title;
+                    btn.innerHTML = `${FOLDER_ICON}<span class="bookmark-folder-pick-name" dir="auto"></span>`;
+                    const nameSpan = btn.querySelector ? btn.querySelector('.bookmark-folder-pick-name') : null;
+                    if (nameSpan)
+                        nameSpan.textContent = f.title;
+                    else
+                        btn.textContent = f.title;
                     if (btn.dataset)
                         btn.dataset.folderId = f.id;
                     btn.addEventListener('click', () => {

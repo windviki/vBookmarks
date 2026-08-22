@@ -761,38 +761,6 @@ export function initViewTabGroups(ctx = {}) {
     // --- Bookmark helpers -------------------------------------------------------
     const bookmarkableUrl = u => /^(https?|ftp|file):/i.test(u || '');
 
-    // velvet staging §2.5: resolves (creating only when missing) the tree
-    // bookmark id for a tab — the "bookmark AND stage" entry points need the
-    // id; the classic addTabToBookmarks flow keeps its own toast semantics.
-    const resolveTabBookmark = (tab, cb) => {
-        if (!tab || !bookmarkableUrl(tab.url)) {
-            cb(null);
-            return;
-        }
-        chrome.bookmarks.search({ url: tab.url }, existing => {
-            const hit = (existing || []).find(n => n.url === tab.url);
-            if (hit) {
-                bookmarkedUrls.add(tab.url);
-                if (views.isActive('tabgroups'))
-                    render();
-                cb({ id: hit.id, url: tab.url, title: tab.title || tab.url });
-                return;
-            }
-            const parentId = rootFolderId();
-            chrome.bookmarks.create({ title: tab.title || tab.url, url: tab.url, parentId }, created => {
-                if (!created || created.id === undefined || created.id === null) {
-                    cb(null);
-                    return;
-                }
-                bookmarkedUrls.add(tab.url);
-                onChanged();
-                if (views.isActive('tabgroups'))
-                    render();
-                cb({ id: created.id, url: tab.url, title: tab.title || tab.url });
-            });
-        });
-    };
-
     const addTabToBookmarks = tabId => {
         const tab = tabById(tabId);
         if (!tab || !bookmarkableUrl(tab.url))
@@ -823,28 +791,23 @@ export function initViewTabGroups(ctx = {}) {
         });
     };
 
-    // --- Staging interop (velvet staging §2.5) -------------------------------
-    // "Bookmark and stage": resolve-or-create the tree anchor, then send the
-    // item into the staging area (URL-deduped there).
-    const stageTab = (tab, cb) => {
+    // --- Staging interop (velvet staging §2.5, user-revised) -----------------
+    // "Send to staging" is a PURE snapshot (url/title, id=null): sending
+    // must not touch the tree — the workbench's own star/favorite actions
+    // do the real bookmarking when the user wants it. Tabs are not
+    // bookmarks; no resolve/create step applies.
+    const stageTab = tab => {
         const stagingApi = ctx.staging;
-        if (!stagingApi) {
-            if (cb)
-                cb();
+        if (!stagingApi || !tab || !bookmarkableUrl(tab.url))
             return;
-        }
-        resolveTabBookmark(tab, resolved => {
-            if (resolved)
-                stagingApi.addItems([resolved]);
-            else if (cb)
-                cb();
-        });
+        stagingApi.addItems([{ id: null, url: tab.url, title: tab.title || tab.url }]);
     };
 
     const stageTabById = tabId => stageTab(tabById(tabId));
 
-    // A whole tab group: bookmarkable tabs by index, one sourceTabGroup
-    // staging group (>10 ConfirmDialog; 0 bookmarkable → toast).
+    // A whole tab group: bookmarkable tabs by index as PURE snapshots into
+    // one sourceTabGroup staging group (>10 ConfirmDialog; 0 bookmarkable →
+    // toast). No tree writes — same revision as stageTab.
     const STAGE_GROUP_CONFIRM_LIMIT = 10;
     const stageTabGroup = (groupId, groupTitle) => {
         const stagingApi = ctx.staging;
@@ -858,34 +821,17 @@ export function initViewTabGroups(ctx = {}) {
             return;
         }
         const run = () => {
-            let pending = groupTabs.length;
-            const entries = [];
-            const done = () => {
-                if (!entries.length)
-                    return;
-                let group = null;
-                const state = stagingApi.state();
-                for (const g of state.groups) {
-                    if (g.sourceTabGroup === groupTitle) {
-                        group = g;
-                        break;
-                    }
+            const entries = groupTabs.map(t => ({ id: null, url: t.url, title: t.title || t.url }));
+            let group = null;
+            const state = stagingApi.state();
+            for (const g of state.groups) {
+                if (g.sourceTabGroup === groupTitle) {
+                    group = g;
+                    break;
                 }
-                const opts = group ? { defaultGroup: group.id } : {};
-                stagingApi.addItems(entries, opts);
-                if (!group && entries.length)
-                    undo.showToast(_m('stagedToast', [`${entries.length}`, groupTitle || '']));
-                else
-                    undo.showToast(_m('stagingAddedSummary', [`${entries.length}`, '0']));
-            };
-            for (const tab of groupTabs) {
-                resolveTabBookmark(tab, resolved => {
-                    if (resolved)
-                        entries.push(resolved);
-                    if (--pending === 0)
-                        done();
-                });
             }
+            stagingApi.addItems(entries, group ? { defaultGroup: group.id } : {});
+            undo.showToast(_m('stagedToast', [`${entries.length}`, groupTitle || '']));
         };
         if (groupTabs.length > STAGE_GROUP_CONFIRM_LIMIT && dialogs && dialogs.ConfirmDialog) {
             dialogs.ConfirmDialog.open({

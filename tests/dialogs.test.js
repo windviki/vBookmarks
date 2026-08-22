@@ -1044,3 +1044,25 @@ describe('StagingGroupAssignDialog (velvet staging §3.3)', () => {
         expect(bodyClasses.contains('needStagingGroupAssign')).toBe(false);
     });
 });
+
+describe('picker visual round (folder glyphs + quick-add seed)', () => {
+    const miniStore = (data = {}) => ({
+        data,
+        get(k, def) { return k in this.data ? this.data[k] : def; },
+        set(k, v) { this.data[k] = v; }
+    });
+    it('rows carry the folder glyph and the seeded quick-add recent', () => {
+        const store = miniStore();
+        const d = freshDialogs(store);
+        d.BookmarkFolderPickDialog.open({ dialog: 'x', mode: null, onPick: () => {} });
+        const btns = els['bookmark-folder-pick-list']
+            .querySelectorAll('button')
+            .filter(b => (b.className || '').indexOf('bookmark-folder-pick-row') >= 0);
+        expect(btns[0].innerHTML).toContain('vbm-icon-folder');
+        // no persisted recents → the quick-add folder ('1' = Bar) seeds the chips
+        const chips = els['bookmark-folder-pick-chips'];
+        expect(chips.hidden).toBe(false);
+        expect(chips.innerHTML).toContain('data-folder-id="1"');
+        expect(chips.innerHTML).toContain('folderPickRecent');
+    });
+});

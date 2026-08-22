@@ -122,26 +122,24 @@ export const CLOCK_ICON =
     '<path d="M8 4.6V8l2.4 1.6"/>' +
     '</svg>';
 
-// Staging "send to the staging area" glyph: a single up arrow above a tray
-// line — the recent section's hover button and every "stage this" entry
-// point (velvet staging §2.2).
+// Staging "send to the staging area" glyph: a paper plane (the universal
+// send metaphor) — the recent section's hover button, the per-group heads
+// and every "stage this" entry point (velvet staging §2.2). One silhouette
+// (the classic three-fold plane), line form for the idle state.
+const STAGE_PLANE_PATH = 'M14.7 1.3L1.3 6l6 2.7 2.7 6 4.7-13.4z';
 export const STAGE_ICON =
     '<svg class="vbm-icon vbm-icon-stage" width="16" height="16" viewBox="0 0 16 16" ' +
     'fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
-    '<path d="M8 12.4V3.6"/>' +
-    '<path d="M4.4 7.2L8 3.6l3.6 3.6"/>' +
-    '<path d="M2.8 13.6h10.4"/>' +
+    `<path d="${STAGE_PLANE_PATH}"/>` +
+    '<path d="M14.7 1.3L7.3 8.7"/>' +
     '</svg>';
 
-// Same glyph in the "already staged" state — a check rides the tray so the
-// toggle reads as done (mirrors the STAR_ICON / STAR_ICON_FILLED pair).
+// Same glyph in the "already staged" state — the SOLID plane (the
+// STAR_ICON / STAR_ICON_FILLED pair recipe: one silhouette, two states).
 export const STAGE_ICON_DONE =
     '<svg class="vbm-icon vbm-icon-stage-done" width="16" height="16" viewBox="0 0 16 16" ' +
-    'fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
-    '<path d="M8 10.8V4.2"/>' +
-    '<path d="M5 7.2L8 4.2l3 3"/>' +
-    '<path d="M2.8 13.6h10.4"/>' +
-    '<path d="M5.6 10.9l1.4 1.4 3-3.2"/>' +
+    'fill="currentColor" stroke="currentColor" stroke-width="1" stroke-linejoin="round" aria-hidden="true">' +
+    `<path d="${STAGE_PLANE_PATH}"/>` +
     '</svg>';
 
 // Tab-groups view row/group actions (16px line grid, same recipe).

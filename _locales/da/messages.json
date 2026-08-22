@@ -2439,13 +2439,13 @@
     "message": "Flet de tre tilføj-mappe-punkter (før/efter/inde i) til ét undermenupunkt ved højreklik på mapper."
   },
   "tabRowStage": {
-    "message": "Bogmærk og klar"
+    "message": "Bogmærk og scene"
   },
   "tabgroupStageAll": {
-    "message": "Bogmærk og klar hele gruppen"
+    "message": "Bogmærk og scene gruppe"
   },
   "tabgroupStageConfirm": {
-    "message": "Bogmærk og klar $n$ faner?",
+    "message": "Bogmærk og scene $n$ faner?",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -2476,5 +2476,13 @@
   },
   "deleteSelected": {
     "message": "Slet valgte"
+  },
+  "recentStageGroup": {
+    "message": "Send $t$ til staging-området",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
   }
 }

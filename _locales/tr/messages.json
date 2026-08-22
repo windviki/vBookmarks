@@ -2439,13 +2439,13 @@
     "message": "Klasöre sağ tıklandığında üç klasör ekleme girişini (önce/sonra/içine) tek bir alt menü girişinde birleştirir."
   },
   "tabRowStage": {
-    "message": "Yer imine ekle ve hazırla"
+    "message": "Yer imi ve sahnele"
   },
   "tabgroupStageAll": {
-    "message": "Yer imi ve sahne grubu"
+    "message": "Grubu yer imi ve sahnele"
   },
   "tabgroupStageConfirm": {
-    "message": "$n$ sekme yer imine eklenip hazırlansın mı?",
+    "message": "$n$ sekmeyi yer imi ve sahnele?",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -2476,5 +2476,13 @@
   },
   "deleteSelected": {
     "message": "Seçilenleri sil"
+  },
+  "recentStageGroup": {
+    "message": "$t$ öğesini hazırlık alanına gönder",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
   }
 }

@@ -2439,13 +2439,13 @@
     "message": "Gabungkan tiga entri tambah-folder (sebelum/sesudah/di dalam) menjadi satu entri submenu pada klik kanan folder."
   },
   "tabRowStage": {
-    "message": "Bookmark dan pementasan"
+    "message": "Tandai & panggung"
   },
   "tabgroupStageAll": {
-    "message": "Simpan & panggung grup"
+    "message": "Tandai & panggung grup"
   },
   "tabgroupStageConfirm": {
-    "message": "Bookmark dan pementasan $n$ tab?",
+    "message": "Tandai & panggung $n$ tab?",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -2476,5 +2476,13 @@
   },
   "deleteSelected": {
     "message": "Hapus yang dipilih"
+  },
+  "recentStageGroup": {
+    "message": "Kirim $t$ ke area pementasan",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
   }
 }

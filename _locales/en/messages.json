@@ -2724,5 +2724,13 @@
   },
   "deleteSelected": {
     "message": "Delete selected"
+  },
+  "recentStageGroup": {
+    "message": "Send $t$ to the staging area",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
   }
 }
