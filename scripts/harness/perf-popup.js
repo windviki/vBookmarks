@@ -6,10 +6,11 @@
 //            50+ browser tabs (a few grouped), stored view state so the
 //            popup cold-opens straight into the big tree render.
 //   Phase 1  popup cold open ×10 (CDP Performance domain: Scripting /
-//            Rendering / Painting + LayoutCount).
-//   Phase 2  tree rebuild ×10 (create a bookmark → poll for its row →
-//            remove; the tree view re-renders the whole tree on the event).
-//   Phase 3  SW cold start ×10 (ServiceWorker.stopAllWorkers → respawn wall
+//            Rendering / Painting + LayoutCount). The 3000-row generateTree
+//            IS the dominant cost of the cold open — the full tree rebuild
+//            has no separate trigger in the app (bookmark events do not
+//            regenerate the tree), so this phase is the tree-rebuild口径.
+//   Phase 2  SW cold start ×10 (ServiceWorker.stopAllWorkers → respawn wall
 //            time + first-script duration).
 //
 // Output: a per-run table + median row, and /tmp/shots/perf/perf.json for
@@ -101,24 +102,44 @@ const openPopup = async (browser, extId) => {
         out.seeded = seed;
         console.log('seeded:', JSON.stringify(seed));
 
-        // 50 tabs (about:blank is offline-safe), then group the first 10
+        // 50 tabs (about:blank is offline-safe). The seed popup just survived
+        // ~3000 onCreated tree regenerations — close it and let the browser
+        // settle instead of reusing a page whose context may be dying, then
+        // group the first 10 tabs from a fresh popup page.
         const tabPages = [];
         for (let i = 0; i < SEED_TABS; i++)
             tabPages.push(await browser.newPage());
-        await sleep(500);
-        const grouped = await seedPage.evaluate(() => new Promise(res => {
-            chrome.tabs.query({}, tabs => {
-                const ids = tabs.filter(t => t.url && t.url.startsWith('about:blank')).slice(0, 10).map(t => t.id);
-                if (!ids.length || !chrome.tabGroups) {
-                    res(0);
-                    return;
-                }
-                chrome.tabGroups.group({ tabIds: ids, createProperties: { title: 'perf', color: 'blue' } }, g => res(ids.length));
-            });
-        }));
+        seedPage.close();
+        await sleep(3000);
+        const groupPage = await openPopup(browser, extId);
+        const grouped = await groupPage.evaluate(() => new Promise(res => {
+            const timer = setTimeout(() => res(-2), 8000); // never hang the probe
+            try {
+                chrome.tabs.query({}, tabs => {
+                    const ids = tabs.filter(t => t.url && t.url.startsWith('about:blank')).slice(0, 10).map(t => t.id);
+                    if (!ids.length || !chrome.tabGroups) {
+                        clearTimeout(timer);
+                        res(0);
+                        return;
+                    }
+                    try {
+                        chrome.tabGroups.group({ tabIds: ids, createProperties: { title: 'perf', color: 'blue' } }, () => {
+                            clearTimeout(timer);
+                            res(ids.length);
+                        });
+                    } catch (e) {
+                        clearTimeout(timer);
+                        res(-1);
+                    }
+                });
+            } catch (e) {
+                clearTimeout(timer);
+                res(-1);
+            }
+        })).catch(() => -3);
         out.seeded.groupedTabs = grouped;
         console.log('grouped tabs:', grouped);
-        seedPage.close();
+        groupPage.close();
 
         // --- Phase 1: popup cold open ×10 -------------------------------------
         const cold = [];
@@ -143,43 +164,15 @@ const openPopup = async (browser, extId) => {
             p.close();
         }
         out.popupColdOpen = cold;
-        console.log('\n== popup cold open (ms) ==');
+        console.log('\n== popup cold open (ms; full 3000-row generateTree inside) ==');
+        console.log('note: RenderingDuration/PaintingDuration are 0 in this Chromium build — wall + scripting + layout count are the reliable rows');
         console.log('run | wall | scripting | rendering | painting | layouts');
         cold.forEach((r, i) =>
             console.log(`${i + 1}   | ${r.wallMs} | ${r.scriptingMs} | ${r.renderingMs} | ${r.paintingMs} | ${r.layoutCount}`));
         const med = k => median(cold.map(r => r[k]));
         console.log(`med | ${med('wallMs')} | ${med('scriptingMs')} | ${med('renderingMs')} | ${med('paintingMs')} | ${med('layoutCount')}`);
 
-        // --- Phase 2: tree rebuild ×10 ----------------------------------------
-        const warm = await openPopup(browser, extId);
-        const rebuilds = [];
-        const perfFolderId = out.seeded.folderId;
-        for (let i = 0; i < RUNS; i++) {
-            const ms = await warm.evaluate((folderId) => new Promise(res => {
-                chrome.bookmarks.create({
-                    parentId: folderId,
-                    title: '__perf_tmp__',
-                    url: 'http://127.0.0.1:9/perf'
-                }, node => {
-                    const t0 = performance.now();
-                    const poll = () => {
-                        if (document.getElementById(`neat-tree-item-${node.id}`))
-                            chrome.bookmarks.remove(node.id, () => res(performance.now() - t0));
-                        else
-                            setTimeout(poll, 16);
-                    };
-                    poll();
-                });
-            }), perfFolderId).catch(() => -1);
-            rebuilds.push(ms);
-        }
-        out.treeRebuildMs = rebuilds;
-        console.log('\n== tree rebuild (create→row visible, ms) ==');
-        console.log(rebuilds.map((r, i) => `${i + 1}: ${r}`).join('  '));
-        console.log('median:', median(rebuilds.filter(r => r >= 0)));
-        warm.close();
-
-        // --- Phase 3: SW cold start ×10 ---------------------------------------
+        // --- Phase 2: SW cold start ×10 ----------------------------------------
         const swStarts = [];
         let swSupported = true;
         try {

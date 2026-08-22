@@ -1,6 +1,6 @@
 # vBookmarks 4.1.0 构建与性能改造落地方案
 
-> 状态：调研与 4.1.0 工作区 dry-run 均已完成（全部数据为实测，见附录 A），待评审后实施。
+> 状态：评审通过（2026-08-22）→ M1–M4 已全部实施并验收通过（构建管线 / 门禁平移 / 性能 P0 / 实测决策），最终实施状态见附录 C，性能数据见附录 A。
 > 适用版本：**4.1.0**（master 开发中版本，含 tab-groups 视图）。本文档取代 `docs/build-bundle-terser-plan.md`（4.0.8 版），沿用其已验证的架构结论，更新全部实测数据，并补齐 CI/发布门禁与性能改造的实施细节。
 > 目标：随 4.1.0 一起发布。两件事 ——
 > **方案 A（构建）**：在源码开发体验不变（仓库根目录仍可 Load unpacked）的前提下新增 `dist/` 构建产物：ESM 模块图 esbuild 打包 + 全部 JS 经 Terser 压缩，发布态从 `dist/` 出包。
@@ -455,8 +455,75 @@ zip 实测（package.py 同口径 collect + deflate 默认级别；实测 level 
   （复测时点：2026-08-22 HEAD 64c5e0b；较初稿的 1120.5/842.1 差异来自非 JS 内容快照，JS 字节与文件数口径完全一致）
 ```
 
-性能实测基线：待 M4 按 §3.7 方法录取后回填（popup 冷打开 / 树重建 / SW 冷启动，源码 vs dist 各 10 次）。
+性能实测（M4，scripts/harness/perf-popup.js，Docker headless，10 次中位数；种子 = 3000 书签含 100 深层子文件夹 + 50 个标签页）：
+
+| 口径 | 源码 | dist | 变化 |
+|---|---|---|---|
+| popup 冷开 wall（ms） | 1024.0 | 980.0 | -4.3% |
+| popup 冷开 scripting（ms） | 154.4 | 125.8 | **-18.5%** |
+| popup 冷开布局数 | 16 | 16 | 0 |
+| SW 冷启动 | 未录取 | — | 本版 Chromium 无 ServiceWorker CDP 域，列为已知限制 |
+
+注：① 树重建无独立触发（bookmark 事件不重建树；generateTree 是冷开主成本），口径并入冷开；② Rendering/Painting 时长本版 Chromium 恒为 0；③ tabGroups 分组在 headless 不可用（不影响徽章种子）；④ 基线为 M3 落地后的 4.1.0 形态（P0 与构建同批实施，P0 前后对比未单独录取——P1 若开展以本表为基准）。探针可复跑：bash scripts/harness/run.sh --perf 与 --dist --perf。
 
 ## 附录 B：本阶段明确不做的事
 
 汇总 §2.8 与 §4.5：经典脚本拼接（Phase 1B，判据驱动）、CSS/HTML minify、激进 tree-shaking、经典脚本转 ESM、zip 内 sourcemap、代码混淆、把单元测试迁到 dist 上跑、虚拟滚动（P2 单独立项判据见 §4.5）。
+---
+
+## 附录 C：4.1.0 实施状态（2026-08-22 验收记录）
+
+### C.1 交付总览
+
+M1–M4 全部落地并通过验收；P1 顺延 4.1.x（口径见 C.5），P2 / Phase 1B 未达启动判据不启用。git 基线：`7334227`（计划文档）→ `ef04237`（收尾文档，本批次共 14 个实施 commit）。
+
+| 里程碑 | 状态 | 关键证据 |
+|---|---|---|
+| M1 构建管线 | ✅ | `npm run build` 自检 PASS（78 文件 / 15 JS）；源码 zip 134 文件 / 1130.3 KB，dist zip 78 文件 / 850.2 KB（附录 A）；webstore 契约 29/29 |
+| M2 门禁平移 | ✅ | `run.sh --dist --smoke-only` PASS；dist 全量 harness PASS 4/FAIL 0（M3 前后各一次）；源码全量 harness PASS 4/FAIL 0；CI 三处更新；AGENTS.md + docs/README*.md（中英）更新 |
+| M3 性能 P0 | ✅ | H1–H7+H9 逐项独立 commit；全量 2648 用例 + lint 全绿；dist 全量 harness 额外抓到 H5 漏改点（favicon-gallery）并修复（b838eec） |
+| M4 实测与决策 | ✅ | perf-popup.js 探针落地并出数（附录 A）；决策：P1 顺延、P2/Phase 1B 不启动 |
+
+### C.2 M1 交付物
+
+- `scripts/runtime-files.json`（单一事实源，build/package 共用）
+- `scripts/build.mjs`（构建即自检 6 项，任一失败非零退出）
+- `scripts/package.py` 新增 `--root`（清单改读 JSON；JS 种子 = 15 文件；zip 恒写仓库 `tmp/`；EXCLUDE_DIRS 加 `dist`）
+- `package.json`：esbuild@0.28.2 / terser@5.50.0 精确锁定（`--save-exact`）+ `build`/`package`/`package:src`/`package:edge`
+- `.gitignore` 加 `dist/`
+
+### C.3 M2 交付物
+
+- `scripts/harness/run.sh` `--dist`（dist 树进镜像，未构建则报错）+ `--perf`（跑探针）；`Dockerfile` 收录 perf-popup.js；头部键盘断言注释 132→153
+- CI（`.github/workflows/ci.yml`）：`test` job 改 dist 构建+出包；`smoke` job 源码+dist 双冒烟；`harness-full` 双全量（dist 为 4.1.0 强制门禁）
+- AGENTS.md：tech stack / Build / Packaging / Release Step 0（三段冒烟）/ Step 1（npm run package）/ harness 描述；docs/README.md + README.zh.md 开发与打包说明
+
+### C.4 M3 逐项记录
+
+| 项 | commit | 行为变更 | 绑定套件 |
+|---|---|---|---|
+| H1 | `3ee0bf3` | 删 tree-view 的 `search.updateIndex`（search.js 已有 dirty + 首搜懒构建） | tree-view / search |
+| H2 | `47a2461` | tooltip 全量 pass → `$tree` mouseover/focusin 事件委托，单行惰性检测 | tree-view |
+| H3 | `cb63c31` | `getFaviconUrl` 手动序列化（14 条真实语料逐字节对齐 URLSearchParams，含 `!'()~` 与空格编码差异） | tree-render |
+| H4 | `91a63f3` | 删渲染后全量同步徽标刷新；sync-manager 初始 blob 按 id 派发 syncStatusChanged | tree-view / sync-manager-client / sync-ui |
+| H5 | `95fb154` + `b838eec` | buildPathMap 单趟产出 `{ paths, ids }`（favicon-gallery 直接调用点修复，dist harness 抓到） | tree-render / view-manager / visit-stats / favicon-gallery |
+| H6 | `0fe2aa7` | dead overlay 按 id 定点更新 + 无标记快速返回（零 DOM 查询） | view-dead |
+| H7 | `a7a3f88` | dupes keeper 每 render 只算一遍（memo 随 groups 引用失效） | view-dupes |
+| H9 | `faf65d2` | tab-groups 未激活 refresh 改 count-only（跳过 queryAllGroups/readClosedGroups/折叠对账） | view-tabgroups |
+
+### C.5 M4 实测与决策
+
+- 探针：`scripts/harness/perf-popup.js`（3000 书签 / 100 深层子文件夹 / 50 标签页种子；CDP Performance 域；`--perf` / `--dist --perf` 可复跑），数据见附录 A。
+- 决策：
+  - **P1 顺延 4.1.x**：冷开 scripting 中位 126–154 ms 且 dist 已 -18.5%，P0 收益达成；P1 属结构性重构（单趟快照/延迟队列/SW 精益化），风险收益比不支持 4.1.0 末期引入。
+  - **P2 不启动**：无 >100 ms 长任务证据，未达 §4.5 判据。
+  - **Phase 1B 不启用**：未达 §2.8 判据（script 请求/解析占比 >5% 无证据）。
+- 已知限制与后续（不阻塞发布）：SW 冷启动口径待换用支持 ServiceWorker CDP 域的 Chromium/puppeteer 补录；Rendering/Painting 指标本版 Chromium 不提供；H9 后续项（徽章计数降频 1s / 仅 tab 增删激活）留档。
+
+### C.6 验收证据汇总
+
+- `npm run build`（自检 PASS）多次；`npm run test:run` **2648/2648**；`npm run lint` **0 错**；`npm run test:webstore` **29/29**
+- `scripts/harness/run.sh --dist --smoke-only`：**PASS**
+- `scripts/harness/run.sh --dist`（全量）：**PASS 4 / FAIL 0**（M3 前、M3 后各一次）
+- `scripts/harness/run.sh`（源码全量）：**PASS 4 / FAIL 0**
+- §3.6 手动冒烟矩阵：自动化层全部覆盖并通过（smoke 覆盖 popup/panel/options/favicon 画廊/公告/命令面板/重定向；keyboard/scrollbar/menu 层覆盖键盘、滚动条、菜单矩阵）；视觉截图类检查点属发布 SOP（scripts/screenshots/run.sh），本批次未单列执行。
