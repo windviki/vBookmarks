@@ -632,6 +632,12 @@
   "tabGroupsCollapseWindow": {
     "message": "विंडो संक्षिप्त करें"
   },
+  "tabGroupsCloseWindow": {
+    "message": "विंडो बंद करें"
+  },
+  "tabGroupsWindowClosedTitle": {
+    "message": "विंडो बंद हुई"
+  },
   "tabGroupsExpandWindow": {
     "message": "विंडो विस्तृत करें"
   },

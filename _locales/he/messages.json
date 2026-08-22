@@ -632,6 +632,12 @@
   "tabGroupsCollapseWindow": {
     "message": "כווץ חלון"
   },
+  "tabGroupsCloseWindow": {
+    "message": "סגור חלון"
+  },
+  "tabGroupsWindowClosedTitle": {
+    "message": "חלון סגור"
+  },
   "tabGroupsExpandWindow": {
     "message": "הרחב חלון"
   },

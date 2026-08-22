@@ -632,6 +632,12 @@
   "tabGroupsCollapseWindow": {
     "message": "Pencereyi daralt"
   },
+  "tabGroupsCloseWindow": {
+    "message": "Pencereyi kapat"
+  },
+  "tabGroupsWindowClosedTitle": {
+    "message": "Kapatılan pencere"
+  },
   "tabGroupsExpandWindow": {
     "message": "Pencereyi genişlet"
   },

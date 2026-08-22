@@ -2338,6 +2338,14 @@
     "message": "Collapse window",
     "description": "Window-head toggle in the tab groups view: folds the window section."
   },
+  "tabGroupsCloseWindow": {
+    "message": "Close window",
+    "description": "Hover action on a window section head: closes the whole window (confirm; tabs land as one merged closed record)."
+  },
+  "tabGroupsWindowClosedTitle": {
+    "message": "Closed window",
+    "description": "Title of the merged recently-closed record a window close writes."
+  },
   "tabGroupsExpandWindow": {
     "message": "Expand window",
     "description": "Window-head toggle in the tab groups view: unfolds the window section."

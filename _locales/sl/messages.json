@@ -632,6 +632,12 @@
   "tabGroupsCollapseWindow": {
     "message": "Strni okno"
   },
+  "tabGroupsCloseWindow": {
+    "message": "Zapri okno"
+  },
+  "tabGroupsWindowClosedTitle": {
+    "message": "Zaprto okno"
+  },
   "tabGroupsExpandWindow": {
     "message": "Razširi okno"
   },

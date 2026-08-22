@@ -632,6 +632,12 @@
   "tabGroupsCollapseWindow": {
     "message": "Fenster einklappen"
   },
+  "tabGroupsCloseWindow": {
+    "message": "Fenster schließen"
+  },
+  "tabGroupsWindowClosedTitle": {
+    "message": "Fenster geschlossen"
+  },
   "tabGroupsExpandWindow": {
     "message": "Fenster erweitern"
   },

@@ -632,6 +632,12 @@
   "tabGroupsCollapseWindow": {
     "message": "উইন্ডো সঙ্কুচিত করুন"
   },
+  "tabGroupsCloseWindow": {
+    "message": "উইন্ডো বন্ধ করুন"
+  },
+  "tabGroupsWindowClosedTitle": {
+    "message": "উইন্ডো বন্ধ হয়েছে"
+  },
   "tabGroupsExpandWindow": {
     "message": "উইন্ডো প্রসারিত করুন"
   },

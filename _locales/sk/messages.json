@@ -632,6 +632,12 @@
   "tabGroupsCollapseWindow": {
     "message": "Zbaliť okno"
   },
+  "tabGroupsCloseWindow": {
+    "message": "Zavrieť okno"
+  },
+  "tabGroupsWindowClosedTitle": {
+    "message": "Zatvorené okno"
+  },
   "tabGroupsExpandWindow": {
     "message": "Rozbaliť okno"
   },

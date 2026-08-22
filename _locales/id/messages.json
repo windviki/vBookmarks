@@ -632,6 +632,12 @@
   "tabGroupsCollapseWindow": {
     "message": "Ciutkan jendela"
   },
+  "tabGroupsCloseWindow": {
+    "message": "Tutup jendela"
+  },
+  "tabGroupsWindowClosedTitle": {
+    "message": "Jendela ditutup"
+  },
   "tabGroupsExpandWindow": {
     "message": "Perluas jendela"
   },

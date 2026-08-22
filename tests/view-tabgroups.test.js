@@ -246,6 +246,12 @@ const setup = (opts = {}) => {
             WINDOW_ID_CURRENT: 1,
             getAllCalls: [],
             updateCalls: [],
+            removeCalls: [],
+            remove(id, cb) {
+                this.removeCalls.push(id);
+                if (cb)
+                    cb();
+            },
             update(id, props, cb) {
                 this.updateCalls.push([id, props]);
                 if (cb)
@@ -683,6 +689,37 @@ describe('multi-window rendering', () => {
         // is expanded through its window-head toggle.
         expect(html).toContain('id="tabgroups-group-g1"');
         expect(html).not.toContain('id="tabgroups-item-10"');
+    });
+
+    it('the window head close button confirms, records ONE merged entry, closes the window and toasts Reopen', () => {
+        const { def, chrome, dialogs, store, undo, clickOn } = setup({
+            windows: [
+                { id: 1, focused: true, tabs: [makeTab(1, 0, { active: true })] },
+                { id: 2, focused: false, tabs: [makeTab(10, 0), makeTab(11, 1, { windowId: 2 })] }
+            ]
+        });
+        def().activate();
+        const li = { dataset: { windowId: '2' }, classList: makeClassList() };
+        const btn = {
+            classList: makeClassList(['tabgroups-window-close']),
+            closest: sel => sel === 'li' ? li : (sel === '.tabgroups-window-close' ? btn : null)
+        };
+        clickOn(btn);
+        // confirm names the window's tab count
+        expect(dialogs.ConfirmDialog.openCalls).toHaveLength(1);
+        expect(dialogs.ConfirmDialog.openCalls[0].dialog).toBe('tabGroupsConfirmClose[2]');
+        dialogs.ConfirmDialog.openCalls[0].fn1();
+        expect(chrome.windows.removeCalls).toEqual([2]);
+        // ONE merged record for the whole window
+        const records = JSON.parse(store._data.tabGroupsClosed);
+        expect(records).toHaveLength(1);
+        expect(records[0].title).toBe('tabGroupsWindowClosedTitle');
+        expect(records[0].tabs).toHaveLength(2);
+        // toast Reopen brings the window's tabs back as one group
+        expect(undo.toastActionCalls).toHaveLength(1);
+        undo.toastActionCalls[0].onAction();
+        expect(chrome.runtime.sendMessageCalls[0].type).toBe('vbm-tab-group-open-new');
+        expect(chrome.runtime.sendMessageCalls[0].urls).toHaveLength(2);
     });
 
     it('exactly one window carries the current pill even when none reports focused', () => {
@@ -1872,12 +1909,12 @@ describe('selection mode folding + row icon parity', () => {
 });
 
 describe('group color style', () => {
-    it('defaults to off (color dot only)', () => {
+    it('defaults to the connector line (4.1.0 polish: line reads best and makes membership unambiguous)', () => {
         const { def, $list } = setup({});
         def().activate();
         expect($list.innerHTML).not.toContain('color-enhanced');
-        expect($list.innerHTML).not.toContain('color-line');
-        expect($list.innerHTML).not.toContain('tg-connector');
+        expect($list.innerHTML).toContain('class="color-line"');
+        expect($list.innerHTML).toContain('tg-connector');
     });
 
     it('edge style marks the list color-enhanced', () => {

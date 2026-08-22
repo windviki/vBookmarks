@@ -632,6 +632,12 @@
   "tabGroupsCollapseWindow": {
     "message": "Kutista ikkuna"
   },
+  "tabGroupsCloseWindow": {
+    "message": "Sulje ikkuna"
+  },
+  "tabGroupsWindowClosedTitle": {
+    "message": "Suljettu ikkuna"
+  },
   "tabGroupsExpandWindow": {
     "message": "Laajenna ikkuna"
   },

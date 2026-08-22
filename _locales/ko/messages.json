@@ -632,6 +632,12 @@
   "tabGroupsCollapseWindow": {
     "message": "창 축소"
   },
+  "tabGroupsCloseWindow": {
+    "message": "창 닫기"
+  },
+  "tabGroupsWindowClosedTitle": {
+    "message": "닫힌 창"
+  },
   "tabGroupsExpandWindow": {
     "message": "창 확대"
   },

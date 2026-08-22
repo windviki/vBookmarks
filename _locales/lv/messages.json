@@ -632,6 +632,12 @@
   "tabGroupsCollapseWindow": {
     "message": "Sakļaut logu"
   },
+  "tabGroupsCloseWindow": {
+    "message": "Aizvērt logu"
+  },
+  "tabGroupsWindowClosedTitle": {
+    "message": "Aizvērts logs"
+  },
   "tabGroupsExpandWindow": {
     "message": "Izvērst logu"
   },

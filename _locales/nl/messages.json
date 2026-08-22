@@ -632,6 +632,12 @@
   "tabGroupsCollapseWindow": {
     "message": "Venster samenvouwen"
   },
+  "tabGroupsCloseWindow": {
+    "message": "Venster sluiten"
+  },
+  "tabGroupsWindowClosedTitle": {
+    "message": "Venster gesloten"
+  },
   "tabGroupsExpandWindow": {
     "message": "Venster uitvouwen"
   },

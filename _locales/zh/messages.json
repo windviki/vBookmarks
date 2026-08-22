@@ -2103,6 +2103,12 @@
   "tabGroupsCollapseWindow": {
     "message": "折叠窗口"
   },
+  "tabGroupsCloseWindow": {
+    "message": "关闭窗口"
+  },
+  "tabGroupsWindowClosedTitle": {
+    "message": "已关闭窗口"
+  },
   "tabGroupsExpandWindow": {
     "message": "展开窗口"
   },

@@ -632,6 +632,12 @@
   "tabGroupsCollapseWindow": {
     "message": "طي النافذة"
   },
+  "tabGroupsCloseWindow": {
+    "message": "إغلاق النافذة"
+  },
+  "tabGroupsWindowClosedTitle": {
+    "message": "تم إغلاق النافذة"
+  },
   "tabGroupsExpandWindow": {
     "message": "توسيع النافذة"
   },

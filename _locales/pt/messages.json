@@ -632,6 +632,12 @@
   "tabGroupsCollapseWindow": {
     "message": "Recolher janela"
   },
+  "tabGroupsCloseWindow": {
+    "message": "Fechar janela"
+  },
+  "tabGroupsWindowClosedTitle": {
+    "message": "Janela fechada"
+  },
   "tabGroupsExpandWindow": {
     "message": "Expandir janela"
   },

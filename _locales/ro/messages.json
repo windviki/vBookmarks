@@ -632,6 +632,12 @@
   "tabGroupsCollapseWindow": {
     "message": "Restrânge fereastra"
   },
+  "tabGroupsCloseWindow": {
+    "message": "Închide fereastra"
+  },
+  "tabGroupsWindowClosedTitle": {
+    "message": "Fereastră închisă"
+  },
   "tabGroupsExpandWindow": {
     "message": "Extinde fereastra"
   },

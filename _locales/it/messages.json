@@ -632,6 +632,12 @@
   "tabGroupsCollapseWindow": {
     "message": "Comprimi finestra"
   },
+  "tabGroupsCloseWindow": {
+    "message": "Chiudi finestra"
+  },
+  "tabGroupsWindowClosedTitle": {
+    "message": "Finestra chiusa"
+  },
   "tabGroupsExpandWindow": {
     "message": "Espandi finestra"
   },

@@ -632,6 +632,12 @@
   "tabGroupsCollapseWindow": {
     "message": "ย่อหน้าต่าง"
   },
+  "tabGroupsCloseWindow": {
+    "message": "ปิดหน้าต่าง"
+  },
+  "tabGroupsWindowClosedTitle": {
+    "message": "ปิดหน้าต่างแล้ว"
+  },
   "tabGroupsExpandWindow": {
     "message": "ขยายหน้าต่าง"
   },

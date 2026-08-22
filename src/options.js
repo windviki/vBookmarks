@@ -293,7 +293,8 @@ const $ = id => document.getElementById(id);
         tabGroupsClosedLimit.addEventListener('change', () => setSetting('tabGroupsClosedLimit', tabGroupsClosedLimit.value));
 
         // Tab-groups view: how a group's color is drawn — off (color dot
-        // only), edge band, or connector line. The legacy boolean
+        // only), edge band, or connector line. Since the 4.1.0 polish round
+        // the default is the connector line; the legacy boolean
         // tabGroupsColorBorder is read once as 'edge' so an existing profile
         // opens the options page on the style it is actually using.
         const tabGroupsColorStyle = $('tabgroups-color-style');
@@ -301,7 +302,7 @@ const $ = id => document.getElementById(id);
         const legacyColorBorder = await getSetting('tabGroupsColorBorder', '');
         tabGroupsColorStyle.value = ['off', 'edge', 'line'].indexOf(storedColorStyle) !== -1
             ? storedColorStyle
-            : (legacyColorBorder ? 'edge' : 'off');
+            : (legacyColorBorder ? 'edge' : 'line');
         tabGroupsColorStyle.addEventListener('change', () => {
             setSetting('tabGroupsColorStyle', tabGroupsColorStyle.value);
             // Keep the retired boolean in step so a downgrade (or any reader

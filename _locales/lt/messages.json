@@ -632,6 +632,12 @@
   "tabGroupsCollapseWindow": {
     "message": "Sutraukti langą"
   },
+  "tabGroupsCloseWindow": {
+    "message": "Uždaryti langą"
+  },
+  "tabGroupsWindowClosedTitle": {
+    "message": "Uždarytas langas"
+  },
   "tabGroupsExpandWindow": {
     "message": "Išplėsti langą"
   },

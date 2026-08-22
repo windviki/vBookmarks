@@ -632,6 +632,12 @@
   "tabGroupsCollapseWindow": {
     "message": "Σύμπτυξη παραθύρου"
   },
+  "tabGroupsCloseWindow": {
+    "message": "Κλείσιμο παραθύρου"
+  },
+  "tabGroupsWindowClosedTitle": {
+    "message": "Κλειστό παράθυρο"
+  },
   "tabGroupsExpandWindow": {
     "message": "Επέκταση παραθύρου"
   },

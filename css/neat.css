@@ -4180,6 +4180,17 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
 li.tabgroups-row.tabgroups-current {
     background: color-mix(in srgb, var(--vbm-accent) 8%, transparent);
 }
+/* The window head's ONE hover action: close the whole window (confirm +
+   one merged closed record — see closeWindowById). Hover/focus reveal like
+   the rows' buttons, danger red (destructive), same right-edge column as
+   the toolbars' last icon (4px row padding + 4px control margin). */
+#tabgroups-list ul li.tabgroups-window-head .row-btn.tabgroups-window-close {
+    color: var(--vbm-danger);
+}
+#tabgroups-list ul li.tabgroups-window-head .tabgroups-window-head-row:hover .tabgroups-window-close,
+#tabgroups-list ul li.tabgroups-window-head .tabgroups-window-head-row:has(:focus-visible) .tabgroups-window-close {
+    visibility: visible;
+}
 
 /* Section headings inside the tab groups list: non-focusable labels that
    split open groups / closed groups / ungrouped tabs. */

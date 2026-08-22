@@ -2031,7 +2031,8 @@
     "message": "添加到书签文件夹…"
   },
   "paletteCmdGoTabGroups": {
-    "message": "转到标签组视图"
+    "message": "切换到标签组视图",
+    "description": "Command palette entry: switch to the tab groups view (slash alias /tabgroups, /groups)."
   },
   "tabGroupsActivateGroup": {
     "message": "转到标签组"
@@ -2153,6 +2154,14 @@
   },
   "tabGroupsCollapseWindow": {
     "message": "收起窗口"
+  },
+  "tabGroupsCloseWindow": {
+    "message": "关闭窗口",
+    "description": "Hover action on a window section head: closes the whole window (confirm; tabs land as one merged closed record)."
+  },
+  "tabGroupsWindowClosedTitle": {
+    "message": "已关闭的窗口",
+    "description": "Title of the merged recently-closed record a window close writes."
   },
   "tabGroupsExpandWindow": {
     "message": "展开窗口"

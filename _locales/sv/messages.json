@@ -632,6 +632,12 @@
   "tabGroupsCollapseWindow": {
     "message": "Minimera fönster"
   },
+  "tabGroupsCloseWindow": {
+    "message": "Stäng fönster"
+  },
+  "tabGroupsWindowClosedTitle": {
+    "message": "Stängt fönster"
+  },
   "tabGroupsExpandWindow": {
     "message": "Expandera fönster"
   },

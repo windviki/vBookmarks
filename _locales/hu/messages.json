@@ -632,6 +632,12 @@
   "tabGroupsCollapseWindow": {
     "message": "Ablak összecsukása"
   },
+  "tabGroupsCloseWindow": {
+    "message": "Ablak bezárása"
+  },
+  "tabGroupsWindowClosedTitle": {
+    "message": "Bezárt ablak"
+  },
   "tabGroupsExpandWindow": {
     "message": "Ablak kibontása"
   },

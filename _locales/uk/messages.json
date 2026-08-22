@@ -632,6 +632,12 @@
   "tabGroupsCollapseWindow": {
     "message": "Згорнути вікно"
   },
+  "tabGroupsCloseWindow": {
+    "message": "Закрити вікно"
+  },
+  "tabGroupsWindowClosedTitle": {
+    "message": "Вікно закрито"
+  },
   "tabGroupsExpandWindow": {
     "message": "Розгорнути вікно"
   },

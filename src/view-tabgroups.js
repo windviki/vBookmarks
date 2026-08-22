@@ -61,19 +61,21 @@ export function initViewTabGroups(ctx = {}) {
     // Collapse/expand sync (toolbar option, default OFF): when off, folding
     // groups in the view is local-only and never updates chrome.tabGroups.
     const syncCollapse = () => !!store.get('tabGroupsSyncCollapse', '');
-    // Group color decoration (options page, default off) — one of three:
-    //   'off'  color dot only (the default);
+    // Group color decoration (options page) — one of three:
+    //   'off'  color dot only;
     //   'edge' a 3px band in the group color down the header + member rows
     //          (the original tabGroupsColorBorder switch);
     //   'line' a color CONNECTOR line under the group head's dot with a
     //          per-row tick, tying the whole group into one tree.
-    // The legacy boolean key is read as 'edge' so an existing profile keeps
-    // the look it had before the style choice existed.
+    // Since the 4.1.0 polish round the default is 'line' (it reads best at
+    // every width and makes membership unambiguous). The legacy boolean key
+    // is read as 'edge' so an existing profile keeps the look it had before
+    // the style choice existed; an explicit 'off' still wins.
     const colorStyle = () => {
         const v = store.get('tabGroupsColorStyle', '');
         if (v === 'edge' || v === 'line' || v === 'off')
             return v;
-        return store.get('tabGroupsColorBorder', '') ? 'edge' : 'off';
+        return store.get('tabGroupsColorBorder', '') ? 'edge' : 'line';
     };
 
     // --- State ----------------------------------------------------------------
@@ -647,6 +649,14 @@ export function initViewTabGroups(ctx = {}) {
                 const current = String(win.id) === String(currentWindowId)
                     ? `<b class="tabgroups-window-current">${_m('tabGroupsCurrentWindow')}</b>`
                     : '';
+                // The head's one hover action: close the WHOLE window. It
+                // confirm-gates on the tab count, records the tabs as ONE
+                // merged closed entry (the batch-close recipe) and the toast
+                // can bring them back — plus Chrome's native Ctrl+Shift+T
+                // restores the window itself. Not rendered in selection mode
+                // (the head toggles the window's membership there).
+                const closeBtn = selecting ? '' :
+                    `<button class="row-btn tabgroups-window-close" aria-label="${htmlspecialchars(_m('tabGroupsCloseWindow'))}" title="${htmlspecialchars(_m('tabGroupsCloseWindow'))}">${TRASH_ICON}</button>`;
                 return `<li class="tabgroups-window-head" data-window-id="${String(win.id)}">` +
                     `<span class="tabgroups-window-head-row" tabindex="-1" role="button" ` +
                     `aria-expanded="${isCollapsed ? 'false' : 'true'}" ` +
@@ -655,6 +665,7 @@ export function initViewTabGroups(ctx = {}) {
                     `<span class="chevron${isCollapsed ? ' collapsed' : ''}" aria-hidden="true"></span>` +
                     `<em>${htmlspecialchars(label)}</em>${current}` +
                     `<span class="count-pill" aria-label="${htmlspecialchars(_m('tabGroupsGroupCount', `${count}`))}">${count}</span>` +
+                    closeBtn +
                     '</span></li>';
             };
             const groupBlock = ({ group, memberTabs }) => {
@@ -1131,6 +1142,42 @@ export function initViewTabGroups(ctx = {}) {
         if (!ids.length)
             return;
         send({ type: TAB_GROUP_MSG.tabsMoveNewWindow, tabIds: ids }, () => refresh());
+    };
+
+    // Close a whole window from its section head: confirm on the tab count,
+    // then keep the tabs as ONE merged closed record (the batch-close
+    // recipe — the 10-slot history must not be flushed) and toast a Reopen
+    // that brings them back as one group. Chrome's native Ctrl+Shift+T
+    // remains the whole-window regret path (it restores the window itself).
+    const closeWindowById = windowId => {
+        const win = windows.find(w => String(w.id) === String(windowId));
+        if (!win || !win.tabs || !win.tabs.length)
+            return;
+        const tabsSnapshot = win.tabs.slice()
+            .sort((a, b) => (a.index || 0) - (b.index || 0))
+            .map(t => ({ title: t.title || '', url: t.url || '' }));
+        dialogs.ConfirmDialog.open({
+            dialog: _m('tabGroupsConfirmClose', `${tabsSnapshot.length}`),
+            button1: `<strong>${_m('delete')}</strong>`,
+            button2: _m('nope'),
+            fn1: () => {
+                const record = {
+                    id: `cw_${Date.now().toString(36)}`,
+                    type: 'group',
+                    title: _m('tabGroupsWindowClosedTitle'),
+                    color: 'grey',
+                    savedAt: Date.now(),
+                    tabs: tabsSnapshot
+                };
+                persistClosedGroups([...readClosedGroups(), record]);
+                closedRecords = readClosedGroups().sort((a, b) => (b.savedAt || 0) - (a.savedAt || 0));
+                if (chrome.windows && chrome.windows.remove)
+                    chrome.windows.remove(win.id, () => void chrome.runtime.lastError);
+                undo.toastAction(_m('tabGroupsClosedToast', `${tabsSnapshot.length}`), _m('tabGroupsReopenAction'),
+                    () => restoreClosedGroup(record.id));
+                scheduleRefresh();
+            }
+        });
     };
 
     const restoreClosedGroup = recordId => {
@@ -1850,7 +1897,17 @@ export function initViewTabGroups(ctx = {}) {
         }
         // Window section head: the whole row folds/unfolds its window (in
         // selection mode it toggles every tab of that window instead, the
-        // same rule the group head follows).
+        // same rule the group head follows). The head's own close-window
+        // button acts instead of folding.
+        const winCloseBtn = closest('.tabgroups-window-close');
+        if (winCloseBtn) {
+            e.preventDefault();
+            e.stopPropagation();
+            const li = winCloseBtn.closest('li');
+            if (li && li.dataset.windowId)
+                closeWindowById(li.dataset.windowId);
+            return;
+        }
         const winHead = closest('.tabgroups-window-head-row');
         if (winHead) {
             e.preventDefault();
@@ -2093,6 +2150,10 @@ export function initViewTabGroups(ctx = {}) {
             const li = winHead.closest('li');
             const winId = li && li.dataset.windowId;
             if (!winId)
+                return;
+            // A BUTTON inside the head (close window) keeps its native keys
+            // — the capture-phase fold handler must not eat its Space/Enter.
+            if (e.target && e.target.closest && e.target.closest('button'))
                 return;
             const k = e.key;
             const isCollapsed = isWindowCollapsed(winId);

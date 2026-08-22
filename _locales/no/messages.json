@@ -632,6 +632,12 @@
   "tabGroupsCollapseWindow": {
     "message": "Skjul vindu"
   },
+  "tabGroupsCloseWindow": {
+    "message": "Lukk vindu"
+  },
+  "tabGroupsWindowClosedTitle": {
+    "message": "Lukket vindu"
+  },
   "tabGroupsExpandWindow": {
     "message": "Utvid vindu"
   },

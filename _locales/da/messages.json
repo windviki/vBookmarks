@@ -632,6 +632,12 @@
   "tabGroupsCollapseWindow": {
     "message": "Skjul vindue"
   },
+  "tabGroupsCloseWindow": {
+    "message": "Luk vindue"
+  },
+  "tabGroupsWindowClosedTitle": {
+    "message": "Lukket vindue"
+  },
   "tabGroupsExpandWindow": {
     "message": "Udvid vindue"
   },

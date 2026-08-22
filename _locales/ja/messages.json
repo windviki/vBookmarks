@@ -632,6 +632,12 @@
   "tabGroupsCollapseWindow": {
     "message": "ウィンドウを折りたたむ"
   },
+  "tabGroupsCloseWindow": {
+    "message": "ウィンドウを閉じる"
+  },
+  "tabGroupsWindowClosedTitle": {
+    "message": "閉じたウィンドウ"
+  },
   "tabGroupsExpandWindow": {
     "message": "ウィンドウを展開"
   },

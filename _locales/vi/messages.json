@@ -632,6 +632,12 @@
   "tabGroupsCollapseWindow": {
     "message": "Thu gọn cửa sổ"
   },
+  "tabGroupsCloseWindow": {
+    "message": "Đóng cửa sổ"
+  },
+  "tabGroupsWindowClosedTitle": {
+    "message": "Cửa sổ đã đóng"
+  },
   "tabGroupsExpandWindow": {
     "message": "Mở rộng cửa sổ"
   },

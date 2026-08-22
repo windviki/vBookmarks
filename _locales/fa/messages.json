@@ -632,6 +632,12 @@
   "tabGroupsCollapseWindow": {
     "message": "جمع کردن پنجره"
   },
+  "tabGroupsCloseWindow": {
+    "message": "بستن پنجره"
+  },
+  "tabGroupsWindowClosedTitle": {
+    "message": "پنجره بسته شد"
+  },
   "tabGroupsExpandWindow": {
     "message": "باز کردن پنجره"
   },

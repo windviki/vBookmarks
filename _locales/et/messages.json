@@ -632,6 +632,12 @@
   "tabGroupsCollapseWindow": {
     "message": "Ahenda aken"
   },
+  "tabGroupsCloseWindow": {
+    "message": "Sulge aken"
+  },
+  "tabGroupsWindowClosedTitle": {
+    "message": "Suletud aken"
+  },
   "tabGroupsExpandWindow": {
     "message": "Laienda aken"
   },
