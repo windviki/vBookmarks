@@ -104,8 +104,10 @@ export function initKeyboard(ctx = {}) {
     };
 
     // Next/previous focusable ROW sibling, skipping LI section separators
-    // that intentionally contain no a/span (e.g. the tab-groups window and
-    // section heads render em/b only so the row walk never lands on them).
+    // that intentionally contain no a/span (e.g. the tab-groups "recently
+    // closed" section head renders em/button only). The tab-groups WINDOW
+    // head does carry a focusable span — the walk lands on it by design
+    // (design doc §15.1: the whole head row is the fold control).
     const nextFocusableRowSibling = (li, dir) => {
         for (let n = li; (n = dir > 0 ? n.nextElementSibling : n.previousElementSibling);) {
             if (n.tagName !== 'LI')

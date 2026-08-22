@@ -63,6 +63,21 @@ const makeEl = () => ({
             if (c.tagName === want)
                 return c;
         return null;
+    },
+    // Tag-name descendant walk (the folder picker's ↑/↓ navigation reads its
+    // row buttons this way).
+    querySelectorAll(sel) {
+        const want = sel.toUpperCase();
+        const out = [];
+        const walk = n => {
+            for (const c of n.children || []) {
+                if (c.tagName === want)
+                    out.push(c);
+                walk(c);
+            }
+        };
+        walk(this);
+        return out;
     }
 });
 
@@ -80,6 +95,10 @@ const IDS = [
     'tab-group-dialog-button', 'tab-group-dialog-cancel-button',
     'tab-group-pick-dialog', 'tab-group-pick-text', 'tab-group-pick-list', 'tab-group-pick-cancel-button',
     'version-dialog', 'version-dialog-text', 'version-dialog-meta', 'version-dialog-copy', 'version-dialog-close',
+    // 4.1.0: the tab-groups view's copy/move choice + bookmark-folder picker
+    'copy-move-dialog', 'copy-move-dialog-text', 'copy-move-move-button', 'copy-move-copy-button', 'copy-move-cancel-button',
+    'bookmark-folder-pick-dialog', 'bookmark-folder-pick-text', 'bookmark-folder-pick-list',
+    'bookmark-folder-pick-cancel-button',
     'cover'
 ];
 
@@ -138,7 +157,16 @@ beforeAll(async () => {
                 : null
     };
     globalThis.window = { addEventListener: () => {} };
-    globalThis.chrome = { i18n: { getMessage: key => key } };
+    globalThis.chrome = {
+        i18n: { getMessage: key => key },
+        // the bookmark-folder picker walks the whole tree at open time
+        bookmarks: {
+            getTree: cb => cb([{ id: '0', title: '', children: [
+                { id: '1', title: 'Bar', children: [{ id: '11', title: 'Dev', children: [] }] },
+                { id: '2', title: 'Other', children: [] }
+            ] }])
+        }
+    };
     new Function('window', fs.readFileSync(new URL('../src/sort-utils.js', import.meta.url), 'utf8'))(globalThis.window);
     ({ widont, initDialogs } = await import('../src/dialogs.js'));
 });
@@ -764,5 +792,53 @@ describe('Ctrl/Cmd+D quick-add guard (quick-add.js)', () => {
         const guardBlock = src.slice(start, end);
         expect(guardBlock).toContain("body.classList.contains('needTabGroup')");
         expect(guardBlock).toContain("body.classList.contains('needGroupPick')");
+    });
+});
+
+describe('BookmarkFolderPickDialog (4.1.0)', () => {
+    it('renders the folder tree as indented rows and picks on click', () => {
+        const d = freshDialogs();
+        const picks = [];
+        d.BookmarkFolderPickDialog.open({ dialog: 'Pick one', onPick: id => picks.push(id) });
+        expect(bodyClasses.contains('needFolderPick')).toBe(true);
+        const list = els['bookmark-folder-pick-list'];
+        const btns = list.querySelectorAll('button');
+        expect(btns).toHaveLength(3); // Bar, Dev (child), Other
+        expect(btns[0].textContent).toBe('Bar');
+        expect(btns[1].textContent).toBe('Dev');
+        expect(btns[1].style.paddingInlineStart).toBe('24px'); // 8 + depth*16
+        btns[1].trigger('click');
+        expect(picks).toEqual(['11']);
+        expect(bodyClasses.contains('needFolderPick')).toBe(false);
+    });
+
+    it('↑/↓/Home/End walk the folder rows (audit L3: Tab alone is a trap)', () => {
+        const d = freshDialogs();
+        d.BookmarkFolderPickDialog.open({ dialog: 'Pick one', onPick: () => {} });
+        const list = els['bookmark-folder-pick-list'];
+        const btns = list.querySelectorAll('button');
+        const key = k => {
+            const ev = { key: k, prevented: false, preventDefault() { this.prevented = true; } };
+            list.trigger('keydown', ev);
+            return ev;
+        };
+        // starting from the cancel button (open focuses it): ↑ climbs into
+        // the list's last row, then the walk is positional
+        globalThis.document.activeElement = btns[0];
+        key('ArrowDown');
+        expect(btns[1].focused).toBe(true);
+        key('ArrowDown'); // clamps at the last row
+        key('End');
+        expect(btns[2].focused).toBe(true);
+        key('Home');
+        expect(btns[0].focused).toBe(true);
+        globalThis.document.activeElement = btns[2];
+        const ev = key('ArrowUp');
+        expect(btns[1].focused).toBe(true);
+        expect(ev.prevented).toBe(true);
+        // unrelated keys pass through untouched
+        const other = { key: 'a', preventDefault() { this.prevented = true; } };
+        list.trigger('keydown', other);
+        expect(other.prevented).toBeUndefined();
     });
 });

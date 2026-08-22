@@ -3722,6 +3722,12 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
 #tabgroups-list ul.color-enhanced li.tabgroups-row.grouped {
     box-shadow: inset 3px 0 0 var(--tg-color, transparent);
 }
+/* RTL mirrors the edge band too (the connector style mirrors for free via
+   its logical inset-inline-start properties) */
+.rtl #tabgroups-list ul.color-enhanced li.tabgroups-group,
+.rtl #tabgroups-list ul.color-enhanced li.tabgroups-row.grouped {
+    box-shadow: inset -3px 0 0 var(--tg-color, transparent);
+}
 
 /* Connector geometry: the group head's dot spans 24px…34px (8px row padding
    + 16px chevron), so its center sits at 29px — the trunk is centered there
@@ -3734,9 +3740,13 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
     --tg-tick-w: 12.5px;   /* trunk center → member icon slot */
 }
 #tabgroups-list ul.color-line.selecting {
-    /* + the checkbox slot (14px box + 6px gap) on both the head and the rows */
+    /* + the checkbox slot (14px box + 6px gap) shifts the trunk with the
+       head's dot. The tick is SHORTER, though: selection mode drops the
+       anchor's 16px twisty placeholder, so the favicon slot sits at
+       8+20+24=52px and the tick only spans 47.5→52 (a 20.5px tick would
+       cross 16px underneath the favicon). */
     --tg-line-x: 47.5px;
-    --tg-tick-w: 20.5px;
+    --tg-tick-w: 4.5px;
 }
 #tabgroups-list ul.color-line li.tabgroups-row.grouped {
     position: relative;
@@ -3826,18 +3836,10 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
 #tabgroups-list .tabgroups-status-icon.discarded {
     color: var(--vbm-warning);
 }
-#tabgroups-list .tabgroups-add-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-sizing: border-box;
-    border: 0;
-    border-radius: 4px;
-    color: var(--vbm-danger);
-}
-#tabgroups-list .tabgroups-add-btn:hover {
-    background: var(--vbm-bg-hover);
-}
+/* The hollow ☆ (add-bookmark) inherits the shared .row-btn language (muted →
+   fg on hover) — the same as the stats view's ☆. It must NOT be red: since
+   4.0.5 red is the delete color, and adding a bookmark is not destructive. */
+
 /* The rightmost row action is close-tab: danger red. The row's own 4px end
    padding plus the control's default 4px end margin put its right edge 8px
    from the container — the SAME column as the group head's close button

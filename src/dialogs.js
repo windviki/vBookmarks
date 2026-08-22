@@ -460,6 +460,34 @@ export function initDialogs(ctx = {}) {
         folderPickCancelBtn.addEventListener('click', () => {
             BookmarkFolderPickDialog.close(false);
         });
+    // ↑/↓/Home/End walk the folder rows: a long folder tree is unreachable
+    // when Tab is the only way through it (4.1.0 audit L3). Enter/Space pick
+    // the focused row natively (they are buttons).
+    const folderPickList = $('bookmark-folder-pick-list');
+    if (folderPickList)
+        folderPickList.addEventListener('keydown', e => {
+            if (!/^(ArrowDown|ArrowUp|Home|End)$/.test(e.key))
+                return;
+            const btns = folderPickList.querySelectorAll
+                ? folderPickList.querySelectorAll('button') : [];
+            if (!btns.length)
+                return;
+            e.preventDefault();
+            const active = document.activeElement;
+            let idx = -1;
+            for (let i = 0; i < btns.length; i++)
+                if (btns[i] === active) {
+                    idx = i;
+                    break;
+                }
+            if (e.key === 'Home')
+                idx = 0;
+            else if (e.key === 'End')
+                idx = btns.length - 1;
+            else
+                idx = Math.min(btns.length - 1, Math.max(0, idx + (e.key === 'ArrowDown' ? 1 : -1)));
+            btns[idx].focus();
+        });
 
     // Events for dialogs
     $('confirm-dialog-button-1').addEventListener('click', () => {
