@@ -141,3 +141,36 @@
 - Toby：看板式 collection/space，重颜值轻密度，免费 60 标签上限。
 - OneTab：一键收纳纯文本列表，刻意单点。
 - Sidebery（Firefox AMO）：垂直标签树、自动快照、Close duplicate tabs、全键盘流。
+
+---
+
+## 附录 B · 修复记录（2026-08-22，全部落地）
+
+按批次就地提交（每批含测试）：
+
+| 批次 | commit | 内容 |
+|---|---|---|
+| 1 | `b2a8d37` | H1 跨窗口激活聚焦（统一 `focusTab` helper：tabs.update(active) + 非当前窗口时 windows.update(focused)，覆盖行点击/中键/activateTab/activateGroup）；H2 首次激活滚动到当前标签（`block:'nearest'`，session 一次）；M7 结构行 Delete 守卫（INPUT/TEXTAREA/SELECT 豁免）；L9 已收藏静默翻转 |
+| 2 | `07c6cfc` | M2 closeTabs/discardTabs lastError 吞错；L1 open-into 组消失 → copyTabs 降级 plainOpen、createCopy 窗口消失重试当前窗口、moveTabsToNewWindow 批量失败逐个重试 + 全失败关空窗；测试 double 修正为忠实的逐调用 lastError 语义 |
+| 3 | `6b0f53d` | M3 组头菜单 sleep 标签随 isGroupAsleep 刷新（补上了该分支从零开始的测试覆盖）；M4 两个 closed 菜单 + viewTabMenu 补绑 hover 聚焦；L2 tab-row 分支 el 归一化到行锚点；L5 i18n 初始标签补 tab-row-pin/tabgroup-collapse |
+| 4 | `601f3a2` | M1 新增 `pruneTabGroupFolderMeta`，视图 refresh 的书签树遍历顺路收集存活文件夹 id 并 prune（覆盖一切删除路径）；键入 `KNOWN_KEYS` + census 决策表，注释说明常量间接写法绕过字面量扫描的教训 |
+| 5 | `40effe8` | M6 ☆ 按钮删除 danger 红（继承 .row-btn 语言，与 stats 视图一致）；L7 选择模式 connector tick 20.5px→4.5px（过冲 16px 穿过 favicon 的几何修正）；L6 edge 色条 RTL 镜像；L3 BookmarkFolderPickDialog ↑/↓/Home/End 行导航；L4 keyboard.js 注释修正 |
+| 6 | `22e3e27` + `00b2f94` | M5 清空按钮移入工具栏第二行（有记录才渲染、ConfirmDialog 确认，键盘可达）；P1 工具栏即时过滤器（标题/URL 子串、窗口 pill 计可见数、过滤期间折叠置惰且折叠按钮置灰、进入选择模式清过滤、无匹配空态）。修正：Esc 清过滤不能挂在 $list capture（keyboard.js 的文档级 Esc capture 总是先吃掉该键）——落在视图 `onEscape` 最内层；i18n 三新键全 locale 落地（verify 0 错误） |
+
+## 附录 C · 门禁追加发现：menu-extreme 既有失败（与标签组无关，已修）
+
+全量门禁在 `verify-menu-extreme.js`（极限缩放×分辨率菜单扫描）挂 7 例：高缩放组合下文件夹菜单 `rect.l=-2`（左缘越出视口 2px）。**基线 `ecfd3e0` 同现同参**（逐字节一致的 rect），证实为既有缺陷，非本轮改动引入。
+
+根因（Docker 内逐组合探针定位）：
+
+1. 极限页面缩放下 popup body（min-width 320px）宽于窗口（200 CSS px），文档可横向滚动；
+2. 页面加载时搜索框启动聚焦在分数几何下把文档预滚 `scrollX=2`（探针证实：菜单打开前 `preOpen.x=2`，activeElement=search-input）；
+3. `positionMenu`（`src/context-menu.js`）的位置钳制基于 `[0, innerWidth]` 视口坐标，未计入 `scrollX/scrollY` —— 菜单 style.left=0 正确，但可见区在文档坐标是 [2, 202]，菜单左缘 2px 被裁。
+
+修复（`src/context-menu.js`）：钳制全部改为滚动感知的文档坐标（`[scrollX, scrollX+winW]`，Y 同理 `[menuMinY, scrollY+viewportH]`，flyout 的 fitsRight/fitsLeft 同改）；同时菜单聚焦改 `focus({ preventScroll: true })`——已被钳制在视口内的菜单不需要 focus 滚动，杜绝该类副作用。`preventScroll` 本身不能修本例（滚动发生在菜单打开之前），它防的是同类复发。
+
+验证：`verify-menu-extreme` 全量重跑结果记录在提交信息。
+
+验证：`npm run test:run` 2638 例全绿（新增 18 例：跨窗口聚焦×3、滚动定位×2、Delete 守卫×2、组头菜单×3、meta×4+prune、文件夹选择器×2、过滤器×8、SW 降级×5——部分共用套件）；`npm run lint` 干净；`i18n.py verify` 0 错误；Docker 全量门禁（smoke + keyboard 153 断言 + scrollbar 752 断言）单独记录于提交时。
+
+设计文档侧的行为变化已在 `docs/tab-groups-view-design.md` §16 登记。

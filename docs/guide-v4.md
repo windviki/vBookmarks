@@ -146,6 +146,7 @@ The classic hierarchical tree (startup view). It is where most organizing happen
 Your whole browser session next to your bookmarks: every window's tabs in real order, grouped tabs nested under their Chrome tab group (color dot/band/line per the *group color style* option), ungrouped tabs as plain rows, the current tab flagged.
 
 - **Row actions**: activate, pin/unpin, sleep/wake, close — from hover buttons, the `→` context menu, or the keyboard. Group heads add rename, move-to-new-window, ungroup, and *save as bookmark folder* (the folder remembers the group's color and title; *open as tab group* restores the look).
+- **Instant filter**: the toolbar's filter box narrows the list by title/URL as you type — folds stay open while filtering so no hit hides, `Esc` clears the box.
 - **Selection mode** batches group-new / open-into-existing / close / sleep over any mix of tabs; selecting already-grouped tabs asks **copy or move** first.
 - **Recently closed groups** sit at the bottom (depth configurable 5–50 in Settings → *Tab groups*): reopen a whole group, or restore / bookmark / forget individual tabs.
 - **Collapse sync**: with the toolbar's sync switch on, folding a group here folds the browser's group too.
