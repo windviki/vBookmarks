@@ -1988,6 +1988,14 @@
       }
     }
   },
+  "tabGroupsBatchClosedTitle": {
+    "message": "已关闭的标签页",
+    "description": "Title of the merged recently-closed record a batch close writes (one record for the whole selection)."
+  },
+  "tabGroupsPinnedUngroupedToast": {
+    "message": "已固定，并已移出标签组",
+    "description": "Toast when pinning a tab that belonged to a group: Chrome forbids pinned grouped tabs, so the tab leaves the group."
+  },
   "tabGroupsReopenAction": {
     "message": "重新打开",
     "description": "Toast action button: reopens the just-closed tab or tab group."

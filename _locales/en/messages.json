@@ -2133,6 +2133,14 @@
       }
     }
   },
+  "tabGroupsBatchClosedTitle": {
+    "message": "Closed tabs",
+    "description": "Title of the merged recently-closed record a batch close writes (one record for the whole selection)."
+  },
+  "tabGroupsPinnedUngroupedToast": {
+    "message": "Pinned — removed from its tab group",
+    "description": "Toast when pinning a tab that belonged to a group: Chrome forbids pinned grouped tabs, so the tab leaves the group."
+  },
   "tabGroupsReopenAction": {
     "message": "Reopen",
     "description": "Toast action button: reopens the just-closed tab or tab group."

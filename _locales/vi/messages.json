@@ -473,6 +473,12 @@
       }
     }
   },
+  "tabGroupsBatchClosedTitle": {
+    "message": "Đã đóng tab"
+  },
+  "tabGroupsPinnedUngroupedToast": {
+    "message": "Đã ghim — gỡ khỏi nhóm tab"
+  },
   "tabGroupsReopenAction": {
     "message": "Mở lại"
   },

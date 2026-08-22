@@ -473,6 +473,12 @@
       }
     }
   },
+  "tabGroupsBatchClosedTitle": {
+    "message": "Zaprti zavihki"
+  },
+  "tabGroupsPinnedUngroupedToast": {
+    "message": "Pripeti — odstranjen iz skupine zavihkov"
+  },
   "tabGroupsReopenAction": {
     "message": "Ponovno odpri"
   },

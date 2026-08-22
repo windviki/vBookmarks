@@ -473,6 +473,12 @@
       }
     }
   },
+  "tabGroupsBatchClosedTitle": {
+    "message": "Tab ditutup"
+  },
+  "tabGroupsPinnedUngroupedToast": {
+    "message": "Disematkan — dihapus dari grup tabnya"
+  },
   "tabGroupsReopenAction": {
     "message": "Buka lagi"
   },

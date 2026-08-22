@@ -473,6 +473,12 @@
       }
     }
   },
+  "tabGroupsBatchClosedTitle": {
+    "message": "닫힌 탭"
+  },
+  "tabGroupsPinnedUngroupedToast": {
+    "message": "고정됨 — 탭 그룹에서 제거됨"
+  },
   "tabGroupsReopenAction": {
     "message": "다시 열기"
   },

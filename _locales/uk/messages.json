@@ -473,6 +473,12 @@
       }
     }
   },
+  "tabGroupsBatchClosedTitle": {
+    "message": "Закриті вкладки"
+  },
+  "tabGroupsPinnedUngroupedToast": {
+    "message": "Закріплено — видалено з групи вкладок"
+  },
   "tabGroupsReopenAction": {
     "message": "Відкрити знову"
   },

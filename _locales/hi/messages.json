@@ -473,6 +473,12 @@
       }
     }
   },
+  "tabGroupsBatchClosedTitle": {
+    "message": "बंद किए गए टैब"
+  },
+  "tabGroupsPinnedUngroupedToast": {
+    "message": "पिन किया गया — उसके टैब समूह से हटाया गया"
+  },
   "tabGroupsReopenAction": {
     "message": "फिर खोलें"
   },

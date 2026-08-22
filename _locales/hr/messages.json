@@ -473,6 +473,12 @@
       }
     }
   },
+  "tabGroupsBatchClosedTitle": {
+    "message": "Zatvorene kartice"
+  },
+  "tabGroupsPinnedUngroupedToast": {
+    "message": "Prikvačeno — uklonjeno iz grupe kartica"
+  },
   "tabGroupsReopenAction": {
     "message": "Ponovno otvori"
   },

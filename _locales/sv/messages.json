@@ -473,6 +473,12 @@
       }
     }
   },
+  "tabGroupsBatchClosedTitle": {
+    "message": "Stängda flikar"
+  },
+  "tabGroupsPinnedUngroupedToast": {
+    "message": "Fäst — borttagen från sin flikgrupp"
+  },
   "tabGroupsReopenAction": {
     "message": "Öppna igen"
   },

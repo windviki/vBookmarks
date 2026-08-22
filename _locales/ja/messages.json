@@ -473,6 +473,12 @@
       }
     }
   },
+  "tabGroupsBatchClosedTitle": {
+    "message": "閉じたタブ"
+  },
+  "tabGroupsPinnedUngroupedToast": {
+    "message": "ピン留め — タブグループから削除しました"
+  },
   "tabGroupsReopenAction": {
     "message": "再度開く"
   },

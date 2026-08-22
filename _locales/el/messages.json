@@ -473,6 +473,12 @@
       }
     }
   },
+  "tabGroupsBatchClosedTitle": {
+    "message": "Κλειστές καρτέλες"
+  },
+  "tabGroupsPinnedUngroupedToast": {
+    "message": "Καρφιτσωμένη — αφαιρέθηκε από την ομάδα καρτελών"
+  },
   "tabGroupsReopenAction": {
     "message": "Άνοιγμα ξανά"
   },

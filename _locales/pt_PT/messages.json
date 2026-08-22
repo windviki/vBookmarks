@@ -472,6 +472,12 @@
       }
     }
   },
+  "tabGroupsBatchClosedTitle": {
+    "message": "Separadores fechados"
+  },
+  "tabGroupsPinnedUngroupedToast": {
+    "message": "Afixado — removido do seu grupo de separadores"
+  },
   "tabGroupsReopenAction": {
     "message": "Reabrir"
   },

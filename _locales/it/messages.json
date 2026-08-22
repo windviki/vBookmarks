@@ -473,6 +473,12 @@
       }
     }
   },
+  "tabGroupsBatchClosedTitle": {
+    "message": "Schede chiuse"
+  },
+  "tabGroupsPinnedUngroupedToast": {
+    "message": "Fissata — rimossa dal gruppo di schede"
+  },
   "tabGroupsReopenAction": {
     "message": "Riapri"
   },

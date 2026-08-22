@@ -472,6 +472,12 @@
       }
     }
   },
+  "tabGroupsBatchClosedTitle": {
+    "message": "Guias fechadas"
+  },
+  "tabGroupsPinnedUngroupedToast": {
+    "message": "Fixada — removida do grupo de guias"
+  },
   "tabGroupsReopenAction": {
     "message": "Reabrir"
   },

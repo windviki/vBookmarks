@@ -473,6 +473,12 @@
       }
     }
   },
+  "tabGroupsBatchClosedTitle": {
+    "message": "Aizvērtās cilnes"
+  },
+  "tabGroupsPinnedUngroupedToast": {
+    "message": "Piesprausts — noņemts no cilnes grupas"
+  },
   "tabGroupsReopenAction": {
     "message": "Atvērt vēlreiz"
   },

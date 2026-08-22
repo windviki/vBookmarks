@@ -473,6 +473,12 @@
       }
     }
   },
+  "tabGroupsBatchClosedTitle": {
+    "message": "বন্ধ ট্যাব"
+  },
+  "tabGroupsPinnedUngroupedToast": {
+    "message": "পিন করা হয়েছে — ট্যাব গ্রুপ থেকে সরানো হয়েছে"
+  },
   "tabGroupsReopenAction": {
     "message": "পুনরায় খুলুন"
   },

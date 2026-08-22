@@ -473,6 +473,12 @@
       }
     }
   },
+  "tabGroupsBatchClosedTitle": {
+    "message": "Geschlossene Tabs"
+  },
+  "tabGroupsPinnedUngroupedToast": {
+    "message": "Angeheftet — aus der Tab-Gruppe entfernt"
+  },
   "tabGroupsReopenAction": {
     "message": "Wieder öffnen"
   },

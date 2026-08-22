@@ -1944,6 +1944,12 @@
       }
     }
   },
+  "tabGroupsBatchClosedTitle": {
+    "message": "已關閉的分頁"
+  },
+  "tabGroupsPinnedUngroupedToast": {
+    "message": "已釘選 — 已從其分頁群組移除"
+  },
   "tabGroupsReopenAction": {
     "message": "重新開啟"
   },

@@ -473,6 +473,12 @@
       }
     }
   },
+  "tabGroupsBatchClosedTitle": {
+    "message": "Kapatılan sekmeler"
+  },
+  "tabGroupsPinnedUngroupedToast": {
+    "message": "Sabitlendi — sekme grubundan çıkarıldı"
+  },
   "tabGroupsReopenAction": {
     "message": "Yeniden aç"
   },

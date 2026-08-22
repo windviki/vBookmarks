@@ -473,6 +473,12 @@
       }
     }
   },
+  "tabGroupsBatchClosedTitle": {
+    "message": "Uždaryti skirtukai"
+  },
+  "tabGroupsPinnedUngroupedToast": {
+    "message": "Prisegta — pašalinta iš skirtukų grupės"
+  },
   "tabGroupsReopenAction": {
     "message": "Atidaryti"
   },

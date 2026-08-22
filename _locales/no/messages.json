@@ -473,6 +473,12 @@
       }
     }
   },
+  "tabGroupsBatchClosedTitle": {
+    "message": "Lukkede faner"
+  },
+  "tabGroupsPinnedUngroupedToast": {
+    "message": "Festet — fjernet fra fanegruppen"
+  },
   "tabGroupsReopenAction": {
     "message": "Åpne igjen"
   },

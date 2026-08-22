@@ -4053,6 +4053,20 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
     /* the shared right-edge rhythm: 4px row padding + 4px control margin */
     padding-inline-end: 4px;
 }
+/* History-strip rhythm (4.1.0 coordination pass): TOP-LEVEL closed entries
+   (a standalone tab record) sit next to closed-group HEADS at the same
+   level, so they take the head height — the data-row's natural 20px used to
+   alternate with the 28px heads, and the dead-view wide second line made
+   them 40px. Expanded-group members keep the compact data-row height, the
+   same hierarchy contrast as live grouped rows under their head. */
+#tabgroups-list ul li.tabgroups-closed-tab:not(.tabgroups-closed-member) {
+    height: var(--vbm-row-h);
+}
+/* the standalone record's primary action is reopen (the arrow, like a
+   closed-group head) — accent, not danger */
+#tabgroups-list ul li.tabgroups-closed-tab .row-btn.tabgroups-closed-reopen {
+    color: var(--vbm-accent);
+}
 /* Members of an EXPANDED closed group indent like live grouped rows (24px —
    the tree's member step): an expanded record keeps the same trunk rhythm
    as the open-tab sections above it. Standalone closed-tab records stay
@@ -4307,6 +4321,13 @@ li.tabgroups-row.tabgroups-current {
    （li.tabgroups-current）承担，语义不丢失。恢复宽度后徽标自动回来。 */
 @container (max-width: 400px) {
     #tabgroups-list .row-badge.current {
+        display: none;
+    }
+    /* 组头的组特有操作（转到/重命名）也收起：320px 下五个按钮固定占
+       ~120px，标题只剩 ~130px。两者都仍可达——F2 重命名、→/右键菜单
+       转到；与行尾对齐的 睡眠/收藏/删除 三列保持显示。 */
+    #tabgroups-list .tabgroups-group-head .tabgroups-group-activate,
+    #tabgroups-list .tabgroups-group-head .tabgroups-group-rename {
         display: none;
     }
 }

@@ -473,6 +473,12 @@
       }
     }
   },
+  "tabGroupsBatchClosedTitle": {
+    "message": "Закрытые вкладки"
+  },
+  "tabGroupsPinnedUngroupedToast": {
+    "message": "Закреплено — удалено из группы вкладок"
+  },
   "tabGroupsReopenAction": {
     "message": "Открыть"
   },

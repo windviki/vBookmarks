@@ -1944,6 +1944,12 @@
       }
     }
   },
+  "tabGroupsBatchClosedTitle": {
+    "message": "已关闭的标签页"
+  },
+  "tabGroupsPinnedUngroupedToast": {
+    "message": "已固定 — 已从标签组中移除"
+  },
   "tabGroupsReopenAction": {
     "message": "重新打开"
   },

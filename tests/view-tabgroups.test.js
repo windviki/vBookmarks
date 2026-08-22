@@ -536,17 +536,18 @@ describe('closed groups and window folding', () => {
             type: 'vbm-tab-group-open-new',
             urls: ['https://t2.example/', 'https://t3.example/'],
             title: 'Dev',
-            color: 'blue'
+            color: 'blue',
+            windowId: 1
         });
     });
 
-    it('restore closed group sends openNew and drops the saved record', () => {
-        const record = { id: 'cg_1', title: 'Dev', color: 'blue', tabs: [{ url: 'https://a/', title: 'A' }, { url: 'https://b/', title: 'B' }] };
+    it('restore closed group sends openNew (with the record window) and drops the saved record', () => {
+        const record = { id: 'cg_1', title: 'Dev', color: 'blue', windowId: 7, tabs: [{ url: 'https://a/', title: 'A' }, { url: 'https://b/', title: 'B' }] };
         const { def, chrome, store, viewTabGroups } = setup({ storeData: { tabGroupsClosed: JSON.stringify([record]) } });
         def().activate();
         viewTabGroups.restoreClosedGroup('cg_1');
         expect(chrome.runtime.sendMessageCalls).toEqual([
-            { type: 'vbm-tab-group-open-new', urls: ['https://a/', 'https://b/'], title: 'Dev', color: 'blue' }
+            { type: 'vbm-tab-group-open-new', urls: ['https://a/', 'https://b/'], title: 'Dev', color: 'blue', windowId: 7 }
         ]);
         expect(store._data.tabGroupsClosed).toBe('[]');
     });
@@ -826,6 +827,20 @@ describe('pinned and sleeping tab state', () => {
         expect(chrome.runtime.sendMessageCalls).toEqual([{ type: 'vbm-tabs-wake', tabIds: [2, 3] }]);
     });
 
+    it('pinning a grouped tab toasts that it left its group', () => {
+        const { def, chrome, undo, clickOn } = setup({});
+        def().activate();
+        const li = { dataset: { tabId: '2' }, classList: makeClassList() };
+        const btn = {
+            classList: makeClassList(['tabgroups-pin-tab']),
+            closest: sel => sel === 'li' ? li : (sel === '.tabgroups-pin-tab' ? btn : null)
+        };
+        clickOn(btn);
+        expect(chrome.tabs.ungroupCalls).toEqual([2]);
+        expect(chrome.tabs.updateCalls).toEqual([[2, { pinned: true }]]);
+        expect(undo.toastCalls).toEqual(['tabGroupsPinnedUngroupedToast']);
+    });
+
     it('togglePinned updates the browser tab pinned state', () => {
         const { def, chrome, viewTabGroups } = setup({});
         def().activate();
@@ -1025,8 +1040,8 @@ describe('tab batch actions', () => {
         });
     });
 
-    it('close selected (many) confirms then sends vbm-tabs-close', () => {
-        const { def, chrome, dialogs, clickOn, closestOf } = setup({});
+    it('close selected (many) confirms, writes ONE merged record and toasts Reopen', () => {
+        const { def, chrome, store, dialogs, undo, clickOn, closestOf } = setup({});
         def().activate();
         clickOn({ closest: closestOf({ '.tabgroups-select-mode': { classList: makeClassList() } }) });
         clickOn({ closest: closestOf({ li: { dataset: { tabId: '1' }, classList: makeClassList() } }) });
@@ -1034,8 +1049,18 @@ describe('tab batch actions', () => {
         clickOn({ closest: closestOf({ '.tabgroups-close-selected': { classList: makeClassList() } }) });
         expect(dialogs.ConfirmDialog.openCalls).toHaveLength(1);
         dialogs.ConfirmDialog.openCalls[0].fn1();
-        expect(chrome.runtime.sendMessageCalls).toHaveLength(1);
         expect(chrome.runtime.sendMessageCalls[0]).toEqual({ type: 'vbm-tabs-close', tabIds: [1, 4] });
+        // ONE merged record for the whole batch (not N singles)
+        const records = JSON.parse(store._data.tabGroupsClosed);
+        expect(records).toHaveLength(1);
+        expect(records[0].type).toBe('group');
+        expect(records[0].tabs).toHaveLength(2);
+        expect(undo.toastActionCalls).toHaveLength(1);
+        expect(undo.toastActionCalls[0].buttonLabel).toBe('tabGroupsReopenAction');
+        // Reopen brings the whole batch back as one group
+        undo.toastActionCalls[0].onAction();
+        expect(chrome.runtime.sendMessageCalls[1].type).toBe('vbm-tab-group-open-new');
+        expect(chrome.runtime.sendMessageCalls[1].urls).toHaveLength(2);
     });
 
     it('close selected with ONE tab skips the confirm and runs the single-op path', () => {
@@ -1388,6 +1413,23 @@ describe('toolbar instant filter (4.1.0 audit P1)', () => {
         expect($list.innerHTML).not.toContain('>Mail<');
         // the window head pill counts the VISIBLE tabs while filtering
         expect($list.innerHTML).toMatch(/count-pill[^>]*>2<\/span>/);
+    });
+
+    it('a filter hit on the GROUP TITLE shows the whole group', () => {
+        const { def, $list, fire } = setup({
+            tabs: [
+                makeTab(1, 0, { title: 'GitHub', active: true }),
+                makeTab(2, 1, { groupId: 'g1', title: ' totally unrelated ' }),
+                makeTab(3, 2, { groupId: 'g1', title: 'also unrelated' })
+            ]
+        });
+        def().activate();
+        typeFilter(fire, 'dev');
+        const html = $list.innerHTML;
+        expect(html).toContain('totally unrelated');
+        expect(html).toContain('also unrelated');
+        // the non-matching ungrouped tab stays hidden
+        expect(html).not.toContain('>GitHub<');
     });
 
     it('hides a window section with no matching tab at all', () => {
@@ -1876,7 +1918,7 @@ describe('recently closed records', () => {
         tabs: [{ title: 'Closed one', url: 'https://closed.example/' }]
     });
 
-    it('renders the close time inline (narrow) and absolute (wide second line)', () => {
+    it('renders the relative close time inline; the absolute time lives in the tooltip (single-line history strip)', () => {
         const metas = [];
         const { def } = setup({
             storeData: { tabGroupsClosed: JSON.stringify([record()]) },
@@ -1886,8 +1928,12 @@ describe('recently closed records', () => {
         const closedMeta = metas.find(m => m && m.rightText);
         expect(closedMeta).toBeTruthy();
         expect(typeof closedMeta.rightText).toBe('string');
-        expect(closedMeta.subRight).toBe(new Date(Date.UTC(2024, 0, 2, 3, 4, 5)).toLocaleString());
+        // 4.1.0 coordination pass: the wide-mode second line is gone — a
+        // standalone record stays single-line next to the closed heads
+        // (the absolute time rides the tooltip instead)
+        expect(closedMeta.subRight).toBeUndefined();
         expect(closedMeta.tooltipAppend).toContain('tabGroupsClosedTimeLabel');
+        expect(closedMeta.tooltipAppend).toContain(new Date(Date.UTC(2024, 0, 2, 3, 4, 5)).toLocaleString());
     });
 
     it('openClosedTab prefers the window the tab was closed in', () => {
@@ -1936,6 +1982,35 @@ describe('recently closed records', () => {
         const standaloneRow = html.lastIndexOf('<li', standaloneStart);
         expect(html.slice(standaloneRow, standaloneStart)).not.toContain('tabgroups-closed-member');
     });
+
+    it('the standalone record leads with a reopen button (not the ☆); members keep the ☆', () => {
+        const groupRec = {
+            id: 'cg_9', type: 'group', title: 'Old group', color: 'grey',
+            savedAt: Date.now(),
+            tabs: [{ title: 'A', url: 'https://a.example/' }]
+        };
+        const { def, $list, chrome, store, clickOn, viewTabGroups } = setup({
+            storeData: { tabGroupsClosed: JSON.stringify([groupRec, record()]) }
+        });
+        def().activate();
+        viewTabGroups.toggleClosedExpanded('cg_9');
+        const html = $list.innerHTML;
+        const standaloneRow = html.slice(html.lastIndexOf('<li', html.indexOf('data-closed-id="ct_1"')),
+            html.indexOf('</li>', html.indexOf('data-closed-id="ct_1"')));
+        expect(standaloneRow).toContain('tabgroups-closed-reopen');
+        expect(standaloneRow).not.toContain('tabgroups-closed-add-bookmark');
+        // the expanded group's MEMBER row keeps the hover ☆ pair
+        expect(html).toContain('tabgroups-closed-add-bookmark');
+        // clicking reopen opens the tab in the background and drops the record
+        const li = { dataset: { closedId: 'ct_1' }, classList: makeClassList() };
+        const btn = {
+            classList: makeClassList(['tabgroups-closed-reopen']),
+            closest: sel => sel === 'li' ? li : (sel === '.tabgroups-closed-reopen' ? btn : null)
+        };
+        clickOn(btn);
+        expect(chrome.tabs.createCalls).toEqual([{ url: 'https://closed.example/', active: false }]);
+        expect(JSON.parse(store._data.tabGroupsClosed).map(r => r.id)).toEqual(['cg_9']);
+    });
 });
 
 describe('escaping + stale-tab guards (4.1.0 merge review)', () => {
@@ -1976,13 +2051,19 @@ describe('narrow-width de-crowding contracts (4.1.0 P1, CSS)', () => {
     it('the current-tab text pill hides below a 400px container — the row tint carries the meaning', async () => {
         const fs = (await import('node:fs')).default;
         const neatCss = fs.readFileSync(new URL('../css/neat.css', import.meta.url), 'utf8');
-        const query = neatCss.match(/@container \(max-width: 400px\) \{([^}]*)\}/);
+        // one nesting level of inner rules inside the container query block
+        const query = neatCss.match(/@container \(max-width: 400px\) \{((?:[^{}]|\{[^{}]*\})*)\}/);
         expect(query, '400px container query exists').toBeTruthy();
         expect(query[1]).toContain('#tabgroups-list .row-badge.current');
         expect(query[1]).toContain('display: none');
         // …and the compensating tint exists on the row itself
         expect(neatCss).toContain('li.tabgroups-row.tabgroups-current {');
         expect(neatCss).toContain('color-mix(in srgb, var(--vbm-accent) 8%, transparent)');
+        // 4.1.0 polish E: the group head's group-specific buttons (activate /
+        // rename) collapse under the same threshold — F2 rename and the →
+        // context menu keep them reachable; the row-aligned tail stays
+        expect(query[1]).toContain('#tabgroups-list .tabgroups-group-head .tabgroups-group-activate,');
+        expect(query[1]).toContain('#tabgroups-list .tabgroups-group-head .tabgroups-group-rename');
     });
 
     it('the window label (em) stretches, so the pill cluster right-aligns on EVERY window head', async () => {

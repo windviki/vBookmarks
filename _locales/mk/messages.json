@@ -472,6 +472,12 @@
       }
     }
   },
+  "tabGroupsBatchClosedTitle": {
+    "message": "Затворени јазичиња"
+  },
+  "tabGroupsPinnedUngroupedToast": {
+    "message": "Закачено — отстрането од својата група јазичиња"
+  },
   "tabGroupsReopenAction": {
     "message": "Отвори повторно"
   },

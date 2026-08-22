@@ -473,6 +473,12 @@
       }
     }
   },
+  "tabGroupsBatchClosedTitle": {
+    "message": "Pestañas cerradas"
+  },
+  "tabGroupsPinnedUngroupedToast": {
+    "message": "Fijada: se eliminó de su grupo de pestañas"
+  },
   "tabGroupsReopenAction": {
     "message": "Reabrir"
   },

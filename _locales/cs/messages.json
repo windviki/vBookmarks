@@ -473,6 +473,12 @@
       }
     }
   },
+  "tabGroupsBatchClosedTitle": {
+    "message": "Zavřené karty"
+  },
+  "tabGroupsPinnedUngroupedToast": {
+    "message": "Připnutá — odebrána ze své skupiny karet"
+  },
   "tabGroupsReopenAction": {
     "message": "Znovu otevřít"
   },

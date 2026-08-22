@@ -539,29 +539,35 @@ export function initViewTabGroups(ctx = {}) {
 
     // Closed rows carry the time we closed them: the records are OUR own
     // (written by closeTabById/closeGroup), so savedAt is always available —
-    // no browser API guessing. Narrow popup: relative time inline in the
-    // right slot; wide/panel: the absolute time as the second line's right
-    // half (the dead view's rightText/subRight recipe). A closed GROUP's
-    // member rows inherit the head's time and stay single-line; they also
-    // take the same 24px member indent as live grouped rows, so an expanded
-    // closed group keeps the tree rhythm of the sections above it.
+    // no browser API guessing. One rhythm for the whole history strip
+    // (4.1.0 coordination pass): TOP-LEVEL entries — a standalone tab
+    // record and a closed-group head — are single-line rows at the head
+    // height with the RELATIVE time inline (absolute time in the tooltip);
+    // an expanded group's members take the same 24px indent and compact
+    // data-row height as live grouped rows. The dead view's wide-mode
+    // second line used to make standalone records 40px between 28px heads.
+    //
+    // The standalone record's primary action is REOPEN (arrow, like a
+    // closed group's head); its bookmark entry stays in the context menu.
+    // Member rows keep the hover ☆ + remove pair.
     const closedTabHtml = (record, tab, idx, opts = {}) => {
         const title = tab.title || tab.url || _m('noTitle');
         const extras = `data-closed-id="${htmlspecialchars(record.id)}" data-closed-tab="${idx}"`;
-        const addLabel = _m('tabGroupsAddBookmark');
         const removeLabel = _m('tabGroupsRemoveClosedTab');
         const standalone = record.type === 'tab';
         const savedAt = record.savedAt || 0;
         const meta = (standalone && savedAt)
             ? {
                 rightText: relTimeLabel(savedAt, _m),
-                subRight: new Date(savedAt).toLocaleString(),
                 tooltipAppend: `${_m('tabGroupsClosedTimeLabel')} ${new Date(savedAt).toLocaleString()}`
             }
             : {};
+        const firstBtn = standalone
+            ? `<button class="row-btn tabgroups-closed-reopen" aria-label="${htmlspecialchars(_m('tabGroupsReopenAction'))}" title="${htmlspecialchars(_m('tabGroupsReopenAction'))}">${ACTIVATE_ICON}</button>`
+            : `<button class="row-btn tabgroups-closed-add-bookmark" aria-label="${htmlspecialchars(_m('tabGroupsAddBookmark'))}" title="${htmlspecialchars(_m('tabGroupsAddBookmark'))}">${STAR_ICON}</button>`;
         return `<li class="vbm-row tabgroups-closed-tab${opts.member ? ' tabgroups-closed-member' : ''}" data-closed-id="${htmlspecialchars(record.id)}" data-closed-tab="${idx}">` +
             treeRender.generateBookmarkHTML(title, tab.url || '', extras, null, null, meta) +
-            `<button class="row-btn tabgroups-closed-add-bookmark" aria-label="${htmlspecialchars(addLabel)}" title="${htmlspecialchars(addLabel)}">${STAR_ICON}</button>` +
+            firstBtn +
             `<button class="row-btn tabgroups-closed-remove-tab" aria-label="${htmlspecialchars(removeLabel)}" title="${htmlspecialchars(removeLabel)}">${TRASH_ICON}</button>` +
             '</li>';
     };
@@ -612,6 +618,17 @@ export function initViewTabGroups(ctx = {}) {
             html += `<ul role="list"${ulClass ? ` class="${ulClass}"` : ''}>`;
 
             const needle = filterNeedle();
+            // A find hits a TAB's title/URL, or a GROUP's title — a group
+            // whose NAME matches shows whole (Chrome's own tab search matches
+            // group names; a name hit that hid the group's body would be a
+            // false negative).
+            const groupTitleMatches = group => {
+                if (!needle || !group)
+                    return false;
+                return `${group.title || ''}`.toLowerCase().includes(needle);
+            };
+            const tabVisible = t => tabMatchesNeedle(t, needle)
+                || (needle && isGrouped(t) && groupTitleMatches(groupById(t.groupId)));
             // Window section head: the WHOLE row is the fold control (a
             // focusable role=button span, so it joins the row keyboard model
             // exactly like a group head) — the old chevron-only button left
@@ -652,7 +669,7 @@ export function initViewTabGroups(ctx = {}) {
             let matchedRows = 0;
             for (let wi = 0, wl = windows.length; wi < wl; wi++) {
                 const win = windows[wi];
-                const visibleTabs = needle ? win.tabs.filter(t => tabMatchesNeedle(t, needle)) : win.tabs;
+                const visibleTabs = needle ? win.tabs.filter(tabVisible) : win.tabs;
                 // A window with no matching tab leaves the flow entirely.
                 if (needle && !visibleTabs.length)
                     continue;
@@ -808,17 +825,21 @@ export function initViewTabGroups(ctx = {}) {
         if (!tab)
             return;
         const shouldPin = !tab.pinned;
+        // Chrome keeps pinned tabs and tab groups mutually exclusive: pinning
+        // a grouped member silently pulls it OUT of its group. That deserves
+        // a toast — the row otherwise just vanishes from its group.
+        const wasGrouped = shouldPin && isGrouped(tab);
         const finish = () => {
             if (chrome.tabs.update) {
                 chrome.tabs.update(tab.id, { pinned: shouldPin }, () => {
                     if (chrome.runtime.lastError)
                         return;
+                    if (wasGrouped)
+                        undo.showToast(_m('tabGroupsPinnedUngroupedToast'));
                     scheduleRefresh();
                 });
             }
         };
-        // Pinning a tab removes it from its tab group first (Chrome keeps
-        // the two states mutually exclusive).
         if (shouldPin && isGrouped(tab)) {
             if (chrome.tabs.ungroup)
                 chrome.tabs.ungroup(tab.id, () => finish());
@@ -1138,7 +1159,11 @@ export function initViewTabGroups(ctx = {}) {
             type: TAB_GROUP_MSG.openNew,
             urls,
             title: record.title || '',
-            color: record.color || 'grey'
+            color: record.color || 'grey',
+            // restore into the window the group lived in (stale ids degrade
+            // gracefully inside the SW — D)
+            windowId: record.windowId !== undefined && record.windowId !== null
+                ? record.windowId : currentWindowId
         });
         scheduleRefresh();
     };
@@ -1467,7 +1492,26 @@ export function initViewTabGroups(ctx = {}) {
             button1: `<strong>${_m('delete')}</strong>`,
             button2: _m('nope'),
             fn1: () => {
+                // The batch records ONE merged closed entry (not N singles —
+                // the 10-slot history must not be flushed by one batch), so
+                // the toast's Reopen and the closed section both bring the
+                // whole batch back as one restorable unit.
+                const record = {
+                    id: `cb_${Date.now().toString(36)}`,
+                    type: 'group',
+                    title: _m('tabGroupsBatchClosedTitle'),
+                    color: 'grey',
+                    savedAt: Date.now(),
+                    windowId: currentWindowId,
+                    tabs: sel.slice()
+                        .sort((a, b) => (a.index || 0) - (b.index || 0))
+                        .map(t => ({ title: t.title || '', url: t.url || '' }))
+                };
+                persistClosedGroups([...readClosedGroups(), record]);
+                closedRecords = readClosedGroups().sort((a, b) => (b.savedAt || 0) - (a.savedAt || 0));
                 send({ type: TAB_GROUP_MSG.tabsClose, tabIds: ids });
+                undo.toastAction(_m('tabGroupsClosedToast', `${ids.length}`), _m('tabGroupsReopenAction'),
+                    () => restoreClosedGroup(record.id));
                 setSelecting(false);
                 scheduleRefresh();
             }
@@ -1936,6 +1980,15 @@ export function initViewTabGroups(ctx = {}) {
             e.preventDefault();
             e.stopPropagation();
             const li = closedOpen.closest('li');
+            if (li && li.dataset.closedId)
+                restoreClosedGroup(li.dataset.closedId);
+            return;
+        }
+        const closedReopen = closest('.tabgroups-closed-reopen');
+        if (closedReopen) {
+            e.preventDefault();
+            e.stopPropagation();
+            const li = closedReopen.closest('li');
             if (li && li.dataset.closedId)
                 restoreClosedGroup(li.dataset.closedId);
             return;

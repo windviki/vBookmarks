@@ -473,6 +473,12 @@
       }
     }
   },
+  "tabGroupsBatchClosedTitle": {
+    "message": "Bezárt lapok"
+  },
+  "tabGroupsPinnedUngroupedToast": {
+    "message": "Rögzítve — eltávolítva a lapcsoportból"
+  },
   "tabGroupsReopenAction": {
     "message": "Újranyitás"
   },

@@ -473,6 +473,12 @@
       }
     }
   },
+  "tabGroupsBatchClosedTitle": {
+    "message": "بسته‌شده‌ها"
+  },
+  "tabGroupsPinnedUngroupedToast": {
+    "message": "سنجاق‌شده — از گروه برگه حذف شد"
+  },
   "tabGroupsReopenAction": {
     "message": "بازگشایی"
   },
