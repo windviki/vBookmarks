@@ -458,10 +458,20 @@
     }
   },
   "tabGroupsClosedToast": {
-    "message": "$count$ برگه بسته شد"
+    "message": "$count$ برگه بسته شد",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsSleptToast": {
-    "message": "$count$ برگه به خواب رفت"
+    "message": "$count$ برگه به خواب رفت",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsReopenAction": {
     "message": "بازگشایی"

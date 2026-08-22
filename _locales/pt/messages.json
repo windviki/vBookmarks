@@ -458,10 +458,20 @@
     }
   },
   "tabGroupsClosedToast": {
-    "message": "Fechadas $count$ aba(s)"
+    "message": "Fechadas $count$ aba(s)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsSleptToast": {
-    "message": "$count$ aba(s) colocadas em repouso"
+    "message": "$count$ aba(s) colocadas em repouso",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsReopenAction": {
     "message": "Reabrir"

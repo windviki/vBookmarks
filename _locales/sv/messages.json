@@ -458,10 +458,20 @@
     }
   },
   "tabGroupsClosedToast": {
-    "message": "Stängde $count$ flik(ar)"
+    "message": "Stängde $count$ flik(ar)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsSleptToast": {
-    "message": "Lade $count$ flik(ar) i vila"
+    "message": "Lade $count$ flik(ar) i vila",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsReopenAction": {
     "message": "Öppna igen"

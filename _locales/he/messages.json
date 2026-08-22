@@ -458,10 +458,20 @@
     }
   },
   "tabGroupsClosedToast": {
-    "message": "נסגרו $count$ לשוניות"
+    "message": "נסגרו $count$ לשוניות",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsSleptToast": {
-    "message": "הועמדו $count$ לשוניות במצב שינה"
+    "message": "הועמדו $count$ לשוניות במצב שינה",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsReopenAction": {
     "message": "פתח מחדש"

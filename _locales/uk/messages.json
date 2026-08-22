@@ -458,10 +458,20 @@
     }
   },
   "tabGroupsClosedToast": {
-    "message": "Закрито вкладок: $count$"
+    "message": "Закрито вкладок: $count$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsSleptToast": {
-    "message": "Переведено в режим сну вкладок: $count$"
+    "message": "Переведено в режим сну вкладок: $count$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsReopenAction": {
     "message": "Відкрити знову"

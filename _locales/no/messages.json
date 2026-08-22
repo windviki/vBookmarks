@@ -458,10 +458,20 @@
     }
   },
   "tabGroupsClosedToast": {
-    "message": "Lukket $count$ fane(r)"
+    "message": "Lukket $count$ fane(r)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsSleptToast": {
-    "message": "Satt $count$ fane(r) i dvale"
+    "message": "Satt $count$ fane(r) i dvale",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsReopenAction": {
     "message": "Åpne igjen"

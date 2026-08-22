@@ -458,10 +458,20 @@
     }
   },
   "tabGroupsClosedToast": {
-    "message": "$count$ टैब बंद किए गए"
+    "message": "$count$ टैब बंद किए गए",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsSleptToast": {
-    "message": "$count$ टैब सोए हुए"
+    "message": "$count$ टैब सोए हुए",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsReopenAction": {
     "message": "फिर खोलें"

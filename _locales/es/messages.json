@@ -458,10 +458,20 @@
     }
   },
   "tabGroupsClosedToast": {
-    "message": "Se cerraron $count$ pestaña(s)"
+    "message": "Se cerraron $count$ pestaña(s)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsSleptToast": {
-    "message": "Se pusieron $count$ pestaña(s) en reposo"
+    "message": "Se pusieron $count$ pestaña(s) en reposo",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsReopenAction": {
     "message": "Reabrir"

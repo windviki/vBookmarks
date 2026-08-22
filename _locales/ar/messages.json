@@ -458,10 +458,20 @@
     }
   },
   "tabGroupsClosedToast": {
-    "message": "أغلق $count$ علامة تبويب"
+    "message": "أغلق $count$ علامة تبويب",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsSleptToast": {
-    "message": "وضع $count$ علامة تبويب في وضع السكون"
+    "message": "وضع $count$ علامة تبويب في وضع السكون",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsReopenAction": {
     "message": "إعادة فتح"

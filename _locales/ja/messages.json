@@ -458,10 +458,20 @@
     }
   },
   "tabGroupsClosedToast": {
-    "message": "$count$ 件のタブを閉じました"
+    "message": "$count$ 件のタブを閉じました",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsSleptToast": {
-    "message": "$count$ 件のタブをスリープしました"
+    "message": "$count$ 件のタブをスリープしました",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsReopenAction": {
     "message": "再度開く"

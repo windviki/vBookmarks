@@ -458,10 +458,20 @@
     }
   },
   "tabGroupsClosedToast": {
-    "message": "$count$ Tabs geschlossen"
+    "message": "$count$ Tabs geschlossen",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsSleptToast": {
-    "message": "$count$ Tabs schlafen gelegt"
+    "message": "$count$ Tabs schlafen gelegt",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsReopenAction": {
     "message": "Wieder öffnen"

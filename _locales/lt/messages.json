@@ -458,10 +458,20 @@
     }
   },
   "tabGroupsClosedToast": {
-    "message": "Uždaryta $count$ skirtukų"
+    "message": "Uždaryta $count$ skirtukų",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsSleptToast": {
-    "message": "Užmigdyti $count$ skirtukai"
+    "message": "Užmigdyti $count$ skirtukai",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsReopenAction": {
     "message": "Atidaryti"

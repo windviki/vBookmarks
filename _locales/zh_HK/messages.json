@@ -1929,10 +1929,20 @@
     }
   },
   "tabGroupsClosedToast": {
-    "message": "已關閉 $count$ 個分頁"
+    "message": "已關閉 $count$ 個分頁",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsSleptToast": {
-    "message": "已休眠 $count$ 個分頁"
+    "message": "已休眠 $count$ 個分頁",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsReopenAction": {
     "message": "重新開啟"

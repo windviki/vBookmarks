@@ -458,10 +458,20 @@
     }
   },
   "tabGroupsClosedToast": {
-    "message": "Έκλεισαν $count$ καρτέλα(ες)"
+    "message": "Έκλεισαν $count$ καρτέλα(ες)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsSleptToast": {
-    "message": "Τέθηκαν σε αναστολή $count$ καρτέλα(ες)"
+    "message": "Τέθηκαν σε αναστολή $count$ καρτέλα(ες)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsReopenAction": {
     "message": "Άνοιγμα ξανά"

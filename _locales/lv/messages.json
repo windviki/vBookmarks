@@ -458,10 +458,20 @@
     }
   },
   "tabGroupsClosedToast": {
-    "message": "Aizvērtas $count$ cilne(s)"
+    "message": "Aizvērtas $count$ cilne(s)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsSleptToast": {
-    "message": "Iemidzinātas $count$ cilne(s)"
+    "message": "Iemidzinātas $count$ cilne(s)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsReopenAction": {
     "message": "Atvērt vēlreiz"

@@ -458,10 +458,20 @@
     }
   },
   "tabGroupsClosedToast": {
-    "message": "Suletud $count$ vahelehte"
+    "message": "Suletud $count$ vahelehte",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsSleptToast": {
-    "message": "Pandud $count$ vahelehte magama"
+    "message": "Pandud $count$ vahelehte magama",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsReopenAction": {
     "message": "Ava uuesti"

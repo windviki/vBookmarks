@@ -2117,11 +2117,21 @@
   },
   "tabGroupsClosedToast": {
     "message": "Closed $count$ tab(s)",
-    "description": "Toast after closing a single tab or tab group; the action button reopens it."
+    "description": "Toast after closing a single tab or tab group; the action button reopens it.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsSleptToast": {
     "message": "Put $count$ tab(s) to sleep",
-    "description": "Toast after sleeping a single tab or tab group; the action button wakes it."
+    "description": "Toast after sleeping a single tab or tab group; the action button wakes it.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsReopenAction": {
     "message": "Reopen",

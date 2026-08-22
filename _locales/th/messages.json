@@ -458,10 +458,20 @@
     }
   },
   "tabGroupsClosedToast": {
-    "message": "ปิดแท็บ $count$ แล้ว"
+    "message": "ปิดแท็บ $count$ แล้ว",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsSleptToast": {
-    "message": "พักแท็บ $count$ แล้ว"
+    "message": "พักแท็บ $count$ แล้ว",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsReopenAction": {
     "message": "เปิดใหม่"

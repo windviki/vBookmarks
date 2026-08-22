@@ -457,10 +457,20 @@
     }
   },
   "tabGroupsClosedToast": {
-    "message": "Затворени $count$ јазичиња"
+    "message": "Затворени $count$ јазичиња",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsSleptToast": {
-    "message": "Ставени $count$ јазичиња во сон"
+    "message": "Ставени $count$ јазичиња во сон",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsReopenAction": {
     "message": "Отвори повторно"

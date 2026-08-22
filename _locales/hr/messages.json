@@ -458,10 +458,20 @@
     }
   },
   "tabGroupsClosedToast": {
-    "message": "Zatvoreno $count$ kartica"
+    "message": "Zatvoreno $count$ kartica",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsSleptToast": {
-    "message": "Uspavano $count$ kartica"
+    "message": "Uspavano $count$ kartica",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsReopenAction": {
     "message": "Ponovno otvori"

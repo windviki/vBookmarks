@@ -458,10 +458,20 @@
     }
   },
   "tabGroupsClosedToast": {
-    "message": "$count$개 탭 닫힘"
+    "message": "$count$개 탭 닫힘",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsSleptToast": {
-    "message": "$count$개 탭 절전 모드로 전환"
+    "message": "$count$개 탭 절전 모드로 전환",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsReopenAction": {
     "message": "다시 열기"

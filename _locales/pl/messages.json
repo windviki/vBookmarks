@@ -458,10 +458,20 @@
     }
   },
   "tabGroupsClosedToast": {
-    "message": "Zamknięto $count$ kartę(karty)"
+    "message": "Zamknięto $count$ kartę(karty)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsSleptToast": {
-    "message": "Uśpiono $count$ kartę(karty)"
+    "message": "Uśpiono $count$ kartę(karty)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsReopenAction": {
     "message": "Otwórz ponownie"

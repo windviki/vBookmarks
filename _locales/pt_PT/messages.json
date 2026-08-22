@@ -457,10 +457,20 @@
     }
   },
   "tabGroupsClosedToast": {
-    "message": "Fechou $count$ separador(es)"
+    "message": "Fechou $count$ separador(es)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsSleptToast": {
-    "message": "Pôs $count$ separador(es) a dormir"
+    "message": "Pôs $count$ separador(es) a dormir",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsReopenAction": {
     "message": "Reabrir"

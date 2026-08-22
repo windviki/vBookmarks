@@ -458,10 +458,20 @@
     }
   },
   "tabGroupsClosedToast": {
-    "message": "Suljettiin $count$ välilehteä"
+    "message": "Suljettiin $count$ välilehteä",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsSleptToast": {
-    "message": "Asetettiin $count$ välilehteä lepotilaan"
+    "message": "Asetettiin $count$ välilehteä lepotilaan",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsReopenAction": {
     "message": "Avaa uudelleen"

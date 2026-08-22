@@ -458,10 +458,20 @@
     }
   },
   "tabGroupsClosedToast": {
-    "message": "S-au închis $count$ filă(fi)"
+    "message": "S-au închis $count$ filă(fi)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsSleptToast": {
-    "message": "S-au adormit $count$ filă(fi)"
+    "message": "S-au adormit $count$ filă(fi)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsReopenAction": {
     "message": "Redeschide"

@@ -1972,11 +1972,21 @@
   },
   "tabGroupsClosedToast": {
     "message": "已关闭 $count$ 个标签页",
-    "description": "Toast after closing a single tab or tab group; the action button reopens it."
+    "description": "Toast after closing a single tab or tab group; the action button reopens it.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsSleptToast": {
     "message": "已休眠 $count$ 个标签页",
-    "description": "Toast after sleeping a single tab or tab group; the action button wakes it."
+    "description": "Toast after sleeping a single tab or tab group; the action button wakes it.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsReopenAction": {
     "message": "重新打开",

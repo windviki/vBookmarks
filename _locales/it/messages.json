@@ -458,10 +458,20 @@
     }
   },
   "tabGroupsClosedToast": {
-    "message": "Chiuse $count$ scheda/e"
+    "message": "Chiuse $count$ scheda/e",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsSleptToast": {
-    "message": "Messe in pausa $count$ scheda/e"
+    "message": "Messe in pausa $count$ scheda/e",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsReopenAction": {
     "message": "Riapri"

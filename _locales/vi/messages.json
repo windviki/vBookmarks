@@ -458,10 +458,20 @@
     }
   },
   "tabGroupsClosedToast": {
-    "message": "Đã đóng $count$ tab"
+    "message": "Đã đóng $count$ tab",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsSleptToast": {
-    "message": "Đã đưa $count$ tab vào chế độ ngủ"
+    "message": "Đã đưa $count$ tab vào chế độ ngủ",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "tabGroupsReopenAction": {
     "message": "Mở lại"
