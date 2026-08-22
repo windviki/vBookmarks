@@ -5,7 +5,7 @@
  *
  * Owns: the tree-view state (the nodeTrees parent map and the onlyShowBMBar
  * startup flag, plus the v4 task-3 #14 session-only show-all override), generateTree (subtree selection incl. onlyShowBMBar, the
- * search-index refresh, the sync-indicator refresh, scroll/focus restore and
+ * scroll/focus restore and
  * the legacy local-separator migration) plus the startup
  * chrome.bookmarks.getTree call, the four tree event handlers (scroll
  * persistence, focus tracking with focusID, folder expand/collapse incl. lazy
@@ -18,7 +18,7 @@
  *
  * initTreeView(ctx) is called once by neat.js right after actions/dnd init —
  * menus/search/dialogs/actions/dnd are all ready by then, so everything is
- * passed as a plain value (no lazy getters). refreshSyncIndicators is a
+ * passed as a plain value (no lazy getters).
  * hoisted function declaration in neat.js (sync-ui 尚未剥离) and
  * SeparatorManager an imported class there, so both arrive via ctx too.
  * ctx.store                 — settings store
@@ -28,7 +28,6 @@
  * ctx.search                — search.js API (quit/reset/results)
  * ctx.actions               — actions.js API (the open* calls + addSeparator)
  * ctx.dnd                   — dnd.js API (consumeNoOpen swallows post-drag click)
- * ctx.refreshSyncIndicators — neat.js's sync UI refresh (called via setTimeout)
  * ctx.getOpens()            — current expanded-folder id array (shared channel
  *                             with treeRender's getter; the view only writes)
  * ctx.getRememberState()    — current remember-state flag (read per call)
@@ -75,7 +74,6 @@ export function initTreeView(ctx = {}) {
     const search = ctx.search;
     const actions = ctx.actions;
     const dnd = ctx.dnd;
-    const refreshSyncIndicators = ctx.refreshSyncIndicators;
     const getRememberState = ctx.getRememberState;
     const setOpens = ctx.setOpens;
     const setRememberState = ctx.setRememberState;
@@ -183,13 +181,6 @@ export function initTreeView(ctx = {}) {
         // dead-mark ×, 第五轮项3), which the swap itself just wiped.
         if (onTreeGenerated)
             onTreeGenerated(tree);
-
-        // Refresh sync indicators after tree is generated
-        if (store.getSyncSetting('showSyncStatus', 'true') === 'true') {
-            setTimeout(() => {
-                refreshSyncIndicators();
-            }, 100);
-        }
 
         if (getRememberState()) {
             $tree.scrollTop = store.get('scrollTop') ? store.get('scrollTop') : 0;

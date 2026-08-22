@@ -66,7 +66,20 @@
             const read = sessionArea.get(SESSION_KEY);
             if (read && typeof read.then === 'function') {
                 read.then(data => {
-                    applySessionBlob(data ? data[SESSION_KEY] : null);
+                    const blob = data ? data[SESSION_KEY] : null;
+                    applySessionBlob(blob);
+                    // H4: the initial blob is applied silently by the classic
+                    // loader, so rows rendered before it arrived never get
+                    // badges — dispatch one event per non-empty entry so
+                    // sync-ui.js re-lays them ("status arrived late").
+                    for (const id of Object.keys(mirror)) {
+                        const entry = mirror[id];
+                        if (entry && (entry.indicator || entry.tooltip)) {
+                            window.dispatchEvent(new window.CustomEvent('syncStatusChanged', {
+                                detail: { bookmarkId: id, status: entry.indicator || '' }
+                            }));
+                        }
+                    }
                 }).catch(() => {});
             }
         } catch (error) {

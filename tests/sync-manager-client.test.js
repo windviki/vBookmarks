@@ -78,6 +78,19 @@ describe('sync-manager page client', () => {
         expect(window.syncManager.getSyncTooltip('a')).toBe('Synced to cloud');
     });
 
+    it('dispatches syncStatusChanged for each non-empty entry of the initial blob (H4: late-arriving statuses reach the DOM)', async () => {
+        const env = loadClient({
+            sessionBlob: blobWith({
+                a: ['synced', 'Synced to cloud'],
+                b: ['local', 'Local only'],
+                c: ['', ''] // empty entry → no dispatch, no DOM churn
+            })
+        });
+        await flushMicrotasks();
+        const byId = Object.fromEntries(env.dispatched.map(e => [e.detail.bookmarkId, e.detail.status]));
+        expect(byId).toEqual({ a: 'synced', b: 'local' });
+    });
+
     it('does not message the SW when the mirror entry exists', async () => {
         const { window, sent } = loadClient({
             sessionBlob: blobWith({ a: ['synced', 'Synced to cloud'] })

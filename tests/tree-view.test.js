@@ -615,15 +615,14 @@ describe('generateTree', () => {
         expect(smInstances[0].saved).toBe(true);
     });
 
-    it('refreshes sync indicators via a 100ms timeout when showSyncStatus is true', () => {
+    it('does not schedule a sync-indicator pass after render (H4: badges come from the row builder + syncStatusChanged events)', () => {
         const ctx = setup({ sync: { showSyncStatus: 'true' } });
         ctx.treeView.generateTree(['ROOT']);
-        expect(ctx.refreshSyncCalls()).toBe(0); // deferred, not synchronous
-        tick(100);
-        expect(ctx.refreshSyncCalls()).toBe(1);
+        tickAll();
+        expect(ctx.refreshSyncCalls()).toBe(0);
     });
 
-    it('does not schedule the sync refresh when showSyncStatus is false', () => {
+    it('does not schedule the sync refresh when showSyncStatus is false either (H4)', () => {
         const ctx = setup({ sync: { showSyncStatus: 'false' } });
         ctx.treeView.generateTree(['ROOT']);
         tickAll();
