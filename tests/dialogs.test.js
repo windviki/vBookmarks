@@ -102,6 +102,9 @@ const IDS = [
     // velvet staging §4.1: picker action buttons + quick-pick chrome
     'bookmark-folder-pick-move-button', 'bookmark-folder-pick-copy-button',
     'bookmark-folder-pick-chips', 'bookmark-folder-pick-filter', 'bookmark-folder-pick-note',
+    // velvet staging §3.3: the group-assign dialog
+    'staging-group-assign-dialog', 'staging-group-assign-text', 'staging-group-assign-list',
+    'staging-group-assign-name', 'staging-group-assign-button', 'staging-group-assign-cancel-button',
     'cover'
 ];
 
@@ -987,5 +990,57 @@ describe('BookmarkFolderPickDialog (4.1.0 + velvet staging §4.1)', () => {
         const other = { key: 'a', preventDefault() { this.prevented = true; } };
         list.trigger('keydown', other);
         expect(other.prevented).toBeUndefined();
+    });
+});
+
+describe('StagingGroupAssignDialog (velvet staging §3.3)', () => {
+    it('lists existing groups with counts; clicking one assigns and closes', () => {
+        const d = freshDialogs();
+        const assigned = [];
+        d.StagingGroupAssignDialog.open({
+            groups: [{ id: 'g1', name: 'Tools', count: 3 }, { id: 'g2', name: '阅读', count: 1 }],
+            onAssign: (gid, name) => assigned.push([gid, name])
+        });
+        expect(bodyClasses.contains('needStagingGroupAssign')).toBe(true);
+        const list = els['staging-group-assign-list'];
+        expect(list.children.length).toBe(2);
+        expect(list.children[0].children[0].innerHTML).toContain('Tools');
+        expect(list.children[0].children[0].innerHTML).toContain('>3<');
+        list.children[1].children[0].trigger('click');
+        expect(assigned).toEqual([['g2', '阅读']]);
+        expect(bodyClasses.contains('needStagingGroupAssign')).toBe(false);
+    });
+
+    it('confirm creates a NEW group from the name input (button + Enter)', () => {
+        const d = freshDialogs();
+        const assigned = [];
+        d.StagingGroupAssignDialog.open({ groups: [], onAssign: (gid, name) => assigned.push([gid, name]) });
+        // no groups → the empty hint row
+        expect(els['staging-group-assign-list'].children[0].className).toBe('staging-group-assign-empty');
+        els['staging-group-assign-name'].value = '新组';
+        els['staging-group-assign-button'].trigger('click');
+        expect(assigned).toEqual([[null, '新组']]);
+        // Enter in the input does the same; empty name is a no-op
+        d.StagingGroupAssignDialog.open({ groups: [], onAssign: (gid, name) => assigned.push([gid, name]) });
+        els['staging-group-assign-name'].value = '   ';
+        els['staging-group-assign-name'].trigger('keydown', { key: 'Enter', preventDefault() {} });
+        expect(assigned).toHaveLength(1);
+        els['staging-group-assign-name'].value = 'Enter组';
+        els['staging-group-assign-name'].trigger('keydown', { key: 'Enter', preventDefault() {} });
+        expect(assigned[1]).toEqual([null, 'Enter组']);
+    });
+
+    it('cancel closes without assigning; closeDialogs covers it', () => {
+        const d = freshDialogs();
+        const assigned = [];
+        d.StagingGroupAssignDialog.open({ groups: [], onAssign: (gid, name) => assigned.push([gid, name]) });
+        els['staging-group-assign-cancel-button'].trigger('click');
+        expect(bodyClasses.contains('needStagingGroupAssign')).toBe(false);
+        expect(assigned).toHaveLength(0);
+        // the Esc-layer path
+        d.StagingGroupAssignDialog.open({ groups: [], onAssign: () => {} });
+        expect(d.activeEl()).toBe(els['staging-group-assign-dialog']);
+        d.closeDialogs();
+        expect(bodyClasses.contains('needStagingGroupAssign')).toBe(false);
     });
 });

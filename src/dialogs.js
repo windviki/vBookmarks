@@ -755,6 +755,88 @@ export function initDialogs(ctx = {}) {
         return false;
     });
 
+    // Staging group-assign dialog (velvet staging §3.3): move the selected
+    // items into an existing group (click its row) or a freshly named one
+    // (type + confirm). A body-class dialog like the rest — Esc, #cover and
+    // the Tab trap ride anyOpen()/activeEl()/closeDialogs().
+    const StagingGroupAssignDialog = {
+        onAssign: () => {
+        },
+        open: opts => {
+            if (!opts)
+                return;
+            rememberInvoker();
+            StagingGroupAssignDialog.onAssign = opts.onAssign || (() => {});
+            const textEl = $('staging-group-assign-text');
+            const list = $('staging-group-assign-list');
+            const nameEl = $('staging-group-assign-name');
+            const okEl = $('staging-group-assign-button');
+            const cancelEl = $('staging-group-assign-cancel-button');
+            if (!textEl || !list || !nameEl || !okEl || !cancelEl)
+                return;
+            textEl.innerHTML = widont(opts.dialog || _m('stagingGroupAssignTitle'));
+            okEl.innerHTML = `<strong>${htmlspecialchars(_m('stagingGroupNew'))}</strong>`;
+            cancelEl.innerHTML = htmlspecialchars(_m('nope'));
+            nameEl.value = '';
+            nameEl.placeholder = _m('stagingGroupNamePrompt');
+            list.innerHTML = '';
+            for (const g of opts.groups || []) {
+                const li = document.createElement('li');
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'staging-group-assign-row';
+                btn.innerHTML = `<span class="staging-group-assign-name" dir="auto">${htmlspecialchars(g.name || _m('noTitle'))}</span>` +
+                    `<span class="count-pill">${g.count}</span>`;
+                btn.addEventListener('click', () => {
+                    StagingGroupAssignDialog.onAssign(g.id, g.name);
+                    StagingGroupAssignDialog.close();
+                });
+                li.appendChild(btn);
+                list.appendChild(li);
+            }
+            if (!(opts.groups || []).length) {
+                const li = document.createElement('li');
+                li.className = 'staging-group-assign-empty';
+                li.textContent = _m('stagingGroupNoGroups');
+                list.appendChild(li);
+            }
+            body.classList.add('needStagingGroupAssign');
+            nameEl.focus();
+        },
+        close: () => {
+            const wasOpen = body.classList.contains('needStagingGroupAssign');
+            body.classList.remove('needStagingGroupAssign');
+            restoreFocus(wasOpen);
+        },
+        // Confirm with a NEW group name (the [New group] button / Enter).
+        confirm: () => {
+            const nameEl = $('staging-group-assign-name');
+            const name = nameEl ? nameEl.value.trim() : '';
+            if (!name)
+                return;
+            StagingGroupAssignDialog.onAssign(null, name);
+            StagingGroupAssignDialog.close();
+        }
+    };
+    const stagingGroupAssignOk = $('staging-group-assign-button');
+    if (stagingGroupAssignOk)
+        stagingGroupAssignOk.addEventListener('click', () => {
+            StagingGroupAssignDialog.confirm();
+        });
+    const stagingGroupAssignCancel = $('staging-group-assign-cancel-button');
+    if (stagingGroupAssignCancel)
+        stagingGroupAssignCancel.addEventListener('click', () => {
+            StagingGroupAssignDialog.close();
+        });
+    const stagingGroupAssignName = $('staging-group-assign-name');
+    if (stagingGroupAssignName)
+        stagingGroupAssignName.addEventListener('keydown', e => {
+            if (e.key !== 'Enter')
+                return;
+            e.preventDefault();
+            StagingGroupAssignDialog.confirm();
+        });
+
     // Version dialog (/version palette command): a metadata card + copy-to-
     // clipboard action + the palette-style footer close button (Esc hint).
     // It is a body-class dialog like the rest, so keyboard.js's Escape layer
@@ -866,6 +948,8 @@ export function initDialogs(ctx = {}) {
             return $('copy-move-dialog');
         if (body.classList.contains('needFolderPick'))
             return $('bookmark-folder-pick-dialog');
+        if (body.classList.contains('needStagingGroupAssign'))
+            return $('staging-group-assign-dialog');
         if (body.classList.contains('needAlert'))
             return $('alert-dialog');
         return null;
@@ -941,10 +1025,12 @@ export function initDialogs(ctx = {}) {
             CopyMoveDialog.close(false);
         if (body.classList.contains('needFolderPick'))
             BookmarkFolderPickDialog.close();
+        if (body.classList.contains('needStagingGroupAssign'))
+            StagingGroupAssignDialog.close();
         if (body.classList.contains('needAlert'))
             AlertDialog.close();
     };
     $('cover').addEventListener('click', closeDialogs);
 
-    return { AlertDialog, ConfirmDialog, EditDialog, NewFolderDialog, SortDialog, GroupDialog, GroupPickDialog, VersionDialog, CopyMoveDialog, BookmarkFolderPickDialog, anyOpen, activeEl, closeDialogs };
+    return { AlertDialog, ConfirmDialog, EditDialog, NewFolderDialog, SortDialog, GroupDialog, GroupPickDialog, VersionDialog, CopyMoveDialog, BookmarkFolderPickDialog, StagingGroupAssignDialog, anyOpen, activeEl, closeDialogs };
 }

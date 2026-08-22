@@ -1705,6 +1705,153 @@ menu[type=context] hr {
     line-height: 16px;
 }
 
+/* The unbookmarked inbox bucket head (§3.4): same row language as the
+   recently-added section head, prefixed by the hollow star. */
+.staging-bucket-head {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin: 2px 4px;
+    padding: 4px 8px;
+    border-radius: var(--vbm-radius);
+    color: var(--vbm-muted);
+    font-size: .9em;
+    cursor: pointer;
+    user-select: none;
+}
+
+.staging-bucket-head:hover,
+.staging-bucket-head:focus-visible {
+    background: var(--vbm-bg-elev);
+    outline: none;
+}
+
+.staging-bucket-star .vbm-icon {
+    vertical-align: -2px;
+}
+
+.staging-bucket-head .count-pill,
+.staging-section-head .count-pill {
+    flex: none;
+}
+
+.staging-bucket-head .chevron,
+.staging-group-head .chevron {
+    flex: none;
+    width: 12px;
+    height: 12px;
+    position: relative;
+}
+
+.staging-bucket-head .chevron::before,
+.staging-group-head .chevron::before {
+    content: '';
+    position: absolute;
+    inset: 2px;
+    border-inline-start: 1.5px solid currentColor;
+    border-bottom: 1.5px solid currentColor;
+    transform: rotate(-45deg);
+    transition: transform .12s ease;
+}
+
+.staging-bucket-head .chevron.collapsed::before,
+.staging-group-head .chevron.collapsed::before {
+    transform: rotate(-135deg);
+}
+
+/* A named group head (§3.5): the dupes group-head row language. */
+.staging-group-head {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin: 2px 4px;
+    padding: 4px 8px;
+    border-radius: var(--vbm-radius);
+    color: var(--vbm-fg);
+    font-size: .9em;
+    cursor: pointer;
+    user-select: none;
+}
+
+.staging-group-head:hover,
+.staging-group-head:focus-visible {
+    background: var(--vbm-bg-elev);
+    outline: none;
+}
+
+/* Group members indent one notch (the dupes member rhythm). */
+#staging-items ul li.vbm-row.staging-member {
+    padding-inline-start: 18px;
+}
+
+/* The staging star is always visible (a real state indicator, not a hover
+   action); the inline remove × keeps the hover reveal. */
+.vbm-row .staging-star {
+    visibility: visible;
+}
+
+.vbm-row .staging-star[aria-pressed="true"] {
+    color: var(--vbm-accent);
+}
+
+/* The group-assign dialog's group rows. */
+.staging-group-assign-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 6px 8px;
+    border: 0;
+    border-radius: var(--vbm-radius);
+    background: transparent;
+    color: var(--vbm-fg);
+    font: inherit;
+    text-align: start;
+    cursor: pointer;
+}
+
+.staging-group-assign-row:hover,
+.staging-group-assign-row:focus-visible {
+    background: var(--vbm-bg-elev);
+    outline: 2px solid var(--vbm-focus-ring);
+    outline-offset: -1px;
+}
+
+.staging-group-assign-name {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+#staging-group-assign-list {
+    list-style: none;
+    margin: 0 0 6px;
+    padding: 0;
+    max-height: 180px;
+    overflow-y: auto;
+}
+
+#staging-group-assign-name {
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0 0 6px;
+    padding: 5px 8px;
+    border: 1px solid var(--vbm-border);
+    border-radius: var(--vbm-radius);
+    background: var(--vbm-bg-elev);
+    color: var(--vbm-fg);
+    font: inherit;
+}
+
+.staging-group-assign-empty {
+    padding: 10px 8px;
+    color: var(--vbm-muted);
+    text-align: center;
+}
+
 .bookmark-folder-pick-empty {
     padding: 10px 8px;
     color: var(--vbm-muted);

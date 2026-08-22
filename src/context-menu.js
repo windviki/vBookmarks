@@ -69,6 +69,8 @@ export function initContextMenu(ctx = {}) {
     // heads get their own menus (absent in minimal test setups → null-check).
     const $histRowContextMenu = $('hist-row-context-menu');
     const $dupesGroupContextMenu = $('dupes-group-context-menu');
+    // velvet staging §3.5: the staging group-head menu (16th menu).
+    const $stagingGroupContextMenu = $('staging-group-context-menu');
     // v4 task-4 #6: the palette custom-command row menu (edit / delete)
     const $paletteCmdContextMenu = $('palette-cmd-context-menu');
     // 4.0.8: the view-tab right-click menu (hide / disable)
@@ -249,6 +251,11 @@ export function initContextMenu(ctx = {}) {
             $dupesGroupContextMenu.style.opacity = '0';
             $dupesGroupContextMenu.style.transform = 'scale(.98)';
         }
+    if ($stagingGroupContextMenu) {
+        $stagingGroupContextMenu.style.left = '-999px';
+        $stagingGroupContextMenu.style.opacity = '0';
+        $stagingGroupContextMenu.style.transform = 'scale(.98)';
+    }
         if ($paletteCmdContextMenu) {
             $paletteCmdContextMenu.style.left = '-999px';
             $paletteCmdContextMenu.style.opacity = '0';
@@ -865,6 +872,12 @@ export function initContextMenu(ctx = {}) {
         // expand/collapse (label follows the current state).
         const groupHead = el.closest('.group-head');
         const tabGroupHead = el.closest('.tabgroups-group-head');
+        // velvet staging: the bucket head's controls are its two inline
+        // buttons — no context menu (a span would fall into the folder menu).
+        if (el.closest && el.closest('.staging-bucket-head')) {
+            e.preventDefault();
+            return;
+        }
         // v4 task-4 #6: a palette CUSTOM command row is no bookmark/folder —
         // its slim menu (edit/delete) dispatches through ctx.paletteMenu
         // with the row's data-cc-id.
@@ -872,6 +885,16 @@ export function initContextMenu(ctx = {}) {
             && $paletteCmdContextMenu && ctx.paletteMenu) {
             el = row;
             menu = $paletteCmdContextMenu;
+        } else if (groupHead && groupHead.parentNode && groupHead.parentNode.classList
+            && groupHead.parentNode.classList.contains('staging-group')
+            && $stagingGroupContextMenu && ctx.staging) {
+            // velvet staging §3.5: the staging group head — fold/rename/
+            // dissolve (+ homing from ST5). Labels follow the fold state.
+            el = groupHead;
+            menu = $stagingGroupContextMenu;
+            const gid = groupHead.parentNode.dataset.groupId;
+            $('staging-group-toggle').textContent =
+                _m(ctx.staging.isGroupCollapsed(gid) ? 'stagingGroupExpand' : 'stagingGroupCollapse');
         } else if (groupHead && groupHead.parentNode && groupHead.parentNode.classList
             && groupHead.parentNode.classList.contains('dupes-group')
             && $dupesGroupContextMenu && ctx.dupesMenu) {
@@ -1029,9 +1052,37 @@ export function initContextMenu(ctx = {}) {
                 // results, recent region, stats/dead/dupes). The label flips
                 // to "Already staged" (with the disabled look) when the row's
                 // URL is already in the workbench — dispatch re-checks.
+                // velvet staging §2.4: staging-row-only entries — remove,
+                // real-state favorite toggle, group assign. Unbookmarked
+                // staging rows additionally lose every tree-id-dependent
+                // entry (edit/copy/delete/positional).
+                const onStagingRow = liId.startsWith('staging-item-');
+                const stagingSep = $('staging-item-sep');
+                const stagingFav = $('staging-fav-toggle');
+                const stagingGroup = $('staging-group-assign');
+                const stagingRemove = $('staging-remove-item');
+                const stagingApi = onStagingRow ? ctx.staging : null;
+                for (const it2 of [stagingSep, stagingFav, stagingGroup, stagingRemove]) {
+                    if (it2)
+                        it2.style.display = stagingApi ? 'block' : 'none';
+                }
+                if (stagingApi) {
+                    const bookmarked = !!(el.parentNode.dataset && el.parentNode.dataset.nodeId);
+                    if (stagingFav)
+                        stagingFav.textContent = _m(bookmarked ? 'stagingUnfav' : 'stagingFav');
+                }
+                // Unbookmarked staging rows have no tree node behind them —
+                // every id-dependent entry would act on a bogus id. Restored
+                // to '' on every other row (inline-style hygiene).
+                const unfavStagingRow = onStagingRow &&
+                    !(el.parentNode.dataset && el.parentNode.dataset.nodeId);
+                for (const hideId of ['bookmark-edit', 'copy-title-and-url', 'bookmark-delete']) {
+                    const hideItem = $(hideId);
+                    if (hideItem)
+                        hideItem.style.display = unfavStagingRow ? 'none' : '';
+                }
                 const stageItem = $('add-to-staging');
                 if (stageItem) {
-                    const onStagingRow = liId.startsWith('staging-item-');
                     // tree rows carry the neat-tree-item- prefix; every
                     // other list-view row carries data-node-id (staging
                     // unfav rows have neither — they cannot be re-sent)
@@ -1200,6 +1251,22 @@ export function initContextMenu(ctx = {}) {
             case 'copy-title-and-url':
                 actions.copyAllTitlesAndUrls(id);
                 break;
+            // velvet staging §2.4: staging-row-only actions
+            case 'staging-remove-item': {
+                if (ctx.staging && li.dataset && li.dataset.url)
+                    ctx.staging.removeByUrl(li.dataset.url);
+                break;
+            }
+            case 'staging-fav-toggle': {
+                if (ctx.staging && li.dataset && li.dataset.url)
+                    ctx.staging.favToggle(li.dataset.url);
+                break;
+            }
+            case 'staging-group-assign': {
+                if (ctx.staging && li.dataset && li.dataset.url)
+                    ctx.staging.openGroupAssign([li.dataset.url]);
+                break;
+            }
             // velvet staging §2.3: send this bookmark to the staging area.
             // The authoritative node comes from the tree (the anchor href
             // is display-escaped); a URL already staged rides addItems'
@@ -1675,6 +1742,47 @@ export function initContextMenu(ctx = {}) {
         $dupesGroupContextMenu.addEventListener('contextmenu', menuBackgroundReposition($dupesGroupContextMenu));
     }
 
+    // velvet staging §3.5: the staging group-head menu. currentContext is the
+    // group-head span; its parent li carries data-group-id.
+    const stagingGroupContextHandler = e => {
+        if (!currentContext)
+            return;
+        const el = e.target;
+        if (!el.classList.contains('menu-item'))
+            return;
+        const gid = currentContext.parentNode.dataset.groupId;
+        if (!gid || !ctx.staging)
+            return;
+        clearMenu();
+        switch (el.id) {
+            case 'staging-group-toggle':
+                ctx.staging.toggleGroupFold(gid);
+                break;
+            case 'staging-group-rename':
+                ctx.staging.renameGroup(gid);
+                break;
+            case 'staging-group-dissolve':
+                ctx.staging.dissolveGroup(gid);
+                break;
+            case 'staging-group-save-folder':
+                if (ctx.staging.saveGroupToFolder)
+                    ctx.staging.saveGroupToFolder(gid);
+                break;
+            case 'staging-group-copy-folder':
+                if (ctx.staging.copyGroupToFolder)
+                    ctx.staging.copyGroupToFolder(gid);
+                break;
+        }
+    };
+    if ($stagingGroupContextMenu) {
+        $stagingGroupContextMenu.addEventListener('mouseup', e => {
+            e.stopPropagation();
+            if (e.button === 0 || (os === 'mac' && e.button === 1))
+                stagingGroupContextHandler(e);
+        });
+        $stagingGroupContextMenu.addEventListener('contextmenu', menuBackgroundReposition($stagingGroupContextMenu));
+    }
+
     // Tab groups view: tab-row menu. currentContext is the row anchor (or
     // span); its closest li carries data-tab-id.
     const tabRowContextHandler = e => {
@@ -1974,6 +2082,8 @@ export function initContextMenu(ctx = {}) {
         // v4 task-3 #10/#16: same null-check contract as searchHistoryMenu
         histRowMenu: $histRowContextMenu || null,
         dupesGroupMenu: $dupesGroupContextMenu || null,
+        // velvet staging §3.5: the staging group-head menu
+        stagingGroupMenu: $stagingGroupContextMenu || null,
         // v4 task-4 #6: palette custom-command row menu
         paletteCmdMenu: $paletteCmdContextMenu || null,
         // 4.0.8: view-tab right-click menu (may be absent in minimal tests)

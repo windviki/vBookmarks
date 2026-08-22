@@ -255,6 +255,13 @@ import { deferIdle, mark as perfMark } from './idle.js';
         'folder-delete': 'deleteEllipsis',
         // velvet staging: folder rows flatten-send into the staging area
         'add-folder-to-staging': 'stagingAdd',
+        // …and the staging group-head menu + the staging-row bookmark-menu
+        // entries (fav toggle label is state-set at open time)
+        'staging-group-rename': 'stagingGroupRename',
+        'staging-group-dissolve': 'stagingGroupDissolve',
+        'staging-group-save-folder': 'groupSaveToFolder',
+        'staging-group-copy-folder': 'groupCopyToFolder',
+        'staging-group-assign': 'stagingGroupAssign',
         // issue #33: direct sort actions + the "Sort options…" dialog opener
         'sort-folder-by-name': 'sortByName',
         'sort-folder-by-date': 'sortByDate',

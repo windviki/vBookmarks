@@ -2274,5 +2274,83 @@
   },
   "stagingFromHistory": {
     "message": "来自历史"
+  },
+  "stagingGroupExpand": {
+    "message": "展开分组"
+  },
+  "stagingGroupCollapse": {
+    "message": "折叠分组"
+  },
+  "stagingGroupRename": {
+    "message": "重命名分组…"
+  },
+  "stagingGroupDissolve": {
+    "message": "解散分组"
+  },
+  "stagingGroupDissolved": {
+    "message": "分组已解散，条目保留在暂存区"
+  },
+  "stagingGroupAssign": {
+    "message": "分组…"
+  },
+  "stagingGroupAssignTitle": {
+    "message": "指派到分组"
+  },
+  "stagingGroupNew": {
+    "message": "新建分组"
+  },
+  "stagingGroupNamePrompt": {
+    "message": "新分组名称"
+  },
+  "stagingGroupNoGroups": {
+    "message": "还没有分组"
+  },
+  "stagingBucketTitle": {
+    "message": "未收藏"
+  },
+  "stagingBucketFavAll": {
+    "message": "收藏全部"
+  },
+  "stagingNew": {
+    "message": "新 $n$",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingRowFav": {
+    "message": "收藏此条目"
+  },
+  "stagingRowUnfav": {
+    "message": "取消收藏此条目"
+  },
+  "stagingFav": {
+    "message": "收藏"
+  },
+  "stagingUnfav": {
+    "message": "取消收藏"
+  },
+  "stagingFavDone": {
+    "message": "已收藏 $n$ 条",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingUnfavDone": {
+    "message": "已取消收藏 $n$ 条",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "groupSaveToFolder": {
+    "message": "保存到文件夹…"
+  },
+  "groupCopyToFolder": {
+    "message": "复制到文件夹…"
   }
 }

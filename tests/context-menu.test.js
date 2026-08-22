@@ -214,9 +214,16 @@ const setup = (opts = {}) => {
     el('DIV', 'hist-open-new-window');
     el('DIV', 'hist-open-incognito');
     el('DIV', 'hist-add-bookmark');
+    // velvet staging: the staging group-head menu + its items
+    const stagingGroupMenu = el('MENU', 'staging-group-context-menu');
+    for (const gid of ['staging-group-toggle', 'staging-group-rename', 'staging-group-dissolve', 'staging-group-save-folder', 'staging-group-copy-folder'])
+        el('DIV', gid).classList.add('menu-item');
     // velvet staging: the staging send entries (bookmark menu / hist-row menu)
-    for (const stageItem of ['hist-row-stage', 'add-to-staging'])
+    for (const stageItem of ['hist-row-stage', 'add-to-staging', 'staging-remove-item', 'staging-fav-toggle', 'staging-group-assign'])
         el('DIV', stageItem).classList.add('menu-item');
+    // the bookmark-menu id-dependent entries the unfav-staging-row rule hides
+    for (const bmId of ['bookmark-edit', 'bookmark-delete', 'copy-title-and-url'])
+        el('DIV', bmId).classList.add('menu-item');
     // v4 task-3 #16: the dupes group-head menu items (open-time labels)
     el('DIV', 'dupes-group-clean');
     el('HR', 'dupes-group-menu-sep1');
@@ -252,7 +259,7 @@ const setup = (opts = {}) => {
     // document.querySelectorAll('menu[type=context]') walk in visibleMenu().
     const allMenus = [bookmarkMenu, folderMenu, separatorMenu, searchHistoryMenu,
         histRowMenu, dupesGroupMenu, paletteCmdMenu, viewTabMenu,
-        tabRowMenu, tabGroupMenu, tabClosedMenu, tabClosedTabMenu,
+        tabRowMenu, tabGroupMenu, tabClosedMenu, tabClosedTabMenu, stagingGroupMenu,
         folderTabGroupSubmenu, folderSortSubmenu, bookmarkTabGroupSubmenu];
     globalThis.document = {
         getElementById: id => byId[id] || null,
@@ -516,7 +523,7 @@ const setup = (opts = {}) => {
         groupDialogCalls, groupPickCalls,
         makeBookmarkRow, makeFolderRow, makeSeparatorRow, makeHistoryRow,
         makeStatsHistRow, makeDupesGroupHead, makeLinkFolderRow, menuItem, makeViewTab, openOn,
-        tabRowMenu, tabGroupMenu, tabClosedMenu, tabClosedTabMenu,
+        tabRowMenu, tabGroupMenu, tabClosedMenu, tabClosedTabMenu, stagingGroupMenu,
         makeTabRow, makeWindowHead, makeClosedGroupHead, makeClosedTabRow, makeGroupHead,
         fireWindow: (type, ev) => {
             for (const fn of (windowListeners[type] || []))
@@ -545,7 +552,8 @@ describe('module API', () => {
             ['bookmarkMenu', 'bookmarkTabGroupSubmenu', 'clearMenu', 'closeMenu', 'closeSubmenu',
                 'dupesGroupMenu', 'folderMenu', 'folderSortSubmenu', 'folderTabGroupSubmenu',
                 'histRowMenu', 'openSubmenuFor', 'paletteCmdMenu', 'searchHistoryMenu',
-                'separatorMenu', 'submenuOpen', 'submenuParentEntry', 'switchBookmarkMenu',
+                'separatorMenu', 'stagingGroupMenu', 'submenuOpen', 'submenuParentEntry',
+                'switchBookmarkMenu',
                 'tabClosedMenu', 'tabClosedTabMenu', 'tabGroupMenu', 'tabRowMenu',
                 'toggleSubmenuFor', 'viewTabMenu']);
         // issue #48 follow-up: the flyout API is callable
@@ -2879,5 +2887,110 @@ describe('staging send entries (velvet staging §2.3)', () => {
         expect(staging.calls[0][0]).toBe('add');
         expect(staging.calls[0][1][0].id).toBeNull();
         expect(staging.calls[0][1][0].url).toBe(a.href);
+    });
+});
+
+describe('staging group menu + staging-row entries (velvet staging §3.5/§2.4)', () => {
+    const stagingApi = () => {
+        const calls = [];
+        const groups = { g1: { collapsed: false } };
+        return {
+            calls, groups,
+            toggleGroupFold: gid => { calls.push(['toggle', gid]); groups[gid].collapsed = !groups[gid].collapsed; },
+            renameGroup: gid => calls.push(['rename', gid]),
+            dissolveGroup: gid => calls.push(['dissolve', gid]),
+            saveGroupToFolder: gid => calls.push(['save', gid]),
+            copyGroupToFolder: gid => calls.push(['copy', gid]),
+            isGroupCollapsed: gid => !!groups[gid].collapsed,
+            removeByUrl: url => calls.push(['remove', url]),
+            favToggle: url => calls.push(['fav', url]),
+            openGroupAssign: urls => calls.push(['assign', urls]),
+            isStaged: () => false,
+            addItems: entries => calls.push(['add', entries])
+        };
+    };
+    const makeStagingGroupHead = el => {
+        const li = el('LI');
+        li.classList.add('staging-group');
+        li.dataset.groupId = 'g1';
+        const head = el('SPAN');
+        head.classList.add('group-head', 'staging-group-head');
+        head.parentNode = li;
+        return { li, head };
+    };
+    const makeStagingRow = (el, url, bookmarked) => {
+        const li = el('LI', 'staging-item-0');
+        li.dataset.url = url;
+        if (bookmarked)
+            li.dataset.nodeId = '42';
+        const a = el('A');
+        a.href = url;
+        a.parentNode = li;
+        return { li, a };
+    };
+
+    it('routes the staging group head to its own menu with a state-aware fold label', () => {
+        const staging = stagingApi();
+        const { byId, el, openOn, stagingGroupMenu } = setup({ staging });
+        const { head } = makeStagingGroupHead(el);
+        openOn(head);
+        expect(stagingGroupMenu.style.opacity).toBe('1');
+        expect(byId['staging-group-toggle'].textContent).toBe('stagingGroupCollapse');
+        staging.groups.g1.collapsed = true;
+        openOn(head);
+        expect(byId['staging-group-toggle'].textContent).toBe('stagingGroupExpand');
+    });
+
+    it('dispatches fold/rename/dissolve and the homing entries through the api', () => {
+        const staging = stagingApi();
+        const { el, stagingGroupMenu, menuItem, openOn } = setup({ staging });
+        const { head } = makeStagingGroupHead(el);
+        // each dispatch closes the menu — reopen between fires (real flow)
+        for (const id of ['staging-group-rename', 'staging-group-dissolve', 'staging-group-save-folder', 'staging-group-copy-folder']) {
+            openOn(head);
+            fire(stagingGroupMenu, 'mouseup', makeEvent({ button: 0, target: menuItem(id) }));
+        }
+        expect(staging.calls).toEqual([
+            ['rename', 'g1'], ['dissolve', 'g1'], ['save', 'g1'], ['copy', 'g1']
+        ]);
+    });
+
+    it('staging rows get the dedicated entries; unfav rows lose the id-dependent ones', () => {
+        const staging = stagingApi();
+        const { byId, el, openOn } = setup({ staging });
+        // bookmarked staging row: dedicated entries on, id entries on
+        const bm = makeStagingRow(el, 'http://s1/', true);
+        openOn(bm.a);
+        expect(byId['staging-remove-item'].style.display).toBe('block');
+        expect(byId['staging-group-assign'].style.display).toBe('block');
+        expect(byId['staging-fav-toggle'].textContent).toBe('stagingUnfav');
+        expect(byId['bookmark-delete'].style.display).toBe('');
+        expect(byId['bookmark-edit'].style.display).toBe('');
+        // unfav staging row: fav label flips, id entries hidden
+        const unfav = makeStagingRow(el, 'http://s2/', false);
+        openOn(unfav.a);
+        expect(byId['staging-fav-toggle'].textContent).toBe('stagingFav');
+        expect(byId['bookmark-delete'].style.display).toBe('none');
+        expect(byId['bookmark-edit'].style.display).toBe('none');
+        expect(byId['copy-title-and-url'].style.display).toBe('none');
+        // a plain (non-staging) row restores them and hides the dedicated set
+        const plainCtx = setup({ staging });
+        const plain = plainCtx.makeBookmarkRow('9');
+        plainCtx.openOn(plain.a);
+        expect(plainCtx.byId['bookmark-delete'].style.display).toBe('');
+        expect(plainCtx.byId['staging-remove-item'].style.display).toBe('none');
+    });
+
+    it('dispatches the staging-row entries by data-url', () => {
+        const staging = stagingApi();
+        const { el, bookmarkMenu, menuItem, openOn } = setup({ staging });
+        const row = makeStagingRow(el, 'http://s1/', true);
+        for (const id of ['staging-remove-item', 'staging-fav-toggle', 'staging-group-assign']) {
+            openOn(row.a);
+            fire(bookmarkMenu, 'mouseup', makeEvent({ button: 0, target: menuItem(id) }));
+        }
+        expect(staging.calls).toEqual([
+            ['remove', 'http://s1/'], ['fav', 'http://s1/'], ['assign', ['http://s1/']]
+        ]);
     });
 });

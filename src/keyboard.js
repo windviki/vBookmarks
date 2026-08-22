@@ -928,6 +928,8 @@ export function initKeyboard(ctx = {}) {
         menus.histRowMenu.addEventListener('keydown', contextKeyDown);
     if (menus.dupesGroupMenu)
         menus.dupesGroupMenu.addEventListener('keydown', contextKeyDown);
+    if (menus.stagingGroupMenu)
+        menus.stagingGroupMenu.addEventListener('keydown', contextKeyDown);
     // v4 task-4 #6's palette custom-command menu gets the same binding (K7) —
     // without it the edit/delete rows were unreachable by keys.
     if (menus.paletteCmdMenu)
@@ -1018,6 +1020,7 @@ export function initKeyboard(ctx = {}) {
     const allMenus = [
         menus.bookmarkMenu, menus.folderMenu, menus.separatorMenu,
         menus.searchHistoryMenu, menus.histRowMenu, menus.dupesGroupMenu,
+        menus.stagingGroupMenu,
         menus.tabRowMenu, menus.tabGroupMenu,
         menus.tabClosedMenu, menus.tabClosedTabMenu,
         menus.paletteCmdMenu, menus.viewTabMenu,
@@ -1174,6 +1177,7 @@ export function initKeyboard(ctx = {}) {
     const menuContainers = [
         menus.bookmarkMenu, menus.folderMenu, menus.separatorMenu,
         menus.searchHistoryMenu, menus.histRowMenu, menus.dupesGroupMenu,
+        menus.stagingGroupMenu,
         menus.tabRowMenu, menus.tabGroupMenu,
         // 4.1.0: the two "recently closed" record menus keep Tab trapped too
         menus.tabClosedMenu, menus.tabClosedTabMenu,

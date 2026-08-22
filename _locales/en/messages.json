@@ -2468,5 +2468,83 @@
   },
   "stagingFromHistory": {
     "message": "From history"
+  },
+  "stagingGroupExpand": {
+    "message": "Expand group"
+  },
+  "stagingGroupCollapse": {
+    "message": "Collapse group"
+  },
+  "stagingGroupRename": {
+    "message": "Rename group…"
+  },
+  "stagingGroupDissolve": {
+    "message": "Dissolve group"
+  },
+  "stagingGroupDissolved": {
+    "message": "Group dissolved — items kept in the staging area"
+  },
+  "stagingGroupAssign": {
+    "message": "Group…"
+  },
+  "stagingGroupAssignTitle": {
+    "message": "Assign to a group"
+  },
+  "stagingGroupNew": {
+    "message": "New group"
+  },
+  "stagingGroupNamePrompt": {
+    "message": "New group name"
+  },
+  "stagingGroupNoGroups": {
+    "message": "No groups yet"
+  },
+  "stagingBucketTitle": {
+    "message": "Unbookmarked"
+  },
+  "stagingBucketFavAll": {
+    "message": "Favorite all"
+  },
+  "stagingNew": {
+    "message": "new $n$",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingRowFav": {
+    "message": "Favorite this item"
+  },
+  "stagingRowUnfav": {
+    "message": "Un-favorite this item"
+  },
+  "stagingFav": {
+    "message": "Favorite"
+  },
+  "stagingUnfav": {
+    "message": "Un-favorite"
+  },
+  "stagingFavDone": {
+    "message": "Favorited $n$ item(s)",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingUnfavDone": {
+    "message": "Un-favorited $n$ item(s)",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "groupSaveToFolder": {
+    "message": "Save to folder…"
+  },
+  "groupCopyToFolder": {
+    "message": "Copy to folder…"
   }
 }

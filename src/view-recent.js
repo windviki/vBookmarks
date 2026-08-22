@@ -36,7 +36,7 @@
  */
 
 import { relTimeLabel } from './tree-render.js';
-import { VIEW_ICONS, STAGE_ICON, STAGE_ICON_DONE } from './icons.js';
+import { VIEW_ICONS, STAGE_ICON, STAGE_ICON_DONE, STAR_ICON, STAR_ICON_FILLED, LIST_X_ICON } from './icons.js';
 import { htmlspecialchars } from './escape.js';
 import { parkRowFocus, unparkRowFocus } from './list-focus.js';
 import * as staging from './staging.js';
@@ -183,20 +183,23 @@ export function initViewRecent(ctx = {}) {
         });
     };
 
-    // --- Staging rows (§2.4) ------------------------------------------------
-    // Render order (§3.4): ① the unbookmarked inbox bucket (id=null &&
-    // group=null — the bucket head itself lands with ST4) → ② groups by
-    // createdAt (heads land with ST4) → ③ bookmarked loose rows. Row ids
-    // are list ordinals (`staging-item-<idx>`); `data-node-id` only exists
-    // on bookmarked rows (context-menu routes on that difference) and
-    // `data-url` is the row's identity key.
-    const stagingRowHtml = (it, idx) => {
+    // --- Staging rows (§2.4/§3.4/§3.5) --------------------------------------
+    // Render order: ① the unbookmarked inbox bucket (id=null && group=null,
+    // rendered-partition derivation — the workbench's progress bar) →
+    // ② groups by createdAt ascending → ③ bookmarked loose rows. Row ids
+    // use the DATA index (`staging-item-<items[i]>`), so folding a group
+    // never renumbers the others; `data-node-id` only exists on bookmarked
+    // rows (context-menu routes on that difference) and `data-url` is the
+    // row's identity key.
+    const stagingRowHtml = (it, idx, inGroup) => {
         const path = it.id ? (views.pathOf(it.id) || '') : '';
         const rel = relTimeLabel(it.ts, _m);
         const subText = it.id
             ? ((views.showItemPath() && path) ? `${path} · ${rel}` : rel)
             : `${_m('stagingFromHistory')} · ${rel}`;
-        return `<li class="vbm-row staging-row" id="staging-item-${idx}" role="listitem" ` +
+        const starLabel = _m(it.id ? 'stagingRowUnfav' : 'stagingRowFav');
+        const removeLabel = _m('stagingRemove');
+        return `<li class="vbm-row staging-row${inGroup ? ' staging-member' : ''}" id="staging-item-${idx}" role="listitem" ` +
             `data-url="${htmlspecialchars(it.url)}"` +
             (it.id ? ` data-node-id="${it.id}" data-parentid=""` : '') + '>' +
             treeRender.generateBookmarkHTML(it.title, it.url, 'data-virtual="1"', it.id || null, null, {
@@ -205,30 +208,76 @@ export function initViewRecent(ctx = {}) {
                 rightText: (views.showItemPath() && path) ? path : '',
                 subText
             }) +
+            // Real-state star slot (§2.4): always visible, filled = the URL
+            // IS a tree node; click performs the real create/remove.
+            `<button type="button" class="row-btn staging-star" aria-pressed="${it.id ? 'true' : 'false'}" ` +
+            `aria-label="${htmlspecialchars(starLabel)}" title="${htmlspecialchars(starLabel)}">` +
+            (it.id ? STAR_ICON_FILLED : STAR_ICON) + '</button>' +
+            // Inline remove (§3.8): hover-revealed × — leaves the tree alone.
+            `<button type="button" class="row-btn staging-remove" ` +
+            `aria-label="${htmlspecialchars(removeLabel)}" title="${htmlspecialchars(removeLabel)}">${LIST_X_ICON}</button>` +
             '</li>';
     };
 
+    // The bucket head (§3.4 iteration C): the "not yet homed" inbox — a
+    // hollow star, the live count, the "new since last visit" counter and
+    // the one-hit "favorite all" shortcut.
+    const bucketHeadHtml = (count, news, collapsed) => {
+        const favAllLabel = _m('stagingBucketFavAll');
+        const countText = news > 0 ? `${count} · ${_m('stagingNew', `${news}`)}` : `${count}`;
+        return `<li class="staging-bucket" role="presentation"><span class="staging-bucket-head" ` +
+            `tabindex="-1" role="button" aria-expanded="${collapsed ? 'false' : 'true'}">` +
+            `<i class="staging-bucket-star" aria-hidden="true">${STAR_ICON}</i>` +
+            `<span class="staging-section-title">${_m('stagingBucketTitle')}</span>` +
+            `<span class="count-pill" aria-label="${count}">${countText}</span>` +
+            `<button type="button" class="row-btn staging-bucket-fav-all" tabindex="-1" ` +
+            `aria-label="${htmlspecialchars(favAllLabel)}" title="${htmlspecialchars(favAllLabel)}">${STAR_ICON_FILLED}</button>` +
+            `<span class="chevron${collapsed ? ' collapsed' : ''}" aria-hidden="true"></span>` +
+            `</span></li>`;
+    };
+
+    // A named group head (§3.5): fold control + name + member count. The
+    // hover homing button and the group context menu land with ST5.
+    const groupHeadHtml = (g, count) => {
+        const collapsed = g.collapsed;
+        return `<li class="staging-group" data-group-id="${g.id}" role="presentation">` +
+            `<span class="group-head staging-group-head" tabindex="-1" role="button" aria-expanded="${collapsed ? 'false' : 'true'}">` +
+            `<span class="chevron${collapsed ? ' collapsed' : ''}" aria-hidden="true"></span>` +
+            `<span class="staging-section-title" dir="auto">${htmlspecialchars(g.name || _m('noTitle'))}</span>` +
+            `<span class="count-pill" aria-label="${count}">${count}</span>` +
+            `</span></li>`;
+    };
+
     const renderStagingArea = () => {
-        const items = stagingState.items;
+        const state = stagingState;
+        const idxOf = new Map(state.items.map((it, i) => [it.url, i]));
         let html = '<ul role="list" id="staging-items">';
-        if (!items.length) {
+        if (!state.items.length) {
             html += `<li class="empty-state" role="listitem"><i>${_m('stagingEmpty')}</i></li>`;
         } else {
-            // ① bucket rows → ③ loose rows; grouped members keep their
-            // group's insertion slot (heads render from ST4)
-            let idx = 0;
-            for (const it of items) {
-                if (it.id === null && it.group === null)
-                    html += stagingRowHtml(it, idx++);
+            // ① the unbookmarked inbox bucket
+            const bucket = staging.unfavBucketItems(state);
+            if (bucket.length) {
+                html += bucketHeadHtml(bucket.length, staging.newCount(state), state.unfavCollapsed);
+                if (!state.unfavCollapsed) {
+                    for (const it of bucket)
+                        html += stagingRowHtml(it, idxOf.get(it.url), false);
+                }
             }
-            for (const it of items) {
-                if (it.group)
-                    html += stagingRowHtml(it, idx++);
+            // ② groups in createdAt order (the model sorts on create)
+            for (const g of state.groups) {
+                const members = staging.groupItems(state, g.id);
+                if (!members.length)
+                    continue;
+                html += groupHeadHtml(g, members.length);
+                if (!g.collapsed) {
+                    for (const it of members)
+                        html += stagingRowHtml(it, idxOf.get(it.url), true);
+                }
             }
-            for (const it of items) {
-                if (it.id !== null && it.group === null)
-                    html += stagingRowHtml(it, idx++);
-            }
+            // ③ bookmarked loose rows
+            for (const it of staging.looseItems(state))
+                html += stagingRowHtml(it, idxOf.get(it.url), false);
         }
         html += '</ul>';
         return html;
@@ -359,6 +408,163 @@ export function initViewRecent(ctx = {}) {
                     count++;
             }
             render(items || [], count);
+        });
+    };
+
+    // --- Real organize actions on the staging rows (§3.4 — "favorite" IS
+    // a tree operation, exactly like the quick-add star and the stats
+    // history-row ☆) ---------------------------------------------------------
+    const quickAddFolderId = () => store.get('quickAddFolderId', '1') || '1';
+
+    const refreshTree = () => {
+        if (treeView && treeView.generateTree)
+            chrome.bookmarks.getTree(treeView.generateTree);
+    };
+
+    // Resolve the tree node for a URL without creating one: the first exact
+    // hit (same anchor rule the relink index uses).
+    const findTreeBookmark = (url, cb) => {
+        chrome.bookmarks.search({ url }, found => {
+            const hit = (found || []).find(f => f.url === url);
+            cb(hit || null);
+        });
+    };
+
+    // Favorite one item: dedupe against the tree first (quick-add star
+    // semantics), then create into the quick-add folder.
+    const favOne = (it, cb) => {
+        findTreeBookmark(it.url, hit => {
+            if (hit) {
+                staging.setFav(stagingState, it.url, hit.id);
+                cb('linked');
+                return;
+            }
+            chrome.bookmarks.create({
+                parentId: quickAddFolderId(),
+                url: it.url,
+                title: it.title || it.url
+            }, created => {
+                if (!created || chrome.runtime.lastError) {
+                    cb('failed');
+                    return;
+                }
+                staging.setFav(stagingState, it.url, created.id);
+                cb('created');
+            });
+        });
+    };
+
+    const favToggle = url => {
+        const it = staging.getByUrl(stagingState, url);
+        if (!it)
+            return;
+        if (it.id) {
+            // Un-favorite: the REAL remove — the item stays, demoted to the
+            // unbookmarked state (the workbench never loses your work).
+            chrome.bookmarks.remove(it.id, () => {
+                if (chrome.runtime.lastError)
+                    return;
+                staging.setUnfavById(stagingState, it.id);
+                persistStaging();
+                renderStaging();
+                refreshTree();
+                toast(_m('stagingUnfavDone', ['1']));
+            });
+        } else {
+            favOne(it, how => {
+                if (how === 'failed')
+                    return;
+                persistStaging();
+                renderStaging();
+                refreshTree();
+                toast(_m('stagingFavDone', ['1']));
+            });
+        }
+    };
+
+    // The bucket head's one-hit "favorite all" (§3.4) — sequential, with a
+    // linked/created/skipped tally.
+    const favAllBucket = () => {
+        const bucket = staging.unfavBucketItems(stagingState);
+        if (!bucket.length)
+            return;
+        let done = 0;
+        let failed = 0;
+        const step = () => {
+            if (done >= bucket.length) {
+                persistStaging();
+                renderStaging();
+                refreshTree();
+                if (bucket.length - failed > 0)
+                    toast(_m('stagingFavDone', [`${bucket.length - failed}`]));
+                return;
+            }
+            const it = bucket[done++];
+            favOne(it, how => {
+                if (how === 'failed')
+                    failed++;
+                step();
+            });
+        };
+        step();
+    };
+
+    // --- Group operations (§3.5 — purely local, zero tree ops) --------------
+    const toggleGroupFold = groupId => {
+        const g = staging.findGroup(stagingState, groupId);
+        if (!g)
+            return;
+        staging.setGroupCollapsed(stagingState, groupId, !g.collapsed);
+        persistStaging();
+        renderStaging();
+    };
+
+    const toggleBucketFold = () => {
+        staging.setUnfavCollapsed(stagingState, !stagingState.unfavCollapsed);
+        persistStaging();
+        renderStaging();
+    };
+
+    const renameGroup = groupId => {
+        const g = staging.findGroup(stagingState, groupId);
+        if (!g || !dialogs || !dialogs.NewFolderDialog)
+            return;
+        dialogs.NewFolderDialog.open(g.name, name => {
+            if (!name || !name.trim())
+                return;
+            staging.renameGroup(stagingState, groupId, name.trim());
+            persistStaging();
+            renderStaging();
+        });
+    };
+
+    const dissolveGroup = groupId => {
+        if (!staging.dissolveGroup(stagingState, groupId))
+            return;
+        persistStaging();
+        renderStaging();
+        toast(_m('stagingGroupDissolved'));
+    };
+
+    // The assign dialog (§3.3): existing groups as rows + a new-name input.
+    const openGroupAssign = urls => {
+        if (!dialogs || !dialogs.StagingGroupAssignDialog)
+            return;
+        const groups = stagingState.groups.map(g => ({
+            id: g.id,
+            name: g.name,
+            count: staging.groupItems(stagingState, g.id).length
+        }));
+        dialogs.StagingGroupAssignDialog.open({
+            groups,
+            onAssign: (groupId, name) => {
+                let target = groupId && staging.findGroup(stagingState, groupId);
+                if (!target)
+                    target = staging.createGroup(stagingState, name || '');
+                staging.assignGroup(stagingState, urls, target.id);
+                persistStaging();
+                renderStaging();
+            }
         });
     };
 
@@ -609,6 +815,43 @@ export function initViewRecent(ctx = {}) {
                 toggleUrl(url, id, title);
             return;
         }
+        if (closest('.staging-star')) {
+            e.preventDefault();
+            e.stopPropagation();
+            const li = closest('li');
+            const url = li && li.dataset && li.dataset.url;
+            if (url)
+                favToggle(url);
+            return;
+        }
+        if (closest('.staging-remove')) {
+            e.preventDefault();
+            e.stopPropagation();
+            const li = closest('li');
+            const url = li && li.dataset && li.dataset.url;
+            if (url)
+                api.removeByUrl(url);
+            return;
+        }
+        if (closest('.staging-bucket-fav-all')) {
+            e.preventDefault();
+            e.stopPropagation();
+            favAllBucket();
+            return;
+        }
+        if (closest('.staging-bucket-head')) {
+            e.preventDefault();
+            toggleBucketFold();
+            return;
+        }
+        if (closest('.staging-group-head')) {
+            e.preventDefault();
+            const li = closest('li');
+            const gid = li && li.dataset && li.dataset.groupId;
+            if (gid)
+                toggleGroupFold(gid);
+            return;
+        }
         if (closest('.recent-stage-all')) {
             e.preventDefault();
             e.stopPropagation();
@@ -657,10 +900,13 @@ export function initViewRecent(ctx = {}) {
         activate: () => {
             probePermission(); // the grant may have landed while away
             // §0.3: lastSeenTs advances on every activation — the bucket's
-            // "new N" counts arrivals since the previous visit.
+            // "new N" counts arrivals since the previous visit, so the
+            // repaint must follow the new baseline.
             if (staging.count(stagingState)) {
                 staging.markSeen(stagingState);
                 persistStaging();
+                refresh();
+                return;
             }
             if (dirty || !$list.innerHTML)
                 refresh();
@@ -672,18 +918,28 @@ export function initViewRecent(ctx = {}) {
 
     // The send API consumed by context-menu (bookmark/folder/hist-row entries),
     // view-stats (history rows) and view-tabgroups (tabs) — see neat.js wiring.
+    const removeByUrl = url => {
+        if (!staging.getByUrl(stagingState, url))
+            return;
+        staging.removeByUrls(stagingState, [url]);
+        persistStaging();
+        renderStaging();
+        toast(_m('stagingRemoved'));
+    };
+
     const api = {
         addItems,
         sendFolder,
+        favToggle,
+        favAllBucket,
+        toggleGroupFold,
+        toggleBucketFold,
+        isGroupCollapsed: gid => !!(staging.findGroup(stagingState, gid) || {}).collapsed,
+        renameGroup,
+        dissolveGroup,
+        openGroupAssign: urls => openGroupAssign(urls),
         isStaged: url => !!staging.getByUrl(stagingState, url),
-        removeByUrl: url => {
-            if (!staging.getByUrl(stagingState, url))
-                return;
-            staging.removeByUrls(stagingState, [url]);
-            persistStaging();
-            renderStaging();
-            toast(_m('stagingRemoved'));
-        },
+        removeByUrl,
         state: () => stagingState
     };
 

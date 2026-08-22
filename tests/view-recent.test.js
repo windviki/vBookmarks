@@ -126,6 +126,7 @@ const setup = (opts = {}) => {
             }
         }
     };
+    chromeStub.runtime = { lastError: undefined };
     chromeStub.storage = {
         listeners: [],
         onChanged: { addListener(fn) { chromeStub.storage.listeners.push(fn); } }
@@ -1029,5 +1030,135 @@ describe('staging view (velvet staging ST3)', () => {
         expect(confirmCalls).toHaveLength(1);
         expect(confirmCalls[0]).toContain('101');
         expect(viewRecent.api.state().items).toHaveLength(101);
+    });
+});
+
+describe('staging groups + bucket + inline actions (velvet staging ST4)', () => {
+    const undoOn = () => ({ toastCalls: [], showToast(msg) { this.toastCalls.push(msg); } });
+
+    it('renders the bucket head with new-N, groups with heads, loose rows last', () => {
+        const { viewRecent, $list, def } = setup({});
+        // two history rows (bucket) + one bookmarked loose + one grouped member
+        viewRecent.api.addItems([
+            { id: null, url: 'http://h1/', title: 'H1', ts: 10 },
+            { id: null, url: 'http://h2/', title: 'H2', ts: 20 },
+            { id: '5', url: 'http://k/', title: 'K', ts: 30 }
+        ]);
+        // simulate a previous visit between the two bucket arrivals, then
+        // repaint (activate would stamp a fresh lastSeenTs)
+        viewRecent.api.state().lastSeenTs = 15;
+        viewRecent.refresh();
+        let html = $list.innerHTML;
+        expect(html).toContain('staging-bucket-head');
+        expect(html).toContain('stagingNew[1]'); // only h2 (ts 20 > 15)
+        // loose bookmarked row renders after the bucket (order in html)
+        expect(html.indexOf('http://h1/')).toBeLessThan(html.indexOf('http://k/'));
+        // assign the two bucket rows into a new group via the model
+        const group = viewRecent.api.state().groups.length
+            ? null : { id: 'g_test', name: 'Tools', collapsed: false, createdAt: 1, sourceFolderId: null, sourceTabGroup: null };
+        if (group)
+            viewRecent.api.state().groups.push(group);
+        viewRecent.api.state().items.forEach(it => {
+            if (it.url === 'http://h1/' || it.url === 'http://h2/')
+                it.group = 'g_test';
+        });
+        def().activate();
+        html = $list.innerHTML;
+        expect(html).toContain('staging-group-head');
+        expect(html).toContain('Tools');
+        expect(html).toContain('staging-member'); // member rows indented
+        // bucket is now EMPTY (both rows grouped) → no bucket head
+        expect(html).not.toContain('staging-bucket-head');
+    });
+
+    it('folding the bucket and a group hides their rows and persists', () => {
+        const { viewRecent, store, $list, def } = setup({});
+        viewRecent.api.addItems([
+            { id: null, url: 'http://h1/', title: 'H1', ts: 10 },
+            { id: '5', url: 'http://k/', title: 'K', ts: 30 }
+        ]);
+        def().activate();
+        viewRecent.api.toggleBucketFold();
+        const saved = JSON.parse(store.get('staging'));
+        expect(saved.unfavCollapsed).toBe(true);
+        expect($list.innerHTML).not.toContain('http://h1/'); // member gone
+        expect($list.innerHTML).toContain('staging-bucket-head'); // head stays
+        viewRecent.api.toggleBucketFold();
+        expect(JSON.parse(store.get('staging')).unfavCollapsed).toBe(false);
+        expect($list.innerHTML).toContain('http://h1/');
+    });
+
+    it('the inline star performs a REAL favorite: dedupe-anchor or create', () => {
+        const { viewRecent, chrome } = setup({
+            searchResults: { 'http://h/': [{ id: '77', url: 'http://h/' }] }
+        });
+        viewRecent.api.addItems([{ id: null, url: 'http://h/', title: 'H' }]);
+        viewRecent.api.favToggle('http://h/');
+        // tree already has the URL → anchored, no create
+        expect(viewRecent.api.state().items[0].id).toBe('77');
+        expect(chrome.bookmarks.createCalls || []).toEqual([]);
+        // and the bookmarked star un-favorites via a REAL remove, item stays
+        chrome.bookmarks.removeCalls = [];
+        chrome.bookmarks.remove = (id, cb) => { chrome.bookmarks.removeCalls.push(id); cb(); };
+        viewRecent.api.favToggle('http://h/');
+        expect(chrome.bookmarks.removeCalls).toEqual(['77']);
+        expect(viewRecent.api.state().items[0].id).toBeNull();
+        expect(viewRecent.api.state().items).toHaveLength(1);
+    });
+
+    it('favToggle on an unanchored URL creates into the quick-add folder', () => {
+        const createCalls = [];
+        const { viewRecent, chrome } = setup({ searchResults: {} });
+        chrome.bookmarks.create = (opts, cb) => {
+            createCalls.push(opts);
+            cb({ id: 'new1', url: opts.url, title: opts.title });
+        };
+        chrome.bookmarks.getTree = cb => cb([]);
+        viewRecent.api.addItems([{ id: null, url: 'http://fresh/', title: 'F' }]);
+        viewRecent.api.favToggle('http://fresh/');
+        expect(createCalls).toEqual([{ parentId: '1', url: 'http://fresh/', title: 'F' }]);
+        expect(viewRecent.api.state().items[0].id).toBe('new1');
+    });
+
+    it('bucket favorite-all favorites every bucket item sequentially', () => {
+        const createCalls = [];
+        const { viewRecent, chrome, undo } = setup({
+            undo: undoOn(), searchResults: {}
+        });
+        chrome.bookmarks.create = (opts, cb) => {
+            createCalls.push(opts.url);
+            cb({ id: 'c' + createCalls.length, url: opts.url, title: 'x' });
+        };
+        chrome.bookmarks.getTree = cb => cb([]);
+        viewRecent.api.addItems([
+            { id: null, url: 'http://a/', title: 'A' },
+            { id: null, url: 'http://b/', title: 'B' }
+        ]);
+        viewRecent.api.favAllBucket();
+        expect(createCalls.sort()).toEqual(['http://a/', 'http://b/']);
+        expect(viewRecent.api.state().items.every(i => i.id)).toBe(true);
+        expect(undo.toastCalls).toContain('stagingFavDone[2]');
+    });
+
+    it('dissolveGroup frees members and forgets the source', () => {
+        const { viewRecent } = setup({});
+        viewRecent.api.addItems([{ id: '5', url: 'http://k/', title: 'K' }]);
+        const state = viewRecent.api.state();
+        state.groups.push({ id: 'g1', name: 'G', collapsed: false, createdAt: 1, sourceFolderId: 'f7', sourceTabGroup: null });
+        state.items[0].group = 'g1';
+        viewRecent.api.dissolveGroup('g1');
+        expect(viewRecent.api.state().groups).toHaveLength(0);
+        expect(viewRecent.api.state().items[0].group).toBeNull();
+    });
+
+    it('isGroupCollapsed reports the fold state for the menu label', () => {
+        const { viewRecent } = setup({});
+        viewRecent.api.addItems([{ id: '5', url: 'http://k/', title: 'K' }]);
+        const state = viewRecent.api.state();
+        state.groups.push({ id: 'g1', name: 'G', collapsed: true, createdAt: 1, sourceFolderId: null, sourceTabGroup: null });
+        state.items[0].group = 'g1';
+        expect(viewRecent.api.isGroupCollapsed('g1')).toBe(true);
+        viewRecent.api.toggleGroupFold('g1');
+        expect(viewRecent.api.isGroupCollapsed('g1')).toBe(false);
     });
 });
