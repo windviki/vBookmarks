@@ -99,6 +99,9 @@ const IDS = [
     'copy-move-dialog', 'copy-move-dialog-text', 'copy-move-move-button', 'copy-move-copy-button', 'copy-move-cancel-button',
     'bookmark-folder-pick-dialog', 'bookmark-folder-pick-text', 'bookmark-folder-pick-list',
     'bookmark-folder-pick-cancel-button',
+    // velvet staging §4.1: picker action buttons + quick-pick chrome
+    'bookmark-folder-pick-move-button', 'bookmark-folder-pick-copy-button',
+    'bookmark-folder-pick-chips', 'bookmark-folder-pick-filter', 'bookmark-folder-pick-note',
     'cover'
 ];
 
@@ -795,28 +798,170 @@ describe('Ctrl/Cmd+D quick-add guard (quick-add.js)', () => {
     });
 });
 
-describe('BookmarkFolderPickDialog (4.1.0)', () => {
-    it('renders the folder tree as indented rows and picks on click', () => {
+describe('BookmarkFolderPickDialog (4.1.0 + velvet staging §4.1)', () => {
+    // row buttons only (every li now also carries an inline pin toggle)
+    const rowBtns = () => els['bookmark-folder-pick-list']
+        .querySelectorAll('button')
+        .filter(b => (b.className || '').indexOf('bookmark-folder-pick-row') >= 0);
+    const pinBtns = () => els['bookmark-folder-pick-list']
+        .querySelectorAll('button')
+        .filter(b => (b.className || '').indexOf('folder-pick-pin-btn') >= 0);
+    const miniStore = (data = {}) => ({
+        data,
+        get(k, def) { return k in this.data ? this.data[k] : def; },
+        set(k, v) { this.data[k] = v; }
+    });
+
+    it('renders the folder tree as indented rows and picks on click (legacy mode)', () => {
         const d = freshDialogs();
         const picks = [];
-        d.BookmarkFolderPickDialog.open({ dialog: 'Pick one', onPick: id => picks.push(id) });
+        d.BookmarkFolderPickDialog.open({ dialog: 'Pick one', onPick: (id, action) => picks.push([id, action]) });
         expect(bodyClasses.contains('needFolderPick')).toBe(true);
-        const list = els['bookmark-folder-pick-list'];
-        const btns = list.querySelectorAll('button');
+        const btns = rowBtns();
         expect(btns).toHaveLength(3); // Bar, Dev (child), Other
         expect(btns[0].textContent).toBe('Bar');
         expect(btns[1].textContent).toBe('Dev');
         expect(btns[1].style.paddingInlineStart).toBe('24px'); // 8 + depth*16
+        // legacy: no mode key → single-select form, move/copy buttons hidden
+        expect(els['bookmark-folder-pick-move-button'].hidden).toBe(true);
+        expect(els['bookmark-folder-pick-copy-button'].hidden).toBe(true);
         btns[1].trigger('click');
-        expect(picks).toEqual(['11']);
+        expect(picks).toEqual([['11', 'pick']]);
         expect(bodyClasses.contains('needFolderPick')).toBe(false);
+    });
+
+    it('legacy picks record the target into folderPickRecents', () => {
+        const store = miniStore();
+        const d = freshDialogs(store);
+        d.BookmarkFolderPickDialog.open({ dialog: 'x', onPick: () => {} });
+        rowBtns()[2].trigger('click'); // Other = '2'
+        d.BookmarkFolderPickDialog.open({ dialog: 'x', onPick: () => {} });
+        rowBtns()[1].trigger('click'); // Dev = '11' — LRU, newest first
+        expect(JSON.parse(store.data.folderPickRecents)).toEqual(['11', '2']);
+    });
+
+    it('three-button mode: row click selects, action button commits with the action', () => {
+        const store = miniStore();
+        const d = freshDialogs(store);
+        const picks = [];
+        d.BookmarkFolderPickDialog.open({ dialog: 'Move or copy?', mode: null, onPick: (id, action) => picks.push([id, action]) });
+        const move = els['bookmark-folder-pick-move-button'];
+        const copy = els['bookmark-folder-pick-copy-button'];
+        expect(move.hidden).toBe(false);
+        expect(copy.hidden).toBe(false);
+        expect(move.disabled).toBe(true); // armed only after a selection
+        rowBtns()[1].trigger('click'); // Dev
+        expect(move.disabled).toBe(false);
+        expect(rowBtns()[1].className).toContain('selected');
+        move.trigger('click');
+        expect(picks).toEqual([['11', 'move']]);
+        expect(bodyClasses.contains('needFolderPick')).toBe(false);
+        // selection recorded as a recent
+        expect(JSON.parse(store.data.folderPickRecents)).toEqual(['11']);
+    });
+
+    it('locked mode shows only the matching action button', () => {
+        const d = freshDialogs();
+        d.BookmarkFolderPickDialog.open({ dialog: 'x', mode: 'copy', onPick: () => {} });
+        expect(els['bookmark-folder-pick-move-button'].hidden).toBe(true);
+        expect(els['bookmark-folder-pick-copy-button'].hidden).toBe(false);
+        rowBtns()[0].trigger('click');
+        const picks = [];
+        d.BookmarkFolderPickDialog.onPick = (id, action) => picks.push([id, action]);
+        els['bookmark-folder-pick-copy-button'].trigger('click');
+        expect(picks).toEqual([['1', 'copy']]);
+    });
+
+    it('hasUnfav reveals the dual-state note', () => {
+        const d = freshDialogs();
+        d.BookmarkFolderPickDialog.open({ dialog: 'x', mode: 'move', onPick: () => {} });
+        expect(els['bookmark-folder-pick-note'].hidden).toBe(true);
+        d.BookmarkFolderPickDialog.open({ dialog: 'x', mode: 'move', hasUnfav: true, onPick: () => {} });
+        expect(els['bookmark-folder-pick-note'].hidden).toBe(false);
+        expect(els['bookmark-folder-pick-note'].innerHTML).toBe('folderPickFavNote');
+    });
+
+    it('filter input hides non-matching rows', () => {
+        const d = freshDialogs();
+        d.BookmarkFolderPickDialog.open({ dialog: 'x', onPick: () => {} });
+        const filter = els['bookmark-folder-pick-filter'];
+        filter.value = 'dev';
+        filter.trigger('input');
+        const btns = rowBtns();
+        expect(btns[0].style.display).toBe('none'); // Bar
+        expect(btns[1].style.display).toBe('');     // Dev
+        expect(btns[2].style.display).toBe('none'); // Other
+    });
+
+    it('inline pin toggle flips the pin roster, chip row and aria state', () => {
+        const store = miniStore();
+        const d = freshDialogs(store);
+        d.BookmarkFolderPickDialog.open({ dialog: 'x', onPick: () => {} });
+        const pins = pinBtns();
+        expect(pins).toHaveLength(3);
+        expect(pins[1].getAttribute('aria-pressed')).toBe('false');
+        pins[1].trigger('click'); // pin Dev
+        expect(JSON.parse(store.data.folderPickPins)).toEqual(['11']);
+        expect(pins[1].getAttribute('aria-pressed')).toBe('true');
+        expect((pins[1].className || '').indexOf('pinned') >= 0).toBe(true);
+        // chips row: one pinned chip labeled with the full path
+        const chips = els['bookmark-folder-pick-chips'];
+        expect(chips.hidden).toBe(false);
+        expect(chips.innerHTML).toContain('folder-pick-chip-label');
+        expect(chips.innerHTML).toContain('Bar / Dev');
+        pins[1].trigger('click'); // unpin → chips row empty again
+        expect(JSON.parse(store.data.folderPickPins)).toEqual([]);
+        expect(chips.hidden).toBe(true);
+    });
+
+    it('chips render recents (LRU, pinned folders not repeated) and click selects', () => {
+        const store = miniStore({
+            folderPickPins: JSON.stringify(['2']),
+            folderPickRecents: JSON.stringify(['11', '2', '1'])
+        });
+        const d = freshDialogs(store);
+        d.BookmarkFolderPickDialog.open({ dialog: 'x', mode: null, onPick: () => {} });
+        const chips = els['bookmark-folder-pick-chips'];
+        // pinned '2' first; recents follow in LRU order with '2' deduped out
+        const order = [...chips.innerHTML.matchAll(/data-folder-id="([^"]+)"/g)].map(m => m[1]);
+        expect(order).toEqual(['2', '11', '1']);
+        // chip click behaves like a row click: select (armed action buttons)
+        const move = els['bookmark-folder-pick-move-button'];
+        chips.trigger('click', { target: { closest: sel => (sel === '.folder-pick-chip' ? { dataset: { folderId: '11' } } : null) } });
+        expect(move.disabled).toBe(false);
+        expect(d.BookmarkFolderPickDialog.selectedFolderId).toBe('11');
+    });
+
+    it('lazy roster pruning drops dead ids at open and writes back', () => {
+        const store = miniStore({
+            folderPickPins: JSON.stringify(['99', '1']),
+            folderPickRecents: JSON.stringify(['42', '2'])
+        });
+        const d = freshDialogs(store);
+        d.BookmarkFolderPickDialog.open({ dialog: 'x', onPick: () => {} });
+        expect(JSON.parse(store.data.folderPickPins)).toEqual(['1']); // '99' dead
+        expect(JSON.parse(store.data.folderPickRecents)).toEqual(['2']); // '42' dead
+    });
+
+    it('close() restores the invoker focus by default; {restoreFocus:false} does not', () => {
+        const d = freshDialogs();
+        const invoker = els['cover'];
+        globalThis.document.activeElement = invoker;
+        d.BookmarkFolderPickDialog.open({ dialog: 'x', onPick: () => {} });
+        d.BookmarkFolderPickDialog.close();
+        expect(invoker.focused).toBe(true); // regularized default
+        invoker.focused = false;
+        globalThis.document.activeElement = invoker;
+        d.BookmarkFolderPickDialog.open({ dialog: 'x', onPick: () => {} });
+        d.BookmarkFolderPickDialog.close({ restoreFocus: false });
+        expect(invoker.focused).toBe(false);
     });
 
     it('↑/↓/Home/End walk the folder rows (audit L3: Tab alone is a trap)', () => {
         const d = freshDialogs();
         d.BookmarkFolderPickDialog.open({ dialog: 'Pick one', onPick: () => {} });
         const list = els['bookmark-folder-pick-list'];
-        const btns = list.querySelectorAll('button');
+        const btns = rowBtns();
         const key = k => {
             const ev = { key: k, prevented: false, preventDefault() { this.prevented = true; } };
             list.trigger('keydown', ev);
@@ -836,6 +981,8 @@ describe('BookmarkFolderPickDialog (4.1.0)', () => {
         const ev = key('ArrowUp');
         expect(btns[1].focused).toBe(true);
         expect(ev.prevented).toBe(true);
+        // pin toggles never join the walk (Tab reaches them instead)
+        expect(pinBtns().every(b => !b.focused)).toBe(true);
         // unrelated keys pass through untouched
         const other = { key: 'a', preventDefault() { this.prevented = true; } };
         list.trigger('keydown', other);

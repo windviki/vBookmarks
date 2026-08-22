@@ -2195,5 +2195,29 @@
   },
   "optionTabGroupsClosedLimit": {
     "message": "关闭标签/标签组历史保留条数"
+  },
+  "folderPickMoveHere": {
+    "message": "移动到此处"
+  },
+  "folderPickCopyHere": {
+    "message": "复制到此处"
+  },
+  "folderPickFilter": {
+    "message": "过滤文件夹…"
+  },
+  "folderPickFavNote": {
+    "message": "未收藏的条目将收藏到此处"
+  },
+  "folderPickPinned": {
+    "message": "已固定"
+  },
+  "folderPickRecent": {
+    "message": "最近"
+  },
+  "pinFolder": {
+    "message": "固定此文件夹"
+  },
+  "unpinFolder": {
+    "message": "取消固定此文件夹"
   }
 }

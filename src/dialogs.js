@@ -14,6 +14,10 @@
  */
 import { pickGroupColor } from './tab-group-utils.js';
 import { htmlspecialchars } from './escape.js';
+import { FOLDER_ICON, PIN_ICON, CLOCK_ICON } from './icons.js';
+import {
+    readIdList, writeIdList, recordRecent, togglePin, pruneIds, chipsModel
+} from './folder-pick.js';
 
 // Replaces neatools' String.prototype.widont with a pure function: keeps the
 // last two words of a dialog message on one line.
@@ -389,87 +393,325 @@ export function initDialogs(ctx = {}) {
             CopyMoveDialog.close(false);
         });
 
-    // Bookmark-folder picker for the tab-groups view: lets the user choose
-    // a bookmark folder as the destination for selected tabs. Rendered as a
-    // flat, indented list of folder buttons (the bookmark tree order).
+    // Bookmark-folder picker (velvet staging §4.1): the tab-groups view's
+    // destination picker, extended into the staging area's move/copy target
+    // dialog. Structure top-down: quick-pick chips row (pins in user order,
+    // then LRU recents — both pruned against the live tree at open), a
+    // filter input, the flat indented folder list (each row with an inline
+    // pin toggle), the dual-state note, and the action buttons.
+    //
+    // open({ dialog, mode?, hasUnfav?, onPick(folderId, action) }):
+    //   - no `mode` key: LEGACY single-select (tab-groups) — a row click
+    //     commits immediately, action = 'pick', button area stays a lone
+    //     cancel (4.1.0 behavior);
+    //   - mode === null: three-button form [Move here][Copy here][Cancel] —
+    //     row/chip click only SELECTS, the action button commits;
+    //   - mode === 'move'|'copy': locked single action + cancel.
+    // Every successful pick records the target into folderPickRecents (all
+    // picker uses share the roster). close({ restoreFocus = true }) — the
+    // old inverted `close(false)` quirk is regularized.
     const BookmarkFolderPickDialog = {
+        mode: 'pick',
+        selectedFolderId: null,
+        folders: [],
+        onPick: () => {
+        },
         open: opts => {
             if (!opts)
                 return;
             rememberInvoker();
             BookmarkFolderPickDialog.onPick = opts.onPick || (() => {});
+            const hasMode = Object.prototype.hasOwnProperty.call(opts, 'mode');
+            BookmarkFolderPickDialog.mode = hasMode ? opts.mode : 'pick';
+            BookmarkFolderPickDialog.selectedFolderId = null;
             const textEl = $('bookmark-folder-pick-text');
             const list = $('bookmark-folder-pick-list');
             const cancelEl = $('bookmark-folder-pick-cancel-button');
+            const moveEl = $('bookmark-folder-pick-move-button');
+            const copyEl = $('bookmark-folder-pick-copy-button');
+            const chipsEl = $('bookmark-folder-pick-chips');
+            const filterEl = $('bookmark-folder-pick-filter');
+            const noteEl = $('bookmark-folder-pick-note');
             if (!textEl || !list || !cancelEl)
                 return;
             textEl.innerHTML = widont(opts.dialog || _m('bookmarkFolderPickDialogTitle'));
+            cancelEl.innerHTML = htmlspecialchars(_m('nope'));
             list.innerHTML = '';
+            const isLegacy = BookmarkFolderPickDialog.mode === 'pick';
+            const showMove = !isLegacy && BookmarkFolderPickDialog.mode !== 'copy';
+            const showCopy = !isLegacy && BookmarkFolderPickDialog.mode !== 'move';
+            if (moveEl) {
+                moveEl.hidden = !showMove;
+                moveEl.innerHTML = `<strong>${htmlspecialchars(_m('folderPickMoveHere'))}</strong>`;
+                moveEl.disabled = true;
+            }
+            if (copyEl) {
+                copyEl.hidden = !showCopy;
+                copyEl.innerHTML = htmlspecialchars(_m('folderPickCopyHere'));
+                copyEl.disabled = true;
+            }
+            if (noteEl) {
+                noteEl.hidden = !opts.hasUnfav;
+                noteEl.innerHTML = htmlspecialchars(_m('folderPickFavNote'));
+            }
+            if (filterEl) {
+                filterEl.value = '';
+                filterEl.placeholder = _m('folderPickFilter');
+            }
             const render = tree => {
                 const folders = [];
-                const walk = (nodes, depth) => {
+                const paths = new Map();
+                const walk = (nodes, depth, prefix) => {
                     for (let i = 0, l = (nodes || []).length; i < l; i++) {
                         const node = nodes[i];
                         if (!node.children)
                             continue;
-                        folders.push({ id: node.id, title: node.title || _m('noTitle'), depth });
-                        walk(node.children, depth + 1);
+                        const title = node.title || _m('noTitle');
+                        const path = prefix ? `${prefix} / ${title}` : title;
+                        folders.push({ id: node.id, title, depth, path });
+                        paths.set(node.id, path);
+                        walk(node.children, depth + 1, path);
                     }
                 };
                 const roots = (tree && tree[0] && tree[0].children) ? tree[0].children : (tree || []);
-                walk(roots, 0);
+                walk(roots, 0, '');
+                BookmarkFolderPickDialog.folders = folders;
+                // Lazy roster hygiene: drop pin/recent ids the tree no longer
+                // has, writing back only when something actually died.
+                const valid = new Set(folders.map(f => f.id));
+                let pins = readIdList(store ? store.get('folderPickPins') : null);
+                let recents = readIdList(store ? store.get('folderPickRecents') : null);
+                const prunedPins = pruneIds(pins, valid);
+                const prunedRecents = pruneIds(recents, valid);
+                if (store && (prunedPins.changed || prunedRecents.changed)) {
+                    pins = prunedPins.list;
+                    recents = prunedRecents.list;
+                    store.set('folderPickPins', writeIdList(pins));
+                    store.set('folderPickRecents', writeIdList(recents));
+                }
+                BookmarkFolderPickDialog.renderChips(chipsEl, pins, prunedRecents.list, paths);
+                renderRows(list, folders, pins, isLegacy);
+            };
+            const renderRows = (list2, folders, pins, isLegacy2) => {
                 if (!folders.length) {
                     const li = document.createElement('li');
                     li.className = 'bookmark-folder-pick-empty';
                     li.textContent = _m('bookmarkFolderNoFolders');
-                    list.appendChild(li);
+                    list2.appendChild(li);
                     return;
                 }
+                const pinSet = new Set(pins.map(String));
                 for (const f of folders) {
                     const li = document.createElement('li');
                     const btn = document.createElement('button');
                     btn.type = 'button';
                     btn.className = 'bookmark-folder-pick-row';
                     btn.style.paddingInlineStart = `${8 + f.depth * 16}px`;
-                    btn.title = f.title;
+                    btn.title = f.path;
                     btn.textContent = f.title;
+                    if (btn.dataset)
+                        btn.dataset.folderId = f.id;
                     btn.addEventListener('click', () => {
-                        BookmarkFolderPickDialog.onPick(f.id);
-                        BookmarkFolderPickDialog.close(false);
+                        if (isLegacy2)
+                            BookmarkFolderPickDialog.commit(f.id, 'pick');
+                        else
+                            BookmarkFolderPickDialog.select(f.id);
                     });
                     li.appendChild(btn);
-                    list.appendChild(li);
+                    const pinBtn = document.createElement('button');
+                    pinBtn.type = 'button';
+                    const pinned = pinSet.has(String(f.id));
+                    pinBtn.className = 'row-btn folder-pick-pin-btn' + (pinned ? ' pinned' : '');
+                    pinBtn.innerHTML = PIN_ICON;
+                    const pinLabel = _m(pinned ? 'unpinFolder' : 'pinFolder');
+                    pinBtn.title = pinLabel;
+                    pinBtn.setAttribute('aria-label', pinLabel);
+                    pinBtn.setAttribute('aria-pressed', pinned ? 'true' : 'false');
+                    if (pinBtn.dataset)
+                        pinBtn.dataset.folderId = f.id;
+                    pinBtn.addEventListener('click', e => {
+                        if (e && e.stopPropagation)
+                            e.stopPropagation();
+                        BookmarkFolderPickDialog.togglePinFor(f.id);
+                    });
+                    li.appendChild(pinBtn);
+                    list2.appendChild(li);
                 }
             };
             chrome.bookmarks.getTree(render);
             body.classList.add('needFolderPick');
-            cancelEl.focus();
+            if (!isLegacy && filterEl && filterEl.focus)
+                filterEl.focus();
+            else
+                cancelEl.focus();
         },
-        close: wasOpen => {
+        // Row/chip selection in the action modes: highlight the target and
+        // arm the move/copy buttons (the commit happens on those).
+        select: id => {
+            BookmarkFolderPickDialog.selectedFolderId = id;
+            const list = $('bookmark-folder-pick-list');
+            const moveEl = $('bookmark-folder-pick-move-button');
+            const copyEl = $('bookmark-folder-pick-copy-button');
+            if (list && list.querySelectorAll) {
+                for (const btn of list.querySelectorAll('button')) {
+                    const cls = btn.className || '';
+                    if (cls.indexOf('bookmark-folder-pick-row') < 0)
+                        continue;
+                    btn.className = 'bookmark-folder-pick-row' +
+                        (String(btn.dataset ? btn.dataset.folderId : '') === String(id) ? ' selected' : '');
+                }
+            }
+            if (moveEl)
+                moveEl.disabled = !id;
+            if (copyEl)
+                copyEl.disabled = !id;
+        },
+        // Every successful target pick feeds the LRU recents roster —
+        // tab-groups saves, staging move/copy, group-level homing all share it.
+        commit: (id, action) => {
+            if (store) {
+                store.set('folderPickRecents',
+                    writeIdList(recordRecent(readIdList(store.get('folderPickRecents')), id)));
+            }
+            BookmarkFolderPickDialog.onPick(id, action);
+            BookmarkFolderPickDialog.close();
+        },
+        commitAction: action => {
+            const id = BookmarkFolderPickDialog.selectedFolderId;
+            if (!id)
+                return;
+            BookmarkFolderPickDialog.commit(id, action);
+        },
+        renderChips: (chipsEl, pins, recents, paths) => {
+            if (!chipsEl)
+                return;
+            const model = chipsModel(pins, recents);
+            let html = '';
+            const chip = (id, icon) => {
+                const path = paths.get(id) || '';
+                return `<button type="button" class="folder-pick-chip" data-folder-id="${id}" ` +
+                    `title="${htmlspecialchars(path)}">${icon}` +
+                    `<span class="folder-pick-chip-name" dir="auto">${htmlspecialchars(path || id)}</span></button>`;
+            };
+            if (model.pins.length) {
+                html += `<span class="folder-pick-chip-label">${htmlspecialchars(_m('folderPickPinned'))}</span>`;
+                for (const id of model.pins)
+                    html += chip(id, PIN_ICON);
+            }
+            if (model.recents.length) {
+                html += `<span class="folder-pick-chip-label">${htmlspecialchars(_m('folderPickRecent'))}</span>`;
+                for (const id of model.recents)
+                    html += chip(id, CLOCK_ICON);
+            }
+            chipsEl.innerHTML = html;
+            chipsEl.hidden = !html;
+        },
+        // Path lookup rebuilt from the last tree walk (depth-first order
+        // lets an ancestor stack per depth reconstruct every full path).
+        pathsOf: () => {
+            const map = new Map();
+            const stack = [];
+            for (const f of BookmarkFolderPickDialog.folders) {
+                stack[f.depth] = f.title;
+                stack.length = f.depth + 1;
+                map.set(f.id, stack.join(' / '));
+            }
+            return map;
+        },
+        togglePinFor: id => {
+            if (!store)
+                return;
+            store.set('folderPickPins',
+                writeIdList(togglePin(readIdList(store.get('folderPickPins')), id)));
+            const nowPins = new Set(readIdList(store.get('folderPickPins')).map(String));
+            const valid = new Set(BookmarkFolderPickDialog.folders.map(x => x.id));
+            BookmarkFolderPickDialog.renderChips($('bookmark-folder-pick-chips'),
+                [...nowPins],
+                pruneIds(readIdList(store.get('folderPickRecents')), valid).list,
+                BookmarkFolderPickDialog.pathsOf());
+            const list = $('bookmark-folder-pick-list');
+            if (!list || !list.querySelectorAll)
+                return;
+            for (const rowBtn of list.querySelectorAll('button')) {
+                const cls = rowBtn.className || '';
+                if (cls.indexOf('folder-pick-pin-btn') < 0)
+                    continue;
+                const on = nowPins.has(String(rowBtn.dataset ? rowBtn.dataset.folderId : ''));
+                rowBtn.className = 'row-btn folder-pick-pin-btn' + (on ? ' pinned' : '');
+                rowBtn.setAttribute('aria-pressed', on ? 'true' : 'false');
+                rowBtn.title = _m(on ? 'unpinFolder' : 'pinFolder');
+            }
+        },
+        close: opts => {
             const open = body.classList.contains('needFolderPick');
             body.classList.remove('needFolderPick');
-            if (wasOpen !== false)
-                return;
-            restoreFocus(open);
-        },
-        onPick: () => {
+            const restore = !opts || opts.restoreFocus !== false;
+            if (restore)
+                restoreFocus(open);
         }
     };
     const folderPickCancelBtn = $('bookmark-folder-pick-cancel-button');
     if (folderPickCancelBtn)
         folderPickCancelBtn.addEventListener('click', () => {
-            BookmarkFolderPickDialog.close(false);
+            BookmarkFolderPickDialog.close();
+        });
+    const folderPickMoveBtn = $('bookmark-folder-pick-move-button');
+    if (folderPickMoveBtn)
+        folderPickMoveBtn.addEventListener('click', () => {
+            BookmarkFolderPickDialog.commitAction('move');
+        });
+    const folderPickCopyBtn = $('bookmark-folder-pick-copy-button');
+    if (folderPickCopyBtn)
+        folderPickCopyBtn.addEventListener('click', () => {
+            BookmarkFolderPickDialog.commitAction('copy');
+        });
+    // Chips row: click = same semantics as a list row (legacy commits, the
+    // action modes select). Bound ONCE — open() only re-renders the HTML.
+    const folderPickChips = $('bookmark-folder-pick-chips');
+    if (folderPickChips)
+        folderPickChips.addEventListener('click', e => {
+            const t = e && e.target ? e.target : null;
+            const closest = t && t.closest ? t.closest.bind(t) : () => null;
+            const chipBtn = closest('.folder-pick-chip');
+            const id = chipBtn && chipBtn.dataset ? chipBtn.dataset.folderId : null;
+            if (!id)
+                return;
+            if (BookmarkFolderPickDialog.mode === 'pick')
+                BookmarkFolderPickDialog.commit(id, 'pick');
+            else
+                BookmarkFolderPickDialog.select(id);
+        });
+    // Filter input: live-filters the indented list by title substring.
+    const folderPickFilter = $('bookmark-folder-pick-filter');
+    if (folderPickFilter)
+        folderPickFilter.addEventListener('input', () => {
+            const needle = (folderPickFilter.value || '').toLowerCase();
+            const list = $('bookmark-folder-pick-list');
+            if (!list || !list.querySelectorAll)
+                return;
+            for (const btn of list.querySelectorAll('button')) {
+                const cls = btn.className || '';
+                if (cls.indexOf('bookmark-folder-pick-row') < 0)
+                    continue;
+                const match = !needle || (btn.textContent || '').toLowerCase().indexOf(needle) >= 0;
+                btn.style.display = match ? '' : 'none';
+            }
         });
     // ↑/↓/Home/End walk the folder rows: a long folder tree is unreachable
     // when Tab is the only way through it (4.1.0 audit L3). Enter/Space pick
-    // the focused row natively (they are buttons).
+    // the focused row natively (they are buttons). The walk only covers the
+    // folder rows themselves — the inline pin toggles are reached by Tab.
     const folderPickList = $('bookmark-folder-pick-list');
     if (folderPickList)
         folderPickList.addEventListener('keydown', e => {
             if (!/^(ArrowDown|ArrowUp|Home|End)$/.test(e.key))
                 return;
-            const btns = folderPickList.querySelectorAll
+            const all = folderPickList.querySelectorAll
                 ? folderPickList.querySelectorAll('button') : [];
+            const btns = [];
+            for (const b of all)
+                if ((b.className || '').indexOf('bookmark-folder-pick-row') >= 0)
+                    btns.push(b);
             if (!btns.length)
                 return;
             e.preventDefault();
@@ -698,7 +940,7 @@ export function initDialogs(ctx = {}) {
         if (body.classList.contains('needCopyMove'))
             CopyMoveDialog.close(false);
         if (body.classList.contains('needFolderPick'))
-            BookmarkFolderPickDialog.close(false);
+            BookmarkFolderPickDialog.close();
         if (body.classList.contains('needAlert'))
             AlertDialog.close();
     };

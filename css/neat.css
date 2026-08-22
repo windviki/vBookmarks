@@ -1500,6 +1500,120 @@ menu[type=context] hr {
     outline-offset: -1px;
 }
 
+.bookmark-folder-pick-row.selected {
+    background: var(--vbm-bg-selected);
+    outline: 2px solid var(--vbm-accent);
+    outline-offset: -1px;
+}
+
+/* --- Folder picker quick-pick (velvet staging §4.1) --- */
+/* chips row = pins (user order) then LRU recents; the inline pin toggle
+   rides each folder row's end (the .row-btn slot language of the lists). */
+.folder-pick-chips {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px;
+    margin: 0 0 6px;
+}
+
+.folder-pick-chip-label {
+    color: var(--vbm-muted);
+    font-size: .85em;
+    white-space: nowrap;
+}
+
+.folder-pick-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    max-width: 160px;
+    padding: 3px 8px;
+    border: 1px solid var(--vbm-border);
+    border-radius: 999px;
+    background: var(--vbm-bg-elev);
+    color: var(--vbm-fg);
+    font: inherit;
+    font-size: .9em;
+    cursor: pointer;
+}
+
+.folder-pick-chip:hover,
+.folder-pick-chip:focus-visible {
+    border-color: var(--vbm-accent);
+    outline: none;
+}
+
+.folder-pick-chip .vbm-icon {
+    flex: none;
+}
+
+.folder-pick-chip-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+#bookmark-folder-pick-filter {
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0 0 6px;
+    padding: 5px 8px;
+    border: 1px solid var(--vbm-border);
+    border-radius: var(--vbm-radius);
+    background: var(--vbm-bg-elev);
+    color: var(--vbm-fg);
+    font: inherit;
+}
+
+#bookmark-folder-pick-list li {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+#bookmark-folder-pick-list li .bookmark-folder-pick-row {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+#bookmark-folder-pick-list li .bookmark-folder-pick-empty {
+    flex: 1 1 auto;
+}
+
+.folder-pick-pin-btn {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    padding: 0;
+    border: 0;
+    border-radius: var(--vbm-radius);
+    background: transparent;
+    color: var(--vbm-muted);
+    cursor: pointer;
+    opacity: 0;
+}
+
+#bookmark-folder-pick-list li:hover .folder-pick-pin-btn,
+#bookmark-folder-pick-list li:focus-within .folder-pick-pin-btn,
+.folder-pick-pin-btn.pinned,
+.folder-pick-pin-btn:focus-visible {
+    opacity: 1;
+}
+
+.folder-pick-pin-btn.pinned {
+    color: var(--vbm-accent);
+}
+
+.folder-pick-note {
+    margin: 0 0 6px;
+    color: var(--vbm-muted);
+    font-size: .9em;
+}
+
 .bookmark-folder-pick-empty {
     padding: 10px 8px;
     color: var(--vbm-muted);

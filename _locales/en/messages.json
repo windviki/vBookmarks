@@ -2389,5 +2389,29 @@
   "optionTabGroupsClosedLimit": {
     "message": "Closed tab/group history to keep",
     "description": "Options-page select in the Views group: how many closed tab/group records the tab groups view remembers."
+  },
+  "folderPickMoveHere": {
+    "message": "Move here"
+  },
+  "folderPickCopyHere": {
+    "message": "Copy here"
+  },
+  "folderPickFilter": {
+    "message": "Filter folders…"
+  },
+  "folderPickFavNote": {
+    "message": "Unbookmarked items will be bookmarked here"
+  },
+  "folderPickPinned": {
+    "message": "Pinned"
+  },
+  "folderPickRecent": {
+    "message": "Recent"
+  },
+  "pinFolder": {
+    "message": "Pin this folder"
+  },
+  "unpinFolder": {
+    "message": "Unpin this folder"
   }
 }
