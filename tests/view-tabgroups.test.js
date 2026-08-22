@@ -1214,21 +1214,17 @@ describe('toolbar instant filter (4.1.0 audit P1)', () => {
         expect($list.innerHTML).not.toContain('tabgroups-item-');
     });
 
-    it('Esc in the filter input clears the filter and stays in the view', () => {
+    it('Esc (the view Esc layer) clears the filter before anything else', () => {
         const { def, $list, fire } = setup({});
         def().activate();
         typeFilter(fire, 'tab 1');
         expect($list.innerHTML).not.toContain('tabgroups-item-2');
-        const ev = fire('keydown', {
-            key: 'Escape',
-            target: { classList: { contains: c => c === 'tabgroups-filter-input' }, closest: () => null },
-            preventDefault() { this.pd = (this.pd || 0) + 1; },
-            stopPropagation() { this.sp = (this.sp || 0) + 1; },
-            stopImmediatePropagation() {}
-        });
-        expect(ev.pd).toBe(1);
-        expect(ev.sp).toBe(1);
+        // the document Esc chain owns the key — the view's onEscape is its
+        // consumer, and the filter is the innermost level
+        expect(def().onEscape()).toBe(true);
         expect($list.innerHTML).toContain('tabgroups-item-2');
+        // with no filter and no selection the view does not consume Esc
+        expect(def().onEscape()).toBe(false);
     });
 
     it('entering selection mode clears the filter (batch bar shows every candidate)', () => {

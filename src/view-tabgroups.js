@@ -1883,19 +1883,6 @@ export function initViewTabGroups(ctx = {}) {
     // whole section. Both heads speak the same protocol, one nesting level
     // apart (window → group → row).
     $list.addEventListener('keydown', e => {
-        // Esc in the filter input clears the filter first — one level above
-        // the view's own Esc layer (selection exit) and the global chain.
-        if (e.key === 'Escape' && e.target && e.target.classList
-            && e.target.classList.contains('tabgroups-filter-input')) {
-            if (filterNeedle()) {
-                e.preventDefault();
-                e.stopPropagation();
-                filterText = '';
-                render();
-                refocusFilter();
-            }
-            return;
-        }
         const isRtlNow = () => !!(document.body && document.body.classList
             && document.body.classList.contains('rtl'));
         const winHead = (e.target && e.target.classList
@@ -2178,6 +2165,15 @@ export function initViewTabGroups(ctx = {}) {
             refresh();
         },
         onEscape: () => {
+            // The view's own Esc levels, innermost first (the document Esc
+            // chain calls onEscapeActive before the search quit / back-to-
+            // tree / window-close layers): an active filter clears first —
+            // it is the most transient state — then selection mode exits.
+            if (filterNeedle()) {
+                filterText = '';
+                render();
+                return true;
+            }
             if (!selecting)
                 return false;
             setSelecting(false);

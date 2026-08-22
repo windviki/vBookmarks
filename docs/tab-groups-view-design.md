@@ -349,3 +349,22 @@ Esc 落到文档层）。本轮把四个菜单（标签行 / 组头 / 已关闭�
 `.vbm-row` 行契约、`row-path`/`row-sub` 容器查询（<480px 行内标签，≥480px 第二行）。
 真浏览器断言：320px 与 640px 两种宽度下列表 `overflow-x: hidden`、无横向溢出，
 且关闭时间在窄宽两态各自只出现在对应槽位。
+
+## 16. 审计修订轮（2026-08-22，docs/review-4.1.0/tabgroups-audit.md）
+
+对照顶级标签管理工具（Chrome 原生/Tab Search、Tab Manager Plus、Workona、Session Buddy 等）
+审计后的行为修订，实现细节见审计报告附录 B：
+
+- **跨窗口激活聚焦**：点击/激活其他窗口的标签会同时 `windows.update(focused)` 聚焦目标窗口
+  （`tabs.update(active)` 只在标签所属窗口内生效，不置前窗口）。
+- **首次进入定位当前标签**：session 内首次激活渲染后 `scrollIntoView({block:'nearest'})`。
+- **工具栏即时过滤器**（P1，对标 TMP/Tab Search）：标题/URL 不区分大小写子串匹配；
+  过滤期间折叠置惰（查找绝不把命中藏在折叠后）、折叠按钮置灰、窗口 pill 计可见数；
+  Esc 经视图 `onEscape` 层清空过滤（该视图 Esc 的最内层，先于退出选择模式）；进入选择模式清空过滤（批量条必须看到全部候选）。
+  过滤器是会话级状态，不持久化；「最近关闭」区不参与过滤。
+- **清空最近关闭**：移入工具栏第二行（仅在有记录时渲染的 danger 色图标），ConfirmDialog 确认——
+  原 section head 内嵌按钮对键盘完全不可达。
+- **组元信息自愈**：`tabGroupFolderMeta` 随每次 refresh 对存活文件夹 prune，文件夹删除
+  不再残留元数据；键已纳入 KNOWN_KEYS 与 storage 普查决策表。
+- 视觉语言：行内 ☆ 加书签回归默认色（红=删除）；选择模式连接线 tick 几何修正（47.5→52px）；
+  edge 色条 RTL 镜像。
