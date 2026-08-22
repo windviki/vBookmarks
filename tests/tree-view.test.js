@@ -630,17 +630,46 @@ describe('generateTree', () => {
         expect(ctx.refreshSyncCalls()).toBe(0);
     });
 
-    it('re-fits bookmark tooltips via a 100ms timeout', () => {
+    it('does NOT run a full tooltip pass on render (H2: rows adapt on hover/focus only)', () => {
         const ctx = setup({});
         const bm = ctx.el('A');
+        bm.classList.add('child');
         bm.scrollWidth = 200;
         bm.offsetWidth = 100;
         bm.title = 'http://t/';
         bm._qs['i'] = { textContent: 'Long title' };
         ctx.doc._qsa['li.child a'] = [bm];
         ctx.treeView.generateTree(['ROOT']);
-        expect(bm.title).toBe('http://t/'); // deferred
-        tick(100);
+        expect(bm.title).toBe('http://t/');
+        tickAll();
+        expect(bm.title).toBe('http://t/'); // no scheduled full pass
+        expect(bm.classList.contains('titled')).toBe(false);
+    });
+
+    it('adapts the hovered row via delegated mouseover (H2)', () => {
+        const ctx = setup({});
+        const bm = ctx.el('A');
+        bm.classList.add('child');
+        bm.scrollWidth = 200;
+        bm.offsetWidth = 100;
+        bm.title = 'http://t/';
+        bm._qs['i'] = { textContent: 'Long title' };
+        ctx.treeView.generateTree(['ROOT']);
+        fire(ctx.tree, 'mouseover', makeEvent({ target: bm }));
+        expect(bm.title).toBe('Long title\nhttp://t/');
+        expect(bm.classList.contains('titled')).toBe(true);
+    });
+
+    it('adapts the focused row via delegated focusin (H2: keyboard walk)', () => {
+        const ctx = setup({});
+        const bm = ctx.el('A');
+        bm.classList.add('child');
+        bm.scrollWidth = 200;
+        bm.offsetWidth = 100;
+        bm.title = 'http://t/';
+        bm._qs['i'] = { textContent: 'Long title' };
+        ctx.treeView.generateTree(['ROOT']);
+        fire(ctx.tree, 'focusin', makeEvent({ target: bm }));
         expect(bm.title).toBe('Long title\nhttp://t/');
         expect(bm.classList.contains('titled')).toBe(true);
     });
@@ -702,7 +731,8 @@ describe('tree events', () => {
     it('lazy-loads children of an unexpanded folder: getChildren -> generated ul appended, div dropped', () => {
         const ctx = setup({ childrenMap: { 9: [{ id: '91', url: 'http://a/' }] } });
         const { li, span, wrapUl } = ctx.makeFolder('9', { level: 1 });
-        const bm = ctx.el('A'); // proves the deferred tooltip pass runs
+        const bm = ctx.el('A'); // H2: no full pass — row adapts on hover
+        bm.classList.add('child');
         bm.scrollWidth = 200;
         bm.offsetWidth = 100;
         bm.title = 'http://t/';
@@ -718,7 +748,9 @@ describe('tree events', () => {
         expect(div.removed).toBe(true);
         expect(wrapUl.dataset.level).toBe('1');
         tick(100);
-        expect(bm.classList.contains('titled')).toBe(true); // adaptBookmarkTooltips ran
+        expect(bm.classList.contains('titled')).toBe(false); // no full pass after expand
+        fire(ctx.tree, 'mouseover', makeEvent({ target: bm }));
+        expect(bm.classList.contains('titled')).toBe(true); // delegated adaptation
     });
 
     it('lazy expand fires onRowsRendered after the fresh rows land (item: dead-mark overlays)', () => {
