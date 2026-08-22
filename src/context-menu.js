@@ -366,6 +366,14 @@ export function initContextMenu(ctx = {}) {
             menu.style.maxWidth = '';
         const menuWidth = menu.offsetWidth;
         const menuHeight = menu.offsetHeight;
+        // The visible band in DOCUMENT coordinates: at extreme page zoom the
+        // body outgrows the window and the page can sit pre-scrolled (the
+        // search input's startup focus churns a couple of px). Clamping to
+        // [0, winW] would park the menu that many px outside the viewport —
+        // the menu-extreme sweep caught exactly this as rect.l = -2 (scrollX
+        // was 2). Every clamp below is scroll-offset aware.
+        const scrollX = window.scrollX || 0;
+        const scrollY = window.scrollY || 0;
         let pageX, pageY;
         if (mode === 'entry') {
             const aw = anchor.width || 0;
@@ -375,8 +383,8 @@ export function initContextMenu(ctx = {}) {
             // against the VIEWPORT — the popup body can be narrower than the
             // window, and a flyout that fits the window is visible even if
             // the body is not that wide.
-            const fitsRight = anchor.left + aw + menuWidth <= winW;
-            const fitsLeft = anchor.left - menuWidth >= 0;
+            const fitsRight = anchor.left + aw + menuWidth <= scrollX + winW;
+            const fitsLeft = anchor.left - menuWidth >= scrollX;
             let below = false;
             if (rtl) {
                 if (fitsLeft) pageX = anchor.left - menuWidth;
@@ -387,16 +395,16 @@ export function initContextMenu(ctx = {}) {
                 else if (fitsLeft) pageX = anchor.left - menuWidth;
                 else { below = true; pageX = anchor.left; }
             }
-            pageX = Math.max(0, Math.min(pageX, Math.max(0, winW - menuWidth)));
+            pageX = Math.max(scrollX, Math.min(pageX, scrollX + Math.max(0, winW - menuWidth)));
             pageY = below
                 ? Math.max(menuMinY, anchor.top + (anchor.height || 0))
                 : Math.max(menuMinY, anchor.top);
-            if (pageY + menuHeight > viewportH)
-                pageY = Math.max(menuMinY, viewportH - menuHeight);
+            if (pageY + menuHeight > scrollY + viewportH)
+                pageY = Math.max(menuMinY, scrollY + viewportH - menuHeight);
         } else {
-            pageX = Math.max(0, Math.min(
+            pageX = Math.max(scrollX, Math.min(
                 rtl ? anchor.left - menuWidth : anchor.left,
-                winW - menuWidth));
+                scrollX + winW - menuWidth));
             const boundY = viewportH - anchor.clientY;
             // A zoom-enlarged menu can be taller than the space below its
             // trigger row: it flips up and covers the row (menuMinY is the
@@ -417,8 +425,9 @@ export function initContextMenu(ctx = {}) {
         menu.style.transform = 'scale(1)';
         // The menu is visible NOW — arm the scroll jitter guard so a scroll
         // the opening gesture itself produces (Mac right-click slide) can't
-        // close it; menu.focus() below and the #48 overflow scroll land here
-        // too, both covered while the guard's window is open.
+        // close it. (menu.focus() rides preventScroll since the 4.1.0 audit —
+        // a viewport-clamped menu never needs a focus scroll, and at extreme
+        // zoom that scroll shoved the document sideways.)
         armJitterGuard();
     };
 
@@ -798,7 +807,10 @@ export function initContextMenu(ctx = {}) {
                 disableItem.classList.toggle('disabled', !state.canDisable);
             }
             positionMenu($viewTabContextMenu, { left: e.pageX, top: e.pageY, clientY: e.clientY }, 'cursor');
-            $viewTabContextMenu.focus();
+            // preventScroll: the menu is already viewport-clamped — a focus
+            // scroll-into-view would only shove the document sideways at
+            // extreme zoom (the menu-extreme l:-2 failures).
+            $viewTabContextMenu.focus({ preventScroll: true });
             return;
         }
         // Tab groups view: the window section head is a fold CONTROL, not a
@@ -1058,7 +1070,13 @@ export function initContextMenu(ctx = {}) {
             // position (clamped to the popup — issue #48) and show the menu.
             applyCollapseState(menu);
             positionMenu(menu, { left: e.pageX, top: e.pageY, clientY: e.clientY }, 'cursor');
-            menu.focus();
+            // preventScroll: the menu is viewport-clamped by positionMenu, so
+            // a focus scroll-into-view can only do harm — at extreme page
+            // zoom (body wider than the window) it shoved the document 2px
+            // sideways (scrollX=2), which parked every absolutely positioned
+            // menu 2px left of the viewport (the menu-extreme l:-2 gate
+            // failures).
+            menu.focus({ preventScroll: true });
         }
     });
     // on Mac, holding down right-click for a period of time closes the context menu
