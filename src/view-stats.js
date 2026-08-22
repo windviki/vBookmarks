@@ -93,7 +93,7 @@
  */
 
 import { relTimeLabel } from './tree-render.js';
-import { VIEW_ICONS, STAR_ICON, STAR_ICON_FILLED } from './icons.js';
+import { VIEW_ICONS, STAR_ICON, STAR_ICON_FILLED, STAGE_ICON, STAGE_ICON_DONE } from './icons.js';
 import { htmlspecialchars } from './escape.js';
 import { parkRowFocus, unparkRowFocus, parkToolbarFocus, restoreToolbarFocus } from './list-focus.js';
 
@@ -330,6 +330,18 @@ export function initViewStats(ctx = {}) {
     // icon → count → time). Both time and count ride the badge slot (time
     // is NOT the row-path), so the wide/panel container query that hides
     // row-path can never drop the time.
+    // velvet staging §2.3: the history rows' hover "send to staging" button —
+    // same slot language as the instant-favorite ☆, toggle semantics.
+    const stageBtnHtml = row => {
+        const api = ctx.stagingApi;
+        const staged = !!(api && api.isStaged(row.url));
+        const label = _m(staged ? 'stagingRemove' : 'stagingAdd');
+        return `<button type="button" class="row-btn staging-add-btn${staged ? ' staged' : ''}" ` +
+            `data-hist-idx="${row.histIdx}" aria-pressed="${staged ? 'true' : 'false'}" ` +
+            `aria-label="${htmlspecialchars(label)}" title="${htmlspecialchars(label)}">` +
+            (staged ? STAGE_ICON_DONE : STAGE_ICON) + '</button>';
+    };
+
     const renderRows = list => {
         const countBadge = c => ({ text: `×${c}`, cls: 'count', aria: _m('statsVisitCount', `${c}`) });
         const timeBadge = t => ({ text: relTimeLabel(t, _m), cls: 'time' });
@@ -371,6 +383,7 @@ export function initViewStats(ctx = {}) {
                     `<button type="button" class="row-btn stats-add-btn" data-hist-idx="${row.histIdx}" ` +
                     `aria-label="${htmlspecialchars(_m('statsHistoryAdd'))}" ` +
                     `title="${htmlspecialchars(_m('statsHistoryAdd'))}">${STAR_ICON}</button>` +
+                    stageBtnHtml(row) +
                     '</li>';
             }
         }
@@ -605,6 +618,23 @@ export function initViewStats(ctx = {}) {
         if (addBtn) {
             e.preventDefault();
             addToBookmarks(parseInt(addBtn.dataset.histIdx, 10));
+            return;
+        }
+        // velvet staging: history-row hover arrow — toggle the snapshot in
+        // the staging area (single fast path next to the bulk flows).
+        const stageBtn = closest('.staging-add-btn');
+        if (stageBtn) {
+            e.preventDefault();
+            e.stopPropagation();
+            const api = ctx.stagingApi;
+            const h = histRows[parseInt(stageBtn.dataset.histIdx, 10)];
+            if (api && h && h.url) {
+                if (api.isStaged(h.url))
+                    api.removeByUrl(h.url);
+                else
+                    api.addItems([{ id: null, url: h.url, title: h.title }]);
+                render();
+            }
             return;
         }
         // plain rows open the bookmark like the tree does (and the open is

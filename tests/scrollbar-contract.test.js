@@ -79,7 +79,7 @@ const topLevelRules = (css) => {
 // must never grow a horizontal one.
 const SCROLL_PANES = [
     '#tree', '#results',
-    '#recent-list', '#dupes-list', '#dead-list', '#stats-list',
+    '#staging-list', '#dupes-list', '#dead-list', '#stats-list',
     '#search-history-area', '#palette-results'
 ];
 
@@ -96,7 +96,7 @@ describe('scrollbar-contract: 滚动容器横向裁剪 (A)', () => {
     });
 
     it('a consolidated overflow-x:hidden guard rule exists (end of file wins the cascade)', () => {
-        const body = ruleBody(neatCss, '#tree,\n#results,\n#recent-list,\n#tabgroups-list,\n#dupes-list,\n#dead-list,\n#stats-list,\n#search-history-area,\n#palette-results {');
+        const body = ruleBody(neatCss, '#tree,\n#results,\n#staging-list,\n#tabgroups-list,\n#dupes-list,\n#dead-list,\n#stats-list,\n#search-history-area,\n#palette-results {');
         expect(body).toContain('overflow-x: hidden');
     });
 
@@ -111,7 +111,7 @@ describe('scrollbar-contract: 纵向滚动保留 (B)', () => {
     });
 
     it('the list-view panes keep overflow:auto (vertical)', () => {
-        expect(ruleBody(neatCss, '#recent-list,\n#tabgroups-list,\n#dupes-list,\n#dead-list,\n#stats-list {')).toContain('overflow: auto');
+        expect(ruleBody(neatCss, '#staging-list,\n#tabgroups-list,\n#dupes-list,\n#dead-list,\n#stats-list {')).toContain('overflow: auto');
     });
 
     it('search-history and palette keep overflow-y:auto (vertical)', () => {
@@ -169,7 +169,7 @@ describe('scrollbar-contract: 固定槽 flex:none (D)', () => {
 
     it('the 16px ::before placeholder slot is fixed in tree/results and every list view', () => {
         assertProps(neatCss, '#tree ul li a::before,\n#results ul li a::before {', ['flex: none', 'width: 16px']);
-        assertProps(neatCss, '#recent-list ul li a::before,\n#tabgroups-list ul li a::before,\n#dupes-list ul li a::before,\n#dead-list ul li a::before,\n#stats-list ul li a::before {', ['flex: none', 'width: 16px']);
+        assertProps(neatCss, '#staging-list ul li a::before,\n#tabgroups-list ul li a::before,\n#dupes-list ul li a::before,\n#dead-list ul li a::before,\n#stats-list ul li a::before {', ['flex: none', 'width: 16px']);
     });
 
     it('header chrome and row controls are fixed-width', () => {

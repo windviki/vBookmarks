@@ -312,11 +312,11 @@ describe('staging render partitions (bucket / loose / counts)', () => {
         const s = createState();
         add(s, [mk(null, 'https://a', 'A', 10), mk(null, 'https://b', 'B', 20)], {}, 10);
         markSeen(s, 15);
-        expect(newCount(s, 99)).toBe(1); // only b (ts=20 > 15)
+        expect(newCount(s)).toBe(1); // only b (ts=20 > 15)
         // grouped arrivals leave the bucket → not "new" anymore
         const g = createGroup(s, 'G', {}, 30);
         assignGroup(s, ['https://b'], g.id);
-        expect(newCount(s, 99)).toBe(0);
+        expect(newCount(s)).toBe(0);
     });
 
     it('markSeen / setRecentCollapsed', () => {

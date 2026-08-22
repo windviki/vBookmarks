@@ -353,7 +353,7 @@ export const unfavBucketItems = state =>
 
 // "new N" — ungrouped inbox arrivals since the last visit (lastSeenTs
 // updates on every view activation).
-export const newCount = (state, now = Date.now()) =>
+export const newCount = state =>
     state.items.filter(it => it.id === null && it.group === null && it.ts > state.lastSeenTs).length;
 
 export const markSeen = (state, now = Date.now()) => {

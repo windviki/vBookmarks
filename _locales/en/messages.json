@@ -968,7 +968,7 @@
     "message": "Show the parent folder path on list rows"
   },
   "viewRecent": {
-    "message": "Recent"
+    "message": "Staging"
   },
   "viewTree": {
     "message": "Tree"
@@ -2413,5 +2413,60 @@
   },
   "unpinFolder": {
     "message": "Unpin this folder"
+  },
+  "stagingAdd": {
+    "message": "Add to staging area"
+  },
+  "stagingAdded": {
+    "message": "Added to the staging area"
+  },
+  "stagingAlready": {
+    "message": "Already in the staging area"
+  },
+  "stagingAddedSummary": {
+    "message": "Added $n$ item(s); $m$ already staged",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "m": {
+        "content": "$2"
+      }
+    }
+  },
+  "stagingFull": {
+    "message": "The staging area is full — remove some items first"
+  },
+  "stagingFolderEmpty": {
+    "message": "This folder has no bookmarks to stage"
+  },
+  "stagingConfirmFolder": {
+    "message": "Stage $n$ bookmarks from this folder?",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "n2": {
+        "content": "$2"
+      }
+    }
+  },
+  "stagingRemove": {
+    "message": "Remove from staging area"
+  },
+  "stagingRemoved": {
+    "message": "Removed from the staging area"
+  },
+  "recentStageAll": {
+    "message": "Stage all recently added"
+  },
+  "recentSectionTitle": {
+    "message": "Recently added"
+  },
+  "stagingEmpty": {
+    "message": "Empty — right-click any bookmark, use the ↑ button here, or stats history rows to send items to the staging area"
+  },
+  "stagingFromHistory": {
+    "message": "From history"
   }
 }

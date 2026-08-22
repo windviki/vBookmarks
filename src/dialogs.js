@@ -14,7 +14,7 @@
  */
 import { pickGroupColor } from './tab-group-utils.js';
 import { htmlspecialchars } from './escape.js';
-import { FOLDER_ICON, PIN_ICON, CLOCK_ICON } from './icons.js';
+import { PIN_ICON, CLOCK_ICON } from './icons.js';
 import {
     readIdList, writeIdList, recordRecent, togglePin, pruneIds, chipsModel
 } from './folder-pick.js';

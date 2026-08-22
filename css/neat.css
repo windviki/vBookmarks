@@ -1614,6 +1614,97 @@ menu[type=context] hr {
     font-size: .9em;
 }
 
+/* --- Staging view (velvet staging §2.1/§2.2/§2.4) --- */
+/* #staging-items opens the workbench region; #recent-head is the foldable
+   section divider between the two regions (a non-row element — the ↑/↓
+   walk skips it via crossRowUl's non-UL sibling rule). */
+#staging-items ul li.staging-row a i {
+    font-style: normal;
+}
+
+.staging-add-btn.staged {
+    color: var(--vbm-accent);
+    visibility: visible;
+}
+
+.staging-section-head {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin: 2px 4px;
+    padding: 4px 8px;
+    border-radius: var(--vbm-radius);
+    color: var(--vbm-muted);
+    font-size: .9em;
+    cursor: pointer;
+    user-select: none;
+}
+
+.staging-section-head:hover,
+.staging-section-head:focus-visible {
+    background: var(--vbm-bg-elev);
+    outline: none;
+}
+
+.staging-section-title {
+    font-weight: 500;
+    color: var(--vbm-fg);
+}
+
+.staging-section-head .chevron {
+    flex: none;
+    width: 12px;
+    height: 12px;
+    position: relative;
+}
+
+.staging-section-head .chevron::before {
+    content: '';
+    position: absolute;
+    inset: 2px;
+    border-inline-start: 1.5px solid currentColor;
+    border-bottom: 1.5px solid currentColor;
+    transform: rotate(-45deg);
+    transition: transform .12s ease;
+}
+
+.staging-section-head .chevron.collapsed::before {
+    transform: rotate(-135deg);
+}
+
+.recent-stage-all {
+    margin-inline-start: auto;
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border: 0;
+    border-radius: 4px;
+    background: transparent;
+    color: var(--vbm-muted);
+    cursor: pointer;
+    line-height: 1;
+    padding: 0;
+    visibility: visible;
+}
+
+.recent-stage-all:hover,
+.recent-stage-all:focus-visible {
+    background: var(--vbm-bg-elev);
+    color: var(--vbm-fg);
+    outline: none;
+}
+
+.staging-section-head .count-pill {
+    background: var(--vbm-bg-elev);
+    border-radius: 999px;
+    padding: 0 6px;
+    font-size: .9em;
+    line-height: 16px;
+}
+
 .bookmark-folder-pick-empty {
     padding: 10px 8px;
     color: var(--vbm-muted);
@@ -1719,7 +1810,7 @@ body.panel-mode #resizer-y {
    navigation and clicks ignore it. v4 task-2: the same empty state serves
    the list views and the search-history area. */
 #results ul li.empty-state,
-#recent-list ul li.empty-state,
+#staging-list ul li.empty-state,
 #dupes-list ul li.empty-state,
 #dead-list ul li.empty-state,
 #stats-list ul li.empty-state,
@@ -2644,7 +2735,7 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
    list joins the same row contract — hover, selected (active/focus) and the
    focus ring are identical across every list view and the tree. */
 
-#recent-list,
+#staging-list,
 #tabgroups-list,
 #dupes-list,
 #dead-list,
@@ -2659,8 +2750,8 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
     position: relative;
 }
 
-#recent-list ul,
-#recent-list ul li,
+#staging-list ul,
+#staging-list ul li,
 #tabgroups-list ul,
 #tabgroups-list ul li,
 #dupes-list ul,
@@ -2677,7 +2768,7 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
 
 /* Bookmark rows only — the same 16px twisty placeholder slot the tree and
    results panes give bookmark rows, keeping titles aligned across views. */
-#recent-list ul li a::before,
+#staging-list ul li a::before,
 #tabgroups-list ul li a::before,
 #dupes-list ul li a::before,
 #dead-list ul li a::before,
@@ -2687,7 +2778,7 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
     width: 16px;
 }
 
-#recent-list ul li a *,
+#staging-list ul li a *,
 #tabgroups-list ul li a *,
 #dupes-list ul li a *,
 #dead-list ul li a *,
@@ -2696,7 +2787,7 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
     pointer-events: none;
 }
 
-#recent-list ul li a:hover,
+#staging-list ul li a:hover,
 #tabgroups-list ul li a:hover,
 #dupes-list ul li a:hover,
 #dead-list ul li a:hover,
@@ -2713,7 +2804,7 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
     background-color: var(--vbm-bg-hover);
 }
 
-#recent-list ul li a:hover i,
+#staging-list ul li a:hover i,
 #tabgroups-list ul li a:hover i,
 #dupes-list ul li a:hover i,
 #dead-list ul li a:hover i,
@@ -2721,9 +2812,9 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
     text-decoration: underline;
 }
 
-#recent-list ul li a:active,
-#recent-list ul li a.active,
-#recent-list ul li a:focus,
+#staging-list ul li a:active,
+#staging-list ul li a.active,
+#staging-list ul li a:focus,
 #tabgroups-list ul li a:active,
 #tabgroups-list ul li a.active,
 #tabgroups-list ul li a:focus,
@@ -2741,7 +2832,7 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
     outline: 0;
 }
 
-#recent-list ul li a:focus,
+#staging-list ul li a:focus,
 #tabgroups-list ul li a:focus,
 #dupes-list ul li a:focus,
 #dead-list ul li a:focus,
@@ -2756,13 +2847,13 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
    full-basis flex item wraps it above the row while li.firstElementChild
    stays the anchor (keyboard.js Enter dispatches its synthetic click there).
    Same pattern as #stats-list .stats-section-head. */
-#recent-list ul li.has-head {
+#staging-list ul li.has-head {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
 }
 
-#recent-list ul li.has-head > a.tree-item-link {
+#staging-list ul li.has-head > a.tree-item-link {
     /* v4 task-3 #1: basis must be auto (max-content), not 0% — with basis 0
        the anchor's hypothetical main size is 0, so it squeezes into the head
        row's (flex 0 0 100%) zero remaining space instead of wrapping to line
@@ -2772,7 +2863,7 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
     min-width: 0;
 }
 
-#recent-list .recent-group-head {
+#staging-list .recent-group-head {
     order: -1;
     flex: 0 0 100%;
     box-sizing: border-box; /* flex-basis:100% + side padding otherwise
@@ -2784,7 +2875,7 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
 }
 
 /* the first row's head needs no top padding (list top already breathes) */
-#recent-list ul li:first-child .recent-group-head {
+#staging-list ul li:first-child .recent-group-head {
     padding-top: 2px;
 }
 
@@ -5282,7 +5373,7 @@ body.panel-mode #stats-list ul li.vbm-row > a.tree-item-link .row-badge.time {
    overflow-y:auto，避免把规则写进各容器内部造成重复。 */
 #tree,
 #results,
-#recent-list,
+#staging-list,
 #tabgroups-list,
 #dupes-list,
 #dead-list,

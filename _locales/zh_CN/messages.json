@@ -154,7 +154,7 @@
     "message": "昨天"
   },
   "viewRecent": {
-    "message": "最近添加"
+    "message": "暂存区"
   },
   "viewTree": {
     "message": "书签树"
@@ -2219,5 +2219,60 @@
   },
   "unpinFolder": {
     "message": "取消固定此文件夹"
+  },
+  "stagingAdd": {
+    "message": "添加到暂存区"
+  },
+  "stagingAdded": {
+    "message": "已添加到暂存区"
+  },
+  "stagingAlready": {
+    "message": "已在暂存区"
+  },
+  "stagingAddedSummary": {
+    "message": "已新增 $n$ 条，$m$ 条已在暂存区",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "m": {
+        "content": "$2"
+      }
+    }
+  },
+  "stagingFull": {
+    "message": "暂存区已满，请先清理"
+  },
+  "stagingFolderEmpty": {
+    "message": "该文件夹没有可暂存的书签"
+  },
+  "stagingConfirmFolder": {
+    "message": "将暂存该文件夹的 $n$ 条书签？",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "n2": {
+        "content": "$2"
+      }
+    }
+  },
+  "stagingRemove": {
+    "message": "移出暂存区"
+  },
+  "stagingRemoved": {
+    "message": "已移出暂存区"
+  },
+  "recentStageAll": {
+    "message": "全部暂存"
+  },
+  "recentSectionTitle": {
+    "message": "最近添加"
+  },
+  "stagingEmpty": {
+    "message": "空空如也——右键任意书签、此处的 ↑ 按钮或统计历史行，都可以发送到暂存区"
+  },
+  "stagingFromHistory": {
+    "message": "来自历史"
   }
 }

@@ -22,7 +22,7 @@ describe('list-view hover/selected parity (item 7b)', () => {
     it('every list view container shares the pane chrome', () => {
         const body = ruleBody(
             neatCss,
-            '#recent-list,\n#tabgroups-list,\n#dupes-list,\n#dead-list,\n#stats-list {');
+            '#staging-list,\n#tabgroups-list,\n#dupes-list,\n#dead-list,\n#stats-list {');
         expect(body).toContain('overflow: auto');
         expect(body).toContain('background-color: var(--vbm-bg)');
     });
@@ -30,7 +30,7 @@ describe('list-view hover/selected parity (item 7b)', () => {
     it('every list view rows get the tree hover background', () => {
         const body = ruleBody(
             neatCss,
-            '#recent-list ul li a:hover,\n#tabgroups-list ul li a:hover,\n#dupes-list ul li a:hover,\n#dead-list ul li a:hover,\n#stats-list ul li a:hover');
+            '#staging-list ul li a:hover,\n#tabgroups-list ul li a:hover,\n#dupes-list ul li a:hover,\n#dead-list ul li a:hover,\n#stats-list ul li a:hover');
         expect(body).toContain('background-color: var(--vbm-bg-hover)');
         // …and the tree/search panes carry the same rule
         const treeBody = ruleBody(neatCss, '#results ul li a:hover,\n#tree ul li a:hover,\n#tree ul li > span:hover');
@@ -46,7 +46,7 @@ describe('list-view hover/selected parity (item 7b)', () => {
         // `#stats-list ul li a:focus {`, so anchor on the full ring selector)
         const body = ruleBody(
             neatCss,
-            '#recent-list ul li a:focus,\n#tabgroups-list ul li a:focus,\n#dupes-list ul li a:focus,\n#dead-list ul li a:focus,\n#stats-list ul li a:focus {');
+            '#staging-list ul li a:focus,\n#tabgroups-list ul li a:focus,\n#dupes-list ul li a:focus,\n#dead-list ul li a:focus,\n#stats-list ul li a:focus {');
         expect(body).toContain('outline: 2px solid var(--vbm-focus-ring)');
     });
 

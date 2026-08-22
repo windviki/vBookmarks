@@ -253,6 +253,8 @@ import { deferIdle, mark as perfMark } from './idle.js';
         'folder-new-incognito-window': 'openBookmarksIncognitoWindow',
         'folder-edit': 'edit',
         'folder-delete': 'deleteEllipsis',
+        // velvet staging: folder rows flatten-send into the staging area
+        'add-folder-to-staging': 'stagingAdd',
         // issue #33: direct sort actions + the "Sort options…" dialog opener
         'sort-folder-by-name': 'sortByName',
         'sort-folder-by-date': 'sortByDate',
@@ -419,6 +421,9 @@ import { deferIdle, mark as perfMark } from './idle.js';
                 toggleGroup: key => viewDupes.toggleGroup(key)
             };
         },
+        // velvet staging §2.3: the staging send API (view-recent inits below
+        // the menus; handlers run only on user events — TDZ-safe lazy getter).
+        get staging() { return viewRecent.api; },
         // Tab groups view: tab-row / group-head context menus (lazy — the
         // view module inits below; menu handlers run only on user events).
         get tabGroupsMenu() {
@@ -493,6 +498,9 @@ import { deferIdle, mark as perfMark } from './idle.js';
     // Declared above initSearch: the saved-query restore can render results
     // during init, and the hook closures must never hit the TDZ.
     let deadOverlayRefresh = () => {};
+    // velvet staging §0.5: every tree rebuild re-links the staging anchors —
+    // a no-op until initViewRecent reassigns it below (same indirection).
+    let stagingTreeSync = () => {};
 
     // Undo stack + deletion toast (P3.3) live in src/undo.js. The onChanged
     // closure only runs after a successful undo — long after initTreeView
@@ -676,6 +684,7 @@ import { deferIdle, mark as perfMark } from './idle.js';
                 views.setPathMap(snapshot.paths);
             deadOverlayRefresh();
             visitStats.prune(ids);
+            stagingTreeSync(t, snapshot);
             perfMark('tree-generated');
         },
         // slice D: page-side visit collection — bookmarkHandler funnels
@@ -717,7 +726,7 @@ import { deferIdle, mark as perfMark } from './idle.js';
         onRowsRendered: () => deadOverlayRefresh()
     });
 
-    initViewRecent({
+    const viewRecent = initViewRecent({
         store,
         views,
         treeRender,
@@ -725,10 +734,13 @@ import { deferIdle, mark as perfMark } from './idle.js';
         treeView,
         visitStats,
         undo,
+        // >100-folder send confirm
+        get dialogs() { return dialogs; },
         // 第五轮项3: re-lay the dead-mark × overlays after every re-render
         // (activate + the onCreated/onRemoved debounced refresh).
         onRowsRendered: () => deadOverlayRefresh()
     });
+    stagingTreeSync = viewRecent.onTreeSnapshot;
 
     // Stats view (v4 task-2 切片 D): visit counters as their own tab.
     // Registration order fixes the tab order (§2: tree/search/recent/
@@ -745,6 +757,8 @@ import { deferIdle, mark as perfMark } from './idle.js';
         visitStats,
         undo,
         onChanged: () => chrome.bookmarks.getTree(treeView.generateTree),
+        // velvet staging §2.3: history rows' hover send-to-staging button.
+        get stagingApi() { return viewRecent.api; },
         // 第五轮项3: re-lay the dead-mark × overlays after every re-render.
         onRowsRendered: () => deadOverlayRefresh()
     });

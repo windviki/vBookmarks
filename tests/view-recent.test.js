@@ -66,7 +66,7 @@ const setup = (opts = {}) => {
         byId[id] = el;
         return el;
     };
-    const $list = makeEl('recent-list');
+    const $list = makeEl('staging-list');
     const $container = makeEl('view-recent');
     const doc = { getElementById: id => byId[id] || null, activeElement: null };
     globalThis.document = doc;
@@ -89,7 +89,18 @@ const setup = (opts = {}) => {
                 cb(opts.tree || []);
             },
             onCreated: { addListener(fn) { this.fn = fn; } },
-            onRemoved: { addListener(fn) { this.fn = fn; } }
+            onRemoved: { addListener(fn) { this.fn = fn; } },
+            onChanged: { addListener(fn) { this.fn = fn; } },
+            getSubTreeCalls: [],
+            getSubTree(id, cb) {
+                this.getSubTreeCalls.push(id);
+                cb(opts.subTree || []);
+            },
+            searchCalls: [],
+            search(q, cb) {
+                this.searchCalls.push(q);
+                cb((opts.searchResults || {})[q.url] || []);
+            }
         },
         permissions: {
             containsCalls: [],
@@ -114,6 +125,10 @@ const setup = (opts = {}) => {
                     cb(opts.historyItems || []);
             }
         }
+    };
+    chromeStub.storage = {
+        listeners: [],
+        onChanged: { addListener(fn) { chromeStub.storage.listeners.push(fn); } }
     };
     globalThis.chrome = chromeStub;
 
@@ -171,6 +186,7 @@ const setup = (opts = {}) => {
         store, views, treeRender, separatorManager, treeView,
         ...(visitStats ? { visitStats } : {}),
         ...(undo ? { undo } : {}),
+        ...(opts.dialogs ? { dialogs: opts.dialogs } : {}),
         ...(opts.onRowsRendered ? { onRowsRendered: opts.onRowsRendered } : {})
     });
     return {
@@ -219,9 +235,12 @@ describe('view registration (§5.3)', () => {
         expect(def().hidden).toBe(true);
     });
 
-    it('exposes only refresh() on the module API', () => {
+    it('exposes refresh + the staging api + onTreeSnapshot', () => {
         const { viewRecent } = setup({});
-        expect(Object.keys(viewRecent)).toEqual(['refresh']);
+        expect(Object.keys(viewRecent)).toEqual(['refresh', 'api', 'onTreeSnapshot']);
+        expect(typeof viewRecent.api.addItems).toBe('function');
+        expect(typeof viewRecent.api.sendFolder).toBe('function');
+        expect(typeof viewRecent.onTreeSnapshot).toBe('function');
     });
 });
 
@@ -810,5 +829,205 @@ describe('row focus park/restore (4.0.1 focus law)', () => {
         doc.activeElement = outside;
         viewRecent.refresh();
         expect(doc.activeElement).toBe(outside);
+    });
+});
+
+describe('staging view (velvet staging ST3)', () => {
+    const undoOn = () => ({
+        toastCalls: [],
+        showToast(msg) { this.toastCalls.push(msg); }
+    });
+    const mkItem = (id, url, title) => ({ id, url, title });
+
+    it('renders both regions: staging rows + foldable recent head + recent rows', () => {
+        const { viewRecent, $list, def } = setup({ recentItems: [ITEMS[0]] });
+        viewRecent.api.addItems([mkItem('101', 'http://a/', 'A'), mkItem(null, 'http://h/', 'H')]);
+        def().activate();
+        const html = $list.innerHTML;
+        expect(html).toContain('<ul role="list" id="staging-items"');
+        expect(html).toContain('id="staging-item-0"');
+        expect(html).toContain('id="recent-head"');
+        expect(html).toContain('id="recent-list"');
+        expect(html).toContain('id="recent-item-101"');
+        // dual-state rows: bookmarked rows anchor data-node-id, unfav don't
+        expect(html).toMatch(/id="staging-item-\d+" role="listitem" data-url="http:\/\/a\/" data-node-id="101"/);
+        expect(html).toMatch(/id="staging-item-\d+" role="listitem" data-url="http:\/\/h\/">/);
+    });
+
+    it('registers badge (staging count) and persistScroll', () => {
+        const { def, viewRecent } = setup({});
+        expect(def().badge()).toBe(0);
+        expect(def().persistScroll).toBe(true);
+        viewRecent.api.addItems([mkItem(null, 'http://x/', 'X')]);
+        expect(def().badge()).toBe(1);
+    });
+
+    it('addItems persists under the staging key and updates badges', () => {
+        const { viewRecent, store, views } = setup({});
+        views.active = true;
+        viewRecent.api.addItems([mkItem('1', 'http://a/', 'A')]);
+        expect(JSON.parse(store.get('staging')).items).toHaveLength(1);
+        expect(views.badgeCalls).toBeGreaterThan(0);
+    });
+
+    it('toast semantics: single add, summary with dupes, cap rejection', () => {
+        const undo = undoOn();
+        const { viewRecent } = setup({ undo });
+        viewRecent.api.addItems([mkItem('1', 'http://a/', 'A')]);
+        expect(undo.toastCalls).toEqual(['stagingAdded']);
+        viewRecent.api.addItems([mkItem('2', 'http://b/', 'B'), mkItem('1', 'http://a/', 'A dup')]);
+        expect(undo.toastCalls[1]).toBe('stagingAddedSummary[1|1]');
+        viewRecent.api.addItems([mkItem('1', 'http://a/', 'again')]);
+        expect(undo.toastCalls[2]).toBe('stagingAlready');
+        // 500 cap: batch rejected whole
+        const many = [];
+        for (let i = 0; i < 501; i++)
+            many.push(mkItem(null, `http://c${i}/`, 'c'));
+        viewRecent.api.addItems(many);
+        expect(undo.toastCalls[3]).toBe('stagingFull');
+        expect(viewRecent.api.state().items).toHaveLength(2); // unchanged
+    });
+
+    it('the recent hover arrow toggles by URL', () => {
+        const undo = undoOn();
+        const { viewRecent, store, def, click } = setup({ undo, recentItems: [ITEMS[0]] });
+        def().activate();
+        const li = { dataset: { nodeId: '101', url: 'http://a/' }, id: 'recent-item-101' };
+        click({
+            preventDefault() {}, stopPropagation() {},
+            target: { closest: sel => (sel === '.staging-add-btn' ? {} : (sel === 'li' ? li : null)) }
+        });
+        expect(viewRecent.api.state().items).toHaveLength(1);
+        expect(undo.toastCalls).toEqual(['stagingAdded']);
+        // click again → removed
+        click({
+            preventDefault() {}, stopPropagation() {},
+            target: { closest: sel => (sel === '.staging-add-btn' ? {} : (sel === 'li' ? li : null)) }
+        });
+        expect(viewRecent.api.state().items).toHaveLength(0);
+        expect(undo.toastCalls[1]).toBe('stagingRemoved');
+        void store;
+    });
+
+    it('stage-all button sends the whole recent region (deduped summary)', () => {
+        const undo = undoOn();
+        const { viewRecent, chrome, def, click } = setup({ undo, recentItems: ITEMS });
+        def().activate();
+        click({
+            preventDefault() {}, stopPropagation() {},
+            target: { closest: sel => (sel === '.recent-stage-all' ? {} : null) }
+        });
+        expect(chrome.bookmarks.getRecentCalls.length).toBeGreaterThanOrEqual(2); // initial + stage-all (+ repaint)
+        expect(viewRecent.api.state().items).toHaveLength(3); // separators/url-less skipped
+        expect(undo.toastCalls[undo.toastCalls.length - 1]).toBe('stagingAddedSummary[3|0]');
+    });
+
+    it('the section head folds the recent region and persists recentCollapsed', () => {
+        const { viewRecent, store, $list, def, click, chrome } = setup({ recentItems: [ITEMS[0]] });
+        def().activate();
+        expect($list.innerHTML).toContain('id="recent-item-101"');
+        click({
+            preventDefault() {}, stopPropagation() {},
+            target: { closest: sel => (sel === '#recent-head' ? {} : null) }
+        });
+        expect(JSON.parse(store.get('staging')).recentCollapsed).toBe(true);
+        expect($list.innerHTML).not.toContain('id="recent-item-101"'); // recent rows gone
+        expect($list.innerHTML).toContain('id="recent-head"'); // the head stays
+        // folded: the next refresh skips the fetch
+        const before = chrome.bookmarks.getRecentCalls.length;
+        viewRecent.refresh();
+        expect(chrome.bookmarks.getRecentCalls.length).toBe(before);
+    });
+
+    it('activate advances lastSeenTs (the bucket "new N" baseline)', () => {
+        const { viewRecent, def } = setup({});
+        const before = viewRecent.api.state().lastSeenTs;
+        def().activate();
+        expect(viewRecent.api.state().lastSeenTs).toBeGreaterThanOrEqual(before);
+    });
+
+    it('storage.onChanged replays the whole staging object', () => {
+        const { viewRecent, chrome, $list, def } = setup({});
+        def().activate();
+        const external = JSON.stringify({
+            v: 1, items: [{ id: null, url: 'http://ext/', title: 'E', ts: 5, group: null }],
+            groups: [], recentCollapsed: false, unfavCollapsed: false, lastSeenTs: 0
+        });
+        chrome.storage.listeners[0]({ staging: { newValue: external } }, 'local');
+        expect(viewRecent.api.state().items[0].url).toBe('http://ext/');
+        expect($list.innerHTML).toContain('http://ext/');
+    });
+
+    it('bookmarks.onChanged keeps snapshots in step', () => {
+        const { viewRecent, chrome } = setup({});
+        viewRecent.api.addItems([mkItem('7', 'http://old/', 'Old')]);
+        chrome.bookmarks.onChanged.fn('7', { title: 'New', url: 'http://new/' });
+        const it = viewRecent.api.state().items[0];
+        expect(it.title).toBe('New');
+        expect(it.url).toBe('http://new/');
+    });
+
+    it('onCreated promotes a matching id-less row; onRemoved verifies by url search', () => {
+        const { viewRecent, chrome } = setup({
+            searchResults: { 'http://h/': [{ id: '88', url: 'http://h/' }] }
+        });
+        viewRecent.api.addItems([mkItem(null, 'http://h/', 'H')]);
+        chrome.bookmarks.onCreated.fn('88', { id: '88', url: 'http://h/', title: 'H' });
+        expect(viewRecent.api.state().items[0].id).toBe('88');
+        // removed anchor with a surviving same-url node → relinked
+        chrome.bookmarks.onRemoved.fn('88');
+        expect(viewRecent.api.state().items[0].id).toBe('88');
+        // …and with NO survivor → falls back to id=null, item stays
+        const ctx2 = setup({ searchResults: {} });
+        ctx2.viewRecent.api.addItems([mkItem('9', 'http://gone/', 'G')]);
+        ctx2.chrome.bookmarks.onRemoved.fn('9');
+        expect(ctx2.viewRecent.api.state().items[0].id).toBeNull();
+        expect(ctx2.viewRecent.api.state().items).toHaveLength(1);
+    });
+
+    it('onTreeSnapshot relinks through the full url index', () => {
+        const { viewRecent } = setup({});
+        viewRecent.api.addItems([mkItem('1', 'http://x/', 'X')]);
+        const snapshot = { urlIndex: new Map([['http://x/', '2']]) };
+        viewRecent.onTreeSnapshot([{ id: '0', children: [] }], snapshot);
+        expect(viewRecent.api.state().items[0].id).toBe('2');
+    });
+
+    it('sendFolder: flattens descendants, merges the sourceFolderId group, guards the cap', () => {
+        const undo = undoOn();
+        const folderNode = {
+            id: '7', title: 'Docs', children: [
+                { id: '71', url: 'http://d1/', title: 'D1' },
+                { id: '72', children: [{ id: '721', url: 'http://d2/', title: 'D2' }] },
+                { id: '73', url: 'http://sep/', title: '—' } // separator filtered below via double
+            ]
+        };
+        const { viewRecent, chrome } = setup({ undo, separatorUrls: ['http://sep/'], subTree: [folderNode] });
+        viewRecent.api.sendFolder('7');
+        expect(chrome.bookmarks.getSubTreeCalls).toEqual(['7']);
+        const state = viewRecent.api.state();
+        expect(state.items.map(i => i.url).sort()).toEqual(['http://d1/', 'http://d2/']);
+        expect(state.groups).toHaveLength(1);
+        expect(state.groups[0].sourceFolderId).toBe('7');
+        expect(state.items.every(i => i.group === state.groups[0].id)).toBe(true);
+        // empty folder → toast
+        const empty = setup({ undo, subTree: [{ id: '8', title: 'E', children: [] }] });
+        empty.viewRecent.api.sendFolder('8');
+        expect(undo.toastCalls).toContain('stagingFolderEmpty');
+    });
+
+    it('sendFolder over 100 bookmarks asks for confirmation, then stages', () => {
+        const confirmCalls = [];
+        const dialogs = {
+            ConfirmDialog: { open: opts => { confirmCalls.push(opts.dialog); opts.fn1(); } }
+        };
+        const big = { id: '9', title: 'Big', children: [] };
+        for (let i = 0; i < 101; i++)
+            big.children.push({ id: `b${i}`, url: `http://b${i}/`, title: 'B' });
+        const { viewRecent } = setup({ subTree: [big], dialogs });
+        viewRecent.api.sendFolder('9');
+        expect(confirmCalls).toHaveLength(1);
+        expect(confirmCalls[0]).toContain('101');
+        expect(viewRecent.api.state().items).toHaveLength(101);
     });
 });

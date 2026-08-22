@@ -192,6 +192,7 @@ const setup = (opts = {}) => {
     // on #folder-delete (present in the pages' markup, absent in the old stub).
     // It is a menu-item like the real page HTML, so dispatch rules apply.
     const folderDelete = el('DIV', 'folder-delete');
+    el('DIV', 'add-folder-to-staging').classList.add('menu-item');
     folderDelete.classList.add('menu-item');
     // The other root-disabled folder entries (edit + before/after adds + the
     // separator insert) get the same treatment — the full ROOT_DISABLED_IDS set.
@@ -213,6 +214,9 @@ const setup = (opts = {}) => {
     el('DIV', 'hist-open-new-window');
     el('DIV', 'hist-open-incognito');
     el('DIV', 'hist-add-bookmark');
+    // velvet staging: the staging send entries (bookmark menu / hist-row menu)
+    for (const stageItem of ['hist-row-stage', 'add-to-staging'])
+        el('DIV', stageItem).classList.add('menu-item');
     // v4 task-3 #16: the dupes group-head menu items (open-time labels)
     el('DIV', 'dupes-group-clean');
     el('HR', 'dupes-group-menu-sep1');
@@ -237,7 +241,7 @@ const setup = (opts = {}) => {
     // round-3 item 3: the feature-view lists get the same scroll/focus
     // menu-dismissal wiring as the tree/results panes
     const viewLists = {};
-    for (const id of ['recent-list', 'tabgroups-list', 'stats-list', 'dead-list', 'dupes-list', 'search-history-area'])
+    for (const id of ['staging-list', 'tabgroups-list', 'stats-list', 'dead-list', 'dupes-list', 'search-history-area'])
         viewLists[id] = el('DIV', id);
     const body = el('BODY', 'body');
     body.offsetWidth = opts.bodyWidth === undefined ? 500 : opts.bodyWidth;
@@ -347,7 +351,9 @@ const setup = (opts = {}) => {
         // 4.0.8: view-tab menu dispatch (view-manager owns the settings)
         get viewMenu() { return opts.viewMenu; },
         // Tab-groups view menus (lazy, exactly like the dead/dupes ones)
-        get tabGroupsMenu() { return opts.tabGroupsMenu; }
+        get tabGroupsMenu() { return opts.tabGroupsMenu; },
+        // velvet staging: the send API (lazy, like neat.js wires it)
+        get staging() { return opts.staging; }
     });
 
     // A bookmark row: <li id="neat-tree-item-42" data-parentid="1"><a href><i>title</i></a></li>
@@ -2413,6 +2419,7 @@ describe('hist-row context menu (v4 task-3 #10)', () => {
         expect(byId['hist-open-new-window'].textContent).toBe('openNewWindow');
         expect(byId['hist-open-incognito'].textContent).toBe('openIncognitoWindow');
         expect(byId['hist-add-bookmark'].textContent).toBe('statsHistoryAdd');
+        expect(byId['hist-row-stage'].textContent).toBe('stagingAdd');
     });
 
     it('resolves the row anchor when a non-anchor element of the row is right-clicked', () => {
@@ -2795,5 +2802,82 @@ describe('zoom-clamped menu under the search bar (issue #59 audit)', () => {
         openOn(makeBookmarkRow().a, { pageY: 590, clientY: 590 });
         // 600 - (40*1.2) - 8 margin = 544, not the raw layout 40 → 552
         expect(bookmarkMenu.style.maxHeight).toBe('544px');
+    });
+});
+
+describe('staging send entries (velvet staging §2.3)', () => {
+    const stagingDouble = (stagedUrls = []) => {
+        const calls = [];
+        return {
+            calls,
+            isStaged: url => stagedUrls.includes(url),
+            addItems: entries => {
+                calls.push(['add', entries]);
+                return { full: false, added: entries, dupes: [] };
+            },
+            sendFolder: id => {
+                calls.push(['folder', id]);
+            }
+        };
+    };
+
+    it('shows add-to-staging on bookmark rows with an id, hides it on staging rows', () => {
+        const staging = stagingDouble();
+        const { byId, makeBookmarkRow, openOn } = setup({ staging });
+        openOn(makeBookmarkRow('42').a);
+        expect(byId['add-to-staging'].style.display).toBe('block');
+        expect(byId['add-to-staging'].textContent).toBe('stagingAdd');
+
+        // a staging-view row (no data-node-id on unfav rows, staging-item id)
+        const { byId: byId2, el, openOn: openOn2 } = setup({ staging });
+        const li = el('LI', 'staging-item-0');
+        const a = el('A');
+        a.href = 'https://x.example/';
+        a.parentNode = li;
+        openOn2(a);
+        expect(byId2['add-to-staging'].style.display).toBe('none');
+    });
+
+    it('flips the label to "already staged" (disabled look) for staged URLs', () => {
+        const staging = stagingDouble(['https://bm-42.example/']);
+        const { byId, makeBookmarkRow, openOn } = setup({ staging });
+        openOn(makeBookmarkRow('42').a);
+        expect(byId['add-to-staging'].textContent).toBe('stagingAlready');
+        expect(byId['add-to-staging'].classList.contains('disabled')).toBe(true);
+    });
+
+    it('hides add-to-staging entirely without a staging api (minimal setups)', () => {
+        const { byId, makeBookmarkRow, openOn } = setup({});
+        openOn(makeBookmarkRow('42').a);
+        expect(byId['add-to-staging'].style.display).toBe('none');
+    });
+
+    it('dispatches add-to-staging through the bookmark api with the tree node', () => {
+        const staging = stagingDouble();
+        const { bookmarkMenu, chrome, makeBookmarkRow, openOn, menuItem } = setup({ staging });
+        openOn(makeBookmarkRow('42').a);
+        chrome.bookmarks.get = (id, cb) => cb([{ id: '42', url: 'https://bm-42.example/', title: 'T' }]);
+        fire(bookmarkMenu, 'mouseup', makeEvent({ button: 0, target: menuItem('add-to-staging') }));
+        expect(staging.calls).toEqual([['add', [{ id: '42', url: 'https://bm-42.example/', title: 'T' }]]]);
+    });
+
+    it('dispatches add-folder-to-staging through the folder api', () => {
+        const staging = stagingDouble();
+        const { folderMenu, makeFolderRow, openOn, menuItem } = setup({ staging });
+        openOn(makeFolderRow('7').span);
+        fire(folderMenu, 'mouseup', makeEvent({ button: 0, target: menuItem('add-folder-to-staging') }));
+        expect(staging.calls).toEqual([['folder', '7']]);
+    });
+
+    it('dispatches hist-row-stage with the row title as an id-less snapshot', () => {
+        const staging = stagingDouble();
+        const { histRowMenu, makeStatsHistRow, openOn, menuItem } = setup({ staging });
+        const { a } = makeStatsHistRow();
+        openOn(a);
+        fire(histRowMenu, 'mouseup', makeEvent({ button: 0, target: menuItem('hist-row-stage') }));
+        expect(staging.calls.length).toBe(1);
+        expect(staging.calls[0][0]).toBe('add');
+        expect(staging.calls[0][1][0].id).toBeNull();
+        expect(staging.calls[0][1][0].url).toBe(a.href);
     });
 });

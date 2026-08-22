@@ -512,6 +512,9 @@ export function initTreeRender(ctx = {}) {
         const ids = new Set();
         const nodeTrees = {};
         const bookmarkIds = new Set();
+        // velvet staging §0.5: url → the FIRST tree node carrying it — the
+        // staging anchors' relink index, built by the same single walk.
+        const urlIndex = new Map();
         const list = tree || [];
         const display = subTree || getEffectiveSubTree(list);
         const displayIds = new Set();
@@ -537,8 +540,11 @@ export function initTreeRender(ctx = {}) {
                     continue;
                 if (typeof node.parentId !== 'undefined') {
                     paths[node.id] = ancestors.join(' / ');
-                    if (node.url)
+                    if (node.url) {
                         ids.add(node.id);
+                        if (!urlIndex.has(node.url))
+                            urlIndex.set(node.url, node.id);
+                    }
                 }
                 if (displayIds.has(node.id)) {
                     if (node.url) {
@@ -562,7 +568,7 @@ export function initTreeRender(ctx = {}) {
         };
         walk(list, []);
         const html = generateHTML(display);
-        return { html, nodeTrees, bookmarkIds, paths, ids };
+        return { html, nodeTrees, bookmarkIds, paths, ids, urlIndex };
     };
 
     return {

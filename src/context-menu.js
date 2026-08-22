@@ -107,7 +107,7 @@ export function initContextMenu(ctx = {}) {
     // replacement row; the list container element itself is never swapped.
     let ownerInfo = null;
     // Every scrollable list a row menu can open on (ownerInfo capture).
-    const LIST_SEL = '#tree, #results, #recent-list, #tabgroups-list, #stats-list, #dead-list, ' +
+    const LIST_SEL = '#tree, #results, #staging-list, #tabgroups-list, #stats-list, #dead-list, ' +
         '#dupes-list, #search-history-area, #palette-results';
 
     // v4 task-2: unified row-id extraction — data-node-id first (the row id
@@ -691,7 +691,7 @@ export function initContextMenu(ctx = {}) {
     // Round-3 item 3: the feature-view lists follow the same contract —
     // scrolling the content or moving focus into the list dismisses an open
     // menu (previously only the tree/results/palette panes did).
-    for (const id of ['recent-list', 'tabgroups-list', 'stats-list', 'dead-list', 'dupes-list', 'search-history-area']) {
+    for (const id of ['staging-list', 'tabgroups-list', 'stats-list', 'dead-list', 'dupes-list', 'search-history-area']) {
         const listEl = $(id);
         if (listEl) {
             listEl.addEventListener('scroll', scrollDismiss);
@@ -1024,6 +1024,29 @@ export function initContextMenu(ctx = {}) {
                     const onDupesRow = liId.startsWith('dupes-item-') && ctx.dupesMenu;
                     keeperItem.style.display = onDupesRow ? 'block' : 'none';
                 }
+                // velvet staging §2.3: "Add to staging area" rides every
+                // bookmark row OUTSIDE the staging view itself (tree, search
+                // results, recent region, stats/dead/dupes). The label flips
+                // to "Already staged" (with the disabled look) when the row's
+                // URL is already in the workbench — dispatch re-checks.
+                const stageItem = $('add-to-staging');
+                if (stageItem) {
+                    const onStagingRow = liId.startsWith('staging-item-');
+                    // tree rows carry the neat-tree-item- prefix; every
+                    // other list-view row carries data-node-id (staging
+                    // unfav rows have neither — they cannot be re-sent)
+                    const hasId = !!((el.parentNode.dataset && el.parentNode.dataset.nodeId) ||
+                        liId.startsWith('neat-tree-item-'));
+                    const show = !onStagingRow && hasId && !!ctx.staging;
+                    stageItem.style.display = show ? 'block' : 'none';
+                    if (show) {
+                        const rowUrl = (el.getAttribute ? el.getAttribute('href') : el.href) || '';
+                        const staged = ctx.staging.isStaged(rowUrl);
+                        stageItem.textContent = _m(staged ? 'stagingAlready' : 'stagingAdd');
+                        if (stageItem.classList)
+                            stageItem.classList.toggle('disabled', staged);
+                    }
+                }
             }
         } else if (el.tagName === 'SPAN') {
             menu = $folderContextMenu;
@@ -1177,6 +1200,19 @@ export function initContextMenu(ctx = {}) {
             case 'copy-title-and-url':
                 actions.copyAllTitlesAndUrls(id);
                 break;
+            // velvet staging §2.3: send this bookmark to the staging area.
+            // The authoritative node comes from the tree (the anchor href
+            // is display-escaped); a URL already staged rides addItems'
+            // dedupe path, which toasts "already staged".
+            case 'add-to-staging': {
+                if (!ctx.staging)
+                    break;
+                chrome.bookmarks.get(id, nodes => {
+                    if (ctx.staging && nodes && nodes.length && nodes[0].url)
+                        ctx.staging.addItems([{ id: nodes[0].id, url: nodes[0].url, title: nodes[0].title }]);
+                });
+                break;
+            }
             case 'replace-url':
                 chrome.tabs.query({
                         'active': true,
@@ -1394,6 +1430,13 @@ export function initContextMenu(ctx = {}) {
                 case 'folder-delete':
                     actions.deleteBookmarks(id, urlsLen, children.length - urlsLen);
                     break;
+                // velvet staging §1.1/§1.3: flatten the folder's descendant
+                // bookmarks into the staging area (auto sourceFolderId
+                // group, >100 confirm and the 500 cap live in the view api).
+                case 'add-folder-to-staging':
+                    if (ctx.staging)
+                        ctx.staging.sendFolder(id);
+                    break;
                 // issue #33: direct sort actions run with the persisted
                 // sortOptions (foldersFirst/recursive), only the key flips.
                 case 'sort-folder-by-name':
@@ -1549,6 +1592,7 @@ export function initContextMenu(ctx = {}) {
         $('hist-open-new-window').textContent = _m('openNewWindow');
         $('hist-open-incognito').textContent = _m('openIncognitoWindow');
         $('hist-add-bookmark').textContent = _m('statsHistoryAdd');
+        $('hist-row-stage').textContent = _m('stagingAdd');
     }
     const histRowContextHandler = e => {
         if (!currentContext)
@@ -1578,6 +1622,15 @@ export function initContextMenu(ctx = {}) {
                     row.parentNode.querySelector('.stats-add-btn');
                 if (addBtn)
                     addBtn.click();
+                break;
+            }
+            // velvet staging §2.3: history rows stage as id-less snapshots
+            // (the "collect history's good stuff" entry — bulk-favorite flow).
+            case 'hist-row-stage': {
+                if (ctx.staging) {
+                    const i = row.querySelector ? row.querySelector('i') : null;
+                    ctx.staging.addItems([{ id: null, url, title: i ? i.textContent : '' }]);
+                }
                 break;
             }
         }
