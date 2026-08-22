@@ -959,6 +959,10 @@ export function initKeyboard(ctx = {}) {
         menus.folderTabGroupSubmenu.addEventListener('keydown', contextKeyDown);
     if (menus.folderSortSubmenu)
         menus.folderSortSubmenu.addEventListener('keydown', contextKeyDown);
+    if (menus.folderCopySubmenu)
+        menus.folderCopySubmenu.addEventListener('keydown', contextKeyDown);
+    if (menus.folderAddSubmenu)
+        menus.folderAddSubmenu.addEventListener('keydown', contextKeyDown);
     if (menus.bookmarkTabGroupSubmenu)
         menus.bookmarkTabGroupSubmenu.addEventListener('keydown', contextKeyDown);
 
@@ -1027,6 +1031,7 @@ export function initKeyboard(ctx = {}) {
         // issue #48 follow-up: the collapsed-group flyouts count as open menus
         // for the document-level Escape / Tab layering.
         menus.folderTabGroupSubmenu, menus.folderSortSubmenu,
+        menus.folderCopySubmenu, menus.folderAddSubmenu,
         menus.bookmarkTabGroupSubmenu
     ].filter(Boolean);
     const anyMenuVisible = () => {
@@ -1192,6 +1197,7 @@ if (views.onEscapeActive()) {
         // issue #48 follow-up: the collapsed-group flyouts keep Tab trapped
         // too (their items are Tab stops only while the flyout is open).
         menus.folderTabGroupSubmenu, menus.folderSortSubmenu,
+        menus.folderCopySubmenu, menus.folderAddSubmenu,
         menus.bookmarkTabGroupSubmenu
     ].filter(Boolean);
     const isWithin = (root, node) => {

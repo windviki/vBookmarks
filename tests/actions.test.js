@@ -316,7 +316,7 @@ describe('module API', () => {
             // velvet staging §5: the internal clipboard + single copy/move
             'setClipBookmark', 'cancelClipBookmark', 'hasClipBookmark',
             'hasCutClipboard', 'pasteClipBookmarkInto', 'copyMoveBookmarkTo',
-            'reapplyCutState'
+            'reapplyCutState', 'copyFolderTitlesAndUrls'
         ];
         for (const name of names)
             expect(typeof actions[name], name).toBe('function');
@@ -937,13 +937,14 @@ describe('deleteBookmarks', () => {
 });
 
 describe('copyAllTitlesAndUrls', () => {
-    it('copies "title\\r\\nurl" of a bookmark through the copier input', () => {
-        const { actions, els } = setup({
+    it('copies "title\\r\\nurl" of a bookmark through the textarea fallback', () => {
+        const { actions, created } = setup({
             nodes: { '5': [{ id: '5', title: 'GitHub', url: 'https://github.com/' }] }
         });
         actions.copyAllTitlesAndUrls('5');
-        expect(els['copier-input'].value).toBe('GitHub\r\nhttps://github.com/');
-        expect(els['copier-input'].selected).toBe(true);
+        // the shared clipboard module's dynamic textarea (no navigator in node)
+        const ta = created[created.length - 1];
+        expect(ta.value).toBe('GitHub\r\nhttps://github.com/');
         expect(document.execCalls).toEqual(['copy']);
     });
 
@@ -971,18 +972,18 @@ describe('copyAllTitlesAndUrls', () => {
         vi.unstubAllGlobals();
     });
 
-    it('falls back to the copier input when writeText rejects', async () => {
+    it('falls back to the textarea path when writeText rejects', async () => {
         vi.stubGlobal('navigator', {
             clipboard: { writeText: () => Promise.reject(new Error('denied')) }
         });
-        const { actions, els } = setup({
+        const { actions, created } = setup({
             nodes: { '5': [{ id: '5', title: 'GitHub', url: 'https://github.com/' }] }
         });
-        actions.copyAllTitlesAndUrls('5');
-        // legacyCopy runs inside .catch — flush the microtask queue
-        await Promise.resolve();
-        await Promise.resolve();
-        expect(els['copier-input'].value).toBe('GitHub\r\nhttps://github.com/');
+        await actions.copyAllTitlesAndUrls('5');
+        // the fallback runs inside .catch — the flushed microtask queue has
+        // landed it by the time the awaited action resolves
+        const ta = created[created.length - 1];
+        expect(ta.value).toBe('GitHub\r\nhttps://github.com/');
         expect(document.execCalls).toEqual(['copy']);
         vi.unstubAllGlobals();
     });

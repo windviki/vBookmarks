@@ -2651,5 +2651,42 @@
   },
   "pasteGone": {
     "message": "The bookmark no longer exists — clipboard cleared"
+  },
+  "folderCopyList": {
+    "message": "Copy titles and addresses"
+  },
+  "folderCopyText": {
+    "message": "Plain text list"
+  },
+  "folderCopyMarkdown": {
+    "message": "Markdown"
+  },
+  "folderCopyJson": {
+    "message": "JSON"
+  },
+  "folderCopyConfirm": {
+    "message": "Copy the list of $n$ bookmarks?",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "folderCopyDone": {
+    "message": "Copied $n$ bookmark entries",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "addFolderMenu": {
+    "message": "Add folder"
+  },
+  "optionCollapseAddFolderMenu": {
+    "message": "Collapse the add-folder entries"
+  },
+  "optionCollapseAddFolderMenuHint": {
+    "message": "Merge the three add-folder entries (before/after/inside) into one submenu entry on folder right-clicks."
   }
 }

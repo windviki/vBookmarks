@@ -92,6 +92,7 @@
     <hr id="folder-context-menu-sep1">
     <div id="folder-edit" class="menu-item" role="menuitem" tabindex="-1"></div>
     <div id="paste-here" class="menu-item" role="menuitem" tabindex="-1" style="display:none"></div>
+    <div id="folder-copy-collapse" class="menu-item has-submenu" role="menuitem" tabindex="-1" aria-haspopup="true" aria-expanded="false" data-submenu="folder-copy-submenu"></div>
     <hr id="folder-context-menu-sep7">
     <div id="sort-folder-by-name" class="menu-item" role="menuitem" tabindex="-1"></div>
     <div id="sort-folder-by-date" class="menu-item" role="menuitem" tabindex="-1"></div>
@@ -100,6 +101,7 @@
     <hr id="folder-context-menu-sep2">
     <div id="add-bookmark-top" class="menu-item" role="menuitem" tabindex="-1"></div>
     <div id="add-bookmark-bottom" class="menu-item" role="menuitem" tabindex="-1"></div>
+    <div id="folder-add-collapse" class="menu-item has-submenu" role="menuitem" tabindex="-1" aria-haspopup="true" aria-expanded="false" data-submenu="folder-add-submenu" style="display:none"></div>
     <div id="add-new-folder" class="menu-item" role="menuitem" tabindex="-1"></div>
     <hr id="folder-context-menu-sep3">
     <div id="add-bookmark-before-folder" class="menu-item" role="menuitem" tabindex="-1"></div>
@@ -123,6 +125,16 @@
     <div id="sub-sort-folder-by-name" class="menu-item" role="menuitem" tabindex="-1"></div>
     <div id="sub-sort-folder-by-date" class="menu-item" role="menuitem" tabindex="-1"></div>
     <div id="sub-sort-folder-contents" class="menu-item" role="menuitem" tabindex="-1"></div>
+</menu>
+<menu id="folder-copy-submenu" class="submenu" type="context" role="menu" tabindex="-1" data-parent-entry="folder-copy-collapse">
+    <div id="sub-folder-copy-text" class="menu-item" role="menuitem" tabindex="-1"></div>
+    <div id="sub-folder-copy-markdown" class="menu-item" role="menuitem" tabindex="-1"></div>
+    <div id="sub-folder-copy-json" class="menu-item" role="menuitem" tabindex="-1"></div>
+</menu>
+<menu id="folder-add-submenu" class="submenu" type="context" role="menu" tabindex="-1" data-parent-entry="folder-add-collapse">
+    <div id="sub-add-folder-before-folder" class="menu-item" role="menuitem" tabindex="-1"></div>
+    <div id="sub-add-folder-after-folder" class="menu-item" role="menuitem" tabindex="-1"></div>
+    <div id="sub-add-new-folder" class="menu-item" role="menuitem" tabindex="-1"></div>
 </menu>
 <menu id="bookmark-tab-group-submenu" class="submenu" type="context" role="menu" tabindex="-1" data-parent-entry="bookmark-tab-group-collapse">
     <div id="sub-bookmark-open-in-new-group" class="menu-item" role="menuitem" tabindex="-1"></div>

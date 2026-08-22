@@ -35,6 +35,8 @@ import { pickGroupColor, readTabGroupFolderMeta } from './tab-group-utils.js';
  * as parentNode.removeChild).
  */
 
+import { writeText as clipboardWriteText, FORMATTERS } from './clipboard.js';
+
 export function initActions(ctx = {}) {
     const $ = id => document.getElementById(id);
     const _m = chrome.i18n.getMessage;
@@ -58,18 +60,7 @@ export function initActions(ctx = {}) {
     // .writeText 配合 manifest 的 clipboardWrite 权限不受此时序限制。
     // 失败时回退到隐藏 textarea + execCommand 的老路径。
     const copyToClipboard = copyText => {
-        const legacyCopy = () => {
-            const copier = $('copier-input');
-            copier.value = copyText;
-            copier.select();
-            document.execCommand('copy');
-        };
-        // node 测试环境（Node <21）没有 navigator 全局，特性检测需先判存在
-        if (typeof navigator !== 'undefined' && navigator.clipboard && navigator.clipboard.writeText) {
-            navigator.clipboard.writeText(copyText).catch(legacyCopy);
-        } else {
-            legacyCopy();
-        }
+        clipboardWriteText(copyText);
     };
 
     // class for get tree style text
@@ -292,6 +283,54 @@ export function initActions(ctx = {}) {
     const dontConfirmOpenFolder = !!store.get('dontConfirmOpenFolder');
     const bookmarkClickStayOpen = !!store.get('bookmarkClickStayOpen');
     const openBookmarksLimit = 10;
+    // --- Folder title+URL list export (velvet staging §6) -------------------
+    // Recursive depth-first collection in tree order; separators and
+    // sub-folder NODES are skipped (their contents are not). No dedupe —
+    // the list stays faithful to the tree.
+    const collectListItems = node => {
+        const out = [];
+        const walk = nodes => {
+            for (let i = 0, l = (nodes || []).length; i < l; i++) {
+                const c = nodes[i];
+                if (!c)
+                    continue;
+                if (c.url) {
+                    if (!separatorManager.isSeparator(c.title, c.url))
+                        out.push({ title: c.title, url: c.url });
+                } else if (c.children) {
+                    walk(c.children);
+                }
+            }
+        };
+        walk(node.children || []);
+        return out;
+    };
+    const FOLDER_COPY_CONFIRM_LIMIT = 200;
+    const copyFolderTitlesAndUrls = (folderId, format = 'text') => {
+        const formatter = FORMATTERS[format] || FORMATTERS.text;
+        chrome.bookmarks.getSubTree(folderId, nodes => {
+            if (!nodes || !nodes.length)
+                return;
+            const items = collectListItems(nodes[0]);
+            if (!items.length)
+                return;
+            const run = () => {
+                copyToClipboard(formatter(items));
+                toast(_m('folderCopyDone', `${items.length}`));
+            };
+            if (items.length > FOLDER_COPY_CONFIRM_LIMIT && dialogs && dialogs.ConfirmDialog) {
+                dialogs.ConfirmDialog.open({
+                    dialog: _m('folderCopyConfirm', `${items.length}`),
+                    button1: `<strong>${_m('open')}</strong>`,
+                    button2: _m('nope'),
+                    fn1: run
+                });
+            } else {
+                run();
+            }
+        });
+    };
+
     // --- Session-scoped internal clipboard (velvet staging §5.2) -----------
     // One bookmark at a time, position-to-position quick moves. Lives in
     // this module's closure ONLY (never storage, never the tree): popup and
@@ -804,6 +843,7 @@ export function initActions(ctx = {}) {
     // actions.addSeparator / actions.deleteSeparator.
     actions.addSeparator = addSeparator;
     actions.deleteSeparator = deleteSeparator;
+    actions.copyFolderTitlesAndUrls = copyFolderTitlesAndUrls;
     // velvet staging §5: the internal clipboard + single-item copy/move
     actions.setClipBookmark = setClipBookmark;
     actions.cancelClipBookmark = cancelClipBookmark;

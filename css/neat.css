@@ -2102,6 +2102,19 @@ menu[type=context].collapse-tab-group #folder-tab-group-collapse {
 menu[type=context].collapse-sort #folder-sort-collapse {
     display: block;
 }
+/* velvet staging §7: the add-folder block collapses by default —
+   #folder-add-collapse shows with the class, the three flat entries hide. */
+menu[type=context] #folder-add-collapse {
+    display: none;
+}
+menu[type=context].collapse-add-folder #folder-add-collapse {
+    display: block;
+}
+menu[type=context].collapse-add-folder #add-folder-before-folder,
+menu[type=context].collapse-add-folder #add-folder-after-folder,
+menu[type=context].collapse-add-folder #add-new-folder {
+    display: none;
+}
 menu[type=context].collapse-tab-group #open-bookmarks-in-group,
 menu[type=context].collapse-tab-group #open-bookmarks-in-group-setup,
 menu[type=context].collapse-tab-group #folder-open-in-existing-group,

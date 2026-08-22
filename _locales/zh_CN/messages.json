@@ -2457,5 +2457,42 @@
   },
   "pasteGone": {
     "message": "书签已不存在,剪贴板已清空"
+  },
+  "folderCopyList": {
+    "message": "复制标题和地址"
+  },
+  "folderCopyText": {
+    "message": "文本清单"
+  },
+  "folderCopyMarkdown": {
+    "message": "Markdown"
+  },
+  "folderCopyJson": {
+    "message": "JSON"
+  },
+  "folderCopyConfirm": {
+    "message": "复制 $n$ 条书签的清单?",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "folderCopyDone": {
+    "message": "已复制 $n$ 条书签条目",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "addFolderMenu": {
+    "message": "添加文件夹"
+  },
+  "optionCollapseAddFolderMenu": {
+    "message": "折叠添加文件夹条目"
+  },
+  "optionCollapseAddFolderMenuHint": {
+    "message": "把文件夹右键菜单的三个添加文件夹条目(此前/此后/子文件夹)合并为一个二级菜单条目。"
   }
 }

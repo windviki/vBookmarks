@@ -234,6 +234,14 @@ import { deferIdle, mark as perfMark } from './idle.js';
         'add-folder-before-folder': 'addNewFolderBefore',
         'add-folder-after-folder': 'addNewFolderAfter',
         'add-new-folder': 'addNewFolder',
+        // velvet staging §7: the collapsed add-folder flyout (label reuse)
+        'sub-add-folder-before-folder': 'addNewFolderBefore',
+        'sub-add-folder-after-folder': 'addNewFolderAfter',
+        'sub-add-new-folder': 'addNewFolder',
+        // velvet staging §6: the folder copy-list flyout
+        'sub-folder-copy-text': 'folderCopyText',
+        'sub-folder-copy-markdown': 'folderCopyMarkdown',
+        'sub-folder-copy-json': 'folderCopyJson',
         'add-separator': 'addSeparator',
         'remove-separator': 'removeSeparator',
         'add-folder-separator': 'addSeparator',

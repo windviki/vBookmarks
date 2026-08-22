@@ -182,7 +182,10 @@ const $ = id => document.getElementById(id);
             // issue #48 follow-up: collapse the tab-group / sort blocks into
             // single submenu entries (tab-group default off, sort default on).
             { id: 'collapse-tab-group-menu', key: 'collapseTabGroupMenu', defaultValue: '0', inverted: false },
-            { id: 'collapse-sort-menu', key: 'collapseSortMenu', defaultValue: '1', inverted: false }
+            { id: 'collapse-sort-menu', key: 'collapseSortMenu', defaultValue: '1', inverted: false },
+            // velvet staging §7: collapse the folder menu's three add-folder
+            // entries into one submenu entry (default on, sync-routed).
+            { id: 'collapse-add-folder-menu', key: 'collapseAddFolderMenu', defaultValue: '1', inverted: false }
         ];
         // Tools: the v4 chrome — palette, quick-add star, tool button and the
         // one-click classic-experience preset (v4 task-3 #20).
@@ -887,6 +890,8 @@ const $ = id => document.getElementById(id);
         document.getElementById('option-collapse-tab-group-menu-hint').innerText = __m('optionCollapseTabGroupMenuHint');
         document.getElementById('option-collapse-sort-menu').innerText = __m('optionCollapseSortMenu');
         document.getElementById('option-collapse-sort-menu-hint').innerText = __m('optionCollapseSortMenuHint');
+        document.getElementById('option-collapse-add-folder-menu').innerText = __m('optionCollapseAddFolderMenu');
+        document.getElementById('option-collapse-add-folder-menu-hint').innerText = __m('optionCollapseAddFolderMenuHint');
         document.getElementById('option-show-tool-button').innerText = __m('optionShowToolButton');
         document.getElementById('classic-experience').innerText = __m('optionClassicExperience');
         document.getElementById('classic-experience-hint').innerText = __m('optionClassicExperienceHint');

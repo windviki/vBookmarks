@@ -92,6 +92,9 @@ export function initContextMenu(ctx = {}) {
     const $folderTabGroupSubmenu = $('folder-tab-group-submenu');
     const $folderSortSubmenu = $('folder-sort-submenu');
     const $bookmarkTabGroupSubmenu = $('bookmark-tab-group-submenu');
+    // velvet staging §6/§7: the folder copy-list + add-folder flyouts.
+    const $folderCopySubmenu = $('folder-copy-submenu');
+    const $folderAddSubmenu = $('folder-add-submenu');
     let openSubmenu = null;
 
     // Collapse settings (lazy, read from ctx at open time): the tab-group
@@ -99,6 +102,8 @@ export function initContextMenu(ctx = {}) {
     // the folder menu only. Defaults — tab-group off, sort on.
     const collapseTabGroup = () => !!ctx.collapseTabGroupMenu;
     const collapseSort = () => ctx.collapseSortMenu !== false;
+    // velvet staging §7: the add-folder block collapses too (default ON).
+    const collapseAddFolder = () => ctx.collapseAddFolderMenu !== false;
 
     // The row element (a/span) the open menu belongs to; cleared by clearMenu.
     let currentContext = null;
@@ -135,6 +140,9 @@ export function initContextMenu(ctx = {}) {
     // They grey out (disable) like folder-delete; the in-root inserts
     // (top/bottom/new-folder) and the open actions stay enabled.
     const ROOT_DISABLED_IDS = [
+        // velvet staging §7: the collapsed add-folder flyout's before/after
+        // entries (sub- prefixed ids, dispatched through the same cases)
+        'sub-add-folder-before-folder', 'sub-add-folder-after-folder',
         'folder-edit',
         'add-bookmark-before-folder', 'add-bookmark-after-folder',
         'add-folder-before-folder', 'add-folder-after-folder',
@@ -193,11 +201,14 @@ export function initContextMenu(ctx = {}) {
             OPEN_CONTENT_IDS.forEach(itemId => toggle(itemId, !hasUrls));
             SORT_CONTENT_IDS.forEach(itemId => toggle(itemId, !hasChildren));
             // The collapsed tab-group entry + its submenu read disabled under
-            // the same no-URL rule as the open entries.
-            const collapseTargets = [$('folder-tab-group-collapse')];
-            const submenu = $folderTabGroupSubmenu;
-            if (submenu)
-                collapseTargets.push(...Array.from(submenu.querySelectorAll('.menu-item')));
+            // the same no-URL rule as the open entries. The velvet-staging
+            // folder copy-list entry follows suit (§6.4: an empty folder has
+            // nothing to export).
+            const collapseTargets = [$('folder-tab-group-collapse'), $('folder-copy-collapse')];
+            for (const submenu of [$folderTabGroupSubmenu, $folderCopySubmenu]) {
+                if (submenu)
+                    collapseTargets.push(...Array.from(submenu.querySelectorAll('.menu-item')));
+            }
             collapseTargets.forEach(t => {
                 if (t && t.classList)
                     t.classList.toggle('disabled', !hasUrls);
@@ -307,7 +318,8 @@ export function initContextMenu(ctx = {}) {
             });
         }
         // Park any open collapsed-group flyout and its expanded marker.
-        for (const sub of [$folderTabGroupSubmenu, $folderSortSubmenu, $bookmarkTabGroupSubmenu]) {
+        for (const sub of [$folderTabGroupSubmenu, $folderSortSubmenu, $bookmarkTabGroupSubmenu,
+            $folderCopySubmenu, $folderAddSubmenu]) {
             if (!sub)
                 continue;
             sub.style.left = '-999px';
@@ -533,8 +545,11 @@ export function initContextMenu(ctx = {}) {
     const applyCollapseState = menu => {
         const isFolder = menu === $folderContextMenu;
         menu.classList.toggle('collapse-tab-group', collapseTabGroup());
-        if (isFolder)
+        if (isFolder) {
             menu.classList.toggle('collapse-sort', collapseSort());
+            // velvet staging §7: the add-folder block collapses too (default ON)
+            menu.classList.toggle('collapse-add-folder', collapseAddFolder());
+        }
         // The folder menu's content-dependent greying (open/tab-group entries
         // need URL children, sort needs any child) is applied by
         // applyContentDisabled at the folder-open branch.
@@ -1529,6 +1544,17 @@ export function initContextMenu(ctx = {}) {
                 case 'paste-here':
                     actions.pasteClipBookmarkInto(id);
                     break;
+                // velvet staging §6: recursive title+URL export in the
+                // three formats (>200 confirm lives in the action).
+                case 'folder-copy-text':
+                    actions.copyFolderTitlesAndUrls(id, 'text');
+                    break;
+                case 'folder-copy-markdown':
+                    actions.copyFolderTitlesAndUrls(id, 'markdown');
+                    break;
+                case 'folder-copy-json':
+                    actions.copyFolderTitlesAndUrls(id, 'json');
+                    break;
                 // issue #33: direct sort actions run with the persisted
                 // sortOptions (foldersFirst/recursive), only the key flips.
                 case 'sort-folder-by-name':
@@ -1564,10 +1590,23 @@ export function initContextMenu(ctx = {}) {
     // menu opens an entry's flyout and closes it over a plain item; entering
     // the flyout — a body-level sibling — never fires the parent's mouseover,
     // so the move into it can't wrongly close it.
-    const entryLabel = e => { if (e) e.textContent = _m(e.id === 'folder-sort-collapse' ? 'sortMenuOptions' : 'tabGroupOptions'); };
+    const entryLabel = e => {
+        if (!e)
+            return;
+        if (e.id === 'folder-sort-collapse')
+            e.textContent = _m('sortMenuOptions');
+        else if (e.id === 'folder-copy-collapse')
+            e.textContent = _m('folderCopyList');
+        else if (e.id === 'folder-add-collapse')
+            e.textContent = _m('addFolderMenu');
+        else
+            e.textContent = _m('tabGroupOptions');
+    };
     entryLabel($('folder-tab-group-collapse'));
     entryLabel($('folder-sort-collapse'));
     entryLabel($('bookmark-tab-group-collapse'));
+    entryLabel($('folder-copy-collapse'));
+    entryLabel($('folder-add-collapse'));
     const bindSubmenu = (sub, handler) => {
         if (!sub)
             return;
@@ -1582,6 +1621,8 @@ export function initContextMenu(ctx = {}) {
     bindSubmenu($folderTabGroupSubmenu, folderContextHandler);
     bindSubmenu($folderSortSubmenu, folderContextHandler);
     bindSubmenu($bookmarkTabGroupSubmenu, bookmarkContextHandler);
+    bindSubmenu($folderCopySubmenu, folderContextHandler);
+    bindSubmenu($folderAddSubmenu, folderContextHandler);
     const bindSubmenuHover = menu => {
         menu.addEventListener('mouseover', e => {
             const t = e.target;
@@ -2126,6 +2167,8 @@ export function initContextMenu(ctx = {}) {
         folderTabGroupSubmenu: $folderTabGroupSubmenu || null,
         folderSortSubmenu: $folderSortSubmenu || null,
         bookmarkTabGroupSubmenu: $bookmarkTabGroupSubmenu || null,
+        folderCopySubmenu: $folderCopySubmenu || null,
+        folderAddSubmenu: $folderAddSubmenu || null,
         openSubmenuFor, closeSubmenu, toggleSubmenuFor, submenuOpen, submenuParentEntry
     };
 }

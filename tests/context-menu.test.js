@@ -225,6 +225,27 @@ const setup = (opts = {}) => {
     for (const bmId of ['bookmark-edit', 'bookmark-delete', 'copy-title-and-url',
         'copy-move-to', 'copy-bookmark', 'cut-bookmark', 'paste-here'])
         el('DIV', bmId).classList.add('menu-item');
+    // velvet staging §6/§7: the folder copy-list collapse + flyout, and the
+    // add-folder collapse entry (flyout items parented via _children so the
+    // submenu's querySelectorAll('.menu-item') walk finds them)
+    const folderCopyEntry = el('DIV', 'folder-copy-collapse');
+    folderCopyEntry.classList.add('menu-item', 'has-submenu');
+    const folderCopySubmenu = el('MENU', 'folder-copy-submenu');
+    folderCopySubmenu._children = [];
+    for (const cid of ['sub-folder-copy-text', 'sub-folder-copy-markdown', 'sub-folder-copy-json']) {
+        const item = el('DIV', cid);
+        item.classList.add('menu-item');
+        folderCopySubmenu._children.push(item);
+    }
+    const folderAddEntry = el('DIV', 'folder-add-collapse');
+    folderAddEntry.classList.add('menu-item', 'has-submenu');
+    const folderAddSubmenu = el('MENU', 'folder-add-submenu');
+    folderAddSubmenu._children = [];
+    for (const aid of ['sub-add-folder-before-folder', 'sub-add-folder-after-folder', 'sub-add-new-folder']) {
+        const item = el('DIV', aid);
+        item.classList.add('menu-item');
+        folderAddSubmenu._children.push(item);
+    }
     // v4 task-3 #16: the dupes group-head menu items (open-time labels)
     el('DIV', 'dupes-group-clean');
     el('HR', 'dupes-group-menu-sep1');
@@ -319,7 +340,8 @@ const setup = (opts = {}) => {
         'editBookmarkFolder', 'deleteBookmark',
         'deleteBookmarks', 'addSeparator', 'deleteSeparator',
         // velvet staging §5: the tree clipboard trio
-        'setClipBookmark', 'copyMoveBookmarkTo', 'pasteClipBookmarkInto'])
+        'setClipBookmark', 'copyMoveBookmarkTo', 'pasteClipBookmarkInto',
+        'copyFolderTitlesAndUrls'])
         actions[name] = (...args) => {
             actionCalls.push([name, ...args]);
             // 4.0.1: lets a test observe the menu/focus state DURING the action
@@ -358,6 +380,7 @@ const setup = (opts = {}) => {
         // tab-group off, sort on).
         get collapseTabGroupMenu() { return !!opts.collapseTabGroupMenu; },
         get collapseSortMenu() { return opts.collapseSortMenu === undefined ? true : !!opts.collapseSortMenu; },
+        get collapseAddFolderMenu() { return opts.collapseAddFolderMenu === undefined ? true : !!opts.collapseAddFolderMenu; },
         get zoomLevel() { return opts.zoomLevel || 1; },
         // 4.0.8: view-tab menu dispatch (view-manager owns the settings)
         get viewMenu() { return opts.viewMenu; },
@@ -554,7 +577,8 @@ describe('module API', () => {
         expect(menus.paletteCmdMenu).toBe(paletteCmdMenu);
         expect(Object.keys(menus).sort()).toEqual(
             ['bookmarkMenu', 'bookmarkTabGroupSubmenu', 'clearMenu', 'closeMenu', 'closeSubmenu',
-                'dupesGroupMenu', 'folderMenu', 'folderSortSubmenu', 'folderTabGroupSubmenu',
+                'dupesGroupMenu', 'folderAddSubmenu', 'folderCopySubmenu', 'folderMenu',
+                'folderSortSubmenu', 'folderTabGroupSubmenu',
                 'histRowMenu', 'openSubmenuFor', 'paletteCmdMenu', 'searchHistoryMenu',
                 'separatorMenu', 'stagingGroupMenu', 'submenuOpen', 'submenuParentEntry',
                 'switchBookmarkMenu',
@@ -3036,5 +3060,60 @@ describe('tree clipboard entries (velvet staging §5)', () => {
         ctx.menus.switchBookmarkMenu(true);
         expect(ctx.byId['copy-bookmark'].style.display).toBe('none');
         expect(ctx.byId['cut-bookmark'].style.display).toBe('none');
+    });
+});
+
+describe('folder copy-list + add-folder collapse (velvet staging §6/§7)', () => {
+    it('dispatches the three copy formats through actions.copyFolderTitlesAndUrls', () => {
+        const ctx = setup({});
+        const cases = [
+            ['sub-folder-copy-text', 'text'],
+            ['sub-folder-copy-markdown', 'markdown'],
+            ['sub-folder-copy-json', 'json']
+        ];
+        for (const [id, fmt] of cases) {
+            ctx.openOn(ctx.makeFolderRow('7').span);
+            fire(ctx.folderMenu, 'mouseup', makeEvent({ button: 0, target: ctx.menuItem(id) }));
+        }
+        const calls = ctx.actionCalls.filter(c => c[0] === 'copyFolderTitlesAndUrls');
+        expect(calls).toEqual([['copyFolderTitlesAndUrls', '7', 'text'],
+            ['copyFolderTitlesAndUrls', '7', 'markdown'], ['copyFolderTitlesAndUrls', '7', 'json']]);
+    });
+
+    it('the add-folder flyout dispatches through the same cases (sub- normalization)', () => {
+        const ctx = setup({});
+        const cases = ['sub-add-folder-before-folder', 'sub-add-folder-after-folder', 'sub-add-new-folder'];
+        for (const id of cases) {
+            ctx.openOn(ctx.makeFolderRow('7').span);
+            fire(ctx.folderMenu, 'mouseup', makeEvent({ button: 0, target: ctx.menuItem(id) }));
+        }
+        const calls = ctx.actionCalls.map(c => c[0]);
+        expect(calls).toEqual(['addNewBookmarkNode', 'addNewBookmarkNode', 'addNewBookmarkNode']);
+    });
+
+    it('applyCollapseState toggles the collapse-add-folder class with the setting', () => {
+        const on = setup({ collapseAddFolderMenu: true });
+        on.openOn(on.makeFolderRow('7').span);
+        expect(on.folderMenu.classList.contains('collapse-add-folder')).toBe(true);
+        const off = setup({ collapseAddFolderMenu: false });
+        off.openOn(off.makeFolderRow('7').span);
+        expect(off.folderMenu.classList.contains('collapse-add-folder')).toBe(false);
+        // default: on
+        const dflt = setup({});
+        dflt.openOn(dflt.makeFolderRow('7').span);
+        expect(dflt.folderMenu.classList.contains('collapse-add-folder')).toBe(true);
+    });
+
+    it('an empty folder greys the copy-list entry and its flyout items', () => {
+        const ctx = setup({ children: { 7: [] } });
+        ctx.openOn(ctx.makeFolderRow('7').span);
+        const entry = ctx.byId['folder-copy-collapse'];
+        const textItem = ctx.byId['sub-folder-copy-text'];
+        expect(entry.classList.contains('disabled')).toBe(true);
+        expect(textItem.classList.contains('disabled')).toBe(true);
+        // a folder WITH urls clears it
+        const full = setup({ children: { 7: [{ id: '71', url: 'http://a/' }] } });
+        full.openOn(full.makeFolderRow('7').span);
+        expect(full.byId['folder-copy-collapse'].classList.contains('disabled')).toBe(false);
     });
 });
