@@ -8,13 +8,14 @@
  * like a tree folder); the current window is open by default and the others
  * fold, with an explicit fold/unfold remembered for next time. Tabs that
  * belong to a Chrome tab group render under a group header (title, color dot,
- * count, go-to/rename/save/sleep/close actions); ungrouped tabs render as
- * plain rows in the same order. Every row ends with the same four icon
- * columns — pin / sleep / bookmark / close — so the columns line up on every
- * row and in selection mode (where they render as inert state markers): the
- * pinned glyph unpins, the crescent is hollow while the tab is awake and
- * filled (click = wake) once it sleeps, and the filled ★ removes the
- * bookmark again (undo-captured).
+ * count, go-to/rename/sleep/save/close actions — the last three sharing the
+ * member rows' column order); ungrouped tabs render as plain rows in the same
+ * order. Every row ends with the same four icon columns — pin / sleep /
+ * bookmark / close — so the columns line up on every row and in selection
+ * mode (where they render as inert state markers): the pinned glyph unpins,
+ * the crescent is hollow while the tab is awake and filled (click = wake)
+ * once it sleeps, and the filled ★ removes the bookmark again
+ * (undo-captured).
  *
  * The view offers a dupes-style selection mode for batch tab management: new
  * tab group / open into an existing group (with a copy-vs-move choice for
@@ -31,7 +32,7 @@
  * dropping callbacks.
  */
 
-import { VIEW_ICONS, STAR_ICON, STAR_ICON_FILLED, SELECT_ICON, FOLDER_ICON, EDIT_ICON, SLEEP_ICON, SLEEP_ICON_FILLED, ACTIVATE_ICON, TRASH_ICON, REDO_ICON, COLLAPSE_ALL_ICON, EXPAND_ALL_ICON, PIN_ICON } from './icons.js';
+import { VIEW_ICONS, STAR_ICON, STAR_ICON_FILLED, SELECT_ICON, FOLDER_STAR_ICON, EDIT_ICON, SLEEP_ICON, SLEEP_ICON_FILLED, ACTIVATE_ICON, TRASH_ICON, REDO_ICON, COLLAPSE_ALL_ICON, EXPAND_ALL_ICON, PIN_ICON } from './icons.js';
 import { htmlspecialchars } from './escape.js';
 import { parkRowFocus, unparkRowFocus, parkToolbarFocus, restoreToolbarFocus } from './list-focus.js';
 import { saveSession, sessionFolderName, tabsToBookmarks } from './session.js';
@@ -427,6 +428,12 @@ export function initViewTabGroups(ctx = {}) {
         // asleep → filled glyph + wake, otherwise hollow glyph + sleep.
         const allAsleep = memberTabs.length > 0 && memberTabs.every(t => !!t.discarded);
         const sleepLabel = _m(allAsleep ? 'tabGroupsWakeGroup' : 'tabGroupsSleepGroup');
+        // Button order (4.1.0 alignment pass): the three actions a group
+        // shares with a single tab read RIGHT-to-left as close (删除) /
+        // save-as-folder (收藏) / sleep (睡眠) — the same order and the
+        // same 20px columns as the member rows' [sleep][star][close] tail,
+        // so the glyphs line up vertically. The group-specific actions
+        // (go-to, rename) keep their places to the left of that tail.
         return `<li class="tabgroups-group tg-${htmlspecialchars(color)}${selecting && memberTabs.every(t => selected.has(String(t.id))) ? ' sel' : ''}" id="tabgroups-group-${gid}" data-group-id="${gid}">` +
             `<span class="tabgroups-group-head" tabindex="-1" role="button" aria-expanded="${isCollapsed ? 'false' : 'true'}" title="${htmlspecialchars(title)}">` +
             `<span class="chevron${isCollapsed ? ' collapsed' : ''}" aria-hidden="true"></span>` +
@@ -435,8 +442,8 @@ export function initViewTabGroups(ctx = {}) {
             `<span class="count-pill" aria-label="${htmlspecialchars(_m('tabGroupsGroupCount', `${memberTabs.length}`))}">${memberTabs.length}</span>` +
             `<button class="row-btn tabgroups-group-activate" aria-label="${htmlspecialchars(_m('tabGroupsActivateGroup'))}" title="${htmlspecialchars(_m('tabGroupsActivateGroup'))}">${ACTIVATE_ICON}</button>` +
             `<button class="row-btn tabgroups-group-rename" aria-label="${htmlspecialchars(_m('tabGroupsRenameGroup'))}" title="${htmlspecialchars(_m('tabGroupsRenameGroup'))}">${EDIT_ICON}</button>` +
-            `<button class="row-btn tabgroups-group-save" aria-label="${htmlspecialchars(saveLabel)}" title="${htmlspecialchars(saveLabel)}">${FOLDER_ICON}</button>` +
             `<button class="row-btn tabgroups-group-sleep${allAsleep ? ' asleep' : ''}" aria-pressed="${allAsleep}" aria-label="${htmlspecialchars(sleepLabel)}" title="${htmlspecialchars(sleepLabel)}">${allAsleep ? SLEEP_ICON_FILLED : SLEEP_ICON}</button>` +
+            `<button class="row-btn tabgroups-group-save" aria-label="${htmlspecialchars(saveLabel)}" title="${htmlspecialchars(saveLabel)}">${FOLDER_STAR_ICON}</button>` +
             `<button class="row-btn tabgroups-group-close" aria-label="${htmlspecialchars(_m('tabGroupsCloseGroup'))}" title="${htmlspecialchars(_m('tabGroupsCloseGroup'))}">${TRASH_ICON}</button>` +
             '</span></li>';
     };

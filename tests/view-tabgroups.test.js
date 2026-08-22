@@ -480,6 +480,20 @@ describe('render', () => {
         expect(html).toContain('tg-blue');
         expect(html).toContain('tabGroupsGroupCount[2]');
         expect(html).toContain('tabgroups-group-save');
+        // button order (4.1.0 alignment pass): the shared tail reads
+        // sleep → save → close left-to-right, mirroring the member rows'
+        // [sleep][star][close] columns; go-to/rename sit left of the tail.
+        const order = [
+            html.indexOf('tabgroups-group-activate'),
+            html.indexOf('tabgroups-group-rename'),
+            html.indexOf('tabgroups-group-sleep'),
+            html.indexOf('tabgroups-group-save'),
+            html.indexOf('tabgroups-group-close')
+        ];
+        expect(order.every(i => i >= 0)).toBe(true);
+        expect([...order].sort((a, b) => a - b)).toEqual(order);
+        // the save action reads as "favorite this folder": folder + star
+        expect(html).toContain('vbm-icon-folder-star');
         // current tab marker
         expect(html).toContain('tabgroups-current');
         expect(html).toContain('row-badge current');

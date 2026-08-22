@@ -14,10 +14,29 @@
  * adjacent <i> label already names the row.
  */
 
+// Bookmark star, hollow (line) form: the quick-add header button and the
+// stats view's one-click "add this history row" action share it. The filled
+// form (STAR_ICON_FILLED) marks the already-bookmarked state in the stats
+// view and the quick-add button's .starred state — one glyph, two states.
+// (Defined up here because FOLDER_STAR_ICON's overlay reuses the path.)
+const STAR_PATH = 'M8 1.7l1.9 3.9 4.3.6-3.1 3 .7 4.3-3.8-2-3.8 2 .7-4.3-3.1-3 4.3-.6z';
+
 export const FOLDER_ICON =
     '<svg class="vbm-icon vbm-icon-folder" width="16" height="16" viewBox="0 0 16 16" ' +
     'fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true">' +
     '<path d="M14.67 12.67a1.33 1.33 0 0 1-1.33 1.33H2.67a1.33 1.33 0 0 1-1.34-1.33V3.33a1.33 1.33 0 0 1 1.34-1.33h3.33l1.33 2h6a1.33 1.33 0 0 1 1.34 1.33z"/>' +
+    '</svg>';
+
+// "Favorite this folder": the folder silhouette with a small SOLID star
+// overlaid on its top-right — the tab-group head's save-as-bookmark-folder
+// action (4.1.0: the group's 收藏 IS saving it as a folder, so the glyph
+// reads as starring a folder rather than a plain folder action). Same 16px
+// line grid; the star reuses STAR_ICON's path scaled onto the corner.
+export const FOLDER_STAR_ICON =
+    '<svg class="vbm-icon vbm-icon-folder-star" width="16" height="16" viewBox="0 0 16 16" ' +
+    'fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true">' +
+    '<path d="M14.67 12.67a1.33 1.33 0 0 1-1.33 1.33H2.67a1.33 1.33 0 0 1-1.34-1.33V3.33a1.33 1.33 0 0 1 1.34-1.33h3.33l1.33 2h6a1.33 1.33 0 0 1 1.34 1.33z"/>' +
+    `<path d="${STAR_PATH}" fill="currentColor" stroke="none" transform="translate(5.2 0.8) scale(0.68)"/>` +
     '</svg>';
 
 export const DOCUMENT_CODE_ICON =
@@ -59,7 +78,6 @@ export const CHECK_ICON =
 // stats view's one-click "add this history row" action share it. The filled
 // form (STAR_ICON_FILLED) marks the already-bookmarked state in the stats
 // view and the quick-add button's .starred state — one glyph, two states.
-const STAR_PATH = 'M8 1.7l1.9 3.9 4.3.6-3.1 3 .7 4.3-3.8-2-3.8 2 .7-4.3-3.1-3 4.3-.6z';
 export const STAR_ICON =
     '<svg class="vbm-icon vbm-icon-star" width="16" height="16" viewBox="0 0 16 16" ' +
     'fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true">' +
