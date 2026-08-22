@@ -472,7 +472,30 @@ zip 实测（package.py 同口径 collect + deflate 默认级别；实测 level 
 | popup 冷开 scripting（ms） | 169.7 | 164.3 | **-3.2%** |
 | popup 冷开布局数 | 16 | 17 | +1 |
 
-注：① 树重建无独立触发（bookmark 事件不重建树；generateTree 是冷开主成本），口径并入冷开；② Rendering/Painting 时长本版 Chromium 恒为 0；③ tabGroups 分组在 headless 不可用（不影响徽章种子）；④ 基线为 M3 落地后的 4.1.0 形态（P0 与构建同批实施，P0 前后对比未单独录取——P1 若开展以本表为基准）。探针可复跑：bash scripts/harness/run.sh --perf 与 --dist --perf。⑤ P1 复测的绝对数值整体高于 M4 档（机器负载/镜像状态差异），但源码 vs dist 的相对优势保持（wall -7.3%、scripting -3.2%），未出现 P1 引入的 dist 回归。
+注：① 树重建无独立触发（bookmark 事件不重建树；generateTree 是冷开主成本），口径并入冷开；② Rendering/Painting 时长本版 Chromium 恒为 0；③ tabGroups 分组在 headless 不可用（不影响徽章种子）；④ 基线为 M3 落地后的 4.1.0 形态（P0 与构建同批实施，P0 前后对比未单独录取——P1 若开展以本表为基准）。探针可复跑：bash scripts/harness/run.sh --perf 与 --dist --perf；量级化复测（任意 ext-root / 自定义种子）：scripts/harness/perf-run.sh <ext-root> --out <dir>，见下方「用户量级复测」。⑤ P1 复测的绝对数值整体高于 M4 档（机器负载/镜像状态差异），但源码 vs dist 的相对优势保持（wall -7.3%、scripting -3.2%），未出现 P1 引入的 dist 回归。
+
+
+### 用户量级复测（6000+ 书签 / 深层嵌套 / 跨层级重复，2026-08-22，附录 A 补充）
+
+**Profile（按维护者真实量级构造）**：`VBM_PERF_BOOKMARKS=6000`（4500 唯一叶子 + 500 组 × 3 份跨层级副本 = 6000），L1 20 × L2 5 × L3 3 = 420 个嵌套文件夹全部展开（树行 ≈ 6420），50 个后台标签页；重复副本落在 **L3 / L2 / L1 / dups-root 四个不同深度**（非同一层级的重复）。4.0.8 用 git worktree（tag v4.0.8），与 master 跑**同一份探针**：`scripts/harness/perf-run.sh <ext-root> --out <dir>`（env：`VBM_PERF_BOOKMARKS` / `VBM_PERF_DUP_RATIO` / `VBM_PERF_RUNS` / `VBM_PERF_DUPES_RUNS` / `VBM_PERF_SETTLE_MS`）。
+
+**口径修正（对比 4.0.8 必需）**：dupes 视图在两个版本都会在启动时 hydrate `dupesLastResult` 快照，直接量“点开 dupes 标签”只能量到从快照 paint（4.0.8 甚至接近 0ms）。因此 dupes 口径改为：视图激活后触发 `bookmarks.onCreated`（新增一个唯一书签），等 `dupesLastResult.ts` 变化 + 400ms 渲染落地，量**整次 regroup（全树 flatten + findDupes + keeper 策略 + 2508 行 innerHTML）**。两次探针间机器负载有漂移（同一批连续跑的绝对数值整体上浮），故同时给 pooled 中位数与稳定区间。
+
+**结果（pooled：4.0.8 13 次冷开 / 15 次 dupes；master 源码同；master dist 5+5 次单独窗口）**：
+
+| 口径 | v4.0.8 | master 源码 | master dist | master 源码 vs 4.0.8 |
+|---|---|---|---|---|
+| popup 冷开 wall−settle（ms） | 261.0 | 219.0 | 140.0 | **-16.1%** |
+| popup 冷开 scripting（ms） | 99.4 | 79.8 | 92.7 | **-19.7%** |
+| popup 冷开布局数 | 15–16 | 18–19 | 17–18 | +3（4.1.0 新增 tab-groups 标签/徽章等 UI 层） |
+| dupes regroup wall（ms） | 2660 | 3077 | 2448 | +15.7%（噪声范围） |
+| dupes regroup scripting（ms） | 732.8 | 788.7 | 549.7 | +7.6%（噪声范围） |
+| dupes 行数 | 2508 | 2508 | 2508 | 0 |
+
+**解读**：
+- 树/首屏路径是本次优化的主战场：6000+ 全展开量级下 cold scripting **-19.7%**、wall（扣除固定 settle）**-16.1%**——H1–H7/H9 + P1 快照/懒加载的收益在这个量级可复现。
+- dupes regroup 两个版本稳定区间重叠（4.0.8 608–927ms，master 556–974ms），+7.6% 属噪声与 4.1.0 视图基础设施（tab-groups 注册、7 视图 updateBadges、菜单/焦点层）的开销，不是 P0/P1 的回归；dist 单独窗口还测到 549.7ms（最快）。要在 6000+ 重复量级再降，需 dupes 专项（findDupes 单趟分组 / 分片渲染，即 P2 判据内的工作）。
+- 探针与对比脚本已入库：`scripts/harness/perf-run.sh`（任意 ext-root 专用 perf 容器）、`scripts/harness/perf-popup.js`（参数化种子 + settle 口径 + dupes regroup 相位）、`scripts/harness/perf-compare.js`（多份 perf.json 汇总）。
 
 ## 附录 B：本阶段明确不做的事
 
