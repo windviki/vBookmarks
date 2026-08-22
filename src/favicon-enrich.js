@@ -381,6 +381,10 @@ export function initFaviconEnrich(ctx = {}) {
     const ImageCtor = ctx.ImageCtor || (typeof Image === 'function' ? Image : null);
     const chromeImpl = ctx.chromeImpl || (typeof chrome !== 'undefined' ? chrome : null);
     const now = ctx.now || (() => Date.now());
+    // P1-2 (4.1.0 收尾): defer the storage hydrate off the first-render path.
+    // onPlaceholder still works (runItem awaits hydrateDone), so rows can
+    // render immediately and the cache read lands one task later.
+    const deferHydrate = !!ctx.deferHydrate;
 
     // --- Session in-memory cache (hydrated from storage) ---------------------
     // host → { d: dataUrl, t: ts, src? } success | { f: n, t: ts } failed
@@ -963,8 +967,11 @@ export function initFaviconEnrich(ctx = {}) {
         // Hydrate-race mitigation (design §5.1): onPlaceholder may have fired
         // before the storage hydrate landed, enqueuing a host that is already
         // cached. Wait for the hydrate, then re-check — a cache hit hot-swaps
-        // and short-circuits instead of issuing a redundant fetch.
-        await hydrateDone;
+        // and short-circuits instead of issuing a redundant fetch. P1-2:
+        // ensureHydrate() also covers the deferHydrate window where the
+        // deferred kick has not fired yet — a queue item must never await a
+        // null promise (that would skip the wait and re-fetch cached hosts).
+        await ensureHydrate();
         const hit = cache.get(item.host);
         // Success entries never expire (4.0.8 收敛策略): a cache hit always
         // hot-swaps. Only budget eviction / an explicit cache clear removes
@@ -1214,7 +1221,21 @@ export function initFaviconEnrich(ctx = {}) {
     }
 
     // Kick off hydrate (parallel to store.ready — not on the render path).
-    hydrateDone = hydrate();
+    // P1-2: with deferHydrate the kick is pushed one task past the first
+    // render so popup open never waits on the storage read; runItem's
+    // ensureHydrate() still starts it immediately if a row enqueues before
+    // the timer fires (never a null-await skip).
+    const ensureHydrate = () => {
+        if (hydrateDone)
+            return hydrateDone;
+        hydrateDone = hydrate();
+        return hydrateDone;
+    };
+    if (deferHydrate && typeof setTimeout === 'function') {
+        setTimeout(ensureHydrate, 0);
+    } else {
+        ensureHydrate();
+    }
 
     return {
         onPlaceholder,
@@ -1226,7 +1247,7 @@ export function initFaviconEnrich(ctx = {}) {
         getCache: () => cache,
         getIdx: () => idxData,
         getBudgetBytes: () => budgetBytes,
-        _hydrateDone: hydrateDone,
+        get _hydrateDone() { return hydrateDone; },
         _hydrated: () => hydrated
     };
 }

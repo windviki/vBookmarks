@@ -29,6 +29,7 @@ import { initAnnounce } from './announce.js';
 import { createToolButton } from './tool-button.js';
 import { initWakeUp } from './wake-up.js';
 import { shouldHighlightUnsynced, shouldRememberState } from './settings.js';
+import { deferIdle, mark as perfMark } from './idle.js';
 
 (window => {
     const store = window.store;
@@ -110,7 +111,10 @@ import { shouldHighlightUnsynced, shouldRememberState } from './settings.js';
         doc: window.document,
         faviconService,
         isEnabled: () => store.get('faviconEnrich', '1') === '1',
-        fallbackEnabled: () => store.get('faviconEnrichAgg', '1') === '1'
+        fallbackEnabled: () => store.get('faviconEnrichAgg', '1') === '1',
+        // P1-2: hydrate is a storage read that rows do not need before paint —
+        // push it one task past the first render.
+        deferHydrate: true
     });
 
     // Flush any debounced index write when the page goes away — a failed
@@ -165,6 +169,7 @@ import { shouldHighlightUnsynced, shouldRememberState } from './settings.js';
     // Storage mirror must be ready (chrome.storage.local loaded + migrated)
     // before any of the settings below are read
     store.ready.then(() => {
+    perfMark('store-ready');
     const document = window.document;
     const chrome = window.chrome;
     const navigator = window.navigator;
@@ -356,17 +361,23 @@ import { shouldHighlightUnsynced, shouldRememberState } from './settings.js';
     // 4.0.8 adds the local what's-new banner beside it. Fire-and-forget: the
     // 6h cache avoids network, every fetch failure is silent, and when the
     // donation card claims this open the announcement defers to the next one.
-    initAnnounce({
-        store,
-        $,
-        chrome,
-        _m,
-        channel: IS_PANEL ? 'sidepanel' : 'popup',
-        donationShowing: donation.shouldShow,
-        // The 4.0.8 local what's-new banner claims the upgrade open — the
-        // remote announce defers (no double-banner for the same release).
-        localBannerShowing: donation.whatsNewShown,
-        get openNewTab() { return (url, inNewTab, selected) => actions.openBookmarkNewTab(url, inNewTab, selected); }
+    // P1-2: the remote announce fetch is not on the first-render path —
+    // defer it to idle (requestIdleCallback with a timeout, or setTimeout 0).
+    // The banner appearing a beat later is fine; failure semantics unchanged
+    // (every fetch failure is silent).
+    deferIdle(() => {
+        initAnnounce({
+            store,
+            $,
+            chrome,
+            _m,
+            channel: IS_PANEL ? 'sidepanel' : 'popup',
+            donationShowing: donation.shouldShow,
+            // The 4.0.8 local what's-new banner claims the upgrade open — the
+            // remote announce defers (no double-banner for the same release).
+            localBannerShowing: donation.whatsNewShown,
+            get openNewTab() { return (url, inNewTab, selected) => actions.openBookmarkNewTab(url, inNewTab, selected); }
+        });
     });
 
     // Context menus live in src/context-menu.js (P1): the three menus, the
@@ -774,9 +785,16 @@ import { shouldHighlightUnsynced, shouldRememberState } from './settings.js';
     // so the tab strip reflects reality before the first visit to those
     // tabs (both refresh()es recompute in the background when inactive and
     // push the count through views.updateBadges).
-    viewStats.refresh();
-    viewDupes.refresh();
-    viewTabGroups.refresh();
+    // P1-2: badge preloads are non-critical — they only make the tab-badge
+    // counts current before the user's first visit to those views. Defer
+    // them to idle so the popup open path finishes with the first render,
+    // not with three extra chrome.* query rounds. Any view the user opens
+    // first refreshes itself on activate() anyway.
+    deferIdle(() => {
+        viewStats.refresh();
+        viewDupes.refresh();
+        viewTabGroups.refresh();
+    });
 
     // Popup reopen "where I was": restore the last focus spot (a list row /
     // header button / toolbar control / view tab) once all views are

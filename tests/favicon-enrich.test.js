@@ -874,6 +874,60 @@ describe('initFaviconEnrich — hydrate-race + session-only cap', () => {
         expect(img.parentNode.children[0].tagName).toBe('IMG');   // hot-swapped, not SVG
     });
 
+    it('deferHydrate pushes the storage read off the init path (P1-2)', async () => {
+        const storage = makeStorageArea({
+            [`${FAVICON_DATA_PREFIX}github.com`]: PNG_DATA_URL,
+            [FAVICON_IDX_KEY]: idxV3({ 'github.com': { t: 1700000000000, s: PNG_DATA_URL.length } })
+        });
+        const en = initFaviconEnrich({
+            doc: makeDoc(),
+            faviconService: makeFavService(),
+            isEnabled: () => true,
+            fallbackEnabled: () => false,
+            fetchImpl: makeFetch([]),
+            ImageCtor: makeFakeImage(),
+            chromeImpl: { storage: { local: storage } },
+            now: nextNow,
+            deferHydrate: true
+        });
+        // Not hydrated synchronously — the kick is deferred past init.
+        expect(en._hydrated()).toBe(false);
+        expect(en._hydrateDone).toBeNull();
+        await new Promise(r => setTimeout(r, 0)); // let the deferred kick land
+        expect(en._hydrateDone).toBeTruthy();
+        await en._hydrateDone;
+        expect(en._hydrated()).toBe(true);
+        expect(en.getCache().has('github.com')).toBe(true);
+    });
+
+    it('deferHydrate never null-awaits: a row enqueued before the timer starts the hydrate and hot-swaps the cache (P1-2)', async () => {
+        const storage = makeStorageArea({
+            [`${FAVICON_DATA_PREFIX}github.com`]: PNG_DATA_URL,
+            [FAVICON_IDX_KEY]: idxV3({ 'github.com': { t: 1700000000000, s: PNG_DATA_URL.length } })
+        });
+        let fetches = 0;
+        const en = initFaviconEnrich({
+            doc: makeDoc(),
+            faviconService: makeFavService(),
+            isEnabled: () => true,
+            fallbackEnabled: () => false,
+            fetchImpl: makeFetch([[/.*/, () => { fetches++; return notFound(); }]]),
+            ImageCtor: makeFakeImage(),
+            chromeImpl: { storage: { local: storage } },
+            now: nextNow,
+            deferHydrate: true
+        });
+        // onPlaceholder fires BEFORE the deferred hydrate kick (same task as
+        // the first render) — the queue must start the hydrate itself.
+        const img = makePlaceholderImg('https://github.com/');
+        en.onPlaceholder(img);
+        await en._hydrateDone;
+        await tick();
+        await tick();
+        expect(fetches).toBe(0);
+        expect(img.parentNode.children[0].tagName).toBe('IMG'); // hot-swapped
+    });
+
     it('caps session-only oversized icons, evicting the oldest beyond the cap', async () => {
         // 100KB icons are >MAX_ICON_BYTES (96KB) → session-only. A burst past
         // SESSION_ONLY_CAP must not accumulate in memory for the session — the
