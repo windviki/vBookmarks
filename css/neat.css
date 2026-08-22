@@ -3859,7 +3859,11 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
 }
 
 /* Closed tab-group rows: saved records, not live browser groups. Same
-   height/right-edge rhythm as a group head, but no chevron. */
+   height/right-edge rhythm as a live group head, but no chevron. 4.1.0
+   polish: besides the dim+italic history treatment, the head shares the
+   LIVE group head's geometry — the color dot keeps the same 6px trailing
+   gap (a missing margin used to glue the dot to the title), and expanded
+   member rows take the same 24px indent as live grouped rows. */
 #tabgroups-list ul li.tabgroups-closed-group .tabgroups-closed-head {
     display: flex;
     align-items: center;
@@ -3884,6 +3888,16 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
     text-overflow: ellipsis;
     white-space: nowrap;
     font-weight: 500;
+}
+#tabgroups-list ul li.tabgroups-closed-group .tab-group-dot {
+    flex: none;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--tg-color);
+    /* the LIVE group head's dot recipe (`.tabgroups-group .tab-group-dot`):
+       a 6px trailing gap — without it the dot glued itself to the title */
+    margin-inline-end: 6px;
 }
 #tabgroups-list ul li.tabgroups-closed-group .count-pill {
     background: var(--vbm-bg-selected);
@@ -3969,6 +3983,13 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
     align-items: center;
     /* the shared right-edge rhythm: 4px row padding + 4px control margin */
     padding-inline-end: 4px;
+}
+/* Members of an EXPANDED closed group indent like live grouped rows (24px —
+   the tree's member step): an expanded record keeps the same trunk rhythm
+   as the open-tab sections above it. Standalone closed-tab records stay
+   flush, level with the closed-group heads. */
+#tabgroups-list ul li.tabgroups-closed-tab.tabgroups-closed-member {
+    padding-inline-start: 24px;
 }
 #tabgroups-list ul li.tabgroups-closed-tab > a.tree-item-link {
     flex: 1;

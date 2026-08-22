@@ -1828,6 +1828,28 @@ describe('recently closed records', () => {
         expect(viewTabGroups.isClosedExpanded('ct_1')).toBe(true);
         expect(viewTabGroups.closedRecordType('nope')).toBe(null);
     });
+
+    it('expanded closed-group members carry the member indent class; standalone records do not', () => {
+        const groupRec = {
+            id: 'cg_9', type: 'group', title: 'Old group', color: 'grey',
+            savedAt: Date.now(),
+            tabs: [{ title: 'A', url: 'https://a.example/' }]
+        };
+        const { def, $list, viewTabGroups } = setup({
+            storeData: { tabGroupsClosed: JSON.stringify([groupRec, record()]) }
+        });
+        def().activate();
+        // collapsed by default: no member rows yet
+        expect($list.innerHTML).not.toContain('tabgroups-closed-member');
+        viewTabGroups.toggleClosedExpanded('cg_9');
+        const html = $list.innerHTML;
+        // the group's member row indents like a live grouped row…
+        expect(html).toContain('tabgroups-closed-member');
+        // …while the standalone closed-tab record stays level with the heads
+        const standaloneStart = html.indexOf('data-closed-id="ct_1"');
+        const standaloneRow = html.lastIndexOf('<li', standaloneStart);
+        expect(html.slice(standaloneRow, standaloneStart)).not.toContain('tabgroups-closed-member');
+    });
 });
 
 describe('escaping + stale-tab guards (4.1.0 merge review)', () => {

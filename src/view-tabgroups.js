@@ -535,8 +535,10 @@ export function initViewTabGroups(ctx = {}) {
     // no browser API guessing. Narrow popup: relative time inline in the
     // right slot; wide/panel: the absolute time as the second line's right
     // half (the dead view's rightText/subRight recipe). A closed GROUP's
-    // member rows inherit the head's time and stay single-line.
-    const closedTabHtml = (record, tab, idx) => {
+    // member rows inherit the head's time and stay single-line; they also
+    // take the same 24px member indent as live grouped rows, so an expanded
+    // closed group keeps the tree rhythm of the sections above it.
+    const closedTabHtml = (record, tab, idx, opts = {}) => {
         const title = tab.title || tab.url || _m('noTitle');
         const extras = `data-closed-id="${htmlspecialchars(record.id)}" data-closed-tab="${idx}"`;
         const addLabel = _m('tabGroupsAddBookmark');
@@ -550,7 +552,7 @@ export function initViewTabGroups(ctx = {}) {
                 tooltipAppend: `${_m('tabGroupsClosedTimeLabel')} ${new Date(savedAt).toLocaleString()}`
             }
             : {};
-        return `<li class="vbm-row tabgroups-closed-tab" data-closed-id="${htmlspecialchars(record.id)}" data-closed-tab="${idx}">` +
+        return `<li class="vbm-row tabgroups-closed-tab${opts.member ? ' tabgroups-closed-member' : ''}" data-closed-id="${htmlspecialchars(record.id)}" data-closed-tab="${idx}">` +
             treeRender.generateBookmarkHTML(title, tab.url || '', extras, null, null, meta) +
             `<button class="row-btn tabgroups-closed-add-bookmark" aria-label="${htmlspecialchars(addLabel)}" title="${htmlspecialchars(addLabel)}">${STAR_ICON}</button>` +
             `<button class="row-btn tabgroups-closed-remove-tab" aria-label="${htmlspecialchars(removeLabel)}" title="${htmlspecialchars(removeLabel)}">${TRASH_ICON}</button>` +
@@ -578,7 +580,7 @@ export function initViewTabGroups(ctx = {}) {
         if (isExpanded) {
             const tabs = record.tabs || [];
             for (let i = 0; i < tabs.length; i++)
-                html += closedTabHtml(record, tabs[i], i);
+                html += closedTabHtml(record, tabs[i], i, { member: true });
         }
         return html;
     };
