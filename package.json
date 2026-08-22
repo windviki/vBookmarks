@@ -7,13 +7,19 @@
     "test:run": "vitest run",
     "test:ci": "vitest run --reporter=default --reporter=json --outputFile=tmp/vitest-count.json && node -e \"const r=require('./tmp/vitest-count.json'); console.log('=== Test count: ' + r.numTotalTests + ' cases / ' + r.numPassedTests + ' passed (README/AGENTS reference) ===')\"",
     "test:webstore": "node --test scripts/webstore/upload-test.js",
-    "lint": "ESLINT_USE_FLAT_CONFIG=true eslint src tests"
+    "lint": "ESLINT_USE_FLAT_CONFIG=true eslint src tests",
+    "build": "node scripts/build.mjs",
+    "package": "npm run build && python3 scripts/package.py --root dist",
+    "package:src": "python3 scripts/package.py",
+    "package:edge": "npm run build && python3 scripts/package.py --root dist --target edge"
   },
   "devDependencies": {
     "chrome-webstore-upload": "^6.0.0",
+    "esbuild": "0.28.2",
     "eslint": "^8.57.1",
     "eslint-plugin-vitest": "^0.5.4",
     "globals": "^17.11.0",
+    "terser": "5.50.0",
     "undici": "^8.10.0",
     "vitest": "^3.2.7",
     "yauzl": "^3.4.0"

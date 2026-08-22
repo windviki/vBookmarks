@@ -13,7 +13,8 @@ Only files needed at runtime or for store listing are included.
 Dev tools, IDE config, screenshots, and source design files are excluded.
 
 Usage:
-    python3 scripts/package.py
+    python3 scripts/package.py                       # source root (dev, 134 files)
+    python3 scripts/package.py --root dist           # dist build (release, 78 files)
     python3 scripts/package.py --target edge
     python3 scripts/package.py --output my-build.zip
 """
@@ -25,101 +26,26 @@ import sys
 import zipfile
 import argparse
 
-# --- Explicit file lists ---
+# --- Runtime file manifest (single source of truth, shared with build.mjs) ---
+#
+# Seeds: classicJs + esmEntries = the 15 JS files that exist in a dist build.
+# Source-root mode: resolve_js_imports() below re-expands the full module graph
+# (134 files). Dist mode: bundles contain no imports, so nothing is added
+# (78 files). See docs/build-and-performance-plan.md §2.4 / §2.6.
 
-# HTML pages referenced from manifest.json (or linked from other pages)
-HTML_PAGES = [
-    'pages/popup.html',
-    'pages/sidepanel.html',
-    'pages/options.html',
-    'pages/advanced-options.html',
-    'pages/favicons.html',
-]
+def load_runtime_files():
+    path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'runtime-files.json')
+    with open(path, encoding='utf-8') as f:
+        return json.load(f)
 
-# JavaScript files referenced by HTML pages (or imported by other modules)
-JS_FILES = [
-    'src/background.js',
-    'src/panel-behavior.js',
-    'src/fuzzy.js',
-    'src/fuzzy-core.js',
-    'src/i18n-live.js',
-    'src/escape.js',
-    'src/list-focus.js',
-    'src/sort-utils.js',
-    'src/storage-usage.js',
-    'src/neat.js',
-    'src/popup.js',
-    'src/options.js',
-    'src/advanced-options.js',
-    'src/store.js',
-    'src/sync-engine.js',
-    'src/sync-manager.js',
-    'src/search-core.js',
-    'src/separators.js',
-    'src/search.js',
-    'src/actions.js',
-    'src/context-menu.js',
-    'src/dialogs.js',
-    'src/keyboard.js',
-    'src/dnd.js',
-    'src/tree-render.js',
-    'src/tree-view.js',
-    'src/sync-ui.js',
-    'src/palette.js',
-    'src/palette-commands.js',
-    'src/options-palette-commands.js',
-    'src/options-proxy.js',
-    'src/favicons.js',
-    'src/favicon-gallery.js',
-    'src/dupes.js',
-    'src/dead-links.js',
-    'src/dead-proxy.js',
-    'src/dead-scan-sw.js',
-    'src/tab-group-utils.js',
-    'src/tab-groups-sw.js',
-    'src/session.js',
-    'src/undo.js',
-    'src/userstyle.js',
-    'src/icons.js',
-    'src/view-manager.js',
-    'src/view-recent.js',
-    'src/view-dupes.js',
-    'src/view-dead.js',
-    'src/risk-banner.js',
-    'src/version.js',
-    'src/visit-stats.js',
-    'src/visit-stats-sw.js',
-    'src/view-stats.js',
-    'vendor/codemirror.js',
-]
 
-# CSS files referenced by HTML pages
-CSS_FILES = [
-    'css/neat.css',
-    'css/options.css',
-    'css/sync-styles.css',
-    'css/favicons.css',
-    'vendor/codemirror.css',
-]
+_RT = load_runtime_files()
 
-# Icon/image files referenced in manifest.json, HTML pages, or JS code
-# (manifest/action icons must stay PNG — Chrome rejects SVG there; icon.svg
-# is the vector master used by the extension pages' <img> tags)
-IMAGES = [
-    'assets/icons/icon.png',
-    'assets/icons/icon16.png',
-    'assets/icons/icon32.png',
-    'assets/icons/icon48.png',
-    'assets/icons/icon128.png',
-    'assets/icons/icon.svg',
-]
-
-# Metadata files for store listing and user reference
-META_FILES = [
-    'license.txt',
-    'docs/README.md',
-    'docs/README.zh.md',
-]
+HTML_PAGES = _RT['html']
+JS_FILES = _RT['classicJs'] + _RT['esmEntries']
+CSS_FILES = _RT['css']
+IMAGES = _RT['images']
+META_FILES = _RT['meta']
 
 # --- Exclusion patterns ---
 
@@ -131,6 +57,7 @@ EXCLUDE_DIRS = {
     'scripts',
     'donation',
     'release',
+    'dist',  # build artifacts (4.1.0+, git-ignored)
     'docs',
     'tests',
     'node_modules',
@@ -340,6 +267,11 @@ def main():
         description='Package vBookmarks extension into a zip file.'
     )
     parser.add_argument(
+        '--root',
+        help='Packaging input root (default: repository root). Pass "dist" to '
+             'package the built release tree (npm run build first).'
+    )
+    parser.add_argument(
         '--output', '-o',
         help='Output zip path (default: tmp/vBookmarks_[ver].zip)'
     )
@@ -368,14 +300,15 @@ def main():
         print('pass. See docs/browser-compat.md for the full evaluation.')
         sys.exit(1)
 
-    root = get_repo_root()
+    root = args.root if args.root else get_repo_root()
     manifest = load_manifest(root)
     version = manifest.get('version', 'unknown')
 
     if args.output:
         output_path = args.output
     else:
-        out_dir = os.path.join(root, 'tmp')
+        # zip 始终写仓库 tmp/（不写进 dist），两种 --root 模式共用
+        out_dir = os.path.join(get_repo_root(), 'tmp')
         os.makedirs(out_dir, exist_ok=True)
         name = f'vBookmarks_{version}.zip' if args.target == 'chrome' \
             else f'vBookmarks_{args.target}_{version}.zip'

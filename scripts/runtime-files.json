@@ -1,0 +1,48 @@
+{
+  "html": [
+    "pages/popup.html",
+    "pages/sidepanel.html",
+    "pages/options.html",
+    "pages/advanced-options.html",
+    "pages/favicons.html"
+  ],
+  "css": [
+    "css/neat.css",
+    "css/options.css",
+    "css/sync-styles.css",
+    "css/favicons.css",
+    "vendor/codemirror.css"
+  ],
+  "images": [
+    "assets/icons/icon.png",
+    "assets/icons/icon16.png",
+    "assets/icons/icon32.png",
+    "assets/icons/icon48.png",
+    "assets/icons/icon128.png",
+    "assets/icons/icon.svg"
+  ],
+  "meta": [
+    "license.txt",
+    "docs/README.md",
+    "docs/README.zh.md"
+  ],
+  "classicJs": [
+    "vendor/codemirror.js",
+    "src/store.js",
+    "src/i18n-live.js",
+    "src/popup.js",
+    "src/sync-manager.js",
+    "src/sort-utils.js",
+    "src/storage-usage.js",
+    "src/options.js",
+    "src/advanced-options.js"
+  ],
+  "esmEntries": [
+    "src/background.js",
+    "src/fuzzy.js",
+    "src/neat.js",
+    "src/options-palette-commands.js",
+    "src/options-proxy.js",
+    "src/favicons.js"
+  ]
+}
