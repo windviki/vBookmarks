@@ -3095,7 +3095,15 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
 }
 
 .vbm-row:hover .row-btn,
-.vbm-row:focus-within .row-btn {
+/* 4.1.0: a MOUSE click on a row button must not pin the whole strip open.
+   Plain :focus-within matched the click's transient focus forever — every
+   sibling button stayed visible until focus moved somewhere else. The
+   reveal now follows :focus-visible only (keyboard Tab / arrow focus),
+   which a mouse click never triggers — so after a click the unclicked
+   buttons hide as soon as the pointer leaves the row, while the clicked
+   one persists via its state glyph (pinned pin / sleeping crescent /
+   filled ★). :has() is Chrome 105+; the manifest floor is 114. */
+.vbm-row:has(:focus-visible) .row-btn {
     visibility: visible;
 }
 

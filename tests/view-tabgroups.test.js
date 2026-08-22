@@ -680,13 +680,15 @@ describe('pinned and sleeping tab state', () => {
         expect(html).toMatch(/tabgroups-row[^"]*discarded/);
         // The state glyphs ARE their own controls: the pinned pin unpins and
         // the filled crescent wakes (both always visible), while an awake tab
-        // shows the hollow crescent and an unpinned row reserves the slot.
+        // shows the hollow crescent and an unpinned row gets the hover pin
+        // button in the same column (4.1.0 parity with sleep/star hovers).
         expect(html).toContain('tabgroups-unpin always-on');
         expect(html).toContain('tabGroupsUnpinTab');
         expect(html).toContain('tabgroups-sleep-tab asleep always-on');
         expect(html).toContain('tabGroupsWakeTab');
         expect(html).toContain('tabGroupsSleepTab');
-        expect(html).toContain('tabgroups-slot');
+        expect(html).toContain('tabgroups-pin-tab');
+        expect(html).toContain('tabGroupsPinTab');
         expect(html).toContain('vbm-icon-sleep-filled');
     });
 
@@ -705,7 +707,7 @@ describe('pinned and sleeping tab state', () => {
         };
         for (const id of [1, 2]) {
             const row = rowOf(id);
-            const slots = (row.match(/tabgroups-slot|tabgroups-unpin|tabgroups-sleep-tab|tabgroups-add-bookmark|tabgroups-remove-bookmark|tabgroups-close-tab/g) || []);
+            const slots = (row.match(/tabgroups-slot|tabgroups-unpin|tabgroups-pin-tab|tabgroups-sleep-tab|tabgroups-add-bookmark|tabgroups-remove-bookmark|tabgroups-close-tab/g) || []);
             expect(slots).toHaveLength(4);
         }
     });
@@ -752,6 +754,22 @@ describe('pinned and sleeping tab state', () => {
         };
         clickOn(btn);
         expect(chrome.tabs.updateCalls).toEqual([[1, { pinned: false }]]);
+    });
+
+    it('the hover pin button pins an unpinned tab from the row itself', () => {
+        const { def, $list, chrome, clickOn } = setup({
+            tabs: [makeTab(1, 0, { active: true })]
+        });
+        def().activate();
+        // an unpinned row renders the hover pin button in the pin column
+        expect($list.innerHTML).toContain('tabgroups-pin-tab');
+        const li = { dataset: { tabId: '1' }, classList: makeClassList() };
+        const btn = {
+            classList: makeClassList(['tabgroups-pin-tab']),
+            closest: sel => sel === 'li' ? li : (sel === '.tabgroups-pin-tab' ? btn : null)
+        };
+        clickOn(btn);
+        expect(chrome.tabs.updateCalls).toEqual([[1, { pinned: true }]]);
     });
 
     it('the group head sleep control follows the members state and toggles', () => {

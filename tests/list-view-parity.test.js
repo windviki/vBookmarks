@@ -84,6 +84,16 @@ describe('list-view hover/selected parity (item 7b)', () => {
         ])
             expect(neatCss, `${sel} is part of the focus-ring rule`).toContain(sel);
     });
+
+    it('row-button reveal follows hover + keyboard focus, never mouse focus (4.1.0)', () => {
+        // A mouse click on a row button used to pin the whole strip open via
+        // :focus-within — the unclicked siblings stayed visible until focus
+        // moved elsewhere. The reveal now keys on :focus-visible only, which
+        // mouse clicks never trigger (Chrome's heuristic).
+        expect(neatCss).toContain('.vbm-row:hover .row-btn,');
+        expect(neatCss).toContain('.vbm-row:has(:focus-visible) .row-btn {');
+        expect(neatCss).not.toContain('.vbm-row:focus-within .row-btn');
+    });
 });
 
 describe('v4.1 visual consistency: 左侧留白 + 删除类操作红色语义', () => {

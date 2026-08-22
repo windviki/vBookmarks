@@ -470,11 +470,12 @@ export function initViewTabGroups(ctx = {}) {
                 emptySlot();
         }
         // Pin: a pinned tab shows the always-visible glyph and one click
-        // unpins it (the state icon IS the action). An unpinned tab keeps
-        // the column reserved — pinning stays a context-menu action.
+        // unpins it (the state icon IS the action). An unpinned tab gets a
+        // hover-revealed pin button in the same column (4.1.0 parity with
+        // the sleep/star hover actions — pinning was context-menu-only).
         const pinHtml = pinned
             ? `<button class="row-btn tabgroups-unpin always-on" aria-pressed="true" aria-label="${htmlspecialchars(_m('tabGroupsUnpinTab'))}" title="${htmlspecialchars(_m('tabGroupsUnpinTab'))}">${PIN_ICON}</button>`
-            : emptySlot();
+            : `<button class="row-btn tabgroups-pin-tab" aria-label="${htmlspecialchars(_m('tabGroupsPinTab'))}" title="${htmlspecialchars(_m('tabGroupsPinTab'))}">${PIN_ICON}</button>`;
         // Sleep: hollow crescent = awake (click sleeps), filled = sleeping
         // (always visible, click wakes the tab in place).
         const sleepLabel = _m(discarded ? 'tabGroupsWakeTab' : 'tabGroupsSleepTab');
@@ -1790,12 +1791,14 @@ export function initViewTabGroups(ctx = {}) {
                 toggleTabSleep(li.dataset.tabId);
             return;
         }
-        // The pinned glyph is its own un-pin control.
-        const unpinBtn = closest('.tabgroups-unpin');
-        if (unpinBtn) {
+        // The pinned glyph is its own un-pin control; the hover-revealed
+        // hollow one pins the tab (4.1.0: same column, state-dependent
+        // action — exactly like the sleep crescent and the star).
+        const pinBtn = closest('.tabgroups-unpin') || closest('.tabgroups-pin-tab');
+        if (pinBtn) {
             e.preventDefault();
             e.stopPropagation();
-            const li = unpinBtn.closest('li');
+            const li = pinBtn.closest('li');
             if (li && li.dataset.tabId)
                 togglePinned(li.dataset.tabId);
             return;
