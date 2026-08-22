@@ -1,6 +1,6 @@
 # vBookmarks 4.1.0 构建与性能改造落地方案
 
-> 状态：评审通过（2026-08-22）→ M1–M4 已全部实施并验收通过（构建管线 / 门禁平移 / 性能 P0 / 实测决策），最终实施状态见附录 C，性能数据见附录 A。
+> 状态：评审通过（2026-08-22）→ M1–M4 已全部实施并验收通过（构建管线 / 门禁平移 / 性能 P0 / 实测决策）；P1 三项（单趟快照 / idle 队列 / SW 精益化）与 H9 后续（徽章降频）已随 4.1.0 收尾实施。最终实施状态见附录 C（C.7），性能数据见附录 A。
 > 适用版本：**4.1.0**（master 开发中版本，含 tab-groups 视图）。本文档取代 `docs/build-bundle-terser-plan.md`（4.0.8 版），沿用其已验证的架构结论，更新全部实测数据，并补齐 CI/发布门禁与性能改造的实施细节。
 > 目标：随 4.1.0 一起发布。两件事 ——
 > **方案 A（构建）**：在源码开发体验不变（仓库根目录仍可 Load unpacked）的前提下新增 `dist/` 构建产物：ESM 模块图 esbuild 打包 + 全部 JS 经 Terser 压缩，发布态从 `dist/` 出包。
@@ -356,13 +356,13 @@ npm run lint       # eslint src tests
 | H5 | `buildPathMap` 一次遍历同时产出 path 与有效 id 集合（返回值扩展为 `{ paths, ids }`），`neat.js` 的 collect walk 删除 | 每次树重建省一遍全树遍历 | 低。同步改 `visitStats.prune` 调用方与 view-manager 套件 |
 | H6 | `refreshOverlays` 快速返回：`deadMarks.size === 0` 且页面无 `.dead-indicator` 时直接 return；有标记时按 id 定点 `getElementById` 更新，不遍历全列表 | 无标记时零开销；有标记时 O(marks) | 低。回归五个列表（tree/results/recent/dead/dupes）的 × 叠加；跑 view-dead 套件 |
 | H7 | `view-dupes.render()` 先算 `keeperByGroup = new Map(...)`，renderToolbar/renderGroup/删除确认全部读它 | 大重复组集不再成倍重复策略计算 | 低。回归选择模式、手动 pin keeper、策略切换；跑 view-dupes 套件 |
-| H9 | `refresh()` 未激活路径改为 count-only：只 `chrome.tabs.query({})` 取数更新徽章，跳过 `queryAllGroups`/`readClosedGroups`/折叠态对账（这些本来就是 render 输入，未激活不需要） | 视图未激活时事件风暴的常数项砍掉大半；后台标签页狂刷标题时不再每 300 ms 白跑 | 低。徽章计数契约不变；跑 view-tabgroups 套件，真机冒烟观察切视图后首渲染仍正确。后续（不阻塞本次）：徽章计数可再降频——`chrome.tabs.query` 仍每 300 ms 一次，可改为 1s 防抖或仅 tab 增删/激活时更新 |
+| H9 | `refresh()` 未激活路径改为 count-only：只 `chrome.tabs.query({})` 取数更新徽章，跳过 `queryAllGroups`/`readClosedGroups`/折叠态对账（这些本来就是 render 输入，未激活不需要） | 视图未激活时事件风暴的常数项砍掉大半；后台标签页狂刷标题时不再每 300 ms 白跑 | 低。徽章计数契约不变；跑 view-tabgroups 套件，真机冒烟观察切视图后首渲染仍正确。**后续已实施（C.7）**：未激活时仅 `onCreated`/`onRemoved` 触发徽章刷新，且防抖降到 1s；其余事件只服务激活视图的 300ms 重渲染 |
 
-### 4.4 P1 结构性优化（4.1.0 尽力项，做不完顺延 4.1.x；各自独立评审）
+### 4.4 P1 结构性优化（4.1.0 收尾已全部实施，见 C.7）
 
-1. **单次树遍历快照**：当前一轮 `generateTree` 至少 5 遍树/行遍历（generateHTML、generateNodeTrees、addBookmarkParents、search.updateIndex〔H1 删除后〕、onTreeGenerated 的 buildPathMap+collect），DOM 侧另有 tooltip/徽标/overlay 三趟（H2/H4/H6 收敛后仍在）。在 `tree-render.js` 增加 `buildTreeSnapshot(tree) → { html, nodeTrees, bookmarkIds, pathMap }`，一次遍历产出全部派生数据，`tree-view.generateTree` 与 `neat.js onTreeGenerated` 改消费同一快照。有 `tests/tree-render.test.js` / `tests/tree-view.test.js` 覆盖兜底。
-2. **首屏后的延迟队列**：popup 打开的关键路径是 主题预涂（同步）→ store.ready → i18n → getTree → generateTree 首渲染。把非关键初始化（远程公告 fetch、favicon 补全扫描启动、github mirror 刷新链）统一挂到首渲染完成后的 idle 队列（`requestIdleCallback` 或 `setTimeout 0`），并用 `performance.mark` 打点（调试开关或 URL 参数启用）验证首屏时间变化。公告/补全的失败语义不变（全部静默）。
-3. **SW 精益化核查**：bundle 后 SW 为 26.6 KiB 单文件，冷启动收益已是四项中最大。核查顶层只挂监听器、不做重活（sync engine/visit collector/dead-scan resume/icon restore 均为挂监听 + 轻量读），把任何可延迟的存储读移到首个事件到来时。用 §3.7 的 SW 冷启动数据验收。
+1. **单次树遍历快照** ✅：当前一轮 `generateTree` 至少 5 遍树/行遍历（generateHTML、generateNodeTrees、addBookmarkParents、search.updateIndex〔H1 删除后〕、onTreeGenerated 的 buildPathMap+collect），DOM 侧另有 tooltip/徽标/overlay 三趟（H2/H4/H6 收敛后仍在）。在 `tree-render.js` 增加 `buildTreeSnapshot(tree, subTree) → { html, nodeTrees, bookmarkIds, paths, ids }`，一次快照遍历产出全部派生数据（paths/ids 覆盖全树，nodeTrees/bookmarkIds/html 以 tree-view 选定的显示子树为准），`tree-view.generateTree` 与 `neat.js onTreeGenerated`（经 `views.setPathMap`）改消费同一快照。有 `tests/tree-render.test.js` / `tests/tree-view.test.js` / `tests/view-manager.test.js` 覆盖兜底。
+2. **首屏后的延迟队列** ✅：popup 打开的关键路径是 主题预涂（同步）→ store.ready → i18n → getTree → generateTree 首渲染。新增 `src/idle.js`（`deferIdle` + `?perf=1` 启用的 `performance.mark` 打点），把非关键初始化（远程公告 fetch、favicon 补全 storage hydrate、启动期三个视图的徽章预载）统一挂到 idle 队列（`requestIdleCallback` + timeout，或 `setTimeout 0`）；github mirror 刷新链本就只在公告 fetch 失败时按冷却触发，随公告一并延后。公告/补全的失败语义不变（全部静默）。
+3. **SW 精益化核查** ✅：bundle 后 SW 为 26.6 KiB 单文件，冷启动收益已是四项中最大。核查结论：sync engine / tab-group opener / panel behavior 均为「挂监听 + 轻量读」；**visit-stats 的整树索引从冷启动 eager 读取改为首次 URL 导航时懒构建**（`indexReady` 门控，首个命中事件触发一次 `bookmarks.getTree`），dead-scan resume 因必须续跑 live scan 而保留其存储读，icon restore / quick-add 菜单两个小读维持现状（每次冷启动各一次轻量 storage 读，量级远小于整树）。用 §3.7 的 SW 冷启动数据验收。
 
 ### 4.5 P2 渲染层（最后手段，明确启动判据）
 
@@ -475,14 +475,14 @@ zip 实测（package.py 同口径 collect + deflate 默认级别；实测 level 
 
 ### C.1 交付总览
 
-M1–M4 全部落地并通过验收；P1 顺延 4.1.x（口径见 C.5），P2 / Phase 1B 未达启动判据不启用。git 基线：`7334227`（计划文档）→ `ef04237`（收尾文档，本批次共 14 个实施 commit）。
+M1–M4 全部落地并通过验收；P1 三项与 H9 后续已随 4.1.0 收尾实施（C.7），P2 / Phase 1B 未达启动判据不启用。git 基线：`7334227`（计划文档）→ `ef04237`（收尾文档，M1–M4 批次共 14 个实施 commit），P1 收尾见 C.7。
 
 | 里程碑 | 状态 | 关键证据 |
 |---|---|---|
 | M1 构建管线 | ✅ | `npm run build` 自检 PASS（78 文件 / 15 JS）；源码 zip 134 文件 / 1130.3 KB，dist zip 78 文件 / 850.2 KB（附录 A）；webstore 契约 29/29 |
 | M2 门禁平移 | ✅ | `run.sh --dist --smoke-only` PASS；dist 全量 harness PASS 4/FAIL 0（M3 前后各一次）；源码全量 harness PASS 4/FAIL 0；CI 三处更新；AGENTS.md + docs/README*.md（中英）更新 |
 | M3 性能 P0 | ✅ | H1–H7+H9 逐项独立 commit；全量 2648 用例 + lint 全绿；dist 全量 harness 额外抓到 H5 漏改点（favicon-gallery）并修复（b838eec） |
-| M4 实测与决策 | ✅ | perf-popup.js 探针落地并出数（附录 A）；决策：P1 顺延、P2/Phase 1B 不启动 |
+| M4 实测与决策 | ✅ | perf-popup.js 探针落地并出数（附录 A）；决策：P1 于 4.1.0 收尾实施（C.7）、P2/Phase 1B 不启动 |
 
 ### C.2 M1 交付物
 
@@ -509,16 +509,16 @@ M1–M4 全部落地并通过验收；P1 顺延 4.1.x（口径见 C.5），P2 / 
 | H5 | `95fb154` + `b838eec` | buildPathMap 单趟产出 `{ paths, ids }`（favicon-gallery 直接调用点修复，dist harness 抓到） | tree-render / view-manager / visit-stats / favicon-gallery |
 | H6 | `0fe2aa7` | dead overlay 按 id 定点更新 + 无标记快速返回（零 DOM 查询） | view-dead |
 | H7 | `a7a3f88` | dupes keeper 每 render 只算一遍（memo 随 groups 引用失效） | view-dupes |
-| H9 | `faf65d2` | tab-groups 未激活 refresh 改 count-only（跳过 queryAllGroups/readClosedGroups/折叠对账） | view-tabgroups |
+| H9 | `faf65d2` + C.7 | tab-groups 未激活 refresh 改 count-only（跳过 queryAllGroups/readClosedGroups/折叠对账）；后续：未激活仅 onCreated/onRemoved 触发 + 1s 防抖 | view-tabgroups |
 
 ### C.5 M4 实测与决策
 
 - 探针：`scripts/harness/perf-popup.js`（3000 书签 / 100 深层子文件夹 / 50 标签页种子；CDP Performance 域；`--perf` / `--dist --perf` 可复跑），数据见附录 A。
 - 决策：
-  - **P1 顺延 4.1.x**：冷开 scripting 中位 126–154 ms 且 dist 已 -18.5%，P0 收益达成；P1 属结构性重构（单趟快照/延迟队列/SW 精益化），风险收益比不支持 4.1.0 末期引入。
+  - **P1 于 4.1.0 收尾实施**：冷开 scripting 中位 126–154 ms 且 dist 已 -18.5%，P0 收益达成；P1 三项（单趟快照 / idle 队列 / SW 精益化）在 4.1.0 末期以低风险独立 commit 落地（C.7），不再顺延。
   - **P2 不启动**：无 >100 ms 长任务证据，未达 §4.5 判据。
   - **Phase 1B 不启用**：未达 §2.8 判据（script 请求/解析占比 >5% 无证据）。
-- 已知限制与后续（不阻塞发布）：SW 冷启动口径待换用支持 ServiceWorker CDP 域的 Chromium/puppeteer 补录；Rendering/Painting 指标本版 Chromium 不提供；H9 后续项（徽章计数降频 1s / 仅 tab 增删激活）留档。
+- 已知限制与后续（不阻塞发布）：SW 冷启动口径待换用支持 ServiceWorker CDP 域的 Chromium/puppeteer 补录；Rendering/Painting 指标本版 Chromium 不提供；H9 后续已实施（C.7），不再留档。
 
 ### C.6 验收证据汇总
 
@@ -527,3 +527,15 @@ M1–M4 全部落地并通过验收；P1 顺延 4.1.x（口径见 C.5），P2 / 
 - `scripts/harness/run.sh --dist`（全量）：**PASS 4 / FAIL 0**（M3 前、M3 后各一次）
 - `scripts/harness/run.sh`（源码全量）：**PASS 4 / FAIL 0**
 - §3.6 手动冒烟矩阵：自动化层全部覆盖并通过（smoke 覆盖 popup/panel/options/favicon 画廊/公告/命令面板/重定向；keyboard/scrollbar/menu 层覆盖键盘、滚动条、菜单矩阵）；视觉截图类检查点属发布 SOP（scripts/screenshots/run.sh），本批次未单列执行。
+
+
+### C.7 P1 收尾实施记录（4.1.0 末期）
+
+| 项 | commit | 行为变更 | 绑定套件 |
+|---|---|---|---|
+| P1-1 单趟快照 | `dba358e` | `buildTreeSnapshot(tree, subTree)` 单次快照遍历产出 `{ html, nodeTrees, bookmarkIds, paths, ids }`（paths/ids 覆盖全树，行级数据以 tree-view 选定子树为准）；tree-view 与 neat.js onTreeGenerated（经 `views.setPathMap`）消费同一快照，删掉 generateNodeTrees/addBookmarkParents/buildPathMap 三趟重复遍历 | tree-render / tree-view / view-manager |
+| P1-2 idle 队列 | `87c6d6c` | 新增 `src/idle.js`（`deferIdle` + `?perf=1` 启用的 `performance.mark`）；远程公告 fetch、favicon 补全 hydrate（`deferHydrate`，`ensureHydrate()` 防 null-await 竞态：渲染期先入队的行会立即启动 hydrate 而不是绕过等待）、启动期三个视图的徽章预载全部延后到首渲染后的 idle 队列（requestIdleCallback + timeout，退化 setTimeout 0）；github mirror 刷新链随公告一并延后，失败语义不变 | idle / favicon-enrich / neat-boot / smoke |
+| P1-3 SW 精益化 | `516aab0` | visit-stats 的整树 URL 索引不再于 SW 冷启动 eager 读取（`bookmarks.getTree` 移出 start()），首次 URL 导航或首个 bookmark 事件时经 `indexReady` 门控懒构建；首个命中事件在构建完成后继续匹配（`ensureIndex` 把构建期间的导航风暴合并成一次 `getTree`） | visit-stats-sw / background |
+| H9 后续 | `d7ff224` | tab-groups 未激活时仅 `tabs.onCreated`/`onRemoved` 触发徽章刷新，防抖降到 1s（`INACTIVE_REFRESH_MS`）；onMoved/onUpdated/onActivated/onAttached/onDetached/tabGroups/bookmarks 事件只服务激活视图的 300ms 重渲染 | view-tabgroups |
+
+验收（本批次）：全量 `npm run test:run` **2665/2665** + lint **0 错**；`npm run build` 自检 PASS（78 文件 / 15 JS）；dist 与源码冒烟按发布 SOP 执行（见 C.6，未单列复跑时以该层为准）。
