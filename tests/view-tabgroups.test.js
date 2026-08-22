@@ -229,6 +229,12 @@ const setup = (opts = {}) => {
         windows: {
             WINDOW_ID_CURRENT: 1,
             getAllCalls: [],
+            updateCalls: [],
+            update(id, props, cb) {
+                this.updateCalls.push([id, props]);
+                if (cb)
+                    cb({ id, ...props });
+            },
             getAll(queryInfo, cb) {
                 this.getAllCalls.push(queryInfo);
                 const defaultTabs = opts.tabs || [
@@ -1049,6 +1055,97 @@ describe('row click/auxclick', () => {
         // middle-click still activates
         fire('auxclick', { button: 1, target, preventDefault() {}, stopPropagation() {} });
         expect(chrome.tabs.updateCalls).toEqual([[1, { active: true }]]);
+    });
+});
+
+describe('cross-window activation', () => {
+    it('clicking a tab in ANOTHER window also focuses that window', () => {
+        const { def, chrome, fire, closestOf } = setup({
+            windows: [
+                { id: 1, focused: true, tabs: [makeTab(1, 0, { active: true })] },
+                { id: 2, focused: false, tabs: [makeTab(9, 0, { windowId: 2 })] }
+            ]
+        });
+        def().activate();
+        const anchor = { dataset: { tabId: '9' }, classList: makeClassList() };
+        fire('click', { target: { closest: closestOf({ a: anchor }) }, preventDefault() {}, stopPropagation() {} });
+        expect(chrome.tabs.updateCalls).toEqual([[9, { active: true }]]);
+        expect(chrome.windows.updateCalls).toEqual([[2, { focused: true }]]);
+    });
+
+    it('clicking a tab in the CURRENT window never refocuses the window', () => {
+        const { def, chrome, fire, closestOf } = setup({});
+        def().activate();
+        const anchor = { dataset: { tabId: '4' }, classList: makeClassList() };
+        fire('click', { target: { closest: closestOf({ a: anchor }) }, preventDefault() {}, stopPropagation() {} });
+        expect(chrome.tabs.updateCalls).toEqual([[4, { active: true }]]);
+        expect(chrome.windows.updateCalls).toEqual([]);
+    });
+
+    it('activateGroup focuses the owning window when it is not current', () => {
+        const { def, viewTabGroups, chrome } = setup({
+            windows: [
+                { id: 1, focused: true, tabs: [makeTab(1, 0, { active: true })] },
+                { id: 2, focused: false, tabs: [makeTab(9, 0, { windowId: 2, groupId: 'g9' })] }
+            ],
+            groups: [makeGroup('g9', 'Far', 'red', { windowId: 2 })]
+        });
+        def().activate();
+        viewTabGroups.activateGroup('g9');
+        expect(chrome.tabs.updateCalls).toEqual([[9, { active: true }]]);
+        expect(chrome.windows.updateCalls).toEqual([[2, { focused: true }]]);
+    });
+});
+
+describe('first-activation scroll to the current tab (design §7)', () => {
+    it('scrolls the current row into view once, then leaves scroll memory alone', () => {
+        const { def, $list } = setup({});
+        const fakeRow = { scrolled: 0, scrollIntoView() { this.scrolled++; } };
+        $list.querySelector = sel => sel === '.tabgroups-current' ? fakeRow : null;
+        def().activate();
+        expect(fakeRow.scrolled).toBe(1);
+        def().activate();
+        expect(fakeRow.scrolled).toBe(1);
+    });
+
+    it('does nothing when no current row exists', () => {
+        const { def, $list } = setup({});
+        $list.querySelector = () => null;
+        expect(() => def().activate()).not.toThrow();
+    });
+});
+
+describe('Delete key guarding', () => {
+    it('Delete on a group head is swallowed (never reaches the bookmark delete path)', () => {
+        const { def, fire } = setup({});
+        def().activate();
+        const head = {
+            classList: makeClassList(['tabgroups-group-head']),
+            closest: sel => sel === 'li' ? { dataset: { groupId: 'g1' } } : null
+        };
+        const ev = fire('keyup', {
+            key: 'Delete',
+            target: head,
+            preventDefault() { this.pd = (this.pd || 0) + 1; },
+            stopImmediatePropagation() { this.sip = (this.sip || 0) + 1; },
+            stopPropagation() {}
+        });
+        expect(ev.pd).toBe(1);
+        expect(ev.sip).toBe(1);
+    });
+
+    it('Delete inside a text input is left alone (caret editing)', () => {
+        const { def, fire } = setup({});
+        def().activate();
+        const ev = fire('keyup', {
+            key: 'Delete',
+            target: { tagName: 'INPUT', closest: () => null },
+            preventDefault() { this.pd = (this.pd || 0) + 1; },
+            stopImmediatePropagation() { this.sip = (this.sip || 0) + 1; },
+            stopPropagation() {}
+        });
+        expect(ev.pd).toBeUndefined();
+        expect(ev.sip).toBeUndefined();
     });
 });
 

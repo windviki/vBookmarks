@@ -99,6 +99,12 @@ export function initViewTabGroups(ctx = {}) {
     let bookmarkedUrls = new Set(); // tab URLs that already exist as bookmarks
     let closedRecords = [];       // saved closed tab groups (our own records)
     let dragTabId = null;
+    // First-activation scroll (design §7): the current tab's row scrolls into
+    // view once the first render after the FIRST activation lands (`nearest`
+    // — a row already visible never moves). Later activations leave the
+    // view-manager's scroll/focus memory alone.
+    let initialScrollDone = false;
+    let pendingScrollToCurrent = false;
     // Fold state saved when selection mode opens everything up, restored on
     // exit (selection mode must show every candidate row).
     let foldSnapshot = null;
@@ -627,6 +633,12 @@ export function initViewTabGroups(ctx = {}) {
         $list.innerHTML = html;
         restoreToolbarFocus($list, parkedToolbar);
         unparkRowFocus($list, parkedRow);
+        if (pendingScrollToCurrent) {
+            pendingScrollToCurrent = false;
+            const cur = $list.querySelector ? $list.querySelector('.tabgroups-current') : null;
+            if (cur && cur.scrollIntoView)
+                cur.scrollIntoView({ block: 'nearest' });
+        }
         onRowsRendered();
     };
 
@@ -639,8 +651,10 @@ export function initViewTabGroups(ctx = {}) {
             return;
         chrome.bookmarks.search({ url: tab.url }, existing => {
             if (existing && existing.length) {
+                // Already bookmarked (the row's star went stale between the
+                // last refresh and the click): flip the state silently, the
+                // same way the stats view's ☆ handles a duplicate.
                 bookmarkedUrls.add(tab.url);
-                undo.showToast(_m('quickAdded'));
                 if (views.isActive('tabgroups'))
                     render();
                 return;
@@ -883,8 +897,7 @@ export function initViewTabGroups(ctx = {}) {
             return;
         const member = tabs.filter(t => String(t.groupId) === String(group.id))
             .sort((a, b) => (a.index || 0) - (b.index || 0))[0];
-        if (member && chrome.tabs.update)
-            chrome.tabs.update(member.id, { active: true }, swallowLastError);
+        focusTab(member);
     };
 
     const renameGroup = groupId => {
@@ -1177,6 +1190,22 @@ export function initViewTabGroups(ctx = {}) {
     // snapshot id carries this guard so a stale id never logs an unchecked
     // runtime.lastError (same pattern as togglePinned's callback).
     const swallowLastError = () => void chrome.runtime.lastError;
+
+    // chrome.tabs.update(active) only switches the tab within ITS OWN window
+    // — a tab living in another window stays invisible until that window is
+    // focused too. The multi-window sections only make sense if clicking a
+    // row actually takes the user there, so every activation also focuses
+    // the owning window (which, for a popup, then closes the popup — the
+    // same semantics as activating a tab in the current window).
+    const focusTab = tab => {
+        if (!tab || !chrome.tabs.update)
+            return;
+        chrome.tabs.update(tab.id, { active: true }, swallowLastError);
+        const winId = tab._windowId || tab.windowId;
+        if (winId !== undefined && winId !== null && String(winId) !== String(currentWindowId)
+            && chrome.windows && chrome.windows.update)
+            chrome.windows.update(winId, { focused: true }, swallowLastError);
+    };
 
     // Chrome keeps pinned tabs and tab groups mutually exclusive: before a
     // tab can be grouped it must be unpinned. Resolves when every requested
@@ -1734,9 +1763,7 @@ export function initViewTabGroups(ctx = {}) {
         const anchor = closest('a');
         if (anchor && anchor.dataset && anchor.dataset.tabId) {
             e.preventDefault();
-            const tab = tabById(anchor.dataset.tabId);
-            if (tab)
-                chrome.tabs.update(tab.id, { active: true }, swallowLastError);
+            focusTab(tabById(anchor.dataset.tabId));
             return;
         }
         if (anchor && anchor.dataset && anchor.dataset.closedId) {
@@ -1756,9 +1783,7 @@ export function initViewTabGroups(ctx = {}) {
         const anchor = closest('a');
         if (anchor && anchor.dataset && anchor.dataset.tabId) {
             e.preventDefault();
-            const tab = tabById(anchor.dataset.tabId);
-            if (tab)
-                chrome.tabs.update(tab.id, { active: true }, swallowLastError);
+            focusTab(tabById(anchor.dataset.tabId));
         }
     });
 
@@ -1940,14 +1965,24 @@ export function initViewTabGroups(ctx = {}) {
     $list.addEventListener('keyup', e => {
         if (e.key !== 'Delete')
             return;
+        // Text fields own their Delete (caret editing) — never swallow it.
+        if (e.target && /^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName || ''))
+            return;
         const closest = (e.target && e.target.closest) ? e.target.closest.bind(e.target) : () => null;
         let rowLi = closest('li.tabgroups-row');
         if (!rowLi && e.target === $list && $list.querySelector) {
             const marked = $list.querySelector('.focus');
             rowLi = marked && marked.closest ? marked.closest('li.tabgroups-row') : null;
         }
-        if (!rowLi)
+        if (!rowLi) {
+            // Every other row in this view (group/window/closed heads,
+            // closed tabs) is NOT a bookmark: swallow Delete so it can never
+            // fall through to keyboard.js's bookmark-delete path with a
+            // bogus id like "tabgroups-group-12".
+            e.preventDefault();
+            e.stopImmediatePropagation();
             return;
+        }
         e.preventDefault();
         e.stopImmediatePropagation();
         if (selecting && selected.size) {
@@ -2029,7 +2064,13 @@ export function initViewTabGroups(ctx = {}) {
         typeAhead: false,
         badge: () => tabs.length,
         activate: () => {
-            // Always revalidate on entry: tabs change behind the popup.
+            // Always revalidate on entry: tabs change behind the popup. The
+            // first activation of this page session also scrolls the current
+            // tab into view once its render lands (design §7).
+            if (!initialScrollDone) {
+                initialScrollDone = true;
+                pendingScrollToCurrent = true;
+            }
             refresh();
         },
         onEscape: () => {
@@ -2047,11 +2088,7 @@ export function initViewTabGroups(ctx = {}) {
         isSelecting: () => selecting,
         // Lazy context-menu dispatch (context-menu.js reads these through
         // neat.js's ctx.tabGroupsMenu getter).
-        activateTab: tabId => {
-            const tab = tabById(tabId);
-            if (tab && chrome.tabs.update)
-                chrome.tabs.update(tab.id, { active: true }, swallowLastError);
-        },
+        activateTab: tabId => focusTab(tabById(tabId)),
         isPinned: tabId => {
             const tab = tabById(tabId);
             return !!(tab && tab.pinned);
