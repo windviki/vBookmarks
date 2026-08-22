@@ -1546,27 +1546,14 @@ export function initViewTabGroups(ctx = {}) {
         }
     });
 
-    // Re-focus the filter input after a render (the innerHTML swap replaced
-    // it) and park the caret at the end of the query.
-    const refocusFilter = () => {
-        const input = $list.querySelector ? $list.querySelector('.tabgroups-filter-input') : null;
-        if (input) {
-            if (input.focus)
-                input.focus();
-            if (input.setSelectionRange && typeof input.value === 'string')
-                input.setSelectionRange(input.value.length, input.value.length);
-        }
-    };
-
-    // The instant filter: every keystroke re-renders the rows (the toolbar
-    // focus park/restore keeps the input focused; refocusFilter fixes the
-    // caret).
+    // The instant filter: every keystroke re-renders the rows; the toolbar
+    // park/restore keeps the input focused AND restores the caret (a render
+    // swaps the element).
     $list.addEventListener('input', e => {
         const t = e.target;
         if (t && t.classList && t.classList.contains('tabgroups-filter-input')) {
             filterText = t.value || '';
             render();
-            refocusFilter();
         }
     });
 

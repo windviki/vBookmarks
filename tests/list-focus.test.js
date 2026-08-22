@@ -217,6 +217,32 @@ describe('parkToolbarFocus / restoreToolbarFocus (B2)', () => {
         expect(after._controls[0].focused).toBe(true);
     });
 
+    it('a text input parks and restores its caret, not just focus', () => {
+        const before = makeToolbarList([makeControl('INPUT', 'tabgroups-filter-input')]);
+        const input = before._controls[0];
+        input.type = 'text';
+        input.selectionStart = 1;
+        input.selectionEnd = 2;
+        input.setSelectionRange = function (a, b) { this.selectionStart = a; this.selectionEnd = b; };
+        setFocus(input);
+        const parked = parkToolbarFocus(before);
+        expect(parked).toEqual({ cls: 'tabgroups-filter-input', idx: 0, sel: [1, 2] });
+        const after = makeToolbarList([makeControl('INPUT', 'tabgroups-filter-input')]);
+        const target = after._controls[0];
+        target.type = 'text';
+        target.setSelectionRange = function (a, b) { this.selectionStart = a; this.selectionEnd = b; };
+        restoreToolbarFocus(after, parked);
+        expect(target.focused).toBe(true);
+        expect(target.selectionStart).toBe(1);
+        expect(target.selectionEnd).toBe(2);
+    });
+
+    it('a button parks no caret (the parked shape stays minimal)', () => {
+        const list = makeToolbarList([makeControl('BUTTON', 'filter-btn')]);
+        setFocus(list._controls[0]);
+        expect(parkToolbarFocus(list)).toEqual({ cls: 'filter-btn', idx: 0 });
+    });
+
     it('the risk banner\'s controls ride the same park/restore', () => {
         const bannerLink = makeControl('A', 'risk-banner-help');
         const list = makeToolbarList([bannerLink]);

@@ -104,7 +104,17 @@ export const parkToolbarFocus = root => {
         if (controls[i] === el) { idx = same; break; }
         same++;
     }
-    return idx < 0 ? null : { cls: own, idx };
+    if (idx < 0)
+        return null;
+    const parked = { cls: own, idx };
+    // A text input also parks its caret: a re-render swaps the element and a
+    // plain focus() would drop the caret to the start (the tab-groups view's
+    // toolbar filter refines per keystroke WHILE tab events can refresh the
+    // list under it — and the dead view's proxy inputs have the same shape).
+    if (el.tagName === 'INPUT' && (el.type === 'text' || el.type === 'search' || el.type === 'url')
+        && typeof el.selectionStart === 'number')
+        parked.sel = [el.selectionStart, el.selectionEnd];
+    return parked;
 };
 
 // Focus back the parked control after the re-render: exact same-class index,
@@ -118,6 +128,9 @@ export const restoreToolbarFocus = (root, parked) => {
         if ((controls[i].className || '').split(/\s+/)[0] === parked.cls)
             same.push(controls[i]);
     const target = same[parked.idx || 0] || same[0];
-    if (target && target.focus)
+    if (target && target.focus) {
         target.focus();
+        if (parked.sel && target.setSelectionRange)
+            target.setSelectionRange(parked.sel[0], parked.sel[1]);
+    }
 };
