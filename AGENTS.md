@@ -125,14 +125,26 @@ The test-audit (2026-08) extraction round added the module suites for the former
 - `tests/helpers/classic.js` — `loadClassicScript(source, window)` wraps the sandbox-eval `new Function` path for classic scripts (store/sort-utils/sync-manager — `tests/fuzzy.test.js` left this pattern in 4.0.5: it imports `src/fuzzy-core.js` directly), so a new suite doesn't hand-roll the eval.
 - **Never copy the implementation under test into a test** — drive the real module; extract pure logic into a real module when it can't be imported (see "操作即模块" in Code Style).
 
+### Build (release)
+
+Since 4.1.0 the release form is `dist/` (esbuild bundle + Terser minify, same-path structure — the dev flow stays build-free):
+
+```bash
+npm run build            # dist/ + build-time self-checks (fails on contract breaks; see docs/build-and-performance-plan.md §3.1)
+npm run package          # build + zip from dist/ → tmp/vBookmarks_<version>.zip
+python3 scripts/package.py --root dist    # zip from an existing dist/ (no rebuild)
+python3 scripts/package.py --output x.zip # custom output path
+```
+
 ### Packaging (deployment)
 
 ```bash
-python3 scripts/package.py                 # writes tmp/vBookmarks_<version>.zip (version from manifest.json; tmp/ is git-ignored)
-python3 scripts/package.py --output x.zip
+npm run package                            # 4.1.0+ default: build dist/ then zip it → tmp/vBookmarks_<version>.zip
+python3 scripts/package.py --root dist     # zip from an existing dist/ (no rebuild)
+python3 scripts/package.py                 # source-root zip (dev form, 134 files — legacy/对照)
 ```
 
-The zip is for Chrome Web Store submission. The include/exclude lists at the top of `scripts/package.py` enumerate every runtime file (including `src/store.js`, `src/sync-manager.js`, `css/sync-styles.css`, `src/search-core.js`) — keep them in sync when adding or removing runtime files. The explicit JS list is only a SEED: `resolve_js_imports` walks the import graph recursively (`IMPORT_RE` matches static `from`/`import '…'` and dynamic `import('…')` alike), so a module reachable only through imports — e.g. `src/dropdown.js`, pulled in by `src/view-dupes.js` — ships without being listed; an unresolvable target prints a WARNING.
+The zip is for Chrome Web Store submission. Runtime file lists live in `scripts/runtime-files.json` — the single source of truth shared by `build.mjs` and `package.py` (keep it in sync when adding or removing runtime files). The JS seed is `classicJs + esmEntries` (15 files); `resolve_js_imports` walks the import graph recursively (`IMPORT_RE` matches static `from`/`import '…'` and dynamic `import('…')` alike), so a module reachable only through imports — e.g. `src/dropdown.js`, pulled in by `src/view-dupes.js` — ships without being listed in source-root mode; dist bundles contain no imports, so nothing is added there (78 files). An unresolvable target prints a WARNING.
 
 ### Locale management
 
