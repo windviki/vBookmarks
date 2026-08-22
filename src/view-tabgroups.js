@@ -1126,6 +1126,14 @@ export function initViewTabGroups(ctx = {}) {
         }
         persistClosedGroups(closedRecords.filter(r => String(r.id) !== String(recordId)));
         closedRecords = readClosedGroups().sort((a, b) => (b.savedAt || 0) - (a.savedAt || 0));
+        if (record.type === 'tab') {
+            // A single-tab record reopens as a PLAIN tab in its original
+            // window (the row-click recipe) — routing it through openNew
+            // would resurrect one tab as a titled one-member tab GROUP.
+            openTabFromRecord(record, 0);
+            scheduleRefresh();
+            return;
+        }
         send({
             type: TAB_GROUP_MSG.openNew,
             urls,
@@ -1247,9 +1255,9 @@ export function initViewTabGroups(ctx = {}) {
 
     // Open ONE tab of a closed record in a background tab, preferring the
     // window it was closed in (gone → the current window). Shared by the row
-    // click and the closed-row context menu.
-    const openClosedTab = (recordId, idx) => {
-        const record = closedRecordById(recordId);
+    // click, the closed-row context menu AND the toast undo (which holds the
+    // record object — its id is already gone from the list by then).
+    const openTabFromRecord = (record, idx) => {
         const tab = record && record.tabs && record.tabs[parseInt(idx, 10) || 0];
         if (!tab || !tab.url || !chrome.tabs.create)
             return;
@@ -1264,6 +1272,10 @@ export function initViewTabGroups(ctx = {}) {
         } else {
             chrome.tabs.create({ url: tab.url, active: false });
         }
+    };
+
+    const openClosedTab = (recordId, idx) => {
+        openTabFromRecord(closedRecordById(recordId), idx);
     };
 
     const isClosedExpanded = recordId => expandedClosed.has(String(recordId));

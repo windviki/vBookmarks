@@ -158,6 +158,12 @@ const setup = (opts = {}) => {
                 if (cb)
                     cb();
             },
+            createCalls: [],
+            create(props, cb) {
+                this.createCalls.push(props);
+                if (cb)
+                    cb({ id: 100 + this.createCalls.length, ...props });
+            },
             discard(id, cb) {
                 this.discardCalls.push(id);
                 if (cb)
@@ -1247,6 +1253,11 @@ describe('keyboard safety (tab rows are not bookmarks)', () => {
         expect(chrome.runtime.sendMessageCalls).toEqual([{ type: 'vbm-tabs-close', tabIds: [1] }]);
         expect(undo.toastActionCalls).toHaveLength(1);
         expect(undo.toastActionCalls[0].buttonLabel).toBe('tabGroupsReopenAction');
+        // the Reopen of a SINGLE-tab record opens a plain background tab —
+        // never a one-member titled tab group (the openNew trap)
+        undo.toastActionCalls[0].onAction();
+        expect(chrome.runtime.sendMessageCalls).toHaveLength(1); // no vbm-tab-group-open-new
+        expect(chrome.tabs.createCalls).toEqual([{ url: 'https://t1.example/', active: false }]);
     });
 });
 
@@ -1972,5 +1983,15 @@ describe('narrow-width de-crowding contracts (4.1.0 P1, CSS)', () => {
         // …and the compensating tint exists on the row itself
         expect(neatCss).toContain('li.tabgroups-row.tabgroups-current {');
         expect(neatCss).toContain('color-mix(in srgb, var(--vbm-accent) 8%, transparent)');
+    });
+
+    it('the window label (em) stretches, so the pill cluster right-aligns on EVERY window head', async () => {
+        // regression guard: an auto margin living only on the current-window
+        // pill used to pull NON-current windows' count pills onto the label.
+        const fs = (await import('node:fs')).default;
+        const neatCss = fs.readFileSync(new URL('../css/neat.css', import.meta.url), 'utf8');
+        const body = neatCss.slice(
+            neatCss.indexOf('#tabgroups-list ul li.tabgroups-window-head em {'));
+        expect(body.slice(0, body.indexOf('}'))).toContain('flex: 1');
     });
 });

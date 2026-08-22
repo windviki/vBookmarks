@@ -4125,7 +4125,7 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
 #tabgroups-list ul li.tabgroups-window-head .chevron.collapsed::before { content: '▸'; }
 .rtl #tabgroups-list ul li.tabgroups-window-head .chevron.collapsed::before { content: '◂'; }
 #tabgroups-list ul li.tabgroups-window-head em {
-    flex: 0 1 auto;
+    flex: 1;
     min-width: 0;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -4137,10 +4137,13 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
    head's last control (4px row padding + 4px pill margin = 8px) */
 /* the current-window pill pins to the row's right zone next to the count
    pill (the same position the current-TAB badge takes on its row) and uses
-   the badge's accent tokens — one "current" language across both levels */
+   the badge's accent tokens — one "current" language across both levels.
+   The label (em) is flex:1, so the pill cluster right-aligns on EVERY
+   window head — with or without the pill (a bare auto margin here used to
+   pull non-current windows' count pills back onto the label). */
 #tabgroups-list ul li.tabgroups-window-head b.tabgroups-window-current {
     flex: none;
-    margin-inline-start: auto;
+    margin-inline-start: 8px;
     font-weight: 500;
     font-size: 9px;
     line-height: 14px;
