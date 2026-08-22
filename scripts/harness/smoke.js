@@ -82,6 +82,17 @@ const waitForPalette = async (page, ms = 15000) => {
     console.log('popup stats:', JSON.stringify(stats));
     await page.screenshot({ path: '/tmp/shots/smoke/popup-light.png' });
 
+    // Gate determinism: turn favicon enrichment OFF for the whole run. The
+    // "offline DinD" assumption does not hold on every host (some sandboxes
+    // DO have outbound network) — a live enricher then adds real icons to the
+    // cache and races the favicon-gallery seed below (observed: expected 1
+    // card, got 3). The gallery section tests cache RENDERING, not the fetch
+    // pipeline. Sync-routed key: set sync, clean local (the seed-by-area rule).
+    await page.evaluate(() => {
+        chrome.storage.sync.set({ faviconEnrich: '', faviconEnrichAgg: '' });
+        chrome.storage.local.remove(['faviconEnrich', 'faviconEnrichAgg']);
+    });
+
     // 2b. v4 task-3 #6: rememberView — the popup reopens on the stored view
     // by default, and falls back to the tree when the option is off.
     const activeViewOf = pg => pg.evaluate(() =>
