@@ -1150,11 +1150,51 @@ describe('bookmark integration', () => {
         expect(chrome.bookmarks.createCalls.length).toBeGreaterThanOrEqual(2); // folder + tabs
         const meta = JSON.parse(store._data.tabGroupFolderMeta || '{}');
         expect(meta.bm_1 && meta.bm_1.color).toBe('blue');
-        expect(undo.toastCalls[0]).toBe('tabGroupsGroupSavedToFolder[2|Dev]');
+        // 4.1.0: the toast carries an Undo that removes the fresh folder
+        // (captured first, so the bookmark undo stack can restore it again)
+        expect(undo.toastActionCalls).toHaveLength(1);
+        expect(undo.toastActionCalls[0].message).toBe('tabGroupsGroupSavedToFolder[2|Dev]');
+        expect(undo.toastActionCalls[0].buttonLabel).toBe('undoAction');
+        const removed = [];
+        chrome.bookmarks.removeTree = (id, cb) => { removed.push(id); cb && cb(); };
+        undo.toastActionCalls[0].onAction();
+        expect(undo.captureCalls).toContain('bm_1');
+        expect(removed).toEqual(['bm_1']);
     });
 });
 
 describe('keyboard safety (tab rows are not bookmarks)', () => {
+    it('Space/Enter and the fold arrows answer on a closed-record head (4.1.0 keyboard gap)', () => {
+        const record = {
+            id: 'cg_1', type: 'group', title: 'Dev', color: 'blue',
+            savedAt: Date.now(), tabs: [{ title: 'A', url: 'https://a/' }]
+        };
+        const { def, viewTabGroups, fire } = setup({
+            storeData: { tabGroupsClosed: JSON.stringify([record]) }
+        });
+        def().activate();
+        const head = { classList: makeClassList(['tabgroups-closed-head']) };
+        const li = { dataset: { closedId: 'cg_1' }, classList: makeClassList() };
+        head.closest = sel => sel === 'li' ? li : (sel === '.tabgroups-closed-head' ? head : null);
+        const press = key => fire('keydown', {
+            key,
+            target: head,
+            preventDefault() { this.pd = true; },
+            stopPropagation() {}
+        });
+        expect(viewTabGroups.isClosedExpanded('cg_1')).toBe(false);
+        press('Enter');
+        expect(viewTabGroups.isClosedExpanded('cg_1')).toBe(true);
+        press(' ');
+        expect(viewTabGroups.isClosedExpanded('cg_1')).toBe(false);
+        // the fold arrows follow the tree-folder rule (this double's body is
+        // rtl: forward = ArrowLeft, back = ArrowRight)
+        press('ArrowLeft');
+        expect(viewTabGroups.isClosedExpanded('cg_1')).toBe(true);
+        press('ArrowRight');
+        expect(viewTabGroups.isClosedExpanded('cg_1')).toBe(false);
+    });
+
     it('group head li carries an id for focus memory', () => {
         const { def, $list } = setup({});
         def().activate();

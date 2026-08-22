@@ -933,6 +933,20 @@ export function initViewTabGroups(ctx = {}) {
             });
     };
 
+    // Regret path for "saved as a bookmark folder": capture-then-remove the
+    // freshly created folder, so the standard bookmark undo stack can bring
+    // it back if the user changes their mind twice.
+    const undoSavedFolder = folderId => {
+        if (!chrome.bookmarks || !chrome.bookmarks.removeTree)
+            return;
+        if (undo.capture)
+            undo.capture(folderId);
+        chrome.bookmarks.removeTree(folderId, () => {
+            void chrome.runtime.lastError;
+            onChanged();
+        });
+    };
+
     const saveGroupToBookmarks = groupId => {
         const group = groupById(groupId);
         if (!group)
@@ -955,7 +969,8 @@ export function initViewTabGroups(ctx = {}) {
                 sourceGroupId: group.id
             });
             onChanged();
-            undo.showToast(_m('tabGroupsGroupSavedToFolder', [`${count}`, folderName]));
+            undo.toastAction(_m('tabGroupsGroupSavedToFolder', [`${count}`, folderName]), _m('undoAction'),
+                () => undoSavedFolder(folderId));
         });
     };
 
@@ -967,11 +982,12 @@ export function initViewTabGroups(ctx = {}) {
             return;
         }
         const folderName = sessionFolderName(new Date(), _m('sessionFolderName'));
-        saveSession({ rootFolderId: rootFolderId(), folderName, tabs: bookmarkTabs }).then(({ count }) => {
-            if (count) {
-                onChanged();
-                undo.showToast(_m('sessionSaved', `${count}`));
-            }
+        saveSession({ rootFolderId: rootFolderId(), folderName, tabs: bookmarkTabs }).then(({ folderId, count }) => {
+            if (!count || !folderId)
+                return;
+            onChanged();
+            undo.toastAction(_m('sessionSaved', `${count}`), _m('undoAction'),
+                () => undoSavedFolder(folderId));
         });
     };
 
@@ -2118,6 +2134,50 @@ export function initViewTabGroups(ctx = {}) {
                 e.preventDefault();
                 e.stopPropagation();
                 focusWindowHead((groupById(gid) || {}).windowId);
+            }
+            return;
+        }
+        // Closed-record heads speak the same fold protocol as the group and
+        // window heads (one nesting level of their own): Space/Enter expands
+        // and collapses, forward-arrow opens a collapsed record, back-arrow
+        // folds an open one (tree-folder rule, keyboard-model §2.3). Before
+        // 4.1.0 the row walk could FOCUS the head but no key answered — a
+        // closed group was mouse-only to expand.
+        const closedHead = (e.target && e.target.classList
+            && e.target.classList.contains('tabgroups-closed-head'))
+            ? e.target
+            : (e.target && e.target.closest ? e.target.closest('.tabgroups-closed-head') : null);
+        if (closedHead) {
+            const li = closedHead.closest('li');
+            const cid = li && li.dataset.closedId;
+            if (!cid)
+                return;
+            const k = e.key;
+            if (selecting && k === ' ') {
+                e.preventDefault();
+                e.stopPropagation();
+                return;
+            }
+            const isCollapsed = !expandedClosed.has(String(cid));
+            const forwardC = k === (isRtlNow() ? 'ArrowLeft' : 'ArrowRight');
+            const backC = k === (isRtlNow() ? 'ArrowRight' : 'ArrowLeft');
+            if (k === ' ' || k === 'Enter') {
+                e.preventDefault();
+                e.stopPropagation();
+                toggleClosedExpanded(cid);
+                return;
+            }
+            if (forwardC && isCollapsed) {
+                e.preventDefault();
+                e.stopPropagation();
+                toggleClosedExpanded(cid);
+                return;
+            }
+            if (backC && !isCollapsed) {
+                e.preventDefault();
+                e.stopPropagation();
+                toggleClosedExpanded(cid);
+                return;
             }
             return;
         }
