@@ -795,6 +795,8 @@ import { deferIdle, mark as perfMark } from './idle.js';
         onChanged: () => chrome.bookmarks.getTree(treeView.generateTree),
         // velvet staging §2.3: history rows' hover send-to-staging button.
         get stagingApi() { return viewRecent.api; },
+        // velvet staging §3.7: selection-mode open actions
+        get actions() { return actions; },
         // 第五轮项3: re-lay the dead-mark × overlays after every re-render.
         onRowsRendered: () => deadOverlayRefresh()
     });

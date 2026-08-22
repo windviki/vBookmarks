@@ -55,6 +55,7 @@ const makeEl = () => ({
         event.preventDefault = event.preventDefault || (() => {
             event.defaultPrevented = true;
         });
+        event.stopPropagation = event.stopPropagation || (() => {});
         (this.listeners[type] || []).forEach(fn => fn(event));
     },
     focus() {
@@ -235,6 +236,10 @@ const setup = (opts = {}) => {
         views,
         rtl: !!opts.rtl,
         revealInTree: opts.revealInTree,
+        ...(opts.stagingApi ? { stagingApi: opts.stagingApi } : {}),
+        ...(opts.actions ? { actions: opts.actions } : {}),
+        ...(opts.dialogs ? { dialogs: opts.dialogs } : {}),
+        ...(opts.undo ? { undo: opts.undo } : {}),
         onRowsRendered: opts.onRowsRendered
     });
     return { s, els, store, chrome: chromeStub, fuzzy, calls, bodyClasses, viewCalls, viewHooks, views, winListeners };
@@ -281,7 +286,10 @@ describe('search execution + rendering', () => {
             { id: '2', parentId: '0', title: 'HN', url: 'https://news.ycombinator.com/', dateAdded: 6, isFolder: false }
         ]);
         const html = els.results.innerHTML;
-        expect(html).toContain('<ul role="list">');
+        expect(html).toContain('<ul role="list" id="results-ul">');
+        // velvet staging §3.6: the result-count bar rides above the results
+        expect(html).toContain('search-result-count');
+        expect(html).toContain('search-select-mode');
         expect(html).toContain('id="results-item-11"');
         expect(html).toContain('data-node-id="11"'); // unified row id (v4 task-2)
         expect(html).toContain('data-node-id="1"'); // folder rows too
@@ -1355,5 +1363,73 @@ describe('search-history record timing: leaving the view (§4.3 timing ③)', ()
         els['search-input'].value = '   ';
         viewHooks.search.deactivate();
         expect(store.get('searchHistory') || '[]').toBe('[]');
+    });
+});
+
+describe('search selection mode (velvet staging §3.6)', () => {
+    const stageApi = () => {
+        const calls = [];
+        return {
+            calls,
+            addItems: entries => { calls.push(['add', entries]); return { full: false, added: entries, dupes: [] }; },
+            isStaged: () => false,
+            state: () => ({ items: [], groups: [] })
+        };
+    };
+
+    it('renders the result-count bar with the select entry during search mode', () => {
+        const ctx = setup({ fuzzyResults: [
+            { id: '11', title: 'GitHub', url: 'https://github.com/', isFolder: false, parentId: '1' }
+        ] });
+        type(ctx.els, 'git');
+        expect(ctx.els.results.innerHTML).toContain('search-result-count');
+        expect(ctx.els.results.innerHTML).toContain('search-select-mode');
+        expect(ctx.els.results.innerHTML).toContain('data-url=');
+    });
+
+    it('selecting and staging sends bookmark ids; folder rows never join', () => {
+        const staging = stageApi();
+        const ctx = setup({
+            stagingApi: staging,
+            fuzzyResults: [
+                { id: '11', title: 'GitHub', url: 'https://github.com/', isFolder: false, parentId: '1' },
+                { id: '12', title: 'Docs', url: 'https://docs.example/', isFolder: false, parentId: '1' },
+                { id: '1', title: 'Folder A', url: '', isFolder: true, parentId: '0' }
+            ]
+        });
+        type(ctx.els, 'g');
+        // enter selection mode through the entry button (capture listener)
+        ctx.els.results.trigger('click', {
+            target: { closest: sel => ((sel === '.search-select-mode' || sel === '.vbm-toolbar') ? {} : null) }
+        });
+        expect(ctx.els.results.innerHTML).toContain('search-select-toolbar');
+        // toggle the first bookmark row
+        ctx.els.results.trigger('click', {
+            target: { closest: sel => (sel === 'li' ? { dataset: { nodeId: '11' } } : null) }
+        });
+        // stage the selection
+        ctx.els.results.trigger('click', {
+            target: { closest: sel => (sel === '.search-stage' ? {} : (sel === '.vbm-toolbar' ? {} : null)) }
+        });
+        expect(staging.calls).toHaveLength(1);
+        expect(staging.calls[0][1]).toEqual([
+            { id: '11', url: 'https://github.com/', title: 'GitHub' }
+        ]);
+    });
+
+    it('the attach-level onEscape leaves the selection mode (before search.escape)', () => {
+        const ctx = setup({ fuzzyResults: [
+            { id: '11', title: 'GitHub', url: 'https://github.com/', isFolder: false, parentId: '1' }
+        ] });
+        type(ctx.els, 'git');
+        ctx.els.results.trigger('click', {
+            target: { closest: sel => ((sel === '.search-select-mode' || sel === '.vbm-toolbar') ? {} : null) }
+        });
+        // the attach hooks were captured by the setup's views double —
+        // onEscape leaves the selection mode first, then declines
+        const onEscape = ctx.viewHooks.search.onEscape;
+        expect(onEscape()).toBe(true);
+        expect(ctx.els.results.innerHTML).not.toContain('search-select-toolbar');
+        expect(onEscape()).toBe(false); // falls through to the search Esc levels
     });
 });

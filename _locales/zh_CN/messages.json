@@ -2525,5 +2525,13 @@
         "content": "$2"
       }
     }
+  },
+  "searchResultCount": {
+    "message": "$n$ 条结果",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
   }
 }

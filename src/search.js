@@ -51,7 +51,7 @@
  * document/window/chrome remain page globals, as in the rest of the popup.
  * No neatools helpers here: plain getElementById/classList/loops only.
  */
-import { FOLDER_ICON, VIEW_ICONS, TRASH_ICON } from './icons.js';
+import { FOLDER_ICON, VIEW_ICONS, TRASH_ICON, SELECT_ICON } from './icons.js';
 import { relTimeLabel } from './tree-render.js';
 import { htmlspecialchars } from './escape.js';
 import {
@@ -386,6 +386,190 @@ export function initSearch(ctx = {}) {
         });
     }
 
+    // --- Selection mode (velvet staging §3.6) --------------------------------
+    // Only BOOKMARK rows select (folder rows and history rows don't); the
+    // unit is the bookmark id. No "un-favorite" button here — on an
+    // all-bookmark list it would be a second delete (§3.6 trade-off).
+    let selecting = false;
+    const selected = new Set(); // bookmark ids (strings)
+    let lastResults = [];
+    // re-run the live query's render (the const search below inits later —
+    // the arrow body defers the reference to call time). Clearing prevValue
+    // bypasses the same-query short-circuit: the selection state changed,
+    // the render must happen even though the query did not.
+    const runSearch = () => {
+        prevValue = '';
+        search({});
+        // selection focus handoff (the dead/dupes law): 'first' focuses the
+        // bar's first enabled control, 'entry' the select-mode button.
+        if (selectionFocus === 'first') {
+            selectionFocus = null;
+            const btn = $results.querySelector && $results.querySelector('.search-select-toolbar button:not([disabled])');
+            if (btn && btn.focus)
+                btn.focus();
+        } else if (selectionFocus === 'entry') {
+            selectionFocus = null;
+            const btn = $results.querySelector && $results.querySelector('.search-select-mode');
+            if (btn && btn.focus)
+                btn.focus();
+        }
+    };
+
+    const setSelecting = (on, focus = null) => {
+        selecting = on;
+        if (!on)
+            selected.clear();
+        if (focus)
+            selectionFocus = focus;
+        // re-render the results list with/without the bar — the current
+        // query's results survive, so re-rank from the live index
+        if (searchInput.value.trim())
+            runSearch();
+    };
+    let selectionFocus = null;
+
+    const selectedResultRows = () => lastResults.filter(r => !r.isFolder && selected.has(String(r.id)));
+
+    const deleteSelectedResults = () => {
+        const rows = selectedResultRows();
+        if (!rows.length)
+            return;
+        const run = () => {
+            let i = 0;
+            const step = () => {
+                if (i >= rows.length) {
+                    selected.clear();
+                    if (searchInput.value.trim())
+                        runSearch();
+                    return;
+                }
+                const r = rows[i++];
+                if (ctx.undo && ctx.undo.capture)
+                    ctx.undo.capture(r.id);
+                chrome.bookmarks.remove(r.id, () => {
+                    if (chrome.runtime.lastError)
+                        return;
+                    step();
+                });
+            };
+            step();
+        };
+        if (ctx.dialogs && ctx.dialogs.ConfirmDialog) {
+            ctx.dialogs.ConfirmDialog.open({
+                dialog: _m('stagingDeleteConfirm', `${rows.length}`),
+                button1: `<strong>${_m('delete')}</strong>`,
+                button2: _m('nope'),
+                fn1: run
+            });
+        } else {
+            run();
+        }
+    };
+
+    // Capture-phase interception: while selecting, clicks on the results
+    // pane toggle membership (tree-view's bookmarkHandler never fires).
+    $results.addEventListener('click', e => {
+        const closest0 = (e.target && e.target.closest) ? e.target.closest.bind(e.target) : () => null;
+        if (!selecting) {
+            // the entry button rides the idle result bar — flip the mode here
+            // (capture phase, before tree-view's bookmarkHandler could run)
+            if (closest0('.search-select-mode') && closest0('.vbm-toolbar')) {
+                e.preventDefault();
+                e.stopPropagation();
+                setSelecting(true, 'first');
+            }
+            return;
+        }
+        e.preventDefault();
+        e.stopPropagation();
+        const closest = closest0;
+        const toolbarBtn = cls => {
+            const btn = closest(cls);
+            return btn && closest('.vbm-toolbar') ? btn : null;
+        };
+        if (toolbarBtn('.search-select-all')) {
+            for (const r of lastResults)
+                if (!r.isFolder)
+                    selected.add(String(r.id));
+            runSearch();
+            return;
+        }
+        if (toolbarBtn('.search-select-invert')) {
+            for (const r of lastResults) {
+                if (r.isFolder)
+                    continue;
+                const id = String(r.id);
+                if (selected.has(id))
+                    selected.delete(id);
+                else
+                    selected.add(id);
+            }
+            runSearch();
+            return;
+        }
+        if (toolbarBtn('.search-select-clear')) {
+            selected.clear();
+            runSearch();
+            return;
+        }
+        if (toolbarBtn('.search-select-exit')) {
+            setSelecting(false, 'entry');
+            return;
+        }
+        if (toolbarBtn('.search-stage')) {
+            if (ctx.stagingApi)
+                ctx.stagingApi.addItems(selectedResultRows().map(r => ({ id: r.id, url: r.url, title: r.title })));
+            return;
+        }
+        if (toolbarBtn('.search-open')) {
+            if (ctx.actions)
+                ctx.actions.openBookmarks(selectedResultRows().map(r => r.url), false);
+            return;
+        }
+        if (toolbarBtn('.search-open-group')) {
+            if (ctx.actions)
+                ctx.actions.openBookmarksInGroup(selectedResultRows().map(r => r.url));
+            return;
+        }
+        if (toolbarBtn('.search-delete')) {
+            deleteSelectedResults();
+            return;
+        }
+        const li = closest('li');
+        const id = li && li.dataset ? li.dataset.nodeId : undefined;
+        if (id !== undefined) {
+            const key = String(id);
+            if (selected.has(key))
+                selected.delete(key);
+            else
+                selected.add(key);
+            runSearch();
+        }
+    }, true);
+    // Space toggles the focused row, Delete acts — capture phase (§3.6).
+    $results.addEventListener('keydown', e => {
+        if (!selecting)
+            return;
+        if (e.key === ' ') {
+            const li = e.target && e.target.closest ? e.target.closest('li.vbm-row') : null;
+            const id = li && li.dataset ? li.dataset.nodeId : undefined;
+            if (id === undefined)
+                return;
+            e.preventDefault();
+            e.stopPropagation();
+            const key = String(id);
+            if (selected.has(key))
+                selected.delete(key);
+            else
+                selected.add(key);
+            runSearch();
+        } else if (e.key === 'Delete') {
+            e.preventDefault();
+            e.stopPropagation();
+            deleteSelectedResults();
+        }
+    }, true);
+
     // Two-level Esc (docs/plan-4.0.0/v4task-2-list.md §2.3/§3.2): the first Esc records
     // the query into the history, clears the box and keeps the results in
     // place — the search view stays put for the next search. With an empty
@@ -407,6 +591,18 @@ export function initSearch(ctx = {}) {
     };
 
     views.attach('search', {
+        // velvet staging §3.6: consumed by views.onEscapeActive() BEFORE
+        // keyboard.js's search.escape() branch — Esc leaves the selection
+        // mode first, the second Esc walks the classic two-level search quit.
+        onEscape: () => {
+            if (selecting) {
+                const ae = document.activeElement;
+                const inToolbar = ae && ae.closest ? ae.closest('.vbm-toolbar') : null;
+                setSelecting(false, inToolbar ? 'entry' : null);
+                return true;
+            }
+            return false;
+        },
         // Re-entry contract: the box stays as it is (empty after the
         // two-level Esc / a fresh switch), the history area re-renders and
         // the results list simply survives — no last-query refill.
@@ -505,7 +701,8 @@ export function initSearch(ctx = {}) {
 
         const renderResults = results => {
             lastResultCount = results.length;
-            let html = '<ul role="list">';
+            lastResults = results;
+            let html = '<ul role="list" id="results-ul">';
             if (!results.length) {
                 // Phase 2b: no-results empty state (no a/span inside, so
                 // keyboard navigation skips it and clicks do nothing)
@@ -515,9 +712,10 @@ export function initSearch(ctx = {}) {
                 const result = results[i];
                 const id = result.id;
                 if (!result.isFolder) {
+                    const sel = selecting && selected.has(String(id));
                     // §3.6: rows carry their parent-folder path label + the
                     // unified 标题/URL/路径 tooltip (via the meta argument).
-                    html += `<li class="vbm-row" data-parentid="${result.parentId}" data-node-id="${id}" id="results-item-${id}" role="listitem">
+                    html += `<li class="vbm-row${sel ? ' sel' : ''}" data-parentid="${result.parentId}" data-node-id="${id}" data-url="${encodeURIComponent(result.url)}" id="results-item-${id}" role="listitem">
                             ${generateBookmarkHTML(result.title, result.url, '', result.id, result.positions, { path: views.pathOf(id) })}</li>`;
                 } else {  // folder
                     // Add sync status indicator for folders in search results
@@ -549,6 +747,30 @@ export function initSearch(ctx = {}) {
                 }
             }
             html += '</ul>';
+            // velvet staging §3.6: the selection toolbar rides above the
+            // results (only bookmark rows select — folder/history rows don't).
+            const bookmarkRows = results.filter(r => !r.isFolder);
+            if (selecting) {
+                html = html.replace('<ul role="list" id="results-ul">',
+                    '<ul role="list" id="results-ul" class="selecting">');
+                let bar = '<div class="search-toolbar search-select-toolbar selecting-bar vbm-toolbar">';
+                bar += `<span class="select-count">${_m('selectCount', `${selected.size}`)}</span>` +
+                    `<button class="search-select-all">${_m('selectAll')}</button>` +
+                    `<button class="search-select-invert">${_m('selectInvert')}</button>` +
+                    `<button class="search-select-clear">${_m('selectClear')}</button>` +
+                    `<button class="search-stage"${selected.size ? '' : ' disabled'}>${_m('stagingAdd')}</button>` +
+                    `<button class="search-open"${selected.size ? '' : ' disabled'}>${_m('open')}</button>` +
+                    `<button class="search-open-group"${selected.size ? '' : ' disabled'}>${_m('openBookmarksInGroup')}</button>` +
+                    `<button class="search-delete"${selected.size ? '' : ' disabled'}>${_m('deleteSelected')}</button>` +
+                    `<button class="search-select-exit">${_m('selectModeExit')}</button>`;
+                bar += '</div>';
+                html = bar + html;
+            } else if (searchMode && bookmarkRows.length) {
+                html = '<div class="search-toolbar vbm-toolbar">' +
+                    `<span class="search-result-count">${_m('searchResultCount', `${results.length}`)}</span>` +
+                    `<button class="search-select-mode" aria-label="${_m('selectModeEnter')}" ` +
+                    `title="${_m('selectModeEnter')}">${SELECT_ICON}</button></div>` + html;
+            }
             $results.innerHTML = html;
             onRowsRendered();
         };

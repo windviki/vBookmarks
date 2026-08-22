@@ -1914,6 +1914,61 @@ menu[type=context] hr {
     color: var(--vbm-accent);
 }
 
+/* The search view's result-count bar + the stats selection entry share the
+   staging toolbar chrome (velvet staging §3.6/§3.7). */
+.search-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px 8px;
+    padding: 2px 6px;
+}
+
+.search-toolbar .search-result-count {
+    color: var(--vbm-muted);
+    white-space: nowrap;
+}
+
+.search-toolbar button {
+    border: 0;
+    border-radius: 4px;
+    background: transparent;
+    color: var(--vbm-fg);
+    font: inherit;
+    font-size: .9em;
+    padding: 3px 6px;
+    cursor: pointer;
+}
+
+.search-toolbar button:hover:not([disabled]),
+.search-toolbar button:focus-visible {
+    background: var(--vbm-bg-elev);
+    outline: none;
+}
+
+.search-toolbar button[disabled] {
+    color: var(--vbm-muted);
+    cursor: default;
+}
+
+.search-toolbar .search-select-mode {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    padding: 0;
+}
+
+.stats-toolbar .stats-select-mode {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    padding: 0;
+}
+
 /* The cut bookmark's faded state (velvet staging §5.2): stays until the
    paste lands, Esc cancels or the clipboard is overwritten. */
 #tree li.cut > a,
@@ -3830,6 +3885,8 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
 #staging-list ul.selecting li.vbm-row::before,
 #staging-list ul.selecting li.staging-group .group-head::before,
 #staging-list ul.selecting li.staging-bucket .staging-bucket-head::before,
+#stats-list ul.selecting li.vbm-row::before,
+#results ul.selecting li.vbm-row::before,
 #dead-list ul.selecting li.vbm-row::before,
 #dupes-list ul.selecting li.dupes-group .group-head::before {
     content: '';
@@ -3856,7 +3913,9 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
     padding-inline-end: 4px;
 }
 
-#staging-list ul.selecting li.vbm-row {
+#staging-list ul.selecting li.vbm-row,
+#stats-list ul.selecting li.vbm-row,
+#results ul.selecting li.vbm-row {
     padding-inline-start: 8px;
     padding-inline-end: 4px;
 }
@@ -3872,13 +3931,17 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
     content: none;
 }
 
-#staging-list ul.selecting li.vbm-row > a::before {
+#staging-list ul.selecting li.vbm-row > a::before,
+#stats-list ul.selecting li.vbm-row > a::before,
+#results ul.selecting li.vbm-row > a::before {
     content: none;
 }
 
 #staging-list ul.selecting li.vbm-row.sel::before,
 #staging-list ul.selecting li.staging-group.sel .group-head::before,
 #staging-list ul.selecting li.staging-bucket.sel .staging-bucket-head::before,
+#stats-list ul.selecting li.vbm-row.sel::before,
+#results ul.selecting li.vbm-row.sel::before,
 #dead-list ul.selecting li.vbm-row.sel::before,
 #dupes-list ul.selecting li.dupes-group.sel .group-head::before {
     content: '✓';
@@ -3894,6 +3957,8 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
 #staging-list ul.selecting li.vbm-row.sel,
 #staging-list ul.selecting li.staging-group.sel .group-head,
 #staging-list ul.selecting li.staging-bucket.sel .staging-bucket-head,
+#stats-list ul.selecting li.vbm-row.sel,
+#results ul.selecting li.vbm-row.sel,
 #dupes-list ul.selecting li.dupes-group.sel .group-head {
     background-color: var(--vbm-bg-selected);
 }

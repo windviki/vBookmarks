@@ -190,6 +190,9 @@ const setup = (opts = {}) => {
     const viewStats = initViewStats({
         store, views, treeRender, separatorManager, treeView, dialogs, visitStats,
         undo, onChanged: onChanged.fn,
+        ...(opts.stagingApi ? { stagingApi: opts.stagingApi } : {}),
+        ...(opts.actions ? { actions: opts.actions } : {}),
+        ...(opts.undoApi ? { undo: opts.undoApi } : {}),
         ...(opts.onRowsRendered ? { onRowsRendered: opts.onRowsRendered } : {})
     });
     return {
@@ -988,5 +991,77 @@ describe('row focus park/restore (4.0.1 focus law)', () => {
         doc.activeElement = outside;
         s.viewStats.refresh();
         expect(doc.activeElement).toBe(outside);
+    });
+});
+
+describe('stats selection mode (velvet staging §3.7)', () => {
+    const stageApi = () => {
+        const calls = [];
+        return {
+            calls,
+            addItems: entries => { calls.push(['add', entries]); return { full: false, added: entries, dupes: [] }; },
+            isStaged: () => false,
+            state: () => ({ items: [], groups: [] })
+        };
+    };
+
+    it('renders the select entry on the idle toolbar and swaps to the selection bar', () => {
+        const ctx = setup({ hasHistoryPermission: true, historyItems: [
+            { url: 'https://hist.example/', visitCount: 2, lastVisitTime: NOW }
+        ] });
+        ctx.def().activate();
+        expect(ctx.$list.innerHTML).toContain('stats-select-mode');
+    });
+
+    it('stages a mixed selection through the toolbar (bookmarked carry ids)', () => {
+        const staging = stageApi();
+        const ctx = setup({ stagingApi: staging, hasHistoryPermission: true, historyItems: [
+            { url: 'https://hist.example/', visitCount: 2, lastVisitTime: NOW }
+        ] });
+        ctx.def().activate();
+        // enter selection mode through the entry button
+        ctx.click({
+            preventDefault() {}, stopPropagation() {},
+            target: { closest: sel => (sel === '.stats-select-mode' ? {} : null) }
+        });
+        expect(ctx.$list.innerHTML).toContain('stats-select-toolbar');
+        expect(ctx.$list.innerHTML).toContain('class="selecting"');
+        // click every row (bookmarked + history rows both carry data-url)
+        const urls = [...ctx.$list.innerHTML.matchAll(/data-url="([^"]+)"/g)].map(m => decodeURIComponent(m[1]));
+        for (const url of urls) {
+            ctx.click({
+                preventDefault() {}, stopPropagation() {},
+                target: { closest: sel => (sel === 'li' ? { dataset: { url: encodeURIComponent(url) } } : null) }
+            });
+        }
+        expect(ctx.$list.innerHTML.match(/select-count">selectCount\[(\d+)\]/)[1]).toBe(`${urls.length}`);
+        // stage: bookmarked rows keep their id, the history row goes id-less
+        ctx.click({
+            preventDefault() {}, stopPropagation() {},
+            target: { closest: sel => (sel === '.stats-stage' ? {} : (sel === '.vbm-toolbar' ? {} : null)) }
+        });
+        expect(staging.calls).toHaveLength(1);
+        const entries = staging.calls[0][1];
+        expect(entries).toHaveLength(urls.length);
+        for (const en of entries) {
+            if (en.url === 'https://hist.example/')
+                expect(en.id).toBeNull();
+            else
+                expect(en.id).toBeTruthy();
+        }
+    });
+
+    it('Esc leaves the selection mode through the view onEscape', () => {
+        const ctx = setup({ hasHistoryPermission: true, historyItems: [
+            { url: 'https://hist.example/', visitCount: 2, lastVisitTime: NOW }
+        ] });
+        ctx.def().activate();
+        ctx.click({
+            preventDefault() {}, stopPropagation() {},
+            target: { closest: sel => (sel === '.stats-select-mode' ? {} : null) }
+        });
+        expect(ctx.def().onEscape()).toBe(true);
+        expect(ctx.$list.innerHTML).toContain('stats-select-mode');
+        expect(ctx.def().onEscape()).toBe(false); // nothing transient left
     });
 });

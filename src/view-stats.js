@@ -93,7 +93,7 @@
  */
 
 import { relTimeLabel } from './tree-render.js';
-import { VIEW_ICONS, STAR_ICON, STAR_ICON_FILLED, STAGE_ICON, STAGE_ICON_DONE } from './icons.js';
+import { VIEW_ICONS, STAR_ICON, STAR_ICON_FILLED, STAGE_ICON, STAGE_ICON_DONE, SELECT_ICON } from './icons.js';
 import { htmlspecialchars } from './escape.js';
 import { parkRowFocus, unparkRowFocus, parkToolbarFocus, restoreToolbarFocus } from './list-focus.js';
 
@@ -230,8 +230,45 @@ export function initViewStats(ctx = {}) {
     // rows are the section's whole point).
     const showUnbookmarked = () => store.get('statsShowUnbookmarked', '1') === '1';
 
+    // --- Selection mode (velvet staging §3.7) -------------------------------
+    // The bulk-collection gesture the stats view was missing: bookmarked
+    // rows AND unbookmarked history rows select alike (unit = url — the two
+    // row kinds' unified key), actions degrade to what applies.
+    let selecting = false;
+    const selected = new Set(); // urls
+    let pendingRowFocus = null;
+    let selectionFocus = null;
+    let displayRows = [];
+
+    const selectedRows = () => displayRows.filter(r => selected.has(r.url));
+
+    const setSelecting = (on, focus = null) => {
+        selecting = on;
+        if (!on)
+            selected.clear();
+        if (focus)
+            selectionFocus = focus;
+        render();
+    };
+
     const renderToolbar = () => {
         const s = sort();
+        if (selecting) {
+            let html = '<div class="stats-toolbar stats-select-toolbar selecting-bar vbm-toolbar">';
+            html += `<span class="select-count">${_m('selectCount', `${selected.size}`)}</span>` +
+                `<button class="stats-select-all">${_m('selectAll')}</button>` +
+                `<button class="stats-select-invert">${_m('selectInvert')}</button>` +
+                `<button class="stats-select-clear">${_m('selectClear')}</button>` +
+                `<button class="stats-stage"${selected.size ? '' : ' disabled'}>${_m('stagingAdd')}</button>` +
+                `<button class="stats-open"${selected.size ? '' : ' disabled'}>${_m('open')}</button>` +
+                `<button class="stats-open-group"${selected.size ? '' : ' disabled'}>${_m('openBookmarksInGroup')}</button>` +
+                `<button class="stats-delete"${selected.size ? '' : ' disabled'}>${_m('deleteSelected')}</button>` +
+                `<button class="stats-select-exit">${_m('selectModeExit')}</button>`;
+            html += '</div>';
+            return html;
+        }
+        if (!enabled())
+            return '';
         // vbm-toolbar: keyboard.js's Tab cycle picks the controls up as
         // stops between the tab strip and the list rows (final polish).
         let html = '<div class="stats-toolbar vbm-toolbar">';
@@ -249,6 +286,10 @@ export function initViewStats(ctx = {}) {
             `<input type="checkbox" class="stats-unbookmarked-input"${showUnbookmarked() ? ' checked' : ''}>` +
             `<span>${_m('statsShowUnbookmarked')}</span></label>`;
         html += `<button class="stats-clear"${rows.length ? '' : ' disabled'}>${_m('statsClearData')}</button>`;
+        // velvet staging §3.7: the selection-mode entry (bulk collection)
+        if (displayRows.length)
+            html += `<button class="stats-select-mode" aria-label="${_m('selectModeEnter')}" ` +
+                `title="${_m('selectModeEnter')}">${SELECT_ICON}</button>`;
         html += '</div>';
         return html;
     };
@@ -350,10 +391,11 @@ export function initViewStats(ctx = {}) {
             const row = list[i];
             const absTime = new Date(row.t || 0).toLocaleString();
             const badges = [timeBadge(row.t), countBadge(row.c)];
+            const sel = selecting && selected.has(row.url);
             if (row.bookmarkId) {
                 const path = views.pathOf(row.bookmarkId);
-                html += `<li class="vbm-row" id="stats-item-${row.bookmarkId}" role="listitem" ` +
-                    `data-node-id="${row.bookmarkId}" data-parentid="${row.parentId || ''}">` +
+                html += `<li class="vbm-row${sel ? ' sel' : ''}" id="stats-item-${row.bookmarkId}" role="listitem" ` +
+                    `data-node-id="${row.bookmarkId}" data-parentid="${row.parentId || ''}" data-url="${encodeURIComponent(row.url)}">` +
                     treeRender.generateBookmarkHTML(row.title, row.url, 'data-virtual="1"', row.bookmarkId, null, {
                         path,
                         badge: badges,
@@ -375,7 +417,7 @@ export function initViewStats(ctx = {}) {
                     `<span class="stats-star" aria-label="${_m('statsHistoryBookmarked')}">${STAR_ICON_FILLED}</span>` +
                     '</li>';
             } else {
-                html += `<li class="vbm-row stats-hist-row" role="listitem">` +
+                html += `<li class="vbm-row stats-hist-row${sel ? ' sel' : ''}" role="listitem" data-url="${encodeURIComponent(row.url)}">` +
                     treeRender.generateBookmarkHTML(row.title, row.url, 'data-virtual="1"', null, null, {
                         badge: badges,
                         subText: absTime
@@ -396,6 +438,10 @@ export function initViewStats(ctx = {}) {
     // here — the same cls+idx restore works unchanged.
 
     const render = () => {
+        // displayRows feeds the toolbar (the select entry rides on it) —
+        // build BEFORE the toolbar renders
+        if (enabled())
+            displayRows = buildDisplayRows();
         let html = renderToolbar();
         if (!enabled()) {
             // Master switch off: guidance instead of data (§3.4 empty states).
@@ -404,12 +450,12 @@ export function initViewStats(ctx = {}) {
             // One merged list under the toolbar's sort control. The guide
             // row (missing history permission) trails the bookmarked rows;
             // with no rows and no guide, the statsEmpty state stands alone.
-            const list = buildDisplayRows();
+            const list = displayRows;
             const guideNeeded = historyPerm === false;
             if (!list.length && !guideNeeded) {
                 html += `<ul role="list"><li class="empty-state" role="listitem"><i>${_m('statsEmpty')}</i></li></ul>`;
             } else {
-                html += '<ul role="list">' + renderRows(list) + (guideNeeded ? renderGuideRow() : '') + '</ul>';
+                html += `<ul role="list"${selecting ? ' class="selecting"' : ''}>` + renderRows(list) + (guideNeeded ? renderGuideRow() : '') + '</ul>';
             }
         }
         // Final polish: keep a focused toolbar control focused across the
@@ -421,7 +467,67 @@ export function initViewStats(ctx = {}) {
         $list.innerHTML = html;
         restoreToolbarFocus($list, parkedToolbar);
         unparkRowFocus($list, parkedRow);
+        // Selection focus handoff (dead/dupes law)
+        if (selectionFocus === 'first') {
+            selectionFocus = null;
+            const firstBtn = $list.querySelector && $list.querySelector('.stats-select-toolbar button:not([disabled])');
+            if (firstBtn && firstBtn.focus)
+                firstBtn.focus();
+        } else if (selectionFocus === 'entry') {
+            selectionFocus = null;
+            const entryBtn = $list.querySelector && $list.querySelector('.stats-select-mode');
+            if (entryBtn && entryBtn.focus)
+                entryBtn.focus();
+        }
+        if (pendingRowFocus !== null) {
+            const url = pendingRowFocus;
+            pendingRowFocus = null;
+            if ($list.querySelector) {
+                const row = $list.querySelector(`li[data-url="${encodeURIComponent(url)}"]`);
+                const anchor = row && row.querySelector ? row.querySelector('a') : null;
+                if (anchor && anchor.focus)
+                    anchor.focus();
+            }
+        }
         onRowsRendered();
+    };
+
+    // Delete applies to the BOOKMARKED rows only (§3.7 — history rows have
+    // no tree node); confirm + per-item undo capture, then refresh.
+    const deleteSelectedRows = () => {
+        const rows2 = selectedRows().filter(r => r.bookmarkId);
+        if (!rows2.length)
+            return;
+        const run = () => {
+            let i = 0;
+            const step = () => {
+                if (i >= rows2.length) {
+                    selected.clear();
+                    onChanged();
+                    undo.showToast(_m('stagingDeleted', `${rows2.length}`));
+                    return;
+                }
+                const r = rows2[i++];
+                if (ctx.undo && ctx.undo.capture)
+                    ctx.undo.capture(r.bookmarkId);
+                chrome.bookmarks.remove(r.bookmarkId, () => {
+                    if (chrome.runtime.lastError)
+                        return;
+                    step();
+                });
+            };
+            step();
+        };
+        if (dialogs && dialogs.ConfirmDialog) {
+            dialogs.ConfirmDialog.open({
+                dialog: _m('stagingDeleteConfirm', `${rows2.length}`),
+                button1: `<strong>${_m('delete')}</strong>`,
+                button2: _m('nope'),
+                fn1: run
+            });
+        } else {
+            run();
+        }
     };
 
     const refresh = () => {
@@ -614,6 +720,78 @@ export function initViewStats(ctx = {}) {
             }
             return;
         }
+        if (selecting) {
+            const toolbarBtn = cls => {
+                const btn = closest(cls);
+                return btn && closest('.vbm-toolbar') ? btn : null;
+            };
+            if (toolbarBtn('.stats-select-all')) {
+                for (const r of displayRows)
+                    selected.add(r.url);
+                render();
+                return;
+            }
+            if (toolbarBtn('.stats-select-invert')) {
+                for (const r of displayRows) {
+                    if (selected.has(r.url))
+                        selected.delete(r.url);
+                    else
+                        selected.add(r.url);
+                }
+                render();
+                return;
+            }
+            if (toolbarBtn('.stats-select-clear')) {
+                selected.clear();
+                render();
+                return;
+            }
+            if (toolbarBtn('.stats-select-exit')) {
+                setSelecting(false, 'entry');
+                return;
+            }
+            if (toolbarBtn('.stats-stage')) {
+                const api = ctx.stagingApi;
+                if (api) {
+                    const rows2 = selectedRows();
+                    api.addItems(rows2.map(r => ({ id: r.bookmarkId || null, url: r.url, title: r.title })));
+                }
+                return;
+            }
+            if (toolbarBtn('.stats-open')) {
+                if (ctx.actions)
+                    ctx.actions.openBookmarks(selectedRows().map(r => r.url), false);
+                return;
+            }
+            if (toolbarBtn('.stats-open-group')) {
+                if (ctx.actions)
+                    ctx.actions.openBookmarksInGroup(selectedRows().map(r => r.url));
+                return;
+            }
+            if (toolbarBtn('.stats-delete')) {
+                deleteSelectedRows();
+                return;
+            }
+            const li = closest('li');
+            const urlAttr = li && li.dataset ? li.dataset.url : undefined;
+            if (urlAttr !== undefined) {
+                e.preventDefault();
+                e.stopPropagation();
+                const url = decodeURIComponent(urlAttr);
+                if (selected.has(url))
+                    selected.delete(url);
+                else
+                    selected.add(url);
+                pendingRowFocus = url;
+                render();
+            }
+            return;
+        }
+        if (closest('.stats-select-mode')) {
+            e.preventDefault();
+            setSelecting(true, 'first');
+            return;
+        }
         const addBtn = closest('.stats-add-btn');
         if (addBtn) {
             e.preventDefault();
@@ -642,6 +820,32 @@ export function initViewStats(ctx = {}) {
         treeView.bookmarkHandler(e);
     });
     $list.addEventListener('auxclick', treeView.bookmarkHandler);
+    // Selection mode keys (velvet staging §3.7): Space toggles the focused
+    // row, Delete acts on the selection — both on the capture phase so
+    // keyboard.js never synthesizes a click under them.
+    $list.addEventListener('keydown', e => {
+        if (!selecting)
+            return;
+        if (e.key === ' ') {
+            const li = e.target && e.target.closest ? e.target.closest('li.vbm-row') : null;
+            const urlAttr = li && li.dataset ? li.dataset.url : undefined;
+            if (urlAttr === undefined)
+                return;
+            e.preventDefault();
+            e.stopPropagation();
+            const url = decodeURIComponent(urlAttr);
+            if (selected.has(url))
+                selected.delete(url);
+            else
+                selected.add(url);
+            pendingRowFocus = url;
+            render();
+        } else if (e.key === 'Delete') {
+            e.preventDefault();
+            e.stopPropagation();
+            deleteSelectedRows();
+        }
+    }, true);
 
     // (v4task-2-list §3.4 superseded by the final-polish toolbar rung: ←/→
     // walk ALL of the toolbar's controls, handled by keyboard.js's non-row
@@ -674,6 +878,17 @@ export function initViewStats(ctx = {}) {
         disableKey: 'disableStatsView',
         typeAhead: false,
         badge: () => rows.length,
+        // velvet staging §3.7: stats has no second Esc level — the view
+        // onEscape just leaves selection mode.
+        onEscape: () => {
+            if (selecting) {
+                const ae = document.activeElement;
+                const inToolbar = ae && ae.closest ? ae.closest('.vbm-toolbar') : null;
+                setSelecting(false, inToolbar ? 'entry' : null);
+                return true;
+            }
+            return false;
+        },
         activate: () => {
             // 数据只在 activate（及授权成功）时拉取：探权限 → 已授权取最近
             // 访问，每条路径的链尾都是 refreshIfNeeded/render —— 单次激活

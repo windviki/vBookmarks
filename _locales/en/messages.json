@@ -2719,5 +2719,13 @@
         "content": "$2"
       }
     }
+  },
+  "searchResultCount": {
+    "message": "$n$ result(s)",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
   }
 }
