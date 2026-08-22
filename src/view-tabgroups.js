@@ -36,7 +36,7 @@ import { htmlspecialchars } from './escape.js';
 import { parkRowFocus, unparkRowFocus, parkToolbarFocus, restoreToolbarFocus } from './list-focus.js';
 import { saveSession, sessionFolderName, tabsToBookmarks } from './session.js';
 import { relTimeLabel } from './tree-render.js';
-import { pickGroupColor, saveTabGroupFolderMeta } from './tab-group-utils.js';
+import { pickGroupColor, saveTabGroupFolderMeta, pruneTabGroupFolderMeta } from './tab-group-utils.js';
 import { TAB_GROUP_MSG } from './tab-groups-sw.js';
 
 export function initViewTabGroups(ctx = {}) {
@@ -171,21 +171,27 @@ export function initViewTabGroups(ctx = {}) {
     // truthiness check must treat -1 as "no group".
     const isGrouped = tab => !!tab && !!tab.groupId && tab.groupId !== -1;
 
-    // Walk the bookmark tree once per refresh and remember which URLs are
-    // already bookmarked. Row state (filled/outline star) reads this set.
-    const collectBookmarkedUrls = tree => {
+    // Walk the bookmark tree once per refresh: remember which URLs are
+    // already bookmarked (row star state) and which folder ids are alive
+    // (the tab-group folder meta is pruned against the live set, so a folder
+    // deleted anywhere never leaves residue).
+    const collectTreeSets = tree => {
         const urls = new Set();
+        const folderIds = new Set();
         const walk = nodes => {
             for (let i = 0, l = (nodes || []).length; i < l; i++) {
                 const node = nodes[i];
-                if (node.children)
+                if (node.children) {
+                    if (node.id !== undefined && node.id !== null)
+                        folderIds.add(String(node.id));
                     walk(node.children);
-                else if (node.url)
+                } else if (node.url) {
                     urls.add(node.url);
+                }
             }
         };
         walk(tree || []);
-        return urls;
+        return { urls, folderIds };
     };
 
     // --- Data -----------------------------------------------------------------
@@ -314,7 +320,9 @@ export function initViewTabGroups(ctx = {}) {
                 chrome.bookmarks.getTree(tree => {
                     if (token !== refreshToken)
                         return;
-                    bookmarkedUrls = collectBookmarkedUrls(tree);
+                    const sets = collectTreeSets(tree);
+                    bookmarkedUrls = sets.urls;
+                    pruneTabGroupFolderMeta(store, sets.folderIds);
                     render();
                 });
             });

@@ -1,5 +1,7 @@
 import { describe, it, expect } from 'vitest';
-import { TAB_GROUP_COLORS, pickGroupColor, cleanGroupTitle } from '../src/tab-group-utils.js';
+import { TAB_GROUP_COLORS, pickGroupColor, cleanGroupTitle,
+    readTabGroupFolderMeta, saveTabGroupFolderMeta, forgetTabGroupFolderMeta,
+    pruneTabGroupFolderMeta, readTabGroupFolderMetaMap } from '../src/tab-group-utils.js';
 
 describe('tab-group-utils', () => {
     describe('pickGroupColor', () => {
@@ -37,6 +39,56 @@ describe('tab-group-utils', () => {
         it('trims and is a no-op when no suffix matches', () => {
             expect(cleanGroupTitle('  Dev Docs  ', [])).toBe('Dev Docs');
             expect(cleanGroupTitle('Dev Docs', ['(Local)'])).toBe('Dev Docs');
+        });
+    });
+
+    describe('tab-group folder meta', () => {
+        const makeStore = () => {
+            const data = {};
+            return {
+                data,
+                get: (key, dflt) => (key in data ? data[key] : dflt),
+                set(key, v) { data[key] = v; }
+            };
+        };
+
+        it('save/read/forget round-trips a folder meta entry', () => {
+            const store = makeStore();
+            saveTabGroupFolderMeta(store, '12', { title: 'Dev', color: 'blue', savedAt: 1, sourceGroupId: 7 });
+            expect(readTabGroupFolderMeta(store, '12')).toEqual({ title: 'Dev', color: 'blue', savedAt: 1, sourceGroupId: 7 });
+            expect(readTabGroupFolderMeta(store, '99')).toBe(null);
+            forgetTabGroupFolderMeta(store, '12');
+            expect(readTabGroupFolderMeta(store, '12')).toBe(null);
+        });
+
+        it('a corrupt stored value reads as an empty map (self-heal)', () => {
+            const store = makeStore();
+            store.set('tabGroupFolderMeta', '{oops');
+            expect(readTabGroupFolderMeta(store, '12')).toBe(null);
+            expect(readTabGroupFolderMetaMap(store)).toEqual({});
+        });
+
+        it('prune drops meta whose folder is gone and keeps live folders', () => {
+            const store = makeStore();
+            saveTabGroupFolderMeta(store, '12', { title: 'Dev', color: 'blue' });
+            saveTabGroupFolderMeta(store, '34', { title: 'Gone', color: 'red' });
+            pruneTabGroupFolderMeta(store, new Set(['12']));
+            expect(readTabGroupFolderMeta(store, '12')).not.toBe(null);
+            expect(readTabGroupFolderMeta(store, '34')).toBe(null);
+        });
+
+        it('prune is a no-op write when nothing is stale', () => {
+            const store = makeStore();
+            saveTabGroupFolderMeta(store, '12', { title: 'Dev', color: 'blue' });
+            const before = store.data.tabGroupFolderMeta;
+            pruneTabGroupFolderMeta(store, new Set(['12', '34']));
+            expect(store.data.tabGroupFolderMeta).toBe(before); // same string — no rewrite
+        });
+
+        it('prune never writes when the map is empty', () => {
+            const store = makeStore();
+            pruneTabGroupFolderMeta(store, new Set());
+            expect(store.data.tabGroupFolderMeta).toBeUndefined();
         });
     });
 });

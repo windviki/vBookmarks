@@ -107,7 +107,10 @@
         // tabGroupsClosed (closed-group records) and tabGroupsViewState (per-
         // device UI collapse state) stay LOCAL like searchHistory/viewState —
         // they describe this device's tabs, not a cross-device preference.
-        'tabGroupsClosed', 'tabGroupsViewState',
+        // tabGroupFolderMeta (tab-group → bookmark-folder title/color meta,
+        // written via TAB_GROUP_FOLDER_META_KEY so the census's literal scan
+        // can't see it) is likewise local: it is keyed by bookmark folder id.
+        'tabGroupsClosed', 'tabGroupsViewState', 'tabGroupFolderMeta',
         // 'showSyncStatus' historically lived in localStorage (the other sync
         // keys were born in the sync area) — listing it lets the v1 migration
         // hand it to chrome.storage.local, from where the local→sync

@@ -89,8 +89,10 @@ const EXPECTED = {
     deadScanConcurrency: 'other', deadScanTimeout: 'other',
     // 4.1.0 tab-groups view: closed-group records (bounded by
     // tabGroupsClosedLimit) + per-device UI collapse state — both small,
-    // both local-only (not sync-routed), both "other".
-    tabGroupsClosed: 'other', tabGroupsViewState: 'other'
+    // both local-only (not sync-routed), both "other". tabGroupFolderMeta is
+    // written via the TAB_GROUP_FOLDER_META_KEY constant (invisible to the
+    // literal scan) — tabled here via its KNOWN_KEYS membership.
+    tabGroupsClosed: 'other', tabGroupsViewState: 'other', tabGroupFolderMeta: 'other'
 };
 
 describe('storage-usage categorization (real src/storage-usage.js)', () => {

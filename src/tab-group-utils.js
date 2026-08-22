@@ -70,3 +70,25 @@ export const forgetTabGroupFolderMeta = (store, folderId) => {
         store.set(TAB_GROUP_FOLDER_META_KEY, JSON.stringify(map));
     } catch (e) { /* best-effort */ }
 };
+
+// Drop meta entries whose bookmark folder no longer exists. The tab-groups
+// view calls this with the live folder-id set on every tree refresh, so a
+// folder deleted anywhere (popup, Chrome's bookmark manager, sync) has its
+// meta pruned instead of accumulating forever (the 4.1.0 audit found the
+// single-folder forget above had no caller — prune is the catch-all).
+export const pruneTabGroupFolderMeta = (store, aliveFolderIds) => {
+    const map = readTabGroupFolderMetaMap(store);
+    const keep = {};
+    let dropped = false;
+    for (const id of Object.keys(map)) {
+        if (aliveFolderIds && aliveFolderIds.has(id))
+            keep[id] = map[id];
+        else
+            dropped = true;
+    }
+    if (!dropped)
+        return;
+    try {
+        store.set(TAB_GROUP_FOLDER_META_KEY, JSON.stringify(keep));
+    } catch (e) { /* best-effort metadata */ }
+};
