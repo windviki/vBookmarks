@@ -351,6 +351,7 @@ const setup = (opts = {}) => {
         undo,
         ...(opts.rememberState === undefined ? {} : { getRememberState: () => !!opts.rememberState }),
         ...(opts.onChanged ? { onChanged: opts.onChanged } : {}),
+        ...(opts.stagingApi ? { staging: opts.stagingApi } : {}),
         ...(opts.onRowsRendered ? { onRowsRendered: opts.onRowsRendered } : {})
     });
 
@@ -2111,5 +2112,68 @@ describe('narrow-width de-crowding contracts (4.1.0 P1, CSS)', () => {
         const body = neatCss.slice(
             neatCss.indexOf('#tabgroups-list ul li.tabgroups-window-head em {'));
         expect(body.slice(0, body.indexOf('}'))).toContain('flex: 1');
+    });
+});
+
+describe('staging interop (velvet staging §2.5)', () => {
+    const stagingApi = () => {
+        const calls = [];
+        return {
+            calls,
+            addItems: (entries, opts) => {
+                calls.push(['add', entries, opts]);
+                return { full: false, added: entries, dupes: [] };
+            },
+            isStaged: () => false,
+            state: () => ({ items: [], groups: [] })
+        };
+    };
+
+    it('stageTabById resolves or creates the tree anchor, then stages it', () => {
+        const staging = stagingApi();
+        const ctx = setup({ stagingApi: staging });
+        const found = [{ id: '77', url: 'https://t1.example/' }]; // tab 1's URL
+        const creates = [];
+        ctx.chrome.bookmarks.search = (q, cb) => cb(found.splice(0, 1).length ? [{ id: '77', url: q.url }] : []);
+        ctx.chrome.bookmarks.create = (props, cb) => { creates.push(props); cb({ id: 'n1', ...props }); };
+        ctx.viewTabGroups.refresh(); // seed tabs
+        // tab 1's URL exists in the tree → anchored, no create
+        ctx.viewTabGroups.stageTabById('1');
+        expect(staging.calls).toEqual([['add', [{ id: '77', url: 'https://t1.example/', title: 'Tab 1' }], undefined]]);
+        expect(ctx.chrome.bookmarks.createCalls.length).toBe(0);
+        // tab 4's URL is nowhere → create into the quick-add folder, then stage
+        ctx.viewTabGroups.stageTabById('4');
+        expect(staging.calls).toHaveLength(2);
+        expect(staging.calls[1][1][0].id).toBe('n1');
+        expect(staging.calls[1][1][0].url).toBe('https://t4.example/');
+        expect(creates).toEqual([{ title: 'Tab 4', url: 'https://t4.example/', parentId: '1' }]);
+    });
+
+    it('stageTabGroup collects bookmarkable members into a sourceTabGroup group', () => {
+        const staging = stagingApi();
+        const ctx = setup({ stagingApi: staging });
+        ctx.chrome.bookmarks.search = (q, cb) => cb([]);
+        ctx.chrome.bookmarks.create = (props, cb) => cb({ id: 'c' + Math.random(), ...props });
+        ctx.viewTabGroups.refresh();
+        // group g1 holds tabs 2+3 (both bookmarkable)
+        ctx.viewTabGroups.stageTabGroup('g1', 'Work');
+        expect(staging.calls).toHaveLength(1);
+        const [tag, entries, opts] = staging.calls[0];
+        expect(tag).toBe('add');
+        expect(entries.map(e => e.url).sort()).toEqual(['https://t2.example/', 'https://t3.example/']);
+        expect(entries.every(e => e.id)).toBe(true); // all created + anchored
+        void opts;
+    });
+
+    it('resolveTabBookmark keeps the classic addTabToBookmarks flow intact (id-return compat)', () => {
+        const ctx = setup({});
+        const creates = [];
+        ctx.chrome.bookmarks.search = (q, cb) => cb([]);
+        ctx.chrome.bookmarks.create = (props, cb) => { creates.push(props); cb({ id: 'n9', ...props }); };
+        ctx.viewTabGroups.refresh();
+        // the ★ path (addTabToBookmarks) still works — it toasts the folder
+        ctx.viewTabGroups.addBookmark('2');
+        expect(creates).toHaveLength(1);
+        expect(creates[0].url).toBe('https://t2.example/');
     });
 });

@@ -96,6 +96,11 @@ const setup = (opts = {}) => {
                 this.getSubTreeCalls.push(id);
                 cb(opts.subTree || []);
             },
+            getCalls: [],
+            get(id, cb) {
+                this.getCalls.push(id);
+                cb((opts.nodes || {})[id] || []);
+            },
             searchCalls: [],
             search(q, cb) {
                 this.searchCalls.push(q);
@@ -1336,7 +1341,7 @@ describe('staging selection mode + group homing (velvet staging ST5)', () => {
             },
             ConfirmDialog: { open: opts => opts.fn1() }
         };
-        const ctx = setup({ dialogs });
+        const ctx = setup({ dialogs, nodes: { 7: [{ id: '7', parentId: '1' }] } });
         const { viewRecent, chrome } = ctx;
         const moves = [];
         chrome.bookmarks.move = (id, dest, cb) => { moves.push([id, dest]); cb(); };

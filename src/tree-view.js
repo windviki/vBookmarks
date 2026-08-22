@@ -474,7 +474,11 @@ export function initTreeView(ctx = {}) {
                 if (ctx.onOpenBookmark) {
                     const openId = el.parentNode.dataset.nodeId
                         || el.parentNode.id.replace(/(neat-tree|neat-recent|results|recent|dead|dupes|stats)-item-/, '');
-                    ctx.onOpenBookmark(openId, url);
+                    // velvet staging §2.4: unbookmarked staging rows have no
+                    // tree id — their opens must not feed visit stats (an
+                    // ordinal row id would pollute the dataset).
+                    if (!el.parentNode.id.startsWith('staging-item-'))
+                        ctx.onOpenBookmark(openId, url);
                 }
                 if (ctrlMeta) { // ctrl/meta click
                     actions.openBookmarkNewTab(url, middleClickBgTab ? shift : !shift);

@@ -365,7 +365,7 @@ export function initViewRecent(ctx = {}) {
                     rightText: (showPath && path) ? path : '',
                     subText
                 }) +
-                stageBtnHtml(d.url) +
+                (selecting ? '' : stageBtnHtml(d.url)) +
                 groupHead +
                 '</li>';
         }
@@ -383,8 +383,9 @@ export function initViewRecent(ctx = {}) {
             `<span class="chevron${collapsed ? ' collapsed' : ''}" aria-hidden="true"></span>` +
             `<span class="staging-section-title">${_m('recentSectionTitle')}</span>` +
             (count ? `<span class="count-pill" aria-label="${count}">${count}</span>` : '') +
-            `<button type="button" class="row-btn recent-stage-all" tabindex="-1" ` +
-            `aria-label="${htmlspecialchars(stageAllLabel)}" title="${htmlspecialchars(stageAllLabel)}">${STAGE_ICON}</button>` +
+            (selecting ? '' :
+                `<button type="button" class="row-btn recent-stage-all" tabindex="-1" ` +
+                `aria-label="${htmlspecialchars(stageAllLabel)}" title="${htmlspecialchars(stageAllLabel)}">${STAGE_ICON}</button>`) +
             `</div>`;
     };
 
@@ -769,12 +770,21 @@ export function initViewRecent(ctx = {}) {
                         step();
                     });
                 } else if (it.id) {
-                    chrome.bookmarks.move(it.id, { parentId: folderId }, () => {
-                        if (!chrome.runtime.lastError) {
-                            moved++;
-                            leaveUrls.push(it.url);
+                    // §4.1: moving onto the current parent is a no-op + toast
+                    // (a real move would silently reorder to the folder end)
+                    chrome.bookmarks.get(it.id, nodes => {
+                        const node = nodes && nodes[0];
+                        if (node && node.parentId === folderId) {
+                            step();
+                            return;
                         }
-                        step();
+                        chrome.bookmarks.move(it.id, { parentId: folderId }, () => {
+                            if (!chrome.runtime.lastError) {
+                                moved++;
+                                leaveUrls.push(it.url);
+                            }
+                            step();
+                        });
                     });
                 } else {
                     chrome.bookmarks.create({ parentId: folderId, url: it.url, title: it.title || it.url }, created => {
