@@ -25,7 +25,7 @@
  * ctx.tree                  — the #tree element (all tree event bindings)
  * ctx.SeparatorManager      — class, for the legacy local-separator migration
  * ctx.treeRender            — tree-render.js API (generateHTML & co.)
- * ctx.search                — search.js API (updateIndex/quit/reset/results)
+ * ctx.search                — search.js API (quit/reset/results)
  * ctx.actions               — actions.js API (the open* calls + addSeparator)
  * ctx.dnd                   — dnd.js API (consumeNoOpen swallows post-drag click)
  * ctx.refreshSyncIndicators — neat.js's sync UI refresh (called via setTimeout)
@@ -164,8 +164,6 @@ export function initTreeView(ctx = {}) {
         const html = treeRender.generateHTML(subTree);
         treeRender.generateNodeTrees(subTree, nodeTrees);
         addBookmarkParents(subTree);
-        // Keep the fuzzy-search index in sync with the freshly loaded tree
-        search.updateIndex(tree);
 
         // 4.0.1 focus law: the innerHTML swap below replaces every row, so a
         // focused row would drop to <body> and the ↓ walk would die. Park it

@@ -516,10 +516,12 @@ import { shouldHighlightUnsynced, shouldRememberState } from './settings.js';
     });
 
     // Search lives in src/search.js (P1): it owns searchMode, the flat fuzzy
-    // index, the results pane and every searchInput listener. generateTree
-    // (tree-view) refreshes the index via search.updateIndex; everything else
-    // goes through the returned API. switchBookmarkMenu comes from the menus
-    // module (it hides the add-* menu entries while search is active).
+    // index (built lazily on first search; dirty-tracked by bookmark change
+    // events), the results pane and every searchInput listener. generateTree
+    // no longer refreshes the index (H1 — search.js's dirty + lazy rebuild
+    // covers it); everything else goes through the returned API.
+    // switchBookmarkMenu comes from the menus module (it hides the add-*
+    // menu entries while search is active).
     const search = initSearch({
         store,
         separatorManager,

@@ -309,10 +309,8 @@ const setup = (opts = {}) => {
         results: el('DIV', 'results'),
         quitCalls: 0,
         resetCalls: 0,
-        updateIndexCalls: [],
         quit() { this.quitCalls++; },
-        reset() { this.resetCalls++; },
-        updateIndex(treeArg) { this.updateIndexCalls.push(treeArg); }
+        reset() { this.resetCalls++; }
     };
     const actions = {
         openBookmarkCalls: [],
@@ -444,10 +442,10 @@ describe('generateTree', () => {
         expect(treeRender.calls.generateHTML[0][0]).toEqual(['E1']);
     });
 
-    it('refreshes the fuzzy-search index with the full tree', () => {
+    it('does NOT rebuild the fuzzy-search index on tree generation (H1: search.js lazy-rebuilds on first search)', () => {
         const { treeView, search } = setup({});
         treeView.generateTree(['ROOT']);
-        expect(search.updateIndexCalls).toEqual([['ROOT']]);
+        expect(search.updateIndex).toBeUndefined();
     });
 
     it('writes the tree HTML directly into $tree.innerHTML (the recent section moved to view-recent.js)', () => {
