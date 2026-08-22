@@ -29,6 +29,12 @@
   "advancedOptions": {
     "message": "Расширенные настройки"
   },
+  "announceDismiss": {
+    "message": "Закрыть"
+  },
+  "announceV408Text": {
+    "message": "v4.0.8 — это выпуск с улучшенными фавиконками: настоящие значки сайтов автоматически загружаются для закладок, которые Chrome ещё не кэшировал."
+  },
   "announceV407Text": {
     "message": "v4.0.7 представляет полнофункциональный просмотр неработающих ссылок: сканирование, пометка, фильтрация и сортировка неработающих и ограниченных ссылок, включая прошлые пометки и временные метки для каждой строки."
   },
@@ -44,12 +50,6 @@
   "announceV410Text": {
     "message": "v4.1.0 добавляет представление «Группы вкладок»: вкладки и группы вкладок каждого окна, управляемые рядом с вашими закладками."
   },
-  "announceV408Text": {
-    "message": "v4.0.8 — это выпуск с улучшенными фавиконками: настоящие значки сайтов автоматически загружаются для закладок, которые Chrome ещё не кэшировал."
-  },
-  "announceDismiss": {
-    "message": "Закрыть"
-  },
   "confirmDeleteFolder": {
     "message": "Эта папка содержит $count$ элемент(ов). Вы можете отменить удаление.",
     "placeholders": {
@@ -57,6 +57,9 @@
         "content": "$1"
       }
     }
+  },
+  "confirmDeleteFolderButton": {
+    "message": "Удалить"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "Вы уверены, что хотите удалить папку $folderName$ с $bookmarkCount$ вложенными закладками?",
@@ -68,9 +71,6 @@
         "content": "$1"
       }
     }
-  },
-  "confirmDeleteFolderButton": {
-    "message": "Удалить"
   },
   "confirmDeleteFolderSubfolders": {
     "message": "Вы уверены, что хотите удалить папку $folderName$ с $subFolderCount$ вложенной(-ыми) подпапкой(-ами)?",
@@ -124,18 +124,11 @@
       }
     }
   },
-  "contextMenuAddBookmark": {
-    "message": "Добавить страницу в закладки с vBookmarks"
-  },
   "copyAllTitlesAndUrls": {
     "message": "Скопировать все заголовки и URL-адреса в буфер обмена"
   },
   "copyTitleAndUrl": {
     "message": "Копировать название и URL"
-  },
-  "crossStorageMoveWarning": {
-    "message": "Нельзя перемещать закладки между синхронизированным и локальным хранилищем. Используйте копирование/вставку.",
-    "description": "Warning when trying to move bookmarks across storage types"
   },
   "customIcon": {
     "message": "Кастомная иконка"
@@ -146,14 +139,14 @@
   "customSeparatorColorDescription": {
     "message": "Настроить цвет разделителя "
   },
-  "customSeparatorStringDescription": {
-    "message": "Если URL-адрес закладки содержит эту строку, она будет отображаться как разделитель "
-  },
   "customSeparatorTitleDescription": {
     "message": "Настоящее название закладки, которое отображается как разделитель "
   },
   "customSeparatorUrlDescription": {
     "message": "Настоящий URL-адрес закладки, который отображается как разделитель "
+  },
+  "customSeparatorStringDescription": {
+    "message": "Если URL-адрес закладки содержит эту строку, она будет отображаться как разделитель "
   },
   "customStyles": {
     "message": "Пользовательский стиль"
@@ -164,8 +157,14 @@
   "customStylesDescription": {
     "message": "Для этого требуется некоторый навык CSS. Кодируйте на свой страх и риск. Обмен кодом был бы разумным "
   },
-  "deadCancel": {
-    "message": "Отмена"
+  "defaultIconButton": {
+    "message": "Использовать дефолтную"
+  },
+  "defaultIconButtonOr": {
+    "message": " или "
+  },
+  "customIconPick": {
+    "message": "Выбрать файл…"
   },
   "deadChecking": {
     "message": "Проверка $done$ / $total$…",
@@ -235,6 +234,839 @@
   },
   "deadClearScan": {
     "message": "Очистить результаты сканирования"
+  },
+  "deadNone": {
+    "message": "Неработающих ссылок не найдено"
+  },
+  "deadNoneFiltered": {
+    "message": "Нет неработающих ссылок в этом фильтре — попробуйте другой раздел выше."
+  },
+  "deadRescan": {
+    "message": "Пересканировать"
+  },
+  "delete": {
+    "message": "Удалить"
+  },
+  "deletedBookmark": {
+    "message": "Удалено $title$",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Example"
+      }
+    },
+    "description": "Toast shown after a bookmark or separator was deleted; the toast offers an undo button. $title$ is the deleted row's title (empty for separators)."
+  },
+  "deletedFolder": {
+    "message": "Удалена папка $title$",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Bookmarks"
+      }
+    },
+    "description": "Toast shown after a bookmark folder (with its whole subtree) was deleted; the toast offers an undo button. $title$ is the folder name."
+  },
+  "optionRecentCount": {
+    "message": "Количество недавно добавленных закладок для отображения"
+  },
+  "optionSearchHistory": {
+    "message": "Записывать историю поиска"
+  },
+  "optionSearchHistoryHint": {
+    "message": "Отключение этой опции также очищает существующую историю."
+  },
+  "recentEmpty": {
+    "message": "Нет недавних закладок. Нажмите Ctrl+D, чтобы добавить текущую страницу."
+  },
+  "recentRevealInTree": {
+    "message": "Показать в дереве"
+  },
+  "searchHistoryClear": {
+    "message": "Очистить всё"
+  },
+  "searchHistoryRemove": {
+    "message": "Удалить этот поиск"
+  },
+  "searchHistoryResultCount": {
+    "message": "$n$ результат(ов)",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "searchHistoryTitle": {
+    "message": "Недавние поиски"
+  },
+  "timeDaysAgo": {
+    "message": "$n$ дн. назад",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "timeHoursAgo": {
+    "message": "$n$ ч. назад",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "timeJustNow": {
+    "message": "только что"
+  },
+  "timeMinutesAgo": {
+    "message": "$n$ мин. назад",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "timeYesterday": {
+    "message": "вчера"
+  },
+  "undoAction": {
+    "message": "Отменить"
+  },
+  "revealOutsideBarHint": {
+    "message": "Показывается только панель закладок: цель находится вне её."
+  },
+  "revealOutsideBarAction": {
+    "message": "Показать все и раскрыть"
+  },
+  "dupesCleanAll": {
+    "message": "Очистить всё: $groups$ групп, $count$ лишних копий",
+    "placeholders": {
+      "groups": {
+        "content": "$1"
+      },
+      "count": {
+        "content": "$2"
+      }
+    },
+    "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go."
+  },
+  "dupesConfirmAll": {
+    "message": "Удалить $count$ лишних копий в $groups$ группах? Выбранный экземпляр в каждой группе будет сохранён.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    },
+    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
+  },
+  "dupesConfirmSelected": {
+    "message": "Удалить $count$ дублирующих закладок из $groups$ выбранных групп?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    }
+  },
+  "dupesConfirmGroup": {
+    "message": "Оставить «$title$» и удалить остальные $count$ копий?",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Example bookmark"
+      },
+      "count": {
+        "content": "$2"
+      }
+    },
+    "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."
+  },
+  "dupesDone": {
+    "message": "Удалено $count$ дубликатов закладок",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Alert shown after the duplicate cleanup finished."
+  },
+  "dupesGroupCount": {
+    "message": "$count$ дубликатов",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
+  },
+  "dupesGroupExpand": {
+    "description": "Dupes view group-head context menu: expand a collapsed duplicate group.",
+    "message": "Развернуть группу"
+  },
+  "dupesGroupCollapse": {
+    "description": "Dupes view group-head context menu: collapse an expanded duplicate group.",
+    "message": "Свернуть группу"
+  },
+  "dupesNone": {
+    "message": "Дубликатов не найдено"
+  },
+  "deleteEllipsis": {
+    "message": "Удалить..."
+  },
+  "donationMessage": {
+    "message": "Нравится? Пожертвуйте на развитие проекта или оцените в магазине: каждый отзыв помогает выпускать обновления."
+  },
+  "donationV4Notice": {
+    "message": "vBookmarks 4.0 — это полностью переработанная версия с современным дизайном и множеством новых функций."
+  },
+  "donationV4GuideLink": {
+    "message": "Читать руководство v4 →"
+  },
+  "donationGo": {
+    "message": "Пожертвовать"
+  },
+  "donationRate": {
+    "message": "Оценить"
+  },
+  "donationRateTitle": {
+    "message": "Оцените vBookmarks в Chrome Web Store"
+  },
+  "donationLater": {
+    "message": "Позже"
+  },
+  "donationNever": {
+    "message": "Больше не показывать"
+  },
+  "donationDismiss": {
+    "message": "Нет"
+  },
+  "edit": {
+    "message": "Редактировать..."
+  },
+  "editBookmark": {
+    "message": "Изменить закладку"
+  },
+  "editFolder": {
+    "message": "Изменить папку"
+  },
+  "errorOccured": {
+    "message": "К сожалению,\r\n\t\tпроизошла ошибка."
+  },
+  "extDesc": {
+    "description": "The extension description.",
+    "message": "Всплывающий менеджер закладок. Расширенный NeatBookmarks."
+  },
+  "extName": {
+    "description": "vBookmarks",
+    "message": "vBookmarks"
+  },
+  "folderEmpty": {
+    "message": "(Пусто)"
+  },
+  "general": {
+    "message": "Общие параметры"
+  },
+  "ignore": {
+    "message": "Игнорировать"
+  },
+  "name": {
+    "description": "Имя закладки или папки",
+    "message": "Имя"
+  },
+  "nope": {
+    "message": "Отмена"
+  },
+  "noTitle": {
+    "description": "Заголовок для безымянных закладок не имеющих ссылки и безымянных папок.",
+    "message": "(без заголовка)"
+  },
+  "open": {
+    "description": "Действие для открытия закладки.",
+    "message": "Открыть"
+  },
+  "openBookmarks": {
+    "message": "Открыть все закладки"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "Открыть все в окне инкогнито"
+  },
+  "openBookmarksInGroup": {
+    "message": "Открыть все в новой группе вкладок"
+  },
+  "openBookmarksInGroupSetup": {
+    "message": "Открыть все в новой группе вкладок…"
+  },
+  "openBookmarksInExistingGroup": {
+    "message": "Открыть все в существующей группе вкладок…"
+  },
+  "tabGroupOptions": {
+    "message": "Группы вкладок"
+  },
+  "sortMenuOptions": {
+    "message": "Сортировка"
+  },
+  "openBookmarksNewWindow": {
+    "message": "Открыть все закладки в новом окне"
+  },
+  "openCommandPaletteCommand": {
+    "message": "Открыть палитру команд"
+  },
+  "openIncognitoWindow": {
+    "message": "Открыть в новом окне (инкогнито)"
+  },
+  "openNewTab": {
+    "message": "Открыть в новой вкладке"
+  },
+  "bookmarkOpenInNewGroup": {
+    "message": "Открыть в новой группе вкладок"
+  },
+  "bookmarkOpenInNewGroupSetup": {
+    "message": "Открыть в новой группе вкладок…"
+  },
+  "bookmarkOpenInExistingGroup": {
+    "message": "Открыть в существующей группе вкладок…"
+  },
+  "openNewWindow": {
+    "message": "Открыть в новом окне"
+  },
+  "openSidePanelCommand": {
+    "message": "Открыть боковую панель vBookmarks"
+  },
+  "optionAnnounceEnabled": {
+    "message": "Показывать анонсы в продукте"
+  },
+  "optionAnnounceEnabledHint": {
+    "message": "Примечания к выпускам и советы из репозитория проекта на GitHub (загружаются не чаще, чем каждые 6 часов). Если отключено, сетевая загрузка не выполняется."
+  },
+  "optionClickNewTab": {
+    "message": "Клик ЛКМ открывает закладку в новой вкладке."
+  },
+  "optionCloseUnusedFolders": {
+    "message": "Закрыть неиспользуемые папки при открытии папки."
+  },
+  "optionConfirmOpenFolder": {
+    "message": "Запрашивать подтверждение при открытии большого количества закладок из папки."
+  },
+  "optionConfirmDeleteFolder": {
+    "message": "Подтверждать удаление непустых папок"
+  },
+  "optionOnlyShowBookmarkBar": {
+    "message": "Показывать только закладки в панели закладок"
+  },
+  "optionSearchAfterEnter": {
+    "message": "Поиск в закладках только при нажатии Enter (вместо мгновенного поиска)"
+  },
+  "optionOpenNewTab": {
+    "message": "Клик СКМ или CTRL+клик открывает закладку в фоновой вкладке."
+  },
+  "optionOpenInSidePanel": {
+    "message": "Открывать в боковой панели вместо всплывающего окна"
+  },
+  "optionPopupStays": {
+    "message": "Всплывающее окно расширения остается открытым при клике ЛКМ по закладкам."
+  },
+  "optionRememberPrevState": {
+    "message": "Запоминать предыдущее состояние (позицию прокрутки, открытые папки и последний сфокусированный элемент)."
+  },
+  "options": {
+    "message": "Основные настройки"
+  },
+  "optionsFooterText": {
+    "description": "Footer text for the Options page",
+    "message": "Создано $authorName$.",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionZoom": {
+    "message": "Увеличить"
+  },
+  "optionTheme": {
+    "message": "Тема"
+  },
+  "optionThemeAuto": {
+    "message": "Как в системе"
+  },
+  "optionThemeLight": {
+    "message": "Светлая"
+  },
+  "optionThemeDark": {
+    "message": "Тёмная"
+  },
+  "optionThemeInk": {
+    "message": "Чернила (тёмная)"
+  },
+  "optionThemePaper": {
+    "message": "Бумага (светлая)"
+  },
+  "optionLanguage": {
+    "message": "Язык"
+  },
+  "optionLanguageAuto": {
+    "message": "Авто"
+  },
+  "optionLanguageHint": {
+    "message": "Изменение языка перезагружает эту страницу."
+  },
+  "paletteClose": {
+    "message": "Закрыть"
+  },
+  "paletteCmdVersion": {
+    "message": "Информация о версии"
+  },
+  "paletteCmdLang": {
+    "message": "Сменить язык…"
+  },
+  "paletteCmdLangUsage": {
+    "message": "Использование: /lang с кодом локали — например, /lang en, /lang zh_CN, /lang ja."
+  },
+  "versionDialogTitle": {
+    "message": "vBookmarks $version$",
+    "placeholders": {
+      "version": {
+        "content": "$1"
+      }
+    }
+  },
+  "versionDialogCopy": {
+    "message": "Копировать информацию"
+  },
+  "versionDialogCopied": {
+    "message": "Скопировано"
+  },
+  "versionMetaVersion": {
+    "message": "Версия расширения"
+  },
+  "versionMetaAnnounce": {
+    "message": "Что нового"
+  },
+  "versionMetaAnnounceNone": {
+    "message": "Нет загруженных объявлений"
+  },
+  "versionMetaBrowser": {
+    "message": "Браузер"
+  },
+  "versionMetaOS": {
+    "message": "ОС"
+  },
+  "versionMetaChannel": {
+    "message": "Канал"
+  },
+  "versionMetaLanguage": {
+    "message": "Язык"
+  },
+  "versionMetaUserAgent": {
+    "message": "Пользовательский агент"
+  },
+  "paletteCmdDead": {
+    "message": "Найти неработающие ссылки"
+  },
+  "paletteCmdDupes": {
+    "message": "Очистить дубликаты закладок"
+  },
+  "paletteCmdNewBookmark": {
+    "message": "Новая закладка…"
+  },
+  "paletteCmdNewFolder": {
+    "message": "Новая папка…"
+  },
+  "paletteCmdQuickAdd": {
+    "message": "Добавить текущую вкладку в закладки"
+  },
+  "paletteCmdSaveSession": {
+    "message": "Сохранить вкладки окна как папку"
+  },
+  "paletteNoResults": {
+    "message": "Нет совпадений"
+  },
+  "palettePlaceholder": {
+    "message": "Поиск закладок, папок, команд…"
+  },
+  "parentFolder": {
+    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
+    "message": "Родительская папка: \"$folderName$\"",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarksbar"
+      }
+    }
+  },
+  "removeSeparator": {
+    "message": "Удалить разделитель"
+  },
+  "replaceUrl": {
+    "message": "Заменить текущим URL"
+  },
+  "reportedToDeveloper": {
+    "description": "Сообщение при возникновении ошибки в расширении, сообщается разработчику.",
+    "message": "Об этом сообщено разработчику."
+  },
+  "reportError": {
+    "message": "Сообщение об ошибке"
+  },
+  "resetButton": {
+    "message": "Сбросить"
+  },
+  "resetSettings": {
+    "message": "Сброс настроек"
+  },
+  "resetSettingsDescription": {
+    "message": "Сброс vBookmarks к настройкам по умолчанию  "
+  },
+  "save": {
+    "message": "Сохранить"
+  },
+  "searchBookmarks": {
+    "description": "Впишите текст для поиска.",
+    "message": "Поиск"
+  },
+  "searchClear": {
+    "message": "Очистить поиск"
+  },
+  "searchNoResults": {
+    "message": "Нет подходящих закладок"
+  },
+  "searchViewHint": {
+    "message": "Введите запрос в поле выше для поиска закладок"
+  },
+  "selectAll": {
+    "message": "Все"
+  },
+  "selectClear": {
+    "message": "Очистить"
+  },
+  "selectCount": {
+    "message": "$count$ выбрано",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "selectInvert": {
+    "message": "Инвертировать"
+  },
+  "selectModeEnter": {
+    "message": "Выбрать"
+  },
+  "selectModeExit": {
+    "message": "Выйти из режима выбора"
+  },
+  "deadRiskBanner": {
+    "message": "Очистка битых ссылок удаляет закладки массово. Сделайте резервную копию закладок перед первой очисткой."
+  },
+  "dupesRiskBanner": {
+    "message": "Дедупликация массово удаляет дубликаты закладок. Сделайте резервную копию перед её применением."
+  },
+  "riskBannerHelp": {
+    "message": "Руководство по резервному копированию и восстановлению"
+  },
+  "riskBannerNever": {
+    "message": "Больше не показывать"
+  },
+  "riskBannerDismiss": {
+    "message": "Закрыть"
+  },
+  "sessionEmpty": {
+    "message": "Нет вкладок для сохранения"
+  },
+  "sessionFolderName": {
+    "message": "Сессия $date$",
+    "placeholders": {
+      "date": {
+        "content": "$1",
+        "example": "2026-07-18 15:04"
+      }
+    },
+    "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm."
+  },
+  "sessionSaved": {
+    "message": "Сохранено $count$ вкладок в новую папку",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "12"
+      }
+    },
+    "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
+  },
+  "url": {
+    "message": "URL"
+  },
+  "syncOptions": {
+    "message": "Параметры синхронизации"
+  },
+  "optionShowSyncStatus": {
+    "message": "Показывать индикаторы синхронизации"
+  },
+  "optionHighlightUnsynced": {
+    "message": "Затемнять несинхронизированные закладки"
+  },
+  "optionAutoRefreshSync": {
+    "message": "Автоматически обновлять статус синхронизации"
+  },
+  "optionSyncRefreshInterval": {
+    "message": "Интервал обновления"
+  },
+  "optionSyncRefreshIntervalSeconds": {
+    "message": "секунд"
+  },
+  "syncStatusSynced": {
+    "message": "Синхронизировано с вашим аккаунтом Google"
+  },
+  "syncStatusLocal": {
+    "message": "Только локально — не загружено"
+  },
+  "syncStatusUnsyncable": {
+    "message": "Не может быть синхронизировано"
+  },
+  "syncSuffixSynced": {
+    "message": "(Синхронизировано)"
+  },
+  "syncSuffixLocal": {
+    "message": "(Локально)"
+  },
+  "optionAutoResizePopup": {
+    "message": "Автоматически изменять размер всплывающего окна под содержимое"
+  },
+  "crossStorageMoveWarning": {
+    "message": "Нельзя перемещать закладки между синхронизированным и локальным хранилищем. Используйте копирование/вставку.",
+    "description": "Warning when trying to move bookmarks across storage types"
+  },
+  "recentBookmarks": {
+    "message": "Недавно добавленные"
+  },
+  "optionShowRecentBookmarks": {
+    "message": "Показывать недавно добавленные закладки вверху всплывающего окна"
+  },
+  "optionShowStatsView": {
+    "message": "Показать вкладку просмотра статистики"
+  },
+  "optionShowDeadView": {
+    "message": "Показать вкладку просмотра битых ссылок"
+  },
+  "optionShowDupesView": {
+    "message": "Показать вкладку просмотра дубликатов"
+  },
+  "optionRecentCollapsed": {
+    "message": "Сворачивать раздел недавно добавленных по умолчанию"
+  },
+  "optionsGroupViews": {
+    "message": "Вид"
+  },
+  "optionsGroupSort": {
+    "message": "Сортировка"
+  },
+  "optionsGroupStats": {
+    "message": "Статистика"
+  },
+  "optionsGroupTools": {
+    "message": "Инструменты"
+  },
+  "optionShowViewTabs": {
+    "message": "Показывать вкладки видов под строкой поиска"
+  },
+  "optionRememberView": {
+    "message": "Запоминать последний активный вид и открывать его заново"
+  },
+  "optionShowTabBadges": {
+    "message": "Показывать значки с количеством на вкладках видов"
+  },
+  "optionPaletteEnabled": {
+    "message": "Включить палитру команд (Ctrl/Cmd+K)"
+  },
+  "optionQuickAddEnabled": {
+    "message": "Показывать кнопку-звезду быстрого добавления рядом с полем поиска"
+  },
+  "optionQuickAddContextMenu": {
+    "message": "Добавить пункт «Добавить страницу в закладки с помощью vBookmarks» в контекстное меню страницы"
+  },
+  "optionQuickAddContextMenuHint": {
+    "message": "Не зависит от кнопки быстрого добавления в виде звезды; восстановление классического интерфейса также отключает этот пункт."
+  },
+  "optionCollapseTabGroupMenu": {
+    "message": "Свернуть записи групп вкладок в одно подменю «Группы вкладок»"
+  },
+  "optionCollapseTabGroupMenuHint": {
+    "message": "Применяется к контекстным меню папок и закладок. По умолчанию отключено; уменьшает высоту меню на небольших экранах или при большом масштабе отображения."
+  },
+  "optionCollapseSortMenu": {
+    "message": "Свернуть пункты сортировки в одно подменю «Сортировка»"
+  },
+  "optionCollapseSortMenuHint": {
+    "message": "Применяется к контекстному меню папок. Включено по умолчанию."
+  },
+  "optionShowToolButton": {
+    "message": "Показывать кнопку инструментов (⋮) рядом с полем поиска"
+  },
+  "optionClassicExperience": {
+    "message": "Восстановить классическую шапку"
+  },
+  "optionClassicExperienceHint": {
+    "message": "Отключает палитру команд, звезду быстрого добавления, её пункт в контекстном меню страницы, кнопку панели и вкладки просмотра. Каждый элемент можно повторно включить отдельно в соответствующем разделе."
+  },
+  "optionShowItemPath": {
+    "message": "Показывать путь родительской папки в строках списка"
+  },
+  "viewRecent": {
+    "message": "Недавние"
+  },
+  "viewTree": {
+    "message": "Дерево"
+  },
+  "viewSearch": {
+    "message": "Поиск"
+  },
+  "viewSwitchAnnounce": {
+    "message": "$name$ вид",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "viewStateEnabled": {
+    "message": "Включено"
+  },
+  "viewStateDisabled": {
+    "message": "Отключено"
+  },
+  "viewEnable": {
+    "message": "Включить"
+  },
+  "viewDisable": {
+    "message": "Отключить"
+  },
+  "viewTabHide": {
+    "message": "Скрыть"
+  },
+  "viewTabDisable": {
+    "message": "Отключить"
+  },
+  "sortFolderContents": {
+    "message": "Сортировать содержимое папки"
+  },
+  "sortByName": {
+    "message": "Сортировать по имени"
+  },
+  "sortByDate": {
+    "message": "Сортировать по дате добавления"
+  },
+  "sortRecursiveSuffix": {
+    "message": "(рекурсивно)"
+  },
+  "sortOptions": {
+    "message": "Параметры сортировки…"
+  },
+  "sortDone": {
+    "message": "Папка отсортирована"
+  },
+  "sortByTitle": {
+    "message": "По названию"
+  },
+  "sortByDateAdded": {
+    "message": "По дате добавления (сначала новые)"
+  },
+  "sortFoldersFirst": {
+    "message": "Папки сверху"
+  },
+  "sortRecursive": {
+    "message": "Сортировать подпапки (рекурсивно)"
+  },
+  "sortRecursiveWarning": {
+    "message": "Это изменит порядок закладок во всех подпапках."
+  },
+  "tabGroupDialogTitle": {
+    "message": "Новая группа вкладок"
+  },
+  "tabGroupTitleLabel": {
+    "message": "Название группы"
+  },
+  "tabGroupColorLabel": {
+    "message": "Цвет"
+  },
+  "tabGroupColorGrey": {
+    "message": "Серый",
+    "description": "Accessible name of the grey color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorBlue": {
+    "message": "Синий",
+    "description": "Accessible name of the blue color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorRed": {
+    "message": "Красный",
+    "description": "Accessible name of the red color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorYellow": {
+    "message": "Жёлтый",
+    "description": "Accessible name of the yellow color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorGreen": {
+    "message": "Зелёный",
+    "description": "Accessible name of the green color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPink": {
+    "message": "Розовый",
+    "description": "Accessible name of the pink color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPurple": {
+    "message": "Фиолетовый",
+    "description": "Accessible name of the purple color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorCyan": {
+    "message": "Голубой",
+    "description": "Accessible name of the cyan color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorOrange": {
+    "message": "Оранжевый",
+    "description": "Accessible name of the orange color swatch in the new-tab-group dialog."
+  },
+  "tabGroupUntitled": {
+    "message": "Безымянная группа"
+  },
+  "tabGroupNoGroups": {
+    "message": "Нет существующих групп вкладок"
+  },
+  "tabGroupPickDialogTitle": {
+    "message": "Открыть в существующей группе вкладок"
+  },
+  "quickAddBookmark": {
+    "message": "Добавить страницу в закладки (Ctrl+D)"
+  },
+  "quickAddBookmarkCommand": {
+    "message": "Быстро добавить текущую вкладку в закладки"
+  },
+  "quickAdded": {
+    "message": "Закладка добавлена"
+  },
+  "quickAddedTo": {
+    "message": "Закладка добавлена в $folderName$",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarks bar"
+      }
+    }
+  },
+  "quickRemoved": {
+    "message": "Закладка удалена"
+  },
+  "quickRemoveBookmark": {
+    "message": "Удалить эту закладку (Ctrl+D)"
+  },
+  "toolButtonTitle": {
+    "message": "Инструменты (Ctrl+K)"
+  },
+  "contextMenuAddBookmark": {
+    "message": "Добавить страницу в закладки с vBookmarks"
   },
   "deadFilterAll": {
     "message": "Все"
@@ -315,14 +1147,653 @@
   "deadMarkedBannerDismiss": {
     "message": "Закрыть"
   },
-  "deadNone": {
-    "message": "Неработающих ссылок не найдено"
+  "deadProxyAdd": {
+    "message": "Добавить прокси-сервер для проверки битых ссылок"
   },
-  "deadNoneFiltered": {
-    "message": "Нет неработающих ссылок в этом фильтре — попробуйте другой раздел выше."
+  "deadProxyLabel": {
+    "message": "Прокси: $server$",
+    "placeholders": {
+      "server": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadProxyChange": {
+    "message": "Изменить"
+  },
+  "deadProxyRemove": {
+    "message": "Удалить"
+  },
+  "deadProxyRemoved": {
+    "message": "Прокси-сервер удалён"
+  },
+  "deadProxyPanelHint": {
+    "message": "Введите существующий прокси-сервер (расширение не предоставляет свой), например 127.0.0.1:7890 или socks5://127.0.0.1:1080."
+  },
+  "deadProxyTestUrlLabel": {
+    "message": "Тестовый URL"
+  },
+  "deadProxyTestSave": {
+    "message": "Проверить и сохранить"
+  },
+  "deadProxyTesting": {
+    "message": "Проверка…"
+  },
+  "deadProxySaved": {
+    "message": "Прокси сохранён — при будущих проверках прямые сбои будут перепроверяться через него"
+  },
+  "deadProxyInvalid": {
+    "message": "Недопустимый адрес прокси — используйте host:port или scheme://host:port (http/https/socks5, без учётных данных)"
+  },
+  "deadProxyUnreachable": {
+    "message": "Прокси недоступен — не сохранён"
+  },
+  "deadProxyDenied": {
+    "message": "Разрешение на использование прокси не предоставлено"
+  },
+  "deadProxyControlled": {
+    "message": "Настройки прокси управляются другим расширением"
+  },
+  "deadProxyUnavailable": {
+    "message": "API прокси недоступен в этом браузере"
+  },
+  "deadProxyNudge": {
+    "message": "Повторная проверка через прокси отделяет действительно неработающие ссылки от заблокированных по региону — настройте это здесь или на странице параметров."
+  },
+  "deadProxyNeverShow": {
+    "message": "Больше не показывать"
+  },
+  "deadStartHint": {
+    "message": "Начать проверку $n$ закладок",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadStatusBlocked": {
+    "message": "заблокировано"
+  },
+  "deadUnmark": {
+    "message": "Удалить пометку о неработоспособности"
+  },
+  "deadUnmarkAll": {
+    "message": "Очистить все пометки"
+  },
+  "deadUnmarkSelected": {
+    "message": "Снять отметку с выбранных"
+  },
+  "dupesApplyAll": {
+    "message": "Применить все ($count$)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesApplySelected": {
+    "message": "Удалить дубликаты выбранных ($count$)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesCleanRestHint": {
+    "message": "Сохранить \"$title$\" и удалить остальные $count$",
+    "placeholders": {
+      "title": {
+        "content": "$1"
+      },
+      "count": {
+        "content": "$2"
+      }
+    }
+  },
+  "dupesIgnoreScheme": {
+    "message": "Игнорировать различия http/https"
+  },
+  "dupesKeepThis": {
+    "message": "Оставить эту"
+  },
+  "dupesKeeperSet": {
+    "message": "Сделать хранителем"
+  },
+  "dupesPreviewSummary": {
+    "message": "$groups$ групп · $count$ будет освобождено",
+    "placeholders": {
+      "groups": {
+        "content": "$1"
+      },
+      "count": {
+        "content": "$2"
+      }
+    }
+  },
+  "dupesRemoveRow": {
+    "message": "Удалить эту копию"
+  },
+  "dupesScopeAll": {
+    "message": "Все закладки"
+  },
+  "dupesScopeBar": {
+    "message": "Только панель закладок"
+  },
+  "dupesStrategyBookmarkBar": {
+    "message": "Оставить на панели закладок"
+  },
+  "dupesStrategyMostVisited": {
+    "message": "Оставить наиболее посещаемую"
+  },
+  "dupesStrategyNewest": {
+    "message": "Оставить новейшую"
+  },
+  "dupesStrategyOldest": {
+    "message": "Оставить старейшую"
+  },
+  "dupesStrategyShallowest": {
+    "message": "Оставить самую поверхностную"
+  },
+  "dupesStrategyShortestTitle": {
+    "message": "Оставить с самым коротким названием"
+  },
+  "optionDeadProxyServer": {
+    "message": "Прокси-сервер для битых ссылок"
+  },
+  "deadProxyServerHint": {
+    "message": "Сохранённый сервер повторно проверяет закладки, не прошедшие прямую проверку, при каждом сканировании битых ссылок, отделяя действительно недоступные ссылки от заблокированных по региону. Тест и сохранение проверяют его (сохраняется только доступный сервер); также можно добавить его из представления битых ссылок."
+  },
+  "deadProxyClear": {
+    "message": "Очистить"
+  },
+  "deadProxyNone": {
+    "message": "(не задано)"
+  },
+  "optionDeadProxyStrip": {
+    "message": "Показывать подсказку о добавлении прокси в представлении неработающих ссылок"
+  },
+  "optionDeadProxyStripHint": {
+    "message": "Выключение скрывает эту подсказку там; прокси-сервер остаётся настраиваемым здесь, а сохранённый сервер всегда показывает свою строку управления в представлении."
+  },
+  "optionDeadScanConcurrency": {
+    "message": "Параллельность сканирования битых ссылок (1-16)"
+  },
+  "optionDeadScanTimeout": {
+    "message": "Тайм-аут сканирования битых ссылок в секундах (2-30)"
+  },
+  "paletteCmdGoDead": {
+    "message": "Перейти к битым ссылкам"
+  },
+  "paletteCmdGoDupes": {
+    "message": "Перейти к дубликатам"
+  },
+  "paletteCmdGoRecent": {
+    "message": "Перейти к недавним"
+  },
+  "paletteCmdGoSearch": {
+    "message": "Перейти к поиску"
+  },
+  "paletteCmdGoTree": {
+    "message": "Перейти к дереву"
+  },
+  "paletteCmdOptions": {
+    "message": "Открыть настройки"
+  },
+  "paletteCmdSearchInView": {
+    "message": "Искать '$query$' в поиске",
+    "placeholders": {
+      "query": {
+        "content": "$1"
+      }
+    }
+  },
+  "rowActionDelete": {
+    "message": "Удалить"
+  },
+  "rowActionMark": {
+    "message": "Пометить как битую"
+  },
+  "rowActionReveal": {
+    "message": "Показать в дереве"
+  },
+  "rowActionUnmark": {
+    "message": "Снять пометку"
+  },
+  "viewDead": {
+    "message": "Битые ссылки"
+  },
+  "viewDupes": {
+    "message": "Дубликаты"
+  },
+  "viewStats": {
+    "message": "Статистика"
+  },
+  "paletteCmdGoStats": {
+    "message": "Перейти к статистике"
+  },
+  "optionStatsEnabled": {
+    "message": "Включить статистику посещений"
+  },
+  "optionFaviconContrast": {
+    "message": "Инвертировать низкоконтрастные фавиконки"
+  },
+  "optionFaviconContrastHint": {
+    "message": "Белые значки на светлых темах и чёрные значки на тёмных инвертируются, чтобы оставаться видимыми. Каждый значок обрабатывается один раз при загрузке — без затрат во время просмотра."
+  },
+  "optionFaviconEnrich": {
+    "message": "Загружать отсутствующие значки сайтов"
+  },
+  "optionFaviconEnrichHint": {
+    "message": "Для сайтов из закладок, для которых Chrome не имеет кэшированного значка, загружать настоящий значок напрямую с сайта (/favicon.ico, затем объявленные страницей значки). Запросы отправляются только на сайты из ваших закладок."
+  },
+  "optionFaviconEnrichAgg": {
+    "message": "Резервные иконки сторонних сервисов"
+  },
+  "optionFaviconEnrichAggHint": {
+    "message": "Если прямое получение не удается, значок ищется по домену во встроенном списке сторонних сервисов значков ($providers$). Недоступный сервис пропускается, и пробуется следующий — повторная попытка не выполняется в течение 6 часов.",
+    "placeholders": {
+      "providers": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionFaviconBackup": {
+    "message": "Включать кэш значков в резервные копии"
+  },
+  "optionFaviconBackupHint": {
+    "message": "Также включать расширенный кэш значков (данные по сайтам, возможно, большого объёма) в экспорт/импорт настроек. Это охватывает уже закэшированные значки, даже когда получение отключено. При выключенном параметре резервные копии остаются небольшими; значки в любом случае будут автоматически загружены заново."
+  },
+  "optionFaviconCacheClear": {
+    "message": "Очистить кэш значков"
+  },
+  "optionFaviconCacheClearConfirm": {
+    "message": "Очистить кэш улучшенных значков? При следующем открытии значки будут автоматически загружены заново."
+  },
+  "optionFaviconCacheEmpty": {
+    "message": "Нет кэша значков для очистки."
+  },
+  "optionFaviconCacheCleared": {
+    "message": "Кэш значков очищен. Значки будут загружены заново при следующем открытии."
+  },
+  "favGalleryLink": {
+    "message": "Просмотреть обновлённые значки",
+    "description": "Options link (Icons group, right of the Clear icon cache button): opens the favicon gallery page listing the sites whose icons were refetched."
+  },
+  "favGalleryTitle": {
+    "message": "Обновлённые значки сайтов",
+    "description": "Favicon gallery page title (h1 + document title)."
+  },
+  "favGalleryHint": {
+    "message": "Значки, полученные vBookmarks для сайтов из закладок, отсутствовавших в кэше Chrome: откуда взят каждый и какие закладки его используют. Только просмотр.",
+    "description": "Subtitle under the favicon gallery title, explaining the page is read-only."
+  },
+  "favGallerySearch": {
+    "message": "Фильтр по сайту, названию или пути",
+    "description": "Placeholder of the favicon gallery filter input."
+  },
+  "favGalleryAll": {
+    "message": "Все",
+    "description": "Favicon gallery source filter chip: show every source."
+  },
+  "favSrcDirect": {
+    "message": "Прямой",
+    "description": "Favicon gallery source badge: the icon was fetched directly from the site itself."
+  },
+  "favSrcProxy": {
+    "message": "Прокси",
+    "description": "Favicon gallery source badge: the icon was fetched through the user's own proxy relay."
+  },
+  "favSrcLegacy": {
+    "message": "Более ранний кэш",
+    "description": "Favicon gallery source badge: cached before the source was recorded, so the origin is unknown."
+  },
+  "favGalleryCompare": {
+    "message": "Сравнить с заглушкой",
+    "description": "Favicon gallery toggle button: switch every icon to the generic placeholder it replaced (before/after comparison)."
+  },
+  "favGalleryShowingBefore": {
+    "message": "Вернуться к настоящим значкам",
+    "description": "Favicon gallery toggle button while the placeholder comparison is shown: switch back to the real fetched icons."
+  },
+  "favGalleryStatSites": {
+    "message": "Сайтов: $n$",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    },
+    "description": "Favicon gallery stats strip: how many sites have a refreshed icon."
+  },
+  "favGalleryStatBookmarks": {
+    "message": "Закладок: $n$",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    },
+    "description": "Favicon gallery stats strip: how many bookmarks sit on the refreshed sites."
+  },
+  "favGalleryVisits": {
+    "message": "Зафиксированных открытий: $n$",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    },
+    "description": "Favicon gallery tooltip on a bookmark row's visit-count pill."
+  },
+  "favGalleryFailedTitle": {
+    "message": "Недавние попытки — значок не найден",
+    "description": "Favicon gallery heading of the muted section listing hosts whose icon fetch failed recently."
+  },
+  "favGalleryFailedHint": {
+    "message": "Повторные попытки выполняются через 24 часа, 3 дня и 7 дней, затем отказ до очистки кэша иконок.",
+    "description": "Favicon gallery hint under the failed-fetch section title."
+  },
+  "favGalleryGaveUp": {
+    "message": "Отказано",
+    "description": "Favicon gallery badge on a failed-strip host whose retries are exhausted (it stays untouched until the icon cache is cleared)."
+  },
+  "favGalleryOrphan": {
+    "message": "На этом хосте не осталось закладок — значок очищается вместе с кэшем.",
+    "description": "Favicon gallery note on a card whose host no longer has any bookmark."
+  },
+  "favGalleryEmptyTitle": {
+    "message": "Обновлённых значков пока нет",
+    "description": "Favicon gallery empty-state heading."
+  },
+  "favGalleryEmptyText": {
+    "message": "Когда во всплывающем окне встречается сайт из закладок, для которого в Chrome нет значка, vBookmarks загружает настоящий значок и отображает его здесь.",
+    "description": "Favicon gallery empty-state body text."
+  },
+  "storageUsageIcon": {
+    "message": "Кэш значков"
+  },
+  "storageUsageOther": {
+    "message": "Другое"
+  },
+  "storageUsageSummary": {
+    "message": "Использовано $1$ из $2$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      },
+      "2": {
+        "content": "$2"
+      }
+    }
+  },
+  "storageUsageFree": {
+    "message": "Свободно"
+  },
+  "storageUsageHint": {
+    "message": "Только локальное хранилище расширения (chrome.storage.local, квота около 10 МБ): кэш значков, настройки и другие локальные данные. Синхронизированные настройки, данные сеансов и сама библиотека закладок здесь не учитываются."
+  },
+  "optionsDonate": {
+    "message": "Пожертвовать"
+  },
+  "optionsGithubLink": {
+    "message": "GitHub"
+  },
+  "optionsHomepageLink": {
+    "message": "Домашняя страница"
+  },
+  "optionsSince": {
+    "message": "Форк из Neat Bookmarks, поддерживается $days$ дней.",
+    "placeholders": {
+      "days": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionsVersion": {
+    "message": "Версия vBookmarks"
+  },
+  "statsSortByCount": {
+    "message": "По количеству"
+  },
+  "statsSortByRecent": {
+    "message": "По дате"
+  },
+  "statsShowUnbookmarked": {
+    "message": "Показать несохранённые"
+  },
+  "statsShowUnbookmarkedHint": {
+    "message": "Включить страницы из истории, которые не сохранены как закладки."
+  },
+  "statsEmpty": {
+    "message": "Статистика накапливается по мере открытия закладок"
+  },
+  "statsDisabledHint": {
+    "message": "Статистика посещений отключена — включите в Настройки → Виды"
+  },
+  "statsVisitCount": {
+    "message": "Посещено $count$ раз",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "statsClearData": {
+    "message": "Очистить статистику"
+  },
+  "statsClearConfirm": {
+    "message": "Очистить статистику посещений для $count$ закладок? Это действие нельзя отменить.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "statsHistoryBanner": {
+    "message": "Предоставьте доступ к истории, чтобы сформировать статистику посещений на основе ваших прошлых визитов."
+  },
+  "statsHistoryEnable": {
+    "message": "Включить"
+  },
+  "statsHistoryDismiss": {
+    "message": "Больше не показывать"
+  },
+  "statsHistoryImported": {
+    "message": "Импортированы прошлые посещения для $count$ закладок",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "paletteCmdToggleViewTabs": {
+    "message": "Переключить вкладки"
+  },
+  "paletteCmdTheme": {
+    "message": "Установить тему…"
+  },
+  "paletteCmdThemeUsage": {
+    "message": "Использование: после /theme укажите имя темы — auto, light, dark, ink или paper (работает уникальный префикс, например /theme d)."
+  },
+  "paletteCustomTag": {
+    "message": "пользовательская"
+  },
+  "paletteCustomDeleteConfirm": {
+    "message": "Удалить команду \"$1\"? Изменение синхронизируется на всех ваших устройствах."
+  },
+  "paletteCustomBroken": {
+    "message": "Папка команды \"$1\" больше не существует. Удалить команду?"
+  },
+  "paletteCmdSaveAsCommand": {
+    "message": "Сохранить \"$1\" как команду…"
+  },
+  "paletteActionOpenUrl": {
+    "message": "Открыть URL"
+  },
+  "paletteActionOpenUrlGroup": {
+    "message": "Открыть группу папок закладок"
+  },
+  "paletteActionViewPreset": {
+    "message": "Открыть представление с пресетом"
+  },
+  "paletteActionUrlTemplate": {
+    "message": "Открыть шаблон URL"
+  },
+  "optionsGroupPalette": {
+    "message": "Палитра команд"
+  },
+  "paletteCustomHint": {
+    "message": "Пользовательские слэш-команды для палитры команд (Ctrl/Cmd+K). Они синхронизируются с вашими настройками — максимум 100 записей."
+  },
+  "paletteCustomAdd": {
+    "message": "Добавить команду…"
+  },
+  "paletteCustomUsage": {
+    "message": "$1 / $2"
+  },
+  "paletteCustomSlash": {
+    "message": "Слэш (слово после /)"
+  },
+  "paletteCustomAliases": {
+    "message": "Псевдонимы (через запятую)"
+  },
+  "paletteCustomAction": {
+    "message": "Действие"
+  },
+  "paletteCustomUrl": {
+    "message": "URL"
+  },
+  "paletteCustomTemplate": {
+    "message": "Шаблон URL — %s заменяется словами после команды"
+  },
+  "paletteCustomWhere": {
+    "message": "Открыть в"
+  },
+  "paletteCustomFolder": {
+    "message": "Папка закладок"
+  },
+  "paletteCustomView": {
+    "message": "Вид"
+  },
+  "paletteCustomStrategy": {
+    "message": "Пресет стратегии дедупликации"
+  },
+  "paletteCustomScope": {
+    "message": "Пресет области дедупликации"
+  },
+  "paletteCustomScan": {
+    "message": "Начинать сканирование при вводе"
+  },
+  "paletteWhereCurrent": {
+    "message": "Текущая вкладка"
+  },
+  "paletteWhereTab": {
+    "message": "Новая вкладка"
+  },
+  "paletteWhereWindow": {
+    "message": "Новое окно"
+  },
+  "paletteWhereBackground": {
+    "message": "Фоновые вкладки"
+  },
+  "paletteCustomSave": {
+    "message": "Сохранить команду"
+  },
+  "paletteCustomErrSlash": {
+    "message": "Слэш: 1–24 символа (строчные буквы, цифры или дефисы), начинается с буквы или цифры."
+  },
+  "paletteCustomErrAlias": {
+    "message": "Псевдонимы: те же правила, что и для слэша (1–24 символа: строчные буквы, цифры или дефисы)."
+  },
+  "paletteCustomErrTaken": {
+    "message": "Этот слэш или псевдоним уже занят."
+  },
+  "paletteCustomErrUrl": {
+    "message": "Разрешены только URL http:// или https://."
+  },
+  "paletteCustomErrFolder": {
+    "message": "Выберите папку закладок."
+  },
+  "paletteCustomErrView": {
+    "message": "Выберите вид."
+  },
+  "paletteCustomErrTemplate": {
+    "message": "Шаблон должен содержать ровно один %s."
+  },
+  "paletteCustomErrAction": {
+    "message": "Выберите тип действия."
+  },
+  "paletteCustomErrLimit": {
+    "message": "Достигнут лимит команд (100) — сначала удалите одну."
+  },
+  "paletteCustomEmpty": {
+    "message": "Пользовательских команд пока нет."
+  },
+  "recentGroupToday": {
+    "message": "Сегодня"
+  },
+  "recentGroupWeek": {
+    "message": "На этой неделе"
+  },
+  "recentGroupMonth": {
+    "message": "В этом месяце"
+  },
+  "recentGroupOlder": {
+    "message": "Ранее"
+  },
+  "searchHistoryRerun": {
+    "message": "Искать снова"
+  },
+  "optionsGroupBackup": {
+    "message": "Резервное копирование"
+  },
+  "optionsGroupContextMenu": {
+    "message": "Контекстные меню"
+  },
+  "optionsGroupIcons": {
+    "message": "Значки"
+  },
+  "settingsExport": {
+    "message": "Экспорт настроек"
+  },
+  "settingsImport": {
+    "message": "Импорт настроек"
+  },
+  "settingsBackupHint": {
+    "message": "Экспорт сохраняет все настройки (включая параметры синхронизации) в JSON-файл. Импорт объединяет резервную копию: настройки из файла перезаписывают текущие, всё остальное сохраняется."
+  },
+  "settingsImportConfirm": {
+    "message": "Импорт перезапишет все настройки, содержащиеся в файле резервной копии (настройки, отсутствующие в файле, будут сохранены), и перезагрузит эту страницу. Продолжить?"
+  },
+  "settingsImportInvalid": {
+    "message": "Недействительный файл настроек: это не резервная копия настроек vBookmarks."
+  },
+  "settingsImportDone": {
+    "message": "Настройки импортированы. Страница будет перезагружена."
+  },
+  "settingsImportError": {
+    "message": "Некоторые настройки не удалось записать (квота хранилища или временная ошибка). Импорт не завершён — пожалуйста, попробуйте ещё раз."
+  },
+  "statsSectionRecent": {
+    "message": "Недавние посещения"
+  },
+  "statsSectionBookmarks": {
+    "message": "Статистика закладок"
+  },
+  "statsHistoryGuide": {
+    "message": "Предоставьте доступ к истории, чтобы увидеть здесь недавние посещения."
+  },
+  "statsHistoryAdd": {
+    "message": "Добавить в закладки"
+  },
+  "statsHistoryBookmarked": {
+    "message": "Добавлено в закладки"
   },
   "deadPause": {
     "message": "Пауза"
+  },
+  "deadResume": {
+    "message": "Возобновить"
+  },
+  "deadCancel": {
+    "message": "Отмена"
   },
   "deadPaused": {
     "message": "Приостановлено"
@@ -671,1475 +2142,339 @@
   "optionTabGroupsClosedLimit": {
     "message": "Сохраняемая история закрытых вкладок/групп"
   },
-  "deadProxyAdd": {
-    "message": "Добавить прокси-сервер для проверки битых ссылок"
+  "folderPickMoveHere": {
+    "message": "Переместить сюда"
   },
-  "deadProxyLabel": {
-    "message": "Прокси: $server$",
-    "placeholders": {
-      "server": {
-        "content": "$1"
-      }
-    }
+  "folderPickCopyHere": {
+    "message": "Копировать сюда"
   },
-  "deadProxyChange": {
-    "message": "Изменить"
+  "folderPickFilter": {
+    "message": "Фильтр папок…"
   },
-  "deadProxyRemove": {
-    "message": "Удалить"
+  "folderPickFavNote": {
+    "message": "Несохранённые элементы будут добавлены в закладки здесь"
   },
-  "deadProxyRemoved": {
-    "message": "Прокси-сервер удалён"
+  "folderPickPinned": {
+    "message": "Закреплённые"
   },
-  "deadProxyPanelHint": {
-    "message": "Введите существующий прокси-сервер (расширение не предоставляет свой), например 127.0.0.1:7890 или socks5://127.0.0.1:1080."
-  },
-  "deadProxyTestUrlLabel": {
-    "message": "Тестовый URL"
-  },
-  "deadProxyTestSave": {
-    "message": "Проверить и сохранить"
-  },
-  "deadProxyTesting": {
-    "message": "Проверка…"
-  },
-  "deadProxySaved": {
-    "message": "Прокси сохранён — при будущих проверках прямые сбои будут перепроверяться через него"
-  },
-  "deadProxyInvalid": {
-    "message": "Недопустимый адрес прокси — используйте host:port или scheme://host:port (http/https/socks5, без учётных данных)"
-  },
-  "deadProxyUnreachable": {
-    "message": "Прокси недоступен — не сохранён"
-  },
-  "deadProxyDenied": {
-    "message": "Разрешение на использование прокси не предоставлено"
-  },
-  "deadProxyControlled": {
-    "message": "Настройки прокси управляются другим расширением"
-  },
-  "deadProxyUnavailable": {
-    "message": "API прокси недоступен в этом браузере"
-  },
-  "deadProxyNudge": {
-    "message": "Повторная проверка через прокси отделяет действительно неработающие ссылки от заблокированных по региону — настройте это здесь или на странице параметров."
-  },
-  "deadRescan": {
-    "message": "Пересканировать"
-  },
-  "deadResume": {
-    "message": "Возобновить"
-  },
-  "deadStartHint": {
-    "message": "Начать проверку $n$ закладок",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "deadStatusBlocked": {
-    "message": "заблокировано"
-  },
-  "deadUnmark": {
-    "message": "Удалить пометку о неработоспособности"
-  },
-  "deadUnmarkAll": {
-    "message": "Очистить все пометки"
-  },
-  "deadUnmarkSelected": {
-    "message": "Снять отметку с выбранных"
-  },
-  "defaultIconButton": {
-    "message": "Использовать дефолтную"
-  },
-  "defaultIconButtonOr": {
-    "message": " или "
-  },
-  "customIconPick": {
-    "message": "Выбрать файл…"
-  },
-  "delete": {
-    "message": "Удалить"
-  },
-  "deleteEllipsis": {
-    "message": "Удалить..."
-  },
-  "deletedBookmark": {
-    "message": "Удалено $title$",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Example"
-      }
-    },
-    "description": "Toast shown after a bookmark or separator was deleted; the toast offers an undo button. $title$ is the deleted row's title (empty for separators)."
-  },
-  "deletedFolder": {
-    "message": "Удалена папка $title$",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Bookmarks"
-      }
-    },
-    "description": "Toast shown after a bookmark folder (with its whole subtree) was deleted; the toast offers an undo button. $title$ is the folder name."
-  },
-  "donationDismiss": {
-    "message": "Нет"
-  },
-  "donationGo": {
-    "message": "Пожертвовать"
-  },
-  "donationRate": {
-    "message": "Оценить"
-  },
-  "donationRateTitle": {
-    "message": "Оцените vBookmarks в Chrome Web Store"
-  },
-  "donationLater": {
-    "message": "Позже"
-  },
-  "donationMessage": {
-    "message": "Нравится? Пожертвуйте на развитие проекта или оцените в магазине: каждый отзыв помогает выпускать обновления."
-  },
-  "donationV4Notice": {
-    "message": "vBookmarks 4.0 — это полностью переработанная версия с современным дизайном и множеством новых функций."
-  },
-  "donationV4GuideLink": {
-    "message": "Читать руководство v4 →"
-  },
-  "donationNever": {
-    "message": "Больше не показывать"
-  },
-  "dupesApplyAll": {
-    "message": "Применить все ($count$)",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "dupesApplySelected": {
-    "message": "Удалить дубликаты выбранных ($count$)",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "dupesCleanAll": {
-    "message": "Очистить всё: $groups$ групп, $count$ лишних копий",
-    "placeholders": {
-      "groups": {
-        "content": "$1"
-      },
-      "count": {
-        "content": "$2"
-      }
-    },
-    "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go."
-  },
-  "dupesCleanRestHint": {
-    "message": "Сохранить \"$title$\" и удалить остальные $count$",
-    "placeholders": {
-      "title": {
-        "content": "$1"
-      },
-      "count": {
-        "content": "$2"
-      }
-    }
-  },
-  "dupesConfirmAll": {
-    "message": "Удалить $count$ лишних копий в $groups$ группах? Выбранный экземпляр в каждой группе будет сохранён.",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      },
-      "groups": {
-        "content": "$2"
-      }
-    },
-    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
-  },
-  "dupesConfirmSelected": {
-    "message": "Удалить $count$ дублирующих закладок из $groups$ выбранных групп?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      },
-      "groups": {
-        "content": "$2"
-      }
-    }
-  },
-  "dupesConfirmGroup": {
-    "message": "Оставить «$title$» и удалить остальные $count$ копий?",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Example bookmark"
-      },
-      "count": {
-        "content": "$2"
-      }
-    },
-    "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."
-  },
-  "dupesDone": {
-    "message": "Удалено $count$ дубликатов закладок",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Alert shown after the duplicate cleanup finished."
-  },
-  "dupesGroupCount": {
-    "message": "$count$ дубликатов",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
-  },
-  "dupesGroupExpand": {
-    "description": "Dupes view group-head context menu: expand a collapsed duplicate group.",
-    "message": "Развернуть группу"
-  },
-  "dupesGroupCollapse": {
-    "description": "Dupes view group-head context menu: collapse an expanded duplicate group.",
-    "message": "Свернуть группу"
-  },
-  "dupesIgnoreScheme": {
-    "message": "Игнорировать различия http/https"
-  },
-  "dupesKeepThis": {
-    "message": "Оставить эту"
-  },
-  "dupesKeeperSet": {
-    "message": "Сделать хранителем"
-  },
-  "dupesNone": {
-    "message": "Дубликатов не найдено"
-  },
-  "dupesPreviewSummary": {
-    "message": "$groups$ групп · $count$ будет освобождено",
-    "placeholders": {
-      "groups": {
-        "content": "$1"
-      },
-      "count": {
-        "content": "$2"
-      }
-    }
-  },
-  "dupesRemoveRow": {
-    "message": "Удалить эту копию"
-  },
-  "dupesScopeAll": {
-    "message": "Все закладки"
-  },
-  "dupesScopeBar": {
-    "message": "Только панель закладок"
-  },
-  "dupesStrategyBookmarkBar": {
-    "message": "Оставить на панели закладок"
-  },
-  "dupesStrategyMostVisited": {
-    "message": "Оставить наиболее посещаемую"
-  },
-  "dupesStrategyNewest": {
-    "message": "Оставить новейшую"
-  },
-  "dupesStrategyOldest": {
-    "message": "Оставить старейшую"
-  },
-  "dupesStrategyShallowest": {
-    "message": "Оставить самую поверхностную"
-  },
-  "dupesStrategyShortestTitle": {
-    "message": "Оставить с самым коротким названием"
-  },
-  "edit": {
-    "message": "Редактировать..."
-  },
-  "editBookmark": {
-    "message": "Изменить закладку"
-  },
-  "editFolder": {
-    "message": "Изменить папку"
-  },
-  "errorOccured": {
-    "message": "К сожалению,\r\n\t\tпроизошла ошибка."
-  },
-  "extDesc": {
-    "description": "The extension description.",
-    "message": "Всплывающий менеджер закладок. Расширенный NeatBookmarks."
-  },
-  "extName": {
-    "description": "vBookmarks",
-    "message": "vBookmarks"
-  },
-  "folderEmpty": {
-    "message": "(Пусто)"
-  },
-  "general": {
-    "message": "Общие параметры"
-  },
-  "ignore": {
-    "message": "Игнорировать"
-  },
-  "name": {
-    "description": "Имя закладки или папки",
-    "message": "Имя"
-  },
-  "noTitle": {
-    "description": "Заголовок для безымянных закладок не имеющих ссылки и безымянных папок.",
-    "message": "(без заголовка)"
-  },
-  "nope": {
-    "message": "Отмена"
-  },
-  "open": {
-    "description": "Действие для открытия закладки.",
-    "message": "Открыть"
-  },
-  "openBookmarks": {
-    "message": "Открыть все закладки"
-  },
-  "openBookmarksInGroup": {
-    "message": "Открыть все в новой группе вкладок"
-  },
-  "openBookmarksInGroupSetup": {
-    "message": "Открыть все в новой группе вкладок…"
-  },
-  "openBookmarksInExistingGroup": {
-    "message": "Открыть все в существующей группе вкладок…"
-  },
-  "tabGroupOptions": {
-    "message": "Группы вкладок"
-  },
-  "sortMenuOptions": {
-    "message": "Сортировка"
-  },
-  "openBookmarksIncognitoWindow": {
-    "message": "Открыть все в окне инкогнито"
-  },
-  "openBookmarksNewWindow": {
-    "message": "Открыть все закладки в новом окне"
-  },
-  "openCommandPaletteCommand": {
-    "message": "Открыть палитру команд"
-  },
-  "openIncognitoWindow": {
-    "message": "Открыть в новом окне (инкогнито)"
-  },
-  "openNewTab": {
-    "message": "Открыть в новой вкладке"
-  },
-  "bookmarkOpenInNewGroup": {
-    "message": "Открыть в новой группе вкладок"
-  },
-  "bookmarkOpenInNewGroupSetup": {
-    "message": "Открыть в новой группе вкладок…"
-  },
-  "bookmarkOpenInExistingGroup": {
-    "message": "Открыть в существующей группе вкладок…"
-  },
-  "openNewWindow": {
-    "message": "Открыть в новом окне"
-  },
-  "openSidePanelCommand": {
-    "message": "Открыть боковую панель vBookmarks"
-  },
-  "optionAnnounceEnabledHint": {
-    "message": "Примечания к выпускам и советы из репозитория проекта на GitHub (загружаются не чаще, чем каждые 6 часов). Если отключено, сетевая загрузка не выполняется."
-  },
-  "optionAnnounceEnabled": {
-    "message": "Показывать анонсы в продукте"
-  },
-  "optionAutoRefreshSync": {
-    "message": "Автоматически обновлять статус синхронизации"
-  },
-  "optionAutoResizePopup": {
-    "message": "Автоматически изменять размер всплывающего окна под содержимое"
-  },
-  "optionClickNewTab": {
-    "message": "Клик ЛКМ открывает закладку в новой вкладке."
-  },
-  "optionCloseUnusedFolders": {
-    "message": "Закрыть неиспользуемые папки при открытии папки."
-  },
-  "optionConfirmDeleteFolder": {
-    "message": "Подтверждать удаление непустых папок"
-  },
-  "optionConfirmOpenFolder": {
-    "message": "Запрашивать подтверждение при открытии большого количества закладок из папки."
-  },
-  "optionDeadProxyServer": {
-    "message": "Прокси-сервер для битых ссылок"
-  },
-  "deadProxyServerHint": {
-    "message": "Сохранённый сервер повторно проверяет закладки, не прошедшие прямую проверку, при каждом сканировании битых ссылок, отделяя действительно недоступные ссылки от заблокированных по региону. Тест и сохранение проверяют его (сохраняется только доступный сервер); также можно добавить его из представления битых ссылок."
-  },
-  "deadProxyClear": {
-    "message": "Очистить"
-  },
-  "deadProxyNone": {
-    "message": "(не задано)"
-  },
-  "optionDeadScanConcurrency": {
-    "message": "Параллельность сканирования битых ссылок (1-16)"
-  },
-  "optionDeadScanTimeout": {
-    "message": "Тайм-аут сканирования битых ссылок в секундах (2-30)"
-  },
-  "optionOnlyShowBookmarkBar": {
-    "message": "Показывать только закладки в панели закладок"
-  },
-  "optionOpenInSidePanel": {
-    "message": "Открывать в боковой панели вместо всплывающего окна"
-  },
-  "optionOpenNewTab": {
-    "message": "Клик СКМ или CTRL+клик открывает закладку в фоновой вкладке."
-  },
-  "optionPopupStays": {
-    "message": "Всплывающее окно расширения остается открытым при клике ЛКМ по закладкам."
-  },
-  "optionRecentCollapsed": {
-    "message": "Сворачивать раздел недавно добавленных по умолчанию"
-  },
-  "optionRecentCount": {
-    "message": "Количество недавно добавленных закладок для отображения"
-  },
-  "optionRememberPrevState": {
-    "message": "Запоминать предыдущее состояние (позицию прокрутки, открытые папки и последний сфокусированный элемент)."
-  },
-  "optionSearchAfterEnter": {
-    "message": "Поиск в закладках только при нажатии Enter (вместо мгновенного поиска)"
-  },
-  "optionSearchHistory": {
-    "message": "Записывать историю поиска"
-  },
-  "optionSearchHistoryHint": {
-    "message": "Отключение этой опции также очищает существующую историю."
-  },
-  "optionShowDeadView": {
-    "message": "Показать вкладку просмотра битых ссылок"
-  },
-  "optionShowDupesView": {
-    "message": "Показать вкладку просмотра дубликатов"
-  },
-  "optionShowItemPath": {
-    "message": "Показывать путь родительской папки в строках списка"
-  },
-  "optionShowRecentBookmarks": {
-    "message": "Показывать недавно добавленные закладки вверху всплывающего окна"
-  },
-  "optionShowStatsView": {
-    "message": "Показать вкладку просмотра статистики"
-  },
-  "optionShowSyncStatus": {
-    "message": "Показывать индикаторы синхронизации"
-  },
-  "optionHighlightUnsynced": {
-    "message": "Затемнять несинхронизированные закладки"
-  },
-  "optionShowViewTabs": {
-    "message": "Показывать вкладки видов под строкой поиска"
-  },
-  "optionRememberView": {
-    "message": "Запоминать последний активный вид и открывать его заново"
-  },
-  "optionShowTabBadges": {
-    "message": "Показывать значки с количеством на вкладках видов"
-  },
-  "optionPaletteEnabled": {
-    "message": "Включить палитру команд (Ctrl/Cmd+K)"
-  },
-  "optionQuickAddEnabled": {
-    "message": "Показывать кнопку-звезду быстрого добавления рядом с полем поиска"
-  },
-  "optionQuickAddContextMenu": {
-    "message": "Добавить пункт «Добавить страницу в закладки с помощью vBookmarks» в контекстное меню страницы"
-  },
-  "optionQuickAddContextMenuHint": {
-    "message": "Не зависит от кнопки быстрого добавления в виде звезды; восстановление классического интерфейса также отключает этот пункт."
-  },
-  "optionCollapseTabGroupMenu": {
-    "message": "Свернуть записи групп вкладок в одно подменю «Группы вкладок»"
-  },
-  "optionCollapseTabGroupMenuHint": {
-    "message": "Применяется к контекстным меню папок и закладок. По умолчанию отключено; уменьшает высоту меню на небольших экранах или при большом масштабе отображения."
-  },
-  "optionCollapseSortMenu": {
-    "message": "Свернуть пункты сортировки в одно подменю «Сортировка»"
-  },
-  "optionCollapseSortMenuHint": {
-    "message": "Применяется к контекстному меню папок. Включено по умолчанию."
-  },
-  "optionShowToolButton": {
-    "message": "Показывать кнопку инструментов (⋮) рядом с полем поиска"
-  },
-  "optionClassicExperience": {
-    "message": "Восстановить классическую шапку"
-  },
-  "optionClassicExperienceHint": {
-    "message": "Отключает палитру команд, звезду быстрого добавления, её пункт в контекстном меню страницы, кнопку панели и вкладки просмотра. Каждый элемент можно повторно включить отдельно в соответствующем разделе."
-  },
-  "optionStatsEnabled": {
-    "message": "Включить статистику посещений"
-  },
-  "optionFaviconContrast": {
-    "message": "Инвертировать низкоконтрастные фавиконки"
-  },
-  "optionFaviconContrastHint": {
-    "message": "Белые значки на светлых темах и чёрные значки на тёмных инвертируются, чтобы оставаться видимыми. Каждый значок обрабатывается один раз при загрузке — без затрат во время просмотра."
-  },
-  "optionFaviconEnrich": {
-    "message": "Загружать отсутствующие значки сайтов"
-  },
-  "optionFaviconEnrichHint": {
-    "message": "Для сайтов из закладок, для которых Chrome не имеет кэшированного значка, загружать настоящий значок напрямую с сайта (/favicon.ico, затем объявленные страницей значки). Запросы отправляются только на сайты из ваших закладок."
-  },
-  "optionFaviconEnrichAgg": {
-    "message": "Резервные иконки сторонних сервисов"
-  },
-  "optionFaviconEnrichAggHint": {
-    "message": "Если прямое получение не удается, значок ищется по домену во встроенном списке сторонних сервисов значков ($providers$). Недоступный сервис пропускается, и пробуется следующий — повторная попытка не выполняется в течение 6 часов.",
-    "placeholders": {
-      "providers": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionFaviconBackup": {
-    "message": "Включать кэш значков в резервные копии"
-  },
-  "optionFaviconBackupHint": {
-    "message": "Также включать расширенный кэш значков (данные по сайтам, возможно, большого объёма) в экспорт/импорт настроек. Это охватывает уже закэшированные значки, даже когда получение отключено. При выключенном параметре резервные копии остаются небольшими; значки в любом случае будут автоматически загружены заново."
-  },
-  "optionFaviconCacheClear": {
-    "message": "Очистить кэш значков"
-  },
-  "optionFaviconCacheClearConfirm": {
-    "message": "Очистить кэш улучшенных значков? При следующем открытии значки будут автоматически загружены заново."
-  },
-  "optionFaviconCacheEmpty": {
-    "message": "Нет кэша значков для очистки."
-  },
-  "optionFaviconCacheCleared": {
-    "message": "Кэш значков очищен. Значки будут загружены заново при следующем открытии."
-  },
-  "favGalleryLink": {
-    "message": "Просмотреть обновлённые значки",
-    "description": "Options link (Icons group, right of the Clear icon cache button): opens the favicon gallery page listing the sites whose icons were refetched."
-  },
-  "favGalleryTitle": {
-    "message": "Обновлённые значки сайтов",
-    "description": "Favicon gallery page title (h1 + document title)."
-  },
-  "favGalleryHint": {
-    "message": "Значки, полученные vBookmarks для сайтов из закладок, отсутствовавших в кэше Chrome: откуда взят каждый и какие закладки его используют. Только просмотр.",
-    "description": "Subtitle under the favicon gallery title, explaining the page is read-only."
-  },
-  "favGallerySearch": {
-    "message": "Фильтр по сайту, названию или пути",
-    "description": "Placeholder of the favicon gallery filter input."
-  },
-  "favGalleryAll": {
-    "message": "Все",
-    "description": "Favicon gallery source filter chip: show every source."
-  },
-  "favSrcDirect": {
-    "message": "Прямой",
-    "description": "Favicon gallery source badge: the icon was fetched directly from the site itself."
-  },
-  "favSrcProxy": {
-    "message": "Прокси",
-    "description": "Favicon gallery source badge: the icon was fetched through the user's own proxy relay."
-  },
-  "favSrcLegacy": {
-    "message": "Более ранний кэш",
-    "description": "Favicon gallery source badge: cached before the source was recorded, so the origin is unknown."
-  },
-  "favGalleryCompare": {
-    "message": "Сравнить с заглушкой",
-    "description": "Favicon gallery toggle button: switch every icon to the generic placeholder it replaced (before/after comparison)."
-  },
-  "favGalleryShowingBefore": {
-    "message": "Вернуться к настоящим значкам",
-    "description": "Favicon gallery toggle button while the placeholder comparison is shown: switch back to the real fetched icons."
-  },
-  "favGalleryStatSites": {
-    "message": "Сайтов: $n$",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    },
-    "description": "Favicon gallery stats strip: how many sites have a refreshed icon."
-  },
-  "favGalleryStatBookmarks": {
-    "message": "Закладок: $n$",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    },
-    "description": "Favicon gallery stats strip: how many bookmarks sit on the refreshed sites."
-  },
-  "favGalleryVisits": {
-    "message": "Зафиксированных открытий: $n$",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    },
-    "description": "Favicon gallery tooltip on a bookmark row's visit-count pill."
-  },
-  "favGalleryFailedTitle": {
-    "message": "Недавние попытки — значок не найден",
-    "description": "Favicon gallery heading of the muted section listing hosts whose icon fetch failed recently."
-  },
-  "favGalleryFailedHint": {
-    "message": "Повторные попытки выполняются через 24 часа, 3 дня и 7 дней, затем отказ до очистки кэша иконок.",
-    "description": "Favicon gallery hint under the failed-fetch section title."
-  },
-  "favGalleryGaveUp": {
-    "message": "Отказано",
-    "description": "Favicon gallery badge on a failed-strip host whose retries are exhausted (it stays untouched until the icon cache is cleared)."
-  },
-  "favGalleryOrphan": {
-    "message": "На этом хосте не осталось закладок — значок очищается вместе с кэшем.",
-    "description": "Favicon gallery note on a card whose host no longer has any bookmark."
-  },
-  "favGalleryEmptyTitle": {
-    "message": "Обновлённых значков пока нет",
-    "description": "Favicon gallery empty-state heading."
-  },
-  "favGalleryEmptyText": {
-    "message": "Когда во всплывающем окне встречается сайт из закладок, для которого в Chrome нет значка, vBookmarks загружает настоящий значок и отображает его здесь.",
-    "description": "Favicon gallery empty-state body text."
-  },
-  "storageUsageIcon": {
-    "message": "Кэш значков"
-  },
-  "storageUsageOther": {
-    "message": "Другое"
-  },
-  "storageUsageSummary": {
-    "message": "Использовано $1$ из $2$",
-    "placeholders": {
-      "1": {
-        "content": "$1"
-      },
-      "2": {
-        "content": "$2"
-      }
-    }
-  },
-  "storageUsageFree": {
-    "message": "Свободно"
-  },
-  "storageUsageHint": {
-    "message": "Только локальное хранилище расширения (chrome.storage.local, квота около 10 МБ): кэш значков, настройки и другие локальные данные. Синхронизированные настройки, данные сеансов и сама библиотека закладок здесь не учитываются."
-  },
-  "optionsDonate": {
-    "message": "Пожертвовать"
-  },
-  "optionsGithubLink": {
-    "message": "GitHub"
-  },
-  "optionsHomepageLink": {
-    "message": "Домашняя страница"
-  },
-  "optionsSince": {
-    "message": "Форк из Neat Bookmarks, поддерживается $days$ дней.",
-    "placeholders": {
-      "days": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionsVersion": {
-    "message": "Версия vBookmarks"
-  },
-  "optionSyncRefreshInterval": {
-    "message": "Интервал обновления"
-  },
-  "optionSyncRefreshIntervalSeconds": {
-    "message": "секунд"
-  },
-  "optionTheme": {
-    "message": "Тема"
-  },
-  "optionThemeAuto": {
-    "message": "Как в системе"
-  },
-  "optionThemeDark": {
-    "message": "Тёмная"
-  },
-  "optionThemeInk": {
-    "message": "Чернила (тёмная)"
-  },
-  "optionThemeLight": {
-    "message": "Светлая"
-  },
-  "optionThemePaper": {
-    "message": "Бумага (светлая)"
-  },
-  "optionLanguage": {
-    "message": "Язык"
-  },
-  "optionLanguageAuto": {
-    "message": "Авто"
-  },
-  "optionLanguageHint": {
-    "message": "Изменение языка перезагружает эту страницу."
-  },
-  "paletteClose": {
-    "message": "Закрыть"
-  },
-  "paletteCmdVersion": {
-    "message": "Информация о версии"
-  },
-  "paletteCmdLang": {
-    "message": "Сменить язык…"
-  },
-  "paletteCmdLangUsage": {
-    "message": "Использование: /lang с кодом локали — например, /lang en, /lang zh_CN, /lang ja."
-  },
-  "versionDialogTitle": {
-    "message": "vBookmarks $version$",
-    "placeholders": {
-      "version": {
-        "content": "$1"
-      }
-    }
-  },
-  "versionDialogCopy": {
-    "message": "Копировать информацию"
-  },
-  "versionDialogCopied": {
-    "message": "Скопировано"
-  },
-  "versionMetaVersion": {
-    "message": "Версия расширения"
-  },
-  "versionMetaAnnounce": {
-    "message": "Что нового"
-  },
-  "versionMetaAnnounceNone": {
-    "message": "Нет загруженных объявлений"
-  },
-  "versionMetaBrowser": {
-    "message": "Браузер"
-  },
-  "versionMetaOS": {
-    "message": "ОС"
-  },
-  "versionMetaChannel": {
-    "message": "Канал"
-  },
-  "versionMetaLanguage": {
-    "message": "Язык"
-  },
-  "versionMetaUserAgent": {
-    "message": "Пользовательский агент"
-  },
-  "optionZoom": {
-    "message": "Увеличить"
-  },
-  "options": {
-    "message": "Основные настройки"
-  },
-  "optionsFooterText": {
-    "description": "Footer text for the Options page",
-    "message": "Создано $authorName$.",
-    "placeholders": {
-      "authorName": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionsGroupBackup": {
-    "message": "Резервное копирование"
-  },
-  "optionsGroupIcons": {
-    "message": "Значки"
-  },
-  "optionsGroupContextMenu": {
-    "message": "Контекстные меню"
-  },
-  "optionsGroupViews": {
-    "message": "Вид"
-  },
-  "optionsGroupSort": {
-    "message": "Сортировка"
-  },
-  "optionsGroupTools": {
-    "message": "Инструменты"
-  },
-  "optionsGroupStats": {
-    "message": "Статистика"
-  },
-  "paletteCmdDead": {
-    "message": "Найти неработающие ссылки"
-  },
-  "paletteCmdDupes": {
-    "message": "Очистить дубликаты закладок"
-  },
-  "paletteCmdGoDead": {
-    "message": "Перейти к битым ссылкам"
-  },
-  "paletteCmdGoDupes": {
-    "message": "Перейти к дубликатам"
-  },
-  "paletteCmdGoRecent": {
-    "message": "Перейти к недавним"
-  },
-  "paletteCmdGoSearch": {
-    "message": "Перейти к поиску"
-  },
-  "paletteCmdGoStats": {
-    "message": "Перейти к статистике"
-  },
-  "paletteCmdGoTree": {
-    "message": "Перейти к дереву"
-  },
-  "paletteCmdNewBookmark": {
-    "message": "Новая закладка…"
-  },
-  "paletteCmdNewFolder": {
-    "message": "Новая папка…"
-  },
-  "paletteCmdOptions": {
-    "message": "Открыть настройки"
-  },
-  "paletteCmdQuickAdd": {
-    "message": "Добавить текущую вкладку в закладки"
-  },
-  "paletteCmdSaveSession": {
-    "message": "Сохранить вкладки окна как папку"
-  },
-  "paletteCmdSearchInView": {
-    "message": "Искать '$query$' в поиске",
-    "placeholders": {
-      "query": {
-        "content": "$1"
-      }
-    }
-  },
-  "paletteCmdToggleViewTabs": {
-    "message": "Переключить вкладки"
-  },
-  "paletteCmdTheme": {
-    "message": "Установить тему…"
-  },
-  "paletteCmdThemeUsage": {
-    "message": "Использование: после /theme укажите имя темы — auto, light, dark, ink или paper (работает уникальный префикс, например /theme d)."
-  },
-  "paletteCustomTag": {
-    "message": "пользовательская"
-  },
-  "paletteCustomDeleteConfirm": {
-    "message": "Удалить команду \"$1\"? Изменение синхронизируется на всех ваших устройствах."
-  },
-  "paletteCustomBroken": {
-    "message": "Папка команды \"$1\" больше не существует. Удалить команду?"
-  },
-  "paletteCmdSaveAsCommand": {
-    "message": "Сохранить \"$1\" как команду…"
-  },
-  "paletteActionOpenUrl": {
-    "message": "Открыть URL"
-  },
-  "paletteActionOpenUrlGroup": {
-    "message": "Открыть группу папок закладок"
-  },
-  "paletteActionViewPreset": {
-    "message": "Открыть представление с пресетом"
-  },
-  "paletteActionUrlTemplate": {
-    "message": "Открыть шаблон URL"
-  },
-  "optionsGroupPalette": {
-    "message": "Палитра команд"
-  },
-  "paletteCustomHint": {
-    "message": "Пользовательские слэш-команды для палитры команд (Ctrl/Cmd+K). Они синхронизируются с вашими настройками — максимум 100 записей."
-  },
-  "paletteCustomAdd": {
-    "message": "Добавить команду…"
-  },
-  "paletteCustomUsage": {
-    "message": "$1 / $2"
-  },
-  "paletteCustomSlash": {
-    "message": "Слэш (слово после /)"
-  },
-  "paletteCustomAliases": {
-    "message": "Псевдонимы (через запятую)"
-  },
-  "paletteCustomAction": {
-    "message": "Действие"
-  },
-  "paletteCustomUrl": {
-    "message": "URL"
-  },
-  "paletteCustomTemplate": {
-    "message": "Шаблон URL — %s заменяется словами после команды"
-  },
-  "paletteCustomWhere": {
-    "message": "Открыть в"
-  },
-  "paletteCustomFolder": {
-    "message": "Папка закладок"
-  },
-  "paletteCustomView": {
-    "message": "Вид"
-  },
-  "paletteCustomStrategy": {
-    "message": "Пресет стратегии дедупликации"
-  },
-  "paletteCustomScope": {
-    "message": "Пресет области дедупликации"
-  },
-  "paletteCustomScan": {
-    "message": "Начинать сканирование при вводе"
-  },
-  "paletteWhereCurrent": {
-    "message": "Текущая вкладка"
-  },
-  "paletteWhereTab": {
-    "message": "Новая вкладка"
-  },
-  "paletteWhereWindow": {
-    "message": "Новое окно"
-  },
-  "paletteWhereBackground": {
-    "message": "Фоновые вкладки"
-  },
-  "paletteCustomSave": {
-    "message": "Сохранить команду"
-  },
-  "paletteCustomErrSlash": {
-    "message": "Слэш: 1–24 символа (строчные буквы, цифры или дефисы), начинается с буквы или цифры."
-  },
-  "paletteCustomErrAlias": {
-    "message": "Псевдонимы: те же правила, что и для слэша (1–24 символа: строчные буквы, цифры или дефисы)."
-  },
-  "paletteCustomErrTaken": {
-    "message": "Этот слэш или псевдоним уже занят."
-  },
-  "paletteCustomErrUrl": {
-    "message": "Разрешены только URL http:// или https://."
-  },
-  "paletteCustomErrFolder": {
-    "message": "Выберите папку закладок."
-  },
-  "paletteCustomErrView": {
-    "message": "Выберите вид."
-  },
-  "paletteCustomErrTemplate": {
-    "message": "Шаблон должен содержать ровно один %s."
-  },
-  "paletteCustomErrAction": {
-    "message": "Выберите тип действия."
-  },
-  "paletteCustomErrLimit": {
-    "message": "Достигнут лимит команд (100) — сначала удалите одну."
-  },
-  "paletteCustomEmpty": {
-    "message": "Пользовательских команд пока нет."
-  },
-  "paletteNoResults": {
-    "message": "Нет совпадений"
-  },
-  "palettePlaceholder": {
-    "message": "Поиск закладок, папок, команд…"
-  },
-  "parentFolder": {
-    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
-    "message": "Родительская папка: \"$folderName$\"",
-    "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarksbar"
-      }
-    }
-  },
-  "quickAddBookmark": {
-    "message": "Добавить страницу в закладки (Ctrl+D)"
-  },
-  "quickAddBookmarkCommand": {
-    "message": "Быстро добавить текущую вкладку в закладки"
-  },
-  "quickAdded": {
-    "message": "Закладка добавлена"
-  },
-  "quickAddedTo": {
-    "message": "Закладка добавлена в $folderName$",
-    "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarks bar"
-      }
-    }
-  },
-  "quickRemoveBookmark": {
-    "message": "Удалить эту закладку (Ctrl+D)"
-  },
-  "quickRemoved": {
-    "message": "Закладка удалена"
-  },
-  "recentBookmarks": {
-    "message": "Недавно добавленные"
-  },
-  "recentEmpty": {
-    "message": "Нет недавних закладок. Нажмите Ctrl+D, чтобы добавить текущую страницу."
-  },
-  "recentGroupMonth": {
-    "message": "В этом месяце"
-  },
-  "recentGroupOlder": {
-    "message": "Ранее"
-  },
-  "recentGroupToday": {
-    "message": "Сегодня"
-  },
-  "recentGroupWeek": {
-    "message": "На этой неделе"
-  },
-  "recentRevealInTree": {
-    "message": "Показать в дереве"
-  },
-  "removeSeparator": {
-    "message": "Удалить разделитель"
-  },
-  "replaceUrl": {
-    "message": "Заменить текущим URL"
-  },
-  "reportError": {
-    "message": "Сообщение об ошибке"
-  },
-  "reportedToDeveloper": {
-    "description": "Сообщение при возникновении ошибки в расширении, сообщается разработчику.",
-    "message": "Об этом сообщено разработчику."
-  },
-  "resetButton": {
-    "message": "Сбросить"
-  },
-  "resetSettings": {
-    "message": "Сброс настроек"
-  },
-  "resetSettingsDescription": {
-    "message": "Сброс vBookmarks к настройкам по умолчанию  "
-  },
-  "rowActionDelete": {
-    "message": "Удалить"
-  },
-  "rowActionMark": {
-    "message": "Пометить как битую"
-  },
-  "rowActionReveal": {
-    "message": "Показать в дереве"
-  },
-  "rowActionUnmark": {
-    "message": "Снять пометку"
-  },
-  "save": {
-    "message": "Сохранить"
-  },
-  "searchBookmarks": {
-    "description": "Впишите текст для поиска.",
-    "message": "Поиск"
-  },
-  "searchClear": {
-    "message": "Очистить поиск"
-  },
-  "searchHistoryClear": {
-    "message": "Очистить всё"
-  },
-  "searchHistoryRemove": {
-    "message": "Удалить этот поиск"
-  },
-  "searchHistoryRerun": {
-    "message": "Искать снова"
-  },
-  "searchHistoryResultCount": {
-    "message": "$n$ результат(ов)",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "searchHistoryTitle": {
-    "message": "Недавние поиски"
-  },
-  "searchNoResults": {
-    "message": "Нет подходящих закладок"
-  },
-  "searchViewHint": {
-    "message": "Введите запрос в поле выше для поиска закладок"
-  },
-  "selectAll": {
-    "message": "Все"
-  },
-  "selectClear": {
-    "message": "Очистить"
-  },
-  "selectCount": {
-    "message": "$count$ выбрано",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "selectInvert": {
-    "message": "Инвертировать"
-  },
-  "selectModeEnter": {
-    "message": "Выбрать"
-  },
-  "selectModeExit": {
-    "message": "Выйти из режима выбора"
-  },
-  "deadRiskBanner": {
-    "message": "Очистка битых ссылок удаляет закладки массово. Сделайте резервную копию закладок перед первой очисткой."
-  },
-  "dupesRiskBanner": {
-    "message": "Дедупликация массово удаляет дубликаты закладок. Сделайте резервную копию перед её применением."
-  },
-  "riskBannerHelp": {
-    "message": "Руководство по резервному копированию и восстановлению"
-  },
-  "riskBannerNever": {
-    "message": "Больше не показывать"
-  },
-  "riskBannerDismiss": {
-    "message": "Закрыть"
-  },
-  "sessionEmpty": {
-    "message": "Нет вкладок для сохранения"
-  },
-  "sessionFolderName": {
-    "message": "Сессия $date$",
-    "placeholders": {
-      "date": {
-        "content": "$1",
-        "example": "2026-07-18 15:04"
-      }
-    },
-    "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm."
-  },
-  "sessionSaved": {
-    "message": "Сохранено $count$ вкладок в новую папку",
-    "placeholders": {
-      "count": {
-        "content": "$1",
-        "example": "12"
-      }
-    },
-    "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
-  },
-  "settingsBackupHint": {
-    "message": "Экспорт сохраняет все настройки (включая параметры синхронизации) в JSON-файл. Импорт объединяет резервную копию: настройки из файла перезаписывают текущие, всё остальное сохраняется."
-  },
-  "settingsExport": {
-    "message": "Экспорт настроек"
-  },
-  "settingsImport": {
-    "message": "Импорт настроек"
-  },
-  "settingsImportConfirm": {
-    "message": "Импорт перезапишет все настройки, содержащиеся в файле резервной копии (настройки, отсутствующие в файле, будут сохранены), и перезагрузит эту страницу. Продолжить?"
-  },
-  "settingsImportDone": {
-    "message": "Настройки импортированы. Страница будет перезагружена."
-  },
-  "settingsImportError": {
-    "message": "Некоторые настройки не удалось записать (квота хранилища или временная ошибка). Импорт не завершён — пожалуйста, попробуйте ещё раз."
-  },
-  "settingsImportInvalid": {
-    "message": "Недействительный файл настроек: это не резервная копия настроек vBookmarks."
-  },
-  "sortByDateAdded": {
-    "message": "По дате добавления (сначала новые)"
-  },
-  "sortByTitle": {
-    "message": "По названию"
-  },
-  "sortFolderContents": {
-    "message": "Сортировать содержимое папки"
-  },
-  "sortByName": {
-    "message": "Сортировать по имени"
-  },
-  "sortByDate": {
-    "message": "Сортировать по дате добавления"
-  },
-  "sortRecursiveSuffix": {
-    "message": "(рекурсивно)"
-  },
-  "sortOptions": {
-    "message": "Параметры сортировки…"
-  },
-  "sortDone": {
-    "message": "Папка отсортирована"
-  },
-  "sortFoldersFirst": {
-    "message": "Папки сверху"
-  },
-  "sortRecursive": {
-    "message": "Сортировать подпапки (рекурсивно)"
-  },
-  "sortRecursiveWarning": {
-    "message": "Это изменит порядок закладок во всех подпапках."
-  },
-  "tabGroupDialogTitle": {
-    "message": "Новая группа вкладок"
-  },
-  "tabGroupTitleLabel": {
-    "message": "Название группы"
-  },
-  "tabGroupColorLabel": {
-    "message": "Цвет"
-  },
-  "tabGroupColorGrey": {
-    "message": "Серый",
-    "description": "Accessible name of the grey color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorBlue": {
-    "message": "Синий",
-    "description": "Accessible name of the blue color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorRed": {
-    "message": "Красный",
-    "description": "Accessible name of the red color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorYellow": {
-    "message": "Жёлтый",
-    "description": "Accessible name of the yellow color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorGreen": {
-    "message": "Зелёный",
-    "description": "Accessible name of the green color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorPink": {
-    "message": "Розовый",
-    "description": "Accessible name of the pink color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorPurple": {
-    "message": "Фиолетовый",
-    "description": "Accessible name of the purple color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorCyan": {
-    "message": "Голубой",
-    "description": "Accessible name of the cyan color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorOrange": {
-    "message": "Оранжевый",
-    "description": "Accessible name of the orange color swatch in the new-tab-group dialog."
-  },
-  "tabGroupUntitled": {
-    "message": "Безымянная группа"
-  },
-  "tabGroupNoGroups": {
-    "message": "Нет существующих групп вкладок"
-  },
-  "tabGroupPickDialogTitle": {
-    "message": "Открыть в существующей группе вкладок"
-  },
-  "statsClearConfirm": {
-    "message": "Очистить статистику посещений для $count$ закладок? Это действие нельзя отменить.",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "statsClearData": {
-    "message": "Очистить статистику"
-  },
-  "statsDisabledHint": {
-    "message": "Статистика посещений отключена — включите в Настройки → Виды"
-  },
-  "statsEmpty": {
-    "message": "Статистика накапливается по мере открытия закладок"
-  },
-  "statsHistoryAdd": {
-    "message": "Добавить в закладки"
-  },
-  "statsHistoryBanner": {
-    "message": "Предоставьте доступ к истории, чтобы сформировать статистику посещений на основе ваших прошлых визитов."
-  },
-  "statsHistoryBookmarked": {
-    "message": "Добавлено в закладки"
-  },
-  "statsHistoryDismiss": {
-    "message": "Больше не показывать"
-  },
-  "statsHistoryEnable": {
-    "message": "Включить"
-  },
-  "statsHistoryGuide": {
-    "message": "Предоставьте доступ к истории, чтобы увидеть здесь недавние посещения."
-  },
-  "statsHistoryImported": {
-    "message": "Импортированы прошлые посещения для $count$ закладок",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "statsSectionBookmarks": {
-    "message": "Статистика закладок"
-  },
-  "statsSectionRecent": {
-    "message": "Недавние посещения"
-  },
-  "statsSortByCount": {
-    "message": "По количеству"
-  },
-  "statsSortByRecent": {
-    "message": "По дате"
-  },
-  "statsShowUnbookmarked": {
-    "message": "Показать несохранённые"
-  },
-  "statsShowUnbookmarkedHint": {
-    "message": "Включить страницы из истории, которые не сохранены как закладки."
-  },
-  "statsVisitCount": {
-    "message": "Посещено $count$ раз",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "syncOptions": {
-    "message": "Параметры синхронизации"
-  },
-  "syncStatusLocal": {
-    "message": "Только локально — не загружено"
-  },
-  "syncStatusSynced": {
-    "message": "Синхронизировано с вашим аккаунтом Google"
-  },
-  "syncStatusUnsyncable": {
-    "message": "Не может быть синхронизировано"
-  },
-  "syncSuffixLocal": {
-    "message": "(Локально)"
-  },
-  "syncSuffixSynced": {
-    "message": "(Синхронизировано)"
-  },
-  "timeDaysAgo": {
-    "message": "$n$ дн. назад",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "timeHoursAgo": {
-    "message": "$n$ ч. назад",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "timeJustNow": {
-    "message": "только что"
-  },
-  "timeMinutesAgo": {
-    "message": "$n$ мин. назад",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "timeYesterday": {
-    "message": "вчера"
-  },
-  "toolButtonTitle": {
-    "message": "Инструменты (Ctrl+K)"
-  },
-  "undoAction": {
-    "message": "Отменить"
-  },
-  "revealOutsideBarHint": {
-    "message": "Показывается только панель закладок: цель находится вне её."
-  },
-  "revealOutsideBarAction": {
-    "message": "Показать все и раскрыть"
-  },
-  "url": {
-    "message": "URL"
-  },
-  "viewDead": {
-    "message": "Битые ссылки"
-  },
-  "viewDupes": {
-    "message": "Дубликаты"
-  },
-  "viewRecent": {
+  "folderPickRecent": {
     "message": "Недавние"
   },
-  "viewSearch": {
-    "message": "Поиск"
+  "pinFolder": {
+    "message": "Закрепить папку"
   },
-  "viewStats": {
-    "message": "Статистика"
+  "unpinFolder": {
+    "message": "Открепить папку"
   },
-  "viewSwitchAnnounce": {
-    "message": "$name$ вид",
+  "stagingAdd": {
+    "message": "В отложенное"
+  },
+  "stagingAdded": {
+    "message": "Добавлено в отложенное"
+  },
+  "stagingAlready": {
+    "message": "Уже в отложенном"
+  },
+  "stagingAddedSummary": {
+    "message": "Добавлено: $n$; уже было: $m$",
     "placeholders": {
-      "name": {
+      "n": {
+        "content": "$1"
+      },
+      "m": {
+        "content": "$2"
+      }
+    }
+  },
+  "stagingFull": {
+    "message": "Область отложенного заполнена — удалите некоторые элементы"
+  },
+  "stagingFolderEmpty": {
+    "message": "В этой папке нет закладок для отложенного"
+  },
+  "stagingConfirmFolder": {
+    "message": "Отложить $n$ закладок из этой папки?",
+    "placeholders": {
+      "n": {
         "content": "$1"
       }
     }
   },
-  "viewStateEnabled": {
-    "message": "Включено"
+  "stagingRemove": {
+    "message": "Убрать из отложенного"
   },
-  "viewStateDisabled": {
-    "message": "Отключено"
+  "stagingRemoved": {
+    "message": "Убрано из отложенного"
   },
-  "viewEnable": {
-    "message": "Включить"
+  "recentStageAll": {
+    "message": "Отложить все недавние"
   },
-  "viewDisable": {
-    "message": "Отключить"
+  "recentSectionTitle": {
+    "message": "Недавно добавленные"
   },
-  "viewTabHide": {
-    "message": "Скрыть"
+  "stagingEmpty": {
+    "message": "Пусто — щёлкните правой кнопкой по закладке, используйте кнопку ↑ здесь или строки истории статистики, чтобы отправить элементы в отложенное"
   },
-  "viewTabDisable": {
-    "message": "Отключить"
+  "stagingFromHistory": {
+    "message": "Из истории"
   },
-  "viewTree": {
-    "message": "Дерево"
+  "stagingGroupExpand": {
+    "message": "Развернуть группу"
   },
-  "deadProxyNeverShow": {
-    "message": "Больше не показывать"
+  "stagingGroupCollapse": {
+    "message": "Свернуть группу"
   },
-  "optionDeadProxyStrip": {
-    "message": "Показывать подсказку о добавлении прокси в представлении неработающих ссылок"
+  "stagingGroupRename": {
+    "message": "Переименовать группу…"
   },
-  "optionDeadProxyStripHint": {
-    "message": "Выключение скрывает эту подсказку там; прокси-сервер остаётся настраиваемым здесь, а сохранённый сервер всегда показывает свою строку управления в представлении."
+  "stagingGroupDissolve": {
+    "message": "Расформировать группу"
+  },
+  "stagingGroupDissolved": {
+    "message": "Группа расформирована — элементы сохранены в отложенном"
+  },
+  "stagingGroupAssign": {
+    "message": "Группа…"
+  },
+  "stagingGroupAssignTitle": {
+    "message": "Назначить группу"
+  },
+  "stagingGroupNew": {
+    "message": "Новая группа"
+  },
+  "stagingGroupNamePrompt": {
+    "message": "Название новой группы"
+  },
+  "stagingGroupNoGroups": {
+    "message": "Групп пока нет"
+  },
+  "stagingBucketTitle": {
+    "message": "Без закладок"
+  },
+  "stagingBucketFavAll": {
+    "message": "Добавить все в избранное"
+  },
+  "stagingNew": {
+    "message": "новых: $n$",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingRowFav": {
+    "message": "В избранное"
+  },
+  "stagingRowUnfav": {
+    "message": "Убрать из избранного"
+  },
+  "stagingFav": {
+    "message": "В избранное"
+  },
+  "stagingUnfav": {
+    "message": "Убрать из избранного"
+  },
+  "stagingFavDone": {
+    "message": "В избранное добавлено: $n$",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingUnfavDone": {
+    "message": "Снято с избранного: $n$",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "groupSaveToFolder": {
+    "message": "Сохранить в папку…"
+  },
+  "groupCopyToFolder": {
+    "message": "Копировать в папку…"
+  },
+  "stagingCount": {
+    "message": "В очереди: $n$",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingMoveCopy": {
+    "message": "Переместить/копировать…"
+  },
+  "stagingMoveDone": {
+    "message": "Перемещено домой: $n$",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingCopyDone": {
+    "message": "Скопировано: $n$",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingMoveConfirm": {
+    "message": "Переместить $n$ в выбранную папку?",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingDeleteConfirm": {
+    "message": "Удалить $n$? Неизбранные просто покинут очередь.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingDeleted": {
+    "message": "Удалено закладок: $n$",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingRemovedCount": {
+    "message": "Удалено из очереди: $n$",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingClear": {
+    "message": "Очистить очередь"
+  },
+  "stagingClearConfirm": {
+    "message": "Очистить всю очередь? Дерево закладок не изменится."
+  },
+  "stagingCleared": {
+    "message": "Очередь очищена"
+  },
+  "groupPlaceTooltip": {
+    "message": "Сохранить группу в папку…"
+  },
+  "copyBookmark": {
+    "message": "Копировать"
+  },
+  "cutBookmark": {
+    "message": "Вырезать"
+  },
+  "copyMoveTo": {
+    "message": "Копировать/переместить…"
+  },
+  "pasteHere": {
+    "message": "Вставить сюда"
+  },
+  "copiedToast": {
+    "message": "Скопировано: $t$",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
+  },
+  "cutToast": {
+    "message": "Вырезано: $t$ — вставьте в целевую папку (Esc — отмена)",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
+  },
+  "pasteDone": {
+    "message": "Вставлено"
+  },
+  "pasteGone": {
+    "message": "Закладка больше не существует — буфер очищен"
+  },
+  "folderCopyList": {
+    "message": "Копировать названия и адреса"
+  },
+  "folderCopyText": {
+    "message": "Простой текст"
+  },
+  "folderCopyMarkdown": {
+    "message": "Markdown"
+  },
+  "folderCopyJson": {
+    "message": "JSON"
+  },
+  "folderCopyConfirm": {
+    "message": "Скопировать список из $n$ закладок?",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "folderCopyDone": {
+    "message": "Скопировано записей: $n$",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "addFolderMenu": {
+    "message": "Добавить папку"
+  },
+  "optionCollapseAddFolderMenu": {
+    "message": "Свернуть пункты добавления папки"
+  },
+  "optionCollapseAddFolderMenuHint": {
+    "message": "Объединить три пункта добавления папки (до/после/внутри) в один подменю при правом клике по папке."
+  },
+  "tabRowStage": {
+    "message": "Закладка и очередь"
+  },
+  "tabgroupStageAll": {
+    "message": "Закладка и очередь всей группы"
+  },
+  "tabgroupStageConfirm": {
+    "message": "Добавить в закладки и очередь $n$ вкладок?",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabgroupStageNone": {
+    "message": "В этой группе нет вкладок для закладок"
+  },
+  "stagedToast": {
+    "message": "В очередь добавлено $n$ вкладок как группа «$t$»",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "t": {
+        "content": "$2"
+      }
+    }
+  },
+  "searchResultCount": {
+    "message": "Результатов: $n$",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "deleteSelected": {
+    "message": "Удалить выбранные"
   }
 }

@@ -29,6 +29,12 @@
   "advancedOptions": {
     "message": "進階設定"
   },
+  "announceDismiss": {
+    "message": "關閉"
+  },
+  "announceV408Text": {
+    "message": "v4.0.8 是強化網站圖示的版本：會自動為 Chrome 尚未快取的書籤擷取真實網站圖示。"
+  },
   "announceV407Text": {
     "message": "v4.0.7 提供功能完整的死連結檢視：可掃描、標記、篩選及排序死連結與受限連結，並包含過往標記和每行時間戳。"
   },
@@ -44,12 +50,6 @@
   "announceV410Text": {
     "message": "v4.1.0 新增「分頁群組」檢視：每個視窗的分頁及分頁群組，可與書籤一併管理。"
   },
-  "announceV408Text": {
-    "message": "v4.0.8 是強化網站圖示的版本：會自動為 Chrome 尚未快取的書籤擷取真實網站圖示。"
-  },
-  "announceDismiss": {
-    "message": "關閉"
-  },
   "confirmDeleteFolder": {
     "message": "此資料夾包含 $count$ 個項目。您可以復原刪除。",
     "placeholders": {
@@ -57,6 +57,9 @@
         "content": "$1"
       }
     }
+  },
+  "confirmDeleteFolderButton": {
+    "message": "刪除"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "您確定要刪除文件夾[$folderName$]（包含 $bookmarkCount$ 個書籤）？",
@@ -68,9 +71,6 @@
         "content": "$1"
       }
     }
-  },
-  "confirmDeleteFolderButton": {
-    "message": "刪除"
   },
   "confirmDeleteFolderSubfolders": {
     "message": "您確定要刪除文件夾[$folderName$]（包含 $subFolderCount$ 個子目錄）？",
@@ -124,18 +124,11 @@
       }
     }
   },
-  "contextMenuAddBookmark": {
-    "message": "使用 vBookmarks 將此頁加入書籤"
-  },
   "copyAllTitlesAndUrls": {
     "message": "拷貝所有標題和鏈接到剪貼板"
   },
   "copyTitleAndUrl": {
     "message": "拷貝標題和鏈接到剪貼板"
-  },
-  "crossStorageMoveWarning": {
-    "message": "無法在同步和本地儲存空間之間移動書籤。請使用複製/貼上功能。",
-    "description": "嘗試跨儲存類型移動書籤時的警告訊息"
   },
   "customIcon": {
     "message": "個性化圖標"
@@ -146,14 +139,14 @@
   "customSeparatorColorDescription": {
     "message": "定制分割條顏色"
   },
-  "customSeparatorStringDescription": {
-    "message": "如果任一書籤URL含有以下字符串，將被顯示為分割條"
-  },
   "customSeparatorTitleDescription": {
     "message": "被用作分割條的書籤節點的标题"
   },
   "customSeparatorUrlDescription": {
     "message": "被用作分割條的書籤節點的URL"
+  },
+  "customSeparatorStringDescription": {
+    "message": "如果任一書籤URL含有以下字符串，將被顯示為分割條"
   },
   "customStyles": {
     "message": "定制CSS"
@@ -164,8 +157,14 @@
   "customStylesDescription": {
     "message": "注意：无CSS知識請勿冒險修改。推薦將代碼共享到 "
   },
-  "deadCancel": {
-    "message": "取消"
+  "defaultIconButton": {
+    "message": "使用默認圖標"
+  },
+  "defaultIconButtonOr": {
+    "message": " 或者 "
+  },
+  "customIconPick": {
+    "message": "選擇檔案…"
   },
   "deadChecking": {
     "message": "正在檢查 $done$ / $total$…",
@@ -235,6 +234,839 @@
   },
   "deadClearScan": {
     "message": "清除掃描結果"
+  },
+  "deadNone": {
+    "message": "找不到失效連結"
+  },
+  "deadNoneFiltered": {
+    "message": "此篩選條件下沒有失效連結 — 請嘗試上方的其他區段"
+  },
+  "deadRescan": {
+    "message": "重新掃描"
+  },
+  "delete": {
+    "message": "刪除"
+  },
+  "deletedBookmark": {
+    "message": "已刪除 $title$",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Example"
+      }
+    },
+    "description": "Toast shown after a bookmark or separator was deleted; the toast offers an undo button. $title$ is the deleted row's title (empty for separators)."
+  },
+  "deletedFolder": {
+    "message": "已刪除資料夾 $title$",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Bookmarks"
+      }
+    },
+    "description": "Toast shown after a bookmark folder (with its whole subtree) was deleted; the toast offers an undo button. $title$ is the folder name."
+  },
+  "optionRecentCount": {
+    "message": "顯示最近新增書籤的數量"
+  },
+  "optionSearchHistory": {
+    "message": "記錄搜尋歷史"
+  },
+  "optionSearchHistoryHint": {
+    "message": "關閉此選項亦會清除現有記錄。"
+  },
+  "recentEmpty": {
+    "message": "沒有最近書籤。按 Ctrl+D 將目前頁面加入書籤。"
+  },
+  "recentRevealInTree": {
+    "message": "在樹狀中顯示"
+  },
+  "searchHistoryClear": {
+    "message": "清除全部"
+  },
+  "searchHistoryRemove": {
+    "message": "移除此搜尋"
+  },
+  "searchHistoryResultCount": {
+    "message": "$n$ 個結果",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "searchHistoryTitle": {
+    "message": "最近的搜尋"
+  },
+  "timeDaysAgo": {
+    "message": "$n$ 天前",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "timeHoursAgo": {
+    "message": "$n$ 小時前",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "timeJustNow": {
+    "message": "剛剛"
+  },
+  "timeMinutesAgo": {
+    "message": "$n$ 分鐘前",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "timeYesterday": {
+    "message": "昨天"
+  },
+  "undoAction": {
+    "message": "復原"
+  },
+  "revealOutsideBarHint": {
+    "message": "目前僅顯示書籤列：目標在書籤列以外。"
+  },
+  "revealOutsideBarAction": {
+    "message": "顯示全部並顯示目標"
+  },
+  "dupesCleanAll": {
+    "message": "全部清理：$groups$ 組，$count$ 個多餘副本",
+    "placeholders": {
+      "groups": {
+        "content": "$1"
+      },
+      "count": {
+        "content": "$2"
+      }
+    },
+    "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go."
+  },
+  "dupesConfirmAll": {
+    "message": "是否在 $groups$ 個群組中移除 $count$ 個額外副本？每個群組中選取的保留項目會被保留。",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    },
+    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
+  },
+  "dupesConfirmSelected": {
+    "message": "要從 $groups$ 個選定群組中移除 $count$ 個重複書籤嗎？",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    }
+  },
+  "dupesConfirmGroup": {
+    "message": "保留「$title$」並移除其他 $count$ 個副本？",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Example bookmark"
+      },
+      "count": {
+        "content": "$2"
+      }
+    },
+    "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."
+  },
+  "dupesDone": {
+    "message": "已移除 $count$ 個重複書籤",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Alert shown after the duplicate cleanup finished."
+  },
+  "dupesGroupCount": {
+    "message": "$count$ 個重複",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
+  },
+  "dupesGroupExpand": {
+    "description": "Dupes view group-head context menu: expand a collapsed duplicate group.",
+    "message": "展開群組"
+  },
+  "dupesGroupCollapse": {
+    "description": "Dupes view group-head context menu: collapse an expanded duplicate group.",
+    "message": "收合群組"
+  },
+  "dupesNone": {
+    "message": "找不到重複項目"
+  },
+  "deleteEllipsis": {
+    "message": "刪除 ..."
+  },
+  "donationMessage": {
+    "message": "覺得好用嗎？捐款支持未來開發——或到商店評分：每則評論都能讓更新持續。"
+  },
+  "donationV4Notice": {
+    "message": "vBookmarks 4.0 是全面重製版本，採用現代設計，並加入多項新功能。"
+  },
+  "donationV4GuideLink": {
+    "message": "閱讀 v4 指南 →"
+  },
+  "donationGo": {
+    "message": "捐款"
+  },
+  "donationRate": {
+    "message": "評分"
+  },
+  "donationRateTitle": {
+    "message": "在 Chrome 網上商店為 vBookmarks 評分"
+  },
+  "donationLater": {
+    "message": "稍後"
+  },
+  "donationNever": {
+    "message": "不再顯示"
+  },
+  "donationDismiss": {
+    "message": "關閉"
+  },
+  "edit": {
+    "message": "編輯 ..."
+  },
+  "editBookmark": {
+    "message": "編輯書籤"
+  },
+  "editFolder": {
+    "message": "編輯文件夾"
+  },
+  "errorOccured": {
+    "message": "有錯誤出現"
+  },
+  "extDesc": {
+    "description": "擴充功能描述",
+    "message": "靈巧實用的彈出書籤管理器，NeatBookmarks的加強版"
+  },
+  "extName": {
+    "description": "擴充功能名稱",
+    "message": "vBookmarks"
+  },
+  "folderEmpty": {
+    "message": "（空）"
+  },
+  "general": {
+    "message": "一般功能"
+  },
+  "ignore": {
+    "message": "忽略"
+  },
+  "name": {
+    "description": "書籤名或文件夾名",
+    "message": "名字"
+  },
+  "nope": {
+    "message": "取消"
+  },
+  "noTitle": {
+    "description": "沒 http(s) 開頭的書籤或沒命名的文件夾的統一標題",
+    "message": "（沒標題）"
+  },
+  "open": {
+    "description": "打開書籤的動作",
+    "message": "打開"
+  },
+  "openBookmarks": {
+    "message": "打開所有書籤"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "在隱身窗口中打開所有書籤"
+  },
+  "openBookmarksInGroup": {
+    "message": "在新分頁群組中全部開啟"
+  },
+  "openBookmarksInGroupSetup": {
+    "message": "全部開啟到新分頁群組…"
+  },
+  "openBookmarksInExistingGroup": {
+    "message": "全部開啟到現有分頁群組…"
+  },
+  "tabGroupOptions": {
+    "message": "分頁群組"
+  },
+  "sortMenuOptions": {
+    "message": "排序"
+  },
+  "openBookmarksNewWindow": {
+    "message": "在新窗口中打開所有書籤"
+  },
+  "openCommandPaletteCommand": {
+    "message": "開啟指令面板"
+  },
+  "openIncognitoWindow": {
+    "message": "在隱身窗口中打開"
+  },
+  "openNewTab": {
+    "message": "在新標籤頁中打開"
+  },
+  "bookmarkOpenInNewGroup": {
+    "message": "在新分頁群組開啟"
+  },
+  "bookmarkOpenInNewGroupSetup": {
+    "message": "在新分頁群組開啟…"
+  },
+  "bookmarkOpenInExistingGroup": {
+    "message": "在現有分頁群組開啟…"
+  },
+  "openNewWindow": {
+    "message": "在新窗口中打開"
+  },
+  "openSidePanelCommand": {
+    "message": "開啟 vBookmarks 側邊面板"
+  },
+  "optionAnnounceEnabled": {
+    "message": "顯示產品內公告"
+  },
+  "optionAnnounceEnabledHint": {
+    "message": "從專案的 GitHub 儲存庫取得版本說明和提示（每 6 小時最多擷取一次）。關閉時也會停止網路擷取。"
+  },
+  "optionClickNewTab": {
+    "message": "左擊書籤在新標籤頁中打開"
+  },
+  "optionCloseUnusedFolders": {
+    "message": "展開文件夾時折疊其他文件夾"
+  },
+  "optionConfirmOpenFolder": {
+    "message": "打開多個書籤前需確認"
+  },
+  "optionConfirmDeleteFolder": {
+    "message": "刪除非空資料夾前先確認"
+  },
+  "optionOnlyShowBookmarkBar": {
+    "message": "僅顯示書籤欄中的書籤"
+  },
+  "optionSearchAfterEnter": {
+    "message": "僅當回車之後才進行書籤搜索（否則輸入字符立即搜索）"
+  },
+  "optionOpenNewTab": {
+    "message": "用鼠標中鍵或按住 Ctrl 鍵左擊在後台打開書籤"
+  },
+  "optionOpenInSidePanel": {
+    "message": "在側邊面板中開啟而非彈出視窗"
+  },
+  "optionPopupStays": {
+    "message": "打開（鼠標左擊）書籤時 Popup 頁面不關閉"
+  },
+  "optionRememberPrevState": {
+    "message": "記住之前的狀態（滾動位置、已開啟的資料夾及最後聚焦的項目）。"
+  },
+  "options": {
+    "message": "設置"
+  },
+  "optionsFooterText": {
+    "description": "Footer text for the Options page",
+    "message": "作者：$authorName$",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionZoom": {
+    "message": "縮放"
+  },
+  "optionTheme": {
+    "message": "主題"
+  },
+  "optionThemeAuto": {
+    "message": "跟隨系統"
+  },
+  "optionThemeLight": {
+    "message": "淺色"
+  },
+  "optionThemeDark": {
+    "message": "深色"
+  },
+  "optionThemeInk": {
+    "message": "墨水（深色）"
+  },
+  "optionThemePaper": {
+    "message": "紙張（淺色）"
+  },
+  "optionLanguage": {
+    "message": "語言"
+  },
+  "optionLanguageAuto": {
+    "message": "自動"
+  },
+  "optionLanguageHint": {
+    "message": "更改語言會重新載入此頁面。"
+  },
+  "paletteClose": {
+    "message": "關閉"
+  },
+  "paletteCmdVersion": {
+    "message": "版本資訊"
+  },
+  "paletteCmdLang": {
+    "message": "切換語言…"
+  },
+  "paletteCmdLangUsage": {
+    "message": "用法：輸入 /lang 加語言代碼，例如 /lang en、/lang zh_CN、/lang ja。"
+  },
+  "versionDialogTitle": {
+    "message": "vBookmarks $version$",
+    "placeholders": {
+      "version": {
+        "content": "$1"
+      }
+    }
+  },
+  "versionDialogCopy": {
+    "message": "複製資訊"
+  },
+  "versionDialogCopied": {
+    "message": "已複製"
+  },
+  "versionMetaVersion": {
+    "message": "擴充功能版本"
+  },
+  "versionMetaAnnounce": {
+    "message": "更新內容"
+  },
+  "versionMetaAnnounceNone": {
+    "message": "沒有載入任何公告"
+  },
+  "versionMetaBrowser": {
+    "message": "瀏覽器"
+  },
+  "versionMetaOS": {
+    "message": "作業系統"
+  },
+  "versionMetaChannel": {
+    "message": "發佈頻道"
+  },
+  "versionMetaLanguage": {
+    "message": "語言"
+  },
+  "versionMetaUserAgent": {
+    "message": "使用者代理"
+  },
+  "paletteCmdDead": {
+    "message": "尋找失效連結"
+  },
+  "paletteCmdDupes": {
+    "message": "清理重複書籤"
+  },
+  "paletteCmdNewBookmark": {
+    "message": "新增書籤…"
+  },
+  "paletteCmdNewFolder": {
+    "message": "新增資料夾…"
+  },
+  "paletteCmdQuickAdd": {
+    "message": "將目前分頁加入書籤"
+  },
+  "paletteCmdSaveSession": {
+    "message": "將視窗分頁儲存為資料夾"
+  },
+  "paletteNoResults": {
+    "message": "無相符結果"
+  },
+  "palettePlaceholder": {
+    "message": "搜尋書籤、資料夾、指令…"
+  },
+  "parentFolder": {
+    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
+    "message": "所在目錄：$folderName$",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarksbar"
+      }
+    }
+  },
+  "removeSeparator": {
+    "message": "移除分隔符"
+  },
+  "replaceUrl": {
+    "message": "替換為當前頁的URL"
+  },
+  "reportedToDeveloper": {
+    "description": "擴展中發生了一個錯誤，已經報告給開發者",
+    "message": "錯誤報告"
+  },
+  "reportError": {
+    "message": "報告此錯誤"
+  },
+  "resetButton": {
+    "message": "重置"
+  },
+  "resetSettings": {
+    "message": "重置所有選項"
+  },
+  "resetSettingsDescription": {
+    "message": "重置所有選項到默認值"
+  },
+  "save": {
+    "message": "儲存"
+  },
+  "searchBookmarks": {
+    "description": "搜索框裡的提示文字",
+    "message": "書籤搜索"
+  },
+  "searchClear": {
+    "message": "清除搜尋"
+  },
+  "searchNoResults": {
+    "message": "無相符書籤"
+  },
+  "searchViewHint": {
+    "message": "在上方輸入框輸入以搜尋您的書籤"
+  },
+  "selectAll": {
+    "message": "全選"
+  },
+  "selectClear": {
+    "message": "清除"
+  },
+  "selectCount": {
+    "message": "已選取 $count$ 項",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "selectInvert": {
+    "message": "反向選擇"
+  },
+  "selectModeEnter": {
+    "message": "選擇"
+  },
+  "selectModeExit": {
+    "message": "結束選擇"
+  },
+  "deadRiskBanner": {
+    "message": "失效連結清理會批次刪除書籤。首次清理前請先備份你的書籤。"
+  },
+  "dupesRiskBanner": {
+    "message": "去重會批次刪除重複書籤。套用前請先備份你的書籤。"
+  },
+  "riskBannerHelp": {
+    "message": "備份及還原指南"
+  },
+  "riskBannerNever": {
+    "message": "不再顯示"
+  },
+  "riskBannerDismiss": {
+    "message": "關閉"
+  },
+  "sessionEmpty": {
+    "message": "沒有可儲存的分頁"
+  },
+  "sessionFolderName": {
+    "message": "工作階段 $date$",
+    "placeholders": {
+      "date": {
+        "content": "$1",
+        "example": "2026-07-18 15:04"
+      }
+    },
+    "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm."
+  },
+  "sessionSaved": {
+    "message": "已將 $count$ 個分頁儲存到新資料夾",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "12"
+      }
+    },
+    "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
+  },
+  "url": {
+    "message": "網址"
+  },
+  "syncOptions": {
+    "message": "同步選項"
+  },
+  "optionShowSyncStatus": {
+    "message": "顯示同步狀態指示器"
+  },
+  "optionHighlightUnsynced": {
+    "message": "變淡顯示未同步的書籤"
+  },
+  "optionAutoRefreshSync": {
+    "message": "自動刷新同步狀態"
+  },
+  "optionSyncRefreshInterval": {
+    "message": "刷新間隔"
+  },
+  "optionSyncRefreshIntervalSeconds": {
+    "message": "秒"
+  },
+  "syncStatusSynced": {
+    "message": "已同步至你的 Google 帳戶"
+  },
+  "syncStatusLocal": {
+    "message": "僅限本地 — 未上載"
+  },
+  "syncStatusUnsyncable": {
+    "message": "無法同步"
+  },
+  "syncSuffixSynced": {
+    "message": "(已同步)"
+  },
+  "syncSuffixLocal": {
+    "message": "(本地)"
+  },
+  "optionAutoResizePopup": {
+    "message": "自動調整彈出視窗大小以適應內容"
+  },
+  "crossStorageMoveWarning": {
+    "message": "無法在同步和本地儲存空間之間移動書籤。請使用複製/貼上功能。",
+    "description": "嘗試跨儲存類型移動書籤時的警告訊息"
+  },
+  "recentBookmarks": {
+    "message": "最近新增"
+  },
+  "optionShowRecentBookmarks": {
+    "message": "在彈出視窗頂部顯示最近新增的書籤"
+  },
+  "optionShowStatsView": {
+    "message": "顯示統計檢視標籤"
+  },
+  "optionShowDeadView": {
+    "message": "顯示失效連結檢視標籤"
+  },
+  "optionShowDupesView": {
+    "message": "顯示重複項檢視標籤"
+  },
+  "optionRecentCollapsed": {
+    "message": "預設收起最近新增的區塊"
+  },
+  "optionsGroupViews": {
+    "message": "檢視"
+  },
+  "optionsGroupSort": {
+    "message": "排序"
+  },
+  "optionsGroupStats": {
+    "message": "統計"
+  },
+  "optionsGroupTools": {
+    "message": "工具"
+  },
+  "optionShowViewTabs": {
+    "message": "在搜尋框下方顯示檢視標籤"
+  },
+  "optionRememberView": {
+    "message": "記住最後使用的檢視，並於重新開啟時還原"
+  },
+  "optionShowTabBadges": {
+    "message": "在檢視分頁上顯示數量徽章"
+  },
+  "optionPaletteEnabled": {
+    "message": "啟用指令面板 (Ctrl/Cmd+K)"
+  },
+  "optionQuickAddEnabled": {
+    "message": "在搜尋框旁顯示快速新增星號按鈕"
+  },
+  "optionQuickAddContextMenu": {
+    "message": "在頁面右鍵選單中加入「使用 vBookmarks 將此頁加入書籤」的項目"
+  },
+  "optionQuickAddContextMenuHint": {
+    "message": "此選項與快速新增星號按鈕無關；還原經典體驗也會關閉此項目。"
+  },
+  "optionCollapseTabGroupMenu": {
+    "message": "將分頁群組項目摺疊成一個「分頁群組」子選單"
+  },
+  "optionCollapseTabGroupMenuHint": {
+    "message": "適用於資料夾和書籤的右鍵選單。預設為關閉；讓較矮的選單在小型／高縮放螢幕上保持更短。"
+  },
+  "optionCollapseSortMenu": {
+    "message": "將排序項目摺疊成一個「排序」子選單"
+  },
+  "optionCollapseSortMenuHint": {
+    "message": "適用於資料夾的右鍵選單。預設為開啟。"
+  },
+  "optionShowToolButton": {
+    "message": "在搜尋框旁顯示工具按鈕 (⋮)"
+  },
+  "optionClassicExperience": {
+    "message": "還原經典標題列"
+  },
+  "optionClassicExperienceHint": {
+    "message": "關閉命令面板、快速新增星標、其頁面右鍵選單項目、工具按鈕和檢視分頁。每一項都可以在其區域中單獨重新啟用。"
+  },
+  "optionShowItemPath": {
+    "message": "在清單列上顯示上層資料夾路徑"
+  },
+  "viewRecent": {
+    "message": "最近"
+  },
+  "viewTree": {
+    "message": "樹狀"
+  },
+  "viewSearch": {
+    "message": "搜尋"
+  },
+  "viewSwitchAnnounce": {
+    "message": "$name$ 檢視",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "viewStateEnabled": {
+    "message": "已經啟用"
+  },
+  "viewStateDisabled": {
+    "message": "已經停用"
+  },
+  "viewEnable": {
+    "message": "啟用"
+  },
+  "viewDisable": {
+    "message": "停用"
+  },
+  "viewTabHide": {
+    "message": "隱藏"
+  },
+  "viewTabDisable": {
+    "message": "停用"
+  },
+  "sortFolderContents": {
+    "message": "排序資料夾內容"
+  },
+  "sortByName": {
+    "message": "按名稱排序"
+  },
+  "sortByDate": {
+    "message": "按新增日期排序"
+  },
+  "sortRecursiveSuffix": {
+    "message": "(遞迴)"
+  },
+  "sortOptions": {
+    "message": "排序選項…"
+  },
+  "sortDone": {
+    "message": "資料夾已排序"
+  },
+  "sortByTitle": {
+    "message": "按標題"
+  },
+  "sortByDateAdded": {
+    "message": "按新增日期（最新優先）"
+  },
+  "sortFoldersFirst": {
+    "message": "資料夾置頂"
+  },
+  "sortRecursive": {
+    "message": "同時排序子資料夾（遞迴）"
+  },
+  "sortRecursiveWarning": {
+    "message": "這會重新排列每個子資料夾中的書籤。"
+  },
+  "tabGroupDialogTitle": {
+    "message": "新分頁群組"
+  },
+  "tabGroupTitleLabel": {
+    "message": "群組標題"
+  },
+  "tabGroupColorLabel": {
+    "message": "顏色"
+  },
+  "tabGroupColorGrey": {
+    "message": "灰色",
+    "description": "Accessible name of the grey color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorBlue": {
+    "message": "藍色",
+    "description": "Accessible name of the blue color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorRed": {
+    "message": "紅色",
+    "description": "Accessible name of the red color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorYellow": {
+    "message": "黃色",
+    "description": "Accessible name of the yellow color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorGreen": {
+    "message": "綠色",
+    "description": "Accessible name of the green color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPink": {
+    "message": "粉紅色",
+    "description": "Accessible name of the pink color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPurple": {
+    "message": "紫色",
+    "description": "Accessible name of the purple color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorCyan": {
+    "message": "青色",
+    "description": "Accessible name of the cyan color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorOrange": {
+    "message": "橙色",
+    "description": "Accessible name of the orange color swatch in the new-tab-group dialog."
+  },
+  "tabGroupUntitled": {
+    "message": "未命名群組"
+  },
+  "tabGroupNoGroups": {
+    "message": "沒有現有的分頁群組"
+  },
+  "tabGroupPickDialogTitle": {
+    "message": "在現有分頁群組開啟"
+  },
+  "quickAddBookmark": {
+    "message": "將此頁加入書籤（Ctrl+D）"
+  },
+  "quickAddBookmarkCommand": {
+    "message": "將目前分頁快速新增為書籤"
+  },
+  "quickAdded": {
+    "message": "書籤已新增"
+  },
+  "quickAddedTo": {
+    "message": "書籤已新增至 $folderName$",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarks bar"
+      }
+    }
+  },
+  "quickRemoved": {
+    "message": "書籤已移除"
+  },
+  "quickRemoveBookmark": {
+    "message": "移除書籤 (Ctrl+D)"
+  },
+  "toolButtonTitle": {
+    "message": "工具 (Ctrl+K)"
+  },
+  "contextMenuAddBookmark": {
+    "message": "使用 vBookmarks 將此頁加入書籤"
   },
   "deadFilterAll": {
     "message": "全部"
@@ -315,29 +1147,6 @@
   "deadMarkedBannerDismiss": {
     "message": "關閉"
   },
-  "deadNone": {
-    "message": "找不到失效連結"
-  },
-  "deadNoneFiltered": {
-    "message": "此篩選條件下沒有失效連結 — 請嘗試上方的其他區段"
-  },
-  "deadPause": {
-    "message": "暫停"
-  },
-  "deadPaused": {
-    "message": "已暫停"
-  },
-  "whatsNewChangelog": {
-    "message": "變更記錄"
-  },
-  "whatsNewTabGroups": {
-    "message": "v$1$ 新增「分頁群組」檢視：每個視窗的分頁和分頁群組，與您的書籤並列顯示。",
-    "placeholders": {
-      "1": {
-        "content": "$1"
-      }
-    }
-  },
   "deadProxyAdd": {
     "message": "新增代理伺服器以檢查失效連結"
   },
@@ -391,11 +1200,8 @@
   "deadProxyNudge": {
     "message": "代理伺服器重新檢查能區分真正失效的連結與受地區限制的連結——可在此處或選項頁面設定。"
   },
-  "deadRescan": {
-    "message": "重新掃描"
-  },
-  "deadResume": {
-    "message": "繼續"
+  "deadProxyNeverShow": {
+    "message": "不再顯示"
   },
   "deadStartHint": {
     "message": "開始掃描 $n$ 個書籤",
@@ -417,68 +1223,6 @@
   "deadUnmarkSelected": {
     "message": "取消標記所選項目"
   },
-  "defaultIconButton": {
-    "message": "使用默認圖標"
-  },
-  "defaultIconButtonOr": {
-    "message": " 或者 "
-  },
-  "customIconPick": {
-    "message": "選擇檔案…"
-  },
-  "delete": {
-    "message": "刪除"
-  },
-  "deleteEllipsis": {
-    "message": "刪除 ..."
-  },
-  "deletedBookmark": {
-    "message": "已刪除 $title$",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Example"
-      }
-    },
-    "description": "Toast shown after a bookmark or separator was deleted; the toast offers an undo button. $title$ is the deleted row's title (empty for separators)."
-  },
-  "deletedFolder": {
-    "message": "已刪除資料夾 $title$",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Bookmarks"
-      }
-    },
-    "description": "Toast shown after a bookmark folder (with its whole subtree) was deleted; the toast offers an undo button. $title$ is the folder name."
-  },
-  "donationDismiss": {
-    "message": "關閉"
-  },
-  "donationGo": {
-    "message": "捐款"
-  },
-  "donationRate": {
-    "message": "評分"
-  },
-  "donationRateTitle": {
-    "message": "在 Chrome 網上商店為 vBookmarks 評分"
-  },
-  "donationLater": {
-    "message": "稍後"
-  },
-  "donationMessage": {
-    "message": "覺得好用嗎？捐款支持未來開發——或到商店評分：每則評論都能讓更新持續。"
-  },
-  "donationV4Notice": {
-    "message": "vBookmarks 4.0 是全面重製版本，採用現代設計，並加入多項新功能。"
-  },
-  "donationV4GuideLink": {
-    "message": "閱讀 v4 指南 →"
-  },
-  "donationNever": {
-    "message": "不再顯示"
-  },
   "dupesApplyAll": {
     "message": "全部套用 ($count$)",
     "placeholders": {
@@ -495,18 +1239,6 @@
       }
     }
   },
-  "dupesCleanAll": {
-    "message": "全部清理：$groups$ 組，$count$ 個多餘副本",
-    "placeholders": {
-      "groups": {
-        "content": "$1"
-      },
-      "count": {
-        "content": "$2"
-      }
-    },
-    "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go."
-  },
   "dupesCleanRestHint": {
     "message": "保留 \"$title$\" 並移除其餘 $count$ 個",
     "placeholders": {
@@ -518,68 +1250,6 @@
       }
     }
   },
-  "dupesConfirmAll": {
-    "message": "是否在 $groups$ 個群組中移除 $count$ 個額外副本？每個群組中選取的保留項目會被保留。",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      },
-      "groups": {
-        "content": "$2"
-      }
-    },
-    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
-  },
-  "dupesConfirmSelected": {
-    "message": "要從 $groups$ 個選定群組中移除 $count$ 個重複書籤嗎？",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      },
-      "groups": {
-        "content": "$2"
-      }
-    }
-  },
-  "dupesConfirmGroup": {
-    "message": "保留「$title$」並移除其他 $count$ 個副本？",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Example bookmark"
-      },
-      "count": {
-        "content": "$2"
-      }
-    },
-    "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."
-  },
-  "dupesDone": {
-    "message": "已移除 $count$ 個重複書籤",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Alert shown after the duplicate cleanup finished."
-  },
-  "dupesGroupCount": {
-    "message": "$count$ 個重複",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
-  },
-  "dupesGroupExpand": {
-    "description": "Dupes view group-head context menu: expand a collapsed duplicate group.",
-    "message": "展開群組"
-  },
-  "dupesGroupCollapse": {
-    "description": "Dupes view group-head context menu: collapse an expanded duplicate group.",
-    "message": "收合群組"
-  },
   "dupesIgnoreScheme": {
     "message": "忽略 http/https 差異"
   },
@@ -588,9 +1258,6 @@
   },
   "dupesKeeperSet": {
     "message": "設為保留"
-  },
-  "dupesNone": {
-    "message": "找不到重複項目"
   },
   "dupesPreviewSummary": {
     "message": "$groups$ 組 · $count$ 個將被釋放",
@@ -630,122 +1297,6 @@
   "dupesStrategyShortestTitle": {
     "message": "保留標題最短的"
   },
-  "edit": {
-    "message": "編輯 ..."
-  },
-  "editBookmark": {
-    "message": "編輯書籤"
-  },
-  "editFolder": {
-    "message": "編輯文件夾"
-  },
-  "errorOccured": {
-    "message": "有錯誤出現"
-  },
-  "extDesc": {
-    "description": "擴充功能描述",
-    "message": "靈巧實用的彈出書籤管理器，NeatBookmarks的加強版"
-  },
-  "extName": {
-    "description": "擴充功能名稱",
-    "message": "vBookmarks"
-  },
-  "folderEmpty": {
-    "message": "（空）"
-  },
-  "general": {
-    "message": "一般功能"
-  },
-  "ignore": {
-    "message": "忽略"
-  },
-  "name": {
-    "description": "書籤名或文件夾名",
-    "message": "名字"
-  },
-  "noTitle": {
-    "description": "沒 http(s) 開頭的書籤或沒命名的文件夾的統一標題",
-    "message": "（沒標題）"
-  },
-  "nope": {
-    "message": "取消"
-  },
-  "open": {
-    "description": "打開書籤的動作",
-    "message": "打開"
-  },
-  "openBookmarks": {
-    "message": "打開所有書籤"
-  },
-  "openBookmarksInGroup": {
-    "message": "在新分頁群組中全部開啟"
-  },
-  "openBookmarksInGroupSetup": {
-    "message": "全部開啟到新分頁群組…"
-  },
-  "openBookmarksInExistingGroup": {
-    "message": "全部開啟到現有分頁群組…"
-  },
-  "tabGroupOptions": {
-    "message": "分頁群組"
-  },
-  "sortMenuOptions": {
-    "message": "排序"
-  },
-  "openBookmarksIncognitoWindow": {
-    "message": "在隱身窗口中打開所有書籤"
-  },
-  "openBookmarksNewWindow": {
-    "message": "在新窗口中打開所有書籤"
-  },
-  "openCommandPaletteCommand": {
-    "message": "開啟指令面板"
-  },
-  "openIncognitoWindow": {
-    "message": "在隱身窗口中打開"
-  },
-  "openNewTab": {
-    "message": "在新標籤頁中打開"
-  },
-  "bookmarkOpenInNewGroup": {
-    "message": "在新分頁群組開啟"
-  },
-  "bookmarkOpenInNewGroupSetup": {
-    "message": "在新分頁群組開啟…"
-  },
-  "bookmarkOpenInExistingGroup": {
-    "message": "在現有分頁群組開啟…"
-  },
-  "openNewWindow": {
-    "message": "在新窗口中打開"
-  },
-  "openSidePanelCommand": {
-    "message": "開啟 vBookmarks 側邊面板"
-  },
-  "optionAnnounceEnabledHint": {
-    "message": "從專案的 GitHub 儲存庫取得版本說明和提示（每 6 小時最多擷取一次）。關閉時也會停止網路擷取。"
-  },
-  "optionAnnounceEnabled": {
-    "message": "顯示產品內公告"
-  },
-  "optionAutoRefreshSync": {
-    "message": "自動刷新同步狀態"
-  },
-  "optionAutoResizePopup": {
-    "message": "自動調整彈出視窗大小以適應內容"
-  },
-  "optionClickNewTab": {
-    "message": "左擊書籤在新標籤頁中打開"
-  },
-  "optionCloseUnusedFolders": {
-    "message": "展開文件夾時折疊其他文件夾"
-  },
-  "optionConfirmDeleteFolder": {
-    "message": "刪除非空資料夾前先確認"
-  },
-  "optionConfirmOpenFolder": {
-    "message": "打開多個書籤前需確認"
-  },
   "optionDeadProxyServer": {
     "message": "失效連結代理伺服器"
   },
@@ -758,104 +1309,67 @@
   "deadProxyNone": {
     "message": "（未設定）"
   },
+  "optionDeadProxyStrip": {
+    "message": "在失效連結檢視中顯示新增代理提示"
+  },
+  "optionDeadProxyStripHint": {
+    "message": "關閉會隱藏該處的提示；代理伺服器仍可在此設定，而已儲存的伺服器一律會在檢視中顯示其管理列。"
+  },
   "optionDeadScanConcurrency": {
     "message": "失效連結掃描並行數（1-16）"
   },
   "optionDeadScanTimeout": {
     "message": "失效連結掃描逾時秒數（2-30）"
   },
-  "optionHighlightUnsynced": {
-    "message": "變淡顯示未同步的書籤"
+  "paletteCmdGoDead": {
+    "message": "前往「失效連結」檢視"
   },
-  "optionOnlyShowBookmarkBar": {
-    "message": "僅顯示書籤欄中的書籤"
+  "paletteCmdGoDupes": {
+    "message": "前往「重複項目」檢視"
   },
-  "optionOpenInSidePanel": {
-    "message": "在側邊面板中開啟而非彈出視窗"
+  "paletteCmdGoRecent": {
+    "message": "前往「最近新增」檢視"
   },
-  "optionOpenNewTab": {
-    "message": "用鼠標中鍵或按住 Ctrl 鍵左擊在後台打開書籤"
+  "paletteCmdGoSearch": {
+    "message": "前往「搜尋」檢視"
   },
-  "optionPopupStays": {
-    "message": "打開（鼠標左擊）書籤時 Popup 頁面不關閉"
+  "paletteCmdGoTree": {
+    "message": "前往「樹狀」檢視"
   },
-  "optionRecentCollapsed": {
-    "message": "預設收起最近新增的區塊"
+  "paletteCmdOptions": {
+    "message": "開啟選項頁面"
   },
-  "optionRecentCount": {
-    "message": "顯示最近新增書籤的數量"
+  "paletteCmdSearchInView": {
+    "message": "在「搜尋」檢視中搜尋「$query$」",
+    "placeholders": {
+      "query": {
+        "content": "$1"
+      }
+    }
   },
-  "optionRememberPrevState": {
-    "message": "記住之前的狀態（滾動位置、已開啟的資料夾及最後聚焦的項目）。"
+  "rowActionDelete": {
+    "message": "刪除"
   },
-  "optionSearchAfterEnter": {
-    "message": "僅當回車之後才進行書籤搜索（否則輸入字符立即搜索）"
+  "rowActionMark": {
+    "message": "標記為失效"
   },
-  "optionSearchHistory": {
-    "message": "記錄搜尋歷史"
+  "rowActionReveal": {
+    "message": "在樹狀中顯示"
   },
-  "optionSearchHistoryHint": {
-    "message": "關閉此選項亦會清除現有記錄。"
+  "rowActionUnmark": {
+    "message": "移除失效標記"
   },
-  "optionShowDeadView": {
-    "message": "顯示失效連結檢視標籤"
+  "viewDead": {
+    "message": "失效連結"
   },
-  "optionShowDupesView": {
-    "message": "顯示重複項檢視標籤"
+  "viewDupes": {
+    "message": "重複項目"
   },
-  "optionShowItemPath": {
-    "message": "在清單列上顯示上層資料夾路徑"
+  "viewStats": {
+    "message": "統計資料"
   },
-  "optionShowRecentBookmarks": {
-    "message": "在彈出視窗頂部顯示最近新增的書籤"
-  },
-  "optionShowStatsView": {
-    "message": "顯示統計檢視標籤"
-  },
-  "optionShowSyncStatus": {
-    "message": "顯示同步狀態指示器"
-  },
-  "optionShowViewTabs": {
-    "message": "在搜尋框下方顯示檢視標籤"
-  },
-  "optionRememberView": {
-    "message": "記住最後使用的檢視，並於重新開啟時還原"
-  },
-  "optionShowTabBadges": {
-    "message": "在檢視分頁上顯示數量徽章"
-  },
-  "optionPaletteEnabled": {
-    "message": "啟用指令面板 (Ctrl/Cmd+K)"
-  },
-  "optionQuickAddEnabled": {
-    "message": "在搜尋框旁顯示快速新增星號按鈕"
-  },
-  "optionQuickAddContextMenu": {
-    "message": "在頁面右鍵選單中加入「使用 vBookmarks 將此頁加入書籤」的項目"
-  },
-  "optionQuickAddContextMenuHint": {
-    "message": "此選項與快速新增星號按鈕無關；還原經典體驗也會關閉此項目。"
-  },
-  "optionCollapseTabGroupMenu": {
-    "message": "將分頁群組項目摺疊成一個「分頁群組」子選單"
-  },
-  "optionCollapseTabGroupMenuHint": {
-    "message": "適用於資料夾和書籤的右鍵選單。預設為關閉；讓較矮的選單在小型／高縮放螢幕上保持更短。"
-  },
-  "optionCollapseSortMenu": {
-    "message": "將排序項目摺疊成一個「排序」子選單"
-  },
-  "optionCollapseSortMenuHint": {
-    "message": "適用於資料夾的右鍵選單。預設為開啟。"
-  },
-  "optionShowToolButton": {
-    "message": "在搜尋框旁顯示工具按鈕 (⋮)"
-  },
-  "optionClassicExperience": {
-    "message": "還原經典標題列"
-  },
-  "optionClassicExperienceHint": {
-    "message": "關閉命令面板、快速新增星標、其頁面右鍵選單項目、工具按鈕和檢視分頁。每一項都可以在其區域中單獨重新啟用。"
+  "paletteCmdGoStats": {
+    "message": "前往「統計資料」檢視"
   },
   "optionStatsEnabled": {
     "message": "啟用瀏覽統計"
@@ -1035,168 +1549,56 @@
   "optionsVersion": {
     "message": "vBookmarks 版本"
   },
-  "optionSyncRefreshInterval": {
-    "message": "刷新間隔"
+  "statsSortByCount": {
+    "message": "按次數"
   },
-  "optionSyncRefreshIntervalSeconds": {
-    "message": "秒"
+  "statsSortByRecent": {
+    "message": "按最近"
   },
-  "optionTheme": {
-    "message": "主題"
+  "statsShowUnbookmarked": {
+    "message": "顯示未收藏書籤"
   },
-  "optionThemeAuto": {
-    "message": "跟隨系統"
+  "statsShowUnbookmarkedHint": {
+    "message": "包含瀏覽記錄中未儲存為書籤的頁面。"
   },
-  "optionThemeDark": {
-    "message": "深色"
+  "statsEmpty": {
+    "message": "統計資料會隨您開啟書籤而累積"
   },
-  "optionThemeInk": {
-    "message": "墨水（深色）"
+  "statsDisabledHint": {
+    "message": "瀏覽統計已關閉——請在「選項」→「檢視」中啟用"
   },
-  "optionThemeLight": {
-    "message": "淺色"
-  },
-  "optionThemePaper": {
-    "message": "紙張（淺色）"
-  },
-  "optionLanguage": {
-    "message": "語言"
-  },
-  "optionLanguageAuto": {
-    "message": "自動"
-  },
-  "optionLanguageHint": {
-    "message": "更改語言會重新載入此頁面。"
-  },
-  "paletteClose": {
-    "message": "關閉"
-  },
-  "paletteCmdVersion": {
-    "message": "版本資訊"
-  },
-  "paletteCmdLang": {
-    "message": "切換語言…"
-  },
-  "paletteCmdLangUsage": {
-    "message": "用法：輸入 /lang 加語言代碼，例如 /lang en、/lang zh_CN、/lang ja。"
-  },
-  "versionDialogTitle": {
-    "message": "vBookmarks $version$",
+  "statsVisitCount": {
+    "message": "已瀏覽 $count$ 次",
     "placeholders": {
-      "version": {
+      "count": {
         "content": "$1"
       }
     }
   },
-  "versionDialogCopy": {
-    "message": "複製資訊"
+  "statsClearData": {
+    "message": "清除統計資料"
   },
-  "versionDialogCopied": {
-    "message": "已複製"
-  },
-  "versionMetaVersion": {
-    "message": "擴充功能版本"
-  },
-  "versionMetaAnnounce": {
-    "message": "更新內容"
-  },
-  "versionMetaAnnounceNone": {
-    "message": "沒有載入任何公告"
-  },
-  "versionMetaBrowser": {
-    "message": "瀏覽器"
-  },
-  "versionMetaOS": {
-    "message": "作業系統"
-  },
-  "versionMetaChannel": {
-    "message": "發佈頻道"
-  },
-  "versionMetaLanguage": {
-    "message": "語言"
-  },
-  "versionMetaUserAgent": {
-    "message": "使用者代理"
-  },
-  "optionZoom": {
-    "message": "縮放"
-  },
-  "options": {
-    "message": "設置"
-  },
-  "optionsFooterText": {
-    "description": "Footer text for the Options page",
-    "message": "作者：$authorName$",
+  "statsClearConfirm": {
+    "message": "確定清除 $count$ 個書籤的瀏覽統計？此操作無法復原。",
     "placeholders": {
-      "authorName": {
+      "count": {
         "content": "$1"
       }
     }
   },
-  "optionsGroupBackup": {
-    "message": "備份"
+  "statsHistoryBanner": {
+    "message": "授予瀏覽記錄存取權限，以使用您過往的訪問記錄來生成瀏覽統計數據。"
   },
-  "optionsGroupIcons": {
-    "message": "圖示"
+  "statsHistoryEnable": {
+    "message": "啟用"
   },
-  "optionsGroupContextMenu": {
-    "message": "內容選單"
+  "statsHistoryDismiss": {
+    "message": "不再顯示"
   },
-  "optionsGroupViews": {
-    "message": "檢視"
-  },
-  "optionsGroupSort": {
-    "message": "排序"
-  },
-  "optionsGroupTools": {
-    "message": "工具"
-  },
-  "optionsGroupStats": {
-    "message": "統計"
-  },
-  "paletteCmdDead": {
-    "message": "尋找失效連結"
-  },
-  "paletteCmdDupes": {
-    "message": "清理重複書籤"
-  },
-  "paletteCmdGoDead": {
-    "message": "前往「失效連結」檢視"
-  },
-  "paletteCmdGoDupes": {
-    "message": "前往「重複項目」檢視"
-  },
-  "paletteCmdGoRecent": {
-    "message": "前往「最近新增」檢視"
-  },
-  "paletteCmdGoSearch": {
-    "message": "前往「搜尋」檢視"
-  },
-  "paletteCmdGoStats": {
-    "message": "前往「統計資料」檢視"
-  },
-  "paletteCmdGoTree": {
-    "message": "前往「樹狀」檢視"
-  },
-  "paletteCmdNewBookmark": {
-    "message": "新增書籤…"
-  },
-  "paletteCmdNewFolder": {
-    "message": "新增資料夾…"
-  },
-  "paletteCmdOptions": {
-    "message": "開啟選項頁面"
-  },
-  "paletteCmdQuickAdd": {
-    "message": "將目前分頁加入書籤"
-  },
-  "paletteCmdSaveSession": {
-    "message": "將視窗分頁儲存為資料夾"
-  },
-  "paletteCmdSearchInView": {
-    "message": "在「搜尋」檢視中搜尋「$query$」",
+  "statsHistoryImported": {
+    "message": "已為 $count$ 個書籤匯入過往訪問記錄",
     "placeholders": {
-      "query": {
+      "count": {
         "content": "$1"
       }
     }
@@ -1324,51 +1726,11 @@
   "paletteCustomEmpty": {
     "message": "尚無自訂指令。"
   },
-  "paletteNoResults": {
-    "message": "無相符結果"
+  "recentGroupToday": {
+    "message": "今日"
   },
-  "palettePlaceholder": {
-    "message": "搜尋書籤、資料夾、指令…"
-  },
-  "parentFolder": {
-    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
-    "message": "所在目錄：$folderName$",
-    "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarksbar"
-      }
-    }
-  },
-  "quickAddBookmark": {
-    "message": "將此頁加入書籤（Ctrl+D）"
-  },
-  "quickAddBookmarkCommand": {
-    "message": "將目前分頁快速新增為書籤"
-  },
-  "quickAdded": {
-    "message": "書籤已新增"
-  },
-  "quickAddedTo": {
-    "message": "書籤已新增至 $folderName$",
-    "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarks bar"
-      }
-    }
-  },
-  "quickRemoveBookmark": {
-    "message": "移除書籤 (Ctrl+D)"
-  },
-  "quickRemoved": {
-    "message": "書籤已移除"
-  },
-  "recentBookmarks": {
-    "message": "最近新增"
-  },
-  "recentEmpty": {
-    "message": "沒有最近書籤。按 Ctrl+D 將目前頁面加入書籤。"
+  "recentGroupWeek": {
+    "message": "本週"
   },
   "recentGroupMonth": {
     "message": "本月"
@@ -1376,148 +1738,17 @@
   "recentGroupOlder": {
     "message": "較早"
   },
-  "recentGroupToday": {
-    "message": "今日"
-  },
-  "recentGroupWeek": {
-    "message": "本週"
-  },
-  "recentRevealInTree": {
-    "message": "在樹狀中顯示"
-  },
-  "removeSeparator": {
-    "message": "移除分隔符"
-  },
-  "replaceUrl": {
-    "message": "替換為當前頁的URL"
-  },
-  "reportError": {
-    "message": "報告此錯誤"
-  },
-  "reportedToDeveloper": {
-    "description": "擴展中發生了一個錯誤，已經報告給開發者",
-    "message": "錯誤報告"
-  },
-  "resetButton": {
-    "message": "重置"
-  },
-  "resetSettings": {
-    "message": "重置所有選項"
-  },
-  "resetSettingsDescription": {
-    "message": "重置所有選項到默認值"
-  },
-  "rowActionDelete": {
-    "message": "刪除"
-  },
-  "rowActionMark": {
-    "message": "標記為失效"
-  },
-  "rowActionReveal": {
-    "message": "在樹狀中顯示"
-  },
-  "rowActionUnmark": {
-    "message": "移除失效標記"
-  },
-  "save": {
-    "message": "儲存"
-  },
-  "searchBookmarks": {
-    "description": "搜索框裡的提示文字",
-    "message": "書籤搜索"
-  },
-  "searchClear": {
-    "message": "清除搜尋"
-  },
-  "searchHistoryClear": {
-    "message": "清除全部"
-  },
-  "searchHistoryRemove": {
-    "message": "移除此搜尋"
-  },
   "searchHistoryRerun": {
     "message": "重新搜尋"
   },
-  "searchHistoryResultCount": {
-    "message": "$n$ 個結果",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
+  "optionsGroupBackup": {
+    "message": "備份"
   },
-  "searchHistoryTitle": {
-    "message": "最近的搜尋"
+  "optionsGroupContextMenu": {
+    "message": "內容選單"
   },
-  "searchNoResults": {
-    "message": "無相符書籤"
-  },
-  "searchViewHint": {
-    "message": "在上方輸入框輸入以搜尋您的書籤"
-  },
-  "selectAll": {
-    "message": "全選"
-  },
-  "selectClear": {
-    "message": "清除"
-  },
-  "selectCount": {
-    "message": "已選取 $count$ 項",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "selectInvert": {
-    "message": "反向選擇"
-  },
-  "selectModeEnter": {
-    "message": "選擇"
-  },
-  "selectModeExit": {
-    "message": "結束選擇"
-  },
-  "deadRiskBanner": {
-    "message": "失效連結清理會批次刪除書籤。首次清理前請先備份你的書籤。"
-  },
-  "dupesRiskBanner": {
-    "message": "去重會批次刪除重複書籤。套用前請先備份你的書籤。"
-  },
-  "riskBannerHelp": {
-    "message": "備份及還原指南"
-  },
-  "riskBannerNever": {
-    "message": "不再顯示"
-  },
-  "riskBannerDismiss": {
-    "message": "關閉"
-  },
-  "sessionEmpty": {
-    "message": "沒有可儲存的分頁"
-  },
-  "sessionFolderName": {
-    "message": "工作階段 $date$",
-    "placeholders": {
-      "date": {
-        "content": "$1",
-        "example": "2026-07-18 15:04"
-      }
-    },
-    "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm."
-  },
-  "sessionSaved": {
-    "message": "已將 $count$ 個分頁儲存到新資料夾",
-    "placeholders": {
-      "count": {
-        "content": "$1",
-        "example": "12"
-      }
-    },
-    "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
-  },
-  "settingsBackupHint": {
-    "message": "匯出會將所有設定（包括同步偏好）儲存至 JSON 檔案。匯入會合併備份：檔案中的設定會覆蓋現有設定，其餘設定則保留不變。"
+  "optionsGroupIcons": {
+    "message": "圖示"
   },
   "settingsExport": {
     "message": "匯出設定"
@@ -1525,8 +1756,14 @@
   "settingsImport": {
     "message": "匯入設定"
   },
+  "settingsBackupHint": {
+    "message": "匯出會將所有設定（包括同步偏好）儲存至 JSON 檔案。匯入會合併備份：檔案中的設定會覆蓋現有設定，其餘設定則保留不變。"
+  },
   "settingsImportConfirm": {
     "message": "匯入將會覆蓋備份檔案中包含的所有設定（不在檔案中的設定會保留），並重新載入此頁面。是否繼續？"
+  },
+  "settingsImportInvalid": {
+    "message": "設定檔案無效：並非 vBookmarks 的設定備份。"
   },
   "settingsImportDone": {
     "message": "設定已匯入。頁面將會重新載入。"
@@ -1534,280 +1771,43 @@
   "settingsImportError": {
     "message": "部分設定無法寫入（儲存配額或暫時性錯誤）。匯入未完成，請重試。"
   },
-  "settingsImportInvalid": {
-    "message": "設定檔案無效：並非 vBookmarks 的設定備份。"
-  },
-  "sortByDateAdded": {
-    "message": "按新增日期（最新優先）"
-  },
-  "sortByTitle": {
-    "message": "按標題"
-  },
-  "sortFolderContents": {
-    "message": "排序資料夾內容"
-  },
-  "sortByName": {
-    "message": "按名稱排序"
-  },
-  "sortByDate": {
-    "message": "按新增日期排序"
-  },
-  "sortRecursiveSuffix": {
-    "message": "(遞迴)"
-  },
-  "sortOptions": {
-    "message": "排序選項…"
-  },
-  "sortDone": {
-    "message": "資料夾已排序"
-  },
-  "sortFoldersFirst": {
-    "message": "資料夾置頂"
-  },
-  "sortRecursive": {
-    "message": "同時排序子資料夾（遞迴）"
-  },
-  "sortRecursiveWarning": {
-    "message": "這會重新排列每個子資料夾中的書籤。"
-  },
-  "tabGroupDialogTitle": {
-    "message": "新分頁群組"
-  },
-  "tabGroupTitleLabel": {
-    "message": "群組標題"
-  },
-  "tabGroupColorLabel": {
-    "message": "顏色"
-  },
-  "tabGroupColorGrey": {
-    "message": "灰色",
-    "description": "Accessible name of the grey color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorBlue": {
-    "message": "藍色",
-    "description": "Accessible name of the blue color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorRed": {
-    "message": "紅色",
-    "description": "Accessible name of the red color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorYellow": {
-    "message": "黃色",
-    "description": "Accessible name of the yellow color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorGreen": {
-    "message": "綠色",
-    "description": "Accessible name of the green color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorPink": {
-    "message": "粉紅色",
-    "description": "Accessible name of the pink color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorPurple": {
-    "message": "紫色",
-    "description": "Accessible name of the purple color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorCyan": {
-    "message": "青色",
-    "description": "Accessible name of the cyan color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorOrange": {
-    "message": "橙色",
-    "description": "Accessible name of the orange color swatch in the new-tab-group dialog."
-  },
-  "tabGroupUntitled": {
-    "message": "未命名群組"
-  },
-  "tabGroupNoGroups": {
-    "message": "沒有現有的分頁群組"
-  },
-  "tabGroupPickDialogTitle": {
-    "message": "在現有分頁群組開啟"
-  },
-  "statsClearConfirm": {
-    "message": "確定清除 $count$ 個書籤的瀏覽統計？此操作無法復原。",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "statsClearData": {
-    "message": "清除統計資料"
-  },
-  "statsDisabledHint": {
-    "message": "瀏覽統計已關閉——請在「選項」→「檢視」中啟用"
-  },
-  "statsEmpty": {
-    "message": "統計資料會隨您開啟書籤而累積"
-  },
-  "statsHistoryAdd": {
-    "message": "加入書籤"
-  },
-  "statsHistoryBanner": {
-    "message": "授予瀏覽記錄存取權限，以使用您過往的訪問記錄來生成瀏覽統計數據。"
-  },
-  "statsHistoryBookmarked": {
-    "message": "已加入書籤"
-  },
-  "statsHistoryDismiss": {
-    "message": "不再顯示"
-  },
-  "statsHistoryEnable": {
-    "message": "啟用"
-  },
-  "statsHistoryGuide": {
-    "message": "授予瀏覽記錄存取權限，即可在此列出你近期瀏覽的網頁。"
-  },
-  "statsHistoryImported": {
-    "message": "已為 $count$ 個書籤匯入過往訪問記錄",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
+  "statsSectionRecent": {
+    "message": "近期瀏覽"
   },
   "statsSectionBookmarks": {
     "message": "書籤統計"
   },
-  "statsSectionRecent": {
-    "message": "近期瀏覽"
+  "statsHistoryGuide": {
+    "message": "授予瀏覽記錄存取權限，即可在此列出你近期瀏覽的網頁。"
   },
-  "statsSortByCount": {
-    "message": "按次數"
+  "statsHistoryAdd": {
+    "message": "加入書籤"
   },
-  "statsSortByRecent": {
-    "message": "按最近"
+  "statsHistoryBookmarked": {
+    "message": "已加入書籤"
   },
-  "statsShowUnbookmarked": {
-    "message": "顯示未收藏書籤"
+  "deadPause": {
+    "message": "暫停"
   },
-  "statsShowUnbookmarkedHint": {
-    "message": "包含瀏覽記錄中未儲存為書籤的頁面。"
+  "deadResume": {
+    "message": "繼續"
   },
-  "statsVisitCount": {
-    "message": "已瀏覽 $count$ 次",
+  "deadCancel": {
+    "message": "取消"
+  },
+  "deadPaused": {
+    "message": "已暫停"
+  },
+  "whatsNewChangelog": {
+    "message": "變更記錄"
+  },
+  "whatsNewTabGroups": {
+    "message": "v$1$ 新增「分頁群組」檢視：每個視窗的分頁和分頁群組，與您的書籤並列顯示。",
     "placeholders": {
-      "count": {
+      "1": {
         "content": "$1"
       }
     }
-  },
-  "syncOptions": {
-    "message": "同步選項"
-  },
-  "syncStatusLocal": {
-    "message": "僅限本地 — 未上載"
-  },
-  "syncStatusSynced": {
-    "message": "已同步至你的 Google 帳戶"
-  },
-  "syncStatusUnsyncable": {
-    "message": "無法同步"
-  },
-  "syncSuffixLocal": {
-    "message": "(本地)"
-  },
-  "syncSuffixSynced": {
-    "message": "(已同步)"
-  },
-  "timeDaysAgo": {
-    "message": "$n$ 天前",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "timeHoursAgo": {
-    "message": "$n$ 小時前",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "timeJustNow": {
-    "message": "剛剛"
-  },
-  "timeMinutesAgo": {
-    "message": "$n$ 分鐘前",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "timeYesterday": {
-    "message": "昨天"
-  },
-  "toolButtonTitle": {
-    "message": "工具 (Ctrl+K)"
-  },
-  "undoAction": {
-    "message": "復原"
-  },
-  "revealOutsideBarHint": {
-    "message": "目前僅顯示書籤列：目標在書籤列以外。"
-  },
-  "revealOutsideBarAction": {
-    "message": "顯示全部並顯示目標"
-  },
-  "url": {
-    "message": "網址"
-  },
-  "viewDead": {
-    "message": "失效連結"
-  },
-  "viewDupes": {
-    "message": "重複項目"
-  },
-  "viewRecent": {
-    "message": "最近"
-  },
-  "viewSearch": {
-    "message": "搜尋"
-  },
-  "viewStats": {
-    "message": "統計資料"
-  },
-  "viewSwitchAnnounce": {
-    "message": "$name$ 檢視",
-    "placeholders": {
-      "name": {
-        "content": "$1"
-      }
-    }
-  },
-  "viewStateEnabled": {
-    "message": "已經啟用"
-  },
-  "viewStateDisabled": {
-    "message": "已經停用"
-  },
-  "viewEnable": {
-    "message": "啟用"
-  },
-  "viewDisable": {
-    "message": "停用"
-  },
-  "viewTabHide": {
-    "message": "隱藏"
-  },
-  "viewTabDisable": {
-    "message": "停用"
-  },
-  "viewTree": {
-    "message": "樹狀"
-  },
-  "deadProxyNeverShow": {
-    "message": "不再顯示"
-  },
-  "optionDeadProxyStrip": {
-    "message": "在失效連結檢視中顯示新增代理提示"
-  },
-  "optionDeadProxyStripHint": {
-    "message": "關閉會隱藏該處的提示；代理伺服器仍可在此設定，而已儲存的伺服器一律會在檢視中顯示其管理列。"
   },
   "viewHiddenTabsHint": {
     "message": "目前位於$view$檢視，你可以透過 $back$ 鍵或命令面板回到樹狀圖檢視。",
@@ -2141,5 +2141,340 @@
   },
   "optionTabGroupsClosedLimit": {
     "message": "保留的已關閉分頁／群組記錄"
+  },
+  "folderPickMoveHere": {
+    "message": "移至這裡"
+  },
+  "folderPickCopyHere": {
+    "message": "複製到這裡"
+  },
+  "folderPickFilter": {
+    "message": "篩選資料夾…"
+  },
+  "folderPickFavNote": {
+    "message": "未加入書籤的項目會在此加入書籤"
+  },
+  "folderPickPinned": {
+    "message": "已釘選"
+  },
+  "folderPickRecent": {
+    "message": "最近"
+  },
+  "pinFolder": {
+    "message": "釘選此資料夾"
+  },
+  "unpinFolder": {
+    "message": "取消釘選此資料夾"
+  },
+  "stagingAdd": {
+    "message": "加入暫存區"
+  },
+  "stagingAdded": {
+    "message": "已加入暫存區"
+  },
+  "stagingAlready": {
+    "message": "已在暫存區"
+  },
+  "stagingAddedSummary": {
+    "message": "已加入 $n$ 個項目；$m$ 個已暫存",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "m": {
+        "content": "$2"
+      }
+    }
+  },
+  "stagingFull": {
+    "message": "暫存區已滿——請先移除部分項目"
+  },
+  "stagingFolderEmpty": {
+    "message": "此資料夾沒有可暫存的書籤"
+  },
+  "stagingConfirmFolder": {
+    "message": "從此資料夾暫存 $n$ 個書籤？",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingRemove": {
+    "message": "從暫存區移除"
+  },
+  "stagingRemoved": {
+    "message": "已從暫存區移除"
+  },
+  "recentStageAll": {
+    "message": "暫存所有最近新增"
+  },
+  "recentSectionTitle": {
+    "message": "最近新增"
+  },
+  "stagingEmpty": {
+    "message": "暫存區為空——以滑鼠右鍵按任何書籤、使用此處的 ↑ 按鈕，或統計記錄列，即可將項目傳送至暫存區"
+  },
+  "stagingFromHistory": {
+    "message": "來自記錄"
+  },
+  "stagingGroupExpand": {
+    "message": "展開群組"
+  },
+  "stagingGroupCollapse": {
+    "message": "摺疊群組"
+  },
+  "stagingGroupRename": {
+    "message": "重新命名群組…"
+  },
+  "stagingGroupDissolve": {
+    "message": "解散群組"
+  },
+  "stagingGroupDissolved": {
+    "message": "群組已解散——項目保留在暫存區"
+  },
+  "stagingGroupAssign": {
+    "message": "群組…"
+  },
+  "stagingGroupAssignTitle": {
+    "message": "指派至群組"
+  },
+  "stagingGroupNew": {
+    "message": "新群組"
+  },
+  "stagingGroupNamePrompt": {
+    "message": "新群組名稱"
+  },
+  "stagingGroupNoGroups": {
+    "message": "尚無群組"
+  },
+  "stagingBucketTitle": {
+    "message": "未加入書籤"
+  },
+  "stagingBucketFavAll": {
+    "message": "全部設為最愛"
+  },
+  "stagingNew": {
+    "message": "新增 $n$",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingRowFav": {
+    "message": "將此項目設為最愛"
+  },
+  "stagingRowUnfav": {
+    "message": "取消此項目的最愛"
+  },
+  "stagingFav": {
+    "message": "設為最愛"
+  },
+  "stagingUnfav": {
+    "message": "取消最愛"
+  },
+  "stagingFavDone": {
+    "message": "已將 $n$ 個項目設為最愛",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingUnfavDone": {
+    "message": "已取消收藏 $n$ 個項目",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "groupSaveToFolder": {
+    "message": "儲存至資料夾…"
+  },
+  "groupCopyToFolder": {
+    "message": "複製至資料夾…"
+  },
+  "stagingCount": {
+    "message": "$n$ 個已暫存",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingMoveCopy": {
+    "message": "移動／複製至…"
+  },
+  "stagingMoveDone": {
+    "message": "已移動 $n$ 個項目至首頁",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingCopyDone": {
+    "message": "已複製 $n$ 個項目",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingMoveConfirm": {
+    "message": "將 $n$ 個項目移至所選資料夾？",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingDeleteConfirm": {
+    "message": "刪除 $n$ 個項目？未加入書籤的項目只會離開暫存區。",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingDeleted": {
+    "message": "已刪除 $n$ 個書籤",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingRemovedCount": {
+    "message": "已從暫存區移除 $n$ 個項目",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingClear": {
+    "message": "清除暫存區"
+  },
+  "stagingClearConfirm": {
+    "message": "清除整個暫存區？書籤樹不會受影響。"
+  },
+  "stagingCleared": {
+    "message": "暫存區已清除"
+  },
+  "groupPlaceTooltip": {
+    "message": "將此群組儲存至資料夾…"
+  },
+  "copyBookmark": {
+    "message": "複製"
+  },
+  "cutBookmark": {
+    "message": "剪下"
+  },
+  "copyMoveTo": {
+    "message": "複製／移動至…"
+  },
+  "pasteHere": {
+    "message": "貼上至此"
+  },
+  "copiedToast": {
+    "message": "已複製：$t$",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
+  },
+  "cutToast": {
+    "message": "已剪下：$t$ — 貼上至目標資料夾（按 Esc 取消）",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
+  },
+  "pasteDone": {
+    "message": "已貼上"
+  },
+  "pasteGone": {
+    "message": "書籤已不存在 — 剪貼簿已清除"
+  },
+  "folderCopyList": {
+    "message": "複製標題和網址"
+  },
+  "folderCopyText": {
+    "message": "純文字清單"
+  },
+  "folderCopyMarkdown": {
+    "message": "Markdown"
+  },
+  "folderCopyJson": {
+    "message": "JSON"
+  },
+  "folderCopyConfirm": {
+    "message": "複製 $n$ 個書籤的清單？",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "folderCopyDone": {
+    "message": "已複製 $n$ 個書籤項目",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "addFolderMenu": {
+    "message": "新增資料夾"
+  },
+  "optionCollapseAddFolderMenu": {
+    "message": "摺疊新增資料夾項目"
+  },
+  "optionCollapseAddFolderMenuHint": {
+    "message": "在資料夾右鍵選單中，將三個新增資料夾項目（之前／之後／內部）合併為一個子選單項目。"
+  },
+  "tabRowStage": {
+    "message": "加入書籤並暫存"
+  },
+  "tabgroupStageAll": {
+    "message": "將整個群組加入書籤並暫存"
+  },
+  "tabgroupStageConfirm": {
+    "message": "將 $n$ 個分頁加入書籤並暫存？",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabgroupStageNone": {
+    "message": "此群組中沒有可加入書籤的分頁"
+  },
+  "stagedToast": {
+    "message": "已將 $n$ 個分頁暫存為群組「$t$」",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "t": {
+        "content": "$2"
+      }
+    }
+  },
+  "searchResultCount": {
+    "message": "$n$ 個結果",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "deleteSelected": {
+    "message": "刪除所選"
   }
 }

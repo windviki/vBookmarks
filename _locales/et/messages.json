@@ -29,6 +29,12 @@
   "advancedOptions": {
     "message": "Täpsemad valikud"
   },
+  "announceDismiss": {
+    "message": "Sule"
+  },
+  "announceV408Text": {
+    "message": "v4.0.8 on favicon-täiustusega väljalase: päris saidi ikoonid laaditakse automaatselt järjehoidjatele, mida Chrome pole veel vahemällu salvestanud."
+  },
   "announceV407Text": {
     "message": "v4.0.7 pakub täisfunktsionaalset surnud linkide vaadet: skanni, märgi, filtreeri ja sorteeri surnud ning piiratud linke koos varasemate märgete ja rea-põhiste ajatemplitega."
   },
@@ -44,12 +50,6 @@
   "announceV410Text": {
     "message": "v4.1.0 lisab vahekaartide rühmade vaate: iga akna vahekaardid ja rühmad, hallatud teie järjehoidjate kõrval."
   },
-  "announceV408Text": {
-    "message": "v4.0.8 on favicon-täiustusega väljalase: päris saidi ikoonid laaditakse automaatselt järjehoidjatele, mida Chrome pole veel vahemällu salvestanud."
-  },
-  "announceDismiss": {
-    "message": "Sule"
-  },
   "confirmDeleteFolder": {
     "message": "See kaust sisaldab $count$ kirje(t). Saate kustutamise tagasi võtta.",
     "placeholders": {
@@ -57,6 +57,9 @@
         "content": "$1"
       }
     }
+  },
+  "confirmDeleteFolderButton": {
+    "message": "Kustuta"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "Kas olete kindel, et soovite kustutada kausta $folderName$ ja $bookmarkCount$ järjehoidja(-d) selles?",
@@ -68,9 +71,6 @@
         "content": "$1"
       }
     }
-  },
-  "confirmDeleteFolderButton": {
-    "message": "Kustuta"
   },
   "confirmDeleteFolderSubfolders": {
     "message": "Kas olete kindel, et soovite kustutada kausta $folderName$ ja $subFolderCount$ alamkausta(-d) selles?",
@@ -124,18 +124,11 @@
       }
     }
   },
-  "contextMenuAddBookmark": {
-    "message": "Lisa see leht vBookmarksiga järjehoidjasse"
-  },
   "copyAllTitlesAndUrls": {
     "message": "Kopeeri kõik pealkirjad ja URL-id lõikelauale"
   },
   "copyTitleAndUrl": {
     "message": "Kopeeri pealkiri ja URL lõikelauale"
-  },
-  "crossStorageMoveWarning": {
-    "message": "Järjehoidjaid ei saa teisaldada sünkroniseeritud ja kohaliku salvesti vahel. Kasutage selle asemel kopeerimist/kleepimist.",
-    "description": "Warning when trying to move bookmarks across storage types"
   },
   "customIcon": {
     "message": "Kohandatud ikoon"
@@ -146,14 +139,14 @@
   "customSeparatorColorDescription": {
     "message": "Kohanda eraldaja värvi"
   },
-  "customSeparatorStringDescription": {
-    "message": "Kui järjehoidja URL sisaldab seda sõnet, kuvatakse seda eraldajana"
-  },
   "customSeparatorTitleDescription": {
     "message": "Järjehoidja tegelik pealkiri, mida kuvatakse eraldajana"
   },
   "customSeparatorUrlDescription": {
     "message": "Järjehoidja tegelik URL, mida kuvatakse eraldajana"
+  },
+  "customSeparatorStringDescription": {
+    "message": "Kui järjehoidja URL sisaldab seda sõnet, kuvatakse seda eraldajana"
   },
   "customStyles": {
     "message": "Kohandatud stiilid"
@@ -164,8 +157,14 @@
   "customStylesDescription": {
     "message": "See nõuab mõningaid CSS oskusi. Muutke oma riskil. Koodi jagamine oleks mõistlik"
   },
-  "deadCancel": {
-    "message": "Tühista"
+  "defaultIconButton": {
+    "message": "Kasuta vaikeväärtust"
+  },
+  "defaultIconButtonOr": {
+    "message": "või"
+  },
+  "customIconPick": {
+    "message": "Vali fail…"
   },
   "deadChecking": {
     "message": "Kontrollin $done$ / $total$…",
@@ -235,6 +234,839 @@
   },
   "deadClearScan": {
     "message": "Tühjenda skannimistulemused"
+  },
+  "deadNone": {
+    "message": "Surnud linke ei leitud"
+  },
+  "deadNoneFiltered": {
+    "message": "Selle filtri all pole surnud linke — proovi mõnda teist jaotist ülal."
+  },
+  "deadRescan": {
+    "message": "Uuesti skännimine"
+  },
+  "delete": {
+    "message": "Kustuta"
+  },
+  "deletedBookmark": {
+    "message": "Kustutatud $title$",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Example"
+      }
+    },
+    "description": "Toast shown after a bookmark or separator was deleted; the toast offers an undo button. $title$ is the deleted row's title (empty for separators)."
+  },
+  "deletedFolder": {
+    "message": "Kustutatud kaust $title$",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Bookmarks"
+      }
+    },
+    "description": "Toast shown after a bookmark folder (with its whole subtree) was deleted; the toast offers an undo button. $title$ is the folder name."
+  },
+  "optionRecentCount": {
+    "message": "Näidatavate hiljuti lisatud järjehoidjate arv"
+  },
+  "optionSearchHistory": {
+    "message": "Salvesta otsinguajalugu"
+  },
+  "optionSearchHistoryHint": {
+    "message": "Selle väljalülitamine kustutab ka olemasoleva ajaloo."
+  },
+  "recentEmpty": {
+    "message": "Hiljutisi järjehoidjaid pole. Vajuta Ctrl+D, et järjehoidjatesse lisada praegune leht."
+  },
+  "recentRevealInTree": {
+    "message": "Näita puus"
+  },
+  "searchHistoryClear": {
+    "message": "Kustuta kõik"
+  },
+  "searchHistoryRemove": {
+    "message": "Eemalda see otsing"
+  },
+  "searchHistoryResultCount": {
+    "message": "$n$ tulemus(t)",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "searchHistoryTitle": {
+    "message": "Hiljutised otsingud"
+  },
+  "timeDaysAgo": {
+    "message": "$n$ päeva tagasi",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "timeHoursAgo": {
+    "message": "$n$ tundi tagasi",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "timeJustNow": {
+    "message": "just nüüd"
+  },
+  "timeMinutesAgo": {
+    "message": "$n$ minutit tagasi",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "timeYesterday": {
+    "message": "eile"
+  },
+  "undoAction": {
+    "message": "Tagasi võtmine"
+  },
+  "revealOutsideBarHint": {
+    "message": "Ainult järjehoidjate riba on kuvatud: sihtmärk asub sellest väljas."
+  },
+  "revealOutsideBarAction": {
+    "message": "Kuva kõik ja paljasta"
+  },
+  "dupesCleanAll": {
+    "message": "Puhasta kõik: $groups$ gruppi, $count$ lisakoopiat",
+    "placeholders": {
+      "groups": {
+        "content": "$1"
+      },
+      "count": {
+        "content": "$2"
+      }
+    },
+    "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go."
+  },
+  "dupesConfirmAll": {
+    "message": "Kustutada $count$ lisa-koopiat $groups$ rühmast? Igast rühmast valitud säilitatav koopia jäetakse alles.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    },
+    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
+  },
+  "dupesConfirmSelected": {
+    "message": "Kas eemaldada $count$ duplikaatjärjehoidjat valitud gruppide hulgast ($groups$)?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    }
+  },
+  "dupesConfirmGroup": {
+    "message": "Jätta alles \"$title$\" ja kustutada ülejäänud $count$ koopiat?",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Example bookmark"
+      },
+      "count": {
+        "content": "$2"
+      }
+    },
+    "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."
+  },
+  "dupesDone": {
+    "message": "Eemaldati $count$ dubleeritud järjehoidjat",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Alert shown after the duplicate cleanup finished."
+  },
+  "dupesGroupCount": {
+    "message": "$count$ dubleerimist",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
+  },
+  "dupesGroupExpand": {
+    "description": "Dupes view group-head context menu: expand a collapsed duplicate group.",
+    "message": "Laienda grupp"
+  },
+  "dupesGroupCollapse": {
+    "description": "Dupes view group-head context menu: collapse an expanded duplicate group.",
+    "message": "Ahenda grupp"
+  },
+  "dupesNone": {
+    "message": "Dubleerimisi ei leitud"
+  },
+  "deleteEllipsis": {
+    "message": "Kustuta..."
+  },
+  "donationMessage": {
+    "message": "Kas naudid seda? Anneta, et toetada selle tulevikku — või hinda seda poes: iga arvustus hoiab uuendusi tulemas."
+  },
+  "donationV4Notice": {
+    "message": "vBookmarks 4.0 on täielikult uuesti loodud, kaasaegse disainiga ja täis uusi funktsioone."
+  },
+  "donationV4GuideLink": {
+    "message": "Loe v4 juhendit →"
+  },
+  "donationGo": {
+    "message": "Anneta"
+  },
+  "donationRate": {
+    "message": "Hinda"
+  },
+  "donationRateTitle": {
+    "message": "Hinda vBookmarksit Chrome Web Store'is"
+  },
+  "donationLater": {
+    "message": "Hiljem"
+  },
+  "donationNever": {
+    "message": "Ära näita enam"
+  },
+  "donationDismiss": {
+    "message": "Loobu"
+  },
+  "edit": {
+    "message": "Redigeeri..."
+  },
+  "editBookmark": {
+    "message": "Redigeeri järjehoidjat"
+  },
+  "editFolder": {
+    "message": "Redigeeri kausta"
+  },
+  "errorOccured": {
+    "message": "Ups, tekkis viga."
+  },
+  "extDesc": {
+    "description": "Laiendi kirjeldus.",
+    "message": "Hüpikakna järjehoidjate haldur. Täiendatud Neat Bookmarks. Korralikum kui Neater Bookmarks."
+  },
+  "extName": {
+    "description": "vBookmarks",
+    "message": "vBookmarks"
+  },
+  "folderEmpty": {
+    "message": "(Tühi)"
+  },
+  "general": {
+    "message": "Üldine"
+  },
+  "ignore": {
+    "message": "Ignoreeri"
+  },
+  "name": {
+    "description": "Järjehoidja või kausta nimi.",
+    "message": "Nimi"
+  },
+  "nope": {
+    "message": "Tühista"
+  },
+  "noTitle": {
+    "description": "Pealkiri nimeta järjehoidjatele ilma http(s) URL-ita või nimetatele kaustadele.",
+    "message": "(pealkirjata)"
+  },
+  "open": {
+    "description": "Tegevus järjehoidjate avamiseks.",
+    "message": "Ava"
+  },
+  "openBookmarks": {
+    "message": "Ava kõik järjehoidjad"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "Ava järjehoidjad inkognito aknas"
+  },
+  "openBookmarksInGroup": {
+    "message": "Ava kõik uues vahekaardigrupis"
+  },
+  "openBookmarksInGroupSetup": {
+    "message": "Ava kõik uues vahekaardirühmas…"
+  },
+  "openBookmarksInExistingGroup": {
+    "message": "Ava kõik olemasolevas vahekaardirühmas…"
+  },
+  "tabGroupOptions": {
+    "message": "Vaheleherühmad"
+  },
+  "sortMenuOptions": {
+    "message": "Sorteeri"
+  },
+  "openBookmarksNewWindow": {
+    "message": "Ava kõik järjehoidjad uues aknas"
+  },
+  "openCommandPaletteCommand": {
+    "message": "Ava käsupalett"
+  },
+  "openIncognitoWindow": {
+    "message": "Ava inkognito aknas"
+  },
+  "openNewTab": {
+    "message": "Ava uues vahelehes"
+  },
+  "bookmarkOpenInNewGroup": {
+    "message": "Ava uues vahekaardirühmas"
+  },
+  "bookmarkOpenInNewGroupSetup": {
+    "message": "Ava uues vahekaardirühmas…"
+  },
+  "bookmarkOpenInExistingGroup": {
+    "message": "Ava olemasolevas vahekaardirühmas…"
+  },
+  "openNewWindow": {
+    "message": "Ava uues aknas"
+  },
+  "openSidePanelCommand": {
+    "message": "Ava vBookmarks külgpaneel"
+  },
+  "optionAnnounceEnabled": {
+    "message": "Kuva tootesisesed teadaanded"
+  },
+  "optionAnnounceEnabledHint": {
+    "message": "Väljalaske märkmed ja näpunäited projekti GitHubi hoidlast (hangitakse mitte sagedamini kui iga 6 tunni järel). Väljalülitamine peatab ka võrgupäringud."
+  },
+  "optionClickNewTab": {
+    "message": "Vasak klõps avab järjehoidja uues vahelehes."
+  },
+  "optionCloseUnusedFolders": {
+    "message": "Sulge kasutamata kaustad kausta avamisel."
+  },
+  "optionConfirmOpenFolder": {
+    "message": "Kuva kinnitus, kui avad palju järjehoidjaid kaustast."
+  },
+  "optionConfirmDeleteFolder": {
+    "message": "Kinnita enne mittetühjade kaustade kustutamist"
+  },
+  "optionOnlyShowBookmarkBar": {
+    "message": "Kuva ainult järjehoidjad järjehoidjade ribal"
+  },
+  "optionSearchAfterEnter": {
+    "message": "Otsi järjehoidjaid ainult ENTERi vajutamisel (mitte kohene otsing)"
+  },
+  "optionOpenNewTab": {
+    "message": "Keskmine klõps või control-klõps avab järjehoidja uues taustavahelehes (mitte esiplaanil)."
+  },
+  "optionOpenInSidePanel": {
+    "message": "Ava külgpaneelis hüpikakna asemel"
+  },
+  "optionPopupStays": {
+    "message": "Hüpikaken jääb avatuks järjehoidjate avamisel (vasak klõps)."
+  },
+  "optionRememberPrevState": {
+    "message": "Jäta meelde eelmine olek (kerimisasend, avatud kaustad ja viimati fookustatud üksus)."
+  },
+  "options": {
+    "message": "Valikud"
+  },
+  "optionsFooterText": {
+    "description": "Footer text for the Options page",
+    "message": "Looja $authorName$.",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionZoom": {
+    "message": "Suum"
+  },
+  "optionTheme": {
+    "message": "Teema"
+  },
+  "optionThemeAuto": {
+    "message": "Järgi süsteemi"
+  },
+  "optionThemeLight": {
+    "message": "Hele"
+  },
+  "optionThemeDark": {
+    "message": "Tume"
+  },
+  "optionThemeInk": {
+    "message": "Tint (tume)"
+  },
+  "optionThemePaper": {
+    "message": "Paber (hele)"
+  },
+  "optionLanguage": {
+    "message": "Keel"
+  },
+  "optionLanguageAuto": {
+    "message": "Automaatne"
+  },
+  "optionLanguageHint": {
+    "message": "Keele muutmine laadib selle lehe uuesti."
+  },
+  "paletteClose": {
+    "message": "Sule"
+  },
+  "paletteCmdVersion": {
+    "message": "Versiooniteave"
+  },
+  "paletteCmdLang": {
+    "message": "Vaheta keelt…"
+  },
+  "paletteCmdLangUsage": {
+    "message": "Kasutus: /lang koos lokaali koodiga — nt /lang en, /lang zh_CN, /lang ja."
+  },
+  "versionDialogTitle": {
+    "message": "vBookmarks $version$",
+    "placeholders": {
+      "version": {
+        "content": "$1"
+      }
+    }
+  },
+  "versionDialogCopy": {
+    "message": "Kopeeri teave"
+  },
+  "versionDialogCopied": {
+    "message": "Kopeeritud"
+  },
+  "versionMetaVersion": {
+    "message": "Laienduse versioon"
+  },
+  "versionMetaAnnounce": {
+    "message": "Mis on uut"
+  },
+  "versionMetaAnnounceNone": {
+    "message": "Teadaannet pole laaditud"
+  },
+  "versionMetaBrowser": {
+    "message": "Brauser"
+  },
+  "versionMetaOS": {
+    "message": "OS"
+  },
+  "versionMetaChannel": {
+    "message": "Kanal"
+  },
+  "versionMetaLanguage": {
+    "message": "Keel"
+  },
+  "versionMetaUserAgent": {
+    "message": "Kasutajaagent"
+  },
+  "paletteCmdDead": {
+    "message": "Otsi surnud linke"
+  },
+  "paletteCmdDupes": {
+    "message": "Puhasta dubleeritud järjehoidjad"
+  },
+  "paletteCmdNewBookmark": {
+    "message": "Uus järjehoidja…"
+  },
+  "paletteCmdNewFolder": {
+    "message": "Uus kaust…"
+  },
+  "paletteCmdQuickAdd": {
+    "message": "Lisa praegune vahekaart järjehoidjaks"
+  },
+  "paletteCmdSaveSession": {
+    "message": "Salvesta akna vahekaardid kaustana"
+  },
+  "paletteNoResults": {
+    "message": "Sobivaid tulemusi pole"
+  },
+  "palettePlaceholder": {
+    "message": "Otsi järjehoidjaid, kaustu, käske…"
+  },
+  "parentFolder": {
+    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
+    "message": "Vanemkaust: \"$folderName$\"",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarksbar"
+      }
+    }
+  },
+  "removeSeparator": {
+    "message": "Eemalda eraldaja"
+  },
+  "replaceUrl": {
+    "message": "Asenda praeguse URL-iga"
+  },
+  "reportedToDeveloper": {
+    "description": "Sõnum laiendis tekkinud veast, teavitatud arendajat.",
+    "message": "See on teatatud arendajale."
+  },
+  "reportError": {
+    "message": "Teata veast"
+  },
+  "resetButton": {
+    "message": "Lähtesta"
+  },
+  "resetSettings": {
+    "message": "Lähtesta seaded"
+  },
+  "resetSettingsDescription": {
+    "message": "Lähtesta vBookmarks vaikeseadetele."
+  },
+  "save": {
+    "message": "Salvesta"
+  },
+  "searchBookmarks": {
+    "description": "Placeholder tekst otsinguväljale.",
+    "message": "Otsi järjehoidjaid"
+  },
+  "searchClear": {
+    "message": "Tühjenda otsing"
+  },
+  "searchNoResults": {
+    "message": "Sobivaid järjehoidjaid pole"
+  },
+  "searchViewHint": {
+    "message": "Tipi ülalolevasse kasti oma järjehoidjate otsimiseks"
+  },
+  "selectAll": {
+    "message": "Kõik"
+  },
+  "selectClear": {
+    "message": "Tühjenda"
+  },
+  "selectCount": {
+    "message": "$count$ valitud",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "selectInvert": {
+    "message": "Pööra"
+  },
+  "selectModeEnter": {
+    "message": "Vali"
+  },
+  "selectModeExit": {
+    "message": "Välju valikust"
+  },
+  "deadRiskBanner": {
+    "message": "Surnud linkide puhastus kustutab järjehoidjaid hulgi. Varundage järjehoidjad enne esimest puhastust."
+  },
+  "dupesRiskBanner": {
+    "message": "Duplikaatide eemaldamine kustutab dubleeritud järjehoidjaid hulgi. Varundage järjehoidjad enne rakendamist."
+  },
+  "riskBannerHelp": {
+    "message": "Varundamise ja taastamise juhend"
+  },
+  "riskBannerNever": {
+    "message": "Ära enam näita"
+  },
+  "riskBannerDismiss": {
+    "message": "Sulge"
+  },
+  "sessionEmpty": {
+    "message": "Salvestamiseks pole vahekaarte"
+  },
+  "sessionFolderName": {
+    "message": "Seanss $date$",
+    "placeholders": {
+      "date": {
+        "content": "$1",
+        "example": "2026-07-18 15:04"
+      }
+    },
+    "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm."
+  },
+  "sessionSaved": {
+    "message": "Salvestati $count$ vahekaarti uude kausta",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "12"
+      }
+    },
+    "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
+  },
+  "url": {
+    "message": "URL"
+  },
+  "syncOptions": {
+    "message": "Sünkroniseerimise valikud"
+  },
+  "optionShowSyncStatus": {
+    "message": "Näita sünkroniseerimise oleku indikaatoreid"
+  },
+  "optionHighlightUnsynced": {
+    "message": "Tuhmista sünkroonimata järjehoidjad"
+  },
+  "optionAutoRefreshSync": {
+    "message": "Automaatselt värskenda sünkroniseerimise olekut"
+  },
+  "optionSyncRefreshInterval": {
+    "message": "Värskendamise intervall"
+  },
+  "optionSyncRefreshIntervalSeconds": {
+    "message": "sekundit"
+  },
+  "syncStatusSynced": {
+    "message": "Sünkroonitud teie Google'i kontoga"
+  },
+  "syncStatusLocal": {
+    "message": "Ainult kohalik – pole üles laaditud"
+  },
+  "syncStatusUnsyncable": {
+    "message": "Ei saa sünkroonida"
+  },
+  "syncSuffixSynced": {
+    "message": "(Sünkroonitud)"
+  },
+  "syncSuffixLocal": {
+    "message": "(Kohalik)"
+  },
+  "optionAutoResizePopup": {
+    "message": "Muuda hüpikakna suurust automaatselt sisu järgi"
+  },
+  "crossStorageMoveWarning": {
+    "message": "Järjehoidjaid ei saa teisaldada sünkroniseeritud ja kohaliku salvesti vahel. Kasutage selle asemel kopeerimist/kleepimist.",
+    "description": "Warning when trying to move bookmarks across storage types"
+  },
+  "recentBookmarks": {
+    "message": "Hiljuti lisatud"
+  },
+  "optionShowRecentBookmarks": {
+    "message": "Kuva hiljuti lisatud järjehoidjad hüpikakna ülaosas"
+  },
+  "optionShowStatsView": {
+    "message": "Näita statistika vahekaarti"
+  },
+  "optionShowDeadView": {
+    "message": "Näita surnud linkide vahekaarti"
+  },
+  "optionShowDupesView": {
+    "message": "Näita dubleeringute vahekaarti"
+  },
+  "optionRecentCollapsed": {
+    "message": "Ahenda hiljuti lisatud jaotis vaikimisi"
+  },
+  "optionsGroupViews": {
+    "message": "Vaated"
+  },
+  "optionsGroupSort": {
+    "message": "Sorteerimine"
+  },
+  "optionsGroupStats": {
+    "message": "Statistika"
+  },
+  "optionsGroupTools": {
+    "message": "Tööriistad"
+  },
+  "optionShowViewTabs": {
+    "message": "Näita vaatekaarte otsingukasti all"
+  },
+  "optionRememberView": {
+    "message": "Jäta meelde viimane aktiivne vaade ja ava see uuesti"
+  },
+  "optionShowTabBadges": {
+    "message": "Kuva vahelehtedel loendusmärgid"
+  },
+  "optionPaletteEnabled": {
+    "message": "Luba käsupalett (Ctrl/Cmd+K)"
+  },
+  "optionQuickAddEnabled": {
+    "message": "Kuva kiirlisamise tärninupp otsingukasti kõrval"
+  },
+  "optionQuickAddContextMenu": {
+    "message": "Lisa \"Bookmark this page with vBookmarks\" üksus lehe paremklõpsumenüüsse"
+  },
+  "optionQuickAddContextMenuHint": {
+    "message": "Sõltumatu kiirlisamise tähenupust; klassikalise kogemuse taastamine lülitab selle kirje ka välja."
+  },
+  "optionCollapseTabGroupMenu": {
+    "message": "Ahenda vaheleherühmade kirjed üheks \"Vaheleherühmad…\" alammenüüks"
+  },
+  "optionCollapseTabGroupMenuHint": {
+    "message": "Rakendub nii kausta kui ka järjehoidja kontekstimenüüle. Vaikimisi on see välja lülitatud; muudab madalad menüüd väikestel või suure suumiga ekraanidel lühemaks."
+  },
+  "optionCollapseSortMenu": {
+    "message": "Ahenda sorteerimiskirjed üheks \"Sorteeri…\" alammenüüks"
+  },
+  "optionCollapseSortMenuHint": {
+    "message": "Rakendub kausta kontekstimenüüle. Vaikimisi on see sisse lülitatud."
+  },
+  "optionShowToolButton": {
+    "message": "Kuva töönupp (⋮) otsingukasti kõrval"
+  },
+  "optionClassicExperience": {
+    "message": "Taasta klassikaline päis"
+  },
+  "optionClassicExperienceHint": {
+    "message": "Lülitab välja käsupaleti, kiirlisamise tähe, selle lehe paremklõpsu kirje, tööriista nupu ja vaatevahelehed. Igaüht neist saab oma jaotises eraldi uuesti sisse lülitada."
+  },
+  "optionShowItemPath": {
+    "message": "Näita loendiridades ülemkausta teed"
+  },
+  "viewRecent": {
+    "message": "Hiljutised"
+  },
+  "viewTree": {
+    "message": "Puu"
+  },
+  "viewSearch": {
+    "message": "Otsing"
+  },
+  "viewSwitchAnnounce": {
+    "message": "$name$ vaade",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "viewStateEnabled": {
+    "message": "Lubatud"
+  },
+  "viewStateDisabled": {
+    "message": "Keelatud"
+  },
+  "viewEnable": {
+    "message": "Luba"
+  },
+  "viewDisable": {
+    "message": "Keela"
+  },
+  "viewTabHide": {
+    "message": "Peida"
+  },
+  "viewTabDisable": {
+    "message": "Keela"
+  },
+  "sortFolderContents": {
+    "message": "Sorteeri kausta sisu"
+  },
+  "sortByName": {
+    "message": "Sorteeri nime järgi"
+  },
+  "sortByDate": {
+    "message": "Sorteeri lisamiskuupäeva järgi"
+  },
+  "sortRecursiveSuffix": {
+    "message": "(rekursiivselt)"
+  },
+  "sortOptions": {
+    "message": "Sorteerimisvalikud…"
+  },
+  "sortDone": {
+    "message": "Kaust sorteeritud"
+  },
+  "sortByTitle": {
+    "message": "Pealkirja järgi"
+  },
+  "sortByDateAdded": {
+    "message": "Lisamiskuupäeva järgi (uusimad ees)"
+  },
+  "sortFoldersFirst": {
+    "message": "Hoia kaustad eespool"
+  },
+  "sortRecursive": {
+    "message": "Sorteeri ka alamkaustad (rekursiivne)"
+  },
+  "sortRecursiveWarning": {
+    "message": "See järjestab ümber järjehoidjad igas alamkaustas."
+  },
+  "tabGroupDialogTitle": {
+    "message": "Uus vahekaardirühm"
+  },
+  "tabGroupTitleLabel": {
+    "message": "Rühma nimi"
+  },
+  "tabGroupColorLabel": {
+    "message": "Värv"
+  },
+  "tabGroupColorGrey": {
+    "message": "Hall",
+    "description": "Accessible name of the grey color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorBlue": {
+    "message": "Sinine",
+    "description": "Accessible name of the blue color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorRed": {
+    "message": "Punane",
+    "description": "Accessible name of the red color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorYellow": {
+    "message": "Kollane",
+    "description": "Accessible name of the yellow color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorGreen": {
+    "message": "Roheline",
+    "description": "Accessible name of the green color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPink": {
+    "message": "Roosa",
+    "description": "Accessible name of the pink color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPurple": {
+    "message": "Lilla",
+    "description": "Accessible name of the purple color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorCyan": {
+    "message": "Tsüaan",
+    "description": "Accessible name of the cyan color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorOrange": {
+    "message": "Oranž",
+    "description": "Accessible name of the orange color swatch in the new-tab-group dialog."
+  },
+  "tabGroupUntitled": {
+    "message": "Nimetu rühm"
+  },
+  "tabGroupNoGroups": {
+    "message": "Olemasolevaid vahekaardirühmi pole"
+  },
+  "tabGroupPickDialogTitle": {
+    "message": "Ava olemasolevas vahekaardirühmas"
+  },
+  "quickAddBookmark": {
+    "message": "Lisa see leht järjehoidjasse (Ctrl+D)"
+  },
+  "quickAddBookmarkCommand": {
+    "message": "Kiirlisa praegune vahekaart järjehoidjana"
+  },
+  "quickAdded": {
+    "message": "Järjehoidja lisatud"
+  },
+  "quickAddedTo": {
+    "message": "Järjehoidja lisatud kausta $folderName$",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarks bar"
+      }
+    }
+  },
+  "quickRemoved": {
+    "message": "Järjehoidja eemaldatud"
+  },
+  "quickRemoveBookmark": {
+    "message": "Eemalda see järjehoidja (Ctrl+D)"
+  },
+  "toolButtonTitle": {
+    "message": "Tööriistad (Ctrl+K)"
+  },
+  "contextMenuAddBookmark": {
+    "message": "Lisa see leht vBookmarksiga järjehoidjasse"
   },
   "deadFilterAll": {
     "message": "Kõik"
@@ -315,14 +1147,653 @@
   "deadMarkedBannerDismiss": {
     "message": "Sule"
   },
-  "deadNone": {
-    "message": "Surnud linke ei leitud"
+  "deadProxyAdd": {
+    "message": "Lisa puhverserver surnud linkide kontrollimiseks"
   },
-  "deadNoneFiltered": {
-    "message": "Selle filtri all pole surnud linke — proovi mõnda teist jaotist ülal."
+  "deadProxyLabel": {
+    "message": "Puhverserver: $server$",
+    "placeholders": {
+      "server": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadProxyChange": {
+    "message": "Muuda"
+  },
+  "deadProxyRemove": {
+    "message": "Eemalda"
+  },
+  "deadProxyRemoved": {
+    "message": "Puhverserver eemaldatud"
+  },
+  "deadProxyPanelHint": {
+    "message": "Sisestage olemasolev puhverserver (laiendus ise ei paku seda), nt 127.0.0.1:7890 või socks5://127.0.0.1:1080."
+  },
+  "deadProxyTestUrlLabel": {
+    "message": "Testi URL-i"
+  },
+  "deadProxyTestSave": {
+    "message": "Testi ja salvesta"
+  },
+  "deadProxyTesting": {
+    "message": "Testimine…"
+  },
+  "deadProxySaved": {
+    "message": "Puhverserver salvestatud — edaspidised skannid kontrollivad selle kaudu otseselt ebaõnnestunud linke"
+  },
+  "deadProxyInvalid": {
+    "message": "Vigane puhverserveri aadress — kasutage host:port või scheme://host:port (http/https/socks5, ilma identimisteabeta)"
+  },
+  "deadProxyUnreachable": {
+    "message": "Puhverserver pole kättesaadav — ei salvestatud"
+  },
+  "deadProxyDenied": {
+    "message": "Puhverserveri luba ei antud"
+  },
+  "deadProxyControlled": {
+    "message": "Puhverserveri sätteid haldab teine laiendus"
+  },
+  "deadProxyUnavailable": {
+    "message": "Puhverserveri API pole selles brauseris saadaval"
+  },
+  "deadProxyNudge": {
+    "message": "Puhverserveri uuesti kontrollimine eristab tegelikke surnud linke piirkondlikult blokeeritutest — seadista see siin või valikute lehel."
+  },
+  "deadProxyNeverShow": {
+    "message": "Ära näita enam"
+  },
+  "deadStartHint": {
+    "message": "Alusta $n$ järjehoidja skännimist",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadStatusBlocked": {
+    "message": "blokeeritud"
+  },
+  "deadUnmark": {
+    "message": "Eemalda surnud märge"
+  },
+  "deadUnmarkAll": {
+    "message": "Kustuta kõik märked"
+  },
+  "deadUnmarkSelected": {
+    "message": "Eemalda märge valitutelt"
+  },
+  "dupesApplyAll": {
+    "message": "Rakenda kõik ($count$)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesApplySelected": {
+    "message": "Eemalda valitud duplikaadid ($count$)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesCleanRestHint": {
+    "message": "Jäta \"$title$\" alles ja eemalda ülejäänud $count$",
+    "placeholders": {
+      "title": {
+        "content": "$1"
+      },
+      "count": {
+        "content": "$2"
+      }
+    }
+  },
+  "dupesIgnoreScheme": {
+    "message": "Ignoreeri http/https erinevusi"
+  },
+  "dupesKeepThis": {
+    "message": "Hoia seda"
+  },
+  "dupesKeeperSet": {
+    "message": "Määra hoidjaks"
+  },
+  "dupesPreviewSummary": {
+    "message": "$groups$ gruppi · $count$ vabastamiseks",
+    "placeholders": {
+      "groups": {
+        "content": "$1"
+      },
+      "count": {
+        "content": "$2"
+      }
+    }
+  },
+  "dupesRemoveRow": {
+    "message": "Kustuta see koopia"
+  },
+  "dupesScopeAll": {
+    "message": "Kõik järjehoidjad"
+  },
+  "dupesScopeBar": {
+    "message": "Ainult järjehoidjate riba"
+  },
+  "dupesStrategyBookmarkBar": {
+    "message": "Hoia järjehoidjate ribal olevat"
+  },
+  "dupesStrategyMostVisited": {
+    "message": "Hoia kõige külastatumat"
+  },
+  "dupesStrategyNewest": {
+    "message": "Hoia uusimat"
+  },
+  "dupesStrategyOldest": {
+    "message": "Hoia vanimat"
+  },
+  "dupesStrategyShallowest": {
+    "message": "Hoia kõige madalamat"
+  },
+  "dupesStrategyShortestTitle": {
+    "message": "Hoia lühimat pealkirja"
+  },
+  "optionDeadProxyServer": {
+    "message": "Surnud linkide puhverserver"
+  },
+  "deadProxyServerHint": {
+    "message": "Salvestatud server kontrollib igal katkiste linkide skaneerimisel uuesti otsesel kontrollil ebaõnnestunud järjehoidjaid, eristades tegelikud katkised lingid piirkonnapiiranguga linkidest. Testi ja salvesta nupp testib seda (ainult kättesaadav server säilitatakse); saate selle lisada ka katkiste linkide vaatest."
+  },
+  "deadProxyClear": {
+    "message": "Tühjenda"
+  },
+  "deadProxyNone": {
+    "message": "(määramata)"
+  },
+  "optionDeadProxyStrip": {
+    "message": "Kuva puhverserveri lisamise vihje surnud linkide vaates"
+  },
+  "optionDeadProxyStripHint": {
+    "message": "Väljas peidab selle vihje seal; puhverserver jääb siin konfigureeritavaks ja salvestatud server kuvab alati oma haldusrea vaates."
+  },
+  "optionDeadScanConcurrency": {
+    "message": "Surnud linkide skannimise kaasvõimsus (1-16)"
+  },
+  "optionDeadScanTimeout": {
+    "message": "Surnud linkide skannimise ajalõpp sekundites (2-30)"
+  },
+  "paletteCmdGoDead": {
+    "message": "Mine surnud linkide vaatesse"
+  },
+  "paletteCmdGoDupes": {
+    "message": "Mine dublikaatide vaatesse"
+  },
+  "paletteCmdGoRecent": {
+    "message": "Mine hiljutiste vaatesse"
+  },
+  "paletteCmdGoSearch": {
+    "message": "Mine otsinguvaatesse"
+  },
+  "paletteCmdGoTree": {
+    "message": "Mine puuvaatesse"
+  },
+  "paletteCmdOptions": {
+    "message": "Ava seadete leht"
+  },
+  "paletteCmdSearchInView": {
+    "message": "Otsi '$query$' otsinguvaates",
+    "placeholders": {
+      "query": {
+        "content": "$1"
+      }
+    }
+  },
+  "rowActionDelete": {
+    "message": "Kustuta"
+  },
+  "rowActionMark": {
+    "message": "Märgi surnuks"
+  },
+  "rowActionReveal": {
+    "message": "Näita puus"
+  },
+  "rowActionUnmark": {
+    "message": "Eemalda surmamärge"
+  },
+  "viewDead": {
+    "message": "Surnud lingid"
+  },
+  "viewDupes": {
+    "message": "Dublikaadid"
+  },
+  "viewStats": {
+    "message": "Statistika"
+  },
+  "paletteCmdGoStats": {
+    "message": "Mine statistika vaatesse"
+  },
+  "optionStatsEnabled": {
+    "message": "Luba külastusstatistika"
+  },
+  "optionFaviconContrast": {
+    "message": "Pööra madala kontrastsusega faviconid"
+  },
+  "optionFaviconContrastHint": {
+    "message": "Valged ikoonid heledatel teemadel ja mustad ikoonid tumedatel teemadel pööratakse ümber, et need nähtavaks jääksid. Iga ikooni proovitakse selle laadimisel üks kord — sirvimise ajal pole kulud."
+  },
+  "optionFaviconEnrich": {
+    "message": "Laadi puuduvad saidiikoonid"
+  },
+  "optionFaviconEnrichHint": {
+    "message": "Järjehoidjatesse lisatud saitide puhul, mille jaoks Chrome'il pole vahemällu salvestatud ikooni, laadi tegelik ikoon otse saidilt (/favicon.ico, seejärel lehel deklareeritud ikoonid). Päringud lähevad ainult teie järjehoidjatesse lisatud saitidele."
+  },
+  "optionFaviconEnrichAgg": {
+    "message": "Kolmanda osapoole ikooni varu"
+  },
+  "optionFaviconEnrichAggHint": {
+    "message": "Kui otsene hankimine ebaõnnestub, otsitakse ikooni üles domeeni järgi sisseehitatud kolmandate osapoolte ikooniteenuste loendist ($providers$). Kättesaamatu teenus jäetakse vahele ja proovitakse järgmist — seda ei proovita uuesti 6 tunni jooksul.",
+    "placeholders": {
+      "providers": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionFaviconBackup": {
+    "message": "Kaasa ikoonide vahemälu varukoopiatesse"
+  },
+  "optionFaviconBackupHint": {
+    "message": "Kaasake rikastatud ikoonide vahemälu (saidipõhised andmed, potentsiaalselt suured) seadete eksporti/importi. See hõlmab juba vahemällu salvestatud ikoone ka siis, kui allalaadimine on välja lülitatud. Väljalülitamisel jäävad varukoopiad väikeseks; ikoonid laaditakse niikuinii automaatselt uuesti."
+  },
+  "optionFaviconCacheClear": {
+    "message": "Tühjenda ikoonide vahemälu"
+  },
+  "optionFaviconCacheClearConfirm": {
+    "message": "Kas kustutada rikastatud ikoonide vahemälu? Ikoonid laaditakse järgmisel avamisel automaatselt uuesti."
+  },
+  "optionFaviconCacheEmpty": {
+    "message": "Kustutatavat ikoonide vahemälu pole."
+  },
+  "optionFaviconCacheCleared": {
+    "message": "Ikoonide vahemälu on tühjendatud. Ikoonid laaditakse järgmisel avamisel uuesti."
+  },
+  "favGalleryLink": {
+    "message": "Vaata värskendatud ikoone",
+    "description": "Options link (Icons group, right of the Clear icon cache button): opens the favicon gallery page listing the sites whose icons were refetched."
+  },
+  "favGalleryTitle": {
+    "message": "Värskendatud saidi ikoonid",
+    "description": "Favicon gallery page title (h1 + document title)."
+  },
+  "favGalleryHint": {
+    "message": "Ikoonid, mille vBookmarks tõi järjehoidjatega saitidele, mille ikooni Chrome polnud vahemällu salvestanud — kust igaüks pärineb ja millised järjehoidjad seda kasutavad. Ainult kuvamiseks.",
+    "description": "Subtitle under the favicon gallery title, explaining the page is read-only."
+  },
+  "favGallerySearch": {
+    "message": "Filtreeri saidi, pealkirja või tee järgi",
+    "description": "Placeholder of the favicon gallery filter input."
+  },
+  "favGalleryAll": {
+    "message": "Kõik",
+    "description": "Favicon gallery source filter chip: show every source."
+  },
+  "favSrcDirect": {
+    "message": "Otsene",
+    "description": "Favicon gallery source badge: the icon was fetched directly from the site itself."
+  },
+  "favSrcProxy": {
+    "message": "Proxy",
+    "description": "Favicon gallery source badge: the icon was fetched through the user's own proxy relay."
+  },
+  "favSrcLegacy": {
+    "message": "Varasem vahemälu",
+    "description": "Favicon gallery source badge: cached before the source was recorded, so the origin is unknown."
+  },
+  "favGalleryCompare": {
+    "message": "Võrdle kohatäitega",
+    "description": "Favicon gallery toggle button: switch every icon to the generic placeholder it replaced (before/after comparison)."
+  },
+  "favGalleryShowingBefore": {
+    "message": "Tagasi päris ikoonide juurde",
+    "description": "Favicon gallery toggle button while the placeholder comparison is shown: switch back to the real fetched icons."
+  },
+  "favGalleryStatSites": {
+    "message": "$n$ saiti",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    },
+    "description": "Favicon gallery stats strip: how many sites have a refreshed icon."
+  },
+  "favGalleryStatBookmarks": {
+    "message": "$n$ järjehoidjat",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    },
+    "description": "Favicon gallery stats strip: how many bookmarks sit on the refreshed sites."
+  },
+  "favGalleryVisits": {
+    "message": "$n$ salvestatud avamiskorda",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    },
+    "description": "Favicon gallery tooltip on a bookmark row's visit-count pill."
+  },
+  "favGalleryFailedTitle": {
+    "message": "Hiljuti proovitud, ikooni ei leitud",
+    "description": "Favicon gallery heading of the muted section listing hosts whose icon fetch failed recently."
+  },
+  "favGalleryFailedHint": {
+    "message": "Ebaõnnestumisi proovitakse uuesti 24 h, 3 päeva ja 7 päeva pärast, seejärel loobutakse, kuni ikoonivahemälu tühjendatakse.",
+    "description": "Favicon gallery hint under the failed-fetch section title."
+  },
+  "favGalleryGaveUp": {
+    "message": "Loobutud",
+    "description": "Favicon gallery badge on a failed-strip host whose retries are exhausted (it stays untouched until the icon cache is cleared)."
+  },
+  "favGalleryOrphan": {
+    "message": "Sellel hostil pole ühtegi järjehoidjat — ikoon eemaldatakse koos vahemäluga.",
+    "description": "Favicon gallery note on a card whose host no longer has any bookmark."
+  },
+  "favGalleryEmptyTitle": {
+    "message": "Värskendatud ikoone veel pole",
+    "description": "Favicon gallery empty-state heading."
+  },
+  "favGalleryEmptyText": {
+    "message": "Kui hüpikaken kohtab järjehoidjatega saiti, mille jaoks Chrome’il ikoon puudub, laadib vBookmarks päris ikooni ja kuvab selle siin.",
+    "description": "Favicon gallery empty-state body text."
+  },
+  "storageUsageIcon": {
+    "message": "Ikoonide vahemälu"
+  },
+  "storageUsageOther": {
+    "message": "Muu"
+  },
+  "storageUsageSummary": {
+    "message": "Kasutatud $1$ / $2$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      },
+      "2": {
+        "content": "$2"
+      }
+    }
+  },
+  "storageUsageFree": {
+    "message": "Vaba"
+  },
+  "storageUsageHint": {
+    "message": "Ainult laienduse kohalik salvestusruum (chrome.storage.local, umbes 10 MB piirang): ikoonide vahemälu ning seaded ja muud kohalikud andmed. Sünkroonitud seaded, seansiandmed ja järjehoidjate raamatukogu ise ei kuulu siia hulka."
+  },
+  "optionsDonate": {
+    "message": "Anneta"
+  },
+  "optionsGithubLink": {
+    "message": "GitHub"
+  },
+  "optionsHomepageLink": {
+    "message": "Koduleht"
+  },
+  "optionsSince": {
+    "message": "Forkitud Neat Bookmarksist, hooldatud $days$ päeva.",
+    "placeholders": {
+      "days": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionsVersion": {
+    "message": "vBookmarksi versioon"
+  },
+  "statsSortByCount": {
+    "message": "Arvu järgi"
+  },
+  "statsSortByRecent": {
+    "message": "Hiljutise järgi"
+  },
+  "statsShowUnbookmarked": {
+    "message": "Kuva mittejärjehoidjaid"
+  },
+  "statsShowUnbookmarkedHint": {
+    "message": "Kaasata ajaloo leheküljed, mida pole järjehoidjatena salvestatud."
+  },
+  "statsEmpty": {
+    "message": "Statistika koguneb, kui järjehoidjaid avate"
+  },
+  "statsDisabledHint": {
+    "message": "Külastusstatistika on välja lülitatud — lubage see valikus Seaded → Vaatemood"
+  },
+  "statsVisitCount": {
+    "message": "Külastatud $count$ korda",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "statsClearData": {
+    "message": "Tühjenda statistika"
+  },
+  "statsClearConfirm": {
+    "message": "Kas tühjendada külastusstatistika $count$ järjehoidja jaoks? Seda ei saa tagasi võtta.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "statsHistoryBanner": {
+    "message": "Andke ajaloo juurdepääs, et täita külastusstatistikat teie varasemate külastustega."
+  },
+  "statsHistoryEnable": {
+    "message": "Luba"
+  },
+  "statsHistoryDismiss": {
+    "message": "Ära näita uuesti"
+  },
+  "statsHistoryImported": {
+    "message": "Imporditi $count$ järjehoidja varasemad külastused",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "paletteCmdToggleViewTabs": {
+    "message": "Lülita vahelehtede vaade"
+  },
+  "paletteCmdTheme": {
+    "message": "Määra teema…"
+  },
+  "paletteCmdThemeUsage": {
+    "message": "Kasutus: /theme koos teema nimega — auto, light, dark, ink või paper (ainulaadne eesliide töötab, nt /theme d)."
+  },
+  "paletteCustomTag": {
+    "message": "kohandatud"
+  },
+  "paletteCustomDeleteConfirm": {
+    "message": "Kas kustutada käsk \"$1\"? Muudatus sünkroonitakse kõigisse seadmetesse."
+  },
+  "paletteCustomBroken": {
+    "message": "Käsu \"$1\" kausta pole enam olemas. Kas kustutada käsk?"
+  },
+  "paletteCmdSaveAsCommand": {
+    "message": "Salvesta \"$1\" käsklusena…"
+  },
+  "paletteActionOpenUrl": {
+    "message": "Ava URL"
+  },
+  "paletteActionOpenUrlGroup": {
+    "message": "Ava järjehoidjate kaustagrupp"
+  },
+  "paletteActionViewPreset": {
+    "message": "Ava vaade eelseadistusega"
+  },
+  "paletteActionUrlTemplate": {
+    "message": "Ava URL-i mall"
+  },
+  "optionsGroupPalette": {
+    "message": "Käsupalett"
+  },
+  "paletteCustomHint": {
+    "message": "Kohandatud kaldkriipsuga käsud käsupaletis (Ctrl/Cmd+K). Need sünkroonitakse teie sätetega — kuni 100 kirjet."
+  },
+  "paletteCustomAdd": {
+    "message": "Lisa käsk…"
+  },
+  "paletteCustomUsage": {
+    "message": "$1 / $2"
+  },
+  "paletteCustomSlash": {
+    "message": "Kaldkriips (sõna pärast /)"
+  },
+  "paletteCustomAliases": {
+    "message": "Aliasid (komaga eraldatud)"
+  },
+  "paletteCustomAction": {
+    "message": "Tegevus"
+  },
+  "paletteCustomUrl": {
+    "message": "URL"
+  },
+  "paletteCustomTemplate": {
+    "message": "URL-i mall — %s asendatakse käsu järel olevate sõnadega"
+  },
+  "paletteCustomWhere": {
+    "message": "Avamiskoht"
+  },
+  "paletteCustomFolder": {
+    "message": "Järjehoidjate kaust"
+  },
+  "paletteCustomView": {
+    "message": "Vaade"
+  },
+  "paletteCustomStrategy": {
+    "message": "Dedup-strateegia eelseadistus"
+  },
+  "paletteCustomScope": {
+    "message": "Dedup-ulatuse eelseadistus"
+  },
+  "paletteCustomScan": {
+    "message": "Käivita skannimine sisestamisel"
+  },
+  "paletteWhereCurrent": {
+    "message": "Praegune vaheleht"
+  },
+  "paletteWhereTab": {
+    "message": "Uus vaheleht"
+  },
+  "paletteWhereWindow": {
+    "message": "Uus aken"
+  },
+  "paletteWhereBackground": {
+    "message": "Taustavahelehed"
+  },
+  "paletteCustomSave": {
+    "message": "Salvesta käsk"
+  },
+  "paletteCustomErrSlash": {
+    "message": "Kaldkriips: 1–24 märki (väiketähed, numbrid või sidekriipsud), algab tähe või numbriga."
+  },
+  "paletteCustomErrAlias": {
+    "message": "Aliasid: samad reeglid nagu kaldkriipsul (1–24 märki: väiketähed, numbrid või sidekriipsud)."
+  },
+  "paletteCustomErrTaken": {
+    "message": "See kaldkriips või alias on juba kasutusel."
+  },
+  "paletteCustomErrUrl": {
+    "message": "Lubatud on ainult http:// või https:// URL-id."
+  },
+  "paletteCustomErrFolder": {
+    "message": "Vali järjehoidjate kaust."
+  },
+  "paletteCustomErrView": {
+    "message": "Vali vaade."
+  },
+  "paletteCustomErrTemplate": {
+    "message": "Mall peab sisaldama täpselt ühte %s."
+  },
+  "paletteCustomErrAction": {
+    "message": "Vali tegevuse tüüp."
+  },
+  "paletteCustomErrLimit": {
+    "message": "Käskude piir on täis (100) — kustuta enne üks."
+  },
+  "paletteCustomEmpty": {
+    "message": "Pole veel kohandatud käske."
+  },
+  "recentGroupToday": {
+    "message": "Täna"
+  },
+  "recentGroupWeek": {
+    "message": "Sel nädalal"
+  },
+  "recentGroupMonth": {
+    "message": "Sel kuul"
+  },
+  "recentGroupOlder": {
+    "message": "Vanemad"
+  },
+  "searchHistoryRerun": {
+    "message": "Otsi uuesti"
+  },
+  "optionsGroupBackup": {
+    "message": "Varundus"
+  },
+  "optionsGroupContextMenu": {
+    "message": "Kontekstimenüüd"
+  },
+  "optionsGroupIcons": {
+    "message": "Ikoonid"
+  },
+  "settingsExport": {
+    "message": "Ekspordi sätted"
+  },
+  "settingsImport": {
+    "message": "Impordi sätted"
+  },
+  "settingsBackupHint": {
+    "message": "Eksport salvestab kõik sätted (sh sünkroonimiseelistused) JSON-faili. Import liidab varunduse tagasi: failis olevad sätted kirjutavad praegused üle, kõik muu jääb alles."
+  },
+  "settingsImportConfirm": {
+    "message": "Importimine kirjutab üle kõik varundusfailis sisalduvad sätted (failis mitteolevad sätted jäävad alles) ja laadib selle lehe uuesti. Jätkame?"
+  },
+  "settingsImportInvalid": {
+    "message": "Vigane sätete fail: see pole vBookmarksi sätete varundus."
+  },
+  "settingsImportDone": {
+    "message": "Sätted imporditud. Leht laaditakse nüüd uuesti."
+  },
+  "settingsImportError": {
+    "message": "Mõnda seadet ei õnnestunud kirjutada (salvestuskvoot või ajutine viga). Import ei lõppenud — proovige palun uuesti."
+  },
+  "statsSectionRecent": {
+    "message": "Hiljutised külastused"
+  },
+  "statsSectionBookmarks": {
+    "message": "Järjehoidjate statistika"
+  },
+  "statsHistoryGuide": {
+    "message": "Andke ajaloo juurdepääs, et siin oma hiljutisi külastusi kuvada."
+  },
+  "statsHistoryAdd": {
+    "message": "Lisa järjehoidjatesse"
+  },
+  "statsHistoryBookmarked": {
+    "message": "Järjehoidjatesse lisatud"
   },
   "deadPause": {
     "message": "Peata"
+  },
+  "deadResume": {
+    "message": "Jätka"
+  },
+  "deadCancel": {
+    "message": "Tühista"
   },
   "deadPaused": {
     "message": "Peatatud"
@@ -671,1475 +2142,339 @@
   "optionTabGroupsClosedLimit": {
     "message": "Säilitatav suletud vahekaartide/rühmade ajalugu"
   },
-  "deadProxyAdd": {
-    "message": "Lisa puhverserver surnud linkide kontrollimiseks"
+  "folderPickMoveHere": {
+    "message": "Liiguta siia"
   },
-  "deadProxyLabel": {
-    "message": "Puhverserver: $server$",
-    "placeholders": {
-      "server": {
-        "content": "$1"
-      }
-    }
+  "folderPickCopyHere": {
+    "message": "Kopeeri siia"
   },
-  "deadProxyChange": {
-    "message": "Muuda"
+  "folderPickFilter": {
+    "message": "Filtreeri kaustu…"
   },
-  "deadProxyRemove": {
-    "message": "Eemalda"
+  "folderPickFavNote": {
+    "message": "Järjehoidjata üksused lisatakse siia järjehoidjatena"
   },
-  "deadProxyRemoved": {
-    "message": "Puhverserver eemaldatud"
+  "folderPickPinned": {
+    "message": "Kinnitatud"
   },
-  "deadProxyPanelHint": {
-    "message": "Sisestage olemasolev puhverserver (laiendus ise ei paku seda), nt 127.0.0.1:7890 või socks5://127.0.0.1:1080."
-  },
-  "deadProxyTestUrlLabel": {
-    "message": "Testi URL-i"
-  },
-  "deadProxyTestSave": {
-    "message": "Testi ja salvesta"
-  },
-  "deadProxyTesting": {
-    "message": "Testimine…"
-  },
-  "deadProxySaved": {
-    "message": "Puhverserver salvestatud — edaspidised skannid kontrollivad selle kaudu otseselt ebaõnnestunud linke"
-  },
-  "deadProxyInvalid": {
-    "message": "Vigane puhverserveri aadress — kasutage host:port või scheme://host:port (http/https/socks5, ilma identimisteabeta)"
-  },
-  "deadProxyUnreachable": {
-    "message": "Puhverserver pole kättesaadav — ei salvestatud"
-  },
-  "deadProxyDenied": {
-    "message": "Puhverserveri luba ei antud"
-  },
-  "deadProxyControlled": {
-    "message": "Puhverserveri sätteid haldab teine laiendus"
-  },
-  "deadProxyUnavailable": {
-    "message": "Puhverserveri API pole selles brauseris saadaval"
-  },
-  "deadProxyNudge": {
-    "message": "Puhverserveri uuesti kontrollimine eristab tegelikke surnud linke piirkondlikult blokeeritutest — seadista see siin või valikute lehel."
-  },
-  "deadRescan": {
-    "message": "Uuesti skännimine"
-  },
-  "deadResume": {
-    "message": "Jätka"
-  },
-  "deadStartHint": {
-    "message": "Alusta $n$ järjehoidja skännimist",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "deadStatusBlocked": {
-    "message": "blokeeritud"
-  },
-  "deadUnmark": {
-    "message": "Eemalda surnud märge"
-  },
-  "deadUnmarkAll": {
-    "message": "Kustuta kõik märked"
-  },
-  "deadUnmarkSelected": {
-    "message": "Eemalda märge valitutelt"
-  },
-  "defaultIconButton": {
-    "message": "Kasuta vaikeväärtust"
-  },
-  "defaultIconButtonOr": {
-    "message": "või"
-  },
-  "customIconPick": {
-    "message": "Vali fail…"
-  },
-  "delete": {
-    "message": "Kustuta"
-  },
-  "deleteEllipsis": {
-    "message": "Kustuta..."
-  },
-  "deletedBookmark": {
-    "message": "Kustutatud $title$",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Example"
-      }
-    },
-    "description": "Toast shown after a bookmark or separator was deleted; the toast offers an undo button. $title$ is the deleted row's title (empty for separators)."
-  },
-  "deletedFolder": {
-    "message": "Kustutatud kaust $title$",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Bookmarks"
-      }
-    },
-    "description": "Toast shown after a bookmark folder (with its whole subtree) was deleted; the toast offers an undo button. $title$ is the folder name."
-  },
-  "donationDismiss": {
-    "message": "Loobu"
-  },
-  "donationGo": {
-    "message": "Anneta"
-  },
-  "donationRate": {
-    "message": "Hinda"
-  },
-  "donationRateTitle": {
-    "message": "Hinda vBookmarksit Chrome Web Store'is"
-  },
-  "donationLater": {
-    "message": "Hiljem"
-  },
-  "donationMessage": {
-    "message": "Kas naudid seda? Anneta, et toetada selle tulevikku — või hinda seda poes: iga arvustus hoiab uuendusi tulemas."
-  },
-  "donationV4Notice": {
-    "message": "vBookmarks 4.0 on täielikult uuesti loodud, kaasaegse disainiga ja täis uusi funktsioone."
-  },
-  "donationV4GuideLink": {
-    "message": "Loe v4 juhendit →"
-  },
-  "donationNever": {
-    "message": "Ära näita enam"
-  },
-  "dupesApplyAll": {
-    "message": "Rakenda kõik ($count$)",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "dupesApplySelected": {
-    "message": "Eemalda valitud duplikaadid ($count$)",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "dupesCleanAll": {
-    "message": "Puhasta kõik: $groups$ gruppi, $count$ lisakoopiat",
-    "placeholders": {
-      "groups": {
-        "content": "$1"
-      },
-      "count": {
-        "content": "$2"
-      }
-    },
-    "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go."
-  },
-  "dupesCleanRestHint": {
-    "message": "Jäta \"$title$\" alles ja eemalda ülejäänud $count$",
-    "placeholders": {
-      "title": {
-        "content": "$1"
-      },
-      "count": {
-        "content": "$2"
-      }
-    }
-  },
-  "dupesConfirmAll": {
-    "message": "Kustutada $count$ lisa-koopiat $groups$ rühmast? Igast rühmast valitud säilitatav koopia jäetakse alles.",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      },
-      "groups": {
-        "content": "$2"
-      }
-    },
-    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
-  },
-  "dupesConfirmSelected": {
-    "message": "Kas eemaldada $count$ duplikaatjärjehoidjat valitud gruppide hulgast ($groups$)?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      },
-      "groups": {
-        "content": "$2"
-      }
-    }
-  },
-  "dupesConfirmGroup": {
-    "message": "Jätta alles \"$title$\" ja kustutada ülejäänud $count$ koopiat?",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Example bookmark"
-      },
-      "count": {
-        "content": "$2"
-      }
-    },
-    "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."
-  },
-  "dupesDone": {
-    "message": "Eemaldati $count$ dubleeritud järjehoidjat",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Alert shown after the duplicate cleanup finished."
-  },
-  "dupesGroupCount": {
-    "message": "$count$ dubleerimist",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
-  },
-  "dupesGroupExpand": {
-    "description": "Dupes view group-head context menu: expand a collapsed duplicate group.",
-    "message": "Laienda grupp"
-  },
-  "dupesGroupCollapse": {
-    "description": "Dupes view group-head context menu: collapse an expanded duplicate group.",
-    "message": "Ahenda grupp"
-  },
-  "dupesIgnoreScheme": {
-    "message": "Ignoreeri http/https erinevusi"
-  },
-  "dupesKeepThis": {
-    "message": "Hoia seda"
-  },
-  "dupesKeeperSet": {
-    "message": "Määra hoidjaks"
-  },
-  "dupesNone": {
-    "message": "Dubleerimisi ei leitud"
-  },
-  "dupesPreviewSummary": {
-    "message": "$groups$ gruppi · $count$ vabastamiseks",
-    "placeholders": {
-      "groups": {
-        "content": "$1"
-      },
-      "count": {
-        "content": "$2"
-      }
-    }
-  },
-  "dupesRemoveRow": {
-    "message": "Kustuta see koopia"
-  },
-  "dupesScopeAll": {
-    "message": "Kõik järjehoidjad"
-  },
-  "dupesScopeBar": {
-    "message": "Ainult järjehoidjate riba"
-  },
-  "dupesStrategyBookmarkBar": {
-    "message": "Hoia järjehoidjate ribal olevat"
-  },
-  "dupesStrategyMostVisited": {
-    "message": "Hoia kõige külastatumat"
-  },
-  "dupesStrategyNewest": {
-    "message": "Hoia uusimat"
-  },
-  "dupesStrategyOldest": {
-    "message": "Hoia vanimat"
-  },
-  "dupesStrategyShallowest": {
-    "message": "Hoia kõige madalamat"
-  },
-  "dupesStrategyShortestTitle": {
-    "message": "Hoia lühimat pealkirja"
-  },
-  "edit": {
-    "message": "Redigeeri..."
-  },
-  "editBookmark": {
-    "message": "Redigeeri järjehoidjat"
-  },
-  "editFolder": {
-    "message": "Redigeeri kausta"
-  },
-  "errorOccured": {
-    "message": "Ups, tekkis viga."
-  },
-  "extDesc": {
-    "description": "Laiendi kirjeldus.",
-    "message": "Hüpikakna järjehoidjate haldur. Täiendatud Neat Bookmarks. Korralikum kui Neater Bookmarks."
-  },
-  "extName": {
-    "description": "vBookmarks",
-    "message": "vBookmarks"
-  },
-  "folderEmpty": {
-    "message": "(Tühi)"
-  },
-  "general": {
-    "message": "Üldine"
-  },
-  "ignore": {
-    "message": "Ignoreeri"
-  },
-  "name": {
-    "description": "Järjehoidja või kausta nimi.",
-    "message": "Nimi"
-  },
-  "noTitle": {
-    "description": "Pealkiri nimeta järjehoidjatele ilma http(s) URL-ita või nimetatele kaustadele.",
-    "message": "(pealkirjata)"
-  },
-  "nope": {
-    "message": "Tühista"
-  },
-  "open": {
-    "description": "Tegevus järjehoidjate avamiseks.",
-    "message": "Ava"
-  },
-  "openBookmarks": {
-    "message": "Ava kõik järjehoidjad"
-  },
-  "openBookmarksInGroup": {
-    "message": "Ava kõik uues vahekaardigrupis"
-  },
-  "openBookmarksInGroupSetup": {
-    "message": "Ava kõik uues vahekaardirühmas…"
-  },
-  "openBookmarksInExistingGroup": {
-    "message": "Ava kõik olemasolevas vahekaardirühmas…"
-  },
-  "tabGroupOptions": {
-    "message": "Vaheleherühmad"
-  },
-  "sortMenuOptions": {
-    "message": "Sorteeri"
-  },
-  "openBookmarksIncognitoWindow": {
-    "message": "Ava järjehoidjad inkognito aknas"
-  },
-  "openBookmarksNewWindow": {
-    "message": "Ava kõik järjehoidjad uues aknas"
-  },
-  "openCommandPaletteCommand": {
-    "message": "Ava käsupalett"
-  },
-  "openIncognitoWindow": {
-    "message": "Ava inkognito aknas"
-  },
-  "openNewTab": {
-    "message": "Ava uues vahelehes"
-  },
-  "bookmarkOpenInNewGroup": {
-    "message": "Ava uues vahekaardirühmas"
-  },
-  "bookmarkOpenInNewGroupSetup": {
-    "message": "Ava uues vahekaardirühmas…"
-  },
-  "bookmarkOpenInExistingGroup": {
-    "message": "Ava olemasolevas vahekaardirühmas…"
-  },
-  "openNewWindow": {
-    "message": "Ava uues aknas"
-  },
-  "openSidePanelCommand": {
-    "message": "Ava vBookmarks külgpaneel"
-  },
-  "optionAnnounceEnabledHint": {
-    "message": "Väljalaske märkmed ja näpunäited projekti GitHubi hoidlast (hangitakse mitte sagedamini kui iga 6 tunni järel). Väljalülitamine peatab ka võrgupäringud."
-  },
-  "optionAnnounceEnabled": {
-    "message": "Kuva tootesisesed teadaanded"
-  },
-  "optionAutoRefreshSync": {
-    "message": "Automaatselt värskenda sünkroniseerimise olekut"
-  },
-  "optionAutoResizePopup": {
-    "message": "Muuda hüpikakna suurust automaatselt sisu järgi"
-  },
-  "optionClickNewTab": {
-    "message": "Vasak klõps avab järjehoidja uues vahelehes."
-  },
-  "optionCloseUnusedFolders": {
-    "message": "Sulge kasutamata kaustad kausta avamisel."
-  },
-  "optionConfirmDeleteFolder": {
-    "message": "Kinnita enne mittetühjade kaustade kustutamist"
-  },
-  "optionConfirmOpenFolder": {
-    "message": "Kuva kinnitus, kui avad palju järjehoidjaid kaustast."
-  },
-  "optionDeadProxyServer": {
-    "message": "Surnud linkide puhverserver"
-  },
-  "deadProxyServerHint": {
-    "message": "Salvestatud server kontrollib igal katkiste linkide skaneerimisel uuesti otsesel kontrollil ebaõnnestunud järjehoidjaid, eristades tegelikud katkised lingid piirkonnapiiranguga linkidest. Testi ja salvesta nupp testib seda (ainult kättesaadav server säilitatakse); saate selle lisada ka katkiste linkide vaatest."
-  },
-  "deadProxyClear": {
-    "message": "Tühjenda"
-  },
-  "deadProxyNone": {
-    "message": "(määramata)"
-  },
-  "optionDeadScanConcurrency": {
-    "message": "Surnud linkide skannimise kaasvõimsus (1-16)"
-  },
-  "optionDeadScanTimeout": {
-    "message": "Surnud linkide skannimise ajalõpp sekundites (2-30)"
-  },
-  "optionOnlyShowBookmarkBar": {
-    "message": "Kuva ainult järjehoidjad järjehoidjade ribal"
-  },
-  "optionOpenInSidePanel": {
-    "message": "Ava külgpaneelis hüpikakna asemel"
-  },
-  "optionOpenNewTab": {
-    "message": "Keskmine klõps või control-klõps avab järjehoidja uues taustavahelehes (mitte esiplaanil)."
-  },
-  "optionPopupStays": {
-    "message": "Hüpikaken jääb avatuks järjehoidjate avamisel (vasak klõps)."
-  },
-  "optionRecentCollapsed": {
-    "message": "Ahenda hiljuti lisatud jaotis vaikimisi"
-  },
-  "optionRecentCount": {
-    "message": "Näidatavate hiljuti lisatud järjehoidjate arv"
-  },
-  "optionRememberPrevState": {
-    "message": "Jäta meelde eelmine olek (kerimisasend, avatud kaustad ja viimati fookustatud üksus)."
-  },
-  "optionSearchAfterEnter": {
-    "message": "Otsi järjehoidjaid ainult ENTERi vajutamisel (mitte kohene otsing)"
-  },
-  "optionSearchHistory": {
-    "message": "Salvesta otsinguajalugu"
-  },
-  "optionSearchHistoryHint": {
-    "message": "Selle väljalülitamine kustutab ka olemasoleva ajaloo."
-  },
-  "optionShowDeadView": {
-    "message": "Näita surnud linkide vahekaarti"
-  },
-  "optionShowDupesView": {
-    "message": "Näita dubleeringute vahekaarti"
-  },
-  "optionShowItemPath": {
-    "message": "Näita loendiridades ülemkausta teed"
-  },
-  "optionShowRecentBookmarks": {
-    "message": "Kuva hiljuti lisatud järjehoidjad hüpikakna ülaosas"
-  },
-  "optionShowStatsView": {
-    "message": "Näita statistika vahekaarti"
-  },
-  "optionShowSyncStatus": {
-    "message": "Näita sünkroniseerimise oleku indikaatoreid"
-  },
-  "optionHighlightUnsynced": {
-    "message": "Tuhmista sünkroonimata järjehoidjad"
-  },
-  "optionShowViewTabs": {
-    "message": "Näita vaatekaarte otsingukasti all"
-  },
-  "optionRememberView": {
-    "message": "Jäta meelde viimane aktiivne vaade ja ava see uuesti"
-  },
-  "optionShowTabBadges": {
-    "message": "Kuva vahelehtedel loendusmärgid"
-  },
-  "optionPaletteEnabled": {
-    "message": "Luba käsupalett (Ctrl/Cmd+K)"
-  },
-  "optionQuickAddEnabled": {
-    "message": "Kuva kiirlisamise tärninupp otsingukasti kõrval"
-  },
-  "optionQuickAddContextMenu": {
-    "message": "Lisa \"Bookmark this page with vBookmarks\" üksus lehe paremklõpsumenüüsse"
-  },
-  "optionQuickAddContextMenuHint": {
-    "message": "Sõltumatu kiirlisamise tähenupust; klassikalise kogemuse taastamine lülitab selle kirje ka välja."
-  },
-  "optionCollapseTabGroupMenu": {
-    "message": "Ahenda vaheleherühmade kirjed üheks \"Vaheleherühmad…\" alammenüüks"
-  },
-  "optionCollapseTabGroupMenuHint": {
-    "message": "Rakendub nii kausta kui ka järjehoidja kontekstimenüüle. Vaikimisi on see välja lülitatud; muudab madalad menüüd väikestel või suure suumiga ekraanidel lühemaks."
-  },
-  "optionCollapseSortMenu": {
-    "message": "Ahenda sorteerimiskirjed üheks \"Sorteeri…\" alammenüüks"
-  },
-  "optionCollapseSortMenuHint": {
-    "message": "Rakendub kausta kontekstimenüüle. Vaikimisi on see sisse lülitatud."
-  },
-  "optionShowToolButton": {
-    "message": "Kuva töönupp (⋮) otsingukasti kõrval"
-  },
-  "optionClassicExperience": {
-    "message": "Taasta klassikaline päis"
-  },
-  "optionClassicExperienceHint": {
-    "message": "Lülitab välja käsupaleti, kiirlisamise tähe, selle lehe paremklõpsu kirje, tööriista nupu ja vaatevahelehed. Igaüht neist saab oma jaotises eraldi uuesti sisse lülitada."
-  },
-  "optionStatsEnabled": {
-    "message": "Luba külastusstatistika"
-  },
-  "optionFaviconContrast": {
-    "message": "Pööra madala kontrastsusega faviconid"
-  },
-  "optionFaviconContrastHint": {
-    "message": "Valged ikoonid heledatel teemadel ja mustad ikoonid tumedatel teemadel pööratakse ümber, et need nähtavaks jääksid. Iga ikooni proovitakse selle laadimisel üks kord — sirvimise ajal pole kulud."
-  },
-  "optionFaviconEnrich": {
-    "message": "Laadi puuduvad saidiikoonid"
-  },
-  "optionFaviconEnrichHint": {
-    "message": "Järjehoidjatesse lisatud saitide puhul, mille jaoks Chrome'il pole vahemällu salvestatud ikooni, laadi tegelik ikoon otse saidilt (/favicon.ico, seejärel lehel deklareeritud ikoonid). Päringud lähevad ainult teie järjehoidjatesse lisatud saitidele."
-  },
-  "optionFaviconEnrichAgg": {
-    "message": "Kolmanda osapoole ikooni varu"
-  },
-  "optionFaviconEnrichAggHint": {
-    "message": "Kui otsene hankimine ebaõnnestub, otsitakse ikooni üles domeeni järgi sisseehitatud kolmandate osapoolte ikooniteenuste loendist ($providers$). Kättesaamatu teenus jäetakse vahele ja proovitakse järgmist — seda ei proovita uuesti 6 tunni jooksul.",
-    "placeholders": {
-      "providers": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionFaviconBackup": {
-    "message": "Kaasa ikoonide vahemälu varukoopiatesse"
-  },
-  "optionFaviconBackupHint": {
-    "message": "Kaasake rikastatud ikoonide vahemälu (saidipõhised andmed, potentsiaalselt suured) seadete eksporti/importi. See hõlmab juba vahemällu salvestatud ikoone ka siis, kui allalaadimine on välja lülitatud. Väljalülitamisel jäävad varukoopiad väikeseks; ikoonid laaditakse niikuinii automaatselt uuesti."
-  },
-  "optionFaviconCacheClear": {
-    "message": "Tühjenda ikoonide vahemälu"
-  },
-  "optionFaviconCacheClearConfirm": {
-    "message": "Kas kustutada rikastatud ikoonide vahemälu? Ikoonid laaditakse järgmisel avamisel automaatselt uuesti."
-  },
-  "optionFaviconCacheEmpty": {
-    "message": "Kustutatavat ikoonide vahemälu pole."
-  },
-  "optionFaviconCacheCleared": {
-    "message": "Ikoonide vahemälu on tühjendatud. Ikoonid laaditakse järgmisel avamisel uuesti."
-  },
-  "favGalleryLink": {
-    "message": "Vaata värskendatud ikoone",
-    "description": "Options link (Icons group, right of the Clear icon cache button): opens the favicon gallery page listing the sites whose icons were refetched."
-  },
-  "favGalleryTitle": {
-    "message": "Värskendatud saidi ikoonid",
-    "description": "Favicon gallery page title (h1 + document title)."
-  },
-  "favGalleryHint": {
-    "message": "Ikoonid, mille vBookmarks tõi järjehoidjatega saitidele, mille ikooni Chrome polnud vahemällu salvestanud — kust igaüks pärineb ja millised järjehoidjad seda kasutavad. Ainult kuvamiseks.",
-    "description": "Subtitle under the favicon gallery title, explaining the page is read-only."
-  },
-  "favGallerySearch": {
-    "message": "Filtreeri saidi, pealkirja või tee järgi",
-    "description": "Placeholder of the favicon gallery filter input."
-  },
-  "favGalleryAll": {
-    "message": "Kõik",
-    "description": "Favicon gallery source filter chip: show every source."
-  },
-  "favSrcDirect": {
-    "message": "Otsene",
-    "description": "Favicon gallery source badge: the icon was fetched directly from the site itself."
-  },
-  "favSrcProxy": {
-    "message": "Proxy",
-    "description": "Favicon gallery source badge: the icon was fetched through the user's own proxy relay."
-  },
-  "favSrcLegacy": {
-    "message": "Varasem vahemälu",
-    "description": "Favicon gallery source badge: cached before the source was recorded, so the origin is unknown."
-  },
-  "favGalleryCompare": {
-    "message": "Võrdle kohatäitega",
-    "description": "Favicon gallery toggle button: switch every icon to the generic placeholder it replaced (before/after comparison)."
-  },
-  "favGalleryShowingBefore": {
-    "message": "Tagasi päris ikoonide juurde",
-    "description": "Favicon gallery toggle button while the placeholder comparison is shown: switch back to the real fetched icons."
-  },
-  "favGalleryStatSites": {
-    "message": "$n$ saiti",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    },
-    "description": "Favicon gallery stats strip: how many sites have a refreshed icon."
-  },
-  "favGalleryStatBookmarks": {
-    "message": "$n$ järjehoidjat",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    },
-    "description": "Favicon gallery stats strip: how many bookmarks sit on the refreshed sites."
-  },
-  "favGalleryVisits": {
-    "message": "$n$ salvestatud avamiskorda",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    },
-    "description": "Favicon gallery tooltip on a bookmark row's visit-count pill."
-  },
-  "favGalleryFailedTitle": {
-    "message": "Hiljuti proovitud, ikooni ei leitud",
-    "description": "Favicon gallery heading of the muted section listing hosts whose icon fetch failed recently."
-  },
-  "favGalleryFailedHint": {
-    "message": "Ebaõnnestumisi proovitakse uuesti 24 h, 3 päeva ja 7 päeva pärast, seejärel loobutakse, kuni ikoonivahemälu tühjendatakse.",
-    "description": "Favicon gallery hint under the failed-fetch section title."
-  },
-  "favGalleryGaveUp": {
-    "message": "Loobutud",
-    "description": "Favicon gallery badge on a failed-strip host whose retries are exhausted (it stays untouched until the icon cache is cleared)."
-  },
-  "favGalleryOrphan": {
-    "message": "Sellel hostil pole ühtegi järjehoidjat — ikoon eemaldatakse koos vahemäluga.",
-    "description": "Favicon gallery note on a card whose host no longer has any bookmark."
-  },
-  "favGalleryEmptyTitle": {
-    "message": "Värskendatud ikoone veel pole",
-    "description": "Favicon gallery empty-state heading."
-  },
-  "favGalleryEmptyText": {
-    "message": "Kui hüpikaken kohtab järjehoidjatega saiti, mille jaoks Chrome’il ikoon puudub, laadib vBookmarks päris ikooni ja kuvab selle siin.",
-    "description": "Favicon gallery empty-state body text."
-  },
-  "storageUsageIcon": {
-    "message": "Ikoonide vahemälu"
-  },
-  "storageUsageOther": {
-    "message": "Muu"
-  },
-  "storageUsageSummary": {
-    "message": "Kasutatud $1$ / $2$",
-    "placeholders": {
-      "1": {
-        "content": "$1"
-      },
-      "2": {
-        "content": "$2"
-      }
-    }
-  },
-  "storageUsageFree": {
-    "message": "Vaba"
-  },
-  "storageUsageHint": {
-    "message": "Ainult laienduse kohalik salvestusruum (chrome.storage.local, umbes 10 MB piirang): ikoonide vahemälu ning seaded ja muud kohalikud andmed. Sünkroonitud seaded, seansiandmed ja järjehoidjate raamatukogu ise ei kuulu siia hulka."
-  },
-  "optionsDonate": {
-    "message": "Anneta"
-  },
-  "optionsGithubLink": {
-    "message": "GitHub"
-  },
-  "optionsHomepageLink": {
-    "message": "Koduleht"
-  },
-  "optionsSince": {
-    "message": "Forkitud Neat Bookmarksist, hooldatud $days$ päeva.",
-    "placeholders": {
-      "days": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionsVersion": {
-    "message": "vBookmarksi versioon"
-  },
-  "optionSyncRefreshInterval": {
-    "message": "Värskendamise intervall"
-  },
-  "optionSyncRefreshIntervalSeconds": {
-    "message": "sekundit"
-  },
-  "optionTheme": {
-    "message": "Teema"
-  },
-  "optionThemeAuto": {
-    "message": "Järgi süsteemi"
-  },
-  "optionThemeDark": {
-    "message": "Tume"
-  },
-  "optionThemeInk": {
-    "message": "Tint (tume)"
-  },
-  "optionThemeLight": {
-    "message": "Hele"
-  },
-  "optionThemePaper": {
-    "message": "Paber (hele)"
-  },
-  "optionLanguage": {
-    "message": "Keel"
-  },
-  "optionLanguageAuto": {
-    "message": "Automaatne"
-  },
-  "optionLanguageHint": {
-    "message": "Keele muutmine laadib selle lehe uuesti."
-  },
-  "paletteClose": {
-    "message": "Sule"
-  },
-  "paletteCmdVersion": {
-    "message": "Versiooniteave"
-  },
-  "paletteCmdLang": {
-    "message": "Vaheta keelt…"
-  },
-  "paletteCmdLangUsage": {
-    "message": "Kasutus: /lang koos lokaali koodiga — nt /lang en, /lang zh_CN, /lang ja."
-  },
-  "versionDialogTitle": {
-    "message": "vBookmarks $version$",
-    "placeholders": {
-      "version": {
-        "content": "$1"
-      }
-    }
-  },
-  "versionDialogCopy": {
-    "message": "Kopeeri teave"
-  },
-  "versionDialogCopied": {
-    "message": "Kopeeritud"
-  },
-  "versionMetaVersion": {
-    "message": "Laienduse versioon"
-  },
-  "versionMetaAnnounce": {
-    "message": "Mis on uut"
-  },
-  "versionMetaAnnounceNone": {
-    "message": "Teadaannet pole laaditud"
-  },
-  "versionMetaBrowser": {
-    "message": "Brauser"
-  },
-  "versionMetaOS": {
-    "message": "OS"
-  },
-  "versionMetaChannel": {
-    "message": "Kanal"
-  },
-  "versionMetaLanguage": {
-    "message": "Keel"
-  },
-  "versionMetaUserAgent": {
-    "message": "Kasutajaagent"
-  },
-  "optionZoom": {
-    "message": "Suum"
-  },
-  "options": {
-    "message": "Valikud"
-  },
-  "optionsFooterText": {
-    "description": "Footer text for the Options page",
-    "message": "Looja $authorName$.",
-    "placeholders": {
-      "authorName": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionsGroupBackup": {
-    "message": "Varundus"
-  },
-  "optionsGroupIcons": {
-    "message": "Ikoonid"
-  },
-  "optionsGroupContextMenu": {
-    "message": "Kontekstimenüüd"
-  },
-  "optionsGroupViews": {
-    "message": "Vaated"
-  },
-  "optionsGroupSort": {
-    "message": "Sorteerimine"
-  },
-  "optionsGroupTools": {
-    "message": "Tööriistad"
-  },
-  "optionsGroupStats": {
-    "message": "Statistika"
-  },
-  "paletteCmdDead": {
-    "message": "Otsi surnud linke"
-  },
-  "paletteCmdDupes": {
-    "message": "Puhasta dubleeritud järjehoidjad"
-  },
-  "paletteCmdGoDead": {
-    "message": "Mine surnud linkide vaatesse"
-  },
-  "paletteCmdGoDupes": {
-    "message": "Mine dublikaatide vaatesse"
-  },
-  "paletteCmdGoRecent": {
-    "message": "Mine hiljutiste vaatesse"
-  },
-  "paletteCmdGoSearch": {
-    "message": "Mine otsinguvaatesse"
-  },
-  "paletteCmdGoStats": {
-    "message": "Mine statistika vaatesse"
-  },
-  "paletteCmdGoTree": {
-    "message": "Mine puuvaatesse"
-  },
-  "paletteCmdNewBookmark": {
-    "message": "Uus järjehoidja…"
-  },
-  "paletteCmdNewFolder": {
-    "message": "Uus kaust…"
-  },
-  "paletteCmdOptions": {
-    "message": "Ava seadete leht"
-  },
-  "paletteCmdQuickAdd": {
-    "message": "Lisa praegune vahekaart järjehoidjaks"
-  },
-  "paletteCmdSaveSession": {
-    "message": "Salvesta akna vahekaardid kaustana"
-  },
-  "paletteCmdSearchInView": {
-    "message": "Otsi '$query$' otsinguvaates",
-    "placeholders": {
-      "query": {
-        "content": "$1"
-      }
-    }
-  },
-  "paletteCmdToggleViewTabs": {
-    "message": "Lülita vahelehtede vaade"
-  },
-  "paletteCmdTheme": {
-    "message": "Määra teema…"
-  },
-  "paletteCmdThemeUsage": {
-    "message": "Kasutus: /theme koos teema nimega — auto, light, dark, ink või paper (ainulaadne eesliide töötab, nt /theme d)."
-  },
-  "paletteCustomTag": {
-    "message": "kohandatud"
-  },
-  "paletteCustomDeleteConfirm": {
-    "message": "Kas kustutada käsk \"$1\"? Muudatus sünkroonitakse kõigisse seadmetesse."
-  },
-  "paletteCustomBroken": {
-    "message": "Käsu \"$1\" kausta pole enam olemas. Kas kustutada käsk?"
-  },
-  "paletteCmdSaveAsCommand": {
-    "message": "Salvesta \"$1\" käsklusena…"
-  },
-  "paletteActionOpenUrl": {
-    "message": "Ava URL"
-  },
-  "paletteActionOpenUrlGroup": {
-    "message": "Ava järjehoidjate kaustagrupp"
-  },
-  "paletteActionViewPreset": {
-    "message": "Ava vaade eelseadistusega"
-  },
-  "paletteActionUrlTemplate": {
-    "message": "Ava URL-i mall"
-  },
-  "optionsGroupPalette": {
-    "message": "Käsupalett"
-  },
-  "paletteCustomHint": {
-    "message": "Kohandatud kaldkriipsuga käsud käsupaletis (Ctrl/Cmd+K). Need sünkroonitakse teie sätetega — kuni 100 kirjet."
-  },
-  "paletteCustomAdd": {
-    "message": "Lisa käsk…"
-  },
-  "paletteCustomUsage": {
-    "message": "$1 / $2"
-  },
-  "paletteCustomSlash": {
-    "message": "Kaldkriips (sõna pärast /)"
-  },
-  "paletteCustomAliases": {
-    "message": "Aliasid (komaga eraldatud)"
-  },
-  "paletteCustomAction": {
-    "message": "Tegevus"
-  },
-  "paletteCustomUrl": {
-    "message": "URL"
-  },
-  "paletteCustomTemplate": {
-    "message": "URL-i mall — %s asendatakse käsu järel olevate sõnadega"
-  },
-  "paletteCustomWhere": {
-    "message": "Avamiskoht"
-  },
-  "paletteCustomFolder": {
-    "message": "Järjehoidjate kaust"
-  },
-  "paletteCustomView": {
-    "message": "Vaade"
-  },
-  "paletteCustomStrategy": {
-    "message": "Dedup-strateegia eelseadistus"
-  },
-  "paletteCustomScope": {
-    "message": "Dedup-ulatuse eelseadistus"
-  },
-  "paletteCustomScan": {
-    "message": "Käivita skannimine sisestamisel"
-  },
-  "paletteWhereCurrent": {
-    "message": "Praegune vaheleht"
-  },
-  "paletteWhereTab": {
-    "message": "Uus vaheleht"
-  },
-  "paletteWhereWindow": {
-    "message": "Uus aken"
-  },
-  "paletteWhereBackground": {
-    "message": "Taustavahelehed"
-  },
-  "paletteCustomSave": {
-    "message": "Salvesta käsk"
-  },
-  "paletteCustomErrSlash": {
-    "message": "Kaldkriips: 1–24 märki (väiketähed, numbrid või sidekriipsud), algab tähe või numbriga."
-  },
-  "paletteCustomErrAlias": {
-    "message": "Aliasid: samad reeglid nagu kaldkriipsul (1–24 märki: väiketähed, numbrid või sidekriipsud)."
-  },
-  "paletteCustomErrTaken": {
-    "message": "See kaldkriips või alias on juba kasutusel."
-  },
-  "paletteCustomErrUrl": {
-    "message": "Lubatud on ainult http:// või https:// URL-id."
-  },
-  "paletteCustomErrFolder": {
-    "message": "Vali järjehoidjate kaust."
-  },
-  "paletteCustomErrView": {
-    "message": "Vali vaade."
-  },
-  "paletteCustomErrTemplate": {
-    "message": "Mall peab sisaldama täpselt ühte %s."
-  },
-  "paletteCustomErrAction": {
-    "message": "Vali tegevuse tüüp."
-  },
-  "paletteCustomErrLimit": {
-    "message": "Käskude piir on täis (100) — kustuta enne üks."
-  },
-  "paletteCustomEmpty": {
-    "message": "Pole veel kohandatud käske."
-  },
-  "paletteNoResults": {
-    "message": "Sobivaid tulemusi pole"
-  },
-  "palettePlaceholder": {
-    "message": "Otsi järjehoidjaid, kaustu, käske…"
-  },
-  "parentFolder": {
-    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
-    "message": "Vanemkaust: \"$folderName$\"",
-    "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarksbar"
-      }
-    }
-  },
-  "quickAddBookmark": {
-    "message": "Lisa see leht järjehoidjasse (Ctrl+D)"
-  },
-  "quickAddBookmarkCommand": {
-    "message": "Kiirlisa praegune vahekaart järjehoidjana"
-  },
-  "quickAdded": {
-    "message": "Järjehoidja lisatud"
-  },
-  "quickAddedTo": {
-    "message": "Järjehoidja lisatud kausta $folderName$",
-    "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarks bar"
-      }
-    }
-  },
-  "quickRemoveBookmark": {
-    "message": "Eemalda see järjehoidja (Ctrl+D)"
-  },
-  "quickRemoved": {
-    "message": "Järjehoidja eemaldatud"
-  },
-  "recentBookmarks": {
-    "message": "Hiljuti lisatud"
-  },
-  "recentEmpty": {
-    "message": "Hiljutisi järjehoidjaid pole. Vajuta Ctrl+D, et järjehoidjatesse lisada praegune leht."
-  },
-  "recentGroupMonth": {
-    "message": "Sel kuul"
-  },
-  "recentGroupOlder": {
-    "message": "Vanemad"
-  },
-  "recentGroupToday": {
-    "message": "Täna"
-  },
-  "recentGroupWeek": {
-    "message": "Sel nädalal"
-  },
-  "recentRevealInTree": {
-    "message": "Näita puus"
-  },
-  "removeSeparator": {
-    "message": "Eemalda eraldaja"
-  },
-  "replaceUrl": {
-    "message": "Asenda praeguse URL-iga"
-  },
-  "reportError": {
-    "message": "Teata veast"
-  },
-  "reportedToDeveloper": {
-    "description": "Sõnum laiendis tekkinud veast, teavitatud arendajat.",
-    "message": "See on teatatud arendajale."
-  },
-  "resetButton": {
-    "message": "Lähtesta"
-  },
-  "resetSettings": {
-    "message": "Lähtesta seaded"
-  },
-  "resetSettingsDescription": {
-    "message": "Lähtesta vBookmarks vaikeseadetele."
-  },
-  "rowActionDelete": {
-    "message": "Kustuta"
-  },
-  "rowActionMark": {
-    "message": "Märgi surnuks"
-  },
-  "rowActionReveal": {
-    "message": "Näita puus"
-  },
-  "rowActionUnmark": {
-    "message": "Eemalda surmamärge"
-  },
-  "save": {
-    "message": "Salvesta"
-  },
-  "searchBookmarks": {
-    "description": "Placeholder tekst otsinguväljale.",
-    "message": "Otsi järjehoidjaid"
-  },
-  "searchClear": {
-    "message": "Tühjenda otsing"
-  },
-  "searchHistoryClear": {
-    "message": "Kustuta kõik"
-  },
-  "searchHistoryRemove": {
-    "message": "Eemalda see otsing"
-  },
-  "searchHistoryRerun": {
-    "message": "Otsi uuesti"
-  },
-  "searchHistoryResultCount": {
-    "message": "$n$ tulemus(t)",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "searchHistoryTitle": {
-    "message": "Hiljutised otsingud"
-  },
-  "searchNoResults": {
-    "message": "Sobivaid järjehoidjaid pole"
-  },
-  "searchViewHint": {
-    "message": "Tipi ülalolevasse kasti oma järjehoidjate otsimiseks"
-  },
-  "selectAll": {
-    "message": "Kõik"
-  },
-  "selectClear": {
-    "message": "Tühjenda"
-  },
-  "selectCount": {
-    "message": "$count$ valitud",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "selectInvert": {
-    "message": "Pööra"
-  },
-  "selectModeEnter": {
-    "message": "Vali"
-  },
-  "selectModeExit": {
-    "message": "Välju valikust"
-  },
-  "deadRiskBanner": {
-    "message": "Surnud linkide puhastus kustutab järjehoidjaid hulgi. Varundage järjehoidjad enne esimest puhastust."
-  },
-  "dupesRiskBanner": {
-    "message": "Duplikaatide eemaldamine kustutab dubleeritud järjehoidjaid hulgi. Varundage järjehoidjad enne rakendamist."
-  },
-  "riskBannerHelp": {
-    "message": "Varundamise ja taastamise juhend"
-  },
-  "riskBannerNever": {
-    "message": "Ära enam näita"
-  },
-  "riskBannerDismiss": {
-    "message": "Sulge"
-  },
-  "sessionEmpty": {
-    "message": "Salvestamiseks pole vahekaarte"
-  },
-  "sessionFolderName": {
-    "message": "Seanss $date$",
-    "placeholders": {
-      "date": {
-        "content": "$1",
-        "example": "2026-07-18 15:04"
-      }
-    },
-    "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm."
-  },
-  "sessionSaved": {
-    "message": "Salvestati $count$ vahekaarti uude kausta",
-    "placeholders": {
-      "count": {
-        "content": "$1",
-        "example": "12"
-      }
-    },
-    "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
-  },
-  "settingsBackupHint": {
-    "message": "Eksport salvestab kõik sätted (sh sünkroonimiseelistused) JSON-faili. Import liidab varunduse tagasi: failis olevad sätted kirjutavad praegused üle, kõik muu jääb alles."
-  },
-  "settingsExport": {
-    "message": "Ekspordi sätted"
-  },
-  "settingsImport": {
-    "message": "Impordi sätted"
-  },
-  "settingsImportConfirm": {
-    "message": "Importimine kirjutab üle kõik varundusfailis sisalduvad sätted (failis mitteolevad sätted jäävad alles) ja laadib selle lehe uuesti. Jätkame?"
-  },
-  "settingsImportDone": {
-    "message": "Sätted imporditud. Leht laaditakse nüüd uuesti."
-  },
-  "settingsImportError": {
-    "message": "Mõnda seadet ei õnnestunud kirjutada (salvestuskvoot või ajutine viga). Import ei lõppenud — proovige palun uuesti."
-  },
-  "settingsImportInvalid": {
-    "message": "Vigane sätete fail: see pole vBookmarksi sätete varundus."
-  },
-  "sortByDateAdded": {
-    "message": "Lisamiskuupäeva järgi (uusimad ees)"
-  },
-  "sortByTitle": {
-    "message": "Pealkirja järgi"
-  },
-  "sortFolderContents": {
-    "message": "Sorteeri kausta sisu"
-  },
-  "sortByName": {
-    "message": "Sorteeri nime järgi"
-  },
-  "sortByDate": {
-    "message": "Sorteeri lisamiskuupäeva järgi"
-  },
-  "sortRecursiveSuffix": {
-    "message": "(rekursiivselt)"
-  },
-  "sortOptions": {
-    "message": "Sorteerimisvalikud…"
-  },
-  "sortDone": {
-    "message": "Kaust sorteeritud"
-  },
-  "sortFoldersFirst": {
-    "message": "Hoia kaustad eespool"
-  },
-  "sortRecursive": {
-    "message": "Sorteeri ka alamkaustad (rekursiivne)"
-  },
-  "sortRecursiveWarning": {
-    "message": "See järjestab ümber järjehoidjad igas alamkaustas."
-  },
-  "tabGroupDialogTitle": {
-    "message": "Uus vahekaardirühm"
-  },
-  "tabGroupTitleLabel": {
-    "message": "Rühma nimi"
-  },
-  "tabGroupColorLabel": {
-    "message": "Värv"
-  },
-  "tabGroupColorGrey": {
-    "message": "Hall",
-    "description": "Accessible name of the grey color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorBlue": {
-    "message": "Sinine",
-    "description": "Accessible name of the blue color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorRed": {
-    "message": "Punane",
-    "description": "Accessible name of the red color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorYellow": {
-    "message": "Kollane",
-    "description": "Accessible name of the yellow color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorGreen": {
-    "message": "Roheline",
-    "description": "Accessible name of the green color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorPink": {
-    "message": "Roosa",
-    "description": "Accessible name of the pink color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorPurple": {
-    "message": "Lilla",
-    "description": "Accessible name of the purple color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorCyan": {
-    "message": "Tsüaan",
-    "description": "Accessible name of the cyan color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorOrange": {
-    "message": "Oranž",
-    "description": "Accessible name of the orange color swatch in the new-tab-group dialog."
-  },
-  "tabGroupUntitled": {
-    "message": "Nimetu rühm"
-  },
-  "tabGroupNoGroups": {
-    "message": "Olemasolevaid vahekaardirühmi pole"
-  },
-  "tabGroupPickDialogTitle": {
-    "message": "Ava olemasolevas vahekaardirühmas"
-  },
-  "statsClearConfirm": {
-    "message": "Kas tühjendada külastusstatistika $count$ järjehoidja jaoks? Seda ei saa tagasi võtta.",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "statsClearData": {
-    "message": "Tühjenda statistika"
-  },
-  "statsDisabledHint": {
-    "message": "Külastusstatistika on välja lülitatud — lubage see valikus Seaded → Vaatemood"
-  },
-  "statsEmpty": {
-    "message": "Statistika koguneb, kui järjehoidjaid avate"
-  },
-  "statsHistoryAdd": {
-    "message": "Lisa järjehoidjatesse"
-  },
-  "statsHistoryBanner": {
-    "message": "Andke ajaloo juurdepääs, et täita külastusstatistikat teie varasemate külastustega."
-  },
-  "statsHistoryBookmarked": {
-    "message": "Järjehoidjatesse lisatud"
-  },
-  "statsHistoryDismiss": {
-    "message": "Ära näita uuesti"
-  },
-  "statsHistoryEnable": {
-    "message": "Luba"
-  },
-  "statsHistoryGuide": {
-    "message": "Andke ajaloo juurdepääs, et siin oma hiljutisi külastusi kuvada."
-  },
-  "statsHistoryImported": {
-    "message": "Imporditi $count$ järjehoidja varasemad külastused",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "statsSectionBookmarks": {
-    "message": "Järjehoidjate statistika"
-  },
-  "statsSectionRecent": {
-    "message": "Hiljutised külastused"
-  },
-  "statsSortByCount": {
-    "message": "Arvu järgi"
-  },
-  "statsSortByRecent": {
-    "message": "Hiljutise järgi"
-  },
-  "statsShowUnbookmarked": {
-    "message": "Kuva mittejärjehoidjaid"
-  },
-  "statsShowUnbookmarkedHint": {
-    "message": "Kaasata ajaloo leheküljed, mida pole järjehoidjatena salvestatud."
-  },
-  "statsVisitCount": {
-    "message": "Külastatud $count$ korda",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "syncOptions": {
-    "message": "Sünkroniseerimise valikud"
-  },
-  "syncStatusLocal": {
-    "message": "Ainult kohalik – pole üles laaditud"
-  },
-  "syncStatusSynced": {
-    "message": "Sünkroonitud teie Google'i kontoga"
-  },
-  "syncStatusUnsyncable": {
-    "message": "Ei saa sünkroonida"
-  },
-  "syncSuffixLocal": {
-    "message": "(Kohalik)"
-  },
-  "syncSuffixSynced": {
-    "message": "(Sünkroonitud)"
-  },
-  "timeDaysAgo": {
-    "message": "$n$ päeva tagasi",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "timeHoursAgo": {
-    "message": "$n$ tundi tagasi",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "timeJustNow": {
-    "message": "just nüüd"
-  },
-  "timeMinutesAgo": {
-    "message": "$n$ minutit tagasi",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "timeYesterday": {
-    "message": "eile"
-  },
-  "toolButtonTitle": {
-    "message": "Tööriistad (Ctrl+K)"
-  },
-  "undoAction": {
-    "message": "Tagasi võtmine"
-  },
-  "revealOutsideBarHint": {
-    "message": "Ainult järjehoidjate riba on kuvatud: sihtmärk asub sellest väljas."
-  },
-  "revealOutsideBarAction": {
-    "message": "Kuva kõik ja paljasta"
-  },
-  "url": {
-    "message": "URL"
-  },
-  "viewDead": {
-    "message": "Surnud lingid"
-  },
-  "viewDupes": {
-    "message": "Dublikaadid"
-  },
-  "viewRecent": {
+  "folderPickRecent": {
     "message": "Hiljutised"
   },
-  "viewSearch": {
-    "message": "Otsing"
+  "pinFolder": {
+    "message": "Kinnita see kaust"
   },
-  "viewStats": {
-    "message": "Statistika"
+  "unpinFolder": {
+    "message": "Eemalda kausta kinnitus"
   },
-  "viewSwitchAnnounce": {
-    "message": "$name$ vaade",
+  "stagingAdd": {
+    "message": "Lisa ootealale"
+  },
+  "stagingAdded": {
+    "message": "Lisatud ootealale"
+  },
+  "stagingAlready": {
+    "message": "Juba ootealal"
+  },
+  "stagingAddedSummary": {
+    "message": "Lisatud $n$ üksust; $m$ juba ootel",
     "placeholders": {
-      "name": {
+      "n": {
+        "content": "$1"
+      },
+      "m": {
+        "content": "$2"
+      }
+    }
+  },
+  "stagingFull": {
+    "message": "Ooteala on täis — eemalda esmalt mõned üksused"
+  },
+  "stagingFolderEmpty": {
+    "message": "Selles kaustas pole järjehoidjaid ootealale lisamiseks"
+  },
+  "stagingConfirmFolder": {
+    "message": "Lisada $n$ järjehoidjat sellest kaustast ootealale?",
+    "placeholders": {
+      "n": {
         "content": "$1"
       }
     }
   },
-  "viewStateEnabled": {
-    "message": "Lubatud"
+  "stagingRemove": {
+    "message": "Eemalda ootealalt"
   },
-  "viewStateDisabled": {
-    "message": "Keelatud"
+  "stagingRemoved": {
+    "message": "Eemaldatud ootealalt"
   },
-  "viewEnable": {
-    "message": "Luba"
+  "recentStageAll": {
+    "message": "Lisa kõik hiljutised ootealale"
   },
-  "viewDisable": {
-    "message": "Keela"
+  "recentSectionTitle": {
+    "message": "Hiljuti lisatud"
   },
-  "viewTabHide": {
-    "message": "Peida"
+  "stagingEmpty": {
+    "message": "Tühi — paremklõpsake mis tahes järjehoidjal, kasutage siin ülesnoolt või ajaloo ridu üksuste ootealale saatmiseks"
   },
-  "viewTabDisable": {
-    "message": "Keela"
+  "stagingFromHistory": {
+    "message": "Ajaloost"
   },
-  "viewTree": {
-    "message": "Puu"
+  "stagingGroupExpand": {
+    "message": "Laienda grupp"
   },
-  "deadProxyNeverShow": {
-    "message": "Ära näita enam"
+  "stagingGroupCollapse": {
+    "message": "Ahenda grupp"
   },
-  "optionDeadProxyStrip": {
-    "message": "Kuva puhverserveri lisamise vihje surnud linkide vaates"
+  "stagingGroupRename": {
+    "message": "Nimeta grupp ümber…"
   },
-  "optionDeadProxyStripHint": {
-    "message": "Väljas peidab selle vihje seal; puhverserver jääb siin konfigureeritavaks ja salvestatud server kuvab alati oma haldusrea vaates."
+  "stagingGroupDissolve": {
+    "message": "Saada grupp laiali"
+  },
+  "stagingGroupDissolved": {
+    "message": "Grupp saadetud laiali — üksused jäid ootealale"
+  },
+  "stagingGroupAssign": {
+    "message": "Grupp…"
+  },
+  "stagingGroupAssignTitle": {
+    "message": "Määra gruppi"
+  },
+  "stagingGroupNew": {
+    "message": "Uus grupp"
+  },
+  "stagingGroupNamePrompt": {
+    "message": "Uue grupi nimi"
+  },
+  "stagingGroupNoGroups": {
+    "message": "Gruppe veel pole"
+  },
+  "stagingBucketTitle": {
+    "message": "Järjehoidjata"
+  },
+  "stagingBucketFavAll": {
+    "message": "Lisa kõik lemmikuteks"
+  },
+  "stagingNew": {
+    "message": "uus $n$",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingRowFav": {
+    "message": "Lisa see üksus lemmikuks"
+  },
+  "stagingRowUnfav": {
+    "message": "Eemalda see üksus lemmikutest"
+  },
+  "stagingFav": {
+    "message": "Lemmik"
+  },
+  "stagingUnfav": {
+    "message": "Eemalda lemmikutest"
+  },
+  "stagingFavDone": {
+    "message": "Lisatud lemmikuks $n$ üksust",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingUnfavDone": {
+    "message": "Eemaldatud lemmikutest $n$ üksust",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "groupSaveToFolder": {
+    "message": "Salvesta kausta…"
+  },
+  "groupCopyToFolder": {
+    "message": "Kopeeri kausta…"
+  },
+  "stagingCount": {
+    "message": "$n$ ootel",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingMoveCopy": {
+    "message": "Teisalda/kopeeri…"
+  },
+  "stagingMoveDone": {
+    "message": "Teisaldatud $n$ üksust koju",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingCopyDone": {
+    "message": "Kopeeritud $n$ üksust",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingMoveConfirm": {
+    "message": "Teisaldada $n$ üksust valitud kausta?",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingDeleteConfirm": {
+    "message": "Kustutada $n$ üksust? Mitte-järjehoidjad lahkuvad lihtsalt ootealalt.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingDeleted": {
+    "message": "Kustutatud $n$ järjehoidjat",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingRemovedCount": {
+    "message": "Eemaldatud $n$ üksust ootealalt",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingClear": {
+    "message": "Tühjenda ooteala"
+  },
+  "stagingClearConfirm": {
+    "message": "Tühjendada kogu ooteala? Järjehoidjapuu ei muutu."
+  },
+  "stagingCleared": {
+    "message": "Ooteala tühjendatud"
+  },
+  "groupPlaceTooltip": {
+    "message": "Salvesta see grupp kausta…"
+  },
+  "copyBookmark": {
+    "message": "Kopeeri"
+  },
+  "cutBookmark": {
+    "message": "Lõika"
+  },
+  "copyMoveTo": {
+    "message": "Kopeeri/teisalda…"
+  },
+  "pasteHere": {
+    "message": "Kleebi siia"
+  },
+  "copiedToast": {
+    "message": "Kopeeritud: $t$",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
+  },
+  "cutToast": {
+    "message": "Lõigatud: $t$ — kleebi sihtkausta (Esc tühistab)",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
+  },
+  "pasteDone": {
+    "message": "Kleebitud"
+  },
+  "pasteGone": {
+    "message": "Järjehoidjat pole enam — lõikelaud tühjendatud"
+  },
+  "folderCopyList": {
+    "message": "Kopeeri pealkirjad ja aadressid"
+  },
+  "folderCopyText": {
+    "message": "Lihtteksti loend"
+  },
+  "folderCopyMarkdown": {
+    "message": "Markdown"
+  },
+  "folderCopyJson": {
+    "message": "JSON"
+  },
+  "folderCopyConfirm": {
+    "message": "Kopeerida $n$ järjehoidja loend?",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "folderCopyDone": {
+    "message": "Kopeeritud $n$ järjehoidja kirjet",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "addFolderMenu": {
+    "message": "Lisa kaust"
+  },
+  "optionCollapseAddFolderMenu": {
+    "message": "Ahenda kausta-lisamise kirjed"
+  },
+  "optionCollapseAddFolderMenuHint": {
+    "message": "Ühenda kolm kausta-lisamise kirjet (enne/pärast/sees) üheks alammenüüks kausta paremklõpsul."
+  },
+  "tabRowStage": {
+    "message": "Järjehoidja ja ooteala"
+  },
+  "tabgroupStageAll": {
+    "message": "Järjehoidja ja ooteala kogu grupp"
+  },
+  "tabgroupStageConfirm": {
+    "message": "Järjehoidja ja ooteala $n$ vahekaarti?",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabgroupStageNone": {
+    "message": "Selles grupis pole järjehoidjaks sobivaid vahekaarte"
+  },
+  "stagedToast": {
+    "message": "Ootel $n$ vahekaarti gruppina „$t$”",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "t": {
+        "content": "$2"
+      }
+    }
+  },
+  "searchResultCount": {
+    "message": "$n$ tulemust",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "deleteSelected": {
+    "message": "Kustuta valitud"
   }
 }

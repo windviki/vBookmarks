@@ -29,6 +29,12 @@
   "advancedOptions": {
     "message": "Opções avançadas"
   },
+  "announceDismiss": {
+    "message": "Dispensar"
+  },
+  "announceV408Text": {
+    "message": "v4.0.8 é o lançamento com favicons aprimorados: ícones reais dos sites são buscados automaticamente para favoritos que o Chrome ainda não armazenou em cache."
+  },
   "announceV407Text": {
     "message": "A v4.0.7 traz a visão completa de links quebrados: verifique, marque, filtre e ordene links quebrados e restritos, com marcações anteriores e carimbos de data/hora por linha."
   },
@@ -44,12 +50,6 @@
   "announceV410Text": {
     "message": "v4.1.0 新增标签组视图：每个窗口的标签页和标签组，与您的书签一起管理。"
   },
-  "announceV408Text": {
-    "message": "v4.0.8 é o lançamento com favicons aprimorados: ícones reais dos sites são buscados automaticamente para favoritos que o Chrome ainda não armazenou em cache."
-  },
-  "announceDismiss": {
-    "message": "Dispensar"
-  },
   "confirmDeleteFolder": {
     "message": "Esta pasta contém $count$ item(ns). Você pode desfazer a exclusão.",
     "placeholders": {
@@ -57,6 +57,9 @@
         "content": "$1"
       }
     }
+  },
+  "confirmDeleteFolderButton": {
+    "message": "Excluir"
   },
   "confirmDeleteFolderBookmarks": {
     "placeholders": {
@@ -68,9 +71,6 @@
       }
     },
     "message": "Você tem certeza que quer apagar a pasta $folderName$ e $bookmarkCount$ favorito(s) incluído(s)?"
-  },
-  "confirmDeleteFolderButton": {
-    "message": "Excluir"
   },
   "confirmDeleteFolderSubfolders": {
     "placeholders": {
@@ -124,17 +124,11 @@
     "description": "Confirmation message for opening all bookmarks in a new window.",
     "message": "Você tem certeza que quer abrir todos os $count$ favoritos em uma nova janela?"
   },
-  "contextMenuAddBookmark": {
-    "message": "Adicionar esta página aos favoritos com vBookmarks"
-  },
   "copyAllTitlesAndUrls": {
     "message": "Copiar todos os títulos e URLs"
   },
   "copyTitleAndUrl": {
     "message": "Copiar título e URL"
-  },
-  "crossStorageMoveWarning": {
-    "message": "Não é possível mover favoritos entre armazenamento sincronizado e local. Use copiar/colar."
   },
   "customIcon": {
     "message": "Ícone personalizado"
@@ -145,14 +139,14 @@
   "customSeparatorColorDescription": {
     "message": "Personalizar cor do separador"
   },
-  "customSeparatorStringDescription": {
-    "message": "Se a URL de um favorito contiver este texto, será exibido como separador"
-  },
   "customSeparatorTitleDescription": {
     "message": "O título real do favorito exibido como separador"
   },
   "customSeparatorUrlDescription": {
     "message": "A URL real do favorito exibido como separador"
+  },
+  "customSeparatorStringDescription": {
+    "message": "Se a URL de um favorito contiver este texto, será exibido como separador"
   },
   "customStyles": {
     "message": "Estilos personalizados"
@@ -163,8 +157,14 @@
   "customStylesDescription": {
     "message": "Requer conhecimento de CSS. Modifique por sua conta e risco."
   },
-  "deadCancel": {
-    "message": "Cancelar"
+  "defaultIconButton": {
+    "message": "Usar padrão"
+  },
+  "defaultIconButtonOr": {
+    "message": "ou"
+  },
+  "customIconPick": {
+    "message": "Escolher arquivo…"
   },
   "deadChecking": {
     "message": "Verificando $done$ / $total$…",
@@ -234,6 +234,835 @@
   },
   "deadClearScan": {
     "message": "Limpar resultados da verificação"
+  },
+  "deadNone": {
+    "message": "Nenhum link quebrado encontrado"
+  },
+  "deadNoneFiltered": {
+    "message": "Nenhum link quebrado neste filtro — tente outro segmento acima"
+  },
+  "deadRescan": {
+    "message": "Reexaminar"
+  },
+  "delete": {
+    "message": "Apagar"
+  },
+  "deletedBookmark": {
+    "message": "$title$ excluído",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Example"
+      }
+    },
+    "description": "Toast shown after a bookmark or separator was deleted; the toast offers an undo button. $title$ is the deleted row's title (empty for separators)."
+  },
+  "deletedFolder": {
+    "message": "Pasta $title$ excluída",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Bookmarks"
+      }
+    },
+    "description": "Toast shown after a bookmark folder (with its whole subtree) was deleted; the toast offers an undo button. $title$ is the folder name."
+  },
+  "optionRecentCount": {
+    "message": "Número de favoritos adicionados recentemente a exibir"
+  },
+  "optionSearchHistory": {
+    "message": "Registrar histórico de pesquisa"
+  },
+  "optionSearchHistoryHint": {
+    "message": "Desativar também limpa o histórico existente."
+  },
+  "recentEmpty": {
+    "message": "Nenhum favorito recente. Pressione Ctrl+D para favoritar a página atual."
+  },
+  "recentRevealInTree": {
+    "message": "Revelar na árvore"
+  },
+  "searchHistoryClear": {
+    "message": "Limpar tudo"
+  },
+  "searchHistoryRemove": {
+    "message": "Remover esta pesquisa"
+  },
+  "searchHistoryResultCount": {
+    "message": "$n$ resultado(s)",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "searchHistoryTitle": {
+    "message": "Pesquisas recentes"
+  },
+  "timeDaysAgo": {
+    "message": "$n$ dias atrás",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "timeHoursAgo": {
+    "message": "$n$ h atrás",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "timeJustNow": {
+    "message": "agora mesmo"
+  },
+  "timeMinutesAgo": {
+    "message": "$n$ min atrás",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "timeYesterday": {
+    "message": "ontem"
+  },
+  "undoAction": {
+    "message": "Desfazer"
+  },
+  "revealOutsideBarHint": {
+    "message": "Somente a barra de favoritos é exibida: o destino está fora dela."
+  },
+  "revealOutsideBarAction": {
+    "message": "Mostrar tudo e revelar"
+  },
+  "dupesCleanAll": {
+    "message": "Limpar tudo: $groups$ grupos, $count$ cópias extras",
+    "placeholders": {
+      "groups": {
+        "content": "$1"
+      },
+      "count": {
+        "content": "$2"
+      }
+    },
+    "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go."
+  },
+  "dupesConfirmAll": {
+    "message": "Remover $count$ cópias extras em $groups$ grupos? O item escolhido como principal em cada grupo é mantido.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    },
+    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
+  },
+  "dupesConfirmSelected": {
+    "message": "Remover $count$ favoritos duplicados dos $groups$ grupos selecionados?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    }
+  },
+  "dupesConfirmGroup": {
+    "message": "Manter \"$title$\" e remover as outras $count$ cópias?",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Example bookmark"
+      },
+      "count": {
+        "content": "$2"
+      }
+    },
+    "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."
+  },
+  "dupesDone": {
+    "message": "$count$ favoritos duplicados removidos",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Alert shown after the duplicate cleanup finished."
+  },
+  "dupesGroupCount": {
+    "message": "$count$ duplicados",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
+  },
+  "dupesGroupExpand": {
+    "description": "Dupes view group-head context menu: expand a collapsed duplicate group.",
+    "message": "Expandir grupo"
+  },
+  "dupesGroupCollapse": {
+    "description": "Dupes view group-head context menu: collapse an expanded duplicate group.",
+    "message": "Recolher grupo"
+  },
+  "dupesNone": {
+    "message": "Nenhum duplicado encontrado"
+  },
+  "deleteEllipsis": {
+    "message": "Apagar..."
+  },
+  "donationMessage": {
+    "message": "Está gostando? Doe para garantir seu futuro — ou avalie na loja: cada avaliação mantém as atualizações chegando."
+  },
+  "donationV4Notice": {
+    "message": "O vBookmarks 4.0 é uma reformulação completa com design moderno e cheio de novos recursos."
+  },
+  "donationV4GuideLink": {
+    "message": "Leia o guia da v4 →"
+  },
+  "donationGo": {
+    "message": "Doar"
+  },
+  "donationRate": {
+    "message": "Avaliar"
+  },
+  "donationRateTitle": {
+    "message": "Avalie o vBookmarks na Chrome Web Store"
+  },
+  "donationLater": {
+    "message": "Depois"
+  },
+  "donationNever": {
+    "message": "Não mostrar novamente"
+  },
+  "donationDismiss": {
+    "message": "Fechar"
+  },
+  "edit": {
+    "message": "Editar..."
+  },
+  "editBookmark": {
+    "message": "Editar favorito"
+  },
+  "editFolder": {
+    "message": "Editar pasta"
+  },
+  "errorOccured": {
+    "message": "Oops, ocorreu um erro."
+  },
+  "extDesc": {
+    "message": "Um gerenciador de favoritos popup. Enhanced Neat Bookmarks."
+  },
+  "extName": {
+    "message": "vBookmarks"
+  },
+  "folderEmpty": {
+    "message": "(Vazio)"
+  },
+  "general": {
+    "message": "Definições Gerais"
+  },
+  "ignore": {
+    "message": "Ignorar"
+  },
+  "name": {
+    "description": "Nome do favorito ou pasta.",
+    "message": "Nome"
+  },
+  "nope": {
+    "message": "Cancelar"
+  },
+  "noTitle": {
+    "description": "Título para favoritos sem título e sem URL http(s) ou pastas sem título.",
+    "message": "(sem título)"
+  },
+  "open": {
+    "description": "Ação para abrir favoritos",
+    "message": "Abrir"
+  },
+  "openBookmarks": {
+    "message": "Abrir todos os favoritos"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "Abrir favoritos em janela anônima"
+  },
+  "openBookmarksInGroup": {
+    "message": "Abrir tudo em novo grupo de abas"
+  },
+  "openBookmarksInGroupSetup": {
+    "message": "Abrir todos num novo grupo…"
+  },
+  "openBookmarksInExistingGroup": {
+    "message": "Abrir todos num grupo existente…"
+  },
+  "tabGroupOptions": {
+    "message": "Grupos de guias"
+  },
+  "sortMenuOptions": {
+    "message": "Classificar"
+  },
+  "openBookmarksNewWindow": {
+    "message": "Abrir favoritos em nova janela"
+  },
+  "openCommandPaletteCommand": {
+    "message": "Abrir paleta de comandos"
+  },
+  "openIncognitoWindow": {
+    "message": "Abrir em uma janela anônima"
+  },
+  "openNewTab": {
+    "message": "Abrir em uma nova guia"
+  },
+  "bookmarkOpenInNewGroup": {
+    "message": "Abrir num novo grupo de abas"
+  },
+  "bookmarkOpenInNewGroupSetup": {
+    "message": "Abrir num novo grupo de abas…"
+  },
+  "bookmarkOpenInExistingGroup": {
+    "message": "Abrir num grupo de abas existente…"
+  },
+  "openNewWindow": {
+    "message": "Abrir em uma nova janela"
+  },
+  "openSidePanelCommand": {
+    "message": "Abrir painel lateral do vBookmarks"
+  },
+  "optionAnnounceEnabled": {
+    "message": "Exibir avisos no produto"
+  },
+  "optionAnnounceEnabledHint": {
+    "message": "Notas de versão e dicas do repositório GitHub do projeto (buscadas no máximo a cada 6 horas). Desativar também interrompe a busca na rede."
+  },
+  "optionClickNewTab": {
+    "message": "Clique com o botão esquerdo do mouse abre favorito em uma nova guia"
+  },
+  "optionCloseUnusedFolders": {
+    "message": "Fechar pastas não utilizadas quando abrir uma nova pasta."
+  },
+  "optionConfirmOpenFolder": {
+    "message": "Mostrar confirmação quando abrir vários favoritos de uma pasta."
+  },
+  "optionConfirmDeleteFolder": {
+    "message": "Confirmar antes de excluir pastas não vazias"
+  },
+  "optionOnlyShowBookmarkBar": {
+    "message": "Mostrar apenas favoritos da barra de favoritos"
+  },
+  "optionSearchAfterEnter": {
+    "message": "Pesquisar favoritos apenas ao pressionar ENTER (em vez de pesquisa instantânea)"
+  },
+  "optionOpenNewTab": {
+    "message": "Clique com o botão do meio do mouse ou control-clique abre o favorito em um nova guia em 2º plano (em vez de 1º plano)."
+  },
+  "optionOpenInSidePanel": {
+    "message": "Abrir no painel lateral em vez de pop-up"
+  },
+  "optionPopupStays": {
+    "message": "O pop-up continua aberto quando abrir um favorito (clicando com o botão esquerdo) ."
+  },
+  "optionRememberPrevState": {
+    "message": "Lembrar estado anterior (posição de rolagem, pastas abertas e o último item focado)."
+  },
+  "options": {
+    "message": "Opções"
+  },
+  "optionsFooterText": {
+    "message": "Criado por $authorName$.",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    },
+    "description": "Footer text for the Options page"
+  },
+  "optionZoom": {
+    "message": "Zoom"
+  },
+  "optionTheme": {
+    "message": "Tema"
+  },
+  "optionThemeAuto": {
+    "message": "Seguir sistema"
+  },
+  "optionThemeLight": {
+    "message": "Claro"
+  },
+  "optionThemeDark": {
+    "message": "Escuro"
+  },
+  "optionThemeInk": {
+    "message": "Tinta (escuro)"
+  },
+  "optionThemePaper": {
+    "message": "Papel (claro)"
+  },
+  "optionLanguage": {
+    "message": "Idioma"
+  },
+  "optionLanguageAuto": {
+    "message": "Automático"
+  },
+  "optionLanguageHint": {
+    "message": "Alterar o idioma recarrega esta página."
+  },
+  "paletteClose": {
+    "message": "Fechar"
+  },
+  "paletteCmdVersion": {
+    "message": "Informações da versão"
+  },
+  "paletteCmdLang": {
+    "message": "Alterar idioma…"
+  },
+  "paletteCmdLangUsage": {
+    "message": "Uso: /lang seguido de um código de localidade — ex.: /lang en, /lang zh_CN, /lang ja."
+  },
+  "versionDialogTitle": {
+    "message": "vBookmarks $version$",
+    "placeholders": {
+      "version": {
+        "content": "$1"
+      }
+    }
+  },
+  "versionDialogCopy": {
+    "message": "Copiar informações"
+  },
+  "versionDialogCopied": {
+    "message": "Copiado"
+  },
+  "versionMetaVersion": {
+    "message": "Versão da extensão"
+  },
+  "versionMetaAnnounce": {
+    "message": "Novidades"
+  },
+  "versionMetaAnnounceNone": {
+    "message": "Nenhuma novidade carregada"
+  },
+  "versionMetaBrowser": {
+    "message": "Navegador"
+  },
+  "versionMetaOS": {
+    "message": "SO"
+  },
+  "versionMetaChannel": {
+    "message": "Canal"
+  },
+  "versionMetaLanguage": {
+    "message": "Idioma"
+  },
+  "versionMetaUserAgent": {
+    "message": "Agente do usuário"
+  },
+  "paletteCmdDead": {
+    "message": "Encontrar links quebrados"
+  },
+  "paletteCmdDupes": {
+    "message": "Limpar favoritos duplicados"
+  },
+  "paletteCmdNewBookmark": {
+    "message": "Novo favorito…"
+  },
+  "paletteCmdNewFolder": {
+    "message": "Nova pasta…"
+  },
+  "paletteCmdQuickAdd": {
+    "message": "Favoritar aba atual"
+  },
+  "paletteCmdSaveSession": {
+    "message": "Salvar abas da janela como pasta"
+  },
+  "paletteNoResults": {
+    "message": "Nenhum resultado correspondente"
+  },
+  "palettePlaceholder": {
+    "message": "Pesquisar favoritos, pastas, comandos…"
+  },
+  "parentFolder": {
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarksbar"
+      }
+    },
+    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
+    "message": "Pasta principal: \"$folderName$\""
+  },
+  "removeSeparator": {
+    "message": "Remover separador"
+  },
+  "replaceUrl": {
+    "message": "Substituir pela URL atual"
+  },
+  "reportedToDeveloper": {
+    "message": "Isso foi relatado ao desenvolvedor."
+  },
+  "reportError": {
+    "message": "Reportar erro"
+  },
+  "resetButton": {
+    "message": "Redefinir"
+  },
+  "resetSettings": {
+    "message": "Redefinir configurações"
+  },
+  "resetSettingsDescription": {
+    "message": "Redefinir vBookmarks para as configurações padrão."
+  },
+  "save": {
+    "message": "Salvar"
+  },
+  "searchBookmarks": {
+    "description": "Texto contido no campo de pesquisa.",
+    "message": "Procurar favoritos"
+  },
+  "searchClear": {
+    "message": "Limpar pesquisa"
+  },
+  "searchNoResults": {
+    "message": "Nenhum favorito correspondente"
+  },
+  "searchViewHint": {
+    "message": "Digite na caixa acima para pesquisar seus favoritos"
+  },
+  "selectAll": {
+    "message": "Tudo"
+  },
+  "selectClear": {
+    "message": "Limpar"
+  },
+  "selectCount": {
+    "message": "$count$ selecionados",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "selectInvert": {
+    "message": "Inverter"
+  },
+  "selectModeEnter": {
+    "message": "Selecionar"
+  },
+  "selectModeExit": {
+    "message": "Sair da seleção"
+  },
+  "deadRiskBanner": {
+    "message": "A limpeza de links quebrados exclui favoritos em massa. Faça backup dos seus favoritos antes da primeira limpeza."
+  },
+  "dupesRiskBanner": {
+    "message": "A deduplicação exclui favoritos duplicados em massa. Faça backup dos seus favoritos antes de aplicá-la."
+  },
+  "riskBannerHelp": {
+    "message": "Guia de backup e restauração"
+  },
+  "riskBannerNever": {
+    "message": "Não mostrar novamente"
+  },
+  "riskBannerDismiss": {
+    "message": "Dispensar"
+  },
+  "sessionEmpty": {
+    "message": "Nenhuma aba para salvar"
+  },
+  "sessionFolderName": {
+    "message": "Sessão $date$",
+    "placeholders": {
+      "date": {
+        "content": "$1",
+        "example": "2026-07-18 15:04"
+      }
+    },
+    "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm."
+  },
+  "sessionSaved": {
+    "message": "$count$ abas salvas em uma nova pasta",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "12"
+      }
+    },
+    "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
+  },
+  "url": {
+    "message": "URL"
+  },
+  "syncOptions": {
+    "message": "Opções de Sincronização"
+  },
+  "optionShowSyncStatus": {
+    "message": "Mostrar indicadores de status de sincronização"
+  },
+  "optionHighlightUnsynced": {
+    "message": "Esmaecer favoritos não sincronizados"
+  },
+  "optionAutoRefreshSync": {
+    "message": "Atualizar status de sincronização automaticamente"
+  },
+  "optionSyncRefreshInterval": {
+    "message": "Intervalo de atualização"
+  },
+  "optionSyncRefreshIntervalSeconds": {
+    "message": "segundos"
+  },
+  "syncStatusSynced": {
+    "message": "Sincronizado com sua conta Google"
+  },
+  "syncStatusLocal": {
+    "message": "Apenas local — não enviado"
+  },
+  "syncStatusUnsyncable": {
+    "message": "Não pode ser sincronizado"
+  },
+  "syncSuffixSynced": {
+    "message": "(Sincronizado)"
+  },
+  "syncSuffixLocal": {
+    "message": "(Local)"
+  },
+  "optionAutoResizePopup": {
+    "message": "Redimensionar automaticamente a janela popup para caber o conteúdo"
+  },
+  "crossStorageMoveWarning": {
+    "message": "Não é possível mover favoritos entre armazenamento sincronizado e local. Use copiar/colar."
+  },
+  "recentBookmarks": {
+    "message": "Adicionados recentemente"
+  },
+  "optionShowRecentBookmarks": {
+    "message": "Mostrar favoritos adicionados recentemente no topo do pop-up"
+  },
+  "optionShowStatsView": {
+    "message": "Mostrar guia de estatísticas"
+  },
+  "optionShowDeadView": {
+    "message": "Mostrar guia de links quebrados"
+  },
+  "optionShowDupesView": {
+    "message": "Mostrar guia de duplicatas"
+  },
+  "optionRecentCollapsed": {
+    "message": "Recolher seção de adicionados recentemente por padrão"
+  },
+  "optionsGroupViews": {
+    "message": "Visualizações"
+  },
+  "optionsGroupSort": {
+    "message": "Ordenação"
+  },
+  "optionsGroupStats": {
+    "message": "Estatísticas"
+  },
+  "optionsGroupTools": {
+    "message": "Ferramentas"
+  },
+  "optionShowViewTabs": {
+    "message": "Mostrar abas de visualização abaixo da caixa de pesquisa"
+  },
+  "optionRememberView": {
+    "message": "Lembrar a última visualização ativa e reabri-la"
+  },
+  "optionShowTabBadges": {
+    "message": "Mostrar contadores nas abas de visualização"
+  },
+  "optionPaletteEnabled": {
+    "message": "Ativar a paleta de comandos (Ctrl/Cmd+K)"
+  },
+  "optionQuickAddEnabled": {
+    "message": "Mostrar o botão de estrela de adição rápida ao lado da caixa de pesquisa"
+  },
+  "optionQuickAddContextMenu": {
+    "message": "Adicionar uma entrada \"Adicionar esta página aos favoritos com vBookmarks\" ao menu de contexto da página"
+  },
+  "optionQuickAddContextMenuHint": {
+    "message": "Independente do botão de estrela de adição rápida; a restauração da experiência clássica também desativa esta entrada."
+  },
+  "optionCollapseTabGroupMenu": {
+    "message": "Recolher os itens dos grupos de guias em um submenu \"Grupos de guias\""
+  },
+  "optionCollapseTabGroupMenuHint": {
+    "message": "Aplica-se aos menus de contexto de pastas e favoritos. Desativado por padrão; mantém os menus de baixa altura mais curtos em telas pequenas ou com zoom alto."
+  },
+  "optionCollapseSortMenu": {
+    "message": "Recolher os itens de classificação em um submenu \"Classificar\""
+  },
+  "optionCollapseSortMenuHint": {
+    "message": "Aplica-se ao menu de contexto de pasta. Ativado por padrão."
+  },
+  "optionShowToolButton": {
+    "message": "Mostrar o botão de ferramentas (⋮) ao lado da caixa de pesquisa"
+  },
+  "optionClassicExperience": {
+    "message": "Restaurar o cabeçalho clássico"
+  },
+  "optionClassicExperienceHint": {
+    "message": "Desativa a paleta de comandos, a estrela de adição rápida, a entrada no menu de contexto da página, o botão da ferramenta e as abas de visualização. Cada um pode ser reativado individualmente na sua seção."
+  },
+  "optionShowItemPath": {
+    "message": "Mostrar o caminho da pasta pai nas linhas da lista"
+  },
+  "viewRecent": {
+    "message": "Recentes"
+  },
+  "viewTree": {
+    "message": "Árvore"
+  },
+  "viewSearch": {
+    "message": "Pesquisa"
+  },
+  "viewSwitchAnnounce": {
+    "message": "Visualização $name$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "viewStateEnabled": {
+    "message": "Ativado"
+  },
+  "viewStateDisabled": {
+    "message": "Desativado"
+  },
+  "viewEnable": {
+    "message": "Ativar"
+  },
+  "viewDisable": {
+    "message": "Desativar"
+  },
+  "viewTabHide": {
+    "message": "Ocultar"
+  },
+  "viewTabDisable": {
+    "message": "Desativar"
+  },
+  "sortFolderContents": {
+    "message": "Ordenar Conteúdo da Pasta"
+  },
+  "sortByName": {
+    "message": "Classificar por nome"
+  },
+  "sortByDate": {
+    "message": "Classificar por data de adição"
+  },
+  "sortRecursiveSuffix": {
+    "message": "(recursivo)"
+  },
+  "sortOptions": {
+    "message": "Opções de classificação…"
+  },
+  "sortDone": {
+    "message": "Pasta classificada"
+  },
+  "sortByTitle": {
+    "message": "Por título"
+  },
+  "sortByDateAdded": {
+    "message": "Por data de adição (mais recente primeiro)"
+  },
+  "sortFoldersFirst": {
+    "message": "Manter pastas no topo"
+  },
+  "sortRecursive": {
+    "message": "Ordenar também subpastas (recursivo)"
+  },
+  "sortRecursiveWarning": {
+    "message": "Isso reorganiza os favoritos em cada subpasta."
+  },
+  "tabGroupDialogTitle": {
+    "message": "Novo grupo de abas"
+  },
+  "tabGroupTitleLabel": {
+    "message": "Título do grupo"
+  },
+  "tabGroupColorLabel": {
+    "message": "Cor"
+  },
+  "tabGroupColorGrey": {
+    "message": "Cinza",
+    "description": "Accessible name of the grey color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorBlue": {
+    "message": "Azul",
+    "description": "Accessible name of the blue color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorRed": {
+    "message": "Vermelho",
+    "description": "Accessible name of the red color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorYellow": {
+    "message": "Amarelo",
+    "description": "Accessible name of the yellow color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorGreen": {
+    "message": "Verde",
+    "description": "Accessible name of the green color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPink": {
+    "message": "Rosa",
+    "description": "Accessible name of the pink color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPurple": {
+    "message": "Roxo",
+    "description": "Accessible name of the purple color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorCyan": {
+    "message": "Ciano",
+    "description": "Accessible name of the cyan color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorOrange": {
+    "message": "Laranja",
+    "description": "Accessible name of the orange color swatch in the new-tab-group dialog."
+  },
+  "tabGroupUntitled": {
+    "message": "Grupo sem título"
+  },
+  "tabGroupNoGroups": {
+    "message": "Nenhum grupo de abas existente"
+  },
+  "tabGroupPickDialogTitle": {
+    "message": "Abrir em grupo de abas existente"
+  },
+  "quickAddBookmark": {
+    "message": "Adicionar esta página aos favoritos (Ctrl+D)"
+  },
+  "quickAddBookmarkCommand": {
+    "message": "Adicionar rapidamente a aba atual como favorito"
+  },
+  "quickAdded": {
+    "message": "Favorito adicionado"
+  },
+  "quickAddedTo": {
+    "message": "Favorito adicionado a $folderName$",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarks bar"
+      }
+    }
+  },
+  "quickRemoved": {
+    "message": "Favorito removido"
+  },
+  "quickRemoveBookmark": {
+    "message": "Remover este favorito (Ctrl+D)"
+  },
+  "toolButtonTitle": {
+    "message": "Ferramentas (Ctrl+K)"
+  },
+  "contextMenuAddBookmark": {
+    "message": "Adicionar esta página aos favoritos com vBookmarks"
   },
   "deadFilterAll": {
     "message": "Todos"
@@ -314,14 +1143,653 @@
   "deadMarkedBannerDismiss": {
     "message": "Dispensar"
   },
-  "deadNone": {
-    "message": "Nenhum link quebrado encontrado"
+  "deadProxyAdd": {
+    "message": "Adicionar um servidor proxy para verificação de links quebrados"
   },
-  "deadNoneFiltered": {
-    "message": "Nenhum link quebrado neste filtro — tente outro segmento acima"
+  "deadProxyLabel": {
+    "message": "Proxy: $server$",
+    "placeholders": {
+      "server": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadProxyChange": {
+    "message": "Alterar"
+  },
+  "deadProxyRemove": {
+    "message": "Remover"
+  },
+  "deadProxyRemoved": {
+    "message": "Servidor proxy removido"
+  },
+  "deadProxyPanelHint": {
+    "message": "Informe um servidor proxy que você já tenha (a extensão não fornece nenhum), ex.: 127.0.0.1:7890 ou socks5://127.0.0.1:1080."
+  },
+  "deadProxyTestUrlLabel": {
+    "message": "URL de teste"
+  },
+  "deadProxyTestSave": {
+    "message": "Testar e salvar"
+  },
+  "deadProxyTesting": {
+    "message": "Testando…"
+  },
+  "deadProxySaved": {
+    "message": "Proxy salvo — verificações futuras reverificam as falhas diretas por meio dele."
+  },
+  "deadProxyInvalid": {
+    "message": "Endereço de proxy inválido — use host:porta ou esquema://host:porta (http/https/socks5, sem credenciais)."
+  },
+  "deadProxyUnreachable": {
+    "message": "Proxy inacessível — não salvo"
+  },
+  "deadProxyDenied": {
+    "message": "A permissão do proxy não foi concedida"
+  },
+  "deadProxyControlled": {
+    "message": "As configurações de proxy são gerenciadas por outra extensão"
+  },
+  "deadProxyUnavailable": {
+    "message": "A API de proxy não está disponível neste navegador"
+  },
+  "deadProxyNudge": {
+    "message": "Uma reverificação via proxy separa links realmente quebrados dos bloqueados por região — configure aqui ou na página de opções."
+  },
+  "deadProxyNeverShow": {
+    "message": "Não mostrar novamente"
+  },
+  "deadStartHint": {
+    "message": "Iniciar verificação de $n$ favoritos",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadStatusBlocked": {
+    "message": "bloqueado"
+  },
+  "deadUnmark": {
+    "message": "Remover marca de morto"
+  },
+  "deadUnmarkAll": {
+    "message": "Limpar todas as marcas"
+  },
+  "deadUnmarkSelected": {
+    "message": "Desmarcar selecionados"
+  },
+  "dupesApplyAll": {
+    "message": "Aplicar todas ($count$)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesApplySelected": {
+    "message": "Deduplicar selecionados ($count$)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesCleanRestHint": {
+    "message": "Manter \"$title$\" e remover os outros $count$",
+    "placeholders": {
+      "title": {
+        "content": "$1"
+      },
+      "count": {
+        "content": "$2"
+      }
+    }
+  },
+  "dupesIgnoreScheme": {
+    "message": "Ignorar diferenças http/https"
+  },
+  "dupesKeepThis": {
+    "message": "Manter este"
+  },
+  "dupesKeeperSet": {
+    "message": "Definir como mantido"
+  },
+  "dupesPreviewSummary": {
+    "message": "$groups$ grupos · $count$ a serem liberados",
+    "placeholders": {
+      "groups": {
+        "content": "$1"
+      },
+      "count": {
+        "content": "$2"
+      }
+    }
+  },
+  "dupesRemoveRow": {
+    "message": "Excluir esta cópia"
+  },
+  "dupesScopeAll": {
+    "message": "Todos os favoritos"
+  },
+  "dupesScopeBar": {
+    "message": "Apenas barra de favoritos"
+  },
+  "dupesStrategyBookmarkBar": {
+    "message": "Manter o da barra de favoritos"
+  },
+  "dupesStrategyMostVisited": {
+    "message": "Manter o mais visitado"
+  },
+  "dupesStrategyNewest": {
+    "message": "Manter o mais recente"
+  },
+  "dupesStrategyOldest": {
+    "message": "Manter o mais antigo"
+  },
+  "dupesStrategyShallowest": {
+    "message": "Manter o mais superficial"
+  },
+  "dupesStrategyShortestTitle": {
+    "message": "Manter o título mais curto"
+  },
+  "optionDeadProxyServer": {
+    "message": "Servidor proxy para links quebrados"
+  },
+  "deadProxyServerHint": {
+    "message": "O servidor salvo re-verifica marcadores com falha direta em cada verificação de links mortos, separando links realmente mortos dos bloqueados por região. Teste e salve para testá-lo (apenas um servidor acessível é mantido); você também pode adicioná-lo na visualização de links mortos."
+  },
+  "deadProxyClear": {
+    "message": "Limpar"
+  },
+  "deadProxyNone": {
+    "message": "(não definido)"
+  },
+  "optionDeadProxyStrip": {
+    "message": "Mostrar a dica de adicionar proxy na visualização de links quebrados"
+  },
+  "optionDeadProxyStripHint": {
+    "message": "Desativado oculta essa dica ali; o servidor proxy continua configurável aqui, e um servidor salvo sempre mostra sua linha de gerenciamento na visualização."
+  },
+  "optionDeadScanConcurrency": {
+    "message": "Simultaneidade de verificação de links mortos (1-16)"
+  },
+  "optionDeadScanTimeout": {
+    "message": "Tempo limite de verificação de links mortos em segundos (2-30)"
+  },
+  "paletteCmdGoDead": {
+    "message": "Ir para visualização de links mortos"
+  },
+  "paletteCmdGoDupes": {
+    "message": "Ir para visualização de duplicatas"
+  },
+  "paletteCmdGoRecent": {
+    "message": "Ir para visualização de recentes"
+  },
+  "paletteCmdGoSearch": {
+    "message": "Ir para visualização de pesquisa"
+  },
+  "paletteCmdGoTree": {
+    "message": "Ir para visualização em árvore"
+  },
+  "paletteCmdOptions": {
+    "message": "Abrir página de opções"
+  },
+  "paletteCmdSearchInView": {
+    "message": "Pesquisar '$query$' na visualização de pesquisa",
+    "placeholders": {
+      "query": {
+        "content": "$1"
+      }
+    }
+  },
+  "rowActionDelete": {
+    "message": "Excluir"
+  },
+  "rowActionMark": {
+    "message": "Marcar como morto"
+  },
+  "rowActionReveal": {
+    "message": "Revelar na árvore"
+  },
+  "rowActionUnmark": {
+    "message": "Remover marca de morto"
+  },
+  "viewDead": {
+    "message": "Links mortos"
+  },
+  "viewDupes": {
+    "message": "Duplicatas"
+  },
+  "viewStats": {
+    "message": "Estatísticas"
+  },
+  "paletteCmdGoStats": {
+    "message": "Ir para visualização de estatísticas"
+  },
+  "optionStatsEnabled": {
+    "message": "Ativar estatísticas de visitas"
+  },
+  "optionFaviconContrast": {
+    "message": "Inverter favicons de baixo contraste"
+  },
+  "optionFaviconContrastHint": {
+    "message": "Ícones brancos em temas claros e ícones pretos em temas escuros são invertidos para permanecerem visíveis. Cada ícone é amostrado uma vez ao carregar — sem custo durante a navegação."
+  },
+  "optionFaviconEnrich": {
+    "message": "Buscar ícones de sites ausentes"
+  },
+  "optionFaviconEnrichHint": {
+    "message": "Para sites favoritados sem ícone em cache no Chrome, busque o ícone real diretamente do site (/favicon.ico e, em seguida, os ícones declarados na página). As solicitações vão apenas para sites que você marcou."
+  },
+  "optionFaviconEnrichAgg": {
+    "message": "Fallback de ícone de terceiros"
+  },
+  "optionFaviconEnrichAggHint": {
+    "message": "Quando a busca direta falha, o ícone é buscado por domínio em uma lista integrada de serviços de ícones de terceiros ($providers$). Um serviço inacessível é ignorado e o próximo é tentado — sem nova tentativa por 6 horas.",
+    "placeholders": {
+      "providers": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionFaviconBackup": {
+    "message": "Incluir cache de ícones nos backups"
+  },
+  "optionFaviconBackupHint": {
+    "message": "Inclua também o cache de favicons enriquecidos (dados por site, potencialmente grandes) na exportação/importação de configurações. Isso cobre ícones já armazenados em cache mesmo com a busca desativada. Desativado mantém os backups pequenos; os ícones são buscados novamente automaticamente de qualquer forma."
+  },
+  "optionFaviconCacheClear": {
+    "message": "Limpar cache de ícones"
+  },
+  "optionFaviconCacheClearConfirm": {
+    "message": "Limpar o cache de ícones enriquecidos? Os ícones serão buscados novamente automaticamente na próxima abertura."
+  },
+  "optionFaviconCacheEmpty": {
+    "message": "Não há cache de ícones para limpar."
+  },
+  "optionFaviconCacheCleared": {
+    "message": "Cache de ícones limpo. Os ícones serão buscados novamente na próxima abertura."
+  },
+  "favGalleryLink": {
+    "message": "Ver ícones atualizados",
+    "description": "Options link (Icons group, right of the Clear icon cache button): opens the favicon gallery page listing the sites whose icons were refetched."
+  },
+  "favGalleryTitle": {
+    "message": "Ícones atualizados de sites",
+    "description": "Favicon gallery page title (h1 + document title)."
+  },
+  "favGalleryHint": {
+    "message": "Ícones que o vBookmarks buscou para sites favoritos que o Chrome não tinha em cache — de onde veio cada um e quais favoritos o utilizam. Somente exibição.",
+    "description": "Subtitle under the favicon gallery title, explaining the page is read-only."
+  },
+  "favGallerySearch": {
+    "message": "Filtrar por site, título ou caminho",
+    "description": "Placeholder of the favicon gallery filter input."
+  },
+  "favGalleryAll": {
+    "message": "Todos",
+    "description": "Favicon gallery source filter chip: show every source."
+  },
+  "favSrcDirect": {
+    "message": "Direto",
+    "description": "Favicon gallery source badge: the icon was fetched directly from the site itself."
+  },
+  "favSrcProxy": {
+    "message": "Proxy",
+    "description": "Favicon gallery source badge: the icon was fetched through the user's own proxy relay."
+  },
+  "favSrcLegacy": {
+    "message": "Cache anterior",
+    "description": "Favicon gallery source badge: cached before the source was recorded, so the origin is unknown."
+  },
+  "favGalleryCompare": {
+    "message": "Comparar com o ícone provisório",
+    "description": "Favicon gallery toggle button: switch every icon to the generic placeholder it replaced (before/after comparison)."
+  },
+  "favGalleryShowingBefore": {
+    "message": "Voltar aos ícones reais",
+    "description": "Favicon gallery toggle button while the placeholder comparison is shown: switch back to the real fetched icons."
+  },
+  "favGalleryStatSites": {
+    "message": "$n$ sites",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    },
+    "description": "Favicon gallery stats strip: how many sites have a refreshed icon."
+  },
+  "favGalleryStatBookmarks": {
+    "message": "$n$ favoritos",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    },
+    "description": "Favicon gallery stats strip: how many bookmarks sit on the refreshed sites."
+  },
+  "favGalleryVisits": {
+    "message": "$n$ aberturas registradas",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    },
+    "description": "Favicon gallery tooltip on a bookmark row's visit-count pill."
+  },
+  "favGalleryFailedTitle": {
+    "message": "Tentativas recentes, nenhum ícone encontrado",
+    "description": "Favicon gallery heading of the muted section listing hosts whose icon fetch failed recently."
+  },
+  "favGalleryFailedHint": {
+    "message": "As falhas são repetidas após 24 h, 3 dias e 7 dias, e então abandonadas até que o cache de ícones seja limpo.",
+    "description": "Favicon gallery hint under the failed-fetch section title."
+  },
+  "favGalleryGaveUp": {
+    "message": "Desistiu",
+    "description": "Favicon gallery badge on a failed-strip host whose retries are exhausted (it stays untouched until the icon cache is cleared)."
+  },
+  "favGalleryOrphan": {
+    "message": "Não há mais favoritos neste host — o ícone é limpo junto com o cache.",
+    "description": "Favicon gallery note on a card whose host no longer has any bookmark."
+  },
+  "favGalleryEmptyTitle": {
+    "message": "Nenhum ícone atualizado ainda",
+    "description": "Favicon gallery empty-state heading."
+  },
+  "favGalleryEmptyText": {
+    "message": "Quando o pop-up encontra um site favorito para o qual o Chrome não tem ícone, o vBookmarks busca o ícone real e o lista aqui.",
+    "description": "Favicon gallery empty-state body text."
+  },
+  "storageUsageIcon": {
+    "message": "Cache de ícones"
+  },
+  "storageUsageOther": {
+    "message": "Outros"
+  },
+  "storageUsageSummary": {
+    "message": "Usado $1$ de $2$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      },
+      "2": {
+        "content": "$2"
+      }
+    }
+  },
+  "storageUsageFree": {
+    "message": "Livre"
+  },
+  "storageUsageHint": {
+    "message": "Somente o armazenamento local da extensão (chrome.storage.local, cota de cerca de 10 MB): o cache de ícones, além das configurações e outros dados locais. As configurações sincronizadas, os dados de sessão e a própria biblioteca de favoritos não são contados aqui."
+  },
+  "optionsDonate": {
+    "message": "Doar"
+  },
+  "optionsGithubLink": {
+    "message": "GitHub"
+  },
+  "optionsHomepageLink": {
+    "message": "Página inicial"
+  },
+  "optionsSince": {
+    "message": "Derivado do Neat Bookmarks, mantido por $days$ dias.",
+    "placeholders": {
+      "days": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionsVersion": {
+    "message": "Versão do vBookmarks"
+  },
+  "statsSortByCount": {
+    "message": "Por contagem"
+  },
+  "statsSortByRecent": {
+    "message": "Por recentes"
+  },
+  "statsShowUnbookmarked": {
+    "message": "Mostrar não marcados"
+  },
+  "statsShowUnbookmarkedHint": {
+    "message": "Incluir páginas do histórico que não estão salvas como favoritos."
+  },
+  "statsEmpty": {
+    "message": "Estatísticas são acumuladas ao abrir favoritos"
+  },
+  "statsDisabledHint": {
+    "message": "Estatísticas de visitas estão desativadas — ative-as em Opções → Visualizações"
+  },
+  "statsVisitCount": {
+    "message": "Visitado $count$ vezes",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "statsClearData": {
+    "message": "Limpar estatísticas"
+  },
+  "statsClearConfirm": {
+    "message": "Limpar estatísticas de visitas de $count$ favoritos? Esta ação não pode ser desfeita.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "statsHistoryBanner": {
+    "message": "Conceda acesso ao histórico para gerar estatísticas de visitas com suas visitas passadas."
+  },
+  "statsHistoryEnable": {
+    "message": "Ativar"
+  },
+  "statsHistoryDismiss": {
+    "message": "Não mostrar novamente"
+  },
+  "statsHistoryImported": {
+    "message": "Importadas visitas passadas para $count$ favoritos",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "paletteCmdToggleViewTabs": {
+    "message": "Alternar abas de visualização"
+  },
+  "paletteCmdTheme": {
+    "message": "Definir tema…"
+  },
+  "paletteCmdThemeUsage": {
+    "message": "Uso: /theme seguido de um nome de tema — auto, light, dark, ink ou paper (um prefixo único funciona, ex.: /theme d)."
+  },
+  "paletteCustomTag": {
+    "message": "personalizado"
+  },
+  "paletteCustomDeleteConfirm": {
+    "message": "Excluir o comando \"$1\"? A alteração será sincronizada em todos os seus dispositivos."
+  },
+  "paletteCustomBroken": {
+    "message": "A pasta do comando \"$1\" não existe mais. Excluir o comando?"
+  },
+  "paletteCmdSaveAsCommand": {
+    "message": "Salvar \"$1\" como comando…"
+  },
+  "paletteActionOpenUrl": {
+    "message": "Abrir URL"
+  },
+  "paletteActionOpenUrlGroup": {
+    "message": "Abrir grupo de pastas de favoritos"
+  },
+  "paletteActionViewPreset": {
+    "message": "Abrir visualização com predefinição"
+  },
+  "paletteActionUrlTemplate": {
+    "message": "Abrir modelo de URL"
+  },
+  "optionsGroupPalette": {
+    "message": "Paleta de comandos"
+  },
+  "paletteCustomHint": {
+    "message": "Comandos de barra personalizados para a paleta de comandos (Ctrl/Cmd+K). Eles sincronizam com suas configurações — máximo de 100 itens."
+  },
+  "paletteCustomAdd": {
+    "message": "Adicionar comando…"
+  },
+  "paletteCustomUsage": {
+    "message": "$1 / $2"
+  },
+  "paletteCustomSlash": {
+    "message": "Barra (a palavra depois de /)"
+  },
+  "paletteCustomAliases": {
+    "message": "Apelidos (separados por vírgula)"
+  },
+  "paletteCustomAction": {
+    "message": "Ação"
+  },
+  "paletteCustomUrl": {
+    "message": "URL"
+  },
+  "paletteCustomTemplate": {
+    "message": "Modelo de URL — %s é substituído pelas palavras após o comando"
+  },
+  "paletteCustomWhere": {
+    "message": "Abrir em"
+  },
+  "paletteCustomFolder": {
+    "message": "Pasta de favoritos"
+  },
+  "paletteCustomView": {
+    "message": "Exibição"
+  },
+  "paletteCustomStrategy": {
+    "message": "Predefinição de estratégia de deduplicação"
+  },
+  "paletteCustomScope": {
+    "message": "Predefinição de escopo de deduplicação"
+  },
+  "paletteCustomScan": {
+    "message": "Iniciar a varredura ao inserir"
+  },
+  "paletteWhereCurrent": {
+    "message": "Guia atual"
+  },
+  "paletteWhereTab": {
+    "message": "Nova guia"
+  },
+  "paletteWhereWindow": {
+    "message": "Nova janela"
+  },
+  "paletteWhereBackground": {
+    "message": "Guias em segundo plano"
+  },
+  "paletteCustomSave": {
+    "message": "Salvar comando"
+  },
+  "paletteCustomErrSlash": {
+    "message": "Barra: de 1 a 24 caracteres, com letras minúsculas, dígitos ou hífens, começando com letra ou dígito."
+  },
+  "paletteCustomErrAlias": {
+    "message": "Apelidos: mesmas regras da barra (de 1 a 24 caracteres, letras minúsculas, dígitos ou hífens)."
+  },
+  "paletteCustomErrTaken": {
+    "message": "Essa barra ou apelido já está em uso."
+  },
+  "paletteCustomErrUrl": {
+    "message": "Apenas URLs http:// ou https:// são permitidas."
+  },
+  "paletteCustomErrFolder": {
+    "message": "Escolha uma pasta de favoritos."
+  },
+  "paletteCustomErrView": {
+    "message": "Escolha uma exibição."
+  },
+  "paletteCustomErrTemplate": {
+    "message": "O modelo deve conter exatamente um %s."
+  },
+  "paletteCustomErrAction": {
+    "message": "Escolha um tipo de ação."
+  },
+  "paletteCustomErrLimit": {
+    "message": "Limite de comandos atingido (100) — exclua um primeiro."
+  },
+  "paletteCustomEmpty": {
+    "message": "Nenhum comando personalizado ainda."
+  },
+  "recentGroupToday": {
+    "message": "Hoje"
+  },
+  "recentGroupWeek": {
+    "message": "Esta semana"
+  },
+  "recentGroupMonth": {
+    "message": "Este mês"
+  },
+  "recentGroupOlder": {
+    "message": "Mais antigos"
+  },
+  "searchHistoryRerun": {
+    "message": "Pesquisar novamente"
+  },
+  "optionsGroupBackup": {
+    "message": "Backup"
+  },
+  "optionsGroupContextMenu": {
+    "message": "Menus de contexto"
+  },
+  "optionsGroupIcons": {
+    "message": "Ícones"
+  },
+  "settingsExport": {
+    "message": "Exportar configurações"
+  },
+  "settingsImport": {
+    "message": "Importar configurações"
+  },
+  "settingsBackupHint": {
+    "message": "A exportação salva todas as configurações (incluindo preferências de sincronização) em um arquivo JSON. A importação mescla um backup de volta: as configurações no arquivo substituem as atuais, todo o resto é mantido."
+  },
+  "settingsImportConfirm": {
+    "message": "A importação substituirá todas as configurações contidas no arquivo de backup (configurações não presentes no arquivo são mantidas) e recarregará esta página. Continuar?"
+  },
+  "settingsImportInvalid": {
+    "message": "Arquivo de configurações inválido: não é um backup de configurações do vBookmarks."
+  },
+  "settingsImportDone": {
+    "message": "Configurações importadas. A página será recarregada agora."
+  },
+  "settingsImportError": {
+    "message": "Algumas configurações não puderam ser gravadas (cota de armazenamento ou erro transitório). A importação não foi concluída — tente novamente."
+  },
+  "statsSectionRecent": {
+    "message": "Visitas recentes"
+  },
+  "statsSectionBookmarks": {
+    "message": "Estatísticas de favoritos"
+  },
+  "statsHistoryGuide": {
+    "message": "Conceda acesso ao histórico para listar suas visitas recentes aqui."
+  },
+  "statsHistoryAdd": {
+    "message": "Adicionar aos favoritos"
+  },
+  "statsHistoryBookmarked": {
+    "message": "Favoritado"
   },
   "deadPause": {
     "message": "Pausar"
+  },
+  "deadResume": {
+    "message": "Retomar"
+  },
+  "deadCancel": {
+    "message": "Cancelar"
   },
   "deadPaused": {
     "message": "Pausado"
@@ -670,1104 +2138,331 @@
   "optionTabGroupsClosedLimit": {
     "message": "Histórico de abas/grupos fechados a manter"
   },
-  "deadProxyAdd": {
-    "message": "Adicionar um servidor proxy para verificação de links quebrados"
+  "folderPickMoveHere": {
+    "message": "Mover para cá"
   },
-  "deadProxyLabel": {
-    "message": "Proxy: $server$",
+  "folderPickCopyHere": {
+    "message": "Copiar para cá"
+  },
+  "folderPickFilter": {
+    "message": "Filtrar pastas…"
+  },
+  "folderPickFavNote": {
+    "message": "Itens não marcados serão marcados aqui"
+  },
+  "folderPickPinned": {
+    "message": "Fixadas"
+  },
+  "folderPickRecent": {
+    "message": "Recentes"
+  },
+  "pinFolder": {
+    "message": "Fixar esta pasta"
+  },
+  "unpinFolder": {
+    "message": "Desafixar esta pasta"
+  },
+  "stagingAdd": {
+    "message": "Adicionar à área"
+  },
+  "stagingAdded": {
+    "message": "Adicionado à área de preparação"
+  },
+  "stagingAlready": {
+    "message": "Já está na área de preparação"
+  },
+  "stagingAddedSummary": {
+    "message": "$n$ item(ns) adicionado(s); $m$ já estavam",
     "placeholders": {
-      "server": {
+      "n": {
         "content": "$1"
+      },
+      "m": {
+        "content": "$2"
       }
     }
   },
-  "deadProxyChange": {
-    "message": "Alterar"
+  "stagingFull": {
+    "message": "A área de preparação está cheia — remova alguns itens primeiro"
   },
-  "deadProxyRemove": {
-    "message": "Remover"
+  "stagingFolderEmpty": {
+    "message": "Esta pasta não tem marcadores para preparar"
   },
-  "deadProxyRemoved": {
-    "message": "Servidor proxy removido"
-  },
-  "deadProxyPanelHint": {
-    "message": "Informe um servidor proxy que você já tenha (a extensão não fornece nenhum), ex.: 127.0.0.1:7890 ou socks5://127.0.0.1:1080."
-  },
-  "deadProxyTestUrlLabel": {
-    "message": "URL de teste"
-  },
-  "deadProxyTestSave": {
-    "message": "Testar e salvar"
-  },
-  "deadProxyTesting": {
-    "message": "Testando…"
-  },
-  "deadProxySaved": {
-    "message": "Proxy salvo — verificações futuras reverificam as falhas diretas por meio dele."
-  },
-  "deadProxyInvalid": {
-    "message": "Endereço de proxy inválido — use host:porta ou esquema://host:porta (http/https/socks5, sem credenciais)."
-  },
-  "deadProxyUnreachable": {
-    "message": "Proxy inacessível — não salvo"
-  },
-  "deadProxyDenied": {
-    "message": "A permissão do proxy não foi concedida"
-  },
-  "deadProxyControlled": {
-    "message": "As configurações de proxy são gerenciadas por outra extensão"
-  },
-  "deadProxyUnavailable": {
-    "message": "A API de proxy não está disponível neste navegador"
-  },
-  "deadProxyNudge": {
-    "message": "Uma reverificação via proxy separa links realmente quebrados dos bloqueados por região — configure aqui ou na página de opções."
-  },
-  "deadRescan": {
-    "message": "Reexaminar"
-  },
-  "deadResume": {
-    "message": "Retomar"
-  },
-  "deadStartHint": {
-    "message": "Iniciar verificação de $n$ favoritos",
+  "stagingConfirmFolder": {
+    "message": "Preparar $n$ marcadores desta pasta?",
     "placeholders": {
       "n": {
         "content": "$1"
       }
     }
   },
-  "deadStatusBlocked": {
-    "message": "bloqueado"
+  "stagingRemove": {
+    "message": "Remover da área de preparação"
   },
-  "deadUnmark": {
-    "message": "Remover marca de morto"
+  "stagingRemoved": {
+    "message": "Removido da área de preparação"
   },
-  "deadUnmarkAll": {
-    "message": "Limpar todas as marcas"
+  "recentStageAll": {
+    "message": "Preparar todos os recentes"
   },
-  "deadUnmarkSelected": {
-    "message": "Desmarcar selecionados"
-  },
-  "defaultIconButton": {
-    "message": "Usar padrão"
-  },
-  "defaultIconButtonOr": {
-    "message": "ou"
-  },
-  "customIconPick": {
-    "message": "Escolher arquivo…"
-  },
-  "delete": {
-    "message": "Apagar"
-  },
-  "deleteEllipsis": {
-    "message": "Apagar..."
-  },
-  "deletedBookmark": {
-    "message": "$title$ excluído",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Example"
-      }
-    },
-    "description": "Toast shown after a bookmark or separator was deleted; the toast offers an undo button. $title$ is the deleted row's title (empty for separators)."
-  },
-  "deletedFolder": {
-    "message": "Pasta $title$ excluída",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Bookmarks"
-      }
-    },
-    "description": "Toast shown after a bookmark folder (with its whole subtree) was deleted; the toast offers an undo button. $title$ is the folder name."
-  },
-  "donationDismiss": {
-    "message": "Fechar"
-  },
-  "donationGo": {
-    "message": "Doar"
-  },
-  "donationRate": {
-    "message": "Avaliar"
-  },
-  "donationRateTitle": {
-    "message": "Avalie o vBookmarks na Chrome Web Store"
-  },
-  "donationLater": {
-    "message": "Depois"
-  },
-  "donationMessage": {
-    "message": "Está gostando? Doe para garantir seu futuro — ou avalie na loja: cada avaliação mantém as atualizações chegando."
-  },
-  "donationV4Notice": {
-    "message": "O vBookmarks 4.0 é uma reformulação completa com design moderno e cheio de novos recursos."
-  },
-  "donationV4GuideLink": {
-    "message": "Leia o guia da v4 →"
-  },
-  "donationNever": {
-    "message": "Não mostrar novamente"
-  },
-  "dupesApplyAll": {
-    "message": "Aplicar todas ($count$)",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "dupesApplySelected": {
-    "message": "Deduplicar selecionados ($count$)",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "dupesCleanAll": {
-    "message": "Limpar tudo: $groups$ grupos, $count$ cópias extras",
-    "placeholders": {
-      "groups": {
-        "content": "$1"
-      },
-      "count": {
-        "content": "$2"
-      }
-    },
-    "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go."
-  },
-  "dupesCleanRestHint": {
-    "message": "Manter \"$title$\" e remover os outros $count$",
-    "placeholders": {
-      "title": {
-        "content": "$1"
-      },
-      "count": {
-        "content": "$2"
-      }
-    }
-  },
-  "dupesConfirmAll": {
-    "message": "Remover $count$ cópias extras em $groups$ grupos? O item escolhido como principal em cada grupo é mantido.",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      },
-      "groups": {
-        "content": "$2"
-      }
-    },
-    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
-  },
-  "dupesConfirmSelected": {
-    "message": "Remover $count$ favoritos duplicados dos $groups$ grupos selecionados?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      },
-      "groups": {
-        "content": "$2"
-      }
-    }
-  },
-  "dupesConfirmGroup": {
-    "message": "Manter \"$title$\" e remover as outras $count$ cópias?",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Example bookmark"
-      },
-      "count": {
-        "content": "$2"
-      }
-    },
-    "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."
-  },
-  "dupesDone": {
-    "message": "$count$ favoritos duplicados removidos",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Alert shown after the duplicate cleanup finished."
-  },
-  "dupesGroupCount": {
-    "message": "$count$ duplicados",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
-  },
-  "dupesGroupExpand": {
-    "description": "Dupes view group-head context menu: expand a collapsed duplicate group.",
-    "message": "Expandir grupo"
-  },
-  "dupesGroupCollapse": {
-    "description": "Dupes view group-head context menu: collapse an expanded duplicate group.",
-    "message": "Recolher grupo"
-  },
-  "dupesIgnoreScheme": {
-    "message": "Ignorar diferenças http/https"
-  },
-  "dupesKeepThis": {
-    "message": "Manter este"
-  },
-  "dupesKeeperSet": {
-    "message": "Definir como mantido"
-  },
-  "dupesNone": {
-    "message": "Nenhum duplicado encontrado"
-  },
-  "dupesPreviewSummary": {
-    "message": "$groups$ grupos · $count$ a serem liberados",
-    "placeholders": {
-      "groups": {
-        "content": "$1"
-      },
-      "count": {
-        "content": "$2"
-      }
-    }
-  },
-  "dupesRemoveRow": {
-    "message": "Excluir esta cópia"
-  },
-  "dupesScopeAll": {
-    "message": "Todos os favoritos"
-  },
-  "dupesScopeBar": {
-    "message": "Apenas barra de favoritos"
-  },
-  "dupesStrategyBookmarkBar": {
-    "message": "Manter o da barra de favoritos"
-  },
-  "dupesStrategyMostVisited": {
-    "message": "Manter o mais visitado"
-  },
-  "dupesStrategyNewest": {
-    "message": "Manter o mais recente"
-  },
-  "dupesStrategyOldest": {
-    "message": "Manter o mais antigo"
-  },
-  "dupesStrategyShallowest": {
-    "message": "Manter o mais superficial"
-  },
-  "dupesStrategyShortestTitle": {
-    "message": "Manter o título mais curto"
-  },
-  "edit": {
-    "message": "Editar..."
-  },
-  "editBookmark": {
-    "message": "Editar favorito"
-  },
-  "editFolder": {
-    "message": "Editar pasta"
-  },
-  "errorOccured": {
-    "message": "Oops, ocorreu um erro."
-  },
-  "extDesc": {
-    "message": "Um gerenciador de favoritos popup. Enhanced Neat Bookmarks."
-  },
-  "extName": {
-    "message": "vBookmarks"
-  },
-  "folderEmpty": {
-    "message": "(Vazio)"
-  },
-  "general": {
-    "message": "Definições Gerais"
-  },
-  "ignore": {
-    "message": "Ignorar"
-  },
-  "name": {
-    "description": "Nome do favorito ou pasta.",
-    "message": "Nome"
-  },
-  "noTitle": {
-    "description": "Título para favoritos sem título e sem URL http(s) ou pastas sem título.",
-    "message": "(sem título)"
-  },
-  "nope": {
-    "message": "Cancelar"
-  },
-  "open": {
-    "description": "Ação para abrir favoritos",
-    "message": "Abrir"
-  },
-  "openBookmarks": {
-    "message": "Abrir todos os favoritos"
-  },
-  "openBookmarksInGroup": {
-    "message": "Abrir tudo em novo grupo de abas"
-  },
-  "openBookmarksInGroupSetup": {
-    "message": "Abrir todos num novo grupo…"
-  },
-  "openBookmarksInExistingGroup": {
-    "message": "Abrir todos num grupo existente…"
-  },
-  "tabGroupOptions": {
-    "message": "Grupos de guias"
-  },
-  "sortMenuOptions": {
-    "message": "Classificar"
-  },
-  "openBookmarksIncognitoWindow": {
-    "message": "Abrir favoritos em janela anônima"
-  },
-  "openBookmarksNewWindow": {
-    "message": "Abrir favoritos em nova janela"
-  },
-  "openCommandPaletteCommand": {
-    "message": "Abrir paleta de comandos"
-  },
-  "openIncognitoWindow": {
-    "message": "Abrir em uma janela anônima"
-  },
-  "openNewTab": {
-    "message": "Abrir em uma nova guia"
-  },
-  "bookmarkOpenInNewGroup": {
-    "message": "Abrir num novo grupo de abas"
-  },
-  "bookmarkOpenInNewGroupSetup": {
-    "message": "Abrir num novo grupo de abas…"
-  },
-  "bookmarkOpenInExistingGroup": {
-    "message": "Abrir num grupo de abas existente…"
-  },
-  "openNewWindow": {
-    "message": "Abrir em uma nova janela"
-  },
-  "openSidePanelCommand": {
-    "message": "Abrir painel lateral do vBookmarks"
-  },
-  "optionAnnounceEnabledHint": {
-    "message": "Notas de versão e dicas do repositório GitHub do projeto (buscadas no máximo a cada 6 horas). Desativar também interrompe a busca na rede."
-  },
-  "optionAnnounceEnabled": {
-    "message": "Exibir avisos no produto"
-  },
-  "optionAutoRefreshSync": {
-    "message": "Atualizar status de sincronização automaticamente"
-  },
-  "optionAutoResizePopup": {
-    "message": "Redimensionar automaticamente a janela popup para caber o conteúdo"
-  },
-  "optionClickNewTab": {
-    "message": "Clique com o botão esquerdo do mouse abre favorito em uma nova guia"
-  },
-  "optionCloseUnusedFolders": {
-    "message": "Fechar pastas não utilizadas quando abrir uma nova pasta."
-  },
-  "optionConfirmDeleteFolder": {
-    "message": "Confirmar antes de excluir pastas não vazias"
-  },
-  "optionConfirmOpenFolder": {
-    "message": "Mostrar confirmação quando abrir vários favoritos de uma pasta."
-  },
-  "optionDeadProxyServer": {
-    "message": "Servidor proxy para links quebrados"
-  },
-  "deadProxyServerHint": {
-    "message": "O servidor salvo re-verifica marcadores com falha direta em cada verificação de links mortos, separando links realmente mortos dos bloqueados por região. Teste e salve para testá-lo (apenas um servidor acessível é mantido); você também pode adicioná-lo na visualização de links mortos."
-  },
-  "deadProxyClear": {
-    "message": "Limpar"
-  },
-  "deadProxyNone": {
-    "message": "(não definido)"
-  },
-  "optionDeadScanConcurrency": {
-    "message": "Simultaneidade de verificação de links mortos (1-16)"
-  },
-  "optionDeadScanTimeout": {
-    "message": "Tempo limite de verificação de links mortos em segundos (2-30)"
-  },
-  "optionOnlyShowBookmarkBar": {
-    "message": "Mostrar apenas favoritos da barra de favoritos"
-  },
-  "optionOpenInSidePanel": {
-    "message": "Abrir no painel lateral em vez de pop-up"
-  },
-  "optionOpenNewTab": {
-    "message": "Clique com o botão do meio do mouse ou control-clique abre o favorito em um nova guia em 2º plano (em vez de 1º plano)."
-  },
-  "optionPopupStays": {
-    "message": "O pop-up continua aberto quando abrir um favorito (clicando com o botão esquerdo) ."
-  },
-  "optionRecentCollapsed": {
-    "message": "Recolher seção de adicionados recentemente por padrão"
-  },
-  "optionRecentCount": {
-    "message": "Número de favoritos adicionados recentemente a exibir"
-  },
-  "optionRememberPrevState": {
-    "message": "Lembrar estado anterior (posição de rolagem, pastas abertas e o último item focado)."
-  },
-  "optionSearchAfterEnter": {
-    "message": "Pesquisar favoritos apenas ao pressionar ENTER (em vez de pesquisa instantânea)"
-  },
-  "optionSearchHistory": {
-    "message": "Registrar histórico de pesquisa"
-  },
-  "optionSearchHistoryHint": {
-    "message": "Desativar também limpa o histórico existente."
-  },
-  "optionShowDeadView": {
-    "message": "Mostrar guia de links quebrados"
-  },
-  "optionShowDupesView": {
-    "message": "Mostrar guia de duplicatas"
-  },
-  "optionShowItemPath": {
-    "message": "Mostrar o caminho da pasta pai nas linhas da lista"
-  },
-  "optionShowRecentBookmarks": {
-    "message": "Mostrar favoritos adicionados recentemente no topo do pop-up"
-  },
-  "optionShowStatsView": {
-    "message": "Mostrar guia de estatísticas"
-  },
-  "optionShowSyncStatus": {
-    "message": "Mostrar indicadores de status de sincronização"
-  },
-  "optionHighlightUnsynced": {
-    "message": "Esmaecer favoritos não sincronizados"
-  },
-  "optionShowViewTabs": {
-    "message": "Mostrar abas de visualização abaixo da caixa de pesquisa"
-  },
-  "optionRememberView": {
-    "message": "Lembrar a última visualização ativa e reabri-la"
-  },
-  "optionShowTabBadges": {
-    "message": "Mostrar contadores nas abas de visualização"
-  },
-  "optionPaletteEnabled": {
-    "message": "Ativar a paleta de comandos (Ctrl/Cmd+K)"
-  },
-  "optionQuickAddEnabled": {
-    "message": "Mostrar o botão de estrela de adição rápida ao lado da caixa de pesquisa"
-  },
-  "optionQuickAddContextMenu": {
-    "message": "Adicionar uma entrada \"Adicionar esta página aos favoritos com vBookmarks\" ao menu de contexto da página"
-  },
-  "optionQuickAddContextMenuHint": {
-    "message": "Independente do botão de estrela de adição rápida; a restauração da experiência clássica também desativa esta entrada."
-  },
-  "optionCollapseTabGroupMenu": {
-    "message": "Recolher os itens dos grupos de guias em um submenu \"Grupos de guias\""
-  },
-  "optionCollapseTabGroupMenuHint": {
-    "message": "Aplica-se aos menus de contexto de pastas e favoritos. Desativado por padrão; mantém os menus de baixa altura mais curtos em telas pequenas ou com zoom alto."
-  },
-  "optionCollapseSortMenu": {
-    "message": "Recolher os itens de classificação em um submenu \"Classificar\""
-  },
-  "optionCollapseSortMenuHint": {
-    "message": "Aplica-se ao menu de contexto de pasta. Ativado por padrão."
-  },
-  "optionShowToolButton": {
-    "message": "Mostrar o botão de ferramentas (⋮) ao lado da caixa de pesquisa"
-  },
-  "optionClassicExperience": {
-    "message": "Restaurar o cabeçalho clássico"
-  },
-  "optionClassicExperienceHint": {
-    "message": "Desativa a paleta de comandos, a estrela de adição rápida, a entrada no menu de contexto da página, o botão da ferramenta e as abas de visualização. Cada um pode ser reativado individualmente na sua seção."
-  },
-  "optionStatsEnabled": {
-    "message": "Ativar estatísticas de visitas"
-  },
-  "optionFaviconContrast": {
-    "message": "Inverter favicons de baixo contraste"
-  },
-  "optionFaviconContrastHint": {
-    "message": "Ícones brancos em temas claros e ícones pretos em temas escuros são invertidos para permanecerem visíveis. Cada ícone é amostrado uma vez ao carregar — sem custo durante a navegação."
-  },
-  "optionFaviconEnrich": {
-    "message": "Buscar ícones de sites ausentes"
-  },
-  "optionFaviconEnrichHint": {
-    "message": "Para sites favoritados sem ícone em cache no Chrome, busque o ícone real diretamente do site (/favicon.ico e, em seguida, os ícones declarados na página). As solicitações vão apenas para sites que você marcou."
-  },
-  "optionFaviconEnrichAgg": {
-    "message": "Fallback de ícone de terceiros"
-  },
-  "optionFaviconEnrichAggHint": {
-    "message": "Quando a busca direta falha, o ícone é buscado por domínio em uma lista integrada de serviços de ícones de terceiros ($providers$). Um serviço inacessível é ignorado e o próximo é tentado — sem nova tentativa por 6 horas.",
-    "placeholders": {
-      "providers": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionFaviconBackup": {
-    "message": "Incluir cache de ícones nos backups"
-  },
-  "optionFaviconBackupHint": {
-    "message": "Inclua também o cache de favicons enriquecidos (dados por site, potencialmente grandes) na exportação/importação de configurações. Isso cobre ícones já armazenados em cache mesmo com a busca desativada. Desativado mantém os backups pequenos; os ícones são buscados novamente automaticamente de qualquer forma."
-  },
-  "optionFaviconCacheClear": {
-    "message": "Limpar cache de ícones"
-  },
-  "optionFaviconCacheClearConfirm": {
-    "message": "Limpar o cache de ícones enriquecidos? Os ícones serão buscados novamente automaticamente na próxima abertura."
-  },
-  "optionFaviconCacheEmpty": {
-    "message": "Não há cache de ícones para limpar."
-  },
-  "optionFaviconCacheCleared": {
-    "message": "Cache de ícones limpo. Os ícones serão buscados novamente na próxima abertura."
-  },
-  "favGalleryLink": {
-    "message": "Ver ícones atualizados",
-    "description": "Options link (Icons group, right of the Clear icon cache button): opens the favicon gallery page listing the sites whose icons were refetched."
-  },
-  "favGalleryTitle": {
-    "message": "Ícones atualizados de sites",
-    "description": "Favicon gallery page title (h1 + document title)."
-  },
-  "favGalleryHint": {
-    "message": "Ícones que o vBookmarks buscou para sites favoritos que o Chrome não tinha em cache — de onde veio cada um e quais favoritos o utilizam. Somente exibição.",
-    "description": "Subtitle under the favicon gallery title, explaining the page is read-only."
-  },
-  "favGallerySearch": {
-    "message": "Filtrar por site, título ou caminho",
-    "description": "Placeholder of the favicon gallery filter input."
-  },
-  "favGalleryAll": {
-    "message": "Todos",
-    "description": "Favicon gallery source filter chip: show every source."
-  },
-  "favSrcDirect": {
-    "message": "Direto",
-    "description": "Favicon gallery source badge: the icon was fetched directly from the site itself."
-  },
-  "favSrcProxy": {
-    "message": "Proxy",
-    "description": "Favicon gallery source badge: the icon was fetched through the user's own proxy relay."
-  },
-  "favSrcLegacy": {
-    "message": "Cache anterior",
-    "description": "Favicon gallery source badge: cached before the source was recorded, so the origin is unknown."
-  },
-  "favGalleryCompare": {
-    "message": "Comparar com o ícone provisório",
-    "description": "Favicon gallery toggle button: switch every icon to the generic placeholder it replaced (before/after comparison)."
-  },
-  "favGalleryShowingBefore": {
-    "message": "Voltar aos ícones reais",
-    "description": "Favicon gallery toggle button while the placeholder comparison is shown: switch back to the real fetched icons."
-  },
-  "favGalleryStatSites": {
-    "message": "$n$ sites",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    },
-    "description": "Favicon gallery stats strip: how many sites have a refreshed icon."
-  },
-  "favGalleryStatBookmarks": {
-    "message": "$n$ favoritos",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    },
-    "description": "Favicon gallery stats strip: how many bookmarks sit on the refreshed sites."
-  },
-  "favGalleryVisits": {
-    "message": "$n$ aberturas registradas",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    },
-    "description": "Favicon gallery tooltip on a bookmark row's visit-count pill."
-  },
-  "favGalleryFailedTitle": {
-    "message": "Tentativas recentes, nenhum ícone encontrado",
-    "description": "Favicon gallery heading of the muted section listing hosts whose icon fetch failed recently."
-  },
-  "favGalleryFailedHint": {
-    "message": "As falhas são repetidas após 24 h, 3 dias e 7 dias, e então abandonadas até que o cache de ícones seja limpo.",
-    "description": "Favicon gallery hint under the failed-fetch section title."
-  },
-  "favGalleryGaveUp": {
-    "message": "Desistiu",
-    "description": "Favicon gallery badge on a failed-strip host whose retries are exhausted (it stays untouched until the icon cache is cleared)."
-  },
-  "favGalleryOrphan": {
-    "message": "Não há mais favoritos neste host — o ícone é limpo junto com o cache.",
-    "description": "Favicon gallery note on a card whose host no longer has any bookmark."
-  },
-  "favGalleryEmptyTitle": {
-    "message": "Nenhum ícone atualizado ainda",
-    "description": "Favicon gallery empty-state heading."
-  },
-  "favGalleryEmptyText": {
-    "message": "Quando o pop-up encontra um site favorito para o qual o Chrome não tem ícone, o vBookmarks busca o ícone real e o lista aqui.",
-    "description": "Favicon gallery empty-state body text."
-  },
-  "storageUsageIcon": {
-    "message": "Cache de ícones"
-  },
-  "storageUsageOther": {
-    "message": "Outros"
-  },
-  "storageUsageSummary": {
-    "message": "Usado $1$ de $2$",
-    "placeholders": {
-      "1": {
-        "content": "$1"
-      },
-      "2": {
-        "content": "$2"
-      }
-    }
-  },
-  "storageUsageFree": {
-    "message": "Livre"
-  },
-  "storageUsageHint": {
-    "message": "Somente o armazenamento local da extensão (chrome.storage.local, cota de cerca de 10 MB): o cache de ícones, além das configurações e outros dados locais. As configurações sincronizadas, os dados de sessão e a própria biblioteca de favoritos não são contados aqui."
-  },
-  "optionsDonate": {
-    "message": "Doar"
-  },
-  "optionsGithubLink": {
-    "message": "GitHub"
-  },
-  "optionsHomepageLink": {
-    "message": "Página inicial"
-  },
-  "optionsSince": {
-    "message": "Derivado do Neat Bookmarks, mantido por $days$ dias.",
-    "placeholders": {
-      "days": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionsVersion": {
-    "message": "Versão do vBookmarks"
-  },
-  "optionSyncRefreshInterval": {
-    "message": "Intervalo de atualização"
-  },
-  "optionSyncRefreshIntervalSeconds": {
-    "message": "segundos"
-  },
-  "optionTheme": {
-    "message": "Tema"
-  },
-  "optionThemeAuto": {
-    "message": "Seguir sistema"
-  },
-  "optionThemeDark": {
-    "message": "Escuro"
-  },
-  "optionThemeInk": {
-    "message": "Tinta (escuro)"
-  },
-  "optionThemeLight": {
-    "message": "Claro"
-  },
-  "optionThemePaper": {
-    "message": "Papel (claro)"
-  },
-  "optionLanguage": {
-    "message": "Idioma"
-  },
-  "optionLanguageAuto": {
-    "message": "Automático"
-  },
-  "optionLanguageHint": {
-    "message": "Alterar o idioma recarrega esta página."
-  },
-  "paletteClose": {
-    "message": "Fechar"
-  },
-  "paletteCmdVersion": {
-    "message": "Informações da versão"
-  },
-  "paletteCmdLang": {
-    "message": "Alterar idioma…"
-  },
-  "paletteCmdLangUsage": {
-    "message": "Uso: /lang seguido de um código de localidade — ex.: /lang en, /lang zh_CN, /lang ja."
-  },
-  "versionDialogTitle": {
-    "message": "vBookmarks $version$",
-    "placeholders": {
-      "version": {
-        "content": "$1"
-      }
-    }
-  },
-  "versionDialogCopy": {
-    "message": "Copiar informações"
-  },
-  "versionDialogCopied": {
-    "message": "Copiado"
-  },
-  "versionMetaVersion": {
-    "message": "Versão da extensão"
-  },
-  "versionMetaAnnounce": {
-    "message": "Novidades"
-  },
-  "versionMetaAnnounceNone": {
-    "message": "Nenhuma novidade carregada"
-  },
-  "versionMetaBrowser": {
-    "message": "Navegador"
-  },
-  "versionMetaOS": {
-    "message": "SO"
-  },
-  "versionMetaChannel": {
-    "message": "Canal"
-  },
-  "versionMetaLanguage": {
-    "message": "Idioma"
-  },
-  "versionMetaUserAgent": {
-    "message": "Agente do usuário"
-  },
-  "optionZoom": {
-    "message": "Zoom"
-  },
-  "options": {
-    "message": "Opções"
-  },
-  "optionsFooterText": {
-    "message": "Criado por $authorName$.",
-    "placeholders": {
-      "authorName": {
-        "content": "$1"
-      }
-    },
-    "description": "Footer text for the Options page"
-  },
-  "optionsGroupBackup": {
-    "message": "Backup"
-  },
-  "optionsGroupIcons": {
-    "message": "Ícones"
-  },
-  "optionsGroupContextMenu": {
-    "message": "Menus de contexto"
-  },
-  "optionsGroupViews": {
-    "message": "Visualizações"
-  },
-  "optionsGroupSort": {
-    "message": "Ordenação"
-  },
-  "optionsGroupTools": {
-    "message": "Ferramentas"
-  },
-  "optionsGroupStats": {
-    "message": "Estatísticas"
-  },
-  "paletteCmdDead": {
-    "message": "Encontrar links quebrados"
-  },
-  "paletteCmdDupes": {
-    "message": "Limpar favoritos duplicados"
-  },
-  "paletteCmdGoDead": {
-    "message": "Ir para visualização de links mortos"
-  },
-  "paletteCmdGoDupes": {
-    "message": "Ir para visualização de duplicatas"
-  },
-  "paletteCmdGoRecent": {
-    "message": "Ir para visualização de recentes"
-  },
-  "paletteCmdGoSearch": {
-    "message": "Ir para visualização de pesquisa"
-  },
-  "paletteCmdGoStats": {
-    "message": "Ir para visualização de estatísticas"
-  },
-  "paletteCmdGoTree": {
-    "message": "Ir para visualização em árvore"
-  },
-  "paletteCmdNewBookmark": {
-    "message": "Novo favorito…"
-  },
-  "paletteCmdNewFolder": {
-    "message": "Nova pasta…"
-  },
-  "paletteCmdOptions": {
-    "message": "Abrir página de opções"
-  },
-  "paletteCmdQuickAdd": {
-    "message": "Favoritar aba atual"
-  },
-  "paletteCmdSaveSession": {
-    "message": "Salvar abas da janela como pasta"
-  },
-  "paletteCmdSearchInView": {
-    "message": "Pesquisar '$query$' na visualização de pesquisa",
-    "placeholders": {
-      "query": {
-        "content": "$1"
-      }
-    }
-  },
-  "paletteCmdToggleViewTabs": {
-    "message": "Alternar abas de visualização"
-  },
-  "paletteCmdTheme": {
-    "message": "Definir tema…"
-  },
-  "paletteCmdThemeUsage": {
-    "message": "Uso: /theme seguido de um nome de tema — auto, light, dark, ink ou paper (um prefixo único funciona, ex.: /theme d)."
-  },
-  "paletteCustomTag": {
-    "message": "personalizado"
-  },
-  "paletteCustomDeleteConfirm": {
-    "message": "Excluir o comando \"$1\"? A alteração será sincronizada em todos os seus dispositivos."
-  },
-  "paletteCustomBroken": {
-    "message": "A pasta do comando \"$1\" não existe mais. Excluir o comando?"
-  },
-  "paletteCmdSaveAsCommand": {
-    "message": "Salvar \"$1\" como comando…"
-  },
-  "paletteActionOpenUrl": {
-    "message": "Abrir URL"
-  },
-  "paletteActionOpenUrlGroup": {
-    "message": "Abrir grupo de pastas de favoritos"
-  },
-  "paletteActionViewPreset": {
-    "message": "Abrir visualização com predefinição"
-  },
-  "paletteActionUrlTemplate": {
-    "message": "Abrir modelo de URL"
-  },
-  "optionsGroupPalette": {
-    "message": "Paleta de comandos"
-  },
-  "paletteCustomHint": {
-    "message": "Comandos de barra personalizados para a paleta de comandos (Ctrl/Cmd+K). Eles sincronizam com suas configurações — máximo de 100 itens."
-  },
-  "paletteCustomAdd": {
-    "message": "Adicionar comando…"
-  },
-  "paletteCustomUsage": {
-    "message": "$1 / $2"
-  },
-  "paletteCustomSlash": {
-    "message": "Barra (a palavra depois de /)"
-  },
-  "paletteCustomAliases": {
-    "message": "Apelidos (separados por vírgula)"
-  },
-  "paletteCustomAction": {
-    "message": "Ação"
-  },
-  "paletteCustomUrl": {
-    "message": "URL"
-  },
-  "paletteCustomTemplate": {
-    "message": "Modelo de URL — %s é substituído pelas palavras após o comando"
-  },
-  "paletteCustomWhere": {
-    "message": "Abrir em"
-  },
-  "paletteCustomFolder": {
-    "message": "Pasta de favoritos"
-  },
-  "paletteCustomView": {
-    "message": "Exibição"
-  },
-  "paletteCustomStrategy": {
-    "message": "Predefinição de estratégia de deduplicação"
-  },
-  "paletteCustomScope": {
-    "message": "Predefinição de escopo de deduplicação"
-  },
-  "paletteCustomScan": {
-    "message": "Iniciar a varredura ao inserir"
-  },
-  "paletteWhereCurrent": {
-    "message": "Guia atual"
-  },
-  "paletteWhereTab": {
-    "message": "Nova guia"
-  },
-  "paletteWhereWindow": {
-    "message": "Nova janela"
-  },
-  "paletteWhereBackground": {
-    "message": "Guias em segundo plano"
-  },
-  "paletteCustomSave": {
-    "message": "Salvar comando"
-  },
-  "paletteCustomErrSlash": {
-    "message": "Barra: de 1 a 24 caracteres, com letras minúsculas, dígitos ou hífens, começando com letra ou dígito."
-  },
-  "paletteCustomErrAlias": {
-    "message": "Apelidos: mesmas regras da barra (de 1 a 24 caracteres, letras minúsculas, dígitos ou hífens)."
-  },
-  "paletteCustomErrTaken": {
-    "message": "Essa barra ou apelido já está em uso."
-  },
-  "paletteCustomErrUrl": {
-    "message": "Apenas URLs http:// ou https:// são permitidas."
-  },
-  "paletteCustomErrFolder": {
-    "message": "Escolha uma pasta de favoritos."
-  },
-  "paletteCustomErrView": {
-    "message": "Escolha uma exibição."
-  },
-  "paletteCustomErrTemplate": {
-    "message": "O modelo deve conter exatamente um %s."
-  },
-  "paletteCustomErrAction": {
-    "message": "Escolha um tipo de ação."
-  },
-  "paletteCustomErrLimit": {
-    "message": "Limite de comandos atingido (100) — exclua um primeiro."
-  },
-  "paletteCustomEmpty": {
-    "message": "Nenhum comando personalizado ainda."
-  },
-  "paletteNoResults": {
-    "message": "Nenhum resultado correspondente"
-  },
-  "palettePlaceholder": {
-    "message": "Pesquisar favoritos, pastas, comandos…"
-  },
-  "parentFolder": {
-    "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarksbar"
-      }
-    },
-    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
-    "message": "Pasta principal: \"$folderName$\""
-  },
-  "quickAddBookmark": {
-    "message": "Adicionar esta página aos favoritos (Ctrl+D)"
-  },
-  "quickAddBookmarkCommand": {
-    "message": "Adicionar rapidamente a aba atual como favorito"
-  },
-  "quickAdded": {
-    "message": "Favorito adicionado"
-  },
-  "quickAddedTo": {
-    "message": "Favorito adicionado a $folderName$",
-    "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarks bar"
-      }
-    }
-  },
-  "quickRemoveBookmark": {
-    "message": "Remover este favorito (Ctrl+D)"
-  },
-  "quickRemoved": {
-    "message": "Favorito removido"
-  },
-  "recentBookmarks": {
+  "recentSectionTitle": {
     "message": "Adicionados recentemente"
   },
-  "recentEmpty": {
-    "message": "Nenhum favorito recente. Pressione Ctrl+D para favoritar a página atual."
+  "stagingEmpty": {
+    "message": "Vazio — clique com o botão direito em qualquer marcador, use o botão ↑ aqui ou linhas do histórico de estatísticas para enviar itens à área de preparação"
   },
-  "recentGroupMonth": {
-    "message": "Este mês"
+  "stagingFromHistory": {
+    "message": "Do histórico"
   },
-  "recentGroupOlder": {
-    "message": "Mais antigos"
+  "stagingGroupExpand": {
+    "message": "Expandir grupo"
   },
-  "recentGroupToday": {
-    "message": "Hoje"
+  "stagingGroupCollapse": {
+    "message": "Recolher grupo"
   },
-  "recentGroupWeek": {
-    "message": "Esta semana"
+  "stagingGroupRename": {
+    "message": "Renomear grupo…"
   },
-  "recentRevealInTree": {
-    "message": "Revelar na árvore"
+  "stagingGroupDissolve": {
+    "message": "Dissolver grupo"
   },
-  "removeSeparator": {
-    "message": "Remover separador"
+  "stagingGroupDissolved": {
+    "message": "Grupo dissolvido — itens mantidos na área de preparação"
   },
-  "replaceUrl": {
-    "message": "Substituir pela URL atual"
+  "stagingGroupAssign": {
+    "message": "Agrupar…"
   },
-  "reportError": {
-    "message": "Reportar erro"
+  "stagingGroupAssignTitle": {
+    "message": "Atribuir a um grupo"
   },
-  "reportedToDeveloper": {
-    "message": "Isso foi relatado ao desenvolvedor."
+  "stagingGroupNew": {
+    "message": "Novo grupo"
   },
-  "resetButton": {
-    "message": "Redefinir"
+  "stagingGroupNamePrompt": {
+    "message": "Nome do novo grupo"
   },
-  "resetSettings": {
-    "message": "Redefinir configurações"
+  "stagingGroupNoGroups": {
+    "message": "Ainda não há grupos"
   },
-  "resetSettingsDescription": {
-    "message": "Redefinir vBookmarks para as configurações padrão."
+  "stagingBucketTitle": {
+    "message": "Não marcados"
   },
-  "rowActionDelete": {
-    "message": "Excluir"
+  "stagingBucketFavAll": {
+    "message": "Favoritar todos"
   },
-  "rowActionMark": {
-    "message": "Marcar como morto"
+  "stagingNew": {
+    "message": "novo $n$",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
   },
-  "rowActionReveal": {
-    "message": "Revelar na árvore"
+  "stagingRowFav": {
+    "message": "Favoritar este item"
   },
-  "rowActionUnmark": {
-    "message": "Remover marca de morto"
+  "stagingRowUnfav": {
+    "message": "Desfavoritar este item"
   },
-  "save": {
-    "message": "Salvar"
+  "stagingFav": {
+    "message": "Favoritar"
   },
-  "searchBookmarks": {
-    "description": "Texto contido no campo de pesquisa.",
-    "message": "Procurar favoritos"
+  "stagingUnfav": {
+    "message": "Desfavoritar"
   },
-  "searchClear": {
-    "message": "Limpar pesquisa"
+  "stagingFavDone": {
+    "message": "$n$ item(ns) favoritado(s)",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
   },
-  "searchHistoryClear": {
-    "message": "Limpar tudo"
+  "stagingUnfavDone": {
+    "message": "Desfavoritado(s): $n$",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
   },
-  "searchHistoryRemove": {
-    "message": "Remover esta pesquisa"
+  "groupSaveToFolder": {
+    "message": "Salvar na pasta…"
   },
-  "searchHistoryRerun": {
-    "message": "Pesquisar novamente"
+  "groupCopyToFolder": {
+    "message": "Copiar para pasta…"
   },
-  "searchHistoryResultCount": {
+  "stagingCount": {
+    "message": "$n$ na área",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingMoveCopy": {
+    "message": "Mover/copiar para…"
+  },
+  "stagingMoveDone": {
+    "message": "Movido(s) $n$ item(ns) para casa",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingCopyDone": {
+    "message": "Copiado(s) $n$ item(ns)",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingMoveConfirm": {
+    "message": "Mover $n$ item(ns) para a pasta escolhida?",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingDeleteConfirm": {
+    "message": "Excluir $n$ item(ns)? Os não favoritados apenas saem da área.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingDeleted": {
+    "message": "Excluído(s) $n$ favorito(s)",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingRemovedCount": {
+    "message": "Removido(s) $n$ item(ns) da área",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingClear": {
+    "message": "Limpar área"
+  },
+  "stagingClearConfirm": {
+    "message": "Limpar toda a área? A árvore de favoritos não é alterada."
+  },
+  "stagingCleared": {
+    "message": "Área limpa"
+  },
+  "groupPlaceTooltip": {
+    "message": "Salvar este grupo em uma pasta…"
+  },
+  "copyBookmark": {
+    "message": "Copiar"
+  },
+  "cutBookmark": {
+    "message": "Recortar"
+  },
+  "copyMoveTo": {
+    "message": "Copiar/mover para…"
+  },
+  "pasteHere": {
+    "message": "Colar aqui"
+  },
+  "copiedToast": {
+    "message": "Copiado: $t$",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
+  },
+  "cutToast": {
+    "message": "Recortado: $t$ — cole na pasta de destino (Esc cancela)",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
+  },
+  "pasteDone": {
+    "message": "Colado"
+  },
+  "pasteGone": {
+    "message": "O favorito não existe mais — área de transferência limpa"
+  },
+  "folderCopyList": {
+    "message": "Copiar títulos e endereços"
+  },
+  "folderCopyText": {
+    "message": "Lista de texto simples"
+  },
+  "folderCopyMarkdown": {
+    "message": "Markdown"
+  },
+  "folderCopyJson": {
+    "message": "JSON"
+  },
+  "folderCopyConfirm": {
+    "message": "Copiar a lista de $n$ favoritos?",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "folderCopyDone": {
+    "message": "Copiado(s) $n$ registro(s) de favorito",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "addFolderMenu": {
+    "message": "Adicionar pasta"
+  },
+  "optionCollapseAddFolderMenu": {
+    "message": "Recolher entradas de adicionar pasta"
+  },
+  "optionCollapseAddFolderMenuHint": {
+    "message": "Mesclar as três entradas de adicionar pasta (antes/depois/dentro) em uma única entrada de submenu ao clicar com o botão direito em uma pasta."
+  },
+  "tabRowStage": {
+    "message": "Favoritar e colocar na área"
+  },
+  "tabgroupStageAll": {
+    "message": "Favoritar e colocar o grupo inteiro na área"
+  },
+  "tabgroupStageConfirm": {
+    "message": "Favoritar e colocar $n$ abas na área?",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabgroupStageNone": {
+    "message": "Nenhuma aba favoritável neste grupo"
+  },
+  "stagedToast": {
+    "message": "$n$ aba(s) colocada(s) na área como o grupo “$t$”",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "t": {
+        "content": "$2"
+      }
+    }
+  },
+  "searchResultCount": {
     "message": "$n$ resultado(s)",
     "placeholders": {
       "n": {
@@ -1775,367 +2470,7 @@
       }
     }
   },
-  "searchHistoryTitle": {
-    "message": "Pesquisas recentes"
-  },
-  "searchNoResults": {
-    "message": "Nenhum favorito correspondente"
-  },
-  "searchViewHint": {
-    "message": "Digite na caixa acima para pesquisar seus favoritos"
-  },
-  "selectAll": {
-    "message": "Tudo"
-  },
-  "selectClear": {
-    "message": "Limpar"
-  },
-  "selectCount": {
-    "message": "$count$ selecionados",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "selectInvert": {
-    "message": "Inverter"
-  },
-  "selectModeEnter": {
-    "message": "Selecionar"
-  },
-  "selectModeExit": {
-    "message": "Sair da seleção"
-  },
-  "deadRiskBanner": {
-    "message": "A limpeza de links quebrados exclui favoritos em massa. Faça backup dos seus favoritos antes da primeira limpeza."
-  },
-  "dupesRiskBanner": {
-    "message": "A deduplicação exclui favoritos duplicados em massa. Faça backup dos seus favoritos antes de aplicá-la."
-  },
-  "riskBannerHelp": {
-    "message": "Guia de backup e restauração"
-  },
-  "riskBannerNever": {
-    "message": "Não mostrar novamente"
-  },
-  "riskBannerDismiss": {
-    "message": "Dispensar"
-  },
-  "sessionEmpty": {
-    "message": "Nenhuma aba para salvar"
-  },
-  "sessionFolderName": {
-    "message": "Sessão $date$",
-    "placeholders": {
-      "date": {
-        "content": "$1",
-        "example": "2026-07-18 15:04"
-      }
-    },
-    "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm."
-  },
-  "sessionSaved": {
-    "message": "$count$ abas salvas em uma nova pasta",
-    "placeholders": {
-      "count": {
-        "content": "$1",
-        "example": "12"
-      }
-    },
-    "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
-  },
-  "settingsBackupHint": {
-    "message": "A exportação salva todas as configurações (incluindo preferências de sincronização) em um arquivo JSON. A importação mescla um backup de volta: as configurações no arquivo substituem as atuais, todo o resto é mantido."
-  },
-  "settingsExport": {
-    "message": "Exportar configurações"
-  },
-  "settingsImport": {
-    "message": "Importar configurações"
-  },
-  "settingsImportConfirm": {
-    "message": "A importação substituirá todas as configurações contidas no arquivo de backup (configurações não presentes no arquivo são mantidas) e recarregará esta página. Continuar?"
-  },
-  "settingsImportDone": {
-    "message": "Configurações importadas. A página será recarregada agora."
-  },
-  "settingsImportError": {
-    "message": "Algumas configurações não puderam ser gravadas (cota de armazenamento ou erro transitório). A importação não foi concluída — tente novamente."
-  },
-  "settingsImportInvalid": {
-    "message": "Arquivo de configurações inválido: não é um backup de configurações do vBookmarks."
-  },
-  "sortByDateAdded": {
-    "message": "Por data de adição (mais recente primeiro)"
-  },
-  "sortByTitle": {
-    "message": "Por título"
-  },
-  "sortFolderContents": {
-    "message": "Ordenar Conteúdo da Pasta"
-  },
-  "sortByName": {
-    "message": "Classificar por nome"
-  },
-  "sortByDate": {
-    "message": "Classificar por data de adição"
-  },
-  "sortRecursiveSuffix": {
-    "message": "(recursivo)"
-  },
-  "sortOptions": {
-    "message": "Opções de classificação…"
-  },
-  "sortDone": {
-    "message": "Pasta classificada"
-  },
-  "sortFoldersFirst": {
-    "message": "Manter pastas no topo"
-  },
-  "sortRecursive": {
-    "message": "Ordenar também subpastas (recursivo)"
-  },
-  "sortRecursiveWarning": {
-    "message": "Isso reorganiza os favoritos em cada subpasta."
-  },
-  "tabGroupDialogTitle": {
-    "message": "Novo grupo de abas"
-  },
-  "tabGroupTitleLabel": {
-    "message": "Título do grupo"
-  },
-  "tabGroupColorLabel": {
-    "message": "Cor"
-  },
-  "tabGroupColorGrey": {
-    "message": "Cinza",
-    "description": "Accessible name of the grey color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorBlue": {
-    "message": "Azul",
-    "description": "Accessible name of the blue color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorRed": {
-    "message": "Vermelho",
-    "description": "Accessible name of the red color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorYellow": {
-    "message": "Amarelo",
-    "description": "Accessible name of the yellow color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorGreen": {
-    "message": "Verde",
-    "description": "Accessible name of the green color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorPink": {
-    "message": "Rosa",
-    "description": "Accessible name of the pink color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorPurple": {
-    "message": "Roxo",
-    "description": "Accessible name of the purple color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorCyan": {
-    "message": "Ciano",
-    "description": "Accessible name of the cyan color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorOrange": {
-    "message": "Laranja",
-    "description": "Accessible name of the orange color swatch in the new-tab-group dialog."
-  },
-  "tabGroupUntitled": {
-    "message": "Grupo sem título"
-  },
-  "tabGroupNoGroups": {
-    "message": "Nenhum grupo de abas existente"
-  },
-  "tabGroupPickDialogTitle": {
-    "message": "Abrir em grupo de abas existente"
-  },
-  "statsClearConfirm": {
-    "message": "Limpar estatísticas de visitas de $count$ favoritos? Esta ação não pode ser desfeita.",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "statsClearData": {
-    "message": "Limpar estatísticas"
-  },
-  "statsDisabledHint": {
-    "message": "Estatísticas de visitas estão desativadas — ative-as em Opções → Visualizações"
-  },
-  "statsEmpty": {
-    "message": "Estatísticas são acumuladas ao abrir favoritos"
-  },
-  "statsHistoryAdd": {
-    "message": "Adicionar aos favoritos"
-  },
-  "statsHistoryBanner": {
-    "message": "Conceda acesso ao histórico para gerar estatísticas de visitas com suas visitas passadas."
-  },
-  "statsHistoryBookmarked": {
-    "message": "Favoritado"
-  },
-  "statsHistoryDismiss": {
-    "message": "Não mostrar novamente"
-  },
-  "statsHistoryEnable": {
-    "message": "Ativar"
-  },
-  "statsHistoryGuide": {
-    "message": "Conceda acesso ao histórico para listar suas visitas recentes aqui."
-  },
-  "statsHistoryImported": {
-    "message": "Importadas visitas passadas para $count$ favoritos",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "statsSectionBookmarks": {
-    "message": "Estatísticas de favoritos"
-  },
-  "statsSectionRecent": {
-    "message": "Visitas recentes"
-  },
-  "statsSortByCount": {
-    "message": "Por contagem"
-  },
-  "statsSortByRecent": {
-    "message": "Por recentes"
-  },
-  "statsShowUnbookmarked": {
-    "message": "Mostrar não marcados"
-  },
-  "statsShowUnbookmarkedHint": {
-    "message": "Incluir páginas do histórico que não estão salvas como favoritos."
-  },
-  "statsVisitCount": {
-    "message": "Visitado $count$ vezes",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "syncOptions": {
-    "message": "Opções de Sincronização"
-  },
-  "syncStatusLocal": {
-    "message": "Apenas local — não enviado"
-  },
-  "syncStatusSynced": {
-    "message": "Sincronizado com sua conta Google"
-  },
-  "syncStatusUnsyncable": {
-    "message": "Não pode ser sincronizado"
-  },
-  "syncSuffixLocal": {
-    "message": "(Local)"
-  },
-  "syncSuffixSynced": {
-    "message": "(Sincronizado)"
-  },
-  "timeDaysAgo": {
-    "message": "$n$ dias atrás",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "timeHoursAgo": {
-    "message": "$n$ h atrás",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "timeJustNow": {
-    "message": "agora mesmo"
-  },
-  "timeMinutesAgo": {
-    "message": "$n$ min atrás",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "timeYesterday": {
-    "message": "ontem"
-  },
-  "toolButtonTitle": {
-    "message": "Ferramentas (Ctrl+K)"
-  },
-  "undoAction": {
-    "message": "Desfazer"
-  },
-  "revealOutsideBarHint": {
-    "message": "Somente a barra de favoritos é exibida: o destino está fora dela."
-  },
-  "revealOutsideBarAction": {
-    "message": "Mostrar tudo e revelar"
-  },
-  "url": {
-    "message": "URL"
-  },
-  "viewDead": {
-    "message": "Links mortos"
-  },
-  "viewDupes": {
-    "message": "Duplicatas"
-  },
-  "viewRecent": {
-    "message": "Recentes"
-  },
-  "viewSearch": {
-    "message": "Pesquisa"
-  },
-  "viewStats": {
-    "message": "Estatísticas"
-  },
-  "viewSwitchAnnounce": {
-    "message": "Visualização $name$",
-    "placeholders": {
-      "name": {
-        "content": "$1"
-      }
-    }
-  },
-  "viewStateEnabled": {
-    "message": "Ativado"
-  },
-  "viewStateDisabled": {
-    "message": "Desativado"
-  },
-  "viewEnable": {
-    "message": "Ativar"
-  },
-  "viewDisable": {
-    "message": "Desativar"
-  },
-  "viewTabHide": {
-    "message": "Ocultar"
-  },
-  "viewTabDisable": {
-    "message": "Desativar"
-  },
-  "viewTree": {
-    "message": "Árvore"
-  },
-  "deadProxyNeverShow": {
-    "message": "Não mostrar novamente"
-  },
-  "optionDeadProxyStrip": {
-    "message": "Mostrar a dica de adicionar proxy na visualização de links quebrados"
-  },
-  "optionDeadProxyStripHint": {
-    "message": "Desativado oculta essa dica ali; o servidor proxy continua configurável aqui, e um servidor salvo sempre mostra sua linha de gerenciamento na visualização."
+  "deleteSelected": {
+    "message": "Excluir selecionados"
   }
 }

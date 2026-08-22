@@ -1344,7 +1344,7 @@
     "message": "切换到重复书签视图"
   },
   "paletteCmdGoRecent": {
-    "message": "切换到最近书签视图"
+    "message": "切换到暂存区视图"
   },
   "paletteCmdGoSearch": {
     "message": "切换到搜索视图"
@@ -2251,9 +2251,6 @@
     "placeholders": {
       "n": {
         "content": "$1"
-      },
-      "n2": {
-        "content": "$2"
       }
     }
   },
@@ -2506,9 +2503,6 @@
     "placeholders": {
       "n": {
         "content": "$1"
-      },
-      "x": {
-        "content": "$2"
       }
     }
   },
@@ -2533,5 +2527,8 @@
         "content": "$1"
       }
     }
+  },
+  "deleteSelected": {
+    "message": "删除所选"
   }
 }

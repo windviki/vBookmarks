@@ -29,6 +29,12 @@
   "advancedOptions": {
     "message": "Napredne opcije"
   },
+  "announceDismiss": {
+    "message": "Zatvori"
+  },
+  "announceV408Text": {
+    "message": "v4.0.8 je izdanje s poboljšanim faviconima: stvarne ikone web stranica automatski se dohvaćaju za knjižne oznake koje Chrome još nije predmemorirao."
+  },
   "announceV407Text": {
     "message": "v4.0.7 donosi potpuno opremljen prikaz mrtvih veza: skenirajte, označite, filtrirajte i sortirajte mrtve i ograničene veze, s prethodnim oznakama i vremenskim oznakama po retku."
   },
@@ -44,12 +50,6 @@
   "announceV410Text": {
     "message": "v4.1.0 dodaje prikaz grupa kartica: kartice i grupe kartica svakog prozora, upravljane uz vaše zabilješke."
   },
-  "announceV408Text": {
-    "message": "v4.0.8 je izdanje s poboljšanim faviconima: stvarne ikone web stranica automatski se dohvaćaju za knjižne oznake koje Chrome još nije predmemorirao."
-  },
-  "announceDismiss": {
-    "message": "Zatvori"
-  },
   "confirmDeleteFolder": {
     "message": "Ova mapa sadrži $count$ stavku(i). Možete poništiti brisanje.",
     "placeholders": {
@@ -57,6 +57,9 @@
         "content": "$1"
       }
     }
+  },
+  "confirmDeleteFolderButton": {
+    "message": "Izbriši"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "Jeste li sigurni da želite izbrisati mapu $folderName$ i $bookmarkCount$ oznaku(e) u njoj?",
@@ -68,9 +71,6 @@
         "content": "$1"
       }
     }
-  },
-  "confirmDeleteFolderButton": {
-    "message": "Izbriši"
   },
   "confirmDeleteFolderSubfolders": {
     "message": "Jeste li sigurni da želite izbrisati mapu $folderName$ i $subFolderCount$ podmapu/e u njoj?",
@@ -124,18 +124,11 @@
       }
     }
   },
-  "contextMenuAddBookmark": {
-    "message": "Označi ovu stranicu s vBookmarks"
-  },
   "copyAllTitlesAndUrls": {
     "message": "Kopiraj sve naslove i URL-ove u međuspremnik"
   },
   "copyTitleAndUrl": {
     "message": "Kopiraj naslov i URL u međuspremnik"
-  },
-  "crossStorageMoveWarning": {
-    "message": "Zabilješke nije moguće premjestiti između sinkroniziranog i lokalnog pohranjivanja. Koristite kopiraj/zalijepi.",
-    "description": "Warning when trying to move bookmarks across storage types"
   },
   "customIcon": {
     "message": "Prilagođena ikona"
@@ -146,14 +139,14 @@
   "customSeparatorColorDescription": {
     "message": "Prilagodi boju separatora"
   },
-  "customSeparatorStringDescription": {
-    "message": "Ako URL oznake sadrži ovaj niz, prikazat će se kao separator"
-  },
   "customSeparatorTitleDescription": {
     "message": "Stvarni naslov oznake koja se prikazuje kao separator"
   },
   "customSeparatorUrlDescription": {
     "message": "Stvarni URL oznake koja se prikazuje kao separator"
+  },
+  "customSeparatorStringDescription": {
+    "message": "Ako URL oznake sadrži ovaj niz, prikazat će se kao separator"
   },
   "customStyles": {
     "message": "Prilagođeni stilovi"
@@ -164,8 +157,14 @@
   "customStylesDescription": {
     "message": "Ovo zahtijeva neke CSS vještine. Izmjenjujte na vlastiti rizik. Dijeljenje koda bi bilo pametno"
   },
-  "deadCancel": {
-    "message": "Otkaži"
+  "defaultIconButton": {
+    "message": "Koristi zadano"
+  },
+  "defaultIconButtonOr": {
+    "message": "ili"
+  },
+  "customIconPick": {
+    "message": "Odaberi datoteku…"
   },
   "deadChecking": {
     "message": "Provjera $done$ / $total$…",
@@ -235,6 +234,839 @@
   },
   "deadClearScan": {
     "message": "Očisti rezultate skeniranja"
+  },
+  "deadNone": {
+    "message": "Nema pronađenih mrtvih poveznica"
+  },
+  "deadNoneFiltered": {
+    "message": "Nema mrtvih veza pod ovim filtrom — probaj drugi segment iznad."
+  },
+  "deadRescan": {
+    "message": "Ponovno skeniraj"
+  },
+  "delete": {
+    "message": "Izbriši"
+  },
+  "deletedBookmark": {
+    "message": "Izbrisano $title$",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Example"
+      }
+    },
+    "description": "Toast shown after a bookmark or separator was deleted; the toast offers an undo button. $title$ is the deleted row's title (empty for separators)."
+  },
+  "deletedFolder": {
+    "message": "Izbrisana mapa $title$",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Bookmarks"
+      }
+    },
+    "description": "Toast shown after a bookmark folder (with its whole subtree) was deleted; the toast offers an undo button. $title$ is the folder name."
+  },
+  "optionRecentCount": {
+    "message": "Broj nedavno dodanih oznaka za prikaz"
+  },
+  "optionSearchHistory": {
+    "message": "Bilježi povijest pretraživanja"
+  },
+  "optionSearchHistoryHint": {
+    "message": "Isključivanjem se također briše postojeća povijest."
+  },
+  "recentEmpty": {
+    "message": "Nema nedavnih oznaka. Pritisnite Ctrl+D za označavanje trenutne stranice."
+  },
+  "recentRevealInTree": {
+    "message": "Pokaži u stablu"
+  },
+  "searchHistoryClear": {
+    "message": "Izbriši sve"
+  },
+  "searchHistoryRemove": {
+    "message": "Ukloni ovo pretraživanje"
+  },
+  "searchHistoryResultCount": {
+    "message": "$n$ rezultat(a)",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "searchHistoryTitle": {
+    "message": "Nedavna pretraživanja"
+  },
+  "timeDaysAgo": {
+    "message": "prije $n$ dana",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "timeHoursAgo": {
+    "message": "prije $n$ sat(i)",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "timeJustNow": {
+    "message": "upravo sada"
+  },
+  "timeMinutesAgo": {
+    "message": "prije $n$ min",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "timeYesterday": {
+    "message": "jučer"
+  },
+  "undoAction": {
+    "message": "Poništi"
+  },
+  "revealOutsideBarHint": {
+    "message": "Prikazana je samo traka sa zabilješkama: cilj se nalazi izvan nje."
+  },
+  "revealOutsideBarAction": {
+    "message": "Prikaži sve i otkrij"
+  },
+  "dupesCleanAll": {
+    "message": "Očisti sve: $groups$ grupa, $count$ dodatnih kopija",
+    "placeholders": {
+      "groups": {
+        "content": "$1"
+      },
+      "count": {
+        "content": "$2"
+      }
+    },
+    "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go."
+  },
+  "dupesConfirmAll": {
+    "message": "Ukloniti $count$ dodatnih kopija unutar $groups$ grupa? Odabrani primjerak u svakoj grupi se zadržava.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    },
+    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
+  },
+  "dupesConfirmSelected": {
+    "message": "Ukloniti $count$ dupliciranih zabilješki iz $groups$ odabranih grupa?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    }
+  },
+  "dupesConfirmGroup": {
+    "message": "Zadržati \"$title$\" i ukloniti ostalih $count$ kopija?",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Example bookmark"
+      },
+      "count": {
+        "content": "$2"
+      }
+    },
+    "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."
+  },
+  "dupesDone": {
+    "message": "Uklonjeno $count$ dupliciranih oznaka",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Alert shown after the duplicate cleanup finished."
+  },
+  "dupesGroupCount": {
+    "message": "$count$ duplikata",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
+  },
+  "dupesGroupExpand": {
+    "description": "Dupes view group-head context menu: expand a collapsed duplicate group.",
+    "message": "Proširi grupu"
+  },
+  "dupesGroupCollapse": {
+    "description": "Dupes view group-head context menu: collapse an expanded duplicate group.",
+    "message": "Sažmi grupu"
+  },
+  "dupesNone": {
+    "message": "Nema pronađenih duplikata"
+  },
+  "deleteEllipsis": {
+    "message": "Izbriši..."
+  },
+  "donationMessage": {
+    "message": "Uživate li u njemu? Donirajte za njegovu budućnost — ili ga ocijenite u trgovini: svaka recenzija pokreće nova ažuriranja."
+  },
+  "donationV4Notice": {
+    "message": "vBookmarks 4.0 potpuna je preradba s modernim dizajnom i puna novih značajki."
+  },
+  "donationV4GuideLink": {
+    "message": "Pročitajte v4 vodič →"
+  },
+  "donationGo": {
+    "message": "Doniraj"
+  },
+  "donationRate": {
+    "message": "Ocijeni"
+  },
+  "donationRateTitle": {
+    "message": "Ocijeni vBookmarks u Chrome Web Storeu"
+  },
+  "donationLater": {
+    "message": "Kasnije"
+  },
+  "donationNever": {
+    "message": "Ne prikazuj više"
+  },
+  "donationDismiss": {
+    "message": "Odbaci"
+  },
+  "edit": {
+    "message": "Uredi..."
+  },
+  "editBookmark": {
+    "message": "Uredi oznaku"
+  },
+  "editFolder": {
+    "message": "Uredi mapu"
+  },
+  "errorOccured": {
+    "message": "Ups, došlo je do greške."
+  },
+  "extDesc": {
+    "description": "Opis proširenja.",
+    "message": "Popup upravitelj oznaka. Poboljšani Neat Bookmarks. uredniji od Neater Bookmarks."
+  },
+  "extName": {
+    "description": "vBookmarks",
+    "message": "vBookmarks"
+  },
+  "folderEmpty": {
+    "message": "(Prazno)"
+  },
+  "general": {
+    "message": "Općenito"
+  },
+  "ignore": {
+    "message": "Zanemari"
+  },
+  "name": {
+    "description": "Naziv oznake ili mape.",
+    "message": "Naziv"
+  },
+  "nope": {
+    "message": "Odustani"
+  },
+  "noTitle": {
+    "description": "Naslov za bezimene oznake bez http(s) URL-a ili bezimene mape.",
+    "message": "(bez naslova)"
+  },
+  "open": {
+    "description": "Radnja za otvaranje oznaka.",
+    "message": "Otvori"
+  },
+  "openBookmarks": {
+    "message": "Otvori sve oznake"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "Otvori oznake u inkognitu"
+  },
+  "openBookmarksInGroup": {
+    "message": "Otvori sve u novoj grupi kartica"
+  },
+  "openBookmarksInGroupSetup": {
+    "message": "Otvori sve u novoj grupi kartica…"
+  },
+  "openBookmarksInExistingGroup": {
+    "message": "Otvori sve u postojećoj grupi kartica…"
+  },
+  "tabGroupOptions": {
+    "message": "Grupe kartica"
+  },
+  "sortMenuOptions": {
+    "message": "Sortiraj"
+  },
+  "openBookmarksNewWindow": {
+    "message": "Otvori sve oznake u novom prozoru"
+  },
+  "openCommandPaletteCommand": {
+    "message": "Otvori paletu naredbi"
+  },
+  "openIncognitoWindow": {
+    "message": "Otvori u inkognito prozoru"
+  },
+  "openNewTab": {
+    "message": "Otvori u novoj kartici"
+  },
+  "bookmarkOpenInNewGroup": {
+    "message": "Otvori u novoj grupi kartica"
+  },
+  "bookmarkOpenInNewGroupSetup": {
+    "message": "Otvori u novoj grupi kartica…"
+  },
+  "bookmarkOpenInExistingGroup": {
+    "message": "Otvori u postojećoj grupi kartica…"
+  },
+  "openNewWindow": {
+    "message": "Otvori u novom prozoru"
+  },
+  "openSidePanelCommand": {
+    "message": "Otvori vBookmarks bočnu ploču"
+  },
+  "optionAnnounceEnabled": {
+    "message": "Prikaži najave u aplikaciji"
+  },
+  "optionAnnounceEnabledHint": {
+    "message": "Bilješke o izdanjima i savjeti iz GitHub spremišta projekta (dohvaćaju se najviše svakih 6 sati). Isključivanje također zaustavlja mrežno dohvaćanje."
+  },
+  "optionClickNewTab": {
+    "message": "Lijevi klik otvara oznaku u novoj kartici."
+  },
+  "optionCloseUnusedFolders": {
+    "message": "Zatvori nekorištene mape pri otvaranju mape."
+  },
+  "optionConfirmOpenFolder": {
+    "message": "Prikaži potvrdu pri otvaranju mnogo oznaka iz mape."
+  },
+  "optionConfirmDeleteFolder": {
+    "message": "Potvrdi prije brisanja nepraznih mapa"
+  },
+  "optionOnlyShowBookmarkBar": {
+    "message": "Prikaži samo oznake u traci oznaka"
+  },
+  "optionSearchAfterEnter": {
+    "message": "Traži oznake samo kada se pritisne ENTER (umjesto trenutnog pretraživanja)"
+  },
+  "optionOpenNewTab": {
+    "message": "Srednji klik ili control-klik otvara oznaku u novoj kartici u pozadini (umjesto u prvom planu)."
+  },
+  "optionOpenInSidePanel": {
+    "message": "Otvori u bočnoj ploči umjesto skočnog prozora"
+  },
+  "optionPopupStays": {
+    "message": "Popup ostaje otvoren pri otvaranju (lijevi klik) oznaka."
+  },
+  "optionRememberPrevState": {
+    "message": "Zapamti prethodno stanje (položaj pomicanja, otvorene mape i posljednju fokusiranu stavku)."
+  },
+  "options": {
+    "message": "Opcije"
+  },
+  "optionsFooterText": {
+    "description": "Footer text for the Options page",
+    "message": "Izradio $authorName$.",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionZoom": {
+    "message": "Zumiranje"
+  },
+  "optionTheme": {
+    "message": "Tema"
+  },
+  "optionThemeAuto": {
+    "message": "Prati sustav"
+  },
+  "optionThemeLight": {
+    "message": "Svijetla"
+  },
+  "optionThemeDark": {
+    "message": "Tamna"
+  },
+  "optionThemeInk": {
+    "message": "Tinta (tamno)"
+  },
+  "optionThemePaper": {
+    "message": "Papir (svijetlo)"
+  },
+  "optionLanguage": {
+    "message": "Jezik"
+  },
+  "optionLanguageAuto": {
+    "message": "Automatski"
+  },
+  "optionLanguageHint": {
+    "message": "Promjena jezika ponovno učitava ovu stranicu."
+  },
+  "paletteClose": {
+    "message": "Zatvori"
+  },
+  "paletteCmdVersion": {
+    "message": "Informacije o verziji"
+  },
+  "paletteCmdLang": {
+    "message": "Promijeni jezik…"
+  },
+  "paletteCmdLangUsage": {
+    "message": "Upotreba: /lang nakon čega slijedi kôd jezika — npr. /lang en, /lang zh_CN, /lang ja."
+  },
+  "versionDialogTitle": {
+    "message": "vBookmarks $version$",
+    "placeholders": {
+      "version": {
+        "content": "$1"
+      }
+    }
+  },
+  "versionDialogCopy": {
+    "message": "Kopiraj informacije"
+  },
+  "versionDialogCopied": {
+    "message": "Kopirano"
+  },
+  "versionMetaVersion": {
+    "message": "Verzija proširenja"
+  },
+  "versionMetaAnnounce": {
+    "message": "Što je novo"
+  },
+  "versionMetaAnnounceNone": {
+    "message": "Nema učitane najave"
+  },
+  "versionMetaBrowser": {
+    "message": "Preglednik"
+  },
+  "versionMetaOS": {
+    "message": "Operacijski sustav"
+  },
+  "versionMetaChannel": {
+    "message": "Kanal"
+  },
+  "versionMetaLanguage": {
+    "message": "Jezik"
+  },
+  "versionMetaUserAgent": {
+    "message": "Korisnički agent"
+  },
+  "paletteCmdDead": {
+    "message": "Pronađi mrtve poveznice"
+  },
+  "paletteCmdDupes": {
+    "message": "Očisti duplicirane oznake"
+  },
+  "paletteCmdNewBookmark": {
+    "message": "Nova oznaka…"
+  },
+  "paletteCmdNewFolder": {
+    "message": "Nova mapa…"
+  },
+  "paletteCmdQuickAdd": {
+    "message": "Označi trenutnu karticu"
+  },
+  "paletteCmdSaveSession": {
+    "message": "Spremi kartice prozora kao mapu"
+  },
+  "paletteNoResults": {
+    "message": "Nema odgovarajućih rezultata"
+  },
+  "palettePlaceholder": {
+    "message": "Pretraži oznake, mape, naredbe…"
+  },
+  "parentFolder": {
+    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
+    "message": "Roditeljska mapa: \"$folderName$\"",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarksbar"
+      }
+    }
+  },
+  "removeSeparator": {
+    "message": "Ukloni separator"
+  },
+  "replaceUrl": {
+    "message": "Zamijeni trenutnim URL-om"
+  },
+  "reportedToDeveloper": {
+    "description": "Poruka za grešku u proširenju, prijavljena developeru.",
+    "message": "Ovo je prijavljeno developeru."
+  },
+  "reportError": {
+    "message": "Prijavi grešku"
+  },
+  "resetButton": {
+    "message": "Resetiraj"
+  },
+  "resetSettings": {
+    "message": "Resetiraj postavke"
+  },
+  "resetSettingsDescription": {
+    "message": "Resetiraj vBookmarks na zadane postavke."
+  },
+  "save": {
+    "message": "Spremi"
+  },
+  "searchBookmarks": {
+    "description": "Placeholder tekst za polje pretraživanja.",
+    "message": "Traži oznake"
+  },
+  "searchClear": {
+    "message": "Očisti pretragu"
+  },
+  "searchNoResults": {
+    "message": "Nema odgovarajućih oznaka"
+  },
+  "searchViewHint": {
+    "message": "Unesite u gornji okvir za pretraživanje oznaka"
+  },
+  "selectAll": {
+    "message": "Sve"
+  },
+  "selectClear": {
+    "message": "Očisti"
+  },
+  "selectCount": {
+    "message": "Odabrano: $count$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "selectInvert": {
+    "message": "Invertiraj"
+  },
+  "selectModeEnter": {
+    "message": "Odaberi"
+  },
+  "selectModeExit": {
+    "message": "Izađi iz odabira"
+  },
+  "deadRiskBanner": {
+    "message": "Čišćenje mrtvih veza masovno briše zabilješke. Napravite sigurnosnu kopiju svojih zabilješki prije prvog čišćenja."
+  },
+  "dupesRiskBanner": {
+    "message": "Uklanjanje duplikata masovno briše duplicirane zabilješke. Prije primjene napravite sigurnosnu kopiju svojih zabilješki."
+  },
+  "riskBannerHelp": {
+    "message": "Vodič za sigurnosno kopiranje i vraćanje"
+  },
+  "riskBannerNever": {
+    "message": "Ne prikazuj ponovno"
+  },
+  "riskBannerDismiss": {
+    "message": "Zatvori"
+  },
+  "sessionEmpty": {
+    "message": "Nema kartica za spremanje"
+  },
+  "sessionFolderName": {
+    "message": "Sesija $date$",
+    "placeholders": {
+      "date": {
+        "content": "$1",
+        "example": "2026-07-18 15:04"
+      }
+    },
+    "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm."
+  },
+  "sessionSaved": {
+    "message": "Spremljeno $count$ kartica u novu mapu",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "12"
+      }
+    },
+    "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
+  },
+  "url": {
+    "message": "URL"
+  },
+  "syncOptions": {
+    "message": "Opcije sinkronizacije"
+  },
+  "optionShowSyncStatus": {
+    "message": "Prikaži indikatore statusa sinkronizacije"
+  },
+  "optionHighlightUnsynced": {
+    "message": "Zatamni nesinkronizirane oznake"
+  },
+  "optionAutoRefreshSync": {
+    "message": "Automatski osvježi status sinkronizacije"
+  },
+  "optionSyncRefreshInterval": {
+    "message": "Interval osvježavanja"
+  },
+  "optionSyncRefreshIntervalSeconds": {
+    "message": "sekundi"
+  },
+  "syncStatusSynced": {
+    "message": "Sinkronizirano s Google računom"
+  },
+  "syncStatusLocal": {
+    "message": "Samo lokalno — nije preneseno"
+  },
+  "syncStatusUnsyncable": {
+    "message": "Ne može se sinkronizirati"
+  },
+  "syncSuffixSynced": {
+    "message": "(Sinkronizirano)"
+  },
+  "syncSuffixLocal": {
+    "message": "(Lokalno)"
+  },
+  "optionAutoResizePopup": {
+    "message": "Automatski prilagodi veličinu prozora skočnog prozora prema sadržaju"
+  },
+  "crossStorageMoveWarning": {
+    "message": "Zabilješke nije moguće premjestiti između sinkroniziranog i lokalnog pohranjivanja. Koristite kopiraj/zalijepi.",
+    "description": "Warning when trying to move bookmarks across storage types"
+  },
+  "recentBookmarks": {
+    "message": "Nedavno dodano"
+  },
+  "optionShowRecentBookmarks": {
+    "message": "Prikaži nedavno dodane oznake na vrhu skočnog prozora"
+  },
+  "optionShowStatsView": {
+    "message": "Prikaži karticu prikaza statistike"
+  },
+  "optionShowDeadView": {
+    "message": "Prikaži karticu prikaza mrtvih veza"
+  },
+  "optionShowDupesView": {
+    "message": "Prikaži karticu prikaza duplikata"
+  },
+  "optionRecentCollapsed": {
+    "message": "Zadano sažmi odjeljak nedavno dodanih"
+  },
+  "optionsGroupViews": {
+    "message": "Prikazi"
+  },
+  "optionsGroupSort": {
+    "message": "Sortiranje"
+  },
+  "optionsGroupStats": {
+    "message": "Statistika"
+  },
+  "optionsGroupTools": {
+    "message": "Alati"
+  },
+  "optionShowViewTabs": {
+    "message": "Prikaži kartice prikaza ispod okvira za pretraživanje"
+  },
+  "optionRememberView": {
+    "message": "Zapamti posljednji aktivni prikaz i ponovno ga otvori"
+  },
+  "optionShowTabBadges": {
+    "message": "Prikaži značke s brojem na karticama prikaza"
+  },
+  "optionPaletteEnabled": {
+    "message": "Omogući paletu naredbi (Ctrl/Cmd+K)"
+  },
+  "optionQuickAddEnabled": {
+    "message": "Prikaži zvijezdu za brzo dodavanje pored okvira za pretraživanje"
+  },
+  "optionQuickAddContextMenu": {
+    "message": "Dodaj stavku \"Zabilježi ovu stranicu s vBookmarks\" u kontekstni izbornik stranice."
+  },
+  "optionQuickAddContextMenuHint": {
+    "message": "Neovisno o gumbu zvjezdice za brzo dodavanje; vraćanje klasičnog iskustva također isključuje ovaj unos."
+  },
+  "optionCollapseTabGroupMenu": {
+    "message": "Sažmi unose grupa kartica u jedan podizbornik „Grupe kartica…“"
+  },
+  "optionCollapseTabGroupMenuHint": {
+    "message": "Odnosi se i na kontekstni izbornik mape i na kontekstni izbornik knjižne oznake. Isključeno prema zadanim postavkama; skraćuje niske izbornike na malim zaslonima ili onima s visokim zumom."
+  },
+  "optionCollapseSortMenu": {
+    "message": "Sažmi unose sortiranja u jedan podizbornik „Sortiraj…“"
+  },
+  "optionCollapseSortMenuHint": {
+    "message": "Odnosi se na kontekstni izbornik mape. Uključeno prema zadanim postavkama."
+  },
+  "optionShowToolButton": {
+    "message": "Prikaži alatni gumb (⋮) pored okvira za pretraživanje"
+  },
+  "optionClassicExperience": {
+    "message": "Vrati klasično zaglavlje"
+  },
+  "optionClassicExperienceHint": {
+    "message": "Isključuje paletu naredbi, zvijezdu za brzo dodavanje, njezin unos u kontekstnom izborniku stranice, alatni gumb i kartice prikaza. Svaka se može ponovno omogućiti pojedinačno u svom odjeljku."
+  },
+  "optionShowItemPath": {
+    "message": "Prikaži putanju roditeljske mape u redovima popisa"
+  },
+  "viewRecent": {
+    "message": "Nedavno"
+  },
+  "viewTree": {
+    "message": "Stablo"
+  },
+  "viewSearch": {
+    "message": "Pretraživanje"
+  },
+  "viewSwitchAnnounce": {
+    "message": "$name$ prikaz",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "viewStateEnabled": {
+    "message": "Omogućeno"
+  },
+  "viewStateDisabled": {
+    "message": "Onemogućeno"
+  },
+  "viewEnable": {
+    "message": "Omogući"
+  },
+  "viewDisable": {
+    "message": "Onemogući"
+  },
+  "viewTabHide": {
+    "message": "Sakrij"
+  },
+  "viewTabDisable": {
+    "message": "Onemogući"
+  },
+  "sortFolderContents": {
+    "message": "Razvrstaj sadržaj mape"
+  },
+  "sortByName": {
+    "message": "Sortiraj po nazivu"
+  },
+  "sortByDate": {
+    "message": "Sortiraj po datumu dodavanja"
+  },
+  "sortRecursiveSuffix": {
+    "message": "(rekurzivno)"
+  },
+  "sortOptions": {
+    "message": "Opcije sortiranja…"
+  },
+  "sortDone": {
+    "message": "Mapa je sortirana"
+  },
+  "sortByTitle": {
+    "message": "Po naslovu"
+  },
+  "sortByDateAdded": {
+    "message": "Po datumu dodavanja (najnovije prvo)"
+  },
+  "sortFoldersFirst": {
+    "message": "Zadrži mape na vrhu"
+  },
+  "sortRecursive": {
+    "message": "Također razvrstaj podmape (rekurzivno)"
+  },
+  "sortRecursiveWarning": {
+    "message": "Ovo mijenja redoslijed oznaka u svakoj podmapi."
+  },
+  "tabGroupDialogTitle": {
+    "message": "Nova grupa kartica"
+  },
+  "tabGroupTitleLabel": {
+    "message": "Naziv grupe"
+  },
+  "tabGroupColorLabel": {
+    "message": "Boja"
+  },
+  "tabGroupColorGrey": {
+    "message": "Siva",
+    "description": "Accessible name of the grey color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorBlue": {
+    "message": "Plava",
+    "description": "Accessible name of the blue color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorRed": {
+    "message": "Crvena",
+    "description": "Accessible name of the red color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorYellow": {
+    "message": "Žuta",
+    "description": "Accessible name of the yellow color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorGreen": {
+    "message": "Zelena",
+    "description": "Accessible name of the green color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPink": {
+    "message": "Ružičasta",
+    "description": "Accessible name of the pink color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPurple": {
+    "message": "Ljubičasta",
+    "description": "Accessible name of the purple color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorCyan": {
+    "message": "Cijan",
+    "description": "Accessible name of the cyan color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorOrange": {
+    "message": "Narančasta",
+    "description": "Accessible name of the orange color swatch in the new-tab-group dialog."
+  },
+  "tabGroupUntitled": {
+    "message": "Neimenovana grupa"
+  },
+  "tabGroupNoGroups": {
+    "message": "Nema postojećih grupa kartica"
+  },
+  "tabGroupPickDialogTitle": {
+    "message": "Otvori u postojećoj grupi kartica"
+  },
+  "quickAddBookmark": {
+    "message": "Označi ovu stranicu (Ctrl+D)"
+  },
+  "quickAddBookmarkCommand": {
+    "message": "Brzo dodaj trenutnu karticu kao zabilješku"
+  },
+  "quickAdded": {
+    "message": "Oznaka dodana"
+  },
+  "quickAddedTo": {
+    "message": "Zabilješka dodana u $folderName$",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarks bar"
+      }
+    }
+  },
+  "quickRemoved": {
+    "message": "Zabilješka uklonjena"
+  },
+  "quickRemoveBookmark": {
+    "message": "Ukloni ovu zabilješku (Ctrl+D)"
+  },
+  "toolButtonTitle": {
+    "message": "Alati (Ctrl+K)"
+  },
+  "contextMenuAddBookmark": {
+    "message": "Označi ovu stranicu s vBookmarks"
   },
   "deadFilterAll": {
     "message": "Sve"
@@ -315,14 +1147,653 @@
   "deadMarkedBannerDismiss": {
     "message": "Odbaci"
   },
-  "deadNone": {
-    "message": "Nema pronađenih mrtvih poveznica"
+  "deadProxyAdd": {
+    "message": "Dodaj proxy poslužitelj za provjeru mrtvih veza"
   },
-  "deadNoneFiltered": {
-    "message": "Nema mrtvih veza pod ovim filtrom — probaj drugi segment iznad."
+  "deadProxyLabel": {
+    "message": "Proxy: $server$",
+    "placeholders": {
+      "server": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadProxyChange": {
+    "message": "Promijeni"
+  },
+  "deadProxyRemove": {
+    "message": "Ukloni"
+  },
+  "deadProxyRemoved": {
+    "message": "Proxy poslužitelj uklonjen"
+  },
+  "deadProxyPanelHint": {
+    "message": "Unesite proxy poslužitelj koji već imate (proširenje ne pruža nijedan), npr. 127.0.0.1:7890 ili socks5://127.0.0.1:1080."
+  },
+  "deadProxyTestUrlLabel": {
+    "message": "Testni URL"
+  },
+  "deadProxyTestSave": {
+    "message": "Testiraj i spremi"
+  },
+  "deadProxyTesting": {
+    "message": "Testiranje…"
+  },
+  "deadProxySaved": {
+    "message": "Proxy spremljen — buduća skeniranja kroz njega ponovno provjeravaju izravne neuspjehe."
+  },
+  "deadProxyInvalid": {
+    "message": "Neispravna proxy adresa — koristite host:port ili shema://host:port (http/https/socks5, bez vjerodajnica)."
+  },
+  "deadProxyUnreachable": {
+    "message": "Proxy nedostupan — nije spremljen."
+  },
+  "deadProxyDenied": {
+    "message": "Nije odobreno dopuštenje za proxy."
+  },
+  "deadProxyControlled": {
+    "message": "Postavkama proxyja upravlja drugo proširenje."
+  },
+  "deadProxyUnavailable": {
+    "message": "Proxy API nije dostupan u ovom pregledniku."
+  },
+  "deadProxyNudge": {
+    "message": "Ponovna provjera putem proxyja razdvaja stvarno mrtve poveznice od regionalno blokiranih — konfigurirajte ovdje ili na stranici opcija."
+  },
+  "deadProxyNeverShow": {
+    "message": "Ne prikazuj više"
+  },
+  "deadStartHint": {
+    "message": "Pokreni skeniranje $n$ oznaka",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadStatusBlocked": {
+    "message": "blokirano"
+  },
+  "deadUnmark": {
+    "message": "Ukloni oznaku mrtve"
+  },
+  "deadUnmarkAll": {
+    "message": "Očisti sve oznake"
+  },
+  "deadUnmarkSelected": {
+    "message": "Odznači odabrano"
+  },
+  "dupesApplyAll": {
+    "message": "Primijeni sve ($count$)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesApplySelected": {
+    "message": "Ukloni duplikate odabranih ($count$)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesCleanRestHint": {
+    "message": "Zadrži \"$title$\" i ukloni ostalih $count$",
+    "placeholders": {
+      "title": {
+        "content": "$1"
+      },
+      "count": {
+        "content": "$2"
+      }
+    }
+  },
+  "dupesIgnoreScheme": {
+    "message": "Zanemari http/https razlike"
+  },
+  "dupesKeepThis": {
+    "message": "Zadrži ovaj"
+  },
+  "dupesKeeperSet": {
+    "message": "Postavi kao čuvar"
+  },
+  "dupesPreviewSummary": {
+    "message": "$groups$ grupa · $count$ će se osloboditi",
+    "placeholders": {
+      "groups": {
+        "content": "$1"
+      },
+      "count": {
+        "content": "$2"
+      }
+    }
+  },
+  "dupesRemoveRow": {
+    "message": "Izbriši ovu kopiju"
+  },
+  "dupesScopeAll": {
+    "message": "Sve oznake"
+  },
+  "dupesScopeBar": {
+    "message": "Samo traka oznaka"
+  },
+  "dupesStrategyBookmarkBar": {
+    "message": "Zadrži onu u traci oznaka"
+  },
+  "dupesStrategyMostVisited": {
+    "message": "Zadrži najposjećeniju"
+  },
+  "dupesStrategyNewest": {
+    "message": "Zadrži najnoviju"
+  },
+  "dupesStrategyOldest": {
+    "message": "Zadrži najstariju"
+  },
+  "dupesStrategyShallowest": {
+    "message": "Zadrži najplitku"
+  },
+  "dupesStrategyShortestTitle": {
+    "message": "Zadrži najkraći naslov"
+  },
+  "optionDeadProxyServer": {
+    "message": "Proxy poslužitelj za mrtve veze"
+  },
+  "deadProxyServerHint": {
+    "message": "Pohranjeni poslužitelj u svakom skeniranju mrtvih poveznica ponovno provjerava oznake koje ne prolaze izravnu provjeru, odvajajući stvarno mrtve poveznice od onih blokiranih za regiju. Opcija Ispitaj i spremi provjerava poslužitelj (zadržava se samo dostupan poslužitelj); možete ga dodati i iz prikaza mrtvih poveznica."
+  },
+  "deadProxyClear": {
+    "message": "Očisti"
+  },
+  "deadProxyNone": {
+    "message": "(nije postavljeno)"
+  },
+  "optionDeadProxyStrip": {
+    "message": "Prikaži naputak za dodavanje proxyja u prikazu mrtvih poveznica"
+  },
+  "optionDeadProxyStripHint": {
+    "message": "Isključeno skriva taj naputak tamo; proxy poslužitelj i dalje se može konfigurirati ovdje, a spremljeni poslužitelj uvijek prikazuje svoj redak za upravljanje u prikazu."
+  },
+  "optionDeadScanConcurrency": {
+    "message": "Istovremenost skeniranja mrtvih poveznica (1-16)"
+  },
+  "optionDeadScanTimeout": {
+    "message": "Vremensko ograničenje skeniranja mrtvih poveznica u sekundama (2-30)"
+  },
+  "paletteCmdGoDead": {
+    "message": "Idi na prikaz mrtvih poveznica"
+  },
+  "paletteCmdGoDupes": {
+    "message": "Idi na prikaz duplikata"
+  },
+  "paletteCmdGoRecent": {
+    "message": "Idi na prikaz nedavnih"
+  },
+  "paletteCmdGoSearch": {
+    "message": "Idi na prikaz pretraživanja"
+  },
+  "paletteCmdGoTree": {
+    "message": "Idi na prikaz stabla"
+  },
+  "paletteCmdOptions": {
+    "message": "Otvori stranicu postavki"
+  },
+  "paletteCmdSearchInView": {
+    "message": "Pretraži '$query$' u prikazu pretraživanja",
+    "placeholders": {
+      "query": {
+        "content": "$1"
+      }
+    }
+  },
+  "rowActionDelete": {
+    "message": "Izbriši"
+  },
+  "rowActionMark": {
+    "message": "Označi kao mrtvo"
+  },
+  "rowActionReveal": {
+    "message": "Prikaži u stablu"
+  },
+  "rowActionUnmark": {
+    "message": "Ukloni oznaku mrtvog"
+  },
+  "viewDead": {
+    "message": "Mrtve poveznice"
+  },
+  "viewDupes": {
+    "message": "Duplikati"
+  },
+  "viewStats": {
+    "message": "Statistika"
+  },
+  "paletteCmdGoStats": {
+    "message": "Idi na prikaz statistike"
+  },
+  "optionStatsEnabled": {
+    "message": "Omogući statistiku posjeta"
+  },
+  "optionFaviconContrast": {
+    "message": "Invertiraj ikone s niskim kontrastom"
+  },
+  "optionFaviconContrastHint": {
+    "message": "Bijele ikone na svijetlim temama i crne ikone na tamnim temama se invertiraju kako bi ostale vidljive. Svaka se ikona uzorkuje samo jednom kad se učita — bez dodatnog opterećenja tijekom pregledavanja."
+  },
+  "optionFaviconEnrich": {
+    "message": "Dohvati nedostajuće ikone web stranica"
+  },
+  "optionFaviconEnrichHint": {
+    "message": "Za web stranice dodane u zabilješke za koje Chrome nema predmemoriranu ikonu, dohvati stvarnu ikonu izravno s web stranice (/favicon.ico, zatim deklarirane ikone stranice). Zahtjevi se šalju samo na web stranice dodane u zabilješke."
+  },
+  "optionFaviconEnrichAgg": {
+    "message": "Rezervna ikona treće strane"
+  },
+  "optionFaviconEnrichAggHint": {
+    "message": "Kada izravno dohvaćanje ne uspije, ikona se traži po domeni iz ugrađenog popisa servisa trećih strana za ikone ($providers$). Servis koji se pokaže nedostupnim se preskače i pokušava se sljedeći — ne pokušava se ponovno 6 sati.",
+    "placeholders": {
+      "providers": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionFaviconBackup": {
+    "message": "Uključi predmemoriju ikona u sigurnosne kopije"
+  },
+  "optionFaviconBackupHint": {
+    "message": "Također uključi predmemoriju obogaćenih favicona (podatke po web-mjestu, potencijalno velike) u izvoz/uvoz postavki. Ovo obuhvaća ikone koje su već u predmemoriji čak i dok je dohvaćanje isključeno. Ako je isključeno, sigurnosne kopije su male; ikone se svejedno automatski ponovno dohvaćaju."
+  },
+  "optionFaviconCacheClear": {
+    "message": "Očisti predmemoriju ikona"
+  },
+  "optionFaviconCacheClearConfirm": {
+    "message": "Očistiti predmemoriju obogaćenih ikona? Ikone će se automatski ponovno dohvatiti pri sljedećem otvaranju."
+  },
+  "optionFaviconCacheEmpty": {
+    "message": "Nema predmemorije ikona za čišćenje."
+  },
+  "optionFaviconCacheCleared": {
+    "message": "Predmemorija ikona je očišćena. Ikone će se ponovno dohvatiti pri sljedećem otvaranju."
+  },
+  "favGalleryLink": {
+    "message": "Prikaži osvježene ikone",
+    "description": "Options link (Icons group, right of the Clear icon cache button): opens the favicon gallery page listing the sites whose icons were refetched."
+  },
+  "favGalleryTitle": {
+    "message": "Osvježene ikone web-mjesta",
+    "description": "Favicon gallery page title (h1 + document title)."
+  },
+  "favGalleryHint": {
+    "message": "Ikone koje je vBookmarks preuzeo za označena web-mjesta za koja Chrome nije imao predmemoriranu ikonu — odakle svaka dolazi i koje ju oznake koriste. Samo za prikaz.",
+    "description": "Subtitle under the favicon gallery title, explaining the page is read-only."
+  },
+  "favGallerySearch": {
+    "message": "Filtriraj po web-mjestu, naslovu ili putanji",
+    "description": "Placeholder of the favicon gallery filter input."
+  },
+  "favGalleryAll": {
+    "message": "Sve",
+    "description": "Favicon gallery source filter chip: show every source."
+  },
+  "favSrcDirect": {
+    "message": "Izravno",
+    "description": "Favicon gallery source badge: the icon was fetched directly from the site itself."
+  },
+  "favSrcProxy": {
+    "message": "Proxy",
+    "description": "Favicon gallery source badge: the icon was fetched through the user's own proxy relay."
+  },
+  "favSrcLegacy": {
+    "message": "Ranija predmemorija",
+    "description": "Favicon gallery source badge: cached before the source was recorded, so the origin is unknown."
+  },
+  "favGalleryCompare": {
+    "message": "Usporedi sa zamjenskom ikonom",
+    "description": "Favicon gallery toggle button: switch every icon to the generic placeholder it replaced (before/after comparison)."
+  },
+  "favGalleryShowingBefore": {
+    "message": "Natrag na stvarne ikone",
+    "description": "Favicon gallery toggle button while the placeholder comparison is shown: switch back to the real fetched icons."
+  },
+  "favGalleryStatSites": {
+    "message": "$n$ web-mjesta",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    },
+    "description": "Favicon gallery stats strip: how many sites have a refreshed icon."
+  },
+  "favGalleryStatBookmarks": {
+    "message": "$n$ oznaka",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    },
+    "description": "Favicon gallery stats strip: how many bookmarks sit on the refreshed sites."
+  },
+  "favGalleryVisits": {
+    "message": "$n$ zabilježenih otvaranja",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    },
+    "description": "Favicon gallery tooltip on a bookmark row's visit-count pill."
+  },
+  "favGalleryFailedTitle": {
+    "message": "Nedavno pokušano, ikona nije pronađena",
+    "description": "Favicon gallery heading of the muted section listing hosts whose icon fetch failed recently."
+  },
+  "favGalleryFailedHint": {
+    "message": "Neuspjeli pokušaji ponavljaju se nakon 24 h, 3 dana i 7 dana, a zatim se odustaje dok se predmemorija ikona ne očisti.",
+    "description": "Favicon gallery hint under the failed-fetch section title."
+  },
+  "favGalleryGaveUp": {
+    "message": "Odustano",
+    "description": "Favicon gallery badge on a failed-strip host whose retries are exhausted (it stays untouched until the icon cache is cleared)."
+  },
+  "favGalleryOrphan": {
+    "message": "Na ovom hostu nema više oznaka — ikona se briše s predmemorijom.",
+    "description": "Favicon gallery note on a card whose host no longer has any bookmark."
+  },
+  "favGalleryEmptyTitle": {
+    "message": "Još nema osvježenih ikona",
+    "description": "Favicon gallery empty-state heading."
+  },
+  "favGalleryEmptyText": {
+    "message": "Kada skočni prozor naiđe na označeno web-mjesto za koje Chrome nema ikonu, vBookmarks preuzme stvarnu ikonu i ovdje je navede.",
+    "description": "Favicon gallery empty-state body text."
+  },
+  "storageUsageIcon": {
+    "message": "Predmemorija ikona"
+  },
+  "storageUsageOther": {
+    "message": "Ostalo"
+  },
+  "storageUsageSummary": {
+    "message": "Iskorišteno $1$ od $2$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      },
+      "2": {
+        "content": "$2"
+      }
+    }
+  },
+  "storageUsageFree": {
+    "message": "Slobodno"
+  },
+  "storageUsageHint": {
+    "message": "Samo lokalna pohrana proširenja (chrome.storage.local, kvota od oko 10 MB): predmemorija ikona te postavke i drugi lokalni podaci. Sinkronizirane postavke, podaci sesije i sama biblioteka oznaka ne ubrajaju se ovdje."
+  },
+  "optionsDonate": {
+    "message": "Doniraj"
+  },
+  "optionsGithubLink": {
+    "message": "GitHub"
+  },
+  "optionsHomepageLink": {
+    "message": "Početna stranica"
+  },
+  "optionsSince": {
+    "message": "Forkano od Neat Bookmarks, održavano $days$ dana.",
+    "placeholders": {
+      "days": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionsVersion": {
+    "message": "Verzija vBookmarks"
+  },
+  "statsSortByCount": {
+    "message": "Po broju"
+  },
+  "statsSortByRecent": {
+    "message": "Po nedavnim"
+  },
+  "statsShowUnbookmarked": {
+    "message": "Prikaži neoznačene"
+  },
+  "statsShowUnbookmarkedHint": {
+    "message": "Uključi stranice iz povijesti koje nisu spremljene kao oznake."
+  },
+  "statsEmpty": {
+    "message": "Statistika se prikuplja dok otvarate oznake"
+  },
+  "statsDisabledHint": {
+    "message": "Statistika posjeta je isključena — omogućite je u Postavke → Prikazi"
+  },
+  "statsVisitCount": {
+    "message": "Posjećeno $count$ puta",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "statsClearData": {
+    "message": "Očisti statistiku"
+  },
+  "statsClearConfirm": {
+    "message": "Očistiti statistiku posjeta za $count$ oznaka? Ovo se ne može poništiti.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "statsHistoryBanner": {
+    "message": "Dodijeli pristup povijesti za pokretanje statistike posjeta s tvojim prošlim posjetima."
+  },
+  "statsHistoryEnable": {
+    "message": "Omogući"
+  },
+  "statsHistoryDismiss": {
+    "message": "Ne prikazuj više"
+  },
+  "statsHistoryImported": {
+    "message": "Uvezeni prošli posjeti za $count$ oznaka",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "paletteCmdToggleViewTabs": {
+    "message": "Preklopi kartice prikaza"
+  },
+  "paletteCmdTheme": {
+    "message": "Postavi temu…"
+  },
+  "paletteCmdThemeUsage": {
+    "message": "Upotreba: /theme nakon čega slijedi naziv teme — auto, light, dark, ink ili paper (radi i jedinstveni prefiks, npr. /theme d)."
+  },
+  "paletteCustomTag": {
+    "message": "prilagođeno"
+  },
+  "paletteCustomDeleteConfirm": {
+    "message": "Izbrisati naredbu \"$1\"? Promjena se sinkronizira na sve vaše uređaje."
+  },
+  "paletteCustomBroken": {
+    "message": "Mapa naredbe \"$1\" više ne postoji. Izbrisati naredbu?"
+  },
+  "paletteCmdSaveAsCommand": {
+    "message": "Spremi \"$1\" kao naredbu…"
+  },
+  "paletteActionOpenUrl": {
+    "message": "Otvori URL"
+  },
+  "paletteActionOpenUrlGroup": {
+    "message": "Otvori grupu mapa zabilješki"
+  },
+  "paletteActionViewPreset": {
+    "message": "Otvori prikaz s predloškom"
+  },
+  "paletteActionUrlTemplate": {
+    "message": "Otvori URL predložak"
+  },
+  "optionsGroupPalette": {
+    "message": "Paleta naredbi"
+  },
+  "paletteCustomHint": {
+    "message": "Prilagođene slash naredbe za paletu naredbi (Ctrl/Cmd+K). Sinkroniziraju se s vašim postavkama — najviše 100 unosa."
+  },
+  "paletteCustomAdd": {
+    "message": "Dodaj naredbu…"
+  },
+  "paletteCustomUsage": {
+    "message": "$1 / $2"
+  },
+  "paletteCustomSlash": {
+    "message": "Kosa crta (riječ nakon /)"
+  },
+  "paletteCustomAliases": {
+    "message": "Aliasi (odvojeni zarezom)"
+  },
+  "paletteCustomAction": {
+    "message": "Radnja"
+  },
+  "paletteCustomUrl": {
+    "message": "URL"
+  },
+  "paletteCustomTemplate": {
+    "message": "URL predložak — %s se zamjenjuje riječima nakon naredbe"
+  },
+  "paletteCustomWhere": {
+    "message": "Otvori u"
+  },
+  "paletteCustomFolder": {
+    "message": "Mapa oznaka"
+  },
+  "paletteCustomView": {
+    "message": "Prikaz"
+  },
+  "paletteCustomStrategy": {
+    "message": "Predložak strategije deduplikacije"
+  },
+  "paletteCustomScope": {
+    "message": "Predložak opsega deduplikacije"
+  },
+  "paletteCustomScan": {
+    "message": "Pokreni skeniranje pri unosu"
+  },
+  "paletteWhereCurrent": {
+    "message": "Trenutna kartica"
+  },
+  "paletteWhereTab": {
+    "message": "Nova kartica"
+  },
+  "paletteWhereWindow": {
+    "message": "Novi prozor"
+  },
+  "paletteWhereBackground": {
+    "message": "Kartice u pozadini"
+  },
+  "paletteCustomSave": {
+    "message": "Spremi naredbu"
+  },
+  "paletteCustomErrSlash": {
+    "message": "Kosa crta: 1–24 znaka – mala slova, znamenke ili crtice, počinje slovom ili znamenkom."
+  },
+  "paletteCustomErrAlias": {
+    "message": "Aliasi: ista pravila kao i za kosu crtu (1–24 znaka; mala slova, znamenke ili crtice)."
+  },
+  "paletteCustomErrTaken": {
+    "message": "Ta kosa crta ili taj alias već su zauzeti."
+  },
+  "paletteCustomErrUrl": {
+    "message": "Dopušteni su samo http:// ili https:// URL-ovi."
+  },
+  "paletteCustomErrFolder": {
+    "message": "Odaberite mapu oznaka."
+  },
+  "paletteCustomErrView": {
+    "message": "Odaberite prikaz."
+  },
+  "paletteCustomErrTemplate": {
+    "message": "Predložak mora sadržavati točno jedan %s."
+  },
+  "paletteCustomErrAction": {
+    "message": "Odaberite vrstu radnje."
+  },
+  "paletteCustomErrLimit": {
+    "message": "Dosegnuto je ograničenje naredbi (100) — prvo obrišite jednu."
+  },
+  "paletteCustomEmpty": {
+    "message": "Još nema prilagođenih naredbi."
+  },
+  "recentGroupToday": {
+    "message": "Danas"
+  },
+  "recentGroupWeek": {
+    "message": "Ovaj tjedan"
+  },
+  "recentGroupMonth": {
+    "message": "Ovaj mjesec"
+  },
+  "recentGroupOlder": {
+    "message": "Starije"
+  },
+  "searchHistoryRerun": {
+    "message": "Pretraži ponovno"
+  },
+  "optionsGroupBackup": {
+    "message": "Sigurnosna kopija"
+  },
+  "optionsGroupContextMenu": {
+    "message": "Kontekstni izbornici"
+  },
+  "optionsGroupIcons": {
+    "message": "Ikone"
+  },
+  "settingsExport": {
+    "message": "Izvezi postavke"
+  },
+  "settingsImport": {
+    "message": "Uvezi postavke"
+  },
+  "settingsBackupHint": {
+    "message": "Izvoz sprema sve postavke (uključujući postavke sinkronizacije) u JSON datoteku. Uvoz spaja sigurnosnu kopiju: postavke u datoteci zamjenjuju trenutne, a sve ostalo ostaje sačuvano."
+  },
+  "settingsImportConfirm": {
+    "message": "Uvoz će prepisati svaku postavku sadržanu u sigurnosnoj datoteci (postavke koje nisu u datoteci ostaju) i ponovno učitati ovu stranicu. Nastaviti?"
+  },
+  "settingsImportInvalid": {
+    "message": "Nevažeća datoteka postavki: nije sigurnosna kopija vBookmarks postavki."
+  },
+  "settingsImportDone": {
+    "message": "Postavke uvezene. Stranica će se sada ponovno učitati."
+  },
+  "settingsImportError": {
+    "message": "Neke postavke nije moguće zapisati (kvota pohrane ili privremena pogreška). Uvoz nije dovršen — pokušajte ponovno."
+  },
+  "statsSectionRecent": {
+    "message": "Nedavni posjeti"
+  },
+  "statsSectionBookmarks": {
+    "message": "Statistika oznaka"
+  },
+  "statsHistoryGuide": {
+    "message": "Dodijelite pristup povijesti za prikaz nedavnih posjeta ovdje."
+  },
+  "statsHistoryAdd": {
+    "message": "Dodaj u oznake"
+  },
+  "statsHistoryBookmarked": {
+    "message": "Označeno"
   },
   "deadPause": {
     "message": "Pauza"
+  },
+  "deadResume": {
+    "message": "Nastavi"
+  },
+  "deadCancel": {
+    "message": "Otkaži"
   },
   "deadPaused": {
     "message": "Pauzirano"
@@ -671,1475 +2142,339 @@
   "optionTabGroupsClosedLimit": {
     "message": "Zadržano zatvorenih kartica/grupa"
   },
-  "deadProxyAdd": {
-    "message": "Dodaj proxy poslužitelj za provjeru mrtvih veza"
+  "folderPickMoveHere": {
+    "message": "Premjesti ovdje"
   },
-  "deadProxyLabel": {
-    "message": "Proxy: $server$",
-    "placeholders": {
-      "server": {
-        "content": "$1"
-      }
-    }
+  "folderPickCopyHere": {
+    "message": "Kopiraj ovdje"
   },
-  "deadProxyChange": {
-    "message": "Promijeni"
+  "folderPickFilter": {
+    "message": "Filtriraj mape…"
   },
-  "deadProxyRemove": {
-    "message": "Ukloni"
+  "folderPickFavNote": {
+    "message": "Neoznačene stavke bit će označene ovdje"
   },
-  "deadProxyRemoved": {
-    "message": "Proxy poslužitelj uklonjen"
+  "folderPickPinned": {
+    "message": "Prikvačeno"
   },
-  "deadProxyPanelHint": {
-    "message": "Unesite proxy poslužitelj koji već imate (proširenje ne pruža nijedan), npr. 127.0.0.1:7890 ili socks5://127.0.0.1:1080."
-  },
-  "deadProxyTestUrlLabel": {
-    "message": "Testni URL"
-  },
-  "deadProxyTestSave": {
-    "message": "Testiraj i spremi"
-  },
-  "deadProxyTesting": {
-    "message": "Testiranje…"
-  },
-  "deadProxySaved": {
-    "message": "Proxy spremljen — buduća skeniranja kroz njega ponovno provjeravaju izravne neuspjehe."
-  },
-  "deadProxyInvalid": {
-    "message": "Neispravna proxy adresa — koristite host:port ili shema://host:port (http/https/socks5, bez vjerodajnica)."
-  },
-  "deadProxyUnreachable": {
-    "message": "Proxy nedostupan — nije spremljen."
-  },
-  "deadProxyDenied": {
-    "message": "Nije odobreno dopuštenje za proxy."
-  },
-  "deadProxyControlled": {
-    "message": "Postavkama proxyja upravlja drugo proširenje."
-  },
-  "deadProxyUnavailable": {
-    "message": "Proxy API nije dostupan u ovom pregledniku."
-  },
-  "deadProxyNudge": {
-    "message": "Ponovna provjera putem proxyja razdvaja stvarno mrtve poveznice od regionalno blokiranih — konfigurirajte ovdje ili na stranici opcija."
-  },
-  "deadRescan": {
-    "message": "Ponovno skeniraj"
-  },
-  "deadResume": {
-    "message": "Nastavi"
-  },
-  "deadStartHint": {
-    "message": "Pokreni skeniranje $n$ oznaka",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "deadStatusBlocked": {
-    "message": "blokirano"
-  },
-  "deadUnmark": {
-    "message": "Ukloni oznaku mrtve"
-  },
-  "deadUnmarkAll": {
-    "message": "Očisti sve oznake"
-  },
-  "deadUnmarkSelected": {
-    "message": "Odznači odabrano"
-  },
-  "defaultIconButton": {
-    "message": "Koristi zadano"
-  },
-  "defaultIconButtonOr": {
-    "message": "ili"
-  },
-  "customIconPick": {
-    "message": "Odaberi datoteku…"
-  },
-  "delete": {
-    "message": "Izbriši"
-  },
-  "deleteEllipsis": {
-    "message": "Izbriši..."
-  },
-  "deletedBookmark": {
-    "message": "Izbrisano $title$",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Example"
-      }
-    },
-    "description": "Toast shown after a bookmark or separator was deleted; the toast offers an undo button. $title$ is the deleted row's title (empty for separators)."
-  },
-  "deletedFolder": {
-    "message": "Izbrisana mapa $title$",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Bookmarks"
-      }
-    },
-    "description": "Toast shown after a bookmark folder (with its whole subtree) was deleted; the toast offers an undo button. $title$ is the folder name."
-  },
-  "donationDismiss": {
-    "message": "Odbaci"
-  },
-  "donationGo": {
-    "message": "Doniraj"
-  },
-  "donationRate": {
-    "message": "Ocijeni"
-  },
-  "donationRateTitle": {
-    "message": "Ocijeni vBookmarks u Chrome Web Storeu"
-  },
-  "donationLater": {
-    "message": "Kasnije"
-  },
-  "donationMessage": {
-    "message": "Uživate li u njemu? Donirajte za njegovu budućnost — ili ga ocijenite u trgovini: svaka recenzija pokreće nova ažuriranja."
-  },
-  "donationV4Notice": {
-    "message": "vBookmarks 4.0 potpuna je preradba s modernim dizajnom i puna novih značajki."
-  },
-  "donationV4GuideLink": {
-    "message": "Pročitajte v4 vodič →"
-  },
-  "donationNever": {
-    "message": "Ne prikazuj više"
-  },
-  "dupesApplyAll": {
-    "message": "Primijeni sve ($count$)",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "dupesApplySelected": {
-    "message": "Ukloni duplikate odabranih ($count$)",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "dupesCleanAll": {
-    "message": "Očisti sve: $groups$ grupa, $count$ dodatnih kopija",
-    "placeholders": {
-      "groups": {
-        "content": "$1"
-      },
-      "count": {
-        "content": "$2"
-      }
-    },
-    "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go."
-  },
-  "dupesCleanRestHint": {
-    "message": "Zadrži \"$title$\" i ukloni ostalih $count$",
-    "placeholders": {
-      "title": {
-        "content": "$1"
-      },
-      "count": {
-        "content": "$2"
-      }
-    }
-  },
-  "dupesConfirmAll": {
-    "message": "Ukloniti $count$ dodatnih kopija unutar $groups$ grupa? Odabrani primjerak u svakoj grupi se zadržava.",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      },
-      "groups": {
-        "content": "$2"
-      }
-    },
-    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
-  },
-  "dupesConfirmSelected": {
-    "message": "Ukloniti $count$ dupliciranih zabilješki iz $groups$ odabranih grupa?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      },
-      "groups": {
-        "content": "$2"
-      }
-    }
-  },
-  "dupesConfirmGroup": {
-    "message": "Zadržati \"$title$\" i ukloniti ostalih $count$ kopija?",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Example bookmark"
-      },
-      "count": {
-        "content": "$2"
-      }
-    },
-    "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."
-  },
-  "dupesDone": {
-    "message": "Uklonjeno $count$ dupliciranih oznaka",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Alert shown after the duplicate cleanup finished."
-  },
-  "dupesGroupCount": {
-    "message": "$count$ duplikata",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
-  },
-  "dupesGroupExpand": {
-    "description": "Dupes view group-head context menu: expand a collapsed duplicate group.",
-    "message": "Proširi grupu"
-  },
-  "dupesGroupCollapse": {
-    "description": "Dupes view group-head context menu: collapse an expanded duplicate group.",
-    "message": "Sažmi grupu"
-  },
-  "dupesIgnoreScheme": {
-    "message": "Zanemari http/https razlike"
-  },
-  "dupesKeepThis": {
-    "message": "Zadrži ovaj"
-  },
-  "dupesKeeperSet": {
-    "message": "Postavi kao čuvar"
-  },
-  "dupesNone": {
-    "message": "Nema pronađenih duplikata"
-  },
-  "dupesPreviewSummary": {
-    "message": "$groups$ grupa · $count$ će se osloboditi",
-    "placeholders": {
-      "groups": {
-        "content": "$1"
-      },
-      "count": {
-        "content": "$2"
-      }
-    }
-  },
-  "dupesRemoveRow": {
-    "message": "Izbriši ovu kopiju"
-  },
-  "dupesScopeAll": {
-    "message": "Sve oznake"
-  },
-  "dupesScopeBar": {
-    "message": "Samo traka oznaka"
-  },
-  "dupesStrategyBookmarkBar": {
-    "message": "Zadrži onu u traci oznaka"
-  },
-  "dupesStrategyMostVisited": {
-    "message": "Zadrži najposjećeniju"
-  },
-  "dupesStrategyNewest": {
-    "message": "Zadrži najnoviju"
-  },
-  "dupesStrategyOldest": {
-    "message": "Zadrži najstariju"
-  },
-  "dupesStrategyShallowest": {
-    "message": "Zadrži najplitku"
-  },
-  "dupesStrategyShortestTitle": {
-    "message": "Zadrži najkraći naslov"
-  },
-  "edit": {
-    "message": "Uredi..."
-  },
-  "editBookmark": {
-    "message": "Uredi oznaku"
-  },
-  "editFolder": {
-    "message": "Uredi mapu"
-  },
-  "errorOccured": {
-    "message": "Ups, došlo je do greške."
-  },
-  "extDesc": {
-    "description": "Opis proširenja.",
-    "message": "Popup upravitelj oznaka. Poboljšani Neat Bookmarks. uredniji od Neater Bookmarks."
-  },
-  "extName": {
-    "description": "vBookmarks",
-    "message": "vBookmarks"
-  },
-  "folderEmpty": {
-    "message": "(Prazno)"
-  },
-  "general": {
-    "message": "Općenito"
-  },
-  "ignore": {
-    "message": "Zanemari"
-  },
-  "name": {
-    "description": "Naziv oznake ili mape.",
-    "message": "Naziv"
-  },
-  "noTitle": {
-    "description": "Naslov za bezimene oznake bez http(s) URL-a ili bezimene mape.",
-    "message": "(bez naslova)"
-  },
-  "nope": {
-    "message": "Odustani"
-  },
-  "open": {
-    "description": "Radnja za otvaranje oznaka.",
-    "message": "Otvori"
-  },
-  "openBookmarks": {
-    "message": "Otvori sve oznake"
-  },
-  "openBookmarksInGroup": {
-    "message": "Otvori sve u novoj grupi kartica"
-  },
-  "openBookmarksInGroupSetup": {
-    "message": "Otvori sve u novoj grupi kartica…"
-  },
-  "openBookmarksInExistingGroup": {
-    "message": "Otvori sve u postojećoj grupi kartica…"
-  },
-  "tabGroupOptions": {
-    "message": "Grupe kartica"
-  },
-  "sortMenuOptions": {
-    "message": "Sortiraj"
-  },
-  "openBookmarksIncognitoWindow": {
-    "message": "Otvori oznake u inkognitu"
-  },
-  "openBookmarksNewWindow": {
-    "message": "Otvori sve oznake u novom prozoru"
-  },
-  "openCommandPaletteCommand": {
-    "message": "Otvori paletu naredbi"
-  },
-  "openIncognitoWindow": {
-    "message": "Otvori u inkognito prozoru"
-  },
-  "openNewTab": {
-    "message": "Otvori u novoj kartici"
-  },
-  "bookmarkOpenInNewGroup": {
-    "message": "Otvori u novoj grupi kartica"
-  },
-  "bookmarkOpenInNewGroupSetup": {
-    "message": "Otvori u novoj grupi kartica…"
-  },
-  "bookmarkOpenInExistingGroup": {
-    "message": "Otvori u postojećoj grupi kartica…"
-  },
-  "openNewWindow": {
-    "message": "Otvori u novom prozoru"
-  },
-  "openSidePanelCommand": {
-    "message": "Otvori vBookmarks bočnu ploču"
-  },
-  "optionAnnounceEnabledHint": {
-    "message": "Bilješke o izdanjima i savjeti iz GitHub spremišta projekta (dohvaćaju se najviše svakih 6 sati). Isključivanje također zaustavlja mrežno dohvaćanje."
-  },
-  "optionAnnounceEnabled": {
-    "message": "Prikaži najave u aplikaciji"
-  },
-  "optionAutoRefreshSync": {
-    "message": "Automatski osvježi status sinkronizacije"
-  },
-  "optionAutoResizePopup": {
-    "message": "Automatski prilagodi veličinu prozora skočnog prozora prema sadržaju"
-  },
-  "optionClickNewTab": {
-    "message": "Lijevi klik otvara oznaku u novoj kartici."
-  },
-  "optionCloseUnusedFolders": {
-    "message": "Zatvori nekorištene mape pri otvaranju mape."
-  },
-  "optionConfirmDeleteFolder": {
-    "message": "Potvrdi prije brisanja nepraznih mapa"
-  },
-  "optionConfirmOpenFolder": {
-    "message": "Prikaži potvrdu pri otvaranju mnogo oznaka iz mape."
-  },
-  "optionDeadProxyServer": {
-    "message": "Proxy poslužitelj za mrtve veze"
-  },
-  "deadProxyServerHint": {
-    "message": "Pohranjeni poslužitelj u svakom skeniranju mrtvih poveznica ponovno provjerava oznake koje ne prolaze izravnu provjeru, odvajajući stvarno mrtve poveznice od onih blokiranih za regiju. Opcija Ispitaj i spremi provjerava poslužitelj (zadržava se samo dostupan poslužitelj); možete ga dodati i iz prikaza mrtvih poveznica."
-  },
-  "deadProxyClear": {
-    "message": "Očisti"
-  },
-  "deadProxyNone": {
-    "message": "(nije postavljeno)"
-  },
-  "optionDeadScanConcurrency": {
-    "message": "Istovremenost skeniranja mrtvih poveznica (1-16)"
-  },
-  "optionDeadScanTimeout": {
-    "message": "Vremensko ograničenje skeniranja mrtvih poveznica u sekundama (2-30)"
-  },
-  "optionOnlyShowBookmarkBar": {
-    "message": "Prikaži samo oznake u traci oznaka"
-  },
-  "optionOpenInSidePanel": {
-    "message": "Otvori u bočnoj ploči umjesto skočnog prozora"
-  },
-  "optionOpenNewTab": {
-    "message": "Srednji klik ili control-klik otvara oznaku u novoj kartici u pozadini (umjesto u prvom planu)."
-  },
-  "optionPopupStays": {
-    "message": "Popup ostaje otvoren pri otvaranju (lijevi klik) oznaka."
-  },
-  "optionRecentCollapsed": {
-    "message": "Zadano sažmi odjeljak nedavno dodanih"
-  },
-  "optionRecentCount": {
-    "message": "Broj nedavno dodanih oznaka za prikaz"
-  },
-  "optionRememberPrevState": {
-    "message": "Zapamti prethodno stanje (položaj pomicanja, otvorene mape i posljednju fokusiranu stavku)."
-  },
-  "optionSearchAfterEnter": {
-    "message": "Traži oznake samo kada se pritisne ENTER (umjesto trenutnog pretraživanja)"
-  },
-  "optionSearchHistory": {
-    "message": "Bilježi povijest pretraživanja"
-  },
-  "optionSearchHistoryHint": {
-    "message": "Isključivanjem se također briše postojeća povijest."
-  },
-  "optionShowDeadView": {
-    "message": "Prikaži karticu prikaza mrtvih veza"
-  },
-  "optionShowDupesView": {
-    "message": "Prikaži karticu prikaza duplikata"
-  },
-  "optionShowItemPath": {
-    "message": "Prikaži putanju roditeljske mape u redovima popisa"
-  },
-  "optionShowRecentBookmarks": {
-    "message": "Prikaži nedavno dodane oznake na vrhu skočnog prozora"
-  },
-  "optionShowStatsView": {
-    "message": "Prikaži karticu prikaza statistike"
-  },
-  "optionShowSyncStatus": {
-    "message": "Prikaži indikatore statusa sinkronizacije"
-  },
-  "optionHighlightUnsynced": {
-    "message": "Zatamni nesinkronizirane oznake"
-  },
-  "optionShowViewTabs": {
-    "message": "Prikaži kartice prikaza ispod okvira za pretraživanje"
-  },
-  "optionRememberView": {
-    "message": "Zapamti posljednji aktivni prikaz i ponovno ga otvori"
-  },
-  "optionShowTabBadges": {
-    "message": "Prikaži značke s brojem na karticama prikaza"
-  },
-  "optionPaletteEnabled": {
-    "message": "Omogući paletu naredbi (Ctrl/Cmd+K)"
-  },
-  "optionQuickAddEnabled": {
-    "message": "Prikaži zvijezdu za brzo dodavanje pored okvira za pretraživanje"
-  },
-  "optionQuickAddContextMenu": {
-    "message": "Dodaj stavku \"Zabilježi ovu stranicu s vBookmarks\" u kontekstni izbornik stranice."
-  },
-  "optionQuickAddContextMenuHint": {
-    "message": "Neovisno o gumbu zvjezdice za brzo dodavanje; vraćanje klasičnog iskustva također isključuje ovaj unos."
-  },
-  "optionCollapseTabGroupMenu": {
-    "message": "Sažmi unose grupa kartica u jedan podizbornik „Grupe kartica…“"
-  },
-  "optionCollapseTabGroupMenuHint": {
-    "message": "Odnosi se i na kontekstni izbornik mape i na kontekstni izbornik knjižne oznake. Isključeno prema zadanim postavkama; skraćuje niske izbornike na malim zaslonima ili onima s visokim zumom."
-  },
-  "optionCollapseSortMenu": {
-    "message": "Sažmi unose sortiranja u jedan podizbornik „Sortiraj…“"
-  },
-  "optionCollapseSortMenuHint": {
-    "message": "Odnosi se na kontekstni izbornik mape. Uključeno prema zadanim postavkama."
-  },
-  "optionShowToolButton": {
-    "message": "Prikaži alatni gumb (⋮) pored okvira za pretraživanje"
-  },
-  "optionClassicExperience": {
-    "message": "Vrati klasično zaglavlje"
-  },
-  "optionClassicExperienceHint": {
-    "message": "Isključuje paletu naredbi, zvijezdu za brzo dodavanje, njezin unos u kontekstnom izborniku stranice, alatni gumb i kartice prikaza. Svaka se može ponovno omogućiti pojedinačno u svom odjeljku."
-  },
-  "optionStatsEnabled": {
-    "message": "Omogući statistiku posjeta"
-  },
-  "optionFaviconContrast": {
-    "message": "Invertiraj ikone s niskim kontrastom"
-  },
-  "optionFaviconContrastHint": {
-    "message": "Bijele ikone na svijetlim temama i crne ikone na tamnim temama se invertiraju kako bi ostale vidljive. Svaka se ikona uzorkuje samo jednom kad se učita — bez dodatnog opterećenja tijekom pregledavanja."
-  },
-  "optionFaviconEnrich": {
-    "message": "Dohvati nedostajuće ikone web stranica"
-  },
-  "optionFaviconEnrichHint": {
-    "message": "Za web stranice dodane u zabilješke za koje Chrome nema predmemoriranu ikonu, dohvati stvarnu ikonu izravno s web stranice (/favicon.ico, zatim deklarirane ikone stranice). Zahtjevi se šalju samo na web stranice dodane u zabilješke."
-  },
-  "optionFaviconEnrichAgg": {
-    "message": "Rezervna ikona treće strane"
-  },
-  "optionFaviconEnrichAggHint": {
-    "message": "Kada izravno dohvaćanje ne uspije, ikona se traži po domeni iz ugrađenog popisa servisa trećih strana za ikone ($providers$). Servis koji se pokaže nedostupnim se preskače i pokušava se sljedeći — ne pokušava se ponovno 6 sati.",
-    "placeholders": {
-      "providers": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionFaviconBackup": {
-    "message": "Uključi predmemoriju ikona u sigurnosne kopije"
-  },
-  "optionFaviconBackupHint": {
-    "message": "Također uključi predmemoriju obogaćenih favicona (podatke po web-mjestu, potencijalno velike) u izvoz/uvoz postavki. Ovo obuhvaća ikone koje su već u predmemoriji čak i dok je dohvaćanje isključeno. Ako je isključeno, sigurnosne kopije su male; ikone se svejedno automatski ponovno dohvaćaju."
-  },
-  "optionFaviconCacheClear": {
-    "message": "Očisti predmemoriju ikona"
-  },
-  "optionFaviconCacheClearConfirm": {
-    "message": "Očistiti predmemoriju obogaćenih ikona? Ikone će se automatski ponovno dohvatiti pri sljedećem otvaranju."
-  },
-  "optionFaviconCacheEmpty": {
-    "message": "Nema predmemorije ikona za čišćenje."
-  },
-  "optionFaviconCacheCleared": {
-    "message": "Predmemorija ikona je očišćena. Ikone će se ponovno dohvatiti pri sljedećem otvaranju."
-  },
-  "favGalleryLink": {
-    "message": "Prikaži osvježene ikone",
-    "description": "Options link (Icons group, right of the Clear icon cache button): opens the favicon gallery page listing the sites whose icons were refetched."
-  },
-  "favGalleryTitle": {
-    "message": "Osvježene ikone web-mjesta",
-    "description": "Favicon gallery page title (h1 + document title)."
-  },
-  "favGalleryHint": {
-    "message": "Ikone koje je vBookmarks preuzeo za označena web-mjesta za koja Chrome nije imao predmemoriranu ikonu — odakle svaka dolazi i koje ju oznake koriste. Samo za prikaz.",
-    "description": "Subtitle under the favicon gallery title, explaining the page is read-only."
-  },
-  "favGallerySearch": {
-    "message": "Filtriraj po web-mjestu, naslovu ili putanji",
-    "description": "Placeholder of the favicon gallery filter input."
-  },
-  "favGalleryAll": {
-    "message": "Sve",
-    "description": "Favicon gallery source filter chip: show every source."
-  },
-  "favSrcDirect": {
-    "message": "Izravno",
-    "description": "Favicon gallery source badge: the icon was fetched directly from the site itself."
-  },
-  "favSrcProxy": {
-    "message": "Proxy",
-    "description": "Favicon gallery source badge: the icon was fetched through the user's own proxy relay."
-  },
-  "favSrcLegacy": {
-    "message": "Ranija predmemorija",
-    "description": "Favicon gallery source badge: cached before the source was recorded, so the origin is unknown."
-  },
-  "favGalleryCompare": {
-    "message": "Usporedi sa zamjenskom ikonom",
-    "description": "Favicon gallery toggle button: switch every icon to the generic placeholder it replaced (before/after comparison)."
-  },
-  "favGalleryShowingBefore": {
-    "message": "Natrag na stvarne ikone",
-    "description": "Favicon gallery toggle button while the placeholder comparison is shown: switch back to the real fetched icons."
-  },
-  "favGalleryStatSites": {
-    "message": "$n$ web-mjesta",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    },
-    "description": "Favicon gallery stats strip: how many sites have a refreshed icon."
-  },
-  "favGalleryStatBookmarks": {
-    "message": "$n$ oznaka",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    },
-    "description": "Favicon gallery stats strip: how many bookmarks sit on the refreshed sites."
-  },
-  "favGalleryVisits": {
-    "message": "$n$ zabilježenih otvaranja",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    },
-    "description": "Favicon gallery tooltip on a bookmark row's visit-count pill."
-  },
-  "favGalleryFailedTitle": {
-    "message": "Nedavno pokušano, ikona nije pronađena",
-    "description": "Favicon gallery heading of the muted section listing hosts whose icon fetch failed recently."
-  },
-  "favGalleryFailedHint": {
-    "message": "Neuspjeli pokušaji ponavljaju se nakon 24 h, 3 dana i 7 dana, a zatim se odustaje dok se predmemorija ikona ne očisti.",
-    "description": "Favicon gallery hint under the failed-fetch section title."
-  },
-  "favGalleryGaveUp": {
-    "message": "Odustano",
-    "description": "Favicon gallery badge on a failed-strip host whose retries are exhausted (it stays untouched until the icon cache is cleared)."
-  },
-  "favGalleryOrphan": {
-    "message": "Na ovom hostu nema više oznaka — ikona se briše s predmemorijom.",
-    "description": "Favicon gallery note on a card whose host no longer has any bookmark."
-  },
-  "favGalleryEmptyTitle": {
-    "message": "Još nema osvježenih ikona",
-    "description": "Favicon gallery empty-state heading."
-  },
-  "favGalleryEmptyText": {
-    "message": "Kada skočni prozor naiđe na označeno web-mjesto za koje Chrome nema ikonu, vBookmarks preuzme stvarnu ikonu i ovdje je navede.",
-    "description": "Favicon gallery empty-state body text."
-  },
-  "storageUsageIcon": {
-    "message": "Predmemorija ikona"
-  },
-  "storageUsageOther": {
-    "message": "Ostalo"
-  },
-  "storageUsageSummary": {
-    "message": "Iskorišteno $1$ od $2$",
-    "placeholders": {
-      "1": {
-        "content": "$1"
-      },
-      "2": {
-        "content": "$2"
-      }
-    }
-  },
-  "storageUsageFree": {
-    "message": "Slobodno"
-  },
-  "storageUsageHint": {
-    "message": "Samo lokalna pohrana proširenja (chrome.storage.local, kvota od oko 10 MB): predmemorija ikona te postavke i drugi lokalni podaci. Sinkronizirane postavke, podaci sesije i sama biblioteka oznaka ne ubrajaju se ovdje."
-  },
-  "optionsDonate": {
-    "message": "Doniraj"
-  },
-  "optionsGithubLink": {
-    "message": "GitHub"
-  },
-  "optionsHomepageLink": {
-    "message": "Početna stranica"
-  },
-  "optionsSince": {
-    "message": "Forkano od Neat Bookmarks, održavano $days$ dana.",
-    "placeholders": {
-      "days": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionsVersion": {
-    "message": "Verzija vBookmarks"
-  },
-  "optionSyncRefreshInterval": {
-    "message": "Interval osvježavanja"
-  },
-  "optionSyncRefreshIntervalSeconds": {
-    "message": "sekundi"
-  },
-  "optionTheme": {
-    "message": "Tema"
-  },
-  "optionThemeAuto": {
-    "message": "Prati sustav"
-  },
-  "optionThemeDark": {
-    "message": "Tamna"
-  },
-  "optionThemeInk": {
-    "message": "Tinta (tamno)"
-  },
-  "optionThemeLight": {
-    "message": "Svijetla"
-  },
-  "optionThemePaper": {
-    "message": "Papir (svijetlo)"
-  },
-  "optionLanguage": {
-    "message": "Jezik"
-  },
-  "optionLanguageAuto": {
-    "message": "Automatski"
-  },
-  "optionLanguageHint": {
-    "message": "Promjena jezika ponovno učitava ovu stranicu."
-  },
-  "paletteClose": {
-    "message": "Zatvori"
-  },
-  "paletteCmdVersion": {
-    "message": "Informacije o verziji"
-  },
-  "paletteCmdLang": {
-    "message": "Promijeni jezik…"
-  },
-  "paletteCmdLangUsage": {
-    "message": "Upotreba: /lang nakon čega slijedi kôd jezika — npr. /lang en, /lang zh_CN, /lang ja."
-  },
-  "versionDialogTitle": {
-    "message": "vBookmarks $version$",
-    "placeholders": {
-      "version": {
-        "content": "$1"
-      }
-    }
-  },
-  "versionDialogCopy": {
-    "message": "Kopiraj informacije"
-  },
-  "versionDialogCopied": {
-    "message": "Kopirano"
-  },
-  "versionMetaVersion": {
-    "message": "Verzija proširenja"
-  },
-  "versionMetaAnnounce": {
-    "message": "Što je novo"
-  },
-  "versionMetaAnnounceNone": {
-    "message": "Nema učitane najave"
-  },
-  "versionMetaBrowser": {
-    "message": "Preglednik"
-  },
-  "versionMetaOS": {
-    "message": "Operacijski sustav"
-  },
-  "versionMetaChannel": {
-    "message": "Kanal"
-  },
-  "versionMetaLanguage": {
-    "message": "Jezik"
-  },
-  "versionMetaUserAgent": {
-    "message": "Korisnički agent"
-  },
-  "optionZoom": {
-    "message": "Zumiranje"
-  },
-  "options": {
-    "message": "Opcije"
-  },
-  "optionsFooterText": {
-    "description": "Footer text for the Options page",
-    "message": "Izradio $authorName$.",
-    "placeholders": {
-      "authorName": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionsGroupBackup": {
-    "message": "Sigurnosna kopija"
-  },
-  "optionsGroupIcons": {
-    "message": "Ikone"
-  },
-  "optionsGroupContextMenu": {
-    "message": "Kontekstni izbornici"
-  },
-  "optionsGroupViews": {
-    "message": "Prikazi"
-  },
-  "optionsGroupSort": {
-    "message": "Sortiranje"
-  },
-  "optionsGroupTools": {
-    "message": "Alati"
-  },
-  "optionsGroupStats": {
-    "message": "Statistika"
-  },
-  "paletteCmdDead": {
-    "message": "Pronađi mrtve poveznice"
-  },
-  "paletteCmdDupes": {
-    "message": "Očisti duplicirane oznake"
-  },
-  "paletteCmdGoDead": {
-    "message": "Idi na prikaz mrtvih poveznica"
-  },
-  "paletteCmdGoDupes": {
-    "message": "Idi na prikaz duplikata"
-  },
-  "paletteCmdGoRecent": {
-    "message": "Idi na prikaz nedavnih"
-  },
-  "paletteCmdGoSearch": {
-    "message": "Idi na prikaz pretraživanja"
-  },
-  "paletteCmdGoStats": {
-    "message": "Idi na prikaz statistike"
-  },
-  "paletteCmdGoTree": {
-    "message": "Idi na prikaz stabla"
-  },
-  "paletteCmdNewBookmark": {
-    "message": "Nova oznaka…"
-  },
-  "paletteCmdNewFolder": {
-    "message": "Nova mapa…"
-  },
-  "paletteCmdOptions": {
-    "message": "Otvori stranicu postavki"
-  },
-  "paletteCmdQuickAdd": {
-    "message": "Označi trenutnu karticu"
-  },
-  "paletteCmdSaveSession": {
-    "message": "Spremi kartice prozora kao mapu"
-  },
-  "paletteCmdSearchInView": {
-    "message": "Pretraži '$query$' u prikazu pretraživanja",
-    "placeholders": {
-      "query": {
-        "content": "$1"
-      }
-    }
-  },
-  "paletteCmdToggleViewTabs": {
-    "message": "Preklopi kartice prikaza"
-  },
-  "paletteCmdTheme": {
-    "message": "Postavi temu…"
-  },
-  "paletteCmdThemeUsage": {
-    "message": "Upotreba: /theme nakon čega slijedi naziv teme — auto, light, dark, ink ili paper (radi i jedinstveni prefiks, npr. /theme d)."
-  },
-  "paletteCustomTag": {
-    "message": "prilagođeno"
-  },
-  "paletteCustomDeleteConfirm": {
-    "message": "Izbrisati naredbu \"$1\"? Promjena se sinkronizira na sve vaše uređaje."
-  },
-  "paletteCustomBroken": {
-    "message": "Mapa naredbe \"$1\" više ne postoji. Izbrisati naredbu?"
-  },
-  "paletteCmdSaveAsCommand": {
-    "message": "Spremi \"$1\" kao naredbu…"
-  },
-  "paletteActionOpenUrl": {
-    "message": "Otvori URL"
-  },
-  "paletteActionOpenUrlGroup": {
-    "message": "Otvori grupu mapa zabilješki"
-  },
-  "paletteActionViewPreset": {
-    "message": "Otvori prikaz s predloškom"
-  },
-  "paletteActionUrlTemplate": {
-    "message": "Otvori URL predložak"
-  },
-  "optionsGroupPalette": {
-    "message": "Paleta naredbi"
-  },
-  "paletteCustomHint": {
-    "message": "Prilagođene slash naredbe za paletu naredbi (Ctrl/Cmd+K). Sinkroniziraju se s vašim postavkama — najviše 100 unosa."
-  },
-  "paletteCustomAdd": {
-    "message": "Dodaj naredbu…"
-  },
-  "paletteCustomUsage": {
-    "message": "$1 / $2"
-  },
-  "paletteCustomSlash": {
-    "message": "Kosa crta (riječ nakon /)"
-  },
-  "paletteCustomAliases": {
-    "message": "Aliasi (odvojeni zarezom)"
-  },
-  "paletteCustomAction": {
-    "message": "Radnja"
-  },
-  "paletteCustomUrl": {
-    "message": "URL"
-  },
-  "paletteCustomTemplate": {
-    "message": "URL predložak — %s se zamjenjuje riječima nakon naredbe"
-  },
-  "paletteCustomWhere": {
-    "message": "Otvori u"
-  },
-  "paletteCustomFolder": {
-    "message": "Mapa oznaka"
-  },
-  "paletteCustomView": {
-    "message": "Prikaz"
-  },
-  "paletteCustomStrategy": {
-    "message": "Predložak strategije deduplikacije"
-  },
-  "paletteCustomScope": {
-    "message": "Predložak opsega deduplikacije"
-  },
-  "paletteCustomScan": {
-    "message": "Pokreni skeniranje pri unosu"
-  },
-  "paletteWhereCurrent": {
-    "message": "Trenutna kartica"
-  },
-  "paletteWhereTab": {
-    "message": "Nova kartica"
-  },
-  "paletteWhereWindow": {
-    "message": "Novi prozor"
-  },
-  "paletteWhereBackground": {
-    "message": "Kartice u pozadini"
-  },
-  "paletteCustomSave": {
-    "message": "Spremi naredbu"
-  },
-  "paletteCustomErrSlash": {
-    "message": "Kosa crta: 1–24 znaka – mala slova, znamenke ili crtice, počinje slovom ili znamenkom."
-  },
-  "paletteCustomErrAlias": {
-    "message": "Aliasi: ista pravila kao i za kosu crtu (1–24 znaka; mala slova, znamenke ili crtice)."
-  },
-  "paletteCustomErrTaken": {
-    "message": "Ta kosa crta ili taj alias već su zauzeti."
-  },
-  "paletteCustomErrUrl": {
-    "message": "Dopušteni su samo http:// ili https:// URL-ovi."
-  },
-  "paletteCustomErrFolder": {
-    "message": "Odaberite mapu oznaka."
-  },
-  "paletteCustomErrView": {
-    "message": "Odaberite prikaz."
-  },
-  "paletteCustomErrTemplate": {
-    "message": "Predložak mora sadržavati točno jedan %s."
-  },
-  "paletteCustomErrAction": {
-    "message": "Odaberite vrstu radnje."
-  },
-  "paletteCustomErrLimit": {
-    "message": "Dosegnuto je ograničenje naredbi (100) — prvo obrišite jednu."
-  },
-  "paletteCustomEmpty": {
-    "message": "Još nema prilagođenih naredbi."
-  },
-  "paletteNoResults": {
-    "message": "Nema odgovarajućih rezultata"
-  },
-  "palettePlaceholder": {
-    "message": "Pretraži oznake, mape, naredbe…"
-  },
-  "parentFolder": {
-    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
-    "message": "Roditeljska mapa: \"$folderName$\"",
-    "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarksbar"
-      }
-    }
-  },
-  "quickAddBookmark": {
-    "message": "Označi ovu stranicu (Ctrl+D)"
-  },
-  "quickAddBookmarkCommand": {
-    "message": "Brzo dodaj trenutnu karticu kao zabilješku"
-  },
-  "quickAdded": {
-    "message": "Oznaka dodana"
-  },
-  "quickAddedTo": {
-    "message": "Zabilješka dodana u $folderName$",
-    "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarks bar"
-      }
-    }
-  },
-  "quickRemoveBookmark": {
-    "message": "Ukloni ovu zabilješku (Ctrl+D)"
-  },
-  "quickRemoved": {
-    "message": "Zabilješka uklonjena"
-  },
-  "recentBookmarks": {
-    "message": "Nedavno dodano"
-  },
-  "recentEmpty": {
-    "message": "Nema nedavnih oznaka. Pritisnite Ctrl+D za označavanje trenutne stranice."
-  },
-  "recentGroupMonth": {
-    "message": "Ovaj mjesec"
-  },
-  "recentGroupOlder": {
-    "message": "Starije"
-  },
-  "recentGroupToday": {
-    "message": "Danas"
-  },
-  "recentGroupWeek": {
-    "message": "Ovaj tjedan"
-  },
-  "recentRevealInTree": {
-    "message": "Pokaži u stablu"
-  },
-  "removeSeparator": {
-    "message": "Ukloni separator"
-  },
-  "replaceUrl": {
-    "message": "Zamijeni trenutnim URL-om"
-  },
-  "reportError": {
-    "message": "Prijavi grešku"
-  },
-  "reportedToDeveloper": {
-    "description": "Poruka za grešku u proširenju, prijavljena developeru.",
-    "message": "Ovo je prijavljeno developeru."
-  },
-  "resetButton": {
-    "message": "Resetiraj"
-  },
-  "resetSettings": {
-    "message": "Resetiraj postavke"
-  },
-  "resetSettingsDescription": {
-    "message": "Resetiraj vBookmarks na zadane postavke."
-  },
-  "rowActionDelete": {
-    "message": "Izbriši"
-  },
-  "rowActionMark": {
-    "message": "Označi kao mrtvo"
-  },
-  "rowActionReveal": {
-    "message": "Prikaži u stablu"
-  },
-  "rowActionUnmark": {
-    "message": "Ukloni oznaku mrtvog"
-  },
-  "save": {
-    "message": "Spremi"
-  },
-  "searchBookmarks": {
-    "description": "Placeholder tekst za polje pretraživanja.",
-    "message": "Traži oznake"
-  },
-  "searchClear": {
-    "message": "Očisti pretragu"
-  },
-  "searchHistoryClear": {
-    "message": "Izbriši sve"
-  },
-  "searchHistoryRemove": {
-    "message": "Ukloni ovo pretraživanje"
-  },
-  "searchHistoryRerun": {
-    "message": "Pretraži ponovno"
-  },
-  "searchHistoryResultCount": {
-    "message": "$n$ rezultat(a)",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "searchHistoryTitle": {
-    "message": "Nedavna pretraživanja"
-  },
-  "searchNoResults": {
-    "message": "Nema odgovarajućih oznaka"
-  },
-  "searchViewHint": {
-    "message": "Unesite u gornji okvir za pretraživanje oznaka"
-  },
-  "selectAll": {
-    "message": "Sve"
-  },
-  "selectClear": {
-    "message": "Očisti"
-  },
-  "selectCount": {
-    "message": "Odabrano: $count$",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "selectInvert": {
-    "message": "Invertiraj"
-  },
-  "selectModeEnter": {
-    "message": "Odaberi"
-  },
-  "selectModeExit": {
-    "message": "Izađi iz odabira"
-  },
-  "deadRiskBanner": {
-    "message": "Čišćenje mrtvih veza masovno briše zabilješke. Napravite sigurnosnu kopiju svojih zabilješki prije prvog čišćenja."
-  },
-  "dupesRiskBanner": {
-    "message": "Uklanjanje duplikata masovno briše duplicirane zabilješke. Prije primjene napravite sigurnosnu kopiju svojih zabilješki."
-  },
-  "riskBannerHelp": {
-    "message": "Vodič za sigurnosno kopiranje i vraćanje"
-  },
-  "riskBannerNever": {
-    "message": "Ne prikazuj ponovno"
-  },
-  "riskBannerDismiss": {
-    "message": "Zatvori"
-  },
-  "sessionEmpty": {
-    "message": "Nema kartica za spremanje"
-  },
-  "sessionFolderName": {
-    "message": "Sesija $date$",
-    "placeholders": {
-      "date": {
-        "content": "$1",
-        "example": "2026-07-18 15:04"
-      }
-    },
-    "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm."
-  },
-  "sessionSaved": {
-    "message": "Spremljeno $count$ kartica u novu mapu",
-    "placeholders": {
-      "count": {
-        "content": "$1",
-        "example": "12"
-      }
-    },
-    "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
-  },
-  "settingsBackupHint": {
-    "message": "Izvoz sprema sve postavke (uključujući postavke sinkronizacije) u JSON datoteku. Uvoz spaja sigurnosnu kopiju: postavke u datoteci zamjenjuju trenutne, a sve ostalo ostaje sačuvano."
-  },
-  "settingsExport": {
-    "message": "Izvezi postavke"
-  },
-  "settingsImport": {
-    "message": "Uvezi postavke"
-  },
-  "settingsImportConfirm": {
-    "message": "Uvoz će prepisati svaku postavku sadržanu u sigurnosnoj datoteci (postavke koje nisu u datoteci ostaju) i ponovno učitati ovu stranicu. Nastaviti?"
-  },
-  "settingsImportDone": {
-    "message": "Postavke uvezene. Stranica će se sada ponovno učitati."
-  },
-  "settingsImportError": {
-    "message": "Neke postavke nije moguće zapisati (kvota pohrane ili privremena pogreška). Uvoz nije dovršen — pokušajte ponovno."
-  },
-  "settingsImportInvalid": {
-    "message": "Nevažeća datoteka postavki: nije sigurnosna kopija vBookmarks postavki."
-  },
-  "sortByDateAdded": {
-    "message": "Po datumu dodavanja (najnovije prvo)"
-  },
-  "sortByTitle": {
-    "message": "Po naslovu"
-  },
-  "sortFolderContents": {
-    "message": "Razvrstaj sadržaj mape"
-  },
-  "sortByName": {
-    "message": "Sortiraj po nazivu"
-  },
-  "sortByDate": {
-    "message": "Sortiraj po datumu dodavanja"
-  },
-  "sortRecursiveSuffix": {
-    "message": "(rekurzivno)"
-  },
-  "sortOptions": {
-    "message": "Opcije sortiranja…"
-  },
-  "sortDone": {
-    "message": "Mapa je sortirana"
-  },
-  "sortFoldersFirst": {
-    "message": "Zadrži mape na vrhu"
-  },
-  "sortRecursive": {
-    "message": "Također razvrstaj podmape (rekurzivno)"
-  },
-  "sortRecursiveWarning": {
-    "message": "Ovo mijenja redoslijed oznaka u svakoj podmapi."
-  },
-  "tabGroupDialogTitle": {
-    "message": "Nova grupa kartica"
-  },
-  "tabGroupTitleLabel": {
-    "message": "Naziv grupe"
-  },
-  "tabGroupColorLabel": {
-    "message": "Boja"
-  },
-  "tabGroupColorGrey": {
-    "message": "Siva",
-    "description": "Accessible name of the grey color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorBlue": {
-    "message": "Plava",
-    "description": "Accessible name of the blue color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorRed": {
-    "message": "Crvena",
-    "description": "Accessible name of the red color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorYellow": {
-    "message": "Žuta",
-    "description": "Accessible name of the yellow color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorGreen": {
-    "message": "Zelena",
-    "description": "Accessible name of the green color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorPink": {
-    "message": "Ružičasta",
-    "description": "Accessible name of the pink color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorPurple": {
-    "message": "Ljubičasta",
-    "description": "Accessible name of the purple color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorCyan": {
-    "message": "Cijan",
-    "description": "Accessible name of the cyan color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorOrange": {
-    "message": "Narančasta",
-    "description": "Accessible name of the orange color swatch in the new-tab-group dialog."
-  },
-  "tabGroupUntitled": {
-    "message": "Neimenovana grupa"
-  },
-  "tabGroupNoGroups": {
-    "message": "Nema postojećih grupa kartica"
-  },
-  "tabGroupPickDialogTitle": {
-    "message": "Otvori u postojećoj grupi kartica"
-  },
-  "statsClearConfirm": {
-    "message": "Očistiti statistiku posjeta za $count$ oznaka? Ovo se ne može poništiti.",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "statsClearData": {
-    "message": "Očisti statistiku"
-  },
-  "statsDisabledHint": {
-    "message": "Statistika posjeta je isključena — omogućite je u Postavke → Prikazi"
-  },
-  "statsEmpty": {
-    "message": "Statistika se prikuplja dok otvarate oznake"
-  },
-  "statsHistoryAdd": {
-    "message": "Dodaj u oznake"
-  },
-  "statsHistoryBanner": {
-    "message": "Dodijeli pristup povijesti za pokretanje statistike posjeta s tvojim prošlim posjetima."
-  },
-  "statsHistoryBookmarked": {
-    "message": "Označeno"
-  },
-  "statsHistoryDismiss": {
-    "message": "Ne prikazuj više"
-  },
-  "statsHistoryEnable": {
-    "message": "Omogući"
-  },
-  "statsHistoryGuide": {
-    "message": "Dodijelite pristup povijesti za prikaz nedavnih posjeta ovdje."
-  },
-  "statsHistoryImported": {
-    "message": "Uvezeni prošli posjeti za $count$ oznaka",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "statsSectionBookmarks": {
-    "message": "Statistika oznaka"
-  },
-  "statsSectionRecent": {
-    "message": "Nedavni posjeti"
-  },
-  "statsSortByCount": {
-    "message": "Po broju"
-  },
-  "statsSortByRecent": {
-    "message": "Po nedavnim"
-  },
-  "statsShowUnbookmarked": {
-    "message": "Prikaži neoznačene"
-  },
-  "statsShowUnbookmarkedHint": {
-    "message": "Uključi stranice iz povijesti koje nisu spremljene kao oznake."
-  },
-  "statsVisitCount": {
-    "message": "Posjećeno $count$ puta",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "syncOptions": {
-    "message": "Opcije sinkronizacije"
-  },
-  "syncStatusLocal": {
-    "message": "Samo lokalno — nije preneseno"
-  },
-  "syncStatusSynced": {
-    "message": "Sinkronizirano s Google računom"
-  },
-  "syncStatusUnsyncable": {
-    "message": "Ne može se sinkronizirati"
-  },
-  "syncSuffixLocal": {
-    "message": "(Lokalno)"
-  },
-  "syncSuffixSynced": {
-    "message": "(Sinkronizirano)"
-  },
-  "timeDaysAgo": {
-    "message": "prije $n$ dana",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "timeHoursAgo": {
-    "message": "prije $n$ sat(i)",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "timeJustNow": {
-    "message": "upravo sada"
-  },
-  "timeMinutesAgo": {
-    "message": "prije $n$ min",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "timeYesterday": {
-    "message": "jučer"
-  },
-  "toolButtonTitle": {
-    "message": "Alati (Ctrl+K)"
-  },
-  "undoAction": {
-    "message": "Poništi"
-  },
-  "revealOutsideBarHint": {
-    "message": "Prikazana je samo traka sa zabilješkama: cilj se nalazi izvan nje."
-  },
-  "revealOutsideBarAction": {
-    "message": "Prikaži sve i otkrij"
-  },
-  "url": {
-    "message": "URL"
-  },
-  "viewDead": {
-    "message": "Mrtve poveznice"
-  },
-  "viewDupes": {
-    "message": "Duplikati"
-  },
-  "viewRecent": {
+  "folderPickRecent": {
     "message": "Nedavno"
   },
-  "viewSearch": {
-    "message": "Pretraživanje"
+  "pinFolder": {
+    "message": "Prikvači ovu mapu"
   },
-  "viewStats": {
-    "message": "Statistika"
+  "unpinFolder": {
+    "message": "Otpikvači ovu mapu"
   },
-  "viewSwitchAnnounce": {
-    "message": "$name$ prikaz",
+  "stagingAdd": {
+    "message": "Dodaj u pripremno područje"
+  },
+  "stagingAdded": {
+    "message": "Dodano u pripremno područje"
+  },
+  "stagingAlready": {
+    "message": "Već u pripremnom području"
+  },
+  "stagingAddedSummary": {
+    "message": "Dodano $n$ stavki; $m$ već pripremljeno",
     "placeholders": {
-      "name": {
+      "n": {
+        "content": "$1"
+      },
+      "m": {
+        "content": "$2"
+      }
+    }
+  },
+  "stagingFull": {
+    "message": "Pripremno područje je puno — prvo uklonite neke stavke"
+  },
+  "stagingFolderEmpty": {
+    "message": "Ova mapa nema oznake za pripremu"
+  },
+  "stagingConfirmFolder": {
+    "message": "Pripremiti $n$ oznaka iz ove mape?",
+    "placeholders": {
+      "n": {
         "content": "$1"
       }
     }
   },
-  "viewStateEnabled": {
-    "message": "Omogućeno"
+  "stagingRemove": {
+    "message": "Ukloni iz pripremnog područja"
   },
-  "viewStateDisabled": {
-    "message": "Onemogućeno"
+  "stagingRemoved": {
+    "message": "Uklonjeno iz pripremnog područja"
   },
-  "viewEnable": {
-    "message": "Omogući"
+  "recentStageAll": {
+    "message": "Pripremi sve nedavno dodane"
   },
-  "viewDisable": {
-    "message": "Onemogući"
+  "recentSectionTitle": {
+    "message": "Nedavno dodano"
   },
-  "viewTabHide": {
-    "message": "Sakrij"
+  "stagingEmpty": {
+    "message": "Prazno — desnom tipkom kliknite bilo koju oznaku, koristite ↑ gumb ovdje ili retke povijesti statistike za slanje stavki u pripremno područje"
   },
-  "viewTabDisable": {
-    "message": "Onemogući"
+  "stagingFromHistory": {
+    "message": "Iz povijesti"
   },
-  "viewTree": {
-    "message": "Stablo"
+  "stagingGroupExpand": {
+    "message": "Proširi grupu"
   },
-  "deadProxyNeverShow": {
-    "message": "Ne prikazuj više"
+  "stagingGroupCollapse": {
+    "message": "Skupi grupu"
   },
-  "optionDeadProxyStrip": {
-    "message": "Prikaži naputak za dodavanje proxyja u prikazu mrtvih poveznica"
+  "stagingGroupRename": {
+    "message": "Preimenuj grupu…"
   },
-  "optionDeadProxyStripHint": {
-    "message": "Isključeno skriva taj naputak tamo; proxy poslužitelj i dalje se može konfigurirati ovdje, a spremljeni poslužitelj uvijek prikazuje svoj redak za upravljanje u prikazu."
+  "stagingGroupDissolve": {
+    "message": "Raspusti grupu"
+  },
+  "stagingGroupDissolved": {
+    "message": "Grupa raspuštena — stavke zadržane u pripremnom području"
+  },
+  "stagingGroupAssign": {
+    "message": "Grupa…"
+  },
+  "stagingGroupAssignTitle": {
+    "message": "Dodijeli grupi"
+  },
+  "stagingGroupNew": {
+    "message": "Nova grupa"
+  },
+  "stagingGroupNamePrompt": {
+    "message": "Naziv nove grupe"
+  },
+  "stagingGroupNoGroups": {
+    "message": "Još nema grupa"
+  },
+  "stagingBucketTitle": {
+    "message": "Neoznačeno"
+  },
+  "stagingBucketFavAll": {
+    "message": "Označi sve kao favorite"
+  },
+  "stagingNew": {
+    "message": "novo $n$",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingRowFav": {
+    "message": "Označi ovu stavku kao favorit"
+  },
+  "stagingRowUnfav": {
+    "message": "Ukloni ovu stavku iz favorita"
+  },
+  "stagingFav": {
+    "message": "Favorit"
+  },
+  "stagingUnfav": {
+    "message": "Ukloni favorit"
+  },
+  "stagingFavDone": {
+    "message": "Označeno kao favorit $n$ stavki",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingUnfavDone": {
+    "message": "Uklonjeno iz favorita $n$ stavki",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "groupSaveToFolder": {
+    "message": "Spremi u mapu…"
+  },
+  "groupCopyToFolder": {
+    "message": "Kopiraj u mapu…"
+  },
+  "stagingCount": {
+    "message": "$n$ pripremljeno",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingMoveCopy": {
+    "message": "Premjesti/kopiraj…"
+  },
+  "stagingMoveDone": {
+    "message": "Premješteno $n$ stavki",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingCopyDone": {
+    "message": "Kopirano $n$ stavki",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingMoveConfirm": {
+    "message": "Premjestiti $n$ stavki u odabranu mapu?",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingDeleteConfirm": {
+    "message": "Obrisati $n$ stavki? One koje nisu označene samo napuštaju područje pripreme.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingDeleted": {
+    "message": "Obrisano $n$ oznaka",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingRemovedCount": {
+    "message": "Uklonjeno $n$ stavki iz područja pripreme",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingClear": {
+    "message": "Očisti pripremu"
+  },
+  "stagingClearConfirm": {
+    "message": "Očistiti cijelo područje pripreme? Stablo oznaka se ne dira."
+  },
+  "stagingCleared": {
+    "message": "Područje pripreme očišćeno"
+  },
+  "groupPlaceTooltip": {
+    "message": "Spremi ovu grupu u mapu…"
+  },
+  "copyBookmark": {
+    "message": "Kopiraj"
+  },
+  "cutBookmark": {
+    "message": "Izreži"
+  },
+  "copyMoveTo": {
+    "message": "Kopiraj/premjesti…"
+  },
+  "pasteHere": {
+    "message": "Zalijepi ovdje"
+  },
+  "copiedToast": {
+    "message": "Kopirano: $t$",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
+  },
+  "cutToast": {
+    "message": "Izrezano: $t$ — zalijepi u ciljnu mapu (Esc za odustajanje)",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
+  },
+  "pasteDone": {
+    "message": "Zalijepljeno"
+  },
+  "pasteGone": {
+    "message": "Oznaka više ne postoji — međuspremnik očišćen"
+  },
+  "folderCopyList": {
+    "message": "Kopiraj naslove i adrese"
+  },
+  "folderCopyText": {
+    "message": "Obični tekst"
+  },
+  "folderCopyMarkdown": {
+    "message": "Markdown"
+  },
+  "folderCopyJson": {
+    "message": "JSON"
+  },
+  "folderCopyConfirm": {
+    "message": "Kopirati popis od $n$ oznaka?",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "folderCopyDone": {
+    "message": "Kopirano $n$ unosa oznaka",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "addFolderMenu": {
+    "message": "Dodaj mapu"
+  },
+  "optionCollapseAddFolderMenu": {
+    "message": "Sažmi unose za dodavanje mape"
+  },
+  "optionCollapseAddFolderMenuHint": {
+    "message": "Spoji tri unosa za dodavanje mape (prije/poslije/unutar) u jedan podizbornik pri desnom kliku na mapu."
+  },
+  "tabRowStage": {
+    "message": "Označi i pripremi"
+  },
+  "tabgroupStageAll": {
+    "message": "Označi i pripremi cijelu grupu"
+  },
+  "tabgroupStageConfirm": {
+    "message": "Označiti i pripremiti $n$ kartica?",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabgroupStageNone": {
+    "message": "Nema označivih kartica u ovoj grupi"
+  },
+  "stagedToast": {
+    "message": "Pripremljeno $n$ kartica kao grupa “$t$”",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "t": {
+        "content": "$2"
+      }
+    }
+  },
+  "searchResultCount": {
+    "message": "$n$ rezultata",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "deleteSelected": {
+    "message": "Obriši odabrano"
   }
 }

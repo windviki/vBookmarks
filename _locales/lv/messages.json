@@ -29,6 +29,12 @@
   "advancedOptions": {
     "message": "Paplašinātās opcijas"
   },
+  "announceDismiss": {
+    "message": "Aizvērt"
+  },
+  "announceV408Text": {
+    "message": "v4.0.8 ir favicon uzlabojumu laidiens: reālās vietņu ikonas tiek automātiski iegūtas grāmatzīmēm, kuras Chrome vēl nav kešojis."
+  },
   "announceV407Text": {
     "message": "v4.0.7 sniedz pilnvērtīgu nederīgu saišu skatu: skenējiet, atzīmējiet, filtrējiet un kārtojiet nederīgas un ierobežotas saites, ar iepriekšējām atzīmēm un katras rindas laika zīmogiem."
   },
@@ -44,12 +50,6 @@
   "announceV410Text": {
     "message": "v4.1.0 pievieno cilņu grupu skatu: katra loga cilnes un cilņu grupas, pārvaldītas blakus jūsu grāmatzīmēm."
   },
-  "announceV408Text": {
-    "message": "v4.0.8 ir favicon uzlabojumu laidiens: reālās vietņu ikonas tiek automātiski iegūtas grāmatzīmēm, kuras Chrome vēl nav kešojis."
-  },
-  "announceDismiss": {
-    "message": "Aizvērt"
-  },
   "confirmDeleteFolder": {
     "message": "Šajā mapē ir $count$ vienums(-i). Dzēšanu var atsaukt.",
     "placeholders": {
@@ -57,6 +57,9 @@
         "content": "$1"
       }
     }
+  },
+  "confirmDeleteFolderButton": {
+    "message": "Dzēst"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "Vai tiešām vēlaties dzēst mapi $folderName$ un $bookmarkCount$ grāmatzīmi(-es) tajā?",
@@ -68,9 +71,6 @@
         "content": "$1"
       }
     }
-  },
-  "confirmDeleteFolderButton": {
-    "message": "Dzēst"
   },
   "confirmDeleteFolderSubfolders": {
     "message": "Vai tiešām vēlaties dzēst mapi $folderName$ un $subFolderCount$ apakšmapi(-es) tajā?",
@@ -124,18 +124,11 @@
       }
     }
   },
-  "contextMenuAddBookmark": {
-    "message": "Pievienot šo lapu grāmatzīmēm ar vBookmarks"
-  },
   "copyAllTitlesAndUrls": {
     "message": "Kopēt visus nosaukumus un URL starpliktuvē"
   },
   "copyTitleAndUrl": {
     "message": "Kopēt nosaukumu un URL starpliktuvē"
-  },
-  "crossStorageMoveWarning": {
-    "message": "Grāmatzīmes nevar pārvietot starp sinhronizēto un vietējo krātuvi. Tā vietā izmantojiet kopēt/ielīmēt.",
-    "description": "Warning when trying to move bookmarks across storage types"
   },
   "customIcon": {
     "message": "Pielāgota ikona"
@@ -146,14 +139,14 @@
   "customSeparatorColorDescription": {
     "message": "Pielāgot atdalītāja krāsu"
   },
-  "customSeparatorStringDescription": {
-    "message": "Ja grāmatzīmes URL satur šo virkni, tā tiks rādīta kā atdalītājs"
-  },
   "customSeparatorTitleDescription": {
     "message": "Grāmatzīmes īstais nosaukums, kas tiek rādīts kā atdalītājs"
   },
   "customSeparatorUrlDescription": {
     "message": "Grāmatzīmes īstais URL, kas tiek rādīts kā atdalītājs"
+  },
+  "customSeparatorStringDescription": {
+    "message": "Ja grāmatzīmes URL satur šo virkni, tā tiks rādīta kā atdalītājs"
   },
   "customStyles": {
     "message": "Pielāgoti stili"
@@ -164,8 +157,14 @@
   "customStylesDescription": {
     "message": "Šim ir nepieciešamas dažas CSS prasmes. Modificējiet uz savu atbildību. Kodu kopīgošana būtu gudra"
   },
-  "deadCancel": {
-    "message": "Atcelt"
+  "defaultIconButton": {
+    "message": "Izmantot noklusējuma"
+  },
+  "defaultIconButtonOr": {
+    "message": "vai"
+  },
+  "customIconPick": {
+    "message": "Izvēlēties failu…"
   },
   "deadChecking": {
     "message": "Pārbauda $done$ / $total$…",
@@ -235,6 +234,839 @@
   },
   "deadClearScan": {
     "message": "Notīrīt skenēšanas rezultātus"
+  },
+  "deadNone": {
+    "message": "Nav atrastas bojātas saites"
+  },
+  "deadNoneFiltered": {
+    "message": "Šajā filtrā nav mirušu saišu — mēģiniet citu segmentu augstāk"
+  },
+  "deadRescan": {
+    "message": "Pārskenēt"
+  },
+  "delete": {
+    "message": "Dzēst"
+  },
+  "deletedBookmark": {
+    "message": "Dzēsta $title$",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Example"
+      }
+    },
+    "description": "Toast shown after a bookmark or separator was deleted; the toast offers an undo button. $title$ is the deleted row's title (empty for separators)."
+  },
+  "deletedFolder": {
+    "message": "Dzēsta mape $title$",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Bookmarks"
+      }
+    },
+    "description": "Toast shown after a bookmark folder (with its whole subtree) was deleted; the toast offers an undo button. $title$ is the folder name."
+  },
+  "optionRecentCount": {
+    "message": "Rādāmo nesen pievienoto grāmatzīmju skaits"
+  },
+  "optionSearchHistory": {
+    "message": "Saglabāt meklēšanas vēsturi"
+  },
+  "optionSearchHistoryHint": {
+    "message": "Izslēdzot šo, tiks dzēsta arī esošā vēsture."
+  },
+  "recentEmpty": {
+    "message": "Nav nesenas grāmatzīmes. Nospiediet Ctrl+D, lai pievienotu pašreizējo lapu grāmatzīmēm."
+  },
+  "recentRevealInTree": {
+    "message": "Rādīt kokā"
+  },
+  "searchHistoryClear": {
+    "message": "Notīrīt visu"
+  },
+  "searchHistoryRemove": {
+    "message": "Noņemt šo meklēšanu"
+  },
+  "searchHistoryResultCount": {
+    "message": "$n$ rezultāts(-i)",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "searchHistoryTitle": {
+    "message": "Nesenās meklēšanas"
+  },
+  "timeDaysAgo": {
+    "message": "Pirms $n$ dienām",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "timeHoursAgo": {
+    "message": "Pirms $n$ st.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "timeJustNow": {
+    "message": "tikko"
+  },
+  "timeMinutesAgo": {
+    "message": "Pirms $n$ min.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "timeYesterday": {
+    "message": "vakar"
+  },
+  "undoAction": {
+    "message": "Atsaukt"
+  },
+  "revealOutsideBarHint": {
+    "message": "Tiek rādīta tikai grāmatzīmju josla: mērķis atrodas ārpus tās."
+  },
+  "revealOutsideBarAction": {
+    "message": "Rādīt visu un atklāt"
+  },
+  "dupesCleanAll": {
+    "message": "Notīrīt visu: $groups$ grupas, $count$ papildu kopijas",
+    "placeholders": {
+      "groups": {
+        "content": "$1"
+      },
+      "count": {
+        "content": "$2"
+      }
+    },
+    "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go."
+  },
+  "dupesConfirmAll": {
+    "message": "Dzēst $count$ papildu kopijas $groups$ grupās? Katrā grupā izvēlētais eksemplārs tiek paturēts.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    },
+    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
+  },
+  "dupesConfirmSelected": {
+    "message": "Vai noņemt $count$ dublētās grāmatzīmes no $groups$ atlasītajām grupām?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    }
+  },
+  "dupesConfirmGroup": {
+    "message": "Saglabāt \"$title$\" un dzēst pārējās $count$ kopijas?",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Example bookmark"
+      },
+      "count": {
+        "content": "$2"
+      }
+    },
+    "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."
+  },
+  "dupesDone": {
+    "message": "Noņemtas $count$ dublētas grāmatzīmes",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Alert shown after the duplicate cleanup finished."
+  },
+  "dupesGroupCount": {
+    "message": "$count$ dublikāti",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
+  },
+  "dupesGroupExpand": {
+    "description": "Dupes view group-head context menu: expand a collapsed duplicate group.",
+    "message": "Izvērst grupu"
+  },
+  "dupesGroupCollapse": {
+    "description": "Dupes view group-head context menu: collapse an expanded duplicate group.",
+    "message": "Sakļaut grupu"
+  },
+  "dupesNone": {
+    "message": "Nav atrasti dublikāti"
+  },
+  "deleteEllipsis": {
+    "message": "Dzēst..."
+  },
+  "donationMessage": {
+    "message": "Vai patīk? Ziedojiet tā nākotnei — vai novērtējiet to veikalā: katra atsauksme veicina jaunus atjauninājumus."
+  },
+  "donationV4Notice": {
+    "message": "vBookmarks 4.0 ir pilnībā pārveidota versija ar mūsdienīgu dizainu un daudzām jaunām funkcijām."
+  },
+  "donationV4GuideLink": {
+    "message": "Lasīt v4 ceļvedi →"
+  },
+  "donationGo": {
+    "message": "Ziedot"
+  },
+  "donationRate": {
+    "message": "Novērtēt"
+  },
+  "donationRateTitle": {
+    "message": "Novērtēt vBookmarks Chrome interneta veikalā"
+  },
+  "donationLater": {
+    "message": "Vēlāk"
+  },
+  "donationNever": {
+    "message": "Nerādīt vairs"
+  },
+  "donationDismiss": {
+    "message": "Atmest"
+  },
+  "edit": {
+    "message": "Rediģēt..."
+  },
+  "editBookmark": {
+    "message": "Rediģēt grāmatzīmi"
+  },
+  "editFolder": {
+    "message": "Rediģēt mapi"
+  },
+  "errorOccured": {
+    "message": "Ups, notika kļūda."
+  },
+  "extDesc": {
+    "description": "Paplašinājuma apraksts.",
+    "message": "Uznirstošs grāmatzīmju pārvaldnieks. Uzlabotais Neat Bookmarks. Kārtīgāks par Neater Bookmarks."
+  },
+  "extName": {
+    "description": "vBookmarks",
+    "message": "vBookmarks"
+  },
+  "folderEmpty": {
+    "message": "(Tukšs)"
+  },
+  "general": {
+    "message": "Vispārīgi"
+  },
+  "ignore": {
+    "message": "Ignorēt"
+  },
+  "name": {
+    "description": "Grāmatzīmes vai mapes nosaukums.",
+    "message": "Nosaukums"
+  },
+  "nope": {
+    "message": "Atcelt"
+  },
+  "noTitle": {
+    "description": "Nosaukums bezvārda grāmatzīmēm bez http(s) URL vai bezvārda mapēm.",
+    "message": "(bez nosaukuma)"
+  },
+  "open": {
+    "description": "Darbība grāmatzīmju atvēršanai.",
+    "message": "Atvērt"
+  },
+  "openBookmarks": {
+    "message": "Atvērt visas grāmatzīmes"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "Atvērt visas incognito logā"
+  },
+  "openBookmarksInGroup": {
+    "message": "Atvērt visus jaunā cilņu grupā"
+  },
+  "openBookmarksInGroupSetup": {
+    "message": "Atvērt visus jaunā cilņu grupā…"
+  },
+  "openBookmarksInExistingGroup": {
+    "message": "Atvērt visus esošajā cilņu grupā…"
+  },
+  "tabGroupOptions": {
+    "message": "Cilņu grupas"
+  },
+  "sortMenuOptions": {
+    "message": "Kārtot"
+  },
+  "openBookmarksNewWindow": {
+    "message": "Atvērt visas grāmatzīmes jaunā logā"
+  },
+  "openCommandPaletteCommand": {
+    "message": "Atvērt komandu paleti"
+  },
+  "openIncognitoWindow": {
+    "message": "Atvērt incognito logā"
+  },
+  "openNewTab": {
+    "message": "Atvērt jaunā cilnē"
+  },
+  "bookmarkOpenInNewGroup": {
+    "message": "Atvērt jaunā cilņu grupā"
+  },
+  "bookmarkOpenInNewGroupSetup": {
+    "message": "Atvērt jaunā cilņu grupā…"
+  },
+  "bookmarkOpenInExistingGroup": {
+    "message": "Atvērt esošajā cilņu grupā…"
+  },
+  "openNewWindow": {
+    "message": "Atvērt jaunā logā"
+  },
+  "openSidePanelCommand": {
+    "message": "Atvērt vBookmarks sānu paneli"
+  },
+  "optionAnnounceEnabled": {
+    "message": "Rādīt paziņojumus produktā"
+  },
+  "optionAnnounceEnabledHint": {
+    "message": "Laidienu piezīmes un padomi no projekta GitHub krātuves (tiek ielādēti ne biežāk kā ik pēc 6 stundām). Izslēgšana arī pārtrauc tīkla pieprasījumus."
+  },
+  "optionClickNewTab": {
+    "message": "Kreisais klikšķis atver grāmatzīmi jaunā cilnē."
+  },
+  "optionCloseUnusedFolders": {
+    "message": "Aizvērt neizmantotās mapes, atverot mapi."
+  },
+  "optionConfirmOpenFolder": {
+    "message": "Rādīt apstiprinājumu, atverot daudz grāmatzīmju no mapes."
+  },
+  "optionConfirmDeleteFolder": {
+    "message": "Apstiprināt pirms netukšu mapju dzēšanas"
+  },
+  "optionOnlyShowBookmarkBar": {
+    "message": "Rādīt tikai grāmatzīmes grāmatzīmju joslā"
+  },
+  "optionSearchAfterEnter": {
+    "message": "Meklēt grāmatzīmes tikai, kad tiek nospiests ENTER (nevis tūlītēja meklēšana)"
+  },
+  "optionOpenNewTab": {
+    "message": "Vidējais klikšķis vai control-klikšķis atver grāmatzīmi jaunā fona cilnē (nevis priekšplānā)."
+  },
+  "optionOpenInSidePanel": {
+    "message": "Atvērt sānu panelī, nevis uznirstošajā logā"
+  },
+  "optionPopupStays": {
+    "message": "Uznirstošais logs paliek atvērts, atverot (kreisais klikšķis) grāmatzīmes."
+  },
+  "optionRememberPrevState": {
+    "message": "Atcerēties iepriekšējo stāvokli (ritināšanas pozīciju, atvērtās mapes un pēdējo fokusēto vienumu)."
+  },
+  "options": {
+    "message": "Opcijas"
+  },
+  "optionsFooterText": {
+    "description": "Footer text for the Options page",
+    "message": "Izveidoja $authorName$.",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionZoom": {
+    "message": "Tālummaiņa"
+  },
+  "optionTheme": {
+    "message": "Tēma"
+  },
+  "optionThemeAuto": {
+    "message": "Sekot sistēmai"
+  },
+  "optionThemeLight": {
+    "message": "Gaiša"
+  },
+  "optionThemeDark": {
+    "message": "Tumša"
+  },
+  "optionThemeInk": {
+    "message": "Tinte (tumša)"
+  },
+  "optionThemePaper": {
+    "message": "Papīrs (gaišs)"
+  },
+  "optionLanguage": {
+    "message": "Valoda"
+  },
+  "optionLanguageAuto": {
+    "message": "Automātiski"
+  },
+  "optionLanguageHint": {
+    "message": "Valodas maiņa pārlādē šo lapu."
+  },
+  "paletteClose": {
+    "message": "Aizvērt"
+  },
+  "paletteCmdVersion": {
+    "message": "Versijas informācija"
+  },
+  "paletteCmdLang": {
+    "message": "Pārslēgt valodu…"
+  },
+  "paletteCmdLangUsage": {
+    "message": "Lietošana: /lang, kam seko lokalizācijas kods — piem., /lang en, /lang zh_CN, /lang ja."
+  },
+  "versionDialogTitle": {
+    "message": "vBookmarks $version$",
+    "placeholders": {
+      "version": {
+        "content": "$1"
+      }
+    }
+  },
+  "versionDialogCopy": {
+    "message": "Kopēt informāciju"
+  },
+  "versionDialogCopied": {
+    "message": "Nokopēts"
+  },
+  "versionMetaVersion": {
+    "message": "Paplašinājuma versija"
+  },
+  "versionMetaAnnounce": {
+    "message": "Jaunumi"
+  },
+  "versionMetaAnnounceNone": {
+    "message": "Nav ielādēts paziņojums"
+  },
+  "versionMetaBrowser": {
+    "message": "Pārlūkprogramma"
+  },
+  "versionMetaOS": {
+    "message": "Operētājsistēma"
+  },
+  "versionMetaChannel": {
+    "message": "Kanāls"
+  },
+  "versionMetaLanguage": {
+    "message": "Valoda"
+  },
+  "versionMetaUserAgent": {
+    "message": "Lietotāja aģents"
+  },
+  "paletteCmdDead": {
+    "message": "Atrast bojātas saites"
+  },
+  "paletteCmdDupes": {
+    "message": "Notīrīt dublētas grāmatzīmes"
+  },
+  "paletteCmdNewBookmark": {
+    "message": "Jauna grāmatzīme…"
+  },
+  "paletteCmdNewFolder": {
+    "message": "Jauna mape…"
+  },
+  "paletteCmdQuickAdd": {
+    "message": "Pievienot pašreizējo cilni grāmatzīmēm"
+  },
+  "paletteCmdSaveSession": {
+    "message": "Saglabāt loga cilnes kā mapi"
+  },
+  "paletteNoResults": {
+    "message": "Nav atbilstošu rezultātu"
+  },
+  "palettePlaceholder": {
+    "message": "Meklēt grāmatzīmes, mapes, komandas…"
+  },
+  "parentFolder": {
+    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
+    "message": "Vecāku mape: \"$folderName$\"",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarksbar"
+      }
+    }
+  },
+  "removeSeparator": {
+    "message": "Noņemt atdalītāju"
+  },
+  "replaceUrl": {
+    "message": "Aizstāt ar pašreizējo URL"
+  },
+  "reportedToDeveloper": {
+    "description": "Ziņojums par kļūdu paplašinājumā, ziņots izstrādātājam.",
+    "message": "Šis ir ziņots izstrādātājam."
+  },
+  "reportError": {
+    "message": "Ziņot par kļūdu"
+  },
+  "resetButton": {
+    "message": "Atiestatīt"
+  },
+  "resetSettings": {
+    "message": "Atiestatīt iestatījumus"
+  },
+  "resetSettingsDescription": {
+    "message": "Atiestatīt vBookmarks uz noklusējuma iestatījumiem."
+  },
+  "save": {
+    "message": "Saglabāt"
+  },
+  "searchBookmarks": {
+    "description": "Aizstājējteksts meklēšanas laukam.",
+    "message": "Meklēt grāmatzīmes"
+  },
+  "searchClear": {
+    "message": "Notīrīt meklēšanu"
+  },
+  "searchNoResults": {
+    "message": "Nav atbilstošu grāmatzīmju"
+  },
+  "searchViewHint": {
+    "message": "Ierakstiet lodziņā augšpusē, lai meklētu grāmatzīmes"
+  },
+  "selectAll": {
+    "message": "Visi"
+  },
+  "selectClear": {
+    "message": "Notīrīt"
+  },
+  "selectCount": {
+    "message": "Atlasīti: $count$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "selectInvert": {
+    "message": "Invertēt"
+  },
+  "selectModeEnter": {
+    "message": "Atlasīt"
+  },
+  "selectModeExit": {
+    "message": "Iziet no atlases"
+  },
+  "deadRiskBanner": {
+    "message": "Bojātu saišu tīrīšana masveidā dzēš grāmatzīmes. Pirms pirmās tīrīšanas dublējiet savas grāmatzīmes."
+  },
+  "dupesRiskBanner": {
+    "message": "Dublikātu noņemšana masveidā dzēš dublētas grāmatzīmes. Pirms lietošanas dublējiet savas grāmatzīmes."
+  },
+  "riskBannerHelp": {
+    "message": "Dublēšanas un atjaunošanas ceļvedis"
+  },
+  "riskBannerNever": {
+    "message": "Vairs nerādīt"
+  },
+  "riskBannerDismiss": {
+    "message": "Aizvērt"
+  },
+  "sessionEmpty": {
+    "message": "Nav cilņu, ko saglabāt"
+  },
+  "sessionFolderName": {
+    "message": "Sesija $date$",
+    "placeholders": {
+      "date": {
+        "content": "$1",
+        "example": "2026-07-18 15:04"
+      }
+    },
+    "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm."
+  },
+  "sessionSaved": {
+    "message": "Saglabātas $count$ cilnes jaunā mapē",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "12"
+      }
+    },
+    "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
+  },
+  "url": {
+    "message": "URL"
+  },
+  "syncOptions": {
+    "message": "Sinhronizācijas opcijas"
+  },
+  "optionShowSyncStatus": {
+    "message": "Rādīt sinhronizācijas statusa indikatorus"
+  },
+  "optionHighlightUnsynced": {
+    "message": "Aptumšot nesinhronizētās grāmatzīmes"
+  },
+  "optionAutoRefreshSync": {
+    "message": "Automātiski atsvaidzināt sinhronizācijas statusu"
+  },
+  "optionSyncRefreshInterval": {
+    "message": "Atsvaidzināšanas intervāls"
+  },
+  "optionSyncRefreshIntervalSeconds": {
+    "message": "sekundes"
+  },
+  "syncStatusSynced": {
+    "message": "Sinhronizēts ar jūsu Google kontu"
+  },
+  "syncStatusLocal": {
+    "message": "Tikai lokāli — nav augšupielādēts"
+  },
+  "syncStatusUnsyncable": {
+    "message": "Nevar sinhronizēt"
+  },
+  "syncSuffixSynced": {
+    "message": "(Sinhronizēts)"
+  },
+  "syncSuffixLocal": {
+    "message": "(Lokāls)"
+  },
+  "optionAutoResizePopup": {
+    "message": "Automātiski mainīt uznirstošā loga izmēru atbilstoši saturam"
+  },
+  "crossStorageMoveWarning": {
+    "message": "Grāmatzīmes nevar pārvietot starp sinhronizēto un vietējo krātuvi. Tā vietā izmantojiet kopēt/ielīmēt.",
+    "description": "Warning when trying to move bookmarks across storage types"
+  },
+  "recentBookmarks": {
+    "message": "Nesen pievienotās"
+  },
+  "optionShowRecentBookmarks": {
+    "message": "Rādīt nesen pievienotās grāmatzīmes uznirstošā loga augšdaļā"
+  },
+  "optionShowStatsView": {
+    "message": "Rādīt statistikas skata cilni"
+  },
+  "optionShowDeadView": {
+    "message": "Rādīt mirušo saišu skata cilni"
+  },
+  "optionShowDupesView": {
+    "message": "Rādīt dublikātu skata cilni"
+  },
+  "optionRecentCollapsed": {
+    "message": "Sakļaut nesen pievienoto sadaļu pēc noklusējuma"
+  },
+  "optionsGroupViews": {
+    "message": "Skati"
+  },
+  "optionsGroupSort": {
+    "message": "Kārtošana"
+  },
+  "optionsGroupStats": {
+    "message": "Statistika"
+  },
+  "optionsGroupTools": {
+    "message": "Rīki"
+  },
+  "optionShowViewTabs": {
+    "message": "Rādīt skatu cilnes zem meklēšanas lodziņa"
+  },
+  "optionRememberView": {
+    "message": "Atcerēties pēdējo aktīvo skatu un atvērt to vēlreiz"
+  },
+  "optionShowTabBadges": {
+    "message": "Rādīt skaita nozīmītes uz skatu cilnēm"
+  },
+  "optionPaletteEnabled": {
+    "message": "Iespējot komandu paleti (Ctrl/Cmd+K)"
+  },
+  "optionQuickAddEnabled": {
+    "message": "Rādīt ātrās pievienošanas zvaigznes pogu blakus meklēšanas lodziņam"
+  },
+  "optionQuickAddContextMenu": {
+    "message": "Pievienot \"Grāmatzīmi šai lapai ar vBookmarks\" lapas ar peles labo pogu izvēlnei"
+  },
+  "optionQuickAddContextMenuHint": {
+    "message": "Neatkarīgs no ātrās pievienošanas zvaigznītes; klasiskās pieredzes atjaunošana arī izslēdz šo ierakstu."
+  },
+  "optionCollapseTabGroupMenu": {
+    "message": "Sakļaut cilņu grupu ierakstus vienā “Cilņu grupas…” apakšizvēlnē"
+  },
+  "optionCollapseTabGroupMenuHint": {
+    "message": "Attiecas gan uz mapju, gan grāmatzīmju konteksta izvēlnēm. Pēc noklusējuma izslēgts; mazos vai tuvinātos ekrānos izvēlnes paliek īsākas."
+  },
+  "optionCollapseSortMenu": {
+    "message": "Sakļaut kārtošanas ierakstus vienā “Kārtot…” apakšizvēlnē"
+  },
+  "optionCollapseSortMenuHint": {
+    "message": "Attiecas uz mapes konteksta izvēlni. Pēc noklusējuma ieslēgts."
+  },
+  "optionShowToolButton": {
+    "message": "Rādīt rīku pogu (⋮) blakus meklēšanas lodziņam"
+  },
+  "optionClassicExperience": {
+    "message": "Atjaunot klasisko galveni"
+  },
+  "optionClassicExperienceHint": {
+    "message": "Izslēdz komandu paleti, ātrās pievienošanas zvaigznīti, tās ierakstu lapas kontekstizvēlnē, rīku pogu un skata cilnes. Katru var atkārtoti iespējot atsevišķi attiecīgajā sadaļā."
+  },
+  "optionShowItemPath": {
+    "message": "Rādīt vecākmapes ceļu saraksta rindās"
+  },
+  "viewRecent": {
+    "message": "Nesenie"
+  },
+  "viewTree": {
+    "message": "Koks"
+  },
+  "viewSearch": {
+    "message": "Meklēt"
+  },
+  "viewSwitchAnnounce": {
+    "message": "$name$ skats",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "viewStateEnabled": {
+    "message": "Iespējots"
+  },
+  "viewStateDisabled": {
+    "message": "Atspējots"
+  },
+  "viewEnable": {
+    "message": "Iespējot"
+  },
+  "viewDisable": {
+    "message": "Atspējot"
+  },
+  "viewTabHide": {
+    "message": "Slēpt"
+  },
+  "viewTabDisable": {
+    "message": "Atspējot"
+  },
+  "sortFolderContents": {
+    "message": "Kārtot mapes saturu"
+  },
+  "sortByName": {
+    "message": "Kārtot pēc nosaukuma"
+  },
+  "sortByDate": {
+    "message": "Kārtot pēc datuma"
+  },
+  "sortRecursiveSuffix": {
+    "message": "(rekursīvi)"
+  },
+  "sortOptions": {
+    "message": "Kārtošanas opcijas…"
+  },
+  "sortDone": {
+    "message": "Mape sakārtota"
+  },
+  "sortByTitle": {
+    "message": "Pēc nosaukuma"
+  },
+  "sortByDateAdded": {
+    "message": "Pēc pievienošanas datuma (jaunākie pirmie)"
+  },
+  "sortFoldersFirst": {
+    "message": "Saglabāt mapes augšpusē"
+  },
+  "sortRecursive": {
+    "message": "Kārtot arī apakšmapes (rekursīvi)"
+  },
+  "sortRecursiveWarning": {
+    "message": "Tas pārkārto grāmatzīmes katrā apakšmapē."
+  },
+  "tabGroupDialogTitle": {
+    "message": "Jauna cilņu grupa"
+  },
+  "tabGroupTitleLabel": {
+    "message": "Grupas nosaukums"
+  },
+  "tabGroupColorLabel": {
+    "message": "Krāsa"
+  },
+  "tabGroupColorGrey": {
+    "message": "Pelēka",
+    "description": "Accessible name of the grey color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorBlue": {
+    "message": "Zila",
+    "description": "Accessible name of the blue color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorRed": {
+    "message": "Sarkana",
+    "description": "Accessible name of the red color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorYellow": {
+    "message": "Dzeltena",
+    "description": "Accessible name of the yellow color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorGreen": {
+    "message": "Zaļa",
+    "description": "Accessible name of the green color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPink": {
+    "message": "Rozā",
+    "description": "Accessible name of the pink color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPurple": {
+    "message": "Violeta",
+    "description": "Accessible name of the purple color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorCyan": {
+    "message": "Ciāna",
+    "description": "Accessible name of the cyan color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorOrange": {
+    "message": "Oranža",
+    "description": "Accessible name of the orange color swatch in the new-tab-group dialog."
+  },
+  "tabGroupUntitled": {
+    "message": "Nenosaukta grupa"
+  },
+  "tabGroupNoGroups": {
+    "message": "Nav esošu cilņu grupu"
+  },
+  "tabGroupPickDialogTitle": {
+    "message": "Atvērt esošajā cilņu grupā"
+  },
+  "quickAddBookmark": {
+    "message": "Pievienot šo lapu grāmatzīmēm (Ctrl+D)"
+  },
+  "quickAddBookmarkCommand": {
+    "message": "Ātri pievienot pašreizējo cilni kā grāmatzīmi"
+  },
+  "quickAdded": {
+    "message": "Grāmatzīme pievienota"
+  },
+  "quickAddedTo": {
+    "message": "Grāmatzīme pievienota $folderName$",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarks bar"
+      }
+    }
+  },
+  "quickRemoved": {
+    "message": "Grāmatzīme noņemta"
+  },
+  "quickRemoveBookmark": {
+    "message": "Noņemt šo grāmatzīmi (Ctrl+D)"
+  },
+  "toolButtonTitle": {
+    "message": "Rīki (Ctrl+K)"
+  },
+  "contextMenuAddBookmark": {
+    "message": "Pievienot šo lapu grāmatzīmēm ar vBookmarks"
   },
   "deadFilterAll": {
     "message": "Visi"
@@ -315,14 +1147,653 @@
   "deadMarkedBannerDismiss": {
     "message": "Aizvērt"
   },
-  "deadNone": {
-    "message": "Nav atrastas bojātas saites"
+  "deadProxyAdd": {
+    "message": "Pievienot starpniekserveri bojātu saišu pārbaudei"
   },
-  "deadNoneFiltered": {
-    "message": "Šajā filtrā nav mirušu saišu — mēģiniet citu segmentu augstāk"
+  "deadProxyLabel": {
+    "message": "Starpniekserveris: $server$",
+    "placeholders": {
+      "server": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadProxyChange": {
+    "message": "Mainīt"
+  },
+  "deadProxyRemove": {
+    "message": "Noņemt"
+  },
+  "deadProxyRemoved": {
+    "message": "Starpniekserveris noņemts"
+  },
+  "deadProxyPanelHint": {
+    "message": "Norādiet jau esošu starpniekserveri (paplašinājums tādu nepiedāvā), piem., 127.0.0.1:7890 vai socks5://127.0.0.1:1080."
+  },
+  "deadProxyTestUrlLabel": {
+    "message": "Testa URL"
+  },
+  "deadProxyTestSave": {
+    "message": "Pārbaudīt un saglabāt"
+  },
+  "deadProxyTesting": {
+    "message": "Notiek pārbaude…"
+  },
+  "deadProxySaved": {
+    "message": "Starpniekserveris saglabāts — turpmākajās skenēšanās neveiksmīgās tiešās pārbaudes tiks veiktas caur to"
+  },
+  "deadProxyInvalid": {
+    "message": "Nederīga starpniekservera adrese — izmantojiet host:port vai scheme://host:port (http/https/socks5, bez akreditācijas datiem)"
+  },
+  "deadProxyUnreachable": {
+    "message": "Starpniekserveris nav sasniedzams — nav saglabāts"
+  },
+  "deadProxyDenied": {
+    "message": "Atļauja starpniekserverim netika piešķirta"
+  },
+  "deadProxyControlled": {
+    "message": "Starpniekservera iestatījumus pārvalda cits paplašinājums"
+  },
+  "deadProxyUnavailable": {
+    "message": "Starpniekservera API nav pieejams šajā pārlūkprogrammā"
+  },
+  "deadProxyNudge": {
+    "message": "Proxy atkārtota pārbaude atdala patiesi bojātas saites no reģionā bloķētām — konfigurējiet to šeit vai opciju lapā."
+  },
+  "deadProxyNeverShow": {
+    "message": "Vairs nerādīt"
+  },
+  "deadStartHint": {
+    "message": "Sākt skenēt $n$ grāmatzīmes",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadStatusBlocked": {
+    "message": "bloķēts"
+  },
+  "deadUnmark": {
+    "message": "Noņemt mirušā atzīmi"
+  },
+  "deadUnmarkAll": {
+    "message": "Notīrīt visas atzīmes"
+  },
+  "deadUnmarkSelected": {
+    "message": "Noņemt atzīmi atlasītajiem"
+  },
+  "dupesApplyAll": {
+    "message": "Lietot visus ($count$)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesApplySelected": {
+    "message": "Noņemt dublikātus atlasītajiem ($count$)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesCleanRestHint": {
+    "message": "Saglabāt \"$title$\" un noņemt pārējos $count$",
+    "placeholders": {
+      "title": {
+        "content": "$1"
+      },
+      "count": {
+        "content": "$2"
+      }
+    }
+  },
+  "dupesIgnoreScheme": {
+    "message": "Ignorēt http/https atšķirības"
+  },
+  "dupesKeepThis": {
+    "message": "Saglabāt šo"
+  },
+  "dupesKeeperSet": {
+    "message": "Iestatīt kā saglabāto"
+  },
+  "dupesPreviewSummary": {
+    "message": "$groups$ grupas · $count$ atbrīvojami",
+    "placeholders": {
+      "groups": {
+        "content": "$1"
+      },
+      "count": {
+        "content": "$2"
+      }
+    }
+  },
+  "dupesRemoveRow": {
+    "message": "Dzēst šo kopiju"
+  },
+  "dupesScopeAll": {
+    "message": "Visas grāmatzīmes"
+  },
+  "dupesScopeBar": {
+    "message": "Tikai grāmatzīmju josla"
+  },
+  "dupesStrategyBookmarkBar": {
+    "message": "Saglabāt grāmatzīmju joslā esošo"
+  },
+  "dupesStrategyMostVisited": {
+    "message": "Saglabāt visbiežāk apmeklēto"
+  },
+  "dupesStrategyNewest": {
+    "message": "Saglabāt jaunāko"
+  },
+  "dupesStrategyOldest": {
+    "message": "Saglabāt vecāko"
+  },
+  "dupesStrategyShallowest": {
+    "message": "Saglabāt seklāko"
+  },
+  "dupesStrategyShortestTitle": {
+    "message": "Saglabāt ar īsāko nosaukumu"
+  },
+  "optionDeadProxyServer": {
+    "message": "Bojātu saišu starpniekserveris"
+  },
+  "deadProxyServerHint": {
+    "message": "Saglabātais serveris katrā bojātu saišu skenēšanā atkārtoti pārbauda grāmatzīmes, kas neizturēja tiešo pārbaudi, atšķirot patiesi bojātas saites no reģionāli bloķētām. Testēt un saglabāt pārbauda to (tiek saglabāts tikai sasniedzams serveris); varat to pievienot arī no bojātu saišu skata."
+  },
+  "deadProxyClear": {
+    "message": "Notīrīt"
+  },
+  "deadProxyNone": {
+    "message": "(nav iestatīts)"
+  },
+  "optionDeadProxyStrip": {
+    "message": "Rādīt proxy pievienošanas norādi bojātu saišu skatā"
+  },
+  "optionDeadProxyStripHint": {
+    "message": "Izslēgts slēpj šo norādi; starpposma serveris paliek konfigurējams šeit, un saglabātais serveris vienmēr rāda savu pārvaldīšanas rindu skatā."
+  },
+  "optionDeadScanConcurrency": {
+    "message": "Nedarbojošos saišu skenēšanas vienlaicīgums (1-16)"
+  },
+  "optionDeadScanTimeout": {
+    "message": "Nedarbojošos saišu skenēšanas taimauts sekundēs (2-30)"
+  },
+  "paletteCmdGoDead": {
+    "message": "Doties uz nedarbojošos saišu skatu"
+  },
+  "paletteCmdGoDupes": {
+    "message": "Doties uz dublikātu skatu"
+  },
+  "paletteCmdGoRecent": {
+    "message": "Doties uz nesen skatīto skatu"
+  },
+  "paletteCmdGoSearch": {
+    "message": "Doties uz meklēšanas skatu"
+  },
+  "paletteCmdGoTree": {
+    "message": "Doties uz koka skatu"
+  },
+  "paletteCmdOptions": {
+    "message": "Atvērt iestatījumu lapu"
+  },
+  "paletteCmdSearchInView": {
+    "message": "Meklēt '$query$' meklēšanas skatā",
+    "placeholders": {
+      "query": {
+        "content": "$1"
+      }
+    }
+  },
+  "rowActionDelete": {
+    "message": "Dzēst"
+  },
+  "rowActionMark": {
+    "message": "Atzīmēt kā nedarbojošos"
+  },
+  "rowActionReveal": {
+    "message": "Parādīt kokā"
+  },
+  "rowActionUnmark": {
+    "message": "Noņemt nedarbojošās atzīmi"
+  },
+  "viewDead": {
+    "message": "Nedarbojošās saites"
+  },
+  "viewDupes": {
+    "message": "Dublikāti"
+  },
+  "viewStats": {
+    "message": "Statistika"
+  },
+  "paletteCmdGoStats": {
+    "message": "Doties uz statistikas skatu"
+  },
+  "optionStatsEnabled": {
+    "message": "Iespējot apmeklējumu statistiku"
+  },
+  "optionFaviconContrast": {
+    "message": "Apgriezt zema kontrasta favicons"
+  },
+  "optionFaviconContrastHint": {
+    "message": "Baltas ikonas gaišajos motīvos un melnas ikonas tumšajos motīvos tiek apgrieztas, lai tās paliktu redzamas. Katra ikona tiek paraugota vienu reizi, kad tā ielādējas — bez papildu slodzes pārlūkošanas laikā."
+  },
+  "optionFaviconEnrich": {
+    "message": "Iegūt trūkstošās vietņu ikonas"
+  },
+  "optionFaviconEnrichHint": {
+    "message": "Grāmatzīmētām vietnēm, kurām Chrome nav kešotu ikonu, iegūstiet īsto ikonu tieši no vietnes (/favicon.ico, pēc tam lapas deklarētās ikonas). Pieprasījumi tiek nosūtīti tikai uz vietnēm, kuras esat atzīmējis grāmatzīmēs."
+  },
+  "optionFaviconEnrichAgg": {
+    "message": "Trešās puses ikonu rezerves"
+  },
+  "optionFaviconEnrichAggHint": {
+    "message": "Ja tieša iegūšana neizdodas, ikona tiek uzmeklēta pēc domēna no iebūvētā trešo pušu ikonu pakalpojumu saraksta ($providers$). Nesasniedzams pakalpojums tiek izlaists un tiek mēģināts nākamais — tas netiek atkārtoti mēģināts 6 stundas.",
+    "placeholders": {
+      "providers": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionFaviconBackup": {
+    "message": "Iekļaut ikonu kešu dublējumos"
+  },
+  "optionFaviconBackupHint": {
+    "message": "Iekļaujiet arī bagātināto favicon kešatmiņu (vietņu dati, potenciāli lieli) iestatījumu eksportā/importā. Tas aptver jau kešotās ikonas, pat ja ielāde ir izslēgta. Izslēgts uztur dublējumus mazus; ikonas tik un tā tiek automātiski ielādētas no jauna."
+  },
+  "optionFaviconCacheClear": {
+    "message": "Notīrīt ikonu kešatmiņu"
+  },
+  "optionFaviconCacheClearConfirm": {
+    "message": "Vai notīrīt bagātināto ikonu kešatmiņu? Ikonas tiks automātiski ielādētas no jauna nākamajā atvēršanā."
+  },
+  "optionFaviconCacheEmpty": {
+    "message": "Nav ikonu kešatmiņas, ko notīrīt."
+  },
+  "optionFaviconCacheCleared": {
+    "message": "Ikonu kešatmiņa ir notīrīta. Ikonas tiks atkārtoti iegūtas nākamajā atvēršanas reizē."
+  },
+  "favGalleryLink": {
+    "message": "Skatīt atjauninātās ikonas",
+    "description": "Options link (Icons group, right of the Clear icon cache button): opens the favicon gallery page listing the sites whose icons were refetched."
+  },
+  "favGalleryTitle": {
+    "message": "Atjauninātās vietņu ikonas",
+    "description": "Favicon gallery page title (h1 + document title)."
+  },
+  "favGalleryHint": {
+    "message": "Ikonas, kuras vBookmarks ielādēja grāmatzīmētām vietnēm, kurām Chrome vēl nebija kešatmiņā — no kurienes katra nāk un kuras grāmatzīmes to izmanto. Tikai skatīšanās.",
+    "description": "Subtitle under the favicon gallery title, explaining the page is read-only."
+  },
+  "favGallerySearch": {
+    "message": "Filtrēt pēc vietnes, nosaukuma vai ceļa",
+    "description": "Placeholder of the favicon gallery filter input."
+  },
+  "favGalleryAll": {
+    "message": "Visas",
+    "description": "Favicon gallery source filter chip: show every source."
+  },
+  "favSrcDirect": {
+    "message": "Tieši",
+    "description": "Favicon gallery source badge: the icon was fetched directly from the site itself."
+  },
+  "favSrcProxy": {
+    "message": "Starpniekserveris",
+    "description": "Favicon gallery source badge: the icon was fetched through the user's own proxy relay."
+  },
+  "favSrcLegacy": {
+    "message": "Vecāka kešatmiņa",
+    "description": "Favicon gallery source badge: cached before the source was recorded, so the origin is unknown."
+  },
+  "favGalleryCompare": {
+    "message": "Salīdzināt ar vietturi",
+    "description": "Favicon gallery toggle button: switch every icon to the generic placeholder it replaced (before/after comparison)."
+  },
+  "favGalleryShowingBefore": {
+    "message": "Atpakaļ uz īstajām ikonām",
+    "description": "Favicon gallery toggle button while the placeholder comparison is shown: switch back to the real fetched icons."
+  },
+  "favGalleryStatSites": {
+    "message": "$n$ vietnes",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    },
+    "description": "Favicon gallery stats strip: how many sites have a refreshed icon."
+  },
+  "favGalleryStatBookmarks": {
+    "message": "$n$ grāmatzīmes",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    },
+    "description": "Favicon gallery stats strip: how many bookmarks sit on the refreshed sites."
+  },
+  "favGalleryVisits": {
+    "message": "Reģistrēti $n$ atvērumi",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    },
+    "description": "Favicon gallery tooltip on a bookmark row's visit-count pill."
+  },
+  "favGalleryFailedTitle": {
+    "message": "Nesen mēģināts, ikona nav atrasta",
+    "description": "Favicon gallery heading of the muted section listing hosts whose icon fetch failed recently."
+  },
+  "favGalleryFailedHint": {
+    "message": "Neveiksmīgie mēģinājumi tiek atkārtoti pēc 24 stundām, 3 dienām un 7 dienām, pēc tam tie tiek atmesti līdz ikonu kešatmiņas notīrīšanai.",
+    "description": "Favicon gallery hint under the failed-fetch section title."
+  },
+  "favGalleryGaveUp": {
+    "message": "Atmests",
+    "description": "Favicon gallery badge on a failed-strip host whose retries are exhausted (it stays untouched until the icon cache is cleared)."
+  },
+  "favGalleryOrphan": {
+    "message": "Šai vietnei vairs nav grāmatzīmju — ikona tiek dzēsta kopā ar kešatmiņu.",
+    "description": "Favicon gallery note on a card whose host no longer has any bookmark."
+  },
+  "favGalleryEmptyTitle": {
+    "message": "Vēl nav atjauninātu ikonu",
+    "description": "Favicon gallery empty-state heading."
+  },
+  "favGalleryEmptyText": {
+    "message": "Kad uznirstošajā logā sastopas grāmatzīmēta vietne, kurai Chrome nav ikonas, vBookmarks ielādē īsto ikonu un parāda to šeit.",
+    "description": "Favicon gallery empty-state body text."
+  },
+  "storageUsageIcon": {
+    "message": "Ikonu kešatmiņa"
+  },
+  "storageUsageOther": {
+    "message": "Citi"
+  },
+  "storageUsageSummary": {
+    "message": "Izmantoti $1$ no $2$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      },
+      "2": {
+        "content": "$2"
+      }
+    }
+  },
+  "storageUsageFree": {
+    "message": "Brīvs"
+  },
+  "storageUsageHint": {
+    "message": "Tikai vietējā paplašinājuma krātuve (chrome.storage.local, aptuveni 10 MB kvota): ikonu kešatmiņa plus iestatījumi un citi vietējie dati. Sinhronizētie iestatījumi, sesijas dati un paša grāmatzīmju bibliotēka šeit netiek ieskaitīti."
+  },
+  "optionsDonate": {
+    "message": "Ziedot"
+  },
+  "optionsGithubLink": {
+    "message": "GitHub"
+  },
+  "optionsHomepageLink": {
+    "message": "Mājaslapa"
+  },
+  "optionsSince": {
+    "message": "Atdalīts no Neat Bookmarks, uzturēts $days$ dienas.",
+    "placeholders": {
+      "days": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionsVersion": {
+    "message": "vBookmarks versija"
+  },
+  "statsSortByCount": {
+    "message": "Pēc skaita"
+  },
+  "statsSortByRecent": {
+    "message": "Pēc nesenuma"
+  },
+  "statsShowUnbookmarked": {
+    "message": "Rādīt neatzīmētās"
+  },
+  "statsShowUnbookmarkedHint": {
+    "message": "Iekļaut vēstures lapas, kuras nav saglabātas kā grāmatzīmes."
+  },
+  "statsEmpty": {
+    "message": "Statistika uzkrājas, atverot grāmatzīmes"
+  },
+  "statsDisabledHint": {
+    "message": "Apmeklējumu statistika ir izslēgta — iespējojiet to Iestatījumi → Skati"
+  },
+  "statsVisitCount": {
+    "message": "Apmeklēts $count$ reizes",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "statsClearData": {
+    "message": "Notīrīt statistiku"
+  },
+  "statsClearConfirm": {
+    "message": "Notīrīt apmeklējumu statistiku $count$ grāmatzīmēm? Šo darbību nevar atcelt.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "statsHistoryBanner": {
+    "message": "Piešķirt vēstures piekļuvi, lai apmeklējumu statistiku papildinātu ar jūsu iepriekšējiem apmeklējumiem."
+  },
+  "statsHistoryEnable": {
+    "message": "Iespējot"
+  },
+  "statsHistoryDismiss": {
+    "message": "Nerādīt vēlreiz"
+  },
+  "statsHistoryImported": {
+    "message": "Importēti iepriekšējie apmeklējumi $count$ grāmatzīmēm",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "paletteCmdToggleViewTabs": {
+    "message": "Pārslēgt skata cilnes"
+  },
+  "paletteCmdTheme": {
+    "message": "Iestatīt motīvu…"
+  },
+  "paletteCmdThemeUsage": {
+    "message": "Lietošana: /theme un motīva nosaukums — auto, light, dark, ink vai paper (der unikāls prefikss, piem., /theme d)."
+  },
+  "paletteCustomTag": {
+    "message": "pielāgots"
+  },
+  "paletteCustomDeleteConfirm": {
+    "message": "Dzēst komandu \"$1\"? Izmaiņas sinhronizējas visās jūsu ierīcēs."
+  },
+  "paletteCustomBroken": {
+    "message": "Komandas \"$1\" mape vairs neeksistē. Dzēst komandu?"
+  },
+  "paletteCmdSaveAsCommand": {
+    "message": "Saglabāt \"$1\" kā komandu…"
+  },
+  "paletteActionOpenUrl": {
+    "message": "Atvērt URL"
+  },
+  "paletteActionOpenUrlGroup": {
+    "message": "Atvērt grāmatzīmju mapju grupu"
+  },
+  "paletteActionViewPreset": {
+    "message": "Atvērt skatu ar iepriekš iestatīto"
+  },
+  "paletteActionUrlTemplate": {
+    "message": "Atvērt URL veidni"
+  },
+  "optionsGroupPalette": {
+    "message": "Komandu palete"
+  },
+  "paletteCustomHint": {
+    "message": "Pielāgotas slīpsvītras komandas komandu paletei (Ctrl/Cmd+K). Tās sinhronizējas ar jūsu iestatījumiem — ne vairāk kā 100 ieraksti."
+  },
+  "paletteCustomAdd": {
+    "message": "Pievienot komandu…"
+  },
+  "paletteCustomUsage": {
+    "message": "$1 / $2"
+  },
+  "paletteCustomSlash": {
+    "message": "Slash (vārds pēc /)"
+  },
+  "paletteCustomAliases": {
+    "message": "Aizstājvārdi (atdalīti ar komatiem)"
+  },
+  "paletteCustomAction": {
+    "message": "Darbība"
+  },
+  "paletteCustomUrl": {
+    "message": "URL"
+  },
+  "paletteCustomTemplate": {
+    "message": "URL veidne — %s tiek aizstāts ar vārdiem pēc komandas"
+  },
+  "paletteCustomWhere": {
+    "message": "Atvērt:"
+  },
+  "paletteCustomFolder": {
+    "message": "Grāmatzīmju mape"
+  },
+  "paletteCustomView": {
+    "message": "Skats"
+  },
+  "paletteCustomStrategy": {
+    "message": "Dublikātu stratēģijas priekšiestatījums"
+  },
+  "paletteCustomScope": {
+    "message": "Dublikātu tvēruma priekšiestatījums"
+  },
+  "paletteCustomScan": {
+    "message": "Sākt skenēšanu pēc ievadīšanas"
+  },
+  "paletteWhereCurrent": {
+    "message": "Pašreizējā cilne"
+  },
+  "paletteWhereTab": {
+    "message": "Jauna cilne"
+  },
+  "paletteWhereWindow": {
+    "message": "Jauns logs"
+  },
+  "paletteWhereBackground": {
+    "message": "Fona cilnes"
+  },
+  "paletteCustomSave": {
+    "message": "Saglabāt komandu"
+  },
+  "paletteCustomErrSlash": {
+    "message": "Slash: 1–24 rakstzīmes — mazie burti, cipari vai defises, sākas ar burtu vai ciparu."
+  },
+  "paletteCustomErrAlias": {
+    "message": "Aizstājvārdi: tie paši noteikumi kā Slash (1–24 rakstzīmes no mazajiem burtiem, cipariem vai defisēm)."
+  },
+  "paletteCustomErrTaken": {
+    "message": "Šis slash vai aizstājvārds jau ir aizņemts."
+  },
+  "paletteCustomErrUrl": {
+    "message": "Ir atļauti tikai http:// vai https:// URL."
+  },
+  "paletteCustomErrFolder": {
+    "message": "Izvēlieties grāmatzīmju mapi."
+  },
+  "paletteCustomErrView": {
+    "message": "Izvēlieties skatu."
+  },
+  "paletteCustomErrTemplate": {
+    "message": "Veidnei jāsatur tieši viens %s."
+  },
+  "paletteCustomErrAction": {
+    "message": "Izvēlieties darbības veidu."
+  },
+  "paletteCustomErrLimit": {
+    "message": "Sasniegts komandu ierobežojums (100) — vispirms izdzēsiet vienu."
+  },
+  "paletteCustomEmpty": {
+    "message": "Pielāgotu komandu vēl nav."
+  },
+  "recentGroupToday": {
+    "message": "Šodien"
+  },
+  "recentGroupWeek": {
+    "message": "Šonedēļ"
+  },
+  "recentGroupMonth": {
+    "message": "Šomēnes"
+  },
+  "recentGroupOlder": {
+    "message": "Vecāki"
+  },
+  "searchHistoryRerun": {
+    "message": "Meklēt vēlreiz"
+  },
+  "optionsGroupBackup": {
+    "message": "Dublējums"
+  },
+  "optionsGroupContextMenu": {
+    "message": "Kontekstizvēlnes"
+  },
+  "optionsGroupIcons": {
+    "message": "Ikonas"
+  },
+  "settingsExport": {
+    "message": "Eksportēt iestatījumus"
+  },
+  "settingsImport": {
+    "message": "Importēt iestatījumus"
+  },
+  "settingsBackupHint": {
+    "message": "Eksportēšana saglabā visus iestatījumus (ieskaitot sinhronizācijas preferences) JSON failā. Importēšana apvieno dublējumu: faila iestatījumi pārraksta esošos, pārējie tiek saglabāti."
+  },
+  "settingsImportConfirm": {
+    "message": "Importēšana pārrakstīs visus iestatījumus, kas ir dublējuma failā (failā neesošie iestatījumi tiek saglabāti) un pārlādēs šo lapu. Turpināt?"
+  },
+  "settingsImportInvalid": {
+    "message": "Nederīgs iestatījumu fails: tas nav vBookmarks iestatījumu dublējums."
+  },
+  "settingsImportDone": {
+    "message": "Iestatījumi importēti. Lapa tiks pārlādēta."
+  },
+  "settingsImportError": {
+    "message": "Dažus iestatījumus nevarēja ierakstīt (krātuves kvota vai pārejoša kļūda). Importēšana netika pabeigta — lūdzu, mēģiniet vēlreiz."
+  },
+  "statsSectionRecent": {
+    "message": "Nesenie apmeklējumi"
+  },
+  "statsSectionBookmarks": {
+    "message": "Grāmatzīmju statistika"
+  },
+  "statsHistoryGuide": {
+    "message": "Piešķiriet vēstures piekļuvi, lai šeit parādītu jūsu nesenos apmeklējumus."
+  },
+  "statsHistoryAdd": {
+    "message": "Pievienot grāmatzīmēm"
+  },
+  "statsHistoryBookmarked": {
+    "message": "Pievienots grāmatzīmēm"
   },
   "deadPause": {
     "message": "Apturēt"
+  },
+  "deadResume": {
+    "message": "Turpināt"
+  },
+  "deadCancel": {
+    "message": "Atcelt"
   },
   "deadPaused": {
     "message": "Apturēts"
@@ -671,1475 +2142,339 @@
   "optionTabGroupsClosedLimit": {
     "message": "Saglabājamā slēgto cilņu/grupu vēsture"
   },
-  "deadProxyAdd": {
-    "message": "Pievienot starpniekserveri bojātu saišu pārbaudei"
+  "folderPickMoveHere": {
+    "message": "Pārvietot šeit"
   },
-  "deadProxyLabel": {
-    "message": "Starpniekserveris: $server$",
-    "placeholders": {
-      "server": {
-        "content": "$1"
-      }
-    }
+  "folderPickCopyHere": {
+    "message": "Kopēt šeit"
   },
-  "deadProxyChange": {
-    "message": "Mainīt"
+  "folderPickFilter": {
+    "message": "Filtrēt mapes…"
   },
-  "deadProxyRemove": {
-    "message": "Noņemt"
+  "folderPickFavNote": {
+    "message": "Neatzīmētie vienumi tiks atzīmēti šeit"
   },
-  "deadProxyRemoved": {
-    "message": "Starpniekserveris noņemts"
+  "folderPickPinned": {
+    "message": "Piespraustie"
   },
-  "deadProxyPanelHint": {
-    "message": "Norādiet jau esošu starpniekserveri (paplašinājums tādu nepiedāvā), piem., 127.0.0.1:7890 vai socks5://127.0.0.1:1080."
-  },
-  "deadProxyTestUrlLabel": {
-    "message": "Testa URL"
-  },
-  "deadProxyTestSave": {
-    "message": "Pārbaudīt un saglabāt"
-  },
-  "deadProxyTesting": {
-    "message": "Notiek pārbaude…"
-  },
-  "deadProxySaved": {
-    "message": "Starpniekserveris saglabāts — turpmākajās skenēšanās neveiksmīgās tiešās pārbaudes tiks veiktas caur to"
-  },
-  "deadProxyInvalid": {
-    "message": "Nederīga starpniekservera adrese — izmantojiet host:port vai scheme://host:port (http/https/socks5, bez akreditācijas datiem)"
-  },
-  "deadProxyUnreachable": {
-    "message": "Starpniekserveris nav sasniedzams — nav saglabāts"
-  },
-  "deadProxyDenied": {
-    "message": "Atļauja starpniekserverim netika piešķirta"
-  },
-  "deadProxyControlled": {
-    "message": "Starpniekservera iestatījumus pārvalda cits paplašinājums"
-  },
-  "deadProxyUnavailable": {
-    "message": "Starpniekservera API nav pieejams šajā pārlūkprogrammā"
-  },
-  "deadProxyNudge": {
-    "message": "Proxy atkārtota pārbaude atdala patiesi bojātas saites no reģionā bloķētām — konfigurējiet to šeit vai opciju lapā."
-  },
-  "deadRescan": {
-    "message": "Pārskenēt"
-  },
-  "deadResume": {
-    "message": "Turpināt"
-  },
-  "deadStartHint": {
-    "message": "Sākt skenēt $n$ grāmatzīmes",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "deadStatusBlocked": {
-    "message": "bloķēts"
-  },
-  "deadUnmark": {
-    "message": "Noņemt mirušā atzīmi"
-  },
-  "deadUnmarkAll": {
-    "message": "Notīrīt visas atzīmes"
-  },
-  "deadUnmarkSelected": {
-    "message": "Noņemt atzīmi atlasītajiem"
-  },
-  "defaultIconButton": {
-    "message": "Izmantot noklusējuma"
-  },
-  "defaultIconButtonOr": {
-    "message": "vai"
-  },
-  "customIconPick": {
-    "message": "Izvēlēties failu…"
-  },
-  "delete": {
-    "message": "Dzēst"
-  },
-  "deleteEllipsis": {
-    "message": "Dzēst..."
-  },
-  "deletedBookmark": {
-    "message": "Dzēsta $title$",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Example"
-      }
-    },
-    "description": "Toast shown after a bookmark or separator was deleted; the toast offers an undo button. $title$ is the deleted row's title (empty for separators)."
-  },
-  "deletedFolder": {
-    "message": "Dzēsta mape $title$",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Bookmarks"
-      }
-    },
-    "description": "Toast shown after a bookmark folder (with its whole subtree) was deleted; the toast offers an undo button. $title$ is the folder name."
-  },
-  "donationDismiss": {
-    "message": "Atmest"
-  },
-  "donationGo": {
-    "message": "Ziedot"
-  },
-  "donationRate": {
-    "message": "Novērtēt"
-  },
-  "donationRateTitle": {
-    "message": "Novērtēt vBookmarks Chrome interneta veikalā"
-  },
-  "donationLater": {
-    "message": "Vēlāk"
-  },
-  "donationMessage": {
-    "message": "Vai patīk? Ziedojiet tā nākotnei — vai novērtējiet to veikalā: katra atsauksme veicina jaunus atjauninājumus."
-  },
-  "donationV4Notice": {
-    "message": "vBookmarks 4.0 ir pilnībā pārveidota versija ar mūsdienīgu dizainu un daudzām jaunām funkcijām."
-  },
-  "donationV4GuideLink": {
-    "message": "Lasīt v4 ceļvedi →"
-  },
-  "donationNever": {
-    "message": "Nerādīt vairs"
-  },
-  "dupesApplyAll": {
-    "message": "Lietot visus ($count$)",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "dupesApplySelected": {
-    "message": "Noņemt dublikātus atlasītajiem ($count$)",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "dupesCleanAll": {
-    "message": "Notīrīt visu: $groups$ grupas, $count$ papildu kopijas",
-    "placeholders": {
-      "groups": {
-        "content": "$1"
-      },
-      "count": {
-        "content": "$2"
-      }
-    },
-    "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go."
-  },
-  "dupesCleanRestHint": {
-    "message": "Saglabāt \"$title$\" un noņemt pārējos $count$",
-    "placeholders": {
-      "title": {
-        "content": "$1"
-      },
-      "count": {
-        "content": "$2"
-      }
-    }
-  },
-  "dupesConfirmAll": {
-    "message": "Dzēst $count$ papildu kopijas $groups$ grupās? Katrā grupā izvēlētais eksemplārs tiek paturēts.",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      },
-      "groups": {
-        "content": "$2"
-      }
-    },
-    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
-  },
-  "dupesConfirmSelected": {
-    "message": "Vai noņemt $count$ dublētās grāmatzīmes no $groups$ atlasītajām grupām?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      },
-      "groups": {
-        "content": "$2"
-      }
-    }
-  },
-  "dupesConfirmGroup": {
-    "message": "Saglabāt \"$title$\" un dzēst pārējās $count$ kopijas?",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Example bookmark"
-      },
-      "count": {
-        "content": "$2"
-      }
-    },
-    "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."
-  },
-  "dupesDone": {
-    "message": "Noņemtas $count$ dublētas grāmatzīmes",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Alert shown after the duplicate cleanup finished."
-  },
-  "dupesGroupCount": {
-    "message": "$count$ dublikāti",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
-  },
-  "dupesGroupExpand": {
-    "description": "Dupes view group-head context menu: expand a collapsed duplicate group.",
-    "message": "Izvērst grupu"
-  },
-  "dupesGroupCollapse": {
-    "description": "Dupes view group-head context menu: collapse an expanded duplicate group.",
-    "message": "Sakļaut grupu"
-  },
-  "dupesIgnoreScheme": {
-    "message": "Ignorēt http/https atšķirības"
-  },
-  "dupesKeepThis": {
-    "message": "Saglabāt šo"
-  },
-  "dupesKeeperSet": {
-    "message": "Iestatīt kā saglabāto"
-  },
-  "dupesNone": {
-    "message": "Nav atrasti dublikāti"
-  },
-  "dupesPreviewSummary": {
-    "message": "$groups$ grupas · $count$ atbrīvojami",
-    "placeholders": {
-      "groups": {
-        "content": "$1"
-      },
-      "count": {
-        "content": "$2"
-      }
-    }
-  },
-  "dupesRemoveRow": {
-    "message": "Dzēst šo kopiju"
-  },
-  "dupesScopeAll": {
-    "message": "Visas grāmatzīmes"
-  },
-  "dupesScopeBar": {
-    "message": "Tikai grāmatzīmju josla"
-  },
-  "dupesStrategyBookmarkBar": {
-    "message": "Saglabāt grāmatzīmju joslā esošo"
-  },
-  "dupesStrategyMostVisited": {
-    "message": "Saglabāt visbiežāk apmeklēto"
-  },
-  "dupesStrategyNewest": {
-    "message": "Saglabāt jaunāko"
-  },
-  "dupesStrategyOldest": {
-    "message": "Saglabāt vecāko"
-  },
-  "dupesStrategyShallowest": {
-    "message": "Saglabāt seklāko"
-  },
-  "dupesStrategyShortestTitle": {
-    "message": "Saglabāt ar īsāko nosaukumu"
-  },
-  "edit": {
-    "message": "Rediģēt..."
-  },
-  "editBookmark": {
-    "message": "Rediģēt grāmatzīmi"
-  },
-  "editFolder": {
-    "message": "Rediģēt mapi"
-  },
-  "errorOccured": {
-    "message": "Ups, notika kļūda."
-  },
-  "extDesc": {
-    "description": "Paplašinājuma apraksts.",
-    "message": "Uznirstošs grāmatzīmju pārvaldnieks. Uzlabotais Neat Bookmarks. Kārtīgāks par Neater Bookmarks."
-  },
-  "extName": {
-    "description": "vBookmarks",
-    "message": "vBookmarks"
-  },
-  "folderEmpty": {
-    "message": "(Tukšs)"
-  },
-  "general": {
-    "message": "Vispārīgi"
-  },
-  "ignore": {
-    "message": "Ignorēt"
-  },
-  "name": {
-    "description": "Grāmatzīmes vai mapes nosaukums.",
-    "message": "Nosaukums"
-  },
-  "noTitle": {
-    "description": "Nosaukums bezvārda grāmatzīmēm bez http(s) URL vai bezvārda mapēm.",
-    "message": "(bez nosaukuma)"
-  },
-  "nope": {
-    "message": "Atcelt"
-  },
-  "open": {
-    "description": "Darbība grāmatzīmju atvēršanai.",
-    "message": "Atvērt"
-  },
-  "openBookmarks": {
-    "message": "Atvērt visas grāmatzīmes"
-  },
-  "openBookmarksInGroup": {
-    "message": "Atvērt visus jaunā cilņu grupā"
-  },
-  "openBookmarksInGroupSetup": {
-    "message": "Atvērt visus jaunā cilņu grupā…"
-  },
-  "openBookmarksInExistingGroup": {
-    "message": "Atvērt visus esošajā cilņu grupā…"
-  },
-  "tabGroupOptions": {
-    "message": "Cilņu grupas"
-  },
-  "sortMenuOptions": {
-    "message": "Kārtot"
-  },
-  "openBookmarksIncognitoWindow": {
-    "message": "Atvērt visas incognito logā"
-  },
-  "openBookmarksNewWindow": {
-    "message": "Atvērt visas grāmatzīmes jaunā logā"
-  },
-  "openCommandPaletteCommand": {
-    "message": "Atvērt komandu paleti"
-  },
-  "openIncognitoWindow": {
-    "message": "Atvērt incognito logā"
-  },
-  "openNewTab": {
-    "message": "Atvērt jaunā cilnē"
-  },
-  "bookmarkOpenInNewGroup": {
-    "message": "Atvērt jaunā cilņu grupā"
-  },
-  "bookmarkOpenInNewGroupSetup": {
-    "message": "Atvērt jaunā cilņu grupā…"
-  },
-  "bookmarkOpenInExistingGroup": {
-    "message": "Atvērt esošajā cilņu grupā…"
-  },
-  "openNewWindow": {
-    "message": "Atvērt jaunā logā"
-  },
-  "openSidePanelCommand": {
-    "message": "Atvērt vBookmarks sānu paneli"
-  },
-  "optionAnnounceEnabledHint": {
-    "message": "Laidienu piezīmes un padomi no projekta GitHub krātuves (tiek ielādēti ne biežāk kā ik pēc 6 stundām). Izslēgšana arī pārtrauc tīkla pieprasījumus."
-  },
-  "optionAnnounceEnabled": {
-    "message": "Rādīt paziņojumus produktā"
-  },
-  "optionAutoRefreshSync": {
-    "message": "Automātiski atsvaidzināt sinhronizācijas statusu"
-  },
-  "optionAutoResizePopup": {
-    "message": "Automātiski mainīt uznirstošā loga izmēru atbilstoši saturam"
-  },
-  "optionClickNewTab": {
-    "message": "Kreisais klikšķis atver grāmatzīmi jaunā cilnē."
-  },
-  "optionCloseUnusedFolders": {
-    "message": "Aizvērt neizmantotās mapes, atverot mapi."
-  },
-  "optionConfirmDeleteFolder": {
-    "message": "Apstiprināt pirms netukšu mapju dzēšanas"
-  },
-  "optionConfirmOpenFolder": {
-    "message": "Rādīt apstiprinājumu, atverot daudz grāmatzīmju no mapes."
-  },
-  "optionDeadProxyServer": {
-    "message": "Bojātu saišu starpniekserveris"
-  },
-  "deadProxyServerHint": {
-    "message": "Saglabātais serveris katrā bojātu saišu skenēšanā atkārtoti pārbauda grāmatzīmes, kas neizturēja tiešo pārbaudi, atšķirot patiesi bojātas saites no reģionāli bloķētām. Testēt un saglabāt pārbauda to (tiek saglabāts tikai sasniedzams serveris); varat to pievienot arī no bojātu saišu skata."
-  },
-  "deadProxyClear": {
-    "message": "Notīrīt"
-  },
-  "deadProxyNone": {
-    "message": "(nav iestatīts)"
-  },
-  "optionDeadScanConcurrency": {
-    "message": "Nedarbojošos saišu skenēšanas vienlaicīgums (1-16)"
-  },
-  "optionDeadScanTimeout": {
-    "message": "Nedarbojošos saišu skenēšanas taimauts sekundēs (2-30)"
-  },
-  "optionOnlyShowBookmarkBar": {
-    "message": "Rādīt tikai grāmatzīmes grāmatzīmju joslā"
-  },
-  "optionOpenInSidePanel": {
-    "message": "Atvērt sānu panelī, nevis uznirstošajā logā"
-  },
-  "optionOpenNewTab": {
-    "message": "Vidējais klikšķis vai control-klikšķis atver grāmatzīmi jaunā fona cilnē (nevis priekšplānā)."
-  },
-  "optionPopupStays": {
-    "message": "Uznirstošais logs paliek atvērts, atverot (kreisais klikšķis) grāmatzīmes."
-  },
-  "optionRecentCollapsed": {
-    "message": "Sakļaut nesen pievienoto sadaļu pēc noklusējuma"
-  },
-  "optionRecentCount": {
-    "message": "Rādāmo nesen pievienoto grāmatzīmju skaits"
-  },
-  "optionRememberPrevState": {
-    "message": "Atcerēties iepriekšējo stāvokli (ritināšanas pozīciju, atvērtās mapes un pēdējo fokusēto vienumu)."
-  },
-  "optionSearchAfterEnter": {
-    "message": "Meklēt grāmatzīmes tikai, kad tiek nospiests ENTER (nevis tūlītēja meklēšana)"
-  },
-  "optionSearchHistory": {
-    "message": "Saglabāt meklēšanas vēsturi"
-  },
-  "optionSearchHistoryHint": {
-    "message": "Izslēdzot šo, tiks dzēsta arī esošā vēsture."
-  },
-  "optionShowDeadView": {
-    "message": "Rādīt mirušo saišu skata cilni"
-  },
-  "optionShowDupesView": {
-    "message": "Rādīt dublikātu skata cilni"
-  },
-  "optionShowItemPath": {
-    "message": "Rādīt vecākmapes ceļu saraksta rindās"
-  },
-  "optionShowRecentBookmarks": {
-    "message": "Rādīt nesen pievienotās grāmatzīmes uznirstošā loga augšdaļā"
-  },
-  "optionShowStatsView": {
-    "message": "Rādīt statistikas skata cilni"
-  },
-  "optionShowSyncStatus": {
-    "message": "Rādīt sinhronizācijas statusa indikatorus"
-  },
-  "optionHighlightUnsynced": {
-    "message": "Aptumšot nesinhronizētās grāmatzīmes"
-  },
-  "optionShowViewTabs": {
-    "message": "Rādīt skatu cilnes zem meklēšanas lodziņa"
-  },
-  "optionRememberView": {
-    "message": "Atcerēties pēdējo aktīvo skatu un atvērt to vēlreiz"
-  },
-  "optionShowTabBadges": {
-    "message": "Rādīt skaita nozīmītes uz skatu cilnēm"
-  },
-  "optionPaletteEnabled": {
-    "message": "Iespējot komandu paleti (Ctrl/Cmd+K)"
-  },
-  "optionQuickAddEnabled": {
-    "message": "Rādīt ātrās pievienošanas zvaigznes pogu blakus meklēšanas lodziņam"
-  },
-  "optionQuickAddContextMenu": {
-    "message": "Pievienot \"Grāmatzīmi šai lapai ar vBookmarks\" lapas ar peles labo pogu izvēlnei"
-  },
-  "optionQuickAddContextMenuHint": {
-    "message": "Neatkarīgs no ātrās pievienošanas zvaigznītes; klasiskās pieredzes atjaunošana arī izslēdz šo ierakstu."
-  },
-  "optionCollapseTabGroupMenu": {
-    "message": "Sakļaut cilņu grupu ierakstus vienā “Cilņu grupas…” apakšizvēlnē"
-  },
-  "optionCollapseTabGroupMenuHint": {
-    "message": "Attiecas gan uz mapju, gan grāmatzīmju konteksta izvēlnēm. Pēc noklusējuma izslēgts; mazos vai tuvinātos ekrānos izvēlnes paliek īsākas."
-  },
-  "optionCollapseSortMenu": {
-    "message": "Sakļaut kārtošanas ierakstus vienā “Kārtot…” apakšizvēlnē"
-  },
-  "optionCollapseSortMenuHint": {
-    "message": "Attiecas uz mapes konteksta izvēlni. Pēc noklusējuma ieslēgts."
-  },
-  "optionShowToolButton": {
-    "message": "Rādīt rīku pogu (⋮) blakus meklēšanas lodziņam"
-  },
-  "optionClassicExperience": {
-    "message": "Atjaunot klasisko galveni"
-  },
-  "optionClassicExperienceHint": {
-    "message": "Izslēdz komandu paleti, ātrās pievienošanas zvaigznīti, tās ierakstu lapas kontekstizvēlnē, rīku pogu un skata cilnes. Katru var atkārtoti iespējot atsevišķi attiecīgajā sadaļā."
-  },
-  "optionStatsEnabled": {
-    "message": "Iespējot apmeklējumu statistiku"
-  },
-  "optionFaviconContrast": {
-    "message": "Apgriezt zema kontrasta favicons"
-  },
-  "optionFaviconContrastHint": {
-    "message": "Baltas ikonas gaišajos motīvos un melnas ikonas tumšajos motīvos tiek apgrieztas, lai tās paliktu redzamas. Katra ikona tiek paraugota vienu reizi, kad tā ielādējas — bez papildu slodzes pārlūkošanas laikā."
-  },
-  "optionFaviconEnrich": {
-    "message": "Iegūt trūkstošās vietņu ikonas"
-  },
-  "optionFaviconEnrichHint": {
-    "message": "Grāmatzīmētām vietnēm, kurām Chrome nav kešotu ikonu, iegūstiet īsto ikonu tieši no vietnes (/favicon.ico, pēc tam lapas deklarētās ikonas). Pieprasījumi tiek nosūtīti tikai uz vietnēm, kuras esat atzīmējis grāmatzīmēs."
-  },
-  "optionFaviconEnrichAgg": {
-    "message": "Trešās puses ikonu rezerves"
-  },
-  "optionFaviconEnrichAggHint": {
-    "message": "Ja tieša iegūšana neizdodas, ikona tiek uzmeklēta pēc domēna no iebūvētā trešo pušu ikonu pakalpojumu saraksta ($providers$). Nesasniedzams pakalpojums tiek izlaists un tiek mēģināts nākamais — tas netiek atkārtoti mēģināts 6 stundas.",
-    "placeholders": {
-      "providers": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionFaviconBackup": {
-    "message": "Iekļaut ikonu kešu dublējumos"
-  },
-  "optionFaviconBackupHint": {
-    "message": "Iekļaujiet arī bagātināto favicon kešatmiņu (vietņu dati, potenciāli lieli) iestatījumu eksportā/importā. Tas aptver jau kešotās ikonas, pat ja ielāde ir izslēgta. Izslēgts uztur dublējumus mazus; ikonas tik un tā tiek automātiski ielādētas no jauna."
-  },
-  "optionFaviconCacheClear": {
-    "message": "Notīrīt ikonu kešatmiņu"
-  },
-  "optionFaviconCacheClearConfirm": {
-    "message": "Vai notīrīt bagātināto ikonu kešatmiņu? Ikonas tiks automātiski ielādētas no jauna nākamajā atvēršanā."
-  },
-  "optionFaviconCacheEmpty": {
-    "message": "Nav ikonu kešatmiņas, ko notīrīt."
-  },
-  "optionFaviconCacheCleared": {
-    "message": "Ikonu kešatmiņa ir notīrīta. Ikonas tiks atkārtoti iegūtas nākamajā atvēršanas reizē."
-  },
-  "favGalleryLink": {
-    "message": "Skatīt atjauninātās ikonas",
-    "description": "Options link (Icons group, right of the Clear icon cache button): opens the favicon gallery page listing the sites whose icons were refetched."
-  },
-  "favGalleryTitle": {
-    "message": "Atjauninātās vietņu ikonas",
-    "description": "Favicon gallery page title (h1 + document title)."
-  },
-  "favGalleryHint": {
-    "message": "Ikonas, kuras vBookmarks ielādēja grāmatzīmētām vietnēm, kurām Chrome vēl nebija kešatmiņā — no kurienes katra nāk un kuras grāmatzīmes to izmanto. Tikai skatīšanās.",
-    "description": "Subtitle under the favicon gallery title, explaining the page is read-only."
-  },
-  "favGallerySearch": {
-    "message": "Filtrēt pēc vietnes, nosaukuma vai ceļa",
-    "description": "Placeholder of the favicon gallery filter input."
-  },
-  "favGalleryAll": {
-    "message": "Visas",
-    "description": "Favicon gallery source filter chip: show every source."
-  },
-  "favSrcDirect": {
-    "message": "Tieši",
-    "description": "Favicon gallery source badge: the icon was fetched directly from the site itself."
-  },
-  "favSrcProxy": {
-    "message": "Starpniekserveris",
-    "description": "Favicon gallery source badge: the icon was fetched through the user's own proxy relay."
-  },
-  "favSrcLegacy": {
-    "message": "Vecāka kešatmiņa",
-    "description": "Favicon gallery source badge: cached before the source was recorded, so the origin is unknown."
-  },
-  "favGalleryCompare": {
-    "message": "Salīdzināt ar vietturi",
-    "description": "Favicon gallery toggle button: switch every icon to the generic placeholder it replaced (before/after comparison)."
-  },
-  "favGalleryShowingBefore": {
-    "message": "Atpakaļ uz īstajām ikonām",
-    "description": "Favicon gallery toggle button while the placeholder comparison is shown: switch back to the real fetched icons."
-  },
-  "favGalleryStatSites": {
-    "message": "$n$ vietnes",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    },
-    "description": "Favicon gallery stats strip: how many sites have a refreshed icon."
-  },
-  "favGalleryStatBookmarks": {
-    "message": "$n$ grāmatzīmes",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    },
-    "description": "Favicon gallery stats strip: how many bookmarks sit on the refreshed sites."
-  },
-  "favGalleryVisits": {
-    "message": "Reģistrēti $n$ atvērumi",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    },
-    "description": "Favicon gallery tooltip on a bookmark row's visit-count pill."
-  },
-  "favGalleryFailedTitle": {
-    "message": "Nesen mēģināts, ikona nav atrasta",
-    "description": "Favicon gallery heading of the muted section listing hosts whose icon fetch failed recently."
-  },
-  "favGalleryFailedHint": {
-    "message": "Neveiksmīgie mēģinājumi tiek atkārtoti pēc 24 stundām, 3 dienām un 7 dienām, pēc tam tie tiek atmesti līdz ikonu kešatmiņas notīrīšanai.",
-    "description": "Favicon gallery hint under the failed-fetch section title."
-  },
-  "favGalleryGaveUp": {
-    "message": "Atmests",
-    "description": "Favicon gallery badge on a failed-strip host whose retries are exhausted (it stays untouched until the icon cache is cleared)."
-  },
-  "favGalleryOrphan": {
-    "message": "Šai vietnei vairs nav grāmatzīmju — ikona tiek dzēsta kopā ar kešatmiņu.",
-    "description": "Favicon gallery note on a card whose host no longer has any bookmark."
-  },
-  "favGalleryEmptyTitle": {
-    "message": "Vēl nav atjauninātu ikonu",
-    "description": "Favicon gallery empty-state heading."
-  },
-  "favGalleryEmptyText": {
-    "message": "Kad uznirstošajā logā sastopas grāmatzīmēta vietne, kurai Chrome nav ikonas, vBookmarks ielādē īsto ikonu un parāda to šeit.",
-    "description": "Favicon gallery empty-state body text."
-  },
-  "storageUsageIcon": {
-    "message": "Ikonu kešatmiņa"
-  },
-  "storageUsageOther": {
-    "message": "Citi"
-  },
-  "storageUsageSummary": {
-    "message": "Izmantoti $1$ no $2$",
-    "placeholders": {
-      "1": {
-        "content": "$1"
-      },
-      "2": {
-        "content": "$2"
-      }
-    }
-  },
-  "storageUsageFree": {
-    "message": "Brīvs"
-  },
-  "storageUsageHint": {
-    "message": "Tikai vietējā paplašinājuma krātuve (chrome.storage.local, aptuveni 10 MB kvota): ikonu kešatmiņa plus iestatījumi un citi vietējie dati. Sinhronizētie iestatījumi, sesijas dati un paša grāmatzīmju bibliotēka šeit netiek ieskaitīti."
-  },
-  "optionsDonate": {
-    "message": "Ziedot"
-  },
-  "optionsGithubLink": {
-    "message": "GitHub"
-  },
-  "optionsHomepageLink": {
-    "message": "Mājaslapa"
-  },
-  "optionsSince": {
-    "message": "Atdalīts no Neat Bookmarks, uzturēts $days$ dienas.",
-    "placeholders": {
-      "days": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionsVersion": {
-    "message": "vBookmarks versija"
-  },
-  "optionSyncRefreshInterval": {
-    "message": "Atsvaidzināšanas intervāls"
-  },
-  "optionSyncRefreshIntervalSeconds": {
-    "message": "sekundes"
-  },
-  "optionTheme": {
-    "message": "Tēma"
-  },
-  "optionThemeAuto": {
-    "message": "Sekot sistēmai"
-  },
-  "optionThemeDark": {
-    "message": "Tumša"
-  },
-  "optionThemeInk": {
-    "message": "Tinte (tumša)"
-  },
-  "optionThemeLight": {
-    "message": "Gaiša"
-  },
-  "optionThemePaper": {
-    "message": "Papīrs (gaišs)"
-  },
-  "optionLanguage": {
-    "message": "Valoda"
-  },
-  "optionLanguageAuto": {
-    "message": "Automātiski"
-  },
-  "optionLanguageHint": {
-    "message": "Valodas maiņa pārlādē šo lapu."
-  },
-  "paletteClose": {
-    "message": "Aizvērt"
-  },
-  "paletteCmdVersion": {
-    "message": "Versijas informācija"
-  },
-  "paletteCmdLang": {
-    "message": "Pārslēgt valodu…"
-  },
-  "paletteCmdLangUsage": {
-    "message": "Lietošana: /lang, kam seko lokalizācijas kods — piem., /lang en, /lang zh_CN, /lang ja."
-  },
-  "versionDialogTitle": {
-    "message": "vBookmarks $version$",
-    "placeholders": {
-      "version": {
-        "content": "$1"
-      }
-    }
-  },
-  "versionDialogCopy": {
-    "message": "Kopēt informāciju"
-  },
-  "versionDialogCopied": {
-    "message": "Nokopēts"
-  },
-  "versionMetaVersion": {
-    "message": "Paplašinājuma versija"
-  },
-  "versionMetaAnnounce": {
-    "message": "Jaunumi"
-  },
-  "versionMetaAnnounceNone": {
-    "message": "Nav ielādēts paziņojums"
-  },
-  "versionMetaBrowser": {
-    "message": "Pārlūkprogramma"
-  },
-  "versionMetaOS": {
-    "message": "Operētājsistēma"
-  },
-  "versionMetaChannel": {
-    "message": "Kanāls"
-  },
-  "versionMetaLanguage": {
-    "message": "Valoda"
-  },
-  "versionMetaUserAgent": {
-    "message": "Lietotāja aģents"
-  },
-  "optionZoom": {
-    "message": "Tālummaiņa"
-  },
-  "options": {
-    "message": "Opcijas"
-  },
-  "optionsFooterText": {
-    "description": "Footer text for the Options page",
-    "message": "Izveidoja $authorName$.",
-    "placeholders": {
-      "authorName": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionsGroupBackup": {
-    "message": "Dublējums"
-  },
-  "optionsGroupIcons": {
-    "message": "Ikonas"
-  },
-  "optionsGroupContextMenu": {
-    "message": "Kontekstizvēlnes"
-  },
-  "optionsGroupViews": {
-    "message": "Skati"
-  },
-  "optionsGroupSort": {
-    "message": "Kārtošana"
-  },
-  "optionsGroupTools": {
-    "message": "Rīki"
-  },
-  "optionsGroupStats": {
-    "message": "Statistika"
-  },
-  "paletteCmdDead": {
-    "message": "Atrast bojātas saites"
-  },
-  "paletteCmdDupes": {
-    "message": "Notīrīt dublētas grāmatzīmes"
-  },
-  "paletteCmdGoDead": {
-    "message": "Doties uz nedarbojošos saišu skatu"
-  },
-  "paletteCmdGoDupes": {
-    "message": "Doties uz dublikātu skatu"
-  },
-  "paletteCmdGoRecent": {
-    "message": "Doties uz nesen skatīto skatu"
-  },
-  "paletteCmdGoSearch": {
-    "message": "Doties uz meklēšanas skatu"
-  },
-  "paletteCmdGoStats": {
-    "message": "Doties uz statistikas skatu"
-  },
-  "paletteCmdGoTree": {
-    "message": "Doties uz koka skatu"
-  },
-  "paletteCmdNewBookmark": {
-    "message": "Jauna grāmatzīme…"
-  },
-  "paletteCmdNewFolder": {
-    "message": "Jauna mape…"
-  },
-  "paletteCmdOptions": {
-    "message": "Atvērt iestatījumu lapu"
-  },
-  "paletteCmdQuickAdd": {
-    "message": "Pievienot pašreizējo cilni grāmatzīmēm"
-  },
-  "paletteCmdSaveSession": {
-    "message": "Saglabāt loga cilnes kā mapi"
-  },
-  "paletteCmdSearchInView": {
-    "message": "Meklēt '$query$' meklēšanas skatā",
-    "placeholders": {
-      "query": {
-        "content": "$1"
-      }
-    }
-  },
-  "paletteCmdToggleViewTabs": {
-    "message": "Pārslēgt skata cilnes"
-  },
-  "paletteCmdTheme": {
-    "message": "Iestatīt motīvu…"
-  },
-  "paletteCmdThemeUsage": {
-    "message": "Lietošana: /theme un motīva nosaukums — auto, light, dark, ink vai paper (der unikāls prefikss, piem., /theme d)."
-  },
-  "paletteCustomTag": {
-    "message": "pielāgots"
-  },
-  "paletteCustomDeleteConfirm": {
-    "message": "Dzēst komandu \"$1\"? Izmaiņas sinhronizējas visās jūsu ierīcēs."
-  },
-  "paletteCustomBroken": {
-    "message": "Komandas \"$1\" mape vairs neeksistē. Dzēst komandu?"
-  },
-  "paletteCmdSaveAsCommand": {
-    "message": "Saglabāt \"$1\" kā komandu…"
-  },
-  "paletteActionOpenUrl": {
-    "message": "Atvērt URL"
-  },
-  "paletteActionOpenUrlGroup": {
-    "message": "Atvērt grāmatzīmju mapju grupu"
-  },
-  "paletteActionViewPreset": {
-    "message": "Atvērt skatu ar iepriekš iestatīto"
-  },
-  "paletteActionUrlTemplate": {
-    "message": "Atvērt URL veidni"
-  },
-  "optionsGroupPalette": {
-    "message": "Komandu palete"
-  },
-  "paletteCustomHint": {
-    "message": "Pielāgotas slīpsvītras komandas komandu paletei (Ctrl/Cmd+K). Tās sinhronizējas ar jūsu iestatījumiem — ne vairāk kā 100 ieraksti."
-  },
-  "paletteCustomAdd": {
-    "message": "Pievienot komandu…"
-  },
-  "paletteCustomUsage": {
-    "message": "$1 / $2"
-  },
-  "paletteCustomSlash": {
-    "message": "Slash (vārds pēc /)"
-  },
-  "paletteCustomAliases": {
-    "message": "Aizstājvārdi (atdalīti ar komatiem)"
-  },
-  "paletteCustomAction": {
-    "message": "Darbība"
-  },
-  "paletteCustomUrl": {
-    "message": "URL"
-  },
-  "paletteCustomTemplate": {
-    "message": "URL veidne — %s tiek aizstāts ar vārdiem pēc komandas"
-  },
-  "paletteCustomWhere": {
-    "message": "Atvērt:"
-  },
-  "paletteCustomFolder": {
-    "message": "Grāmatzīmju mape"
-  },
-  "paletteCustomView": {
-    "message": "Skats"
-  },
-  "paletteCustomStrategy": {
-    "message": "Dublikātu stratēģijas priekšiestatījums"
-  },
-  "paletteCustomScope": {
-    "message": "Dublikātu tvēruma priekšiestatījums"
-  },
-  "paletteCustomScan": {
-    "message": "Sākt skenēšanu pēc ievadīšanas"
-  },
-  "paletteWhereCurrent": {
-    "message": "Pašreizējā cilne"
-  },
-  "paletteWhereTab": {
-    "message": "Jauna cilne"
-  },
-  "paletteWhereWindow": {
-    "message": "Jauns logs"
-  },
-  "paletteWhereBackground": {
-    "message": "Fona cilnes"
-  },
-  "paletteCustomSave": {
-    "message": "Saglabāt komandu"
-  },
-  "paletteCustomErrSlash": {
-    "message": "Slash: 1–24 rakstzīmes — mazie burti, cipari vai defises, sākas ar burtu vai ciparu."
-  },
-  "paletteCustomErrAlias": {
-    "message": "Aizstājvārdi: tie paši noteikumi kā Slash (1–24 rakstzīmes no mazajiem burtiem, cipariem vai defisēm)."
-  },
-  "paletteCustomErrTaken": {
-    "message": "Šis slash vai aizstājvārds jau ir aizņemts."
-  },
-  "paletteCustomErrUrl": {
-    "message": "Ir atļauti tikai http:// vai https:// URL."
-  },
-  "paletteCustomErrFolder": {
-    "message": "Izvēlieties grāmatzīmju mapi."
-  },
-  "paletteCustomErrView": {
-    "message": "Izvēlieties skatu."
-  },
-  "paletteCustomErrTemplate": {
-    "message": "Veidnei jāsatur tieši viens %s."
-  },
-  "paletteCustomErrAction": {
-    "message": "Izvēlieties darbības veidu."
-  },
-  "paletteCustomErrLimit": {
-    "message": "Sasniegts komandu ierobežojums (100) — vispirms izdzēsiet vienu."
-  },
-  "paletteCustomEmpty": {
-    "message": "Pielāgotu komandu vēl nav."
-  },
-  "paletteNoResults": {
-    "message": "Nav atbilstošu rezultātu"
-  },
-  "palettePlaceholder": {
-    "message": "Meklēt grāmatzīmes, mapes, komandas…"
-  },
-  "parentFolder": {
-    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
-    "message": "Vecāku mape: \"$folderName$\"",
-    "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarksbar"
-      }
-    }
-  },
-  "quickAddBookmark": {
-    "message": "Pievienot šo lapu grāmatzīmēm (Ctrl+D)"
-  },
-  "quickAddBookmarkCommand": {
-    "message": "Ātri pievienot pašreizējo cilni kā grāmatzīmi"
-  },
-  "quickAdded": {
-    "message": "Grāmatzīme pievienota"
-  },
-  "quickAddedTo": {
-    "message": "Grāmatzīme pievienota $folderName$",
-    "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarks bar"
-      }
-    }
-  },
-  "quickRemoveBookmark": {
-    "message": "Noņemt šo grāmatzīmi (Ctrl+D)"
-  },
-  "quickRemoved": {
-    "message": "Grāmatzīme noņemta"
-  },
-  "recentBookmarks": {
-    "message": "Nesen pievienotās"
-  },
-  "recentEmpty": {
-    "message": "Nav nesenas grāmatzīmes. Nospiediet Ctrl+D, lai pievienotu pašreizējo lapu grāmatzīmēm."
-  },
-  "recentGroupMonth": {
-    "message": "Šomēnes"
-  },
-  "recentGroupOlder": {
-    "message": "Vecāki"
-  },
-  "recentGroupToday": {
-    "message": "Šodien"
-  },
-  "recentGroupWeek": {
-    "message": "Šonedēļ"
-  },
-  "recentRevealInTree": {
-    "message": "Rādīt kokā"
-  },
-  "removeSeparator": {
-    "message": "Noņemt atdalītāju"
-  },
-  "replaceUrl": {
-    "message": "Aizstāt ar pašreizējo URL"
-  },
-  "reportError": {
-    "message": "Ziņot par kļūdu"
-  },
-  "reportedToDeveloper": {
-    "description": "Ziņojums par kļūdu paplašinājumā, ziņots izstrādātājam.",
-    "message": "Šis ir ziņots izstrādātājam."
-  },
-  "resetButton": {
-    "message": "Atiestatīt"
-  },
-  "resetSettings": {
-    "message": "Atiestatīt iestatījumus"
-  },
-  "resetSettingsDescription": {
-    "message": "Atiestatīt vBookmarks uz noklusējuma iestatījumiem."
-  },
-  "rowActionDelete": {
-    "message": "Dzēst"
-  },
-  "rowActionMark": {
-    "message": "Atzīmēt kā nedarbojošos"
-  },
-  "rowActionReveal": {
-    "message": "Parādīt kokā"
-  },
-  "rowActionUnmark": {
-    "message": "Noņemt nedarbojošās atzīmi"
-  },
-  "save": {
-    "message": "Saglabāt"
-  },
-  "searchBookmarks": {
-    "description": "Aizstājējteksts meklēšanas laukam.",
-    "message": "Meklēt grāmatzīmes"
-  },
-  "searchClear": {
-    "message": "Notīrīt meklēšanu"
-  },
-  "searchHistoryClear": {
-    "message": "Notīrīt visu"
-  },
-  "searchHistoryRemove": {
-    "message": "Noņemt šo meklēšanu"
-  },
-  "searchHistoryRerun": {
-    "message": "Meklēt vēlreiz"
-  },
-  "searchHistoryResultCount": {
-    "message": "$n$ rezultāts(-i)",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "searchHistoryTitle": {
-    "message": "Nesenās meklēšanas"
-  },
-  "searchNoResults": {
-    "message": "Nav atbilstošu grāmatzīmju"
-  },
-  "searchViewHint": {
-    "message": "Ierakstiet lodziņā augšpusē, lai meklētu grāmatzīmes"
-  },
-  "selectAll": {
-    "message": "Visi"
-  },
-  "selectClear": {
-    "message": "Notīrīt"
-  },
-  "selectCount": {
-    "message": "Atlasīti: $count$",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "selectInvert": {
-    "message": "Invertēt"
-  },
-  "selectModeEnter": {
-    "message": "Atlasīt"
-  },
-  "selectModeExit": {
-    "message": "Iziet no atlases"
-  },
-  "deadRiskBanner": {
-    "message": "Bojātu saišu tīrīšana masveidā dzēš grāmatzīmes. Pirms pirmās tīrīšanas dublējiet savas grāmatzīmes."
-  },
-  "dupesRiskBanner": {
-    "message": "Dublikātu noņemšana masveidā dzēš dublētas grāmatzīmes. Pirms lietošanas dublējiet savas grāmatzīmes."
-  },
-  "riskBannerHelp": {
-    "message": "Dublēšanas un atjaunošanas ceļvedis"
-  },
-  "riskBannerNever": {
-    "message": "Vairs nerādīt"
-  },
-  "riskBannerDismiss": {
-    "message": "Aizvērt"
-  },
-  "sessionEmpty": {
-    "message": "Nav cilņu, ko saglabāt"
-  },
-  "sessionFolderName": {
-    "message": "Sesija $date$",
-    "placeholders": {
-      "date": {
-        "content": "$1",
-        "example": "2026-07-18 15:04"
-      }
-    },
-    "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm."
-  },
-  "sessionSaved": {
-    "message": "Saglabātas $count$ cilnes jaunā mapē",
-    "placeholders": {
-      "count": {
-        "content": "$1",
-        "example": "12"
-      }
-    },
-    "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
-  },
-  "settingsBackupHint": {
-    "message": "Eksportēšana saglabā visus iestatījumus (ieskaitot sinhronizācijas preferences) JSON failā. Importēšana apvieno dublējumu: faila iestatījumi pārraksta esošos, pārējie tiek saglabāti."
-  },
-  "settingsExport": {
-    "message": "Eksportēt iestatījumus"
-  },
-  "settingsImport": {
-    "message": "Importēt iestatījumus"
-  },
-  "settingsImportConfirm": {
-    "message": "Importēšana pārrakstīs visus iestatījumus, kas ir dublējuma failā (failā neesošie iestatījumi tiek saglabāti) un pārlādēs šo lapu. Turpināt?"
-  },
-  "settingsImportDone": {
-    "message": "Iestatījumi importēti. Lapa tiks pārlādēta."
-  },
-  "settingsImportError": {
-    "message": "Dažus iestatījumus nevarēja ierakstīt (krātuves kvota vai pārejoša kļūda). Importēšana netika pabeigta — lūdzu, mēģiniet vēlreiz."
-  },
-  "settingsImportInvalid": {
-    "message": "Nederīgs iestatījumu fails: tas nav vBookmarks iestatījumu dublējums."
-  },
-  "sortByDateAdded": {
-    "message": "Pēc pievienošanas datuma (jaunākie pirmie)"
-  },
-  "sortByTitle": {
-    "message": "Pēc nosaukuma"
-  },
-  "sortFolderContents": {
-    "message": "Kārtot mapes saturu"
-  },
-  "sortByName": {
-    "message": "Kārtot pēc nosaukuma"
-  },
-  "sortByDate": {
-    "message": "Kārtot pēc datuma"
-  },
-  "sortRecursiveSuffix": {
-    "message": "(rekursīvi)"
-  },
-  "sortOptions": {
-    "message": "Kārtošanas opcijas…"
-  },
-  "sortDone": {
-    "message": "Mape sakārtota"
-  },
-  "sortFoldersFirst": {
-    "message": "Saglabāt mapes augšpusē"
-  },
-  "sortRecursive": {
-    "message": "Kārtot arī apakšmapes (rekursīvi)"
-  },
-  "sortRecursiveWarning": {
-    "message": "Tas pārkārto grāmatzīmes katrā apakšmapē."
-  },
-  "tabGroupDialogTitle": {
-    "message": "Jauna cilņu grupa"
-  },
-  "tabGroupTitleLabel": {
-    "message": "Grupas nosaukums"
-  },
-  "tabGroupColorLabel": {
-    "message": "Krāsa"
-  },
-  "tabGroupColorGrey": {
-    "message": "Pelēka",
-    "description": "Accessible name of the grey color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorBlue": {
-    "message": "Zila",
-    "description": "Accessible name of the blue color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorRed": {
-    "message": "Sarkana",
-    "description": "Accessible name of the red color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorYellow": {
-    "message": "Dzeltena",
-    "description": "Accessible name of the yellow color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorGreen": {
-    "message": "Zaļa",
-    "description": "Accessible name of the green color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorPink": {
-    "message": "Rozā",
-    "description": "Accessible name of the pink color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorPurple": {
-    "message": "Violeta",
-    "description": "Accessible name of the purple color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorCyan": {
-    "message": "Ciāna",
-    "description": "Accessible name of the cyan color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorOrange": {
-    "message": "Oranža",
-    "description": "Accessible name of the orange color swatch in the new-tab-group dialog."
-  },
-  "tabGroupUntitled": {
-    "message": "Nenosaukta grupa"
-  },
-  "tabGroupNoGroups": {
-    "message": "Nav esošu cilņu grupu"
-  },
-  "tabGroupPickDialogTitle": {
-    "message": "Atvērt esošajā cilņu grupā"
-  },
-  "statsClearConfirm": {
-    "message": "Notīrīt apmeklējumu statistiku $count$ grāmatzīmēm? Šo darbību nevar atcelt.",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "statsClearData": {
-    "message": "Notīrīt statistiku"
-  },
-  "statsDisabledHint": {
-    "message": "Apmeklējumu statistika ir izslēgta — iespējojiet to Iestatījumi → Skati"
-  },
-  "statsEmpty": {
-    "message": "Statistika uzkrājas, atverot grāmatzīmes"
-  },
-  "statsHistoryAdd": {
-    "message": "Pievienot grāmatzīmēm"
-  },
-  "statsHistoryBanner": {
-    "message": "Piešķirt vēstures piekļuvi, lai apmeklējumu statistiku papildinātu ar jūsu iepriekšējiem apmeklējumiem."
-  },
-  "statsHistoryBookmarked": {
-    "message": "Pievienots grāmatzīmēm"
-  },
-  "statsHistoryDismiss": {
-    "message": "Nerādīt vēlreiz"
-  },
-  "statsHistoryEnable": {
-    "message": "Iespējot"
-  },
-  "statsHistoryGuide": {
-    "message": "Piešķiriet vēstures piekļuvi, lai šeit parādītu jūsu nesenos apmeklējumus."
-  },
-  "statsHistoryImported": {
-    "message": "Importēti iepriekšējie apmeklējumi $count$ grāmatzīmēm",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "statsSectionBookmarks": {
-    "message": "Grāmatzīmju statistika"
-  },
-  "statsSectionRecent": {
-    "message": "Nesenie apmeklējumi"
-  },
-  "statsSortByCount": {
-    "message": "Pēc skaita"
-  },
-  "statsSortByRecent": {
-    "message": "Pēc nesenuma"
-  },
-  "statsShowUnbookmarked": {
-    "message": "Rādīt neatzīmētās"
-  },
-  "statsShowUnbookmarkedHint": {
-    "message": "Iekļaut vēstures lapas, kuras nav saglabātas kā grāmatzīmes."
-  },
-  "statsVisitCount": {
-    "message": "Apmeklēts $count$ reizes",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "syncOptions": {
-    "message": "Sinhronizācijas opcijas"
-  },
-  "syncStatusLocal": {
-    "message": "Tikai lokāli — nav augšupielādēts"
-  },
-  "syncStatusSynced": {
-    "message": "Sinhronizēts ar jūsu Google kontu"
-  },
-  "syncStatusUnsyncable": {
-    "message": "Nevar sinhronizēt"
-  },
-  "syncSuffixLocal": {
-    "message": "(Lokāls)"
-  },
-  "syncSuffixSynced": {
-    "message": "(Sinhronizēts)"
-  },
-  "timeDaysAgo": {
-    "message": "Pirms $n$ dienām",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "timeHoursAgo": {
-    "message": "Pirms $n$ st.",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "timeJustNow": {
-    "message": "tikko"
-  },
-  "timeMinutesAgo": {
-    "message": "Pirms $n$ min.",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "timeYesterday": {
-    "message": "vakar"
-  },
-  "toolButtonTitle": {
-    "message": "Rīki (Ctrl+K)"
-  },
-  "undoAction": {
-    "message": "Atsaukt"
-  },
-  "revealOutsideBarHint": {
-    "message": "Tiek rādīta tikai grāmatzīmju josla: mērķis atrodas ārpus tās."
-  },
-  "revealOutsideBarAction": {
-    "message": "Rādīt visu un atklāt"
-  },
-  "url": {
-    "message": "URL"
-  },
-  "viewDead": {
-    "message": "Nedarbojošās saites"
-  },
-  "viewDupes": {
-    "message": "Dublikāti"
-  },
-  "viewRecent": {
+  "folderPickRecent": {
     "message": "Nesenie"
   },
-  "viewSearch": {
-    "message": "Meklēt"
+  "pinFolder": {
+    "message": "Piespraust šo mapi"
   },
-  "viewStats": {
-    "message": "Statistika"
+  "unpinFolder": {
+    "message": "Atspraust šo mapi"
   },
-  "viewSwitchAnnounce": {
-    "message": "$name$ skats",
+  "stagingAdd": {
+    "message": "Pievienot sagatavošanas zonai"
+  },
+  "stagingAdded": {
+    "message": "Pievienots sagatavošanas zonai"
+  },
+  "stagingAlready": {
+    "message": "Jau ir sagatavošanas zonā"
+  },
+  "stagingAddedSummary": {
+    "message": "Pievienots $n$ vienums(-i); $m$ jau sagatavoti",
     "placeholders": {
-      "name": {
+      "n": {
+        "content": "$1"
+      },
+      "m": {
+        "content": "$2"
+      }
+    }
+  },
+  "stagingFull": {
+    "message": "Sagatavošanas zona ir pilna — vispirms noņemiet dažus vienumus"
+  },
+  "stagingFolderEmpty": {
+    "message": "Šajā mapē nav grāmatzīmju, ko sagatavot"
+  },
+  "stagingConfirmFolder": {
+    "message": "Sagatavot $n$ grāmatzīmes no šīs mapes?",
+    "placeholders": {
+      "n": {
         "content": "$1"
       }
     }
   },
-  "viewStateEnabled": {
-    "message": "Iespējots"
+  "stagingRemove": {
+    "message": "Noņemt no sagatavošanas zonas"
   },
-  "viewStateDisabled": {
-    "message": "Atspējots"
+  "stagingRemoved": {
+    "message": "Noņemts no sagatavošanas zonas"
   },
-  "viewEnable": {
-    "message": "Iespējot"
+  "recentStageAll": {
+    "message": "Sagatavot visus nesen pievienotos"
   },
-  "viewDisable": {
-    "message": "Atspējot"
+  "recentSectionTitle": {
+    "message": "Nesen pievienotie"
   },
-  "viewTabHide": {
-    "message": "Slēpt"
+  "stagingEmpty": {
+    "message": "Tukšs — ar peles labo pogu noklikšķiniet uz jebkuras grāmatzīmes, izmantojiet ↑ pogu šeit vai statistikas vēstures rindas, lai nosūtītu vienumus uz sagatavošanas zonu"
   },
-  "viewTabDisable": {
-    "message": "Atspējot"
+  "stagingFromHistory": {
+    "message": "No vēstures"
   },
-  "viewTree": {
-    "message": "Koks"
+  "stagingGroupExpand": {
+    "message": "Izvērst grupu"
   },
-  "deadProxyNeverShow": {
-    "message": "Vairs nerādīt"
+  "stagingGroupCollapse": {
+    "message": "Sakļaut grupu"
   },
-  "optionDeadProxyStrip": {
-    "message": "Rādīt proxy pievienošanas norādi bojātu saišu skatā"
+  "stagingGroupRename": {
+    "message": "Pārdēvēt grupu…"
   },
-  "optionDeadProxyStripHint": {
-    "message": "Izslēgts slēpj šo norādi; starpposma serveris paliek konfigurējams šeit, un saglabātais serveris vienmēr rāda savu pārvaldīšanas rindu skatā."
+  "stagingGroupDissolve": {
+    "message": "Izformēt grupu"
+  },
+  "stagingGroupDissolved": {
+    "message": "Grupa izformēta — vienumi saglabāti sagatavošanas zonā"
+  },
+  "stagingGroupAssign": {
+    "message": "Grupa…"
+  },
+  "stagingGroupAssignTitle": {
+    "message": "Piešķirt grupai"
+  },
+  "stagingGroupNew": {
+    "message": "Jauna grupa"
+  },
+  "stagingGroupNamePrompt": {
+    "message": "Jaunas grupas nosaukums"
+  },
+  "stagingGroupNoGroups": {
+    "message": "Vēl nav grupu"
+  },
+  "stagingBucketTitle": {
+    "message": "Neatzīmētie"
+  },
+  "stagingBucketFavAll": {
+    "message": "Atzīmēt visus kā favorītus"
+  },
+  "stagingNew": {
+    "message": "jauni $n$",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingRowFav": {
+    "message": "Atzīmēt šo vienumu kā favorītu"
+  },
+  "stagingRowUnfav": {
+    "message": "Noņemt šī vienuma favorīta atzīmi"
+  },
+  "stagingFav": {
+    "message": "Favorīts"
+  },
+  "stagingUnfav": {
+    "message": "Noņemt favorītu"
+  },
+  "stagingFavDone": {
+    "message": "Atzīmēti $n$ vienumi(-i) kā favorīti",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingUnfavDone": {
+    "message": "Noņemta favorīta atzīme $n$ vienumam(-iem)",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "groupSaveToFolder": {
+    "message": "Saglabāt mapē…"
+  },
+  "groupCopyToFolder": {
+    "message": "Kopēt uz mapi…"
+  },
+  "stagingCount": {
+    "message": "$n$ sagatavoti",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingMoveCopy": {
+    "message": "Pārvietot/kopēt uz…"
+  },
+  "stagingMoveDone": {
+    "message": "Pārvietoti $n$ vienumi uz sākumu",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingCopyDone": {
+    "message": "Kopēti $n$ vienumi",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingMoveConfirm": {
+    "message": "Pārvietot $n$ vienumus uz izvēlēto mapi?",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingDeleteConfirm": {
+    "message": "Dzēst $n$ vienumus? Neatzīmētie vienkārši pamet sagatavošanas apgabalu.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingDeleted": {
+    "message": "Dzēsti $n$ grāmatzīmes",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingRemovedCount": {
+    "message": "Noņemti $n$ vienumi no sagatavošanas apgabala",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingClear": {
+    "message": "Notīrīt sagatavošanu"
+  },
+  "stagingClearConfirm": {
+    "message": "Notīrīt visu sagatavošanas apgabalu? Grāmatzīmju koks netiks skarts."
+  },
+  "stagingCleared": {
+    "message": "Sagatavošanas apgabals notīrīts"
+  },
+  "groupPlaceTooltip": {
+    "message": "Saglabāt šo grupu mapē…"
+  },
+  "copyBookmark": {
+    "message": "Kopēt"
+  },
+  "cutBookmark": {
+    "message": "Izgriezt"
+  },
+  "copyMoveTo": {
+    "message": "Kopēt/pārvietot uz…"
+  },
+  "pasteHere": {
+    "message": "Ielīmēt šeit"
+  },
+  "copiedToast": {
+    "message": "Kopēts: $t$",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
+  },
+  "cutToast": {
+    "message": "Izgriezts: $t$ — ielīmējiet mērķa mapē (Esc atceļ)",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
+  },
+  "pasteDone": {
+    "message": "Ielīmēts"
+  },
+  "pasteGone": {
+    "message": "Grāmatzīme vairs neeksistē — starpliktuve notīrīta"
+  },
+  "folderCopyList": {
+    "message": "Kopēt nosaukumus un adreses"
+  },
+  "folderCopyText": {
+    "message": "Vienkārša teksta saraksts"
+  },
+  "folderCopyMarkdown": {
+    "message": "Markdown"
+  },
+  "folderCopyJson": {
+    "message": "JSON"
+  },
+  "folderCopyConfirm": {
+    "message": "Kopēt $n$ grāmatzīmju sarakstu?",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "folderCopyDone": {
+    "message": "Kopēti $n$ grāmatzīmju ieraksti",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "addFolderMenu": {
+    "message": "Pievienot mapi"
+  },
+  "optionCollapseAddFolderMenu": {
+    "message": "Sakļaut mapes pievienošanas ierakstus"
+  },
+  "optionCollapseAddFolderMenuHint": {
+    "message": "Apvienot trīs mapes pievienošanas ierakstus (pirms/pēc/iekšā) vienā apakšizvēlnē, ar peles labo pogu noklikšķinot uz mapes."
+  },
+  "tabRowStage": {
+    "message": "Grāmatzīme un sagatavošana"
+  },
+  "tabgroupStageAll": {
+    "message": "Grāmatzīme un sagatavot visu grupu"
+  },
+  "tabgroupStageConfirm": {
+    "message": "Grāmatzīme un sagatavot $n$ cilnes?",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabgroupStageNone": {
+    "message": "Šajā grupā nav grāmatzīmējamu cilņu"
+  },
+  "stagedToast": {
+    "message": "Sagatavotas $n$ cilnes kā grupa “$t$”",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "t": {
+        "content": "$2"
+      }
+    }
+  },
+  "searchResultCount": {
+    "message": "$n$ rezultāti",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "deleteSelected": {
+    "message": "Dzēst atlasītos"
   }
 }

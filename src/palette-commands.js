@@ -35,7 +35,7 @@ import { htmlspecialchars } from './escape.js';
 // command table). palette.test.js pins the table and this list in sync.
 export const PALETTE_RESERVED = [
     'add', 'star', 'new', 'folder', 'mkdir', 'session', 'save',
-    'tree', 'home', 'search', 'find', 'tabgroups', 'recent', 'latest', 'stats', 'visits',
+    'tree', 'home', 'search', 'find', 'tabgroups', 'recent', 'latest', 'staging', 'stats', 'visits',
     'dead', 'broken', 'dupes', 'dedup', 'theme',
     'dark', 'light', 'ink', 'paper', 'tabs', 'version', 'lang', 'options', 'settings', 'secret'
 ];

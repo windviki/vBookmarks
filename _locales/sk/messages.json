@@ -29,6 +29,12 @@
   "advancedOptions": {
     "message": "Pokročilé možnosti"
   },
+  "announceDismiss": {
+    "message": "Zavrieť"
+  },
+  "announceV408Text": {
+    "message": "v4.0.8 je verzia s vylepšenými favikonami: skutočné ikony stránok sa automaticky načítavajú pre záložky, ktoré Chrome ešte neuložil do vyrovnávacej pamäte."
+  },
   "announceV407Text": {
     "message": "v4.0.7 prináša plnohodnotné zobrazenie nefunkčných odkazov: skenovanie, označovanie, filtrovanie a triedenie nefunkčných a obmedzených odkazov, s predchádzajúcimi označeniami a časovými pečiatkami pre každý riadok."
   },
@@ -44,12 +50,6 @@
   "announceV410Text": {
     "message": "v4.1.0 pridáva zobrazenie skupín kariet: karty a skupiny kariet každého okna, spravované vedľa vašich záložiek."
   },
-  "announceV408Text": {
-    "message": "v4.0.8 je verzia s vylepšenými favikonami: skutočné ikony stránok sa automaticky načítavajú pre záložky, ktoré Chrome ešte neuložil do vyrovnávacej pamäte."
-  },
-  "announceDismiss": {
-    "message": "Zavrieť"
-  },
   "confirmDeleteFolder": {
     "message": "Tento priečinok obsahuje $count$ položiek. Odstránenie môžete vrátiť späť.",
     "placeholders": {
@@ -57,6 +57,9 @@
         "content": "$1"
       }
     }
+  },
+  "confirmDeleteFolderButton": {
+    "message": "Odstrániť"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "Ste si istí, že chcete odstrániť priečinok $folderName$ a $bookmarkCount$ záložku(y) v ňom?",
@@ -68,9 +71,6 @@
         "content": "$1"
       }
     }
-  },
-  "confirmDeleteFolderButton": {
-    "message": "Odstrániť"
   },
   "confirmDeleteFolderSubfolders": {
     "message": "Ste si istí, že chcete odstrániť priečinok $folderName$ a $subFolderCount$ podpriečinok(ov) v ňom?",
@@ -124,18 +124,11 @@
       }
     }
   },
-  "contextMenuAddBookmark": {
-    "message": "Pridať túto stránku do záložiek pomocou vBookmarks"
-  },
   "copyAllTitlesAndUrls": {
     "message": "Skopírovať všetky názvy a URL do schránky"
   },
   "copyTitleAndUrl": {
     "message": "Skopírovať názov a URL do schránky"
-  },
-  "crossStorageMoveWarning": {
-    "message": "Záložky nie je možné presúvať medzi synchronizovaným a miestnym úložiskom. Použite kopírovať/prilepiť.",
-    "description": "Warning when trying to move bookmarks across storage types"
   },
   "customIcon": {
     "message": "Vlastná ikona"
@@ -146,14 +139,14 @@
   "customSeparatorColorDescription": {
     "message": "Prispôsobiť farbu oddeľovača"
   },
-  "customSeparatorStringDescription": {
-    "message": "Ak URL záložky obsahuje tento reťazec, zobrazí sa ako oddeľovač"
-  },
   "customSeparatorTitleDescription": {
     "message": "Skutočný názov záložky, ktorá sa zobrazuje ako oddeľovač"
   },
   "customSeparatorUrlDescription": {
     "message": "Skutočná URL záložky, ktorá sa zobrazuje ako oddeľovač"
+  },
+  "customSeparatorStringDescription": {
+    "message": "Ak URL záložky obsahuje tento reťazec, zobrazí sa ako oddeľovač"
   },
   "customStyles": {
     "message": "Vlastné štýly"
@@ -164,8 +157,14 @@
   "customStylesDescription": {
     "message": "Toto vyžaduje nejaké CSS znalosti. Upravujte na vlastné riziko. Zdieľanie kódu by b múdre"
   },
-  "deadCancel": {
-    "message": "Zrušiť"
+  "defaultIconButton": {
+    "message": "Použiť predvolené"
+  },
+  "defaultIconButtonOr": {
+    "message": "alebo"
+  },
+  "customIconPick": {
+    "message": "Vybrať súbor…"
   },
   "deadChecking": {
     "message": "Kontrolujem $done$ / $total$…",
@@ -235,6 +234,839 @@
   },
   "deadClearScan": {
     "message": "Vymazať výsledky skenovania"
+  },
+  "deadNone": {
+    "message": "Nenašli sa žiadne nefunkčné odkazy"
+  },
+  "deadNoneFiltered": {
+    "message": "Pod týmto filtrom nie sú žiadne mŕtve odkazy — skúste iný segment vyššie"
+  },
+  "deadRescan": {
+    "message": "Opätovné skenovanie"
+  },
+  "delete": {
+    "message": "Odstrániť"
+  },
+  "deletedBookmark": {
+    "message": "Vymazané $title$",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Example"
+      }
+    },
+    "description": "Toast shown after a bookmark or separator was deleted; the toast offers an undo button. $title$ is the deleted row's title (empty for separators)."
+  },
+  "deletedFolder": {
+    "message": "Vymazaný priečinok $title$",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Bookmarks"
+      }
+    },
+    "description": "Toast shown after a bookmark folder (with its whole subtree) was deleted; the toast offers an undo button. $title$ is the folder name."
+  },
+  "optionRecentCount": {
+    "message": "Počet nedávno pridaných záložiek na zobrazenie"
+  },
+  "optionSearchHistory": {
+    "message": "Zaznamenávať históriu vyhľadávania"
+  },
+  "optionSearchHistoryHint": {
+    "message": "Vypnutím sa tiež vymaže existujúca história."
+  },
+  "recentEmpty": {
+    "message": "Žiadne nedávne záložky. Stlačte Ctrl+D na pridanie aktuálnej stránky do záložiek."
+  },
+  "recentRevealInTree": {
+    "message": "Zobraziť v strome"
+  },
+  "searchHistoryClear": {
+    "message": "Vymazať všetky"
+  },
+  "searchHistoryRemove": {
+    "message": "Odstrániť toto vyhľadávanie"
+  },
+  "searchHistoryResultCount": {
+    "message": "$n$ výsledkov",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "searchHistoryTitle": {
+    "message": "Nedávne vyhľadávania"
+  },
+  "timeDaysAgo": {
+    "message": "pred $n$ dňami",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "timeHoursAgo": {
+    "message": "pred $n$ hod.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "timeJustNow": {
+    "message": "práve teraz"
+  },
+  "timeMinutesAgo": {
+    "message": "pred $n$ min.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "timeYesterday": {
+    "message": "včera"
+  },
+  "undoAction": {
+    "message": "Späť"
+  },
+  "revealOutsideBarHint": {
+    "message": "Zobrazuje sa iba lišta záložiek: cieľ leží mimo nej."
+  },
+  "revealOutsideBarAction": {
+    "message": "Zobraziť všetko a odhaliť"
+  },
+  "dupesCleanAll": {
+    "message": "Vyčistiť všetky: $groups$ skupín, $count$ extra kópií",
+    "placeholders": {
+      "groups": {
+        "content": "$1"
+      },
+      "count": {
+        "content": "$2"
+      }
+    },
+    "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go."
+  },
+  "dupesConfirmAll": {
+    "message": "Odstrániť $count$ nadbytočných kópií v rámci $groups$ skupín? Vybraný zástupca v každej skupine sa zachová.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    },
+    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
+  },
+  "dupesConfirmSelected": {
+    "message": "Odstrániť $count$ duplicitných záložiek z vybraných $groups$ skupín?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    }
+  },
+  "dupesConfirmGroup": {
+    "message": "Ponechať „$title$“ a odstrániť zvyšných $count$ kópií?",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Example bookmark"
+      },
+      "count": {
+        "content": "$2"
+      }
+    },
+    "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."
+  },
+  "dupesDone": {
+    "message": "Odstránených $count$ duplicitných záložiek",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Alert shown after the duplicate cleanup finished."
+  },
+  "dupesGroupCount": {
+    "message": "$count$ duplicit",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
+  },
+  "dupesGroupExpand": {
+    "description": "Dupes view group-head context menu: expand a collapsed duplicate group.",
+    "message": "Rozbaliť skupinu"
+  },
+  "dupesGroupCollapse": {
+    "description": "Dupes view group-head context menu: collapse an expanded duplicate group.",
+    "message": "Zbaliť skupinu"
+  },
+  "dupesNone": {
+    "message": "Nenašli sa žiadne duplicity"
+  },
+  "deleteEllipsis": {
+    "message": "Odstrániť..."
+  },
+  "donationMessage": {
+    "message": "Páči sa vám? Prispejte na jej budúcnosť — alebo ju ohodnoťte v obchode: každá recenzia prináša ďalšie aktualizácie."
+  },
+  "donationV4Notice": {
+    "message": "vBookmarks 4.0 je úplne prepracovaná verzia s moderným dizajnom a množstvom nových funkcií."
+  },
+  "donationV4GuideLink": {
+    "message": "Prečítať si sprievodcu pre v4 →"
+  },
+  "donationGo": {
+    "message": "Prispieť"
+  },
+  "donationRate": {
+    "message": "Ohodnotiť"
+  },
+  "donationRateTitle": {
+    "message": "Ohodnoťte vBookmarks v Chrome Web Store"
+  },
+  "donationLater": {
+    "message": "Neskôr"
+  },
+  "donationNever": {
+    "message": "Nezobrazovať znova"
+  },
+  "donationDismiss": {
+    "message": "Zrušiť"
+  },
+  "edit": {
+    "message": "Upraviť..."
+  },
+  "editBookmark": {
+    "message": "Upraviť záložku"
+  },
+  "editFolder": {
+    "message": "Upraviť priečinok"
+  },
+  "errorOccured": {
+    "message": "Oops, nastala chyba."
+  },
+  "extDesc": {
+    "description": "Popis rozšírenia.",
+    "message": "Pop-up správca záložiek. Vylepšené Neat Bookmarks. Usporiadanejšie ako Neater Bookmarks."
+  },
+  "extName": {
+    "description": "vBookmarks",
+    "message": "vBookmarks"
+  },
+  "folderEmpty": {
+    "message": "(Prázdne)"
+  },
+  "general": {
+    "message": "Všeobecné"
+  },
+  "ignore": {
+    "message": "Ignorovať"
+  },
+  "name": {
+    "description": "Názov záložky alebo priečinka.",
+    "message": "Názov"
+  },
+  "nope": {
+    "message": "Zrušiť"
+  },
+  "noTitle": {
+    "description": "Názov pre bezmenné záložky bez http(s) URL alebo bezmenné priečinky.",
+    "message": "(bez názvu)"
+  },
+  "open": {
+    "description": "Akcia na otvorenie záložiek.",
+    "message": "Otvoriť"
+  },
+  "openBookmarks": {
+    "message": "Otvoriť všetky záložky"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "Otvoriť v inkognito okne"
+  },
+  "openBookmarksInGroup": {
+    "message": "Otvoriť v novej skupine"
+  },
+  "openBookmarksInGroupSetup": {
+    "message": "Otvoriť všetko v novej skupine kariet…"
+  },
+  "openBookmarksInExistingGroup": {
+    "message": "Otvoriť všetko v existujúcej skupine kariet…"
+  },
+  "tabGroupOptions": {
+    "message": "Skupiny kariet"
+  },
+  "sortMenuOptions": {
+    "message": "Zoradiť"
+  },
+  "openBookmarksNewWindow": {
+    "message": "Otvoriť všetky záložky v novom okne"
+  },
+  "openCommandPaletteCommand": {
+    "message": "Otvoriť paletu príkazov"
+  },
+  "openIncognitoWindow": {
+    "message": "Otvoriť v inkognito okne"
+  },
+  "openNewTab": {
+    "message": "Otvoriť na novej karte"
+  },
+  "bookmarkOpenInNewGroup": {
+    "message": "Otvoriť v novej skupine kariet"
+  },
+  "bookmarkOpenInNewGroupSetup": {
+    "message": "Otvoriť v novej skupine kariet…"
+  },
+  "bookmarkOpenInExistingGroup": {
+    "message": "Otvoriť v existujúcej skupine kariet…"
+  },
+  "openNewWindow": {
+    "message": "Otvoriť v novom okne"
+  },
+  "openSidePanelCommand": {
+    "message": "Otvoriť bočný panel vBookmarks"
+  },
+  "optionAnnounceEnabled": {
+    "message": "Zobrazovať oznámenia v produkte"
+  },
+  "optionAnnounceEnabledHint": {
+    "message": "Poznámky k vydaniu a tipy z GitHub repozitára projektu (načítavajú sa maximálne každých 6 hodín). Vypnutím sa zastaví aj sieťové načítavanie."
+  },
+  "optionClickNewTab": {
+    "message": "Ľavý klik otvára záložku na novej karte."
+  },
+  "optionCloseUnusedFolders": {
+    "message": "Zatvoriť nepoužívané priečinky pri otváraní priečinka."
+  },
+  "optionConfirmOpenFolder": {
+    "message": "Zobraziť potvrdenie pri otváraní veľa záložiek z priečinka."
+  },
+  "optionConfirmDeleteFolder": {
+    "message": "Potvrdiť pred odstránením neprázdnych priečinkov"
+  },
+  "optionOnlyShowBookmarkBar": {
+    "message": "Zobraziť len záložky v lište záložiek"
+  },
+  "optionSearchAfterEnter": {
+    "message": "Hľadať záložky len pri stlačení ENTER (namiesto okamžitého hľadania)"
+  },
+  "optionOpenNewTab": {
+    "message": "Stredný klik alebo control-klik otvára záložku na novej pozadí karte (namiesto popredia)."
+  },
+  "optionOpenInSidePanel": {
+    "message": "Otvoriť v bočnom paneli namiesto vyskakovacieho okna"
+  },
+  "optionPopupStays": {
+    "message": "Popup zostane otvorený pri otváraní (ľavý klik) záložiek."
+  },
+  "optionRememberPrevState": {
+    "message": "Zapamätať predchádzajúci stav (pozíciu posúvania, otvorené priečinky a poslednú zameranú položku)."
+  },
+  "options": {
+    "message": "Možnosti"
+  },
+  "optionsFooterText": {
+    "description": "Footer text for the Options page",
+    "message": "Vytvoril $authorName$.",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionZoom": {
+    "message": "Priblíženie"
+  },
+  "optionTheme": {
+    "message": "Téma"
+  },
+  "optionThemeAuto": {
+    "message": "Podľa systému"
+  },
+  "optionThemeLight": {
+    "message": "Svetlá"
+  },
+  "optionThemeDark": {
+    "message": "Tmavá"
+  },
+  "optionThemeInk": {
+    "message": "Atrament (tmavá)"
+  },
+  "optionThemePaper": {
+    "message": "Papier (svetlá)"
+  },
+  "optionLanguage": {
+    "message": "Jazyk"
+  },
+  "optionLanguageAuto": {
+    "message": "Automaticky"
+  },
+  "optionLanguageHint": {
+    "message": "Zmena jazyka znova načíta túto stránku."
+  },
+  "paletteClose": {
+    "message": "Zavrieť"
+  },
+  "paletteCmdVersion": {
+    "message": "Informácie o verzii"
+  },
+  "paletteCmdLang": {
+    "message": "Prepnúť jazyk…"
+  },
+  "paletteCmdLangUsage": {
+    "message": "Použitie: /lang nasledovaný kódom lokality – napr. /lang en, /lang zh_CN, /lang ja."
+  },
+  "versionDialogTitle": {
+    "message": "vBookmarks $version$",
+    "placeholders": {
+      "version": {
+        "content": "$1"
+      }
+    }
+  },
+  "versionDialogCopy": {
+    "message": "Kopírovať informácie"
+  },
+  "versionDialogCopied": {
+    "message": "Skopírované"
+  },
+  "versionMetaVersion": {
+    "message": "Verzia rozšírenia"
+  },
+  "versionMetaAnnounce": {
+    "message": "Novinky"
+  },
+  "versionMetaAnnounceNone": {
+    "message": "Nebolo načítané žiadne oznámenie."
+  },
+  "versionMetaBrowser": {
+    "message": "Prehliadač"
+  },
+  "versionMetaOS": {
+    "message": "OS"
+  },
+  "versionMetaChannel": {
+    "message": "Kanál"
+  },
+  "versionMetaLanguage": {
+    "message": "Jazyk"
+  },
+  "versionMetaUserAgent": {
+    "message": "User agent"
+  },
+  "paletteCmdDead": {
+    "message": "Nájsť nefunkčné odkazy"
+  },
+  "paletteCmdDupes": {
+    "message": "Vyčistiť duplicitné záložky"
+  },
+  "paletteCmdNewBookmark": {
+    "message": "Nová záložka…"
+  },
+  "paletteCmdNewFolder": {
+    "message": "Nový priečinok…"
+  },
+  "paletteCmdQuickAdd": {
+    "message": "Pridať aktuálnu kartu do záložiek"
+  },
+  "paletteCmdSaveSession": {
+    "message": "Uložiť karty okna ako priečinok"
+  },
+  "paletteNoResults": {
+    "message": "Žiadne zodpovedajúce výsledky"
+  },
+  "palettePlaceholder": {
+    "message": "Hľadať záložky, priečinky, príkazy…"
+  },
+  "parentFolder": {
+    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
+    "message": "Rodičovský priečinok: \"$folderName$\"",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarksbar"
+      }
+    }
+  },
+  "removeSeparator": {
+    "message": "Odstrániť oddeľovač"
+  },
+  "replaceUrl": {
+    "message": "Nahradiť aktuálnou URL"
+  },
+  "reportedToDeveloper": {
+    "description": "Správa pre chybu v rozšírení, nahlásená vývojárovi.",
+    "message": "Toto bolo nahlásené vývojárovi."
+  },
+  "reportError": {
+    "message": "Nahlásiť chybu"
+  },
+  "resetButton": {
+    "message": "Resetovať"
+  },
+  "resetSettings": {
+    "message": "Resetovať nastavenia"
+  },
+  "resetSettingsDescription": {
+    "message": "Resetovať vBookmarks na predvolené nastavenia."
+  },
+  "save": {
+    "message": "Uložiť"
+  },
+  "searchBookmarks": {
+    "description": "Zástupný text pre vyhľadávacie pole.",
+    "message": "Hľadať záložky"
+  },
+  "searchClear": {
+    "message": "Vymazať vyhľadávanie"
+  },
+  "searchNoResults": {
+    "message": "Žiadne zodpovedajúce záložky"
+  },
+  "searchViewHint": {
+    "message": "Napíšte do poľa vyššie na vyhľadanie záložiek"
+  },
+  "selectAll": {
+    "message": "Všetko"
+  },
+  "selectClear": {
+    "message": "Vyčistiť"
+  },
+  "selectCount": {
+    "message": "$count$ vybratých",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "selectInvert": {
+    "message": "Invertovať"
+  },
+  "selectModeEnter": {
+    "message": "Vybrať"
+  },
+  "selectModeExit": {
+    "message": "Ukončiť výber"
+  },
+  "deadRiskBanner": {
+    "message": "Čistenie nefunkčných odkazov hromadne odstraňuje záložky. Pred prvým čistením si zálohujte záložky."
+  },
+  "dupesRiskBanner": {
+    "message": "Deduplikácia hromadne odstraňuje duplicitné záložky. Pred použitím si zálohujte záložky."
+  },
+  "riskBannerHelp": {
+    "message": "Návod na zálohovanie a obnovenie"
+  },
+  "riskBannerNever": {
+    "message": "Nezobrazovať znova"
+  },
+  "riskBannerDismiss": {
+    "message": "Zavrieť"
+  },
+  "sessionEmpty": {
+    "message": "Žiadne karty na uloženie"
+  },
+  "sessionFolderName": {
+    "message": "Relácia $date$",
+    "placeholders": {
+      "date": {
+        "content": "$1",
+        "example": "2026-07-18 15:04"
+      }
+    },
+    "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm."
+  },
+  "sessionSaved": {
+    "message": "Uložených $count$ kariet do nového priečinka",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "12"
+      }
+    },
+    "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
+  },
+  "url": {
+    "message": "URL"
+  },
+  "syncOptions": {
+    "message": "Možnosti synchronizácie"
+  },
+  "optionShowSyncStatus": {
+    "message": "Zobraziť indikátory stavu synchronizácie"
+  },
+  "optionHighlightUnsynced": {
+    "message": "Stlmiť nesynchronizované záložky"
+  },
+  "optionAutoRefreshSync": {
+    "message": "Automaticky obnovovať stav synchronizácie"
+  },
+  "optionSyncRefreshInterval": {
+    "message": "Interval obnovenia"
+  },
+  "optionSyncRefreshIntervalSeconds": {
+    "message": "sekúnd"
+  },
+  "syncStatusSynced": {
+    "message": "Synchronizované s účtom Google"
+  },
+  "syncStatusLocal": {
+    "message": "Len lokálne – nenahrané"
+  },
+  "syncStatusUnsyncable": {
+    "message": "Nedá sa synchronizovať"
+  },
+  "syncSuffixSynced": {
+    "message": "(Synchronizované)"
+  },
+  "syncSuffixLocal": {
+    "message": "(Lokálne)"
+  },
+  "optionAutoResizePopup": {
+    "message": "Automaticky zmeňte veľkosť vyskakovacieho okna podľa obsahu"
+  },
+  "crossStorageMoveWarning": {
+    "message": "Záložky nie je možné presúvať medzi synchronizovaným a miestnym úložiskom. Použite kopírovať/prilepiť.",
+    "description": "Warning when trying to move bookmarks across storage types"
+  },
+  "recentBookmarks": {
+    "message": "Nedávno pridané"
+  },
+  "optionShowRecentBookmarks": {
+    "message": "Zobraziť nedávno pridané záložky v hornej časti vyskakovacieho okna"
+  },
+  "optionShowStatsView": {
+    "message": "Zobraziť kartu zobrazenia štatistík"
+  },
+  "optionShowDeadView": {
+    "message": "Zobraziť kartu zobrazenia mŕtvych odkazov"
+  },
+  "optionShowDupesView": {
+    "message": "Zobraziť kartu zobrazenia duplikátov"
+  },
+  "optionRecentCollapsed": {
+    "message": "Štandardne zbaliť sekciu nedávno pridaných"
+  },
+  "optionsGroupViews": {
+    "message": "Zobrazenia"
+  },
+  "optionsGroupSort": {
+    "message": "Triedenie"
+  },
+  "optionsGroupStats": {
+    "message": "Štatistiky"
+  },
+  "optionsGroupTools": {
+    "message": "Nástroje"
+  },
+  "optionShowViewTabs": {
+    "message": "Zobraziť karty zobrazenia pod vyhľadávacím poľom"
+  },
+  "optionRememberView": {
+    "message": "Zapamätať si posledné aktívne zobrazenie a znovu ho otvoriť"
+  },
+  "optionShowTabBadges": {
+    "message": "Zobrazovať počty na kartách zobrazení"
+  },
+  "optionPaletteEnabled": {
+    "message": "Povoliť paletu príkazov (Ctrl/Cmd+K)"
+  },
+  "optionQuickAddEnabled": {
+    "message": "Zobraziť tlačidlo rýchleho pridania (hviezdičku) vedľa vyhľadávacieho poľa"
+  },
+  "optionQuickAddContextMenu": {
+    "message": "Pridať do kontextovej ponuky stránky položku „Pridať túto stránku do záložiek pomocou vBookmarks“"
+  },
+  "optionQuickAddContextMenuHint": {
+    "message": "Táto položka je nezávislá od tlačidla hviezdičky rýchleho pridávania; obnovenie klasického prostredia ju tiež vypne."
+  },
+  "optionCollapseTabGroupMenu": {
+    "message": "Zbaliť položky skupín kariet do jednej podponuky „Skupiny kariet“."
+  },
+  "optionCollapseTabGroupMenuHint": {
+    "message": "Vzťahuje sa na kontextové ponuky priečinkov aj záložiek. Vypnuté štandardne; skracuje nízke ponuky na malých obrazovkách alebo pri veľkom priblížení."
+  },
+  "optionCollapseSortMenu": {
+    "message": "Zbaliť položky triedenia do jednej podponuky „Zoradiť“."
+  },
+  "optionCollapseSortMenuHint": {
+    "message": "Vzťahuje sa na kontextovú ponuku priečinka. Štandardne zapnuté."
+  },
+  "optionShowToolButton": {
+    "message": "Zobraziť tlačidlo nástrojov (⋮) vedľa vyhľadávacieho poľa"
+  },
+  "optionClassicExperience": {
+    "message": "Obnoviť klasickú hlavičku"
+  },
+  "optionClassicExperienceHint": {
+    "message": "Vypne paletu príkazov, hviezdičku rýchleho pridania, jej položku v kontextovej ponuke stránky, tlačidlo nástroja a karty zobrazenia. Každú položku je možné znova povoliť jednotlivo v jej sekcii."
+  },
+  "optionShowItemPath": {
+    "message": "Zobraziť cestu nadradeného priečinka v riadkoch zoznamu"
+  },
+  "viewRecent": {
+    "message": "Nedávne"
+  },
+  "viewTree": {
+    "message": "Strom"
+  },
+  "viewSearch": {
+    "message": "Vyhľadávanie"
+  },
+  "viewSwitchAnnounce": {
+    "message": "Zobrazenie $name$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "viewStateEnabled": {
+    "message": "Povolené"
+  },
+  "viewStateDisabled": {
+    "message": "Zakázané"
+  },
+  "viewEnable": {
+    "message": "Povoliť"
+  },
+  "viewDisable": {
+    "message": "Zakázať"
+  },
+  "viewTabHide": {
+    "message": "Skryť"
+  },
+  "viewTabDisable": {
+    "message": "Zakázať"
+  },
+  "sortFolderContents": {
+    "message": "Zoradiť obsah priečinka"
+  },
+  "sortByName": {
+    "message": "Zoradiť podľa názvu"
+  },
+  "sortByDate": {
+    "message": "Zoradiť podľa dátumu"
+  },
+  "sortRecursiveSuffix": {
+    "message": "(rekurzívne)"
+  },
+  "sortOptions": {
+    "message": "Možnosti zoradenia…"
+  },
+  "sortDone": {
+    "message": "Priečinok zoradený"
+  },
+  "sortByTitle": {
+    "message": "Podľa názvu"
+  },
+  "sortByDateAdded": {
+    "message": "Podľa dátumu pridania (najnovšie prvé)"
+  },
+  "sortFoldersFirst": {
+    "message": "Ponechať priečinky navrchu"
+  },
+  "sortRecursive": {
+    "message": "Zoradiť aj podpriečinky (rekurzívne)"
+  },
+  "sortRecursiveWarning": {
+    "message": "Preusporiada záložky v každom podpriečinku."
+  },
+  "tabGroupDialogTitle": {
+    "message": "Nová skupina kariet"
+  },
+  "tabGroupTitleLabel": {
+    "message": "Názov skupiny"
+  },
+  "tabGroupColorLabel": {
+    "message": "Farba"
+  },
+  "tabGroupColorGrey": {
+    "message": "Sivá",
+    "description": "Accessible name of the grey color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorBlue": {
+    "message": "Modrá",
+    "description": "Accessible name of the blue color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorRed": {
+    "message": "Červená",
+    "description": "Accessible name of the red color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorYellow": {
+    "message": "Žltá",
+    "description": "Accessible name of the yellow color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorGreen": {
+    "message": "Zelená",
+    "description": "Accessible name of the green color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPink": {
+    "message": "Ružová",
+    "description": "Accessible name of the pink color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPurple": {
+    "message": "Fialová",
+    "description": "Accessible name of the purple color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorCyan": {
+    "message": "Azúrová",
+    "description": "Accessible name of the cyan color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorOrange": {
+    "message": "Oranžová",
+    "description": "Accessible name of the orange color swatch in the new-tab-group dialog."
+  },
+  "tabGroupUntitled": {
+    "message": "Skupina bez názvu"
+  },
+  "tabGroupNoGroups": {
+    "message": "Žiadne existujúce skupiny kariet"
+  },
+  "tabGroupPickDialogTitle": {
+    "message": "Otvoriť v existujúcej skupine kariet"
+  },
+  "quickAddBookmark": {
+    "message": "Pridať túto stránku do záložiek (Ctrl+D)"
+  },
+  "quickAddBookmarkCommand": {
+    "message": "Rýchlo pridať aktuálnu kartu ako záložku"
+  },
+  "quickAdded": {
+    "message": "Záložka pridaná"
+  },
+  "quickAddedTo": {
+    "message": "Záložka pridaná do $folderName$",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarks bar"
+      }
+    }
+  },
+  "quickRemoved": {
+    "message": "Záložka odstránená"
+  },
+  "quickRemoveBookmark": {
+    "message": "Odstrániť túto záložku (Ctrl+D)"
+  },
+  "toolButtonTitle": {
+    "message": "Nástroje (Ctrl+K)"
+  },
+  "contextMenuAddBookmark": {
+    "message": "Pridať túto stránku do záložiek pomocou vBookmarks"
   },
   "deadFilterAll": {
     "message": "Všetky"
@@ -315,14 +1147,653 @@
   "deadMarkedBannerDismiss": {
     "message": "Zavrieť"
   },
-  "deadNone": {
-    "message": "Nenašli sa žiadne nefunkčné odkazy"
+  "deadProxyAdd": {
+    "message": "Pridať proxy server pre kontroly nefunkčných odkazov"
   },
-  "deadNoneFiltered": {
-    "message": "Pod týmto filtrom nie sú žiadne mŕtve odkazy — skúste iný segment vyššie"
+  "deadProxyLabel": {
+    "message": "Proxy: $server$",
+    "placeholders": {
+      "server": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadProxyChange": {
+    "message": "Zmeniť"
+  },
+  "deadProxyRemove": {
+    "message": "Odstrániť"
+  },
+  "deadProxyRemoved": {
+    "message": "Proxy server bol odstránený"
+  },
+  "deadProxyPanelHint": {
+    "message": "Zadajte proxy server, ktorý už máte (rozšírenie žiadny neposkytuje), napr. 127.0.0.1:7890 alebo socks5://127.0.0.1:1080."
+  },
+  "deadProxyTestUrlLabel": {
+    "message": "Testovacia URL"
+  },
+  "deadProxyTestSave": {
+    "message": "Testovať a uložiť"
+  },
+  "deadProxyTesting": {
+    "message": "Testuje sa…"
+  },
+  "deadProxySaved": {
+    "message": "Proxy server uložený — budúce kontroly cez neho znova preveria priame zlyhania."
+  },
+  "deadProxyInvalid": {
+    "message": "Neplatná adresa proxy servera — použite host:port alebo schéma://host:port (http/https/socks5, bez prihlasovacích údajov)"
+  },
+  "deadProxyUnreachable": {
+    "message": "Proxy server je nedostupný — neuložený"
+  },
+  "deadProxyDenied": {
+    "message": "Povolenie pre proxy server nebolo udelené"
+  },
+  "deadProxyControlled": {
+    "message": "Nastavenia proxy servera spravuje iné rozšírenie"
+  },
+  "deadProxyUnavailable": {
+    "message": "Proxy API nie je v tomto prehliadači k dispozícii"
+  },
+  "deadProxyNudge": {
+    "message": "Opätovná kontrola cez proxy rozlišuje skutočne nefunkčné odkazy od regionálne blokovaných — nakonfigurujte ju tu alebo na stránke možností."
+  },
+  "deadProxyNeverShow": {
+    "message": "Nezobrazovať znova"
+  },
+  "deadStartHint": {
+    "message": "Spustiť kontrolu $n$ záložiek",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadStatusBlocked": {
+    "message": "blokované"
+  },
+  "deadUnmark": {
+    "message": "Odstrániť označenie mŕtveho"
+  },
+  "deadUnmarkAll": {
+    "message": "Vymazať všetky označenia"
+  },
+  "deadUnmarkSelected": {
+    "message": "Odznačiť vybrané"
+  },
+  "dupesApplyAll": {
+    "message": "Použiť všetky ($count$)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesApplySelected": {
+    "message": "Deduplikovať vybrané ($count$)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesCleanRestHint": {
+    "message": "Ponechať \"$title$\" a odstrániť ostatných $count$",
+    "placeholders": {
+      "title": {
+        "content": "$1"
+      },
+      "count": {
+        "content": "$2"
+      }
+    }
+  },
+  "dupesIgnoreScheme": {
+    "message": "Ignorovať rozdiely http/https"
+  },
+  "dupesKeepThis": {
+    "message": "Ponechať tento"
+  },
+  "dupesKeeperSet": {
+    "message": "Určiť ako uchovávač"
+  },
+  "dupesPreviewSummary": {
+    "message": "$groups$ skupín · $count$ na uvoľnenie",
+    "placeholders": {
+      "groups": {
+        "content": "$1"
+      },
+      "count": {
+        "content": "$2"
+      }
+    }
+  },
+  "dupesRemoveRow": {
+    "message": "Odstrániť túto kópiu"
+  },
+  "dupesScopeAll": {
+    "message": "Všetky záložky"
+  },
+  "dupesScopeBar": {
+    "message": "Iba lišta záložiek"
+  },
+  "dupesStrategyBookmarkBar": {
+    "message": "Ponechať ten na lište záložiek"
+  },
+  "dupesStrategyMostVisited": {
+    "message": "Ponechať najnavštevovanejšie"
+  },
+  "dupesStrategyNewest": {
+    "message": "Ponechať najnovšie"
+  },
+  "dupesStrategyOldest": {
+    "message": "Ponechať najstaršie"
+  },
+  "dupesStrategyShallowest": {
+    "message": "Ponechať najplytšie"
+  },
+  "dupesStrategyShortestTitle": {
+    "message": "Ponechať najkratší názov"
+  },
+  "optionDeadProxyServer": {
+    "message": "Proxy server pre nefunkčné odkazy"
+  },
+  "deadProxyServerHint": {
+    "message": "Uložený server pri každej kontrole mŕtvych odkazov znovu skontroluje záložky, ktoré zlyhali pri priamom teste, a oddelí skutočne mŕtve odkazy od regionálne blokovaných. Testovať a uložiť ho otestuje (zachová sa len dosiahnuteľný server); môžete ho pridať aj z pohľadu mŕtvych odkazov."
+  },
+  "deadProxyClear": {
+    "message": "Vymazať"
+  },
+  "deadProxyNone": {
+    "message": "(nenastavené)"
+  },
+  "optionDeadProxyStrip": {
+    "message": "Zobraziť tip na pridanie proxy v zobrazení mŕtvych odkazov"
+  },
+  "optionDeadProxyStripHint": {
+    "message": "Vypnutie tento tip v zobrazení skryje; proxy server tu zostáva konfigurovateľný a uložený server sa v zobrazení vždy zobrazí so svojím riadkom správy."
+  },
+  "optionDeadScanConcurrency": {
+    "message": "Súbežnosť skenovania mŕtvych odkazov (1-16)"
+  },
+  "optionDeadScanTimeout": {
+    "message": "Časový limit skenovania mŕtvych odkazov v sekundách (2-30)"
+  },
+  "paletteCmdGoDead": {
+    "message": "Prejsť na zobrazenie mŕtvych odkazov"
+  },
+  "paletteCmdGoDupes": {
+    "message": "Prejsť na zobrazenie duplikátov"
+  },
+  "paletteCmdGoRecent": {
+    "message": "Prejsť na zobrazenie nedávnych"
+  },
+  "paletteCmdGoSearch": {
+    "message": "Prejsť na zobrazenie vyhľadávania"
+  },
+  "paletteCmdGoTree": {
+    "message": "Prejsť na zobrazenie stromu"
+  },
+  "paletteCmdOptions": {
+    "message": "Otvoriť stránku možností"
+  },
+  "paletteCmdSearchInView": {
+    "message": "Hľadať '$query$' v zobrazení vyhľadávania",
+    "placeholders": {
+      "query": {
+        "content": "$1"
+      }
+    }
+  },
+  "rowActionDelete": {
+    "message": "Odstrániť"
+  },
+  "rowActionMark": {
+    "message": "Označiť ako mŕtvy"
+  },
+  "rowActionReveal": {
+    "message": "Zobraziť v strome"
+  },
+  "rowActionUnmark": {
+    "message": "Odstrániť označenie mŕtveho"
+  },
+  "viewDead": {
+    "message": "Mŕtve odkazy"
+  },
+  "viewDupes": {
+    "message": "Duplikáty"
+  },
+  "viewStats": {
+    "message": "Štatistiky"
+  },
+  "paletteCmdGoStats": {
+    "message": "Prejsť na zobrazenie štatistík"
+  },
+  "optionStatsEnabled": {
+    "message": "Povoliť štatistiky návštev"
+  },
+  "optionFaviconContrast": {
+    "message": "Invertovať favikony s nízkym kontrastom"
+  },
+  "optionFaviconContrastHint": {
+    "message": "Biele ikony vo svetlých témach a čierne ikony v tmavých témach sú invertované, aby zostali viditeľné. Každá ikona sa pri načítaní raz vzorkuje – počas prehliadania to nič nestojí."
+  },
+  "optionFaviconEnrich": {
+    "message": "Načítať chýbajúce ikony stránok"
+  },
+  "optionFaviconEnrichHint": {
+    "message": "Pre záložky, pre ktoré Chrome nemá v medzipamäti ikonu, načíta skutočnú ikonu priamo zo stránky (/favicon.ico, potom deklarované ikony stránky). Požiadavky smerujú iba na stránky, ktoré máte v záložkách."
+  },
+  "optionFaviconEnrichAgg": {
+    "message": "Záložné ikony tretích strán"
+  },
+  "optionFaviconEnrichAggHint": {
+    "message": "Keď priame získavanie zlyhá, ikona sa vyhľadá podľa domény v zabudovanom zozname služieb tretích strán ($providers$). Nedostupná služba sa preskočí a vyskúša sa ďalšia – znova sa nebude skúšať 6 hodín.",
+    "placeholders": {
+      "providers": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionFaviconBackup": {
+    "message": "Zahrnúť vyrovnávaciu pamäť ikon do záloh"
+  },
+  "optionFaviconBackupHint": {
+    "message": "Zahrnúť aj obohatenú vyrovnávaciu pamäť favikôn (údaje pre jednotlivé stránky, potenciálne veľké) do exportu/importu nastavení. To pokrýva už uložené ikony, aj keď je načítavanie vypnuté. Vypnutie udržiava zálohy malé; ikony sa aj tak automaticky znova načítajú."
+  },
+  "optionFaviconCacheClear": {
+    "message": "Vyčistiť medzipamäť ikon"
+  },
+  "optionFaviconCacheClearConfirm": {
+    "message": "Vyčistiť obohatenú vyrovnávaciu pamäť ikon? Ikony sa pri ďalšom otvorení automaticky znova načítajú."
+  },
+  "optionFaviconCacheEmpty": {
+    "message": "Nie je čo vymazať z vyrovnávacej pamäte ikon."
+  },
+  "optionFaviconCacheCleared": {
+    "message": "Medzipamäť ikon bola vyčistená. Ikony sa pri ďalšom otvorení znova načítajú."
+  },
+  "favGalleryLink": {
+    "message": "Zobraziť obnovené ikony",
+    "description": "Options link (Icons group, right of the Clear icon cache button): opens the favicon gallery page listing the sites whose icons were refetched."
+  },
+  "favGalleryTitle": {
+    "message": "Obnovené ikony stránok",
+    "description": "Favicon gallery page title (h1 + document title)."
+  },
+  "favGalleryHint": {
+    "message": "Ikony, ktoré vBookmarks získal pre záložkové stránky, ktoré Chrome nemal v medzipamäti – odkiaľ každá pochádza a ktoré záložky ju používajú. Len na zobrazenie.",
+    "description": "Subtitle under the favicon gallery title, explaining the page is read-only."
+  },
+  "favGallerySearch": {
+    "message": "Filtrovať podľa stránky, názvu alebo cesty",
+    "description": "Placeholder of the favicon gallery filter input."
+  },
+  "favGalleryAll": {
+    "message": "Všetky",
+    "description": "Favicon gallery source filter chip: show every source."
+  },
+  "favSrcDirect": {
+    "message": "Priamy",
+    "description": "Favicon gallery source badge: the icon was fetched directly from the site itself."
+  },
+  "favSrcProxy": {
+    "message": "Proxy",
+    "description": "Favicon gallery source badge: the icon was fetched through the user's own proxy relay."
+  },
+  "favSrcLegacy": {
+    "message": "Predchádzajúca medzipamäť",
+    "description": "Favicon gallery source badge: cached before the source was recorded, so the origin is unknown."
+  },
+  "favGalleryCompare": {
+    "message": "Porovnať so zástupnou ikonou",
+    "description": "Favicon gallery toggle button: switch every icon to the generic placeholder it replaced (before/after comparison)."
+  },
+  "favGalleryShowingBefore": {
+    "message": "Späť na skutočné ikony",
+    "description": "Favicon gallery toggle button while the placeholder comparison is shown: switch back to the real fetched icons."
+  },
+  "favGalleryStatSites": {
+    "message": "$n$ stránok",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    },
+    "description": "Favicon gallery stats strip: how many sites have a refreshed icon."
+  },
+  "favGalleryStatBookmarks": {
+    "message": "$n$ záložiek",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    },
+    "description": "Favicon gallery stats strip: how many bookmarks sit on the refreshed sites."
+  },
+  "favGalleryVisits": {
+    "message": "$n$ zaznamenaných otvorení",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    },
+    "description": "Favicon gallery tooltip on a bookmark row's visit-count pill."
+  },
+  "favGalleryFailedTitle": {
+    "message": "Nedávno skúšané, ikona sa nenašla",
+    "description": "Favicon gallery heading of the muted section listing hosts whose icon fetch failed recently."
+  },
+  "favGalleryFailedHint": {
+    "message": "Neúspešné pokusy sa opakujú po 24 hodinách, 3 dňoch a 7 dňoch, potom sa vzdajú, kým sa nevymaže vyrovnávacia pamäť ikon.",
+    "description": "Favicon gallery hint under the failed-fetch section title."
+  },
+  "favGalleryGaveUp": {
+    "message": "Vzdané",
+    "description": "Favicon gallery badge on a failed-strip host whose retries are exhausted (it stays untouched until the icon cache is cleared)."
+  },
+  "favGalleryOrphan": {
+    "message": "Na tomto hostiteľovi nezostala žiadna záložka – ikona sa vymaže s medzipamäťou.",
+    "description": "Favicon gallery note on a card whose host no longer has any bookmark."
+  },
+  "favGalleryEmptyTitle": {
+    "message": "Zatiaľ žiadne obnovené ikony",
+    "description": "Favicon gallery empty-state heading."
+  },
+  "favGalleryEmptyText": {
+    "message": "Keď vyskakovacie okno natrafí na záložkovú stránku, pre ktorú Chrome nemá ikonu, vBookmarks načíta tú skutočnú a zobrazí ju tu.",
+    "description": "Favicon gallery empty-state body text."
+  },
+  "storageUsageIcon": {
+    "message": "Cache ikon"
+  },
+  "storageUsageOther": {
+    "message": "Ostatné"
+  },
+  "storageUsageSummary": {
+    "message": "Použité $1$ z $2$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      },
+      "2": {
+        "content": "$2"
+      }
+    }
+  },
+  "storageUsageFree": {
+    "message": "Voľné"
+  },
+  "storageUsageHint": {
+    "message": "Len lokálne úložisko rozšírenia (chrome.storage.local, kvóta približne 10 MB): cache ikon plus nastavenia a iné lokálne údaje. Synchronizované nastavenia, údaje relácie a samotná knižnica záložiek sa tu nezapočítavajú."
+  },
+  "optionsDonate": {
+    "message": "Prispieť"
+  },
+  "optionsGithubLink": {
+    "message": "GitHub"
+  },
+  "optionsHomepageLink": {
+    "message": "Domovská stránka"
+  },
+  "optionsSince": {
+    "message": "Odvodené z Neat Bookmarks, udržiavané už $days$ dní.",
+    "placeholders": {
+      "days": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionsVersion": {
+    "message": "vBookmarks verzia"
+  },
+  "statsSortByCount": {
+    "message": "Podľa počtu"
+  },
+  "statsSortByRecent": {
+    "message": "Podľa nedávnych"
+  },
+  "statsShowUnbookmarked": {
+    "message": "Zobraziť neuložené"
+  },
+  "statsShowUnbookmarkedHint": {
+    "message": "Zahrnúť stránky z histórie, ktoré nie sú uložené ako záložky."
+  },
+  "statsEmpty": {
+    "message": "Štatistiky sa postupne vytvárajú pri otváraní záložiek"
+  },
+  "statsDisabledHint": {
+    "message": "Štatistiky návštev sú vypnuté — povoľte ich v Možnosti → Zobrazenia"
+  },
+  "statsVisitCount": {
+    "message": "Navštívené $count$ krát",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "statsClearData": {
+    "message": "Vymazať štatistiky"
+  },
+  "statsClearConfirm": {
+    "message": "Vymazať štatistiky návštev pre $count$ záložiek? Tento krok sa nedá vrátiť.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "statsHistoryBanner": {
+    "message": "Udeľte prístup k histórii na naplnenie štatistík návštev z vašich minulých návštev."
+  },
+  "statsHistoryEnable": {
+    "message": "Povoliť"
+  },
+  "statsHistoryDismiss": {
+    "message": "Už nezobrazovať"
+  },
+  "statsHistoryImported": {
+    "message": "Importované minulé návštevy pre $count$ záložiek",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "paletteCmdToggleViewTabs": {
+    "message": "Prepínať zobrazenie kariet"
+  },
+  "paletteCmdTheme": {
+    "message": "Nastaviť tému…"
+  },
+  "paletteCmdThemeUsage": {
+    "message": "Použitie: /theme a názov témy — auto, light, dark, ink alebo paper (funguje aj jednoznačná predpona, napr. /theme d)."
+  },
+  "paletteCustomTag": {
+    "message": "vlastný"
+  },
+  "paletteCustomDeleteConfirm": {
+    "message": "Odstrániť príkaz „$1“? Zmena sa synchronizuje do všetkých vašich zariadení."
+  },
+  "paletteCustomBroken": {
+    "message": "Priečinok príkazu „$1“ už neexistuje. Odstrániť príkaz?"
+  },
+  "paletteCmdSaveAsCommand": {
+    "message": "Uložiť „$1“ ako príkaz…"
+  },
+  "paletteActionOpenUrl": {
+    "message": "Otvoriť URL"
+  },
+  "paletteActionOpenUrlGroup": {
+    "message": "Otvoriť skupinu priečinkov záložiek"
+  },
+  "paletteActionViewPreset": {
+    "message": "Otvoriť zobrazenie s predvoľbou"
+  },
+  "paletteActionUrlTemplate": {
+    "message": "Otvoriť šablónu URL"
+  },
+  "optionsGroupPalette": {
+    "message": "Paleta príkazov"
+  },
+  "paletteCustomHint": {
+    "message": "Vlastné príkazy so šikmou lomkou pre paletu príkazov (Ctrl/Cmd+K). Synchronizujú sa s vašimi nastaveniami — maximálne 100 položiek."
+  },
+  "paletteCustomAdd": {
+    "message": "Pridať príkaz…"
+  },
+  "paletteCustomUsage": {
+    "message": "$1 / $2"
+  },
+  "paletteCustomSlash": {
+    "message": "Lomka (slovo za /)"
+  },
+  "paletteCustomAliases": {
+    "message": "Aliasy (oddelené čiarkami)"
+  },
+  "paletteCustomAction": {
+    "message": "Akcia"
+  },
+  "paletteCustomUrl": {
+    "message": "URL"
+  },
+  "paletteCustomTemplate": {
+    "message": "Šablóna URL – %s sa nahradí slovami za príkazom."
+  },
+  "paletteCustomWhere": {
+    "message": "Otvoriť v"
+  },
+  "paletteCustomFolder": {
+    "message": "Priečinok so záložkami"
+  },
+  "paletteCustomView": {
+    "message": "Zobrazenie"
+  },
+  "paletteCustomStrategy": {
+    "message": "Predvoľba stratégie deduplikácie"
+  },
+  "paletteCustomScope": {
+    "message": "Predvoľba rozsahu deduplikácie"
+  },
+  "paletteCustomScan": {
+    "message": "Spustiť skenovanie pri zadaní"
+  },
+  "paletteWhereCurrent": {
+    "message": "Aktuálna karta"
+  },
+  "paletteWhereTab": {
+    "message": "Nová karta"
+  },
+  "paletteWhereWindow": {
+    "message": "Nové okno"
+  },
+  "paletteWhereBackground": {
+    "message": "Karty na pozadí"
+  },
+  "paletteCustomSave": {
+    "message": "Uložiť príkaz"
+  },
+  "paletteCustomErrSlash": {
+    "message": "Lomka: 1–24 znakov, malé písmená, číslice alebo pomlčky, začína písmenom alebo číslicou."
+  },
+  "paletteCustomErrAlias": {
+    "message": "Aliasy: rovnaké pravidlá ako lomka (1–24 znakov, malé písmená, číslice alebo pomlčky)."
+  },
+  "paletteCustomErrTaken": {
+    "message": "Táto lomka alebo alias sa už používa."
+  },
+  "paletteCustomErrUrl": {
+    "message": "Povolené sú iba adresy URL http:// alebo https://."
+  },
+  "paletteCustomErrFolder": {
+    "message": "Vyberte priečinok so záložkami."
+  },
+  "paletteCustomErrView": {
+    "message": "Vyberte zobrazenie."
+  },
+  "paletteCustomErrTemplate": {
+    "message": "Šablóna musí obsahovať presne jeden výskyt %s."
+  },
+  "paletteCustomErrAction": {
+    "message": "Vyberte typ akcie."
+  },
+  "paletteCustomErrLimit": {
+    "message": "Limit príkazov dosiahnutý (100) – najprv jeden odstráňte."
+  },
+  "paletteCustomEmpty": {
+    "message": "Zatiaľ žiadne vlastné príkazy."
+  },
+  "recentGroupToday": {
+    "message": "Dnes"
+  },
+  "recentGroupWeek": {
+    "message": "Tento týždeň"
+  },
+  "recentGroupMonth": {
+    "message": "Tento mesiac"
+  },
+  "recentGroupOlder": {
+    "message": "Staršie"
+  },
+  "searchHistoryRerun": {
+    "message": "Hľadať znova"
+  },
+  "optionsGroupBackup": {
+    "message": "Záloha"
+  },
+  "optionsGroupContextMenu": {
+    "message": "Kontextové ponuky"
+  },
+  "optionsGroupIcons": {
+    "message": "Ikony"
+  },
+  "settingsExport": {
+    "message": "Exportovať nastavenia"
+  },
+  "settingsImport": {
+    "message": "Importovať nastavenia"
+  },
+  "settingsBackupHint": {
+    "message": "Export uloží všetky nastavenia (vrátane preferencií synchronizácie) do súboru JSON. Import zlúči zálohu späť: nastavenia v súbore prepíšu aktuálne, ostatné zostávajú zachované."
+  },
+  "settingsImportConfirm": {
+    "message": "Import prepíše všetky nastavenia obsiahnuté v záložnom súbore (nastavenia, ktoré nie sú v súbore, zostanú zachované) a znova načíta túto stránku. Pokračovať?"
+  },
+  "settingsImportInvalid": {
+    "message": "Neplatný súbor nastavení: nejde o zálohu nastavení vBookmarks."
+  },
+  "settingsImportDone": {
+    "message": "Nastavenia importované. Stránka sa teraz znova načíta."
+  },
+  "settingsImportError": {
+    "message": "Niektoré nastavenia sa nepodarilo zapísať (kvóta úložiska alebo dočasná chyba). Import sa nedokončil – skúste to znova."
+  },
+  "statsSectionRecent": {
+    "message": "Nedávne návštevy"
+  },
+  "statsSectionBookmarks": {
+    "message": "Štatistiky záložiek"
+  },
+  "statsHistoryGuide": {
+    "message": "Udeľte prístup k histórii, aby ste tu mohli zobraziť svoje nedávne návštevy."
+  },
+  "statsHistoryAdd": {
+    "message": "Pridať do záložiek"
+  },
+  "statsHistoryBookmarked": {
+    "message": "Pridané do záložiek"
   },
   "deadPause": {
     "message": "Pauza"
+  },
+  "deadResume": {
+    "message": "Pokračovať"
+  },
+  "deadCancel": {
+    "message": "Zrušiť"
   },
   "deadPaused": {
     "message": "Pozastavené"
@@ -671,1107 +2142,331 @@
   "optionTabGroupsClosedLimit": {
     "message": "Počet zatvorených kariet/skupín na uchovanie"
   },
-  "deadProxyAdd": {
-    "message": "Pridať proxy server pre kontroly nefunkčných odkazov"
+  "folderPickMoveHere": {
+    "message": "Presunúť sem"
   },
-  "deadProxyLabel": {
-    "message": "Proxy: $server$",
+  "folderPickCopyHere": {
+    "message": "Kopírovať sem"
+  },
+  "folderPickFilter": {
+    "message": "Filtrovať priečinky…"
+  },
+  "folderPickFavNote": {
+    "message": "Nezáložkované položky budú záložkované tu"
+  },
+  "folderPickPinned": {
+    "message": "Pripnuté"
+  },
+  "folderPickRecent": {
+    "message": "Nedávne"
+  },
+  "pinFolder": {
+    "message": "Pripnúť tento priečinok"
+  },
+  "unpinFolder": {
+    "message": "Odpnúť tento priečinok"
+  },
+  "stagingAdd": {
+    "message": "Pridať do dočasnej oblasti"
+  },
+  "stagingAdded": {
+    "message": "Pridané do dočasnej oblasti"
+  },
+  "stagingAlready": {
+    "message": "Už v dočasnej oblasti"
+  },
+  "stagingAddedSummary": {
+    "message": "Pridané $n$ položiek; $m$ už v oblasti",
     "placeholders": {
-      "server": {
+      "n": {
         "content": "$1"
+      },
+      "m": {
+        "content": "$2"
       }
     }
   },
-  "deadProxyChange": {
-    "message": "Zmeniť"
+  "stagingFull": {
+    "message": "Dočasná oblasť je plná — najprv odstráňte niektoré položky"
   },
-  "deadProxyRemove": {
-    "message": "Odstrániť"
+  "stagingFolderEmpty": {
+    "message": "Tento priečinok nemá žiadne záložky na pridanie"
   },
-  "deadProxyRemoved": {
-    "message": "Proxy server bol odstránený"
-  },
-  "deadProxyPanelHint": {
-    "message": "Zadajte proxy server, ktorý už máte (rozšírenie žiadny neposkytuje), napr. 127.0.0.1:7890 alebo socks5://127.0.0.1:1080."
-  },
-  "deadProxyTestUrlLabel": {
-    "message": "Testovacia URL"
-  },
-  "deadProxyTestSave": {
-    "message": "Testovať a uložiť"
-  },
-  "deadProxyTesting": {
-    "message": "Testuje sa…"
-  },
-  "deadProxySaved": {
-    "message": "Proxy server uložený — budúce kontroly cez neho znova preveria priame zlyhania."
-  },
-  "deadProxyInvalid": {
-    "message": "Neplatná adresa proxy servera — použite host:port alebo schéma://host:port (http/https/socks5, bez prihlasovacích údajov)"
-  },
-  "deadProxyUnreachable": {
-    "message": "Proxy server je nedostupný — neuložený"
-  },
-  "deadProxyDenied": {
-    "message": "Povolenie pre proxy server nebolo udelené"
-  },
-  "deadProxyControlled": {
-    "message": "Nastavenia proxy servera spravuje iné rozšírenie"
-  },
-  "deadProxyUnavailable": {
-    "message": "Proxy API nie je v tomto prehliadači k dispozícii"
-  },
-  "deadProxyNudge": {
-    "message": "Opätovná kontrola cez proxy rozlišuje skutočne nefunkčné odkazy od regionálne blokovaných — nakonfigurujte ju tu alebo na stránke možností."
-  },
-  "deadRescan": {
-    "message": "Opätovné skenovanie"
-  },
-  "deadResume": {
-    "message": "Pokračovať"
-  },
-  "deadStartHint": {
-    "message": "Spustiť kontrolu $n$ záložiek",
+  "stagingConfirmFolder": {
+    "message": "Pridať $n$ záložiek z tohto priečinka?",
     "placeholders": {
       "n": {
         "content": "$1"
       }
     }
   },
-  "deadStatusBlocked": {
-    "message": "blokované"
+  "stagingRemove": {
+    "message": "Odstrániť z dočasnej oblasti"
   },
-  "deadUnmark": {
-    "message": "Odstrániť označenie mŕtveho"
+  "stagingRemoved": {
+    "message": "Odstránené z dočasnej oblasti"
   },
-  "deadUnmarkAll": {
-    "message": "Vymazať všetky označenia"
+  "recentStageAll": {
+    "message": "Pridať všetky nedávne"
   },
-  "deadUnmarkSelected": {
-    "message": "Odznačiť vybrané"
-  },
-  "defaultIconButton": {
-    "message": "Použiť predvolené"
-  },
-  "defaultIconButtonOr": {
-    "message": "alebo"
-  },
-  "customIconPick": {
-    "message": "Vybrať súbor…"
-  },
-  "delete": {
-    "message": "Odstrániť"
-  },
-  "deleteEllipsis": {
-    "message": "Odstrániť..."
-  },
-  "deletedBookmark": {
-    "message": "Vymazané $title$",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Example"
-      }
-    },
-    "description": "Toast shown after a bookmark or separator was deleted; the toast offers an undo button. $title$ is the deleted row's title (empty for separators)."
-  },
-  "deletedFolder": {
-    "message": "Vymazaný priečinok $title$",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Bookmarks"
-      }
-    },
-    "description": "Toast shown after a bookmark folder (with its whole subtree) was deleted; the toast offers an undo button. $title$ is the folder name."
-  },
-  "donationDismiss": {
-    "message": "Zrušiť"
-  },
-  "donationGo": {
-    "message": "Prispieť"
-  },
-  "donationRate": {
-    "message": "Ohodnotiť"
-  },
-  "donationRateTitle": {
-    "message": "Ohodnoťte vBookmarks v Chrome Web Store"
-  },
-  "donationLater": {
-    "message": "Neskôr"
-  },
-  "donationMessage": {
-    "message": "Páči sa vám? Prispejte na jej budúcnosť — alebo ju ohodnoťte v obchode: každá recenzia prináša ďalšie aktualizácie."
-  },
-  "donationV4Notice": {
-    "message": "vBookmarks 4.0 je úplne prepracovaná verzia s moderným dizajnom a množstvom nových funkcií."
-  },
-  "donationV4GuideLink": {
-    "message": "Prečítať si sprievodcu pre v4 →"
-  },
-  "donationNever": {
-    "message": "Nezobrazovať znova"
-  },
-  "dupesApplyAll": {
-    "message": "Použiť všetky ($count$)",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "dupesApplySelected": {
-    "message": "Deduplikovať vybrané ($count$)",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "dupesCleanAll": {
-    "message": "Vyčistiť všetky: $groups$ skupín, $count$ extra kópií",
-    "placeholders": {
-      "groups": {
-        "content": "$1"
-      },
-      "count": {
-        "content": "$2"
-      }
-    },
-    "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go."
-  },
-  "dupesCleanRestHint": {
-    "message": "Ponechať \"$title$\" a odstrániť ostatných $count$",
-    "placeholders": {
-      "title": {
-        "content": "$1"
-      },
-      "count": {
-        "content": "$2"
-      }
-    }
-  },
-  "dupesConfirmAll": {
-    "message": "Odstrániť $count$ nadbytočných kópií v rámci $groups$ skupín? Vybraný zástupca v každej skupine sa zachová.",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      },
-      "groups": {
-        "content": "$2"
-      }
-    },
-    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
-  },
-  "dupesConfirmSelected": {
-    "message": "Odstrániť $count$ duplicitných záložiek z vybraných $groups$ skupín?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      },
-      "groups": {
-        "content": "$2"
-      }
-    }
-  },
-  "dupesConfirmGroup": {
-    "message": "Ponechať „$title$“ a odstrániť zvyšných $count$ kópií?",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Example bookmark"
-      },
-      "count": {
-        "content": "$2"
-      }
-    },
-    "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."
-  },
-  "dupesDone": {
-    "message": "Odstránených $count$ duplicitných záložiek",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Alert shown after the duplicate cleanup finished."
-  },
-  "dupesGroupCount": {
-    "message": "$count$ duplicit",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
-  },
-  "dupesGroupExpand": {
-    "description": "Dupes view group-head context menu: expand a collapsed duplicate group.",
-    "message": "Rozbaliť skupinu"
-  },
-  "dupesGroupCollapse": {
-    "description": "Dupes view group-head context menu: collapse an expanded duplicate group.",
-    "message": "Zbaliť skupinu"
-  },
-  "dupesIgnoreScheme": {
-    "message": "Ignorovať rozdiely http/https"
-  },
-  "dupesKeepThis": {
-    "message": "Ponechať tento"
-  },
-  "dupesKeeperSet": {
-    "message": "Určiť ako uchovávač"
-  },
-  "dupesNone": {
-    "message": "Nenašli sa žiadne duplicity"
-  },
-  "dupesPreviewSummary": {
-    "message": "$groups$ skupín · $count$ na uvoľnenie",
-    "placeholders": {
-      "groups": {
-        "content": "$1"
-      },
-      "count": {
-        "content": "$2"
-      }
-    }
-  },
-  "dupesRemoveRow": {
-    "message": "Odstrániť túto kópiu"
-  },
-  "dupesScopeAll": {
-    "message": "Všetky záložky"
-  },
-  "dupesScopeBar": {
-    "message": "Iba lišta záložiek"
-  },
-  "dupesStrategyBookmarkBar": {
-    "message": "Ponechať ten na lište záložiek"
-  },
-  "dupesStrategyMostVisited": {
-    "message": "Ponechať najnavštevovanejšie"
-  },
-  "dupesStrategyNewest": {
-    "message": "Ponechať najnovšie"
-  },
-  "dupesStrategyOldest": {
-    "message": "Ponechať najstaršie"
-  },
-  "dupesStrategyShallowest": {
-    "message": "Ponechať najplytšie"
-  },
-  "dupesStrategyShortestTitle": {
-    "message": "Ponechať najkratší názov"
-  },
-  "edit": {
-    "message": "Upraviť..."
-  },
-  "editBookmark": {
-    "message": "Upraviť záložku"
-  },
-  "editFolder": {
-    "message": "Upraviť priečinok"
-  },
-  "errorOccured": {
-    "message": "Oops, nastala chyba."
-  },
-  "extDesc": {
-    "description": "Popis rozšírenia.",
-    "message": "Pop-up správca záložiek. Vylepšené Neat Bookmarks. Usporiadanejšie ako Neater Bookmarks."
-  },
-  "extName": {
-    "description": "vBookmarks",
-    "message": "vBookmarks"
-  },
-  "folderEmpty": {
-    "message": "(Prázdne)"
-  },
-  "general": {
-    "message": "Všeobecné"
-  },
-  "ignore": {
-    "message": "Ignorovať"
-  },
-  "name": {
-    "description": "Názov záložky alebo priečinka.",
-    "message": "Názov"
-  },
-  "noTitle": {
-    "description": "Názov pre bezmenné záložky bez http(s) URL alebo bezmenné priečinky.",
-    "message": "(bez názvu)"
-  },
-  "nope": {
-    "message": "Zrušiť"
-  },
-  "open": {
-    "description": "Akcia na otvorenie záložiek.",
-    "message": "Otvoriť"
-  },
-  "openBookmarks": {
-    "message": "Otvoriť všetky záložky"
-  },
-  "openBookmarksInGroup": {
-    "message": "Otvoriť v novej skupine"
-  },
-  "openBookmarksInGroupSetup": {
-    "message": "Otvoriť všetko v novej skupine kariet…"
-  },
-  "openBookmarksInExistingGroup": {
-    "message": "Otvoriť všetko v existujúcej skupine kariet…"
-  },
-  "tabGroupOptions": {
-    "message": "Skupiny kariet"
-  },
-  "sortMenuOptions": {
-    "message": "Zoradiť"
-  },
-  "openBookmarksIncognitoWindow": {
-    "message": "Otvoriť v inkognito okne"
-  },
-  "openBookmarksNewWindow": {
-    "message": "Otvoriť všetky záložky v novom okne"
-  },
-  "openCommandPaletteCommand": {
-    "message": "Otvoriť paletu príkazov"
-  },
-  "openIncognitoWindow": {
-    "message": "Otvoriť v inkognito okne"
-  },
-  "openNewTab": {
-    "message": "Otvoriť na novej karte"
-  },
-  "bookmarkOpenInNewGroup": {
-    "message": "Otvoriť v novej skupine kariet"
-  },
-  "bookmarkOpenInNewGroupSetup": {
-    "message": "Otvoriť v novej skupine kariet…"
-  },
-  "bookmarkOpenInExistingGroup": {
-    "message": "Otvoriť v existujúcej skupine kariet…"
-  },
-  "openNewWindow": {
-    "message": "Otvoriť v novom okne"
-  },
-  "openSidePanelCommand": {
-    "message": "Otvoriť bočný panel vBookmarks"
-  },
-  "optionAnnounceEnabledHint": {
-    "message": "Poznámky k vydaniu a tipy z GitHub repozitára projektu (načítavajú sa maximálne každých 6 hodín). Vypnutím sa zastaví aj sieťové načítavanie."
-  },
-  "optionAnnounceEnabled": {
-    "message": "Zobrazovať oznámenia v produkte"
-  },
-  "optionAutoRefreshSync": {
-    "message": "Automaticky obnovovať stav synchronizácie"
-  },
-  "optionAutoResizePopup": {
-    "message": "Automaticky zmeňte veľkosť vyskakovacieho okna podľa obsahu"
-  },
-  "optionClickNewTab": {
-    "message": "Ľavý klik otvára záložku na novej karte."
-  },
-  "optionCloseUnusedFolders": {
-    "message": "Zatvoriť nepoužívané priečinky pri otváraní priečinka."
-  },
-  "optionConfirmDeleteFolder": {
-    "message": "Potvrdiť pred odstránením neprázdnych priečinkov"
-  },
-  "optionConfirmOpenFolder": {
-    "message": "Zobraziť potvrdenie pri otváraní veľa záložiek z priečinka."
-  },
-  "optionDeadProxyServer": {
-    "message": "Proxy server pre nefunkčné odkazy"
-  },
-  "deadProxyServerHint": {
-    "message": "Uložený server pri každej kontrole mŕtvych odkazov znovu skontroluje záložky, ktoré zlyhali pri priamom teste, a oddelí skutočne mŕtve odkazy od regionálne blokovaných. Testovať a uložiť ho otestuje (zachová sa len dosiahnuteľný server); môžete ho pridať aj z pohľadu mŕtvych odkazov."
-  },
-  "deadProxyClear": {
-    "message": "Vymazať"
-  },
-  "deadProxyNone": {
-    "message": "(nenastavené)"
-  },
-  "optionDeadScanConcurrency": {
-    "message": "Súbežnosť skenovania mŕtvych odkazov (1-16)"
-  },
-  "optionDeadScanTimeout": {
-    "message": "Časový limit skenovania mŕtvych odkazov v sekundách (2-30)"
-  },
-  "optionOnlyShowBookmarkBar": {
-    "message": "Zobraziť len záložky v lište záložiek"
-  },
-  "optionOpenInSidePanel": {
-    "message": "Otvoriť v bočnom paneli namiesto vyskakovacieho okna"
-  },
-  "optionOpenNewTab": {
-    "message": "Stredný klik alebo control-klik otvára záložku na novej pozadí karte (namiesto popredia)."
-  },
-  "optionPopupStays": {
-    "message": "Popup zostane otvorený pri otváraní (ľavý klik) záložiek."
-  },
-  "optionRecentCollapsed": {
-    "message": "Štandardne zbaliť sekciu nedávno pridaných"
-  },
-  "optionRecentCount": {
-    "message": "Počet nedávno pridaných záložiek na zobrazenie"
-  },
-  "optionRememberPrevState": {
-    "message": "Zapamätať predchádzajúci stav (pozíciu posúvania, otvorené priečinky a poslednú zameranú položku)."
-  },
-  "optionSearchAfterEnter": {
-    "message": "Hľadať záložky len pri stlačení ENTER (namiesto okamžitého hľadania)"
-  },
-  "optionSearchHistory": {
-    "message": "Zaznamenávať históriu vyhľadávania"
-  },
-  "optionSearchHistoryHint": {
-    "message": "Vypnutím sa tiež vymaže existujúca história."
-  },
-  "optionShowDeadView": {
-    "message": "Zobraziť kartu zobrazenia mŕtvych odkazov"
-  },
-  "optionShowDupesView": {
-    "message": "Zobraziť kartu zobrazenia duplikátov"
-  },
-  "optionShowItemPath": {
-    "message": "Zobraziť cestu nadradeného priečinka v riadkoch zoznamu"
-  },
-  "optionShowRecentBookmarks": {
-    "message": "Zobraziť nedávno pridané záložky v hornej časti vyskakovacieho okna"
-  },
-  "optionShowStatsView": {
-    "message": "Zobraziť kartu zobrazenia štatistík"
-  },
-  "optionShowSyncStatus": {
-    "message": "Zobraziť indikátory stavu synchronizácie"
-  },
-  "optionHighlightUnsynced": {
-    "message": "Stlmiť nesynchronizované záložky"
-  },
-  "optionShowViewTabs": {
-    "message": "Zobraziť karty zobrazenia pod vyhľadávacím poľom"
-  },
-  "optionRememberView": {
-    "message": "Zapamätať si posledné aktívne zobrazenie a znovu ho otvoriť"
-  },
-  "optionShowTabBadges": {
-    "message": "Zobrazovať počty na kartách zobrazení"
-  },
-  "optionPaletteEnabled": {
-    "message": "Povoliť paletu príkazov (Ctrl/Cmd+K)"
-  },
-  "optionQuickAddEnabled": {
-    "message": "Zobraziť tlačidlo rýchleho pridania (hviezdičku) vedľa vyhľadávacieho poľa"
-  },
-  "optionQuickAddContextMenu": {
-    "message": "Pridať do kontextovej ponuky stránky položku „Pridať túto stránku do záložiek pomocou vBookmarks“"
-  },
-  "optionQuickAddContextMenuHint": {
-    "message": "Táto položka je nezávislá od tlačidla hviezdičky rýchleho pridávania; obnovenie klasického prostredia ju tiež vypne."
-  },
-  "optionCollapseTabGroupMenu": {
-    "message": "Zbaliť položky skupín kariet do jednej podponuky „Skupiny kariet“."
-  },
-  "optionCollapseTabGroupMenuHint": {
-    "message": "Vzťahuje sa na kontextové ponuky priečinkov aj záložiek. Vypnuté štandardne; skracuje nízke ponuky na malých obrazovkách alebo pri veľkom priblížení."
-  },
-  "optionCollapseSortMenu": {
-    "message": "Zbaliť položky triedenia do jednej podponuky „Zoradiť“."
-  },
-  "optionCollapseSortMenuHint": {
-    "message": "Vzťahuje sa na kontextovú ponuku priečinka. Štandardne zapnuté."
-  },
-  "optionShowToolButton": {
-    "message": "Zobraziť tlačidlo nástrojov (⋮) vedľa vyhľadávacieho poľa"
-  },
-  "optionClassicExperience": {
-    "message": "Obnoviť klasickú hlavičku"
-  },
-  "optionClassicExperienceHint": {
-    "message": "Vypne paletu príkazov, hviezdičku rýchleho pridania, jej položku v kontextovej ponuke stránky, tlačidlo nástroja a karty zobrazenia. Každú položku je možné znova povoliť jednotlivo v jej sekcii."
-  },
-  "optionStatsEnabled": {
-    "message": "Povoliť štatistiky návštev"
-  },
-  "optionFaviconContrast": {
-    "message": "Invertovať favikony s nízkym kontrastom"
-  },
-  "optionFaviconContrastHint": {
-    "message": "Biele ikony vo svetlých témach a čierne ikony v tmavých témach sú invertované, aby zostali viditeľné. Každá ikona sa pri načítaní raz vzorkuje – počas prehliadania to nič nestojí."
-  },
-  "optionFaviconEnrich": {
-    "message": "Načítať chýbajúce ikony stránok"
-  },
-  "optionFaviconEnrichHint": {
-    "message": "Pre záložky, pre ktoré Chrome nemá v medzipamäti ikonu, načíta skutočnú ikonu priamo zo stránky (/favicon.ico, potom deklarované ikony stránky). Požiadavky smerujú iba na stránky, ktoré máte v záložkách."
-  },
-  "optionFaviconEnrichAgg": {
-    "message": "Záložné ikony tretích strán"
-  },
-  "optionFaviconEnrichAggHint": {
-    "message": "Keď priame získavanie zlyhá, ikona sa vyhľadá podľa domény v zabudovanom zozname služieb tretích strán ($providers$). Nedostupná služba sa preskočí a vyskúša sa ďalšia – znova sa nebude skúšať 6 hodín.",
-    "placeholders": {
-      "providers": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionFaviconBackup": {
-    "message": "Zahrnúť vyrovnávaciu pamäť ikon do záloh"
-  },
-  "optionFaviconBackupHint": {
-    "message": "Zahrnúť aj obohatenú vyrovnávaciu pamäť favikôn (údaje pre jednotlivé stránky, potenciálne veľké) do exportu/importu nastavení. To pokrýva už uložené ikony, aj keď je načítavanie vypnuté. Vypnutie udržiava zálohy malé; ikony sa aj tak automaticky znova načítajú."
-  },
-  "optionFaviconCacheClear": {
-    "message": "Vyčistiť medzipamäť ikon"
-  },
-  "optionFaviconCacheClearConfirm": {
-    "message": "Vyčistiť obohatenú vyrovnávaciu pamäť ikon? Ikony sa pri ďalšom otvorení automaticky znova načítajú."
-  },
-  "optionFaviconCacheEmpty": {
-    "message": "Nie je čo vymazať z vyrovnávacej pamäte ikon."
-  },
-  "optionFaviconCacheCleared": {
-    "message": "Medzipamäť ikon bola vyčistená. Ikony sa pri ďalšom otvorení znova načítajú."
-  },
-  "favGalleryLink": {
-    "message": "Zobraziť obnovené ikony",
-    "description": "Options link (Icons group, right of the Clear icon cache button): opens the favicon gallery page listing the sites whose icons were refetched."
-  },
-  "favGalleryTitle": {
-    "message": "Obnovené ikony stránok",
-    "description": "Favicon gallery page title (h1 + document title)."
-  },
-  "favGalleryHint": {
-    "message": "Ikony, ktoré vBookmarks získal pre záložkové stránky, ktoré Chrome nemal v medzipamäti – odkiaľ každá pochádza a ktoré záložky ju používajú. Len na zobrazenie.",
-    "description": "Subtitle under the favicon gallery title, explaining the page is read-only."
-  },
-  "favGallerySearch": {
-    "message": "Filtrovať podľa stránky, názvu alebo cesty",
-    "description": "Placeholder of the favicon gallery filter input."
-  },
-  "favGalleryAll": {
-    "message": "Všetky",
-    "description": "Favicon gallery source filter chip: show every source."
-  },
-  "favSrcDirect": {
-    "message": "Priamy",
-    "description": "Favicon gallery source badge: the icon was fetched directly from the site itself."
-  },
-  "favSrcProxy": {
-    "message": "Proxy",
-    "description": "Favicon gallery source badge: the icon was fetched through the user's own proxy relay."
-  },
-  "favSrcLegacy": {
-    "message": "Predchádzajúca medzipamäť",
-    "description": "Favicon gallery source badge: cached before the source was recorded, so the origin is unknown."
-  },
-  "favGalleryCompare": {
-    "message": "Porovnať so zástupnou ikonou",
-    "description": "Favicon gallery toggle button: switch every icon to the generic placeholder it replaced (before/after comparison)."
-  },
-  "favGalleryShowingBefore": {
-    "message": "Späť na skutočné ikony",
-    "description": "Favicon gallery toggle button while the placeholder comparison is shown: switch back to the real fetched icons."
-  },
-  "favGalleryStatSites": {
-    "message": "$n$ stránok",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    },
-    "description": "Favicon gallery stats strip: how many sites have a refreshed icon."
-  },
-  "favGalleryStatBookmarks": {
-    "message": "$n$ záložiek",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    },
-    "description": "Favicon gallery stats strip: how many bookmarks sit on the refreshed sites."
-  },
-  "favGalleryVisits": {
-    "message": "$n$ zaznamenaných otvorení",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    },
-    "description": "Favicon gallery tooltip on a bookmark row's visit-count pill."
-  },
-  "favGalleryFailedTitle": {
-    "message": "Nedávno skúšané, ikona sa nenašla",
-    "description": "Favicon gallery heading of the muted section listing hosts whose icon fetch failed recently."
-  },
-  "favGalleryFailedHint": {
-    "message": "Neúspešné pokusy sa opakujú po 24 hodinách, 3 dňoch a 7 dňoch, potom sa vzdajú, kým sa nevymaže vyrovnávacia pamäť ikon.",
-    "description": "Favicon gallery hint under the failed-fetch section title."
-  },
-  "favGalleryGaveUp": {
-    "message": "Vzdané",
-    "description": "Favicon gallery badge on a failed-strip host whose retries are exhausted (it stays untouched until the icon cache is cleared)."
-  },
-  "favGalleryOrphan": {
-    "message": "Na tomto hostiteľovi nezostala žiadna záložka – ikona sa vymaže s medzipamäťou.",
-    "description": "Favicon gallery note on a card whose host no longer has any bookmark."
-  },
-  "favGalleryEmptyTitle": {
-    "message": "Zatiaľ žiadne obnovené ikony",
-    "description": "Favicon gallery empty-state heading."
-  },
-  "favGalleryEmptyText": {
-    "message": "Keď vyskakovacie okno natrafí na záložkovú stránku, pre ktorú Chrome nemá ikonu, vBookmarks načíta tú skutočnú a zobrazí ju tu.",
-    "description": "Favicon gallery empty-state body text."
-  },
-  "storageUsageIcon": {
-    "message": "Cache ikon"
-  },
-  "storageUsageOther": {
-    "message": "Ostatné"
-  },
-  "storageUsageSummary": {
-    "message": "Použité $1$ z $2$",
-    "placeholders": {
-      "1": {
-        "content": "$1"
-      },
-      "2": {
-        "content": "$2"
-      }
-    }
-  },
-  "storageUsageFree": {
-    "message": "Voľné"
-  },
-  "storageUsageHint": {
-    "message": "Len lokálne úložisko rozšírenia (chrome.storage.local, kvóta približne 10 MB): cache ikon plus nastavenia a iné lokálne údaje. Synchronizované nastavenia, údaje relácie a samotná knižnica záložiek sa tu nezapočítavajú."
-  },
-  "optionsDonate": {
-    "message": "Prispieť"
-  },
-  "optionsGithubLink": {
-    "message": "GitHub"
-  },
-  "optionsHomepageLink": {
-    "message": "Domovská stránka"
-  },
-  "optionsSince": {
-    "message": "Odvodené z Neat Bookmarks, udržiavané už $days$ dní.",
-    "placeholders": {
-      "days": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionsVersion": {
-    "message": "vBookmarks verzia"
-  },
-  "optionSyncRefreshInterval": {
-    "message": "Interval obnovenia"
-  },
-  "optionSyncRefreshIntervalSeconds": {
-    "message": "sekúnd"
-  },
-  "optionTheme": {
-    "message": "Téma"
-  },
-  "optionThemeAuto": {
-    "message": "Podľa systému"
-  },
-  "optionThemeDark": {
-    "message": "Tmavá"
-  },
-  "optionThemeInk": {
-    "message": "Atrament (tmavá)"
-  },
-  "optionThemeLight": {
-    "message": "Svetlá"
-  },
-  "optionThemePaper": {
-    "message": "Papier (svetlá)"
-  },
-  "optionLanguage": {
-    "message": "Jazyk"
-  },
-  "optionLanguageAuto": {
-    "message": "Automaticky"
-  },
-  "optionLanguageHint": {
-    "message": "Zmena jazyka znova načíta túto stránku."
-  },
-  "paletteClose": {
-    "message": "Zavrieť"
-  },
-  "paletteCmdVersion": {
-    "message": "Informácie o verzii"
-  },
-  "paletteCmdLang": {
-    "message": "Prepnúť jazyk…"
-  },
-  "paletteCmdLangUsage": {
-    "message": "Použitie: /lang nasledovaný kódom lokality – napr. /lang en, /lang zh_CN, /lang ja."
-  },
-  "versionDialogTitle": {
-    "message": "vBookmarks $version$",
-    "placeholders": {
-      "version": {
-        "content": "$1"
-      }
-    }
-  },
-  "versionDialogCopy": {
-    "message": "Kopírovať informácie"
-  },
-  "versionDialogCopied": {
-    "message": "Skopírované"
-  },
-  "versionMetaVersion": {
-    "message": "Verzia rozšírenia"
-  },
-  "versionMetaAnnounce": {
-    "message": "Novinky"
-  },
-  "versionMetaAnnounceNone": {
-    "message": "Nebolo načítané žiadne oznámenie."
-  },
-  "versionMetaBrowser": {
-    "message": "Prehliadač"
-  },
-  "versionMetaOS": {
-    "message": "OS"
-  },
-  "versionMetaChannel": {
-    "message": "Kanál"
-  },
-  "versionMetaLanguage": {
-    "message": "Jazyk"
-  },
-  "versionMetaUserAgent": {
-    "message": "User agent"
-  },
-  "optionZoom": {
-    "message": "Priblíženie"
-  },
-  "options": {
-    "message": "Možnosti"
-  },
-  "optionsFooterText": {
-    "description": "Footer text for the Options page",
-    "message": "Vytvoril $authorName$.",
-    "placeholders": {
-      "authorName": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionsGroupBackup": {
-    "message": "Záloha"
-  },
-  "optionsGroupIcons": {
-    "message": "Ikony"
-  },
-  "optionsGroupContextMenu": {
-    "message": "Kontextové ponuky"
-  },
-  "optionsGroupViews": {
-    "message": "Zobrazenia"
-  },
-  "optionsGroupSort": {
-    "message": "Triedenie"
-  },
-  "optionsGroupTools": {
-    "message": "Nástroje"
-  },
-  "optionsGroupStats": {
-    "message": "Štatistiky"
-  },
-  "paletteCmdDead": {
-    "message": "Nájsť nefunkčné odkazy"
-  },
-  "paletteCmdDupes": {
-    "message": "Vyčistiť duplicitné záložky"
-  },
-  "paletteCmdGoDead": {
-    "message": "Prejsť na zobrazenie mŕtvych odkazov"
-  },
-  "paletteCmdGoDupes": {
-    "message": "Prejsť na zobrazenie duplikátov"
-  },
-  "paletteCmdGoRecent": {
-    "message": "Prejsť na zobrazenie nedávnych"
-  },
-  "paletteCmdGoSearch": {
-    "message": "Prejsť na zobrazenie vyhľadávania"
-  },
-  "paletteCmdGoStats": {
-    "message": "Prejsť na zobrazenie štatistík"
-  },
-  "paletteCmdGoTree": {
-    "message": "Prejsť na zobrazenie stromu"
-  },
-  "paletteCmdNewBookmark": {
-    "message": "Nová záložka…"
-  },
-  "paletteCmdNewFolder": {
-    "message": "Nový priečinok…"
-  },
-  "paletteCmdOptions": {
-    "message": "Otvoriť stránku možností"
-  },
-  "paletteCmdQuickAdd": {
-    "message": "Pridať aktuálnu kartu do záložiek"
-  },
-  "paletteCmdSaveSession": {
-    "message": "Uložiť karty okna ako priečinok"
-  },
-  "paletteCmdSearchInView": {
-    "message": "Hľadať '$query$' v zobrazení vyhľadávania",
-    "placeholders": {
-      "query": {
-        "content": "$1"
-      }
-    }
-  },
-  "paletteCmdToggleViewTabs": {
-    "message": "Prepínať zobrazenie kariet"
-  },
-  "paletteCmdTheme": {
-    "message": "Nastaviť tému…"
-  },
-  "paletteCmdThemeUsage": {
-    "message": "Použitie: /theme a názov témy — auto, light, dark, ink alebo paper (funguje aj jednoznačná predpona, napr. /theme d)."
-  },
-  "paletteCustomTag": {
-    "message": "vlastný"
-  },
-  "paletteCustomDeleteConfirm": {
-    "message": "Odstrániť príkaz „$1“? Zmena sa synchronizuje do všetkých vašich zariadení."
-  },
-  "paletteCustomBroken": {
-    "message": "Priečinok príkazu „$1“ už neexistuje. Odstrániť príkaz?"
-  },
-  "paletteCmdSaveAsCommand": {
-    "message": "Uložiť „$1“ ako príkaz…"
-  },
-  "paletteActionOpenUrl": {
-    "message": "Otvoriť URL"
-  },
-  "paletteActionOpenUrlGroup": {
-    "message": "Otvoriť skupinu priečinkov záložiek"
-  },
-  "paletteActionViewPreset": {
-    "message": "Otvoriť zobrazenie s predvoľbou"
-  },
-  "paletteActionUrlTemplate": {
-    "message": "Otvoriť šablónu URL"
-  },
-  "optionsGroupPalette": {
-    "message": "Paleta príkazov"
-  },
-  "paletteCustomHint": {
-    "message": "Vlastné príkazy so šikmou lomkou pre paletu príkazov (Ctrl/Cmd+K). Synchronizujú sa s vašimi nastaveniami — maximálne 100 položiek."
-  },
-  "paletteCustomAdd": {
-    "message": "Pridať príkaz…"
-  },
-  "paletteCustomUsage": {
-    "message": "$1 / $2"
-  },
-  "paletteCustomSlash": {
-    "message": "Lomka (slovo za /)"
-  },
-  "paletteCustomAliases": {
-    "message": "Aliasy (oddelené čiarkami)"
-  },
-  "paletteCustomAction": {
-    "message": "Akcia"
-  },
-  "paletteCustomUrl": {
-    "message": "URL"
-  },
-  "paletteCustomTemplate": {
-    "message": "Šablóna URL – %s sa nahradí slovami za príkazom."
-  },
-  "paletteCustomWhere": {
-    "message": "Otvoriť v"
-  },
-  "paletteCustomFolder": {
-    "message": "Priečinok so záložkami"
-  },
-  "paletteCustomView": {
-    "message": "Zobrazenie"
-  },
-  "paletteCustomStrategy": {
-    "message": "Predvoľba stratégie deduplikácie"
-  },
-  "paletteCustomScope": {
-    "message": "Predvoľba rozsahu deduplikácie"
-  },
-  "paletteCustomScan": {
-    "message": "Spustiť skenovanie pri zadaní"
-  },
-  "paletteWhereCurrent": {
-    "message": "Aktuálna karta"
-  },
-  "paletteWhereTab": {
-    "message": "Nová karta"
-  },
-  "paletteWhereWindow": {
-    "message": "Nové okno"
-  },
-  "paletteWhereBackground": {
-    "message": "Karty na pozadí"
-  },
-  "paletteCustomSave": {
-    "message": "Uložiť príkaz"
-  },
-  "paletteCustomErrSlash": {
-    "message": "Lomka: 1–24 znakov, malé písmená, číslice alebo pomlčky, začína písmenom alebo číslicou."
-  },
-  "paletteCustomErrAlias": {
-    "message": "Aliasy: rovnaké pravidlá ako lomka (1–24 znakov, malé písmená, číslice alebo pomlčky)."
-  },
-  "paletteCustomErrTaken": {
-    "message": "Táto lomka alebo alias sa už používa."
-  },
-  "paletteCustomErrUrl": {
-    "message": "Povolené sú iba adresy URL http:// alebo https://."
-  },
-  "paletteCustomErrFolder": {
-    "message": "Vyberte priečinok so záložkami."
-  },
-  "paletteCustomErrView": {
-    "message": "Vyberte zobrazenie."
-  },
-  "paletteCustomErrTemplate": {
-    "message": "Šablóna musí obsahovať presne jeden výskyt %s."
-  },
-  "paletteCustomErrAction": {
-    "message": "Vyberte typ akcie."
-  },
-  "paletteCustomErrLimit": {
-    "message": "Limit príkazov dosiahnutý (100) – najprv jeden odstráňte."
-  },
-  "paletteCustomEmpty": {
-    "message": "Zatiaľ žiadne vlastné príkazy."
-  },
-  "paletteNoResults": {
-    "message": "Žiadne zodpovedajúce výsledky"
-  },
-  "palettePlaceholder": {
-    "message": "Hľadať záložky, priečinky, príkazy…"
-  },
-  "parentFolder": {
-    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
-    "message": "Rodičovský priečinok: \"$folderName$\"",
-    "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarksbar"
-      }
-    }
-  },
-  "quickAddBookmark": {
-    "message": "Pridať túto stránku do záložiek (Ctrl+D)"
-  },
-  "quickAddBookmarkCommand": {
-    "message": "Rýchlo pridať aktuálnu kartu ako záložku"
-  },
-  "quickAdded": {
-    "message": "Záložka pridaná"
-  },
-  "quickAddedTo": {
-    "message": "Záložka pridaná do $folderName$",
-    "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarks bar"
-      }
-    }
-  },
-  "quickRemoveBookmark": {
-    "message": "Odstrániť túto záložku (Ctrl+D)"
-  },
-  "quickRemoved": {
-    "message": "Záložka odstránená"
-  },
-  "recentBookmarks": {
+  "recentSectionTitle": {
     "message": "Nedávno pridané"
   },
-  "recentEmpty": {
-    "message": "Žiadne nedávne záložky. Stlačte Ctrl+D na pridanie aktuálnej stránky do záložiek."
+  "stagingEmpty": {
+    "message": "Prázdne — kliknite pravým tlačidlom na záložku, použite tlačidlo ↑ alebo riadky histórie štatistík na odoslanie položiek do dočasnej oblasti"
   },
-  "recentGroupMonth": {
-    "message": "Tento mesiac"
+  "stagingFromHistory": {
+    "message": "Z histórie"
   },
-  "recentGroupOlder": {
-    "message": "Staršie"
+  "stagingGroupExpand": {
+    "message": "Rozbaliť skupinu"
   },
-  "recentGroupToday": {
-    "message": "Dnes"
+  "stagingGroupCollapse": {
+    "message": "Zbaliť skupinu"
   },
-  "recentGroupWeek": {
-    "message": "Tento týždeň"
+  "stagingGroupRename": {
+    "message": "Premenovať skupinu…"
   },
-  "recentRevealInTree": {
-    "message": "Zobraziť v strome"
+  "stagingGroupDissolve": {
+    "message": "Rozpustiť skupinu"
   },
-  "removeSeparator": {
-    "message": "Odstrániť oddeľovač"
+  "stagingGroupDissolved": {
+    "message": "Skupina rozpustená — položky zostali v dočasnej oblasti"
   },
-  "replaceUrl": {
-    "message": "Nahradiť aktuálnou URL"
+  "stagingGroupAssign": {
+    "message": "Skupina…"
   },
-  "reportError": {
-    "message": "Nahlásiť chybu"
+  "stagingGroupAssignTitle": {
+    "message": "Priradiť do skupiny"
   },
-  "reportedToDeveloper": {
-    "description": "Správa pre chybu v rozšírení, nahlásená vývojárovi.",
-    "message": "Toto bolo nahlásené vývojárovi."
+  "stagingGroupNew": {
+    "message": "Nová skupina"
   },
-  "resetButton": {
-    "message": "Resetovať"
+  "stagingGroupNamePrompt": {
+    "message": "Názov novej skupiny"
   },
-  "resetSettings": {
-    "message": "Resetovať nastavenia"
+  "stagingGroupNoGroups": {
+    "message": "Zatiaľ žiadne skupiny"
   },
-  "resetSettingsDescription": {
-    "message": "Resetovať vBookmarks na predvolené nastavenia."
+  "stagingBucketTitle": {
+    "message": "Nezáložkované"
   },
-  "rowActionDelete": {
-    "message": "Odstrániť"
+  "stagingBucketFavAll": {
+    "message": "Oblúbiť všetky"
   },
-  "rowActionMark": {
-    "message": "Označiť ako mŕtvy"
+  "stagingNew": {
+    "message": "nové $n$",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
   },
-  "rowActionReveal": {
-    "message": "Zobraziť v strome"
+  "stagingRowFav": {
+    "message": "Oblúbiť túto položku"
   },
-  "rowActionUnmark": {
-    "message": "Odstrániť označenie mŕtveho"
+  "stagingRowUnfav": {
+    "message": "Zrušiť obľúbenosť tejto položky"
   },
-  "save": {
-    "message": "Uložiť"
+  "stagingFav": {
+    "message": "Obľúbené"
   },
-  "searchBookmarks": {
-    "description": "Zástupný text pre vyhľadávacie pole.",
-    "message": "Hľadať záložky"
+  "stagingUnfav": {
+    "message": "Zrušiť obľúbenosť"
   },
-  "searchClear": {
-    "message": "Vymazať vyhľadávanie"
+  "stagingFavDone": {
+    "message": "Oblúbené $n$ položiek",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
   },
-  "searchHistoryClear": {
-    "message": "Vymazať všetky"
+  "stagingUnfavDone": {
+    "message": "Zrušené obľúbené: $n$",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
   },
-  "searchHistoryRemove": {
-    "message": "Odstrániť toto vyhľadávanie"
+  "groupSaveToFolder": {
+    "message": "Uložiť do priečinka…"
   },
-  "searchHistoryRerun": {
-    "message": "Hľadať znova"
+  "groupCopyToFolder": {
+    "message": "Kopírovať do priečinka…"
   },
-  "searchHistoryResultCount": {
+  "stagingCount": {
+    "message": "$n$ v zásobníku",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingMoveCopy": {
+    "message": "Presunúť/kopírovať do…"
+  },
+  "stagingMoveDone": {
+    "message": "Presunuté: $n$ domov",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingCopyDone": {
+    "message": "Kopírované: $n$",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingMoveConfirm": {
+    "message": "Presunúť $n$ do vybraného priečinka?",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingDeleteConfirm": {
+    "message": "Odstrániť $n$? Neuložené len opustia zásobník.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingDeleted": {
+    "message": "Odstránené: $n$",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingRemovedCount": {
+    "message": "Odstránené z zásobníka: $n$",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingClear": {
+    "message": "Vyčistiť zásobník"
+  },
+  "stagingClearConfirm": {
+    "message": "Vyčistiť celý zásobník? Strom záložiek sa nedotkne."
+  },
+  "stagingCleared": {
+    "message": "Zásobník vyčistený"
+  },
+  "groupPlaceTooltip": {
+    "message": "Uložiť túto skupinu do priečinka…"
+  },
+  "copyBookmark": {
+    "message": "Kopírovať"
+  },
+  "cutBookmark": {
+    "message": "Vystrihnúť"
+  },
+  "copyMoveTo": {
+    "message": "Kopírovať/presunúť do…"
+  },
+  "pasteHere": {
+    "message": "Vložiť sem"
+  },
+  "copiedToast": {
+    "message": "Kopírované: $t$",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
+  },
+  "cutToast": {
+    "message": "Vystrihnuté: $t$ — vložte do cieľového priečinka (Esc zruší)",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
+  },
+  "pasteDone": {
+    "message": "Vložené"
+  },
+  "pasteGone": {
+    "message": "Záložka už neexistuje — schránka vyčistená"
+  },
+  "folderCopyList": {
+    "message": "Kopírovať názvy a adresy"
+  },
+  "folderCopyText": {
+    "message": "Zoznam ako text"
+  },
+  "folderCopyMarkdown": {
+    "message": "Markdown"
+  },
+  "folderCopyJson": {
+    "message": "JSON"
+  },
+  "folderCopyConfirm": {
+    "message": "Kopírovať zoznam $n$ záložiek?",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "folderCopyDone": {
+    "message": "Kopírované: $n$ záložiek",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "addFolderMenu": {
+    "message": "Pridať priečinok"
+  },
+  "optionCollapseAddFolderMenu": {
+    "message": "Zbaliť položky pridania priečinka"
+  },
+  "optionCollapseAddFolderMenuHint": {
+    "message": "Zlúčiť tri položky pridania priečinka (pred/po/vnútri) do jednej podponuky pri kliknutí pravým tlačidlom na priečinok."
+  },
+  "tabRowStage": {
+    "message": "Uložiť a pripraviť"
+  },
+  "tabgroupStageAll": {
+    "message": "Uložiť a pripraviť celú skupinu"
+  },
+  "tabgroupStageConfirm": {
+    "message": "Uložiť a pripraviť $n$ kariet?",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabgroupStageNone": {
+    "message": "V tejto skupine nie sú žiadne ukladateľné karty"
+  },
+  "stagedToast": {
+    "message": "Pripravené: $n$ kariet ako skupina „$t$“",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "t": {
+        "content": "$2"
+      }
+    }
+  },
+  "searchResultCount": {
     "message": "$n$ výsledkov",
     "placeholders": {
       "n": {
@@ -1779,367 +2474,7 @@
       }
     }
   },
-  "searchHistoryTitle": {
-    "message": "Nedávne vyhľadávania"
-  },
-  "searchNoResults": {
-    "message": "Žiadne zodpovedajúce záložky"
-  },
-  "searchViewHint": {
-    "message": "Napíšte do poľa vyššie na vyhľadanie záložiek"
-  },
-  "selectAll": {
-    "message": "Všetko"
-  },
-  "selectClear": {
-    "message": "Vyčistiť"
-  },
-  "selectCount": {
-    "message": "$count$ vybratých",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "selectInvert": {
-    "message": "Invertovať"
-  },
-  "selectModeEnter": {
-    "message": "Vybrať"
-  },
-  "selectModeExit": {
-    "message": "Ukončiť výber"
-  },
-  "deadRiskBanner": {
-    "message": "Čistenie nefunkčných odkazov hromadne odstraňuje záložky. Pred prvým čistením si zálohujte záložky."
-  },
-  "dupesRiskBanner": {
-    "message": "Deduplikácia hromadne odstraňuje duplicitné záložky. Pred použitím si zálohujte záložky."
-  },
-  "riskBannerHelp": {
-    "message": "Návod na zálohovanie a obnovenie"
-  },
-  "riskBannerNever": {
-    "message": "Nezobrazovať znova"
-  },
-  "riskBannerDismiss": {
-    "message": "Zavrieť"
-  },
-  "sessionEmpty": {
-    "message": "Žiadne karty na uloženie"
-  },
-  "sessionFolderName": {
-    "message": "Relácia $date$",
-    "placeholders": {
-      "date": {
-        "content": "$1",
-        "example": "2026-07-18 15:04"
-      }
-    },
-    "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm."
-  },
-  "sessionSaved": {
-    "message": "Uložených $count$ kariet do nového priečinka",
-    "placeholders": {
-      "count": {
-        "content": "$1",
-        "example": "12"
-      }
-    },
-    "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
-  },
-  "settingsBackupHint": {
-    "message": "Export uloží všetky nastavenia (vrátane preferencií synchronizácie) do súboru JSON. Import zlúči zálohu späť: nastavenia v súbore prepíšu aktuálne, ostatné zostávajú zachované."
-  },
-  "settingsExport": {
-    "message": "Exportovať nastavenia"
-  },
-  "settingsImport": {
-    "message": "Importovať nastavenia"
-  },
-  "settingsImportConfirm": {
-    "message": "Import prepíše všetky nastavenia obsiahnuté v záložnom súbore (nastavenia, ktoré nie sú v súbore, zostanú zachované) a znova načíta túto stránku. Pokračovať?"
-  },
-  "settingsImportDone": {
-    "message": "Nastavenia importované. Stránka sa teraz znova načíta."
-  },
-  "settingsImportError": {
-    "message": "Niektoré nastavenia sa nepodarilo zapísať (kvóta úložiska alebo dočasná chyba). Import sa nedokončil – skúste to znova."
-  },
-  "settingsImportInvalid": {
-    "message": "Neplatný súbor nastavení: nejde o zálohu nastavení vBookmarks."
-  },
-  "sortByDateAdded": {
-    "message": "Podľa dátumu pridania (najnovšie prvé)"
-  },
-  "sortByTitle": {
-    "message": "Podľa názvu"
-  },
-  "sortFolderContents": {
-    "message": "Zoradiť obsah priečinka"
-  },
-  "sortByName": {
-    "message": "Zoradiť podľa názvu"
-  },
-  "sortByDate": {
-    "message": "Zoradiť podľa dátumu"
-  },
-  "sortRecursiveSuffix": {
-    "message": "(rekurzívne)"
-  },
-  "sortOptions": {
-    "message": "Možnosti zoradenia…"
-  },
-  "sortDone": {
-    "message": "Priečinok zoradený"
-  },
-  "sortFoldersFirst": {
-    "message": "Ponechať priečinky navrchu"
-  },
-  "sortRecursive": {
-    "message": "Zoradiť aj podpriečinky (rekurzívne)"
-  },
-  "sortRecursiveWarning": {
-    "message": "Preusporiada záložky v každom podpriečinku."
-  },
-  "tabGroupDialogTitle": {
-    "message": "Nová skupina kariet"
-  },
-  "tabGroupTitleLabel": {
-    "message": "Názov skupiny"
-  },
-  "tabGroupColorLabel": {
-    "message": "Farba"
-  },
-  "tabGroupColorGrey": {
-    "message": "Sivá",
-    "description": "Accessible name of the grey color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorBlue": {
-    "message": "Modrá",
-    "description": "Accessible name of the blue color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorRed": {
-    "message": "Červená",
-    "description": "Accessible name of the red color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorYellow": {
-    "message": "Žltá",
-    "description": "Accessible name of the yellow color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorGreen": {
-    "message": "Zelená",
-    "description": "Accessible name of the green color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorPink": {
-    "message": "Ružová",
-    "description": "Accessible name of the pink color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorPurple": {
-    "message": "Fialová",
-    "description": "Accessible name of the purple color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorCyan": {
-    "message": "Azúrová",
-    "description": "Accessible name of the cyan color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorOrange": {
-    "message": "Oranžová",
-    "description": "Accessible name of the orange color swatch in the new-tab-group dialog."
-  },
-  "tabGroupUntitled": {
-    "message": "Skupina bez názvu"
-  },
-  "tabGroupNoGroups": {
-    "message": "Žiadne existujúce skupiny kariet"
-  },
-  "tabGroupPickDialogTitle": {
-    "message": "Otvoriť v existujúcej skupine kariet"
-  },
-  "statsClearConfirm": {
-    "message": "Vymazať štatistiky návštev pre $count$ záložiek? Tento krok sa nedá vrátiť.",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "statsClearData": {
-    "message": "Vymazať štatistiky"
-  },
-  "statsDisabledHint": {
-    "message": "Štatistiky návštev sú vypnuté — povoľte ich v Možnosti → Zobrazenia"
-  },
-  "statsEmpty": {
-    "message": "Štatistiky sa postupne vytvárajú pri otváraní záložiek"
-  },
-  "statsHistoryAdd": {
-    "message": "Pridať do záložiek"
-  },
-  "statsHistoryBanner": {
-    "message": "Udeľte prístup k histórii na naplnenie štatistík návštev z vašich minulých návštev."
-  },
-  "statsHistoryBookmarked": {
-    "message": "Pridané do záložiek"
-  },
-  "statsHistoryDismiss": {
-    "message": "Už nezobrazovať"
-  },
-  "statsHistoryEnable": {
-    "message": "Povoliť"
-  },
-  "statsHistoryGuide": {
-    "message": "Udeľte prístup k histórii, aby ste tu mohli zobraziť svoje nedávne návštevy."
-  },
-  "statsHistoryImported": {
-    "message": "Importované minulé návštevy pre $count$ záložiek",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "statsSectionBookmarks": {
-    "message": "Štatistiky záložiek"
-  },
-  "statsSectionRecent": {
-    "message": "Nedávne návštevy"
-  },
-  "statsSortByCount": {
-    "message": "Podľa počtu"
-  },
-  "statsSortByRecent": {
-    "message": "Podľa nedávnych"
-  },
-  "statsShowUnbookmarked": {
-    "message": "Zobraziť neuložené"
-  },
-  "statsShowUnbookmarkedHint": {
-    "message": "Zahrnúť stránky z histórie, ktoré nie sú uložené ako záložky."
-  },
-  "statsVisitCount": {
-    "message": "Navštívené $count$ krát",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "syncOptions": {
-    "message": "Možnosti synchronizácie"
-  },
-  "syncStatusLocal": {
-    "message": "Len lokálne – nenahrané"
-  },
-  "syncStatusSynced": {
-    "message": "Synchronizované s účtom Google"
-  },
-  "syncStatusUnsyncable": {
-    "message": "Nedá sa synchronizovať"
-  },
-  "syncSuffixLocal": {
-    "message": "(Lokálne)"
-  },
-  "syncSuffixSynced": {
-    "message": "(Synchronizované)"
-  },
-  "timeDaysAgo": {
-    "message": "pred $n$ dňami",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "timeHoursAgo": {
-    "message": "pred $n$ hod.",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "timeJustNow": {
-    "message": "práve teraz"
-  },
-  "timeMinutesAgo": {
-    "message": "pred $n$ min.",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "timeYesterday": {
-    "message": "včera"
-  },
-  "toolButtonTitle": {
-    "message": "Nástroje (Ctrl+K)"
-  },
-  "undoAction": {
-    "message": "Späť"
-  },
-  "revealOutsideBarHint": {
-    "message": "Zobrazuje sa iba lišta záložiek: cieľ leží mimo nej."
-  },
-  "revealOutsideBarAction": {
-    "message": "Zobraziť všetko a odhaliť"
-  },
-  "url": {
-    "message": "URL"
-  },
-  "viewDead": {
-    "message": "Mŕtve odkazy"
-  },
-  "viewDupes": {
-    "message": "Duplikáty"
-  },
-  "viewRecent": {
-    "message": "Nedávne"
-  },
-  "viewSearch": {
-    "message": "Vyhľadávanie"
-  },
-  "viewStats": {
-    "message": "Štatistiky"
-  },
-  "viewSwitchAnnounce": {
-    "message": "Zobrazenie $name$",
-    "placeholders": {
-      "name": {
-        "content": "$1"
-      }
-    }
-  },
-  "viewStateEnabled": {
-    "message": "Povolené"
-  },
-  "viewStateDisabled": {
-    "message": "Zakázané"
-  },
-  "viewEnable": {
-    "message": "Povoliť"
-  },
-  "viewDisable": {
-    "message": "Zakázať"
-  },
-  "viewTabHide": {
-    "message": "Skryť"
-  },
-  "viewTabDisable": {
-    "message": "Zakázať"
-  },
-  "viewTree": {
-    "message": "Strom"
-  },
-  "deadProxyNeverShow": {
-    "message": "Nezobrazovať znova"
-  },
-  "optionDeadProxyStrip": {
-    "message": "Zobraziť tip na pridanie proxy v zobrazení mŕtvych odkazov"
-  },
-  "optionDeadProxyStripHint": {
-    "message": "Vypnutie tento tip v zobrazení skryje; proxy server tu zostáva konfigurovateľný a uložený server sa v zobrazení vždy zobrazí so svojím riadkom správy."
+  "deleteSelected": {
+    "message": "Odstrániť vybrané"
   }
 }

@@ -29,6 +29,12 @@
   "advancedOptions": {
     "message": "Avancerede Indstillinger"
   },
+  "announceDismiss": {
+    "message": "Afvis"
+  },
+  "announceV408Text": {
+    "message": "v4.0.8 er udgivelsen med de forbedrede favicons: rigtige webstedsikoner hentes automatisk for bogmærker, som Chrome endnu ikke har cachelagret."
+  },
   "announceV407Text": {
     "message": "v4.0.7 leverer den fuldt udstyrede visning af døde links: scan, marker, filtrer og sorter døde og begrænsede links, med tidligere markeringer og tidsstempler pr. række."
   },
@@ -44,12 +50,6 @@
   "announceV410Text": {
     "message": "v4.1.0 tilføjer fanegruppevisningen: alle vinduers faner og fanegrupper, administreret ved siden af dine bogmærker."
   },
-  "announceV408Text": {
-    "message": "v4.0.8 er udgivelsen med de forbedrede favicons: rigtige webstedsikoner hentes automatisk for bogmærker, som Chrome endnu ikke har cachelagret."
-  },
-  "announceDismiss": {
-    "message": "Afvis"
-  },
   "confirmDeleteFolder": {
     "message": "Denne mappe indeholder $count$ emne(r). Du kan fortryde sletningen.",
     "placeholders": {
@@ -57,6 +57,9 @@
         "content": "$1"
       }
     }
+  },
+  "confirmDeleteFolderButton": {
+    "message": "Slet"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "Er du sikker på, du vil slette mappen $folderName$ og $bookmarkCount$ bogmærke(r) i den?",
@@ -68,9 +71,6 @@
         "content": "$1"
       }
     }
-  },
-  "confirmDeleteFolderButton": {
-    "message": "Slet"
   },
   "confirmDeleteFolderSubfolders": {
     "message": "Er du sikker på, du vil slette mappen $folderName$ og $subFolderCount$ undermappe(r) i den?",
@@ -124,18 +124,11 @@
       }
     }
   },
-  "contextMenuAddBookmark": {
-    "message": "Bogmærk denne side med vBookmarks"
-  },
   "copyAllTitlesAndUrls": {
     "message": "Kopier alle titler og URL'er til udklipsholder"
   },
   "copyTitleAndUrl": {
     "message": "Kopier titel og URL"
-  },
-  "crossStorageMoveWarning": {
-    "message": "Bogmærker kan ikke flyttes mellem synkroniseret og lokal lagring. Brug kopier/indsæt i stedet.",
-    "description": "Warning when trying to move bookmarks across storage types"
   },
   "customIcon": {
     "message": "Brugerdefineret ikon"
@@ -146,14 +139,14 @@
   "customSeparatorColorDescription": {
     "message": "Tilpas Skillelinjefarve"
   },
-  "customSeparatorStringDescription": {
-    "message": "Hvis URL'en af et bogmærke indeholder denne streng, vil det blive vist som en skillelinje"
-  },
   "customSeparatorTitleDescription": {
     "message": "Den rigtige titel af bogmærket som vises som en skillelinje"
   },
   "customSeparatorUrlDescription": {
     "message": "Den rigtige URL af bogmærket som vises som en skillelinje"
+  },
+  "customSeparatorStringDescription": {
+    "message": "Hvis URL'en af et bogmærke indeholder denne streng, vil det blive vist som en skillelinje"
   },
   "customStyles": {
     "message": "Brugerdefinerede Stile"
@@ -164,8 +157,14 @@
   "customStylesDescription": {
     "message": "Dette kræver nogle CSS færdigheder. Rediger på egen risiko. Kodedeling ville være klogt via"
   },
-  "deadCancel": {
-    "message": "Annuller"
+  "defaultIconButton": {
+    "message": "Brug standard"
+  },
+  "defaultIconButtonOr": {
+    "message": "eller"
+  },
+  "customIconPick": {
+    "message": "Vælg fil…"
   },
   "deadChecking": {
     "message": "Kontrollerer $done$ / $total$…",
@@ -235,6 +234,839 @@
   },
   "deadClearScan": {
     "message": "Ryd scanresultater"
+  },
+  "deadNone": {
+    "message": "Ingen døde links fundet"
+  },
+  "deadNoneFiltered": {
+    "message": "Ingen døde links under dette filter — prøv et andet segment ovenfor"
+  },
+  "deadRescan": {
+    "message": "Genscan"
+  },
+  "delete": {
+    "message": "Slet"
+  },
+  "deletedBookmark": {
+    "message": "Slettede $title$",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Example"
+      }
+    },
+    "description": "Toast shown after a bookmark or separator was deleted; the toast offers an undo button. $title$ is the deleted row's title (empty for separators)."
+  },
+  "deletedFolder": {
+    "message": "Slettede mappen $title$",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Bookmarks"
+      }
+    },
+    "description": "Toast shown after a bookmark folder (with its whole subtree) was deleted; the toast offers an undo button. $title$ is the folder name."
+  },
+  "optionRecentCount": {
+    "message": "Antal nyligt tilføjede bogmærker, der skal vises"
+  },
+  "optionSearchHistory": {
+    "message": "Registrer søgehistorik"
+  },
+  "optionSearchHistoryHint": {
+    "message": "Deaktivering af denne fjerner også den eksisterende historik."
+  },
+  "recentEmpty": {
+    "message": "Ingen nylige bogmærker. Tryk Ctrl+D for at bogmærke den aktuelle side."
+  },
+  "recentRevealInTree": {
+    "message": "Vis i træ"
+  },
+  "searchHistoryClear": {
+    "message": "Ryd alt"
+  },
+  "searchHistoryRemove": {
+    "message": "Fjern denne søgning"
+  },
+  "searchHistoryResultCount": {
+    "message": "$n$ resultat(er)",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "searchHistoryTitle": {
+    "message": "Seneste søgninger"
+  },
+  "timeDaysAgo": {
+    "message": "$n$ dage siden",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "timeHoursAgo": {
+    "message": "$n$ time siden",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "timeJustNow": {
+    "message": "lige nu"
+  },
+  "timeMinutesAgo": {
+    "message": "$n$ min. siden",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "timeYesterday": {
+    "message": "i går"
+  },
+  "undoAction": {
+    "message": "Fortryd"
+  },
+  "revealOutsideBarHint": {
+    "message": "Kun bogmærkelinjen vises: målet ligger uden for den."
+  },
+  "revealOutsideBarAction": {
+    "message": "Vis alle og fremhæv"
+  },
+  "dupesCleanAll": {
+    "message": "Ryd alle: $groups$ grupper, $count$ ekstra kopier",
+    "placeholders": {
+      "groups": {
+        "content": "$1"
+      },
+      "count": {
+        "content": "$2"
+      }
+    },
+    "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go."
+  },
+  "dupesConfirmAll": {
+    "message": "Fjern $count$ ekstra kopier fordelt på $groups$ grupper? Den valgte i hver gruppe beholdes.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    },
+    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
+  },
+  "dupesConfirmSelected": {
+    "message": "Fjern $count$ dubletbogmærker fra de $groups$ valgte grupper?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    }
+  },
+  "dupesConfirmGroup": {
+    "message": "Behold \"$title$\" og fjern de andre $count$ kopier?",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Example bookmark"
+      },
+      "count": {
+        "content": "$2"
+      }
+    },
+    "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."
+  },
+  "dupesDone": {
+    "message": "Fjernede $count$ dubletbogmærker",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Alert shown after the duplicate cleanup finished."
+  },
+  "dupesGroupCount": {
+    "message": "$count$ dubletter",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
+  },
+  "dupesGroupExpand": {
+    "description": "Dupes view group-head context menu: expand a collapsed duplicate group.",
+    "message": "Udvid gruppe"
+  },
+  "dupesGroupCollapse": {
+    "description": "Dupes view group-head context menu: collapse an expanded duplicate group.",
+    "message": "Skjul gruppe"
+  },
+  "dupesNone": {
+    "message": "Ingen dubletter fundet"
+  },
+  "deleteEllipsis": {
+    "message": "Slet..."
+  },
+  "donationMessage": {
+    "message": "Nyder du det? Donér for at sikre fremtiden — eller bedøm det i butikken: hver anmeldelse holder opdateringerne i gang."
+  },
+  "donationV4Notice": {
+    "message": "vBookmarks 4.0 er en komplet nyfortolkning med et moderne design og fuld af nye funktioner."
+  },
+  "donationV4GuideLink": {
+    "message": "Læs v4-guiden →"
+  },
+  "donationGo": {
+    "message": "Donér"
+  },
+  "donationRate": {
+    "message": "Bedøm"
+  },
+  "donationRateTitle": {
+    "message": "Bedøm vBookmarks i Chrome Webshop"
+  },
+  "donationLater": {
+    "message": "Senere"
+  },
+  "donationNever": {
+    "message": "Vis ikke igen"
+  },
+  "donationDismiss": {
+    "message": "Afvis"
+  },
+  "edit": {
+    "message": "Rediger..."
+  },
+  "editBookmark": {
+    "message": "Rediger bogmærke"
+  },
+  "editFolder": {
+    "message": "Rediger mappe"
+  },
+  "errorOccured": {
+    "message": "Ups, der opstod en fejl."
+  },
+  "extDesc": {
+    "description": "The extension description.",
+    "message": "En popup bogmærkehåndtering. Forbedret Neat Bookmarks. Pænere end Neater Bookmarks."
+  },
+  "extName": {
+    "description": "vBookmarks",
+    "message": "vBookmarks"
+  },
+  "folderEmpty": {
+    "message": "(Tom)"
+  },
+  "general": {
+    "message": "Generelt"
+  },
+  "ignore": {
+    "message": "Ignorer"
+  },
+  "name": {
+    "description": "Name of bookmark or folder.",
+    "message": "Navn"
+  },
+  "nope": {
+    "message": "Annuller"
+  },
+  "noTitle": {
+    "description": "The title for untitled bookmarks with no http(s) URL or untitled folders.",
+    "message": "(ingen titel)"
+  },
+  "open": {
+    "description": "Action to open bookmarks.",
+    "message": "Åbn"
+  },
+  "openBookmarks": {
+    "message": "Åbn Alle Bogmærker"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "Åbn alle i inkognitovindue"
+  },
+  "openBookmarksInGroup": {
+    "message": "Åbn alle i ny fanegruppe"
+  },
+  "openBookmarksInGroupSetup": {
+    "message": "Åbn alle i ny fanegruppe…"
+  },
+  "openBookmarksInExistingGroup": {
+    "message": "Åbn alle i eksisterende fanegruppe…"
+  },
+  "tabGroupOptions": {
+    "message": "Fangrupper"
+  },
+  "sortMenuOptions": {
+    "message": "Sorter"
+  },
+  "openBookmarksNewWindow": {
+    "message": "Åbn Alle Bogmærker i Nyt Vindue"
+  },
+  "openCommandPaletteCommand": {
+    "message": "Åbn kommandopalet"
+  },
+  "openIncognitoWindow": {
+    "message": "Åbn i Inkognitovindue"
+  },
+  "openNewTab": {
+    "message": "Åbn i Ny Fane"
+  },
+  "bookmarkOpenInNewGroup": {
+    "message": "Åbn i ny fanegruppe"
+  },
+  "bookmarkOpenInNewGroupSetup": {
+    "message": "Åbn i ny fanegruppe…"
+  },
+  "bookmarkOpenInExistingGroup": {
+    "message": "Åbn i eksisterende fanegruppe…"
+  },
+  "openNewWindow": {
+    "message": "Åbn i Nyt Vindue"
+  },
+  "openSidePanelCommand": {
+    "message": "Åbn vBookmarks sidepanel"
+  },
+  "optionAnnounceEnabled": {
+    "message": "Vis meddelelser i produktet"
+  },
+  "optionAnnounceEnabledHint": {
+    "message": "Udgivelsesnoter og tips fra projektets GitHub-lager (hentes højst hver 6. time). Slået fra stopper også netværkshentningen."
+  },
+  "optionClickNewTab": {
+    "message": "Venstreklik åbner bogmærke i ny fane."
+  },
+  "optionCloseUnusedFolders": {
+    "message": "Luk ubrugte mapper, når en mappe åbnes."
+  },
+  "optionConfirmOpenFolder": {
+    "message": "Vis bekræftelse, når der åbnes mange bogmærker fra en mappe."
+  },
+  "optionConfirmDeleteFolder": {
+    "message": "Bekræft før sletning af ikke-tomme mapper"
+  },
+  "optionOnlyShowBookmarkBar": {
+    "message": "Vis kun bogmærker i Bogmærkelinjen"
+  },
+  "optionSearchAfterEnter": {
+    "message": "Søg bogmærker kun når ENTER trykkes (i stedet for øjeblikkelig søgning)"
+  },
+  "optionOpenNewTab": {
+    "message": "Midterklik eller control-klik åbner bogmærke i ny baggrundsfane (i stedet for forgrundsfane)."
+  },
+  "optionOpenInSidePanel": {
+    "message": "Åbn i sidepanel i stedet for popup"
+  },
+  "optionPopupStays": {
+    "message": "Popup forbliver åben, når der åbnes (venstreklikkes) bogmærker."
+  },
+  "optionRememberPrevState": {
+    "message": "Husk tidligere tilstand (rulposition, åbnede mapper og det sidste fokuserede element)."
+  },
+  "options": {
+    "message": "Indstillinger"
+  },
+  "optionsFooterText": {
+    "description": "Footer text for the Options page",
+    "message": "Bygget af $authorName$.",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionZoom": {
+    "message": "Zoom"
+  },
+  "optionTheme": {
+    "message": "Tema"
+  },
+  "optionThemeAuto": {
+    "message": "Følg system"
+  },
+  "optionThemeLight": {
+    "message": "Lys"
+  },
+  "optionThemeDark": {
+    "message": "Mørk"
+  },
+  "optionThemeInk": {
+    "message": "Blæk (mørk)"
+  },
+  "optionThemePaper": {
+    "message": "Papir (lys)"
+  },
+  "optionLanguage": {
+    "message": "Sprog"
+  },
+  "optionLanguageAuto": {
+    "message": "Auto"
+  },
+  "optionLanguageHint": {
+    "message": "Ændring af sproget genindlæser denne side."
+  },
+  "paletteClose": {
+    "message": "Luk"
+  },
+  "paletteCmdVersion": {
+    "message": "Versionsinfo"
+  },
+  "paletteCmdLang": {
+    "message": "Skift sprog…"
+  },
+  "paletteCmdLangUsage": {
+    "message": "Brug: /lang efterfulgt af en sprogkode — f.eks. /lang en, /lang zh_CN, /lang ja."
+  },
+  "versionDialogTitle": {
+    "message": "vBookmarks $version$",
+    "placeholders": {
+      "version": {
+        "content": "$1"
+      }
+    }
+  },
+  "versionDialogCopy": {
+    "message": "Kopiér info"
+  },
+  "versionDialogCopied": {
+    "message": "Kopieret"
+  },
+  "versionMetaVersion": {
+    "message": "Udvidelsesversion"
+  },
+  "versionMetaAnnounce": {
+    "message": "Hvad er nyt"
+  },
+  "versionMetaAnnounceNone": {
+    "message": "Ingen meddelelse indlæst"
+  },
+  "versionMetaBrowser": {
+    "message": "Browser"
+  },
+  "versionMetaOS": {
+    "message": "OS"
+  },
+  "versionMetaChannel": {
+    "message": "Kanal"
+  },
+  "versionMetaLanguage": {
+    "message": "Sprog"
+  },
+  "versionMetaUserAgent": {
+    "message": "Brugeragent"
+  },
+  "paletteCmdDead": {
+    "message": "Find døde links"
+  },
+  "paletteCmdDupes": {
+    "message": "Rens dubletbogmærker"
+  },
+  "paletteCmdNewBookmark": {
+    "message": "Nyt bogmærke…"
+  },
+  "paletteCmdNewFolder": {
+    "message": "Ny mappe…"
+  },
+  "paletteCmdQuickAdd": {
+    "message": "Bogmærk denne fane"
+  },
+  "paletteCmdSaveSession": {
+    "message": "Gem vinduesfaner som mappe"
+  },
+  "paletteNoResults": {
+    "message": "Ingen matchende resultater"
+  },
+  "palettePlaceholder": {
+    "message": "Søg i bogmærker, mapper, kommandoer…"
+  },
+  "parentFolder": {
+    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
+    "message": "Overordnet mappe: \"$folderName$\"",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarksbar"
+      }
+    }
+  },
+  "removeSeparator": {
+    "message": "Fjern Skillelinje"
+  },
+  "replaceUrl": {
+    "message": "Erstat dette med nuværende URL"
+  },
+  "reportedToDeveloper": {
+    "description": "A message for an error occured in the extension, has been reported to the developer.",
+    "message": "Dette er blevet rapporteret til udvikleren."
+  },
+  "reportError": {
+    "message": "Rapporter Fejl"
+  },
+  "resetButton": {
+    "message": "Nulstil"
+  },
+  "resetSettings": {
+    "message": "Nulstil indstillinger"
+  },
+  "resetSettingsDescription": {
+    "message": "Nulstil vBookmarks til standardindstillinger."
+  },
+  "save": {
+    "message": "Gem"
+  },
+  "searchBookmarks": {
+    "description": "Placeholder text for search field.",
+    "message": "Søg Bogmærker"
+  },
+  "searchClear": {
+    "message": "Ryd søgning"
+  },
+  "searchNoResults": {
+    "message": "Ingen matchende bogmærker"
+  },
+  "searchViewHint": {
+    "message": "Skriv i feltet ovenfor for at søge i dine bogmærker"
+  },
+  "selectAll": {
+    "message": "Alle"
+  },
+  "selectClear": {
+    "message": "Ryd"
+  },
+  "selectCount": {
+    "message": "$count$ valgt",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "selectInvert": {
+    "message": "Inverter"
+  },
+  "selectModeEnter": {
+    "message": "Vælg"
+  },
+  "selectModeExit": {
+    "message": "Afslut valg"
+  },
+  "deadRiskBanner": {
+    "message": "Oprydning af døde links sletter bogmærker i store mængder. Sikkerhedskopiér dine bogmærker, før du kører den første oprydning."
+  },
+  "dupesRiskBanner": {
+    "message": "Deduplikering sletter duplikerede bogmærker i store mængder. Sikkerhedskopiér dine bogmærker, før du anvender den."
+  },
+  "riskBannerHelp": {
+    "message": "Vejledning til sikkerhedskopi og gendannelse"
+  },
+  "riskBannerNever": {
+    "message": "Vis ikke igen"
+  },
+  "riskBannerDismiss": {
+    "message": "Luk"
+  },
+  "sessionEmpty": {
+    "message": "Ingen faner at gemme"
+  },
+  "sessionFolderName": {
+    "message": "Session $date$",
+    "placeholders": {
+      "date": {
+        "content": "$1",
+        "example": "2026-07-18 15:04"
+      }
+    },
+    "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm."
+  },
+  "sessionSaved": {
+    "message": "Gemte $count$ faner i en ny mappe",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "12"
+      }
+    },
+    "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
+  },
+  "url": {
+    "message": "URL"
+  },
+  "syncOptions": {
+    "message": "Synkroniseringsindstillinger"
+  },
+  "optionShowSyncStatus": {
+    "message": "Vis synkroniseringsstatusindikatorer"
+  },
+  "optionHighlightUnsynced": {
+    "message": "Dæmp usynkroniserede bogmærker"
+  },
+  "optionAutoRefreshSync": {
+    "message": "Opdater synkroniseringsstatus automatisk"
+  },
+  "optionSyncRefreshInterval": {
+    "message": "Opdateringsinterval"
+  },
+  "optionSyncRefreshIntervalSeconds": {
+    "message": "sekunder"
+  },
+  "syncStatusSynced": {
+    "message": "Synkroniseret til din Google-konto"
+  },
+  "syncStatusLocal": {
+    "message": "Kun lokalt — ikke uploadet"
+  },
+  "syncStatusUnsyncable": {
+    "message": "Kan ikke synkroniseres"
+  },
+  "syncSuffixSynced": {
+    "message": "(Synkroniseret)"
+  },
+  "syncSuffixLocal": {
+    "message": "(Lokal)"
+  },
+  "optionAutoResizePopup": {
+    "message": "Tilpas automatisk popup-vinduets størrelse til indholdet"
+  },
+  "crossStorageMoveWarning": {
+    "message": "Bogmærker kan ikke flyttes mellem synkroniseret og lokal lagring. Brug kopier/indsæt i stedet.",
+    "description": "Warning when trying to move bookmarks across storage types"
+  },
+  "recentBookmarks": {
+    "message": "Senest tilføjet"
+  },
+  "optionShowRecentBookmarks": {
+    "message": "Vis senest tilføjede bogmærker øverst i popuppen"
+  },
+  "optionShowStatsView": {
+    "message": "Vis fanen til statistik"
+  },
+  "optionShowDeadView": {
+    "message": "Vis fanen til døde links"
+  },
+  "optionShowDupesView": {
+    "message": "Vis fanen til dubletter"
+  },
+  "optionRecentCollapsed": {
+    "message": "Fold sektionen for senest tilføjede sammen som standard"
+  },
+  "optionsGroupViews": {
+    "message": "Visninger"
+  },
+  "optionsGroupSort": {
+    "message": "Sortering"
+  },
+  "optionsGroupStats": {
+    "message": "Statistik"
+  },
+  "optionsGroupTools": {
+    "message": "Værktøjer"
+  },
+  "optionShowViewTabs": {
+    "message": "Vis faner under søgefeltet"
+  },
+  "optionRememberView": {
+    "message": "Husk den senest aktive visning og åbn den igen"
+  },
+  "optionShowTabBadges": {
+    "message": "Vis antalsmærker på visningsfanerne"
+  },
+  "optionPaletteEnabled": {
+    "message": "Aktivér kommandopaletten (Ctrl/Cmd+K)"
+  },
+  "optionQuickAddEnabled": {
+    "message": "Vis stjerneknappen til hurtigtilføjelse ved søgefeltet"
+  },
+  "optionQuickAddContextMenu": {
+    "message": "Tilføj et \"Bogmærk denne side med vBookmarks\"-punkt til sidens højreklikmenu"
+  },
+  "optionQuickAddContextMenuHint": {
+    "message": "Uafhængig af stjerneknappen til hurtig tilføjelse; gendannelse af den klassiske oplevelse slår også denne indstilling fra."
+  },
+  "optionCollapseTabGroupMenu": {
+    "message": "Skjul fangruppe-punkterne i én \"Fangrupper…\"-undermenu"
+  },
+  "optionCollapseTabGroupMenuHint": {
+    "message": "Gælder for både mappens og bogmærkets højreklikmenu. Som standard fra; holder korte menuer kortere på små/højt zoomede skærme."
+  },
+  "optionCollapseSortMenu": {
+    "message": "Skjul sorteringspunkterne i én \"Sorter…\"-undermenu"
+  },
+  "optionCollapseSortMenuHint": {
+    "message": "Gælder for mappens højreklikmenu. Som standard til."
+  },
+  "optionShowToolButton": {
+    "message": "Vis værktøjsknappen (⋮) ved siden af søgefeltet"
+  },
+  "optionClassicExperience": {
+    "message": "Gendan den klassiske header"
+  },
+  "optionClassicExperienceHint": {
+    "message": "Slår kommandopaletten, hurtigtilføj-stjernen, dens højrekliksindgang på siden, værktøjsknappen og visningsfanerne fra. Hver enkelt kan genaktiveres individuelt i sin sektion."
+  },
+  "optionShowItemPath": {
+    "message": "Vis stien til overordnet mappe på listelinjer"
+  },
+  "viewRecent": {
+    "message": "Seneste"
+  },
+  "viewTree": {
+    "message": "Træ"
+  },
+  "viewSearch": {
+    "message": "Søg"
+  },
+  "viewSwitchAnnounce": {
+    "message": "$name$ visning",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "viewStateEnabled": {
+    "message": "Aktiveret"
+  },
+  "viewStateDisabled": {
+    "message": "Deaktiveret"
+  },
+  "viewEnable": {
+    "message": "Aktiver"
+  },
+  "viewDisable": {
+    "message": "Deaktiver"
+  },
+  "viewTabHide": {
+    "message": "Skjul"
+  },
+  "viewTabDisable": {
+    "message": "Deaktiver"
+  },
+  "sortFolderContents": {
+    "message": "Sortér mappeindhold"
+  },
+  "sortByName": {
+    "message": "Sorter efter navn"
+  },
+  "sortByDate": {
+    "message": "Sorter efter tilføjelsesdato"
+  },
+  "sortRecursiveSuffix": {
+    "message": "(rekursiv)"
+  },
+  "sortOptions": {
+    "message": "Sorteringsmuligheder…"
+  },
+  "sortDone": {
+    "message": "Mappen er sorteret"
+  },
+  "sortByTitle": {
+    "message": "Efter titel"
+  },
+  "sortByDateAdded": {
+    "message": "Efter tilføjelsesdato (nyeste først)"
+  },
+  "sortFoldersFirst": {
+    "message": "Hold mapper øverst"
+  },
+  "sortRecursive": {
+    "message": "Sortér også undermapper (rekursivt)"
+  },
+  "sortRecursiveWarning": {
+    "message": "Dette omarrangerer bogmærker i hver undermappe."
+  },
+  "tabGroupDialogTitle": {
+    "message": "Ny fanegruppe"
+  },
+  "tabGroupTitleLabel": {
+    "message": "Gruppetitel"
+  },
+  "tabGroupColorLabel": {
+    "message": "Farve"
+  },
+  "tabGroupColorGrey": {
+    "message": "Grå",
+    "description": "Accessible name of the grey color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorBlue": {
+    "message": "Blå",
+    "description": "Accessible name of the blue color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorRed": {
+    "message": "Rød",
+    "description": "Accessible name of the red color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorYellow": {
+    "message": "Gul",
+    "description": "Accessible name of the yellow color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorGreen": {
+    "message": "Grøn",
+    "description": "Accessible name of the green color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPink": {
+    "message": "Lyserød",
+    "description": "Accessible name of the pink color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPurple": {
+    "message": "Lilla",
+    "description": "Accessible name of the purple color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorCyan": {
+    "message": "Cyan",
+    "description": "Accessible name of the cyan color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorOrange": {
+    "message": "Orange",
+    "description": "Accessible name of the orange color swatch in the new-tab-group dialog."
+  },
+  "tabGroupUntitled": {
+    "message": "Unavngiven gruppe"
+  },
+  "tabGroupNoGroups": {
+    "message": "Ingen eksisterende fanegrupper"
+  },
+  "tabGroupPickDialogTitle": {
+    "message": "Åbn i eksisterende fanegruppe"
+  },
+  "quickAddBookmark": {
+    "message": "Bogmærk denne side (Ctrl+D)"
+  },
+  "quickAddBookmarkCommand": {
+    "message": "Hurtigtilføj den aktuelle fane som bogmærke"
+  },
+  "quickAdded": {
+    "message": "Bogmærke tilføjet"
+  },
+  "quickAddedTo": {
+    "message": "Bogmærke tilføjet til $folderName$",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarks bar"
+      }
+    }
+  },
+  "quickRemoved": {
+    "message": "Bogmærke fjernet"
+  },
+  "quickRemoveBookmark": {
+    "message": "Fjern dette bogmærke (Ctrl+D)"
+  },
+  "toolButtonTitle": {
+    "message": "Værktøjer (Ctrl+K)"
+  },
+  "contextMenuAddBookmark": {
+    "message": "Bogmærk denne side med vBookmarks"
   },
   "deadFilterAll": {
     "message": "Alle"
@@ -315,14 +1147,653 @@
   "deadMarkedBannerDismiss": {
     "message": "Luk"
   },
-  "deadNone": {
-    "message": "Ingen døde links fundet"
+  "deadProxyAdd": {
+    "message": "Tilføj en proxyserver til død-link-tjek"
   },
-  "deadNoneFiltered": {
-    "message": "Ingen døde links under dette filter — prøv et andet segment ovenfor"
+  "deadProxyLabel": {
+    "message": "Proxy: $server$",
+    "placeholders": {
+      "server": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadProxyChange": {
+    "message": "Skift"
+  },
+  "deadProxyRemove": {
+    "message": "Fjern"
+  },
+  "deadProxyRemoved": {
+    "message": "Proxyserver fjernet"
+  },
+  "deadProxyPanelHint": {
+    "message": "Indtast en proxyserver, du allerede har (udvidelsen leverer ingen), f.eks. 127.0.0.1:7890 eller socks5://127.0.0.1:1080."
+  },
+  "deadProxyTestUrlLabel": {
+    "message": "Test-URL"
+  },
+  "deadProxyTestSave": {
+    "message": "Test og gem"
+  },
+  "deadProxyTesting": {
+    "message": "Tester…"
+  },
+  "deadProxySaved": {
+    "message": "Proxy gemt – fremtidige scanninger genkontrollerer direkte fejl via den."
+  },
+  "deadProxyInvalid": {
+    "message": "Ugyldig proxyadresse – brug host:port eller scheme://host:port (http/https/socks5, uden loginoplysninger)"
+  },
+  "deadProxyUnreachable": {
+    "message": "Proxy utilgængelig – ikke gemt"
+  },
+  "deadProxyDenied": {
+    "message": "Proxy-tilladelsen blev ikke givet"
+  },
+  "deadProxyControlled": {
+    "message": "Proxyindstillingerne styres af en anden udvidelse"
+  },
+  "deadProxyUnavailable": {
+    "message": "Proxy-API'et er ikke tilgængeligt i denne browser"
+  },
+  "deadProxyNudge": {
+    "message": "En proxy-genkontrol adskiller rigtige døde links fra regionblokerede — konfigurer det her eller på indstillingssiden."
+  },
+  "deadProxyNeverShow": {
+    "message": "Vis ikke igen"
+  },
+  "deadStartHint": {
+    "message": "Start scanning af $n$ bogmærker",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadStatusBlocked": {
+    "message": "blokeret"
+  },
+  "deadUnmark": {
+    "message": "Fjern død-markering"
+  },
+  "deadUnmarkAll": {
+    "message": "Ryd alle markeringer"
+  },
+  "deadUnmarkSelected": {
+    "message": "Afmarkér valgte"
+  },
+  "dupesApplyAll": {
+    "message": "Anvend alle ($count$)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesApplySelected": {
+    "message": "Fjern dubletter blandt valgte ($count$)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesCleanRestHint": {
+    "message": "Behold \"$title$\" og fjern de andre $count$",
+    "placeholders": {
+      "title": {
+        "content": "$1"
+      },
+      "count": {
+        "content": "$2"
+      }
+    }
+  },
+  "dupesIgnoreScheme": {
+    "message": "Ignorer http/https-forskelle"
+  },
+  "dupesKeepThis": {
+    "message": "Behold denne"
+  },
+  "dupesKeeperSet": {
+    "message": "Sæt som keeper"
+  },
+  "dupesPreviewSummary": {
+    "message": "$groups$ grupper · $count$ skal frigøres",
+    "placeholders": {
+      "groups": {
+        "content": "$1"
+      },
+      "count": {
+        "content": "$2"
+      }
+    }
+  },
+  "dupesRemoveRow": {
+    "message": "Slet denne kopi"
+  },
+  "dupesScopeAll": {
+    "message": "Alle bogmærker"
+  },
+  "dupesScopeBar": {
+    "message": "Kun bogmærkelinje"
+  },
+  "dupesStrategyBookmarkBar": {
+    "message": "Behold den i bogmærkelinjen"
+  },
+  "dupesStrategyMostVisited": {
+    "message": "Behold den mest besøgte"
+  },
+  "dupesStrategyNewest": {
+    "message": "Behold nyeste"
+  },
+  "dupesStrategyOldest": {
+    "message": "Behold ældste"
+  },
+  "dupesStrategyShallowest": {
+    "message": "Behold den overfladiskeste"
+  },
+  "dupesStrategyShortestTitle": {
+    "message": "Behold den korteste titel"
+  },
+  "optionDeadProxyServer": {
+    "message": "Proxyserver til døde links"
+  },
+  "deadProxyServerHint": {
+    "message": "Den gemte server genkontrollerer bogmærker, der fejler direkte kontrol, i hver død-link-scanning og adskiller rigtige døde links fra regionsblokerede. Test og gem afprøver den (kun en tilgængelig server bevares); du kan også tilføje den fra visningen af døde links."
+  },
+  "deadProxyClear": {
+    "message": "Ryd"
+  },
+  "deadProxyNone": {
+    "message": "(ikke angivet)"
+  },
+  "optionDeadProxyStrip": {
+    "message": "Vis tip om at tilføje proxy i visningen af døde links"
+  },
+  "optionDeadProxyStripHint": {
+    "message": "Fra skjuler tippet der; proxy-serveren forbliver konfigurerbar her, og en gemt server viser altid sin administrationsrække i visningen."
+  },
+  "optionDeadScanConcurrency": {
+    "message": "Samtidighed for scanning af døde links (1-16)"
+  },
+  "optionDeadScanTimeout": {
+    "message": "Timeout for scanning af døde links i sekunder (2-30)"
+  },
+  "paletteCmdGoDead": {
+    "message": "Gå til visning af døde links"
+  },
+  "paletteCmdGoDupes": {
+    "message": "Gå til visning af dubletter"
+  },
+  "paletteCmdGoRecent": {
+    "message": "Gå til seneste visning"
+  },
+  "paletteCmdGoSearch": {
+    "message": "Gå til søgevisning"
+  },
+  "paletteCmdGoTree": {
+    "message": "Gå til trævisning"
+  },
+  "paletteCmdOptions": {
+    "message": "Åbn indstillingsside"
+  },
+  "paletteCmdSearchInView": {
+    "message": "Søg efter '$query$' i søgevisning",
+    "placeholders": {
+      "query": {
+        "content": "$1"
+      }
+    }
+  },
+  "rowActionDelete": {
+    "message": "Slet"
+  },
+  "rowActionMark": {
+    "message": "Marker som død"
+  },
+  "rowActionReveal": {
+    "message": "Vis i træ"
+  },
+  "rowActionUnmark": {
+    "message": "Fjern død-markering"
+  },
+  "viewDead": {
+    "message": "Døde links"
+  },
+  "viewDupes": {
+    "message": "Dubletter"
+  },
+  "viewStats": {
+    "message": "Statistik"
+  },
+  "paletteCmdGoStats": {
+    "message": "Gå til statistikvisning"
+  },
+  "optionStatsEnabled": {
+    "message": "Aktivér besøgsstatistik"
+  },
+  "optionFaviconContrast": {
+    "message": "Invertér lavkontrast-favicons"
+  },
+  "optionFaviconContrastHint": {
+    "message": "Hvide ikoner på lyse temaer og sorte ikoner på mørke temaer inverteres, så de forbliver synlige. Hvert ikon prøves én gang, når det indlæses — ingen ekstra omkostning under browsing."
+  },
+  "optionFaviconEnrich": {
+    "message": "Hent manglende webstedsikoner"
+  },
+  "optionFaviconEnrichHint": {
+    "message": "For bogmærkede websteder, som Chrome ikke har et cachelagret ikon for, hentes det faktiske ikon direkte fra webstedet (/favicon.ico, derefter sidens erklærede ikoner). Forespørgsler går kun til websteder, du har bogmærket."
+  },
+  "optionFaviconEnrichAgg": {
+    "message": "Tredjepartsikon-fallback"
+  },
+  "optionFaviconEnrichAggHint": {
+    "message": "Når direkte hentning fejler, slås ikonet op efter domæne fra en indbygget liste over tredjeparts ikontjenester ($providers$). En tjeneste, der er utilgængelig, springes over, og den næste prøves — den forsøges ikke igen i 6 timer.",
+    "placeholders": {
+      "providers": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionFaviconBackup": {
+    "message": "Medtag ikoncache i sikkerhedskopier"
+  },
+  "optionFaviconBackupHint": {
+    "message": "Pak også den berigede favicon-cache (data pr. site, potentielt stor) med i eksport/import af indstillinger. Dette dækker ikoner, der allerede er cachet, selv mens hentning er slået fra. Fra holder sikkerhedskopier små; ikoner hentes automatisk igen alligevel."
+  },
+  "optionFaviconCacheClear": {
+    "message": "Ryd ikoncache"
+  },
+  "optionFaviconCacheClearConfirm": {
+    "message": "Ryd den berigede ikon-cache? Ikoner hentes automatisk igen ved næste åbning."
+  },
+  "optionFaviconCacheEmpty": {
+    "message": "Ingen ikon-cache at rydde."
+  },
+  "optionFaviconCacheCleared": {
+    "message": "Ikoncachen er ryddet. Ikonerne hentes igen ved næste åbning."
+  },
+  "favGalleryLink": {
+    "message": "Vis opdaterede ikoner",
+    "description": "Options link (Icons group, right of the Clear icon cache button): opens the favicon gallery page listing the sites whose icons were refetched."
+  },
+  "favGalleryTitle": {
+    "message": "Opdaterede webstedsikoner",
+    "description": "Favicon gallery page title (h1 + document title)."
+  },
+  "favGalleryHint": {
+    "message": "Ikoner, som vBookmarks hentede for bogmærkede websteder, som Chrome ikke havde i cachen – hvor hvert enkelt ikon kom fra, og hvilke bogmærker der bruger det. Kun til visning.",
+    "description": "Subtitle under the favicon gallery title, explaining the page is read-only."
+  },
+  "favGallerySearch": {
+    "message": "Filtrer efter websted, titel eller sti",
+    "description": "Placeholder of the favicon gallery filter input."
+  },
+  "favGalleryAll": {
+    "message": "Alle",
+    "description": "Favicon gallery source filter chip: show every source."
+  },
+  "favSrcDirect": {
+    "message": "Direkte",
+    "description": "Favicon gallery source badge: the icon was fetched directly from the site itself."
+  },
+  "favSrcProxy": {
+    "message": "Proxy",
+    "description": "Favicon gallery source badge: the icon was fetched through the user's own proxy relay."
+  },
+  "favSrcLegacy": {
+    "message": "Tidligere cache",
+    "description": "Favicon gallery source badge: cached before the source was recorded, so the origin is unknown."
+  },
+  "favGalleryCompare": {
+    "message": "Sammenlign med pladsholder",
+    "description": "Favicon gallery toggle button: switch every icon to the generic placeholder it replaced (before/after comparison)."
+  },
+  "favGalleryShowingBefore": {
+    "message": "Tilbage til rigtige ikoner",
+    "description": "Favicon gallery toggle button while the placeholder comparison is shown: switch back to the real fetched icons."
+  },
+  "favGalleryStatSites": {
+    "message": "$n$ websteder",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    },
+    "description": "Favicon gallery stats strip: how many sites have a refreshed icon."
+  },
+  "favGalleryStatBookmarks": {
+    "message": "$n$ bogmærker",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    },
+    "description": "Favicon gallery stats strip: how many bookmarks sit on the refreshed sites."
+  },
+  "favGalleryVisits": {
+    "message": "$n$ registrerede åbninger",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    },
+    "description": "Favicon gallery tooltip on a bookmark row's visit-count pill."
+  },
+  "favGalleryFailedTitle": {
+    "message": "For nylig forsøgt, intet ikon fundet",
+    "description": "Favicon gallery heading of the muted section listing hosts whose icon fetch failed recently."
+  },
+  "favGalleryFailedHint": {
+    "message": "Mislykkede forsøg gentages efter 24 timer, 3 dage og 7 dage, hvorefter de opgives, indtil ikon-cachen ryddes.",
+    "description": "Favicon gallery hint under the failed-fetch section title."
+  },
+  "favGalleryGaveUp": {
+    "message": "Opgivet",
+    "description": "Favicon gallery badge on a failed-strip host whose retries are exhausted (it stays untouched until the icon cache is cleared)."
+  },
+  "favGalleryOrphan": {
+    "message": "Intet bogmærke er tilbage på denne vært – ikonet fjernes med cachen.",
+    "description": "Favicon gallery note on a card whose host no longer has any bookmark."
+  },
+  "favGalleryEmptyTitle": {
+    "message": "Ingen opdaterede ikoner endnu",
+    "description": "Favicon gallery empty-state heading."
+  },
+  "favGalleryEmptyText": {
+    "message": "Når popup-vinduet støder på et bogmærket websted, som Chrome ikke har noget ikon for, henter vBookmarks det rigtige ikon og viser det her.",
+    "description": "Favicon gallery empty-state body text."
+  },
+  "storageUsageIcon": {
+    "message": "Ikon-cache"
+  },
+  "storageUsageOther": {
+    "message": "Andet"
+  },
+  "storageUsageSummary": {
+    "message": "Brugt $1$ af $2$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      },
+      "2": {
+        "content": "$2"
+      }
+    }
+  },
+  "storageUsageFree": {
+    "message": "Ledig"
+  },
+  "storageUsageHint": {
+    "message": "Kun lokal udvidelseslagring (chrome.storage.local, cirka 10 MB-kvote): ikon-cachen plus indstillinger og andre lokale data. Synkroniserede indstillinger, sessiondata og selve bogmærke-biblioteket tælles ikke med her."
+  },
+  "optionsDonate": {
+    "message": "Donér"
+  },
+  "optionsGithubLink": {
+    "message": "GitHub"
+  },
+  "optionsHomepageLink": {
+    "message": "Hjemmeside"
+  },
+  "optionsSince": {
+    "message": "Forket fra Neat Bookmarks, vedligeholdt i $days$ dage.",
+    "placeholders": {
+      "days": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionsVersion": {
+    "message": "vBookmarks version"
+  },
+  "statsSortByCount": {
+    "message": "Efter antal"
+  },
+  "statsSortByRecent": {
+    "message": "Efter seneste"
+  },
+  "statsShowUnbookmarked": {
+    "message": "Vis umarkerede"
+  },
+  "statsShowUnbookmarkedHint": {
+    "message": "Medtag sider fra historikken, der ikke er gemt som bogmærker."
+  },
+  "statsEmpty": {
+    "message": "Statistik opbygges, når du åbner bogmærker"
+  },
+  "statsDisabledHint": {
+    "message": "Besøgsstatistik er slået fra — aktivér det i Indstillinger → Visninger"
+  },
+  "statsVisitCount": {
+    "message": "Besøgt $count$ gange",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "statsClearData": {
+    "message": "Ryd statistik"
+  },
+  "statsClearConfirm": {
+    "message": "Ryd besøgsstatistik for $count$ bogmærker? Dette kan ikke fortrydes.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "statsHistoryBanner": {
+    "message": "Giv historieadgang for at så besøgsstatistik med dine tidligere besøg."
+  },
+  "statsHistoryEnable": {
+    "message": "Aktivér"
+  },
+  "statsHistoryDismiss": {
+    "message": "Vis ikke igen"
+  },
+  "statsHistoryImported": {
+    "message": "Importerede tidligere besøg for $count$ bogmærker",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "paletteCmdToggleViewTabs": {
+    "message": "Skift faner"
+  },
+  "paletteCmdTheme": {
+    "message": "Indstil tema…"
+  },
+  "paletteCmdThemeUsage": {
+    "message": "Brug: /theme efterfulgt af et temanavn – auto, light, dark, ink eller paper (et unikt præfiks virker, f.eks. /theme d)."
+  },
+  "paletteCustomTag": {
+    "message": "tilpasset"
+  },
+  "paletteCustomDeleteConfirm": {
+    "message": "Slet kommandoen \"$1\"? Ændringen synkroniseres til alle dine enheder."
+  },
+  "paletteCustomBroken": {
+    "message": "Mappen for kommandoen \"$1\" findes ikke længere. Slet kommandoen?"
+  },
+  "paletteCmdSaveAsCommand": {
+    "message": "Gem \"$1\" som kommando…"
+  },
+  "paletteActionOpenUrl": {
+    "message": "Åbn URL"
+  },
+  "paletteActionOpenUrlGroup": {
+    "message": "Åbn bogmærkemappegruppe"
+  },
+  "paletteActionViewPreset": {
+    "message": "Åbn visning med præsæt"
+  },
+  "paletteActionUrlTemplate": {
+    "message": "Åbn URL-skabelon"
+  },
+  "optionsGroupPalette": {
+    "message": "Kommandopalet"
+  },
+  "paletteCustomHint": {
+    "message": "Tilpassede skråstregskommandoer til kommandopaletten (Ctrl/Cmd+K). De synkroniseres med dine indstillinger – maks. 100 poster."
+  },
+  "paletteCustomAdd": {
+    "message": "Tilføj kommando…"
+  },
+  "paletteCustomUsage": {
+    "message": "$1 / $2"
+  },
+  "paletteCustomSlash": {
+    "message": "Skråstreg (ordet efter /)"
+  },
+  "paletteCustomAliases": {
+    "message": "Aliaser (adskilt af komma)"
+  },
+  "paletteCustomAction": {
+    "message": "Handling"
+  },
+  "paletteCustomUrl": {
+    "message": "URL"
+  },
+  "paletteCustomTemplate": {
+    "message": "URL-skabelon — %s erstattes af ordene efter kommandoen"
+  },
+  "paletteCustomWhere": {
+    "message": "Åbn i"
+  },
+  "paletteCustomFolder": {
+    "message": "Bogmærkemappe"
+  },
+  "paletteCustomView": {
+    "message": "Visning"
+  },
+  "paletteCustomStrategy": {
+    "message": "Forudindstilling for dedup-strategi"
+  },
+  "paletteCustomScope": {
+    "message": "Forudindstilling for dedup-omfang"
+  },
+  "paletteCustomScan": {
+    "message": "Start scanningen ved indtastning"
+  },
+  "paletteWhereCurrent": {
+    "message": "Aktuel fane"
+  },
+  "paletteWhereTab": {
+    "message": "Ny fane"
+  },
+  "paletteWhereWindow": {
+    "message": "Nyt vindue"
+  },
+  "paletteWhereBackground": {
+    "message": "Baggrundsfaner"
+  },
+  "paletteCustomSave": {
+    "message": "Gem kommando"
+  },
+  "paletteCustomErrSlash": {
+    "message": "Skråstreg: 1–24 tegn bestående af små bogstaver, tal eller bindestreger, der begynder med et bogstav eller tal."
+  },
+  "paletteCustomErrAlias": {
+    "message": "Aliaser: samme regler som skråstregen (1–24 tegn bestående af små bogstaver, tal eller bindestreger)."
+  },
+  "paletteCustomErrTaken": {
+    "message": "Den skråstreg eller det alias er allerede optaget."
+  },
+  "paletteCustomErrUrl": {
+    "message": "Kun http://- eller https://-URL'er er tilladt."
+  },
+  "paletteCustomErrFolder": {
+    "message": "Vælg en bogmærkemappe."
+  },
+  "paletteCustomErrView": {
+    "message": "Vælg en visning."
+  },
+  "paletteCustomErrTemplate": {
+    "message": "Skabelonen skal indeholde præcis én %s."
+  },
+  "paletteCustomErrAction": {
+    "message": "Vælg en handlingstype."
+  },
+  "paletteCustomErrLimit": {
+    "message": "Kommandogrænsen er nået (100) — slet en først."
+  },
+  "paletteCustomEmpty": {
+    "message": "Ingen brugerdefinerede kommandoer endnu."
+  },
+  "recentGroupToday": {
+    "message": "I dag"
+  },
+  "recentGroupWeek": {
+    "message": "Denne uge"
+  },
+  "recentGroupMonth": {
+    "message": "Denne måned"
+  },
+  "recentGroupOlder": {
+    "message": "Ældre"
+  },
+  "searchHistoryRerun": {
+    "message": "Søg igen"
+  },
+  "optionsGroupBackup": {
+    "message": "Sikkerhedskopi"
+  },
+  "optionsGroupContextMenu": {
+    "message": "Kontekstmenuer"
+  },
+  "optionsGroupIcons": {
+    "message": "Ikoner"
+  },
+  "settingsExport": {
+    "message": "Eksporter indstillinger"
+  },
+  "settingsImport": {
+    "message": "Importer indstillinger"
+  },
+  "settingsBackupHint": {
+    "message": "Eksport gemmer alle indstillinger (inkl. synkroniseringspræferencer) til en JSON-fil. Import fusionerer en sikkerhedskopi tilbage: indstillinger i filen overskriver de nuværende, alt andet bevares."
+  },
+  "settingsImportConfirm": {
+    "message": "Import vil overskrive alle indstillinger i sikkerhedskopifilen (indstillinger, der ikke er i filen, bevares) og genindlæse denne side. Fortsæt?"
+  },
+  "settingsImportInvalid": {
+    "message": "Ugyldig indstillingsfil: ikke en sikkerhedskopi af vBookmarks-indstillinger."
+  },
+  "settingsImportDone": {
+    "message": "Indstillinger importeret. Siden genindlæses nu."
+  },
+  "settingsImportError": {
+    "message": "Nogle indstillinger kunne ikke skrives (lagringskvote eller en midlertidig fejl). Importen blev ikke fuldført — prøv venligst igen."
+  },
+  "statsSectionRecent": {
+    "message": "Seneste besøg"
+  },
+  "statsSectionBookmarks": {
+    "message": "Bogmærkestatistik"
+  },
+  "statsHistoryGuide": {
+    "message": "Giv adgang til historik for at liste dine seneste besøg her."
+  },
+  "statsHistoryAdd": {
+    "message": "Tilføj til bogmærker"
+  },
+  "statsHistoryBookmarked": {
+    "message": "Bogmærket"
   },
   "deadPause": {
     "message": "Pause"
+  },
+  "deadResume": {
+    "message": "Genoptag"
+  },
+  "deadCancel": {
+    "message": "Annuller"
   },
   "deadPaused": {
     "message": "Pauseret"
@@ -671,1107 +2142,331 @@
   "optionTabGroupsClosedLimit": {
     "message": "Lukket fane/gruppe-historik, der skal beholdes"
   },
-  "deadProxyAdd": {
-    "message": "Tilføj en proxyserver til død-link-tjek"
+  "folderPickMoveHere": {
+    "message": "Flyt hertil"
   },
-  "deadProxyLabel": {
-    "message": "Proxy: $server$",
+  "folderPickCopyHere": {
+    "message": "Kopiér hertil"
+  },
+  "folderPickFilter": {
+    "message": "Filtrér mapper…"
+  },
+  "folderPickFavNote": {
+    "message": "Ikke-bogmærkede elementer bogmærkes her"
+  },
+  "folderPickPinned": {
+    "message": "Fastgjort"
+  },
+  "folderPickRecent": {
+    "message": "Seneste"
+  },
+  "pinFolder": {
+    "message": "Fastgør denne mappe"
+  },
+  "unpinFolder": {
+    "message": "Frigør denne mappe"
+  },
+  "stagingAdd": {
+    "message": "Tilføj til klaringsområde"
+  },
+  "stagingAdded": {
+    "message": "Tilføjet til klaringsområdet"
+  },
+  "stagingAlready": {
+    "message": "Allerede i klaringsområdet"
+  },
+  "stagingAddedSummary": {
+    "message": "Tilføjet $n$ element(er); $m$ allerede klar",
     "placeholders": {
-      "server": {
+      "n": {
         "content": "$1"
+      },
+      "m": {
+        "content": "$2"
       }
     }
   },
-  "deadProxyChange": {
-    "message": "Skift"
+  "stagingFull": {
+    "message": "Klaringsområdet er fuldt — fjern nogle elementer først"
   },
-  "deadProxyRemove": {
-    "message": "Fjern"
+  "stagingFolderEmpty": {
+    "message": "Denne mappe har ingen bogmærker at klarere"
   },
-  "deadProxyRemoved": {
-    "message": "Proxyserver fjernet"
-  },
-  "deadProxyPanelHint": {
-    "message": "Indtast en proxyserver, du allerede har (udvidelsen leverer ingen), f.eks. 127.0.0.1:7890 eller socks5://127.0.0.1:1080."
-  },
-  "deadProxyTestUrlLabel": {
-    "message": "Test-URL"
-  },
-  "deadProxyTestSave": {
-    "message": "Test og gem"
-  },
-  "deadProxyTesting": {
-    "message": "Tester…"
-  },
-  "deadProxySaved": {
-    "message": "Proxy gemt – fremtidige scanninger genkontrollerer direkte fejl via den."
-  },
-  "deadProxyInvalid": {
-    "message": "Ugyldig proxyadresse – brug host:port eller scheme://host:port (http/https/socks5, uden loginoplysninger)"
-  },
-  "deadProxyUnreachable": {
-    "message": "Proxy utilgængelig – ikke gemt"
-  },
-  "deadProxyDenied": {
-    "message": "Proxy-tilladelsen blev ikke givet"
-  },
-  "deadProxyControlled": {
-    "message": "Proxyindstillingerne styres af en anden udvidelse"
-  },
-  "deadProxyUnavailable": {
-    "message": "Proxy-API'et er ikke tilgængeligt i denne browser"
-  },
-  "deadProxyNudge": {
-    "message": "En proxy-genkontrol adskiller rigtige døde links fra regionblokerede — konfigurer det her eller på indstillingssiden."
-  },
-  "deadRescan": {
-    "message": "Genscan"
-  },
-  "deadResume": {
-    "message": "Genoptag"
-  },
-  "deadStartHint": {
-    "message": "Start scanning af $n$ bogmærker",
+  "stagingConfirmFolder": {
+    "message": "Klarér $n$ bogmærker fra denne mappe?",
     "placeholders": {
       "n": {
         "content": "$1"
       }
     }
   },
-  "deadStatusBlocked": {
-    "message": "blokeret"
+  "stagingRemove": {
+    "message": "Fjern fra klaringsområde"
   },
-  "deadUnmark": {
-    "message": "Fjern død-markering"
+  "stagingRemoved": {
+    "message": "Fjernet fra klaringsområdet"
   },
-  "deadUnmarkAll": {
-    "message": "Ryd alle markeringer"
+  "recentStageAll": {
+    "message": "Klarér alle nyligt tilføjede"
   },
-  "deadUnmarkSelected": {
-    "message": "Afmarkér valgte"
+  "recentSectionTitle": {
+    "message": "Nyligt tilføjet"
   },
-  "defaultIconButton": {
-    "message": "Brug standard"
+  "stagingEmpty": {
+    "message": "Tom — højreklik på et bogmærke, brug ↑-knappen her, eller statistikhistorik-rækker for at sende elementer til klaringsområdet"
   },
-  "defaultIconButtonOr": {
-    "message": "eller"
+  "stagingFromHistory": {
+    "message": "Fra historik"
   },
-  "customIconPick": {
-    "message": "Vælg fil…"
-  },
-  "delete": {
-    "message": "Slet"
-  },
-  "deleteEllipsis": {
-    "message": "Slet..."
-  },
-  "deletedBookmark": {
-    "message": "Slettede $title$",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Example"
-      }
-    },
-    "description": "Toast shown after a bookmark or separator was deleted; the toast offers an undo button. $title$ is the deleted row's title (empty for separators)."
-  },
-  "deletedFolder": {
-    "message": "Slettede mappen $title$",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Bookmarks"
-      }
-    },
-    "description": "Toast shown after a bookmark folder (with its whole subtree) was deleted; the toast offers an undo button. $title$ is the folder name."
-  },
-  "donationDismiss": {
-    "message": "Afvis"
-  },
-  "donationGo": {
-    "message": "Donér"
-  },
-  "donationRate": {
-    "message": "Bedøm"
-  },
-  "donationRateTitle": {
-    "message": "Bedøm vBookmarks i Chrome Webshop"
-  },
-  "donationLater": {
-    "message": "Senere"
-  },
-  "donationMessage": {
-    "message": "Nyder du det? Donér for at sikre fremtiden — eller bedøm det i butikken: hver anmeldelse holder opdateringerne i gang."
-  },
-  "donationV4Notice": {
-    "message": "vBookmarks 4.0 er en komplet nyfortolkning med et moderne design og fuld af nye funktioner."
-  },
-  "donationV4GuideLink": {
-    "message": "Læs v4-guiden →"
-  },
-  "donationNever": {
-    "message": "Vis ikke igen"
-  },
-  "dupesApplyAll": {
-    "message": "Anvend alle ($count$)",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "dupesApplySelected": {
-    "message": "Fjern dubletter blandt valgte ($count$)",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "dupesCleanAll": {
-    "message": "Ryd alle: $groups$ grupper, $count$ ekstra kopier",
-    "placeholders": {
-      "groups": {
-        "content": "$1"
-      },
-      "count": {
-        "content": "$2"
-      }
-    },
-    "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go."
-  },
-  "dupesCleanRestHint": {
-    "message": "Behold \"$title$\" og fjern de andre $count$",
-    "placeholders": {
-      "title": {
-        "content": "$1"
-      },
-      "count": {
-        "content": "$2"
-      }
-    }
-  },
-  "dupesConfirmAll": {
-    "message": "Fjern $count$ ekstra kopier fordelt på $groups$ grupper? Den valgte i hver gruppe beholdes.",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      },
-      "groups": {
-        "content": "$2"
-      }
-    },
-    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
-  },
-  "dupesConfirmSelected": {
-    "message": "Fjern $count$ dubletbogmærker fra de $groups$ valgte grupper?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      },
-      "groups": {
-        "content": "$2"
-      }
-    }
-  },
-  "dupesConfirmGroup": {
-    "message": "Behold \"$title$\" og fjern de andre $count$ kopier?",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Example bookmark"
-      },
-      "count": {
-        "content": "$2"
-      }
-    },
-    "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."
-  },
-  "dupesDone": {
-    "message": "Fjernede $count$ dubletbogmærker",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Alert shown after the duplicate cleanup finished."
-  },
-  "dupesGroupCount": {
-    "message": "$count$ dubletter",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
-  },
-  "dupesGroupExpand": {
-    "description": "Dupes view group-head context menu: expand a collapsed duplicate group.",
+  "stagingGroupExpand": {
     "message": "Udvid gruppe"
   },
-  "dupesGroupCollapse": {
-    "description": "Dupes view group-head context menu: collapse an expanded duplicate group.",
+  "stagingGroupCollapse": {
     "message": "Skjul gruppe"
   },
-  "dupesIgnoreScheme": {
-    "message": "Ignorer http/https-forskelle"
+  "stagingGroupRename": {
+    "message": "Omdøb gruppe…"
   },
-  "dupesKeepThis": {
-    "message": "Behold denne"
+  "stagingGroupDissolve": {
+    "message": "Opløs gruppe"
   },
-  "dupesKeeperSet": {
-    "message": "Sæt som keeper"
+  "stagingGroupDissolved": {
+    "message": "Gruppe opløst — elementer beholdt i klaringsområdet"
   },
-  "dupesNone": {
-    "message": "Ingen dubletter fundet"
+  "stagingGroupAssign": {
+    "message": "Gruppe…"
   },
-  "dupesPreviewSummary": {
-    "message": "$groups$ grupper · $count$ skal frigøres",
+  "stagingGroupAssignTitle": {
+    "message": "Tildel til en gruppe"
+  },
+  "stagingGroupNew": {
+    "message": "Ny gruppe"
+  },
+  "stagingGroupNamePrompt": {
+    "message": "Nyt gruppenavn"
+  },
+  "stagingGroupNoGroups": {
+    "message": "Ingen grupper endnu"
+  },
+  "stagingBucketTitle": {
+    "message": "Ikke-bogmærket"
+  },
+  "stagingBucketFavAll": {
+    "message": "Favorit alle"
+  },
+  "stagingNew": {
+    "message": "ny $n$",
     "placeholders": {
-      "groups": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingRowFav": {
+    "message": "Favorit dette element"
+  },
+  "stagingRowUnfav": {
+    "message": "Fjern favorit fra dette element"
+  },
+  "stagingFav": {
+    "message": "Favorit"
+  },
+  "stagingUnfav": {
+    "message": "Fjern favorit"
+  },
+  "stagingFavDone": {
+    "message": "Favoriseret $n$ element(er)",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingUnfavDone": {
+    "message": "Fjernet favorit fra $n$ element(er)",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "groupSaveToFolder": {
+    "message": "Gem i mappe…"
+  },
+  "groupCopyToFolder": {
+    "message": "Kopiér til mappe…"
+  },
+  "stagingCount": {
+    "message": "$n$ klar",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingMoveCopy": {
+    "message": "Flyt/kopiér til…"
+  },
+  "stagingMoveDone": {
+    "message": "Flyttede $n$ element(er) hjem",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingCopyDone": {
+    "message": "Kopierede $n$ element(er)",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingMoveConfirm": {
+    "message": "Flyt $n$ element(er) til den valgte mappe?",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingDeleteConfirm": {
+    "message": "Slet $n$ element(er)? Ikke-bogmærkede forlader bare klarområdet.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingDeleted": {
+    "message": "Slettede $n$ bogmærke(r)",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingRemovedCount": {
+    "message": "Fjernede $n$ element(er) fra klarområdet",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingClear": {
+    "message": "Ryd klarområde"
+  },
+  "stagingClearConfirm": {
+    "message": "Ryd hele klarområdet? Bogmærketræet røres ikke."
+  },
+  "stagingCleared": {
+    "message": "Klarområde ryddet"
+  },
+  "groupPlaceTooltip": {
+    "message": "Gem denne gruppe i en mappe…"
+  },
+  "copyBookmark": {
+    "message": "Kopiér"
+  },
+  "cutBookmark": {
+    "message": "Klip"
+  },
+  "copyMoveTo": {
+    "message": "Kopiér/flyt til…"
+  },
+  "pasteHere": {
+    "message": "Indsæt her"
+  },
+  "copiedToast": {
+    "message": "Kopieret: $t$",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
+  },
+  "cutToast": {
+    "message": "Klippet: $t$ — indsæt i en målmappe (Esc annullerer)",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
+  },
+  "pasteDone": {
+    "message": "Indsat"
+  },
+  "pasteGone": {
+    "message": "Bogmærket findes ikke længere — udklipsholder ryddet"
+  },
+  "folderCopyList": {
+    "message": "Kopiér titler og adresser"
+  },
+  "folderCopyText": {
+    "message": "Almindelig tekstliste"
+  },
+  "folderCopyMarkdown": {
+    "message": "Markdown"
+  },
+  "folderCopyJson": {
+    "message": "JSON"
+  },
+  "folderCopyConfirm": {
+    "message": "Kopiér listen over $n$ bogmærker?",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "folderCopyDone": {
+    "message": "Kopierede $n$ bogmærkeposter",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "addFolderMenu": {
+    "message": "Tilføj mappe"
+  },
+  "optionCollapseAddFolderMenu": {
+    "message": "Skjul tilføj-mappe-punkterne"
+  },
+  "optionCollapseAddFolderMenuHint": {
+    "message": "Flet de tre tilføj-mappe-punkter (før/efter/inde i) til ét undermenupunkt ved højreklik på mapper."
+  },
+  "tabRowStage": {
+    "message": "Bogmærk og klar"
+  },
+  "tabgroupStageAll": {
+    "message": "Bogmærk og klar hele gruppen"
+  },
+  "tabgroupStageConfirm": {
+    "message": "Bogmærk og klar $n$ faner?",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabgroupStageNone": {
+    "message": "Ingen bogmærkbare faner i denne gruppe"
+  },
+  "stagedToast": {
+    "message": "Klargjorde $n$ fane(r) som gruppen “$t$”",
+    "placeholders": {
+      "n": {
         "content": "$1"
       },
-      "count": {
+      "t": {
         "content": "$2"
       }
     }
   },
-  "dupesRemoveRow": {
-    "message": "Slet denne kopi"
-  },
-  "dupesScopeAll": {
-    "message": "Alle bogmærker"
-  },
-  "dupesScopeBar": {
-    "message": "Kun bogmærkelinje"
-  },
-  "dupesStrategyBookmarkBar": {
-    "message": "Behold den i bogmærkelinjen"
-  },
-  "dupesStrategyMostVisited": {
-    "message": "Behold den mest besøgte"
-  },
-  "dupesStrategyNewest": {
-    "message": "Behold nyeste"
-  },
-  "dupesStrategyOldest": {
-    "message": "Behold ældste"
-  },
-  "dupesStrategyShallowest": {
-    "message": "Behold den overfladiskeste"
-  },
-  "dupesStrategyShortestTitle": {
-    "message": "Behold den korteste titel"
-  },
-  "edit": {
-    "message": "Rediger..."
-  },
-  "editBookmark": {
-    "message": "Rediger bogmærke"
-  },
-  "editFolder": {
-    "message": "Rediger mappe"
-  },
-  "errorOccured": {
-    "message": "Ups, der opstod en fejl."
-  },
-  "extDesc": {
-    "description": "The extension description.",
-    "message": "En popup bogmærkehåndtering. Forbedret Neat Bookmarks. Pænere end Neater Bookmarks."
-  },
-  "extName": {
-    "description": "vBookmarks",
-    "message": "vBookmarks"
-  },
-  "folderEmpty": {
-    "message": "(Tom)"
-  },
-  "general": {
-    "message": "Generelt"
-  },
-  "ignore": {
-    "message": "Ignorer"
-  },
-  "name": {
-    "description": "Name of bookmark or folder.",
-    "message": "Navn"
-  },
-  "noTitle": {
-    "description": "The title for untitled bookmarks with no http(s) URL or untitled folders.",
-    "message": "(ingen titel)"
-  },
-  "nope": {
-    "message": "Annuller"
-  },
-  "open": {
-    "description": "Action to open bookmarks.",
-    "message": "Åbn"
-  },
-  "openBookmarks": {
-    "message": "Åbn Alle Bogmærker"
-  },
-  "openBookmarksInGroup": {
-    "message": "Åbn alle i ny fanegruppe"
-  },
-  "openBookmarksInGroupSetup": {
-    "message": "Åbn alle i ny fanegruppe…"
-  },
-  "openBookmarksInExistingGroup": {
-    "message": "Åbn alle i eksisterende fanegruppe…"
-  },
-  "tabGroupOptions": {
-    "message": "Fangrupper"
-  },
-  "sortMenuOptions": {
-    "message": "Sorter"
-  },
-  "openBookmarksIncognitoWindow": {
-    "message": "Åbn alle i inkognitovindue"
-  },
-  "openBookmarksNewWindow": {
-    "message": "Åbn Alle Bogmærker i Nyt Vindue"
-  },
-  "openCommandPaletteCommand": {
-    "message": "Åbn kommandopalet"
-  },
-  "openIncognitoWindow": {
-    "message": "Åbn i Inkognitovindue"
-  },
-  "openNewTab": {
-    "message": "Åbn i Ny Fane"
-  },
-  "bookmarkOpenInNewGroup": {
-    "message": "Åbn i ny fanegruppe"
-  },
-  "bookmarkOpenInNewGroupSetup": {
-    "message": "Åbn i ny fanegruppe…"
-  },
-  "bookmarkOpenInExistingGroup": {
-    "message": "Åbn i eksisterende fanegruppe…"
-  },
-  "openNewWindow": {
-    "message": "Åbn i Nyt Vindue"
-  },
-  "openSidePanelCommand": {
-    "message": "Åbn vBookmarks sidepanel"
-  },
-  "optionAnnounceEnabledHint": {
-    "message": "Udgivelsesnoter og tips fra projektets GitHub-lager (hentes højst hver 6. time). Slået fra stopper også netværkshentningen."
-  },
-  "optionAnnounceEnabled": {
-    "message": "Vis meddelelser i produktet"
-  },
-  "optionAutoRefreshSync": {
-    "message": "Opdater synkroniseringsstatus automatisk"
-  },
-  "optionAutoResizePopup": {
-    "message": "Tilpas automatisk popup-vinduets størrelse til indholdet"
-  },
-  "optionClickNewTab": {
-    "message": "Venstreklik åbner bogmærke i ny fane."
-  },
-  "optionCloseUnusedFolders": {
-    "message": "Luk ubrugte mapper, når en mappe åbnes."
-  },
-  "optionConfirmDeleteFolder": {
-    "message": "Bekræft før sletning af ikke-tomme mapper"
-  },
-  "optionConfirmOpenFolder": {
-    "message": "Vis bekræftelse, når der åbnes mange bogmærker fra en mappe."
-  },
-  "optionDeadProxyServer": {
-    "message": "Proxyserver til døde links"
-  },
-  "deadProxyServerHint": {
-    "message": "Den gemte server genkontrollerer bogmærker, der fejler direkte kontrol, i hver død-link-scanning og adskiller rigtige døde links fra regionsblokerede. Test og gem afprøver den (kun en tilgængelig server bevares); du kan også tilføje den fra visningen af døde links."
-  },
-  "deadProxyClear": {
-    "message": "Ryd"
-  },
-  "deadProxyNone": {
-    "message": "(ikke angivet)"
-  },
-  "optionDeadScanConcurrency": {
-    "message": "Samtidighed for scanning af døde links (1-16)"
-  },
-  "optionDeadScanTimeout": {
-    "message": "Timeout for scanning af døde links i sekunder (2-30)"
-  },
-  "optionOnlyShowBookmarkBar": {
-    "message": "Vis kun bogmærker i Bogmærkelinjen"
-  },
-  "optionOpenInSidePanel": {
-    "message": "Åbn i sidepanel i stedet for popup"
-  },
-  "optionOpenNewTab": {
-    "message": "Midterklik eller control-klik åbner bogmærke i ny baggrundsfane (i stedet for forgrundsfane)."
-  },
-  "optionPopupStays": {
-    "message": "Popup forbliver åben, når der åbnes (venstreklikkes) bogmærker."
-  },
-  "optionRecentCollapsed": {
-    "message": "Fold sektionen for senest tilføjede sammen som standard"
-  },
-  "optionRecentCount": {
-    "message": "Antal nyligt tilføjede bogmærker, der skal vises"
-  },
-  "optionRememberPrevState": {
-    "message": "Husk tidligere tilstand (rulposition, åbnede mapper og det sidste fokuserede element)."
-  },
-  "optionSearchAfterEnter": {
-    "message": "Søg bogmærker kun når ENTER trykkes (i stedet for øjeblikkelig søgning)"
-  },
-  "optionSearchHistory": {
-    "message": "Registrer søgehistorik"
-  },
-  "optionSearchHistoryHint": {
-    "message": "Deaktivering af denne fjerner også den eksisterende historik."
-  },
-  "optionShowDeadView": {
-    "message": "Vis fanen til døde links"
-  },
-  "optionShowDupesView": {
-    "message": "Vis fanen til dubletter"
-  },
-  "optionShowItemPath": {
-    "message": "Vis stien til overordnet mappe på listelinjer"
-  },
-  "optionShowRecentBookmarks": {
-    "message": "Vis senest tilføjede bogmærker øverst i popuppen"
-  },
-  "optionShowStatsView": {
-    "message": "Vis fanen til statistik"
-  },
-  "optionShowSyncStatus": {
-    "message": "Vis synkroniseringsstatusindikatorer"
-  },
-  "optionHighlightUnsynced": {
-    "message": "Dæmp usynkroniserede bogmærker"
-  },
-  "optionShowViewTabs": {
-    "message": "Vis faner under søgefeltet"
-  },
-  "optionRememberView": {
-    "message": "Husk den senest aktive visning og åbn den igen"
-  },
-  "optionShowTabBadges": {
-    "message": "Vis antalsmærker på visningsfanerne"
-  },
-  "optionPaletteEnabled": {
-    "message": "Aktivér kommandopaletten (Ctrl/Cmd+K)"
-  },
-  "optionQuickAddEnabled": {
-    "message": "Vis stjerneknappen til hurtigtilføjelse ved søgefeltet"
-  },
-  "optionQuickAddContextMenu": {
-    "message": "Tilføj et \"Bogmærk denne side med vBookmarks\"-punkt til sidens højreklikmenu"
-  },
-  "optionQuickAddContextMenuHint": {
-    "message": "Uafhængig af stjerneknappen til hurtig tilføjelse; gendannelse af den klassiske oplevelse slår også denne indstilling fra."
-  },
-  "optionCollapseTabGroupMenu": {
-    "message": "Skjul fangruppe-punkterne i én \"Fangrupper…\"-undermenu"
-  },
-  "optionCollapseTabGroupMenuHint": {
-    "message": "Gælder for både mappens og bogmærkets højreklikmenu. Som standard fra; holder korte menuer kortere på små/højt zoomede skærme."
-  },
-  "optionCollapseSortMenu": {
-    "message": "Skjul sorteringspunkterne i én \"Sorter…\"-undermenu"
-  },
-  "optionCollapseSortMenuHint": {
-    "message": "Gælder for mappens højreklikmenu. Som standard til."
-  },
-  "optionShowToolButton": {
-    "message": "Vis værktøjsknappen (⋮) ved siden af søgefeltet"
-  },
-  "optionClassicExperience": {
-    "message": "Gendan den klassiske header"
-  },
-  "optionClassicExperienceHint": {
-    "message": "Slår kommandopaletten, hurtigtilføj-stjernen, dens højrekliksindgang på siden, værktøjsknappen og visningsfanerne fra. Hver enkelt kan genaktiveres individuelt i sin sektion."
-  },
-  "optionStatsEnabled": {
-    "message": "Aktivér besøgsstatistik"
-  },
-  "optionFaviconContrast": {
-    "message": "Invertér lavkontrast-favicons"
-  },
-  "optionFaviconContrastHint": {
-    "message": "Hvide ikoner på lyse temaer og sorte ikoner på mørke temaer inverteres, så de forbliver synlige. Hvert ikon prøves én gang, når det indlæses — ingen ekstra omkostning under browsing."
-  },
-  "optionFaviconEnrich": {
-    "message": "Hent manglende webstedsikoner"
-  },
-  "optionFaviconEnrichHint": {
-    "message": "For bogmærkede websteder, som Chrome ikke har et cachelagret ikon for, hentes det faktiske ikon direkte fra webstedet (/favicon.ico, derefter sidens erklærede ikoner). Forespørgsler går kun til websteder, du har bogmærket."
-  },
-  "optionFaviconEnrichAgg": {
-    "message": "Tredjepartsikon-fallback"
-  },
-  "optionFaviconEnrichAggHint": {
-    "message": "Når direkte hentning fejler, slås ikonet op efter domæne fra en indbygget liste over tredjeparts ikontjenester ($providers$). En tjeneste, der er utilgængelig, springes over, og den næste prøves — den forsøges ikke igen i 6 timer.",
-    "placeholders": {
-      "providers": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionFaviconBackup": {
-    "message": "Medtag ikoncache i sikkerhedskopier"
-  },
-  "optionFaviconBackupHint": {
-    "message": "Pak også den berigede favicon-cache (data pr. site, potentielt stor) med i eksport/import af indstillinger. Dette dækker ikoner, der allerede er cachet, selv mens hentning er slået fra. Fra holder sikkerhedskopier små; ikoner hentes automatisk igen alligevel."
-  },
-  "optionFaviconCacheClear": {
-    "message": "Ryd ikoncache"
-  },
-  "optionFaviconCacheClearConfirm": {
-    "message": "Ryd den berigede ikon-cache? Ikoner hentes automatisk igen ved næste åbning."
-  },
-  "optionFaviconCacheEmpty": {
-    "message": "Ingen ikon-cache at rydde."
-  },
-  "optionFaviconCacheCleared": {
-    "message": "Ikoncachen er ryddet. Ikonerne hentes igen ved næste åbning."
-  },
-  "favGalleryLink": {
-    "message": "Vis opdaterede ikoner",
-    "description": "Options link (Icons group, right of the Clear icon cache button): opens the favicon gallery page listing the sites whose icons were refetched."
-  },
-  "favGalleryTitle": {
-    "message": "Opdaterede webstedsikoner",
-    "description": "Favicon gallery page title (h1 + document title)."
-  },
-  "favGalleryHint": {
-    "message": "Ikoner, som vBookmarks hentede for bogmærkede websteder, som Chrome ikke havde i cachen – hvor hvert enkelt ikon kom fra, og hvilke bogmærker der bruger det. Kun til visning.",
-    "description": "Subtitle under the favicon gallery title, explaining the page is read-only."
-  },
-  "favGallerySearch": {
-    "message": "Filtrer efter websted, titel eller sti",
-    "description": "Placeholder of the favicon gallery filter input."
-  },
-  "favGalleryAll": {
-    "message": "Alle",
-    "description": "Favicon gallery source filter chip: show every source."
-  },
-  "favSrcDirect": {
-    "message": "Direkte",
-    "description": "Favicon gallery source badge: the icon was fetched directly from the site itself."
-  },
-  "favSrcProxy": {
-    "message": "Proxy",
-    "description": "Favicon gallery source badge: the icon was fetched through the user's own proxy relay."
-  },
-  "favSrcLegacy": {
-    "message": "Tidligere cache",
-    "description": "Favicon gallery source badge: cached before the source was recorded, so the origin is unknown."
-  },
-  "favGalleryCompare": {
-    "message": "Sammenlign med pladsholder",
-    "description": "Favicon gallery toggle button: switch every icon to the generic placeholder it replaced (before/after comparison)."
-  },
-  "favGalleryShowingBefore": {
-    "message": "Tilbage til rigtige ikoner",
-    "description": "Favicon gallery toggle button while the placeholder comparison is shown: switch back to the real fetched icons."
-  },
-  "favGalleryStatSites": {
-    "message": "$n$ websteder",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    },
-    "description": "Favicon gallery stats strip: how many sites have a refreshed icon."
-  },
-  "favGalleryStatBookmarks": {
-    "message": "$n$ bogmærker",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    },
-    "description": "Favicon gallery stats strip: how many bookmarks sit on the refreshed sites."
-  },
-  "favGalleryVisits": {
-    "message": "$n$ registrerede åbninger",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    },
-    "description": "Favicon gallery tooltip on a bookmark row's visit-count pill."
-  },
-  "favGalleryFailedTitle": {
-    "message": "For nylig forsøgt, intet ikon fundet",
-    "description": "Favicon gallery heading of the muted section listing hosts whose icon fetch failed recently."
-  },
-  "favGalleryFailedHint": {
-    "message": "Mislykkede forsøg gentages efter 24 timer, 3 dage og 7 dage, hvorefter de opgives, indtil ikon-cachen ryddes.",
-    "description": "Favicon gallery hint under the failed-fetch section title."
-  },
-  "favGalleryGaveUp": {
-    "message": "Opgivet",
-    "description": "Favicon gallery badge on a failed-strip host whose retries are exhausted (it stays untouched until the icon cache is cleared)."
-  },
-  "favGalleryOrphan": {
-    "message": "Intet bogmærke er tilbage på denne vært – ikonet fjernes med cachen.",
-    "description": "Favicon gallery note on a card whose host no longer has any bookmark."
-  },
-  "favGalleryEmptyTitle": {
-    "message": "Ingen opdaterede ikoner endnu",
-    "description": "Favicon gallery empty-state heading."
-  },
-  "favGalleryEmptyText": {
-    "message": "Når popup-vinduet støder på et bogmærket websted, som Chrome ikke har noget ikon for, henter vBookmarks det rigtige ikon og viser det her.",
-    "description": "Favicon gallery empty-state body text."
-  },
-  "storageUsageIcon": {
-    "message": "Ikon-cache"
-  },
-  "storageUsageOther": {
-    "message": "Andet"
-  },
-  "storageUsageSummary": {
-    "message": "Brugt $1$ af $2$",
-    "placeholders": {
-      "1": {
-        "content": "$1"
-      },
-      "2": {
-        "content": "$2"
-      }
-    }
-  },
-  "storageUsageFree": {
-    "message": "Ledig"
-  },
-  "storageUsageHint": {
-    "message": "Kun lokal udvidelseslagring (chrome.storage.local, cirka 10 MB-kvote): ikon-cachen plus indstillinger og andre lokale data. Synkroniserede indstillinger, sessiondata og selve bogmærke-biblioteket tælles ikke med her."
-  },
-  "optionsDonate": {
-    "message": "Donér"
-  },
-  "optionsGithubLink": {
-    "message": "GitHub"
-  },
-  "optionsHomepageLink": {
-    "message": "Hjemmeside"
-  },
-  "optionsSince": {
-    "message": "Forket fra Neat Bookmarks, vedligeholdt i $days$ dage.",
-    "placeholders": {
-      "days": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionsVersion": {
-    "message": "vBookmarks version"
-  },
-  "optionSyncRefreshInterval": {
-    "message": "Opdateringsinterval"
-  },
-  "optionSyncRefreshIntervalSeconds": {
-    "message": "sekunder"
-  },
-  "optionTheme": {
-    "message": "Tema"
-  },
-  "optionThemeAuto": {
-    "message": "Følg system"
-  },
-  "optionThemeDark": {
-    "message": "Mørk"
-  },
-  "optionThemeInk": {
-    "message": "Blæk (mørk)"
-  },
-  "optionThemeLight": {
-    "message": "Lys"
-  },
-  "optionThemePaper": {
-    "message": "Papir (lys)"
-  },
-  "optionLanguage": {
-    "message": "Sprog"
-  },
-  "optionLanguageAuto": {
-    "message": "Auto"
-  },
-  "optionLanguageHint": {
-    "message": "Ændring af sproget genindlæser denne side."
-  },
-  "paletteClose": {
-    "message": "Luk"
-  },
-  "paletteCmdVersion": {
-    "message": "Versionsinfo"
-  },
-  "paletteCmdLang": {
-    "message": "Skift sprog…"
-  },
-  "paletteCmdLangUsage": {
-    "message": "Brug: /lang efterfulgt af en sprogkode — f.eks. /lang en, /lang zh_CN, /lang ja."
-  },
-  "versionDialogTitle": {
-    "message": "vBookmarks $version$",
-    "placeholders": {
-      "version": {
-        "content": "$1"
-      }
-    }
-  },
-  "versionDialogCopy": {
-    "message": "Kopiér info"
-  },
-  "versionDialogCopied": {
-    "message": "Kopieret"
-  },
-  "versionMetaVersion": {
-    "message": "Udvidelsesversion"
-  },
-  "versionMetaAnnounce": {
-    "message": "Hvad er nyt"
-  },
-  "versionMetaAnnounceNone": {
-    "message": "Ingen meddelelse indlæst"
-  },
-  "versionMetaBrowser": {
-    "message": "Browser"
-  },
-  "versionMetaOS": {
-    "message": "OS"
-  },
-  "versionMetaChannel": {
-    "message": "Kanal"
-  },
-  "versionMetaLanguage": {
-    "message": "Sprog"
-  },
-  "versionMetaUserAgent": {
-    "message": "Brugeragent"
-  },
-  "optionZoom": {
-    "message": "Zoom"
-  },
-  "options": {
-    "message": "Indstillinger"
-  },
-  "optionsFooterText": {
-    "description": "Footer text for the Options page",
-    "message": "Bygget af $authorName$.",
-    "placeholders": {
-      "authorName": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionsGroupBackup": {
-    "message": "Sikkerhedskopi"
-  },
-  "optionsGroupIcons": {
-    "message": "Ikoner"
-  },
-  "optionsGroupContextMenu": {
-    "message": "Kontekstmenuer"
-  },
-  "optionsGroupViews": {
-    "message": "Visninger"
-  },
-  "optionsGroupSort": {
-    "message": "Sortering"
-  },
-  "optionsGroupTools": {
-    "message": "Værktøjer"
-  },
-  "optionsGroupStats": {
-    "message": "Statistik"
-  },
-  "paletteCmdDead": {
-    "message": "Find døde links"
-  },
-  "paletteCmdDupes": {
-    "message": "Rens dubletbogmærker"
-  },
-  "paletteCmdGoDead": {
-    "message": "Gå til visning af døde links"
-  },
-  "paletteCmdGoDupes": {
-    "message": "Gå til visning af dubletter"
-  },
-  "paletteCmdGoRecent": {
-    "message": "Gå til seneste visning"
-  },
-  "paletteCmdGoSearch": {
-    "message": "Gå til søgevisning"
-  },
-  "paletteCmdGoStats": {
-    "message": "Gå til statistikvisning"
-  },
-  "paletteCmdGoTree": {
-    "message": "Gå til trævisning"
-  },
-  "paletteCmdNewBookmark": {
-    "message": "Nyt bogmærke…"
-  },
-  "paletteCmdNewFolder": {
-    "message": "Ny mappe…"
-  },
-  "paletteCmdOptions": {
-    "message": "Åbn indstillingsside"
-  },
-  "paletteCmdQuickAdd": {
-    "message": "Bogmærk denne fane"
-  },
-  "paletteCmdSaveSession": {
-    "message": "Gem vinduesfaner som mappe"
-  },
-  "paletteCmdSearchInView": {
-    "message": "Søg efter '$query$' i søgevisning",
-    "placeholders": {
-      "query": {
-        "content": "$1"
-      }
-    }
-  },
-  "paletteCmdToggleViewTabs": {
-    "message": "Skift faner"
-  },
-  "paletteCmdTheme": {
-    "message": "Indstil tema…"
-  },
-  "paletteCmdThemeUsage": {
-    "message": "Brug: /theme efterfulgt af et temanavn – auto, light, dark, ink eller paper (et unikt præfiks virker, f.eks. /theme d)."
-  },
-  "paletteCustomTag": {
-    "message": "tilpasset"
-  },
-  "paletteCustomDeleteConfirm": {
-    "message": "Slet kommandoen \"$1\"? Ændringen synkroniseres til alle dine enheder."
-  },
-  "paletteCustomBroken": {
-    "message": "Mappen for kommandoen \"$1\" findes ikke længere. Slet kommandoen?"
-  },
-  "paletteCmdSaveAsCommand": {
-    "message": "Gem \"$1\" som kommando…"
-  },
-  "paletteActionOpenUrl": {
-    "message": "Åbn URL"
-  },
-  "paletteActionOpenUrlGroup": {
-    "message": "Åbn bogmærkemappegruppe"
-  },
-  "paletteActionViewPreset": {
-    "message": "Åbn visning med præsæt"
-  },
-  "paletteActionUrlTemplate": {
-    "message": "Åbn URL-skabelon"
-  },
-  "optionsGroupPalette": {
-    "message": "Kommandopalet"
-  },
-  "paletteCustomHint": {
-    "message": "Tilpassede skråstregskommandoer til kommandopaletten (Ctrl/Cmd+K). De synkroniseres med dine indstillinger – maks. 100 poster."
-  },
-  "paletteCustomAdd": {
-    "message": "Tilføj kommando…"
-  },
-  "paletteCustomUsage": {
-    "message": "$1 / $2"
-  },
-  "paletteCustomSlash": {
-    "message": "Skråstreg (ordet efter /)"
-  },
-  "paletteCustomAliases": {
-    "message": "Aliaser (adskilt af komma)"
-  },
-  "paletteCustomAction": {
-    "message": "Handling"
-  },
-  "paletteCustomUrl": {
-    "message": "URL"
-  },
-  "paletteCustomTemplate": {
-    "message": "URL-skabelon — %s erstattes af ordene efter kommandoen"
-  },
-  "paletteCustomWhere": {
-    "message": "Åbn i"
-  },
-  "paletteCustomFolder": {
-    "message": "Bogmærkemappe"
-  },
-  "paletteCustomView": {
-    "message": "Visning"
-  },
-  "paletteCustomStrategy": {
-    "message": "Forudindstilling for dedup-strategi"
-  },
-  "paletteCustomScope": {
-    "message": "Forudindstilling for dedup-omfang"
-  },
-  "paletteCustomScan": {
-    "message": "Start scanningen ved indtastning"
-  },
-  "paletteWhereCurrent": {
-    "message": "Aktuel fane"
-  },
-  "paletteWhereTab": {
-    "message": "Ny fane"
-  },
-  "paletteWhereWindow": {
-    "message": "Nyt vindue"
-  },
-  "paletteWhereBackground": {
-    "message": "Baggrundsfaner"
-  },
-  "paletteCustomSave": {
-    "message": "Gem kommando"
-  },
-  "paletteCustomErrSlash": {
-    "message": "Skråstreg: 1–24 tegn bestående af små bogstaver, tal eller bindestreger, der begynder med et bogstav eller tal."
-  },
-  "paletteCustomErrAlias": {
-    "message": "Aliaser: samme regler som skråstregen (1–24 tegn bestående af små bogstaver, tal eller bindestreger)."
-  },
-  "paletteCustomErrTaken": {
-    "message": "Den skråstreg eller det alias er allerede optaget."
-  },
-  "paletteCustomErrUrl": {
-    "message": "Kun http://- eller https://-URL'er er tilladt."
-  },
-  "paletteCustomErrFolder": {
-    "message": "Vælg en bogmærkemappe."
-  },
-  "paletteCustomErrView": {
-    "message": "Vælg en visning."
-  },
-  "paletteCustomErrTemplate": {
-    "message": "Skabelonen skal indeholde præcis én %s."
-  },
-  "paletteCustomErrAction": {
-    "message": "Vælg en handlingstype."
-  },
-  "paletteCustomErrLimit": {
-    "message": "Kommandogrænsen er nået (100) — slet en først."
-  },
-  "paletteCustomEmpty": {
-    "message": "Ingen brugerdefinerede kommandoer endnu."
-  },
-  "paletteNoResults": {
-    "message": "Ingen matchende resultater"
-  },
-  "palettePlaceholder": {
-    "message": "Søg i bogmærker, mapper, kommandoer…"
-  },
-  "parentFolder": {
-    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
-    "message": "Overordnet mappe: \"$folderName$\"",
-    "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarksbar"
-      }
-    }
-  },
-  "quickAddBookmark": {
-    "message": "Bogmærk denne side (Ctrl+D)"
-  },
-  "quickAddBookmarkCommand": {
-    "message": "Hurtigtilføj den aktuelle fane som bogmærke"
-  },
-  "quickAdded": {
-    "message": "Bogmærke tilføjet"
-  },
-  "quickAddedTo": {
-    "message": "Bogmærke tilføjet til $folderName$",
-    "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarks bar"
-      }
-    }
-  },
-  "quickRemoveBookmark": {
-    "message": "Fjern dette bogmærke (Ctrl+D)"
-  },
-  "quickRemoved": {
-    "message": "Bogmærke fjernet"
-  },
-  "recentBookmarks": {
-    "message": "Senest tilføjet"
-  },
-  "recentEmpty": {
-    "message": "Ingen nylige bogmærker. Tryk Ctrl+D for at bogmærke den aktuelle side."
-  },
-  "recentGroupMonth": {
-    "message": "Denne måned"
-  },
-  "recentGroupOlder": {
-    "message": "Ældre"
-  },
-  "recentGroupToday": {
-    "message": "I dag"
-  },
-  "recentGroupWeek": {
-    "message": "Denne uge"
-  },
-  "recentRevealInTree": {
-    "message": "Vis i træ"
-  },
-  "removeSeparator": {
-    "message": "Fjern Skillelinje"
-  },
-  "replaceUrl": {
-    "message": "Erstat dette med nuværende URL"
-  },
-  "reportError": {
-    "message": "Rapporter Fejl"
-  },
-  "reportedToDeveloper": {
-    "description": "A message for an error occured in the extension, has been reported to the developer.",
-    "message": "Dette er blevet rapporteret til udvikleren."
-  },
-  "resetButton": {
-    "message": "Nulstil"
-  },
-  "resetSettings": {
-    "message": "Nulstil indstillinger"
-  },
-  "resetSettingsDescription": {
-    "message": "Nulstil vBookmarks til standardindstillinger."
-  },
-  "rowActionDelete": {
-    "message": "Slet"
-  },
-  "rowActionMark": {
-    "message": "Marker som død"
-  },
-  "rowActionReveal": {
-    "message": "Vis i træ"
-  },
-  "rowActionUnmark": {
-    "message": "Fjern død-markering"
-  },
-  "save": {
-    "message": "Gem"
-  },
-  "searchBookmarks": {
-    "description": "Placeholder text for search field.",
-    "message": "Søg Bogmærker"
-  },
-  "searchClear": {
-    "message": "Ryd søgning"
-  },
-  "searchHistoryClear": {
-    "message": "Ryd alt"
-  },
-  "searchHistoryRemove": {
-    "message": "Fjern denne søgning"
-  },
-  "searchHistoryRerun": {
-    "message": "Søg igen"
-  },
-  "searchHistoryResultCount": {
+  "searchResultCount": {
     "message": "$n$ resultat(er)",
     "placeholders": {
       "n": {
@@ -1779,367 +2474,7 @@
       }
     }
   },
-  "searchHistoryTitle": {
-    "message": "Seneste søgninger"
-  },
-  "searchNoResults": {
-    "message": "Ingen matchende bogmærker"
-  },
-  "searchViewHint": {
-    "message": "Skriv i feltet ovenfor for at søge i dine bogmærker"
-  },
-  "selectAll": {
-    "message": "Alle"
-  },
-  "selectClear": {
-    "message": "Ryd"
-  },
-  "selectCount": {
-    "message": "$count$ valgt",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "selectInvert": {
-    "message": "Inverter"
-  },
-  "selectModeEnter": {
-    "message": "Vælg"
-  },
-  "selectModeExit": {
-    "message": "Afslut valg"
-  },
-  "deadRiskBanner": {
-    "message": "Oprydning af døde links sletter bogmærker i store mængder. Sikkerhedskopiér dine bogmærker, før du kører den første oprydning."
-  },
-  "dupesRiskBanner": {
-    "message": "Deduplikering sletter duplikerede bogmærker i store mængder. Sikkerhedskopiér dine bogmærker, før du anvender den."
-  },
-  "riskBannerHelp": {
-    "message": "Vejledning til sikkerhedskopi og gendannelse"
-  },
-  "riskBannerNever": {
-    "message": "Vis ikke igen"
-  },
-  "riskBannerDismiss": {
-    "message": "Luk"
-  },
-  "sessionEmpty": {
-    "message": "Ingen faner at gemme"
-  },
-  "sessionFolderName": {
-    "message": "Session $date$",
-    "placeholders": {
-      "date": {
-        "content": "$1",
-        "example": "2026-07-18 15:04"
-      }
-    },
-    "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm."
-  },
-  "sessionSaved": {
-    "message": "Gemte $count$ faner i en ny mappe",
-    "placeholders": {
-      "count": {
-        "content": "$1",
-        "example": "12"
-      }
-    },
-    "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
-  },
-  "settingsBackupHint": {
-    "message": "Eksport gemmer alle indstillinger (inkl. synkroniseringspræferencer) til en JSON-fil. Import fusionerer en sikkerhedskopi tilbage: indstillinger i filen overskriver de nuværende, alt andet bevares."
-  },
-  "settingsExport": {
-    "message": "Eksporter indstillinger"
-  },
-  "settingsImport": {
-    "message": "Importer indstillinger"
-  },
-  "settingsImportConfirm": {
-    "message": "Import vil overskrive alle indstillinger i sikkerhedskopifilen (indstillinger, der ikke er i filen, bevares) og genindlæse denne side. Fortsæt?"
-  },
-  "settingsImportDone": {
-    "message": "Indstillinger importeret. Siden genindlæses nu."
-  },
-  "settingsImportError": {
-    "message": "Nogle indstillinger kunne ikke skrives (lagringskvote eller en midlertidig fejl). Importen blev ikke fuldført — prøv venligst igen."
-  },
-  "settingsImportInvalid": {
-    "message": "Ugyldig indstillingsfil: ikke en sikkerhedskopi af vBookmarks-indstillinger."
-  },
-  "sortByDateAdded": {
-    "message": "Efter tilføjelsesdato (nyeste først)"
-  },
-  "sortByTitle": {
-    "message": "Efter titel"
-  },
-  "sortFolderContents": {
-    "message": "Sortér mappeindhold"
-  },
-  "sortByName": {
-    "message": "Sorter efter navn"
-  },
-  "sortByDate": {
-    "message": "Sorter efter tilføjelsesdato"
-  },
-  "sortRecursiveSuffix": {
-    "message": "(rekursiv)"
-  },
-  "sortOptions": {
-    "message": "Sorteringsmuligheder…"
-  },
-  "sortDone": {
-    "message": "Mappen er sorteret"
-  },
-  "sortFoldersFirst": {
-    "message": "Hold mapper øverst"
-  },
-  "sortRecursive": {
-    "message": "Sortér også undermapper (rekursivt)"
-  },
-  "sortRecursiveWarning": {
-    "message": "Dette omarrangerer bogmærker i hver undermappe."
-  },
-  "tabGroupDialogTitle": {
-    "message": "Ny fanegruppe"
-  },
-  "tabGroupTitleLabel": {
-    "message": "Gruppetitel"
-  },
-  "tabGroupColorLabel": {
-    "message": "Farve"
-  },
-  "tabGroupColorGrey": {
-    "message": "Grå",
-    "description": "Accessible name of the grey color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorBlue": {
-    "message": "Blå",
-    "description": "Accessible name of the blue color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorRed": {
-    "message": "Rød",
-    "description": "Accessible name of the red color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorYellow": {
-    "message": "Gul",
-    "description": "Accessible name of the yellow color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorGreen": {
-    "message": "Grøn",
-    "description": "Accessible name of the green color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorPink": {
-    "message": "Lyserød",
-    "description": "Accessible name of the pink color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorPurple": {
-    "message": "Lilla",
-    "description": "Accessible name of the purple color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorCyan": {
-    "message": "Cyan",
-    "description": "Accessible name of the cyan color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorOrange": {
-    "message": "Orange",
-    "description": "Accessible name of the orange color swatch in the new-tab-group dialog."
-  },
-  "tabGroupUntitled": {
-    "message": "Unavngiven gruppe"
-  },
-  "tabGroupNoGroups": {
-    "message": "Ingen eksisterende fanegrupper"
-  },
-  "tabGroupPickDialogTitle": {
-    "message": "Åbn i eksisterende fanegruppe"
-  },
-  "statsClearConfirm": {
-    "message": "Ryd besøgsstatistik for $count$ bogmærker? Dette kan ikke fortrydes.",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "statsClearData": {
-    "message": "Ryd statistik"
-  },
-  "statsDisabledHint": {
-    "message": "Besøgsstatistik er slået fra — aktivér det i Indstillinger → Visninger"
-  },
-  "statsEmpty": {
-    "message": "Statistik opbygges, når du åbner bogmærker"
-  },
-  "statsHistoryAdd": {
-    "message": "Tilføj til bogmærker"
-  },
-  "statsHistoryBanner": {
-    "message": "Giv historieadgang for at så besøgsstatistik med dine tidligere besøg."
-  },
-  "statsHistoryBookmarked": {
-    "message": "Bogmærket"
-  },
-  "statsHistoryDismiss": {
-    "message": "Vis ikke igen"
-  },
-  "statsHistoryEnable": {
-    "message": "Aktivér"
-  },
-  "statsHistoryGuide": {
-    "message": "Giv adgang til historik for at liste dine seneste besøg her."
-  },
-  "statsHistoryImported": {
-    "message": "Importerede tidligere besøg for $count$ bogmærker",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "statsSectionBookmarks": {
-    "message": "Bogmærkestatistik"
-  },
-  "statsSectionRecent": {
-    "message": "Seneste besøg"
-  },
-  "statsSortByCount": {
-    "message": "Efter antal"
-  },
-  "statsSortByRecent": {
-    "message": "Efter seneste"
-  },
-  "statsShowUnbookmarked": {
-    "message": "Vis umarkerede"
-  },
-  "statsShowUnbookmarkedHint": {
-    "message": "Medtag sider fra historikken, der ikke er gemt som bogmærker."
-  },
-  "statsVisitCount": {
-    "message": "Besøgt $count$ gange",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "syncOptions": {
-    "message": "Synkroniseringsindstillinger"
-  },
-  "syncStatusLocal": {
-    "message": "Kun lokalt — ikke uploadet"
-  },
-  "syncStatusSynced": {
-    "message": "Synkroniseret til din Google-konto"
-  },
-  "syncStatusUnsyncable": {
-    "message": "Kan ikke synkroniseres"
-  },
-  "syncSuffixLocal": {
-    "message": "(Lokal)"
-  },
-  "syncSuffixSynced": {
-    "message": "(Synkroniseret)"
-  },
-  "timeDaysAgo": {
-    "message": "$n$ dage siden",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "timeHoursAgo": {
-    "message": "$n$ time siden",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "timeJustNow": {
-    "message": "lige nu"
-  },
-  "timeMinutesAgo": {
-    "message": "$n$ min. siden",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "timeYesterday": {
-    "message": "i går"
-  },
-  "toolButtonTitle": {
-    "message": "Værktøjer (Ctrl+K)"
-  },
-  "undoAction": {
-    "message": "Fortryd"
-  },
-  "revealOutsideBarHint": {
-    "message": "Kun bogmærkelinjen vises: målet ligger uden for den."
-  },
-  "revealOutsideBarAction": {
-    "message": "Vis alle og fremhæv"
-  },
-  "url": {
-    "message": "URL"
-  },
-  "viewDead": {
-    "message": "Døde links"
-  },
-  "viewDupes": {
-    "message": "Dubletter"
-  },
-  "viewRecent": {
-    "message": "Seneste"
-  },
-  "viewSearch": {
-    "message": "Søg"
-  },
-  "viewStats": {
-    "message": "Statistik"
-  },
-  "viewSwitchAnnounce": {
-    "message": "$name$ visning",
-    "placeholders": {
-      "name": {
-        "content": "$1"
-      }
-    }
-  },
-  "viewStateEnabled": {
-    "message": "Aktiveret"
-  },
-  "viewStateDisabled": {
-    "message": "Deaktiveret"
-  },
-  "viewEnable": {
-    "message": "Aktiver"
-  },
-  "viewDisable": {
-    "message": "Deaktiver"
-  },
-  "viewTabHide": {
-    "message": "Skjul"
-  },
-  "viewTabDisable": {
-    "message": "Deaktiver"
-  },
-  "viewTree": {
-    "message": "Træ"
-  },
-  "deadProxyNeverShow": {
-    "message": "Vis ikke igen"
-  },
-  "optionDeadProxyStrip": {
-    "message": "Vis tip om at tilføje proxy i visningen af døde links"
-  },
-  "optionDeadProxyStripHint": {
-    "message": "Fra skjuler tippet der; proxy-serveren forbliver konfigurerbar her, og en gemt server viser altid sin administrationsrække i visningen."
+  "deleteSelected": {
+    "message": "Slet valgte"
   }
 }

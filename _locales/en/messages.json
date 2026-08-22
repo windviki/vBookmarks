@@ -1468,8 +1468,8 @@
     "description": "Command palette entry (slash command /dupes) that switches to the duplicate cleanup view."
   },
   "paletteCmdGoRecent": {
-    "message": "Go to Recent view",
-    "description": "Command palette entry (slash command /recent) that switches to the recent bookmarks view."
+    "message": "Go to Staging view",
+    "description": "Command palette entry (slash command /recent, alias /staging) that switches to the staging (upgraded recent) view."
   },
   "paletteCmdGoSearch": {
     "message": "Go to Search view",
@@ -2445,9 +2445,6 @@
     "placeholders": {
       "n": {
         "content": "$1"
-      },
-      "n2": {
-        "content": "$2"
       }
     }
   },
@@ -2700,9 +2697,6 @@
     "placeholders": {
       "n": {
         "content": "$1"
-      },
-      "x": {
-        "content": "$2"
       }
     }
   },
@@ -2727,5 +2721,8 @@
         "content": "$1"
       }
     }
+  },
+  "deleteSelected": {
+    "message": "Delete selected"
   }
 }

@@ -29,6 +29,12 @@
   "advancedOptions": {
     "message": "אפשרויות מתקדמות"
   },
+  "announceDismiss": {
+    "message": "סגור"
+  },
+  "announceV408Text": {
+    "message": "v4.0.8 היא המהדורה עם שיפור ה-favicon: סמלי אתרים אמיתיים נשלפים אוטומטית עבור סימניות ש-Chrome טרם שמר במטמון."
+  },
   "announceV407Text": {
     "message": "v4.0.7 מספק תצוגת קישורים מתים מלאה: סריקה, סימון, סינון ומיון של קישורים מתים ומוגבלים, עם סימונים קודמים וחותמות זמן לכל שורה."
   },
@@ -44,12 +50,6 @@
   "announceV410Text": {
     "message": "v4.1.0 מוסיף תצוגת קבוצות כרטיסיות: הכרטיסיות וקבוצות הכרטיסיות של כל חלון, מנוהלות לצד הסימניות שלך."
   },
-  "announceV408Text": {
-    "message": "v4.0.8 היא המהדורה עם שיפור ה-favicon: סמלי אתרים אמיתיים נשלפים אוטומטית עבור סימניות ש-Chrome טרם שמר במטמון."
-  },
-  "announceDismiss": {
-    "message": "סגור"
-  },
   "confirmDeleteFolder": {
     "message": "תיקייה זו מכילה $count$ פריט(ים). ניתן לבטל את המחיקה.",
     "placeholders": {
@@ -57,6 +57,9 @@
         "content": "$1"
       }
     }
+  },
+  "confirmDeleteFolderButton": {
+    "message": "מחק"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "האם אתה בטוח שברצונך למחוק את תיקיית $folderName$ ו-$bookmarkCount$ סימניות בה?",
@@ -68,9 +71,6 @@
         "content": "$1"
       }
     }
-  },
-  "confirmDeleteFolderButton": {
-    "message": "מחק"
   },
   "confirmDeleteFolderSubfolders": {
     "message": "האם אתה בטוח שברצונך למחוק את תיקיית $folderName$ ו-$subFolderCount$ תיקיות משנה בה?",
@@ -124,18 +124,11 @@
       }
     }
   },
-  "contextMenuAddBookmark": {
-    "message": "הוסף סימניה לדף זה באמצעות vBookmarks"
-  },
   "copyAllTitlesAndUrls": {
     "message": "העתק את כל הכותרות וה-URLs ללוח הגזירים"
   },
   "copyTitleAndUrl": {
     "message": "העתק כותרת ו-URL ללוח הגזירים"
-  },
-  "crossStorageMoveWarning": {
-    "message": "לא ניתן להעביר סימניות בין אחסון מסונכרן למקומי. השתמש בהעתקה/הדבקה במקום זאת.",
-    "description": "Warning when trying to move bookmarks across storage types"
   },
   "customIcon": {
     "message": "אייקון מותאם אישית"
@@ -146,14 +139,14 @@
   "customSeparatorColorDescription": {
     "message": "התאם אישית צבע מפריד"
   },
-  "customSeparatorStringDescription": {
-    "message": "אם ה-URL של סימנייה מכיל מחרוזת זו, היא תוצג כמפריד"
-  },
   "customSeparatorTitleDescription": {
     "message": "הכותרת האמיתית של סימנייה המוצגת כמפריד"
   },
   "customSeparatorUrlDescription": {
     "message": "ה-URL האמיתי של סימנייה המוצגת כמפריד"
+  },
+  "customSeparatorStringDescription": {
+    "message": "אם ה-URL של סימנייה מכיל מחרוזת זו, היא תוצג כמפריד"
   },
   "customStyles": {
     "message": "סגנונות מותאמים אישית"
@@ -164,8 +157,14 @@
   "customStylesDescription": {
     "message": "דורש כמה ידע ב-CSS. שנה על אחריותך בלבד. שיתוף קוד יהיה חכם דרך"
   },
-  "deadCancel": {
-    "message": "בטל"
+  "defaultIconButton": {
+    "message": "השתמש בברירת מחדל"
+  },
+  "defaultIconButtonOr": {
+    "message": "או"
+  },
+  "customIconPick": {
+    "message": "בחר קובץ…"
   },
   "deadChecking": {
     "message": "בודק $done$ / $total$…",
@@ -235,6 +234,839 @@
   },
   "deadClearScan": {
     "message": "נקה תוצאות סריקה"
+  },
+  "deadNone": {
+    "message": "לא נמצאו קישורים מתים"
+  },
+  "deadNoneFiltered": {
+    "message": "אין קישורים מתים תחת מסנן זה — נסה קטע אחר למעלה"
+  },
+  "deadRescan": {
+    "message": "סריקה מחדש"
+  },
+  "delete": {
+    "message": "מחק"
+  },
+  "deletedBookmark": {
+    "message": "נמחקה $title$",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Example"
+      }
+    },
+    "description": "Toast shown after a bookmark or separator was deleted; the toast offers an undo button. $title$ is the deleted row's title (empty for separators)."
+  },
+  "deletedFolder": {
+    "message": "נמחקה תיקייה $title$",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Bookmarks"
+      }
+    },
+    "description": "Toast shown after a bookmark folder (with its whole subtree) was deleted; the toast offers an undo button. $title$ is the folder name."
+  },
+  "optionRecentCount": {
+    "message": "מספר הסימניות שנוספו לאחרונה להצגה"
+  },
+  "optionSearchHistory": {
+    "message": "תיעוד היסטוריית חיפוש"
+  },
+  "optionSearchHistoryHint": {
+    "message": "כיבוי זה ינקה גם את ההיסטוריה הקיימת."
+  },
+  "recentEmpty": {
+    "message": "אין סימניות אחרונות. לחץ על Ctrl+D כדי לסמן את הדף הנוכחי."
+  },
+  "recentRevealInTree": {
+    "message": "חשוף בעץ"
+  },
+  "searchHistoryClear": {
+    "message": "נקה הכל"
+  },
+  "searchHistoryRemove": {
+    "message": "הסר חיפוש זה"
+  },
+  "searchHistoryResultCount": {
+    "message": "$n$ תוצאה(ות)",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "searchHistoryTitle": {
+    "message": "חיפושים אחרונים"
+  },
+  "timeDaysAgo": {
+    "message": "לפני $n$ ימים",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "timeHoursAgo": {
+    "message": "לפני $n$ שעות",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "timeJustNow": {
+    "message": "זה עתה"
+  },
+  "timeMinutesAgo": {
+    "message": "לפני $n$ דקות",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "timeYesterday": {
+    "message": "אתמול"
+  },
+  "undoAction": {
+    "message": "בטל"
+  },
+  "revealOutsideBarHint": {
+    "message": "מוצג רק סרגל הסימניות: היעד נמצא מחוץ לו."
+  },
+  "revealOutsideBarAction": {
+    "message": "הצג הכול וגלה"
+  },
+  "dupesCleanAll": {
+    "message": "נקה הכל: $groups$ קבוצות, $count$ עותקים מיותרים",
+    "placeholders": {
+      "groups": {
+        "content": "$1"
+      },
+      "count": {
+        "content": "$2"
+      }
+    },
+    "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go."
+  },
+  "dupesConfirmAll": {
+    "message": "להסיר $count$ עותקים נוספים בין $groups$ קבוצות? הפריט שנבחר בכל קבוצה יישמר.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    },
+    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
+  },
+  "dupesConfirmSelected": {
+    "message": "להסיר $count$ סימניות כפולות מבין $groups$ הקבוצות שנבחרו?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    }
+  },
+  "dupesConfirmGroup": {
+    "message": "להשאיר את \"$title$\" ולהסיר את $count$ העותקים האחרים?",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Example bookmark"
+      },
+      "count": {
+        "content": "$2"
+      }
+    },
+    "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."
+  },
+  "dupesDone": {
+    "message": "הוסרו $count$ סימניות כפולות",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Alert shown after the duplicate cleanup finished."
+  },
+  "dupesGroupCount": {
+    "message": "$count$ כפילויות",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
+  },
+  "dupesGroupExpand": {
+    "description": "Dupes view group-head context menu: expand a collapsed duplicate group.",
+    "message": "הרחב קבוצה"
+  },
+  "dupesGroupCollapse": {
+    "description": "Dupes view group-head context menu: collapse an expanded duplicate group.",
+    "message": "כווץ קבוצה"
+  },
+  "dupesNone": {
+    "message": "לא נמצאו כפילויות"
+  },
+  "deleteEllipsis": {
+    "message": "מחק..."
+  },
+  "donationMessage": {
+    "message": "נהנים מההרחבה? תרמו כדי לתמוך בעתידה — או דרגו אותה בחנות: כל ביקורת ממשיכה את העדכונים."
+  },
+  "donationV4Notice": {
+    "message": "vBookmarks 4.0 הוא גרסה מחודשת לחלוטין בעיצוב מודרני, עמוסה בתכונות חדשות."
+  },
+  "donationV4GuideLink": {
+    "message": "קרא את המדריך ל-v4 →"
+  },
+  "donationGo": {
+    "message": "תרום"
+  },
+  "donationRate": {
+    "message": "דרגו"
+  },
+  "donationRateTitle": {
+    "message": "דרגו את vBookmarks בחנות האינטרנט של Chrome"
+  },
+  "donationLater": {
+    "message": "מאוחר יותר"
+  },
+  "donationNever": {
+    "message": "אל תציג שוב"
+  },
+  "donationDismiss": {
+    "message": "סגור"
+  },
+  "edit": {
+    "message": "ערוך..."
+  },
+  "editBookmark": {
+    "message": "ערוך סימנייה"
+  },
+  "editFolder": {
+    "message": "ערוך תיקייה"
+  },
+  "errorOccured": {
+    "message": "אופס, אירעה שגיאה."
+  },
+  "extDesc": {
+    "description": "The extension description.",
+    "message": "מנהל סימניות קופץ. Neat Bookmarks משופר. נקי יותר מ-Neater Bookmarks."
+  },
+  "extName": {
+    "description": "vBookmarks",
+    "message": "vBookmarks"
+  },
+  "folderEmpty": {
+    "message": "(ריק)"
+  },
+  "general": {
+    "message": "כללי"
+  },
+  "ignore": {
+    "message": "התעלם"
+  },
+  "name": {
+    "description": "Name of bookmark or folder.",
+    "message": "שם"
+  },
+  "nope": {
+    "message": "ביטול"
+  },
+  "noTitle": {
+    "description": "The title for untitled bookmarks with no http(s) URL or untitled folders.",
+    "message": "(ללא כותרת)"
+  },
+  "open": {
+    "description": "Action to open bookmarks.",
+    "message": "פתח"
+  },
+  "openBookmarks": {
+    "message": "פתח את כל הסימניות"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "פתח סימניות בחלון פרטי"
+  },
+  "openBookmarksInGroup": {
+    "message": "פתח הכל בקבוצת כרטיסיות"
+  },
+  "openBookmarksInGroupSetup": {
+    "message": "פתח הכל בקבוצת טאבים חדשה…"
+  },
+  "openBookmarksInExistingGroup": {
+    "message": "פתח הכל בקבוצת טאבים קיימת…"
+  },
+  "tabGroupOptions": {
+    "message": "קבוצות כרטיסיות"
+  },
+  "sortMenuOptions": {
+    "message": "מיון"
+  },
+  "openBookmarksNewWindow": {
+    "message": "פתח את כל הסימניות בחלון חדש"
+  },
+  "openCommandPaletteCommand": {
+    "message": "פתח לוח פקודות"
+  },
+  "openIncognitoWindow": {
+    "message": "פתח בחלון גלישה פרטית"
+  },
+  "openNewTab": {
+    "message": "פתח בלשונית חדשה"
+  },
+  "bookmarkOpenInNewGroup": {
+    "message": "פתח בקבוצת טאבים חדשה"
+  },
+  "bookmarkOpenInNewGroupSetup": {
+    "message": "פתח בקבוצת טאבים חדשה…"
+  },
+  "bookmarkOpenInExistingGroup": {
+    "message": "פתח בקבוצת טאבים קיימת…"
+  },
+  "openNewWindow": {
+    "message": "פתח בחלון חדש"
+  },
+  "openSidePanelCommand": {
+    "message": "פתח חלונית צד של vBookmarks"
+  },
+  "optionAnnounceEnabled": {
+    "message": "הצג הודעות בתוך המוצר"
+  },
+  "optionAnnounceEnabledHint": {
+    "message": "הערות שחרור וטיפים ממאגר GitHub של הפרויקט (נשלפים לכל היותר כל 6 שעות). כיבוי גם עוצר את הבאת הנתונים מהרשת."
+  },
+  "optionClickNewTab": {
+    "message": "לחיצה שמאלית פותחת סימנייה בלשונית חדשה."
+  },
+  "optionCloseUnusedFolders": {
+    "message": "סגור תיקיות שאינן בשימוש בעת פתיחת תיקייה."
+  },
+  "optionConfirmOpenFolder": {
+    "message": "הצג אישור בעת פתיחת הרבה סימניות מתיקייה."
+  },
+  "optionConfirmDeleteFolder": {
+    "message": "אשר לפני מחיקת תיקיות שאינן ריקות"
+  },
+  "optionOnlyShowBookmarkBar": {
+    "message": "הצג רק סימניות בסרגל הסימניות"
+  },
+  "optionSearchAfterEnter": {
+    "message": "חפש סימניות רק כאשר לוחצים ENTER (במקום חיפוש מיידי)"
+  },
+  "optionOpenNewTab": {
+    "message": "לחיצה אמצעית או control-לחיצה פותחת סימנייה בלשונית חדשה ברקע (במקום בחזית)."
+  },
+  "optionOpenInSidePanel": {
+    "message": "פתח בחלונית צד במקום בחלון קופץ"
+  },
+  "optionPopupStays": {
+    "message": "חלון קופץ נשאר פתוח בעת פתיחת (לחיצה שמאלית) סימניות."
+  },
+  "optionRememberPrevState": {
+    "message": "זכור מצב קודם (מיקום גלילה, תיקיות פתוחות והפריט האחרון בפוקוס)."
+  },
+  "options": {
+    "message": "אפשרויות"
+  },
+  "optionsFooterText": {
+    "description": "Footer text for the Options page",
+    "message": "נוצר על ידי $authorName$.",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionZoom": {
+    "message": "זום"
+  },
+  "optionTheme": {
+    "message": "ערכת נושא"
+  },
+  "optionThemeAuto": {
+    "message": "עקוב אחר המערכת"
+  },
+  "optionThemeLight": {
+    "message": "בהיר"
+  },
+  "optionThemeDark": {
+    "message": "כהה"
+  },
+  "optionThemeInk": {
+    "message": "דיו (כהה)"
+  },
+  "optionThemePaper": {
+    "message": "נייר (בהיר)"
+  },
+  "optionLanguage": {
+    "message": "שפה"
+  },
+  "optionLanguageAuto": {
+    "message": "אוטומטי"
+  },
+  "optionLanguageHint": {
+    "message": "שינוי השפה יטען מחדש את הדף הזה."
+  },
+  "paletteClose": {
+    "message": "סגור"
+  },
+  "paletteCmdVersion": {
+    "message": "מידע גרסה"
+  },
+  "paletteCmdLang": {
+    "message": "החלף שפה…"
+  },
+  "paletteCmdLangUsage": {
+    "message": "שימוש: /lang ואחריו קוד שפה — למשל /lang en, /lang zh_CN, /lang ja."
+  },
+  "versionDialogTitle": {
+    "message": "vBookmarks $version$",
+    "placeholders": {
+      "version": {
+        "content": "$1"
+      }
+    }
+  },
+  "versionDialogCopy": {
+    "message": "העתק מידע"
+  },
+  "versionDialogCopied": {
+    "message": "הועתק"
+  },
+  "versionMetaVersion": {
+    "message": "גרסת הרחבה"
+  },
+  "versionMetaAnnounce": {
+    "message": "מה חדש"
+  },
+  "versionMetaAnnounceNone": {
+    "message": "לא נטענה הודעה"
+  },
+  "versionMetaBrowser": {
+    "message": "דפדפן"
+  },
+  "versionMetaOS": {
+    "message": "מערכת הפעלה"
+  },
+  "versionMetaChannel": {
+    "message": "ערוץ"
+  },
+  "versionMetaLanguage": {
+    "message": "שפה"
+  },
+  "versionMetaUserAgent": {
+    "message": "סוכן משתמש"
+  },
+  "paletteCmdDead": {
+    "message": "מצא קישורים מתים"
+  },
+  "paletteCmdDupes": {
+    "message": "נקה סימניות כפולות"
+  },
+  "paletteCmdNewBookmark": {
+    "message": "סימניה חדשה…"
+  },
+  "paletteCmdNewFolder": {
+    "message": "תיקייה חדשה…"
+  },
+  "paletteCmdQuickAdd": {
+    "message": "סמן כרטיסייה נוכחית"
+  },
+  "paletteCmdSaveSession": {
+    "message": "שמור כרטיסיות חלון כתיקייה"
+  },
+  "paletteNoResults": {
+    "message": "אין תוצאות תואמות"
+  },
+  "palettePlaceholder": {
+    "message": "חפש סימניות, תיקיות, פקודות…"
+  },
+  "parentFolder": {
+    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
+    "message": "תיקיית אב: \"$folderName$\"",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarksbar"
+      }
+    }
+  },
+  "removeSeparator": {
+    "message": "הסר מפריד"
+  },
+  "replaceUrl": {
+    "message": "החלף זאת ב-URL הנוכחי"
+  },
+  "reportedToDeveloper": {
+    "description": "A message for an error occured in the extension, has been reported to the developer.",
+    "message": "זה דווח למפתח."
+  },
+  "reportError": {
+    "message": "דווח על שגיאה"
+  },
+  "resetButton": {
+    "message": "איפוס"
+  },
+  "resetSettings": {
+    "message": "איפוס הגדרות"
+  },
+  "resetSettingsDescription": {
+    "message": "אפס את vBookmarks להגדרות ברירת המחדל."
+  },
+  "save": {
+    "message": "שמור"
+  },
+  "searchBookmarks": {
+    "description": "Placeholder text for search field.",
+    "message": "חפש סימניות"
+  },
+  "searchClear": {
+    "message": "נקה חיפוש"
+  },
+  "searchNoResults": {
+    "message": "אין סימניות תואמות"
+  },
+  "searchViewHint": {
+    "message": "הקלד בתיבה למעלה כדי לחפש בסימניות שלך"
+  },
+  "selectAll": {
+    "message": "הכל"
+  },
+  "selectClear": {
+    "message": "נקה"
+  },
+  "selectCount": {
+    "message": "נבחרו $count$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "selectInvert": {
+    "message": "הפוך"
+  },
+  "selectModeEnter": {
+    "message": "בחר"
+  },
+  "selectModeExit": {
+    "message": "צא ממצב בחירה"
+  },
+  "deadRiskBanner": {
+    "message": "ניקוי קישורים שבורים מוחק סימניות בכמות גדולה. גבה את הסימניות לפני הניקוי הראשון."
+  },
+  "dupesRiskBanner": {
+    "message": "הסרת כפילויות מוחקת סימניות כפולות בכמות גדולה. גבה את הסימניות לפני שתפעיל אותה."
+  },
+  "riskBannerHelp": {
+    "message": "מדריך גיבוי ושחזור"
+  },
+  "riskBannerNever": {
+    "message": "לא להציג שוב"
+  },
+  "riskBannerDismiss": {
+    "message": "סגור"
+  },
+  "sessionEmpty": {
+    "message": "אין כרטיסיות לשמירה"
+  },
+  "sessionFolderName": {
+    "message": "סשן $date$",
+    "placeholders": {
+      "date": {
+        "content": "$1",
+        "example": "2026-07-18 15:04"
+      }
+    },
+    "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm."
+  },
+  "sessionSaved": {
+    "message": "נשמרו $count$ כרטיסיות בתיקייה חדשה",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "12"
+      }
+    },
+    "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
+  },
+  "url": {
+    "message": "URL"
+  },
+  "syncOptions": {
+    "message": "אפשרויות סנכרון"
+  },
+  "optionShowSyncStatus": {
+    "message": "הצג מחווני מצב סנכרון"
+  },
+  "optionHighlightUnsynced": {
+    "message": "עמעם סימניות לא מסונכרנות"
+  },
+  "optionAutoRefreshSync": {
+    "message": "רענן מצב סנכרון אוטומטית"
+  },
+  "optionSyncRefreshInterval": {
+    "message": "מרווח רענון"
+  },
+  "optionSyncRefreshIntervalSeconds": {
+    "message": "שניות"
+  },
+  "syncStatusSynced": {
+    "message": "מסונכרן לחשבון Google שלך"
+  },
+  "syncStatusLocal": {
+    "message": "מקומי בלבד — לא הועלה"
+  },
+  "syncStatusUnsyncable": {
+    "message": "לא ניתן לסנכרן"
+  },
+  "syncSuffixSynced": {
+    "message": "(מסונכרן)"
+  },
+  "syncSuffixLocal": {
+    "message": "(מקומי)"
+  },
+  "optionAutoResizePopup": {
+    "message": "שנה גודל חלון הקופץ אוטומטית לפי תוכן"
+  },
+  "crossStorageMoveWarning": {
+    "message": "לא ניתן להעביר סימניות בין אחסון מסונכרן למקומי. השתמש בהעתקה/הדבקה במקום זאת.",
+    "description": "Warning when trying to move bookmarks across storage types"
+  },
+  "recentBookmarks": {
+    "message": "נוספו לאחרונה"
+  },
+  "optionShowRecentBookmarks": {
+    "message": "הצג סימניות שנוספו לאחרונה בראש החלון הקופץ"
+  },
+  "optionShowStatsView": {
+    "message": "הצג לשונית תצוגת סטטיסטיקות"
+  },
+  "optionShowDeadView": {
+    "message": "הצג לשונית תצוגת קישורים מתים"
+  },
+  "optionShowDupesView": {
+    "message": "הצג לשונית תצוגת כפילויות"
+  },
+  "optionRecentCollapsed": {
+    "message": "כווץ את הקטע 'נוספו לאחרונה' כברירת מחדל"
+  },
+  "optionsGroupViews": {
+    "message": "תצוגות"
+  },
+  "optionsGroupSort": {
+    "message": "מיון"
+  },
+  "optionsGroupStats": {
+    "message": "סטטיסטיקות"
+  },
+  "optionsGroupTools": {
+    "message": "כלים"
+  },
+  "optionShowViewTabs": {
+    "message": "הצג לשוניות תצוגה מתחת לתיבת החיפוש"
+  },
+  "optionRememberView": {
+    "message": "זכור את התצוגה הפעילה האחרונה ופתח אותה מחדש"
+  },
+  "optionShowTabBadges": {
+    "message": "הצג תגי מספר על לשוניות התצוגה"
+  },
+  "optionPaletteEnabled": {
+    "message": "הפעל את פלטת הפקודות (Ctrl/Cmd+K)"
+  },
+  "optionQuickAddEnabled": {
+    "message": "הצג את כפתור הכוכב להוספה מהירה לצד תיבת החיפוש"
+  },
+  "optionQuickAddContextMenu": {
+    "message": "הוסף פריט \"הוסף עמוד זה לסימניות עם vBookmarks\" לתפריט ההקשר של הדף"
+  },
+  "optionQuickAddContextMenuHint": {
+    "message": "אינו תלוי בכפתור הכוכב להוספה מהירה; שחזור החוויה הקלאסית גם משבית פריט זה."
+  },
+  "optionCollapseTabGroupMenu": {
+    "message": "כווץ את ערכי קבוצות הכרטיסיות לתפריט משנה אחד \"קבוצות כרטיסיות…\""
+  },
+  "optionCollapseTabGroupMenuHint": {
+    "message": "חל על תפריטי ההקשר של תיקיות ושל סימניות. כבוי כברירת מחדל; מקצר תפריטים נמוכים במסכים קטנים או בעלי זום גבוה."
+  },
+  "optionCollapseSortMenu": {
+    "message": "כווץ את ערכי המיון לתפריט משנה אחד \"מיון…\""
+  },
+  "optionCollapseSortMenuHint": {
+    "message": "חל על תפריט ההקשר של תיקיות. מופעל כברירת מחדל."
+  },
+  "optionShowToolButton": {
+    "message": "הצג את כפתור הכלים (⋮) לצד תיבת החיפוש"
+  },
+  "optionClassicExperience": {
+    "message": "שחזר את הכותרת הקלאסית"
+  },
+  "optionClassicExperienceHint": {
+    "message": "מכבה את פלטת הפקודות, את כוכב ההוספה המהירה, את פריט תפריט ההקשר שלו בדף, את כפתור הכלי ואת כרטיסיות התצוגה. ניתן להפעיל כל אחד מחדש בנפרד בסעיף שלו."
+  },
+  "optionShowItemPath": {
+    "message": "הצג נתיב תיקיית אב בשורות הרשימה"
+  },
+  "viewRecent": {
+    "message": "אחרונים"
+  },
+  "viewTree": {
+    "message": "עץ"
+  },
+  "viewSearch": {
+    "message": "חיפוש"
+  },
+  "viewSwitchAnnounce": {
+    "message": "תצוגת $name$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "viewStateEnabled": {
+    "message": "מופעל"
+  },
+  "viewStateDisabled": {
+    "message": "מושבת"
+  },
+  "viewEnable": {
+    "message": "הפעל"
+  },
+  "viewDisable": {
+    "message": "השבת"
+  },
+  "viewTabHide": {
+    "message": "הסתר"
+  },
+  "viewTabDisable": {
+    "message": "השבת"
+  },
+  "sortFolderContents": {
+    "message": "מיין תוכן תיקייה"
+  },
+  "sortByName": {
+    "message": "מיין לפי שם"
+  },
+  "sortByDate": {
+    "message": "מיין לפי תאריך הוספה"
+  },
+  "sortRecursiveSuffix": {
+    "message": "(רקורסיבי)"
+  },
+  "sortOptions": {
+    "message": "אפשרויות מיון…"
+  },
+  "sortDone": {
+    "message": "התיקייה ממוינת"
+  },
+  "sortByTitle": {
+    "message": "לפי כותרת"
+  },
+  "sortByDateAdded": {
+    "message": "לפי תאריך הוספה (חדש ראשון)"
+  },
+  "sortFoldersFirst": {
+    "message": "שמור תיקיות בראש"
+  },
+  "sortRecursive": {
+    "message": "מיין גם תת-תיקיות (רקורסיבי)"
+  },
+  "sortRecursiveWarning": {
+    "message": "פעולה זו מסדרת מחדש סימניות בכל תיקיית משנה."
+  },
+  "tabGroupDialogTitle": {
+    "message": "קבוצת טאבים חדשה"
+  },
+  "tabGroupTitleLabel": {
+    "message": "שם הקבוצה"
+  },
+  "tabGroupColorLabel": {
+    "message": "צבע"
+  },
+  "tabGroupColorGrey": {
+    "message": "אפור",
+    "description": "Accessible name of the grey color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorBlue": {
+    "message": "כחול",
+    "description": "Accessible name of the blue color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorRed": {
+    "message": "אדום",
+    "description": "Accessible name of the red color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorYellow": {
+    "message": "צהוב",
+    "description": "Accessible name of the yellow color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorGreen": {
+    "message": "ירוק",
+    "description": "Accessible name of the green color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPink": {
+    "message": "ורוד",
+    "description": "Accessible name of the pink color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPurple": {
+    "message": "סגול",
+    "description": "Accessible name of the purple color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorCyan": {
+    "message": "ציאן",
+    "description": "Accessible name of the cyan color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorOrange": {
+    "message": "כתום",
+    "description": "Accessible name of the orange color swatch in the new-tab-group dialog."
+  },
+  "tabGroupUntitled": {
+    "message": "קבוצה ללא שם"
+  },
+  "tabGroupNoGroups": {
+    "message": "אין קבוצות טאבים קיימות"
+  },
+  "tabGroupPickDialogTitle": {
+    "message": "פתח בקבוצת טאבים קיימת"
+  },
+  "quickAddBookmark": {
+    "message": "הוסף סימניה לדף זה (Ctrl+D)"
+  },
+  "quickAddBookmarkCommand": {
+    "message": "הוספה מהירה של הלשונית הנוכחית כסימניה"
+  },
+  "quickAdded": {
+    "message": "סימניה נוספה"
+  },
+  "quickAddedTo": {
+    "message": "הסימניה נוספה ל-$folderName$",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarks bar"
+      }
+    }
+  },
+  "quickRemoved": {
+    "message": "הסימניה הוסרה"
+  },
+  "quickRemoveBookmark": {
+    "message": "הסר סימניה זו (Ctrl+D)"
+  },
+  "toolButtonTitle": {
+    "message": "כלים (Ctrl+K)"
+  },
+  "contextMenuAddBookmark": {
+    "message": "הוסף סימניה לדף זה באמצעות vBookmarks"
   },
   "deadFilterAll": {
     "message": "הכל"
@@ -315,14 +1147,653 @@
   "deadMarkedBannerDismiss": {
     "message": "סגור"
   },
-  "deadNone": {
-    "message": "לא נמצאו קישורים מתים"
+  "deadProxyAdd": {
+    "message": "הוסף שרת פרוקסי לבדיקות קישורים שבורים"
   },
-  "deadNoneFiltered": {
-    "message": "אין קישורים מתים תחת מסנן זה — נסה קטע אחר למעלה"
+  "deadProxyLabel": {
+    "message": "פרוקסי: $server$",
+    "placeholders": {
+      "server": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadProxyChange": {
+    "message": "שנה"
+  },
+  "deadProxyRemove": {
+    "message": "הסר"
+  },
+  "deadProxyRemoved": {
+    "message": "שרת הפרוקסי הוסר"
+  },
+  "deadProxyPanelHint": {
+    "message": "הזן שרת פרוקסי שכבר יש לך (ההרחבה אינה מספקת אחד), למשל 127.0.0.1:7890 או socks5://127.0.0.1:1080."
+  },
+  "deadProxyTestUrlLabel": {
+    "message": "כתובת URL לבדיקה"
+  },
+  "deadProxyTestSave": {
+    "message": "בדוק ושמור"
+  },
+  "deadProxyTesting": {
+    "message": "בודק…"
+  },
+  "deadProxySaved": {
+    "message": "הפרוקסי נשמר — סריקות עתידיות יבדקו דרכו שוב כשלים ישירים."
+  },
+  "deadProxyInvalid": {
+    "message": "כתובת פרוקסי לא תקינה — יש להשתמש בפורמט host:port או scheme://host:port (http/https/socks5, ללא פרטי התחברות)."
+  },
+  "deadProxyUnreachable": {
+    "message": "הפרוקסי אינו זמין — לא נשמר"
+  },
+  "deadProxyDenied": {
+    "message": "הרשאת הפרוקסי לא ניתנה"
+  },
+  "deadProxyControlled": {
+    "message": "הגדרות הפרוקסי מנוהלות על ידי הרחבה אחרת"
+  },
+  "deadProxyUnavailable": {
+    "message": "ממשק ה-API של הפרוקסי אינו זמין בדפדפן זה"
+  },
+  "deadProxyNudge": {
+    "message": "בדיקת פרוקסי חוזרת מבדילה בין קישורים מתים באמת לאלה החסומים לפי אזור — הגדר זאת כאן או בדף האפשרויות."
+  },
+  "deadProxyNeverShow": {
+    "message": "אל תציג שוב"
+  },
+  "deadStartHint": {
+    "message": "התחל לסרוק $n$ סימניות",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadStatusBlocked": {
+    "message": "חסום"
+  },
+  "deadUnmark": {
+    "message": "הסר סימון מת"
+  },
+  "deadUnmarkAll": {
+    "message": "נקה את כל הסימונים"
+  },
+  "deadUnmarkSelected": {
+    "message": "בטל סימון מהנבחרים"
+  },
+  "dupesApplyAll": {
+    "message": "החל הכל ($count$)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesApplySelected": {
+    "message": "הסר כפילויות מהנבחרים ($count$)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesCleanRestHint": {
+    "message": "שמור על \"$title$\" והסר את $count$ האחרים",
+    "placeholders": {
+      "title": {
+        "content": "$1"
+      },
+      "count": {
+        "content": "$2"
+      }
+    }
+  },
+  "dupesIgnoreScheme": {
+    "message": "התעלם מהבדלי http/https"
+  },
+  "dupesKeepThis": {
+    "message": "שמור את זה"
+  },
+  "dupesKeeperSet": {
+    "message": "הגדר כשומר"
+  },
+  "dupesPreviewSummary": {
+    "message": "קבוצות $groups$ · $count$ ישוחררו",
+    "placeholders": {
+      "groups": {
+        "content": "$1"
+      },
+      "count": {
+        "content": "$2"
+      }
+    }
+  },
+  "dupesRemoveRow": {
+    "message": "מחק עותק זה"
+  },
+  "dupesScopeAll": {
+    "message": "כל הסימניות"
+  },
+  "dupesScopeBar": {
+    "message": "רק סרגל הסימניות"
+  },
+  "dupesStrategyBookmarkBar": {
+    "message": "שמור את זה שבסרגל הסימניות"
+  },
+  "dupesStrategyMostVisited": {
+    "message": "שמור את הנצפה ביותר"
+  },
+  "dupesStrategyNewest": {
+    "message": "שמור את החדש ביותר"
+  },
+  "dupesStrategyOldest": {
+    "message": "שמור את הישן ביותר"
+  },
+  "dupesStrategyShallowest": {
+    "message": "שמור את הרדוד ביותר"
+  },
+  "dupesStrategyShortestTitle": {
+    "message": "שמור את הכותרת הקצרה ביותר"
+  },
+  "optionDeadProxyServer": {
+    "message": "שרת פרוקסי לקישורים שבורים"
+  },
+  "deadProxyServerHint": {
+    "message": "השרת השמור בודק מחדש סימניות שנכשלו בבדיקה ישירה בכל סריקת קישורים מתים, ומפריד בין קישורים מתים אמיתיים לכאלה החסומים לפי אזור. בדיקה ושמירה בודקת אותו (נשמר רק שרת נגיש); ניתן גם להוסיף אותו מתצוגת הקישורים המתים."
+  },
+  "deadProxyClear": {
+    "message": "נקה"
+  },
+  "deadProxyNone": {
+    "message": "(לא מוגדר)"
+  },
+  "optionDeadProxyStrip": {
+    "message": "הצג רמז להוספת פרוקסי בתצוגת הקישורים השבורים"
+  },
+  "optionDeadProxyStripHint": {
+    "message": "כיבוי מסתיר את הרמז שם; שרת הפרוקסי נשאר ניתן להגדרה כאן, ושרת שמור תמיד מציג את שורת הניהול שלו בתצוגה."
+  },
+  "optionDeadScanConcurrency": {
+    "message": "מקביליות סריקת קישורים מתים (1-16)"
+  },
+  "optionDeadScanTimeout": {
+    "message": "זמן קצוב לסריקת קישורים מתים בשניות (2-30)"
+  },
+  "paletteCmdGoDead": {
+    "message": "עבור לתצוגת קישורים מתים"
+  },
+  "paletteCmdGoDupes": {
+    "message": "עבור לתצוגת כפילויות"
+  },
+  "paletteCmdGoRecent": {
+    "message": "עבור לתצוגת אחרונים"
+  },
+  "paletteCmdGoSearch": {
+    "message": "עבור לתצוגת חיפוש"
+  },
+  "paletteCmdGoTree": {
+    "message": "עבור לתצוגת עץ"
+  },
+  "paletteCmdOptions": {
+    "message": "פתח דף הגדרות"
+  },
+  "paletteCmdSearchInView": {
+    "message": "חפש '$query$' בתצוגת חיפוש",
+    "placeholders": {
+      "query": {
+        "content": "$1"
+      }
+    }
+  },
+  "rowActionDelete": {
+    "message": "מחק"
+  },
+  "rowActionMark": {
+    "message": "סמן כמת"
+  },
+  "rowActionReveal": {
+    "message": "הצג בעץ"
+  },
+  "rowActionUnmark": {
+    "message": "הסר סימון מת"
+  },
+  "viewDead": {
+    "message": "קישורים מתים"
+  },
+  "viewDupes": {
+    "message": "כפילויות"
+  },
+  "viewStats": {
+    "message": "סטטיסטיקות"
+  },
+  "paletteCmdGoStats": {
+    "message": "עבור לתצוגת סטטיסטיקות"
+  },
+  "optionStatsEnabled": {
+    "message": "הפעל סטטיסטיקות ביקור"
+  },
+  "optionFaviconContrast": {
+    "message": "הפוך אייקוני אתרים בעלי ניגודיות נמוכה"
+  },
+  "optionFaviconContrastHint": {
+    "message": "אייקונים לבנים בערכות נושא בהירות ואייקונים שחורים בערכות נושא כהות מופלים כדי שיישארו גלויים. כל אייקון נדגם פעם אחת בעת טעינתו — ללא עלות במהלך הגלישה."
+  },
+  "optionFaviconEnrich": {
+    "message": "אחזר אייקוני אתרים חסרים"
+  },
+  "optionFaviconEnrichHint": {
+    "message": "עבור אתרים בסימניות שאין ל-Chrome אייקון שמור עבורם, אחזר את האייקון האמיתי ישירות מהאתר (/favicon.ico, ולאחר מכן האייקונים המוצהרים של הדף). בקשות נשלחות רק לאתרים שבסימניות."
+  },
+  "optionFaviconEnrichAgg": {
+    "message": "גיבוי אייקון מצד שלישי"
+  },
+  "optionFaviconEnrichAggHint": {
+    "message": "כאשר האחזור הישיר נכשל, חפש את האייקון לפי דומיין מתוך רשימה מובנית של שירותי אייקונים של צד שלישי ($providers$). שירות שנמצא בלתי זמין מדולג ומנסים את הבא — הוא לא ינוסה שוב במשך 6 שעות.",
+    "placeholders": {
+      "providers": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionFaviconBackup": {
+    "message": "כלול מטמון אייקונים בגיבויים"
+  },
+  "optionFaviconBackupHint": {
+    "message": "כלול גם את מטמון האייקונים המועשר (נתונים לפי אתר, שעלולים להיות גדולים) בייצוא/ייבוא ההגדרות. זה כולל אייקונים שכבר נשמרו במטמון גם כשהאחזור כבוי. כשהאפשרות כבויה, הגיבויים נשארים קטנים; האייקונים יאוחזרו אוטומטית בכל מקרה."
+  },
+  "optionFaviconCacheClear": {
+    "message": "נקה מטמון אייקונים"
+  },
+  "optionFaviconCacheClearConfirm": {
+    "message": "לנקות את מטמון האייקונים המועשר? האייקונים יאוחזרו אוטומטית בפתיחה הבאה."
+  },
+  "optionFaviconCacheEmpty": {
+    "message": "אין מטמון אייקונים לנקות."
+  },
+  "optionFaviconCacheCleared": {
+    "message": "מטמון האייקונים נוקה. האייקונים יאוחזרו מחדש בפתיחה הבאה."
+  },
+  "favGalleryLink": {
+    "message": "הצג סמלים מעודכנים",
+    "description": "Options link (Icons group, right of the Clear icon cache button): opens the favicon gallery page listing the sites whose icons were refetched."
+  },
+  "favGalleryTitle": {
+    "message": "סמלי אתרים מעודכנים",
+    "description": "Favicon gallery page title (h1 + document title)."
+  },
+  "favGalleryHint": {
+    "message": "סמלים ש-vBookmarks הביא עבור אתרים עם סימנייה ש-Chrome לא שמר במטמון — מהיכן הגיע כל אחד ואילו סימניות משתמשות בו. לתצוגה בלבד.",
+    "description": "Subtitle under the favicon gallery title, explaining the page is read-only."
+  },
+  "favGallerySearch": {
+    "message": "סנן לפי אתר, כותרת או נתיב",
+    "description": "Placeholder of the favicon gallery filter input."
+  },
+  "favGalleryAll": {
+    "message": "הכל",
+    "description": "Favicon gallery source filter chip: show every source."
+  },
+  "favSrcDirect": {
+    "message": "ישיר",
+    "description": "Favicon gallery source badge: the icon was fetched directly from the site itself."
+  },
+  "favSrcProxy": {
+    "message": "פרוקסי",
+    "description": "Favicon gallery source badge: the icon was fetched through the user's own proxy relay."
+  },
+  "favSrcLegacy": {
+    "message": "מטמון קודם",
+    "description": "Favicon gallery source badge: cached before the source was recorded, so the origin is unknown."
+  },
+  "favGalleryCompare": {
+    "message": "השווה עם סמל ברירת המחדל",
+    "description": "Favicon gallery toggle button: switch every icon to the generic placeholder it replaced (before/after comparison)."
+  },
+  "favGalleryShowingBefore": {
+    "message": "חזרה לסמלים האמיתיים",
+    "description": "Favicon gallery toggle button while the placeholder comparison is shown: switch back to the real fetched icons."
+  },
+  "favGalleryStatSites": {
+    "message": "$n$ אתרים",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    },
+    "description": "Favicon gallery stats strip: how many sites have a refreshed icon."
+  },
+  "favGalleryStatBookmarks": {
+    "message": "$n$ סימניות",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    },
+    "description": "Favicon gallery stats strip: how many bookmarks sit on the refreshed sites."
+  },
+  "favGalleryVisits": {
+    "message": "$n$ פתיחות מתועדות",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    },
+    "description": "Favicon gallery tooltip on a bookmark row's visit-count pill."
+  },
+  "favGalleryFailedTitle": {
+    "message": "נוסו לאחרונה, לא נמצא סמל",
+    "description": "Favicon gallery heading of the muted section listing hosts whose icon fetch failed recently."
+  },
+  "favGalleryFailedHint": {
+    "message": "מתבצע ניסיון חוזר לכשלים לאחר 24 שעות, 3 ימים ו-7 ימים, ולאחר מכן מוותרים עליהם עד שינוקה מטמון הסמלים.",
+    "description": "Favicon gallery hint under the failed-fetch section title."
+  },
+  "favGalleryGaveUp": {
+    "message": "ננטש",
+    "description": "Favicon gallery badge on a failed-strip host whose retries are exhausted (it stays untouched until the icon cache is cleared)."
+  },
+  "favGalleryOrphan": {
+    "message": "לא נותרה סימנייה במארח הזה — הסמל יימחק עם המטמון.",
+    "description": "Favicon gallery note on a card whose host no longer has any bookmark."
+  },
+  "favGalleryEmptyTitle": {
+    "message": "אין עדיין סמלים מעודכנים",
+    "description": "Favicon gallery empty-state heading."
+  },
+  "favGalleryEmptyText": {
+    "message": "כשהחלונית נתקלת באתר מסומן בסימנייה שאין ל-Chrome סמל עבורו, vBookmarks שולף את הסמל האמיתי ומציג אותו כאן.",
+    "description": "Favicon gallery empty-state body text."
+  },
+  "storageUsageIcon": {
+    "message": "מטמון אייקונים"
+  },
+  "storageUsageOther": {
+    "message": "אחר"
+  },
+  "storageUsageSummary": {
+    "message": "נעשה שימוש ב-$1$ מתוך $2$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      },
+      "2": {
+        "content": "$2"
+      }
+    }
+  },
+  "storageUsageFree": {
+    "message": "פנוי"
+  },
+  "storageUsageHint": {
+    "message": "אחסון מקומי של ההרחבה בלבד (chrome.storage.local, מכסת כ-10 מגה-בייט): מטמון האייקונים יחד עם ההגדרות ונתונים מקומיים נוספים. הגדרות מסונכרנות, נתוני סשן וספריית הסימניות עצמה אינם נספרים כאן."
+  },
+  "optionsDonate": {
+    "message": "תרומה"
+  },
+  "optionsGithubLink": {
+    "message": "GitHub"
+  },
+  "optionsHomepageLink": {
+    "message": "דף הבית"
+  },
+  "optionsSince": {
+    "message": "נוצר מתוך Neat Bookmarks, ומתוחזק במשך $days$ ימים.",
+    "placeholders": {
+      "days": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionsVersion": {
+    "message": "גרסת vBookmarks"
+  },
+  "statsSortByCount": {
+    "message": "לפי כמות"
+  },
+  "statsSortByRecent": {
+    "message": "לפי אחרונים"
+  },
+  "statsShowUnbookmarked": {
+    "message": "הצג לא מסומנים"
+  },
+  "statsShowUnbookmarkedHint": {
+    "message": "כלול עמודים מההיסטוריה שלא נשמרו כסימניות."
+  },
+  "statsEmpty": {
+    "message": "סטטיסטיקות מצטברות כשפותחים סימניות"
+  },
+  "statsDisabledHint": {
+    "message": "סטטיסטיקות הביקור כבויות — הפעל אותן באפשרויות → תצוגות"
+  },
+  "statsVisitCount": {
+    "message": "בוקר $count$ פעמים",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "statsClearData": {
+    "message": "נקה סטטיסטיקות"
+  },
+  "statsClearConfirm": {
+    "message": "לנקות סטטיסטיקות ביקור עבור $count$ סימניות? לא ניתן לבטל פעולה זו.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "statsHistoryBanner": {
+    "message": "הענק גישה להיסטוריה כדי לאכלס סטטיסטיקות ביקורים עם ביקוריך הקודמים."
+  },
+  "statsHistoryEnable": {
+    "message": "הפעל"
+  },
+  "statsHistoryDismiss": {
+    "message": "אל תציג שוב"
+  },
+  "statsHistoryImported": {
+    "message": "יובאו ביקורים קודמים עבור $count$ סימניות",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "paletteCmdToggleViewTabs": {
+    "message": "הצג/הסתר לשוניות"
+  },
+  "paletteCmdTheme": {
+    "message": "הגדר ערכת נושא…"
+  },
+  "paletteCmdThemeUsage": {
+    "message": "שימוש: /theme ואחריו שם ערכת נושא — auto, light, dark, ink או paper (קידומת ייחודית עובדת, למשל /theme d)."
+  },
+  "paletteCustomTag": {
+    "message": "מותאם אישית"
+  },
+  "paletteCustomDeleteConfirm": {
+    "message": "למחוק את הפקודה \"$1\"? השינוי יסונכרן לכל המכשירים שלך."
+  },
+  "paletteCustomBroken": {
+    "message": "התיקייה של הפקודה \"$1\" כבר אינה קיימת. למחוק את הפקודה?"
+  },
+  "paletteCmdSaveAsCommand": {
+    "message": "שמור את \"$1\" כפקודה…"
+  },
+  "paletteActionOpenUrl": {
+    "message": "פתח כתובת URL"
+  },
+  "paletteActionOpenUrlGroup": {
+    "message": "פתח קבוצת תיקיות של סימניות"
+  },
+  "paletteActionViewPreset": {
+    "message": "פתח תצוגה עם הגדרה מראש"
+  },
+  "paletteActionUrlTemplate": {
+    "message": "פתח תבנית URL"
+  },
+  "optionsGroupPalette": {
+    "message": "פלטת פקודות"
+  },
+  "paletteCustomHint": {
+    "message": "פקודות סלאש מותאמות אישית לפלטת הפקודות (Ctrl/Cmd+K). הן מסונכרנות עם ההגדרות שלך — עד 100 פקודות."
+  },
+  "paletteCustomAdd": {
+    "message": "הוסף פקודה…"
+  },
+  "paletteCustomUsage": {
+    "message": "$1 / $2"
+  },
+  "paletteCustomSlash": {
+    "message": "לוכסן (המילה אחרי /)"
+  },
+  "paletteCustomAliases": {
+    "message": "כינויים (מופרדים בפסיקים)"
+  },
+  "paletteCustomAction": {
+    "message": "פעולה"
+  },
+  "paletteCustomUrl": {
+    "message": "URL"
+  },
+  "paletteCustomTemplate": {
+    "message": "תבנית URL — %s מוחלף במילים שאחרי הפקודה"
+  },
+  "paletteCustomWhere": {
+    "message": "פתח ב"
+  },
+  "paletteCustomFolder": {
+    "message": "תיקיית סימניות"
+  },
+  "paletteCustomView": {
+    "message": "תצוגה"
+  },
+  "paletteCustomStrategy": {
+    "message": "אסטרטגיית הסרת כפילויות"
+  },
+  "paletteCustomScope": {
+    "message": "טווח הסרת כפילויות"
+  },
+  "paletteCustomScan": {
+    "message": "התחל סריקה עם הכניסה"
+  },
+  "paletteWhereCurrent": {
+    "message": "לשונית נוכחית"
+  },
+  "paletteWhereTab": {
+    "message": "לשונית חדשה"
+  },
+  "paletteWhereWindow": {
+    "message": "חלון חדש"
+  },
+  "paletteWhereBackground": {
+    "message": "לשוניות רקע"
+  },
+  "paletteCustomSave": {
+    "message": "שמור פקודה"
+  },
+  "paletteCustomErrSlash": {
+    "message": "לוכסן: 1–24 תווים של אותיות קטנות, ספרות או מקפים, המתחיל באות או ספרה."
+  },
+  "paletteCustomErrAlias": {
+    "message": "כינויים: אותם כללים כמו הלוכסן (1–24 תווים של אותיות קטנות, ספרות או מקפים)."
+  },
+  "paletteCustomErrTaken": {
+    "message": "הלוכסן או הכינוי הזה כבר תפוס."
+  },
+  "paletteCustomErrUrl": {
+    "message": "מותרות רק כתובות URL עם http:// או https://."
+  },
+  "paletteCustomErrFolder": {
+    "message": "בחר תיקיית סימניות."
+  },
+  "paletteCustomErrView": {
+    "message": "בחר תצוגה."
+  },
+  "paletteCustomErrTemplate": {
+    "message": "התבנית חייבת להכיל בדיוק %s אחד."
+  },
+  "paletteCustomErrAction": {
+    "message": "בחר סוג פעולה."
+  },
+  "paletteCustomErrLimit": {
+    "message": "הגעת למגבלת הפקודות (100) — מחק אחת תחילה."
+  },
+  "paletteCustomEmpty": {
+    "message": "אין עדיין פקודות מותאמות אישית."
+  },
+  "recentGroupToday": {
+    "message": "היום"
+  },
+  "recentGroupWeek": {
+    "message": "השבוע"
+  },
+  "recentGroupMonth": {
+    "message": "החודש"
+  },
+  "recentGroupOlder": {
+    "message": "ישן יותר"
+  },
+  "searchHistoryRerun": {
+    "message": "חפש שוב"
+  },
+  "optionsGroupBackup": {
+    "message": "גיבוי"
+  },
+  "optionsGroupContextMenu": {
+    "message": "תפריטי הקשר"
+  },
+  "optionsGroupIcons": {
+    "message": "סמלים"
+  },
+  "settingsExport": {
+    "message": "ייצוא הגדרות"
+  },
+  "settingsImport": {
+    "message": "ייבוא הגדרות"
+  },
+  "settingsBackupHint": {
+    "message": "ייצוא שומר את כל ההגדרות (כולל העדפות סנכרון) לקובץ JSON. ייבוא ממזג גיבוי בחזרה: הגדרות בקובץ יחליפו את ההגדרות הנוכחיות, כל השאר נשמר."
+  },
+  "settingsImportConfirm": {
+    "message": "הייבוא יחליף כל הגדרה שנמצאת בקובץ הגיבוי (הגדרות שאינן בקובץ יישמרו) ויטען מחדש דף זה. להמשיך?"
+  },
+  "settingsImportInvalid": {
+    "message": "קובץ הגדרות לא תקין: אינו גיבוי הגדרות של vBookmarks."
+  },
+  "settingsImportDone": {
+    "message": "הגדרות יובאו. הדף ייטען מחדש כעת."
+  },
+  "settingsImportError": {
+    "message": "לא ניתן היה לכתוב חלק מההגדרות (מכסת אחסון או שגיאה זמנית). הייבוא לא הושלם — נסה שוב."
+  },
+  "statsSectionRecent": {
+    "message": "ביקורים אחרונים"
+  },
+  "statsSectionBookmarks": {
+    "message": "סטטיסטיקות סימניות"
+  },
+  "statsHistoryGuide": {
+    "message": "הענק גישה להיסטוריה כדי להציג את הביקורים האחרונים שלך כאן."
+  },
+  "statsHistoryAdd": {
+    "message": "הוסף לסימניות"
+  },
+  "statsHistoryBookmarked": {
+    "message": "סומן"
   },
   "deadPause": {
     "message": "השהה"
+  },
+  "deadResume": {
+    "message": "המשך"
+  },
+  "deadCancel": {
+    "message": "בטל"
   },
   "deadPaused": {
     "message": "מושהה"
@@ -671,1475 +2142,339 @@
   "optionTabGroupsClosedLimit": {
     "message": "היסטוריית כרטיסיות/קבוצות סגורות לשמירה"
   },
-  "deadProxyAdd": {
-    "message": "הוסף שרת פרוקסי לבדיקות קישורים שבורים"
+  "folderPickMoveHere": {
+    "message": "העבר לכאן"
   },
-  "deadProxyLabel": {
-    "message": "פרוקסי: $server$",
+  "folderPickCopyHere": {
+    "message": "העתק לכאן"
+  },
+  "folderPickFilter": {
+    "message": "סנן תיקיות…"
+  },
+  "folderPickFavNote": {
+    "message": "פריטים שאינם מסומנים יסומנו כאן"
+  },
+  "folderPickPinned": {
+    "message": "מוצמדות"
+  },
+  "folderPickRecent": {
+    "message": "אחרונות"
+  },
+  "pinFolder": {
+    "message": "הצמד תיקייה זו"
+  },
+  "unpinFolder": {
+    "message": "בטל הצמדת תיקייה זו"
+  },
+  "stagingAdd": {
+    "message": "הוסף לאזור ההמתנה"
+  },
+  "stagingAdded": {
+    "message": "נוסף לאזור ההמתנה"
+  },
+  "stagingAlready": {
+    "message": "כבר באזור ההמתנה"
+  },
+  "stagingAddedSummary": {
+    "message": "נוספו $n$ פריטים; $m$ כבר בהמתנה",
     "placeholders": {
-      "server": {
+      "n": {
         "content": "$1"
+      },
+      "m": {
+        "content": "$2"
       }
     }
   },
-  "deadProxyChange": {
-    "message": "שנה"
+  "stagingFull": {
+    "message": "אזור ההמתנה מלא — הסר תחילה פריטים"
   },
-  "deadProxyRemove": {
-    "message": "הסר"
+  "stagingFolderEmpty": {
+    "message": "לתיקייה זו אין סימניות להעברה"
   },
-  "deadProxyRemoved": {
-    "message": "שרת הפרוקסי הוסר"
-  },
-  "deadProxyPanelHint": {
-    "message": "הזן שרת פרוקסי שכבר יש לך (ההרחבה אינה מספקת אחד), למשל 127.0.0.1:7890 או socks5://127.0.0.1:1080."
-  },
-  "deadProxyTestUrlLabel": {
-    "message": "כתובת URL לבדיקה"
-  },
-  "deadProxyTestSave": {
-    "message": "בדוק ושמור"
-  },
-  "deadProxyTesting": {
-    "message": "בודק…"
-  },
-  "deadProxySaved": {
-    "message": "הפרוקסי נשמר — סריקות עתידיות יבדקו דרכו שוב כשלים ישירים."
-  },
-  "deadProxyInvalid": {
-    "message": "כתובת פרוקסי לא תקינה — יש להשתמש בפורמט host:port או scheme://host:port (http/https/socks5, ללא פרטי התחברות)."
-  },
-  "deadProxyUnreachable": {
-    "message": "הפרוקסי אינו זמין — לא נשמר"
-  },
-  "deadProxyDenied": {
-    "message": "הרשאת הפרוקסי לא ניתנה"
-  },
-  "deadProxyControlled": {
-    "message": "הגדרות הפרוקסי מנוהלות על ידי הרחבה אחרת"
-  },
-  "deadProxyUnavailable": {
-    "message": "ממשק ה-API של הפרוקסי אינו זמין בדפדפן זה"
-  },
-  "deadProxyNudge": {
-    "message": "בדיקת פרוקסי חוזרת מבדילה בין קישורים מתים באמת לאלה החסומים לפי אזור — הגדר זאת כאן או בדף האפשרויות."
-  },
-  "deadRescan": {
-    "message": "סריקה מחדש"
-  },
-  "deadResume": {
-    "message": "המשך"
-  },
-  "deadStartHint": {
-    "message": "התחל לסרוק $n$ סימניות",
+  "stagingConfirmFolder": {
+    "message": "להעביר $n$ סימניות מתיקייה זו?",
     "placeholders": {
       "n": {
         "content": "$1"
       }
     }
   },
-  "deadStatusBlocked": {
-    "message": "חסום"
+  "stagingRemove": {
+    "message": "הסר מאזור ההמתנה"
   },
-  "deadUnmark": {
-    "message": "הסר סימון מת"
+  "stagingRemoved": {
+    "message": "הוסר מאזור ההמתנה"
   },
-  "deadUnmarkAll": {
-    "message": "נקה את כל הסימונים"
+  "recentStageAll": {
+    "message": "העבר את כל החדשות"
   },
-  "deadUnmarkSelected": {
-    "message": "בטל סימון מהנבחרים"
-  },
-  "defaultIconButton": {
-    "message": "השתמש בברירת מחדל"
-  },
-  "defaultIconButtonOr": {
-    "message": "או"
-  },
-  "customIconPick": {
-    "message": "בחר קובץ…"
-  },
-  "delete": {
-    "message": "מחק"
-  },
-  "deleteEllipsis": {
-    "message": "מחק..."
-  },
-  "deletedBookmark": {
-    "message": "נמחקה $title$",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Example"
-      }
-    },
-    "description": "Toast shown after a bookmark or separator was deleted; the toast offers an undo button. $title$ is the deleted row's title (empty for separators)."
-  },
-  "deletedFolder": {
-    "message": "נמחקה תיקייה $title$",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Bookmarks"
-      }
-    },
-    "description": "Toast shown after a bookmark folder (with its whole subtree) was deleted; the toast offers an undo button. $title$ is the folder name."
-  },
-  "donationDismiss": {
-    "message": "סגור"
-  },
-  "donationGo": {
-    "message": "תרום"
-  },
-  "donationRate": {
-    "message": "דרגו"
-  },
-  "donationRateTitle": {
-    "message": "דרגו את vBookmarks בחנות האינטרנט של Chrome"
-  },
-  "donationLater": {
-    "message": "מאוחר יותר"
-  },
-  "donationMessage": {
-    "message": "נהנים מההרחבה? תרמו כדי לתמוך בעתידה — או דרגו אותה בחנות: כל ביקורת ממשיכה את העדכונים."
-  },
-  "donationV4Notice": {
-    "message": "vBookmarks 4.0 הוא גרסה מחודשת לחלוטין בעיצוב מודרני, עמוסה בתכונות חדשות."
-  },
-  "donationV4GuideLink": {
-    "message": "קרא את המדריך ל-v4 →"
-  },
-  "donationNever": {
-    "message": "אל תציג שוב"
-  },
-  "dupesApplyAll": {
-    "message": "החל הכל ($count$)",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "dupesApplySelected": {
-    "message": "הסר כפילויות מהנבחרים ($count$)",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "dupesCleanAll": {
-    "message": "נקה הכל: $groups$ קבוצות, $count$ עותקים מיותרים",
-    "placeholders": {
-      "groups": {
-        "content": "$1"
-      },
-      "count": {
-        "content": "$2"
-      }
-    },
-    "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go."
-  },
-  "dupesCleanRestHint": {
-    "message": "שמור על \"$title$\" והסר את $count$ האחרים",
-    "placeholders": {
-      "title": {
-        "content": "$1"
-      },
-      "count": {
-        "content": "$2"
-      }
-    }
-  },
-  "dupesConfirmAll": {
-    "message": "להסיר $count$ עותקים נוספים בין $groups$ קבוצות? הפריט שנבחר בכל קבוצה יישמר.",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      },
-      "groups": {
-        "content": "$2"
-      }
-    },
-    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
-  },
-  "dupesConfirmSelected": {
-    "message": "להסיר $count$ סימניות כפולות מבין $groups$ הקבוצות שנבחרו?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      },
-      "groups": {
-        "content": "$2"
-      }
-    }
-  },
-  "dupesConfirmGroup": {
-    "message": "להשאיר את \"$title$\" ולהסיר את $count$ העותקים האחרים?",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Example bookmark"
-      },
-      "count": {
-        "content": "$2"
-      }
-    },
-    "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."
-  },
-  "dupesDone": {
-    "message": "הוסרו $count$ סימניות כפולות",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Alert shown after the duplicate cleanup finished."
-  },
-  "dupesGroupCount": {
-    "message": "$count$ כפילויות",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
-  },
-  "dupesGroupExpand": {
-    "description": "Dupes view group-head context menu: expand a collapsed duplicate group.",
-    "message": "הרחב קבוצה"
-  },
-  "dupesGroupCollapse": {
-    "description": "Dupes view group-head context menu: collapse an expanded duplicate group.",
-    "message": "כווץ קבוצה"
-  },
-  "dupesIgnoreScheme": {
-    "message": "התעלם מהבדלי http/https"
-  },
-  "dupesKeepThis": {
-    "message": "שמור את זה"
-  },
-  "dupesKeeperSet": {
-    "message": "הגדר כשומר"
-  },
-  "dupesNone": {
-    "message": "לא נמצאו כפילויות"
-  },
-  "dupesPreviewSummary": {
-    "message": "קבוצות $groups$ · $count$ ישוחררו",
-    "placeholders": {
-      "groups": {
-        "content": "$1"
-      },
-      "count": {
-        "content": "$2"
-      }
-    }
-  },
-  "dupesRemoveRow": {
-    "message": "מחק עותק זה"
-  },
-  "dupesScopeAll": {
-    "message": "כל הסימניות"
-  },
-  "dupesScopeBar": {
-    "message": "רק סרגל הסימניות"
-  },
-  "dupesStrategyBookmarkBar": {
-    "message": "שמור את זה שבסרגל הסימניות"
-  },
-  "dupesStrategyMostVisited": {
-    "message": "שמור את הנצפה ביותר"
-  },
-  "dupesStrategyNewest": {
-    "message": "שמור את החדש ביותר"
-  },
-  "dupesStrategyOldest": {
-    "message": "שמור את הישן ביותר"
-  },
-  "dupesStrategyShallowest": {
-    "message": "שמור את הרדוד ביותר"
-  },
-  "dupesStrategyShortestTitle": {
-    "message": "שמור את הכותרת הקצרה ביותר"
-  },
-  "edit": {
-    "message": "ערוך..."
-  },
-  "editBookmark": {
-    "message": "ערוך סימנייה"
-  },
-  "editFolder": {
-    "message": "ערוך תיקייה"
-  },
-  "errorOccured": {
-    "message": "אופס, אירעה שגיאה."
-  },
-  "extDesc": {
-    "description": "The extension description.",
-    "message": "מנהל סימניות קופץ. Neat Bookmarks משופר. נקי יותר מ-Neater Bookmarks."
-  },
-  "extName": {
-    "description": "vBookmarks",
-    "message": "vBookmarks"
-  },
-  "folderEmpty": {
-    "message": "(ריק)"
-  },
-  "general": {
-    "message": "כללי"
-  },
-  "ignore": {
-    "message": "התעלם"
-  },
-  "name": {
-    "description": "Name of bookmark or folder.",
-    "message": "שם"
-  },
-  "noTitle": {
-    "description": "The title for untitled bookmarks with no http(s) URL or untitled folders.",
-    "message": "(ללא כותרת)"
-  },
-  "nope": {
-    "message": "ביטול"
-  },
-  "open": {
-    "description": "Action to open bookmarks.",
-    "message": "פתח"
-  },
-  "openBookmarks": {
-    "message": "פתח את כל הסימניות"
-  },
-  "openBookmarksInGroup": {
-    "message": "פתח הכל בקבוצת כרטיסיות"
-  },
-  "openBookmarksInGroupSetup": {
-    "message": "פתח הכל בקבוצת טאבים חדשה…"
-  },
-  "openBookmarksInExistingGroup": {
-    "message": "פתח הכל בקבוצת טאבים קיימת…"
-  },
-  "tabGroupOptions": {
-    "message": "קבוצות כרטיסיות"
-  },
-  "sortMenuOptions": {
-    "message": "מיון"
-  },
-  "openBookmarksIncognitoWindow": {
-    "message": "פתח סימניות בחלון פרטי"
-  },
-  "openBookmarksNewWindow": {
-    "message": "פתח את כל הסימניות בחלון חדש"
-  },
-  "openCommandPaletteCommand": {
-    "message": "פתח לוח פקודות"
-  },
-  "openIncognitoWindow": {
-    "message": "פתח בחלון גלישה פרטית"
-  },
-  "openNewTab": {
-    "message": "פתח בלשונית חדשה"
-  },
-  "bookmarkOpenInNewGroup": {
-    "message": "פתח בקבוצת טאבים חדשה"
-  },
-  "bookmarkOpenInNewGroupSetup": {
-    "message": "פתח בקבוצת טאבים חדשה…"
-  },
-  "bookmarkOpenInExistingGroup": {
-    "message": "פתח בקבוצת טאבים קיימת…"
-  },
-  "openNewWindow": {
-    "message": "פתח בחלון חדש"
-  },
-  "openSidePanelCommand": {
-    "message": "פתח חלונית צד של vBookmarks"
-  },
-  "optionAnnounceEnabledHint": {
-    "message": "הערות שחרור וטיפים ממאגר GitHub של הפרויקט (נשלפים לכל היותר כל 6 שעות). כיבוי גם עוצר את הבאת הנתונים מהרשת."
-  },
-  "optionAnnounceEnabled": {
-    "message": "הצג הודעות בתוך המוצר"
-  },
-  "optionAutoRefreshSync": {
-    "message": "רענן מצב סנכרון אוטומטית"
-  },
-  "optionAutoResizePopup": {
-    "message": "שנה גודל חלון הקופץ אוטומטית לפי תוכן"
-  },
-  "optionClickNewTab": {
-    "message": "לחיצה שמאלית פותחת סימנייה בלשונית חדשה."
-  },
-  "optionCloseUnusedFolders": {
-    "message": "סגור תיקיות שאינן בשימוש בעת פתיחת תיקייה."
-  },
-  "optionConfirmDeleteFolder": {
-    "message": "אשר לפני מחיקת תיקיות שאינן ריקות"
-  },
-  "optionConfirmOpenFolder": {
-    "message": "הצג אישור בעת פתיחת הרבה סימניות מתיקייה."
-  },
-  "optionDeadProxyServer": {
-    "message": "שרת פרוקסי לקישורים שבורים"
-  },
-  "deadProxyServerHint": {
-    "message": "השרת השמור בודק מחדש סימניות שנכשלו בבדיקה ישירה בכל סריקת קישורים מתים, ומפריד בין קישורים מתים אמיתיים לכאלה החסומים לפי אזור. בדיקה ושמירה בודקת אותו (נשמר רק שרת נגיש); ניתן גם להוסיף אותו מתצוגת הקישורים המתים."
-  },
-  "deadProxyClear": {
-    "message": "נקה"
-  },
-  "deadProxyNone": {
-    "message": "(לא מוגדר)"
-  },
-  "optionDeadScanConcurrency": {
-    "message": "מקביליות סריקת קישורים מתים (1-16)"
-  },
-  "optionDeadScanTimeout": {
-    "message": "זמן קצוב לסריקת קישורים מתים בשניות (2-30)"
-  },
-  "optionOnlyShowBookmarkBar": {
-    "message": "הצג רק סימניות בסרגל הסימניות"
-  },
-  "optionOpenInSidePanel": {
-    "message": "פתח בחלונית צד במקום בחלון קופץ"
-  },
-  "optionOpenNewTab": {
-    "message": "לחיצה אמצעית או control-לחיצה פותחת סימנייה בלשונית חדשה ברקע (במקום בחזית)."
-  },
-  "optionPopupStays": {
-    "message": "חלון קופץ נשאר פתוח בעת פתיחת (לחיצה שמאלית) סימניות."
-  },
-  "optionRecentCollapsed": {
-    "message": "כווץ את הקטע 'נוספו לאחרונה' כברירת מחדל"
-  },
-  "optionRecentCount": {
-    "message": "מספר הסימניות שנוספו לאחרונה להצגה"
-  },
-  "optionRememberPrevState": {
-    "message": "זכור מצב קודם (מיקום גלילה, תיקיות פתוחות והפריט האחרון בפוקוס)."
-  },
-  "optionSearchAfterEnter": {
-    "message": "חפש סימניות רק כאשר לוחצים ENTER (במקום חיפוש מיידי)"
-  },
-  "optionSearchHistory": {
-    "message": "תיעוד היסטוריית חיפוש"
-  },
-  "optionSearchHistoryHint": {
-    "message": "כיבוי זה ינקה גם את ההיסטוריה הקיימת."
-  },
-  "optionShowDeadView": {
-    "message": "הצג לשונית תצוגת קישורים מתים"
-  },
-  "optionShowDupesView": {
-    "message": "הצג לשונית תצוגת כפילויות"
-  },
-  "optionShowItemPath": {
-    "message": "הצג נתיב תיקיית אב בשורות הרשימה"
-  },
-  "optionShowRecentBookmarks": {
-    "message": "הצג סימניות שנוספו לאחרונה בראש החלון הקופץ"
-  },
-  "optionShowStatsView": {
-    "message": "הצג לשונית תצוגת סטטיסטיקות"
-  },
-  "optionShowSyncStatus": {
-    "message": "הצג מחווני מצב סנכרון"
-  },
-  "optionHighlightUnsynced": {
-    "message": "עמעם סימניות לא מסונכרנות"
-  },
-  "optionShowViewTabs": {
-    "message": "הצג לשוניות תצוגה מתחת לתיבת החיפוש"
-  },
-  "optionRememberView": {
-    "message": "זכור את התצוגה הפעילה האחרונה ופתח אותה מחדש"
-  },
-  "optionShowTabBadges": {
-    "message": "הצג תגי מספר על לשוניות התצוגה"
-  },
-  "optionPaletteEnabled": {
-    "message": "הפעל את פלטת הפקודות (Ctrl/Cmd+K)"
-  },
-  "optionQuickAddEnabled": {
-    "message": "הצג את כפתור הכוכב להוספה מהירה לצד תיבת החיפוש"
-  },
-  "optionQuickAddContextMenu": {
-    "message": "הוסף פריט \"הוסף עמוד זה לסימניות עם vBookmarks\" לתפריט ההקשר של הדף"
-  },
-  "optionQuickAddContextMenuHint": {
-    "message": "אינו תלוי בכפתור הכוכב להוספה מהירה; שחזור החוויה הקלאסית גם משבית פריט זה."
-  },
-  "optionCollapseTabGroupMenu": {
-    "message": "כווץ את ערכי קבוצות הכרטיסיות לתפריט משנה אחד \"קבוצות כרטיסיות…\""
-  },
-  "optionCollapseTabGroupMenuHint": {
-    "message": "חל על תפריטי ההקשר של תיקיות ושל סימניות. כבוי כברירת מחדל; מקצר תפריטים נמוכים במסכים קטנים או בעלי זום גבוה."
-  },
-  "optionCollapseSortMenu": {
-    "message": "כווץ את ערכי המיון לתפריט משנה אחד \"מיון…\""
-  },
-  "optionCollapseSortMenuHint": {
-    "message": "חל על תפריט ההקשר של תיקיות. מופעל כברירת מחדל."
-  },
-  "optionShowToolButton": {
-    "message": "הצג את כפתור הכלים (⋮) לצד תיבת החיפוש"
-  },
-  "optionClassicExperience": {
-    "message": "שחזר את הכותרת הקלאסית"
-  },
-  "optionClassicExperienceHint": {
-    "message": "מכבה את פלטת הפקודות, את כוכב ההוספה המהירה, את פריט תפריט ההקשר שלו בדף, את כפתור הכלי ואת כרטיסיות התצוגה. ניתן להפעיל כל אחד מחדש בנפרד בסעיף שלו."
-  },
-  "optionStatsEnabled": {
-    "message": "הפעל סטטיסטיקות ביקור"
-  },
-  "optionFaviconContrast": {
-    "message": "הפוך אייקוני אתרים בעלי ניגודיות נמוכה"
-  },
-  "optionFaviconContrastHint": {
-    "message": "אייקונים לבנים בערכות נושא בהירות ואייקונים שחורים בערכות נושא כהות מופלים כדי שיישארו גלויים. כל אייקון נדגם פעם אחת בעת טעינתו — ללא עלות במהלך הגלישה."
-  },
-  "optionFaviconEnrich": {
-    "message": "אחזר אייקוני אתרים חסרים"
-  },
-  "optionFaviconEnrichHint": {
-    "message": "עבור אתרים בסימניות שאין ל-Chrome אייקון שמור עבורם, אחזר את האייקון האמיתי ישירות מהאתר (/favicon.ico, ולאחר מכן האייקונים המוצהרים של הדף). בקשות נשלחות רק לאתרים שבסימניות."
-  },
-  "optionFaviconEnrichAgg": {
-    "message": "גיבוי אייקון מצד שלישי"
-  },
-  "optionFaviconEnrichAggHint": {
-    "message": "כאשר האחזור הישיר נכשל, חפש את האייקון לפי דומיין מתוך רשימה מובנית של שירותי אייקונים של צד שלישי ($providers$). שירות שנמצא בלתי זמין מדולג ומנסים את הבא — הוא לא ינוסה שוב במשך 6 שעות.",
-    "placeholders": {
-      "providers": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionFaviconBackup": {
-    "message": "כלול מטמון אייקונים בגיבויים"
-  },
-  "optionFaviconBackupHint": {
-    "message": "כלול גם את מטמון האייקונים המועשר (נתונים לפי אתר, שעלולים להיות גדולים) בייצוא/ייבוא ההגדרות. זה כולל אייקונים שכבר נשמרו במטמון גם כשהאחזור כבוי. כשהאפשרות כבויה, הגיבויים נשארים קטנים; האייקונים יאוחזרו אוטומטית בכל מקרה."
-  },
-  "optionFaviconCacheClear": {
-    "message": "נקה מטמון אייקונים"
-  },
-  "optionFaviconCacheClearConfirm": {
-    "message": "לנקות את מטמון האייקונים המועשר? האייקונים יאוחזרו אוטומטית בפתיחה הבאה."
-  },
-  "optionFaviconCacheEmpty": {
-    "message": "אין מטמון אייקונים לנקות."
-  },
-  "optionFaviconCacheCleared": {
-    "message": "מטמון האייקונים נוקה. האייקונים יאוחזרו מחדש בפתיחה הבאה."
-  },
-  "favGalleryLink": {
-    "message": "הצג סמלים מעודכנים",
-    "description": "Options link (Icons group, right of the Clear icon cache button): opens the favicon gallery page listing the sites whose icons were refetched."
-  },
-  "favGalleryTitle": {
-    "message": "סמלי אתרים מעודכנים",
-    "description": "Favicon gallery page title (h1 + document title)."
-  },
-  "favGalleryHint": {
-    "message": "סמלים ש-vBookmarks הביא עבור אתרים עם סימנייה ש-Chrome לא שמר במטמון — מהיכן הגיע כל אחד ואילו סימניות משתמשות בו. לתצוגה בלבד.",
-    "description": "Subtitle under the favicon gallery title, explaining the page is read-only."
-  },
-  "favGallerySearch": {
-    "message": "סנן לפי אתר, כותרת או נתיב",
-    "description": "Placeholder of the favicon gallery filter input."
-  },
-  "favGalleryAll": {
-    "message": "הכל",
-    "description": "Favicon gallery source filter chip: show every source."
-  },
-  "favSrcDirect": {
-    "message": "ישיר",
-    "description": "Favicon gallery source badge: the icon was fetched directly from the site itself."
-  },
-  "favSrcProxy": {
-    "message": "פרוקסי",
-    "description": "Favicon gallery source badge: the icon was fetched through the user's own proxy relay."
-  },
-  "favSrcLegacy": {
-    "message": "מטמון קודם",
-    "description": "Favicon gallery source badge: cached before the source was recorded, so the origin is unknown."
-  },
-  "favGalleryCompare": {
-    "message": "השווה עם סמל ברירת המחדל",
-    "description": "Favicon gallery toggle button: switch every icon to the generic placeholder it replaced (before/after comparison)."
-  },
-  "favGalleryShowingBefore": {
-    "message": "חזרה לסמלים האמיתיים",
-    "description": "Favicon gallery toggle button while the placeholder comparison is shown: switch back to the real fetched icons."
-  },
-  "favGalleryStatSites": {
-    "message": "$n$ אתרים",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    },
-    "description": "Favicon gallery stats strip: how many sites have a refreshed icon."
-  },
-  "favGalleryStatBookmarks": {
-    "message": "$n$ סימניות",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    },
-    "description": "Favicon gallery stats strip: how many bookmarks sit on the refreshed sites."
-  },
-  "favGalleryVisits": {
-    "message": "$n$ פתיחות מתועדות",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    },
-    "description": "Favicon gallery tooltip on a bookmark row's visit-count pill."
-  },
-  "favGalleryFailedTitle": {
-    "message": "נוסו לאחרונה, לא נמצא סמל",
-    "description": "Favicon gallery heading of the muted section listing hosts whose icon fetch failed recently."
-  },
-  "favGalleryFailedHint": {
-    "message": "מתבצע ניסיון חוזר לכשלים לאחר 24 שעות, 3 ימים ו-7 ימים, ולאחר מכן מוותרים עליהם עד שינוקה מטמון הסמלים.",
-    "description": "Favicon gallery hint under the failed-fetch section title."
-  },
-  "favGalleryGaveUp": {
-    "message": "ננטש",
-    "description": "Favicon gallery badge on a failed-strip host whose retries are exhausted (it stays untouched until the icon cache is cleared)."
-  },
-  "favGalleryOrphan": {
-    "message": "לא נותרה סימנייה במארח הזה — הסמל יימחק עם המטמון.",
-    "description": "Favicon gallery note on a card whose host no longer has any bookmark."
-  },
-  "favGalleryEmptyTitle": {
-    "message": "אין עדיין סמלים מעודכנים",
-    "description": "Favicon gallery empty-state heading."
-  },
-  "favGalleryEmptyText": {
-    "message": "כשהחלונית נתקלת באתר מסומן בסימנייה שאין ל-Chrome סמל עבורו, vBookmarks שולף את הסמל האמיתי ומציג אותו כאן.",
-    "description": "Favicon gallery empty-state body text."
-  },
-  "storageUsageIcon": {
-    "message": "מטמון אייקונים"
-  },
-  "storageUsageOther": {
-    "message": "אחר"
-  },
-  "storageUsageSummary": {
-    "message": "נעשה שימוש ב-$1$ מתוך $2$",
-    "placeholders": {
-      "1": {
-        "content": "$1"
-      },
-      "2": {
-        "content": "$2"
-      }
-    }
-  },
-  "storageUsageFree": {
-    "message": "פנוי"
-  },
-  "storageUsageHint": {
-    "message": "אחסון מקומי של ההרחבה בלבד (chrome.storage.local, מכסת כ-10 מגה-בייט): מטמון האייקונים יחד עם ההגדרות ונתונים מקומיים נוספים. הגדרות מסונכרנות, נתוני סשן וספריית הסימניות עצמה אינם נספרים כאן."
-  },
-  "optionsDonate": {
-    "message": "תרומה"
-  },
-  "optionsGithubLink": {
-    "message": "GitHub"
-  },
-  "optionsHomepageLink": {
-    "message": "דף הבית"
-  },
-  "optionsSince": {
-    "message": "נוצר מתוך Neat Bookmarks, ומתוחזק במשך $days$ ימים.",
-    "placeholders": {
-      "days": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionsVersion": {
-    "message": "גרסת vBookmarks"
-  },
-  "optionSyncRefreshInterval": {
-    "message": "מרווח רענון"
-  },
-  "optionSyncRefreshIntervalSeconds": {
-    "message": "שניות"
-  },
-  "optionTheme": {
-    "message": "ערכת נושא"
-  },
-  "optionThemeAuto": {
-    "message": "עקוב אחר המערכת"
-  },
-  "optionThemeDark": {
-    "message": "כהה"
-  },
-  "optionThemeInk": {
-    "message": "דיו (כהה)"
-  },
-  "optionThemeLight": {
-    "message": "בהיר"
-  },
-  "optionThemePaper": {
-    "message": "נייר (בהיר)"
-  },
-  "optionLanguage": {
-    "message": "שפה"
-  },
-  "optionLanguageAuto": {
-    "message": "אוטומטי"
-  },
-  "optionLanguageHint": {
-    "message": "שינוי השפה יטען מחדש את הדף הזה."
-  },
-  "paletteClose": {
-    "message": "סגור"
-  },
-  "paletteCmdVersion": {
-    "message": "מידע גרסה"
-  },
-  "paletteCmdLang": {
-    "message": "החלף שפה…"
-  },
-  "paletteCmdLangUsage": {
-    "message": "שימוש: /lang ואחריו קוד שפה — למשל /lang en, /lang zh_CN, /lang ja."
-  },
-  "versionDialogTitle": {
-    "message": "vBookmarks $version$",
-    "placeholders": {
-      "version": {
-        "content": "$1"
-      }
-    }
-  },
-  "versionDialogCopy": {
-    "message": "העתק מידע"
-  },
-  "versionDialogCopied": {
-    "message": "הועתק"
-  },
-  "versionMetaVersion": {
-    "message": "גרסת הרחבה"
-  },
-  "versionMetaAnnounce": {
-    "message": "מה חדש"
-  },
-  "versionMetaAnnounceNone": {
-    "message": "לא נטענה הודעה"
-  },
-  "versionMetaBrowser": {
-    "message": "דפדפן"
-  },
-  "versionMetaOS": {
-    "message": "מערכת הפעלה"
-  },
-  "versionMetaChannel": {
-    "message": "ערוץ"
-  },
-  "versionMetaLanguage": {
-    "message": "שפה"
-  },
-  "versionMetaUserAgent": {
-    "message": "סוכן משתמש"
-  },
-  "optionZoom": {
-    "message": "זום"
-  },
-  "options": {
-    "message": "אפשרויות"
-  },
-  "optionsFooterText": {
-    "description": "Footer text for the Options page",
-    "message": "נוצר על ידי $authorName$.",
-    "placeholders": {
-      "authorName": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionsGroupBackup": {
-    "message": "גיבוי"
-  },
-  "optionsGroupIcons": {
-    "message": "סמלים"
-  },
-  "optionsGroupContextMenu": {
-    "message": "תפריטי הקשר"
-  },
-  "optionsGroupViews": {
-    "message": "תצוגות"
-  },
-  "optionsGroupSort": {
-    "message": "מיון"
-  },
-  "optionsGroupTools": {
-    "message": "כלים"
-  },
-  "optionsGroupStats": {
-    "message": "סטטיסטיקות"
-  },
-  "paletteCmdDead": {
-    "message": "מצא קישורים מתים"
-  },
-  "paletteCmdDupes": {
-    "message": "נקה סימניות כפולות"
-  },
-  "paletteCmdGoDead": {
-    "message": "עבור לתצוגת קישורים מתים"
-  },
-  "paletteCmdGoDupes": {
-    "message": "עבור לתצוגת כפילויות"
-  },
-  "paletteCmdGoRecent": {
-    "message": "עבור לתצוגת אחרונים"
-  },
-  "paletteCmdGoSearch": {
-    "message": "עבור לתצוגת חיפוש"
-  },
-  "paletteCmdGoStats": {
-    "message": "עבור לתצוגת סטטיסטיקות"
-  },
-  "paletteCmdGoTree": {
-    "message": "עבור לתצוגת עץ"
-  },
-  "paletteCmdNewBookmark": {
-    "message": "סימניה חדשה…"
-  },
-  "paletteCmdNewFolder": {
-    "message": "תיקייה חדשה…"
-  },
-  "paletteCmdOptions": {
-    "message": "פתח דף הגדרות"
-  },
-  "paletteCmdQuickAdd": {
-    "message": "סמן כרטיסייה נוכחית"
-  },
-  "paletteCmdSaveSession": {
-    "message": "שמור כרטיסיות חלון כתיקייה"
-  },
-  "paletteCmdSearchInView": {
-    "message": "חפש '$query$' בתצוגת חיפוש",
-    "placeholders": {
-      "query": {
-        "content": "$1"
-      }
-    }
-  },
-  "paletteCmdToggleViewTabs": {
-    "message": "הצג/הסתר לשוניות"
-  },
-  "paletteCmdTheme": {
-    "message": "הגדר ערכת נושא…"
-  },
-  "paletteCmdThemeUsage": {
-    "message": "שימוש: /theme ואחריו שם ערכת נושא — auto, light, dark, ink או paper (קידומת ייחודית עובדת, למשל /theme d)."
-  },
-  "paletteCustomTag": {
-    "message": "מותאם אישית"
-  },
-  "paletteCustomDeleteConfirm": {
-    "message": "למחוק את הפקודה \"$1\"? השינוי יסונכרן לכל המכשירים שלך."
-  },
-  "paletteCustomBroken": {
-    "message": "התיקייה של הפקודה \"$1\" כבר אינה קיימת. למחוק את הפקודה?"
-  },
-  "paletteCmdSaveAsCommand": {
-    "message": "שמור את \"$1\" כפקודה…"
-  },
-  "paletteActionOpenUrl": {
-    "message": "פתח כתובת URL"
-  },
-  "paletteActionOpenUrlGroup": {
-    "message": "פתח קבוצת תיקיות של סימניות"
-  },
-  "paletteActionViewPreset": {
-    "message": "פתח תצוגה עם הגדרה מראש"
-  },
-  "paletteActionUrlTemplate": {
-    "message": "פתח תבנית URL"
-  },
-  "optionsGroupPalette": {
-    "message": "פלטת פקודות"
-  },
-  "paletteCustomHint": {
-    "message": "פקודות סלאש מותאמות אישית לפלטת הפקודות (Ctrl/Cmd+K). הן מסונכרנות עם ההגדרות שלך — עד 100 פקודות."
-  },
-  "paletteCustomAdd": {
-    "message": "הוסף פקודה…"
-  },
-  "paletteCustomUsage": {
-    "message": "$1 / $2"
-  },
-  "paletteCustomSlash": {
-    "message": "לוכסן (המילה אחרי /)"
-  },
-  "paletteCustomAliases": {
-    "message": "כינויים (מופרדים בפסיקים)"
-  },
-  "paletteCustomAction": {
-    "message": "פעולה"
-  },
-  "paletteCustomUrl": {
-    "message": "URL"
-  },
-  "paletteCustomTemplate": {
-    "message": "תבנית URL — %s מוחלף במילים שאחרי הפקודה"
-  },
-  "paletteCustomWhere": {
-    "message": "פתח ב"
-  },
-  "paletteCustomFolder": {
-    "message": "תיקיית סימניות"
-  },
-  "paletteCustomView": {
-    "message": "תצוגה"
-  },
-  "paletteCustomStrategy": {
-    "message": "אסטרטגיית הסרת כפילויות"
-  },
-  "paletteCustomScope": {
-    "message": "טווח הסרת כפילויות"
-  },
-  "paletteCustomScan": {
-    "message": "התחל סריקה עם הכניסה"
-  },
-  "paletteWhereCurrent": {
-    "message": "לשונית נוכחית"
-  },
-  "paletteWhereTab": {
-    "message": "לשונית חדשה"
-  },
-  "paletteWhereWindow": {
-    "message": "חלון חדש"
-  },
-  "paletteWhereBackground": {
-    "message": "לשוניות רקע"
-  },
-  "paletteCustomSave": {
-    "message": "שמור פקודה"
-  },
-  "paletteCustomErrSlash": {
-    "message": "לוכסן: 1–24 תווים של אותיות קטנות, ספרות או מקפים, המתחיל באות או ספרה."
-  },
-  "paletteCustomErrAlias": {
-    "message": "כינויים: אותם כללים כמו הלוכסן (1–24 תווים של אותיות קטנות, ספרות או מקפים)."
-  },
-  "paletteCustomErrTaken": {
-    "message": "הלוכסן או הכינוי הזה כבר תפוס."
-  },
-  "paletteCustomErrUrl": {
-    "message": "מותרות רק כתובות URL עם http:// או https://."
-  },
-  "paletteCustomErrFolder": {
-    "message": "בחר תיקיית סימניות."
-  },
-  "paletteCustomErrView": {
-    "message": "בחר תצוגה."
-  },
-  "paletteCustomErrTemplate": {
-    "message": "התבנית חייבת להכיל בדיוק %s אחד."
-  },
-  "paletteCustomErrAction": {
-    "message": "בחר סוג פעולה."
-  },
-  "paletteCustomErrLimit": {
-    "message": "הגעת למגבלת הפקודות (100) — מחק אחת תחילה."
-  },
-  "paletteCustomEmpty": {
-    "message": "אין עדיין פקודות מותאמות אישית."
-  },
-  "paletteNoResults": {
-    "message": "אין תוצאות תואמות"
-  },
-  "palettePlaceholder": {
-    "message": "חפש סימניות, תיקיות, פקודות…"
-  },
-  "parentFolder": {
-    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
-    "message": "תיקיית אב: \"$folderName$\"",
-    "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarksbar"
-      }
-    }
-  },
-  "quickAddBookmark": {
-    "message": "הוסף סימניה לדף זה (Ctrl+D)"
-  },
-  "quickAddBookmarkCommand": {
-    "message": "הוספה מהירה של הלשונית הנוכחית כסימניה"
-  },
-  "quickAdded": {
-    "message": "סימניה נוספה"
-  },
-  "quickAddedTo": {
-    "message": "הסימניה נוספה ל-$folderName$",
-    "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarks bar"
-      }
-    }
-  },
-  "quickRemoveBookmark": {
-    "message": "הסר סימניה זו (Ctrl+D)"
-  },
-  "quickRemoved": {
-    "message": "הסימניה הוסרה"
-  },
-  "recentBookmarks": {
+  "recentSectionTitle": {
     "message": "נוספו לאחרונה"
   },
-  "recentEmpty": {
-    "message": "אין סימניות אחרונות. לחץ על Ctrl+D כדי לסמן את הדף הנוכחי."
+  "stagingEmpty": {
+    "message": "ריק — לחץ לחיצה ימנית על סימניה, השתמש בכפתור ↑ כאן, או בשורות היסטוריית סטטיסטיקות כדי לשלוח פריטים לאזור ההמתנה"
   },
-  "recentGroupMonth": {
-    "message": "החודש"
+  "stagingFromHistory": {
+    "message": "מהיסטוריה"
   },
-  "recentGroupOlder": {
-    "message": "ישן יותר"
+  "stagingGroupExpand": {
+    "message": "הרחב קבוצה"
   },
-  "recentGroupToday": {
-    "message": "היום"
+  "stagingGroupCollapse": {
+    "message": "כווץ קבוצה"
   },
-  "recentGroupWeek": {
-    "message": "השבוע"
+  "stagingGroupRename": {
+    "message": "שנה שם קבוצה…"
   },
-  "recentRevealInTree": {
-    "message": "חשוף בעץ"
+  "stagingGroupDissolve": {
+    "message": "פרק קבוצה"
   },
-  "removeSeparator": {
-    "message": "הסר מפריד"
+  "stagingGroupDissolved": {
+    "message": "הקבוצה פורקה — פריטים נשמרו באזור ההמתנה"
   },
-  "replaceUrl": {
-    "message": "החלף זאת ב-URL הנוכחי"
+  "stagingGroupAssign": {
+    "message": "קבוצה…"
   },
-  "reportError": {
-    "message": "דווח על שגיאה"
+  "stagingGroupAssignTitle": {
+    "message": "שייך לקבוצה"
   },
-  "reportedToDeveloper": {
-    "description": "A message for an error occured in the extension, has been reported to the developer.",
-    "message": "זה דווח למפתח."
+  "stagingGroupNew": {
+    "message": "קבוצה חדשה"
   },
-  "resetButton": {
-    "message": "איפוס"
+  "stagingGroupNamePrompt": {
+    "message": "שם קבוצה חדשה"
   },
-  "resetSettings": {
-    "message": "איפוס הגדרות"
+  "stagingGroupNoGroups": {
+    "message": "אין עדיין קבוצות"
   },
-  "resetSettingsDescription": {
-    "message": "אפס את vBookmarks להגדרות ברירת המחדל."
+  "stagingBucketTitle": {
+    "message": "לא מסומן"
   },
-  "rowActionDelete": {
-    "message": "מחק"
+  "stagingBucketFavAll": {
+    "message": "סמן הכל כמועדף"
   },
-  "rowActionMark": {
-    "message": "סמן כמת"
-  },
-  "rowActionReveal": {
-    "message": "הצג בעץ"
-  },
-  "rowActionUnmark": {
-    "message": "הסר סימון מת"
-  },
-  "save": {
-    "message": "שמור"
-  },
-  "searchBookmarks": {
-    "description": "Placeholder text for search field.",
-    "message": "חפש סימניות"
-  },
-  "searchClear": {
-    "message": "נקה חיפוש"
-  },
-  "searchHistoryClear": {
-    "message": "נקה הכל"
-  },
-  "searchHistoryRemove": {
-    "message": "הסר חיפוש זה"
-  },
-  "searchHistoryRerun": {
-    "message": "חפש שוב"
-  },
-  "searchHistoryResultCount": {
-    "message": "$n$ תוצאה(ות)",
+  "stagingNew": {
+    "message": "חדש $n$",
     "placeholders": {
       "n": {
         "content": "$1"
       }
     }
   },
-  "searchHistoryTitle": {
-    "message": "חיפושים אחרונים"
+  "stagingRowFav": {
+    "message": "סמן פריט זה כמועדף"
   },
-  "searchNoResults": {
-    "message": "אין סימניות תואמות"
+  "stagingRowUnfav": {
+    "message": "בטל סימון מועדף לפריט זה"
   },
-  "searchViewHint": {
-    "message": "הקלד בתיבה למעלה כדי לחפש בסימניות שלך"
+  "stagingFav": {
+    "message": "מועדף"
   },
-  "selectAll": {
-    "message": "הכל"
+  "stagingUnfav": {
+    "message": "לא מועדף"
   },
-  "selectClear": {
-    "message": "נקה"
-  },
-  "selectCount": {
-    "message": "נבחרו $count$",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "selectInvert": {
-    "message": "הפוך"
-  },
-  "selectModeEnter": {
-    "message": "בחר"
-  },
-  "selectModeExit": {
-    "message": "צא ממצב בחירה"
-  },
-  "deadRiskBanner": {
-    "message": "ניקוי קישורים שבורים מוחק סימניות בכמות גדולה. גבה את הסימניות לפני הניקוי הראשון."
-  },
-  "dupesRiskBanner": {
-    "message": "הסרת כפילויות מוחקת סימניות כפולות בכמות גדולה. גבה את הסימניות לפני שתפעיל אותה."
-  },
-  "riskBannerHelp": {
-    "message": "מדריך גיבוי ושחזור"
-  },
-  "riskBannerNever": {
-    "message": "לא להציג שוב"
-  },
-  "riskBannerDismiss": {
-    "message": "סגור"
-  },
-  "sessionEmpty": {
-    "message": "אין כרטיסיות לשמירה"
-  },
-  "sessionFolderName": {
-    "message": "סשן $date$",
-    "placeholders": {
-      "date": {
-        "content": "$1",
-        "example": "2026-07-18 15:04"
-      }
-    },
-    "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm."
-  },
-  "sessionSaved": {
-    "message": "נשמרו $count$ כרטיסיות בתיקייה חדשה",
-    "placeholders": {
-      "count": {
-        "content": "$1",
-        "example": "12"
-      }
-    },
-    "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
-  },
-  "settingsBackupHint": {
-    "message": "ייצוא שומר את כל ההגדרות (כולל העדפות סנכרון) לקובץ JSON. ייבוא ממזג גיבוי בחזרה: הגדרות בקובץ יחליפו את ההגדרות הנוכחיות, כל השאר נשמר."
-  },
-  "settingsExport": {
-    "message": "ייצוא הגדרות"
-  },
-  "settingsImport": {
-    "message": "ייבוא הגדרות"
-  },
-  "settingsImportConfirm": {
-    "message": "הייבוא יחליף כל הגדרה שנמצאת בקובץ הגיבוי (הגדרות שאינן בקובץ יישמרו) ויטען מחדש דף זה. להמשיך?"
-  },
-  "settingsImportDone": {
-    "message": "הגדרות יובאו. הדף ייטען מחדש כעת."
-  },
-  "settingsImportError": {
-    "message": "לא ניתן היה לכתוב חלק מההגדרות (מכסת אחסון או שגיאה זמנית). הייבוא לא הושלם — נסה שוב."
-  },
-  "settingsImportInvalid": {
-    "message": "קובץ הגדרות לא תקין: אינו גיבוי הגדרות של vBookmarks."
-  },
-  "sortByDateAdded": {
-    "message": "לפי תאריך הוספה (חדש ראשון)"
-  },
-  "sortByTitle": {
-    "message": "לפי כותרת"
-  },
-  "sortFolderContents": {
-    "message": "מיין תוכן תיקייה"
-  },
-  "sortByName": {
-    "message": "מיין לפי שם"
-  },
-  "sortByDate": {
-    "message": "מיין לפי תאריך הוספה"
-  },
-  "sortRecursiveSuffix": {
-    "message": "(רקורסיבי)"
-  },
-  "sortOptions": {
-    "message": "אפשרויות מיון…"
-  },
-  "sortDone": {
-    "message": "התיקייה ממוינת"
-  },
-  "sortFoldersFirst": {
-    "message": "שמור תיקיות בראש"
-  },
-  "sortRecursive": {
-    "message": "מיין גם תת-תיקיות (רקורסיבי)"
-  },
-  "sortRecursiveWarning": {
-    "message": "פעולה זו מסדרת מחדש סימניות בכל תיקיית משנה."
-  },
-  "tabGroupDialogTitle": {
-    "message": "קבוצת טאבים חדשה"
-  },
-  "tabGroupTitleLabel": {
-    "message": "שם הקבוצה"
-  },
-  "tabGroupColorLabel": {
-    "message": "צבע"
-  },
-  "tabGroupColorGrey": {
-    "message": "אפור",
-    "description": "Accessible name of the grey color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorBlue": {
-    "message": "כחול",
-    "description": "Accessible name of the blue color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorRed": {
-    "message": "אדום",
-    "description": "Accessible name of the red color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorYellow": {
-    "message": "צהוב",
-    "description": "Accessible name of the yellow color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorGreen": {
-    "message": "ירוק",
-    "description": "Accessible name of the green color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorPink": {
-    "message": "ורוד",
-    "description": "Accessible name of the pink color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorPurple": {
-    "message": "סגול",
-    "description": "Accessible name of the purple color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorCyan": {
-    "message": "ציאן",
-    "description": "Accessible name of the cyan color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorOrange": {
-    "message": "כתום",
-    "description": "Accessible name of the orange color swatch in the new-tab-group dialog."
-  },
-  "tabGroupUntitled": {
-    "message": "קבוצה ללא שם"
-  },
-  "tabGroupNoGroups": {
-    "message": "אין קבוצות טאבים קיימות"
-  },
-  "tabGroupPickDialogTitle": {
-    "message": "פתח בקבוצת טאבים קיימת"
-  },
-  "statsClearConfirm": {
-    "message": "לנקות סטטיסטיקות ביקור עבור $count$ סימניות? לא ניתן לבטל פעולה זו.",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "statsClearData": {
-    "message": "נקה סטטיסטיקות"
-  },
-  "statsDisabledHint": {
-    "message": "סטטיסטיקות הביקור כבויות — הפעל אותן באפשרויות → תצוגות"
-  },
-  "statsEmpty": {
-    "message": "סטטיסטיקות מצטברות כשפותחים סימניות"
-  },
-  "statsHistoryAdd": {
-    "message": "הוסף לסימניות"
-  },
-  "statsHistoryBanner": {
-    "message": "הענק גישה להיסטוריה כדי לאכלס סטטיסטיקות ביקורים עם ביקוריך הקודמים."
-  },
-  "statsHistoryBookmarked": {
-    "message": "סומן"
-  },
-  "statsHistoryDismiss": {
-    "message": "אל תציג שוב"
-  },
-  "statsHistoryEnable": {
-    "message": "הפעל"
-  },
-  "statsHistoryGuide": {
-    "message": "הענק גישה להיסטוריה כדי להציג את הביקורים האחרונים שלך כאן."
-  },
-  "statsHistoryImported": {
-    "message": "יובאו ביקורים קודמים עבור $count$ סימניות",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "statsSectionBookmarks": {
-    "message": "סטטיסטיקות סימניות"
-  },
-  "statsSectionRecent": {
-    "message": "ביקורים אחרונים"
-  },
-  "statsSortByCount": {
-    "message": "לפי כמות"
-  },
-  "statsSortByRecent": {
-    "message": "לפי אחרונים"
-  },
-  "statsShowUnbookmarked": {
-    "message": "הצג לא מסומנים"
-  },
-  "statsShowUnbookmarkedHint": {
-    "message": "כלול עמודים מההיסטוריה שלא נשמרו כסימניות."
-  },
-  "statsVisitCount": {
-    "message": "בוקר $count$ פעמים",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "syncOptions": {
-    "message": "אפשרויות סנכרון"
-  },
-  "syncStatusLocal": {
-    "message": "מקומי בלבד — לא הועלה"
-  },
-  "syncStatusSynced": {
-    "message": "מסונכרן לחשבון Google שלך"
-  },
-  "syncStatusUnsyncable": {
-    "message": "לא ניתן לסנכרן"
-  },
-  "syncSuffixLocal": {
-    "message": "(מקומי)"
-  },
-  "syncSuffixSynced": {
-    "message": "(מסונכרן)"
-  },
-  "timeDaysAgo": {
-    "message": "לפני $n$ ימים",
+  "stagingFavDone": {
+    "message": "סומנו $n$ פריטים כמועדפים",
     "placeholders": {
       "n": {
         "content": "$1"
       }
     }
   },
-  "timeHoursAgo": {
-    "message": "לפני $n$ שעות",
+  "stagingUnfavDone": {
+    "message": "בוטל סימון מועדף ל-$n$ פריטים",
     "placeholders": {
       "n": {
         "content": "$1"
       }
     }
   },
-  "timeJustNow": {
-    "message": "זה עתה"
+  "groupSaveToFolder": {
+    "message": "שמירה לתיקייה…"
   },
-  "timeMinutesAgo": {
-    "message": "לפני $n$ דקות",
+  "groupCopyToFolder": {
+    "message": "העתקה לתיקייה…"
+  },
+  "stagingCount": {
+    "message": "$n$ בהמתנה",
     "placeholders": {
       "n": {
         "content": "$1"
       }
     }
   },
-  "timeYesterday": {
-    "message": "אתמול"
+  "stagingMoveCopy": {
+    "message": "העברה/העתקה אל…"
   },
-  "toolButtonTitle": {
-    "message": "כלים (Ctrl+K)"
-  },
-  "undoAction": {
-    "message": "בטל"
-  },
-  "revealOutsideBarHint": {
-    "message": "מוצג רק סרגל הסימניות: היעד נמצא מחוץ לו."
-  },
-  "revealOutsideBarAction": {
-    "message": "הצג הכול וגלה"
-  },
-  "url": {
-    "message": "URL"
-  },
-  "viewDead": {
-    "message": "קישורים מתים"
-  },
-  "viewDupes": {
-    "message": "כפילויות"
-  },
-  "viewRecent": {
-    "message": "אחרונים"
-  },
-  "viewSearch": {
-    "message": "חיפוש"
-  },
-  "viewStats": {
-    "message": "סטטיסטיקות"
-  },
-  "viewSwitchAnnounce": {
-    "message": "תצוגת $name$",
+  "stagingMoveDone": {
+    "message": "הועברו $n$ פריטים הביתה",
     "placeholders": {
-      "name": {
+      "n": {
         "content": "$1"
       }
     }
   },
-  "viewStateEnabled": {
-    "message": "מופעל"
+  "stagingCopyDone": {
+    "message": "הועתקו $n$ פריטים",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
   },
-  "viewStateDisabled": {
-    "message": "מושבת"
+  "stagingMoveConfirm": {
+    "message": "להעביר $n$ פריטים לתיקייה שנבחרה?",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
   },
-  "viewEnable": {
-    "message": "הפעל"
+  "stagingDeleteConfirm": {
+    "message": "למחוק $n$ פריטים? לא מסומנים פשוט עוזבים את אזור ההמתנה.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
   },
-  "viewDisable": {
-    "message": "השבת"
+  "stagingDeleted": {
+    "message": "נמחקו $n$ סימניות",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
   },
-  "viewTabHide": {
-    "message": "הסתר"
+  "stagingRemovedCount": {
+    "message": "הוסרו $n$ פריטים מאזור ההמתנה",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
   },
-  "viewTabDisable": {
-    "message": "השבת"
+  "stagingClear": {
+    "message": "ניקוי אזור ההמתנה"
   },
-  "viewTree": {
-    "message": "עץ"
+  "stagingClearConfirm": {
+    "message": "לנקות את כל אזור ההמתנה? עץ הסימניות לא ייפגע."
   },
-  "deadProxyNeverShow": {
-    "message": "אל תציג שוב"
+  "stagingCleared": {
+    "message": "אזור ההמתנה נוקה"
   },
-  "optionDeadProxyStrip": {
-    "message": "הצג רמז להוספת פרוקסי בתצוגת הקישורים השבורים"
+  "groupPlaceTooltip": {
+    "message": "שמירת קבוצה זו לתיקייה…"
   },
-  "optionDeadProxyStripHint": {
-    "message": "כיבוי מסתיר את הרמז שם; שרת הפרוקסי נשאר ניתן להגדרה כאן, ושרת שמור תמיד מציג את שורת הניהול שלו בתצוגה."
+  "copyBookmark": {
+    "message": "העתק"
+  },
+  "cutBookmark": {
+    "message": "גזור"
+  },
+  "copyMoveTo": {
+    "message": "העתק/העבר אל…"
+  },
+  "pasteHere": {
+    "message": "הדבק כאן"
+  },
+  "copiedToast": {
+    "message": "הועתק: $t$",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
+  },
+  "cutToast": {
+    "message": "נגזר: $t$ — הדבק לתיקיית יעד (Esc מבטל)",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
+  },
+  "pasteDone": {
+    "message": "הודבק"
+  },
+  "pasteGone": {
+    "message": "הסימנייה כבר לא קיימת — הלוח נוקה"
+  },
+  "folderCopyList": {
+    "message": "העתק כותרות וכתובות"
+  },
+  "folderCopyText": {
+    "message": "רשימת טקסט פשוט"
+  },
+  "folderCopyMarkdown": {
+    "message": "Markdown"
+  },
+  "folderCopyJson": {
+    "message": "JSON"
+  },
+  "folderCopyConfirm": {
+    "message": "להעתיק את רשימת $n$ הסימניות?",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "folderCopyDone": {
+    "message": "הועתקו $n$ רשומות סימניות",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "addFolderMenu": {
+    "message": "הוסף תיקייה"
+  },
+  "optionCollapseAddFolderMenu": {
+    "message": "קפל את רשומות הוספת התיקייה"
+  },
+  "optionCollapseAddFolderMenuHint": {
+    "message": "אחד את שלוש רשומות הוספת התיקייה (לפני/אחרי/בתוך) לרשומת תפריט משנה אחת בלחיצה ימנית על תיקייה."
+  },
+  "tabRowStage": {
+    "message": "סמן והמתן"
+  },
+  "tabgroupStageAll": {
+    "message": "סמן והמתן את כל הקבוצה"
+  },
+  "tabgroupStageConfirm": {
+    "message": "לסמן ולהמתין $n$ לשוניות?",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabgroupStageNone": {
+    "message": "אין לשוניות הניתנות לסימון בקבוצה זו"
+  },
+  "stagedToast": {
+    "message": "סומנו $n$ לשוניות כקבוצה \"$t$\"",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "t": {
+        "content": "$2"
+      }
+    }
+  },
+  "searchResultCount": {
+    "message": "$n$ תוצאות",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "deleteSelected": {
+    "message": "מחק נבחרים"
   }
 }

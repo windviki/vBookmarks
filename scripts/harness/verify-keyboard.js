@@ -417,6 +417,40 @@ const SEED = `
     check('recent ↑ past top: tab strip',
         await focusedTab() === 'view-tab-recent', await activeDesc());
 
+    // --- staging (velvet staging ST5): the dual-region view's idle toolbar
+    // offers the selection entry; entering swaps in the two rungs, Space
+    // toggles the focused row, Esc leaves the mode (focus back to entry) ---
+    await page.click('#view-tab-recent'); await sleep(400);
+    // stage one item first (context-menu path is covered by unit suites;
+    // here the row-level arrow rides the recent region's hover button)
+    const staged = await $(() => {
+        const list = document.getElementById('staging-list');
+        const btn = list && list.querySelector('#recent-list .staging-add-btn');
+        if (btn) {
+            btn.click();
+            return true;
+        }
+        return false;
+    });
+    if (staged) {
+        await sleep(400);
+        check('staging: entry button rendered', await $(() =>
+            !!document.querySelector('.staging-select-mode')), '(missing entry)');
+        await page.click('.staging-select-mode'); await sleep(400);
+        check('staging: selection rungs rendered', await $(() =>
+            !!document.querySelector('.staging-select-toolbar') &&
+            !!document.querySelector('.staging-actions-toolbar')), '(missing rungs)');
+        await page.keyboard.press('Tab'); await sleep(150); // rung 1 → rows
+        await page.keyboard.press('Tab'); await sleep(150);
+        await page.keyboard.press('ArrowDown'); await sleep(250);
+        await page.keyboard.press('Space', { delay: 80 }); await sleep(300);
+        check('staging: Space selected the focused row', await $(() =>
+            !!document.querySelector('#staging-items li.sel')), '(no .sel row)');
+        await page.keyboard.press('Escape'); await sleep(300);
+        check('staging: Esc left the selection mode', await $(() =>
+            !document.querySelector('.staging-select-toolbar')), '(bar survived)');
+    }
+
     // --- stats (three seeded bookmark rows + the §2.5 toolbar rung) ---
     await page.click('#view-tab-stats'); await sleep(700);
     await page.keyboard.press('ArrowDown'); await sleep(250);

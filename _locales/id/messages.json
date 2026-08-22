@@ -29,6 +29,12 @@
   "advancedOptions": {
     "message": "Opsi Lanjutan"
   },
+  "announceDismiss": {
+    "message": "Tutup"
+  },
+  "announceV408Text": {
+    "message": "v4.0.8 adalah rilis dengan peningkatan favicon: ikon situs asli diambil otomatis untuk bookmark yang belum di-cache oleh Chrome."
+  },
   "announceV407Text": {
     "message": "v4.0.7 menghadirkan tampilan tautan mati yang lengkap: pindai, tandai, filter, dan urutkan tautan mati dan terbatas, dengan penanda sebelumnya dan stempel waktu per baris."
   },
@@ -44,12 +50,6 @@
   "announceV410Text": {
     "message": "v4.1.0 新增标签页组视图：每个窗口的标签页和标签页组，可在书签旁进行管理。"
   },
-  "announceV408Text": {
-    "message": "v4.0.8 adalah rilis dengan peningkatan favicon: ikon situs asli diambil otomatis untuk bookmark yang belum di-cache oleh Chrome."
-  },
-  "announceDismiss": {
-    "message": "Tutup"
-  },
   "confirmDeleteFolder": {
     "message": "Folder ini berisi $count$ item. Anda dapat membatalkan penghapusan.",
     "placeholders": {
@@ -57,6 +57,9 @@
         "content": "$1"
       }
     }
+  },
+  "confirmDeleteFolderButton": {
+    "message": "Hapus"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "Apakah Anda yakin ingin menghapus folder $folderName$ dan $bookmarkCount$ markah di dalamnya?",
@@ -68,9 +71,6 @@
         "content": "$1"
       }
     }
-  },
-  "confirmDeleteFolderButton": {
-    "message": "Hapus"
   },
   "confirmDeleteFolderSubfolders": {
     "message": "Apakah Anda yakin ingin menghapus folder $folderName$ dan $subFolderCount$ sub-folder di dalamnya?",
@@ -124,18 +124,11 @@
       }
     }
   },
-  "contextMenuAddBookmark": {
-    "message": "Bookmark halaman ini dengan vBookmarks"
-  },
   "copyAllTitlesAndUrls": {
     "message": "Salin semua judul dan URL ke clipboard"
   },
   "copyTitleAndUrl": {
     "message": "Salin judul dan URL ke clipboard"
-  },
-  "crossStorageMoveWarning": {
-    "message": "Bookmark tidak dapat dipindahkan antara penyimpanan yang disinkronkan dan lokal. Gunakan salin/tempel sebagai gantinya.",
-    "description": "Warning when trying to move bookmarks across storage types"
   },
   "customIcon": {
     "message": "Ikon kustom"
@@ -146,14 +139,14 @@
   "customSeparatorColorDescription": {
     "message": "Kustomisasi Warna Pemisah"
   },
-  "customSeparatorStringDescription": {
-    "message": "Jika URL dari markah berisi string ini, akan ditampilkan sebagai pemisah"
-  },
   "customSeparatorTitleDescription": {
     "message": "Judul asli dari markah yang ditampilkan sebagai pemisah"
   },
   "customSeparatorUrlDescription": {
     "message": "URL asli dari markah yang ditampilkan sebagai pemisah"
+  },
+  "customSeparatorStringDescription": {
+    "message": "Jika URL dari markah berisi string ini, akan ditampilkan sebagai pemisah"
   },
   "customStyles": {
     "message": "Gaya Kustom"
@@ -164,8 +157,14 @@
   "customStylesDescription": {
     "message": "Ini memerlukan beberapa keterampilan CSS. Ubah dengan risiko Anda sendiri. Berbagi kode akan bijaksana dilakukan melalui"
   },
-  "deadCancel": {
-    "message": "Batal"
+  "defaultIconButton": {
+    "message": "Gunakan default"
+  },
+  "defaultIconButtonOr": {
+    "message": "atau"
+  },
+  "customIconPick": {
+    "message": "Pilih berkas…"
   },
   "deadChecking": {
     "message": "Memeriksa $done$ / $total$…",
@@ -235,6 +234,839 @@
   },
   "deadClearScan": {
     "message": "Hapus hasil pemindaian"
+  },
+  "deadNone": {
+    "message": "Tidak ada tautan mati ditemukan"
+  },
+  "deadNoneFiltered": {
+    "message": "Tidak ada tautan mati di bawah filter ini — coba segmen lain di atas"
+  },
+  "deadRescan": {
+    "message": "Pindai ulang"
+  },
+  "delete": {
+    "message": "Hapus"
+  },
+  "deletedBookmark": {
+    "message": "$title$ dihapus",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Example"
+      }
+    },
+    "description": "Toast shown after a bookmark or separator was deleted; the toast offers an undo button. $title$ is the deleted row's title (empty for separators)."
+  },
+  "deletedFolder": {
+    "message": "Folder $title$ dihapus",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Bookmarks"
+      }
+    },
+    "description": "Toast shown after a bookmark folder (with its whole subtree) was deleted; the toast offers an undo button. $title$ is the folder name."
+  },
+  "optionRecentCount": {
+    "message": "Jumlah bookmark yang baru ditambahkan untuk ditampilkan"
+  },
+  "optionSearchHistory": {
+    "message": "Rekam riwayat pencarian"
+  },
+  "optionSearchHistoryHint": {
+    "message": "Menonaktifkan ini juga akan menghapus riwayat yang ada."
+  },
+  "recentEmpty": {
+    "message": "Tidak ada bookmark terbaru. Tekan Ctrl+D untuk menandai halaman ini."
+  },
+  "recentRevealInTree": {
+    "message": "Tampilkan di Pohon"
+  },
+  "searchHistoryClear": {
+    "message": "Hapus semua"
+  },
+  "searchHistoryRemove": {
+    "message": "Hapus pencarian ini"
+  },
+  "searchHistoryResultCount": {
+    "message": "$n$ hasil",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "searchHistoryTitle": {
+    "message": "Pencarian terbaru"
+  },
+  "timeDaysAgo": {
+    "message": "$n$ hari yang lalu",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "timeHoursAgo": {
+    "message": "$n$ jam yang lalu",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "timeJustNow": {
+    "message": "baru saja"
+  },
+  "timeMinutesAgo": {
+    "message": "$n$ menit yang lalu",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "timeYesterday": {
+    "message": "kemarin"
+  },
+  "undoAction": {
+    "message": "Urungkan"
+  },
+  "revealOutsideBarHint": {
+    "message": "Hanya bilah bookmark yang ditampilkan: target berada di luarnya."
+  },
+  "revealOutsideBarAction": {
+    "message": "Tampilkan semua dan perlihatkan"
+  },
+  "dupesCleanAll": {
+    "message": "Bersihkan semua: $groups$ grup, $count$ salinan ekstra",
+    "placeholders": {
+      "groups": {
+        "content": "$1"
+      },
+      "count": {
+        "content": "$2"
+      }
+    },
+    "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go."
+  },
+  "dupesConfirmAll": {
+    "message": "Hapus $count$ salinan tambahan di $groups$ grup? Pemilih di setiap grup akan dipertahankan.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    },
+    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
+  },
+  "dupesConfirmSelected": {
+    "message": "Hapus $count$ bookmark duplikat dari $groups$ grup yang dipilih?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    }
+  },
+  "dupesConfirmGroup": {
+    "message": "Simpan \"$title$\" dan hapus $count$ salinan lainnya?",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Example bookmark"
+      },
+      "count": {
+        "content": "$2"
+      }
+    },
+    "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."
+  },
+  "dupesDone": {
+    "message": "$count$ bookmark duplikat dihapus",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Alert shown after the duplicate cleanup finished."
+  },
+  "dupesGroupCount": {
+    "message": "$count$ duplikat",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
+  },
+  "dupesGroupExpand": {
+    "description": "Dupes view group-head context menu: expand a collapsed duplicate group.",
+    "message": "Perluas grup"
+  },
+  "dupesGroupCollapse": {
+    "description": "Dupes view group-head context menu: collapse an expanded duplicate group.",
+    "message": "Ciutkan grup"
+  },
+  "dupesNone": {
+    "message": "Tidak ada duplikat ditemukan"
+  },
+  "deleteEllipsis": {
+    "message": "Hapus..."
+  },
+  "donationMessage": {
+    "message": "Menikmatinya? Donasi untuk mendukung masa depannya — atau beri peringkat di toko: setiap ulasan menjaga pembaruan terus datang."
+  },
+  "donationV4Notice": {
+    "message": "vBookmarks 4.0 adalah rombakan total dengan desain modern, dilengkapi fitur-fitur baru."
+  },
+  "donationV4GuideLink": {
+    "message": "Baca panduan v4 →"
+  },
+  "donationGo": {
+    "message": "Donasi"
+  },
+  "donationRate": {
+    "message": "Beri peringkat"
+  },
+  "donationRateTitle": {
+    "message": "Beri peringkat untuk vBookmarks di Chrome Web Store"
+  },
+  "donationLater": {
+    "message": "Nanti"
+  },
+  "donationNever": {
+    "message": "Jangan tampilkan lagi"
+  },
+  "donationDismiss": {
+    "message": "Tutup"
+  },
+  "edit": {
+    "message": "Edit..."
+  },
+  "editBookmark": {
+    "message": "Edit markah"
+  },
+  "editFolder": {
+    "message": "Edit folder"
+  },
+  "errorOccured": {
+    "message": "Ups, terjadi kesalahan."
+  },
+  "extDesc": {
+    "description": "The extension description.",
+    "message": "Manajer markah popup. Neat Bookmarks yang ditingkatkan. Lebih rapi dari Neater Bookmarks."
+  },
+  "extName": {
+    "description": "vBookmarks",
+    "message": "vBookmarks"
+  },
+  "folderEmpty": {
+    "message": "(Kosong)"
+  },
+  "general": {
+    "message": "Umum"
+  },
+  "ignore": {
+    "message": "Abaikan"
+  },
+  "name": {
+    "description": "Name of bookmark or folder.",
+    "message": "Nama"
+  },
+  "nope": {
+    "message": "Batal"
+  },
+  "noTitle": {
+    "description": "The title for untitled bookmarks with no http(s) URL or untitled folders.",
+    "message": "(tanpa judul)"
+  },
+  "open": {
+    "description": "Action to open bookmarks.",
+    "message": "Buka"
+  },
+  "openBookmarks": {
+    "message": "Buka Semua Markah"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "Buka Semua Markah di Jendela Samaran"
+  },
+  "openBookmarksInGroup": {
+    "message": "Buka semua di grup tab baru"
+  },
+  "openBookmarksInGroupSetup": {
+    "message": "Buka semua di grup tab baru…"
+  },
+  "openBookmarksInExistingGroup": {
+    "message": "Buka semua di grup tab yang ada…"
+  },
+  "tabGroupOptions": {
+    "message": "Grup tab"
+  },
+  "sortMenuOptions": {
+    "message": "Urutkan"
+  },
+  "openBookmarksNewWindow": {
+    "message": "Buka Semua Markah di Jendela Baru"
+  },
+  "openCommandPaletteCommand": {
+    "message": "Buka palet perintah"
+  },
+  "openIncognitoWindow": {
+    "message": "Buka di Jendela Penyamaran"
+  },
+  "openNewTab": {
+    "message": "Buka di Tab Baru"
+  },
+  "bookmarkOpenInNewGroup": {
+    "message": "Buka di grup tab baru"
+  },
+  "bookmarkOpenInNewGroupSetup": {
+    "message": "Buka di grup tab baru…"
+  },
+  "bookmarkOpenInExistingGroup": {
+    "message": "Buka di grup tab yang ada…"
+  },
+  "openNewWindow": {
+    "message": "Buka di Jendela Baru"
+  },
+  "openSidePanelCommand": {
+    "message": "Buka panel samping vBookmarks"
+  },
+  "optionAnnounceEnabled": {
+    "message": "Tampilkan pengumuman dalam produk"
+  },
+  "optionAnnounceEnabledHint": {
+    "message": "Catatan rilis dan tips dari repositori GitHub proyek (diambil paling sering setiap 6 jam). Nonaktif juga menghentikan pengambilan jaringan."
+  },
+  "optionClickNewTab": {
+    "message": "Klik kiri membuka markah di tab baru."
+  },
+  "optionCloseUnusedFolders": {
+    "message": "Tutup folder yang tidak digunakan saat membuka folder."
+  },
+  "optionConfirmOpenFolder": {
+    "message": "Tampilkan konfirmasi saat membuka banyak markah dari folder."
+  },
+  "optionConfirmDeleteFolder": {
+    "message": "Konfirmasi sebelum menghapus folder yang tidak kosong"
+  },
+  "optionOnlyShowBookmarkBar": {
+    "message": "Hanya tampilkan markah di Bilah Markah"
+  },
+  "optionSearchAfterEnter": {
+    "message": "Cari markah hanya saat ENTER ditekan (bukan pencarian instan)"
+  },
+  "optionOpenNewTab": {
+    "message": "Klik tengah atau control-klik membuka markah di tab latar belakang baru (bukan latar depan)."
+  },
+  "optionOpenInSidePanel": {
+    "message": "Buka di panel samping, bukan popup"
+  },
+  "optionPopupStays": {
+    "message": "Popup tetap terbuka saat membuka (klik kiri) markah."
+  },
+  "optionRememberPrevState": {
+    "message": "Ingat keadaan sebelumnya (posisi gulir, folder yang dibuka, dan item terakhir yang difokuskan)."
+  },
+  "options": {
+    "message": "Opsi"
+  },
+  "optionsFooterText": {
+    "description": "Footer text for the Options page",
+    "message": "Dibangun oleh $authorName$.",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionZoom": {
+    "message": "Perbesar"
+  },
+  "optionTheme": {
+    "message": "Tema"
+  },
+  "optionThemeAuto": {
+    "message": "Ikuti sistem"
+  },
+  "optionThemeLight": {
+    "message": "Terang"
+  },
+  "optionThemeDark": {
+    "message": "Gelap"
+  },
+  "optionThemeInk": {
+    "message": "Tinta (gelap)"
+  },
+  "optionThemePaper": {
+    "message": "Kertas (terang)"
+  },
+  "optionLanguage": {
+    "message": "Bahasa"
+  },
+  "optionLanguageAuto": {
+    "message": "Otomatis"
+  },
+  "optionLanguageHint": {
+    "message": "Mengubah bahasa akan memuat ulang halaman ini."
+  },
+  "paletteClose": {
+    "message": "Tutup"
+  },
+  "paletteCmdVersion": {
+    "message": "Info versi"
+  },
+  "paletteCmdLang": {
+    "message": "Ganti bahasa…"
+  },
+  "paletteCmdLangUsage": {
+    "message": "Penggunaan: /lang diikuti kode lokal — mis. /lang en, /lang zh_CN, /lang ja."
+  },
+  "versionDialogTitle": {
+    "message": "vBookmarks $version$",
+    "placeholders": {
+      "version": {
+        "content": "$1"
+      }
+    }
+  },
+  "versionDialogCopy": {
+    "message": "Salin info"
+  },
+  "versionDialogCopied": {
+    "message": "Tersalin"
+  },
+  "versionMetaVersion": {
+    "message": "Versi ekstensi"
+  },
+  "versionMetaAnnounce": {
+    "message": "Yang baru"
+  },
+  "versionMetaAnnounceNone": {
+    "message": "Tidak ada pengumuman yang dimuat."
+  },
+  "versionMetaBrowser": {
+    "message": "Peramban"
+  },
+  "versionMetaOS": {
+    "message": "OS"
+  },
+  "versionMetaChannel": {
+    "message": "Saluran"
+  },
+  "versionMetaLanguage": {
+    "message": "Bahasa"
+  },
+  "versionMetaUserAgent": {
+    "message": "Agen pengguna"
+  },
+  "paletteCmdDead": {
+    "message": "Cari tautan mati"
+  },
+  "paletteCmdDupes": {
+    "message": "Bersihkan bookmark duplikat"
+  },
+  "paletteCmdNewBookmark": {
+    "message": "Bookmark baru…"
+  },
+  "paletteCmdNewFolder": {
+    "message": "Folder baru…"
+  },
+  "paletteCmdQuickAdd": {
+    "message": "Bookmark tab saat ini"
+  },
+  "paletteCmdSaveSession": {
+    "message": "Simpan tab jendela sebagai folder"
+  },
+  "paletteNoResults": {
+    "message": "Tidak ada hasil yang cocok"
+  },
+  "palettePlaceholder": {
+    "message": "Cari bookmark, folder, perintah…"
+  },
+  "parentFolder": {
+    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
+    "message": "Folder induk: \"$folderName$\"",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarksbar"
+      }
+    }
+  },
+  "removeSeparator": {
+    "message": "Hapus Pemisah"
+  },
+  "replaceUrl": {
+    "message": "Ganti ini dengan URL saat ini"
+  },
+  "reportedToDeveloper": {
+    "description": "A message for an error occured in the extension, has been reported to the developer.",
+    "message": "Ini telah dilaporkan ke pengembang."
+  },
+  "reportError": {
+    "message": "Laporkan Kesalahan"
+  },
+  "resetButton": {
+    "message": "Reset"
+  },
+  "resetSettings": {
+    "message": "Reset pengaturan"
+  },
+  "resetSettingsDescription": {
+    "message": "Reset vBookmarks ke pengaturan default."
+  },
+  "save": {
+    "message": "Simpan"
+  },
+  "searchBookmarks": {
+    "description": "Placeholder text for search field.",
+    "message": "Cari Markah"
+  },
+  "searchClear": {
+    "message": "Hapus pencarian"
+  },
+  "searchNoResults": {
+    "message": "Tidak ada bookmark yang cocok"
+  },
+  "searchViewHint": {
+    "message": "Ketik di kotak di atas untuk mencari bookmark Anda"
+  },
+  "selectAll": {
+    "message": "Semua"
+  },
+  "selectClear": {
+    "message": "Bersihkan"
+  },
+  "selectCount": {
+    "message": "$count$ dipilih",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "selectInvert": {
+    "message": "Balikkan"
+  },
+  "selectModeEnter": {
+    "message": "Pilih"
+  },
+  "selectModeExit": {
+    "message": "Keluar dari mode pilih"
+  },
+  "deadRiskBanner": {
+    "message": "Pembersihan tautan mati menghapus penanda secara massal. Cadangkan penanda Anda sebelum pembersihan pertama."
+  },
+  "dupesRiskBanner": {
+    "message": "Deduplikasi menghapus penanda duplikat secara massal. Cadangkan penanda Anda sebelum menerapkannya."
+  },
+  "riskBannerHelp": {
+    "message": "Panduan pencadangan & pemulihan"
+  },
+  "riskBannerNever": {
+    "message": "Jangan tampilkan lagi"
+  },
+  "riskBannerDismiss": {
+    "message": "Tutup"
+  },
+  "sessionEmpty": {
+    "message": "Tidak ada tab untuk disimpan"
+  },
+  "sessionFolderName": {
+    "message": "Sesi $date$",
+    "placeholders": {
+      "date": {
+        "content": "$1",
+        "example": "2026-07-18 15:04"
+      }
+    },
+    "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm."
+  },
+  "sessionSaved": {
+    "message": "$count$ tab disimpan ke folder baru",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "12"
+      }
+    },
+    "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
+  },
+  "url": {
+    "message": "URL"
+  },
+  "syncOptions": {
+    "message": "Opsi Sinkronisasi"
+  },
+  "optionShowSyncStatus": {
+    "message": "Tampilkan indikator status sinkronisasi"
+  },
+  "optionHighlightUnsynced": {
+    "message": "Redupkan bookmark yang tidak tersinkronisasi"
+  },
+  "optionAutoRefreshSync": {
+    "message": "Segarkan status sinkronisasi otomatis"
+  },
+  "optionSyncRefreshInterval": {
+    "message": "Interval penyegaran"
+  },
+  "optionSyncRefreshIntervalSeconds": {
+    "message": "detik"
+  },
+  "syncStatusSynced": {
+    "message": "Disinkronkan ke akun Google Anda"
+  },
+  "syncStatusLocal": {
+    "message": "Lokal saja — tidak diunggah"
+  },
+  "syncStatusUnsyncable": {
+    "message": "Tidak dapat disinkronkan"
+  },
+  "syncSuffixSynced": {
+    "message": "(Disinkronkan)"
+  },
+  "syncSuffixLocal": {
+    "message": "(Lokal)"
+  },
+  "optionAutoResizePopup": {
+    "message": "Ubah ukuran jendela popup otomatis agar sesuai dengan konten"
+  },
+  "crossStorageMoveWarning": {
+    "message": "Bookmark tidak dapat dipindahkan antara penyimpanan yang disinkronkan dan lokal. Gunakan salin/tempel sebagai gantinya.",
+    "description": "Warning when trying to move bookmarks across storage types"
+  },
+  "recentBookmarks": {
+    "message": "Baru ditambahkan"
+  },
+  "optionShowRecentBookmarks": {
+    "message": "Tampilkan bookmark yang baru ditambahkan di bagian atas popup"
+  },
+  "optionShowStatsView": {
+    "message": "Tampilkan tab statistik"
+  },
+  "optionShowDeadView": {
+    "message": "Tampilkan tab tautan mati"
+  },
+  "optionShowDupesView": {
+    "message": "Tampilkan tab duplikat"
+  },
+  "optionRecentCollapsed": {
+    "message": "Ciutkan bagian yang baru ditambahkan secara default"
+  },
+  "optionsGroupViews": {
+    "message": "Tampilan"
+  },
+  "optionsGroupSort": {
+    "message": "Pengurutan"
+  },
+  "optionsGroupStats": {
+    "message": "Statistik"
+  },
+  "optionsGroupTools": {
+    "message": "Alat"
+  },
+  "optionShowViewTabs": {
+    "message": "Tampilkan tab tampilan di bawah kotak pencarian"
+  },
+  "optionRememberView": {
+    "message": "Ingat tampilan aktif terakhir dan buka kembali"
+  },
+  "optionShowTabBadges": {
+    "message": "Tampilkan lencana jumlah pada tab tampilan"
+  },
+  "optionPaletteEnabled": {
+    "message": "Aktifkan palet perintah (Ctrl/Cmd+K)"
+  },
+  "optionQuickAddEnabled": {
+    "message": "Tampilkan tombol bintang tambah cepat di samping kolom pencarian"
+  },
+  "optionQuickAddContextMenu": {
+    "message": "Tambahkan entri \"Tandai halaman ini dengan vBookmarks\" ke menu klik kanan halaman"
+  },
+  "optionQuickAddContextMenuHint": {
+    "message": "Tidak tergantung pada tombol bintang tambah cepat; pemulihan pengalaman klasik juga akan mematikan entri ini."
+  },
+  "optionCollapseTabGroupMenu": {
+    "message": "Ciutkan entri grup tab menjadi satu submenu \"Grup tab…\""
+  },
+  "optionCollapseTabGroupMenuHint": {
+    "message": "Berlaku untuk menu klik kanan folder dan bookmark. Nonaktif secara default; menjaga tinggi menu tetap rendah pada layar kecil/zoom tinggi."
+  },
+  "optionCollapseSortMenu": {
+    "message": "Ciutkan entri pengurutan menjadi satu submenu \"Urutkan…\""
+  },
+  "optionCollapseSortMenuHint": {
+    "message": "Berlaku untuk menu klik kanan folder. Aktif secara default."
+  },
+  "optionShowToolButton": {
+    "message": "Tampilkan tombol alat (⋮) di samping kolom pencarian"
+  },
+  "optionClassicExperience": {
+    "message": "Kembalikan header klasik"
+  },
+  "optionClassicExperienceHint": {
+    "message": "Menonaktifkan palet perintah, bintang tambah cepat, entri klik kanan di halamannya, tombol alat, dan tab tampilan. Masing-masing dapat diaktifkan kembali secara individual di bagiannya."
+  },
+  "optionShowItemPath": {
+    "message": "Tampilkan jalur folder induk pada baris daftar"
+  },
+  "viewRecent": {
+    "message": "Terbaru"
+  },
+  "viewTree": {
+    "message": "Pohon"
+  },
+  "viewSearch": {
+    "message": "Cari"
+  },
+  "viewSwitchAnnounce": {
+    "message": "$name$ tampilan",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "viewStateEnabled": {
+    "message": "Aktif"
+  },
+  "viewStateDisabled": {
+    "message": "Nonaktif"
+  },
+  "viewEnable": {
+    "message": "Aktifkan"
+  },
+  "viewDisable": {
+    "message": "Nonaktifkan"
+  },
+  "viewTabHide": {
+    "message": "Sembunyikan"
+  },
+  "viewTabDisable": {
+    "message": "Nonaktifkan"
+  },
+  "sortFolderContents": {
+    "message": "Urutkan Isi Folder"
+  },
+  "sortByName": {
+    "message": "Urutkan nama"
+  },
+  "sortByDate": {
+    "message": "Urutkan tanggal"
+  },
+  "sortRecursiveSuffix": {
+    "message": "(rekursif)"
+  },
+  "sortOptions": {
+    "message": "Opsi pengurutan…"
+  },
+  "sortDone": {
+    "message": "Folder diurutkan"
+  },
+  "sortByTitle": {
+    "message": "Berdasarkan judul"
+  },
+  "sortByDateAdded": {
+    "message": "Berdasarkan tanggal ditambahkan (terbaru dulu)"
+  },
+  "sortFoldersFirst": {
+    "message": "Folder di atas"
+  },
+  "sortRecursive": {
+    "message": "Urutkan subfolder juga (rekursif)"
+  },
+  "sortRecursiveWarning": {
+    "message": "Ini akan mengurutkan ulang bookmark di setiap subfolder."
+  },
+  "tabGroupDialogTitle": {
+    "message": "Grup tab baru"
+  },
+  "tabGroupTitleLabel": {
+    "message": "Judul grup"
+  },
+  "tabGroupColorLabel": {
+    "message": "Warna"
+  },
+  "tabGroupColorGrey": {
+    "message": "Abu-abu",
+    "description": "Accessible name of the grey color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorBlue": {
+    "message": "Biru",
+    "description": "Accessible name of the blue color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorRed": {
+    "message": "Merah",
+    "description": "Accessible name of the red color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorYellow": {
+    "message": "Kuning",
+    "description": "Accessible name of the yellow color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorGreen": {
+    "message": "Hijau",
+    "description": "Accessible name of the green color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPink": {
+    "message": "Merah Muda",
+    "description": "Accessible name of the pink color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPurple": {
+    "message": "Ungu",
+    "description": "Accessible name of the purple color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorCyan": {
+    "message": "Cyan",
+    "description": "Accessible name of the cyan color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorOrange": {
+    "message": "Oranye",
+    "description": "Accessible name of the orange color swatch in the new-tab-group dialog."
+  },
+  "tabGroupUntitled": {
+    "message": "Grup tanpa judul"
+  },
+  "tabGroupNoGroups": {
+    "message": "Tidak ada grup tab yang tersedia"
+  },
+  "tabGroupPickDialogTitle": {
+    "message": "Buka di grup tab yang ada"
+  },
+  "quickAddBookmark": {
+    "message": "Bookmark halaman ini (Ctrl+D)"
+  },
+  "quickAddBookmarkCommand": {
+    "message": "Menambahkan tab saat ini sebagai bookmark dengan cepat"
+  },
+  "quickAdded": {
+    "message": "Bookmark ditambahkan"
+  },
+  "quickAddedTo": {
+    "message": "Bookmark ditambahkan ke $folderName$",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarks bar"
+      }
+    }
+  },
+  "quickRemoved": {
+    "message": "Bookmark dihapus"
+  },
+  "quickRemoveBookmark": {
+    "message": "Hapus bookmark ini (Ctrl+D)"
+  },
+  "toolButtonTitle": {
+    "message": "Alat (Ctrl+K)"
+  },
+  "contextMenuAddBookmark": {
+    "message": "Bookmark halaman ini dengan vBookmarks"
   },
   "deadFilterAll": {
     "message": "Semua"
@@ -315,14 +1147,653 @@
   "deadMarkedBannerDismiss": {
     "message": "Tutup"
   },
-  "deadNone": {
-    "message": "Tidak ada tautan mati ditemukan"
+  "deadProxyAdd": {
+    "message": "Tambahkan server proxy untuk pemeriksaan tautan mati"
   },
-  "deadNoneFiltered": {
-    "message": "Tidak ada tautan mati di bawah filter ini — coba segmen lain di atas"
+  "deadProxyLabel": {
+    "message": "Proxy: $server$",
+    "placeholders": {
+      "server": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadProxyChange": {
+    "message": "Ubah"
+  },
+  "deadProxyRemove": {
+    "message": "Hapus"
+  },
+  "deadProxyRemoved": {
+    "message": "Server proxy dihapus"
+  },
+  "deadProxyPanelHint": {
+    "message": "Masukkan server proxy yang sudah Anda miliki (ekstensi tidak menyediakan), mis. 127.0.0.1:7890 atau socks5://127.0.0.1:1080."
+  },
+  "deadProxyTestUrlLabel": {
+    "message": "URL uji"
+  },
+  "deadProxyTestSave": {
+    "message": "Uji & simpan"
+  },
+  "deadProxyTesting": {
+    "message": "Menguji…"
+  },
+  "deadProxySaved": {
+    "message": "Proxy disimpan — pemindaian berikutnya akan memeriksa ulang kegagalan langsung melalui proxy tersebut"
+  },
+  "deadProxyInvalid": {
+    "message": "Alamat proxy tidak valid — gunakan host:port atau skema://host:port (http/https/socks5, tanpa kredensial)"
+  },
+  "deadProxyUnreachable": {
+    "message": "Proxy tidak terjangkau — tidak disimpan"
+  },
+  "deadProxyDenied": {
+    "message": "Izin proxy tidak diberikan"
+  },
+  "deadProxyControlled": {
+    "message": "Setelan proxy dikelola oleh ekstensi lain"
+  },
+  "deadProxyUnavailable": {
+    "message": "API proxy tidak tersedia di peramban ini"
+  },
+  "deadProxyNudge": {
+    "message": "Pemeriksaan ulang proxy memisahkan tautan mati yang sesungguhnya dari tautan yang diblokir karena wilayah — konfigurasikan di sini atau di halaman opsi."
+  },
+  "deadProxyNeverShow": {
+    "message": "Jangan tampilkan lagi"
+  },
+  "deadStartHint": {
+    "message": "Mulai memindai $n$ bookmark",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadStatusBlocked": {
+    "message": "diblokir"
+  },
+  "deadUnmark": {
+    "message": "Hapus tanda mati"
+  },
+  "deadUnmarkAll": {
+    "message": "Hapus semua tanda"
+  },
+  "deadUnmarkSelected": {
+    "message": "Batal tandai yang dipilih"
+  },
+  "dupesApplyAll": {
+    "message": "Terapkan semua ($count$)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesApplySelected": {
+    "message": "Hapus duplikat yang dipilih ($count$)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesCleanRestHint": {
+    "message": "Simpan \"$title$\" dan hapus $count$ lainnya",
+    "placeholders": {
+      "title": {
+        "content": "$1"
+      },
+      "count": {
+        "content": "$2"
+      }
+    }
+  },
+  "dupesIgnoreScheme": {
+    "message": "Abaikan perbedaan http/https"
+  },
+  "dupesKeepThis": {
+    "message": "Simpan yang ini"
+  },
+  "dupesKeeperSet": {
+    "message": "Tetapkan sebagai penyimpan"
+  },
+  "dupesPreviewSummary": {
+    "message": "$groups$ grup · $count$ akan dibebaskan",
+    "placeholders": {
+      "groups": {
+        "content": "$1"
+      },
+      "count": {
+        "content": "$2"
+      }
+    }
+  },
+  "dupesRemoveRow": {
+    "message": "Hapus salinan ini"
+  },
+  "dupesScopeAll": {
+    "message": "Semua bookmark"
+  },
+  "dupesScopeBar": {
+    "message": "Hanya bilah bookmark"
+  },
+  "dupesStrategyBookmarkBar": {
+    "message": "Simpan yang ada di bilah bookmark"
+  },
+  "dupesStrategyMostVisited": {
+    "message": "Simpan yang paling sering dikunjungi"
+  },
+  "dupesStrategyNewest": {
+    "message": "Simpan terbaru"
+  },
+  "dupesStrategyOldest": {
+    "message": "Simpan terlama"
+  },
+  "dupesStrategyShallowest": {
+    "message": "Simpan yang paling dangkal"
+  },
+  "dupesStrategyShortestTitle": {
+    "message": "Simpan judul terpendek"
+  },
+  "optionDeadProxyServer": {
+    "message": "Server proxy tautan mati"
+  },
+  "deadProxyServerHint": {
+    "message": "Server yang tersimpan memeriksa ulang penanda yang gagal dalam pemeriksaan langsung di setiap pemindaian tautan mati, memisahkan tautan mati yang sebenarnya dari yang diblokir wilayah. Uji & simpan mengujinya (hanya server yang dapat dijangkau yang disimpan); Anda juga dapat menambahkannya dari tampilan tautan mati."
+  },
+  "deadProxyClear": {
+    "message": "Bersihkan"
+  },
+  "deadProxyNone": {
+    "message": "(tidak diatur)"
+  },
+  "optionDeadProxyStrip": {
+    "message": "Tampilkan petunjuk menambah proksi di tampilan tautan mati"
+  },
+  "optionDeadProxyStripHint": {
+    "message": "Nonaktif menyembunyikan petunjuk itu di sana; server proksi tetap dapat dikonfigurasi di sini, dan server yang tersimpan selalu menampilkan baris kelolaannya di tampilan."
+  },
+  "optionDeadScanConcurrency": {
+    "message": "Konkurensi pemindaian tautan mati (1-16)"
+  },
+  "optionDeadScanTimeout": {
+    "message": "Batas waktu pemindaian tautan mati dalam detik (2-30)"
+  },
+  "paletteCmdGoDead": {
+    "message": "Buka tampilan Tautan Mati"
+  },
+  "paletteCmdGoDupes": {
+    "message": "Buka tampilan Duplikat"
+  },
+  "paletteCmdGoRecent": {
+    "message": "Buka tampilan Terbaru"
+  },
+  "paletteCmdGoSearch": {
+    "message": "Buka tampilan Pencarian"
+  },
+  "paletteCmdGoTree": {
+    "message": "Buka tampilan Pohon"
+  },
+  "paletteCmdOptions": {
+    "message": "Buka halaman opsi"
+  },
+  "paletteCmdSearchInView": {
+    "message": "Cari '$query$' di tampilan Pencarian",
+    "placeholders": {
+      "query": {
+        "content": "$1"
+      }
+    }
+  },
+  "rowActionDelete": {
+    "message": "Hapus"
+  },
+  "rowActionMark": {
+    "message": "Tandai sebagai mati"
+  },
+  "rowActionReveal": {
+    "message": "Tampilkan di pohon"
+  },
+  "rowActionUnmark": {
+    "message": "Hapus tanda mati"
+  },
+  "viewDead": {
+    "message": "Tautan mati"
+  },
+  "viewDupes": {
+    "message": "Duplikat"
+  },
+  "viewStats": {
+    "message": "Statistik"
+  },
+  "paletteCmdGoStats": {
+    "message": "Buka tampilan Statistik"
+  },
+  "optionStatsEnabled": {
+    "message": "Aktifkan statistik kunjungan"
+  },
+  "optionFaviconContrast": {
+    "message": "Balik favicon kontras rendah"
+  },
+  "optionFaviconContrastHint": {
+    "message": "Ikon putih pada tema terang dan ikon hitam pada tema gelap dibalik agar tetap terlihat. Setiap ikon diambil sampelnya satu kali saat dimuat — tanpa beban saat menjelajah."
+  },
+  "optionFaviconEnrich": {
+    "message": "Ambil ikon situs yang hilang"
+  },
+  "optionFaviconEnrichHint": {
+    "message": "Untuk situs yang ditandai yang tidak memiliki ikon cache di Chrome, ambil ikon asli langsung dari situs (/favicon.ico, lalu ikon yang dideklarasikan halaman). Permintaan hanya dikirim ke situs yang Anda tandai."
+  },
+  "optionFaviconEnrichAgg": {
+    "message": "Cadangan ikon pihak ketiga"
+  },
+  "optionFaviconEnrichAggHint": {
+    "message": "Jika pengambilan langsung gagal, cari ikon berdasarkan domain dari daftar bawaan layanan ikon pihak ketiga ($providers$). Layanan yang tidak dapat dijangkau akan dilewati dan layanan berikutnya dicoba — layanan tersebut tidak dicoba ulang selama 6 jam.",
+    "placeholders": {
+      "providers": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionFaviconBackup": {
+    "message": "Sertakan cache ikon dalam cadangan"
+  },
+  "optionFaviconBackupHint": {
+    "message": "Juga sertakan cache favicon yang diperkaya (data per situs, berpotensi besar) ke dalam ekspor/impor pengaturan. Ini mencakup ikon yang sudah ada dalam cache meskipun pengambilan ikon dinonaktifkan. Nonaktif membuat cadangan tetap kecil; ikon akan diambil ulang secara otomatis."
+  },
+  "optionFaviconCacheClear": {
+    "message": "Bersihkan cache ikon"
+  },
+  "optionFaviconCacheClearConfirm": {
+    "message": "Hapus cache favicon yang diperkaya? Ikon akan diambil ulang secara otomatis pada pembukaan berikutnya."
+  },
+  "optionFaviconCacheEmpty": {
+    "message": "Tidak ada cache favicon untuk dihapus."
+  },
+  "optionFaviconCacheCleared": {
+    "message": "Cache ikon telah dibersihkan. Ikon akan diambil ulang saat dibuka berikutnya."
+  },
+  "favGalleryLink": {
+    "message": "Lihat ikon yang disegarkan",
+    "description": "Options link (Icons group, right of the Clear icon cache button): opens the favicon gallery page listing the sites whose icons were refetched."
+  },
+  "favGalleryTitle": {
+    "message": "Ikon situs yang disegarkan",
+    "description": "Favicon gallery page title (h1 + document title)."
+  },
+  "favGalleryHint": {
+    "message": "Ikon yang diambil vBookmarks untuk situs yang dibookmark yang belum di-cache Chrome — dari mana masing-masing berasal dan bookmark mana yang menggunakannya. Hanya tampilan.",
+    "description": "Subtitle under the favicon gallery title, explaining the page is read-only."
+  },
+  "favGallerySearch": {
+    "message": "Filter menurut situs, judul, atau jalur",
+    "description": "Placeholder of the favicon gallery filter input."
+  },
+  "favGalleryAll": {
+    "message": "Semua",
+    "description": "Favicon gallery source filter chip: show every source."
+  },
+  "favSrcDirect": {
+    "message": "Langsung",
+    "description": "Favicon gallery source badge: the icon was fetched directly from the site itself."
+  },
+  "favSrcProxy": {
+    "message": "Proksi",
+    "description": "Favicon gallery source badge: the icon was fetched through the user's own proxy relay."
+  },
+  "favSrcLegacy": {
+    "message": "Cache sebelumnya",
+    "description": "Favicon gallery source badge: cached before the source was recorded, so the origin is unknown."
+  },
+  "favGalleryCompare": {
+    "message": "Bandingkan dengan placeholder",
+    "description": "Favicon gallery toggle button: switch every icon to the generic placeholder it replaced (before/after comparison)."
+  },
+  "favGalleryShowingBefore": {
+    "message": "Kembali ke ikon asli",
+    "description": "Favicon gallery toggle button while the placeholder comparison is shown: switch back to the real fetched icons."
+  },
+  "favGalleryStatSites": {
+    "message": "$n$ situs",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    },
+    "description": "Favicon gallery stats strip: how many sites have a refreshed icon."
+  },
+  "favGalleryStatBookmarks": {
+    "message": "$n$ bookmark",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    },
+    "description": "Favicon gallery stats strip: how many bookmarks sit on the refreshed sites."
+  },
+  "favGalleryVisits": {
+    "message": "$n$ bukaan tercatat",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    },
+    "description": "Favicon gallery tooltip on a bookmark row's visit-count pill."
+  },
+  "favGalleryFailedTitle": {
+    "message": "Baru dicoba, ikon tidak ditemukan",
+    "description": "Favicon gallery heading of the muted section listing hosts whose icon fetch failed recently."
+  },
+  "favGalleryFailedHint": {
+    "message": "Kegagalan dicoba lagi setelah 24 jam, 3 hari, dan 7 hari, kemudian dihentikan hingga cache ikon dibersihkan.",
+    "description": "Favicon gallery hint under the failed-fetch section title."
+  },
+  "favGalleryGaveUp": {
+    "message": "Menyerah",
+    "description": "Favicon gallery badge on a failed-strip host whose retries are exhausted (it stays untouched until the icon cache is cleared)."
+  },
+  "favGalleryOrphan": {
+    "message": "Tidak ada bookmark yang tersisa di host ini — ikon akan ikut terhapus bersama cache.",
+    "description": "Favicon gallery note on a card whose host no longer has any bookmark."
+  },
+  "favGalleryEmptyTitle": {
+    "message": "Belum ada ikon yang disegarkan",
+    "description": "Favicon gallery empty-state heading."
+  },
+  "favGalleryEmptyText": {
+    "message": "Saat popup menemukan situs yang dibookmark tanpa ikon di Chrome, vBookmarks mengambil ikon aslinya dan mencantumkannya di sini.",
+    "description": "Favicon gallery empty-state body text."
+  },
+  "storageUsageIcon": {
+    "message": "Cache ikon"
+  },
+  "storageUsageOther": {
+    "message": "Lainnya"
+  },
+  "storageUsageSummary": {
+    "message": "Terpakai $1$ dari $2$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      },
+      "2": {
+        "content": "$2"
+      }
+    }
+  },
+  "storageUsageFree": {
+    "message": "Kosong"
+  },
+  "storageUsageHint": {
+    "message": "Hanya penyimpanan lokal ekstensi (chrome.storage.local, sekitar 10 MB kuota): cache ikon beserta pengaturan dan data lokal lainnya. Pengaturan tersinkron, data sesi, dan pustaka bookmark tidak dihitung di sini."
+  },
+  "optionsDonate": {
+    "message": "Donasi"
+  },
+  "optionsGithubLink": {
+    "message": "GitHub"
+  },
+  "optionsHomepageLink": {
+    "message": "Beranda"
+  },
+  "optionsSince": {
+    "message": "Fork dari Neat Bookmarks, dikelola selama $days$ hari.",
+    "placeholders": {
+      "days": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionsVersion": {
+    "message": "Versi vBookmarks"
+  },
+  "statsSortByCount": {
+    "message": "Berdasarkan jumlah"
+  },
+  "statsSortByRecent": {
+    "message": "Berdasarkan terbaru"
+  },
+  "statsShowUnbookmarked": {
+    "message": "Tampilkan yang tidak ditandai"
+  },
+  "statsShowUnbookmarkedHint": {
+    "message": "Sertakan halaman dari riwayat yang tidak disimpan sebagai bookmark."
+  },
+  "statsEmpty": {
+    "message": "Statistik terbangun saat Anda membuka bookmark"
+  },
+  "statsDisabledHint": {
+    "message": "Statistik kunjungan mati — aktifkan di Opsi → Tampilan"
+  },
+  "statsVisitCount": {
+    "message": "Dikunjungi $count$ kali",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "statsClearData": {
+    "message": "Hapus statistik"
+  },
+  "statsClearConfirm": {
+    "message": "Hapus statistik kunjungan untuk $count$ bookmark? Tindakan ini tidak bisa dibatalkan.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "statsHistoryBanner": {
+    "message": "Berikan akses riwayat untuk mengisi statistik kunjungan dengan kunjungan masa lalu Anda"
+  },
+  "statsHistoryEnable": {
+    "message": "Aktifkan"
+  },
+  "statsHistoryDismiss": {
+    "message": "Jangan tampilkan lagi"
+  },
+  "statsHistoryImported": {
+    "message": "Kunjungan masa lalu diimpor untuk $count$ bookmark",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "paletteCmdToggleViewTabs": {
+    "message": "Alihkan tab tampilan"
+  },
+  "paletteCmdTheme": {
+    "message": "Atur tema…"
+  },
+  "paletteCmdThemeUsage": {
+    "message": "Penggunaan: /theme diikuti nama tema — auto, light, dark, ink, atau paper (prefiks unik berfungsi, mis. /theme d)."
+  },
+  "paletteCustomTag": {
+    "message": "kustom"
+  },
+  "paletteCustomDeleteConfirm": {
+    "message": "Hapus perintah \"$1\"? Perubahan ini akan disinkronkan ke semua perangkat Anda."
+  },
+  "paletteCustomBroken": {
+    "message": "Folder perintah \"$1\" tidak lagi ada. Hapus perintah ini?"
+  },
+  "paletteCmdSaveAsCommand": {
+    "message": "Simpan \"$1\" sebagai perintah…"
+  },
+  "paletteActionOpenUrl": {
+    "message": "Buka URL"
+  },
+  "paletteActionOpenUrlGroup": {
+    "message": "Buka grup folder penanda"
+  },
+  "paletteActionViewPreset": {
+    "message": "Buka tampilan dengan prasetel"
+  },
+  "paletteActionUrlTemplate": {
+    "message": "Buka templat URL"
+  },
+  "optionsGroupPalette": {
+    "message": "Palet perintah"
+  },
+  "paletteCustomHint": {
+    "message": "Perintah garis miring khusus untuk palet perintah (Ctrl/Cmd+K). Perintah ini disinkronkan dengan setelan Anda — maksimal 100 entri."
+  },
+  "paletteCustomAdd": {
+    "message": "Tambah perintah…"
+  },
+  "paletteCustomUsage": {
+    "message": "$1 / $2"
+  },
+  "paletteCustomSlash": {
+    "message": "Slash (kata setelah /)"
+  },
+  "paletteCustomAliases": {
+    "message": "Alias (dipisahkan koma)"
+  },
+  "paletteCustomAction": {
+    "message": "Aksi"
+  },
+  "paletteCustomUrl": {
+    "message": "URL"
+  },
+  "paletteCustomTemplate": {
+    "message": "Templat URL — %s diganti dengan kata-kata setelah perintah"
+  },
+  "paletteCustomWhere": {
+    "message": "Buka di"
+  },
+  "paletteCustomFolder": {
+    "message": "Folder bookmark"
+  },
+  "paletteCustomView": {
+    "message": "Tampilan"
+  },
+  "paletteCustomStrategy": {
+    "message": "Prasetel strategi dedup"
+  },
+  "paletteCustomScope": {
+    "message": "Prasetel cakupan dedup"
+  },
+  "paletteCustomScan": {
+    "message": "Mulai pemindaian saat entri"
+  },
+  "paletteWhereCurrent": {
+    "message": "Tab saat ini"
+  },
+  "paletteWhereTab": {
+    "message": "Tab baru"
+  },
+  "paletteWhereWindow": {
+    "message": "Jendela baru"
+  },
+  "paletteWhereBackground": {
+    "message": "Tab latar belakang"
+  },
+  "paletteCustomSave": {
+    "message": "Simpan perintah"
+  },
+  "paletteCustomErrSlash": {
+    "message": "Slash: 1–24 karakter huruf kecil, angka, atau tanda hubung, diawali huruf atau angka."
+  },
+  "paletteCustomErrAlias": {
+    "message": "Alias: aturan yang sama seperti slash (1–24 karakter huruf kecil, angka, atau tanda hubung)."
+  },
+  "paletteCustomErrTaken": {
+    "message": "Slash atau alias tersebut sudah digunakan."
+  },
+  "paletteCustomErrUrl": {
+    "message": "Hanya URL http:// atau https:// yang diizinkan."
+  },
+  "paletteCustomErrFolder": {
+    "message": "Pilih folder bookmark."
+  },
+  "paletteCustomErrView": {
+    "message": "Pilih tampilan."
+  },
+  "paletteCustomErrTemplate": {
+    "message": "Templat harus mengandung tepat satu %s."
+  },
+  "paletteCustomErrAction": {
+    "message": "Pilih jenis aksi."
+  },
+  "paletteCustomErrLimit": {
+    "message": "Batas perintah tercapai (100) — hapus satu dulu."
+  },
+  "paletteCustomEmpty": {
+    "message": "Belum ada perintah kustom."
+  },
+  "recentGroupToday": {
+    "message": "Hari ini"
+  },
+  "recentGroupWeek": {
+    "message": "Minggu ini"
+  },
+  "recentGroupMonth": {
+    "message": "Bulan ini"
+  },
+  "recentGroupOlder": {
+    "message": "Lebih lama"
+  },
+  "searchHistoryRerun": {
+    "message": "Cari lagi"
+  },
+  "optionsGroupBackup": {
+    "message": "Cadangan"
+  },
+  "optionsGroupContextMenu": {
+    "message": "Menu konteks"
+  },
+  "optionsGroupIcons": {
+    "message": "Ikon"
+  },
+  "settingsExport": {
+    "message": "Ekspor pengaturan"
+  },
+  "settingsImport": {
+    "message": "Impor pengaturan"
+  },
+  "settingsBackupHint": {
+    "message": "Ekspor menyimpan semua pengaturan (termasuk preferensi sinkronisasi) ke file JSON. Impor menggabungkan kembali cadangan: pengaturan di file menimpa yang saat ini, sisanya dipertahankan."
+  },
+  "settingsImportConfirm": {
+    "message": "Pengimporan akan menimpa setiap pengaturan yang ada di file cadangan (pengaturan yang tidak ada di file tetap dipertahankan) dan memuat ulang halaman ini. Lanjutkan?"
+  },
+  "settingsImportInvalid": {
+    "message": "File pengaturan tidak valid: bukan cadangan pengaturan vBookmarks."
+  },
+  "settingsImportDone": {
+    "message": "Pengaturan diimpor. Halaman akan dimuat ulang sekarang."
+  },
+  "settingsImportError": {
+    "message": "Beberapa pengaturan tidak dapat ditulis (kuota penyimpanan atau kesalahan sementara). Impor tidak selesai — silakan coba lagi."
+  },
+  "statsSectionRecent": {
+    "message": "Kunjungan terbaru"
+  },
+  "statsSectionBookmarks": {
+    "message": "Statistik bookmark"
+  },
+  "statsHistoryGuide": {
+    "message": "Berikan akses riwayat untuk menampilkan kunjungan terbaru Anda di sini."
+  },
+  "statsHistoryAdd": {
+    "message": "Tambahkan ke bookmark"
+  },
+  "statsHistoryBookmarked": {
+    "message": "Telah dibookmark"
   },
   "deadPause": {
     "message": "Jeda"
+  },
+  "deadResume": {
+    "message": "Lanjutkan"
+  },
+  "deadCancel": {
+    "message": "Batal"
   },
   "deadPaused": {
     "message": "Dijeda"
@@ -671,1107 +2142,331 @@
   "optionTabGroupsClosedLimit": {
     "message": "Riwayat tab/grup yang ditutup untuk disimpan"
   },
-  "deadProxyAdd": {
-    "message": "Tambahkan server proxy untuk pemeriksaan tautan mati"
+  "folderPickMoveHere": {
+    "message": "Pindah ke sini"
   },
-  "deadProxyLabel": {
-    "message": "Proxy: $server$",
+  "folderPickCopyHere": {
+    "message": "Salin ke sini"
+  },
+  "folderPickFilter": {
+    "message": "Filter folder…"
+  },
+  "folderPickFavNote": {
+    "message": "Item yang tidak dibookmark akan dibookmark di sini"
+  },
+  "folderPickPinned": {
+    "message": "Disematkan"
+  },
+  "folderPickRecent": {
+    "message": "Terbaru"
+  },
+  "pinFolder": {
+    "message": "Sematkan folder ini"
+  },
+  "unpinFolder": {
+    "message": "Lepas sematan folder ini"
+  },
+  "stagingAdd": {
+    "message": "Tambah ke area pementasan"
+  },
+  "stagingAdded": {
+    "message": "Ditambahkan ke area pementasan"
+  },
+  "stagingAlready": {
+    "message": "Sudah ada di area pementasan"
+  },
+  "stagingAddedSummary": {
+    "message": "Menambahkan $n$ item; $m$ sudah dipentaskan",
     "placeholders": {
-      "server": {
+      "n": {
         "content": "$1"
+      },
+      "m": {
+        "content": "$2"
       }
     }
   },
-  "deadProxyChange": {
-    "message": "Ubah"
+  "stagingFull": {
+    "message": "Area pementasan penuh — hapus beberapa item dulu"
   },
-  "deadProxyRemove": {
-    "message": "Hapus"
+  "stagingFolderEmpty": {
+    "message": "Folder ini tidak memiliki bookmark untuk dipentaskan"
   },
-  "deadProxyRemoved": {
-    "message": "Server proxy dihapus"
-  },
-  "deadProxyPanelHint": {
-    "message": "Masukkan server proxy yang sudah Anda miliki (ekstensi tidak menyediakan), mis. 127.0.0.1:7890 atau socks5://127.0.0.1:1080."
-  },
-  "deadProxyTestUrlLabel": {
-    "message": "URL uji"
-  },
-  "deadProxyTestSave": {
-    "message": "Uji & simpan"
-  },
-  "deadProxyTesting": {
-    "message": "Menguji…"
-  },
-  "deadProxySaved": {
-    "message": "Proxy disimpan — pemindaian berikutnya akan memeriksa ulang kegagalan langsung melalui proxy tersebut"
-  },
-  "deadProxyInvalid": {
-    "message": "Alamat proxy tidak valid — gunakan host:port atau skema://host:port (http/https/socks5, tanpa kredensial)"
-  },
-  "deadProxyUnreachable": {
-    "message": "Proxy tidak terjangkau — tidak disimpan"
-  },
-  "deadProxyDenied": {
-    "message": "Izin proxy tidak diberikan"
-  },
-  "deadProxyControlled": {
-    "message": "Setelan proxy dikelola oleh ekstensi lain"
-  },
-  "deadProxyUnavailable": {
-    "message": "API proxy tidak tersedia di peramban ini"
-  },
-  "deadProxyNudge": {
-    "message": "Pemeriksaan ulang proxy memisahkan tautan mati yang sesungguhnya dari tautan yang diblokir karena wilayah — konfigurasikan di sini atau di halaman opsi."
-  },
-  "deadRescan": {
-    "message": "Pindai ulang"
-  },
-  "deadResume": {
-    "message": "Lanjutkan"
-  },
-  "deadStartHint": {
-    "message": "Mulai memindai $n$ bookmark",
+  "stagingConfirmFolder": {
+    "message": "Pentaskan $n$ bookmark dari folder ini?",
     "placeholders": {
       "n": {
         "content": "$1"
       }
     }
   },
-  "deadStatusBlocked": {
-    "message": "diblokir"
+  "stagingRemove": {
+    "message": "Hapus dari area pementasan"
   },
-  "deadUnmark": {
-    "message": "Hapus tanda mati"
+  "stagingRemoved": {
+    "message": "Dihapus dari area pementasan"
   },
-  "deadUnmarkAll": {
-    "message": "Hapus semua tanda"
+  "recentStageAll": {
+    "message": "Pentaskan semua yang baru ditambahkan"
   },
-  "deadUnmarkSelected": {
-    "message": "Batal tandai yang dipilih"
-  },
-  "defaultIconButton": {
-    "message": "Gunakan default"
-  },
-  "defaultIconButtonOr": {
-    "message": "atau"
-  },
-  "customIconPick": {
-    "message": "Pilih berkas…"
-  },
-  "delete": {
-    "message": "Hapus"
-  },
-  "deleteEllipsis": {
-    "message": "Hapus..."
-  },
-  "deletedBookmark": {
-    "message": "$title$ dihapus",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Example"
-      }
-    },
-    "description": "Toast shown after a bookmark or separator was deleted; the toast offers an undo button. $title$ is the deleted row's title (empty for separators)."
-  },
-  "deletedFolder": {
-    "message": "Folder $title$ dihapus",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Bookmarks"
-      }
-    },
-    "description": "Toast shown after a bookmark folder (with its whole subtree) was deleted; the toast offers an undo button. $title$ is the folder name."
-  },
-  "donationDismiss": {
-    "message": "Tutup"
-  },
-  "donationGo": {
-    "message": "Donasi"
-  },
-  "donationRate": {
-    "message": "Beri peringkat"
-  },
-  "donationRateTitle": {
-    "message": "Beri peringkat untuk vBookmarks di Chrome Web Store"
-  },
-  "donationLater": {
-    "message": "Nanti"
-  },
-  "donationMessage": {
-    "message": "Menikmatinya? Donasi untuk mendukung masa depannya — atau beri peringkat di toko: setiap ulasan menjaga pembaruan terus datang."
-  },
-  "donationV4Notice": {
-    "message": "vBookmarks 4.0 adalah rombakan total dengan desain modern, dilengkapi fitur-fitur baru."
-  },
-  "donationV4GuideLink": {
-    "message": "Baca panduan v4 →"
-  },
-  "donationNever": {
-    "message": "Jangan tampilkan lagi"
-  },
-  "dupesApplyAll": {
-    "message": "Terapkan semua ($count$)",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "dupesApplySelected": {
-    "message": "Hapus duplikat yang dipilih ($count$)",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "dupesCleanAll": {
-    "message": "Bersihkan semua: $groups$ grup, $count$ salinan ekstra",
-    "placeholders": {
-      "groups": {
-        "content": "$1"
-      },
-      "count": {
-        "content": "$2"
-      }
-    },
-    "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go."
-  },
-  "dupesCleanRestHint": {
-    "message": "Simpan \"$title$\" dan hapus $count$ lainnya",
-    "placeholders": {
-      "title": {
-        "content": "$1"
-      },
-      "count": {
-        "content": "$2"
-      }
-    }
-  },
-  "dupesConfirmAll": {
-    "message": "Hapus $count$ salinan tambahan di $groups$ grup? Pemilih di setiap grup akan dipertahankan.",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      },
-      "groups": {
-        "content": "$2"
-      }
-    },
-    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
-  },
-  "dupesConfirmSelected": {
-    "message": "Hapus $count$ bookmark duplikat dari $groups$ grup yang dipilih?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      },
-      "groups": {
-        "content": "$2"
-      }
-    }
-  },
-  "dupesConfirmGroup": {
-    "message": "Simpan \"$title$\" dan hapus $count$ salinan lainnya?",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Example bookmark"
-      },
-      "count": {
-        "content": "$2"
-      }
-    },
-    "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."
-  },
-  "dupesDone": {
-    "message": "$count$ bookmark duplikat dihapus",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Alert shown after the duplicate cleanup finished."
-  },
-  "dupesGroupCount": {
-    "message": "$count$ duplikat",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
-  },
-  "dupesGroupExpand": {
-    "description": "Dupes view group-head context menu: expand a collapsed duplicate group.",
-    "message": "Perluas grup"
-  },
-  "dupesGroupCollapse": {
-    "description": "Dupes view group-head context menu: collapse an expanded duplicate group.",
-    "message": "Ciutkan grup"
-  },
-  "dupesIgnoreScheme": {
-    "message": "Abaikan perbedaan http/https"
-  },
-  "dupesKeepThis": {
-    "message": "Simpan yang ini"
-  },
-  "dupesKeeperSet": {
-    "message": "Tetapkan sebagai penyimpan"
-  },
-  "dupesNone": {
-    "message": "Tidak ada duplikat ditemukan"
-  },
-  "dupesPreviewSummary": {
-    "message": "$groups$ grup · $count$ akan dibebaskan",
-    "placeholders": {
-      "groups": {
-        "content": "$1"
-      },
-      "count": {
-        "content": "$2"
-      }
-    }
-  },
-  "dupesRemoveRow": {
-    "message": "Hapus salinan ini"
-  },
-  "dupesScopeAll": {
-    "message": "Semua bookmark"
-  },
-  "dupesScopeBar": {
-    "message": "Hanya bilah bookmark"
-  },
-  "dupesStrategyBookmarkBar": {
-    "message": "Simpan yang ada di bilah bookmark"
-  },
-  "dupesStrategyMostVisited": {
-    "message": "Simpan yang paling sering dikunjungi"
-  },
-  "dupesStrategyNewest": {
-    "message": "Simpan terbaru"
-  },
-  "dupesStrategyOldest": {
-    "message": "Simpan terlama"
-  },
-  "dupesStrategyShallowest": {
-    "message": "Simpan yang paling dangkal"
-  },
-  "dupesStrategyShortestTitle": {
-    "message": "Simpan judul terpendek"
-  },
-  "edit": {
-    "message": "Edit..."
-  },
-  "editBookmark": {
-    "message": "Edit markah"
-  },
-  "editFolder": {
-    "message": "Edit folder"
-  },
-  "errorOccured": {
-    "message": "Ups, terjadi kesalahan."
-  },
-  "extDesc": {
-    "description": "The extension description.",
-    "message": "Manajer markah popup. Neat Bookmarks yang ditingkatkan. Lebih rapi dari Neater Bookmarks."
-  },
-  "extName": {
-    "description": "vBookmarks",
-    "message": "vBookmarks"
-  },
-  "folderEmpty": {
-    "message": "(Kosong)"
-  },
-  "general": {
-    "message": "Umum"
-  },
-  "ignore": {
-    "message": "Abaikan"
-  },
-  "name": {
-    "description": "Name of bookmark or folder.",
-    "message": "Nama"
-  },
-  "noTitle": {
-    "description": "The title for untitled bookmarks with no http(s) URL or untitled folders.",
-    "message": "(tanpa judul)"
-  },
-  "nope": {
-    "message": "Batal"
-  },
-  "open": {
-    "description": "Action to open bookmarks.",
-    "message": "Buka"
-  },
-  "openBookmarks": {
-    "message": "Buka Semua Markah"
-  },
-  "openBookmarksInGroup": {
-    "message": "Buka semua di grup tab baru"
-  },
-  "openBookmarksInGroupSetup": {
-    "message": "Buka semua di grup tab baru…"
-  },
-  "openBookmarksInExistingGroup": {
-    "message": "Buka semua di grup tab yang ada…"
-  },
-  "tabGroupOptions": {
-    "message": "Grup tab"
-  },
-  "sortMenuOptions": {
-    "message": "Urutkan"
-  },
-  "openBookmarksIncognitoWindow": {
-    "message": "Buka Semua Markah di Jendela Samaran"
-  },
-  "openBookmarksNewWindow": {
-    "message": "Buka Semua Markah di Jendela Baru"
-  },
-  "openCommandPaletteCommand": {
-    "message": "Buka palet perintah"
-  },
-  "openIncognitoWindow": {
-    "message": "Buka di Jendela Penyamaran"
-  },
-  "openNewTab": {
-    "message": "Buka di Tab Baru"
-  },
-  "bookmarkOpenInNewGroup": {
-    "message": "Buka di grup tab baru"
-  },
-  "bookmarkOpenInNewGroupSetup": {
-    "message": "Buka di grup tab baru…"
-  },
-  "bookmarkOpenInExistingGroup": {
-    "message": "Buka di grup tab yang ada…"
-  },
-  "openNewWindow": {
-    "message": "Buka di Jendela Baru"
-  },
-  "openSidePanelCommand": {
-    "message": "Buka panel samping vBookmarks"
-  },
-  "optionAnnounceEnabledHint": {
-    "message": "Catatan rilis dan tips dari repositori GitHub proyek (diambil paling sering setiap 6 jam). Nonaktif juga menghentikan pengambilan jaringan."
-  },
-  "optionAnnounceEnabled": {
-    "message": "Tampilkan pengumuman dalam produk"
-  },
-  "optionAutoRefreshSync": {
-    "message": "Segarkan status sinkronisasi otomatis"
-  },
-  "optionAutoResizePopup": {
-    "message": "Ubah ukuran jendela popup otomatis agar sesuai dengan konten"
-  },
-  "optionClickNewTab": {
-    "message": "Klik kiri membuka markah di tab baru."
-  },
-  "optionCloseUnusedFolders": {
-    "message": "Tutup folder yang tidak digunakan saat membuka folder."
-  },
-  "optionConfirmDeleteFolder": {
-    "message": "Konfirmasi sebelum menghapus folder yang tidak kosong"
-  },
-  "optionConfirmOpenFolder": {
-    "message": "Tampilkan konfirmasi saat membuka banyak markah dari folder."
-  },
-  "optionDeadProxyServer": {
-    "message": "Server proxy tautan mati"
-  },
-  "deadProxyServerHint": {
-    "message": "Server yang tersimpan memeriksa ulang penanda yang gagal dalam pemeriksaan langsung di setiap pemindaian tautan mati, memisahkan tautan mati yang sebenarnya dari yang diblokir wilayah. Uji & simpan mengujinya (hanya server yang dapat dijangkau yang disimpan); Anda juga dapat menambahkannya dari tampilan tautan mati."
-  },
-  "deadProxyClear": {
-    "message": "Bersihkan"
-  },
-  "deadProxyNone": {
-    "message": "(tidak diatur)"
-  },
-  "optionDeadScanConcurrency": {
-    "message": "Konkurensi pemindaian tautan mati (1-16)"
-  },
-  "optionDeadScanTimeout": {
-    "message": "Batas waktu pemindaian tautan mati dalam detik (2-30)"
-  },
-  "optionOnlyShowBookmarkBar": {
-    "message": "Hanya tampilkan markah di Bilah Markah"
-  },
-  "optionOpenInSidePanel": {
-    "message": "Buka di panel samping, bukan popup"
-  },
-  "optionOpenNewTab": {
-    "message": "Klik tengah atau control-klik membuka markah di tab latar belakang baru (bukan latar depan)."
-  },
-  "optionPopupStays": {
-    "message": "Popup tetap terbuka saat membuka (klik kiri) markah."
-  },
-  "optionRecentCollapsed": {
-    "message": "Ciutkan bagian yang baru ditambahkan secara default"
-  },
-  "optionRecentCount": {
-    "message": "Jumlah bookmark yang baru ditambahkan untuk ditampilkan"
-  },
-  "optionRememberPrevState": {
-    "message": "Ingat keadaan sebelumnya (posisi gulir, folder yang dibuka, dan item terakhir yang difokuskan)."
-  },
-  "optionSearchAfterEnter": {
-    "message": "Cari markah hanya saat ENTER ditekan (bukan pencarian instan)"
-  },
-  "optionSearchHistory": {
-    "message": "Rekam riwayat pencarian"
-  },
-  "optionSearchHistoryHint": {
-    "message": "Menonaktifkan ini juga akan menghapus riwayat yang ada."
-  },
-  "optionShowDeadView": {
-    "message": "Tampilkan tab tautan mati"
-  },
-  "optionShowDupesView": {
-    "message": "Tampilkan tab duplikat"
-  },
-  "optionShowItemPath": {
-    "message": "Tampilkan jalur folder induk pada baris daftar"
-  },
-  "optionShowRecentBookmarks": {
-    "message": "Tampilkan bookmark yang baru ditambahkan di bagian atas popup"
-  },
-  "optionShowStatsView": {
-    "message": "Tampilkan tab statistik"
-  },
-  "optionShowSyncStatus": {
-    "message": "Tampilkan indikator status sinkronisasi"
-  },
-  "optionHighlightUnsynced": {
-    "message": "Redupkan bookmark yang tidak tersinkronisasi"
-  },
-  "optionShowViewTabs": {
-    "message": "Tampilkan tab tampilan di bawah kotak pencarian"
-  },
-  "optionRememberView": {
-    "message": "Ingat tampilan aktif terakhir dan buka kembali"
-  },
-  "optionShowTabBadges": {
-    "message": "Tampilkan lencana jumlah pada tab tampilan"
-  },
-  "optionPaletteEnabled": {
-    "message": "Aktifkan palet perintah (Ctrl/Cmd+K)"
-  },
-  "optionQuickAddEnabled": {
-    "message": "Tampilkan tombol bintang tambah cepat di samping kolom pencarian"
-  },
-  "optionQuickAddContextMenu": {
-    "message": "Tambahkan entri \"Tandai halaman ini dengan vBookmarks\" ke menu klik kanan halaman"
-  },
-  "optionQuickAddContextMenuHint": {
-    "message": "Tidak tergantung pada tombol bintang tambah cepat; pemulihan pengalaman klasik juga akan mematikan entri ini."
-  },
-  "optionCollapseTabGroupMenu": {
-    "message": "Ciutkan entri grup tab menjadi satu submenu \"Grup tab…\""
-  },
-  "optionCollapseTabGroupMenuHint": {
-    "message": "Berlaku untuk menu klik kanan folder dan bookmark. Nonaktif secara default; menjaga tinggi menu tetap rendah pada layar kecil/zoom tinggi."
-  },
-  "optionCollapseSortMenu": {
-    "message": "Ciutkan entri pengurutan menjadi satu submenu \"Urutkan…\""
-  },
-  "optionCollapseSortMenuHint": {
-    "message": "Berlaku untuk menu klik kanan folder. Aktif secara default."
-  },
-  "optionShowToolButton": {
-    "message": "Tampilkan tombol alat (⋮) di samping kolom pencarian"
-  },
-  "optionClassicExperience": {
-    "message": "Kembalikan header klasik"
-  },
-  "optionClassicExperienceHint": {
-    "message": "Menonaktifkan palet perintah, bintang tambah cepat, entri klik kanan di halamannya, tombol alat, dan tab tampilan. Masing-masing dapat diaktifkan kembali secara individual di bagiannya."
-  },
-  "optionStatsEnabled": {
-    "message": "Aktifkan statistik kunjungan"
-  },
-  "optionFaviconContrast": {
-    "message": "Balik favicon kontras rendah"
-  },
-  "optionFaviconContrastHint": {
-    "message": "Ikon putih pada tema terang dan ikon hitam pada tema gelap dibalik agar tetap terlihat. Setiap ikon diambil sampelnya satu kali saat dimuat — tanpa beban saat menjelajah."
-  },
-  "optionFaviconEnrich": {
-    "message": "Ambil ikon situs yang hilang"
-  },
-  "optionFaviconEnrichHint": {
-    "message": "Untuk situs yang ditandai yang tidak memiliki ikon cache di Chrome, ambil ikon asli langsung dari situs (/favicon.ico, lalu ikon yang dideklarasikan halaman). Permintaan hanya dikirim ke situs yang Anda tandai."
-  },
-  "optionFaviconEnrichAgg": {
-    "message": "Cadangan ikon pihak ketiga"
-  },
-  "optionFaviconEnrichAggHint": {
-    "message": "Jika pengambilan langsung gagal, cari ikon berdasarkan domain dari daftar bawaan layanan ikon pihak ketiga ($providers$). Layanan yang tidak dapat dijangkau akan dilewati dan layanan berikutnya dicoba — layanan tersebut tidak dicoba ulang selama 6 jam.",
-    "placeholders": {
-      "providers": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionFaviconBackup": {
-    "message": "Sertakan cache ikon dalam cadangan"
-  },
-  "optionFaviconBackupHint": {
-    "message": "Juga sertakan cache favicon yang diperkaya (data per situs, berpotensi besar) ke dalam ekspor/impor pengaturan. Ini mencakup ikon yang sudah ada dalam cache meskipun pengambilan ikon dinonaktifkan. Nonaktif membuat cadangan tetap kecil; ikon akan diambil ulang secara otomatis."
-  },
-  "optionFaviconCacheClear": {
-    "message": "Bersihkan cache ikon"
-  },
-  "optionFaviconCacheClearConfirm": {
-    "message": "Hapus cache favicon yang diperkaya? Ikon akan diambil ulang secara otomatis pada pembukaan berikutnya."
-  },
-  "optionFaviconCacheEmpty": {
-    "message": "Tidak ada cache favicon untuk dihapus."
-  },
-  "optionFaviconCacheCleared": {
-    "message": "Cache ikon telah dibersihkan. Ikon akan diambil ulang saat dibuka berikutnya."
-  },
-  "favGalleryLink": {
-    "message": "Lihat ikon yang disegarkan",
-    "description": "Options link (Icons group, right of the Clear icon cache button): opens the favicon gallery page listing the sites whose icons were refetched."
-  },
-  "favGalleryTitle": {
-    "message": "Ikon situs yang disegarkan",
-    "description": "Favicon gallery page title (h1 + document title)."
-  },
-  "favGalleryHint": {
-    "message": "Ikon yang diambil vBookmarks untuk situs yang dibookmark yang belum di-cache Chrome — dari mana masing-masing berasal dan bookmark mana yang menggunakannya. Hanya tampilan.",
-    "description": "Subtitle under the favicon gallery title, explaining the page is read-only."
-  },
-  "favGallerySearch": {
-    "message": "Filter menurut situs, judul, atau jalur",
-    "description": "Placeholder of the favicon gallery filter input."
-  },
-  "favGalleryAll": {
-    "message": "Semua",
-    "description": "Favicon gallery source filter chip: show every source."
-  },
-  "favSrcDirect": {
-    "message": "Langsung",
-    "description": "Favicon gallery source badge: the icon was fetched directly from the site itself."
-  },
-  "favSrcProxy": {
-    "message": "Proksi",
-    "description": "Favicon gallery source badge: the icon was fetched through the user's own proxy relay."
-  },
-  "favSrcLegacy": {
-    "message": "Cache sebelumnya",
-    "description": "Favicon gallery source badge: cached before the source was recorded, so the origin is unknown."
-  },
-  "favGalleryCompare": {
-    "message": "Bandingkan dengan placeholder",
-    "description": "Favicon gallery toggle button: switch every icon to the generic placeholder it replaced (before/after comparison)."
-  },
-  "favGalleryShowingBefore": {
-    "message": "Kembali ke ikon asli",
-    "description": "Favicon gallery toggle button while the placeholder comparison is shown: switch back to the real fetched icons."
-  },
-  "favGalleryStatSites": {
-    "message": "$n$ situs",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    },
-    "description": "Favicon gallery stats strip: how many sites have a refreshed icon."
-  },
-  "favGalleryStatBookmarks": {
-    "message": "$n$ bookmark",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    },
-    "description": "Favicon gallery stats strip: how many bookmarks sit on the refreshed sites."
-  },
-  "favGalleryVisits": {
-    "message": "$n$ bukaan tercatat",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    },
-    "description": "Favicon gallery tooltip on a bookmark row's visit-count pill."
-  },
-  "favGalleryFailedTitle": {
-    "message": "Baru dicoba, ikon tidak ditemukan",
-    "description": "Favicon gallery heading of the muted section listing hosts whose icon fetch failed recently."
-  },
-  "favGalleryFailedHint": {
-    "message": "Kegagalan dicoba lagi setelah 24 jam, 3 hari, dan 7 hari, kemudian dihentikan hingga cache ikon dibersihkan.",
-    "description": "Favicon gallery hint under the failed-fetch section title."
-  },
-  "favGalleryGaveUp": {
-    "message": "Menyerah",
-    "description": "Favicon gallery badge on a failed-strip host whose retries are exhausted (it stays untouched until the icon cache is cleared)."
-  },
-  "favGalleryOrphan": {
-    "message": "Tidak ada bookmark yang tersisa di host ini — ikon akan ikut terhapus bersama cache.",
-    "description": "Favicon gallery note on a card whose host no longer has any bookmark."
-  },
-  "favGalleryEmptyTitle": {
-    "message": "Belum ada ikon yang disegarkan",
-    "description": "Favicon gallery empty-state heading."
-  },
-  "favGalleryEmptyText": {
-    "message": "Saat popup menemukan situs yang dibookmark tanpa ikon di Chrome, vBookmarks mengambil ikon aslinya dan mencantumkannya di sini.",
-    "description": "Favicon gallery empty-state body text."
-  },
-  "storageUsageIcon": {
-    "message": "Cache ikon"
-  },
-  "storageUsageOther": {
-    "message": "Lainnya"
-  },
-  "storageUsageSummary": {
-    "message": "Terpakai $1$ dari $2$",
-    "placeholders": {
-      "1": {
-        "content": "$1"
-      },
-      "2": {
-        "content": "$2"
-      }
-    }
-  },
-  "storageUsageFree": {
-    "message": "Kosong"
-  },
-  "storageUsageHint": {
-    "message": "Hanya penyimpanan lokal ekstensi (chrome.storage.local, sekitar 10 MB kuota): cache ikon beserta pengaturan dan data lokal lainnya. Pengaturan tersinkron, data sesi, dan pustaka bookmark tidak dihitung di sini."
-  },
-  "optionsDonate": {
-    "message": "Donasi"
-  },
-  "optionsGithubLink": {
-    "message": "GitHub"
-  },
-  "optionsHomepageLink": {
-    "message": "Beranda"
-  },
-  "optionsSince": {
-    "message": "Fork dari Neat Bookmarks, dikelola selama $days$ hari.",
-    "placeholders": {
-      "days": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionsVersion": {
-    "message": "Versi vBookmarks"
-  },
-  "optionSyncRefreshInterval": {
-    "message": "Interval penyegaran"
-  },
-  "optionSyncRefreshIntervalSeconds": {
-    "message": "detik"
-  },
-  "optionTheme": {
-    "message": "Tema"
-  },
-  "optionThemeAuto": {
-    "message": "Ikuti sistem"
-  },
-  "optionThemeDark": {
-    "message": "Gelap"
-  },
-  "optionThemeInk": {
-    "message": "Tinta (gelap)"
-  },
-  "optionThemeLight": {
-    "message": "Terang"
-  },
-  "optionThemePaper": {
-    "message": "Kertas (terang)"
-  },
-  "optionLanguage": {
-    "message": "Bahasa"
-  },
-  "optionLanguageAuto": {
-    "message": "Otomatis"
-  },
-  "optionLanguageHint": {
-    "message": "Mengubah bahasa akan memuat ulang halaman ini."
-  },
-  "paletteClose": {
-    "message": "Tutup"
-  },
-  "paletteCmdVersion": {
-    "message": "Info versi"
-  },
-  "paletteCmdLang": {
-    "message": "Ganti bahasa…"
-  },
-  "paletteCmdLangUsage": {
-    "message": "Penggunaan: /lang diikuti kode lokal — mis. /lang en, /lang zh_CN, /lang ja."
-  },
-  "versionDialogTitle": {
-    "message": "vBookmarks $version$",
-    "placeholders": {
-      "version": {
-        "content": "$1"
-      }
-    }
-  },
-  "versionDialogCopy": {
-    "message": "Salin info"
-  },
-  "versionDialogCopied": {
-    "message": "Tersalin"
-  },
-  "versionMetaVersion": {
-    "message": "Versi ekstensi"
-  },
-  "versionMetaAnnounce": {
-    "message": "Yang baru"
-  },
-  "versionMetaAnnounceNone": {
-    "message": "Tidak ada pengumuman yang dimuat."
-  },
-  "versionMetaBrowser": {
-    "message": "Peramban"
-  },
-  "versionMetaOS": {
-    "message": "OS"
-  },
-  "versionMetaChannel": {
-    "message": "Saluran"
-  },
-  "versionMetaLanguage": {
-    "message": "Bahasa"
-  },
-  "versionMetaUserAgent": {
-    "message": "Agen pengguna"
-  },
-  "optionZoom": {
-    "message": "Perbesar"
-  },
-  "options": {
-    "message": "Opsi"
-  },
-  "optionsFooterText": {
-    "description": "Footer text for the Options page",
-    "message": "Dibangun oleh $authorName$.",
-    "placeholders": {
-      "authorName": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionsGroupBackup": {
-    "message": "Cadangan"
-  },
-  "optionsGroupIcons": {
-    "message": "Ikon"
-  },
-  "optionsGroupContextMenu": {
-    "message": "Menu konteks"
-  },
-  "optionsGroupViews": {
-    "message": "Tampilan"
-  },
-  "optionsGroupSort": {
-    "message": "Pengurutan"
-  },
-  "optionsGroupTools": {
-    "message": "Alat"
-  },
-  "optionsGroupStats": {
-    "message": "Statistik"
-  },
-  "paletteCmdDead": {
-    "message": "Cari tautan mati"
-  },
-  "paletteCmdDupes": {
-    "message": "Bersihkan bookmark duplikat"
-  },
-  "paletteCmdGoDead": {
-    "message": "Buka tampilan Tautan Mati"
-  },
-  "paletteCmdGoDupes": {
-    "message": "Buka tampilan Duplikat"
-  },
-  "paletteCmdGoRecent": {
-    "message": "Buka tampilan Terbaru"
-  },
-  "paletteCmdGoSearch": {
-    "message": "Buka tampilan Pencarian"
-  },
-  "paletteCmdGoStats": {
-    "message": "Buka tampilan Statistik"
-  },
-  "paletteCmdGoTree": {
-    "message": "Buka tampilan Pohon"
-  },
-  "paletteCmdNewBookmark": {
-    "message": "Bookmark baru…"
-  },
-  "paletteCmdNewFolder": {
-    "message": "Folder baru…"
-  },
-  "paletteCmdOptions": {
-    "message": "Buka halaman opsi"
-  },
-  "paletteCmdQuickAdd": {
-    "message": "Bookmark tab saat ini"
-  },
-  "paletteCmdSaveSession": {
-    "message": "Simpan tab jendela sebagai folder"
-  },
-  "paletteCmdSearchInView": {
-    "message": "Cari '$query$' di tampilan Pencarian",
-    "placeholders": {
-      "query": {
-        "content": "$1"
-      }
-    }
-  },
-  "paletteCmdToggleViewTabs": {
-    "message": "Alihkan tab tampilan"
-  },
-  "paletteCmdTheme": {
-    "message": "Atur tema…"
-  },
-  "paletteCmdThemeUsage": {
-    "message": "Penggunaan: /theme diikuti nama tema — auto, light, dark, ink, atau paper (prefiks unik berfungsi, mis. /theme d)."
-  },
-  "paletteCustomTag": {
-    "message": "kustom"
-  },
-  "paletteCustomDeleteConfirm": {
-    "message": "Hapus perintah \"$1\"? Perubahan ini akan disinkronkan ke semua perangkat Anda."
-  },
-  "paletteCustomBroken": {
-    "message": "Folder perintah \"$1\" tidak lagi ada. Hapus perintah ini?"
-  },
-  "paletteCmdSaveAsCommand": {
-    "message": "Simpan \"$1\" sebagai perintah…"
-  },
-  "paletteActionOpenUrl": {
-    "message": "Buka URL"
-  },
-  "paletteActionOpenUrlGroup": {
-    "message": "Buka grup folder penanda"
-  },
-  "paletteActionViewPreset": {
-    "message": "Buka tampilan dengan prasetel"
-  },
-  "paletteActionUrlTemplate": {
-    "message": "Buka templat URL"
-  },
-  "optionsGroupPalette": {
-    "message": "Palet perintah"
-  },
-  "paletteCustomHint": {
-    "message": "Perintah garis miring khusus untuk palet perintah (Ctrl/Cmd+K). Perintah ini disinkronkan dengan setelan Anda — maksimal 100 entri."
-  },
-  "paletteCustomAdd": {
-    "message": "Tambah perintah…"
-  },
-  "paletteCustomUsage": {
-    "message": "$1 / $2"
-  },
-  "paletteCustomSlash": {
-    "message": "Slash (kata setelah /)"
-  },
-  "paletteCustomAliases": {
-    "message": "Alias (dipisahkan koma)"
-  },
-  "paletteCustomAction": {
-    "message": "Aksi"
-  },
-  "paletteCustomUrl": {
-    "message": "URL"
-  },
-  "paletteCustomTemplate": {
-    "message": "Templat URL — %s diganti dengan kata-kata setelah perintah"
-  },
-  "paletteCustomWhere": {
-    "message": "Buka di"
-  },
-  "paletteCustomFolder": {
-    "message": "Folder bookmark"
-  },
-  "paletteCustomView": {
-    "message": "Tampilan"
-  },
-  "paletteCustomStrategy": {
-    "message": "Prasetel strategi dedup"
-  },
-  "paletteCustomScope": {
-    "message": "Prasetel cakupan dedup"
-  },
-  "paletteCustomScan": {
-    "message": "Mulai pemindaian saat entri"
-  },
-  "paletteWhereCurrent": {
-    "message": "Tab saat ini"
-  },
-  "paletteWhereTab": {
-    "message": "Tab baru"
-  },
-  "paletteWhereWindow": {
-    "message": "Jendela baru"
-  },
-  "paletteWhereBackground": {
-    "message": "Tab latar belakang"
-  },
-  "paletteCustomSave": {
-    "message": "Simpan perintah"
-  },
-  "paletteCustomErrSlash": {
-    "message": "Slash: 1–24 karakter huruf kecil, angka, atau tanda hubung, diawali huruf atau angka."
-  },
-  "paletteCustomErrAlias": {
-    "message": "Alias: aturan yang sama seperti slash (1–24 karakter huruf kecil, angka, atau tanda hubung)."
-  },
-  "paletteCustomErrTaken": {
-    "message": "Slash atau alias tersebut sudah digunakan."
-  },
-  "paletteCustomErrUrl": {
-    "message": "Hanya URL http:// atau https:// yang diizinkan."
-  },
-  "paletteCustomErrFolder": {
-    "message": "Pilih folder bookmark."
-  },
-  "paletteCustomErrView": {
-    "message": "Pilih tampilan."
-  },
-  "paletteCustomErrTemplate": {
-    "message": "Templat harus mengandung tepat satu %s."
-  },
-  "paletteCustomErrAction": {
-    "message": "Pilih jenis aksi."
-  },
-  "paletteCustomErrLimit": {
-    "message": "Batas perintah tercapai (100) — hapus satu dulu."
-  },
-  "paletteCustomEmpty": {
-    "message": "Belum ada perintah kustom."
-  },
-  "paletteNoResults": {
-    "message": "Tidak ada hasil yang cocok"
-  },
-  "palettePlaceholder": {
-    "message": "Cari bookmark, folder, perintah…"
-  },
-  "parentFolder": {
-    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
-    "message": "Folder induk: \"$folderName$\"",
-    "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarksbar"
-      }
-    }
-  },
-  "quickAddBookmark": {
-    "message": "Bookmark halaman ini (Ctrl+D)"
-  },
-  "quickAddBookmarkCommand": {
-    "message": "Menambahkan tab saat ini sebagai bookmark dengan cepat"
-  },
-  "quickAdded": {
-    "message": "Bookmark ditambahkan"
-  },
-  "quickAddedTo": {
-    "message": "Bookmark ditambahkan ke $folderName$",
-    "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarks bar"
-      }
-    }
-  },
-  "quickRemoveBookmark": {
-    "message": "Hapus bookmark ini (Ctrl+D)"
-  },
-  "quickRemoved": {
-    "message": "Bookmark dihapus"
-  },
-  "recentBookmarks": {
+  "recentSectionTitle": {
     "message": "Baru ditambahkan"
   },
-  "recentEmpty": {
-    "message": "Tidak ada bookmark terbaru. Tekan Ctrl+D untuk menandai halaman ini."
+  "stagingEmpty": {
+    "message": "Kosong — klik kanan bookmark mana pun, gunakan tombol ↑ di sini, atau baris riwayat statistik untuk mengirim item ke area pementasan"
   },
-  "recentGroupMonth": {
-    "message": "Bulan ini"
+  "stagingFromHistory": {
+    "message": "Dari riwayat"
   },
-  "recentGroupOlder": {
-    "message": "Lebih lama"
+  "stagingGroupExpand": {
+    "message": "Perluas grup"
   },
-  "recentGroupToday": {
-    "message": "Hari ini"
+  "stagingGroupCollapse": {
+    "message": "Ciutkan grup"
   },
-  "recentGroupWeek": {
-    "message": "Minggu ini"
+  "stagingGroupRename": {
+    "message": "Ubah nama grup…"
   },
-  "recentRevealInTree": {
-    "message": "Tampilkan di Pohon"
+  "stagingGroupDissolve": {
+    "message": "Bubarkan grup"
   },
-  "removeSeparator": {
-    "message": "Hapus Pemisah"
+  "stagingGroupDissolved": {
+    "message": "Grup dibubarkan — item tetap di area pementasan"
   },
-  "replaceUrl": {
-    "message": "Ganti ini dengan URL saat ini"
+  "stagingGroupAssign": {
+    "message": "Grup…"
   },
-  "reportError": {
-    "message": "Laporkan Kesalahan"
+  "stagingGroupAssignTitle": {
+    "message": "Tetapkan ke grup"
   },
-  "reportedToDeveloper": {
-    "description": "A message for an error occured in the extension, has been reported to the developer.",
-    "message": "Ini telah dilaporkan ke pengembang."
+  "stagingGroupNew": {
+    "message": "Grup baru"
   },
-  "resetButton": {
-    "message": "Reset"
+  "stagingGroupNamePrompt": {
+    "message": "Nama grup baru"
   },
-  "resetSettings": {
-    "message": "Reset pengaturan"
+  "stagingGroupNoGroups": {
+    "message": "Belum ada grup"
   },
-  "resetSettingsDescription": {
-    "message": "Reset vBookmarks ke pengaturan default."
+  "stagingBucketTitle": {
+    "message": "Belum dibookmark"
   },
-  "rowActionDelete": {
-    "message": "Hapus"
+  "stagingBucketFavAll": {
+    "message": "Favoritkan semua"
   },
-  "rowActionMark": {
-    "message": "Tandai sebagai mati"
+  "stagingNew": {
+    "message": "baru $n$",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
   },
-  "rowActionReveal": {
-    "message": "Tampilkan di pohon"
+  "stagingRowFav": {
+    "message": "Favoritkan item ini"
   },
-  "rowActionUnmark": {
-    "message": "Hapus tanda mati"
+  "stagingRowUnfav": {
+    "message": "Hapus favorit item ini"
   },
-  "save": {
-    "message": "Simpan"
+  "stagingFav": {
+    "message": "Favorit"
   },
-  "searchBookmarks": {
-    "description": "Placeholder text for search field.",
-    "message": "Cari Markah"
+  "stagingUnfav": {
+    "message": "Hapus favorit"
   },
-  "searchClear": {
-    "message": "Hapus pencarian"
+  "stagingFavDone": {
+    "message": "Memfavoritkan $n$ item",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
   },
-  "searchHistoryClear": {
-    "message": "Hapus semua"
+  "stagingUnfavDone": {
+    "message": "Menghapus favorit $n$ item",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
   },
-  "searchHistoryRemove": {
-    "message": "Hapus pencarian ini"
+  "groupSaveToFolder": {
+    "message": "Simpan ke folder…"
   },
-  "searchHistoryRerun": {
-    "message": "Cari lagi"
+  "groupCopyToFolder": {
+    "message": "Salin ke folder…"
   },
-  "searchHistoryResultCount": {
+  "stagingCount": {
+    "message": "$n$ dipentaskan",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingMoveCopy": {
+    "message": "Pindah/salin ke…"
+  },
+  "stagingMoveDone": {
+    "message": "Memindahkan $n$ item ke rumah",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingCopyDone": {
+    "message": "Menyalin $n$ item",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingMoveConfirm": {
+    "message": "Pindahkan $n$ item ke folder yang dipilih?",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingDeleteConfirm": {
+    "message": "Hapus $n$ item? Yang tidak dibookmark hanya meninggalkan area pementasan.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingDeleted": {
+    "message": "Menghapus $n$ bookmark",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingRemovedCount": {
+    "message": "Menghapus $n$ item dari area pementasan",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingClear": {
+    "message": "Bersihkan pementasan"
+  },
+  "stagingClearConfirm": {
+    "message": "Bersihkan seluruh area pementasan? Pohon bookmark tidak disentuh."
+  },
+  "stagingCleared": {
+    "message": "Area pementasan dibersihkan"
+  },
+  "groupPlaceTooltip": {
+    "message": "Simpan grup ini ke folder…"
+  },
+  "copyBookmark": {
+    "message": "Salin"
+  },
+  "cutBookmark": {
+    "message": "Potong"
+  },
+  "copyMoveTo": {
+    "message": "Salin/pindah ke…"
+  },
+  "pasteHere": {
+    "message": "Tempel di sini"
+  },
+  "copiedToast": {
+    "message": "Disalin: $t$",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
+  },
+  "cutToast": {
+    "message": "Dipotong: $t$ — tempel ke folder tujuan (Esc membatalkan)",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
+  },
+  "pasteDone": {
+    "message": "Ditempel"
+  },
+  "pasteGone": {
+    "message": "Bookmark tidak lagi ada — clipboard dibersihkan"
+  },
+  "folderCopyList": {
+    "message": "Salin judul dan alamat"
+  },
+  "folderCopyText": {
+    "message": "Daftar teks biasa"
+  },
+  "folderCopyMarkdown": {
+    "message": "Markdown"
+  },
+  "folderCopyJson": {
+    "message": "JSON"
+  },
+  "folderCopyConfirm": {
+    "message": "Salin daftar $n$ bookmark?",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "folderCopyDone": {
+    "message": "Menyalin $n$ entri bookmark",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "addFolderMenu": {
+    "message": "Tambah folder"
+  },
+  "optionCollapseAddFolderMenu": {
+    "message": "Ciutkan entri tambah-folder"
+  },
+  "optionCollapseAddFolderMenuHint": {
+    "message": "Gabungkan tiga entri tambah-folder (sebelum/sesudah/di dalam) menjadi satu entri submenu pada klik kanan folder."
+  },
+  "tabRowStage": {
+    "message": "Bookmark dan pementasan"
+  },
+  "tabgroupStageAll": {
+    "message": "Bookmark dan pementasan seluruh grup"
+  },
+  "tabgroupStageConfirm": {
+    "message": "Bookmark dan pementasan $n$ tab?",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabgroupStageNone": {
+    "message": "Tidak ada tab yang bisa dibookmark di grup ini"
+  },
+  "stagedToast": {
+    "message": "Mempertunjukkan $n$ tab sebagai grup “$t$”",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "t": {
+        "content": "$2"
+      }
+    }
+  },
+  "searchResultCount": {
     "message": "$n$ hasil",
     "placeholders": {
       "n": {
@@ -1779,367 +2474,7 @@
       }
     }
   },
-  "searchHistoryTitle": {
-    "message": "Pencarian terbaru"
-  },
-  "searchNoResults": {
-    "message": "Tidak ada bookmark yang cocok"
-  },
-  "searchViewHint": {
-    "message": "Ketik di kotak di atas untuk mencari bookmark Anda"
-  },
-  "selectAll": {
-    "message": "Semua"
-  },
-  "selectClear": {
-    "message": "Bersihkan"
-  },
-  "selectCount": {
-    "message": "$count$ dipilih",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "selectInvert": {
-    "message": "Balikkan"
-  },
-  "selectModeEnter": {
-    "message": "Pilih"
-  },
-  "selectModeExit": {
-    "message": "Keluar dari mode pilih"
-  },
-  "deadRiskBanner": {
-    "message": "Pembersihan tautan mati menghapus penanda secara massal. Cadangkan penanda Anda sebelum pembersihan pertama."
-  },
-  "dupesRiskBanner": {
-    "message": "Deduplikasi menghapus penanda duplikat secara massal. Cadangkan penanda Anda sebelum menerapkannya."
-  },
-  "riskBannerHelp": {
-    "message": "Panduan pencadangan & pemulihan"
-  },
-  "riskBannerNever": {
-    "message": "Jangan tampilkan lagi"
-  },
-  "riskBannerDismiss": {
-    "message": "Tutup"
-  },
-  "sessionEmpty": {
-    "message": "Tidak ada tab untuk disimpan"
-  },
-  "sessionFolderName": {
-    "message": "Sesi $date$",
-    "placeholders": {
-      "date": {
-        "content": "$1",
-        "example": "2026-07-18 15:04"
-      }
-    },
-    "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm."
-  },
-  "sessionSaved": {
-    "message": "$count$ tab disimpan ke folder baru",
-    "placeholders": {
-      "count": {
-        "content": "$1",
-        "example": "12"
-      }
-    },
-    "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
-  },
-  "settingsBackupHint": {
-    "message": "Ekspor menyimpan semua pengaturan (termasuk preferensi sinkronisasi) ke file JSON. Impor menggabungkan kembali cadangan: pengaturan di file menimpa yang saat ini, sisanya dipertahankan."
-  },
-  "settingsExport": {
-    "message": "Ekspor pengaturan"
-  },
-  "settingsImport": {
-    "message": "Impor pengaturan"
-  },
-  "settingsImportConfirm": {
-    "message": "Pengimporan akan menimpa setiap pengaturan yang ada di file cadangan (pengaturan yang tidak ada di file tetap dipertahankan) dan memuat ulang halaman ini. Lanjutkan?"
-  },
-  "settingsImportDone": {
-    "message": "Pengaturan diimpor. Halaman akan dimuat ulang sekarang."
-  },
-  "settingsImportError": {
-    "message": "Beberapa pengaturan tidak dapat ditulis (kuota penyimpanan atau kesalahan sementara). Impor tidak selesai — silakan coba lagi."
-  },
-  "settingsImportInvalid": {
-    "message": "File pengaturan tidak valid: bukan cadangan pengaturan vBookmarks."
-  },
-  "sortByDateAdded": {
-    "message": "Berdasarkan tanggal ditambahkan (terbaru dulu)"
-  },
-  "sortByTitle": {
-    "message": "Berdasarkan judul"
-  },
-  "sortFolderContents": {
-    "message": "Urutkan Isi Folder"
-  },
-  "sortByName": {
-    "message": "Urutkan nama"
-  },
-  "sortByDate": {
-    "message": "Urutkan tanggal"
-  },
-  "sortRecursiveSuffix": {
-    "message": "(rekursif)"
-  },
-  "sortOptions": {
-    "message": "Opsi pengurutan…"
-  },
-  "sortDone": {
-    "message": "Folder diurutkan"
-  },
-  "sortFoldersFirst": {
-    "message": "Folder di atas"
-  },
-  "sortRecursive": {
-    "message": "Urutkan subfolder juga (rekursif)"
-  },
-  "sortRecursiveWarning": {
-    "message": "Ini akan mengurutkan ulang bookmark di setiap subfolder."
-  },
-  "tabGroupDialogTitle": {
-    "message": "Grup tab baru"
-  },
-  "tabGroupTitleLabel": {
-    "message": "Judul grup"
-  },
-  "tabGroupColorLabel": {
-    "message": "Warna"
-  },
-  "tabGroupColorGrey": {
-    "message": "Abu-abu",
-    "description": "Accessible name of the grey color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorBlue": {
-    "message": "Biru",
-    "description": "Accessible name of the blue color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorRed": {
-    "message": "Merah",
-    "description": "Accessible name of the red color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorYellow": {
-    "message": "Kuning",
-    "description": "Accessible name of the yellow color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorGreen": {
-    "message": "Hijau",
-    "description": "Accessible name of the green color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorPink": {
-    "message": "Merah Muda",
-    "description": "Accessible name of the pink color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorPurple": {
-    "message": "Ungu",
-    "description": "Accessible name of the purple color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorCyan": {
-    "message": "Cyan",
-    "description": "Accessible name of the cyan color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorOrange": {
-    "message": "Oranye",
-    "description": "Accessible name of the orange color swatch in the new-tab-group dialog."
-  },
-  "tabGroupUntitled": {
-    "message": "Grup tanpa judul"
-  },
-  "tabGroupNoGroups": {
-    "message": "Tidak ada grup tab yang tersedia"
-  },
-  "tabGroupPickDialogTitle": {
-    "message": "Buka di grup tab yang ada"
-  },
-  "statsClearConfirm": {
-    "message": "Hapus statistik kunjungan untuk $count$ bookmark? Tindakan ini tidak bisa dibatalkan.",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "statsClearData": {
-    "message": "Hapus statistik"
-  },
-  "statsDisabledHint": {
-    "message": "Statistik kunjungan mati — aktifkan di Opsi → Tampilan"
-  },
-  "statsEmpty": {
-    "message": "Statistik terbangun saat Anda membuka bookmark"
-  },
-  "statsHistoryAdd": {
-    "message": "Tambahkan ke bookmark"
-  },
-  "statsHistoryBanner": {
-    "message": "Berikan akses riwayat untuk mengisi statistik kunjungan dengan kunjungan masa lalu Anda"
-  },
-  "statsHistoryBookmarked": {
-    "message": "Telah dibookmark"
-  },
-  "statsHistoryDismiss": {
-    "message": "Jangan tampilkan lagi"
-  },
-  "statsHistoryEnable": {
-    "message": "Aktifkan"
-  },
-  "statsHistoryGuide": {
-    "message": "Berikan akses riwayat untuk menampilkan kunjungan terbaru Anda di sini."
-  },
-  "statsHistoryImported": {
-    "message": "Kunjungan masa lalu diimpor untuk $count$ bookmark",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "statsSectionBookmarks": {
-    "message": "Statistik bookmark"
-  },
-  "statsSectionRecent": {
-    "message": "Kunjungan terbaru"
-  },
-  "statsSortByCount": {
-    "message": "Berdasarkan jumlah"
-  },
-  "statsSortByRecent": {
-    "message": "Berdasarkan terbaru"
-  },
-  "statsShowUnbookmarked": {
-    "message": "Tampilkan yang tidak ditandai"
-  },
-  "statsShowUnbookmarkedHint": {
-    "message": "Sertakan halaman dari riwayat yang tidak disimpan sebagai bookmark."
-  },
-  "statsVisitCount": {
-    "message": "Dikunjungi $count$ kali",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "syncOptions": {
-    "message": "Opsi Sinkronisasi"
-  },
-  "syncStatusLocal": {
-    "message": "Lokal saja — tidak diunggah"
-  },
-  "syncStatusSynced": {
-    "message": "Disinkronkan ke akun Google Anda"
-  },
-  "syncStatusUnsyncable": {
-    "message": "Tidak dapat disinkronkan"
-  },
-  "syncSuffixLocal": {
-    "message": "(Lokal)"
-  },
-  "syncSuffixSynced": {
-    "message": "(Disinkronkan)"
-  },
-  "timeDaysAgo": {
-    "message": "$n$ hari yang lalu",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "timeHoursAgo": {
-    "message": "$n$ jam yang lalu",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "timeJustNow": {
-    "message": "baru saja"
-  },
-  "timeMinutesAgo": {
-    "message": "$n$ menit yang lalu",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "timeYesterday": {
-    "message": "kemarin"
-  },
-  "toolButtonTitle": {
-    "message": "Alat (Ctrl+K)"
-  },
-  "undoAction": {
-    "message": "Urungkan"
-  },
-  "revealOutsideBarHint": {
-    "message": "Hanya bilah bookmark yang ditampilkan: target berada di luarnya."
-  },
-  "revealOutsideBarAction": {
-    "message": "Tampilkan semua dan perlihatkan"
-  },
-  "url": {
-    "message": "URL"
-  },
-  "viewDead": {
-    "message": "Tautan mati"
-  },
-  "viewDupes": {
-    "message": "Duplikat"
-  },
-  "viewRecent": {
-    "message": "Terbaru"
-  },
-  "viewSearch": {
-    "message": "Cari"
-  },
-  "viewStats": {
-    "message": "Statistik"
-  },
-  "viewSwitchAnnounce": {
-    "message": "$name$ tampilan",
-    "placeholders": {
-      "name": {
-        "content": "$1"
-      }
-    }
-  },
-  "viewStateEnabled": {
-    "message": "Aktif"
-  },
-  "viewStateDisabled": {
-    "message": "Nonaktif"
-  },
-  "viewEnable": {
-    "message": "Aktifkan"
-  },
-  "viewDisable": {
-    "message": "Nonaktifkan"
-  },
-  "viewTabHide": {
-    "message": "Sembunyikan"
-  },
-  "viewTabDisable": {
-    "message": "Nonaktifkan"
-  },
-  "viewTree": {
-    "message": "Pohon"
-  },
-  "deadProxyNeverShow": {
-    "message": "Jangan tampilkan lagi"
-  },
-  "optionDeadProxyStrip": {
-    "message": "Tampilkan petunjuk menambah proksi di tampilan tautan mati"
-  },
-  "optionDeadProxyStripHint": {
-    "message": "Nonaktif menyembunyikan petunjuk itu di sana; server proksi tetap dapat dikonfigurasi di sini, dan server yang tersimpan selalu menampilkan baris kelolaannya di tampilan."
+  "deleteSelected": {
+    "message": "Hapus yang dipilih"
   }
 }
