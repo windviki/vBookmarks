@@ -464,7 +464,15 @@ zip 实测（package.py 同口径 collect + deflate 默认级别；实测 level 
 | popup 冷开布局数 | 16 | 16 | 0 |
 | SW 冷启动 | 未录取 | — | 本版 Chromium 无 ServiceWorker CDP 域，列为已知限制 |
 
-注：① 树重建无独立触发（bookmark 事件不重建树；generateTree 是冷开主成本），口径并入冷开；② Rendering/Painting 时长本版 Chromium 恒为 0；③ tabGroups 分组在 headless 不可用（不影响徽章种子）；④ 基线为 M3 落地后的 4.1.0 形态（P0 与构建同批实施，P0 前后对比未单独录取——P1 若开展以本表为基准）。探针可复跑：bash scripts/harness/run.sh --perf 与 --dist --perf。
+**P1 收尾后复测（2026-08-22，同一 Docker 环境连续两次，C.7 批次后）**：
+
+| 口径 | 源码 | dist | 变化 |
+|---|---|---|---|
+| popup 冷开 wall（ms） | 982.0 | 910.0 | **-7.3%** |
+| popup 冷开 scripting（ms） | 169.7 | 164.3 | **-3.2%** |
+| popup 冷开布局数 | 16 | 17 | +1 |
+
+注：① 树重建无独立触发（bookmark 事件不重建树；generateTree 是冷开主成本），口径并入冷开；② Rendering/Painting 时长本版 Chromium 恒为 0；③ tabGroups 分组在 headless 不可用（不影响徽章种子）；④ 基线为 M3 落地后的 4.1.0 形态（P0 与构建同批实施，P0 前后对比未单独录取——P1 若开展以本表为基准）。探针可复跑：bash scripts/harness/run.sh --perf 与 --dist --perf。⑤ P1 复测的绝对数值整体高于 M4 档（机器负载/镜像状态差异），但源码 vs dist 的相对优势保持（wall -7.3%、scripting -3.2%），未出现 P1 引入的 dist 回归。
 
 ## 附录 B：本阶段明确不做的事
 
@@ -538,4 +546,4 @@ M1–M4 全部落地并通过验收；P1 三项与 H9 后续已随 4.1.0 收尾�
 | P1-3 SW 精益化 | `516aab0` | visit-stats 的整树 URL 索引不再于 SW 冷启动 eager 读取（`bookmarks.getTree` 移出 start()），首次 URL 导航或首个 bookmark 事件时经 `indexReady` 门控懒构建；首个命中事件在构建完成后继续匹配（`ensureIndex` 把构建期间的导航风暴合并成一次 `getTree`） | visit-stats-sw / background |
 | H9 后续 | `d7ff224` | tab-groups 未激活时仅 `tabs.onCreated`/`onRemoved` 触发徽章刷新，防抖降到 1s（`INACTIVE_REFRESH_MS`）；onMoved/onUpdated/onActivated/onAttached/onDetached/tabGroups/bookmarks 事件只服务激活视图的 300ms 重渲染 | view-tabgroups |
 
-验收（本批次）：全量 `npm run test:run` **2665/2665** + lint **0 错**；`npm run build` 自检 PASS（78 文件 / 15 JS）；dist 与源码冒烟按发布 SOP 执行（见 C.6，未单列复跑时以该层为准）。
+验收（本批次）：全量 `npm run test:run` **2665/2665** + lint **0 错**；`npm run build` 自检 PASS（78 文件 / 15 JS）；`npm run package` + `test:webstore` 29/29；源码与 dist 冒烟均 PASS；dist 全量 harness **PASS 4 / FAIL 0**；perf 探针源码+dist 复测见附录 A（P1 后）。
