@@ -1354,6 +1354,14 @@ describe('shared parent-path map (§3.6)', () => {
         expect(result.ids.has('2')).toBe(true);
         expect(result.ids.has('1')).toBe(false);
     });
+
+    it('setPathMap swaps the map without a tree walk (P1-1 snapshot)', () => {
+        const { views } = setup({});
+        expect(views.pathOf('11')).toBe('');
+        views.setPathMap({ 11: 'Folder A' });
+        expect(views.pathOf('11')).toBe('Folder A');
+        expect(views.pathOf('unknown')).toBe('');
+    });
 });
 
 describe('settings', () => {

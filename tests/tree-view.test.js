@@ -265,6 +265,7 @@ const setup = (opts = {}) => {
             getEffectiveSubTree: [],
             generateHTML: [],
             generateNodeTrees: [],
+            buildTreeSnapshot: [],
             generateBookmarkHTML: [],
             getParentPath: []
         },
@@ -284,6 +285,31 @@ const setup = (opts = {}) => {
             this.calls.generateNodeTrees.push([data, list]);
             if (opts.parentMap)
                 Object.assign(list, opts.parentMap);
+        },
+        buildTreeSnapshot(treeArg, subTreeArg) {
+            this.calls.buildTreeSnapshot.push([treeArg, subTreeArg]);
+            if (opts.snapshot)
+                return opts.snapshot;
+            const nodeTrees = {};
+            if (opts.parentMap)
+                Object.assign(nodeTrees, opts.parentMap);
+            const bookmarkIds = new Set();
+            const collect = nodes => {
+                for (const n of (nodes || [])) {
+                    if (!n)
+                        continue;
+                    if (n.url) {
+                        nodeTrees[n.id] = n.parentId; // addBookmarkParents contract
+                        bookmarkIds.add(`${n.id}`);
+                    }
+                    if (n.children)
+                        collect(n.children);
+                }
+            };
+            const display = subTreeArg !== undefined ? subTreeArg : (opts.effectiveSubTree || []);
+            collect(display);
+            const html = this.generateHTML(display, undefined);
+            return { html, nodeTrees, bookmarkIds, paths: opts.paths || {}, ids: opts.ids || new Set() };
         },
         generateBookmarkHTML(title, url, extras, id) {
             this.calls.generateBookmarkHTML.push([title, url, extras, id]);
@@ -454,6 +480,31 @@ describe('generateTree', () => {
         expect(tree.innerHTML).toBe('HTML');
         expect(tree.innerHTML).not.toContain('recent-section');
         expect(chrome.bookmarks.getRecentCalls).toEqual([]); // tree-view no longer fetches recents
+    });
+
+    it('uses buildTreeSnapshot when available (P1-1: no generateNodeTrees/addBookmarkParents repeat)', () => {
+        const ctx = setup({ effectiveSubTree: [{ id: '1', url: 'http://a/' }] });
+        ctx.treeView.generateTree(['ROOT']);
+        expect(ctx.treeRender.calls.buildTreeSnapshot).toHaveLength(1);
+        expect(ctx.treeRender.calls.buildTreeSnapshot[0][0]).toEqual(['ROOT']);
+        expect(ctx.treeRender.calls.buildTreeSnapshot[0][1]).toEqual([{ id: '1', url: 'http://a/' }]);
+        expect(ctx.treeRender.calls.generateNodeTrees).toHaveLength(0);
+        expect(ctx.tree.innerHTML).toBe('HTML');
+    });
+
+    it('forwards the snapshot (paths/ids) to onTreeGenerated (P1-1)', () => {
+        const seen = [];
+        const ctx = setup({
+            effectiveSubTree: [{ id: '1', url: 'http://a/' }],
+            paths: { 1: '' },
+            ids: new Set(['1']),
+            onTreeGenerated(t, snap) { seen.push({ t, snap }); }
+        });
+        ctx.treeView.generateTree(['ROOT']);
+        expect(seen).toHaveLength(1);
+        expect(seen[0].t).toEqual(['ROOT']);
+        expect(seen[0].snap.paths).toEqual({ 1: '' });
+        expect(seen[0].snap.ids.has('1')).toBe(true);
     });
 
     it('fires onTreeGenerated AFTER the innerHTML swap (item: overlay first paint)', () => {

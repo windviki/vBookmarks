@@ -654,12 +654,18 @@ import { shouldHighlightUnsynced, shouldRememberState } from './settings.js';
         // slice C §5.5c: and re-lays the dead-mark × overlays (the view
         // inits below — the indirection stays a no-op until then);
         // slice D §5.4: and prunes visit stats of deleted bookmarks
-        onTreeGenerated: t => {
-            // H5: buildPathMap's single traversal already collects the live
-            // bookmark ids — no second walk for visitStats.prune.
-            const { ids } = views.buildPathMap(t);
+        onTreeGenerated: (t, snapshot) => {
+            // H5 + P1-1: the snapshot walk already collected paths AND live
+            // bookmark ids — no extra traversal for the path map or
+            // visitStats.prune. Fallback (minimal test doubles) keeps the
+            // buildPathMap walk.
+            const hasSnapshot = !!(snapshot && snapshot.paths && snapshot.ids);
+            const ids = hasSnapshot ? snapshot.ids : views.buildPathMap(t).ids;
+            if (hasSnapshot && views.setPathMap)
+                views.setPathMap(snapshot.paths);
             deadOverlayRefresh();
             visitStats.prune(ids);
+            perfMark('tree-generated');
         },
         // slice D: page-side visit collection — bookmarkHandler funnels
         // every bookmark open (tree/search/recent/stats/dead/dupes rows);

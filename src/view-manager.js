@@ -1152,6 +1152,11 @@ export function initViewManager(ctx = {}) {
         pathMap = result.paths;
         return result;
     };
+    // P1-1: tree-view's buildTreeSnapshot already produced the path map in
+    // its single walk — swap it in directly (no second traversal).
+    const setPathMap = paths => {
+        pathMap = paths || {};
+    };
     const pathOf = id => pathMap[id] || '';
 
     // --- Live storage sync ------------------------------------------------------
@@ -1233,6 +1238,7 @@ export function initViewManager(ctx = {}) {
         focusEdgeRow,
         restoreFocusSpot,
         buildPathMap,
+        setPathMap,
         pathOf,
         updateBadges,
         showItemPath: () => !!store.get('showItemPath', '1'),

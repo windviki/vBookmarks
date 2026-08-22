@@ -163,9 +163,25 @@ export function initTreeView(ctx = {}) {
             // Use getEffectiveSubTree to handle dual-storage Chrome
             subTree = treeRender.getEffectiveSubTree(tree);
         }
-        const html = treeRender.generateHTML(subTree);
-        treeRender.generateNodeTrees(subTree, nodeTrees);
-        addBookmarkParents(subTree);
+        // P1-1: buildTreeSnapshot walks the FULL tree once and returns the
+        // rendered HTML + every derived map (nodeTrees/bookmarkIds/paths/ids)
+        // in a single pass — no more generateNodeTrees/addBookmarkParents/
+        // buildPathMap repeats. Minimal test doubles without the snapshot
+        // API keep the old three-walk path.
+        let snapshot = null;
+        let html;
+        if (treeRender.buildTreeSnapshot) {
+            snapshot = treeRender.buildTreeSnapshot(tree, subTree);
+            html = snapshot.html;
+            for (const [id, parentId] of Object.entries(snapshot.nodeTrees))
+                nodeTrees[id] = parentId;
+            for (const id of snapshot.bookmarkIds)
+                bookmarkIds.add(id);
+        } else {
+            html = treeRender.generateHTML(subTree);
+            treeRender.generateNodeTrees(subTree, nodeTrees);
+            addBookmarkParents(subTree);
+        }
 
         // 4.0.1 focus law: the innerHTML swap below replaces every row, so a
         // focused row would drop to <body> and the ↓ walk would die. Park it
@@ -180,7 +196,7 @@ export function initTreeView(ctx = {}) {
         // innerHTML swap — the hook also re-lays DOM overlays (slice C's
         // dead-mark ×, 第五轮项3), which the swap itself just wiped.
         if (onTreeGenerated)
-            onTreeGenerated(tree);
+            onTreeGenerated(tree, snapshot);
 
         if (getRememberState()) {
             $tree.scrollTop = store.get('scrollTop') ? store.get('scrollTop') : 0;

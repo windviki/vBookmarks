@@ -886,6 +886,112 @@ describe('generateNodeTrees', () => {
     });
 });
 
+describe('buildTreeSnapshot (P1-1: single-walk tree snapshot)', () => {
+    it('produces html + all derived maps in one snapshot (dual storage)', () => {
+        const tr = setup();
+        const tree = [
+            {
+                id: 'bar', parentId: '0', title: 'Bookmarks Bar', folderType: 'bookmarks-bar', children: [
+                    {
+                        id: '10', parentId: 'bar', title: 'Folder A', children: [
+                            { id: '11', parentId: '10', title: 'GitHub', url: 'https://x.com/' },
+                            {
+                                id: '12', parentId: '10', title: 'Nested', children: [
+                                    { id: '13', parentId: '12', title: 'Deep', url: 'https://y.com/' }
+                                ]
+                            }
+                        ]
+                    },
+                    { id: '14', parentId: 'bar', title: 'Top', url: 'https://t.com/' }
+                ]
+            },
+            {
+                id: 'other', parentId: '0', title: 'Other Bookmarks', folderType: 'other', children: [
+                    { id: '20', parentId: 'other', title: 'Other BM', url: 'https://o.com/' }
+                ]
+            }
+        ];
+        const subTree = tr.getEffectiveSubTree(tree);
+        const snap = tr.buildTreeSnapshot(tree, subTree);
+        expect(snap.html).toBe(tr.generateHTML(subTree));
+        expect(snap.paths).toEqual(buildPathMap(tree).paths);
+        expect([...snap.ids].sort()).toEqual([...buildPathMap(tree).ids].sort());
+        // nodeTrees/bookmarkIds cover the DISPLAYED subtree only
+        expect(snap.nodeTrees['10']).toBe('bar');
+        expect(snap.nodeTrees['12']).toBe('10');
+        expect(snap.nodeTrees['11']).toBe('10');
+        expect(snap.nodeTrees['14']).toBe('bar');
+        expect(snap.nodeTrees['20']).toBe('other');
+        expect(snap.nodeTrees['bar']).toBeUndefined();  // roots are never rows
+        expect(snap.nodeTrees['other']).toBeUndefined();
+        expect([...snap.bookmarkIds].sort()).toEqual(['11', '13', '14', '20']);
+    });
+
+    it('honors a bar-only display subtree while paths/ids still cover the full tree', () => {
+        const tr = setup();
+        const tree = [
+            {
+                id: 'bar', parentId: '0', title: 'Bookmarks Bar', folderType: 'bookmarks-bar', children: [
+                    { id: '10', parentId: 'bar', title: 'Folder A', children: [
+                        { id: '11', parentId: '10', title: 'GitHub', url: 'https://x.com/' }
+                    ] }
+                ]
+            },
+            {
+                id: 'other', parentId: '0', title: 'Other Bookmarks', folderType: 'other', children: [
+                    { id: '20', parentId: 'other', title: 'Outside', url: 'https://o.com/' }
+                ]
+            }
+        ];
+        const barSub = tree[0].children; // onlyShowBMBar: the bar subtree renders
+        const snap = tr.buildTreeSnapshot(tree, barSub);
+        expect(snap.html).toBe(tr.generateHTML(barSub));
+        expect(snap.html).not.toContain('https://o.com/'); // bar-only render
+        expect(snap.nodeTrees['10']).toBe('bar');
+        expect(snap.nodeTrees['11']).toBe('10');
+        expect(snap.nodeTrees['20']).toBeUndefined();      // outside the display
+        expect(snap.bookmarkIds.has('11')).toBe(true);
+        expect(snap.bookmarkIds.has('20')).toBe(false);
+        // path map + prune ids are still FULL-tree
+        expect(snap.paths['20']).toBe('Other Bookmarks');
+        expect(snap.ids.has('20')).toBe(true);
+    });
+
+    it('legacy single-root shape: only tree[0] children are displayed rows', () => {
+        const tr = setup();
+        const tree = [{
+            id: '0', title: '', children: [
+                { id: '1', parentId: '0', title: 'Folder A', children: [
+                    { id: '3', parentId: '1', title: 'Sub', children: [
+                        { id: '31', parentId: '3', title: 'Deep', url: 'https://d.com/' }
+                    ] }
+                ] },
+                { id: '2', parentId: '0', title: 'Top', url: 'https://t.com/' }
+            ]
+        }];
+        const snap = tr.buildTreeSnapshot(tree);
+        expect(snap.html).toBe(tr.generateHTML(tr.getEffectiveSubTree(tree)));
+        expect(snap.nodeTrees['3']).toBe('1');   // nested folder recorded
+        expect(snap.nodeTrees['31']).toBe('3');  // bookmark parent recorded
+        expect(snap.nodeTrees['2']).toBe('0');   // top-level bookmark recorded
+        expect(snap.nodeTrees['1']).toBeUndefined(); // root folder (parentId 0) skipped
+        expect(snap.bookmarkIds.has('31')).toBe(true);
+        expect(snap.bookmarkIds.has('2')).toBe(true);
+    });
+
+    it('tolerates empty input', () => {
+        const tr = setup();
+        for (const input of [null, [], [{ id: '0', title: '' }]]) {
+            const snap = tr.buildTreeSnapshot(input);
+            expect(snap.html).toBe(tr.generateHTML([]));
+            expect(snap.paths).toEqual({});
+            expect(snap.ids.size).toBe(0);
+            expect(snap.nodeTrees).toEqual({});
+            expect(snap.bookmarkIds.size).toBe(0);
+        }
+    });
+});
+
 describe('getParentPath', () => {
     it('resolves a full ancestor chain, root first', () => {
         const tr = setup();

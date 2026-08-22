@@ -494,6 +494,77 @@ export function initTreeRender(ctx = {}) {
                nodeFolderType !== undefined;
     };
 
+    // P1-1 (4.1.0 收尾): single-snapshot walk — one traversal over the FULL
+    // tree produces every derived map (paths for list rows, live bookmark
+    // ids for visitStats.prune, the tree-view nodeTrees/bookmarkIds) plus the
+    // rendered HTML. Replaces generateNodeTrees + addBookmarkParents +
+    // buildPathMap (three walks, two of them full-tree) with one snapshot
+    // walk + the subtree render, so a generateTree rebuild no longer pays
+    // repeated O(n) traversals for the same data.
+    //
+    // `subTree` is the display root tree-view already selected (bookmarks-bar
+    // filter / effective dual-storage subtree); it decides which nodes are
+    // rendered rows (nodeTrees/bookmarkIds/html) while paths/ids still cover
+    // the FULL tree (list-view path labels + visitStats.prune need the whole
+    // tree). Optional: defaults to getEffectiveSubTree for direct callers.
+    const buildTreeSnapshot = (tree, subTree) => {
+        const paths = {};
+        const ids = new Set();
+        const nodeTrees = {};
+        const bookmarkIds = new Set();
+        const list = tree || [];
+        const display = subTree || getEffectiveSubTree(list);
+        const displayIds = new Set();
+        const collectDisplay = nodes => {
+            if (!nodes)
+                return;
+            for (let i = 0, l = nodes.length; i < l; i++) {
+                const node = nodes[i];
+                if (!node)
+                    continue;
+                displayIds.add(node.id);
+                if (node.children)
+                    collectDisplay(node.children);
+            }
+        };
+        collectDisplay(display);
+        const walk = (nodes, ancestors) => {
+            if (!nodes)
+                return;
+            for (let i = 0, l = nodes.length; i < l; i++) {
+                const node = nodes[i];
+                if (!node)
+                    continue;
+                if (typeof node.parentId !== 'undefined') {
+                    paths[node.id] = ancestors.join(' / ');
+                    if (node.url)
+                        ids.add(node.id);
+                }
+                if (displayIds.has(node.id)) {
+                    if (node.url) {
+                        // addBookmarkParents contract: bookmark rows resolve
+                        // their ancestor chain too (reveal-in-tree).
+                        nodeTrees[node.id] = node.parentId;
+                        bookmarkIds.add(`${node.id}`);
+                    } else if (!isRootFolder(node)) {
+                        // generateNodeTrees contract: non-root folders only.
+                        nodeTrees[node.id] = node.parentId;
+                    }
+                }
+                if (node.children) {
+                    const title = (node.title || '').trim();
+                    const next = (typeof node.parentId !== 'undefined' && title)
+                        ? ancestors.concat(title)
+                        : ancestors;
+                    walk(node.children, next);
+                }
+            }
+        };
+        walk(list, []);
+        const html = generateHTML(display);
+        return { html, nodeTrees, bookmarkIds, paths, ids };
+    };
+
     return {
         getFaviconUrl,
         highlightTitlePositions,
@@ -502,6 +573,7 @@ export function initTreeRender(ctx = {}) {
         generateSeparatorHTML,
         generateHTML,
         generateNodeTrees,
+        buildTreeSnapshot,
         getParentPath,
         findFolderByType,
         getEffectiveSubTree,
