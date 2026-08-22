@@ -26,10 +26,12 @@
 #                 docs/build-and-performance-plan.md §3.3).
 SMOKE_ONLY=0
 DIST_MODE=0
+PERF_MODE=0
 for arg in "$@"; do
     case "$arg" in
         --smoke-only) SMOKE_ONLY=1 ;;
         --dist) DIST_MODE=1 ;;
+        --perf) PERF_MODE=1 ;;
         *) echo "unknown argument: $arg" >&2; exit 2 ;;
     esac
 done
@@ -54,7 +56,7 @@ else
     (cd "$REPO_ROOT" && tar cf - --exclude=./.git --exclude=./node_modules --exclude=./tmp --exclude=./dist --exclude=./.env --exclude=./.claude --exclude=./.env.example .) \
         | tar xf - -C "$CTX/vBookmarks"
 fi
-cp "$REPO_ROOT"/scripts/harness/{Dockerfile,smoke.js,verify-keyboard.js,verify-scrollbars.js,verify-menu-overflow.js,verify-menu-collapse.js,verify-menu-extreme.js,verify-menu-overlong.js,verify-rightclick-repeat.js,verify-bmlet.js} "$CTX/"
+cp "$REPO_ROOT"/scripts/harness/{Dockerfile,smoke.js,verify-keyboard.js,verify-scrollbars.js,verify-menu-overflow.js,verify-menu-collapse.js,verify-menu-extreme.js,verify-menu-overlong.js,verify-rightclick-repeat.js,verify-bmlet.js,perf-popup.js} "$CTX/"
 cp "$REPO_ROOT"/scripts/screenshots/{shots.js,shots-matrix.js,shots-i18n.js,shots-palette.js,shots-guide.js,shots-tabgroups.js,shots-tabgroups-view.js} "$CTX/"
 cp -r "$REPO_ROOT"/scripts/harness/diag "$CTX/diag"
 
@@ -81,6 +83,11 @@ run_verify() {
 run_verify smoke.js
 if [[ "$SMOKE_ONLY" == "1" ]]; then
     echo "Harness gate (smoke-only): PASS — captures in $OUT"
+    exit 0
+fi
+if [[ "$PERF_MODE" == "1" ]]; then
+    VBM_PERF_MODE="${DIST_MODE:+dist}" run_verify perf-popup.js
+    echo "Harness perf: done (tables above; /tmp/shots/perf/perf.json captured)"
     exit 0
 fi
 # Layer 2a — keyboard/view (blocking). Esc chains stay in vitest
