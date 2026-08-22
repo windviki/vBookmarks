@@ -784,7 +784,10 @@ import { deferIdle, mark as perfMark } from './idle.js';
     // Tab-badge freshness: recompute the stats/dupes counts once at startup
     // so the tab strip reflects reality before the first visit to those
     // tabs (both refresh()es recompute in the background when inactive and
-    // push the count through views.updateBadges).
+    // push the count through views.updateBadges). The dead badge is the same
+    // shape but its inputs (the persisted scan cache + the tree join) are
+    // async and only activate() loads them — preloadBadge folds them in
+    // render-free, so the dead tab is no longer dark until its first visit.
     // P1-2: badge preloads are non-critical — they only make the tab-badge
     // counts current before the user's first visit to those views. Defer
     // them to idle so the popup open path finishes with the first render,
@@ -794,6 +797,7 @@ import { deferIdle, mark as perfMark } from './idle.js';
         viewStats.refresh();
         viewDupes.refresh();
         viewTabGroups.refresh();
+        viewDead.preloadBadge();
     });
 
     // Popup reopen "where I was": restore the last focus spot (a list row /

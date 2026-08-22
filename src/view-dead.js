@@ -1966,6 +1966,36 @@ export function initViewDead(ctx = {}) {
         onKey
     });
 
+    // Badge preload (4.0.8 fix): the tab badge derives from the persisted
+    // scan cache joined against the live tree, but BOTH inputs arrive
+    // asynchronously and activate() is the only path that loads them. On a
+    // popup open that lands in another view the dead tab therefore stayed
+    // dark until the view's first visit — while stats/dupes badges were
+    // preloaded by neat.js's idle block. neat.js now calls this once at
+    // startup alongside those: read the cache → fold the live blob → join
+    // the tree → updateBadges. Deliberately render-free (the first
+    // activation keeps its dirty-flag render decision) and never kicks a
+    // scan — the stats view's post-read badge refresh is the same shape.
+    const preloadBadge = () => {
+        const local = chrome.storage && chrome.storage.local;
+        if (!local || !local.get) // unit doubles without storage
+            return;
+        local.get([DEAD_SCAN_KEY, DEAD_LAST_KEY], data => {
+            try {
+                lastScan = data[DEAD_LAST_KEY] ? JSON.parse(data[DEAD_LAST_KEY]) : null;
+            } catch (e) {
+                lastScan = null;
+            }
+            invalidateResultRows(); // 新缓存 → 结果行重算
+            foldBlob(data[DEAD_SCAN_KEY]);
+            chrome.bookmarks.getTree(t => {
+                treeItems = new Map(scannableItems(t).map(item => [item.id, item]));
+                invalidateResultRows(); // tree join 重建 → 结果行重算
+                views.updateBadges();
+            });
+        });
+    };
+
     // Sort dropdown wiring (see dropdown.js for the protocol). Delegated on
     // $list, so it survives the innerHTML swap on every render — the onSelect
     // re-renders synchronously, which detaches the old trigger before
@@ -1985,5 +2015,5 @@ export function initViewDead(ctx = {}) {
         rtl: !!(document.body && document.body.classList && document.body.classList.contains('rtl'))
     });
 
-    return { refresh: render, refreshOverlays, isMarked, toggleMark };
+    return { refresh: render, refreshOverlays, isMarked, toggleMark, preloadBadge };
 }

@@ -399,7 +399,49 @@ describe('view registration (§5.5)', () => {
     it('exposes refresh/refreshOverlays/isMarked/toggleMark on the module API', () => {
         const { viewDead } = setup({});
         expect(Object.keys(viewDead).sort())
-            .toEqual(['isMarked', 'refresh', 'refreshOverlays', 'toggleMark']);
+            .toEqual(['isMarked', 'preloadBadge', 'refresh', 'refreshOverlays', 'toggleMark']);
+    });
+
+    it('preloadBadge folds the stored scan + tree join render-free — the badge is fresh before the first visit (4.0.8 fix)', () => {
+        // The 4.0.8 report: opening the popup in the tree view left the dead
+        // tab badge dark until the dead view was visited once. The preload is
+        // the startup path that makes the registration-time badge() non-zero
+        // WITHOUT rendering the list.
+        const cache = JSON.stringify({
+            ts: 1, scannedCount: 2,
+            results: {
+                '12': { status: 'dead', code: 404 },
+                '13': { status: 'blocked', code: 404 },
+                '99': { status: 'dead', code: 404 } // deleted while the popup was closed
+            }
+        });
+        const ctx = setup({ storeData: { deadLastScan: cache } });
+        expect(ctx.def().badge()).toBe(0); // no read/join yet → dark
+        const bumps = ctx.views.badgeCalls;
+        ctx.viewDead.preloadBadge();
+        // the join drops the stale verdict (99 is not in the tree), so the
+        // badge shows exactly the rows the list would show
+        expect(ctx.def().badge()).toBe(2);
+        expect(ctx.views.badgeCalls).toBeGreaterThan(bumps);
+        // render-free: the list was never painted by the preload
+        expect(ctx.$list.innerHTML).toBe('');
+        expect(ctx.chrome.bookmarks.getTreeCalls).toBe(1);
+    });
+
+    it('preloadBadge without a stored scan keeps the badge dark but still re-evaluates', () => {
+        const ctx = setup({});
+        expect(ctx.def().badge()).toBe(0);
+        const bumps = ctx.views.badgeCalls;
+        ctx.viewDead.preloadBadge();
+        expect(ctx.def().badge()).toBe(0);
+        expect(ctx.views.badgeCalls).toBeGreaterThan(bumps);
+        expect(ctx.$list.innerHTML).toBe('');
+    });
+
+    it('preloadBadge tolerates a corrupt cache (badge stays dark, no throw)', () => {
+        const ctx = setup({ storeData: { deadLastScan: '{not json' } });
+        expect(() => ctx.viewDead.preloadBadge()).not.toThrow();
+        expect(ctx.def().badge()).toBe(0);
     });
 });
 

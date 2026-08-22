@@ -255,7 +255,20 @@ export function initViewManager(ctx = {}) {
             return;
         }
         indicator.style.opacity = '1';
-        indicator.style.width = `${tab.offsetWidth}px`;
+        // offsetLeft/offsetWidth are rounded independently by the browser, so
+        // for the strip's LAST tab their sum can overshoot the strip's true
+        // right edge by 1px on a fractional-DPR layout. Clamp the width: the
+        // indicator is absolutely positioned inside the unclipped
+        // #view-tabs → #container → body chain, so a 1px overshoot propagates
+        // to the document scroll width — and Chrome sizes the popup window
+        // from that (the 4.0.8 report: the popup widened 1px only while the
+        // dupes tab — the strip's last — was active). `max` is NaN in unit
+        // stubs without clientWidth → no clamp, unchanged behavior.
+        const max = $tabs.clientWidth - tab.offsetLeft;
+        const width = Number.isFinite(max)
+            ? Math.min(tab.offsetWidth, Math.max(0, max))
+            : tab.offsetWidth;
+        indicator.style.width = `${width}px`;
         indicator.style.transform = `translateX(${tab.offsetLeft}px)`;
     };
 
