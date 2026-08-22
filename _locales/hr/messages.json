@@ -596,6 +596,15 @@
   "tabGroupsClearClosedGroups": {
     "message": "Očisti sve"
   },
+  "tabGroupsConfirmClearClosed": {
+    "message": "Očistiti sve nedavno zatvorene zapise? Neće se moći ponovno otvoriti odavde."
+  },
+  "tabGroupsFilterPlaceholder": {
+    "message": "Filtriraj otvorene kartice"
+  },
+  "tabGroupsNoMatchingTabs": {
+    "message": "Nema odgovarajućih kartica"
+  },
   "tabGroupsClosedOpenTab": {
     "message": "Otvori u novoj kartici"
   },

@@ -596,6 +596,15 @@
   "tabGroupsClearClosedGroups": {
     "message": "Alles wissen"
   },
+  "tabGroupsConfirmClearClosed": {
+    "message": "Alle recent gesloten records wissen? Ze kunnen hier niet meer worden heropend."
+  },
+  "tabGroupsFilterPlaceholder": {
+    "message": "Open tabbladen filteren"
+  },
+  "tabGroupsNoMatchingTabs": {
+    "message": "Geen overeenkomende tabbladen"
+  },
   "tabGroupsClosedOpenTab": {
     "message": "Openen in nieuw tabblad"
   },

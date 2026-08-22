@@ -596,6 +596,15 @@
   "tabGroupsClearClosedGroups": {
     "message": "Tøm alle"
   },
+  "tabGroupsConfirmClearClosed": {
+    "message": "Slette alle nylig lukkede oppføringer? De kan ikke lenger gjenåpnes herfra."
+  },
+  "tabGroupsFilterPlaceholder": {
+    "message": "Filtrer åpne faner"
+  },
+  "tabGroupsNoMatchingTabs": {
+    "message": "Ingen samsvarende faner"
+  },
   "tabGroupsClosedOpenTab": {
     "message": "Åpne i ny fane"
   },

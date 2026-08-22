@@ -596,6 +596,15 @@
   "tabGroupsClearClosedGroups": {
     "message": "Tyhjennä kaikki"
   },
+  "tabGroupsConfirmClearClosed": {
+    "message": "Poistetaanko kaikki viimeaikaiset suljetut tiedot? Niitä ei voi enää avata täältä."
+  },
+  "tabGroupsFilterPlaceholder": {
+    "message": "Suodata avoimia välilehtiä"
+  },
+  "tabGroupsNoMatchingTabs": {
+    "message": "Ei vastaavia välilehtiä"
+  },
   "tabGroupsClosedOpenTab": {
     "message": "Avaa uudessa välilehdessä"
   },

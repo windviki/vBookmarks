@@ -596,6 +596,15 @@
   "tabGroupsClearClosedGroups": {
     "message": "Notīrīt visu"
   },
+  "tabGroupsConfirmClearClosed": {
+    "message": "Vai notīrīt visus nesen slēgtos ierakstus? Tos vairs nevarēs atvērt no šejienes."
+  },
+  "tabGroupsFilterPlaceholder": {
+    "message": "Filtrēt atvērtās cilnes"
+  },
+  "tabGroupsNoMatchingTabs": {
+    "message": "Nav atbilstošu cilņu"
+  },
   "tabGroupsClosedOpenTab": {
     "message": "Atvērt jaunā cilnē"
   },

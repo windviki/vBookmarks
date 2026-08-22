@@ -596,6 +596,15 @@
   "tabGroupsClearClosedGroups": {
     "message": "Összes törlése"
   },
+  "tabGroupsConfirmClearClosed": {
+    "message": "Törli az összes nemrég bezárt rekordot? Innen már nem nyithatók meg újra."
+  },
+  "tabGroupsFilterPlaceholder": {
+    "message": "Nyitott lapok szűrése"
+  },
+  "tabGroupsNoMatchingTabs": {
+    "message": "Nincs egyező lap"
+  },
   "tabGroupsClosedOpenTab": {
     "message": "Megnyitás új lapon"
   },

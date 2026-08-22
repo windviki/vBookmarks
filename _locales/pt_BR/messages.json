@@ -595,6 +595,15 @@
   "tabGroupsClearClosedGroups": {
     "message": "Limpar tudo"
   },
+  "tabGroupsConfirmClearClosed": {
+    "message": "Limpar todos os registros fechados recentemente? Eles não poderão mais ser reabertos daqui."
+  },
+  "tabGroupsFilterPlaceholder": {
+    "message": "Filtrar abas abertas"
+  },
+  "tabGroupsNoMatchingTabs": {
+    "message": "Nenhuma aba correspondente"
+  },
   "tabGroupsClosedOpenTab": {
     "message": "Abrir em nova aba"
   },

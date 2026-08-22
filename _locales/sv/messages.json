@@ -596,6 +596,15 @@
   "tabGroupsClearClosedGroups": {
     "message": "Rensa alla"
   },
+  "tabGroupsConfirmClearClosed": {
+    "message": "Rensa alla nyligen stängda poster? De kan inte längre öppnas härifrån."
+  },
+  "tabGroupsFilterPlaceholder": {
+    "message": "Filtrera öppna flikar"
+  },
+  "tabGroupsNoMatchingTabs": {
+    "message": "Inga matchande flikar"
+  },
   "tabGroupsClosedOpenTab": {
     "message": "Öppna i ny flik"
   },

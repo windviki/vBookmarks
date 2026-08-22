@@ -596,6 +596,15 @@
   "tabGroupsClearClosedGroups": {
     "message": "Ryd alle"
   },
+  "tabGroupsConfirmClearClosed": {
+    "message": "Ryd alle nyligt lukkede poster? De kan ikke længere genåbnes herfra."
+  },
+  "tabGroupsFilterPlaceholder": {
+    "message": "Filtrer åbne faner"
+  },
+  "tabGroupsNoMatchingTabs": {
+    "message": "Ingen matchende faner"
+  },
   "tabGroupsClosedOpenTab": {
     "message": "Åbn i ny fane"
   },

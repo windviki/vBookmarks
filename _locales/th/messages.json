@@ -596,6 +596,15 @@
   "tabGroupsClearClosedGroups": {
     "message": "ล้างทั้งหมด"
   },
+  "tabGroupsConfirmClearClosed": {
+    "message": "ล้างบันทึกที่เพิ่งปิดทั้งหมดหรือไม่ จะไม่สามารถเปิดใหม่จากที่นี่ได้อีก"
+  },
+  "tabGroupsFilterPlaceholder": {
+    "message": "กรองแท็บที่เปิดอยู่"
+  },
+  "tabGroupsNoMatchingTabs": {
+    "message": "ไม่พบแท็บที่ตรงกัน"
+  },
   "tabGroupsClosedOpenTab": {
     "message": "เปิดในแท็บใหม่"
   },

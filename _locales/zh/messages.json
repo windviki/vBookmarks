@@ -2067,6 +2067,15 @@
   "tabGroupsClearClosedGroups": {
     "message": "全部清除"
   },
+  "tabGroupsConfirmClearClosed": {
+    "message": "清除所有最近关闭的记录？之后将无法从此处重新打开。"
+  },
+  "tabGroupsFilterPlaceholder": {
+    "message": "筛选打开的标签页"
+  },
+  "tabGroupsNoMatchingTabs": {
+    "message": "无匹配的标签页"
+  },
   "tabGroupsClosedOpenTab": {
     "message": "在新标签页中打开"
   },

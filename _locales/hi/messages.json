@@ -596,6 +596,15 @@
   "tabGroupsClearClosedGroups": {
     "message": "सभी साफ़ करें"
   },
+  "tabGroupsConfirmClearClosed": {
+    "message": "क्या सभी हाल ही में बंद किए गए रिकॉर्ड साफ़ करें? उन्हें यहाँ से दोबारा नहीं खोला जा सकेगा।"
+  },
+  "tabGroupsFilterPlaceholder": {
+    "message": "खुले टैब फ़िल्टर करें"
+  },
+  "tabGroupsNoMatchingTabs": {
+    "message": "कोई मेल खाते टैब नहीं"
+  },
   "tabGroupsClosedOpenTab": {
     "message": "नए टैब में खोलें"
   },

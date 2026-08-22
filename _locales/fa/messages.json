@@ -596,6 +596,15 @@
   "tabGroupsClearClosedGroups": {
     "message": "پاک کردن همه"
   },
+  "tabGroupsConfirmClearClosed": {
+    "message": "همهٔ سوابق بستهشدهٔ اخیر پاک شوند؟ دیگر نمیتوان آنها را از اینجا باز کرد."
+  },
+  "tabGroupsFilterPlaceholder": {
+    "message": "فیلتر کردن برگههای باز"
+  },
+  "tabGroupsNoMatchingTabs": {
+    "message": "برگهٔ مطابقی وجود ندارد"
+  },
   "tabGroupsClosedOpenTab": {
     "message": "باز کردن در برگه جدید"
   },

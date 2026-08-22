@@ -2294,6 +2294,18 @@
     "message": "Clear all",
     "description": "Button on the closed tab groups section heading: removes all saved closed-group records."
   },
+  "tabGroupsConfirmClearClosed": {
+    "message": "Clear all recently closed records? They can no longer be reopened from here.",
+    "description": "Confirmation dialog before clearing the tab groups view's recently-closed records list."
+  },
+  "tabGroupsFilterPlaceholder": {
+    "message": "Filter open tabs",
+    "description": "Placeholder of the instant filter input in the tab groups view toolbar: filters the listed tabs by title or URL."
+  },
+  "tabGroupsNoMatchingTabs": {
+    "message": "No matching tabs",
+    "description": "Empty state in the tab groups view when the toolbar filter matches no open tab."
+  },
   "tabGroupsClosedOpenTab": {
     "message": "Open in new tab",
     "description": "Hover action on a saved tab inside a closed tab group row."

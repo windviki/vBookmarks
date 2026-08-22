@@ -596,6 +596,15 @@
   "tabGroupsClearClosedGroups": {
     "message": "Išvalyti visus"
   },
+  "tabGroupsConfirmClearClosed": {
+    "message": "Išvalyti visus neseniai uždarytus įrašus? Jų nebebus galima atidaryti iš čia."
+  },
+  "tabGroupsFilterPlaceholder": {
+    "message": "Filtruoti atidarytas korteles"
+  },
+  "tabGroupsNoMatchingTabs": {
+    "message": "Atitinkančių kortelių nėra"
+  },
   "tabGroupsClosedOpenTab": {
     "message": "Atidaryti naujoje kortelėje"
   },

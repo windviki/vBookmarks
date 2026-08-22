@@ -596,6 +596,15 @@
   "tabGroupsClearClosedGroups": {
     "message": "مسح الكل"
   },
+  "tabGroupsConfirmClearClosed": {
+    "message": "مسح جميع السجلات المغلقة مؤخرًا؟ لن يمكن إعادة فتحها من هنا بعد الآن."
+  },
+  "tabGroupsFilterPlaceholder": {
+    "message": "تصفية علامات التبويب المفتوحة"
+  },
+  "tabGroupsNoMatchingTabs": {
+    "message": "لا توجد علامات تبويب مطابقة"
+  },
   "tabGroupsClosedOpenTab": {
     "message": "فتح في تبويب جديد"
   },

@@ -596,6 +596,15 @@
   "tabGroupsClearClosedGroups": {
     "message": "Εκκαθάριση όλων"
   },
+  "tabGroupsConfirmClearClosed": {
+    "message": "Να διαγραφούν όλες οι πρόσφατες εγγραφές; Δεν θα μπορούν να ανοιχτούν ξανά από εδώ."
+  },
+  "tabGroupsFilterPlaceholder": {
+    "message": "Φίλτρο ανοιχτών καρτελών"
+  },
+  "tabGroupsNoMatchingTabs": {
+    "message": "Δεν υπάρχουν αντίστοιχες καρτέλες"
+  },
   "tabGroupsClosedOpenTab": {
     "message": "Άνοιγμα σε νέα καρτέλα"
   },

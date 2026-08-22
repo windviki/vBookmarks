@@ -596,6 +596,15 @@
   "tabGroupsClearClosedGroups": {
     "message": "Xóa tất cả"
   },
+  "tabGroupsConfirmClearClosed": {
+    "message": "Xóa tất cả bản ghi đã đóng gần đây? Chúng sẽ không thể mở lại từ đây."
+  },
+  "tabGroupsFilterPlaceholder": {
+    "message": "Lọc tab đang mở"
+  },
+  "tabGroupsNoMatchingTabs": {
+    "message": "Không có tab khớp"
+  },
   "tabGroupsClosedOpenTab": {
     "message": "Mở trong tab mới"
   },

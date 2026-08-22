@@ -2108,6 +2108,15 @@
   "tabGroupsClearClosedGroups": {
     "message": "清空"
   },
+  "tabGroupsConfirmClearClosed": {
+    "message": "清空全部「最近关闭」记录？清空后将无法从这里恢复。"
+  },
+  "tabGroupsFilterPlaceholder": {
+    "message": "筛选打开的标签页"
+  },
+  "tabGroupsNoMatchingTabs": {
+    "message": "没有匹配的标签页"
+  },
   "tabGroupsClosedOpenTab": {
     "message": "在新标签页打开"
   },

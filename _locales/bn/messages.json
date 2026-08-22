@@ -596,6 +596,15 @@
   "tabGroupsClearClosedGroups": {
     "message": "সব মুছুন"
   },
+  "tabGroupsConfirmClearClosed": {
+    "message": "সব সাম্প্রতিক বন্ধ রেকর্ড মুছে ফেলবেন? এগুলো আর এখান থেকে পুনরায় খোলা যাবে না।"
+  },
+  "tabGroupsFilterPlaceholder": {
+    "message": "খোলা ট্যাব ফিল্টার করুন"
+  },
+  "tabGroupsNoMatchingTabs": {
+    "message": "কোনো মিলে যাওয়া ট্যাব নেই"
+  },
   "tabGroupsClosedOpenTab": {
     "message": "নতুন ট্যাবে খুলুন"
   },

@@ -439,12 +439,17 @@ describe('closed groups and window folding', () => {
         expect(store._data.tabGroupsClosed).toBe('[]');
     });
 
-    it('clearClosedGroups removes every saved closed record', () => {
+    it('clearClosedGroups confirms first (the records are the only reopen path)', () => {
         const record = { id: 'cg_1', title: 'Dev', color: 'blue', savedAt: Date.now(), tabs: [{ url: 'https://a/', title: 'A' }] };
-        const { def, $list, store, viewTabGroups } = setup({ storeData: { tabGroupsClosed: JSON.stringify([record]) } });
+        const { def, $list, store, viewTabGroups, dialogs } = setup({ storeData: { tabGroupsClosed: JSON.stringify([record]) } });
         def().activate();
         expect($list.innerHTML).toContain('tabgroups-closed-group');
         viewTabGroups.clearClosedGroups();
+        // nothing happens before the confirm
+        expect(store._data.tabGroupsClosed).not.toBe('[]');
+        expect(dialogs.ConfirmDialog.openCalls).toHaveLength(1);
+        expect(dialogs.ConfirmDialog.openCalls[0].dialog).toBe('tabGroupsConfirmClearClosed');
+        dialogs.ConfirmDialog.openCalls[0].fn1();
         expect(store._data.tabGroupsClosed).toBe('[]');
         expect($list.innerHTML).not.toContain('tabgroups-closed-group');
     });
@@ -1146,6 +1151,119 @@ describe('Delete key guarding', () => {
         });
         expect(ev.pd).toBeUndefined();
         expect(ev.sip).toBeUndefined();
+    });
+});
+
+describe('toolbar instant filter (4.1.0 audit P1)', () => {
+    const typeFilter = (fire, text) => fire('input', {
+        target: { classList: { contains: c => c === 'tabgroups-filter-input' }, value: text }
+    });
+
+    it('narrows rows by title/URL substring and updates the window pill', () => {
+        const { def, $list, fire } = setup({
+            tabs: [
+                makeTab(1, 0, { title: 'GitHub', active: true }),
+                makeTab(2, 1, { title: 'Mail' }),
+                makeTab(3, 2, { title: 'git cheatsheet' })
+            ]
+        });
+        def().activate();
+        expect($list.innerHTML).toContain('tabgroups-filter-input');
+        typeFilter(fire, 'git');
+        expect($list.innerHTML).toContain('GitHub');
+        expect($list.innerHTML).toContain('git cheatsheet');
+        expect($list.innerHTML).not.toContain('>Mail<');
+        // the window head pill counts the VISIBLE tabs while filtering
+        expect($list.innerHTML).toMatch(/count-pill[^>]*>2<\/span>/);
+    });
+
+    it('hides a window section with no matching tab at all', () => {
+        const { def, $list, fire } = setup({
+            windows: [
+                { id: 1, focused: true, tabs: [makeTab(1, 0, { title: 'GitHub', active: true })] },
+                { id: 2, focused: false, tabs: [makeTab(9, 0, { title: 'Mail', windowId: 2 })] }
+            ]
+        });
+        def().activate();
+        typeFilter(fire, 'github');
+        expect($list.innerHTML).toContain('GitHub');
+        // window 2's head leaves the flow entirely
+        expect($list.innerHTML).not.toContain('data-window-id="2"');
+    });
+
+    it('force-expands folded groups and windows while filtering', () => {
+        const { def, $list, fire } = setup({
+            groups: [makeGroup('g1', 'Dev', 'blue', { collapsed: true })],
+            tabs: [
+                makeTab(1, 0, { title: 'Home', active: true }),
+                makeTab(2, 1, { title: 'GitHub', groupId: 'g1' })
+            ]
+        });
+        def().activate();
+        // collapsed group: member row hidden without a filter
+        expect($list.innerHTML).not.toContain('tabgroups-item-2');
+        typeFilter(fire, 'github');
+        expect($list.innerHTML).toContain('tabgroups-item-2');
+    });
+
+    it('shows an empty state when nothing matches', () => {
+        const { def, $list, fire } = setup({});
+        def().activate();
+        typeFilter(fire, 'zzz-no-such-tab');
+        expect($list.innerHTML).toContain('tabGroupsNoMatchingTabs');
+        expect($list.innerHTML).not.toContain('tabgroups-item-');
+    });
+
+    it('Esc in the filter input clears the filter and stays in the view', () => {
+        const { def, $list, fire } = setup({});
+        def().activate();
+        typeFilter(fire, 'tab 1');
+        expect($list.innerHTML).not.toContain('tabgroups-item-2');
+        const ev = fire('keydown', {
+            key: 'Escape',
+            target: { classList: { contains: c => c === 'tabgroups-filter-input' }, closest: () => null },
+            preventDefault() { this.pd = (this.pd || 0) + 1; },
+            stopPropagation() { this.sp = (this.sp || 0) + 1; },
+            stopImmediatePropagation() {}
+        });
+        expect(ev.pd).toBe(1);
+        expect(ev.sp).toBe(1);
+        expect($list.innerHTML).toContain('tabgroups-item-2');
+    });
+
+    it('entering selection mode clears the filter (batch bar shows every candidate)', () => {
+        const { def, $list, fire, clickOn, closestOf } = setup({});
+        def().activate();
+        typeFilter(fire, 'tab 1');
+        expect($list.innerHTML).not.toContain('tabgroups-item-2');
+        clickOn({ closest: closestOf({ '.tabgroups-select-mode': { classList: makeClassList() } }) });
+        expect($list.innerHTML).toContain('tabgroups-item-2');
+        // the batch bar replaces the idle toolbar — the filter input leaves
+        // with it, and the filter itself is cleared
+        expect($list.innerHTML).not.toContain('tabgroups-filter-input');
+        // exiting selection brings the idle toolbar (and the empty filter
+        // input) back
+        clickOn({ closest: closestOf({ '.tabgroups-select-exit': { classList: makeClassList() } }) });
+        expect($list.innerHTML).toContain('tabgroups-filter-input');
+        expect($list.innerHTML).toContain('tabgroups-item-2');
+    });
+
+    it('disables the fold buttons while a filter is active', () => {
+        const { def, $list, fire } = setup({});
+        def().activate();
+        typeFilter(fire, 'tab');
+        expect($list.innerHTML).toContain('class="tabgroups-collapse-all tabgroups-icon-btn" title="tabGroupsCollapseAll" aria-label="tabGroupsCollapseAll" disabled');
+        expect($list.innerHTML).toContain('class="tabgroups-expand-all tabgroups-icon-btn" title="tabGroupsExpandAll" aria-label="tabGroupsExpandAll" disabled');
+    });
+
+    it('renders the clear-closed toolbar icon only while records exist', () => {
+        const record = { id: 'cg_1', title: 'Dev', color: 'blue', savedAt: Date.now(), tabs: [{ url: 'https://a/', title: 'A' }] };
+        const withRec = setup({ storeData: { tabGroupsClosed: JSON.stringify([record]) } });
+        withRec.def().activate();
+        expect(withRec.$list.innerHTML).toContain('tabgroups-closed-clear');
+        const without = setup({});
+        without.def().activate();
+        expect(without.$list.innerHTML).not.toContain('tabgroups-closed-clear');
     });
 });
 

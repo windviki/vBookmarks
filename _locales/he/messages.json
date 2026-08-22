@@ -596,6 +596,15 @@
   "tabGroupsClearClosedGroups": {
     "message": "נקה הכל"
   },
+  "tabGroupsConfirmClearClosed": {
+    "message": "לנקות את כל הרשומות שנסגרו לאחרונה? לא ניתן יהיה לפתוח אותן מכאן."
+  },
+  "tabGroupsFilterPlaceholder": {
+    "message": "סינון כרטיסיות פתוחות"
+  },
+  "tabGroupsNoMatchingTabs": {
+    "message": "אין כרטיסיות תואמות"
+  },
   "tabGroupsClosedOpenTab": {
     "message": "פתח בכרטיסייה חדשה"
   },

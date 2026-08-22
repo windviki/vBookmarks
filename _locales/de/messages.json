@@ -596,6 +596,15 @@
   "tabGroupsClearClosedGroups": {
     "message": "Alle löschen"
   },
+  "tabGroupsConfirmClearClosed": {
+    "message": "Alle kürzlich geschlossenen Einträge löschen? Sie können von hier aus nicht mehr erneut geöffnet werden."
+  },
+  "tabGroupsFilterPlaceholder": {
+    "message": "Offene Tabs filtern"
+  },
+  "tabGroupsNoMatchingTabs": {
+    "message": "Keine passenden Tabs"
+  },
   "tabGroupsClosedOpenTab": {
     "message": "In neuem Tab öffnen"
   },

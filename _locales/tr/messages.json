@@ -596,6 +596,15 @@
   "tabGroupsClearClosedGroups": {
     "message": "Tümünü temizle"
   },
+  "tabGroupsConfirmClearClosed": {
+    "message": "Tüm son kapatılan kayıtlar silinsin mi? Artık buradan yeniden açılamayacaklar."
+  },
+  "tabGroupsFilterPlaceholder": {
+    "message": "Açık sekmeleri filtrele"
+  },
+  "tabGroupsNoMatchingTabs": {
+    "message": "Eşleşen sekme yok"
+  },
   "tabGroupsClosedOpenTab": {
     "message": "Yeni sekmede aç"
   },

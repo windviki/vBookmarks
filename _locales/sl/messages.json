@@ -596,6 +596,15 @@
   "tabGroupsClearClosedGroups": {
     "message": "Počisti vse"
   },
+  "tabGroupsConfirmClearClosed": {
+    "message": "Počisti vse nedavno zaprte zapise? Od tu jih ne bo več mogoče odpreti."
+  },
+  "tabGroupsFilterPlaceholder": {
+    "message": "Filtriraj odprte zavihke"
+  },
+  "tabGroupsNoMatchingTabs": {
+    "message": "Ni ujemajočih se zavihkov"
+  },
   "tabGroupsClosedOpenTab": {
     "message": "Odpri v novem zavihku"
   },

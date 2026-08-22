@@ -595,6 +595,15 @@
   "tabGroupsClearClosedGroups": {
     "message": "Исчисти сè"
   },
+  "tabGroupsConfirmClearClosed": {
+    "message": "Дали да се избришат сите неодамна затворени записи? Тие повеќе нема да можат да се отворат од тука."
+  },
+  "tabGroupsFilterPlaceholder": {
+    "message": "Филтрирај отворени јазичиња"
+  },
+  "tabGroupsNoMatchingTabs": {
+    "message": "Нема соодветни јазичиња"
+  },
   "tabGroupsClosedOpenTab": {
     "message": "Отвори во ново јазиче"
   },

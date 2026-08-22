@@ -596,6 +596,15 @@
   "tabGroupsClearClosedGroups": {
     "message": "Cancella tutto"
   },
+  "tabGroupsConfirmClearClosed": {
+    "message": "Cancellare tutti i record chiusi di recente? Non potranno più essere riaperti da qui."
+  },
+  "tabGroupsFilterPlaceholder": {
+    "message": "Filtra schede aperte"
+  },
+  "tabGroupsNoMatchingTabs": {
+    "message": "Nessuna scheda corrispondente"
+  },
   "tabGroupsClosedOpenTab": {
     "message": "Apri in nuova scheda"
   },

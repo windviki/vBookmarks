@@ -596,6 +596,15 @@
   "tabGroupsClearClosedGroups": {
     "message": "Изчисти всичко"
   },
+  "tabGroupsConfirmClearClosed": {
+    "message": "Изчистване на всички скорошни записи? Те вече няма да могат да бъдат отворени оттук."
+  },
+  "tabGroupsFilterPlaceholder": {
+    "message": "Филтриране на отворени раздели"
+  },
+  "tabGroupsNoMatchingTabs": {
+    "message": "Няма съвпадащи раздели"
+  },
   "tabGroupsClosedOpenTab": {
     "message": "Отваряне в нов раздел"
   },

@@ -596,6 +596,15 @@
   "tabGroupsClearClosedGroups": {
     "message": "모두 지우기"
   },
+  "tabGroupsConfirmClearClosed": {
+    "message": "모든 최근 닫힌 기록을 지우시겠습니까? 여기서 다시 열 수 없게 됩니다."
+  },
+  "tabGroupsFilterPlaceholder": {
+    "message": "열린 탭 필터링"
+  },
+  "tabGroupsNoMatchingTabs": {
+    "message": "일치하는 탭 없음"
+  },
   "tabGroupsClosedOpenTab": {
     "message": "새 탭에서 열기"
   },

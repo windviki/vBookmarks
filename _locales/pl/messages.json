@@ -596,6 +596,15 @@
   "tabGroupsClearClosedGroups": {
     "message": "Wyczyść wszystko"
   },
+  "tabGroupsConfirmClearClosed": {
+    "message": "Wyczyścić wszystkie ostatnio zamknięte rekordy? Nie będzie można ich stąd ponownie otworzyć."
+  },
+  "tabGroupsFilterPlaceholder": {
+    "message": "Filtruj otwarte karty"
+  },
+  "tabGroupsNoMatchingTabs": {
+    "message": "Brak pasujących kart"
+  },
   "tabGroupsClosedOpenTab": {
     "message": "Otwórz w nowej karcie"
   },

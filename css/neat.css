@@ -3902,23 +3902,35 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
     align-items: center;
     gap: 8px;
 }
-#tabgroups-list ul li.tabgroups-closed-section-head .tabgroups-closed-clear {
-    margin-inline-start: auto;
-    margin-inline-end: 8px;
-    border: 0;
+
+/* The toolbar's instant tab filter (4.1.0 audit P1): title/URL substring
+   match over the open tabs. Lives in the second toolbar rung between the
+   options cluster and the icon buttons; the keyboard model's K14 rule
+   already owns its caret keys (←/→/Home/End), ↑/↓ leave via the rung walk. */
+.tabgroups-toolbar .tabgroups-filter-input {
+    flex: 1;
+    min-width: 60px;
+    height: 22px;
+    padding: 0 6px;
+    border: 1px solid var(--vbm-border);
     border-radius: var(--vbm-radius);
-    background: transparent;
-    color: var(--vbm-accent);
+    background: var(--vbm-bg);
+    color: var(--vbm-fg);
     font-size: 11px;
-    padding: 2px 6px;
-    cursor: pointer;
+    box-sizing: border-box;
 }
-#tabgroups-list ul li.tabgroups-closed-section-head .tabgroups-closed-clear:hover {
-    background: var(--vbm-bg-hover);
-}
-#tabgroups-list ul li.tabgroups-closed-section-head .tabgroups-closed-clear:focus-visible {
+.tabgroups-toolbar .tabgroups-filter-input:focus {
     outline: 2px solid var(--vbm-focus-ring);
-    outline-offset: -2px;
+    outline-offset: -1px;
+    border-color: var(--vbm-accent);
+}
+.tabgroups-toolbar .tabgroups-filter-input::placeholder {
+    color: var(--vbm-muted);
+}
+/* The clear-closed icon is destructive — the danger color, same as the
+   selection bar's close-selected button. */
+.tabgroups-toolbar button.tabgroups-closed-clear {
+    color: var(--vbm-danger);
 }
 
 /* Closed-group rows are history, not live tabs: dim + italic, matching the

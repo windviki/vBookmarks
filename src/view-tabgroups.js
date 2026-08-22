@@ -105,6 +105,11 @@ export function initViewTabGroups(ctx = {}) {
     // view-manager's scroll/focus memory alone.
     let initialScrollDone = false;
     let pendingScrollToCurrent = false;
+    // In-view instant filter (session-only, never persisted): matches tab
+    // title + URL, hides non-matching rows/groups/windows, and force-expands
+    // folds while active — a find operation must never hide a hit behind a
+    // fold (same philosophy as selection mode opening every fold).
+    let filterText = '';
     // Fold state saved when selection mode opens everything up, restored on
     // exit (selection mode must show every candidate row).
     let foldSnapshot = null;
@@ -170,6 +175,11 @@ export function initViewTabGroups(ctx = {}) {
     // Chrome reports groupId: -1 for tabs that are NOT grouped; every
     // truthiness check must treat -1 as "no group".
     const isGrouped = tab => !!tab && !!tab.groupId && tab.groupId !== -1;
+
+    // Instant filter: case-insensitive substring over title + URL.
+    const filterNeedle = () => filterText.trim().toLowerCase();
+    const tabMatchesNeedle = (tab, needle) => !needle
+        || `${tab.title || ''}\n${tab.url || ''}`.toLowerCase().includes(needle);
 
     // Walk the bookmark tree once per refresh: remember which URLs are
     // already bookmarked (row star state) and which folder ids are alive
@@ -330,10 +340,10 @@ export function initViewTabGroups(ctx = {}) {
     };
 
     // --- Rendering --------------------------------------------------------------
-    const iconBtn = (cls, icon, labelKey) => {
+    const iconBtn = (cls, icon, labelKey, disabled) => {
         const label = _m(labelKey);
         return `<button class="${cls} tabgroups-icon-btn" title="${htmlspecialchars(label)}" ` +
-            `aria-label="${htmlspecialchars(label)}">${icon}</button>`;
+            `aria-label="${htmlspecialchars(label)}"${disabled ? ' disabled' : ''}>${icon}</button>`;
     };
 
     const renderToolbar = () => {
@@ -361,15 +371,19 @@ export function initViewTabGroups(ctx = {}) {
         }
         // Idle toolbar: two stacked .vbm-toolbar rows (the dead/dupes
         // recipe). Row 1 = view controls (summary left, refresh/fold icons
-        // right); row 2 = view options (collapse-sync checkbox left, select
-        // mode icon right).
+        // right); row 2 = view options (collapse-sync checkbox left, then
+        // the instant tab filter, and on the right the clear-closed icon —
+        // only while records exist — plus the select-mode icon).
         const syncLabel = _m('tabGroupsSyncCollapse');
         const syncHint = _m('tabGroupsSyncCollapseHint');
+        const filterLabel = _m('tabGroupsFilterPlaceholder');
         return '<div class="tabgroups-toolbar tabgroups-controls-toolbar vbm-toolbar">' +
             `<span class="tabgroups-summary">${_m('tabGroupsSummary', [`${tabs.length}`, `${groups.length}`])}</span>` +
             iconBtn('tabgroups-refresh', REDO_ICON, 'tabGroupsToolbarRefresh') +
-            iconBtn('tabgroups-collapse-all', COLLAPSE_ALL_ICON, 'tabGroupsCollapseAll') +
-            iconBtn('tabgroups-expand-all', EXPAND_ALL_ICON, 'tabGroupsExpandAll') +
+            // The fold buttons stand down while a filter is active (folds
+            // are inert — the filter force-expands every group and window).
+            iconBtn('tabgroups-collapse-all', COLLAPSE_ALL_ICON, 'tabGroupsCollapseAll', !!filterNeedle()) +
+            iconBtn('tabgroups-expand-all', EXPAND_ALL_ICON, 'tabGroupsExpandAll', !!filterNeedle()) +
             '</div>' +
             '<div class="tabgroups-toolbar tabgroups-actions-toolbar vbm-toolbar">' +
             `<span class="tabgroups-options" role="group" aria-label="${htmlspecialchars(_m('tabGroupOptions'))}">` +
@@ -377,13 +391,21 @@ export function initViewTabGroups(ctx = {}) {
             `<input type="checkbox" class="tabgroups-sync-collapse-input"${syncCollapse() ? ' checked' : ''}>` +
             `<span>${htmlspecialchars(syncLabel)}</span></label>` +
             '</span>' +
+            `<input type="text" class="tabgroups-filter-input" placeholder="${htmlspecialchars(filterLabel)}" ` +
+            `aria-label="${htmlspecialchars(filterLabel)}" value="${htmlspecialchars(filterText)}">` +
+            // The clear-closed action lives in the toolbar (not the section
+            // head) so the keyboard model can reach it — a button inside a
+            // plain LI was mouse-only (4.1.0 audit M5).
+            (closedRecords.length ? iconBtn('tabgroups-closed-clear', TRASH_ICON, 'tabGroupsClearClosedGroups') : '') +
             iconBtn('tabgroups-select-mode', SELECT_ICON, 'selectModeEnter') +
             '</div>';
     };
 
     const groupHeadHtml = (group, memberTabs) => {
         const gid = String(group.id);
-        const isCollapsed = collapsed.has(gid);
+        // Folds are inert while the filter is active — a find never hides
+        // hits behind a fold, and the head renders expanded accordingly.
+        const isCollapsed = !filterNeedle() && collapsed.has(gid);
         const title = group.title || _m('tabGroupUntitled');
         const color = group.color || 'grey';
         const saveLabel = _m('tabGroupsSaveFolder');
@@ -558,16 +580,17 @@ export function initViewTabGroups(ctx = {}) {
             ].filter(Boolean).join(' ');
             html += `<ul role="list"${ulClass ? ` class="${ulClass}"` : ''}>`;
 
+            const needle = filterNeedle();
             // Window section head: the WHOLE row is the fold control (a
             // focusable role=button span, so it joins the row keyboard model
             // exactly like a group head) — the old chevron-only button left
             // most of the row dead to both mouse and keyboard.
-            const windowHead = (win, idx) => {
+            const windowHead = (win, idx, count) => {
                 const label = _m('tabGroupsWindow', [`${idx + 1}`]);
-                const isCollapsed = collapsedWindows.has(String(win.id));
+                // Folds are inert while filtering — a find never hides hits.
+                const isCollapsed = !needle && collapsedWindows.has(String(win.id));
                 const toggleLabel = _m(isCollapsed ? 'tabGroupsExpandWindow' : 'tabGroupsCollapseWindow');
                 const current = win.focused ? `<b class="tabgroups-window-current">${_m('tabGroupsCurrentWindow')}</b>` : '';
-                const count = win.tabs.length;
                 return `<li class="tabgroups-window-head" data-window-id="${String(win.id)}">` +
                     `<span class="tabgroups-window-head-row" tabindex="-1" role="button" ` +
                     `aria-expanded="${isCollapsed ? 'false' : 'true'}" ` +
@@ -580,17 +603,22 @@ export function initViewTabGroups(ctx = {}) {
             };
             const groupBlock = ({ group, memberTabs }) => {
                 let out = groupHeadHtml(group, memberTabs);
-                if (!collapsed.has(String(group.id))) {
+                if (needle || !collapsed.has(String(group.id))) {
                     for (let mi = 0; mi < memberTabs.length; mi++)
                         out += tabRowHtml(memberTabs[mi], { lastMember: mi === memberTabs.length - 1 });
                 }
                 return out;
             };
 
+            let matchedRows = 0;
             for (let wi = 0, wl = windows.length; wi < wl; wi++) {
                 const win = windows[wi];
-                html += windowHead(win, wi);
-                if (collapsedWindows.has(String(win.id)))
+                const visibleTabs = needle ? win.tabs.filter(t => tabMatchesNeedle(t, needle)) : win.tabs;
+                // A window with no matching tab leaves the flow entirely.
+                if (needle && !visibleTabs.length)
+                    continue;
+                html += windowHead(win, wi, visibleTabs.length);
+                if (!needle && collapsedWindows.has(String(win.id)))
                     continue;
 
                 // Open groups and ungrouped tabs render INTERLEAVED in the
@@ -598,33 +626,38 @@ export function initViewTabGroups(ctx = {}) {
                 // order). Closed (collapsed) groups leave the inline flow
                 // and anchor to the bottom of their window section.
                 const seenGroups = new Set();
-                for (let i = 0, l = win.tabs.length; i < l; i++) {
-                    const tab = win.tabs[i];
+                for (let i = 0, l = visibleTabs.length; i < l; i++) {
+                    const tab = visibleTabs[i];
                     if (!isGrouped(tab)) {
                         html += tabRowHtml(tab);
+                        matchedRows++;
                         continue;
                     }
                     const group = groupById(tab.groupId);
                     if (!group) {
                         html += tabRowHtml(tab);
+                        matchedRows++;
                         continue;
                     }
                     const gid = String(group.id);
                     if (seenGroups.has(gid))
                         continue;
                     seenGroups.add(gid);
-                    const memberTabs = win.tabs.filter(t => String(t.groupId) === gid)
+                    const memberTabs = visibleTabs.filter(t => String(t.groupId) === gid)
                         .sort((a, b) => (a.index || 0) - (b.index || 0));
                     // Collapsed groups stay inline in tab order (they are not
                     // closed — their tabs still exist in the browser).
                     html += groupBlock({ group, memberTabs });
+                    matchedRows += memberTabs.length;
                 }
             }
+            if (needle && !matchedRows)
+                html += `<li class="empty-state" role="listitem"><i>${_m('tabGroupsNoMatchingTabs')}</i></li>`;
 
-            if (closedRecords.length) {
-                const clearLabel = _m('tabGroupsClearClosedGroups');
-                html += `<li class="tabgroups-section-head tabgroups-closed-section-head"><em>${_m('tabGroupsClosedGroups')}</em>` +
-                    `<button class="tabgroups-closed-clear" title="${htmlspecialchars(clearLabel)}" aria-label="${htmlspecialchars(clearLabel)}">${htmlspecialchars(clearLabel)}</button></li>`;
+            // The closed-record section is history, not open tabs — it stays
+            // out of the filter's scope (hidden while a filter is active).
+            if (!needle && closedRecords.length) {
+                html += `<li class="tabgroups-section-head tabgroups-closed-section-head"><em>${_m('tabGroupsClosedGroups')}</em></li>`;
                 for (const record of closedRecords) {
                     if (record.type === 'tab') {
                         const tab = (record.tabs && record.tabs[0]) || { title: record.title || '', url: record.url || '' };
@@ -1097,10 +1130,22 @@ export function initViewTabGroups(ctx = {}) {
     };
 
     const clearClosedGroups = () => {
-        persistClosedGroups([]);
-        closedRecords = [];
-        if (views.isActive('tabgroups'))
-            render();
+        if (!closedRecords.length)
+            return;
+        // The records are the ONLY way to reopen a closed group from here —
+        // clearing them is destructive, so it confirms like the view's other
+        // destructive batch actions (the 4.1.0 audit found this unguarded).
+        dialogs.ConfirmDialog.open({
+            dialog: _m('tabGroupsConfirmClearClosed'),
+            button1: `<strong>${_m('delete')}</strong>`,
+            button2: _m('nope'),
+            fn1: () => {
+                persistClosedGroups([]);
+                closedRecords = [];
+                if (views.isActive('tabgroups'))
+                    render();
+            }
+        });
     };
 
     const closedRecordById = recordId =>
@@ -1149,6 +1194,9 @@ export function initViewTabGroups(ctx = {}) {
             foldSnapshot = { groups: [...collapsed], windows: [...collapsedWindows] };
             collapsed.clear();
             collapsedWindows.clear();
+            // Same "show every candidate" law applies to the filter: a batch
+            // bar that cannot see half its rows is a trap.
+            filterText = '';
         } else if (!on && selecting && foldSnapshot) {
             collapsed.clear();
             for (const id of foldSnapshot.groups)
@@ -1327,7 +1375,12 @@ export function initViewTabGroups(ctx = {}) {
         });
     };
 
+    // A fold action while the filter is active would be invisible state
+    // churn (the filter force-expands everything) — folds stand down until
+    // the filter clears.
     const setGroupCollapsed = (groupId, shouldCollapse) => {
+        if (filterNeedle())
+            return;
         if (shouldCollapse)
             collapsed.add(String(groupId));
         else
@@ -1356,6 +1409,8 @@ export function initViewTabGroups(ctx = {}) {
     // Window folding: the effective set plus the explicit choice that
     // survives into the next session (see windowChoice).
     const setWindowCollapsed = (windowId, shouldCollapse) => {
+        if (filterNeedle())
+            return; // folds are inert while the filter is active
         const id = String(windowId);
         if (shouldCollapse)
             collapsedWindows.add(id);
@@ -1404,6 +1459,8 @@ export function initViewTabGroups(ctx = {}) {
         toggleIds(tabs.filter(t => String(t._windowId || t.windowId) === String(windowId)).map(t => String(t.id)));
 
     const collapseAll = () => {
+        if (filterNeedle())
+            return; // folds are inert while the filter is active
         for (const g of groups)
             collapsed.add(String(g.id));
         persistUIState();
@@ -1419,6 +1476,8 @@ export function initViewTabGroups(ctx = {}) {
         }
     };
     const expandAll = () => {
+        if (filterNeedle())
+            return; // folds are inert while the filter is active
         collapsed.clear();
         persistUIState();
         render();
@@ -1484,6 +1543,30 @@ export function initViewTabGroups(ctx = {}) {
             // No re-render needed for a settings checkbox; the next collapse
             // action reads the new value.
             return;
+        }
+    });
+
+    // Re-focus the filter input after a render (the innerHTML swap replaced
+    // it) and park the caret at the end of the query.
+    const refocusFilter = () => {
+        const input = $list.querySelector ? $list.querySelector('.tabgroups-filter-input') : null;
+        if (input) {
+            if (input.focus)
+                input.focus();
+            if (input.setSelectionRange && typeof input.value === 'string')
+                input.setSelectionRange(input.value.length, input.value.length);
+        }
+    };
+
+    // The instant filter: every keystroke re-renders the rows (the toolbar
+    // focus park/restore keeps the input focused; refocusFilter fixes the
+    // caret).
+    $list.addEventListener('input', e => {
+        const t = e.target;
+        if (t && t.classList && t.classList.contains('tabgroups-filter-input')) {
+            filterText = t.value || '';
+            render();
+            refocusFilter();
         }
     });
 
@@ -1800,6 +1883,19 @@ export function initViewTabGroups(ctx = {}) {
     // whole section. Both heads speak the same protocol, one nesting level
     // apart (window → group → row).
     $list.addEventListener('keydown', e => {
+        // Esc in the filter input clears the filter first — one level above
+        // the view's own Esc layer (selection exit) and the global chain.
+        if (e.key === 'Escape' && e.target && e.target.classList
+            && e.target.classList.contains('tabgroups-filter-input')) {
+            if (filterNeedle()) {
+                e.preventDefault();
+                e.stopPropagation();
+                filterText = '';
+                render();
+                refocusFilter();
+            }
+            return;
+        }
         const isRtlNow = () => !!(document.body && document.body.classList
             && document.body.classList.contains('rtl'));
         const winHead = (e.target && e.target.classList

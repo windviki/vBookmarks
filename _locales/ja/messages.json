@@ -596,6 +596,15 @@
   "tabGroupsClearClosedGroups": {
     "message": "すべてクリア"
   },
+  "tabGroupsConfirmClearClosed": {
+    "message": "最近閉じた記録をすべてクリアしますか？ここから再度開くことはできなくなります。"
+  },
+  "tabGroupsFilterPlaceholder": {
+    "message": "開いているタブをフィルタ"
+  },
+  "tabGroupsNoMatchingTabs": {
+    "message": "一致するタブがありません"
+  },
   "tabGroupsClosedOpenTab": {
     "message": "新しいタブで開く"
   },

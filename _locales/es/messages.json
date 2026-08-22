@@ -596,6 +596,15 @@
   "tabGroupsClearClosedGroups": {
     "message": "Borrar todo"
   },
+  "tabGroupsConfirmClearClosed": {
+    "message": "¿Borrar todos los registros recientemente cerrados? Ya no se podrán reabrir desde aquí."
+  },
+  "tabGroupsFilterPlaceholder": {
+    "message": "Filtrar pestañas abiertas"
+  },
+  "tabGroupsNoMatchingTabs": {
+    "message": "No hay pestañas coincidentes"
+  },
   "tabGroupsClosedOpenTab": {
     "message": "Abrir en nueva pestaña"
   },

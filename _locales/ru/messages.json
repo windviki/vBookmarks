@@ -596,6 +596,15 @@
   "tabGroupsClearClosedGroups": {
     "message": "Очистить все"
   },
+  "tabGroupsConfirmClearClosed": {
+    "message": "Очистить все недавно закрытые записи? Их больше нельзя будет открыть отсюда."
+  },
+  "tabGroupsFilterPlaceholder": {
+    "message": "Фильтр открытых вкладок"
+  },
+  "tabGroupsNoMatchingTabs": {
+    "message": "Нет подходящих вкладок"
+  },
   "tabGroupsClosedOpenTab": {
     "message": "Открыть в новой вкладке"
   },

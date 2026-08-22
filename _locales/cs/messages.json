@@ -596,6 +596,15 @@
   "tabGroupsClearClosedGroups": {
     "message": "Vymazat vše"
   },
+  "tabGroupsConfirmClearClosed": {
+    "message": "Vymazat všechny nedávno zavřené záznamy? Nebudou již moci být znovu otevřeny odtud."
+  },
+  "tabGroupsFilterPlaceholder": {
+    "message": "Filtrovat otevřené karty"
+  },
+  "tabGroupsNoMatchingTabs": {
+    "message": "Žádné odpovídající karty"
+  },
   "tabGroupsClosedOpenTab": {
     "message": "Otevřít na nové kartě"
   },

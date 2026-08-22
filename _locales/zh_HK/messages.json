@@ -2067,6 +2067,15 @@
   "tabGroupsClearClosedGroups": {
     "message": "全部清除"
   },
+  "tabGroupsConfirmClearClosed": {
+    "message": "確定清除所有最近關閉的記錄？之後無法從此處重新開啟。"
+  },
+  "tabGroupsFilterPlaceholder": {
+    "message": "篩選開啟的分頁"
+  },
+  "tabGroupsNoMatchingTabs": {
+    "message": "沒有相符的分頁"
+  },
   "tabGroupsClosedOpenTab": {
     "message": "在新分頁開啟"
   },

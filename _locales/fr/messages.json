@@ -596,6 +596,15 @@
   "tabGroupsClearClosedGroups": {
     "message": "Tout effacer"
   },
+  "tabGroupsConfirmClearClosed": {
+    "message": "Effacer tous les enregistrements récemment fermés ? Ils ne pourront plus être rouverts depuis ici."
+  },
+  "tabGroupsFilterPlaceholder": {
+    "message": "Filtrer les onglets ouverts"
+  },
+  "tabGroupsNoMatchingTabs": {
+    "message": "Aucun onglet correspondant"
+  },
   "tabGroupsClosedOpenTab": {
     "message": "Ouvrir dans un nouvel onglet"
   },

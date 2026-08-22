@@ -596,6 +596,15 @@
   "tabGroupsClearClosedGroups": {
     "message": "Bersihkan semua"
   },
+  "tabGroupsConfirmClearClosed": {
+    "message": "Hapus semua catatan yang baru ditutup? Mereka tidak dapat dibuka kembali dari sini."
+  },
+  "tabGroupsFilterPlaceholder": {
+    "message": "Saring tab yang terbuka"
+  },
+  "tabGroupsNoMatchingTabs": {
+    "message": "Tidak ada tab yang cocok"
+  },
   "tabGroupsClosedOpenTab": {
     "message": "Buka di tab baru"
   },

@@ -596,6 +596,15 @@
   "tabGroupsClearClosedGroups": {
     "message": "Șterge tot"
   },
+  "tabGroupsConfirmClearClosed": {
+    "message": "Ștergeți toate înregistrările închise recent? Nu mai pot fi redeschise de aici."
+  },
+  "tabGroupsFilterPlaceholder": {
+    "message": "Filtrează filele deschise"
+  },
+  "tabGroupsNoMatchingTabs": {
+    "message": "Nicio filă potrivită"
+  },
   "tabGroupsClosedOpenTab": {
     "message": "Deschide în filă nouă"
   },

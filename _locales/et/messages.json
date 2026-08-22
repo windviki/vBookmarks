@@ -596,6 +596,15 @@
   "tabGroupsClearClosedGroups": {
     "message": "Kustuta kõik"
   },
+  "tabGroupsConfirmClearClosed": {
+    "message": "Kustutada kõik hiljuti suletud kirjed? Neid ei saa enam siit uuesti avada."
+  },
+  "tabGroupsFilterPlaceholder": {
+    "message": "Filtreeri avatud vahekaarte"
+  },
+  "tabGroupsNoMatchingTabs": {
+    "message": "Vastavaid vahekaarte pole"
+  },
   "tabGroupsClosedOpenTab": {
     "message": "Ava uuel vahelehel"
   },
