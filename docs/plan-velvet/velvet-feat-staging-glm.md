@@ -3,20 +3,13 @@
 > 基线：4.1.0 HEAD（七视图；80 测试套件 / ~2664 用例；en 560 i18n 键；`manifest.json` 4.1.0；release 走 dist 构建）。
 > 上游：[`velvet-feat-staging.md`](velvet-feat-staging.md)（含 4.1.0 复审迭代记录）。**本文是其精修落地版**：需求清单冻结不动，方案节在上游基础上做了行号级复核后的修正与补全，可独立作为实施依据。
 >
-> **相对上游的修订记录**（全部来自对 4.1.0 HEAD 的逐触点复核，不推翻上游任何决策）：
-> ① **修正三处与代码不符的表述**：
->   - §3.6 搜索视图 Esc：search 视图**没有** view def `onEscape` 字段，实际 Esc 链在 keyboard.js 文档层 `search.escape()` 专属分支（keyboard.js:1119-1135）。插入点改为「`views.attach('search', { onEscape })` 会在 `views.onEscapeActive()` 分支先于 `search.escape()` 被调用——顺序恰好符合设计，但机制名以本文为准」。
->   - §5.3 内部剪贴板：`POSITIONAL_IDS`（context-menu.js:1890-1896）**只作用于 bookmark-context-menu 的 8 个位置项**；文件夹菜单的树内显隐走 `ROOT_DISABLED_IDS`（:135）等独立逻辑。「粘贴到此处」并入 POSITIONAL_IDS 的说法不成立，改为 §5.3 的新路径（bookmark 菜单项进 POSITIONAL_IDS，folder 菜单项走 folder handler 的动态显隐）。
->   - §6.5 旧实现描述：`actions.copyAllTitlesAndUrls` → `TreeText(nodeId)` **对文件夹同样递归**，只是输出为缩进树样式文本，不是「只处理单个书签」。结论不变（新增三格式扁平清单的独立实现），立项理由修正为「格式不同而非能力缺失」；TreeText 树样式作为**第四格式候选**登记（本期不做）。
-> ② **补两处遗漏触点**：
->   - view-recent.js 现只监听 `onCreated/onRemoved`（:284-285），**无 `onChanged`/`onMoved` 监听**——§0.5 的「onChanged → 暂存行随新标题/favicon 重渲染」需要新增 listener，已列入 §8 触点。
->   - `addTabToBookmarks`（view-tabgroups.js:703-733）在书签已存在时**只翻星标、不返回书签 id**——§2.5「收藏并暂存」需要拿到 `existing[0].id`，需扩展返回值或新写薄封装，已列入 §8。
-> ③ **补实情说明**：
->   - `persistScroll` 字段 view-manager.js:26-27/944/962 有文档与消费端，但**全库无任何视图置 true**——recent 将是第一个使用者，该路径从未被真实行使，§8 测试清单补 persistScroll 断言。
->   - 打开类动作的 10 项确认阈值实际受 `dontConfirmOpenFolder` 设置旁路（actions.js:443）——「沿用」包含该旁路，语义一致。
->   - popup/sidepanel 双页 `<menu>` 计数实测各 **15 个**（12 顶级 + 3 submenu），`#staging-group-context-menu` 确为第 16 个。
->   - `runtime-files.json` 的 esmEntries 只列入口 JS；`src/staging.js`/`src/clipboard.js` 经 neat.js import 可达即自动进 dist 包，**无需也不应**直接登记清单（除非做独立入口）。
->   - deadMarks 的跨文档 `storage.onChanged` 先例（view-dead.js:1410-1415）是**从 change 对象完整重解析、不信任 store 镜像**（审计 D7 注释）——staging 的 JSON 比 deadMarks 数组复杂，监听侧同样整对象重解析，不做增量合并。
+> **迭代记录 A（首轮精修，相对上游）**：三处机制表述修正（搜索 Esc 走 keyboard.js `search.escape()` 分支而非 view `onEscape`；`POSITIONAL_IDS` 只作用 bookmark 菜单，文件夹粘贴走 handler 动态显隐；`TreeText` 对文件夹本就递归，立项理由改为「格式不同」）；两处触点补漏（view-recent 无 `bookmarks.onChanged` 监听；`addTabToBookmarks` 已收藏时不返回书签 id）；实情说明（`persistScroll` 全库首例需测试；runtime-files.json esmEntries 只列入口；双页 `<menu>` 实测 15 个；打开确认受 `dontConfirmOpenFolder` 旁路；storage.onChanged 整对象重解析）。
+>
+> **迭代记录 B（本轮重审：「收藏」改为真实书签树操作 + 生效模型裁决）**——用户澄清：**「发送到暂存区不改书签树」只约束「发送」这个动作，不是全过程不改树**。暂存区是中间状态的工作台，用于批量组织已收藏与未收藏书签，最终仍要对接全插件各视图的具体动作；因此**暂存区里的「收藏/取消收藏」是真的对收藏夹（书签树）进行操作**，不是本地标记。据此本轮做了四处结构级修订：
+> ① **数据模型重定义（§0.3）**：条目改为**双态**——`id` 非空 = 已收藏（指向真实书签节点），`id = null` = 未收藏（仅 `url`+`title` 快照，来源：stats 视图未收藏历史行、或取消收藏的落档）。首版的本地 `fav` 布尔标记**删除**；「已收藏/未收藏」从此是**真实状态**，与全 app 词汇对齐（快加星 = URL 是否已成书签，quick-add.js 按 URL search 切换 create/remove；stats 视图「已收藏统计行 / 未收藏历史行」正是这套词汇，view-stats.js:15-26）。
+> ② **收藏/取消收藏落为真实动作（§3.4）**：收藏 = `chrome.bookmarks.create` 进 `quickAddFolderId`（与快加星、stats 历史行星标完全同语义）；取消收藏 = `chrome.bookmarks.remove`（条目留在暂存区落档为未收藏态，可再收藏）。内置「未收藏桶」合成组随之**删除**——未收藏不再是需要一个桶来安置的本地标记，而是每行的真实星标态；分组与收藏态正交且互不干涉。
+> ③ **生效模型裁决（§3.0，新增）**：对比 Gmail/Photos/Material 3 的「选择→工具条→立即生效→toast 撤销」与购物车式「统一应用」，结合书签树实时同步的特性，**定案立即生效**；destructive 罕见动作（删除真实书签、清空暂存）保留 ConfirmDialog，其余全部走撤销。附同类产品调研（§14）。
+> ④ **操作便捷性增补（§3.8，新增）**：行内星标一键切换（快加星同款 hover 按钮）、混合选择的「作用于适用项 + 计数汇报」、归位即离场的「排水式」工作台节奏；stats 视图未收藏历史行成为暂存区的新入口（§2.3），补齐「批量收藏历史好内容」的最高频整理流。
 
 ## 准备实现的功能
 
@@ -37,41 +30,56 @@
 
 **0.1 视图升级策略**：保留现有 view id `recent`、`#view-recent` 容器、`showRecentBookmarks`/`disableRecentView` 两个设置键不变，仅把视图标题改为「暂存区」（i18n 键名 `viewRecent` 保留、文案改写，走改文案的 `[TODO:]` 重翻译流程，43 locale 同步），内部拆成「暂存列表（上）+ 最近添加（下）」两个区域。理由：view-manager 的注册、隐藏/禁用、palette Go 命令、`Alt+N`、viewState 记忆全部继续工作，零迁移；下方最近添加的功能仍是原视图的一个子集。palette 的 `/recent` 命令保留并增加 alias `staging`（命令 slash 名 = view id 不变，alias 零机制改动）。
 
-**0.2 暂存区的性质**：暂存区是**书签 id 的本地集合**，只记录「哪些书签待处理」，不复制书签数据、不改变书签树、不影响同步。所有暂存区内部操作（移出、清空、分组、收藏）都只改这个集合；只有「删除」「移动/复制到文件夹」这两个显式动作才触碰书签树。
+**0.2 暂存区的性质（迭代 B 修订）**：暂存区是**整理工作台（decision workbench）**，不是只读暂存池。「发送到暂存区」这个动作**不改书签树**（需求原文约束的仅是这一点）；但暂存区内部对条目执行的**整理动作是真实生效的**——收藏/取消收藏真的建/删书签，移动/复制真的改树，删除真的删书签。暂存区承载的是「批量决策」：把散落各视图的待处理项收集到一张工作台上，成批施加本就存在于各视图的动作（stats 历史行的收藏星、树菜单的移动/复制、删除、批量打开），而不是发明一套只在暂存区内部可见的影子状态。工作台的条目有**真实双态**：
 
-**0.3 数据与持久化**：新增一个 `chrome.storage.local` 键 `staging`（`store.js` 的 `KNOWN_KEYS` 注册，**不进 `SYNC_KEYS`**——书签 id 设备本地，与 `deadMarks*`/`visitStats` 同一决策，store.js:133-135 的「deliberately NOT here」注释区追加），值为一个 JSON 对象：
+- **已收藏条目**：`id` 指向树内书签节点，行上星标为实心（与快加星 `starred` 态同源）。
+- **未收藏条目**：无书签节点，只有 `url`+`title`（+来源时间）快照；行上星标为空心。来源有二：stats 视图「未收藏历史行」直接发送；已收藏条目在暂存区里被取消收藏后**落档**（条目不离开暂存区，退为未收藏态，随时可再收藏）。
+
+**0.3 数据与持久化（迭代 B 重定义）**：新增一个 `chrome.storage.local` 键 `staging`（`store.js` 的 `KNOWN_KEYS` 注册，**不进 `SYNC_KEYS`**——书签数据设备本地，与 `deadMarks*`/`visitStats` 同一决策，store.js:133-135 的「deliberately NOT here」注释区追加），值为一个 JSON 对象（schema 版本 `v:1` 即本文形态，未发版直接定形）：
 
 ```json
 {
   "v": 1,
-  "items": [ { "id": "书签id", "ts": 1234567890123, "group": "groupId或null", "fav": false } ],
+  "items": [
+    { "id": "书签id或null", "url": "https://…", "title": "标题快照", "ts": 1234567890123, "group": "groupId或null" }
+  ],
   "groups": [ { "id": "g_xxx", "name": "A", "collapsed": false, "createdAt": 1234567890123, "sourceFolderId": "可选", "sourceTabGroup": "可选" } ],
-  "recentCollapsed": false,
-  "unfavCollapsed": false
+  "recentCollapsed": false
 }
 ```
 
-- `v` 为 schema 版本（favicon-enrich 索引的 `v` 字段先例），未来字段演进按 `v` 迁移。
-- `items` 是暂存列表的唯一数据源；`ts` 为加入时间；`group = null` 表示未分组；`fav` 是**暂存区内的收藏标记**（布尔，默认 false），与分组正交。
-- `groups` 只保存用户手动组、文件夹发送自动组与 tab 组整组暂存自动组。`sourceFolderId` 记文件夹来源；`sourceTabGroup` 记 tab 组标题来源（§2.5）。内置「未收藏」**不是 groups 数组里的真实组**，而是一个渲染桶（见 3.4）：`fav === false && group === null` 的条目自动落入该桶，`unfavCollapsed` 保存它的折叠状态。
+- `items` 是暂存列表的唯一数据源；`ts` 为加入时间；`group = null` 表示未分组。
+- **双态由 `id` 表达**：`id` 非空 = 已收藏；`id = null` = 未收藏。`url`/`title` 是**恒在快照**——已收藏条目也保留（取消收藏落档、树事件同步、渲染兜底三处用到），`onChanged` 时随树更新（§0.5）。
+- **收藏态没有独立字段**：真实状态由 `id` 派生，杜绝「本地标记与树漂移」的整类问题。首版方案的 `fav` 布尔与 `unfavCollapsed` 字段删除。
+- `groups` 只保存用户手动组、文件夹发送自动组与 tab 组整组暂存自动组（`sourceFolderId`/`sourceTabGroup` 记来源，重复发送合并，见 §1.1/§2.5）。分组与收藏态**正交**：未收藏条目可以待在任何组里（星标空心而已），收藏态切换不改 `group`。
 - 暂存数据存 local 不存 sync（体量可能大、且是设备本地工作台语义）。
 - 读写沿用 store 的 200ms 防抖持久化（store.js:216）；写入后**显式调** `views.updateBadges()`（store.set 不自动触发，view-manager.js:1000-1003 仅在视图切换时重算）更新 tab 徽标（`badge()` 返回暂存条数，0 隐藏，遵循 `showTabBadges` 门控 :278-287）。
-- **census 登记**：`tests/storage-usage.test.js` 的 `EXPECTED` 决策表（:57 起，测试 :111 扫真实 `store.knownKeys`）加 `staging: 'other'`——有界小数据（上限 500 条 × ~40B ≈ 20KB），无独立字节预算，归 catch-all，存储条三段不变。不加表项 census 必挂。
-- **跨文档一致性**：popup 与 sidepanel 可同时打开、各持 store 镜像。暂存视图参照 4.0.8 `deadMarks` 先例（view-dead.js:1410-1415）挂 `chrome.storage.onChanged` 监听 `staging` 键，**从 change 对象完整重解析整个 JSON 并替换本地态**（不信任 store 镜像、不做增量合并——staging 结构比 deadMarks 数组复杂，增量合并的脏窗口不值得），外部写入（另一文档、选项页导入）时重渲染，避免双端互相覆盖旧快照。
-- **备份**：`staging` 在 local 区，自动随选项页备份导出；跨设备导入后书签 id 失配由 0.4 的修剪自愈，无需特殊处理。
+- **census 登记**：`tests/storage-usage.test.js` 的 `EXPECTED` 决策表（:57 起，测试 :111 扫真实 `store.knownKeys`）加 `staging: 'other'`——有界小数据（上限 500 条 × ~60B ≈ 30KB，双态快照略大于首版估算），无独立字节预算，归 catch-all。不加表项 census 必挂。
+- **跨文档一致性**：popup 与 sidepanel 可同时打开、各持 store 镜像。暂存视图参照 4.0.8 `deadMarks` 先例（view-dead.js:1410-1415）挂 `chrome.storage.onChanged` 监听 `staging` 键，**从 change 对象完整重解析整个 JSON 并替换本地态**（不信任 store 镜像、不做增量合并），外部写入时重渲染。
+- **备份**：`staging` 在 local 区，自动随选项页备份导出；跨设备导入后由 0.4/0.5 的修剪/重链自愈，无需特殊处理。
 
-**0.4 容量与去重**：
-- 同一书签 id 只允许出现一次。重复发送不产生第二条，toast「已在暂存区」；若重复发送的是文件夹，只补入其中尚未在暂存区的书签，并报告「新增 N 条，M 条已在暂存区」。
+**0.4 容量与去重（迭代 B 修订：按 URL 去重）**：
+- 暂存列表以 **URL 为唯一性键**（Chrome 书签本就以 URL 为「页面」的身份；去重视图的存在说明树内同 URL 多份是要治理的病，暂存区不复制这个病）。同一 URL 只允许出现一条：重复发送（书签或历史行）不产生第二条，toast「已在暂存区」；重复发送文件夹只补入新 URL，并报告「新增 N 条，M 条已在暂存区」。
+- 条目的 `id` 只是「该 URL 当前在树内的锚点」：树内同 URL 多个节点时锚定第一个命中（`buildTreeSnapshot` 的 url 索引，见 0.5）；锚点被删而树内仍有同 URL 节点时**重链**，不降级。
 - 暂存区硬上限 **500 条**（常量，不做选项）。超过上限时新发送整体拒绝并提示「暂存区已满，请先清理」，不静默截断。
-- 每次树重建（`onTreeGenerated`）或 `chrome.bookmarks.onRemoved` 后修剪：id 已不存在的 item 移除；用户组/文件夹组因此变空则自动删除该组（内置「未收藏」桶不是真实组，无需清理）。书签被移动不影响暂存（id 仍有效，路径标签跟随 pathMap 更新）。
+- 修剪：每次树重建（`onTreeGenerated`）后，对 `id` 非空的条目校验——id 失效则在 url 索引中重链；重链不到 = 树内该 URL 已不存在 → **不删除条目**，置 `id = null` 落档为未收藏态（用户显式整理过的工作集，树侧变化不悄悄偷走条目；真正离开暂存区只有 §3.3 的显式出口）。`chrome.bookmarks.onRemoved` 后走同一修剪路径。用户组/文件夹组因此变空则自动删组。
 
-**0.5 与书签树事件的同步规则**：现 view-recent.js 只监听 `onCreated`/`onRemoved`（:284-285）——本功能**新增 `onChanged` 监听**（`onMoved` 仍不需要：id 稳定，路径标签下次渲染经 `views.pathOf` 自取）。`onChanged`（标题/URL 修改）→ 若被改书签在暂存区，随行重渲染新标题/新 favicon；`onCreated` 不影响暂存（但刷新最近添加区，沿用现有防抖）；`onRemoved` 触发修剪（0.4）。统一走 300ms 防抖的 `scheduleRefresh()`（view-recent 现有机制，:278-283），非激活时只置 `dirty` 标志、activate 时重放（:267-272）。
+**0.5 与书签树事件的同步规则（迭代 B 扩展）**：现 view-recent.js 只监听 `onCreated`/`onRemoved`（:284-285）——本功能**新增 `onChanged` 监听**（`onMoved` 仍不需要：id 稳定，路径标签下次渲染经 `views.pathOf` 自取）：
+
+| 树事件 | 暂存区反应 |
+|---|---|
+| `onCreated`（新书签，可能来自本插件收藏、也可能来自同步/他处） | url 索引命中某 `id=null` 条目 → **自动重链**（历史行暂存后他处收藏了同 URL，条目升为已收藏态——工作台与树永远一致） |
+| `onChanged`（标题/URL 修改） | 命中条目更新 `title`/`url` 快照并重渲染（favicon 随新 url） |
+| `onRemoved` | 修剪：重链 or 落档（0.4） |
+| `onMoved` | 不动（id 稳定） |
+
+url 索引直接复用 4.1.0 性能改造的 `buildTreeSnapshot` 单遍快照（树重建时已建，零额外遍历）；事件间隙的小批量校验走增量 `chrome.bookmarks.search({url})`（暂存条目级、非全树）。统一走 300ms 防抖的 `scheduleRefresh()`（view-recent 现有机制，:278-283），非激活时只置 `dirty` 标志、activate 时重放（:267-272）。
 
 ### 1. 文件夹相关（允许发送吗 / 发送过来允许展开吗 / 超大文件夹）
 
 **1.1 文件夹允许发送，但按「扁平化收集」处理**：
-- 发送文件夹 = 递归收集该文件夹下全部**书签**（跳过分隔符与子文件夹节点本身），每个书签作为一条独立 item 进入暂存列表。
-- 同时自动创建一个**虚拟分组**，组名取文件夹标题，`sourceFolderId` 记该文件夹 id；若已存在同 `sourceFolderId` 的分组，则合并进该组，不重复建组。新加入的条目默认 `group = 该组`、`fav = false`；**已存在的条目不改动其 `group`/`fav`**（避免发送动作覆盖用户已有整理），只补缺。用户手动创建的分组不受影响。
+- 发送文件夹 = 递归收集该文件夹下全部**书签**（跳过分隔符与子文件夹节点本身），每个书签作为一条独立 item（`id` 锚定、url/title 快照）进入暂存列表。
+- 同时自动创建一个**虚拟分组**，组名取文件夹标题，`sourceFolderId` 记该文件夹 id；若已存在同 `sourceFolderId` 的分组，则合并进该组，不重复建组。新加入的条目默认 `group = 该组`；**已存在的条目不改动其 `group`**（避免发送动作覆盖用户已有整理），只补缺。用户手动创建的分组不受影响。
 - 空文件夹（没有任何书签，只有子文件夹或为空）不产生任何 item，toast「该文件夹没有可暂存的书签」。
 - 这样「发送过来的文件夹是否需要展开」问题自然消解：暂存列表**没有文件夹层级**，收到的是一组带组头的扁平书签；组头可折叠/展开，折叠后就是一条「文件夹名 + N 条」的摘要行。
 
@@ -83,7 +91,7 @@
   - `当前暂存条数 + N > 500`：直接拒绝并 toast，提示先移出/清空或改为发送子文件夹；不部分截断。
 - 理由：静默截断会让用户误以为整个文件夹已暂存；部分暂存在后续「移动到…」时会造成树被半搬家的危险。
 
-### 2. 视图布局与两区域交互
+### 2. 视图布局、两区域交互与各视图入口
 
 **2.1 上下区域（单滚动容器 + crossRowUl 先例）**：
 
@@ -91,103 +99,120 @@
   1. `#staging-items`：暂存条目区——组头 + 成员 `<ul>`（仿 dupes 视图的组结构）+ 无组散行 `<ul>`；空态时渲染引导空态行（§11）。
   2. `#recent-head`：最近添加**区域头**（折叠箭头 + 「最近添加」标题 + 条数 + 「全部暂存」图标按钮，§2.2）；非行元素，不参与行步行（`crossRowUl` 的非 UL 分隔 div 跳过逻辑天然覆盖，keyboard.js:87-104）。
   3. `#recent-list`：最近添加区——**保留现有 id 与渲染路径**（时间分组表头 `recent-group-head` 为行内尾子元素的现状结构不变，view-recent.js:231-249），但从独立滚动容器降为 `#staging-list` 内的普通块级子元素（滚动父是 `#staging-list`）。
-- 键盘零新机制：`listEl` = `#staging-list`，`views.lists()` 照旧单条注册；↑/↓ 在暂存区末行继续下行经 `crossRowUl` 进入最近添加区首行，反向同理；行 id 前缀 `staging-item-<id>` / `recent-item-<id>` 天然不撞（同一书签可同时出现在两区），`viewState.focus` 与 `focusSpot` 按行 id 记忆无需特判。
-- view def 增量字段：`badge: () => items.length`（暂存条数；stats 视图 `badge` 先例 view-stats.js:643）、`persistScroll: true`（双区域合一后滚动记忆更有价值；**注意：全库首个使用者**，view-manager.js:944/962 的消费端从未被真实视图行使，实施时补单测——见 §8 测试清单）、`typeAhead: false`（维持）。
+- 键盘零新机制：`listEl` = `#staging-list`，`views.lists()` 照旧单条注册；↑/↓ 在暂存区末行继续下行经 `crossRowUl` 进入最近添加区首行，反向同理；行 id 前缀 `staging-item-<idx>` / `recent-item-<id>`（暂存条目改用**列表序号**为行 id 键——URL 是唯一性键但不是合法 id 字符，同一 URL 也只有一条，序号在渲染期分配、`viewState.focus` 按 `data-node-id`（书签 id）或序号记忆，与既有 focusSpot 机制兼容），`viewState` 记忆无需特判。
+- view def 增量字段：`badge: () => items.length`（暂存条数；stats 视图 `badge` 先例 view-stats.js:643）、`persistScroll: true`（双区域合一后滚动记忆更有价值；**注意：全库首个使用者**，view-manager.js:944/962 的消费端从未被真实视图行使，实施时补单测）、`typeAhead: false`（维持）。
 - 上下文菜单体系：`context-menu.js` 的 `LIST_SEL`（:110-111，现值含 `#recent-list`）把 `#recent-list` 替换为 `#staging-list`（ownerInfo 捕获/滚动 dismiss 覆盖整个双区域）；行特征路由按 `staging-item-` 前缀与组头类名分发（§2.4/§3.5）。
 - 最近添加区域头整区可折叠；折叠状态存 `staging.recentCollapsed`（跨会话保留）。折叠时只保留区域头，`getRecent` 刷新跳过（复用现有 inactive skip 思路）。现有时间分组表头（今天/本周/本月/更早）逻辑保持不变。
 - 废弃说明：不给 view-manager 加 `extraLists`；若未来某视图需要**各自独立滚动**的双区（本设计明确不要），再评估该字段。
 
 **2.2 最近添加区域的上箭头与区头动作**：
-- 每行加 hover 显示按钮 `.staging-add-btn`（向上箭头 SVG，16px 网格 1.5px 描边，入 `src/icons.js` 常量），点击即把该书签加入暂存列表。
-- 已加入时按钮变为实心/打勾态（`.staged`，`aria-pressed="true"`），再次点击 = 移出暂存（与快速收藏星标的 toggle 心智一致）；变化后有 toast 与 tab 徽标刷新。
-- 该按钮用 `.row-btn` 体系（与死链 ⚑/🗑 同款槽位，neat.css hover/focus-within 揭示规则 :3097-3105），保证右缘对齐；非 hover 不显示但槽位恒占。
-- 区域头右侧加「全部暂存」图标按钮：把当前最近添加区全部条目（≤ `recentCount` 条）批量入暂存，去重汇总 toast（「新增 N 条，M 条已在暂存区」）；条目已在暂存区的自动跳过。量级 ≤ recentCount（默认 20），不设确认框。
+- 每行加 hover 显示按钮 `.staging-add-btn`（向上箭头 SVG，16px 网格 1.5px 描边，入 `src/icons.js` 常量），点击即把该书签（id + url/title 快照）加入暂存列表。
+- 已加入（按 URL 命中）时按钮变为实心/打勾态（`.staged`，`aria-pressed="true"`），再次点击 = 移出暂存（与快速收藏星标的 toggle 心智一致）；变化后有 toast 与 tab 徽标刷新。
+- 该按钮用 `.row-btn` 体系（与死链 ⚑/🗑 同款槽位，neat.css hover/focus-within 揭示规则 :3097-3102），保证右缘对齐；非 hover 不显示但槽位恒占。
+- 区域头右侧加「全部暂存」图标按钮：把当前最近添加区全部条目（≤ `recentCount` 条）批量入暂存，去重汇总 toast（「新增 N 条，M 条已在暂存区」）。量级 ≤ recentCount（默认 20），不设确认框。
 
-**2.3 菜单入口（树/列表视图）**：
-- 「添加到暂存区」进入**书签行右键菜单**（`bookmark-context-menu`），树、搜索结果、暂存区以外的各列表视图（最近添加区、统计已收藏行、死链、去重成员行）都可见；无书签 id 的行（搜索历史、统计未收藏历史、去重组头）不显示该项。实现上参照 `dead-mark-toggle`/`dupes-set-keeper` 的视图专属项先例：菜单项常态 `display:none`，按行上下文显隐。
+**2.3 菜单入口（各视图，迭代 B 扩展 stats 历史行）**：
+- 「添加到暂存区」进入**书签行右键菜单**（`bookmark-context-menu`），树、搜索结果、暂存区以外的各列表视图（最近添加区、统计已收藏行、死链、去重成员行）都可见；无书签 id 的行不显示该项。实现上参照 `dead-mark-toggle`/`dupes-set-keeper` 的视图专属项先例：菜单项常态 `display:none`，按行上下文显隐。
+- **stats 视图「未收藏历史行」（迭代 B 新增，双态条目的主入口）**：历史行没有书签 id，但携带 url/title——同样提供「添加到暂存区」（右键菜单项 + 行内 `.staging-add-btn` hover 按钮与既有即时收藏星并排同款槽位），发送后暂存为 `id = null` 的未收藏条目。这是「批量收藏历史好内容」高频流的入口：勾一批历史行 → 发到暂存区 → 在工作台上统一收藏/归位。即时收藏星保留不动（单条快路径与批量路径并存，同 recent 区上箭头与右键菜单的关系）。
 - 文件夹行（树内与搜索结果 link-folder）的**文件夹菜单**也加「添加到暂存区」，走 1.1 的扁平化收集。
-- 书签行菜单项在打开时查询暂存状态：已在暂存区时标签显示「已在暂存区」并置灰；未加入时显示「添加到暂存区」。文件夹行菜单项不做逐条比对（文件夹按扁平集合处理），保持可点击，重复发送只补缺并 toast 汇总。
+- 书签行菜单项在打开时按 URL 查询暂存状态：已在暂存区时标签显示「已在暂存区」并置灰；未加入时显示「添加到暂存区」。文件夹行菜单项不做逐条比对，保持可点击，重复发送只补缺并 toast 汇总。
 - 暂存区自身的行右键菜单见 2.4；搜索视图选择模式的「发送到暂存区」见 3.6；tab-groups 视图入口见 2.5。
 
-**2.4 暂存行渲染**：
-- 复用 `treeRender.generateBookmarkHTML`（签名 `(title, url, extras, bookmarkId, titlePositions, meta)`，tree-render.js:165；recent 区已在用 `data-virtual="1"` + meta {path, badge, rightText, subText}，view-recent.js:238-247），行 id `staging-item-<id>`，`data-node-id` 供 context-menu 统一取 id。
-- 双行布局参照 recent 区现状（宽/panel 第二行 `subText` = `路径 · 相对加入时间`，窄视口右槽 `rightText` = 路径，沿用 `views.pathOf`，可被 `showItemPath` 关闭）。分组内成员行左缘按组缩进一档（视觉上挂在组头下，与 dupes 成员行一致）。
-- `fav === true` 的行显示实心收藏星标（`.row-btn` 槽位，恒可见，参照 `.dead-mark-btn.marked` 的常驻可见先例），星标仅表达暂存区内的收藏标记，不改变书签树。
-- 死标 ⚑ overlay 与 sync 点：暂存行与 recent 区行一起进 `onRowsRendered` 重铺流程（view-recent 现有回调，:69/:259），死标/阻断琥珀标、本地/不可同步点自动覆盖——暂存区与全插件信息密度一致，不为暂存行单独造覆盖物。
-- 行右键：复用 `bookmark-context-menu`，暂存行上下文下追加视图专属项「移出暂存」「收藏/取消收藏」（显示/隐藏规则同 `dead-mark-toggle` 先例）；「移动到/复制到…」复用树菜单同名项（§5.1，无位置语义，树外可用）；「删除书签」「在树中定位」沿用既有项。
-- 行打开走 `treeView.bookmarkHandler`（click/auxclick），自动经 `ctx.onOpenBookmark` 钩子计 visitStats——暂存行的打开行为与全部列表视图一致。
+**2.4 暂存行渲染（迭代 B 修订：星标 = 真实态）**：
+- 行内容用 `treeRender.generateBookmarkHTML`（tree-render.js:165；recent 区已在用 meta {path, badge, rightText, subText}）渲染标题/url；已收藏条目行 id 锚 `data-node-id`，未收藏条目 `data-node-id` 省略（context-menu 路由此差异分流）。
+- 双行布局参照 recent 区现状（宽/panel 第二行 `subText` = `路径 · 相对加入时间`——未收藏条目无路径，`subText` = `来自历史 · 相对时间`；窄视口右槽 `rightText` 同理）。分组内成员行左缘按组缩进一档（与 dupes 成员行一致）。
+- **星标槽**：每行右缘 `.row-btn` 槽位一枚星标按钮，恒可见——已收藏 = 实心（快加星 `starred` 视觉同源），未收藏 = 空心 muted；点击 = **真实切换**（收藏走 §3.4 create / 取消收藏走 remove），单条路径与批量工具条完全同语义（快加星的行内版）。`aria-pressed` 随态。
+- 死标 ⚑ overlay 与 sync 点：**仅已收藏条目**进 `onRowsRendered` 重铺流程（view-recent 现有回调，:69/:259），死标/阻断琥珀标、本地/不可同步点自动覆盖——未收藏条目不在树内，无死活可言。
+- 行右键：复用 `bookmark-context-menu`，暂存行上下文下追加视图专属项「移出暂存」「收藏/取消收藏」（随条目态切换标签；显示/隐藏规则同 `dead-mark-toggle` 先例）；「移动到/复制到…」复用树菜单同名项（§5.1，未收藏条目上等价于「收藏到指定文件夹」，见 §3.3 注）；「删除书签」仅已收藏条目显示（未收藏条目无树可删，「移出暂存」即其删除）。
+- 行打开走 `treeView.bookmarkHandler` 的同款管线（click/auxclick → `chrome.tabs.create`）；已收藏条目经 `ctx.onOpenBookmark` 钩子计 visitStats，未收藏条目打开不计书签访问统计（无书签 id 可计）。
 
 **2.5 tab-groups 视图互通（落实需求第 8 条）**：
 
-tab 不是书签，暂存区只收书签 id——互通动作定义为「**收藏并暂存**」：
+tab 不是书签，暂存区收条目（url/title）天然兼容——互通动作定义为「**收藏并暂存**」：
 
-- tab 行右键菜单（`#tab-row-context-menu`）与最近关闭 tab 行菜单（`#tabgroups-closed-tab-context-menu`）各加「收藏并暂存」：书签侧按 `addTabToBookmarks` 的既有语义处理——`chrome.bookmarks.search({url})` 去重，未收藏则 create 进 `quickAddFolderId`（view-tabgroups.js:703-733、rootFolderId :59），已收藏则直接用既有书签 id。**API 改动**：现 `addTabToBookmarks` 在已收藏时只翻星标、不返回书签 id（:708-715）——扩展其返回已解析的书签 id（或新增 `resolveTabBookmark(tab)` 薄封装：search 命中返回 `existing[0].id`，未命中走 create 并返回新 id；现调用点不受影响，返回值向后兼容），然后把书签 id 送入暂存区（未分组，落入「未收藏」桶）。toast 汇总说明（「已收藏并暂存 / 已在暂存区」）。
-- 组头菜单（`#tabgroup-context-menu`）加「整组收藏并暂存」：组内 tabs 按 index 排序、`tabsToBookmarks` 协议白名单过滤（bookmarkableUrl https?/ftp/file，:702）、逐个收藏进 `quickAddFolderId`（同 URL 去重），全部结果 id 作为一个暂存组进入，组名取标签组标题、`groups[].sourceTabGroup` 记该标题（同标题再发送时合并，与 `sourceFolderId` 合并规则同构）。
-- 防护：组内可收藏 tab 数 > **10** 时 ConfirmDialog 报数确认（与 open-all 阈值心智一致；open-all 的确认同样受 `dontConfirmOpenFolder` 旁路，此处沿用同旁路保持一致）；超暂存上限按 0.4 整体拒绝。0 个可收藏 tab（全部 chrome:// 类协议）toast 说明。
+- tab 行右键菜单（`#tab-row-context-menu`）与最近关闭 tab 行菜单（`#tabgroups-closed-tab-context-menu`）各加「收藏并暂存」：书签侧按 `addTabToBookmarks` 的既有语义处理——`chrome.bookmarks.search({url})` 去重，未收藏则 create 进 `quickAddFolderId`（view-tabgroups.js:703-733、rootFolderId :59），已收藏则直接用既有书签 id。**API 改动**：现 `addTabToBookmarks` 在已收藏时只翻星标、不返回书签 id（:708-715）——扩展其返回已解析的书签 id（或新增 `resolveTabBookmark(tab)` 薄封装；现调用点不受影响），然后把条目（id + url/title）送入暂存区（未分组）。toast 汇总说明（「已收藏并暂存 / 已在暂存区」）。
+- 组头菜单（`#tabgroup-context-menu`）加「整组收藏并暂存」：组内 tabs 按 index 排序、`tabsToBookmarks` 协议白名单过滤（bookmarkableUrl https?/ftp/file，:702）、逐个收藏进 `quickAddFolderId`（同 URL 去重），全部结果作为一个暂存组进入，组名取标签组标题、`groups[].sourceTabGroup` 记该标题（同标题再发送时合并，与 `sourceFolderId` 合并规则同构）。
+- 防护：组内可收藏 tab 数 > **10** 时 ConfirmDialog 报数确认（open-all 阈值心智一致，含 `dontConfirmOpenFolder` 旁路同沿）；超暂存上限按 0.4 整体拒绝。0 个可收藏 tab（全部 chrome:// 类协议）toast 说明。
 - 反向闭环：暂存条目整理后用「移动/复制到…」归位到树文件夹；tab 组「save-as-bookmark-folder」的既有路径不变。暂存区由此成为 tab 组 → 书签树之间的中转台。
 
-### 3. 暂存列表选择模式（功能定义）
+### 3. 暂存列表：生效模型与选择模式
 
-**3.1 模式骨架**：完全复用选择模式既有机制——`selecting` 标志 + `selected` 集合 + 工具条整体切换 + 行点击切换成员 + capture 相 Space 切换聚焦行 + Esc 退出 + `parkRowFocus`/`parkToolbarFocus` 焦点保持 + `<ul class="selecting">` / 行 `.sel` 视觉。4.1.0 已有三套同构先例（死链/去重/tabgroups），本视图参照 tabgroups 的完整度：进入选择模式时**展开全部组折叠并快照、退出时恢复**（view-tabgroups.js:1205-1227 先例，含 selecting 期间停止 persistUIState），保证「全选/反选作用于折叠组」语义可见。`typeAhead: false`。
+**3.0 生效模型裁决：立即生效，不做「统一应用」（迭代 B 新增）**
+
+用户悬而未决的问题：动作是「点击即生效」还是「连目标与效果一起暂存、最后统一应用」。**定案：立即生效**。依据：
+
+1. **同类产品的主流裁决一致**（§14 调研）：Gmail / Google Photos / Material 3 的选择模式全部是「选择 → 上下文工具条 → 点动作**立即生效** → toast 撤销」；「先攒后统一应用」只出现在购物车、照片导入器这类**需要提交前审阅汇总**的场景。暂存区已经提供了「攒」的那一半（收集待办项），如果动作效果也要攒，就是在工作台上再叠一层「预览态」——每行要显示「将删除/将移动到 X」的 pending 徽标，视觉噪音和状态机复杂度双倍，而收益（提交前反悔）已被「立即生效 + 撤销」覆盖。
+2. **书签树是实时同步的活物**：统一应用意味着一个可能横跨数分钟的「待应用事务」，期间其他设备的同步写入、用户的树内手动操作都会使 pending 操作失效，apply 时需要整套再校验（目标文件夹还在吗、书签还在吗、URL 变了吗）——这是一套为零收益支付的复杂度。立即生效则每步都作用在真实当前树上，失败即时可见。
+3. **全插件的动作原语全是立即式**：`actions.openBookmarks`、move/copy、`chrome.bookmarks.remove`、`undo.capture`/`undo.toastAction`、ConfirmDialog——立即生效 = 全部复用；统一应用 = 新造一台「计划操作引擎」。
+4. **危险度分层用现成机制**（Confirm vs Undo 裁决启发式：高频低危 → 撤销；罕见高危 → 确认）：删除真实书签（罕见高危）= ConfirmDialog + undo 单步；清空暂存（大动作）= ConfirmDialog；收藏/取消收藏/移出/复制（高频低危）= 直接执行 + toast（取消收藏附撤销）。**唯一例外**：批量「移动到文件夹」对已选已收藏条目是真实搬树，量级可能大——沿用 `openBookmarks` 的 10 项确认阈值心智（>10 条时 ConfirmDialog 报数确认，受 `dontConfirmOpenFolder` 同款旁路），单步 undo 照挂。
+
+**3.1 模式骨架**：完全复用选择模式既有机制——`selecting` 标志 + `selected` 集合 + 工具条整体切换 + 行点击切换成员 + capture 相 Space 切换聚焦行 + Esc 退出 + `parkRowFocus`/`parkToolbarFocus` 焦点保持 + `<ul class="selecting">` / 行 `.sel` 视觉。4.1.0 已有三套同构先例（死链/去重/tabgroups），本视图参照 tabgroups 的完整度：进入选择模式时**展开全部组折叠并快照、退出时恢复**（view-tabgroups.js:1205-1227 先例，含 selecting 期间停止 persistUIState）。`typeAhead: false`。
 
 **3.2 选择单元与作用域**：
-- 选择单元是**暂存条目（书签）**；`selected` 存书签 id。
-- 组头在非选择模式下点击 = 折叠/展开；在**选择模式下点击组头 = 全选/取消全选该组全部成员**（与去重「组头选择」一致，组头显示全选/半选/未选三态）。折叠的组同样可被组头整体选中。内置「未收藏」桶的组头（`__unfav__`）遵循同一规则。
-- 「全选」作用于**全部暂存条目**（含折叠组内成员），不是仅可见行；「反选」同样以全部条目为全集；「清除选择」只清选择集，不动暂存数据。
+- 选择单元是**暂存条目（URL）**；`selected` 存条目标识（列表序号或 URL，实现取其一，测试锁死）。
+- 组头在非选择模式下点击 = 折叠/展开；在**选择模式下点击组头 = 全选/取消全选该组全部成员**（组头显示全选/半选/未选三态）。折叠的组同样可被组头整体选中。
+- 「全选」作用于**全部暂存条目**（含折叠组内成员）；「反选」同样以全部条目为全集；「清除选择」只清选择集，不动暂存数据。
+- **混合选择**（已收藏 + 未收藏混选）是常态而非边界：各动作「作用于适用项」，不适用的跳过，toast 按动作汇报（「已收藏 N 条」「其中 M 条已是书签，跳过」）。工具条按钮不因混合选择禁用——禁用会逼用户先做一遍视图内分类，恰是工作台要替用户省掉的功。
 
-**3.3 选择工具条按钮语义**（逐一定义）：
+**3.3 选择工具条按钮语义（迭代 B 全表重写）**：
 
-工具条为两条图标 `.vbm-toolbar` rung（tabgroups 选择条的双 rung 先例）：第一 rung = 计数 + 选择集操作，第二 rung = 动作。每个图标按钮带 title/aria。
+工具条为两条图标 `.vbm-toolbar` rung（tabgroups 选择条的双 rung 先例）：第一 rung = 计数 + 选择集操作，第二 rung = 动作。每个图标按钮带 title/aria。**全部动作立即生效**（§3.0）。
 
 | 按钮 | rung | 作用对象 | 语义 |
 |---|---|---|---|
 | 计数（`.select-count`） | 1 | — | `selectCount` 带数量参数，复用既有键 |
 | 全选 / 反选 / 清除选择 | 1 | 选择集 | 只改选择集 |
 | 退出 | 1 | — | 退出选择模式 |
-| 打开 | 2 | 已选条目 | 批量打开（`actions.openBookmarks`，10 项确认阈值沿用，含 `dontConfirmOpenFolder` 旁路） |
+| 打开 | 2 | 已选条目 | 批量打开（按 url，`actions.openBookmarks`，10 项确认阈值沿用含旁路）——双态条目都有 url，全适用 |
 | 打开为标签组 | 2 | 已选条目 | `actions.openBookmarksInGroup`（SW 管线，popup 关闭不掉单） |
-| 移出暂存 | 2 | 已选条目 | 仅从暂存列表移除，书签树不动，toast 可撤销（撤销 = 重新加入，见注） |
-| 收藏 | 2 | 已选条目 | 置 `fav=true`（见 3.4）：无分组条目离开内置「未收藏」桶、成为已收藏未分组行；在文件夹/手动组内的条目留在原组并显示星标。书签树不动 |
-| 取消收藏 | 2 | 已选条目 | 置 `fav=false`：无分组条目回到内置「未收藏」桶；在文件夹/手动组内的条目留在原组。书签树不动 |
-| 新建分组… | 2 | 已选条目 | 弹出命名对话框（NewFolderDialog 模式复用，dialogs.js:127-150），把已选条目从原组/未分组移入新虚拟组 |
-| 移动/复制到… | 2 | 已选条目 | 打开文件夹选择器（第 4 节）；移动成功后从暂存移除，复制成功后保留 |
-| 删除所选 | 2 | 已选条目 | **删除真实书签**（`chrome.bookmarks.remove` 串行、读 lastError、ConfirmDialog 报实际数量、`undo.capture` 每条 + 单步撤销提示），成功后从暂存移除 |
-| 清空暂存 | 2 | 全部条目 | 仅清空暂存列表（含分组），书签树不动，ConfirmDialog 确认 |
+| 收藏 | 2 | 适用项：未收藏条目 | **真实建书签**：逐条 `chrome.bookmarks.create` 进 `quickAddFolderId`（快加星/stats 历史行星同语义；建前查 url 索引，树内已存在同 URL 则直接锚定不重复建——与快加星去重一致）。条目升为已收藏态、**留在暂存区**（待继续归位组织）。toast「已收藏 N 条」+ undo 单步（逐条 capture，撤销 = 全部移除新建书签） |
+| 取消收藏 | 2 | 适用项：已收藏条目 | **真实删书签**：逐条 `chrome.bookmarks.remove`（读 lastError）。条目**留在暂存区**、落档为未收藏态（id=null，快照仍在）——工作台不弄丢你正在整理的东西，后悔可再收藏或最终移出。toast「已取消收藏 N 条」+ undo 单步（capture 恢复书签并重链） |
+| 新建分组… | 2 | 已选条目 | 弹出命名对话框（NewFolderDialog 模式复用，dialogs.js:127-150），把已选条目从原组/未分组移入新虚拟组（纯本地，不动树） |
+| 移动/复制到… | 2 | 已选条目 | 打开文件夹选择器（第 4 节）。**已收藏条目**：move = 真实 `chrome.bookmarks.move`（>10 条确认，见 §3.0 注 4），成功后条目**离开暂存区**（归位即完成使命）；copy = 真实 `create` 副本到目标（原书签原位不动，条目留在暂存区）。**未收藏条目**：move/copy 均等价于「**收藏到指定文件夹**」（create 到目标；move 后条目离开、copy 后留下——与已收藏条目同律），这正是收藏默认夹之外的精确落点通道 |
+| 删除所选 | 2 | 适用项：已收藏条目 | **删除真实书签 + 条目离场**（`chrome.bookmarks.remove` 串行、读 lastError、ConfirmDialog 报实际数量、`undo.capture` 每条 + 单步撤销，撤销同时恢复书签与暂存条目）。选中集中的未收藏条目：无树可删，等价「移出暂存」（toast 分别计数） |
+| 移出暂存 | 2 | 已选条目 | 仅从暂存列表移除，树不动，toast 可撤销（撤销 = 按 url/title/group/ts 快照重新加入） |
+| 清空暂存 | 2 | 全部条目 | 仅清空暂存列表（含分组），树不动，ConfirmDialog 确认 |
 
-注：「打开 / 打开为标签组」是对首版按钮清单的扩充，依据是需求第 6 条（搜索视图选择模式含同类动作）与第 8 条（视图互通）——暂存区作为中转台，批量打开是归位之外的另一主出口。「移出暂存」的撤销经 `undo.toastAction`（一次性动作，undo.js:173）实现（重新写入被移条目及其 `group`/`fav`/`ts` 快照），不走书签 undo 栈（书签树未动）。
+条目离开暂存区的出口只有三个：移动归位、删除、移出/清空（显式动作）——收藏态翻转和复制永远保留条目（工作台语义：它们是「整理中的中间态」，不是「待清理的缓存」）。「移出暂存」的撤销经 `undo.toastAction`（一次性动作，undo.js:173）实现，不走书签 undo 栈（书签树未动）。
 
-**3.4 「收藏」与内置「未收藏」桶的定位**：vBookmarks 当前没有书签「收藏」属性，暂存区又不该改书签树，因此把「收藏」定义为暂存条目上的**布尔标记 `fav`**，与分组正交；不做「收藏组」，改为内置**「未收藏」桶**：
+**3.4 「收藏」的真实语义（迭代 B 重写，取代首版本地标记方案）**：
 
-- 渲染规则：`fav === false && group === null` 的条目自动归入内置「未收藏」桶（合成组头 id `__unfav__`，不出现在 `groups` 数组里）。它始终排在最上方、支持折叠、不可重命名/不可删除；**其他视图单条发送来的未收藏书签（没有文件夹归属）默认落在这里**。
-- 文件夹发送来的条目默认 `group = 文件夹组`，即使 `fav === false` 也**不进入未收藏桶**，而是待在文件夹组里——消解「收藏组」和文件夹虚拟组的重叠问题（收藏不再是组，条目永远只有一个 `group`）。
-- 已收藏（`fav === true`）的条目：若 `group === null`，作为**无组头的散行**渲染在全部组之后（行上显示实心星标）；若 `group` 是文件夹组或手动组，则**留在原组内**并显示星标。
-- 「收藏」= 置 `fav=true`（不改 `group`）；「取消收藏」= 置 `fav=false`（不改 `group`）。渲染桶随 `fav`/`group` 自动重算。
-- 这样：收藏是属性、分组是归属，二者永不冲突；内置桶只承接「未收藏且未分组」的默认态。
+- **为什么删掉本地 `fav` 标记**：vBookmarks 的「收藏」词汇在全 app 有确切含义——快加星（`quickAddFolderId` 为目标、URL search 判态、create/remove 切换）、stats 视图「已收藏统计行 / 未收藏历史行」（view-stats.js:15-26，历史行星标 = create 进 quickAddFolderId，:497-526）。若暂存区再造一个「只在暂存区可见的收藏标记」，同一个词在弹窗里出现两种含义，且用户「在暂存区收藏了、树里却没有」的预期落空。**收藏必须是真的**。
+- **收藏 = `chrome.bookmarks.create({parentId: quickAddFolderId, url, title})`**，先查 url 索引去重（树内已有同 URL → 只锚定 id，不建第二条——快加星同款防重复）。默认夹 = `quickAddFolderId`（默认书签栏）；要收进其他文件夹用「移动/复制到…」的未收藏分支（收藏到指定文件夹）。
+- **取消收藏 = `chrome.bookmarks.remove(id)`**，与快加星的取消完全同义。条目落档为未收藏态留在暂存区——这是「批量退藏」与「删除」的本质区别：退藏留档（历史里还在、暂存区里还在，后悔有路），删除离场（书签与条目俱毁，只剩 undo 窗口）。
+- **首版「内置未收藏桶（`__unfav__`）」删除**：它存在的唯一理由是本地标记需要一个「家」。收藏态真实化后，未收藏是每行的星标空心态，与分组正交（未收藏条目照样待在文件夹组/手动组里），不需要也不应该有合成桶。渲染规则相应简化：① 各组（用户组/文件夹组/tab 组按 `createdAt` 升序）→ ② 未分组散行（插入序，收藏态混合呈现、星标区分）。组头三态选择、折叠等组机制全部不变。
+- **为什么「收藏后条目留在暂存区」而不是完成离场**：收藏（默认夹）通常不是整理的终点，而是「先保住、再归位」的中间步——收藏后接着「移动到…」精确归位才是完整流。真正表示「处理完毕」的出口是移动归位/删除/移出，工作台以「排水」节奏收敛（列表长度即进度），不靠收藏态偷偷帮忙清理。
 
-**3.5 虚拟分组细则**：
-- 分组是纯本地组织方式：每个条目最多属于一个真实组（`group` 一个 id 或 `null`）；移动到新组即离开旧组（不复制）。`fav` 不是组，不占归属名额。
-- 组头显示：折叠箭头 + 组名 + 条数 pill（`aria-expanded` 随折叠态）；右键菜单（**新增第 16 个菜单 `#staging-group-context-menu`**，双页现状各 15 个 `<menu>` 实测）：展开/折叠、重命名、解散（成员 `group = null`：`fav=false` 落入未收藏桶、`fav=true` 落入已收藏散行；组删除）、全选本组（选择模式外也可用）。键盘绑定照 12 主菜单先例纳入 `keyboard.js` 的绑定清单（:917-961）与 Tab-trap `menuContainers`（:1174-1185）。
-- 渲染顺序固定为：① 内置「未收藏」桶 → ② 用户组/文件夹组/tab 组按 `createdAt` 升序 → ③ 已收藏未分组散行（无组头，行带星标）。
-- 折叠状态：真实组存组对象 `collapsed`；内置「未收藏」桶存 `staging.unfavCollapsed`。
+**3.5 虚拟分组细则（迭代 B 去 fav 化）**：
+- 分组是纯本地组织方式：每个条目最多属于一个真实组（`group` 一个 id 或 `null`）；移动到新组即离开旧组（不复制）。收藏态不是组、不占归属名额，组内成员的星标态可任意混合。
+- 组头显示：折叠箭头 + 组名 + 条数 pill（`aria-expanded` 随折叠态）；右键菜单（**新增第 16 个菜单 `#staging-group-context-menu`**，双页现状各 15 个 `<menu>` 实测）：展开/折叠、重命名、解散（成员 `group = null`，散行呈现）、全选本组（选择模式外也可用）。键盘绑定照 12 主菜单先例纳入 `keyboard.js` 的绑定清单（:917-961）与 Tab-trap `menuContainers`（:1174-1185）。
 - 文件夹发送自动生成的组，若用户手动解散，`sourceFolderId` 随之清除；以后再次发送该文件夹会重新建组。`sourceTabGroup` 组同理。
-- 暂存条目在列表内**不支持拖拽重排**（`data-virtual` 拒绝，`items` 数组序即插入序）；手动排序作为未来候选，本期不做（避免引入第二套 dnd 语义）。
+- 暂存条目在列表内**不支持拖拽重排**（`data-virtual` 拒绝，`items` 数组序即插入序）；手动排序作为未来候选，本期不做。
 
 **3.6 搜索视图选择模式（落实需求第 6 条）**：
 
 - **入口与形态**：搜索结果区顶部新增一条细长工具条（`.vbm-toolbar`，仅 searchMode 且有结果时渲染）：左 = 结果计数文本，右 = 选择模式图标按钮（`SELECT_ICON` 已有常量）。工具条随结果区一起 render，焦点保持走 `parkToolbarFocus`。
-- **选择单元**：结果列表中**带书签 id 的行**（`#results` 的书签行）；link-folder 行与历史区行**不可选**（文件夹的批量语义见树视图；历史行无书签 id）。选择集合存书签 id。
-- **选择动作条**（选择模式时工具条整体切换，单 rung）：计数 + 全选/反选/清 + 打开 / 打开为标签组 / 发送到暂存区 / 删除所选 / 退出。语义与 3.3 同名按钮完全一致（发送到暂存 = 逐条入暂存落入未收藏桶；删除 = 真实删除走 confirm+undo 链）。需求原文含「取消收藏」，但搜索结果行不携带暂存 `fav` 标记、也不应改书签树——**取舍**：不提供「取消收藏」（该动作只对暂存条目有意义）；已在暂存区的条目再次「发送到暂存区」按 0.4 去重跳过。
-- **键盘**：capture 相 Space 切换聚焦行选择；Esc 层级 = 退出选择模式 → 退出搜索模式。**机制精确化**（GLM 修订）：search 视图的 Esc 现走 keyboard.js 文档层 `search.escape()` 专属分支（keyboard.js:1119-1135，两级 quitSearchMode），**不存在 view def `onEscape`**。实现：在 `views.attach('search', {...})` 挂 `onEscape`——它在 `views.onEscapeActive()`（keyboard.js:1119）分支被调用，**先于** `search.escape()`，正好实现「先退选择模式、再退搜索模式」的层级；单测钉死该顺序。Delete 在选择模式作用于所选（吞键先例：tabgroups 的 capture 相 keyup）。
-- **与搜索输入的共存**：搜索框持有键盘输入焦点是搜索视图的主状态；选择模式的行点击/Space 走列表侧，输入框 `typeAhead` 语义不变（搜索视图 `typeAhead` 保持 true，字母键照旧定位输入框——选择切换只认 Space 与点击，与死链/去重一致）。
+- **选择单元**：结果列表中**带书签 id 的行**（`#results` 的书签行）；link-folder 行与历史区行不可选。选择集合存书签 id。
+- **选择动作条**（选择模式时工具条整体切换，单 rung）：计数 + 全选/反选/清 + 打开 / 打开为标签组 / 发送到暂存区 / 删除所选 / 退出。语义与 3.3 同名按钮完全一致（发送到暂存 = 逐条入暂存；删除 = 真实删除走 confirm+undo 链）。需求原文列有「取消收藏」，但搜索结果行全是书签，「取消收藏」与「删除」的树效果完全相同（都是 remove）——**取舍**：不设两个同效按钮，退藏留档的完整语义（取消收藏但保留条目）只在暂存区提供；想批量退藏先发暂存区再取消收藏，两步且每步可撤销。
+- **键盘**：capture 相 Space 切换聚焦行选择；Esc 层级 = 退出选择模式 → 退出搜索模式。**机制精确化**：search 视图的 Esc 现走 keyboard.js 文档层 `search.escape()` 专属分支（keyboard.js:1119-1135，两级 quitSearchMode），**不存在 view def `onEscape`**。实现：在 `views.attach('search', {...})` 挂 `onEscape`——它在 `views.onEscapeActive()`（keyboard.js:1119）分支被调用，**先于** `search.escape()`，正好实现「先退选择模式、再退搜索模式」；单测钉死该顺序。Delete 在选择模式作用于所选（吞键先例：tabgroups 的 capture 相 keyup）。
+- **与搜索输入的共存**：搜索框持有键盘输入焦点是搜索视图的主状态；选择模式的行点击/Space 走列表侧，输入框 `typeAhead` 语义不变（选择切换只认 Space 与点击，与死链/去重一致）。
+
+**3.7 单条与批量的双轨（迭代 B 新增，操作便捷性）**：
+
+- **行内星标**（§2.4）是单条快路径：hover 一键真实切换收藏态，无需进选择模式——对应 Gmail 里「单封邮件直接归档」与「多选进工具条」的双轨。
+- **行内「移出」**：星标旁同款 `.row-btn` 槽位一枚移出按钮（×，hover 揭示），单条移出可撤销——不强迫批量心智。
+- **右键菜单**为中路径：单条的全部动作（收藏/取消收藏/移动到…/复制到…/删除/移出）都在行右键菜单可达（§2.4）。
+- 三条路径（行内按钮 / 右键 / 选择工具条）语义严格同一套（§3.3/§3.4），只是聚合度不同——同一心智、三种粒度。
 
 ### 4. 文件夹选择器（扩展复用 BookmarkFolderPickDialog）
 
 **4.1 形态**：4.1.0 已有两个相邻组件——`CopyMoveDialog`（`#copy-move-dialog`，tab-groups 的「复制 vs 移动」两按钮问询，dialogs.js:341-389）与 `BookmarkFolderPickDialog`（`#bookmark-folder-pick-dialog`，仅文件夹的扁平缩进列表 + 自带 ↑/↓/Home/End 行导航，dialogs.js:394-512）。**不新建任何对话框、不引入第二个名为 CopyMoveDialog 的组件**；定案为扩展 `BookmarkFolderPickDialog`：
 
 - 签名扩展为 `BookmarkFolderPickDialog.open({ dialog, mode = null, onPick(folderId, action) })`：
-  - `mode = null`（本功能的默认）：底部按钮区为 **[移动到此处] [复制到此处] [取消]** 三按钮，选中文件夹后点动作按钮即 `onPick(folderId, 'move'|'copy')`——**一次对话完成选位置 + 选动作**，比「mode 单选 + 树」的两段式少一跳。
+  - `mode = null`（本功能的默认）：底部按钮区为 **[移动到此处] [复制到此处] [取消]** 三按钮，选中文件夹后点动作按钮即 `onPick(folderId, 'move'|'copy')`——**一次对话完成选位置 + 选动作**。
   - `mode = 'move'|'copy'`：锁定动作，按钮区只显示对应动作 + 取消（保留给未来独立快捷入口）。
   - **旧调用兼容**：tab-groups 现有调用（`onPick(folderId)` 单参、纯选择语义）不受影响——`action` 缺省为 `'pick'`，按钮区维持单「选择」形态（现状）。
+  - **双态条目的按钮文案**：选择集含未收藏条目时，按钮副文案注明「未收藏条目将收藏到此处」（i18n `folderPickFavNote`）——移动/复制对未收藏条目的等价语义（§3.3）在对话里说清楚，不藏在文档里。
 - 数据源维持现状：open 时 `chrome.bookmarks.getTree` 全量 walk 收文件夹、扁平缩进按钮列表。**打磨项**（随实施评估，不阻塞）：顶部过滤输入（文件夹多时即时过滤）、会话内记忆上次目标文件夹。
 - 已知怪癖随扩展一并正规化：现 `close(wasOpen)` 参数语义反置（`close(false)` 才 restoreFocus，dialogs.js:449-454）——扩展时改为显式 `{ restoreFocus = true }` 选项，两处旧调用点同步更新，`tests/dialogs.test.js` 锁死新语义。
 - 目标为书签当前父文件夹时：move = no-op + toast；copy = 在同一文件夹产生副本（允许）。
@@ -204,17 +229,18 @@ tab 不是书签，暂存区只收书签 id——互通动作定义为「**收�
 - 新增会话级内部剪贴板（模块内状态即可，不进书签树、不进 storage；popup 关闭即清空）：`{ mode: 'copy'|'cut', id, title }`。**作用域注明**：popup 与 sidepanel 是两个文档，剪贴板各自独立、互不可见——可接受（工作台语义本就按窗口），不引入 storage 同步。
 - 书签行右键菜单：
   - 「复制」：记录 `{mode:'copy', id}`，toast「已复制：标题」；不改变书签。
-  - 「剪切」：记录 `{mode:'cut', id}`，toast「已剪切，去目标文件夹粘贴（Esc 取消）」；树中该行加 `.cut` 淡化态（`opacity` 减半，velvet 状态语言落地时统一收口为 token），直到粘贴/取消/剪贴板被覆盖。
+  - 「剪切」：记录 `{mode:'cut', id}`，toast「已剪切，去目标文件夹粘贴（Esc 取消）」；树中该行加 `.cut` 淡化态（velvet 状态语言落地时统一收口为 token），直到粘贴/取消/剪贴板被覆盖。
 - 文件夹行右键菜单（树内）动态显示「粘贴到此处」：
   - 剪贴板为空：不显示。
   - mode=copy：在目标文件夹末尾 `chrome.bookmarks.create` 复制一份；剪贴板保留（可连续粘贴到多处）。
   - mode=cut：`chrome.bookmarks.move(id, {parentId})` 到目标文件夹末尾，成功后清空剪贴板；目标为原父文件夹时 no-op 并清空剪贴板。
 - 粘贴后走 `getTree(generateTree)` 刷新；若剪贴板书签已被删除，toast「书签已不存在」并清空剪贴板。
 - 剪贴板仅接受**单条书签**（需求原文就是「单条书签」）；文件夹不提供复制/剪切（文件夹的复制/移动用现有排序/拖拽或「复制/移动到…」的文件夹形态，暂不做文件夹级剪贴板，避免循环移动校验）。
-- Esc 的取消语义：文档 Esc 层在剪贴板为 cut 且无更高层（palette/菜单/对话框）打开时，优先清空剪贴板并移除 `.cut` 标记，再走既有 Esc 链（keyboard.js 文档级 Esc 的插入点与菜单/搜索同层）。
+- Esc 的取消语义：文档 Esc 层在剪贴板为 cut 且无更高层（palette/菜单/对话框）打开时，优先清空剪贴板并移除 `.cut` 标记，再走既有 Esc 链。
 - **树外可粘贴吗**：不可——「粘贴到此处」需要目标文件夹语义，只在树内 folder 菜单出现；树外整理走暂存区。
+- **与暂存区剪贴板的关系**：互不相干——树内剪贴板是「位置对位置」的单条快搬；暂存区是「多来源聚合」的批量工作台。批量需求一律走暂存区，不把剪贴板扩展成多选（那是在造第二套选择模式）。
 
-**5.3 菜单可用性**（GLM 修正）：**bookmark 菜单的「复制」「剪切」是树内专属项**，并入 `POSITIONAL_IDS`（context-menu.js:1890-1896，该清单现只含 bookmark 菜单的 8 个位置项，加入即得树内显隐规则）；**folder 菜单的「粘贴到此处」不归 POSITIONAL_IDS**——folder 菜单项的显隐在 folder handler 内动态判断（剪贴板非空才显示，参照 tabgroups 视图专属项的动态显隐先例），树外文件夹行（搜索结果 link-folder）不显示（无位置语义的粘贴目标不成立）。「复制/移动到…」无位置语义，树外可用（5.1）；树外列表（recent/stats/dead/dupes/search results）只加「添加到暂存区」与「在树中定位」等无位置语义项。
+**5.3 菜单可用性**：**bookmark 菜单的「复制」「剪切」是树内专属项**，并入 `POSITIONAL_IDS`（context-menu.js:1890-1896，该清单现只含 bookmark 菜单的 8 个位置项，加入即得树内显隐规则）；**folder 菜单的「粘贴到此处」不归 POSITIONAL_IDS**——folder 菜单项的显隐在 folder handler 内动态判断（剪贴板非空才显示，参照 tabgroups 视图专属项的动态显隐先例），树外文件夹行（搜索结果 link-folder）不显示。「复制/移动到…」无位置语义，树外可用（5.1）；树外列表（recent/stats/dead/dupes/search results）只加「添加到暂存区」与「在树中定位」等无位置语义项。
 
 ### 6. 文件夹菜单：复制标题和地址（json / markdown / 文本清单）
 
@@ -229,7 +255,7 @@ tab 不是书签，暂存区只收书签 id——互通动作定义为「**收�
 
 **6.4 空文件夹**：与现有 open/sort 的 content-disabled 逻辑一致，无书签时该折叠项置灰（`OPEN_CONTENT_IDS`（:154-191，`sub-` 前缀条目已在清单）的思路扩展到 `folder-copy-collapse` 及其 `sub-` 子项，`hideAllMenus` 清态同步覆盖）。
 
-**6.5 与旧实现的差异**（GLM 修正理由）：现有 `actions.copyAllTitlesAndUrls` → `new TreeText(nodeId)` 对文件夹同样递归，但输出是**缩进树样式文本**（层级缩进），且只此一种格式——本需求要的是三格式**扁平清单**，且现有菜单项只挂在书签行（文件夹行已无此菜单）。定案：新增 `actions.copyFolderTitlesAndUrls(folderId, format)` 独立实现（纯格式化函数提进 `src/clipboard.js` 或 `src/folder-copy.js`，三格式各有单测），不动现有单条书签「复制标题和地址」菜单与 TreeText；TreeText 树样式作为未来第四格式候选登记（`sub-folder-copy-tree`，本期不做）。
+**6.5 与旧实现的差异**：现有 `actions.copyAllTitlesAndUrls` → `new TreeText(nodeId)` 对文件夹同样递归，但输出是**缩进树样式文本**（层级缩进），且只此一种格式——本需求要的是三格式**扁平清单**。定案：新增 `actions.copyFolderTitlesAndUrls(folderId, format)` 独立实现（纯格式化函数提进 `src/clipboard.js` 或 `src/folder-copy.js`，三格式各有单测），不动现有单条书签「复制标题和地址」菜单与 TreeText；TreeText 树样式作为未来第四格式候选登记（`sub-folder-copy-tree`，本期不做）。
 
 **6.6 子菜单机制触点（精确清单）**：① `pages/popup.html` + `pages/sidepanel.html` 双页加 entry（`class="menu-item has-submenu" data-submenu="folder-copy-submenu"`）与 `<menu class="submenu" id="folder-copy-submenu">`；② neat.js 标签表加 `sub-` 前缀条目；③ context-menu.js：顶部取元素、`hideAllMenus` 三段（:227/:291 及 submenu 段）、`bindSubmenu`（:1436-1449）/`bindSubmenuHover`（:1450-1462）绑到 folder handler、dispatch 的 `sub-` 归一化（:1107 与 :1252 两处）；④ keyboard.js 三处——`contextKeyDown` 绑定清单（:917-961）、Tab-trap `menuContainers`（:1174-1185）、文档级两级 Esc（:1060-1066）自动覆盖。
 
@@ -251,90 +277,108 @@ tab 不是书签，暂存区只收书签 id——互通动作定义为「**收�
 ### 8. 落地触点清单（4.1.0 HEAD 精确版）
 
 - `pages/popup.html` / `pages/sidepanel.html`（**双页同步**，`tests/fuzzy.test.js` :267-281 的 script 清单 parity 断言只比 script 列表，菜单结构另有 popup-layout.test.js 等覆盖）：`#view-recent` 内改单滚动容器 `#staging-list` + `#staging-items` + `#recent-head` 标记；bookmark/folder 菜单新项；`#staging-group-context-menu`（第 16 个菜单）；`folder-copy-submenu` 与 `folder-add-submenu` 两个 `<menu class="submenu">`；tab-groups 两个菜单的新项。
-- `src/staging.js`（**新建纯模块**，「操作即模块」规范）：数据模型全部纯逻辑——add/remove/dedupe/500 上限/修剪/分组增删改/收藏标记/未收藏桶推导/渲染桶重算/快照撤销（移出暂存的逆操作数据）。零 chrome.*/DOM 引用，单测直驱。**构建**：经 neat.js import 可达即自动进 dist esm 包，无需登记 `scripts/runtime-files.json`（esmEntries 只列入口）。
-- `src/view-recent.js`：升级为暂存视图（保留文件名与 `recent` view id）；两区域渲染、组结构、选择模式、区头折叠与「全部暂存」、上箭头按钮、`badge`/`persistScroll` 注册字段、`chrome.storage.onChanged` 监听 `staging` 键（整对象重解析）；**新增 `chrome.bookmarks.onChanged` 监听**（现只有 onCreated/onRemoved，:284-285）。
-- `src/actions.js`：新增 `copyFolderTitlesAndUrls`、内部剪贴板操作、move/copy 批量执行（串行 + lastError + 实际数量 toast）；暂存增删经 `src/staging.js`。
+- `src/staging.js`（**新建纯模块**，「操作即模块」规范）：数据模型全部纯逻辑——add（双态条目/URL 去重）/remove/500 上限/修剪与**重链**（id 失效 → url 锚点再链或落档）/分组增删改/**收藏态推导（id 即态）**/快照撤销数据。零 chrome.*/DOM 引用，单测直驱。**构建**：经 neat.js import 可达即自动进 dist esm 包，无需登记 `scripts/runtime-files.json`（esmEntries 只列入口）。
+- `src/view-recent.js`：升级为暂存视图（保留文件名与 `recent` view id）；两区域渲染、组结构、选择模式、区头折叠与「全部暂存」、上箭头按钮、行内星标/移出按钮、`badge`/`persistScroll` 注册字段、`chrome.storage.onChanged` 监听 `staging` 键（整对象重解析）；**新增 `chrome.bookmarks.onChanged` 监听**（现只有 onCreated/onRemoved，:284-285）；onCreated/onRemoved 挂接重链/落档修剪（§0.5）。
+- `src/actions.js`：新增 `copyFolderTitlesAndUrls`、内部剪贴板操作、move/copy 批量执行（串行 + lastError + 实际数量 toast）、`stageFavItems`/`stageUnfavItems`（收藏/取消收藏的批量真实执行 + undo capture 组装）；暂存增删经 `src/staging.js`。
 - `src/clipboard.js` 或 `src/folder-copy.js`（新建纯模块）：clipboard 写入（自 actions.js:60-72 提取）+ 三格式格式化（§6.3/§6.5）。
-- `src/context-menu.js`：`LIST_SEL` 换 `#staging-list`；bookmark/folder/tabgroups 菜单新项与两个新 submenu；暂存行/组头的行特征路由；`applyContentDisabled` 覆盖复制清单项；`applyCollapseState` 覆盖 `collapseAddFolderMenu`；bookmark 菜单的复制/剪切并入 `POSITIONAL_IDS`（folder 粘贴走 handler 动态显隐，见 §5.3）。
-- `src/dialogs.js`：`BookmarkFolderPickDialog` 扩展（§4.1）+ `close` 语义正规化（两处旧调用点同步）。
+- `src/context-menu.js`：`LIST_SEL` 换 `#staging-list`；bookmark/folder/tabgroups 菜单新项与两个新 submenu；暂存行（双态分流）/组头/历史行的行特征路由；`applyContentDisabled` 覆盖复制清单项；`applyCollapseState` 覆盖 `collapseAddFolderMenu`；bookmark 菜单的复制/剪切并入 `POSITIONAL_IDS`（folder 粘贴走 handler 动态显隐，见 §5.3）。
+- `src/dialogs.js`：`BookmarkFolderPickDialog` 扩展（§4.1，含双态按钮副文案）+ `close` 语义正规化（两处旧调用点同步）。
 - `src/view-tabgroups.js`：tab 行/closed tab 行「收藏并暂存」（**`addTabToBookmarks` 扩展返回书签 id** 或新增 `resolveTabBookmark` 薄封装，§2.5）、组头「整组收藏并暂存」。
+- `src/view-stats.js`：未收藏历史行的「添加到暂存区」入口（右键项 + hover 按钮，与即时收藏星并排，§2.3）。
 - `src/search.js` + `views.attach('search')`：搜索视图选择模式（§3.6，`onEscape` 挂 attach 层、先于 keyboard.js 的 `search.escape()` 分支消费）。
 - `src/view-manager.js`：**零机制改动**（badge/persistScroll 走既有注册字段；persistScroll 首例见测试注）。
 - `src/keyboard.js`：第 16 菜单 + 两个新 submenu 的绑定清单（三处，:917-961/:1174-1185/:1060-1066）；搜索视图选择态的 Esc/Space/Delete 层。
 - `src/store.js`：`KNOWN_KEYS` 加 `staging`（local 注释区 :133-135 追加）、`SYNC_KEYS` 加 `collapseAddFolderMenu`。
 - `tests/storage-usage.test.js`：census 决策表加 `staging: 'other'`。
 - `_locales/*`：新增 i18n 键（§10 清单），走 `i18n.py` 全流程（audit/missing/verify 三门禁）。
-- `AGENTS.md` + `docs/agents/modules.md`：view-recent.js 行升级描述、context-menu/dialogs/store 行同步（实施时）。
-- 测试：`tests/` 新增 `staging.test.js`（纯模型全逻辑）、`folder-copy.test.js`（三格式）、`clipboard.test.js`；扩展 `view-recent.test.js`（双区域/选择模式/组头/**persistScroll 首例断言**/onChanged 重渲染）、`dialogs.test.js`（picker 扩展 + close 正规化）、`context-menu.test.js`（新项/新 submenu/置灰/折叠/文件夹粘贴显隐）、`keyboard.test.js`（新绑定）、`view-tabgroups.test.js`（收藏并暂存 + id 返回兼容）、`search.test.js`（选择模式 + Esc 层级顺序）；harness `verify-keyboard.js` 补暂存视图行步行与选择模式断言（Docker 门禁）。
+- `AGENTS.md` + `docs/agents/modules.md`：view-recent.js 行升级描述、context-menu/dialogs/store/actions 行同步（实施时）。
+- 测试：`tests/` 新增 `staging.test.js`（纯模型全逻辑：双态/URL 去重/重链落档/分组）、`folder-copy.test.js`（三格式）、`clipboard.test.js`；扩展 `view-recent.test.js`（双区域/选择模式/组头/混合选择/**persistScroll 首例断言**/onChanged/onCreated 重链）、`dialogs.test.js`（picker 扩展 + close 正规化 + 双态副文案）、`context-menu.test.js`（新项/新 submenu/置灰/折叠/文件夹粘贴显隐/历史行入口）、`keyboard.test.js`（新绑定）、`view-tabgroups.test.js`（收藏并暂存 + id 返回兼容）、`view-stats.test.js`（历史行暂存入口）、`search.test.js`（选择模式 + Esc 层级顺序）、`actions.test.js`（收藏/取消收藏批量执行 + undo 组装）；harness `verify-keyboard.js` 补暂存视图行步行与选择模式断言（Docker 门禁）。
 
-### 9. 决策速览表
+### 9. 决策速览表（迭代 B 更新）
 
 | 问题 | 决策 |
 |---|---|
-| 视图升级方式 | 保留 `recent` view id 与设置键，标题改为「暂存区」（`viewRecent` 键名保留、文案改写）；palette `/recent` 加 alias `staging` |
-| 暂存区存什么 | 只存书签 id 的本地集合（`staging` JSON，`v:1`），上限 500，去重，失效修剪；local 区不进 sync；census 归 `'other'` |
-| 文件夹允许发送吗 | 允许，扁平化为书签集合，自动生成同名虚拟分组（`sourceFolderId` 合并） |
-| 发送过来允许展开吗 | 无文件夹层级；分组头可折叠，折叠后显示「组名 + N 条」摘要 |
+| 视图升级方式 | 保留 `recent` view id 与设置键，标题改为「暂存区」；palette `/recent` 加 alias `staging` |
+| 暂存区存什么 | 双态条目（`id` 非空=已收藏 / `null`=未收藏，恒带 url/title 快照）；上限 500；**URL 为唯一性键**；local 区不进 sync；census 归 `'other'` |
+| 「不改书签树」的边界 | **只约束发送动作**；暂存区内的整理动作（收藏/取消收藏/移动/复制/删除）全部真实生效 |
+| 收藏/取消收藏 | **真实树操作**：收藏 = create 进 `quickAddFolderId`（url 去重锚定，与快加星/stats 历史行星同语义）；取消收藏 = remove，条目**落档留场**（未收藏态，可再收藏）；本地 `fav` 标记与 `__unfav__` 合成桶删除 |
+| 生效模型 | **立即生效 + 分层防护**（高频低危 = toast/撤销；删除与清空 = ConfirmDialog；批量移动 >10 = 确认）；「统一应用」否决（§3.0 四条依据） |
+| 条目离场出口 | 仅三个显式动作：移动归位 / 删除 / 移出·清空；收藏态翻转与复制永远留场 |
+| 树事件同步 | onCreated 重链（url 命中则升已收藏）；onChanged 更新快照；onRemoved 修剪（重链或落档，**不删条目**）；onMoved 不动；url 索引复用 `buildTreeSnapshot` |
+| 文件夹允许发送吗 | 允许，扁平化为书签集合（id+快照），自动生成同名虚拟分组（`sourceFolderId` 合并） |
 | 超大文件夹 | 先计数：>100 确认；超 500 上限整体拒绝，不静默截断 |
-| 暂存区支持文件夹层级吗 | 不支持；层级只存在于书签树，归位靠文件夹选择器 |
-| 虚拟分组 | 支持；内置「未收藏」桶 + 用户组/文件夹组/tab 组 + 已收藏未分组散行；组头可折叠、可作选择单元 |
-| 收藏/取消收藏 | 暂存条目 `fav` 布尔标记，与分组正交（收藏不是组）；未收藏且未分组自动入内置「未收藏」桶，不改书签树 |
-| 选择模式「删除」 | 删除真实书签（confirm + undo 单步）；「清空」只清暂存本地（ConfirmDialog）；「移出」toastAction 可撤销 |
+| 虚拟分组 | 用户组/文件夹组/tab 组（`createdAt` 序）+ 未分组散行；分组与收藏态正交；组头可折叠、可作选择单元 |
+| 混合选择 | 各动作「作用于适用项 + 计数汇报」，按钮不因混选禁用 |
+| 单条路径 | 行内星标（真实切换）+ 行内移出 + 右键菜单，与批量工具条同一套语义三种粒度（§3.7） |
+| 选择模式「删除」 | 删除真实书签 + 条目离场（confirm + undo 单步，撤销同时恢复书签与条目）；「清空」只清暂存本地；「移出」toastAction 可撤销 |
 | 双区域键盘模型 | 单滚动容器 + 兄弟 `<ul>` + `crossRowUl`（死链视图先例），view-manager 零机制改动 |
-| 文件夹选择器 | 扩展复用 `BookmarkFolderPickDialog`（底部 [移动][复制][取消] 一次完成选位置+选动作）；不新建对话框 |
-| 移动/复制到文件夹 | 移动成功移出暂存，复制保留；同父 move no-op |
-| 树内复制/剪切/粘贴 | 会话级单条书签剪贴板（popup/sidepanel 各自独立）；copy 可多次粘贴，cut 粘贴后清空；Esc 优先取消 cut；bookmark 菜单项进 POSITIONAL_IDS、folder 粘贴走 handler 动态显隐 |
-| tab-groups 互通 | tab/closed tab 行「收藏并暂存」（`resolveTabBookmark` 解析/建书签取 id + URL 去重）；组头「整组收藏并暂存」（>10 确认，自动建 `sourceTabGroup` 组） |
-| 搜索视图选择模式 | 结果区新增细工具条入口；仅书签行可选；动作 = 打开/打开为标签组/发送到暂存区/删除（无「取消收藏」——fav 只存在于暂存区）；Esc 经 attach 层 `onEscape` 先于 `search.escape()` |
+| 文件夹选择器 | 扩展复用 `BookmarkFolderPickDialog`（[移动][复制][取消] 一次完成；双态选择集时按钮副文案注明未收藏条目将收藏到此处） |
+| 移动/复制到文件夹 | 已收藏：move 真实搬树（>10 确认）成功离场 / copy 副本留场；未收藏：等价「收藏到指定文件夹」，move 离场 / copy 留场；同父 move no-op |
+| 树内复制/剪切/粘贴 | 会话级单条书签剪贴板（popup/sidepanel 各自独立）；copy 可多次粘贴，cut 粘贴后清空；Esc 优先取消 cut；bookmark 菜单项进 POSITIONAL_IDS、folder 粘贴走 handler 动态显隐；与暂存区互不相干（§5.2） |
+| tab-groups 互通 | tab/closed tab 行「收藏并暂存」（`resolveTabBookmark` 取/建书签 id + URL 去重）；组头「整组收藏并暂存」（>10 确认，自动建 `sourceTabGroup` 组） |
+| stats 历史行互通 | 未收藏历史行「添加到暂存区」（右键 + hover 按钮，与即时收藏星并存）——批量收藏历史内容的入口 |
+| 搜索视图选择模式 | 结果区细工具条；仅书签行可选；动作 = 打开/打开为标签组/发送到暂存区/删除（无「取消收藏」——与删除同效，退藏留档只在暂存区）；Esc 经 attach 层 `onEscape` 先于 `search.escape()` |
 | 文件夹复制清单 | 递归收集，文本/Markdown/JSON 三格式；>200 确认；clipboard 模式提为纯模块；TreeText 树样式留作第四格式候选 |
 | 添加文件夹折叠 | 默认折叠为「添加文件夹 ▸（此前/此后/子文件夹）」，选项 `collapseAddFolderMenu` 默认开、入 `SYNC_KEYS`、落选项页 Context menus 组 |
 
 ### 10. 新增 i18n 键清单（en 基线；实施时以 `i18n.py` 流程为准）
 
-- 视图/区域：`viewRecent`（**改文案**「Staging/暂存区」，43 locale 重翻译）、`recentSectionTitle`（「最近添加」区头）、`stagingEmpty`（空态引导）。
+- 视图/区域：`viewRecent`（**改文案**「Staging/暂存区」，43 locale 重翻译）、`recentSectionTitle`、`stagingEmpty`（空态引导）。
 - 发送/状态：`stagingAdd`、`stagingAdded`、`stagingAlready`、`stagingAddedSummary`（新增 $n$ 条，$m$ 条已在暂存区）、`stagingFull`、`stagingFolderEmpty`、`stagingConfirmFolder`、`recentStageAll`。
-- 暂存动作：`stagingRemove`、`stagingRemoved`、`stagingFav`、`stagingUnfav`、`stagingClear`、`stagingClearConfirm`、`stagingDeleteConfirm`（含 undo 单步提示，参照 `undoSingleStepNote` 复用）。
-- 分组：`stagingGroupUnfav`、`stagingGroupNew`、`stagingGroupRename`、`stagingGroupDissolve`、`stagingGroupSelectAll`、`stagingGroupNamePrompt`。
-- 文件夹选择器：`folderPickMoveHere`、`folderPickCopyHere`、`folderPickFilter`（打磨项预留）、`stagingMoveDone`/`stagingCopyDone`（含数量参数）。
+- 暂存动作：`stagingRemove`、`stagingRemoved`、`stagingFav`（收藏）、`stagingFavDone`（已收藏 $n$ 条，含跳过数）、`stagingUnfav`（取消收藏）、`stagingUnfavDone`（已取消收藏 $n$ 条）、`stagingClear`、`stagingClearConfirm`、`stagingDeleteConfirm`（含 undo 单步提示，参照 `undoSingleStepNote` 复用）、`stagingMoveDone`/`stagingCopyDone`（含数量参数）、`stagingMoveConfirm`（>10 条确认）。
+- 条目态：`stagingFromHistory`（未收藏条目 subText「来自历史」）、`stagingRowFav`/`stagingRowUnfav`（行内星标 title，随态切换）。
+- 分组：`stagingGroupNew`、`stagingGroupRename`、`stagingGroupDissolve`、`stagingGroupSelectAll`、`stagingGroupNamePrompt`。
+- 文件夹选择器：`folderPickMoveHere`、`folderPickCopyHere`、`folderPickFilter`（打磨项预留）、`folderPickFavNote`（未收藏条目将收藏到此处）。
 - 树剪贴板：`copyBookmark`、`cutBookmark`、`pasteHere`、`copiedToast`/`cutToast`/`pasteDone`/`pasteGone`。
 - 文件夹复制清单：`folderCopyList`、`folderCopyText`/`folderCopyMarkdown`/`folderCopyJson`、`folderCopyConfirm`、`folderCopyDone`。
 - 添加文件夹折叠：`addFolderMenu`；三个子项标签复用既有键。
 - tab-groups 互通：`tabRowStage`、`tabgroupStageAll`、`tabgroupStageConfirm`、`stagedToast`。
+- stats 历史行：复用 `stagingAdd`/`stagingAdded`（零新键，仅入口）。
 - 搜索选择模式：`searchSelectMode` + 复用既有选择条键；「发送到暂存区」复用 `stagingAdd`。
 - 选项页：`optionCollapseAddFolderMenu`。
 
-净增约 **40 键**（改文案 1 键另走重翻译）；en + zh 系实译，其余 locale `[TODO:key]` 占位后 `translate --apply`，`verify` 零残留。
+净增约 **45 键**（改文案 1 键另走重翻译）；en + zh 系实译，其余 locale `[TODO:key]` 占位后 `translate --apply`，`verify` 零残留。
 
 ### 11. 空态、可达性、动效与性能预算
 
-- **空态**：暂存列表空时渲染引导行（图标 + 一行 muted 文案，指向右键菜单与最近区上箭头两个入口）；最近添加区空态沿用 `recentEmpty`；未收藏桶空时不渲染组头。
-- **可达性**：组头 `aria-expanded`；上箭头按钮 `aria-pressed`；选择计数沿用 `.select-count` 文本；全部新按钮 title + aria-label；新菜单 `role="menu"`/`menuitem` 照旧。
+- **空态**：暂存列表空时渲染引导行（图标 + 一行 muted 文案，指向右键菜单、最近区上箭头与 stats 历史行三个入口）；最近添加区空态沿用 `recentEmpty`。
+- **可达性**：组头 `aria-expanded`；上箭头按钮 `aria-pressed`；**行内星标 `aria-pressed` 随真实收藏态**（screen reader 读「已收藏/未收藏」）；选择计数沿用 `.select-count` 文本；全部新按钮 title + aria-label；新菜单 `role="menu"`/`menuitem` 照旧。
 - **RTL**：行按钮/星标/组头缩进全部走 `inset-inline-*` 逻辑属性；子菜单 flyout 的侧开翻转沿用 `positionMenu` 既有 RTL 处理。
-- **动效**：上箭头/staged 态切换只动 `opacity`（dur-1 档）；无新增位移动效；`prefers-reduced-motion` 全局收口自动覆盖。
-- **性能预算**：暂存区单次渲染 ≤500 行 + 组头，innerHTML 整块替换在死链视图同量级已验证（且 4.1.0 已完成 badge 同步去全量刷新等 perf 系列）；修剪 = 一次 Set 查找；`badge()` O(1)。最近区折叠时 `getRecent` 跳过。不引入任何后台轮询。
-- **favicon**：暂存行 favicon 走既有 `_favicon` + 补全链 + 反色服务，零新增。
+- **动效**：上箭头/staged 态、星标实空心切换只动 `opacity`/fill（dur-1 档）；无新增位移动效；`prefers-reduced-motion` 全局收口自动覆盖。
+- **性能预算**：暂存区单次渲染 ≤500 行 + 组头，innerHTML 整块替换在死链视图同量级已验证（且 4.1.0 已完成 badge 同步去全量刷新等 perf 系列）；修剪/重链 = url 索引一次查表（复用 `buildTreeSnapshot`）；`badge()` O(1)。最近区折叠时 `getRecent` 跳过。不引入任何后台轮询。
+- **favicon**：已收藏与未收藏条目的 favicon 走同一条既有 `_favicon`（按 url）+ 补全链 + 反色服务，零新增。
 
 ### 12. 与 velvet 视觉版本的关系
 
-本功能以**功能版本**单独先行落地（视觉沿用 4.1.0 现行语言：`.row-btn` 体系、dupes/tabgroups 组头样式、双 rung 图标工具条、body-class 对话框），不等待 velvet 视觉改版。velvet（`docs/plan-velvet/velvet-task-2-glm.md`）已为暂存区的新元素预留视觉契约（双区域区头、组头、未收藏桶、星标行、选择工具条、文件夹选择器卡片化、`.cut` 剪切态）——velvet 落地时暂存视图随全局面貌一并收敛，无二次设计。若两版本并行，velvet 的视觉契约以任务 2 文档为准、本功能的 DOM/类名结构不变（视觉改版应是 CSS/token 层工作）。
+本功能以**功能版本**单独先行落地（视觉沿用 4.1.0 现行语言：`.row-btn` 体系、dupes/tabgroups 组头样式、双 rung 图标工具条、body-class 对话框），不等待 velvet 视觉改版。velvet（`docs/plan-velvet/velvet-task-2-glm.md`）已为暂存区的新元素预留视觉契约（双区域区头、组头、星标行、选择工具条、文件夹选择器卡片化、`.cut` 剪切态）——velvet 落地时暂存视图随全局面貌一并收敛，无二次设计。若两版本并行，velvet 的视觉契约以任务 2 文档为准、本功能的 DOM/类名结构不变（视觉改版应是 CSS/token 层工作）。
 
-### 13. 实施切片建议（GLM 增补）
+### 13. 实施切片建议
 
 每片独立提交 + 全绿（vitest 全量 + Docker smoke/verify-keyboard 门禁）：
 
 | Slice | 内容 | 依赖 |
 |---|---|---|
-| ST1 | `src/staging.js` 纯模型 + `staging.test.js` + store 键 + census 登记 | 无 |
-| ST2 | `BookmarkFolderPickDialog` 扩展 + `close` 正规化（dialogs.test.js） | 无 |
-| ST3 | 暂存视图双区域骨架（DOM 改造 + 单滚动容器 + crossRowUl 步行 + badge/persistScroll + onChanged 监听 + storage.onChanged）+ 发送入口（菜单 + 上箭头 + 全部暂存） | ST1 |
-| ST4 | 分组（组头渲染/折叠/组菜单/未收藏桶）+ `fav` 标记 | ST3 |
-| ST5 | 暂存选择模式（双 rung 工具条全动作 + 移动/复制/删除/清空） | ST2/ST4 |
+| ST1 | `src/staging.js` 纯模型（双态/URL 去重/重链落档/分组）+ `staging.test.js` + store 键 + census 登记 | 无 |
+| ST2 | `BookmarkFolderPickDialog` 扩展 + `close` 正规化 + 双态副文案（dialogs.test.js） | 无 |
+| ST3 | 暂存视图双区域骨架（DOM 改造 + 单滚动容器 + crossRowUl 步行 + badge/persistScroll + onChanged/onCreated 重链监听 + storage.onChanged）+ 发送入口（书签菜单 + 上箭头 + 全部暂存 + **stats 历史行入口**） | ST1 |
+| ST4 | 分组（组头渲染/折叠/组菜单）+ 行内星标/移出按钮（真实切换） | ST3 |
+| ST5 | 暂存选择模式（双 rung 工具条全动作：收藏/取消收藏/移动复制/删除/清空/移出，混合选择语义） | ST2/ST4 |
 | ST6 | 树视图：复制/剪切/粘贴 + 「复制/移动到…」+ Esc 取消链 | ST2 |
 | ST7 | 文件夹复制清单（clipboard.js 提取 + 三格式）+ 添加文件夹折叠 + 选项 | 无（可并行） |
 | ST8 | tab-groups 互通（resolveTabBookmark + 两个菜单入口 + 整组） | ST1 |
 | ST9 | 搜索视图选择模式（工具条 + 动作 + Esc 层级） | ST1 |
-| ST10 | i18n 40 键全流程 + AGENTS.md/docs 同步 + harness 断言收尾 | 全部 |
+| ST10 | i18n 45 键全流程 + AGENTS.md/docs 同步 + harness 断言收尾 | 全部 |
+
+### 14. 同类产品调研备忘（迭代 B，支撑 §3.0/§3.7 裁决）
+
+- **Raindrop.io**：Unsorted 内建收件箱（保存不选集合 → 落 Unsorted，事后整理）；多选工具条批量 move/tag/delete；删除进 Trash 集合可恢复。「先收集后整理」证实暂存区的产品价值；其批量动作全部立即生效 + Trash 兜底，无「统一应用」层。
+- **Gmail / Google Photos / Material 3 selection**：长按/勾选进入选择模式 → 上下文工具条（transform 而非弹层，保持空间稳定）→ 点动作**立即生效** → 底部 toast + Undo。M3 规范明文：contextual action bar 持续存在直到动作发生——与我们的双 rung 工具条同构。
+- **Confirm vs Undo 裁决启发式**（Vitaly Friedman 等）：高频低危动作用 undo（不打断）；罕见高危动作用 confirm（用户会无脑点穿高频 confirm，confirm 泛化等于没有）。本方案「收藏/取消收藏/移出 = undo；删除/清空/大批量移动 = confirm」直接套用。
+- **Bulk action 指引**（Eleken 等）：提供全选、上下文工具条、清晰反馈与撤销——对应本方案第一 rung 的全选/反选/清除与各动作计数 toast。
+- **购物车/照片导入器（反例参照）**：deferred apply 只在「提交前必须审阅汇总」的场景成立（下单金额、导入去重选项）；书签整理的每步都可独立撤销且树实时同步，审阅层是纯开销。
+
+**对 vBookmarks 的净启示**：暂存区 = Raindrop 的 Unsorted 心智（收集inbox）+ Gmail 的选择工具条（批量立即生效 + 撤销）+ vBookmarks 自己的真实收藏语义（快加星/stats 词汇复用），三者拼起来正好是「批量决策工作台」，且每块都有本仓既有先例可抄——零新交互范式的发明。
 
 ---
 
-*本文为 [`velvet-feat-staging.md`](velvet-feat-staging.md) 的 GLM 精审版：需求清单冻结不动，方案经 4.1.0 HEAD 逐触点复核（三处机制表述修正、两处 API/监听遗漏补全、persistScroll 首例与 dist 清单实情说明），并增补实施切片。*
+*本文为 [`velvet-feat-staging.md`](velvet-feat-staging.md) 的 GLM 精审定稿：迭代 A 做行号级触点复核（三处修正、两处补漏）；迭代 B 按用户澄清把「收藏/取消收藏」落为真实书签树操作（双态条目模型、URL 唯一键、重链自愈、删除本地 fav 标记与未收藏合成桶），裁决生效模型为「立即生效 + 分层防护」（§3.0，含同类产品调研 §14），并补单条/右键/批量三粒度同语义的操作便捷性设计（§3.7）。需求清单冻结不动。*

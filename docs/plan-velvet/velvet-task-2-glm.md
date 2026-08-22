@@ -85,7 +85,7 @@ task-1-final §1.7 的状态 token 表扩展以下 staging 新状态（几何全
 |---|---|---|---|---|
 | `.cut` 剪切淡化 | 树行 | `opacity` 减半 + 保留行内容 | 同左 | 同左 |
 | `.staged` 已暂存 | recent 区上箭头按钮 | 实心/打勾态，只动 `opacity`/fill | 同左 | 同左 |
-| 组头 hover/折叠 | staging 组头、`__unfav__` 桶 | `--vbm-bg-hover` + `aria-expanded` 箭头旋转（transform，dur-1） | 同左 + 磷光叠底 | 暖灰 |
+| 组头 hover/折叠 | staging 组头 | `--vbm-bg-hover` + `aria-expanded` 箭头旋转（transform，dur-1） | 同左 + 磷光叠底 | 暖灰 |
 | 选择条双 rung | staging/搜索选择工具条 | 与 tabgroups 既有双 rung 同款卡片化（surface 底 + `--vbm-radius`） | 同左 | 同左 |
 
 `.cut` 淡化在 velvet 落地时收口为 token（`--vbm-cut-dim` 或复用现有 muted 通道，实施时定），staging 文档 §5.2 的临时 opacity 写法随之替换。
@@ -124,9 +124,8 @@ staging 功能版以 4.1.0 现行语言先行；velvet 落地时其新元素随�
 | 元素 | velvet 契约 |
 |---|---|
 | 双区域（`#staging-items` / `#recent-head` / `#recent-list`） | 同居一张视图卡（surface）；区域头 `#recent-head` = 卡内分区条：muted 标题 + 条数 pill + 动作钮，高度入 4px 网（28px），折叠箭头 transform 旋转 dur-1 |
-| 组头（真实组 + `__unfav__` 桶） | 与 dupes/tabgroups 组头同款模板收敛为**唯一组头样式**（现状三视图组头已有细微分叉，velvet 一并统一）：折叠箭头 + 名称 + 条数 pill（tabular-nums）、hover 走 `--vbm-bg-hover`、选中三态（选择模式）走状态表 |
-| 未收藏桶 `__unfav__` | 组头图标用 muted 星形轮廓（区别于实心 fav 星标），材质按主题 |
-| fav 星标行 | `.row-btn` 槽位恒可见实心星标；星标色 = `--vbm-accent`（非语义色——收藏是主动作不是警示），与 quick-add 星同源 |
+| 组头（真实组） | 与 dupes/tabgroups 组头同款模板收敛为**唯一组头样式**（现状三视图组头已有细微分叉，velvet 一并统一）：折叠箭头 + 名称 + 条数 pill（tabular-nums）、hover 走 `--vbm-bg-hover`、选中三态（选择模式）走状态表 |
+| 星标行（真实双态） | `.row-btn` 槽位恒可见星标，`aria-pressed` 随真实收藏态切换：已收藏 = 实心（quick-add `starred` 同源）/ 未收藏 = 空心 muted；星标色 = `--vbm-accent`（非语义色——收藏是主动作不是警示），切换只动 opacity/fill |
 | 上箭头 `.staging-add-btn` / `.staged` | `.row-btn` 体系；`.staged` 实心态 fill 过渡 dur-1；无位移 |
 | 选择工具条（staging 双 rung / 搜索单 rung） | 与 tabgroups 选择条同款卡片化工具条（surface + `--vbm-radius` + elev-1 若浮层化；嵌卡内则无阴影——层级靠表面）；图标全部 16px/1.5px 描边纪律 |
 | `BookmarkFolderPickDialog` 三按钮形态 | 卡片化对话框（surface + `--vbm-radius` + elev-2）；文件夹缩进列表行高入网；[移动到此处]/[复制到此处] 主按钮 = accent 填充，取消 = ghost；顶部过滤输入（打磨项）与搜索框同款 |
