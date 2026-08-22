@@ -17,7 +17,7 @@ vBookmarks
 - **快而安静** —— fzf 风格模糊搜索、命中高亮（对中日韩友好）；地址栏 `*` + 空格搜书签；同步状态指示克制不吵。
 - **随你打扮** —— 五套精制主题、自定义 CSS、自定义工具栏图标、单视图显隐开关——也可以整条隐藏 tab 条，回到经典单栏模样。
 - **隐私为先** —— 数据全本地，43 种语言，MIT 开源。
-- **Chrome 与 Edge 通吃** —— 同一个 MV3 包两款浏览器都能装（`scripts/package.py --target chrome|edge`；Firefox 需要构建步骤，评估见 [browser-compat.md](browser-compat.md)）。
+- **Chrome 与 Edge 通吃** —— 同一个 MV3 包两款浏览器都能装（`npm run package` 构建 `dist/` 并产出商店 zip；`python3 scripts/package.py --target edge` 直接出源码 zip；Firefox 需要构建步骤，评估见 [browser-compat.md](browser-compat.md)）。
 
 基于 [MIT 协议](http://www.opensource.org/licenses/mit-license.php)开源。常见问题见 [FAQ](https://github.com/windviki/vBookmarks/wiki/FAQ)。4.0 新特性上手请读 [v4 功能指南](guide-v4.zh.md)。
 
@@ -30,7 +30,7 @@ vBookmarks
 - **快速收藏无处不在** —— 弹窗星标按钮、`Ctrl/Cmd+D`、全局快捷键 `Alt+Shift+S`、页面右键菜单"收藏此页"。
 - **同步状态感知** —— Chrome 138+ 的双存储（本地/已同步）下，仅本地子树柔和淡显，根文件夹标注`（仅本地）`/`（已同步）`；跨存储拖拽用温和的 toast 提示代替生硬的失败。
 - **43 种语言**，全部与英文基准对齐，由 LLM 辅助的翻译流水线持续同步。
-- **隐私无忧** —— 纯 ES6+ JavaScript，无框架、无构建、无遥测；你看到的源码就是你运行的代码。访问统计只存在本地，一个开关停采、一个按钮清空。
+- **隐私无忧** —— 纯 ES6+ JavaScript，无框架、无遥测；开发无需构建步骤（发布包由 `dist/` 经 `npm run build` 构建）。访问统计只存在本地，一个开关停采、一个按钮清空。
 
 
 # 4.0 新变化
@@ -161,7 +161,7 @@ vBookmarks
 
 # 开发指南
 
-无构建步骤 —— 在 `chrome://extensions/` 中**加载已解压的扩展程序**，选择仓库根目录即可。
+开发无构建步骤 —— 在 `chrome://extensions/` 中**加载已解压的扩展程序**，选择仓库根目录（开发形态）即可。发布形态是 `dist/`：先 `npm run build` 再加载 `dist/` 目录（或 `npm run package` 出商店 zip）。
 
 ```bash
 # 单元测试（Vitest — 实时用例数以 `npm run test:run` 输出为准）

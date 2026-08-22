@@ -8,21 +8,31 @@
 # and runs only the screenshot suites).
 #
 #   smoke.js              — zero console errors + v4 behavioral assertions
-#   verify-keyboard.js    — keyboard/view hard assertions (132)
+#   verify-keyboard.js    — keyboard/view hard assertions (153)
 #   verify-scrollbars.js  — horizontal-scrollbar matrix probe (752)
 #   verify-menu-overflow.js — #48: tall menu stays open, no focus-scroll dismiss
 #   verify-menu-collapse.js — collapsed submenus open/dispatch/clamp
 #   verify-menu-extreme.js  — DPR × zoom × size sweep (menus never clip/dismiss)
 # diag/ holds manual diagnostic probes (run on demand, see rerun.sh).
 #
-# Usage: scripts/harness/run.sh [--smoke-only]
+# Usage: scripts/harness/run.sh [--smoke-only] [--dist]
 #   --smoke-only  run only smoke.js (zero console errors + v4 behavior) —
 #                 the release gate for "the extension loads without crashing".
 #                 The full run adds the keyboard/scrollbar/menu verify layers.
+#   --dist        package the built dist/ release tree instead of the repo
+#                 root (dev form). Requires `npm run build` first — this is
+#                 the ONLY gate that catches bundle/minify breaks of the
+#                 app-shell load order / global contracts (see
+#                 docs/build-and-performance-plan.md §3.3).
 SMOKE_ONLY=0
-if [[ "${1:-}" == "--smoke-only" ]]; then
-    SMOKE_ONLY=1
-fi
+DIST_MODE=0
+for arg in "$@"; do
+    case "$arg" in
+        --smoke-only) SMOKE_ONLY=1 ;;
+        --dist) DIST_MODE=1 ;;
+        *) echo "unknown argument: $arg" >&2; exit 2 ;;
+    esac
+done
 set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
@@ -34,8 +44,16 @@ cleanup() { rm -rf "$CTX"; }
 trap cleanup EXIT
 
 mkdir -p "$CTX/vBookmarks" "$OUT"
-(cd "$REPO_ROOT" && tar cf - --exclude=./.git --exclude=./node_modules --exclude=./tmp --exclude=./.env --exclude=./.claude --exclude=./.env.example .) \
-    | tar xf - -C "$CTX/vBookmarks"
+if [[ "$DIST_MODE" == "1" ]]; then
+    if [[ ! -f "$REPO_ROOT/dist/manifest.json" ]]; then
+        echo "ERROR: dist/ not built — run 'npm run build' first." >&2
+        exit 1
+    fi
+    (cd "$REPO_ROOT/dist" && tar cf - .) | tar xf - -C "$CTX/vBookmarks"
+else
+    (cd "$REPO_ROOT" && tar cf - --exclude=./.git --exclude=./node_modules --exclude=./tmp --exclude=./dist --exclude=./.env --exclude=./.claude --exclude=./.env.example .) \
+        | tar xf - -C "$CTX/vBookmarks"
+fi
 cp "$REPO_ROOT"/scripts/harness/{Dockerfile,smoke.js,verify-keyboard.js,verify-scrollbars.js,verify-menu-overflow.js,verify-menu-collapse.js,verify-menu-extreme.js,verify-menu-overlong.js,verify-rightclick-repeat.js,verify-bmlet.js} "$CTX/"
 cp "$REPO_ROOT"/scripts/screenshots/{shots.js,shots-matrix.js,shots-i18n.js,shots-palette.js,shots-guide.js,shots-tabgroups.js,shots-tabgroups-view.js} "$CTX/"
 cp -r "$REPO_ROOT"/scripts/harness/diag "$CTX/diag"

@@ -32,8 +32,11 @@ jobs:
       - name: i18n full audit (placeholders, menu lengths)
         run: python3 scripts/i18n.py verify
 
-      - name: Package the extension zip
-        run: python3 scripts/package.py
+      - name: Build dist (esbuild bundle + terser minify + self-checks)
+        run: npm run build
+
+      - name: Package the extension zip (dist release tree)
+        run: python3 scripts/package.py --root dist
 
       - name: Validate packaged zip (CWS contract)
         run: npm run test:webstore
@@ -47,8 +50,22 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Real-browser smoke (zero console errors)
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build dist (self-checked)
+        run: npm run build
+
+      - name: Real-browser smoke — source root (dev form)
         run: scripts/harness/run.sh --smoke-only
+
+      - name: Real-browser smoke — dist release tree
+        run: scripts/harness/run.sh --dist --smoke-only
 
   # Full browser harness (keyboard + scrollbar + menu layers). Manual trigger
   # only — slower than the push/PR smoke gate, so it stays off the default path.
@@ -58,5 +75,19 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Full browser verification (keyboard/scrollbar/menu)
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build dist (self-checked)
+        run: npm run build
+
+      - name: Full browser verification — source root (keyboard/scrollbar/menu)
         run: scripts/harness/run.sh
+
+      - name: Full browser verification — dist release tree (4.1.0 mandatory)
+        run: scripts/harness/run.sh --dist

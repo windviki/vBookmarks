@@ -17,7 +17,7 @@ vBookmarks
 - **Fast and quiet** — fzf-style fuzzy search with match highlighting (CJK-friendly), omnibox search (`*` + Space), and sync-status indicators that stay out of your way.
 - **Make it yours** — five crafted themes, custom CSS, custom toolbar icon, per-view visibility toggles — or hide the tab strip entirely for the classic one-pane look.
 - **Private by design** — local-only data, 43 languages, MIT licensed.
-- **Chrome and Edge** — one MV3 package installs on both (`scripts/package.py --target chrome|edge`; Firefox would need a build step — evaluation in [browser-compat.md](browser-compat.md)).
+- **Chrome and Edge** — one MV3 package installs on both (`npm run package` builds `dist/` and produces the store zip; `python3 scripts/package.py --target edge` for a direct source zip; Firefox would need a build step — evaluation in [browser-compat.md](browser-compat.md)).
 
 Licensed under the [MIT License](http://www.opensource.org/licenses/mit-license.php). Read the [FAQ](https://github.com/windviki/vBookmarks/wiki/FAQ). New in 4.0? Read the [v4 feature guide](guide-v4.md).
 
@@ -30,7 +30,7 @@ Licensed under the [MIT License](http://www.opensource.org/licenses/mit-license.
 - **Quick add everywhere** — star button in the popup, `Ctrl/Cmd+D`, the global `Alt+Shift+S` shortcut, or "Bookmark this page" from the page context menu.
 - **Sync-aware** — on Chrome 138+ it understands Chrome's dual local/synced bookmark storage: local-only subtrees are gently dimmed, roots are labeled `(Local)` / `(Synced)`, and cross-storage drags are blocked with a polite toast instead of a hard failure.
 - **43 languages**, all aligned to the English baseline and kept in sync by an LLM-assisted translation pipeline.
-- **Private by design** — plain ES6+ JavaScript, no framework, no build step, no telemetry; the source you inspect is the code you run. Visit statistics are stored locally, can be paused with one switch and erased with one button.
+- **Private by design** — plain ES6+ JavaScript, no framework, no telemetry; development needs no build step (release packages are built from `dist/` via `npm run build`). Visit statistics are stored locally, can be paused with one switch and erased with one button.
 
 
 # What's new in 4.0
@@ -161,7 +161,7 @@ Licensed under the [MIT License](http://www.opensource.org/licenses/mit-license.
 
 # For developers
 
-No build step — **Load unpacked** the repo root in `chrome://extensions/`.
+Dev needs no build step — **Load unpacked** the repo root in `chrome://extensions/` for the dev form. The release form is `dist/`: `npm run build`, then Load unpacked `dist/` (or `npm run package` for the store zip).
 
 ```bash
 # Unit tests (Vitest — the live case count is `npm run test:run` output)
