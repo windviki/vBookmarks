@@ -277,11 +277,13 @@ import { shouldHighlightUnsynced, shouldRememberState } from './settings.js';
         'tab-group-pick-cancel-button': 'nope',
         // Tab groups view: tab-row and group context-menu items
         'tab-row-activate': 'tabGroupsActivateTab',
+        'tab-row-pin': 'tabGroupsPinTab',
         'tab-row-add-bookmark': 'tabGroupsMenuAddBookmark',
         'tab-row-sleep': 'tabGroupsSelectSleep',
         'tab-row-close': 'tabGroupsSelectClose',
         'tabgroup-activate': 'tabGroupsActivateGroup',
         'tabgroup-rename': 'tabGroupsRenameGroup',
+        'tabgroup-collapse': 'tabGroupsCollapseGroup',
         'tabgroup-move-new-window': 'tabGroupsMoveNewWindow',
         'tabgroup-ungroup': 'tabGroupsUngroupGroup',
         'tabgroup-save-folder': 'tabGroupsMenuSaveFolder',
@@ -887,6 +889,15 @@ import { shouldHighlightUnsynced, shouldRememberState } from './settings.js';
         menus.tabRowMenu.addEventListener('mousemove', contextMouseMove);
     if (menus.tabGroupMenu)
         menus.tabGroupMenu.addEventListener('mousemove', contextMouseMove);
+    // 4.1.0 audit: the two "recently closed" record menus (and the 4.0.8
+    // view-tab menu) need the same hover-focus, or hovering them leaves the
+    // keyboard focus on a stale item of a previous menu.
+    if (menus.tabClosedMenu)
+        menus.tabClosedMenu.addEventListener('mousemove', contextMouseMove);
+    if (menus.tabClosedTabMenu)
+        menus.tabClosedTabMenu.addEventListener('mousemove', contextMouseMove);
+    if (menus.viewTabMenu)
+        menus.viewTabMenu.addEventListener('mousemove', contextMouseMove);
     // issue #48 follow-up: the collapsed-group flyouts highlight/focus their
     // items on hover too. contextMouseOut is deliberately NOT bound to them —
     // a mouseout to a hidden flyout would strand focus there.
@@ -914,6 +925,12 @@ import { shouldHighlightUnsynced, shouldRememberState } from './settings.js';
         menus.tabRowMenu.addEventListener('mouseout', contextMouseOut);
     if (menus.tabGroupMenu)
         menus.tabGroupMenu.addEventListener('mouseout', contextMouseOut);
+    if (menus.tabClosedMenu)
+        menus.tabClosedMenu.addEventListener('mouseout', contextMouseOut);
+    if (menus.tabClosedTabMenu)
+        menus.tabClosedTabMenu.addEventListener('mouseout', contextMouseOut);
+    if (menus.viewTabMenu)
+        menus.viewTabMenu.addEventListener('mouseout', contextMouseOut);
 
     // Reset separators — CSS-driven since v4.1: .separator-row + .separator-line
     // use absolute positioning (left:0 / right:8px) that auto-adapts to any width.

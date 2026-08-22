@@ -886,6 +886,13 @@ export function initContextMenu(ctx = {}) {
             const gid = tabGroupHead.parentNode.dataset.groupId;
             $('tabgroup-collapse').textContent =
                 _m(ctx.tabGroupsMenu.isCollapsed(gid) ? 'tabGroupsExpandGroup' : 'tabGroupsCollapseGroup');
+            // Sleep is a stateful toggle like the row menu's: an all-asleep
+            // group offers "wake", anything else offers "sleep" (dispatch
+            // toggles through isGroupAsleep — the label must agree with it).
+            const groupSleepItem = $('tabgroup-sleep');
+            if (groupSleepItem)
+                groupSleepItem.textContent = _m(ctx.tabGroupsMenu.isGroupAsleep(gid)
+                    ? 'tabGroupsWakeGroup' : 'tabGroupsSleepGroup');
         } else if (row.classList && row.classList.contains('tabgroups-row')
             && $tabRowContextMenu && ctx.tabGroupsMenu) {
             // Tab groups view: a tab row is not a bookmark — its own menu
@@ -893,6 +900,11 @@ export function initContextMenu(ctx = {}) {
             // bookmark menu whose entries would act on a bogus id. Every
             // stateful entry's label follows the row's CURRENT state, so the
             // menu offers the action that actually applies.
+            // Normalize el to the row's anchor (like the closed-tab branch):
+            // right-clicking a row's icon button must still mark the ROW as
+            // the menu owner, or the row loses its active styling.
+            const anchor = el.tagName === 'A' ? el : row.querySelector('a');
+            el = anchor || el;
             menu = $tabRowContextMenu;
             const tabId = row.dataset.tabId;
             const pinItem = $('tab-row-pin');

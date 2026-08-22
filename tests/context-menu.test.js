@@ -226,7 +226,7 @@ const setup = (opts = {}) => {
     const tabClosedMenu = el('MENU', 'tabgroups-closed-context-menu');
     const tabClosedTabMenu = el('MENU', 'tabgroups-closed-tab-context-menu');
     for (const id of ['tab-row-activate', 'tab-row-pin', 'tab-row-add-bookmark',
-        'tab-row-sleep', 'tab-row-close', 'tabgroup-collapse',
+        'tab-row-sleep', 'tab-row-close', 'tabgroup-collapse', 'tabgroup-sleep',
         'tabgroups-closed-reopen', 'tabgroups-closed-toggle', 'tabgroups-closed-forget',
         'tabgroups-closed-tab-open', 'tabgroups-closed-tab-bookmark',
         'tabgroups-closed-tab-remove']) {
@@ -458,6 +458,17 @@ const setup = (opts = {}) => {
         row.parentNode = li;
         return { li, row };
     };
+    // A live tab-group head: <li class="tabgroups-group" data-group-id><span
+    // class="tabgroups-group-head"> — the owner of the tabgroup menu.
+    const makeGroupHead = (groupId = 'g1') => {
+        const li = el('LI', `tabgroups-group-${groupId}`);
+        li.classList.add('tabgroups-group');
+        li.dataset.groupId = groupId;
+        const head = el('SPAN');
+        head.classList.add('tabgroups-group-head');
+        head.parentNode = li;
+        return { li, head };
+    };
     const makeClosedGroupHead = (closedId = 'cg_1') => {
         const li = el('LI');
         li.classList.add('tabgroups-closed-group');
@@ -500,7 +511,7 @@ const setup = (opts = {}) => {
         makeBookmarkRow, makeFolderRow, makeSeparatorRow, makeHistoryRow,
         makeStatsHistRow, makeDupesGroupHead, makeLinkFolderRow, menuItem, makeViewTab, openOn,
         tabRowMenu, tabGroupMenu, tabClosedMenu, tabClosedTabMenu,
-        makeTabRow, makeWindowHead, makeClosedGroupHead, makeClosedTabRow,
+        makeTabRow, makeWindowHead, makeClosedGroupHead, makeClosedTabRow, makeGroupHead,
         fireWindow: (type, ev) => {
             for (const fn of (windowListeners[type] || []))
                 fn(ev);
@@ -2657,6 +2668,38 @@ describe('tab-groups view menus (4.1.0: state-aware entries)', () => {
         for (const menu of [s.folderMenu, s.bookmarkMenu, s.tabRowMenu, s.tabGroupMenu,
             s.tabClosedMenu, s.tabClosedTabMenu])
             expect(menu.style.opacity).not.toBe('1');
+    });
+
+    it('a group head opens its own menu with state-following collapse/sleep labels', () => {
+        const s = setup({ tabGroupsMenu: tabGroupsStub({ collapsed: true, groupAsleep: true }) });
+        s.openOn(s.makeGroupHead('g1').head);
+        expect(s.tabGroupMenu.style.opacity).toBe('1');
+        expect(s.bookmarkMenu.style.opacity).not.toBe('1');
+        expect(s.byId['tabgroup-collapse'].textContent).toBe('tabGroupsExpandGroup');
+        // an all-asleep group must OFFER the wake (dispatch toggles through
+        // isGroupAsleep — the label has to agree with the action)
+        expect(s.byId['tabgroup-sleep'].textContent).toBe('tabGroupsWakeGroup');
+    });
+
+    it('…and an awake, expanded group head offers collapse + sleep', () => {
+        const s = setup({ tabGroupsMenu: tabGroupsStub({}) });
+        s.openOn(s.makeGroupHead('g1').head);
+        expect(s.byId['tabgroup-collapse'].textContent).toBe('tabGroupsCollapseGroup');
+        expect(s.byId['tabgroup-sleep'].textContent).toBe('tabGroupsSleepGroup');
+    });
+
+    it('the group sleep entry dispatches the action its label promises', () => {
+        const asleep = tabGroupsStub({ groupAsleep: true });
+        const s = setup({ tabGroupsMenu: asleep });
+        s.openOn(s.makeGroupHead('g1').head);
+        fire(s.tabGroupMenu, 'mouseup', makeEvent({ button: 0, target: s.byId['tabgroup-sleep'] }));
+        expect(asleep.calls).toEqual([['wakeGroup', 'g1']]);
+
+        const awake = tabGroupsStub({});
+        const t = setup({ tabGroupsMenu: awake });
+        t.openOn(t.makeGroupHead('g2').head);
+        fire(t.tabGroupMenu, 'mouseup', makeEvent({ button: 0, target: t.byId['tabgroup-sleep'] }));
+        expect(awake.calls).toEqual([['sleepGroup', 'g2']]);
     });
 
     it('a closed record head opens the closed menu, not the folder menu', () => {
