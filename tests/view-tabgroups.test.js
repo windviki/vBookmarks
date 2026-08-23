@@ -464,9 +464,43 @@ describe('view registration', () => {
             vi.advanceTimersByTime(299);
             expect(ctx.chrome.windows.getAllCalls).toHaveLength(0);
             vi.advanceTimersByTime(1);
-            // active refresh is a FULL refresh (windows + groups + tree)
+            // active refresh re-renders from windows + groups (+ tree only
+            // while the bookmark walk is dirty — see the tests below)
             expect(ctx.chrome.windows.getAllCalls.length).toBeGreaterThan(0);
             expect(ctx.chrome.tabGroups.queryCalls.length).toBeGreaterThan(0);
+        } finally {
+            vi.useRealTimers();
+        }
+    });
+
+    it('tab-only churn after a clean walk skips the bookmark-tree read (4.1.1)', () => {
+        vi.useFakeTimers();
+        try {
+            const ctx = setup({ active: true });
+            ctx.def().activate();               // first activation walks the tree
+            expect(ctx.chrome.bookmarks.getTreeCalls).toBeGreaterThan(0);
+            ctx.chrome.bookmarks.getTreeCalls = 0;
+            ctx.tabsListeners.onUpdated[0]();   // tab-only churn
+            vi.advanceTimersByTime(301);
+            expect(ctx.chrome.windows.getAllCalls.length).toBeGreaterThan(0);
+            expect(ctx.chrome.bookmarks.getTreeCalls).toBe(0); // sets reused
+        } finally {
+            vi.useRealTimers();
+        }
+    });
+
+    it('a bookmarks event re-marks the tree dirty — the next refresh walks it again', () => {
+        vi.useFakeTimers();
+        try {
+            const ctx = setup({ active: true });
+            ctx.def().activate();
+            ctx.chrome.bookmarks.getTreeCalls = 0;
+            ctx.tabsListeners.onUpdated[0]();
+            vi.advanceTimersByTime(301);
+            expect(ctx.chrome.bookmarks.getTreeCalls).toBe(0);
+            ctx.bookmarksListeners.onCreated[0]();
+            vi.advanceTimersByTime(301);
+            expect(ctx.chrome.bookmarks.getTreeCalls).toBeGreaterThan(0);
         } finally {
             vi.useRealTimers();
         }

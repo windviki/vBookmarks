@@ -169,11 +169,21 @@ export function initFaviconFallback(doc = document, ctx = {}) {
     const verdicts = new Map();   // src → true (placeholder) | false (real)
     const statsBySrc = new Map(); // src → { dark, light, colored, cover } of a real icon
 
+    // The default-icon SVG markup is parsed ONCE and cloned per swap — a
+    // list re-render swaps the placeholder img of every placeholder row
+    // (measured ~40 ms of innerHTML parsing per 1371-row refresh when each
+    // swap re-parsed the same markup).
+    let defaultIconTemplate = null;
     const swapForDefaultIcon = img => {
-        const host = doc.createElement('span');
-        host.innerHTML = DEFAULT_BOOKMARK_ICON;
-        const svg = host.firstChild;
-        if (svg && img.parentNode)
+        if (!defaultIconTemplate) {
+            const host = doc.createElement('span');
+            host.innerHTML = DEFAULT_BOOKMARK_ICON;
+            defaultIconTemplate = host.firstChild;
+            if (!defaultIconTemplate)
+                return;
+        }
+        const svg = defaultIconTemplate.cloneNode(true);
+        if (img.parentNode)
             img.parentNode.replaceChild(svg, img);
     };
 

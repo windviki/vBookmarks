@@ -63,10 +63,16 @@ beforeAll(() => {
                 };
             }
             // <span> host for the SVG swap markup: parse just enough — the
-            // module only reads .firstChild.
+            // module reads .firstChild and clones it (4.1.1: the template
+            // is parsed once, every swap clones).
             return {
                 innerHTML: '',
-                get firstChild() { return { svgMarkup: this.innerHTML }; }
+                get firstChild() {
+                    return {
+                        svgMarkup: this.innerHTML,
+                        cloneNode() { return { svgMarkup: this.svgMarkup }; }
+                    };
+                }
             };
         }
     };
