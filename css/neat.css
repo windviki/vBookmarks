@@ -5192,7 +5192,9 @@ body.panel-mode #stats-list ul li.vbm-row > a.tree-item-link .row-badge.time {
    （contain-intrinsic-size 提供滚动条估算高度，auto 前缀记住每行实际高度，
    两行 dupes 行/宽面板行二次渲染后即准确）。焦点行按规范自动转为"相关"
    会被渲染，键盘走格不受影响；树视图（#tree）冷开路径已优化且对齐/连线
-   几何敏感，不纳入本批。Chrome 85+，本扩展最低 114。 */
+   几何敏感，不纳入本批；最近视图（recent）行数受 recentCount 限制（默认
+   ~20 行）无屏外收益，且实测其 computed overflow-x 读取会被 cv 干扰
+   （verify-scrollbars 门禁回归），一并排除。Chrome 85+，最低 114。 */
 #tabgroups-list ul li.vbm-row,
 #tabgroups-list ul li.tabgroups-group,
 #tabgroups-list ul li.tabgroups-window-head,
@@ -5202,7 +5204,6 @@ body.panel-mode #stats-list ul li.vbm-row > a.tree-item-link .row-badge.time {
 #dupes-list ul li.vbm-row,
 #dupes-list ul li.dupes-group,
 #dead-list ul li.vbm-row,
-#recent-list ul li.vbm-row,
 #stats-list ul li.vbm-row {
     content-visibility: auto;
     contain-intrinsic-size: auto var(--vbm-row-h);
