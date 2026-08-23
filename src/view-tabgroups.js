@@ -36,6 +36,7 @@
 import { VIEW_ICONS, STAR_ICON, STAR_ICON_FILLED, SELECT_ICON, FOLDER_STAR_ICON, EDIT_ICON, SLEEP_ICON, SLEEP_ICON_FILLED, ACTIVATE_ICON, TRASH_ICON, REDO_ICON, COLLAPSE_ALL_ICON, EXPAND_ALL_ICON, PIN_ICON, PIN_ICON_FILLED } from './icons.js';
 import { htmlspecialchars } from './escape.js';
 import { parkRowFocus, unparkRowFocus, parkToolbarFocus, restoreToolbarFocus } from './list-focus.js';
+import { paintListChunked } from './list-chunks.js';
 import { saveSession, sessionFolderName, tabsToBookmarks } from './session.js';
 import { relTimeLabel } from './tree-render.js';
 import { pickGroupColor, saveTabGroupFolderMeta, pruneTabGroupFolderMeta } from './tab-group-utils.js';
@@ -139,6 +140,9 @@ export function initViewTabGroups(ctx = {}) {
     // Fold state saved when selection mode opens everything up, restored on
     // exit (selection mode must show every candidate row).
     let foldSnapshot = null;
+    // The in-flight chunked paint (list-chunks.js): a new render cancels
+    // the previous one's pending row batches.
+    let paintHandle = null;
 
     const CLOSED_GROUPS_KEY = 'tabGroupsClosed';
     const UI_STATE_KEY = 'tabGroupsViewState';
@@ -681,9 +685,13 @@ export function initViewTabGroups(ctx = {}) {
             addBookmark: _m('tabGroupsAddBookmark'),
             close: _m('tabGroupsSelectClose')
         };
-        let html = renderToolbar();
+        // 4.1.1: rows stream in chunks (list-chunks.js) — the head paint is
+        // synchronous (toolbar + first rows), the rest appends per frame.
+        // The pieces array holds li-level fragments in render order.
+        let head = renderToolbar();
+        const pieces = [];
         if (!tabs.length) {
-            html += `<ul role="list"><li class="empty-state" role="listitem"><i>${_m('tabGroupsViewEmpty')}</i></li></ul>`;
+            head += `<ul role="list"><li class="empty-state" role="listitem"><i>${_m('tabGroupsViewEmpty')}</i></li></ul>`;
         } else {
             const style = colorStyle();
             const ulClass = [
@@ -691,7 +699,7 @@ export function initViewTabGroups(ctx = {}) {
                 style === 'edge' ? 'color-enhanced' : '',
                 style === 'line' ? 'color-line' : ''
             ].filter(Boolean).join(' ');
-            html += `<ul role="list"${ulClass ? ` class="${ulClass}"` : ''}>`;
+            head += `<ul role="list"${ulClass ? ` class="${ulClass}"` : ''}></ul>`;
 
             const needle = filterNeedle();
             // A find hits a TAB's title/URL, or a GROUP's title — a group
@@ -758,7 +766,7 @@ export function initViewTabGroups(ctx = {}) {
                 // A window with no matching tab leaves the flow entirely.
                 if (needle && !visibleTabs.length)
                     continue;
-                html += windowHead(win, wi, visibleTabs.length);
+                pieces.push(windowHead(win, wi, visibleTabs.length));
                 if (!needle && collapsedWindows.has(String(win.id)))
                     continue;
 
@@ -793,13 +801,13 @@ export function initViewTabGroups(ctx = {}) {
                 for (let i = 0, l = visibleTabs.length; i < l; i++) {
                     const tab = visibleTabs[i];
                     if (!isGrouped(tab)) {
-                        html += tabRowHtml(tab, L);
+                        pieces.push(tabRowHtml(tab, L));
                         matchedRows++;
                         continue;
                     }
                     const group = groupById(tab.groupId);
                     if (!group) {
-                        html += tabRowHtml(tab, L);
+                        pieces.push(tabRowHtml(tab, L));
                         matchedRows++;
                         continue;
                     }
@@ -812,12 +820,12 @@ export function initViewTabGroups(ctx = {}) {
                         : membersByGid.get(gid);
                     // Collapsed groups stay inline in tab order (they are not
                     // closed — their tabs still exist in the browser).
-                    html += groupBlock({ group, memberTabs, L });
+                    pieces.push(groupBlock({ group, memberTabs, L }));
                     matchedRows += memberTabs.length;
                 }
             }
             if (needle && !matchedRows)
-                html += `<li class="empty-state" role="listitem"><i>${_m('tabGroupsNoMatchingTabs')}</i></li>`;
+                pieces.push(`<li class="empty-state" role="listitem"><i>${_m('tabGroupsNoMatchingTabs')}</i></li>`);
 
             // The closed-record section is history, not open tabs — it stays
             // out of the filter's scope (hidden while a filter is active).
@@ -827,33 +835,71 @@ export function initViewTabGroups(ctx = {}) {
             // so the button joins the keyboard model's Tab ring, and ↑/↓
             // cross between the open-tab zone and this zone through it).
             if (!needle && closedRecords.length) {
-                html += `<li class="tabgroups-section-head tabgroups-closed-section-head vbm-section-head">` +
+                pieces.push(`<li class="tabgroups-section-head tabgroups-closed-section-head vbm-section-head">` +
                     `<em>${_m('tabGroupsClosedGroups')}</em>` +
                     iconBtn('tabgroups-closed-clear', TRASH_ICON, 'tabGroupsClearClosedGroups') +
-                    `</li>`;
+                    `</li>`);
                 for (const record of closedRecords) {
                     if (record.type === 'tab') {
                         const tab = (record.tabs && record.tabs[0]) || { title: record.title || '', url: record.url || '' };
-                        html += closedTabHtml(record, tab, 0);
+                        pieces.push(closedTabHtml(record, tab, 0));
                     } else {
-                        html += closedGroupHtml(record);
+                        pieces.push(closedGroupHtml(record));
                     }
                 }
             }
-            html += '</ul>';
         }
+        // Focus law + chunked paint. The toolbar park/restore runs on the
+        // head paint (the toolbar lives in the head); the ROW park/restore
+        // retries per chunk (an id'd row restores as soon as its chunk is
+        // in) and always runs at settle, where the clamped-index path is
+        // safe again — the full list exists by then.
         const parkedToolbar = parkToolbarFocus($list);
-        const parkedRow = parkRowFocus($list);
-        $list.innerHTML = html;
-        restoreToolbarFocus($list, parkedToolbar);
-        unparkRowFocus($list, parkedRow);
-        if (pendingScrollToCurrent) {
-            pendingScrollToCurrent = false;
+        let parkedRow = parkRowFocus($list);
+        if (paintHandle)
+            paintHandle.cancel();
+        const tryScrollToCurrent = () => {
+            if (!pendingScrollToCurrent)
+                return;
             const cur = $list.querySelector ? $list.querySelector('.tabgroups-current') : null;
-            if (cur && cur.scrollIntoView)
+            if (cur && cur.scrollIntoView) {
+                pendingScrollToCurrent = false;
                 cur.scrollIntoView({ block: 'nearest' });
-        }
-        onRowsRendered();
+            }
+        };
+        const tryUnparkRow = () => {
+            if (!parkedRow)
+                return;
+            if (parkedRow.id && typeof document !== 'undefined'
+                && typeof document.getElementById === 'function'
+                && document.getElementById(parkedRow.id)) {
+                unparkRowFocus($list, parkedRow);
+                parkedRow = null;
+            }
+        };
+        paintHandle = paintListChunked($list, {
+            head,
+            pieces,
+            first: 80,
+            chunk: 160,
+            onHead: el => {
+                restoreToolbarFocus(el, parkedToolbar);
+                onRowsRendered();
+                tryScrollToCurrent();
+            },
+            onChunk: () => {
+                tryUnparkRow();
+                onRowsRendered();
+                tryScrollToCurrent();
+            },
+            onSettled: el => {
+                if (parkedRow) {
+                    unparkRowFocus(el, parkedRow);
+                    parkedRow = null;
+                }
+                tryScrollToCurrent();
+            }
+        });
     };
 
     // --- Bookmark helpers -------------------------------------------------------

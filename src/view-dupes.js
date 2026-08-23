@@ -80,6 +80,7 @@ import { initDropdowns } from './dropdown.js';
 import { makeRiskBanner, RISK_HELP_URL } from './risk-banner.js';
 import { htmlspecialchars } from './escape.js';
 import { parkRowFocus, unparkRowFocus, parkToolbarFocus, restoreToolbarFocus } from './list-focus.js';
+import { paintListChunked } from './list-chunks.js';
 
 // Group-head URL display (view-system absorption): the normalized key's
 // discriminating part usually sits in the tail path, where CSS
@@ -154,6 +155,9 @@ export function initViewDupes(ctx = {}) {
     // selection bar's first enabled control on entry, and the restored 选择
     // entry button on exit — the same law as the dead view's selection mode.
     let selectionFocus = null; // 'first' | 'entry' | null
+    // The in-flight chunked paint (list-chunks.js): a new render cancels
+    // the previous one's pending group batches.
+    let paintHandle = null;
 
     const strategy = () => store.get('dupesStrategy', 'keep-oldest') || 'keep-oldest';
     const scope = () => store.get('dupesScope', 'all') || 'all';
@@ -441,62 +445,97 @@ export function initViewDupes(ctx = {}) {
                 if (!alive.has(key))
                     selected.delete(key);
         }
-        let html = riskBanner.html() + renderToolbar();
+        // 4.1.1: rows stream in chunks (list-chunks.js) — head paint is
+        // synchronous (banner + toolbar + first groups), the rest appends
+        // per frame. 2508-row regroups used to freeze the popup for the
+        // whole parse.
+        let head = riskBanner.html() + renderToolbar();
+        const pieces = [];
         if (!groups.length) {
-            html += `<ul role="list"><li class="empty-state" role="listitem"><i>${_m('dupesNone')}</i></li></ul>`;
+            head += `<ul role="list"><li class="empty-state" role="listitem"><i>${_m('dupesNone')}</i></li></ul>`;
         } else {
-            html += `<ul role="list"${selecting ? ' class="selecting"' : ''}>`;
+            head += `<ul role="list"${selecting ? ' class="selecting"' : ''}></ul>`;
             for (let i = 0, l = groups.length; i < l; i++)
-                html += renderGroup(groups[i]);
-            html += '</ul>';
+                pieces.push(renderGroup(groups[i]));
         }
-        // keep a focused toolbar control focused across the swap (see above)
+        // Focus law + chunked paint. Toolbar park/restore and the selection
+        // toolbar transitions run on the head paint (the toolbar lives in
+        // the head); the head/member focus restores and the row park/restore
+        // retry per chunk — their targets may sit in any batch — and always
+        // run at settle, where the clamped-index row restore is safe again.
         const parkedToolbar = parkToolbarFocus($list);
-        // 4.0.1 focus law: a focused list ROW rides the same swap
-        const parkedRow = parkRowFocus($list);
-        $list.innerHTML = html;
-        restoreToolbarFocus($list, parkedToolbar);
-        // …restored BEFORE the pending* blocks below, so an explicit
-        // head/member park still wins when one is set.
-        unparkRowFocus($list, parkedRow);
-        onRowsRendered();
-        // Post-render focus restore for the head-key fold/expand (the head
-        // element was replaced by the innerHTML swap).
-        if (pendingHeadFocus) {
+        let parkedRow = parkRowFocus($list);
+        if (paintHandle)
+            paintHandle.cancel();
+        const tryHeadFocus = () => {
+            if (!pendingHeadFocus)
+                return;
+            if (typeof $list.querySelectorAll !== 'function')
+                return;
             const key = pendingHeadFocus;
-            pendingHeadFocus = null;
-            let headEl = null;
             const groupLis = $list.querySelectorAll('li.dupes-group');
             for (let i = 0, l = groupLis.length; i < l; i++) {
                 if (groupLis[i].dataset && groupLis[i].dataset.key === key) {
-                    headEl = groupLis[i].querySelector('.group-head');
-                    break;
+                    const headEl = groupLis[i].querySelector('.group-head');
+                    if (headEl) {
+                        pendingHeadFocus = null;
+                        headEl.focus();
+                    }
+                    return;
                 }
             }
-            if (headEl)
-                headEl.focus();
-        }
-        // v4 task-4 #8: select-mode Space toggle fired from a member row —
-        // restore focus to that row's anchor after the swap.
-        if (pendingMemberFocus) {
-            const id = pendingMemberFocus;
-            pendingMemberFocus = null;
-            const row = document.getElementById(`dupes-item-${id}`);
-            const a = row && row.querySelector('a');
-            if (a)
+        };
+        const tryMemberFocus = () => {
+            if (!pendingMemberFocus)
+                return;
+            const row = document.getElementById(`dupes-item-${pendingMemberFocus}`);
+            const a = row && row.querySelector ? row.querySelector('a') : null;
+            if (a) {
+                pendingMemberFocus = null;
                 a.focus();
-        }
-        // Selection-mode toolbar transitions: after the swap the old button
-        // class is gone, so restoreToolbarFocus above has no target. Mutually
-        // exclusive with pendingMemberFocus in practice (the Space toggle
-        // never triggers a mode transition), so the ordering never competes.
-        if (selectionFocus === 'first') {
-            selectionFocus = null;
-            focusSelectionBarFirst();
-        } else if (selectionFocus === 'entry') {
-            selectionFocus = null;
-            focusSelectModeButton();
-        }
+            }
+        };
+        const tryUnparkRow = () => {
+            if (!parkedRow)
+                return;
+            if (parkedRow.id && typeof document !== 'undefined'
+                && typeof document.getElementById === 'function'
+                && document.getElementById(parkedRow.id)) {
+                unparkRowFocus($list, parkedRow);
+                parkedRow = null;
+            }
+        };
+        paintHandle = paintListChunked($list, {
+            head,
+            pieces,
+            first: 30,   // groups (~1 + members rows each) in the head paint
+            chunk: 60,
+            onHead: el => {
+                restoreToolbarFocus(el, parkedToolbar);
+                onRowsRendered();
+                if (selectionFocus === 'first') {
+                    selectionFocus = null;
+                    focusSelectionBarFirst();
+                } else if (selectionFocus === 'entry') {
+                    selectionFocus = null;
+                    focusSelectModeButton();
+                }
+            },
+            onChunk: () => {
+                tryHeadFocus();
+                tryMemberFocus();
+                tryUnparkRow();
+                onRowsRendered();
+            },
+            onSettled: el => {
+                if (parkedRow) {
+                    unparkRowFocus(el, parkedRow);
+                    parkedRow = null;
+                }
+                tryHeadFocus();
+                tryMemberFocus();
+            }
+        });
     };
 
     const refresh = () => {
