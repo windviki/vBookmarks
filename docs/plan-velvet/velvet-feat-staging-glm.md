@@ -45,6 +45,12 @@
 
 > **迭代记录 H（性能同源化，master 4.1.0 性能提交合入后回写）**：暂存视图按 master 的同一套手段收口——① **分片绘制**：全量重绘走 `paintListChunked`（pipes 模式——banner/工具条/空 `<ul>`/剪刀/区头随 head 同步落地，`#staging-items` 行按 60 首批 + 120 行/帧流入，recent 行受 `recentCount` 约束随 head 落地；新的渲染先 cancel 上一笔 paintHandle，局部重绘 `renderStagingNow` 同样先取消在途分片）；测试 double 无 rAF 时自动退化为单次 innerHTML（原行为不变）。② **content-visibility**：`#staging-items` 行加入 `content-visibility:auto` 花名册（500 行上限下屏外行跳过布局/绘制；`#recent-list` 维持 master 的排除决定）。③ **行级 i18n 提升**：行循环里 `stagingFromHistory/stagingRowFav/Unfav/stagingRemove` 与 recent 时间桶标签改为每次渲染解析一次（4.1.0 view-tabgroups 同法）。④ favicon 模板克隆/对比度彩度防护等 master 侧优化随合并自动生效。
 
+> **迭代记录 I（展开折叠「手术式」DOM 更新——用户反馈全视图折叠变慢后回写）**：A/B 真浏览器探针（diag-fold-ab.js，3400 书签 / 240 标签 / 800 暂存条目同种子，对比合入 master 前的构建）定位到折叠慢的根因不在分片绘制本身，而在**折叠动作的整表重走**：dupes 组折叠曾走 refresh()（getTree→flatten→regroup→缓存回写→全量重绘，实测首帧 533ms 才见变化）；staging 组/桶折叠走 renderStagingNow()（800 行同步重建 + favicon 重挂，实测 129/217ms 冻结）；tabgroups 组折叠走全量 render()（58/60ms + 流式尾 250ms）。树视图折叠本就是 class 切换（同规模 75ms 首展开、折叠零重绘），无需改动。修复 = **折叠只动该组自己的行**（head li 原节点保留——焦点/拖拽/快捷按钮监听全部存活）：
+> ① **dupes**（view-dupes.js）：renderGroup 拆 groupHeadHtml + groupMembersHtml；点击/键盘折叠改 foldGroupSurgically——head 原位更新 aria-expanded/chevron，成员行按 .dupes-member 连续块 remove / insertAdjacentHTML('afterend') 重插（keeper/日期/路径全走原生成器，零行为漂移）。实测折叠 533→2.6ms、展开 539→4.8ms（首帧）。虚拟滚动实验室（行不全会合）与测试 double 保持整表 refresh()/render() 原路径。
+> ② **staging**（view-recent.js）：toggleGroupFold/toggleBucketFold 改手术式——head li 原位同步 chevron/aria-expanded，成员 .staging-member 连续块按折叠态移除/经 stagingRowHtml 重插（i18n 标签缓存提为 stagingLabels() 复用）；lastRenderedRaw 同步推进避免下次进入视图的补重绘。实测折叠 129→12ms、展开 217→55ms（首帧）。桶成员与组成员同配方。
+> ③ **tabgroups**（view-tabgroups.js）：setGroupCollapsed 在非虚拟实验室下改 foldGroupSurgically——成员连续块以 li.vbm-row[data-group-id=gid] 界定 remove / 按 tabRowHtml（含 lastMember 连线收口）重插，窗口区/关闭组区 DOM 不触碰；浏览器侧 chrome.tabGroups.update 写透与 persistUIState 原样保留。实测折叠 58→3.2ms、展开 60→11.8ms（首帧）。
+> ④ **i18n 缓存同源化**：三个视图的行标签缓存（dupesLabels/stagingLabels/tabgroupsLabels）从 render 内联提为函数，整表渲染与手术式折叠共用同一份解析。门禁：2861 vitest 全绿 / eslint 0 / build 自检 PASS / diag-staging-verify ALL PASS / verify-keyboard 164 pass / verify-scrollbars 748 断言 ALL PASS。
+
 ## 准备实现的功能
 
 > 原始需求清单（冻结，逐字保留；下方「问题和方案」为其落地设计，迭代不改动本节）。

@@ -136,6 +136,10 @@ export function initViewDupes(ctx = {}) {
     let itemIndex = new Map();       // id → flattened item of the last regroup
     const keepers = new Map();       // group key → manually pinned keeper item
     const collapsed = new Set();     // folded group keys
+    // LAB virtual painter flag (options 实验室, default off). The windowed
+    // painter never keeps the full list in the DOM, so fold surgery (which
+    // inserts/removes rows in place) must yield to a full render there.
+    const virtualLab = () => !!store.get('virtualScrollLab', '');
     let dirty = false;
     // v4 task-3 #5 selection mode: groups (not rows) are the unit — the
     // toolbar's 选择 button swaps the toolbar for a batch bar (all/invert/
@@ -353,11 +357,21 @@ export function initViewDupes(ctx = {}) {
         return html;
     };
 
-    const renderGroup = (group, L) => {
+    // Per-render row label cache (i18n hoisting): member rows used to
+    // re-ask chrome.i18n 4× per row — resolve once per render (and once
+    // per surgical fold) instead.
+    const dupesLabels = () => ({
+        keepThis: _m('dupesKeepThis'),
+        rowDelete: _m('rowActionDelete'),
+        noTitle: _m('noTitle'),
+        groupCount: n => _m('dupesGroupCount', n),
+        cleanRestHint: (title, doomed) => _m('dupesCleanRestHint', [title, doomed])
+    });
+
+    const groupHeadHtml = (group, L) => {
         const keeper = keeperOf(group);
         const key = htmlspecialchars(group.key);
         const isCollapsed = collapsed.has(group.key);
-        const showPath = views.showItemPath();
         // The per-group quick action names its strategy pick up front
         // ("keep 〈title〉, remove the other N") — one click applies the
         // configured strategy to this group alone. v4 task-4 #9: the glyph
@@ -366,15 +380,20 @@ export function initViewDupes(ctx = {}) {
         const doomed = planDeletion(group, keeper).length;
         const hint = htmlspecialchars(L.cleanRestHint(
             keeper.title || L.noTitle, `${doomed}`));
-        let html = `<li class="dupes-group${selecting && selected.has(group.key) ? ' sel' : ''}" data-key="${key}">` +
+        return `<li class="dupes-group${selecting && selected.has(group.key) ? ' sel' : ''}" data-key="${key}">` +
             `<span class="group-head" tabindex="-1" role="button" aria-expanded="${isCollapsed ? 'false' : 'true'}">` +
             `<span class="chevron${isCollapsed ? ' collapsed' : ''}"></span>` +
             `<span class="dupes-key" dir="auto" title="${key}">${htmlspecialchars(midTruncate(group.key))}</span>` +
             `<span class="count-pill" aria-label="${L.groupCount(`${group.items.length}`)}">${group.items.length}</span>` +
             `<button class="row-btn dupes-clean-rest" aria-label="${hint}" title="${hint}">${CHECK_ICON}</button>` +
             '</span></li>';
-        if (isCollapsed)
-            return html;
+    };
+
+    const groupMembersHtml = (group, L) => {
+        const keeper = keeperOf(group);
+        const key = htmlspecialchars(group.key);
+        const showPath = views.showItemPath();
+        let html = '';
         for (let i = 0, l = group.items.length; i < l; i++) {
             const item = group.items[i];
             const isKeeper = item === keeper;
@@ -403,6 +422,38 @@ export function initViewDupes(ctx = {}) {
                 '</li>';
         }
         return html;
+    };
+
+    const renderGroup = (group, L) => {
+        const html = groupHeadHtml(group, L);
+        return collapsed.has(group.key) ? html : html + groupMembersHtml(group, L);
+    };
+
+    // §perf (fold surgery): a group fold moves ONLY the group's own
+    // .dupes-member rows — no getTree/regroup, no full repaint. The head li
+    // keeps its node, so focus and the head listeners survive. Under the
+    // LAB virtual painter the rows are windowed (never all in the DOM) and
+    // the full render stays the law.
+    const foldGroupSurgically = (li, key) => {
+        const nowCollapsed = collapsed.has(key);
+        const head = li.querySelector('.group-head');
+        if (head)
+            head.setAttribute('aria-expanded', nowCollapsed ? 'false' : 'true');
+        const chev = li.querySelector('.chevron');
+        if (chev)
+            chev.classList.toggle('collapsed', !!nowCollapsed);
+        let next = li.nextElementSibling;
+        while (next && next.classList && next.classList.contains('dupes-member')) {
+            const rm = next;
+            next = next.nextElementSibling;
+            rm.remove();
+        }
+        if (!nowCollapsed) {
+            const g = groups.find(x => x.key === key);
+            if (g)
+                li.insertAdjacentHTML('afterend', groupMembersHtml(g, dupesLabels()));
+        }
+        onRowsRendered();
     };
 
     // --- Toolbar + row focus park/restore: see src/list-focus.js -----------
@@ -452,13 +503,7 @@ export function initViewDupes(ctx = {}) {
         // whole parse. Per-render i18n labels (the tab-groups recipe):
         // member rows used to re-ask chrome.i18n 4× per row (keep/delete
         // labels) — 2500 groups × 2 members = 20000 getMessage crossings.
-        const L = {
-            keepThis: _m('dupesKeepThis'),
-            rowDelete: _m('rowActionDelete'),
-            noTitle: _m('noTitle'),
-            groupCount: n => _m('dupesGroupCount', n),
-            cleanRestHint: (title, doomed) => _m('dupesCleanRestHint', [title, doomed])
-        };
+        const L = dupesLabels();
         let head = riskBanner.html() + renderToolbar();
         const pieces = [];
         // Piece index of the focus-retry targets: onChunk only retries once
@@ -938,7 +983,14 @@ export function initViewDupes(ctx = {}) {
                     collapsed.delete(key);
                 else
                     collapsed.add(key);
-                refresh();
+                // §perf: fold surgery — the data never changed, so the old
+                // refresh() (getTree → flatten → regroup → cache save →
+                // repaint) was pure overhead on every fold toggle.
+                if (virtualLab() || !li || typeof li.querySelector !== 'function') {
+                    refresh();
+                } else {
+                    foldGroupSurgically(li, key);
+                }
             }
             return;
         }
@@ -990,10 +1042,15 @@ export function initViewDupes(ctx = {}) {
                     collapsed.delete(key);
                 else
                     collapsed.add(key);
-                // refresh() re-renders async and replaces the head element —
-                // park the key so render() can restore focus to the new head.
-                pendingHeadFocus = key;
-                refresh();
+                // §perf: fold surgery keeps the head element in place, so the
+                // focus stays on it — no park/restore round trip. The LAB
+                // virtual painter and minimal doubles keep the full render.
+                if (virtualLab() || !li || typeof li.querySelector !== 'function') {
+                    pendingHeadFocus = key;
+                    refresh();
+                } else {
+                    foldGroupSurgically(li, key);
+                }
             }
             return;
         }

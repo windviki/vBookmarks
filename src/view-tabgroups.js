@@ -144,6 +144,10 @@ export function initViewTabGroups(ctx = {}) {
     // The in-flight chunked paint (list-chunks.js): a new render cancels
     // the previous one's pending row batches.
     let paintHandle = null;
+    // LAB virtual painter flag (options 实验室, default off). The windowed
+    // painter never keeps the full list in the DOM, so fold surgery (which
+    // inserts/removes rows in place) must yield to a full render there.
+    const virtualLab = () => !!store.get('virtualScrollLab', '');
 
     const CLOSED_GROUPS_KEY = 'tabGroupsClosed';
     const UI_STATE_KEY = 'tabGroupsViewState';
@@ -484,6 +488,25 @@ export function initViewTabGroups(ctx = {}) {
             '</div>';
     };
 
+    // Per-render row label cache (i18n hoisting): every row used to
+    // re-ask chrome.i18n for the same handful of strings (7+ getMessage
+    // crossings per row) — resolve once per render (and once per surgical
+    // fold) instead.
+    const tabgroupsLabels = () => ({
+        currentTab: _m('tabGroupsCurrentTab'),
+        pinned: _m('tabGroupsPinned'),
+        discarded: _m('tabGroupsDiscarded'),
+        bookmarked: _m('tabGroupsBookmarked'),
+        noTitle: _m('noTitle'),
+        unpin: _m('tabGroupsUnpinTab'),
+        pin: _m('tabGroupsPinTab'),
+        wake: _m('tabGroupsWakeTab'),
+        sleep: _m('tabGroupsSleepTab'),
+        removeBookmark: _m('tabGroupsRemoveBookmark'),
+        addBookmark: _m('tabGroupsAddBookmark'),
+        close: _m('tabGroupsSelectClose')
+    });
+
     const groupHeadHtml = (group, memberTabs, G) => {
         const gid = String(group.id);
         // Folds are inert while the filter is active — a find never hides
@@ -671,20 +694,7 @@ export function initViewTabGroups(ctx = {}) {
         // the same handful of strings (7+ getMessage crossings per row); the
         // profiler attributed ~37 ms of a 1371-row render to the binding.
         // Resolve them once, hand them down.
-        const L = {
-            currentTab: _m('tabGroupsCurrentTab'),
-            pinned: _m('tabGroupsPinned'),
-            discarded: _m('tabGroupsDiscarded'),
-            bookmarked: _m('tabGroupsBookmarked'),
-            noTitle: _m('noTitle'),
-            unpin: _m('tabGroupsUnpinTab'),
-            pin: _m('tabGroupsPinTab'),
-            wake: _m('tabGroupsWakeTab'),
-            sleep: _m('tabGroupsSleepTab'),
-            removeBookmark: _m('tabGroupsRemoveBookmark'),
-            addBookmark: _m('tabGroupsAddBookmark'),
-            close: _m('tabGroupsSelectClose')
-        };
+        const L = tabgroupsLabels();
         // 4.1.0: rows stream in chunks (list-chunks.js) — the head paint is
         // synchronous (toolbar + first rows), the rest appends per frame.
         // The pieces array holds li-level fragments in render order.
@@ -1827,6 +1837,44 @@ export function initViewTabGroups(ctx = {}) {
     // A fold action while the filter is active would be invisible state
     // churn (the filter force-expands everything) — folds stand down until
     // the filter clears.
+    // §perf (fold surgery): a group fold moves ONLY the group's own
+    // contiguous member rows — no full repaint, the head li keeps its node
+    // (focus survives), and the window/closed sections stay untouched.
+    // The LAB virtual painter and minimal DOM doubles keep the full render.
+    const foldGroupSurgically = (gid, shouldCollapse) => {
+        const li = $list.querySelector
+            ? $list.querySelector('#tabgroups-group-' + gid)
+            : null;
+        if (!li || typeof li.querySelector !== 'function') {
+            render();
+            return;
+        }
+        const head = li.querySelector('.tabgroups-group-head');
+        if (head)
+            head.setAttribute('aria-expanded', shouldCollapse ? 'false' : 'true');
+        const chev = li.querySelector('.chevron');
+        if (chev)
+            chev.classList.toggle('collapsed', !!shouldCollapse);
+        let next = li.nextElementSibling;
+        while (next && next.classList && next.classList.contains('vbm-row')
+            && next.dataset && next.dataset.groupId === gid) {
+            const rm = next;
+            next = next.nextElementSibling;
+            rm.remove();
+        }
+        if (!shouldCollapse) {
+            const memberTabs = tabs.filter(t => isGrouped(t) && String(t.groupId) === gid);
+            if (memberTabs.length) {
+                const L = tabgroupsLabels();
+                const html = memberTabs
+                    .map((t, mi) => tabRowHtml(t, { lastMember: mi === memberTabs.length - 1, L }))
+                    .join('');
+                li.insertAdjacentHTML('afterend', html);
+            }
+        }
+        onRowsRendered();
+    };
+
     const setGroupCollapsed = (groupId, shouldCollapse) => {
         if (filterNeedle())
             return;
@@ -1835,7 +1883,10 @@ export function initViewTabGroups(ctx = {}) {
         else
             collapsed.delete(String(groupId));
         persistUIState();
-        render();
+        if (virtualLab())
+            render();
+        else
+            foldGroupSurgically(String(groupId), shouldCollapse);
         // Only write through to the browser when the toolbar option is on.
         // Default OFF: view folding stays local (a refresh restores the
         // browser's own collapsed state).

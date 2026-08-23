@@ -351,6 +351,16 @@ export function initViewRecent(ctx = {}) {
             `</span></li>`;
     };
 
+    // Per-render row label cache (i18n hoisting): the row loops re-read
+    // the same strings once per row — resolve them once per render (and
+    // once per surgical fold) instead.
+    const stagingLabels = () => ({
+        fromHistory: _m('stagingFromHistory'),
+        rowFav: _m('stagingRowFav'),
+        rowUnfav: _m('stagingRowUnfav'),
+        remove: _m('stagingRemove')
+    });
+
     // Returns { ul, pieces }: the EMPTY #staging-items <ul> (painted with
     // the head) + the row markup pieces (streamed inside it by
     // list-chunks — the 4.1.0 chunked-paint law). The pieces also join
@@ -358,12 +368,7 @@ export function initViewRecent(ctx = {}) {
     const renderStagingArea = () => {
         const state = stagingState;
         const idxOf = new Map(state.items.map((it, i) => [it.url, i]));
-        const L = {
-            fromHistory: _m('stagingFromHistory'),
-            rowFav: _m('stagingRowFav'),
-            rowUnfav: _m('stagingRowUnfav'),
-            remove: _m('stagingRemove')
-        };
+        const L = stagingLabels();
         const ul = `<ul role="list" id="staging-items"${selecting ? ' class="selecting"' : ''}></ul>`;
         const pieces = [];
         // The guiding empty state yields to user-built groups: a workbench
@@ -1306,13 +1311,55 @@ export function initViewRecent(ctx = {}) {
     const copyGroupToFolder = gid => openPickerForItems(groupItemsOf(gid));
 
     // --- Group operations (§3.5 — purely local, zero tree ops) --------------
+    // §perf (fold surgery): a group/bucket fold moves ONLY the head's own
+    // contiguous .staging-member rows — the head li keeps its node (focus,
+    // drag state and the quick-tail listeners all survive), the recent
+    // region stays untouched and no favicon re-hydration runs. Falls back
+    // to the full staging repaint when the head li is missing (minimal
+    // test doubles / a repaint that never landed).
+    const escSel = s => (typeof CSS !== 'undefined' && CSS.escape)
+        ? CSS.escape(s)
+        : String(s).replace(/["\\]/g, '\\$&');
+    const syncHeadFoldState = (headLi, headSel, collapsedNow) => {
+        const head = headLi.querySelector(headSel);
+        if (head)
+            head.setAttribute('aria-expanded', collapsedNow ? 'false' : 'true');
+        const chev = headLi.querySelector('.chevron');
+        if (chev)
+            chev.classList.toggle('collapsed', !!collapsedNow);
+    };
+    const foldStagingRows = (headLi, membersHtml) => {
+        let next = headLi.nextElementSibling;
+        while (next && next.classList && next.classList.contains('staging-member')) {
+            const rm = next;
+            next = next.nextElementSibling;
+            rm.remove();
+        }
+        if (membersHtml)
+            headLi.insertAdjacentHTML('afterend', membersHtml);
+        onRowsRendered();
+    };
+    const memberRowsHtml = items => {
+        const idxOf = new Map(stagingState.items.map((it, i) => [it.url, i]));
+        return items.map(it => stagingRowHtml(it, idxOf.get(it.url), true, stagingLabels())).join('');
+    };
+
     const toggleGroupFold = groupId => {
         const g = staging.findGroup(stagingState, groupId);
         if (!g || selecting)
             return;
         staging.setGroupCollapsed(stagingState, groupId, !g.collapsed);
         foldPersist();
-        renderStaging();
+        lastRenderedRaw = staging.serialize(stagingState);
+        const headLi = $list.querySelector
+            ? $list.querySelector('li.staging-group[data-group-id="' + escSel(groupId) + '"]')
+            : null;
+        if (!headLi) {
+            renderStaging();
+            return;
+        }
+        syncHeadFoldState(headLi, '.staging-group-head', g.collapsed);
+        foldStagingRows(headLi, g.collapsed ? '' : memberRowsHtml(staging.groupItems(stagingState, groupId)));
     };
 
     const toggleBucketFold = () => {
@@ -1320,7 +1367,16 @@ export function initViewRecent(ctx = {}) {
             return;
         staging.setUnfavCollapsed(stagingState, !stagingState.unfavCollapsed);
         foldPersist();
-        renderStaging();
+        lastRenderedRaw = staging.serialize(stagingState);
+        const headLi = $list.querySelector
+            ? $list.querySelector('li.staging-bucket')
+            : null;
+        if (!headLi) {
+            renderStaging();
+            return;
+        }
+        syncHeadFoldState(headLi, '.staging-bucket-head', stagingState.unfavCollapsed);
+        foldStagingRows(headLi, stagingState.unfavCollapsed ? '' : memberRowsHtml(staging.unfavBucketItems(stagingState)));
     };
 
     const renameGroup = groupId => {
