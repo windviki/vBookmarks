@@ -2260,6 +2260,9 @@
   "stagingShortcutAdd": {
     "message": "ショートカットを追加"
   },
+  "stagingShortcutBarLabel": {
+    "message": "移動先:"
+  },
   "stagingShortcutTitle": {
     "message": "移動先ショートカット"
   },

@@ -2260,6 +2260,9 @@
   "stagingShortcutAdd": {
     "message": "เพิ่มทางลัด"
   },
+  "stagingShortcutBarLabel": {
+    "message": "ย้ายไปที่:"
+  },
   "stagingShortcutTitle": {
     "message": "ทางลัดย้ายไปยัง"
   },

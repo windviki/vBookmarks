@@ -2260,6 +2260,9 @@
   "stagingShortcutAdd": {
     "message": "Añadir acceso directo"
   },
+  "stagingShortcutBarLabel": {
+    "message": "Mover a:"
+  },
   "stagingShortcutTitle": {
     "message": "Acceso directo de mover"
   },

@@ -2260,6 +2260,9 @@
   "stagingShortcutAdd": {
     "message": "Dodaj prečac"
   },
+  "stagingShortcutBarLabel": {
+    "message": "Premjesti u:"
+  },
   "stagingShortcutTitle": {
     "message": "Prečac za premještanje"
   },

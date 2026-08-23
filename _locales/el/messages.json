@@ -2260,6 +2260,9 @@
   "stagingShortcutAdd": {
     "message": "Προσθήκη συντόμευσης"
   },
+  "stagingShortcutBarLabel": {
+    "message": "Μετακίνηση σε:"
+  },
   "stagingShortcutTitle": {
     "message": "Συντόμευση μετακίνησης"
   },

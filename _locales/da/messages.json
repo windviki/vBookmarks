@@ -2260,6 +2260,9 @@
   "stagingShortcutAdd": {
     "message": "Tilføj genvej"
   },
+  "stagingShortcutBarLabel": {
+    "message": "Flyt til:"
+  },
   "stagingShortcutTitle": {
     "message": "Flyt-til-genvej"
   },

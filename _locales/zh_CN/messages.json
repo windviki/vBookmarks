@@ -2314,6 +2314,9 @@
   "stagingShortcutAdd": {
     "message": "添加快捷"
   },
+  "stagingShortcutBarLabel": {
+    "message": "收藏到："
+  },
   "stagingShortcutTitle": {
     "message": "移动到文件夹快捷方式"
   },

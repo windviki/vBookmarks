@@ -2260,6 +2260,9 @@
   "stagingShortcutAdd": {
     "message": "Aggiungi scorciatoia"
   },
+  "stagingShortcutBarLabel": {
+    "message": "Sposta in:"
+  },
   "stagingShortcutTitle": {
     "message": "Scorciatoia di spostamento"
   },

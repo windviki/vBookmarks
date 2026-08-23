@@ -2260,6 +2260,9 @@
   "stagingShortcutAdd": {
     "message": "Добавяне на пряк път"
   },
+  "stagingShortcutBarLabel": {
+    "message": "Премести в:"
+  },
   "stagingShortcutTitle": {
     "message": "Пряк път за преместване"
   },

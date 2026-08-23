@@ -2508,6 +2508,9 @@
   "stagingShortcutAdd": {
     "message": "Add shortcut"
   },
+  "stagingShortcutBarLabel": {
+    "message": "Move to:"
+  },
   "stagingShortcutTitle": {
     "message": "Move-to shortcut"
   },

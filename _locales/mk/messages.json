@@ -2259,6 +2259,9 @@
   "stagingShortcutAdd": {
     "message": "Додај кратенка"
   },
+  "stagingShortcutBarLabel": {
+    "message": "Премести во:"
+  },
   "stagingShortcutTitle": {
     "message": "Кратенка за преместување"
   },

@@ -2260,6 +2260,9 @@
   "stagingShortcutAdd": {
     "message": "바로가기 추가"
   },
+  "stagingShortcutBarLabel": {
+    "message": "이동:"
+  },
   "stagingShortcutTitle": {
     "message": "이동 바로가기"
   },

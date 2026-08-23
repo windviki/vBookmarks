@@ -1727,7 +1727,10 @@ menu[type=context] hr {
 .staging-group-head .chevron {
     flex: none;
     width: 16px;
-    margin-inline-end: 4px; /* + the 4px gap = the 8px lead to content */
+    /* 12px margin + the 4px gap = a 16px lead to content: the head's
+       first content glyph lands on the LOOSE row's TITLE column (40px),
+       which is also where the member rows' icon column now sits. */
+    margin-inline-end: 12px;
     text-align: center;
     color: var(--vbm-muted);
 }
@@ -1763,7 +1766,7 @@ menu[type=context] hr {
 .staging-bucket-star {
     flex: none;
     display: inline-flex;
-    margin-inline-end: 4px; /* + the 4px gap = the 8px lead to the title */
+    margin-inline-end: 12px; /* + the 4px gap = the 16px lead to the title */
     color: var(--vbm-muted);
 }
 
@@ -1831,25 +1834,28 @@ menu[type=context] hr {
 
 /* Hierarchy (the tabgroups law, not the flat dupes law — staging is a
    workbench where members move between groups constantly): a row under
-   a head indents 16px so its FAVICON column (16px indent + the anchor's
-   16px slot = 32px) lands exactly on its head's first content glyph
-   (group head title / bucket head star, also 32px). Loose rows keep the
-   16px baseline — one glance shows who is grouped and who is not, and
-   the drop targets (head rows) read as the columns their members hang
-   off. */
+   a head indents 24px so its FAVICON column (24px indent + the anchor's
+   16px slot = 40px) lands on the LOOSE row's TITLE column AND its head's
+   first content glyph (group head title / bucket head star, also 40px).
+   Loose rows keep their 16px icon / 40px title baseline — one glance
+   shows who is grouped and who is not, and the drop targets (head rows)
+   read as the columns their members hang off. A faint inset line on the
+   member rows' edge (the tabgroups color-line language, token-muted
+   instead of per-group colored) ties them to their head without adding
+   visual weight. */
 #staging-items li.vbm-row.staging-member {
-    padding-inline-start: 16px;
+    padding-inline-start: 24px;
+    box-shadow: inset 2px 0 0 color-mix(in srgb, var(--vbm-accent) 14%, transparent);
 }
 
 /* Selection mode keeps the hierarchy WITHOUT moving the checkbox off the
    8px axis (the tabgroups law): the base #staging-list ul.selecting rule
    already gives every row the 8px lead, so every checkbox shares one
-   column; the member CONTENT then steps 28px right via the anchor margin
-   (8px lead + 14px checkbox + 6px margin + 4px gap + 28px = 56px = the
-   head's first content glyph, which starts after the checkbox + chevron
-   at the same 56px). */
+   column; the member CONTENT then steps 36px right via the anchor margin
+   (8px lead + 20px checkbox + 36px = 64px = the head's first content
+   glyph, which starts after the checkbox + chevron at the same 64px). */
 #staging-list ul.selecting li.vbm-row.staging-member > a.tree-item-link {
-    margin-inline-start: 28px;
+    margin-inline-start: 36px;
 }
 
 /* Drag & drop between staging groups: the dragged source fades (the cut
@@ -2050,14 +2056,33 @@ li.staging-row.drag-over {
 }
 
 /* --- Move-to shortcut chips (selection bar rung 3) ----------------------
-   A chip = tab-group color dot + alias (falls back to the folder path);
-   hover reveals the edit/remove .row-btns. The + adds one via the dialog
-   above. */
+   Normal mode is read-only per chip: a chip = tab-group color dot + alias,
+   click = MOVE the selection. Managing lives behind the right-edge icon
+   cluster ([+] add, [pencil] edit-mode) so chips never waste horizontal
+   space on per-chip buttons. In edit mode the chips get a dashed accent
+   border (a clearly different visual state): clicking a chip EDITS it, and
+   the delete control floats as a red × over the chip's color dot. */
 .staging-shortcuts-toolbar {
     border-bottom: 1px solid var(--vbm-border);
 }
 
+/* the short left label "收藏到：" — only when the view is wide enough */
+.staging-shortcuts-label {
+    flex: none;
+    color: var(--vbm-muted);
+    font-size: 11px;
+    white-space: nowrap;
+    display: none;
+}
+
+@container (min-width: 520px) {
+    .staging-shortcuts-label {
+        display: inline;
+    }
+}
+
 .staging-shortcut-item {
+    position: relative; /* the edit-mode delete badge anchors here */
     display: inline-flex;
     align-items: center;
 }
@@ -2092,37 +2117,68 @@ li.staging-row.drag-over {
     text-overflow: ellipsis;
 }
 
-.staging-shortcut-item .row-btn.staging-shortcut-edit,
-.staging-shortcut-item .row-btn.staging-shortcut-remove {
-    visibility: hidden;
+/* edit mode: the dashed accent border is the "click = edit" signal, and
+   the delete × floats over the chip's leading color dot */
+.staging-shortcuts-toolbar.editing .staging-shortcut {
+    border-style: dashed;
+    border-color: var(--vbm-accent);
 }
 
-.staging-shortcut-item:hover .row-btn.staging-shortcut-edit,
-.staging-shortcut-item:hover .row-btn.staging-shortcut-remove,
-.staging-shortcut-item:focus-within .row-btn.staging-shortcut-edit,
-.staging-shortcut-item:focus-within .row-btn.staging-shortcut-remove {
-    visibility: visible;
+.staging-shortcuts-toolbar .staging-shortcut-del {
+    display: none;
 }
 
-.staging-shortcut-edit:hover {
-    color: var(--vbm-accent);
+.staging-shortcuts-toolbar.editing .staging-shortcut-del {
+    display: inline-flex;
+    position: absolute;
+    left: -5px;
+    top: 50%;
+    transform: translateY(-50%);
+    align-items: center;
+    justify-content: center;
+    width: 14px;
+    height: 14px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: var(--vbm-danger);
+    color: var(--vbm-danger-fg);
+    font-size: 10px;
+    line-height: 1;
+    cursor: pointer;
+    z-index: 1;
 }
 
-.staging-shortcut-remove:hover {
-    background: color-mix(in srgb, var(--vbm-danger) 12%, transparent);
-    color: var(--vbm-danger);
-}
-
-.staging-toolbar .staging-shortcut-add {
+/* the right-edge management cluster: [+] add, [pencil] edit-mode toggle —
+   two 22px icon squares docked 8px off the edge like every other toolbar's
+   rightmost icon */
+.staging-shortcuts-cluster {
     display: inline-flex;
     align-items: center;
     gap: 4px;
+    margin-inline-start: auto;
 }
 
-.staging-toolbar .staging-shortcut-add .vbm-icon {
-    width: 14px;
-    height: 14px;
+.staging-toolbar .staging-shortcut-add,
+.staging-toolbar .staging-shortcut-edit-mode {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    padding: 0;
     flex: none;
+}
+
+.staging-toolbar .staging-shortcut-add .vbm-icon,
+.staging-toolbar .staging-shortcut-edit-mode .vbm-icon {
+    width: 16px;
+    height: 16px;
+}
+
+.staging-toolbar .staging-shortcut-edit-mode[aria-pressed="true"] {
+    background: var(--vbm-bg-selected);
+    color: var(--vbm-fg-selected);
 }
 
 /* The staging/search toolbars ride the tabgroups/dupes/dead chrome: 11px
@@ -2244,6 +2300,61 @@ li.staging-row.drag-over {
 .staging-toolbar .staging-icon-btn.staging-delete:hover:not([disabled]),
 .staging-toolbar .staging-icon-btn.staging-clear-all:hover:not([disabled]) {
     background: color-mix(in srgb, var(--vbm-danger) 12%, transparent);
+}
+
+/* Width-aware labels: at narrow widths the rung stays nine glyphs; as
+   the container widens, buttons grow into icon+text ONE BY ONE — the
+   destructive pair (删除/清空, danger red) gains its text FIRST, then
+   the organize/favorite group, then everything else. Never wait for
+   the whole rung to fit before showing any text. */
+.staging-toolbar .staging-icon-btn {
+    gap: 4px;
+}
+
+.staging-toolbar .staging-icon-btn .staging-btn-label {
+    display: none;
+}
+
+@container (min-width: 520px) {
+    .staging-toolbar .staging-icon-btn.staging-delete,
+    .staging-toolbar .staging-icon-btn.staging-clear-all {
+        width: auto;
+        padding: 2px 6px;
+    }
+    .staging-toolbar .staging-icon-btn.staging-delete .staging-btn-label,
+    .staging-toolbar .staging-icon-btn.staging-clear-all .staging-btn-label {
+        display: inline;
+    }
+}
+
+@container (min-width: 680px) {
+    .staging-toolbar .staging-icon-btn.staging-fav,
+    .staging-toolbar .staging-icon-btn.staging-unfav,
+    .staging-toolbar .staging-icon-btn.staging-assign,
+    .staging-toolbar .staging-icon-btn.staging-movecopy {
+        width: auto;
+        padding: 2px 6px;
+    }
+    .staging-toolbar .staging-icon-btn.staging-fav .staging-btn-label,
+    .staging-toolbar .staging-icon-btn.staging-unfav .staging-btn-label,
+    .staging-toolbar .staging-icon-btn.staging-assign .staging-btn-label,
+    .staging-toolbar .staging-icon-btn.staging-movecopy .staging-btn-label {
+        display: inline;
+    }
+}
+
+@container (min-width: 820px) {
+    .staging-toolbar .staging-icon-btn.staging-open,
+    .staging-toolbar .staging-icon-btn.staging-open-group,
+    .staging-toolbar .staging-icon-btn.staging-remove {
+        width: auto;
+        padding: 2px 6px;
+    }
+    .staging-toolbar .staging-icon-btn.staging-open .staging-btn-label,
+    .staging-toolbar .staging-icon-btn.staging-open-group .staging-btn-label,
+    .staging-toolbar .staging-icon-btn.staging-remove .staging-btn-label {
+        display: inline;
+    }
 }
 
 /* The three select-mode entry buttons share the dupes select-mode recipe:

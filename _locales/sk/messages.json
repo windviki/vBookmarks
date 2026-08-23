@@ -2260,6 +2260,9 @@
   "stagingShortcutAdd": {
     "message": "Pridať odkaz"
   },
+  "stagingShortcutBarLabel": {
+    "message": "Presunúť do:"
+  },
   "stagingShortcutTitle": {
     "message": "Odkaz na presun"
   },

@@ -2260,6 +2260,9 @@
   "stagingShortcutAdd": {
     "message": "Dodaj skrót"
   },
+  "stagingShortcutBarLabel": {
+    "message": "Przenieś do:"
+  },
   "stagingShortcutTitle": {
     "message": "Skrót przenoszenia"
   },

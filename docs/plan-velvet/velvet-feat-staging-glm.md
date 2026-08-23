@@ -36,6 +36,11 @@
 > ③ **picker 过滤栏样式收口（§4.1）**：`#bookmark-folder-pick-filter` 的 ID 级 `width:100%` 曾压过 `.dialog > *` 的封顶列宽（宽面板里整条拉满、与其余对话框控件不对齐）——改为 `width: var(--dialog-content-width)` 并并入 `#edit/#new-folder` 输入配方（4px/6px padding、accent 焦点边）。
 > ④ **入口补全**：chips 的加/改/删全部在 rung3 自身（＋/✎/×），无需右键菜单；跨文档经 `chrome.storage.onChanged` 对 `stagingShortcuts` 同款回声防护同步；删除 chip 即时 toast。
 
+> **迭代记录 G（细调轮：40px 层级轴 / 快捷栏编辑态与宽度感知 / 工具栏渐进文本，实施后回写）**：
+> ① **层级轴再收紧（§3.1/§3.5）**：成员行缩进升到 24px——**成员 icon 左缘（40px）= 散行标题左缘 = 组头标题/桶头星标左缘**（此前 32px 对 32px，缩进感不足）；组头 chevron→内容槽改为 16px（margin 12 + gap 4）对应调整；选择态锚点 margin 36px（复选框 8px 轴不变，icon 落到 64px = 选择态组头标题/桶头星标列）。成员行左缘加 2px 淡 accent 连接线（tabgroups color-line 语言的 token 化淡色版，不抢眼）。
+> ② **快捷栏重设计（§3.3）**：普通态 chip 零附属按钮（点击 = move），管理动作收进**右缘双图标簇**——[＋] 添加（FOLDER_PLUS，tooltip 语义）、[pencil] 编辑模式开关（`aria-pressed`）；编辑态 chip 改**虚线 accent 边框**（点击 = 编辑的视觉信号），删除 = **悬浮在色点上的红 ×**（14px 圆），退出选择模式自动复位编辑态。左端「收藏到：」短标签仅 ≥520px 容器显示。
+> ③ **动作 rung 宽度感知（§3.3）**：九个图标按钮内置 `.staging-btn-label`，容器 ≥520px **先给 danger 对（删除/清空）显示 icon+文本**，≥680px 再给收藏/取消收藏/分组/移动复制到，≥820px 全显——渐进补文本，不等全行放得下才一起出现。
+
 ## 准备实现的功能
 
 > 原始需求清单（冻结，逐字保留；下方「问题和方案」为其落地设计，迭代不改动本节）。
@@ -189,7 +194,7 @@ tab 不是书签，暂存区收条目（url/title）天然兼容——互通动�
 4. **危险度分层用现成机制**（Confirm vs Undo 裁决启发式：高频低危 → 撤销；罕见高危 → 确认）：删除真实书签（罕见高危）= ConfirmDialog + undo 单步；清空暂存（大动作）= ConfirmDialog；收藏/取消收藏/移出/复制（高频低危）= 直接执行 + toast（取消收藏附撤销）。**唯一例外**：批量「移动到文件夹」对已选已收藏条目是真实搬树，量级可能大——沿用 `openBookmarks` 的 10 项确认阈值心智（>10 条时 ConfirmDialog 报数确认，受 `dontConfirmOpenFolder` 同款旁路），单步 undo 照挂。
 
 **3.1 模式骨架**：完全复用选择模式既有机制——`selecting` 标志 + `selected` 集合 + 工具条整体切换 + 行点击切换成员 + capture 相 Space 切换聚焦行 + Esc 退出 + `parkRowFocus`/`parkToolbarFocus` 焦点保持 + `<ul class="selecting">` / 行 `.sel` 视觉。4.1.0 已有三套同构先例（死链/去重/tabgroups），本视图参照 tabgroups 的完整度：进入选择模式时**展开全部组折叠并快照、退出时恢复**（view-tabgroups.js:1205-1227 先例，含 selecting 期间停止 persistUIState）。`typeAhead: false`。
-- **复选框轴与层级（迭代 D→E）**：行/组头/桶头全部走 8px 左槽——成员行与散行复选框同列；成员行（含桶成员）内容经锚点 margin **28px** 让 favicon 落在 56px = 选择态组头标题/桶头星标列（层级与复选框轴互不干扰，tabgroups grouped 行同法）；散行 favicon 28px 基线；组头三态（全选 `.sel` / 半选 `.some` / 未选）沿用去重组头配方。普通态同律：成员 favicon 32px = 组头标题/桶头星标列，散行 16px 基线；窄行 `min-height: var(--vbm-row-h)` 与组头同高。
+- **复选框轴与层级（迭代 D→G）**：行/组头/桶头全部走 8px 左槽——成员行与散行复选框同列；成员行（含桶成员）内容经锚点 margin **36px** 让 favicon 落在 64px = 选择态组头标题/桶头星标列（层级与复选框轴互不干扰，tabgroups grouped 行同法）；散行 favicon 28px 基线；组头三态沿用去重组头配方。普通态（迭代 G）：成员行缩进 24px，**成员 favicon 40px = 散行标题 = 组头标题/桶头星标**（淡 accent 连接线标记成员行），散行 16px icon/40px 标题基线；窄行 `min-height: var(--vbm-row-h)` 与组头同高。
 
 **3.2 选择单元与作用域**：
 - 选择单元是**暂存条目（URL）**；`selected` 存条目标识（列表序号或 URL，实现取其一，测试锁死）。
@@ -199,7 +204,7 @@ tab 不是书签，暂存区收条目（url/title）天然兼容——互通动�
 
 **3.3 选择工具条按钮语义（迭代 B 全表重写）**：
 
-工具条为三条 `.vbm-toolbar` rung（tabgroups 选择条先例 + 快捷归位行，封顶三行）：第一 rung = 计数 + 选择集操作（文本按钮）；**第二 rung = 动作，迭代 E 起图标化**——九枚 22px 图标按钮（打开 OPEN / 打开为标签组 TABS / 收藏 STAR / 取消收藏 STAR_X / 分组 GROUP / 移动复制到 folder-star / 移出 plane-x / 删除所选 TRASH / 清空暂存 LIST_X），label 入 title/aria（死链视图的 icon 思路：语义无歧义者图标化），整行不换行；删除/清空 danger 红。`openBookmarksInGroup(urls)` 无标题调用已修（`pickGroupColor(undefined)` 崩溃，staging/search/stats 三入口同源受益）。**第三 rung = 移动快捷栏（迭代 F）**：`.staging-shortcuts-toolbar`——用户自定义「移动到目录」chips（仅 move 语义），色点/别名/✎/×/＋ 见迭代记录 F 与 §9 决策表。**全部动作立即生效**（§3.0）。
+工具条为三条 `.vbm-toolbar` rung（tabgroups 选择条先例 + 快捷归位行，封顶三行）：第一 rung = 计数 + 选择集操作（文本按钮）；**第二 rung = 动作，迭代 E 起图标化**——九枚 22px 图标按钮（打开 OPEN / 打开为标签组 TABS / 收藏 STAR / 取消收藏 STAR_X / 分组 GROUP / 移动复制到 folder-star / 移出 plane-x / 删除所选 TRASH / 清空暂存 LIST_X），label 入 title/aria（死链视图的 icon 思路：语义无歧义者图标化），整行不换行；删除/清空 danger 红。`openBookmarksInGroup(urls)` 无标题调用已修（`pickGroupColor(undefined)` 崩溃，staging/search/stats 三入口同源受益）。**第三 rung = 移动快捷栏（迭代 F→G）**：`.staging-shortcuts-toolbar`——用户自定义「移动到目录」chips（仅 move 语义）；普通态 chip = 色点+别名（点击即 move、零附属按钮），管理经**右缘 [＋]/[pencil] 双图标簇**进入编辑态（虚线边框 = 点击编辑、色点上悬浮红 × = 删除），左端「收藏到：」标签 ≥520px 才显示；**动作 rung 宽度感知（迭代 G）**：`.staging-btn-label` 随容器变宽渐进显示——≥520px danger 对（删除/清空）先 icon+文本，≥680px 收藏/取消收藏/分组/移动复制到，≥820px 全显。详见迭代记录 F/G 与 §9 决策表。**全部动作立即生效**（§3.0）。
 
 | 按钮 | rung | 作用对象 | 语义 |
 |---|---|---|---|
@@ -372,7 +377,7 @@ tab 不是书签，暂存区收条目（url/title）天然兼容——互通动�
 | 虚拟分组 | 用户组（`manual` 标记，空组常驻、可删除可撤销）/文件夹组/tab 组（`createdAt` 序，组头拖拽重排）+ 未分组散行；分组与收藏态正交；组头可折叠、可作选择单元；移入/新建统一走分组指派对话框（工具条与行右键同源）；行↔组头/桶头/他行拖拽、组头↔组头重排只写暂存模型 |
 | 「未收藏」桶 | **恢复（迭代 C）**：`id=null && group=null` 的真实态收件箱分区（置顶、可折叠、空心星图标）；桶头「收藏全部」快捷 + 「新 N」计数（`lastSeenTs`）；进组离桶、退藏落档回桶 |
 | 组级归位 | 组头「保存到文件夹…」（未收藏 create / 已收藏 move，>10 确认，完成整组离场、空组自动解散）与「复制到文件夹…」；hover「归位」直达；语义 = §3.3 同名动作的全组预置，非第三套动作 |
-| 移动快捷栏（迭代 F） | 选择工具条第三 rung = 用户自定义「移动到目录」chips（**仅 move**，点击即整批归位离场；复制走图标 rung/右键菜单）；chip = tabgroups 色点 + 别名/路径、hover ✎/×、尾部 ＋；`stagingShortcuts` local 键（`{id,folderId,alias,color}` 数组）+ census `'other'`；编辑对话框复用 picker + 九色色板；跨文档 storage.onChanged 回声防护同步 |
+| 移动快捷栏（迭代 F→G） | 选择工具条第三 rung = 用户自定义「移动到目录」chips（**仅 move**，点击即整批归位离场；复制走图标 rung/右键菜单）；普通态 chip = 色点+别名零附属按钮，管理 = 右缘 [＋]/[pencil] 双图标簇，编辑态虚线边框 + 色点悬浮红 × 删除；`stagingShortcuts` local 键 + census `'other'`；编辑对话框复用 picker + 九色色板；跨文档 storage.onChanged 回声防护同步；左端「收藏到：」标签 ≥520px 显示 |
 | 文件夹选择器快选 | 顶部 chips：pin（行内 PIN_ICON 切换、用户序）+ 最近（LRU ≤6、全部 picker 用途自动记录）；过滤输入转正；`folderPickPins`/`folderPickRecents` 两键 local + census 'other'；打开时按树惰性修剪失效 id |
 | stats 选择模式 | 已收藏统计行 + 未收藏历史行均可选（统一键 = url，混选常态）；动作 = 发送到暂存区/打开/打开为标签组/删除（适用项降级）；入口同搜索（§3.7） |
 | 混合选择 | 各动作「作用于适用项 + 计数汇报」，按钮不因混选禁用 |
@@ -395,7 +400,7 @@ tab 不是书签，暂存区收条目（url/title）天然兼容——互通动�
 - 暂存动作：`stagingRemove`、`stagingRemoved`、`stagingFav`（收藏）、`stagingFavDone`（已收藏 $n$ 条，含跳过数）、`stagingUnfav`（取消收藏）、`stagingUnfavDone`（已取消收藏 $n$ 条）、`stagingClear`、`stagingClearConfirm`、`stagingDeleteConfirm`（含 undo 单步提示，参照 `undoSingleStepNote` 复用）、`stagingMoveDone`/`stagingCopyDone`（含数量参数）、`stagingMoveConfirm`（>10 条确认）。
 - 条目态：`stagingFromHistory`（未收藏条目 subText「来自历史」）、`stagingRowFav`/`stagingRowUnfav`（行内星标 title，随态切换）。
 - 分组：`stagingGroupNew`、`stagingGroupRename`、`stagingGroupDissolve`、`stagingGroupSelectAll`、`stagingGroupNamePrompt`、`stagingGroupAssign`（分组…：工具条/行右键入口 + 指派对话框标题与按钮）、`groupSaveToFolder`（保存到文件夹…）、`groupCopyToFolder`（复制到文件夹…）、`groupPlaceTooltip`（归位）。
-- 移动快捷栏（迭代 F）：`stagingShortcutAdd`、`stagingShortcutTitle`、`stagingShortcutEdit`、`stagingShortcutAlias`、`stagingShortcutPickFolder`、`stagingShortcutSave`、`stagingShortcutRemove`、`stagingShortcutRemoved`、`stagingShortcutMove`（$1$ = 别名/路径）；颜色标签复用 `tabGroupColorLabel` 系。
+- 移动快捷栏（迭代 F→G）：`stagingShortcutAdd`、`stagingShortcutTitle`、`stagingShortcutEdit`、`stagingShortcutAlias`、`stagingShortcutPickFolder`、`stagingShortcutSave`、`stagingShortcutRemove`、`stagingShortcutRemoved`、`stagingShortcutMove`（$1$ = 别名/路径）、`stagingShortcutBarLabel`（收藏到：）；颜色标签复用 `tabGroupColorLabel` 系。
 - 未收藏桶：`stagingBucketFavAll`（收藏全部）、`stagingNew`（新 $n$）。
 - 文件夹选择器：`folderPickMoveHere`、`folderPickCopyHere`、`folderPickFilter`、`folderPickFavNote`（未收藏条目将收藏到此处）、`folderPickPinned`（已 pin 区标）、`folderPickRecent`（最近区标）、`pinFolder`/`unpinFolder`（行内 pin 按钮 title）。
 - 树剪贴板：`copyBookmark`、`cutBookmark`、`pasteHere`、`copiedToast`/`cutToast`/`pasteDone`/`pasteGone`。

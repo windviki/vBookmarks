@@ -2260,6 +2260,9 @@
   "stagingShortcutAdd": {
     "message": "Přidat zástupce"
   },
+  "stagingShortcutBarLabel": {
+    "message": "Přesunout do:"
+  },
   "stagingShortcutTitle": {
     "message": "Zástupce pro přesun"
   },

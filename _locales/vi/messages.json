@@ -2260,6 +2260,9 @@
   "stagingShortcutAdd": {
     "message": "Thêm lối tắt"
   },
+  "stagingShortcutBarLabel": {
+    "message": "Di chuyển đến:"
+  },
   "stagingShortcutTitle": {
     "message": "Lối tắt di chuyển"
   },

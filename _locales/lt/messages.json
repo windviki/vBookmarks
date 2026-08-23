@@ -2260,6 +2260,9 @@
   "stagingShortcutAdd": {
     "message": "Pridėti nuorodą"
   },
+  "stagingShortcutBarLabel": {
+    "message": "Perkelti į:"
+  },
   "stagingShortcutTitle": {
     "message": "Perkėlimo nuoroda"
   },

@@ -2260,6 +2260,9 @@
   "stagingShortcutAdd": {
     "message": "शॉर्टकट जोड़ें"
   },
+  "stagingShortcutBarLabel": {
+    "message": "यहाँ ले जाएँ:"
+  },
   "stagingShortcutTitle": {
     "message": "मूव-टू शॉर्टकट"
   },

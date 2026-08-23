@@ -2260,6 +2260,9 @@
   "stagingShortcutAdd": {
     "message": "Snelkoppeling toevoegen"
   },
+  "stagingShortcutBarLabel": {
+    "message": "Verplaatsen naar:"
+  },
   "stagingShortcutTitle": {
     "message": "Verplaats-snelkoppeling"
   },

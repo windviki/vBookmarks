@@ -2260,6 +2260,9 @@
   "stagingShortcutAdd": {
     "message": "Lisa otsetee"
   },
+  "stagingShortcutBarLabel": {
+    "message": "Liiguta:"
+  },
   "stagingShortcutTitle": {
     "message": "Liigutamise otsetee"
   },

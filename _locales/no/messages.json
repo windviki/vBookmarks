@@ -2260,6 +2260,9 @@
   "stagingShortcutAdd": {
     "message": "Legg til snarvei"
   },
+  "stagingShortcutBarLabel": {
+    "message": "Flytt til:"
+  },
   "stagingShortcutTitle": {
     "message": "Flytt-til-snarvei"
   },

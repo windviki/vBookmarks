@@ -2260,6 +2260,9 @@
   "stagingShortcutAdd": {
     "message": "Adaugă scurtătură"
   },
+  "stagingShortcutBarLabel": {
+    "message": "Mută la:"
+  },
   "stagingShortcutTitle": {
     "message": "Scurtătură de mutare"
   },

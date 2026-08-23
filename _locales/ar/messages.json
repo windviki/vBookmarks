@@ -2260,6 +2260,9 @@
   "stagingShortcutAdd": {
     "message": "إضافة اختصار"
   },
+  "stagingShortcutBarLabel": {
+    "message": "الانتقال إلى:"
+  },
   "stagingShortcutTitle": {
     "message": "اختصار النقل"
   },

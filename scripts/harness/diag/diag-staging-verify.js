@@ -164,6 +164,15 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
                 ? li.querySelector('.favicon-container').getBoundingClientRect().left : null;
             out.memberFavX = favX(document.querySelector('li.staging-member'));
             out.looseFavX = favX([...document.querySelectorAll('#staging-items li.staging-row')].find(li => !li.classList.contains('staging-member')));
+            out.looseTitleX = (() => {
+                const li = [...document.querySelectorAll('#staging-items li.staging-row')].find(x => !x.classList.contains('staging-member'));
+                const i = li && li.querySelector('a i');
+                return i ? i.getBoundingClientRect().left : null;
+            })();
+            out.bucketStarX = (() => {
+                const el = document.querySelector('.staging-bucket-star');
+                return el ? el.getBoundingClientRect().left : null;
+            })();
             out.manualEmptyHead = !!document.querySelector('li.staging-group[data-group-id="g3"]');
             // collapsed chevron: exactly one glyph source
             const cs = getComputedStyle(firstGroupHead.querySelector('.chevron'), '::before');
@@ -209,7 +218,10 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
         ck('bucket fav-all vertically centered', vCenter(css.bucketFav, css.bucketHead));
         ck('select-mode right-aligned inside the toolbar (8px inset)', css.selectBtn && Math.abs(css.selectBtn.right - (css.listRight - 8)) < 1.5);
         ck('summary stays left of the action cluster', css.summaryRight < css.newGroupBtn.left);
-        ck('member rows indent 16px', css.memberFavX !== null && css.looseFavX !== null && Math.abs(css.memberFavX - css.looseFavX - 16) < 1.5);
+        ck('member rows indent 24px (icon column = loose row title column)',
+            css.memberFavX !== null && css.looseFavX !== null &&
+            Math.abs(css.memberFavX - css.looseFavX - 24) < 1.5 &&
+            css.looseTitleX !== null && Math.abs(css.memberFavX - css.looseTitleX) < 1.5);
         ck('member favicon column = group head title column (tabgroups hierarchy)',
             css.memberFavX !== null && css.groupTitle && Math.abs(css.memberFavX - css.groupTitle.left) < 1.5);
         ck('narrow rows are the same 28px height as the heads',
@@ -272,7 +284,10 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
                     bucketStarX: bucketStar ? bucketStar.getBoundingClientRect().left : null,
                     actionIcons: document.querySelectorAll('.staging-actions-toolbar .staging-icon-btn').length,
                     shortcutChips: document.querySelectorAll('.staging-shortcuts-toolbar .staging-shortcut').length,
-                    shortcutAdd: !!document.querySelector('.staging-shortcuts-toolbar .staging-shortcut-add')
+                    shortcutAdd: !!document.querySelector('.staging-shortcuts-toolbar .staging-shortcut-add'),
+                    shortcutEditModeBtn: !!document.querySelector('.staging-shortcuts-toolbar .staging-shortcut-edit-mode'),
+                    perChipBtns: document.querySelectorAll('.staging-shortcut-item .row-btn').length,
+                    labelDisplay: (() => { const el = document.querySelector('.staging-shortcuts-label'); return el ? getComputedStyle(el).display : null; })()
                 });
             }, 300));
         });
@@ -286,12 +301,14 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
             Math.abs(selGeo.g1FavX - selGeo.groupTitleX) < 1.5 &&
             selGeo.bucketFavX !== null && selGeo.bucketStarX !== null &&
             Math.abs(selGeo.bucketFavX - selGeo.bucketStarX) < 1.5);
-        ck('selection member content keeps the 28px step off the loose baseline',
+        ck('selection member content keeps the 36px step off the loose baseline',
             selGeo.g1FavX !== null && selGeo.looseFavX !== null &&
-            Math.abs((selGeo.g1FavX - selGeo.looseFavX) - 28) < 1.5);
+            Math.abs((selGeo.g1FavX - selGeo.looseFavX) - 36) < 1.5);
         ck('selection action rung is iconified (9 glyph buttons)', selGeo.actionIcons === 9);
-        ck('move-to shortcut rung renders the seeded chip + the add button',
-            selGeo.shortcutChips === 1 && selGeo.shortcutAdd);
+        ck('move-to shortcut rung renders chip + icon-only add + edit-mode toggle',
+            selGeo.shortcutChips === 1 && selGeo.shortcutAdd && selGeo.shortcutEditModeBtn);
+        ck('shortcut chips carry NO per-chip buttons in normal mode', selGeo.perChipBtns === 0);
+        ck('shortcut label hidden at 320px (narrow)', selGeo.labelDisplay === 'none');
         // MOVE-TO shortcut: select a row, click the chip, the item must
         // leave staging and land in the target folder (move semantics;
         // the runtime's bookmarks.move runs for real here)
@@ -310,6 +327,46 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
         console.log('shortcutMove:', JSON.stringify({ preMove, ...shortcutAfter }));
         ck('row selected before the shortcut click', preMove.sel >= 1 && preMove.chip);
         ck('shortcut click MOVES the selected item out of staging (move-only semantics)', shortcutAfter.left === false);
+        // --- shortcut edit mode: pencil toggle flips the bar, chips get
+        // the dashed edit look + the floating delete ×, and clicking a
+        // chip opens the editor dialog (Esc closes it) ---
+        await page.evaluate(() => document.querySelector('.staging-shortcut-edit-mode').click());
+        await sleep(250);
+        const editGeo = await page.evaluate(() => ({
+            editing: !!document.querySelector('.staging-shortcuts-toolbar.editing'),
+            del: !!document.querySelector('.staging-shortcut-del'),
+            dashed: (() => { const el = document.querySelector('.staging-shortcut'); return el ? getComputedStyle(el).borderStyle : null; })()
+        }));
+        ck('edit-mode toggle: bar flips, delete × appears, chips turn dashed',
+            editGeo.editing && editGeo.del && editGeo.dashed === 'dashed');
+        await page.evaluate(() => document.querySelector('.staging-shortcut').click());
+        await sleep(300);
+        const dialogOpen = await page.evaluate(() =>
+            !!document.querySelector('#staging-shortcut-dialog') &&
+            document.body.classList.contains('needStagingShortcut'));
+        ck('edit mode: clicking a chip opens the shortcut editor dialog', dialogOpen);
+        await page.keyboard.press('Escape');
+        await sleep(250);
+        await page.evaluate(() => document.querySelector('.staging-shortcut-edit-mode').click());
+        await sleep(200);
+        // --- width-aware action labels: at 800px the DANGER pair gains
+        // text first (progressive, not all-or-nothing); restore 320 ---
+        await page.evaluate(() => { document.body.style.width = '800px'; });
+        await sleep(250);
+        const wide = await page.evaluate(() => ({
+            containerW: document.getElementById('container').getBoundingClientRect().width,
+            delW: document.querySelector('.staging-delete').getBoundingClientRect().width,
+            delLabel: getComputedStyle(document.querySelector('.staging-delete .staging-btn-label')).display,
+            openLabel: getComputedStyle(document.querySelector('.staging-open .staging-btn-label')).display,
+            barLabel: getComputedStyle(document.querySelector('.staging-shortcuts-label')).display
+        }));
+        console.log('wide:', JSON.stringify(wide));
+        await page.evaluate(() => { document.body.style.width = ''; });
+        await sleep(200);
+        ck('width-aware: danger delete shows icon+text at 800px (progressive)',
+            wide.delW > 22 && wide.delLabel !== 'none');
+        ck('width-aware: lower-priority open stays icon-only at 800px', wide.openLabel === 'none');
+        ck('shortcut label appears at 800px', wide.barLabel !== 'none');
         // open-as-tab-group through the icon rung: the urls-only call
         // path must send without a pageerror (the old pickGroupColor
         // crash read as a popup error toast). The runtime message is

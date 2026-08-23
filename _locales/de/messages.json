@@ -2260,6 +2260,9 @@
   "stagingShortcutAdd": {
     "message": "Verknüpfung hinzufügen"
   },
+  "stagingShortcutBarLabel": {
+    "message": "Verschieben nach:"
+  },
   "stagingShortcutTitle": {
     "message": "Verschieben-Verknüpfung"
   },

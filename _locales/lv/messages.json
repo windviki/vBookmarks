@@ -2260,6 +2260,9 @@
   "stagingShortcutAdd": {
     "message": "Pievienot saīsni"
   },
+  "stagingShortcutBarLabel": {
+    "message": "Pārvietot uz:"
+  },
   "stagingShortcutTitle": {
     "message": "Pārvietošanas saīsne"
   },

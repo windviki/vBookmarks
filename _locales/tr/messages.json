@@ -2260,6 +2260,9 @@
   "stagingShortcutAdd": {
     "message": "Kısayol ekle"
   },
+  "stagingShortcutBarLabel": {
+    "message": "Taşı:"
+  },
   "stagingShortcutTitle": {
     "message": "Taşıma kısayolu"
   },

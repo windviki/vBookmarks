@@ -2256,6 +2256,9 @@
   "stagingShortcutAdd": {
     "message": "Adicionar atalho"
   },
+  "stagingShortcutBarLabel": {
+    "message": "Mover para:"
+  },
   "stagingShortcutTitle": {
     "message": "Atalho de mover para"
   },

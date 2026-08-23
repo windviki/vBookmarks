@@ -2260,6 +2260,9 @@
   "stagingShortcutAdd": {
     "message": "শর্টকাট যোগ করুন"
   },
+  "stagingShortcutBarLabel": {
+    "message": "এখানে সরান:"
+  },
   "stagingShortcutTitle": {
     "message": "স্থানান্তর শর্টকাট"
   },

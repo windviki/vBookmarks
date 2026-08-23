@@ -2260,6 +2260,9 @@
   "stagingShortcutAdd": {
     "message": "Ajouter un raccourci"
   },
+  "stagingShortcutBarLabel": {
+    "message": "Déplacer vers :"
+  },
   "stagingShortcutTitle": {
     "message": "Raccourci de déplacement"
   },

@@ -2260,6 +2260,9 @@
   "stagingShortcutAdd": {
     "message": "Додати ярлик"
   },
+  "stagingShortcutBarLabel": {
+    "message": "Перемістити до:"
+  },
   "stagingShortcutTitle": {
     "message": "Ярлик переміщення"
   },

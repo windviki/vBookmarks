@@ -483,6 +483,10 @@ export function initViewRecent(ctx = {}) {
     // expands every fold (snapshot restored on exit — the tabgroups law);
     // the fold writes are suppressed while selecting.
     let selecting = false;
+    // The shortcut bar's manage state (rung 3): false = chips move on
+    // click, true = chips edit and the floating delete × shows. Leaving
+    // selection mode always resets it.
+    let editingShortcuts = false;
     const selected = new Set(); // urls
     let pendingRowFocus = null;
     let selectionFocus = null;
@@ -507,8 +511,10 @@ export function initViewRecent(ctx = {}) {
         // partial repaint below then never has to touch that region.
         if ($list.classList)
             $list.classList.toggle('selecting-view', on);
-        if (!on)
+        if (!on) {
             selected.clear();
+            editingShortcuts = false;
+        }
         if (focus)
             selectionFocus = focus;
         renderStaging();
@@ -540,9 +546,11 @@ export function initViewRecent(ctx = {}) {
             // 收藏态(收藏 / 取消收藏) → 组织(分组 / 移动复制到) → 离场
             // (移出 / 删除所选 / 清空暂存 — the destructive pair ends the
             // rung in danger red, delete before the staging-wide clear).
-            const iconBtn = (cls, label, icon) =>
-                `<button class="staging-icon-btn ${cls}"${hasSel} aria-label="${htmlspecialchars(label)}" ` +
-                `title="${htmlspecialchars(label)}">${icon}</button>`;
+            const iconBtn = (cls, label, icon) => {
+                const lab = htmlspecialchars(label);
+                return `<button class="staging-icon-btn ${cls}"${hasSel} aria-label="${lab}" title="${lab}">` +
+                    `${icon}<span class="staging-btn-label">${lab}</span></button>`;
+            };
             let r2 = '<div class="staging-toolbar staging-actions-toolbar selecting-bar vbm-toolbar">';
             r2 += iconBtn('staging-open', _m('open'), OPEN_ICON) +
                 iconBtn('staging-open-group', _m('openBookmarksInGroup'), TABS_ICON) +
@@ -555,37 +563,41 @@ export function initViewRecent(ctx = {}) {
                 // 清空暂存 acts on ALL items (not the selection), so its
                 // gate is the item count, not the selection size
                 `<button class="staging-icon-btn staging-clear-all"${n ? '' : ' disabled'} ` +
-                `aria-label="${htmlspecialchars(_m('stagingClear'))}" title="${htmlspecialchars(_m('stagingClear'))}">${LIST_X_ICON}</button>`;
+                `aria-label="${htmlspecialchars(_m('stagingClear'))}" title="${htmlspecialchars(_m('stagingClear'))}">` +
+                `${LIST_X_ICON}<span class="staging-btn-label">${htmlspecialchars(_m('stagingClear'))}</span></button>`;
             r2 += '</div>';
-            // Rung 3: the customizable MOVE-TO shortcuts (the workbench's
-            // most frequent homing paths — one click = move the whole
-            // selection into the pinned folder; copy stays on the icon
-            // rung and the context menus). Three rungs max, per the
-            // toolbar budget. Each chip = tab-group color dot + alias,
-            // hover reveals edit/remove; the trailing + adds one.
+            // Rung 3: the customizable MOVE-TO shortcuts. Normal mode is
+            // minimal-horizontal: chip = color dot + alias (click = move),
+            // NO per-chip buttons. The right-edge cluster is [+] add and
+            // [pencil] edit-mode; in edit mode chips get the dashed border
+            // (click = edit) and a floating red × over the color dot to
+            // delete.
             const shortcutItem = sc => {
                 const path = views.pathOf(sc.folderId) || sc.folderId;
                 const label = htmlspecialchars(sc.alias || path);
-                const editLabel = _m('stagingShortcutEdit');
-                const removeLabel = _m('stagingShortcutRemove');
                 const moveLabel = htmlspecialchars(_m('stagingShortcutMove', [label]));
+                const editLabel = htmlspecialchars(_m('stagingShortcutEdit'));
                 return '<span class="staging-shortcut-item">' +
                     '<button type="button" class="staging-shortcut tg-' + sc.color + '" data-shortcut-id="' + sc.id + '" ' +
-                    'aria-label="' + moveLabel + '" title="' + htmlspecialchars(path) + '">' +
+                    'aria-label="' + (editingShortcuts ? editLabel : moveLabel) + '" title="' + htmlspecialchars(path) + '">' +
                     '<span class="tab-group-dot tg-' + sc.color + '" aria-hidden="true"></span>' +
                     '<span class="staging-shortcut-name" dir="auto">' + label + '</span></button>' +
-                    '<button type="button" class="row-btn staging-shortcut-edit" data-shortcut-id="' + sc.id + '" tabindex="-1" ' +
-                    'aria-label="' + htmlspecialchars(editLabel) + '" title="' + htmlspecialchars(editLabel) + '">' + EDIT_ICON + '</button>' +
-                    '<button type="button" class="row-btn staging-shortcut-remove" data-shortcut-id="' + sc.id + '" tabindex="-1" ' +
-                    'aria-label="' + htmlspecialchars(removeLabel) + '" title="' + htmlspecialchars(removeLabel) + '">' + STAGE_REMOVE_ICON + '</button>' +
+                    '<button type="button" class="staging-shortcut-del" data-shortcut-id="' + sc.id + '" tabindex="-1" ' +
+                    'aria-label="' + htmlspecialchars(_m('stagingShortcutRemove')) + '" ' +
+                    'title="' + htmlspecialchars(_m('stagingShortcutRemove')) + '">×</button>' +
                     '</span>';
             };
-            let r3 = '<div class="staging-toolbar staging-shortcuts-toolbar vbm-toolbar">';
+            let r3 = '<div class="staging-toolbar staging-shortcuts-toolbar vbm-toolbar' + (editingShortcuts ? ' editing' : '') + '">';
+            if (!editingShortcuts)
+                r3 += '<span class="staging-shortcuts-label">' + htmlspecialchars(_m('stagingShortcutBarLabel')) + '</span>';
             for (const sc of shortcuts)
                 r3 += shortcutItem(sc);
-            const addLabel = _m('stagingShortcutAdd');
-            r3 += '<button class="staging-shortcut-add" aria-label="' + htmlspecialchars(addLabel) + '" ' +
-                'title="' + htmlspecialchars(addLabel) + '">' + FOLDER_PLUS_ICON + htmlspecialchars(addLabel) + '</button>';
+            r3 += '<span class="staging-shortcuts-cluster">' +
+                '<button type="button" class="staging-shortcut-add" aria-label="' + htmlspecialchars(_m('stagingShortcutAdd')) + '" ' +
+                'title="' + htmlspecialchars(_m('stagingShortcutAdd')) + '">' + FOLDER_PLUS_ICON + '</button>' +
+                '<button type="button" class="staging-shortcut-edit-mode" aria-pressed="' + (editingShortcuts ? 'true' : 'false') + '" ' +
+                'aria-label="' + htmlspecialchars(_m('stagingShortcutEdit')) + '" title="' + htmlspecialchars(_m('stagingShortcutEdit')) + '">' + EDIT_ICON + '</button>' +
+                '</span>';
             r3 += '</div>';
             return r1 + r2 + r3;
         }
@@ -1608,28 +1620,32 @@ export function initViewRecent(ctx = {}) {
             if (toolbarBtn('.staging-delete')) { deleteSelected(); return; }
             if (toolbarBtn('.staging-remove')) { removeSelected(); return; }
             if (toolbarBtn('.staging-clear-all')) { clearStaging(); return; }
-            // move-to shortcuts (rung 3): one click homes the whole
-            // selection; edit/remove manage the chip; + opens the editor
+            // move-to shortcuts (rung 3): normal mode = click moves the
+            // whole selection; edit mode = click opens the editor and
+            // the floating × deletes. [+] adds, [pencil] toggles edit mode.
             if (toolbarBtn('.staging-shortcut')) {
                 const btn = closest('.staging-shortcut');
-                if (btn && btn.dataset && btn.dataset.shortcutId)
-                    shortcutMove(btn.dataset.shortcutId);
+                if (btn && btn.dataset && btn.dataset.shortcutId) {
+                    if (editingShortcuts)
+                        openShortcutEditor(btn.dataset.shortcutId);
+                    else
+                        shortcutMove(btn.dataset.shortcutId);
+                }
                 return;
             }
-            if (toolbarBtn('.staging-shortcut-edit')) {
-                const btn = closest('.staging-shortcut-edit');
-                if (btn && btn.dataset && btn.dataset.shortcutId)
-                    openShortcutEditor(btn.dataset.shortcutId);
-                return;
-            }
-            if (toolbarBtn('.staging-shortcut-remove')) {
-                const btn = closest('.staging-shortcut-remove');
+            if (toolbarBtn('.staging-shortcut-del')) {
+                const btn = closest('.staging-shortcut-del');
                 if (btn && btn.dataset && btn.dataset.shortcutId)
                     removeShortcutChip(btn.dataset.shortcutId);
                 return;
             }
             if (toolbarBtn('.staging-shortcut-add')) {
                 openShortcutEditor(null);
+                return;
+            }
+            if (toolbarBtn('.staging-shortcut-edit-mode')) {
+                editingShortcuts = !editingShortcuts;
+                renderStaging();
                 return;
             }
             // a group/bucket head click selects ALL its members (§3.2)

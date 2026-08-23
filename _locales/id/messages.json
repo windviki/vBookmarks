@@ -2260,6 +2260,9 @@
   "stagingShortcutAdd": {
     "message": "Tambah pintasan"
   },
+  "stagingShortcutBarLabel": {
+    "message": "Pindah ke:"
+  },
   "stagingShortcutTitle": {
     "message": "Pintasan pindah ke"
   },

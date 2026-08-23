@@ -2260,6 +2260,9 @@
   "stagingShortcutAdd": {
     "message": "הוסף קיצור דרך"
   },
+  "stagingShortcutBarLabel": {
+    "message": "העבר אל:"
+  },
   "stagingShortcutTitle": {
     "message": "קיצור דרך להעברה"
   },

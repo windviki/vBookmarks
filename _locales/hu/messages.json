@@ -2260,6 +2260,9 @@
   "stagingShortcutAdd": {
     "message": "Parancsikon hozzáadása"
   },
+  "stagingShortcutBarLabel": {
+    "message": "Áthelyezés ide:"
+  },
   "stagingShortcutTitle": {
     "message": "Áthelyezési parancsikon"
   },

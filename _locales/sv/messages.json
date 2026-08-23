@@ -2260,6 +2260,9 @@
   "stagingShortcutAdd": {
     "message": "Lägg till genväg"
   },
+  "stagingShortcutBarLabel": {
+    "message": "Flytta till:"
+  },
   "stagingShortcutTitle": {
     "message": "Flytta till genväg"
   },

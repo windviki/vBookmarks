@@ -2260,6 +2260,9 @@
   "stagingShortcutAdd": {
     "message": "افزودن میانبر"
   },
+  "stagingShortcutBarLabel": {
+    "message": "انتقال به:"
+  },
   "stagingShortcutTitle": {
     "message": "میانبر انتقال به"
   },

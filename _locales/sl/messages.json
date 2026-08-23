@@ -2260,6 +2260,9 @@
   "stagingShortcutAdd": {
     "message": "Dodaj bližnjico"
   },
+  "stagingShortcutBarLabel": {
+    "message": "Premakni v:"
+  },
   "stagingShortcutTitle": {
     "message": "Bližnjica za premik"
   },

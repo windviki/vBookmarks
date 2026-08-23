@@ -2260,6 +2260,9 @@
   "stagingShortcutAdd": {
     "message": "Lisää pikakuvake"
   },
+  "stagingShortcutBarLabel": {
+    "message": "Siirrä kohteeseen:"
+  },
   "stagingShortcutTitle": {
     "message": "Siirrä pikakuvake"
   },

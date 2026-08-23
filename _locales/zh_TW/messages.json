@@ -2260,6 +2260,9 @@
   "stagingShortcutAdd": {
     "message": "新增捷徑"
   },
+  "stagingShortcutBarLabel": {
+    "message": "收藏到："
+  },
   "stagingShortcutTitle": {
     "message": "移動到資料夾捷徑"
   },
