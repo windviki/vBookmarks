@@ -62,7 +62,11 @@ export const hashPixels = bytes => {
 // the flip filter were tuned against a 14-real-favicon matrix (thepaper,
 // github, x, netflix, youtube, yabook, ccav1, spotify, zhihu,
 // stackoverflow, docker, bilibili, devconsole, …) rendered on all four
-// theme backgrounds — see tmp/favicon-lab for the harness.
+// theme backgrounds — see tmp/favicon-lab for the harness. 4.1.1 retuned
+// the dark branch against a 60-icon matrix (tmp/favicon-lab/icons2 —
+// netflix/youtube/figma/tiktok/x/bilibili/zhihu + 45 more common sites):
+// a colored guard (0.10) now stops dark-but-vivid marks from being
+// hue-wrecked by the flip; sheet-2.py renders the visual comparison.
 export const contrastStats = data => {
     let dark = 0, light = 0, colored = 0, cover = 0;
     const total = data.length / 4;
@@ -87,30 +91,34 @@ export const contrastStats = data => {
     return { dark: dark / cover, light: light / cover, colored: colored / cover, cover: cover / total };
 };
 
-// Flip decision. Dark background: flip only a PREDOMINANTLY dark mark with
-// essentially no light pixels (thepaper/github/netflix — dark glyphs on
-// transparency, dark > 0.55 & light ≈ 0). A dark plate carrying a real
-// light glyph (x.com: light ≈ 0.10) already reads correctly and stays.
-// Light background mirrors it with a looser glyph guard: a light plate with
-// a dark glyph (a white card with black text) is perfectly readable as-is,
-// so the flip needs light > 0.60 with dark < 0.15 AND the mark near-
-// monochrome (colored < 0.30). The colored guard is what keeps a colorful
-// logo from being flipped on a light theme: devconsole's white-card-with-
-// chrome-color-block icon (colored ≈ 0.42) is perfectly legible on white —
-// inverting it would turn the white card black and shift every hue, wrecking
-// the brand mark. yabook's pure-white glyph (colored 0) still flips. The
-// dark branch deliberately has NO colored guard: a dark-but-colorful mark
-// (netflix red N) is the whole point of the hue-preserving filter — flip its
-// LIGHTNESS, keep its hue, and it reads better on a dark theme. Mid-tone and
-// two-tone icons fall between the guards and are never flipped — a lightness
-// flip (L→1−L) buys them no contrast either way. (`?? 0` keeps callers that
-// hand a stats object without the colored field working — treated as
-// monochrome.)
+// Flip decision. Dark background: flip only a PREDOMINANTLY dark, NEAR-
+// MONOCHROME mark with essentially no light pixels (thepaper/github —
+// dark glyphs on transparency). A dark plate carrying a real light glyph
+// (x.com: light ≈ 0.10) already reads correctly and stays. And since
+// 4.1.1 the dark branch ALSO refuses to flip dark-but-COLORFUL marks
+// (netflix's dark-red N, the old youtube .ico's red plate): the
+// invert+hue-rotate filter halves their chroma (measured netflix red
+// 190→90 — a washed pastel users reported as a "weird filter"), while
+// the saturated original reads fine on dark by chroma contrast alone.
+// The dark guard (0.10) is deliberately stricter than the light one
+// (0.30): wrongly flipping a colorful mark is a glaring visible defect,
+// wrongly not flipping a dark mark is merely a dim icon.
+// Light background mirrors it: a light plate with a dark glyph (a white
+// card with black text) is perfectly readable as-is, so the flip needs
+// light > 0.60 with dark < 0.15 AND the mark near-monochrome
+// (colored < 0.30). devconsole's white-card-with-chrome-color-block icon
+// (colored ≈ 0.42) is perfectly legible on white — inverting it would
+// turn the white card black and shift every hue, wrecking the brand
+// mark. yabook's pure-white glyph (colored 0) still flips. Mid-tone and
+// two-tone icons fall between the guards and are never flipped — a
+// lightness flip (L→1−L) buys them no contrast either way. (`?? 0`
+// keeps callers that hand a stats object without the colored field
+// working — treated as monochrome.)
 export const needsContrast = (stats, darkBg) => {
     if (!stats || !stats.cover)
         return false;
     if (darkBg)
-        return stats.dark > 0.55 && stats.light < 0.05;
+        return stats.dark > 0.55 && stats.light < 0.05 && (stats.colored ?? 0) < 0.10;
     return stats.light > 0.60 && stats.dark < 0.15 && (stats.colored ?? 0) < 0.30;
 };
 
