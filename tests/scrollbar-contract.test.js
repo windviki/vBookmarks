@@ -96,7 +96,7 @@ describe('scrollbar-contract: 滚动容器横向裁剪 (A)', () => {
     });
 
     it('a consolidated overflow-x:hidden guard rule exists (end of file wins the cascade)', () => {
-        const body = ruleBody(neatCss, '#tree,\n#results,\n#staging-list,\n#tabgroups-list,\n#dupes-list,\n#dead-list,\n#stats-list,\n#search-history-area,\n#palette-results {');
+        const body = ruleBody(neatCss, '#tree,\n#results,\n#staging-list,\n#recent-list,\n#tabgroups-list,\n#dupes-list,\n#dead-list,\n#stats-list,\n#search-history-area,\n#palette-results {');
         expect(body).toContain('overflow-x: hidden');
     });
 

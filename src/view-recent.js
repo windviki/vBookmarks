@@ -36,6 +36,7 @@
  */
 
 import { relTimeLabel } from './tree-render.js';
+import { paintListChunked } from './list-chunks.js';
 import { VIEW_ICONS, STAGE_ICON, STAGE_ICON_DONE, STAGE_REMOVE_ICON, STAR_ICON, STAR_ICON_FILLED, STAR_X_ICON, SELECT_ICON, FOLDER_STAR_ICON, FOLDER_PLUS_ICON, EDIT_ICON, TRASH_ICON, LIST_X_ICON, OPEN_ICON, TABS_ICON, GROUP_ICON, UNGROUP_ICON, SCISSORS_ICON } from './icons.js';
 import { htmlspecialchars } from './escape.js';
 import { parkRowFocus, unparkRowFocus, parkToolbarFocus, restoreToolbarFocus } from './list-focus.js';
@@ -247,14 +248,17 @@ export function initViewRecent(ctx = {}) {
     // never renumbers the others; `data-node-id` only exists on bookmarked
     // rows (context-menu routes on that difference) and `data-url` is the
     // row's identity key.
-    const stagingRowHtml = (it, idx, inGroup) => {
+    // `L` = the per-render label cache (i18n hoisting, the 4.1.0 view-
+    // tabgroups recipe): row loops re-read the SAME strings hundreds of
+    // times — resolving them once per render costs one getMessage each.
+    const stagingRowHtml = (it, idx, inGroup, L) => {
         const path = it.id ? (views.pathOf(it.id) || '') : '';
         const rel = relTimeLabel(it.ts, _m);
         const subText = it.id
             ? ((views.showItemPath() && path) ? `${path} · ${rel}` : rel)
-            : `${_m('stagingFromHistory')} · ${rel}`;
-        const starLabel = _m(it.id ? 'stagingRowUnfav' : 'stagingRowFav');
-        const removeLabel = _m('stagingRemove');
+            : `${L.fromHistory} · ${rel}`;
+        const starLabel = it.id ? L.rowUnfav : L.rowFav;
+        const removeLabel = L.remove;
         const sel = selecting && selected.has(it.url);
         // draggable: the row is an HTML5 drag source (group-to-group moves,
         // staging-only bookkeeping). The anchor itself must opt OUT
@@ -347,29 +351,40 @@ export function initViewRecent(ctx = {}) {
             `</span></li>`;
     };
 
+    // Returns { ul, pieces }: the EMPTY #staging-items <ul> (painted with
+    // the head) + the row markup pieces (streamed inside it by
+    // list-chunks — the 4.1.0 chunked-paint law). The pieces also join
+    // back into one string for the synchronous partial repaint path.
     const renderStagingArea = () => {
         const state = stagingState;
         const idxOf = new Map(state.items.map((it, i) => [it.url, i]));
-        let html = `<ul role="list" id="staging-items"${selecting ? ' class="selecting"' : ''}>`;
+        const L = {
+            fromHistory: _m('stagingFromHistory'),
+            rowFav: _m('stagingRowFav'),
+            rowUnfav: _m('stagingRowUnfav'),
+            remove: _m('stagingRemove')
+        };
+        const ul = `<ul role="list" id="staging-items"${selecting ? ' class="selecting"' : ''}></ul>`;
+        const pieces = [];
         // The guiding empty state yields to user-built groups: a workbench
         // with manual groups (even 0-item ones) is being set up, not empty.
         if (!state.items.length && !state.groups.some(g => g.manual)) {
             // §11: a guiding empty state — the plane glyph + one muted line
             // pointing at the three entry points.
-            html += `<li class="empty-state staging-empty" role="listitem">${STAGE_ICON}<i>${_m('stagingEmpty')}</i></li>`;
+            pieces.push(`<li class="empty-state staging-empty" role="listitem">${STAGE_ICON}<i>${_m('stagingEmpty')}</i></li>`);
         } else {
             // Selecting forces every fold open (§3.1) without writing back.
             const unfavCollapsed = selecting ? false : state.unfavCollapsed;
             // ① the unbookmarked inbox bucket
             const bucket = staging.unfavBucketItems(state);
             if (bucket.length) {
-                html += bucketHeadHtml(bucket.length, staging.newCount(state), unfavCollapsed);
+                pieces.push(bucketHeadHtml(bucket.length, staging.newCount(state), unfavCollapsed));
                 if (!unfavCollapsed) {
                     // bucket rows indent under the bucket head too (its
                     // star column is their favicon column) — the inbox
                     // reads as a head with members, not as loose rows
                     for (const it of bucket)
-                        html += stagingRowHtml(it, idxOf.get(it.url), true);
+                        pieces.push(stagingRowHtml(it, idxOf.get(it.url), true, L));
                 }
             }
             // ② groups in createdAt order (the model sorts on create).
@@ -379,18 +394,17 @@ export function initViewRecent(ctx = {}) {
                 const members = staging.groupItems(state, g.id);
                 if (!members.length && !g.manual)
                     continue;
-                html += groupHeadHtml(g, members.length);
+                pieces.push(groupHeadHtml(g, members.length));
                 if (selecting || !g.collapsed) {
                     for (const it of members)
-                        html += stagingRowHtml(it, idxOf.get(it.url), true);
+                        pieces.push(stagingRowHtml(it, idxOf.get(it.url), true, L));
                 }
             }
             // ③ bookmarked loose rows
             for (const it of staging.looseItems(state))
-                html += stagingRowHtml(it, idxOf.get(it.url), false);
+                pieces.push(stagingRowHtml(it, idxOf.get(it.url), false, L));
         }
-        html += '</ul>';
-        return html;
+        return { ul, pieces };
     };
 
     // --- Recently-added region (§2.1/§2.2) ----------------------------------
@@ -422,13 +436,19 @@ export function initViewRecent(ctx = {}) {
     // stage buttons read them (group membership is fixed at render time).
     let recentGroupUrls = [[], [], [], []];
 
+    // Recent rows as { ul, pieces, count } — the empty <ul> rides the head,
+    // the row pieces stream inside it (same chunked-paint contract). The
+    // bucket labels resolve once per render (i18n hoisting).
     const renderRecentRows = items => {
-        let html = '<ul role="list" id="recent-list">';
+        const pieces = [];
+        const ul = '<ul role="list" id="recent-list"></ul>';
         let count = 0;
         let lastGroup = -1;
         const now = Date.now();
         const showPath = views.showItemPath();
         const groupUrls = [[], [], [], []];
+        const groupLabels = GROUP_KEYS.map(k => _m(k));
+        const stageGroupLabels = groupLabels.map(t => _m('recentStageGroup', t));
         for (let i = 0, l = items.length; i < l; i++) {
             const d = items[i];
             if (!d.url || separatorManager.isSeparator(d.title, d.url))
@@ -450,14 +470,14 @@ export function initViewRecent(ctx = {}) {
             // CSS hides them (visibility, so the geometry stays frozen) —
             // that lets staging-only repaints leave this region alone.
             const groupHead = (g !== lastGroup)
-                ? `<div class="recent-group-head" role="presentation">${_m(GROUP_KEYS[g])}` +
+                ? `<div class="recent-group-head" role="presentation">${groupLabels[g]}` +
                   `<button type="button" class="row-btn recent-group-stage" tabindex="-1" ` +
-                  `data-recent-group="${g}" aria-label="${htmlspecialchars(_m('recentStageGroup', _m(GROUP_KEYS[g])))}" ` +
-                  `title="${htmlspecialchars(_m('recentStageGroup', _m(GROUP_KEYS[g])))}">${STAGE_ICON}</button>` +
+                  `data-recent-group="${g}" aria-label="${htmlspecialchars(stageGroupLabels[g])}" ` +
+                  `title="${htmlspecialchars(stageGroupLabels[g])}">${STAGE_ICON}</button>` +
                   `</div>`
                 : '';
             lastGroup = g;
-            html += `<li class="vbm-row${groupHead ? ' has-head' : ''}" id="recent-item-${d.id}" role="listitem" ` +
+            pieces.push(`<li class="vbm-row${groupHead ? ' has-head' : ''}" id="recent-item-${d.id}" role="listitem" ` +
                 `data-node-id="${d.id}" data-parentid="${d.parentId}">` +
                 treeRender.generateBookmarkHTML(d.title, d.url, 'data-virtual="1"', d.id, null, {
                     path,
@@ -467,13 +487,12 @@ export function initViewRecent(ctx = {}) {
                 }) +
                 stageBtnHtml(d.url) +
                 groupHead +
-                '</li>';
+                '</li>');
         }
         if (!count)
-            html += `<li class="empty-state" role="listitem"><i>${_m('recentEmpty')}</i></li>`;
-        html += '</ul>';
+            pieces.push(`<li class="empty-state" role="listitem"><i>${_m('recentEmpty')}</i></li>`);
         recentGroupUrls = groupUrls;
-        return { html, count };
+        return { ul, pieces, count };
     };
 
     const renderRecentHead = count => {
@@ -639,6 +658,9 @@ export function initViewRecent(ctx = {}) {
     // model mutation between renders must force a repaint on activate).
     let painted = false;
     let lastRenderedRaw = null;
+    // The in-flight chunked paint (4.1.0 list-chunks): every render cancels
+    // its predecessor so an older paint's tail batches never race a newer one.
+    let paintHandle = null;
     // Selection-mode focus handoff (dead/dupes law): 'first' → the
     // toolbar's first enabled control; 'entry' → the select-mode button.
     // Shared by the full render and the staging-only partial repaint.
@@ -663,32 +685,63 @@ export function initViewRecent(ctx = {}) {
         }
     };
 
+    // Full repaint through the 4.1.0 chunked painter: the head (banners +
+    // toolbars + the EMPTY #staging-items <ul> + scissors + recent head +
+    // the EMPTY #recent-list <ul>) lands synchronously, the staging rows
+    // stream inside their <ul> in adaptive rAF batches (the recent rows —
+    // recentCount-bounded — land with the head). Node test doubles have no
+    // rAF: paintListChunked degrades to ONE synchronous paint, exactly the
+    // old innerHTML behavior.
     const render = (items, recentN) => {
-        let html = chromeHtml();
-        html += renderToolbar();
-        html += renderStagingArea();
+        if (paintHandle)
+            paintHandle.cancel();
+        const stagingArea = renderStagingArea();
+        let head = chromeHtml();
+        head += renderToolbar();
+        head += stagingArea.ul;
         // The scissors cut: the recently-added region is a separate
         // lower half, never a staging group — the dashed line + scissors
         // mark the boundary BEFORE the foldable section head.
-        html += `<div class="staging-cut" aria-hidden="true">${SCISSORS_ICON}</div>`;
-        html += renderRecentHead(recentN);
+        head += `<div class="staging-cut" aria-hidden="true">${SCISSORS_ICON}</div>`;
+        head += renderRecentHead(recentN);
+        const pipes = [{
+            ul: '#staging-items',
+            pieces: stagingArea.pieces,
+            first: 60,   // first rows land with the head
+            chunk: 120   // then stream 120 rows per frame (adaptive off in
+                         // pipes mode — the fixed stride is the dead-view law)
+        }];
         if (!stagingState.recentCollapsed) {
             const rendered = renderRecentRows(items || []);
             recentTotal = rendered.count;
-            html += rendered.html;
+            head += rendered.ul;
+            pipes.push({
+                ul: '#recent-list',
+                pieces: rendered.pieces,
+                first: 1000, // recentCount-bounded — land everything with the head
+                chunk: 60
+            });
         }
         // 4.0.1 focus law: a focused row rides the swap (park above, restore
         // here) so the ↓ walk survives every refresh repaint. The toolbar
         // rides the same law (parkToolbarFocus/restoreToolbarFocus).
         const parkedToolbar = parkToolbarFocus($list);
         const parkedRow = parkRowFocus($list);
-        $list.innerHTML = html;
-        painted = true;
-        lastRenderedRaw = staging.serialize(stagingState);
-        restoreToolbarFocus($list, parkedToolbar);
-        unparkRowFocus($list, parkedRow);
-        applyFocusHandoffs();
-        onRowsRendered();
+        paintHandle = paintListChunked($list, {
+            head,
+            pipes,
+            onHead: list => {
+                restoreToolbarFocus(list, parkedToolbar);
+            },
+            onSettled: list => {
+                paintHandle = null;
+                painted = true;
+                lastRenderedRaw = staging.serialize(stagingState);
+                unparkRowFocus(list, parkedRow);
+                applyFocusHandoffs();
+                onRowsRendered();
+            }
+        });
     };
 
     const refresh = () => {
@@ -722,6 +775,10 @@ export function initViewRecent(ctx = {}) {
     // re-triggered for the recent rows, which was the bulk of the
     // "entering the view feels laggy" favicon churn.
     const renderStagingNow = () => {
+        // A pending full paint's tail batches must never land after this
+        // partial swap — cancel it first.
+        if (paintHandle)
+            paintHandle.cancel();
         // minimal test stubs only carry innerHTML — fall back to the
         // full path when the DOM helpers are absent. The scissors cut is
         // the partial repaint's anchor: everything before it is staging
@@ -737,7 +794,12 @@ export function initViewRecent(ctx = {}) {
         }
         const parkedToolbar = parkToolbarFocus($list);
         const parkedRow = parkRowFocus($list);
-        const leading = chromeHtml() + renderToolbar() + renderStagingArea();
+        const stagingArea = renderStagingArea();
+        // pieces must join INSIDE the <ul>, never after its </ul> —
+        // the list-chunks contract's own trap (li siblings of the list
+        // are invisible to every `ul li` rule and row walk).
+        const stagingUl = stagingArea.ul.slice(0, -5) + stagingArea.pieces.join('') + '</ul>';
+        const leading = chromeHtml() + renderToolbar() + stagingUl;
         while ($list.firstChild && $list.firstChild !== anchor)
             $list.firstChild.remove();
         anchor.insertAdjacentHTML('beforebegin', leading);

@@ -6279,6 +6279,7 @@ body.panel-mode #stats-list ul li.vbm-row > a.tree-item-link .row-badge.time {
 #tree,
 #results,
 #staging-list,
+#recent-list,
 #tabgroups-list,
 #dupes-list,
 #dead-list,
@@ -6308,7 +6309,8 @@ body.panel-mode #stats-list ul li.vbm-row > a.tree-item-link .row-badge.time {
 #dupes-list ul li.vbm-row,
 #dupes-list ul li.dupes-group,
 #dead-list ul li.vbm-row,
-#stats-list ul li.vbm-row {
+#stats-list ul li.vbm-row,
+#staging-list #staging-items li.vbm-row {
     content-visibility: auto;
     contain-intrinsic-size: auto var(--vbm-row-h);
 }

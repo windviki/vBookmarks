@@ -43,6 +43,8 @@
 > ④ **快捷栏与对话框细调（迭代 G 续）**：编辑态删除 × 精确覆盖色点中心（left 14px = 1px 边框 + 8px padding + 10px 色点半宽）；新增快捷后**键盘焦点自动落到新 chip**（←/→ 立即可走，不再只认旧按钮）；`#staging-shortcut-alias` 改 `--dialog-content-width` 封顶列宽；picker 打开时 `z-index: 210` 盖过编辑器（完整文件树可见，legacy 单选同样渲染 pin/最近 chips）。
 > ⑤ **组头尾与引导条（迭代 G 续）**：组头快捷尾改 [重命名][归档][解散][移出暂存]——danger「删除分组」撤出组头（仅右键菜单/选择模式），最右槽 = 移出暂存（组+成员离场、树不动、确认+撤销）；剪刀分割线上下空隙加大；工具栏上方新增 staging guide 引导条（「在此整理书签，选择模式解锁批量操作」+ **不再提醒**，`stagingGuideDismissed` local 键入 KNOWN_KEYS/census）。
 
+> **迭代记录 H（性能同源化，master 4.1.0 性能提交合入后回写）**：暂存视图按 master 的同一套手段收口——① **分片绘制**：全量重绘走 `paintListChunked`（pipes 模式——banner/工具条/空 `<ul>`/剪刀/区头随 head 同步落地，`#staging-items` 行按 60 首批 + 120 行/帧流入，recent 行受 `recentCount` 约束随 head 落地；新的渲染先 cancel 上一笔 paintHandle，局部重绘 `renderStagingNow` 同样先取消在途分片）；测试 double 无 rAF 时自动退化为单次 innerHTML（原行为不变）。② **content-visibility**：`#staging-items` 行加入 `content-visibility:auto` 花名册（500 行上限下屏外行跳过布局/绘制；`#recent-list` 维持 master 的排除决定）。③ **行级 i18n 提升**：行循环里 `stagingFromHistory/stagingRowFav/Unfav/stagingRemove` 与 recent 时间桶标签改为每次渲染解析一次（4.1.0 view-tabgroups 同法）。④ favicon 模板克隆/对比度彩度防护等 master 侧优化随合并自动生效。
+
 ## 准备实现的功能
 
 > 原始需求清单（冻结，逐字保留；下方「问题和方案」为其落地设计，迭代不改动本节）。
