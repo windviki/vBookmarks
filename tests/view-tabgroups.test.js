@@ -2114,4 +2114,19 @@ describe('narrow-width de-crowding contracts (4.1.0 P1, CSS)', () => {
             neatCss.indexOf('#tabgroups-list ul li.tabgroups-window-head em {'));
         expect(body.slice(0, body.indexOf('}'))).toContain('flex: 1');
     });
+
+    it('every tab-groups count rides the ONE shared pill shape (window/closed heads included)', async () => {
+        // regression guard: the shared sizing rule only listed the dupes and
+        // live-group heads — window and closed-group counts rendered as bare
+        // colored text (radius 0, no padding, 11px) next to real pills.
+        const fs = (await import('node:fs')).default;
+        const neatCss = fs.readFileSync(new URL('../css/neat.css', import.meta.url), 'utf8');
+        const start = neatCss.indexOf('.dupes-group .count-pill,\n.tabgroups-group .count-pill,');
+        expect(start).toBeGreaterThanOrEqual(0);
+        const block = neatCss.slice(start, neatCss.indexOf('}', start));
+        expect(block).toContain('#tabgroups-list ul li.tabgroups-window-head .count-pill');
+        expect(block).toContain('#tabgroups-list ul li.tabgroups-closed-group .count-pill');
+        for (const prop of ['height: 14px', 'border-radius: 7px', 'font-size: 9px', 'padding: 0 4px'])
+            expect(block, prop).toContain(prop);
+    });
 });

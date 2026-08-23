@@ -3548,8 +3548,14 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
     color: var(--vbm-muted);
 }
 
+/* The one count-pill shape, shared by every view (4.1.0 fix: the window
+   and closed-group heads fell outside this selector list and their counts
+   rendered as bare colored text — only the dupes/live-group heads had the
+   pill). Colors stay per-context below. */
 .dupes-group .count-pill,
 .tabgroups-group .count-pill,
+#tabgroups-list ul li.tabgroups-window-head .count-pill,
+#tabgroups-list ul li.tabgroups-closed-group .count-pill,
 .vbm-row .row-badge {
     flex: none;
     min-width: 14px;
