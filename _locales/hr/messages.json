@@ -2141,5 +2141,14 @@
   },
   "optionDeadProxyStripHint": {
     "message": "Isključeno skriva taj naputak tamo; proxy poslužitelj i dalje se može konfigurirati ovdje, a spremljeni poslužitelj uvijek prikazuje svoj redak za upravljanje u prikazu."
+  },
+  "optionsGroupLabs": {
+    "message": "Laboratorij"
+  },
+  "optionVirtualScrollLab": {
+    "message": "Virtualno pomicanje (eksperimentalno)"
+  },
+  "optionVirtualScrollLabHint": {
+    "message": "Prikazi grupa kartica i duplikata prikazuju samo retke blizu vidljivog područja. Mnogo brže na vrlo velikim popisima; dok je eksperimentalno, položaj trake za pomicanje je procjena."
   }
 }

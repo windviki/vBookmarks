@@ -2141,5 +2141,14 @@
   },
   "optionDeadProxyStripHint": {
     "message": "Uit verbergt die tip daar; de proxyserver blijft hier configureerbaar en een opgeslagen server toont altijd zijn beheerrij in de weergave."
+  },
+  "optionsGroupLabs": {
+    "message": "Labs"
+  },
+  "optionVirtualScrollLab": {
+    "message": "Virtueel scrollen (experimenteel)"
+  },
+  "optionVirtualScrollLabHint": {
+    "message": "De weergaven voor tabbladgroepen en duplicaten renderen alleen de rijen nabij het viewport. Veel sneller bij zeer grote lijsten; hoewel experimenteel is de schuifbalkpositie een schatting."
   }
 }

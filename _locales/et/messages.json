@@ -2141,5 +2141,14 @@
   },
   "optionDeadProxyStripHint": {
     "message": "Väljas peidab selle vihje seal; puhverserver jääb siin konfigureeritavaks ja salvestatud server kuvab alati oma haldusrea vaates."
+  },
+  "optionsGroupLabs": {
+    "message": "Laborid"
+  },
+  "optionVirtualScrollLab": {
+    "message": "Virtuaalne kerimine (eksperimentaalne)"
+  },
+  "optionVirtualScrollLabHint": {
+    "message": "Vahekaardirühmade ja dublikaatide vaated renderdavad ainult vaateakna lähedal asuvaid ridu. Väga suurtes loendites palju kiirem; eksperimentaalses režiimis on kerimisriba asukoht hinnanguline."
   }
 }

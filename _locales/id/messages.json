@@ -2141,5 +2141,14 @@
   },
   "optionDeadProxyStripHint": {
     "message": "Nonaktif menyembunyikan petunjuk itu di sana; server proksi tetap dapat dikonfigurasi di sini, dan server yang tersimpan selalu menampilkan baris kelolaannya di tampilan."
+  },
+  "optionsGroupLabs": {
+    "message": "Laboratorium"
+  },
+  "optionVirtualScrollLab": {
+    "message": "Gulir virtual (eksperimental)"
+  },
+  "optionVirtualScrollLabHint": {
+    "message": "Tampilan grup tab dan duplikat hanya merender baris di dekat area pandang. Jauh lebih cepat pada daftar yang sangat besar; selama eksperimental, posisi bilah gulir adalah perkiraan."
   }
 }

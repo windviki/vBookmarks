@@ -2141,5 +2141,14 @@
   },
   "optionDeadProxyStripHint": {
     "message": "オフにすると、そのビュー内ではヒントが非表示になります。プロキシサーバーはここで設定可能で、保存済みサーバーは常にビューに管理行が表示されます。"
+  },
+  "optionsGroupLabs": {
+    "message": "ラボ"
+  },
+  "optionVirtualScrollLab": {
+    "message": "仮想スクロール（実験的）"
+  },
+  "optionVirtualScrollLabHint": {
+    "message": "タブグループと重複ビューでは、ビューポート付近の行のみをレンダリングします。非常に大きなリストでは大幅に高速化されますが、実験的な機能のため、スクロールバーの位置は概算です。"
   }
 }

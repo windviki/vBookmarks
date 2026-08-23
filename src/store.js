@@ -115,7 +115,10 @@
         // keys were born in the sync area) — listing it lets the v1 migration
         // hand it to chrome.storage.local, from where the local→sync
         // migration below moves it to its final home.
-        'showSyncStatus'
+        'showSyncStatus',
+        // 4.1.1 实验室: virtual scrolling for the tab-groups/dupes views
+        // (options Labs group; local — a per-device experiment, default off)
+        'virtualScrollLab'
     ];
 
     // Keys that live in chrome.storage.sync (user preferences synced across

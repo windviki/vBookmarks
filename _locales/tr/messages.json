@@ -2141,5 +2141,14 @@
   },
   "optionDeadProxyStripHint": {
     "message": "Kapalı, oradaki ipucunu gizler; proxy sunucusu burada yapılandırılabilir kalır ve kaydedilmiş bir sunucu görünümde her zaman yönetim satırını gösterir."
+  },
+  "optionsGroupLabs": {
+    "message": "Laboratuvarlar"
+  },
+  "optionVirtualScrollLab": {
+    "message": "Sanal kaydırma (deneysel)"
+  },
+  "optionVirtualScrollLabHint": {
+    "message": "Sekme grupları ve yinelenenler görünümleri yalnızca görünüm alanına yakın satırları işler. Çok büyük listelerde çok daha hızlıdır; deneysel iken kaydırma çubuğu konumu tahminidir."
   }
 }

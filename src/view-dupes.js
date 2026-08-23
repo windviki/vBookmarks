@@ -81,6 +81,7 @@ import { makeRiskBanner, RISK_HELP_URL } from './risk-banner.js';
 import { htmlspecialchars } from './escape.js';
 import { parkRowFocus, unparkRowFocus, parkToolbarFocus, restoreToolbarFocus } from './list-focus.js';
 import { paintListChunked } from './list-chunks.js';
+import { paintListVirtual } from './virtual-list.js';
 
 // Group-head URL display (view-system absorption): the normalized key's
 // discriminating part usually sits in the tail path, where CSS
@@ -458,11 +459,14 @@ export function initViewDupes(ctx = {}) {
             for (let i = 0, l = groups.length; i < l; i++)
                 pieces.push(renderGroup(groups[i]));
         }
-        // Focus law + chunked paint. Toolbar park/restore and the selection
+        // Focus law + the paint. Toolbar park/restore and the selection
         // toolbar transitions run on the head paint (the toolbar lives in
         // the head); the head/member focus restores and the row park/restore
         // retry per chunk — their targets may sit in any batch — and always
         // run at settle, where the clamped-index row restore is safe again.
+        // The LAB virtual painter (options 实验室, default off) never has
+        // the full list in the DOM: its settle keeps id-based restores only.
+        const virtual = !!store.get('virtualScrollLab', '');
         const parkedToolbar = parkToolbarFocus($list);
         let parkedRow = parkRowFocus($list);
         if (paintHandle)
@@ -505,11 +509,9 @@ export function initViewDupes(ctx = {}) {
                 parkedRow = null;
             }
         };
-        paintHandle = paintListChunked($list, {
+        const paintOpts = {
             head,
             pieces,
-            first: 30,   // groups (~1 + members rows each) in the head paint
-            chunk: 60,
             onHead: el => {
                 restoreToolbarFocus(el, parkedToolbar);
                 onRowsRendered();
@@ -528,14 +530,20 @@ export function initViewDupes(ctx = {}) {
                 onRowsRendered();
             },
             onSettled: el => {
-                if (parkedRow) {
+                if (parkedRow && !virtual) {
                     unparkRowFocus(el, parkedRow);
+                    parkedRow = null;
+                } else if (parkedRow) {
+                    tryUnparkRow();   // id-based only under the virtual painter
                     parkedRow = null;
                 }
                 tryHeadFocus();
                 tryMemberFocus();
             }
-        });
+        };
+        paintHandle = virtual
+            ? paintListVirtual($list, paintOpts)
+            : paintListChunked($list, { ...paintOpts, first: 30, chunk: 60 });
     };
 
     const refresh = () => {
@@ -715,6 +723,23 @@ export function initViewDupes(ctx = {}) {
     chrome.bookmarks.onRemoved.addListener(scheduleRefresh);
     chrome.bookmarks.onChanged.addListener(scheduleRefresh);
     chrome.bookmarks.onMoved.addListener(scheduleRefresh);
+
+    // LAB live switch: an options-page flip of virtualScrollLab must reach
+    // an open popup/side panel without a restart — adopt the value into the
+    // store mirror (render() reads it at paint time) and re-render if this
+    // view is showing. Local area: the options page writes it with
+    // setSetting's default; accept sync too for future routing moves.
+    if (chrome.storage && chrome.storage.onChanged) {
+        chrome.storage.onChanged.addListener((changes, area) => {
+            if ((area !== 'local' && area !== 'sync') || !changes
+                || !Object.prototype.hasOwnProperty.call(changes, 'virtualScrollLab'))
+                return;
+            if (store.adopt)
+                store.adopt('virtualScrollLab', changes.virtualScrollLab.newValue);
+            if (views.isActive('dupes') && groups.length)
+                render();
+        });
+    }
 
     // Strategy/scope are custom dropdowns now (native <select> could not
     // follow the arrow protocol). The scheme checkbox stays a native control

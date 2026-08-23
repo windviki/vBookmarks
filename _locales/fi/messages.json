@@ -2141,5 +2141,14 @@
   },
   "optionDeadProxyStripHint": {
     "message": "Poistaminen käytöstä piilottaa vihjeen siellä; välityspalvelin on edelleen määritettävissä täällä, ja tallennettu palvelin näyttää aina hallintarivinsä kyseisessä näkymässä."
+  },
+  "optionsGroupLabs": {
+    "message": "Laboratorio"
+  },
+  "optionVirtualScrollLab": {
+    "message": "Virtuaalinen vieritys (kokeellinen)"
+  },
+  "optionVirtualScrollLabHint": {
+    "message": "Välilehtiryhmien ja kaksoiskappaleiden näkymät renderöivät vain näkymän lähellä olevat rivit. Paljon nopeampi erittäin suurissa luetteloissa; kokeellisessa vaiheessa vierityspalkin sijainti on arvio."
   }
 }

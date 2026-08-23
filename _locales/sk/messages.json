@@ -2141,5 +2141,14 @@
   },
   "optionDeadProxyStripHint": {
     "message": "Vypnutie tento tip v zobrazení skryje; proxy server tu zostáva konfigurovateľný a uložený server sa v zobrazení vždy zobrazí so svojím riadkom správy."
+  },
+  "optionsGroupLabs": {
+    "message": "Laboratórium"
+  },
+  "optionVirtualScrollLab": {
+    "message": "Virtuálne posúvanie (experimentálne)"
+  },
+  "optionVirtualScrollLabHint": {
+    "message": "Zobrazenia skupín kariet a duplicit vykresľujú iba riadky v blízkosti viditeľnej oblasti. Oveľa rýchlejšie pri veľmi veľkých zoznamoch; počas experimentálneho režimu je pozícia posúvača odhadovaná."
   }
 }

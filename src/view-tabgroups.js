@@ -37,6 +37,7 @@ import { VIEW_ICONS, STAR_ICON, STAR_ICON_FILLED, SELECT_ICON, FOLDER_STAR_ICON,
 import { htmlspecialchars } from './escape.js';
 import { parkRowFocus, unparkRowFocus, parkToolbarFocus, restoreToolbarFocus } from './list-focus.js';
 import { paintListChunked } from './list-chunks.js';
+import { paintListVirtual } from './virtual-list.js';
 import { saveSession, sessionFolderName, tabsToBookmarks } from './session.js';
 import { relTimeLabel } from './tree-render.js';
 import { pickGroupColor, saveTabGroupFolderMeta, pruneTabGroupFolderMeta } from './tab-group-utils.js';
@@ -690,6 +691,9 @@ export function initViewTabGroups(ctx = {}) {
         // The pieces array holds li-level fragments in render order.
         let head = renderToolbar();
         const pieces = [];
+        // Piece index carrying the current tab's row — the LAB virtual
+        // painter's initial reveal target (first-activation scroll).
+        let currentPieceIdx = null;
         if (!tabs.length) {
             head += `<ul role="list"><li class="empty-state" role="listitem"><i>${_m('tabGroupsViewEmpty')}</i></li></ul>`;
         } else {
@@ -801,12 +805,16 @@ export function initViewTabGroups(ctx = {}) {
                 for (let i = 0, l = visibleTabs.length; i < l; i++) {
                     const tab = visibleTabs[i];
                     if (!isGrouped(tab)) {
+                        if (String(tab.id) === String(currentTabId))
+                            currentPieceIdx = pieces.length;
                         pieces.push(tabRowHtml(tab, L));
                         matchedRows++;
                         continue;
                     }
                     const group = groupById(tab.groupId);
                     if (!group) {
+                        if (String(tab.id) === String(currentTabId))
+                            currentPieceIdx = pieces.length;
                         pieces.push(tabRowHtml(tab, L));
                         matchedRows++;
                         continue;
@@ -820,6 +828,8 @@ export function initViewTabGroups(ctx = {}) {
                         : membersByGid.get(gid);
                     // Collapsed groups stay inline in tab order (they are not
                     // closed — their tabs still exist in the browser).
+                    if (memberTabs.some(t => String(t.id) === String(currentTabId)))
+                        currentPieceIdx = pieces.length;
                     pieces.push(groupBlock({ group, memberTabs, L }));
                     matchedRows += memberTabs.length;
                 }
@@ -849,11 +859,14 @@ export function initViewTabGroups(ctx = {}) {
                 }
             }
         }
-        // Focus law + chunked paint. The toolbar park/restore runs on the
-        // head paint (the toolbar lives in the head); the ROW park/restore
+        // Focus law + the paint. The toolbar park/restore runs on the head
+        // paint (the toolbar lives in the head); the ROW park/restore
         // retries per chunk (an id'd row restores as soon as its chunk is
         // in) and always runs at settle, where the clamped-index path is
-        // safe again — the full list exists by then.
+        // safe again — the full list exists by then. The LAB virtual painter
+        // (options 实验室, default off) never has the full list in the DOM:
+        // its settle keeps the id-based restore only.
+        const virtual = !!store.get('virtualScrollLab', '');
         const parkedToolbar = parkToolbarFocus($list);
         let parkedRow = parkRowFocus($list);
         if (paintHandle)
@@ -877,11 +890,9 @@ export function initViewTabGroups(ctx = {}) {
                 parkedRow = null;
             }
         };
-        paintHandle = paintListChunked($list, {
+        const paintOpts = {
             head,
             pieces,
-            first: 80,
-            chunk: 160,
             onHead: el => {
                 restoreToolbarFocus(el, parkedToolbar);
                 onRowsRendered();
@@ -893,13 +904,22 @@ export function initViewTabGroups(ctx = {}) {
                 tryScrollToCurrent();
             },
             onSettled: el => {
-                if (parkedRow) {
+                if (parkedRow && !virtual) {
                     unparkRowFocus(el, parkedRow);
+                    parkedRow = null;
+                } else if (parkedRow) {
+                    tryUnparkRow();   // id-based only under the virtual painter
                     parkedRow = null;
                 }
                 tryScrollToCurrent();
             }
-        });
+        };
+        paintHandle = virtual
+            ? paintListVirtual($list, {
+                ...paintOpts,
+                revealIndex: pendingScrollToCurrent ? currentPieceIdx : null
+            })
+            : paintListChunked($list, { ...paintOpts, first: 80, chunk: 160 });
     };
 
     // --- Bookmark helpers -------------------------------------------------------
@@ -1907,7 +1927,7 @@ export function initViewTabGroups(ctx = {}) {
                 if ((area !== 'sync' && area !== 'local') || !changes)
                     return;
                 let touched = false;
-                for (const key of ['tabGroupsColorStyle', 'tabGroupsColorBorder', 'tabGroupsSyncCollapse']) {
+                for (const key of ['tabGroupsColorStyle', 'tabGroupsColorBorder', 'tabGroupsSyncCollapse', 'virtualScrollLab']) {
                     if (Object.prototype.hasOwnProperty.call(changes, key)) {
                         if (store.adopt)
                             store.adopt(key, changes[key].newValue);

@@ -1776,6 +1776,15 @@
   "optionsGroupBackup": {
     "message": "备份"
   },
+  "optionsGroupLabs": {
+    "message": "实验室"
+  },
+  "optionVirtualScrollLab": {
+    "message": "虚拟滚动（实验性）"
+  },
+  "optionVirtualScrollLabHint": {
+    "message": "标签组与去重视图只渲染视口附近的行，超大列表明显更快。实验阶段滚动条位置为估算值。"
+  },
   "optionsGroupIcons": {
     "message": "图标"
   },

@@ -2141,5 +2141,14 @@
   },
   "optionDeadProxyStripHint": {
     "message": "Izslēgts slēpj šo norādi; starpposma serveris paliek konfigurējams šeit, un saglabātais serveris vienmēr rāda savu pārvaldīšanas rindu skatā."
+  },
+  "optionsGroupLabs": {
+    "message": "Laboratorija"
+  },
+  "optionVirtualScrollLab": {
+    "message": "Virtuālā ritināšana (eksperimentāla)"
+  },
+  "optionVirtualScrollLabHint": {
+    "message": "Cilņu grupu un dublikātu skati attēlo tikai rindas pie skata loga. Daudz ātrāk ļoti lielos sarakstos; kamēr eksperimentāla, ritjoslas pozīcija ir aptuvena."
   }
 }

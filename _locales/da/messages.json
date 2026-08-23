@@ -2141,5 +2141,14 @@
   },
   "optionDeadProxyStripHint": {
     "message": "Fra skjuler tippet der; proxy-serveren forbliver konfigurerbar her, og en gemt server viser altid sin administrationsrække i visningen."
+  },
+  "optionsGroupLabs": {
+    "message": "Laboratorier"
+  },
+  "optionVirtualScrollLab": {
+    "message": "Virtuel rulning (eksperimentel)"
+  },
+  "optionVirtualScrollLabHint": {
+    "message": "Fanegrupper og dubletvisninger gengiver kun rækkerne nær visningsporten. Meget hurtigere på meget store lister; mens det er eksperimentelt, er rullepositionen et skøn."
   }
 }

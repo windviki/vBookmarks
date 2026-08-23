@@ -199,6 +199,13 @@ const $ = id => document.getElementById(id);
             { id: 'stats-enabled', key: 'statsEnabled', defaultValue: '1', inverted: false },
             { id: 'search-history-enabled', key: 'searchHistoryEnabled', defaultValue: '1', inverted: false }
         ];
+        // 4.1.1 实验室: experimental features live here, default OFF, promoted
+        // to their real groups only after real-world soak. virtualScrollLab —
+        // the tab-groups/dupes views keep only the viewport window in the DOM
+        // (src/virtual-list.js; off = the chunked streaming painter).
+        const labsSettings = [
+            { id: 'virtual-scroll-lab', key: 'virtualScrollLab', defaultValue: '', inverted: false }
+        ];
         await bindSettingsList(viewSettings);
         await bindSettingsList(treeSettings);
         await bindSettingsList(searchSettings);
@@ -206,6 +213,7 @@ const $ = id => document.getElementById(id);
         await bindSettingsList(contextMenuSettings);
         await bindSettingsList(toolsSettings);
         await bindSettingsList(statsSettings);
+        await bindSettingsList(labsSettings);
         // 4.0.8: the enable/disable control for the four feature views.
         // Disabled = the view's show option is greyed out and the view is
         // treated as hidden by the popup (no tab, no shortcut, no palette
@@ -953,6 +961,10 @@ const $ = id => document.getElementById(id);
         document.getElementById('option-dead-scan-timeout').innerText = __m('optionDeadScanTimeout');
         document.getElementById('reset-settings-description').innerText = __m('resetSettingsDescription');
         document.getElementById('reset-button').innerText = __m('resetButton');
+        // 4.1.1 实验室 group
+        document.getElementById('labs-options').innerText = __m('optionsGroupLabs');
+        document.getElementById('option-virtual-scroll-lab').innerText = __m('optionVirtualScrollLab');
+        document.getElementById('option-virtual-scroll-lab-hint').innerText = __m('optionVirtualScrollLabHint');
 
         // Sync settings labels
         document.getElementById('sync-options').innerText = __m('syncOptions');

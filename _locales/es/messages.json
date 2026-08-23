@@ -2141,5 +2141,14 @@
   },
   "optionDeadProxyStripHint": {
     "message": "Desactivado oculta esa sugerencia allí; el servidor proxy sigue configurable aquí, y un servidor guardado siempre muestra su fila de administración en la vista."
+  },
+  "optionsGroupLabs": {
+    "message": "Laboratorio"
+  },
+  "optionVirtualScrollLab": {
+    "message": "Desplazamiento virtual (experimental)"
+  },
+  "optionVirtualScrollLabHint": {
+    "message": "Las vistas de grupos de pestañas y duplicados renderizan solo las filas cercanas al área visible. Mucho más rápido en listas muy grandes; mientras sea experimental, la posición de la barra de desplazamiento es una estimación."
   }
 }

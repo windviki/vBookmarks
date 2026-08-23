@@ -2141,5 +2141,14 @@
   },
   "optionDeadProxyStripHint": {
     "message": "Izklop skrije ta namig tam; strežnik proxyja je tukaj še vedno mogoče konfigurirati, shranjeni strežnik pa v pogledu vedno prikaže svojo vrstico za upravljanje."
+  },
+  "optionsGroupLabs": {
+    "message": "Laboratorij"
+  },
+  "optionVirtualScrollLab": {
+    "message": "Navidezno drsenje (eksperimentalno)"
+  },
+  "optionVirtualScrollLabHint": {
+    "message": "Pogledi zavihkov in dvojnikov prikažejo samo vrstice blizu vidnega območja. Veliko hitreje pri zelo velikih seznamih; med eksperimentalnim načinom je položaj drsnika ocenjen."
   }
 }

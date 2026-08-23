@@ -2141,5 +2141,14 @@
   },
   "optionDeadProxyStripHint": {
     "message": "Av skjuler hintet der; proxyserveren forblir konfigurerbar her, og en lagret server viser alltid sin administrasjonsrad i visningen."
+  },
+  "optionsGroupLabs": {
+    "message": "Laboratorier"
+  },
+  "optionVirtualScrollLab": {
+    "message": "Virtuell rulling (eksperimentell)"
+  },
+  "optionVirtualScrollLabHint": {
+    "message": "Fanegruppe- og duplikatvisningene gjengir kun radene nær visningsområdet. Mye raskere på svært store lister; mens eksperimentell er rullefeltets posisjon et estimat."
   }
 }

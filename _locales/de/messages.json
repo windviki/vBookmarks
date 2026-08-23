@@ -2141,5 +2141,14 @@
   },
   "optionDeadProxyStripHint": {
     "message": "Wenn deaktiviert, wird der Hinweis dort ausgeblendet; der Proxy-Server bleibt hier konfigurierbar, und ein gespeicherter Server zeigt seine Verwaltungszeile stets in der Ansicht an."
+  },
+  "optionsGroupLabs": {
+    "message": "Labore"
+  },
+  "optionVirtualScrollLab": {
+    "message": "Virtuelles Scrollen (experimentell)"
+  },
+  "optionVirtualScrollLabHint": {
+    "message": "Die Ansichten für Tab-Gruppen und Duplikate rendern nur die Zeilen in der Nähe des Viewports. Bei sehr großen Listen deutlich schneller; experimentell ist die Scrollbar-Position eine Schätzung."
   }
 }

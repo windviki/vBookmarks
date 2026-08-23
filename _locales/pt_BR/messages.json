@@ -2137,5 +2137,14 @@
   },
   "optionDeadProxyStripHint": {
     "message": "Desativado oculta essa dica ali; o servidor proxy continua configurável aqui, e um servidor salvo sempre mostra sua linha de gerenciamento na visualização."
+  },
+  "optionsGroupLabs": {
+    "message": "Laboratório"
+  },
+  "optionVirtualScrollLab": {
+    "message": "Rolagem virtual (experimental)"
+  },
+  "optionVirtualScrollLabHint": {
+    "message": "As visualizações de grupos de guias e duplicados renderizam apenas as linhas próximas à área visível. Muito mais rápido em listas muito grandes; enquanto experimental, a posição da barra de rolagem é uma estimativa."
   }
 }

@@ -2141,5 +2141,14 @@
   },
   "optionDeadProxyStripHint": {
     "message": "Wyłączenie ukrywa tę wskazówkę; serwer proxy pozostaje tutaj konfigurowalny, a zapisany serwer zawsze pokazuje swój wiersz zarządzania w widoku."
+  },
+  "optionsGroupLabs": {
+    "message": "Laboratorium"
+  },
+  "optionVirtualScrollLab": {
+    "message": "Wirtualne przewijanie (eksperymentalne)"
+  },
+  "optionVirtualScrollLabHint": {
+    "message": "Widoki grup kart i duplikatów renderują tylko wiersze w pobliżu widocznego obszaru. Znacznie szybsze na bardzo dużych listach; w wersji eksperymentalnej pozycja paska przewijania jest szacunkowa."
   }
 }

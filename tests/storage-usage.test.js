@@ -92,7 +92,9 @@ const EXPECTED = {
     // both local-only (not sync-routed), both "other". tabGroupFolderMeta is
     // written via the TAB_GROUP_FOLDER_META_KEY constant (invisible to the
     // literal scan) — tabled here via its KNOWN_KEYS membership.
-    tabGroupsClosed: 'other', tabGroupsViewState: 'other', tabGroupFolderMeta: 'other'
+    tabGroupsClosed: 'other', tabGroupsViewState: 'other', tabGroupFolderMeta: 'other',
+    // 4.1.1 实验室: the virtual-scroll experiment switch (local, default off)
+    virtualScrollLab: 'other'
 };
 
 describe('storage-usage categorization (real src/storage-usage.js)', () => {

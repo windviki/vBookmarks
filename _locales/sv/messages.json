@@ -2141,5 +2141,14 @@
   },
   "optionDeadProxyStripHint": {
     "message": "Av döljer tipset där; proxyservern förblir konfigurerbar här, och en sparad server visar alltid sin hanteringsrad i vyn."
+  },
+  "optionsGroupLabs": {
+    "message": "Labb"
+  },
+  "optionVirtualScrollLab": {
+    "message": "Virtuell rullning (experimentell)"
+  },
+  "optionVirtualScrollLabHint": {
+    "message": "Vyn för flikgrupper och dubbletter renderar endast raderna nära visningsporten. Mycket snabbare på mycket stora listor; medan den är experimentell är rullningslägets position en uppskattning."
   }
 }

@@ -522,6 +522,8 @@ zip 实测（package.py 同口径 collect + deflate 默认级别；实测 level 
 
 **修复过程中的两处门禁拦截（真机门禁的价值记录）**：①list-chunks 首版把行片段拼在已闭合 `</ul>` 之后——真实解析器下 `<li>` 沦为 ul 兄弟节点，keyboard.js 的 `ul>li` 行选择器与全部 `#x-list ul li` CSS 规则落空（D1 键盘用例回归；字符串 double 单测全绿察觉不了，Docker 真机门禁捕获，diag-d1-repro.js 复现）；②content-visibility 选择器最初含 `#recent-list`——verify-scrollbars 31 例 computed overflow-x 读到 visible（机理未明的 Chromium 行为；recent 行数受 recentCount 上限约束本无屏外收益，已排除并复跑 ALL PASS 748）。
 
+**4.1.1 实验室预置**：P2 判据内的虚拟滚动以实验室开关形式落地（选项页实验室组 `virtualScrollLab`，默认关；`src/virtual-list.js`——视口窗口 + padding 撑几何、滚动 rAF 重开窗、focusin 边缘扩窗、重渲染保留滚动位置；diag-virtual-lab.js 同会话实测 6000/2508 行 regroup：虚拟 2.2-3.1 s 稳定 vs 分片 3.7-17.4 s 逐轮恶化——高负载下 O(视口) 渲染账单的优势；已知局限：行高为估算值、End/Home 落在已渲染行上）。稳定 soak 后再决定是否转正。
+
 注：①分片渲染不减少总解析量，但把一整块 ~470ms 冻结摊成逐帧批次，首内容提前、UI 全程可交互；②`(program)`（样式/布局/绘制）的下降主要来自 content-visibility；③`scrollIntoView` 599→161ms（首开定位当前标签行）；④工作负载与种子前后完全一致，同一 Docker 环境连续跑；⑤验收：vitest 2696/2696 + lint 0 错、源码全量 harness ALL PASS（smoke + 键盘 156/0 + 滚动条 748）、dist 构建自检 + dist 全量 harness ALL PASS。复跑：`scripts/harness/rerun.sh diag/diag-41x-perf.js`（env：VBM_TG_WINDOWS/VBM_TG_GROUPS_PER_WIN/VBM_TG_TABS_PER_GROUP/VBM_TG_LOOSE）。
 
 ## 附录 B：本阶段明确不做的事

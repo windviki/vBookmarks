@@ -2141,5 +2141,14 @@
   },
   "optionDeadProxyStripHint": {
     "message": "Off nasconde quel suggerimento; il server proxy rimane configurabile qui, e un server salvato mostra sempre la relativa riga di gestione nella vista."
+  },
+  "optionsGroupLabs": {
+    "message": "Laboratori"
+  },
+  "optionVirtualScrollLab": {
+    "message": "Scorrimento virtuale (sperimentale)"
+  },
+  "optionVirtualScrollLabHint": {
+    "message": "Le viste dei gruppi di schede e dei duplicati visualizzano solo le righe vicine al viewport. Molto più veloce su elenchi molto grandi; mentre è sperimentale, la posizione della barra di scorrimento è una stima."
   }
 }

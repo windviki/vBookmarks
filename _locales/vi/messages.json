@@ -2141,5 +2141,14 @@
   },
   "optionDeadProxyStripHint": {
     "message": "Tắt sẽ ẩn gợi ý đó ở đó; máy chủ proxy vẫn có thể định cấu hình tại đây, và máy chủ đã lưu luôn hiển thị hàng quản lý của nó trong chế độ xem."
+  },
+  "optionsGroupLabs": {
+    "message": "实验室"
+  },
+  "optionVirtualScrollLab": {
+    "message": "虚拟滚动（实验性）"
+  },
+  "optionVirtualScrollLabHint": {
+    "message": "标签组和重复项视图仅渲染视口附近的行。在非常大的列表上速度更快；实验阶段滚动条位置为估算值。"
   }
 }

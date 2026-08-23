@@ -2141,5 +2141,14 @@
   },
   "optionDeadProxyStripHint": {
     "message": "Dezactivarea ascunde acea sugestie acolo; serverul proxy rămâne configurabil aici, iar un server salvat afișează întotdeauna rândul său de gestionare în vizualizare."
+  },
+  "optionsGroupLabs": {
+    "message": "Laborator"
+  },
+  "optionVirtualScrollLab": {
+    "message": "Derulare virtuală (experimental)"
+  },
+  "optionVirtualScrollLabHint": {
+    "message": "Vizualizările pentru grupuri de file și duplicate afișează doar rândurile din apropierea zonei vizibile. Mult mai rapid pe liste foarte mari; în faza experimentală, poziția barei de derulare este estimată."
   }
 }
