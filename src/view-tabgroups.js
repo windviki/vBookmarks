@@ -12,9 +12,10 @@
  * member rows' column order); ungrouped tabs render as plain rows in the same
  * order. Every row ends with the same four icon columns — pin / sleep /
  * bookmark / close — so the columns line up on every row and in selection
- * mode (where they render as inert state markers): the pinned glyph unpins,
- * the crescent is hollow while the tab is awake and filled (click = wake)
- * once it sleeps, and the filled ★ removes the bookmark again
+ * mode (where they render as inert state markers): the SOLID pin marks the
+ * pinned state and unpins on click (a hollow pin on hover pins an unpinned
+ * row), the crescent is hollow while the tab is awake and filled (click =
+ * wake) once it sleeps, and the filled ★ removes the bookmark again
  * (undo-captured).
  *
  * The view offers a dupes-style selection mode for batch tab management: new
@@ -32,7 +33,7 @@
  * dropping callbacks.
  */
 
-import { VIEW_ICONS, STAR_ICON, STAR_ICON_FILLED, SELECT_ICON, FOLDER_STAR_ICON, EDIT_ICON, SLEEP_ICON, SLEEP_ICON_FILLED, ACTIVATE_ICON, TRASH_ICON, REDO_ICON, COLLAPSE_ALL_ICON, EXPAND_ALL_ICON, PIN_ICON } from './icons.js';
+import { VIEW_ICONS, STAR_ICON, STAR_ICON_FILLED, SELECT_ICON, FOLDER_STAR_ICON, EDIT_ICON, SLEEP_ICON, SLEEP_ICON_FILLED, ACTIVATE_ICON, TRASH_ICON, REDO_ICON, COLLAPSE_ALL_ICON, EXPAND_ALL_ICON, PIN_ICON, PIN_ICON_FILLED } from './icons.js';
 import { htmlspecialchars } from './escape.js';
 import { parkRowFocus, unparkRowFocus, parkToolbarFocus, restoreToolbarFocus } from './list-focus.js';
 import { saveSession, sessionFolderName, tabsToBookmarks } from './session.js';
@@ -475,7 +476,7 @@ export function initViewTabGroups(ctx = {}) {
         const bookmarkedLabel = _m('tabGroupsBookmarked');
         if (selecting) {
             return (pinned
-                ? `<span class="tabgroups-status-icon pinned" aria-label="${htmlspecialchars(pinnedLabel)}" title="${htmlspecialchars(pinnedLabel)}">${PIN_ICON}</span>`
+                ? `<span class="tabgroups-status-icon pinned" aria-label="${htmlspecialchars(pinnedLabel)}" title="${htmlspecialchars(pinnedLabel)}">${PIN_ICON_FILLED}</span>`
                 : emptySlot()) +
                 (discarded
                     ? `<span class="tabgroups-status-icon discarded" aria-label="${htmlspecialchars(discardedLabel)}" title="${htmlspecialchars(discardedLabel)}">${SLEEP_ICON_FILLED}</span>`
@@ -485,12 +486,13 @@ export function initViewTabGroups(ctx = {}) {
                     : emptySlot()) +
                 emptySlot();
         }
-        // Pin: a pinned tab shows the always-visible glyph and one click
-        // unpins it (the state icon IS the action). An unpinned tab gets a
-        // hover-revealed pin button in the same column (4.1.0 parity with
-        // the sleep/star hover actions — pinning was context-menu-only).
+        // Pin: a pinned tab shows the always-visible SOLID pin (state glyph
+        // language — filled = on, like the sleeping crescent and bookmarked
+        // ★) and one click unpins it. An unpinned tab gets a hover-revealed
+        // hollow pin button in the same column (4.1.0 parity with the
+        // sleep/star hover actions — pinning was context-menu-only).
         const pinHtml = pinned
-            ? `<button class="row-btn tabgroups-unpin always-on" aria-pressed="true" aria-label="${htmlspecialchars(_m('tabGroupsUnpinTab'))}" title="${htmlspecialchars(_m('tabGroupsUnpinTab'))}">${PIN_ICON}</button>`
+            ? `<button class="row-btn tabgroups-unpin always-on" aria-pressed="true" aria-label="${htmlspecialchars(_m('tabGroupsUnpinTab'))}" title="${htmlspecialchars(_m('tabGroupsUnpinTab'))}">${PIN_ICON_FILLED}</button>`
             : `<button class="row-btn tabgroups-pin-tab" aria-label="${htmlspecialchars(_m('tabGroupsPinTab'))}" title="${htmlspecialchars(_m('tabGroupsPinTab'))}">${PIN_ICON}</button>`;
         // Sleep: hollow crescent = awake (click sleeps), filled = sleeping
         // (always visible, click wakes the tab in place).

@@ -28,15 +28,17 @@ export const FOLDER_ICON =
     '</svg>';
 
 // "Favorite this folder": the folder silhouette with a small SOLID star
-// overlaid on its top-right — the tab-group head's save-as-bookmark-folder
-// action (4.1.0: the group's 收藏 IS saving it as a folder, so the glyph
-// reads as starring a folder rather than a plain folder action). Same 16px
-// line grid; the star reuses STAR_ICON's path scaled onto the corner.
+// sitting in the body's blank center — the tab-group head's
+// save-as-bookmark-folder action (4.1.0: the group's 收藏 IS saving it as a
+// folder, so the glyph reads as starring a folder rather than a plain
+// folder action). Same 16px line grid; the star reuses STAR_ICON's path
+// scaled into the body (the first cut parked it on the top-right corner,
+// where it occluded the folder's own outline).
 export const FOLDER_STAR_ICON =
     '<svg class="vbm-icon vbm-icon-folder-star" width="16" height="16" viewBox="0 0 16 16" ' +
     'fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true">' +
     '<path d="M14.67 12.67a1.33 1.33 0 0 1-1.33 1.33H2.67a1.33 1.33 0 0 1-1.34-1.33V3.33a1.33 1.33 0 0 1 1.34-1.33h3.33l1.33 2h6a1.33 1.33 0 0 1 1.34 1.33z"/>' +
-    `<path d="${STAR_PATH}" fill="currentColor" stroke="none" transform="translate(5.2 0.8) scale(0.68)"/>` +
+    `<path d="${STAR_PATH}" fill="currentColor" stroke="none" transform="translate(3.84 5.17) scale(0.52)"/>` +
     '</svg>';
 
 export const DOCUMENT_CODE_ICON =
@@ -107,10 +109,18 @@ export const TRASH_ICON =
     '<path d="M4.4 4.5l.6 8.1a1.2 1.2 0 0 0 1.2 1.1h3.6a1.2 1.2 0 0 0 1.2-1.1l.6-8.1"/>' +
     '</svg>';
 
-// Tab-groups view status glyph: pinned tab (push-pin).
+// Tab-groups view status glyph: pinned tab (push-pin). Two states, one
+// silhouette — the filled/solid family recipe (STAR / SLEEP): PIN_ICON is
+// the hollow form (an unpinned row's hover "pin this" action), and
+// PIN_ICON_FILLED marks the pinned STATE (always visible; one click unpins).
 export const PIN_ICON =
     '<svg class="vbm-icon vbm-icon-pin" width="16" height="16" viewBox="0 0 16 16" ' +
     'fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+    '<path d="M6 7.2v4.3L4.8 13h6.4L10 11.5V7.2l3.2-3.2H2.8L6 7.2z"/>' +
+    '</svg>';
+export const PIN_ICON_FILLED =
+    '<svg class="vbm-icon vbm-icon-pin vbm-icon-pin-filled" width="16" height="16" viewBox="0 0 16 16" ' +
+    'fill="currentColor" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
     '<path d="M6 7.2v4.3L4.8 13h6.4L10 11.5V7.2l3.2-3.2H2.8L6 7.2z"/>' +
     '</svg>';
 

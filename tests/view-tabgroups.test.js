@@ -754,11 +754,13 @@ describe('pinned and sleeping tab state', () => {
         const html = $list.innerHTML;
         expect(html).toMatch(/tabgroups-row[^"]*pinned/);
         expect(html).toMatch(/tabgroups-row[^"]*discarded/);
-        // The state glyphs ARE their own controls: the pinned pin unpins and
-        // the filled crescent wakes (both always visible), while an awake tab
-        // shows the hollow crescent and an unpinned row gets the hover pin
-        // button in the same column (4.1.0 parity with sleep/star hovers).
+        // The state glyphs ARE their own controls and follow the
+        // filled-family language: the SOLID pin marks pinned (one click
+        // unpins), the filled crescent marks sleeping (click wakes), an
+        // awake tab shows the hollow crescent and an unpinned row the
+        // hover hollow pin.
         expect(html).toContain('tabgroups-unpin always-on');
+        expect(html).toContain('vbm-icon-pin-filled');
         expect(html).toContain('tabGroupsUnpinTab');
         expect(html).toContain('tabgroups-sleep-tab asleep always-on');
         expect(html).toContain('tabGroupsWakeTab');
