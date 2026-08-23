@@ -257,7 +257,7 @@ export function initViewRecent(ctx = {}) {
     // `L` = the per-render label cache (i18n hoisting, the 4.1.0 view-
     // tabgroups recipe): row loops re-read the SAME strings hundreds of
     // times — resolving them once per render costs one getMessage each.
-    const stagingRowHtml = (it, idx, inGroup, L) => {
+    const stagingRowHtml = (it, idx, inGroup, L, lastMember = false) => {
         const path = it.id ? (views.pathOf(it.id) || '') : '';
         const rel = relTimeLabel(it.ts, _m);
         const subText = it.id
@@ -271,9 +271,10 @@ export function initViewRecent(ctx = {}) {
         // (draggable="false") or Chrome starts a native link drag from it and
         // the li never becomes the source. Selection mode drops the affordance.
         const dragAttr = selecting ? '' : ' draggable="true"';
-        return `<li class="vbm-row staging-row${inGroup ? ' staging-member' : ''}${sel ? ' sel' : ''}" id="staging-item-${idx}" role="listitem" ` +
+        return `<li class="vbm-row staging-row${inGroup ? ' staging-member' : ''}${lastMember ? ' staging-last' : ''}${sel ? ' sel' : ''}" id="staging-item-${idx}" role="listitem" ` +
             `data-url="${htmlspecialchars(it.url)}"${dragAttr}` +
             (it.id ? ` data-node-id="${it.id}" data-parentid=""` : '') + '>' +
+            (inGroup ? '<span class="staging-connector" aria-hidden="true"></span>' : '') +
             treeRender.generateBookmarkHTML(it.title, it.url, 'data-virtual="1" draggable="false"', it.id || null, null, {
                 path,
                 badge: { text: rel, cls: 'time' },
@@ -309,7 +310,7 @@ export function initViewRecent(ctx = {}) {
         const favAllLabel = _m('stagingBucketFavAll');
         const countText = news > 0 ? `${count} · ${_m('stagingNew', `${news}`)}` : `${count}`;
         const selCls = headSelClass(staging.unfavBucketItems(stagingState).map(it => it.url));
-        return `<li class="staging-bucket${selCls}" role="presentation"><span class="staging-bucket-head" ` +
+        return `<li class="staging-bucket${selCls}${count ? ' has-members' : ''}" role="presentation"><span class="staging-bucket-head" ` +
             `tabindex="-1" role="button" aria-expanded="${collapsed ? 'false' : 'true'}">` +
             // the fold chevron leads — the same leading position as the group
             // head, the section head, the tree and the dupes/tabgroups heads
@@ -339,7 +340,7 @@ export function initViewRecent(ctx = {}) {
         const selCls = headSelClass(staging.groupItems(stagingState, g.id).map(it => it.url));
         const dragAttr = selecting ? '' : ' draggable="true"';
         const gname = htmlspecialchars(g.name || _m('noTitle'));
-        return `<li class="staging-group${selCls}" data-group-id="${g.id}" role="presentation">` +
+        return `<li class="staging-group${selCls}${count ? ' has-members' : ''}" data-group-id="${g.id}" role="presentation">` +
             `<span class="group-head staging-group-head" tabindex="-1" role="button" ` +
             `aria-expanded="${collapsed ? 'false' : 'true'}" title="${gname}"${dragAttr}>` +
             `<span class="chevron${collapsed ? ' collapsed' : ''}" aria-hidden="true"></span>` +
@@ -399,8 +400,8 @@ export function initViewRecent(ctx = {}) {
                     // bucket rows indent under the bucket head too (its
                     // star column is their favicon column) — the inbox
                     // reads as a head with members, not as loose rows
-                    for (const it of bucket)
-                        pieces.push(stagingRowHtml(it, idxOf.get(it.url), true, L));
+                    for (let bi = 0, bl = bucket.length; bi < bl; bi++)
+                        pieces.push(stagingRowHtml(bucket[bi], idxOf.get(bucket[bi].url), true, L, bi === bl - 1));
                 }
             }
             // ② groups in createdAt order (the model sorts on create).
@@ -412,8 +413,8 @@ export function initViewRecent(ctx = {}) {
                     continue;
                 pieces.push(groupHeadHtml(g, members.length));
                 if (selecting || !g.collapsed) {
-                    for (const it of members)
-                        pieces.push(stagingRowHtml(it, idxOf.get(it.url), true, L));
+                    for (let mi = 0, ml = members.length; mi < ml; mi++)
+                        pieces.push(stagingRowHtml(members[mi], idxOf.get(members[mi].url), true, L, mi === ml - 1));
                 }
             }
             // ③ bookmarked loose rows
@@ -1399,7 +1400,7 @@ export function initViewRecent(ctx = {}) {
     };
     const memberRowsHtml = items => {
         const idxOf = new Map(stagingState.items.map((it, i) => [it.url, i]));
-        return items.map(it => stagingRowHtml(it, idxOf.get(it.url), true, stagingLabels())).join('');
+        return items.map((it, mi) => stagingRowHtml(it, idxOf.get(it.url), true, stagingLabels(), mi === items.length - 1)).join('');
     };
 
     const toggleGroupFold = groupId => {

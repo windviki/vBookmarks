@@ -97,13 +97,16 @@ describe('list-view hover/selected parity (item 7b)', () => {
 });
 
 describe('v4.1 visual consistency: 左侧留白 + 删除类操作红色语义', () => {
-    // 去重视图的组头/成员行用 8px padding-inline-start 提供左缘留白
-    // （该设计系统的通用内联槽），避免 chevron / keeper-radio 贴容器左缘。
-    it('dupes 组头与成员行共享左侧 8px 留白', () => {
+    // 去重视图组头用 8px 内联槽（chevron 不贴左缘）；成员行按折叠记忆轮
+    // 轴对齐法改用 18px——keeper-radio 中心落在暂存区散行 icon 中心（26px）、
+    // 成员 icon 中心落在暂存区组内成员 icon 中心（50px，a::before 6px 补位）。
+    it('dupes 组头 8px 留白、成员行按暂存区轴对齐法缩进', () => {
         expect(ruleBody(neatCss, '.dupes-group .group-head {'))
             .toContain('padding-inline-start: 8px');
         expect(ruleBody(neatCss, '#dupes-list ul li.dupes-member {'))
-            .toContain('padding-inline-start: 8px');
+            .toContain('padding-inline-start: 18px');
+        expect(ruleBody(neatCss, '#dupes-list ul li.dupes-member a::before {'))
+            .toContain('width: 6px');
     });
 
     // 选择模式复选框同样离开左缘：死链侧在选中态行上加同值内边距，去重侧

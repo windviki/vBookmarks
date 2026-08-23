@@ -1871,7 +1871,76 @@ menu[type=context] hr {
    visual weight. */
 #staging-items li.vbm-row.staging-member {
     padding-inline-start: 24px;
-    box-shadow: inset 2px 0 0 color-mix(in srgb, var(--vbm-accent) 14%, transparent);
+    position: relative;
+}
+
+/* Tree-structure connector (the tabgroups color-line law, muted for the
+   workbench): the flat inset edge line became a REAL tree drawing — a thin
+   1px LIGHT DASHED trunk drops from the head's chevron/star center (16px)
+   and every member row gets a dashed tick from the trunk to its icon slot
+   (40px); the last member closes the trunk with an elbow. Dashes are 3px
+   on / 3px off in a faint muted token — structure without per-group color. */
+#staging-list {
+    --staging-line: color-mix(in srgb, var(--vbm-muted) 42%, transparent);
+}
+#staging-items li.vbm-row.staging-member > .staging-connector {
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: 15.5px; /* the chevron/star column's center (16px) */
+    width: 24.5px;             /* the tick's run to the icon slot at 40px */
+    pointer-events: none;
+}
+#staging-items li.vbm-row.staging-member > .staging-connector::before {
+    content: '';
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: 0;
+    width: 1px;
+    background: repeating-linear-gradient(to bottom,
+        var(--staging-line) 0 3px, transparent 3px 6px);
+}
+#staging-items li.vbm-row.staging-member > .staging-connector::after {
+    content: '';
+    position: absolute;
+    inset-inline-start: 0;
+    top: calc(50% - 0.5px);
+    width: 24.5px;
+    height: 1px;
+    background: repeating-linear-gradient(to right,
+        var(--staging-line) 0 3px, transparent 3px 6px);
+}
+/* the group's LAST member closes the trunk with an elbow at the tick */
+#staging-items li.vbm-row.staging-member.staging-last > .staging-connector::before {
+    bottom: calc(50% - 0.5px);
+}
+/* the head grows the trunk's first half, from its own chevron/star center
+   down to the first member — only when members actually follow (empty
+   manual groups must not dangle a line), and never while folded */
+#staging-items li.staging-group,
+#staging-items li.staging-bucket {
+    position: relative;
+}
+#staging-items li.staging-group.has-members::after,
+#staging-items li.staging-bucket.has-members::after {
+    content: '';
+    position: absolute;
+    inset-inline-start: 15.5px;
+    top: 50%;
+    bottom: 0;
+    width: 1px;
+    background: repeating-linear-gradient(to bottom,
+        var(--staging-line) 0 3px, transparent 3px 6px);
+    pointer-events: none;
+}
+#staging-items li.staging-group.has-members:has(.chevron.collapsed)::after,
+#staging-items li.staging-bucket.has-members:has(.chevron.collapsed)::after {
+    display: none;
+}
+/* selection mode is the flat checkbox working mode — the tree lines rest */
+#staging-list ul.selecting .staging-connector,
+#staging-list ul.selecting li.staging-group::after,
+#staging-list ul.selecting li.staging-bucket::after {
+    display: none;
 }
 
 /* Selection mode keeps the hierarchy WITHOUT moving the checkbox off the
@@ -4707,18 +4776,22 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
     color: var(--vbm-accent);
 }
 
-/* Member rows: the 16px keeper slot takes the chevron column's place, so
-   the generic ::before placeholder collapses — icon columns stay aligned. */
+/* Member rows (折叠记忆轮 axis law): the geometry mirrors the staging
+   workbench — the keeper radio's CENTER lands on the staging LOOSE row's
+   icon center (26px: 18px lead + the 16px radio's middle) and the member
+   icon's CENTER lands on the staging GROUPED member's icon center (50px:
+   the favicon slot at 40px + half the 20px icon box). The anchor keeps a
+   6px ::before so the icon slot starts at 40px exactly. */
 #dupes-list ul li.dupes-member a::before {
-    width: 0;
+    width: 6px;
 }
 
 #dupes-list ul li.dupes-member {
     display: flex;
     align-items: center;
-    /* v4.1 visual fix: 成员行与组头共用左侧 8px 留白（见 .group-head），
-       keeper-radio 不再贴着容器左缘。hover 背景在 li 上，覆盖整个留白区。 */
-    padding-inline-start: 8px;
+    /* the radio starts at 18px (center 26px = staging loose icon center);
+       hover 背景在 li 上，覆盖整个留白区。 */
+    padding-inline-start: 18px;
 }
 
 /* 4.0.8: group-head's clean-rest ✓ aligns with the toolbar right edge too.

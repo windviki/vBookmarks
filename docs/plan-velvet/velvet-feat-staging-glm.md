@@ -60,6 +60,11 @@
 > ⑥ **引导条通用关闭按钮（六点反馈之 2）**：staging-guide-banner 补会话级 ×（risk-banner/dead marked-banner 法则——本次弹窗内关闭、下次弹窗重现），「不再提醒」保留为永久关闭。
 > 门禁：2864 vitest 全绿 / eslint 0 / build 自检 PASS / diag-staging-verify ALL PASS / verify-keyboard 164 pass / verify-scrollbars 748 断言 ALL PASS / diag-vl-6000 无空白 / diag-fold-memory 19 项 ALL PASS。
 
+> **迭代记录 K（轴对齐收尾：暂存树连线 + 去重轴对齐，实施后回写）**：
+> ① **暂存区树结构连线**：成员行左缘的扁平 2px accent 内嵌线换成真正的**树状连线**（tabgroups color-line 同机制、工作台化配色）——组头/桶头的 chevron/星标中心（16px）垂下 1px 细线，每位成员行在行高正中画一条到 icon 槽（40px）的横 tick，组内最后一名成员以肘形收口（staging-last），组头经 has-members 类只画有成员的前半段、折叠态不悬线、选择模式（复选框扁平工作态）整体隐去。**淡色虚线** = 3px 实/3px 空的 repeating-linear-gradient、muted 42% 混色 token（--staging-line），不抢内容。DOM 层成员行注入 .staging-connector（pointer-events:none，绝对定位不影响布局），手术式折叠重建同源带 lastMember。
+> ② **去重视图反向轴对齐**：组头不动，成员行按暂存区工作台轴线重排——keeper-radio **中心落到暂存区散行 icon 中心（26px**，li 留白 8→18px）**，成员 icon 中心落到暂存区组内成员 icon 中心（50px**，a::before 0→6px 补位、icon 槽 40px 起）**。真浏览器探针 diag-axis-align.js 实测两轴逐像素吻合（26/50/15.5/24.5 全中）。
+> 门禁：2864 vitest 全绿 / eslint 0 / build 自检 PASS / diag-staging-verify ALL PASS / verify-keyboard 164 pass / verify-scrollbars 748 断言 ALL PASS / diag-fold-memory 19 项 / diag-axis-align 7 项 ALL PASS。
+
 ## 准备实现的功能
 
 > 原始需求清单（冻结，逐字保留；下方「问题和方案」为其落地设计，迭代不改动本节）。
