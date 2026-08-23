@@ -2537,5 +2537,14 @@
   },
   "stagingGroupSelectAll": {
     "message": "このグループをすべて選択"
+  },
+  "optionsGroupLabs": {
+    "message": "ラボ"
+  },
+  "optionVirtualScrollLab": {
+    "message": "仮想スクロール（実験的）"
+  },
+  "optionVirtualScrollLabHint": {
+    "message": "タブグループと重複ビューでは、ビューポート付近の行のみをレンダリングします。非常に大きなリストでは大幅に高速化されますが、実験的な機能のため、スクロールバーの位置は概算です。"
   }
 }

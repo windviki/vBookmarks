@@ -80,6 +80,8 @@ import { initDropdowns } from './dropdown.js';
 import { makeRiskBanner, RISK_HELP_URL } from './risk-banner.js';
 import { htmlspecialchars } from './escape.js';
 import { parkRowFocus, unparkRowFocus, parkToolbarFocus, restoreToolbarFocus } from './list-focus.js';
+import { paintListChunked } from './list-chunks.js';
+import { paintListVirtual } from './virtual-list.js';
 
 // Group-head URL display (view-system absorption): the normalized key's
 // discriminating part usually sits in the tail path, where CSS
@@ -154,6 +156,9 @@ export function initViewDupes(ctx = {}) {
     // selection bar's first enabled control on entry, and the restored 选择
     // entry button on exit — the same law as the dead view's selection mode.
     let selectionFocus = null; // 'first' | 'entry' | null
+    // The in-flight chunked paint (list-chunks.js): a new render cancels
+    // the previous one's pending group batches.
+    let paintHandle = null;
 
     const strategy = () => store.get('dupesStrategy', 'keep-oldest') || 'keep-oldest';
     const scope = () => store.get('dupesScope', 'all') || 'all';
@@ -348,7 +353,7 @@ export function initViewDupes(ctx = {}) {
         return html;
     };
 
-    const renderGroup = group => {
+    const renderGroup = (group, L) => {
         const keeper = keeperOf(group);
         const key = htmlspecialchars(group.key);
         const isCollapsed = collapsed.has(group.key);
@@ -359,13 +364,13 @@ export function initViewDupes(ctx = {}) {
         // is a ✓ ("apply this group's dedup"), not a × (which read as a
         // plain delete and went unnoticed).
         const doomed = planDeletion(group, keeper).length;
-        const hint = htmlspecialchars(_m('dupesCleanRestHint',
-            [keeper.title || _m('noTitle'), `${doomed}`]));
+        const hint = htmlspecialchars(L.cleanRestHint(
+            keeper.title || L.noTitle, `${doomed}`));
         let html = `<li class="dupes-group${selecting && selected.has(group.key) ? ' sel' : ''}" data-key="${key}">` +
             `<span class="group-head" tabindex="-1" role="button" aria-expanded="${isCollapsed ? 'false' : 'true'}">` +
             `<span class="chevron${isCollapsed ? ' collapsed' : ''}"></span>` +
             `<span class="dupes-key" dir="auto" title="${key}">${htmlspecialchars(midTruncate(group.key))}</span>` +
-            `<span class="count-pill" aria-label="${_m('dupesGroupCount', `${group.items.length}`)}">${group.items.length}</span>` +
+            `<span class="count-pill" aria-label="${L.groupCount(`${group.items.length}`)}">${group.items.length}</span>` +
             `<button class="row-btn dupes-clean-rest" aria-label="${hint}" title="${hint}">${CHECK_ICON}</button>` +
             '</span></li>';
         if (isCollapsed)
@@ -381,7 +386,7 @@ export function initViewDupes(ctx = {}) {
                 `id="dupes-item-${item.id}" role="listitem" data-node-id="${item.id}" ` +
                 `data-parentid="${item.parentId}" data-key="${key}">` +
                 `<button class="keeper-radio${isKeeper ? ' checked' : ''}" ` +
-                `aria-label="${_m('dupesKeepThis')}" title="${_m('dupesKeepThis')}"></button>` +
+                `aria-label="${L.keepThis}" title="${L.keepThis}"></button>` +
                 treeRender.generateBookmarkHTML(item.title, item.url, 'data-virtual="1"', item.id, null, {
                     path,
                     // §3.6 unified meta: the date rides the left-aligned time
@@ -393,8 +398,8 @@ export function initViewDupes(ctx = {}) {
                     rightText: (showPath && path) ? path : '',
                     subText: (showPath && path) ? `${path} · ${fullTime}` : fullTime
                 }) +
-                `<button class="row-btn dupes-member-del" aria-label="${_m('rowActionDelete')}" ` +
-                `title="${_m('rowActionDelete')}">${TRASH_ICON}</button>` +
+                `<button class="row-btn dupes-member-del" aria-label="${L.rowDelete}" ` +
+                `title="${L.rowDelete}">${TRASH_ICON}</button>` +
                 '</li>';
         }
         return html;
@@ -441,62 +446,138 @@ export function initViewDupes(ctx = {}) {
                 if (!alive.has(key))
                     selected.delete(key);
         }
-        let html = riskBanner.html() + renderToolbar();
+        // 4.1.0: rows stream in chunks (list-chunks.js) — head paint is
+        // synchronous (banner + toolbar + first groups), the rest appends
+        // per frame. 2508-row regroups used to freeze the popup for the
+        // whole parse. Per-render i18n labels (the tab-groups recipe):
+        // member rows used to re-ask chrome.i18n 4× per row (keep/delete
+        // labels) — 2500 groups × 2 members = 20000 getMessage crossings.
+        const L = {
+            keepThis: _m('dupesKeepThis'),
+            rowDelete: _m('rowActionDelete'),
+            noTitle: _m('noTitle'),
+            groupCount: n => _m('dupesGroupCount', n),
+            cleanRestHint: (title, doomed) => _m('dupesCleanRestHint', [title, doomed])
+        };
+        let head = riskBanner.html() + renderToolbar();
+        const pieces = [];
+        // Piece index of the focus-retry targets: onChunk only retries once
+        // its piece is actually in the DOM (no per-batch list scans).
+        const groupPieceIdx = new Map();   // group key → piece index
+        const memberPieceIdx = new Map();  // member id  → piece index
         if (!groups.length) {
-            html += `<ul role="list"><li class="empty-state" role="listitem"><i>${_m('dupesNone')}</i></li></ul>`;
+            head += `<ul role="list"><li class="empty-state" role="listitem"><i>${_m('dupesNone')}</i></li></ul>`;
         } else {
-            html += `<ul role="list"${selecting ? ' class="selecting"' : ''}>`;
-            for (let i = 0, l = groups.length; i < l; i++)
-                html += renderGroup(groups[i]);
-            html += '</ul>';
+            head += `<ul role="list"${selecting ? ' class="selecting"' : ''}></ul>`;
+            for (let i = 0, l = groups.length; i < l; i++) {
+                const g = groups[i];
+                groupPieceIdx.set(g.key, i);
+                for (const item of g.items)
+                    memberPieceIdx.set(item.id, i);
+                pieces.push(renderGroup(g, L));
+            }
         }
-        // keep a focused toolbar control focused across the swap (see above)
+        // Focus law + the paint. Toolbar park/restore and the selection
+        // toolbar transitions run on the head paint (the toolbar lives in
+        // the head); the head/member focus restores and the row park/restore
+        // retry per chunk — their targets may sit in any batch — and always
+        // run at settle, where the clamped-index row restore is safe again.
+        // The LAB virtual painter (options 实验室, default off) never has
+        // the full list in the DOM: its settle keeps id-based restores only.
+        const virtual = !!store.get('virtualScrollLab', '');
         const parkedToolbar = parkToolbarFocus($list);
-        // 4.0.1 focus law: a focused list ROW rides the same swap
-        const parkedRow = parkRowFocus($list);
-        $list.innerHTML = html;
-        restoreToolbarFocus($list, parkedToolbar);
-        // …restored BEFORE the pending* blocks below, so an explicit
-        // head/member park still wins when one is set.
-        unparkRowFocus($list, parkedRow);
-        onRowsRendered();
-        // Post-render focus restore for the head-key fold/expand (the head
-        // element was replaced by the innerHTML swap).
-        if (pendingHeadFocus) {
+        let parkedRow = parkRowFocus($list);
+        if (paintHandle)
+            paintHandle.cancel();
+        const tryHeadFocus = (paintedThrough) => {
+            if (!pendingHeadFocus)
+                return;
+            if (typeof $list.querySelectorAll !== 'function')
+                return;
+            // Piece-index gate: the head row exists once its group's piece
+            // is in (or the whole list, on settle) — no per-batch scan
+            // before that.
+            const idx = groupPieceIdx.get(pendingHeadFocus);
+            if (idx === undefined || (paintedThrough != null && idx >= paintedThrough))
+                return;
             const key = pendingHeadFocus;
-            pendingHeadFocus = null;
-            let headEl = null;
             const groupLis = $list.querySelectorAll('li.dupes-group');
             for (let i = 0, l = groupLis.length; i < l; i++) {
                 if (groupLis[i].dataset && groupLis[i].dataset.key === key) {
-                    headEl = groupLis[i].querySelector('.group-head');
-                    break;
+                    const headEl = groupLis[i].querySelector('.group-head');
+                    if (headEl) {
+                        pendingHeadFocus = null;
+                        headEl.focus();
+                    }
+                    return;
                 }
             }
-            if (headEl)
-                headEl.focus();
-        }
-        // v4 task-4 #8: select-mode Space toggle fired from a member row —
-        // restore focus to that row's anchor after the swap.
-        if (pendingMemberFocus) {
-            const id = pendingMemberFocus;
-            pendingMemberFocus = null;
-            const row = document.getElementById(`dupes-item-${id}`);
-            const a = row && row.querySelector('a');
-            if (a)
+        };
+        const tryMemberFocus = (paintedThrough) => {
+            if (!pendingMemberFocus)
+                return;
+            const idx = memberPieceIdx.get(pendingMemberFocus);
+            if (idx === undefined || (paintedThrough != null && idx >= paintedThrough))
+                return;
+            const row = document.getElementById(`dupes-item-${pendingMemberFocus}`);
+            const a = row && row.querySelector ? row.querySelector('a') : null;
+            if (a) {
+                pendingMemberFocus = null;
                 a.focus();
-        }
-        // Selection-mode toolbar transitions: after the swap the old button
-        // class is gone, so restoreToolbarFocus above has no target. Mutually
-        // exclusive with pendingMemberFocus in practice (the Space toggle
-        // never triggers a mode transition), so the ordering never competes.
-        if (selectionFocus === 'first') {
-            selectionFocus = null;
-            focusSelectionBarFirst();
-        } else if (selectionFocus === 'entry') {
-            selectionFocus = null;
-            focusSelectModeButton();
-        }
+            }
+        };
+        const tryUnparkRow = () => {
+            if (!parkedRow)
+                return;
+            if (parkedRow.id && typeof document !== 'undefined'
+                && typeof document.getElementById === 'function'
+                && document.getElementById(parkedRow.id)) {
+                unparkRowFocus($list, parkedRow);
+                parkedRow = null;
+            }
+        };
+        const paintOpts = {
+            head,
+            pieces,
+            onHead: el => {
+                restoreToolbarFocus(el, parkedToolbar);
+                onRowsRendered();
+                // Targets inside the synchronous head batch resolve now.
+                tryHeadFocus(null);
+                tryMemberFocus(null);
+                if (selectionFocus === 'first') {
+                    selectionFocus = null;
+                    focusSelectionBarFirst();
+                } else if (selectionFocus === 'entry') {
+                    selectionFocus = null;
+                    focusSelectModeButton();
+                }
+            },
+            onChunk: (el, from, end) => {
+                tryHeadFocus(end);
+                tryMemberFocus(end);
+                tryUnparkRow();
+                onRowsRendered();
+            },
+            onSettled: el => {
+                if (parkedRow && !virtual) {
+                    unparkRowFocus(el, parkedRow);
+                    parkedRow = null;
+                } else if (parkedRow) {
+                    tryUnparkRow();   // id-based only under the virtual painter
+                    parkedRow = null;
+                }
+                tryHeadFocus(null);
+                tryMemberFocus(null);
+            }
+        };
+        paintHandle = virtual
+            ? paintListVirtual($list, paintOpts)
+            : paintListChunked($list, {
+                ...paintOpts,
+                first: 40, chunk: 60,
+                adaptive: true, budgetMs: 16, minChunk: 24, maxChunk: 240
+            });
     };
 
     const refresh = () => {
@@ -676,6 +757,23 @@ export function initViewDupes(ctx = {}) {
     chrome.bookmarks.onRemoved.addListener(scheduleRefresh);
     chrome.bookmarks.onChanged.addListener(scheduleRefresh);
     chrome.bookmarks.onMoved.addListener(scheduleRefresh);
+
+    // LAB live switch: an options-page flip of virtualScrollLab must reach
+    // an open popup/side panel without a restart — adopt the value into the
+    // store mirror (render() reads it at paint time) and re-render if this
+    // view is showing. Local area: the options page writes it with
+    // setSetting's default; accept sync too for future routing moves.
+    if (chrome.storage && chrome.storage.onChanged) {
+        chrome.storage.onChanged.addListener((changes, area) => {
+            if ((area !== 'local' && area !== 'sync') || !changes
+                || !Object.prototype.hasOwnProperty.call(changes, 'virtualScrollLab'))
+                return;
+            if (store.adopt)
+                store.adopt('virtualScrollLab', changes.virtualScrollLab.newValue);
+            if (views.isActive('dupes') && groups.length)
+                render();
+        });
+    }
 
     // Strategy/scope are custom dropdowns now (native <select> could not
     // follow the arrow protocol). The scheme checkbox stays a native control

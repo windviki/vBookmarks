@@ -2537,5 +2537,14 @@
   },
   "stagingGroupSelectAll": {
     "message": "Selecionar tudo neste grupo"
+  },
+  "optionsGroupLabs": {
+    "message": "Laboratório"
+  },
+  "optionVirtualScrollLab": {
+    "message": "Rolagem virtual (experimental)"
+  },
+  "optionVirtualScrollLabHint": {
+    "message": "As visualizações de grupos de guias e duplicados renderizam apenas as linhas próximas à área visível. Muito mais rápido em listas muito grandes; enquanto experimental, a posição da barra de rolagem é uma estimativa."
   }
 }

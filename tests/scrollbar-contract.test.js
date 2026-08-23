@@ -177,7 +177,7 @@ describe('scrollbar-contract: 固定槽 flex:none (D)', () => {
         assertProps(neatCss, '#tool-btn {', ['flex: none', 'width: 30px']);
         assertProps(neatCss, '.view-tab .tab-icon {', ['flex: none']);
         assertProps(neatCss, '.row-btn {', ['flex: none', 'width: 20px']);
-        assertProps(neatCss, '.dupes-group .count-pill,\n.tabgroups-group .count-pill,\n.vbm-row .row-badge {', ['flex: none']);
+        assertProps(neatCss, '.dupes-group .count-pill,\n.tabgroups-group .count-pill,\n#tabgroups-list ul li.tabgroups-window-head .count-pill,\n#tabgroups-list ul li.tabgroups-closed-group .count-pill,\n.vbm-row .row-badge {', ['flex: none']);
         // 前导换行锚定独立规则——`#dupes-list ul.selecting .keeper-radio` 含同子串
         assertProps(neatCss, '\n.keeper-radio {', ['flex: none']);
     });

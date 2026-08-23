@@ -2537,5 +2537,14 @@
   },
   "stagingGroupSelectAll": {
     "message": "Vybrať všetko v skupine"
+  },
+  "optionsGroupLabs": {
+    "message": "Laboratórium"
+  },
+  "optionVirtualScrollLab": {
+    "message": "Virtuálne posúvanie (experimentálne)"
+  },
+  "optionVirtualScrollLabHint": {
+    "message": "Zobrazenia skupín kariet a duplicit vykresľujú iba riadky v blízkosti viditeľnej oblasti. Oveľa rýchlejšie pri veľmi veľkých zoznamoch; počas experimentálneho režimu je pozícia posúvača odhadovaná."
   }
 }

@@ -2537,5 +2537,14 @@
   },
   "stagingGroupSelectAll": {
     "message": "Vybrat vše ve skupině"
+  },
+  "optionsGroupLabs": {
+    "message": "Laboratoře"
+  },
+  "optionVirtualScrollLab": {
+    "message": "Virtuální posouvání (experimentální)"
+  },
+  "optionVirtualScrollLabHint": {
+    "message": "Zobrazení skupin karet a duplicit vykresluje pouze řádky poblíž výřezu. Mnohem rychlejší u velmi velkých seznamů; v experimentálním režimu je pozice posuvníku odhadem."
   }
 }

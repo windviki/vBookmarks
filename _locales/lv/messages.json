@@ -2537,5 +2537,14 @@
   },
   "stagingGroupSelectAll": {
     "message": "Atlasīt visu grupā"
+  },
+  "optionsGroupLabs": {
+    "message": "Laboratorija"
+  },
+  "optionVirtualScrollLab": {
+    "message": "Virtuālā ritināšana (eksperimentāla)"
+  },
+  "optionVirtualScrollLabHint": {
+    "message": "Cilņu grupu un dublikātu skati attēlo tikai rindas pie skata loga. Daudz ātrāk ļoti lielos sarakstos; kamēr eksperimentāla, ritjoslas pozīcija ir aptuvena."
   }
 }

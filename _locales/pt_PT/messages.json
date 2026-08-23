@@ -2533,5 +2533,14 @@
   },
   "stagingGroupSelectAll": {
     "message": "Selecionar tudo neste grupo"
+  },
+  "optionsGroupLabs": {
+    "message": "Laboratório"
+  },
+  "optionVirtualScrollLab": {
+    "message": "Rolagem virtual (experimental)"
+  },
+  "optionVirtualScrollLabHint": {
+    "message": "As visualizações de grupos de separadores e duplicados renderizam apenas as linhas próximas da área visível. Muito mais rápido em listas muito grandes; enquanto experimental, a posição da barra de rolagem é uma estimativa."
   }
 }

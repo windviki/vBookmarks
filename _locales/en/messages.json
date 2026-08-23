@@ -1929,6 +1929,15 @@
   "optionsGroupBackup": {
     "message": "Backup"
   },
+  "optionsGroupLabs": {
+    "message": "Labs"
+  },
+  "optionVirtualScrollLab": {
+    "message": "Virtual scrolling (experimental)"
+  },
+  "optionVirtualScrollLabHint": {
+    "message": "The tab groups and duplicates views render only the rows near the viewport. Much faster on very large lists; while experimental the scrollbar position is an estimate."
+  },
   "optionsGroupContextMenu": {
     "message": "Context menus"
   },

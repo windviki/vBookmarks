@@ -2537,5 +2537,14 @@
   },
   "stagingGroupSelectAll": {
     "message": "Seleziona tutto nel gruppo"
+  },
+  "optionsGroupLabs": {
+    "message": "Laboratori"
+  },
+  "optionVirtualScrollLab": {
+    "message": "Scorrimento virtuale (sperimentale)"
+  },
+  "optionVirtualScrollLabHint": {
+    "message": "Le viste dei gruppi di schede e dei duplicati visualizzano solo le righe vicine al viewport. Molto più veloce su elenchi molto grandi; mentre è sperimentale, la posizione della barra di scorrimento è una stima."
   }
 }

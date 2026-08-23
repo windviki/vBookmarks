@@ -6,10 +6,12 @@
 //   VBM_PERF_BOOKMARKS   total bookmarks (default 6000 — the maintainer's
 //                        real-world scale: deep nesting + cross-level dups)
 //   VBM_PERF_DUP_RATIO   duplicate-copy ratio (default 0.25): dupGroups =
-//                        round(count * ratio / 3) URLs each get 3 extra
-//                        copies placed at FOUR different depths (L3 originals,
-//                        L2 copy, L1 copy, dups-root copy) — "many duplicates
-//                        that are not on the same level".
+//                        round(count * ratio / copies) URLs each get `copies`
+//                        extra copies placed at FOUR different depths (L3
+//                        originals, L2 copy, L1 copy, dups-root copy) — "many
+//                        duplicates that are not on the same level".
+//   VBM_DUP_COPIES       copies per dup group (default 3; 1 = 2-item groups,
+//                        the maintainer's 2500+ groups at 6000 bookmarks)
 //   VBM_PERF_RUNS        popup cold-open runs (default 10)
 //   VBM_PERF_DUPES_RUNS  dupes-view activation runs (default 5)
 //
@@ -34,6 +36,7 @@ const RUNS = Math.max(1, parseInt(process.env.VBM_PERF_RUNS || '10', 10));
 const DUPES_RUNS = Math.max(1, parseInt(process.env.VBM_PERF_DUPES_RUNS || '5', 10));
 const SEED_BOOKMARKS = Math.max(100, parseInt(process.env.VBM_PERF_BOOKMARKS || '6000', 10));
 const DUP_RATIO = Math.min(0.9, Math.max(0, parseFloat(process.env.VBM_PERF_DUP_RATIO || '0.25')));
+const DUP_COPIES = Math.min(6, Math.max(1, parseInt(process.env.VBM_DUP_COPIES || '3', 10)));
 const SEED_TABS = 50;
 // Settle beat after popup load BEFORE the measurement window starts: with the
 // P1-2 idle queue (master) part of the startup work (announce fetch, favicon
@@ -51,6 +54,7 @@ const median = arr => {
 const launch = () => puppeteer.launch({
     executablePath: process.env.CHROME_BIN || '/usr/bin/chromium-browser',
     headless: 'new',
+    protocolTimeout: 600000, // the 1200-tab workload build is ONE long evaluate
     args: [
         '--no-sandbox',
         '--disable-dev-shm-usage',
@@ -77,7 +81,7 @@ const openPopup = async (browser, extId) => {
         mode: process.env.VBM_PERF_MODE || 'source',
         runs: RUNS,
         dupesRuns: DUPES_RUNS,
-        profile: { bookmarks: SEED_BOOKMARKS, dupRatio: DUP_RATIO, settleMs: SETTLE_MS },
+        profile: { bookmarks: SEED_BOOKMARKS, dupRatio: DUP_RATIO, dupCopies: DUP_COPIES, settleMs: SETTLE_MS },
         seeded: {}
     };
 
@@ -101,8 +105,8 @@ const openPopup = async (browser, extId) => {
             const folder = await create({ parentId: bar.id, title: '__perf__' });
 
             const L1 = 20, L2 = 5, L3 = 3;
-            const dupGroups = Math.round(opts.count * opts.dupRatio / 3);
-            const leavesTarget = Math.max(L1 * L2 * L3, opts.count - dupGroups * 3);
+            const dupGroups = Math.round(opts.count * opts.dupRatio / opts.copies);
+            const leavesTarget = Math.max(L1 * L2 * L3, opts.count - dupGroups * opts.copies);
             const perL3 = Math.max(1, Math.round(leavesTarget / (L1 * L2 * L3)));
             const leaves = perL3 * L1 * L2 * L3;
 
@@ -149,21 +153,20 @@ const openPopup = async (browser, extId) => {
                 await Promise.all(batch);
             }
 
-            // Cross-level duplicates: 3 extra copies per dup group at FOUR
-            // different depths (L3 original / L2 copy / L1 copy / dups-root).
+            // Cross-level duplicates: `copies` extra copies per dup group at
+            // FOUR different depths (L3 original / L2 copy / L1 copy / dups-root).
             const dupsFolder = await create({ parentId: folder.id, title: '__perf_dups__' });
             openIds.push(dupsFolder.id);
             let dupCopies = 0;
             const dupGroupsActual = Math.min(dupGroups, originals.length);
+            const copyParents = (g, c) => {
+                const pool = [l2Ids[g % l2Ids.length].id, l1Ids[g % l1Ids.length].id, dupsFolder.id];
+                return pool[(g + c) % pool.length];
+            };
             for (let g = 0; g < dupGroupsActual; g++) {
                 const origin = originals[g];
-                const copyAt = [
-                    l2Ids[g % l2Ids.length].id,   // depth 3 (folder L2)
-                    l1Ids[g % l1Ids.length].id,   // depth 2 (folder L1)
-                    dupsFolder.id                 // depth 1 (dups root)
-                ];
-                for (const parentId of copyAt) {
-                    await create({ parentId, title: origin.title, url: origin.url });
+                for (let c = 0; c < opts.copies; c++) {
+                    await create({ parentId: copyParents(g, c), title: origin.title, url: origin.url });
                     dupCopies++;
                 }
             }
@@ -182,7 +185,7 @@ const openPopup = async (browser, extId) => {
                 total: leaves + dupCopies,
                 depth: 5 // bar → L1 → L2 → L3 → bookmark
             };
-        }, { count: SEED_BOOKMARKS, dupRatio: DUP_RATIO });
+        }, { count: SEED_BOOKMARKS, dupRatio: DUP_RATIO, copies: DUP_COPIES });
         out.seeded = seed;
         console.log('seeded:', JSON.stringify(seed));
         console.log('stage: seed done — closing seed page before tab seeding');

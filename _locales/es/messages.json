@@ -2537,5 +2537,14 @@
   },
   "stagingGroupSelectAll": {
     "message": "Seleccionar todo en este grupo"
+  },
+  "optionsGroupLabs": {
+    "message": "Laboratorio"
+  },
+  "optionVirtualScrollLab": {
+    "message": "Desplazamiento virtual (experimental)"
+  },
+  "optionVirtualScrollLabHint": {
+    "message": "Las vistas de grupos de pestañas y duplicados renderizan solo las filas cercanas al área visible. Mucho más rápido en listas muy grandes; mientras sea experimental, la posición de la barra de desplazamiento es una estimación."
   }
 }

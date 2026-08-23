@@ -2537,5 +2537,14 @@
   },
   "stagingGroupSelectAll": {
     "message": "Pilih semua di grup ini"
+  },
+  "optionsGroupLabs": {
+    "message": "Laboratorium"
+  },
+  "optionVirtualScrollLab": {
+    "message": "Gulir virtual (eksperimental)"
+  },
+  "optionVirtualScrollLabHint": {
+    "message": "Tampilan grup tab dan duplikat hanya merender baris di dekat area pandang. Jauh lebih cepat pada daftar yang sangat besar; selama eksperimental, posisi bilah gulir adalah perkiraan."
   }
 }

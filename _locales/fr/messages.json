@@ -2537,5 +2537,14 @@
   },
   "stagingGroupSelectAll": {
     "message": "Tout sélectionner dans ce groupe"
+  },
+  "optionsGroupLabs": {
+    "message": "Laboratoires"
+  },
+  "optionVirtualScrollLab": {
+    "message": "Défilement virtuel (expérimental)"
+  },
+  "optionVirtualScrollLabHint": {
+    "message": "Les vues des groupes d'onglets et des doublons n'affichent que les lignes proches de la fenêtre. Beaucoup plus rapide sur les très grandes listes ; en phase expérimentale, la position de la barre de défilement est une estimation."
   }
 }

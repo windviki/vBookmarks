@@ -2537,5 +2537,14 @@
   },
   "stagingGroupSelectAll": {
     "message": "Csoport teljes kijelölése"
+  },
+  "optionsGroupLabs": {
+    "message": "Laboratórium"
+  },
+  "optionVirtualScrollLab": {
+    "message": "Virtuális görgetés (kísérleti)"
+  },
+  "optionVirtualScrollLabHint": {
+    "message": "A lapcsoportok és ismétlődések nézetei csak a nézetablak közelében lévő sorokat jelenítik meg. Nagyon nagy listákon sokkal gyorsabb; kísérleti fázisban a görgetősáv pozíciója becsült."
   }
 }

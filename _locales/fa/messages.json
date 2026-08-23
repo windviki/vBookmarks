@@ -2537,5 +2537,14 @@
   },
   "stagingGroupSelectAll": {
     "message": "انتخاب همه در این گروه"
+  },
+  "optionsGroupLabs": {
+    "message": "آزمایشگاه"
+  },
+  "optionVirtualScrollLab": {
+    "message": "پیمایش مجازی (آزمایشی)"
+  },
+  "optionVirtualScrollLabHint": {
+    "message": "نمایش گروه‌های تب و موارد تکراری فقط ردیف‌های نزدیک به ناحیه دید را رندر می‌کند. در لیست‌های بسیار بزرگ بسیار سریع‌تر است؛ در حالت آزمایشی، موقعیت نوار پیمایش تقریبی است."
   }
 }

@@ -47,10 +47,19 @@ export const normalizeUrl = url => {
 
 export const findDupes = (bookmarks, opts = {}) => {
     const byKey = new Map();
+    // normalizeUrl memo over the raw string: duplicate copies share the
+    // exact same URL text (the dedup workload is duplicates by definition),
+    // and URL parsing is findDupes's dominant cost (measured ~70 ms of a
+    // 6000-bookmark regroup). First occurrence parses, the rest hit the map.
+    const normCache = new Map();
     for (const b of bookmarks) {
         if (!b || !b.url)
             continue;
-        let key = normalizeUrl(b.url);
+        let key = normCache.get(b.url);
+        if (key === undefined) {
+            key = normalizeUrl(b.url);
+            normCache.set(b.url, key);
+        }
         // v4 task-2 §5.6c: dupesIgnoreScheme treats http/https variants of
         // the same address as one group (scheme upgrades are a real dupe
         // source; off by default — a few sites serve different content per

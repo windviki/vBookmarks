@@ -154,7 +154,7 @@
     "message": "昨天"
   },
   "viewRecent": {
-    "message": "暂存区"
+    "message": "最近添加"
   },
   "viewTree": {
     "message": "书签树"
@@ -1344,7 +1344,7 @@
     "message": "切换到重复书签视图"
   },
   "paletteCmdGoRecent": {
-    "message": "切换到暂存区视图"
+    "message": "切换到最近书签视图"
   },
   "paletteCmdGoSearch": {
     "message": "切换到搜索视图"
@@ -2591,5 +2591,14 @@
   },
   "stagingGroupSelectAll": {
     "message": "全选本组"
+  },
+  "optionsGroupLabs": {
+    "message": "实验室"
+  },
+  "optionVirtualScrollLab": {
+    "message": "虚拟滚动（实验性）"
+  },
+  "optionVirtualScrollLabHint": {
+    "message": "标签组与去重视图只渲染视口附近的行，超大列表明显更快。实验阶段滚动条位置为估算值。"
   }
 }

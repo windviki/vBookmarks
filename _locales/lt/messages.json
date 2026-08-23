@@ -2537,5 +2537,14 @@
   },
   "stagingGroupSelectAll": {
     "message": "Pasirinkti visus grupėje"
+  },
+  "optionsGroupLabs": {
+    "message": "Laboratorija"
+  },
+  "optionVirtualScrollLab": {
+    "message": "Virtualus slinkimas (eksperimentinis)"
+  },
+  "optionVirtualScrollLabHint": {
+    "message": "Skirtukų grupių ir dublikatų rodiniai atvaizduoja tik eilutes šalia rodymo srities. Daug greičiau labai dideliuose sąrašuose; eksperimentiniu režimu slinkties juostos padėtis yra apytikslė."
   }
 }

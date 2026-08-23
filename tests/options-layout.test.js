@@ -27,16 +27,18 @@ describe('options page group structure (round-6 item 5, v4 task-3 #17 merge)', (
         // general / views / per-view groups (tree/search/tab-groups/recent/
         // stats/dead/dupes) / icons / context menu / tools / palette /
         // sync / accessibility / custom icon / separators / sorting /
-        // custom styles / backup+reset — advanced-options merged in.
+        // custom styles / backup+reset / labs — advanced-options merged in.
         // 4.1.0: the tab-groups group is live; only dupes stays a placeholder.
-        expect(count(optionsHtml, '<section class="options-group">')).toBe(19);
+        // 4.1.0: the Labs group (experimental features, default-off switches).
+        expect(count(optionsHtml, '<section class="options-group">')).toBe(20);
         expect(count(optionsHtml, '<section class="options-group" hidden>')).toBe(1);
         expect(optionsHtml).toContain('<main class="options-grid">');
         for (const id of ['general', 'views-options', 'tree-options', 'search-options', 'tabgroups-options',
                 'recent-options', 'stats-options', 'dead-scan-options', 'dupes-options',
                 'icons-options', 'context-menu-options', 'tools-options',
                 'palette-cmd-options', 'sync-options', 'accessibility',
-                'custom-icon', 'separator-options', 'sort-options', 'custom-styles', 'backup-options'])
+                'custom-icon', 'separator-options', 'sort-options', 'custom-styles', 'backup-options',
+                'labs-options'])
             expect(optionsHtml).toContain(`<h2 id="${id}">`);
     });
 

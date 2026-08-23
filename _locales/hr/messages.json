@@ -2537,5 +2537,14 @@
   },
   "stagingGroupSelectAll": {
     "message": "Odaberi sve u grupi"
+  },
+  "optionsGroupLabs": {
+    "message": "Laboratorij"
+  },
+  "optionVirtualScrollLab": {
+    "message": "Virtualno pomicanje (eksperimentalno)"
+  },
+  "optionVirtualScrollLabHint": {
+    "message": "Prikazi grupa kartica i duplikata prikazuju samo retke blizu vidljivog područja. Mnogo brže na vrlo velikim popisima; dok je eksperimentalno, položaj trake za pomicanje je procjena."
   }
 }

@@ -2537,5 +2537,14 @@
   },
   "stagingGroupSelectAll": {
     "message": "Zaznacz wszystko w grupie"
+  },
+  "optionsGroupLabs": {
+    "message": "Laboratorium"
+  },
+  "optionVirtualScrollLab": {
+    "message": "Wirtualne przewijanie (eksperymentalne)"
+  },
+  "optionVirtualScrollLabHint": {
+    "message": "Widoki grup kart i duplikatów renderują tylko wiersze w pobliżu widocznego obszaru. Znacznie szybsze na bardzo dużych listach; w wersji eksperymentalnej pozycja paska przewijania jest szacunkowa."
   }
 }

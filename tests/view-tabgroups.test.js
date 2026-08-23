@@ -465,9 +465,43 @@ describe('view registration', () => {
             vi.advanceTimersByTime(299);
             expect(ctx.chrome.windows.getAllCalls).toHaveLength(0);
             vi.advanceTimersByTime(1);
-            // active refresh is a FULL refresh (windows + groups + tree)
+            // active refresh re-renders from windows + groups (+ tree only
+            // while the bookmark walk is dirty — see the tests below)
             expect(ctx.chrome.windows.getAllCalls.length).toBeGreaterThan(0);
             expect(ctx.chrome.tabGroups.queryCalls.length).toBeGreaterThan(0);
+        } finally {
+            vi.useRealTimers();
+        }
+    });
+
+    it('tab-only churn after a clean walk skips the bookmark-tree read (4.1.0)', () => {
+        vi.useFakeTimers();
+        try {
+            const ctx = setup({ active: true });
+            ctx.def().activate();               // first activation walks the tree
+            expect(ctx.chrome.bookmarks.getTreeCalls).toBeGreaterThan(0);
+            ctx.chrome.bookmarks.getTreeCalls = 0;
+            ctx.tabsListeners.onUpdated[0]();   // tab-only churn
+            vi.advanceTimersByTime(301);
+            expect(ctx.chrome.windows.getAllCalls.length).toBeGreaterThan(0);
+            expect(ctx.chrome.bookmarks.getTreeCalls).toBe(0); // sets reused
+        } finally {
+            vi.useRealTimers();
+        }
+    });
+
+    it('a bookmarks event re-marks the tree dirty — the next refresh walks it again', () => {
+        vi.useFakeTimers();
+        try {
+            const ctx = setup({ active: true });
+            ctx.def().activate();
+            ctx.chrome.bookmarks.getTreeCalls = 0;
+            ctx.tabsListeners.onUpdated[0]();
+            vi.advanceTimersByTime(301);
+            expect(ctx.chrome.bookmarks.getTreeCalls).toBe(0);
+            ctx.bookmarksListeners.onCreated[0]();
+            vi.advanceTimersByTime(301);
+            expect(ctx.chrome.bookmarks.getTreeCalls).toBeGreaterThan(0);
         } finally {
             vi.useRealTimers();
         }
@@ -755,11 +789,13 @@ describe('pinned and sleeping tab state', () => {
         const html = $list.innerHTML;
         expect(html).toMatch(/tabgroups-row[^"]*pinned/);
         expect(html).toMatch(/tabgroups-row[^"]*discarded/);
-        // The state glyphs ARE their own controls: the pinned pin unpins and
-        // the filled crescent wakes (both always visible), while an awake tab
-        // shows the hollow crescent and an unpinned row gets the hover pin
-        // button in the same column (4.1.0 parity with sleep/star hovers).
+        // The state glyphs ARE their own controls and follow the
+        // filled-family language: the SOLID pin marks pinned (one click
+        // unpins), the filled crescent marks sleeping (click wakes), an
+        // awake tab shows the hollow crescent and an unpinned row the
+        // hover hollow pin.
         expect(html).toContain('tabgroups-unpin always-on');
+        expect(html).toContain('vbm-icon-pin-filled');
         expect(html).toContain('tabGroupsUnpinTab');
         expect(html).toContain('tabgroups-sleep-tab asleep always-on');
         expect(html).toContain('tabGroupsWakeTab');
@@ -2116,6 +2152,21 @@ describe('narrow-width de-crowding contracts (4.1.0 P1, CSS)', () => {
         const body = neatCss.slice(
             neatCss.indexOf('#tabgroups-list ul li.tabgroups-window-head em {'));
         expect(body.slice(0, body.indexOf('}'))).toContain('flex: 1');
+    });
+
+    it('every tab-groups count rides the ONE shared pill shape (window/closed heads included)', async () => {
+        // regression guard: the shared sizing rule only listed the dupes and
+        // live-group heads — window and closed-group counts rendered as bare
+        // colored text (radius 0, no padding, 11px) next to real pills.
+        const fs = (await import('node:fs')).default;
+        const neatCss = fs.readFileSync(new URL('../css/neat.css', import.meta.url), 'utf8');
+        const start = neatCss.indexOf('.dupes-group .count-pill,\n.tabgroups-group .count-pill,');
+        expect(start).toBeGreaterThanOrEqual(0);
+        const block = neatCss.slice(start, neatCss.indexOf('}', start));
+        expect(block).toContain('#tabgroups-list ul li.tabgroups-window-head .count-pill');
+        expect(block).toContain('#tabgroups-list ul li.tabgroups-closed-group .count-pill');
+        for (const prop of ['height: 14px', 'border-radius: 7px', 'font-size: 9px', 'padding: 0 4px'])
+            expect(block, prop).toContain(prop);
     });
 });
 

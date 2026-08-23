@@ -12,9 +12,10 @@
  * member rows' column order); ungrouped tabs render as plain rows in the same
  * order. Every row ends with the same four icon columns — pin / sleep /
  * bookmark / close — so the columns line up on every row and in selection
- * mode (where they render as inert state markers): the pinned glyph unpins,
- * the crescent is hollow while the tab is awake and filled (click = wake)
- * once it sleeps, and the filled ★ removes the bookmark again
+ * mode (where they render as inert state markers): the SOLID pin marks the
+ * pinned state and unpins on click (a hollow pin on hover pins an unpinned
+ * row), the crescent is hollow while the tab is awake and filled (click =
+ * wake) once it sleeps, and the filled ★ removes the bookmark again
  * (undo-captured).
  *
  * The view offers a dupes-style selection mode for batch tab management: new
@@ -32,9 +33,11 @@
  * dropping callbacks.
  */
 
-import { VIEW_ICONS, STAR_ICON, STAR_ICON_FILLED, SELECT_ICON, FOLDER_STAR_ICON, EDIT_ICON, SLEEP_ICON, SLEEP_ICON_FILLED, ACTIVATE_ICON, TRASH_ICON, REDO_ICON, COLLAPSE_ALL_ICON, EXPAND_ALL_ICON, PIN_ICON } from './icons.js';
+import { VIEW_ICONS, STAR_ICON, STAR_ICON_FILLED, SELECT_ICON, FOLDER_STAR_ICON, EDIT_ICON, SLEEP_ICON, SLEEP_ICON_FILLED, ACTIVATE_ICON, TRASH_ICON, REDO_ICON, COLLAPSE_ALL_ICON, EXPAND_ALL_ICON, PIN_ICON, PIN_ICON_FILLED } from './icons.js';
 import { htmlspecialchars } from './escape.js';
 import { parkRowFocus, unparkRowFocus, parkToolbarFocus, restoreToolbarFocus } from './list-focus.js';
+import { paintListChunked } from './list-chunks.js';
+import { paintListVirtual } from './virtual-list.js';
 import { saveSession, sessionFolderName, tabsToBookmarks } from './session.js';
 import { relTimeLabel } from './tree-render.js';
 import { pickGroupColor, saveTabGroupFolderMeta, pruneTabGroupFolderMeta } from './tab-group-utils.js';
@@ -85,6 +88,28 @@ export function initViewTabGroups(ctx = {}) {
     let windows = [];       // [{ id, focused, tabs }] sorted: current first
     let tabs = [];          // flat chrome.tabs.Tab[] across every window
     let groups = [];        // chrome.tabGroups.TabGroup[] across every window
+    // String(id) → item indexes over tabs/groups. The old per-call
+    // `array.find` scans made every grouped row O(groups) (and the render
+    // walk O(tabs × groups)) — at 160 groups × 1200 tabs the profiler put
+    // several ms per render into the scans alone, growing quadratically
+    // with the group count. Rebuilt wherever the arrays are assigned.
+    let tabMap = new Map();
+    let groupMap = new Map();
+    const reindexTabs = () => {
+        tabMap = new Map();
+        for (const t of tabs)
+            tabMap.set(String(t.id), t);
+    };
+    const reindexGroups = () => {
+        groupMap = new Map();
+        for (const g of groups)
+            groupMap.set(String(g.id), g);
+    };
+    // The bookmark-tree walk (bookmarkedUrls + folder-meta prune) costs a
+    // full chrome.bookmarks.getTree round trip — measured 53-106 ms per
+    // refresh at 6000 bookmarks. Tab-only churn (the common storm while the
+    // view is open) cannot change it: re-walk only after a bookmarks event.
+    let bookmarksDirty = true;
     let currentWindowId = null;
     let currentTabId = null;
     let selecting = false;
@@ -116,6 +141,9 @@ export function initViewTabGroups(ctx = {}) {
     // Fold state saved when selection mode opens everything up, restored on
     // exit (selection mode must show every candidate row).
     let foldSnapshot = null;
+    // The in-flight chunked paint (list-chunks.js): a new render cancels
+    // the previous one's pending row batches.
+    let paintHandle = null;
 
     const CLOSED_GROUPS_KEY = 'tabGroupsClosed';
     const UI_STATE_KEY = 'tabGroupsViewState';
@@ -173,8 +201,8 @@ export function initViewTabGroups(ctx = {}) {
         return capped;
     };
 
-    const groupById = id => groups.find(g => String(g.id) === String(id));
-    const tabById = id => tabs.find(t => String(t.id) === String(id));
+    const groupById = id => groupMap.get(String(id));
+    const tabById = id => tabMap.get(String(id));
     // Chrome reports groupId: -1 for tabs that are NOT grouped; every
     // truthiness check must treat -1 as "no group".
     const isGrouped = tab => !!tab && !!tab.groupId && tab.groupId !== -1;
@@ -261,99 +289,130 @@ export function initViewTabGroups(ctx = {}) {
                 if (token !== refreshToken)
                     return;
                 tabs = tabList || [];
+                reindexTabs();
                 views.updateBadges();
             });
             return;
         }
-        readWindows(winList => {
-            if (token !== refreshToken)
-                return; // a newer refresh started — drop this stale read
+        // The three render inputs are independent reads — fire them
+        // together. The old chain serialized windows.getAll →
+        // tabGroups.query → bookmarks.getTree (three IPC round trips end to
+        // end; the outer two measured ~100 ms combined per refresh at
+        // 1200 tabs / 6000 bookmarks), and tab-only churn paid all three.
+        // Now the tree read joins the fan-out AND is skipped entirely while
+        // bookmarksDirty is false (only bookmarks events flip it).
+        const treeWanted = bookmarksDirty;
+        let winList = null, groupList = null, tree = null;
+        let landed = 0;
+        const need = 2 + (treeWanted ? 1 : 0);
+        const join = () => {
             windows = winList;
             tabs = windows.flatMap(w => w.tabs.map(t => ({ ...t, _windowId: t.windowId || w.id })));
+            reindexTabs();
             const focused = windows.find(w => w.focused) || windows[0];
             currentWindowId = focused ? focused.id
                 : ((chrome.windows && chrome.windows.WINDOW_ID_CURRENT) || 1);
             const activeTab = tabs.find(t => t.active);
             currentTabId = activeTab ? activeTab.id : (tabs[0] && tabs[0].id);
-            queryAllGroups(groupList => {
+            groups = groupList || [];
+            reindexGroups();
+            // Keep the list folding in sync with the browser's own
+            // collapsed state (chrome.tabGroups.TabGroup.collapsed).
+            collapsed.clear();
+            for (const g of groups)
+                if (g.collapsed)
+                    collapsed.add(String(g.id));
+
+            // Restore (or default) the view-local folding state.
+            // Windows: the CURRENT window is open by default and the
+            // others fold; only an explicit fold/unfold the user
+            // performed is remembered and wins over that default (with
+            // remember-state on). Group folds follow the browser when
+            // sync is on; when sync is off the saved view override
+            // survives refreshes.
+            const uiState = readUIState();
+            // With remember-state ON the persisted choices are the truth;
+            // with it OFF nothing is stored, so THIS session's in-memory
+            // choices must survive the refresh — a tab event fires a
+            // refresh every 300 ms, and rebuilding from an empty state
+            // would undo the fold the user just performed.
+            if (rememberState()) {
+                windowChoice.clear();
+                if (uiState.windowChoices && typeof uiState.windowChoices === 'object') {
+                    for (const id of Object.keys(uiState.windowChoices))
+                        windowChoice.set(String(id), !!uiState.windowChoices[id]);
+                } else if (Array.isArray(uiState.collapsedWindows)) {
+                    // Legacy shape (a flat collapsed list): read every entry
+                    // as an explicit fold so an upgrade keeps the folds.
+                    for (const id of uiState.collapsedWindows)
+                        windowChoice.set(String(id), true);
+                }
+            }
+            collapsedWindows.clear();
+            for (const w of windows) {
+                const id = String(w.id);
+                const folded = windowChoice.has(id) ? windowChoice.get(id) : !w.focused;
+                if (folded)
+                    collapsedWindows.add(id);
+            }
+            expandedClosed.clear();
+            if (Array.isArray(uiState.expandedClosed))
+                for (const id of uiState.expandedClosed)
+                    expandedClosed.add(String(id));
+            if (!syncCollapse() && Array.isArray(uiState.collapsedGroups)) {
+                for (const g of groups) {
+                    const gid = String(g.id);
+                    if (uiState.collapsedGroups.indexOf(gid) !== -1)
+                        collapsed.add(gid);
+                    else
+                        collapsed.delete(gid);
+                }
+            }
+            // Selection mode shows every candidate row: a refresh that
+            // lands mid-selection must not re-fold what setSelecting
+            // opened (tab events fire constantly while selecting).
+            if (selecting) {
+                collapsed.clear();
+                collapsedWindows.clear();
+            }
+
+            closedRecords = readClosedGroups()
+                .sort((a, b) => (b.savedAt || 0) - (a.savedAt || 0));
+            if (treeWanted) {
+                const sets = collectTreeSets(tree);
+                bookmarkedUrls = sets.urls;
+                pruneTabGroupFolderMeta(store, sets.folderIds);
+                bookmarksDirty = false;
+            }
+            views.updateBadges();
+            if (!views.isActive('tabgroups'))
+                return;
+            render();
+        };
+        const step = () => {
+            if (++landed === need)
+                join();
+        };
+        readWindows(list => {
+            if (token !== refreshToken)
+                return; // a newer refresh started — drop this stale read
+            winList = list || [];
+            step();
+        });
+        queryAllGroups(list => {
+            if (token !== refreshToken)
+                return;
+            groupList = list || [];
+            step();
+        });
+        if (treeWanted) {
+            chrome.bookmarks.getTree(t => {
                 if (token !== refreshToken)
                     return;
-                groups = groupList || [];
-                // Keep the list folding in sync with the browser's own
-                // collapsed state (chrome.tabGroups.TabGroup.collapsed).
-                collapsed.clear();
-                for (const g of groups)
-                    if (g.collapsed)
-                        collapsed.add(String(g.id));
-
-                // Restore (or default) the view-local folding state.
-                // Windows: the CURRENT window is open by default and the
-                // others fold; only an explicit fold/unfold the user
-                // performed is remembered and wins over that default (with
-                // remember-state on). Group folds follow the browser when
-                // sync is on; when sync is off the saved view override
-                // survives refreshes.
-                const uiState = readUIState();
-                // With remember-state ON the persisted choices are the truth;
-                // with it OFF nothing is stored, so THIS session's in-memory
-                // choices must survive the refresh — a tab event fires a
-                // refresh every 300 ms, and rebuilding from an empty state
-                // would undo the fold the user just performed.
-                if (rememberState()) {
-                    windowChoice.clear();
-                    if (uiState.windowChoices && typeof uiState.windowChoices === 'object') {
-                        for (const id of Object.keys(uiState.windowChoices))
-                            windowChoice.set(String(id), !!uiState.windowChoices[id]);
-                    } else if (Array.isArray(uiState.collapsedWindows)) {
-                        // Legacy shape (a flat collapsed list): read every entry
-                        // as an explicit fold so an upgrade keeps the folds.
-                        for (const id of uiState.collapsedWindows)
-                            windowChoice.set(String(id), true);
-                    }
-                }
-                collapsedWindows.clear();
-                for (const w of windows) {
-                    const id = String(w.id);
-                    const folded = windowChoice.has(id) ? windowChoice.get(id) : !w.focused;
-                    if (folded)
-                        collapsedWindows.add(id);
-                }
-                expandedClosed.clear();
-                if (Array.isArray(uiState.expandedClosed))
-                    for (const id of uiState.expandedClosed)
-                        expandedClosed.add(String(id));
-                if (!syncCollapse() && Array.isArray(uiState.collapsedGroups)) {
-                    for (const g of groups) {
-                        const gid = String(g.id);
-                        if (uiState.collapsedGroups.indexOf(gid) !== -1)
-                            collapsed.add(gid);
-                        else
-                            collapsed.delete(gid);
-                    }
-                }
-                // Selection mode shows every candidate row: a refresh that
-                // lands mid-selection must not re-fold what setSelecting
-                // opened (tab events fire constantly while selecting).
-                if (selecting) {
-                    collapsed.clear();
-                    collapsedWindows.clear();
-                }
-
-                closedRecords = readClosedGroups()
-                    .sort((a, b) => (b.savedAt || 0) - (a.savedAt || 0));
-                views.updateBadges();
-                if (!views.isActive('tabgroups'))
-                    return;
-                chrome.bookmarks.getTree(tree => {
-                    if (token !== refreshToken)
-                        return;
-                    const sets = collectTreeSets(tree);
-                    bookmarkedUrls = sets.urls;
-                    pruneTabGroupFolderMeta(store, sets.folderIds);
-                    render();
-                });
+                tree = t;
+                step();
             });
-        });
+        }
     };
 
     // --- Rendering --------------------------------------------------------------
@@ -425,18 +484,17 @@ export function initViewTabGroups(ctx = {}) {
             '</div>';
     };
 
-    const groupHeadHtml = (group, memberTabs) => {
+    const groupHeadHtml = (group, memberTabs, G) => {
         const gid = String(group.id);
         // Folds are inert while the filter is active — a find never hides
         // hits behind a fold, and the head renders expanded accordingly.
         const isCollapsed = !filterNeedle() && collapsed.has(gid);
-        const title = group.title || _m('tabGroupUntitled');
+        const title = group.title || G.untitled;
         const color = group.color || 'grey';
-        const saveLabel = _m('tabGroupsSaveFolder');
         // Group sleep is a real toggle, like the member rows': every member
         // asleep → filled glyph + wake, otherwise hollow glyph + sleep.
         const allAsleep = memberTabs.length > 0 && memberTabs.every(t => !!t.discarded);
-        const sleepLabel = _m(allAsleep ? 'tabGroupsWakeGroup' : 'tabGroupsSleepGroup');
+        const sleepLabel = allAsleep ? G.wake : G.sleep;
         // Button order (4.1.0 alignment pass): the three actions a group
         // shares with a single tab read RIGHT-to-left as close (删除) /
         // save-as-folder (收藏) / sleep (睡眠) — the same order and the
@@ -448,12 +506,12 @@ export function initViewTabGroups(ctx = {}) {
             `<span class="chevron${isCollapsed ? ' collapsed' : ''}" aria-hidden="true"></span>` +
             `<span class="tab-group-dot tg-${htmlspecialchars(color)}"></span>` +
             `<span class="tabgroups-group-title" dir="auto">${htmlspecialchars(title)}</span>` +
-            `<span class="count-pill" aria-label="${htmlspecialchars(_m('tabGroupsGroupCount', `${memberTabs.length}`))}">${memberTabs.length}</span>` +
-            `<button class="row-btn tabgroups-group-activate" aria-label="${htmlspecialchars(_m('tabGroupsActivateGroup'))}" title="${htmlspecialchars(_m('tabGroupsActivateGroup'))}">${ACTIVATE_ICON}</button>` +
-            `<button class="row-btn tabgroups-group-rename" aria-label="${htmlspecialchars(_m('tabGroupsRenameGroup'))}" title="${htmlspecialchars(_m('tabGroupsRenameGroup'))}">${EDIT_ICON}</button>` +
+            `<span class="count-pill" aria-label="${htmlspecialchars(G.count(`${memberTabs.length}`))}">${memberTabs.length}</span>` +
+            `<button class="row-btn tabgroups-group-activate" aria-label="${htmlspecialchars(G.activate)}" title="${htmlspecialchars(G.activate)}">${ACTIVATE_ICON}</button>` +
+            `<button class="row-btn tabgroups-group-rename" aria-label="${htmlspecialchars(G.rename)}" title="${htmlspecialchars(G.rename)}">${EDIT_ICON}</button>` +
             `<button class="row-btn tabgroups-group-sleep${allAsleep ? ' asleep' : ''}" aria-pressed="${allAsleep}" aria-label="${htmlspecialchars(sleepLabel)}" title="${htmlspecialchars(sleepLabel)}">${allAsleep ? SLEEP_ICON_FILLED : SLEEP_ICON}</button>` +
-            `<button class="row-btn tabgroups-group-save" aria-label="${htmlspecialchars(saveLabel)}" title="${htmlspecialchars(saveLabel)}">${FOLDER_STAR_ICON}</button>` +
-            `<button class="row-btn tabgroups-group-close" aria-label="${htmlspecialchars(_m('tabGroupsCloseGroup'))}" title="${htmlspecialchars(_m('tabGroupsCloseGroup'))}">${TRASH_ICON}</button>` +
+            `<button class="row-btn tabgroups-group-save" aria-label="${htmlspecialchars(G.save)}" title="${htmlspecialchars(G.save)}">${FOLDER_STAR_ICON}</button>` +
+            `<button class="row-btn tabgroups-group-close" aria-label="${htmlspecialchars(G.close)}" title="${htmlspecialchars(G.close)}">${TRASH_ICON}</button>` +
             '</span></li>';
     };
 
@@ -466,16 +524,16 @@ export function initViewTabGroups(ctx = {}) {
     // controls (state glyph = click toggles that state); selection mode
     // renders the SAME four columns as inert state markers, so the row
     // geometry is identical in both modes (only the batch bar acts there).
-    const rowIcons = tab => {
+    const rowIcons = (tab, L = {}) => {
         const pinned = !!tab.pinned;
         const discarded = !!tab.discarded;
         const bookmarked = bookmarkedUrls.has(tab.url || '');
-        const pinnedLabel = _m('tabGroupsPinned');
-        const discardedLabel = _m('tabGroupsDiscarded');
-        const bookmarkedLabel = _m('tabGroupsBookmarked');
+        const pinnedLabel = L.pinned || _m('tabGroupsPinned');
+        const discardedLabel = L.discarded || _m('tabGroupsDiscarded');
+        const bookmarkedLabel = L.bookmarked || _m('tabGroupsBookmarked');
         if (selecting) {
             return (pinned
-                ? `<span class="tabgroups-status-icon pinned" aria-label="${htmlspecialchars(pinnedLabel)}" title="${htmlspecialchars(pinnedLabel)}">${PIN_ICON}</span>`
+                ? `<span class="tabgroups-status-icon pinned" aria-label="${htmlspecialchars(pinnedLabel)}" title="${htmlspecialchars(pinnedLabel)}">${PIN_ICON_FILLED}</span>`
                 : emptySlot()) +
                 (discarded
                     ? `<span class="tabgroups-status-icon discarded" aria-label="${htmlspecialchars(discardedLabel)}" title="${htmlspecialchars(discardedLabel)}">${SLEEP_ICON_FILLED}</span>`
@@ -485,16 +543,17 @@ export function initViewTabGroups(ctx = {}) {
                     : emptySlot()) +
                 emptySlot();
         }
-        // Pin: a pinned tab shows the always-visible glyph and one click
-        // unpins it (the state icon IS the action). An unpinned tab gets a
-        // hover-revealed pin button in the same column (4.1.0 parity with
-        // the sleep/star hover actions — pinning was context-menu-only).
+        // Pin: a pinned tab shows the always-visible SOLID pin (state glyph
+        // language — filled = on, like the sleeping crescent and bookmarked
+        // ★) and one click unpins it. An unpinned tab gets a hover-revealed
+        // hollow pin button in the same column (4.1.0 parity with the
+        // sleep/star hover actions — pinning was context-menu-only).
         const pinHtml = pinned
-            ? `<button class="row-btn tabgroups-unpin always-on" aria-pressed="true" aria-label="${htmlspecialchars(_m('tabGroupsUnpinTab'))}" title="${htmlspecialchars(_m('tabGroupsUnpinTab'))}">${PIN_ICON}</button>`
-            : `<button class="row-btn tabgroups-pin-tab" aria-label="${htmlspecialchars(_m('tabGroupsPinTab'))}" title="${htmlspecialchars(_m('tabGroupsPinTab'))}">${PIN_ICON}</button>`;
+            ? `<button class="row-btn tabgroups-unpin always-on" aria-pressed="true" aria-label="${htmlspecialchars(L.unpin || _m('tabGroupsUnpinTab'))}" title="${htmlspecialchars(L.unpin || _m('tabGroupsUnpinTab'))}">${PIN_ICON_FILLED}</button>`
+            : `<button class="row-btn tabgroups-pin-tab" aria-label="${htmlspecialchars(L.pin || _m('tabGroupsPinTab'))}" title="${htmlspecialchars(L.pin || _m('tabGroupsPinTab'))}">${PIN_ICON}</button>`;
         // Sleep: hollow crescent = awake (click sleeps), filled = sleeping
         // (always visible, click wakes the tab in place).
-        const sleepLabel = _m(discarded ? 'tabGroupsWakeTab' : 'tabGroupsSleepTab');
+        const sleepLabel = discarded ? (L.wake || _m('tabGroupsWakeTab')) : (L.sleep || _m('tabGroupsSleepTab'));
         const sleepHtml = `<button class="row-btn tabgroups-sleep-tab${discarded ? ' asleep always-on' : ''}" ` +
             `aria-pressed="${discarded}" aria-label="${htmlspecialchars(sleepLabel)}" title="${htmlspecialchars(sleepLabel)}">` +
             `${discarded ? SLEEP_ICON_FILLED : SLEEP_ICON}</button>`;
@@ -502,22 +561,23 @@ export function initViewTabGroups(ctx = {}) {
         // filled ★ once bookmarked — clicking it now REMOVES the bookmark
         // (undo-captured) — and a hover-revealed hollow ☆ otherwise.
         const starHtml = bookmarked
-            ? `<button class="row-btn tabgroups-remove-bookmark always-on" aria-pressed="true" aria-label="${htmlspecialchars(_m('tabGroupsRemoveBookmark'))}" title="${htmlspecialchars(_m('tabGroupsRemoveBookmark'))}">${STAR_ICON_FILLED}</button>`
-            : `<button class="row-btn tabgroups-add-bookmark tabgroups-add-btn" aria-label="${htmlspecialchars(_m('tabGroupsAddBookmark'))}" title="${htmlspecialchars(_m('tabGroupsAddBookmark'))}">${STAR_ICON}</button>`;
+            ? `<button class="row-btn tabgroups-remove-bookmark always-on" aria-pressed="true" aria-label="${htmlspecialchars(L.removeBookmark || _m('tabGroupsRemoveBookmark'))}" title="${htmlspecialchars(L.removeBookmark || _m('tabGroupsRemoveBookmark'))}">${STAR_ICON_FILLED}</button>`
+            : `<button class="row-btn tabgroups-add-bookmark tabgroups-add-btn" aria-label="${htmlspecialchars(L.addBookmark || _m('tabGroupsAddBookmark'))}" title="${htmlspecialchars(L.addBookmark || _m('tabGroupsAddBookmark'))}">${STAR_ICON}</button>`;
         // The rightmost hover action is close-tab (delete).
-        const closeLabel = _m('tabGroupsSelectClose');
+        const closeLabel = L.close || _m('tabGroupsSelectClose');
         const closeHtml = `<button class="row-btn tabgroups-close-tab" aria-label="${htmlspecialchars(closeLabel)}" title="${htmlspecialchars(closeLabel)}">${TRASH_ICON}</button>`;
         return pinHtml + sleepHtml + starHtml + closeHtml;
     };
 
     const tabRowHtml = (tab, opts = {}) => {
+        const L = opts.L || {};
         const tid = String(tab.id);
         const isCurrent = String(tab.id) === String(currentTabId);
         const inGroup = isGrouped(tab);
         const isSelected = selected.has(tid);
         const pinned = !!tab.pinned;
         const discarded = !!tab.discarded;
-        const currentLabel = _m('tabGroupsCurrentTab');
+        const currentLabel = L.currentTab || _m('tabGroupsCurrentTab');
         const extras = `data-tab-id="${tid}" data-url="${htmlspecialchars(tab.url || '')}"`;
         const badge = isCurrent ? [{ text: currentLabel, cls: 'current' }] : [];
         const groupColor = inGroup ? ((groupById(tab.groupId) || {}).color || 'grey') : '';
@@ -534,8 +594,8 @@ export function initViewTabGroups(ctx = {}) {
             `${winId !== undefined && winId !== null ? ` data-window-id="${String(winId)}"` : ''}` +
             `${inGroup ? ` data-group-id="${String(tab.groupId)}"` : ''}>` +
             connector +
-            treeRender.generateBookmarkHTML(tab.title || tab.url || _m('noTitle'), tab.url || '', extras, null, null, { badge }) +
-            rowIcons(tab) +
+            treeRender.generateBookmarkHTML(tab.title || tab.url || L.noTitle || _m('noTitle'), tab.url || '', extras, null, null, { badge }) +
+            rowIcons(tab, L) +
             '</li>';
     };
 
@@ -607,9 +667,46 @@ export function initViewTabGroups(ctx = {}) {
             if (!alive.has(id))
                 selected.delete(id);
 
-        let html = renderToolbar();
+        // Per-render i18n labels. Every row used to re-ask chrome.i18n for
+        // the same handful of strings (7+ getMessage crossings per row); the
+        // profiler attributed ~37 ms of a 1371-row render to the binding.
+        // Resolve them once, hand them down.
+        const L = {
+            currentTab: _m('tabGroupsCurrentTab'),
+            pinned: _m('tabGroupsPinned'),
+            discarded: _m('tabGroupsDiscarded'),
+            bookmarked: _m('tabGroupsBookmarked'),
+            noTitle: _m('noTitle'),
+            unpin: _m('tabGroupsUnpinTab'),
+            pin: _m('tabGroupsPinTab'),
+            wake: _m('tabGroupsWakeTab'),
+            sleep: _m('tabGroupsSleepTab'),
+            removeBookmark: _m('tabGroupsRemoveBookmark'),
+            addBookmark: _m('tabGroupsAddBookmark'),
+            close: _m('tabGroupsSelectClose')
+        };
+        // 4.1.0: rows stream in chunks (list-chunks.js) — the head paint is
+        // synchronous (toolbar + first rows), the rest appends per frame.
+        // The pieces array holds li-level fragments in render order.
+        // Per-render group-head i18n labels: 160 group heads × ~5 static
+        // getMessage crossings used to pay the i18n bridge every render.
+        const G = {
+            untitled: _m('tabGroupUntitled'),
+            count: n => _m('tabGroupsGroupCount', n),
+            activate: _m('tabGroupsActivateGroup'),
+            rename: _m('tabGroupsRenameGroup'),
+            save: _m('tabGroupsSaveFolder'),
+            sleep: _m('tabGroupsSleepGroup'),
+            wake: _m('tabGroupsWakeGroup'),
+            close: _m('tabGroupsCloseGroup')
+        };
+        let head = renderToolbar();
+        const pieces = [];
+        // Piece index carrying the current tab's row — the LAB virtual
+        // painter's initial reveal target (first-activation scroll).
+        let currentPieceIdx = null;
         if (!tabs.length) {
-            html += `<ul role="list"><li class="empty-state" role="listitem"><i>${_m('tabGroupsViewEmpty')}</i></li></ul>`;
+            head += `<ul role="list"><li class="empty-state" role="listitem"><i>${_m('tabGroupsViewEmpty')}</i></li></ul>`;
         } else {
             const style = colorStyle();
             const ulClass = [
@@ -617,7 +714,7 @@ export function initViewTabGroups(ctx = {}) {
                 style === 'edge' ? 'color-enhanced' : '',
                 style === 'line' ? 'color-line' : ''
             ].filter(Boolean).join(' ');
-            html += `<ul role="list"${ulClass ? ` class="${ulClass}"` : ''}>`;
+            head += `<ul role="list"${ulClass ? ` class="${ulClass}"` : ''}></ul>`;
 
             const needle = filterNeedle();
             // A find hits a TAB's title/URL, or a GROUP's title — a group
@@ -668,11 +765,11 @@ export function initViewTabGroups(ctx = {}) {
                     closeBtn +
                     '</span></li>';
             };
-            const groupBlock = ({ group, memberTabs }) => {
-                let out = groupHeadHtml(group, memberTabs);
+            const groupBlock = ({ group, memberTabs, L }) => {
+                let out = groupHeadHtml(group, memberTabs, G);
                 if (needle || !collapsed.has(String(group.id))) {
                     for (let mi = 0; mi < memberTabs.length; mi++)
-                        out += tabRowHtml(memberTabs[mi], { lastMember: mi === memberTabs.length - 1 });
+                        out += tabRowHtml(memberTabs[mi], { lastMember: mi === memberTabs.length - 1, L });
                 }
                 return out;
             };
@@ -684,7 +781,7 @@ export function initViewTabGroups(ctx = {}) {
                 // A window with no matching tab leaves the flow entirely.
                 if (needle && !visibleTabs.length)
                     continue;
-                html += windowHead(win, wi, visibleTabs.length);
+                pieces.push(windowHead(win, wi, visibleTabs.length));
                 if (!needle && collapsedWindows.has(String(win.id)))
                     continue;
 
@@ -692,17 +789,44 @@ export function initViewTabGroups(ctx = {}) {
                 // browser's actual tab order (drag sorting reorders that
                 // order). Closed (collapsed) groups leave the inline flow
                 // and anchor to the bottom of their window section.
+                // Group members are pre-bucketed in ONE pass (the walk used
+                // to re-filter the whole window per group — O(tabs×groups)
+                // with a String() allocation per compare). visibleTabs
+                // keeps the window's index order (sortTabs ordered it and
+                // the filter pass preserves order), so the buckets come out
+                // ordered with no per-group sort. The filtered (needle)
+                // walk keeps the per-group filter: a group-name hit shows
+                // the whole group even when members don't match the needle.
+                const membersByGid = new Map();
+                if (!needle) {
+                    for (let i = 0; i < visibleTabs.length; i++) {
+                        const t = visibleTabs[i];
+                        if (!isGrouped(t) || !groupMap.has(String(t.groupId)))
+                            continue;
+                        const gid = String(t.groupId);
+                        let arr = membersByGid.get(gid);
+                        if (!arr) {
+                            arr = [];
+                            membersByGid.set(gid, arr);
+                        }
+                        arr.push(t);
+                    }
+                }
                 const seenGroups = new Set();
                 for (let i = 0, l = visibleTabs.length; i < l; i++) {
                     const tab = visibleTabs[i];
                     if (!isGrouped(tab)) {
-                        html += tabRowHtml(tab);
+                        if (String(tab.id) === String(currentTabId))
+                            currentPieceIdx = pieces.length;
+                        pieces.push(tabRowHtml(tab, L));
                         matchedRows++;
                         continue;
                     }
                     const group = groupById(tab.groupId);
                     if (!group) {
-                        html += tabRowHtml(tab);
+                        if (String(tab.id) === String(currentTabId))
+                            currentPieceIdx = pieces.length;
+                        pieces.push(tabRowHtml(tab, L));
                         matchedRows++;
                         continue;
                     }
@@ -710,16 +834,19 @@ export function initViewTabGroups(ctx = {}) {
                     if (seenGroups.has(gid))
                         continue;
                     seenGroups.add(gid);
-                    const memberTabs = visibleTabs.filter(t => String(t.groupId) === gid)
-                        .sort((a, b) => (a.index || 0) - (b.index || 0));
+                    const memberTabs = needle
+                        ? visibleTabs.filter(t => String(t.groupId) === gid)
+                        : membersByGid.get(gid);
                     // Collapsed groups stay inline in tab order (they are not
                     // closed — their tabs still exist in the browser).
-                    html += groupBlock({ group, memberTabs });
+                    if (memberTabs.some(t => String(t.id) === String(currentTabId)))
+                        currentPieceIdx = pieces.length;
+                    pieces.push(groupBlock({ group, memberTabs, L }));
                     matchedRows += memberTabs.length;
                 }
             }
             if (needle && !matchedRows)
-                html += `<li class="empty-state" role="listitem"><i>${_m('tabGroupsNoMatchingTabs')}</i></li>`;
+                pieces.push(`<li class="empty-state" role="listitem"><i>${_m('tabGroupsNoMatchingTabs')}</i></li>`);
 
             // The closed-record section is history, not open tabs — it stays
             // out of the filter's scope (hidden while a filter is active).
@@ -729,33 +856,89 @@ export function initViewTabGroups(ctx = {}) {
             // so the button joins the keyboard model's Tab ring, and ↑/↓
             // cross between the open-tab zone and this zone through it).
             if (!needle && closedRecords.length) {
-                html += `<li class="tabgroups-section-head tabgroups-closed-section-head vbm-section-head">` +
+                pieces.push(`<li class="tabgroups-section-head tabgroups-closed-section-head vbm-section-head">` +
                     `<em>${_m('tabGroupsClosedGroups')}</em>` +
                     iconBtn('tabgroups-closed-clear', TRASH_ICON, 'tabGroupsClearClosedGroups') +
-                    `</li>`;
+                    `</li>`);
                 for (const record of closedRecords) {
                     if (record.type === 'tab') {
                         const tab = (record.tabs && record.tabs[0]) || { title: record.title || '', url: record.url || '' };
-                        html += closedTabHtml(record, tab, 0);
+                        pieces.push(closedTabHtml(record, tab, 0));
                     } else {
-                        html += closedGroupHtml(record);
+                        pieces.push(closedGroupHtml(record));
                     }
                 }
             }
-            html += '</ul>';
         }
+        // Focus law + the paint. The toolbar park/restore runs on the head
+        // paint (the toolbar lives in the head); the ROW park/restore
+        // retries per chunk (an id'd row restores as soon as its chunk is
+        // in) and always runs at settle, where the clamped-index path is
+        // safe again — the full list exists by then. The LAB virtual painter
+        // (options 实验室, default off) never has the full list in the DOM:
+        // its settle keeps the id-based restore only.
+        const virtual = !!store.get('virtualScrollLab', '');
         const parkedToolbar = parkToolbarFocus($list);
-        const parkedRow = parkRowFocus($list);
-        $list.innerHTML = html;
-        restoreToolbarFocus($list, parkedToolbar);
-        unparkRowFocus($list, parkedRow);
-        if (pendingScrollToCurrent) {
-            pendingScrollToCurrent = false;
+        let parkedRow = parkRowFocus($list);
+        if (paintHandle)
+            paintHandle.cancel();
+        const tryScrollToCurrent = (paintedThrough) => {
+            if (!pendingScrollToCurrent)
+                return;
+            // Piece-index gate: the current-tab row exists once its piece
+            // is in — no per-batch querySelector walk before that.
+            if (currentPieceIdx == null || (paintedThrough != null && currentPieceIdx >= paintedThrough))
+                return;
             const cur = $list.querySelector ? $list.querySelector('.tabgroups-current') : null;
-            if (cur && cur.scrollIntoView)
+            if (cur && cur.scrollIntoView) {
+                pendingScrollToCurrent = false;
                 cur.scrollIntoView({ block: 'nearest' });
-        }
-        onRowsRendered();
+            }
+        };
+        const tryUnparkRow = () => {
+            if (!parkedRow)
+                return;
+            if (parkedRow.id && typeof document !== 'undefined'
+                && typeof document.getElementById === 'function'
+                && document.getElementById(parkedRow.id)) {
+                unparkRowFocus($list, parkedRow);
+                parkedRow = null;
+            }
+        };
+        const paintOpts = {
+            head,
+            pieces,
+            onHead: el => {
+                restoreToolbarFocus(el, parkedToolbar);
+                onRowsRendered();
+                tryScrollToCurrent(null);   // target may sit in the head batch
+            },
+            onChunk: (el, from, end) => {
+                tryUnparkRow();
+                onRowsRendered();
+                tryScrollToCurrent(end);
+            },
+            onSettled: el => {
+                if (parkedRow && !virtual) {
+                    unparkRowFocus(el, parkedRow);
+                    parkedRow = null;
+                } else if (parkedRow) {
+                    tryUnparkRow();   // id-based only under the virtual painter
+                    parkedRow = null;
+                }
+                tryScrollToCurrent(null);
+            }
+        };
+        paintHandle = virtual
+            ? paintListVirtual($list, {
+                ...paintOpts,
+                revealIndex: pendingScrollToCurrent ? currentPieceIdx : null
+            })
+            : paintListChunked($list, {
+                ...paintOpts,
+                first: 80, chunk: 160,
+                adaptive: true, budgetMs: 16, minChunk: 48, maxChunk: 320
+            });
     };
 
     // --- Bookmark helpers -------------------------------------------------------
@@ -1799,9 +1982,14 @@ export function initViewTabGroups(ctx = {}) {
                 chrome.tabGroups[ev].addListener(scheduleActiveRefresh);
         }
         // Bookmarked state (filled/outline star) follows the bookmark tree.
+        // The listener also flips bookmarksDirty — refresh() re-walks the
+        // (expensive) full tree only after these events, never on tab churn.
         for (const ev of ['onCreated', 'onRemoved', 'onChanged']) {
             if (chrome.bookmarks && chrome.bookmarks[ev] && chrome.bookmarks[ev].addListener)
-                chrome.bookmarks[ev].addListener(scheduleActiveRefresh);
+                chrome.bookmarks[ev].addListener(() => {
+                    bookmarksDirty = true;
+                    scheduleActiveRefresh();
+                });
         }
         // Options-page writes to these keys must reach an open side panel
         // live (the view-manager already does this for show/disable keys).
@@ -1812,7 +2000,7 @@ export function initViewTabGroups(ctx = {}) {
                 if ((area !== 'sync' && area !== 'local') || !changes)
                     return;
                 let touched = false;
-                for (const key of ['tabGroupsColorStyle', 'tabGroupsColorBorder', 'tabGroupsSyncCollapse']) {
+                for (const key of ['tabGroupsColorStyle', 'tabGroupsColorBorder', 'tabGroupsSyncCollapse', 'virtualScrollLab']) {
                     if (Object.prototype.hasOwnProperty.call(changes, key)) {
                         if (store.adopt)
                             store.adopt(key, changes[key].newValue);

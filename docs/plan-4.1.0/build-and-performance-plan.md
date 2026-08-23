@@ -497,6 +497,37 @@ zip 实测（package.py 同口径 collect + deflate 默认级别；实测 level 
 - dupes regroup 两个版本稳定区间重叠（4.0.8 608–927ms，master 556–974ms），+7.6% 属噪声与 4.1.0 视图基础设施（tab-groups 注册、7 视图 updateBadges、菜单/焦点层）的开销，不是 P0/P1 的回归；dist 单独窗口还测到 549.7ms（最快）。要在 6000+ 重复量级再降，需 dupes 专项（findDupes 单趟分组 / 分片渲染，即 P2 判据内的工作）。
 - 探针与对比脚本已入库：`scripts/harness/perf-run.sh`（任意 ext-root 专用 perf 容器）、`scripts/harness/perf-popup.js`（参数化种子 + settle 口径 + dupes regroup 相位）、`scripts/harness/perf-compare.js`（多份 perf.json 汇总）。
 
+### 4.1.0 标签组视图与去重视图专项（2026-08-23，diag-41x-perf.js 函数级探针）
+
+用户报告「点开标签组视图要等好几秒」+ 6000 书签量级去重视图卡顿。新增 `scripts/harness/diag/diag-41x-perf.js`（CDP Profiler 域，函数级 self-time；真实 windows/tabs/tab-groups 工作负载：4 窗 × (40 组 × 6 + 60 散) = 1200 标签 / 160 组 / 1371 行；dupes 沿用 6000/25% 种子 = 2508 行），同一探针跑优化前后。
+
+**基线热点（优化前）**：标签组激活 wall≈1414ms、首内容 1064ms——`scrollIntoView`(599ms 强制全量布局) + render(175ms) + favicon 占位链路(~130ms) + 三跳串行 IPC(~100ms)；重渲染 wall≈1625-1965ms、`(program)`（innerHTML 解析+样式+布局）**1668ms** + `bookmarks.getTree` 每刷 53-106ms + 每行 7+ 次 `_m()`(getUILanguage 37ms)。dupes regroup wall≈2648ms、render 自身 469ms（同步解析）+ `(program)` 1576ms + normalizeUrl/URL ~70ms。
+
+**落地项**（四个 commit：8b01d0f / 1555d9d / a1f06da / 9b6d918）：
+1. `refresh()` 三路 IPC 并行 + 书签树脏标记（tab 事件风暴不再重走 getTree）
+2. 组/标签查找 Map 化 + 组员单趟分桶（原 O(tabs×groups)）+ 每渲染 i18n 标签提升
+3. favicon 占位 SVG 模板一次解析按需 clone；dupes `findDupes` 按原始 URL 串 memo normalizeUrl
+4. `src/list-chunks.js` 分片渲染（head 同步 + rAF 批次追加；无 rAF/小列表退化单次 innerHTML）接入两视图
+5. `neat.css` 重列表行 `content-visibility:auto`（屏外行跳过布局/绘制）
+
+| 口径 | 优化前 | 优化后（终测，含 ul 注入修复） | 变化 |
+|---|---|---|---|
+| 标签组激活·首内容（firstDOM） | 1064 ms | 239 ms | **-78%** |
+| 标签组激活·wall（至稳定） | 1414 ms | 680 ms | **-52%** |
+| 标签组重渲染·wall | 1611-1965 ms | 976-1038 ms | **-40%（中位）** |
+| 标签组重渲染·(program) | 1668 ms | ~541 ms | **-68%** |
+| 标签组重渲染·getTree | 每刷 53-106 ms | 0（脏标记命中） | 消除 |
+| dupes regroup·wall | 2372-2738 ms | 1071-1136 ms | **-57%（中位）** |
+| dupes regroup·render 同步解析 | 469 ms（一整块） | ~2 ms（解析分散为分帧 insertAdjacentHTML ~360 ms） | 主线程不再长冻 |
+
+**修复过程中的两处门禁拦截（真机门禁的价值记录）**：①list-chunks 首版把行片段拼在已闭合 `</ul>` 之后——真实解析器下 `<li>` 沦为 ul 兄弟节点，keyboard.js 的 `ul>li` 行选择器与全部 `#x-list ul li` CSS 规则落空（D1 键盘用例回归；字符串 double 单测全绿察觉不了，Docker 真机门禁捕获，diag-d1-repro.js 复现）；②content-visibility 选择器最初含 `#recent-list`——verify-scrollbars 31 例 computed overflow-x 读到 visible（机理未明的 Chromium 行为；recent 行数受 recentCount 上限约束本无屏外收益，已排除并复跑 ALL PASS 748）。
+
+**4.1.0 实验室预置**：P2 判据内的虚拟滚动以实验室开关形式落地（选项页实验室组 `virtualScrollLab`，默认关；`src/virtual-list.js`——视口窗口 + padding 撑几何、滚动 rAF 重开窗、focusin 边缘扩窗、重渲染保留滚动位置；diag-virtual-lab.js 同会话实测 6000/2508 行 regroup：虚拟 2.2-3.1 s 稳定 vs 分片 3.7-17.4 s 逐轮恶化——高负载下 O(视口) 渲染账单的优势；已知局限：行高为估算值、End/Home 落在已渲染行上）。稳定 soak 后再决定是否转正。
+
+**4.1.0 性能第 2 轮（2026-08-23 审计批次，报告 docs/review-4.1.0/perf-round2-audit.md）**：在 4.1.0 终测基础上继续压榨，五项落地（提交 `aae2dfe`..`794f0f2`）——①list-chunks 自适应分片（实测插入成本伸缩批次，2508 行的 42 帧固定阶梯变为机器自适应）+ `onChunk(list, from, end)` 区间回调 + pipes 多 `<ul>` 流式；②去重/标签组行级与组头级 i18n 提升（去重成员行 20000 次 getMessage/渲染 → ~5000；标签组组头 ~800 → 常数次，重渲染热点 getUILanguage 16.9ms 消失）+ 焦点重试按 piece 索引定点（消灭每批全表扫描）；③死链视图扫描中**增量渲染**（每 700ms 发布只补丁工具栏 + 按树序插入新增问题行，已渲染行与 favicon 全程不动——旧实现每 tick 全表重建 O(n²/scan)；真机 tick 探针 diag-dead-ticks.js：333 次连续采样结果 `<ul>` 节点身份不变、单 tick 仅新增 ~121 行）+ 空闲态 pipes 分片（结果列表 + 标注残留双 ul 同 head 绘制）；④virtual-list 行高渲染后实测（滚动条漂移修复）；⑤探针旋钮 VBM_DUP_COPIES（1=双条目组，还原维护者 6000 书签/2500+ 重复组真实形状）+ VBM_DIAG_VIRTUAL + rerun.sh 环境透传。复测（同种子同环境）：标签组重渲染 wall -10%、scripting -19%、GC 225.5→53ms（-76%）；去重 regroup（500 组）wall -10%；**真实量级 2520 组/7568 行：分片 wall ~1370ms / scripting ~968ms，虚拟 wall ~900ms（-34%）/ scripting ~352ms（-64%）/ DOM 29 行**——虚拟转正决策与前置条件（jump-to-edge 键盘契约、标签组 DnD 保留分片）见报告 §7.1。验收：vitest 2711/2711（+14）、lint 0 错、build 自检 PASS、源码/dist smoke PASS。
+
+注：①分片渲染不减少总解析量，但把一整块 ~470ms 冻结摊成逐帧批次，首内容提前、UI 全程可交互；②`(program)`（样式/布局/绘制）的下降主要来自 content-visibility；③`scrollIntoView` 599→161ms（首开定位当前标签行）；④工作负载与种子前后完全一致，同一 Docker 环境连续跑；⑤验收：vitest 2696/2696 + lint 0 错、源码全量 harness ALL PASS（smoke + 键盘 156/0 + 滚动条 748）、dist 构建自检 + dist 全量 harness ALL PASS。复跑：`scripts/harness/rerun.sh diag/diag-41x-perf.js`（env：VBM_TG_WINDOWS/VBM_TG_GROUPS_PER_WIN/VBM_TG_TABS_PER_GROUP/VBM_TG_LOOSE）。
+
 ## 附录 B：本阶段明确不做的事
 
 汇总 §2.8 与 §4.5：经典脚本拼接（Phase 1B，判据驱动）、CSS/HTML minify、激进 tree-shaking、经典脚本转 ESM、zip 内 sourcemap、代码混淆、把单元测试迁到 dist 上跑、虚拟滚动（P2 单独立项判据见 §4.5）。

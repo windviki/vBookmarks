@@ -2537,5 +2537,14 @@
   },
   "stagingGroupSelectAll": {
     "message": "Vælg alle i denne gruppe"
+  },
+  "optionsGroupLabs": {
+    "message": "Laboratorier"
+  },
+  "optionVirtualScrollLab": {
+    "message": "Virtuel rulning (eksperimentel)"
+  },
+  "optionVirtualScrollLabHint": {
+    "message": "Fanegrupper og dubletvisninger gengiver kun rækkerne nær visningsporten. Meget hurtigere på meget store lister; mens det er eksperimentelt, er rullepositionen et skøn."
   }
 }

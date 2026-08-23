@@ -2537,5 +2537,14 @@
   },
   "stagingGroupSelectAll": {
     "message": "Vali kõik selles rühmas"
+  },
+  "optionsGroupLabs": {
+    "message": "Laborid"
+  },
+  "optionVirtualScrollLab": {
+    "message": "Virtuaalne kerimine (eksperimentaalne)"
+  },
+  "optionVirtualScrollLabHint": {
+    "message": "Vahekaardirühmade ja dublikaatide vaated renderdavad ainult vaateakna lähedal asuvaid ridu. Väga suurtes loendites palju kiirem; eksperimentaalses režiimis on kerimisriba asukoht hinnanguline."
   }
 }

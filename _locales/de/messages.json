@@ -2537,5 +2537,14 @@
   },
   "stagingGroupSelectAll": {
     "message": "Alle in dieser Gruppe auswählen"
+  },
+  "optionsGroupLabs": {
+    "message": "Labore"
+  },
+  "optionVirtualScrollLab": {
+    "message": "Virtuelles Scrollen (experimentell)"
+  },
+  "optionVirtualScrollLabHint": {
+    "message": "Die Ansichten für Tab-Gruppen und Duplikate rendern nur die Zeilen in der Nähe des Viewports. Bei sehr großen Listen deutlich schneller; experimentell ist die Scrollbar-Position eine Schätzung."
   }
 }

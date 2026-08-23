@@ -63,10 +63,16 @@ beforeAll(() => {
                 };
             }
             // <span> host for the SVG swap markup: parse just enough — the
-            // module only reads .firstChild.
+            // module reads .firstChild and clones it (4.1.0: the template
+            // is parsed once, every swap clones).
             return {
                 innerHTML: '',
-                get firstChild() { return { svgMarkup: this.innerHTML }; }
+                get firstChild() {
+                    return {
+                        svgMarkup: this.innerHTML,
+                        cloneNode() { return { svgMarkup: this.svgMarkup }; }
+                    };
+                }
             };
         }
     };
@@ -138,6 +144,8 @@ describe('needsContrast', () => {
     const nearBlack = { dark: 0.9, light: 0, colored: 0, cover: 0.6 };    // 偏黑深色 logo，透明底
     const midGray = { dark: 0, light: 0, colored: 0, cover: 1 };
     const darkColorful = { dark: 1, light: 0, colored: 1, cover: 0.49 };  // netflix: 暗而饱和
+    const darkColorfulPlate = { dark: 0.9, light: 0.046, colored: 0.98, cover: 0.58 }; // 旧 youtube .ico: 红板+小白三角
+    const darkSlightlyColored = { dark: 0.9, light: 0, colored: 0.05, cover: 0.8 }; // 黑字标 + 一点彩: 仍翻
     const lightColorful = { dark: 0, light: 0.66, colored: 0.42, cover: 1 }; // devconsole: 白底彩色 logo
     const lightSlightlyColored = { dark: 0, light: 0.8, colored: 0.25, cover: 1 }; // 浅底 + 少量彩: 仍翻
     const darkPlateLightGlyph = { dark: 0.82, light: 0.1, colored: 0, cover: 1 }; // x.com: 黑盘白字
@@ -159,9 +167,22 @@ describe('needsContrast', () => {
         expect(needsContrast(nearBlack, false)).toBe(false);
     });
 
-    it('flips a dark-but-colorful mark on dark — the hue-preserving filter keeps its hue', () => {
-        expect(needsContrast(darkColorful, true)).toBe(true);   // netflix 红 N → 浅红
+    it('leaves a dark-but-colorful mark alone on dark — the flip halves its chroma (netflix)', () => {
+        // 4.1.0 用户实测反馈：netflix 暗 红 N 翻转后 chroma 190→90，呈褪色粉，
+        // "奇怪的滤镜效果"。饱和色在暗背景上靠彩度对比本就可见，不再翻转。
+        expect(needsContrast(darkColorful, true)).toBe(false);
         expect(needsContrast(darkColorful, false)).toBe(false);
+    });
+
+    it('leaves a dark colorful plate alone on dark (old youtube .ico red plate)', () => {
+        // 红板 + 小白三角：light 0.046 恰好穿过旧规则的 0.05 缺口；
+        // 彩度防护后保持原样——红板在暗背景上本就清晰。
+        expect(needsContrast(darkColorfulPlate, true)).toBe(false);
+        expect(needsContrast(darkColorfulPlate, false)).toBe(false);
+    });
+
+    it('still flips a dark mark with only a little color (dark guard threshold 0.10)', () => {
+        expect(needsContrast(darkSlightlyColored, true)).toBe(true);
     });
 
     it('leaves a light-but-colorful logo alone on light — the white card would go black (devconsole)', () => {

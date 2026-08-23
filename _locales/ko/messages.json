@@ -2537,5 +2537,14 @@
   },
   "stagingGroupSelectAll": {
     "message": "이 그룹 모두 선택"
+  },
+  "optionsGroupLabs": {
+    "message": "실험실"
+  },
+  "optionVirtualScrollLab": {
+    "message": "가상 스크롤(실험적)"
+  },
+  "optionVirtualScrollLabHint": {
+    "message": "탭 그룹 및 중복 보기는 뷰포트 근처의 행만 렌더링합니다. 매우 큰 목록에서 훨씬 빠르며, 실험적 기능으로 스크롤바 위치는 추정치입니다."
   }
 }

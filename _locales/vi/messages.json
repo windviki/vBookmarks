@@ -2537,5 +2537,14 @@
   },
   "stagingGroupSelectAll": {
     "message": "Chọn tất cả trong nhóm này"
+  },
+  "optionsGroupLabs": {
+    "message": "实验室"
+  },
+  "optionVirtualScrollLab": {
+    "message": "虚拟滚动（实验性）"
+  },
+  "optionVirtualScrollLabHint": {
+    "message": "标签组和重复项视图仅渲染视口附近的行。在非常大的列表上速度更快；实验阶段滚动条位置为估算值。"
   }
 }

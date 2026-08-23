@@ -2537,5 +2537,14 @@
   },
   "stagingGroupSelectAll": {
     "message": "Izberi vse v tej skupini"
+  },
+  "optionsGroupLabs": {
+    "message": "Laboratorij"
+  },
+  "optionVirtualScrollLab": {
+    "message": "Navidezno drsenje (eksperimentalno)"
+  },
+  "optionVirtualScrollLabHint": {
+    "message": "Pogledi zavihkov in dvojnikov prikažejo samo vrstice blizu vidnega območja. Veliko hitreje pri zelo velikih seznamih; med eksperimentalnim načinom je položaj drsnika ocenjen."
   }
 }

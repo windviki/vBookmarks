@@ -2537,5 +2537,14 @@
   },
   "stagingGroupSelectAll": {
     "message": "全選此群組"
+  },
+  "optionsGroupLabs": {
+    "message": "實驗室"
+  },
+  "optionVirtualScrollLab": {
+    "message": "虛擬捲動（實驗性）"
+  },
+  "optionVirtualScrollLabHint": {
+    "message": "分頁群組和重複項目檢視只會渲染接近視窗的列。在非常大的清單上速度更快；實驗期間捲軸位置為估計值。"
   }
 }

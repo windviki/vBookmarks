@@ -2537,5 +2537,14 @@
   },
   "stagingGroupSelectAll": {
     "message": "Velg alle i denne gruppen"
+  },
+  "optionsGroupLabs": {
+    "message": "Laboratorier"
+  },
+  "optionVirtualScrollLab": {
+    "message": "Virtuell rulling (eksperimentell)"
+  },
+  "optionVirtualScrollLabHint": {
+    "message": "Fanegruppe- og duplikatvisningene gjengir kun radene nær visningsområdet. Mye raskere på svært store lister; mens eksperimentell er rullefeltets posisjon et estimat."
   }
 }
