@@ -24,6 +24,8 @@ describe('staging state shape and parse', () => {
         expect(s.groups).toEqual([]);
         expect(s.recentCollapsed).toBe(false);
         expect(s.unfavCollapsed).toBe(false);
+        expect(s.headCollapsed).toBe(false);
+        expect(s.recentGroupCollapsed).toEqual({});
         expect(s.lastSeenTs).toBe(0);
     });
 
@@ -33,11 +35,15 @@ describe('staging state shape and parse', () => {
         const g = createGroup(s, 'G', { sourceFolderId: '7' }, 200);
         assignGroup(s, ['https://a'], g.id);
         s.recentCollapsed = true;
+        s.headCollapsed = true;
+        s.recentGroupCollapsed = { recentGroupToday: true, recentGroupOlder: true };
         s.lastSeenTs = 300;
         const back = parse(serialize(s));
         expect(back.items).toEqual([{ id: '1', url: 'https://a', title: 'A', ts: 100, group: g.id }]);
         expect(back.groups[0].sourceFolderId).toBe('7');
         expect(back.recentCollapsed).toBe(true);
+        expect(back.headCollapsed).toBe(true);
+        expect(back.recentGroupCollapsed).toEqual({ recentGroupToday: true, recentGroupOlder: true });
         expect(back.lastSeenTs).toBe(300);
     });
 

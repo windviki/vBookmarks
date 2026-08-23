@@ -47,6 +47,10 @@ export const createState = () => ({
     groups: [],
     recentCollapsed: false,
     unfavCollapsed: false,
+    // 折叠记忆轮: the two big section folds + the recent time-bucket folds
+    // ride the same persisted model, so a reopen resumes the workbench.
+    headCollapsed: false,
+    recentGroupCollapsed: {},
     lastSeenTs: 0
 });
 
@@ -68,6 +72,11 @@ export const parse = raw => {
     state.lastSeenTs = typeof parsed.lastSeenTs === 'number' ? parsed.lastSeenTs : 0;
     state.recentCollapsed = !!parsed.recentCollapsed;
     state.unfavCollapsed = !!parsed.unfavCollapsed;
+    state.headCollapsed = !!parsed.headCollapsed;
+    if (parsed.recentGroupCollapsed && typeof parsed.recentGroupCollapsed === 'object') {
+        for (const k of Object.keys(parsed.recentGroupCollapsed))
+            state.recentGroupCollapsed[k] = !!parsed.recentGroupCollapsed[k];
+    }
     const knownGroups = new Set();
     if (Array.isArray(parsed.groups)) {
         for (const g of parsed.groups) {
@@ -443,6 +452,12 @@ export const setRecentCollapsed = (state, collapsed) => {
 
 export const setUnfavCollapsed = (state, collapsed) => {
     state.unfavCollapsed = !!collapsed;
+};
+export const setHeadCollapsed = (state, collapsed) => {
+    state.headCollapsed = !!collapsed;
+};
+export const setRecentGroupCollapsed = (state, key, collapsed) => {
+    state.recentGroupCollapsed[key] = !!collapsed;
 };
 
 // --- Move-to shortcuts (the selection bar's customizable quick row) --------

@@ -154,15 +154,16 @@ export const STAGE_ICON =
     '<path d="M14.7 1.3L7.3 8.7"/>' +
     '</svg>';
 
-// The REMOVE counterpart: the plane shrinks into the upper-left corner
-// with a small × at its heel — "un-send", the direct opposite of the send
-// glyph (never the clear-list × alone, which reads as wiping a list).
+// The REMOVE counterpart: the FULL-SIZE hollow plane with a small ×
+// overlaid on its bottom-right corner — "un-send", the direct opposite of
+// the send glyph (never the clear-list × alone, which reads as wiping a
+// list). The main glyph is NEVER shrunk to make room for the ×.
 export const STAGE_REMOVE_ICON =
     '<svg class="vbm-icon vbm-icon-stage-remove" width="16" height="16" viewBox="0 0 16 16" ' +
     'fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
-    `<g transform="translate(-1.2 -1.2) scale(0.8)"><path d="${STAGE_PLANE_PATH}"/></g>` +
-    '<path d="M11.2 11.2l3.3 3.3"/>' +
-    '<path d="M14.5 11.2l-3.3 3.3"/>' +
+    `<path d="${STAGE_PLANE_PATH}"/>` +
+    '<path d="M10.8 10.8l3.2 3.2"/>' +
+    '<path d="M14 10.8l-3.2 3.2"/>' +
     '</svg>';
 
 // Same glyph in the "already staged" state — the SOLID plane (the
@@ -309,13 +310,15 @@ export const GROUP_ICON =
     '<path d="M1.67 11.17L8 14.33l6.33-3.16"/>' +
     '</svg>';
 
-// Un-favorite: the hollow star with a small × — the inverse of the star
-// row action, so the two toolbar buttons read as one toggle pair.
+// Un-favorite: the FULL-SIZE hollow star with a small × overlaid on its
+// bottom-right corner — the inverse of the star row action, so the two
+// toolbar buttons read as one toggle pair. The star is never shrunk.
 export const STAR_X_ICON =
     '<svg class="vbm-icon vbm-icon-star-x" width="16" height="16" viewBox="0 0 16 16" ' +
     'fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
     `<path d="${STAR_PATH}"/>` +
-    '<path d="M11.2 4.2l2.6 2.6M13.8 4.2l-2.6 2.6"/>' +
+    '<path d="M10.8 10.8l3.2 3.2"/>' +
+    '<path d="M14 10.8l-3.2 3.2"/>' +
     '</svg>';
 
 // Dissolve a staging group: members exit the box (the door-arrow-out

@@ -654,7 +654,7 @@ describe('coarse time sections (第四轮项8)', () => {
         id: `${id}`, parentId: '1', title: `t${id}`, url: `http://h${id}/`, dateAdded: ts
     });
     const heads = html =>
-        [...html.matchAll(/<div class="recent-group-head" role="presentation">(\w+)(?:<button[\s\S]*?<\/button>)?<\/div>/g)]
+        [...html.matchAll(/<li class="recent-group-li[^"]*" data-recent-group="(\d)"/g)]
             .map(m => m[1]);
 
     it('segments the desc list into 今天/本周/本月/更早, one header per group', () => {
@@ -671,29 +671,23 @@ describe('coarse time sections (第四轮项8)', () => {
         });
         def().activate();
         const html = $list.innerHTML;
-        expect(heads(html)).toEqual([
-            'recentGroupToday', 'recentGroupWeek', 'recentGroupMonth', 'recentGroupOlder'
-        ]);
-        // a header is tucked into its group's first row, AFTER the anchor:
-        // CSS order pulls it above the row visually, li.firstElementChild
-        // stays the anchor so Enter opens the bookmark (keyboard.js)
+        expect(heads(html)).toEqual(['0', '1', '2', '3']);
+        // a REAL head li leads its own contiguous member rows (折叠记忆轮):
+        // the head precedes the first member, member rows carry
+        // data-recent-group so the surgical fold can move exactly that block.
         const at = s => html.indexOf(s);
-        expect(at('id="recent-item-1"')).toBeLessThan(at('<a href="http://h1/"'));
-        expect(at('<a href="http://h1/"')).toBeLessThan(at('recentGroupToday'));
-        expect(at('id="recent-item-3"')).toBeLessThan(at('<a href="http://h3/"'));
-        expect(at('<a href="http://h3/"')).toBeLessThan(at('recentGroupWeek'));
-        expect(at('id="recent-item-5"')).toBeLessThan(at('<a href="http://h5/"'));
-        expect(at('<a href="http://h5/"')).toBeLessThan(at('recentGroupMonth'));
-        expect(at('id="recent-item-7"')).toBeLessThan(at('<a href="http://h7/"'));
-        expect(at('<a href="http://h7/"')).toBeLessThan(at('recentGroupOlder'));
-        // head-carrying rows are marked for the flex/order styling
-        expect(html).toContain('class="vbm-row has-head" id="recent-item-1"');
+        expect(at('class="recent-group-li')).toBeLessThan(at('id="recent-item-1"'));
+        // the SECOND head li follows item-2's rows and leads item-3's
+        expect(at('id="recent-item-3"')).toBeGreaterThan(at('class="recent-group-li', at('id="recent-item-1"') + 1));
+        expect(html).toContain('data-recent-group="0"');
+        expect(html).toContain('data-recent-group="3"');
+        expect(html).not.toContain('has-head');
     });
 
     it('pins 今天 to the local calendar day: midnight is today, 1ms before is 本周', () => {
         const { $list, def } = setup({ recentItems: [mk(1, SOD), mk(2, SOD - 1)] });
         def().activate();
-        expect(heads($list.innerHTML)).toEqual(['recentGroupToday', 'recentGroupWeek']);
+        expect(heads($list.innerHTML)).toEqual(['0', '1']);
     });
 
     it('pins 本周 to a rolling 7×24h (not the calendar week)', () => {
@@ -701,7 +695,7 @@ describe('coarse time sections (第四轮项8)', () => {
             recentItems: [mk(1, NOW - 7 * DAY + HOUR), mk(2, NOW - 7 * DAY - HOUR)]
         });
         def().activate();
-        expect(heads($list.innerHTML)).toEqual(['recentGroupWeek', 'recentGroupMonth']);
+        expect(heads($list.innerHTML)).toEqual(['1', '2']);
     });
 
     it('pins 本月 to a rolling 30×24h (not the calendar month)', () => {
@@ -709,7 +703,7 @@ describe('coarse time sections (第四轮项8)', () => {
             recentItems: [mk(1, NOW - 30 * DAY + HOUR), mk(2, NOW - 30 * DAY - HOUR)]
         });
         def().activate();
-        expect(heads($list.innerHTML)).toEqual(['recentGroupMonth', 'recentGroupOlder']);
+        expect(heads($list.innerHTML)).toEqual(['2', '3']);
     });
 
     it('repeats no header within a group and hides empty groups', () => {
@@ -717,7 +711,7 @@ describe('coarse time sections (第四轮项8)', () => {
             recentItems: [mk(1, NOW), mk(2, SOD), mk(3, NOW - 40 * DAY)]
         });
         def().activate();
-        expect(heads($list.innerHTML)).toEqual(['recentGroupToday', 'recentGroupOlder']);
+        expect(heads($list.innerHTML)).toEqual(['0', '3']);
     });
 
     it('renders no headers in the empty state', () => {
@@ -726,16 +720,48 @@ describe('coarse time sections (第四轮项8)', () => {
         expect($list.innerHTML).not.toContain('recent-group-head');
     });
 
-    it('headers are non-interactive: presentational; only the hover stage button inside', () => {
+    it('a time-bucket head folds its own rows (surgical) and persists recentGroupCollapsed', () => {
+        const { store, $list, def, click } = setup({ recentItems: [mk(1, NOW), mk(2, NOW - 40 * DAY)] });
+        def().activate();
+        expect($list.innerHTML).toContain('id="recent-item-1"');
+        click({
+            preventDefault() {}, stopPropagation() {},
+            target: {
+                closest: sel => (sel === '.recent-group-head' ? {}
+                    : (sel === '.recent-group-li' ? { dataset: { recentGroup: '0' } } : null))
+            }
+        });
+        const saved = JSON.parse(store.get('staging'));
+        expect(saved.recentGroupCollapsed.recentGroupToday).toBe(true);
+        expect($list.innerHTML).not.toContain('id="recent-item-1"'); // the bucket's rows fold
+        expect($list.innerHTML).toContain('id="recent-item-2"');    // other bucket stays
+        expect($list.innerHTML).toContain('class="recent-group-li'); // head stays
+        // unfold: the bucket's rows come back and the state persists false
+        click({
+            preventDefault() {}, stopPropagation() {},
+            target: {
+                closest: sel => (sel === '.recent-group-head' ? {}
+                    : (sel === '.recent-group-li' ? { dataset: { recentGroup: '0' } } : null))
+            }
+        });
+        expect(JSON.parse(store.get('staging')).recentGroupCollapsed.recentGroupToday).toBe(false);
+        expect($list.innerHTML).toContain('id="recent-item-1"');
+    });
+
+    it('time-bucket heads are REAL foldable group heads (折叠记忆轮)', () => {
         const { $list, def } = setup({ recentItems: [mk(1, NOW)] });
         def().activate();
-        const m = $list.innerHTML.match(/<div class="recent-group-head"[^>]*>/);
+        const m = $list.innerHTML.match(/<li class="recent-group-li" data-recent-group="0"[^>]*>[\s\S]*?<\/li>/);
         expect(m).not.toBe(null);
-        expect(m[0]).toContain('role="presentation"');
-        expect(m[0]).not.toContain('tabindex'); // the head itself never joins the Tab ring
-        expect(m[0]).not.toMatch(/<[as][\s>]/); // no a/span: keys & clicks skip it
+        expect(m[0]).toContain('role="presentation"'); // the li stays presentational
+        expect(m[0]).toContain('aria-expanded="true"');
+        // the fold control is a span head (role=button, in the walk via
+        // tabindex -1) with a chevron, a title and a count pill
+        expect(m[0]).toMatch(/<span class="group-head recent-group-head" role="button" tabindex="-1"/);
+        expect(m[0]).toContain('chevron');
+        expect(m[0]).toContain('count-pill');
         // velvet staging: the per-bucket send button is mouse-only by design
-        // (tabindex -1, revealed on head hover)
+        // (tabindex -1)
         const btn = $list.innerHTML.match(/<button[^>]*class="row-btn recent-group-stage"[^>]*>/);
         expect(btn).not.toBe(null);
         expect(btn[0]).toContain('tabindex="-1"');
@@ -867,6 +893,39 @@ describe('staging view (velvet staging ST3)', () => {
         // the idle toolbar: summary left, new-group + select-mode right
         expect(html).toContain('staging-new-group');
         expect(html).toContain('staging-select-mode');
+    });
+
+    it('the staging head folds the whole staging area and persists headCollapsed', () => {
+        const { viewRecent, store, $list, def, click } = setup({});
+        viewRecent.api.addItems([mkItem('1', 'http://a/', 'A')]);
+        def().activate();
+        expect($list.innerHTML).toContain('id="staging-head"');
+        expect($list.innerHTML).toContain('id="staging-item-0"');
+        click({
+            preventDefault() {},
+            target: { closest: sel => (sel === '#staging-head' ? {} : null) }
+        });
+        expect(JSON.parse(store.get('staging')).headCollapsed).toBe(true);
+        expect($list.innerHTML).not.toContain('id="staging-item-0"'); // whole area folds
+        expect($list.innerHTML).toContain('id="staging-head"');       // the head stays
+        click({
+            preventDefault() {},
+            target: { closest: sel => (sel === '#staging-head' ? {} : null) }
+        });
+        expect(JSON.parse(store.get('staging')).headCollapsed).toBe(false);
+        expect($list.innerHTML).toContain('id="staging-item-0"');
+    });
+
+    it('the guide × session-dismisses the hint; 不再提醒 stays permanent', () => {
+        const { store, $list, def, click } = setup({});
+        def().activate();
+        expect($list.innerHTML).toContain('staging-guide-banner');
+        click({
+            preventDefault() {}, stopPropagation() {},
+            target: { closest: sel => (sel === '.staging-guide-close' ? {} : null) }
+        });
+        expect($list.innerHTML).not.toContain('staging-guide-banner');
+        expect(store.get('stagingGuideDismissed')).toBeUndefined(); // permanent flag untouched
     });
 
     it('registers badge (staging count) and persistScroll', () => {

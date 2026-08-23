@@ -51,6 +51,15 @@
 > ③ **tabgroups**（view-tabgroups.js）：setGroupCollapsed 在非虚拟实验室下改 foldGroupSurgically——成员连续块以 li.vbm-row[data-group-id=gid] 界定 remove / 按 tabRowHtml（含 lastMember 连线收口）重插，窗口区/关闭组区 DOM 不触碰；浏览器侧 chrome.tabGroups.update 写透与 persistUIState 原样保留。实测折叠 58→3.2ms、展开 60→11.8ms（首帧）。
 > ④ **i18n 缓存同源化**：三个视图的行标签缓存（dupesLabels/stagingLabels/tabgroupsLabels）从 render 内联提为函数，整表渲染与手术式折叠共用同一份解析。门禁：2861 vitest 全绿 / eslint 0 / build 自检 PASS / diag-staging-verify ALL PASS / verify-keyboard 164 pass / verify-scrollbars 748 断言 ALL PASS。
 
+> **迭代记录 J（虚拟滚动修复 + 折叠记忆轮 + 六点反馈收口，实施后回写）**：
+> ① **虚拟滚动实验室与 content-visibility 互斥修复**：虚拟画笔每次 re-window 用 innerHTML 重建窗口行，而 cv:auto 让这些新行跳过渲染与命中测试——6000 书签实测滚动后视口整段空白、直到下一次滚动才恢复（diag-vl-6000.js 复现：行已就位、elementFromPoint 打不中）。修复 = 虚拟模式下两个视图给列表挂 .virtual-paint 类（dupes/tabgroups render 处按标志切换），CSS 追加 #dupes-list.virtual-paint 等的 content-visibility:visible 覆盖（窗口本就约 40 行，cv 无收益且有害）。修复后探针 0 空白、re-window 35-56ms、树视图在去重滚动后依旧健康。
+> ② **折叠记忆轮（六点反馈之 3）**：a) 暂存区上方新增真正的**暂存区组头** #staging-head——原 idle 工具条重构为可点击折叠的组头行（chevron + 加粗标题「暂存区」+ 计数 pill 右移、与 [新建分组][选择模式] 工具按钮同排右置，headCollapsed 随模型持久化）；b) 最近添加区的**今天/本周/本月/更早分块升级为真正的可折叠组头**（li.recent-group-li：chevron + 标题 + 计数 pill + 整组发送按钮，成员行挂 data-recent-group，recentGroupCollapsed 按桶持久化，折叠为手术式只动本桶连续行）；c) 两个大组头（暂存区/最近添加）行高 32px、标题 14px/600 加粗加大；d) 选择模式快照/恢复覆盖新增的 headCollapsed 与 recentGroupCollapsed（选择中强制展开）；e) 计数一致性裁决 = **统一 pills**：暂存区 pill 计数、aria 为「已暂存 N 条」，最近添加 pill aria 为「最近添加 · N」，均与工具按钮同排靠右。模型新增 headCollapsed/recentGroupCollapsed（staging.js，容忍解析，测试回填）。
+> ③ **「分组…」按钮无响应修复**：needStagingGroupAssign 只写了 body class、neat.css 从未登记该对话框的显隐/遮罩规则——补 .needStagingGroupAssign #staging-group-assign-dialog（top 40px/opacity 1/pointer-events auto）与 #cover 规则（选择工具条图标 rung 的「分组」从此弹出分组对话框，真浏览器探针断言可见）。
+> ④ **移出暂存文本层级**：.staging-remove 的 .staging-btn-label 从 820px 档提前到 680px 档（与收藏/取消收藏/分组/移动复制到同档，宽度合适即显示）。
+> ⑤ **图标重画（六点反馈之 6）**：STAR_X_ICON = 全尺寸空心星 + 右下角 ×；STAGE_REMOVE_ICON = 全尺寸空心纸飞机 + 右下角 ×——主体不再缩放腾位（删掉旧的 scale(0.8) 平移方案），语义与旧图标一致。
+> ⑥ **引导条通用关闭按钮（六点反馈之 2）**：staging-guide-banner 补会话级 ×（risk-banner/dead marked-banner 法则——本次弹窗内关闭、下次弹窗重现），「不再提醒」保留为永久关闭。
+> 门禁：2864 vitest 全绿 / eslint 0 / build 自检 PASS / diag-staging-verify ALL PASS / verify-keyboard 164 pass / verify-scrollbars 748 断言 ALL PASS / diag-vl-6000 无空白 / diag-fold-memory 19 项 ALL PASS。
+
 ## 准备实现的功能
 
 > 原始需求清单（冻结，逐字保留；下方「问题和方案」为其落地设计，迭代不改动本节）。

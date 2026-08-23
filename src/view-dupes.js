@@ -530,6 +530,13 @@ export function initViewDupes(ctx = {}) {
         // The LAB virtual painter (options 实验室, default off) never has
         // the full list in the DOM: its settle keeps id-based restores only.
         const virtual = !!store.get('virtualScrollLab', '');
+        // The virtual painter keeps only the viewport window in the DOM —
+        // content-visibility:auto on its rows makes fresh windows skip
+        // rendering AND hit-testing until the next scroll (blank viewport
+        // at 6000 bookmarks, repro diag-vl-6000.js) and buys nothing at
+        // ~40 rendered rows. The css/neat.css override keys on this class.
+        if ($list && $list.classList && typeof $list.classList.toggle === 'function')
+            $list.classList.toggle('virtual-paint', virtual);
         const parkedToolbar = parkToolbarFocus($list);
         let parkedRow = parkRowFocus($list);
         if (paintHandle)

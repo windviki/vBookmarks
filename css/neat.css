@@ -1009,7 +1009,8 @@ menu[type=context] hr {
 .needAlert #cover,
 .needConfirm #cover,
 .needEdit #cover,
-.needStagingShortcut #cover {
+.needStagingShortcut #cover,
+.needStagingGroupAssign #cover {
     left: 0;
     opacity: 1;
 }
@@ -1676,7 +1677,8 @@ menu[type=context] hr {
 
 .staging-section-head,
 .staging-bucket-head,
-.staging-group-head {
+.staging-group-head,
+.recent-group-head {
     display: flex;
     align-items: center;
     /* 4px gap + each glyph's own 4px margin = the same 8px lead/stride
@@ -1699,16 +1701,40 @@ menu[type=context] hr {
 
 .staging-section-head:hover,
 .staging-bucket-head:hover,
-.staging-group-head:hover {
+.staging-group-head:hover,
+.recent-group-head:hover {
     background: var(--vbm-bg-hover);
 }
 
 /* :focus (not :focus-visible), like the tabgroups/dupes group heads — the
    head keeps the selected paint while it owns focus, exactly the sibling
    views' protocol. */
+/* 折叠记忆轮: the TWO big region heads (staging area + recently added)
+   speak louder — a taller row, a bigger bolder title — so the view reads
+   as two stacked sections at a glance. The staging head is the idle
+   toolbar (its own class .staging-head-main), the recent head is
+   #recent-head; both share .staging-section-head. */
+.staging-toolbar.staging-head-main {
+    height: 32px;
+    padding-block: 0;
+    flex-wrap: nowrap;
+    gap: 4px;
+    font-size: 12px;
+}
+.staging-head-main .staging-section-title,
+#recent-head .staging-section-title {
+    font-size: 14px;
+    font-weight: 600;
+}
+#recent-head {
+    height: 32px;
+    font-size: 12px;
+}
+
 .staging-section-head:focus,
 .staging-bucket-head:focus,
-.staging-group-head:focus {
+.staging-group-head:focus,
+.recent-group-head:focus {
     color: var(--vbm-fg-selected);
     background: var(--vbm-bg-selected);
     outline: 2px solid var(--vbm-focus-ring);
@@ -1729,7 +1755,8 @@ menu[type=context] hr {
 
 .staging-section-head .chevron,
 .staging-bucket-head .chevron,
-.staging-group-head .chevron {
+.staging-group-head .chevron,
+.recent-group-head .chevron {
     flex: none;
     width: 16px;
     /* 12px margin + the 4px gap = a 16px lead to content: the head's
@@ -1742,19 +1769,22 @@ menu[type=context] hr {
 
 .staging-section-head .chevron::before,
 .staging-bucket-head .chevron::before,
-.staging-group-head .chevron::before {
+.staging-group-head .chevron::before,
+.recent-group-head .chevron::before {
     content: '▾';
 }
 
 .staging-section-head .chevron.collapsed::before,
 .staging-bucket-head .chevron.collapsed::before,
-.staging-group-head .chevron.collapsed::before {
+.staging-group-head .chevron.collapsed::before,
+.recent-group-head .chevron.collapsed::before {
     content: '▸';
 }
 
 .rtl .staging-section-head .chevron.collapsed::before,
 .rtl .staging-bucket-head .chevron.collapsed::before,
-.rtl .staging-group-head .chevron.collapsed::before {
+.rtl .staging-group-head .chevron.collapsed::before,
+.rtl .recent-group-head .chevron.collapsed::before {
     content: '◂';
 }
 
@@ -1762,7 +1792,8 @@ menu[type=context] hr {
    9px tabular) — only the token colors are staging-local. */
 .staging-section-head .count-pill,
 .staging-bucket-head .count-pill,
-.staging-group-head .count-pill {
+.staging-group-head .count-pill,
+.recent-group-head .count-pill {
     background: var(--vbm-bg-selected);
     color: var(--vbm-fg-selected);
     margin-inline-end: 4px;
@@ -2331,28 +2362,28 @@ li.staging-row.drag-over {
     .staging-toolbar .staging-icon-btn.staging-fav,
     .staging-toolbar .staging-icon-btn.staging-unfav,
     .staging-toolbar .staging-icon-btn.staging-assign,
-    .staging-toolbar .staging-icon-btn.staging-movecopy {
+    .staging-toolbar .staging-icon-btn.staging-movecopy,
+    .staging-toolbar .staging-icon-btn.staging-remove {
         width: auto;
         padding: 2px 6px;
     }
     .staging-toolbar .staging-icon-btn.staging-fav .staging-btn-label,
     .staging-toolbar .staging-icon-btn.staging-unfav .staging-btn-label,
     .staging-toolbar .staging-icon-btn.staging-assign .staging-btn-label,
-    .staging-toolbar .staging-icon-btn.staging-movecopy .staging-btn-label {
+    .staging-toolbar .staging-icon-btn.staging-movecopy .staging-btn-label,
+    .staging-toolbar .staging-icon-btn.staging-remove .staging-btn-label {
         display: inline;
     }
 }
 
 @container (min-width: 820px) {
     .staging-toolbar .staging-icon-btn.staging-open,
-    .staging-toolbar .staging-icon-btn.staging-open-group,
-    .staging-toolbar .staging-icon-btn.staging-remove {
+    .staging-toolbar .staging-icon-btn.staging-open-group {
         width: auto;
         padding: 2px 6px;
     }
     .staging-toolbar .staging-icon-btn.staging-open .staging-btn-label,
-    .staging-toolbar .staging-icon-btn.staging-open-group .staging-btn-label,
-    .staging-toolbar .staging-icon-btn.staging-remove .staging-btn-label {
+    .staging-toolbar .staging-icon-btn.staging-open-group .staging-btn-label {
         display: inline;
     }
 }
@@ -2433,6 +2464,12 @@ li.staging-row.drag-over {
 
 .needInputName #new-folder-dialog,
 .needStagingShortcut #staging-shortcut-dialog {
+    top: 40px;
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.needStagingGroupAssign #staging-group-assign-dialog {
     top: 40px;
     opacity: 1;
     pointer-events: auto;
@@ -3593,75 +3630,27 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
     height: 12px;
 }
 
-/* Recent-view coarse time group heads (fourth-round item 8): non-interactive
-   section labels (Today/This week/This month/Older), muted small type.
-   The head div is the carrier row's LAST DOM child — order:-1 on a
-   full-basis flex item wraps it above the row while li.firstElementChild
-   stays the anchor (keyboard.js Enter dispatches its synthetic click there).
-   Same pattern as #stats-list .stats-section-head. */
-#staging-list ul li.has-head {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
+/* Recent-view coarse time group heads (折叠记忆轮): REAL group heads in
+   the staging virtual-group recipe — chevron + title + count pill + stage
+   button on one 28px row. The head li is followed by its own contiguous
+   member rows (data-recent-group), so a fold moves exactly that block. */
+#recent-list li.recent-group-li {
+    list-style: none;
 }
 
-#staging-list ul li.has-head > a.tree-item-link {
-    /* v4 task-3 #1: basis must be auto (max-content), not 0% — with basis 0
-       the anchor's hypothetical main size is 0, so it squeezes into the head
-       row's (flex 0 0 100%) zero remaining space instead of wrapping to line
-       2, gets clamped to zero width, and its children overflow into a
-       permanent horizontal scrollbar. */
-    flex: 1 1 auto;
-    min-width: 0;
-    /* 工作台轮 axis law: the grow-1 anchor used to absorb ALL of line 2's
-       free space, pushing the row's send button onto a THIRD wrapped line
-       (left-aligned, one row-height lower — the "three send buttons, three
-       vertical positions" complaint). Cap its width so the 20px button +
-       8px end margin (+ the anchor's own 4px end margin) always keeps its
-       slot on the SAME line, docked to the shared 8px right axis. */
-    max-width: calc(100% - 32px);
-}
-
-#staging-list .recent-group-head {
-    order: -1;
-    flex: 0 0 100%;
-    box-sizing: border-box; /* flex-basis:100% + side padding otherwise
-       overflows the list → a permanent horizontal scrollbar (v4 task-3 #1) */
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    /* var(--vbm-row-h), not a bespoke 24px: the head's stage glyph must
-       center on the SAME 14px middle as the rows/group-heads/section-head
-       glyphs above and below it — a shorter head put the "today/this week"
-       send button 2px higher than the row sends, the exact "same button in
-       three vertical positions" complaint. The 8px inline lead puts the
-       label on the upper heads' chevron column — one 11px muted section
-       style across the whole view. */
-    height: var(--vbm-row-h);
-    padding: 0 4px 0 8px;
-    font-size: 11px;
-    color: var(--vbm-muted);
-    user-select: none;
-}
-
-/* the first row's head sits flush at the list top */
-#staging-list ul li:first-child .recent-group-head {
+/* the first bucket's head sits flush at the list top */
+#recent-list li.recent-group-li:first-child .recent-group-head {
     margin-top: 2px;
 }
 
-/* A time-bucket head's hover stage button (velvet staging: the per-bucket
-   send) — a plain .row-btn flex child pinned to the trailing edge
-   (margin-inline-start: auto) so every stage glyph in the view shares one
-   right axis AND one vertical-center law with the row/section-head/group-
-   head buttons. */
+/* A time-bucket head's stage button (velvet staging: the per-bucket send)
+   — always visible like the staging group heads' quick tails, pinned to
+   the trailing edge so every stage glyph in the view shares one right axis
+   and one vertical-center law. */
 .recent-group-head .recent-group-stage {
     margin-inline-start: auto;
-    visibility: hidden;
-}
-
-.recent-group-head:hover .recent-group-stage,
-.recent-group-head .recent-group-stage:focus-visible {
     visibility: visible;
+    color: var(--vbm-accent);
 }
 
 .recent-group-head .recent-group-stage:hover {
@@ -3823,6 +3812,27 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
 
 .staging-guide-banner .staging-guide-dismiss:hover {
     background: var(--vbm-bg-hover);
+}
+
+/* The universal session-dismiss × (the risk-banner / dead marked-banner
+   law): closes the hint for this popup open; 不再提醒 stays permanent. */
+.staging-guide-banner .staging-guide-close {
+    flex: none;
+    border: 0;
+    border-radius: var(--vbm-radius);
+    background: transparent;
+    color: var(--vbm-muted);
+    font: inherit;
+    font-size: 13px;
+    line-height: 1;
+    padding: 2px 6px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.staging-guide-banner .staging-guide-close:hover {
+    background: var(--vbm-bg-hover);
+    color: var(--vbm-fg);
 }
 
 /* v4 task-4 #14 risk banner (dead/dupes pre-use warning): same one-line
@@ -6313,4 +6323,19 @@ body.panel-mode #stats-list ul li.vbm-row > a.tree-item-link .row-badge.time {
 #staging-list #staging-items li.vbm-row {
     content-visibility: auto;
     contain-intrinsic-size: auto var(--vbm-row-h);
+}
+
+/* 虚拟滚动（virtualScrollLab 实验室）例外：虚拟画笔只保留视口窗口行，
+   cv:auto 会让新窗口行跳过渲染与命中测试——6000 书签实测滚动后视口整段
+   空白（diag-vl-6000.js 复现：行已就位、elementFromPoint 打不中，直到下
+   一次滚动才恢复）。窗口本就 ~40 行，cv 无收益，直接关闭。 */
+#tabgroups-list.virtual-paint ul li.vbm-row,
+#tabgroups-list.virtual-paint ul li.tabgroups-group,
+#tabgroups-list.virtual-paint ul li.tabgroups-window-head,
+#tabgroups-list.virtual-paint ul li.tabgroups-section-head,
+#tabgroups-list.virtual-paint ul li.tabgroups-closed-group,
+#tabgroups-list.virtual-paint ul li.tabgroups-closed-tab,
+#dupes-list.virtual-paint ul li.vbm-row,
+#dupes-list.virtual-paint ul li.dupes-group {
+    content-visibility: visible;
 }

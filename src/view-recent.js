@@ -140,13 +140,19 @@ export function initViewRecent(ctx = {}) {
 
     // --- Staging guide strip (above the toolbar) -------------------------
     // One quiet line: organize bookmarks here; selection mode unlocks the
-    // batch actions. Dismissed permanently via 不再提醒.
+    // batch actions. The universal × is the session-level dismiss (the
+    // risk-banner / dead marked-banner × law — the hint returns on the next
+    // popup open); 不再提醒 is the permanent one.
+    let guideDismissed = false;
     const stagingGuideHtml = () => {
-        if (store.get('stagingGuideDismissed'))
+        if (store.get('stagingGuideDismissed') || guideDismissed)
             return '';
         const dismissLabel = _m('stagingGuideDismiss');
+        const closeLabel = _m('riskBannerDismiss');
         return `<div class="staging-guide-banner" role="note">` +
             `<i>${htmlspecialchars(_m('stagingGuideText'))}</i>` +
+            `<button type="button" class="staging-guide-close" tabindex="-1" ` +
+            `aria-label="${htmlspecialchars(closeLabel)}" title="${htmlspecialchars(closeLabel)}">×</button>` +
             `<button type="button" class="staging-guide-dismiss" tabindex="-1">` +
             htmlspecialchars(dismissLabel) + `</button>` +
             `</div>`;
@@ -371,6 +377,11 @@ export function initViewRecent(ctx = {}) {
         const L = stagingLabels();
         const ul = `<ul role="list" id="staging-items"${selecting ? ' class="selecting"' : ''}></ul>`;
         const pieces = [];
+        // The whole-area fold (headCollapsed): the staging head alone carries
+        // the count — no rows stream. Selection mode force-opens (selecting
+        // renders every candidate row, the tabgroups law).
+        if (state.headCollapsed && !selecting)
+            return { ul, pieces };
         // The guiding empty state yields to user-built groups: a workbench
         // with manual groups (even 0-item ones) is being set up, not empty.
         if (!state.items.length && !state.groups.some(g => g.manual)) {
@@ -440,50 +451,32 @@ export function initViewRecent(ctx = {}) {
     // Per-time-bucket urls of the last recent render — the bucket heads'
     // stage buttons read them (group membership is fixed at render time).
     let recentGroupUrls = [[], [], [], []];
+    // Per-time-bucket ROWS of the last render — the surgical fold re-inserts
+    // a folded bucket's member lis from this cache (no refetch, no favicon
+    // re-hydration; the recent region stays untouched by staging repaints).
+    let recentGroupRows = [[], [], [], []];
 
     // Recent rows as { ul, pieces, count } — the empty <ul> rides the head,
     // the row pieces stream inside it (same chunked-paint contract). The
     // bucket labels resolve once per render (i18n hoisting).
-    const renderRecentRows = items => {
-        const pieces = [];
-        const ul = '<ul role="list" id="recent-list"></ul>';
-        let count = 0;
-        let lastGroup = -1;
-        const now = Date.now();
+    // 折叠记忆轮: the coarse time sections (今天/本周/本月/更早) are now REAL
+    // group heads (the staging virtual-group recipe — chevron + title +
+    // count pill + stage button), each clickable to fold its own rows, the
+    // fold state persisted per bucket (recentGroupCollapsed). Member rows
+    // carry data-recent-group so the surgical fold can move exactly their
+    // own contiguous block.
+    const recentMemberHtml = (g, rows) => {
         const showPath = views.showItemPath();
-        const groupUrls = [[], [], [], []];
-        const groupLabels = GROUP_KEYS.map(k => _m(k));
-        const stageGroupLabels = groupLabels.map(t => _m('recentStageGroup', t));
-        for (let i = 0, l = items.length; i < l; i++) {
-            const d = items[i];
-            if (!d.url || separatorManager.isSeparator(d.title, d.url))
-                continue;
-            count++;
-            groupUrls[groupIndex(d.dateAdded || 0, now)].push({ id: d.id, url: d.url, title: d.title });
+        let html = '';
+        for (let i = 0, l = rows.length; i < l; i++) {
+            const d = rows[i];
             const path = views.pathOf(d.id);
             // §3.3: narrow right slot = relative time; wide second line =
             // `路径 · 绝对时间` (the path half follows showItemPath).
             const absTime = new Date(d.dateAdded || 0).toLocaleString();
             const subText = (showPath && path) ? `${path} · ${absTime}` : absTime;
-            // Non-interactive section header (iOS-style): a plain div tucked
-            // into the group's first row as its LAST DOM child — CSS order
-            // pulls it above the row visually while li.firstElementChild
-            // stays the anchor, so keyboard.js Enter still opens the
-            // bookmark. Empty groups never appear.
-            const g = groupIndex(d.dateAdded || 0, now);
-            // The stage buttons render in BOTH modes; the selecting-view
-            // CSS hides them (visibility, so the geometry stays frozen) —
-            // that lets staging-only repaints leave this region alone.
-            const groupHead = (g !== lastGroup)
-                ? `<div class="recent-group-head" role="presentation">${groupLabels[g]}` +
-                  `<button type="button" class="row-btn recent-group-stage" tabindex="-1" ` +
-                  `data-recent-group="${g}" aria-label="${htmlspecialchars(stageGroupLabels[g])}" ` +
-                  `title="${htmlspecialchars(stageGroupLabels[g])}">${STAGE_ICON}</button>` +
-                  `</div>`
-                : '';
-            lastGroup = g;
-            pieces.push(`<li class="vbm-row${groupHead ? ' has-head' : ''}" id="recent-item-${d.id}" role="listitem" ` +
-                `data-node-id="${d.id}" data-parentid="${d.parentId}">` +
+            html += `<li class="vbm-row" id="recent-item-${d.id}" role="listitem" ` +
+                `data-node-id="${d.id}" data-parentid="${d.parentId}" data-recent-group="${g}">` +
                 treeRender.generateBookmarkHTML(d.title, d.url, 'data-virtual="1"', d.id, null, {
                     path,
                     badge: { text: relTimeLabel(d.dateAdded, _m), cls: 'time' },
@@ -491,23 +484,73 @@ export function initViewRecent(ctx = {}) {
                     subText
                 }) +
                 stageBtnHtml(d.url) +
-                groupHead +
-                '</li>');
+                '</li>';
+        }
+        return html;
+    };
+
+    const renderRecentRows = items => {
+        const pieces = [];
+        const ul = '<ul role="list" id="recent-list"></ul>';
+        let count = 0;
+        const now = Date.now();
+        const rowsByGroup = [[], [], [], []];
+        const groupUrls = [[], [], [], []];
+        const groupLabels = GROUP_KEYS.map(k => _m(k));
+        const stageGroupLabels = groupLabels.map(t => _m('recentStageGroup', t));
+        for (let i = 0, l = items.length; i < l; i++) {
+            const d = items[i];
+            if (!d.url || separatorManager.isSeparator(d.title, d.url))
+                continue;
+            const g = groupIndex(d.dateAdded || 0, now);
+            count++;
+            rowsByGroup[g].push(d);
+            groupUrls[g].push({ id: d.id, url: d.url, title: d.title });
+        }
+        // The stage buttons render in BOTH modes; the selecting-view CSS
+        // hides them (visibility, so the geometry stays frozen) — that lets
+        // staging-only repaints leave this region alone.
+        for (let g = 0; g < 4; g++) {
+            const rows = rowsByGroup[g];
+            if (!rows.length)
+                continue;
+            const key = GROUP_KEYS[g];
+            const collapsed = !selecting && !!stagingState.recentGroupCollapsed[key];
+            const label = groupLabels[g];
+            pieces.push(`<li class="recent-group-li${collapsed ? ' collapsed' : ''}" data-recent-group="${g}" role="presentation">` +
+                `<span class="group-head recent-group-head" role="button" tabindex="-1" ` +
+                `aria-expanded="${collapsed ? 'false' : 'true'}" title="${htmlspecialchars(label)}">` +
+                `<span class="chevron${collapsed ? ' collapsed' : ''}" aria-hidden="true"></span>` +
+                `<span class="staging-section-title" dir="auto">${label}</span>` +
+                `<span class="count-pill" aria-label="${htmlspecialchars(label + ' · ' + rows.length)}">${rows.length}</span>` +
+                (selecting ? '' :
+                    `<button type="button" class="row-btn recent-group-stage" tabindex="-1" ` +
+                    `data-recent-group="${g}" aria-label="${htmlspecialchars(stageGroupLabels[g])}" ` +
+                    `title="${htmlspecialchars(stageGroupLabels[g])}">${STAGE_ICON}</button>`) +
+                '</span></li>');
+            if (collapsed)
+                continue;
+            pieces.push(recentMemberHtml(g, rows));
         }
         if (!count)
             pieces.push(`<li class="empty-state" role="listitem"><i>${_m('recentEmpty')}</i></li>`);
         recentGroupUrls = groupUrls;
+        recentGroupRows = rowsByGroup;
         return { ul, pieces, count };
     };
 
     const renderRecentHead = count => {
         const collapsed = stagingState.recentCollapsed;
         const stageAllLabel = _m('recentStageAll');
+        // The pill speaks the same count language as the staging head's:
+        // title + count in the aria/title, the bare number in the pill.
+        const countLabel = `${_m('recentSectionTitle')} · ${count}`;
         return `<div id="recent-head" class="staging-section-head${collapsed ? ' collapsed' : ''}" ` +
             `role="button" tabindex="-1" aria-expanded="${collapsed ? 'false' : 'true'}">` +
             `<span class="chevron${collapsed ? ' collapsed' : ''}" aria-hidden="true"></span>` +
             `<span class="staging-section-title">${_m('recentSectionTitle')}</span>` +
-            (count ? `<span class="count-pill" aria-label="${count}">${count}</span>` : '') +
+            (count ? `<span class="count-pill" aria-label="${htmlspecialchars(countLabel)}" ` +
+                `title="${htmlspecialchars(countLabel)}">${count}</span>` : '') +
             `<button type="button" class="row-btn recent-stage-all" tabindex="-1" ` +
             `aria-label="${htmlspecialchars(stageAllLabel)}" title="${htmlspecialchars(stageAllLabel)}">${STAGE_ICON}</button>` +
             `</div>`;
@@ -536,10 +579,14 @@ export function initViewRecent(ctx = {}) {
         if (on && !selecting) {
             foldSnapshot = {
                 unfav: stagingState.unfavCollapsed,
+                head: stagingState.headCollapsed,
+                recentGroups: { ...(stagingState.recentGroupCollapsed || {}) },
                 groups: stagingState.groups.map(g => [g.id, g.collapsed])
             };
         } else if (!on && selecting && foldSnapshot) {
             stagingState.unfavCollapsed = foldSnapshot.unfav;
+            stagingState.headCollapsed = foldSnapshot.head;
+            stagingState.recentGroupCollapsed = { ...(foldSnapshot.recentGroups || {}) };
             for (const [gid, collapsed] of foldSnapshot.groups)
                 staging.setGroupCollapsed(stagingState, gid, collapsed);
             foldSnapshot = null;
@@ -640,13 +687,24 @@ export function initViewRecent(ctx = {}) {
             r3 += '</div>';
             return r1 + r2 + r3;
         }
-        // The dead/dupes toolbar law: summary left, the action cluster pinned
-        // right (margin-inline-end:auto on the summary). The select-mode icon
-        // needs rows to act on; 新建分组 works on an empty workbench too — the
-        // toolbar never disappears (an empty staging area is still a
-        // workbench you can set up).
-        let html = '<div class="staging-toolbar vbm-toolbar">';
-        html += `<span class="staging-summary">${_m('stagingCount', `${n}`)}</span>` +
+        // The idle toolbar IS the staging section head (折叠记忆轮): one
+        // foldable head row — chevron + bold title + count pill + the tool
+        // buttons [新建分组][选择模式] — the count moved out of the old
+        // left summary slot into the right cluster, the same pill the recent
+        // head uses (one count language across both regions). The select-mode
+        // icon needs rows to act on; 新建分组 works on an empty workbench too
+        // — the head never disappears. Clicking the row folds the whole
+        // staging area (headCollapsed persists); the buttons keep their own
+        // actions (their click branches run first).
+        const collapsed = stagingState.headCollapsed;
+        const countLabel = _m('stagingCount', `${n}`);
+        let html = '<div id="staging-head" class="staging-toolbar staging-section-head staging-head-main vbm-toolbar' +
+            (collapsed ? ' collapsed' : '') + '" role="button" tabindex="-1" ' +
+            `aria-expanded="${collapsed ? 'false' : 'true'}">` +
+            `<span class="chevron${collapsed ? ' collapsed' : ''}" aria-hidden="true"></span>` +
+            `<span class="staging-section-title">${htmlspecialchars(_m('viewRecent'))}</span>` +
+            `<span class="count-pill" aria-label="${htmlspecialchars(countLabel)}" ` +
+            `title="${htmlspecialchars(countLabel)}">${n}</span>` +
             `<button class="staging-new-group" aria-label="${htmlspecialchars(_m('stagingGroupNew'))}" ` +
             `title="${htmlspecialchars(_m('stagingGroupNew'))}">${FOLDER_PLUS_ICON}${htmlspecialchars(_m('stagingGroupNew'))}</button>`;
         if (n)
@@ -1362,6 +1420,54 @@ export function initViewRecent(ctx = {}) {
         foldStagingRows(headLi, g.collapsed ? '' : memberRowsHtml(staging.groupItems(stagingState, groupId)));
     };
 
+    // The staging-area fold (headCollapsed, 折叠记忆轮): the whole
+    // #staging-items list hides under its head — a staging-only repaint
+    // (the head is the anchor's leading chrome, the recent region stays).
+    const toggleHeadFold = () => {
+        if (selecting)
+            return;
+        staging.setHeadCollapsed(stagingState, !stagingState.headCollapsed);
+        foldPersist();
+        renderStaging();
+    };
+
+    // A recent time-bucket fold (recentGroupCollapsed, 折叠记忆轮): surgical
+    // DOM update on the bucket's own contiguous member rows — the head li
+    // survives (focus stays), rows come back from the last render's cache.
+    const toggleRecentGroupFold = g => {
+        if (selecting)
+            return;
+        const key = GROUP_KEYS[g];
+        const collapsedNow = !stagingState.recentGroupCollapsed[key];
+        staging.setRecentGroupCollapsed(stagingState, key, collapsedNow);
+        foldPersist();
+        lastRenderedRaw = staging.serialize(stagingState);
+        const headLi = $list.querySelector
+            ? $list.querySelector('li.recent-group-li[data-recent-group="' + g + '"]')
+            : null;
+        if (!headLi) {
+            refresh();
+            return;
+        }
+        headLi.classList.toggle('collapsed', collapsedNow);
+        const head = headLi.querySelector('.recent-group-head');
+        if (head)
+            head.setAttribute('aria-expanded', collapsedNow ? 'false' : 'true');
+        const chev = headLi.querySelector('.chevron');
+        if (chev)
+            chev.classList.toggle('collapsed', collapsedNow);
+        let next = headLi.nextElementSibling;
+        while (next && next.classList && next.classList.contains('vbm-row')
+            && next.dataset && next.dataset.recentGroup === String(g)) {
+            const rm = next;
+            next = next.nextElementSibling;
+            rm.remove();
+        }
+        if (!collapsedNow && recentGroupRows[g] && recentGroupRows[g].length)
+            headLi.insertAdjacentHTML('afterend', recentMemberHtml(g, recentGroupRows[g]));
+        onRowsRendered();
+    };
+
     const toggleBucketFold = () => {
         if (selecting)
             return;
@@ -1833,6 +1939,13 @@ export function initViewRecent(ctx = {}) {
             newGroup();
             return;
         }
+        // The staging head folds the whole staging area; its buttons'
+        // branches above win their own clicks first.
+        if (closest('#staging-head')) {
+            e.preventDefault();
+            toggleHeadFold();
+            return;
+        }
         if (closest('.staging-group-rename')) {
             e.preventDefault();
             e.stopPropagation();
@@ -1888,6 +2001,15 @@ export function initViewRecent(ctx = {}) {
             e.preventDefault();
             store.set('statsHistoryBannerDismissed', '1');
             refresh();
+            return;
+        }
+        if (closest('.staging-guide-close')) {
+            // Session-level × (the risk-banner law): gone for this popup
+            // open, back on the next one — 不再提醒 stays permanent.
+            e.preventDefault();
+            e.stopPropagation();
+            guideDismissed = true;
+            renderStaging();
             return;
         }
         if (closest('.staging-guide-dismiss')) {
@@ -1959,6 +2081,16 @@ export function initViewRecent(ctx = {}) {
             e.preventDefault();
             e.stopPropagation();
             chrome.bookmarks.getRecent(recentCount(), items => stageAllRecent(items));
+            return;
+        }
+        // A recent time-bucket head folds its own rows (折叠记忆轮); the
+        // stage button inside it is handled above.
+        if (closest('.recent-group-head')) {
+            e.preventDefault();
+            const headLi = closest('.recent-group-li') || closest('li');
+            const g = headLi && headLi.dataset ? parseInt(headLi.dataset.recentGroup, 10) : NaN;
+            if (!isNaN(g))
+                toggleRecentGroupFold(g);
             return;
         }
         if (closest('#recent-head')) {
@@ -2118,6 +2250,7 @@ export function initViewRecent(ctx = {}) {
         // head itself holds focus (heads are tabindex=-1 rows of the walk).
         const headTarget = e.target && e.target.closest
             ? (e.target.closest('.staging-group-head') || e.target.closest('.staging-bucket-head') ||
+                e.target.closest('.recent-group-head') || e.target.closest('#staging-head') ||
                 e.target.closest('#recent-head'))
             : null;
         // A quick-tail button owns its own keys: after clicking
@@ -2125,7 +2258,7 @@ export function initViewRecent(ctx = {}) {
         // stays on the button, and Space/Enter must re-activate the
         // BUTTON, not fold the head behind it.
         if (headTarget && e.target !== headTarget && e.target.closest &&
-            e.target.closest('.staging-group-head button, .staging-bucket-head button, #recent-head button'))
+            e.target.closest('.staging-group-head button, .staging-bucket-head button, .recent-group-head button, #staging-head button, #recent-head button'))
             return;
         // F2 renames the focused group head (the tabgroups-head parity).
         if (headTarget && e.key === 'F2' && !selecting &&

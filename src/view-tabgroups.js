@@ -888,6 +888,11 @@ export function initViewTabGroups(ctx = {}) {
         // (options 实验室, default off) never has the full list in the DOM:
         // its settle keeps the id-based restore only.
         const virtual = !!store.get('virtualScrollLab', '');
+        // Virtual painter + content-visibility:auto = fresh windows that
+        // skip rendering/hit-testing (blank viewport, repro diag-vl-6000.js)
+        // — the override in css/neat.css keys on this class.
+        if ($list && $list.classList && typeof $list.classList.toggle === 'function')
+            $list.classList.toggle('virtual-paint', virtual);
         const parkedToolbar = parkToolbarFocus($list);
         let parkedRow = parkRowFocus($list);
         if (paintHandle)
