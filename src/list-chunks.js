@@ -17,19 +17,24 @@
  * unchanged; interactivity is preserved.
  *
  * Contract notes:
- *  - `head` must contain the (closed, possibly empty) <ul> the pieces go
- *    into — the helper finds it as the list's last <ul>-tagged child and
- *    appends every batch inside it. Everything outside the <ul> (toolbar,
- *    risk banner) lives in `head` and paints synchronously.
+ *  - `head` must END with the (closed, possibly empty) <ul> the pieces go
+ *    into — every path below paints the head first, discovers that <ul> in
+ *    the FRESH content, and appends the rows INSIDE it. Concatenating
+ *    pieces after a closed </ul> instead would strand the <li>s as
+ *    siblings of the list (verified: the keyboard row walks and every
+ *    `#x-list ul li` CSS rule missed them — caught by the Docker keyboard
+ *    gate, invisible to the string-concat unit doubles).
  *  - Without requestAnimationFrame, without querySelector/
  *    insertAdjacentHTML on the list (the unit-test doubles), or for lists
  *    small enough to fit in the first chunk, everything degrades to ONE
- *    synchronous innerHTML assignment — callers never need a fallback.
+ *    synchronous paint that appends all pieces into the same <ul> —
+ *    callers never need a fallback.
  *  - onHead fires right after the head paint (toolbar focus restore;
  *    row-focus targets inside the first chunk); onChunk fires after each
  *    appended batch (retry restores that depend on rows further down);
  *    onSettled fires once the last piece is in (deferred scroll-into-view,
- *    row-focus restore by clamped index).
+ *    row-focus restore by clamped index). The synchronous paint fires
+ *    onHead + onSettled only — no appended batch happened.
  *  - The returned handle's cancel() drops every pending batch — a newer
  *    render must never race an older one's tail chunks.
  */
@@ -50,10 +55,37 @@ export const paintListChunked = (list, opts = {}) => {
         onSettled = null
     } = opts;
 
+    const domCapable = typeof list.querySelector === 'function'
+        && typeof list.insertAdjacentHTML === 'function';
+
+    // Paint the head, find the rows <ul> in the fresh content (the LAST
+    // ul-tagged element — the head ends with it), append `html` inside it.
+    // Returns the ul (null when the head carries none).
+    const paintHeadAndAppend = html => {
+        list.innerHTML = head;
+        let ul = null;
+        for (let el = list.lastElementChild; el; el = el.previousElementSibling) {
+            if (el.tagName === 'UL') {
+                ul = el;
+                break;
+            }
+        }
+        if (html) {
+            if (ul && typeof ul.insertAdjacentHTML === 'function')
+                ul.insertAdjacentHTML('beforeend', html);
+            else if (typeof list.insertAdjacentHTML === 'function')
+                list.insertAdjacentHTML('beforeend', html);
+        }
+        return ul;
+    };
+
     const paintAll = () => {
-        list.innerHTML = head + pieces.join('');
-        // No appended batches happened, so onChunk does not fire — onHead
-        // and onSettled carry everything (toolbar restore, settle restores).
+        if (domCapable) {
+            paintHeadAndAppend(pieces.join(''));
+        } else {
+            // String-concat doubles: the concatenation IS the model.
+            list.innerHTML = head + pieces.join('');
+        }
         if (onHead)
             onHead(list);
         if (onSettled)
@@ -63,31 +95,13 @@ export const paintListChunked = (list, opts = {}) => {
 
     const batchFrames = frameScheduler();
     // Degenerate shapes and tiny lists: one synchronous paint, no machinery.
-    if (!batchFrames || pieces.length <= first
-        || typeof list.querySelector !== 'function'
-        || typeof list.insertAdjacentHTML !== 'function')
-        return paintAll();
-
-    // Head paint FIRST — the <ul> the pieces stream into only exists in the
-    // FRESH content (discovering it before the paint would read the outgoing
-    // DOM's last element instead).
-    const headHtml = head + pieces.slice(0, first).join('');
-    list.innerHTML = headHtml;
-
-    let ul = null;
-    for (let el = list.lastElementChild; el; el = el.previousElementSibling) {
-        if (el.tagName === 'UL') {
-            ul = el;
-            break;
-        }
-    }
-    // No <ul> in the head (a mis-shaped or empty-state head) — repaint the
-    // whole thing synchronously; no callback has fired yet, so paintAll's
-    // onHead/onSettled run exactly once.
-    if (!ul || typeof ul.insertAdjacentHTML !== 'function')
+    if (!batchFrames || pieces.length <= first || !domCapable)
         return paintAll();
 
     const state = { cancelled: false };
+    const ul = paintHeadAndAppend(pieces.slice(0, first).join(''));
+    if (!ul || typeof ul.insertAdjacentHTML !== 'function')
+        return paintAll();   // head carried no <ul> — repaint everything
     let at = first;
 
     if (onHead)                  // head is in — the toolbar and the first

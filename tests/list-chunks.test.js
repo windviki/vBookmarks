@@ -1,8 +1,11 @@
 // list-chunks.js unit suite — the 4.1.1 chunked list painter. The DOM is a
 // purpose-built double: innerHTML records the string, lastElementChild
-// surfaces the <ul> the way a real parser would (the head always contains
-// one), and insertAdjacentHTML appends into the ul's buffer. requestAnimationFrame
-// is captured into a manual frame queue so the tests drive frames explicitly.
+// surfaces the <ul> the way a real parser would (the head always ends with
+// one), and insertAdjacentHTML appends into the ul's buffer — mirroring the
+// contract that row pieces land INSIDE the head's <ul>, never as siblings
+// (stranded <li>s after a closed </ul> was the D1 keyboard-gate regression).
+// requestAnimationFrame is captured into a manual frame queue so the tests
+// drive frames explicitly.
 import { describe, it, expect, afterEach } from 'vitest';
 import { paintListChunked } from '../src/list-chunks.js';
 
@@ -22,7 +25,10 @@ const makeList = () => {
         set innerHTML(v) { this._html = v; },
         get lastElementChild() { return this._html.includes('<ul') ? ul : null; },
         querySelector(sel) { return sel === 'ul' ? ul : null; },
-        insertAdjacentHTML() {}
+        insertAdjacentHTML(pos, html) {
+            if (pos === 'beforeend')
+                this._html += html;
+        }
     };
     return list;
 };
@@ -38,7 +44,7 @@ describe('paintListChunked', () => {
         delete globalThis.requestAnimationFrame;
     });
 
-    it('a list within the first chunk paints in one synchronous innerHTML', () => {
+    it('a list within the first chunk paints synchronously with the rows INSIDE the ul', () => {
         const list = makeList();
         const events = [];
         const handle = paintListChunked(list, {
@@ -49,12 +55,13 @@ describe('paintListChunked', () => {
             onChunk: () => events.push('chunk'),
             onSettled: () => events.push('settled')
         });
-        expect(list.innerHTML).toBe('<div class="toolbar"></div><ul></ul><li>1</li><li>2</li>');
+        expect(list.innerHTML).toBe('<div class="toolbar"></div><ul></ul>');
+        expect(list.ul.buffer).toBe('<li>1</li><li>2</li>');   // inside the ul
         expect(events).toEqual(['head', 'settled']);   // no appended batch → no chunk event
         expect(handle.cancelled).toBe(false);
     });
 
-    it('without requestAnimationFrame everything degrades to one synchronous paint', () => {
+    it('without requestAnimationFrame everything degrades to the same synchronous paint', () => {
         const list = makeList();
         paintListChunked(list, {
             head: '<ul></ul>',
@@ -62,7 +69,8 @@ describe('paintListChunked', () => {
             first: 1,
             chunk: 1
         });
-        expect(list.innerHTML).toBe('<ul></ul><li>1</li><li>2</li><li>3</li>');
+        expect(list.innerHTML).toBe('<ul></ul>');
+        expect(list.ul.buffer).toBe('<li>1</li><li>2</li><li>3</li>');
     });
 
     it('streams: head + first rows synchronously, the rest one batch per frame', () => {
@@ -78,17 +86,17 @@ describe('paintListChunked', () => {
             onChunk: () => events.push('chunk'),
             onSettled: () => events.push('settled')
         });
-        // synchronous head paint: toolbar + first two rows, and nothing else yet
-        expect(list.innerHTML).toBe('<div class="toolbar"></div><ul></ul><li>1</li><li>2</li>');
-        expect(list.ul.buffer).toBe('');
+        // synchronous head paint: toolbar + first two rows INSIDE the ul
+        expect(list.innerHTML).toBe('<div class="toolbar"></div><ul></ul>');
+        expect(list.ul.buffer).toBe('<li>1</li><li>2</li>');
         expect(events).toEqual(['head']);
         // frame 1: rows 3+4
         frames.shift()();
-        expect(list.ul.buffer).toBe('<li>3</li><li>4</li>');
+        expect(list.ul.buffer).toBe('<li>1</li><li>2</li><li>3</li><li>4</li>');
         expect(events).toEqual(['head', 'chunk']);
         // frame 2: row 5 + settle
         frames.shift()();
-        expect(list.ul.buffer).toBe('<li>3</li><li>4</li><li>5</li>');
+        expect(list.ul.buffer).toBe('<li>1</li><li>2</li><li>3</li><li>4</li><li>5</li>');
         expect(events).toEqual(['head', 'chunk', 'chunk', 'settled']);
         expect(frames).toHaveLength(0);
     });
@@ -107,12 +115,12 @@ describe('paintListChunked', () => {
         });
         handle.cancel();
         frames.shift()();
-        expect(list.ul.buffer).toBe('');
+        expect(list.ul.buffer).toBe('<li>1</li>');    // only the head batch landed
         expect(events).toEqual([]);
         expect(handle.cancelled).toBe(true);
     });
 
-    it('a head without a <ul> falls back to the single synchronous paint', () => {
+    it('a head without a <ul> appends the pieces to the list itself, synchronously', () => {
         const frames = makeFrames();
         const list = makeList();
         paintListChunked(list, {
@@ -124,7 +132,7 @@ describe('paintListChunked', () => {
         expect(frames).toHaveLength(0);
     });
 
-    it('a list without querySelector (unit-test doubles) takes the synchronous path', () => {
+    it('a list without querySelector (unit-test doubles) takes the string-concat path', () => {
         const list = makeList();
         delete list.querySelector;
         paintListChunked(list, {
