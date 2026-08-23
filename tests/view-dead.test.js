@@ -3474,4 +3474,68 @@ describe('row focus park/restore (4.0.1 focus law)', () => {
         viewDead.refresh();
         expect(doc.activeElement).toBe(outside);
     });
+
+    it('scan ticks insert only NEW settled rows at their tree-order position (incremental live render)', () => {
+        // 4.1.0 perf round 2: once the live list is painted, each 700ms
+        // publish patches the toolbar in place and inserts only the freshly
+        // settled problem rows — the already-painted rows (and their favicon
+        // <img>s) are never rebuilt.
+        const first = blobOf({ done: 1, total: 3, results: { 12: { status: 'dead', code: 404 } } });
+        const ctx = setup({ scanStorage: { vbmDeadScan: JSON.stringify(first) } });
+        const { $list } = ctx;
+        // Upgrade the string double with the real-DOM primitives the
+        // incremental path needs: a results <ul> with live children and a
+        // toolbar stub whose outerHTML records in-place patches.
+        const ul = {
+            children: [],
+            insertAdjacentHTML(pos, html) {
+                if (pos === 'beforeend')
+                    this.children.push({ html });
+            }
+        };
+        const toolbar = { _outer: '', set outerHTML(v) { this._outer = v; }, get outerHTML() { return this._outer; } };
+        $list.querySelector = sel => (sel === '.dead-scan-toolbar' ? toolbar
+            : sel === 'ul[role="list"]' ? ul : null);
+        $list.insertAdjacentHTML = () => {};
+        ctx.def().activate();
+        // The first paint was a single shot; model its painted row 12 as a
+        // beforebegin-capable anchor in the results list.
+        const row12 = {
+            html: 'rendered-12',
+            insertAdjacentHTML(pos, h) {
+                if (pos === 'beforebegin') {
+                    const i = ul.children.indexOf(this);
+                    ul.children.splice(i, 0, { html: h });
+                }
+            }
+        };
+        ul.children.push(row12);
+        // Tick 2: 13 settles (AFTER 12 in tree order) → appended at the end,
+        // row 12's node untouched.
+        publishBlob(ctx, blobOf({ done: 2, total: 3, results: {
+            12: { status: 'dead', code: 404 },
+            13: { status: 'dead', code: 500 }
+        } }));
+        expect(ul.children.map(c => c.html)).toEqual([
+            'rendered-12',
+            expect.stringContaining('id="dead-item-13"')
+        ]);
+        expect(toolbar._outer).toContain('dead-pause'); // toolbar patched in place
+        // Tick 3: 11 settles BEFORE 12 in tree order → inserted before row 12,
+        // not appended (tree order among settled rows never breaks).
+        publishBlob(ctx, blobOf({ done: 3, total: 3, results: {
+            11: { status: 'dead', code: 410 },
+            12: { status: 'dead', code: 404 },
+            13: { status: 'dead', code: 500 }
+        } }));
+        expect(ul.children.map(c => c.html)).toEqual([
+            expect.stringContaining('id="dead-item-11"'),
+            'rendered-12',
+            expect.stringContaining('id="dead-item-13"')
+        ]);
+        // the whole-list rebuild string is gone from this path — row 12 was
+        // painted once and never re-serialized (no second dead-item-12 li)
+        const all = JSON.stringify(ul.children.map(c => c.html));
+        expect(all.match(/id="dead-item-12"/g) || []).toHaveLength(0);
+    });
 });

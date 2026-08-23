@@ -123,6 +123,12 @@ import { makeRiskBanner, RISK_HELP_URL } from './risk-banner.js';
 import { initDropdowns } from './dropdown.js';
 import { htmlspecialchars } from './escape.js';
 import { parkRowFocus, unparkRowFocus, parkToolbarFocus, restoreToolbarFocus } from './list-focus.js';
+import { paintListChunked } from './list-chunks.js';
+
+// Idle chunked paint sizes (4.1.0 perf round 2): the synchronous head slice
+// and the per-frame batch for the dead view's result/marked lists.
+const DEAD_CHUNK_FIRST = 60;
+const DEAD_CHUNK = 100;
 
 export function initViewDead(ctx = {}) {
     const $ = id => document.getElementById(id);
@@ -178,7 +184,16 @@ export function initViewDead(ctx = {}) {
     // owns the run; `live` mirrors the published vbmDeadScan blob while one
     // exists (live.state splits scanning/paused). scanStarting guards the
     // window between the start message and the blob's first publication.
-    let live = null;        // { state, done, total, order:[id…], results:Map }
+    let live = null;        // { state, done, total, ts, order:[id…], results:Map }
+    // Incremental live rendering (4.1.0 perf round 2): while a run lives, the
+    // view keeps the already-painted result rows and only inserts NEW settled
+    // problem rows at their tree-order position + patches the toolbar — the
+    // old tick path rebuilt the whole list every 700ms publish (O(n) per
+    // tick, O(n²/scan) at 6000 bookmarks, and each swap blanked every
+    // _favicon <img> → icon flicker + refetch storms). `liveDom` mirrors the
+    // incremental DOM state; it is dropped whenever a full paint runs (mark
+    // moves, run end, capability-less test doubles).
+    let liveDom = null;     // { ts, ul, rendered:Set, markedIds:Set, markedCount }
     let scanStarting = false;
     let lastScan = null;    // { ts, scannedCount, results: {id:{status,code}} }
     // Dirty flag: true when a state change arrived while the view was
@@ -373,10 +388,12 @@ export function initViewDead(ctx = {}) {
     //   - mid-scan / cached results: only the UNCOVERED marks (a healthy-but-
     //     previously-marked link, or a mark added after the run) — the residue
     //     the doc (docs/dead-过去标注语义.md) calls the only remaining source.
-    const markedRows = () => {
+    // `resolvedRows` (optional): a precomputed liveRows() — the incremental
+    // render already walked the journal once and passes it down.
+    const markedRows = (resolvedRows) => {
         let covered = null;
         if (live)
-            covered = new Set(liveRows().map(r => r.item.id));
+            covered = new Set((resolvedRows || liveRows()).map(r => r.item.id));
         else if (lastScan)
             covered = new Set(allResultRows().map(r => r.item.id));
         const showAll = !live && !lastScan;
@@ -632,62 +649,70 @@ export function initViewDead(ctx = {}) {
     const fmtTime = ts => (typeof ts === 'number' && ts) ? new Date(ts).toLocaleString() : '';
 
     // One <ul> of result rows — shared by the cached result set and the
-    // progressive mid-scan list (same row markup, same buttons).
-    const renderRows = rows => {
+    // progressive mid-scan list (same row markup, same buttons). The piece
+    // builders (rowLiHtml/markedLiHtml) emit li-level strings so the chunked
+    // idle paint and the incremental mid-scan paint can append row by row;
+    // renderRows/renderMarkedRows keep the full-list string form for the
+    // live full render and the test doubles. L carries the per-render i18n
+    // labels — every row used to re-ask chrome.i18n 6-10× (mark/unmark/
+    // delete/time labels) per render.
+    const rowLiHtml = (row, L) => {
+        const { item, result } = row;
+        const blocked = result.status === 'blocked';
+        const path = views.pathOf(item.id);
+        const marked = deadMarks.has(item.id);
+        const sel = selecting && selected.has(item.id);
+        // 时间信息：标记时间（有则显）+ 检测时间（per-row ts）。第二行右侧
+        // (subRight) 显示 `标记时间 · 检测时间`；tooltip 追加同两行带标签。
+        const markTime = deadMarkTimes.get(item.id);
+        const detectTime = typeof result.ts === 'number' ? result.ts : null;
+        const times = [markTime, detectTime].filter(t => t).map(fmtTime).join(' · ');
+        const tip = [];
+        if (markTime) tip.push(`${L.markTimeLabel} ${fmtTime(markTime)}`);
+        if (detectTime) tip.push(`${L.detectTimeLabel} ${fmtTime(detectTime)}`);
+        return `<li class="vbm-row${sel ? ' sel' : ''}${blocked ? ' blocked' : ''}" ` +
+            `id="dead-item-${item.id}" role="listitem" data-node-id="${item.id}">` +
+            treeRender.generateBookmarkHTML(item.title, item.url, 'data-virtual="1"', item.id, null, {
+                path,
+                // Intentional exception: the path labels are NOT gated
+                // by showItemPath here (the dupes/recent rows are) —
+                // locating a dead bookmark needs its containing folder
+                // to be visible (docs/plan-4.0.0/v4task-2-list.md §3.5 row spec:
+                // "[icon][title ……] [×dead | ⇄直连×] [path]").
+                rightText: path,
+                // 宽/panel 第二行：路径左对齐（subText）+ 时间右对齐（subRight）。
+                // 窄视口 row-sub 隐藏、右侧槽只显示 path（rightText）→ 时间仅
+                // 存 tooltip（追加在下方）。
+                subText: path,
+                subRight: times,
+                tooltipAppend: tip.join('\n'),
+                // pill 外层槽：宽/panel 下固定宽度，时间右对齐到槽左边缘
+                // （pill 背景维持文本长度）。窄视口由 CSS 取消固定宽度。
+                badgeSlot: true,
+                badge: {
+                    // statusLabel expects the direct channel's
+                    // raw verdict (numeric / 'error'+name)
+                    text: blocked ? L.blocked
+                        : statusLabel({ status: result.code, ok: false, error: result.error }),
+                    cls: blocked ? 'blocked' : 'dead'
+                }
+            }) +
+            // 选择模式下结果行不渲染 ⚑/× 行按钮（与 renderMarkedRows 一致）：
+            // CSS 也会隐藏它们，但多出的 DOM 节点对屏幕阅读器仍可见、且点击
+            // 落在行容器上会被 membership 处理器吞掉——JS 层面不渲染更干净。
+            (selecting ? '' :
+                `<button class="row-btn dead-mark-btn${marked ? ' marked' : ''}" ` +
+                `aria-pressed="${marked}" ` +
+                `aria-label="${marked ? L.unmark : L.mark}" ` +
+                `title="${marked ? L.unmark : L.mark}">${FLAG_ICON}</button>` +
+                `<button class="row-btn dead-del-btn" aria-label="${L.rowDelete}" ` +
+                `title="${L.rowDelete}">${TRASH_ICON}</button>`) +
+            '</li>';
+    };
+    const renderRows = (rows, L) => {
         let html = `<ul role="list"${selecting ? ' class="selecting"' : ''}>`;
-        for (let i = 0, l = rows.length; i < l; i++) {
-            const { item, result } = rows[i];
-            const blocked = result.status === 'blocked';
-            const path = views.pathOf(item.id);
-            const marked = deadMarks.has(item.id);
-            const sel = selecting && selected.has(item.id);
-            // 时间信息：标记时间（有则显）+ 检测时间（per-row ts）。第二行右侧
-            // (subRight) 显示 `标记时间 · 检测时间`；tooltip 追加同两行带标签。
-            const markTime = deadMarkTimes.get(item.id);
-            const detectTime = typeof result.ts === 'number' ? result.ts : null;
-            const times = [markTime, detectTime].filter(t => t).map(fmtTime).join(' · ');
-            const tip = [];
-            if (markTime) tip.push(`${_m('deadMarkTimeLabel')} ${fmtTime(markTime)}`);
-            if (detectTime) tip.push(`${_m('deadDetectTimeLabel')} ${fmtTime(detectTime)}`);
-            html += `<li class="vbm-row${sel ? ' sel' : ''}${blocked ? ' blocked' : ''}" ` +
-                `id="dead-item-${item.id}" role="listitem" data-node-id="${item.id}">` +
-                treeRender.generateBookmarkHTML(item.title, item.url, 'data-virtual="1"', item.id, null, {
-                    path,
-                    // Intentional exception: the path labels are NOT gated
-                    // by showItemPath here (the dupes/recent rows are) —
-                    // locating a dead bookmark needs its containing folder
-                    // to be visible (docs/plan-4.0.0/v4task-2-list.md §3.5 row spec:
-                    // "[icon][title ……] [×dead | ⇄直连×] [path]").
-                    rightText: path,
-                    // 宽/panel 第二行：路径左对齐（subText）+ 时间右对齐（subRight）。
-                    // 窄视口 row-sub 隐藏、右侧槽只显示 path（rightText）→ 时间仅
-                    // 存 tooltip（追加在下方）。
-                    subText: path,
-                    subRight: times,
-                    tooltipAppend: tip.join('\n'),
-                    // pill 外层槽：宽/panel 下固定宽度，时间右对齐到槽左边缘
-                    // （pill 背景维持文本长度）。窄视口由 CSS 取消固定宽度。
-                    badgeSlot: true,
-                    badge: {
-                        // statusLabel expects the direct channel's
-                        // raw verdict (numeric / 'error'+name)
-                        text: blocked ? _m('deadStatusBlocked')
-                            : statusLabel({ status: result.code, ok: false, error: result.error }),
-                        cls: blocked ? 'blocked' : 'dead'
-                    }
-                }) +
-                // 选择模式下结果行不渲染 ⚑/× 行按钮（与 renderMarkedRows 一致）：
-                // CSS 也会隐藏它们，但多出的 DOM 节点对屏幕阅读器仍可见、且点击
-                // 落在行容器上会被 membership 处理器吞掉——JS 层面不渲染更干净。
-                (selecting ? '' :
-                    `<button class="row-btn dead-mark-btn${marked ? ' marked' : ''}" ` +
-                    `aria-pressed="${marked}" ` +
-                    `aria-label="${marked ? _m('deadUnmark') : _m('deadMark')}" ` +
-                    `title="${marked ? _m('deadUnmark') : _m('deadMark')}">${FLAG_ICON}</button>` +
-                    `<button class="row-btn dead-del-btn" aria-label="${_m('rowActionDelete')}" ` +
-                    `title="${_m('rowActionDelete')}">${TRASH_ICON}</button>`) +
-                '</li>';
-        }
+        for (let i = 0, l = rows.length; i < l; i++)
+            html += rowLiHtml(rows[i], L);
         return html + '</ul>';
     };
 
@@ -703,45 +728,47 @@ export function initViewDead(ctx = {}) {
     // mark/unmark/delete work on them exactly like on the results (the shared
     // row-click branch swallows the row buttons while selecting, so they are
     // not rendered in that mode — no dead controls on screen).
-    const renderMarkedRows = (rows, hasResults) => {
+    const markedLiHtml = (row, L) => {
+        const { item } = row;
+        const sel = selecting && selected.has(item.id);
+        const path = views.pathOf(item.id);
+        // 残留行的"已标注"badge 按来源着色（审计 F4）：一次标注的来源是
+        // 过去的死链（danger 红）或受限（warning 琥珀）——本行若在 lastScan
+        // 里判过 blocked 就读琥珀，其余（dead / ok / 未探测 / 无缓存）一律
+        // 红。idle 完成扫描后残留行多为健康/未探测，自然落红；live 扫描中
+        // 未判定标记可查上轮 verdict。li 同步带 blocked class → ⚑ 按钮与
+        // tree overlay 的颜色随来源（受限橙 / 其余红）。
+        const verdict = lastScan && lastScan.results && lastScan.results[item.id];
+        const badgeCls = verdict && verdict.status === 'blocked' ? 'blocked' : 'dead';
+        const markTime = deadMarkTimes.get(item.id);
+        const tip = markTime ? `${L.markTimeLabel} ${fmtTime(markTime)}` : '';
+        return `<li class="vbm-row${sel ? ' sel' : ''}${badgeCls === 'blocked' ? ' blocked' : ''}" ` +
+            `id="dead-item-${item.id}" ` +
+            `role="listitem" data-node-id="${item.id}">` +
+            treeRender.generateBookmarkHTML(item.title, item.url, 'data-virtual="1"', item.id, null, {
+                path,
+                rightText: path,
+                subText: path,
+                subRight: fmtTime(markTime),
+                tooltipAppend: tip,
+                badgeSlot: true,
+                badge: { text: L.markedRow, cls: badgeCls }
+            }) +
+            (selecting ? '' :
+                `<button class="row-btn dead-mark-btn marked" aria-pressed="true" ` +
+                `aria-label="${L.unmark}" title="${L.unmark}">${FLAG_ICON}</button>` +
+                `<button class="row-btn dead-del-btn" aria-label="${L.rowDelete}" ` +
+                `title="${L.rowDelete}">${TRASH_ICON}</button>`) +
+            '</li>';
+    };
+    const renderMarkedRows = (rows, hasResults, L) => {
         // head 的分隔线（.after-results）仅在结果列表在上方时出现——"全部"/扫描中
         // 视图的残留区块与结果列表视觉分开；marked-only 视图（无结果列表）head 紧跟
         // 工具栏，带分隔线会与工具栏 border-bottom 叠成双线。
         let html = `<div class="dead-marked-head${hasResults ? ' after-results' : ''}">${_m('deadMarkedCount', `${rows.length}`)}</div>`;
         html += `<ul role="list" class="dead-marked-list${selecting ? ' selecting' : ''}">`;
-        for (let i = 0, l = rows.length; i < l; i++) {
-            const { item } = rows[i];
-            const sel = selecting && selected.has(item.id);
-            const path = views.pathOf(item.id);
-            // 残留行的"已标注"badge 按来源着色（审计 F4）：一次标注的来源是
-            // 过去的死链（danger 红）或受限（warning 琥珀）——本行若在 lastScan
-            // 里判过 blocked 就读琥珀，其余（dead / ok / 未探测 / 无缓存）一律
-            // 红。idle 完成扫描后残留行多为健康/未探测，自然落红；live 扫描中
-            // 未判定标记可查上轮 verdict。li 同步带 blocked class → ⚑ 按钮与
-            // tree overlay 的颜色随来源（受限橙 / 其余红）。
-            const verdict = lastScan && lastScan.results && lastScan.results[item.id];
-            const badgeCls = verdict && verdict.status === 'blocked' ? 'blocked' : 'dead';
-            const markTime = deadMarkTimes.get(item.id);
-            const tip = markTime ? `${_m('deadMarkTimeLabel')} ${fmtTime(markTime)}` : '';
-            html += `<li class="vbm-row${sel ? ' sel' : ''}${badgeCls === 'blocked' ? ' blocked' : ''}" ` +
-                `id="dead-item-${item.id}" ` +
-                `role="listitem" data-node-id="${item.id}">` +
-                treeRender.generateBookmarkHTML(item.title, item.url, 'data-virtual="1"', item.id, null, {
-                    path,
-                    rightText: path,
-                    subText: path,
-                    subRight: fmtTime(markTime),
-                    tooltipAppend: tip,
-                    badgeSlot: true,
-                    badge: { text: _m('deadMarkedRow'), cls: badgeCls }
-                }) +
-                (selecting ? '' :
-                    `<button class="row-btn dead-mark-btn marked" aria-pressed="true" ` +
-                    `aria-label="${_m('deadUnmark')}" title="${_m('deadUnmark')}">${FLAG_ICON}</button>` +
-                    `<button class="row-btn dead-del-btn" aria-label="${_m('rowActionDelete')}" ` +
-                    `title="${_m('rowActionDelete')}">${TRASH_ICON}</button>`) +
-                '</li>';
-        }
+        for (let i = 0, l = rows.length; i < l; i++)
+            html += markedLiHtml(rows[i], L);
         return html + '</ul>';
     };
 
@@ -818,17 +845,101 @@ export function initViewDead(ctx = {}) {
                 if (!alive.has(id))
                     selected.delete(id);
         }
-        let html = riskBanner.html() + markedBannerHtml() + renderProxyStrip() + renderToolbar();
+        // Per-render i18n labels (the tab-groups recipe): row building used
+        // to re-ask chrome.i18n 6-10× per row (mark/unmark/delete/time
+        // labels) — at 1000+ result rows that was tens of ms per render.
+        const L = {
+            mark: _m('deadMark'),
+            unmark: _m('deadUnmark'),
+            rowDelete: _m('rowActionDelete'),
+            blocked: _m('deadStatusBlocked'),
+            markedRow: _m('deadMarkedRow'),
+            markTimeLabel: _m('deadMarkTimeLabel'),
+            detectTimeLabel: _m('deadDetectTimeLabel')
+        };
+
+        // --- Incremental live paint (4.1.0 perf round 2) ----------------------
+        // While a run lives, every 700ms publish used to rebuild the WHOLE
+        // list (all settled rows re-parsed per tick, every _favicon <img>
+        // recreated — icon flicker + refetch storms; O(n²/scan) at 6000
+        // bookmarks). The journal only ever APPENDS settled checks in tree
+        // order, so: patch the toolbar in place and insert only the NEW
+        // problem rows at their tree-order position. Anything the model
+        // cannot prove identical (mark moves, run change, selection mode,
+        // capability-less doubles) falls through to the full paint below.
+        if (live && !selecting && typeof $list.querySelector === 'function') {
+            const rows = liveRows();
+            const marks = markedRows(rows);
+            const eligible = liveDom && liveDom.ts === live.ts
+                && liveDom.markedCount === marks.length
+                && liveDom.markedIds.size === marks.length
+                && marks.every(m => liveDom.markedIds.has(m.item.id));
+            if (eligible) {
+                const toolbarEl = $list.querySelector('.dead-scan-toolbar');
+                if (toolbarEl && toolbarEl.outerHTML !== undefined) {
+                    // The focused control (pause/resume…) rides the toolbar
+                    // swap — park it before, restore after.
+                    const parked = parkToolbarFocus($list);
+                    toolbarEl.outerHTML = renderToolbar();
+                    restoreToolbarFocus($list, parked);
+                }
+                const ul = liveDom.ul;
+                const children = ul && ul.children ? ul.children : null;
+                let ci = 0;
+                let html = '';
+                const flushAt = anchor => {
+                    if (!html)
+                        return;
+                    if (anchor && typeof anchor.insertAdjacentHTML === 'function')
+                        anchor.insertAdjacentHTML('beforebegin', html);
+                    else if (ul && typeof ul.insertAdjacentHTML === 'function')
+                        ul.insertAdjacentHTML('beforeend', html);
+                    html = '';
+                };
+                for (let i = 0, l = rows.length; i < l; i++) {
+                    const r = rows[i];
+                    if (liveDom.rendered.has(r.item.id)) {
+                        flushAt(children ? children[ci] : null);
+                        if (children && ci < children.length)
+                            ci++;
+                        continue;
+                    }
+                    html += rowLiHtml(r, L);
+                    liveDom.rendered.add(r.item.id);
+                }
+                flushAt(null);
+                if (deadMarks.size)
+                    refreshOverlays();   // × on the fresh rows only (id-targeted)
+                needsRender = false;   // the DOM now reflects the current state
+                return;
+            }
+        }
+
+        // --- Full paint ----------------------------------------------------------
+        // Chunked idle painting needs real-DOM query/insert primitives; the
+        // string-model test doubles keep the single full-string build (rows
+        // INSIDE their <ul> — the D1 lesson: string concat can't prove the
+        // ul contract, so only the shared painter is allowed to chunk).
+        const chunked = typeof $list.querySelector === 'function'
+            && typeof $list.insertAdjacentHTML === 'function';
+        let head = riskBanner.html() + markedBannerHtml() + renderProxyStrip() + renderToolbar();
+        let pipes = null;
+        // 4.1.0: idle rows stream in chunks (list-chunks.js) — filter/sort
+        // switches and the scan-finish settle used to pay one giant innerHTML
+        // parse (1000+ rows ≈ 150-400ms freeze). The live first paint stays a
+        // single shot so the incremental DOM state covers EXACTLY the painted
+        // rows (a chunk still in flight would otherwise be counted rendered).
         if (live) {
             // Progressive rendering (v4 task-4 #16): the blob journal's
             // settled dead/blocked checks are already rows while the SW's
             // scan keeps running. A mark the run re-verifies as a problem row
             // moves into the result list here (its marked state kept on the
             // row); the still-unchecked marks append below.
-            html += renderRows(liveRows());
-            const marks = markedRows();
+            const rows = liveRows();
+            head += renderRows(rows, L);
+            const marks = markedRows(rows);
             if (marks.length)
-                html += renderMarkedRows(marks, true);
+                head += renderMarkedRows(marks, true, L);
         } else if (filter === 'marked' || !lastScan) {
             // Marked-only view: the whole marked set, no result rows. With no
             // scan at all AND no marks (a fresh first run) the executable
@@ -841,19 +952,29 @@ export function initViewDead(ctx = {}) {
             // falls back to an empty state — the empty
             // `<ul class="dead-marked-list">` shell must not linger where
             // there is nothing left to show.
-            if (marks.length)
-                html += renderMarkedRows(marks, false);
-            else if (!lastScan && !deadMarks.size)
+            if (marks.length) {
+                if (chunked) {
+                    head += `<div class="dead-marked-head">${_m('deadMarkedCount', `${marks.length}`)}</div>` +
+                        `<ul role="list" class="dead-marked-list${selecting ? ' selecting' : ''}"></ul>`;
+                    pipes = [{
+                        ul: 'ul.dead-marked-list',
+                        pieces: marks.map(r => markedLiHtml(r, L)),
+                        first: DEAD_CHUNK_FIRST, chunk: DEAD_CHUNK
+                    }];
+                } else {
+                    head += renderMarkedRows(marks, false, L);
+                }
+            } else if (!lastScan && !deadMarks.size) {
                 // 没有任何历史死链数据（从未扫描 / 清除扫描结果）且从未标注 →
                 // 蓝色开始扫描按钮。这是"第一次启动"的号召性空态。
-                html += `<ul role="list"><li class="empty-state dead-start" role="listitem" tabindex="-1">` +
+                head += `<ul role="list"><li class="empty-state dead-start" role="listitem" tabindex="-1">` +
                     `<i>${_m('deadStartHint', `${treeItems.size}`)}</i></li></ul>`;
-            else if (!lastScan)
+            } else if (!lastScan) {
                 // 有标注但被"未标注"子筛选整块隐藏（无缓存 + markFilter=unmarked
                 // + 有标注）→ 不能说"开始第一次扫描"，提示换分段才文对题
                 // （audit D13）。有历史扫描的情况走下面的普通空态。
-                html += `<ul role="list"><li class="empty-state" role="listitem"><i>${_m('deadNoneFiltered')}</i></li></ul>`;
-            else {
+                head += `<ul role="list"><li class="empty-state" role="listitem"><i>${_m('deadNoneFiltered')}</i></li></ul>`;
+            } else {
                 // 有历史扫描但"上次标注"分类为空 → 普通空态（不显示蓝色按钮）。
                 // 残留标注存在但被已标注/未标注子筛选隐藏 → 提示换分段；真无残留
                 // → "还没有标记过书签"。
@@ -862,71 +983,92 @@ export function initViewDead(ctx = {}) {
                 // deadMarkedNone 误导——用户明明标记过，只是都判进结果行了）。
                 const label = (markedRows().length || deadMarks.size)
                     ? 'deadNoneFiltered' : 'deadMarkedNone';
-                html += `<ul role="list"><li class="empty-state" role="listitem"><i>${_m(label)}</i></li></ul>`;
+                head += `<ul role="list"><li class="empty-state" role="listitem"><i>${_m(label)}</i></li></ul>`;
             }
         } else {
             const allRows = allResultRows();
             const rows = resultRows();
-            // Distinguish "the scan found nothing" from "the active filter
-            // matches nothing" — the latter tells the user the other
-            // segments (still visible above) are where the rows went.
-            html += rows.length
-                ? renderRows(rows)
-                : `<ul role="list"><li class="empty-state" role="listitem"><i>${_m(filter !== 'all' && allRows.length ? 'deadNoneFiltered' : 'deadNone')}</i></li></ul>`;
             // The marked list renders ONLY under "全部" (the default view),
             // when any residue mark exists — it is the "上次标注" record
-            // appended below the full result set. Content: marks the result
-            // rows do NOT cover (dead-过去标注语义.md §2.4: a marked id the last
-            // scan judged healthy, or one it never probed, or one added after
-            // it) — marks among the scan's problem rows carry the toggle in
-            // the result rows, so they are not repeated here. Gated on the
-            // RESIDUE count, not the raw set: when every mark is covered (过去
-            // 标注 empty) no empty list shell may linger. Under 仅死链/仅受限
-            // only that category's rows are on screen: a category filter hides
-            // the marked list entirely (a mark the category hides is covered
-            // by its own row once the segment switches back, so echoing it
-            // here read as "the toolbar filter is swapped / the list shows
-            // everything" — the toolbar/list mismatch report).
-            const marks = visibleMarkedRows();
-            if (filter === 'all' && marks.length)
-                html += renderMarkedRows(marks, true);
+            // appended below the full result set (below the empty state
+            // too: an all-healthy rescan keeps every past mark reachable).
+            // Content: marks the result rows do NOT cover (dead-过去标注语义.md
+            // §2.4: a marked id the last scan judged healthy, or one it never
+            // probed, or one added after it) — marks among the scan's problem
+            // rows carry the toggle in the result rows, so they are not
+            // repeated here. Gated on the RESIDUE count, not the raw set:
+            // when every mark is covered (过去标注 empty) no empty list shell
+            // may linger. Under 仅死链/仅受限 only that category's rows are
+            // on screen: a category filter hides the marked list entirely (a
+            // mark the category hides is covered by its own row once the
+            // segment switches back, so echoing it here read as "the toolbar
+            // filter is swapped / the list shows everything" — the toolbar/
+            // list mismatch report).
+            const marks = filter === 'all' ? visibleMarkedRows() : [];
+            if (chunked) {
+                // Distinguish "the scan found nothing" from "the active
+                // filter matches nothing" — the latter tells the user the
+                // other segments (still visible above) are where the rows
+                // went. The results ul is the FIRST role=list ul in the head
+                // (the marked list below carries its own class) — the pipe's
+                // ul selector resolves against the fresh head content.
+                if (rows.length) {
+                    head += `<ul role="list"${selecting ? ' class="selecting"' : ''}></ul>`;
+                    pipes = [{
+                        ul: 'ul[role="list"]',
+                        pieces: rows.map(r => rowLiHtml(r, L)),
+                        first: DEAD_CHUNK_FIRST, chunk: DEAD_CHUNK
+                    }];
+                } else {
+                    head += `<ul role="list"><li class="empty-state" role="listitem"><i>${_m(filter !== 'all' && allRows.length ? 'deadNoneFiltered' : 'deadNone')}</i></li></ul>`;
+                }
+                if (marks.length) {
+                    head += `<div class="dead-marked-head after-results">${_m('deadMarkedCount', `${marks.length}`)}</div>` +
+                        `<ul role="list" class="dead-marked-list${selecting ? ' selecting' : ''}"></ul>`;
+                    pipes = pipes || [];
+                    pipes.push({
+                        ul: 'ul.dead-marked-list',
+                        pieces: marks.map(r => markedLiHtml(r, L)),
+                        first: DEAD_CHUNK_FIRST, chunk: DEAD_CHUNK
+                    });
+                }
+            } else {
+                head += rows.length
+                    ? renderRows(rows, L)
+                    : `<ul role="list"><li class="empty-state" role="listitem"><i>${_m(filter !== 'all' && allRows.length ? 'deadNoneFiltered' : 'deadNone')}</i></li></ul>`;
+                if (marks.length)
+                    head += renderMarkedRows(marks, true, L);
+            }
         }
         // keep a focused toolbar control focused across the swap (see above)
         const parkedToolbar = parkToolbarFocus($list);
         // 4.0.1 focus law: a focused list ROW rides the same swap
-        const parkedRow = parkRowFocus($list);
+        let parkedRow = parkRowFocus($list);
         // v4 task-4 #17: mid-scan repaints are silent — the list's scroll
         // position survives the innerHTML swap (idle interactions keep the
         // old reset-to-top behavior).
-        const scroll = live ? $list.scrollTop : 0;
-        $list.innerHTML = html;
-        if (live && scroll)
-            $list.scrollTop = scroll;
-        restoreToolbarFocus($list, parkedToolbar);
-        // …restored BEFORE the pendingRowFocus block below, so that explicit
-        // override still wins when set (v4 task-4 #8).
-        unparkRowFocus($list, parkedRow);
+        const liveScroll = live ? $list.scrollTop : 0;
         // v4 task-4 #8: select-mode Space toggle — restore the row's anchor.
-        if (pendingRowFocus) {
+        const tryPendingRowFocus = () => {
+            if (!pendingRowFocus)
+                return;
             const id = pendingRowFocus;
             pendingRowFocus = null;
             const row = document.getElementById(`dead-item-${id}`);
-            const a = row && row.querySelector('a');
+            const a = row && row.querySelector ? row.querySelector('a') : null;
             if (a)
                 a.focus();
-        }
-        // Selection-mode toolbar transitions: after the swap the old button
-        // class is gone, so restoreToolbarFocus above has no target. The two
-        // paths are mutually exclusive in practice (pendingRowFocus is set
-        // only by the Space toggle, which never triggers a mode transition),
-        // so this ordering never competes with the row park above.
-        if (selectionFocus === 'first') {
-            selectionFocus = null;
-            focusSelectionBarFirst();
-        } else if (selectionFocus === 'entry') {
-            selectionFocus = null;
-            focusSelectModeButton();
-        }
+        };
+        const tryUnparkRow = () => {
+            if (!parkedRow || !parkedRow.id
+                || typeof document === 'undefined'
+                || typeof document.getElementById !== 'function')
+                return;
+            if (document.getElementById(parkedRow.id)) {
+                unparkRowFocus($list, parkedRow);
+                parkedRow = null;
+            }
+        };
         // Cancelling a scan re-renders the toolbar from live (pause/cancel)
         // to idle: the parked control (e.g. .dead-cancel) no longer exists,
         // restoreToolbarFocus fails silently and focus falls out of the list
@@ -934,8 +1076,12 @@ export function initViewDead(ctx = {}) {
         // The banner itself must not trap focus, but the keyboard must not
         // lose it either: when the focus was IN this list before the swap and
         // ends up outside it after (nothing to restore to), land on the dead
-        // view's tab instead of <body>.
-        if (parkedToolbar || parkedRow) {
+        // view's tab instead of <body>. Runs at settle so the row park
+        // (which needs the full list for its index fallback) restores first.
+        const hadParkedFocus = !!(parkedToolbar || parkedRow);
+        const fallbackFocusLoss = () => {
+            if (!hadParkedFocus)
+                return;
             let ae = document.activeElement;
             while (ae && ae !== $list)
                 ae = ae.parentNode;
@@ -944,6 +1090,74 @@ export function initViewDead(ctx = {}) {
                 if (tab && tab.focus)
                     tab.focus();
             }
+        };
+        const paintOpts = {
+            head,
+            pieces: [],
+            onHead: el => {
+                if (live && liveScroll)
+                    $list.scrollTop = liveScroll;
+                restoreToolbarFocus(el, parkedToolbar);
+                tryPendingRowFocus();
+                // Selection-mode toolbar transitions: after the swap the old
+                // button class is gone, so restoreToolbarFocus above has no
+                // target. The two paths are mutually exclusive in practice
+                // (pendingRowFocus is set only by the Space toggle, which never
+                // triggers a mode transition), so this ordering never competes
+                // with the row park above.
+                if (selectionFocus === 'first') {
+                    selectionFocus = null;
+                    focusSelectionBarFirst();
+                } else if (selectionFocus === 'entry') {
+                    selectionFocus = null;
+                    focusSelectModeButton();
+                }
+            },
+            onChunk: () => {
+                tryUnparkRow();
+                tryPendingRowFocus();
+            },
+            onSettled: el => {
+                // …restored BEFORE the pendingRowFocus block below, so that
+                // explicit override still wins when set (v4 task-4 #8).
+                if (parkedRow) {
+                    unparkRowFocus(el, parkedRow);
+                    parkedRow = null;
+                }
+                tryPendingRowFocus();
+                fallbackFocusLoss();
+            }
+        };
+        if (pipes) {
+            paintListChunked($list, {
+                ...paintOpts,
+                pipes,
+                adaptive: true, budgetMs: 16, minChunk: 40, maxChunk: 300
+            });
+        } else {
+            // Single-shot shapes: the live first paint, every empty state, and
+            // capability-less test doubles — pieces [] collapses to one paint.
+            paintListChunked($list, paintOpts);
+        }
+        // The incremental DOM state mirrors exactly what was just painted
+        // (live single-shot: rendered covers every row in the fresh ul).
+        if (live && typeof $list.querySelector === 'function') {
+            const ul = $list.querySelector('ul[role="list"]');
+            if (ul) {
+                const rowsNow = liveRows();
+                const marksNow = markedRows(rowsNow);
+                liveDom = {
+                    ts: live.ts,
+                    ul,
+                    rendered: new Set(rowsNow.map(r => r.item.id)),
+                    markedIds: new Set(marksNow.map(m => m.item.id)),
+                    markedCount: marksNow.length
+                };
+            } else {
+                liveDom = null;
+            }
+        } else {
+            liveDom = null;
         }
         needsRender = false;   // the DOM now reflects the current state
     };
@@ -1353,6 +1567,7 @@ export function initViewDead(ctx = {}) {
                     state: blob.state === 'paused' ? 'paused' : 'scanning',
                     done: blob.done || 0,
                     total: blob.total || 0,
+                    ts: blob.ts || 0,   // run identity for the incremental DOM
                     order: blob.items || [],
                     results: new Map(Object.entries(blob.results || {}))
                 };
