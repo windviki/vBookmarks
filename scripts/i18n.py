@@ -108,6 +108,10 @@ SUSPECT_ALLOWLIST = {
     'url',
     'paletteCustomUrl',
     'paletteCustomUsage',
+    # velvet staging: the format names themselves are universal technical
+    # terms — "Markdown" and "JSON" are not translated in any locale.
+    'folderCopyMarkdown',
+    'folderCopyJson',
 }
 
 # locale -> language name used in the translation prompt
