@@ -2257,6 +2257,38 @@
   "stagingGroupNoGroups": {
     "message": "아직 그룹 없음"
   },
+  "stagingShortcutAdd": {
+    "message": "바로가기 추가"
+  },
+  "stagingShortcutTitle": {
+    "message": "이동 바로가기"
+  },
+  "stagingShortcutEdit": {
+    "message": "바로가기 편집"
+  },
+  "stagingShortcutAlias": {
+    "message": "별칭"
+  },
+  "stagingShortcutPickFolder": {
+    "message": "대상 폴더 선택…"
+  },
+  "stagingShortcutSave": {
+    "message": "저장"
+  },
+  "stagingShortcutRemove": {
+    "message": "바로가기 제거"
+  },
+  "stagingShortcutRemoved": {
+    "message": "바로가기 제거됨"
+  },
+  "stagingShortcutMove": {
+    "message": "선택 항목을 $1$(으)로 이동",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
   "stagingBucketTitle": {
     "message": "북마크되지 않음"
   },

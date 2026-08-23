@@ -2257,6 +2257,38 @@
   "stagingGroupNoGroups": {
     "message": "Brak grup"
   },
+  "stagingShortcutAdd": {
+    "message": "Dodaj skrót"
+  },
+  "stagingShortcutTitle": {
+    "message": "Skrót przenoszenia"
+  },
+  "stagingShortcutEdit": {
+    "message": "Edytuj skrót"
+  },
+  "stagingShortcutAlias": {
+    "message": "Alias"
+  },
+  "stagingShortcutPickFolder": {
+    "message": "Wybierz folder docelowy…"
+  },
+  "stagingShortcutSave": {
+    "message": "Zapisz"
+  },
+  "stagingShortcutRemove": {
+    "message": "Usuń skrót"
+  },
+  "stagingShortcutRemoved": {
+    "message": "Skrót usunięty"
+  },
+  "stagingShortcutMove": {
+    "message": "Przenieś zaznaczone do $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
   "stagingBucketTitle": {
     "message": "Niezakładkowane"
   },

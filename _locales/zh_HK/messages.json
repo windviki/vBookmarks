@@ -2257,6 +2257,38 @@
   "stagingGroupNoGroups": {
     "message": "尚無群組"
   },
+  "stagingShortcutAdd": {
+    "message": "新增捷徑"
+  },
+  "stagingShortcutTitle": {
+    "message": "移動到資料夾捷徑"
+  },
+  "stagingShortcutEdit": {
+    "message": "編輯捷徑"
+  },
+  "stagingShortcutAlias": {
+    "message": "別名"
+  },
+  "stagingShortcutPickFolder": {
+    "message": "選擇目標資料夾…"
+  },
+  "stagingShortcutSave": {
+    "message": "儲存"
+  },
+  "stagingShortcutRemove": {
+    "message": "刪除捷徑"
+  },
+  "stagingShortcutRemoved": {
+    "message": "已刪除捷徑"
+  },
+  "stagingShortcutMove": {
+    "message": "移動所選到 $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
   "stagingBucketTitle": {
     "message": "未加入書籤"
   },

@@ -2257,6 +2257,38 @@
   "stagingGroupNoGroups": {
     "message": "Noch keine Gruppen"
   },
+  "stagingShortcutAdd": {
+    "message": "Verknüpfung hinzufügen"
+  },
+  "stagingShortcutTitle": {
+    "message": "Verschieben-Verknüpfung"
+  },
+  "stagingShortcutEdit": {
+    "message": "Verknüpfung bearbeiten"
+  },
+  "stagingShortcutAlias": {
+    "message": "Alias"
+  },
+  "stagingShortcutPickFolder": {
+    "message": "Zielordner wählen…"
+  },
+  "stagingShortcutSave": {
+    "message": "Speichern"
+  },
+  "stagingShortcutRemove": {
+    "message": "Verknüpfung entfernen"
+  },
+  "stagingShortcutRemoved": {
+    "message": "Verknüpfung entfernt"
+  },
+  "stagingShortcutMove": {
+    "message": "Ausgewählte nach $1$ verschieben",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
   "stagingBucketTitle": {
     "message": "Nicht gespeichert"
   },

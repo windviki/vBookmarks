@@ -2505,6 +2505,38 @@
   "stagingGroupNoGroups": {
     "message": "No groups yet"
   },
+  "stagingShortcutAdd": {
+    "message": "Add shortcut"
+  },
+  "stagingShortcutTitle": {
+    "message": "Move-to shortcut"
+  },
+  "stagingShortcutEdit": {
+    "message": "Edit shortcut"
+  },
+  "stagingShortcutAlias": {
+    "message": "Alias"
+  },
+  "stagingShortcutPickFolder": {
+    "message": "Pick target folder…"
+  },
+  "stagingShortcutSave": {
+    "message": "Save"
+  },
+  "stagingShortcutRemove": {
+    "message": "Remove shortcut"
+  },
+  "stagingShortcutRemoved": {
+    "message": "Shortcut removed"
+  },
+  "stagingShortcutMove": {
+    "message": "Move selected to $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
   "stagingBucketTitle": {
     "message": "Unbookmarked"
   },

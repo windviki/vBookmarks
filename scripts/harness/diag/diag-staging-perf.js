@@ -94,6 +94,9 @@ const OBSERVER_BOOT = () => {
         await cdp.send('Performance.enable');
 
         const instrumentMutations = () => page.evaluate(() => {
+            // disconnect the previous window's observer — overlapping
+            // observers double-count the same mutations across entries
+            if (window.__vbmObs) window.__vbmObs.disconnect();
             const list = document.getElementById('staging-list');
             window.__vbmMut = { buckets: new Array(16).fill(0), started: performance.now(), total: 0 };
             const bucketOf = () => Math.min(15, Math.floor((performance.now() - window.__vbmMut.started) / 500));
@@ -106,6 +109,7 @@ const OBSERVER_BOOT = () => {
                 window.__vbmMut.total += n;
                 window.__vbmMut.buckets[bucketOf()] += n;
             });
+            window.__vbmObs = obs;
             obs.observe(list, { childList: true, subtree: true, attributes: true, attributeFilter: ['src', 'class'] });
         });
 
@@ -153,6 +157,7 @@ const OBSERVER_BOOT = () => {
         // while the staging view is open) — the per-event render storm probe.
         await page.evaluate(() => {
             window.__vbmDiag.longTasks.length = 0;
+            if (window.__vbmObs) window.__vbmObs.disconnect();
             const list = document.getElementById('staging-list');
             window.__vbmMut = { buckets: new Array(16).fill(0), started: performance.now(), total: 0 };
             const obs = new MutationObserver(muts => {
@@ -161,6 +166,7 @@ const OBSERVER_BOOT = () => {
                     n += (m.addedNodes ? m.addedNodes.length : 0) + (m.removedNodes ? m.removedNodes.length : 0);
                 window.__vbmMut.total += n;
             });
+            window.__vbmObs = obs;
             obs.observe(list, { childList: true, subtree: true });
         });
         const burst = await page.evaluate(() => new Promise(resolve => {
@@ -186,6 +192,7 @@ const OBSERVER_BOOT = () => {
             stagingItems: window.store ? (JSON.parse(window.store.get('staging') || '{}').items || []).length : -1
         }));
         console.log('final:', JSON.stringify({ burst, state }));
+        require('fs').mkdirSync('/tmp/shots', { recursive: true });
         await page.screenshot({ path: '/tmp/shots/diag-staging-perf.png' });
     } finally {
         await browser.close();

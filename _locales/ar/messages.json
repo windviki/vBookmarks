@@ -2257,6 +2257,38 @@
   "stagingGroupNoGroups": {
     "message": "لا توجد مجموعات بعد"
   },
+  "stagingShortcutAdd": {
+    "message": "إضافة اختصار"
+  },
+  "stagingShortcutTitle": {
+    "message": "اختصار النقل"
+  },
+  "stagingShortcutEdit": {
+    "message": "تعديل الاختصار"
+  },
+  "stagingShortcutAlias": {
+    "message": "الاسم المستعار"
+  },
+  "stagingShortcutPickFolder": {
+    "message": "اختر المجلد الهدف…"
+  },
+  "stagingShortcutSave": {
+    "message": "حفظ"
+  },
+  "stagingShortcutRemove": {
+    "message": "إزالة الاختصار"
+  },
+  "stagingShortcutRemoved": {
+    "message": "تمت إزالة الاختصار"
+  },
+  "stagingShortcutMove": {
+    "message": "نقل المحدد إلى $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
   "stagingBucketTitle": {
     "message": "غير مفضل"
   },

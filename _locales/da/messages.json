@@ -2257,6 +2257,38 @@
   "stagingGroupNoGroups": {
     "message": "Ingen grupper endnu"
   },
+  "stagingShortcutAdd": {
+    "message": "Tilføj genvej"
+  },
+  "stagingShortcutTitle": {
+    "message": "Flyt-til-genvej"
+  },
+  "stagingShortcutEdit": {
+    "message": "Rediger genvej"
+  },
+  "stagingShortcutAlias": {
+    "message": "Alias"
+  },
+  "stagingShortcutPickFolder": {
+    "message": "Vælg målmappe…"
+  },
+  "stagingShortcutSave": {
+    "message": "Gem"
+  },
+  "stagingShortcutRemove": {
+    "message": "Fjern genvej"
+  },
+  "stagingShortcutRemoved": {
+    "message": "Genvej fjernet"
+  },
+  "stagingShortcutMove": {
+    "message": "Flyt valgte til $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
   "stagingBucketTitle": {
     "message": "Ikke-bogmærket"
   },

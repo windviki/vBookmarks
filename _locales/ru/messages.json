@@ -2257,6 +2257,38 @@
   "stagingGroupNoGroups": {
     "message": "Групп пока нет"
   },
+  "stagingShortcutAdd": {
+    "message": "Добавить ярлык"
+  },
+  "stagingShortcutTitle": {
+    "message": "Ярлык перемещения"
+  },
+  "stagingShortcutEdit": {
+    "message": "Изменить ярлык"
+  },
+  "stagingShortcutAlias": {
+    "message": "Псевдоним"
+  },
+  "stagingShortcutPickFolder": {
+    "message": "Выбрать папку…"
+  },
+  "stagingShortcutSave": {
+    "message": "Сохранить"
+  },
+  "stagingShortcutRemove": {
+    "message": "Удалить ярлык"
+  },
+  "stagingShortcutRemoved": {
+    "message": "Ярлык удалён"
+  },
+  "stagingShortcutMove": {
+    "message": "Переместить выбранное в $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
   "stagingBucketTitle": {
     "message": "Без закладок"
   },

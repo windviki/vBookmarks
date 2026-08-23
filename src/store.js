@@ -115,6 +115,9 @@
         // by design — bookmark ids and bulk snapshots) and the folder-picker
         // quick-pick rosters (pin list + LRU recents, both bookmark-id keyed).
         'staging', 'folderPickPins', 'folderPickRecents',
+        // move-to-folder shortcut chips (selection bar quick row): bookmark-id
+        // keyed like the picker rosters, device-local.
+        'stagingShortcuts',
         // 'showSyncStatus' historically lived in localStorage (the other sync
         // keys were born in the sync area) — listing it lets the v1 migration
         // hand it to chrome.storage.local, from where the local→sync

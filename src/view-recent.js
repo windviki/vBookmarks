@@ -36,7 +36,7 @@
  */
 
 import { relTimeLabel } from './tree-render.js';
-import { VIEW_ICONS, STAGE_ICON, STAGE_ICON_DONE, STAGE_REMOVE_ICON, STAR_ICON, STAR_ICON_FILLED, SELECT_ICON, FOLDER_STAR_ICON, FOLDER_PLUS_ICON, EDIT_ICON } from './icons.js';
+import { VIEW_ICONS, STAGE_ICON, STAGE_ICON_DONE, STAGE_REMOVE_ICON, STAR_ICON, STAR_ICON_FILLED, STAR_X_ICON, SELECT_ICON, FOLDER_STAR_ICON, FOLDER_PLUS_ICON, EDIT_ICON, TRASH_ICON, LIST_X_ICON, OPEN_ICON, TABS_ICON, GROUP_ICON, UNGROUP_ICON, SCISSORS_ICON } from './icons.js';
 import { htmlspecialchars } from './escape.js';
 import { parkRowFocus, unparkRowFocus, parkToolbarFocus, restoreToolbarFocus } from './list-focus.js';
 import * as staging from './staging.js';
@@ -92,9 +92,27 @@ export function initViewRecent(ctx = {}) {
         views.updateBadges(); // store.set does not auto-update tab badges
     };
 
+    // Move-to-folder shortcut chips (the selection bar's customizable
+    // quick row) — same device-local persistence discipline as staging:
+    // byte-compare our own writes against the onChanged echo.
+    let shortcuts = staging.parseShortcuts(store.get('stagingShortcuts'));
+    const ownShortcutWrites = [];
+    const persistShortcuts = () => {
+        const raw = staging.serializeShortcuts(shortcuts);
+        ownShortcutWrites.push(raw);
+        if (ownShortcutWrites.length > 8)
+            ownShortcutWrites.shift();
+        store.set('stagingShortcuts', raw);
+    };
+
+    // Staging-only repaint (defined further down, next to render/refresh):
+    // rebuilds banner + toolbar + #staging-items in place and leaves the
+    // recently-added region's DOM untouched, so a fold toggle / drag /
+    // selection change no longer re-hydrates every recent-row favicon
+    // (the "favicon refresh process" lag source).
     const renderStaging = () => {
         if (views.isActive('recent'))
-            refresh();
+            renderStagingNow();
         else
             dirty = true;
     };
@@ -280,29 +298,37 @@ export function initViewRecent(ctx = {}) {
     };
 
     // A named group head (§3.5): fold control + name + member count. The
-    // hover tail carries the quick actions (rename, homing — the tabgroups
-    // head language); the context menu holds the full set (dissolve, delete,
-    // select-all…). Manual (user-created) groups render even when EMPTY —
+    // quick tail reads right-to-left like the member rows' — place (homing)
+    // on the star column, delete (danger) on the remove column — with the
+    // group-specific rename/dissolve pair to the left (the tabgroups-head
+    // language: activate/rename live left of the shared tail). The context
+    // menu keeps the full set (toggle/rename/dissolve/delete/select-all/
+    // save/copy). Manual (user-created) groups render even when EMPTY —
     // they exist to be dragged into.
     const groupHeadHtml = (g, count) => {
         const collapsed = selecting ? false : g.collapsed;
         const placeLabel = _m('groupPlaceTooltip');
         const renameLabel = _m('stagingGroupRename');
+        const dissolveLabel = _m('stagingGroupDissolve');
+        const deleteLabel = _m('stagingGroupDelete');
         const selCls = headSelClass(staging.groupItems(stagingState, g.id).map(it => it.url));
         const dragAttr = selecting ? '' : ' draggable="true"';
+        const gname = htmlspecialchars(g.name || _m('noTitle'));
         return `<li class="staging-group${selCls}" data-group-id="${g.id}" role="presentation">` +
-            `<span class="group-head staging-group-head" tabindex="-1" role="button" aria-expanded="${collapsed ? 'false' : 'true'}"${dragAttr}>` +
+            `<span class="group-head staging-group-head" tabindex="-1" role="button" ` +
+            `aria-expanded="${collapsed ? 'false' : 'true'}" title="${gname}"${dragAttr}>` +
             `<span class="chevron${collapsed ? ' collapsed' : ''}" aria-hidden="true"></span>` +
-            `<span class="staging-section-title" dir="auto">${htmlspecialchars(g.name || _m('noTitle'))}</span>` +
+            `<span class="staging-section-title" dir="auto">${gname}</span>` +
             `<span class="count-pill" aria-label="${count}">${count}</span>` +
             (selecting ? '' :
-                // The tabgroups-head quick tail: rename (F2 parity) + the
-                // §3.5 hover homing — save the whole group to a folder in
-                // one hop (folder-picker chips included).
                 `<button type="button" class="row-btn staging-group-rename" tabindex="-1" ` +
                 `aria-label="${htmlspecialchars(renameLabel)}" title="${htmlspecialchars(renameLabel)}">${EDIT_ICON}</button>` +
+                `<button type="button" class="row-btn staging-group-dissolve" tabindex="-1" ` +
+                `aria-label="${htmlspecialchars(dissolveLabel)}" title="${htmlspecialchars(dissolveLabel)}">${UNGROUP_ICON}</button>` +
                 `<button type="button" class="row-btn staging-group-place" tabindex="-1" ` +
-                `aria-label="${htmlspecialchars(placeLabel)}" title="${htmlspecialchars(placeLabel)}">${FOLDER_STAR_ICON}</button>`) +
+                `aria-label="${htmlspecialchars(placeLabel)}" title="${htmlspecialchars(placeLabel)}">${FOLDER_STAR_ICON}</button>` +
+                `<button type="button" class="row-btn staging-group-delete" tabindex="-1" ` +
+                `aria-label="${htmlspecialchars(deleteLabel)}" title="${htmlspecialchars(deleteLabel)}">${TRASH_ICON}</button>`) +
             `</span></li>`;
     };
 
@@ -324,8 +350,11 @@ export function initViewRecent(ctx = {}) {
             if (bucket.length) {
                 html += bucketHeadHtml(bucket.length, staging.newCount(state), unfavCollapsed);
                 if (!unfavCollapsed) {
+                    // bucket rows indent under the bucket head too (its
+                    // star column is their favicon column) — the inbox
+                    // reads as a head with members, not as loose rows
                     for (const it of bucket)
-                        html += stagingRowHtml(it, idxOf.get(it.url), false);
+                        html += stagingRowHtml(it, idxOf.get(it.url), true);
                 }
             }
             // ② groups in createdAt order (the model sorts on create).
@@ -402,12 +431,14 @@ export function initViewRecent(ctx = {}) {
             // stays the anchor, so keyboard.js Enter still opens the
             // bookmark. Empty groups never appear.
             const g = groupIndex(d.dateAdded || 0, now);
+            // The stage buttons render in BOTH modes; the selecting-view
+            // CSS hides them (visibility, so the geometry stays frozen) —
+            // that lets staging-only repaints leave this region alone.
             const groupHead = (g !== lastGroup)
                 ? `<div class="recent-group-head" role="presentation">${_m(GROUP_KEYS[g])}` +
-                  (selecting ? '' :
-                    `<button type="button" class="row-btn recent-group-stage" tabindex="-1" ` +
-                    `data-recent-group="${g}" aria-label="${htmlspecialchars(_m('recentStageGroup', _m(GROUP_KEYS[g])))}" ` +
-                    `title="${htmlspecialchars(_m('recentStageGroup', _m(GROUP_KEYS[g])))}">${STAGE_ICON}</button>`) +
+                  `<button type="button" class="row-btn recent-group-stage" tabindex="-1" ` +
+                  `data-recent-group="${g}" aria-label="${htmlspecialchars(_m('recentStageGroup', _m(GROUP_KEYS[g])))}" ` +
+                  `title="${htmlspecialchars(_m('recentStageGroup', _m(GROUP_KEYS[g])))}">${STAGE_ICON}</button>` +
                   `</div>`
                 : '';
             lastGroup = g;
@@ -419,7 +450,7 @@ export function initViewRecent(ctx = {}) {
                     rightText: (showPath && path) ? path : '',
                     subText
                 }) +
-                (selecting ? '' : stageBtnHtml(d.url)) +
+                stageBtnHtml(d.url) +
                 groupHead +
                 '</li>';
         }
@@ -438,9 +469,8 @@ export function initViewRecent(ctx = {}) {
             `<span class="chevron${collapsed ? ' collapsed' : ''}" aria-hidden="true"></span>` +
             `<span class="staging-section-title">${_m('recentSectionTitle')}</span>` +
             (count ? `<span class="count-pill" aria-label="${count}">${count}</span>` : '') +
-            (selecting ? '' :
-                `<button type="button" class="row-btn recent-stage-all" tabindex="-1" ` +
-                `aria-label="${htmlspecialchars(stageAllLabel)}" title="${htmlspecialchars(stageAllLabel)}">${STAGE_ICON}</button>`) +
+            `<button type="button" class="row-btn recent-stage-all" tabindex="-1" ` +
+            `aria-label="${htmlspecialchars(stageAllLabel)}" title="${htmlspecialchars(stageAllLabel)}">${STAGE_ICON}</button>` +
             `</div>`;
     };
 
@@ -472,6 +502,11 @@ export function initViewRecent(ctx = {}) {
             foldSnapshot = null;
         }
         selecting = on;
+        // The root class hides the recently-added region's send buttons
+        // while selecting (CSS visibility, slots stay occupied) — the
+        // partial repaint below then never has to touch that region.
+        if ($list.classList)
+            $list.classList.toggle('selecting-view', on);
         if (!on)
             selected.clear();
         if (focus)
@@ -498,18 +533,61 @@ export function initViewRecent(ctx = {}) {
                 `<button class="staging-select-exit">${_m('selectModeExit')}</button>`;
             r1 += '</div>';
             const hasSel = selected.size ? '' : ' disabled';
+            // The ACTION rung is iconified (the dead-view law): every
+            // glyph's meaning survives without text, so the labels move
+            // into title/aria and all nine actions fit ONE row. Order =
+            // the workbench's key ops: 打开(open / open-as-tab-group) →
+            // 收藏态(收藏 / 取消收藏) → 组织(分组 / 移动复制到) → 离场
+            // (移出 / 删除所选 / 清空暂存 — the destructive pair ends the
+            // rung in danger red, delete before the staging-wide clear).
+            const iconBtn = (cls, label, icon) =>
+                `<button class="staging-icon-btn ${cls}"${hasSel} aria-label="${htmlspecialchars(label)}" ` +
+                `title="${htmlspecialchars(label)}">${icon}</button>`;
             let r2 = '<div class="staging-toolbar staging-actions-toolbar selecting-bar vbm-toolbar">';
-            r2 += `<button class="staging-open"${hasSel}>${_m('open')}</button>` +
-                `<button class="staging-open-group"${hasSel}>${_m('openBookmarksInGroup')}</button>` +
-                `<button class="staging-fav"${hasSel}>${_m('stagingFav')}</button>` +
-                `<button class="staging-unfav"${hasSel}>${_m('stagingUnfav')}</button>` +
-                `<button class="staging-assign"${hasSel}>${_m('stagingGroupAssign')}</button>` +
-                `<button class="staging-movecopy"${hasSel}>${_m('stagingMoveCopy')}</button>` +
-                `<button class="staging-delete"${hasSel}>${_m('deleteSelected')}</button>` +
-                `<button class="staging-remove"${hasSel}>${_m('stagingRemove')}</button>` +
-                `<button class="staging-clear-all"${n ? '' : ' disabled'}>${_m('stagingClear')}</button>`;
+            r2 += iconBtn('staging-open', _m('open'), OPEN_ICON) +
+                iconBtn('staging-open-group', _m('openBookmarksInGroup'), TABS_ICON) +
+                iconBtn('staging-fav', _m('stagingFav'), STAR_ICON) +
+                iconBtn('staging-unfav', _m('stagingUnfav'), STAR_X_ICON) +
+                iconBtn('staging-assign', _m('stagingGroupAssign'), GROUP_ICON) +
+                iconBtn('staging-movecopy', _m('stagingMoveCopy'), FOLDER_STAR_ICON) +
+                iconBtn('staging-remove', _m('stagingRemove'), STAGE_REMOVE_ICON) +
+                iconBtn('staging-delete', _m('deleteSelected'), TRASH_ICON) +
+                // 清空暂存 acts on ALL items (not the selection), so its
+                // gate is the item count, not the selection size
+                `<button class="staging-icon-btn staging-clear-all"${n ? '' : ' disabled'} ` +
+                `aria-label="${htmlspecialchars(_m('stagingClear'))}" title="${htmlspecialchars(_m('stagingClear'))}">${LIST_X_ICON}</button>`;
             r2 += '</div>';
-            return r1 + r2;
+            // Rung 3: the customizable MOVE-TO shortcuts (the workbench's
+            // most frequent homing paths — one click = move the whole
+            // selection into the pinned folder; copy stays on the icon
+            // rung and the context menus). Three rungs max, per the
+            // toolbar budget. Each chip = tab-group color dot + alias,
+            // hover reveals edit/remove; the trailing + adds one.
+            const shortcutItem = sc => {
+                const path = views.pathOf(sc.folderId) || sc.folderId;
+                const label = htmlspecialchars(sc.alias || path);
+                const editLabel = _m('stagingShortcutEdit');
+                const removeLabel = _m('stagingShortcutRemove');
+                const moveLabel = htmlspecialchars(_m('stagingShortcutMove', [label]));
+                return '<span class="staging-shortcut-item">' +
+                    '<button type="button" class="staging-shortcut tg-' + sc.color + '" data-shortcut-id="' + sc.id + '" ' +
+                    'aria-label="' + moveLabel + '" title="' + htmlspecialchars(path) + '">' +
+                    '<span class="tab-group-dot tg-' + sc.color + '" aria-hidden="true"></span>' +
+                    '<span class="staging-shortcut-name" dir="auto">' + label + '</span></button>' +
+                    '<button type="button" class="row-btn staging-shortcut-edit" data-shortcut-id="' + sc.id + '" tabindex="-1" ' +
+                    'aria-label="' + htmlspecialchars(editLabel) + '" title="' + htmlspecialchars(editLabel) + '">' + EDIT_ICON + '</button>' +
+                    '<button type="button" class="row-btn staging-shortcut-remove" data-shortcut-id="' + sc.id + '" tabindex="-1" ' +
+                    'aria-label="' + htmlspecialchars(removeLabel) + '" title="' + htmlspecialchars(removeLabel) + '">' + STAGE_REMOVE_ICON + '</button>' +
+                    '</span>';
+            };
+            let r3 = '<div class="staging-toolbar staging-shortcuts-toolbar vbm-toolbar">';
+            for (const sc of shortcuts)
+                r3 += shortcutItem(sc);
+            const addLabel = _m('stagingShortcutAdd');
+            r3 += '<button class="staging-shortcut-add" aria-label="' + htmlspecialchars(addLabel) + '" ' +
+                'title="' + htmlspecialchars(addLabel) + '">' + FOLDER_PLUS_ICON + htmlspecialchars(addLabel) + '</button>';
+            r3 += '</div>';
+            return r1 + r2 + r3;
         }
         // The dead/dupes toolbar law: summary left, the action cluster pinned
         // right (margin-inline-end:auto on the summary). The select-mode icon
@@ -528,26 +606,16 @@ export function initViewRecent(ctx = {}) {
     };
 
     let dirty = false;
-    const render = (items, recentN) => {
-        let html = bannerHtml();
-        html += renderToolbar();
-        html += renderStagingArea();
-        html += renderRecentHead(recentN);
-        if (!stagingState.recentCollapsed) {
-            const rendered = renderRecentRows(items || []);
-            recentTotal = rendered.count;
-            html += rendered.html;
-        }
-        // 4.0.1 focus law: a focused row rides the swap (park above, restore
-        // here) so the ↓ walk survives every refresh repaint. The toolbar
-        // rides the same law (parkToolbarFocus/restoreToolbarFocus).
-        const parkedToolbar = parkToolbarFocus($list);
-        const parkedRow = parkRowFocus($list);
-        $list.innerHTML = html;
-        restoreToolbarFocus($list, parkedToolbar);
-        unparkRowFocus($list, parkedRow);
-        // Selection-mode focus handoff (dead/dupes law): 'first' → the
-        // toolbar's first enabled control; 'entry' → the select-mode button.
+    // Whether the list has been fully painted at least once (a stubbable
+    // flag — DOM probing via querySelector breaks the minimal test $list),
+    // and the serialized staging state that paint reflected (a direct
+    // model mutation between renders must force a repaint on activate).
+    let painted = false;
+    let lastRenderedRaw = null;
+    // Selection-mode focus handoff (dead/dupes law): 'first' → the
+    // toolbar's first enabled control; 'entry' → the select-mode button.
+    // Shared by the full render and the staging-only partial repaint.
+    const applyFocusHandoffs = () => {
         if (selectionFocus === 'first') {
             selectionFocus = null;
             const firstBtn = $list.querySelector && $list.querySelector('.staging-select-toolbar button:not([disabled])');
@@ -566,6 +634,33 @@ export function initViewRecent(ctx = {}) {
             if (anchor && anchor.focus)
                 anchor.focus();
         }
+    };
+
+    const render = (items, recentN) => {
+        let html = bannerHtml();
+        html += renderToolbar();
+        html += renderStagingArea();
+        // The scissors cut: the recently-added region is a separate
+        // lower half, never a staging group — the dashed line + scissors
+        // mark the boundary BEFORE the foldable section head.
+        html += `<div class="staging-cut" aria-hidden="true">${SCISSORS_ICON}</div>`;
+        html += renderRecentHead(recentN);
+        if (!stagingState.recentCollapsed) {
+            const rendered = renderRecentRows(items || []);
+            recentTotal = rendered.count;
+            html += rendered.html;
+        }
+        // 4.0.1 focus law: a focused row rides the swap (park above, restore
+        // here) so the ↓ walk survives every refresh repaint. The toolbar
+        // rides the same law (parkToolbarFocus/restoreToolbarFocus).
+        const parkedToolbar = parkToolbarFocus($list);
+        const parkedRow = parkRowFocus($list);
+        $list.innerHTML = html;
+        painted = true;
+        lastRenderedRaw = staging.serialize(stagingState);
+        restoreToolbarFocus($list, parkedToolbar);
+        unparkRowFocus($list, parkedRow);
+        applyFocusHandoffs();
         onRowsRendered();
     };
 
@@ -591,6 +686,84 @@ export function initViewRecent(ctx = {}) {
             }
             render(items || [], count);
         });
+    };
+
+    // --- Staging-only partial repaint (perf round) -------------------------
+    // A fold toggle / drag / selection change rebuilds ONLY the leading
+    // block (banner + toolbar + #staging-items) in place. #recent-head and
+    // #recent-list keep their nodes — favicon fallback/enrichment is NOT
+    // re-triggered for the recent rows, which was the bulk of the
+    // "entering the view feels laggy" favicon churn.
+    const renderStagingNow = () => {
+        // minimal test stubs only carry innerHTML — fall back to the
+        // full path when the DOM helpers are absent. The scissors cut is
+        // the partial repaint's anchor: everything before it is staging
+        // chrome, everything from it down (cut + recent region) stays.
+        const anchor = $list.querySelector
+            ? ($list.querySelector('.staging-cut') || $list.querySelector('#recent-head'))
+            : null;
+        if (!anchor) {
+            // never fully painted yet (the recent head always leads the
+            // recent region) — let the full path do the first paint
+            refresh();
+            return;
+        }
+        const parkedToolbar = parkToolbarFocus($list);
+        const parkedRow = parkRowFocus($list);
+        const leading = bannerHtml() + renderToolbar() + renderStagingArea();
+        while ($list.firstChild && $list.firstChild !== anchor)
+            $list.firstChild.remove();
+        anchor.insertAdjacentHTML('beforebegin', leading);
+        lastRenderedRaw = staging.serialize(stagingState);
+        restoreToolbarFocus($list, parkedToolbar);
+        unparkRowFocus($list, parkedRow);
+        syncRecentStageButtons();
+        applyFocusHandoffs();
+        onRowsRendered();
+    };
+
+    // Re-entry optimization: lastSeenTs advances on every activation, so
+    // the bucket head's "new N" reads 0 afterwards — update the pill text
+    // in place instead of re-rendering the whole view (which re-armed the
+    // favicon refresh process on every tab switch).
+    const syncBucketSeen = () => {
+        const pill = $list.querySelector && $list.querySelector('.staging-bucket .count-pill');
+        if (!pill)
+            return;
+        const n = `${staging.unfavBucketItems(stagingState).length}`;
+        pill.textContent = n;
+        pill.setAttribute('aria-label', n);
+    };
+
+    // Keep the untouched recent region's stage glyphs in step with the
+    // staging state after a partial repaint (staged class + aria-pressed +
+    // the remove/add label). Cheap: ≤ recentCount rows, only touched when
+    // the state actually flipped.
+    const syncRecentStageButtons = () => {
+        if (!$list.querySelectorAll)
+            return;
+        const idToUrl = new Map();
+        for (const grp of recentGroupUrls)
+            for (const r of grp)
+                idToUrl.set(r.id, r.url);
+        const rows = $list.querySelectorAll('#recent-list li');
+        for (let i = 0, l = rows.length; i < l; i++) {
+            const li = rows[i];
+            const btn = li.querySelector('.staging-add-btn');
+            if (!btn || !li.dataset || !li.dataset.nodeId)
+                continue;
+            const url = idToUrl.get(li.dataset.nodeId);
+            if (url === undefined)
+                continue;
+            const staged = !!staging.getByUrl(stagingState, url);
+            if (btn.classList.contains('staged') === staged)
+                continue;
+            btn.classList.toggle('staged', staged);
+            btn.setAttribute('aria-pressed', staged ? 'true' : 'false');
+            const label = htmlspecialchars(_m(staged ? 'stagingRemove' : 'stagingAdd'));
+            btn.setAttribute('aria-label', label);
+            btn.title = label;
+        }
     };
 
     // --- Real organize actions on the staging rows (§3.4 — "favorite" IS
@@ -989,6 +1162,43 @@ export function initViewRecent(ctx = {}) {
         }
     };
 
+    // --- Move-to shortcuts (selection bar rung 3) --------------------------
+    // MOVE only (the more common homing gesture): bookmarked items really
+    // move and leave staging, unbookmarked ones are created into the folder
+    // and leave too — the §3.3 move semantics via applyMoveOrCopy.
+    const shortcutOf = id => shortcuts.find(s => s.id === id);
+
+    const shortcutMove = id => {
+        const sc = shortcutOf(id);
+        const items = selectedItems();
+        if (!sc || !items.length)
+            return;
+        applyMoveOrCopy(items, sc.folderId, 'move');
+    };
+
+    const openShortcutEditor = id => {
+        if (!dialogs || !dialogs.StagingShortcutDialog)
+            return;
+        dialogs.StagingShortcutDialog.open({
+            shortcut: id ? shortcutOf(id) : null,
+            onSave: data => {
+                if (!data || !data.folderId)
+                    return;
+                staging.upsertShortcut(shortcuts, data);
+                persistShortcuts();
+                renderStaging();
+            }
+        });
+    };
+
+    const removeShortcutChip = id => {
+        if (!staging.removeShortcut(shortcuts, id))
+            return;
+        persistShortcuts();
+        renderStaging();
+        toast(_m('stagingShortcutRemoved'));
+    };
+
     // Group-level homing (§3.5): the head's hover button + the group menu's
     // save/copy entries — the §3.3 actions with the group's members
     // preselected (no third action semantics).
@@ -1303,15 +1513,26 @@ export function initViewRecent(ctx = {}) {
     // writes echo too (see ownWrites above) and are skipped.
     if (chrome.storage && chrome.storage.onChanged)
         chrome.storage.onChanged.addListener((changes, area) => {
-            if (area !== 'local' || !('staging' in changes))
+            if (area !== 'local')
                 return;
-            const raw = changes.staging.newValue;
-            if (ownWrites.includes(raw))
-                return; // our own echo — state and mirror already hold it
-            if (store.adopt)
-                store.adopt('staging', raw);
-            stagingState = staging.parse(raw);
-            renderStaging();
+            if ('staging' in changes) {
+                const raw = changes.staging.newValue;
+                if (ownWrites.includes(raw))
+                    return; // our own echo — state and mirror already hold it
+                if (store.adopt)
+                    store.adopt('staging', raw);
+                stagingState = staging.parse(raw);
+                renderStaging();
+            }
+            if ('stagingShortcuts' in changes) {
+                const raw = changes.stagingShortcuts.newValue;
+                if (ownShortcutWrites.includes(raw))
+                    return;
+                if (store.adopt)
+                    store.adopt('stagingShortcuts', raw);
+                shortcuts = staging.parseShortcuts(raw);
+                renderStaging();
+            }
         });
 
     // Tree-event mutations (promotions, snapshot updates, relinks) land on
@@ -1387,6 +1608,30 @@ export function initViewRecent(ctx = {}) {
             if (toolbarBtn('.staging-delete')) { deleteSelected(); return; }
             if (toolbarBtn('.staging-remove')) { removeSelected(); return; }
             if (toolbarBtn('.staging-clear-all')) { clearStaging(); return; }
+            // move-to shortcuts (rung 3): one click homes the whole
+            // selection; edit/remove manage the chip; + opens the editor
+            if (toolbarBtn('.staging-shortcut')) {
+                const btn = closest('.staging-shortcut');
+                if (btn && btn.dataset && btn.dataset.shortcutId)
+                    shortcutMove(btn.dataset.shortcutId);
+                return;
+            }
+            if (toolbarBtn('.staging-shortcut-edit')) {
+                const btn = closest('.staging-shortcut-edit');
+                if (btn && btn.dataset && btn.dataset.shortcutId)
+                    openShortcutEditor(btn.dataset.shortcutId);
+                return;
+            }
+            if (toolbarBtn('.staging-shortcut-remove')) {
+                const btn = closest('.staging-shortcut-remove');
+                if (btn && btn.dataset && btn.dataset.shortcutId)
+                    removeShortcutChip(btn.dataset.shortcutId);
+                return;
+            }
+            if (toolbarBtn('.staging-shortcut-add')) {
+                openShortcutEditor(null);
+                return;
+            }
             // a group/bucket head click selects ALL its members (§3.2)
             const headLi = closest('.staging-group') || closest('.staging-bucket');
             if (headLi) {
@@ -1443,6 +1688,25 @@ export function initViewRecent(ctx = {}) {
             const headLi = closest('.staging-group');
             if (headLi && headLi.dataset && headLi.dataset.groupId)
                 saveGroupToFolder(headLi.dataset.groupId);
+            return;
+        }
+        // The quick tail's group-specific pair (dissolve / delete) — the
+        // same handlers the group menu dispatches (delete is confirm-gated
+        // with a toast undo, dissolve scatters members in place).
+        if (closest('.staging-group-dissolve')) {
+            e.preventDefault();
+            e.stopPropagation();
+            const headLi = closest('.staging-group');
+            if (headLi && headLi.dataset && headLi.dataset.groupId)
+                dissolveGroup(headLi.dataset.groupId);
+            return;
+        }
+        if (closest('.staging-group-delete')) {
+            e.preventDefault();
+            e.stopPropagation();
+            const headLi = closest('.staging-group');
+            if (headLi && headLi.dataset && headLi.dataset.groupId)
+                deleteGroup(headLi.dataset.groupId);
             return;
         }
         if (closest('.stats-history-enable')) {
@@ -1563,6 +1827,10 @@ export function initViewRecent(ctx = {}) {
             e.preventDefault();
             return;
         }
+        // Interactive children never start a drag: a click on the star/× or
+        // the head's rename/place buttons is an action, not a grab point.
+        if (e.target && e.target.closest && e.target.closest('button, a'))
+            return;
         const li = e.target && e.target.closest ? e.target.closest('li.staging-row') : null;
         if (li && li.dataset && li.dataset.url !== undefined) {
             dragRowUrl = li.dataset.url;
@@ -1683,6 +1951,13 @@ export function initViewRecent(ctx = {}) {
             ? (e.target.closest('.staging-group-head') || e.target.closest('.staging-bucket-head') ||
                 e.target.closest('#recent-head'))
             : null;
+        // A quick-tail button owns its own keys: after clicking
+        // rename/dissolve/place/delete (or fav-all / stage-all) focus
+        // stays on the button, and Space/Enter must re-activate the
+        // BUTTON, not fold the head behind it.
+        if (headTarget && e.target !== headTarget && e.target.closest &&
+            e.target.closest('.staging-group-head button, .staging-bucket-head button, #recent-head button'))
+            return;
         // F2 renames the focused group head (the tabgroups-head parity).
         if (headTarget && e.key === 'F2' && !selecting &&
             headTarget.classList.contains('staging-group-head')) {
@@ -1780,15 +2055,23 @@ export function initViewRecent(ctx = {}) {
         activate: () => {
             probePermission(); // the grant may have landed while away
             // §0.3: lastSeenTs advances on every activation — the bucket's
-            // "new N" counts arrivals since the previous visit, so the
-            // repaint must follow the new baseline.
+            // "new N" counts arrivals since the previous visit. The clean
+            // re-entry updates just that pill in place: a full repaint on
+            // every tab switch re-armed the favicon refresh process for
+            // every row (the "enter the view and wait seconds" lag).
             if (staging.count(stagingState)) {
+                const stagingChanged = lastRenderedRaw !== staging.serialize(stagingState);
                 staging.markSeen(stagingState);
                 persistStaging();
-                refresh();
+                if (dirty || !painted || stagingChanged)
+                    refresh();
+                else {
+                    syncBucketSeen();
+                    lastRenderedRaw = staging.serialize(stagingState);
+                }
                 return;
             }
-            if (dirty || !$list.innerHTML)
+            if (dirty || !painted)
                 refresh();
         },
         onKey

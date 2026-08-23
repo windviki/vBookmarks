@@ -2257,6 +2257,38 @@
   "stagingGroupNoGroups": {
     "message": "ยังไม่มีกลุ่ม"
   },
+  "stagingShortcutAdd": {
+    "message": "เพิ่มทางลัด"
+  },
+  "stagingShortcutTitle": {
+    "message": "ทางลัดย้ายไปยัง"
+  },
+  "stagingShortcutEdit": {
+    "message": "แก้ไขทางลัด"
+  },
+  "stagingShortcutAlias": {
+    "message": "นามแฝง"
+  },
+  "stagingShortcutPickFolder": {
+    "message": "เลือกโฟลเดอร์ปลายทาง…"
+  },
+  "stagingShortcutSave": {
+    "message": "บันทึก"
+  },
+  "stagingShortcutRemove": {
+    "message": "ลบทางลัด"
+  },
+  "stagingShortcutRemoved": {
+    "message": "ลบทางลัดแล้ว"
+  },
+  "stagingShortcutMove": {
+    "message": "ย้ายที่เลือกไปยัง $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
   "stagingBucketTitle": {
     "message": "ยังไม่ได้บุ๊กมาร์ก"
   },

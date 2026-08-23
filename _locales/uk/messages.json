@@ -2257,6 +2257,38 @@
   "stagingGroupNoGroups": {
     "message": "Груп поки немає"
   },
+  "stagingShortcutAdd": {
+    "message": "Додати ярлик"
+  },
+  "stagingShortcutTitle": {
+    "message": "Ярлик переміщення"
+  },
+  "stagingShortcutEdit": {
+    "message": "Редагувати ярлик"
+  },
+  "stagingShortcutAlias": {
+    "message": "Псевдонім"
+  },
+  "stagingShortcutPickFolder": {
+    "message": "Вибрати цільову папку…"
+  },
+  "stagingShortcutSave": {
+    "message": "Зберегти"
+  },
+  "stagingShortcutRemove": {
+    "message": "Видалити ярлик"
+  },
+  "stagingShortcutRemoved": {
+    "message": "Ярлик видалено"
+  },
+  "stagingShortcutMove": {
+    "message": "Перемістити вибране до $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
   "stagingBucketTitle": {
     "message": "Не збережені"
   },

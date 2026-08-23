@@ -2256,6 +2256,38 @@
   "stagingGroupNoGroups": {
     "message": "Сè уште нема групи"
   },
+  "stagingShortcutAdd": {
+    "message": "Додај кратенка"
+  },
+  "stagingShortcutTitle": {
+    "message": "Кратенка за преместување"
+  },
+  "stagingShortcutEdit": {
+    "message": "Уреди кратенка"
+  },
+  "stagingShortcutAlias": {
+    "message": "Псевдоним"
+  },
+  "stagingShortcutPickFolder": {
+    "message": "Избери целна папка…"
+  },
+  "stagingShortcutSave": {
+    "message": "Зачувај"
+  },
+  "stagingShortcutRemove": {
+    "message": "Отстрани кратенка"
+  },
+  "stagingShortcutRemoved": {
+    "message": "Кратенката е отстранета"
+  },
+  "stagingShortcutMove": {
+    "message": "Премести избрано во $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
   "stagingBucketTitle": {
     "message": "Необележани"
   },

@@ -2257,6 +2257,38 @@
   "stagingGroupNoGroups": {
     "message": "Belum ada grup"
   },
+  "stagingShortcutAdd": {
+    "message": "Tambah pintasan"
+  },
+  "stagingShortcutTitle": {
+    "message": "Pintasan pindah ke"
+  },
+  "stagingShortcutEdit": {
+    "message": "Edit pintasan"
+  },
+  "stagingShortcutAlias": {
+    "message": "Alias"
+  },
+  "stagingShortcutPickFolder": {
+    "message": "Pilih folder tujuan…"
+  },
+  "stagingShortcutSave": {
+    "message": "Simpan"
+  },
+  "stagingShortcutRemove": {
+    "message": "Hapus pintasan"
+  },
+  "stagingShortcutRemoved": {
+    "message": "Pintasan dihapus"
+  },
+  "stagingShortcutMove": {
+    "message": "Pindahkan yang dipilih ke $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
   "stagingBucketTitle": {
     "message": "Belum dibookmark"
   },

@@ -2257,6 +2257,38 @@
   "stagingGroupNoGroups": {
     "message": "Nog geen groepen"
   },
+  "stagingShortcutAdd": {
+    "message": "Snelkoppeling toevoegen"
+  },
+  "stagingShortcutTitle": {
+    "message": "Verplaats-snelkoppeling"
+  },
+  "stagingShortcutEdit": {
+    "message": "Snelkoppeling bewerken"
+  },
+  "stagingShortcutAlias": {
+    "message": "Alias"
+  },
+  "stagingShortcutPickFolder": {
+    "message": "Doelmap kiezen…"
+  },
+  "stagingShortcutSave": {
+    "message": "Opslaan"
+  },
+  "stagingShortcutRemove": {
+    "message": "Snelkoppeling verwijderen"
+  },
+  "stagingShortcutRemoved": {
+    "message": "Snelkoppeling verwijderd"
+  },
+  "stagingShortcutMove": {
+    "message": "Selectie verplaatsen naar $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
   "stagingBucketTitle": {
     "message": "Niet-bladwijzer"
   },

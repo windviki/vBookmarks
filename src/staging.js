@@ -31,6 +31,8 @@
  * (view-recent.js) and actions layer own persistence and rendering.
  */
 
+import { TAB_GROUP_COLORS } from './tab-group-utils.js';
+
 export const STAGING_LIMIT = 500;
 
 let groupSeq = 0;
@@ -441,4 +443,71 @@ export const setRecentCollapsed = (state, collapsed) => {
 
 export const setUnfavCollapsed = (state, collapsed) => {
     state.unfavCollapsed = !!collapsed;
+};
+
+// --- Move-to shortcuts (the selection bar's customizable quick row) --------
+// Stored as a JSON array under the `stagingShortcuts` local key:
+//   [{ id: 's_xxx', folderId: '书签文件夹id', alias: '别名', color: 'blue' }]
+// Array order = render order. Pure model — the view owns persistence and
+// the dialog owns folder resolution.
+
+export const shortcutColors = TAB_GROUP_COLORS;
+
+export const parseShortcuts = raw => {
+    let parsed = [];
+    if (!raw)
+        return parsed;
+    try {
+        parsed = JSON.parse(raw);
+    } catch (e) {
+        return [];
+    }
+    if (!Array.isArray(parsed))
+        return [];
+    const palette = new Set(TAB_GROUP_COLORS);
+    const out = [];
+    for (const s of parsed) {
+        if (!s || typeof s !== 'object' || !s.id || !s.folderId)
+            continue;
+        out.push({
+            id: `${s.id}`,
+            folderId: `${s.folderId}`,
+            alias: typeof s.alias === 'string' ? s.alias : '',
+            color: palette.has(s.color) ? s.color : 'blue'
+        });
+    }
+    return out;
+};
+
+export const serializeShortcuts = list => JSON.stringify(list);
+
+// Add or edit a shortcut; an entry without an id creates one (new id,
+// appended). Returns the stored entry.
+export const upsertShortcut = (list, entry) => {
+    if (!entry || !entry.folderId)
+        return null;
+    const palette = new Set(TAB_GROUP_COLORS);
+    const clean = {
+        folderId: `${entry.folderId}`,
+        alias: typeof entry.alias === 'string' ? entry.alias.trim() : '',
+        color: palette.has(entry.color) ? entry.color : 'blue'
+    };
+    if (entry.id) {
+        const hit = list.find(s => s.id === entry.id);
+        if (hit) {
+            Object.assign(hit, clean);
+            return hit;
+        }
+    }
+    const created = { id: newGroupId(), ...clean };
+    list.push(created);
+    return created;
+};
+
+export const removeShortcut = (list, id) => {
+    const idx = list.findIndex(s => s.id === id);
+    if (idx < 0)
+        return false;
+    list.splice(idx, 1);
+    return true;
 };

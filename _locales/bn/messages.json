@@ -2257,6 +2257,38 @@
   "stagingGroupNoGroups": {
     "message": "এখনও কোনো গ্রুপ নেই"
   },
+  "stagingShortcutAdd": {
+    "message": "শর্টকাট যোগ করুন"
+  },
+  "stagingShortcutTitle": {
+    "message": "স্থানান্তর শর্টকাট"
+  },
+  "stagingShortcutEdit": {
+    "message": "শর্টকাট সম্পাদনা করুন"
+  },
+  "stagingShortcutAlias": {
+    "message": "উপনাম"
+  },
+  "stagingShortcutPickFolder": {
+    "message": "লক্ষ্য ফোল্ডার নির্বাচন করুন…"
+  },
+  "stagingShortcutSave": {
+    "message": "সংরক্ষণ করুন"
+  },
+  "stagingShortcutRemove": {
+    "message": "শর্টকাট সরান"
+  },
+  "stagingShortcutRemoved": {
+    "message": "শর্টকাট সরানো হয়েছে"
+  },
+  "stagingShortcutMove": {
+    "message": "নির্বাচিত $1$-এ স্থানান্তর করুন",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
   "stagingBucketTitle": {
     "message": "বুকমার্ক করা হয়নি"
   },

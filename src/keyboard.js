@@ -544,9 +544,30 @@ export function initKeyboard(ctx = {}) {
                     // option row and null.focus() throws.
                     const firstRow = this.querySelector('ul:not(.vbm-dropdown-list)>li:first-child');
                     // Same li[tabindex] row-container rule as End (4.0.1 P4).
-                    const firstFocus = firstRow && (firstRow.getAttribute && firstRow.getAttribute('tabindex') !== null
+                    let firstFocus = firstRow && (firstRow.getAttribute && firstRow.getAttribute('tabindex') !== null
                         ? firstRow
                         : firstRow.querySelector('span, a'));
+                    // A section li with no focusable content (the staging
+                    // view's empty-state row) must not dead-end Home: keep
+                    // walking forward to the first REAL row across the
+                    // sibling ULs — the same rule the arrow walk applies.
+                    if (!firstFocus && typeof this.querySelectorAll === 'function') {
+                        const uls = this.querySelectorAll('ul:not(.vbm-dropdown-list)');
+                        for (const ul of Array.from(uls || [])) {
+                            const lis = ul && ul.querySelectorAll ? ul.querySelectorAll('li') : [];
+                            for (const li of Array.from(lis)) {
+                                const f = (li.getAttribute && li.getAttribute('tabindex') !== null)
+                                    ? li
+                                    : (li.querySelector && li.querySelector('span, a'));
+                                if (f) {
+                                    firstFocus = f;
+                                    break;
+                                }
+                            }
+                            if (firstFocus)
+                                break;
+                        }
+                    }
                     if (firstFocus)
                         firstFocus.focus();
                     else if (!firstRow)

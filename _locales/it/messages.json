@@ -2257,6 +2257,38 @@
   "stagingGroupNoGroups": {
     "message": "Nessun gruppo ancora"
   },
+  "stagingShortcutAdd": {
+    "message": "Aggiungi scorciatoia"
+  },
+  "stagingShortcutTitle": {
+    "message": "Scorciatoia di spostamento"
+  },
+  "stagingShortcutEdit": {
+    "message": "Modifica scorciatoia"
+  },
+  "stagingShortcutAlias": {
+    "message": "Alias"
+  },
+  "stagingShortcutPickFolder": {
+    "message": "Scegli cartella di destinazione…"
+  },
+  "stagingShortcutSave": {
+    "message": "Salva"
+  },
+  "stagingShortcutRemove": {
+    "message": "Rimuovi scorciatoia"
+  },
+  "stagingShortcutRemoved": {
+    "message": "Scorciatoia rimossa"
+  },
+  "stagingShortcutMove": {
+    "message": "Sposta selezionati in $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
   "stagingBucketTitle": {
     "message": "Non salvati"
   },

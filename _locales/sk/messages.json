@@ -2257,6 +2257,38 @@
   "stagingGroupNoGroups": {
     "message": "Zatiaľ žiadne skupiny"
   },
+  "stagingShortcutAdd": {
+    "message": "Pridať odkaz"
+  },
+  "stagingShortcutTitle": {
+    "message": "Odkaz na presun"
+  },
+  "stagingShortcutEdit": {
+    "message": "Upraviť odkaz"
+  },
+  "stagingShortcutAlias": {
+    "message": "Alias"
+  },
+  "stagingShortcutPickFolder": {
+    "message": "Vybrať cieľový priečinok…"
+  },
+  "stagingShortcutSave": {
+    "message": "Uložiť"
+  },
+  "stagingShortcutRemove": {
+    "message": "Odstrániť odkaz"
+  },
+  "stagingShortcutRemoved": {
+    "message": "Odkaz odstránený"
+  },
+  "stagingShortcutMove": {
+    "message": "Presunúť vybrané do $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
   "stagingBucketTitle": {
     "message": "Nezáložkované"
   },

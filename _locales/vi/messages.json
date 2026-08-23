@@ -2257,6 +2257,38 @@
   "stagingGroupNoGroups": {
     "message": "Chưa có nhóm nào"
   },
+  "stagingShortcutAdd": {
+    "message": "Thêm lối tắt"
+  },
+  "stagingShortcutTitle": {
+    "message": "Lối tắt di chuyển"
+  },
+  "stagingShortcutEdit": {
+    "message": "Sửa lối tắt"
+  },
+  "stagingShortcutAlias": {
+    "message": "Bí danh"
+  },
+  "stagingShortcutPickFolder": {
+    "message": "Chọn thư mục đích…"
+  },
+  "stagingShortcutSave": {
+    "message": "Lưu"
+  },
+  "stagingShortcutRemove": {
+    "message": "Xóa lối tắt"
+  },
+  "stagingShortcutRemoved": {
+    "message": "Đã xóa lối tắt"
+  },
+  "stagingShortcutMove": {
+    "message": "Di chuyển đã chọn đến $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
   "stagingBucketTitle": {
     "message": "Chưa đánh dấu"
   },

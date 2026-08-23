@@ -513,6 +513,16 @@ describe('openBookmarksInGroup', () => {
             expect(palette).toContain(msg.color);
     });
 
+    it('survives the selection-bar call with urls only (no title)', () => {
+        // staging/search/stats pass just the url array; the old
+        // pickGroupColor(undefined) threw before the message went out
+        const { actions, chrome } = setup({});
+        expect(() => actions.openBookmarksInGroup(urls(2))).not.toThrow();
+        expect(chrome.runtime.sent).toHaveLength(1);
+        expect(chrome.runtime.sent[0].urls).toEqual(['https://x/0', 'https://x/1']);
+        expect(palette).toContain(chrome.runtime.sent[0].color);
+    });
+
     it('lets an explicit groupColor override the derived one (the setup dialog path)', () => {
         const { actions, chrome } = setup({});
         actions.openBookmarksInGroup(urls(1), 'Dev Stuff', 'orange');

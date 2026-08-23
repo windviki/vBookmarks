@@ -260,12 +260,15 @@ const SEED = `
     // ====================================================================
     console.log('═══ §2.1 区域焦点记忆 ═══');
     await page.click('#view-tab-recent'); await sleep(900);
-    // Tab into the list (first row), ArrowDown onto the second row.
-    await page.click('#search-input'); await sleep(150);
-    await page.keyboard.press('Tab'); await sleep(150); // quick-add
-    await page.keyboard.press('Tab'); await sleep(150); // tool
-    await page.keyboard.press('Tab'); await sleep(150); // tab strip
-    await page.keyboard.press('Tab'); await sleep(150); // list row 1
+    // Focus a recent row directly, ArrowDown onto the second row. (The
+    // staging toolbar now sits in the Tab ring between the strip and the
+    // rows, so a fixed Tab count no longer lands on the row — the walk
+    // contract itself is what matters here.)
+    await page.evaluate(() => {
+        const a = document.querySelector('#recent-list li a');
+        if (a) a.focus();
+    });
+    await sleep(150);
     check('memory setup: landed on a recent row', await $(() => {
         const el = document.activeElement;
         return !!el && !!el.closest('#recent-list');
@@ -396,13 +399,19 @@ const SEED = `
         document.activeElement && document.activeElement.classList.contains('tabgroups-window-head-row')),
         await activeDesc());
 
-    // --- recent (the §2.1 memory walk left a remembered row here, so the
-    // strip's ↓ restores THAT row instead of the first — by design; Home
-    // then re-anchors the walk at the top) ---
+    // --- recent (the §2.1 memory walk left a remembered row here). The
+    // staging toolbar is now the list's LOWEST rung (the stats/dead/dupes
+    // law), so the strip's ↓ lands on IT first; the next ↓ restores the
+    // remembered row — by design; Home then re-anchors the walk at the
+    // top ---
     await page.click('#view-tab-recent'); await sleep(700);
     await page.keyboard.press('ArrowDown'); await sleep(250);
+    check('recent ↓ from strip: the staging toolbar rung', await $(() =>
+        !!(document.activeElement && document.activeElement.closest('.staging-toolbar'))),
+        await activeDesc());
+    await page.keyboard.press('ArrowDown'); await sleep(250);
     st = await activeLiIndex('#recent-list');
-    check('recent ↓ from strip: remembered row restored',
+    check('recent rung ↓: remembered row restored',
         st.idx >= 0 && /focus/.test(st.focus), JSON.stringify(st));
     await page.keyboard.press('Home'); await sleep(200);
     st = await activeLiIndex('#recent-list');
@@ -414,7 +423,11 @@ const SEED = `
     st = await activeLiIndex('#recent-list');
     check('recent ↑: previous row', st.idx === 0, JSON.stringify(st));
     await page.keyboard.press('ArrowUp'); await sleep(200);
-    check('recent ↑ past top: tab strip',
+    check('recent row ↑: back to the staging toolbar rung', await $(() =>
+        !!(document.activeElement && document.activeElement.closest('.staging-toolbar'))),
+        await activeDesc());
+    await page.keyboard.press('ArrowUp'); await sleep(200);
+    check('recent rung ↑ past top: tab strip',
         await focusedTab() === 'view-tab-recent', await activeDesc());
 
     // --- staging (velvet staging ST5): the dual-region view's idle toolbar
@@ -440,9 +453,14 @@ const SEED = `
         check('staging: selection rungs rendered', await $(() =>
             !!document.querySelector('.staging-select-toolbar') &&
             !!document.querySelector('.staging-actions-toolbar')), '(missing rungs)');
-        await page.keyboard.press('Tab'); await sleep(150); // rung 1 → rows
-        await page.keyboard.press('Tab'); await sleep(150);
-        await page.keyboard.press('ArrowDown'); await sleep(250);
+        // focus a STAGING row directly (the two rungs have 13 controls;
+        // a fixed Tab count is order-fragile) — Space is the selection
+        // toggle contract under test
+        await page.evaluate(() => {
+            const a = document.querySelector('#staging-items li.staging-row a');
+            if (a) a.focus();
+        });
+        await sleep(200);
         await page.keyboard.press('Space', { delay: 80 }); await sleep(300);
         check('staging: Space selected the focused row', await $(() =>
             !!document.querySelector('#staging-items li.sel')), '(no .sel row)');
@@ -858,7 +876,13 @@ const SEED = `
     st = await activeLiIndex('#results');
     check('search results ↑: previous row', st.idx === 0, JSON.stringify(st));
     await page.keyboard.press('ArrowUp'); await sleep(200);
-    check('search results ↑ past top: tab strip',
+    // the select-mode toolbar is an in-list rung now (velvet staging
+    // §3.6): first-row ↑ lands on IT, the next ↑ crosses to the strip
+    check('search results ↑ past top: the select toolbar rung', await $(() =>
+        !!(document.activeElement && document.activeElement.closest('.search-toolbar'))),
+        await activeDesc());
+    await page.keyboard.press('ArrowUp'); await sleep(200);
+    check('search results ↑ past the rung: tab strip',
         await focusedTab() === 'view-tab-search', await activeDesc());
 
     // Empty the box (quits back to the tree), re-enter the search view:
@@ -889,7 +913,12 @@ const SEED = `
     });
     await sleep(150);
     await page.keyboard.press('ArrowUp'); await sleep(200);
-    check('history ↑ past top: crosses to the tab strip (not the box)',
+    // same rung law: history top ↑ → the select toolbar, ↑ → strip, ↑ → box
+    check('history ↑ past top: the select toolbar rung', await $(() =>
+        !!(document.activeElement && document.activeElement.closest('.search-toolbar'))),
+        await activeDesc());
+    await page.keyboard.press('ArrowUp'); await sleep(200);
+    check('history rung ↑: tab strip (not the box)',
         await focusedTab() === 'view-tab-search', await activeDesc());
     await page.keyboard.press('ArrowUp'); await sleep(200);
     check('strip ↑: back to the box',

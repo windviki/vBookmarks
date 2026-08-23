@@ -2257,6 +2257,38 @@
   "stagingGroupNoGroups": {
     "message": "Ainda não há grupos"
   },
+  "stagingShortcutAdd": {
+    "message": "Adicionar atalho"
+  },
+  "stagingShortcutTitle": {
+    "message": "Atalho de mover para"
+  },
+  "stagingShortcutEdit": {
+    "message": "Editar atalho"
+  },
+  "stagingShortcutAlias": {
+    "message": "Alias"
+  },
+  "stagingShortcutPickFolder": {
+    "message": "Escolher pasta de destino…"
+  },
+  "stagingShortcutSave": {
+    "message": "Salvar"
+  },
+  "stagingShortcutRemove": {
+    "message": "Remover atalho"
+  },
+  "stagingShortcutRemoved": {
+    "message": "Atalho removido"
+  },
+  "stagingShortcutMove": {
+    "message": "Mover selecionados para $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
   "stagingBucketTitle": {
     "message": "Não marcados"
   },

@@ -30,7 +30,8 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
         console.log('extension id:', extId);
         const page = await browser.newPage();
         await page.setViewport({ width: 400, height: 620 });
-        page.on('pageerror', e => console.log('PAGEERROR:', e.message));
+        let pageErrors = 0;
+        page.on('pageerror', e => { pageErrors++; console.log('PAGEERROR:', e.message); });
         page.setDefaultTimeout(60000);
         await page.goto(`chrome-extension://${extId}/pages/popup.html`, { waitUntil: 'load' });
         await sleep(1200);
@@ -40,6 +41,7 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
             const tree = await new Promise(res => chrome.bookmarks.getTree(res));
             const bar = tree[0].children.find(c => c.id && !c.url && c.children);
             const folder = await create({ parentId: bar.id, title: '__staging_verify__' });
+            const target = await create({ parentId: bar.id, title: '__staging_shortcut_target__' });
             const now = Date.now();
             const items = [];
             for (let i = 0; i < 4; i++) {
@@ -63,9 +65,10 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
             };
             await new Promise(res => chrome.storage.local.set({
                 staging: JSON.stringify(staging),
+                stagingShortcuts: JSON.stringify([{ id: 'sc1', folderId: target.id, alias: 'Tools', color: 'blue' }]),
                 activeView: 'tree'
             }, res));
-            return { items: items.length };
+            return { items: items.length, folder: folder.id, target: target.id };
         });
         console.log('seeded:', JSON.stringify(seeded));
         await page.reload({ waitUntil: 'load' });
@@ -100,6 +103,27 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
             out.groupPlace = rect(groupPlace);
             out.groupRename = rect(groupRename);
             out.bucketFav = rect(bucketFav);
+            // the three send glyphs of the recent region (row / time
+            // bucket head / section head) — the one-axis check. Each
+            // button's own rect is paired with its host row's rect so
+            // the vertical check measures the CENTER OFFSET, not the
+            // stacked rows' differing page y.
+            const rowStageEl = document.querySelector('#recent-list li .staging-add-btn');
+            const groupStageEl = document.querySelector('.recent-group-head .recent-group-stage');
+            const stageAllEl = document.querySelector('#recent-head .recent-stage-all');
+            out.rowStage = rect(rowStageEl);
+            // the button shares the ANCHOR's flex line (the li also
+            // carries the wrapped time-bucket head line above it); the
+            // li rect is the row-HEIGHT contract (28px like the heads)
+            out.rowStageHost = rowStageEl ? rect(rowStageEl.closest('li').querySelector('a')) : null;
+            out.rowStageLi = rowStageEl ? rect(rowStageEl.closest('li')) : null;
+            // a STAGING row li (no wrapped time head) is the height contract
+            out.stagingRowLi = rect(document.querySelector('#staging-items li.staging-row'));
+            out.groupStage = rect(groupStageEl);
+            out.groupStageHost = groupStageEl ? rect(groupStageEl.closest('.recent-group-head')) : null;
+            out.stageAll = rect(stageAllEl);
+            out.stageAllHost = rect(stageAllEl ? stageAllEl.closest('#recent-head') : null);
+            out.groupPlaceVisible = groupPlace ? getComputedStyle(groupPlace).visibility : null;
             const selectBtn = document.querySelector('.staging-select-mode');
             const newGroupBtn = document.querySelector('.staging-new-group');
             out.selectBtn = rect(selectBtn);
@@ -108,7 +132,33 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
                 const el = document.querySelector('.staging-summary');
                 return el ? el.getBoundingClientRect().right : null;
             })();
-            out.listRight = document.getElementById('staging-list').getBoundingClientRect().right;
+            const listRect = document.getElementById('staging-list').getBoundingClientRect();
+            out.listRight = listRect.right;
+            out.listLeft = listRect.left;
+            // group-head lead: the chevron column must start 8px off the
+            // container edge (the tabgroups/dupes head law)
+            out.groupChevLeft = firstGroupHead.querySelector('.chevron').getBoundingClientRect().left;
+            // hierarchy: the member favicon column == the head's first
+            // content glyph (group head title), both 32px from the edge
+            out.groupTitle = rect(firstGroupHead.querySelector('.staging-section-title'));
+            // head quick tail: narrow container keeps place/delete only
+            out.groupRename = rect(groupRename);
+            out.groupDissolve = rect(document.querySelector('.staging-group-head .staging-group-dissolve'));
+            out.groupDelete = rect(document.querySelector('.staging-group-head .staging-group-delete'));
+            const visibleNow = el => !!(el && el.getClientRects && el.getClientRects().length);
+            out.renameVisible = visibleNow(groupRename);
+            out.dissolveVisible = visibleNow(document.querySelector('.staging-group-head .staging-group-dissolve'));
+            out.placeVisible = visibleNow(groupPlace);
+            out.deleteVisible = visibleNow(document.querySelector('.staging-group-head .staging-group-delete'));
+            // scissors divider + iconified action rung + time-head lead
+            out.cut = !!document.querySelector('#staging-list .staging-cut');
+            out.actionIcons = document.querySelectorAll('.staging-actions-toolbar .staging-icon-btn').length;
+            out.timeHeadLeft = (() => {
+                const el = document.querySelector('.recent-group-head');
+                if (!el) return null;
+                const r = el.getBoundingClientRect();
+                return parseFloat(getComputedStyle(el).paddingLeft) + r.left;
+            })();
             // member indent: a member row's favicon x vs a loose row's favicon x
             const favX = li => li && li.querySelector('.favicon-container')
                 ? li.querySelector('.favicon-container').getBoundingClientRect().left : null;
@@ -147,17 +197,137 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
         ck('bucket head fixed height 28', Math.abs(css.bucketHead.h - 28) < 1.5);
         // the axis law binds each row's LAST trailing button (rename sits
         // left of place inside the group head's quick pair by design)
-        const rightAxis = [css.rowBtn, css.groupPlace, css.bucketFav]
+        // the axis law binds each tail's RIGHTMOST button (row remove /
+        // head delete / bucket fav-all) to the same 8px-off-edge column
+        const rightAxis = [css.rowBtn, css.groupDelete, css.bucketFav]
             .every(r => r && Math.abs(r.right - css.rowBtn.right) < 1.5);
         ck('trailing buttons share one right axis', rightAxis);
-        // vertical centers each within own row middle ±1.5px
+        // vertical centers each within own row middle ±1.5px (rename/
+        // dissolve are display:none at this narrow width — skip them)
         const vCenter = (btn, row) => btn && row && Math.abs(btn.cy - (row.top + row.h / 2)) < 1.5;
-        ck('group quick buttons vertically centered', vCenter(css.groupPlace, css.groupHead) && vCenter(css.groupRename, css.groupHead));
+        ck('group quick buttons vertically centered', vCenter(css.groupPlace, css.groupHead) && vCenter(css.groupDelete, css.groupHead));
         ck('bucket fav-all vertically centered', vCenter(css.bucketFav, css.bucketHead));
         ck('select-mode right-aligned inside the toolbar (8px inset)', css.selectBtn && Math.abs(css.selectBtn.right - (css.listRight - 8)) < 1.5);
         ck('summary stays left of the action cluster', css.summaryRight < css.newGroupBtn.left);
         ck('member rows indent 16px', css.memberFavX !== null && css.looseFavX !== null && Math.abs(css.memberFavX - css.looseFavX - 16) < 1.5);
+        ck('member favicon column = group head title column (tabgroups hierarchy)',
+            css.memberFavX !== null && css.groupTitle && Math.abs(css.memberFavX - css.groupTitle.left) < 1.5);
+        ck('narrow rows are the same 28px height as the heads',
+            css.stagingRowLi && Math.abs(css.stagingRowLi.h - 28) < 1.5);
         ck('manual empty group renders its head', css.manualEmptyHead);
+        ck('group head chevron starts at the 8px lead', css.groupChevLeft !== null && Math.abs(css.groupChevLeft - css.listLeft - 8) < 1.5);
+        ck('group quick tail always visible (tabgroups law)', css.groupPlaceVisible === 'visible');
+        // ≤400px container (this probe runs at 320px body): the group-
+        // specific pair hides, the row-shared place/delete stay
+        ck('narrow quick tail = place + delete (rename/dissolve folded into menu/F2)',
+            css.placeVisible && css.deleteVisible && !css.renameVisible && !css.dissolveVisible);
+        ck('delete is the rightmost head button (danger slot)',
+            css.groupDelete && Math.abs(css.groupDelete.right - (css.listRight - 8)) < 1.5);
+        ck('scissors divider separates the recent region', css.cut);
+        ck('time-bucket head label starts on the 8px lead column',
+            css.timeHeadLeft !== null && Math.abs(css.timeHeadLeft - (css.listLeft + 8)) < 1.5);
+        // the three same send buttons of the recent region: ONE right
+        // axis (all end 8px off the list edge) and ONE vertical-center
+        // OFFSET (each centers in its own --vbm-row-h host row — the
+        // "three vertical positions" complaint)
+        const sendRights = [css.rowStage, css.groupStage, css.stageAll].filter(Boolean);
+        ck('row/bucket/section send buttons share one right axis',
+            sendRights.length === 3 && sendRights.every(r => Math.abs(r.right - (css.listRight - 8)) < 1.5));
+        ck('row/bucket/section send buttons share one vertical-center offset',
+            vCenter(css.rowStage, css.rowStageHost) &&
+            vCenter(css.groupStage, css.groupStageHost) &&
+            vCenter(css.stageAll, css.stageAllHost));
+
+        // --- 1b. selection-mode checkbox axis -----------------------------
+        const selGeo = await page.evaluate(() => {
+            document.querySelector('.staging-select-mode').click();
+            return new Promise(r => setTimeout(() => {
+                const list = document.getElementById('staging-list').getBoundingClientRect();
+                const boxLeft = el => el ? parseFloat(getComputedStyle(el, '::before').width) && el.getBoundingClientRect().left + 8 : null;
+                const row = [...document.querySelectorAll('#staging-items li.staging-row')];
+                const member = row.find(li => li.classList.contains('staging-member'));
+                const loose = row.find(li => !li.classList.contains('staging-member'));
+                const groupHead = document.querySelector('#staging-items li.staging-group .staging-group-head');
+                const bucketHead = document.querySelector('#staging-items li.staging-bucket .staging-bucket-head');
+                const favX = li => li && li.querySelector('.favicon-container')
+                    ? li.querySelector('.favicon-container').getBoundingClientRect().left : null;
+                // hierarchy probes: a GROUP member (anchored/0 ∈ g1) must
+                // hang under the group head's title, a BUCKET member
+                // (snap/2, ungrouped unbookmarked) under the bucket's star
+                const g1member = document.querySelector('li.staging-row[data-url="http://127.0.0.1:9/anchored/0"]');
+                const bucketMember = document.querySelector('li.staging-row[data-url="http://127.0.0.1:9/snap/2"]');
+                const groupTitle = document.querySelector('li.staging-group .staging-section-title');
+                const bucketStar = document.querySelector('li.staging-bucket .staging-bucket-star');
+                r({
+                    listLeft: list.left,
+                    memberCheck: boxLeft(member),
+                    looseCheck: boxLeft(loose),
+                    groupCheck: boxLeft(groupHead),
+                    bucketCheck: boxLeft(bucketHead),
+                    memberFavX: favX(member),
+                    looseFavX: favX(loose),
+                    g1FavX: favX(g1member),
+                    groupTitleX: groupTitle ? groupTitle.getBoundingClientRect().left : null,
+                    bucketFavX: favX(bucketMember),
+                    bucketStarX: bucketStar ? bucketStar.getBoundingClientRect().left : null,
+                    actionIcons: document.querySelectorAll('.staging-actions-toolbar .staging-icon-btn').length,
+                    shortcutChips: document.querySelectorAll('.staging-shortcuts-toolbar .staging-shortcut').length,
+                    shortcutAdd: !!document.querySelector('.staging-shortcuts-toolbar .staging-shortcut-add')
+                });
+            }, 300));
+        });
+        console.log('selGeo:', JSON.stringify(selGeo));
+        const checkAxis = selGeo.listLeft + 8;
+        ck('selection checkboxes share one 8px axis (row/head/bucket)',
+            [selGeo.memberCheck, selGeo.looseCheck, selGeo.groupCheck, selGeo.bucketCheck]
+                .every(x => x !== null && Math.abs(x - checkAxis) < 1.5));
+        ck('selection member content hangs under its head glyph (group title / bucket star)',
+            selGeo.g1FavX !== null && selGeo.groupTitleX !== null &&
+            Math.abs(selGeo.g1FavX - selGeo.groupTitleX) < 1.5 &&
+            selGeo.bucketFavX !== null && selGeo.bucketStarX !== null &&
+            Math.abs(selGeo.bucketFavX - selGeo.bucketStarX) < 1.5);
+        ck('selection member content keeps the 28px step off the loose baseline',
+            selGeo.g1FavX !== null && selGeo.looseFavX !== null &&
+            Math.abs((selGeo.g1FavX - selGeo.looseFavX) - 28) < 1.5);
+        ck('selection action rung is iconified (9 glyph buttons)', selGeo.actionIcons === 9);
+        ck('move-to shortcut rung renders the seeded chip + the add button',
+            selGeo.shortcutChips === 1 && selGeo.shortcutAdd);
+        // MOVE-TO shortcut: select a row, click the chip, the item must
+        // leave staging and land in the target folder (move semantics;
+        // the runtime's bookmarks.move runs for real here)
+        await page.evaluate(() => document.querySelector('li.staging-row[data-url="http://127.0.0.1:9/anchored/1"]').click());
+        await sleep(250);
+        const preMove = await page.evaluate(() => ({
+            sel: document.querySelectorAll('#staging-items li.sel').length,
+            chip: !!document.querySelector('.staging-shortcut')
+        }));
+        await page.evaluate(() => document.querySelector('.staging-shortcut').click());
+        await sleep(900);
+        const shortcutAfter = await page.evaluate(() => new Promise(res => chrome.storage.local.get('staging', d => {
+            const s = JSON.parse(d.staging);
+            res({ left: s.items.some(i => i.url === 'http://127.0.0.1:9/anchored/1'), items: s.items.length });
+        })));
+        console.log('shortcutMove:', JSON.stringify({ preMove, ...shortcutAfter }));
+        ck('row selected before the shortcut click', preMove.sel >= 1 && preMove.chip);
+        ck('shortcut click MOVES the selected item out of staging (move-only semantics)', shortcutAfter.left === false);
+        // open-as-tab-group through the icon rung: the urls-only call
+        // path must send without a pageerror (the old pickGroupColor
+        // crash read as a popup error toast). The runtime message is
+        // stubbed here — the probe checks the POPUP-side path, not the
+        // real tab open (which would flip the headless target away).
+        await page.evaluate(() => document.querySelector('li.staging-row[data-url="http://127.0.0.1:9/anchored/2"]').click());
+        await sleep(200);
+        const errsBefore = pageErrors;
+        await page.evaluate(() => {
+            window.__vbmRealSend = chrome.runtime.sendMessage;
+            chrome.runtime.sendMessage = (msg, cb) => { if (cb) cb(); };
+        });
+        await page.evaluate(() => document.querySelector('.staging-open-group').click());
+        await sleep(300);
+        await page.evaluate(() => { chrome.runtime.sendMessage = window.__vbmRealSend; });
+        ck('open-as-tab-group icon runs the urls-only path without errors', pageErrors === errsBefore);
+        await page.evaluate(() => document.querySelector('.staging-select-exit').click());
+        await sleep(300);
 
         // --- 2+3. DnD --------------------------------------------------------
         const dnd = await page.evaluate(() => {

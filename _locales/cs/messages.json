@@ -2257,6 +2257,38 @@
   "stagingGroupNoGroups": {
     "message": "Zatím žádné skupiny"
   },
+  "stagingShortcutAdd": {
+    "message": "Přidat zástupce"
+  },
+  "stagingShortcutTitle": {
+    "message": "Zástupce pro přesun"
+  },
+  "stagingShortcutEdit": {
+    "message": "Upravit zástupce"
+  },
+  "stagingShortcutAlias": {
+    "message": "Alias"
+  },
+  "stagingShortcutPickFolder": {
+    "message": "Vybrat cílovou složku…"
+  },
+  "stagingShortcutSave": {
+    "message": "Uložit"
+  },
+  "stagingShortcutRemove": {
+    "message": "Odebrat zástupce"
+  },
+  "stagingShortcutRemoved": {
+    "message": "Zástupce odebrán"
+  },
+  "stagingShortcutMove": {
+    "message": "Přesunout vybrané do $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
   "stagingBucketTitle": {
     "message": "Nezáložkováno"
   },

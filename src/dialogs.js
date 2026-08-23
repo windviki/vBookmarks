@@ -12,7 +12,7 @@
  * ctx.onSort(folderId, opts) runs when the sort dialog is confirmed.
  * document/window/chrome remain page globals, as in the rest of the popup.
  */
-import { pickGroupColor } from './tab-group-utils.js';
+import { pickGroupColor, TAB_GROUP_COLORS } from './tab-group-utils.js';
 import { htmlspecialchars } from './escape.js';
 import { PIN_ICON, CLOCK_ICON, FOLDER_ICON } from './icons.js';
 import {
@@ -847,6 +847,114 @@ export function initDialogs(ctx = {}) {
             StagingGroupAssignDialog.confirm();
         });
 
+    // Move-to shortcut editor (velvet staging workbench round): target
+    // folder (via the shared picker, legacy single-select), alias input
+    // and the tab-group color palette. A body-class dialog like the rest
+    // — Esc / #cover / the Tab trap ride anyOpen()/activeEl()/closeDialogs.
+    const StagingShortcutDialog = {
+        onSave: () => {
+        },
+        editingId: null,
+        folderId: null,
+        color: 'blue',
+        open: opts => {
+            if (!opts)
+                return;
+            rememberInvoker();
+            StagingShortcutDialog.onSave = opts.onSave || (() => {});
+            const sc = opts.shortcut || null;
+            StagingShortcutDialog.editingId = sc ? sc.id : null;
+            StagingShortcutDialog.folderId = sc ? sc.folderId : null;
+            StagingShortcutDialog.color = (sc && sc.color) || 'blue';
+            const textEl = $('staging-shortcut-text');
+            const aliasEl = $('staging-shortcut-alias');
+            const folderEl = $('staging-shortcut-folder');
+            const colorsEl = $('staging-shortcut-colors');
+            const saveEl = $('staging-shortcut-save');
+            const cancelEl = $('staging-shortcut-cancel');
+            const colorLabel = $('staging-shortcut-color-label');
+            if (!textEl || !aliasEl || !folderEl || !colorsEl || !saveEl || !cancelEl)
+                return;
+            if (colorLabel)
+                colorLabel.textContent = _m('tabGroupColorLabel');
+            textEl.innerHTML = widont(_m(sc ? 'stagingShortcutEdit' : 'stagingShortcutTitle'));
+            saveEl.innerHTML = `<strong>${htmlspecialchars(_m('stagingShortcutSave'))}</strong>`;
+            cancelEl.innerHTML = htmlspecialchars(_m('nope'));
+            aliasEl.value = sc && sc.alias ? sc.alias : '';
+            aliasEl.placeholder = _m('stagingShortcutAlias');
+            StagingShortcutDialog.setFolderLabel(folderEl, StagingShortcutDialog.folderId);
+            colorsEl.innerHTML = TAB_GROUP_COLORS.map(c =>
+                `<label class="tab-group-color tg-${c}">` +
+                `<input type="radio" name="staging-shortcut-color" value="${c}" class="visually-hidden"` +
+                (StagingShortcutDialog.color === c ? ' checked' : '') + `><span></span></label>`).join('');
+            body.classList.add('needStagingShortcut');
+            aliasEl.focus();
+        },
+        setFolderLabel: (folderEl, folderId) => {
+            if (!folderId) {
+                folderEl.textContent = _m('stagingShortcutPickFolder');
+                folderEl.classList.add('empty');
+                return;
+            }
+            chrome.bookmarks.get(folderId, nodes => {
+                const node = nodes && nodes[0];
+                folderEl.textContent = node && node.title ? node.title : folderId;
+                folderEl.title = folderId;
+                folderEl.classList.remove('empty');
+            });
+        },
+        pickFolder: () => {
+            BookmarkFolderPickDialog.open({
+                dialog: _m('stagingShortcutPickFolder'),
+                onPick: id => {
+                    StagingShortcutDialog.folderId = id;
+                    StagingShortcutDialog.setFolderLabel($('staging-shortcut-folder'), id);
+                }
+            });
+        },
+        confirm: () => {
+            if (!StagingShortcutDialog.folderId)
+                return;
+            const aliasEl = $('staging-shortcut-alias');
+            const alias = aliasEl ? aliasEl.value.trim() : '';
+            StagingShortcutDialog.onSave({
+                id: StagingShortcutDialog.editingId || null,
+                folderId: StagingShortcutDialog.folderId,
+                alias,
+                color: StagingShortcutDialog.color
+            });
+            StagingShortcutDialog.close();
+        },
+        close: () => {
+            const wasOpen = body.classList.contains('needStagingShortcut');
+            body.classList.remove('needStagingShortcut');
+            restoreFocus(wasOpen);
+        }
+    };
+    const stagingShortcutSave = $('staging-shortcut-save');
+    if (stagingShortcutSave)
+        stagingShortcutSave.addEventListener('click', () => StagingShortcutDialog.confirm());
+    const stagingShortcutCancel = $('staging-shortcut-cancel');
+    if (stagingShortcutCancel)
+        stagingShortcutCancel.addEventListener('click', () => StagingShortcutDialog.close());
+    const stagingShortcutFolder = $('staging-shortcut-folder');
+    if (stagingShortcutFolder)
+        stagingShortcutFolder.addEventListener('click', () => StagingShortcutDialog.pickFolder());
+    const stagingShortcutAlias = $('staging-shortcut-alias');
+    if (stagingShortcutAlias)
+        stagingShortcutAlias.addEventListener('keydown', e => {
+            if (e.key !== 'Enter')
+                return;
+            e.preventDefault();
+            StagingShortcutDialog.confirm();
+        });
+    const stagingShortcutColors = $('staging-shortcut-colors');
+    if (stagingShortcutColors)
+        stagingShortcutColors.addEventListener('change', e => {
+            if (e.target && e.target.value)
+                StagingShortcutDialog.color = e.target.value;
+        });
+
     // Version dialog (/version palette command): a metadata card + copy-to-
     // clipboard action + the palette-style footer close button (Esc hint).
     // It is a body-class dialog like the rest, so keyboard.js's Escape layer
@@ -935,7 +1043,8 @@ export function initDialogs(ctx = {}) {
         body.classList.contains('needAlert') || body.classList.contains('needInputName') ||
         body.classList.contains('needSort') || body.classList.contains('needTabGroup') ||
         body.classList.contains('needGroupPick') || body.classList.contains('needVersion') ||
-        body.classList.contains('needCopyMove') || body.classList.contains('needFolderPick');
+        body.classList.contains('needCopyMove') || body.classList.contains('needFolderPick') ||
+        body.classList.contains('needStagingShortcut');
 
     // The open dialog's own element — keyboard.js's modal Tab trap cycles
     // within it. Null when nothing is up; precedence mirrors closeDialogs.
@@ -958,6 +1067,8 @@ export function initDialogs(ctx = {}) {
             return $('copy-move-dialog');
         if (body.classList.contains('needFolderPick'))
             return $('bookmark-folder-pick-dialog');
+        if (body.classList.contains('needStagingShortcut'))
+            return $('staging-shortcut-dialog');
         if (body.classList.contains('needStagingGroupAssign'))
             return $('staging-group-assign-dialog');
         if (body.classList.contains('needAlert'))
@@ -1035,6 +1146,8 @@ export function initDialogs(ctx = {}) {
             CopyMoveDialog.close(false);
         if (body.classList.contains('needFolderPick'))
             BookmarkFolderPickDialog.close();
+        if (body.classList.contains('needStagingShortcut'))
+            StagingShortcutDialog.close();
         if (body.classList.contains('needStagingGroupAssign'))
             StagingGroupAssignDialog.close();
         if (body.classList.contains('needAlert'))
@@ -1042,5 +1155,5 @@ export function initDialogs(ctx = {}) {
     };
     $('cover').addEventListener('click', closeDialogs);
 
-    return { AlertDialog, ConfirmDialog, EditDialog, NewFolderDialog, SortDialog, GroupDialog, GroupPickDialog, VersionDialog, CopyMoveDialog, BookmarkFolderPickDialog, StagingGroupAssignDialog, anyOpen, activeEl, closeDialogs };
+    return { AlertDialog, ConfirmDialog, EditDialog, NewFolderDialog, SortDialog, GroupDialog, GroupPickDialog, VersionDialog, CopyMoveDialog, BookmarkFolderPickDialog, StagingGroupAssignDialog, StagingShortcutDialog, anyOpen, activeEl, closeDialogs };
 }

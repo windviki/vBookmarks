@@ -1008,7 +1008,8 @@ menu[type=context] hr {
 
 .needAlert #cover,
 .needConfirm #cover,
-.needEdit #cover {
+.needEdit #cover,
+.needStagingShortcut #cover {
     left: 0;
     opacity: 1;
 }
@@ -1567,21 +1568,24 @@ menu[type=context] hr {
     white-space: nowrap;
 }
 
+/* The filter joins the dialog-input recipe (#edit/#new-folder inputs): the
+   capped content measure (NOT a full-width band — the ID's old width:100%
+   overrode .dialog > * and stretched edge-to-edge in wide panels), the
+   same 4px/6px padding and the same accent-border focus treatment. */
 #bookmark-folder-pick-filter {
-    width: 100%;
+    width: var(--dialog-content-width);
     box-sizing: border-box;
-    height: 24px;
     margin: 0 0 8px;
-    padding: 0 8px;
+    padding: 4px 6px;
     border: 1px solid var(--vbm-border);
-    border-radius: var(--vbm-radius);
+    border-radius: 6px;
     background: var(--vbm-bg);
     color: var(--vbm-fg);
     font: inherit;
-    font-size: 11px;
 }
 
 #bookmark-folder-pick-filter:focus-visible {
+    border-color: var(--vbm-accent);
     outline: 2px solid var(--vbm-focus-ring);
     outline-offset: -1px;
 }
@@ -1670,9 +1674,17 @@ menu[type=context] hr {
 .staging-group-head {
     display: flex;
     align-items: center;
-    gap: 6px;
+    /* 4px gap + each glyph's own 4px margin = the same 8px lead/stride
+       rhythm the rows use: the chevron column starts at 8px (where the
+       selection checkbox lands), the head's first content glyph sits at
+       32px — exactly the member rows' favicon column (16px indent +
+       16px anchor slot) — and the trailing .row-btns step 28px (20px +
+       4px margin + 4px gap), the SAME stride as the row tail buttons,
+       so head delete/place dock on the row remove/star columns. */
+    gap: 4px;
     height: var(--vbm-row-h);
-    padding-inline: 0;
+    padding-inline-start: 8px;
+    padding-inline-end: 4px;
     font-size: 11px;
     color: var(--vbm-muted);
     cursor: pointer;
@@ -1686,16 +1698,23 @@ menu[type=context] hr {
     background: var(--vbm-bg-hover);
 }
 
-.staging-section-head:focus-visible,
-.staging-bucket-head:focus-visible,
-.staging-group-head:focus-visible {
+/* :focus (not :focus-visible), like the tabgroups/dupes group heads — the
+   head keeps the selected paint while it owns focus, exactly the sibling
+   views' protocol. */
+.staging-section-head:focus,
+.staging-bucket-head:focus,
+.staging-group-head:focus {
     color: var(--vbm-fg-selected);
     background: var(--vbm-bg-selected);
     outline: 2px solid var(--vbm-focus-ring);
     outline-offset: -2px;
 }
 
+/* The title fills the middle (tabgroups-title recipe): long names truncate
+   instead of pushing the count pill / trailing buttons out of the row. */
 .staging-section-title {
+    flex: 1;
+    min-width: 0;
     font-weight: 500;
     color: var(--vbm-fg);
     white-space: nowrap;
@@ -1708,6 +1727,7 @@ menu[type=context] hr {
 .staging-group-head .chevron {
     flex: none;
     width: 16px;
+    margin-inline-end: 4px; /* + the 4px gap = the 8px lead to content */
     text-align: center;
     color: var(--vbm-muted);
 }
@@ -1730,32 +1750,32 @@ menu[type=context] hr {
     content: '◂';
 }
 
+/* The count pill joins the dupes/tabgroups shared pill recipe (14px /
+   9px tabular) — only the token colors are staging-local. */
 .staging-section-head .count-pill,
 .staging-bucket-head .count-pill,
 .staging-group-head .count-pill {
-    flex: none;
     background: var(--vbm-bg-selected);
     color: var(--vbm-fg-selected);
-    border-radius: 999px;
-    padding: 0 6px;
-    font-size: 11px;
-    line-height: 16px;
+    margin-inline-end: 4px;
 }
 
 .staging-bucket-star {
     flex: none;
     display: inline-flex;
+    margin-inline-end: 4px; /* + the 4px gap = the 8px lead to the title */
     color: var(--vbm-muted);
 }
 
 /* Head trailing buttons — ONE axis with the rows' trailing .row-btns (the
-   dead-view law: every send/star/× glyph in the view vertically centers in
-   its own fixed-height flex row and docks 4px off the right edge). All four
-   carry .row-btn (20px square, margin-inline-end 4px); the first trailing
-   button of each head pushes the cluster right with margin-inline-start:
-   auto. The bucket's favorite-all and the section head's stage-all are
-   primary actions (always visible); the group head's rename/place are the
-   hover-revealed quick tail (the tabgroups-head language). */
+   dead-view law): every send/star/× glyph vertically centers in its own
+   var(--vbm-row-h) flex row, and every head's 4px end padding + the
+   .row-btn's 4px end margin docks the last glyph exactly 8px off the right
+   edge — the same column as the rows' last buttons and the toolbar's
+   rightmost icon. The first trailing button of each head pins the cluster
+   right with margin-inline-start:auto. The bucket's favorite-all, the
+   section head's stage-all and the group head's quick tail are all always
+   visible (primary actions / the tabgroups-head language). */
 .staging-bucket-head .staging-bucket-fav-all,
 .staging-section-head .recent-stage-all {
     margin-inline-start: auto;
@@ -1768,39 +1788,68 @@ menu[type=context] hr {
     color: var(--vbm-accent);
 }
 
+/* The group quick tail (tabgroups-head language): the group-specific
+   pair (rename / dissolve) sits LEFT of the row-shared tail; the shared
+   tail reads right-to-left exactly like the member rows' —
+   [place 归档] on the star column, [delete] danger on the remove column.
+   Rename/dissolve are muted secondary actions (F2 + the group menu stay
+   as their keyboard paths); place is the primary homing action in accent;
+   delete is destructive and takes the RIGHTMOST slot (the dead/dupes
+   law: danger red, always rightmost). */
 .staging-group-head .staging-group-rename {
     margin-inline-start: auto; /* first of the quick tail — pins the cluster */
 }
 
 .staging-group-head .staging-group-rename,
-.staging-group-head .staging-group-place {
-    visibility: hidden;
-}
-
-.staging-group:hover .staging-group-rename,
-.staging-group:hover .staging-group-place,
-.staging-group:focus-within .staging-group-rename,
-.staging-group:focus-within .staging-group-place,
-.staging-group-rename:focus-visible,
-.staging-group-place:focus-visible {
+.staging-group-head .staging-group-dissolve,
+.staging-group-head .staging-group-place,
+.staging-group-head .staging-group-delete {
     visibility: visible;
 }
 
-.staging-group-rename:hover,
-.staging-group-place:hover {
+.staging-group-head .staging-group-place {
     color: var(--vbm-accent);
 }
 
-/* Group member rows indent under their head (the tree/dupes rhythm): the
-   favicon column shifts one 16px lead so members read as contained, not as
-   loose rows that happen to follow a head. Selection mode keeps the
-   hierarchy (8px checkbox lead + 16px indent). */
+.staging-group-head .staging-group-delete {
+    color: var(--vbm-danger);
+}
+
+.staging-group-head .staging-group-delete:hover {
+    background: color-mix(in srgb, var(--vbm-danger) 12%, transparent);
+}
+
+/* 超窄（tabgroups 同法）：≤400px 容器收起组特有的 rename/dissolve（仍可
+   经 F2 / 组菜单到达），保留与行尾同列的 place/delete 两键，标题获得
+   全部剩余宽度。恢复宽度后四键自动回来。 */
+@container (max-width: 400px) {
+    #staging-list .staging-group-head .staging-group-rename,
+    #staging-list .staging-group-head .staging-group-dissolve {
+        display: none;
+    }
+}
+
+/* Hierarchy (the tabgroups law, not the flat dupes law — staging is a
+   workbench where members move between groups constantly): a row under
+   a head indents 16px so its FAVICON column (16px indent + the anchor's
+   16px slot = 32px) lands exactly on its head's first content glyph
+   (group head title / bucket head star, also 32px). Loose rows keep the
+   16px baseline — one glance shows who is grouped and who is not, and
+   the drop targets (head rows) read as the columns their members hang
+   off. */
 #staging-items li.vbm-row.staging-member {
     padding-inline-start: 16px;
 }
 
-#staging-list ul.selecting li.vbm-row.staging-member {
-    padding-inline-start: 24px;
+/* Selection mode keeps the hierarchy WITHOUT moving the checkbox off the
+   8px axis (the tabgroups law): the base #staging-list ul.selecting rule
+   already gives every row the 8px lead, so every checkbox shares one
+   column; the member CONTENT then steps 28px right via the anchor margin
+   (8px lead + 14px checkbox + 6px margin + 4px gap + 28px = 56px = the
+   head's first content glyph, which starts after the checkbox + chevron
+   at the same 56px). */
+#staging-list ul.selecting li.vbm-row.staging-member > a.tree-item-link {
+    margin-inline-start: 28px;
 }
 
 /* Drag & drop between staging groups: the dragged source fades (the cut
@@ -1824,10 +1873,14 @@ li.staging-row.drag-over {
 /* Row chrome, the dead/stats recipe: the li is a flex row so the trailing
    star/× buttons dock to the right edge on ONE line in both the narrow
    single-line and the wide two-line (row-sub) forms; the anchor takes the
-   remaining space and hands the buttons their 4px lead. */
+   remaining space and hands the buttons their 4px lead. min-height =
+   --vbm-row-h makes every narrow row exactly the heads' height (the old
+   20px rows under 28px heads made head buttons a different-size target
+   than row buttons); wide two-line rows grow past it naturally. */
 #staging-list ul li.vbm-row {
     display: flex;
     align-items: center;
+    min-height: var(--vbm-row-h);
 }
 
 #staging-list ul li.vbm-row > a.tree-item-link {
@@ -1836,6 +1889,15 @@ li.staging-row.drag-over {
     min-width: 0;
     align-items: center;
     margin-inline-end: 4px;
+}
+
+/* The dead-view one-axis law: the row's trailing buttons (and the second-
+   from-right one — star / stage) end 8px off the container edge, exactly
+   the toolbar's rightmost icon column; the 8px end margin doubles as the
+   gap between the pair, the same column rhythm as dead-mark/delete. */
+#staging-list ul li.vbm-row > .row-btn:last-child,
+#staging-list ul li.vbm-row > .row-btn:nth-last-child(2) {
+    margin-inline-end: 8px;
 }
 
 /* The staging empty state: the plane glyph above the guiding line (§11). */
@@ -1931,6 +1993,138 @@ li.staging-row.drag-over {
     text-align: center;
 }
 
+/* --- Move-to shortcut editor dialog (workbench round) ------------------
+   Same body-class dialog chrome: capped column, 40px landing tier,
+   #cover, Esc. The color swatches reuse the tab-group .tab-group-color
+   labels verbatim (one Chrome palette, one look). */
+#staging-shortcut-text {
+    margin: 0 0 .6em;
+    font-weight: bold;
+}
+
+#staging-shortcut-folder {
+    text-align: start;
+    margin: 0 0 8px;
+    padding: 5px 8px;
+    border: 1px solid var(--vbm-border);
+    border-radius: var(--vbm-radius);
+    background: var(--vbm-bg);
+    color: var(--vbm-fg);
+    font: inherit;
+    cursor: pointer;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+#staging-shortcut-folder.empty {
+    color: var(--vbm-muted);
+    font-style: italic;
+}
+
+#staging-shortcut-alias {
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0 0 8px;
+    padding: 4px 6px;
+    background: var(--vbm-bg);
+    color: var(--vbm-fg);
+    border: 1px solid var(--vbm-border);
+    border-radius: 6px;
+    font: inherit;
+}
+
+#staging-shortcut-color-label {
+    display: block;
+    margin: 0 0 4px;
+    color: var(--vbm-muted);
+    font-size: .85em;
+    text-align: start;
+}
+
+#staging-shortcut-colors {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 0 0 4px;
+}
+
+/* --- Move-to shortcut chips (selection bar rung 3) ----------------------
+   A chip = tab-group color dot + alias (falls back to the folder path);
+   hover reveals the edit/remove .row-btns. The + adds one via the dialog
+   above. */
+.staging-shortcuts-toolbar {
+    border-bottom: 1px solid var(--vbm-border);
+}
+
+.staging-shortcut-item {
+    display: inline-flex;
+    align-items: center;
+}
+
+.staging-shortcut {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    max-width: 150px;
+    padding: 2px 8px;
+    border: 1px solid var(--vbm-border);
+    border-radius: 999px;
+    background: var(--vbm-bg-elev);
+    color: var(--vbm-fg);
+    font: inherit;
+    font-size: 11px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.staging-shortcut:hover {
+    border-color: var(--vbm-accent);
+}
+
+.staging-shortcut:focus-visible {
+    outline: 2px solid var(--vbm-focus-ring);
+    outline-offset: -1px;
+}
+
+.staging-shortcut-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.staging-shortcut-item .row-btn.staging-shortcut-edit,
+.staging-shortcut-item .row-btn.staging-shortcut-remove {
+    visibility: hidden;
+}
+
+.staging-shortcut-item:hover .row-btn.staging-shortcut-edit,
+.staging-shortcut-item:hover .row-btn.staging-shortcut-remove,
+.staging-shortcut-item:focus-within .row-btn.staging-shortcut-edit,
+.staging-shortcut-item:focus-within .row-btn.staging-shortcut-remove {
+    visibility: visible;
+}
+
+.staging-shortcut-edit:hover {
+    color: var(--vbm-accent);
+}
+
+.staging-shortcut-remove:hover {
+    background: color-mix(in srgb, var(--vbm-danger) 12%, transparent);
+    color: var(--vbm-danger);
+}
+
+.staging-toolbar .staging-shortcut-add {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.staging-toolbar .staging-shortcut-add .vbm-icon {
+    width: 14px;
+    height: 14px;
+    flex: none;
+}
+
 /* The staging/search toolbars ride the tabgroups/dupes/dead chrome: 11px
    accent controls, the 6px gap, the 4px 8px padding. In the two-rung
    selection layout the FIRST row drops its border-bottom (one visual
@@ -1959,6 +2153,7 @@ li.staging-row.drag-over {
 }
 
 .staging-toolbar .staging-summary,
+.staging-toolbar .select-count,
 .search-toolbar .search-result-count {
     color: var(--vbm-muted);
     white-space: nowrap;
@@ -1966,9 +2161,16 @@ li.staging-row.drag-over {
 
 /* The dead/dupes toolbar law: the summary fills the left, the action
    cluster pins to the right — the staging view's select-mode entry (and the
-   新建分组 button beside it) right-align like every other view's. */
+   新建分组 button beside it) right-align like every other view's. The
+   selection count reads with the same 500 weight as the dead/dupes
+   .select-count. */
 .staging-toolbar .staging-summary {
     margin-inline-end: auto;
+    font-weight: 500;
+}
+
+.staging-toolbar .select-count {
+    font-weight: 500;
 }
 
 /* The new-group button carries an icon next to its label (the only
@@ -2013,6 +2215,35 @@ li.staging-row.drag-over {
 .search-toolbar button:focus-visible {
     outline: 2px solid var(--vbm-focus-ring);
     outline-offset: -2px;
+}
+
+/* The staging selection bar's ACTION rung is iconified (the dead-view
+   law): semantics that survive as a glyph get a glyph, the label moves
+   into title/aria, and the whole rung fits ONE row — 9 × 22px squares.
+   Delete/clear read danger red (destructive), the rest accent. */
+.staging-toolbar .staging-icon-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    padding: 0;
+    flex: none;
+}
+
+.staging-toolbar .staging-icon-btn .vbm-icon {
+    width: 16px;
+    height: 16px;
+}
+
+.staging-toolbar .staging-icon-btn.staging-delete,
+.staging-toolbar .staging-icon-btn.staging-clear-all {
+    color: var(--vbm-danger);
+}
+
+.staging-toolbar .staging-icon-btn.staging-delete:hover:not([disabled]),
+.staging-toolbar .staging-icon-btn.staging-clear-all:hover:not([disabled]) {
+    background: color-mix(in srgb, var(--vbm-danger) 12%, transparent);
 }
 
 /* The three select-mode entry buttons share the dupes select-mode recipe:
@@ -2089,7 +2320,8 @@ li.staging-row.drag-over {
     pointer-events: auto;
 }
 
-.needInputName #new-folder-dialog {
+.needInputName #new-folder-dialog,
+.needStagingShortcut #staging-shortcut-dialog {
     top: 40px;
     opacity: 1;
     pointer-events: auto;
@@ -3224,6 +3456,31 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
     outline-offset: -2px;
 }
 
+/* The scissors divider: the recently-added region is NOT a group — it is
+   a separate lower half. A dashed cut line with a scissors glyph marks
+   the boundary so the region can never be misread as one more staging
+   group (fold chevron + title + count stay on the head below it). */
+.staging-cut {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 8px 0;
+    color: var(--vbm-muted);
+}
+
+.staging-cut::before,
+.staging-cut::after {
+    content: '';
+    flex: 1;
+    border-top: 1px dashed var(--vbm-border);
+}
+
+.staging-cut .vbm-icon {
+    flex: none;
+    width: 12px;
+    height: 12px;
+}
+
 /* Recent-view coarse time group heads (fourth-round item 8): non-interactive
    section labels (Today/This week/This month/Older), muted small type.
    The head div is the carrier row's LAST DOM child — order:-1 on a
@@ -3244,6 +3501,13 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
        permanent horizontal scrollbar. */
     flex: 1 1 auto;
     min-width: 0;
+    /* 工作台轮 axis law: the grow-1 anchor used to absorb ALL of line 2's
+       free space, pushing the row's send button onto a THIRD wrapped line
+       (left-aligned, one row-height lower — the "three send buttons, three
+       vertical positions" complaint). Cap its width so the 20px button +
+       8px end margin (+ the anchor's own 4px end margin) always keeps its
+       slot on the SAME line, docked to the shared 8px right axis. */
+    max-width: calc(100% - 32px);
 }
 
 #staging-list .recent-group-head {
@@ -3253,11 +3517,16 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
        overflows the list → a permanent horizontal scrollbar (v4 task-3 #1) */
     display: flex;
     align-items: center;
-    gap: 6px;
-    height: 24px; /* fixed height: the trailing button centers in its own row
-       (the one-axis law — an auto-height padding box put it three different
-       vertical positions across the view) */
-    padding: 0 4px 0 0;
+    gap: 4px;
+    /* var(--vbm-row-h), not a bespoke 24px: the head's stage glyph must
+       center on the SAME 14px middle as the rows/group-heads/section-head
+       glyphs above and below it — a shorter head put the "today/this week"
+       send button 2px higher than the row sends, the exact "same button in
+       three vertical positions" complaint. The 8px inline lead puts the
+       label on the upper heads' chevron column — one 11px muted section
+       style across the whole view. */
+    height: var(--vbm-row-h);
+    padding: 0 4px 0 8px;
     font-size: 11px;
     color: var(--vbm-muted);
     user-select: none;
@@ -3285,6 +3554,15 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
 
 .recent-group-head .recent-group-stage:hover {
     color: var(--vbm-accent);
+}
+
+/* Selection mode hides the recent region's send buttons via the root
+   .selecting-view class (visibility, slots stay occupied): the partial
+   repaint never has to rebuild this region just to drop its buttons. */
+#staging-list.selecting-view .staging-add-btn,
+#staging-list.selecting-view .recent-group-stage,
+#staging-list.selecting-view .recent-stage-all {
+    visibility: hidden;
 }
 
 /* Search-history area (top half of #view-search): a muted head row with a
@@ -4210,6 +4488,24 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
 .dupes-group .count-pill,
 .tabgroups-group .count-pill,
 .vbm-row .row-badge {
+    flex: none;
+    min-width: 14px;
+    height: 14px;
+    padding: 0 4px;
+    box-sizing: border-box;
+    border-radius: 7px;
+    font-size: 9px;
+    line-height: 14px;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+}
+
+/* Staging heads join the same pill geometry (kept as its own block so
+   the scrollbar-contract fixture's verbatim shared-rule string stays
+   intact); the token colors live with the staging head rules above. */
+.staging-section-head .count-pill,
+.staging-bucket-head .count-pill,
+.staging-group-head .count-pill {
     flex: none;
     min-width: 14px;
     height: 14px;

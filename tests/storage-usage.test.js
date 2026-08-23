@@ -95,7 +95,8 @@ const EXPECTED = {
     tabGroupsClosed: 'other', tabGroupsViewState: 'other', tabGroupFolderMeta: 'other',
     // velvet staging feature: the workbench dataset (bounded by the 500-item
     // cap) + the folder-picker quick-pick rosters — bookmark-id keyed, local.
-    staging: 'other', folderPickPins: 'other', folderPickRecents: 'other'
+    staging: 'other', folderPickPins: 'other', folderPickRecents: 'other',
+    stagingShortcuts: 'other'
 };
 
 describe('storage-usage categorization (real src/storage-usage.js)', () => {

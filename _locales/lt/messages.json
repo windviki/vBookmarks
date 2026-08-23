@@ -2257,6 +2257,38 @@
   "stagingGroupNoGroups": {
     "message": "Grupių dar nėra"
   },
+  "stagingShortcutAdd": {
+    "message": "Pridėti nuorodą"
+  },
+  "stagingShortcutTitle": {
+    "message": "Perkėlimo nuoroda"
+  },
+  "stagingShortcutEdit": {
+    "message": "Redaguoti nuorodą"
+  },
+  "stagingShortcutAlias": {
+    "message": "Pseudonimas"
+  },
+  "stagingShortcutPickFolder": {
+    "message": "Pasirinkti paskirties aplanką…"
+  },
+  "stagingShortcutSave": {
+    "message": "Išsaugoti"
+  },
+  "stagingShortcutRemove": {
+    "message": "Pašalinti nuorodą"
+  },
+  "stagingShortcutRemoved": {
+    "message": "Nuoroda pašalinta"
+  },
+  "stagingShortcutMove": {
+    "message": "Perkelti pasirinktus į $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
   "stagingBucketTitle": {
     "message": "Neįtraukta į žymes"
   },

@@ -10,7 +10,8 @@ import {
     renameGroup, dissolveGroup, deleteGroup, restoreGroup, reorderGroups,
     pruneEmptyGroups, assignGroup,
     setGroupCollapsed, unfavBucketItems, newCount, markSeen, groupItems,
-    looseItems, setRecentCollapsed, setUnfavCollapsed
+    looseItems, setRecentCollapsed, setUnfavCollapsed,
+    parseShortcuts, upsertShortcut, removeShortcut
 } from '../src/staging.js';
 
 const mk = (id, url, title, ts) => ({ id, url, title, ts });
@@ -384,5 +385,38 @@ describe('staging render partitions (bucket / loose / counts)', () => {
         expect(s.lastSeenTs).toBe(123);
         setRecentCollapsed(s, true);
         expect(s.recentCollapsed).toBe(true);
+    });
+});
+
+describe('staging move-to shortcuts (workbench round)', () => {
+    it('parseShortcuts tolerates garbage and prunes invalid entries', () => {
+        const list = parseShortcuts('{"not":"an array"}');
+        expect(list).toEqual([]);
+        const parsed = parseShortcuts(JSON.stringify([
+            { id: 's1', folderId: '10', alias: 'Tools', color: 'blue' },
+            { id: 's2', folderId: '11' }, // no alias/color → defaults
+            { id: 'bad-color', folderId: '12', color: 'neon' },
+            { id: 'no-folder' },
+            'junk'
+        ]));
+        expect(parsed).toHaveLength(3);
+        expect(parsed[0]).toEqual({ id: 's1', folderId: '10', alias: 'Tools', color: 'blue' });
+        expect(parsed[1].alias).toBe('');
+        expect(parsed[1].color).toBe('blue');
+        expect(parsed[2].color).toBe('blue'); // invalid color → blue
+    });
+
+    it('upsertShortcut creates and edits; removeShortcut deletes', () => {
+        const list = [];
+        const created = upsertShortcut(list, { folderId: '10', alias: '  Tools  ', color: 'red' });
+        expect(created.alias).toBe('Tools');
+        expect(list).toHaveLength(1);
+        const edited = upsertShortcut(list, { id: created.id, folderId: '12', alias: 'Reading', color: 'green' });
+        expect(edited.id).toBe(created.id);
+        expect(list).toHaveLength(1); // edit, not duplicate
+        expect(list[0]).toEqual({ id: created.id, folderId: '12', alias: 'Reading', color: 'green' });
+        expect(removeShortcut(list, created.id)).toBe(true);
+        expect(removeShortcut(list, created.id)).toBe(false);
+        expect(list).toEqual([]);
     });
 });

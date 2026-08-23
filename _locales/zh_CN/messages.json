@@ -2311,6 +2311,38 @@
   "stagingGroupNoGroups": {
     "message": "还没有分组"
   },
+  "stagingShortcutAdd": {
+    "message": "添加快捷"
+  },
+  "stagingShortcutTitle": {
+    "message": "移动到文件夹快捷方式"
+  },
+  "stagingShortcutEdit": {
+    "message": "编辑快捷方式"
+  },
+  "stagingShortcutAlias": {
+    "message": "别名"
+  },
+  "stagingShortcutPickFolder": {
+    "message": "选择目标文件夹…"
+  },
+  "stagingShortcutSave": {
+    "message": "保存"
+  },
+  "stagingShortcutRemove": {
+    "message": "删除快捷方式"
+  },
+  "stagingShortcutRemoved": {
+    "message": "已删除快捷方式"
+  },
+  "stagingShortcutMove": {
+    "message": "移动所选到 $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
   "stagingBucketTitle": {
     "message": "未收藏"
   },

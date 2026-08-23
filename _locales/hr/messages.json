@@ -2257,6 +2257,38 @@
   "stagingGroupNoGroups": {
     "message": "Još nema grupa"
   },
+  "stagingShortcutAdd": {
+    "message": "Dodaj prečac"
+  },
+  "stagingShortcutTitle": {
+    "message": "Prečac za premještanje"
+  },
+  "stagingShortcutEdit": {
+    "message": "Uredi prečac"
+  },
+  "stagingShortcutAlias": {
+    "message": "Pseudonim"
+  },
+  "stagingShortcutPickFolder": {
+    "message": "Odaberi ciljnu mapu…"
+  },
+  "stagingShortcutSave": {
+    "message": "Spremi"
+  },
+  "stagingShortcutRemove": {
+    "message": "Ukloni prečac"
+  },
+  "stagingShortcutRemoved": {
+    "message": "Prečac uklonjen"
+  },
+  "stagingShortcutMove": {
+    "message": "Premjesti odabrano u $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
   "stagingBucketTitle": {
     "message": "Neoznačeno"
   },

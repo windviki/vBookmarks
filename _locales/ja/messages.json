@@ -2257,6 +2257,38 @@
   "stagingGroupNoGroups": {
     "message": "グループはまだありません"
   },
+  "stagingShortcutAdd": {
+    "message": "ショートカットを追加"
+  },
+  "stagingShortcutTitle": {
+    "message": "移動先ショートカット"
+  },
+  "stagingShortcutEdit": {
+    "message": "ショートカットを編集"
+  },
+  "stagingShortcutAlias": {
+    "message": "エイリアス"
+  },
+  "stagingShortcutPickFolder": {
+    "message": "ターゲットフォルダを選択…"
+  },
+  "stagingShortcutSave": {
+    "message": "保存"
+  },
+  "stagingShortcutRemove": {
+    "message": "ショートカットを削除"
+  },
+  "stagingShortcutRemoved": {
+    "message": "ショートカットを削除しました"
+  },
+  "stagingShortcutMove": {
+    "message": "選択項目を$1$へ移動",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
   "stagingBucketTitle": {
     "message": "未ブックマーク"
   },

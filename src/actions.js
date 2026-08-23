@@ -623,7 +623,11 @@ export function initActions(ctx = {}) {
             // so "open all in new tab group" recreates the group as it was.
             const meta = folderId ? readTabGroupFolderMeta(store, folderId) : null;
             const effectiveTitle = meta && meta.title ? meta.title : groupTitle;
-            const effectiveColor = meta && meta.color ? meta.color : (groupColor || pickGroupColor(groupTitle));
+            // The staging/search/stats selection bars call with urls ONLY
+            // (no title) — pickGroupColor must never see undefined, or it
+            // crashes on title.length before the message is sent.
+            const effectiveColor = meta && meta.color ? meta.color
+                : (groupColor || pickGroupColor(effectiveTitle || ''));
             const open = () => {
                 chrome.runtime.sendMessage({
                     type: 'vbm-tab-group-open-new',

@@ -2089,9 +2089,13 @@ describe('narrow-width de-crowding contracts (4.1.0 P1, CSS)', () => {
     it('the current-tab text pill hides below a 400px container — the row tint carries the meaning', async () => {
         const fs = (await import('node:fs')).default;
         const neatCss = fs.readFileSync(new URL('../css/neat.css', import.meta.url), 'utf8');
-        // one nesting level of inner rules inside the container query block
-        const query = neatCss.match(/@container \(max-width: 400px\) \{((?:[^{}]|\{[^{}]*\})*)\}/);
-        expect(query, '400px container query exists').toBeTruthy();
+        // one nesting level of inner rules inside the container query block.
+        // The staging view now owns its own 400px block (it hides its group
+        // rename/dissolve pair), so pick the TABGROUPS block explicitly
+        // instead of the first match in the file.
+        const queries = [...neatCss.matchAll(/@container \(max-width: 400px\) \{((?:[^{}]|\{[^{}]*\})*)\}/g)];
+        const query = queries.find(q => q[1].includes('#tabgroups-list .row-badge.current'));
+        expect(query, 'tabgroups 400px container query exists').toBeTruthy();
         expect(query[1]).toContain('#tabgroups-list .row-badge.current');
         expect(query[1]).toContain('display: none');
         // …and the compensating tint exists on the row itself

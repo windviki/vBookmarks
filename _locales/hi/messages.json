@@ -2257,6 +2257,38 @@
   "stagingGroupNoGroups": {
     "message": "अभी कोई समूह नहीं"
   },
+  "stagingShortcutAdd": {
+    "message": "शॉर्टकट जोड़ें"
+  },
+  "stagingShortcutTitle": {
+    "message": "मूव-टू शॉर्टकट"
+  },
+  "stagingShortcutEdit": {
+    "message": "शॉर्टकट संपादित करें"
+  },
+  "stagingShortcutAlias": {
+    "message": "उपनाम"
+  },
+  "stagingShortcutPickFolder": {
+    "message": "लक्ष्य फ़ोल्डर चुनें…"
+  },
+  "stagingShortcutSave": {
+    "message": "सहेजें"
+  },
+  "stagingShortcutRemove": {
+    "message": "शॉर्टकट हटाएँ"
+  },
+  "stagingShortcutRemoved": {
+    "message": "शॉर्टकट हटा दिया गया"
+  },
+  "stagingShortcutMove": {
+    "message": "चयनित को $1$ पर ले जाएँ",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
   "stagingBucketTitle": {
     "message": "बिना बुकमार्क"
   },

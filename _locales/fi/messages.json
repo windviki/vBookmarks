@@ -2257,6 +2257,38 @@
   "stagingGroupNoGroups": {
     "message": "Ei ryhmiä vielä"
   },
+  "stagingShortcutAdd": {
+    "message": "Lisää pikakuvake"
+  },
+  "stagingShortcutTitle": {
+    "message": "Siirrä pikakuvake"
+  },
+  "stagingShortcutEdit": {
+    "message": "Muokkaa pikakuvaketta"
+  },
+  "stagingShortcutAlias": {
+    "message": "Alias"
+  },
+  "stagingShortcutPickFolder": {
+    "message": "Valitse kohdekansio…"
+  },
+  "stagingShortcutSave": {
+    "message": "Tallenna"
+  },
+  "stagingShortcutRemove": {
+    "message": "Poista pikakuvake"
+  },
+  "stagingShortcutRemoved": {
+    "message": "Pikakuvake poistettu"
+  },
+  "stagingShortcutMove": {
+    "message": "Siirrä valittu kohteeseen $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
   "stagingBucketTitle": {
     "message": "Kirjanmerkitsemättömät"
   },

@@ -2257,6 +2257,38 @@
   "stagingGroupNoGroups": {
     "message": "Niciun grup încă"
   },
+  "stagingShortcutAdd": {
+    "message": "Adaugă scurtătură"
+  },
+  "stagingShortcutTitle": {
+    "message": "Scurtătură de mutare"
+  },
+  "stagingShortcutEdit": {
+    "message": "Editează scurtătura"
+  },
+  "stagingShortcutAlias": {
+    "message": "Alias"
+  },
+  "stagingShortcutPickFolder": {
+    "message": "Alege folderul țintă…"
+  },
+  "stagingShortcutSave": {
+    "message": "Salvează"
+  },
+  "stagingShortcutRemove": {
+    "message": "Elimină scurtătura"
+  },
+  "stagingShortcutRemoved": {
+    "message": "Scurtătură eliminată"
+  },
+  "stagingShortcutMove": {
+    "message": "Mută selecția în $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
   "stagingBucketTitle": {
     "message": "Nemarcate"
   },

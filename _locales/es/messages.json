@@ -2257,6 +2257,38 @@
   "stagingGroupNoGroups": {
     "message": "Aún no hay grupos"
   },
+  "stagingShortcutAdd": {
+    "message": "Añadir acceso directo"
+  },
+  "stagingShortcutTitle": {
+    "message": "Acceso directo de mover"
+  },
+  "stagingShortcutEdit": {
+    "message": "Editar acceso directo"
+  },
+  "stagingShortcutAlias": {
+    "message": "Alias"
+  },
+  "stagingShortcutPickFolder": {
+    "message": "Elegir carpeta de destino…"
+  },
+  "stagingShortcutSave": {
+    "message": "Guardar"
+  },
+  "stagingShortcutRemove": {
+    "message": "Eliminar acceso directo"
+  },
+  "stagingShortcutRemoved": {
+    "message": "Acceso directo eliminado"
+  },
+  "stagingShortcutMove": {
+    "message": "Mover seleccionados a $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
   "stagingBucketTitle": {
     "message": "Sin marcar"
   },

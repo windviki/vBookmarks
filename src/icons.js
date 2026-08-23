@@ -257,6 +257,67 @@ export const CHEVRON_ICON =
     '<polyline points="6.25 4.25 10 8 6.25 11.75"/>' +
     '</svg>';
 
+// Staging view (velvet staging workbench round) glyphs, same 16px line
+// grid: the scissors divider, the iconified selection-bar actions (open /
+// open-as-tab-group / assign / un-favorite / dissolve-group).
+
+// The recently-added region's cut divider: scissors between dashed lines.
+export const SCISSORS_ICON =
+    '<svg class="vbm-icon vbm-icon-scissors" width="16" height="16" viewBox="0 0 16 16" ' +
+    'fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+    '<circle cx="5.33" cy="4.67" r="1.67"/>' +
+    '<circle cx="5.33" cy="11.33" r="1.67"/>' +
+    '<line x1="6.67" y1="5.67" x2="12.33" y2="10.33"/>' +
+    '<line x1="6.67" y1="10.33" x2="12.33" y2="5.67"/>' +
+    '<line x1="12.33" y1="10.33" x2="14" y2="11.33"/>' +
+    '<line x1="12.33" y1="5.67" x2="14" y2="4.67"/>' +
+    '</svg>';
+
+// Open in new tabs: the classic external-arrow-out-of-a-box glyph.
+export const OPEN_ICON =
+    '<svg class="vbm-icon vbm-icon-open" width="16" height="16" viewBox="0 0 16 16" ' +
+    'fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+    '<path d="M14.67 8v4.67a2 2 0 0 1-2 2H3.33a2 2 0 0 1-2-2V3.33a2 2 0 0 1 2-2H8"/>' +
+    '<polyline points="10 1.33 14.67 1.33 14.67 6"/>' +
+    '<line x1="7.33" y1="8.67" x2="14.67" y2="1.33"/>' +
+    '</svg>';
+
+// Open as a tab group: the back tab + front window stack.
+export const TABS_ICON =
+    '<svg class="vbm-icon vbm-icon-tabs" width="16" height="16" viewBox="0 0 16 16" ' +
+    'fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+    '<path d="M6.5 2h5.83A1.67 1.67 0 0 1 14 3.67V5"/>' +
+    '<rect x="1" y="5" width="14" height="9.33" rx="1.2"/>' +
+    '</svg>';
+
+// Assign into a group: the layers/stack glyph (organize = stack).
+export const GROUP_ICON =
+    '<svg class="vbm-icon vbm-icon-group" width="16" height="16" viewBox="0 0 16 16" ' +
+    'fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+    '<path d="M8 1.67l6.33 3.16L8 8 1.67 4.83z"/>' +
+    '<path d="M1.67 8l6.33 3.16L14.33 8"/>' +
+    '<path d="M1.67 11.17L8 14.33l6.33-3.16"/>' +
+    '</svg>';
+
+// Un-favorite: the hollow star with a small × — the inverse of the star
+// row action, so the two toolbar buttons read as one toggle pair.
+export const STAR_X_ICON =
+    '<svg class="vbm-icon vbm-icon-star-x" width="16" height="16" viewBox="0 0 16 16" ' +
+    'fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+    `<path d="${STAR_PATH}"/>` +
+    '<path d="M11.2 4.2l2.6 2.6M13.8 4.2l-2.6 2.6"/>' +
+    '</svg>';
+
+// Dissolve a staging group: members exit the box (the door-arrow-out
+// glyph) — distinct from delete's trash and remove's plane.
+export const UNGROUP_ICON =
+    '<svg class="vbm-icon vbm-icon-ungroup" width="16" height="16" viewBox="0 0 16 16" ' +
+    'fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+    '<path d="M9.33 2v4.67"/>' +
+    '<polyline points="7 4.33 9.33 2 11.67 4.33"/>' +
+    '<path d="M2.5 3.67v7.66A2.17 2.17 0 0 0 4.67 13.5h6.66a2.17 2.17 0 0 0 2.17-2.17V3.67"/>' +
+    '</svg>';
+
 // v4 task-2: one 16px line icon per view tab (docs/plan-4.0.0/v4task-2.md §3.2). Same
 // grid/stroke recipe as the tile icons above; colored by the tab's CSS
 // `color` (muted normally, accent when selected). The search glyph matches

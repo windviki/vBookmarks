@@ -2257,6 +2257,38 @@
   "stagingGroupNoGroups": {
     "message": "אין עדיין קבוצות"
   },
+  "stagingShortcutAdd": {
+    "message": "הוסף קיצור דרך"
+  },
+  "stagingShortcutTitle": {
+    "message": "קיצור דרך להעברה"
+  },
+  "stagingShortcutEdit": {
+    "message": "ערוך קיצור דרך"
+  },
+  "stagingShortcutAlias": {
+    "message": "כינוי"
+  },
+  "stagingShortcutPickFolder": {
+    "message": "בחר תיקיית יעד…"
+  },
+  "stagingShortcutSave": {
+    "message": "שמור"
+  },
+  "stagingShortcutRemove": {
+    "message": "הסר קיצור דרך"
+  },
+  "stagingShortcutRemoved": {
+    "message": "קיצור הדרך הוסר"
+  },
+  "stagingShortcutMove": {
+    "message": "העבר את הנבחר ל-$1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
   "stagingBucketTitle": {
     "message": "לא מסומן"
   },

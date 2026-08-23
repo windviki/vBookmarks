@@ -2257,6 +2257,38 @@
   "stagingGroupNoGroups": {
     "message": "Aucun groupe pour l'instant"
   },
+  "stagingShortcutAdd": {
+    "message": "Ajouter un raccourci"
+  },
+  "stagingShortcutTitle": {
+    "message": "Raccourci de déplacement"
+  },
+  "stagingShortcutEdit": {
+    "message": "Modifier le raccourci"
+  },
+  "stagingShortcutAlias": {
+    "message": "Alias"
+  },
+  "stagingShortcutPickFolder": {
+    "message": "Choisir le dossier cible…"
+  },
+  "stagingShortcutSave": {
+    "message": "Enregistrer"
+  },
+  "stagingShortcutRemove": {
+    "message": "Supprimer le raccourci"
+  },
+  "stagingShortcutRemoved": {
+    "message": "Raccourci supprimé"
+  },
+  "stagingShortcutMove": {
+    "message": "Déplacer la sélection vers $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
   "stagingBucketTitle": {
     "message": "Non mis en favori"
   },

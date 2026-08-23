@@ -2257,6 +2257,38 @@
   "stagingGroupNoGroups": {
     "message": "Inga grupper ännu"
   },
+  "stagingShortcutAdd": {
+    "message": "Lägg till genväg"
+  },
+  "stagingShortcutTitle": {
+    "message": "Flytta till genväg"
+  },
+  "stagingShortcutEdit": {
+    "message": "Redigera genväg"
+  },
+  "stagingShortcutAlias": {
+    "message": "Alias"
+  },
+  "stagingShortcutPickFolder": {
+    "message": "Välj målmapp…"
+  },
+  "stagingShortcutSave": {
+    "message": "Spara"
+  },
+  "stagingShortcutRemove": {
+    "message": "Ta bort genväg"
+  },
+  "stagingShortcutRemoved": {
+    "message": "Genväg borttagen"
+  },
+  "stagingShortcutMove": {
+    "message": "Flytta markerade till $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
   "stagingBucketTitle": {
     "message": "Obokmärkta"
   },

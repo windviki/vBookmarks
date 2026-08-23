@@ -2257,6 +2257,38 @@
   "stagingGroupNoGroups": {
     "message": "Δεν υπάρχουν ακόμη ομάδες"
   },
+  "stagingShortcutAdd": {
+    "message": "Προσθήκη συντόμευσης"
+  },
+  "stagingShortcutTitle": {
+    "message": "Συντόμευση μετακίνησης"
+  },
+  "stagingShortcutEdit": {
+    "message": "Επεξεργασία συντόμευσης"
+  },
+  "stagingShortcutAlias": {
+    "message": "Ψευδώνυμο"
+  },
+  "stagingShortcutPickFolder": {
+    "message": "Επιλογή φακέλου προορισμού…"
+  },
+  "stagingShortcutSave": {
+    "message": "Αποθήκευση"
+  },
+  "stagingShortcutRemove": {
+    "message": "Αφαίρεση συντόμευσης"
+  },
+  "stagingShortcutRemoved": {
+    "message": "Η συντόμευση αφαιρέθηκε"
+  },
+  "stagingShortcutMove": {
+    "message": "Μετακίνηση επιλεγμένων σε $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
   "stagingBucketTitle": {
     "message": "Μη σελιδοποιημένα"
   },

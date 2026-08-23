@@ -2257,6 +2257,38 @@
   "stagingGroupNoGroups": {
     "message": "Gruppe veel pole"
   },
+  "stagingShortcutAdd": {
+    "message": "Lisa otsetee"
+  },
+  "stagingShortcutTitle": {
+    "message": "Liigutamise otsetee"
+  },
+  "stagingShortcutEdit": {
+    "message": "Muuda otsetee"
+  },
+  "stagingShortcutAlias": {
+    "message": "Alias"
+  },
+  "stagingShortcutPickFolder": {
+    "message": "Vali sihtkaust…"
+  },
+  "stagingShortcutSave": {
+    "message": "Salvesta"
+  },
+  "stagingShortcutRemove": {
+    "message": "Eemalda otsetee"
+  },
+  "stagingShortcutRemoved": {
+    "message": "Otsetee eemaldatud"
+  },
+  "stagingShortcutMove": {
+    "message": "Liiguta valitud sihtkohta $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
   "stagingBucketTitle": {
     "message": "Järjehoidjata"
   },

@@ -2257,6 +2257,38 @@
   "stagingGroupNoGroups": {
     "message": "Henüz grup yok"
   },
+  "stagingShortcutAdd": {
+    "message": "Kısayol ekle"
+  },
+  "stagingShortcutTitle": {
+    "message": "Taşıma kısayolu"
+  },
+  "stagingShortcutEdit": {
+    "message": "Kısayolu düzenle"
+  },
+  "stagingShortcutAlias": {
+    "message": "Takma ad"
+  },
+  "stagingShortcutPickFolder": {
+    "message": "Hedef klasörü seç…"
+  },
+  "stagingShortcutSave": {
+    "message": "Kaydet"
+  },
+  "stagingShortcutRemove": {
+    "message": "Kısayolu kaldır"
+  },
+  "stagingShortcutRemoved": {
+    "message": "Kısayol kaldırıldı"
+  },
+  "stagingShortcutMove": {
+    "message": "Seçilenleri $1$ konumuna taşı",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
   "stagingBucketTitle": {
     "message": "Yer imi eklenmemiş"
   },

@@ -2257,6 +2257,38 @@
   "stagingGroupNoGroups": {
     "message": "Все още няма групи"
   },
+  "stagingShortcutAdd": {
+    "message": "Добавяне на пряк път"
+  },
+  "stagingShortcutTitle": {
+    "message": "Пряк път за преместване"
+  },
+  "stagingShortcutEdit": {
+    "message": "Редактиране на пряк път"
+  },
+  "stagingShortcutAlias": {
+    "message": "Псевдоним"
+  },
+  "stagingShortcutPickFolder": {
+    "message": "Избор на целева папка…"
+  },
+  "stagingShortcutSave": {
+    "message": "Запазване"
+  },
+  "stagingShortcutRemove": {
+    "message": "Премахване на пряк път"
+  },
+  "stagingShortcutRemoved": {
+    "message": "Пряк път премахнат"
+  },
+  "stagingShortcutMove": {
+    "message": "Преместване на избраното в $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
   "stagingBucketTitle": {
     "message": "Без отметка"
   },

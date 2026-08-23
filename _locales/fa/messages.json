@@ -2257,6 +2257,38 @@
   "stagingGroupNoGroups": {
     "message": "هنوز گروهی وجود ندارد"
   },
+  "stagingShortcutAdd": {
+    "message": "افزودن میانبر"
+  },
+  "stagingShortcutTitle": {
+    "message": "میانبر انتقال به"
+  },
+  "stagingShortcutEdit": {
+    "message": "ویرایش میانبر"
+  },
+  "stagingShortcutAlias": {
+    "message": "نام مستعار"
+  },
+  "stagingShortcutPickFolder": {
+    "message": "انتخاب پوشه مقصد…"
+  },
+  "stagingShortcutSave": {
+    "message": "ذخیره"
+  },
+  "stagingShortcutRemove": {
+    "message": "حذف میانبر"
+  },
+  "stagingShortcutRemoved": {
+    "message": "میانبر حذف شد"
+  },
+  "stagingShortcutMove": {
+    "message": "انتقال انتخاب‌شده به $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
   "stagingBucketTitle": {
     "message": "نشانهنشده"
   },
