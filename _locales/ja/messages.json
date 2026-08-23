@@ -2233,6 +2233,15 @@
   "stagingGroupDissolved": {
     "message": "グループを解散しました — 項目はステージング領域に保持されます"
   },
+  "stagingGroupDelete": {
+    "message": "グループを削除（項目を含む）"
+  },
+  "stagingGroupDeleteConfirm": {
+    "message": "グループ「$1」を削除しますか？$2 個の項目もステージング領域から削除されます。"
+  },
+  "stagingGroupDeleted": {
+    "message": "グループを削除しました — $1 個の項目を削除"
+  },
   "stagingGroupAssign": {
     "message": "グループ…"
   },

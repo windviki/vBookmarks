@@ -2233,6 +2233,15 @@
   "stagingGroupDissolved": {
     "message": "그룹 해체됨 — 항목은 스테이징 영역에 유지됨"
   },
+  "stagingGroupDelete": {
+    "message": "그룹 삭제(항목 포함)"
+  },
+  "stagingGroupDeleteConfirm": {
+    "message": "그룹 \"$1\"을(를) 삭제할까요? $2개 항목도 스테이징 영역에서 제거됩니다."
+  },
+  "stagingGroupDeleted": {
+    "message": "그룹 삭제됨 — $1개 항목 제거됨"
+  },
   "stagingGroupAssign": {
     "message": "그룹…"
   },

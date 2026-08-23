@@ -2233,6 +2233,15 @@
   "stagingGroupDissolved": {
     "message": "Groep ontbonden — items behouden in de wachtruimte"
   },
+  "stagingGroupDelete": {
+    "message": "Groep verwijderen (met items)"
+  },
+  "stagingGroupDeleteConfirm": {
+    "message": "Groep \"$1\" verwijderen? De $2 item(s) verlaten ook het staginggebied."
+  },
+  "stagingGroupDeleted": {
+    "message": "Groep verwijderd — $1 item(s) verwijderd"
+  },
   "stagingGroupAssign": {
     "message": "Groep…"
   },

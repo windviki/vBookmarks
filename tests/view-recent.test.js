@@ -860,9 +860,13 @@ describe('staging view (velvet staging ST3)', () => {
         expect(html).toContain('id="recent-head"');
         expect(html).toContain('id="recent-list"');
         expect(html).toContain('id="recent-item-101"');
-        // dual-state rows: bookmarked rows anchor data-node-id, unfav don't
-        expect(html).toMatch(/id="staging-item-\d+" role="listitem" data-url="http:\/\/a\/" data-node-id="101"/);
-        expect(html).toMatch(/id="staging-item-\d+" role="listitem" data-url="http:\/\/h\/">/);
+        // dual-state rows: bookmarked rows anchor data-node-id, unfav don't;
+        // idle rows are HTML5 drag sources (the group-to-group DnD)
+        expect(html).toMatch(/id="staging-item-\d+" role="listitem" data-url="http:\/\/a\/" draggable="true" data-node-id="101"/);
+        expect(html).toMatch(/id="staging-item-\d+" role="listitem" data-url="http:\/\/h\/" draggable="true">/);
+        // the idle toolbar: summary left, new-group + select-mode right
+        expect(html).toContain('staging-new-group');
+        expect(html).toContain('staging-select-mode');
     });
 
     it('registers badge (staging count) and persistScroll', () => {
@@ -1460,3 +1464,246 @@ describe('per-bucket stage buttons (velvet staging UX round)', () => {
         expect(ctx.viewRecent.api.state().items.map(i => i.url).sort()).toEqual(['http://today/', 'http://week/']);
     });
 });
+
+describe('staging group management + DnD + render coalescing (workbench round)', () => {
+    const undoOn = () => ({
+        toastCalls: [], actionCalls: [],
+        showToast(msg) { this.toastCalls.push(msg); },
+        toastAction(msg, label, fn) { this.actionCalls.push([msg, label, fn]); }
+    });
+
+    // minimal fake nodes for the delegated DnD handlers: `closest` answers
+    // for one selector, classList records, dataset carries the identity.
+    const mkNode = (sel, props = {}) => {
+        const node = { ...props };
+        const set = new Set(props.classes || []);
+        node.classList = {
+            add: c => set.add(c),
+            remove: c => set.delete(c),
+            contains: c => set.has(c)
+        };
+        node.closest = s => (s === sel ? node : null);
+        return node;
+    };
+    const dndEvent = target => ({
+        target,
+        preventDefault() {},
+        stopPropagation() {},
+        dataTransfer: { setData() {}, effectAllowed: null, dropEffect: null }
+    });
+
+    const fire = ($list, type, ev) => $list._listeners[type][0](ev);
+
+    it('createGroup builds a manual group that renders its head even while empty', () => {
+        const ctx = setup({});
+        const gid = ctx.viewRecent.api.createGroup('Reading list');
+        const state = ctx.viewRecent.api.state();
+        expect(state.groups[0].name).toBe('Reading list');
+        expect(state.groups[0].manual).toBe(true);
+        ctx.def().activate();
+        const html = ctx.$list.innerHTML;
+        expect(html).toContain('data-group-id="' + gid + '"');
+        expect(html).toContain('Reading list');
+        // the empty manual head carries the fold + count-pill + quick tail
+        expect(html).toMatch(new RegExp('staging-group-head[^>]*draggable="true"'));
+        expect(html).toContain('staging-group-rename');
+        expect(html).toContain('staging-group-place');
+        // removeByUrls keeps it (manual survives the prune)
+        ctx.viewRecent.api.addItems([{ id: null, url: 'http://x/', title: 'X' }]);
+        ctx.viewRecent.api.removeByUrl('http://x/');
+        expect(ctx.viewRecent.api.state().groups).toHaveLength(1);
+    });
+
+    it('the toolbar keeps the new-group entry on an EMPTY workbench (select hidden)', () => {
+        const ctx = setup({});
+        ctx.def().activate();
+        const html = ctx.$list.innerHTML;
+        expect(html).toContain('staging-new-group');
+        expect(html).not.toContain('staging-select-mode');
+    });
+
+    it('the new-group button opens the dialog and lands a manual group', () => {
+        const opened = [];
+        const dialogs = {
+            NewFolderDialog: { open(name, cb) { opened.push(name); cb('Tools'); } }
+        };
+        const ctx = setup({ dialogs });
+        ctx.def().activate();
+        ctx.click({
+            preventDefault() {}, stopPropagation() {},
+            target: { closest: sel => (sel === '.staging-new-group' ? {} : null) }
+        });
+        expect(opened).toEqual(['']);
+        const state = ctx.viewRecent.api.state();
+        expect(state.groups.map(g => g.name)).toEqual(['Tools']);
+        expect(state.groups[0].manual).toBe(true);
+    });
+
+    it('the group-head rename quick button and F2 both route to the rename dialog', () => {
+        const opened = [];
+        const dialogs = {
+            NewFolderDialog: { open(name, cb) { opened.push(name); cb('Renamed'); } }
+        };
+        const ctx = setup({ dialogs });
+        const gid = ctx.viewRecent.api.createGroup('Old');
+        ctx.def().activate();
+        ctx.click({
+            preventDefault() {}, stopPropagation() {},
+            target: {
+                closest: sel => (sel === '.staging-group-rename' ? {}
+                    : (sel === '.staging-group' ? { dataset: { groupId: gid } } : null))
+            }
+        });
+        expect(opened).toEqual(['Old']);
+        expect(ctx.viewRecent.api.state().groups[0].name).toBe('Renamed');
+        // F2 on the focused head
+        opened.length = 0;
+        ctx.viewRecent.api.renameGroup(gid); // no-op guard path stays intact
+        fire(ctx.$list, 'keydown', {
+            key: 'F2',
+            target: mkNode('.staging-group-head', { parentNode: { dataset: { groupId: gid } } }),
+            preventDefault() {}, stopPropagation() {}
+        });
+        expect(opened).toEqual(['Renamed']);
+    });
+
+    it('deleteGroup removes the group AND its items; the toast undo restores both', () => {
+        const confirmOpens = [];
+        const undo = undoOn();
+        const dialogs = {
+            ConfirmDialog: { open(opts) { confirmOpens.push(opts.dialog); opts.fn1(); } }
+        };
+        const ctx = setup({ dialogs, undo });
+        ctx.viewRecent.api.addItems([
+            { id: '5', url: 'http://in/', title: 'In' },
+            { id: '6', url: 'http://out/', title: 'Out' }
+        ]);
+        const gid = ctx.viewRecent.api.createGroup('Doomed');
+        ctx.viewRecent.api.state().items.find(i => i.url === 'http://in/').group = gid;
+        ctx.viewRecent.api.deleteGroup(gid);
+        const state = ctx.viewRecent.api.state();
+        expect(confirmOpens).toHaveLength(1);
+        expect(state.groups).toHaveLength(0);
+        expect(state.items.map(i => i.url)).toEqual(['http://out/']);
+        expect(undo.actionCalls).toHaveLength(1);
+        undo.actionCalls[0][2](); // the undo callback
+        const after = ctx.viewRecent.api.state();
+        expect(after.groups.map(g => g.name)).toEqual(['Doomed']);
+        expect(after.items.find(i => i.url === 'http://in/').group).toBe(after.groups[0].id);
+        expect(after.items.map(i => i.url).sort()).toEqual(['http://in/', 'http://out/']);
+    });
+
+    it('DnD: dragging a row onto a group head assigns it (staging only, tree untouched)', () => {
+        const moves = [];
+        const ctx = setup({});
+        ctx.chrome.bookmarks.move = (id, dest, cb) => { moves.push([id, dest]); cb(); };
+        ctx.viewRecent.api.addItems([{ id: null, url: 'http://r/', title: 'R' }]);
+        const gid = ctx.viewRecent.api.createGroup('Target');
+        // collapsed target: the drop must reveal it
+        ctx.viewRecent.api.toggleGroupFold(gid);
+        const rowLi = mkNode('li.staging-row', { dataset: { url: 'http://r/' } });
+        const head = mkNode('.staging-group-head', {
+            classes: ['staging-group-head'],
+            parentNode: { dataset: { groupId: gid } }
+        });
+        fire(ctx.$list, 'dragstart', dndEvent(rowLi));
+        fire(ctx.$list, 'dragover', dndEvent(head));
+        fire(ctx.$list, 'drop', dndEvent(head));
+        const state = ctx.viewRecent.api.state();
+        expect(state.items[0].group).toBe(gid);
+        expect(state.groups[0].collapsed).toBe(false); // revealed by the drop
+        expect(moves).toEqual([]); // the tree was never touched
+        expect(store_get_staging_group(ctx)).toBe(gid); // persisted bookkeeping
+    });
+
+    it('DnD: dropping onto the bucket head ungroups; onto a row adopts its group', () => {
+        const ctx = setup({});
+        ctx.viewRecent.api.addItems([
+            { id: '5', url: 'http://a/', title: 'A' },
+            { id: '6', url: 'http://b/', title: 'B' },
+            { id: null, url: 'http://c/', title: 'C' }
+        ]);
+        const state0 = ctx.viewRecent.api.state();
+        const gid = ctx.viewRecent.api.createGroup('G');
+        state0.items.find(i => i.url === 'http://b/').group = gid;
+        // drag C onto B (a member) → C joins G
+        fire(ctx.$list, 'dragstart', dndEvent(mkNode('li.staging-row', { dataset: { url: 'http://c/' } })));
+        fire(ctx.$list, 'drop', dndEvent(mkNode('li.staging-row', { dataset: { url: 'http://b/' } })));
+        expect(ctx.viewRecent.api.state().items.find(i => i.url === 'http://c/').group).toBe(gid);
+        // drag C onto the bucket head → ungrouped
+        fire(ctx.$list, 'dragstart', dndEvent(mkNode('li.staging-row', { dataset: { url: 'http://c/' } })));
+        fire(ctx.$list, 'drop', dndEvent(mkNode('.staging-bucket-head', {
+            classes: ['staging-bucket-head']
+        })));
+        expect(ctx.viewRecent.api.state().items.find(i => i.url === 'http://c/').group).toBeNull();
+        // drag A (bookmarked, loose) onto the bucket head → stays loose, no error
+        fire(ctx.$list, 'dragstart', dndEvent(mkNode('li.staging-row', { dataset: { url: 'http://a/' } })));
+        fire(ctx.$list, 'drop', dndEvent(mkNode('.staging-bucket-head', {
+            classes: ['staging-bucket-head']
+        })));
+        expect(ctx.viewRecent.api.state().items.find(i => i.url === 'http://a/').group).toBeNull();
+    });
+
+    it('DnD: dragging a group head onto another group head reorders', () => {
+        const ctx = setup({});
+        const g1 = ctx.viewRecent.api.createGroup('One');
+        const g2 = ctx.viewRecent.api.createGroup('Two');
+        const g3 = ctx.viewRecent.api.createGroup('Three');
+        ctx.viewRecent.api.addItems([{ id: null, url: 'http://x/', title: 'X' }]);
+        const head3 = mkNode('.staging-group-head', {
+            classes: ['staging-group-head'],
+            parentNode: { dataset: { groupId: g3 } }
+        });
+        const head1 = mkNode('.staging-group-head', {
+            classes: ['staging-group-head'],
+            parentNode: { dataset: { groupId: g1 } }
+        });
+        fire(ctx.$list, 'dragstart', dndEvent(head3));
+        fire(ctx.$list, 'dragover', dndEvent(head1));
+        fire(ctx.$list, 'drop', dndEvent(head1));
+        expect(ctx.viewRecent.api.state().groups.map(g => g.name)).toEqual(['Three', 'One', 'Two']);
+        expect(g3).toBeTruthy();
+        expect(g2).toBeTruthy();
+    });
+
+    it('the storage.onChanged echo guard: our own write does not replay, a foreign one does', () => {
+        const ctx = setup({});
+        ctx.viewRecent.api.addItems([{ id: null, url: 'http://a/', title: 'A' }]);
+        const before = ctx.viewRecent.api.state();
+        const written = ctx.store._data.staging;
+        // our own echo (byte-identical to what we flushed)
+        ctx.chrome.storage.listeners[0]({ staging: { newValue: written } }, 'local');
+        expect(ctx.viewRecent.api.state()).toBe(before); // no object swap, no re-render
+        // a foreign document's write replays as a whole-object re-parse
+        const foreign = JSON.stringify({
+            v: 1, items: [{ id: null, url: 'http://ext2/', title: 'E2', ts: 1, group: null }],
+            groups: [], recentCollapsed: false, unfavCollapsed: false, lastSeenTs: 0
+        });
+        ctx.chrome.storage.listeners[0]({ staging: { newValue: foreign } }, 'local');
+        const after = ctx.viewRecent.api.state();
+        expect(after).not.toBe(before);
+        expect(after.items[0].url).toBe('http://ext2/');
+    });
+
+    it('tree-event promotions mutate state synchronously and coalesce the repaint', () => {
+        const ctx = setup({ searchResults: { 'http://h/': [{ id: '88', url: 'http://h/' }] } });
+        ctx.viewRecent.api.addItems([{ id: null, url: 'http://h/', title: 'H' }]);
+        const before = ctx.store._data.staging;
+        ctx.chrome.bookmarks.onCreated.fn('88', { id: '88', url: 'http://h/', title: 'H' });
+        // state landed immediately…
+        expect(ctx.viewRecent.api.state().items[0].id).toBe('88');
+        // …but the persist+render pass waits for the coalescing tick
+        expect(ctx.store._data.staging).toBe(before);
+        tick(120);
+        expect(ctx.store._data.staging).not.toBe(before);
+        expect(ctx.store._data.staging).toContain('"id":"88"');
+    });
+});
+
+// helper used by the DnD persistence assertion (kept outside the describe
+// so the whole file shares one declaration point)
+function store_get_staging_group(ctx) {
+    const raw = JSON.parse(ctx.store._data.staging);
+    const it = raw.items.find(i => i.url === 'http://r/');
+    return it ? it.group : null;
+}

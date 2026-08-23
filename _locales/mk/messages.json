@@ -2232,6 +2232,15 @@
   "stagingGroupDissolved": {
     "message": "Групата е распуштена — ставките се задржани во подрачјето за подготовка"
   },
+  "stagingGroupDelete": {
+    "message": "Избриши група (со ставки)"
+  },
+  "stagingGroupDeleteConfirm": {
+    "message": "Да се избрише групата \"$1\"? Нејзините $2 ставки исто така ќе ја напуштат областа за подготвување."
+  },
+  "stagingGroupDeleted": {
+    "message": "Групата е избришана — отстранети $1 ставки"
+  },
   "stagingGroupAssign": {
     "message": "Група…"
   },

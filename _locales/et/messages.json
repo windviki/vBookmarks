@@ -2233,6 +2233,15 @@
   "stagingGroupDissolved": {
     "message": "Grupp saadetud laiali — üksused jäid ootealale"
   },
+  "stagingGroupDelete": {
+    "message": "Kustuta grupp (koos üksustega)"
+  },
+  "stagingGroupDeleteConfirm": {
+    "message": "Kas kustutada grupp \"$1\"? Selle $2 üksust lahkuvad ka lavalt."
+  },
+  "stagingGroupDeleted": {
+    "message": "Grupp kustutatud — $1 üksust eemaldatud"
+  },
   "stagingGroupAssign": {
     "message": "Grupp…"
   },

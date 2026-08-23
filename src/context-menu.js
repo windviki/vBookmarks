@@ -1842,6 +1842,12 @@ export function initContextMenu(ctx = {}) {
             case 'staging-group-dissolve':
                 ctx.staging.dissolveGroup(gid);
                 break;
+            // group + its member items leave staging together (confirm +
+            // toast-undo in the view layer)
+            case 'staging-group-delete':
+                if (ctx.staging.deleteGroup)
+                    ctx.staging.deleteGroup(gid);
+                break;
             // §3.5: usable OUTSIDE selection mode too — one hop into the
             // mode with the group's members preselected.
             case 'staging-group-select-all':

@@ -2233,6 +2233,15 @@
   "stagingGroupDissolved": {
     "message": "Grupo disuelto: los elementos se conservan en la zona de preparación"
   },
+  "stagingGroupDelete": {
+    "message": "Eliminar grupo (con elementos)"
+  },
+  "stagingGroupDeleteConfirm": {
+    "message": "¿Eliminar el grupo \"$1\"? Sus $2 elemento(s) también saldrán del área de preparación."
+  },
+  "stagingGroupDeleted": {
+    "message": "Grupo eliminado — $1 elemento(s) eliminados"
+  },
   "stagingGroupAssign": {
     "message": "Agrupar…"
   },

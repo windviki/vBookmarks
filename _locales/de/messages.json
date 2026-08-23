@@ -2233,6 +2233,15 @@
   "stagingGroupDissolved": {
     "message": "Gruppe aufgelöst – Elemente bleiben in der Sammelmappe"
   },
+  "stagingGroupDelete": {
+    "message": "Gruppe löschen (mit Elementen)"
+  },
+  "stagingGroupDeleteConfirm": {
+    "message": "Gruppe \"$1\" löschen? Ihre $2 Element(e) verlassen ebenfalls den Staging-Bereich."
+  },
+  "stagingGroupDeleted": {
+    "message": "Gruppe gelöscht — $1 Element(e) entfernt"
+  },
   "stagingGroupAssign": {
     "message": "Gruppe…"
   },

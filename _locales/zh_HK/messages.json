@@ -2233,6 +2233,15 @@
   "stagingGroupDissolved": {
     "message": "群組已解散——項目保留在暫存區"
   },
+  "stagingGroupDelete": {
+    "message": "刪除群組（含項目）"
+  },
+  "stagingGroupDeleteConfirm": {
+    "message": "刪除群組「$1」？其 $2 個項目亦會離開暫存區。"
+  },
+  "stagingGroupDeleted": {
+    "message": "群組已刪除 — 已移除 $1 個項目"
+  },
   "stagingGroupAssign": {
     "message": "群組…"
   },

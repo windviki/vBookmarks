@@ -2233,6 +2233,15 @@
   "stagingGroupDissolved": {
     "message": "Grupė išskirstyta — elementai išliko paruošimo srityje"
   },
+  "stagingGroupDelete": {
+    "message": "Ištrinti grupę (su elementais)"
+  },
+  "stagingGroupDeleteConfirm": {
+    "message": "Ištrinti grupę \"$1\"? Jos $2 elementas(-ai) taip pat paliks laukimo sritį."
+  },
+  "stagingGroupDeleted": {
+    "message": "Grupė ištrinta — pašalinta $1 elementas(-ai)"
+  },
   "stagingGroupAssign": {
     "message": "Grupė…"
   },

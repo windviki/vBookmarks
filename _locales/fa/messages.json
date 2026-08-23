@@ -2233,6 +2233,15 @@
   "stagingGroupDissolved": {
     "message": "گروه منحل شد — موارد در منطقه موقت باقی ماندند"
   },
+  "stagingGroupDelete": {
+    "message": "حذف گروه (با موارد)"
+  },
+  "stagingGroupDeleteConfirm": {
+    "message": "گروه «$1» حذف شود؟ $2 مورد آن نیز از ناحیه موقت خارج میشوند."
+  },
+  "stagingGroupDeleted": {
+    "message": "گروه حذف شد — $1 مورد حذف شد"
+  },
   "stagingGroupAssign": {
     "message": "گروه…"
   },

@@ -2233,6 +2233,15 @@
   "stagingGroupDissolved": {
     "message": "Csoport feloldva – az elemek a gyűjtőben maradtak"
   },
+  "stagingGroupDelete": {
+    "message": "Csoport törlése (elemekkel)"
+  },
+  "stagingGroupDeleteConfirm": {
+    "message": "Törli a(z) \"$1\" csoportot? $2 eleme is elhagyja az előkészítő területet."
+  },
+  "stagingGroupDeleted": {
+    "message": "Csoport törölve — $1 elem eltávolítva"
+  },
   "stagingGroupAssign": {
     "message": "Csoport…"
   },

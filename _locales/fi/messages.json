@@ -2233,6 +2233,15 @@
   "stagingGroupDissolved": {
     "message": "Ryhmä hajotettu — kohteet säilytetty odotuslistalla"
   },
+  "stagingGroupDelete": {
+    "message": "Poista ryhmä (kohteineen)"
+  },
+  "stagingGroupDeleteConfirm": {
+    "message": "Poistetaanko ryhmä \"$1\"? Sen $2 kohdetta poistuu myös esitysalueelta."
+  },
+  "stagingGroupDeleted": {
+    "message": "Ryhmä poistettu — $1 kohdetta poistettu"
+  },
   "stagingGroupAssign": {
     "message": "Ryhmä…"
   },

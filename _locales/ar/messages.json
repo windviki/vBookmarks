@@ -2233,6 +2233,15 @@
   "stagingGroupDissolved": {
     "message": "تم حل المجموعة — بقيت العناصر في منطقة التجميع"
   },
+  "stagingGroupDelete": {
+    "message": "حذف المجموعة (مع العناصر)"
+  },
+  "stagingGroupDeleteConfirm": {
+    "message": "حذف المجموعة \"$1\"؟ ستغادر عناصرها ($2) منطقة التجهيز أيضًا."
+  },
+  "stagingGroupDeleted": {
+    "message": "تم حذف المجموعة — تمت إزالة $1 عنصرًا"
+  },
   "stagingGroupAssign": {
     "message": "مجموعة…"
   },

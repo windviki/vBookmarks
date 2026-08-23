@@ -2233,6 +2233,15 @@
   "stagingGroupDissolved": {
     "message": "分组已解散 — 项目保留在暂存区"
   },
+  "stagingGroupDelete": {
+    "message": "删除分组（含项目）"
+  },
+  "stagingGroupDeleteConfirm": {
+    "message": "删除分组“$1”？其 $2 个项目也将移出暂存区。"
+  },
+  "stagingGroupDeleted": {
+    "message": "分组已删除 — 已移除 $1 个项目"
+  },
   "stagingGroupAssign": {
     "message": "分组…"
   },

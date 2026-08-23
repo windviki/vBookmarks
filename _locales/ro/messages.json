@@ -2233,6 +2233,15 @@
   "stagingGroupDissolved": {
     "message": "Grup dizolvat — elementele păstrate în zona de pregătire"
   },
+  "stagingGroupDelete": {
+    "message": "Șterge grupul (cu elemente)"
+  },
+  "stagingGroupDeleteConfirm": {
+    "message": "Ștergeți grupul \"$1\"? Cele $2 element(e) părăsesc și zona de pregătire."
+  },
+  "stagingGroupDeleted": {
+    "message": "Grup șters — $1 element(e) eliminate"
+  },
   "stagingGroupAssign": {
     "message": "Grup…"
   },

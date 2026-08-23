@@ -2233,6 +2233,15 @@
   "stagingGroupDissolved": {
     "message": "Grupa raspuštena — stavke zadržane u pripremnom području"
   },
+  "stagingGroupDelete": {
+    "message": "Obriši grupu (sa stavkama)"
+  },
+  "stagingGroupDeleteConfirm": {
+    "message": "Obrisati grupu \"$1\"? Njezinih $2 stavki također napušta područje pripreme."
+  },
+  "stagingGroupDeleted": {
+    "message": "Grupa obrisana — uklonjeno $1 stavki"
+  },
   "stagingGroupAssign": {
     "message": "Grupa…"
   },

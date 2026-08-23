@@ -2233,6 +2233,15 @@
   "stagingGroupDissolved": {
     "message": "Gruppe oppløst — elementer beholdt i staging-området"
   },
+  "stagingGroupDelete": {
+    "message": "Slett gruppe (med elementer)"
+  },
+  "stagingGroupDeleteConfirm": {
+    "message": "Slett gruppen \"$1\"? De $2 elementene forlater også staging-området."
+  },
+  "stagingGroupDeleted": {
+    "message": "Gruppe slettet — $1 element(er) fjernet"
+  },
   "stagingGroupAssign": {
     "message": "Gruppe…"
   },

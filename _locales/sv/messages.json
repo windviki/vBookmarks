@@ -2233,6 +2233,15 @@
   "stagingGroupDissolved": {
     "message": "Grupp upplöst — objekt behålls i väntelistan"
   },
+  "stagingGroupDelete": {
+    "message": "Ta bort grupp (med objekt)"
+  },
+  "stagingGroupDeleteConfirm": {
+    "message": "Ta bort gruppen \"$1\"? Dess $2 objekt(er) lämnar också mellanlagringsområdet."
+  },
+  "stagingGroupDeleted": {
+    "message": "Grupp borttagen — $1 objekt(er) borttagna"
+  },
   "stagingGroupAssign": {
     "message": "Grupp…"
   },

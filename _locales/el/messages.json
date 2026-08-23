@@ -2233,6 +2233,15 @@
   "stagingGroupDissolved": {
     "message": "Η ομάδα διαλύθηκε — τα στοιχεία παραμένουν στην περιοχή"
   },
+  "stagingGroupDelete": {
+    "message": "Διαγραφή ομάδας (με στοιχεία)"
+  },
+  "stagingGroupDeleteConfirm": {
+    "message": "Διαγραφή ομάδας \"$1\"; Τα $2 στοιχείο(α) της απομακρύνονται επίσης από την περιοχή προσωρινής αποθήκευσης."
+  },
+  "stagingGroupDeleted": {
+    "message": "Η ομάδα διαγράφηκε — αφαιρέθηκαν $1 στοιχείο(α)"
+  },
   "stagingGroupAssign": {
     "message": "Ομάδα…"
   },

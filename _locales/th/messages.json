@@ -2233,6 +2233,15 @@
   "stagingGroupDissolved": {
     "message": "ยุบกลุ่มแล้ว — รายการยังคงอยู่ในพื้นที่จัดเตรียม"
   },
+  "stagingGroupDelete": {
+    "message": "ลบกลุ่ม (พร้อมรายการ)"
+  },
+  "stagingGroupDeleteConfirm": {
+    "message": "ลบกลุ่ม \"$1\" หรือไม่? รายการ $2 รายการจะออกจากพื้นที่จัดเตรียมด้วย"
+  },
+  "stagingGroupDeleted": {
+    "message": "ลบกลุ่มแล้ว — ลบรายการ $1 รายการ"
+  },
   "stagingGroupAssign": {
     "message": "กลุ่ม…"
   },

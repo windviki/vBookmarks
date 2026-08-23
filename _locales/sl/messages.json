@@ -2233,6 +2233,15 @@
   "stagingGroupDissolved": {
     "message": "Skupina razpuščena — elementi ostanejo v začasnem območju"
   },
+  "stagingGroupDelete": {
+    "message": "Izbriši skupino (s predmeti)"
+  },
+  "stagingGroupDeleteConfirm": {
+    "message": "Izbrisati skupino \"$1\"? Njenih $2 predmetov prav tako zapusti območje priprave."
+  },
+  "stagingGroupDeleted": {
+    "message": "Skupina izbrisana — odstranjenih $1 predmetov"
+  },
   "stagingGroupAssign": {
     "message": "Skupina…"
   },

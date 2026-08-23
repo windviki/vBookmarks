@@ -273,6 +273,7 @@ import { deferIdle, mark as perfMark } from './idle.js';
         // entries (fav toggle label is state-set at open time)
         'staging-group-rename': 'stagingGroupRename',
         'staging-group-dissolve': 'stagingGroupDissolve',
+        'staging-group-delete': 'stagingGroupDelete',
         'staging-group-select-all': 'stagingGroupSelectAll',
         'staging-group-save-folder': 'groupSaveToFolder',
         'staging-group-copy-folder': 'groupCopyToFolder',

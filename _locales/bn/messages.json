@@ -2233,6 +2233,15 @@
   "stagingGroupDissolved": {
     "message": "গ্রুপ ভেঙে গেছে — আইটেম স্টেজিং এলাকায় রাখা হয়েছে"
   },
+  "stagingGroupDelete": {
+    "message": "গ্রুপ মুছুন (আইটেমসহ)"
+  },
+  "stagingGroupDeleteConfirm": {
+    "message": "\"$1\" গ্রুপটি মুছবেন? এর $2টি আইটেমও স্টেজিং এলাকা ছেড়ে যাবে।"
+  },
+  "stagingGroupDeleted": {
+    "message": "গ্রুপ মুছে ফেলা হয়েছে — $1টি আইটেম সরানো হয়েছে"
+  },
   "stagingGroupAssign": {
     "message": "গ্রুপ…"
   },

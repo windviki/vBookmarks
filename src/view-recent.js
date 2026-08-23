@@ -36,7 +36,7 @@
  */
 
 import { relTimeLabel } from './tree-render.js';
-import { VIEW_ICONS, STAGE_ICON, STAGE_ICON_DONE, STAGE_REMOVE_ICON, STAR_ICON, STAR_ICON_FILLED, SELECT_ICON, FOLDER_STAR_ICON } from './icons.js';
+import { VIEW_ICONS, STAGE_ICON, STAGE_ICON_DONE, STAGE_REMOVE_ICON, STAR_ICON, STAR_ICON_FILLED, SELECT_ICON, FOLDER_STAR_ICON, FOLDER_PLUS_ICON, EDIT_ICON } from './icons.js';
 import { htmlspecialchars } from './escape.js';
 import { parkRowFocus, unparkRowFocus, parkToolbarFocus, restoreToolbarFocus } from './list-focus.js';
 import * as staging from './staging.js';
@@ -70,8 +70,25 @@ export function initViewRecent(ctx = {}) {
     // --- Staging state (src/staging.js owns the model) --------------------
     let stagingState = staging.parse(store.get('staging'));
 
+    // chrome.storage.onChanged ALSO fires in the document that made the write
+    // (verified against a real Chrome) — every persistStaging() would echo
+    // back ~200ms later as a phantom cross-document replay (a second full
+    // re-render + a stagingState object swap that can strand in-flight batch
+    // closures on the stale object). Track the exact bytes we flushed; an
+    // echo that matches ANY of our own recent writes is skipped. A genuine
+    // external write can never byte-match one of ours unless the state is
+    // identical — in which case skipping the replay is exactly right.
+    const ownWrites = [];
+    const rememberOwnWrite = raw => {
+        ownWrites.push(raw);
+        if (ownWrites.length > 16)
+            ownWrites.shift();
+    };
+
     const persistStaging = () => {
-        store.set('staging', staging.serialize(stagingState));
+        const raw = staging.serialize(stagingState);
+        rememberOwnWrite(raw);
+        store.set('staging', raw);
         views.updateBadges(); // store.set does not auto-update tab badges
     };
 
@@ -174,12 +191,17 @@ export function initViewRecent(ctx = {}) {
             return;
         }
         chrome.permissions.contains({ permissions: ['history'] }, granted => {
-            historyPerm = !!granted;
-            if (historyPerm && !store.get('statsHistoryImportedAt')) {
+            const resolved = !!granted;
+            const changed = historyPerm !== resolved;
+            historyPerm = resolved;
+            if (resolved && !store.get('statsHistoryImportedAt')) {
                 importHistory(); // grant landed while the popup was closed
-            } else if (views.isActive('recent')) {
-                refresh(); // repaint with the banner resolved
+            } else if (changed && views.isActive('recent')) {
+                refresh(); // the banner zone changed — repaint once
             }
+            // An unchanged verdict needs no repaint: the activate() hook that
+            // triggered this probe runs its own refresh — the old unconditional
+            // refresh made every view entry paint twice.
         });
     };
 
@@ -200,10 +222,15 @@ export function initViewRecent(ctx = {}) {
         const starLabel = _m(it.id ? 'stagingRowUnfav' : 'stagingRowFav');
         const removeLabel = _m('stagingRemove');
         const sel = selecting && selected.has(it.url);
+        // draggable: the row is an HTML5 drag source (group-to-group moves,
+        // staging-only bookkeeping). The anchor itself must opt OUT
+        // (draggable="false") or Chrome starts a native link drag from it and
+        // the li never becomes the source. Selection mode drops the affordance.
+        const dragAttr = selecting ? '' : ' draggable="true"';
         return `<li class="vbm-row staging-row${inGroup ? ' staging-member' : ''}${sel ? ' sel' : ''}" id="staging-item-${idx}" role="listitem" ` +
-            `data-url="${htmlspecialchars(it.url)}"` +
+            `data-url="${htmlspecialchars(it.url)}"${dragAttr}` +
             (it.id ? ` data-node-id="${it.id}" data-parentid=""` : '') + '>' +
-            treeRender.generateBookmarkHTML(it.title, it.url, 'data-virtual="1"', it.id || null, null, {
+            treeRender.generateBookmarkHTML(it.title, it.url, 'data-virtual="1" draggable="false"', it.id || null, null, {
                 path,
                 badge: { text: rel, cls: 'time' },
                 rightText: (views.showItemPath() && path) ? path : '',
@@ -253,19 +280,27 @@ export function initViewRecent(ctx = {}) {
     };
 
     // A named group head (§3.5): fold control + name + member count. The
-    // hover homing button and the group context menu land with ST5.
+    // hover tail carries the quick actions (rename, homing — the tabgroups
+    // head language); the context menu holds the full set (dissolve, delete,
+    // select-all…). Manual (user-created) groups render even when EMPTY —
+    // they exist to be dragged into.
     const groupHeadHtml = (g, count) => {
         const collapsed = selecting ? false : g.collapsed;
         const placeLabel = _m('groupPlaceTooltip');
+        const renameLabel = _m('stagingGroupRename');
         const selCls = headSelClass(staging.groupItems(stagingState, g.id).map(it => it.url));
+        const dragAttr = selecting ? '' : ' draggable="true"';
         return `<li class="staging-group${selCls}" data-group-id="${g.id}" role="presentation">` +
-            `<span class="group-head staging-group-head" tabindex="-1" role="button" aria-expanded="${collapsed ? 'false' : 'true'}">` +
+            `<span class="group-head staging-group-head" tabindex="-1" role="button" aria-expanded="${collapsed ? 'false' : 'true'}"${dragAttr}>` +
             `<span class="chevron${collapsed ? ' collapsed' : ''}" aria-hidden="true"></span>` +
             `<span class="staging-section-title" dir="auto">${htmlspecialchars(g.name || _m('noTitle'))}</span>` +
             `<span class="count-pill" aria-label="${count}">${count}</span>` +
             (selecting ? '' :
-                // §3.5: hover-revealed homing — save the whole group to a
-                // folder in one hop (folder-picker chips included).
+                // The tabgroups-head quick tail: rename (F2 parity) + the
+                // §3.5 hover homing — save the whole group to a folder in
+                // one hop (folder-picker chips included).
+                `<button type="button" class="row-btn staging-group-rename" tabindex="-1" ` +
+                `aria-label="${htmlspecialchars(renameLabel)}" title="${htmlspecialchars(renameLabel)}">${EDIT_ICON}</button>` +
                 `<button type="button" class="row-btn staging-group-place" tabindex="-1" ` +
                 `aria-label="${htmlspecialchars(placeLabel)}" title="${htmlspecialchars(placeLabel)}">${FOLDER_STAR_ICON}</button>`) +
             `</span></li>`;
@@ -275,7 +310,9 @@ export function initViewRecent(ctx = {}) {
         const state = stagingState;
         const idxOf = new Map(state.items.map((it, i) => [it.url, i]));
         let html = `<ul role="list" id="staging-items"${selecting ? ' class="selecting"' : ''}>`;
-        if (!state.items.length) {
+        // The guiding empty state yields to user-built groups: a workbench
+        // with manual groups (even 0-item ones) is being set up, not empty.
+        if (!state.items.length && !state.groups.some(g => g.manual)) {
             // §11: a guiding empty state — the plane glyph + one muted line
             // pointing at the three entry points.
             html += `<li class="empty-state staging-empty" role="listitem">${STAGE_ICON}<i>${_m('stagingEmpty')}</i></li>`;
@@ -291,10 +328,12 @@ export function initViewRecent(ctx = {}) {
                         html += stagingRowHtml(it, idxOf.get(it.url), false);
                 }
             }
-            // ② groups in createdAt order (the model sorts on create)
+            // ② groups in createdAt order (the model sorts on create).
+            // Manual (user-built) groups render their head even at 0 members
+            // — an empty group is a landing zone for the next drag/drop.
             for (const g of state.groups) {
                 const members = staging.groupItems(state, g.id);
-                if (!members.length)
+                if (!members.length && !g.manual)
                     continue;
                 html += groupHeadHtml(g, members.length);
                 if (selecting || !g.collapsed) {
@@ -448,8 +487,7 @@ export function initViewRecent(ctx = {}) {
     };
 
     const renderToolbar = () => {
-        if (!staging.count(stagingState))
-            return '';
+        const n = staging.count(stagingState);
         if (selecting) {
             // Rung 1: count + set ops + exit; Rung 2: the actions (§3.3).
             let r1 = '<div class="staging-toolbar staging-select-toolbar selecting-bar vbm-toolbar">';
@@ -469,14 +507,22 @@ export function initViewRecent(ctx = {}) {
                 `<button class="staging-movecopy"${hasSel}>${_m('stagingMoveCopy')}</button>` +
                 `<button class="staging-delete"${hasSel}>${_m('deleteSelected')}</button>` +
                 `<button class="staging-remove"${hasSel}>${_m('stagingRemove')}</button>` +
-                `<button class="staging-clear-all"${staging.count(stagingState) ? '' : ' disabled'}>${_m('stagingClear')}</button>`;
+                `<button class="staging-clear-all"${n ? '' : ' disabled'}>${_m('stagingClear')}</button>`;
             r2 += '</div>';
             return r1 + r2;
         }
+        // The dead/dupes toolbar law: summary left, the action cluster pinned
+        // right (margin-inline-end:auto on the summary). The select-mode icon
+        // needs rows to act on; 新建分组 works on an empty workbench too — the
+        // toolbar never disappears (an empty staging area is still a
+        // workbench you can set up).
         let html = '<div class="staging-toolbar vbm-toolbar">';
-        html += `<span class="staging-summary">${_m('stagingCount', `${staging.count(stagingState)}`)}</span>` +
-            `<button class="staging-select-mode" aria-label="${htmlspecialchars(_m('selectModeEnter'))}" ` +
-            `title="${htmlspecialchars(_m('selectModeEnter'))}">${SELECT_ICON}</button>`;
+        html += `<span class="staging-summary">${_m('stagingCount', `${n}`)}</span>` +
+            `<button class="staging-new-group" aria-label="${htmlspecialchars(_m('stagingGroupNew'))}" ` +
+            `title="${htmlspecialchars(_m('stagingGroupNew'))}">${FOLDER_PLUS_ICON}${htmlspecialchars(_m('stagingGroupNew'))}</button>`;
+        if (n)
+            html += `<button class="staging-select-mode" aria-label="${htmlspecialchars(_m('selectModeEnter'))}" ` +
+                `title="${htmlspecialchars(_m('selectModeEnter'))}">${SELECT_ICON}</button>`;
         html += '</div>';
         return html;
     };
@@ -989,6 +1035,61 @@ export function initViewRecent(ctx = {}) {
         toast(_m('stagingGroupDissolved'));
     };
 
+    // User-built groups (the workbench's organizing units): created empty
+    // (manual: true — they survive pruneEmptyGroups), named through the same
+    // NewFolderDialog the rename path uses.
+    const newGroup = () => {
+        if (!dialogs || !dialogs.NewFolderDialog)
+            return;
+        dialogs.NewFolderDialog.open('', name => {
+            if (!name || !name.trim())
+                return;
+            staging.createGroup(stagingState, name.trim(), { manual: true });
+            persistStaging();
+            renderStaging();
+        });
+    };
+
+    // Delete (vs dissolve): the group AND its member items leave staging —
+    // confirm-gated (information deletion), toast-undo restores both.
+    const deleteGroup = groupId => {
+        const g = staging.findGroup(stagingState, groupId);
+        if (!g)
+            return;
+        const count = staging.groupItems(stagingState, groupId).length;
+        const run = () => {
+            const receipt = staging.deleteGroup(stagingState, groupId);
+            if (!receipt)
+                return;
+            persistStaging();
+            renderStaging();
+            undo.toastAction(_m('stagingGroupDeleted', `${receipt.removed.length}`), _m('undoAction'), () => {
+                staging.restoreGroup(stagingState, receipt);
+                persistStaging();
+                renderStaging();
+            });
+        };
+        if (dialogs && dialogs.ConfirmDialog) {
+            dialogs.ConfirmDialog.open({
+                dialog: _m('stagingGroupDeleteConfirm', [htmlspecialchars(g.name || _m('noTitle')), `${count}`]),
+                button1: `<strong>${_m('delete')}</strong>`,
+                button2: _m('nope'),
+                fn1: run
+            });
+        } else {
+            run();
+        }
+    };
+
+    // Drag reorder of the groups themselves (manual arrangement, staging-only
+    // bookkeeping): the dragged head lands BEFORE the target head.
+    const reorderGroup = (draggedId, targetId) => {
+        if (!staging.reorderGroups(stagingState, draggedId, targetId))
+            return;
+        persistStaging();
+        renderStaging();
+    };
+
     // The assign dialog (§3.3): existing groups as rows + a new-name input.
     const openGroupAssign = urls => {
         if (!dialogs || !dialogs.StagingGroupAssignDialog)
@@ -1123,10 +1224,8 @@ export function initViewRecent(ctx = {}) {
     // --- Tree-event sync (§0.5) ---------------------------------------------
     const relinkWith = urlIndex => {
         const r = staging.relink(stagingState, urlIndex);
-        if (r.changed) {
-            persistStaging();
-            renderStaging();
-        }
+        if (r.changed)
+            commitStagingSoon();
     };
 
     // Incremental verification for a removed anchor: per-url search keeps it
@@ -1150,13 +1249,14 @@ export function initViewRecent(ctx = {}) {
     chrome.bookmarks.onCreated.addListener((id, node) => {
         scheduleRefresh();
         // A staged id-less row whose URL just became a bookmark elsewhere
-        // auto-promotes (workbench and tree stay consistent).
+        // auto-promotes (workbench and tree stay consistent). State lands
+        // synchronously; the repaint is coalesced (batch creates fire this
+        // once per item — see commitStagingSoon).
         if (node && node.url) {
             const it = staging.getByUrl(stagingState, node.url);
             if (it && !it.id) {
                 staging.setFav(stagingState, node.url, id);
-                persistStaging();
-                renderStaging();
+                commitStagingSoon();
             }
         }
     });
@@ -1168,10 +1268,8 @@ export function initViewRecent(ctx = {}) {
     });
     // NEW (§0.5): title/url edits keep the snapshot in step with the tree.
     chrome.bookmarks.onChanged.addListener((id, changes) => {
-        if (staging.updateSnapshot(stagingState, id, changes)) {
-            persistStaging();
-            renderStaging();
-        }
+        if (staging.updateSnapshot(stagingState, id, changes))
+            commitStagingSoon();
     });
 
     // Full-index relink riding every tree rebuild (neat.js feeds the
@@ -1201,16 +1299,36 @@ export function initViewRecent(ctx = {}) {
 
     // Cross-document consistency (§0.3): popup and sidepanel each hold a
     // store mirror; the other document's write replays here as a whole-
-    // object re-parse (never trust the local mirror, never merge).
+    // object re-parse (never trust the local mirror, never merge). Our OWN
+    // writes echo too (see ownWrites above) and are skipped.
     if (chrome.storage && chrome.storage.onChanged)
         chrome.storage.onChanged.addListener((changes, area) => {
             if (area !== 'local' || !('staging' in changes))
                 return;
+            const raw = changes.staging.newValue;
+            if (ownWrites.includes(raw))
+                return; // our own echo — state and mirror already hold it
             if (store.adopt)
-                store.adopt('staging', changes.staging.newValue);
-            stagingState = staging.parse(changes.staging.newValue);
+                store.adopt('staging', raw);
+            stagingState = staging.parse(raw);
             renderStaging();
         });
+
+    // Tree-event mutations (promotions, snapshot updates, relinks) land on
+    // the state object synchronously, but their persist+render pass is
+    // coalesced: a folder-send batch or an undo replay fires one bookmark
+    // event per item, and a full innerHTML re-render per event froze the
+    // popup through the whole sequence (the "extremely laggy" report).
+    let eventCommitTimer = null;
+    const commitStagingSoon = () => {
+        if (eventCommitTimer)
+            return;
+        eventCommitTimer = setTimeout(() => {
+            eventCommitTimer = null;
+            persistStaging();
+            renderStaging();
+        }, 120);
+    };
 
     // Debounced freshness while the popup stays open.
     let refreshTimer = null;
@@ -1303,6 +1421,20 @@ export function initViewRecent(ctx = {}) {
         if (closest('.staging-select-mode')) {
             e.preventDefault();
             setSelecting(true, 'first');
+            return;
+        }
+        if (closest('.staging-new-group')) {
+            e.preventDefault();
+            e.stopPropagation();
+            newGroup();
+            return;
+        }
+        if (closest('.staging-group-rename')) {
+            e.preventDefault();
+            e.stopPropagation();
+            const headLi = closest('.staging-group');
+            if (headLi && headLi.dataset && headLi.dataset.groupId)
+                renameGroup(headLi.dataset.groupId);
             return;
         }
         if (closest('.staging-group-place')) {
@@ -1406,6 +1538,143 @@ export function initViewRecent(ctx = {}) {
         treeView.bookmarkHandler(e);
     });
     $list.addEventListener('auxclick', treeView.bookmarkHandler);
+
+    // --- Drag & drop between staging groups (the workbench's manual organ-
+    // izing): rows drag onto group heads / the bucket head (ungroup) / other
+    // rows (adopt that row's group); group heads drag to reorder. Everything
+    // lands ONLY in the staging model — the tree is never touched. HTML5 DnD
+    // here never meets the tree's mousedown machinery: staging anchors carry
+    // data-virtual (the tree drag skips them) and this list is not #tree.
+    const STAGING_ROW_MIME = 'application/x-vbm-staging';
+    const STAGING_GROUP_MIME = 'application/x-vbm-staging-group';
+    let dragRowUrl = null;
+    let dragGroupId = null;
+    let dragOverEl = null;
+
+    const dragTargetOf = t => {
+        if (!t || !t.closest)
+            return null;
+        return t.closest('.staging-group-head') || t.closest('.staging-bucket-head') ||
+            (dragRowUrl ? t.closest('li.staging-row') : null);
+    };
+
+    $list.addEventListener('dragstart', e => {
+        if (selecting) {
+            e.preventDefault();
+            return;
+        }
+        const li = e.target && e.target.closest ? e.target.closest('li.staging-row') : null;
+        if (li && li.dataset && li.dataset.url !== undefined) {
+            dragRowUrl = li.dataset.url;
+            dragGroupId = null;
+            try {
+                e.dataTransfer.setData(STAGING_ROW_MIME, dragRowUrl);
+                e.dataTransfer.setData('text/plain', dragRowUrl);
+                e.dataTransfer.effectAllowed = 'move';
+            } catch (_) { dragRowUrl = null; }
+            li.classList.add('dragging');
+            return;
+        }
+        const head = e.target && e.target.classList && e.target.classList.contains('staging-group-head')
+            ? e.target : null;
+        const gid = head && head.parentNode && head.parentNode.dataset
+            ? head.parentNode.dataset.groupId : null;
+        if (gid) {
+            dragGroupId = gid;
+            dragRowUrl = null;
+            try {
+                e.dataTransfer.setData(STAGING_GROUP_MIME, gid);
+                e.dataTransfer.effectAllowed = 'move';
+            } catch (_) { dragGroupId = null; }
+            head.classList.add('dragging');
+        }
+    });
+
+    $list.addEventListener('dragover', e => {
+        if (selecting || (!dragRowUrl && !dragGroupId))
+            return;
+        const target = dragTargetOf(e.target);
+        if (!target)
+            return;
+        e.preventDefault();
+        if (e.dataTransfer)
+            e.dataTransfer.dropEffect = 'move';
+        if (dragOverEl !== target) {
+            if (dragOverEl && dragOverEl.classList)
+                dragOverEl.classList.remove('drag-over');
+            dragOverEl = target;
+        }
+        if (!target.classList.contains('drag-over'))
+            target.classList.add('drag-over');
+    });
+
+    $list.addEventListener('drop', e => {
+        if (selecting || (!dragRowUrl && !dragGroupId))
+            return;
+        const target = dragTargetOf(e.target);
+        if (!target)
+            return;
+        e.preventDefault();
+        e.stopPropagation();
+        if (dragOverEl && dragOverEl.classList)
+            dragOverEl.classList.remove('drag-over');
+        dragOverEl = null;
+        if (dragGroupId) {
+            const headLi = target.classList.contains('staging-group-head')
+                ? target.parentNode : null;
+            const targetGid = headLi && headLi.dataset ? headLi.dataset.groupId : null;
+            if (targetGid && targetGid !== dragGroupId)
+                reorderGroup(dragGroupId, targetGid);
+            dragGroupId = null;
+            return;
+        }
+        const url = dragRowUrl;
+        dragRowUrl = null;
+        const it = url ? staging.getByUrl(stagingState, url) : null;
+        if (!it)
+            return;
+        if (target.classList.contains('staging-group-head')) {
+            const gid = target.parentNode && target.parentNode.dataset
+                ? target.parentNode.dataset.groupId : null;
+            if (gid && it.group !== gid) {
+                staging.assignGroup(stagingState, [url], gid);
+                // Dropping into a collapsed group reveals it — the result of
+                // the move must be visible, not swallowed by the fold.
+                staging.setGroupCollapsed(stagingState, gid, false);
+                persistStaging();
+                renderStaging();
+            }
+            return;
+        }
+        if (target.classList.contains('staging-bucket-head')) {
+            // the inbox head = "no group": bookmarked rows fall to the loose
+            // rows, unbookmarked ones to the bucket — assignGroup sorts it.
+            if (it.group !== null) {
+                staging.assignGroup(stagingState, [url], null);
+                persistStaging();
+                renderStaging();
+            }
+            return;
+        }
+        // a staging row target: adopt that row's group (loose row → ungroup)
+        const rowLi = target;
+        const rowIt = rowLi.dataset && rowLi.dataset.url
+            ? staging.getByUrl(stagingState, rowLi.dataset.url) : null;
+        const rowGroup = rowIt ? rowIt.group : undefined;
+        if (rowGroup !== undefined && it.group !== rowGroup) {
+            staging.assignGroup(stagingState, [url], rowGroup);
+            persistStaging();
+            renderStaging();
+        }
+    });
+
+    $list.addEventListener('dragend', () => {
+        dragRowUrl = null;
+        dragGroupId = null;
+        dragOverEl = null;
+        for (const el of $list.querySelectorAll('.drag-over, .dragging'))
+            el.classList.remove('drag-over', 'dragging');
+    });
     $list.addEventListener('keydown', e => {
         // Head keys (dupes group-head protocol): ←/→/Space/Enter fold a
         // group/bucket head, or the recently-added section head, when the
@@ -1414,6 +1683,16 @@ export function initViewRecent(ctx = {}) {
             ? (e.target.closest('.staging-group-head') || e.target.closest('.staging-bucket-head') ||
                 e.target.closest('#recent-head'))
             : null;
+        // F2 renames the focused group head (the tabgroups-head parity).
+        if (headTarget && e.key === 'F2' && !selecting &&
+            headTarget.classList.contains('staging-group-head')) {
+            e.preventDefault();
+            e.stopPropagation();
+            const li = headTarget.closest('li');
+            if (li && li.dataset && li.dataset.groupId)
+                renameGroup(li.dataset.groupId);
+            return;
+        }
         if (headTarget && !selecting && [' ', 'Enter', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
             const fold = () => {
                 e.preventDefault();
@@ -1538,6 +1817,18 @@ export function initViewRecent(ctx = {}) {
         isGroupCollapsed: gid => !!(staging.findGroup(stagingState, gid) || {}).collapsed,
         renameGroup,
         dissolveGroup,
+        // User-built groups: create (named, manual — survives empty-pruning),
+        // delete (group + members leave staging, confirm + toast-undo in the
+        // view layer), and the DnD reorder hook the drop handler rides.
+        newGroup,
+        createGroup: name => {
+            const g = staging.createGroup(stagingState, (name || '').trim(), { manual: true });
+            persistStaging();
+            renderStaging();
+            return g.id;
+        },
+        deleteGroup,
+        reorderGroup,
         // §2.4: the row-menu "Copy/move to…" on an UNbookmarked staging row —
         // the §3.3 unfav semantics (create into the target; move leaves,
         // copy stays) through the same picker.

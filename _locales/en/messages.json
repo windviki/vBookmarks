@@ -2481,6 +2481,15 @@
   "stagingGroupDissolved": {
     "message": "Group dissolved — items kept in the staging area"
   },
+  "stagingGroupDelete": {
+    "message": "Delete group (with items)"
+  },
+  "stagingGroupDeleteConfirm": {
+    "message": "Delete group \"$1\"? Its $2 item(s) leave the staging area too."
+  },
+  "stagingGroupDeleted": {
+    "message": "Group deleted — $1 item(s) removed"
+  },
   "stagingGroupAssign": {
     "message": "Group…"
   },

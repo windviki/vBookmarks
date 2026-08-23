@@ -2233,6 +2233,15 @@
   "stagingGroupDissolved": {
     "message": "Групата е разпусната — елементите остават в зоната за подготовка"
   },
+  "stagingGroupDelete": {
+    "message": "Изтриване на група (с елементи)"
+  },
+  "stagingGroupDeleteConfirm": {
+    "message": "Да се изтрие групата \"$1\"? Нейните $2 елемент(а) също напускат зоната за подготовка."
+  },
+  "stagingGroupDeleted": {
+    "message": "Групата е изтрита — $1 елемент(а) премахнати"
+  },
   "stagingGroupAssign": {
     "message": "Група…"
   },

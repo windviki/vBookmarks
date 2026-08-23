@@ -2233,6 +2233,15 @@
   "stagingGroupDissolved": {
     "message": "Đã giải tán nhóm — các mục vẫn giữ trong vùng chờ"
   },
+  "stagingGroupDelete": {
+    "message": "Xóa nhóm (kèm mục)"
+  },
+  "stagingGroupDeleteConfirm": {
+    "message": "Xóa nhóm \"$1\"? $2 mục của nhóm cũng sẽ rời khỏi khu vực tạm."
+  },
+  "stagingGroupDeleted": {
+    "message": "Đã xóa nhóm — $1 mục đã bị xóa"
+  },
   "stagingGroupAssign": {
     "message": "Nhóm…"
   },

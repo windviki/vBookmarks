@@ -2233,6 +2233,15 @@
   "stagingGroupDissolved": {
     "message": "समूह भंग — आइटम स्टेजिंग क्षेत्र में रखे गए"
   },
+  "stagingGroupDelete": {
+    "message": "समूह हटाएँ (आइटम सहित)"
+  },
+  "stagingGroupDeleteConfirm": {
+    "message": "समूह \"$1\" हटाएँ? इसके $2 आइटम भी स्टेजिंग क्षेत्र से हट जाएँगे।"
+  },
+  "stagingGroupDeleted": {
+    "message": "समूह हटाया गया — $1 आइटम हटाए गए"
+  },
   "stagingGroupAssign": {
     "message": "समूह…"
   },

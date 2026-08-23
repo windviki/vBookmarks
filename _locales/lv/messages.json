@@ -2233,6 +2233,15 @@
   "stagingGroupDissolved": {
     "message": "Grupa izformēta — vienumi saglabāti sagatavošanas zonā"
   },
+  "stagingGroupDelete": {
+    "message": "Dzēst grupu (ar vienumiem)"
+  },
+  "stagingGroupDeleteConfirm": {
+    "message": "Dzēst grupu \"$1\"? Tās $2 vienums(-i) arī tiks noņemti no sagatavošanas zonas."
+  },
+  "stagingGroupDeleted": {
+    "message": "Grupa dzēsta — noņemti $1 vienums(-i)"
+  },
   "stagingGroupAssign": {
     "message": "Grupa…"
   },

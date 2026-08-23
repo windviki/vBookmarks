@@ -2233,6 +2233,15 @@
   "stagingGroupDissolved": {
     "message": "הקבוצה פורקה — פריטים נשמרו באזור ההמתנה"
   },
+  "stagingGroupDelete": {
+    "message": "מחק קבוצה (עם פריטים)"
+  },
+  "stagingGroupDeleteConfirm": {
+    "message": "למחוק קבוצה \"$1\"? $2 הפריטים שלה יוסרו גם מאזור ההמתנה."
+  },
+  "stagingGroupDeleted": {
+    "message": "הקבוצה נמחקה — $1 פריטים הוסרו"
+  },
   "stagingGroupAssign": {
     "message": "קבוצה…"
   },

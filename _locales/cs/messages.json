@@ -2233,6 +2233,15 @@
   "stagingGroupDissolved": {
     "message": "Skupina rozpuštěna — položky zůstaly v oblasti"
   },
+  "stagingGroupDelete": {
+    "message": "Smazat skupinu (s položkami)"
+  },
+  "stagingGroupDeleteConfirm": {
+    "message": "Smazat skupinu \"$1\"? Její $2 položka/ky také opustí oblast přípravy."
+  },
+  "stagingGroupDeleted": {
+    "message": "Skupina smazána — $1 položka/ky odstraněny"
+  },
   "stagingGroupAssign": {
     "message": "Skupina…"
   },

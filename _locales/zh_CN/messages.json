@@ -2287,6 +2287,15 @@
   "stagingGroupDissolved": {
     "message": "分组已解散，条目保留在暂存区"
   },
+  "stagingGroupDelete": {
+    "message": "删除分组（连同条目）"
+  },
+  "stagingGroupDeleteConfirm": {
+    "message": "删除分组「$1」？其中 $2 个条目也会一并移出暂存区。"
+  },
+  "stagingGroupDeleted": {
+    "message": "分组已删除，移出 $1 个条目"
+  },
   "stagingGroupAssign": {
     "message": "分组…"
   },

@@ -2233,6 +2233,15 @@
   "stagingGroupDissolved": {
     "message": "Grup dibubarkan — item tetap di area pementasan"
   },
+  "stagingGroupDelete": {
+    "message": "Hapus grup (dengan item)"
+  },
+  "stagingGroupDeleteConfirm": {
+    "message": "Hapus grup \"$1\"? $2 itemnya juga keluar dari area pementasan."
+  },
+  "stagingGroupDeleted": {
+    "message": "Grup dihapus — $1 item dihapus"
+  },
   "stagingGroupAssign": {
     "message": "Grup…"
   },

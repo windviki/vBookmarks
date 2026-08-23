@@ -2233,6 +2233,15 @@
   "stagingGroupDissolved": {
     "message": "Grupa rozwiązana — elementy pozostały w obszarze roboczym"
   },
+  "stagingGroupDelete": {
+    "message": "Usuń grupę (z elementami)"
+  },
+  "stagingGroupDeleteConfirm": {
+    "message": "Usunąć grupę \"$1\"? Jej $2 element(y) również opuści obszar roboczy."
+  },
+  "stagingGroupDeleted": {
+    "message": "Grupa usunięta — usunięto $1 element(y)"
+  },
   "stagingGroupAssign": {
     "message": "Grupuj…"
   },

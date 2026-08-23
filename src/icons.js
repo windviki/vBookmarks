@@ -39,6 +39,16 @@ export const FOLDER_STAR_ICON =
     `<path d="${STAR_PATH}" fill="currentColor" stroke="none" transform="translate(5.2 0.8) scale(0.68)"/>` +
     '</svg>';
 
+// "New group" (staging view): the folder silhouette with a small + on the
+// top-right — the toolbar's create-a-staging-group action. Same 16px line
+// grid as FOLDER_ICON/FOLDER_STAR_ICON so the family reads as one.
+export const FOLDER_PLUS_ICON =
+    '<svg class="vbm-icon vbm-icon-folder-plus" width="16" height="16" viewBox="0 0 16 16" ' +
+    'fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+    '<path d="M14.67 12.67a1.33 1.33 0 0 1-1.33 1.33H2.67a1.33 1.33 0 0 1-1.34-1.33V3.33a1.33 1.33 0 0 1 1.34-1.33h3.33l1.33 2h6a1.33 1.33 0 0 1 1.34 1.33z"/>' +
+    '<path d="M11.33 6.67v4M9.33 8.67h4"/>' +
+    '</svg>';
+
 export const DOCUMENT_CODE_ICON =
     '<svg class="vbm-icon vbm-icon-doc-code" width="16" height="16" viewBox="0 0 16 16" ' +
     'fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +

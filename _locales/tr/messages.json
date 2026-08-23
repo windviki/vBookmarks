@@ -2233,6 +2233,15 @@
   "stagingGroupDissolved": {
     "message": "Grup dağıtıldı — öğeler bekleme alanında kaldı"
   },
+  "stagingGroupDelete": {
+    "message": "Grubu sil (öğelerle)"
+  },
+  "stagingGroupDeleteConfirm": {
+    "message": "\"$1\" grubu silinsin mi? $2 öğe de hazırlık alanından çıkar."
+  },
+  "stagingGroupDeleted": {
+    "message": "Grup silindi — $1 öğe kaldırıldı"
+  },
   "stagingGroupAssign": {
     "message": "Grupla…"
   },

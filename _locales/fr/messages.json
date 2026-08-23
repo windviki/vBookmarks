@@ -2233,6 +2233,15 @@
   "stagingGroupDissolved": {
     "message": "Groupe dissous — les éléments sont conservés dans la zone de staging"
   },
+  "stagingGroupDelete": {
+    "message": "Supprimer le groupe (avec éléments)"
+  },
+  "stagingGroupDeleteConfirm": {
+    "message": "Supprimer le groupe \"$1\" ? Ses $2 élément(s) quitteront aussi la zone de staging."
+  },
+  "stagingGroupDeleted": {
+    "message": "Groupe supprimé — $1 élément(s) retiré(s)"
+  },
   "stagingGroupAssign": {
     "message": "Groupe…"
   },
