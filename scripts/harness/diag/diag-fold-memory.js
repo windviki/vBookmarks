@@ -97,10 +97,14 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
         await sleep(500);
         check('guide × hides the banner', await page.evaluate(() => !document.querySelector('.staging-guide-banner')));
 
-        // staging head fold
+        // staging head fold (instant: rows stay painted, hidden by class)
         await page.evaluate(() => document.getElementById('staging-head').click());
         await sleep(600);
-        check('staging head folds all rows', await page.evaluate(() => document.querySelectorAll('#staging-items li.vbm-row').length === 0));
+        check('staging head folds all rows', await page.evaluate(() => {
+            const list = document.getElementById('staging-list');
+            const ul = document.getElementById('staging-items');
+            return list.classList.contains('staging-area-collapsed') && getComputedStyle(ul).display === 'none';
+        }));
         check('head survives the fold', await page.evaluate(() => !!document.getElementById('staging-head')));
 
         // recent bucket fold (first bucket head)
@@ -125,13 +129,21 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
             stagingRows: document.querySelectorAll('#staging-items li.vbm-row').length,
             bucket0Rows: document.querySelectorAll('#recent-list li.vbm-row[data-recent-group="0"]').length,
             bucket3Rows: document.querySelectorAll('#recent-list li.vbm-row[data-recent-group="3"]').length,
-            headCollapsed: null
+            areaHidden: document.getElementById('staging-list').classList.contains('staging-area-collapsed')
         }));
-        check('staging head fold persists across reopen', persisted.stagingRows === 0);
+        check('staging head fold persists across reopen', persisted.stagingRows === 0 && persisted.areaHidden);
         check('today bucket fold persists across reopen', persisted.bucket0Rows === 0);
 
-        // unfold the staging head again for the selection-mode checks
-        await page.evaluate(() => document.getElementById('staging-head').click());
+        // unfold the staging head again (first unfold after a folded-open:
+        // the cached pieces drop in ONE innerHTML) — and TIME it
+        const unfoldMs = await page.evaluate(() => {
+            const t0 = performance.now();
+            document.getElementById('staging-head').click();
+            const t1 = performance.now();
+            return new Promise(res => requestAnimationFrame(() => requestAnimationFrame(() => res({ sync: +(t1 - t0).toFixed(1), settled: +(performance.now() - t0).toFixed(1) }))));
+        });
+        console.log('UNFOLD-TIMING', JSON.stringify(unfoldMs));
+        check('staging head unfold is instant (<60ms settled)', unfoldMs.settled < 60, JSON.stringify(unfoldMs));
         await sleep(600);
         // selection mode + assign dialog
         await page.evaluate(() => document.querySelector('.staging-select-mode').click());

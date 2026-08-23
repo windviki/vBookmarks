@@ -996,7 +996,7 @@ describe('staging view (velvet staging ST3)', () => {
         expect(undo.toastCalls[undo.toastCalls.length - 1]).toBe('stagingAddedSummary[3|0]');
     });
 
-    it('the section head folds the recent region and persists recentCollapsed', () => {
+    it('the section head folds the recent region (class-hide) and persists recentCollapsed', () => {
         const { viewRecent, store, $list, def, click, chrome } = setup({ recentItems: [ITEMS[0]] });
         def().activate();
         expect($list.innerHTML).toContain('id="recent-item-101"');
@@ -1005,12 +1005,16 @@ describe('staging view (velvet staging ST3)', () => {
             target: { closest: sel => (sel === '#recent-head' ? {} : null) }
         });
         expect(JSON.parse(store.get('staging')).recentCollapsed).toBe(true);
-        expect($list.innerHTML).not.toContain('id="recent-item-101"'); // recent rows gone
+        // instant-fold law: the rows stay painted (hidden by a root class in
+        // the real DOM); the head flips its aria-expanded
+        expect($list.innerHTML).toContain('id="recent-item-101"');
+        expect($list.innerHTML).toMatch(/id="recent-head"[^>]*aria-expanded="false"/);
         expect($list.innerHTML).toContain('id="recent-head"'); // the head stays
-        // folded: the next refresh skips the fetch
+        // freshness law: the fetch is never skipped (rows stay up to date
+        // even while the region is folded away)
         const before = chrome.bookmarks.getRecentCalls.length;
         viewRecent.refresh();
-        expect(chrome.bookmarks.getRecentCalls.length).toBe(before);
+        expect(chrome.bookmarks.getRecentCalls.length).toBe(before + 1);
     });
 
     it('activate advances lastSeenTs (the bucket "new N" baseline)', () => {

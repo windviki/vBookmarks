@@ -65,6 +65,13 @@
 > ② **去重视图反向轴对齐**：组头不动，成员行按暂存区工作台轴线重排——keeper-radio **中心落到暂存区散行 icon 中心（26px**，li 留白 8→18px）**，成员 icon 中心落到暂存区组内成员 icon 中心（50px**，a::before 0→6px 补位、icon 槽 40px 起）**。真浏览器探针 diag-axis-align.js 实测两轴逐像素吻合（26/50/15.5/24.5 全中）。
 > 门禁：2864 vitest 全绿 / eslint 0 / build 自检 PASS / diag-staging-verify ALL PASS / verify-keyboard 164 pass / verify-scrollbars 748 断言 ALL PASS / diag-fold-memory 19 项 / diag-axis-align 7 项 ALL PASS。
 
+> **迭代记录 L（组头标题修复 + 大组头折叠瞬时化 + 全视图折叠审计 + 4.0.8 对比，实施后回写）**：
+> ① **标题修复**：`viewRecent` 文案此前只有 en 改写为 Staging——zh_CN 仍是「最近添加」、其余 41 个 locale 全是「Recent/最近」，暂存区组头与视图标签因此显示错误。全部非 en locale 标记 [TODO:] 并经 i18n.py LLM 重译（zh/zh_CN = 暂存区、ja = ステージング 等），verify/missing 双门禁通过。
+> ② **两个大组头折叠瞬时化（用户反馈展开特别缓慢）**：根因 = 展开走整表重绘（暂存区组头展开 → renderStagingNow 全量重建 ~150-250ms；最近区组头折叠 → refresh() 全视图重绘+分片流）。修复 = **class 显隐法**——折叠/展开只是根类切换（display 零成本）：最近区**恒绘制**（行数受 recentCount 约束，折叠态藏而不删，数据事件照常刷新、不再跳 fetch）；暂存区折叠态不落 DOM，但**每次渲染都预建行串缓存**，展开时单次 innerHTML 投放缓存——实测展开 sync 3.2ms / settled 19ms（此前 150-250ms）。
+> ③ **全视图折叠审计收口**：树 = class 切换（本就瞬时）；dupes/tabgroups 组折叠 = 手术式（前轮）；staging 组/桶 = 手术式（前轮）；最近时间桶 = 手术式（前轮）；**本轮补 tabgroups 窗口折叠手术式**——折叠时按「绘制态」捕获整块 DOM（组内折叠态以 DOM 为准）再移除，展开原样插回（虚拟实验室仍走整表）。至此全部视图的折叠均不触发整表重绘。
+> ④ **4.0.8 对比审计（diag-cmp-408.js，6000 书签同种子）**：共享操作面实测——弹窗打开 226 vs 395ms、BIG 文件夹（1000 子项）展开 229 vs 281ms、折叠 ~9 vs ~8ms、树滚动 ~100-140ms 两者持平——**当前构建在共享面等于或快于 4.0.8**；4.1 多出的暂存/去重/标签组/死链视图及其机制是新成本来源（本分支已逐轮收口：折叠全手术、cv 与虚拟滚动互斥已修、favicon 重挂已局部化）。此前「比 4.0.8 慢」的体感主要来自两个大组头展开的整表重绘（本轮归零）与未命中缓存的 favicon 补全队列（4.0.6 起与 4.0.8 同源，非新引入）。
+> 门禁：2864 vitest 全绿 / eslint 0 / build 自检 PASS / i18n verify+missing 通过 / diag-staging-verify ALL PASS / verify-keyboard 164 pass / verify-scrollbars 748 断言 ALL PASS / diag-fold-memory 20 项 / diag-axis-align 7 项 ALL PASS。
+
 ## 准备实现的功能
 
 > 原始需求清单（冻结，逐字保留；下方「问题和方案」为其落地设计，迭代不改动本节）。

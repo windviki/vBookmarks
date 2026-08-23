@@ -1943,6 +1943,17 @@ menu[type=context] hr {
     display: none;
 }
 
+/* 折叠记忆轮 instant folds: the two big heads hide their regions with a
+   root class — the rows stay painted, so fold/unfold is a zero-work display
+   swap (no repaint, no stream). A persisted-fold open paints nothing for the
+   staging area; the unfold drops the cached pieces in ONE innerHTML. */
+#staging-list.staging-area-collapsed #staging-items {
+    display: none;
+}
+#staging-list.recent-area-collapsed #recent-list {
+    display: none;
+}
+
 /* Selection mode keeps the hierarchy WITHOUT moving the checkbox off the
    8px axis (the tabgroups law): the base #staging-list ul.selecting rule
    already gives every row the 8px lead, so every checkbox shares one

@@ -378,11 +378,11 @@ export function initViewRecent(ctx = {}) {
         const L = stagingLabels();
         const ul = `<ul role="list" id="staging-items"${selecting ? ' class="selecting"' : ''}></ul>`;
         const pieces = [];
-        // The whole-area fold (headCollapsed): the staging head alone carries
-        // the count — no rows stream. Selection mode force-opens (selecting
-        // renders every candidate row, the tabgroups law).
-        if (state.headCollapsed && !selecting)
-            return { ul, pieces };
+        // Selection mode force-opens (selecting renders every candidate row,
+        // the tabgroups law) — the fold state itself only gates whether the
+        // pieces land in the DOM (render()/renderStagingNow read it); the
+        // pieces are ALWAYS built so the unfold can drop them from the
+        // stagingRowsCache in one innerHTML.
         // The guiding empty state yields to user-built groups: a workbench
         // with manual groups (even 0-item ones) is being set up, not empty.
         if (!state.items.length && !state.groups.some(g => g.manual)) {
@@ -456,6 +456,10 @@ export function initViewRecent(ctx = {}) {
     // a folded bucket's member lis from this cache (no refetch, no favicon
     // re-hydration; the recent region stays untouched by staging repaints).
     let recentGroupRows = [[], [], [], []];
+    // Prebuilt staging-rows HTML (all pieces joined): the staging head's
+    // fold keeps the rows OUT of the DOM while collapsed, and the unfold
+    // drops this cache in ONE innerHTML — no rebuild, no stream wait.
+    let stagingRowsCache = '';
 
     // Recent rows as { ul, pieces, count } — the empty <ul> rides the head,
     // the row pieces stream inside it (same chunked-paint contract). The
@@ -557,9 +561,8 @@ export function initViewRecent(ctx = {}) {
             `</div>`;
     };
 
-    // Cached count for the fold: while collapsed the recent fetch is skipped
-    // (§2.1) and the head keeps the last known number.
-    let recentTotal = null;
+    // (折叠记忆轮: the recent region always paints — the fold hides it with
+    // a root class, so no cached count is needed any more.)
 
     // --- Selection mode (§3.1: the dead/dupes/tabgroups machinery) ---------
     // The selection unit is the staging item = its URL (§3.2). Entering
@@ -760,6 +763,12 @@ export function initViewRecent(ctx = {}) {
         if (paintHandle)
             paintHandle.cancel();
         const stagingArea = renderStagingArea();
+        // The rows cache serves the head folds: while the staging area is
+        // folded the rows stay OUT of the DOM (the pipe below stays empty),
+        // but the prebuilt pieces stay cached so the unfold drops them in
+        // ONE innerHTML — no rebuild, no stream wait.
+        stagingRowsCache = stagingArea.pieces.join('');
+        const stagingCollapsed = stagingState.headCollapsed && !selecting;
         let head = chromeHtml();
         head += renderToolbar();
         head += stagingArea.ul;
@@ -770,21 +779,25 @@ export function initViewRecent(ctx = {}) {
         head += renderRecentHead(recentN);
         const pipes = [{
             ul: '#staging-items',
-            pieces: stagingArea.pieces,
+            pieces: stagingCollapsed ? [] : stagingArea.pieces,
             first: 60,   // first rows land with the head
             chunk: 120   // then stream 120 rows per frame (adaptive off in
                          // pipes mode — the fixed stride is the dead-view law)
         }];
-        if (!stagingState.recentCollapsed) {
-            const rendered = renderRecentRows(items || []);
-            recentTotal = rendered.count;
-            head += rendered.ul;
-            pipes.push({
-                ul: '#recent-list',
-                pieces: rendered.pieces,
-                first: 1000, // recentCount-bounded — land everything with the head
-                chunk: 60
-            });
+        // The recent region always paints (its rows are recentCount-bounded);
+        // the fold hides them with a root class, so folding/unfolding is a
+        // zero-work display swap instead of a full repaint.
+        const rendered = renderRecentRows(items || []);
+        head += rendered.ul;
+        pipes.push({
+            ul: '#recent-list',
+            pieces: rendered.pieces,
+            first: 1000, // recentCount-bounded — land everything with the head
+            chunk: 60
+        });
+        if ($list && $list.classList && typeof $list.classList.toggle === 'function') {
+            $list.classList.toggle('staging-area-collapsed', stagingCollapsed);
+            $list.classList.toggle('recent-area-collapsed', !!stagingState.recentCollapsed);
         }
         // 4.0.1 focus law: a focused row rides the swap (park above, restore
         // here) so the ↓ walk survives every refresh repaint. The toolbar
@@ -817,10 +830,6 @@ export function initViewRecent(ctx = {}) {
             return;
         }
         dirty = false;
-        if (stagingState.recentCollapsed && recentTotal !== null) {
-            render(null, recentTotal);
-            return;
-        }
         chrome.bookmarks.getRecent(recentCount(), items => {
             let count = 0;
             for (let i = 0, l = (items || []).length; i < l; i++) {
@@ -859,14 +868,22 @@ export function initViewRecent(ctx = {}) {
         const parkedToolbar = parkToolbarFocus($list);
         const parkedRow = parkRowFocus($list);
         const stagingArea = renderStagingArea();
+        // Cache the prebuilt rows for the unfold; while collapsed the DOM
+        // gets the EMPTY <ul> (the rows drop in from the cache on unfold).
+        stagingRowsCache = stagingArea.pieces.join('');
+        const stagingCollapsed = stagingState.headCollapsed && !selecting;
         // pieces must join INSIDE the <ul>, never after its </ul> —
         // the list-chunks contract's own trap (li siblings of the list
         // are invisible to every `ul li` rule and row walk).
-        const stagingUl = stagingArea.ul.slice(0, -5) + stagingArea.pieces.join('') + '</ul>';
+        const stagingUl = stagingCollapsed
+            ? stagingArea.ul
+            : stagingArea.ul.slice(0, -5) + stagingArea.pieces.join('') + '</ul>';
         const leading = chromeHtml() + renderToolbar() + stagingUl;
         while ($list.firstChild && $list.firstChild !== anchor)
             $list.firstChild.remove();
         anchor.insertAdjacentHTML('beforebegin', leading);
+        if ($list && $list.classList && typeof $list.classList.toggle === 'function')
+            $list.classList.toggle('staging-area-collapsed', stagingCollapsed);
         lastRenderedRaw = staging.serialize(stagingState);
         restoreToolbarFocus($list, parkedToolbar);
         unparkRowFocus($list, parkedRow);
@@ -1427,9 +1444,28 @@ export function initViewRecent(ctx = {}) {
     const toggleHeadFold = () => {
         if (selecting)
             return;
-        staging.setHeadCollapsed(stagingState, !stagingState.headCollapsed);
+        const collapsedNow = !stagingState.headCollapsed;
+        staging.setHeadCollapsed(stagingState, collapsedNow);
         foldPersist();
-        renderStaging();
+        lastRenderedRaw = staging.serialize(stagingState);
+        const head = $list.querySelector ? $list.querySelector('#staging-head') : null;
+        const ul = $list.querySelector ? $list.querySelector('#staging-items') : null;
+        if (!head || !ul || typeof ul.innerHTML !== 'string') {
+            renderStaging();
+            return;
+        }
+        head.classList.toggle('collapsed', collapsedNow);
+        head.setAttribute('aria-expanded', collapsedNow ? 'false' : 'true');
+        const chev = head.querySelector('.chevron');
+        if (chev)
+            chev.classList.toggle('collapsed', collapsedNow);
+        if ($list.classList && typeof $list.classList.toggle === 'function')
+            $list.classList.toggle('staging-area-collapsed', collapsedNow);
+        // first unfold after a folded-open: the rows never streamed — drop
+        // the cached pieces in ONE innerHTML (no rebuild, no stream wait)
+        if (!collapsedNow && !ul.children.length && stagingRowsCache)
+            ul.innerHTML = stagingRowsCache;
+        onRowsRendered();
     };
 
     // A recent time-bucket fold (recentGroupCollapsed, 折叠记忆轮): surgical
@@ -2096,9 +2132,24 @@ export function initViewRecent(ctx = {}) {
         }
         if (closest('#recent-head')) {
             e.preventDefault();
-            staging.setRecentCollapsed(stagingState, !stagingState.recentCollapsed);
+            // The rows stay painted; the fold is a zero-work display swap
+            // (root class) — no refresh, no repaint, no stream.
+            const collapsedNow = !stagingState.recentCollapsed;
+            staging.setRecentCollapsed(stagingState, collapsedNow);
             persistStaging();
-            refresh();
+            lastRenderedRaw = staging.serialize(stagingState);
+            const headEl = $list.querySelector ? $list.querySelector('#recent-head') : null;
+            if (!headEl) {
+                refresh();
+                return;
+            }
+            headEl.classList.toggle('collapsed', collapsedNow);
+            headEl.setAttribute('aria-expanded', collapsedNow ? 'false' : 'true');
+            const chev = headEl.querySelector('.chevron');
+            if (chev)
+                chev.classList.toggle('collapsed', collapsedNow);
+            if ($list.classList && typeof $list.classList.toggle === 'function')
+                $list.classList.toggle('recent-area-collapsed', collapsedNow);
             return;
         }
         treeView.bookmarkHandler(e);
