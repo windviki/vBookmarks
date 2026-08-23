@@ -1,4 +1,4 @@
-// 4.1.1 LAB verification — the virtualScrollLab switch (options 实验室):
+// 4.1.0 LAB verification — the virtualScrollLab switch (options 实验室):
 // with the flag ON, the dupes/tab-groups lists keep only the viewport window
 // in the DOM (paddings carry the rest); scrolling re-windows; flipping the
 // switch live re-renders both ways; the regroup cost is measured ON vs OFF

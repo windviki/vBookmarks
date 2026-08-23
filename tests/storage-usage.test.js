@@ -93,7 +93,7 @@ const EXPECTED = {
     // written via the TAB_GROUP_FOLDER_META_KEY constant (invisible to the
     // literal scan) — tabled here via its KNOWN_KEYS membership.
     tabGroupsClosed: 'other', tabGroupsViewState: 'other', tabGroupFolderMeta: 'other',
-    // 4.1.1 实验室: the virtual-scroll experiment switch (local, default off)
+    // 4.1.0 实验室: the virtual-scroll experiment switch (local, default off)
     virtualScrollLab: 'other'
 };
 

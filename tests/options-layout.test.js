@@ -29,7 +29,7 @@ describe('options page group structure (round-6 item 5, v4 task-3 #17 merge)', (
         // sync / accessibility / custom icon / separators / sorting /
         // custom styles / backup+reset / labs — advanced-options merged in.
         // 4.1.0: the tab-groups group is live; only dupes stays a placeholder.
-        // 4.1.1: the Labs group (experimental features, default-off switches).
+        // 4.1.0: the Labs group (experimental features, default-off switches).
         expect(count(optionsHtml, '<section class="options-group">')).toBe(20);
         expect(count(optionsHtml, '<section class="options-group" hidden>')).toBe(1);
         expect(optionsHtml).toContain('<main class="options-grid">');

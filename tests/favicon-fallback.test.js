@@ -63,7 +63,7 @@ beforeAll(() => {
                 };
             }
             // <span> host for the SVG swap markup: parse just enough — the
-            // module reads .firstChild and clones it (4.1.1: the template
+            // module reads .firstChild and clones it (4.1.0: the template
             // is parsed once, every swap clones).
             return {
                 innerHTML: '',
@@ -168,7 +168,7 @@ describe('needsContrast', () => {
     });
 
     it('leaves a dark-but-colorful mark alone on dark — the flip halves its chroma (netflix)', () => {
-        // 4.1.1 用户实测反馈：netflix 暗 红 N 翻转后 chroma 190→90，呈褪色粉，
+        // 4.1.0 用户实测反馈：netflix 暗 红 N 翻转后 chroma 190→90，呈褪色粉，
         // "奇怪的滤镜效果"。饱和色在暗背景上靠彩度对比本就可见，不再翻转。
         expect(needsContrast(darkColorful, true)).toBe(false);
         expect(needsContrast(darkColorful, false)).toBe(false);

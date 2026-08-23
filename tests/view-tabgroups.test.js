@@ -473,7 +473,7 @@ describe('view registration', () => {
         }
     });
 
-    it('tab-only churn after a clean walk skips the bookmark-tree read (4.1.1)', () => {
+    it('tab-only churn after a clean walk skips the bookmark-tree read (4.1.0)', () => {
         vi.useFakeTimers();
         try {
             const ctx = setup({ active: true });

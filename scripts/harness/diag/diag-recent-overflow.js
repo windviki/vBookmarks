@@ -1,5 +1,5 @@
 // Bisect the #recent-list computed-overflow-x regression: print the matched
-// overflow declarations + test with the 4.1.1 content-visibility block
+// overflow declarations + test with the 4.1.0 content-visibility block
 // neutralized via an injected override.
 const puppeteer = require('puppeteer');
 const sleep = ms => new Promise(r => setTimeout(r, ms));
@@ -45,7 +45,7 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
         }, label);
 
         console.log(await probe('as-is'));
-        // Neutralize the 4.1.1 content-visibility block on recent rows only.
+        // Neutralize the 4.1.0 content-visibility block on recent rows only.
         await page.addStyleTag({ content: '#recent-list ul li.vbm-row { content-visibility: visible !important; contain-intrinsic-size: none; }' });
         await sleep(300);
         console.log(await probe('cv-neutralized'));

@@ -62,7 +62,7 @@ export const hashPixels = bytes => {
 // the flip filter were tuned against a 14-real-favicon matrix (thepaper,
 // github, x, netflix, youtube, yabook, ccav1, spotify, zhihu,
 // stackoverflow, docker, bilibili, devconsole, …) rendered on all four
-// theme backgrounds — see tmp/favicon-lab for the harness. 4.1.1 retuned
+// theme backgrounds — see tmp/favicon-lab for the harness. 4.1.0 retuned
 // the dark branch against a 60-icon matrix (tmp/favicon-lab/icons2 —
 // netflix/youtube/figma/tiktok/x/bilibili/zhihu + 45 more common sites):
 // a colored guard (0.10) now stops dark-but-vivid marks from being
@@ -95,7 +95,7 @@ export const contrastStats = data => {
 // MONOCHROME mark with essentially no light pixels (thepaper/github —
 // dark glyphs on transparency). A dark plate carrying a real light glyph
 // (x.com: light ≈ 0.10) already reads correctly and stays. And since
-// 4.1.1 the dark branch ALSO refuses to flip dark-but-COLORFUL marks
+// 4.1.0 the dark branch ALSO refuses to flip dark-but-COLORFUL marks
 // (netflix's dark-red N, the old youtube .ico's red plate): the
 // invert+hue-rotate filter halves their chroma (measured netflix red
 // 190→90 — a washed pastel users reported as a "weird filter"), while

@@ -199,7 +199,7 @@ const $ = id => document.getElementById(id);
             { id: 'stats-enabled', key: 'statsEnabled', defaultValue: '1', inverted: false },
             { id: 'search-history-enabled', key: 'searchHistoryEnabled', defaultValue: '1', inverted: false }
         ];
-        // 4.1.1 实验室: experimental features live here, default OFF, promoted
+        // 4.1.0 实验室: experimental features live here, default OFF, promoted
         // to their real groups only after real-world soak. virtualScrollLab —
         // the tab-groups/dupes views keep only the viewport window in the DOM
         // (src/virtual-list.js; off = the chunked streaming painter).
@@ -961,7 +961,7 @@ const $ = id => document.getElementById(id);
         document.getElementById('option-dead-scan-timeout').innerText = __m('optionDeadScanTimeout');
         document.getElementById('reset-settings-description').innerText = __m('resetSettingsDescription');
         document.getElementById('reset-button').innerText = __m('resetButton');
-        // 4.1.1 实验室 group
+        // 4.1.0 实验室 group
         document.getElementById('labs-options').innerText = __m('optionsGroupLabs');
         document.getElementById('option-virtual-scroll-lab').innerText = __m('optionVirtualScrollLab');
         document.getElementById('option-virtual-scroll-lab-hint').innerText = __m('optionVirtualScrollLabHint');
