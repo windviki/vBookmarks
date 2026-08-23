@@ -2263,6 +2263,12 @@
   "stagingShortcutBarLabel": {
     "message": "Flytta till:"
   },
+  "stagingGuideText": {
+    "message": "Organisera bokmärken här — markera rader och gå in i markeringsläge för batchåtgärder."
+  },
+  "stagingGuideDismiss": {
+    "message": "Visa inte igen"
+  },
   "stagingShortcutTitle": {
     "message": "Flytta till genväg"
   },

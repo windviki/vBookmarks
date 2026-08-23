@@ -2263,6 +2263,12 @@
   "stagingShortcutBarLabel": {
     "message": "移動先:"
   },
+  "stagingGuideText": {
+    "message": "ここでブックマークを整理 — 行を選択して選択モードに入り、一括操作を行います。"
+  },
+  "stagingGuideDismiss": {
+    "message": "今後表示しない"
+  },
   "stagingShortcutTitle": {
     "message": "移動先ショートカット"
   },

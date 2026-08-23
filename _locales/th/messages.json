@@ -2263,6 +2263,12 @@
   "stagingShortcutBarLabel": {
     "message": "ย้ายไปที่:"
   },
+  "stagingGuideText": {
+    "message": "จัดระเบียบที่คั่นหนังสือที่นี่ — เลือกแถวและเข้าสู่โหมดการเลือกเพื่อดำเนินการเป็นชุด"
+  },
+  "stagingGuideDismiss": {
+    "message": "ไม่ต้องแสดงอีก"
+  },
   "stagingShortcutTitle": {
     "message": "ทางลัดย้ายไปยัง"
   },

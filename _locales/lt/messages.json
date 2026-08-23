@@ -2263,6 +2263,12 @@
   "stagingShortcutBarLabel": {
     "message": "Perkelti į:"
   },
+  "stagingGuideText": {
+    "message": "Tvarkykite žymes čia — pasirinkite eilutes ir įjunkite žymėjimo režimą grupinėms operacijoms."
+  },
+  "stagingGuideDismiss": {
+    "message": "Nerodyti daugiau"
+  },
   "stagingShortcutTitle": {
     "message": "Perkėlimo nuoroda"
   },

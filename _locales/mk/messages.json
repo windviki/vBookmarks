@@ -2262,6 +2262,12 @@
   "stagingShortcutBarLabel": {
     "message": "Премести во:"
   },
+  "stagingGuideText": {
+    "message": "Организирајте обележувачи овде — изберете редови и влезете во режим на селекција за групни дејства."
+  },
+  "stagingGuideDismiss": {
+    "message": "Не прикажувај повторно"
+  },
   "stagingShortcutTitle": {
     "message": "Кратенка за преместување"
   },

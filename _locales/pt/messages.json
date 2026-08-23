@@ -2263,6 +2263,12 @@
   "stagingShortcutBarLabel": {
     "message": "Mover para:"
   },
+  "stagingGuideText": {
+    "message": "Organize bookmarks here — select rows and enter selection mode for the batch actions."
+  },
+  "stagingGuideDismiss": {
+    "message": "Don’t show again"
+  },
   "stagingShortcutTitle": {
     "message": "Atalho de mover para"
   },

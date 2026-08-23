@@ -2263,6 +2263,12 @@
   "stagingShortcutBarLabel": {
     "message": "Mută la:"
   },
+  "stagingGuideText": {
+    "message": "Organizați marcajele aici — selectați rândurile și intrați în modul de selecție pentru acțiunile în lot."
+  },
+  "stagingGuideDismiss": {
+    "message": "Nu mai afișa"
+  },
   "stagingShortcutTitle": {
     "message": "Scurtătură de mutare"
   },

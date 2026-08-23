@@ -2263,6 +2263,12 @@
   "stagingShortcutBarLabel": {
     "message": "Verplaatsen naar:"
   },
+  "stagingGuideText": {
+    "message": "Organiseer hier bladwijzers — selecteer rijen en ga naar selectiemodus voor batchacties."
+  },
+  "stagingGuideDismiss": {
+    "message": "Niet meer tonen"
+  },
   "stagingShortcutTitle": {
     "message": "Verplaats-snelkoppeling"
   },

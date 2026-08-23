@@ -2263,6 +2263,12 @@
   "stagingShortcutBarLabel": {
     "message": "الانتقال إلى:"
   },
+  "stagingGuideText": {
+    "message": "نظّم الإشارات المرجعية هنا — حدد الصفوف وأدخل وضع التحديد للإجراءات الجماعية."
+  },
+  "stagingGuideDismiss": {
+    "message": "لا تظهر مرة أخرى"
+  },
   "stagingShortcutTitle": {
     "message": "اختصار النقل"
   },

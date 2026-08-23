@@ -2263,6 +2263,12 @@
   "stagingShortcutBarLabel": {
     "message": "Μετακίνηση σε:"
   },
+  "stagingGuideText": {
+    "message": "Οργανώστε τους σελιδοδείκτες εδώ — επιλέξτε γραμμές και ενεργοποιήστε τη λειτουργία επιλογής για μαζικές ενέργειες."
+  },
+  "stagingGuideDismiss": {
+    "message": "Να μην εμφανιστεί ξανά"
+  },
   "stagingShortcutTitle": {
     "message": "Συντόμευση μετακίνησης"
   },

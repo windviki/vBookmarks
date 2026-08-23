@@ -2263,6 +2263,12 @@
   "stagingShortcutBarLabel": {
     "message": "Sposta in:"
   },
+  "stagingGuideText": {
+    "message": "Organizza qui i segnalibri — seleziona le righe e attiva la modalità di selezione per le azioni in batch."
+  },
+  "stagingGuideDismiss": {
+    "message": "Non mostrare più"
+  },
   "stagingShortcutTitle": {
     "message": "Scorciatoia di spostamento"
   },

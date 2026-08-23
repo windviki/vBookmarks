@@ -2263,6 +2263,12 @@
   "stagingShortcutBarLabel": {
     "message": "Flytt til:"
   },
+  "stagingGuideText": {
+    "message": "Organiser bokmerker her — velg rader og gå inn i utvalgsmodus for massehandlinger."
+  },
+  "stagingGuideDismiss": {
+    "message": "Ikke vis igjen"
+  },
   "stagingShortcutTitle": {
     "message": "Flytt-til-snarvei"
   },

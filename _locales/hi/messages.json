@@ -2263,6 +2263,12 @@
   "stagingShortcutBarLabel": {
     "message": "यहाँ ले जाएँ:"
   },
+  "stagingGuideText": {
+    "message": "यहां बुकमार्क व्यवस्थित करें — पंक्तियाँ चुनें और बैच क्रियाओं के लिए चयन मोड में प्रवेश करें।"
+  },
+  "stagingGuideDismiss": {
+    "message": "फिर से न दिखाएँ"
+  },
   "stagingShortcutTitle": {
     "message": "मूव-टू शॉर्टकट"
   },

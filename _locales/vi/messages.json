@@ -2263,6 +2263,12 @@
   "stagingShortcutBarLabel": {
     "message": "Di chuyển đến:"
   },
+  "stagingGuideText": {
+    "message": "在此整理书签 — 选择行并进入选择模式以执行批量操作。"
+  },
+  "stagingGuideDismiss": {
+    "message": "不再显示"
+  },
   "stagingShortcutTitle": {
     "message": "Lối tắt di chuyển"
   },

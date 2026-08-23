@@ -2263,6 +2263,12 @@
   "stagingShortcutBarLabel": {
     "message": "انتقال به:"
   },
+  "stagingGuideText": {
+    "message": "نشانکها را اینجا مرتب کنید — ردیفها را انتخاب و برای اقدامات گروهی وارد حالت انتخاب شوید."
+  },
+  "stagingGuideDismiss": {
+    "message": "دیگر نشان نده"
+  },
   "stagingShortcutTitle": {
     "message": "میانبر انتقال به"
   },

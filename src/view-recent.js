@@ -137,6 +137,22 @@ export function initViewRecent(ctx = {}) {
             `</div>`;
     };
 
+    // --- Staging guide strip (above the toolbar) -------------------------
+    // One quiet line: organize bookmarks here; selection mode unlocks the
+    // batch actions. Dismissed permanently via 不再提醒.
+    const stagingGuideHtml = () => {
+        if (store.get('stagingGuideDismissed'))
+            return '';
+        const dismissLabel = _m('stagingGuideDismiss');
+        return `<div class="staging-guide-banner" role="note">` +
+            `<i>${htmlspecialchars(_m('stagingGuideText'))}</i>` +
+            `<button type="button" class="staging-guide-dismiss" tabindex="-1">` +
+            htmlspecialchars(dismissLabel) + `</button>` +
+            `</div>`;
+    };
+
+    const chromeHtml = () => bannerHtml() + stagingGuideHtml();
+
     // chrome.history.search returns one item per URL (visitCount already
     // aggregated), so the cap only bounds memory: 100000 distinct URLs is
     // 全量 (附录 B 项 7a) for any realistic profile — the old 2000 silently
@@ -298,19 +314,18 @@ export function initViewRecent(ctx = {}) {
     };
 
     // A named group head (§3.5): fold control + name + member count. The
-    // quick tail reads right-to-left like the member rows' — place (homing)
-    // on the star column, delete (danger) on the remove column — with the
-    // group-specific rename/dissolve pair to the left (the tabgroups-head
-    // language: activate/rename live left of the shared tail). The context
-    // menu keeps the full set (toggle/rename/dissolve/delete/select-all/
-    // save/copy). Manual (user-created) groups render even when EMPTY —
-    // they exist to be dragged into.
+    // quick tail is [rename][place 归档][dissolve 解散][remove 移出暂存] —
+    // the dangerous 删除分组 no longer lives on the head (context menu /
+    // selection mode only); the rightmost slot is 移出暂存 (group + its
+    // member items leave staging, tree untouched, confirm + toast undo).
+    // Manual (user-created) groups render even when EMPTY — they exist
+    // to be dragged into.
     const groupHeadHtml = (g, count) => {
         const collapsed = selecting ? false : g.collapsed;
         const placeLabel = _m('groupPlaceTooltip');
         const renameLabel = _m('stagingGroupRename');
         const dissolveLabel = _m('stagingGroupDissolve');
-        const deleteLabel = _m('stagingGroupDelete');
+        const removeLabel = _m('stagingRemove');
         const selCls = headSelClass(staging.groupItems(stagingState, g.id).map(it => it.url));
         const dragAttr = selecting ? '' : ' draggable="true"';
         const gname = htmlspecialchars(g.name || _m('noTitle'));
@@ -323,12 +338,12 @@ export function initViewRecent(ctx = {}) {
             (selecting ? '' :
                 `<button type="button" class="row-btn staging-group-rename" tabindex="-1" ` +
                 `aria-label="${htmlspecialchars(renameLabel)}" title="${htmlspecialchars(renameLabel)}">${EDIT_ICON}</button>` +
-                `<button type="button" class="row-btn staging-group-dissolve" tabindex="-1" ` +
-                `aria-label="${htmlspecialchars(dissolveLabel)}" title="${htmlspecialchars(dissolveLabel)}">${UNGROUP_ICON}</button>` +
                 `<button type="button" class="row-btn staging-group-place" tabindex="-1" ` +
                 `aria-label="${htmlspecialchars(placeLabel)}" title="${htmlspecialchars(placeLabel)}">${FOLDER_STAR_ICON}</button>` +
-                `<button type="button" class="row-btn staging-group-delete" tabindex="-1" ` +
-                `aria-label="${htmlspecialchars(deleteLabel)}" title="${htmlspecialchars(deleteLabel)}">${TRASH_ICON}</button>`) +
+                `<button type="button" class="row-btn staging-group-dissolve" tabindex="-1" ` +
+                `aria-label="${htmlspecialchars(dissolveLabel)}" title="${htmlspecialchars(dissolveLabel)}">${UNGROUP_ICON}</button>` +
+                `<button type="button" class="row-btn staging-group-remove" tabindex="-1" ` +
+                `aria-label="${htmlspecialchars(removeLabel)}" title="${htmlspecialchars(removeLabel)}">${STAGE_REMOVE_ICON}</button>`) +
             `</span></li>`;
     };
 
@@ -649,7 +664,7 @@ export function initViewRecent(ctx = {}) {
     };
 
     const render = (items, recentN) => {
-        let html = bannerHtml();
+        let html = chromeHtml();
         html += renderToolbar();
         html += renderStagingArea();
         // The scissors cut: the recently-added region is a separate
@@ -722,7 +737,7 @@ export function initViewRecent(ctx = {}) {
         }
         const parkedToolbar = parkToolbarFocus($list);
         const parkedRow = parkRowFocus($list);
-        const leading = bannerHtml() + renderToolbar() + renderStagingArea();
+        const leading = chromeHtml() + renderToolbar() + renderStagingArea();
         while ($list.firstChild && $list.firstChild !== anchor)
             $list.firstChild.remove();
         anchor.insertAdjacentHTML('beforebegin', leading);
@@ -1196,9 +1211,19 @@ export function initViewRecent(ctx = {}) {
             onSave: data => {
                 if (!data || !data.folderId)
                     return;
-                staging.upsertShortcut(shortcuts, data);
+                const saved = staging.upsertShortcut(shortcuts, data);
                 persistShortcuts();
-                renderStaging();
+                // Defer past the dialog's close (which restores focus to
+                // the invoker): after the bar re-renders, land keyboard
+                // focus on the saved chip so ←/→ walk it immediately.
+                setTimeout(() => {
+                    renderStaging();
+                    if (saved && saved.id && $list.querySelector) {
+                        const chip = $list.querySelector('.staging-shortcut[data-shortcut-id="' + saved.id + '"]');
+                        if (chip && chip.focus)
+                            chip.focus();
+                    }
+                }, 0);
             }
         });
     };
@@ -1717,7 +1742,10 @@ export function initViewRecent(ctx = {}) {
                 dissolveGroup(headLi.dataset.groupId);
             return;
         }
-        if (closest('.staging-group-delete')) {
+        if (closest('.staging-group-remove')) {
+            // 移出暂存 (rightmost head slot): the group AND its member
+            // items leave the staging area — tree untouched, confirm +
+            // toast undo. The dangerous 删除分组 stays in the menu.
             e.preventDefault();
             e.stopPropagation();
             const headLi = closest('.staging-group');
@@ -1742,6 +1770,13 @@ export function initViewRecent(ctx = {}) {
             e.preventDefault();
             store.set('statsHistoryBannerDismissed', '1');
             refresh();
+            return;
+        }
+        if (closest('.staging-guide-dismiss')) {
+            e.preventDefault();
+            e.stopPropagation();
+            store.set('stagingGuideDismissed', '1');
+            renderStaging();
             return;
         }
         if (closest('.staging-add-btn')) {

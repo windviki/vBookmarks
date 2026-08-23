@@ -2263,6 +2263,12 @@
   "stagingShortcutBarLabel": {
     "message": "העבר אל:"
   },
+  "stagingGuideText": {
+    "message": "ארגן כאן סימניות — בחר שורות והיכנס למצב בחירה לפעולות קבוצתיות."
+  },
+  "stagingGuideDismiss": {
+    "message": "אל תציג שוב"
+  },
   "stagingShortcutTitle": {
     "message": "קיצור דרך להעברה"
   },

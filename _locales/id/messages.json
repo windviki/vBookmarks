@@ -2263,6 +2263,12 @@
   "stagingShortcutBarLabel": {
     "message": "Pindah ke:"
   },
+  "stagingGuideText": {
+    "message": "Atur bookmark di sini — pilih baris dan masuk mode seleksi untuk aksi batch."
+  },
+  "stagingGuideDismiss": {
+    "message": "Jangan tampilkan lagi"
+  },
   "stagingShortcutTitle": {
     "message": "Pintasan pindah ke"
   },

@@ -2259,6 +2259,12 @@
   "stagingShortcutBarLabel": {
     "message": "Mover para:"
   },
+  "stagingGuideText": {
+    "message": "Organize os favoritos aqui — selecione linhas e entre no modo de seleção para ações em lote."
+  },
+  "stagingGuideDismiss": {
+    "message": "Não mostrar novamente"
+  },
   "stagingShortcutTitle": {
     "message": "Atalho de mover para"
   },

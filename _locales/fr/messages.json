@@ -2263,6 +2263,12 @@
   "stagingShortcutBarLabel": {
     "message": "Déplacer vers :"
   },
+  "stagingGuideText": {
+    "message": "Organisez vos signets ici — sélectionnez des lignes et entrez en mode sélection pour les actions groupées."
+  },
+  "stagingGuideDismiss": {
+    "message": "Ne plus afficher"
+  },
   "stagingShortcutTitle": {
     "message": "Raccourci de déplacement"
   },

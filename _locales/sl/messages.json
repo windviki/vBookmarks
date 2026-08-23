@@ -2263,6 +2263,12 @@
   "stagingShortcutBarLabel": {
     "message": "Premakni v:"
   },
+  "stagingGuideText": {
+    "message": "Tu organizirajte zaznamke — izberite vrstice in vstopite v način izbire za množična dejanja."
+  },
+  "stagingGuideDismiss": {
+    "message": "Ne prikaži več"
+  },
   "stagingShortcutTitle": {
     "message": "Bližnjica za premik"
   },

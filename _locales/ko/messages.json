@@ -2263,6 +2263,12 @@
   "stagingShortcutBarLabel": {
     "message": "이동:"
   },
+  "stagingGuideText": {
+    "message": "여기에서 북마크를 정리하세요 — 행을 선택하고 선택 모드로 전환하여 일괄 작업을 수행하세요."
+  },
+  "stagingGuideDismiss": {
+    "message": "다시 표시하지 않음"
+  },
   "stagingShortcutTitle": {
     "message": "이동 바로가기"
   },

@@ -2263,6 +2263,12 @@
   "stagingShortcutBarLabel": {
     "message": "Премести в:"
   },
+  "stagingGuideText": {
+    "message": "Организирайте отметките тук — изберете редове и влезте в режим на избор за групови действия."
+  },
+  "stagingGuideDismiss": {
+    "message": "Не показвай повече"
+  },
   "stagingShortcutTitle": {
     "message": "Пряк път за преместване"
   },

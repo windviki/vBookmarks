@@ -2263,6 +2263,12 @@
   "stagingShortcutBarLabel": {
     "message": "收藏到："
   },
+  "stagingGuideText": {
+    "message": "在這裡整理書籤——選取列並進入選取模式，可使用更多批次操作。"
+  },
+  "stagingGuideDismiss": {
+    "message": "不再提醒"
+  },
   "stagingShortcutTitle": {
     "message": "移動到資料夾捷徑"
   },

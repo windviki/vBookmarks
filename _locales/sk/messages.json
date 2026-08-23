@@ -2263,6 +2263,12 @@
   "stagingShortcutBarLabel": {
     "message": "Presunúť do:"
   },
+  "stagingGuideText": {
+    "message": "Tu si usporiadajte záložky — vyberte riadky a vstúpte do režimu výberu pre hromadné akcie."
+  },
+  "stagingGuideDismiss": {
+    "message": "Nezobrazovať znova"
+  },
   "stagingShortcutTitle": {
     "message": "Odkaz na presun"
   },

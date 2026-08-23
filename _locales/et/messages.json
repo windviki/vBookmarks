@@ -2263,6 +2263,12 @@
   "stagingShortcutBarLabel": {
     "message": "Liiguta:"
   },
+  "stagingGuideText": {
+    "message": "Korralda järjehoidjaid siin — vali read ja lülitu valikurežiimile pakktoimingute jaoks."
+  },
+  "stagingGuideDismiss": {
+    "message": "Ära näita enam"
+  },
   "stagingShortcutTitle": {
     "message": "Liigutamise otsetee"
   },

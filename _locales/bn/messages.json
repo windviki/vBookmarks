@@ -2263,6 +2263,12 @@
   "stagingShortcutBarLabel": {
     "message": "এখানে সরান:"
   },
+  "stagingGuideText": {
+    "message": "এখানে বুকমার্ক সাজান — সারি নির্বাচন করুন এবং ব্যাচ অ্যাকশনের জন্য নির্বাচন মোডে প্রবেশ করুন।"
+  },
+  "stagingGuideDismiss": {
+    "message": "আবার দেখাবেন না"
+  },
   "stagingShortcutTitle": {
     "message": "স্থানান্তর শর্টকাট"
   },

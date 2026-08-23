@@ -2263,6 +2263,12 @@
   "stagingShortcutBarLabel": {
     "message": "Premjesti u:"
   },
+  "stagingGuideText": {
+    "message": "Ovdje organizirajte oznake — odaberite retke i uđite u način odabira za grupne radnje."
+  },
+  "stagingGuideDismiss": {
+    "message": "Ne prikazuj ponovno"
+  },
   "stagingShortcutTitle": {
     "message": "Prečac za premještanje"
   },

@@ -2263,6 +2263,12 @@
   "stagingShortcutBarLabel": {
     "message": "Pārvietot uz:"
   },
+  "stagingGuideText": {
+    "message": "Šeit organizējiet grāmatzīmes — atlasiet rindas un ievadiet atlases režīmu pakešdarbībām."
+  },
+  "stagingGuideDismiss": {
+    "message": "Vairs nerādīt"
+  },
   "stagingShortcutTitle": {
     "message": "Pārvietošanas saīsne"
   },

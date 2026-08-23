@@ -2263,6 +2263,12 @@
   "stagingShortcutBarLabel": {
     "message": "Przenieś do:"
   },
+  "stagingGuideText": {
+    "message": "Organizuj zakładki tutaj — zaznacz wiersze i wejdź w tryb zaznaczania, aby wykonać akcje zbiorcze."
+  },
+  "stagingGuideDismiss": {
+    "message": "Nie pokazuj ponownie"
+  },
   "stagingShortcutTitle": {
     "message": "Skrót przenoszenia"
   },

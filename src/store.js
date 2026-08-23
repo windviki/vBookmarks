@@ -118,6 +118,8 @@
         // move-to-folder shortcut chips (selection bar quick row): bookmark-id
         // keyed like the picker rosters, device-local.
         'stagingShortcuts',
+        // staging guide strip's "don't show again" stamp (device-local UI state)
+        'stagingGuideDismissed',
         // 'showSyncStatus' historically lived in localStorage (the other sync
         // keys were born in the sync area) — listing it lets the v1 migration
         // hand it to chrome.storage.local, from where the local→sync

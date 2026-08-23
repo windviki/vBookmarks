@@ -2263,6 +2263,12 @@
   "stagingShortcutBarLabel": {
     "message": "Áthelyezés ide:"
   },
+  "stagingGuideText": {
+    "message": "Rendezze itt a könyvjelzőket — válasszon sorokat, és lépjen kijelölési módba a tömeges műveletekhez."
+  },
+  "stagingGuideDismiss": {
+    "message": "Ne mutasd újra"
+  },
   "stagingShortcutTitle": {
     "message": "Áthelyezési parancsikon"
   },

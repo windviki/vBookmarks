@@ -2263,6 +2263,12 @@
   "stagingShortcutBarLabel": {
     "message": "Flyt til:"
   },
+  "stagingGuideText": {
+    "message": "Organiser bogmærker her — vælg rækker og indtast markeringstilstand for batchhandlinger."
+  },
+  "stagingGuideDismiss": {
+    "message": "Vis ikke igen"
+  },
   "stagingShortcutTitle": {
     "message": "Flyt-til-genvej"
   },

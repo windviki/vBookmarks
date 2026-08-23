@@ -141,15 +141,16 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
             // hierarchy: the member favicon column == the head's first
             // content glyph (group head title), both 32px from the edge
             out.groupTitle = rect(firstGroupHead.querySelector('.staging-section-title'));
-            // head quick tail: narrow container keeps place/delete only
+            // head quick tail: [rename][place][dissolve][remove 移出暂存];
+            // narrow container keeps place/remove only
             out.groupRename = rect(groupRename);
             out.groupDissolve = rect(document.querySelector('.staging-group-head .staging-group-dissolve'));
-            out.groupDelete = rect(document.querySelector('.staging-group-head .staging-group-delete'));
+            out.groupRemove = rect(document.querySelector('.staging-group-head .staging-group-remove'));
             const visibleNow = el => !!(el && el.getClientRects && el.getClientRects().length);
             out.renameVisible = visibleNow(groupRename);
             out.dissolveVisible = visibleNow(document.querySelector('.staging-group-head .staging-group-dissolve'));
             out.placeVisible = visibleNow(groupPlace);
-            out.deleteVisible = visibleNow(document.querySelector('.staging-group-head .staging-group-delete'));
+            out.removeVisible = visibleNow(document.querySelector('.staging-group-head .staging-group-remove'));
             // scissors divider + iconified action rung + time-head lead
             out.cut = !!document.querySelector('#staging-list .staging-cut');
             out.actionIcons = document.querySelectorAll('.staging-actions-toolbar .staging-icon-btn').length;
@@ -174,6 +175,7 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
                 return el ? el.getBoundingClientRect().left : null;
             })();
             out.manualEmptyHead = !!document.querySelector('li.staging-group[data-group-id="g3"]');
+            out.guideBanner = !!document.querySelector('.staging-guide-banner');
             // collapsed chevron: exactly one glyph source
             const cs = getComputedStyle(firstGroupHead.querySelector('.chevron'), '::before');
             out.chevronExpanded = getComputedStyle(firstGroupHead.querySelector('.chevron'), '::before').content;
@@ -204,17 +206,15 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
         ck('collapsed chevron = single ▸ glyph (no overlap)', collapsedChevron.content.includes('▸'));
         ck('group head fixed height 28', Math.abs(css.groupHead.h - 28) < 1.5);
         ck('bucket head fixed height 28', Math.abs(css.bucketHead.h - 28) < 1.5);
-        // the axis law binds each row's LAST trailing button (rename sits
-        // left of place inside the group head's quick pair by design)
         // the axis law binds each tail's RIGHTMOST button (row remove /
-        // head delete / bucket fav-all) to the same 8px-off-edge column
-        const rightAxis = [css.rowBtn, css.groupDelete, css.bucketFav]
+        // head 移出暂存 / bucket fav-all) to the same 8px-off-edge column
+        const rightAxis = [css.rowBtn, css.groupRemove, css.bucketFav]
             .every(r => r && Math.abs(r.right - css.rowBtn.right) < 1.5);
         ck('trailing buttons share one right axis', rightAxis);
         // vertical centers each within own row middle ±1.5px (rename/
         // dissolve are display:none at this narrow width — skip them)
         const vCenter = (btn, row) => btn && row && Math.abs(btn.cy - (row.top + row.h / 2)) < 1.5;
-        ck('group quick buttons vertically centered', vCenter(css.groupPlace, css.groupHead) && vCenter(css.groupDelete, css.groupHead));
+        ck('group quick buttons vertically centered', vCenter(css.groupPlace, css.groupHead) && vCenter(css.groupRemove, css.groupHead));
         ck('bucket fav-all vertically centered', vCenter(css.bucketFav, css.bucketHead));
         ck('select-mode right-aligned inside the toolbar (8px inset)', css.selectBtn && Math.abs(css.selectBtn.right - (css.listRight - 8)) < 1.5);
         ck('summary stays left of the action cluster', css.summaryRight < css.newGroupBtn.left);
@@ -231,11 +231,12 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
         ck('group quick tail always visible (tabgroups law)', css.groupPlaceVisible === 'visible');
         // ≤400px container (this probe runs at 320px body): the group-
         // specific pair hides, the row-shared place/delete stay
-        ck('narrow quick tail = place + delete (rename/dissolve folded into menu/F2)',
-            css.placeVisible && css.deleteVisible && !css.renameVisible && !css.dissolveVisible);
-        ck('delete is the rightmost head button (danger slot)',
-            css.groupDelete && Math.abs(css.groupDelete.right - (css.listRight - 8)) < 1.5);
+        ck('narrow quick tail = place + remove (rename/dissolve folded into menu/F2)',
+            css.placeVisible && css.removeVisible && !css.renameVisible && !css.dissolveVisible);
+        ck('移出暂存 is the rightmost head button (删除分组 stays in the menu)',
+            css.groupRemove && Math.abs(css.groupRemove.right - (css.listRight - 8)) < 1.5);
         ck('scissors divider separates the recent region', css.cut);
+        ck('guide strip renders above the toolbar', css.guideBanner);
         ck('time-bucket head label starts on the 8px lead column',
             css.timeHeadLeft !== null && Math.abs(css.timeHeadLeft - (css.listLeft + 8)) < 1.5);
         // the three same send buttons of the recent region: ONE right
@@ -249,6 +250,12 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
             vCenter(css.rowStage, css.rowStageHost) &&
             vCenter(css.groupStage, css.groupStageHost) &&
             vCenter(css.stageAll, css.stageAllHost));
+
+        // --- guide strip: 不再提醒 dismisses it for good -----------------
+        await page.evaluate(() => document.querySelector('.staging-guide-dismiss').click());
+        await sleep(300);
+        ck('guide strip: 不再提醒 dismisses the banner',
+            await page.evaluate(() => !document.querySelector('.staging-guide-banner')));
 
         // --- 1b. selection-mode checkbox axis -----------------------------
         const selGeo = await page.evaluate(() => {
@@ -335,10 +342,17 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
         const editGeo = await page.evaluate(() => ({
             editing: !!document.querySelector('.staging-shortcuts-toolbar.editing'),
             del: !!document.querySelector('.staging-shortcut-del'),
-            dashed: (() => { const el = document.querySelector('.staging-shortcut'); return el ? getComputedStyle(el).borderStyle : null; })()
+            dashed: (() => { const el = document.querySelector('.staging-shortcut'); return el ? getComputedStyle(el).borderStyle : null; })(),
+            delRect: (() => { const el = document.querySelector('.staging-shortcut-del'); const r = el.getBoundingClientRect(); return { left: r.left, w: r.width, transform: getComputedStyle(el).transform }; })(),
+            dotRect: (() => { const el = document.querySelector('.staging-shortcut .tab-group-dot'); const r = el.getBoundingClientRect(); return { left: r.left, w: r.width }; })(),
+            chipRect: (() => { const el = document.querySelector('.staging-shortcut'); const r = el.getBoundingClientRect(); return { left: r.left }; })()
         }));
+        console.log('editGeo:', JSON.stringify(editGeo));
         ck('edit-mode toggle: bar flips, delete × appears, chips turn dashed',
             editGeo.editing && editGeo.del && editGeo.dashed === 'dashed');
+        ck('edit-mode delete × centers on (covers) the color dot',
+            editGeo.delRect && editGeo.dotRect &&
+            Math.abs((editGeo.delRect.left + editGeo.delRect.w / 2) - (editGeo.dotRect.left + editGeo.dotRect.w / 2)) < 1.5);
         await page.evaluate(() => document.querySelector('.staging-shortcut').click());
         await sleep(300);
         const dialogOpen = await page.evaluate(() =>

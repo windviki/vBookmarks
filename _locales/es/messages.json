@@ -2263,6 +2263,12 @@
   "stagingShortcutBarLabel": {
     "message": "Mover a:"
   },
+  "stagingGuideText": {
+    "message": "Organice marcadores aquí: seleccione filas y entre en modo de selección para las acciones por lotes."
+  },
+  "stagingGuideDismiss": {
+    "message": "No mostrar de nuevo"
+  },
   "stagingShortcutTitle": {
     "message": "Acceso directo de mover"
   },

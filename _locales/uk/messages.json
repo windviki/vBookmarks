@@ -2263,6 +2263,12 @@
   "stagingShortcutBarLabel": {
     "message": "Перемістити до:"
   },
+  "stagingGuideText": {
+    "message": "Організуйте закладки тут — виберіть рядки та увійдіть у режим вибору для групових дій."
+  },
+  "stagingGuideDismiss": {
+    "message": "Більше не показувати"
+  },
   "stagingShortcutTitle": {
     "message": "Ярлик переміщення"
   },

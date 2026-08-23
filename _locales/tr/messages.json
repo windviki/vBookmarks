@@ -2263,6 +2263,12 @@
   "stagingShortcutBarLabel": {
     "message": "Taşı:"
   },
+  "stagingGuideText": {
+    "message": "Yer imlerini burada düzenleyin — satırları seçin ve toplu işlemler için seçim moduna girin."
+  },
+  "stagingGuideDismiss": {
+    "message": "Tekrar gösterme"
+  },
   "stagingShortcutTitle": {
     "message": "Taşıma kısayolu"
   },

@@ -2511,6 +2511,12 @@
   "stagingShortcutBarLabel": {
     "message": "Move to:"
   },
+  "stagingGuideText": {
+    "message": "Organize bookmarks here — select rows and enter selection mode for the batch actions."
+  },
+  "stagingGuideDismiss": {
+    "message": "Don\u2019t show again"
+  },
   "stagingShortcutTitle": {
     "message": "Move-to shortcut"
   },

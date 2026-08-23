@@ -2263,6 +2263,12 @@
   "stagingShortcutBarLabel": {
     "message": "Verschieben nach:"
   },
+  "stagingGuideText": {
+    "message": "Organisieren Sie Lesezeichen hier — wählen Sie Zeilen aus und wechseln Sie in den Auswahlmodus für Stapelaktionen."
+  },
+  "stagingGuideDismiss": {
+    "message": "Nicht mehr anzeigen"
+  },
   "stagingShortcutTitle": {
     "message": "Verschieben-Verknüpfung"
   },

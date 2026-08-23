@@ -1300,6 +1300,11 @@ menu[type=context] hr {
     top: 0;
     opacity: 1;
     pointer-events: auto;
+    /* 210 > the base .dialog 200: when the picker opens ON TOP of the
+       shortcut editor (which sits later in the DOM), it must paint
+       above — the full folder tree and the pin/recent chips stay
+       visible over the editor. */
+    z-index: 210;
 }
 
 .needTabGroup #cover,
@@ -1791,14 +1796,13 @@ menu[type=context] hr {
     color: var(--vbm-accent);
 }
 
-/* The group quick tail (tabgroups-head language): the group-specific
-   pair (rename / dissolve) sits LEFT of the row-shared tail; the shared
-   tail reads right-to-left exactly like the member rows' —
-   [place 归档] on the star column, [delete] danger on the remove column.
+/* The group quick tail (tabgroups-head language): order = [rename][place
+   归档][dissolve 解散][remove 移出暂存] — the DANGEROUS delete-group no
+   longer lives on the head; the rightmost slot is 移出暂存 (group + its
+   member items leave the staging area, tree untouched, confirm + toast
+   undo). 删除分组 stays only in the group context menu / selection mode.
    Rename/dissolve are muted secondary actions (F2 + the group menu stay
-   as their keyboard paths); place is the primary homing action in accent;
-   delete is destructive and takes the RIGHTMOST slot (the dead/dupes
-   law: danger red, always rightmost). */
+   as their keyboard paths); place is the primary homing action in accent. */
 .staging-group-head .staging-group-rename {
     margin-inline-start: auto; /* first of the quick tail — pins the cluster */
 }
@@ -1806,7 +1810,7 @@ menu[type=context] hr {
 .staging-group-head .staging-group-rename,
 .staging-group-head .staging-group-dissolve,
 .staging-group-head .staging-group-place,
-.staging-group-head .staging-group-delete {
+.staging-group-head .staging-group-remove {
     visibility: visible;
 }
 
@@ -1814,17 +1818,8 @@ menu[type=context] hr {
     color: var(--vbm-accent);
 }
 
-.staging-group-head .staging-group-delete {
-    color: var(--vbm-danger);
-}
-
-.staging-group-head .staging-group-delete:hover {
-    background: color-mix(in srgb, var(--vbm-danger) 12%, transparent);
-}
-
 /* 超窄（tabgroups 同法）：≤400px 容器收起组特有的 rename/dissolve（仍可
-   经 F2 / 组菜单到达），保留与行尾同列的 place/delete 两键，标题获得
-   全部剩余宽度。恢复宽度后四键自动回来。 */
+   经 F2 / 组菜单到达），保留 place/remove 两键，标题获得全部剩余宽度。 */
 @container (max-width: 400px) {
     #staging-list .staging-group-head .staging-group-rename,
     #staging-list .staging-group-head .staging-group-dissolve {
@@ -2029,7 +2024,8 @@ li.staging-row.drag-over {
 }
 
 #staging-shortcut-alias {
-    width: 100%;
+    /* the capped dialog-content measure, not a full-width band */
+    width: var(--dialog-content-width);
     box-sizing: border-box;
     margin: 0 0 8px;
     padding: 4px 6px;
@@ -2087,11 +2083,12 @@ li.staging-row.drag-over {
     align-items: center;
 }
 
-.staging-shortcut {
+.staging-toolbar .staging-shortcut {
     display: inline-flex;
     align-items: center;
     gap: 4px;
     max-width: 150px;
+    box-sizing: border-box;
     padding: 2px 8px;
     border: 1px solid var(--vbm-border);
     border-radius: 999px;
@@ -2131,9 +2128,12 @@ li.staging-row.drag-over {
 .staging-shortcuts-toolbar.editing .staging-shortcut-del {
     display: inline-flex;
     position: absolute;
-    left: -5px;
+    box-sizing: border-box;
+    /* 14px = the chip's 1px border + 8px padding + half the 10px color
+       dot — the × sits EXACTLY on the dot's center and covers it */
+    left: 14px;
     top: 50%;
-    transform: translateY(-50%);
+    transform: translate(-50%, -50%);
     align-items: center;
     justify-content: center;
     width: 14px;
@@ -3575,7 +3575,8 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
     display: flex;
     align-items: center;
     gap: 6px;
-    padding: 4px 8px 0;
+    /* generous breathing room above and below the dashed cut line */
+    padding: 8px 8px 4px;
     color: var(--vbm-muted);
 }
 
@@ -3785,6 +3786,43 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
 .stats-history-banner .stats-history-dismiss {
     flex: none;
     opacity: 1; /* banners have no hover-to-reveal */
+}
+
+/* Staging guide strip (above the view toolbar): a quiet one-line hint —
+   organize here, then enter selection mode for the batch actions — with
+   a "don't show again" dismiss. Token-driven like the sibling banners. */
+.staging-guide-banner {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 8px;
+    border-bottom: 1px solid var(--vbm-border);
+    background: color-mix(in srgb, var(--vbm-accent) 6%, transparent);
+    color: var(--vbm-muted);
+    font-size: 11px;
+}
+
+.staging-guide-banner i {
+    flex: 1;
+    min-width: 0;
+    font-style: normal;
+}
+
+.staging-guide-banner .staging-guide-dismiss {
+    flex: none;
+    border: 0;
+    border-radius: var(--vbm-radius);
+    background: transparent;
+    color: var(--vbm-accent);
+    font: inherit;
+    font-size: 11px;
+    padding: 1px 6px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.staging-guide-banner .staging-guide-dismiss:hover {
+    background: var(--vbm-bg-hover);
 }
 
 /* v4 task-4 #14 risk banner (dead/dupes pre-use warning): same one-line

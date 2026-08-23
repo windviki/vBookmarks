@@ -2263,6 +2263,12 @@
   "stagingShortcutBarLabel": {
     "message": "Siirrä kohteeseen:"
   },
+  "stagingGuideText": {
+    "message": "Järjestä kirjanmerkit tässä — valitse rivit ja siirry valintatilaan erätoimintoja varten."
+  },
+  "stagingGuideDismiss": {
+    "message": "Älä näytä uudelleen"
+  },
   "stagingShortcutTitle": {
     "message": "Siirrä pikakuvake"
   },
