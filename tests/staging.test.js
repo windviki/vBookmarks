@@ -7,7 +7,8 @@ import {
     STAGING_LIMIT, createState, parse, serialize, count, getByUrl,
     snapshotItems, add, removeByUrls, clearAll, relink, updateSnapshot,
     setFav, setUnfavById, findGroup, findGroupBySource, createGroup,
-    renameGroup, dissolveGroup, pruneEmptyGroups, assignGroup,
+    renameGroup, dissolveGroup, deleteGroup, restoreGroup, reorderGroups,
+    pruneEmptyGroups, assignGroup,
     setGroupCollapsed, unfavBucketItems, newCount, markSeen, groupItems,
     looseItems, setRecentCollapsed, setUnfavCollapsed
 } from '../src/staging.js';
@@ -290,6 +291,64 @@ describe('staging groups', () => {
         expect(s.groups.length).toBe(0); // pruned via remove
         pruneEmptyGroups(s); // idempotent
         expect(renameGroup(s, 'ghost', 'x')).toBe(false);
+    });
+
+    it('manual (user-built) groups survive parse + an emptied member set', () => {
+        const s = createState();
+        const g = createGroup(s, 'Mine', { manual: true }, 2);
+        add(s, [mk('1', 'https://a', 'A')], {}, 1);
+        assignGroup(s, ['https://a'], g.id);
+        const back = parse(serialize(s));
+        expect(back.groups[0].manual).toBe(true);
+        removeByUrls(back, ['https://a']);
+        expect(back.groups.length).toBe(1); // NOT pruned — it is a workspace
+        // but clearAll still clears everything, manual included
+        clearAll(back);
+        expect(back.groups.length).toBe(0);
+        // non-manual groups keep the old auto-dissolve law
+        const s2 = createState();
+        const auto = createGroup(s2, 'Auto', {}, 1);
+        add(s2, [mk('1', 'https://a', 'A')], {}, 1);
+        assignGroup(s2, ['https://a'], auto.id);
+        removeByUrls(s2, ['https://a']);
+        expect(s2.groups.length).toBe(0);
+    });
+
+    it('deleteGroup removes the group AND its members; restoreGroup undoes both', () => {
+        const s = createState();
+        add(s, [mk('1', 'https://a', 'A'), mk('2', 'https://b', 'B'), mk('3', 'https://c', 'C')], {}, 1);
+        const g = createGroup(s, 'G', {}, 2);
+        assignGroup(s, ['https://a', 'https://b'], g.id);
+        const receipt = deleteGroup(s, g.id);
+        expect(receipt.removed.map(it => it.url).sort()).toEqual(['https://a', 'https://b']);
+        expect(s.items.map(it => it.url)).toEqual(['https://c']); // outsider stays
+        expect(s.groups.length).toBe(0);
+        expect(deleteGroup(s, g.id)).toBeNull(); // gone is gone
+        expect(restoreGroup(s, receipt)).toBe(true);
+        expect(findGroup(s, g.id).name).toBe('G');
+        expect(groupItems(s, g.id).map(it => it.url).sort()).toEqual(['https://a', 'https://b']);
+        expect(s.items.length).toBe(3);
+    });
+
+    it('reorderGroups moves a group before its target and rebases createdAt', () => {
+        const s = createState();
+        const a = createGroup(s, 'A', {}, 100);
+        const b = createGroup(s, 'B', {}, 200);
+        const c = createGroup(s, 'C', {}, 300);
+        expect(reorderGroups(s, c.id, a.id)).toBe(true); // C before A
+        expect(s.groups.map(g => g.name)).toEqual(['C', 'A', 'B']);
+        const stamps = s.groups.map(g => g.createdAt);
+        expect(stamps[0] < stamps[1]).toBe(true);
+        expect(stamps[1] < stamps[2]).toBe(true);
+        // a later createGroup lands at the END of the visual order
+        const d = createGroup(s, 'D', {}, 9999);
+        expect(s.groups.map(g => g.name)).toEqual(['C', 'A', 'B', 'D']);
+        // no-ops: onto itself, onto an unknown target
+        expect(reorderGroups(s, a.id, a.id)).toBe(false);
+        expect(reorderGroups(s, a.id, 'ghost')).toBe(false);
+        expect(s.groups.map(g => g.name)).toEqual(['C', 'A', 'B', 'D']);
+        // moving onto its own successor is order-neutral
+        expect(reorderGroups(s, a.id, b.id)).toBe(false);
     });
 });
 

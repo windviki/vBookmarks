@@ -13,7 +13,7 @@
  * State shape (persisted as one JSON string under the `staging` local key):
  *   { v: 1,
  *     items:  [ { id, url, title, ts, group } ],   // url is the unique key
- *     groups: [ { id, name, collapsed, createdAt, sourceFolderId?, sourceTabGroup? } ],
+ *     groups: [ { id, name, collapsed, createdAt, sourceFolderId?, sourceTabGroup?, manual? } ],
  *     recentCollapsed: false,   // "Recently added" section fold
  *     unfavCollapsed: false,    // unbookmarked inbox bucket fold
  *     lastSeenTs: 0 }           // "new N" counter baseline
@@ -78,7 +78,10 @@ export const parse = raw => {
                 collapsed: !!g.collapsed,
                 createdAt: typeof g.createdAt === 'number' ? g.createdAt : 0,
                 sourceFolderId: g.sourceFolderId || null,
-                sourceTabGroup: g.sourceTabGroup || null
+                sourceTabGroup: g.sourceTabGroup || null,
+                // User-created groups survive an emptied member set (they
+                // exist to be filled — the workbench's organizing units).
+                manual: !!g.manual
             });
         }
     }
@@ -287,7 +290,8 @@ export const createGroup = (state, name, source = {}, now = Date.now()) => {
         collapsed: false,
         createdAt: now,
         sourceFolderId: source.sourceFolderId || null,
-        sourceTabGroup: source.sourceTabGroup || null
+        sourceTabGroup: source.sourceTabGroup || null,
+        manual: !!source.manual
     };
     state.groups.push(group);
     // createdAt ascending render order (§3.4): freshly created groups sort
@@ -320,10 +324,74 @@ export const dissolveGroup = (state, groupId) => {
     return true;
 };
 
-// Groups whose members are all gone dissolve automatically (§0.4).
+// Delete (vs dissolve): the group AND its member items leave the staging
+// area together — the explicit "this whole pile is done" exit. Returns the
+// removal receipt (group snapshot + member snapshots) so the actions layer
+// can offer undo; null when the group does not exist.
+export const deleteGroup = (state, groupId) => {
+    const idx = state.groups.findIndex(g => g.id === groupId);
+    if (idx < 0)
+        return null;
+    const [group] = state.groups.splice(idx, 1);
+    const removed = [];
+    state.items = state.items.filter(it => {
+        if (it.group === groupId) {
+            removed.push(snapshot(it));
+            return false;
+        }
+        return true;
+    });
+    return { group: { ...group }, removed };
+};
+
+// Undo counterpart of deleteGroup: restore the group (same id, so member
+// snapshots reattach) then re-add the member items verbatim.
+export const restoreGroup = (state, receipt) => {
+    if (!receipt || !receipt.group || !Array.isArray(receipt.removed))
+        return false;
+    if (!findGroup(state, receipt.group.id))
+        state.groups.push({ ...receipt.group });
+    state.groups.sort((a, b) => a.createdAt - b.createdAt);
+    for (const snap of receipt.removed)
+        if (!getByUrl(state, snap.url))
+            state.items.push({ ...snap, group: receipt.group.id });
+    return true;
+};
+
+// Drag-reorder (the workbench's manual arrangement): move `draggedId` to sit
+// BEFORE `targetId` in the render order. Render order is the array order
+// (kept sorted by createdAt), so the move rewrites the createdAt sequence to
+// stay monotonic — the invariant createGroup's sort relies on. A move onto
+// its own successor is a no-op; returns true when the order changed.
+export const reorderGroups = (state, draggedId, targetId) => {
+    if (!draggedId || !targetId || draggedId === targetId)
+        return false;
+    const from = state.groups.findIndex(g => g.id === draggedId);
+    const to = state.groups.findIndex(g => g.id === targetId);
+    if (from < 0 || to < 0)
+        return false;
+    if (to === from + 1)
+        return false; // already sits immediately before the target
+    const [moved] = state.groups.splice(from, 1);
+    const insertAt = state.groups.findIndex(g => g.id === targetId);
+    if (insertAt < 0) {
+        state.groups.splice(from, 0, moved); // target vanished mid-drag — abort
+        return false;
+    }
+    state.groups.splice(insertAt, 0, moved);
+    // Rebase createdAt ascending so createGroup's sort + future inserts keep
+    // the same visual order (second-resolution stamps are plenty here).
+    const base = Math.min(Date.now(), ...state.groups.map(g => g.createdAt || 0));
+    state.groups.forEach((g, i) => { g.createdAt = base + i * 1000; });
+    return true;
+};
+
+// Groups whose members are all gone dissolve automatically (§0.4) — EXCEPT
+// user-created (`manual`) groups: an empty group the user built to drag
+// things into is a workspace, not a leftover.
 export const pruneEmptyGroups = state => {
     const populated = new Set(state.items.map(it => it.group).filter(Boolean));
-    state.groups = state.groups.filter(g => populated.has(g.id));
+    state.groups = state.groups.filter(g => populated.has(g.id) || g.manual);
 };
 
 export const assignGroup = (state, urls, groupId) => {
