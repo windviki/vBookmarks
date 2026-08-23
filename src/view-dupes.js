@@ -353,7 +353,7 @@ export function initViewDupes(ctx = {}) {
         return html;
     };
 
-    const renderGroup = group => {
+    const renderGroup = (group, L) => {
         const keeper = keeperOf(group);
         const key = htmlspecialchars(group.key);
         const isCollapsed = collapsed.has(group.key);
@@ -364,13 +364,13 @@ export function initViewDupes(ctx = {}) {
         // is a ✓ ("apply this group's dedup"), not a × (which read as a
         // plain delete and went unnoticed).
         const doomed = planDeletion(group, keeper).length;
-        const hint = htmlspecialchars(_m('dupesCleanRestHint',
-            [keeper.title || _m('noTitle'), `${doomed}`]));
+        const hint = htmlspecialchars(L.cleanRestHint(
+            keeper.title || L.noTitle, `${doomed}`));
         let html = `<li class="dupes-group${selecting && selected.has(group.key) ? ' sel' : ''}" data-key="${key}">` +
             `<span class="group-head" tabindex="-1" role="button" aria-expanded="${isCollapsed ? 'false' : 'true'}">` +
             `<span class="chevron${isCollapsed ? ' collapsed' : ''}"></span>` +
             `<span class="dupes-key" dir="auto" title="${key}">${htmlspecialchars(midTruncate(group.key))}</span>` +
-            `<span class="count-pill" aria-label="${_m('dupesGroupCount', `${group.items.length}`)}">${group.items.length}</span>` +
+            `<span class="count-pill" aria-label="${L.groupCount(`${group.items.length}`)}">${group.items.length}</span>` +
             `<button class="row-btn dupes-clean-rest" aria-label="${hint}" title="${hint}">${CHECK_ICON}</button>` +
             '</span></li>';
         if (isCollapsed)
@@ -386,7 +386,7 @@ export function initViewDupes(ctx = {}) {
                 `id="dupes-item-${item.id}" role="listitem" data-node-id="${item.id}" ` +
                 `data-parentid="${item.parentId}" data-key="${key}">` +
                 `<button class="keeper-radio${isKeeper ? ' checked' : ''}" ` +
-                `aria-label="${_m('dupesKeepThis')}" title="${_m('dupesKeepThis')}"></button>` +
+                `aria-label="${L.keepThis}" title="${L.keepThis}"></button>` +
                 treeRender.generateBookmarkHTML(item.title, item.url, 'data-virtual="1"', item.id, null, {
                     path,
                     // §3.6 unified meta: the date rides the left-aligned time
@@ -398,8 +398,8 @@ export function initViewDupes(ctx = {}) {
                     rightText: (showPath && path) ? path : '',
                     subText: (showPath && path) ? `${path} · ${fullTime}` : fullTime
                 }) +
-                `<button class="row-btn dupes-member-del" aria-label="${_m('rowActionDelete')}" ` +
-                `title="${_m('rowActionDelete')}">${TRASH_ICON}</button>` +
+                `<button class="row-btn dupes-member-del" aria-label="${L.rowDelete}" ` +
+                `title="${L.rowDelete}">${TRASH_ICON}</button>` +
                 '</li>';
         }
         return html;
@@ -446,18 +446,36 @@ export function initViewDupes(ctx = {}) {
                 if (!alive.has(key))
                     selected.delete(key);
         }
-        // 4.1.1: rows stream in chunks (list-chunks.js) — head paint is
+        // 4.1.0: rows stream in chunks (list-chunks.js) — head paint is
         // synchronous (banner + toolbar + first groups), the rest appends
         // per frame. 2508-row regroups used to freeze the popup for the
-        // whole parse.
+        // whole parse. Per-render i18n labels (the tab-groups recipe):
+        // member rows used to re-ask chrome.i18n 4× per row (keep/delete
+        // labels) — 2500 groups × 2 members = 20000 getMessage crossings.
+        const L = {
+            keepThis: _m('dupesKeepThis'),
+            rowDelete: _m('rowActionDelete'),
+            noTitle: _m('noTitle'),
+            groupCount: n => _m('dupesGroupCount', n),
+            cleanRestHint: (title, doomed) => _m('dupesCleanRestHint', [title, doomed])
+        };
         let head = riskBanner.html() + renderToolbar();
         const pieces = [];
+        // Piece index of the focus-retry targets: onChunk only retries once
+        // its piece is actually in the DOM (no per-batch list scans).
+        const groupPieceIdx = new Map();   // group key → piece index
+        const memberPieceIdx = new Map();  // member id  → piece index
         if (!groups.length) {
             head += `<ul role="list"><li class="empty-state" role="listitem"><i>${_m('dupesNone')}</i></li></ul>`;
         } else {
             head += `<ul role="list"${selecting ? ' class="selecting"' : ''}></ul>`;
-            for (let i = 0, l = groups.length; i < l; i++)
-                pieces.push(renderGroup(groups[i]));
+            for (let i = 0, l = groups.length; i < l; i++) {
+                const g = groups[i];
+                groupPieceIdx.set(g.key, i);
+                for (const item of g.items)
+                    memberPieceIdx.set(item.id, i);
+                pieces.push(renderGroup(g, L));
+            }
         }
         // Focus law + the paint. Toolbar park/restore and the selection
         // toolbar transitions run on the head paint (the toolbar lives in
@@ -471,10 +489,16 @@ export function initViewDupes(ctx = {}) {
         let parkedRow = parkRowFocus($list);
         if (paintHandle)
             paintHandle.cancel();
-        const tryHeadFocus = () => {
+        const tryHeadFocus = (paintedThrough) => {
             if (!pendingHeadFocus)
                 return;
             if (typeof $list.querySelectorAll !== 'function')
+                return;
+            // Piece-index gate: the head row exists once its group's piece
+            // is in (or the whole list, on settle) — no per-batch scan
+            // before that.
+            const idx = groupPieceIdx.get(pendingHeadFocus);
+            if (idx === undefined || (paintedThrough != null && idx >= paintedThrough))
                 return;
             const key = pendingHeadFocus;
             const groupLis = $list.querySelectorAll('li.dupes-group');
@@ -489,8 +513,11 @@ export function initViewDupes(ctx = {}) {
                 }
             }
         };
-        const tryMemberFocus = () => {
+        const tryMemberFocus = (paintedThrough) => {
             if (!pendingMemberFocus)
+                return;
+            const idx = memberPieceIdx.get(pendingMemberFocus);
+            if (idx === undefined || (paintedThrough != null && idx >= paintedThrough))
                 return;
             const row = document.getElementById(`dupes-item-${pendingMemberFocus}`);
             const a = row && row.querySelector ? row.querySelector('a') : null;
@@ -515,6 +542,9 @@ export function initViewDupes(ctx = {}) {
             onHead: el => {
                 restoreToolbarFocus(el, parkedToolbar);
                 onRowsRendered();
+                // Targets inside the synchronous head batch resolve now.
+                tryHeadFocus(null);
+                tryMemberFocus(null);
                 if (selectionFocus === 'first') {
                     selectionFocus = null;
                     focusSelectionBarFirst();
@@ -523,9 +553,9 @@ export function initViewDupes(ctx = {}) {
                     focusSelectModeButton();
                 }
             },
-            onChunk: () => {
-                tryHeadFocus();
-                tryMemberFocus();
+            onChunk: (el, from, end) => {
+                tryHeadFocus(end);
+                tryMemberFocus(end);
                 tryUnparkRow();
                 onRowsRendered();
             },
@@ -537,13 +567,17 @@ export function initViewDupes(ctx = {}) {
                     tryUnparkRow();   // id-based only under the virtual painter
                     parkedRow = null;
                 }
-                tryHeadFocus();
-                tryMemberFocus();
+                tryHeadFocus(null);
+                tryMemberFocus(null);
             }
         };
         paintHandle = virtual
             ? paintListVirtual($list, paintOpts)
-            : paintListChunked($list, { ...paintOpts, first: 30, chunk: 60 });
+            : paintListChunked($list, {
+                ...paintOpts,
+                first: 40, chunk: 60,
+                adaptive: true, budgetMs: 16, minChunk: 24, maxChunk: 240
+            });
     };
 
     const refresh = () => {

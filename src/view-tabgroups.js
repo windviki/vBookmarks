@@ -484,18 +484,17 @@ export function initViewTabGroups(ctx = {}) {
             '</div>';
     };
 
-    const groupHeadHtml = (group, memberTabs) => {
+    const groupHeadHtml = (group, memberTabs, G) => {
         const gid = String(group.id);
         // Folds are inert while the filter is active — a find never hides
         // hits behind a fold, and the head renders expanded accordingly.
         const isCollapsed = !filterNeedle() && collapsed.has(gid);
-        const title = group.title || _m('tabGroupUntitled');
+        const title = group.title || G.untitled;
         const color = group.color || 'grey';
-        const saveLabel = _m('tabGroupsSaveFolder');
         // Group sleep is a real toggle, like the member rows': every member
         // asleep → filled glyph + wake, otherwise hollow glyph + sleep.
         const allAsleep = memberTabs.length > 0 && memberTabs.every(t => !!t.discarded);
-        const sleepLabel = _m(allAsleep ? 'tabGroupsWakeGroup' : 'tabGroupsSleepGroup');
+        const sleepLabel = allAsleep ? G.wake : G.sleep;
         // Button order (4.1.0 alignment pass): the three actions a group
         // shares with a single tab read RIGHT-to-left as close (删除) /
         // save-as-folder (收藏) / sleep (睡眠) — the same order and the
@@ -507,12 +506,12 @@ export function initViewTabGroups(ctx = {}) {
             `<span class="chevron${isCollapsed ? ' collapsed' : ''}" aria-hidden="true"></span>` +
             `<span class="tab-group-dot tg-${htmlspecialchars(color)}"></span>` +
             `<span class="tabgroups-group-title" dir="auto">${htmlspecialchars(title)}</span>` +
-            `<span class="count-pill" aria-label="${htmlspecialchars(_m('tabGroupsGroupCount', `${memberTabs.length}`))}">${memberTabs.length}</span>` +
-            `<button class="row-btn tabgroups-group-activate" aria-label="${htmlspecialchars(_m('tabGroupsActivateGroup'))}" title="${htmlspecialchars(_m('tabGroupsActivateGroup'))}">${ACTIVATE_ICON}</button>` +
-            `<button class="row-btn tabgroups-group-rename" aria-label="${htmlspecialchars(_m('tabGroupsRenameGroup'))}" title="${htmlspecialchars(_m('tabGroupsRenameGroup'))}">${EDIT_ICON}</button>` +
+            `<span class="count-pill" aria-label="${htmlspecialchars(G.count(`${memberTabs.length}`))}">${memberTabs.length}</span>` +
+            `<button class="row-btn tabgroups-group-activate" aria-label="${htmlspecialchars(G.activate)}" title="${htmlspecialchars(G.activate)}">${ACTIVATE_ICON}</button>` +
+            `<button class="row-btn tabgroups-group-rename" aria-label="${htmlspecialchars(G.rename)}" title="${htmlspecialchars(G.rename)}">${EDIT_ICON}</button>` +
             `<button class="row-btn tabgroups-group-sleep${allAsleep ? ' asleep' : ''}" aria-pressed="${allAsleep}" aria-label="${htmlspecialchars(sleepLabel)}" title="${htmlspecialchars(sleepLabel)}">${allAsleep ? SLEEP_ICON_FILLED : SLEEP_ICON}</button>` +
-            `<button class="row-btn tabgroups-group-save" aria-label="${htmlspecialchars(saveLabel)}" title="${htmlspecialchars(saveLabel)}">${FOLDER_STAR_ICON}</button>` +
-            `<button class="row-btn tabgroups-group-close" aria-label="${htmlspecialchars(_m('tabGroupsCloseGroup'))}" title="${htmlspecialchars(_m('tabGroupsCloseGroup'))}">${TRASH_ICON}</button>` +
+            `<button class="row-btn tabgroups-group-save" aria-label="${htmlspecialchars(G.save)}" title="${htmlspecialchars(G.save)}">${FOLDER_STAR_ICON}</button>` +
+            `<button class="row-btn tabgroups-group-close" aria-label="${htmlspecialchars(G.close)}" title="${htmlspecialchars(G.close)}">${TRASH_ICON}</button>` +
             '</span></li>';
     };
 
@@ -686,9 +685,21 @@ export function initViewTabGroups(ctx = {}) {
             addBookmark: _m('tabGroupsAddBookmark'),
             close: _m('tabGroupsSelectClose')
         };
-        // 4.1.1: rows stream in chunks (list-chunks.js) — the head paint is
+        // 4.1.0: rows stream in chunks (list-chunks.js) — the head paint is
         // synchronous (toolbar + first rows), the rest appends per frame.
         // The pieces array holds li-level fragments in render order.
+        // Per-render group-head i18n labels: 160 group heads × ~5 static
+        // getMessage crossings used to pay the i18n bridge every render.
+        const G = {
+            untitled: _m('tabGroupUntitled'),
+            count: n => _m('tabGroupsGroupCount', n),
+            activate: _m('tabGroupsActivateGroup'),
+            rename: _m('tabGroupsRenameGroup'),
+            save: _m('tabGroupsSaveFolder'),
+            sleep: _m('tabGroupsSleepGroup'),
+            wake: _m('tabGroupsWakeGroup'),
+            close: _m('tabGroupsCloseGroup')
+        };
         let head = renderToolbar();
         const pieces = [];
         // Piece index carrying the current tab's row — the LAB virtual
@@ -755,7 +766,7 @@ export function initViewTabGroups(ctx = {}) {
                     '</span></li>';
             };
             const groupBlock = ({ group, memberTabs, L }) => {
-                let out = groupHeadHtml(group, memberTabs);
+                let out = groupHeadHtml(group, memberTabs, G);
                 if (needle || !collapsed.has(String(group.id))) {
                     for (let mi = 0; mi < memberTabs.length; mi++)
                         out += tabRowHtml(memberTabs[mi], { lastMember: mi === memberTabs.length - 1, L });
@@ -871,8 +882,12 @@ export function initViewTabGroups(ctx = {}) {
         let parkedRow = parkRowFocus($list);
         if (paintHandle)
             paintHandle.cancel();
-        const tryScrollToCurrent = () => {
+        const tryScrollToCurrent = (paintedThrough) => {
             if (!pendingScrollToCurrent)
+                return;
+            // Piece-index gate: the current-tab row exists once its piece
+            // is in — no per-batch querySelector walk before that.
+            if (currentPieceIdx == null || (paintedThrough != null && currentPieceIdx >= paintedThrough))
                 return;
             const cur = $list.querySelector ? $list.querySelector('.tabgroups-current') : null;
             if (cur && cur.scrollIntoView) {
@@ -896,12 +911,12 @@ export function initViewTabGroups(ctx = {}) {
             onHead: el => {
                 restoreToolbarFocus(el, parkedToolbar);
                 onRowsRendered();
-                tryScrollToCurrent();
+                tryScrollToCurrent(null);   // target may sit in the head batch
             },
-            onChunk: () => {
+            onChunk: (el, from, end) => {
                 tryUnparkRow();
                 onRowsRendered();
-                tryScrollToCurrent();
+                tryScrollToCurrent(end);
             },
             onSettled: el => {
                 if (parkedRow && !virtual) {
@@ -911,7 +926,7 @@ export function initViewTabGroups(ctx = {}) {
                     tryUnparkRow();   // id-based only under the virtual painter
                     parkedRow = null;
                 }
-                tryScrollToCurrent();
+                tryScrollToCurrent(null);
             }
         };
         paintHandle = virtual
@@ -919,7 +934,11 @@ export function initViewTabGroups(ctx = {}) {
                 ...paintOpts,
                 revealIndex: pendingScrollToCurrent ? currentPieceIdx : null
             })
-            : paintListChunked($list, { ...paintOpts, first: 80, chunk: 160 });
+            : paintListChunked($list, {
+                ...paintOpts,
+                first: 80, chunk: 160,
+                adaptive: true, budgetMs: 16, minChunk: 48, maxChunk: 320
+            });
     };
 
     // --- Bookmark helpers -------------------------------------------------------
