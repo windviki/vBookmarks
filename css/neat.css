@@ -1672,7 +1672,7 @@ menu[type=context] hr {
     align-items: center;
     gap: 6px;
     height: var(--vbm-row-h);
-    padding-inline: 8px;
+    padding-inline: 0;
     font-size: 11px;
     color: var(--vbm-muted);
     cursor: pointer;
@@ -1790,13 +1790,6 @@ menu[type=context] hr {
     color: var(--vbm-fg);
     outline: 2px solid var(--vbm-focus-ring);
     outline-offset: -2px;
-}
-
-/* Group members share the dupes member rhythm: the 8px slot aligns the
-   row with its head (head = 8px slot + 16px chevron; member = 8px slot +
-   the anchor's 16px lead — the same title axis, one visual group). */
-#staging-items ul li.vbm-row.staging-member {
-    padding-inline-start: 8px;
 }
 
 /* Row chrome, the dead/stats recipe: the li is a flex row so the trailing
@@ -2170,13 +2163,6 @@ menu[type=context] hr {
 .staging-group-head:focus-visible {
     background: var(--vbm-bg-elev);
     outline: none;
-}
-
-/* Group members share the dupes member rhythm: the 8px slot aligns the
-   row with its head (head = 8px slot + 16px chevron; member = 8px slot +
-   the anchor's 16px lead — the same title axis, one visual group). */
-#staging-items ul li.vbm-row.staging-member {
-    padding-inline-start: 8px;
 }
 
 /* Row chrome, the dead/stats recipe: the li is a flex row so the trailing
@@ -4502,6 +4488,13 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
 #results ul.selecting li.vbm-row {
     padding-inline-start: 8px;
     padding-inline-end: 4px;
+}
+
+/* Selecting heads take the same 8px lead so their checkbox (the head's
+   ::before) lands on the rows' checkbox axis. */
+#staging-list ul.selecting li.staging-group .group-head,
+#staging-list ul.selecting li.staging-bucket .staging-bucket-head {
+    padding-inline-start: 8px;
 }
 
 #dead-list ul.selecting li.vbm-row > a {

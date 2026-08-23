@@ -36,7 +36,7 @@
  */
 
 import { relTimeLabel } from './tree-render.js';
-import { VIEW_ICONS, STAGE_ICON, STAGE_ICON_DONE, STAR_ICON, STAR_ICON_FILLED, LIST_X_ICON, SELECT_ICON, FOLDER_STAR_ICON } from './icons.js';
+import { VIEW_ICONS, STAGE_ICON, STAGE_ICON_DONE, STAGE_REMOVE_ICON, STAR_ICON, STAR_ICON_FILLED, SELECT_ICON, FOLDER_STAR_ICON } from './icons.js';
 import { htmlspecialchars } from './escape.js';
 import { parkRowFocus, unparkRowFocus, parkToolbarFocus, restoreToolbarFocus } from './list-focus.js';
 import * as staging from './staging.js';
@@ -219,7 +219,7 @@ export function initViewRecent(ctx = {}) {
                 (it.id ? STAR_ICON_FILLED : STAR_ICON) + '</button>' +
                 // Inline remove (§3.8): hover-revealed × — leaves the tree alone.
                 `<button type="button" class="row-btn staging-remove" ` +
-                `aria-label="${htmlspecialchars(removeLabel)}" title="${htmlspecialchars(removeLabel)}">${LIST_X_ICON}</button>`) +
+                `aria-label="${htmlspecialchars(removeLabel)}" title="${htmlspecialchars(removeLabel)}">${STAGE_REMOVE_ICON}</button>`) +
             '</li>';
     };
 
@@ -240,13 +240,15 @@ export function initViewRecent(ctx = {}) {
         const selCls = headSelClass(staging.unfavBucketItems(stagingState).map(it => it.url));
         return `<li class="staging-bucket${selCls}" role="presentation"><span class="staging-bucket-head" ` +
             `tabindex="-1" role="button" aria-expanded="${collapsed ? 'false' : 'true'}">` +
+            // the fold chevron leads — the same leading position as the group
+            // head, the section head, the tree and the dupes/tabgroups heads
+            `<span class="chevron${collapsed ? ' collapsed' : ''}" aria-hidden="true"></span>` +
             `<i class="staging-bucket-star" aria-hidden="true">${STAR_ICON}</i>` +
             `<span class="staging-section-title">${_m('stagingBucketTitle')}</span>` +
             `<span class="count-pill" aria-label="${count}">${countText}</span>` +
             (selecting ? '' :
                 `<button type="button" class="row-btn staging-bucket-fav-all" tabindex="-1" ` +
                 `aria-label="${htmlspecialchars(favAllLabel)}" title="${htmlspecialchars(favAllLabel)}">${STAR_ICON_FILLED}</button>`) +
-            `<span class="chevron${collapsed ? ' collapsed' : ''}" aria-hidden="true"></span>` +
             `</span></li>`;
     };
 

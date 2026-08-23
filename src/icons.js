@@ -134,6 +134,17 @@ export const STAGE_ICON =
     '<path d="M14.7 1.3L7.3 8.7"/>' +
     '</svg>';
 
+// The REMOVE counterpart: the plane shrinks into the upper-left corner
+// with a small × at its heel — "un-send", the direct opposite of the send
+// glyph (never the clear-list × alone, which reads as wiping a list).
+export const STAGE_REMOVE_ICON =
+    '<svg class="vbm-icon vbm-icon-stage-remove" width="16" height="16" viewBox="0 0 16 16" ' +
+    'fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+    `<g transform="translate(-1.2 -1.2) scale(0.8)"><path d="${STAGE_PLANE_PATH}"/></g>` +
+    '<path d="M11.2 11.2l3.3 3.3"/>' +
+    '<path d="M14.5 11.2l-3.3 3.3"/>' +
+    '</svg>';
+
 // Same glyph in the "already staged" state — the SOLID plane (the
 // STAR_ICON / STAR_ICON_FILLED pair recipe: one silhouette, two states).
 export const STAGE_ICON_DONE =
