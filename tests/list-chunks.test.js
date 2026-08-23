@@ -1,4 +1,4 @@
-// list-chunks.js unit suite — the 4.1.1 chunked list painter. The DOM is a
+// list-chunks.js unit suite — the 4.1.0 chunked list painter. The DOM is a
 // purpose-built double: innerHTML records the string, lastElementChild
 // surfaces the <ul> the way a real parser would (the head always ends with
 // one), and insertAdjacentHTML appends into the ul's buffer — mirroring the
@@ -141,5 +141,116 @@ describe('paintListChunked', () => {
             first: 1
         });
         expect(list.innerHTML).toBe('<ul></ul><li>1</li><li>2</li>');
+    });
+
+    it('onChunk receives the slice bounds (from, end) so views can gate piece-indexed retries', () => {
+        const frames = makeFrames();
+        const list = makeList();
+        const ranges = [];
+        paintListChunked(list, {
+            head: '<ul></ul>',
+            pieces: ['<li>1</li>', '<li>2</li>', '<li>3</li>', '<li>4</li>'],
+            first: 1,
+            chunk: 2,
+            onChunk: (el, from, end) => ranges.push([from, end])
+        });
+        frames.shift()();
+        frames.shift()();
+        expect(ranges).toEqual([[1, 3], [3, 4]]);
+    });
+
+    it('adaptive sizing grows and shrinks the next batch from the measured insert cost', () => {
+        const frames = makeFrames();
+        const list = makeList();
+        const spans = [];
+        let t = 0;
+        let cost = 20; // ms per insert — above the 12ms budget → shrink
+        globalThis.performance = {
+            now: () => {
+                const v = t;
+                t += cost;
+                spans.push(v);
+                return v;
+            }
+        };
+        try {
+            paintListChunked(list, {
+                head: '<ul></ul>',
+                pieces: Array.from({ length: 30 }, (_, i) => `<li>${i}</li>`),
+                first: 2,
+                chunk: 10,
+                adaptive: true,
+                budgetMs: 12,
+                minChunk: 4,
+                maxChunk: 40
+            });
+            // frame 1: 10 pieces at cost 20 → next = max(4, 10*12/20) = 6
+            frames.shift()();
+            expect(list.ul.buffer).toBe(Array.from({ length: 12 }, (_, i) => `<li>${i}</li>`).join(''));
+            // frame 2: 6 pieces; make it cheap → grow 6*1.6 = 10
+            cost = 1;
+            frames.shift()();
+            expect(list.ul.buffer).toBe(Array.from({ length: 18 }, (_, i) => `<li>${i}</li>`).join(''));
+            // frame 3: 10 pieces (grown); settle the tail as cheap
+            while (frames.length)
+                frames.shift()();
+            expect(list.ul.buffer).toBe(Array.from({ length: 30 }, (_, i) => `<li>${i}</li>`).join(''));
+        } finally {
+            delete globalThis.performance;
+        }
+    });
+
+    it('pipes mode streams two <ul>s from one head paint', () => {
+        const frames = makeFrames();
+        // A two-ul double: querySelector resolves both selectors.
+        const ulA = { tagName: 'UL', buffer: '', insertAdjacentHTML(pos, h) { if (pos === 'beforeend') this.buffer += h; } };
+        const ulB = { tagName: 'UL', buffer: '', insertAdjacentHTML(pos, h) { if (pos === 'beforeend') this.buffer += h; } };
+        const list = {
+            _html: '',
+            get innerHTML() { return this._html; },
+            set innerHTML(v) { this._html = v; },
+            querySelector(sel) { return sel === 'ul[role="list"]' ? ulA : ulB; },
+            insertAdjacentHTML() {}
+        };
+        const events = [];
+        paintListChunked(list, {
+            head: '<ul role="list"></ul><ul class="marked"></ul>',
+            pipes: [
+                { ul: 'ul[role="list"]', pieces: ['<li>a1</li>', '<li>a2</li>', '<li>a3</li>'], first: 1, chunk: 1 },
+                { ul: '.marked', pieces: ['<li>b1</li>', '<li>b2</li>'], first: 1, chunk: 1 }
+            ],
+            onHead: () => events.push('head'),
+            onChunk: () => events.push('chunk'),
+            onSettled: () => events.push('settled')
+        });
+        // head + first slice of each pipe, synchronously
+        expect(ulA.buffer).toBe('<li>a1</li>');
+        expect(ulB.buffer).toBe('<li>b1</li>');
+        expect(events).toEqual(['head']);
+        // frame 1: second slice of each pipe
+        frames.shift()();
+        expect(ulA.buffer).toBe('<li>a1</li><li>a2</li>');
+        expect(ulB.buffer).toBe('<li>b1</li><li>b2</li>');
+        // frame 2: pipe A tail; frame 3: all settled
+        frames.shift()();
+        expect(ulA.buffer).toBe('<li>a1</li><li>a2</li><li>a3</li>');
+        frames.shift()();
+        expect(events).toEqual(['head', 'chunk', 'chunk', 'chunk', 'settled']);
+    });
+
+    it('pipes mode with a missing ul falls back to one synchronous paint', () => {
+        const frames = makeFrames();
+        const list = makeList();
+        delete list.querySelector;
+        const events = [];
+        paintListChunked(list, {
+            head: '<ul></ul>',
+            pipes: [{ ul: 'ul', pieces: ['<li>1</li>', '<li>2</li>'], first: 1, chunk: 1 }],
+            onHead: () => events.push('head'),
+            onSettled: () => events.push('settled')
+        });
+        expect(list.innerHTML).toContain('<li>1</li><li>2</li>');
+        expect(events).toEqual(['head', 'settled']);
+        expect(frames).toHaveLength(0);
     });
 });
