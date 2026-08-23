@@ -2484,5 +2484,8 @@
         "content": "$1"
       }
     }
+  },
+  "stagingGroupSelectAll": {
+    "message": "เลือกทั้งหมดในกลุ่มนี้"
   }
 }

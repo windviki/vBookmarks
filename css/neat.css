@@ -1799,6 +1799,37 @@ menu[type=context] hr {
     padding-inline-start: 8px;
 }
 
+/* Row chrome, the dead/stats recipe: the li is a flex row so the trailing
+   star/× buttons dock to the right edge on ONE line in both the narrow
+   single-line and the wide two-line (row-sub) forms; the anchor takes the
+   remaining space and hands the buttons their 4px lead. */
+#staging-list ul li.vbm-row {
+    display: flex;
+    align-items: center;
+}
+
+#staging-list ul li.vbm-row > a.tree-item-link {
+    flex: 1 1 auto; /* auto basis (not 0): the two-line form must wrap the
+       anchor's own content, never collapse it under the buttons */
+    min-width: 0;
+    align-items: center;
+    margin-inline-end: 4px;
+}
+
+/* The staging empty state: the plane glyph above the guiding line (§11). */
+.empty-state.staging-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.empty-state.staging-empty .vbm-icon-stage {
+    color: var(--vbm-muted);
+    width: 20px;
+    height: 20px;
+}
+
 /* The staging star is always visible (a real state indicator, not a hover
    action); the inline remove × keeps the hover reveal. */
 .vbm-row .staging-star {
@@ -1807,6 +1838,14 @@ menu[type=context] hr {
 
 .vbm-row .staging-star[aria-pressed="true"] {
     color: var(--vbm-accent);
+}
+
+/* §11: the state glyphs cross-fade on color only (no layout motion) — the
+   star's hollow↔solid and the plane's idle↔staged flips. */
+.vbm-row .staging-star,
+.vbm-row .staging-add-btn,
+.recent-group-head .recent-group-stage {
+    transition: color .12s ease-out;
 }
 
 /* Group-head hover homing (§3.5) — the .row-btn reveal language. */
@@ -2140,6 +2179,37 @@ menu[type=context] hr {
     padding-inline-start: 8px;
 }
 
+/* Row chrome, the dead/stats recipe: the li is a flex row so the trailing
+   star/× buttons dock to the right edge on ONE line in both the narrow
+   single-line and the wide two-line (row-sub) forms; the anchor takes the
+   remaining space and hands the buttons their 4px lead. */
+#staging-list ul li.vbm-row {
+    display: flex;
+    align-items: center;
+}
+
+#staging-list ul li.vbm-row > a.tree-item-link {
+    flex: 1 1 auto; /* auto basis (not 0): the two-line form must wrap the
+       anchor's own content, never collapse it under the buttons */
+    min-width: 0;
+    align-items: center;
+    margin-inline-end: 4px;
+}
+
+/* The staging empty state: the plane glyph above the guiding line (§11). */
+.empty-state.staging-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.empty-state.staging-empty .vbm-icon-stage {
+    color: var(--vbm-muted);
+    width: 20px;
+    height: 20px;
+}
+
 /* The staging star is always visible (a real state indicator, not a hover
    action); the inline remove × keeps the hover reveal. */
 .vbm-row .staging-star {
@@ -2148,6 +2218,14 @@ menu[type=context] hr {
 
 .vbm-row .staging-star[aria-pressed="true"] {
     color: var(--vbm-accent);
+}
+
+/* §11: the state glyphs cross-fade on color only (no layout motion) — the
+   star's hollow↔solid and the plane's idle↔staged flips. */
+.vbm-row .staging-star,
+.vbm-row .staging-add-btn,
+.recent-group-head .recent-group-stage {
+    transition: color .12s ease-out;
 }
 
 /* The group-assign dialog's group rows. */

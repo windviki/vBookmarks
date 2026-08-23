@@ -2484,5 +2484,8 @@
         "content": "$1"
       }
     }
+  },
+  "stagingGroupSelectAll": {
+    "message": "全选此组"
   }
 }

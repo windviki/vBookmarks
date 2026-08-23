@@ -1299,9 +1299,21 @@ export function initContextMenu(ctx = {}) {
             case 'cut-bookmark':
                 actions.setClipBookmark('cut', id, groupTitle);
                 break;
-            case 'copy-move-to':
+            case 'copy-move-to': {
+                // velvet staging §2.4: an UNbookmarked staging row has no
+                // tree id — its li id is a data ordinal. The §3.3 unfav
+                // semantics (create into the picked folder) run through the
+                // staging api instead.
+                const rowLi = li;
+                if (rowLi && (rowLi.id || '').startsWith('staging-item-') &&
+                    !(rowLi.dataset && rowLi.dataset.nodeId) &&
+                    ctx.staging && rowLi.dataset && rowLi.dataset.url) {
+                    ctx.staging.moveCopyItem(decodeURIComponent(rowLi.dataset.url));
+                    break;
+                }
                 actions.copyMoveBookmarkTo(id);
                 break;
+            }
             // velvet staging §2.3: send this bookmark to the staging area.
             // The authoritative node comes from the tree (the anchor href
             // is display-escaped); a URL already staged rides addItems'
@@ -1829,6 +1841,12 @@ export function initContextMenu(ctx = {}) {
                 break;
             case 'staging-group-dissolve':
                 ctx.staging.dissolveGroup(gid);
+                break;
+            // §3.5: usable OUTSIDE selection mode too — one hop into the
+            // mode with the group's members preselected.
+            case 'staging-group-select-all':
+                if (ctx.staging.selectAllGroup)
+                    ctx.staging.selectAllGroup(gid);
                 break;
             case 'staging-group-save-folder':
                 if (ctx.staging.saveGroupToFolder)

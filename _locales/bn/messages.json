@@ -2484,5 +2484,8 @@
         "content": "$1"
       }
     }
+  },
+  "stagingGroupSelectAll": {
+    "message": "এই গ্রুপের সব নির্বাচন করুন"
   }
 }

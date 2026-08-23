@@ -2483,5 +2483,8 @@
         "content": "$1"
       }
     }
+  },
+  "stagingGroupSelectAll": {
+    "message": "Избери ги сите во групава"
   }
 }

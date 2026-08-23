@@ -374,6 +374,10 @@ const setup = (opts = {}) => {
     const actions = {};
     for (const name of ['editBookmarkFolder', 'deleteBookmark', 'deleteBookmarks'])
         actions[name] = (...args) => actionCalls.push([name, ...args]);
+    // velvet staging: the clipboard-cancel Esc branch reads these (overridable)
+    actions.hasCutClipboard = () => false;
+    actions.cancelClipBookmark = () => actionCalls.push(['cancelClipBookmark']);
+    Object.assign(actions, opts.actions || {});
     const flags = { searchActive: !!opts.searchActive, dialogOpen: !!opts.dialogOpen };
     const searchCalls = [];
     const search = {
@@ -424,6 +428,20 @@ const setup = (opts = {}) => {
         menus.viewTabMenu = viewTabMenu;
     for (const key of Object.keys(tabGroupsMenus))
         menus[key] = tabGroupsMenus[key].menu;
+    // velvet staging §3.5/§6/§7: the staging group menu + the two folder
+    // flyouts join the binding list (omittable for guard coverage).
+    const velvetMenus = {};
+    if (!opts.noVelvetMenus) {
+        for (const [key, id] of [
+            ['stagingGroupMenu', 'staging-group-context-menu'],
+            ['folderCopySubmenu', 'folder-copy-submenu'],
+            ['folderAddSubmenu', 'folder-add-submenu']
+        ]) {
+            const menu = el('MENU', id);
+            velvetMenus[key] = menu;
+            menus[key] = menu;
+        }
+    }
     // issue #48 follow-up: the collapsed-flyout API for the keyboard branches.
     // Recording double — openSubmenuFor returns a settable flyout element
     // (each entry may carry `_submenu`), closeSubmenu parks it, submenuOpen
@@ -531,7 +549,7 @@ const setup = (opts = {}) => {
     };
 
     return {
-        keyboard, doc, fireDoc, el, row, buildTypeRows, pageRow,
+        keyboard, doc, fireDoc, el, row, buildTypeRows, pageRow, velvetMenus, actions, actionCalls,
         tree, results, body, searchInput, search,
         bookmarkMenu, folderMenu, separatorMenu, menus,
         searchHistoryMenu, shmItem1, shmItem2,
@@ -3662,5 +3680,34 @@ describe('dead view cross-<ul> navigation (跨区修复)', () => {
         // 无相邻列表可跨：焦点留在原行，不进树、不越出
         expect(ctx.doc.activeElement).toBe(r2.a);
         expect(ctx.f1.link.focused).toBe(false);
+    });
+});
+
+describe('velvet staging keyboard round', () => {
+    it('the three new menus join the contextKeyDown bindings', () => {
+        const s = setup({});
+        for (const key of ['stagingGroupMenu', 'folderCopySubmenu', 'folderAddSubmenu']) {
+            expect(s.velvetMenus[key]._listeners.keydown, key).toHaveLength(1);
+        }
+        // omitted entirely → no crash, no binding
+        const bare = setup({ noVelvetMenus: true });
+        expect(bare.velvetMenus).toEqual({});
+    });
+
+    it('document Esc cancels a pending CUT clipboard before the view chain (§5.2)', () => {
+        let pending = true;
+        const s = setup({
+            actions: {
+                hasCutClipboard: () => pending,
+                cancelClipBookmark: () => { pending = false; }
+            }
+        });
+        s.fireDoc('keydown', makeEvent({ key: 'Escape' }));
+        expect(pending).toBe(false); // the cut was cancelled
+        // with nothing pending the same Esc falls through the branch
+        let probes = 0;
+        s.actions.hasCutClipboard = () => { probes++; return false; };
+        s.fireDoc('keydown', makeEvent({ key: 'Escape' }));
+        expect(probes).toBe(1);
     });
 });

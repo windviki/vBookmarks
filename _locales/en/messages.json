@@ -2732,5 +2732,8 @@
         "content": "$1"
       }
     }
+  },
+  "stagingGroupSelectAll": {
+    "message": "Select all in this group"
   }
 }

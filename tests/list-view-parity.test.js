@@ -240,3 +240,29 @@ describe('v4.1 visual consistency: 死链开始扫描药丸 CTA + favicon 反色
         expect(body).toContain('filter: invert(1) hue-rotate(180deg)');
     });
 });
+
+describe('velvet staging: 行尾按钮停靠对齐(死链/stats 配方)', () => {
+    it('staging 行是 flex 行且锚点占满剩余宽度——行尾星标/移出在单双行形态下都贴右', () => {
+        const li = ruleBody(neatCss, '#staging-list ul li.vbm-row {');
+        expect(li).toContain('display: flex');
+        expect(li).toContain('align-items: center');
+        const a = ruleBody(neatCss, '#staging-list ul li.vbm-row > a.tree-item-link {');
+        expect(a).toContain('flex: 1 1 auto');
+        expect(a).toContain('min-width: 0');
+        expect(a).toContain('margin-inline-end: 4px');
+    });
+
+    it('选择模式的复选框配方与死链/去重共享(左缘 8px 槽 + 复选框抑制引导槽)', () => {
+        const box = ruleBody(neatCss, '#staging-list ul.selecting li.vbm-row::before,');
+        expect(box).toContain('width: 14px');
+        expect(box).toContain('margin-inline-end: 6px');
+        const pad = ruleBody(neatCss, '#staging-list ul.selecting li.vbm-row,');
+        expect(pad).toContain('padding-inline-start: 8px');
+        expect(pad).toContain('padding-inline-end: 4px');
+    });
+
+    it('状态图标的切换只动 color(dur-1 渐变,无位移)', () => {
+        const body = ruleBody(neatCss, '.vbm-row .staging-star,');
+        expect(body).toContain('transition: color .12s ease-out');
+    });
+});

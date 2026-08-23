@@ -216,7 +216,8 @@ const setup = (opts = {}) => {
     el('DIV', 'hist-add-bookmark');
     // velvet staging: the staging group-head menu + its items
     const stagingGroupMenu = el('MENU', 'staging-group-context-menu');
-    for (const gid of ['staging-group-toggle', 'staging-group-rename', 'staging-group-dissolve', 'staging-group-save-folder', 'staging-group-copy-folder'])
+    for (const gid of ['staging-group-toggle', 'staging-group-rename', 'staging-group-dissolve',
+        'staging-group-select-all', 'staging-group-save-folder', 'staging-group-copy-folder'])
         el('DIV', gid).classList.add('menu-item');
     // velvet staging: the staging send entries (bookmark menu / hist-row menu)
     for (const stageItem of ['hist-row-stage', 'add-to-staging', 'staging-remove-item', 'staging-fav-toggle', 'staging-group-assign'])
@@ -2929,6 +2930,8 @@ describe('staging group menu + staging-row entries (velvet staging §3.5/§2.4)'
             dissolveGroup: gid => calls.push(['dissolve', gid]),
             saveGroupToFolder: gid => calls.push(['save', gid]),
             copyGroupToFolder: gid => calls.push(['copy', gid]),
+            selectAllGroup: gid => calls.push(['selectAll', gid]),
+            moveCopyItem: url => calls.push(['moveCopy', url]),
             isGroupCollapsed: gid => !!groups[gid].collapsed,
             removeByUrl: url => calls.push(['remove', url]),
             favToggle: url => calls.push(['fav', url]),
@@ -3173,5 +3176,66 @@ describe('tab-groups staging interop entries (velvet staging §2.5)', () => {
         fire(ctx.tabClosedTabMenu, 'mouseup', makeEvent({ button: 0, target: ctx.menuItem('tabgroups-closed-tab-stage') }));
         expect(staging.calls.length).toBe(1);
         expect(staging.calls[0][0]).toBe('add');
+    });
+});
+
+describe('audit round: group select-all + unfav copy-move (velvet staging §3.5/§2.4)', () => {
+    const stagingApi = () => {
+        const calls = [];
+        return {
+            calls,
+            isStaged: () => false,
+            addItems: e => calls.push(['add', e]),
+            sendFolder: () => {},
+            toggleGroupFold: () => {}, renameGroup: () => {}, dissolveGroup: () => {},
+            saveGroupToFolder: () => {}, copyGroupToFolder: () => {},
+            selectAllGroup: gid => calls.push(['selectAll', gid]),
+            moveCopyItem: url => calls.push(['moveCopy', url]),
+            isGroupCollapsed: () => false,
+            removeByUrl: () => {}, favToggle: () => {}, openGroupAssign: () => {}
+        };
+    };
+    const makeGroupHead = el => {
+        const li = el('LI');
+        li.classList.add('staging-group');
+        li.dataset.groupId = 'g1';
+        const head = el('SPAN');
+        head.classList.add('group-head', 'staging-group-head');
+        head.parentNode = li;
+        return { li, head };
+    };
+    const makeUnfavStagingRow = (el, url) => {
+        const li = el('LI', 'staging-item-3');
+        li.dataset.url = encodeURIComponent(url);
+        const a = el('A');
+        a.href = url;
+        a.parentNode = li;
+        return { li, a };
+    };
+
+    it('staging-group-select-all dispatches through selectAllGroup', () => {
+        const staging = stagingApi();
+        const ctx = setup({ staging });
+        const { el, openOn } = ctx;
+        const { head } = makeGroupHead(el);
+        openOn(head);
+        fire(ctx.stagingGroupMenu, 'mouseup', makeEvent({ button: 0, target: ctx.menuItem('staging-group-select-all') }));
+        expect(staging.calls).toEqual([['selectAll', 'g1']]);
+    });
+
+    it('copy-move-to on an unfav staging row routes to moveCopyItem (the §3.3 unfav semantics)', () => {
+        const staging = stagingApi();
+        const ctx = setup({ staging });
+        const { el, openOn } = ctx;
+        const row = makeUnfavStagingRow(el, 'https://snap.example/');
+        openOn(row.a);
+        fire(ctx.bookmarkMenu, 'mouseup', makeEvent({ button: 0, target: ctx.menuItem('copy-move-to') }));
+        expect(staging.calls).toEqual([['moveCopy', 'https://snap.example/']]);
+        // a bookmarked staging row (data-node-id) still takes the classic path
+        const bmRow = makeUnfavStagingRow(el, 'https://bm.example/');
+        bmRow.li.dataset.nodeId = '42';
+        openOn(bmRow.a);
+        fire(ctx.bookmarkMenu, 'mouseup', makeEvent({ button: 0, target: ctx.menuItem('copy-move-to') }));
+        expect(ctx.actionCalls.some(c => c[0] === 'copyMoveBookmarkTo' && c[1] === '42')).toBe(true);
     });
 });

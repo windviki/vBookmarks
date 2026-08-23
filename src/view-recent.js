@@ -274,7 +274,9 @@ export function initViewRecent(ctx = {}) {
         const idxOf = new Map(state.items.map((it, i) => [it.url, i]));
         let html = `<ul role="list" id="staging-items"${selecting ? ' class="selecting"' : ''}>`;
         if (!state.items.length) {
-            html += `<li class="empty-state" role="listitem"><i>${_m('stagingEmpty')}</i></li>`;
+            // §11: a guiding empty state — the plane glyph + one muted line
+            // pointing at the three entry points.
+            html += `<li class="empty-state staging-empty" role="listitem">${STAGE_ICON}<i>${_m('stagingEmpty')}</i></li>`;
         } else {
             // Selecting forces every fold open (§3.1) without writing back.
             const unfavCollapsed = selecting ? false : state.unfavCollapsed;
@@ -1534,6 +1536,23 @@ export function initViewRecent(ctx = {}) {
         isGroupCollapsed: gid => !!(staging.findGroup(stagingState, gid) || {}).collapsed,
         renameGroup,
         dissolveGroup,
+        // §2.4: the row-menu "Copy/move to…" on an UNbookmarked staging row —
+        // the §3.3 unfav semantics (create into the target; move leaves,
+        // copy stays) through the same picker.
+        moveCopyItem: url => {
+            const it = staging.getByUrl(stagingState, url);
+            if (it)
+                openPickerForItems([it]);
+        },
+        selectAllGroup: gid => {
+            const urls = staging.groupItems(stagingState, gid).map(it => it.url);
+            if (!urls.length)
+                return;
+            selected.clear();
+            for (const u of urls)
+                selected.add(u);
+            setSelecting(true, 'first');
+        },
         saveGroupToFolder,
         copyGroupToFolder,
         openGroupAssign: urls => openGroupAssign(urls),

@@ -2484,5 +2484,8 @@
         "content": "$1"
       }
     }
+  },
+  "stagingGroupSelectAll": {
+    "message": "이 그룹 모두 선택"
   }
 }
