@@ -1,4 +1,4 @@
-// virtual-list.js unit suite — the 4.1.1 LAB painter (options 实验室 switch).
+// virtual-list.js unit suite — the 4.1.0 LAB painter (options 实验室 switch).
 // The DOM double models what the painter needs: innerHTML string, the rows
 // <ul> discovered from the head (a real parser's shape), per-element style,
 // scrollTop read/write, and an event registry so scroll/focusin drive the
@@ -7,7 +7,7 @@
 import { describe, it, expect, afterEach } from 'vitest';
 import { paintListVirtual } from '../src/virtual-list.js';
 
-const makeList = ({ viewportRows = 20 } = {}) => {
+const makeList = ({ viewportRows = 20, heights = null } = {}) => {
     const listeners = {};
     const ul = {
         tagName: 'UL',
@@ -22,9 +22,15 @@ const makeList = ({ viewportRows = 20 } = {}) => {
             this._html = v;
             // A real parser turns the written markup into <li> children —
             // model them as stable objects keyed by the piece id the tests
-            // bake into the markup (id="p<index>").
+            // bake into the markup (id="p<index>"). `heights` adds the
+            // measurable offsetHeight real rendered rows report.
             this.children = (v.match(/<li[^>]*id="p(\d+)"/g) || [])
-                .map(m => ({ piece: +m.match(/p(\d+)/)[1] }));
+                .map(m => {
+                    const piece = +m.match(/p(\d+)/)[1];
+                    return heights
+                        ? { piece, offsetHeight: heights(piece) }
+                        : { piece };
+                });
         }
     });
     Object.defineProperty(ul, 'firstElementChild', {
@@ -195,5 +201,33 @@ describe('paintListVirtual', () => {
         });
         expect((list.innerHTML.match(/<li /g) || []).length).toBe(3);
         expect(events).toEqual(['head', 'settled']);
+    });
+
+    it('measured row heights replace the estimates: the paddings track real geometry', () => {
+        // 4.1.0 perf round 2: rendered rows are measured (offsetHeight) and
+        // the prefix sums rebuilt — two-line wide/panel rows stop drifting
+        // the scrollbar.
+        const list = makeList({
+            viewportRows: 4,
+            // pieces < 10 are "two-line rows": 56px instead of 28
+            heights: piece => (piece < 10 ? 56 : 28)
+        });
+        paintListVirtual(list, { head: '<ul></ul>', pieces: pieces(100) });
+        const rendered = list.renderedPieces();
+        // invariant: the scrollbar model (top pad + measured window + bottom
+        // pad) equals the TRUE total — 10 two-line pieces × 56px + 90 × 28px
+        // (with estimate-only geometry it would still say 100 × 28).
+        const topPad = parseInt(list.ul.style.paddingTop, 10);
+        const botPad = parseInt(list.ul.style.paddingBottom, 10);
+        const windowH = rendered.reduce((h, p) => h + (p < 10 ? 56 : 28), 0);
+        expect(topPad + windowH + botPad).toBe(10 * 56 + 90 * 28);
+        // …and the measured pieces actually got rendered (the window started
+        // at the top, so the two-line head pieces are inside it)
+        expect(rendered.some(p => p < 10)).toBe(true);
+        // re-window past the measured head: the top padding now reflects
+        // real 56px rows, not 28px estimates
+        list.scrollTop = 20 * 56;
+        list.fire('scroll');
+        expect(parseInt(list.ul.style.paddingTop, 10)).toBeGreaterThanOrEqual(10 * 56);
     });
 });

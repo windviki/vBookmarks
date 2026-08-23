@@ -1,5 +1,5 @@
 /**
- * Virtualized list painting (4.1.1 LAB — behind the options-page 实验室
+ * Virtualized list painting (4.1.0 LAB — behind the options-page 实验室
  * switch `virtualScrollLab`, default OFF; promoted to a default only after
  * real-world soak, per the P2 virtual-scrolling judgment in
  * docs/plan-4.1.0/build-and-performance-plan.md §4.5).
@@ -72,12 +72,51 @@ export const paintListVirtual = (list, opts = {}) => {
         return syncPaint();
 
     // --- geometry model (piece-granular prefix sums) ----------------------
-    const heights = pieces.map(liCount).map(n => n * ROW_H);
-    const tops = new Array(pieces.length + 1);
-    tops[0] = 0;
-    for (let i = 0; i < pieces.length; i++)
-        tops[i + 1] = tops[i] + heights[i];
-    const totalH = tops[pieces.length];
+    // Heights start as estimates (row count × ROW_H). Every applied window
+    // is then MEASURED against the real rendered <li>s (offsetHeight) and
+    // the prefix sums rebuilt — visited regions get exact heights, so the
+    // scrollbar converges on reality instead of drifting on two-line
+    // wide/panel rows (the LAB's chief limitation). Pieces whose children
+    // report no usable height (unit doubles, cv:auto offscreen rows that
+    // never laid out) keep their estimate.
+    const liCounts = pieces.map(liCount);
+    const heights = liCounts.map(n => n * ROW_H);
+    let tops = null;
+    const rebuildTops = () => {
+        tops = new Array(pieces.length + 1);
+        tops[0] = 0;
+        for (let i = 0; i < pieces.length; i++)
+            tops[i + 1] = tops[i] + heights[i];
+    };
+    rebuildTops();
+    const totalH = () => tops[pieces.length];
+
+    const measure = (from, to) => {
+        const children = ul.children;
+        if (!children || typeof children.length !== 'number' || !children.length)
+            return false;
+        let ci = 0;
+        let changed = false;
+        for (let i = from; i < to; i++) {
+            const k = liCounts[i];
+            let h = 0;
+            let ok = true;
+            for (let j = 0; j < k; j++) {
+                const li = children[ci + j];
+                if (!li || typeof li.offsetHeight !== 'number' || li.offsetHeight <= 0) {
+                    ok = false;
+                    break;
+                }
+                h += li.offsetHeight;
+            }
+            ci += k;
+            if (ok && h > 0 && h !== heights[i]) {
+                heights[i] = h;
+                changed = true;
+            }
+        }
+        return changed;
+    };
 
     const viewportH = () => {
         const h = list.clientHeight || list.offsetHeight || 0;
@@ -121,8 +160,14 @@ export const paintListVirtual = (list, opts = {}) => {
         for (let i = from; i < to; i++)
             html += pieces[i];
         ul.innerHTML = html;
+        // Measure BEFORE the padding write: this window's real heights move
+        // tops[to] (and the total), so the paddings must reflect the updated
+        // prefix sums — a scrollbar sized from stale estimates is the drift
+        // the LAB was known for.
+        if (measure(from, to))
+            rebuildTops();
         ul.style.paddingTop = tops[from] + 'px';
-        ul.style.paddingBottom = (totalH - tops[to]) + 'px';
+        ul.style.paddingBottom = (totalH() - tops[to]) + 'px';
         start = from;
         end = to;
     };
