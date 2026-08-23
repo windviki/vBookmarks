@@ -10,6 +10,7 @@
 #   VBM_PERF_BOOKMARKS   total bookmarks to seed (default 6000)
 #   VBM_PERF_DUP_RATIO   duplicate-copy ratio (default 0.25 — copies land at
 #                        FOUR different depths: L3/L2/L1/dups-root)
+#   VBM_DUP_COPIES       copies per dup group (default 3; 1 = 2-item groups, 2500+)
 #   VBM_PERF_RUNS        popup cold-open runs (default 10)
 #   VBM_PERF_DUPES_RUNS  dupes-view activation runs (default 5)
 set -euo pipefail
@@ -66,7 +67,7 @@ cp "$HERE/perf-popup.js" "$CTX/perf-popup.js"
 docker build -q -t "$IMAGE" "$CTX" >/dev/null
 
 ENV_ARGS=()
-for k in VBM_PERF_MODE VBM_PERF_BOOKMARKS VBM_PERF_DUP_RATIO VBM_PERF_RUNS VBM_PERF_DUPES_RUNS VBM_PERF_SETTLE_MS; do
+for k in VBM_PERF_MODE VBM_PERF_BOOKMARKS VBM_PERF_DUP_RATIO VBM_DUP_COPIES VBM_PERF_RUNS VBM_PERF_DUPES_RUNS VBM_PERF_SETTLE_MS; do
     if [[ -n "${!k:-}" ]]; then
         ENV_ARGS+=(-e "$k=${!k}")
     fi

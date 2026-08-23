@@ -17,8 +17,16 @@ cp -r "$REPO_ROOT"/scripts/harness/diag "$CTX/diag"
 docker build -q -t vbm-smoke:local "$CTX" >/dev/null
 SCRIPT="$1"; shift || true
 name="vbm-rerun-$$"
+# Forward the VBM_* probe knobs (diag-41x-perf / diag-dead-ticks read them) —
+# perf-run.sh already does the same for perf-popup.js.
+ENV_ARGS=()
+for k in VBM_PERF_BOOKMARKS VBM_PERF_DUP_RATIO VBM_DUP_COPIES VBM_PERF_RUNS VBM_PERF_DUPES_RUNS VBM_PERF_SETTLE_MS VBM_DIAG_SKIP_TG VBM_DIAG_SKIP_DUPES VBM_DIAG_VIRTUAL VBM_TG_WINDOWS VBM_TG_GROUPS_PER_WIN VBM_TG_TABS_PER_GROUP VBM_TG_LOOSE; do
+    if [[ -n "${!k:-}" ]]; then
+        ENV_ARGS+=(-e "$k=${!k}")
+    fi
+done
 docker rm -f "$name" >/dev/null 2>&1 || true
-docker create --name "$name" vbm-smoke:local node "/work/$SCRIPT" "$@" >/dev/null
+docker create --name "$name" "${ENV_ARGS[@]}" vbm-smoke:local node "/work/$SCRIPT" "$@" >/dev/null
 docker start -a "$name"
 code=$?
 docker cp "$name":/tmp/shots/. "$OUT/" 2>/dev/null || true

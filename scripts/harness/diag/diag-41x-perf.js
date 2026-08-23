@@ -9,12 +9,16 @@
 // Env knobs (all optional):
 //   VBM_PERF_BOOKMARKS     total bookmarks seeded (default 6000)
 //   VBM_PERF_DUP_RATIO     duplicate-copy ratio (default 0.25)
+//   VBM_DUP_COPIES         extra copies per dup group (default 3; 1 = 2-item
+//                          groups — the maintainer's 2500+ groups @6000)
 //   VBM_TG_WINDOWS         browser windows in the tab-groups workload (default 4)
 //   VBM_TG_GROUPS_PER_WIN  tab groups per window (default 40)
 //   VBM_TG_TABS_PER_GROUP  tabs inside each group (default 6)
 //   VBM_TG_LOOSE           ungrouped tabs per window (default 60)
 //   VBM_DIAG_SKIP_TG=1     skip the tab-groups phases
 //   VBM_DIAG_SKIP_DUPES=1  skip the dupes phases
+//   VBM_DIAG_VIRTUAL=1     seed virtualScrollLab=1 (the LAB virtual painter
+//                          instead of chunked streaming)
 //
 // Phases:
 //   A  seed bookmarks (perf-popup.js Phase 0 recipe) + close seed page
@@ -36,6 +40,7 @@ const fs = require('fs');
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 const SEED_BOOKMARKS = Math.max(100, parseInt(process.env.VBM_PERF_BOOKMARKS || '6000', 10));
 const DUP_RATIO = Math.min(0.9, Math.max(0, parseFloat(process.env.VBM_PERF_DUP_RATIO || '0.25')));
+const DUP_COPIES = Math.min(6, Math.max(1, parseInt(process.env.VBM_DUP_COPIES || '3', 10)));
 const TG_WINDOWS = parseInt(process.env.VBM_TG_WINDOWS || '4', 10);
 const TG_GROUPS_PER_WIN = parseInt(process.env.VBM_TG_GROUPS_PER_WIN || '40', 10);
 const TG_TABS_PER_GROUP = parseInt(process.env.VBM_TG_TABS_PER_GROUP || '6', 10);
@@ -73,6 +78,7 @@ const summarizeProfile = (profile, topN = 28) => {
 const launch = () => puppeteer.launch({
     executablePath: process.env.CHROME_BIN || '/usr/bin/chromium-browser',
     headless: 'new',
+    protocolTimeout: 600000, // the 1200-tab workload build is ONE long evaluate
     args: [
         '--no-sandbox',
         '--disable-dev-shm-usage',
@@ -138,7 +144,7 @@ const INSTALL_WRAP = (listId) => {
 (async () => {
     const outDir = '/tmp/shots/perf';
     fs.mkdirSync(outDir, { recursive: true });
-    const out = { profile: { bookmarks: SEED_BOOKMARKS, dupRatio: DUP_RATIO, tg: { windows: TG_WINDOWS, groupsPerWin: TG_GROUPS_PER_WIN, tabsPerGroup: TG_TABS_PER_GROUP, loose: TG_LOOSE } } };
+    const out = { profile: { bookmarks: SEED_BOOKMARKS, dupRatio: DUP_RATIO, dupCopies: DUP_COPIES, tg: { windows: TG_WINDOWS, groupsPerWin: TG_GROUPS_PER_WIN, tabsPerGroup: TG_TABS_PER_GROUP, loose: TG_LOOSE } } };
     const browser = await launch();
     try {
         await sleep(2000);
@@ -157,8 +163,8 @@ const INSTALL_WRAP = (listId) => {
             const bar = tree[0].children.find(c => c.id && !c.url && c.children);
             const folder = await create({ parentId: bar.id, title: '__perf__' });
             const L1 = 20, L2 = 5, L3 = 3;
-            const dupGroups = Math.round(opts.count * opts.dupRatio / 3);
-            const leavesTarget = Math.max(L1 * L2 * L3, opts.count - dupGroups * 3);
+            const dupGroups = Math.round(opts.count * opts.dupRatio / opts.copies);
+            const leavesTarget = Math.max(L1 * L2 * L3, opts.count - dupGroups * opts.copies);
             const perL3 = Math.max(1, Math.round(leavesTarget / (L1 * L2 * L3)));
             const openIds = [folder.id];
             const l1Ids = [];
@@ -193,18 +199,27 @@ const INSTALL_WRAP = (listId) => {
             const dupsFolder = await create({ parentId: folder.id, title: '__perf_dups__' });
             openIds.push(dupsFolder.id);
             let dupCopies = 0;
+            // Copies land at different depths (cross-level duplicates): the
+            // pool cycles L2 → L1 → dups-root → L2 …, copies > 3 reuse the
+            // depths with the (g % copies) offset so URLs still spread.
+            const copyParents = (g, c) => {
+                const pool = [l2Ids[g % l2Ids.length].id, l1Ids[g % l1Ids.length].id, dupsFolder.id];
+                return pool[(g + c) % pool.length];
+            };
             for (let g = 0; g < Math.min(dupGroups, originals.length); g++) {
                 const origin = originals[g];
-                for (const parentId of [l2Ids[g % l2Ids.length].id, l1Ids[g % l1Ids.length].id, dupsFolder.id]) {
-                    await create({ parentId, title: origin.title, url: origin.url });
+                for (let c = 0; c < opts.copies; c++) {
+                    await create({ parentId: copyParents(g, c), title: origin.title, url: origin.url });
                     dupCopies++;
                 }
             }
             const payload = { opens: JSON.stringify(openIds) };
+            if (opts.virtual)
+                payload.virtualScrollLab = '1';
             await new Promise(res => chrome.storage.local.set(payload, res));
             await new Promise(res => chrome.storage.sync.set(payload, res));
-            return { total: seq + dupCopies, dupGroups: Math.min(dupGroups, originals.length) };
-        }, { count: SEED_BOOKMARKS, dupRatio: DUP_RATIO });
+            return { total: seq + dupCopies, dupGroups: Math.min(dupGroups, originals.length), copies: opts.copies, virtual: !!opts.virtual };
+        }, { count: SEED_BOOKMARKS, dupRatio: DUP_RATIO, copies: DUP_COPIES, virtual: !!process.env.VBM_DIAG_VIRTUAL });
         console.log('seeded:', JSON.stringify(seed));
         await seedPage.close().catch(() => {});
 
@@ -249,8 +264,9 @@ const INSTALL_WRAP = (listId) => {
         console.log('tab workload:', JSON.stringify(built));
         await buildPage.close().catch(() => {});
         out.tabWorkload = built;
-        if (built.error) {
-            console.log('tab-groups phases skipped (workload build failed)');
+        if (built.error || process.env.VBM_DIAG_SKIP_TG) {
+            console.log('tab-groups phases skipped (' +
+                (built.error ? 'workload build failed: ' + built.error : 'VBM_DIAG_SKIP_TG') + ')');
         } else {
 
         // --- Phase C: tab-groups ACTIVATION -----------------------------------
