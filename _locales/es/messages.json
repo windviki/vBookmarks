@@ -2498,13 +2498,13 @@
     "message": "Fusiona las tres entradas de añadir carpeta (antes/después/dentro) en una subentrada al hacer clic derecho en una carpeta."
   },
   "tabRowStage": {
-    "message": "Marcar y escenificar"
+    "message": "Enviar a staging"
   },
   "tabgroupStageAll": {
-    "message": "Marcar y escenificar grupo"
+    "message": "Enviar grupo a staging"
   },
   "tabgroupStageConfirm": {
-    "message": "¿Marcar y escenificar $n$ pestañas?",
+    "message": "¿Enviar $n$ pestañas a staging?",
     "placeholders": {
       "n": {
         "content": "$1"

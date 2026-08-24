@@ -2498,13 +2498,13 @@
     "message": "Gabungkan tiga entri tambah-folder (sebelum/sesudah/di dalam) menjadi satu entri submenu pada klik kanan folder."
   },
   "tabRowStage": {
-    "message": "Tandai & panggung"
+    "message": "Kirim ke panggung"
   },
   "tabgroupStageAll": {
-    "message": "Tandai & panggung grup"
+    "message": "Kirim grup ke panggung"
   },
   "tabgroupStageConfirm": {
-    "message": "Tandai & panggung $n$ tab?",
+    "message": "Kirim $n$ tab ke panggung?",
     "placeholders": {
       "n": {
         "content": "$1"

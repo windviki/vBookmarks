@@ -2498,13 +2498,13 @@
     "message": "Fusionner les trois entrées d'ajout de dossier (avant/après/dans) en une seule entrée de sous-menu lors d'un clic droit sur un dossier."
   },
   "tabRowStage": {
-    "message": "Marquer et mettre en scène"
+    "message": "Envoyer en staging"
   },
   "tabgroupStageAll": {
-    "message": "Marquer et mettre en scène le groupe"
+    "message": "Envoyer le groupe en staging"
   },
   "tabgroupStageConfirm": {
-    "message": "Marquer et mettre en scène $n$ onglets ?",
+    "message": "Envoyer $n$ onglets en staging ?",
     "placeholders": {
       "n": {
         "content": "$1"

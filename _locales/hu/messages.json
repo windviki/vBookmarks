@@ -2498,13 +2498,13 @@
     "message": "A három mappahozzáadás-bejegyzés (elé/mögé/belül) egy almenübe vonása a mappa jobb egérgombos menüjében."
   },
   "tabRowStage": {
-    "message": "Könyvjelző és színpad"
+    "message": "Küldés a várólistára"
   },
   "tabgroupStageAll": {
-    "message": "Csoport könyvjelzőzése és színpadra"
+    "message": "Csoport küldése a várólistára"
   },
   "tabgroupStageConfirm": {
-    "message": "Könyvjelzőzze és színpadra tegye a(z) $n$ lapot?",
+    "message": "Küldjük a(z) $n$ lapot a várólistára?",
     "placeholders": {
       "n": {
         "content": "$1"

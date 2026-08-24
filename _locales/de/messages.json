@@ -2498,13 +2498,13 @@
     "message": "Die drei Ordner-hinzufügen-Einträge (vor/nach/in) bei Rechtsklick auf Ordner zu einem Untermenüeintrag zusammenfassen."
   },
   "tabRowStage": {
-    "message": "Lesezeichen & Bühne"
+    "message": "An Staging senden"
   },
   "tabgroupStageAll": {
-    "message": "Gruppe speichern & Bühne"
+    "message": "Gruppe an Staging senden"
   },
   "tabgroupStageConfirm": {
-    "message": "$n$ Tabs speichern & Bühne?",
+    "message": "$n$ Tabs an Staging senden?",
     "placeholders": {
       "n": {
         "content": "$1"

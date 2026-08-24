@@ -2494,13 +2494,13 @@
     "message": "Mesclar as três entradas de adicionar pasta (antes/depois/dentro) em uma única entrada de submenu ao clicar com o botão direito em uma pasta."
   },
   "tabRowStage": {
-    "message": "Marcar e encenar"
+    "message": "Enviar para palco"
   },
   "tabgroupStageAll": {
-    "message": "Marcar e encenar grupo"
+    "message": "Enviar grupo para palco"
   },
   "tabgroupStageConfirm": {
-    "message": "Marcar e encenar $n$ abas?",
+    "message": "Enviar $n$ abas para o palco?",
     "placeholders": {
       "n": {
         "content": "$1"

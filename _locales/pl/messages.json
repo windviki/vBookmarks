@@ -2498,13 +2498,13 @@
     "message": "Połącz trzy pozycje dodawania folderu (przed/po/wewnątrz) w jeden podmenu przy prawym kliknięciu na folder."
   },
   "tabRowStage": {
-    "message": "Zapisz i odłóż"
+    "message": "Przenieś do poczekalni"
   },
   "tabgroupStageAll": {
-    "message": "Zapisz i odłóż grupę"
+    "message": "Przenieś grupę do poczekalni"
   },
   "tabgroupStageConfirm": {
-    "message": "Zapisać i odłożyć $n$ kart?",
+    "message": "Przenieść $n$ kart do poczekalni?",
     "placeholders": {
       "n": {
         "content": "$1"

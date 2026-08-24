@@ -2498,13 +2498,13 @@
     "message": "将文件夹右键菜单中的三个添加文件夹条目（之前/之后/内部）合并为一个子菜单条目。"
   },
   "tabRowStage": {
-    "message": "收藏并暂存"
+    "message": "发送到暂存区"
   },
   "tabgroupStageAll": {
-    "message": "收藏并暂存组"
+    "message": "发送组到暂存区"
   },
   "tabgroupStageConfirm": {
-    "message": "收藏并暂存 $n$ 个标签页？",
+    "message": "将 $n$ 个标签页发送到暂存区？",
     "placeholders": {
       "n": {
         "content": "$1"

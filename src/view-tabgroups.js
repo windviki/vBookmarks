@@ -33,7 +33,7 @@
  * dropping callbacks.
  */
 
-import { VIEW_ICONS, STAR_ICON, STAR_ICON_FILLED, SELECT_ICON, FOLDER_STAR_ICON, EDIT_ICON, SLEEP_ICON, SLEEP_ICON_FILLED, ACTIVATE_ICON, TRASH_ICON, REDO_ICON, COLLAPSE_ALL_ICON, EXPAND_ALL_ICON, PIN_ICON, PIN_ICON_FILLED } from './icons.js';
+import { VIEW_ICONS, STAR_ICON, STAR_ICON_FILLED, SELECT_ICON, FOLDER_STAR_ICON, EDIT_ICON, SLEEP_ICON, SLEEP_ICON_FILLED, ACTIVATE_ICON, TRASH_ICON, REDO_ICON, COLLAPSE_ALL_ICON, EXPAND_ALL_ICON, PIN_ICON, PIN_ICON_FILLED, STAGE_ICON, STAGE_ICON_DONE } from './icons.js';
 import { htmlspecialchars } from './escape.js';
 import { parkRowFocus, unparkRowFocus, parkToolbarFocus, restoreToolbarFocus } from './list-focus.js';
 import { paintListChunked } from './list-chunks.js';
@@ -538,6 +538,7 @@ export function initViewTabGroups(ctx = {}) {
         sleep: _m('tabGroupsSleepTab'),
         removeBookmark: _m('tabGroupsRemoveBookmark'),
         addBookmark: _m('tabGroupsAddBookmark'),
+        stage: _m('tabRowStage'),
         close: _m('tabGroupsSelectClose')
     });
 
@@ -552,6 +553,11 @@ export function initViewTabGroups(ctx = {}) {
         // asleep → filled glyph + wake, otherwise hollow glyph + sleep.
         const allAsleep = memberTabs.length > 0 && memberTabs.every(t => !!t.discarded);
         const sleepLabel = allAsleep ? G.wake : G.sleep;
+        // Staged indicator: every bookmarkable member already staged → the
+        // filled plane, always on (the staging view's .staged law).
+        const groupStaged = memberTabs.some(t => bookmarkableUrl(t.url))
+            && memberTabs.filter(t => bookmarkableUrl(t.url)).every(t => isStagedUrl(t.url));
+        const groupStageLabel = G.stage;
         // Button order (4.1.0 alignment pass): the three actions a group
         // shares with a single tab read RIGHT-to-left as close (删除) /
         // save-as-folder (收藏) / sleep (睡眠) — the same order and the
@@ -568,6 +574,7 @@ export function initViewTabGroups(ctx = {}) {
             `<button class="row-btn tabgroups-group-rename" aria-label="${htmlspecialchars(G.rename)}" title="${htmlspecialchars(G.rename)}">${EDIT_ICON}</button>` +
             `<button class="row-btn tabgroups-group-sleep${allAsleep ? ' asleep' : ''}" aria-pressed="${allAsleep}" aria-label="${htmlspecialchars(sleepLabel)}" title="${htmlspecialchars(sleepLabel)}">${allAsleep ? SLEEP_ICON_FILLED : SLEEP_ICON}</button>` +
             `<button class="row-btn tabgroups-group-save" aria-label="${htmlspecialchars(G.save)}" title="${htmlspecialchars(G.save)}">${FOLDER_STAR_ICON}</button>` +
+            `<button class="row-btn tabgroups-group-stage${groupStaged ? ' staged always-on' : ''}" aria-pressed="${groupStaged}" aria-label="${htmlspecialchars(groupStageLabel)}" title="${htmlspecialchars(groupStageLabel)}">${groupStaged ? STAGE_ICON_DONE : STAGE_ICON}</button>` +
             `<button class="row-btn tabgroups-group-close" aria-label="${htmlspecialchars(G.close)}" title="${htmlspecialchars(G.close)}">${TRASH_ICON}</button>` +
             '</span></li>';
     };
@@ -579,15 +586,21 @@ export function initViewTabGroups(ctx = {}) {
 
     // The row's trailing icon strip. Non-selection mode renders live
     // controls (state glyph = click toggles that state); selection mode
-    // renders the SAME four columns as inert state markers, so the row
+    // renders the SAME columns as inert state markers, so the row
     // geometry is identical in both modes (only the batch bar acts there).
+    // The stage column sits between the bookmark star and close (the same
+    // slot order the group head uses) and follows the .staged law: staged →
+    // the filled plane, always on in accent; otherwise a hover-revealed
+    // hollow plane.
     const rowIcons = (tab, L = {}) => {
         const pinned = !!tab.pinned;
         const discarded = !!tab.discarded;
         const bookmarked = bookmarkedUrls.has(tab.url || '');
+        const staged = isStagedUrl(tab.url);
         const pinnedLabel = L.pinned || _m('tabGroupsPinned');
         const discardedLabel = L.discarded || _m('tabGroupsDiscarded');
         const bookmarkedLabel = L.bookmarked || _m('tabGroupsBookmarked');
+        const stagedLabel = L.stage || _m('tabRowStage');
         if (selecting) {
             return (pinned
                 ? `<span class="tabgroups-status-icon pinned" aria-label="${htmlspecialchars(pinnedLabel)}" title="${htmlspecialchars(pinnedLabel)}">${PIN_ICON_FILLED}</span>`
@@ -597,6 +610,9 @@ export function initViewTabGroups(ctx = {}) {
                     : emptySlot()) +
                 (bookmarked
                     ? `<span class="tabgroups-star" aria-label="${htmlspecialchars(bookmarkedLabel)}" title="${htmlspecialchars(bookmarkedLabel)}">${STAR_ICON_FILLED}</span>`
+                    : emptySlot()) +
+                (staged
+                    ? `<span class="tabgroups-star staged" aria-label="${htmlspecialchars(stagedLabel)}" title="${htmlspecialchars(stagedLabel)}">${STAGE_ICON_DONE}</span>`
                     : emptySlot()) +
                 emptySlot();
         }
@@ -620,10 +636,15 @@ export function initViewTabGroups(ctx = {}) {
         const starHtml = bookmarked
             ? `<button class="row-btn tabgroups-remove-bookmark always-on" aria-pressed="true" aria-label="${htmlspecialchars(L.removeBookmark || _m('tabGroupsRemoveBookmark'))}" title="${htmlspecialchars(L.removeBookmark || _m('tabGroupsRemoveBookmark'))}">${STAR_ICON_FILLED}</button>`
             : `<button class="row-btn tabgroups-add-bookmark tabgroups-add-btn" aria-label="${htmlspecialchars(L.addBookmark || _m('tabGroupsAddBookmark'))}" title="${htmlspecialchars(L.addBookmark || _m('tabGroupsAddBookmark'))}">${STAR_ICON}</button>`;
+        // Stage (发送到暂存): pure snapshot between the star and close
+        // columns; staged → filled plane always on in accent.
+        const stageHtml = staged
+            ? `<button class="row-btn tabgroups-stage staged always-on" aria-pressed="true" aria-label="${htmlspecialchars(stagedLabel)}" title="${htmlspecialchars(stagedLabel)}">${STAGE_ICON_DONE}</button>`
+            : `<button class="row-btn tabgroups-stage" aria-label="${htmlspecialchars(stagedLabel)}" title="${htmlspecialchars(stagedLabel)}">${STAGE_ICON}</button>`;
         // The rightmost hover action is close-tab (delete).
         const closeLabel = L.close || _m('tabGroupsSelectClose');
         const closeHtml = `<button class="row-btn tabgroups-close-tab" aria-label="${htmlspecialchars(closeLabel)}" title="${htmlspecialchars(closeLabel)}">${TRASH_ICON}</button>`;
-        return pinHtml + sleepHtml + starHtml + closeHtml;
+        return pinHtml + sleepHtml + starHtml + stageHtml + closeHtml;
     };
 
     const tabRowHtml = (tab, opts = {}) => {
@@ -684,11 +705,31 @@ export function initViewTabGroups(ctx = {}) {
         const firstBtn = standalone
             ? `<button class="row-btn tabgroups-closed-reopen" aria-label="${htmlspecialchars(_m('tabGroupsReopenAction'))}" title="${htmlspecialchars(_m('tabGroupsReopenAction'))}">${ACTIVATE_ICON}</button>`
             : `<button class="row-btn tabgroups-closed-add-bookmark" aria-label="${htmlspecialchars(_m('tabGroupsAddBookmark'))}" title="${htmlspecialchars(_m('tabGroupsAddBookmark'))}">${STAR_ICON}</button>`;
+        // 发送到暂存 between the leading action and the trailing ×: staged →
+        // the filled plane, always on in accent (the staging view's law).
+        const closedStaged = isStagedUrl(tab.url);
+        const closedStageLabel = _m('tabRowStage');
+        const stageBtn = `<button class="row-btn tabgroups-closed-stage${closedStaged ? ' staged always-on' : ''}" ` +
+            `aria-pressed="${closedStaged}" aria-label="${htmlspecialchars(closedStageLabel)}" title="${htmlspecialchars(closedStageLabel)}">` +
+            `${closedStaged ? STAGE_ICON_DONE : STAGE_ICON}</button>`;
         return `<li class="vbm-row tabgroups-closed-tab${opts.member ? ' tabgroups-closed-member' : ''}" data-closed-id="${htmlspecialchars(record.id)}" data-closed-tab="${idx}">` +
             treeRender.generateBookmarkHTML(title, tab.url || '', extras, null, null, meta) +
             firstBtn +
+            stageBtn +
             `<button class="row-btn tabgroups-closed-remove-tab" aria-label="${htmlspecialchars(removeLabel)}" title="${htmlspecialchars(removeLabel)}">${TRASH_ICON}</button>` +
             '</li>';
+    };
+
+    // The closed group head's stage button (暂存 between reopen and delete):
+    // every bookmarkable recorded tab already staged → filled plane, always on.
+    const closedHeadStageBtn = record => {
+        const tabs = record.tabs || [];
+        const bookmarkable = tabs.filter(t => bookmarkableUrl(t.url));
+        const staged = bookmarkable.length > 0 && bookmarkable.every(t => isStagedUrl(t.url));
+        const label = _m('tabgroupStageAll');
+        return `<button class="row-btn tabgroups-closed-stage-group${staged ? ' staged always-on' : ''}" ` +
+            `aria-pressed="${staged}" aria-label="${htmlspecialchars(label)}" title="${htmlspecialchars(label)}">` +
+            `${staged ? STAGE_ICON_DONE : STAGE_ICON}</button>`;
     };
 
     const closedGroupHtml = record => {
@@ -707,6 +748,7 @@ export function initViewTabGroups(ctx = {}) {
             `<span class="tabgroups-closed-meta" title="${htmlspecialchars(closedAtFull)}">${htmlspecialchars(closedAt)}</span>` +
             `<span class="count-pill" aria-label="${htmlspecialchars(_m('tabGroupsGroupCount', `${(record.tabs || []).length}`))}">${(record.tabs || []).length}</span>` +
             `<button class="row-btn tabgroups-closed-open" aria-label="${htmlspecialchars(openLabel)}" title="${htmlspecialchars(openLabel)}">${ACTIVATE_ICON}</button>` +
+            closedHeadStageBtn(record) +
             `<button class="row-btn tabgroups-closed-delete" aria-label="${htmlspecialchars(deleteLabel)}" title="${htmlspecialchars(deleteLabel)}">${TRASH_ICON}</button>` +
             '</span></li>';
         if (isExpanded) {
@@ -740,6 +782,7 @@ export function initViewTabGroups(ctx = {}) {
             activate: _m('tabGroupsActivateGroup'),
             rename: _m('tabGroupsRenameGroup'),
             save: _m('tabGroupsSaveFolder'),
+            stage: _m('tabgroupStageAll'),
             sleep: _m('tabGroupsSleepGroup'),
             wake: _m('tabGroupsWakeGroup'),
             close: _m('tabGroupsCloseGroup')
@@ -1064,6 +1107,37 @@ export function initViewTabGroups(ctx = {}) {
     };
 
     const stageTabById = tabId => stageTab(tabById(tabId));
+
+    // Staged-state probe for the row/head buttons: staged → the filled plane
+    // glyph, always visible in accent (the staging view's .staged law).
+    const isStagedUrl = url => !!(ctx.staging && ctx.staging.isStaged && url && ctx.staging.isStaged(url));
+
+    // Stage a CLOSED record (group head → every recorded tab; one recorded
+    // tab → its snapshot). Pure snapshots like stageTab — no tree writes.
+    const stageClosedGroup = recordId => {
+        const stagingApi = ctx.staging;
+        const record = closedRecords.find(r => String(r.id) === String(recordId));
+        if (!stagingApi || !record)
+            return;
+        const entries = (record.tabs || [])
+            .filter(t => bookmarkableUrl(t.url))
+            .map(t => ({ id: null, url: t.url, title: t.title || t.url }));
+        if (!entries.length) {
+            undo.showToast(_m('tabgroupStageNone'));
+            return;
+        }
+        stagingApi.addItems(entries);
+        undo.showToast(_m('stagingAddedSummary', [`${entries.length}`, '0']));
+    };
+
+    const stageClosedTab = (recordId, idx) => {
+        const stagingApi = ctx.staging;
+        const record = closedRecords.find(r => String(r.id) === String(recordId));
+        const tab = record && (record.tabs || [])[idx];
+        if (!stagingApi || !tab || !bookmarkableUrl(tab.url))
+            return;
+        stagingApi.addItems([{ id: null, url: tab.url, title: tab.title || tab.url }]);
+    };
 
     // A whole tab group: bookmarkable tabs by index as PURE snapshots into
     // one sourceTabGroup staging group (>10 ConfirmDialog; 0 bookmarkable →
@@ -2454,6 +2528,46 @@ export function initViewTabGroups(ctx = {}) {
                 addTabToBookmarks(li.dataset.tabId);
             return;
         }
+        // 发送到暂存 (row): the pure snapshot send, same as the menu entry.
+        const stageBtn = closest('.tabgroups-stage');
+        if (stageBtn) {
+            e.preventDefault();
+            e.stopPropagation();
+            const li = stageBtn.closest('li');
+            if (li && li.dataset.tabId)
+                stageTabById(li.dataset.tabId);
+            return;
+        }
+        // 发送到暂存 (group head): the whole group as one staging group.
+        const groupStageBtn = closest('.tabgroups-group-stage');
+        if (groupStageBtn) {
+            e.preventDefault();
+            e.stopPropagation();
+            const li = groupStageBtn.closest('li');
+            if (li && li.dataset.groupId)
+                stageTabGroup(li.dataset.groupId, (groupById(li.dataset.groupId) || {}).title);
+            return;
+        }
+        // 发送到暂存 (closed rows): the recorded tab's snapshot.
+        const closedStageBtn = closest('.tabgroups-closed-stage');
+        if (closedStageBtn) {
+            e.preventDefault();
+            e.stopPropagation();
+            const li = closedStageBtn.closest('li');
+            if (li && li.dataset.closedId)
+                stageClosedTab(li.dataset.closedId, parseInt(li.dataset.closedTab, 10) || 0);
+            return;
+        }
+        // 发送到暂存 (closed group head): every recorded tab of the record.
+        const closedGroupStageBtn = closest('.tabgroups-closed-stage-group');
+        if (closedGroupStageBtn) {
+            e.preventDefault();
+            e.stopPropagation();
+            const li = closedGroupStageBtn.closest('li');
+            if (li && li.dataset.closedId)
+                stageClosedGroup(li.dataset.closedId);
+            return;
+        }
         const activateBtn = closest('.tabgroups-group-activate');
         if (activateBtn) {
             e.preventDefault();
@@ -2953,6 +3067,7 @@ export function initViewTabGroups(ctx = {}) {
         // reads these through neat.js's ctx.tabGroupsMenu getter).
         stageTabById,
         stageTabGroup,
+        stageClosedGroup,
         // Lazy context-menu dispatch (context-menu.js reads these through
         // neat.js's ctx.tabGroupsMenu getter).
         activateTab: tabId => focusTab(tabById(tabId)),

@@ -327,6 +327,7 @@ import { deferIdle, mark as perfMark } from './idle.js';
         // the record's state are re-set at open time by context-menu.js)
         'tabgroups-closed-reopen': 'tabGroupsReopenGroup',
         'tabgroups-closed-toggle': 'tabGroupsExpandedExpand',
+        'tabgroups-closed-stage-all': 'tabgroupStageAll',
         'tabgroups-closed-forget': 'tabGroupsDeleteClosedGroup',
         'tabgroups-closed-tab-open': 'tabGroupsClosedOpenTab',
         'tabgroups-closed-tab-bookmark': 'tabGroupsMenuAddBookmark',

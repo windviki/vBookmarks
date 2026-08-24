@@ -2498,13 +2498,13 @@
     "message": "Klasöre sağ tıklandığında üç klasör ekleme girişini (önce/sonra/içine) tek bir alt menü girişinde birleştirir."
   },
   "tabRowStage": {
-    "message": "Yer imi ve sahnele"
+    "message": "Aşamaya gönder"
   },
   "tabgroupStageAll": {
-    "message": "Grubu yer imi ve sahnele"
+    "message": "Grubu aşamaya gönder"
   },
   "tabgroupStageConfirm": {
-    "message": "$n$ sekmeyi yer imi ve sahnele?",
+    "message": "$n$ sekmeyi aşamaya gönderilsin mi?",
     "placeholders": {
       "n": {
         "content": "$1"

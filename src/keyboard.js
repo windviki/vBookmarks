@@ -96,7 +96,7 @@ export function initKeyboard(ctx = {}) {
                 continue;
             // 与 Home/End 的 li[tabindex] 聚焦规则一致 (4.0.1 P4)。
             const focus = row.getAttribute && row.getAttribute('tabindex') !== null
-                ? row : row.querySelector('span, a');
+                ? row : rowFocusTarget(row);
             if (focus)
                 return focus;
         }
@@ -108,11 +108,22 @@ export function initKeyboard(ctx = {}) {
     // closed" section head renders em/button only). The tab-groups WINDOW
     // head does carry a focusable span — the walk lands on it by design
     // (design doc §15.1: the whole head row is the fold control).
+    // Row target: prefer a REAL focus candidate — the anchor, or a span
+    // that opted in with tabindex. A bare span (the staging/tabgroups tree
+    // CONNECTOR glyphs lead their rows) is focus(): a no-op, which used to
+    // strand the ↓/↑ walk on every expanded group head. The second selector
+    // is the legacy pass (tree rows and hand-written test doubles stub it
+    // verbatim); in a real DOM with an anchor the first one always wins.
+    const rowFocusTarget = li => {
+        if (!li || !li.querySelector)
+            return null;
+        return li.querySelector('a, span[tabindex]') || li.querySelector('a, span') || null;
+    };
     const nextFocusableRowSibling = (li, dir) => {
         for (let n = li; (n = dir > 0 ? n.nextElementSibling : n.previousElementSibling);) {
             if (n.tagName !== 'LI')
                 continue;
-            const focus = n.querySelector && n.querySelector('a, span');
+            const focus = rowFocusTarget(n);
             if (focus)
                 return focus;
         }
@@ -305,7 +316,7 @@ export function initKeyboard(ctx = {}) {
                 {
                     const liChild = li.querySelector('ul>li:first-child');
                     // may be an "(Empty)" marker row, which has no focusable element
-                    const liChildFocus = liChild ? liChild.querySelector('a, span') : null;
+                    const liChildFocus = liChild ? rowFocusTarget(liChild) : null;
                     if (li.classList.contains('open') && liChildFocus) {
                         liChildFocus.focus();
                         break;
@@ -334,7 +345,7 @@ export function initKeyboard(ctx = {}) {
                         if (li)
                             nextLi = li.nextElementSibling;
                         if (nextLi)
-                            nextLiSpan = nextLi.querySelector('a, span');
+                            nextLiSpan = rowFocusTarget(nextLi);
                         if (nextLiSpan) //fixed: pushed down "DOWN" when the focus was at the last node
                             nextLiSpan.focus();
                     } while (li && !nextLi);
@@ -348,7 +359,7 @@ export function initKeyboard(ctx = {}) {
                 //（死链视图的 .dead-marked-head 分隔 div）不是行，归 null 落到
                 // 兄弟 <ul> 跨越。树视图 <ul> 子元素恒为 <li>，此处不会误伤。
                 while (prevLi && prevLi.tagName === 'LI'
-                    && !(prevLi.querySelector && prevLi.querySelector('a, span')))
+                    && !rowFocusTarget(prevLi))
                     prevLi = prevLi.previousElementSibling;
                 if (prevLi && prevLi.tagName !== 'LI')
                     prevLi = null;
@@ -358,14 +369,14 @@ export function initKeyboard(ctx = {}) {
                         const visible = Array.from(lis).filter(li => !!li.parentNode.offsetHeight);
                         prevLi = visible[visible.length - 1];
                     }
-                    const prevLiFocus = prevLi && prevLi.querySelector('a, span');
+                    const prevLiFocus = prevLi && rowFocusTarget(prevLi);
                     if (prevLiFocus) {
                         prevLiFocus.focus();
                     } else if (prevLi) {
                         // "(Empty)" marker row: land on its folder instead
                         const markerParentLi = prevLi.parentNode.parentNode;
                         if (markerParentLi && markerParentLi.tagName === 'LI')
-                            markerParentLi.querySelector('a, span').focus();
+                            rowFocusTarget(markerParentLi).focus();
                     }
                 } else {
                     // 兄弟 <ul> 跨越优先（残留首行 ↑ → 结果列表末行）；落空再走
@@ -376,7 +387,7 @@ export function initKeyboard(ctx = {}) {
                     } else {
                         const parentPrevLi = li.parentNode.parentNode;
                         if (parentPrevLi && parentPrevLi.tagName === 'LI') {
-                            parentPrevLi.querySelector('a, span').focus();
+                            rowFocusTarget(parentPrevLi).focus();
                         } else {
                             // v4task-2-list §2.1 + §2.5 (final polish): ↑ past
                             // the first row crosses into the in-list toolbar when
@@ -524,7 +535,7 @@ export function initKeyboard(ctx = {}) {
                     // doubles lack it.)
                     const focus = li && (li.getAttribute && li.getAttribute('tabindex') !== null
                         ? li
-                        : li.querySelector('span, a'));
+                        : rowFocusTarget(li));
                     if (focus)
                         focus.focus();
                     else if (!li)
@@ -546,7 +557,7 @@ export function initKeyboard(ctx = {}) {
                     // Same li[tabindex] row-container rule as End (4.0.1 P4).
                     let firstFocus = firstRow && (firstRow.getAttribute && firstRow.getAttribute('tabindex') !== null
                         ? firstRow
-                        : firstRow.querySelector('span, a'));
+                        : rowFocusTarget(firstRow));
                     // A section li with no focusable content (the staging
                     // view's empty-state row) must not dead-end Home: keep
                     // walking forward to the first REAL row across the
@@ -558,7 +569,7 @@ export function initKeyboard(ctx = {}) {
                             for (const li of Array.from(lis)) {
                                 const f = (li.getAttribute && li.getAttribute('tabindex') !== null)
                                     ? li
-                                    : (li.querySelector && li.querySelector('span, a'));
+                                    : rowFocusTarget(li);
                                 if (f) {
                                     firstFocus = f;
                                     break;

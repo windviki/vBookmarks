@@ -2498,13 +2498,13 @@
     "message": "Spoji tri unosa za dodavanje mape (prije/poslije/unutar) u jedan podizbornik pri desnom kliku na mapu."
   },
   "tabRowStage": {
-    "message": "Dodaj u oznake i pozornicu"
+    "message": "Pošalji u pripremu"
   },
   "tabgroupStageAll": {
-    "message": "Dodaj grupu u oznake i pozornicu"
+    "message": "Pošalji grupu u pripremu"
   },
   "tabgroupStageConfirm": {
-    "message": "Dodati $n$ kartica u oznake i pozornicu?",
+    "message": "Poslati $n$ kartica u pripremu?",
     "placeholders": {
       "n": {
         "content": "$1"

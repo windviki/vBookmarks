@@ -2498,13 +2498,13 @@
     "message": "Slå samman de tre lägg-till-mapp-posterna (före/efter/inuti) till en undermenypost vid högerklick på mappar."
   },
   "tabRowStage": {
-    "message": "Bokmärk och scen"
+    "message": "Skicka till scen"
   },
   "tabgroupStageAll": {
-    "message": "Bokmärk och scen grupp"
+    "message": "Skicka grupp till scen"
   },
   "tabgroupStageConfirm": {
-    "message": "Bokmärk och scen $n$ flikar?",
+    "message": "Skicka $n$ flikar till scen?",
     "placeholders": {
       "n": {
         "content": "$1"

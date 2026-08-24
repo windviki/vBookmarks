@@ -983,6 +983,10 @@ export function initContextMenu(ctx = {}) {
                 const count = ctx.tabGroupsMenu.closedTabCount(cid);
                 toggleItem.classList.toggle('disabled', !count);
             }
+            // An empty record has nothing to stage either.
+            const closedStageAllItem = $('tabgroups-closed-stage-all');
+            if (closedStageAllItem && cid)
+                closedStageAllItem.classList.toggle('disabled', !ctx.tabGroupsMenu.closedTabCount(cid));
         } else if (row.classList && row.classList.contains('tabgroups-closed-tab')
             && $tabClosedTabContextMenu && ctx.tabGroupsMenu) {
             // One saved tab inside a closed record (or a closed single tab):
@@ -2013,6 +2017,12 @@ export function initContextMenu(ctx = {}) {
                 break;
             case 'tabgroups-closed-toggle':
                 ctx.tabGroupsMenu.toggleClosedExpanded(cid);
+                break;
+            // 发送到暂存 (whole closed record): pure snapshots, no tree
+            // writes — the same send the closed head's plane button runs.
+            case 'tabgroups-closed-stage-all':
+                if (ctx.tabGroupsMenu.stageClosedGroup)
+                    ctx.tabGroupsMenu.stageClosedGroup(cid);
                 break;
             case 'tabgroups-closed-forget':
                 ctx.tabGroupsMenu.deleteClosedGroup(cid);

@@ -196,6 +196,11 @@ export function initSearch(ctx = {}) {
     chrome.bookmarks.onMoved.addListener(markSearchIndexDirty);
 
     const quitSearchMode = (ignoreFocus) => {
+        // Leaving search MODE also leaves selection mode — quitting with the
+        // ×/empty box while selecting used to keep the bar + ul.selecting
+        // chrome on the surviving results across view re-entries.
+        if (selecting)
+            setSelecting(false);
         if (searchMode) {
             prevValue = '';
             searchInput.value = '';
@@ -216,6 +221,8 @@ export function initSearch(ctx = {}) {
     // original code inlined these five statements in bookmarkHandler).
     // §4.3: opening a result is one of the history-record timings.
     const resetSearchState = () => {
+        if (selecting)
+            setSelecting(false);
         if (searchMode) {
             recordHistory(searchInput.value);
             prevValue = '';
@@ -243,6 +250,14 @@ export function initSearch(ctx = {}) {
     // the area container — the `emptyFocus` fallback).
     const parkRowFocus = () => sharedParkRowFocus($historyArea);
     const unparkRowFocus = parked => sharedUnparkRowFocus($historyArea, parked, searchInput);
+    // Identical-render skip (the resize listener fires a re-render per resize
+    // event — a size-correction loop would rebuild the rows under the cursor
+    // every frame, killing :hover (the row × never reveals) and racing clicks
+    // onto detached nodes). A render that TRIMMED tail rows must always redo
+    // (a larger viewport restores them), so the skip only holds while the
+    // last render was untrimmed.
+    let lastHistoryHtml = null;
+    let lastHistoryTrimmed = false;
     const renderHistoryArea = () => {
         if (!$historyArea)
             return;
@@ -250,7 +265,12 @@ export function initSearch(ctx = {}) {
         const parkedRow = parkRowFocus();
         const list = historyEnabled() ? readHistory() : [];
         if (!list.length) {
-            $historyArea.innerHTML = `<ul role="list"><li class="empty-state" role="listitem"><i>${_m('searchViewHint')}</i></li></ul>`;
+            const hintHtml = `<ul role="list"><li class="empty-state" role="listitem"><i>${_m('searchViewHint')}</i></li></ul>`;
+            if (hintHtml !== lastHistoryHtml) {
+                lastHistoryHtml = hintHtml;
+                lastHistoryTrimmed = false;
+                $historyArea.innerHTML = hintHtml;
+            }
             unparkRowFocus(parkedRow);
             return;
         }
@@ -271,12 +291,22 @@ export function initSearch(ctx = {}) {
                 `</li>`;
         }
         html += '</ul>';
+        if (html === lastHistoryHtml && !lastHistoryTrimmed) {
+            // unchanged list, untrimmed last render — the DOM is already
+            // exactly this; keep the live nodes (hover, focus, in-flight
+            // clicks all survive).
+            unparkRowFocus(parkedRow);
+            return;
+        }
+        lastHistoryHtml = html;
         $historyArea.innerHTML = html;
         // v4 task-4 #4: never let the upper area grow a scrollbar — the area
         // caps at 40% of the view height (CSS), so drop tail rows until the
         // remainder fits. The stored MRU keeps all 10 entries; this is a
         // pure view concern (jsdom/no-layout doubles report 0 ≥ 0 → no-op).
         trimHistoryToFit();
+        lastHistoryTrimmed = !!$historyArea.querySelector
+            && $historyArea.querySelectorAll('a[data-q]').length < list.length;
         // …restored AFTER the trim, so a trimmed-away row can't take focus.
         unparkRowFocus(parkedRow);
     };
@@ -297,6 +327,10 @@ export function initSearch(ctx = {}) {
     const runHistoryQuery = q => {
         searchInput.value = q;
         updateClearBtn();
+        // Bypass the same-query short-circuit: re-picking the CURRENT query
+        // from the history must visibly re-run (results + count repaint),
+        // not no-op because prevValue already holds it.
+        prevValue = '';
         search(true); // explicit pick: runs even in searchAfterEnter mode
         searchInput.focus();
     };
@@ -422,9 +456,28 @@ export function initSearch(ctx = {}) {
         if (focus)
             selectionFocus = focus;
         // re-render the results list with/without the bar — the current
-        // query's results survive, so re-rank from the live index
+        // query's results survive, so re-rank from the live index. With an
+        // EMPTY query there is nothing to re-rank, but the bar and the
+        // ul.selecting chrome must still leave the surviving DOM (the
+        // ×-clear path): leaving them behind stranded a phantom selection
+        // bar over the results until the next query.
         if (searchInput.value.trim())
             runSearch();
+        else if (!on)
+            stripSelectionChrome();
+    };
+    // Remove the selection bar + selecting classes from the SURVIVING
+    // results DOM (no re-render — an empty query has nothing to re-rank).
+    const stripSelectionChrome = () => {
+        const bar = $results.querySelector && $results.querySelector('.search-select-toolbar');
+        if (bar && bar.remove)
+            bar.remove();
+        const ul = document.getElementById('results-ul');
+        if (ul && ul.classList)
+            ul.classList.remove('selecting');
+        const rows = $results.querySelectorAll ? $results.querySelectorAll('#results-ul li.vbm-row.sel') : [];
+        for (let i = 0; i < rows.length; i++)
+            rows[i].classList.remove('sel');
     };
     let selectionFocus = null;
 
@@ -794,6 +847,10 @@ export function initSearch(ctx = {}) {
             // searchMode is off — quitSearchMode would skip the write and the
             // stale query would restore on the next popup open.
             store.set('searchQuery', '');
+            // Emptying the box while selecting also exits selection mode (the
+            // same law as quitSearchMode — the bar never survives the query).
+            if (selecting)
+                setSelecting(false);
             // keep focus on input
             // do not restore focus to item
             quitSearchMode(true);

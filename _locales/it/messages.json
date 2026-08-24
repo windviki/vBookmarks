@@ -2498,13 +2498,13 @@
     "message": "Unisci le tre voci di aggiunta cartella (prima/dopo/dentro) in una sola voce di sottomenu al clic destro su cartella."
   },
   "tabRowStage": {
-    "message": "Segna e metti in scena"
+    "message": "Invia a staging"
   },
   "tabgroupStageAll": {
-    "message": "Segna e metti in scena gruppo"
+    "message": "Invia gruppo a staging"
   },
   "tabgroupStageConfirm": {
-    "message": "Segnare e mettere in scena $n$ schede?",
+    "message": "Inviare $n$ schede a staging?",
     "placeholders": {
       "n": {
         "content": "$1"

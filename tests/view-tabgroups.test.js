@@ -1928,8 +1928,9 @@ describe('selection mode folding + row icon parity', () => {
         const html = $list.innerHTML;
         // no live row controls…
         expect(html).not.toContain('row-btn');
-        // …but the same four columns per row (markers + reserved slots), so
-        // the bookmarked ★ column cannot shift its neighbours' glyphs
+        // …but the same five columns per row (markers + reserved slots — the
+        // stage plane joined between the star and close), so the bookmarked ★
+        // column cannot shift its neighbours' glyphs
         const rowOf = id => {
             const start = html.indexOf(`id="tabgroups-item-${id}"`);
             return html.slice(start, html.indexOf('</li>', start));
@@ -1937,7 +1938,7 @@ describe('selection mode folding + row icon parity', () => {
         for (const id of [1, 2]) {
             const row = rowOf(id);
             const slots = (row.match(/tabgroups-slot|tabgroups-status-icon|tabgroups-star/g) || []);
-            expect(slots).toHaveLength(4);
+            expect(slots).toHaveLength(5);
         }
         expect(rowOf(1)).toContain('tabgroups-status-icon pinned');
         expect(rowOf(1)).toContain('tabgroups-star');

@@ -2494,13 +2494,13 @@
     "message": "Fundir as três entradas de adicionar pasta (antes/depois/dentro) num submenu ao clicar com o botão direito numa pasta."
   },
   "tabRowStage": {
-    "message": "Marcar e preparar"
+    "message": "Enviar para palco"
   },
   "tabgroupStageAll": {
-    "message": "Marcar e preparar grupo"
+    "message": "Enviar grupo para palco"
   },
   "tabgroupStageConfirm": {
-    "message": "Marcar e preparar $n$ separadores?",
+    "message": "Enviar $n$ separadores para palco?",
     "placeholders": {
       "n": {
         "content": "$1"

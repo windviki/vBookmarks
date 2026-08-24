@@ -2498,13 +2498,13 @@
     "message": "אחד את שלוש רשומות הוספת התיקייה (לפני/אחרי/בתוך) לרשומת תפריט משנה אחת בלחיצה ימנית על תיקייה."
   },
   "tabRowStage": {
-    "message": "סמן ושמור"
+    "message": "שלח לשלב"
   },
   "tabgroupStageAll": {
-    "message": "סמן ושמור קבוצה"
+    "message": "שלח קבוצה לשלב"
   },
   "tabgroupStageConfirm": {
-    "message": "לסמן ולשמור $n$ לשוניות?",
+    "message": "לשלוח $n$ לשוניות לשלב?",
     "placeholders": {
       "n": {
         "content": "$1"

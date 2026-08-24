@@ -2498,13 +2498,13 @@
     "message": "Combină cele trei intrări de adăugare folder (înainte/după/în interior) într-o singură intrare de submeniu la clic dreapta pe folder."
   },
   "tabRowStage": {
-    "message": "Marchează și plasează"
+    "message": "Trimite în staging"
   },
   "tabgroupStageAll": {
-    "message": "Marchează și plasează grupul"
+    "message": "Trimite grupul în staging"
   },
   "tabgroupStageConfirm": {
-    "message": "Marchezi și plasezi $n$ file?",
+    "message": "Trimite $n$ file în staging?",
     "placeholders": {
       "n": {
         "content": "$1"

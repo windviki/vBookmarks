@@ -2498,13 +2498,13 @@
     "message": "Voeg de drie map-toevoegen-items (vóór/na/binnen) samen tot één submenu-item bij rechtsklik op mappen."
   },
   "tabRowStage": {
-    "message": "Bladwijzer en podium"
+    "message": "Naar staging"
   },
   "tabgroupStageAll": {
-    "message": "Bladwijzer en podiumgroep"
+    "message": "Groep naar staging"
   },
   "tabgroupStageConfirm": {
-    "message": "Bladwijzer en podium $n$ tabbladen?",
+    "message": "$n$ tabbladen naar staging sturen?",
     "placeholders": {
       "n": {
         "content": "$1"

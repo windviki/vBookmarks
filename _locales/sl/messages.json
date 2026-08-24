@@ -2498,13 +2498,13 @@
     "message": "Združi tri vnose za dodajanje mape (pred/za/znotraj) v en podmeni pri desnem kliku na mapo."
   },
   "tabRowStage": {
-    "message": "Zaznamuj in pripravi"
+    "message": "Pošlji v pripravljalnico"
   },
   "tabgroupStageAll": {
-    "message": "Zaznamuj in pripravi skupino"
+    "message": "Pošlji skupino v pripravljalnico"
   },
   "tabgroupStageConfirm": {
-    "message": "Zaznamuj in pripravi $n$ zavihkov?",
+    "message": "Poslati $n$ zavihkov v pripravljalnico?",
     "placeholders": {
       "n": {
         "content": "$1"

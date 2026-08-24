@@ -2498,13 +2498,13 @@
     "message": "Yhdistä kolme kansion lisäysvalintaa (ennen/jälkeen/sisään) yhdeksi alivalikoksi kansion hiiren kakkospainikkeella."
   },
   "tabRowStage": {
-    "message": "Lisää kirjanmerkki ja jono"
+    "message": "Lähetä välitykseen"
   },
   "tabgroupStageAll": {
-    "message": "Lisää ryhmä kirjanmerkiksi ja jonoon"
+    "message": "Lähetä ryhmä välitykseen"
   },
   "tabgroupStageConfirm": {
-    "message": "Lisätäänkö $n$ välilehteä kirjanmerkiksi ja jonoon?",
+    "message": "Lähetetäänkö $n$ välilehteä välitykseen?",
     "placeholders": {
       "n": {
         "content": "$1"

@@ -2373,6 +2373,14 @@ li.staging-row.drag-over {
 }
 
 /* The dead/dupes toolbar law: the summary fills the left, the action
+   cluster pins to the right — the search view's idle result count and its
+   select-mode entry follow the same axis (the entry button right-aligns
+   like every other view's). */
+.search-toolbar .search-result-count {
+    margin-inline-end: auto;
+}
+
+/* The dead/dupes toolbar law: the summary fills the left, the action
    cluster pins to the right — the staging view's select-mode entry (and the
    新建分组 button beside it) right-align like every other view's. The
    selection count reads with the same 500 weight as the dead/dupes
@@ -4578,6 +4586,15 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
     padding-inline-end: 4px;
 }
 
+/* The results rows are BLOCK li by default (#results ul li shares the tree's
+   display:block) — every other list view's rows are flex. Without this the
+   selecting checkbox ::before renders as a squashed inline box in the row's
+   top-left corner and the wrapped row breaks the list rhythm. */
+#results ul.selecting li.vbm-row {
+    display: flex;
+    align-items: center;
+}
+
 /* Selecting heads take the same 8px lead so their checkbox (the head's
    ::before) lands on the rows' checkbox axis. */
 #staging-list ul.selecting li.staging-group .group-head,
@@ -5065,6 +5082,18 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
     color: var(--vbm-accent);
 }
 #tabgroups-list .row-btn.always-on {
+    visibility: visible;
+}
+/* 发送到暂存 column (between the bookmark star and close, on rows / group
+   heads / closed records alike): staged → the filled plane always on in
+   accent — the staging view's .staged law, one accent language for every
+   staged glyph in the popup. */
+#tabgroups-list .row-btn.tabgroups-stage.staged,
+#tabgroups-list .row-btn.tabgroups-group-stage.staged,
+#tabgroups-list .row-btn.tabgroups-closed-stage.staged,
+#tabgroups-list .row-btn.tabgroups-closed-stage-group.staged,
+#tabgroups-list .tabgroups-star.staged {
+    color: var(--vbm-accent);
     visibility: visible;
 }
 #tabgroups-list .row-btn.tabgroups-remove-bookmark,

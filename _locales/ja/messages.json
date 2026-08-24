@@ -2498,13 +2498,13 @@
     "message": "フォルダの右クリック時に、3つのフォルダ追加エントリ（前/後/内）を1つのサブメニューにまとめます。"
   },
   "tabRowStage": {
-    "message": "ブックマークしてステージ"
+    "message": "ステージングに送る"
   },
   "tabgroupStageAll": {
-    "message": "グループをブックマークしてステージ"
+    "message": "グループをステージングへ"
   },
   "tabgroupStageConfirm": {
-    "message": "$n$ 個のタブをブックマークしてステージしますか？",
+    "message": "$n$ 個のタブをステージングに送りますか？",
     "placeholders": {
       "n": {
         "content": "$1"

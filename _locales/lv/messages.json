@@ -2498,13 +2498,13 @@
     "message": "Apvienot trīs mapes pievienošanas ierakstus (pirms/pēc/iekšā) vienā apakšizvēlnē, ar peles labo pogu noklikšķinot uz mapes."
   },
   "tabRowStage": {
-    "message": "Grāmatzīme un skatuve"
+    "message": "Nosūtīt uz sagatavi"
   },
   "tabgroupStageAll": {
-    "message": "Grāmatzīme un skatuve grupai"
+    "message": "Nosūtīt grupu uz sagatavi"
   },
   "tabgroupStageConfirm": {
-    "message": "Grāmatzīmēt un novietot $n$ cilnes?",
+    "message": "Nosūtīt $n$ cilnes uz sagatavi?",
     "placeholders": {
       "n": {
         "content": "$1"

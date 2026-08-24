@@ -2498,13 +2498,13 @@
     "message": "Slå sammen de tre legg-til-mappe-oppføringene (før/etter/inni) til én undermenyoppføring ved høyreklikk på mapper."
   },
   "tabRowStage": {
-    "message": "Bokmerk og scene"
+    "message": "Send til staging"
   },
   "tabgroupStageAll": {
-    "message": "Bokmerk og scene gruppe"
+    "message": "Send gruppe til staging"
   },
   "tabgroupStageConfirm": {
-    "message": "Bokmerk og scene $n$ faner?",
+    "message": "Sende $n$ faner til staging?",
     "placeholders": {
       "n": {
         "content": "$1"

@@ -2498,13 +2498,13 @@
     "message": "Zlúčiť tri položky pridania priečinka (pred/po/vnútri) do jednej podponuky pri kliknutí pravým tlačidlom na priečinok."
   },
   "tabRowStage": {
-    "message": "Uložiť a pripraviť"
+    "message": "Odoslať do stagingu"
   },
   "tabgroupStageAll": {
-    "message": "Uložiť a pripraviť skupinu"
+    "message": "Odoslať skupinu do stagingu"
   },
   "tabgroupStageConfirm": {
-    "message": "Uložiť a pripraviť $n$ kariet?",
+    "message": "Odoslať $n$ kariet do stagingu?",
     "placeholders": {
       "n": {
         "content": "$1"

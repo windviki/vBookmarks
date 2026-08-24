@@ -2498,13 +2498,13 @@
     "message": "Gộp ba mục thêm thư mục (trước/sau/trong) thành một mục con khi nhấp chuột phải vào thư mục."
   },
   "tabRowStage": {
-    "message": "Đánh dấu và lưu"
+    "message": "Đưa vào vùng chờ"
   },
   "tabgroupStageAll": {
-    "message": "Đánh dấu và lưu nhóm"
+    "message": "Đưa nhóm vào vùng chờ"
   },
   "tabgroupStageConfirm": {
-    "message": "Đánh dấu và lưu $n$ tab?",
+    "message": "Đưa $n$ tab vào vùng chờ?",
     "placeholders": {
       "n": {
         "content": "$1"

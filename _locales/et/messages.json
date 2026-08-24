@@ -2498,13 +2498,13 @@
     "message": "Ühenda kolm kausta-lisamise kirjet (enne/pärast/sees) üheks alammenüüks kausta paremklõpsul."
   },
   "tabRowStage": {
-    "message": "Järjesta ja salvesta"
+    "message": "Saada lavale"
   },
   "tabgroupStageAll": {
-    "message": "Salvesta ja järjesta grupp"
+    "message": "Saada grupp lavale"
   },
   "tabgroupStageConfirm": {
-    "message": "Salvesta ja järjesta $n$ vahelehte?",
+    "message": "Saada $n$ vahekaarti lavale?",
     "placeholders": {
       "n": {
         "content": "$1"

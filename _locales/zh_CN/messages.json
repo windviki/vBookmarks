@@ -2254,7 +2254,6 @@
       }
     }
   },
-
   "stagingConfirmFolderOk": {
     "message": "暂存"
   },
@@ -2439,7 +2438,6 @@
       }
     }
   },
-
   "stagingMoveConfirmOk": {
     "message": "移动"
   },
@@ -2473,7 +2471,6 @@
   "stagingClearConfirm": {
     "message": "清空整个暂存区?不会改动书签树。"
   },
-
   "stagingClearConfirmOk": {
     "message": "清空"
   },
@@ -2555,13 +2552,13 @@
     "message": "把文件夹右键菜单的三个添加文件夹条目(此前/此后/子文件夹)合并为一个二级菜单条目。"
   },
   "tabRowStage": {
-    "message": "收藏并暂存"
+    "message": "发送到暂存"
   },
   "tabgroupStageAll": {
-    "message": "整组收藏并暂存"
+    "message": "整组发送到暂存"
   },
   "tabgroupStageConfirm": {
-    "message": "收藏并暂存 $n$ 个标签页?",
+    "message": "发送 $n$ 个标签页到暂存?",
     "placeholders": {
       "n": {
         "content": "$1"

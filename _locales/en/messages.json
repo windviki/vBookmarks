@@ -2457,7 +2457,6 @@
       }
     }
   },
-
   "stagingConfirmFolderOk": {
     "message": "Stage"
   },
@@ -2528,7 +2527,7 @@
     "message": "Organize bookmarks here — select rows and enter selection mode for the batch actions."
   },
   "stagingGuideDismiss": {
-    "message": "Don\u2019t show again"
+    "message": "Don’t show again"
   },
   "stagingShortcutTitle": {
     "message": "Move-to shortcut"
@@ -2642,7 +2641,6 @@
       }
     }
   },
-
   "stagingMoveConfirmOk": {
     "message": "Move"
   },
@@ -2676,7 +2674,6 @@
   "stagingClearConfirm": {
     "message": "Clear the whole staging area? The bookmark tree is not touched."
   },
-
   "stagingClearConfirmOk": {
     "message": "Clear"
   },
@@ -2758,13 +2755,13 @@
     "message": "Merge the three add-folder entries (before/after/inside) into one submenu entry on folder right-clicks."
   },
   "tabRowStage": {
-    "message": "Bookmark and stage"
+    "message": "Send to staging"
   },
   "tabgroupStageAll": {
-    "message": "Bookmark and stage group"
+    "message": "Send group to staging"
   },
   "tabgroupStageConfirm": {
-    "message": "Bookmark and stage $n$ tabs?",
+    "message": "Send $n$ tabs to staging?",
     "placeholders": {
       "n": {
         "content": "$1"

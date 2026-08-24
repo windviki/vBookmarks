@@ -2498,13 +2498,13 @@
     "message": "Mesclar as três entradas de adicionar pasta (antes/depois/dentro) em uma única entrada de submenu ao clicar com o botão direito em uma pasta."
   },
   "tabRowStage": {
-    "message": "Adicionar aos favoritos e encenar"
+    "message": "Enviar para palco"
   },
   "tabgroupStageAll": {
-    "message": "Adicionar grupo aos favoritos e encenar"
+    "message": "Enviar grupo para palco"
   },
   "tabgroupStageConfirm": {
-    "message": "Adicionar aos favoritos e encenar $n$ abas?",
+    "message": "Enviar $n$ abas para o palco?",
     "placeholders": {
       "n": {
         "content": "$1"
