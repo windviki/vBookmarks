@@ -144,9 +144,6 @@ export function initViewTabGroups(ctx = {}) {
     // The in-flight chunked paint (list-chunks.js): a new render cancels
     // the previous one's pending row batches.
     let paintHandle = null;
-    // Window fold surgery: the last-painted block html per window id (the
-    // collapse captures the DOM as painted, the expand re-inserts it).
-    const windowBlockCache = new Map();
     // LAB virtual painter flag (options 实验室, default off). The windowed
     // painter never keeps the full list in the DOM, so fold surgery (which
     // inserts/removes rows in place) must yield to a full render there.
@@ -1849,6 +1846,14 @@ export function initViewTabGroups(ctx = {}) {
     // contiguous member rows — no full repaint, the head li keeps its node
     // (focus survives), and the window/closed sections stay untouched.
     // The LAB virtual painter and minimal DOM doubles keep the full render.
+    // §perf (fold surgery, node stash): a group fold moves ONLY the group's
+    // own contiguous member rows — no full repaint, the head li keeps its node
+    // (focus survives), and the window/closed sections stay untouched.
+    // Collapsed rows are stashed in a fragment keyed by the head (WeakMap) and
+    // reinserted as the ORIGINAL nodes on expand — no HTML rebuild, no favicon
+    // load storm, no overlay rescan. The LAB virtual painter and minimal DOM
+    // doubles keep the full render.
+    const foldStash = new WeakMap();
     const foldGroupSurgically = (gid, shouldCollapse) => {
         const li = $list.querySelector
             ? $list.querySelector('#tabgroups-group-' + gid)
@@ -1863,24 +1868,32 @@ export function initViewTabGroups(ctx = {}) {
         const chev = li.querySelector('.chevron');
         if (chev)
             chev.classList.toggle('collapsed', !!shouldCollapse);
+        const stash = foldStash.get(li) || document.createDocumentFragment();
         let next = li.nextElementSibling;
         while (next && next.classList && next.classList.contains('vbm-row')
             && next.dataset && next.dataset.groupId === gid) {
             const rm = next;
             next = next.nextElementSibling;
-            rm.remove();
+            stash.appendChild(rm);
         }
-        if (!shouldCollapse) {
-            const memberTabs = tabs.filter(t => isGrouped(t) && String(t.groupId) === gid);
-            if (memberTabs.length) {
-                const L = tabgroupsLabels();
-                const html = memberTabs
-                    .map((t, mi) => tabRowHtml(t, { lastMember: mi === memberTabs.length - 1, L }))
-                    .join('');
-                li.insertAdjacentHTML('afterend', html);
-            }
+        if (shouldCollapse) {
+            if (stash.childNodes.length)
+                foldStash.set(li, stash);
+            return;
         }
-        onRowsRendered();
+        if (stash.childNodes.length) {
+            li.after(stash);
+            return; // reinserted nodes keep their overlays
+        }
+        const memberTabs = tabs.filter(t => isGrouped(t) && String(t.groupId) === gid);
+        if (memberTabs.length) {
+            const L = tabgroupsLabels();
+            const html = memberTabs
+                .map((t, mi) => tabRowHtml(t, { lastMember: mi === memberTabs.length - 1, L }))
+                .join('');
+            li.insertAdjacentHTML('afterend', html);
+            onRowsRendered(); // rebuilt rows carry no overlays — repaint them
+        }
     };
 
     const setGroupCollapsed = (groupId, shouldCollapse) => {
@@ -1916,11 +1929,13 @@ export function initViewTabGroups(ctx = {}) {
 
     // Window folding: the effective set plus the explicit choice that
     // survives into the next session (see windowChoice).
-    // §perf (fold surgery, the window block): a window fold captures the
+    // §perf (fold surgery, the window block): a window fold detaches the
     // block AS PAINTED (group folds included — the members' DOM is the
-    // truth, never a stale rebuild) and drops/restores exactly those lis —
-    // no full repaint, the head li survives (focus stays). The LAB virtual
-    // painter and minimal DOM doubles keep the full render.
+    // truth, never a stale rebuild) into a fragment keyed by the head li and
+    // restores exactly those nodes — no outerHTML serialize/re-parse, no
+    // favicon load storm, no full repaint, the head li survives (focus
+    // stays). The LAB virtual painter and minimal DOM doubles keep the full
+    // render.
     const foldWindowSurgically = (id, shouldCollapse) => {
         const headLi = $list.querySelector
             ? $list.querySelector('li.tabgroups-window-head[data-window-id="' + id + '"]')
@@ -1935,26 +1950,25 @@ export function initViewTabGroups(ctx = {}) {
         const chev = headLi.querySelector('.chevron');
         if (chev)
             chev.classList.toggle('collapsed', !!shouldCollapse);
-        if (shouldCollapse) {
-            let html = '';
-            let next = headLi.nextElementSibling;
-            while (next && next.classList
-                && !(next.classList.contains('tabgroups-window-head')
-                    || next.classList.contains('tabgroups-section-head'))) {
-                const rm = next;
-                next = next.nextElementSibling;
-                html += rm.outerHTML;
-                rm.remove();
-            }
-            windowBlockCache.set(id, html);
-        } else {
-            const html = windowBlockCache.get(id);
-            if (html)
-                headLi.insertAdjacentHTML('afterend', html);
-            else
-                render(); // never painted — full path
+        const stash = foldStash.get(headLi) || document.createDocumentFragment();
+        let next = headLi.nextElementSibling;
+        while (next && next.classList
+            && !(next.classList.contains('tabgroups-window-head')
+                || next.classList.contains('tabgroups-section-head'))) {
+            const rm = next;
+            next = next.nextElementSibling;
+            stash.appendChild(rm);
         }
-        onRowsRendered();
+        if (shouldCollapse) {
+            if (stash.childNodes.length)
+                foldStash.set(headLi, stash);
+            return;
+        }
+        if (stash.childNodes.length) {
+            headLi.after(stash);
+            return; // reinserted nodes keep their overlays
+        }
+        render(); // never painted — full path
     };
 
     const setWindowCollapsed = (windowId, shouldCollapse) => {

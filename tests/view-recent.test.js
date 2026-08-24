@@ -1165,6 +1165,59 @@ describe('staging groups + bucket + inline actions (velvet staging ST4)', () => 
         expect($list.innerHTML).toContain('http://h1/');
     });
 
+    // §perf (fold surgery, node stash): the surgical fold must detach the
+    // member ROW NODES into a fragment and reinsert the ORIGINAL nodes on
+    // expand — no HTML rebuild (no favicon load storm), no dead-overlay
+    // rescan (the reinserted nodes keep their overlays). Driven through a
+    // minimal DOM double: the double's head li exposes just enough surface
+    // (querySelector/nextElementSibling/after) for the surgical path.
+    it('fold surgery reinserts the ORIGINAL member nodes without rebuilding HTML', () => {
+        const rowsRendered = [];
+        const { viewRecent, $list, doc, treeRender } = setup({
+            onRowsRendered: () => rowsRendered.push(1)
+        });
+        viewRecent.api.addItems([{ id: null, url: 'http://h1/', title: 'H1', ts: 10 }]);
+
+        const member2 = {
+            classList: { contains: c => c === 'staging-member' },
+            nextElementSibling: null
+        };
+        const member1 = {
+            classList: { contains: c => c === 'staging-member' },
+            nextElementSibling: member2
+        };
+        const afterCalls = [];
+        const headLi = {
+            querySelector: () => null,
+            nextElementSibling: member1,
+            after(...args) { afterCalls.push(...args); }
+        };
+        const fragments = [];
+        doc.createDocumentFragment = () => {
+            const frag = {
+                _kids: [],
+                appendChild(n) { this._kids.push(n); },
+                get childNodes() { return this._kids; }
+            };
+            fragments.push(frag);
+            return frag;
+        };
+        $list.querySelector = sel => (sel === 'li.staging-bucket' ? headLi : null);
+
+        const renderedBefore = treeRender.calls.length;
+        const base = rowsRendered.length; // addItems already rendered once
+        viewRecent.api.toggleBucketFold(); // collapse
+        expect(afterCalls).toHaveLength(0);       // nothing reinserted
+        expect(rowsRendered).toHaveLength(base);  // no overlay rescan on collapse
+        expect(fragments).toHaveLength(1);
+        expect(fragments[0].childNodes).toEqual([member1, member2]); // detached, in order
+
+        viewRecent.api.toggleBucketFold(); // expand
+        expect(afterCalls).toEqual([fragments[0]]); // the SAME fragment/nodes back
+        expect(rowsRendered).toHaveLength(base);    // reinserted nodes keep overlays
+        expect(treeRender.calls.length).toBe(renderedBefore); // no HTML rebuild
+    });
+
     it('the inline star performs a REAL favorite: dedupe-anchor or create', () => {
         const { viewRecent, chrome } = setup({
             searchResults: { 'http://h/': [{ id: '77', url: 'http://h/' }] }

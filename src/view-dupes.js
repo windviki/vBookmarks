@@ -431,9 +431,12 @@ export function initViewDupes(ctx = {}) {
 
     // §perf (fold surgery): a group fold moves ONLY the group's own
     // .dupes-member rows — no getTree/regroup, no full repaint. The head li
-    // keeps its node, so focus and the head listeners survive. Under the
-    // LAB virtual painter the rows are windowed (never all in the DOM) and
-    // the full render stays the law.
+    // keeps its node, so focus and the head listeners survive. Collapsed rows
+    // are stashed in a fragment keyed by the head (WeakMap) and reinserted as
+    // the ORIGINAL nodes on expand — no HTML rebuild, no favicon load storm,
+    // no overlay rescan. Under the LAB virtual painter the rows are windowed
+    // (never all in the DOM) and the full render stays the law.
+    const foldStash = new WeakMap();
     const foldGroupSurgically = (li, key) => {
         const nowCollapsed = collapsed.has(key);
         const head = li.querySelector('.group-head');
@@ -442,18 +445,27 @@ export function initViewDupes(ctx = {}) {
         const chev = li.querySelector('.chevron');
         if (chev)
             chev.classList.toggle('collapsed', !!nowCollapsed);
+        const stash = foldStash.get(li) || document.createDocumentFragment();
         let next = li.nextElementSibling;
         while (next && next.classList && next.classList.contains('dupes-member')) {
             const rm = next;
             next = next.nextElementSibling;
-            rm.remove();
+            stash.appendChild(rm);
         }
-        if (!nowCollapsed) {
-            const g = groups.find(x => x.key === key);
-            if (g)
-                li.insertAdjacentHTML('afterend', groupMembersHtml(g, dupesLabels()));
+        if (nowCollapsed) {
+            if (stash.childNodes.length)
+                foldStash.set(li, stash);
+            return;
         }
-        onRowsRendered();
+        if (stash.childNodes.length) {
+            li.after(stash);
+            return; // reinserted nodes keep their overlays
+        }
+        const g = groups.find(x => x.key === key);
+        if (g) {
+            li.insertAdjacentHTML('afterend', groupMembersHtml(g, dupesLabels()));
+            onRowsRendered(); // rebuilt rows carry no overlays — repaint them
+        }
     };
 
     // --- Toolbar + row focus park/restore: see src/list-focus.js -----------

@@ -612,9 +612,16 @@ export function initViewRecent(ctx = {}) {
 
     // Fold handlers route through here so selecting-time folds stay
     // ephemeral (never written back).
+    // Returns the serialized state so fold toggles reuse it for
+    // lastRenderedRaw — one serialize per fold, not two.
     const foldPersist = () => {
-        if (!suppressFoldPersist && !selecting)
-            persistStaging();
+        const raw = staging.serialize(stagingState);
+        if (!suppressFoldPersist && !selecting) {
+            rememberOwnWrite(raw);
+            store.set('staging', raw);
+            views.updateBadges(); // store.set does not auto-update tab badges
+        }
+        return raw;
     };
 
     const renderToolbar = () => {
@@ -1404,16 +1411,39 @@ export function initViewRecent(ctx = {}) {
         if (chev)
             chev.classList.toggle('collapsed', !!collapsedNow);
     };
-    const foldStagingRows = (headLi, membersHtml) => {
+    // §perf (fold surgery, node stash): collapsing DETACHES the head's
+    // contiguous member rows into a DocumentFragment keyed by the head li
+    // (WeakMap — a full repaint replaces the head element and orphans any
+    // stale stash). Expanding reinserts the ORIGINAL nodes: dead overlays,
+    // hydrated favicons and focus state all survive — no HTML re-parse, no
+    // favicon load storm, no overlay rescan. The HTML rebuild stays as the
+    // fallback for a head that never painted members (test doubles).
+    const foldStash = new WeakMap();
+    const stashRows = headLi => {
+        const frag = foldStash.get(headLi) || document.createDocumentFragment();
         let next = headLi.nextElementSibling;
         while (next && next.classList && next.classList.contains('staging-member')) {
             const rm = next;
             next = next.nextElementSibling;
-            rm.remove();
+            frag.appendChild(rm);
         }
-        if (membersHtml)
-            headLi.insertAdjacentHTML('afterend', membersHtml);
-        onRowsRendered();
+        return frag;
+    };
+    const foldStagingRows = (headLi, membersHtml) => {
+        const stash = stashRows(headLi);
+        if (!membersHtml) {
+            if (stash.childNodes.length)
+                foldStash.set(headLi, stash);
+            return; // collapsed: removed nodes keep their overlays
+        }
+        if (stash.childNodes.length) {
+            headLi.after(stash);
+            return; // reinserted nodes keep their overlays
+        }
+        // membersHtml may be a thunk — only stringified when the stash missed
+        const html = typeof membersHtml === 'function' ? membersHtml() : membersHtml;
+        headLi.insertAdjacentHTML('afterend', html);
+        onRowsRendered(); // rebuilt rows carry no overlays — repaint them
     };
     const memberRowsHtml = items => {
         const idxOf = new Map(stagingState.items.map((it, i) => [it.url, i]));
@@ -1425,8 +1455,7 @@ export function initViewRecent(ctx = {}) {
         if (!g || selecting)
             return;
         staging.setGroupCollapsed(stagingState, groupId, !g.collapsed);
-        foldPersist();
-        lastRenderedRaw = staging.serialize(stagingState);
+        lastRenderedRaw = foldPersist();
         const headLi = $list.querySelector
             ? $list.querySelector('li.staging-group[data-group-id="' + escSel(groupId) + '"]')
             : null;
@@ -1435,7 +1464,7 @@ export function initViewRecent(ctx = {}) {
             return;
         }
         syncHeadFoldState(headLi, '.staging-group-head', g.collapsed);
-        foldStagingRows(headLi, g.collapsed ? '' : memberRowsHtml(staging.groupItems(stagingState, groupId)));
+        foldStagingRows(headLi, g.collapsed ? '' : () => memberRowsHtml(staging.groupItems(stagingState, groupId)));
     };
 
     // The staging-area fold (headCollapsed, 折叠记忆轮): the whole
@@ -1446,8 +1475,7 @@ export function initViewRecent(ctx = {}) {
             return;
         const collapsedNow = !stagingState.headCollapsed;
         staging.setHeadCollapsed(stagingState, collapsedNow);
-        foldPersist();
-        lastRenderedRaw = staging.serialize(stagingState);
+        lastRenderedRaw = foldPersist();
         const head = $list.querySelector ? $list.querySelector('#staging-head') : null;
         const ul = $list.querySelector ? $list.querySelector('#staging-items') : null;
         if (!head || !ul || typeof ul.innerHTML !== 'string') {
@@ -1463,9 +1491,11 @@ export function initViewRecent(ctx = {}) {
             $list.classList.toggle('staging-area-collapsed', collapsedNow);
         // first unfold after a folded-open: the rows never streamed — drop
         // the cached pieces in ONE innerHTML (no rebuild, no stream wait)
-        if (!collapsedNow && !ul.children.length && stagingRowsCache)
+        if (!collapsedNow && !ul.children.length && stagingRowsCache) {
             ul.innerHTML = stagingRowsCache;
-        onRowsRendered();
+            onRowsRendered(); // rebuilt rows carry no overlays — repaint them
+        }
+        // else: pure class toggle — the rows never left the DOM, no rescan
     };
 
     // A recent time-bucket fold (recentGroupCollapsed, 折叠记忆轮): surgical
@@ -1477,8 +1507,7 @@ export function initViewRecent(ctx = {}) {
         const key = GROUP_KEYS[g];
         const collapsedNow = !stagingState.recentGroupCollapsed[key];
         staging.setRecentGroupCollapsed(stagingState, key, collapsedNow);
-        foldPersist();
-        lastRenderedRaw = staging.serialize(stagingState);
+        lastRenderedRaw = foldPersist();
         const headLi = $list.querySelector
             ? $list.querySelector('li.recent-group-li[data-recent-group="' + g + '"]')
             : null;
@@ -1492,25 +1521,37 @@ export function initViewRecent(ctx = {}) {
             head.setAttribute('aria-expanded', collapsedNow ? 'false' : 'true');
         const chev = headLi.querySelector('.chevron');
         if (chev)
-            chev.classList.toggle('collapsed', collapsedNow);
+            chev.classList.toggle('collapsed', !!collapsedNow);
+        // §perf (node stash, same as foldStagingRows): detach into a
+        // fragment keyed by the head, reinsert the ORIGINAL nodes on expand.
+        const stash = foldStash.get(headLi) || document.createDocumentFragment();
         let next = headLi.nextElementSibling;
         while (next && next.classList && next.classList.contains('vbm-row')
             && next.dataset && next.dataset.recentGroup === String(g)) {
             const rm = next;
             next = next.nextElementSibling;
-            rm.remove();
+            stash.appendChild(rm);
         }
-        if (!collapsedNow && recentGroupRows[g] && recentGroupRows[g].length)
+        if (collapsedNow) {
+            if (stash.childNodes.length)
+                foldStash.set(headLi, stash);
+            return;
+        }
+        if (stash.childNodes.length) {
+            headLi.after(stash);
+            return; // reinserted nodes keep their overlays
+        }
+        if (recentGroupRows[g] && recentGroupRows[g].length) {
             headLi.insertAdjacentHTML('afterend', recentMemberHtml(g, recentGroupRows[g]));
-        onRowsRendered();
+            onRowsRendered(); // rebuilt rows carry no overlays — repaint them
+        }
     };
 
     const toggleBucketFold = () => {
         if (selecting)
             return;
         staging.setUnfavCollapsed(stagingState, !stagingState.unfavCollapsed);
-        foldPersist();
-        lastRenderedRaw = staging.serialize(stagingState);
+        lastRenderedRaw = foldPersist();
         const headLi = $list.querySelector
             ? $list.querySelector('li.staging-bucket')
             : null;
@@ -1519,7 +1560,7 @@ export function initViewRecent(ctx = {}) {
             return;
         }
         syncHeadFoldState(headLi, '.staging-bucket-head', stagingState.unfavCollapsed);
-        foldStagingRows(headLi, stagingState.unfavCollapsed ? '' : memberRowsHtml(staging.unfavBucketItems(stagingState)));
+        foldStagingRows(headLi, stagingState.unfavCollapsed ? '' : () => memberRowsHtml(staging.unfavBucketItems(stagingState)));
     };
 
     const renameGroup = groupId => {
