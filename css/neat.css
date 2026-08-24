@@ -1767,6 +1767,36 @@ menu[type=context] hr {
     color: var(--vbm-muted);
 }
 
+/* The THREE fold heads (virtual group / inbox bucket / recent time bucket)
+   are PEERS of the ungrouped bookmark rows, not of the two big section
+   heads: the chevron's CENTER lands on the loose row's favicon center
+   (16px ::before slot + 10px into the 20px container = 26px → the chevron
+   spans 18–34px), and the title's left edge lands on the loose row's TITLE
+   axis (40px = 18 + 16 + 2px margin + 4px gap). They also read as group
+   heads in their own right: the title font matches the bookmark rows (12px,
+   no longer the 11px chrome font), and in wide views the row grows to 32px
+   so folding/dragging lands on a comfortable target. */
+.staging-bucket-head,
+.staging-group-head,
+.recent-group-head {
+    padding-inline-start: 18px;
+    font-size: 12px;
+}
+
+.staging-bucket-head .chevron,
+.staging-group-head .chevron,
+.recent-group-head .chevron {
+    margin-inline-end: 2px; /* 18 + 16 + 2 + 4px gap = the 40px title axis */
+}
+
+@container (min-width: 480px) {
+    .staging-bucket-head,
+    .staging-group-head,
+    .recent-group-head {
+        height: 32px; /* taller fold/drag target in wide views */
+    }
+}
+
 .staging-section-head .chevron::before,
 .staging-bucket-head .chevron::before,
 .staging-group-head .chevron::before,
@@ -1802,7 +1832,11 @@ menu[type=context] hr {
 .staging-bucket-star {
     flex: none;
     display: inline-flex;
-    margin-inline-end: 12px; /* + the 4px gap = the 16px lead to the title */
+    /* 2px lead after the chevron (+ the 4px gap) puts the star's left edge
+       on the member rows' favicon column (40px); 4px after keeps the title
+       on the member title axis (64px). */
+    margin-inline-start: 2px;
+    margin-inline-end: 4px;
     color: var(--vbm-muted);
 }
 
@@ -1886,8 +1920,8 @@ menu[type=context] hr {
 #staging-items li.vbm-row.staging-member > .staging-connector {
     position: absolute;
     inset-block: 0;
-    inset-inline-start: 15.5px; /* the chevron/star column's center (16px) */
-    width: 24.5px;             /* the tick's run to the icon slot at 40px */
+    inset-inline-start: 25.5px; /* the chevron's center (26px) */
+    width: 14.5px;              /* the tick's run to the icon slot at 40px */
     pointer-events: none;
 }
 #staging-items li.vbm-row.staging-member > .staging-connector::before {
@@ -1904,7 +1938,7 @@ menu[type=context] hr {
     position: absolute;
     inset-inline-start: 0;
     top: calc(50% - 0.5px);
-    width: 24.5px;
+    width: 14.5px;
     height: 1px;
     background: repeating-linear-gradient(to right,
         var(--staging-line) 0 3px, transparent 3px 6px);
@@ -1924,7 +1958,7 @@ menu[type=context] hr {
 #staging-items li.staging-bucket.has-members::after {
     content: '';
     position: absolute;
-    inset-inline-start: 15.5px;
+    inset-inline-start: 25.5px;
     top: 50%;
     bottom: 0;
     width: 1px;
@@ -1936,11 +1970,21 @@ menu[type=context] hr {
 #staging-items li.staging-bucket.has-members:has(.chevron.collapsed)::after {
     display: none;
 }
-/* selection mode is the flat checkbox working mode — the tree lines rest */
-#staging-list ul.selecting .staging-connector,
-#staging-list ul.selecting li.staging-group::after,
-#staging-list ul.selecting li.staging-bucket::after {
-    display: none;
+/* Selection mode keeps the tree lines (one visual law in both modes — the
+   geometry simply follows the checkbox axis: the head's chevron center sits
+   at 36px (8px lead + 14px checkbox + 6px margin + 16px chevron ÷ 2), and
+   the member rows' favicon column starts at 64px (28px checkbox lead + the
+   36px anchor margin). */
+#staging-list ul.selecting li.vbm-row.staging-member > .staging-connector {
+    inset-inline-start: 35.5px;
+    width: 28.5px;
+}
+#staging-list ul.selecting li.vbm-row.staging-member > .staging-connector::after {
+    width: 28.5px;
+}
+#staging-list ul.selecting li.staging-group.has-members::after,
+#staging-list ul.selecting li.staging-bucket.has-members::after {
+    inset-inline-start: 35.5px;
 }
 
 /* 折叠记忆轮 instant folds: the two big heads hide their regions with a
@@ -2088,7 +2132,9 @@ li.staging-row.drag-over {
 }
 
 #staging-group-assign-name {
-    width: 100%;
+    /* the capped dialog-content measure, not a full-width band (the
+       shortcut-editor alias input recipe — one input width law in dialogs) */
+    width: var(--dialog-content-width);
     box-sizing: border-box;
     margin: 0 0 6px;
     padding: 5px 8px;
@@ -2413,59 +2459,17 @@ li.staging-row.drag-over {
     background: color-mix(in srgb, var(--vbm-danger) 12%, transparent);
 }
 
-/* Width-aware labels: at narrow widths the rung stays nine glyphs; as
-   the container widens, buttons grow into icon+text ONE BY ONE — the
-   destructive pair (删除/清空, danger red) gains its text FIRST, then
-   the organize/favorite group, then everything else. Never wait for
-   the whole rung to fit before showing any text. */
+/* Width-aware labels (JS-measured, view-recent.js fitSelectionLabels): the
+   labels start hidden and the fit pass reveals them ONE BY ONE from the
+   right edge as free space allows — progressive at EVERY width, not at a
+   handful of container breakpoints (the old @container steps jumped whole
+   groups of labels at 520/680/820px). The fit pass sets inline styles. */
 .staging-toolbar .staging-icon-btn {
     gap: 4px;
 }
 
 .staging-toolbar .staging-icon-btn .staging-btn-label {
     display: none;
-}
-
-@container (min-width: 520px) {
-    .staging-toolbar .staging-icon-btn.staging-delete,
-    .staging-toolbar .staging-icon-btn.staging-clear-all {
-        width: auto;
-        padding: 2px 6px;
-    }
-    .staging-toolbar .staging-icon-btn.staging-delete .staging-btn-label,
-    .staging-toolbar .staging-icon-btn.staging-clear-all .staging-btn-label {
-        display: inline;
-    }
-}
-
-@container (min-width: 680px) {
-    .staging-toolbar .staging-icon-btn.staging-fav,
-    .staging-toolbar .staging-icon-btn.staging-unfav,
-    .staging-toolbar .staging-icon-btn.staging-assign,
-    .staging-toolbar .staging-icon-btn.staging-movecopy,
-    .staging-toolbar .staging-icon-btn.staging-remove {
-        width: auto;
-        padding: 2px 6px;
-    }
-    .staging-toolbar .staging-icon-btn.staging-fav .staging-btn-label,
-    .staging-toolbar .staging-icon-btn.staging-unfav .staging-btn-label,
-    .staging-toolbar .staging-icon-btn.staging-assign .staging-btn-label,
-    .staging-toolbar .staging-icon-btn.staging-movecopy .staging-btn-label,
-    .staging-toolbar .staging-icon-btn.staging-remove .staging-btn-label {
-        display: inline;
-    }
-}
-
-@container (min-width: 820px) {
-    .staging-toolbar .staging-icon-btn.staging-open,
-    .staging-toolbar .staging-icon-btn.staging-open-group {
-        width: auto;
-        padding: 2px 6px;
-    }
-    .staging-toolbar .staging-icon-btn.staging-open .staging-btn-label,
-    .staging-toolbar .staging-icon-btn.staging-open-group .staging-btn-label {
-        display: inline;
-    }
 }
 
 /* The three select-mode entry buttons share the dupes select-mode recipe:
@@ -3746,6 +3750,15 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
     visibility: hidden;
 }
 
+/* Selection mode is a staging-only working mode: the scissors cut and the
+   whole recently-added region leave the flow (the recent rows are not
+   selection candidates — hiding them keeps the workbench the only subject). */
+#staging-list.selecting-view .staging-cut,
+#staging-list.selecting-view #recent-head,
+#staging-list.selecting-view #recent-list {
+    display: none;
+}
+
 /* Search-history area (top half of #view-search): a muted head row with a
    "clear all" text button, then one row per past query. The area caps at
    40% of the view height and scrolls on its own so a full 10-entry history
@@ -4046,7 +4059,8 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
     text-decoration: underline;
 }
 
-.announce-banner .announce-dismiss {
+.announce-banner .announce-dismiss,
+#whats-new .announce-dismiss {
     flex: none;
     align-self: center;
     width: 18px;
@@ -4060,7 +4074,8 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
     line-height: 1;
 }
 
-.announce-banner .announce-dismiss:hover {
+.announce-banner .announce-dismiss:hover,
+#whats-new .announce-dismiss:hover {
     background: var(--vbm-bg-selected);
     color: var(--vbm-fg);
 }
@@ -5307,7 +5322,7 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
     display: block;
     padding: 6px 0 0;
     color: var(--vbm-fg);
-    font-size: 11px;
+    font-size: 12px; /* never smaller than the bookmark/tab row titles */
 }
 #tabgroups-list ul li.tabgroups-window-head:first-child {
     padding-top: 2px;

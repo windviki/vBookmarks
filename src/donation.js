@@ -153,6 +153,18 @@ export const createDonation = ({ store, $, chrome, _m, openNewTab }) => {
             changelogLink.href = CHANGELOG_URL;
         }
         whatsNew.hidden = !whatsNewShown;
+        // The × (announce-banner parity): the version gate already recorded
+        // the crossing, so hiding is permanent — no extra persistence. First
+        // open after an upgrade otherwise strands the banner with no exit.
+        const whatsNewDismiss = $('whats-new-dismiss');
+        if (whatsNewDismiss) {
+            const dismissLabel = _m('announceDismiss');
+            whatsNewDismiss.setAttribute('aria-label', dismissLabel);
+            whatsNewDismiss.title = dismissLabel;
+            whatsNewDismiss.addEventListener('click', () => {
+                whatsNew.hidden = true;
+            });
+        }
         // Left-click routes through actions so the popup-respecting open
         // semantics stay uniform (same as the v4-guide-link handler).
         const changelog = $('whats-new-changelog');

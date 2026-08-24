@@ -269,27 +269,42 @@ export function initViewTabGroups(ctx = {}) {
     const sortTabs = list => (list || []).slice().sort((a, b) => (a.index || 0) - (b.index || 0));
 
     // Read every normal browser window with its populated tabs, sorted with
-    // the current window first. Fallback: the pre-existing current-window
+    // the current window first. The current window comes from
+    // chrome.windows.getLastFocused — the `focused` flag on getAll's results
+    // is a snapshot that can be stale at popup open (a freshly-activated
+    // window still reporting unfocused, so the OTHER window won the sort and
+    // wore the 当前 pill). Fallback: the pre-existing current-window
     // tabs.query path (old Chrome / minimal tests).
     const readWindows = cb => {
         if (chrome.windows && chrome.windows.getAll) {
-            chrome.windows.getAll({ populate: true }, wins => {
-                const all = (wins || [])
-                    .filter(w => w && w.tabs && w.tabs.length && (!w.type || w.type === 'normal'))
-                    .map(w => ({
-                        id: w.id,
-                        focused: !!w.focused,
-                        tabs: sortTabs(w.tabs)
-                    }))
-                    .sort((a, b) => {
-                        if (a.focused && !b.focused)
-                            return -1;
-                        if (!a.focused && b.focused)
-                            return 1;
-                        return Number(a.id) - Number(b.id);
-                    });
-                cb(all.length ? all : []);
-            });
+            const withAll = focusedId => {
+                chrome.windows.getAll({ populate: true }, wins => {
+                    const all = (wins || [])
+                        .filter(w => w && w.tabs && w.tabs.length && (!w.type || w.type === 'normal'))
+                        .map(w => ({
+                            id: w.id,
+                            focused: focusedId !== null && focusedId !== undefined
+                                ? w.id === focusedId
+                                : !!w.focused,
+                            tabs: sortTabs(w.tabs)
+                        }))
+                        .sort((a, b) => {
+                            if (a.focused && !b.focused)
+                                return -1;
+                            if (!a.focused && b.focused)
+                                return 1;
+                            return Number(a.id) - Number(b.id);
+                        });
+                    cb(all.length ? all : []);
+                });
+            };
+            if (chrome.windows.getLastFocused) {
+                chrome.windows.getLastFocused(win => {
+                    withAll(chrome.runtime.lastError || !win ? null : win.id);
+                });
+                return;
+            }
+            withAll(null);
             return;
         }
         chrome.tabs.query({ currentWindow: true }, tabList => {

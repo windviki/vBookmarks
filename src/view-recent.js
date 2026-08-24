@@ -37,7 +37,7 @@
 
 import { relTimeLabel } from './tree-render.js';
 import { paintListChunked } from './list-chunks.js';
-import { VIEW_ICONS, STAGE_ICON, STAGE_ICON_DONE, STAGE_REMOVE_ICON, STAR_ICON, STAR_ICON_FILLED, STAR_X_ICON, SELECT_ICON, FOLDER_STAR_ICON, FOLDER_PLUS_ICON, EDIT_ICON, TRASH_ICON, LIST_X_ICON, OPEN_ICON, TABS_ICON, GROUP_ICON, UNGROUP_ICON, SCISSORS_ICON } from './icons.js';
+import { VIEW_ICONS, STAGE_ICON, STAGE_ICON_DONE, STAGE_REMOVE_ICON, STAR_ICON, STAR_ICON_FILLED, STAR_X_ICON, SELECT_ICON, FOLDER_STAR_ICON, FOLDER_PLUS_ICON, EDIT_ICON, TRASH_ICON, LIST_X_ICON, OPEN_ICON, TABS_ICON, GROUP_ICON, UNGROUP_ICON, SCISSORS_ICON, COLLAPSE_ALL_ICON, EXPAND_ALL_ICON } from './icons.js';
 import { htmlspecialchars } from './escape.js';
 import { parkRowFocus, unparkRowFocus, parkToolbarFocus, restoreToolbarFocus } from './list-focus.js';
 import * as staging from './staging.js';
@@ -723,6 +723,19 @@ export function initViewRecent(ctx = {}) {
             `title="${htmlspecialchars(countLabel)}">${n}</span>` +
             `<button class="staging-new-group" aria-label="${htmlspecialchars(_m('stagingGroupNew'))}" ` +
             `title="${htmlspecialchars(_m('stagingGroupNew'))}">${FOLDER_PLUS_ICON}${htmlspecialchars(_m('stagingGroupNew'))}</button>`;
+        // 全部折叠/全部展开 (the tabgroups toolbar pair, same icons + keys):
+        // they act on every virtual folding unit — the named groups AND the
+        // unbookmarked inbox bucket — and stand down when there is nothing
+        // foldable on the workbench.
+        const foldable = stagingState.groups.length > 0 ||
+            staging.unfavBucketItems(stagingState).length > 0;
+        const foldBtn = (cls, icon, key) => {
+            const lab = htmlspecialchars(_m(key));
+            return `<button class="staging-icon-btn ${cls}"${foldable ? '' : ' disabled'} ` +
+                `aria-label="${lab}" title="${lab}">${icon}</button>`;
+        };
+        html += foldBtn('staging-fold-collapse-all', COLLAPSE_ALL_ICON, 'tabGroupsCollapseAll') +
+            foldBtn('staging-fold-expand-all', EXPAND_ALL_ICON, 'tabGroupsExpandAll');
         if (n)
             html += `<button class="staging-select-mode" aria-label="${htmlspecialchars(_m('selectModeEnter'))}" ` +
                 `title="${htmlspecialchars(_m('selectModeEnter'))}">${SELECT_ICON}</button>`;
@@ -829,6 +842,7 @@ export function initViewRecent(ctx = {}) {
                 lastRenderedRaw = staging.serialize(stagingState);
                 unparkRowFocus(list, parkedRow);
                 applyFocusHandoffs();
+                fitSelectionLabels();
                 onRowsRendered();
             }
         });
@@ -906,8 +920,71 @@ export function initViewRecent(ctx = {}) {
         unparkRowFocus($list, parkedRow);
         syncRecentStageButtons();
         applyFocusHandoffs();
+        fitSelectionLabels();
         onRowsRendered();
     };
+
+    // 渐进式文字 (selection action rung): the icon buttons' labels reveal
+    // ONE BY ONE from the right edge as free width allows — measured per
+    // render/resize instead of a handful of container breakpoints, so every
+    // extra pixel of width earns the next label (never whole groups at
+    // 520/680/820px jumps). Pure DOM measurement; guarded for test doubles.
+    const fitSelectionLabels = () => {
+        if (!$list.querySelectorAll || !$list.querySelector)
+            return;
+        const bar = $list.querySelector('.staging-actions-toolbar');
+        if (!bar || !bar.querySelectorAll || !bar.querySelectorAll('.staging-icon-btn').length)
+            return;
+        const btns = [...bar.querySelectorAll('.staging-icon-btn')];
+        for (const b of btns) {
+            const lab = b.querySelector('.staging-btn-label');
+            if (lab)
+                lab.style.display = 'none';
+            b.style.width = '';
+            b.style.padding = '';
+        }
+        // free width = bar box − padding − buttons − inter-button gaps
+        let used = 16; // 8px + 8px bar padding
+        for (const b of btns)
+            used += b.offsetWidth;
+        used += 6 * Math.max(0, btns.length - 1); // the toolbar gap
+        let free = bar.clientWidth - used;
+        // rightmost first — the danger pair (删除/清空) leads, mirroring the
+        // old breakpoint order's intent, then the organize/favorite group,
+        // then the open pair on the left
+        for (let i = btns.length - 1; i >= 0 && free > 0; i--) {
+            const b = btns[i];
+            const lab = b.querySelector('.staging-btn-label');
+            if (!lab)
+                continue;
+            const before = b.offsetWidth;
+            lab.style.display = 'inline';
+            b.style.width = 'auto';
+            b.style.padding = '2px 6px';
+            const delta = b.offsetWidth - before;
+            if (delta <= free)
+                free -= delta;
+            else {
+                lab.style.display = 'none';
+                b.style.width = '';
+                b.style.padding = '';
+                break;
+            }
+        }
+    };
+    // A popup/panel resize re-fits the rung (width change only — the fit
+    // itself only mutates the labels, never the container's width).
+    if (typeof ResizeObserver !== 'undefined' && $list) {
+        let lastW = -1;
+        new ResizeObserver(entries => {
+            const w = entries.length ? entries[0].contentRect.width : lastW;
+            if (w === lastW)
+                return;
+            lastW = w;
+            if (selecting)
+                fitSelectionLabels();
+        }).observe($list);
+    }
 
     // Re-entry optimization: lastSeenTs advances on every activation, so
     // the bucket head's "new N" reads 0 afterwards — update the pill text
@@ -1657,6 +1734,19 @@ export function initViewRecent(ctx = {}) {
         foldStagingRows(headLi, stagingState.unfavCollapsed ? '' : () => memberRowsHtml(staging.unfavBucketItems(stagingState)));
     };
 
+    // 全部折叠/全部展开: every virtual folding unit (named groups + the
+    // inbox bucket) snaps to `want`. An explicit bulk action pays one full
+    // staging repaint — the surgical fold paths are for single-head toggles.
+    const setAllFolds = want => {
+        if (!stagingState.groups.length && !staging.unfavBucketItems(stagingState).length)
+            return;
+        for (const g of stagingState.groups)
+            staging.setGroupCollapsed(stagingState, g.id, want);
+        staging.setUnfavCollapsed(stagingState, want);
+        lastRenderedRaw = foldPersist();
+        renderStaging();
+    };
+
     const renameGroup = groupId => {
         const g = staging.findGroup(stagingState, groupId);
         if (!g || !dialogs || !dialogs.NewFolderDialog)
@@ -2122,6 +2212,18 @@ export function initViewRecent(ctx = {}) {
             e.preventDefault();
             e.stopPropagation();
             newGroup();
+            return;
+        }
+        if (closest('.staging-fold-collapse-all')) {
+            e.preventDefault();
+            e.stopPropagation();
+            setAllFolds(true);
+            return;
+        }
+        if (closest('.staging-fold-expand-all')) {
+            e.preventDefault();
+            e.stopPropagation();
+            setAllFolds(false);
             return;
         }
         // The staging head folds the whole staging area; its buttons'
