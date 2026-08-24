@@ -75,7 +75,8 @@
  */
 
 import { findDupes, pickKeeper, planDeletion } from './dupes.js';
-import { VIEW_ICONS, CHECK_ICON, CHEVRON_ICON, SELECT_ICON, TRASH_ICON } from './icons.js';
+import { VIEW_ICONS, CHECK_ICON, CHEVRON_ICON, SELECT_ICON, TRASH_ICON, STAGE_ICON, STAGE_ICON_DONE } from './icons.js';
+import { stageBtnHtml as relayStageBtnHtml, flipStageBtn, toggleStageItem, isStagedUrl } from './staging-relay.js';
 import { initDropdowns } from './dropdown.js';
 import { makeRiskBanner, RISK_HELP_URL } from './risk-banner.js';
 import { htmlspecialchars } from './escape.js';
@@ -368,6 +369,16 @@ export function initViewDupes(ctx = {}) {
         // selection mode (icon-only, tooltip reuses the original i18n copy).
         html += '<div class="dupes-toolbar dupes-actions-toolbar vbm-toolbar">';
         html += `<span class="dupes-summary">${_m('dupesPreviewSummary', [`${groups.length}`, `${doomed}`])}</span>`;
+        // velvet staging relay: every duplicate member joins the workbench
+        // (keeper + doomed alike — the strategy can be re-decided there),
+        // left of 全部应用. Icon-only like the select-mode entry.
+        {
+            const allItems = groups.flatMap(g => g.items)
+                .map(it => ({ id: it.id, url: it.url, title: it.title || '' }));
+            const stageLabel = htmlspecialchars(_m('stagingAdd'));
+            html += `<button class="dupes-stage-all"${allItems.length ? '' : ' disabled'} ` +
+                `title="${stageLabel}" aria-label="${stageLabel}">${STAGE_ICON}</button>`;
+        }
         html += `<button class="dupes-apply-all"${doomed ? '' : ' disabled'}>` +
             _m('dupesApplyAll', `${doomed}`) + '</button>';
         html += selectBtn;
@@ -386,6 +397,25 @@ export function initViewDupes(ctx = {}) {
         cleanRestHint: (title, doomed) => _m('dupesCleanRestHint', [title, doomed])
     });
 
+    // velvet staging relay: the shared hover 发送到暂存 toggle (the
+    // stats-view recipe — .staging-add-btn + .staged accent, click toggles).
+    const stageBtnHtml = item => relayStageBtnHtml(ctx.staging, item, _m);
+    const groupAllStaged = group => {
+        const items = (group && group.items) || [];
+        return items.length > 0 && items.every(it => isStagedUrl(ctx.staging, it.url));
+    };
+    // The GROUP head's relay: whole-membership semantics — click sends every
+    // member (the strategy can be re-decided on the workbench); an
+    // all-staged group toggles back out. Same glyph/label language as the
+    // rows, with the whole-group staged verdict.
+    const groupStageBtnHtml = group => {
+        const staged = groupAllStaged(group);
+        const label = _m(staged ? 'stagingRemove' : 'stagingAdd');
+        return `<button type="button" class="row-btn staging-add-btn${staged ? ' staged' : ''}" ` +
+            `aria-pressed="${staged}" aria-label="${htmlspecialchars(label)}" ` +
+            `title="${htmlspecialchars(label)}">${staged ? STAGE_ICON_DONE : STAGE_ICON}</button>`;
+    };
+
     const groupHeadHtml = (group, L) => {
         const keeper = keeperOf(group);
         const key = htmlspecialchars(group.key);
@@ -403,6 +433,9 @@ export function initViewDupes(ctx = {}) {
             `<span class="chevron${isCollapsed ? ' collapsed' : ''}"></span>` +
             `<span class="dupes-key" dir="auto" title="${key}">${htmlspecialchars(midTruncate(group.key))}</span>` +
             `<span class="count-pill" aria-label="${L.groupCount(`${group.items.length}`)}">${group.items.length}</span>` +
+            // velvet staging relay: the whole group joins the workbench (all
+            // members, not just the doomed — the strategy can change there).
+            groupStageBtnHtml(group) +
             `<button class="row-btn dupes-clean-rest" aria-label="${hint}" title="${hint}">${CHECK_ICON}</button>` +
             '</span></li>';
     };
@@ -435,6 +468,7 @@ export function initViewDupes(ctx = {}) {
                     rightText: (showPath && path) ? path : '',
                     subText: (showPath && path) ? `${path} · ${fullTime}` : fullTime
                 }) +
+                stageBtnHtml(item) +
                 `<button class="row-btn dupes-member-del" aria-label="${L.rowDelete}" ` +
                 `title="${L.rowDelete}">${TRASH_ICON}</button>` +
                 '</li>';
@@ -941,6 +975,23 @@ export function initViewDupes(ctx = {}) {
             cleanAll();
             return;
         }
+        // velvet staging relay: every duplicate member joins the workbench.
+        // All visible member planes flip to staged in place.
+        if (closest('.dupes-stage-all')) {
+            e.preventDefault();
+            const api = ctx.staging;
+            if (api) {
+                const entries = groups.flatMap(g => g.items)
+                    .map(it => ({ id: it.id, url: it.url, title: it.title || '' }));
+                if (entries.length) {
+                    api.addItems(entries);
+                    if ($list.querySelectorAll)
+                        for (const btn of $list.querySelectorAll('.staging-add-btn'))
+                            flipStageBtn(btn, true, _m);
+                }
+            }
+            return;
+        }
         // The scheme checkbox must NOT fall through to bookmarkHandler —
         // its unconditional preventDefault cancels the checkbox's native
         // toggle (the click's default action), so the box would never flip
@@ -1014,6 +1065,26 @@ export function initViewDupes(ctx = {}) {
             const group = groups.find(g => g.key === (li && li.dataset.key));
             if (group)
                 cleanGroup(group);
+            return;
+        }
+        // velvet staging relay: the row's hover 发送到暂存 toggle (staged
+        // rows leave the workbench — the stats-view law); the head runs the
+        // whole-group toggle. The flip lands on the live buttons.
+        const stageBtn = closest('.staging-add-btn');
+        if (stageBtn) {
+            e.preventDefault();
+            e.stopPropagation();
+            const li = stageBtn.closest('li');
+            if (li && li.dataset.nodeId) {
+                const item = itemIndex.get(li.dataset.nodeId);
+                const nowStaged = item ? toggleStageItem(ctx.staging, item) : null;
+                if (nowStaged !== null)
+                    flipStageBtn(stageBtn, nowStaged, _m);
+            } else if (li && li.dataset.key !== undefined) {
+                const nowStaged = stageGroupByKey(li.dataset.key);
+                if (nowStaged !== null)
+                    flipGroupBlock(li, nowStaged);
+            }
             return;
         }
         // 4.0.8: per-member floating delete — directly removes this one
@@ -1277,6 +1348,39 @@ export function initViewDupes(ctx = {}) {
     if (hydrated)
         views.updateBadges(); // dupes was unregistered during hydrate()
 
+    // velvet staging relay: whole-membership stage toggle by group key (the
+    // head's plane button + the group menu entry share it). Returns the new
+    // all-staged verdict so the caller can flip the live buttons in place.
+    const stageGroupByKey = key => {
+        const api = ctx.staging;
+        const group = groups.find(g => g.key === key);
+        if (!api || !group || !group.items.length)
+            return null;
+        if (groupAllStaged(group)) {
+            for (const it of group.items)
+                api.removeByUrl(it.url);
+            return false;
+        }
+        api.addItems(group.items.map(it => ({ id: it.id, url: it.url, title: it.title || '' })));
+        return true;
+    };
+
+    // Flip the head plane + every member plane of the head's DOM block.
+    const flipGroupBlock = (headLi, staged) => {
+        if (!headLi || !headLi.querySelectorAll)
+            return;
+        const headBtn = headLi.querySelector('.staging-add-btn');
+        if (headBtn)
+            flipStageBtn(headBtn, staged, _m);
+        let next = headLi.nextElementSibling;
+        while (next && next.classList && next.classList.contains('dupes-member')) {
+            const btn = next.querySelector('.staging-add-btn');
+            if (btn)
+                flipStageBtn(btn, staged, _m);
+            next = next.nextElementSibling;
+        }
+    };
+
     return {
         refresh,
         setKeeper,
@@ -1284,6 +1388,7 @@ export function initViewDupes(ctx = {}) {
         cleanHint,
         isCollapsed: key => collapsed.has(key),
         cleanGroup: cleanGroupByKey,
+        stageGroup: stageGroupByKey,
         toggleGroup
     };
 }

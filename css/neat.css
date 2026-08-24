@@ -4475,7 +4475,10 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
     margin-inline-start: 0;
     margin-inline-end: auto; /* summary left, primary actions right */
 }
-.dupes-toolbar button.dupes-select-mode {
+.dupes-toolbar button.dupes-select-mode,
+/* the staging relay's toolbar plane: the same 22px accent square, one icon
+   language with the select-mode entry (both sit left of the primary action) */
+.dupes-toolbar button.dupes-stage-all {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -4587,12 +4590,32 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
 }
 
 /* The results rows are BLOCK li by default (#results ul li shares the tree's
-   display:block) — every other list view's rows are flex. Without this the
-   selecting checkbox ::before renders as a squashed inline box in the row's
-   top-left corner and the wrapped row breaks the list rhythm. */
-#results ul.selecting li.vbm-row {
+   display:block) — every other list view's rows are flex. The rows now carry
+   trailing .row-btns ([发送到暂存][删除], the staging relay pair) and the
+   selecting checkbox ::before, both of which need the flex row geometry:
+   without it the checkbox renders as a squashed inline box in the row's
+   top-left corner and the buttons wrap the row. */
+#results ul li.vbm-row {
     display: flex;
     align-items: center;
+}
+
+#results ul li.vbm-row > a.tree-item-link {
+    flex: 1 1 auto; /* auto basis: the wide two-line form wraps its own content */
+    min-width: 0;
+    margin-inline-end: 4px;
+}
+
+/* The row's trailing pair ends 8px off the container edge — the same right
+   axis as every other list view's last row button. */
+#results ul li.vbm-row > .row-btn:last-child {
+    margin-inline-end: 8px;
+}
+
+/* The hover delete is destructive: danger red like every other view's
+   rightmost row action. */
+#results ul li.vbm-row .row-btn.search-row-del {
+    color: var(--vbm-danger);
 }
 
 /* Selecting heads take the same 8px lead so their checkbox (the head's

@@ -118,7 +118,8 @@
 import { filterScannable, collectDead, statusLabel } from './dead-links.js';
 import { parseProxyServer, formatProxyServer, DEFAULT_PROXY_TEST_URL, proxyPermission, requestProxyPermission, proxyControllable, testProxyReachable } from './dead-proxy.js';
 import { DEAD_SCAN_KEY, DEAD_LAST_KEY, DEAD_SCAN_MSG } from './dead-scan-sw.js';
-import { VIEW_ICONS, FLAG_ICON, FLAG_X_ICON, TRASH_ICON, CHEVRON_ICON, REDO_ICON, LIST_X_ICON, SELECT_ICON } from './icons.js';
+import { VIEW_ICONS, FLAG_ICON, FLAG_X_ICON, TRASH_ICON, CHEVRON_ICON, REDO_ICON, LIST_X_ICON, SELECT_ICON, STAGE_ICON } from './icons.js';
+import { stageBtnHtml as relayStageBtnHtml, flipStageBtn, toggleStageItem } from './staging-relay.js';
 import { makeRiskBanner, RISK_HELP_URL } from './risk-banner.js';
 import { initDropdowns } from './dropdown.js';
 import { htmlspecialchars } from './escape.js';
@@ -604,6 +605,11 @@ export function initViewDead(ctx = {}) {
             }
             if (deadMarks.size)
                 row += iconBtn('dead-unmark-all', FLAG_X_ICON, 'deadUnmarkAll');
+            // velvet staging relay: send every LISTED row (filter-aware) to
+            // the workbench — the batch entry left of 删除全部, one relay law
+            // with the rows' hover plane.
+            if (selectableRows().length)
+                row += iconBtn('dead-stage-all', STAGE_ICON, 'stagingAdd');
             if (selectableRows().length)
                 row += iconBtn('dead-delete-all', TRASH_ICON, 'deadDeleteAllBtn');
             if (selectableRows().length)
@@ -656,6 +662,12 @@ export function initViewDead(ctx = {}) {
     // live full render and the test doubles. L carries the per-render i18n
     // labels — every row used to re-ask chrome.i18n 6-10× (mark/unmark/
     // delete/time labels) per render.
+    // velvet staging relay: the row's hover 发送到暂存 toggle — the shared
+    // recipe (src/staging-relay.js, the stats-view original): click toggles,
+    // the flip lands on the live button (this view does not re-render on
+    // staging changes).
+    const stageBtnHtml = item => relayStageBtnHtml(ctx.staging, item, _m);
+
     const rowLiHtml = (row, L) => {
         const { item, result } = row;
         const blocked = result.status === 'blocked';
@@ -705,6 +717,7 @@ export function initViewDead(ctx = {}) {
                 `aria-pressed="${marked}" ` +
                 `aria-label="${marked ? L.unmark : L.mark}" ` +
                 `title="${marked ? L.unmark : L.mark}">${FLAG_ICON}</button>` +
+                stageBtnHtml(item) +
                 `<button class="row-btn dead-del-btn" aria-label="${L.rowDelete}" ` +
                 `title="${L.rowDelete}">${TRASH_ICON}</button>`) +
             '</li>';
@@ -757,6 +770,7 @@ export function initViewDead(ctx = {}) {
             (selecting ? '' :
                 `<button class="row-btn dead-mark-btn marked" aria-pressed="true" ` +
                 `aria-label="${L.unmark}" title="${L.unmark}">${FLAG_ICON}</button>` +
+                stageBtnHtml(item) +
                 `<button class="row-btn dead-del-btn" aria-label="${L.rowDelete}" ` +
                 `title="${L.rowDelete}">${TRASH_ICON}</button>`) +
             '</li>';
@@ -1907,6 +1921,24 @@ export function initViewDead(ctx = {}) {
             clearScanResults();
             return;
         }
+        // velvet staging relay: every LISTED row joins the workbench (the
+        // rows' hover toggle already covers singles; dupes land as themselves).
+        // Every visible plane flips to staged in place — no repaint.
+        if (closest('.dead-stage-all')) {
+            e.preventDefault();
+            const api = ctx.staging;
+            if (api) {
+                const rows = selectableRows().map(({ item }) =>
+                    ({ id: item.id, url: item.url, title: item.title || '' }));
+                if (rows.length) {
+                    api.addItems(rows);
+                    if ($list.querySelectorAll)
+                        for (const btn of $list.querySelectorAll('.staging-add-btn'))
+                            flipStageBtn(btn, true, _m);
+                }
+            }
+            return;
+        }
         if (closest('.dead-delete-all')) {
             e.preventDefault();
             deleteAll();
@@ -1994,6 +2026,21 @@ export function initViewDead(ctx = {}) {
             const id = li && li.dataset.nodeId;
             if (id)
                 actions.deleteBookmark(id);
+            return;
+        }
+        // velvet staging relay: the row's hover 发送到暂存 toggle (staged
+        // rows leave the workbench — the same law as the stats rows). The
+        // flip lands on the live button; no repaint needed.
+        const stageBtn = closest('.staging-add-btn');
+        if (stageBtn) {
+            e.preventDefault();
+            e.stopPropagation();
+            const li = stageBtn.closest('li');
+            const id = li && li.dataset.nodeId;
+            const row = id ? [...allResultRows(), ...markedRows()].find(r => r.item.id === id) : null;
+            const nowStaged = row ? toggleStageItem(ctx.staging, row.item) : null;
+            if (nowStaged !== null)
+                flipStageBtn(stageBtn, nowStaged, _m);
             return;
         }
         // plain row clicks open the bookmark like the tree does

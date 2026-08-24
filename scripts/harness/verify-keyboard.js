@@ -626,7 +626,13 @@ const SEED = `
         document.activeElement && document.activeElement.type === 'checkbox'),
         await activeDesc());
     await page.keyboard.press('ArrowDown'); await sleep(250);
-    check('dupes controls rung ↓: the actions rung (apply-all)', await $(() =>
+    // The actions rung's first control is now the staging relay plane
+    // (dupes-stage-all), then apply-all, then the select-mode square.
+    check('dupes controls rung ↓: the actions rung (stage-all relay)', await $(() =>
+        document.activeElement && document.activeElement.classList.contains('dupes-stage-all')),
+        await activeDesc());
+    await page.keyboard.press('ArrowRight'); await sleep(200);
+    check('dupes actions rung →: apply-all', await $(() =>
         document.activeElement && document.activeElement.classList.contains('dupes-apply-all')),
         await activeDesc());
     await page.keyboard.press('ArrowRight'); await sleep(200);
@@ -634,16 +640,16 @@ const SEED = `
         document.activeElement && document.activeElement.classList.contains('dupes-select-mode')),
         await activeDesc());
     await page.keyboard.press('ArrowRight'); await sleep(200);
-    check('dupes actions rung → wraps at the row edge: back to apply-all', await $(() =>
-        document.activeElement && document.activeElement.classList.contains('dupes-apply-all')),
+    check('dupes actions rung → wraps at the row edge: back to stage-all', await $(() =>
+        document.activeElement && document.activeElement.classList.contains('dupes-stage-all')),
         await activeDesc());
     await page.keyboard.press('ArrowDown'); await sleep(250);
     check('dupes actions rung ↓: group head focused', await $(() =>
         document.activeElement && document.activeElement.classList.contains('group-head')),
         await activeDesc());
     await page.keyboard.press('ArrowUp'); await sleep(200);
-    check('dupes head ↑ past top: the LOWEST rung (actions row, apply-all)', await $(() =>
-        document.activeElement && document.activeElement.classList.contains('dupes-apply-all')),
+    check('dupes head ↑ past top: the LOWEST rung (actions row, stage-all)', await $(() =>
+        document.activeElement && document.activeElement.classList.contains('dupes-stage-all')),
         await activeDesc());
     // ↓ from the actions rung enters the rows: head → first member
     await page.keyboard.press('ArrowDown'); await sleep(250);

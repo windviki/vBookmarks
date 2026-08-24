@@ -257,7 +257,7 @@ describe('view registration (§5.6)', () => {
     it('exposes the module API (refresh/setKeeper + the #16 group-head menu hooks)', () => {
         const { viewDupes } = setup({});
         expect(Object.keys(viewDupes).sort()).toEqual(
-            ['cleanGroup', 'cleanHint', 'isCollapsed', 'refresh', 'setKeeper', 'toggleGroup']);
+            ['cleanGroup', 'cleanHint', 'isCollapsed', 'refresh', 'setKeeper', 'stageGroup', 'toggleGroup']);
     });
 
     it('badge() tracks the group count (0 hides the tab badge)', () => {

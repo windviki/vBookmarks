@@ -1810,6 +1810,11 @@ export function initContextMenu(ctx = {}) {
             case 'dupes-group-clean':
                 ctx.dupesMenu.cleanGroup(key);
                 break;
+            // velvet staging relay: whole group joins the workbench
+            case 'dupes-group-stage':
+                if (ctx.dupesMenu.stageGroup)
+                    ctx.dupesMenu.stageGroup(key);
+                break;
             case 'dupes-group-toggle':
                 ctx.dupesMenu.toggleGroup(key);
                 break;

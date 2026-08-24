@@ -209,6 +209,8 @@ import { deferIdle, mark as perfMark } from './idle.js';
         'reveal-in-tree': 'recentRevealInTree',
         'dead-mark-toggle': 'deadMark',
         'dupes-set-keeper': 'dupesKeeperSet',
+        // velvet staging relay: the dupes group-head menu's whole-group send
+        'dupes-group-stage': 'tabgroupStageAll',
         'bookmark-new-tab': 'openNewTab',
         'bookmark-new-window': 'openNewWindow',
         'bookmark-new-incognito-window': 'openIncognitoWindow',
@@ -447,6 +449,7 @@ import { deferIdle, mark as perfMark } from './idle.js';
                 cleanHint: key => viewDupes.cleanHint(key),
                 isCollapsed: key => viewDupes.isCollapsed(key),
                 cleanGroup: key => viewDupes.cleanGroup(key),
+                stageGroup: key => viewDupes.stageGroup(key),
                 toggleGroup: key => viewDupes.toggleGroup(key)
             };
         },
@@ -586,6 +589,13 @@ import { deferIdle, mark as perfMark } from './idle.js';
         rtl,
         // §2.3 R 键在树中定位：treeView 在下方才初始化，惰性闭包求值
         revealInTree: (...args) => treeView.revealInTree(...args),
+        // velvet staging relay: the selection bar's 暂存/打开 actions + the
+        // rows' hover 发送到暂存 toggle — viewRecent/actions init below, so
+        // they ride lazy getters (TDZ-safe, resolved at event time). These
+        // used to be MISSING entirely: the bar's stage/open buttons were
+        // silent no-ops behind their `if (ctx.x)` guards.
+        get stagingApi() { return viewRecent.api; },
+        get actions() { return actions; },
         // 第五轮项3: results re-render wipes the dead-mark × overlays —
         // re-lay them after every render (no-op until viewDead inits).
         onRowsRendered: () => deadOverlayRefresh()
@@ -818,7 +828,10 @@ import { deferIdle, mark as perfMark } from './idle.js';
         treeView,
         actions,
         dialogs,
-        undo
+        undo,
+        // velvet staging relay: the rows' hover 发送到暂存 toggle + the
+        // toolbar's stage-all (viewRecent inits above — plain getter fine).
+        get staging() { return viewRecent.api; }
     });
     const viewDupes = initViewDupes({
         store,
@@ -832,6 +845,9 @@ import { deferIdle, mark as perfMark } from './idle.js';
         // slice D: the keep-most-visited strategy reads real counts now
         // (zeros + disabled option while statsEnabled is off)
         visitStats,
+        // velvet staging relay: row/head/toolbar 发送到暂存 (viewRecent
+        // inits above).
+        get staging() { return viewRecent.api; },
         // 第五轮项3: re-lay the dead-mark × overlays after every re-render.
         onRowsRendered: () => deadOverlayRefresh()
     });

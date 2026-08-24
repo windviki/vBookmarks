@@ -52,6 +52,7 @@
  * No neatools helpers here: plain getElementById/classList/loops only.
  */
 import { FOLDER_ICON, VIEW_ICONS, TRASH_ICON, SELECT_ICON } from './icons.js';
+import { stageBtnHtml as relayStageBtnHtml, flipStageBtn, toggleStageItem } from './staging-relay.js';
 import { relTimeLabel } from './tree-render.js';
 import { htmlspecialchars } from './escape.js';
 import {
@@ -530,6 +531,33 @@ export function initSearch(ctx = {}) {
                 e.preventDefault();
                 e.stopPropagation();
                 setSelecting(true, 'first');
+                return;
+            }
+            // velvet staging relay: the row's hover 发送到暂存 toggle (the
+            // stats-view law — staged rows leave the workbench). The flip
+            // lands on the live button; no results repaint.
+            const stageBtn = closest0('.staging-add-btn');
+            if (stageBtn) {
+                e.preventDefault();
+                e.stopPropagation();
+                const li = stageBtn.closest('li');
+                const r = li && lastResults.find(x => String(x.id) === String(li.dataset.nodeId));
+                const nowStaged = r ? toggleStageItem(ctx.stagingApi, r) : null;
+                if (nowStaged !== null)
+                    flipStageBtn(stageBtn, nowStaged, _m);
+                return;
+            }
+            // the row's hover delete: the real bookmark remove (undo toast),
+            // same as the tree's keyboard Delete on this row.
+            const rowDel = closest0('.search-row-del');
+            if (rowDel) {
+                e.preventDefault();
+                e.stopPropagation();
+                const li = rowDel.closest('li');
+                const id = li && li.dataset.nodeId;
+                if (id && ctx.actions && ctx.actions.deleteBookmark)
+                    ctx.actions.deleteBookmark(id);
+                return;
             }
             return;
         }
@@ -766,10 +794,21 @@ export function initSearch(ctx = {}) {
                 const id = result.id;
                 if (!result.isFolder) {
                     const sel = selecting && selected.has(String(id));
+                    // velvet staging relay: the row's trailing hover pair
+                    // [发送到暂存][删除] — the shared recipe (src/staging-relay.js,
+                    // click toggles: staged rows leave the workbench) plus the
+                    // real bookmark delete (undo-captured, same as the tree's
+                    // keyboard Delete). Selection mode keeps the DOM flat.
+                    let tail = '';
+                    if (!selecting) {
+                        const delLabel = htmlspecialchars(_m('rowActionDelete'));
+                        tail = relayStageBtnHtml(ctx.stagingApi, { id, url: result.url }, _m) +
+                            `<button type="button" class="row-btn search-row-del" aria-label="${delLabel}" title="${delLabel}">${TRASH_ICON}</button>`;
+                    }
                     // §3.6: rows carry their parent-folder path label + the
                     // unified 标题/URL/路径 tooltip (via the meta argument).
                     html += `<li class="vbm-row${sel ? ' sel' : ''}" data-parentid="${result.parentId}" data-node-id="${id}" data-url="${encodeURIComponent(result.url)}" id="results-item-${id}" role="listitem">
-                            ${generateBookmarkHTML(result.title, result.url, '', result.id, result.positions, { path: views.pathOf(id) })}</li>`;
+                            ${generateBookmarkHTML(result.title, result.url, '', result.id, result.positions, { path: views.pathOf(id) })}${tail}</li>`;
                 } else {  // folder
                     // Add sync status indicator for folders in search results
                     let syncIndicator = '';
