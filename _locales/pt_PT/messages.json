@@ -48,7 +48,7 @@
     "message": "Novidades na v4.1.0"
   },
   "announceV410Text": {
-    "message": "A v4.1.0 adiciona a vista de grupos de separadores: os separadores e grupos de separadores de cada janela, geridos ao lado dos seus marcadores."
+    "message": "v4.1.0 adiciona a vista de Grupos de separadores e a Área de preparação: gerencie os separadores de cada janela junto dos seus marcadores e recolha marcadores de qualquer lugar para uma bancada de preparação para organização em massa."
   },
   "confirmDeleteFolder": {
     "message": "Esta pasta contém $count$ item(ns). Pode anular a eliminação.",
@@ -2196,6 +2196,9 @@
       }
     }
   },
+  "stagingConfirmFolderOk": {
+    "message": "Preparar"
+  },
   "stagingRemove": {
     "message": "Remover da área de preparação"
   },
@@ -2377,6 +2380,9 @@
       }
     }
   },
+  "stagingMoveConfirmOk": {
+    "message": "Mover"
+  },
   "stagingDeleteConfirm": {
     "message": "Eliminar $n$ item(ns)? Os não marcados apenas saem da área de espera.",
     "placeholders": {
@@ -2406,6 +2412,9 @@
   },
   "stagingClearConfirm": {
     "message": "Limpar toda a área de espera? A árvore de marcadores não é alterada."
+  },
+  "stagingClearConfirmOk": {
+    "message": "Limpar"
   },
   "stagingCleared": {
     "message": "Área de espera limpa"

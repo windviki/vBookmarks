@@ -679,9 +679,14 @@ export function initViewRecent(ctx = {}) {
                     'aria-label="' + (editingShortcuts ? editLabel : moveLabel) + '" title="' + htmlspecialchars(path) + '">' +
                     '<span class="tab-group-dot tg-' + sc.color + '" aria-hidden="true"></span>' +
                     '<span class="staging-shortcut-name" dir="auto">' + label + '</span></button>' +
-                    '<button type="button" class="staging-shortcut-del" data-shortcut-id="' + sc.id + '" tabindex="-1" ' +
-                    'aria-label="' + htmlspecialchars(_m('stagingShortcutRemove')) + '" ' +
-                    'title="' + htmlspecialchars(_m('stagingShortcutRemove')) + '">×</button>' +
+                    // del chips exist ONLY in edit mode (leave the DOM, not
+                    // CSS-hidden: a display:none button still catches the ←/→
+                    // rung walk and dead-ends focus — H4)
+                    (editingShortcuts
+                        ? '<button type="button" class="staging-shortcut-del" data-shortcut-id="' + sc.id + '" tabindex="-1" ' +
+                        'aria-label="' + htmlspecialchars(_m('stagingShortcutRemove')) + '" ' +
+                        'title="' + htmlspecialchars(_m('stagingShortcutRemove')) + '">×</button>'
+                        : '') +
                     '</span>';
             };
             let r3 = '<div class="staging-toolbar staging-shortcuts-toolbar vbm-toolbar' + (editingShortcuts ? ' editing' : '') + '">';
@@ -1027,19 +1032,33 @@ export function initViewRecent(ctx = {}) {
             return;
         let done = 0;
         let failed = 0;
+        const createdIds = [];
         const step = () => {
             if (done >= bucket.length) {
                 persistStaging();
                 renderStaging();
                 refreshTree();
-                if (bucket.length - failed > 0)
-                    toast(_m('stagingFavDone', [`${bucket.length - failed}`]));
+                const n = bucket.length - failed;
+                if (n > 0)
+                    undo.toastAction(_m('stagingFavDone', `${n}`), _m('undoAction'), () => {
+                        for (const id of createdIds)
+                            chrome.bookmarks.remove(id, () => {
+                                if (chrome.runtime.lastError)
+                                    return;
+                                staging.setUnfavById(stagingState, id);
+                            });
+                        persistStaging();
+                        renderStaging();
+                        refreshTree();
+                    });
                 return;
             }
             const it = bucket[done++];
             favOne(it, how => {
                 if (how === 'failed')
                     failed++;
+                else if (how === 'created' && it.id)
+                    createdIds.push(it.id);
                 step();
             });
         };
@@ -1085,9 +1104,9 @@ export function initViewRecent(ctx = {}) {
                         () => {
                             for (const id of createdIds)
                                 chrome.bookmarks.remove(id, () => {
-                                    staging.setUnfavById(stagingState, id);
                                     if (chrome.runtime.lastError)
                                         return;
+                                    staging.setUnfavById(stagingState, id);
                                 });
                             persistStaging();
                             renderStaging();
@@ -1113,28 +1132,30 @@ export function initViewRecent(ctx = {}) {
         const items = selectedItems().filter(it => it.id);
         if (!items.length)
             return;
-        const snapshots = items.map(it => ({ ...it }));
+        // restore bookkeeping: remember each node's real parent so undo
+        // recreates into the ORIGINAL folder, not the quick-add catch-all (M1)
+        const restorePlans = items.map(it => ({ it, parentId: null }));
         let i = 0;
         const step = () => {
             if (i >= items.length) {
                 persistStaging();
                 renderStaging();
                 refreshTree();
-                undo.toastAction(_m('stagingUnfavDone', `${snapshots.length}`), _m('undoAction'), () => {
+                undo.toastAction(_m('stagingUnfavDone', `${items.length}`), _m('undoAction'), () => {
                     // restore the bookmarks and re-anchor the items
                     let j = 0;
                     const restore = () => {
-                        if (j >= snapshots.length) {
+                        if (j >= restorePlans.length) {
                             persistStaging();
                             renderStaging();
                             refreshTree();
                             return;
                         }
-                        const sn = snapshots[j++];
-                        const parentId = sn.parentId || quickAddFolderId();
-                        chrome.bookmarks.create({ parentId, url: sn.url, title: sn.title }, created => {
+                        const plan = restorePlans[j++];
+                        const parentId = plan.parentId || quickAddFolderId();
+                        chrome.bookmarks.create({ parentId, url: plan.it.url, title: plan.it.title }, created => {
                             if (created)
-                                staging.setFav(stagingState, sn.url, created.id);
+                                staging.setFav(stagingState, plan.it.url, created.id);
                             restore();
                         });
                     };
@@ -1142,12 +1163,18 @@ export function initViewRecent(ctx = {}) {
                 });
                 return;
             }
-            const it = items[i++];
-            chrome.bookmarks.remove(it.id, () => {
-                if (chrome.runtime.lastError)
-                    return;
-                staging.setUnfavById(stagingState, it.id);
-                step();
+            const idx = i++;
+            const it = items[idx];
+            chrome.bookmarks.get(it.id, nodes => {
+                const node = nodes && nodes[0];
+                if (node && node.parentId)
+                    restorePlans[idx].parentId = node.parentId;
+                chrome.bookmarks.remove(it.id, () => {
+                    if (chrome.runtime.lastError)
+                        return;
+                    staging.setUnfavById(stagingState, it.id);
+                    step();
+                });
             });
         };
         step();
@@ -1164,15 +1191,13 @@ export function initViewRecent(ctx = {}) {
             let moved = 0;
             let copied = 0;
             const leaveUrls = [];
-            const step = () => {
+                const step = () => {
                 if (done >= items.length) {
-                    persistStaging();
-                    renderStaging();
-                    refreshTree();
                     if (leaveUrls.length)
                         staging.removeByUrls(stagingState, leaveUrls);
                     persistStaging();
                     renderStaging();
+                    refreshTree();
                     toast(_m(action === 'move' ? 'stagingMoveDone' : 'stagingCopyDone',
                         `${action === 'move' ? moved : copied}`));
                     return;
@@ -1215,11 +1240,15 @@ export function initViewRecent(ctx = {}) {
             };
             step();
         };
+        // >10-item moves of real bookmarks are irreversible (no undo toast
+        // restores a bulk move) — always confirm; deliberately NOT gated on
+        // dontConfirmOpenFolder (that flag covers opening N tabs, a far less
+        // destructive gesture — M4).
         if (action === 'move' && items.length > MOVE_CONFIRM_LIMIT &&
-            dialogs && dialogs.ConfirmDialog && !store.get('dontConfirmOpenFolder')) {
+            dialogs && dialogs.ConfirmDialog) {
             dialogs.ConfirmDialog.open({
                 dialog: _m('stagingMoveConfirm', `${items.length}`),
-                button1: `<strong>${_m('open')}</strong>`,
+                button1: `<strong>${_m('stagingMoveConfirmOk')}</strong>`,
                 button2: _m('nope'),
                 fn1: run
             });
@@ -1251,6 +1280,10 @@ export function initViewRecent(ctx = {}) {
             // restore bookkeeping: each bookmarked item keeps its original
             // parent folder for the undo recreate
             const restorePlans = bookmarked.map(it => ({ it, parentId: null }));
+            // group snapshots must be taken BEFORE removeByUrls prunes the
+            // emptied groups — at undo time they are already gone
+            const groupSnaps = [...new Set(items.map(it => it.group).filter(Boolean))]
+                .map(id => ({ ...staging.findGroup(stagingState, id) }));
             let i = 0;
             const step = () => {
                 if (i >= bookmarked.length) {
@@ -1278,7 +1311,14 @@ export function initViewRecent(ctx = {}) {
                                 restore();
                             });
                         };
-                        staging.add(stagingState, items.map(it => ({ ...it })));
+                        // group-aware re-add: the pruned groups come back
+                        // first so organized members reattach (H1)
+                        const r = staging.restoreItems(stagingState,
+                            items.map(it => ({ ...it })), groupSnaps);
+                        if (r.full) {
+                            toast(_m('stagingFull'));
+                            return;
+                        }
                         restore();
                     });
                     return;
@@ -1306,17 +1346,24 @@ export function initViewRecent(ctx = {}) {
         }
     };
 
-    // Remove from staging (tree untouched) — undo re-adds the snapshots.
+    // Remove from staging (tree untouched) — undo re-adds the snapshots WITH
+    // their group membership (restoreItems re-creates pruned groups first).
     const removeSelected = () => {
         const items = selectedItems();
         if (!items.length)
             return;
         const snapshots = items.map(it => ({ ...it }));
+        const groupSnaps = [...new Set(items.map(it => it.group).filter(Boolean))]
+            .map(id => ({ ...staging.findGroup(stagingState, id) }));
         staging.removeByUrls(stagingState, items.map(it => it.url));
         persistStaging();
         renderStaging();
         undo.toastAction(_m('stagingRemovedCount', `${snapshots.length}`), _m('undoAction'), () => {
-            staging.add(stagingState, snapshots);
+            const r = staging.restoreItems(stagingState, snapshots, groupSnaps);
+            if (r.full) {
+                toast(_m('stagingFull'));
+                return;
+            }
             persistStaging();
             renderStaging();
         });
@@ -1326,16 +1373,28 @@ export function initViewRecent(ctx = {}) {
         if (!staging.count(stagingState))
             return;
         const run = () => {
+            // capture BEFORE clearAll wipes them — undo restores items with
+            // group membership AND the user-built groups themselves (H2)
+            const snaps = stagingState.items.map(it => ({ ...it }));
+            const groups = stagingState.groups.map(g => ({ ...g }));
             staging.clearAll(stagingState);
             selected.clear();
             persistStaging();
             renderStaging();
-            toast(_m('stagingCleared'));
+            undo.toastAction(_m('stagingCleared'), _m('undoAction'), () => {
+                const r = staging.restoreItems(stagingState, snaps, groups);
+                if (r.full) {
+                    toast(_m('stagingFull'));
+                    return;
+                }
+                persistStaging();
+                renderStaging();
+            });
         };
         if (dialogs && dialogs.ConfirmDialog) {
             dialogs.ConfirmDialog.open({
                 dialog: _m('stagingClearConfirm'),
-                button1: `<strong>${_m('open')}</strong>`,
+                button1: `<strong>${_m('stagingClearConfirmOk')}</strong>`,
                 button2: _m('nope'),
                 fn1: run
             });
@@ -1612,11 +1671,24 @@ export function initViewRecent(ctx = {}) {
     };
 
     const dissolveGroup = groupId => {
+        const g = staging.findGroup(stagingState, groupId);
+        if (!g)
+            return;
+        // undo bookkeeping BEFORE the dissolve: the group snapshot (name,
+        // source binding, fold state) and the member urls (dissolve keeps
+        // the members — undo just re-binds them to the restored group)
+        const groupSnap = { ...g };
+        const memberUrls = staging.groupItems(stagingState, groupId).map(it => it.url);
         if (!staging.dissolveGroup(stagingState, groupId))
             return;
         persistStaging();
         renderStaging();
-        toast(_m('stagingGroupDissolved'));
+        undo.toastAction(_m('stagingGroupDissolved'), _m('undoAction'), () => {
+            staging.restoreItems(stagingState, [], [groupSnap]);
+            staging.assignGroup(stagingState, memberUrls, groupSnap.id);
+            persistStaging();
+            renderStaging();
+        });
     };
 
     // User-built groups (the workbench's organizing units): created empty
@@ -1763,7 +1835,7 @@ export function initViewRecent(ctx = {}) {
         if (entries.length > FOLDER_CONFIRM_LIMIT && dialogs && dialogs.ConfirmDialog) {
             dialogs.ConfirmDialog.open({
                 dialog: _m('stagingConfirmFolder', `${entries.length}`),
-                button1: `<strong>${_m('open')}</strong>`,
+                button1: `<strong>${_m('stagingConfirmFolderOk')}</strong>`,
                 button2: _m('nope'),
                 fn1: run
             });
@@ -2373,6 +2445,33 @@ export function initViewRecent(ctx = {}) {
             el.classList.remove('drag-over', 'dragging');
     });
     $list.addEventListener('keydown', e => {
+        // Delete on a staging row = remove-from-staging (the row × button's
+        // semantics, with undo) — NOT actions.deleteBookmark: the shared
+        // keyup handler would delete the REAL bookmark for staged rows and
+        // silently no-op on unbookmarked ones (M3). Consumed here so the
+        // keyup path never sees it.
+        if (e.key === 'Delete') {
+            const li = e.target && e.target.closest ? e.target.closest('li.vbm-row') : null;
+            const url = li && li.dataset ? li.dataset.url : undefined;
+            if (url !== undefined && staging.getByUrl(stagingState, url)) {
+                e.preventDefault();
+                e.stopPropagation();
+                removeByUrl(url);
+                return;
+            }
+        }
+        // Esc closes the first-run guide banner (keyboard parity with the
+        // click × — M5; the banner buttons stay mouse-only, but Esc must
+        // always offer an exit).
+        if (e.key === 'Escape' && !selecting && !guideDismissed &&
+            !store.get('stagingGuideDismissed') &&
+            $list.querySelector('.staging-guide-banner')) {
+            e.preventDefault();
+            e.stopPropagation();
+            guideDismissed = true;
+            renderStaging();
+            return;
+        }
         // Head keys (dupes group-head protocol): ←/→/Space/Enter fold a
         // group/bucket head, or the recently-added section head, when the
         // head itself holds focus (heads are tabindex=-1 rows of the walk).
@@ -2512,12 +2611,23 @@ export function initViewRecent(ctx = {}) {
     // The send API consumed by context-menu (bookmark/folder/hist-row entries),
     // view-stats (history rows) and view-tabgroups (tabs) — see neat.js wiring.
     const removeByUrl = url => {
-        if (!staging.getByUrl(stagingState, url))
+        const it = staging.getByUrl(stagingState, url);
+        if (!it)
             return;
+        const snap = { ...it };
+        const groupSnap = it.group ? { ...staging.findGroup(stagingState, it.group) } : null;
         staging.removeByUrls(stagingState, [url]);
         persistStaging();
         renderStaging();
-        toast(_m('stagingRemoved'));
+        undo.toastAction(_m('stagingRemoved'), _m('undoAction'), () => {
+            const r = staging.restoreItems(stagingState, [snap], groupSnap ? [groupSnap] : []);
+            if (r.full) {
+                toast(_m('stagingFull'));
+                return;
+            }
+            persistStaging();
+            renderStaging();
+        });
     };
 
     const api = {

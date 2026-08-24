@@ -408,7 +408,7 @@
     "message": "v4.1.0 新变化"
   },
   "announceV410Text": {
-    "message": "v4.1.0 新增标签组视图：在书签旁边直接管理每个窗口的标签页与标签组。"
+    "message": "v4.1.0 新增标签组视图与暂存区：在书签旁管理各窗口的标签页，并从任意入口收集书签到暂存工作台批量整理。"
   },
   "announceV408Text": {
     "message": "v4.0.8 图标加强版：自动为 Chrome 未缓存的收藏网站拉取真实图标。"
@@ -2254,6 +2254,10 @@
       }
     }
   },
+
+  "stagingConfirmFolderOk": {
+    "message": "暂存"
+  },
   "stagingRemove": {
     "message": "移出暂存区"
   },
@@ -2435,6 +2439,10 @@
       }
     }
   },
+
+  "stagingMoveConfirmOk": {
+    "message": "移动"
+  },
   "stagingDeleteConfirm": {
     "message": "删除 $n$ 条?未收藏的条目只会移出暂存区。",
     "placeholders": {
@@ -2464,6 +2472,10 @@
   },
   "stagingClearConfirm": {
     "message": "清空整个暂存区?不会改动书签树。"
+  },
+
+  "stagingClearConfirmOk": {
+    "message": "清空"
   },
   "stagingCleared": {
     "message": "暂存区已清空"

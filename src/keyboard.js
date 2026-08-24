@@ -717,6 +717,11 @@ export function initKeyboard(ctx = {}) {
         switch (e.key) {
             case "Delete": // delete
                 e.preventDefault();
+                // Staging rows own their Delete (remove-from-staging with
+                // undo, handled in view-recent's keydown); never route them
+                // to a real bookmark delete (M3).
+                if (li.closest && li.closest('#staging-list'))
+                    break;
                 const id = li.dataset.nodeId || li.id.replace(/(neat-tree|neat-recent|results|recent)-item-/, '');
                 if (!id)
                     break;

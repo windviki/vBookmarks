@@ -48,7 +48,7 @@
     "message": "Uutta v4.1.0:ssa"
   },
   "announceV410Text": {
-    "message": "v4.1.0 lisää Välilehtiryhmät-näkymän: jokaisen ikkunan välilehdet ja välilehtiryhmät hallittavissa kirjanmerkkien vieressä."
+    "message": "v4.1.0 lisää välilehtiryhmien näkymän ja työalueen: hallitse kaikkien ikkunoiden välilehtiä kirjanmerkkiesi vieressä ja kerää kirjanmerkkejä mistä tahansa työalueelle joukkokäsittelyä varten."
   },
   "confirmDeleteFolder": {
     "message": "Tämä kansio sisältää $count$ kohdetta. Voit peruuttaa poiston.",
@@ -2200,6 +2200,9 @@
       }
     }
   },
+  "stagingConfirmFolderOk": {
+    "message": "Vaiheista"
+  },
   "stagingRemove": {
     "message": "Poista odotuslistalta"
   },
@@ -2381,6 +2384,9 @@
       }
     }
   },
+  "stagingMoveConfirmOk": {
+    "message": "Siirrä"
+  },
   "stagingDeleteConfirm": {
     "message": "Poistetaanko $n$ kohdetta? Ei-kirjanmerkityt poistuvat vain odotusalueelta.",
     "placeholders": {
@@ -2410,6 +2416,9 @@
   },
   "stagingClearConfirm": {
     "message": "Tyhjennetäänkö koko odotusalue? Kirjanmerkkihakemistoa ei muuteta."
+  },
+  "stagingClearConfirmOk": {
+    "message": "Tyhjennä"
   },
   "stagingCleared": {
     "message": "Odotusalue tyhjennetty"

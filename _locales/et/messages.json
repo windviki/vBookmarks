@@ -48,7 +48,7 @@
     "message": "Mis on uut versioonis v4.1.0"
   },
   "announceV410Text": {
-    "message": "v4.1.0 lisab vahekaartide rühmade vaate: iga akna vahekaardid ja rühmad, hallatud teie järjehoidjate kõrval."
+    "message": "v4.1.0 lisab vahekaartide rühmade vaate ja lavastusala: hallake kõigi akende vahekaarte järjehoidjate kõrval ning koguge järjehoidjaid igalt poolt lavastustöölauale hulgikorraldamiseks."
   },
   "confirmDeleteFolder": {
     "message": "See kaust sisaldab $count$ kirje(t). Saate kustutamise tagasi võtta.",
@@ -2200,6 +2200,9 @@
       }
     }
   },
+  "stagingConfirmFolderOk": {
+    "message": "Lavastage"
+  },
   "stagingRemove": {
     "message": "Eemalda ootealalt"
   },
@@ -2381,6 +2384,9 @@
       }
     }
   },
+  "stagingMoveConfirmOk": {
+    "message": "Liiguta"
+  },
   "stagingDeleteConfirm": {
     "message": "Kustutada $n$ üksust? Mitte-järjehoidjad lahkuvad lihtsalt ootealalt.",
     "placeholders": {
@@ -2410,6 +2416,9 @@
   },
   "stagingClearConfirm": {
     "message": "Tühjendada kogu ooteala? Järjehoidjapuu ei muutu."
+  },
+  "stagingClearConfirmOk": {
+    "message": "Tühjenda"
   },
   "stagingCleared": {
     "message": "Ooteala tühjendatud"

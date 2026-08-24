@@ -9,9 +9,9 @@ vBookmarks
 
 [Available on WebStore](https://chrome.google.com/webstore/detail/vbookmarks/odhjcodnoebmndcihdedenkmdmklpihb) · [HomePage](http://windviki.github.com/vBookmarks/)
 
-**vBookmarks turns your bookmark pile into a fast, keyboard-first workspace.** One click on the toolbar icon opens a seven-view manager that lives in the popup (or Chrome's side panel — your choice): the familiar folder tree, instant fuzzy search, a tab-groups view, a Recently Added timeline, visit statistics, a dead-link scanner, and a duplicate cleaner. Everything is reachable from the keyboard, every delete is undoable, and nothing ever leaves your browser — no accounts, no telemetry, no build-step black box, just plain JavaScript you can read.
+**vBookmarks turns your bookmark pile into a fast, keyboard-first workspace.** One click on the toolbar icon opens a seven-view manager that lives in the popup (or Chrome's side panel — your choice): the familiar folder tree, instant fuzzy search, a tab-groups view, a staging workbench (with the recently-added timeline folded in), visit statistics, a dead-link scanner, and a duplicate cleaner. Everything is reachable from the keyboard, every delete is undoable, and nothing ever leaves your browser — no accounts, no telemetry, no build-step black box, just plain JavaScript you can read.
 
-- **Seven views, one popup** — Tree / Search / Tab groups / Recent / Stats / Dead links / Duplicates, switched from an icon tab strip or with `Alt+1…7`.
+- **Seven views, one popup** — Tree / Search / Tab groups / Staging (with the recent list inside) / Stats / Dead links / Duplicates, switched from an icon tab strip or with `Alt+1…7`.
 - **A maintenance crew for your library** — scan for dead links with pause & resume, deduplicate with six keep-strategies and undoable batch cleaning, save a whole window of tabs as a session folder.
 - **Keyboard-first for real** — every view is fully operable without a mouse: arrows, `Enter`, `F2` rename, `Delete`, view shortcuts, and a `Ctrl/Cmd+K` command palette.
 - **Fast and quiet** — fzf-style fuzzy search with match highlighting (CJK-friendly), omnibox search (`*` + Space), and sync-status indicators that stay out of your way.
@@ -219,6 +219,19 @@ python3 scripts/package.py         # → tmp/vBookmarks_<version>.zip
 - **Selection mode with copy/move semantics**: batch group-into-new-group, open-into-existing-group, close or sleep; selected tabs already in a group prompt a copy-or-move choice. Selected tabs can be bookmarked into a chosen folder via the new folder-picker dialog.
 - **Recently closed groups**: the last N closed groups (configurable 5–50) stay listed with per-tab restore/bookmark/remove and a reopen-all, persisted like search history.
 - **Options**: the tab strip gets the Tab groups show/disable controls like every feature view; the new *Tab groups* options group carries the group-color style (off / edge band / connector line) and the closed-history depth. The palette grows `/tabgroups`, and the what's-new banner mechanism re-arms once for this release.
+- **Staging area workbench — the Recent tab grew up**: the seventh-tab slot is now a staging workspace whose rows are dual-state — bookmarked items wear their ★, unbookmarked/history items sit beside them with an outline ☆, so "already saved" and "just parked here" read at a glance. You build your own groups: drag rows between groups, drag group heads to reorder, and group-head menus cover select-all-in-group, save-to-folder, copy the list, dissolve, and delete. **Selection mode** batches open / favorite / group / move / copy / delete / remove-from-staging over any mix of rows. An **internal clipboard** brings copy/cut/paste to the tree, the **folder picker** offers pinned + LRU quick picks with copy-as-text/Markdown/JSON export, and *send to staging* entries appear across the bookmark, history, tab-groups and stats views plus the context menus. Every view gets a **shortcut bar** of move-to-folder chips for one-click filing. A **virtual scrolling** lab switch joins the experiments (off by default).
+
+#### Performance
+
+- **Chunked list rendering + content-visibility for heavy views**: tab-groups first paint dropped from 1064 ms to 239 ms; the duplicates view regroups 57% faster; the dead-link scanner renders its results incrementally instead of in one blocking burst.
+- **Surgical fold/collapse updates**: folding or collapsing no longer rebuilds whole lists — only the affected rows change, so folding a big group stays instant.
+- **One-time favicon placeholder parsing**: the placeholder template is parsed once and reused, and i18n labels are hoisted per render instead of re-fetched for every row.
+
+#### Fixed
+
+- **Favicon dark-chroma guard**: dark but vivid icons are no longer desaturated by the dark-mode contrast flip — only genuinely low-contrast icons get adjusted.
+- **Keyboard row-selector regression** caused by chunked `<ul>` injection — keyboard navigation tracks the real row order again.
+- **Recent-list scrollbar regression** from content-visibility — the staging/recent view scrolls correctly to the end again.
 
 ### v4.0.8
 

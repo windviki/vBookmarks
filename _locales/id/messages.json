@@ -48,7 +48,7 @@
     "message": "v4.1.0 中的新功能"
   },
   "announceV410Text": {
-    "message": "v4.1.0 新增标签页组视图：每个窗口的标签页和标签页组，可在书签旁进行管理。"
+    "message": "v4.1.0 添加了标签组视图和暂存区：在书签旁管理每个窗口的标签页，并将任意位置的书签收集到暂存工作台进行批量整理。"
   },
   "confirmDeleteFolder": {
     "message": "Folder ini berisi $count$ item. Anda dapat membatalkan penghapusan.",
@@ -2200,6 +2200,9 @@
       }
     }
   },
+  "stagingConfirmFolderOk": {
+    "message": "Tahap"
+  },
   "stagingRemove": {
     "message": "Hapus dari area pementasan"
   },
@@ -2381,6 +2384,9 @@
       }
     }
   },
+  "stagingMoveConfirmOk": {
+    "message": "Pindah"
+  },
   "stagingDeleteConfirm": {
     "message": "Hapus $n$ item? Yang tidak dibookmark hanya meninggalkan area pementasan.",
     "placeholders": {
@@ -2410,6 +2416,9 @@
   },
   "stagingClearConfirm": {
     "message": "Bersihkan seluruh area pementasan? Pohon bookmark tidak disentuh."
+  },
+  "stagingClearConfirmOk": {
+    "message": "Bersihkan"
   },
   "stagingCleared": {
     "message": "Area pementasan dibersihkan"

@@ -48,7 +48,7 @@
     "message": "v4.1.0 新功能"
   },
   "announceV410Text": {
-    "message": "v4.1.0 新增标签页组视图：每个窗口的标签页和标签页组，与书签一同管理。"
+    "message": "v4.1.0 新增标签组视图和暂存区：在书签旁管理每个窗口的标签页，并将任意位置的书签收集到暂存工作台进行批量整理。"
   },
   "confirmDeleteFolder": {
     "message": "此文件夹包含$count$个项目。您可以撤销删除。",
@@ -2200,6 +2200,9 @@
       }
     }
   },
+  "stagingConfirmFolderOk": {
+    "message": "暂存"
+  },
   "stagingRemove": {
     "message": "从暂存区移除"
   },
@@ -2381,6 +2384,9 @@
       }
     }
   },
+  "stagingMoveConfirmOk": {
+    "message": "移动"
+  },
   "stagingDeleteConfirm": {
     "message": "删除 $n$ 项？未收藏的项将仅从暂存区移除。",
     "placeholders": {
@@ -2410,6 +2416,9 @@
   },
   "stagingClearConfirm": {
     "message": "清空整个暂存区？书签树不受影响。"
+  },
+  "stagingClearConfirmOk": {
+    "message": "清除"
   },
   "stagingCleared": {
     "message": "暂存区已清空"

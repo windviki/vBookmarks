@@ -48,7 +48,7 @@
     "message": "v4.1.0'daki yenilikler"
   },
   "announceV410Text": {
-    "message": "v4.1.0, Sekme grupları görünümünü ekler: her pencerenin sekmeleri ve sekme grupları, yer imlerinizin yanında yönetilir."
+    "message": "v4.1.0, Sekme grupları görünümü ve Hazırlık alanı ekler: tüm pencerelerin sekmelerini yer imlerinizin yanında yönetin ve yer imlerini her yerden toplu düzenleme için bir hazırlık çalışma alanına toplayın."
   },
   "confirmDeleteFolder": {
     "message": "Bu klasörde $count$ öğe bulunuyor. Silme işlemini geri alabilirsiniz.",
@@ -2200,6 +2200,9 @@
       }
     }
   },
+  "stagingConfirmFolderOk": {
+    "message": "Aşamala"
+  },
   "stagingRemove": {
     "message": "Bekleme alanından kaldır"
   },
@@ -2381,6 +2384,9 @@
       }
     }
   },
+  "stagingMoveConfirmOk": {
+    "message": "Taşı"
+  },
   "stagingDeleteConfirm": {
     "message": "$n$ öğe silinsin mi? Favorisi kaldırılmış olanlar yalnızca hazırlık alanından çıkar.",
     "placeholders": {
@@ -2410,6 +2416,9 @@
   },
   "stagingClearConfirm": {
     "message": "Tüm hazırlık alanı temizlensin mi? Yer imi ağacına dokunulmaz."
+  },
+  "stagingClearConfirmOk": {
+    "message": "Temizle"
   },
   "stagingCleared": {
     "message": "Hazırlık alanı temizlendi"

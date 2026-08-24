@@ -48,7 +48,7 @@
     "message": "Kas naujo v4.1.0"
   },
   "announceV410Text": {
-    "message": "v4.1.0 prideda skirtukų grupių rodinį: kiekvieno lango skirtukai ir jų grupės, valdomi šalia jūsų žymių."
+    "message": "v4.1.0 prideda skirtukų grupių rodinį ir paruošimo sritį: tvarkykite kiekvieno lango skirtukus šalia žymių ir rinkite žymes iš bet kur į paruošimo darbo stalą masiniam organizavimui."
   },
   "confirmDeleteFolder": {
     "message": "Šiame aplanke yra $count$ elementas(-ai). Galite atšaukti ištrynimą.",
@@ -2200,6 +2200,9 @@
       }
     }
   },
+  "stagingConfirmFolderOk": {
+    "message": "Scenarijus"
+  },
   "stagingRemove": {
     "message": "Pašalinti iš paruošimo srities"
   },
@@ -2381,6 +2384,9 @@
       }
     }
   },
+  "stagingMoveConfirmOk": {
+    "message": "Perkelti"
+  },
   "stagingDeleteConfirm": {
     "message": "Ištrinti $n$ elem.? Neįtrauktos tik palieka paruošimo sritį.",
     "placeholders": {
@@ -2410,6 +2416,9 @@
   },
   "stagingClearConfirm": {
     "message": "Išvalyti visą paruošimo sritį? Žymių medis nepakeičiamas."
+  },
+  "stagingClearConfirmOk": {
+    "message": "Išvalyti"
   },
   "stagingCleared": {
     "message": "Paruošimo sritis išvalyta"

@@ -48,7 +48,7 @@
     "message": "v4.1.0 的新功能"
   },
   "announceV410Text": {
-    "message": "v4.1.0 新增标签组视图：每个窗口的标签页和标签组，与您的书签一起管理。"
+    "message": "v4.1.0 adiciona a visualização de grupos de abas e a área de preparação: gerencie as abas de cada janela ao lado de seus favoritos e colete favoritos de qualquer lugar em uma bancada de preparação para organização em massa."
   },
   "confirmDeleteFolder": {
     "message": "Esta pasta contém $count$ item(ns). Você pode desfazer a exclusão.",
@@ -2196,6 +2196,9 @@
       }
     }
   },
+  "stagingConfirmFolderOk": {
+    "message": "Preparar"
+  },
   "stagingRemove": {
     "message": "Remover da área de preparação"
   },
@@ -2377,6 +2380,9 @@
       }
     }
   },
+  "stagingMoveConfirmOk": {
+    "message": "Mover"
+  },
   "stagingDeleteConfirm": {
     "message": "Excluir $n$ item(ns)? Os não favoritados apenas saem da área.",
     "placeholders": {
@@ -2406,6 +2412,9 @@
   },
   "stagingClearConfirm": {
     "message": "Limpar toda a área? A árvore de favoritos não é alterada."
+  },
+  "stagingClearConfirmOk": {
+    "message": "Limpar"
   },
   "stagingCleared": {
     "message": "Área limpa"

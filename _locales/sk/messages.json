@@ -48,7 +48,7 @@
     "message": "Čo je nové vo v4.1.0"
   },
   "announceV410Text": {
-    "message": "v4.1.0 pridáva zobrazenie skupín kariet: karty a skupiny kariet každého okna, spravované vedľa vašich záložiek."
+    "message": "v4.1.0 pridáva zobrazenie skupín kariet a oblasť prípravy: spravujte karty každého okna vedľa svojich záložiek a zbierajte záložky odkiaľkoľvek do pracovnej plochy na hromadné usporiadanie."
   },
   "confirmDeleteFolder": {
     "message": "Tento priečinok obsahuje $count$ položiek. Odstránenie môžete vrátiť späť.",
@@ -2200,6 +2200,9 @@
       }
     }
   },
+  "stagingConfirmFolderOk": {
+    "message": "Pripraviť"
+  },
   "stagingRemove": {
     "message": "Odstrániť z dočasnej oblasti"
   },
@@ -2381,6 +2384,9 @@
       }
     }
   },
+  "stagingMoveConfirmOk": {
+    "message": "Presunúť"
+  },
   "stagingDeleteConfirm": {
     "message": "Odstrániť $n$? Neuložené len opustia zásobník.",
     "placeholders": {
@@ -2410,6 +2416,9 @@
   },
   "stagingClearConfirm": {
     "message": "Vyčistiť celý zásobník? Strom záložiek sa nedotkne."
+  },
+  "stagingClearConfirmOk": {
+    "message": "Vyčistiť"
   },
   "stagingCleared": {
     "message": "Zásobník vyčistený"

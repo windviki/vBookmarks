@@ -152,14 +152,17 @@ Your whole browser session next to your bookmarks: every window's tabs in real o
 - **Collapse sync**: with the toolbar's sync switch on, folding a group here folds the browser's group too.
 - **Bookmarks bridge**: a tab row's ★ files it into your quick-add folder; selected tabs can be bookmarked into any folder via the folder-picker dialog.
 
-### 3.3 Recent
+### 3.3 Staging
 
 ![Recent view](images/guide/view-recent.png)
 
-- Newest bookmarks grouped **Today / This week (7 d) / This month (30 d) / Older**; a relative-time badge on the right, and `path · exact time` as the tail label (narrow) or second line (wide).
-- Row count is configurable (10/20/50/100, default 20).
-- `R` or right-click → *Reveal in tree* jumps to the bookmark's real position. With *Show only the bookmarks bar* on and the target outside the bar, a hint toast explains instead of failing silently — its *Show all and reveal* action shows the full tree for the session and completes the jump.
-- A banner about the history permission may appear: that's the optional one-time import (see §3.3) — enable it or dismiss it; the view works either way.
+The former *Recent* tab is now the **staging workbench**: a scratch desk for links you're not sure about yet, with the recently-added list folded in below. The top is your staging list — an *inbox* bucket of unstaged/unbookmarked items plus the groups you build yourself. Rows are dual-state: a solid ★ means the item is bookmarked, an outline ☆ means it's merely parked in staging. Below sits the foldable recent-adds section, still grouped **Today / This week (7 d) / This month (30 d) / Older** with the same tail labels as before.
+
+- **Groups are yours to build**: collapsible group heads, drag rows between groups, drag group heads to reorder. A group head's menu offers select-all-in-group, save-to-folder, copy the list, dissolve, and delete.
+- **Selection mode**: `Space` on a row (or the toolbar button) starts multi-select; batch actions cover open, favorite, group, move, copy, delete and remove-from-staging.
+- **Shortcut bar**: a strip of favorite move-to-folder chips (editable) across the views for one-click filing.
+- **Send to staging** from the context menus, tab-groups rows, and the stats view drops anything onto the desk.
+- **Keyboard**: the same arrow / `Space` / `Esc` grammar as every other view; `Delete` removes a row from staging — with undo. Most destructive actions leave a toast with undo.
 
 ### 3.4 Stats
 

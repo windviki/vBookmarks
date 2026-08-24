@@ -48,7 +48,7 @@
     "message": "Nyheter i v4.1.0"
   },
   "announceV410Text": {
-    "message": "v4.1.0 legger til Fanegrupper-visningen: alle vinduers faner og fanegrupper, administrert ved siden av bokmerkene dine."
+    "message": "v4.1.0 新增标签组视图和暂存区：在书签旁管理每个窗口的标签页，并将任意位置的书签收集到暂存工作台进行批量整理。"
   },
   "confirmDeleteFolder": {
     "message": "Denne mappen inneholder $count$ element(er). Du kan angre slettingen.",
@@ -2200,6 +2200,9 @@
       }
     }
   },
+  "stagingConfirmFolderOk": {
+    "message": "Stage"
+  },
   "stagingRemove": {
     "message": "Fjern fra staging-området"
   },
@@ -2381,6 +2384,9 @@
       }
     }
   },
+  "stagingMoveConfirmOk": {
+    "message": "Flytt"
+  },
   "stagingDeleteConfirm": {
     "message": "Slette $n$ element(er)? Ikke-bokmerkede forlater bare køområdet.",
     "placeholders": {
@@ -2410,6 +2416,9 @@
   },
   "stagingClearConfirm": {
     "message": "Tøm hele køområdet? Bokmertreet blir ikke berørt."
+  },
+  "stagingClearConfirmOk": {
+    "message": "Tøm"
   },
   "stagingCleared": {
     "message": "Køområdet er tømt"

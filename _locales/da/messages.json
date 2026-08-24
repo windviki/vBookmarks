@@ -48,7 +48,7 @@
     "message": "Nyheder i v4.1.0"
   },
   "announceV410Text": {
-    "message": "v4.1.0 tilføjer fanegruppevisningen: alle vinduers faner og fanegrupper, administreret ved siden af dine bogmærker."
+    "message": "v4.1.0 tilføjer fanegruppevisningen og arbejdsområdet: administrer alle vinduers faner ved siden af dine bogmærker, og saml bogmærker fra hvor som helst i et arbejdsområde til masseorganisering."
   },
   "confirmDeleteFolder": {
     "message": "Denne mappe indeholder $count$ emne(r). Du kan fortryde sletningen.",
@@ -2200,6 +2200,9 @@
       }
     }
   },
+  "stagingConfirmFolderOk": {
+    "message": "Scen"
+  },
   "stagingRemove": {
     "message": "Fjern fra klaringsområde"
   },
@@ -2381,6 +2384,9 @@
       }
     }
   },
+  "stagingMoveConfirmOk": {
+    "message": "Flyt"
+  },
   "stagingDeleteConfirm": {
     "message": "Slet $n$ element(er)? Ikke-bogmærkede forlader bare klarområdet.",
     "placeholders": {
@@ -2410,6 +2416,9 @@
   },
   "stagingClearConfirm": {
     "message": "Ryd hele klarområdet? Bogmærketræet røres ikke."
+  },
+  "stagingClearConfirmOk": {
+    "message": "Ryd"
   },
   "stagingCleared": {
     "message": "Klarområde ryddet"

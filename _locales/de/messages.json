@@ -48,7 +48,7 @@
     "message": "Neuerungen in v4.1.0"
   },
   "announceV410Text": {
-    "message": "v4.1.0 fügt die Tab-Gruppen-Ansicht hinzu: Tabs und Tab-Gruppen jedes Fensters, verwaltet neben Ihren Lesezeichen."
+    "message": "v4.1.0 fügt die Tab-Gruppen-Ansicht und den Staging-Bereich hinzu: Verwalten Sie die Tabs jedes Fensters neben Ihren Lesezeichen und sammeln Sie Lesezeichen von überall in einer Staging-Arbeitsfläche für die Massenorganisation."
   },
   "confirmDeleteFolder": {
     "message": "Dieser Ordner enthält $count$ Element(e). Sie können das Löschen rückgängig machen.",
@@ -2200,6 +2200,9 @@
       }
     }
   },
+  "stagingConfirmFolderOk": {
+    "message": "Stufe"
+  },
   "stagingRemove": {
     "message": "Aus Sammelmappe entfernen"
   },
@@ -2381,6 +2384,9 @@
       }
     }
   },
+  "stagingMoveConfirmOk": {
+    "message": "Verschieben"
+  },
   "stagingDeleteConfirm": {
     "message": "$n$ Element(e) löschen? Nicht als Lesezeichen gespeicherte verlassen nur den Staging-Bereich.",
     "placeholders": {
@@ -2410,6 +2416,9 @@
   },
   "stagingClearConfirm": {
     "message": "Den gesamten Staging-Bereich leeren? Der Lesezeichenbaum bleibt unberührt."
+  },
+  "stagingClearConfirmOk": {
+    "message": "Löschen"
   },
   "stagingCleared": {
     "message": "Staging-Bereich geleert"

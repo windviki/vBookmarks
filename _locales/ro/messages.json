@@ -48,7 +48,7 @@
     "message": "Noutăți în v4.1.0"
   },
   "announceV410Text": {
-    "message": "v4.1.0 adaugă vizualizarea Grupuri de file: filele și grupurile de file ale fiecărei ferestre, gestionate lângă marcajele tale."
+    "message": "v4.1.0 adaugă vizualizarea grupurilor de file și zona de pregătire: gestionați filele fiecărei ferestre lângă marcaje și colectați marcaje de oriunde într-un spațiu de lucru pentru organizare în masă."
   },
   "confirmDeleteFolder": {
     "message": "Acest dosar conține $count$ element(e). Puteți anula ștergerea.",
@@ -2200,6 +2200,9 @@
       }
     }
   },
+  "stagingConfirmFolderOk": {
+    "message": "Pregătește"
+  },
   "stagingRemove": {
     "message": "Elimină din zona de pregătire"
   },
@@ -2381,6 +2384,9 @@
       }
     }
   },
+  "stagingMoveConfirmOk": {
+    "message": "Mută"
+  },
   "stagingDeleteConfirm": {
     "message": "Ștergeți $n$ element(e)? Cele nemarcate părăsesc doar zona de așteptare.",
     "placeholders": {
@@ -2410,6 +2416,9 @@
   },
   "stagingClearConfirm": {
     "message": "Goliți întreaga zonă de așteptare? Arborele de marcaje nu este atins."
+  },
+  "stagingClearConfirmOk": {
+    "message": "Șterge"
   },
   "stagingCleared": {
     "message": "Zona de așteptare a fost golită"

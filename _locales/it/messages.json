@@ -48,7 +48,7 @@
     "message": "Novità in v4.1.0"
   },
   "announceV410Text": {
-    "message": "v4.1.0 aggiunge la vista Gruppi di schede: le schede e i gruppi di schede di ogni finestra, gestiti accanto ai tuoi segnalibri."
+    "message": "v4.1.0 aggiunge la vista Gruppi di schede e l'Area di staging: gestisci le schede di ogni finestra accanto ai segnalibri e raccogli segnalibri da qualsiasi luogo in un'area di lavoro per organizzazioni in blocco."
   },
   "confirmDeleteFolder": {
     "message": "Questa cartella contiene $count$ elemento(i). Puoi annullare l'eliminazione.",
@@ -2200,6 +2200,9 @@
       }
     }
   },
+  "stagingConfirmFolderOk": {
+    "message": "Prepara"
+  },
   "stagingRemove": {
     "message": "Rimuovi dall'area di staging"
   },
@@ -2381,6 +2384,9 @@
       }
     }
   },
+  "stagingMoveConfirmOk": {
+    "message": "Sposta"
+  },
   "stagingDeleteConfirm": {
     "message": "Eliminare $n$ elementi? Quelli non salvati lasceranno solo l'area di attesa.",
     "placeholders": {
@@ -2410,6 +2416,9 @@
   },
   "stagingClearConfirm": {
     "message": "Svuotare l'intera area di attesa? L'albero dei segnalibri non verrà toccato."
+  },
+  "stagingClearConfirmOk": {
+    "message": "Cancella"
   },
   "stagingCleared": {
     "message": "Area di attesa svuotata"

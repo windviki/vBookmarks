@@ -48,7 +48,7 @@
     "message": "A v4.1.0 újdonságai"
   },
   "announceV410Text": {
-    "message": "A v4.1.0 hozzáadja a Lapcsoportok nézetet: minden ablak lapjai és lapcsoportjai, a könyvjelzők mellett kezelve."
+    "message": "A v4.1.0 új lapcsoport-nézetet és előkészítő területet ad hozzá: kezelje minden ablak lapjait a könyvjelzők mellett, és gyűjtsön könyvjelzőket bárhonnan egy előkészítő munkafelületre a tömeges rendszerezéshez."
   },
   "confirmDeleteFolder": {
     "message": "Ez a mappa $count$ elemet tartalmaz. A törlés visszavonható.",
@@ -2200,6 +2200,9 @@
       }
     }
   },
+  "stagingConfirmFolderOk": {
+    "message": "Előkészítés"
+  },
   "stagingRemove": {
     "message": "Eltávolítás a gyűjtőből"
   },
@@ -2381,6 +2384,9 @@
       }
     }
   },
+  "stagingMoveConfirmOk": {
+    "message": "Áthelyezés"
+  },
   "stagingDeleteConfirm": {
     "message": "Törli $n$ elemet? A nem könyvjelzőzöttek csak elhagyják az előkészítő területet.",
     "placeholders": {
@@ -2410,6 +2416,9 @@
   },
   "stagingClearConfirm": {
     "message": "Törli a teljes előkészítő területet? A könyvjelzőfa nem érintett."
+  },
+  "stagingClearConfirmOk": {
+    "message": "Törlés"
   },
   "stagingCleared": {
     "message": "Előkészítő terület törölve"

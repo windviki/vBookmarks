@@ -48,7 +48,7 @@
     "message": "What's new in v4.1.0"
   },
   "announceV410Text": {
-    "message": "v4.1.0 adds the Tab groups view: every window's tabs and tab groups, managed next to your bookmarks."
+    "message": "v4.1.0 adds the Tab groups view and the Staging area: manage every window's tabs next to your bookmarks, and collect bookmarks from anywhere into a staging workbench for bulk organizing."
   },
   "confirmDeleteFolder": {
     "message": "This folder contains $count$ item(s). You can undo the deletion.",
@@ -2457,6 +2457,10 @@
       }
     }
   },
+
+  "stagingConfirmFolderOk": {
+    "message": "Stage"
+  },
   "stagingRemove": {
     "message": "Remove from staging area"
   },
@@ -2638,6 +2642,10 @@
       }
     }
   },
+
+  "stagingMoveConfirmOk": {
+    "message": "Move"
+  },
   "stagingDeleteConfirm": {
     "message": "Delete $n$ item(s)? Unbookmarked ones just leave the staging area.",
     "placeholders": {
@@ -2667,6 +2675,10 @@
   },
   "stagingClearConfirm": {
     "message": "Clear the whole staging area? The bookmark tree is not touched."
+  },
+
+  "stagingClearConfirmOk": {
+    "message": "Clear"
   },
   "stagingCleared": {
     "message": "Staging area cleared"

@@ -48,7 +48,7 @@
     "message": "Co nowego w v4.1.0"
   },
   "announceV410Text": {
-    "message": "v4.1.0 dodaje widok grup kart: karty i grupy kart każdego okna, zarządzane obok zakładek."
+    "message": "v4.1.0 dodaje widok grup kart oraz obszar roboczy: zarządzaj kartami każdego okna obok zakładek i zbieraj zakładki z dowolnego miejsca do obszaru roboczego do masowej organizacji."
   },
   "confirmDeleteFolder": {
     "message": "Ten folder zawiera $count$ element(y). Możesz cofnąć usunięcie.",
@@ -2200,6 +2200,9 @@
       }
     }
   },
+  "stagingConfirmFolderOk": {
+    "message": "Przenieś"
+  },
   "stagingRemove": {
     "message": "Usuń z obszaru roboczego"
   },
@@ -2381,6 +2384,9 @@
       }
     }
   },
+  "stagingMoveConfirmOk": {
+    "message": "Przenieś"
+  },
   "stagingDeleteConfirm": {
     "message": "Usunąć $n$? Niezaznaczone opuszczą poczekalnię.",
     "placeholders": {
@@ -2410,6 +2416,9 @@
   },
   "stagingClearConfirm": {
     "message": "Wyczyścić całą poczekalnię? Drzewo zakładek nie zostanie zmienione."
+  },
+  "stagingClearConfirmOk": {
+    "message": "Wyczyść"
   },
   "stagingCleared": {
     "message": "Poczekalnia wyczyszczona"

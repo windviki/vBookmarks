@@ -176,6 +176,29 @@ export const add = (state, entries, opts = {}, now = Date.now()) => {
     return result;
 };
 
+/**
+ * Undo counterpart of removeByUrls / clearAll / dissolveGroup: re-create the
+ * missing groups FIRST (same ids, so member snapshots reattach to their
+ * original group — `add` cannot do this, it only ever assigns defaultGroup),
+ * then re-add item snapshots verbatim. Cap-rejected restores return
+ * `{ full: true, restored: 0 }` (whole-batch rejection, mirroring `add`) —
+ * the caller must surface it instead of toasting success.
+ */
+export const restoreItems = (state, snaps, groups = []) => {
+    for (const g of groups) {
+        if (g && g.id && !findGroup(state, g.id))
+            state.groups.push({ ...g });
+    }
+    state.groups.sort((a, b) => (a.createdAt || 0) - (b.createdAt || 0));
+    const known = new Set(state.groups.map(g => g.id));
+    const fresh = (snaps || []).filter(s => s && s.url && !getByUrl(state, s.url));
+    if (state.items.length + fresh.length > STAGING_LIMIT)
+        return { full: true, restored: 0 };
+    for (const snap of fresh)
+        state.items.push({ ...snap, group: known.has(snap.group) ? snap.group : null });
+    return { full: false, restored: fresh.length };
+};
+
 // The only exits besides move-home/delete (§3.3): explicit removal. Returns
 // the removed snapshots so undo.toastAction can re-add them verbatim.
 export const removeByUrls = (state, urls) => {

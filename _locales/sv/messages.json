@@ -48,7 +48,7 @@
     "message": "Nyheter i v4.1.0"
   },
   "announceV410Text": {
-    "message": "v4.1.0 lägger till vyn Flikgrupper: alla fönsters flikar och flikgrupper, hanterade bredvid dina bokmärken."
+    "message": "v4.1.0 lägger till vy för flikgrupper och arbetsområde: hantera alla fönsters flikar bredvid dina bokmärken, och samla bokmärken från var som helst till ett arbetsbord för massorganisering."
   },
   "confirmDeleteFolder": {
     "message": "Den här mappen innehåller $count$ objekt. Du kan ångra borttagningen.",
@@ -2200,6 +2200,9 @@
       }
     }
   },
+  "stagingConfirmFolderOk": {
+    "message": "Scen"
+  },
   "stagingRemove": {
     "message": "Ta bort från väntelistan"
   },
@@ -2381,6 +2384,9 @@
       }
     }
   },
+  "stagingMoveConfirmOk": {
+    "message": "Flytta"
+  },
   "stagingDeleteConfirm": {
     "message": "Ta bort $n$ objekt? Obokmärkta lämnar bara köområdet.",
     "placeholders": {
@@ -2410,6 +2416,9 @@
   },
   "stagingClearConfirm": {
     "message": "Rensa hela köområdet? Bokmärkesträdet påverkas inte."
+  },
+  "stagingClearConfirmOk": {
+    "message": "Rensa"
   },
   "stagingCleared": {
     "message": "Köområdet rensat"

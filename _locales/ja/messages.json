@@ -48,7 +48,7 @@
     "message": "v4.1.0 の新機能"
   },
   "announceV410Text": {
-    "message": "v4.1.0 では、タブグループビューが追加されました。各ウィンドウのタブとタブグループをブックマークと一緒に管理できます。"
+    "message": "v4.1.0 では、タブグループビューとステージングエリアが追加されました。ブックマークの横で各ウィンドウのタブを管理し、どこからでもブックマークをステージングワークベンチに集めて一括整理できます。"
   },
   "confirmDeleteFolder": {
     "message": "このフォルダには$count$個のアイテムが含まれています。削除は元に戻せます。",
@@ -2200,6 +2200,9 @@
       }
     }
   },
+  "stagingConfirmFolderOk": {
+    "message": "ステージ"
+  },
   "stagingRemove": {
     "message": "ステージング領域から削除"
   },
@@ -2381,6 +2384,9 @@
       }
     }
   },
+  "stagingMoveConfirmOk": {
+    "message": "移動"
+  },
   "stagingDeleteConfirm": {
     "message": "$n$件を削除しますか？ブックマークされていないものはステージ領域から外れるだけです。",
     "placeholders": {
@@ -2410,6 +2416,9 @@
   },
   "stagingClearConfirm": {
     "message": "ステージ領域全体をクリアしますか？ブックマークツリーには影響しません。"
+  },
+  "stagingClearConfirmOk": {
+    "message": "クリア"
   },
   "stagingCleared": {
     "message": "ステージ領域をクリアしました"

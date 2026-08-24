@@ -48,7 +48,7 @@
     "message": "Co je nového ve v4.1.0"
   },
   "announceV410Text": {
-    "message": "v4.1.0 přidává zobrazení skupin karet: karty a skupiny karet každého okna, spravované vedle vašich záložek."
+    "message": "v4.1.0 přidává zobrazení skupin karet a pracovní oblast: spravujte karty každého okna vedle svých záložek a shromažďujte záložky odkudkoli do pracovní plochy pro hromadné uspořádání."
   },
   "confirmDeleteFolder": {
     "message": "Tato složka obsahuje $count$ položek. Smazání můžete vrátit.",
@@ -2200,6 +2200,9 @@
       }
     }
   },
+  "stagingConfirmFolderOk": {
+    "message": "Připravit"
+  },
   "stagingRemove": {
     "message": "Odebrat z oblasti"
   },
@@ -2381,6 +2384,9 @@
       }
     }
   },
+  "stagingMoveConfirmOk": {
+    "message": "Přesunout"
+  },
   "stagingDeleteConfirm": {
     "message": "Smazat $n$ položek? Nezáložkované jen opustí připravenou oblast.",
     "placeholders": {
@@ -2410,6 +2416,9 @@
   },
   "stagingClearConfirm": {
     "message": "Vyčistit celou připravenou oblast? Strom záložek zůstane nedotčen."
+  },
+  "stagingClearConfirmOk": {
+    "message": "Vymazat"
   },
   "stagingCleared": {
     "message": "Připravená oblast vyčištěna"

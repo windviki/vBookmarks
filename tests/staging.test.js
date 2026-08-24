@@ -7,7 +7,7 @@ import {
     STAGING_LIMIT, createState, parse, serialize, count, getByUrl,
     snapshotItems, add, removeByUrls, clearAll, relink, updateSnapshot,
     setFav, setUnfavById, findGroup, findGroupBySource, createGroup,
-    renameGroup, dissolveGroup, deleteGroup, restoreGroup, reorderGroups,
+    renameGroup, dissolveGroup, deleteGroup, restoreGroup, restoreItems, reorderGroups,
     pruneEmptyGroups, assignGroup,
     setGroupCollapsed, unfavBucketItems, newCount, markSeen, groupItems,
     looseItems, setRecentCollapsed, setUnfavCollapsed,
@@ -335,6 +335,61 @@ describe('staging groups', () => {
         expect(findGroup(s, g.id).name).toBe('G');
         expect(groupItems(s, g.id).map(it => it.url).sort()).toEqual(['https://a', 'https://b']);
         expect(s.items.length).toBe(3);
+    });
+
+    it('restoreItems re-creates pruned groups and re-attaches member snapshots to them (H1)', () => {
+        const s = createState();
+        add(s, [mk('1', 'https://a', 'A'), mk('2', 'https://b', 'B')], {}, 1);
+        const g = createGroup(s, 'G', {}, 2);
+        assignGroup(s, ['https://a', 'https://b'], g.id);
+        // removeSelected's capture-then-remove flow
+        const snaps = s.items.map(it => ({ ...it }));
+        const groupSnaps = [{ ...g }];
+        removeByUrls(s, ['https://a', 'https://b']);
+        expect(s.groups.length).toBe(0); // pruned with the members
+        const r = restoreItems(s, snaps, groupSnaps);
+        expect(r.full).toBe(false);
+        expect(r.restored).toBe(2);
+        expect(findGroup(s, g.id).name).toBe('G'); // group came back, same id
+        expect(groupItems(s, g.id).map(it => it.url).sort()).toEqual(['https://a', 'https://b']);
+        // snapshots keep their ts verbatim
+        expect(s.items.every(it => it.ts === 1)).toBe(true);
+    });
+
+    it('restoreItems never duplicates existing urls and drops stale group tags', () => {
+        const s = createState();
+        add(s, [mk('1', 'https://a', 'A')], {}, 1);
+        const r = restoreItems(s,
+            [{ id: '1', url: 'https://a', title: 'A', ts: 1, group: 'ghost' },
+             { id: null, url: 'https://b', title: 'B', ts: 2, group: 'ghost' }]);
+        expect(r.restored).toBe(1); // only b added
+        expect(s.items.find(it => it.url === 'https://b').group).toBe(null); // ghost dropped
+    });
+
+    it('restoreItems rejects the whole batch at the 500 cap (no partial undo)', () => {
+        const s = createState();
+        for (let i = 0; i < 499; i++)
+            add(s, [mk(null, `https://x${i}`, 'X')], {}, i);
+        const snaps = [{ id: null, url: 'https://a', title: 'A', ts: 1, group: null },
+            { id: null, url: 'https://b', title: 'B', ts: 1, group: null }];
+        const r = restoreItems(s, snaps);
+        expect(r.full).toBe(true);
+        expect(r.restored).toBe(0);
+        expect(s.items.length).toBe(499); // neither landed
+    });
+
+    it('restoreItems with only group snapshots re-creates the group (dissolve undo)', () => {
+        const s = createState();
+        const g = createGroup(s, 'Mine', { manual: true }, 1);
+        add(s, [mk('1', 'https://a', 'A')], {}, 1);
+        assignGroup(s, ['https://a'], g.id);
+        const groupSnap = { ...g };
+        const memberUrls = ['https://a'];
+        expect(dissolveGroup(s, g.id)).toBe(true);
+        expect(s.items[0].group).toBe(null);
+        restoreItems(s, [], [groupSnap]);
+        assignGroup(s, memberUrls, groupSnap.id);
+        expect(groupItems(s, groupSnap.id).map(it => it.url)).toEqual(['https://a']);
     });
 
     it('reorderGroups moves a group before its target and rebases createdAt', () => {

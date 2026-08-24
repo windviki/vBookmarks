@@ -48,7 +48,7 @@
     "message": "Nouveautés de v4.1.0"
   },
   "announceV410Text": {
-    "message": "v4.1.0 ajoute la vue Groupes d'onglets : les onglets et groupes d'onglets de chaque fenêtre, gérés à côté de vos signets."
+    "message": "v4.1.0 新增标签组视图和暂存区：在书签旁管理每个窗口的标签页，并将任意位置的书签收集到暂存工作台进行批量整理。"
   },
   "confirmDeleteFolder": {
     "message": "Ce dossier contient $count$ élément(s). Vous pouvez annuler la suppression.",
@@ -2200,6 +2200,9 @@
       }
     }
   },
+  "stagingConfirmFolderOk": {
+    "message": "Mettre en scène"
+  },
   "stagingRemove": {
     "message": "Retirer de la zone de staging"
   },
@@ -2381,6 +2384,9 @@
       }
     }
   },
+  "stagingMoveConfirmOk": {
+    "message": "Déplacer"
+  },
   "stagingDeleteConfirm": {
     "message": "Supprimer $n$ élément(s) ? Ceux non mis en signet quittent simplement la zone d'attente.",
     "placeholders": {
@@ -2410,6 +2416,9 @@
   },
   "stagingClearConfirm": {
     "message": "Vider toute la zone d'attente ? L'arborescence des signets n'est pas touchée."
+  },
+  "stagingClearConfirmOk": {
+    "message": "Effacer"
   },
   "stagingCleared": {
     "message": "Zone d'attente vidée"

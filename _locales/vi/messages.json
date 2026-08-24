@@ -48,7 +48,7 @@
     "message": "v4.1.0 的新功能"
   },
   "announceV410Text": {
-    "message": "v4.1.0 新增标签页组视图：每个窗口的标签页和标签页组，可在书签旁管理。"
+    "message": "v4.1.0 新增标签组视图和暂存区：在书签旁管理每个窗口的标签页，并将任意位置的书签收集到暂存工作台进行批量整理。"
   },
   "confirmDeleteFolder": {
     "message": "Thư mục này chứa $count$ (mục). Bạn có thể hoàn tác việc xóa.",
@@ -2200,6 +2200,9 @@
       }
     }
   },
+  "stagingConfirmFolderOk": {
+    "message": "Lưu"
+  },
   "stagingRemove": {
     "message": "Xóa khỏi vùng chờ"
   },
@@ -2381,6 +2384,9 @@
       }
     }
   },
+  "stagingMoveConfirmOk": {
+    "message": "Di chuyển"
+  },
   "stagingDeleteConfirm": {
     "message": "Xóa $n$ mục? Các mục không đánh dấu sẽ rời khỏi khu vực xếp.",
     "placeholders": {
@@ -2410,6 +2416,9 @@
   },
   "stagingClearConfirm": {
     "message": "Xóa toàn bộ khu vực xếp? Cây dấu trang không bị ảnh hưởng."
+  },
+  "stagingClearConfirmOk": {
+    "message": "Xóa"
   },
   "stagingCleared": {
     "message": "Đã xóa khu vực xếp"

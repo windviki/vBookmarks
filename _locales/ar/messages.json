@@ -48,7 +48,7 @@
     "message": "ما الجديد في v4.1.0"
   },
   "announceV410Text": {
-    "message": "يضيف v4.1.0 عرض مجموعات التبويبات: تبويبات كل نافذة ومجموعاتها، مُدارة بجانب إشاراتك المرجعية."
+    "message": "v4.1.0 新增标签组视图和暂存区：在书签旁管理每个窗口的标签页，并将任意位置的书签收集到暂存工作台进行批量整理。"
   },
   "confirmDeleteFolder": {
     "message": "يحتوي هذا المجلد على $count$ عنصر(عناصر). يمكنك التراجع عن الحذف.",
@@ -2200,6 +2200,9 @@
       }
     }
   },
+  "stagingConfirmFolderOk": {
+    "message": "مرحلة"
+  },
   "stagingRemove": {
     "message": "إزالة من منطقة التجميع"
   },
@@ -2381,6 +2384,9 @@
       }
     }
   },
+  "stagingMoveConfirmOk": {
+    "message": "نقل"
+  },
   "stagingDeleteConfirm": {
     "message": "حذف $n$ عنصر؟ غير المحفوظة ستغادر منطقة الانتظار فقط.",
     "placeholders": {
@@ -2410,6 +2416,9 @@
   },
   "stagingClearConfirm": {
     "message": "مسح منطقة الانتظار بالكامل؟ لن تتأثر شجرة الإشارات المرجعية."
+  },
+  "stagingClearConfirmOk": {
+    "message": "مسح"
   },
   "stagingCleared": {
     "message": "تم مسح منطقة الانتظار"

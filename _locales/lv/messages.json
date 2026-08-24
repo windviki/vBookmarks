@@ -48,7 +48,7 @@
     "message": "Jaunumi versijā v4.1.0"
   },
   "announceV410Text": {
-    "message": "v4.1.0 pievieno cilņu grupu skatu: katra loga cilnes un cilņu grupas, pārvaldītas blakus jūsu grāmatzīmēm."
+    "message": "v4.1.0 pievieno cilņu grupu skatu un sagatavošanas zonu: pārvaldiet katra loga cilnes blakus grāmatzīmēm un vāciet grāmatzīmes no jebkuras vietas sagatavošanas darbvirsmā lielapjoma organizēšanai."
   },
   "confirmDeleteFolder": {
     "message": "Šajā mapē ir $count$ vienums(-i). Dzēšanu var atsaukt.",
@@ -2200,6 +2200,9 @@
       }
     }
   },
+  "stagingConfirmFolderOk": {
+    "message": "Saglabāt"
+  },
   "stagingRemove": {
     "message": "Noņemt no sagatavošanas zonas"
   },
@@ -2381,6 +2384,9 @@
       }
     }
   },
+  "stagingMoveConfirmOk": {
+    "message": "Pārvietot"
+  },
   "stagingDeleteConfirm": {
     "message": "Dzēst $n$ vienumus? Neatzīmētie vienkārši pamet sagatavošanas apgabalu.",
     "placeholders": {
@@ -2410,6 +2416,9 @@
   },
   "stagingClearConfirm": {
     "message": "Notīrīt visu sagatavošanas apgabalu? Grāmatzīmju koks netiks skarts."
+  },
+  "stagingClearConfirmOk": {
+    "message": "Notīrīt"
   },
   "stagingCleared": {
     "message": "Sagatavošanas apgabals notīrīts"

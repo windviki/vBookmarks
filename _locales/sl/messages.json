@@ -48,7 +48,7 @@
     "message": "Novosti v v4.1.0"
   },
   "announceV410Text": {
-    "message": "v4.1.0 dodaja pogled skupin zavihkov: zavihki in skupine zavihkov vsakega okna, upravljani poleg vaših zaznamkov."
+    "message": "v4.1.0 dodaja pogled zavihkov in delovno območje: upravljajte zavihke vsakega okna poleg zaznamkov ter zbirajte zaznamke od koder koli v delovno območje za množično organizacijo."
   },
   "confirmDeleteFolder": {
     "message": "Ta mapa vsebuje $count$ element(-e). Brisanje lahko razveljavite.",
@@ -2200,6 +2200,9 @@
       }
     }
   },
+  "stagingConfirmFolderOk": {
+    "message": "Uprizori"
+  },
   "stagingRemove": {
     "message": "Odstrani iz začasnega območja"
   },
@@ -2381,6 +2384,9 @@
       }
     }
   },
+  "stagingMoveConfirmOk": {
+    "message": "Premakni"
+  },
   "stagingDeleteConfirm": {
     "message": "Izbrišem $n$ elementov? Odstranjeni iz priljubljenih samo zapustijo območje priprave.",
     "placeholders": {
@@ -2410,6 +2416,9 @@
   },
   "stagingClearConfirm": {
     "message": "Počistim celotno območje priprave? Drevo zaznamkov se ne spremeni."
+  },
+  "stagingClearConfirmOk": {
+    "message": "Počisti"
   },
   "stagingCleared": {
     "message": "Območje priprave je počiščeno"

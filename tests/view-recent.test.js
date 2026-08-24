@@ -420,8 +420,9 @@ describe('history-permission banner (item 7a)', () => {
         merge(entries) { this.mergeCalls.push(entries); return entries.length; }
     });
     const undoOn = () => ({
-        toastCalls: [],
-        showToast(msg) { this.toastCalls.push(msg); }
+        toastCalls: [], actionCalls: [],
+        showToast(msg) { this.toastCalls.push(msg); },
+        toastAction(msg, label, fn) { this.actionCalls.push([msg, label, fn]); }
     });
     const IMPORT_TREE = [{
         id: '0', title: '', children: [
@@ -540,8 +541,9 @@ describe('history import chain (第四轮项5)', () => {
         merge(entries) { this.mergeCalls.push(entries); return entries.length; }
     });
     const undoOn = () => ({
-        toastCalls: [],
-        showToast(msg) { this.toastCalls.push(msg); }
+        toastCalls: [], actionCalls: [],
+        showToast(msg) { this.toastCalls.push(msg); },
+        toastAction(msg, label, fn) { this.actionCalls.push([msg, label, fn]); }
     });
     const enableClick = {
         preventDefault() {},
@@ -871,8 +873,9 @@ describe('row focus park/restore (4.0.1 focus law)', () => {
 
 describe('staging view (velvet staging ST3)', () => {
     const undoOn = () => ({
-        toastCalls: [],
-        showToast(msg) { this.toastCalls.push(msg); }
+        toastCalls: [], actionCalls: [],
+        showToast(msg) { this.toastCalls.push(msg); },
+        toastAction(msg, label, fn) { this.actionCalls.push([msg, label, fn]); }
     });
     const mkItem = (id, url, title) => ({ id, url, title });
 
@@ -1111,7 +1114,7 @@ describe('staging view (velvet staging ST3)', () => {
 });
 
 describe('staging groups + bucket + inline actions (velvet staging ST4)', () => {
-    const undoOn = () => ({ toastCalls: [], showToast(msg) { this.toastCalls.push(msg); } });
+    const undoOn = () => ({ toastCalls: [], actionCalls: [], showToast(msg) { this.toastCalls.push(msg); }, toastAction(msg, label, fn) { this.actionCalls.push([msg, label, fn]); } });
 
     it('renders the bucket head with new-N, groups with heads, loose rows last', () => {
         const { viewRecent, $list, def } = setup({});
@@ -1267,11 +1270,11 @@ describe('staging groups + bucket + inline actions (velvet staging ST4)', () => 
         viewRecent.api.favAllBucket();
         expect(createCalls.sort()).toEqual(['http://a/', 'http://b/']);
         expect(viewRecent.api.state().items.every(i => i.id)).toBe(true);
-        expect(undo.toastCalls).toContain('stagingFavDone[2]');
+        expect(undo.actionCalls.map(c => c[0])).toContain('stagingFavDone[2]');
     });
 
     it('dissolveGroup frees members and forgets the source', () => {
-        const { viewRecent } = setup({});
+        const { viewRecent } = setup({ undo: undoOn() });
         viewRecent.api.addItems([{ id: '5', url: 'http://k/', title: 'K' }]);
         const state = viewRecent.api.state();
         state.groups.push({ id: 'g1', name: 'G', collapsed: false, createdAt: 1, sourceFolderId: 'f7', sourceTabGroup: null });
@@ -1537,7 +1540,7 @@ describe('staging selection mode + group homing (velvet staging ST5)', () => {
         expect(confirms).toEqual(['stagingClearConfirm']);
         expect(viewRecent.api.state().items).toHaveLength(0);
         expect(JSON.parse(store.get('staging')).items).toHaveLength(0);
-        expect(undo.toastCalls).toContain('stagingCleared');
+        expect(undo.actionCalls.map(c => c[0])).toContain('stagingCleared');
     });
 
     it('Esc exits selection mode through the view onEscape', () => {
@@ -1611,7 +1614,7 @@ describe('staging group management + DnD + render coalescing (workbench round)',
     const fire = ($list, type, ev) => $list._listeners[type][0](ev);
 
     it('createGroup builds a manual group that renders its head even while empty', () => {
-        const ctx = setup({});
+        const ctx = setup({ undo: undoOn() });
         const gid = ctx.viewRecent.api.createGroup('Reading list');
         const state = ctx.viewRecent.api.state();
         expect(state.groups[0].name).toBe('Reading list');

@@ -48,7 +48,7 @@
     "message": "v4.1.0 新功能"
   },
   "announceV410Text": {
-    "message": "v4.1.0 新增「分頁群組」檢視：每個視窗的分頁及分頁群組，可與書籤一併管理。"
+    "message": "v4.1.0 新增分頁群組檢視及暫存區：喺書籤旁邊管理每個視窗嘅分頁，並從任何地方收集書籤到暫存工作台，以便批量整理。"
   },
   "confirmDeleteFolder": {
     "message": "此資料夾包含 $count$ 個項目。您可以復原刪除。",
@@ -2200,6 +2200,9 @@
       }
     }
   },
+  "stagingConfirmFolderOk": {
+    "message": "暫存"
+  },
   "stagingRemove": {
     "message": "從暫存區移除"
   },
@@ -2381,6 +2384,9 @@
       }
     }
   },
+  "stagingMoveConfirmOk": {
+    "message": "移動"
+  },
   "stagingDeleteConfirm": {
     "message": "刪除 $n$ 個項目？未加入書籤的項目只會離開暫存區。",
     "placeholders": {
@@ -2410,6 +2416,9 @@
   },
   "stagingClearConfirm": {
     "message": "清除整個暫存區？書籤樹不會受影響。"
+  },
+  "stagingClearConfirmOk": {
+    "message": "清除"
   },
   "stagingCleared": {
     "message": "暫存區已清除"

@@ -48,7 +48,7 @@
     "message": "מה חדש ב-4.1.0"
   },
   "announceV410Text": {
-    "message": "v4.1.0 מוסיף תצוגת קבוצות כרטיסיות: הכרטיסיות וקבוצות הכרטיסיות של כל חלון, מנוהלות לצד הסימניות שלך."
+    "message": "v4.1.0 מוסיף את תצוגת קבוצות הכרטיסיות ואזור העבודה: נהל את הכרטיסיות של כל חלון לצד הסימניות שלך, ואסוף סימניות מכל מקום לאזור עבודה לארגון בכמות."
   },
   "confirmDeleteFolder": {
     "message": "תיקייה זו מכילה $count$ פריט(ים). ניתן לבטל את המחיקה.",
@@ -2200,6 +2200,9 @@
       }
     }
   },
+  "stagingConfirmFolderOk": {
+    "message": "במה"
+  },
   "stagingRemove": {
     "message": "הסר מאזור ההמתנה"
   },
@@ -2381,6 +2384,9 @@
       }
     }
   },
+  "stagingMoveConfirmOk": {
+    "message": "העבר"
+  },
   "stagingDeleteConfirm": {
     "message": "למחוק $n$ פריטים? לא מסומנים פשוט עוזבים את אזור ההמתנה.",
     "placeholders": {
@@ -2410,6 +2416,9 @@
   },
   "stagingClearConfirm": {
     "message": "לנקות את כל אזור ההמתנה? עץ הסימניות לא ייפגע."
+  },
+  "stagingClearConfirmOk": {
+    "message": "נקה"
   },
   "stagingCleared": {
     "message": "אזור ההמתנה נוקה"

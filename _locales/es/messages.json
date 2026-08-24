@@ -48,7 +48,7 @@
     "message": "Novedades en v4.1.0"
   },
   "announceV410Text": {
-    "message": "v4.1.0 añade la vista de grupos de pestañas: las pestañas y grupos de pestañas de cada ventana, gestionados junto a tus marcadores."
+    "message": "v4.1.0 añade la vista de grupos de pestañas y el área de preparación: gestiona las pestañas de cada ventana junto a tus marcadores y recopila marcadores de cualquier lugar en un banco de trabajo para organizarlos en masa."
   },
   "confirmDeleteFolder": {
     "message": "Esta carpeta contiene $count$ elemento(s). Puede deshacer la eliminación.",
@@ -2200,6 +2200,9 @@
       }
     }
   },
+  "stagingConfirmFolderOk": {
+    "message": "Etapa"
+  },
   "stagingRemove": {
     "message": "Eliminar de la zona de preparación"
   },
@@ -2381,6 +2384,9 @@
       }
     }
   },
+  "stagingMoveConfirmOk": {
+    "message": "Mover"
+  },
   "stagingDeleteConfirm": {
     "message": "¿Eliminar $n$ elemento(s)? Los no marcados solo salen del área de espera.",
     "placeholders": {
@@ -2410,6 +2416,9 @@
   },
   "stagingClearConfirm": {
     "message": "¿Vaciar toda el área de espera? El árbol de marcadores no se toca."
+  },
+  "stagingClearConfirmOk": {
+    "message": "Borrar"
   },
   "stagingCleared": {
     "message": "Área de espera vaciada"

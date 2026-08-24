@@ -48,7 +48,7 @@
     "message": "Nieuw in v4.1.0"
   },
   "announceV410Text": {
-    "message": "v4.1.0 voegt de weergave Tabgroepen toe: de tabbladen en tabgroepen van elk venster, beheerd naast uw bladwijzers."
+    "message": "v4.1.0 voegt de tabgroepenweergave en het staginggebied toe: beheer de tabbladen van elk venster naast uw bladwijzers en verzamel bladwijzers van overal in een stagingwerkbank voor bulkorganisatie."
   },
   "confirmDeleteFolder": {
     "message": "Deze map bevat $count$ item(s). U kunt het verwijderen ongedaan maken.",
@@ -2200,6 +2200,9 @@
       }
     }
   },
+  "stagingConfirmFolderOk": {
+    "message": "Staging"
+  },
   "stagingRemove": {
     "message": "Verwijderen uit wachtruimte"
   },
@@ -2381,6 +2384,9 @@
       }
     }
   },
+  "stagingMoveConfirmOk": {
+    "message": "Verplaatsen"
+  },
   "stagingDeleteConfirm": {
     "message": "$n$ item(s) verwijderen? Niet-bladwijzeritems verlaten alleen het staginggebied.",
     "placeholders": {
@@ -2410,6 +2416,9 @@
   },
   "stagingClearConfirm": {
     "message": "Hele staginggebied wissen? De bladwijzerboom wordt niet aangeraakt."
+  },
+  "stagingClearConfirmOk": {
+    "message": "Wissen"
   },
   "stagingCleared": {
     "message": "Staginggebied gewist"

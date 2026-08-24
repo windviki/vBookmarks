@@ -48,7 +48,7 @@
     "message": "Novosti u v4.1.0"
   },
   "announceV410Text": {
-    "message": "v4.1.0 dodaje prikaz grupa kartica: kartice i grupe kartica svakog prozora, upravljane uz vaše zabilješke."
+    "message": "v4.1.0 dodaje prikaz grupa kartica i područje za pripremu: upravljajte karticama svakog prozora pored svojih oznaka i prikupljajte oznake s bilo kojeg mjesta u radni prostor za masovno organiziranje."
   },
   "confirmDeleteFolder": {
     "message": "Ova mapa sadrži $count$ stavku(i). Možete poništiti brisanje.",
@@ -2200,6 +2200,9 @@
       }
     }
   },
+  "stagingConfirmFolderOk": {
+    "message": "Pozornica"
+  },
   "stagingRemove": {
     "message": "Ukloni iz pripremnog područja"
   },
@@ -2381,6 +2384,9 @@
       }
     }
   },
+  "stagingMoveConfirmOk": {
+    "message": "Premjesti"
+  },
   "stagingDeleteConfirm": {
     "message": "Obrisati $n$ stavki? One koje nisu označene samo napuštaju područje pripreme.",
     "placeholders": {
@@ -2410,6 +2416,9 @@
   },
   "stagingClearConfirm": {
     "message": "Očistiti cijelo područje pripreme? Stablo oznaka se ne dira."
+  },
+  "stagingClearConfirmOk": {
+    "message": "Očisti"
   },
   "stagingCleared": {
     "message": "Područje pripreme očišćeno"

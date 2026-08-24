@@ -48,7 +48,7 @@
     "message": "v4.1.0 的新功能"
   },
   "announceV410Text": {
-    "message": "v4.1.0 新增标签组视图：每个窗口的标签和标签组，与书签一起管理。"
+    "message": "v4.1.0 新增标签组视图和暂存区：在书签旁管理每个窗口的标签页，并将任意位置的书签收集到暂存工作台进行批量整理。"
   },
   "confirmDeleteFolder": {
     "message": "Esta pasta contém $count$ item(ns). Você pode desfazer a exclusão.",
@@ -2200,6 +2200,9 @@
       }
     }
   },
+  "stagingConfirmFolderOk": {
+    "message": "Preparar"
+  },
   "stagingRemove": {
     "message": "Remover da área de preparação"
   },
@@ -2381,6 +2384,9 @@
       }
     }
   },
+  "stagingMoveConfirmOk": {
+    "message": "Mover"
+  },
   "stagingDeleteConfirm": {
     "message": "Excluir $n$ item(ns)? Os não marcados apenas saem da área de espera.",
     "placeholders": {
@@ -2410,6 +2416,9 @@
   },
   "stagingClearConfirm": {
     "message": "Limpar toda a área de espera? A árvore de marcadores não é alterada."
+  },
+  "stagingClearConfirmOk": {
+    "message": "Limpar"
   },
   "stagingCleared": {
     "message": "Área de espera limpa"
