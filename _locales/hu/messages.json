@@ -1802,7 +1802,7 @@
     "message": "Változásnapló"
   },
   "whatsNewTabGroups": {
-    "message": "A v$1$ új lapcsoportok nézetet ad: minden ablak lapjai és lapcsoportjai a könyvjelzők mellett.",
+    "message": "A v$1$ új lapcsoport-nézetet és előkészítő területet ad hozzá: kezelje minden ablak lapjait a könyvjelzők mellett, és gyűjtsön könyvjelzőket bárhonnan egy előkészítő munkafelületre tömeges rendezéshez.",
     "placeholders": {
       "1": {
         "content": "$1"

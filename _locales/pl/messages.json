@@ -1802,7 +1802,7 @@
     "message": "Dziennik zmian"
   },
   "whatsNewTabGroups": {
-    "message": "v$1$ dodaje widok grup kart: karty i grupy kart każdego okna, obok zakładek.",
+    "message": "v$1$ dodaje widok grup kart oraz obszar roboczy: zarządzaj kartami każdego okna obok zakładek i zbieraj zakładki z dowolnego miejsca do obszaru roboczego w celu masowej organizacji.",
     "placeholders": {
       "1": {
         "content": "$1"

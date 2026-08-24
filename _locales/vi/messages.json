@@ -1802,7 +1802,7 @@
     "message": "Nhật ký thay đổi"
   },
   "whatsNewTabGroups": {
-    "message": "v$1$ bổ sung chế độ xem Nhóm tab: các tab và nhóm tab của mỗi cửa sổ, bên cạnh dấu trang của bạn.",
+    "message": "v$1$ bổ sung chế độ xem Nhóm tab và Khu vực tạm: quản lý tab của mọi cửa sổ bên cạnh dấu trang, và thu thập dấu trang từ mọi nơi vào bàn làm việc tạm để tổ chức hàng loạt.",
     "placeholders": {
       "1": {
         "content": "$1"

@@ -1798,7 +1798,7 @@
     "message": "Registo de alterações"
   },
   "whatsNewTabGroups": {
-    "message": "v$1$ adiciona a vista de grupos de separadores: os separadores e grupos de separadores de cada janela, ao lado dos seus marcadores.",
+    "message": "v$1$ adiciona a vista de grupos de separadores e a área de preparação: gerencie os separadores de cada janela junto dos seus marcadores e reúna marcadores de qualquer lugar numa bancada de preparação para organização em massa.",
     "placeholders": {
       "1": {
         "content": "$1"

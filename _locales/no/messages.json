@@ -1802,7 +1802,7 @@
     "message": "Endringslogg"
   },
   "whatsNewTabGroups": {
-    "message": "v$1$ legger til fanegruppevisningen: alle vinduers faner og fanegrupper, ved siden av bokmerkene dine.",
+    "message": "v$1$ legger til fanegruppevisningen og arbeidsområdet: administrer alle vinduers faner ved siden av bokmerkene dine, og samle bokmerker fra hvor som helst inn i et arbeidsområde for masseorganisering.",
     "placeholders": {
       "1": {
         "content": "$1"

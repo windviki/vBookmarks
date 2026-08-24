@@ -1802,7 +1802,7 @@
     "message": "Wijzigingslogboek"
   },
   "whatsNewTabGroups": {
-    "message": "v$1$ voegt de weergave van tabbladgroepen toe: de tabbladen en tabbladgroepen van elk venster, naast uw bladwijzers.",
+    "message": "v$1$ voegt de tabgroepenweergave en het staginggebied toe: beheer de tabbladen van elk venster naast uw bladwijzers en verzamel bladwijzers van overal in een stagingwerkbank voor bulkorganisatie.",
     "placeholders": {
       "1": {
         "content": "$1"

@@ -1802,7 +1802,7 @@
     "message": "Änderungsprotokoll"
   },
   "whatsNewTabGroups": {
-    "message": "v$1$ fügt die Ansicht „Tab-Gruppen“ hinzu: die Tabs und Tab-Gruppen jedes Fensters neben Ihren Lesezeichen.",
+    "message": "v$1$ fügt die Tab-Gruppen-Ansicht und den Staging-Bereich hinzu: Verwalten Sie die Tabs jedes Fensters neben Ihren Lesezeichen und sammeln Sie Lesezeichen von überall in einer Staging-Workbench für die Massenorganisation.",
     "placeholders": {
       "1": {
         "content": "$1"

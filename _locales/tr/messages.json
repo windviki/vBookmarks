@@ -1802,7 +1802,7 @@
     "message": "Değişiklik günlüğü"
   },
   "whatsNewTabGroups": {
-    "message": "v$1$, sekme grupları görünümünü ekler: her pencerenin sekmeleri ve sekme grupları, yer imlerinizin yanında.",
+    "message": "v$1$ sekme grupları görünümünü ve Hazırlık alanını ekler: her pencerenin sekmelerini yer imlerinizin yanında yönetin ve yer imlerini her yerden toplu düzenleme için bir hazırlık tezgahında toplayın.",
     "placeholders": {
       "1": {
         "content": "$1"

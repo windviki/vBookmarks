@@ -1996,7 +1996,7 @@
     "message": "Changelog"
   },
   "whatsNewTabGroups": {
-    "message": "v$1$ adds the Tab groups view: every window's tabs and tab groups, next to your bookmarks.",
+    "message": "v$1$ adds the Tab groups view and the Staging area: manage every window's tabs next to your bookmarks, and collect bookmarks from anywhere into a staging workbench for bulk organizing.",
     "placeholders": {
       "1": {
         "content": "$1"

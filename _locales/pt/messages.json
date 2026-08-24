@@ -1802,7 +1802,7 @@
     "message": "Registro de alterações"
   },
   "whatsNewTabGroups": {
-    "message": "v$1$ adiciona a visualização de grupos de abas: as abas e grupos de abas de cada janela, ao lado dos seus favoritos.",
+    "message": "v$1$ adiciona a visualização de grupos de abas e a área de preparação: gerencie as abas de cada janela ao lado de seus favoritos e colete favoritos de qualquer lugar em uma bancada de preparação para organização em massa.",
     "placeholders": {
       "1": {
         "content": "$1"

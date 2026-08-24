@@ -1802,7 +1802,7 @@
     "message": "Registro de cambios"
   },
   "whatsNewTabGroups": {
-    "message": "v$1$ añade la vista de grupos de pestañas: las pestañas y grupos de pestañas de cada ventana, junto a tus marcadores.",
+    "message": "v$1$ añade la vista de grupos de pestañas y el área de preparación: gestiona las pestañas de cada ventana junto a tus marcadores y recopila marcadores de cualquier lugar en un banco de trabajo para organizarlos en masa.",
     "placeholders": {
       "1": {
         "content": "$1"

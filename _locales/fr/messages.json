@@ -1802,7 +1802,7 @@
     "message": "Journal des modifications"
   },
   "whatsNewTabGroups": {
-    "message": "v$1$ ajoute la vue Groupes d'onglets : les onglets et groupes d'onglets de chaque fenêtre, à côté de vos signets.",
+    "message": "v$1$ ajoute la vue des groupes d'onglets et la zone de préparation : gérez les onglets de chaque fenêtre à côté de vos favoris, et collectez des favoris de n'importe où dans un espace de travail pour un classement en masse.",
     "placeholders": {
       "1": {
         "content": "$1"

@@ -1802,7 +1802,7 @@
     "message": "Izmaiņu žurnāls"
   },
   "whatsNewTabGroups": {
-    "message": "v$1$ pievieno cilņu grupu skatu: katra loga cilnes un cilņu grupas blakus jūsu grāmatzīmēm.",
+    "message": "v$1$ pievieno cilņu grupu skatu un sagatavošanas zonu: pārvaldiet katra loga cilnes blakus grāmatzīmēm un vāciet grāmatzīmes no jebkuras vietas sagatavošanas darbvirsmā masveida organizēšanai.",
     "placeholders": {
       "1": {
         "content": "$1"

@@ -1802,7 +1802,7 @@
     "message": "Muutosloki"
   },
   "whatsNewTabGroups": {
-    "message": "v$1$ lisää välilehtiryhmien näkymän: jokaisen ikkunan välilehdet ja välilehtiryhmät kirjanmerkkiesi vieressä.",
+    "message": "v$1$ lisää välilehtiryhmien näkymän ja työtilan: hallinnoi kaikkien ikkunoiden välilehtiä kirjanmerkkiesi vieressä ja kerää kirjanmerkkejä mistä tahansa työtilaan joukkokäsittelyä varten.",
     "placeholders": {
       "1": {
         "content": "$1"

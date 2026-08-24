@@ -1802,7 +1802,7 @@
     "message": "Changelog"
   },
   "whatsNewTabGroups": {
-    "message": "v$1$ aggiunge la vista dei gruppi di schede: le schede e i gruppi di schede di ogni finestra, accanto ai tuoi segnalibri.",
+    "message": "v$1$ aggiunge la vista dei gruppi di schede e l'area di staging: gestisci le schede di ogni finestra accanto ai tuoi segnalibri e raccogli segnalibri da qualsiasi luogo in un banco di lavoro di staging per l'organizzazione in blocco.",
     "placeholders": {
       "1": {
         "content": "$1"

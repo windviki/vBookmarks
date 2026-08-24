@@ -1802,7 +1802,7 @@
     "message": "Dnevnik sprememb"
   },
   "whatsNewTabGroups": {
-    "message": "v$1$ doda pogled skupin zavihkov: zavihki in skupine zavihkov vsakega okna, poleg vaših zaznamkov.",
+    "message": "v$1$ doda pogled skupin zavihkov in območje za pripravo: upravljajte zavihke vsakega okna poleg svojih zaznamkov ter zbirajte zaznamke od koder koli v delovno površino za množično organiziranje.",
     "placeholders": {
       "1": {
         "content": "$1"

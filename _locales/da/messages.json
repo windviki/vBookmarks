@@ -1802,7 +1802,7 @@
     "message": "Ændringslog"
   },
   "whatsNewTabGroups": {
-    "message": "v$1$ tilføjer visningen af fanegrupper: alle vinduers faner og fanegrupper, ved siden af dine bogmærker.",
+    "message": "v$1$ tilføjer fanegruppevisningen og arbejdsområdet: administrer alle vinduers faner ved siden af dine bogmærker, og saml bogmærker fra hvor som helst i et arbejdsområde til masseorganisering.",
     "placeholders": {
       "1": {
         "content": "$1"

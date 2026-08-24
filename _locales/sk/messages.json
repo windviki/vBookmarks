@@ -1802,7 +1802,7 @@
     "message": "Zoznam zmien"
   },
   "whatsNewTabGroups": {
-    "message": "v$1$ pridáva zobrazenie skupín kariet: karty a skupiny kariet každého okna, vedľa vašich záložiek.",
+    "message": "v$1$ pridáva zobrazenie skupín kariet a pracovnú oblasť: spravujte karty každého okna vedľa svojich záložiek a zhromažďujte záložky odkiaľkoľvek do pracovnej oblasti na hromadné usporiadanie.",
     "placeholders": {
       "1": {
         "content": "$1"

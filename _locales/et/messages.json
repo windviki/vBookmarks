@@ -1802,7 +1802,7 @@
     "message": "Muudatuslogi"
   },
   "whatsNewTabGroups": {
-    "message": "v$1$ lisab vahekaartide rühmade vaate: iga akna vahekaardid ja vahekaartide rühmad teie järjehoidjate kõrval.",
+    "message": "v$1$ lisab vahekaartide rühmade vaate ja ettevalmistusala: hallake kõigi akende vahekaarte järjehoidjate kõrval ning koguge järjehoidjaid kõikjalt ettevalmistustöölauale hulgi korrastamiseks.",
     "placeholders": {
       "1": {
         "content": "$1"

@@ -1802,7 +1802,7 @@
     "message": "Jurnal de modificări"
   },
   "whatsNewTabGroups": {
-    "message": "v$1$ adaugă vizualizarea Grupuri de file: filele și grupurile de file din fiecare fereastră, lângă marcajele tale.",
+    "message": "v$1$ adaugă vizualizarea grupurilor de file și zona de pregătire: gestionați filele fiecărei ferestre lângă marcaje și colectați marcaje de oriunde într-un spațiu de lucru pentru organizare în masă.",
     "placeholders": {
       "1": {
         "content": "$1"

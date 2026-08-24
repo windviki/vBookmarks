@@ -1802,7 +1802,7 @@
     "message": "Pakeitimų istorija"
   },
   "whatsNewTabGroups": {
-    "message": "v$1$ prideda skirtukų grupių rodinį: kiekvieno lango skirtukai ir skirtukų grupės šalia jūsų žymių.",
+    "message": "v$1$ prideda skirtukų grupių rodinį ir parengiamąją sritį: valdykite kiekvieno lango skirtukus šalia žymių ir rinkite žymes iš bet kur į parengiamąją darbo sritį masiniam tvarkymui.",
     "placeholders": {
       "1": {
         "content": "$1"

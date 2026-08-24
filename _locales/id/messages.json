@@ -1802,7 +1802,7 @@
     "message": "Catatan perubahan"
   },
   "whatsNewTabGroups": {
-    "message": "v$1$ menambahkan tampilan Grup Tab: tab dan grup tab setiap jendela, di samping bookmark Anda.",
+    "message": "v$1$ menambahkan tampilan Grup Tab dan Area Penyimpanan: kelola tab setiap jendela di samping bookmark Anda, dan kumpulkan bookmark dari mana saja ke dalam meja kerja penyimpanan untuk pengorganisasian massal.",
     "placeholders": {
       "1": {
         "content": "$1"

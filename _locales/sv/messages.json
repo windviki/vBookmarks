@@ -1802,7 +1802,7 @@
     "message": "Ändringslogg"
   },
   "whatsNewTabGroups": {
-    "message": "v$1$ lägger till vy för tabbgrupper: alla fönsters tabbar och tabbgrupper, bredvid dina bokmärken.",
+    "message": "v$1$ lägger till vy för tabbgrupper och arbetsyta: hantera alla fönsters tabbar bredvid dina bokmärken och samla bokmärken från var som helst till en arbetsyta för massorganisering.",
     "placeholders": {
       "1": {
         "content": "$1"

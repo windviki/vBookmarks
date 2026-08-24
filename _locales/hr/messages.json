@@ -1802,7 +1802,7 @@
     "message": "Popis promjena"
   },
   "whatsNewTabGroups": {
-    "message": "v$1$ dodaje prikaz grupa kartica: kartice i grupe kartica svakog prozora, uz vaše zabilješke.",
+    "message": "v$1$ dodaje prikaz grupa kartica i područje za pripremu: upravljajte karticama svakog prozora pored svojih oznaka i prikupljajte oznake s bilo kojeg mjesta u radni prostor za masovno organiziranje.",
     "placeholders": {
       "1": {
         "content": "$1"
