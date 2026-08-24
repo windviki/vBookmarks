@@ -49,3 +49,11 @@
 ## 验收门禁
 
 每批次完成后：`npm run test:run` + `npm run lint` + `npm run build` + `python3 scripts/i18n.py verify/missing/audit`；A/B 批次各带新增单测。
+
+## 验收记录（2026-08-24 收口）
+
+- 批次提交：9db0bc1（审计落盘）→ 293b3f9（批次A/C）→ afd6333（批次B）→ aedcf0e（whats-new 文案补正）
+- 单测 2881/2881（新增 restoreItems 5 例 + pipes 自适应/fold 流竞态 2 例）；eslint、build self-check、i18n verify/missing/audit 全绿
+- 真机门禁：`run.sh --smoke-only`（源码根）与 `run.sh --dist --smoke-only` PASS（NO PAGE ERRORS）；`run.sh --dist` 全量 ALL PASS（smoke/keyboard/scrollbar/folder-menu 4 套，scrollbar 门禁已含新增 #staging-list 与 #tabgroups-list panes）
+- whats-new 横幅实际文案源是 `whatsNewTabGroups` 而非 `announceV410Text`——真机 smoke 暴露后已同步补暂存区文案（两键 43 locale 均实译）
+- 登记不做：L2 空源组残留（无害）、L4 组键盘重排、L5 palette 暂存管理命令、virtualScrollLab 默认翻转（保持浸泡）、死链空闲态 diag 单独复测（以 §4b 汇总口径为准）
