@@ -144,6 +144,11 @@ export function initViewTabGroups(ctx = {}) {
     // The in-flight chunked paint (list-chunks.js): a new render cancels
     // the previous one's pending row batches.
     let paintHandle = null;
+    // Fold spans for the LAB virtual painter (rebuilt every render): gid /
+    // window id → [members piece from, to) — a fold hides/shows exactly that
+    // piece range through the painter's fold().
+    let groupFoldSpans = new Map();
+    let windowFoldSpans = new Map();
     // LAB virtual painter flag (options 实验室, default off). The windowed
     // painter never keeps the full list in the DOM, so fold surgery (which
     // inserts/removes rows in place) must yield to a full render there.
@@ -711,7 +716,11 @@ export function initViewTabGroups(ctx = {}) {
             close: _m('tabGroupsCloseGroup')
         };
         let head = renderToolbar();
+        const virtual = !!store.get('virtualScrollLab', '');
         const pieces = [];
+        const hiddenRanges = []; // render-time folds → the painter starts them hidden
+        groupFoldSpans = new Map();
+        windowFoldSpans = new Map();
         // Piece index carrying the current tab's row — the LAB virtual
         // painter's initial reveal target (first-activation scroll).
         let currentPieceIdx = null;
@@ -775,13 +784,26 @@ export function initViewTabGroups(ctx = {}) {
                     closeBtn +
                     '</span></li>';
             };
-            const groupBlock = ({ group, memberTabs, L }) => {
-                let out = groupHeadHtml(group, memberTabs, G);
-                if (needle || !collapsed.has(String(group.id))) {
-                    for (let mi = 0; mi < memberTabs.length; mi++)
-                        out += tabRowHtml(memberTabs[mi], { lastMember: mi === memberTabs.length - 1, L });
+
+            // §perf (fold surgery × virtual painter): heads and member
+            // bodies are SEPARATE pieces so a fold maps to hiding the
+            // members piece alone (the clicked head keeps its node under
+            // both painters). Under the virtual painter folded bodies are
+            // still built (painted hidden) so an unfold stays surgical; the
+            // chunked painter keeps the old shape (skip when folded).
+            const pushGroupBlock = ({ group, memberTabs, L }) => {
+                pieces.push(groupHeadHtml(group, memberTabs, G));
+                const gid = String(group.id);
+                const shown = needle || !collapsed.has(gid);
+                let membersHtml = '';
+                for (let mi = 0; mi < memberTabs.length; mi++)
+                    membersHtml += tabRowHtml(memberTabs[mi], { lastMember: mi === memberTabs.length - 1, L });
+                groupFoldSpans.set(gid, [pieces.length, pieces.length + 1]);
+                if (shown || virtual) {
+                    if (!shown)
+                        hiddenRanges.push([pieces.length, pieces.length + 1]);
+                    pieces.push(membersHtml);
                 }
-                return out;
             };
 
             let matchedRows = 0;
@@ -792,68 +814,77 @@ export function initViewTabGroups(ctx = {}) {
                 if (needle && !visibleTabs.length)
                     continue;
                 pieces.push(windowHead(win, wi, visibleTabs.length));
-                if (!needle && collapsedWindows.has(String(win.id)))
-                    continue;
+                const winId = String(win.id);
+                const winCollapsed = !needle && collapsedWindows.has(winId);
+                // §perf (fold surgery × virtual painter): a collapsed window
+                // still builds its block (hidden) under the virtual painter
+                // so unfolding it stays surgical; the chunked painter skips.
+                const winStart = pieces.length;
+                if (!winCollapsed || virtual) {
 
-                // Open groups and ungrouped tabs render INTERLEAVED in the
-                // browser's actual tab order (drag sorting reorders that
-                // order). Closed (collapsed) groups leave the inline flow
-                // and anchor to the bottom of their window section.
-                // Group members are pre-bucketed in ONE pass (the walk used
-                // to re-filter the whole window per group — O(tabs×groups)
-                // with a String() allocation per compare). visibleTabs
-                // keeps the window's index order (sortTabs ordered it and
-                // the filter pass preserves order), so the buckets come out
-                // ordered with no per-group sort. The filtered (needle)
-                // walk keeps the per-group filter: a group-name hit shows
-                // the whole group even when members don't match the needle.
-                const membersByGid = new Map();
-                if (!needle) {
-                    for (let i = 0; i < visibleTabs.length; i++) {
-                        const t = visibleTabs[i];
-                        if (!isGrouped(t) || !groupMap.has(String(t.groupId)))
-                            continue;
-                        const gid = String(t.groupId);
-                        let arr = membersByGid.get(gid);
-                        if (!arr) {
-                            arr = [];
-                            membersByGid.set(gid, arr);
+                    // Open groups and ungrouped tabs render INTERLEAVED in the
+                    // browser's actual tab order (drag sorting reorders that
+                    // order). Closed (collapsed) groups leave the inline flow
+                    // and anchor to the bottom of their window section.
+                    // Group members are pre-bucketed in ONE pass (the walk used
+                    // to re-filter the whole window per group — O(tabs×groups)
+                    // with a String() allocation per compare). visibleTabs
+                    // keeps the window's index order (sortTabs ordered it and
+                    // the filter pass preserves order), so the buckets come out
+                    // ordered with no per-group sort. The filtered (needle)
+                    // walk keeps the per-group filter: a group-name hit shows
+                    // the whole group even when members don't match the needle.
+                    const membersByGid = new Map();
+                    if (!needle) {
+                        for (let i = 0; i < visibleTabs.length; i++) {
+                            const t = visibleTabs[i];
+                            if (!isGrouped(t) || !groupMap.has(String(t.groupId)))
+                                continue;
+                            const gid = String(t.groupId);
+                            let arr = membersByGid.get(gid);
+                            if (!arr) {
+                                arr = [];
+                                membersByGid.set(gid, arr);
+                            }
+                            arr.push(t);
                         }
-                        arr.push(t);
+                    }
+                    const seenGroups = new Set();
+                    for (let i = 0, l = visibleTabs.length; i < l; i++) {
+                        const tab = visibleTabs[i];
+                        if (!isGrouped(tab)) {
+                            if (String(tab.id) === String(currentTabId))
+                                currentPieceIdx = pieces.length;
+                            pieces.push(tabRowHtml(tab, L));
+                            matchedRows++;
+                            continue;
+                        }
+                        const group = groupById(tab.groupId);
+                        if (!group) {
+                            if (String(tab.id) === String(currentTabId))
+                                currentPieceIdx = pieces.length;
+                            pieces.push(tabRowHtml(tab, L));
+                            matchedRows++;
+                            continue;
+                        }
+                        const gid = String(group.id);
+                        if (seenGroups.has(gid))
+                            continue;
+                        seenGroups.add(gid);
+                        const memberTabs = needle
+                            ? visibleTabs.filter(t => String(t.groupId) === gid)
+                            : membersByGid.get(gid);
+                        // Collapsed groups stay inline in tab order (they are not
+                        // closed — their tabs still exist in the browser).
+                        if (memberTabs.some(t => String(t.id) === String(currentTabId)))
+                            currentPieceIdx = pieces.length;
+                        pushGroupBlock({ group, memberTabs, L });
+                        matchedRows += memberTabs.length;
                     }
                 }
-                const seenGroups = new Set();
-                for (let i = 0, l = visibleTabs.length; i < l; i++) {
-                    const tab = visibleTabs[i];
-                    if (!isGrouped(tab)) {
-                        if (String(tab.id) === String(currentTabId))
-                            currentPieceIdx = pieces.length;
-                        pieces.push(tabRowHtml(tab, L));
-                        matchedRows++;
-                        continue;
-                    }
-                    const group = groupById(tab.groupId);
-                    if (!group) {
-                        if (String(tab.id) === String(currentTabId))
-                            currentPieceIdx = pieces.length;
-                        pieces.push(tabRowHtml(tab, L));
-                        matchedRows++;
-                        continue;
-                    }
-                    const gid = String(group.id);
-                    if (seenGroups.has(gid))
-                        continue;
-                    seenGroups.add(gid);
-                    const memberTabs = needle
-                        ? visibleTabs.filter(t => String(t.groupId) === gid)
-                        : membersByGid.get(gid);
-                    // Collapsed groups stay inline in tab order (they are not
-                    // closed — their tabs still exist in the browser).
-                    if (memberTabs.some(t => String(t.id) === String(currentTabId)))
-                        currentPieceIdx = pieces.length;
-                    pieces.push(groupBlock({ group, memberTabs, L }));
-                    matchedRows += memberTabs.length;
-                }
+                windowFoldSpans.set(winId, [winStart, pieces.length]);
+                if (winCollapsed && virtual)
+                    hiddenRanges.push([winStart, pieces.length]);
             }
             if (needle && !matchedRows)
                 pieces.push(`<li class="empty-state" role="listitem"><i>${_m('tabGroupsNoMatchingTabs')}</i></li>`);
@@ -886,8 +917,7 @@ export function initViewTabGroups(ctx = {}) {
         // in) and always runs at settle, where the clamped-index path is
         // safe again — the full list exists by then. The LAB virtual painter
         // (options 实验室, default off) never has the full list in the DOM:
-        // its settle keeps the id-based restore only.
-        const virtual = !!store.get('virtualScrollLab', '');
+        // its settle keeps id-based restore only.
         // Virtual painter + content-visibility:auto = fresh windows that
         // skip rendering/hit-testing (blank viewport, repro diag-vl-6000.js)
         // — the override in css/neat.css keys on this class.
@@ -947,6 +977,7 @@ export function initViewTabGroups(ctx = {}) {
         paintHandle = virtual
             ? paintListVirtual($list, {
                 ...paintOpts,
+                hiddenRanges,
                 revealIndex: pendingScrollToCurrent ? currentPieceIdx : null
             })
             : paintListChunked($list, {
@@ -1904,10 +1935,15 @@ export function initViewTabGroups(ctx = {}) {
         else
             collapsed.delete(String(groupId));
         persistUIState();
-        if (virtualLab())
-            render();
-        else
+        if (virtualLab()) {
+            // §perf (fold surgery × virtual painter): hide/show the group's
+            // members PIECE through the painter — no full render, the scroll
+            // position and the head's node/focus both survive.
+            foldVirtual(groupFoldSpans.get(String(groupId)), shouldCollapse,
+                '#tabgroups-group-' + groupId, '.tabgroups-group-head');
+        } else {
             foldGroupSurgically(String(groupId), shouldCollapse);
+        }
         // Only write through to the browser when the toolbar option is on.
         // Default OFF: view folding stays local (a refresh restores the
         // browser's own collapsed state).
@@ -1971,6 +2007,29 @@ export function initViewTabGroups(ctx = {}) {
         render(); // never painted — full path
     };
 
+    // §perf (fold surgery × virtual painter): route a fold through the
+    // painter's piece-range fold() — no full render, the scroll position and
+    // the head's node (focus) both survive. Falls back to render() when the
+    // painter isn't geometry-backed (minimal doubles / a paint that never
+    // landed). `chromeSel` is the head's focusable row — its aria-expanded
+    // and the chevron mirror the fold.
+    const foldVirtual = (span, shouldCollapse, headSel, chromeSel) => {
+        if (!span || !paintHandle || typeof paintHandle.fold !== 'function') {
+            render();
+            return;
+        }
+        paintHandle.fold(span[0], span[1], shouldCollapse);
+        const li = $list.querySelector ? $list.querySelector(headSel) : null;
+        if (li && typeof li.querySelector === 'function') {
+            const chrome = li.querySelector(chromeSel);
+            if (chrome)
+                chrome.setAttribute('aria-expanded', shouldCollapse ? 'false' : 'true');
+            const chev = li.querySelector('.chevron');
+            if (chev)
+                chev.classList.toggle('collapsed', !!shouldCollapse);
+        }
+    };
+
     const setWindowCollapsed = (windowId, shouldCollapse) => {
         if (filterNeedle())
             return; // folds are inert while the filter is active
@@ -1981,10 +2040,15 @@ export function initViewTabGroups(ctx = {}) {
             collapsedWindows.delete(id);
         windowChoice.set(id, !!shouldCollapse);
         persistUIState();
-        if (virtualLab())
-            render();
-        else
+        if (virtualLab()) {
+            // §perf (fold surgery × virtual painter): the window's block is
+            // a contiguous piece range — hide/show it through the painter.
+            foldVirtual(windowFoldSpans.get(id), shouldCollapse,
+                'li.tabgroups-window-head[data-window-id="' + id + '"]',
+                '.tabgroups-window-head-row');
+        } else {
             foldWindowSurgically(id, shouldCollapse);
+        }
     };
     const toggleWindowCollapsed = windowId =>
         setWindowCollapsed(windowId, !collapsedWindows.has(String(windowId)));

@@ -136,9 +136,9 @@ export function initViewDupes(ctx = {}) {
     let itemIndex = new Map();       // id → flattened item of the last regroup
     const keepers = new Map();       // group key → manually pinned keeper item
     const collapsed = new Set();     // folded group keys
-    // LAB virtual painter flag (options 实验室, default off). The windowed
-    // painter never keeps the full list in the DOM, so fold surgery (which
-    // inserts/removes rows in place) must yield to a full render there.
+    // LAB virtual painter flag (options 实验室, default off). Under it a fold
+    // goes through the painter's piece-range fold() (rows move in place, the
+    // geometry/scrollbar follow) instead of the DOM-sibling surgery.
     const virtualLab = () => !!store.get('virtualScrollLab', '');
     let dirty = false;
     // v4 task-3 #5 selection mode: groups (not rows) are the unit — the
@@ -163,6 +163,10 @@ export function initViewDupes(ctx = {}) {
     // The in-flight chunked paint (list-chunks.js): a new render cancels
     // the previous one's pending group batches.
     let paintHandle = null;
+    // Fold spans for the LAB virtual painter: group key → [members piece
+    // from, to) of the CURRENT render (rebuilt every render). Under the
+    // virtual painter a fold hides/shows exactly this piece range.
+    let virtualFoldSpans = new Map();
 
     const strategy = () => store.get('dupesStrategy', 'keep-oldest') || 'keep-oldest';
     const scope = () => store.get('dupesScope', 'all') || 'all';
@@ -424,18 +428,13 @@ export function initViewDupes(ctx = {}) {
         return html;
     };
 
-    const renderGroup = (group, L) => {
-        const html = groupHeadHtml(group, L);
-        return collapsed.has(group.key) ? html : html + groupMembersHtml(group, L);
-    };
-
     // §perf (fold surgery): a group fold moves ONLY the group's own
     // .dupes-member rows — no getTree/regroup, no full repaint. The head li
     // keeps its node, so focus and the head listeners survive. Collapsed rows
     // are stashed in a fragment keyed by the head (WeakMap) and reinserted as
     // the ORIGINAL nodes on expand — no HTML rebuild, no favicon load storm,
-    // no overlay rescan. Under the LAB virtual painter the rows are windowed
-    // (never all in the DOM) and the full render stays the law.
+    // no overlay rescan. Under the LAB virtual painter the equivalent runs
+    // through the painter's fold() (foldVirtual below).
     const foldStash = new WeakMap();
     const foldGroupSurgically = (li, key) => {
         const nowCollapsed = collapsed.has(key);
@@ -465,6 +464,28 @@ export function initViewDupes(ctx = {}) {
         if (g) {
             li.insertAdjacentHTML('afterend', groupMembersHtml(g, dupesLabels()));
             onRowsRendered(); // rebuilt rows carry no overlays — repaint them
+        }
+    };
+
+    // §perf (fold surgery × virtual painter): hide/show the group's members
+    // PIECE through the painter's fold() — no refresh(), no getTree, the
+    // scroll position and the clicked head's node both survive. Falls back
+    // to the full refresh when the painter isn't geometry-backed (minimal
+    // doubles / a paint that never landed).
+    const foldVirtual = (key, li) => {
+        const span = virtualFoldSpans.get(key);
+        if (!span || !paintHandle || typeof paintHandle.fold !== 'function') {
+            refresh();
+            return;
+        }
+        paintHandle.fold(span[0], span[1], collapsed.has(key));
+        if (li && typeof li.querySelector === 'function') {
+            const head = li.querySelector('.group-head');
+            if (head)
+                head.setAttribute('aria-expanded', collapsed.has(key) ? 'false' : 'true');
+            const chev = li.querySelector('.chevron');
+            if (chev)
+                chev.classList.toggle('collapsed', collapsed.has(key));
         }
     };
 
@@ -517,21 +538,38 @@ export function initViewDupes(ctx = {}) {
         // labels) — 2500 groups × 2 members = 20000 getMessage crossings.
         const L = dupesLabels();
         let head = riskBanner.html() + renderToolbar();
+        const virtual = !!store.get('virtualScrollLab', '');
         const pieces = [];
+        const hiddenRanges = [];   // render-time folds → the painter starts them hidden
         // Piece index of the focus-retry targets: onChunk only retries once
         // its piece is actually in the DOM (no per-batch list scans).
-        const groupPieceIdx = new Map();   // group key → piece index
-        const memberPieceIdx = new Map();  // member id  → piece index
+        const groupPieceIdx = new Map();   // group key → head piece index
+        const memberPieceIdx = new Map();  // member id  → members piece index
+        virtualFoldSpans = new Map();
         if (!groups.length) {
             head += `<ul role="list"><li class="empty-state" role="listitem"><i>${_m('dupesNone')}</i></li></ul>`;
         } else {
             head += `<ul role="list"${selecting ? ' class="selecting"' : ''}></ul>`;
+            // §perf (fold surgery × virtual painter): the head and the
+            // members are SEPARATE pieces — a fold then maps to hiding the
+            // members piece alone, so the clicked head keeps its node under
+            // both painters. Under the virtual painter a collapsed group
+            // still builds its members piece (painted hidden) so an expand
+            // stays surgical; the chunked painter keeps the old shape (no
+            // members piece — the surgical expand rebuilds from HTML).
             for (let i = 0, l = groups.length; i < l; i++) {
                 const g = groups[i];
-                groupPieceIdx.set(g.key, i);
+                groupPieceIdx.set(g.key, pieces.length);
+                pieces.push(groupHeadHtml(g, L));
                 for (const item of g.items)
-                    memberPieceIdx.set(item.id, i);
-                pieces.push(renderGroup(g, L));
+                    memberPieceIdx.set(item.id, pieces.length);
+                virtualFoldSpans.set(g.key, [pieces.length, pieces.length + 1]);
+                if (!collapsed.has(g.key)) {
+                    pieces.push(groupMembersHtml(g, L));
+                } else if (virtual) {
+                    hiddenRanges.push(virtualFoldSpans.get(g.key));
+                    pieces.push(groupMembersHtml(g, L)); // painted hidden: expand stays surgical
+                }
             }
         }
         // Focus law + the paint. Toolbar park/restore and the selection
@@ -541,7 +579,6 @@ export function initViewDupes(ctx = {}) {
         // run at settle, where the clamped-index row restore is safe again.
         // The LAB virtual painter (options 实验室, default off) never has
         // the full list in the DOM: its settle keeps id-based restores only.
-        const virtual = !!store.get('virtualScrollLab', '');
         // The virtual painter keeps only the viewport window in the DOM —
         // content-visibility:auto on its rows makes fresh windows skip
         // rendering AND hit-testing until the next scroll (blank viewport
@@ -636,7 +673,7 @@ export function initViewDupes(ctx = {}) {
             }
         };
         paintHandle = virtual
-            ? paintListVirtual($list, paintOpts)
+            ? paintListVirtual($list, { ...paintOpts, hiddenRanges })
             : paintListChunked($list, {
                 ...paintOpts,
                 first: 40, chunk: 60,
@@ -1005,7 +1042,9 @@ export function initViewDupes(ctx = {}) {
                 // §perf: fold surgery — the data never changed, so the old
                 // refresh() (getTree → flatten → regroup → cache save →
                 // repaint) was pure overhead on every fold toggle.
-                if (virtualLab() || !li || typeof li.querySelector !== 'function') {
+                if (virtualLab()) {
+                    foldVirtual(key, li);
+                } else if (!li || typeof li.querySelector !== 'function') {
                     refresh();
                 } else {
                     foldGroupSurgically(li, key);
@@ -1063,8 +1102,11 @@ export function initViewDupes(ctx = {}) {
                     collapsed.add(key);
                 // §perf: fold surgery keeps the head element in place, so the
                 // focus stays on it — no park/restore round trip. The LAB
-                // virtual painter and minimal doubles keep the full render.
-                if (virtualLab() || !li || typeof li.querySelector !== 'function') {
+                // virtual painter folds through its piece-range fold(); the
+                // minimal DOM doubles keep the full render.
+                if (virtualLab()) {
+                    foldVirtual(key, li);
+                } else if (!li || typeof li.querySelector !== 'function') {
                     pendingHeadFocus = key;
                     refresh();
                 } else {

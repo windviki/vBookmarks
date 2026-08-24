@@ -53,6 +53,7 @@ export const paintListVirtual = (list, opts = {}) => {
         head = '',
         pieces = [],
         revealIndex = null,   // piece index to scroll to on first paint
+        hiddenRanges = null,  // [[from, to), ...] pieces that start hidden (render-time folds)
         onHead = null,
         onChunk = null,
         onSettled = null
@@ -81,12 +82,26 @@ export const paintListVirtual = (list, opts = {}) => {
     // never laid out) keep their estimate.
     const liCounts = pieces.map(liCount);
     const heights = liCounts.map(n => n * ROW_H);
+    // Fold surgery (fold() below): hidden pieces contribute zero height but
+    // KEEP their last-known height for the restore. `painted` mirrors which
+    // pieces currently own rows in the ul (apply repaints whole windows, the
+    // fold path adds/removes single pieces' rows in place).
+    const hidden = pieces.map(() => false);
+    const painted = pieces.map(() => false);
+    for (const [from, to] of (hiddenRanges || [])) {
+        for (let i = from; i < to && i < pieces.length; i++)
+            hidden[i] = true;
+    }
+    const effH = i => (hidden[i] ? 0 : heights[i]);
+    // Detached rows of surgically hidden pieces (fold surgery below); a
+    // repainted piece's stash is garbage — apply() clears it.
+    const nodeStash = new Map(); // piece index → DocumentFragment
     let tops = null;
     const rebuildTops = () => {
         tops = new Array(pieces.length + 1);
         tops[0] = 0;
         for (let i = 0; i < pieces.length; i++)
-            tops[i + 1] = tops[i] + heights[i];
+            tops[i + 1] = tops[i] + effH(i);
     };
     rebuildTops();
     const totalH = () => tops[pieces.length];
@@ -98,6 +113,9 @@ export const paintListVirtual = (list, opts = {}) => {
         let ci = 0;
         let changed = false;
         for (let i = from; i < to; i++) {
+            if (hidden[i]) {
+                continue; // owns no rows in the ul — children walk skips it
+            }
             const k = liCounts[i];
             let h = 0;
             let ok = true;
@@ -157,9 +175,18 @@ export const paintListVirtual = (list, opts = {}) => {
 
     const apply = (from, to) => {
         let html = '';
-        for (let i = from; i < to; i++)
-            html += pieces[i];
+        for (let i = from; i < to; i++) {
+            if (!hidden[i])
+                html += pieces[i];
+        }
         ul.innerHTML = html;
+        for (let i = 0; i < painted.length; i++)
+            painted[i] = false;
+        for (let i = from; i < to; i++) {
+            painted[i] = !hidden[i];
+            if (!hidden[i])
+                nodeStash.delete(i); // repainted from HTML — old stash is garbage
+        }
         // Measure BEFORE the padding write: this window's real heights move
         // tops[to] (and the total), so the paddings must reflect the updated
         // prefix sums — a scrollbar sized from stale estimates is the drift
@@ -242,9 +269,142 @@ export const paintListVirtual = (list, opts = {}) => {
         list.addEventListener('focusin', onFocusIn);
     }
 
+    // --- fold surgery (live group/window folds without a repaint) ---------
+    // hide/show a CONTIGUOUS piece range: hidden pieces contribute zero
+    // height but keep their last-measured height for the restore; the
+    // range's rows are detached into a per-piece fragment and reinserted as
+    // the ORIGINAL nodes on show (favicons/overlays survive), and the
+    // paddings — the virtual scrollbar — follow the rebuilt tops exactly. A
+    // block entirely above the viewport compensates scrollTop so the
+    // viewport content stays anchored instead of jumping. The views keep
+    // the head piece OUT of the range, so the clicked head keeps its node
+    // and focus.
+    const childOffset = i => {
+        let off = 0;
+        for (let j = 0; j < i; j++)
+            if (painted[j])
+                off += liCounts[j];
+        return off;
+    };
+    const removeRowsOf = i => {
+        const children = ul.children;
+        if (!children || typeof children.length !== 'number' || !children.length)
+            return;
+        const off = childOffset(i);
+        const k = liCounts[i];
+        if (off + k > children.length)
+            return; // geometry mismatch — leave the DOM alone
+        const frag = (typeof document !== 'undefined'
+            && typeof document.createDocumentFragment === 'function')
+            ? document.createDocumentFragment()
+            : null;
+        for (let j = 0; j < k; j++) {
+            const li = children[off];
+            if (!li)
+                break;
+            if (frag && typeof frag.appendChild === 'function')
+                frag.appendChild(li); // moving a node detaches it from the ul
+            else if (typeof li.remove === 'function')
+                li.remove();
+            else
+                return;
+        }
+        if (frag)
+            nodeStash.set(i, frag);
+        painted[i] = false;
+    };
+    const insertRowsOf = i => {
+        const off = childOffset(i);
+        const children = ul.children;
+        const ref = children ? children[off] : null;
+        const stash = nodeStash.get(i);
+        if (stash && stash.childNodes && stash.childNodes.length) {
+            if (ref && ref.parentNode)
+                ref.parentNode.insertBefore(stash, ref);
+            else if (typeof ul.appendChild === 'function')
+                ul.appendChild(stash);
+            else
+                return;
+            nodeStash.delete(i);
+            painted[i] = true;
+            return;
+        }
+        if (ref && typeof ref.insertAdjacentHTML === 'function')
+            ref.insertAdjacentHTML('beforebegin', pieces[i]);
+        else if (typeof ul.insertAdjacentHTML === 'function')
+            ul.insertAdjacentHTML('beforeend', pieces[i]);
+        else
+            return;
+        painted[i] = true;
+    };
+    const fold = (from, to, shouldHide) => {
+        if (state.cancelled
+            || typeof from !== 'number' || typeof to !== 'number'
+            || from < 0 || to > pieces.length || from >= to)
+            return false;
+        const hide = !!shouldHide;
+        if (hidden[from] === hide)
+            return true; // idempotent — ranges are uniform by contract
+        if (hide && measure(start, end))
+            rebuildTops(); // rows still attached: lock in EXACT heights
+        const blockTop = tops[from];
+        let blockH = 0;
+        for (let i = from; i < to; i++) {
+            blockH += heights[i];
+            hidden[i] = hide;
+        }
+        rebuildTops();
+        // Viewport anchor: a block ENTIRELY above the viewport must not
+        // shift what the user sees — compensate the scroll by its height.
+        const st = list.scrollTop || 0;
+        let wanted = st;
+        if (hide) {
+            if (st > 0 && blockTop + blockH <= st + 1)
+                wanted = Math.max(0, st - blockH);
+        } else if (st > 0 && blockTop <= st + 1) {
+            wanted = st + blockH;
+        }
+        const w = windowFor(wanted);
+        if (hide) {
+            for (let i = Math.max(from, start); i < Math.min(to, end); i++) {
+                if (painted[i])
+                    removeRowsOf(i);
+            }
+        }
+        // Fill the new window: the shown range's pieces plus anything the
+        // geometry change newly brought into view (below a hide, above a
+        // compensated show) — inserted in place, never a full repaint.
+        for (let i = w[0]; i < w[1]; i++) {
+            if (!hidden[i] && !painted[i])
+                insertRowsOf(i);
+        }
+        // Trim what left the window (a show grows the content back, so the
+        // pieces a hide had pulled in are now out of range) — stashed for
+        // reuse. Keeps the scrollbar model exact: painted rows + paddings
+        // always equal the window span.
+        for (let i = start; i < end; i++) {
+            if (i >= w[0] && i < w[1])
+                continue;
+            if (!hidden[i] && painted[i])
+                removeRowsOf(i);
+        }
+        if (measure(w[0], w[1]))
+            rebuildTops();
+        start = w[0];
+        end = w[1];
+        ul.style.paddingTop = tops[start] + 'px';
+        ul.style.paddingBottom = (totalH() - tops[end]) + 'px';
+        // The paddings exist before the scroll write (a scrollTop set on a
+        // short list clamps to 0) — same law as the initial paint.
+        if (list.scrollTop !== undefined && list.scrollTop !== wanted)
+            list.scrollTop = wanted;
+        return true;
+    };
+
     return {
         cancelled: false,
         partial: !(start === 0 && end >= pieces.length),
+        fold,
         cancel() {
             state.cancelled = true;
             this.cancelled = true;
@@ -252,6 +412,7 @@ export const paintListVirtual = (list, opts = {}) => {
                 list.removeEventListener('scroll', onScroll);
                 list.removeEventListener('focusin', onFocusIn);
             }
+            nodeStash.clear();
             ul.style.paddingTop = '';
             ul.style.paddingBottom = '';
         }

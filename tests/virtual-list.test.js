@@ -9,12 +9,63 @@ import { paintListVirtual } from '../src/virtual-list.js';
 
 const makeList = ({ viewportRows = 20, heights = null } = {}) => {
     const listeners = {};
-    const ul = {
+    // Children double: real-parser shape (staged by innerHTML writes) PLUS
+    // the surgical ops fold() needs — remove(), insertAdjacentHTML and a
+    // parentNode the fragment insertBefore path can use.
+    let ul;
+    const parseLis = html => (html.match(/<li[^>]*id="p(\d+)"/g) || [])
+        .map(m => makeChild(+m.match(/p(\d+)/)[1]));
+    const makeChild = piece => {
+        const child = {
+            piece,
+            parentNode: null,
+            offsetHeight: heights ? heights(piece) : 0,
+            insertAdjacentHTML(pos, html) {
+                if (pos !== 'beforebegin')
+                    return;
+                const idx = ul.children.indexOf(child);
+                if (idx >= 0)
+                    ul.children.splice(idx, 0, ...parseLis(html));
+            },
+            remove() {
+                const idx = ul.children.indexOf(child);
+                if (idx >= 0)
+                    ul.children.splice(idx, 1);
+            }
+        };
+        return child;
+    };
+    ul = {
         tagName: 'UL',
         style: {},
         _html: '',
         children: [],
-        insertAdjacentHTML() {}
+        insertAdjacentHTML(pos, html) {
+            if (pos === 'beforeend')
+                ul.children.push(...parseLis(html));
+        },
+        insertBefore(frag, ref) {
+            const idx = ref ? ul.children.indexOf(ref) : ul.children.length;
+            if (idx < 0)
+                return;
+            const kids = frag.childNodes.slice();
+            ul.children.splice(idx, 0, ...kids);
+            frag._kids.length = 0;
+            for (const k of kids)
+                k.parentNode = ul;
+        },
+        appendChild(node) {
+            if (node && Array.isArray(node.childNodes)) {
+                const kids = node.childNodes.slice();
+                ul.children.push(...kids);
+                node._kids.length = 0;
+                for (const k of kids)
+                    k.parentNode = ul;
+            } else if (node) {
+                ul.children.push(node);
+                node.parentNode = ul;
+            }
+        }
     };
     Object.defineProperty(ul, 'innerHTML', {
         get() { return this._html; },
@@ -24,13 +75,9 @@ const makeList = ({ viewportRows = 20, heights = null } = {}) => {
             // model them as stable objects keyed by the piece id the tests
             // bake into the markup (id="p<index>"). `heights` adds the
             // measurable offsetHeight real rendered rows report.
-            this.children = (v.match(/<li[^>]*id="p(\d+)"/g) || [])
-                .map(m => {
-                    const piece = +m.match(/p(\d+)/)[1];
-                    return heights
-                        ? { piece, offsetHeight: heights(piece) }
-                        : { piece };
-                });
+            this.children = parseLis(v);
+            for (const c of this.children)
+                c.parentNode = ul;
         }
     });
     Object.defineProperty(ul, 'firstElementChild', {
@@ -71,6 +118,25 @@ const makeList = ({ viewportRows = 20, heights = null } = {}) => {
         }
     };
     return list;
+};
+
+// The node-stash path needs document.createDocumentFragment; the stub below
+// installs it on globalThis (the fold describe's afterEach removes it) —
+// fragments model appendChild (a move detaches from the ul via the child's
+// own remove) and a live-ish childNodes array.
+const stubFragments = () => {
+    globalThis.document = {
+        createDocumentFragment: () => ({
+            _kids: [],
+            appendChild(n) {
+                if (typeof n.remove === 'function')
+                    n.remove();
+                this._kids.push(n);
+                n.parentNode = this;
+            },
+            get childNodes() { return this._kids; }
+        })
+    };
 };
 
 const pieces = n => Array.from({ length: n }, (_, i) => `<li id="p${i}" class="vbm-row">row ${i}</li>`);
@@ -229,5 +295,182 @@ describe('paintListVirtual', () => {
         list.scrollTop = 20 * 56;
         list.fire('scroll');
         expect(parseInt(list.ul.style.paddingTop, 10)).toBeGreaterThanOrEqual(10 * 56);
+    });
+});
+
+describe('paintListVirtual fold() — surgical folds under the windowed painter', () => {
+    afterEach(() => {
+        delete globalThis.requestAnimationFrame;
+        delete globalThis.document;
+    });
+
+    it('hiding a piece range removes its rows in place and shrinks the scrollbar model', () => {
+        stubFragments();
+        const list = makeList({ viewportRows: 20 });
+        const handle = paintListVirtual(list, { head: '<ul></ul>', pieces: pieces(300) });
+        expect(handle.fold(10, 12, true)).toBe(true);
+        const after = list.renderedPieces();
+        // rows 10-11 left the DOM; the rest of the window is untouched
+        expect(after).not.toContain(10);
+        expect(after).not.toContain(11);
+        expect(after).toContain(9);
+        expect(after).toContain(12);
+        // the window refills from below to keep the viewport covered, so the
+        // row count need not drop by exactly 2 — what matters is the
+        // scrollbar invariant below
+        // scrollbar invariant: top pad + rendered rows + bottom pad = 298 rows
+        const topPad = parseInt(list.ul.style.paddingTop, 10);
+        const botPad = parseInt(list.ul.style.paddingBottom, 10);
+        expect(topPad + after.length * 28 + botPad).toBe(298 * 28);
+    });
+
+    it('a fold above the viewport compensates scrollTop so the view stays anchored', () => {
+        stubFragments();
+        const list = makeList({ viewportRows: 20 });
+        const handle = paintListVirtual(list, { head: '<ul></ul>', pieces: pieces(300) });
+        list.scrollTop = 150 * 28;
+        list.fire('scroll');
+        const centerBefore = list.renderedPieces();
+        expect(centerBefore).toContain(150);
+        handle.fold(10, 12, true); // two pieces above the viewport
+        expect(list.scrollTop).toBe(150 * 28 - 2 * 28);
+        // the viewport still centers the same content
+        expect(list.renderedPieces()).toContain(150);
+        expect(list.renderedPieces()).not.toContain(10);
+    });
+
+    it('a fold inside the viewport does not move the scroll (content slides up)', () => {
+        stubFragments();
+        const list = makeList({ viewportRows: 20 });
+        const handle = paintListVirtual(list, { head: '<ul></ul>', pieces: pieces(300) });
+        handle.fold(5, 7, true); // block straddles the viewport top region
+        expect(list.scrollTop).toBe(0);
+    });
+
+    it('showing reinserts the rows at the exact position — same nodes, same order', () => {
+        stubFragments();
+        const list = makeList({ viewportRows: 20 });
+        const handle = paintListVirtual(list, { head: '<ul></ul>', pieces: pieces(300) });
+        const nodesBefore = list.ul.children.slice();
+        handle.fold(10, 12, true);
+        handle.fold(10, 12, false);
+        const after = list.renderedPieces();
+        // contiguity restored: …8, 9, 10, 11, 12…
+        const at = after.indexOf(10);
+        expect(after.slice(at - 2, at + 4)).toEqual([8, 9, 10, 11, 12, 13]);
+        // the node stash reinserts the ORIGINAL child objects (favicon/
+        // overlay hydration survives a fold round trip)
+        const revived = list.ul.children.filter(c => c.piece === 10 || c.piece === 11);
+        expect(revived[0]).toBe(nodesBefore.find(c => c.piece === 10));
+        expect(revived[1]).toBe(nodesBefore.find(c => c.piece === 11));
+        // scrollbar back to the full 300-row model
+        const topPad = parseInt(list.ul.style.paddingTop, 10);
+        const botPad = parseInt(list.ul.style.paddingBottom, 10);
+        expect(topPad + after.length * 28 + botPad).toBe(300 * 28);
+    });
+
+    it('hidden pieces never resurrect on scroll re-windows', () => {
+        stubFragments();
+        const list = makeList({ viewportRows: 20 });
+        const handle = paintListVirtual(list, { head: '<ul></ul>', pieces: pieces(300) });
+        handle.fold(10, 12, true);
+        // scroll far away, then back over the folded range
+        list.scrollTop = 200 * 28;
+        list.fire('scroll');
+        list.scrollTop = 10 * 28;
+        list.fire('scroll');
+        const rendered = list.renderedPieces();
+        expect(rendered).not.toContain(10);
+        expect(rendered).not.toContain(11);
+        // and the geometry still accounts for them as zero
+        const topPad = parseInt(list.ul.style.paddingTop, 10);
+        const botPad = parseInt(list.ul.style.paddingBottom, 10);
+        expect(topPad + rendered.length * 28 + botPad).toBe(298 * 28);
+    });
+
+    it('a multi-<li> piece folds as one unit (group members block)', () => {
+        stubFragments();
+        const list = makeList({ viewportRows: 20 });
+        // piece 5 is a 3-row members block; pieces carry id="p<index>"
+        const groupPieces = pieces(100).slice();
+        groupPieces[5] = '<li id="p5" class="dupes-member">m1</li>' +
+            '<li id="p5" class="dupes-member">m2</li><li id="p5" class="dupes-member">m3</li>';
+        const handle = paintListVirtual(list, { head: '<ul></ul>', pieces: groupPieces });
+        const before = list.renderedPieces();
+        expect(before.filter(p => p === 5)).toHaveLength(3);
+        handle.fold(5, 6, true);
+        expect(list.renderedPieces().filter(p => p === 5)).toHaveLength(0);
+        // three rows left the model
+        const topPad = parseInt(list.ul.style.paddingTop, 10);
+        const botPad = parseInt(list.ul.style.paddingBottom, 10);
+        const rows = list.renderedPieces().length;
+        expect(topPad + rows * 28 + botPad).toBe((100 + 2 - 3) * 28);
+        handle.fold(5, 6, false);
+        expect(list.renderedPieces().filter(p => p === 5)).toHaveLength(3);
+    });
+
+    it('measured heights survive the hide — the restore reinserts exact geometry', () => {
+        stubFragments();
+        const list = makeList({
+            viewportRows: 20,
+            heights: piece => (piece >= 10 && piece < 12 ? 56 : 28) // two-line members
+        });
+        const handle = paintListVirtual(list, { head: '<ul></ul>', pieces: pieces(300) });
+        // initial window measured pieces 10/11 at their real 56px
+        handle.fold(10, 12, true);
+        const st = list.scrollTop; // 0 — no compensation
+        expect(st).toBe(0);
+        // hiding above a deep viewport compensates with the MEASURED heights
+        list.scrollTop = 150 * 28;
+        list.fire('scroll');
+        handle.fold(10, 12, true); // idempotent — already hidden
+        handle.fold(10, 12, false); // show again: content above shifts by 2×56
+        expect(list.scrollTop).toBe(150 * 28 + 2 * 56);
+    });
+
+    it('hiddenRanges start pieces hidden (render-time folds)', () => {
+        stubFragments();
+        const list = makeList({ viewportRows: 20 });
+        paintListVirtual(list, {
+            head: '<ul></ul>',
+            pieces: pieces(100),
+            hiddenRanges: [[2, 4], [10, 12]]
+        });
+        const rendered = list.renderedPieces();
+        expect(rendered).not.toContain(2);
+        expect(rendered).not.toContain(3);
+        expect(rendered).not.toContain(10);
+        expect(rendered).toContain(4);
+        const topPad = parseInt(list.ul.style.paddingTop, 10);
+        const botPad = parseInt(list.ul.style.paddingBottom, 10);
+        expect(topPad + rendered.length * 28 + botPad).toBe(96 * 28);
+    });
+
+    it('without document fragments the hide falls back to remove() + HTML reinsert', () => {
+        // no stubFragments() — geometry-less environment
+        const list = makeList({ viewportRows: 20 });
+        const handle = paintListVirtual(list, { head: '<ul></ul>', pieces: pieces(300) });
+        handle.fold(10, 12, true);
+        expect(list.renderedPieces()).not.toContain(10);
+        handle.fold(10, 12, false);
+        const after = list.renderedPieces();
+        const at = after.indexOf(10);
+        expect(after.slice(at, at + 2)).toEqual([10, 11]);
+        const topPad = parseInt(list.ul.style.paddingTop, 10);
+        const botPad = parseInt(list.ul.style.paddingBottom, 10);
+        expect(topPad + after.length * 28 + botPad).toBe(300 * 28);
+    });
+
+    it('rejects out-of-range and empty ranges (idempotent no-ops)', () => {
+        stubFragments();
+        const list = makeList({ viewportRows: 20 });
+        const handle = paintListVirtual(list, { head: '<ul></ul>', pieces: pieces(30) });
+        expect(handle.fold(-1, 3, true)).toBe(false);
+        expect(handle.fold(5, 5, true)).toBe(false);
+        expect(handle.fold(0, 99, true)).toBe(false);
+        expect(handle.fold(0, 2, true)).toBe(true);
+        expect(handle.fold(0, 2, true)).toBe(true); // already hidden — ok
+        handle.cancel();
+        expect(handle.fold(3, 5, false)).toBe(false); // cancelled
     });
 });
