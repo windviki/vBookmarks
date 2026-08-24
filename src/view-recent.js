@@ -811,6 +811,7 @@ export function initViewRecent(ctx = {}) {
         // rides the same law (parkToolbarFocus/restoreToolbarFocus).
         const parkedToolbar = parkToolbarFocus($list);
         const parkedRow = parkRowFocus($list);
+        paintSettled = false;
         paintHandle = paintListChunked($list, {
             head,
             pipes,
@@ -818,7 +819,7 @@ export function initViewRecent(ctx = {}) {
                 restoreToolbarFocus(list, parkedToolbar);
             },
             onSettled: list => {
-                paintHandle = null;
+                paintSettled = true;
                 painted = true;
                 lastRenderedRaw = staging.serialize(stagingState);
                 unparkRowFocus(list, parkedRow);
@@ -856,9 +857,13 @@ export function initViewRecent(ctx = {}) {
     // "entering the view feels laggy" favicon churn.
     const renderStagingNow = () => {
         // A pending full paint's tail batches must never land after this
-        // partial swap — cancel it first.
-        if (paintHandle)
+        // partial swap — cancel it first (and mark settled: a stale
+        // in-flight handle would read as "streaming" to the folds).
+        if (paintHandle) {
             paintHandle.cancel();
+            paintHandle = null;
+        }
+        paintSettled = true;
         // minimal test stubs only carry innerHTML — fall back to the
         // full path when the DOM helpers are absent. The scissors cut is
         // the partial repaint's anchor: everything before it is staging
@@ -1419,6 +1424,20 @@ export function initViewRecent(ctx = {}) {
     // favicon load storm, no overlay rescan. The HTML rebuild stays as the
     // fallback for a head that never painted members (test doubles).
     const foldStash = new WeakMap();
+    // A fold while the chunked stream is still landing rows must cancel it
+    // and repaint with the new fold state — surgery assumes a settled DOM:
+    // a pending batch could re-append the just-folded members after the
+    // surgical removal. paintHandle alone can't say "streaming" (the sync
+    // degrade path fires onSettled DURING the paint call, before the handle
+    // assignment completes), so the settle flag carries the truth.
+    let paintSettled = true;
+    const foldDuringStream = () => {
+        if (!paintHandle || paintSettled)
+            return false;
+        paintHandle.cancel();
+        paintHandle = null;
+        return true;
+    };
     const stashRows = headLi => {
         const frag = foldStash.get(headLi) || document.createDocumentFragment();
         let next = headLi.nextElementSibling;
@@ -1463,6 +1482,10 @@ export function initViewRecent(ctx = {}) {
             renderStaging();
             return;
         }
+        if (foldDuringStream()) {
+            renderStaging();
+            return;
+        }
         syncHeadFoldState(headLi, '.staging-group-head', g.collapsed);
         foldStagingRows(headLi, g.collapsed ? '' : () => memberRowsHtml(staging.groupItems(stagingState, groupId)));
     };
@@ -1479,6 +1502,10 @@ export function initViewRecent(ctx = {}) {
         const head = $list.querySelector ? $list.querySelector('#staging-head') : null;
         const ul = $list.querySelector ? $list.querySelector('#staging-items') : null;
         if (!head || !ul || typeof ul.innerHTML !== 'string') {
+            renderStaging();
+            return;
+        }
+        if (foldDuringStream()) {
             renderStaging();
             return;
         }
@@ -1512,6 +1539,10 @@ export function initViewRecent(ctx = {}) {
             ? $list.querySelector('li.recent-group-li[data-recent-group="' + g + '"]')
             : null;
         if (!headLi) {
+            refresh();
+            return;
+        }
+        if (foldDuringStream()) {
             refresh();
             return;
         }
@@ -1556,6 +1587,10 @@ export function initViewRecent(ctx = {}) {
             ? $list.querySelector('li.staging-bucket')
             : null;
         if (!headLi) {
+            renderStaging();
+            return;
+        }
+        if (foldDuringStream()) {
             renderStaging();
             return;
         }

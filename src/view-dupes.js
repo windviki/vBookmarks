@@ -167,6 +167,20 @@ export function initViewDupes(ctx = {}) {
     // from, to) of the CURRENT render (rebuilt every render). Under the
     // virtual painter a fold hides/shows exactly this piece range.
     let virtualFoldSpans = new Map();
+    // A fold while the chunked stream is still landing rows cancels it and
+    // repaints with the new fold state — surgery assumes a settled DOM: a
+    // pending batch could re-append the just-folded members after the
+    // surgical removal. paintHandle alone can't say "streaming" (the sync
+    // degrade path fires onSettled DURING the paint call, before the handle
+    // assignment completes), so the settle flag carries the truth.
+    let paintSettled = true;
+    const foldDuringStream = () => {
+        if (!paintHandle || paintSettled)
+            return false;
+        paintHandle.cancel();
+        paintHandle = null;
+        return true;
+    };
 
     const strategy = () => store.get('dupesStrategy', 'keep-oldest') || 'keep-oldest';
     const scope = () => store.get('dupesScope', 'all') || 'all';
@@ -661,6 +675,7 @@ export function initViewDupes(ctx = {}) {
                 onRowsRendered();
             },
             onSettled: el => {
+                paintSettled = true;
                 if (parkedRow && !virtual) {
                     unparkRowFocus(el, parkedRow);
                     parkedRow = null;
@@ -672,6 +687,7 @@ export function initViewDupes(ctx = {}) {
                 tryMemberFocus(null);
             }
         };
+        paintSettled = false;
         paintHandle = virtual
             ? paintListVirtual($list, { ...paintOpts, hiddenRanges })
             : paintListChunked($list, {
@@ -1044,6 +1060,9 @@ export function initViewDupes(ctx = {}) {
                 // repaint) was pure overhead on every fold toggle.
                 if (virtualLab()) {
                     foldVirtual(key, li);
+                } else if (foldDuringStream()) {
+                    pendingHeadFocus = key;
+                    render();
                 } else if (!li || typeof li.querySelector !== 'function') {
                     refresh();
                 } else {
@@ -1106,6 +1125,9 @@ export function initViewDupes(ctx = {}) {
                 // minimal DOM doubles keep the full render.
                 if (virtualLab()) {
                     foldVirtual(key, li);
+                } else if (foldDuringStream()) {
+                    pendingHeadFocus = key;
+                    render();
                 } else if (!li || typeof li.querySelector !== 'function') {
                     pendingHeadFocus = key;
                     refresh();

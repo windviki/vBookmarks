@@ -149,6 +149,20 @@ export function initViewTabGroups(ctx = {}) {
     // piece range through the painter's fold().
     let groupFoldSpans = new Map();
     let windowFoldSpans = new Map();
+    // A fold while the chunked stream is still landing rows cancels it and
+    // repaints with the new fold state — surgery assumes a settled DOM: a
+    // pending batch could re-append the just-folded members after the
+    // surgical removal. paintHandle alone can't say "streaming" (the sync
+    // degrade path fires onSettled DURING the paint call, before the handle
+    // assignment completes), so the settle flag carries the truth.
+    let paintSettled = true;
+    const foldDuringStream = () => {
+        if (!paintHandle || paintSettled)
+            return false;
+        paintHandle.cancel();
+        paintHandle = null;
+        return true;
+    };
     // LAB virtual painter flag (options 实验室, default off). The windowed
     // painter never keeps the full list in the DOM, so fold surgery (which
     // inserts/removes rows in place) must yield to a full render there.
@@ -964,6 +978,7 @@ export function initViewTabGroups(ctx = {}) {
                 tryScrollToCurrent(end);
             },
             onSettled: el => {
+                paintSettled = true;
                 if (parkedRow && !virtual) {
                     unparkRowFocus(el, parkedRow);
                     parkedRow = null;
@@ -974,6 +989,7 @@ export function initViewTabGroups(ctx = {}) {
                 tryScrollToCurrent(null);
             }
         };
+        paintSettled = false;
         paintHandle = virtual
             ? paintListVirtual($list, {
                 ...paintOpts,
@@ -1941,6 +1957,8 @@ export function initViewTabGroups(ctx = {}) {
             // position and the head's node/focus both survive.
             foldVirtual(groupFoldSpans.get(String(groupId)), shouldCollapse,
                 '#tabgroups-group-' + groupId, '.tabgroups-group-head');
+        } else if (foldDuringStream()) {
+            render();
         } else {
             foldGroupSurgically(String(groupId), shouldCollapse);
         }
@@ -2046,6 +2064,8 @@ export function initViewTabGroups(ctx = {}) {
             foldVirtual(windowFoldSpans.get(id), shouldCollapse,
                 'li.tabgroups-window-head[data-window-id="' + id + '"]',
                 '.tabgroups-window-head-row');
+        } else if (foldDuringStream()) {
+            render();
         } else {
             foldWindowSurgically(id, shouldCollapse);
         }
