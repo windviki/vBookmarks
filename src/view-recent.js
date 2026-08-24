@@ -793,8 +793,8 @@ export function initViewRecent(ctx = {}) {
             ul: '#staging-items',
             pieces: stagingCollapsed ? [] : stagingArea.pieces,
             first: 60,   // first rows land with the head
-            chunk: 120   // then stream 120 rows per frame (adaptive off in
-                         // pipes mode — the fixed stride is the dead-view law)
+            chunk: 120   // then stream 120 rows per frame (fixed stride —
+                         // the staging list is 500-capped, no need to adapt)
         }];
         // The recent region always paints (its rows are recentCount-bounded);
         // the fold hides them with a root class, so folding/unfolding is a

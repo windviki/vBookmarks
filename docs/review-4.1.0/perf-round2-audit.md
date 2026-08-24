@@ -111,18 +111,18 @@
 
 ## 5. 查漏补缺清单（按优先级，实施后回填状态）
 
-### 5.1 [P1] list-chunks 自适应分片 — ✅ 已实施（待复测数据）
+### 5.1 [P1] list-chunks 自适应分片 — ✅ 已实施（复测数据以 §4b 汇总表为准；第 3 轮 2026-08-24 补：pipes 模式此前未接 adapt()，现已实现——一轮全管道插入成本共享一个缩放系数反馈，含专项单测）
 固定 30/60（去重）与 80/160（标签组）不随设备与行重伸缩；真实 2500+ 组（~7500 行）需 ~126 帧纯调度。已改为**按实测插入成本自适应**：首片画完测一次 parse 成本，后续每片按预算（budgetMs 16ms，[min,max] 夹取：去重 24-240、标签组 48-320、死链 40-300）伸缩；`onChunk(list, from, end)` 携带切片边界；新增 `pipes` 多 `<ul>` 流式模式（死链结果列表 + 标注残留列表同一次 head 绘制）。单列表模式行为不变，8 例单测。
 
-### 5.2 [P1] 去重/标签组 onChunk 全表重试 — ✅ 已实施（待复测数据）
+### 5.2 [P1] 去重/标签组 onChunk 全表重试 — ✅ 已实施（复测数据以 §4b 汇总表为准）
 render() 构建 piece 索引（`groupPieceIdx`/`memberPieceIdx`/`currentPieceIdx`），`tryHeadFocus`/`tryMemberFocus`/`tryScrollToCurrent` 只在目标 piece 已落地的批次重试，其余批次零 DOM 查询；settle 时仍兜底全量重试（虚拟滚动路径沿用按批重试）。
 
-### 5.3 [P1] 去重/标签组/死链 i18n 提升 — ✅ 已实施（待复测数据）
+### 5.3 [P1] 去重/标签组/死链 i18n 提升 — ✅ 已实施（复测数据以 §4b 汇总表为准）
 - 去重 `renderGroup`：成员行 4 次/行的 `_m()` 提升为渲染级 `L` 字典（keepThis/rowDelete/noTitle + 组级 groupCount/cleanRestHint）——2500 组 × 2 成员 = 20000 次 getMessage 降至 ~5000+8。
 - 标签组 `groupHeadHtml`：activate/rename/save/sleep/wake/close/untitled 提升为渲染级 `G` 字典（~800 次/渲染 → 常数次）。
 - 死链 `rowLiHtml`/`markedLiHtml`：mark/unmark/delete/时间标签等 6-10 次/行提升为渲染级 `L` 字典。
 
-### 5.4 [P0] 死链视图渲染性能 — ✅ 已实施（待复测数据）
+### 5.4 [P0] 死链视图渲染性能 — ✅ 已实施（扫描相位有 diag-dead-ticks 专项实测；空闲态 pipes 分片未单独录取相位数据，效果由 §4b 汇总表覆盖——不再标注待复测）
 1. **扫描中增量渲染**：blob 每 700ms 发布只做——工具栏原地 `outerHTML` 补丁（焦点 park/restore）+ 按树序把**新增**问题行插到正确位置（`liveDom.rendered`/`markedIds` 记账；行从未重绘、favicon 不再闪烁）。标注残留集合变化（标记移动/新标记/run 更换/选择模式/测试 double）时自动回退整表重绘。含 1 例专项单测（树序插入 + ul 身份稳定）。
 2. **空闲态分片渲染**：结果/残留列表走 list-chunks pipes（head 一次绘制，两 ul 并行流式；60 首片 / 100 每批）；扫描完成、筛选/排序切换、标记批量操作的上千行结果不再一次性解析。测试 double（无 query/insert 原语）保持旧整串渲染路径（D1 教训：字符串模型不能证明 ul 契约）。
 3. **SW 侧**（P2，暂不做）：blob 每 tick 全量 JSON（6000 行 ≈ 600KB/tick）在页面侧不再全量重绘后影响有限，记录为后续增量 journal 选项。

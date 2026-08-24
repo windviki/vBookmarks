@@ -253,4 +253,68 @@ describe('paintListChunked', () => {
         expect(events).toEqual(['head', 'settled']);
         expect(frames).toHaveLength(0);
     });
+
+    it('pipes mode adapts the shared batch scale from the round cost (perf round 3)', () => {
+        const frames = makeFrames();
+        const ulA = { tagName: 'UL', buffer: '', insertAdjacentHTML(pos, h) { if (pos === 'beforeend') this.buffer += h; } };
+        const list = {
+            _html: '',
+            get innerHTML() { return this._html; },
+            set innerHTML(v) { this._html = v; },
+            querySelector: () => ulA,
+            insertAdjacentHTML() {}
+        };
+        let t = 0;
+        let cost = 20; // per-round insert cost above the 12ms budget → shrink
+        globalThis.performance = { now: () => (t += cost) };
+        try {
+            paintListChunked(list, {
+                head: '<ul></ul>',
+                pipes: [{ ul: 'ul', pieces: Array.from({ length: 24 }, (_, i) => `<li>${i}</li>`), first: 2, chunk: 10 }],
+                adaptive: true, budgetMs: 12, minChunk: 4, maxChunk: 40
+            });
+            expect(ulA.buffer).toBe('<li>0</li><li>1</li>'); // head slice
+            // frame 1: base chunk 10 (cost 20 > budget) → next round shrinks
+            frames.shift()();
+            expect(ulA.buffer.endsWith('<li>11</li>')).toBe(true);
+            // frame 2: chunk now max(4, round(10 * 12/20)) = 6
+            cost = 1;
+            frames.shift()();
+            expect(ulA.buffer.endsWith('<li>17</li>')).toBe(true);
+            while (frames.length)
+                frames.shift()();
+            expect(ulA.buffer).toBe(Array.from({ length: 24 }, (_, i) => `<li>${i}</li>`).join(''));
+        } finally {
+            delete globalThis.performance;
+        }
+    });
+
+    it('fold-during-stream contract: cancel + repaint mid-flight leaves no stale appends on late frames (f9d9e1b)', () => {
+        const frames = makeFrames();
+        const list = makeList();
+        // 5 rows, 1 in head, 1 per frame → the stream is mid-flight with 3
+        // queued frames when the view's foldDuringStream guard fires.
+        const handle = paintListChunked(list, {
+            head: '<ul></ul>',
+            pieces: ['<li>1</li>', '<li>2</li>', '<li>3</li>', '<li>4</li>', '<li>5</li>'],
+            first: 1,
+            chunk: 1
+        });
+        expect(frames.length).toBeGreaterThan(0);
+        // the view guard: cancel the stream, then repaint surgically/fully
+        // on the settled-looking DOM (the repaint's innerHTML swap retires
+        // the old <ul> — mirror that by clearing the old buffer)
+        handle.cancel();
+        const staleFrames = frames.slice();
+        list.ul.buffer = '';
+        paintListChunked(list, {
+            head: '<ul></ul>',
+            pieces: ['<li>x</li>'],
+            first: 5
+        });
+        // pumping every stale frame must append NOTHING from the old stream
+        while (staleFrames.length)
+            staleFrames.shift()();
+        expect(list.ul.buffer).toBe('<li>x</li>');
+    });
 });

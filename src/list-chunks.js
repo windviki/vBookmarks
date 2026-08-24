@@ -159,16 +159,35 @@ export const paintListChunked = (list, opts = {}) => {
             onHead(list);
         const state = { cancelled: false };
         let remaining = resolved.length;
+        // Adaptive sizing in pipes mode (4.1.0 perf round 2): one shared
+        // scale over every pipe's base chunk — the whole round shares one
+        // frame budget, so the cost of ALL inserts feeds back together.
+        const now = typeof performance !== 'undefined' && performance.now
+            ? () => performance.now()
+            : null;
+        let scale = 1;
+        const adapt = costMs => {
+            if (!costMs)
+                return;
+            if (costMs > budgetMs)
+                scale = Math.max(minChunk / Math.max(1, chunk), scale * (budgetMs / costMs));
+            else if (costMs < budgetMs * 0.4)
+                scale = Math.min(maxChunk / Math.max(1, chunk), scale * 1.6);
+        };
         const pump = () => {
             if (state.cancelled)
                 return;
             remaining = 0;
+            const t0 = adaptive && now ? now() : 0;
             for (const p of resolved) {
                 if (p.at >= p.pieces.length)
                     continue;
                 remaining++;
+                const size = adaptive
+                    ? Math.max(minChunk, Math.round((p.chunk || chunk) * scale))
+                    : (p.chunk || chunk);
                 const from = p.at;
-                const end = Math.min(from + p.chunk, p.pieces.length);
+                const end = Math.min(from + size, p.pieces.length);
                 let html = '';
                 for (let i = from; i < end; i++)
                     html += p.pieces[i];
@@ -178,6 +197,8 @@ export const paintListChunked = (list, opts = {}) => {
                 if (onChunk)
                     onChunk(list, from, end);
             }
+            if (adaptive && now && remaining)
+                adapt(now() - t0);
             if (remaining)
                 batchFrames(pump);
             else if (onSettled)

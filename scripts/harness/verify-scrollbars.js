@@ -109,10 +109,11 @@ const PREF_KEYS = ['popupWidth', 'popupHeight', 'autoResizePopup', 'rememberView
 const VIEWS = [
     { id: 'tree',   panes: ['#tree'] },
     { id: 'search', panes: ['#search-history-area', '#results'] },
-    { id: 'recent', panes: ['#recent-list'] },
+    { id: 'recent', panes: ['#staging-list', '#recent-list'] },
     { id: 'stats',  panes: ['#stats-list'] },
     { id: 'dead',   panes: ['#dead-list'] },
     { id: 'dupes',  panes: ['#dupes-list'] },
+    { id: 'tabgroups', panes: ['#tabgroups-list'] },
 ];
 
 // 展开全部文件夹（最多 12 轮，每轮点击所有未展开的 parent）。

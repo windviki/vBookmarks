@@ -528,6 +528,16 @@ zip 实测（package.py 同口径 collect + deflate 默认级别；实测 level 
 
 注：①分片渲染不减少总解析量，但把一整块 ~470ms 冻结摊成逐帧批次，首内容提前、UI 全程可交互；②`(program)`（样式/布局/绘制）的下降主要来自 content-visibility；③`scrollIntoView` 599→161ms（首开定位当前标签行）；④工作负载与种子前后完全一致，同一 Docker 环境连续跑；⑤验收：vitest 2696/2696 + lint 0 错、源码全量 harness ALL PASS（smoke + 键盘 156/0 + 滚动条 748）、dist 构建自检 + dist 全量 harness ALL PASS。复跑：`scripts/harness/rerun.sh diag/diag-41x-perf.js`（env：VBM_TG_WINDOWS/VBM_TG_GROUPS_PER_WIN/VBM_TG_TABS_PER_GROUP/VBM_TG_LOOSE）。
 
+## 附录 A 补充：暂存区/最近视图性能证据指针（2026-08-24）
+
+staging 视图（velvet 工作台）的性能实测不录在本附录，统一见
+`docs/plan-velvet/velvet-feat-staging-glm.md` 的迭代记录 I/J/L：
+- 分片绘制接入（renderStaging pipes 模式，round H）
+- 折叠手术化（fold surgery，round I：533→2.6ms 量级记录）
+- 折叠瞬时化（root class + stagingRowsCache，round L：3.2ms sync / 19ms settled vs 旧 150-250ms 全表重绘）
+死链视图空闲态 pipes 分片与 list-chunks pipes 自适应（第 3 轮）见
+`docs/review-4.1.0/perf-round2-audit.md` §5.1/§5.4。
+
 ## 附录 B：本阶段明确不做的事
 
 汇总 §2.8 与 §4.5：经典脚本拼接（Phase 1B，判据驱动）、CSS/HTML minify、激进 tree-shaking、经典脚本转 ESM、zip 内 sourcemap、代码混淆、把单元测试迁到 dist 上跑、虚拟滚动（P2 单独立项判据见 §4.5）。

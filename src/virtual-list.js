@@ -356,6 +356,12 @@ export const paintListVirtual = (list, opts = {}) => {
         rebuildTops();
         // Viewport anchor: a block ENTIRELY above the viewport must not
         // shift what the user sees — compensate the scroll by its height.
+        // NOTE: blockH sums heights[], and pieces never visited by the
+        // window carry the 28px row ESTIMATE (see the heights init) —
+        // folding a large above-viewport block of unvisited wide/panel
+        // two-line rows shifts the viewport slightly (the estimate
+        // under-counts). Lab-flagged, acceptable for the experiment; a
+        // measure-on-demand pass would close it.
         const st = list.scrollTop || 0;
         let wanted = st;
         if (hide) {

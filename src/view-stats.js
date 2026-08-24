@@ -96,6 +96,7 @@ import { relTimeLabel } from './tree-render.js';
 import { VIEW_ICONS, STAR_ICON, STAR_ICON_FILLED, STAGE_ICON, STAGE_ICON_DONE, SELECT_ICON } from './icons.js';
 import { htmlspecialchars } from './escape.js';
 import { parkRowFocus, unparkRowFocus, parkToolbarFocus, restoreToolbarFocus } from './list-focus.js';
+import { paintListChunked } from './list-chunks.js';
 
 export function initViewStats(ctx = {}) {
     const $ = id => document.getElementById(id);
@@ -239,6 +240,8 @@ export function initViewStats(ctx = {}) {
     let pendingRowFocus = null;
     let selectionFocus = null;
     let displayRows = [];
+    let paintHandle = null;       // the in-flight chunked paint (cancelled on re-render)
+    let urlPieceIdx = new Map();  // focus-retry gate: url → piece index
 
     const selectedRows = () => displayRows.filter(r => selected.has(r.url));
 
@@ -383,10 +386,17 @@ export function initViewStats(ctx = {}) {
             (staged ? STAGE_ICON_DONE : STAGE_ICON) + '</button>';
     };
 
-    const renderRows = list => {
+    // Row pieces for the chunked painter (4.1.0 perf round 3): one <li>
+    // piece per row plus the url → piece-index map the focus retries gate on.
+    const renderRowPieces = list => {
         const countBadge = c => ({ text: `×${c}`, cls: 'count', aria: _m('statsVisitCount', `${c}`) });
         const timeBadge = t => ({ text: relTimeLabel(t, _m), cls: 'time' });
-        let html = '';
+        const urlIdx = new Map();
+        const pieces = [];
+        const push = (row, html) => {
+            urlIdx.set(row.url, pieces.length);
+            pieces.push(html);
+        };
         for (let i = 0, l = list.length; i < l; i++) {
             const row = list[i];
             const absTime = new Date(row.t || 0).toLocaleString();
@@ -394,7 +404,7 @@ export function initViewStats(ctx = {}) {
             const sel = selecting && selected.has(row.url);
             if (row.bookmarkId) {
                 const path = views.pathOf(row.bookmarkId);
-                html += `<li class="vbm-row${sel ? ' sel' : ''}" id="stats-item-${row.bookmarkId}" role="listitem" ` +
+                push(row, `<li class="vbm-row${sel ? ' sel' : ''}" id="stats-item-${row.bookmarkId}" role="listitem" ` +
                     `data-node-id="${row.bookmarkId}" data-parentid="${row.parentId || ''}" data-url="${encodeURIComponent(row.url)}">` +
                     treeRender.generateBookmarkHTML(row.title, row.url, 'data-virtual="1"', row.bookmarkId, null, {
                         path,
@@ -418,9 +428,9 @@ export function initViewStats(ctx = {}) {
                     // the same hover stage toggle the unbookmarked rows carry
                     // (both row kinds end with star + plane columns aligned)
                     stageBtnHtml(row) +
-                    '</li>';
+                    '</li>');
             } else {
-                html += `<li class="vbm-row stats-hist-row${sel ? ' sel' : ''}" role="listitem" data-url="${encodeURIComponent(row.url)}">` +
+                push(row, `<li class="vbm-row stats-hist-row${sel ? ' sel' : ''}" role="listitem" data-url="${encodeURIComponent(row.url)}">` +
                     treeRender.generateBookmarkHTML(row.title, row.url, 'data-virtual="1"', null, null, {
                         badge: badges,
                         subText: absTime
@@ -429,10 +439,10 @@ export function initViewStats(ctx = {}) {
                     `aria-label="${htmlspecialchars(_m('statsHistoryAdd'))}" ` +
                     `title="${htmlspecialchars(_m('statsHistoryAdd'))}">${STAR_ICON}</button>` +
                     stageBtnHtml(row) +
-                    '</li>';
+                    '</li>');
             }
         }
-        return html;
+        return { pieces, urlIdx };
     };
 
     // --- Toolbar + row focus park/restore: see src/list-focus.js -----------
@@ -446,43 +456,40 @@ export function initViewStats(ctx = {}) {
         if (enabled())
             displayRows = buildDisplayRows();
         let html = renderToolbar();
-        if (!enabled()) {
-            // Master switch off: guidance instead of data (§3.4 empty states).
-            html += `<ul role="list"><li class="empty-state" role="listitem"><i>${_m('statsDisabledHint')}</i></li></ul>`;
-        } else {
-            // One merged list under the toolbar's sort control. The guide
-            // row (missing history permission) trails the bookmarked rows;
-            // with no rows and no guide, the statsEmpty state stands alone.
-            const list = displayRows;
-            const guideNeeded = historyPerm === false;
-            if (!list.length && !guideNeeded) {
-                html += `<ul role="list"><li class="empty-state" role="listitem"><i>${_m('statsEmpty')}</i></li></ul>`;
-            } else {
-                html += `<ul role="list"${selecting ? ' class="selecting"' : ''}>` + renderRows(list) + (guideNeeded ? renderGuideRow() : '') + '</ul>';
-            }
-        }
+        const list = enabled() ? displayRows : [];
+        const guideNeeded = enabled() && historyPerm === false;
         // Final polish: keep a focused toolbar control focused across the
         // innerHTML swap (sort switch re-renders the bar) — cls+idx key, or
         // the keyboard rung dies on every refresh.
         const parkedToolbar = parkToolbarFocus($list);
         // 4.0.1 focus law: a focused list ROW rides the same swap
-        const parkedRow = parkRowFocus($list);
-        $list.innerHTML = html;
-        restoreToolbarFocus($list, parkedToolbar);
-        unparkRowFocus($list, parkedRow);
-        // Selection focus handoff (dead/dupes law)
-        if (selectionFocus === 'first') {
-            selectionFocus = null;
-            const firstBtn = $list.querySelector && $list.querySelector('.stats-select-toolbar button:not([disabled])');
-            if (firstBtn && firstBtn.focus)
-                firstBtn.focus();
-        } else if (selectionFocus === 'entry') {
-            selectionFocus = null;
-            const entryBtn = $list.querySelector && $list.querySelector('.stats-select-mode');
-            if (entryBtn && entryBtn.focus)
-                entryBtn.focus();
-        }
-        if (pendingRowFocus !== null) {
+        let parkedRow = parkRowFocus($list);
+        if (paintHandle)
+            paintHandle.cancel();
+        // Chunked paint (4.1.0 perf round 3): the toolbar + the first rows
+        // land synchronously, the rest stream in adaptive rAF batches — the
+        // 6000-bookmark profile no longer pays one whole-list parse task.
+        // Degenerate shapes (master off, empty, no guide) keep the plain
+        // single paint.
+        const finishSelectionFocus = () => {
+            if (selectionFocus === 'first') {
+                selectionFocus = null;
+                const firstBtn = $list.querySelector && $list.querySelector('.stats-select-toolbar button:not([disabled])');
+                if (firstBtn && firstBtn.focus)
+                    firstBtn.focus();
+            } else if (selectionFocus === 'entry') {
+                selectionFocus = null;
+                const entryBtn = $list.querySelector && $list.querySelector('.stats-select-mode');
+                if (entryBtn && entryBtn.focus)
+                    entryBtn.focus();
+            }
+        };
+        const tryPendingRowFocus = paintedThrough => {
+            if (pendingRowFocus === null)
+                return;
+            const idx = urlPieceIdx.get(pendingRowFocus);
+            if (idx === undefined || (paintedThrough != null && idx >= paintedThrough))
+                return;
             const url = pendingRowFocus;
             pendingRowFocus = null;
             if ($list.querySelector) {
@@ -491,8 +498,66 @@ export function initViewStats(ctx = {}) {
                 if (anchor && anchor.focus)
                     anchor.focus();
             }
+        };
+        const tryUnparkRow = () => {
+            if (parkedRow && parkedRow.id && typeof document !== 'undefined'
+                && typeof document.getElementById === 'function'
+                && document.getElementById(parkedRow.id)) {
+                unparkRowFocus($list, parkedRow);
+                parkedRow = null;
+            }
+        };
+        if (!enabled()) {
+            // Master switch off: guidance instead of data (§3.4 empty states).
+            html += `<ul role="list"><li class="empty-state" role="listitem"><i>${_m('statsDisabledHint')}</i></li></ul>`;
+            $list.innerHTML = html;
+            restoreToolbarFocus($list, parkedToolbar);
+            unparkRowFocus($list, parkedRow);
+            parkedRow = null;
+            finishSelectionFocus();
+            onRowsRendered();
+            return;
         }
-        onRowsRendered();
+        if (!list.length && !guideNeeded) {
+            html += `<ul role="list"><li class="empty-state" role="listitem"><i>${_m('statsEmpty')}</i></li></ul>`;
+            $list.innerHTML = html;
+            restoreToolbarFocus($list, parkedToolbar);
+            unparkRowFocus($list, parkedRow);
+            parkedRow = null;
+            finishSelectionFocus();
+            onRowsRendered();
+            return;
+        }
+        // One merged list under the toolbar's sort control. The guide
+        // row (missing history permission) trails the bookmarked rows.
+        const { pieces, urlIdx } = renderRowPieces(list);
+        urlPieceIdx = urlIdx;
+        if (guideNeeded)
+            pieces.push(renderGuideRow());
+        paintHandle = paintListChunked($list, {
+            head: html + `<ul role="list"${selecting ? ' class="selecting"' : ''}>`,
+            pieces,
+            first: 80, chunk: 160,
+            adaptive: true, budgetMs: 16, minChunk: 40, maxChunk: 320,
+            onHead: el => {
+                restoreToolbarFocus(el, parkedToolbar);
+                finishSelectionFocus();
+                tryPendingRowFocus(null);
+                onRowsRendered();
+            },
+            onChunk: (el, from, end) => {
+                tryPendingRowFocus(end);
+                tryUnparkRow();
+                onRowsRendered();
+            },
+            onSettled: el => {
+                if (parkedRow) {
+                    unparkRowFocus(el, parkedRow);
+                    parkedRow = null;
+                }
+                tryPendingRowFocus(null);
+            }
+        });
     };
 
     // Delete applies to the BOOKMARKED rows only (§3.7 — history rows have
