@@ -278,6 +278,7 @@ import { deferIdle, mark as perfMark } from './idle.js';
         'staging-group-save-folder': 'groupSaveToFolder',
         'staging-group-copy-folder': 'groupCopyToFolder',
         'staging-group-assign': 'stagingGroupAssign',
+        'staging-remove-item': 'stagingRemove',
         // issue #33: direct sort actions + the "Sort options…" dialog opener
         'sort-folder-by-name': 'sortByName',
         'sort-folder-by-date': 'sortByDate',
