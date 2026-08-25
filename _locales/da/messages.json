@@ -2495,7 +2495,7 @@
     "message": "Skjul tilføj-mappe-punkterne"
   },
   "optionCollapseAddFolderMenuHint": {
-    "message": "Flet de tre tilføj-mappe-punkter (før/efter/inde i) til ét undermenupunkt ved højreklik på mapper."
+    "message": "Flet tilføj-mappe-punkterne (før/efter/inde i mapperækker, før/efter på bogmærkerækker) sammen til ét undermenupunkt."
   },
   "tabRowStage": {
     "message": "Send til staging"

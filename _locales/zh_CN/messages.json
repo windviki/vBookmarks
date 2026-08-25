@@ -2549,7 +2549,7 @@
     "message": "折叠添加文件夹条目"
   },
   "optionCollapseAddFolderMenuHint": {
-    "message": "把文件夹右键菜单的三个添加文件夹条目(此前/此后/子文件夹)合并为一个二级菜单条目。"
+    "message": "把右键菜单的添加文件夹条目（文件夹行：此前/此后/子文件夹；书签行：此前/此后）合并为一个二级菜单条目。"
   },
   "tabRowStage": {
     "message": "发送到暂存"

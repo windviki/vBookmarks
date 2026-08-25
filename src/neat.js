@@ -240,6 +240,10 @@ import { deferIdle, mark as perfMark } from './idle.js';
         'sub-add-folder-before-folder': 'addNewFolderBefore',
         'sub-add-folder-after-folder': 'addNewFolderAfter',
         'sub-add-new-folder': 'addNewFolder',
+        // …the bookmark-menu twin of that flyout (before/after only — a
+        // bookmark row has no "inside")
+        'sub-add-folder-before-bookmark': 'addNewFolderBefore',
+        'sub-add-folder-after-bookmark': 'addNewFolderAfter',
         // velvet staging §6: the folder copy-list flyout
         'sub-folder-copy-text': 'folderCopyText',
         'sub-folder-copy-markdown': 'folderCopyMarkdown',
@@ -254,6 +258,11 @@ import { deferIdle, mark as perfMark } from './idle.js';
         'cut-bookmark': 'cutBookmark',
         'copy-move-to': 'copyMoveTo',
         'paste-here': 'pasteHere',
+        // the bookmark-row paste (insert as the target's next sibling) shares
+        // the folder paste's label; the folder menu's copy/move picker entry
+        // shares the bookmark menu's
+        'paste-here-bookmark': 'pasteHere',
+        'folder-copy-move-to': 'copyMoveTo',
         // 'copy-all-titles-and-urls' : 'copyAllTitlesAndUrls',
         'replace-url': 'replaceUrl',
         'folder-window': 'openBookmarks',
@@ -511,6 +520,10 @@ import { deferIdle, mark as perfMark } from './idle.js';
         // sort on).
         get collapseTabGroupMenu() { return store.get('collapseTabGroupMenu', '0') === '1'; },
         get collapseSortMenu() { return store.get('collapseSortMenu', '1') === '1'; },
+        // velvet staging §7: the add-folder block collapses on BOTH the folder
+        // and bookmark menus (same one-setting-both-menus shape as the
+        // tab-group block; default on).
+        get collapseAddFolderMenu() { return store.get('collapseAddFolderMenu', '1') === '1'; },
         // The extension zoom factor (body[data-zoom] CSS zoom): the menu
         // container itself is zoom:1 while #search is a zoomed body> child,
         // so positionMenu scales the search-bar clamp up to viewport space.

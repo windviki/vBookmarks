@@ -2495,7 +2495,7 @@
     "message": "Réduire les entrées d'ajout de dossier"
   },
   "optionCollapseAddFolderMenuHint": {
-    "message": "Fusionner les trois entrées d'ajout de dossier (avant/après/dans) en une seule entrée de sous-menu lors d'un clic droit sur un dossier."
+    "message": "将添加文件夹条目（文件夹行上的之前/之后/内部，书签行上的之前/之后）合并为一个子菜单条目。"
   },
   "tabRowStage": {
     "message": "Envoyer en staging"

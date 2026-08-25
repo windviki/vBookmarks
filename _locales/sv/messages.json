@@ -2495,7 +2495,7 @@
     "message": "Fäll ihop lägg-till-mapp-posterna"
   },
   "optionCollapseAddFolderMenuHint": {
-    "message": "Slå samman de tre lägg-till-mapp-posterna (före/efter/inuti) till en undermenypost vid högerklick på mappar."
+    "message": "Slå samman lägg-till-mapp-poster (före/efter/inuti på mapprader, före/efter på bokmärkesrader) till en undermenypost."
   },
   "tabRowStage": {
     "message": "Skicka till scen"

@@ -2495,7 +2495,7 @@
     "message": "Sakļaut mapes pievienošanas ierakstus"
   },
   "optionCollapseAddFolderMenuHint": {
-    "message": "Apvienot trīs mapes pievienošanas ierakstus (pirms/pēc/iekšā) vienā apakšizvēlnē, ar peles labo pogu noklikšķinot uz mapes."
+    "message": "Apvienot mapes pievienošanas ierakstus (pirms/pēc/iekšā mapju rindās, pirms/pēc grāmatzīmju rindās) vienā apakšizvēlnes ierakstā."
   },
   "tabRowStage": {
     "message": "Nosūtīt uz sagatavi"

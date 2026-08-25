@@ -2495,7 +2495,7 @@
     "message": "Contraer entradas de añadir carpeta"
   },
   "optionCollapseAddFolderMenuHint": {
-    "message": "Fusiona las tres entradas de añadir carpeta (antes/después/dentro) en una subentrada al hacer clic derecho en una carpeta."
+    "message": "将添加文件夹条目（文件夹行上的之前/之后/内部，书签行上的之前/之后）合并为一个子菜单条目。"
   },
   "tabRowStage": {
     "message": "Enviar a staging"

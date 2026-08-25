@@ -410,6 +410,78 @@ export function initActions(ctx = {}) {
             }
         });
     };
+    // Paste next to a BOOKMARK row (§5.2 extension): the clip lands as the
+    // target's next sibling — cut moves with the same-parent removal shift
+    // corrected, copy creates right after the target. A clip already sitting
+    // there is a no-op that just clears the clipboard.
+    const pasteClipBookmarkAfter = targetId => {
+        if (!clipBookmark)
+            return;
+        if (String(clipBookmark.id) === String(targetId))
+            return;
+        const clip = clipBookmark;
+        chrome.bookmarks.get(clip.id, nodes => {
+            if (!nodes || !nodes.length || chrome.runtime.lastError) {
+                toast(_m('pasteGone'));
+                cancelClipBookmark();
+                return;
+            }
+            const node = nodes[0];
+            chrome.bookmarks.get(targetId, targets => {
+                if (!targets || !targets.length || chrome.runtime.lastError)
+                    return;
+                const target = targets[0];
+                chrome.bookmarks.getChildren(target.parentId, siblings => {
+                    if (chrome.runtime.lastError || !siblings)
+                        return;
+                    let targetIndex = -1;
+                    let clipIndex = -1;
+                    for (let i = 0, l = siblings.length; i < l; i++) {
+                        if (String(siblings[i].id) === String(target.id))
+                            targetIndex = i;
+                        else if (String(siblings[i].id) === String(clip.id))
+                            clipIndex = i;
+                    }
+                    if (targetIndex < 0)
+                        return;
+                    if (clip.mode === 'cut') {
+                        const sameParent = node.parentId === target.parentId;
+                        if (sameParent && clipIndex === targetIndex + 1) {
+                            // already the next sibling: nothing to do
+                            cancelClipBookmark();
+                            return;
+                        }
+                        // Chrome removes the node BEFORE inserting at the
+                        // requested index: when the clip sits before the
+                        // target in the same parent, the removal shifts the
+                        // target down one — aim one slot lower so the clip
+                        // still lands immediately after it.
+                        const index = (sameParent && clipIndex > -1 && clipIndex < targetIndex)
+                            ? targetIndex
+                            : targetIndex + 1;
+                        chrome.bookmarks.move(clip.id, { parentId: target.parentId, index }, () => {
+                            if (chrome.runtime.lastError)
+                                return;
+                            clipBookmark = null;
+                            clearCutMark();
+                            refreshTree();
+                            toast(_m('pasteDone'));
+                        });
+                    } else {
+                        chrome.bookmarks.create({
+                            parentId: target.parentId,
+                            index: targetIndex + 1,
+                            title: node.title,
+                            url: node.url
+                        }, () => {
+                            refreshTree();
+                            toast(_m('pasteDone'));
+                        });
+                    }
+                });
+            });
+        });
+    };
     // "Copy/move to…" — the picker completes a single-item move/copy (§5.1).
     const copyMoveBookmarkTo = id => {
         if (!dialogs || !dialogs.BookmarkFolderPickDialog)
@@ -436,6 +508,87 @@ export function initActions(ctx = {}) {
                             return;
                         }
                         chrome.bookmarks.move(id, { parentId: folderId }, () => {
+                            if (chrome.runtime.lastError)
+                                return;
+                            refreshTree();
+                            toast(_m('stagingMoveDone', '1'));
+                        });
+                    }
+                }
+            });
+        });
+    };
+    // Recursive folder clone for the copy path below: chrome.bookmarks has
+    // no subtree copy, so folders are recreated depth-first (bookmarks and
+    // separators are plain URL nodes and copy with a single create).
+    const copyFolderTree = (node, parentId, done) => {
+        chrome.bookmarks.create({ parentId, title: node.title || '' }, created => {
+            if (chrome.runtime.lastError || !created) {
+                if (done)
+                    done(false);
+                return;
+            }
+            const children = node.children || [];
+            let pending = children.length;
+            if (!pending) {
+                if (done)
+                    done(true);
+                return;
+            }
+            let ok = true;
+            for (const child of children) {
+                if (child.url) {
+                    chrome.bookmarks.create({
+                        parentId: created.id,
+                        title: child.title || '',
+                        url: child.url
+                    }, () => {
+                        if (chrome.runtime.lastError)
+                            ok = false;
+                        if (--pending === 0 && done)
+                            done(ok);
+                    });
+                } else {
+                    copyFolderTree(child, created.id, success => {
+                        ok = ok && success;
+                        if (--pending === 0 && done)
+                            done(ok);
+                    });
+                }
+            }
+        });
+    };
+    // The folder-row "Copy/move to…" (§5.1 extension): the same three-button
+    // picker, with the folder itself + its descendants excluded (a move into
+    // its own subtree is a Chrome-rejected cycle) and a recursive clone on
+    // the copy path.
+    const copyMoveFolderTo = folderId => {
+        if (!dialogs || !dialogs.BookmarkFolderPickDialog)
+            return;
+        chrome.bookmarks.getSubTree(folderId, subtree => {
+            if (!subtree || !subtree.length || chrome.runtime.lastError)
+                return;
+            const banned = [];
+            const collect = n => {
+                banned.push(String(n.id));
+                (n.children || []).forEach(collect);
+            };
+            collect(subtree[0]);
+            dialogs.BookmarkFolderPickDialog.open({
+                mode: null,
+                excludeIds: banned,
+                onPick: (targetId, action) => {
+                    if (action === 'copy') {
+                        copyFolderTree(subtree[0], targetId, () => {
+                            refreshTree();
+                            toast(_m('stagingCopyDone', '1'));
+                        });
+                    } else {
+                        if (subtree[0].parentId === targetId) {
+                            toast(_m('pasteDone'));
+                            return;
+                        }
+                        chrome.bookmarks.move(folderId, { parentId: targetId }, () => {
                             if (chrome.runtime.lastError)
                                 return;
                             refreshTree();
@@ -854,7 +1007,9 @@ export function initActions(ctx = {}) {
     actions.hasClipBookmark = hasClipBookmark;
     actions.hasCutClipboard = hasCutClipboard;
     actions.pasteClipBookmarkInto = pasteClipBookmarkInto;
+    actions.pasteClipBookmarkAfter = pasteClipBookmarkAfter;
     actions.copyMoveBookmarkTo = copyMoveBookmarkTo;
+    actions.copyMoveFolderTo = copyMoveFolderTo;
     actions.reapplyCutState = reapplyCutState;
 
     return actions;

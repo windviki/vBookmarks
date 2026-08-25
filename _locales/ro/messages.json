@@ -2495,7 +2495,7 @@
     "message": "Restrânge intrările de adăugare folder"
   },
   "optionCollapseAddFolderMenuHint": {
-    "message": "Combină cele trei intrări de adăugare folder (înainte/după/în interior) într-o singură intrare de submeniu la clic dreapta pe folder."
+    "message": "Combină intrările de adăugare folder (înainte/după/în interior pe rândurile de foldere, înainte/după pe rândurile de marcaje) într-o singură intrare de submeniu."
   },
   "tabRowStage": {
     "message": "Trimite în staging"

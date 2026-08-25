@@ -2495,7 +2495,7 @@
     "message": "Ahenda kausta-lisamise kirjed"
   },
   "optionCollapseAddFolderMenuHint": {
-    "message": "Ühenda kolm kausta-lisamise kirjet (enne/pärast/sees) üheks alammenüüks kausta paremklõpsul."
+    "message": "Ühenda kausta lisamise kirjed (kaustaridade ees/taga/sees, järjehoidjate ridade ees/taga) üheks alammenüü kirjeks."
   },
   "tabRowStage": {
     "message": "Saada lavale"

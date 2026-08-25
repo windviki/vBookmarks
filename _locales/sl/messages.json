@@ -2495,7 +2495,7 @@
     "message": "Strni vnose za dodajanje mape"
   },
   "optionCollapseAddFolderMenuHint": {
-    "message": "Združi tri vnose za dodajanje mape (pred/za/znotraj) v en podmeni pri desnem kliku na mapo."
+    "message": "Združi vnose za dodajanje mape (pred/za/znotraj vrstic map, pred/za vrstic zaznamkov) v en vnos podmenija."
   },
   "tabRowStage": {
     "message": "Pošlji v pripravljalnico"

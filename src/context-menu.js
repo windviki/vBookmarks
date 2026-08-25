@@ -92,9 +92,11 @@ export function initContextMenu(ctx = {}) {
     const $folderTabGroupSubmenu = $('folder-tab-group-submenu');
     const $folderSortSubmenu = $('folder-sort-submenu');
     const $bookmarkTabGroupSubmenu = $('bookmark-tab-group-submenu');
-    // velvet staging §6/§7: the folder copy-list + add-folder flyouts.
+    // velvet staging §6/§7: the folder copy-list + add-folder flyouts, plus
+    // the bookmark-menu twin of the add-folder flyout.
     const $folderCopySubmenu = $('folder-copy-submenu');
     const $folderAddSubmenu = $('folder-add-submenu');
+    const $bookmarkAddSubmenu = $('bookmark-add-submenu');
     let openSubmenu = null;
 
     // Collapse settings (lazy, read from ctx at open time): the tab-group
@@ -144,6 +146,9 @@ export function initContextMenu(ctx = {}) {
         // entries (sub- prefixed ids, dispatched through the same cases)
         'sub-add-folder-before-folder', 'sub-add-folder-after-folder',
         'folder-edit',
+        // the folder-menu copy/move picker entry: roots are immovable and
+        // copying a root is nonsense — grey it like folder-edit
+        'folder-copy-move-to',
         'add-bookmark-before-folder', 'add-bookmark-after-folder',
         'add-folder-before-folder', 'add-folder-after-folder',
         'add-folder-separator', 'folder-delete'
@@ -319,7 +324,7 @@ export function initContextMenu(ctx = {}) {
         }
         // Park any open collapsed-group flyout and its expanded marker.
         for (const sub of [$folderTabGroupSubmenu, $folderSortSubmenu, $bookmarkTabGroupSubmenu,
-            $folderCopySubmenu, $folderAddSubmenu]) {
+            $folderCopySubmenu, $folderAddSubmenu, $bookmarkAddSubmenu]) {
             if (!sub)
                 continue;
             sub.style.left = '-999px';
@@ -545,10 +550,12 @@ export function initContextMenu(ctx = {}) {
     const applyCollapseState = menu => {
         const isFolder = menu === $folderContextMenu;
         menu.classList.toggle('collapse-tab-group', collapseTabGroup());
+        // velvet staging §7: the add-folder block collapses on BOTH menus
+        // (default ON) — the bookmark menu folds its before/after pair into
+        // the same "Add folder" flyout shape the folder menu uses.
+        menu.classList.toggle('collapse-add-folder', collapseAddFolder());
         if (isFolder) {
             menu.classList.toggle('collapse-sort', collapseSort());
-            // velvet staging §7: the add-folder block collapses too (default ON)
-            menu.classList.toggle('collapse-add-folder', collapseAddFolder());
         }
         // The folder menu's content-dependent greying (open/tab-group entries
         // need URL children, sort needs any child) is applied by
@@ -1037,6 +1044,21 @@ export function initContextMenu(ctx = {}) {
                 // too — same flat rule.)
                 const inTree = el.parentNode.id.startsWith('neat-tree-item-');
                 setPositionalItems(inTree);
+                // velvet staging §7 twin: the collapsed add-folder flyout
+                // entry follows the flat entries' tree-only rule — '' defers
+                // to the collapse-add-folder CSS, 'none' forces it off.
+                const addCollapseItem = $('bookmark-add-collapse');
+                if (addCollapseItem)
+                    addCollapseItem.style.display = inTree ? '' : 'none';
+                // velvet staging §5.2 extension: paste-as-next-sibling rides
+                // TREE bookmark rows while the clipboard holds one.
+                const pasteBmItem = $('paste-here-bookmark');
+                if (pasteBmItem) {
+                    const bmActions = ctx.actions;
+                    pasteBmItem.style.display =
+                        (inTree && bmActions && bmActions.hasClipBookmark && bmActions.hasClipBookmark())
+                            ? 'block' : 'none';
+                }
                 // v4 task-2: "Reveal in tree" only makes sense for rows that
                 // live outside the tree view (recent list / search results);
                 // on a tree row the entry would be a no-op, so hide it there.
@@ -1316,6 +1338,11 @@ export function initContextMenu(ctx = {}) {
             case 'cut-bookmark':
                 actions.setClipBookmark('cut', id, groupTitle);
                 break;
+            // velvet staging §5.2 extension: paste the clipboard bookmark as
+            // this row's NEXT SIBLING (copy keeps, cut consumes).
+            case 'paste-here-bookmark':
+                actions.pasteClipBookmarkAfter(id);
+                break;
             case 'copy-move-to': {
                 // velvet staging §2.4: an UNbookmarked staging row has no
                 // tree id — its li id is a data ordinal. The §3.3 unfav
@@ -1558,6 +1585,11 @@ export function initContextMenu(ctx = {}) {
                 case 'folder-edit':
                     actions.editBookmarkFolder(id);
                     break;
+                // velvet staging §5.1 extension: the folder-row copy/move
+                // picker (subtree copy on the copy path, cycle-safe targets)
+                case 'folder-copy-move-to':
+                    actions.copyMoveFolderTo(id);
+                    break;
                 case 'folder-delete':
                     actions.deleteBookmarks(id, urlsLen, children.length - urlsLen);
                     break;
@@ -1626,7 +1658,7 @@ export function initContextMenu(ctx = {}) {
             e.textContent = _m('sortMenuOptions');
         else if (e.id === 'folder-copy-collapse')
             e.textContent = _m('folderCopyList');
-        else if (e.id === 'folder-add-collapse')
+        else if (e.id === 'folder-add-collapse' || e.id === 'bookmark-add-collapse')
             e.textContent = _m('addFolderMenu');
         else
             e.textContent = _m('tabGroupOptions');
@@ -1636,6 +1668,7 @@ export function initContextMenu(ctx = {}) {
     entryLabel($('bookmark-tab-group-collapse'));
     entryLabel($('folder-copy-collapse'));
     entryLabel($('folder-add-collapse'));
+    entryLabel($('bookmark-add-collapse'));
     const bindSubmenu = (sub, handler) => {
         if (!sub)
             return;
@@ -1652,6 +1685,7 @@ export function initContextMenu(ctx = {}) {
     bindSubmenu($bookmarkTabGroupSubmenu, bookmarkContextHandler);
     bindSubmenu($folderCopySubmenu, folderContextHandler);
     bindSubmenu($folderAddSubmenu, folderContextHandler);
+    bindSubmenu($bookmarkAddSubmenu, bookmarkContextHandler);
     const bindSubmenuHover = menu => {
         menu.addEventListener('mouseover', e => {
             const t = e.target;
@@ -2201,7 +2235,10 @@ export function initContextMenu(ctx = {}) {
         for (let i = 0; i < POSITIONAL_IDS.length; i++) {
             const item = $(POSITIONAL_IDS[i]);
             if (item)
-                item.style.display = visible ? 'block' : 'none';
+                // '' (not 'block') when visible: the add-folder pair is also
+                // governed by the collapse-add-folder CSS class, which an
+                // inline 'block' would override.
+                item.style.display = visible ? '' : 'none';
         }
     };
 
@@ -2243,6 +2280,7 @@ export function initContextMenu(ctx = {}) {
         bookmarkTabGroupSubmenu: $bookmarkTabGroupSubmenu || null,
         folderCopySubmenu: $folderCopySubmenu || null,
         folderAddSubmenu: $folderAddSubmenu || null,
+        bookmarkAddSubmenu: $bookmarkAddSubmenu || null,
         openSubmenuFor, closeSubmenu, toggleSubmenuFor, submenuOpen, submenuParentEntry
     };
 }

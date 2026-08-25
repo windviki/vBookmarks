@@ -2491,7 +2491,7 @@
     "message": "Recolher entradas de adicionar pasta"
   },
   "optionCollapseAddFolderMenuHint": {
-    "message": "Mesclar as três entradas de adicionar pasta (antes/depois/dentro) em uma única entrada de submenu ao clicar com o botão direito em uma pasta."
+    "message": "将添加文件夹的条目（文件夹行上的前/后/内部，书签行上的前/后）合并为一个子菜单条目。"
   },
   "tabRowStage": {
     "message": "Enviar para palco"

@@ -2495,7 +2495,7 @@
     "message": "Sažmi unose za dodavanje mape"
   },
   "optionCollapseAddFolderMenuHint": {
-    "message": "Spoji tri unosa za dodavanje mape (prije/poslije/unutar) u jedan podizbornik pri desnom kliku na mapu."
+    "message": "Spoji unose za dodavanje mape (prije/poslije/unutar na redovima mapa, prije/poslije na redovima oznaka) u jedan unos podizbornika."
   },
   "tabRowStage": {
     "message": "Pošalji u pripremu"

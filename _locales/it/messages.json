@@ -2495,7 +2495,7 @@
     "message": "Comprimi le voci di aggiunta cartella"
   },
   "optionCollapseAddFolderMenuHint": {
-    "message": "Unisci le tre voci di aggiunta cartella (prima/dopo/dentro) in una sola voce di sottomenu al clic destro su cartella."
+    "message": "Unisci le voci di aggiunta cartella (prima/dopo/dentro sulle righe cartella, prima/dopo sulle righe segnalibro) in una singola voce di sottomenu."
   },
   "tabRowStage": {
     "message": "Invia a staging"

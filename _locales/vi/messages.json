@@ -2495,7 +2495,7 @@
     "message": "Thu gọn các mục thêm thư mục"
   },
   "optionCollapseAddFolderMenuHint": {
-    "message": "Gộp ba mục thêm thư mục (trước/sau/trong) thành một mục con khi nhấp chuột phải vào thư mục."
+    "message": "将添加文件夹条目（文件夹行上的前/后/内部，书签行上的前/后）合并为一个子菜单条目。"
   },
   "tabRowStage": {
     "message": "Đưa vào vùng chờ"

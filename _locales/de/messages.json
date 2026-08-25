@@ -2495,7 +2495,7 @@
     "message": "Ordner-hinzufügen-Einträge einklappen"
   },
   "optionCollapseAddFolderMenuHint": {
-    "message": "Die drei Ordner-hinzufügen-Einträge (vor/nach/in) bei Rechtsklick auf Ordner zu einem Untermenüeintrag zusammenfassen."
+    "message": "将添加文件夹条目（文件夹行上的之前/之后/内部，书签行上的之前/之后）合并为一个子菜单条目。"
   },
   "tabRowStage": {
     "message": "An Staging senden"

@@ -2495,7 +2495,7 @@
     "message": "Sutraukti aplanko pridėjimo elementus"
   },
   "optionCollapseAddFolderMenuHint": {
-    "message": "Sujungti tris aplanko pridėjimo elementus (prieš/po/viduje) į vieną submeniu elementą, kai dešiniuoju pelės klavišu spustelite aplanką."
+    "message": "Sujungti aplankų pridėjimo įrašus (prieš/po/viduje aplankų eilutėse, prieš/po žymių eilutėse) į vieną submeniu įrašą."
   },
   "tabRowStage": {
     "message": "Siųsti į sceną"

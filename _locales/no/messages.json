@@ -2495,7 +2495,7 @@
     "message": "Slå sammen legg-til-mappe-oppføringene"
   },
   "optionCollapseAddFolderMenuHint": {
-    "message": "Slå sammen de tre legg-til-mappe-oppføringene (før/etter/inni) til én undermenyoppføring ved høyreklikk på mapper."
+    "message": "Slå sammen legg-til-mappe-oppføringene (før/etter/inni på mapperader, før/etter på bokmerkerader) til én undermenypost."
   },
   "tabRowStage": {
     "message": "Send til staging"

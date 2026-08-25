@@ -224,7 +224,8 @@ const setup = (opts = {}) => {
         el('DIV', stageItem).classList.add('menu-item');
     // the bookmark-menu id-dependent entries the unfav-staging-row rule hides
     for (const bmId of ['bookmark-edit', 'bookmark-delete', 'copy-title-and-url',
-        'copy-move-to', 'copy-bookmark', 'cut-bookmark', 'paste-here'])
+        'copy-move-to', 'copy-bookmark', 'cut-bookmark', 'paste-here',
+        'paste-here-bookmark', 'folder-copy-move-to'])
         el('DIV', bmId).classList.add('menu-item');
     // velvet staging §6/§7: the folder copy-list collapse + flyout, and the
     // add-folder collapse entry (flyout items parented via _children so the
@@ -246,6 +247,16 @@ const setup = (opts = {}) => {
         const item = el('DIV', aid);
         item.classList.add('menu-item');
         folderAddSubmenu._children.push(item);
+    }
+    // the bookmark-menu twin: flyout entry + its two before/after items
+    const bookmarkAddEntry = el('DIV', 'bookmark-add-collapse');
+    bookmarkAddEntry.classList.add('menu-item', 'has-submenu');
+    const bookmarkAddSubmenu = el('MENU', 'bookmark-add-submenu');
+    bookmarkAddSubmenu._children = [];
+    for (const bid of ['sub-add-folder-before-bookmark', 'sub-add-folder-after-bookmark']) {
+        const item = el('DIV', bid);
+        item.classList.add('menu-item');
+        bookmarkAddSubmenu._children.push(item);
     }
     // v4 task-3 #16: the dupes group-head menu items (open-time labels)
     el('DIV', 'dupes-group-clean');
@@ -283,7 +294,7 @@ const setup = (opts = {}) => {
     const allMenus = [bookmarkMenu, folderMenu, separatorMenu, searchHistoryMenu,
         histRowMenu, dupesGroupMenu, paletteCmdMenu, viewTabMenu,
         tabRowMenu, tabGroupMenu, tabClosedMenu, tabClosedTabMenu, stagingGroupMenu,
-        folderTabGroupSubmenu, folderSortSubmenu, bookmarkTabGroupSubmenu];
+        folderTabGroupSubmenu, folderSortSubmenu, bookmarkTabGroupSubmenu, bookmarkAddSubmenu];
     globalThis.document = {
         getElementById: id => byId[id] || null,
         querySelectorAll: sel => (sel === 'menu[type=context]' ? allMenus : []),
@@ -340,8 +351,10 @@ const setup = (opts = {}) => {
         'openBookmarksInGroup', 'openInExistingTabGroup', 'openBookmarksNewWindow',
         'editBookmarkFolder', 'deleteBookmark',
         'deleteBookmarks', 'addSeparator', 'deleteSeparator',
-        // velvet staging §5: the tree clipboard trio
+        // velvet staging §5: the tree clipboard trio (+ the §5.2/§5.1
+        // extensions: paste-as-next-sibling, the folder-row picker)
         'setClipBookmark', 'copyMoveBookmarkTo', 'pasteClipBookmarkInto',
+        'pasteClipBookmarkAfter', 'copyMoveFolderTo',
         'copyFolderTitlesAndUrls'])
         actions[name] = (...args) => {
             actionCalls.push([name, ...args]);
@@ -577,7 +590,7 @@ describe('module API', () => {
         // v4 task-4 #6: the palette custom-command row menu (edit/delete)
         expect(menus.paletteCmdMenu).toBe(paletteCmdMenu);
         expect(Object.keys(menus).sort()).toEqual(
-            ['bookmarkMenu', 'bookmarkTabGroupSubmenu', 'clearMenu', 'closeMenu', 'closeSubmenu',
+            ['bookmarkAddSubmenu', 'bookmarkMenu', 'bookmarkTabGroupSubmenu', 'clearMenu', 'closeMenu', 'closeSubmenu',
                 'dupesGroupMenu', 'folderAddSubmenu', 'folderCopySubmenu', 'folderMenu',
                 'folderSortSubmenu', 'folderTabGroupSubmenu',
                 'histRowMenu', 'openSubmenuFor', 'paletteCmdMenu', 'searchHistoryMenu',
@@ -2132,8 +2145,10 @@ describe('switchBookmarkMenu', () => {
         for (const id of ids)
             expect(byId[id].style.display, id).toBe('none');
         menus.switchBookmarkMenu(false);
+        // '' (not 'block'): visible positional items defer to the CSS so the
+        // collapse-add-folder class can still fold the add-folder pair.
         for (const id of ids)
-            expect(byId[id].style.display, id).toBe('block');
+            expect(byId[id].style.display, id).toBe('');
     });
 });
 
@@ -2414,8 +2429,9 @@ describe('flat bookmark menu outside the tree view (v4 task-3 #11)', () => {
             expect(byId[id].style.display, id).toBe('none');
         const treeRow = makeBookmarkRow('42');
         openOn(treeRow.a);
+        // '' = CSS-governed visible (collapse-add-folder may fold the pair)
         for (const id of POSITIONAL)
-            expect(byId[id].style.display, id).toBe('block');
+            expect(byId[id].style.display, id).toBe('');
     });
 
     it('flattens dead/dupes/stats/results view rows as well', () => {
@@ -2435,7 +2451,7 @@ describe('flat bookmark menu outside the tree view (v4 task-3 #11)', () => {
         const treeRow = makeBookmarkRow('42');
         openOn(treeRow.a);
         for (const id of POSITIONAL)
-            expect(byId[id].style.display, id).toBe('block');
+            expect(byId[id].style.display, id).toBe('');
     });
 });
 
@@ -3053,11 +3069,51 @@ describe('tree clipboard entries (velvet staging §5)', () => {
         expect(ctx2.actionCalls.some(c => c[0] === 'pasteClipBookmarkInto' && c[1] === '7')).toBe(true);
     });
 
+    // §5.2 extension: bookmark rows paste as the target's next sibling
+    it('paste-here-bookmark shows on tree bookmark rows only with a loaded clipboard', () => {
+        const loaded = setup({ clipboard: true });
+        loaded.openOn(loaded.makeBookmarkRow('42').a);
+        expect(loaded.byId['paste-here-bookmark'].style.display).toBe('block');
+        const empty = setup({ clipboard: false });
+        empty.openOn(empty.makeBookmarkRow('42').a);
+        expect(empty.byId['paste-here-bookmark'].style.display).toBe('none');
+        // out-of-tree rows (flat result lists) never offer it
+        const recent = setup({ clipboard: true });
+        const row = recent.makeBookmarkRow('43');
+        row.li.id = 'neat-recent-item-43';
+        recent.openOn(row.a);
+        expect(recent.byId['paste-here-bookmark'].style.display).toBe('none');
+        // dispatch runs the next-sibling paste with the row id
+        const ctx2 = setup({ clipboard: true });
+        ctx2.openOn(ctx2.makeBookmarkRow('42').a);
+        fire(ctx2.bookmarkMenu, 'mouseup',
+            makeEvent({ button: 0, target: ctx2.menuItem('paste-here-bookmark') }));
+        expect(ctx2.actionCalls.some(c => c[0] === 'pasteClipBookmarkAfter' && c[1] === '42')).toBe(true);
+    });
+
+    // §5.1 extension: the folder-row copy/move picker entry
+    it('folder-copy-move-to dispatches the folder picker and greys out on roots', () => {
+        const ctx = setup({});
+        ctx.openOn(ctx.makeFolderRow('7').span);
+        fire(ctx.folderMenu, 'mouseup',
+            makeEvent({ button: 0, target: ctx.menuItem('folder-copy-move-to') }));
+        expect(ctx.actionCalls.some(c => c[0] === 'copyMoveFolderTo' && c[1] === '7')).toBe(true);
+        // root folders (parent '0') refuse it like folder-edit
+        const root = setup({});
+        const rootRow = root.makeFolderRow('1', '0');
+        root.openOn(rootRow.span);
+        expect(root.byId['folder-copy-move-to'].classList.contains('disabled')).toBe(true);
+        const plain = setup({});
+        plain.openOn(plain.makeFolderRow('7').span);
+        expect(plain.byId['folder-copy-move-to'].classList.contains('disabled')).toBe(false);
+    });
+
     it('copy/cut follow the positional tree-visibility rule', () => {
         const ctx = setup({});
         ctx.openOn(ctx.makeBookmarkRow('42').a);
-        expect(ctx.byId['copy-bookmark'].style.display).toBe('block');
-        expect(ctx.byId['cut-bookmark'].style.display).toBe('block');
+        // '' = CSS-governed visible (setPositionalItems no longer pins 'block')
+        expect(ctx.byId['copy-bookmark'].style.display).toBe('');
+        expect(ctx.byId['cut-bookmark'].style.display).toBe('');
         // switchBookmarkMenu(true) disables the positional set (search mode:
         // a results row is never a tree row)
         ctx.menus.switchBookmarkMenu(true);
@@ -3105,6 +3161,68 @@ describe('folder copy-list + add-folder collapse (velvet staging §6/§7)', () =
         const dflt = setup({});
         dflt.openOn(dflt.makeFolderRow('7').span);
         expect(dflt.folderMenu.classList.contains('collapse-add-folder')).toBe(true);
+    });
+
+    // §7 twin: the setting folds the BOOKMARK menu's add-folder pair too —
+    // the original bug report was "the option never does anything" because
+    // ctx.collapseAddFolderMenu was never wired in neat.js (the class sat
+    // permanently on) while the flyout entry carried a leftover inline
+    // display:none that the CSS could not lift.
+    it('the collapse-add-folder setting is wired end to end (neat.js getter + store sync key + options row)', () => {
+        // The original bug: context-menu fell back to "always collapsed"
+        // because neat.js never exposed ctx.collapseAddFolderMenu — the
+        // module test's own getter hid the gap. Pin all three wiring layers
+        // by source contract.
+        const neatSource = fs.readFileSync(new URL('../src/neat.js', import.meta.url), 'utf8');
+        expect(neatSource).toContain("get collapseAddFolderMenu() { return store.get('collapseAddFolderMenu', '1') === '1'; }");
+        const storeSource = fs.readFileSync(new URL('../src/store.js', import.meta.url), 'utf8');
+        expect(storeSource).toContain("'collapseAddFolderMenu'");
+        const optionsHtml = fs.readFileSync(new URL('../pages/options.html', import.meta.url), 'utf8');
+        expect(optionsHtml).toContain('id="collapse-add-folder-menu"');
+    });
+
+    it('the collapse-add-folder class rides the bookmark menu as well', () => {
+        const on = setup({ collapseAddFolderMenu: true });
+        on.openOn(on.makeBookmarkRow('42').a);
+        expect(on.bookmarkMenu.classList.contains('collapse-add-folder')).toBe(true);
+        const off = setup({ collapseAddFolderMenu: false });
+        off.openOn(off.makeBookmarkRow('42').a);
+        expect(off.bookmarkMenu.classList.contains('collapse-add-folder')).toBe(false);
+    });
+
+    it('the bookmark add-folder flyout entry is tree-only and defers to the collapse CSS', () => {
+        const ctx = setup({});
+        // label assigned at init (same addFolderMenu key as the folder twin)
+        expect(ctx.byId['bookmark-add-collapse'].textContent).toBe('addFolderMenu');
+        ctx.openOn(ctx.makeBookmarkRow('42').a);
+        // '' = CSS-governed: .collapse-add-folder decides flat-vs-flyout
+        expect(ctx.byId['bookmark-add-collapse'].style.display).toBe('');
+        const recent = ctx.makeBookmarkRow('43');
+        recent.li.id = 'neat-recent-item-43';
+        ctx.openOn(recent.a);
+        expect(ctx.byId['bookmark-add-collapse'].style.display).toBe('none');
+    });
+
+    it('the bookmark add-folder flyout items dispatch through the sub- normalization', () => {
+        const ctx = setup({});
+        ctx.openOn(ctx.makeBookmarkRow('42').a);
+        fire(ctx.bookmarkMenu, 'mouseup',
+            makeEvent({ button: 0, target: ctx.menuItem('sub-add-folder-before-bookmark') }));
+        expect(ctx.actionCalls).toEqual([['addNewBookmarkNode', '42', 'before', '', '']]);
+    });
+
+    it('the flyout markup exists identically in popup.html and sidepanel.html', () => {
+        for (const page of ['popup.html', 'sidepanel.html']) {
+            const html = fs.readFileSync(new URL(`../pages/${page}`, import.meta.url), 'utf8');
+            expect(html.includes('id="bookmark-add-submenu"'), page).toBe(true);
+            expect(html.includes('id="paste-here-bookmark"'), page).toBe(true);
+            expect(html.includes('id="folder-copy-move-to"'), page).toBe(true);
+            // the folder flyout entry must NOT carry an inline display:none —
+            // the CSS class alone decides (the regression this batch fixes)
+            const entry = html.match(/<div id="folder-add-collapse"[^>]*>/);
+            expect(entry, page).toBeTruthy();
+            expect(entry[0].includes('display:none'), page).toBe(false);
+        }
     });
 
     it('an empty folder greys the copy-list entry and its flyout items', () => {

@@ -2495,7 +2495,7 @@
     "message": "Sbalit položky přidání složky"
   },
   "optionCollapseAddFolderMenuHint": {
-    "message": "Sloučit tři položky přidání složky (před/po/uvnitř) do jedné podnabídky při kliknutí pravým tlačítkem na složku."
+    "message": "将添加文件夹条目（文件夹行上的前/后/内部，书签行上的前/后）合并为一个子菜单条目。"
   },
   "tabRowStage": {
     "message": "Odeslat do přípravy"

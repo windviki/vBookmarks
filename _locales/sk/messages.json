@@ -2495,7 +2495,7 @@
     "message": "Zbaliť položky pridania priečinka"
   },
   "optionCollapseAddFolderMenuHint": {
-    "message": "Zlúčiť tri položky pridania priečinka (pred/po/vnútri) do jednej podponuky pri kliknutí pravým tlačidlom na priečinok."
+    "message": "Zlučiť položky pridania priečinka (pred/po/vo vnútri riadkov priečinkov, pred/po na riadkoch záložiek) do jednej položky podponuky."
   },
   "tabRowStage": {
     "message": "Odoslať do stagingu"

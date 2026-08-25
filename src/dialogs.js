@@ -421,6 +421,13 @@ export function initDialogs(ctx = {}) {
                 return;
             rememberInvoker();
             BookmarkFolderPickDialog.onPick = opts.onPick || (() => {});
+            // Folder move/copy safety (velvet staging §5.1 extension): callers
+            // moving a FOLDER pass its own subtree's ids as excludeIds — the
+            // picker hides those rows and chips so a move can never target
+            // the folder itself or a descendant (a Chrome-rejected cycle).
+            BookmarkFolderPickDialog.excludeIds = (opts.excludeIds && opts.excludeIds.length)
+                ? new Set(opts.excludeIds.map(String))
+                : null;
             const hasMode = Object.prototype.hasOwnProperty.call(opts, 'mode');
             BookmarkFolderPickDialog.mode = hasMode ? opts.mode : 'pick';
             BookmarkFolderPickDialog.selectedFolderId = null;
@@ -476,6 +483,11 @@ export function initDialogs(ctx = {}) {
                 const roots = (tree && tree[0] && tree[0].children) ? tree[0].children : (tree || []);
                 walk(roots, 0, '');
                 BookmarkFolderPickDialog.folders = folders;
+                // The roster-prune `valid` set stays COMPLETE (banned folders
+                // included) — excluding them from the walk would permanently
+                // prune pins/recents pointing into the moved folder's
+                // subtree; only the rendered rows/chips skip them.
+                const banned = BookmarkFolderPickDialog.excludeIds;
                 // Lazy roster hygiene: drop pin/recent ids the tree no longer
                 // has, writing back only when something actually died.
                 const valid = new Set(folders.map(f => f.id));
@@ -495,7 +507,9 @@ export function initDialogs(ctx = {}) {
                     store.set('folderPickRecents', writeIdList(recents));
                 }
                 BookmarkFolderPickDialog.renderChips(chipsEl, pins, prunedRecents.list, paths);
-                renderRows(list, folders, pins, isLegacy);
+                renderRows(list, banned
+                    ? folders.filter(f => !banned.has(String(f.id)))
+                    : folders, pins, isLegacy);
             };
             const renderRows = (list2, folders, pins, isLegacy2) => {
                 if (!folders.length) {
@@ -595,6 +609,10 @@ export function initDialogs(ctx = {}) {
         renderChips: (chipsEl, pins, recents, paths) => {
             if (!chipsEl)
                 return;
+            // Cycle safety: banned chips never render (a pinned/recent target
+            // inside the folder being moved stays in the roster, just hidden).
+            const banned = BookmarkFolderPickDialog.excludeIds;
+            const allowed = id => !banned || !banned.has(String(id));
             const model = chipsModel(pins, recents);
             let html = '';
             const chip = (id, icon) => {
@@ -604,14 +622,20 @@ export function initDialogs(ctx = {}) {
                     `<span class="folder-pick-chip-name" dir="auto">${htmlspecialchars(path || id)}</span></button>`;
             };
             if (model.pins.length) {
-                html += `<span class="folder-pick-chip-label">${htmlspecialchars(_m('folderPickPinned'))}</span>`;
-                for (const id of model.pins)
-                    html += chip(id, PIN_ICON);
+                const shown = model.pins.filter(allowed);
+                if (shown.length) {
+                    html += `<span class="folder-pick-chip-label">${htmlspecialchars(_m('folderPickPinned'))}</span>`;
+                    for (const id of shown)
+                        html += chip(id, PIN_ICON);
+                }
             }
             if (model.recents.length) {
-                html += `<span class="folder-pick-chip-label">${htmlspecialchars(_m('folderPickRecent'))}</span>`;
-                for (const id of model.recents)
-                    html += chip(id, CLOCK_ICON);
+                const shown = model.recents.filter(allowed);
+                if (shown.length) {
+                    html += `<span class="folder-pick-chip-label">${htmlspecialchars(_m('folderPickRecent'))}</span>`;
+                    for (const id of shown)
+                        html += chip(id, CLOCK_ICON);
+                }
             }
             chipsEl.innerHTML = html;
             chipsEl.hidden = !html;

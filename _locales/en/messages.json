@@ -2752,7 +2752,7 @@
     "message": "Collapse the add-folder entries"
   },
   "optionCollapseAddFolderMenuHint": {
-    "message": "Merge the three add-folder entries (before/after/inside) into one submenu entry on folder right-clicks."
+    "message": "Merge the add-folder entries (before/after/inside on folder rows, before/after on bookmark rows) into one submenu entry."
   },
   "tabRowStage": {
     "message": "Send to staging"

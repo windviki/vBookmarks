@@ -2827,9 +2827,19 @@ menu[type=context] #folder-add-collapse {
 menu[type=context].collapse-add-folder #folder-add-collapse {
     display: block;
 }
+/* …and the bookmark-menu twin: the flyout entry shows with the class, the
+   two flat before/after entries hide (a bookmark row has no "inside"). */
+menu[type=context] #bookmark-add-collapse {
+    display: none;
+}
+menu[type=context].collapse-add-folder #bookmark-add-collapse {
+    display: block;
+}
 menu[type=context].collapse-add-folder #add-folder-before-folder,
 menu[type=context].collapse-add-folder #add-folder-after-folder,
-menu[type=context].collapse-add-folder #add-new-folder {
+menu[type=context].collapse-add-folder #add-new-folder,
+menu[type=context].collapse-add-folder #add-folder-before-bookmark,
+menu[type=context].collapse-add-folder #add-folder-after-bookmark {
     display: none;
 }
 menu[type=context].collapse-tab-group #open-bookmarks-in-group,

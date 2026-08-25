@@ -946,6 +946,34 @@ describe('BookmarkFolderPickDialog (4.1.0 + velvet staging §4.1)', () => {
         expect(JSON.parse(store.data.folderPickRecents)).toEqual(['2']); // '42' dead
     });
 
+    // §5.1 extension: folder move/copy passes its own subtree as excludeIds —
+    // those rows and chips hide (cycle safety) without pruning the roster.
+    it('excludeIds hides the subtree rows and chips but keeps the rosters intact', () => {
+        const store = miniStore({
+            folderPickPins: JSON.stringify(['11']),
+            folderPickRecents: JSON.stringify(['11'])
+        });
+        const d = freshDialogs(store);
+        d.BookmarkFolderPickDialog.open({
+            dialog: 'x', mode: null,
+            excludeIds: ['1', '11'],
+            onPick: () => {}
+        });
+        // only Other survives the row list…
+        const btns = rowBtns();
+        expect(btns.map(b => b.textContent)).toEqual(['Other']);
+        // …and the pinned/recent chip for '11' hides with its label
+        const chips = els['bookmark-folder-pick-chips'];
+        expect(chips.innerHTML).not.toContain('data-folder-id="11"');
+        // the rosters are NOT pruned (banned ids are hidden, not dead)
+        expect(JSON.parse(store.data.folderPickPins)).toEqual(['11']);
+        expect(JSON.parse(store.data.folderPickRecents)).toEqual(['11']);
+        // a later open without the option shows everything again
+        d.BookmarkFolderPickDialog.open({ dialog: 'x', onPick: () => {} });
+        expect(rowBtns()).toHaveLength(3);
+        expect(els['bookmark-folder-pick-chips'].innerHTML).toContain('data-folder-id="11"');
+    });
+
     it('close() restores the invoker focus by default; {restoreFocus:false} does not', () => {
         const d = freshDialogs();
         const invoker = els['cover'];

@@ -2495,7 +2495,7 @@
     "message": "Klasör ekleme girişlerini daralt"
   },
   "optionCollapseAddFolderMenuHint": {
-    "message": "Klasöre sağ tıklandığında üç klasör ekleme girişini (önce/sonra/içine) tek bir alt menü girişinde birleştirir."
+    "message": "将添加文件夹条目（文件夹行上的之前/之后/内部，书签行上的之前/之后）合并为一个子菜单条目。"
   },
   "tabRowStage": {
     "message": "Aşamaya gönder"

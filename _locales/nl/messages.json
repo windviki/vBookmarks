@@ -2495,7 +2495,7 @@
     "message": "Map-toevoegen-items samenvouwen"
   },
   "optionCollapseAddFolderMenuHint": {
-    "message": "Voeg de drie map-toevoegen-items (vóór/na/binnen) samen tot één submenu-item bij rechtsklik op mappen."
+    "message": "将添加文件夹条目（文件夹行上的之前/之后/内部，书签行上的之前/之后）合并为一个子菜单条目。"
   },
   "tabRowStage": {
     "message": "Naar staging"

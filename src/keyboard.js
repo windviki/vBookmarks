@@ -1001,6 +1001,8 @@ export function initKeyboard(ctx = {}) {
         menus.folderCopySubmenu.addEventListener('keydown', contextKeyDown);
     if (menus.folderAddSubmenu)
         menus.folderAddSubmenu.addEventListener('keydown', contextKeyDown);
+    if (menus.bookmarkAddSubmenu)
+        menus.bookmarkAddSubmenu.addEventListener('keydown', contextKeyDown);
     if (menus.bookmarkTabGroupSubmenu)
         menus.bookmarkTabGroupSubmenu.addEventListener('keydown', contextKeyDown);
 

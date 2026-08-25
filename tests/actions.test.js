@@ -316,6 +316,8 @@ describe('module API', () => {
             // velvet staging §5: the internal clipboard + single copy/move
             'setClipBookmark', 'cancelClipBookmark', 'hasClipBookmark',
             'hasCutClipboard', 'pasteClipBookmarkInto', 'copyMoveBookmarkTo',
+            // §5.2/§5.1 extensions: paste-as-next-sibling + the folder-row picker
+            'pasteClipBookmarkAfter', 'copyMoveFolderTo',
             'reapplyCutState', 'copyFolderTitlesAndUrls'
         ];
         for (const name of names)
@@ -1311,5 +1313,166 @@ describe('internal clipboard (velvet staging §5.2)', () => {
         actions.copyMoveBookmarkTo('42');
         calls.folderPick[0].onPick('33', 'copy');
         expect(creates).toEqual([{ parentId: '33', title: 'T', url: 'http://t/' }]);
+    });
+
+    // §5.2 extension: paste-as-next-sibling on bookmark rows
+    const pasteAfterSetup = nodes => {
+        const built = setup({});
+        const moves = [];
+        const creates = [];
+        built.chrome.bookmarks.get = (id, cb) => cb(nodes[id] || []);
+        built.chrome.bookmarks.getChildren = (id, cb) => cb(nodes[id] || []);
+        built.chrome.bookmarks.move = (id, dest, cb) => { moves.push([id, dest]); cb(); };
+        built.chrome.bookmarks.create = (opts, cb) => { creates.push(opts); cb({ id: 'n1' }); };
+        built.chrome.bookmarks.getTree = cb => cb([]);
+        return { ...built, moves, creates };
+    };
+
+    it('paste-after moves a cut from another parent right after the target', () => {
+        const t = pasteAfterSetup({
+            '42': [{ id: '42', parentId: '1', title: 'T', url: 'http://t/' }],
+            '77': [{ id: '77', parentId: '9', title: 'X', url: 'http://x/' }],
+            '9': [{ id: 'a', url: 'u1' }, { id: '77', url: 'u2' }, { id: 'b', url: 'u3' }]
+        });
+        t.actions.setClipBookmark('cut', '42', 'T');
+        t.actions.pasteClipBookmarkAfter('77');
+        expect(t.moves).toEqual([['42', { parentId: '9', index: 2 }]]);
+        expect(t.actions.hasClipBookmark()).toBe(false);
+    });
+
+    it('paste-after corrects the index when the cut sits BEFORE the target in the same parent', () => {
+        // Chrome removes before inserting: siblings [42(0), 77(1), b(2)] —
+        // after removal the target is at 0, so index 1 lands right after it.
+        const t = pasteAfterSetup({
+            '42': [{ id: '42', parentId: '9', title: 'T', url: 'http://t/' }],
+            '77': [{ id: '77', parentId: '9', title: 'X', url: 'http://x/' }],
+            '9': [{ id: '42', url: 'u1' }, { id: '77', url: 'u2' }, { id: 'b', url: 'u3' }]
+        });
+        t.actions.setClipBookmark('cut', '42', 'T');
+        t.actions.pasteClipBookmarkAfter('77');
+        expect(t.moves).toEqual([['42', { parentId: '9', index: 1 }]]);
+    });
+
+    it('paste-after keeps targetIndex+1 when the cut sits after the target', () => {
+        const t = pasteAfterSetup({
+            '42': [{ id: '42', parentId: '9', title: 'T', url: 'http://t/' }],
+            '77': [{ id: '77', parentId: '9', title: 'X', url: 'http://x/' }],
+            '9': [{ id: '77', url: 'u1' }, { id: 'b', url: 'u2' }, { id: '42', url: 'u3' }]
+        });
+        t.actions.setClipBookmark('cut', '42', 'T');
+        t.actions.pasteClipBookmarkAfter('77');
+        expect(t.moves).toEqual([['42', { parentId: '9', index: 1 }]]);
+    });
+
+    it('a cut already sitting right after the target is a clearing no-op', () => {
+        const t = pasteAfterSetup({
+            '42': [{ id: '42', parentId: '9', title: 'T', url: 'http://t/' }],
+            '77': [{ id: '77', parentId: '9', title: 'X', url: 'http://x/' }],
+            '9': [{ id: '77', url: 'u1' }, { id: '42', url: 'u2' }]
+        });
+        t.actions.setClipBookmark('cut', '42', 'T');
+        t.actions.pasteClipBookmarkAfter('77');
+        expect(t.moves).toEqual([]);
+        expect(t.actions.hasClipBookmark()).toBe(false);
+    });
+
+    it('paste-after on the cut row itself changes nothing', () => {
+        const t = pasteAfterSetup({
+            '42': [{ id: '42', parentId: '9', title: 'T', url: 'http://t/' }]
+        });
+        t.actions.setClipBookmark('cut', '42', 'T');
+        t.actions.pasteClipBookmarkAfter('42');
+        expect(t.moves).toEqual([]);
+        expect(t.actions.hasClipBookmark()).toBe(true);
+    });
+
+    it('paste-after copies at targetIndex+1 and keeps the clipboard', () => {
+        const t = pasteAfterSetup({
+            '42': [{ id: '42', parentId: '1', title: 'T', url: 'http://t/' }],
+            '77': [{ id: '77', parentId: '9', title: 'X', url: 'http://x/' }],
+            '9': [{ id: 'a', url: 'u1' }, { id: '77', url: 'u2' }]
+        });
+        t.actions.setClipBookmark('copy', '42', 'T');
+        t.actions.pasteClipBookmarkAfter('77');
+        expect(t.creates).toEqual([{ parentId: '9', index: 2, title: 'T', url: 'http://t/' }]);
+        expect(t.actions.hasClipBookmark()).toBe(true);
+    });
+
+    it('paste-after with a deleted clip toasts and clears', () => {
+        const t = pasteAfterSetup({
+            '77': [{ id: '77', parentId: '9', title: 'X', url: 'http://x/' }]
+        });
+        t.actions.setClipBookmark('cut', '42', 'T');
+        t.actions.pasteClipBookmarkAfter('77');
+        expect(t.actions.hasClipBookmark()).toBe(false);
+        expect(t.ops.some(o => o[0] === 'toast' && String(o[1]).includes('pasteGone'))).toBe(true);
+    });
+
+    // §5.1 extension: the folder-row copy/move picker
+    it('copyMoveFolderTo excludes its own subtree from the picker and moves', () => {
+        const { actions, chrome, calls } = setup({});
+        chrome.bookmarks.getSubTree = (id, cb) => cb([{
+            id: '50', parentId: '1', title: 'F',
+            children: [
+                { id: '51', title: 'a', url: 'http://a/' },
+                { id: '52', title: 'sub', children: [{ id: '53', title: 'b', url: 'http://b/' }] }
+            ]
+        }]);
+        const moves = [];
+        chrome.bookmarks.move = (id, dest, cb) => { moves.push([id, dest]); cb(); };
+        chrome.bookmarks.getTree = cb => cb([]);
+        actions.copyMoveFolderTo('50');
+        expect(calls.folderPick).toHaveLength(1);
+        expect(calls.folderPick[0].mode).toBeNull();
+        // self + descendant ids only, stringified
+        expect(calls.folderPick[0].excludeIds.sort()).toEqual(['50', '51', '52', '53']);
+        calls.folderPick[0].onPick('33', 'move');
+        expect(moves).toEqual([['50', { parentId: '33' }]]);
+    });
+
+    it('copyMoveFolderTo moving onto the current parent is a toast no-op', () => {
+        const { actions, chrome, calls, ops } = setup({});
+        chrome.bookmarks.getSubTree = (id, cb) => cb([{ id: '50', parentId: '1', title: 'F', children: [] }]);
+        const moves = [];
+        chrome.bookmarks.move = (id, dest, cb) => { moves.push([id, dest]); cb(); };
+        chrome.bookmarks.getTree = cb => cb([]);
+        actions.copyMoveFolderTo('50');
+        calls.folderPick[0].onPick('1', 'move');
+        expect(moves).toEqual([]);
+        expect(ops.some(o => o[0] === 'toast' && String(o[1]).includes('pasteDone'))).toBe(true);
+    });
+
+    it('copyMoveFolderTo copy path recursively clones folders, bookmarks and separators', () => {
+        const { actions, chrome, calls } = setup({});
+        chrome.bookmarks.getSubTree = (id, cb) => cb([{
+            id: '50', parentId: '1', title: 'F',
+            children: [
+                { id: '51', title: 'a', url: 'http://a/' },
+                { id: '52', title: 'sep', url: 'http://separatethis.com/#x' },
+                { id: '53', title: 'sub', children: [{ id: '54', title: 'b', url: 'http://b/' }] }
+            ]
+        }]);
+        chrome.bookmarks.getTree = cb => cb([]);
+        // record the CREATED nodes (id included) — the default double's
+        // createCalls only keep the props
+        const createdNodes = [];
+        let seq = 0;
+        chrome.bookmarks.create = (props, cb) => {
+            const node = { id: `n${seq++}`, ...props };
+            createdNodes.push(node);
+            cb(node);
+        };
+        actions.copyMoveFolderTo('50');
+        calls.folderPick[0].onPick('33', 'copy');
+        // the root folder clone first, into the picked target
+        expect(createdNodes[0]).toEqual({ id: 'n0', parentId: '33', title: 'F' });
+        // direct url children (bookmarks AND separator-form urls) clone in
+        const direct = createdNodes.filter(n => n.parentId === 'n0' && n.url);
+        expect(direct.some(n => n.url === 'http://a/' && n.title === 'a')).toBe(true);
+        expect(direct.some(n => n.url === 'http://separatethis.com/#x')).toBe(true);
+        // the subfolder clones, and ITS child lands inside the clone
+        const subClone = createdNodes.find(n => n.title === 'sub' && !n.url);
+        expect(subClone.parentId).toBe('n0');
+        expect(createdNodes.some(n => n.url === 'http://b/' && n.parentId === subClone.id)).toBe(true);
     });
 });

@@ -2495,7 +2495,7 @@
     "message": "Tiivistä kansioiden lisäysvalinnat"
   },
   "optionCollapseAddFolderMenuHint": {
-    "message": "Yhdistä kolme kansion lisäysvalintaa (ennen/jälkeen/sisään) yhdeksi alivalikoksi kansion hiiren kakkospainikkeella."
+    "message": "Yhdistä lisää-kansio -merkinnät (ennen/jälkeen/sisällä kansioriveillä, ennen/jälkeen kirjanmerkkiriveillä) yhdeksi alavalikon kohteeksi."
   },
   "tabRowStage": {
     "message": "Lähetä välitykseen"

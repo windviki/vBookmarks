@@ -2495,7 +2495,7 @@
     "message": "Zwiń pozycje dodawania folderu"
   },
   "optionCollapseAddFolderMenuHint": {
-    "message": "Połącz trzy pozycje dodawania folderu (przed/po/wewnątrz) w jeden podmenu przy prawym kliknięciu na folder."
+    "message": "将添加文件夹条目（文件夹行上的之前/之后/内部，书签行上的之前/之后）合并为一个子菜单条目。"
   },
   "tabRowStage": {
     "message": "Przenieś do poczekalni"

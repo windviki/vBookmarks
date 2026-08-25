@@ -2495,7 +2495,7 @@
     "message": "Ciutkan entri tambah-folder"
   },
   "optionCollapseAddFolderMenuHint": {
-    "message": "Gabungkan tiga entri tambah-folder (sebelum/sesudah/di dalam) menjadi satu entri submenu pada klik kanan folder."
+    "message": "Gabungkan entri tambah-folder (sebelum/sesudah/di dalam pada baris folder, sebelum/sesudah pada baris bookmark) menjadi satu entri submenu."
   },
   "tabRowStage": {
     "message": "Kirim ke panggung"

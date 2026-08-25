@@ -2495,7 +2495,7 @@
     "message": "Mappahozzáadás-bejegyzések összecsukása"
   },
   "optionCollapseAddFolderMenuHint": {
-    "message": "A három mappahozzáadás-bejegyzés (elé/mögé/belül) egy almenübe vonása a mappa jobb egérgombos menüjében."
+    "message": "A mappasorokon (előtte/utána/belül) és a könyvjelzősorokon (előtte/utána) megjelenő mappa-hozzáadási bejegyzéseket egyesítse egy almenübe."
   },
   "tabRowStage": {
     "message": "Küldés a várólistára"
