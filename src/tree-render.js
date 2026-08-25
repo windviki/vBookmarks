@@ -1,4 +1,4 @@
-import { FOLDER_ICON, DOCUMENT_CODE_ICON, CHEVRON_ICON, EDIT_ICON, TRASH_ICON } from './icons.js';
+import { FOLDER_ICON, DOCUMENT_CODE_ICON, CHEVRON_ICON, EDIT_ICON, TRASH_ICON, STAGE_ICON, STAGE_ICON_DONE } from './icons.js';
 import { htmlspecialchars } from './escape.js';
 import { stageBtnHtml as relayStageBtnHtml } from './staging-relay.js';
 
@@ -156,7 +156,35 @@ export function initTreeRender(ctx = {}) {
     // (stagingEnabled, the options 暂存和最近添加 master switch).
     const treeRowActionsOn = () => store.get('treeRowActions', '1') === '1';
     const stagingRelayOn = () => store.get('stagingEnabled', '1') === '1';
-    const treeRowTail = (url, isFolder) => {
+    // A folder's staged verdict: EVERY descendant bookmark staged (unknown
+    // children — a collapsed lazy folder — read as unstaged). The click is
+    // the menu's flatten-send (sendFolder merges one sourceFolderId group).
+    const folderStagedUrls = folderNode => {
+        const urls = [];
+        const walk = n => {
+            for (const c of (n && n.children) || []) {
+                if (c.url) {
+                    if (!separatorManager.isSeparator(c.title, c.url))
+                        urls.push(c.url);
+                } else {
+                    walk(c);
+                }
+            }
+        };
+        walk(folderNode);
+        return urls;
+    };
+    const folderStageBtnHtml = folderNode => {
+        if (!ctx.staging || !ctx.staging.isStaged)
+            return '';
+        const urls = folderStagedUrls(folderNode);
+        const staged = urls.length > 0 && urls.every(u => ctx.staging.isStaged(u));
+        const label = htmlspecialchars(_m(staged ? 'stagingAlready' : 'stagingAdd'));
+        return `<button type="button" class="row-btn staging-add-btn${staged ? ' staged' : ''}" ` +
+            `aria-pressed="${staged}" aria-label="${label}" title="${label}">` +
+            `${staged ? STAGE_ICON_DONE : STAGE_ICON}</button>`;
+    };
+    const treeRowTail = (url, isFolder, folderNode) => {
         if (!treeRowActionsOn())
             return '';
         const esc = htmlspecialchars;
@@ -164,8 +192,10 @@ export function initTreeRender(ctx = {}) {
         const delLabel = esc(_m('rowActionDelete'));
         let html = `<button type="button" class="row-btn tree-row-btn tree-row-edit" ` +
             `aria-label="${editLabel}" title="${editLabel}">${EDIT_ICON}</button>`;
-        if (!isFolder && url && stagingRelayOn())
-            html += relayStageBtnHtml(ctx.staging, { url }, _m);
+        if (stagingRelayOn())
+            html += isFolder
+                ? folderStageBtnHtml(folderNode)
+                : (url ? relayStageBtnHtml(ctx.staging, { url }, _m) : '');
         html += `<button type="button" class="row-btn tree-row-btn tree-row-delete" ` +
             `aria-label="${delLabel}" title="${delLabel}">${TRASH_ICON}</button>`;
         return html;
@@ -325,7 +355,7 @@ export function initTreeRender(ctx = {}) {
 		       ${FOLDER_ICON}
 		       ${syncIndicator}
 		   </div>
-		   <i>${displayTitle}</i>${treeRowTail('', true)}
+		   <i>${displayTitle}</i>${treeRowTail('', true, folderNode)}
 		   </span>`;
     };
 

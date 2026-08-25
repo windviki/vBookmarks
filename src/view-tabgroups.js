@@ -38,6 +38,7 @@ import { htmlspecialchars } from './escape.js';
 import { parkRowFocus, unparkRowFocus, parkToolbarFocus, restoreToolbarFocus } from './list-focus.js';
 import { paintListChunked } from './list-chunks.js';
 import { paintListVirtual } from './virtual-list.js';
+import { flipStageBtn } from './staging-relay.js';
 import { saveSession, sessionFolderName, tabsToBookmarks } from './session.js';
 import { relTimeLabel } from './tree-render.js';
 import { pickGroupColor, saveTabGroupFolderMeta, pruneTabGroupFolderMeta } from './tab-group-utils.js';
@@ -849,6 +850,18 @@ export function initViewTabGroups(ctx = {}) {
                 // (the head toggles the window's membership there).
                 const closeBtn = selecting ? '' :
                     `<button class="row-btn tabgroups-window-close" aria-label="${htmlspecialchars(_m('tabGroupsCloseWindow'))}" title="${htmlspecialchars(_m('tabGroupsCloseWindow'))}">${TRASH_ICON}</button>`;
+                // 发送全部暂存 (left of close): every bookmarkable tab of
+                // the window joins the workbench; all-staged → the filled
+                // plane, always on. Off with the staging master switch.
+                const winTabs = tabs.filter(t => String(t.windowId || t._windowId) === String(win.id));
+                const winStageable = winTabs.filter(t => bookmarkableUrl(t.url));
+                const winStaged = relayOn() && winStageable.length > 0
+                    && winStageable.every(t => isStagedUrl(t.url));
+                const winStageLabel = htmlspecialchars(_m('stagingAdd'));
+                const winStageBtn = (selecting || !relayOn()) ? '' :
+                    `<button class="row-btn tabgroups-window-stage${winStaged ? ' staged always-on' : ''}" ` +
+                    `aria-pressed="${winStaged}" aria-label="${winStageLabel}" title="${winStageLabel}">` +
+                    `${winStaged ? STAGE_ICON_DONE : STAGE_ICON}</button>`;
                 return `<li class="tabgroups-window-head" data-window-id="${String(win.id)}">` +
                     `<span class="tabgroups-window-head-row" tabindex="-1" role="button" ` +
                     `aria-expanded="${isCollapsed ? 'false' : 'true'}" ` +
@@ -857,6 +870,7 @@ export function initViewTabGroups(ctx = {}) {
                     `<span class="chevron${isCollapsed ? ' collapsed' : ''}" aria-hidden="true"></span>` +
                     `<em>${htmlspecialchars(label)}</em>${current}` +
                     `<span class="count-pill" aria-label="${htmlspecialchars(_m('tabGroupsGroupCount', `${count}`))}">${count}</span>` +
+                    winStageBtn +
                     closeBtn +
                     '</span></li>';
             };
@@ -2438,6 +2452,30 @@ export function initViewTabGroups(ctx = {}) {
         // selection mode it toggles every tab of that window instead, the
         // same rule the group head follows). The head's own close-window
         // button acts instead of folding.
+        // 发送全部暂存 (window head): every bookmarkable tab of the window
+        // joins the workbench; the head plane + every row plane flip in place.
+        const winStageBtn2 = closest('.tabgroups-window-stage');
+        if (winStageBtn2) {
+            e.preventDefault();
+            e.stopPropagation();
+            const api = ctx.staging;
+            const li2 = winStageBtn2.closest('li');
+            const wid = li2 && li2.dataset.windowId;
+            if (api && wid !== undefined && wid !== null) {
+                const winTabs = tabs.filter(t => String(t.windowId || t._windowId) === String(wid));
+                const entries = winTabs.filter(t => bookmarkableUrl(t.url))
+                    .map(t => ({ id: null, url: t.url, title: t.title || t.url }));
+                if (entries.length)
+                    api.addItems(entries);
+                if ($list.querySelectorAll) {
+                    // every rendered row of this window flips to staged
+                    for (const btn of $list.querySelectorAll(`li[data-window-id="${String(wid)}"] .staging-add-btn, li[data-window-id="${String(wid)}"] .tabgroups-stage`))
+                        flipStageBtn(btn, true, _m);
+                }
+                flipStageBtn(winStageBtn2, true, _m);
+            }
+            return;
+        }
         const winCloseBtn = closest('.tabgroups-window-close');
         if (winCloseBtn) {
             e.preventDefault();

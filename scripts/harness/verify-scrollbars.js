@@ -258,8 +258,15 @@ const sweepViews = async (page, tag, { includePalette, capture = false }) => {
             const m = await measurePane(page, paneSel);
             if (m.missing) { check(false, `${tag} ${view.id} ${paneSel} missing`); continue; }
             if (m.hidden) { check(false, `${tag} ${view.id} ${paneSel} hidden (no layout)`); continue; }
-            check(m.overflowX === 'hidden',
-                `${tag} ${view.id} ${paneSel} overflow-x:hidden (computed ${m.overflowX})`);
+            // #recent-list is deliberately NOT a scroll container (visible):
+            // overflow-x:hidden would normalize overflow-y to auto — the
+            // ul reserves a scrollbar gutter, shifts the recent rows' icon
+            // axis off the staging region's and can stack a second scrollbar
+            // (fifth fix round). Every other pane is a scroll ROOT and keeps
+            // the hidden-x guard.
+            const wantX = paneSel === '#recent-list' ? 'visible' : 'hidden';
+            check(m.overflowX === wantX,
+                `${tag} ${view.id} ${paneSel} overflow-x:${wantX} (computed ${m.overflowX})`);
             if (view.id !== 'tree') {
                 check(!m.xOverflow,
                     `${tag} ${view.id} ${paneSel} no hidden overflow (scrollW=${m.scrollW} clientW=${m.clientW})`);

@@ -2478,7 +2478,7 @@ describe('batch deletion (delete all / delete selected)', () => {
         const { $list } = ctx;
         ctx.def().activate();
         ctx.clickOn({ closest: sel => (sel === '.dead-select-mode' ? {} : null) });
-        expect($list.innerHTML).toContain('class="dead-delete-selected" disabled');
+        expect($list.innerHTML).toContain('dead-delete-selected" disabled');
     });
 
     it('delete-selected confirms, deletes the selected rows, toasts once and leaves the mode', async () => {
@@ -2488,7 +2488,7 @@ describe('batch deletion (delete all / delete selected)', () => {
         ctx.clickOn({ closest: sel => (sel === '.dead-select-mode' ? {} : null) });
         rowClick(ctx, '12');
         rowClick(ctx, '13');
-        expect($list.innerHTML).not.toContain('class="dead-delete-selected" disabled');
+        expect($list.innerHTML).not.toContain('dead-delete-selected" disabled');
         ctx.clickOn({ closest: sel => (sel === '.dead-delete-selected' ? {} : null) });
         expect(dialogs.ConfirmDialog.openCalls[0].dialog).toBe('deadConfirmDeleteSelected[2]<br>undoSingleStepNote');
         expect(chrome.bookmarks.removeCalls).toEqual([]); // gated until fn1
@@ -2821,7 +2821,7 @@ describe('selection mode (v4 task-3 #4)', () => {
         // the ul carries the mode class (CSS draws the checkboxes)
         expect($list.innerHTML).toContain('<ul role="list" class="selecting">');
         // empty selection → both batch buttons disabled
-        expect($list.innerHTML).toContain('class="dead-mark-selected" disabled');
+        expect($list.innerHTML).toContain('dead-mark-selected" disabled');
     });
 
     it('row clicks toggle membership instead of opening the bookmark', () => {
@@ -2833,7 +2833,7 @@ describe('selection mode (v4 task-3 #4)', () => {
         rowClick(ctx, '12');
         expect($list.innerHTML).toContain('class="vbm-row sel" id="dead-item-12"');
         expect($list.innerHTML).toContain('selectCount[1]');
-        expect($list.innerHTML).not.toContain('class="dead-mark-selected" disabled');
+        expect($list.innerHTML).not.toContain('dead-mark-selected" disabled');
         rowClick(ctx, '12'); // toggle off
         expect($list.innerHTML).toContain('selectCount[0]');
         expect($list.innerHTML).not.toContain('class="vbm-row sel" id="dead-item-12"');

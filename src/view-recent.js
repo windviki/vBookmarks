@@ -41,6 +41,7 @@ import { VIEW_ICONS, STAGE_ICON, STAGE_ICON_DONE, STAGE_REMOVE_ICON, STAR_ICON, 
 import { htmlspecialchars } from './escape.js';
 import { parkRowFocus, unparkRowFocus, parkToolbarFocus, restoreToolbarFocus } from './list-focus.js';
 import { flipStageBtn } from './staging-relay.js';
+import { fitToolbarLabels, watchToolbarFit } from './toolbar-fit.js';
 import * as staging from './staging.js';
 
 export function initViewRecent(ctx = {}) {
@@ -314,6 +315,7 @@ export function initViewRecent(ctx = {}) {
 
     const bucketHeadHtml = (count, news, collapsed) => {
         const favAllLabel = _m('stagingBucketFavAll');
+        const removeAllLabel = _m('stagingRemove');
         const countText = news > 0 ? `${count} · ${_m('stagingNew', `${news}`)}` : `${count}`;
         const selCls = headSelClass(staging.unfavBucketItems(stagingState).map(it => it.url));
         return `<li class="staging-bucket${selCls}${count ? ' has-members' : ''}" role="presentation"><span class="staging-bucket-head" ` +
@@ -326,8 +328,46 @@ export function initViewRecent(ctx = {}) {
             `<span class="count-pill" aria-label="${count}">${countText}</span>` +
             (selecting ? '' :
                 `<button type="button" class="row-btn staging-bucket-fav-all" tabindex="-1" ` +
-                `aria-label="${htmlspecialchars(favAllLabel)}" title="${htmlspecialchars(favAllLabel)}">${STAR_ICON_FILLED}</button>`) +
+                `aria-label="${htmlspecialchars(favAllLabel)}" title="${htmlspecialchars(favAllLabel)}">${STAR_ICON_FILLED}</button>` +
+                // 移除暂存 (rightmost): every bucket item leaves the workbench
+                // (tree untouched) — confirm + toast undo, aligned on the rows'
+                // trailing icon axis like every head quick-tail button.
+                `<button type="button" class="row-btn staging-bucket-remove-all" tabindex="-1" ` +
+                `aria-label="${htmlspecialchars(removeAllLabel)}" title="${htmlspecialchars(removeAllLabel)}">${STAGE_REMOVE_ICON}</button>`) +
             `</span></li>`;
+    };
+
+    // 移除暂存 (whole bucket): snapshots first, then the confirm + toast-undo
+    // path the other bulk exits use.
+    const removeBucketItems = () => {
+        const items = staging.unfavBucketItems(stagingState);
+        if (!items.length)
+            return;
+        const snapshots = items.map(it => ({ ...it }));
+        const run = () => {
+            staging.removeByUrls(stagingState, snapshots.map(it => it.url));
+            persistStaging();
+            renderStaging();
+            undo.toastAction(_m('stagingRemovedCount', `${snapshots.length}`), _m('undoAction'), () => {
+                const r = staging.restoreItems(stagingState, snapshots, []);
+                if (r.full) {
+                    toast(_m('stagingFull'));
+                    return;
+                }
+                persistStaging();
+                renderStaging();
+            });
+        };
+        if (dialogs && dialogs.ConfirmDialog && snapshots.length > 10) {
+            dialogs.ConfirmDialog.open({
+                dialog: _m('stagingDeleteConfirm', `${snapshots.length}`),
+                button1: `<strong>${_m('stagingRemove')}</strong>`,
+                button2: _m('nope'),
+                fn1: run
+            });
+        } else {
+            run();
+        }
     };
 
     // A named group head (§3.5): fold control + name + member count. The
@@ -651,8 +691,8 @@ export function initViewRecent(ctx = {}) {
             // rung in danger red, delete before the staging-wide clear).
             const iconBtn = (cls, label, icon) => {
                 const lab = htmlspecialchars(label);
-                return `<button class="staging-icon-btn ${cls}"${hasSel} aria-label="${lab}" title="${lab}">` +
-                    `${icon}<span class="staging-btn-label">${lab}</span></button>`;
+                return `<button class="staging-icon-btn vbm-fit-btn ${cls}"${hasSel} aria-label="${lab}" title="${lab}">` +
+                    `${icon}<span class="staging-btn-label vbm-fit-label">${lab}</span></button>`;
             };
             let r2 = '<div class="staging-toolbar staging-actions-toolbar selecting-bar vbm-toolbar">';
             r2 += iconBtn('staging-open', _m('open'), OPEN_ICON) +
@@ -665,9 +705,9 @@ export function initViewRecent(ctx = {}) {
                 iconBtn('staging-delete', _m('deleteSelected'), TRASH_ICON) +
                 // 清空暂存 acts on ALL items (not the selection), so its
                 // gate is the item count, not the selection size
-                `<button class="staging-icon-btn staging-clear-all"${n ? '' : ' disabled'} ` +
+                `<button class="staging-icon-btn vbm-fit-btn staging-clear-all"${n ? '' : ' disabled'} ` +
                 `aria-label="${htmlspecialchars(_m('stagingClear'))}" title="${htmlspecialchars(_m('stagingClear'))}">` +
-                `${LIST_X_ICON}<span class="staging-btn-label">${htmlspecialchars(_m('stagingClear'))}</span></button>`;
+                `${LIST_X_ICON}<span class="staging-btn-label vbm-fit-label">${htmlspecialchars(_m('stagingClear'))}</span></button>`;
             r2 += '</div>';
             // Rung 3: the customizable MOVE-TO shortcuts. Normal mode is
             // minimal-horizontal: chip = color dot + alias (click = move),
@@ -737,7 +777,7 @@ export function initViewRecent(ctx = {}) {
             staging.unfavBucketItems(stagingState).length > 0;
         const foldBtn = (cls, icon, key) => {
             const lab = htmlspecialchars(_m(key));
-            return `<button class="staging-icon-btn ${cls}"${foldable ? '' : ' disabled'} ` +
+            return `<button class="staging-icon-btn vbm-fit-btn ${cls}"${foldable ? '' : ' disabled'} ` +
                 `aria-label="${lab}" title="${lab}">${icon}</button>`;
         };
         html += foldBtn('staging-fold-collapse-all', COLLAPSE_ALL_ICON, 'tabGroupsCollapseAll') +
@@ -944,61 +984,16 @@ export function initViewRecent(ctx = {}) {
     // extra pixel of width earns the next label (never whole groups at
     // 520/680/820px jumps). Pure DOM measurement; guarded for test doubles.
     const fitSelectionLabels = () => {
-        if (!$list.querySelectorAll || !$list.querySelector)
+        if (!$list.querySelector)
             return;
-        const bar = $list.querySelector('.staging-actions-toolbar');
-        if (!bar || !bar.querySelectorAll || !bar.querySelectorAll('.staging-icon-btn').length)
-            return;
-        const btns = [...bar.querySelectorAll('.staging-icon-btn')];
-        for (const b of btns) {
-            const lab = b.querySelector('.staging-btn-label');
-            if (lab)
-                lab.style.display = 'none';
-            b.style.width = '';
-            b.style.padding = '';
-        }
-        // free width = bar box − padding − buttons − inter-button gaps
-        let used = 16; // 8px + 8px bar padding
-        for (const b of btns)
-            used += b.offsetWidth;
-        used += 6 * Math.max(0, btns.length - 1); // the toolbar gap
-        let free = bar.clientWidth - used;
-        // rightmost first — the danger pair (删除/清空) leads, mirroring the
-        // old breakpoint order's intent, then the organize/favorite group,
-        // then the open pair on the left
-        for (let i = btns.length - 1; i >= 0 && free > 0; i--) {
-            const b = btns[i];
-            const lab = b.querySelector('.staging-btn-label');
-            if (!lab)
-                continue;
-            const before = b.offsetWidth;
-            lab.style.display = 'inline';
-            b.style.width = 'auto';
-            b.style.padding = '2px 6px';
-            const delta = b.offsetWidth - before;
-            if (delta <= free)
-                free -= delta;
-            else {
-                lab.style.display = 'none';
-                b.style.width = '';
-                b.style.padding = '';
-                break;
-            }
-        }
+        fitToolbarLabels($list.querySelector('.staging-actions-toolbar'));
     };
     // A popup/panel resize re-fits the rung (width change only — the fit
     // itself only mutates the labels, never the container's width).
-    if (typeof ResizeObserver !== 'undefined' && $list) {
-        let lastW = -1;
-        new ResizeObserver(entries => {
-            const w = entries.length ? entries[0].contentRect.width : lastW;
-            if (w === lastW)
-                return;
-            lastW = w;
-            if (selecting)
-                fitSelectionLabels();
-        }).observe($list);
-    }
+    watchToolbarFit($list, () => {
+        if (selecting)
+            fitSelectionLabels();
+    });
 
     // Re-entry optimization: lastSeenTs advances on every activation, so
     // the bucket head's "new N" reads 0 afterwards — update the pill text
@@ -2366,6 +2361,12 @@ export function initViewRecent(ctx = {}) {
             const url = li && li.dataset && li.dataset.url;
             if (url)
                 api.removeByUrl(url);
+            return;
+        }
+        if (closest('.staging-bucket-remove-all')) {
+            e.preventDefault();
+            e.stopPropagation();
+            removeBucketItems();
             return;
         }
         if (closest('.staging-bucket-fav-all')) {

@@ -339,11 +339,20 @@ export function initTreeView(ctx = {}) {
                 ctx.actions.deleteBookmark(id);
             }
         } else if (btn.classList.contains('staging-add-btn') && ctx.staging) {
-            const a = li.querySelector('a');
-            const url = a ? a.getAttribute('href') : '';
-            const nowStaged = toggleStageItem(ctx.staging, { id, url });
-            if (nowStaged !== null)
-                flipStageBtn(btn, nowStaged, _m2);
+            if (li.classList.contains('parent')) {
+                // A FOLDER plane = the menu's flatten-send: every descendant
+                // joins the workbench as one sourceFolderId group (confirm
+                // for >100 lives in sendFolder). One-way send — the filled
+                // plane lands immediately.
+                ctx.staging.sendFolder(id);
+                flipStageBtn(btn, true, _m2);
+            } else {
+                const a = li.querySelector('a');
+                const url = a ? a.getAttribute('href') : '';
+                const nowStaged = toggleStageItem(ctx.staging, { id, url });
+                if (nowStaged !== null)
+                    flipStageBtn(btn, nowStaged, _m2);
+            }
         }
     }, true);
     $tree.addEventListener('click', e => {

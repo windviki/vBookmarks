@@ -93,7 +93,8 @@
  */
 
 import { relTimeLabel } from './tree-render.js';
-import { VIEW_ICONS, STAR_ICON, STAR_ICON_FILLED, STAGE_ICON, STAGE_ICON_DONE, SELECT_ICON } from './icons.js';
+import { VIEW_ICONS, STAR_ICON, STAR_ICON_FILLED, STAGE_ICON, STAGE_ICON_DONE, SELECT_ICON, OPEN_ICON, TABS_ICON, TRASH_ICON } from './icons.js';
+import { fitToolbarLabels, watchToolbarFit } from './toolbar-fit.js';
 import { htmlspecialchars } from './escape.js';
 import { parkRowFocus, unparkRowFocus, parkToolbarFocus, restoreToolbarFocus } from './list-focus.js';
 import { paintListChunked } from './list-chunks.js';
@@ -257,18 +258,30 @@ export function initViewStats(ctx = {}) {
     const renderToolbar = () => {
         const s = sort();
         if (selecting) {
+            // The staging-view law: TWO rungs — rung 1 = count + set ops +
+            // exit, rung 2 = the ICONIFIED actions ([发送到暂存][打开][打开为
+            // 标签组][删除], labels revealed progressively from the right via
+            // the shared toolbar fitter).
             let html = '<div class="stats-toolbar stats-select-toolbar selecting-bar vbm-toolbar">';
-            const barStageOn = !ctx.stagingApi || !ctx.stagingApi.isEnabled || ctx.stagingApi.isEnabled();
             html += `<span class="select-count">${_m('selectCount', `${selected.size}`)}</span>` +
                 `<button class="stats-select-all">${_m('selectAll')}</button>` +
                 `<button class="stats-select-invert">${_m('selectInvert')}</button>` +
                 `<button class="stats-select-clear">${_m('selectClear')}</button>` +
-                (barStageOn ? `<button class="stats-stage"${selected.size ? '' : ' disabled'}>${_m('stagingAdd')}</button>` : '') +
-                `<button class="stats-open"${selected.size ? '' : ' disabled'}>${_m('open')}</button>` +
-                `<button class="stats-open-group"${selected.size ? '' : ' disabled'}>${_m('openBookmarksInGroup')}</button>` +
-                `<button class="stats-delete"${selected.size ? '' : ' disabled'}>${_m('deleteSelected')}</button>` +
                 `<button class="stats-select-exit">${_m('selectModeExit')}</button>`;
             html += '</div>';
+            const hasSel = selected.size ? '' : ' disabled';
+            const barStageOn = !ctx.stagingApi || !ctx.stagingApi.isEnabled || ctx.stagingApi.isEnabled();
+            const iconBtn = (cls, key, icon) => {
+                const lab = htmlspecialchars(_m(key));
+                return `<button class="stats-icon-btn vbm-fit-btn ${cls}"${hasSel} aria-label="${lab}" title="${lab}">` +
+                    `${icon}<span class="stats-btn-label vbm-fit-label">${lab}</span></button>`;
+            };
+            html += '<div class="stats-toolbar stats-actions-toolbar vbm-toolbar">' +
+                (barStageOn ? iconBtn('stats-stage', 'stagingAdd', STAGE_ICON) : '') +
+                iconBtn('stats-open', 'open', OPEN_ICON) +
+                iconBtn('stats-open-group', 'openBookmarksInGroup', TABS_ICON) +
+                iconBtn('stats-delete', 'deleteSelected', TRASH_ICON) +
+                '</div>';
             return html;
         }
         if (!enabled())
@@ -560,9 +573,22 @@ export function initViewStats(ctx = {}) {
                     parkedRow = null;
                 }
                 tryPendingRowFocus(null);
+                fitSelectionLabels();
             }
         });
     };
+
+    // The selecting action rung's progressive labels (shared fitter) —
+    // reveal right-to-left as free width allows; re-fit on resize.
+    const fitSelectionLabels = () => {
+        if (!$list.querySelector)
+            return;
+        fitToolbarLabels($list.querySelector('.stats-actions-toolbar'));
+    };
+    watchToolbarFit($list, () => {
+        if (selecting)
+            fitSelectionLabels();
+    });
 
     // Delete applies to the BOOKMARKED rows only (§3.7 — history rows have
     // no tree node); confirm + per-item undo capture, then refresh.

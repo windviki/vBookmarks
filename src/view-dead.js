@@ -120,6 +120,7 @@ import { parseProxyServer, formatProxyServer, DEFAULT_PROXY_TEST_URL, proxyPermi
 import { DEAD_SCAN_KEY, DEAD_LAST_KEY, DEAD_SCAN_MSG } from './dead-scan-sw.js';
 import { VIEW_ICONS, FLAG_ICON, FLAG_X_ICON, TRASH_ICON, CHEVRON_ICON, REDO_ICON, LIST_X_ICON, SELECT_ICON, STAGE_ICON } from './icons.js';
 import { stageBtnHtml as relayStageBtnHtml, flipStageBtn, toggleStageItem } from './staging-relay.js';
+import { fitToolbarLabels, watchToolbarFit } from './toolbar-fit.js';
 import { makeRiskBanner, RISK_HELP_URL } from './risk-banner.js';
 import { initDropdowns } from './dropdown.js';
 import { htmlspecialchars } from './escape.js';
@@ -545,19 +546,32 @@ export function initViewDead(ctx = {}) {
             return html;
         }
         if (selecting) {
-            // v4 task-3 #4: the batch bar replaces every idle control
-            // while the mode is on — the scan/filter buttons come back
-            // on exit. Action buttons disable on an empty selection.
+            // v4 task-3 #4 + the staging-view law: the batch bar replaces
+            // every idle control while the mode is on — TWO rungs now:
+            // rung 1 = count + set ops + exit, rung 2 = the ICONIFIED
+            // actions ([标注][取消标注][发送到暂存][删除], labels revealed
+            // progressively from the right via the shared toolbar fitter).
             let html = '<div class="dead-toolbar dead-scan-toolbar vbm-toolbar">';
             html += `<span class="select-count">${_m('selectCount', `${selected.size}`)}</span>` +
                 `<button class="dead-select-all">${_m('selectAll')}</button>` +
                 `<button class="dead-select-invert">${_m('selectInvert')}</button>` +
                 `<button class="dead-select-clear">${_m('selectClear')}</button>` +
-                `<button class="dead-mark-selected"${selected.size ? '' : ' disabled'}>${_m('deadMarkSelected')}</button>` +
-                `<button class="dead-unmark-selected"${selected.size ? '' : ' disabled'}>${_m('deadUnmarkSelected')}</button>` +
-                `<button class="dead-delete-selected"${selected.size ? '' : ' disabled'}>${_m('deadDeleteSelected')}</button>` +
                 `<button class="dead-select-exit">${_m('selectModeExit')}</button>`;
             html += '</div>';
+            const hasSel = selected.size ? '' : ' disabled';
+            const iconBtn = (cls, key, icon) => {
+                const lab = htmlspecialchars(_m(key));
+                return `<button class="dead-icon-btn vbm-fit-btn ${cls}"${hasSel} aria-label="${lab}" title="${lab}">` +
+                    `${icon}<span class="dead-btn-label vbm-fit-label">${lab}</span></button>`;
+            };
+            html += '<div class="dead-toolbar dead-actions-toolbar vbm-toolbar">' +
+                iconBtn('dead-mark-selected', 'deadMarkSelected', FLAG_ICON) +
+                iconBtn('dead-unmark-selected', 'deadUnmarkSelected', FLAG_X_ICON) +
+                (relayOn()
+                    ? iconBtn('dead-stage-selected', 'stagingAdd', STAGE_ICON)
+                    : '') +
+                iconBtn('dead-delete-selected', 'deadDeleteSelected', TRASH_ICON) +
+                '</div>';
             return html;
         }
 
@@ -668,6 +682,19 @@ export function initViewDead(ctx = {}) {
     // staging changes). Empty while the staging master switch is off.
     const relayOn = () => !ctx.staging || !ctx.staging.isEnabled || ctx.staging.isEnabled();
     const stageBtnHtml = item => relayOn() ? relayStageBtnHtml(ctx.staging, item, _m) : '';
+
+    // The selecting action rung's progressive labels (shared fitter; the
+    // dead-btn-label spans start hidden, the fit reveals them right-to-left
+    // as free width allows — re-fit on container resize while selecting).
+    const fitSelectionLabels = () => {
+        if (!$list.querySelector)
+            return;
+        fitToolbarLabels($list.querySelector('.dead-actions-toolbar'));
+    };
+    watchToolbarFit($list, () => {
+        if (selecting)
+            fitSelectionLabels();
+    });
 
     const rowLiHtml = (row, L) => {
         const { item, result } = row;
@@ -1141,6 +1168,7 @@ export function initViewDead(ctx = {}) {
                 }
                 tryPendingRowFocus();
                 fallbackFocusLoss();
+                fitSelectionLabels();
             }
         };
         if (pipes) {
@@ -1988,6 +2016,19 @@ export function initViewDead(ctx = {}) {
         if (closest('.dead-unmark-selected')) {
             e.preventDefault();
             markSelected(false);
+            return;
+        }
+        // velvet staging relay: the selection's rows join the workbench.
+        if (closest('.dead-stage-selected')) {
+            e.preventDefault();
+            const api = ctx.staging;
+            if (api) {
+                const rows = selectableRows()
+                    .filter(({ item }) => selected.has(item.id))
+                    .map(({ item }) => ({ id: item.id, url: item.url, title: item.title || '' }));
+                if (rows.length)
+                    api.addItems(rows);
+            }
             return;
         }
         if (closest('.dead-delete-selected')) {

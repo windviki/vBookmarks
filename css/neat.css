@@ -5141,6 +5141,7 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
    heads / closed records alike): staged → the filled plane always on in
    accent — the staging view's .staged law, one accent language for every
    staged glyph in the popup. */
+#tabgroups-list .row-btn.tabgroups-window-stage.staged,
 #tabgroups-list .row-btn.tabgroups-stage.staged,
 #tabgroups-list .row-btn.tabgroups-group-stage.staged,
 #tabgroups-list .row-btn.tabgroups-closed-stage.staged,
@@ -5811,6 +5812,51 @@ body.panel-mode #dead-list .vbm-row .row-badge-slot {
     background: var(--vbm-bg-hover);
 }
 
+/* The selecting action rung is iconified (the staging-view law): 22px
+   squares with 16px glyphs, vertically centered like the rows' icons; the
+   danger delete reads red. Labels start hidden — the shared toolbar fitter
+   (src/toolbar-fit.js) reveals them one by one from the right as free
+   width allows, via inline styles. */
+.dead-toolbar .dead-icon-btn,
+.stats-toolbar .stats-icon-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    width: 22px;
+    height: 22px;
+    padding: 0;
+    flex: none;
+}
+
+.dead-toolbar .dead-icon-btn .vbm-icon,
+.stats-toolbar .stats-icon-btn .vbm-icon {
+    width: 16px;
+    height: 16px;
+}
+
+.dead-toolbar .dead-icon-btn.dead-delete-selected,
+.stats-toolbar .stats-icon-btn.stats-delete {
+    color: var(--vbm-danger);
+}
+
+.dead-toolbar .dead-icon-btn.dead-delete-selected:hover:not([disabled]),
+.stats-toolbar .stats-icon-btn.stats-delete:hover:not([disabled]) {
+    background: color-mix(in srgb, var(--vbm-danger) 12%, transparent);
+}
+
+.dead-toolbar .dead-icon-btn .dead-btn-label,
+.stats-toolbar .stats-icon-btn .stats-btn-label {
+    display: none;
+}
+
+/* The two selecting rungs read as ONE visual block (the staging/search
+   selecting-bar law): the first rung drops its bottom border. */
+.dead-toolbar.dead-scan-toolbar:has(+ .dead-actions-toolbar),
+.stats-toolbar.stats-select-toolbar:has(+ .stats-actions-toolbar) {
+    border-bottom: 0;
+}
+
 .dead-toolbar .dead-filter {
     display: inline-flex;
     border: 1px solid var(--vbm-border);
@@ -6470,7 +6516,6 @@ body.panel-mode #stats-list ul li.vbm-row > a.tree-item-link .row-badge.time {
 #tree,
 #results,
 #staging-list,
-#recent-list,
 #tabgroups-list,
 #dupes-list,
 #dead-list,
@@ -6478,6 +6523,15 @@ body.panel-mode #stats-list ul li.vbm-row > a.tree-item-link .row-badge.time {
 #search-history-area,
 #palette-results {
     overflow-x: hidden;
+}
+
+/* #recent-list 刻意不在上面清单里: 它是 #staging-list 里的子区域, 不是滚动根
+   (其余 ul 也没列)。`overflow-x:hidden` 会把 overflow-y 从 visible 规格化成
+   auto —— ul 变成滚动容器, 预留滚动条槽把整个最近添加区的行图标右轴挤偏
+   一个滚动条宽(与上方暂存区不同轴), 内容再高时还会叠出第二根滚动条。
+   横向裁切由滚动根 #staging-list 的 overflow-x:hidden 兜底。 */
+#recent-list {
+    overflow: visible;
 }
 
 /* === 屏幕外行跳过布局/绘制（4.1.0 性能）======================================
