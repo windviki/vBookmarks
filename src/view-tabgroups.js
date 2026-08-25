@@ -503,15 +503,16 @@ export function initViewTabGroups(ctx = {}) {
         const filterClearLabel = _m('searchClear');
         return '<div class="tabgroups-toolbar tabgroups-controls-toolbar vbm-toolbar">' +
             `<span class="tabgroups-summary">${_m('tabGroupsWindowsCount', [`${windows.length}`])} · ${_m('tabGroupsSummary', [`${tabs.length}`, `${groups.length}`])}</span>` +
+            // The icon tail rides ONE nowrap cluster with the rows' 20px/4px
+            // geometry (the fold buttons stand down while a filter is active
+            // — folds are inert under a find). The select-mode entry joined
+            // the controls rung (rightmost, the every-view law).
+            '<span class="tabgroups-icon-cluster">' +
             iconBtn('tabgroups-refresh', REDO_ICON, 'tabGroupsToolbarRefresh') +
-            // The fold buttons stand down while a filter is active (folds
-            // are inert — the filter force-expands every group and window).
             iconBtn('tabgroups-collapse-all', COLLAPSE_ALL_ICON, 'tabGroupsCollapseAll', !!filterNeedle()) +
             iconBtn('tabgroups-expand-all', EXPAND_ALL_ICON, 'tabGroupsExpandAll', !!filterNeedle()) +
-            // The select-mode entry joins the CONTROLS rung (rightmost, the
-            // every-view law) — it used to trail the filter field on the
-            // options rung below, off the shared right axis.
             iconBtn('tabgroups-select-mode', SELECT_ICON, 'selectModeEnter') +
+            '</span>' +
             '</div>' +
             '<div class="tabgroups-toolbar tabgroups-actions-toolbar vbm-toolbar">' +
             `<span class="tabgroups-options" role="group" aria-label="${htmlspecialchars(_m('tabGroupOptions'))}">` +

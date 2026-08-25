@@ -592,14 +592,20 @@ export function initViewDead(ctx = {}) {
                 const time = new Date(lastScan.ts).toLocaleString();
                 html += `<span class="dead-last">${_m('deadLastScanAt', time)}</span>`;
             }
-            if (lastScan || deadMarks.size)
-                html += iconBtn('dead-rescan', REDO_ICON, 'deadRescan');
-            if (lastScan)
-                html += iconBtn('dead-clear-scan', LIST_X_ICON, 'deadClearScan');
-            // 删除全部 moved UP to the detection row's last slot (the marks
-            // row below reads as the marking/filtering block only now).
-            if (selectableRows().length)
-                html += iconBtn('dead-delete-all', TRASH_ICON, 'deadDeleteAllBtn');
+            // The icon tail rides ONE nowrap cluster (the rows' 20px/4px
+            // geometry, right-pinned on the 8px axis) — 删除全部 moved UP to
+            // this row's last slot; the marks row below is marking/filtering.
+            {
+                let tail = '';
+                if (lastScan || deadMarks.size)
+                    tail += iconBtn('dead-rescan', REDO_ICON, 'deadRescan');
+                if (lastScan)
+                    tail += iconBtn('dead-clear-scan', LIST_X_ICON, 'deadClearScan');
+                if (selectableRows().length)
+                    tail += iconBtn('dead-delete-all', TRASH_ICON, 'deadDeleteAllBtn');
+                if (tail)
+                    html += `<span class="dead-icon-cluster">${tail}</span>`;
+            }
             html += '</div>';
         }
 
@@ -621,15 +627,18 @@ export function initViewDead(ctx = {}) {
                 if (filteredN && markFilter !== 'marked')
                     row += iconBtn('dead-mark-all', FLAG_ICON, 'deadMarkAll');
             }
+            let tail = '';
             if (deadMarks.size)
-                row += iconBtn('dead-unmark-all', FLAG_X_ICON, 'deadUnmarkAll');
+                tail += iconBtn('dead-unmark-all', FLAG_X_ICON, 'deadUnmarkAll');
             // velvet staging relay: send every LISTED row (filter-aware) to
             // the workbench — the batch entry left of 删除全部, one relay law
             // with the rows' hover plane. Stands down with the master switch.
             if (relayOn() && selectableRows().length)
-                row += iconBtn('dead-stage-all', STAGE_ICON, 'stagingAdd');
+                tail += iconBtn('dead-stage-all', STAGE_ICON, 'stagingAdd');
             if (selectableRows().length)
-                row += iconBtn('dead-select-mode', SELECT_ICON, 'selectModeEnter');
+                tail += iconBtn('dead-select-mode', SELECT_ICON, 'selectModeEnter');
+            if (tail)
+                row += `<span class="dead-icon-cluster">${tail}</span>`;
             if (row)
                 html += `<div class="dead-toolbar dead-mark-toolbar vbm-toolbar">${row}</div>`;
         }

@@ -2058,9 +2058,17 @@ li.staging-row.drag-over {
    from-right one — star / stage) end 8px off the container edge, exactly
    the toolbar's rightmost icon column; the 8px end margin doubles as the
    gap between the pair, the same column rhythm as dead-mark/delete. */
+/* 2026-08 axis unification: the trailing strip keeps a UNIFORM 4px stride;
+   the 8px right edge comes from the li's 4px padding-inline-end below (the
+   old 8px last-margin made the final stride 28px — toolbar clusters with
+   their even 24px cadence could never stack on it). */
 #staging-list ul li.vbm-row > .row-btn:last-child,
 #staging-list ul li.vbm-row > .row-btn:nth-last-child(2) {
-    margin-inline-end: 8px;
+    margin-inline-end: 4px;
+}
+
+#staging-list ul li.vbm-row {
+    padding-inline-end: 4px;
 }
 
 /* The staging empty state: the plane glyph above a calm two-beat guide —
@@ -2503,8 +2511,8 @@ li.staging-row.drag-over {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 22px;
-    height: 22px;
+    width: 20px;
+    height: 20px;
     padding: 0;
     flex: none;
 }
@@ -2563,7 +2571,7 @@ li.staging-row.drag-over {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 22px;
+    width: 20px;
     height: 22px;
     padding: 0;
     flex: none;
@@ -4595,8 +4603,8 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 22px;
-    height: 22px;
+    width: 20px;
+    height: 20px;
     padding: 0;
     flex: none;
     border: 0;
@@ -4610,6 +4618,58 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
 (auto width, 2px 6px padding, 16px glyph) — the same box as the dead view's
 icon buttons and its own 全部应用 neighbour; the old 22px square read
 visibly smaller next to them. */
+/* --- Toolbar icon clusters (design-laws.md §2) ------------------------
+   Every toolbar's PURE-ICON tail rides one nowrap cluster: 20px boxes on
+   the 4px stride (the rows' trailing-icon geometry), right-pinned so the
+   last glyph lands on the 8px right axis — stacking one-to-one with the
+   rows' hover icons below. */
+.dead-toolbar .dead-icon-cluster,
+.tabgroups-toolbar .tabgroups-icon-cluster {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    flex: none;
+    margin-inline-start: auto;
+}
+
+.dead-toolbar .dead-icon-cluster button,
+.tabgroups-toolbar .tabgroups-icon-cluster button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    flex: none;
+    border: 0;
+    border-radius: var(--vbm-radius);
+    background: transparent;
+    color: var(--vbm-accent);
+    cursor: pointer;
+}
+
+.dead-toolbar .dead-icon-cluster button:hover:not([disabled]),
+.tabgroups-toolbar .tabgroups-icon-cluster button:hover:not([disabled]) {
+    background: var(--vbm-bg-hover);
+}
+
+.dead-toolbar .dead-icon-cluster button .vbm-icon,
+.tabgroups-toolbar .tabgroups-icon-cluster button .vbm-icon {
+    width: 16px;
+    height: 16px;
+    flex: none;
+}
+
+/* The iconified selecting rungs keep the same stride (4px gap = 24px with
+   the 20px boxes) so their glyph columns match the rows too. */
+.dead-toolbar.dead-actions-toolbar,
+.stats-toolbar.stats-actions-toolbar,
+.search-toolbar.search-actions-toolbar,
+.tabgroups-toolbar.tabgroups-actions-toolbar.selecting-bar,
+.staging-toolbar.staging-actions-toolbar {
+    gap: 4px;
+}
+
 /* The icon strip (暂存全部·折叠全部·展开全部·选择模式) rides ONE nowrap
    cluster pinned right of 全部应用, with the ROWS' icon geometry — 20px
    boxes on the 4px stride — so the glyphs keep the row columns' cadence
@@ -4627,7 +4687,7 @@ visibly smaller next to them. */
     align-items: center;
     justify-content: center;
     width: 20px;
-    height: 22px;
+    height: 20px;
     padding: 0;
     flex: none;
     border: 0;
@@ -4764,7 +4824,11 @@ visibly smaller next to them. */
 /* The row's trailing pair ends 8px off the container edge — the same right
    axis as every other list view's last row button. */
 #results ul li.vbm-row > .row-btn:last-child {
-    margin-inline-end: 8px;
+    margin-inline-end: 4px;
+}
+
+#results ul li.vbm-row {
+    padding-inline-end: 4px;
 }
 
 /* The hover delete is destructive: danger red like every other view's
@@ -5035,7 +5099,11 @@ visibly smaller next to them. */
    mode): toolbar right edge is 8px from the container, so the last row-btn
    gets an 8px end margin instead of the default 4px. */
 #dupes-list ul li.dupes-member > .row-btn:last-child {
-    margin-inline-end: 8px;
+    margin-inline-end: 4px;
+}
+
+#dupes-list ul li.dupes-member {
+    padding-inline-end: 4px;
 }
 #dupes-list .row-btn.dupes-member-del {
     color: var(--vbm-danger);
@@ -5138,8 +5206,8 @@ visibly smaller next to them. */
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 22px;
-    height: 22px;
+    width: 20px;
+    height: 20px;
     padding: 0;
     flex: none;
 }
@@ -5979,8 +6047,8 @@ body.panel-mode #dead-list .vbm-row .row-badge-slot {
     align-items: center;
     justify-content: center;
     gap: 4px;
-    width: 22px;
-    height: 22px;
+    width: 20px;
+    height: 20px;
     padding: 0;
     flex: none;
     border: 0;
@@ -6112,8 +6180,8 @@ body.panel-mode #dead-list .vbm-row .row-badge-slot {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 22px;
-    height: 22px;
+    width: 20px;
+    height: 20px;
     padding: 0;
     flex: none;
 }
@@ -6402,8 +6470,13 @@ body.panel-mode #dead-list .vbm-row .row-badge-slot {
    22px icon + 6px gap 的同一右缘列上（浮动的 hover 按钮与常驻的 marked
    按钮同一右缘）。 */
 #dead-list ul li.vbm-row > .row-btn:last-child,
-#dead-list ul li.vbm-row > .row-btn:nth-last-child(2) {
-    margin-inline-end: 8px;
+#dead-list ul li.vbm-row > .row-btn:nth-last-child(2),
+#dead-list ul li.vbm-row > .row-btn:last-child {
+    margin-inline-end: 4px;
+}
+
+#dead-list ul li.vbm-row {
+    padding-inline-end: 4px;
 }
 
 #dead-list .row-btn.dead-mark-btn.marked .vbm-icon-flag path {
@@ -6601,6 +6674,16 @@ body.vbm-btn-alt .dead-proxy-strip button.dead-proxy-remove:hover {
 #stats-list ul li.vbm-row {
     display: flex;
     align-items: center;
+}
+
+/* 2026-08 axis unification: uniform 4px stride, the 8px edge from the li's
+   4px padding-inline-end (see design-laws.md §2). */
+#stats-list ul li.vbm-row > .row-btn:last-child {
+    margin-inline-end: 4px;
+}
+
+#stats-list ul li.vbm-row {
+    padding-inline-end: 4px;
 }
 
 #stats-list ul li.vbm-row > a.tree-item-link {
