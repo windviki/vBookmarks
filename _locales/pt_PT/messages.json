@@ -2551,5 +2551,17 @@
   },
   "optionVirtualScrollLabHint": {
     "message": "As visualizações de grupos de separadores e duplicados renderizam apenas as linhas próximas da área visível. Muito mais rápido em listas muito grandes; enquanto experimental, a posição da barra de rolagem é uma estimativa."
+  },
+  "optionsStagingSection": {
+    "message": "Staging e adicionados recentemente"
+  },
+  "optionStagingEnabled": {
+    "message": "Ativar a área de staging"
+  },
+  "optionStagingEnabledHint": {
+    "message": "Quando desativado, esta vista mantém apenas a lista de adicionados recentemente, e todos os botões ou entradas de menu de staging nas outras vistas ficam ocultos."
+  },
+  "optionTreeRowActions": {
+    "message": "Ações ao passar o rato nas linhas da árvore (editar / stage / eliminar)"
   }
 }

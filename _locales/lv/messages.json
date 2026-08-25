@@ -2555,5 +2555,17 @@
   },
   "optionVirtualScrollLabHint": {
     "message": "Cilņu grupu un dublikātu skati attēlo tikai rindas pie skata loga. Daudz ātrāk ļoti lielos sarakstos; kamēr eksperimentāla, ritjoslas pozīcija ir aptuvena."
+  },
+  "optionsStagingSection": {
+    "message": "Staging un nesen pievienotie"
+  },
+  "optionStagingEnabled": {
+    "message": "Iespējot staging apgabalu"
+  },
+  "optionStagingEnabledHint": {
+    "message": "Kamēr izslēgts, šis skats saglabā tikai nesen pievienoto sarakstu, un visas staging pogas vai izvēlnes ieraksti citos skatos tiek paslēpti."
+  },
+  "optionTreeRowActions": {
+    "message": "Darbības, virzot kursoru pār koka rindām (rediģēt / staging / dzēst)"
   }
 }

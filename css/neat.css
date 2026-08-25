@@ -1765,6 +1765,13 @@ menu[type=context] hr {
     margin-inline-end: 12px;
     text-align: center;
     color: var(--vbm-muted);
+    /* The ▾/▸ TEXT glyph rides the text baseline, sitting visibly lower
+       than the flex-centered SVG buttons beside it — center it in its own
+       16px box so every glyph on the head shares one optical axis. */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
 }
 
 /* The THREE fold heads (virtual group / inbox bucket / recent time bucket)
@@ -1972,19 +1979,19 @@ menu[type=context] hr {
 }
 /* Selection mode keeps the tree lines (one visual law in both modes — the
    geometry simply follows the checkbox axis: the head's chevron center sits
-   at 36px (8px lead + 14px checkbox + 6px margin + 16px chevron ÷ 2), and
-   the member rows' favicon column starts at 64px (28px checkbox lead + the
-   36px anchor margin). */
+   at 40px (8px lead + 14px checkbox + 6px margin + 4px flex gap + 16px
+   chevron ÷ 2), and the member rows' favicon column starts at 64px (28px
+   checkbox lead + the 36px anchor margin). */
 #staging-list ul.selecting li.vbm-row.staging-member > .staging-connector {
-    inset-inline-start: 35.5px;
-    width: 28.5px;
+    inset-inline-start: 39.5px;
+    width: 24.5px;
 }
 #staging-list ul.selecting li.vbm-row.staging-member > .staging-connector::after {
-    width: 28.5px;
+    width: 24.5px;
 }
 #staging-list ul.selecting li.staging-group.has-members::after,
 #staging-list ul.selecting li.staging-bucket.has-members::after {
-    inset-inline-start: 35.5px;
+    inset-inline-start: 39.5px;
 }
 
 /* 折叠记忆轮 instant folds: the two big heads hide their regions with a
@@ -4258,6 +4265,29 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
     line-height: 1;
     padding: 0;
 }
+/* Tree-row hover quick actions [编辑][暂存][删除] (options 书签树 switch):
+   the buttons live INSIDE the row's anchor/span, so they must opt back into
+   pointer events (the blanket rule above makes row content click-through),
+   and their reveal rides the row's OWN hover box — scoped, never the
+   ancestor rows' (a nested li hover does not paint its ancestors' buttons). */
+#tree ul li a .row-btn,
+#tree ul li > span .row-btn {
+    flex: none;
+    pointer-events: auto;
+}
+
+#tree ul li a:hover .row-btn,
+#tree ul li > span:hover .row-btn,
+#tree ul li a:has(:focus-visible) .row-btn,
+#tree ul li > span:has(:focus-visible) .row-btn {
+    visibility: visible;
+}
+
+/* The hover delete is destructive: danger red (the rightmost-action law). */
+#tree ul li .row-btn.tree-row-delete {
+    color: var(--vbm-danger);
+}
+
 
 .vbm-row:hover .row-btn,
 /* 4.1.0: a MOUSE click on a row button must not pin the whole strip open.

@@ -321,14 +321,16 @@ export const STAR_X_ICON =
     '<path d="M14 10.8l-3.2 3.2"/>' +
     '</svg>';
 
-// Dissolve a staging group: members exit the box (the door-arrow-out
-// glyph) — distinct from delete's trash and remove's plane.
+// Dissolve a staging group: members exit the box upward — a centered open
+// cup with a centered up-arrow (axially symmetric about x=8, unlike the
+// earlier off-center door-arrow), distinct from delete's trash and remove's
+// plane.
 export const UNGROUP_ICON =
     '<svg class="vbm-icon vbm-icon-ungroup" width="16" height="16" viewBox="0 0 16 16" ' +
     'fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
-    '<path d="M9.33 2v4.67"/>' +
-    '<polyline points="7 4.33 9.33 2 11.67 4.33"/>' +
-    '<path d="M2.5 3.67v7.66A2.17 2.17 0 0 0 4.67 13.5h6.66a2.17 2.17 0 0 0 2.17-2.17V3.67"/>' +
+    '<path d="M8 7V2.5"/>' +
+    '<polyline points="5.5 5 8 2.5 10.5 5"/>' +
+    '<path d="M2.5 7.5v4a1.5 1.5 0 0 0 1.5 1.5h8a1.5 1.5 0 0 0 1.5-1.5v-4"/>' +
     '</svg>';
 
 // v4 task-2: one 16px line icon per view tab (docs/plan-4.0.0/v4task-2.md §3.2). Same

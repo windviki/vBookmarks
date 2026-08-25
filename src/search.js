@@ -798,11 +798,13 @@ export function initSearch(ctx = {}) {
                     // [发送到暂存][删除] — the shared recipe (src/staging-relay.js,
                     // click toggles: staged rows leave the workbench) plus the
                     // real bookmark delete (undo-captured, same as the tree's
-                    // keyboard Delete). Selection mode keeps the DOM flat.
+                    // keyboard Delete). Selection mode keeps the DOM flat; the
+                    // plane stands down with the staging master switch.
                     let tail = '';
                     if (!selecting) {
+                        const relayOn = !ctx.stagingApi || !ctx.stagingApi.isEnabled || ctx.stagingApi.isEnabled();
                         const delLabel = htmlspecialchars(_m('rowActionDelete'));
-                        tail = relayStageBtnHtml(ctx.stagingApi, { id, url: result.url }, _m) +
+                        tail = (relayOn ? relayStageBtnHtml(ctx.stagingApi, { id, url: result.url }, _m) : '') +
                             `<button type="button" class="row-btn search-row-del" aria-label="${delLabel}" title="${delLabel}">${TRASH_ICON}</button>`;
                     }
                     // §3.6: rows carry their parent-folder path label + the
@@ -846,11 +848,12 @@ export function initSearch(ctx = {}) {
                 html = html.replace('<ul role="list" id="results-ul">',
                     '<ul role="list" id="results-ul" class="selecting">');
                 let bar = '<div class="search-toolbar search-select-toolbar selecting-bar vbm-toolbar">';
+                const barStageOn = !ctx.stagingApi || !ctx.stagingApi.isEnabled || ctx.stagingApi.isEnabled();
                 bar += `<span class="select-count">${_m('selectCount', `${selected.size}`)}</span>` +
                     `<button class="search-select-all">${_m('selectAll')}</button>` +
                     `<button class="search-select-invert">${_m('selectInvert')}</button>` +
                     `<button class="search-select-clear">${_m('selectClear')}</button>` +
-                    `<button class="search-stage"${selected.size ? '' : ' disabled'}>${_m('stagingAdd')}</button>` +
+                    (barStageOn ? `<button class="search-stage"${selected.size ? '' : ' disabled'}>${_m('stagingAdd')}</button>` : '') +
                     `<button class="search-open"${selected.size ? '' : ' disabled'}>${_m('open')}</button>` +
                     `<button class="search-open-group"${selected.size ? '' : ' disabled'}>${_m('openBookmarksInGroup')}</button>` +
                     `<button class="search-delete"${selected.size ? '' : ' disabled'}>${_m('deleteSelected')}</button>` +

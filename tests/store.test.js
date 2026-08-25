@@ -316,7 +316,9 @@ describe('store.js', () => {
                 'deadSort', 'deadFilter', 'deadMarkFilter',
                 'statsSort', 'statsShowUnbookmarked',
                 // 4.1.0 tab-groups view prefs
-                'tabGroupsSyncCollapse', 'tabGroupsColorStyle', 'tabGroupsColorBorder', 'tabGroupsClosedLimit'
+                'tabGroupsSyncCollapse', 'tabGroupsColorStyle', 'tabGroupsColorBorder', 'tabGroupsClosedLimit',
+                // staging master switch + tree-row hover actions
+                'stagingEnabled', 'treeRowActions'
             ]);
         });
 

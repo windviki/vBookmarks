@@ -2555,5 +2555,17 @@
   },
   "optionVirtualScrollLabHint": {
     "message": "Zobrazenia skupín kariet a duplicit vykresľujú iba riadky v blízkosti viditeľnej oblasti. Oveľa rýchlejšie pri veľmi veľkých zoznamoch; počas experimentálneho režimu je pozícia posúvača odhadovaná."
+  },
+  "optionsStagingSection": {
+    "message": "Staging a nedávno pridané"
+  },
+  "optionStagingEnabled": {
+    "message": "Povoliť oblasť staging"
+  },
+  "optionStagingEnabledHint": {
+    "message": "Keď je vypnuté, toto zobrazenie obsahuje iba zoznam nedávno pridaných a všetky tlačidlá alebo položky ponuky staging v ostatných zobrazeniach sa skryjú."
+  },
+  "optionTreeRowActions": {
+    "message": "Akcie pri prejdení myšou na riadky stromu (upraviť / stage / odstrániť)"
   }
 }

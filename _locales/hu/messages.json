@@ -2555,5 +2555,17 @@
   },
   "optionVirtualScrollLabHint": {
     "message": "A lapcsoportok és ismétlődések nézetei csak a nézetablak közelében lévő sorokat jelenítik meg. Nagyon nagy listákon sokkal gyorsabb; kísérleti fázisban a görgetősáv pozíciója becsült."
+  },
+  "optionsStagingSection": {
+    "message": "Staging és legutóbb hozzáadottak"
+  },
+  "optionStagingEnabled": {
+    "message": "Staging terület engedélyezése"
+  },
+  "optionStagingEnabledHint": {
+    "message": "Kikapcsolva ez a nézet csak a legutóbb hozzáadott listát tartja meg, és a többi nézetben minden staging gomb vagy menüpont elrejtve jelenik meg."
+  },
+  "optionTreeRowActions": {
+    "message": "Műveletek a fa sorokon (szerkesztés / staging / törlés)"
   }
 }

@@ -2555,5 +2555,17 @@
   },
   "optionVirtualScrollLabHint": {
     "message": "탭 그룹 및 중복 보기는 뷰포트 근처의 행만 렌더링합니다. 매우 큰 목록에서 훨씬 빠르며, 실험적 기능으로 스크롤바 위치는 추정치입니다."
+  },
+  "optionsStagingSection": {
+    "message": "스테이징 및 최근 추가됨"
+  },
+  "optionStagingEnabled": {
+    "message": "스테이징 영역 활성화"
+  },
+  "optionStagingEnabledHint": {
+    "message": "이 기능을 끄면 이 보기에는 최근 추가된 목록만 표시되며, 다른 보기의 모든 스테이징 버튼이나 메뉴 항목이 숨겨집니다."
+  },
+  "optionTreeRowActions": {
+    "message": "트리 행에 마우스 오버 시 작업 표시 (편집 / 스테이징 / 삭제)"
   }
 }

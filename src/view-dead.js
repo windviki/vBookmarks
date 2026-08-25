@@ -607,8 +607,8 @@ export function initViewDead(ctx = {}) {
                 row += iconBtn('dead-unmark-all', FLAG_X_ICON, 'deadUnmarkAll');
             // velvet staging relay: send every LISTED row (filter-aware) to
             // the workbench — the batch entry left of 删除全部, one relay law
-            // with the rows' hover plane.
-            if (selectableRows().length)
+            // with the rows' hover plane. Stands down with the master switch.
+            if (relayOn() && selectableRows().length)
                 row += iconBtn('dead-stage-all', STAGE_ICON, 'stagingAdd');
             if (selectableRows().length)
                 row += iconBtn('dead-delete-all', TRASH_ICON, 'deadDeleteAllBtn');
@@ -665,8 +665,9 @@ export function initViewDead(ctx = {}) {
     // velvet staging relay: the row's hover 发送到暂存 toggle — the shared
     // recipe (src/staging-relay.js, the stats-view original): click toggles,
     // the flip lands on the live button (this view does not re-render on
-    // staging changes).
-    const stageBtnHtml = item => relayStageBtnHtml(ctx.staging, item, _m);
+    // staging changes). Empty while the staging master switch is off.
+    const relayOn = () => !ctx.staging || !ctx.staging.isEnabled || ctx.staging.isEnabled();
+    const stageBtnHtml = item => relayOn() ? relayStageBtnHtml(ctx.staging, item, _m) : '';
 
     const rowLiHtml = (row, L) => {
         const { item, result } = row;

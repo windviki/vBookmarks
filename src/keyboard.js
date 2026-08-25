@@ -215,6 +215,7 @@ export function initKeyboard(ctx = {}) {
                                     && !(focused.closest && focused.closest('.vbm-dropdown-list')))
                                 ? focused
                                 : (this.querySelector('li a, li span') ||
+                                   rowFocusTarget(this.querySelector('li')) ||
                                    this.querySelector('li a, li span, li[tabindex]'));
                             if (target)
                                 target.focus();

@@ -2555,5 +2555,17 @@
   },
   "optionVirtualScrollLabHint": {
     "message": "Vyn för flikgrupper och dubbletter renderar endast raderna nära visningsporten. Mycket snabbare på mycket stora listor; medan den är experimentell är rullningslägets position en uppskattning."
+  },
+  "optionsStagingSection": {
+    "message": "Staging och nyligen tillagda"
+  },
+  "optionStagingEnabled": {
+    "message": "Aktivera staging-området"
+  },
+  "optionStagingEnabledHint": {
+    "message": "När avstängd visar denna vy endast listan över nyligen tillagda, och alla staging-knappar eller menyposter i de andra vyerna döljs."
+  },
+  "optionTreeRowActions": {
+    "message": "Hovringsåtgärder på trädrader (redigera / stage / ta bort)"
   }
 }

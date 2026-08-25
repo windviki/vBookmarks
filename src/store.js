@@ -179,7 +179,10 @@
         'deadSort', 'deadFilter', 'deadMarkFilter',
         'statsSort', 'statsShowUnbookmarked',
         // 4.1.0 tab-groups view prefs (device-independent)
-        'tabGroupsSyncCollapse', 'tabGroupsColorStyle', 'tabGroupsColorBorder', 'tabGroupsClosedLimit'
+        'tabGroupsSyncCollapse', 'tabGroupsColorStyle', 'tabGroupsColorBorder', 'tabGroupsClosedLimit',
+        // staging master switch + tree-row hover actions (options
+        // 暂存和最近添加 / 书签树 — device-independent preferences)
+        'stagingEnabled', 'treeRowActions'
     ];
     const SYNC_KEY_SET = new Set(SYNC_KEYS);
     const isSyncKey = key => SYNC_KEY_SET.has(key);

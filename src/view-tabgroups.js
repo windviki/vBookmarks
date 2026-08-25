@@ -574,7 +574,7 @@ export function initViewTabGroups(ctx = {}) {
             `<button class="row-btn tabgroups-group-rename" aria-label="${htmlspecialchars(G.rename)}" title="${htmlspecialchars(G.rename)}">${EDIT_ICON}</button>` +
             `<button class="row-btn tabgroups-group-sleep${allAsleep ? ' asleep' : ''}" aria-pressed="${allAsleep}" aria-label="${htmlspecialchars(sleepLabel)}" title="${htmlspecialchars(sleepLabel)}">${allAsleep ? SLEEP_ICON_FILLED : SLEEP_ICON}</button>` +
             `<button class="row-btn tabgroups-group-save" aria-label="${htmlspecialchars(G.save)}" title="${htmlspecialchars(G.save)}">${FOLDER_STAR_ICON}</button>` +
-            `<button class="row-btn tabgroups-group-stage${groupStaged ? ' staged always-on' : ''}" aria-pressed="${groupStaged}" aria-label="${htmlspecialchars(groupStageLabel)}" title="${htmlspecialchars(groupStageLabel)}">${groupStaged ? STAGE_ICON_DONE : STAGE_ICON}</button>` +
+            (relayOn() ? `<button class="row-btn tabgroups-group-stage${groupStaged ? ' staged always-on' : ''}" aria-pressed="${groupStaged}" aria-label="${htmlspecialchars(groupStageLabel)}" title="${htmlspecialchars(groupStageLabel)}">${groupStaged ? STAGE_ICON_DONE : STAGE_ICON}</button>` : '') +
             `<button class="row-btn tabgroups-group-close" aria-label="${htmlspecialchars(G.close)}" title="${htmlspecialchars(G.close)}">${TRASH_ICON}</button>` +
             '</span></li>';
     };
@@ -611,7 +611,7 @@ export function initViewTabGroups(ctx = {}) {
                 (bookmarked
                     ? `<span class="tabgroups-star" aria-label="${htmlspecialchars(bookmarkedLabel)}" title="${htmlspecialchars(bookmarkedLabel)}">${STAR_ICON_FILLED}</span>`
                     : emptySlot()) +
-                (staged
+                (relayOn() && staged
                     ? `<span class="tabgroups-star staged" aria-label="${htmlspecialchars(stagedLabel)}" title="${htmlspecialchars(stagedLabel)}">${STAGE_ICON_DONE}</span>`
                     : emptySlot()) +
                 emptySlot();
@@ -638,9 +638,9 @@ export function initViewTabGroups(ctx = {}) {
             : `<button class="row-btn tabgroups-add-bookmark tabgroups-add-btn" aria-label="${htmlspecialchars(L.addBookmark || _m('tabGroupsAddBookmark'))}" title="${htmlspecialchars(L.addBookmark || _m('tabGroupsAddBookmark'))}">${STAR_ICON}</button>`;
         // Stage (发送到暂存): pure snapshot between the star and close
         // columns; staged → filled plane always on in accent.
-        const stageHtml = staged
+        const stageHtml = !relayOn() ? '' : (staged
             ? `<button class="row-btn tabgroups-stage staged always-on" aria-pressed="true" aria-label="${htmlspecialchars(stagedLabel)}" title="${htmlspecialchars(stagedLabel)}">${STAGE_ICON_DONE}</button>`
-            : `<button class="row-btn tabgroups-stage" aria-label="${htmlspecialchars(stagedLabel)}" title="${htmlspecialchars(stagedLabel)}">${STAGE_ICON}</button>`;
+            : `<button class="row-btn tabgroups-stage" aria-label="${htmlspecialchars(stagedLabel)}" title="${htmlspecialchars(stagedLabel)}">${STAGE_ICON}</button>`);
         // The rightmost hover action is close-tab (delete).
         const closeLabel = L.close || _m('tabGroupsSelectClose');
         const closeHtml = `<button class="row-btn tabgroups-close-tab" aria-label="${htmlspecialchars(closeLabel)}" title="${htmlspecialchars(closeLabel)}">${TRASH_ICON}</button>`;
@@ -709,9 +709,11 @@ export function initViewTabGroups(ctx = {}) {
         // the filled plane, always on in accent (the staging view's law).
         const closedStaged = isStagedUrl(tab.url);
         const closedStageLabel = _m('tabRowStage');
-        const stageBtn = `<button class="row-btn tabgroups-closed-stage${closedStaged ? ' staged always-on' : ''}" ` +
-            `aria-pressed="${closedStaged}" aria-label="${htmlspecialchars(closedStageLabel)}" title="${htmlspecialchars(closedStageLabel)}">` +
-            `${closedStaged ? STAGE_ICON_DONE : STAGE_ICON}</button>`;
+        const stageBtn = relayOn()
+            ? `<button class="row-btn tabgroups-closed-stage${closedStaged ? ' staged always-on' : ''}" ` +
+              `aria-pressed="${closedStaged}" aria-label="${htmlspecialchars(closedStageLabel)}" title="${htmlspecialchars(closedStageLabel)}">` +
+              `${closedStaged ? STAGE_ICON_DONE : STAGE_ICON}</button>`
+            : '';
         return `<li class="vbm-row tabgroups-closed-tab${opts.member ? ' tabgroups-closed-member' : ''}" data-closed-id="${htmlspecialchars(record.id)}" data-closed-tab="${idx}">` +
             treeRender.generateBookmarkHTML(title, tab.url || '', extras, null, null, meta) +
             firstBtn +
@@ -723,6 +725,8 @@ export function initViewTabGroups(ctx = {}) {
     // The closed group head's stage button (暂存 between reopen and delete):
     // every bookmarkable recorded tab already staged → filled plane, always on.
     const closedHeadStageBtn = record => {
+        if (!relayOn())
+            return '';
         const tabs = record.tabs || [];
         const bookmarkable = tabs.filter(t => bookmarkableUrl(t.url));
         const staged = bookmarkable.length > 0 && bookmarkable.every(t => isStagedUrl(t.url));
@@ -1109,7 +1113,10 @@ export function initViewTabGroups(ctx = {}) {
     const stageTabById = tabId => stageTab(tabById(tabId));
 
     // Staged-state probe for the row/head buttons: staged → the filled plane
-    // glyph, always visible in accent (the staging view's .staged law).
+    // glyph, always visible in accent (the staging view's .staged law). All
+    // the relay builders below return nothing while the staging master
+    // switch (stagingEnabled) is off.
+    const relayOn = () => !ctx.staging || !ctx.staging.isEnabled || ctx.staging.isEnabled();
     const isStagedUrl = url => !!(ctx.staging && ctx.staging.isStaged && url && ctx.staging.isStaged(url));
 
     // Stage a CLOSED record (group head → every recorded tab; one recorded

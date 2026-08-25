@@ -1,5 +1,6 @@
-import { FOLDER_ICON, DOCUMENT_CODE_ICON, CHEVRON_ICON } from './icons.js';
+import { FOLDER_ICON, DOCUMENT_CODE_ICON, CHEVRON_ICON, EDIT_ICON, TRASH_ICON } from './icons.js';
 import { htmlspecialchars } from './escape.js';
+import { stageBtnHtml as relayStageBtnHtml } from './staging-relay.js';
 
 /**
  * Tree HTML generation + tree data helpers (P1 module extracted from neat.js,
@@ -148,6 +149,28 @@ export function initTreeRender(ctx = {}) {
     const getRememberState = ctx.getRememberState;
     const _m = chrome.i18n.getMessage;
 
+    // Tree-row hover quick actions [编辑][暂存][删除] (options 书签树 →
+    // treeRowActions, default on). Bookmarks get all three; folders skip
+    // the plane (a folder "stage" is the context menu's flatten-send). The
+    // plane only renders while the staging feature itself is enabled
+    // (stagingEnabled, the options 暂存和最近添加 master switch).
+    const treeRowActionsOn = () => store.get('treeRowActions', '1') === '1';
+    const stagingRelayOn = () => store.get('stagingEnabled', '1') === '1';
+    const treeRowTail = (url, isFolder) => {
+        if (!treeRowActionsOn())
+            return '';
+        const esc = htmlspecialchars;
+        const editLabel = esc(_m(isFolder ? 'editFolder' : 'editBookmark'));
+        const delLabel = esc(_m('rowActionDelete'));
+        let html = `<button type="button" class="row-btn tree-row-btn tree-row-edit" ` +
+            `aria-label="${editLabel}" title="${editLabel}">${EDIT_ICON}</button>`;
+        if (!isFolder && url && stagingRelayOn())
+            html += relayStageBtnHtml(ctx.staging, { url }, _m);
+        html += `<button type="button" class="row-btn tree-row-btn tree-row-delete" ` +
+            `aria-label="${delLabel}" title="${delLabel}">${TRASH_ICON}</button>`;
+        return html;
+    };
+
     const getFaviconUrl = (url) => {
         // H3: precomputed base + manual serialization — no per-row URL object.
         // Must stay byte-identical to URLSearchParams (guarded by the corpus
@@ -262,7 +285,7 @@ export function initTreeRender(ctx = {}) {
                     ${faviconHtml}
                     ${syncIndicator}
                 </div>
-                ${nameHtml}
+                ${nameHtml}${(meta && meta.tailHtml) || ''}
                 </a>`;
     };
 
@@ -302,7 +325,7 @@ export function initTreeRender(ctx = {}) {
 		       ${FOLDER_ICON}
 		       ${syncIndicator}
 		   </div>
-		   <i>${displayTitle}</i>
+		   <i>${displayTitle}</i>${treeRowTail('', true)}
 		   </span>`;
     };
 
@@ -390,7 +413,11 @@ export function initTreeRender(ctx = {}) {
                     html += generateSeparatorHTML(paddingStart);
                     separatorManager.add(id);
                 } else {
-                    html += generateBookmarkHTML(title, url, stylePad, id);
+                    // tree rows carry their hover quick-action tail (the
+                    // shared generateBookmarkHTML appends meta.tailHtml
+                    // inside the anchor — hover reveal + focus ride the
+                    // anchor's own box, no ancestor-hover leakage).
+                    html += generateBookmarkHTML(title, url, stylePad, id, null, { tailHtml: treeRowTail(url, false) });
                 }
             }
             html += '</li>';

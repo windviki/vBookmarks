@@ -2555,5 +2555,17 @@
   },
   "optionVirtualScrollLabHint": {
     "message": "มุมมองกลุ่มแท็บและรายการซ้ำจะแสดงเฉพาะแถวที่อยู่ใกล้กับพื้นที่มองเห็นเท่านั้น เร็วกว่ามากในรายการขนาดใหญ่ ขณะที่อยู่ในโหมดทดลอง ตำแหน่งแถบเลื่อนเป็นการประมาณค่า"
+  },
+  "optionsStagingSection": {
+    "message": "暂存与最近添加"
+  },
+  "optionStagingEnabled": {
+    "message": "启用暂存区"
+  },
+  "optionStagingEnabledHint": {
+    "message": "关闭后，此视图仅保留最近添加的列表，其他视图中的暂存按钮或菜单项将全部隐藏。"
+  },
+  "optionTreeRowActions": {
+    "message": "树行上的悬停操作（编辑 / 暂存 / 删除）"
   }
 }

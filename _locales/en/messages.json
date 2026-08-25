@@ -2803,5 +2803,17 @@
   },
   "stagingGroupSelectAll": {
     "message": "Select all in this group"
+  },
+  "optionsStagingSection": {
+    "message": "Staging & recently added"
+  },
+  "optionStagingEnabled": {
+    "message": "Enable the staging area"
+  },
+  "optionStagingEnabledHint": {
+    "message": "While off, this view keeps only the recently-added list, and every staging button or menu entry in the other views hides."
+  },
+  "optionTreeRowActions": {
+    "message": "Hover actions on tree rows (edit / stage / delete)"
   }
 }

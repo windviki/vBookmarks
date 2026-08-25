@@ -2555,5 +2555,17 @@
   },
   "optionVirtualScrollLabHint": {
     "message": "分頁群組和重複項目檢視只會渲染接近視窗的列。在非常大的清單上速度更快；實驗期間捲軸位置為估計值。"
+  },
+  "optionsStagingSection": {
+    "message": "暫存及最近新增"
+  },
+  "optionStagingEnabled": {
+    "message": "啟用暫存區"
+  },
+  "optionStagingEnabledHint": {
+    "message": "關閉時，此檢視僅保留最近新增清單，其他檢視中的暫存按鈕或選單項目會隱藏。"
+  },
+  "optionTreeRowActions": {
+    "message": "樹狀列上的懸停操作（編輯／暫存／刪除）"
   }
 }

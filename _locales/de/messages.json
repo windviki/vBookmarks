@@ -2555,5 +2555,17 @@
   },
   "optionVirtualScrollLabHint": {
     "message": "Die Ansichten für Tab-Gruppen und Duplikate rendern nur die Zeilen in der Nähe des Viewports. Bei sehr großen Listen deutlich schneller; experimentell ist die Scrollbar-Position eine Schätzung."
+  },
+  "optionsStagingSection": {
+    "message": "Staging & kürzlich hinzugefügt"
+  },
+  "optionStagingEnabled": {
+    "message": "Staging-Bereich aktivieren"
+  },
+  "optionStagingEnabledHint": {
+    "message": "Wenn deaktiviert, zeigt diese Ansicht nur die kürzlich hinzugefügte Liste, und alle Staging-Schaltflächen oder Menüeinträge in den anderen Ansichten werden ausgeblendet."
+  },
+  "optionTreeRowActions": {
+    "message": "Hover-Aktionen auf Baumzeilen (Bearbeiten / Staging / Löschen)"
   }
 }

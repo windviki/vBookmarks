@@ -2555,5 +2555,17 @@
   },
   "optionVirtualScrollLabHint": {
     "message": "Fanegrupper og dubletvisninger gengiver kun rækkerne nær visningsporten. Meget hurtigere på meget store lister; mens det er eksperimentelt, er rullepositionen et skøn."
+  },
+  "optionsStagingSection": {
+    "message": "Staging og nyligt tilføjede"
+  },
+  "optionStagingEnabled": {
+    "message": "Aktivér staging-området"
+  },
+  "optionStagingEnabledHint": {
+    "message": "Mens denne er slået fra, viser denne visning kun den nyligt tilføjede liste, og alle staging-knapper eller menupunkter i de andre visninger skjules."
+  },
+  "optionTreeRowActions": {
+    "message": "Hover-handlinger på trærækker (rediger / stage / slet)"
   }
 }

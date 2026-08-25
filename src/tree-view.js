@@ -65,6 +65,7 @@
  */
 
 import { parkRowFocus, unparkRowFocus } from './list-focus.js';
+import { toggleStageItem, flipStageBtn } from './staging-relay.js';
 
 export function initTreeView(ctx = {}) {
     const store = ctx.store;
@@ -306,6 +307,45 @@ export function initTreeView(ctx = {}) {
         }
     }, true);
     const closeUnusedFolders = store.get('closeUnusedFolders');
+    // Tree-row hover quick actions (编辑/发送到暂存/删除): capture-phase so
+    // the buttons win over bookmarkHandler (a click on a button inside the
+    // row anchor would otherwise open the bookmark). Folder rows skip the
+    // plane (their stage entry is the menu's flatten-send).
+    $tree.addEventListener('click', e => {
+        if (e.button !== 0)
+            return;
+        const btn = e.target && e.target.closest ? e.target.closest('.tree-row-btn, #tree .staging-add-btn') : null;
+        if (!btn)
+            return;
+        e.preventDefault();
+        e.stopPropagation();
+        const li = btn.closest('li');
+        const id = li ? String(li.id).replace(/^neat-tree-item-/, '') : '';
+        if (!id)
+            return;
+        const _m2 = chrome.i18n.getMessage;
+        if (btn.classList.contains('tree-row-edit')) {
+            ctx.actions.editBookmarkFolder(id);
+        } else if (btn.classList.contains('tree-row-delete')) {
+            if (li.classList.contains('parent')) {
+                chrome.bookmarks.getChildren(id, children => {
+                    if (chrome.runtime.lastError)
+                        return;
+                    children = children || [];
+                    const urlsLen = children.map(c => c.url).filter(Boolean).length;
+                    ctx.actions.deleteBookmarks(id, urlsLen, children.length - urlsLen);
+                });
+            } else {
+                ctx.actions.deleteBookmark(id);
+            }
+        } else if (btn.classList.contains('staging-add-btn') && ctx.staging) {
+            const a = li.querySelector('a');
+            const url = a ? a.getAttribute('href') : '';
+            const nowStaged = toggleStageItem(ctx.staging, { id, url });
+            if (nowStaged !== null)
+                flipStageBtn(btn, nowStaged, _m2);
+        }
+    }, true);
     $tree.addEventListener('click', e => {
         if (e.button !== 0)
             return;

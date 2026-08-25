@@ -1154,6 +1154,19 @@ export function initContextMenu(ctx = {}) {
                 pasteItem.style.display = (inTree && actions && actions.hasClipBookmark()) ? 'block' : 'none';
             }
         }
+        // The staging master switch (options 暂存和最近添加 → stagingEnabled):
+        // while off, EVERY staging entry across every menu hides — this runs
+        // AFTER the per-branch display logic so it always wins.
+        if (ctx.staging && ctx.staging.isEnabled && !ctx.staging.isEnabled()) {
+            for (const hideId of ['add-to-staging', 'staging-item-sep', 'staging-fav-toggle',
+                'staging-group-assign', 'staging-remove-item', 'folder-stage-sep', 'add-folder-to-staging',
+                'hist-row-stage', 'dupes-group-stage', 'tab-row-stage', 'tabgroup-stage-all',
+                'tabgroups-closed-stage-all', 'tabgroups-closed-tab-stage']) {
+                const hideItem = $(hideId);
+                if (hideItem)
+                    hideItem.style.display = 'none';
+            }
+        }
         if (menu) {
             currentContext = el;
             // Capture the owner row's identity NOW — a view re-render under

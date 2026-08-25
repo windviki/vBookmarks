@@ -40,6 +40,7 @@ import { paintListChunked } from './list-chunks.js';
 import { VIEW_ICONS, STAGE_ICON, STAGE_ICON_DONE, STAGE_REMOVE_ICON, STAR_ICON, STAR_ICON_FILLED, STAR_X_ICON, SELECT_ICON, FOLDER_STAR_ICON, FOLDER_PLUS_ICON, EDIT_ICON, TRASH_ICON, LIST_X_ICON, OPEN_ICON, TABS_ICON, GROUP_ICON, UNGROUP_ICON, SCISSORS_ICON, COLLAPSE_ALL_ICON, EXPAND_ALL_ICON } from './icons.js';
 import { htmlspecialchars } from './escape.js';
 import { parkRowFocus, unparkRowFocus, parkToolbarFocus, restoreToolbarFocus } from './list-focus.js';
+import { flipStageBtn } from './staging-relay.js';
 import * as staging from './staging.js';
 
 export function initViewRecent(ctx = {}) {
@@ -62,6 +63,11 @@ export function initViewRecent(ctx = {}) {
     const $list = $('staging-list');
 
     const enabled = () => !!store.get('showRecentBookmarks', '1');
+    // The staging master switch (options 暂存和最近添加 → stagingEnabled,
+    // default on): off collapses the view to the classic recently-added
+    // list — no workbench chrome, no toolbar, and every other view's
+    // staging entries hide (they read this through api.isEnabled).
+    const stagingOn = () => store.get('stagingEnabled', '1') === '1';
     const recentCount = () => {
         const n = parseInt(store.get('recentCount', '20'), 10);
         return n > 0 ? n : 20;
@@ -794,21 +800,29 @@ export function initViewRecent(ctx = {}) {
         // ONE innerHTML — no rebuild, no stream wait.
         stagingRowsCache = stagingArea.pieces.join('');
         const stagingCollapsed = stagingState.headCollapsed && !selecting;
+        // The staging master switch (options 暂存和最近添加): off collapses
+        // the view to the classic recently-added list — no workbench chrome,
+        // no toolbar, no scissors (there is no upper half to cut from).
+        const workbenchOn = stagingOn();
         let head = chromeHtml();
-        head += renderToolbar();
-        head += stagingArea.ul;
-        // The scissors cut: the recently-added region is a separate
-        // lower half, never a staging group — the dashed line + scissors
-        // mark the boundary BEFORE the foldable section head.
-        head += `<div class="staging-cut" aria-hidden="true">${SCISSORS_ICON}</div>`;
+        if (workbenchOn) {
+            head += renderToolbar();
+            head += stagingArea.ul;
+            // The scissors cut: the recently-added region is a separate
+            // lower half, never a staging group — the dashed line + scissors
+            // mark the boundary BEFORE the foldable section head.
+            head += `<div class="staging-cut" aria-hidden="true">${SCISSORS_ICON}</div>`;
+        }
         head += renderRecentHead(recentN);
-        const pipes = [{
-            ul: '#staging-items',
-            pieces: stagingCollapsed ? [] : stagingArea.pieces,
-            first: 60,   // first rows land with the head
-            chunk: 120   // then stream 120 rows per frame (fixed stride —
-                         // the staging list is 500-capped, no need to adapt)
-        }];
+        const pipes = [];
+        if (workbenchOn)
+            pipes.push({
+                ul: '#staging-items',
+                pieces: stagingCollapsed ? [] : stagingArea.pieces,
+                first: 60,   // first rows land with the head
+                chunk: 120   // then stream 120 rows per frame (fixed stride —
+                             // the staging list is 500-capped, no need to adapt)
+            });
         // The recent region always paints (its rows are recentCount-bounded);
         // the fold hides them with a root class, so folding/unfolding is a
         // zero-work display swap instead of a full repaint.
@@ -821,7 +835,7 @@ export function initViewRecent(ctx = {}) {
             chunk: 60
         });
         if ($list && $list.classList && typeof $list.classList.toggle === 'function') {
-            $list.classList.toggle('staging-area-collapsed', stagingCollapsed);
+            $list.classList.toggle('staging-area-collapsed', stagingCollapsed || !workbenchOn);
             $list.classList.toggle('recent-area-collapsed', !!stagingState.recentCollapsed);
         }
         // 4.0.1 focus law: a focused row rides the swap (park above, restore
@@ -2049,6 +2063,18 @@ export function initViewRecent(ctx = {}) {
     // writes echo too (see ownWrites above) and are skipped.
     if (chrome.storage && chrome.storage.onChanged)
         chrome.storage.onChanged.addListener((changes, area) => {
+            // The master switch lives in the SYNC area (options page writes
+            // it there through the area-transparent routing) — adopt + repaint
+            // for both areas; a stale workbench must not survive the flip.
+            if ('stagingEnabled' in changes) {
+                if (store.adopt)
+                    store.adopt('stagingEnabled', changes.stagingEnabled.newValue);
+                if (views.isActive('recent'))
+                    refresh();
+                refreshTree();
+                views.updateBadges();
+                return;
+            }
             if (area !== 'local')
                 return;
             if ('staging' in changes) {
@@ -2314,8 +2340,14 @@ export function initViewRecent(ctx = {}) {
             const url = li && ((li.dataset && li.dataset.url) ||
                 (li.querySelector && li.querySelector('a') ? li.querySelector('a').getAttribute('href') : ''));
             const title = '';
-            if (url)
+            if (url) {
+                const existing = staging.getByUrl(stagingState, url);
                 toggleUrl(url, id, title);
+                // The recent region is deliberately untouched by staging
+                // repaints — flip the clicked plane in place (hollow → the
+                // always-on filled plane, one visual law with every relay).
+                flipStageBtn(e.target.closest('.staging-add-btn'), !existing, _m);
+            }
             return;
         }
         if (closest('.staging-star')) {
@@ -2672,7 +2704,7 @@ export function initViewRecent(ctx = {}) {
         showKey: 'showRecentBookmarks',
         disableKey: 'disableRecentView',
         typeAhead: false,
-        badge: () => staging.count(stagingState),
+        badge: () => stagingOn() ? staging.count(stagingState) : 0,
         persistScroll: true, // first user in the codebase — see view-manager tests
         onEscape: () => {
             if (selecting) {
@@ -2778,6 +2810,8 @@ export function initViewRecent(ctx = {}) {
         selectedUrls: () => [...selected],
         isSelecting: () => selecting,
         isStaged: url => !!staging.getByUrl(stagingState, url),
+        // The master switch — every other view's staging entries gate on it.
+        isEnabled: () => stagingOn(),
         removeByUrl,
         state: () => stagingState
     };

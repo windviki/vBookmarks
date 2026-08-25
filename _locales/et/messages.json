@@ -2555,5 +2555,17 @@
   },
   "optionVirtualScrollLabHint": {
     "message": "Vahekaardirühmade ja dublikaatide vaated renderdavad ainult vaateakna lähedal asuvaid ridu. Väga suurtes loendites palju kiirem; eksperimentaalses režiimis on kerimisriba asukoht hinnanguline."
+  },
+  "optionsStagingSection": {
+    "message": "Staging ja hiljuti lisatud"
+  },
+  "optionStagingEnabled": {
+    "message": "Luba staging-ala"
+  },
+  "optionStagingEnabledHint": {
+    "message": "Kui see on välja lülitatud, kuvab see vaade ainult hiljuti lisatud loendit ning kõik staging-nupud ja menüükirjed teistes vaadetes peidetakse."
+  },
+  "optionTreeRowActions": {
+    "message": "Hõljumistoimingud puuridade puhul (muuda / stage / kustuta)"
   }
 }

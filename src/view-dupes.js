@@ -376,8 +376,10 @@ export function initViewDupes(ctx = {}) {
             const allItems = groups.flatMap(g => g.items)
                 .map(it => ({ id: it.id, url: it.url, title: it.title || '' }));
             const stageLabel = htmlspecialchars(_m('stagingAdd'));
-            html += `<button class="dupes-stage-all"${allItems.length ? '' : ' disabled'} ` +
-                `title="${stageLabel}" aria-label="${stageLabel}">${STAGE_ICON}</button>`;
+            html += relayOn()
+                ? `<button class="dupes-stage-all"${allItems.length ? '' : ' disabled'} ` +
+                  `title="${stageLabel}" aria-label="${stageLabel}">${STAGE_ICON}</button>`
+                : '';
         }
         html += `<button class="dupes-apply-all"${doomed ? '' : ' disabled'}>` +
             _m('dupesApplyAll', `${doomed}`) + '</button>';
@@ -399,7 +401,9 @@ export function initViewDupes(ctx = {}) {
 
     // velvet staging relay: the shared hover 发送到暂存 toggle (the
     // stats-view recipe — .staging-add-btn + .staged accent, click toggles).
-    const stageBtnHtml = item => relayStageBtnHtml(ctx.staging, item, _m);
+    // Both builders return '' while the staging master switch is off.
+    const relayOn = () => !ctx.staging || !ctx.staging.isEnabled || ctx.staging.isEnabled();
+    const stageBtnHtml = item => relayOn() ? relayStageBtnHtml(ctx.staging, item, _m) : '';
     const groupAllStaged = group => {
         const items = (group && group.items) || [];
         return items.length > 0 && items.every(it => isStagedUrl(ctx.staging, it.url));
@@ -409,6 +413,8 @@ export function initViewDupes(ctx = {}) {
     // all-staged group toggles back out. Same glyph/label language as the
     // rows, with the whole-group staged verdict.
     const groupStageBtnHtml = group => {
+        if (!relayOn())
+            return '';
         const staged = groupAllStaged(group);
         const label = _m(staged ? 'stagingRemove' : 'stagingAdd');
         return `<button type="button" class="row-btn staging-add-btn${staged ? ' staged' : ''}" ` +

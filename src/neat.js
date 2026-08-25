@@ -370,7 +370,10 @@ import { deferIdle, mark as perfMark } from './idle.js';
         store,
         separatorManager,
         getOpens: () => opens,
-        getRememberState: () => rememberState
+        getRememberState: () => rememberState,
+        // Tree-row hover actions: the staging relay api (viewRecent inits
+        // far below — the getter only runs at render/click time, TDZ-safe).
+        get staging() { return viewRecent.api; }
     });
 
     // 树视图层（nodeTrees、最近书签区、generateTree、树事件与启动的
@@ -704,6 +707,9 @@ import { deferIdle, mark as perfMark } from './idle.js';
         search,
         actions,
         dnd,
+        // tree-row hover actions: the staging relay api (lazy — viewRecent
+        // inits after this wiring, clicks happen much later).
+        get staging() { return viewRecent.api; },
         refreshSyncIndicators: syncUi.refreshSyncIndicators,
         getOpens: () => opens,
         getRememberState: () => rememberState,

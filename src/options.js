@@ -119,7 +119,10 @@ const $ = id => document.getElementById(id);
         // stats / dead / dupes. Groups without options stay hidden placeholders.
         const treeSettings = [
             // v3 carry-over: the popup shows only the bookmarks bar subtree.
-            { id: 'only-show-bmbar', key: 'onlyShowBMBar', defaultValue: '', inverted: false }
+            { id: 'only-show-bmbar', key: 'onlyShowBMBar', defaultValue: '', inverted: false },
+            // Tree-row hover quick actions [编辑][发送到暂存][删除] — off
+            // leaves the rows clean (context menu / keyboard stay).
+            { id: 'tree-row-actions', key: 'treeRowActions', defaultValue: '1', inverted: false }
         ];
         const searchSettings = [
             // v3 carry-over: rank/search only after Enter, not on every keystroke.
@@ -298,6 +301,12 @@ const $ = id => document.getElementById(id);
         const recentCount = $('recent-count');
         recentCount.value = await getSetting('recentCount', '20');
         recentCount.addEventListener('change', () => setSetting('recentCount', recentCount.value));
+        // 暂存和最近添加: the staging master switch — off hides the
+        // workbench's upper half in the view AND every staging entry
+        // (buttons, toolbars, context-menu items) across all other views.
+        await bindSettingsList([
+            { id: 'staging-enabled', key: 'stagingEnabled', defaultValue: '1', inverted: false }
+        ]);
         // Tab-groups view: closed tab/group history depth.
         const tabGroupsClosedLimit = $('tabgroups-closed-limit');
         tabGroupsClosedLimit.value = await getSetting('tabGroupsClosedLimit', '10');
@@ -868,7 +877,10 @@ const $ = id => document.getElementById(id);
         document.getElementById('tree-options').innerText = __m('viewTree');
         document.getElementById('search-options').innerText = __m('viewSearch');
         document.getElementById('tabgroups-options').innerText = __m('viewTabGroups');
-        document.getElementById('recent-options').innerText = __m('viewRecent');
+        document.getElementById('recent-options').innerText = __m('optionsStagingSection');
+        document.getElementById('option-staging-enabled').innerText = __m('optionStagingEnabled');
+        document.getElementById('option-staging-enabled-hint').innerText = __m('optionStagingEnabledHint');
+        document.getElementById('option-tree-row-actions').innerText = __m('optionTreeRowActions');
         document.getElementById('dupes-options').innerText = __m('viewDupes');
         document.getElementById('icons-options').innerText = __m('optionsGroupIcons');
         document.getElementById('context-menu-options').innerText = __m('optionsGroupContextMenu');

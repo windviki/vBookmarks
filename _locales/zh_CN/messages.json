@@ -2609,5 +2609,17 @@
   },
   "optionVirtualScrollLabHint": {
     "message": "标签组与去重视图只渲染视口附近的行，超大列表明显更快。实验阶段滚动条位置为估算值。"
+  },
+  "optionsStagingSection": {
+    "message": "暂存和最近添加"
+  },
+  "optionStagingEnabled": {
+    "message": "启用暂存功能"
+  },
+  "optionStagingEnabledHint": {
+    "message": "禁用后本视图只保留最近添加列表，其他所有视图的暂存按钮和菜单项全部隐藏。"
+  },
+  "optionTreeRowActions": {
+    "message": "书签行悬浮快捷按钮（编辑/暂存/删除）"
   }
 }

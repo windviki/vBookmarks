@@ -2555,5 +2555,17 @@
   },
   "optionVirtualScrollLabHint": {
     "message": "Sekme grupları ve yinelenenler görünümleri yalnızca görünüm alanına yakın satırları işler. Çok büyük listelerde çok daha hızlıdır; deneysel iken kaydırma çubuğu konumu tahminidir."
+  },
+  "optionsStagingSection": {
+    "message": "Hazırlama ve yeni eklenenler"
+  },
+  "optionStagingEnabled": {
+    "message": "Hazırlama alanını etkinleştir"
+  },
+  "optionStagingEnabledHint": {
+    "message": "Kapalıyken, bu görünüm yalnızca yeni eklenenler listesini tutar ve diğer görünümlerdeki tüm hazırlama düğmeleri veya menü girişleri gizlenir."
+  },
+  "optionTreeRowActions": {
+    "message": "Ağaç satırlarında üzerine gelme eylemleri (düzenle / hazırla / sil)"
   }
 }

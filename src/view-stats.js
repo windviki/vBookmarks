@@ -258,11 +258,12 @@ export function initViewStats(ctx = {}) {
         const s = sort();
         if (selecting) {
             let html = '<div class="stats-toolbar stats-select-toolbar selecting-bar vbm-toolbar">';
+            const barStageOn = !ctx.stagingApi || !ctx.stagingApi.isEnabled || ctx.stagingApi.isEnabled();
             html += `<span class="select-count">${_m('selectCount', `${selected.size}`)}</span>` +
                 `<button class="stats-select-all">${_m('selectAll')}</button>` +
                 `<button class="stats-select-invert">${_m('selectInvert')}</button>` +
                 `<button class="stats-select-clear">${_m('selectClear')}</button>` +
-                `<button class="stats-stage"${selected.size ? '' : ' disabled'}>${_m('stagingAdd')}</button>` +
+                (barStageOn ? `<button class="stats-stage"${selected.size ? '' : ' disabled'}>${_m('stagingAdd')}</button>` : '') +
                 `<button class="stats-open"${selected.size ? '' : ' disabled'}>${_m('open')}</button>` +
                 `<button class="stats-open-group"${selected.size ? '' : ' disabled'}>${_m('openBookmarksInGroup')}</button>` +
                 `<button class="stats-delete"${selected.size ? '' : ' disabled'}>${_m('deleteSelected')}</button>` +
@@ -375,9 +376,12 @@ export function initViewStats(ctx = {}) {
     // is NOT the row-path), so the wide/panel container query that hides
     // row-path can never drop the time.
     // velvet staging §2.3: the history rows' hover "send to staging" button —
-    // same slot language as the instant-favorite ☆, toggle semantics.
+    // same slot language as the instant-favorite ☆, toggle semantics. Empty
+    // while the staging master switch is off.
     const stageBtnHtml = row => {
         const api = ctx.stagingApi;
+        if (api && api.isEnabled && !api.isEnabled())
+            return '';
         const staged = !!(api && api.isStaged(row.url));
         const label = _m(staged ? 'stagingRemove' : 'stagingAdd');
         return `<button type="button" class="row-btn staging-add-btn${staged ? ' staged' : ''}" ` +

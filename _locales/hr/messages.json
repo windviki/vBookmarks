@@ -2555,5 +2555,17 @@
   },
   "optionVirtualScrollLabHint": {
     "message": "Prikazi grupa kartica i duplikata prikazuju samo retke blizu vidljivog područja. Mnogo brže na vrlo velikim popisima; dok je eksperimentalno, položaj trake za pomicanje je procjena."
+  },
+  "optionsStagingSection": {
+    "message": "Pripravljanje i nedavno dodano"
+  },
+  "optionStagingEnabled": {
+    "message": "Omogući područje pripreme"
+  },
+  "optionStagingEnabledHint": {
+    "message": "Kada je isključeno, ovaj prikaz zadržava samo popis nedavno dodanih, a svi gumbi ili stavke izbornika za pripremu u ostalim prikazima se skrivaju."
+  },
+  "optionTreeRowActions": {
+    "message": "Radnje pri lebdenju na redovima stabla (uredi / pripremi / obriši)"
   }
 }

@@ -2555,5 +2555,17 @@
   },
   "optionVirtualScrollLabHint": {
     "message": "Las vistas de grupos de pestañas y duplicados renderizan solo las filas cercanas al área visible. Mucho más rápido en listas muy grandes; mientras sea experimental, la posición de la barra de desplazamiento es una estimación."
+  },
+  "optionsStagingSection": {
+    "message": "Área de preparación y añadidos recientes"
+  },
+  "optionStagingEnabled": {
+    "message": "Activar el área de preparación"
+  },
+  "optionStagingEnabledHint": {
+    "message": "Mientras esté desactivada, esta vista solo muestra la lista de añadidos recientes y se ocultan todos los botones o entradas de menú de preparación en las demás vistas."
+  },
+  "optionTreeRowActions": {
+    "message": "Acciones al pasar el cursor sobre filas del árbol (editar / preparar / eliminar)"
   }
 }

@@ -2555,5 +2555,17 @@
   },
   "optionVirtualScrollLabHint": {
     "message": "Pogledi zavihkov in dvojnikov prikažejo samo vrstice blizu vidnega območja. Veliko hitreje pri zelo velikih seznamih; med eksperimentalnim načinom je položaj drsnika ocenjen."
+  },
+  "optionsStagingSection": {
+    "message": "Staging in nedavno dodano"
+  },
+  "optionStagingEnabled": {
+    "message": "Omogoči območje staging"
+  },
+  "optionStagingEnabledHint": {
+    "message": "Ko je izklopljeno, ta pogled prikazuje samo seznam nedavno dodanih, vsi gumbi ali vnosniki v meniju za staging v drugih pogledih pa se skrijejo."
+  },
+  "optionTreeRowActions": {
+    "message": "Dejanja ob prehodu miške nad vrsticami drevesa (uredi / staging / izbriši)"
   }
 }

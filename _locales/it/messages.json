@@ -2555,5 +2555,17 @@
   },
   "optionVirtualScrollLabHint": {
     "message": "Le viste dei gruppi di schede e dei duplicati visualizzano solo le righe vicine al viewport. Molto più veloce su elenchi molto grandi; mentre è sperimentale, la posizione della barra di scorrimento è una stima."
+  },
+  "optionsStagingSection": {
+    "message": "Area di staging e aggiunti di recente"
+  },
+  "optionStagingEnabled": {
+    "message": "Abilita l'area di staging"
+  },
+  "optionStagingEnabledHint": {
+    "message": "Se disattivata, questa vista mostra solo l'elenco dei recenti e tutti i pulsanti o le voci di menu di staging nelle altre viste vengono nascosti."
+  },
+  "optionTreeRowActions": {
+    "message": "Azioni al passaggio del mouse sulle righe dell'albero (modifica / staging / elimina)"
   }
 }

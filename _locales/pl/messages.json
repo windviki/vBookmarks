@@ -2555,5 +2555,17 @@
   },
   "optionVirtualScrollLabHint": {
     "message": "Widoki grup kart i duplikatów renderują tylko wiersze w pobliżu widocznego obszaru. Znacznie szybsze na bardzo dużych listach; w wersji eksperymentalnej pozycja paska przewijania jest szacunkowa."
+  },
+  "optionsStagingSection": {
+    "message": "Przechowywanie i ostatnio dodane"
+  },
+  "optionStagingEnabled": {
+    "message": "Włącz obszar przechowywania"
+  },
+  "optionStagingEnabledHint": {
+    "message": "Gdy wyłączone, ten widok zawiera tylko listę ostatnio dodanych, a wszystkie przyciski lub pozycje menu przechowywania w innych widokach są ukryte."
+  },
+  "optionTreeRowActions": {
+    "message": "Akcje po najechaniu na wiersze drzewa (edytuj / przechowaj / usuń)"
   }
 }

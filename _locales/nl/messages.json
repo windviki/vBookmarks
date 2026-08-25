@@ -2555,5 +2555,17 @@
   },
   "optionVirtualScrollLabHint": {
     "message": "De weergaven voor tabbladgroepen en duplicaten renderen alleen de rijen nabij het viewport. Veel sneller bij zeer grote lijsten; hoewel experimenteel is de schuifbalkpositie een schatting."
+  },
+  "optionsStagingSection": {
+    "message": "Staging en recent toegevoegd"
+  },
+  "optionStagingEnabled": {
+    "message": "Staging-gebied inschakelen"
+  },
+  "optionStagingEnabledHint": {
+    "message": "Wanneer uitgeschakeld, toont deze weergave alleen de recent toegevoegde lijst en worden alle staging-knoppen of menu-items in de andere weergaven verborgen."
+  },
+  "optionTreeRowActions": {
+    "message": "Hover-acties op boomrijen (bewerken / stagen / verwijderen)"
   }
 }

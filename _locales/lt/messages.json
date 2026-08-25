@@ -2555,5 +2555,17 @@
   },
   "optionVirtualScrollLabHint": {
     "message": "Skirtukų grupių ir dublikatų rodiniai atvaizduoja tik eilutes šalia rodymo srities. Daug greičiau labai dideliuose sąrašuose; eksperimentiniu režimu slinkties juostos padėtis yra apytikslė."
+  },
+  "optionsStagingSection": {
+    "message": "Prelaida ir neseniai pridėta"
+  },
+  "optionStagingEnabled": {
+    "message": "Įgalinti prelaidos sritį"
+  },
+  "optionStagingEnabledHint": {
+    "message": "Kai išjungta, šis rodinys rodo tik neseniai pridėtų sąrašą, o visi prelaidos mygtukai ar meniu punktai kituose rodiniuose paslepiami."
+  },
+  "optionTreeRowActions": {
+    "message": "Veiksmai užvedus pelę ant medžio eilučių (redaguoti / prelaida / ištrinti)"
   }
 }

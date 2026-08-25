@@ -2555,5 +2555,17 @@
   },
   "optionVirtualScrollLabHint": {
     "message": "タブグループと重複ビューでは、ビューポート付近の行のみをレンダリングします。非常に大きなリストでは大幅に高速化されますが、実験的な機能のため、スクロールバーの位置は概算です。"
+  },
+  "optionsStagingSection": {
+    "message": "ステージングと最近追加"
+  },
+  "optionStagingEnabled": {
+    "message": "ステージング領域を有効にする"
+  },
+  "optionStagingEnabledHint": {
+    "message": "オフにすると、このビューには最近追加されたリストのみが表示され、他のビューのステージングボタンやメニュー項目はすべて非表示になります。"
+  },
+  "optionTreeRowActions": {
+    "message": "ツリー行のホバーアクション（編集／ステージ／削除）"
   }
 }

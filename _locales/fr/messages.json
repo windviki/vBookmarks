@@ -2555,5 +2555,17 @@
   },
   "optionVirtualScrollLabHint": {
     "message": "Les vues des groupes d'onglets et des doublons n'affichent que les lignes proches de la fenêtre. Beaucoup plus rapide sur les très grandes listes ; en phase expérimentale, la position de la barre de défilement est une estimation."
+  },
+  "optionsStagingSection": {
+    "message": "Préparation et ajouts récents"
+  },
+  "optionStagingEnabled": {
+    "message": "Activer la zone de préparation"
+  },
+  "optionStagingEnabledHint": {
+    "message": "Lorsque désactivé, cette vue ne conserve que la liste des ajouts récents, et tous les boutons ou entrées de menu de préparation des autres vues sont masqués."
+  },
+  "optionTreeRowActions": {
+    "message": "Actions au survol des lignes de l'arborescence (modifier / préparer / supprimer)"
   }
 }

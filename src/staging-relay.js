@@ -31,8 +31,8 @@ export const stageBtnHtml = (api, item, _m) => {
 
 // Reflect a toggle on the live button without a re-render.
 export const flipStageBtn = (btn, staged, _m) => {
-    if (!btn)
-        return;
+    if (!btn || !btn.classList || !btn.setAttribute)
+        return; // hand-written test doubles carry innerHTML only
     const label = _m(staged ? 'stagingRemove' : 'stagingAdd');
     btn.classList.toggle('staged', !!staged);
     btn.setAttribute('aria-pressed', staged ? 'true' : 'false');

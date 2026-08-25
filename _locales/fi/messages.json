@@ -2555,5 +2555,17 @@
   },
   "optionVirtualScrollLabHint": {
     "message": "Välilehtiryhmien ja kaksoiskappaleiden näkymät renderöivät vain näkymän lähellä olevat rivit. Paljon nopeampi erittäin suurissa luetteloissa; kokeellisessa vaiheessa vierityspalkin sijainti on arvio."
+  },
+  "optionsStagingSection": {
+    "message": "Vaiheistus ja äskettäin lisätyt"
+  },
+  "optionStagingEnabled": {
+    "message": "Ota vaiheistusalue käyttöön"
+  },
+  "optionStagingEnabledHint": {
+    "message": "Kun pois päältä, tämä näkymä näyttää vain äskettäin lisätyt, ja kaikki vaiheistuspainikkeet tai -valikkokohdat muissa näkymissä piilotetaan."
+  },
+  "optionTreeRowActions": {
+    "message": "Viehiöt puuriveillä (muokkaa / vaiheista / poista)"
   }
 }

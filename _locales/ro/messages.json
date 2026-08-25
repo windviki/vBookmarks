@@ -2555,5 +2555,17 @@
   },
   "optionVirtualScrollLabHint": {
     "message": "Vizualizările pentru grupuri de file și duplicate afișează doar rândurile din apropierea zonei vizibile. Mult mai rapid pe liste foarte mari; în faza experimentală, poziția barei de derulare este estimată."
+  },
+  "optionsStagingSection": {
+    "message": "Staging și adăugate recent"
+  },
+  "optionStagingEnabled": {
+    "message": "Activează zona de staging"
+  },
+  "optionStagingEnabledHint": {
+    "message": "Când este dezactivată, această vizualizare păstrează doar lista adăugate recent, iar fiecare buton sau element de meniu de staging din celelalte vizualizări este ascuns."
+  },
+  "optionTreeRowActions": {
+    "message": "Acțiuni la hover pe rândurile din arbore (editare / staging / ștergere)"
   }
 }

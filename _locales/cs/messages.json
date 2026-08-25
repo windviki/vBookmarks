@@ -2555,5 +2555,17 @@
   },
   "optionVirtualScrollLabHint": {
     "message": "Zobrazení skupin karet a duplicit vykresluje pouze řádky poblíž výřezu. Mnohem rychlejší u velmi velkých seznamů; v experimentálním režimu je pozice posuvníku odhadem."
+  },
+  "optionsStagingSection": {
+    "message": "Příprava a nedávno přidané"
+  },
+  "optionStagingEnabled": {
+    "message": "Povolit oblast přípravy"
+  },
+  "optionStagingEnabledHint": {
+    "message": "Když je vypnuto, toto zobrazení obsahuje pouze seznam nedávno přidaných a všechna tlačítka nebo položky nabídky přípravy v ostatních zobrazeních se skryjí."
+  },
+  "optionTreeRowActions": {
+    "message": "Akce při najetí na řádky stromu (upravit / připravit / smazat)"
   }
 }

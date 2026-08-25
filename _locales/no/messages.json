@@ -2555,5 +2555,17 @@
   },
   "optionVirtualScrollLabHint": {
     "message": "Fanegruppe- og duplikatvisningene gjengir kun radene nær visningsområdet. Mye raskere på svært store lister; mens eksperimentell er rullefeltets posisjon et estimat."
+  },
+  "optionsStagingSection": {
+    "message": "Staging og nylig lagt til"
+  },
+  "optionStagingEnabled": {
+    "message": "Aktiver staging-området"
+  },
+  "optionStagingEnabledHint": {
+    "message": "Når dette er av, viser denne visningen bare listen over nylig lagt til, og alle staging-knapper eller menyelementer i de andre visningene skjules."
+  },
+  "optionTreeRowActions": {
+    "message": "Handlinger ved hover på tre-rader (rediger / stage / slett)"
   }
 }
