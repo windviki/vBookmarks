@@ -2563,5 +2563,13 @@
   },
   "optionTreeRowActions": {
     "message": "Ações ao passar o mouse nas linhas da árvore (editar / stage / excluir)"
+  },
+  "optionsStorageSyncTip": {
+    "message": "Sincronizado pela sua conta Chrome — esta configuração é compartilhada entre seus dispositivos.",
+    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
+  },
+  "optionsStorageLocalTip": {
+    "message": "Armazenado apenas neste dispositivo — não compartilhado pela sincronização do Chrome.",
+    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
   }
 }

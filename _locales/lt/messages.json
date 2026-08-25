@@ -2567,5 +2567,13 @@
   },
   "optionTreeRowActions": {
     "message": "Veiksmai užvedus pelę ant medžio eilučių (redaguoti / prelaida / ištrinti)"
+  },
+  "optionsStorageSyncTip": {
+    "message": "Sinchronizuojama per „Chrome“ paskyrą — šis nustatymas bendrinamas visuose įrenginiuose.",
+    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
+  },
+  "optionsStorageLocalTip": {
+    "message": "Saugoma tik šiame įrenginyje — nėra bendrinama per „Chrome“ sinchronizavimą.",
+    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
   }
 }

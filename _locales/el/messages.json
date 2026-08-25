@@ -2567,5 +2567,13 @@
   },
   "optionTreeRowActions": {
     "message": "Ενέργειες αιώρησης σε γραμμές δέντρου (επεξεργασία / στάδιο / διαγραφή)"
+  },
+  "optionsStorageSyncTip": {
+    "message": "Συγχρονίζεται μέσω του λογαριασμού σας στο Chrome — αυτή η ρύθμιση είναι κοινή σε όλες τις συσκευές σας.",
+    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
+  },
+  "optionsStorageLocalTip": {
+    "message": "Αποθηκεύεται μόνο σε αυτή τη συσκευή — δεν συγχρονίζεται μέσω του Chrome.",
+    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
   }
 }

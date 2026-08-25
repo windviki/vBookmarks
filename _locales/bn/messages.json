@@ -2567,5 +2567,13 @@
   },
   "optionTreeRowActions": {
     "message": "ট্রি সারিতে হোভার অ্যাকশন (সম্পাদনা / স্টেজ / মুছুন)"
+  },
+  "optionsStorageSyncTip": {
+    "message": "আপনার Chrome অ্যাকাউন্টের মাধ্যমে সিঙ্ক হয়েছে — এই সেটিংটি আপনার ডিভাইসগুলিতে ভাগ করা হয়েছে।",
+    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
+  },
+  "optionsStorageLocalTip": {
+    "message": "শুধুমাত্র এই ডিভাইসে সংরক্ষিত — Chrome সিঙ্কের মাধ্যমে ভাগ করা হয়নি।",
+    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
   }
 }

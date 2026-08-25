@@ -2621,5 +2621,13 @@
   },
   "optionTreeRowActions": {
     "message": "书签行悬浮快捷按钮（编辑/暂存/删除）"
+  },
+  "optionsStorageSyncTip": {
+    "message": "已保存到 Chrome 同步（云端），随账号在多设备间保持一致。",
+    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
+  },
+  "optionsStorageLocalTip": {
+    "message": "仅保存在本设备的本地存储，不会通过 Chrome 同步。",
+    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
   }
 }

@@ -2567,5 +2567,13 @@
   },
   "optionTreeRowActions": {
     "message": "Darbības, virzot kursoru pār koka rindām (rediģēt / staging / dzēst)"
+  },
+  "optionsStorageSyncTip": {
+    "message": "Sinhronizēts, izmantojot jūsu Chrome kontu — šis iestatījums tiek koplietots starp jūsu ierīcēm.",
+    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
+  },
+  "optionsStorageLocalTip": {
+    "message": "Saglabāts tikai šajā ierīcē — netiek koplietots, izmantojot Chrome sinhronizāciju.",
+    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
   }
 }

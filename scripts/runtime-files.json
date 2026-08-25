@@ -43,6 +43,7 @@
     "src/neat.js",
     "src/options-palette-commands.js",
     "src/options-proxy.js",
+    "src/options-storage-badges.js",
     "src/favicons.js"
   ]
 }

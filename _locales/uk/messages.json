@@ -2567,5 +2567,13 @@
   },
   "optionTreeRowActions": {
     "message": "Дії при наведенні на рядки дерева (редагувати / стейджити / видалити)"
+  },
+  "optionsStorageSyncTip": {
+    "message": "Синхронізовано через ваш обліковий запис Chrome — цей параметр спільний для всіх ваших пристроїв.",
+    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
+  },
+  "optionsStorageLocalTip": {
+    "message": "Зберігається лише на цьому пристрої — не синхронізується через Chrome.",
+    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
   }
 }

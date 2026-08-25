@@ -2567,5 +2567,13 @@
   },
   "optionTreeRowActions": {
     "message": "Műveletek a fa sorokon (szerkesztés / staging / törlés)"
+  },
+  "optionsStorageSyncTip": {
+    "message": "A Chrome-fiókodon keresztül szinkronizálva — ez a beállítás megosztott az eszközeid között.",
+    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
+  },
+  "optionsStorageLocalTip": {
+    "message": "Csak ezen az eszközön tárolva — nem oszlik meg a Chrome-szinkronizáláson keresztül.",
+    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
   }
 }

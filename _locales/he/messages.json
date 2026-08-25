@@ -2567,5 +2567,13 @@
   },
   "optionTreeRowActions": {
     "message": "פעולות בריחוף על שורות העץ (עריכה / שלב / מחיקה)"
+  },
+  "optionsStorageSyncTip": {
+    "message": "מסונכרן דרך חשבון Chrome שלך — הגדרה זו משותפת בין המכשירים שלך.",
+    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
+  },
+  "optionsStorageLocalTip": {
+    "message": "מאוחסן רק במכשיר זה — לא משותף דרך סנכרון Chrome.",
+    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
   }
 }

@@ -2566,5 +2566,13 @@
   },
   "optionTreeRowActions": {
     "message": "Дејства при лебдење на редовите (уреди / подготви / избриши)"
+  },
+  "optionsStorageSyncTip": {
+    "message": "Се синхронизира преку вашата Chrome сметка — оваа поставка е споделена на сите ваши уреди.",
+    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
+  },
+  "optionsStorageLocalTip": {
+    "message": "Се чува само на овој уред — не се споделува преку Chrome синхронизација.",
+    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
   }
 }

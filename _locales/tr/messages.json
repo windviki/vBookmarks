@@ -2567,5 +2567,13 @@
   },
   "optionTreeRowActions": {
     "message": "Ağaç satırlarında üzerine gelme eylemleri (düzenle / hazırla / sil)"
+  },
+  "optionsStorageSyncTip": {
+    "message": "Chrome hesabınız üzerinden senkronize edilir — bu ayar cihazlarınız arasında paylaşılır.",
+    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
+  },
+  "optionsStorageLocalTip": {
+    "message": "Yalnızca bu cihazda saklanır — Chrome senkronizasyonu ile paylaşılmaz.",
+    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
   }
 }

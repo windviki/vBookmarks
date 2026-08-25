@@ -2567,5 +2567,13 @@
   },
   "optionTreeRowActions": {
     "message": "Hover-Aktionen auf Baumzeilen (Bearbeiten / Staging / Löschen)"
+  },
+  "optionsStorageSyncTip": {
+    "message": "Über Ihr Chrome-Konto synchronisiert – diese Einstellung wird geräteübergreifend geteilt.",
+    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
+  },
+  "optionsStorageLocalTip": {
+    "message": "Nur auf diesem Gerät gespeichert – nicht über die Chrome-Synchronisierung geteilt.",
+    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
   }
 }

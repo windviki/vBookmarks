@@ -2567,5 +2567,13 @@
   },
   "optionTreeRowActions": {
     "message": "Hover-acties op boomrijen (bewerken / stagen / verwijderen)"
+  },
+  "optionsStorageSyncTip": {
+    "message": "Gesynchroniseerd via je Chrome-account — deze instelling wordt gedeeld op al je apparaten.",
+    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
+  },
+  "optionsStorageLocalTip": {
+    "message": "Alleen op dit apparaat opgeslagen — niet gedeeld via Chrome-synchronisatie.",
+    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
   }
 }

@@ -2567,5 +2567,13 @@
   },
   "optionTreeRowActions": {
     "message": "Radnje pri lebdenju na redovima stabla (uredi / pripremi / obriši)"
+  },
+  "optionsStorageSyncTip": {
+    "message": "Sinkronizirano putem vašeg Chrome računa — ova se postavka dijeli na svim vašim uređajima.",
+    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
+  },
+  "optionsStorageLocalTip": {
+    "message": "Pohranjeno samo na ovom uređaju — ne dijeli se putem Chrome sinkronizacije.",
+    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
   }
 }

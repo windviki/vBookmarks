@@ -697,6 +697,56 @@ body[data-theme="ink"] .cm-s-default span.cm-attribute { color: #d19a66; }
 .options-group .options-list{
 	margin-top: 0;
 }
+/* --- Storage-area badges (cloud / cloud-off) ----------------------------
+   Each group header tells where its settings persist: a cloud icon for
+   chrome.storage.sync members (device-independent preferences), a crossed
+   cloud for device-local keys (screen state, scan/proxy tuning, oversized
+   values). A mixed group carries the majority kind on the header and only
+   its differing rows get their own badge — right-aligned on the row's first
+   line — so the page stays quiet. Decorative spans; the native title
+   tooltip carries the explanation. Anchored on the <section>/<li> (never
+   inside the <h2>, whose innerText options.js replaces when labeling). */
+.options-group{
+	position: relative;
+}
+.storage-badge{
+	position: absolute;
+	display: inline-flex;
+	width: 14px;
+	height: 14px;
+	color: var(--vbm-muted);
+	opacity: .7;
+	z-index: 1;
+}
+.storage-badge:hover{
+	opacity: 1;
+}
+.storage-badge svg{
+	width: 100%;
+	height: 100%;
+	fill: none;
+	stroke: currentColor;
+	stroke-width: 1.8;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+}
+/* Header badge docks at the h2's end edge, vertically on its line. */
+.group-storage-badge{
+	top: 1px;
+	inset-inline-end: .4em;
+}
+.options-group:has(.group-storage-badge)>h2{
+	padding-inline-end: 1.6em; /* a long heading never runs under the badge */
+}
+/* Row badge (mixed-group outliers): centered on the row's 28px first line,
+   flush with the li's inner padding edge. */
+.options-list>li:has(.row-storage-badge){
+	position: relative;
+}
+.row-storage-badge{
+	top: calc(.5em + 7px);
+	inset-inline-end: 1em;
+}
 /* --- Storage usage bar (Icons group) ----------------------------------
    Icon cache / bookmark data / other / free, so the user can judge whether
    the icon cache is worth clearing. Hover a segment for a size tooltip; the

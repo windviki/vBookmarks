@@ -2815,5 +2815,13 @@
   },
   "optionTreeRowActions": {
     "message": "Hover actions on tree rows (edit / stage / delete)"
+  },
+  "optionsStorageSyncTip": {
+    "message": "Synced through your Chrome account — this setting is shared across your devices.",
+    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
+  },
+  "optionsStorageLocalTip": {
+    "message": "Stored on this device only — not shared through Chrome sync.",
+    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
   }
 }

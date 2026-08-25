@@ -2567,5 +2567,13 @@
   },
   "optionTreeRowActions": {
     "message": "Действия при задържане върху редове (редактиране / сцениране / изтриване)"
+  },
+  "optionsStorageSyncTip": {
+    "message": "Синхронизирано чрез вашия Chrome акаунт — тази настройка се споделя между вашите устройства.",
+    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
+  },
+  "optionsStorageLocalTip": {
+    "message": "Съхранява се само на това устройство — не се споделя чрез Chrome синхронизация.",
+    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
   }
 }

@@ -2567,5 +2567,13 @@
   },
   "optionTreeRowActions": {
     "message": "ट्री पंक्तियों पर होवर क्रियाएँ (संपादित करें / स्टेज करें / हटाएँ)"
+  },
+  "optionsStorageSyncTip": {
+    "message": "आपके Chrome खाते के माध्यम से सिंक किया गया — यह सेटिंग आपके सभी डिवाइसों पर साझा होती है।",
+    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
+  },
+  "optionsStorageLocalTip": {
+    "message": "केवल इस डिवाइस पर संग्रहीत — Chrome सिंक के माध्यम से साझा नहीं होती।",
+    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
   }
 }

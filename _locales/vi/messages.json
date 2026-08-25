@@ -2567,5 +2567,13 @@
   },
   "optionTreeRowActions": {
     "message": "树行悬停操作（编辑 / 暂存 / 删除）"
+  },
+  "optionsStorageSyncTip": {
+    "message": "通过 Chrome 账户同步 — 此设置跨设备共享。",
+    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
+  },
+  "optionsStorageLocalTip": {
+    "message": "仅存储在此设备上 — 不通过 Chrome 同步共享。",
+    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
   }
 }

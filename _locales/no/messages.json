@@ -2567,5 +2567,13 @@
   },
   "optionTreeRowActions": {
     "message": "Handlinger ved hover på tre-rader (rediger / stage / slett)"
+  },
+  "optionsStorageSyncTip": {
+    "message": "通过 Chrome 账户同步 — 此设置在你的设备间共享。",
+    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
+  },
+  "optionsStorageLocalTip": {
+    "message": "仅存储在此设备上 — 不通过 Chrome 同步共享。",
+    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
   }
 }

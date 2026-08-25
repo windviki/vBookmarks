@@ -2567,5 +2567,13 @@
   },
   "optionTreeRowActions": {
     "message": "Hõljumistoimingud puuridade puhul (muuda / stage / kustuta)"
+  },
+  "optionsStorageSyncTip": {
+    "message": "Sünkroonitud Chrome'i kontoga — see säte on jagatud kõigis seadmetes.",
+    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
+  },
+  "optionsStorageLocalTip": {
+    "message": "Salvestatud ainult selles seadmes — ei jagata Chrome'i sünkroonimise kaudu.",
+    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
   }
 }

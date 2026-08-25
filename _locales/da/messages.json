@@ -2567,5 +2567,13 @@
   },
   "optionTreeRowActions": {
     "message": "Hover-handlinger på trærækker (rediger / stage / slet)"
+  },
+  "optionsStorageSyncTip": {
+    "message": "Synkroniseres via din Chrome-konto — denne indstilling deles på tværs af dine enheder.",
+    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
+  },
+  "optionsStorageLocalTip": {
+    "message": "Kun gemt på denne enhed — deles ikke via Chrome-synkronisering.",
+    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
   }
 }

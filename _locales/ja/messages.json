@@ -2567,5 +2567,13 @@
   },
   "optionTreeRowActions": {
     "message": "ツリー行のホバーアクション（編集／ステージ／削除）"
+  },
+  "optionsStorageSyncTip": {
+    "message": "Chrome アカウントを通じて同期されます — この設定はデバイス間で共有されます。",
+    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
+  },
+  "optionsStorageLocalTip": {
+    "message": "このデバイスにのみ保存されます — Chrome 同期では共有されません。",
+    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
   }
 }

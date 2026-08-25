@@ -2567,5 +2567,13 @@
   },
   "optionTreeRowActions": {
     "message": "트리 행에 마우스 오버 시 작업 표시 (편집 / 스테이징 / 삭제)"
+  },
+  "optionsStorageSyncTip": {
+    "message": "Chrome 계정을 통해 동기화됨 — 이 설정은 모든 기기에서 공유됩니다.",
+    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
+  },
+  "optionsStorageLocalTip": {
+    "message": "이 기기에만 저장됨 — Chrome 동기화로 공유되지 않습니다.",
+    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
   }
 }
