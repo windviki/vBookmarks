@@ -327,13 +327,14 @@ export function initViewRecent(ctx = {}) {
             `<span class="staging-section-title">${_m('stagingBucketTitle')}</span>` +
             `<span class="count-pill" aria-label="${count}">${countText}</span>` +
             (selecting ? '' :
+                `<span class="head-icon-cluster">` +
                 `<button type="button" class="row-btn staging-bucket-fav-all" tabindex="-1" ` +
                 `aria-label="${htmlspecialchars(favAllLabel)}" title="${htmlspecialchars(favAllLabel)}">${STAR_ICON_FILLED}</button>` +
                 // 移除暂存 (rightmost): every bucket item leaves the workbench
-                // (tree untouched) — confirm + toast undo, aligned on the rows'
-                // trailing icon axis like every head quick-tail button.
+                // (tree untouched) — confirm + toast undo, on the rows' axis.
                 `<button type="button" class="row-btn staging-bucket-remove-all" tabindex="-1" ` +
-                `aria-label="${htmlspecialchars(removeAllLabel)}" title="${htmlspecialchars(removeAllLabel)}">${STAGE_REMOVE_ICON}</button>`) +
+                `aria-label="${htmlspecialchars(removeAllLabel)}" title="${htmlspecialchars(removeAllLabel)}">${STAGE_REMOVE_ICON}</button>` +
+                `</span>`) +
             `</span></li>`;
     };
 
@@ -393,6 +394,10 @@ export function initViewRecent(ctx = {}) {
             `<span class="staging-section-title" dir="auto">${gname}</span>` +
             `<span class="count-pill" aria-label="${count}">${count}</span>` +
             (selecting ? '' :
+                // the quick tail rides one head-icon-cluster (design-laws §2:
+                // 20px boxes, the cluster's own 4px gap, no per-button margins
+                // — stride 24, last glyph on the rows' 8px axis)
+                `<span class="head-icon-cluster">` +
                 `<button type="button" class="row-btn staging-group-rename" tabindex="-1" ` +
                 `aria-label="${htmlspecialchars(renameLabel)}" title="${htmlspecialchars(renameLabel)}">${EDIT_ICON}</button>` +
                 `<button type="button" class="row-btn staging-group-place" tabindex="-1" ` +
@@ -400,7 +405,8 @@ export function initViewRecent(ctx = {}) {
                 `<button type="button" class="row-btn staging-group-dissolve" tabindex="-1" ` +
                 `aria-label="${htmlspecialchars(dissolveLabel)}" title="${htmlspecialchars(dissolveLabel)}">${UNGROUP_ICON}</button>` +
                 `<button type="button" class="row-btn staging-group-remove" tabindex="-1" ` +
-                `aria-label="${htmlspecialchars(removeLabel)}" title="${htmlspecialchars(removeLabel)}">${STAGE_REMOVE_ICON}</button>`) +
+                `aria-label="${htmlspecialchars(removeLabel)}" title="${htmlspecialchars(removeLabel)}">${STAGE_REMOVE_ICON}</button>` +
+                `</span>`) +
             `</span></li>`;
     };
 
@@ -575,9 +581,11 @@ export function initViewRecent(ctx = {}) {
                 `<span class="staging-section-title" dir="auto">${label}</span>` +
                 `<span class="count-pill" aria-label="${htmlspecialchars(label + ' · ' + rows.length)}">${rows.length}</span>` +
                 (selecting ? '' :
+                    `<span class="head-icon-cluster">` +
                     `<button type="button" class="row-btn recent-group-stage" tabindex="-1" ` +
                     `data-recent-group="${g}" aria-label="${htmlspecialchars(stageGroupLabels[g])}" ` +
-                    `title="${htmlspecialchars(stageGroupLabels[g])}">${STAGE_ICON}</button>`) +
+                    `title="${htmlspecialchars(stageGroupLabels[g])}">${STAGE_ICON}</button>` +
+                    `</span>`) +
                 '</span></li>');
             if (collapsed)
                 continue;

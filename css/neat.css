@@ -1856,9 +1856,17 @@ menu[type=context] hr {
    right with margin-inline-start:auto. The bucket's favorite-all, the
    section head's stage-all and the group head's quick tail are all always
    visible (primary actions / the tabgroups-head language). */
-.staging-bucket-head .staging-bucket-fav-all,
+.staging-bucket-head .head-icon-cluster,
 .staging-section-head .recent-stage-all {
     margin-inline-start: auto;
+}
+
+.staging-bucket-head .staging-bucket-fav-all {
+    visibility: visible;
+    color: var(--vbm-accent);
+}
+
+.staging-section-head .recent-stage-all {
     visibility: visible;
     color: var(--vbm-accent);
 }
@@ -1875,8 +1883,8 @@ menu[type=context] hr {
    undo). 删除分组 stays only in the group context menu / selection mode.
    Rename/dissolve are muted secondary actions (F2 + the group menu stay
    as their keyboard paths); place is the primary homing action in accent. */
-.staging-group-head .staging-group-rename {
-    margin-inline-start: auto; /* first of the quick tail — pins the cluster */
+.staging-group-head .head-icon-cluster {
+    margin-inline-start: auto; /* the quick tail pins right as one unit */
 }
 
 .staging-group-head .staging-group-rename,
@@ -3822,8 +3830,11 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
    — always visible like the staging group heads' quick tails, pinned to
    the trailing edge so every stage glyph in the view shares one right axis
    and one vertical-center law. */
-.recent-group-head .recent-group-stage {
+.recent-group-head .head-icon-cluster {
     margin-inline-start: auto;
+}
+
+.recent-group-head .recent-group-stage {
     visibility: visible;
     color: var(--vbm-accent);
 }
@@ -3871,6 +3882,13 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
     list-style: none;
     margin: 0;
     padding: 0;
+}
+
+/* The history rows' × stacks on the results rows' delete column: the li
+   carries the same 4px end padding (the ×'s own 4px margin completes the
+   8px edge — design-laws.md §2). */
+#search-history-area ul li.search-history-row {
+    padding-inline-end: 4px;
 }
 
 .search-history-head {
@@ -4354,6 +4372,24 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
     line-height: 1;
     padding: 0;
 }
+/* --- Head icon clusters (design-laws.md §2) ----------------------------
+   A head's own 4px gap spaces chevron/title/pill — trailing BUTTONS ride a
+   dedicated cluster instead (its own 4px gap, no per-button margins), so
+   the strip keeps the rows' 24px stride and the head's 4px end padding
+   lands the last glyph on the shared 8px axis. */
+.head-icon-cluster {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    flex: none;
+    /* completes the head's 4px end padding to the shared 8px axis */
+    margin-inline-end: 4px;
+}
+
+.head-icon-cluster .row-btn {
+    margin-inline-end: 0;
+}
+
 /* Tree-row hover quick actions [编辑][暂存][删除] (options 书签树 switch):
    the buttons live INSIDE the row's anchor/span, so they must opt back into
    pointer events (the blanket rule above makes row content click-through),

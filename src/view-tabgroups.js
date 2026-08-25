@@ -894,8 +894,7 @@ export function initViewTabGroups(ctx = {}) {
                     `<span class="chevron${isCollapsed ? ' collapsed' : ''}" aria-hidden="true"></span>` +
                     `<em>${htmlspecialchars(label)}</em>${current}` +
                     `<span class="count-pill" aria-label="${htmlspecialchars(_m('tabGroupsGroupCount', `${count}`))}">${count}</span>` +
-                    winStageBtn +
-                    closeBtn +
+                    `<span class="head-icon-cluster">${winStageBtn}${closeBtn}</span>` +
                     '</span></li>';
             };
 

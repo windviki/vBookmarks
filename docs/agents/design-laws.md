@@ -8,7 +8,7 @@
 
 ## 2. 行图标几何：20px 盒、24px 均匀步距（2026-08 终版）
 
-行尾悬浮图标与工具栏纯图标钮**全部** 20px 盒（高同 20）+ 16px 图标 + **均匀 4px 间距**；右缘 8px 由 **li 的 `padding-inline-end: 4px`** 提供——**禁止**给最后一个按钮加 8px margin（那会把末段步距撑成 28px，工具栏簇永远堆不齐；staging/search/dead/stats 四个视图都犯过）。工具栏纯图标尾一律包 nowrap 的 `<span class="*-icon-cluster">`（簇内 gap 4、`margin-inline-start:auto` 右锚定），文本控件（过滤段、全部应用等）不参与堆叠、放簇左侧。图标化的选择动作行同用 20px 盒 + 4px gap（渐进文字点亮时宽度自然增长）。**验收标准**：diag 实测工具栏图标中心与行尾图标中心逐一相等（参考 lattice：中心 302 = 右缘 8px 轴 @420px 容器）。
+行尾悬浮图标与工具栏纯图标钮**全部** 20px 盒（高同 20）+ 16px 图标 + **均匀 4px 间距**；右缘 8px 由 **li 的 `padding-inline-end: 4px`** 提供——**禁止**给最后一个按钮加 8px margin（那会把末段步距撑成 28px，工具栏簇永远堆不齐；staging/search/dead/stats 四个视图都犯过）。工具栏纯图标尾与**组头/窗口头快捷尾**一律包 nowrap 簇：工具栏用 `<span class="*-icon-cluster">`（簇内 gap 4、`margin-inline-start:auto` 右锚定），组头用 `<span class="head-icon-cluster">`（簇内 gap 4、按钮 margin 0、**簇尾 margin 4** 与头 padding 4 合成 8px 轴——头自身的 gap 4 会与按钮 margin 叠成 28px 步距，禁止按钮直接作为头的尾子元素）。文本控件（过滤段、全部应用等）不参与堆叠、放簇左侧。图标化的选择动作行同用 20px 盒 + 4px gap（渐进文字点亮时宽度自然增长）。**验收标准**：diag 实测工具栏图标中心与行尾图标中心逐一相等（参考 lattice：中心 302 = 右缘 8px 轴 @420px 容器）。
 
 - **特异性陷阱**：`.dupes-toolbar button:not(...)` 这类链是 (0,5,1)；新按钮要么加进 `:not()` 排除表（如 `.dupes-tbtn`），要么用同量级复合选择器。**后代组合子不能匹配同一元素上的两个类**——`.dupes-toolbar .dupes-actions-toolbar …` 在两类同挂一个 div 时永不命中（去重图标簇为此排查过一轮）。写完规则必须实测 `getComputedStyle`。
 
