@@ -2216,7 +2216,7 @@
     "message": "Nedavno dodano"
   },
   "stagingEmpty": {
-    "message": "Prazno — desnom tipkom kliknite bilo koju oznaku, koristite ↑ gumb ovdje ili retke povijesti statistike za slanje stavki u pripremno područje"
+    "message": "Još ništa nije pripremljeno. Pošaljite ovdje oznake iz bilo kojeg prikaza — gumb aviona na retku ili izbornik desnim klikom — zatim ih organizirajte i pohranite u grupi."
   },
   "stagingFromHistory": {
     "message": "Iz povijesti"

@@ -2216,7 +2216,7 @@
     "message": "Son eklenenler"
   },
   "stagingEmpty": {
-    "message": "Boş — herhangi bir yer imine sağ tıklayın, buradaki ↑ düğmesini veya istatistik geçmişi satırlarını kullanarak öğeleri bekleme alanına gönderin"
+    "message": "Henüz hiçbir şey hazırlanmadı. Yer imlerini herhangi bir görünümden buraya gönderin — satırdaki uçak düğmesi veya sağ tıklama menüsü — ardından toplu olarak düzenleyin ve dosyalayın."
   },
   "stagingFromHistory": {
     "message": "Geçmişten"

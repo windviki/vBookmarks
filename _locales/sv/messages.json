@@ -2216,7 +2216,7 @@
     "message": "Nyligen tillagda"
   },
   "stagingEmpty": {
-    "message": "Tom — högerklicka på ett bokmärke, använd ↑-knappen här eller historikrader för att skicka objekt till väntelistan"
+    "message": "Inget är klart ännu. Skicka bokmärken hit från valfri vy — plan-knappen på en rad eller högerklicksmenyn — och organisera och arkivera dem i bulk."
   },
   "stagingFromHistory": {
     "message": "Från historik"

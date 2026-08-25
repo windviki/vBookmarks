@@ -307,6 +307,17 @@ export function initTreeView(ctx = {}) {
         }
     }, true);
     const closeUnusedFolders = store.get('closeUnusedFolders');
+    // A folder plane's flip cascades: the folder's own button AND every
+    // descendant row's plane inside its expanded subtree (the tree only
+    // re-renders on bookmark events — the visual sync is our job here).
+    const flipFolderPlanes = (folderLi, staged, _m2) => {
+        if (!folderLi || !folderLi.querySelectorAll)
+            return;
+        flipStageBtn(folderLi.querySelector(':scope > span .staging-add-btn'), staged, _m2);
+        for (const btn of folderLi.querySelectorAll('ul .staging-add-btn'))
+            flipStageBtn(btn, staged, _m2);
+    };
+
     // Tree-row hover quick actions (编辑/发送到暂存/删除): capture-phase so
     // the buttons win over bookmarkHandler (a click on a button inside the
     // row anchor would otherwise open the bookmark). Folder rows skip the
@@ -362,10 +373,10 @@ export function initTreeView(ctx = {}) {
                         && bookmarkable.every(u => ctx.staging.isStaged(u));
                     if (allStaged) {
                         ctx.staging.removeByUrls(bookmarkable);
-                        flipStageBtn(btn, false, _m2);
+                        flipFolderPlanes(li, false, _m2);
                     } else {
                         ctx.staging.sendFolder(id);
-                        flipStageBtn(btn, true, _m2);
+                        flipFolderPlanes(li, true, _m2);
                     }
                 });
             } else {

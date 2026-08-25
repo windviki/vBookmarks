@@ -2216,7 +2216,7 @@
     "message": "Baru ditambahkan"
   },
   "stagingEmpty": {
-    "message": "Kosong — klik kanan bookmark mana pun, gunakan tombol ↑ di sini, atau baris riwayat statistik untuk mengirim item ke area pementasan"
+    "message": "Belum ada yang dipentaskan. Kirim bookmark ke sini dari tampilan mana pun — tombol pesawat di baris, atau menu klik kanan — lalu atur dan simpan secara massal."
   },
   "stagingFromHistory": {
     "message": "Dari riwayat"

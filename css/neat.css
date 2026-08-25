@@ -2063,12 +2063,22 @@ li.staging-row.drag-over {
     margin-inline-end: 8px;
 }
 
-/* The staging empty state: the plane glyph above the guiding line (§11). */
+/* The staging empty state: the plane glyph above a calm two-beat guide —
+   the sentence sets on a comfortable measure (no full-width band of text),
+   muted like every other empty state, with a touch more leading. */
 .empty-state.staging-empty {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 4px;
+    gap: 8px;
+    padding: 18px 24px;
+}
+
+.empty-state.staging-empty i {
+    max-width: 36em;
+    text-align: center;
+    line-height: 1.6;
+    color: var(--vbm-muted);
 }
 
 .empty-state.staging-empty .vbm-icon-stage {
@@ -2534,6 +2544,17 @@ li.staging-row.drag-over {
    landing on the same right axis as the rows' trailing planes below. */
 .stats-toolbar .stats-select-mode {
     margin-inline-start: auto;
+}
+
+/* 清空统计 joins the select-mode entry as the right-hand cluster (the
+   auto pin moved from select-mode to clear — both right-align together). */
+.stats-toolbar .stats-clear {
+    margin-inline-start: auto;
+}
+
+.stats-toolbar .stats-clear + .stats-select-mode,
+.stats-toolbar .stats-select-mode + .stats-clear {
+    margin-inline-start: 0;
 }
 
 .staging-toolbar .staging-select-mode,
@@ -4589,17 +4610,38 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
 (auto width, 2px 6px padding, 16px glyph) — the same box as the dead view's
 icon buttons and its own 全部应用 neighbour; the old 22px square read
 visibly smaller next to them. */
-.dupes-toolbar .dupes-actions-toolbar button.dupes-stage-all {
+/* The icon strip (暂存全部·折叠全部·展开全部·选择模式) rides ONE nowrap
+   cluster pinned right of 全部应用, with the ROWS' icon geometry — 20px
+   boxes on the 4px stride — so the glyphs keep the row columns' cadence
+   and a wrapped toolbar never splits the strip. */
+.dupes-toolbar.dupes-actions-toolbar .dupes-icon-cluster {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    flex: none;
+}
+
+.dupes-toolbar.dupes-actions-toolbar .dupes-icon-cluster button,
+.dupes-toolbar.dupes-actions-toolbar .dupes-icon-cluster button.dupes-tbtn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 3px 6px; /* 16px glyph + 6px = the dead view's icon-button box;
-                          the :not() flat-button chain at (0,3,1) used to win
-                          this back to 2px — match its specificity and win by
-                          source order */
+    width: 20px;
+    height: 22px;
+    padding: 0;
     flex: none;
+    border: 0;
+    border-radius: var(--vbm-radius);
+    background: transparent;
+    color: var(--vbm-accent);
+    cursor: pointer;
 }
-.dupes-toolbar .dupes-actions-toolbar button.dupes-stage-all .vbm-icon {
+
+.dupes-toolbar.dupes-actions-toolbar .dupes-icon-cluster button:hover:not([disabled]) {
+    background: var(--vbm-bg-hover);
+}
+
+.dupes-toolbar.dupes-actions-toolbar .dupes-icon-cluster button .vbm-icon {
     width: 16px;
     height: 16px;
     flex: none;
@@ -4645,7 +4687,7 @@ visibly smaller next to them. */
    going flat). The dropdown trigger is its own bordered control, so it
    joins the exclusion list (its (0,2,0) rules would otherwise lose to this
    (0,3,1) one). */
-.dupes-toolbar button:not(.dupes-apply-all):not(.dupes-apply-selected):not(.vbm-dropdown-trigger):not(.dupes-select-mode) {
+.dupes-toolbar button:not(.dupes-apply-all):not(.dupes-apply-selected):not(.vbm-dropdown-trigger):not(.dupes-select-mode):not(.dupes-tbtn) {
     border: 0;
     border-radius: var(--vbm-radius);
     background: transparent;
@@ -5598,7 +5640,11 @@ li.tabgroups-row.tabgroups-current {
     color: var(--vbm-danger);
 }
 #tabgroups-list ul li.tabgroups-window-head .tabgroups-window-head-row:hover .tabgroups-window-close,
-#tabgroups-list ul li.tabgroups-window-head .tabgroups-window-head-row:has(:focus-visible) .tabgroups-window-close {
+#tabgroups-list ul li.tabgroups-window-head .tabgroups-window-head-row:has(:focus-visible) .tabgroups-window-close,
+/* the window plane reveals on hover like the close button (it had no reveal
+   rule — permanently visibility:hidden, i.e. invisible) */
+#tabgroups-list ul li.tabgroups-window-head .tabgroups-window-head-row:hover .tabgroups-window-stage,
+#tabgroups-list ul li.tabgroups-window-head .tabgroups-window-head-row:has(:focus-visible) .tabgroups-window-stage {
     visibility: visible;
 }
 

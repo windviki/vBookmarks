@@ -2216,7 +2216,7 @@
     "message": "Nylig lagt til"
   },
   "stagingEmpty": {
-    "message": "Tom — høyreklikk et bokmerke, bruk ↑-knappen her, eller stats-historikkrader for å sende elementer til staging-området"
+    "message": "Ingenting er lagt til ennå. Send bokmerker hit fra hvilken som helst visning — flyknappen på en rad, eller høyreklikk-menyen — og organiser og arkiver dem i bulk."
   },
   "stagingFromHistory": {
     "message": "Fra historikk"

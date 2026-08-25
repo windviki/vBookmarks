@@ -2216,7 +2216,7 @@
     "message": "Añadidos recientemente"
   },
   "stagingEmpty": {
-    "message": "Vacío: haz clic derecho en cualquier marcador, usa el botón ↑ aquí o las filas del historial de estadísticas para enviar elementos a la zona de preparación"
+    "message": "Aún no hay nada en espera. Envía marcadores aquí desde cualquier vista — con el botón de avión en una fila o el menú contextual — y luego organízalos y archívalos en lote."
   },
   "stagingFromHistory": {
     "message": "Del historial"

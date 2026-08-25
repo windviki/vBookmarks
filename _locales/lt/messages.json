@@ -2216,7 +2216,7 @@
     "message": "Naujausiai pridėta"
   },
   "stagingEmpty": {
-    "message": "Tuščia — dešiniuoju pelės klavišu spustelėkite bet kurią žymę, naudokite ↑ mygtuką čia arba statistikos istorijos eilutes, kad siųstumėte elementus į paruošimo sritį"
+    "message": "Dar nieko neįdėta. Siųskite žymes čia iš bet kurio rodinio — mygtuką lėktuve eilutėje arba dešiniuoju pelės klavišu — tada tvarkykite ir archyvuokite jas masiškai."
   },
   "stagingFromHistory": {
     "message": "Iš istorijos"

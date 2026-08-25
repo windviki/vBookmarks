@@ -2216,7 +2216,7 @@
     "message": "Mới thêm"
   },
   "stagingEmpty": {
-    "message": "Trống — nhấp chuột phải vào dấu trang, dùng nút ↑ ở đây hoặc hàng lịch sử thống kê để đưa mục vào vùng chờ"
+    "message": "Chưa có gì được xếp tạm. Gửi dấu trang vào đây từ bất kỳ chế độ xem nào — nút máy bay trên hàng hoặc menu chuột phải — sau đó sắp xếp và lưu trữ hàng loạt."
   },
   "stagingFromHistory": {
     "message": "Từ lịch sử"

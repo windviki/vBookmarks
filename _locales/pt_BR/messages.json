@@ -2212,7 +2212,7 @@
     "message": "Adicionados recentemente"
   },
   "stagingEmpty": {
-    "message": "Vazio — clique com o botão direito em qualquer marcador, use o botão ↑ aqui ou linhas do histórico de estatísticas para enviar itens à área de preparação"
+    "message": "Nada em espera ainda. Envie marcadores para cá de qualquer visualização — o botão de avião em uma linha ou o menu de clique direito — e depois organize e arquive em lote."
   },
   "stagingFromHistory": {
     "message": "Do histórico"

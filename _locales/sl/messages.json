@@ -2216,7 +2216,7 @@
     "message": "Nedavno dodani"
   },
   "stagingEmpty": {
-    "message": "Prazno — z desnim klikom na zaznamek, uporabite gumb ↑ tukaj ali vrstice zgodovine statistike za pošiljanje elementov v začasno območje"
+    "message": "Ni še nič odloženega. Pošljite zaznamke sem iz katerega koli pogleda — z gumbom za letalo v vrstici ali prek desnega klika — nato jih organizirajte in razporedite v skupinah."
   },
   "stagingFromHistory": {
     "message": "Iz zgodovine"

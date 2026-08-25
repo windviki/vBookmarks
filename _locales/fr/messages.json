@@ -2216,7 +2216,7 @@
     "message": "Ajoutés récemment"
   },
   "stagingEmpty": {
-    "message": "Vide — cliquez droit sur un signet, utilisez le bouton ↑ ici, ou les lignes de l'historique des stats pour envoyer des éléments vers la zone de staging"
+    "message": "暂存区暂无内容。可从任意视图将书签发送至此——点击行上的飞机按钮或使用右键菜单——然后批量整理归档。"
   },
   "stagingFromHistory": {
     "message": "Depuis l'historique"

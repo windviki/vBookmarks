@@ -222,8 +222,13 @@ export const applyStorageBadges = ({
     for (const rowId in dataRows) {
         const control = doc.getElementById(rowId);
         const li = control && typeof control.closest === 'function' ? control.closest('li') : null;
-        if (li)
-            li.appendChild(makeBadge(doc, dataRows[rowId], 'storage-badge-inline', tipSync, tipLocal));
+        if (li) {
+            // The favicon block is two-tier (label head + action row): the
+            // badge rides the ACTION row beside the gallery link — appending
+            // to the li itself made it a third line under the flex column.
+            const host = (li.querySelector && li.querySelector('.favicon-cache-row')) || li;
+            host.appendChild(makeBadge(doc, dataRows[rowId], 'storage-badge-inline', tipSync, tipLocal));
+        }
     }
 };
 

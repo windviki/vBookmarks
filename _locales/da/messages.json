@@ -2216,7 +2216,7 @@
     "message": "Nyligt tilføjet"
   },
   "stagingEmpty": {
-    "message": "Tom — højreklik på et bogmærke, brug ↑-knappen her, eller statistikhistorik-rækker for at sende elementer til klaringsområdet"
+    "message": "Intet klar endnu. Send bogmærker hertil fra enhver visning — flyveknappen på en række eller højreklikmenuen — og organisér og arkivér dem derefter i bulk."
   },
   "stagingFromHistory": {
     "message": "Fra historik"

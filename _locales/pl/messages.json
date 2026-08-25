@@ -2216,7 +2216,7 @@
     "message": "Ostatnio dodane"
   },
   "stagingEmpty": {
-    "message": "Pusto — kliknij prawym przyciskiem zakładkę, użyj przycisku ↑ tutaj lub wierszy historii statystyk, aby dodać elementy do obszaru roboczego"
+    "message": "还没有暂存内容。从任意视图将书签发送到这里——点击行上的飞机按钮或右键菜单——然后批量整理和归档。"
   },
   "stagingFromHistory": {
     "message": "Z historii"

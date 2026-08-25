@@ -2473,7 +2473,7 @@
     "message": "Recently added"
   },
   "stagingEmpty": {
-    "message": "Empty — right-click any bookmark, use the ↑ button here, or stats history rows to send items to the staging area"
+    "message": "Nothing staged yet. Send bookmarks here from any view — the plane button on a row, or the right-click menu — then organize and file them in bulk."
   },
   "stagingFromHistory": {
     "message": "From history"

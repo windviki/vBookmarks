@@ -375,21 +375,19 @@ export function initViewDupes(ctx = {}) {
         // 选择模式 — the fold pair reuses the tab-groups icons + keys.
         html += `<button class="dupes-apply-all"${doomed ? '' : ' disabled'}>` +
             _m('dupesApplyAll', `${doomed}`) + '</button>';
-        {
-            const allItems = groups.flatMap(g => g.items)
-                .map(it => ({ id: it.id, url: it.url, title: it.title || '' }));
-            const stageLabel = htmlspecialchars(_m('stagingAdd'));
-            html += relayOn()
-                ? `<button class="dupes-stage-all"${allItems.length ? '' : ' disabled'} ` +
-                  `title="${stageLabel}" aria-label="${stageLabel}">${STAGE_ICON}</button>`
-                : '';
-        }
         const foldLabel = k => htmlspecialchars(_m(k));
-        html += `<button class="dupes-collapse-all"${groups.length ? '' : ' disabled'} ` +
-            `title="${foldLabel('tabGroupsCollapseAll')}" aria-label="${foldLabel('tabGroupsCollapseAll')}">${COLLAPSE_ALL_ICON}</button>` +
-            `<button class="dupes-expand-all"${groups.length ? '' : ' disabled'} ` +
-            `title="${foldLabel('tabGroupsExpandAll')}" aria-label="${foldLabel('tabGroupsExpandAll')}">${EXPAND_ALL_ICON}</button>`;
-        html += selectBtn;
+        const foldBtn = (cls, icon, key) =>
+            `<button class="dupes-tbtn ${cls}${groups.length ? '' : ' disabled'}" ` +
+            `title="${foldLabel(key)}" aria-label="${foldLabel(key)}">${icon}</button>`;
+        // The icon strip rides one nowrap cluster with the rows' icon
+        // geometry (20px + 4px stride) — a wrapped toolbar must never split
+        // it, and every glyph keeps the row columns' cadence.
+        html += '<span class="dupes-icon-cluster">' +
+            (relayOn() ? foldBtn('dupes-stage-all', STAGE_ICON, 'stagingAdd') : '') +
+            foldBtn('dupes-collapse-all', COLLAPSE_ALL_ICON, 'tabGroupsCollapseAll') +
+            foldBtn('dupes-expand-all', EXPAND_ALL_ICON, 'tabGroupsExpandAll') +
+            selectBtn +
+            '</span>';
         html += '</div>';
         return html;
     };

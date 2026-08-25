@@ -2216,7 +2216,7 @@
     "message": "Äskettäin lisätyt"
   },
   "stagingEmpty": {
-    "message": "Tyhjä — napsauta kirjanmerkkiä hiiren kakkospainikkeella, käytä yllä olevaa ↑-painiketta tai tilastohistoriarivejä lähettääksesi kohteita odotuslistalle"
+    "message": "Ei vielä mitään jonossa. Lähetä kirjanmerkkejä tähän mistä tahansa näkymästä — rivin lentokonepainikkeesta tai hiiren kakkospainikkeen valikosta — ja järjestä sekä arkistoi ne joukkona."
   },
   "stagingFromHistory": {
     "message": "Historiasta"

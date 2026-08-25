@@ -2216,7 +2216,7 @@
     "message": "Legutóbb hozzáadva"
   },
   "stagingEmpty": {
-    "message": "Üres – kattintson jobb gombbal bármelyik könyvjelzőre, használja a ↑ gombot itt, vagy a statisztika előzményeinek sorait az elemek gyűjtőbe küldéséhez"
+    "message": "Még nincs semmi előkészítve. Küldjön ide könyvjelzőket bármely nézetből — a sorban lévő repülő gombbal vagy a jobb egérgombos menüvel — majd rendezze és helyezze el őket tömegesen."
   },
   "stagingFromHistory": {
     "message": "Előzményekből"

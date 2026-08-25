@@ -2216,7 +2216,7 @@
     "message": "Nesen pievienotie"
   },
   "stagingEmpty": {
-    "message": "Tukšs — ar peles labo pogu noklikšķiniet uz jebkuras grāmatzīmes, izmantojiet ↑ pogu šeit vai statistikas vēstures rindas, lai nosūtītu vienumus uz sagatavošanas zonu"
+    "message": "Vēl nekas nav sagatavots. Nosūtiet grāmatzīmes šeit no jebkura skata — lidmašīnas poga rindā vai konteksta izvēlne — pēc tam kārtojiet un ievietojiet tās grupās."
   },
   "stagingFromHistory": {
     "message": "No vēstures"

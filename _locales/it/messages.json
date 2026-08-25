@@ -2216,7 +2216,7 @@
     "message": "Aggiunti di recente"
   },
   "stagingEmpty": {
-    "message": "Vuoto — fai clic destro su un segnalibro, usa il pulsante ↑ qui o le righe della cronologia per inviare elementi all'area di staging"
+    "message": "Nessun elemento in coda. Invia qui i segnalibri da qualsiasi vista — con il pulsante aereo su una riga o il menu contestuale — poi organizzali e archiviali in blocco."
   },
   "stagingFromHistory": {
     "message": "Dalla cronologia"

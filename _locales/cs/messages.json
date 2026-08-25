@@ -2216,7 +2216,7 @@
     "message": "Nedávno přidané"
   },
   "stagingEmpty": {
-    "message": "Prázdné — klikněte pravým tlačítkem na záložku, použijte tlačítko ↑ zde nebo řádky historie statistik pro odeslání položek do oblasti"
+    "message": "Zatím nic ve frontě. Pošlete sem záložky z libovolného zobrazení — tlačítkem letadla na řádku nebo z kontextové nabídky — a pak je hromadně uspořádejte a zařaďte."
   },
   "stagingFromHistory": {
     "message": "Z historie"

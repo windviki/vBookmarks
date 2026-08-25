@@ -8,6 +8,7 @@ Guidance for AI coding agents working on this repository. Assumes no prior knowl
 > - `docs/agents/release.md` — release build/packaging detail, the two-step release process (git发布 + 商店发布 via the CWS API)
 > - `docs/agents/i18n.md` — locale management flow (`scripts/i18n.py`, translate/verify gates)
 > - `docs/agents/quirks.md` — verified known quirks, full text
+- `docs/agents/design-laws.md` — the visual/interaction laws distilled from repeated user feedback (right-edge 8px axis, 20px/24px icon-column geometry, staged glyph language, two-rung selecting bars, in-place flip sync…). READ BEFORE touching toolbars, row buttons or group heads
 
 ## Project Overview
 
