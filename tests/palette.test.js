@@ -835,6 +835,17 @@ describe('result composition', () => {
         expect(rowClasses()).toHaveLength(COMMAND_MSGS.length);
     });
 
+    it('the /recent command answers its latest/staging aliases (ST10)', () => {
+        const { palette, results, rowClasses, type } = setup({});
+        palette.open();
+        type('/staging');
+        expect(rowClasses().length).toBeGreaterThanOrEqual(1);
+        expect(results._appended[0]._innerHTML).toContain(MSGS.paletteCmdGoRecent);
+        expect(rowClasses().every(c => c === 'palette-row palette-command')).toBe(true);
+        type('/latest');
+        expect(results._appended[0]._innerHTML).toContain(MSGS.paletteCmdGoRecent);
+    });
+
     it('ranks real fuzzy title hits above url-only hits', () => {
         const { palette, results, type } = setup({});
         palette.open();

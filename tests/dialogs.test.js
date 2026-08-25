@@ -105,6 +105,10 @@ const IDS = [
     // velvet staging §3.3: the group-assign dialog
     'staging-group-assign-dialog', 'staging-group-assign-text', 'staging-group-assign-list',
     'staging-group-assign-name', 'staging-group-assign-button', 'staging-group-assign-cancel-button',
+    // the staging shortcut-bar editor (workbench round)
+    'staging-shortcut-text', 'staging-shortcut-alias', 'staging-shortcut-folder',
+    'staging-shortcut-colors', 'staging-shortcut-save', 'staging-shortcut-cancel',
+    'staging-shortcut-color-label',
     'cover'
 ];
 
@@ -126,6 +130,8 @@ const PALETTE = ['grey', 'blue', 'red', 'yellow', 'green', 'pink', 'purple', 'cy
 
 beforeAll(async () => {
     els = Object.fromEntries(IDS.map(id => [id, makeEl()]));
+    // setFolderLabel toggles the folder row's .empty state
+    els['staging-shortcut-folder'].classList = makeClassList();
     colorRadios = PALETTE.map(color => {
         const r = makeEl();
         r.tagName = 'INPUT';
@@ -170,7 +176,12 @@ beforeAll(async () => {
             getTree: cb => cb([{ id: '0', title: '', children: [
                 { id: '1', title: 'Bar', children: [{ id: '11', title: 'Dev', children: [] }] },
                 { id: '2', title: 'Other', children: [] }
-            ] }])
+            ] }]),
+            // StagingShortcutDialog.setFolderLabel resolves folder titles
+            getNodes: {},
+            get(id, cb) {
+                cb(this.getNodes[id] || []);
+            }
         }
     };
     new Function('window', fs.readFileSync(new URL('../src/sort-utils.js', import.meta.url), 'utf8'))(globalThis.window);
@@ -1018,6 +1029,82 @@ describe('BookmarkFolderPickDialog (4.1.0 + velvet staging §4.1)', () => {
         const other = { key: 'a', preventDefault() { this.prevented = true; } };
         list.trigger('keydown', other);
         expect(other.prevented).toBeUndefined();
+    });
+});
+
+describe('StagingShortcutDialog (staging shortcut-bar editor)', () => {
+    it('opens empty: create title, alias placeholder, empty folder row, default blue radio', () => {
+        const d = freshDialogs();
+        d.StagingShortcutDialog.open({ onSave: () => {} });
+        expect(bodyClasses.contains('needStagingShortcut')).toBe(true);
+        expect(els['staging-shortcut-text'].innerHTML).toContain('stagingShortcutTitle');
+        expect(els['staging-shortcut-alias'].value).toBe('');
+        expect(els['staging-shortcut-alias'].placeholder).toBe('stagingShortcutAlias');
+        expect(els['staging-shortcut-alias'].focused).toBe(true);
+        // no folder picked yet: the placeholder label + the .empty state
+        expect(els['staging-shortcut-folder'].textContent).toBe('stagingShortcutPickFolder');
+        expect(els['staging-shortcut-folder'].classList.contains('empty')).toBe(true);
+        // nine color radios, blue checked by default
+        const colors = els['staging-shortcut-colors'].innerHTML;
+        expect((colors.match(/type="radio"/g) || []).length).toBe(9);
+        expect(colors).toContain('value="blue" class="visually-hidden" checked');
+    });
+
+    it('opens with a shortcut: edit title, prefilled alias/color, resolved folder title', () => {
+        const d = freshDialogs();
+        globalThis.chrome.bookmarks.getNodes['33'] = [{ id: '33', title: 'Targets' }];
+        d.StagingShortcutDialog.open({
+            shortcut: { id: 's1', folderId: '33', alias: 'docs', color: 'red' },
+            onSave: () => {}
+        });
+        expect(els['staging-shortcut-text'].innerHTML).toContain('stagingShortcutEdit');
+        expect(els['staging-shortcut-alias'].value).toBe('docs');
+        expect(els['staging-shortcut-colors'].innerHTML).toContain('value="red" class="visually-hidden" checked');
+        expect(els['staging-shortcut-folder'].textContent).toBe('Targets');
+        expect(els['staging-shortcut-folder'].classList.contains('empty')).toBe(false);
+    });
+
+    it('confirm without a folder is a no-op; with one it saves the shape and closes', () => {
+        const d = freshDialogs();
+        const saved = [];
+        d.StagingShortcutDialog.open({ onSave: sc => saved.push(sc) });
+        els['staging-shortcut-save'].trigger('click');
+        expect(saved).toEqual([]); // no folder picked → refused
+        expect(bodyClasses.contains('needStagingShortcut')).toBe(true);
+        // pick a folder through the internal state (the picker path), set alias
+        d.StagingShortcutDialog.folderId = '33';
+        els['staging-shortcut-alias'].value = '  docs  ';
+        els['staging-shortcut-save'].trigger('click');
+        expect(saved).toEqual([{ id: null, folderId: '33', alias: 'docs', color: 'blue' }]);
+        expect(bodyClasses.contains('needStagingShortcut')).toBe(false);
+    });
+
+    it('a color change updates the saved color; Enter on the alias confirms', () => {
+        const d = freshDialogs();
+        const saved = [];
+        d.StagingShortcutDialog.open({
+            shortcut: { id: 's1', folderId: '33', alias: '', color: 'blue' },
+            onSave: sc => saved.push(sc)
+        });
+        els['staging-shortcut-colors'].trigger('change', { target: { value: 'green' } });
+        els['staging-shortcut-alias'].trigger('keydown', {
+            key: 'Enter',
+            preventDefault() {}
+        });
+        expect(saved).toEqual([{ id: 's1', folderId: '33', alias: '', color: 'green' }]);
+    });
+
+    it('the folder row opens the shared picker and adopts its pick', () => {
+        const d = freshDialogs();
+        d.StagingShortcutDialog.open({ onSave: () => {} });
+        els['staging-shortcut-folder'].trigger('click');
+        expect(bodyClasses.contains('needFolderPick')).toBe(true);
+        // commit a pick through the picker's own list (Dev = '11')
+        const rows = els['bookmark-folder-pick-list'].children
+            .map(li => li.children[0]);
+        rows[1].trigger('click'); // legacy single-select? no — mode undefined…
+        // pickFolder passes no mode → legacy pick commits on row click
+        expect(d.StagingShortcutDialog.folderId).toBe('11');
     });
 });
 

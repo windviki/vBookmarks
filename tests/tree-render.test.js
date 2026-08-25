@@ -722,6 +722,45 @@ describe('generateSeparatorHTML', () => {
     });
 });
 
+describe('tree-row quick actions (treeRowActions option)', () => {
+    // the suite's store double returns undefined for unset keys (no default
+    // application), so the ON cases seed the switches explicitly
+    const BM = { id: '1', parentId: '0', title: 'A', url: 'http://e.com/' };
+
+    it('renders the edit + stage + delete tail on bookmark rows when on', () => {
+        const tr = setup({ store: makeStore({ treeRowActions: '1', stagingEnabled: '1' }) });
+        const html = tr.generateHTML([BM]);
+        expect(html).toContain('tree-row-edit');
+        expect(html).toContain('tree-row-delete');
+        expect(html).toContain('staging-add-btn');
+    });
+
+    it('treeRowActions off removes the whole tail', () => {
+        const tr = setup({ store: makeStore({ treeRowActions: '0', stagingEnabled: '1' }) });
+        const html = tr.generateHTML([BM]);
+        expect(html).not.toContain('tree-row-edit');
+        expect(html).not.toContain('tree-row-delete');
+        expect(html).not.toContain('staging-add-btn');
+    });
+
+    it('stagingEnabled off keeps edit+delete but drops the stage plane', () => {
+        const tr = setup({ store: makeStore({ treeRowActions: '1', stagingEnabled: '0' }) });
+        const html = tr.generateHTML([BM]);
+        expect(html).toContain('tree-row-edit');
+        expect(html).toContain('tree-row-delete');
+        expect(html).not.toContain('staging-add-btn');
+    });
+
+    it('folder rows carry edit+delete; the folder plane needs a staging api', () => {
+        const tr = setup({ store: makeStore({ treeRowActions: '1', stagingEnabled: '1' }) });
+        const html = tr.generateHTML([{ id: '5', parentId: '0', title: 'F', children: [BM] }]);
+        expect(html).toContain('tree-row-edit');
+        expect(html).toContain('tree-row-delete');
+        // no ctx.staging injected → folderStageBtnHtml yields nothing
+        expect(html).not.toContain('staging-add-btn');
+    });
+});
+
 describe('generateHTML', () => {
     it('renders the muted empty-folder row for empty data, padded onto the text axis', () => {
         const tr = setup();

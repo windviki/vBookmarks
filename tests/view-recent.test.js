@@ -898,6 +898,26 @@ describe('staging view (velvet staging ST3)', () => {
         expect(html).toContain('staging-select-mode');
     });
 
+    it('the staging master switch collapses the view to the bare recently-added list', () => {
+        // stagingEnabled '0' (options 暂存和最近添加): no workbench chrome,
+        // no staging <ul>, no scissors — just the recent head + rows
+        const { viewRecent, $list, def } = setup({
+            storeData: { stagingEnabled: '0' },
+            recentItems: [ITEMS[0]]
+        });
+        viewRecent.api.addItems([mkItem('101', 'http://a/', 'A')]);
+        def().activate();
+        const html = $list.innerHTML;
+        expect(html).not.toContain('id="staging-items"');
+        expect(html).not.toContain('staging-cut');
+        expect(html).not.toContain('staging-new-group');
+        expect(html).not.toContain('staging-select-mode');
+        expect(html).toContain('id="recent-head"');
+        expect(html).toContain('id="recent-item-101"');
+        // the api reports the stand-down (context-menu/tree tails gate on it)
+        expect(viewRecent.api.isEnabled()).toBe(false);
+    });
+
     it('the staging head folds the whole staging area and persists headCollapsed', () => {
         const { viewRecent, store, $list, def, click } = setup({});
         viewRecent.api.addItems([mkItem('1', 'http://a/', 'A')]);

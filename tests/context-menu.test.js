@@ -220,8 +220,11 @@ const setup = (opts = {}) => {
         'staging-group-select-all', 'staging-group-save-folder', 'staging-group-copy-folder'])
         el('DIV', gid).classList.add('menu-item');
     // velvet staging: the staging send entries (bookmark menu / hist-row menu)
+    // + the separators the master switch hides with them
     for (const stageItem of ['hist-row-stage', 'add-to-staging', 'staging-remove-item', 'staging-fav-toggle', 'staging-group-assign'])
         el('DIV', stageItem).classList.add('menu-item');
+    el('HR', 'staging-item-sep');
+    el('HR', 'folder-stage-sep');
     // the bookmark-menu id-dependent entries the unfav-staging-row rule hides
     for (const bmId of ['bookmark-edit', 'bookmark-delete', 'copy-title-and-url',
         'copy-move-to', 'copy-bookmark', 'cut-bookmark', 'paste-here',
@@ -3039,6 +3042,27 @@ describe('staging group menu + staging-row entries (velvet staging §3.5/§2.4)'
         expect(staging.calls).toEqual([
             ['remove', 'http://s1/'], ['fav', 'http://s1/'], ['assign', ['http://s1/']]
         ]);
+    });
+
+    // The stagingEnabled master switch (options 暂存和最近添加): while off,
+    // EVERY staging entry across the menus hides — the per-branch display
+    // logic ran first, this override always wins.
+    it('the staging master switch hides every staging entry at open time', () => {
+        const off = { isEnabled: () => false, isStaged: () => false };
+        const ctx = setup({ staging: off });
+        ctx.openOn(ctx.makeBookmarkRow('42').a);
+        expect(ctx.byId['add-to-staging'].style.display).toBe('none');
+        expect(ctx.byId['staging-item-sep'].style.display).toBe('none');
+        const fctx = setup({ staging: off });
+        fctx.openOn(fctx.makeFolderRow('7').span);
+        expect(fctx.byId['add-folder-to-staging'].style.display).toBe('none');
+        expect(fctx.byId['folder-stage-sep'].style.display).toBe('none');
+        // on: the bookmark-row entry shows again (the folder one stays
+        // content-driven but is NOT force-hidden)
+        const on = { isEnabled: () => true, isStaged: () => false };
+        const octx = setup({ staging: on });
+        octx.openOn(octx.makeBookmarkRow('42').a);
+        expect(octx.byId['add-to-staging'].style.display).toBe('block');
     });
 });
 
