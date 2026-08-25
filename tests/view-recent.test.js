@@ -768,6 +768,20 @@ describe('coarse time sections (第四轮项8)', () => {
         expect(btn).not.toBe(null);
         expect(btn[0]).toContain('tabindex="-1"');
     });
+
+    it('time-bucket heads carry the range meta sub line in a head-main column (2026-08 peer law)', () => {
+        // 今天 → its date; 本周/本月 → recentGroupSince; 更早 → recentGroupBefore
+        // — the head reads as a peer of the two-line rows: title + muted meta
+        // stacked in one column (the rows' .row-main/.row-sub recipe).
+        const { $list, def } = setup({ recentItems: [mk(1, NOW), mk(2, NOW - 8 * DAY), mk(3, NOW - 40 * DAY)] });
+        def().activate();
+        const html = $list.innerHTML;
+        expect(html).toContain(`<span class="head-sub">${new Date().toLocaleDateString()}</span>`);
+        expect(html).toContain('recentGroupSince[');
+        expect(html).toContain('recentGroupBefore[');
+        expect(html).toMatch(
+            /<span class="head-main"><span class="staging-section-title" dir="auto">[\s\S]*?<\/span><span class="head-sub">recentGroup/);
+    });
 });
 
 describe('row focus park/restore (4.0.1 focus law)', () => {
@@ -1651,6 +1665,20 @@ describe('staging group management + DnD + render coalescing (workbench round)',
         ctx.viewRecent.api.addItems([{ id: null, url: 'http://x/', title: 'X' }]);
         ctx.viewRecent.api.removeByUrl('http://x/');
         expect(ctx.viewRecent.api.state().groups).toHaveLength(1);
+    });
+
+    it('the group head carries its creation time as the meta sub line (2026-08 peer law)', () => {
+        // The fold head reads as a peer of the member rows: title + a muted
+        // 创建于 meta line stacked in one .head-main column (the rows'
+        // .row-main/.row-sub recipe; CSS hides the sub in the narrow form).
+        const ctx = setup({ undo: undoOn() });
+        const gid = ctx.viewRecent.api.createGroup('Reading list');
+        ctx.def().activate();
+        const html = ctx.$list.innerHTML;
+        expect(html).toMatch(new RegExp(
+            'data-group-id="' + gid + '"[\\s\\S]*?<span class="head-main">' +
+            '<span class="staging-section-title" dir="auto">Reading list</span>' +
+            '<span class="head-sub">stagingGroupCreated\\['));
     });
 
     it('the toolbar keeps the new-group entry on an EMPTY workbench (select hidden)', () => {

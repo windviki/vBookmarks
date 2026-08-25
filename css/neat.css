@@ -1695,10 +1695,15 @@ menu[type=context] hr {
        4px margin + 4px gap), the SAME stride as the row tail buttons,
        so head delete/place dock on the row remove/star columns. */
     gap: 4px;
-    height: var(--vbm-row-h);
+    /* 2026-08 peer-of-rows law: min-height (not height) — the two-line
+       heads (head-sub meta line below) must grow to the member rows'
+       height instead of clipping. No font-size pin: the fold heads inherit
+       the body base so their title is EXACTLY the row title's size on
+       every platform (the fixed 11/12px pins read smaller than rows
+       wherever `font: menu` resolves above 12px). */
+    min-height: var(--vbm-row-h);
     padding-inline-start: 8px;
     padding-inline-end: 4px;
-    font-size: 11px;
     color: var(--vbm-muted);
     cursor: pointer;
     user-select: none;
@@ -1785,15 +1790,16 @@ menu[type=context] hr {
    heads: the chevron's CENTER lands on the loose row's favicon center
    (16px ::before slot + 10px into the 20px container = 26px → the chevron
    spans 18–34px), and the title's left edge lands on the loose row's TITLE
-   axis (40px = 18 + 16 + 2px margin + 4px gap). They also read as group
-   heads in their own right: the title font matches the bookmark rows (12px,
-   no longer the 11px chrome font), and in wide views the row grows to 32px
-   so folding/dragging lands on a comfortable target. */
+   axis (40px = 18 + 16 + 2px margin + 4px gap). 2026-08 size law: the title
+   font IS the row font — both inherit the body base (the old 12px pin read
+   smaller than the rows on platforms where `font: menu` > 12px), and
+   line-height mirrors .tree-item-link's 1.67em so a two-line head (title +
+   head-sub meta) is exactly as tall as a two-line member row. */
 .staging-bucket-head,
 .staging-group-head,
 .recent-group-head {
     padding-inline-start: 18px;
-    font-size: 12px;
+    line-height: 1.67em;
 }
 
 .staging-bucket-head .chevron,
@@ -1802,12 +1808,56 @@ menu[type=context] hr {
     margin-inline-end: 2px; /* 18 + 16 + 2 + 4px gap = the 40px title axis */
 }
 
+/* Head meta column (the same recipe as the rows' .row-main/.row-sub): the
+   title and its muted meta line stack in one column, so in the two-line
+   (wide / panel) form the head matches the member rows' height and carries
+   the group's creation time (staging groups) or the bucket's time range
+   (recent sections) as its second line. Narrow form hides the sub line —
+   the head stays one line tall, like the narrow rows. */
+.staging-group-head .head-main,
+.recent-group-head .head-main {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.staging-group-head .head-sub,
+.recent-group-head .head-sub {
+    display: none;
+    color: var(--vbm-muted);
+    font-size: 12px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 @container (min-width: 480px) {
     .staging-bucket-head,
     .staging-group-head,
     .recent-group-head {
-        height: 32px; /* taller fold/drag target in wide views */
+        min-height: 32px; /* comfortable fold/drag target in wide views */
     }
+    /* two-line form: the meta line shows and every fold head — including
+       the bucket head, which has no meta of its own — stands exactly as
+       tall as the two-line member rows (2 × the 1.67em line box). */
+    .staging-bucket-head {
+        min-height: 3.34em;
+    }
+    .staging-group-head .head-sub,
+    .recent-group-head .head-sub {
+        display: block;
+    }
+}
+
+/* panel-mode twins (rows are always two-line there): see the block above */
+body.panel-mode .staging-bucket-head {
+    min-height: 3.34em;
+}
+body.panel-mode .staging-group-head .head-sub,
+body.panel-mode .recent-group-head .head-sub {
+    display: block;
 }
 
 .staging-section-head .chevron::before,
@@ -5073,10 +5123,13 @@ visibly smaller next to them. */
 
 /* Staging heads join the same pill geometry (kept as its own block so
    the scrollbar-contract fixture's verbatim shared-rule string stays
-   intact); the token colors live with the staging head rules above. */
+   intact); the token colors live with the staging head rules above.
+   2026-08: the recent time-bucket heads join too — they had only the
+   color half and their counts rendered as bare text. */
 .staging-section-head .count-pill,
 .staging-bucket-head .count-pill,
-.staging-group-head .count-pill {
+.staging-group-head .count-pill,
+.recent-group-head .count-pill {
     flex: none;
     min-width: 14px;
     height: 14px;

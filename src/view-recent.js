@@ -387,11 +387,20 @@ export function initViewRecent(ctx = {}) {
         const selCls = headSelClass(staging.groupItems(stagingState, g.id).map(it => it.url));
         const dragAttr = selecting ? '' : ' draggable="true"';
         const gname = htmlspecialchars(g.name || _m('noTitle'));
+        // head meta line (2026-08 user call): the fold head reads as a PEER of
+        // the member rows — title size matches, and in the two-line (wide/
+        // panel) form a second muted line carries the group's creation time,
+        // mirroring the rows' `路径 · 时间` sub line (hidden in narrow form).
+        const createdSub = (typeof g.createdAt === 'number' && g.createdAt)
+            ? htmlspecialchars(_m('stagingGroupCreated', [new Date(g.createdAt).toLocaleString()])) : '';
         return `<li class="staging-group${selCls}${count ? ' has-members' : ''}" data-group-id="${g.id}" role="presentation">` +
             `<span class="group-head staging-group-head" tabindex="-1" role="button" ` +
             `aria-expanded="${collapsed ? 'false' : 'true'}" title="${gname}"${dragAttr}>` +
             `<span class="chevron${collapsed ? ' collapsed' : ''}" aria-hidden="true"></span>` +
+            `<span class="head-main">` +
             `<span class="staging-section-title" dir="auto">${gname}</span>` +
+            (createdSub ? `<span class="head-sub">${createdSub}</span>` : '') +
+            `</span>` +
             `<span class="count-pill" aria-label="${count}">${count}</span>` +
             (selecting ? '' :
                 // the quick tail rides one head-icon-cluster (design-laws §2:
@@ -555,6 +564,18 @@ export function initViewRecent(ctx = {}) {
         const groupUrls = [[], [], [], []];
         const groupLabels = GROUP_KEYS.map(k => _m(k));
         const stageGroupLabels = groupLabels.map(t => _m('recentStageGroup', t));
+        // Time-bucket meta lines (the group-head peer law): 今天 shows its
+        // date, 本周/本月 the date they reach back to, 更早 the same boundary
+        // read as "before" — the bucket's own clock, mirroring the staging
+        // group heads' creation-time sub line.
+        const weekStart = new Date(now - 7 * 86400000).toLocaleDateString();
+        const monthStart = new Date(now - 30 * 86400000).toLocaleDateString();
+        const rangeLabels = [
+            new Date(now).toLocaleDateString(),
+            _m('recentGroupSince', [weekStart]),
+            _m('recentGroupSince', [monthStart]),
+            _m('recentGroupBefore', [monthStart])
+        ];
         for (let i = 0, l = items.length; i < l; i++) {
             const d = items[i];
             if (!d.url || separatorManager.isSeparator(d.title, d.url))
@@ -578,7 +599,10 @@ export function initViewRecent(ctx = {}) {
                 `<span class="group-head recent-group-head" role="button" tabindex="-1" ` +
                 `aria-expanded="${collapsed ? 'false' : 'true'}" title="${htmlspecialchars(label)}">` +
                 `<span class="chevron${collapsed ? ' collapsed' : ''}" aria-hidden="true"></span>` +
+                `<span class="head-main">` +
                 `<span class="staging-section-title" dir="auto">${label}</span>` +
+                `<span class="head-sub">${htmlspecialchars(rangeLabels[g])}</span>` +
+                `</span>` +
                 `<span class="count-pill" aria-label="${htmlspecialchars(label + ' · ' + rows.length)}">${rows.length}</span>` +
                 (selecting ? '' :
                     `<span class="head-icon-cluster">` +
