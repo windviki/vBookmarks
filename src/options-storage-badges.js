@@ -138,6 +138,17 @@ export const OPTIONS_STORAGE_GROUPS = {
     // settings) and dupes-options (hidden placeholder group)
 };
 
+// Dataset rows — explicit badges for rows that manage DATA, not a setting:
+// the favicon cache (vbmFavicon:* + vbmFaviconIdx) lives in
+// chrome.storage.local by design, while the Icons group's SETTINGS are all
+// sync — so the gallery link states its dataset's locality itself. Anchored
+// and placed exactly like an outlier row, but with the inline variant class
+// (it rides the row's flex flow right after the link instead of docking
+// absolutely at the card edge).
+export const DATA_ROW_BADGES = {
+    'favicon-gallery-link': STORAGE_LOCAL
+};
+
 export const storageKindOf = (key, syncKeySet) =>
     syncKeySet.has(key) ? STORAGE_SYNC : STORAGE_LOCAL;
 
@@ -181,10 +192,12 @@ const makeBadge = (doc, kind, extraClass, tipSync, tipLocal) => {
 };
 
 // Decorate the page: one badge per group header (the majority kind), plus a
-// row badge on each outlier row. Unknown headings/rows are skipped quietly —
-// the module rides on ids options.html owns.
+// row badge on each outlier row, plus the explicit dataset-row badges.
+// Unknown headings/rows are skipped quietly — the module rides on ids
+// options.html owns.
 export const applyStorageBadges = ({
     groups = OPTIONS_STORAGE_GROUPS,
+    dataRows = DATA_ROW_BADGES,
     syncKeySet,
     tipSync,
     tipLocal,
@@ -205,6 +218,12 @@ export const applyStorageBadges = ({
             if (li)
                 li.appendChild(makeBadge(doc, outlier.kind, 'row-storage-badge', tipSync, tipLocal));
         }
+    }
+    for (const rowId in dataRows) {
+        const control = doc.getElementById(rowId);
+        const li = control && typeof control.closest === 'function' ? control.closest('li') : null;
+        if (li)
+            li.appendChild(makeBadge(doc, dataRows[rowId], 'storage-badge-inline', tipSync, tipLocal));
     }
 };
 

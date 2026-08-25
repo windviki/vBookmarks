@@ -370,6 +370,8 @@ white-space: nowrap;
    "view refreshed icons" link pins to the row's end. */
 .options-list li.favicon-cache-row{
 display: flex;
+flex-wrap: wrap; /* label+button … link+badge: the link wraps to its own
+                    right-pinned line when a narrow column/locale doesn't fit */
 align-items: center;
 gap: .75em;
 }
@@ -710,7 +712,6 @@ body[data-theme="ink"] .cm-s-default span.cm-attribute { color: #d19a66; }
 	position: relative;
 }
 .storage-badge{
-	position: absolute;
 	display: inline-flex;
 	width: 14px;
 	height: 14px;
@@ -732,6 +733,7 @@ body[data-theme="ink"] .cm-s-default span.cm-attribute { color: #d19a66; }
 }
 /* Header badge docks at the h2's end edge, vertically on its line. */
 .group-storage-badge{
+	position: absolute;
 	top: 1px;
 	inset-inline-end: .4em;
 }
@@ -744,8 +746,16 @@ body[data-theme="ink"] .cm-s-default span.cm-attribute { color: #d19a66; }
 	position: relative;
 }
 .row-storage-badge{
+	position: absolute;
 	top: calc(.5em + 7px);
 	inset-inline-end: 1em;
+}
+/* Inline badge (dataset rows like the favicon gallery link): rides the
+   flex flow right after its anchor instead of docking absolutely. */
+.storage-badge-inline{
+	flex: none;
+	align-self: center;
+	margin-inline-start: 2px;
 }
 /* --- Storage usage bar (Icons group) ----------------------------------
    Icon cache / bookmark data / other / free, so the user can judge whether

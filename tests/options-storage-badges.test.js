@@ -16,6 +16,7 @@ import fs from 'node:fs';
 
 import {
     OPTIONS_STORAGE_GROUPS,
+    DATA_ROW_BADGES,
     classifyGroup,
     applyStorageBadges,
     STORAGE_SYNC,
@@ -73,6 +74,9 @@ describe('storage badges: real store.js consistency', () => {
         // groups without settings stay badge-free (buttons-only / placeholder)
         expect(OPTIONS_STORAGE_GROUPS).not.toHaveProperty('backup-options');
         expect(OPTIONS_STORAGE_GROUPS).not.toHaveProperty('dupes-options');
+        // dataset-row badge anchors are real options.html ids too
+        for (const rowId of Object.keys(DATA_ROW_BADGES))
+            expect(optionsHtml, `data row id ${rowId}`).toContain(`id="${rowId}"`);
     });
 
     it('classifies every group per the storage-audit segments', () => {
@@ -246,6 +250,28 @@ describe('storage badges: DOM application', () => {
         expect(g2.lis.row3.children).toHaveLength(0);
     });
 
+    it('appends dataset-row badges inline after their anchor (dataRows)', () => {
+        const doc = makeDoc();
+        const li = makeNode('', 'LI');
+        const link = makeNode('data-link', 'A');
+        link._closestBy.li = li;
+        doc.registry['data-link'] = link;
+        applyStorageBadges({
+            groups: {},
+            dataRows: { 'data-link': STORAGE_LOCAL },
+            syncKeySet: new Set(),
+            tipSync: 'TIP-SYNC',
+            tipLocal: 'TIP-LOCAL',
+            doc
+        });
+        expect(li.children).toHaveLength(1);
+        const badge = li.children[0];
+        expect(badge.className).toContain('storage-badge-inline');
+        expect(badge.className).toContain('storage-local');
+        expect(badge.title).toBe('TIP-LOCAL');
+        expect(badge.innerHTML).toContain('M4 4l16 16');
+    });
+
     it('skips unknown headings and rows quietly', () => {
         const doc = makeDoc();
         const g1 = wireGroup(doc, 'g1', ['row1']);
@@ -272,10 +298,20 @@ describe('storage badges: page wiring', () => {
         expect(runtimeFiles).toContain('"src/options-storage-badges.js"');
     });
 
-    it('styles the group and row badges in options.css', () => {
+    it('styles the group, row and inline badges in options.css', () => {
         expect(optionsCss).toContain('.storage-badge{');
         expect(optionsCss).toContain('.group-storage-badge{');
         expect(optionsCss).toContain('.row-storage-badge{');
+        expect(optionsCss).toContain('.storage-badge-inline{');
+    });
+
+    it('reorganizes the favicon cache row: label + button, gallery link badgeable', () => {
+        // "Icon cache" row label (storageUsageIcon) before the clear button;
+        // the gallery link (favGalleryLink) carries the inline device-local
+        // badge via DATA_ROW_BADGES; the row wraps instead of overflowing
+        expect(optionsHtml).toContain('<span id="favicon-cache-label"></span><button id="favicon-cache-clear"');
+        expect(Object.keys(DATA_ROW_BADGES)).toEqual(['favicon-gallery-link']);
+        expect(DATA_ROW_BADGES['favicon-gallery-link']).toBe(STORAGE_LOCAL);
     });
 
     it('carries real tooltip strings in en and zh_CN', () => {

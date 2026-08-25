@@ -935,6 +935,10 @@ const $ = id => document.getElementById(id);
         document.getElementById('option-favicon-backup').innerText = __m('optionFaviconBackup');
         document.getElementById('option-favicon-backup-hint').innerText = __m('optionFaviconBackupHint');
         document.getElementById('favicon-cache-clear').innerText = __m('optionFaviconCacheClear');
+        // Row label ("Icon cache") — same string the usage-bar legend uses
+        // (storageUsageIcon), so the row and the bar below it name the same
+        // dataset.
+        document.getElementById('favicon-cache-label').innerText = __m('storageUsageIcon');
         document.getElementById('favicon-gallery-link').innerText = __m('favGalleryLink');
         // The dead-link proxy server row (label/buttons/hint/error) is bound
         // by src/options-proxy.js — a module, so it can import dead-proxy.js.
