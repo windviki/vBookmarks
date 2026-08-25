@@ -2167,10 +2167,10 @@
     "message": "Odpnúť tento priečinok"
   },
   "stagingAdd": {
-    "message": "Pridať do dočasnej oblasti"
+    "message": "Odoslať do stagingu"
   },
   "stagingAdded": {
-    "message": "Pridané do dočasnej oblasti"
+    "message": "Odoslané do stagingu"
   },
   "stagingAlready": {
     "message": "Už v dočasnej oblasti"
@@ -2235,6 +2235,9 @@
   },
   "stagingGroupDissolved": {
     "message": "Skupina rozpustená — položky zostali v dočasnej oblasti"
+  },
+  "stagingGroupCreated": {
+    "message": "Vytvorené $1"
   },
   "stagingGroupDelete": {
     "message": "Odstrániť skupinu (s položkami)"
@@ -2543,6 +2546,12 @@
         "content": "$1"
       }
     }
+  },
+  "recentGroupSince": {
+    "message": "Od $1"
+  },
+  "recentGroupBefore": {
+    "message": "Pred $1"
   },
   "stagingGroupSelectAll": {
     "message": "Vybrať všetko v skupine"

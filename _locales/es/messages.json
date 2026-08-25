@@ -2167,10 +2167,10 @@
     "message": "Desfijar esta carpeta"
   },
   "stagingAdd": {
-    "message": "Añadir a la zona de preparación"
+    "message": "Enviar a staging"
   },
   "stagingAdded": {
-    "message": "Añadido a la zona de preparación"
+    "message": "Enviado a staging"
   },
   "stagingAlready": {
     "message": "Ya está en la zona de preparación"
@@ -2235,6 +2235,9 @@
   },
   "stagingGroupDissolved": {
     "message": "Grupo disuelto: los elementos se conservan en la zona de preparación"
+  },
+  "stagingGroupCreated": {
+    "message": "Creado el $1"
   },
   "stagingGroupDelete": {
     "message": "Eliminar grupo (con elementos)"
@@ -2543,6 +2546,12 @@
         "content": "$1"
       }
     }
+  },
+  "recentGroupSince": {
+    "message": "Desde $1"
+  },
+  "recentGroupBefore": {
+    "message": "Antes de $1"
   },
   "stagingGroupSelectAll": {
     "message": "Seleccionar todo en este grupo"

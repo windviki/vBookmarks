@@ -2424,10 +2424,10 @@
     "message": "Unpin this folder"
   },
   "stagingAdd": {
-    "message": "Add to staging area"
+    "message": "Send to staging"
   },
   "stagingAdded": {
-    "message": "Added to the staging area"
+    "message": "Sent to staging"
   },
   "stagingAlready": {
     "message": "Already in the staging area"
@@ -2492,6 +2492,9 @@
   },
   "stagingGroupDissolved": {
     "message": "Group dissolved — items kept in the staging area"
+  },
+  "stagingGroupCreated": {
+    "message": "Created on $1"
   },
   "stagingGroupDelete": {
     "message": "Delete group (with items)"
@@ -2800,6 +2803,12 @@
         "content": "$1"
       }
     }
+  },
+  "recentGroupSince": {
+    "message": "Since $1"
+  },
+  "recentGroupBefore": {
+    "message": "Before $1"
   },
   "stagingGroupSelectAll": {
     "message": "Select all in this group"

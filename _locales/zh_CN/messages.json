@@ -2221,10 +2221,10 @@
     "message": "取消固定此文件夹"
   },
   "stagingAdd": {
-    "message": "添加到暂存区"
+    "message": "发送到暂存"
   },
   "stagingAdded": {
-    "message": "已添加到暂存区"
+    "message": "已发送到暂存"
   },
   "stagingAlready": {
     "message": "已在暂存区"
@@ -2289,6 +2289,9 @@
   },
   "stagingGroupDissolved": {
     "message": "分组已解散，条目保留在暂存区"
+  },
+  "stagingGroupCreated": {
+    "message": "创建于 $1"
   },
   "stagingGroupDelete": {
     "message": "删除分组（连同条目）"
@@ -2597,6 +2600,12 @@
         "content": "$1"
       }
     }
+  },
+  "recentGroupSince": {
+    "message": "自 $1 起"
+  },
+  "recentGroupBefore": {
+    "message": "$1 之前"
   },
   "stagingGroupSelectAll": {
     "message": "全选本组"

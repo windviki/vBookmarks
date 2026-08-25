@@ -2167,10 +2167,10 @@
     "message": "Відкріпити цю папку"
   },
   "stagingAdd": {
-    "message": "Додати до списку"
+    "message": "Надіслати в чергу"
   },
   "stagingAdded": {
-    "message": "Додано до списку"
+    "message": "Надіслано в чергу"
   },
   "stagingAlready": {
     "message": "Вже у списку"
@@ -2235,6 +2235,9 @@
   },
   "stagingGroupDissolved": {
     "message": "Групу розформовано — елементи збережено у списку"
+  },
+  "stagingGroupCreated": {
+    "message": "Створено $1"
   },
   "stagingGroupDelete": {
     "message": "Видалити групу (з елементами)"
@@ -2543,6 +2546,12 @@
         "content": "$1"
       }
     }
+  },
+  "recentGroupSince": {
+    "message": "З $1"
+  },
+  "recentGroupBefore": {
+    "message": "До $1"
   },
   "stagingGroupSelectAll": {
     "message": "Вибрати все в групі"

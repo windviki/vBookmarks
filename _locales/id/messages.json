@@ -2167,10 +2167,10 @@
     "message": "Lepas sematan folder ini"
   },
   "stagingAdd": {
-    "message": "Tambah ke area pementasan"
+    "message": "Kirim ke staging"
   },
   "stagingAdded": {
-    "message": "Ditambahkan ke area pementasan"
+    "message": "Terkirim ke staging"
   },
   "stagingAlready": {
     "message": "Sudah ada di area pementasan"
@@ -2235,6 +2235,9 @@
   },
   "stagingGroupDissolved": {
     "message": "Grup dibubarkan — item tetap di area pementasan"
+  },
+  "stagingGroupCreated": {
+    "message": "Dibuat pada $1"
   },
   "stagingGroupDelete": {
     "message": "Hapus grup (dengan item)"
@@ -2543,6 +2546,12 @@
         "content": "$1"
       }
     }
+  },
+  "recentGroupSince": {
+    "message": "Sejak $1"
+  },
+  "recentGroupBefore": {
+    "message": "Sebelum $1"
   },
   "stagingGroupSelectAll": {
     "message": "Pilih semua di grup ini"

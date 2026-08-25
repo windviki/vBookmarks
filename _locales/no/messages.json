@@ -2167,10 +2167,10 @@
     "message": "Løsne denne mappen"
   },
   "stagingAdd": {
-    "message": "Legg til i staging-området"
+    "message": "Send til staging"
   },
   "stagingAdded": {
-    "message": "Lagt til i staging-området"
+    "message": "Sendt til staging"
   },
   "stagingAlready": {
     "message": "Allerede i staging-området"
@@ -2235,6 +2235,9 @@
   },
   "stagingGroupDissolved": {
     "message": "Gruppe oppløst — elementer beholdt i staging-området"
+  },
+  "stagingGroupCreated": {
+    "message": "Opprettet $1"
   },
   "stagingGroupDelete": {
     "message": "Slett gruppe (med elementer)"
@@ -2543,6 +2546,12 @@
         "content": "$1"
       }
     }
+  },
+  "recentGroupSince": {
+    "message": "Siden $1"
+  },
+  "recentGroupBefore": {
+    "message": "Før $1"
   },
   "stagingGroupSelectAll": {
     "message": "Velg alle i denne gruppen"

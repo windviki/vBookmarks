@@ -2167,10 +2167,10 @@
     "message": "Bu klasörün sabitlemesini kaldır"
   },
   "stagingAdd": {
-    "message": "Bekleme alanına ekle"
+    "message": "Sahneye gönder"
   },
   "stagingAdded": {
-    "message": "Bekleme alanına eklendi"
+    "message": "Sahneye gönderildi"
   },
   "stagingAlready": {
     "message": "Zaten bekleme alanında"
@@ -2235,6 +2235,9 @@
   },
   "stagingGroupDissolved": {
     "message": "Grup dağıtıldı — öğeler bekleme alanında kaldı"
+  },
+  "stagingGroupCreated": {
+    "message": "$1 tarihinde oluşturuldu"
   },
   "stagingGroupDelete": {
     "message": "Grubu sil (öğelerle)"
@@ -2543,6 +2546,12 @@
         "content": "$1"
       }
     }
+  },
+  "recentGroupSince": {
+    "message": "$1'den beri"
+  },
+  "recentGroupBefore": {
+    "message": "$1'den önce"
   },
   "stagingGroupSelectAll": {
     "message": "Bu gruptaki tümünü seç"

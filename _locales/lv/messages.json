@@ -2167,10 +2167,10 @@
     "message": "Atspraust šo mapi"
   },
   "stagingAdd": {
-    "message": "Pievienot sagatavošanas zonai"
+    "message": "Nosūtīt uz sagatavi"
   },
   "stagingAdded": {
-    "message": "Pievienots sagatavošanas zonai"
+    "message": "Nosūtīts uz sagatavi"
   },
   "stagingAlready": {
     "message": "Jau ir sagatavošanas zonā"
@@ -2235,6 +2235,9 @@
   },
   "stagingGroupDissolved": {
     "message": "Grupa izformēta — vienumi saglabāti sagatavošanas zonā"
+  },
+  "stagingGroupCreated": {
+    "message": "Izveidots $1"
   },
   "stagingGroupDelete": {
     "message": "Dzēst grupu (ar vienumiem)"
@@ -2543,6 +2546,12 @@
         "content": "$1"
       }
     }
+  },
+  "recentGroupSince": {
+    "message": "Kopš $1"
+  },
+  "recentGroupBefore": {
+    "message": "Pirms $1"
   },
   "stagingGroupSelectAll": {
     "message": "Atlasīt visu grupā"

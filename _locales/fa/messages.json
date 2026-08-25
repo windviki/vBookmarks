@@ -2167,10 +2167,10 @@
     "message": "برداشتن سنجاق این پوشه"
   },
   "stagingAdd": {
-    "message": "افزودن به منطقه موقت"
+    "message": "ارسال به مرحله"
   },
   "stagingAdded": {
-    "message": "به منطقه موقت اضافه شد"
+    "message": "به مرحله ارسال شد"
   },
   "stagingAlready": {
     "message": "از قبل در منطقه موقت است"
@@ -2235,6 +2235,9 @@
   },
   "stagingGroupDissolved": {
     "message": "گروه منحل شد — موارد در منطقه موقت باقی ماندند"
+  },
+  "stagingGroupCreated": {
+    "message": "ایجاد شده در $1"
   },
   "stagingGroupDelete": {
     "message": "حذف گروه (با موارد)"
@@ -2543,6 +2546,12 @@
         "content": "$1"
       }
     }
+  },
+  "recentGroupSince": {
+    "message": "از $1"
+  },
+  "recentGroupBefore": {
+    "message": "قبل از $1"
   },
   "stagingGroupSelectAll": {
     "message": "انتخاب همه در این گروه"

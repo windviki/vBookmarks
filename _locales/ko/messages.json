@@ -2167,10 +2167,10 @@
     "message": "이 폴더 고정 해제"
   },
   "stagingAdd": {
-    "message": "스테이징 영역에 추가"
+    "message": "스테이징으로 보내기"
   },
   "stagingAdded": {
-    "message": "스테이징 영역에 추가됨"
+    "message": "스테이징으로 보냄"
   },
   "stagingAlready": {
     "message": "이미 스테이징 영역에 있음"
@@ -2235,6 +2235,9 @@
   },
   "stagingGroupDissolved": {
     "message": "그룹 해체됨 — 항목은 스테이징 영역에 유지됨"
+  },
+  "stagingGroupCreated": {
+    "message": "$1에 생성됨"
   },
   "stagingGroupDelete": {
     "message": "그룹 삭제(항목 포함)"
@@ -2543,6 +2546,12 @@
         "content": "$1"
       }
     }
+  },
+  "recentGroupSince": {
+    "message": "$1 이후"
+  },
+  "recentGroupBefore": {
+    "message": "$1 이전"
   },
   "stagingGroupSelectAll": {
     "message": "이 그룹 모두 선택"

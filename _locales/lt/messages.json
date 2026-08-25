@@ -2167,10 +2167,10 @@
     "message": "Atsegti šį aplanką"
   },
   "stagingAdd": {
-    "message": "Įtraukti į paruošimo sritį"
+    "message": "Siųsti į sceną"
   },
   "stagingAdded": {
-    "message": "Įtraukta į paruošimo sritį"
+    "message": "Išsiųsta į sceną"
   },
   "stagingAlready": {
     "message": "Jau paruošimo srityje"
@@ -2235,6 +2235,9 @@
   },
   "stagingGroupDissolved": {
     "message": "Grupė išskirstyta — elementai išliko paruošimo srityje"
+  },
+  "stagingGroupCreated": {
+    "message": "Sukurta $1"
   },
   "stagingGroupDelete": {
     "message": "Ištrinti grupę (su elementais)"
@@ -2543,6 +2546,12 @@
         "content": "$1"
       }
     }
+  },
+  "recentGroupSince": {
+    "message": "Nuo $1"
+  },
+  "recentGroupBefore": {
+    "message": "Iki $1"
   },
   "stagingGroupSelectAll": {
     "message": "Pasirinkti visus grupėje"

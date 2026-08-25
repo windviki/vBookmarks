@@ -2167,10 +2167,10 @@
     "message": "Mappa rögzítésének feloldása"
   },
   "stagingAdd": {
-    "message": "Hozzáadás a gyűjtőhöz"
+    "message": "Küldés a várólistára"
   },
   "stagingAdded": {
-    "message": "Hozzáadva a gyűjtőhöz"
+    "message": "Elküldve a várólistára"
   },
   "stagingAlready": {
     "message": "Már a gyűjtőben van"
@@ -2235,6 +2235,9 @@
   },
   "stagingGroupDissolved": {
     "message": "Csoport feloldva – az elemek a gyűjtőben maradtak"
+  },
+  "stagingGroupCreated": {
+    "message": "Létrehozva: $1"
   },
   "stagingGroupDelete": {
     "message": "Csoport törlése (elemekkel)"
@@ -2543,6 +2546,12 @@
         "content": "$1"
       }
     }
+  },
+  "recentGroupSince": {
+    "message": "$1 óta"
+  },
+  "recentGroupBefore": {
+    "message": "$1 előtt"
   },
   "stagingGroupSelectAll": {
     "message": "Csoport teljes kijelölése"

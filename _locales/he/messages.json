@@ -2167,10 +2167,10 @@
     "message": "בטל הצמדת תיקייה זו"
   },
   "stagingAdd": {
-    "message": "הוסף לאזור ההמתנה"
+    "message": "שלח לסטייג'ינג"
   },
   "stagingAdded": {
-    "message": "נוסף לאזור ההמתנה"
+    "message": "נשלח לסטייג'ינג"
   },
   "stagingAlready": {
     "message": "כבר באזור ההמתנה"
@@ -2235,6 +2235,9 @@
   },
   "stagingGroupDissolved": {
     "message": "הקבוצה פורקה — פריטים נשמרו באזור ההמתנה"
+  },
+  "stagingGroupCreated": {
+    "message": "נוצר ב-$1"
   },
   "stagingGroupDelete": {
     "message": "מחק קבוצה (עם פריטים)"
@@ -2543,6 +2546,12 @@
         "content": "$1"
       }
     }
+  },
+  "recentGroupSince": {
+    "message": "מאז $1"
+  },
+  "recentGroupBefore": {
+    "message": "לפני $1"
   },
   "stagingGroupSelectAll": {
     "message": "בחר הכל בקבוצה זו"

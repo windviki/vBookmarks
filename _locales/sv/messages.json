@@ -2167,10 +2167,10 @@
     "message": "Lossa denna mapp"
   },
   "stagingAdd": {
-    "message": "Lägg till i väntelista"
+    "message": "Skicka till staging"
   },
   "stagingAdded": {
-    "message": "Tillagd i väntelistan"
+    "message": "Skickat till staging"
   },
   "stagingAlready": {
     "message": "Redan i väntelistan"
@@ -2235,6 +2235,9 @@
   },
   "stagingGroupDissolved": {
     "message": "Grupp upplöst — objekt behålls i väntelistan"
+  },
+  "stagingGroupCreated": {
+    "message": "Skapad den $1"
   },
   "stagingGroupDelete": {
     "message": "Ta bort grupp (med objekt)"
@@ -2543,6 +2546,12 @@
         "content": "$1"
       }
     }
+  },
+  "recentGroupSince": {
+    "message": "Sedan $1"
+  },
+  "recentGroupBefore": {
+    "message": "Före $1"
   },
   "stagingGroupSelectAll": {
     "message": "Välj alla i gruppen"

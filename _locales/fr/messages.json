@@ -2167,10 +2167,10 @@
     "message": "Désépingler ce dossier"
   },
   "stagingAdd": {
-    "message": "Ajouter à la zone de staging"
+    "message": "Envoyer en staging"
   },
   "stagingAdded": {
-    "message": "Ajouté à la zone de staging"
+    "message": "Envoyé en staging"
   },
   "stagingAlready": {
     "message": "Déjà dans la zone de staging"
@@ -2235,6 +2235,9 @@
   },
   "stagingGroupDissolved": {
     "message": "Groupe dissous — les éléments sont conservés dans la zone de staging"
+  },
+  "stagingGroupCreated": {
+    "message": "Créé le $1"
   },
   "stagingGroupDelete": {
     "message": "Supprimer le groupe (avec éléments)"
@@ -2543,6 +2546,12 @@
         "content": "$1"
       }
     }
+  },
+  "recentGroupSince": {
+    "message": "Depuis $1"
+  },
+  "recentGroupBefore": {
+    "message": "Avant $1"
   },
   "stagingGroupSelectAll": {
     "message": "Tout sélectionner dans ce groupe"

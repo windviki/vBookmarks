@@ -2167,10 +2167,10 @@
     "message": "Frigør denne mappe"
   },
   "stagingAdd": {
-    "message": "Tilføj til klaringsområde"
+    "message": "Send til staging"
   },
   "stagingAdded": {
-    "message": "Tilføjet til klaringsområdet"
+    "message": "Sendt til staging"
   },
   "stagingAlready": {
     "message": "Allerede i klaringsområdet"
@@ -2235,6 +2235,9 @@
   },
   "stagingGroupDissolved": {
     "message": "Gruppe opløst — elementer beholdt i klaringsområdet"
+  },
+  "stagingGroupCreated": {
+    "message": "Oprettet den $1"
   },
   "stagingGroupDelete": {
     "message": "Slet gruppe (med elementer)"
@@ -2543,6 +2546,12 @@
         "content": "$1"
       }
     }
+  },
+  "recentGroupSince": {
+    "message": "Siden $1"
+  },
+  "recentGroupBefore": {
+    "message": "Før $1"
   },
   "stagingGroupSelectAll": {
     "message": "Vælg alle i denne gruppe"
