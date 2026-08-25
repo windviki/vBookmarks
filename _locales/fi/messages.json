@@ -2167,10 +2167,10 @@
     "message": "Irrota tämän kansion kiinnitys"
   },
   "stagingAdd": {
-    "message": "Lisää odotuslistalle"
+    "message": "Lähetä odottamaan"
   },
   "stagingAdded": {
-    "message": "Lisätty odotuslistalle"
+    "message": "Lähetetty odottamaan"
   },
   "stagingAlready": {
     "message": "Jo odotuslistalla"
@@ -2235,6 +2235,9 @@
   },
   "stagingGroupDissolved": {
     "message": "Ryhmä hajotettu — kohteet säilytetty odotuslistalla"
+  },
+  "stagingGroupCreated": {
+    "message": "Luotu $1"
   },
   "stagingGroupDelete": {
     "message": "Poista ryhmä (kohteineen)"
@@ -2543,6 +2546,12 @@
         "content": "$1"
       }
     }
+  },
+  "recentGroupSince": {
+    "message": "Alkaen $1"
+  },
+  "recentGroupBefore": {
+    "message": "Ennen $1"
   },
   "stagingGroupSelectAll": {
     "message": "Valitse kaikki tässä ryhmässä"

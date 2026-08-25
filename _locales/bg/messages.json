@@ -2167,10 +2167,10 @@
     "message": "Откачи тази папка"
   },
   "stagingAdd": {
-    "message": "Добави в зоната за подготовка"
+    "message": "Изпрати в етапа"
   },
   "stagingAdded": {
-    "message": "Добавено в зоната за подготовка"
+    "message": "Изпратено в етапа"
   },
   "stagingAlready": {
     "message": "Вече е в зоната за подготовка"
@@ -2235,6 +2235,9 @@
   },
   "stagingGroupDissolved": {
     "message": "Групата е разпусната — елементите остават в зоната за подготовка"
+  },
+  "stagingGroupCreated": {
+    "message": "Създадено на $1"
   },
   "stagingGroupDelete": {
     "message": "Изтриване на група (с елементи)"
@@ -2543,6 +2546,12 @@
         "content": "$1"
       }
     }
+  },
+  "recentGroupSince": {
+    "message": "От $1"
+  },
+  "recentGroupBefore": {
+    "message": "Преди $1"
   },
   "stagingGroupSelectAll": {
     "message": "Избери всички в групата"

@@ -2167,10 +2167,10 @@
     "message": "Anheften dieses Ordners aufheben"
   },
   "stagingAdd": {
-    "message": "Zur Sammelmappe hinzufügen"
+    "message": "Zur Staging senden"
   },
   "stagingAdded": {
-    "message": "Zur Sammelmappe hinzugefügt"
+    "message": "An Staging gesendet"
   },
   "stagingAlready": {
     "message": "Bereits in der Sammelmappe"
@@ -2235,6 +2235,9 @@
   },
   "stagingGroupDissolved": {
     "message": "Gruppe aufgelöst – Elemente bleiben in der Sammelmappe"
+  },
+  "stagingGroupCreated": {
+    "message": "Erstellt am $1"
   },
   "stagingGroupDelete": {
     "message": "Gruppe löschen (mit Elementen)"
@@ -2543,6 +2546,12 @@
         "content": "$1"
       }
     }
+  },
+  "recentGroupSince": {
+    "message": "Seit $1"
+  },
+  "recentGroupBefore": {
+    "message": "Vor $1"
   },
   "stagingGroupSelectAll": {
     "message": "Alle in dieser Gruppe auswählen"

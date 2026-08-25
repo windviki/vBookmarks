@@ -2167,10 +2167,10 @@
     "message": "Eemalda kausta kinnitus"
   },
   "stagingAdd": {
-    "message": "Lisa ootealale"
+    "message": "Saada ootealale"
   },
   "stagingAdded": {
-    "message": "Lisatud ootealale"
+    "message": "Saadetud ootealale"
   },
   "stagingAlready": {
     "message": "Juba ootealal"
@@ -2235,6 +2235,9 @@
   },
   "stagingGroupDissolved": {
     "message": "Grupp saadetud laiali — üksused jäid ootealale"
+  },
+  "stagingGroupCreated": {
+    "message": "Loodud $1"
   },
   "stagingGroupDelete": {
     "message": "Kustuta grupp (koos üksustega)"
@@ -2543,6 +2546,12 @@
         "content": "$1"
       }
     }
+  },
+  "recentGroupSince": {
+    "message": "Alates $1"
+  },
+  "recentGroupBefore": {
+    "message": "Enne $1"
   },
   "stagingGroupSelectAll": {
     "message": "Vali kõik selles rühmas"

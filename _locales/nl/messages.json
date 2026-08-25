@@ -2167,10 +2167,10 @@
     "message": "Vastzetten van deze map opheffen"
   },
   "stagingAdd": {
-    "message": "Toevoegen aan wachtruimte"
+    "message": "Naar staging sturen"
   },
   "stagingAdded": {
-    "message": "Toegevoegd aan de wachtruimte"
+    "message": "Naar staging verzonden"
   },
   "stagingAlready": {
     "message": "Al in de wachtruimte"
@@ -2235,6 +2235,9 @@
   },
   "stagingGroupDissolved": {
     "message": "Groep ontbonden — items behouden in de wachtruimte"
+  },
+  "stagingGroupCreated": {
+    "message": "Gemaakt op $1"
   },
   "stagingGroupDelete": {
     "message": "Groep verwijderen (met items)"
@@ -2543,6 +2546,12 @@
         "content": "$1"
       }
     }
+  },
+  "recentGroupSince": {
+    "message": "Sinds $1"
+  },
+  "recentGroupBefore": {
+    "message": "Vóór $1"
   },
   "stagingGroupSelectAll": {
     "message": "Selecteer alles in deze groep"

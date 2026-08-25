@@ -2167,10 +2167,10 @@
     "message": "Открепить папку"
   },
   "stagingAdd": {
-    "message": "В отложенное"
+    "message": "Отправить в staging"
   },
   "stagingAdded": {
-    "message": "Добавлено в отложенное"
+    "message": "Отправлено в staging"
   },
   "stagingAlready": {
     "message": "Уже в отложенном"
@@ -2235,6 +2235,9 @@
   },
   "stagingGroupDissolved": {
     "message": "Группа расформирована — элементы сохранены в отложенном"
+  },
+  "stagingGroupCreated": {
+    "message": "Создано $1"
   },
   "stagingGroupDelete": {
     "message": "Удалить группу (с элементами)"
@@ -2543,6 +2546,12 @@
         "content": "$1"
       }
     }
+  },
+  "recentGroupSince": {
+    "message": "С $1"
+  },
+  "recentGroupBefore": {
+    "message": "До $1"
   },
   "stagingGroupSelectAll": {
     "message": "Выбрать все в группе"

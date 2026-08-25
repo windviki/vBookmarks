@@ -2167,10 +2167,10 @@
     "message": "Rimuovi fissaggio cartella"
   },
   "stagingAdd": {
-    "message": "Aggiungi all'area di staging"
+    "message": "Invia a staging"
   },
   "stagingAdded": {
-    "message": "Aggiunto all'area di staging"
+    "message": "Inviato a staging"
   },
   "stagingAlready": {
     "message": "Già nell'area di staging"
@@ -2235,6 +2235,9 @@
   },
   "stagingGroupDissolved": {
     "message": "Gruppo sciolto — elementi mantenuti nell'area di staging"
+  },
+  "stagingGroupCreated": {
+    "message": "Creato il $1"
   },
   "stagingGroupDelete": {
     "message": "Elimina gruppo (con elementi)"
@@ -2543,6 +2546,12 @@
         "content": "$1"
       }
     }
+  },
+  "recentGroupSince": {
+    "message": "Dal $1"
+  },
+  "recentGroupBefore": {
+    "message": "Prima del $1"
   },
   "stagingGroupSelectAll": {
     "message": "Seleziona tutto nel gruppo"

@@ -2166,10 +2166,10 @@
     "message": "Откачи ја оваа папка"
   },
   "stagingAdd": {
-    "message": "Додај во подрачје за подготовка"
+    "message": "Испрати во сцена"
   },
   "stagingAdded": {
-    "message": "Додадено во подрачјето за подготовка"
+    "message": "Испратено во сцена"
   },
   "stagingAlready": {
     "message": "Веќе е во подрачјето за подготовка"
@@ -2234,6 +2234,9 @@
   },
   "stagingGroupDissolved": {
     "message": "Групата е распуштена — ставките се задржани во подрачјето за подготовка"
+  },
+  "stagingGroupCreated": {
+    "message": "Создадено на $1"
   },
   "stagingGroupDelete": {
     "message": "Избриши група (со ставки)"
@@ -2542,6 +2545,12 @@
         "content": "$1"
       }
     }
+  },
+  "recentGroupSince": {
+    "message": "Од $1"
+  },
+  "recentGroupBefore": {
+    "message": "Пред $1"
   },
   "stagingGroupSelectAll": {
     "message": "Избери ги сите во групава"

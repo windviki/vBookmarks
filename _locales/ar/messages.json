@@ -2167,10 +2167,10 @@
     "message": "إلغاء تثبيت هذا المجلد"
   },
   "stagingAdd": {
-    "message": "أضف إلى منطقة التجميع"
+    "message": "إرسال إلى المرحلة"
   },
   "stagingAdded": {
-    "message": "تمت الإضافة إلى منطقة التجميع"
+    "message": "تم الإرسال إلى المرحلة"
   },
   "stagingAlready": {
     "message": "موجود بالفعل في منطقة التجميع"
@@ -2235,6 +2235,9 @@
   },
   "stagingGroupDissolved": {
     "message": "تم حل المجموعة — بقيت العناصر في منطقة التجميع"
+  },
+  "stagingGroupCreated": {
+    "message": "تم الإنشاء في $1"
   },
   "stagingGroupDelete": {
     "message": "حذف المجموعة (مع العناصر)"
@@ -2543,6 +2546,12 @@
         "content": "$1"
       }
     }
+  },
+  "recentGroupSince": {
+    "message": "منذ $1"
+  },
+  "recentGroupBefore": {
+    "message": "قبل $1"
   },
   "stagingGroupSelectAll": {
     "message": "تحديد الكل في هذه المجموعة"

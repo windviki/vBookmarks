@@ -2167,10 +2167,10 @@
     "message": "Odpni to mapo"
   },
   "stagingAdd": {
-    "message": "Dodaj v začasno območje"
+    "message": "Pošlji v pripravljalno območje"
   },
   "stagingAdded": {
-    "message": "Dodano v začasno območje"
+    "message": "Poslano v pripravljalno območje"
   },
   "stagingAlready": {
     "message": "Že v začasnem območju"
@@ -2235,6 +2235,9 @@
   },
   "stagingGroupDissolved": {
     "message": "Skupina razpuščena — elementi ostanejo v začasnem območju"
+  },
+  "stagingGroupCreated": {
+    "message": "Ustvarjeno $1"
   },
   "stagingGroupDelete": {
     "message": "Izbriši skupino (s predmeti)"
@@ -2543,6 +2546,12 @@
         "content": "$1"
       }
     }
+  },
+  "recentGroupSince": {
+    "message": "Od $1"
+  },
+  "recentGroupBefore": {
+    "message": "Pred $1"
   },
   "stagingGroupSelectAll": {
     "message": "Izberi vse v tej skupini"

@@ -2167,10 +2167,10 @@
     "message": "Odepnout tuto složku"
   },
   "stagingAdd": {
-    "message": "Přidat do oblasti"
+    "message": "Odeslat do stagingu"
   },
   "stagingAdded": {
-    "message": "Přidáno do oblasti"
+    "message": "Odesláno do stagingu"
   },
   "stagingAlready": {
     "message": "Již v oblasti"
@@ -2235,6 +2235,9 @@
   },
   "stagingGroupDissolved": {
     "message": "Skupina rozpuštěna — položky zůstaly v oblasti"
+  },
+  "stagingGroupCreated": {
+    "message": "Vytvořeno $1"
   },
   "stagingGroupDelete": {
     "message": "Smazat skupinu (s položkami)"
@@ -2543,6 +2546,12 @@
         "content": "$1"
       }
     }
+  },
+  "recentGroupSince": {
+    "message": "Od $1"
+  },
+  "recentGroupBefore": {
+    "message": "Před $1"
   },
   "stagingGroupSelectAll": {
     "message": "Vybrat vše ve skupině"

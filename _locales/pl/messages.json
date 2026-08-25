@@ -2167,10 +2167,10 @@
     "message": "Odepnij ten folder"
   },
   "stagingAdd": {
-    "message": "Dodaj do obszaru roboczego"
+    "message": "Wyślij do poczekalni"
   },
   "stagingAdded": {
-    "message": "Dodano do obszaru roboczego"
+    "message": "Wysłano do poczekalni"
   },
   "stagingAlready": {
     "message": "Już w obszarze roboczym"
@@ -2235,6 +2235,9 @@
   },
   "stagingGroupDissolved": {
     "message": "Grupa rozwiązana — elementy pozostały w obszarze roboczym"
+  },
+  "stagingGroupCreated": {
+    "message": "Utworzono $1"
   },
   "stagingGroupDelete": {
     "message": "Usuń grupę (z elementami)"
@@ -2543,6 +2546,12 @@
         "content": "$1"
       }
     }
+  },
+  "recentGroupSince": {
+    "message": "Od $1"
+  },
+  "recentGroupBefore": {
+    "message": "Przed $1"
   },
   "stagingGroupSelectAll": {
     "message": "Zaznacz wszystko w grupie"

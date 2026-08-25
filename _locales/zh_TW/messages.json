@@ -2167,10 +2167,10 @@
     "message": "取消釘選此資料夾"
   },
   "stagingAdd": {
-    "message": "加入暫存區"
+    "message": "傳送至暫存區"
   },
   "stagingAdded": {
-    "message": "已加入暫存區"
+    "message": "已傳送至暫存區"
   },
   "stagingAlready": {
     "message": "已在暫存區中"
@@ -2235,6 +2235,9 @@
   },
   "stagingGroupDissolved": {
     "message": "群組已解散 — 項目保留在暫存區中"
+  },
+  "stagingGroupCreated": {
+    "message": "建立於 $1"
   },
   "stagingGroupDelete": {
     "message": "删除群组（含项目）"
@@ -2543,6 +2546,12 @@
         "content": "$1"
       }
     }
+  },
+  "recentGroupSince": {
+    "message": "自 $1 起"
+  },
+  "recentGroupBefore": {
+    "message": "$1 之前"
   },
   "stagingGroupSelectAll": {
     "message": "全選此群組"

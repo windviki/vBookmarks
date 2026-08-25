@@ -2167,10 +2167,10 @@
     "message": "Bỏ ghim thư mục này"
   },
   "stagingAdd": {
-    "message": "Thêm vào vùng chờ"
+    "message": "Gửi đến vùng tạm"
   },
   "stagingAdded": {
-    "message": "Đã thêm vào vùng chờ"
+    "message": "Đã gửi đến vùng tạm"
   },
   "stagingAlready": {
     "message": "Đã có trong vùng chờ"
@@ -2235,6 +2235,9 @@
   },
   "stagingGroupDissolved": {
     "message": "Đã giải tán nhóm — các mục vẫn giữ trong vùng chờ"
+  },
+  "stagingGroupCreated": {
+    "message": "Tạo vào $1"
   },
   "stagingGroupDelete": {
     "message": "Xóa nhóm (kèm mục)"
@@ -2543,6 +2546,12 @@
         "content": "$1"
       }
     }
+  },
+  "recentGroupSince": {
+    "message": "Từ $1"
+  },
+  "recentGroupBefore": {
+    "message": "Trước $1"
   },
   "stagingGroupSelectAll": {
     "message": "Chọn tất cả trong nhóm này"

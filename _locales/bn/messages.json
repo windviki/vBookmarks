@@ -2167,10 +2167,10 @@
     "message": "এই ফোল্ডার আনপিন করুন"
   },
   "stagingAdd": {
-    "message": "স্টেজিং এলাকায় যোগ করুন"
+    "message": "স্টেজিংয়ে পাঠান"
   },
   "stagingAdded": {
-    "message": "স্টেজিং এলাকায় যোগ হয়েছে"
+    "message": "স্টেজিংয়ে পাঠানো হয়েছে"
   },
   "stagingAlready": {
     "message": "ইতিমধ্যে স্টেজিং এলাকায় আছে"
@@ -2235,6 +2235,9 @@
   },
   "stagingGroupDissolved": {
     "message": "গ্রুপ ভেঙে গেছে — আইটেম স্টেজিং এলাকায় রাখা হয়েছে"
+  },
+  "stagingGroupCreated": {
+    "message": "$1-এ তৈরি"
   },
   "stagingGroupDelete": {
     "message": "গ্রুপ মুছুন (আইটেমসহ)"
@@ -2543,6 +2546,12 @@
         "content": "$1"
       }
     }
+  },
+  "recentGroupSince": {
+    "message": "$1 থেকে"
+  },
+  "recentGroupBefore": {
+    "message": "$1 এর আগে"
   },
   "stagingGroupSelectAll": {
     "message": "এই গ্রুপের সব নির্বাচন করুন"

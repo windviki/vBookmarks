@@ -2167,10 +2167,10 @@
     "message": "Ξεκαρφίτσωμα αυτού του φακέλου"
   },
   "stagingAdd": {
-    "message": "Προσθήκη στην περιοχή"
+    "message": "Αποστολή σε staging"
   },
   "stagingAdded": {
-    "message": "Προστέθηκε στην περιοχή"
+    "message": "Στάλθηκε στο staging"
   },
   "stagingAlready": {
     "message": "Ήδη στην περιοχή"
@@ -2235,6 +2235,9 @@
   },
   "stagingGroupDissolved": {
     "message": "Η ομάδα διαλύθηκε — τα στοιχεία παραμένουν στην περιοχή"
+  },
+  "stagingGroupCreated": {
+    "message": "Δημιουργήθηκε στις $1"
   },
   "stagingGroupDelete": {
     "message": "Διαγραφή ομάδας (με στοιχεία)"
@@ -2543,6 +2546,12 @@
         "content": "$1"
       }
     }
+  },
+  "recentGroupSince": {
+    "message": "Από $1"
+  },
+  "recentGroupBefore": {
+    "message": "Πριν από $1"
   },
   "stagingGroupSelectAll": {
     "message": "Επιλογή όλων στην ομάδα"

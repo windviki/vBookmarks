@@ -2167,10 +2167,10 @@
     "message": "เลิกปักหมุดโฟลเดอร์นี้"
   },
   "stagingAdd": {
-    "message": "เพิ่มไปยังพื้นที่จัดเตรียม"
+    "message": "ส่งไป staging"
   },
   "stagingAdded": {
-    "message": "เพิ่มไปยังพื้นที่จัดเตรียมแล้ว"
+    "message": "ส่งไป staging แล้ว"
   },
   "stagingAlready": {
     "message": "อยู่ในพื้นที่จัดเตรียมแล้ว"
@@ -2235,6 +2235,9 @@
   },
   "stagingGroupDissolved": {
     "message": "ยุบกลุ่มแล้ว — รายการยังคงอยู่ในพื้นที่จัดเตรียม"
+  },
+  "stagingGroupCreated": {
+    "message": "สร้างเมื่อ $1"
   },
   "stagingGroupDelete": {
     "message": "ลบกลุ่ม (พร้อมรายการ)"
@@ -2543,6 +2546,12 @@
         "content": "$1"
       }
     }
+  },
+  "recentGroupSince": {
+    "message": "ตั้งแต่ $1"
+  },
+  "recentGroupBefore": {
+    "message": "ก่อน $1"
   },
   "stagingGroupSelectAll": {
     "message": "เลือกทั้งหมดในกลุ่มนี้"

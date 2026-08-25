@@ -2167,10 +2167,10 @@
     "message": "Anulează fixarea dosarului"
   },
   "stagingAdd": {
-    "message": "Adaugă în zona de pregătire"
+    "message": "Trimite în staging"
   },
   "stagingAdded": {
-    "message": "Adăugat în zona de pregătire"
+    "message": "Trimis în staging"
   },
   "stagingAlready": {
     "message": "Deja în zona de pregătire"
@@ -2235,6 +2235,9 @@
   },
   "stagingGroupDissolved": {
     "message": "Grup dizolvat — elementele păstrate în zona de pregătire"
+  },
+  "stagingGroupCreated": {
+    "message": "Creat pe $1"
   },
   "stagingGroupDelete": {
     "message": "Șterge grupul (cu elemente)"
@@ -2543,6 +2546,12 @@
         "content": "$1"
       }
     }
+  },
+  "recentGroupSince": {
+    "message": "De la $1"
+  },
+  "recentGroupBefore": {
+    "message": "Înainte de $1"
   },
   "stagingGroupSelectAll": {
     "message": "Selectați tot în acest grup"

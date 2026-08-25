@@ -2167,10 +2167,10 @@
     "message": "Desafixar esta pasta"
   },
   "stagingAdd": {
-    "message": "Adicionar à área"
+    "message": "Enviar para staging"
   },
   "stagingAdded": {
-    "message": "Adicionado à área de preparação"
+    "message": "Enviado para staging"
   },
   "stagingAlready": {
     "message": "Já está na área de preparação"
@@ -2235,6 +2235,9 @@
   },
   "stagingGroupDissolved": {
     "message": "Grupo dissolvido — itens mantidos na área de preparação"
+  },
+  "stagingGroupCreated": {
+    "message": "Criado em $1"
   },
   "stagingGroupDelete": {
     "message": "Excluir grupo (com itens)"
@@ -2543,6 +2546,12 @@
         "content": "$1"
       }
     }
+  },
+  "recentGroupSince": {
+    "message": "Desde $1"
+  },
+  "recentGroupBefore": {
+    "message": "Antes de $1"
   },
   "stagingGroupSelectAll": {
     "message": "Selecionar tudo neste grupo"
