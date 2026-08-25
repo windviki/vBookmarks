@@ -6138,10 +6138,12 @@ body.panel-mode #dead-list .vbm-row .row-badge-slot {
 }
 
 /* 重新扫描 / 清除结果 read danger (2026-08 user call: destructive-ish scan
-   lifecycle actions) alongside 删除全部. */
-.dead-toolbar .dead-rescan,
-.dead-toolbar .dead-clear-scan,
-.dead-toolbar .dead-delete-all,
+   lifecycle actions) alongside 删除全部. Cluster-safe specificity: the row-1
+   trio rides .dead-icon-cluster, whose base rule (0,3,1) used to outrank
+   these (0,2,0) selectors and repaint them accent (design-laws §2 trap). */
+.dead-toolbar .dead-icon-cluster button.dead-rescan,
+.dead-toolbar .dead-icon-cluster button.dead-clear-scan,
+.dead-toolbar .dead-icon-cluster button.dead-delete-all,
 .dead-toolbar .dead-icon-btn.dead-delete-selected,
 .stats-toolbar .stats-icon-btn.stats-delete,
 .search-toolbar .search-icon-btn.search-delete,
@@ -6149,6 +6151,9 @@ body.panel-mode #dead-list .vbm-row .row-badge-slot {
     color: var(--vbm-danger);
 }
 
+.dead-toolbar .dead-icon-cluster button.dead-rescan:hover:not([disabled]),
+.dead-toolbar .dead-icon-cluster button.dead-clear-scan:hover:not([disabled]),
+.dead-toolbar .dead-icon-cluster button.dead-delete-all:hover:not([disabled]),
 .dead-toolbar .dead-icon-btn.dead-delete-selected:hover:not([disabled]),
 .stats-toolbar .stats-icon-btn.stats-delete:hover:not([disabled]),
 .search-toolbar .search-icon-btn.search-delete:hover:not([disabled]),

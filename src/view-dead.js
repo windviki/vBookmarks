@@ -609,8 +609,9 @@ export function initViewDead(ctx = {}) {
             html += '</div>';
         }
 
-        // Row 2 — mark toolbar: dead filter, mark all, clear all marks,
-        // delete all, selection mode. Same gating as the old single toolbar.
+        // Row 2 — mark toolbar: the dead/blocked category filter segment
+        // (left, a text control) + the right-pinned icon cluster [标记全部]
+        // [取消全部标记][发送到暂存][选择模式].
         {
             let row = '';
             if (lastScan && (rows.length || deadMarks.size)) {
@@ -624,10 +625,13 @@ export function initViewDead(ctx = {}) {
                 ])
                     row += `<button class="dead-filter-btn" data-filter="${value}" aria-pressed="${filter === value}">${_m(key)} ${count}</button>`;
                 row += '</span>';
-                if (filteredN && markFilter !== 'marked')
-                    row += iconBtn('dead-mark-all', FLAG_ICON, 'deadMarkAll');
             }
+            // 标记全部 rides the icon cluster (2026-08 user call: it drifted
+            // loose next to the filter segment while 取消全部标记 sat in the
+            // right-pinned cluster — the marking pair reads as ONE unit).
             let tail = '';
+            if (filteredN && markFilter !== 'marked')
+                tail += iconBtn('dead-mark-all', FLAG_ICON, 'deadMarkAll');
             if (deadMarks.size)
                 tail += iconBtn('dead-unmark-all', FLAG_X_ICON, 'deadUnmarkAll');
             // velvet staging relay: send every LISTED row (filter-aware) to

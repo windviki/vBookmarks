@@ -1378,6 +1378,37 @@ describe('idle three-row toolbar structure (4.0.8 死链工具栏重排)', () =>
             expect(m[2], cls).toBe(key);
         }
     });
+
+    it('标记全部 rides the right-pinned icon cluster, adjacent to 取消全部标记 (2026-08 drift fix)', () => {
+        // The marking pair reads as ONE unit: 标记全部 used to sit loose next
+        // to the filter segment while 取消全部标记 lived in the right-pinned
+        // cluster — the two drifted apart whenever the toolbar had slack.
+        const ctx = setup({ storeData: { deadLastScan: CACHE, deadMarks: '["12"]' } });
+        ctx.def().activate();
+        const html = ctx.$list.innerHTML;
+        const clusters = html.match(/<span class="dead-icon-cluster">[\s\S]*?<\/span>/g) || [];
+        const marks = clusters.filter(c => c.includes('dead-unmark-all'));
+        expect(marks).toHaveLength(1);
+        expect(marks[0]).toContain('dead-mark-all');
+        // adjacency: nothing but unmark-all's own opening tag between the pair
+        const a = marks[0].indexOf('dead-mark-all');
+        const b = marks[0].indexOf('dead-unmark-all');
+        expect(a).toBeGreaterThanOrEqual(0);
+        expect(b).toBeGreaterThan(a);
+        expect(marks[0].slice(a, b).match(/<button/g) || []).toHaveLength(1);
+    });
+
+    it('CSS contract: the row-1 danger trio keeps cluster-safe specificity (design-laws §2 trap)', () => {
+        // The trio rides .dead-icon-cluster whose base rule is (0,3,1) — the
+        // danger overrides must name the cluster too or they lose the
+        // cascade and repaint the buttons accent.
+        const neatCss = fs.readFileSync(new URL('../css/neat.css', import.meta.url), 'utf8');
+        for (const cls of ['dead-rescan', 'dead-clear-scan', 'dead-delete-all']) {
+            expect(neatCss).toContain(`.dead-toolbar .dead-icon-cluster button.${cls},`);
+        }
+        expect(neatCss).not.toContain('.dead-toolbar .dead-rescan,');
+        expect(neatCss).toContain('.dead-toolbar .dead-icon-cluster button.dead-delete-all:hover:not([disabled]),');
+    });
 });
 
 describe('mark-status filter + sort (4.0.7 死链视图增强)', () => {
