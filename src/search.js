@@ -241,6 +241,23 @@ export function initSearch(ctx = {}) {
     // there is history, the searchViewHint guide row otherwise. The lower
     // #results list keeps the last search's output between searches.
     const $historyArea = $('search-history-area');
+    // The history rows' × must column-stack on the results rows' delete
+    // column (design-laws §3), but the two halves of #view-search are
+    // SEPARATE scrollers: when the results list grows its 8px scrollbar the
+    // history area above does not, and the two right axes drift apart by
+    // exactly the scrollbar inset (the "intermittent" misalignment — it
+    // only reproduces while the results list overflows). Mirror the
+    // results' LIVE scrollbar inset onto the history area's end padding;
+    // offsetWidth−clientWidth reads 0 on overlay-scrollbar systems, so
+    // those stay untouched.
+    const syncHistoryGutter = () => {
+        if (!$historyArea || !$results)
+            return;
+        const inset = $results.offsetWidth - $results.clientWidth;
+        const pad = inset > 0 ? `${inset}px` : '';
+        if ($historyArea.style.paddingInlineEnd !== pad)
+            $historyArea.style.paddingInlineEnd = pad;
+    };
     // --- Row focus park/restore (4.0.1 focus law) --------------------------
     // The history-area park rides the shared list views' implementation
     // (src/list-focus.js): renderHistoryArea's innerHTML swap replaces every
@@ -263,6 +280,10 @@ export function initSearch(ctx = {}) {
     const renderHistoryArea = () => {
         if (!$historyArea)
             return;
+        // view entry / history repaint: re-measure — a popup resized while
+        // another view was active skips the resize listener below, so the
+        // mirrored gutter can be stale on re-entry.
+        syncHistoryGutter();
         // 4.0.1 focus law: park a focused history row across the swap
         const parkedRow = parkRowFocus();
         const list = historyEnabled() ? readHistory() : [];
@@ -302,6 +323,10 @@ export function initSearch(ctx = {}) {
         }
         lastHistoryHtml = html;
         $historyArea.innerHTML = html;
+        // View entry re-paints the history area — the results pane may have
+        // gained/lost its scrollbar while another view was active (the
+        // resize listener stands down outside the search view).
+        syncHistoryGutter();
         // v4 task-4 #4: never let the upper area grow a scrollbar — the area
         // caps at 40% of the view height (CSS), so drop tail rows until the
         // remainder fits. The stored MRU keeps all 10 entries; this is a
@@ -776,6 +801,9 @@ export function initSearch(ctx = {}) {
             clearTimeout(historyResizeTimer);
             historyResizeTimer = setTimeout(() => {
                 historyResizeTimer = null;
+                // A width change can toggle the results scrollbar with no
+                // re-render — re-mirror it before the height work below.
+                syncHistoryGutter();
                 if (typeof $historyArea.querySelector !== 'function')
                     return;
                 const ul = $historyArea.querySelector('ul');
@@ -919,6 +947,8 @@ export function initSearch(ctx = {}) {
                     `title="${_m('selectModeEnter')}">${SELECT_ICON}</button></div>` + html;
             }
             $results.innerHTML = html;
+            // The fresh result list may have just grown/dropped its scrollbar.
+            syncHistoryGutter();
             onRowsRendered();
         };
 

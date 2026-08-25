@@ -268,6 +268,32 @@ describe('search execution + rendering', () => {
         expect(rendered).toHaveLength(2);
     });
 
+    it('mirrors the results scrollbar inset onto the history area (the history × stacks on the results delete column)', () => {
+        // The two halves of #view-search are separate scrollers: while the
+        // results list overflows, its 8px scrollbar shifts the results'
+        // delete column left of the history rows' ×. The render must mirror
+        // the live inset (offsetWidth−clientWidth, so overlay-scrollbar
+        // systems read 0) onto the history area's end padding.
+        const results = makeEl();
+        let scrollbar = 0;
+        Object.defineProperty(results, 'offsetWidth', { get: () => 420 });
+        Object.defineProperty(results, 'clientWidth', { get: () => 420 - scrollbar });
+        const { els } = setup({
+            extraEls: { results },
+            fuzzyResults: [
+                { id: '11', parentId: '1', title: 'GitHub', url: 'https://github.com/', isFolder: false, positions: [] }
+            ]
+        });
+        type(els, 'git');
+        expect(els['search-history-area'].style.paddingInlineEnd).toBe('');
+        scrollbar = 8; // the results list now overflows
+        type(els, 'github');
+        expect(els['search-history-area'].style.paddingInlineEnd).toBe('8px');
+        scrollbar = 0; // a shorter result set drops the scrollbar again
+        type(els, 'g');
+        expect(els['search-history-area'].style.paddingInlineEnd).toBe('');
+    });
+
     it('ranks the flat index and renders bookmark + folder rows', () => {
         const { s, els, fuzzy, calls, store, viewCalls } = setup({
             fuzzyResults: [
