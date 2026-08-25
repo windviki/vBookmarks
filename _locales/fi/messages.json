@@ -2575,5 +2575,13 @@
   "optionsStorageLocalTip": {
     "message": "Tallennettu vain tähän laitteeseen — ei jaeta Chrome-synkronoinnin kautta.",
     "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
+  },
+  "tabGroupsWindowsCount": {
+    "message": "$n$ ikkunaa",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
   }
 }

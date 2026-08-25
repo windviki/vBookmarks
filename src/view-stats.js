@@ -302,7 +302,7 @@ export function initViewStats(ctx = {}) {
         html += `<label class="stats-unbookmarked" title="${_m('statsShowUnbookmarkedHint')}">` +
             `<input type="checkbox" class="stats-unbookmarked-input"${showUnbookmarked() ? ' checked' : ''}>` +
             `<span>${_m('statsShowUnbookmarked')}</span></label>`;
-        html += `<button class="stats-clear"${rows.length ? '' : ' disabled'}>${_m('statsClearData')}</button>`;
+        html += `<button class="stats-clear"${rows.length ? '' : ' disabled'}>${TRASH_ICON}${_m('statsClearData')}</button>`;
         // velvet staging §3.7: the selection-mode entry (bulk collection)
         if (displayRows.length)
             html += `<button class="stats-select-mode" aria-label="${_m('selectModeEnter')}" ` +

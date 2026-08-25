@@ -2575,5 +2575,13 @@
   "optionsStorageLocalTip": {
     "message": "Saglabāts tikai šajā ierīcē — netiek koplietots, izmantojot Chrome sinhronizāciju.",
     "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
+  },
+  "tabGroupsWindowsCount": {
+    "message": "$n$ logi",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
   }
 }

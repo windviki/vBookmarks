@@ -2575,5 +2575,13 @@
   "optionsStorageLocalTip": {
     "message": "केवल इस डिवाइस पर संग्रहीत — Chrome सिंक के माध्यम से साझा नहीं होती।",
     "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
+  },
+  "tabGroupsWindowsCount": {
+    "message": "$n$ विंडो",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
   }
 }

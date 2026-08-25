@@ -2575,5 +2575,13 @@
   "optionsStorageLocalTip": {
     "message": "이 기기에만 저장됨 — Chrome 동기화로 공유되지 않습니다.",
     "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
+  },
+  "tabGroupsWindowsCount": {
+    "message": "$n$개 창",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
   }
 }

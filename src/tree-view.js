@@ -340,12 +340,34 @@ export function initTreeView(ctx = {}) {
             }
         } else if (btn.classList.contains('staging-add-btn') && ctx.staging) {
             if (li.classList.contains('parent')) {
-                // A FOLDER plane = the menu's flatten-send: every descendant
-                // joins the workbench as one sourceFolderId group (confirm
-                // for >100 lives in sendFolder). One-way send — the filled
-                // plane lands immediately.
-                ctx.staging.sendFolder(id);
-                flipStageBtn(btn, true, _m2);
+                // A FOLDER plane is a symmetric toggle: unstaged → the menu's
+                // flatten-send (every descendant joins as one sourceFolderId
+                // group, >100 confirm inside); all-staged → every descendant
+                // item leaves (batch exit with toast undo).
+                chrome.bookmarks.getSubTree(id, nodes => {
+                    if (chrome.runtime.lastError || !nodes || !nodes.length)
+                        return;
+                    const urls = [];
+                    const walk = n => {
+                        for (const c of (n.children) || []) {
+                            if (c.url)
+                                urls.push(c.url);
+                            else
+                                walk(c);
+                        }
+                    };
+                    walk(nodes[0]);
+                    const bookmarkable = urls.filter(u => !/^javascript:/i.test(u));
+                    const allStaged = bookmarkable.length > 0
+                        && bookmarkable.every(u => ctx.staging.isStaged(u));
+                    if (allStaged) {
+                        ctx.staging.removeByUrls(bookmarkable);
+                        flipStageBtn(btn, false, _m2);
+                    } else {
+                        ctx.staging.sendFolder(id);
+                        flipStageBtn(btn, true, _m2);
+                    }
+                });
             } else {
                 const a = li.querySelector('a');
                 const url = a ? a.getAttribute('href') : '';

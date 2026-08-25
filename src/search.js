@@ -51,7 +51,8 @@
  * document/window/chrome remain page globals, as in the rest of the popup.
  * No neatools helpers here: plain getElementById/classList/loops only.
  */
-import { FOLDER_ICON, VIEW_ICONS, TRASH_ICON, SELECT_ICON } from './icons.js';
+import { FOLDER_ICON, VIEW_ICONS, TRASH_ICON, SELECT_ICON, STAGE_ICON, OPEN_ICON, TABS_ICON } from './icons.js';
+import { fitToolbarLabels, watchToolbarFit } from './toolbar-fit.js';
 import { stageBtnHtml as relayStageBtnHtml, flipStageBtn, toggleStageItem } from './staging-relay.js';
 import { relTimeLabel } from './tree-render.js';
 import { htmlspecialchars } from './escape.js';
@@ -276,7 +277,7 @@ export function initSearch(ctx = {}) {
             return;
         }
         let html = `<div class="search-history-head"><i>${htmlspecialchars(_m('searchHistoryTitle'))}</i>` +
-            `<button type="button" id="search-history-clear" class="search-history-clear" tabindex="-1">${htmlspecialchars(_m('searchHistoryClear'))}</button></div>` +
+            `<button type="button" id="search-history-clear" class="search-history-clear" tabindex="-1">${TRASH_ICON}${htmlspecialchars(_m('searchHistoryClear'))}</button></div>` +
             '<ul role="list">';
         for (let i = 0, l = list.length; i < l; i++) {
             const entry = list[i];
@@ -432,6 +433,15 @@ export function initSearch(ctx = {}) {
     // the arrow body defers the reference to call time). Clearing prevValue
     // bypasses the same-query short-circuit: the selection state changed,
     // the render must happen even though the query did not.
+    const fitSelectionLabels = () => {
+        if (!$results.querySelector)
+            return;
+        fitToolbarLabels($results.querySelector('.search-actions-toolbar'));
+    };
+    watchToolbarFit($results, () => {
+        if (selecting)
+            fitSelectionLabels();
+    });
     const runSearch = () => {
         prevValue = '';
         search({});
@@ -448,6 +458,7 @@ export function initSearch(ctx = {}) {
             if (btn && btn.focus)
                 btn.focus();
         }
+        setTimeout(fitSelectionLabels, 0); // the new bar's labels settle post-paint
     };
 
     const setSelecting = (on, focus = null) => {
@@ -876,18 +887,30 @@ export function initSearch(ctx = {}) {
             if (selecting) {
                 html = html.replace('<ul role="list" id="results-ul">',
                     '<ul role="list" id="results-ul" class="selecting">');
+                // The staging-view law: TWO rungs — rung 1 = count + set ops +
+                // exit, rung 2 = the ICONIFIED actions ([发送到暂存][打开][打开为
+                // 标签组][删除所选], labels revealed progressively from the right
+                // via the shared toolbar fitter).
                 let bar = '<div class="search-toolbar search-select-toolbar selecting-bar vbm-toolbar">';
-                const barStageOn = !ctx.stagingApi || !ctx.stagingApi.isEnabled || ctx.stagingApi.isEnabled();
                 bar += `<span class="select-count">${_m('selectCount', `${selected.size}`)}</span>` +
                     `<button class="search-select-all">${_m('selectAll')}</button>` +
                     `<button class="search-select-invert">${_m('selectInvert')}</button>` +
                     `<button class="search-select-clear">${_m('selectClear')}</button>` +
-                    (barStageOn ? `<button class="search-stage"${selected.size ? '' : ' disabled'}>${_m('stagingAdd')}</button>` : '') +
-                    `<button class="search-open"${selected.size ? '' : ' disabled'}>${_m('open')}</button>` +
-                    `<button class="search-open-group"${selected.size ? '' : ' disabled'}>${_m('openBookmarksInGroup')}</button>` +
-                    `<button class="search-delete"${selected.size ? '' : ' disabled'}>${_m('deleteSelected')}</button>` +
                     `<button class="search-select-exit">${_m('selectModeExit')}</button>`;
                 bar += '</div>';
+                const barStageOn = !ctx.stagingApi || !ctx.stagingApi.isEnabled || ctx.stagingApi.isEnabled();
+                const hasSel = selected.size ? '' : ' disabled';
+                const iconBtn = (cls, key, icon) => {
+                    const lab = htmlspecialchars(_m(key));
+                    return `<button class="search-icon-btn vbm-fit-btn ${cls}"${hasSel} aria-label="${lab}" title="${lab}">` +
+                        `${icon}<span class="search-btn-label vbm-fit-label">${lab}</span></button>`;
+                };
+                bar += '<div class="search-toolbar search-actions-toolbar vbm-toolbar">' +
+                    (barStageOn ? iconBtn('search-stage', 'stagingAdd', STAGE_ICON) : '') +
+                    iconBtn('search-open', 'open', OPEN_ICON) +
+                    iconBtn('search-open-group', 'openBookmarksInGroup', TABS_ICON) +
+                    iconBtn('search-delete', 'deleteSelected', TRASH_ICON) +
+                    '</div>';
                 html = bar + html;
             } else if (searchMode && bookmarkRows.length) {
                 html = '<div class="search-toolbar vbm-toolbar">' +

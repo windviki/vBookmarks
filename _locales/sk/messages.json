@@ -2575,5 +2575,13 @@
   "optionsStorageLocalTip": {
     "message": "Uložené iba na tomto zariadení — nezdieľané cez synchronizáciu Chrome.",
     "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
+  },
+  "tabGroupsWindowsCount": {
+    "message": "$n$ okien",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
   }
 }

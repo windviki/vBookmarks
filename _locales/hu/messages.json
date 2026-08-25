@@ -2575,5 +2575,13 @@
   "optionsStorageLocalTip": {
     "message": "Csak ezen az eszközön tárolva — nem oszlik meg a Chrome-szinkronizáláson keresztül.",
     "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
+  },
+  "tabGroupsWindowsCount": {
+    "message": "$n$ ablak",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
   }
 }

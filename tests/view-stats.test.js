@@ -341,7 +341,8 @@ describe('toolbar', () => {
         s.def().activate();
         expect(s.$list.innerHTML).toContain('data-sort="count" aria-pressed="true"');
         expect(s.$list.innerHTML).toContain('data-sort="recent" aria-pressed="false"');
-        expect(s.$list.innerHTML).toContain('<button class="stats-clear">statsClearData</button>');
+        expect(s.$list.innerHTML).toContain('class="stats-clear"'); // icon+text since 2026-08
+        expect(s.$list.innerHTML).toContain('statsClearData</button>');
     });
 
     it('disables the clear button when there is nothing to clear', () => {

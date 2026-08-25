@@ -2575,5 +2575,13 @@
   "optionsStorageLocalTip": {
     "message": "Зберігається лише на цьому пристрої — не синхронізується через Chrome.",
     "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
+  },
+  "tabGroupsWindowsCount": {
+    "message": "$n$ вікон",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
   }
 }

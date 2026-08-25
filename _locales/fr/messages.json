@@ -2575,5 +2575,13 @@
   "optionsStorageLocalTip": {
     "message": "仅存储在此设备上 — 不通过 Chrome 同步共享。",
     "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
+  },
+  "tabGroupsWindowsCount": {
+    "message": "$n$ fenêtres",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
   }
 }

@@ -2823,5 +2823,13 @@
   "optionsStorageLocalTip": {
     "message": "Stored on this device only — not shared through Chrome sync.",
     "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
+  },
+  "tabGroupsWindowsCount": {
+    "message": "$n$ windows",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
   }
 }

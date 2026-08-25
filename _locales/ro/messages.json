@@ -2575,5 +2575,13 @@
   "optionsStorageLocalTip": {
     "message": "Stocat doar pe acest dispozitiv — nu este partajat prin sincronizarea Chrome.",
     "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
+  },
+  "tabGroupsWindowsCount": {
+    "message": "$n$ ferestre",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
   }
 }

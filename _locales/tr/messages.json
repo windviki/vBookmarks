@@ -2575,5 +2575,13 @@
   "optionsStorageLocalTip": {
     "message": "Yalnızca bu cihazda saklanır — Chrome senkronizasyonu ile paylaşılmaz.",
     "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
+  },
+  "tabGroupsWindowsCount": {
+    "message": "$n$ pencere",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
   }
 }

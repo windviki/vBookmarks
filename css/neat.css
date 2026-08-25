@@ -3877,6 +3877,19 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
     cursor: pointer;
 }
 
+/* icon+text form (2026-08): the leading trash glyph joins the label */
+#search-history-clear {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+#search-history-clear .vbm-icon {
+    width: 12px;
+    height: 12px;
+    flex: none;
+}
+
 #search-history-clear:hover {
     background: color-mix(in srgb, var(--vbm-danger) 12%, transparent);
 }
@@ -4552,6 +4565,11 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
     margin-inline-start: 0;
     margin-inline-end: auto; /* summary left, primary actions right */
 }
+
+/* In the SELECTING bar the same right pin belongs to 去重所选 (now last). */
+.dupes-toolbar.selecting-bar .dupes-apply-selected {
+    margin-inline-start: auto;
+}
 .dupes-toolbar button.dupes-select-mode {
     display: inline-flex;
     align-items: center;
@@ -5052,6 +5070,13 @@ visibly smaller next to them. */
     margin-inline-start: 0;
     margin-inline-end: auto;
     white-space: nowrap;
+    /* The controls rung gained the select-mode entry (and the summary the
+       windows count) — at high zoom the rung now overflows unless the
+       summary ellipsizes; it is the only shrinkable member. */
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex-shrink: 1;
 }
 .tabgroups-toolbar .tabgroups-options {
     display: flex;
@@ -5317,6 +5342,12 @@ visibly smaller next to them. */
     min-width: 60px;
     display: flex;
     align-items: center;
+}
+
+/* The filter takes the rung's right edge (the select-mode entry moved up to
+   the controls rung, leaving the field without its right anchor). */
+.tabgroups-filter-field {
+    margin-inline-start: auto;
 }
 .tabgroups-toolbar .tabgroups-filter-input {
     flex: 1;
@@ -5895,7 +5926,9 @@ body.panel-mode #dead-list .vbm-row .row-badge-slot {
    (src/toolbar-fit.js) reveals them one by one from the right as free
    width allows, via inline styles. */
 .dead-toolbar .dead-icon-btn,
-.stats-toolbar .stats-icon-btn {
+.stats-toolbar .stats-icon-btn,
+.search-toolbar .search-icon-btn,
+.tabgroups-toolbar .tabgroups-icon-btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -5904,34 +5937,82 @@ body.panel-mode #dead-list .vbm-row .row-badge-slot {
     height: 22px;
     padding: 0;
     flex: none;
+    border: 0;
+    border-radius: var(--vbm-radius);
+    background: transparent;
+    /* the dead-toolbar flat-button base doesn't exist on stats/search/
+       tabgroups — the iconified rungs carry it themselves (the stats rung
+       rendered muted-grey and looked disabled without it) */
+    color: var(--vbm-accent);
+    font-size: 11px;
+    cursor: pointer;
+}
+
+.dead-toolbar .dead-icon-btn:hover:not([disabled]),
+.stats-toolbar .stats-icon-btn:hover:not([disabled]),
+.search-toolbar .search-icon-btn:hover:not([disabled]),
+.tabgroups-toolbar .tabgroups-icon-btn:hover:not([disabled]) {
+    background: var(--vbm-bg-hover);
+}
+
+.dead-toolbar .dead-icon-btn:disabled,
+.stats-toolbar .stats-icon-btn:disabled,
+.search-toolbar .search-icon-btn:disabled,
+.tabgroups-toolbar .tabgroups-icon-btn:disabled {
+    opacity: .5;
+    cursor: default;
 }
 
 .dead-toolbar .dead-icon-btn .vbm-icon,
-.stats-toolbar .stats-icon-btn .vbm-icon {
+.stats-toolbar .stats-icon-btn .vbm-icon,
+.search-toolbar .search-icon-btn .vbm-icon,
+.tabgroups-toolbar .tabgroups-icon-btn .vbm-icon {
     width: 16px;
     height: 16px;
 }
 
+/* 重新扫描 / 清除结果 read danger (2026-08 user call: destructive-ish scan
+   lifecycle actions) alongside 删除全部. */
+.dead-toolbar .dead-rescan,
+.dead-toolbar .dead-clear-scan,
+.dead-toolbar .dead-delete-all,
 .dead-toolbar .dead-icon-btn.dead-delete-selected,
-.stats-toolbar .stats-icon-btn.stats-delete {
+.stats-toolbar .stats-icon-btn.stats-delete,
+.search-toolbar .search-icon-btn.search-delete,
+.tabgroups-toolbar .tabgroups-icon-btn.tabgroups-close-selected {
     color: var(--vbm-danger);
 }
 
 .dead-toolbar .dead-icon-btn.dead-delete-selected:hover:not([disabled]),
-.stats-toolbar .stats-icon-btn.stats-delete:hover:not([disabled]) {
+.stats-toolbar .stats-icon-btn.stats-delete:hover:not([disabled]),
+.search-toolbar .search-icon-btn.search-delete:hover:not([disabled]),
+.tabgroups-toolbar .tabgroups-icon-btn.tabgroups-close-selected:hover:not([disabled]) {
     background: color-mix(in srgb, var(--vbm-danger) 12%, transparent);
 }
 
 .dead-toolbar .dead-icon-btn .dead-btn-label,
-.stats-toolbar .stats-icon-btn .stats-btn-label {
+.stats-toolbar .stats-icon-btn .stats-btn-label,
+.search-toolbar .search-icon-btn .search-btn-label,
+.tabgroups-toolbar .tabgroups-icon-btn .tabgroups-btn-label {
     display: none;
 }
 
 /* The two selecting rungs read as ONE visual block (the staging/search
    selecting-bar law): the first rung drops its bottom border. */
 .dead-toolbar.dead-scan-toolbar:has(+ .dead-actions-toolbar),
-.stats-toolbar.stats-select-toolbar:has(+ .stats-actions-toolbar) {
+.stats-toolbar.stats-select-toolbar:has(+ .stats-actions-toolbar),
+.search-toolbar.search-select-toolbar:has(+ .search-actions-toolbar),
+.tabgroups-toolbar.tabgroups-select-toolbar:has(+ .tabgroups-actions-toolbar) {
     border-bottom: 0;
+}
+
+.dead-toolbar.dead-actions-toolbar,
+.stats-toolbar.stats-actions-toolbar,
+.search-toolbar.search-actions-toolbar,
+/* tabgroups' IDLE options rung shares the actions-toolbar class — the
+   nowrap law belongs to the SELECTING rung only (selecting-bar). */
+.tabgroups-toolbar.tabgroups-actions-toolbar.selecting-bar {
+    flex-wrap: nowrap;
 }
 
 .dead-toolbar .dead-filter {
@@ -6387,6 +6468,18 @@ body.panel-mode #dead-list .vbm-row .row-badge-slot {
     padding: 2px 4px;
     cursor: pointer;
     border-radius: var(--vbm-radius);
+}
+
+.stats-toolbar .stats-clear {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.stats-toolbar .stats-clear .vbm-icon {
+    width: 12px;
+    height: 12px;
+    flex: none;
 }
 
 .stats-toolbar .stats-clear:hover {

@@ -2574,5 +2574,13 @@
   "optionsStorageLocalTip": {
     "message": "Се чува само на овој уред — не се споделува преку Chrome синхронизација.",
     "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
+  },
+  "tabGroupsWindowsCount": {
+    "message": "$n$ прозорци",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
   }
 }

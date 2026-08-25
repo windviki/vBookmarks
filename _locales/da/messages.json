@@ -2575,5 +2575,13 @@
   "optionsStorageLocalTip": {
     "message": "Kun gemt på denne enhed — deles ikke via Chrome-synkronisering.",
     "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
+  },
+  "tabGroupsWindowsCount": {
+    "message": "$n$ vinduer",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
   }
 }

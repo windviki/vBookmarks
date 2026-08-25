@@ -75,7 +75,7 @@
  */
 
 import { findDupes, pickKeeper, planDeletion } from './dupes.js';
-import { VIEW_ICONS, CHECK_ICON, CHEVRON_ICON, SELECT_ICON, TRASH_ICON, STAGE_ICON, STAGE_ICON_DONE } from './icons.js';
+import { VIEW_ICONS, CHECK_ICON, CHEVRON_ICON, SELECT_ICON, TRASH_ICON, STAGE_ICON, STAGE_ICON_DONE, COLLAPSE_ALL_ICON, EXPAND_ALL_ICON } from './icons.js';
 import { stageBtnHtml as relayStageBtnHtml, flipStageBtn, toggleStageItem, isStagedUrl } from './staging-relay.js';
 import { initDropdowns } from './dropdown.js';
 import { makeRiskBanner, RISK_HELP_URL } from './risk-banner.js';
@@ -317,14 +317,16 @@ export function initViewDupes(ctx = {}) {
                 if (selected.has(g.key))
                     doomedSel += planDeletion(g, keeperOf(g)).length;
             }
+            // 去重所选 rides LAST, right-aligned (the primary-action slot —
+            // it was buried between the set ops and the exit).
             return '<div class="dupes-toolbar selecting-bar vbm-toolbar">' +
                 `<span class="select-count">${_m('selectCount', `${selected.size}`)}</span>` +
                 `<button class="dupes-select-all">${_m('selectAll')}</button>` +
                 `<button class="dupes-select-invert">${_m('selectInvert')}</button>` +
                 `<button class="dupes-select-clear">${_m('selectClear')}</button>` +
+                `<button class="dupes-select-exit">${_m('selectModeExit')}</button>` +
                 `<button class="dupes-apply-selected"${doomedSel ? '' : ' disabled'}>` +
                 `${_m('dupesApplySelected', `${doomedSel}`)}</button>` +
-                `<button class="dupes-select-exit">${_m('selectModeExit')}</button>` +
                 '</div>';
         }
         const doomed = doomedCount();
@@ -369,9 +371,10 @@ export function initViewDupes(ctx = {}) {
         // selection mode (icon-only, tooltip reuses the original i18n copy).
         html += '<div class="dupes-toolbar dupes-actions-toolbar vbm-toolbar">';
         html += `<span class="dupes-summary">${_m('dupesPreviewSummary', [`${groups.length}`, `${doomed}`])}</span>`;
-        // velvet staging relay: every duplicate member joins the workbench
-        // (keeper + doomed alike — the strategy can be re-decided there),
-        // left of 全部应用. Icon-only like the select-mode entry.
+        // Order (2026-08 user call): 全部应用 · 暂存全部 · 折叠全部 · 展开全部 ·
+        // 选择模式 — the fold pair reuses the tab-groups icons + keys.
+        html += `<button class="dupes-apply-all"${doomed ? '' : ' disabled'}>` +
+            _m('dupesApplyAll', `${doomed}`) + '</button>';
         {
             const allItems = groups.flatMap(g => g.items)
                 .map(it => ({ id: it.id, url: it.url, title: it.title || '' }));
@@ -381,11 +384,42 @@ export function initViewDupes(ctx = {}) {
                   `title="${stageLabel}" aria-label="${stageLabel}">${STAGE_ICON}</button>`
                 : '';
         }
-        html += `<button class="dupes-apply-all"${doomed ? '' : ' disabled'}>` +
-            _m('dupesApplyAll', `${doomed}`) + '</button>';
+        const foldLabel = k => htmlspecialchars(_m(k));
+        html += `<button class="dupes-collapse-all"${groups.length ? '' : ' disabled'} ` +
+            `title="${foldLabel('tabGroupsCollapseAll')}" aria-label="${foldLabel('tabGroupsCollapseAll')}">${COLLAPSE_ALL_ICON}</button>` +
+            `<button class="dupes-expand-all"${groups.length ? '' : ' disabled'} ` +
+            `title="${foldLabel('tabGroupsExpandAll')}" aria-label="${foldLabel('tabGroupsExpandAll')}">${EXPAND_ALL_ICON}</button>`;
         html += selectBtn;
         html += '</div>';
         return html;
+    };
+
+    // 折叠全部/展开全部: every group head snaps to `want` — the same
+    // per-head surgical fold the head clicks run (fold state itself is
+    // session-only in this view, matching the single-fold behavior).
+    const setAllGroupFolds = want => {
+        if (!groups.length || !$list.querySelectorAll)
+            return;
+        for (const g of groups) {
+            if (want)
+                collapsed.add(g.key);
+            else
+                collapsed.delete(g.key);
+        }
+        for (const li of $list.querySelectorAll('li.dupes-group')) {
+            const key = li.dataset && li.dataset.key;
+            if (!key)
+                continue;
+            const liCollapsed = !!li.querySelector('.chevron.collapsed');
+            if (liCollapsed === want)
+                continue;
+            if (virtualLab())
+                foldVirtual(key, li);
+            else if (foldDuringStream())
+                render();
+            else
+                foldGroupSurgically(li, key);
+        }
     };
 
     // Per-render row label cache (i18n hoisting): member rows used to
@@ -983,6 +1017,16 @@ export function initViewDupes(ctx = {}) {
         }
         // velvet staging relay: every duplicate member joins the workbench.
         // All visible member planes flip to staged in place.
+        if (closest('.dupes-collapse-all')) {
+            e.preventDefault();
+            setAllGroupFolds(true);
+            return;
+        }
+        if (closest('.dupes-expand-all')) {
+            e.preventDefault();
+            setAllGroupFolds(false);
+            return;
+        }
         if (closest('.dupes-stage-all')) {
             e.preventDefault();
             const api = ctx.staging;

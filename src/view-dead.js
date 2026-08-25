@@ -596,6 +596,10 @@ export function initViewDead(ctx = {}) {
                 html += iconBtn('dead-rescan', REDO_ICON, 'deadRescan');
             if (lastScan)
                 html += iconBtn('dead-clear-scan', LIST_X_ICON, 'deadClearScan');
+            // 删除全部 moved UP to the detection row's last slot (the marks
+            // row below reads as the marking/filtering block only now).
+            if (selectableRows().length)
+                html += iconBtn('dead-delete-all', TRASH_ICON, 'deadDeleteAllBtn');
             html += '</div>';
         }
 
@@ -624,8 +628,6 @@ export function initViewDead(ctx = {}) {
             // with the rows' hover plane. Stands down with the master switch.
             if (relayOn() && selectableRows().length)
                 row += iconBtn('dead-stage-all', STAGE_ICON, 'stagingAdd');
-            if (selectableRows().length)
-                row += iconBtn('dead-delete-all', TRASH_ICON, 'deadDeleteAllBtn');
             if (selectableRows().length)
                 row += iconBtn('dead-select-mode', SELECT_ICON, 'selectModeEnter');
             if (row)

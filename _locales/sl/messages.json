@@ -2575,5 +2575,13 @@
   "optionsStorageLocalTip": {
     "message": "Shranjeno samo na tej napravi — ni deljeno prek sinhronizacije Chrome.",
     "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
+  },
+  "tabGroupsWindowsCount": {
+    "message": "$n$ oken",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
   }
 }

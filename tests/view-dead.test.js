@@ -1347,7 +1347,9 @@ describe('idle three-row toolbar structure (4.0.8 死链工具栏重排)', () =>
         expect(rows[1].match(/class="dead-filter-btn"/g)).toHaveLength(4);
         expect(rows[1]).toContain('class="dead-mark-all"');
         expect(rows[1]).toContain('class="dead-unmark-all"');
-        expect(rows[1]).toContain('class="dead-delete-all"');
+        // 2026-08: 删除全部 moved UP to the detection row (rows[0])
+        expect(rows[1]).not.toContain('dead-delete-all');
+        expect(rows[0]).toContain('class="dead-delete-all"');
         expect(rows[1]).toContain('class="dead-select-mode"');
         expect(rows[1]).not.toContain('dead-mark-filter-btn');
         // Row 3 — status: the mark-status filter segment + the sort dropdown

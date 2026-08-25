@@ -2824,6 +2824,29 @@ export function initViewRecent(ctx = {}) {
         isStaged: url => !!staging.getByUrl(stagingState, url),
         // The master switch — every other view's staging entries gate on it.
         isEnabled: () => stagingOn(),
+        // Batch exit for FOLDER planes (the tree's staged-folder toggle-off):
+        // snapshots first so the toast undo restores group membership.
+        removeByUrls: urls => {
+            const set = new Set(urls || []);
+            if (!set.size)
+                return;
+            const snapshots = stagingState.items.filter(it => set.has(it.url)).map(it => ({ ...it }));
+            const groupSnaps = [...new Set(snapshots.map(it => it.group).filter(Boolean))]
+                .map(id => ({ ...staging.findGroup(stagingState, id) }));
+            staging.removeByUrls(stagingState, [...set]);
+            persistStaging();
+            renderStaging();
+            if (snapshots.length)
+                undo.toastAction(_m('stagingRemovedCount', `${snapshots.length}`), _m('undoAction'), () => {
+                    const r = staging.restoreItems(stagingState, snapshots, groupSnaps);
+                    if (r.full) {
+                        toast(_m('stagingFull'));
+                        return;
+                    }
+                    persistStaging();
+                    renderStaging();
+                });
+        },
         removeByUrl,
         state: () => stagingState
     };

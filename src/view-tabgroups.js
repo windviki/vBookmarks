@@ -33,12 +33,13 @@
  * dropping callbacks.
  */
 
-import { VIEW_ICONS, STAR_ICON, STAR_ICON_FILLED, SELECT_ICON, FOLDER_STAR_ICON, EDIT_ICON, SLEEP_ICON, SLEEP_ICON_FILLED, ACTIVATE_ICON, TRASH_ICON, REDO_ICON, COLLAPSE_ALL_ICON, EXPAND_ALL_ICON, PIN_ICON, PIN_ICON_FILLED, STAGE_ICON, STAGE_ICON_DONE } from './icons.js';
+import { VIEW_ICONS, STAR_ICON, STAR_ICON_FILLED, SELECT_ICON, FOLDER_STAR_ICON, FOLDER_PLUS_ICON, EDIT_ICON, SLEEP_ICON, SLEEP_ICON_FILLED, ACTIVATE_ICON, TRASH_ICON, REDO_ICON, COLLAPSE_ALL_ICON, EXPAND_ALL_ICON, PIN_ICON, PIN_ICON_FILLED, STAGE_ICON, STAGE_ICON_DONE, TABS_ICON } from './icons.js';
 import { htmlspecialchars } from './escape.js';
 import { parkRowFocus, unparkRowFocus, parkToolbarFocus, restoreToolbarFocus } from './list-focus.js';
 import { paintListChunked } from './list-chunks.js';
 import { paintListVirtual } from './virtual-list.js';
 import { flipStageBtn } from './staging-relay.js';
+import { fitToolbarLabels, watchToolbarFit } from './toolbar-fit.js';
 import { saveSession, sessionFolderName, tabsToBookmarks } from './session.js';
 import { relTimeLabel } from './tree-render.js';
 import { pickGroupColor, saveTabGroupFolderMeta, pruneTabGroupFolderMeta } from './tab-group-utils.js';
@@ -468,6 +469,14 @@ export function initViewTabGroups(ctx = {}) {
             // Two-row batch bar, the dupes recipe: row 1 is selection-only
             // (count + all/invert/clear + exit), row 2 is the batch actions.
             // Each row is its own .vbm-toolbar keyboard rung.
+            // The staging-view law: rung 1 = count + set ops + exit, rung 2 =
+            // the ICONIFIED batch actions (labels revealed progressively from
+            // the right via the shared toolbar fitter).
+            const iconBtn2 = (cls, key, icon) => {
+                const lab = htmlspecialchars(_m(key));
+                return `<button class="tabgroups-icon-btn vbm-fit-btn ${cls}"${hasSel ? '' : ' disabled'} aria-label="${lab}" title="${lab}">` +
+                    `${icon}<span class="tabgroups-btn-label vbm-fit-label">${lab}</span></button>`;
+            };
             return '<div class="tabgroups-toolbar tabgroups-select-toolbar selecting-bar vbm-toolbar">' +
                 `<span class="select-count">${_m('selectCount', `${sel}`)}</span>` +
                 `<button class="tabgroups-select-all">${_m('selectAll')}</button>` +
@@ -476,12 +485,12 @@ export function initViewTabGroups(ctx = {}) {
                 `<button class="tabgroups-select-exit">${_m('selectModeExit')}</button>` +
                 '</div>' +
                 '<div class="tabgroups-toolbar tabgroups-actions-toolbar selecting-bar vbm-toolbar">' +
-                `<button class="tabgroups-new-group"${hasSel ? '' : ' disabled'}>${_m('tabGroupsSelectNewGroup')}</button>` +
-                `<button class="tabgroups-open-into"${hasSel ? '' : ' disabled'}>${_m('tabGroupsSelectOpenInto')}</button>` +
-                `<button class="tabgroups-add-bookmarks"${hasSel ? '' : ' disabled'}>${_m('tabGroupsSelectAddBookmarks')}</button>` +
-                `<button class="tabgroups-save-folder"${hasSel ? '' : ' disabled'}>${_m('tabGroupsSelectSaveFolder')}</button>` +
-                `<button class="tabgroups-sleep-selected"${hasSel ? '' : ' disabled'}>${_m('tabGroupsSelectSleep')}</button>` +
-                `<button class="tabgroups-close-selected"${hasSel ? '' : ' disabled'}>${_m('tabGroupsSelectClose')}</button>` +
+                iconBtn2('tabgroups-new-group', 'tabGroupsSelectNewGroup', FOLDER_PLUS_ICON) +
+                iconBtn2('tabgroups-open-into', 'tabGroupsSelectOpenInto', TABS_ICON) +
+                iconBtn2('tabgroups-add-bookmarks', 'tabGroupsSelectAddBookmarks', STAR_ICON) +
+                iconBtn2('tabgroups-save-folder', 'tabGroupsSelectSaveFolder', FOLDER_STAR_ICON) +
+                iconBtn2('tabgroups-sleep-selected', 'tabGroupsSelectSleep', SLEEP_ICON) +
+                iconBtn2('tabgroups-close-selected', 'tabGroupsSelectClose', TRASH_ICON) +
                 '</div>';
         }
         // Idle toolbar: two stacked .vbm-toolbar rows (the dead/dupes
@@ -493,7 +502,7 @@ export function initViewTabGroups(ctx = {}) {
         const filterLabel = _m('tabGroupsFilterPlaceholder');
         const filterClearLabel = _m('searchClear');
         return '<div class="tabgroups-toolbar tabgroups-controls-toolbar vbm-toolbar">' +
-            `<span class="tabgroups-summary">${_m('tabGroupsSummary', [`${tabs.length}`, `${groups.length}`])}</span>` +
+            `<span class="tabgroups-summary">${_m('tabGroupsWindowsCount', [`${windows.length}`])} · ${_m('tabGroupsSummary', [`${tabs.length}`, `${groups.length}`])}</span>` +
             iconBtn('tabgroups-refresh', REDO_ICON, 'tabGroupsToolbarRefresh') +
             // The fold buttons stand down while a filter is active (folds
             // are inert — the filter force-expands every group and window).
@@ -530,6 +539,17 @@ export function initViewTabGroups(ctx = {}) {
     // re-ask chrome.i18n for the same handful of strings (7+ getMessage
     // crossings per row) — resolve once per render (and once per surgical
     // fold) instead.
+    // The selecting action rung's progressive labels (shared fitter).
+    const fitSelectionLabels = () => {
+        if (!$list.querySelector)
+            return;
+        fitToolbarLabels($list.querySelector('.tabgroups-actions-toolbar'));
+    };
+    watchToolbarFit($list, () => {
+        if (selecting)
+            fitSelectionLabels();
+    });
+
     const tabgroupsLabels = () => ({
         currentTab: _m('tabGroupsCurrentTab'),
         pinned: _m('tabGroupsPinned'),
@@ -1049,6 +1069,7 @@ export function initViewTabGroups(ctx = {}) {
             onHead: el => {
                 restoreToolbarFocus(el, parkedToolbar);
                 onRowsRendered();
+                fitSelectionLabels();
                 tryScrollToCurrent(null);   // target may sit in the head batch
             },
             onChunk: (el, from, end) => {
@@ -1058,6 +1079,7 @@ export function initViewTabGroups(ctx = {}) {
             },
             onSettled: el => {
                 paintSettled = true;
+                fitSelectionLabels();
                 if (parkedRow && !virtual) {
                     unparkRowFocus(el, parkedRow);
                     parkedRow = null;
