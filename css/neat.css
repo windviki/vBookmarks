@@ -2079,6 +2079,18 @@ body.panel-mode .recent-group-head .head-sub {
     margin-inline-start: 36px;
 }
 
+/* The heads' first content glyph must stack on that SAME 64px column (the
+   comment above claimed it did, but the arithmetic never held: the title
+   landed at 54px and the bucket star at 56px — the hierarchy kinked 10px in
+   selection mode. Step both first-content slots onto the member column). */
+#staging-list ul.selecting .staging-group-head .head-main {
+    margin-inline-start: 10px;
+}
+
+#staging-list ul.selecting .staging-bucket-head .staging-bucket-star {
+    margin-inline-start: 10px;
+}
+
 /* Drag & drop between staging groups: the dragged source fades (the cut
    convention), the live target reads as an accent-welled drop zone. */
 li.staging-row.dragging,

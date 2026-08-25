@@ -91,6 +91,9 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
             const groupPlace = document.querySelector('.staging-group-head .staging-group-place');
             const groupRename = document.querySelector('.staging-group-head .staging-group-rename');
             const bucketFav = document.querySelector('.staging-bucket-fav-all');
+            // the bucket tail's RIGHTMOST glyph is 移除暂存 (remove-all) since
+            // it joined the tail — fav-all is one stride left of the axis
+            const bucketRemove = document.querySelector('.staging-bucket-head .staging-bucket-remove-all');
             const rect = el => {
                 if (!el) return null;
                 const r = el.getBoundingClientRect();
@@ -103,6 +106,7 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
             out.groupPlace = rect(groupPlace);
             out.groupRename = rect(groupRename);
             out.bucketFav = rect(bucketFav);
+            out.bucketRemove = rect(bucketRemove);
             // the three send glyphs of the recent region (row / time
             // bucket head / section head) — the one-axis check. Each
             // button's own rect is paired with its host row's rect so
@@ -135,8 +139,9 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
             const listRect = document.getElementById('staging-list').getBoundingClientRect();
             out.listRight = listRect.right;
             out.listLeft = listRect.left;
-            // group-head lead: the chevron column must start 8px off the
-            // container edge (the tabgroups/dupes head law)
+            // group-head lead (round G hierarchy): the chevron spans 18–34px
+            // so its CENTER (26px) stacks on the loose row's favicon center —
+            // the fold heads' 18px inline lead, not the old 8px section-head one
             out.groupChevLeft = firstGroupHead.querySelector('.chevron').getBoundingClientRect().left;
             // hierarchy: the member favicon column == the head's first
             // content glyph (group head title), both 32px from the edge
@@ -155,10 +160,12 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
             out.cut = !!document.querySelector('#staging-list .staging-cut');
             out.actionIcons = document.querySelectorAll('.staging-actions-toolbar .staging-icon-btn').length;
             out.timeHeadLeft = (() => {
-                const el = document.querySelector('.recent-group-head');
-                if (!el) return null;
-                const r = el.getBoundingClientRect();
-                return parseFloat(getComputedStyle(el).paddingLeft) + r.left;
+                // the fold head's TITLE axis (40px = 18 lead + 16 chevron +
+                // 2 margin + 4 gap) — shared with the group heads and the
+                // loose rows' title column; the old check read the head's own
+                // padding edge (18px) against a pre-fold 8px expectation
+                const el = document.querySelector('.recent-group-head .staging-section-title');
+                return el ? el.getBoundingClientRect().left : null;
             })();
             // member indent: a member row's favicon x vs a loose row's favicon x
             const favX = li => li && li.querySelector('.favicon-container')
@@ -207,8 +214,8 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
         ck('group head fixed height 28', Math.abs(css.groupHead.h - 28) < 1.5);
         ck('bucket head fixed height 28', Math.abs(css.bucketHead.h - 28) < 1.5);
         // the axis law binds each tail's RIGHTMOST button (row remove /
-        // head 移出暂存 / bucket fav-all) to the same 8px-off-edge column
-        const rightAxis = [css.rowBtn, css.groupRemove, css.bucketFav]
+        // head 移出暂存 / bucket 移除暂存) to the same 8px-off-edge column
+        const rightAxis = [css.rowBtn, css.groupRemove, css.bucketRemove]
             .every(r => r && Math.abs(r.right - css.rowBtn.right) < 1.5);
         ck('trailing buttons share one right axis', rightAxis);
         // vertical centers each within own row middle ±1.5px (rename/
@@ -227,7 +234,7 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
         ck('narrow rows are the same 28px height as the heads',
             css.stagingRowLi && Math.abs(css.stagingRowLi.h - 28) < 1.5);
         ck('manual empty group renders its head', css.manualEmptyHead);
-        ck('group head chevron starts at the 8px lead', css.groupChevLeft !== null && Math.abs(css.groupChevLeft - css.listLeft - 8) < 1.5);
+        ck('group head chevron starts at the 18px fold lead (center on the loose favicon)', css.groupChevLeft !== null && Math.abs(css.groupChevLeft - css.listLeft - 18) < 1.5);
         ck('group quick tail always visible (tabgroups law)', css.groupPlaceVisible === 'visible');
         // ≤400px container (this probe runs at 320px body): the group-
         // specific pair hides, the row-shared place/delete stay
@@ -237,8 +244,8 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
             css.groupRemove && Math.abs(css.groupRemove.right - (css.listRight - 8)) < 1.5);
         ck('scissors divider separates the recent region', css.cut);
         ck('guide strip renders above the toolbar', css.guideBanner);
-        ck('time-bucket head label starts on the 8px lead column',
-            css.timeHeadLeft !== null && Math.abs(css.timeHeadLeft - (css.listLeft + 8)) < 1.5);
+        ck('time-bucket head title starts on the shared 40px title axis',
+            css.timeHeadLeft !== null && Math.abs(css.timeHeadLeft - (css.listLeft + 40)) < 1.5);
         // the three same send buttons of the recent region: ONE right
         // axis (all end 8px off the list edge) and ONE vertical-center
         // OFFSET (each centers in its own --vbm-row-h host row — the
