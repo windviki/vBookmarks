@@ -234,48 +234,74 @@ describe('height drag (resizer-y)', () => {
 describe('width drag (resizer-x)', () => {
     const dragStart = m => m.pointerdown(m.resizerX, { screenX: 600 });
 
-    it('writes the target to the ROOT immediately and pins body to the achieved viewport (chase)', () => {
-        // mount viewport 400; drag target 500 — the bubble is still at 400,
-        // so the body must keep filling the ACHIEVED viewport, not the target
+    it('writes the raw target to root AND body when the viewport is within LEAD (grow / slow drags)', () => {
         const m = mount({ bodyWidth: 400 });
         dragStart(m);
+        // screenX 500 = 100px leftward travel = +100 width; target 500 >
+        // viewport 400 − 16 → unpaced, verbatim target on both elements
         m.fireDoc('pointermove', { screenX: 500 });
         expect(globalThis.document.documentElement.style.width).toBe('500px');
-        expect(m.body.style.width).toBe('400px');
-        expect(m.store.map.get('popupWidth')).toBe(500); // the TARGET persists
+        expect(m.body.style.width).toBe('500px');
+        expect(m.store.map.get('popupWidth')).toBe(500);
         expect(m.clearMenu).toHaveBeenCalled();
     });
 
-    it('each viewport catch-up step re-pins the body, and the exact target lands at rest', () => {
-        const m = mount({ bodyWidth: 400 });
+    it('paces a fast shrink: root and body lead the achieved viewport by only 16px', () => {
+        const m = mount({ bodyWidth: 640, innerWidth: 640 });
         dragStart(m);
-        m.fireDoc('pointermove', { screenX: 500 }); // target 500, viewport 400
-        m.win.innerWidth = 460;                      // bubble halfway
+        m.fireDoc('pointermove', { screenX: 600 + 320 }); // fling: target 320
+        expect(globalThis.document.documentElement.style.width).toBe('624px');
+        expect(m.body.style.width).toBe('624px');
+        expect(m.store.map.get('popupWidth')).toBe(320); // the TARGET persists
+    });
+
+    it('each viewport catch-up step re-paces, and the exact target lands at rest', () => {
+        const m = mount({ bodyWidth: 640, innerWidth: 640 });
+        dragStart(m);
+        m.fireDoc('pointermove', { screenX: 600 + 320 }); // target 320, paced 624
+        m.win.innerWidth = 500;                           // bubble halfway
         m.fireWin('resize', {});
-        expect(m.body.style.width).toBe('460px');
-        m.win.innerWidth = 500;                      // caught up
+        expect(m.body.style.width).toBe('484px');
+        expect(globalThis.document.documentElement.style.width).toBe('484px');
+        m.win.innerWidth = 320;                           // caught up
         m.fireWin('resize', {});
-        expect(m.body.style.width).toBe('500px');
+        expect(m.body.style.width).toBe('320px');
         // chase complete: a later stray resize must not resurrect it
-        m.win.innerWidth = 502;
+        m.win.innerWidth = 318;
         m.fireWin('resize', {});
-        expect(m.body.style.width).toBe('500px');
+        expect(m.body.style.width).toBe('320px');
     });
 
     it('the chase survives pointerup through the bubble\'s tail frames', () => {
-        const m = mount({ bodyWidth: 400 });
+        const m = mount({ bodyWidth: 640, innerWidth: 640 });
         dragStart(m);
-        m.fireDoc('pointermove', { screenX: 500 });
-        m.fireDoc('pointerup', { screenX: 500 });
-        expect(m.body.style.width).toBe('400px'); // still glued mid-chase
-        m.win.innerWidth = 500;
+        m.fireDoc('pointermove', { screenX: 600 + 320 });
+        m.fireDoc('pointerup', { screenX: 600 + 320 });
+        expect(m.body.style.width).toBe('624px'); // still paced mid-chase
+        m.win.innerWidth = 320;
         m.fireWin('resize', {});
-        expect(m.body.style.width).toBe('500px'); // settles with the bubble
+        expect(m.body.style.width).toBe('320px'); // settles with the bubble
         expect(m.store.flush).toHaveBeenCalled();
         expect(m.adaptTooltips).toHaveBeenCalledTimes(1);
     });
 
-    it('drag end with the viewport already caught up settles the body now', () => {
+    it('end-of-drag watchdog snaps the document to the target if the viewport stalls mid-chase', () => {
+        vi.useFakeTimers();
+        try {
+            const m = mount({ bodyWidth: 640, innerWidth: 640 });
+            dragStart(m);
+            m.fireDoc('pointermove', { screenX: 600 + 320 }); // paced 624
+            m.fireDoc('pointerup', { screenX: 600 + 320 });   // no further steps
+            expect(m.body.style.width).toBe('624px');
+            vi.advanceTimersByTime(801);
+            expect(m.body.style.width).toBe('320px');
+            expect(globalThis.document.documentElement.style.width).toBe('320px');
+        } finally {
+            vi.useRealTimers();
+        }
+    });
+
+    it('drag end with the viewport already caught up settles the document now', () => {
         const m = mount({ bodyWidth: 400, innerWidth: 500 });
         dragStart(m);
         m.fireDoc('pointermove', { screenX: 500 });
@@ -298,7 +324,11 @@ describe('width drag (resizer-x)', () => {
         m.fireDoc('pointermove', { screenX: -800 });
         expect(globalThis.document.documentElement.style.width).toBe('640px');
         m.fireDoc('pointermove', { screenX: 900 });
-        expect(globalThis.document.documentElement.style.width).toBe('320px');
+        // target 320 clamps at the hard min; pace keeps 16px of lead
+        expect(globalThis.document.documentElement.style.width).toBe('384px');
+        m.win.innerWidth = 320;
+        m.fireWin('resize', {});
+        expect(m.body.style.width).toBe('320px');
     });
 
     it('window blur resets the drag state (a stray move cannot resize)', () => {

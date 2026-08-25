@@ -7,12 +7,14 @@
  *  - the width/height edge-drag resizers: pointer events + capture (a popup
  *    widens LEFTWARD from its toolbar anchor, so the drag must survive the
  *    pointer leaving the window) with screen-edge clamps frozen at
- *    pointerdown. The width drag is CHASE-PINNED: the root element carries
- *    the pointer target (drives the native bubble, which resizes
- *    asynchronously) while body stays pinned to the viewport the bubble has
- *    actually achieved until it catches up — the visible content edge then
- *    moves with the bubble instead of ahead of it (no right-edge blank
- *    strip, no oscillating right-aligned header buttons; chaseBodyWidth in
+ *    pointerdown. The width drag is PACED against the native window: the
+ *    popup follows the document's laid-out width asynchronously (grow is
+ *    instant, narrow lags — user-measured up to 235px), so root and body
+ *    both take chaseBodyWidth's bounded-lead value instead of the raw
+ *    pointer target — the shrink keeps its preferred-size pressure while
+ *    the visible right-edge strip stays bounded by the LEAD constant, and
+ *    an end-of-drag watchdog guarantees the document converges to the
+ *    stored target even if the viewport stalls (chaseBodyWidth in
  *    resize-core.js);
  *  - the extension zoom (Ctrl/Cmd+wheel, Ctrl/Cmd +/-/0).
  * The pure decisions (grow/stay/shrink, drag clamps, zoom steps) live in
@@ -140,19 +142,29 @@ export function initResize(ctx = {}) {
         screenX = 0,
         screenY = 0;
 
-    // Width-chase state (see chaseBodyWidth in resize-core.js): the target
-    // the root width was last set to while the native bubble is still
-    // catching up. Non-zero from the first X move until the achieved
-    // viewport reaches the target; the resize listener below re-pins the
-    // body on every viewport step in between (also after pointerup — the
-    // bubble keeps moving through the drag's tail frames).
+    // Width-chase state (see chaseBodyWidth in resize-core.js): the pointer
+    // TARGET the user is dragging toward, which the document approaches at a
+    // bounded LEAD ahead of the viewport the native bubble has actually
+    // achieved. Non-zero from the first X move until the achieved viewport
+    // reaches the target; the resize listener below re-paces the document on
+    // every viewport step in between (also after pointerup — the bubble keeps
+    // moving through the drag's tail frames).
     let widthChase = 0;
+    let chaseWatchdog = 0;
     const applyWidthChase = () => {
         if (!widthChase)
             return;
-        body.style.width = `${chaseBodyWidth(widthChase, window.innerWidth)}px`;
-        if (Math.abs(window.innerWidth - widthChase) <= 0.5)
+        const w = chaseBodyWidth(widthChase, window.innerWidth);
+        // Both elements carry the paced width: the popup's preferred size is
+        // the CONTENT extent (the max of the root box and the overflowing
+        // body — see the regression note in resize-core.js), so pacing only
+        // one of them either deadlocks the shrink or detaches the content.
+        document.documentElement.style.width = `${w}px`;
+        body.style.width = `${w}px`;
+        if (window.innerWidth <= widthChase + 0.5) {
             widthChase = 0; // caught up — rest state: body == root == stored
+            if (chaseWatchdog) { clearTimeout(chaseWatchdog); chaseWatchdog = 0; }
+        }
     };
     window.addEventListener('resize', applyWidthChase);
 
@@ -169,11 +181,28 @@ export function initResize(ctx = {}) {
         resizerXDown = false;
         resizerYDown = false;
         currentMaxHeight = 0; // a cancelled/ended drag's ceiling must not leak
-        // Drag end while the bubble already caught up: settle the body to
-        // the exact target now (no further resize event will come). If the
-        // bubble is still mid-chase, widthChase stays armed — the resize
-        // listener keeps gluing the body through the tail frames.
+        // Drag end while the bubble already caught up: settle the document to
+        // the exact target now. If it is still mid-chase, widthChase stays
+        // armed — the resize listener keeps pacing the document through the
+        // tail frames — and the watchdog below guarantees convergence: if the
+        // viewport ever stalls above the target (no further resize steps),
+        // snap the document to the stored target so the popup can never rest
+        // wider than the width the user chose.
         applyWidthChase();
+        if (widthChase) {
+            if (chaseWatchdog)
+                clearTimeout(chaseWatchdog);
+            const target = widthChase;
+            const docEl = document.documentElement;
+            chaseWatchdog = setTimeout(() => {
+                chaseWatchdog = 0;
+                if (widthChase !== target)
+                    return; // a newer drag owns the state now
+                widthChase = 0;
+                docEl.style.width = `${target}px`;
+                body.style.width = `${target}px`;
+            }, 800);
+        }
         // Commit the final size synchronously: popup pagehide is NOT
         // guaranteed on close, so the debounced store write could be lost if
         // the popup closes right after the drag (the "widened but next open is
@@ -196,6 +225,9 @@ export function initResize(ctx = {}) {
         e.preventDefault();
         e.stopPropagation();
         resizerXDown = true;
+        // A new drag owns the width now: cancel any pending convergence
+        // watchdog left by the previous drag's tail.
+        if (chaseWatchdog) { clearTimeout(chaseWatchdog); chaseWatchdog = 0; }
         bodyWidth = body.offsetWidth;
         screenX = e.screenX;
         maxResizeWidth = onScreenMaxWidth();
@@ -239,21 +271,18 @@ export function initResize(ctx = {}) {
             // 320 < width < 640, and never wider than the screen leaves room
             // for (a wider popup pushes its resize handle off-screen).
             width = clampDragWidth(width, maxResizeWidth);
-            // The popup OS window is sized from the ROOT element, not body —
-            // and <html> width:auto tracks the VIEWPORT, so once the window
-            // has grown the root stays at the widest attained width and the
-            // window can never narrow again ("widened, can't narrow back":
-            // body shrank but innerWidth stayed pinned, verified on Edge
-            // 151). Setting the root width explicitly lets the window follow
-            // the drag in both directions. (Height needs no such help:
-            // <html> height:auto shrink-wraps the content.)
-            document.documentElement.style.width = `${width}px`;
-            // The bubble follows the root ASYNCHRONOUSLY. Body must not run
-            // ahead of it: pinned to the achieved viewport (chase rule,
-            // resize-core.js) the visible content edge — toolbar, list,
-            // right-aligned header buttons — stays glued to the bubble edge
-            // while it catches up, instead of detaching into a right-edge
-            // blank strip / clipped buttons that "fill back" a beat later.
+            // The popup window sizes from the document's laid-out width
+            // (max of the root box and the overflowing body) and follows it
+            // ASYNCHRONOUSLY — growing with no lag but narrowing through a
+            // visible chase. Writing the raw target every move lets the
+            // content outrun the window edge by the full lag (the "右缘弹开
+            // 再填回" strip; right-aligned header buttons oscillating against
+            // the visible edge). Both elements instead take the PACED width
+            // (chase rule, resize-core.js): never more than LEAD px narrower
+            // than the viewport the window has achieved, so the shrink keeps
+            // its preferred-size pressure while the visible strip stays
+            // bounded — and the pointer target is taken verbatim the moment
+            // the window is within LEAD of it (grow / slow drags: unpaced).
             widthChase = width;
             applyWidthChase();
             store.set('popupWidth', width);

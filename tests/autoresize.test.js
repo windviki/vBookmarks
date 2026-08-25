@@ -246,27 +246,29 @@ describe('popup WIDTH drag clamp (pointerDragHandler)', () => {
 });
 
 describe('popup width-chase rule (chaseBodyWidth)', () => {
-    // During an X drag the root element carries the pointer target while
-    // the native bubble catches up asynchronously; the body stays pinned to
-    // the viewport the bubble has ACHIEVED so the visible content edge
-    // never detaches from the window edge (no blank strip / no oscillating
-    // right-aligned buttons). Only at caught-up does the body take the
-    // exact target.
-    it('pins the body to the achieved viewport while the bubble lags', () => {
-        expect(chaseBodyWidth(320, 640)).toBe(640); // fast compression, mid-chase
-        expect(chaseBodyWidth(640, 330)).toBe(330); // expansion, mid-chase
-        expect(chaseBodyWidth(500, 460)).toBe(460); // halfway caught up
+    // During an X drag the native window follows the document's laid-out
+    // width asynchronously (grow instant, narrow lagging — user-measured
+    // bubbleLag up to 235px on Chrome 151/dpr2). The document takes the
+    // bounded-LEAD pace: never more than LEAD px narrower than the achieved
+    // viewport (keeps the shrink's preferred-size pressure, bounds the
+    // visible right-edge strip by LEAD), and the raw pointer target the
+    // moment the viewport is within LEAD of it (grow / slow drags unpaced).
+    it('paces a lagging shrink: the document leads the achieved viewport by only LEAD px', () => {
+        expect(chaseBodyWidth(320, 640)).toBe(624);  // fast compression, mid-chase
+        expect(chaseBodyWidth(500, 560)).toBe(544);  // halfway caught up
+        expect(chaseBodyWidth(500, 516)).toBe(500);  // within LEAD → unpaced
     });
 
-    it('snaps to the exact target once the viewport reaches it', () => {
+    it('grow and caught-up drags take the raw pointer target', () => {
+        expect(chaseBodyWidth(640, 330)).toBe(640);  // expansion: target verbatim
         expect(chaseBodyWidth(500, 500)).toBe(500);
         expect(chaseBodyWidth(320, 320)).toBe(320);
+        expect(chaseBodyWidth(500, 501)).toBe(500);  // rounding residue ≤ LEAD
     });
 
-    it('treats device-pixel rounding within eps as caught up', () => {
-        expect(chaseBodyWidth(500, 499.6)).toBe(500);
-        expect(chaseBodyWidth(500, 500.4)).toBe(500);
-        expect(chaseBodyWidth(500, 499)).toBe(499); // beyond eps → still pinned
+    it('the lead is configurable', () => {
+        expect(chaseBodyWidth(320, 640, 8)).toBe(632);
+        expect(chaseBodyWidth(320, 640, 40)).toBe(600);
     });
 
     it('narrowing back is always reachable: the min never exceeds 320', () => {
@@ -325,8 +327,10 @@ describe('resizer source contract (4.0.1 width regression gate)', () => {
         // root element; <html> width:auto tracks the viewport, so after a
         // widen the root sticks at the widest width and the window can never
         // narrow (body shrank, innerWidth stayed pinned). The drag must write
-        // documentElement's width alongside body's or narrowing is dead.
-        expect(resizeJs).toMatch(/document\.documentElement\.style\.width = `\$\{width\}px`/);
+        // documentElement's width alongside body's or narrowing is dead —
+        // since the paced-chase refactor both writes live in applyWidthChase
+        // (same value on both elements, every paced step and every settle).
+        expect(resizeJs).toMatch(/applyWidthChase[\s\S]*?document\.documentElement\.style\.width = `\$\{w\}px`[\s\S]*?body\.style\.width = `\$\{w\}px`/);
     });
 
     it('flushes AFTER the final width write on drag end, not before', () => {

@@ -41,23 +41,35 @@ export const decideWidthMax = ({ bodyWidth, leftRoom, rightRoom, hardMax = RESIZ
 export const clampDragWidth = (width, maxResizeWidth, hardMin = 320) =>
     Math.max(hardMin, Math.min(maxResizeWidth, width));
 
-// Width-chase rule for the X drag (pointerDragHandler + the drag-window
-// resize listener in resize.js). The native popup bubble follows the ROOT
-// element's width ASYNCHRONOUSLY — writing the pointer target to root and
-// body alike leaves the body detached from the still-wide visible edge for
-// the frames the bubble needs to catch up: a right-edge blank strip across
-// toolbar and list on fast compressions, and right-aligned header buttons
-// oscillating against the visible edge (the 2026-08 resize-smoothness
-// report; headless harness diag-r1-smooth.js reproduces the same geometry by
-// freezing the root box one transition late — content tracks the target
-// while root/viewport lag, then "fill back"). The fix splits the two roles:
-// the root carries the target (drives the bubble), the body is pinned to the
-// viewport the bubble has actually ACHIEVED until it catches up, so the
-// visible content edge moves WITH the bubble instead of ahead of it. Only
-// when the viewport reaches the target does the body snap to the exact
-// target (eps covers device-pixel rounding).
-export const chaseBodyWidth = (targetW, viewportW, eps = 0.5) =>
-    Math.abs(viewportW - targetW) <= eps ? targetW : viewportW;
+// Width-pace rule for the X drag (pointerDragHandler + the drag-window
+// resize listener in resize.js). The native popup bubble follows the
+// document's laid-out width ASYNCHRONOUSLY, and asymmetrically: it grows
+// with zero lag but narrows through a visible chase (user-measured on
+// Chrome 151/dpr2 with scripts/console/probe-resize.js v3: bubbleLag up to
+// 235px and a 234px right-edge blank strip for ~55 frames during a fast
+// compression — the "右缘弹开再填回" report). Writing the raw pointer
+// target to the document on every move lets the content outrun the bubble
+// by exactly that lag. The rule below paces the DOCUMENT instead: while
+// the achieved viewport is still wider than the target, the document stays
+// only LEAD px narrower than the viewport — far enough that the popup's
+// preferred size keeps pulling the bubble down (the shrink engine), close
+// enough that the visible blank strip is bounded by LEAD instead of the
+// full lag. The pointer target is taken verbatim as soon as the viewport
+// is within LEAD of it (grow, and slow drags, behave like the unpaced
+// code).
+//
+// Regression note (2026-08, first attempt, user-reported "可以拉伸但无法
+// 缩短"): pinning the body TO the achieved viewport (body == innerWidth)
+// deadlocks the shrink on real Chrome — the popup sizes from the CONTENT
+// extent (the max of the root box and the overflowing body), so content ==
+// viewport means the preferred size never drops and the bubble never
+// narrows. Headless Chromium instead follows the ROOT element's box (the
+// harness evidence that misled the first design), which is why the Docker
+// diag could not catch it. The document must stay strictly narrower than
+// the viewport for the window to shrink at all.
+export const CHASE_LEAD_PX = 16;
+export const chaseBodyWidth = (targetW, viewportW, lead = CHASE_LEAD_PX) =>
+    Math.max(targetW, viewportW - lead);
 
 // Zoom level for a Ctrl/Cmd+wheel or Ctrl/Cmd++/-/0 delta (neat.js zoom()).
 // 0 resets to the default → null. Otherwise ±10 steps clamped to [90, 150].
