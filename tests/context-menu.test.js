@@ -254,7 +254,9 @@ const setup = (opts = {}) => {
     // the bookmark-menu twin: flyout entry + its two before/after items
     const bookmarkAddEntry = el('DIV', 'bookmark-add-collapse');
     bookmarkAddEntry.classList.add('menu-item', 'has-submenu');
+    bookmarkAddEntry.dataset.submenu = 'bookmark-add-submenu';
     const bookmarkAddSubmenu = el('MENU', 'bookmark-add-submenu');
+    bookmarkAddSubmenu.dataset.parentEntry = 'bookmark-add-collapse';
     bookmarkAddSubmenu._children = [];
     for (const bid of ['sub-add-folder-before-bookmark', 'sub-add-folder-after-bookmark']) {
         const item = el('DIV', bid);
@@ -762,6 +764,20 @@ describe('clearMenu', () => {
         menus.clearMenu();
         expect(bookmarkMenu.style.left).toBe('-999px');
         expect(bookmarkMenu.style.opacity).toBe('0');
+    });
+
+    // B2 scrollbar-gate regression: an opened menu gets an inline top from
+    // positionMenu; closing must CLEAR it so the base CSS re-parks the box
+    // above the viewport — a parked menu keeping its last top extended
+    // documentElement.scrollHeight below the fold.
+    it('closing clears the inline top so parked menus re-pin above the viewport', () => {
+        const ctx = setup({});
+        ctx.openOn(ctx.makeFolderRow('7').span);
+        expect(ctx.folderMenu.style.top).not.toBe('');
+        ctx.menus.clearMenu();
+        expect(ctx.folderMenu.style.top).toBe('');
+        expect(ctx.folderMenu.style.left).toBe('-999px');
+        expect(ctx.folderMenu.style.opacity).toBe('0');
     });
 
     it('is wired to outside clicks, scrolls and focus moves', () => {
@@ -3203,6 +3219,16 @@ describe('folder copy-list + add-folder collapse (velvet staging §6/§7)', () =
         expect(storeSource).toContain("'collapseAddFolderMenu'");
         const optionsHtml = fs.readFileSync(new URL('../pages/options.html', import.meta.url), 'utf8');
         expect(optionsHtml).toContain('id="collapse-add-folder-menu"');
+    });
+
+    it('the branch-new option switches are declared in the options binding list', () => {
+        // the data-driven checkbox binder is generic (one representative key
+        // is behavior-tested); the per-key contract is the declaration row —
+        // a forgotten row means the checkbox renders dead.
+        const optionsSource = fs.readFileSync(new URL('../src/options.js', import.meta.url), 'utf8');
+        expect(optionsSource).toContain("{ id: 'collapse-add-folder-menu', key: 'collapseAddFolderMenu', defaultValue: '1', inverted: false }");
+        expect(optionsSource).toContain("{ id: 'staging-enabled', key: 'stagingEnabled', defaultValue: '1', inverted: false }");
+        expect(optionsSource).toContain("{ id: 'tree-row-actions', key: 'treeRowActions', defaultValue: '1', inverted: false }");
     });
 
     it('the collapse-add-folder class rides the bookmark menu as well', () => {

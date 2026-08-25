@@ -242,66 +242,34 @@ export function initContextMenu(ctx = {}) {
         }
     };
 
+    // Park a menu off-canvas: left stays -999px and the INLINE top from the
+    // last open is cleared so the base CSS re-pins it ABOVE the viewport —
+    // a parked box that keeps its last top could still extend
+    // documentElement.scrollHeight below the fold (the B2 scrollbar-gate
+    // regression; see the top:-999px note in neat.css).
+    const parkMenu = m => {
+        if (!m)
+            return;
+        m.style.left = '-999px';
+        m.style.top = '';
+        m.style.opacity = '0';
+        m.style.transform = 'scale(.98)';
+    };
+
     const hideAllMenus = () => {
-        $bookmarkContextMenu.style.left = '-999px';
-        $bookmarkContextMenu.style.opacity = '0';
-        $bookmarkContextMenu.style.transform = 'scale(.98)';
-        $folderContextMenu.style.left = '-999px';
-        $folderContextMenu.style.opacity = '0';
-        $folderContextMenu.style.transform = 'scale(.98)';
-        $separatorContextMenu.style.left = '-999px';
-        $separatorContextMenu.style.opacity = '0';
-        $separatorContextMenu.style.transform = 'scale(.98)';
-        if ($searchHistoryContextMenu) {
-            $searchHistoryContextMenu.style.left = '-999px';
-            $searchHistoryContextMenu.style.opacity = '0';
-            $searchHistoryContextMenu.style.transform = 'scale(.98)';
-        }
-        if ($histRowContextMenu) {
-            $histRowContextMenu.style.left = '-999px';
-            $histRowContextMenu.style.opacity = '0';
-            $histRowContextMenu.style.transform = 'scale(.98)';
-        }
-        if ($dupesGroupContextMenu) {
-            $dupesGroupContextMenu.style.left = '-999px';
-            $dupesGroupContextMenu.style.opacity = '0';
-            $dupesGroupContextMenu.style.transform = 'scale(.98)';
-        }
-    if ($stagingGroupContextMenu) {
-        $stagingGroupContextMenu.style.left = '-999px';
-        $stagingGroupContextMenu.style.opacity = '0';
-        $stagingGroupContextMenu.style.transform = 'scale(.98)';
-    }
-        if ($paletteCmdContextMenu) {
-            $paletteCmdContextMenu.style.left = '-999px';
-            $paletteCmdContextMenu.style.opacity = '0';
-            $paletteCmdContextMenu.style.transform = 'scale(.98)';
-        }
-        if ($viewTabContextMenu) {
-            $viewTabContextMenu.style.left = '-999px';
-            $viewTabContextMenu.style.opacity = '0';
-            $viewTabContextMenu.style.transform = 'scale(.98)';
-        }
-        if ($tabRowContextMenu) {
-            $tabRowContextMenu.style.left = '-999px';
-            $tabRowContextMenu.style.opacity = '0';
-            $tabRowContextMenu.style.transform = 'scale(.98)';
-        }
-        if ($tabGroupContextMenu) {
-            $tabGroupContextMenu.style.left = '-999px';
-            $tabGroupContextMenu.style.opacity = '0';
-            $tabGroupContextMenu.style.transform = 'scale(.98)';
-        }
-        if ($tabClosedContextMenu) {
-            $tabClosedContextMenu.style.left = '-999px';
-            $tabClosedContextMenu.style.opacity = '0';
-            $tabClosedContextMenu.style.transform = 'scale(.98)';
-        }
-        if ($tabClosedTabContextMenu) {
-            $tabClosedTabContextMenu.style.left = '-999px';
-            $tabClosedTabContextMenu.style.opacity = '0';
-            $tabClosedTabContextMenu.style.transform = 'scale(.98)';
-        }
+        parkMenu($bookmarkContextMenu);
+        parkMenu($folderContextMenu);
+        parkMenu($separatorContextMenu);
+        parkMenu($searchHistoryContextMenu);
+        parkMenu($histRowContextMenu);
+        parkMenu($dupesGroupContextMenu);
+        parkMenu($stagingGroupContextMenu);
+        parkMenu($paletteCmdContextMenu);
+        parkMenu($viewTabContextMenu);
+        parkMenu($tabRowContextMenu);
+        parkMenu($tabGroupContextMenu);
+        parkMenu($tabClosedContextMenu);
+        parkMenu($tabClosedTabContextMenu);
         // The root-folder disabled states are per-open (root vs non-root);
         // drop them all here so they can never leak across unrelated menu
         // opens.
@@ -325,11 +293,7 @@ export function initContextMenu(ctx = {}) {
         // Park any open collapsed-group flyout and its expanded marker.
         for (const sub of [$folderTabGroupSubmenu, $folderSortSubmenu, $bookmarkTabGroupSubmenu,
             $folderCopySubmenu, $folderAddSubmenu, $bookmarkAddSubmenu]) {
-            if (!sub)
-                continue;
-            sub.style.left = '-999px';
-            sub.style.opacity = '0';
-            sub.style.transform = 'scale(.98)';
+            parkMenu(sub);
         }
         if (openSubmenu && openSubmenu._parentEntryId) {
             const entry = $(openSubmenu._parentEntryId);
@@ -501,9 +465,7 @@ export function initContextMenu(ctx = {}) {
         if (!sub)
             return null;
         if (openSubmenu && openSubmenu !== sub) {
-            openSubmenu.style.left = '-999px';
-            openSubmenu.style.opacity = '0';
-            openSubmenu.style.transform = 'scale(.98)';
+            parkMenu(openSubmenu);
             if (openSubmenu._parentEntryId) {
                 const old = $(openSubmenu._parentEntryId);
                 if (old && old.setAttribute)
@@ -521,9 +483,7 @@ export function initContextMenu(ctx = {}) {
         if (!openSubmenu)
             return;
         const parentId = openSubmenu._parentEntryId;
-        openSubmenu.style.left = '-999px';
-        openSubmenu.style.opacity = '0';
-        openSubmenu.style.transform = 'scale(.98)';
+        parkMenu(openSubmenu);
         openSubmenu = null;
         if (parentId) {
             const entry = $(parentId);

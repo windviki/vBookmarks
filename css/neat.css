@@ -899,6 +899,12 @@ menu[type=context] {
     list-style: none;
     position: absolute;
     left: -999px;
+    /* Park ABOVE the viewport too: top:auto leaves a never-opened menu's
+       static-position box (zoom-exempt, full item height) extending below
+       the fold — it fed documentElement.scrollHeight and tripped the B2
+       scrollbar gate once the folder menu grew past the viewport height.
+       Negative-direction boxes never create scrollable overflow. */
+    top: -999px;
     z-index: 300;
     border: 1px solid var(--vbm-border);
     border-radius: var(--vbm-radius);
