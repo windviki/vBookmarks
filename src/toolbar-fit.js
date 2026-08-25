@@ -50,6 +50,27 @@ export const fitToolbarLabels = bar => {
             break;
         }
     }
+    // Overflow backstop: rounding, subpixel gaps and the bar's own padding
+    // can each shave a pixel off `free` — with the rung pinned to one row
+    // (nowrap) an over-reveal now reads as scrollWidth > clientWidth; revert
+    // labels right-to-left until the row actually fits.
+    const revealed = [];
+    for (const b of btns) {
+        const lab = b.querySelector('.vbm-fit-label');
+        if (lab && lab.style.display === 'inline')
+            revealed.push({ b, lab });
+    }
+    let guard = revealed.length + 2;
+    while (guard-- > 0
+        && bar.clientWidth >= 0
+        && typeof bar.scrollWidth === 'number'
+        && bar.scrollWidth > bar.clientWidth + 1
+        && revealed.length) {
+        const { b, lab } = revealed.pop();
+        lab.style.display = 'none';
+        b.style.width = '';
+        b.style.padding = '';
+    }
 };
 
 // One observer per list container (persistent element). Width change only —

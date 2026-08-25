@@ -499,6 +499,10 @@ export function initViewTabGroups(ctx = {}) {
             // are inert — the filter force-expands every group and window).
             iconBtn('tabgroups-collapse-all', COLLAPSE_ALL_ICON, 'tabGroupsCollapseAll', !!filterNeedle()) +
             iconBtn('tabgroups-expand-all', EXPAND_ALL_ICON, 'tabGroupsExpandAll', !!filterNeedle()) +
+            // The select-mode entry joins the CONTROLS rung (rightmost, the
+            // every-view law) — it used to trail the filter field on the
+            // options rung below, off the shared right axis.
+            iconBtn('tabgroups-select-mode', SELECT_ICON, 'selectModeEnter') +
             '</div>' +
             '<div class="tabgroups-toolbar tabgroups-actions-toolbar vbm-toolbar">' +
             `<span class="tabgroups-options" role="group" aria-label="${htmlspecialchars(_m('tabGroupOptions'))}">` +
@@ -519,7 +523,6 @@ export function initViewTabGroups(ctx = {}) {
                   '</button>'
                 : '') +
             `</span>` +
-            iconBtn('tabgroups-select-mode', SELECT_ICON, 'selectModeEnter') +
             '</div>';
     };
 

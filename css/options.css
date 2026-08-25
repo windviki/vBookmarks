@@ -368,14 +368,24 @@ white-space: nowrap;
 }
 /* 4.0.8 favicon gallery entry: the clear-cache row becomes a flex row so the
    "view refreshed icons" link pins to the row's end. */
-.options-list li.favicon-cache-row{
+/* 图标缓存 is a two-tier block (2026-08): the label heads the row, the
+   actions (clear + gallery link + badge) flow on their own line beneath —
+   one squeezed flex line went vertical once the label text landed. */
+.options-list li.favicon-cache-block{
 display: flex;
-flex-wrap: wrap; /* label+button … link+badge: the link wraps to its own
-                    right-pinned line when a narrow column/locale doesn't fit */
+flex-direction: column;
+gap: .35em;
+}
+.options-list li.favicon-cache-block .favicon-cache-head{
+font-weight: 600;
+}
+.options-list li.favicon-cache-block .favicon-cache-row{
+display: flex;
+flex-wrap: wrap; /* link+badge wraps right-pinned when a narrow column/locale doesn't fit */
 align-items: center;
 gap: .75em;
 }
-.options-list li.favicon-cache-row #favicon-gallery-link{
+.options-list li.favicon-cache-block .favicon-cache-row #favicon-gallery-link{
 margin-inline-start: auto;
 white-space: nowrap;
 }

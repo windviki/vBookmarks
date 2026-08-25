@@ -767,8 +767,13 @@ export function initViewRecent(ctx = {}) {
             `<span class="staging-section-title">${htmlspecialchars(_m('viewRecent'))}</span>` +
             `<span class="count-pill" aria-label="${htmlspecialchars(countLabel)}" ` +
             `title="${htmlspecialchars(countLabel)}">${n}</span>` +
+            // 清空全部 (danger, left of 新建分组): the same confirm + toast-
+            // undo path the selection bar's clear button runs — an icon+text
+            // entry like its neighbour, reading danger red.
+            `<button class="staging-clear-entry"${n ? '' : ' disabled'} aria-label="${htmlspecialchars(_m('stagingClear'))}" ` +
+            `title="${htmlspecialchars(_m('stagingClear'))}">${TRASH_ICON}<span class="staging-entry-label">${htmlspecialchars(_m('stagingClear'))}</span></button>` +
             `<button class="staging-new-group" aria-label="${htmlspecialchars(_m('stagingGroupNew'))}" ` +
-            `title="${htmlspecialchars(_m('stagingGroupNew'))}">${FOLDER_PLUS_ICON}${htmlspecialchars(_m('stagingGroupNew'))}</button>`;
+            `title="${htmlspecialchars(_m('stagingGroupNew'))}">${FOLDER_PLUS_ICON}<span class="staging-entry-label">${htmlspecialchars(_m('stagingGroupNew'))}</span></button>`;
         // 全部折叠/全部展开 (the tabgroups toolbar pair, same icons + keys):
         // they act on every virtual folding unit — the named groups AND the
         // unbookmarked inbox bucket — and stand down when there is nothing
@@ -2227,6 +2232,12 @@ export function initViewRecent(ctx = {}) {
         if (closest('.staging-select-mode')) {
             e.preventDefault();
             setSelecting(true, 'first');
+            return;
+        }
+        if (closest('.staging-clear-entry')) {
+            e.preventDefault();
+            e.stopPropagation();
+            clearStaging();
             return;
         }
         if (closest('.staging-new-group')) {

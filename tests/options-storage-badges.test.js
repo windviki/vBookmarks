@@ -309,7 +309,9 @@ describe('storage badges: page wiring', () => {
         // "Icon cache" row label (storageUsageIcon) before the clear button;
         // the gallery link (favGalleryLink) carries the inline device-local
         // badge via DATA_ROW_BADGES; the row wraps instead of overflowing
-        expect(optionsHtml).toContain('<span id="favicon-cache-label"></span><button id="favicon-cache-clear"');
+        // two-tier block (2026-08): the label heads, the actions flow below
+        expect(optionsHtml).toContain('<div class="favicon-cache-head" id="favicon-cache-label"></div>');
+        expect(optionsHtml).toContain('<button id="favicon-cache-clear"');
         expect(Object.keys(DATA_ROW_BADGES)).toEqual(['favicon-gallery-link']);
         expect(DATA_ROW_BADGES['favicon-gallery-link']).toBe(STORAGE_LOCAL);
     });

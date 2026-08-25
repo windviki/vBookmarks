@@ -2372,6 +2372,17 @@ li.staging-row.drag-over {
     border-bottom: 1px solid var(--vbm-border);
 }
 
+/* The iconified ACTION rungs never wrap (the one-row law): a wrapped rung
+   defeats the label fitter's free-width accounting — a too-wide label wraps
+   instead of overflowing, so the loop keeps revealing and the last button
+   lands on a second line. No-wrap makes overflow measurable (the fitter's
+   backstop reverts labels until scrollWidth fits). */
+.staging-toolbar.staging-actions-toolbar,
+.dead-toolbar.dead-actions-toolbar,
+.stats-toolbar.stats-actions-toolbar {
+    flex-wrap: nowrap;
+}
+
 .staging-toolbar .staging-summary,
 .staging-toolbar .select-count,
 .search-toolbar .search-result-count {
@@ -2407,6 +2418,35 @@ li.staging-row.drag-over {
     display: inline-flex;
     align-items: center;
     gap: 4px;
+}
+
+/* 清空全部 (idle head): icon+text like 新建分组 but danger red — the same
+   semantics the selection bar's clear runs (confirm + toast undo). */
+.staging-toolbar .staging-clear-entry {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--vbm-danger);
+}
+
+.staging-toolbar .staging-clear-entry:hover:not([disabled]) {
+    background: color-mix(in srgb, var(--vbm-danger) 12%, transparent);
+}
+
+.staging-toolbar .staging-clear-entry .vbm-icon {
+    width: 14px;
+    height: 14px;
+    flex: none;
+}
+
+/* The head row is nowrap by design; under ~480px the two icon+text entries
+   drop their labels (title/aria keep the meaning) so the row's min-content
+   width can never push the list into horizontal overflow at high zoom. */
+@container (max-width: 480px) {
+    .staging-toolbar .staging-clear-entry .staging-entry-label,
+    .staging-toolbar .staging-new-group .staging-entry-label {
+        display: none;
+    }
 }
 
 .staging-toolbar .staging-new-group .vbm-icon {
@@ -2489,6 +2529,13 @@ li.staging-row.drag-over {
 
 /* The three select-mode entry buttons share the dupes select-mode recipe:
    a 22px accent square. */
+/* The stats idle bar has no summary span to pin the cluster right — the
+   select-mode entry takes the right edge itself (every other view's law),
+   landing on the same right axis as the rows' trailing planes below. */
+.stats-toolbar .stats-select-mode {
+    margin-inline-start: auto;
+}
+
 .staging-toolbar .staging-select-mode,
 .search-toolbar .search-select-mode,
 .stats-toolbar .stats-select-mode {
@@ -4505,10 +4552,7 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
     margin-inline-start: 0;
     margin-inline-end: auto; /* summary left, primary actions right */
 }
-.dupes-toolbar button.dupes-select-mode,
-/* the staging relay's toolbar plane: the same 22px accent square, one icon
-   language with the select-mode entry (both sit left of the primary action) */
-.dupes-toolbar button.dupes-stage-all {
+.dupes-toolbar button.dupes-select-mode {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -4522,6 +4566,27 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
     color: var(--vbm-accent);
     cursor: pointer;
 }
+
+/* The staging relay's toolbar plane rides the row's TEXT-button geometry
+(auto width, 2px 6px padding, 16px glyph) — the same box as the dead view's
+icon buttons and its own 全部应用 neighbour; the old 22px square read
+visibly smaller next to them. */
+.dupes-toolbar .dupes-actions-toolbar button.dupes-stage-all {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3px 6px; /* 16px glyph + 6px = the dead view's icon-button box;
+                          the :not() flat-button chain at (0,3,1) used to win
+                          this back to 2px — match its specificity and win by
+                          source order */
+    flex: none;
+}
+.dupes-toolbar .dupes-actions-toolbar button.dupes-stage-all .vbm-icon {
+    width: 16px;
+    height: 16px;
+    flex: none;
+}
+
 .dupes-toolbar button.dupes-select-mode:hover {
     background: var(--vbm-bg-hover);
 }
@@ -5457,9 +5522,21 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
    The label (em) is flex:1, so the pill cluster right-aligns on EVERY
    window head — with or without the pill (a bare auto margin here used to
    pull non-current windows' count pills back onto the label). */
+#tabgroups-list ul li.tabgroups-window-head .tabgroups-window-head-row {
+    position: relative; /* hosts the absolutely pinned current pill */
+}
 #tabgroups-list ul li.tabgroups-window-head b.tabgroups-window-current {
+    /* The current-WINDOW pill shares the current-TAB badge's right axis:
+       absolutely pinned at 128px off the right edge (the rows' trailing
+       strip: 4px anchor end margin + five 20px columns with 4px strides +
+       the row's end padding). In-flow placement drifted with the count
+       pill's digit width; the pinned axis never moves. */
+    position: absolute;
+    inset-inline-end: 128px;
+    top: 50%;
+    transform: translateY(-50%);
     flex: none;
-    margin-inline-start: 8px;
+    margin: 0;
     font-weight: 500;
     font-size: 9px;
     line-height: 14px;

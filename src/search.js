@@ -748,13 +748,42 @@ export function initSearch(ctx = {}) {
         renderHistoryArea();
     if (typeof window.addEventListener === 'function')
         window.addEventListener('pagehide', () => recordHistory(searchInput.value));
-    // v4 task-4 #4: a popup resize (edge drag) changes how many history rows
-    // fit under the 40% cap — re-render so the area re-fills instead of
-    // keeping stale trimmed rows. Cheap; renders only in the search view.
+    // v4 task-4 #4, storm-proofed (the 2026-08 probe log: 721 resize events
+    // /3 s × a full re-render per tick — renderHistoryArea's trimmed state
+    // forces a full repaint every call, trim shifts the content height, the
+    // auto-resize answers, the loop self-runs at 240 Hz and kills hover and
+    // clicks). The resize path now (a) is debounced 200 ms, (b) SHRINKS by
+    // trimming nodes off the live list only — no re-render, no hover churn,
+    // and the height settles so the loop dies — and (c) re-renders to refill
+    // ONLY when the area actually GREW while rows were trimmed away.
+    let historyResizeTimer = null;
+    let historyAreaLastH = -1;
     if (typeof window.addEventListener === 'function')
         window.addEventListener('resize', () => {
-            if (views.isActive('search'))
-                renderHistoryArea();
+            if (!views.isActive('search') || !$historyArea)
+                return;
+            clearTimeout(historyResizeTimer);
+            historyResizeTimer = setTimeout(() => {
+                historyResizeTimer = null;
+                if (typeof $historyArea.querySelector !== 'function')
+                    return;
+                const ul = $historyArea.querySelector('ul');
+                const hasRows = !!$historyArea.querySelector('a[data-q]');
+                if (!ul || !hasRows)
+                    return;
+                const h = $historyArea.clientHeight;
+                const grew = h > historyAreaLastH + 4;
+                historyAreaLastH = h;
+                if ($historyArea.scrollHeight > $historyArea.clientHeight + 1) {
+                    // shrink: trim tail rows off the LIVE list — zero rebuild
+                    while (ul.children.length > 1 && $historyArea.scrollHeight > $historyArea.clientHeight)
+                        ul.removeChild(ul.lastElementChild);
+                } else if (grew && lastHistoryTrimmed) {
+                    // grew with rows missing: one full refill (it trims to
+                    // fit again inside renderHistoryArea)
+                    renderHistoryArea();
+                }
+            }, 200);
         });
 
     const search = (e) => {
