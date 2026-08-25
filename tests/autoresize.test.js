@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import {
     decideHeight, decideWidthMax, clampDragWidth,
     nextZoomLevel, ZOOM_MIN, ZOOM_MAX, ZOOM_STEP,
-    dragWidthDelta, popupMaxHeight, clampDragHeight
+    dragWidthDelta, popupMaxHeight, clampDragHeight, chaseBodyWidth
 } from '../src/resize-core.js';
 
 /**
@@ -242,6 +242,31 @@ describe('popup WIDTH drag clamp (pointerDragHandler)', () => {
         expect(clampDragWidth(400, 640)).toBe(400);
         expect(clampDragWidth(320, 640)).toBe(320);
         expect(clampDragWidth(640, 640)).toBe(640);
+    });
+});
+
+describe('popup width-chase rule (chaseBodyWidth)', () => {
+    // During an X drag the root element carries the pointer target while
+    // the native bubble catches up asynchronously; the body stays pinned to
+    // the viewport the bubble has ACHIEVED so the visible content edge
+    // never detaches from the window edge (no blank strip / no oscillating
+    // right-aligned buttons). Only at caught-up does the body take the
+    // exact target.
+    it('pins the body to the achieved viewport while the bubble lags', () => {
+        expect(chaseBodyWidth(320, 640)).toBe(640); // fast compression, mid-chase
+        expect(chaseBodyWidth(640, 330)).toBe(330); // expansion, mid-chase
+        expect(chaseBodyWidth(500, 460)).toBe(460); // halfway caught up
+    });
+
+    it('snaps to the exact target once the viewport reaches it', () => {
+        expect(chaseBodyWidth(500, 500)).toBe(500);
+        expect(chaseBodyWidth(320, 320)).toBe(320);
+    });
+
+    it('treats device-pixel rounding within eps as caught up', () => {
+        expect(chaseBodyWidth(500, 499.6)).toBe(500);
+        expect(chaseBodyWidth(500, 500.4)).toBe(500);
+        expect(chaseBodyWidth(500, 499)).toBe(499); // beyond eps → still pinned
     });
 
     it('narrowing back is always reachable: the min never exceeds 320', () => {

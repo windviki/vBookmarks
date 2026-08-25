@@ -41,6 +41,24 @@ export const decideWidthMax = ({ bodyWidth, leftRoom, rightRoom, hardMax = RESIZ
 export const clampDragWidth = (width, maxResizeWidth, hardMin = 320) =>
     Math.max(hardMin, Math.min(maxResizeWidth, width));
 
+// Width-chase rule for the X drag (pointerDragHandler + the drag-window
+// resize listener in resize.js). The native popup bubble follows the ROOT
+// element's width ASYNCHRONOUSLY — writing the pointer target to root and
+// body alike leaves the body detached from the still-wide visible edge for
+// the frames the bubble needs to catch up: a right-edge blank strip across
+// toolbar and list on fast compressions, and right-aligned header buttons
+// oscillating against the visible edge (the 2026-08 resize-smoothness
+// report; headless harness diag-r1-smooth.js reproduces the same geometry by
+// freezing the root box one transition late — content tracks the target
+// while root/viewport lag, then "fill back"). The fix splits the two roles:
+// the root carries the target (drives the bubble), the body is pinned to the
+// viewport the bubble has actually ACHIEVED until it catches up, so the
+// visible content edge moves WITH the bubble instead of ahead of it. Only
+// when the viewport reaches the target does the body snap to the exact
+// target (eps covers device-pixel rounding).
+export const chaseBodyWidth = (targetW, viewportW, eps = 0.5) =>
+    Math.abs(viewportW - targetW) <= eps ? targetW : viewportW;
+
 // Zoom level for a Ctrl/Cmd+wheel or Ctrl/Cmd++/-/0 delta (neat.js zoom()).
 // 0 resets to the default → null. Otherwise ±10 steps clamped to [90, 150].
 export const ZOOM_MIN = 90;

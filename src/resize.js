@@ -7,7 +7,13 @@
  *  - the width/height edge-drag resizers: pointer events + capture (a popup
  *    widens LEFTWARD from its toolbar anchor, so the drag must survive the
  *    pointer leaving the window) with screen-edge clamps frozen at
- *    pointerdown;
+ *    pointerdown. The width drag is CHASE-PINNED: the root element carries
+ *    the pointer target (drives the native bubble, which resizes
+ *    asynchronously) while body stays pinned to the viewport the bubble has
+ *    actually achieved until it catches up — the visible content edge then
+ *    moves with the bubble instead of ahead of it (no right-edge blank
+ *    strip, no oscillating right-aligned header buttons; chaseBodyWidth in
+ *    resize-core.js);
  *  - the extension zoom (Ctrl/Cmd+wheel, Ctrl/Cmd +/-/0).
  * The pure decisions (grow/stay/shrink, drag clamps, zoom steps) live in
  * resize-core.js; this module is only the DOM/chrome wiring around them.
@@ -37,7 +43,7 @@
  */
 import {
     decideHeight, decideWidthMax, clampDragWidth, nextZoomLevel,
-    dragWidthDelta, popupMaxHeight, clampDragHeight
+    dragWidthDelta, popupMaxHeight, clampDragHeight, chaseBodyWidth
 } from './resize-core.js';
 import { isAutoResizeEnabled } from './settings.js';
 
@@ -134,6 +140,22 @@ export function initResize(ctx = {}) {
         screenX = 0,
         screenY = 0;
 
+    // Width-chase state (see chaseBodyWidth in resize-core.js): the target
+    // the root width was last set to while the native bubble is still
+    // catching up. Non-zero from the first X move until the achieved
+    // viewport reaches the target; the resize listener below re-pins the
+    // body on every viewport step in between (also after pointerup — the
+    // bubble keeps moving through the drag's tail frames).
+    let widthChase = 0;
+    const applyWidthChase = () => {
+        if (!widthChase)
+            return;
+        body.style.width = `${chaseBodyWidth(widthChase, window.innerWidth)}px`;
+        if (Math.abs(window.innerWidth - widthChase) <= 0.5)
+            widthChase = 0; // caught up — rest state: body == root == stored
+    };
+    window.addEventListener('resize', applyWidthChase);
+
     // Drag the edge — POINTER events + capture (4.0.1 regression gate).
     // A Chrome popup grows LEFTWARD from its toolbar anchor, so a widen drag
     // pushes the pointer out of the popup window. The drag must therefore be
@@ -147,6 +169,11 @@ export function initResize(ctx = {}) {
         resizerXDown = false;
         resizerYDown = false;
         currentMaxHeight = 0; // a cancelled/ended drag's ceiling must not leak
+        // Drag end while the bubble already caught up: settle the body to
+        // the exact target now (no further resize event will come). If the
+        // bubble is still mid-chase, widthChase stays armed — the resize
+        // listener keeps gluing the body through the tail frames.
+        applyWidthChase();
         // Commit the final size synchronously: popup pagehide is NOT
         // guaranteed on close, so the debounced store write could be lost if
         // the popup closes right after the drag (the "widened but next open is
@@ -212,12 +239,6 @@ export function initResize(ctx = {}) {
             // 320 < width < 640, and never wider than the screen leaves room
             // for (a wider popup pushes its resize handle off-screen).
             width = clampDragWidth(width, maxResizeWidth);
-            // if (!rtl && e.screenX < 640 || rtl && e.screenX > 640) {
-            //     $resizerx.style.cursor = 'not-allowed';
-            // } else {
-            //     $resizerx.style.cursor = 'col-resize';
-            // }
-            body.style.width = `${width}px`;
             // The popup OS window is sized from the ROOT element, not body —
             // and <html> width:auto tracks the VIEWPORT, so once the window
             // has grown the root stays at the widest attained width and the
@@ -227,6 +248,14 @@ export function initResize(ctx = {}) {
             // the drag in both directions. (Height needs no such help:
             // <html> height:auto shrink-wraps the content.)
             document.documentElement.style.width = `${width}px`;
+            // The bubble follows the root ASYNCHRONOUSLY. Body must not run
+            // ahead of it: pinned to the achieved viewport (chase rule,
+            // resize-core.js) the visible content edge — toolbar, list,
+            // right-aligned header buttons — stays glued to the bubble edge
+            // while it catches up, instead of detaching into a right-edge
+            // blank strip / clipped buttons that "fill back" a beat later.
+            widthChase = width;
+            applyWidthChase();
             store.set('popupWidth', width);
             clearMenu();
         } else {

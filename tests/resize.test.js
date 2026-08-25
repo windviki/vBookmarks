@@ -234,54 +234,85 @@ describe('height drag (resizer-y)', () => {
 describe('width drag (resizer-x)', () => {
     const dragStart = m => m.pointerdown(m.resizerX, { screenX: 600 });
 
-    it('drags ltr by the mirrored screen delta and writes body AND root width', () => {
+    it('writes the target to the ROOT immediately and pins body to the achieved viewport (chase)', () => {
+        // mount viewport 400; drag target 500 — the bubble is still at 400,
+        // so the body must keep filling the ACHIEVED viewport, not the target
         const m = mount({ bodyWidth: 400 });
         dragStart(m);
-        // screenX 500 = 100px leftward travel = +100 width (ltr delta)
         m.fireDoc('pointermove', { screenX: 500 });
-        expect(m.body.style.width).toBe('500px');
         expect(globalThis.document.documentElement.style.width).toBe('500px');
-        expect(m.store.map.get('popupWidth')).toBe(500);
+        expect(m.body.style.width).toBe('400px');
+        expect(m.store.map.get('popupWidth')).toBe(500); // the TARGET persists
         expect(m.clearMenu).toHaveBeenCalled();
     });
 
-    it('mirrors the delta in rtl', () => {
-        const m = mount({ bodyWidth: 400, rtl: true });
+    it('each viewport catch-up step re-pins the body, and the exact target lands at rest', () => {
+        const m = mount({ bodyWidth: 400 });
         dragStart(m);
-        m.fireDoc('pointermove', { screenX: 700 });
+        m.fireDoc('pointermove', { screenX: 500 }); // target 500, viewport 400
+        m.win.innerWidth = 460;                      // bubble halfway
+        m.fireWin('resize', {});
+        expect(m.body.style.width).toBe('460px');
+        m.win.innerWidth = 500;                      // caught up
+        m.fireWin('resize', {});
+        expect(m.body.style.width).toBe('500px');
+        // chase complete: a later stray resize must not resurrect it
+        m.win.innerWidth = 502;
+        m.fireWin('resize', {});
         expect(m.body.style.width).toBe('500px');
     });
 
-    it('clamps into [320, maxResizeWidth]', () => {
-        const m = mount({ bodyWidth: 400 });
-        dragStart(m);
-        // maxResizeWidth frozen at pointerdown: min(640, 400 + 1296) = 640
-        m.fireDoc('pointermove', { screenX: -800 });
-        expect(m.body.style.width).toBe('640px');
-        m.fireDoc('pointermove', { screenX: 900 });
-        expect(m.body.style.width).toBe('320px');
-    });
-
-    it('flushes the store and refreshes tooltips at drag end', () => {
+    it('the chase survives pointerup through the bubble\'s tail frames', () => {
         const m = mount({ bodyWidth: 400 });
         dragStart(m);
         m.fireDoc('pointermove', { screenX: 500 });
         m.fireDoc('pointerup', { screenX: 500 });
+        expect(m.body.style.width).toBe('400px'); // still glued mid-chase
+        m.win.innerWidth = 500;
+        m.fireWin('resize', {});
+        expect(m.body.style.width).toBe('500px'); // settles with the bubble
         expect(m.store.flush).toHaveBeenCalled();
         expect(m.adaptTooltips).toHaveBeenCalledTimes(1);
+    });
+
+    it('drag end with the viewport already caught up settles the body now', () => {
+        const m = mount({ bodyWidth: 400, innerWidth: 500 });
+        dragStart(m);
+        m.fireDoc('pointermove', { screenX: 500 });
+        m.fireDoc('pointerup', { screenX: 500 });
+        expect(m.body.style.width).toBe('500px');
+    });
+
+    it('mirrors the delta in rtl', () => {
+        const m = mount({ bodyWidth: 400, rtl: true, innerWidth: 500 });
+        dragStart(m);
+        m.fireDoc('pointermove', { screenX: 700 });
+        expect(globalThis.document.documentElement.style.width).toBe('500px');
+        expect(m.body.style.width).toBe('500px');
+    });
+
+    it('clamps into [320, maxResizeWidth]', () => {
+        const m = mount({ bodyWidth: 400, innerWidth: 400 });
+        dragStart(m);
+        // maxResizeWidth frozen at pointerdown: min(640, 400 + 1296) = 640
+        m.fireDoc('pointermove', { screenX: -800 });
+        expect(globalThis.document.documentElement.style.width).toBe('640px');
+        m.fireDoc('pointermove', { screenX: 900 });
+        expect(globalThis.document.documentElement.style.width).toBe('320px');
     });
 
     it('window blur resets the drag state (a stray move cannot resize)', () => {
         const m = mount({ bodyWidth: 400 });
         dragStart(m);
+        m.fireDoc('pointermove', { screenX: 500 });
         m.fireWin('blur', {});
         expect(m.store.flush).toHaveBeenCalled();
         expect(m.adaptTooltips).toHaveBeenCalled();
 
         const stray = m.fireDoc('pointermove', { screenX: 100 });
         expect(stray.preventDefault).not.toHaveBeenCalled();
-        expect(m.body.style.width).toBeUndefined();
-        expect(m.store.map.has('popupWidth')).toBe(false);
+        expect(globalThis.document.documentElement.style.width).toBe('500px'); // untouched
+        expect(m.store.map.get('popupWidth')).toBe(500);
     });
 
     it('pointercancel ends the drag like pointerup', () => {

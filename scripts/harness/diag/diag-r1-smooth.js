@@ -36,7 +36,7 @@ const SEED_BOOKMARKS = `
         await c({parentId: t.id, title: 'Link ' + i, url: 'https://example.com/t/' + i});
 })()`;
 
-// Page-side: install the rAF sampler. Row = [t, targetW, rootW, bodyW, innerW, outerW, qBtnR, tBtnR, barR]
+// Page-side: install the rAF sampler + LoAF attribution. Row = [t, targetW, rootW, bodyW, innerW, outerW, qBtnR, tBtnR, barR]
 const INSTALL_SAMPLER = `
 window.__vbmS = { on: true, rows: [] };
 window.__diag = { downs: 0, moves: 0, ups: 0, styleWrites: [] };
@@ -49,6 +49,19 @@ window.addEventListener('pointermove', () => {
     window.__diag.styleWrites.push(document.documentElement.style.width);
 });
 window.addEventListener('pointerup', () => { window.__diag.ups++; }, true);
+window.__loaf = [];
+try {
+    new PerformanceObserver(list => {
+        for (const e of list.getEntries())
+            window.__loaf.push({
+                dur: +e.duration.toFixed(1),
+                styleLayout: e.styleAndLayoutStart != null && e.renderStart != null
+                    ? +(e.startTime + e.duration - e.styleAndLayoutStart).toFixed(1) : -1,
+                scripts: (e.scripts || []).slice(0, 3).map(s =>
+                    (s.invokerType || '?') + '/' + (s.invoker || s.entryPoint || '?') + '=' + (+s.duration).toFixed(1))
+            });
+    }).observe({ type: 'long-animation-frame', buffered: false });
+} catch (_) { window.__loaf = ['unsupported']; }
 (function loop() {
     if (!window.__vbmS.on) return;
     const doc = document.documentElement;
@@ -129,6 +142,7 @@ const summary = (label, rows, dragSpanMs) => {
     if (!n) return { label, error: 'no samples' };
     let maxFrame = 0, prevT = rows[0][0];
     let maxGap = 0, gapFrames = 0, maxClip = 0, clipFrames = 0;
+    let maxBodyRoot = 0, hScrollFrames = 0;
     let settleIdx = -1;
     const offQ = [];
     for (let i = 0; i < n; i++) {
@@ -141,6 +155,8 @@ const summary = (label, rows, dragSpanMs) => {
         const clip = r[2] - r[4];             // rootW - innerWidth (expansion clipping)
         if (clip > maxClip) maxClip = clip;
         if (clip > 8) clipFrames++;
+        const bodyRoot = r[2] - r[3];         // root - body（<0 = body 铺满更宽的视口, 追逐中）
+        if (Math.abs(bodyRoot) > Math.abs(maxBodyRoot)) maxBodyRoot = bodyRoot;
         if (r[6] >= 0 && r[4] > 0) offQ.push(r[4] - r[6]); // innerWidth - qBtn.right
     }
     // settle: last index whose |gap|>1, then time from there to end
@@ -158,6 +174,7 @@ const summary = (label, rows, dragSpanMs) => {
         gapOver8Frames: gapFrames,
         maxClipPx: +maxClip.toFixed(1),      // 拉伸: 内容比 widget 宽多少（右侧被裁）
         clipOver8Frames: clipFrames,
+        maxRootBodyDivergencePx: +maxBodyRoot.toFixed(1), // root−body（修复后拖拽中应≈−8 量级=铺满视口）
         settleTailMs: settleMs,
         qBtnOffsetFromEdge: {
             mean: +mean(offQ).toFixed(2), sd: +sd(offQ).toFixed(2),
@@ -218,50 +235,61 @@ const timeline = (rows, step) => rows
 
         await evalIn(INSTALL_SAMPLER);
 
-        const phase = async (label, dragArgs, useTransition) => {
-            await evalIn(`window.__vbmS.rows = []; window.__diag = { downs: 0, moves: 0, ups: 0, styleWrites: [] }; true`);
+        const phase = async (label, dragArgs, useTransition, verbose) => {
+            await evalIn(`window.__vbmS.rows = []; window.__diag = { downs: 0, moves: 0, ups: 0, styleWrites: [] };
+                if (Array.isArray(window.__loaf)) window.__loaf.length = 0; true`);
             await evalIn(INJECT_TRANSITION(!!useTransition));
-            await evalIn(`(${RUN_DRAG})(${JSON.stringify(dragArgs)})`);
+            if (dragArgs)
+                await evalIn(`(${RUN_DRAG})(${JSON.stringify(dragArgs)})`);
+            else
+                await sleep(900); // idle baseline
             const rows = await evalIn(`window.__vbmS.rows`);
             const diag = await evalIn(`JSON.stringify({
                 downs: window.__diag.downs, moves: window.__diag.moves, ups: window.__diag.ups,
                 firstW: window.__diag.styleWrites[0] || '(none)', lastW: window.__diag.styleWrites[window.__diag.styleWrites.length - 1] || '(none)',
                 writes: window.__diag.styleWrites.length
             })`);
+            const loaf = await evalIn(`JSON.stringify(
+                (window.__loaf && window.__loaf.slice && window.__loaf.slice().sort((a, b) => (b.dur || 0) - (a.dur || 0)).slice(0, 5)) || [])`);
             const rmin = k => Math.min(...rows.map(r => r[k]));
             const rmax = k => Math.max(...rows.map(r => r[k]));
             console.log('\n== ' + label + ' ==');
             console.log('events ' + diag +
                 ` | ranges: target ${rmin(1)}-${rmax(1)} root ${rmin(2)}-${rmax(2)} inner ${rmin(4)}-${rmax(4)}`);
             console.log(JSON.stringify(summary(label, rows)));
-            if (process.env.VBM_DIAG_VERBOSE) console.log(timeline(rows, Math.max(1, Math.floor(rows.length / 24))));
+            console.log('topLoAF ' + loaf);
+            if (verbose || process.env.VBM_DIAG_VERBOSE)
+                console.log(timeline(rows, Math.max(1, Math.floor(rows.length / 30))));
             return rows;
         };
 
+        // —— idle 基线（帧预算校准）——
+        await phase('IDLE dupes 静置（基线）', null);
+
         // —— 现状基线（timer=125Hz move，逐事件写宽度）——
         await phase('A1 dupes 加速压缩 640→320 @125Hz（现状）',
-            { fromW: 640, toW: 320, T: 1000, mode: 'accel', pacing: 'timer' });
+            { toW: 320, T: 1000, mode: 'accel', pacing: 'timer' });
         await phase('B1 dupes 匀速拉伸 320→640 @125Hz（现状）',
-            { fromW: 320, toW: 640, T: 1500, mode: 'linear', pacing: 'timer' });
-        // —— 候选修复①：move 以 rAF 节流（每帧一次写）——
+            { toW: 640, T: 1500, mode: 'linear', pacing: 'timer' });
+        // —— 候选①：move 以 rAF 节流（每帧一次写）——
         await phase('A3 dupes 加速压缩 640→320 @rAF（写合并模拟）',
-            { fromW: 640, toW: 320, T: 1000, mode: 'accel', pacing: 'raf' });
+            { toW: 320, T: 1000, mode: 'accel', pacing: 'raf' });
         await phase('B3 dupes 匀速拉伸 320→640 @rAF（写合并模拟）',
-            { fromW: 320, toW: 640, T: 1500, mode: 'linear', pacing: 'raf' });
-        // —— 候选修复②：html/body width .1s linear transition（内容平滑追随）——
+            { toW: 640, T: 1500, mode: 'linear', pacing: 'raf' });
+        // —— 候选②：html/body width .1s linear transition（内容平滑追随）——
         await phase('A5 dupes 加速压缩 640→320 @125Hz + width transition',
-            { fromW: 640, toW: 320, T: 1000, mode: 'accel', pacing: 'timer' }, true);
+            { toW: 320, T: 1000, mode: 'accel', pacing: 'timer' }, true, true);
         await phase('B5 dupes 匀速拉伸 320→640 @125Hz + width transition',
-            { fromW: 320, toW: 640, T: 1500, mode: 'linear', pacing: 'timer' }, true);
+            { toW: 640, T: 1500, mode: 'linear', pacing: 'timer' }, true, true);
         await evalIn(INJECT_TRANSITION(false));
 
-        // —— 症状 B：树视图按钮抖动（拉伸+压缩混合，现状）——
+        // —— 症状 B：树视图按钮抖动（压缩+拉伸，现状）——
         await evalIn(`document.getElementById('view-tab-tree').click(); true`);
         await sleep(900);
-        await phase('C1 tree 匀速拉伸 320→640 @125Hz（现状·按钮抖动）',
-            { fromW: 320, toW: 640, T: 1500, mode: 'linear', pacing: 'timer' });
-        await phase('C2 tree 加速压缩 640→320 @125Hz（现状·按钮抖动）',
-            { fromW: 640, toW: 320, T: 1000, mode: 'accel', pacing: 'timer' });
+        await phase('C1 tree 加速压缩 640→320 @125Hz（现状·按钮抖动）',
+            { toW: 320, T: 1000, mode: 'accel', pacing: 'timer' });
+        await phase('C2 tree 匀速拉伸 320→640 @125Hz（现状·按钮抖动）',
+            { toW: 640, T: 1500, mode: 'linear', pacing: 'timer' });
     } catch (e) {
         console.error('DIAG FAIL:', e.message);
         process.exitCode = 2;
