@@ -230,6 +230,44 @@ describe('options page control alignment (2026-08-26 选项页修补)', () => {
             '#palette-cmd-form .options-list li label:has(> input[type=text]:last-child) > input{');
         expect(input).toContain('flex: 1 1 10em');
     });
+
+    it('pins the unit-bearing stepper row (sync interval) to the shared right column', () => {
+        const label = ruleBody(optionsCss, '.options-list li label:has(> input[type=number] + span){');
+        expect(label).toContain('display: flex');
+        const span = ruleBody(optionsCss,
+            '.options-list li label:has(> input[type=number] + span) > span:first-child{');
+        expect(span).toContain('margin-__MSG_@@bidi_end_edge__: auto');
+    });
+
+    it('styles the palette form validation line as the danger hint recipe', () => {
+        const err = ruleBody(optionsCss, '.options-list li #pc-error{');
+        expect(err).toContain('color: var(--vbm-danger)');
+        expect(err).toContain('line-height: 1.4');
+        // an empty line collapses away — no stray band under the form
+        expect(ruleBody(optionsCss, '.options-list li #pc-error:empty{')).toContain('display: none');
+    });
+
+    it('splits the form footer save/cancel pair evenly like the backup band', () => {
+        const li = ruleBody(optionsCss, '.options-list li:has(> button#pc-save){');
+        expect(li).toContain('display: flex');
+        const btn = ruleBody(optionsCss, '.options-list li:has(> button#pc-save) > button{');
+        expect(btn).toContain('flex: 1 1 8em');
+    });
+
+    it('lays the command-list head out as a flex row with the actions pinned right', () => {
+        const head = ruleBody(optionsCss, '.options-list li .pc-cmd-head{');
+        expect(head).toContain('display: flex');
+        const pin = ruleBody(optionsCss, '.options-list li .pc-cmd-head button:first-of-type{');
+        expect(pin).toContain('margin-__MSG_@@bidi_start_edge__: auto');
+    });
+
+    it('gives selects, number inputs and buttons the text inputs focus ring', () => {
+        const focus = ruleBody(optionsCss, 'input:not([type]):focus,');
+        expect(focus).toContain('border-color: var(--vbm-accent)');
+        expect(focus).toContain('outline: 2px solid var(--vbm-focus-ring)');
+        const btn = ruleBody(optionsCss, 'button:focus-visible{');
+        expect(btn).toContain('outline: 2px solid var(--vbm-focus-ring)');
+    });
 });
 
 describe('options page header responsive wrap (narrow widths)', () => {

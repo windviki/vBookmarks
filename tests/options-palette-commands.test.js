@@ -183,6 +183,12 @@ describe('options page palette-command manager', () => {
         expect(cmdListItems()).toHaveLength(1);
         const head = cmdListItems()[0].children[0];
         expect(head.children[0].textContent).toContain('/work');
+        // flex head (2026-08-26 audit): class carries the layout, and the row
+        // is exactly head + summary — the old trailing <br> painted a blank
+        // 28px line box between command rows
+        expect(head.className).toBe('pc-cmd-head');
+        expect(cmdListItems()[0].children).toHaveLength(2);
+        expect(cmdListItems()[0].children[1].tagName).toBe('SMALL');
         // the usage meter is populated (its exact count is not observable with
         // a key-echoing _m double — the list length above pins the count)
         expect(els['palette-cmd-usage'].textContent).toBe('paletteCustomUsage');
@@ -354,7 +360,9 @@ describe('options page palette-command manager', () => {
         }];
         await boot({ seed });
         // summarizeAction resolves the open-url description + the ×count
-        // (the <li> is head div → summary <small> → <br>)
+        // (the <li> is head div → summary <small>; the old trailing <br>
+        // went away with the flex head — it painted a blank 28px line box
+        // between command rows)
         const summary = cmdListItems()[0].children[1];
         expect(summary.textContent).toContain('paletteActionOpenUrl');
         expect(summary.textContent).toContain('×5');

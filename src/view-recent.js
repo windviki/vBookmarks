@@ -935,6 +935,11 @@ export function initViewRecent(ctx = {}) {
                 unparkRowFocus(list, parkedRow);
                 applyFocusHandoffs();
                 fitSelectionLabels();
+                // The head planes' staged state must survive FULL repaints
+                // too — the partial tail below syncs, but the first paint
+                // (or a storage-driven refresh) landed after items were
+                // already staged would otherwise render hollow heads.
+                syncRecentStageButtons();
                 onRowsRendered();
             }
         });
@@ -1051,7 +1056,8 @@ export function initViewRecent(ctx = {}) {
     // the remove/add label). Cheap: ≤ recentCount rows, only touched when
     // the state actually flipped.
     const syncRecentStageButtons = () => {
-        if (!$list.querySelectorAll)
+        // minimal test doubles carry innerHTML only — skip quietly
+        if (!$list.querySelectorAll || !$list.querySelector)
             return;
         const idToUrl = new Map();
         for (const grp of recentGroupUrls)
@@ -1076,6 +1082,33 @@ export function initViewRecent(ctx = {}) {
             // a bucket-head send left never-sent rows hollow but accent).
             flipStageBtn(btn, staged, _m);
         }
+        // Bucket/region head planes follow the tabgroups group-head law
+        // (state-not-truth glyphs): every member staged → the filled
+        // always-on plane. The heads are indicators, not toggles — the
+        // click still lands the batch (a same-name group absorbs it), so
+        // unlike flipStageBtn the send label/aria-name stay; only the
+        // plane, aria-pressed and the icon swap in place.
+        const flipHeadPlane = (btn, all) => {
+            if (!btn || !btn.classList)
+                return;
+            if (btn.classList.contains('staged') === all)
+                return;
+            btn.classList.toggle('staged', all);
+            btn.setAttribute('aria-pressed', all ? 'true' : 'false');
+            btn.innerHTML = all ? STAGE_ICON_DONE : STAGE_ICON;
+        };
+        for (const head of $list.querySelectorAll('.recent-group-stage')) {
+            const g = parseInt(head.dataset ? head.dataset.recentGroup : '', 10);
+            const grp = recentGroupUrls[g];
+            if (!grp || !grp.length)
+                continue;
+            flipHeadPlane(head, grp.every(r => !!staging.getByUrl(stagingState, r.url)));
+        }
+        const regionRows = [];
+        for (const grp of recentGroupUrls)
+            regionRows.push(...grp);
+        flipHeadPlane($list.querySelector('.recent-stage-all'),
+            regionRows.length > 0 && regionRows.every(r => !!staging.getByUrl(stagingState, r.url)));
     };
 
     // --- Real organize actions on the staging rows (§3.4 — "favorite" IS

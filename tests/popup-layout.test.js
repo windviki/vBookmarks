@@ -93,3 +93,57 @@ describe('dupes group URL typography (fourth-round item 6)', () => {
         expect(body).not.toContain('font-family');
     });
 });
+
+// 2026-08-26 audit-round geometry contracts: the 4.1.0 toolbar/banner
+// additions land on the §2 20px grid and the shared recipes.
+describe('2026-08-26 audit geometry contracts', () => {
+    it('the tab-groups empty state joins the shared muted empty-state rule', () => {
+        // the view shipped without it — its "no windows" row rendered
+        // foreground-colored and left-aligned against every sibling list
+        expect(neatCss).toContain('#tabgroups-list ul li.empty-state');
+    });
+
+    it('the search rung stack closes with a bottom border on the REAL last rung', () => {
+        // the old `search-select-toolbar:last-of-type` never matched (the
+        // selecting mode always emits both rungs) — the pair rendered
+        // borderless while staging kept its closing line
+        expect(neatCss).not.toContain('search-select-toolbar:last-of-type');
+        const closer = ruleBody(neatCss,
+            '.staging-toolbar.staging-actions-toolbar,\n.search-toolbar.search-actions-toolbar {');
+        expect(closer).toContain('border-bottom: 1px solid var(--vbm-border)');
+    });
+
+    it('every select-mode entry box is 20×20 (the §2 toolbar-grid box)', () => {
+        const trio = ruleBody(neatCss, '.staging-toolbar .staging-select-mode,');
+        expect(trio).toContain('width: 20px');
+        expect(trio).toContain('height: 20px');
+        expect(neatCss.match(/\.staging-shortcut-add,\n\.staging-toolbar \.staging-shortcut-edit-mode \{[\s\S]*?\}/)[0])
+            .toContain('height: 20px');
+    });
+
+    it('the staging chip delete × uses the inline-start inset (RTL-safe)', () => {
+        const del = ruleBody(neatCss, '.staging-shortcuts-toolbar.editing .staging-shortcut-del {');
+        expect(del).toContain('inset-inline-start: 14px');
+        expect(del).not.toContain('left: 14px');
+    });
+
+    it('the staging guide × is the 20×20 dismiss box (banner-family law)', () => {
+        const close = ruleBody(neatCss, '.staging-guide-banner .staging-guide-close {');
+        expect(close).toContain('width: 20px');
+        expect(close).toContain('height: 20px');
+        expect(close).toContain('margin-inline-start: auto');
+    });
+
+    it('icon+text toolbar entries share the 14px glyph and 2px vertical padding', () => {
+        expect(ruleBody(neatCss, '#search-history-clear .vbm-icon {')).toContain('width: 14px');
+        expect(ruleBody(neatCss, '.stats-toolbar .stats-clear .vbm-icon {')).toContain('width: 14px');
+        expect(ruleBody(neatCss, '.staging-toolbar .staging-clear-entry .vbm-icon {')).toContain('width: 14px');
+        expect(ruleBody(neatCss, '.staging-toolbar .staging-new-group .vbm-icon {')).toContain('width: 14px');
+        expect(ruleBody(neatCss, '#search-history-clear {')).toContain('padding: 2px 6px');
+    });
+
+    it('the closed-history clear-all hover reads the danger tint', () => {
+        const hover = ruleBody(neatCss, '.tabgroups-section-head button.tabgroups-closed-clear:hover {');
+        expect(hover).toContain('color-mix(in srgb, var(--vbm-danger) 12%, transparent)');
+    });
+});

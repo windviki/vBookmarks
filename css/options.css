@@ -482,15 +482,58 @@ white-space: nowrap;
 	margin-inline-start: auto; /* pin Clear to the card's right edge; wraps with the row when narrow */
 }
 /* Result line under the row: failures read as danger, success as the green
-   success token (paper's accent is vermilion — too close to the danger red). */
+   success token (paper's accent is vermilion — too close to the danger red).
+   line-height 1.4: the line rides the hint grid, not the row's 28px bar. */
 .options-list li #dead-proxy-server-error{
 	display: block;
 	margin-top: 4px;
 	font-size: 12px;
+	line-height: 1.4;
 	color: var(--vbm-danger);
 }
 .options-list li #dead-proxy-server-error.ok{
 	color: var(--vbm-success);
+}
+/* Palette form's validation line: the same danger hint recipe as the
+   dead-proxy result line; empty collapses away so the form carries no
+   stray band. */
+.options-list li #pc-error{
+	display: block;
+	margin-top: 4px;
+	font-size: 12px;
+	line-height: 1.4;
+	color: var(--vbm-danger);
+}
+.options-list li #pc-error:empty{
+	display: none;
+}
+/* The form footer's save/cancel pair splits the card evenly — the same
+   balanced band the backup group's export/import row uses. */
+.options-list li:has(> button#pc-save){
+	display: flex;
+	gap: 1em;
+}
+.options-list li:has(> button#pc-save) > button{
+	flex: 1 1 8em;
+	margin-__MSG_@@bidi_start_edge__: 0; /* the flex gap replaces the 1em offset */
+}
+/* Command list rows: a flex head (slash/name left, Edit/Delete pinned to
+   the card's right edge) over the summary hint — the buttons used to trail
+   the name inline and wrap raggedly behind long titles. */
+.options-list li .pc-cmd-head{
+	display: flex;
+	align-items: center;
+	gap: 0 .5em;
+}
+.options-list li .pc-cmd-head button{
+	margin-__MSG_@@bidi_start_edge__: 0; /* the flex gap replaces the 1em offset */
+	white-space: nowrap;
+}
+.options-list li .pc-cmd-head button:first-of-type{
+	margin-__MSG_@@bidi_start_edge__: auto; /* pin the action pair to the end */
+}
+.options-list li .pc-cmd-head + small{
+	margin-top: 0; /* the summary hint hugs its head (rows stay compact) */
 }
 .options-list li input[type=number]{
 	background: var(--vbm-bg-elev);
@@ -506,8 +549,9 @@ white-space: nowrap;
 /* Dead-link quota rows: the label text on the left, the number input pinned
    to the card's right edge so both quota boxes share one right column (their
    natural widths would leave the right edges ragged as the labels differ in
-   length). Only rows whose last control is a number input match — the sync
-   interval and zoom rows keep their inline flow. */
+   length). Only rows whose last control is a number input match — the zoom
+   row has the same shape, and the sync-interval row (a trailing seconds
+   span) gets its own variant below. */
 .options-list li label:has(> input[type=number]:last-child){
 	display: flex;
 	align-items: center;
@@ -517,6 +561,21 @@ white-space: nowrap;
 	margin-__MSG_@@bidi_end_edge__: auto;
 }
 .options-list li label:has(> input[type=number]:last-child) > input[type=number]{
+	margin-__MSG_@@bidi_start_edge__: 0;
+}
+/* Number input + trailing unit span (sync refresh interval "seconds"): the
+   [input unit] cluster pins to the same right column, the unit hugging its
+   input (the small gap replaces the row's 1em; the label's auto margin
+   still pushes the cluster to the edge). */
+.options-list li label:has(> input[type=number] + span){
+	display: flex;
+	align-items: center;
+	gap: .4em;
+}
+.options-list li label:has(> input[type=number] + span) > span:first-child{
+	margin-__MSG_@@bidi_end_edge__: auto;
+}
+.options-list li label:has(> input[type=number] + span) > input[type=number]{
 	margin-__MSG_@@bidi_start_edge__: 0;
 }
 /* Dropdown rows join that same right column: label text on the left, the
@@ -937,10 +996,19 @@ input[type=url] {
 	padding: 2px 6px;
 	font: inherit;
 }
+/* Focus parity: selects and number inputs share the text inputs' surface,
+   so they share the focus treatment too — one ring style across a form
+   (the palette editor mixes the three control kinds row to row). */
 input:not([type]):focus,
 input[type=text]:focus,
-input[type=url]:focus {
+input[type=url]:focus,
+select:focus,
+input[type=number]:focus {
 	border-color: var(--vbm-accent);
+	outline: 2px solid var(--vbm-focus-ring);
+	outline-offset: -1px;
+}
+button:focus-visible{
 	outline: 2px solid var(--vbm-focus-ring);
 	outline-offset: -1px;
 }

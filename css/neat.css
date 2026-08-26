@@ -2503,8 +2503,10 @@ li.staging-row.drag-over {
     position: absolute;
     box-sizing: border-box;
     /* 14px = the chip's 1px border + 8px padding + half the 10px color
-       dot — the × sits EXACTLY on the dot's center and covers it */
-    left: 14px;
+       dot — the × sits EXACTLY on the dot's center and covers it. The
+       inline-start inset keeps the × over the dot in RTL too (the dot
+       rides the chip's start edge there). */
+    inset-inline-start: 14px;
     top: 50%;
     transform: translate(-50%, -50%);
     align-items: center;
@@ -2523,8 +2525,8 @@ li.staging-row.drag-over {
 }
 
 /* the right-edge management cluster: [+] add, [pencil] edit-mode toggle —
-   two 22px icon squares docked 8px off the edge like every other toolbar's
-   rightmost icon */
+   two 20px icon squares docked 8px off the edge like every other toolbar's
+   rightmost icon (the §2 toolbar-grid box; the icon stays 16px) */
 .staging-shortcuts-cluster {
     display: inline-flex;
     align-items: center;
@@ -2537,8 +2539,8 @@ li.staging-row.drag-over {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 22px;
-    height: 22px;
+    width: 20px;
+    height: 20px;
     padding: 0;
     flex: none;
 }
@@ -2576,8 +2578,13 @@ li.staging-row.drag-over {
     border-bottom: 0;
 }
 
+/* The closing border returns on the stack's last rung. Search's variant
+   used to say `search-select-toolbar:last-of-type`, which can never match —
+   the selecting mode always emits both rungs as adjacent divs, so rung 1 is
+   never the last sibling and the pair rendered with no bottom border at
+   all (the staging stack kept its closing line). Name the real last rung. */
 .staging-toolbar.staging-actions-toolbar,
-.search-toolbar.search-select-toolbar:last-of-type {
+.search-toolbar.search-actions-toolbar {
     border-bottom: 1px solid var(--vbm-border);
 }
 
@@ -2705,7 +2712,7 @@ li.staging-row.drag-over {
 
 /* The staging selection bar's ACTION rung is iconified (the dead-view
    law): semantics that survive as a glyph get a glyph, the label moves
-   into title/aria, and the whole rung fits ONE row — 9 × 22px squares.
+   into title/aria, and the whole rung fits ONE row — 9 × 20px squares.
    Delete/clear read danger red (destructive), the rest accent. */
 .staging-toolbar .staging-icon-btn {
     display: inline-flex;
@@ -2746,7 +2753,7 @@ li.staging-row.drag-over {
 }
 
 /* The three select-mode entry buttons share the dupes select-mode recipe:
-   a 22px accent square. */
+   a 20px accent square (the §2 toolbar-grid box). */
 /* The stats idle bar has no summary span to pin the cluster right — the
    select-mode entry takes the right edge itself (every other view's law),
    landing on the same right axis as the rows' trailing planes below. */
@@ -2773,7 +2780,7 @@ li.staging-row.drag-over {
     align-items: center;
     justify-content: center;
     width: 20px;
-    height: 22px;
+    height: 20px;
     padding: 0;
     flex: none;
     border: 0;
@@ -2941,6 +2948,7 @@ body.panel-mode #resizer-y {
 #dupes-list ul li.empty-state,
 #dead-list ul li.empty-state,
 #stats-list ul li.empty-state,
+#tabgroups-list ul li.empty-state,
 #search-history-area ul li.empty-state {
     color: var(--vbm-muted);
     text-align: center;
@@ -4124,7 +4132,7 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
     background: transparent;
     color: var(--vbm-danger);
     font-size: 11px;
-    padding: 1px 6px;
+    padding: 2px 6px;
     cursor: pointer;
 }
 
@@ -4136,8 +4144,8 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
 }
 
 #search-history-clear .vbm-icon {
-    width: 12px;
-    height: 12px;
+    width: 14px;
+    height: 14px;
     flex: none;
 }
 
@@ -4258,17 +4266,25 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
 }
 
 /* The universal session-dismiss × (the risk-banner / dead marked-banner
-   law): closes the hint for this popup open; 不再提醒 stays permanent. */
+   law): closes the hint for this popup open; 不再提醒 stays permanent.
+   Same 20×20 muted box as the sibling dismiss × buttons — one geometry
+   for the whole banner family. */
 .staging-guide-banner .staging-guide-close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     flex: none;
+    width: 20px;
+    height: 20px;
+    margin-inline-start: auto;
     border: 0;
-    border-radius: var(--vbm-radius);
+    border-radius: 4px;
     background: transparent;
     color: var(--vbm-muted);
     font: inherit;
     font-size: 13px;
     line-height: 1;
-    padding: 2px 6px;
+    padding: 0;
     cursor: pointer;
     white-space: nowrap;
 }
@@ -5792,7 +5808,7 @@ visibly smaller next to them. */
     cursor: pointer;
 }
 .tabgroups-section-head button.tabgroups-closed-clear:hover {
-    background: var(--vbm-bg-hover);
+    background: color-mix(in srgb, var(--vbm-danger) 12%, transparent);
 }
 .tabgroups-section-head button.tabgroups-closed-clear:focus-visible {
     outline: 2px solid var(--vbm-focus-ring);
@@ -6878,8 +6894,8 @@ body.panel-mode #dead-list .vbm-row .row-badge-slot {
 }
 
 .stats-toolbar .stats-clear .vbm-icon {
-    width: 12px;
-    height: 12px;
+    width: 14px;
+    height: 14px;
     flex: none;
 }
 

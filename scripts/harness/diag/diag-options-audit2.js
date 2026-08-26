@@ -50,11 +50,14 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
                 const c = document.getElementById(id).getBoundingClientRect();
                 return { li: { r: Math.round(r.right) }, c: { l: Math.round(c.left), r: Math.round(c.right), w: Math.round(c.width) } };
             };
+            const save = document.getElementById('pc-save').getBoundingClientRect();
+            const cancel = document.getElementById('pc-cancel').getBoundingClientRect();
             return {
                 pcName: row('pc-name'),
                 pcUrl: row('pc-url'),
                 pcAction: row('pc-action'),
-                pcWhere: row('pc-where')
+                pcWhere: row('pc-where'),
+                saveCancel: { save: { l: Math.round(save.left), r: Math.round(save.right), w: Math.round(save.width) }, cancel: { l: Math.round(cancel.left), r: Math.round(cancel.right), w: Math.round(cancel.width) } }
             };
         });
         console.log('PALETTEFORM ' + JSON.stringify(form));

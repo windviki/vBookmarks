@@ -8,8 +8,8 @@
 # and runs only the screenshot suites).
 #
 #   smoke.js              — zero console errors + v4 behavioral assertions
-#   verify-keyboard.js    — keyboard/view hard assertions (153)
-#   verify-scrollbars.js  — horizontal-scrollbar matrix probe (752)
+#   verify-keyboard.js    — keyboard/view hard assertions (168)
+#   verify-scrollbars.js  — horizontal-scrollbar matrix probe (903)
 #   verify-menu-overflow.js — #48: tall menu stays open, no focus-scroll dismiss
 #   verify-menu-collapse.js — collapsed submenus open/dispatch/clamp
 #   verify-menu-extreme.js  — DPR × zoom × size sweep (menus never clip/dismiss)

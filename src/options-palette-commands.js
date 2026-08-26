@@ -179,6 +179,7 @@ const renderList = () => {
     for (const cmd of list) {
         const li = document.createElement('li');
         const head = document.createElement('div');
+        head.className = 'pc-cmd-head'; // flex row: text left, actions right
         const slash = document.createElement('code');
         slash.textContent = slashNamesOf(cmd).map(s => `/${s}`).join(' ');
         head.appendChild(slash);
@@ -204,7 +205,6 @@ const renderList = () => {
         const uses = cmd.useCount ? ` · ×${cmd.useCount}` : '';
         summary.textContent = summarizeAction(cmd, _m) + uses;
         li.appendChild(summary);
-        li.appendChild(document.createElement('br'));
         $listEl.appendChild(li);
     }
 };

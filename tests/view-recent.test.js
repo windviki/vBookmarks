@@ -1641,6 +1641,54 @@ describe('per-bucket stage buttons (velvet staging UX round)', () => {
         bucketClick(ctx, 0);
         expect(ctx.viewRecent.api.state().items.map(i => i.url).sort()).toEqual(['http://today/', 'http://week/']);
     });
+
+    // tabgroups group-head law: every member staged → the filled always-on
+    // plane (state-not-truth glyph). The recent heads never repaint, so the
+    // flip must happen in the render-tail sync, in place.
+    it('flips the bucket/region head planes solid only when every member is staged', () => {
+        const ctx = setup({
+            // removeByUrl toasts through the undo double — a recording stub
+            undo: { showToast() {}, toastAction() {} },
+            recentItems: [
+                { id: '1', parentId: '1', title: 'today', url: 'http://today/', dateAdded: NOW2 },
+                { id: '2', parentId: '1', title: 'week', url: 'http://week/', dateAdded: NOW2 - 3 * DAY }
+            ]
+        });
+        ctx.def().activate();
+        const mkBtn = g => {
+            const cls = new Set();
+            return {
+                dataset: { recentGroup: String(g) },
+                classList: {
+                    contains: c => cls.has(c),
+                    toggle: (c, on) => (on ? cls.add(c) : cls.delete(c))
+                },
+                setAttribute() {},
+                innerHTML: ''
+            };
+        };
+        const heads = [mkBtn(0), mkBtn(1)]; // today bucket, week bucket
+        const region = mkBtn('');
+        ctx.$list.querySelectorAll = sel => (sel === '.recent-group-stage' ? heads : []);
+        ctx.$list.querySelector = sel => (sel === '.recent-stage-all' ? region : null);
+        // stage only the week bucket → its head flips; today's and the
+        // region head stay hollow
+        ctx.viewRecent.api.addItems([{ id: null, url: 'http://week/', title: 'week' }]);
+        ctx.def().activate();
+        expect(heads[1].classList.contains('staged')).toBe(true);
+        expect(heads[0].classList.contains('staged')).toBe(false);
+        expect(region.classList.contains('staged')).toBe(false);
+        // stage the last one → every plane goes solid, region head included
+        ctx.viewRecent.api.addItems([{ id: null, url: 'http://today/', title: 'today' }]);
+        ctx.def().activate();
+        expect(heads[0].classList.contains('staged')).toBe(true);
+        expect(region.classList.contains('staged')).toBe(true);
+        // unstage one → the planes flip back hollow on the next paint
+        ctx.viewRecent.api.removeByUrl('http://week/');
+        ctx.def().activate();
+        expect(heads[1].classList.contains('staged')).toBe(false);
+        expect(region.classList.contains('staged')).toBe(false);
+    });
 });
 
 describe('staging group management + DnD + render coalescing (workbench round)', () => {
