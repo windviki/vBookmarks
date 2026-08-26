@@ -87,7 +87,14 @@ export function createVisitStatsCollector() {
             walk(tree);
             urlIndex = idx;
             indexReady = true;
-            if (cb)
+            // P1-3 lazy-build callers pass a function (indexWaiters); the
+            // bookmark-event path passes NOTHING (see the wrapped listeners
+            // below) — but the type guard is load-bearing either way: a
+            // truthy non-function cb (a leaked event id) must never be
+            // called. TypeError: cb is not a function was the real-world
+            // symptom (bookmarks.onCreated(id, node) → rebuildIndex(id) →
+            // cb = id string → cb() crashed the service worker).
+            if (typeof cb === 'function')
                 cb();
         });
     };
@@ -225,7 +232,12 @@ export function createVisitStatsCollector() {
         const rebuildEvents = ['onCreated', 'onRemoved', 'onChanged', 'onImportEnded'];
         for (const name of rebuildEvents) {
             if (chrome.bookmarks[name])
-                chrome.bookmarks[name].addListener(rebuildIndex);
+                // Wrapped: the events call back with (id, node) — rebuildIndex
+                // takes an optional cb, so the raw function would receive the
+                // bookmark id AS its cb and later call it (crash). The events
+                // only signal "tree changed"; the id is irrelevant (full
+                // rebuild).
+                chrome.bookmarks[name].addListener(() => rebuildIndex());
         }
         if (chrome.bookmarks.onMoved)
             chrome.bookmarks.onMoved.addListener(() => {

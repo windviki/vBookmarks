@@ -145,7 +145,17 @@ describe('start + index', () => {
     it('rebuilds the index on bookmark events (lazily after start)', () => {
         createVisitStatsCollector().start();
         expect(chromeDouble.calls.getTree).toBe(0);
-        chromeDouble.listeners.bookmarks.onCreated();
+        // Chrome calls the listener with REAL event args — (id, node) for
+        // onCreated — and the event id must never leak into rebuildIndex's
+        // cb (the pre-fix raw wiring crashed: cb = id string → cb() →
+        // TypeError: cb is not a function, the SW-side "t is not a function").
+        let threw = null;
+        try {
+            chromeDouble.listeners.bookmarks.onCreated('123', { id: '123', url: 'https://b.com/page' });
+        } catch (e) {
+            threw = e;
+        }
+        expect(threw).toBeNull();
         expect(chromeDouble.calls.getTree).toBe(1);
     });
 
