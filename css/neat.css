@@ -1808,56 +1808,54 @@ menu[type=context] hr {
     margin-inline-end: 2px; /* 18 + 16 + 2 + 4px gap = the 40px title axis */
 }
 
-/* Head meta column (the same recipe as the rows' .row-main/.row-sub): the
-   title and its muted meta line stack in one column, so in the two-line
-   (wide / panel) form the head matches the member rows' height and carries
-   the group's creation time (staging groups) or the bucket's time range
-   (recent sections) as its second line. Narrow form hides the sub line —
-   the head stays one line tall, like the narrow rows. */
-.staging-group-head .head-main,
-.recent-group-head .head-main {
-    flex: 1;
-    min-width: 0;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
+/* Head leading glyph (2026-08-25 icon round): the group head carries the
+   tree's folder glyph and the recent time-bucket head a clock — both on the
+   bucket star's exact slot (2px lead + 4px tail + the head's 4px flex gap),
+   so every fold head reads glyph-then-title and the glyph column stacks on
+   the member rows' favicon column (40px narrow / 64px selecting). The
+   creation-time/range meta line this replaces is gone — the fold heads are
+   single-line again, vertically centered in the taller row like the bucket. */
+.staging-group-folder,
+.recent-group-clock {
+    flex: none;
+    display: inline-flex;
+    /* the star's exact slot: left edge on the member favicon column (40px) */
+    margin-inline-start: 0;
+    margin-inline-end: 4px;
+    color: var(--vbm-muted);
 }
 
-.staging-group-head .head-sub,
-.recent-group-head .head-sub {
-    display: none;
-    color: var(--vbm-muted);
-    font-size: 12px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+/* 2026-08-25: the fold-head titles read as ROWS, not chrome — normal weight
+   (the .staging-section-title base is 500; the two big section heads keep
+   their 600). */
+.staging-bucket-head .staging-section-title,
+.staging-group-head .staging-section-title,
+.recent-group-head .staging-section-title {
+    font-weight: 400;
+}
+
+/* Recent time-bucket rows hang under their head like staging members
+   (2026-08-25): the same 24px inline indent puts their favicon column on
+   the head's leading glyph column — one hierarchy law across both areas. */
+#recent-list li.vbm-row {
+    padding-inline-start: 24px;
 }
 
 @container (min-width: 480px) {
+    /* the two-line row height for EVERY fold head (single-line content,
+       vertically centered — the meta line is gone, the height stays) */
     .staging-bucket-head,
     .staging-group-head,
     .recent-group-head {
-        min-height: 32px; /* comfortable fold/drag target in wide views */
-    }
-    /* two-line form: the meta line shows and every fold head — including
-       the bucket head, which has no meta of its own — stands exactly as
-       tall as the two-line member rows (2 × the 1.67em line box). */
-    .staging-bucket-head {
         min-height: 3.34em;
-    }
-    .staging-group-head .head-sub,
-    .recent-group-head .head-sub {
-        display: block;
     }
 }
 
-/* panel-mode twins (rows are always two-line there): see the block above */
-body.panel-mode .staging-bucket-head {
+/* panel-mode twin (rows are always two-line there): see the block above */
+body.panel-mode .staging-bucket-head,
+body.panel-mode .staging-group-head,
+body.panel-mode .recent-group-head {
     min-height: 3.34em;
-}
-body.panel-mode .staging-group-head .head-sub,
-body.panel-mode .recent-group-head .head-sub {
-    display: block;
 }
 
 .staging-section-head .chevron::before,
@@ -1895,10 +1893,11 @@ body.panel-mode .recent-group-head .head-sub {
 .staging-bucket-star {
     flex: none;
     display: inline-flex;
-    /* 2px lead after the chevron (+ the 4px gap) puts the star's left edge
-       on the member rows' favicon column (40px); 4px after keeps the title
-       on the member title axis (64px). */
-    margin-inline-start: 2px;
+    /* no extra lead — the chevron's own 2px margin + the 4px gap already
+       land the star's left edge on the member rows' favicon column (40px;
+       the old 2px lead parked it at 42, off its own documented column);
+       4px after keeps the title on the member title axis (64px). */
+    margin-inline-start: 0;
     margin-inline-end: 4px;
     color: var(--vbm-muted);
 }
@@ -2080,10 +2079,10 @@ body.panel-mode .recent-group-head .head-sub {
 }
 
 /* The heads' first content glyph must stack on that SAME 64px column (the
-   comment above claimed it did, but the arithmetic never held: the title
-   landed at 54px and the bucket star at 56px — the hierarchy kinked 10px in
-   selection mode. Step both first-content slots onto the member column). */
-#staging-list ul.selecting .staging-group-head .head-main {
+   comment above claimed it did, but the arithmetic never held: the glyph
+   column landed at 54px — the hierarchy kinked 10px in selection mode.
+   Step both leading glyphs onto the member column). */
+#staging-list ul.selecting .staging-group-head .staging-group-folder {
     margin-inline-start: 10px;
 }
 

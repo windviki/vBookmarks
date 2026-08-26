@@ -143,9 +143,37 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
             // so its CENTER (26px) stacks on the loose row's favicon center —
             // the fold heads' 18px inline lead, not the old 8px section-head one
             out.groupChevLeft = firstGroupHead.querySelector('.chevron').getBoundingClientRect().left;
-            // hierarchy: the member favicon column == the head's first
-            // content glyph (group head title), both 32px from the edge
+            // hierarchy: the member favicon column == the head's LEADING
+            // GLYPH (folder icon on the group head, star on the bucket) at
+            // 40px — the title sits one slot further right (64px)
+            out.groupGlyph = rect(firstGroupHead.querySelector('.staging-group-folder') ||
+                firstGroupHead.querySelector('.staging-section-title'));
+            // 2026-08-25 vertical-axis probes: every head glyph's y-CENTER vs
+            // its title — the span's line box AND the text's ink box (a
+            // Range around the text node; the eye compares glyph center to
+            // INK center, and a line box can center differently) — plus the
+            // cross-row stack against the member/loose rows' favicons.
+            const inkRect = el => {
+                if (!el || !el.firstChild) return null;
+                const rng = document.createRange();
+                rng.selectNodeContents(el);
+                const r = rng.getBoundingClientRect();
+                return { top: r.top, bottom: r.bottom, cy: r.top + r.height / 2, left: r.left, h: r.height };
+            };
+            out.chevGlyph = rect(firstGroupHead.querySelector('.chevron'));
+            out.bucketStar = rect(document.querySelector('.staging-bucket-head .staging-bucket-star'));
+            out.clockGlyph = rect(document.querySelector('.recent-group-head .recent-group-clock'));
             out.groupTitle = rect(firstGroupHead.querySelector('.staging-section-title'));
+            out.groupTitleInk = inkRect(firstGroupHead.querySelector('.staging-section-title'));
+            out.bucketTitle = rect(document.querySelector('.staging-bucket-head .staging-section-title'));
+            out.clockTitle = rect(document.querySelector('.recent-group-head .staging-section-title'));
+            out.bucketTitleInk = inkRect(document.querySelector('.staging-bucket-head .staging-section-title'));
+            out.clockTitleInk = inkRect(document.querySelector('.recent-group-head .staging-section-title'));
+            const memberLi0 = document.querySelector('li.staging-member');
+            const looseLi0 = [...document.querySelectorAll('#staging-items li.staging-row')].find(li => !li.classList.contains('staging-member'));
+            out.memberFav = memberLi0 ? rect(memberLi0.querySelector('.favicon-container')) : null;
+            out.looseFav = looseLi0 ? rect(looseLi0.querySelector('.favicon-container')) : null;
+            out.looseTitle = looseLi0 ? rect(looseLi0.querySelector('a i')) : null;
             // head quick tail: [rename][place][dissolve][remove 移出暂存];
             // narrow container keeps place/remove only
             out.groupRename = rect(groupRename);
@@ -160,11 +188,12 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
             out.cut = !!document.querySelector('#staging-list .staging-cut');
             out.actionIcons = document.querySelectorAll('.staging-actions-toolbar .staging-icon-btn').length;
             out.timeHeadLeft = (() => {
-                // the fold head's TITLE axis (40px = 18 lead + 16 chevron +
-                // 2 margin + 4 gap) — shared with the group heads and the
-                // loose rows' title column; the old check read the head's own
-                // padding edge (18px) against a pre-fold 8px expectation
-                const el = document.querySelector('.recent-group-head .staging-section-title');
+                // the fold head's LEADING GLYPH column (40px = 18 lead +
+                // 16 chevron + 2 margin + 4 gap) — the clock on the time
+                // buckets, the folder on the staging groups, the star on the
+                // inbox bucket, all stacking on the member favicon column
+                const el = document.querySelector('.recent-group-clock') ||
+                    document.querySelector('.recent-group-head .staging-section-title');
                 return el ? el.getBoundingClientRect().left : null;
             })();
             // member indent: a member row's favicon x vs a loose row's favicon x
@@ -229,8 +258,30 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
             css.memberFavX !== null && css.looseFavX !== null &&
             Math.abs(css.memberFavX - css.looseFavX - 24) < 1.5 &&
             css.looseTitleX !== null && Math.abs(css.memberFavX - css.looseTitleX) < 1.5);
-        ck('member favicon column = group head title column (tabgroups hierarchy)',
-            css.memberFavX !== null && css.groupTitle && Math.abs(css.memberFavX - css.groupTitle.left) < 1.5);
+        ck('member favicon column = head leading glyph column (folder/star, tabgroups hierarchy)',
+            css.memberFavX !== null && css.groupGlyph && Math.abs(css.memberFavX - css.groupGlyph.left) < 1.5);
+        // the 2026-08-25 icon-round law: the head's leading glyph LEFT-ALIGNS
+        // with the LOOSE (ungrouped) row's TITLE column — the folder reads as
+        // sitting exactly where an ungrouped row's text begins
+        ck('head folder glyph left-aligns with the loose row title column',
+            css.groupGlyph && css.looseTitle && Math.abs(css.groupGlyph.left - css.looseTitle.left) < 1.5);
+        // one optical y-axis per head: chevron/folder/star/clock centers vs
+        // the title's LINE-BOX center, and the title's INK center too
+        ck('head glyphs share one optical y-axis with their titles (line box)',
+            css.chevGlyph && css.groupGlyph && css.bucketStar && css.clockGlyph &&
+            css.groupTitle && css.bucketTitle && css.clockTitle &&
+            Math.abs(css.chevGlyph.cy - css.groupTitle.cy) < 1.5 &&
+            Math.abs(css.groupGlyph.cy - css.groupTitle.cy) < 1.5 &&
+            Math.abs(css.bucketStar.cy - css.bucketTitle.cy) < 1.5 &&
+            Math.abs(css.clockGlyph.cy - css.clockTitle.cy) < 1.5);
+        ck('head glyph centers stack on the title INK center (optical axis)',
+            css.groupGlyph && css.groupTitleInk && css.bucketTitleInk && css.clockTitleInk &&
+            Math.abs(css.groupGlyph.cy - css.groupTitleInk.cy) < 1.5 &&
+            Math.abs(css.bucketStar.cy - css.bucketTitleInk.cy) < 1.5 &&
+            Math.abs(css.clockGlyph.cy - css.clockTitleInk.cy) < 1.5);
+        // cross-row y-CENTERS are one row apart by construction (adjacent
+        // rows) — the vertical stack law is EQUAL HEIGHTS, checked narrow
+        // above and wide below.
         ck('narrow rows are the same 28px height as the heads',
             css.stagingRowLi && Math.abs(css.stagingRowLi.h - 28) < 1.5);
         ck('manual empty group renders its head', css.manualEmptyHead);
@@ -244,7 +295,7 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
             css.groupRemove && Math.abs(css.groupRemove.right - (css.listRight - 8)) < 1.5);
         ck('scissors divider separates the recent region', css.cut);
         ck('guide strip renders above the toolbar', css.guideBanner);
-        ck('time-bucket head title starts on the shared 40px title axis',
+        ck('time-bucket head glyph starts on the shared 40px lead column',
             css.timeHeadLeft !== null && Math.abs(css.timeHeadLeft - (css.listLeft + 40)) < 1.5);
         // the three same send buttons of the recent region: ONE right
         // axis (all end 8px off the list edge) and ONE vertical-center
@@ -282,7 +333,8 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
                 // (snap/2, ungrouped unbookmarked) under the bucket's star
                 const g1member = document.querySelector('li.staging-row[data-url="http://127.0.0.1:9/anchored/0"]');
                 const bucketMember = document.querySelector('li.staging-row[data-url="http://127.0.0.1:9/snap/2"]');
-                const groupTitle = document.querySelector('li.staging-group .staging-section-title');
+                const groupGlyph = document.querySelector('li.staging-group .staging-group-folder') ||
+                    document.querySelector('li.staging-group .staging-section-title');
                 const bucketStar = document.querySelector('li.staging-bucket .staging-bucket-star');
                 r({
                     listLeft: list.left,
@@ -293,7 +345,7 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
                     memberFavX: favX(member),
                     looseFavX: favX(loose),
                     g1FavX: favX(g1member),
-                    groupTitleX: groupTitle ? groupTitle.getBoundingClientRect().left : null,
+                    groupGlyphX: groupGlyph ? groupGlyph.getBoundingClientRect().left : null,
                     bucketFavX: favX(bucketMember),
                     bucketStarX: bucketStar ? bucketStar.getBoundingClientRect().left : null,
                     actionIcons: document.querySelectorAll('.staging-actions-toolbar .staging-icon-btn').length,
@@ -310,9 +362,9 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
         ck('selection checkboxes share one 8px axis (row/head/bucket)',
             [selGeo.memberCheck, selGeo.looseCheck, selGeo.groupCheck, selGeo.bucketCheck]
                 .every(x => x !== null && Math.abs(x - checkAxis) < 1.5));
-        ck('selection member content hangs under its head glyph (group title / bucket star)',
-            selGeo.g1FavX !== null && selGeo.groupTitleX !== null &&
-            Math.abs(selGeo.g1FavX - selGeo.groupTitleX) < 1.5 &&
+        ck('selection member content hangs under its head glyph (group folder / bucket star)',
+            selGeo.g1FavX !== null && selGeo.groupGlyphX !== null &&
+            Math.abs(selGeo.g1FavX - selGeo.groupGlyphX) < 1.5 &&
             selGeo.bucketFavX !== null && selGeo.bucketStarX !== null &&
             Math.abs(selGeo.bucketFavX - selGeo.bucketStarX) < 1.5);
         ck('selection member content keeps the 36px step off the loose baseline',
@@ -381,13 +433,45 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
             openLabel: getComputedStyle(document.querySelector('.staging-open .staging-btn-label')).display,
             barLabel: getComputedStyle(document.querySelector('.staging-shortcuts-label')).display
         }));
-        console.log('wide:', JSON.stringify(wide));
+        // wide (two-line) vertical axis: the fold head stands exactly as
+        // tall as the two-line member rows, and its glyph + title ink stay
+        // vertically centered in the taller row
+        const wideV = await page.evaluate(() => {
+            const r = el => {
+                if (!el) return null;
+                const b = el.getBoundingClientRect();
+                return { top: b.top, cy: b.top + b.height / 2, h: b.height, left: b.left };
+            };
+            const head = document.querySelector('.staging-group-head');
+            const row = document.querySelector('#staging-items li.staging-row');
+            const glyph = head ? head.querySelector('.staging-group-folder') : null;
+            const titleEl = head ? head.querySelector('.staging-section-title') : null;
+            let ink = null;
+            if (titleEl && titleEl.firstChild) {
+                const rng = document.createRange();
+                rng.selectNodeContents(titleEl);
+                const b = rng.getBoundingClientRect();
+                ink = { top: b.top, cy: b.top + b.height / 2, h: b.height };
+            }
+            const chev = head ? head.querySelector('.chevron') : null;
+            return { head: r(head), row: r(row), glyph: r(glyph), chev: r(chev), ink,
+                sub: row ? getComputedStyle(row.querySelector('.row-sub')).display : null };
+        });
+        console.log('wideV:', JSON.stringify(wideV));
         await page.evaluate(() => { document.body.style.width = ''; });
         await sleep(200);
         ck('width-aware: danger delete shows icon+text at 800px (progressive)',
             wide.delW > 22 && wide.delLabel !== 'none');
         ck('width-aware: lower-priority open stays icon-only at 800px', wide.openLabel === 'none');
         ck('shortcut label appears at 800px', wide.barLabel !== 'none');
+        ck('wide: fold head height equals the two-line member row height',
+            wideV.head && wideV.row && wideV.sub === 'block' &&
+            Math.abs(wideV.head.h - wideV.row.h) < 1.5);
+        ck('wide: head glyph/chevron/title-ink vertically centered in the taller head',
+            wideV.head && wideV.glyph && wideV.chev && wideV.ink &&
+            Math.abs(wideV.glyph.cy - wideV.head.cy) < 1.5 &&
+            Math.abs(wideV.chev.cy - wideV.head.cy) < 1.5 &&
+            Math.abs(wideV.ink.cy - wideV.head.cy) < 1.5);
         // open-as-tab-group through the icon rung: the urls-only call
         // path must send without a pageerror (the old pickGroupColor
         // crash read as a popup error toast). The runtime message is
