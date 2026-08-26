@@ -2659,8 +2659,8 @@ li.staging-row.drag-over {
 }
 
 .staging-toolbar .staging-clear-entry .vbm-icon {
-    width: 14px;
-    height: 14px;
+    width: 16px;
+    height: 16px;
     flex: none;
 }
 
@@ -2675,8 +2675,8 @@ li.staging-row.drag-over {
 }
 
 .staging-toolbar .staging-new-group .vbm-icon {
-    width: 14px;
-    height: 14px;
+    width: 16px;
+    height: 16px;
     flex: none;
 }
 
@@ -4144,8 +4144,8 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
 }
 
 #search-history-clear .vbm-icon {
-    width: 14px;
-    height: 14px;
+    width: 16px;
+    height: 16px;
     flex: none;
 }
 
@@ -6894,8 +6894,8 @@ body.panel-mode #dead-list .vbm-row .row-badge-slot {
 }
 
 .stats-toolbar .stats-clear .vbm-icon {
-    width: 14px;
-    height: 14px;
+    width: 16px;
+    height: 16px;
     flex: none;
 }
 

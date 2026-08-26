@@ -134,11 +134,16 @@ describe('2026-08-26 audit geometry contracts', () => {
         expect(close).toContain('margin-inline-start: auto');
     });
 
-    it('icon+text toolbar entries share the 14px glyph and 2px vertical padding', () => {
-        expect(ruleBody(neatCss, '#search-history-clear .vbm-icon {')).toContain('width: 14px');
-        expect(ruleBody(neatCss, '.stats-toolbar .stats-clear .vbm-icon {')).toContain('width: 14px');
-        expect(ruleBody(neatCss, '.staging-toolbar .staging-clear-entry .vbm-icon {')).toContain('width: 14px');
-        expect(ruleBody(neatCss, '.staging-toolbar .staging-new-group .vbm-icon {')).toContain('width: 14px');
+    it('icon+text toolbar entries share the 16px glyph — one toolbar glyph size', () => {
+        // §2: toolbar icon buttons are 20px boxes with 16px glyphs. The
+        // icon+text entries (清空统计 / 清空暂存 / 清除搜索历史 / 新建分组)
+        // used to render 14px — visibly smaller than the 16px trash next to
+        // them once the fitter hides their labels at narrow widths (they
+        // become icon-only de facto).
+        expect(ruleBody(neatCss, '#search-history-clear .vbm-icon {')).toContain('width: 16px');
+        expect(ruleBody(neatCss, '.stats-toolbar .stats-clear .vbm-icon {')).toContain('width: 16px');
+        expect(ruleBody(neatCss, '.staging-toolbar .staging-clear-entry .vbm-icon {')).toContain('width: 16px');
+        expect(ruleBody(neatCss, '.staging-toolbar .staging-new-group .vbm-icon {')).toContain('width: 16px');
         expect(ruleBody(neatCss, '#search-history-clear {')).toContain('padding: 2px 6px');
     });
 
