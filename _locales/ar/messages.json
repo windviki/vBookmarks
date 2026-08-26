@@ -2597,5 +2597,11 @@
         "content": "$1"
       }
     }
+  },
+  "searchHistoryClose": {
+    "message": "إخفاء سجل البحث"
+  },
+  "searchHistoryClosedToast": {
+    "message": "تم إخفاء سجل البحث — أعد تفعيله في الخيارات ← البحث"
   }
 }

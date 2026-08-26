@@ -2597,5 +2597,11 @@
         "content": "$1"
       }
     }
+  },
+  "searchHistoryClose": {
+    "message": "Nascondi cronologia di ricerca"
+  },
+  "searchHistoryClosedToast": {
+    "message": "Cronologia di ricerca nascosta — riattivala in Opzioni → Ricerca"
   }
 }

@@ -2597,5 +2597,11 @@
         "content": "$1"
       }
     }
+  },
+  "searchHistoryClose": {
+    "message": "Skrýt historii vyhledávání"
+  },
+  "searchHistoryClosedToast": {
+    "message": "Historie vyhledávání je skrytá — znovu ji zapnete v Možnosti → Hledání"
   }
 }

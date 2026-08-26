@@ -2848,5 +2848,13 @@
       }
     },
     "description": "Search results toolbar: stage every result into a staging group named after the query. Placeholder $1$ = the query."
+  },
+  "searchHistoryClose": {
+    "message": "Hide search history",
+    "description": "Search history header: the × that hides the whole search-history area (re-enable in Options → Search)."
+  },
+  "searchHistoryClosedToast": {
+    "message": "Search history hidden — re-enable it in Options → Search",
+    "description": "Toast after the search-history area's close × hides it."
   }
 }

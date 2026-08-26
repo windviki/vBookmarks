@@ -2597,5 +2597,11 @@
         "content": "$1"
       }
     }
+  },
+  "searchHistoryClose": {
+    "message": "Sakrij povijest pretraživanja"
+  },
+  "searchHistoryClosedToast": {
+    "message": "Povijest pretraživanja je skrivena — ponovno je uključite u Opcije → Pretraživanje"
   }
 }

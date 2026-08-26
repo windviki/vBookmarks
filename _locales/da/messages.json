@@ -2597,5 +2597,11 @@
         "content": "$1"
       }
     }
+  },
+  "searchHistoryClose": {
+    "message": "Skjul søgehistorik"
+  },
+  "searchHistoryClosedToast": {
+    "message": "Søgehistorikken er skjult — genaktiver den i Indstillinger → Søgning"
   }
 }

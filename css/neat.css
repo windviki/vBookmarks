@@ -4145,6 +4145,30 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
     background: color-mix(in srgb, var(--vbm-danger) 12%, transparent);
 }
 
+/* The close × (2026-08-26 report): same head-button recipe but MUTED — it
+   hides the area (a preference flip, not an information delete), so it
+   reads neutral like the rest of the head chrome. */
+#search-history-close {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    margin-inline-start: 2px;
+    border: 0;
+    border-radius: var(--vbm-radius);
+    background: transparent;
+    color: var(--vbm-muted);
+    cursor: pointer;
+    padding: 0;
+}
+
+#search-history-close:hover {
+    background: var(--vbm-bg-hover);
+    color: var(--vbm-fg);
+}
+
 /* The per-row remove button gets the same danger treatment as the header's
    clear-all above and the dead view's .dead-del-btn: deleting a history
    entry is information deletion, so it reads red at rest and hovers with

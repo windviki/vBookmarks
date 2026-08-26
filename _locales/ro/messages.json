@@ -2597,5 +2597,11 @@
         "content": "$1"
       }
     }
+  },
+  "searchHistoryClose": {
+    "message": "Ascunde istoricul căutărilor"
+  },
+  "searchHistoryClosedToast": {
+    "message": "Istoricul căutărilor este ascuns — reactivați-l în Opțiuni → Căutare"
   }
 }

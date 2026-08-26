@@ -2597,5 +2597,11 @@
         "content": "$1"
       }
     }
+  },
+  "searchHistoryClose": {
+    "message": "Ẩn lịch sử tìm kiếm"
+  },
+  "searchHistoryClosedToast": {
+    "message": "Lịch sử tìm kiếm đã ẩn — bật lại trong Tùy chọn → Tìm kiếm"
   }
 }

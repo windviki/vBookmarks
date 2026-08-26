@@ -2597,5 +2597,11 @@
         "content": "$1"
       }
     }
+  },
+  "searchHistoryClose": {
+    "message": "Piilota hakuhistoria"
+  },
+  "searchHistoryClosedToast": {
+    "message": "Hakuhistoria on piilotettu — ota se uudelleen käyttöön Asetukset → Haku"
   }
 }

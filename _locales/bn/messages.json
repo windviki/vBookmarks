@@ -2597,5 +2597,11 @@
         "content": "$1"
       }
     }
+  },
+  "searchHistoryClose": {
+    "message": "অনুসন্ধানের ইতিহাস লুকান"
+  },
+  "searchHistoryClosedToast": {
+    "message": "অনুসন্ধানের ইতিহাস লুকানো হয়েছে — এটি আবার চালু করুন বিকল্প → অনুসন্ধান"
   }
 }

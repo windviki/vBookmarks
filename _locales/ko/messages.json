@@ -2597,5 +2597,11 @@
         "content": "$1"
       }
     }
+  },
+  "searchHistoryClose": {
+    "message": "검색 기록 숨기기"
+  },
+  "searchHistoryClosedToast": {
+    "message": "검색 기록이 숨겨졌습니다 — 옵션 → 검색에서 다시 사용 설정하세요"
   }
 }

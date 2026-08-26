@@ -866,14 +866,15 @@ describe('search history area (§3.2/§4.3)', () => {
         expect(els['search-history-area'].innerHTML).toContain('data-q="&lt;b&gt;&quot;x&quot;"');
     });
 
-    it('shows only the hint when history is disabled (entries stay stored but hidden)', () => {
+    // 2026-08-26 report: disabled = the area is GONE entirely (innerHTML
+    // cleared → the CSS :empty rule hides the box) — entries stay stored
+    // but the results pane owns the view.
+    it('a disabled history area renders EMPTY (entries stay stored but hidden)', () => {
         const { els, viewHooks } = setup({
             storeData: { searchHistoryEnabled: '', searchHistory: HISTORY }
         });
         viewHooks.search.activate();
-        const html = els['search-history-area'].innerHTML;
-        expect(html).toContain('searchViewHint');
-        expect(html).not.toContain('data-q=');
+        expect(els['search-history-area'].innerHTML).toBe('');
     });
 
     it('clicking a history row reruns the query immediately — even in searchAfterEnter mode', () => {
@@ -906,6 +907,28 @@ describe('search history area (§3.2/§4.3)', () => {
         });
         expect(store.get('searchHistory')).toBe('[]');
         expect(els['search-history-area'].innerHTML).toContain('searchViewHint');
+    });
+
+    // 2026-08-26 report: the head's close × hides the WHOLE history area —
+    // the same contract as the options 记录搜索历史 switch (off wipes the
+    // MRU too) + a toast pointing at 选项→搜索.
+    it('the close × hides the history area (enabled off + MRU wiped + toast)', () => {
+        const toasts = [];
+        const { els, viewHooks, store } = setup({
+            storeData: { searchHistory: JSON.stringify([{ q: 'a', ts: 1, n: 0 }]) },
+            undo: { showToast: msg => toasts.push(msg) }
+        });
+        viewHooks.search.activate();
+        expect(els['search-history-area'].innerHTML).toContain('id="search-history-close"');
+        els['search-history-area'].trigger('click', {
+            target: { closest: sel => (sel === '#search-history-close' ? {} : null) }
+        });
+        expect(store.get('searchHistoryEnabled')).toBe('');
+        expect(store.get('searchHistory')).toBe('[]');
+        // the area is GONE entirely (innerHTML cleared → the CSS :empty rule
+        // hides the box) — no hint row, the results pane owns the view
+        expect(els['search-history-area'].innerHTML).toBe('');
+        expect(toasts).toEqual(['searchHistoryClosedToast']);
     });
 
     it('Enter on a focused row reruns it, Delete removes it', () => {

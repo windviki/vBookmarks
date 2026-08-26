@@ -2597,5 +2597,11 @@
         "content": "$1"
       }
     }
+  },
+  "searchHistoryClose": {
+    "message": "Slēpt meklēšanas vēsturi"
+  },
+  "searchHistoryClosedToast": {
+    "message": "Meklēšanas vēsture ir paslēpta — iespējojiet to atkārtoti Opcijas → Meklēšana"
   }
 }

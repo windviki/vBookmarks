@@ -2597,5 +2597,11 @@
         "content": "$1"
       }
     }
+  },
+  "searchHistoryClose": {
+    "message": "Otsinguajaloo peitmine"
+  },
+  "searchHistoryClosedToast": {
+    "message": "Otsinguajalugu on peidetud — luba see uuesti jaotises Valikud → Otsing"
   }
 }

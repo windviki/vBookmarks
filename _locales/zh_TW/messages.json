@@ -2597,5 +2597,11 @@
         "content": "$1"
       }
     }
+  },
+  "searchHistoryClose": {
+    "message": "隱藏最近搜索"
+  },
+  "searchHistoryClosedToast": {
+    "message": "最近搜索區域已隱藏，可在 選項→搜索 中重新開啟"
   }
 }

@@ -2597,5 +2597,11 @@
         "content": "$1"
       }
     }
+  },
+  "searchHistoryClose": {
+    "message": "Zoekgeschiedenis verbergen"
+  },
+  "searchHistoryClosedToast": {
+    "message": "Zoekgeschiedenis verborgen — schakel deze opnieuw in via Opties → Zoeken"
   }
 }

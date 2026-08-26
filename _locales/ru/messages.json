@@ -2597,5 +2597,11 @@
         "content": "$1"
       }
     }
+  },
+  "searchHistoryClose": {
+    "message": "Скрыть историю поиска"
+  },
+  "searchHistoryClosedToast": {
+    "message": "История поиска скрыта — включите её снова в Настройки → Поиск"
   }
 }

@@ -2597,5 +2597,11 @@
         "content": "$1"
       }
     }
+  },
+  "searchHistoryClose": {
+    "message": "ซ่อนประวัติการค้นหา"
+  },
+  "searchHistoryClosedToast": {
+    "message": "ซ่อนประวัติการค้นหาแล้ว — เปิดอีกครั้งในตัวเลือก → ค้นหา"
   }
 }

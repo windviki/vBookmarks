@@ -2597,5 +2597,11 @@
         "content": "$1"
       }
     }
+  },
+  "searchHistoryClose": {
+    "message": "Slėpti paieškos istoriją"
+  },
+  "searchHistoryClosedToast": {
+    "message": "Paieškos istorija paslėpta — įjunkite ją vėl parinktyse → Paieška"
   }
 }

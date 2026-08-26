@@ -2597,5 +2597,11 @@
         "content": "$1"
       }
     }
+  },
+  "searchHistoryClose": {
+    "message": "Dölj sökhistorik"
+  },
+  "searchHistoryClosedToast": {
+    "message": "Sökhistoriken är dold — aktivera den igen under Alternativ → Sök"
   }
 }

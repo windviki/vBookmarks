@@ -2597,5 +2597,11 @@
         "content": "$1"
       }
     }
+  },
+  "searchHistoryClose": {
+    "message": "खोज इतिहास छिपाएँ"
+  },
+  "searchHistoryClosedToast": {
+    "message": "खोज इतिहास छिपा दिया गया — इसे फिर से चालू करें विकल्प → खोज"
   }
 }

@@ -2597,5 +2597,11 @@
         "content": "$1"
       }
     }
+  },
+  "searchHistoryClose": {
+    "message": "Ocultar historial de búsqueda"
+  },
+  "searchHistoryClosedToast": {
+    "message": "Historial de búsqueda oculto — actívalo de nuevo en Opciones → Búsqueda"
   }
 }

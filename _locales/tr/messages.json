@@ -2597,5 +2597,11 @@
         "content": "$1"
       }
     }
+  },
+  "searchHistoryClose": {
+    "message": "Arama geçmişini gizle"
+  },
+  "searchHistoryClosedToast": {
+    "message": "Arama geçmişi gizlendi — Seçenekler → Ara bölümünden yeniden etkinleştirin"
   }
 }

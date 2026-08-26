@@ -1016,14 +1016,16 @@ describe('classic-experience preset (v4 task-3 #20 + issue #49)', () => {
 
         // every one of these switches is a sync-routed key (2026-08 storage audit)
         for (const key of ['paletteEnabled', 'quickAddEnabled', 'quickAddContextMenu',
-            'showToolButton', 'showViewTabs', 'treeRowActions'])
+            'showToolButton', 'showViewTabs', 'treeRowActions', 'searchHistoryEnabled'])
             expect(sb.syncData[key]).toBe('');
         expect(sb.elements['quick-add-context-menu'].checked).toBe(false);
         expect(sb.elements['palette-enabled'].checked).toBe(false);
         expect(sb.elements['show-tool-button'].checked).toBe(false);
         // 2026-08-26 report round: the tree-row hover quick actions
-        // (书签行悬浮快捷按钮) stand down with the one-click classic preset too
+        // (书签行悬浮快捷按钮) and the search-history area stand down with
+        // the one-click classic preset too
         expect(sb.elements['tree-row-actions'].checked).toBe(false);
+        expect(sb.elements['search-history-enabled'].checked).toBe(false);
     });
 
     it('the quick-add context-menu switch binds to storage and toggles independently', async () => {

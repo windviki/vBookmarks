@@ -2593,5 +2593,11 @@
         "content": "$1"
       }
     }
+  },
+  "searchHistoryClose": {
+    "message": "Ocultar histórico de pesquisa"
+  },
+  "searchHistoryClosedToast": {
+    "message": "Histórico de pesquisa oculto — reative em Opções → Pesquisa"
   }
 }

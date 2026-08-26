@@ -2597,5 +2597,11 @@
         "content": "$1"
       }
     }
+  },
+  "searchHistoryClose": {
+    "message": "پنهان کردن تاریخچه جستجو"
+  },
+  "searchHistoryClosedToast": {
+    "message": "تاریخچه جستجو پنهان شد — دوباره در گزینهها ← جستجو فعال کنید"
   }
 }

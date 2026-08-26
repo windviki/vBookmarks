@@ -286,7 +286,20 @@ export function initSearch(ctx = {}) {
         syncHistoryGutter();
         // 4.0.1 focus law: park a focused history row across the swap
         const parkedRow = parkRowFocus();
-        const list = historyEnabled() ? readHistory() : [];
+        if (!historyEnabled()) {
+            // 2026-08-26 report: off = the area is GONE entirely (the CSS
+            // #search-history-area:empty rule hides the box) — no hint row,
+            // the results pane owns the view. Same contract for the options
+            // switch and the head's close ×.
+            if ($historyArea.innerHTML !== '') {
+                lastHistoryHtml = '';
+                lastHistoryTrimmed = false;
+                $historyArea.innerHTML = '';
+            }
+            unparkRowFocus(parkedRow);
+            return;
+        }
+        const list = readHistory();
         if (!list.length) {
             const hintHtml = `<ul role="list"><li class="empty-state" role="listitem"><i>${_m('searchViewHint')}</i></li></ul>`;
             if (hintHtml !== lastHistoryHtml) {
@@ -297,8 +310,18 @@ export function initSearch(ctx = {}) {
             unparkRowFocus(parkedRow);
             return;
         }
+        // The head's close × (2026-08-26 report): hides the WHOLE history
+        // area (the same contract as the options 记录搜索历史 switch — off
+        // wipes the MRU too) with a toast pointing at 选项→搜索.
+        const closeLabel = _m('searchHistoryClose');
         let html = `<div class="search-history-head"><i>${htmlspecialchars(_m('searchHistoryTitle'))}</i>` +
-            `<button type="button" id="search-history-clear" class="search-history-clear" tabindex="-1">${TRASH_ICON}${htmlspecialchars(_m('searchHistoryClear'))}</button></div>` +
+            `<button type="button" id="search-history-clear" class="search-history-clear" tabindex="-1">${TRASH_ICON}${htmlspecialchars(_m('searchHistoryClear'))}</button>` +
+            `<button type="button" id="search-history-close" class="search-history-close" tabindex="-1" ` +
+            `aria-label="${htmlspecialchars(closeLabel)}" title="${htmlspecialchars(closeLabel)}">` +
+            '<svg class="vbm-icon vbm-icon-close" width="12" height="12" viewBox="0 0 16 16" ' +
+            'fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">' +
+            '<path d="M4.5 4.5l7 7M11.5 4.5l-7 7"/></svg>' +
+            '</button></div>' +
             '<ul role="list">';
         for (let i = 0, l = list.length; i < l; i++) {
             const entry = list[i];
@@ -374,6 +397,22 @@ export function initSearch(ctx = {}) {
             if (removeBtn) {
                 e.preventDefault();
                 removeHistoryEntry(removeBtn.dataset.q);
+                return;
+            }
+            // The close × (2026-08-26 report): hides the whole history area
+            // — the SAME contract as the options 记录搜索历史 switch (off
+            // also wipes the MRU), so the toast points at 选项→搜索 to bring
+            // it back. The area re-renders to the empty hint (the CSS
+            // #search-history-area:empty rule hides it), leaving the results
+            // pane alone.
+            const closeBtn = closest('#search-history-close');
+            if (closeBtn) {
+                e.preventDefault();
+                store.set('searchHistoryEnabled', '');
+                store.set('searchHistory', '[]');
+                renderHistoryArea();
+                if (ctx.undo && ctx.undo.showToast)
+                    ctx.undo.showToast(_m('searchHistoryClosedToast'));
                 return;
             }
             const a = closest('a[data-q]');

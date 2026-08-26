@@ -2597,5 +2597,11 @@
         "content": "$1"
       }
     }
+  },
+  "searchHistoryClose": {
+    "message": "Keresési előzmények elrejtése"
+  },
+  "searchHistoryClosedToast": {
+    "message": "A keresési előzmények elrejtve — kapcsolja vissza a Beállítások → Keresés menüben"
   }
 }

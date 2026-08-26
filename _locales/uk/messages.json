@@ -2597,5 +2597,11 @@
         "content": "$1"
       }
     }
+  },
+  "searchHistoryClose": {
+    "message": "Приховати історію пошуку"
+  },
+  "searchHistoryClosedToast": {
+    "message": "Історію пошуку приховано — увімкніть її знову в Налаштування → Пошук"
   }
 }

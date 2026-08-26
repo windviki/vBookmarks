@@ -2597,5 +2597,11 @@
         "content": "$1"
       }
     }
+  },
+  "searchHistoryClose": {
+    "message": "Sembunyikan riwayat pencarian"
+  },
+  "searchHistoryClosedToast": {
+    "message": "Riwayat pencarian disembunyikan — aktifkan lagi di Opsi → Cari"
   }
 }

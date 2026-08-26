@@ -2597,5 +2597,11 @@
         "content": "$1"
       }
     }
+  },
+  "searchHistoryClose": {
+    "message": "検索履歴を非表示"
+  },
+  "searchHistoryClosedToast": {
+    "message": "検索履歴は非表示です — オプション → 検索で再度有効にできます"
   }
 }

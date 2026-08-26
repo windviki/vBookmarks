@@ -2597,5 +2597,11 @@
         "content": "$1"
       }
     }
+  },
+  "searchHistoryClose": {
+    "message": "Suchverlauf ausblenden"
+  },
+  "searchHistoryClosedToast": {
+    "message": "Suchverlauf ausgeblendet — wieder aktivieren unter Optionen → Suche"
   }
 }

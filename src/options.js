@@ -293,7 +293,11 @@ const $ = id => document.getElementById(id);
                 ['quickAddContextMenu', 'quick-add-context-menu'],
                 ['showToolButton', 'show-tool-button'],
                 ['showViewTabs', 'show-view-tabs'],
-                ['treeRowActions', 'tree-row-actions']
+                ['treeRowActions', 'tree-row-actions'],
+                // 2026-08-26 report: the classic preset also hides the
+                // search-history area (记录搜索历史 off — the checkbox and
+                // the area's close × share this key).
+                ['searchHistoryEnabled', 'search-history-enabled']
             ];
             for (const [key, id] of classic) {
                 await setSetting(key, '');
