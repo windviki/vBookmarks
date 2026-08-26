@@ -170,6 +170,19 @@ const idxV3 = (hosts = {}, down = {}) => JSON.stringify({
 
 const tick = () => new Promise(r => setTimeout(r, 0));
 
+// Poll until `predicate` holds. The enricher's fetch chain is async
+// (microtasks + the fake ImageCtor's setTimeout(0) load), so under heavy
+// parallel CI load a fixed sleep is not a reliable "everything landed"
+// signal — assert on the terminal state instead.
+const waitUntil = async (predicate, what, timeoutMs = 3000) => {
+    const start = Date.now();
+    while (!predicate()) {
+        if (Date.now() - start > timeoutMs)
+            throw new Error(`waitUntil timed out: ${what}`);
+        await new Promise(r => setTimeout(r, 10));
+    }
+};
+
 let seq = 0;
 const nextNow = () => { seq += 1000; return 1700000000000 + seq; };
 
@@ -950,7 +963,11 @@ describe('initFaviconEnrich — hydrate-race + session-only cap', () => {
         await en._hydrateDone;
         for (let i = 0; i < SESSION_ONLY_CAP + 1; i++)
             en.onPlaceholder(makePlaceholderImg(`https://big${i}.example/`));
-        await new Promise(r => setTimeout(r, 50));
+        // Wait for the LAST placeholder's chain to land — queue pumps at
+        // CONCURRENCY and completion order is FIFO, so big24 present means
+        // every insert ran and the cap eviction already fired.
+        await waitUntil(() => en.getCache().has(`big${SESSION_ONLY_CAP}.example`),
+            'session-only burst never completed');
         const cache = en.getCache();
         expect(cache.size).toBeLessThanOrEqual(SESSION_ONLY_CAP);
         expect(cache.has('big0.example')).toBe(false);                 // oldest evicted
