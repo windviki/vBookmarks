@@ -1058,6 +1058,9 @@
   "optionSearchHistory": {
     "message": "অনুসন্ধানের ইতিহাস এলাকা দেখান"
   },
+  "optionSearchHistoryCount": {
+    "message": "সাম্প্রতিক অনুসন্ধানের সংখ্যা দেখান"
+  },
   "optionSearchHistoryHint": {
     "message": "ফলাফলের উপরের সাম্প্রতিক অনুসন্ধান এলাকা লুকান — রেকর্ড করা প্রশ্ন সংরক্ষিত থাকে"
   },

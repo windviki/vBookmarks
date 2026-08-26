@@ -150,8 +150,11 @@
     //   limit), userstyle (unbounded CSS);
     // - device/screen/network state: openInSidePanel, autoResizePopup, zoom,
     //   popup size/scroll/focus/view state, deadProxyServer, deadScan*;
-    // - privacy/local data: searchHistory; remote caches: vbmAnnounce*,
-    //   vbmGithubMirrors; local bookkeeping: version/donation counters.
+    // - privacy/local data: searchHistory — the recorded queries stay on the
+    //   device; their DISPLAY count (searchHistoryCount) is a plain
+    //   preference and IS synced below;
+    // - remote caches: vbmAnnounce*, vbmGithubMirrors; local bookkeeping:
+    //   version/donation counters.
     const SYNC_KEYS = [
         // sync-status preferences (the original four)
         'showSyncStatus', 'highlightUnsynced', 'autoRefreshSync', 'syncRefreshInterval',
@@ -174,7 +177,7 @@
         // icon handling
         'faviconContrast', 'faviconEnrich', 'faviconEnrichAgg', 'faviconBackupInclude',
         // sort/filter/count preferences
-        'recentCount', 'sortOptions',
+        'recentCount', 'sortOptions', 'searchHistoryCount',
         'dupesStrategy', 'dupesScope', 'dupesIgnoreScheme',
         'deadSort', 'deadFilter', 'deadMarkFilter',
         'statsSort', 'statsShowUnbookmarked',

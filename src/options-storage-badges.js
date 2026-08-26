@@ -32,8 +32,9 @@ export const STORAGE_LOCAL = 'local';
 // consistency test below pins that.
 export const OPTIONS_STORAGE_GROUPS = {
     general: [
-        // 2026-08-26: the recent-search display count is a local device-state
-        // preference (like autoResizePopup) — general is the mixed group.
+        // 2026-08-26 选项页修补: the recent-search display count became a
+        // synced preference like recentCount — general stays mixed through
+        // the two device-state keys below only.
         { row: 'search-history-count', key: 'searchHistoryCount' },
         { row: 'click-new-tab', key: 'leftClickNewTab' },
         { row: 'open-new-tab-bg', key: 'middleClickBgTab' },

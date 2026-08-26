@@ -1058,6 +1058,9 @@
   "optionSearchHistory": {
     "message": "Mostra l'area della cronologia di ricerca"
   },
+  "optionSearchHistoryCount": {
+    "message": "Numero di ricerche recenti da mostrare"
+  },
   "optionSearchHistoryHint": {
     "message": "Nascondi l'area delle ricerche recenti sopra i risultati — le query registrate vengono conservate"
   },

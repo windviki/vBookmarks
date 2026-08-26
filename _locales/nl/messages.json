@@ -1058,6 +1058,9 @@
   "optionSearchHistory": {
     "message": "Zoekgeschiedenisgebied weergeven"
   },
+  "optionSearchHistoryCount": {
+    "message": "Aantal recente zoekopdrachten om weer te geven"
+  },
   "optionSearchHistoryHint": {
     "message": "Het gebied met recente zoekopdrachten boven de resultaten verbergen — opgeslagen zoekopdrachten blijven bewaard"
   },

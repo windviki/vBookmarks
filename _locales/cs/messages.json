@@ -1058,6 +1058,9 @@
   "optionSearchHistory": {
     "message": "Zobrazit oblast historie vyhledávání"
   },
+  "optionSearchHistoryCount": {
+    "message": "Počet nedávných vyhledávání k zobrazení"
+  },
   "optionSearchHistoryHint": {
     "message": "Skrýt oblast nedávných hledání nad výsledky — zaznamenané dotazy zůstávají"
   },

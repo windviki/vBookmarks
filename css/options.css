@@ -410,7 +410,9 @@ white-space: nowrap;
 	margin-__MSG_@@bidi_end_edge__: 5px;
 }
 /* Custom-icon row: the two buttons + "or" divider sit on one flex line so
-   they share a vertical center and wrap cleanly on narrow cards. The file
+   they share a vertical center and wrap cleanly on narrow cards; the two
+   buttons grow equally so the band fills the row beside the floated preview
+   and the trailing button lands flush on the card's right edge. The file
    input is hidden and opened by #custom-icon-pick (the engine won't style
    ::file-selector-button, so a native input can't match the button here). */
 .options-list li > div:has(> #default-icon-button){
@@ -421,6 +423,8 @@ white-space: nowrap;
 }
 .options-list li > div:has(> #default-icon-button) button{
 	margin-__MSG_@@bidi_start_edge__: 0; /* the flex gap replaces the 1em offset */
+	flex: 1 1 auto;
+	white-space: nowrap;
 }
 .options-list li #default-icon-button-or{
 	color: var(--vbm-muted);
@@ -514,6 +518,47 @@ white-space: nowrap;
 }
 .options-list li label:has(> input[type=number]:last-child) > input[type=number]{
 	margin-__MSG_@@bidi_start_edge__: 0;
+}
+/* Dropdown rows join that same right column: label text on the left, the
+   select pinned to the card's right edge — the edge the stats-clear /
+   backup buttons close on, so a card's trailing controls share one line.
+   The inline flow left theme/language mid-row at whatever x the label ended;
+   min-width keeps short numeric dropdowns (counts) from reading as slivers,
+   while long option lists (language) keep their natural width. */
+.options-list li label:has(> select:last-child){
+	display: flex;
+	align-items: center;
+	gap: 1em;
+}
+.options-list li label:has(> select:last-child) > span{
+	margin-__MSG_@@bidi_end_edge__: auto;
+}
+.options-list li label:has(> select:last-child) > select{
+	/* flex:none: never let a narrow multicol column shrink the control below
+	   its longest option (a compressed select truncates its own text into a
+	   bare "…"); max-width:100% remains the overflow guard for very long
+	   option lists (the language dropdown) where shrinking is the only out. */
+	flex: none;
+	min-width: 9em;
+	max-width: 100%;
+	margin-__MSG_@@bidi_start_edge__: 0;
+}
+/* Palette-command form: the free-text rows follow the same shape (label
+   left, field filling to the right edge) so the whole editor reads as one
+   aligned column. Scoped to the form — the separator fields' own stacked
+   full-width layout below must not turn into an inline flex row. */
+#palette-cmd-form .options-list li label:has(> input[type=text]:last-child){
+	display: flex;
+	align-items: center;
+	gap: 1em;
+}
+#palette-cmd-form .options-list li label:has(> input[type=text]:last-child) > span{
+	margin-__MSG_@@bidi_end_edge__: auto;
+}
+#palette-cmd-form .options-list li label:has(> input[type=text]:last-child) > input{
+	flex: 1 1 10em;
+	min-width: 0;
+	box-sizing: border-box;
 }
 .options-list li select{
 	background: var(--vbm-bg-elev);

@@ -1058,6 +1058,9 @@
   "optionSearchHistory": {
     "message": "검색 기록 영역 표시"
   },
+  "optionSearchHistoryCount": {
+    "message": "표시할 최근 검색 수"
+  },
   "optionSearchHistoryHint": {
     "message": "결과 위의 최근 검색 영역 숨기기 — 기록된 쿼리는 유지됩니다"
   },

@@ -1058,6 +1058,9 @@
   "optionSearchHistory": {
     "message": "Pokaż obszar historii wyszukiwania"
   },
+  "optionSearchHistoryCount": {
+    "message": "Liczba ostatnich wyszukiwań do wyświetlenia"
+  },
   "optionSearchHistoryHint": {
     "message": "Ukryj obszar ostatnich wyszukiwań nad wynikami — zapisane zapytania zostają zachowane"
   },

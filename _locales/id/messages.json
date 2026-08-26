@@ -1058,6 +1058,9 @@
   "optionSearchHistory": {
     "message": "Tampilkan area riwayat pencarian"
   },
+  "optionSearchHistoryCount": {
+    "message": "Jumlah pencarian terbaru yang ditampilkan"
+  },
   "optionSearchHistoryHint": {
     "message": "Sembunyikan area pencarian terbaru di atas hasil — kueri yang tersimpan tetap dipertahankan"
   },

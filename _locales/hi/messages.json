@@ -1058,6 +1058,9 @@
   "optionSearchHistory": {
     "message": "खोज इतिहास क्षेत्र दिखाएँ"
   },
+  "optionSearchHistoryCount": {
+    "message": "हाल की खोजों की संख्या दिखाएं"
+  },
   "optionSearchHistoryHint": {
     "message": "परिणामों के ऊपर हाल की खोज क्षेत्र छिपाएँ — रिकॉर्ड किए गए क्वेरी रखे जाते हैं"
   },

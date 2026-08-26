@@ -1058,6 +1058,9 @@
   "optionSearchHistory": {
     "message": "Rodyti paieškos istorijos sritį"
   },
+  "optionSearchHistoryCount": {
+    "message": "Rodomų naujausių paieškų skaičius"
+  },
   "optionSearchHistoryHint": {
     "message": "Slėpti naujausių paieškų sritį virš rezultatų — įrašytos užklausos išlieka"
   },

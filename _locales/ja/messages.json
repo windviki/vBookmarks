@@ -1058,6 +1058,9 @@
   "optionSearchHistory": {
     "message": "検索履歴エリアを表示"
   },
+  "optionSearchHistoryCount": {
+    "message": "表示する最近の検索数"
+  },
   "optionSearchHistoryHint": {
     "message": "結果の上の最近の検索エリアを非表示 — 記録されたクエリは保持されます"
   },

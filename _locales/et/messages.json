@@ -1058,6 +1058,9 @@
   "optionSearchHistory": {
     "message": "Kuva otsinguajaloo ala"
   },
+  "optionSearchHistoryCount": {
+    "message": "Kuvatavate hiljutiste otsingute arv"
+  },
   "optionSearchHistoryHint": {
     "message": "Peida hiljutiste otsingute ala tulemuste kohal — salvestatud päringud säilivad"
   },

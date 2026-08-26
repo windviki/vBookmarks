@@ -311,7 +311,7 @@ describe('store.js', () => {
                 'paletteEnabled', 'quickAddEnabled', 'showToolButton', 'quickAddContextMenu',
                 'collapseTabGroupMenu', 'collapseSortMenu', 'collapseAddFolderMenu', 'statsEnabled', 'searchHistoryEnabled',
                 'faviconContrast', 'faviconEnrich', 'faviconEnrichAgg', 'faviconBackupInclude',
-                'recentCount', 'sortOptions',
+                'recentCount', 'sortOptions', 'searchHistoryCount',
                 'dupesStrategy', 'dupesScope', 'dupesIgnoreScheme',
                 'deadSort', 'deadFilter', 'deadMarkFilter',
                 'statsSort', 'statsShowUnbookmarked',

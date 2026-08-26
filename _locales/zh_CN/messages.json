@@ -1074,6 +1074,9 @@
   "optionSearchHistory": {
     "message": "显示最近搜索区域"
   },
+  "optionSearchHistoryCount": {
+    "message": "最近搜索的显示条数"
+  },
   "optionSearchHistoryHint": {
     "message": "隐藏结果区上方的最近搜索区域——已记录的查询会保留。"
   },

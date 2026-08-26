@@ -92,13 +92,13 @@ describe('storage badges: real store.js consistency', () => {
             else
                 allLocal.push(headingId);
         }
-        // General mixes 10 sync preferences with the device-state keys
-        // (autoResizePopup, openInSidePanel + the 2026-08-26 recent-search
-        // display count) — the only mixed group.
+        // General mixes 11 sync preferences with the two device-state keys
+        // (autoResizePopup, openInSidePanel) — the only mixed group. The
+        // recent-search display count joined the sync area in the 2026-08-26
+        // options round (a plain preference like recentCount).
         expect(mixed).toEqual(['general']);
         expect(plan.general.dominant).toBe(STORAGE_SYNC);
         expect(plan.general.outliers).toEqual([
-            { row: 'search-history-count', key: 'searchHistoryCount', kind: STORAGE_LOCAL },
             { row: 'auto-resize-popup', key: 'autoResizePopup', kind: STORAGE_LOCAL },
             { row: 'open-in-side-panel', key: 'openInSidePanel', kind: STORAGE_LOCAL }
         ]);

@@ -202,6 +202,36 @@ describe('options page responsive layout rules (v4 task-3 #17)', () => {
     });
 });
 
+describe('options page control alignment (2026-08-26 选项页修补)', () => {
+    it('pins every dropdown row to the card\'s right edge — the stats-clear edge', () => {
+        const label = ruleBody(optionsCss, '.options-list li label:has(> select:last-child){');
+        expect(label).toContain('display: flex');
+        expect(label).toContain('align-items: center');
+        // the leading label span yields; the select lands flush on the li's
+        // content edge — where the stats-clear / backup buttons also close
+        const span = ruleBody(optionsCss, '.options-list li label:has(> select:last-child) > span{');
+        expect(span).toContain('margin-__MSG_@@bidi_end_edge__: auto');
+        const select = ruleBody(optionsCss, '.options-list li label:has(> select:last-child) > select{');
+        expect(select).toContain('min-width: 9em');
+        expect(select).toContain('margin-__MSG_@@bidi_start_edge__: 0');
+    });
+
+    it('keeps the custom-icon buttons band filling the row beside the preview float', () => {
+        const btn = ruleBody(optionsCss, '.options-list li > div:has(> #default-icon-button) button{');
+        expect(btn).toContain('flex: 1 1 auto');
+        expect(btn).toContain('white-space: nowrap');
+    });
+
+    it('aligns the palette-command form text fields with the pinned selects', () => {
+        const label = ruleBody(optionsCss,
+            '#palette-cmd-form .options-list li label:has(> input[type=text]:last-child){');
+        expect(label).toContain('display: flex');
+        const input = ruleBody(optionsCss,
+            '#palette-cmd-form .options-list li label:has(> input[type=text]:last-child) > input{');
+        expect(input).toContain('flex: 1 1 10em');
+    });
+});
+
 describe('options page header responsive wrap (narrow widths)', () => {
     // The header's three element groups — the title block (icon+name+small),
     // the #header-since subtitle docked in front of the pills and the right

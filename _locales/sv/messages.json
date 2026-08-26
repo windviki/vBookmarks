@@ -1058,6 +1058,9 @@
   "optionSearchHistory": {
     "message": "Visa sökhistorikområdet"
   },
+  "optionSearchHistoryCount": {
+    "message": "Antal senaste sökningar att visa"
+  },
   "optionSearchHistoryHint": {
     "message": "Dölj området för senaste sökningar ovanför resultaten — sparade frågor behålls"
   },

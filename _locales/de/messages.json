@@ -1058,6 +1058,9 @@
   "optionSearchHistory": {
     "message": "Suchverlaufsbereich anzeigen"
   },
+  "optionSearchHistoryCount": {
+    "message": "Anzahl der letzten Suchanfragen anzeigen"
+  },
   "optionSearchHistoryHint": {
     "message": "Den Bereich für letzte Suchanfragen über den Ergebnissen ausblenden — aufgezeichnete Anfragen bleiben erhalten"
   },

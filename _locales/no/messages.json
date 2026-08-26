@@ -1058,6 +1058,9 @@
   "optionSearchHistory": {
     "message": "Vis søkehistorikkområdet"
   },
+  "optionSearchHistoryCount": {
+    "message": "Antall nylige søk som skal vises"
+  },
   "optionSearchHistoryHint": {
     "message": "Skjul området for nylige søk over resultatene — lagrede spørringer beholdes"
   },

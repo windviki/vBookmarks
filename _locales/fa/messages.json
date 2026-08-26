@@ -1058,6 +1058,9 @@
   "optionSearchHistory": {
     "message": "نمایش ناحیه تاریخچه جستجو"
   },
+  "optionSearchHistoryCount": {
+    "message": "تعداد جستجوهای اخیر برای نمایش"
+  },
   "optionSearchHistoryHint": {
     "message": "مخفی کردن ناحیه جستجوهای اخیر بالای نتایج — پرسوجوهای ثبتشده حفظ میشوند"
   },

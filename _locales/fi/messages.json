@@ -1058,6 +1058,9 @@
   "optionSearchHistory": {
     "message": "Näytä hakuhistoria-alue"
   },
+  "optionSearchHistoryCount": {
+    "message": "Näytettävien viimeaikaisten hakujen määrä"
+  },
   "optionSearchHistoryHint": {
     "message": "Piilota viimeaikaisten hakujen alue tulosten yläpuolelta — tallennetut kyselyt säilyvät"
   },

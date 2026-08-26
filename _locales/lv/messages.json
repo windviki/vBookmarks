@@ -1058,6 +1058,9 @@
   "optionSearchHistory": {
     "message": "Rādīt meklēšanas vēstures apgabalu"
   },
+  "optionSearchHistoryCount": {
+    "message": "Rādāmo neseno meklējumu skaits"
+  },
   "optionSearchHistoryHint": {
     "message": "Paslēpt pēdējo meklējumu apgabalu virs rezultātiem — saglabātie vaicājumi tiek paturēti"
   },

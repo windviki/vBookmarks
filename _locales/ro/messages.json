@@ -1058,6 +1058,9 @@
   "optionSearchHistory": {
     "message": "Afișează zona istoricului de căutări"
   },
+  "optionSearchHistoryCount": {
+    "message": "Numărul de căutări recente de afișat"
+  },
   "optionSearchHistoryHint": {
     "message": "Ascunde zona căutărilor recente deasupra rezultatelor — interogările înregistrate sunt păstrate"
   },

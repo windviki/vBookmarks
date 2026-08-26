@@ -1058,6 +1058,9 @@
   "optionSearchHistory": {
     "message": "إظهار منطقة سجل البحث"
   },
+  "optionSearchHistoryCount": {
+    "message": "عدد عمليات البحث الأخيرة المراد عرضها"
+  },
   "optionSearchHistoryHint": {
     "message": "إخفاء منطقة البحث الحديثة أعلى النتائج — تبقى الاستعلامات المسجلة محفوظة"
   },

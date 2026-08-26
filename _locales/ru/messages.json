@@ -1058,6 +1058,9 @@
   "optionSearchHistory": {
     "message": "Показывать область истории поиска"
   },
+  "optionSearchHistoryCount": {
+    "message": "Количество последних поисков для отображения"
+  },
   "optionSearchHistoryHint": {
     "message": "Скрыть область недавних поисков над результатами — записанные запросы сохраняются"
   },

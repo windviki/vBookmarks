@@ -1058,6 +1058,9 @@
   "optionSearchHistory": {
     "message": "Prikaži područje povijesti pretraživanja"
   },
+  "optionSearchHistoryCount": {
+    "message": "Broj nedavnih pretraživanja za prikaz"
+  },
   "optionSearchHistoryHint": {
     "message": "Sakrij područje nedavnih pretraga iznad rezultata — zabilježeni upiti ostaju"
   },

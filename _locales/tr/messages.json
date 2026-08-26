@@ -1058,6 +1058,9 @@
   "optionSearchHistory": {
     "message": "Arama geçmişi alanını göster"
   },
+  "optionSearchHistoryCount": {
+    "message": "Gösterilecek son aramaların sayısı"
+  },
   "optionSearchHistoryHint": {
     "message": "Sonuçların üzerindeki son aramalar alanını gizle — kaydedilen sorgular korunur"
   },

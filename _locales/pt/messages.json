@@ -1058,6 +1058,9 @@
   "optionSearchHistory": {
     "message": "Mostrar a área do histórico de pesquisa"
   },
+  "optionSearchHistoryCount": {
+    "message": "Número de pesquisas recentes a exibir"
+  },
   "optionSearchHistoryHint": {
     "message": "Ocultar a área de pesquisas recentes acima dos resultados — as consultas registradas são mantidas"
   },

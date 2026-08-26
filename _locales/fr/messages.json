@@ -1058,6 +1058,9 @@
   "optionSearchHistory": {
     "message": "Afficher la zone d'historique de recherche"
   },
+  "optionSearchHistoryCount": {
+    "message": "Nombre de recherches récentes à afficher"
+  },
   "optionSearchHistoryHint": {
     "message": "Masquer la zone de recherches récentes au-dessus des résultats — les requêtes enregistrées sont conservées"
   },

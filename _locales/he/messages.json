@@ -1058,6 +1058,9 @@
   "optionSearchHistory": {
     "message": "הצגת אזור היסטוריית חיפוש"
   },
+  "optionSearchHistoryCount": {
+    "message": "מספר החיפושים האחרונים להצגה"
+  },
   "optionSearchHistoryHint": {
     "message": "הסתרת אזור החיפושים האחרונים מעל התוצאות — השאילתות שנשמרו נשמרות"
   },

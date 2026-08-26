@@ -1058,6 +1058,9 @@
   "optionSearchHistory": {
     "message": "Keresési előzmények területének megjelenítése"
   },
+  "optionSearchHistoryCount": {
+    "message": "Megjelenítendő legutóbbi keresések száma"
+  },
   "optionSearchHistoryHint": {
     "message": "Az eredmények feletti közelmúltbeli keresések területének elrejtése — a rögzített lekérdezések megmaradnak"
   },

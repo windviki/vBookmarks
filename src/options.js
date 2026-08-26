@@ -928,6 +928,7 @@ const $ = id => document.getElementById(id);
         document.getElementById('option-tabgroups-closed-limit').innerText = __m('optionTabGroupsClosedLimit');
         document.getElementById('option-search-history').innerText = __m('optionSearchHistory');
         document.getElementById('option-search-history-hint').innerText = __m('optionSearchHistoryHint');
+        document.getElementById('option-search-history-count').innerText = __m('optionSearchHistoryCount');
         document.getElementById('option-stats-enabled').innerText = __m('optionStatsEnabled');
         document.getElementById('stats-clear').innerText = __m('statsClearData');
         document.getElementById('option-favicon-contrast').innerText = __m('optionFaviconContrast');

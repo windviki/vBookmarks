@@ -1058,6 +1058,9 @@
   "optionSearchHistory": {
     "message": "Показване на областта за история на търсенето"
   },
+  "optionSearchHistoryCount": {
+    "message": "Брой последни търсения за показване"
+  },
   "optionSearchHistoryHint": {
     "message": "Скриване на областта за скорошни търсения над резултатите — записите се запазват"
   },

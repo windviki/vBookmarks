@@ -1162,6 +1162,9 @@
   "optionSearchHistory": {
     "message": "Show the search history area"
   },
+  "optionSearchHistoryCount": {
+    "message": "Number of recent searches to show"
+  },
   "optionSearchHistoryHint": {
     "message": "Hide the recent-search area above the results — the recorded queries are kept."
   },

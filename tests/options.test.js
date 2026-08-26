@@ -1049,7 +1049,8 @@ describe('classic-experience preset (v4 task-3 #20 + issue #49)', () => {
         expect(sb.elements['search-history-count'].value).toBe('5'); // default
         sb.elements['search-history-count'].value = '10';
         await sb.elements['search-history-count'].fire('change');
-        expect(sb.localData.searchHistoryCount).toBe('10');
+        // a synced preference like recentCount since the 2026-08-26 round
+        expect(sb.syncData.searchHistoryCount).toBe('10');
     });
 
     it('the quick-add context-menu switch binds to storage and toggles independently', async () => {

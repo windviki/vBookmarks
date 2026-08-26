@@ -1058,6 +1058,9 @@
   "optionSearchHistory": {
     "message": "Hiển thị khu vực lịch sử tìm kiếm"
   },
+  "optionSearchHistoryCount": {
+    "message": "Số lượng tìm kiếm gần đây để hiển thị"
+  },
   "optionSearchHistoryHint": {
     "message": "Ẩn khu vực tìm kiếm gần đây phía trên kết quả — các truy vấn đã lưu được giữ lại"
   },

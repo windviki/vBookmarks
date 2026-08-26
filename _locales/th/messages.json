@@ -1058,6 +1058,9 @@
   "optionSearchHistory": {
     "message": "แสดงพื้นที่ประวัติการค้นหา"
   },
+  "optionSearchHistoryCount": {
+    "message": "จำนวนการค้นหาล่าสุดที่จะแสดง"
+  },
   "optionSearchHistoryHint": {
     "message": "ซ่อนพื้นที่การค้นหาล่าสุดเหนือผลลัพธ์ — คิวรีที่บันทึกไว้ยังคงอยู่"
   },
