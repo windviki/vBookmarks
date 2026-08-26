@@ -275,7 +275,7 @@ const setup = (opts = {}) => {
     const tabGroupMenu = el('MENU', 'tabgroup-context-menu');
     const tabClosedMenu = el('MENU', 'tabgroups-closed-context-menu');
     const tabClosedTabMenu = el('MENU', 'tabgroups-closed-tab-context-menu');
-    for (const id of ['tab-row-activate', 'tab-row-pin', 'tab-row-add-bookmark',
+    for (const id of ['tab-row-activate', 'tab-row-new-window', 'tab-row-pin', 'tab-row-add-bookmark',
         'tab-row-sleep', 'tab-row-close', 'tabgroup-collapse', 'tabgroup-sleep',
         'tabgroups-closed-reopen', 'tabgroups-closed-toggle', 'tabgroups-closed-forget',
         'tabgroups-closed-tab-open', 'tabgroups-closed-tab-bookmark',
@@ -2688,6 +2688,7 @@ describe('tab-groups view menus (4.1.0: state-aware entries)', () => {
             isClosedExpanded: () => !!state.closedExpanded,
             closedTabCount: () => (state.closedTabCount === undefined ? 3 : state.closedTabCount),
             activateTab: id => calls.push(['activateTab', id]),
+            moveTabToNewWindow: id => calls.push(['moveTabToNewWindow', id]),
             togglePinned: id => calls.push(['togglePinned', id]),
             addBookmark: id => calls.push(['addBookmark', id]),
             removeBookmark: id => calls.push(['removeBookmark', id]),
@@ -2738,6 +2739,16 @@ describe('tab-groups view menus (4.1.0: state-aware entries)', () => {
         t.openOn(t.makeTabRow('4').a);
         fire(t.tabRowMenu, 'mouseup', makeEvent({ button: 0, target: t.byId['tab-row-sleep'] }));
         expect(awake.calls).toEqual([['sleepTab', '4']]);
+    });
+
+    // 移动到新窗口 (2026-08-26): the row menu's new-window entry moves the
+    // ONE tab into a fresh window through the view api.
+    it('the tab-row new-window entry moves the single tab', () => {
+        const stub = tabGroupsStub({});
+        const s = setup({ tabGroupsMenu: stub });
+        s.openOn(s.makeTabRow('12').a);
+        fire(s.tabRowMenu, 'mouseup', makeEvent({ button: 0, target: s.byId['tab-row-new-window'] }));
+        expect(stub.calls).toEqual([['moveTabToNewWindow', '12']]);
     });
 
     it('the window section head opens NO menu (it is a fold control)', () => {

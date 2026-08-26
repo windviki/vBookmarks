@@ -5742,12 +5742,14 @@ visibly smaller next to them. */
    from the previous window by a hairline. The WHOLE row is the fold control
    (a focusable role=button span), so it hovers, focuses and answers keys
    exactly like a group head — the chevron alone used to be the only live
-   target. */
+   target. No font-size pin: the head title is EXACTLY the tab rows' size
+   (they inherit the body base — the old 12px pin read smaller than the rows
+   wherever `font: menu` resolves above 12px); the bold em carries the
+   hierarchy instead. */
 #tabgroups-list ul li.tabgroups-window-head {
     display: block;
     padding: 6px 0 0;
     color: var(--vbm-fg);
-    font-size: 12px; /* never smaller than the bookmark/tab row titles */
 }
 #tabgroups-list ul li.tabgroups-window-head:first-child {
     padding-top: 2px;
@@ -6006,6 +6008,14 @@ li.tabgroups-row.tabgroups-current {
 #tabgroups-list ul li.tabgroups-row.drag-over {
     box-shadow: inset 0 2px 0 var(--vbm-accent);
 }
+/* Window-head drag merge: the whole TARGET window section (head + rows)
+   wells as one drop zone — the staging drag-over recipe (accent 10% + 1px
+   inset ring), so the destination reads as the window, not a row. */
+#tabgroups-list ul li.window-drop-target {
+    background: color-mix(in srgb, var(--vbm-accent) 10%, transparent);
+    box-shadow: inset 0 0 0 1px var(--vbm-accent);
+}
+#tabgroups-list ul li.tabgroups-window-head.dragging { opacity: .45; }
 
 /* Selection mode mirrors the dupes view: checkbox at the inline start,
    selected rows tint, row buttons hide, and a group head toggles the whole

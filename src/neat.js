@@ -319,6 +319,7 @@ import { deferIdle, mark as perfMark } from './idle.js';
         'tab-group-pick-cancel-button': 'nope',
         // Tab groups view: tab-row and group context-menu items
         'tab-row-activate': 'tabGroupsActivateTab',
+        'tab-row-new-window': 'tabGroupsMoveNewWindow',
         'tab-row-pin': 'tabGroupsPinTab',
         'tab-row-add-bookmark': 'tabGroupsMenuAddBookmark',
         'tab-row-sleep': 'tabGroupsSelectSleep',

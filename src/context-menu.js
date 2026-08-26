@@ -1908,6 +1908,12 @@ export function initContextMenu(ctx = {}) {
             case 'tab-row-activate':
                 ctx.tabGroupsMenu.activateTab(tabId);
                 break;
+            // 移动到新窗口: the same SW move the group menu's entry runs,
+            // one tab — a fresh window opens with this tab in it.
+            case 'tab-row-new-window':
+                if (ctx.tabGroupsMenu.moveTabToNewWindow)
+                    ctx.tabGroupsMenu.moveTabToNewWindow(tabId);
+                break;
             case 'tab-row-pin':
                 ctx.tabGroupsMenu.togglePinned(tabId);
                 break;
