@@ -1328,7 +1328,7 @@
     "message": "前往重复项视图"
   },
   "paletteCmdGoRecent": {
-    "message": "前往最近视图"
+    "message": "切換到暫存/最近視圖"
   },
   "paletteCmdGoSearch": {
     "message": "前往搜索视图"

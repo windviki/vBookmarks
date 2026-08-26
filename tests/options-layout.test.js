@@ -127,9 +127,13 @@ describe('options page group structure (round-6 item 5, v4 task-3 #17 merge)', (
         expect(recent).not.toContain('id="tabgroups-closed-limit"');
         // Stats group owns the data controls, not the show switch
         const stats = bodyOf('stats-options');
-        for (const id of ['stats-enabled', 'stats-clear', 'search-history-enabled'])
+        for (const id of ['stats-enabled', 'stats-clear'])
             expect(stats).toContain(`id="${id}"`);
         expect(stats).not.toContain('id="show-stats-view"');
+        // 2026-08-26 report: 记录搜索历史 belongs to the SEARCH group
+        expect(stats).not.toContain('id="search-history-enabled"');
+        const search = bodyOf('search-options');
+        expect(search).toContain('id="search-history-enabled"');
         // Dead group owns the scan/proxy controls, not the show switch
         const dead = bodyOf('dead-scan-options');
         for (const id of ['dead-proxy-server-input', 'dead-proxy-strip-visible',
