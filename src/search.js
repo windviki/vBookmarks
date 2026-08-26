@@ -561,6 +561,21 @@ export function initSearch(ctx = {}) {
     $results.addEventListener('click', e => {
         const closest0 = (e.target && e.target.closest) ? e.target.closest.bind(e.target) : () => null;
         if (!selecting) {
+            // 暂存全部 (idle toolbar): every BOOKMARK row of the current
+            // result list lands in one staging group named after the query —
+            // the named-group append law (a same-name group absorbs it).
+            if (closest0('.search-stage-all') && closest0('.vbm-toolbar')) {
+                e.preventDefault();
+                e.stopPropagation();
+                if (ctx.stagingApi && ctx.stagingApi.addItemsToNamedGroup) {
+                    const entries = lastResults
+                        .filter(r => !r.isFolder && r.url)
+                        .map(r => ({ id: r.id, url: r.url, title: r.title }));
+                    if (entries.length)
+                        ctx.stagingApi.addItemsToNamedGroup((searchInput.value || '').trim(), entries);
+                }
+                return;
+            }
             // the entry button rides the idle result bar — flip the mode here
             // (capture phase, before tree-view's bookmarkHandler could run)
             if (closest0('.search-select-mode') && closest0('.vbm-toolbar')) {
@@ -941,10 +956,23 @@ export function initSearch(ctx = {}) {
                     '</div>';
                 html = bar + html;
             } else if (searchMode && bookmarkRows.length) {
+                // 暂存全部 (2026-08-26): the whole result list lands in one
+                // staging group NAMED after the query — one icon button left
+                // of the select entry, on the same 20px/4px cluster (the
+                // every-view vertical-axis law). Off with the staging master
+                // switch.
+                const idleStageOn = !ctx.stagingApi || !ctx.stagingApi.isEnabled
+                    || ctx.stagingApi.isEnabled();
+                const idleStageTip = _m('searchStageAllGroup', [value]);
                 html = '<div class="search-toolbar vbm-toolbar">' +
                     `<span class="search-result-count">${_m('searchResultCount', `${results.length}`)}</span>` +
+                    `<span class="search-icon-cluster">` +
+                    (idleStageOn
+                        ? `<button class="search-stage-all" aria-label="${htmlspecialchars(idleStageTip)}" ` +
+                          `title="${htmlspecialchars(idleStageTip)}">${STAGE_ICON}</button>`
+                        : '') +
                     `<button class="search-select-mode" aria-label="${_m('selectModeEnter')}" ` +
-                    `title="${_m('selectModeEnter')}">${SELECT_ICON}</button></div>` + html;
+                    `title="${_m('selectModeEnter')}">${SELECT_ICON}</button></span></div>` + html;
             }
             $results.innerHTML = html;
             // The fresh result list may have just grown/dropped its scrollbar.

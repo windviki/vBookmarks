@@ -371,15 +371,19 @@ export function initViewRecent(ctx = {}) {
         }
     };
 
-    // A named group head (§3.5): fold control + name + member count. The
-    // quick tail is [rename][place 归档][dissolve 解散][remove 移出暂存] —
-    // the dangerous 删除分组 no longer lives on the head (context menu /
-    // selection mode only); the rightmost slot is 移出暂存 (group + its
-    // member items leave staging, tree untouched, confirm + toast undo).
-    // Manual (user-created) groups render even when EMPTY — they exist
-    // to be dragged into.
+    // A named group head (§3.5). The quick tail (2026-08-26 reorder, six
+    // always-visible keys): [open-all 全部打开][open-as-tab-group 打开为
+    // 标签组 — the selection rung's TABS glyph][rename 编辑][dissolve 解散]
+    // [place 保存为文件夹][remove 移出暂存] — the open pair leads (the
+    // group's whole point), the dangerous 删除分组 stays off the head
+    // (context menu / selection mode only) and the rightmost slot keeps the
+    // tree-safe group removal (confirm + toast undo). Manual (user-created)
+    // groups render even when EMPTY — they exist to be dragged into; the
+    // open pair stands down at 0 members (nothing to open).
     const groupHeadHtml = (g, count) => {
         const collapsed = selecting ? false : g.collapsed;
+        const openAllLabel = _m('openBookmarks');
+        const openGroupLabel = _m('openBookmarksInGroup');
         const placeLabel = _m('groupPlaceTooltip');
         const renameLabel = _m('stagingGroupRename');
         const dissolveLabel = _m('stagingGroupDissolve');
@@ -402,12 +406,18 @@ export function initViewRecent(ctx = {}) {
                 // 20px boxes, the cluster's own 4px gap, no per-button margins
                 // — stride 24, last glyph on the rows' 8px axis)
                 `<span class="head-icon-cluster">` +
+                (count ?
+                    `<button type="button" class="row-btn staging-group-open-all" tabindex="-1" ` +
+                    `aria-label="${htmlspecialchars(openAllLabel)}" title="${htmlspecialchars(openAllLabel)}">${OPEN_ICON}</button>` +
+                    `<button type="button" class="row-btn staging-group-open-group" tabindex="-1" ` +
+                    `aria-label="${htmlspecialchars(openGroupLabel)}" title="${htmlspecialchars(openGroupLabel)}">${TABS_ICON}</button>`
+                    : '') +
                 `<button type="button" class="row-btn staging-group-rename" tabindex="-1" ` +
                 `aria-label="${htmlspecialchars(renameLabel)}" title="${htmlspecialchars(renameLabel)}">${EDIT_ICON}</button>` +
-                `<button type="button" class="row-btn staging-group-place" tabindex="-1" ` +
-                `aria-label="${htmlspecialchars(placeLabel)}" title="${htmlspecialchars(placeLabel)}">${FOLDER_STAR_ICON}</button>` +
                 `<button type="button" class="row-btn staging-group-dissolve" tabindex="-1" ` +
                 `aria-label="${htmlspecialchars(dissolveLabel)}" title="${htmlspecialchars(dissolveLabel)}">${UNGROUP_ICON}</button>` +
+                `<button type="button" class="row-btn staging-group-place" tabindex="-1" ` +
+                `aria-label="${htmlspecialchars(placeLabel)}" title="${htmlspecialchars(placeLabel)}">${FOLDER_STAR_ICON}</button>` +
                 `<button type="button" class="row-btn staging-group-remove" tabindex="-1" ` +
                 `aria-label="${htmlspecialchars(removeLabel)}" title="${htmlspecialchars(removeLabel)}">${STAGE_REMOVE_ICON}</button>` +
                 `</span>`) +
@@ -1914,6 +1924,21 @@ export function initViewRecent(ctx = {}) {
         return r;
     };
 
+    // Named-group landing (2026-08-26): a bucket send (最近添加的时间组 /
+    // the search results' keyword batch) lands in a staging group NAMED
+    // after its origin — an existing same-name group absorbs the batch
+    // (append, the model's URL dedupe keeps it clean), otherwise a fresh
+    // group is created. Auto (not manual): emptying it prunes it away.
+    const stageIntoNamedGroup = (name, entries) => {
+        if (!entries || !entries.length)
+            return { full: false, added: [], dupes: [] };
+        const trimmed = (name || '').trim();
+        let group = trimmed ? staging.findGroupByName(stagingState, trimmed) : null;
+        if (!group)
+            group = staging.createGroup(stagingState, trimmed, {});
+        return addItems(entries, { defaultGroup: group.id });
+    };
+
     // Folder send (§1.1/§1.3): flatten every descendant bookmark (skipping
     // separators and sub-folder nodes), auto-merge into a sourceFolderId
     // group, guard the >100 confirm and the 500 cap.
@@ -2281,6 +2306,27 @@ export function initViewRecent(ctx = {}) {
             toggleHeadFold();
             return;
         }
+        if (closest('.staging-group-open-all')) {
+            e.preventDefault();
+            e.stopPropagation();
+            const headLi = closest('.staging-group');
+            const gid = headLi && headLi.dataset && headLi.dataset.groupId;
+            const urls = gid ? groupItemsOf(gid).map(it => it.url) : [];
+            if (urls.length && ctx.actions && ctx.actions.openBookmarks)
+                ctx.actions.openBookmarks(urls);
+            return;
+        }
+        if (closest('.staging-group-open-group')) {
+            e.preventDefault();
+            e.stopPropagation();
+            const headLi = closest('.staging-group');
+            const gid = headLi && headLi.dataset && headLi.dataset.groupId;
+            const urls = gid ? groupItemsOf(gid).map(it => it.url) : [];
+            const g = gid ? staging.findGroup(stagingState, gid) : null;
+            if (urls.length && ctx.actions && ctx.actions.openBookmarksInGroup)
+                ctx.actions.openBookmarksInGroup(urls, (g && g.name) || '');
+            return;
+        }
         if (closest('.staging-group-rename')) {
             e.preventDefault();
             e.stopPropagation();
@@ -2420,8 +2466,11 @@ export function initViewRecent(ctx = {}) {
             e.stopPropagation();
             const btn = closest('.recent-group-stage');
             const g = parseInt(btn.dataset ? btn.dataset.recentGroup : '', 10);
+            // 命名分组落地 (2026-08-26): the batch lands in a staging group
+            // NAMED after the bucket (本周 → 本周); a same-name group
+            // absorbs the append instead of forking a sibling.
             if (!isNaN(g) && recentGroupUrls[g] && recentGroupUrls[g].length)
-                addItems(recentGroupUrls[g]);
+                stageIntoNamedGroup(_m(GROUP_KEYS[g]), recentGroupUrls[g]);
             return;
         }
         if (closest('.recent-stage-all')) {
@@ -2794,6 +2843,12 @@ export function initViewRecent(ctx = {}) {
 
     const api = {
         addItems,
+        // Named-group batch sends (the recent time buckets / the search
+        // keyword toolbar button) and the member-url read the group context
+        // menu's open entries dispatch through.
+        addItemsToNamedGroup: stageIntoNamedGroup,
+        groupUrls: gid => staging.groupItems(stagingState, gid).map(it => it.url),
+        groupName: gid => (staging.findGroup(stagingState, gid) || {}).name || '',
         sendFolder,
         favToggle,
         favAllBucket,

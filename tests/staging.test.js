@@ -6,7 +6,7 @@ import { describe, it, expect } from 'vitest';
 import {
     STAGING_LIMIT, createState, parse, serialize, count, getByUrl,
     snapshotItems, add, removeByUrls, clearAll, relink, updateSnapshot,
-    setFav, setUnfavById, findGroup, findGroupBySource, createGroup,
+    setFav, setUnfavById, findGroup, findGroupBySource, findGroupByName, createGroup,
     renameGroup, dissolveGroup, deleteGroup, restoreGroup, restoreItems, reorderGroups,
     pruneEmptyGroups, assignGroup,
     setGroupCollapsed, unfavBucketItems, newCount, markSeen, groupItems,
@@ -260,6 +260,19 @@ describe('staging groups', () => {
         expect(findGroupBySource(s, { sourceFolderId: '7' }).id).toBe(f.id);
         expect(findGroupBySource(s, { sourceTabGroup: 'Work' }).id).toBe(t.id);
         expect(findGroupBySource(s, { sourceFolderId: '8' })).toBeNull();
+    });
+
+    // 命名分组落地 (2026-08-26): the recent time-bucket / search-keyword
+    // sends land in a group NAMED after their origin — an exact-name match
+    // (oldest first, the render order) absorbs the append.
+    it('findGroupByName matches an exact name (oldest first), null otherwise', () => {
+        const s = createState();
+        const first = createGroup(s, '本周', {}, 100);
+        createGroup(s, '本周', {}, 200);
+        expect(findGroupByName(s, '本周').id).toBe(first.id);
+        expect(findGroupByName(s, '本周 ')).toBeNull(); // exact match only
+        expect(findGroupByName(s, 'missing')).toBeNull();
+        expect(findGroupByName(s, '')).toBeNull(); // blank never matches
     });
 
     it('assignGroup moves items between groups exactly once (no copies)', () => {

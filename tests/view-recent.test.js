@@ -193,6 +193,7 @@ const setup = (opts = {}) => {
         ...(visitStats ? { visitStats } : {}),
         ...(undo ? { undo } : {}),
         ...(opts.dialogs ? { dialogs: opts.dialogs } : {}),
+        ...(opts.actions ? { actions: opts.actions } : {}),
         ...(opts.onRowsRendered ? { onRowsRendered: opts.onRowsRendered } : {})
     });
     return {
@@ -1874,3 +1875,131 @@ function store_get_staging_group(ctx) {
     const it = raw.items.find(i => i.url === 'http://r/');
     return it ? it.group : null;
 }
+
+describe('open×4 quick tail + named-group landings (2026-08-26 round)', () => {
+    const undoOn = () => ({
+        toastCalls: [], actionCalls: [],
+        showToast(msg) { this.toastCalls.push(msg); },
+        toastAction(msg, label, fn) { this.actionCalls.push([msg, label, fn]); }
+    });
+
+    const mkActions = () => ({
+        openCalls: [], groupOpenCalls: [], windowCalls: [],
+        openBookmarks(urls) { this.openCalls.push(urls); },
+        openBookmarksInGroup(urls, title) { this.groupOpenCalls.push([urls, title]); },
+        openBookmarksNewWindow(urls, incognito) { this.windowCalls.push([urls, !!incognito]); }
+    });
+
+    const seededGroup = (ctx, name, urls) => {
+        const gid = ctx.viewRecent.api.createGroup(name);
+        ctx.viewRecent.api.addItems(urls.map((u, i) => ({ id: null, url: u, title: `t${i}` })));
+        for (const it of ctx.viewRecent.api.state().items)
+            if (urls.includes(it.url))
+                it.group = gid;
+        return gid;
+    };
+
+    it('the head quick tail reads 全部打开→标签组→编辑→解散→保存文件夹→移出暂存 (in order)', () => {
+        const ctx = setup({ undo: undoOn() });
+        seededGroup(ctx, 'Work', ['http://a/', 'http://b/']);
+        ctx.def().activate();
+        const html = ctx.$list.innerHTML;
+        const order = ['staging-group-open-all', 'staging-group-open-group',
+            'staging-group-rename', 'staging-group-dissolve',
+            'staging-group-place', 'staging-group-remove'];
+        let at = -1;
+        for (const cls of order) {
+            const idx = html.indexOf(cls);
+            expect(idx, cls).toBeGreaterThan(at);
+            at = idx;
+        }
+    });
+
+    it('an EMPTY manual group head keeps the tail but drops the open pair', () => {
+        const ctx = setup({ undo: undoOn() });
+        ctx.viewRecent.api.createGroup('Landing');
+        ctx.def().activate();
+        const html = ctx.$list.innerHTML;
+        expect(html).not.toContain('staging-group-open-all');
+        expect(html).not.toContain('staging-group-open-group');
+        expect(html).toContain('staging-group-rename');
+        expect(html).toContain('staging-group-remove');
+    });
+
+    it('open-all and open-as-tab-group dispatch the member urls through ctx.actions', () => {
+        const actions = mkActions();
+        const ctx = setup({ actions, undo: undoOn() });
+        const gid = seededGroup(ctx, 'Work', ['http://a/', 'http://b/']);
+        ctx.def().activate();
+        const clickCls = cls => ctx.click({
+            preventDefault() {}, stopPropagation() {},
+            target: {
+                closest: sel => (sel === cls ? {}
+                    : (sel === '.staging-group' ? { dataset: { groupId: gid } } : null))
+            }
+        });
+        clickCls('.staging-group-open-all');
+        expect(actions.openCalls).toEqual([['http://a/', 'http://b/']]);
+        clickCls('.staging-group-open-group');
+        expect(actions.groupOpenCalls).toEqual([[['http://a/', 'http://b/'], 'Work']]);
+        // an empty group dispatches nothing
+        const empty = ctx.viewRecent.api.createGroup('Empty');
+        ctx.click({
+            preventDefault() {}, stopPropagation() {},
+            target: {
+                closest: sel => (sel === '.staging-group-open-all' ? {}
+                    : (sel === '.staging-group' ? { dataset: { groupId: empty } } : null))
+            }
+        });
+        expect(actions.openCalls).toHaveLength(1);
+    });
+
+    it('addItemsToNamedGroup creates the named group and a same-name send APPENDS into it', () => {
+        const ctx = setup({ undo: undoOn() });
+        ctx.viewRecent.api.addItemsToNamedGroup('本周', [
+            { id: '1', url: 'http://a/', title: 'A' },
+            { id: '2', url: 'http://b/', title: 'B' }
+        ]);
+        let state = ctx.viewRecent.api.state();
+        expect(state.groups.map(g => g.name)).toEqual(['本周']);
+        const gid = state.groups[0].id;
+        expect(state.items.every(i => i.group === gid)).toBe(true);
+        expect(state.groups[0].manual).toBe(false); // auto — prunes when empty
+        // resend with one new url: NO sibling group, the new item joins
+        ctx.viewRecent.api.addItemsToNamedGroup('本周', [
+            { id: '2', url: 'http://b/', title: 'B' },
+            { id: '3', url: 'http://c/', title: 'C' }
+        ]);
+        state = ctx.viewRecent.api.state();
+        expect(state.groups).toHaveLength(1);
+        expect(state.items.map(i => i.url)).toEqual(['http://a/', 'http://b/', 'http://c/']);
+        expect(state.items.find(i => i.url === 'http://c/').group).toBe(gid);
+    });
+
+    it('the recent time-bucket stage button lands the bucket in a group NAMED after the bucket', () => {
+        const ctx = setup({ undo: undoOn(), recentItems: [
+            { id: '101', parentId: '1', title: 'A', url: 'http://a/', dateAdded: Date.now() }
+        ] });
+        ctx.def().activate();
+        ctx.click({
+            preventDefault() {}, stopPropagation() {},
+            target: {
+                closest: sel => (sel === '.recent-group-stage'
+                    ? { dataset: { recentGroup: '0' } } : null)
+            }
+        });
+        const state = ctx.viewRecent.api.state();
+        // the stub i18n returns the message KEY, so 今天 renders as its key
+        expect(state.groups.map(g => g.name)).toEqual(['recentGroupToday']);
+        expect(state.items.map(i => i.url)).toEqual(['http://a/']);
+        expect(state.items[0].group).toBe(state.groups[0].id);
+    });
+
+    it('api.groupUrls / groupName expose the group membership the context menu reads', () => {
+        const ctx = setup({ undo: undoOn() });
+        const gid = seededGroup(ctx, 'Work', ['http://a/']);
+        expect(ctx.viewRecent.api.groupUrls(gid)).toEqual(['http://a/']);
+        expect(ctx.viewRecent.api.groupName(gid)).toBe('Work');
+        expect(ctx.viewRecent.api.groupUrls('missing')).toEqual([]);
+    });
+});

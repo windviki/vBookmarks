@@ -317,6 +317,16 @@ export const findGroupBySource = (state, source) => {
     return null;
 };
 
+// Name-keyed landing group (the recent time-bucket / search-keyword sends):
+// an exact-name match wins (oldest first — array order is the render order),
+// so re-sending "本周" APPENDS into the existing 本周 group instead of
+// forking a same-named sibling. Null when no group carries the name yet.
+export const findGroupByName = (state, name) => {
+    if (!name)
+        return null;
+    return state.groups.find(g => g.name === name) || null;
+};
+
 export const createGroup = (state, name, source = {}, now = Date.now()) => {
     const group = {
         id: newGroupId(),

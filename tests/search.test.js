@@ -1443,6 +1443,53 @@ describe('search selection mode (velvet staging §3.6)', () => {
         ]);
     });
 
+    it('暂存全部 (idle toolbar): every bookmark result lands in one query-named group', () => {
+        const staging = stageApi();
+        staging.isEnabled = () => true;
+        staging.addItemsToNamedGroup = (name, entries) => {
+            staging.calls.push(['named', name, entries]);
+            return { full: false, added: entries, dupes: [] };
+        };
+        const ctx = setup({
+            stagingApi: staging,
+            fuzzyResults: [
+                { id: '11', title: 'GitHub', url: 'https://github.com/', isFolder: false, parentId: '1' },
+                { id: '1', title: 'Folder A', url: '', isFolder: true, parentId: '0' }
+            ]
+        });
+        type(ctx.els, 'git');
+        const html = ctx.els.results.innerHTML;
+        // the button rides the idle bar LEFT of the select entry, in one
+        // 4px-stride icon cluster
+        expect(html).toContain('search-icon-cluster');
+        expect(html).toContain('search-stage-all');
+        expect(html.indexOf('search-stage-all')).toBeLessThan(html.indexOf('search-select-mode'));
+        // the click sends the bookmark rows (folder rows excluded) into a
+        // group NAMED after the query
+        ctx.els.results.trigger('click', {
+            target: { closest: sel => ((sel === '.search-stage-all' || sel === '.vbm-toolbar') ? {} : null) }
+        });
+        expect(staging.calls).toHaveLength(1);
+        expect(staging.calls[0][1]).toBe('git');
+        expect(staging.calls[0][2]).toEqual([
+            { id: '11', url: 'https://github.com/', title: 'GitHub' }
+        ]);
+    });
+
+    it('the idle stage-all button stands down with the staging master switch off', () => {
+        const staging = stageApi();
+        staging.isEnabled = () => false;
+        const ctx = setup({
+            stagingApi: staging,
+            fuzzyResults: [
+                { id: '11', title: 'GitHub', url: 'https://github.com/', isFolder: false, parentId: '1' }
+            ]
+        });
+        type(ctx.els, 'git');
+        expect(ctx.els.results.innerHTML).not.toContain('search-stage-all');
+        expect(ctx.els.results.innerHTML).toContain('search-select-mode');
+    });
+
     it('the attach-level onEscape leaves the selection mode (before search.escape)', () => {
         const ctx = setup({ fuzzyResults: [
             { id: '11', title: 'GitHub', url: 'https://github.com/', isFolder: false, parentId: '1' }
