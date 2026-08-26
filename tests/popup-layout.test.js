@@ -107,7 +107,7 @@ describe('2026-08-26 audit geometry contracts', () => {
         // the old `search-select-toolbar:last-of-type` never matched (the
         // selecting mode always emits both rungs) — the pair rendered
         // borderless while staging kept its closing line
-        expect(neatCss).not.toContain('search-select-toolbar:last-of-type');
+        expect(neatCss.includes('.search-toolbar.search-select-toolbar:last-of-type {')).toBe(false);
         const closer = ruleBody(neatCss,
             '.staging-toolbar.staging-actions-toolbar,\n.search-toolbar.search-actions-toolbar {');
         expect(closer).toContain('border-bottom: 1px solid var(--vbm-border)');
