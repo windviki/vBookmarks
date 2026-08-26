@@ -728,7 +728,7 @@ describe('tree-row quick actions (treeRowActions option)', () => {
     const BM = { id: '1', parentId: '0', title: 'A', url: 'http://e.com/' };
 
     it('renders the edit + stage + delete tail on bookmark rows when on', () => {
-        const tr = setup({ store: makeStore({ treeRowActions: '1', stagingEnabled: '1' }) });
+        const tr = setup({ store: makeStore({ treeRowActions: '1', stagingEnabled: '1', showRecentBookmarks: '1' }) });
         const html = tr.generateHTML([BM]);
         expect(html).toContain('tree-row-edit');
         expect(html).toContain('tree-row-delete');
@@ -736,7 +736,7 @@ describe('tree-row quick actions (treeRowActions option)', () => {
     });
 
     it('treeRowActions off removes the whole tail', () => {
-        const tr = setup({ store: makeStore({ treeRowActions: '0', stagingEnabled: '1' }) });
+        const tr = setup({ store: makeStore({ treeRowActions: '0', stagingEnabled: '1', showRecentBookmarks: '1' }) });
         const html = tr.generateHTML([BM]);
         expect(html).not.toContain('tree-row-edit');
         expect(html).not.toContain('tree-row-delete');
@@ -744,7 +744,17 @@ describe('tree-row quick actions (treeRowActions option)', () => {
     });
 
     it('stagingEnabled off keeps edit+delete but drops the stage plane', () => {
-        const tr = setup({ store: makeStore({ treeRowActions: '1', stagingEnabled: '0' }) });
+        const tr = setup({ store: makeStore({ treeRowActions: '1', stagingEnabled: '0', showRecentBookmarks: '1' }) });
+        const html = tr.generateHTML([BM]);
+        expect(html).toContain('tree-row-edit');
+        expect(html).toContain('tree-row-delete');
+        expect(html).not.toContain('staging-add-btn');
+    });
+
+    // 2026-08-26 report round: a DISABLED staging view (showRecentBookmarks
+    // off) drops the stage plane exactly like the master switch.
+    it('a disabled staging view drops the stage plane too', () => {
+        const tr = setup({ store: makeStore({ treeRowActions: '1', stagingEnabled: '1', showRecentBookmarks: '' }) });
         const html = tr.generateHTML([BM]);
         expect(html).toContain('tree-row-edit');
         expect(html).toContain('tree-row-delete');
@@ -752,7 +762,7 @@ describe('tree-row quick actions (treeRowActions option)', () => {
     });
 
     it('folder rows carry edit+delete; the folder plane needs a staging api', () => {
-        const tr = setup({ store: makeStore({ treeRowActions: '1', stagingEnabled: '1' }) });
+        const tr = setup({ store: makeStore({ treeRowActions: '1', stagingEnabled: '1', showRecentBookmarks: '1' }) });
         const html = tr.generateHTML([{ id: '5', parentId: '0', title: 'F', children: [BM] }]);
         expect(html).toContain('tree-row-edit');
         expect(html).toContain('tree-row-delete');

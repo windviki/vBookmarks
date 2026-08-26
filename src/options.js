@@ -284,13 +284,16 @@ const $ = id => document.getElementById(id);
         $('classic-experience').addEventListener('click', async () => {
             // The classic v3 chrome turns off every v4-only extra: command
             // palette, quick-add star, its page right-click menu entry (issue
-            // #49), the tool button and the view tabs.
+            // #49), the tool button, the view tabs, and the tree-row hover
+            // quick actions (2026-08-26 report round: 书签行悬浮快捷按钮 must
+            // stand down with the one-click classic preset).
             const classic = [
                 ['paletteEnabled', 'palette-enabled'],
                 ['quickAddEnabled', 'quick-add-enabled'],
                 ['quickAddContextMenu', 'quick-add-context-menu'],
                 ['showToolButton', 'show-tool-button'],
-                ['showViewTabs', 'show-view-tabs']
+                ['showViewTabs', 'show-view-tabs'],
+                ['treeRowActions', 'tree-row-actions']
             ];
             for (const [key, id] of classic) {
                 await setSetting(key, '');

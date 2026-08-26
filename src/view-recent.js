@@ -68,7 +68,10 @@ export function initViewRecent(ctx = {}) {
     // default on): off collapses the view to the classic recently-added
     // list — no workbench chrome, no toolbar, and every other view's
     // staging entries hide (they read this through api.isEnabled).
-    const stagingOn = () => store.get('stagingEnabled', '1') === '1';
+    // Disabling the VIEW (showRecentBookmarks off / disableRecentView) is
+    // the same contract — the 2026-08-26 report round: with the view
+    // hidden, every cross-view staging entry must stand down too.
+    const stagingOn = () => store.get('stagingEnabled', '1') === '1' && enabled();
     const recentCount = () => {
         const n = parseInt(store.get('recentCount', '20'), 10);
         return n > 0 ? n : 20;

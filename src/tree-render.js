@@ -153,9 +153,12 @@ export function initTreeRender(ctx = {}) {
     // treeRowActions, default on). Bookmarks get all three; folders skip
     // the plane (a folder "stage" is the context menu's flatten-send). The
     // plane only renders while the staging feature itself is enabled
-    // (stagingEnabled, the options 暂存和最近添加 master switch).
+    // (stagingEnabled, the options 暂存和最近添加 master switch) AND the
+    // staging view is not disabled (showRecentBookmarks — the 2026-08-26
+    // report round: a disabled view stands down every cross-view entry).
     const treeRowActionsOn = () => store.get('treeRowActions', '1') === '1';
-    const stagingRelayOn = () => store.get('stagingEnabled', '1') === '1';
+    const stagingRelayOn = () => store.get('stagingEnabled', '1') === '1'
+        && !!store.get('showRecentBookmarks', '1');
     // A folder's staged verdict: EVERY descendant bookmark staged (unknown
     // children — a collapsed lazy folder — read as unstaged). The click is
     // the menu's flatten-send (sendFolder merges one sourceFolderId group).

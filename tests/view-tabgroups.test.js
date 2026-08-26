@@ -2219,6 +2219,10 @@ describe('staging interop (velvet staging §2.5, pure-snapshot revision)', () =>
                 calls.push(['add', entries, opts]);
                 return { full: false, added: entries, dupes: [] };
             },
+            addItemsToNamedGroup: (name, entries) => {
+                calls.push(['named', name, entries]);
+                return { full: false, added: entries, dupes: [] };
+            },
             isStaged: () => false,
             state: () => ({ items: [], groups: [] })
         };
@@ -2239,18 +2243,38 @@ describe('staging interop (velvet staging §2.5, pure-snapshot revision)', () =>
         expect(creates).toEqual([]);
     });
 
-    it('stageTabGroup sends the whole group as one sourceTabGroup batch', () => {
+    // 2026-08-26 report round 4: the whole group lands in a group NAMED
+    // after the tab group (addItemsToNamedGroup — same-name absorbs,
+    // otherwise a fresh named group), and the groupId match is STRING-safe:
+    // chrome.tabs populate returns NUMBER groupIds while the DOM dataset is
+    // a string — a strict === matched nothing and every send fell into the
+    // "no bookmarkable tabs" toast.
+    it('stageTabGroup sends the whole group into a group NAMED after it (numeric groupId safe)', () => {
         const staging = stagingApi();
-        const ctx = setup({ stagingApi: staging });
+        const ctx = setup({
+            stagingApi: staging,
+            tabs: [
+                makeTab(1, 0, { active: true }),
+                makeTab(2, 1, { groupId: 7 }),
+                makeTab(3, 2, { groupId: 7 }),
+                makeTab(4, 3, { groupId: 8 })
+            ]
+        });
         ctx.chrome.bookmarks.search = () => {};
         ctx.chrome.bookmarks.create = (props, cb) => cb({ id: 'x', ...props });
         ctx.viewTabGroups.refresh();
-        ctx.viewTabGroups.stageTabGroup('g1', 'Work');
+        // the DOM hands the dataset STRING '7'; the tabs carry NUMBER 7
+        ctx.viewTabGroups.stageTabGroup('7', 'Work');
         expect(staging.calls).toHaveLength(1);
-        const [tag, entries] = staging.calls[0];
-        expect(tag).toBe('add');
+        const [tag, name, entries] = staging.calls[0];
+        expect(tag).toBe('named');
+        expect(name).toBe('Work');
         expect(entries.map(e => e.url).sort()).toEqual(['https://t2.example/', 'https://t3.example/']);
         expect(entries.every(e => e.id === null)).toBe(true); // pure snapshots
+        // group 8 untouched
+        ctx.viewTabGroups.stageTabGroup('8', 'Other');
+        expect(staging.calls).toHaveLength(2);
+        expect(staging.calls[1][2].map(e => e.url)).toEqual(['https://t4.example/']);
     });
 
     it('the classic ★ addTabToBookmarks flow is unchanged', () => {

@@ -932,6 +932,21 @@ describe('staging view (velvet staging ST3)', () => {
         expect(viewRecent.api.isEnabled()).toBe(false);
     });
 
+    // 2026-08-26 report round: DISABLING THE VIEW (showRecentBookmarks off)
+    // is the same contract as the master switch — every cross-view staging
+    // entry reads api.isEnabled and must stand down with the hidden view.
+    it('a disabled view (showRecentBookmarks off) stands down isEnabled like the master switch', () => {
+        const { viewRecent, def } = setup({
+            storeData: { showRecentBookmarks: '', stagingEnabled: '1' }
+        });
+        const tab = def();
+        expect(tab.hidden).toBe(true);
+        expect(viewRecent.api.isEnabled()).toBe(false);
+        // re-enabling the view restores the staging contract
+        const { viewRecent: vr2 } = setup({ storeData: { showRecentBookmarks: '1' } });
+        expect(vr2.api.isEnabled()).toBe(true);
+    });
+
     it('the staging head folds the whole staging area and persists headCollapsed', () => {
         const { viewRecent, store, $list, def, click } = setup({});
         viewRecent.api.addItems([mkItem('1', 'http://a/', 'A')]);

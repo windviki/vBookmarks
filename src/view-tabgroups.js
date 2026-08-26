@@ -1190,15 +1190,21 @@ export function initViewTabGroups(ctx = {}) {
     };
 
     // A whole tab group: bookmarkable tabs by index as PURE snapshots into
-    // one sourceTabGroup staging group (>10 ConfirmDialog; 0 bookmarkable →
-    // toast). No tree writes — same revision as stageTab.
+    // ONE staging group NAMED after the tab group (2026-08-26 report round
+    // 4: the send must land in a same-name group — findGroupByName absorbs
+    // re-sends, otherwise a fresh named group is created; the old code only
+    // matched sourceTabGroup and sent UNGROUPED otherwise). >10 ConfirmDialog;
+    // 0 bookmarkable → toast. No tree writes — same revision as stageTab.
     const STAGE_GROUP_CONFIRM_LIMIT = 10;
     const stageTabGroup = (groupId, groupTitle) => {
         const stagingApi = ctx.staging;
         if (!stagingApi)
             return;
+        // tabs from windows.getAll populate carry groupId as a NUMBER while
+        // the DOM dataset is a string — a strict === matched nothing and the
+        // send always fell into the "no bookmarkable tabs" toast.
         const groupTabs = tabs
-            .filter(t => t.groupId === groupId && bookmarkableUrl(t.url))
+            .filter(t => String(t.groupId) === String(groupId) && bookmarkableUrl(t.url))
             .sort((a, b) => (a.index || 0) - (b.index || 0));
         if (!groupTabs.length) {
             undo.showToast(_m('tabgroupStageNone'));
@@ -1206,15 +1212,10 @@ export function initViewTabGroups(ctx = {}) {
         }
         const run = () => {
             const entries = groupTabs.map(t => ({ id: null, url: t.url, title: t.title || t.url }));
-            let group = null;
-            const state = stagingApi.state();
-            for (const g of state.groups) {
-                if (g.sourceTabGroup === groupTitle) {
-                    group = g;
-                    break;
-                }
-            }
-            stagingApi.addItems(entries, group ? { defaultGroup: group.id } : {});
+            if (stagingApi.addItemsToNamedGroup)
+                stagingApi.addItemsToNamedGroup(groupTitle || '', entries);
+            else
+                stagingApi.addItems(entries);
             undo.showToast(_m('stagedToast', [`${entries.length}`, groupTitle || '']));
         };
         if (groupTabs.length > STAGE_GROUP_CONFIRM_LIMIT && dialogs && dialogs.ConfirmDialog) {
