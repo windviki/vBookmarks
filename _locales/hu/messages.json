@@ -2583,5 +2583,19 @@
         "content": "$1"
       }
     }
+  },
+  "tabGroupsNewWindow": {
+    "message": "Új ablak"
+  },
+  "tabGroupsMergedWindowToast": {
+    "message": "Az ablak lapcsoportként egyesítve"
+  },
+  "searchStageAllGroup": {
+    "message": "Összes találat átmozgatása „$1$” csoportba",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
   }
 }

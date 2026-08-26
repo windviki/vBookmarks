@@ -2583,5 +2583,19 @@
         "content": "$1"
       }
     }
+  },
+  "tabGroupsNewWindow": {
+    "message": "नई विंडो"
+  },
+  "tabGroupsMergedWindowToast": {
+    "message": "विंडो को टैब समूह के रूप में मिला दिया गया"
+  },
+  "searchStageAllGroup": {
+    "message": "सभी परिणामों को समूह \"$1$\" के रूप में स्टेज करें",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
   }
 }

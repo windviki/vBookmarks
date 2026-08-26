@@ -2583,5 +2583,19 @@
         "content": "$1"
       }
     }
+  },
+  "tabGroupsNewWindow": {
+    "message": "新しいウィンドウ"
+  },
+  "tabGroupsMergedWindowToast": {
+    "message": "ウィンドウをタブグループとして統合しました"
+  },
+  "searchStageAllGroup": {
+    "message": "すべての結果をグループ「$1$」としてステージング",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
   }
 }

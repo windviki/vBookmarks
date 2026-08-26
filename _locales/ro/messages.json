@@ -2583,5 +2583,19 @@
         "content": "$1"
       }
     }
+  },
+  "tabGroupsNewWindow": {
+    "message": "Fereastră nouă"
+  },
+  "tabGroupsMergedWindowToast": {
+    "message": "Fereastră fuzionată ca grup de file"
+  },
+  "searchStageAllGroup": {
+    "message": "Trimite toate rezultatele ca grupul \"$1$\"",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
   }
 }

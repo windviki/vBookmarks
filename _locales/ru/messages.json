@@ -2583,5 +2583,19 @@
         "content": "$1"
       }
     }
+  },
+  "tabGroupsNewWindow": {
+    "message": "Новое окно"
+  },
+  "tabGroupsMergedWindowToast": {
+    "message": "Окно объединено в группу вкладок"
+  },
+  "searchStageAllGroup": {
+    "message": "Отправить все результаты в группу «$1$»",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
   }
 }

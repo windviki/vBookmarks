@@ -2583,5 +2583,19 @@
         "content": "$1"
       }
     }
+  },
+  "tabGroupsNewWindow": {
+    "message": "Nuova finestra"
+  },
+  "tabGroupsMergedWindowToast": {
+    "message": "Finestra unita come gruppo di schede"
+  },
+  "searchStageAllGroup": {
+    "message": "Invia tutti i risultati come gruppo \"$1$\"",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
   }
 }

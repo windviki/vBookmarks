@@ -2583,5 +2583,19 @@
         "content": "$1"
       }
     }
+  },
+  "tabGroupsNewWindow": {
+    "message": "Novi prozor"
+  },
+  "tabGroupsMergedWindowToast": {
+    "message": "Prozor je spojen kao grupa kartica"
+  },
+  "searchStageAllGroup": {
+    "message": "Pošalji sve rezultate kao grupu \"$1$\"",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
   }
 }

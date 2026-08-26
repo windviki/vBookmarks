@@ -2583,5 +2583,19 @@
         "content": "$1"
       }
     }
+  },
+  "tabGroupsNewWindow": {
+    "message": "新建窗口"
+  },
+  "tabGroupsMergedWindowToast": {
+    "message": "窗口已并入为标签组"
+  },
+  "searchStageAllGroup": {
+    "message": "将全部结果暂存为分组「$1$」",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
   }
 }

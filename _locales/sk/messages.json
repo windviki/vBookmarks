@@ -2583,5 +2583,19 @@
         "content": "$1"
       }
     }
+  },
+  "tabGroupsNewWindow": {
+    "message": "Nové okno"
+  },
+  "tabGroupsMergedWindowToast": {
+    "message": "Okno bolo zlúčené ako skupina kariet"
+  },
+  "searchStageAllGroup": {
+    "message": "Odoslať všetky výsledky ako skupinu „$1$“",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
   }
 }

@@ -2583,5 +2583,19 @@
         "content": "$1"
       }
     }
+  },
+  "tabGroupsNewWindow": {
+    "message": "Nieuw venster"
+  },
+  "tabGroupsMergedWindowToast": {
+    "message": "Venster samengevoegd als tabgroep"
+  },
+  "searchStageAllGroup": {
+    "message": "Alle resultaten naar groep \"$1$\" sturen",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
   }
 }

@@ -2583,5 +2583,19 @@
         "content": "$1"
       }
     }
+  },
+  "tabGroupsNewWindow": {
+    "message": "پنجره جدید"
+  },
+  "tabGroupsMergedWindowToast": {
+    "message": "پنجره به‌عنوان یک گروه تب ادغام شد"
+  },
+  "searchStageAllGroup": {
+    "message": "ارسال همه نتایج به‌عنوان گروه «$1$»",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
   }
 }

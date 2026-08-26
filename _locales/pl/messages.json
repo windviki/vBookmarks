@@ -2583,5 +2583,19 @@
         "content": "$1"
       }
     }
+  },
+  "tabGroupsNewWindow": {
+    "message": "Nowe okno"
+  },
+  "tabGroupsMergedWindowToast": {
+    "message": "Okno połączono jako grupę kart"
+  },
+  "searchStageAllGroup": {
+    "message": "Wyślij wszystkie wyniki jako grupę „$1$”",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
   }
 }

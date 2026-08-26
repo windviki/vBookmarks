@@ -2583,5 +2583,19 @@
         "content": "$1"
       }
     }
+  },
+  "tabGroupsNewWindow": {
+    "message": "Νέο παράθυρο"
+  },
+  "tabGroupsMergedWindowToast": {
+    "message": "Το παράθυρο συγχωνεύτηκε ως ομάδα καρτελών"
+  },
+  "searchStageAllGroup": {
+    "message": "Αποστολή όλων των αποτελεσμάτων ως ομάδα \"$1$\"",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
   }
 }

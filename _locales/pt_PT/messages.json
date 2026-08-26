@@ -2579,5 +2579,19 @@
         "content": "$1"
       }
     }
+  },
+  "tabGroupsNewWindow": {
+    "message": "Nova janela"
+  },
+  "tabGroupsMergedWindowToast": {
+    "message": "Janela fundida como grupo de separadores"
+  },
+  "searchStageAllGroup": {
+    "message": "Enviar todos os resultados como o grupo \"$1$\"",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
   }
 }

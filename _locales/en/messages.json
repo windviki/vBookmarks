@@ -2831,5 +2831,22 @@
         "content": "$1"
       }
     }
+  },
+  "tabGroupsNewWindow": {
+    "message": "New window",
+    "description": "Tab-groups view: the toolbar button that opens a fresh empty browser window (left of Refresh)."
+  },
+  "tabGroupsMergedWindowToast": {
+    "message": "Window merged as a tab group",
+    "description": "Toast after a window-head drag merged that window into another as one tab group."
+  },
+  "searchStageAllGroup": {
+    "message": "Stage all results as group \"$1$\"",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    },
+    "description": "Search results toolbar: stage every result into a staging group named after the query. Placeholder $1$ = the query."
   }
 }

@@ -2583,5 +2583,19 @@
         "content": "$1"
       }
     }
+  },
+  "tabGroupsNewWindow": {
+    "message": "নতুন উইন্ডো"
+  },
+  "tabGroupsMergedWindowToast": {
+    "message": "উইন্ডোটি ট্যাব গ্রুপ হিসেবে একত্রিত হয়েছে"
+  },
+  "searchStageAllGroup": {
+    "message": "সব ফলাফল \"$1$\" গ্রুপ হিসেবে স্টেজ করুন",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
   }
 }

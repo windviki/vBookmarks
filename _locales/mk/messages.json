@@ -2582,5 +2582,19 @@
         "content": "$1"
       }
     }
+  },
+  "tabGroupsNewWindow": {
+    "message": "Нов прозорец"
+  },
+  "tabGroupsMergedWindowToast": {
+    "message": "Прозорецот е споен како група јазичиња"
+  },
+  "searchStageAllGroup": {
+    "message": "Испрати ги сите резултати како група „$1$“",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
   }
 }

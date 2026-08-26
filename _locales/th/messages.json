@@ -2583,5 +2583,19 @@
         "content": "$1"
       }
     }
+  },
+  "tabGroupsNewWindow": {
+    "message": "หน้าต่างใหม่"
+  },
+  "tabGroupsMergedWindowToast": {
+    "message": "รวมหน้าต่างเป็นกลุ่มแท็บแล้ว"
+  },
+  "searchStageAllGroup": {
+    "message": "ส่งผลลัพธ์ทั้งหมดเป็นกลุ่ม \"$1$\"",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
   }
 }

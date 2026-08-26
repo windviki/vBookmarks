@@ -2583,5 +2583,19 @@
         "content": "$1"
       }
     }
+  },
+  "tabGroupsNewWindow": {
+    "message": "Novo okno"
+  },
+  "tabGroupsMergedWindowToast": {
+    "message": "Okno je združeno kot skupina zavihkov"
+  },
+  "searchStageAllGroup": {
+    "message": "Pošlji vse zadetke kot skupino \"$1$\"",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
   }
 }

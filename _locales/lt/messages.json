@@ -2583,5 +2583,19 @@
         "content": "$1"
       }
     }
+  },
+  "tabGroupsNewWindow": {
+    "message": "Naujas langas"
+  },
+  "tabGroupsMergedWindowToast": {
+    "message": "Langas sujungtas kaip kortelių grupė"
+  },
+  "searchStageAllGroup": {
+    "message": "Siųsti visus rezultatus kaip grupę „$1$“",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
   }
 }

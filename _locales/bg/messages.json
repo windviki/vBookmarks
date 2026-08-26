@@ -2583,5 +2583,19 @@
         "content": "$1"
       }
     }
+  },
+  "tabGroupsNewWindow": {
+    "message": "Нов прозорец"
+  },
+  "tabGroupsMergedWindowToast": {
+    "message": "Прозорецът е обединен като група раздели"
+  },
+  "searchStageAllGroup": {
+    "message": "Изпращане на всички резултати като група „$1$“",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
   }
 }

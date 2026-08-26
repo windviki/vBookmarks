@@ -2583,5 +2583,19 @@
         "content": "$1"
       }
     }
+  },
+  "tabGroupsNewWindow": {
+    "message": "Uus aken"
+  },
+  "tabGroupsMergedWindowToast": {
+    "message": "Aken on liidetud vahekaardigrupina"
+  },
+  "searchStageAllGroup": {
+    "message": "Saada kõik tulemused grupina \"$1$\"",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
   }
 }

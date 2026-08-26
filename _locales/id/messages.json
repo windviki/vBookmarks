@@ -2583,5 +2583,19 @@
         "content": "$1"
       }
     }
+  },
+  "tabGroupsNewWindow": {
+    "message": "Jendela baru"
+  },
+  "tabGroupsMergedWindowToast": {
+    "message": "Jendela digabungkan sebagai grup tab"
+  },
+  "searchStageAllGroup": {
+    "message": "Kirim semua hasil sebagai grup \"$1$\"",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
   }
 }

@@ -2583,5 +2583,19 @@
         "content": "$1"
       }
     }
+  },
+  "tabGroupsNewWindow": {
+    "message": "새 창"
+  },
+  "tabGroupsMergedWindowToast": {
+    "message": "창을 탭 그룹으로 병합했습니다"
+  },
+  "searchStageAllGroup": {
+    "message": "모든 결과를 \"$1$\" 그룹으로 보내기",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
   }
 }

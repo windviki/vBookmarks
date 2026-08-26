@@ -2583,5 +2583,19 @@
         "content": "$1"
       }
     }
+  },
+  "tabGroupsNewWindow": {
+    "message": "חלון חדש"
+  },
+  "tabGroupsMergedWindowToast": {
+    "message": "החלון מוזג כקבוצת לשוניות"
+  },
+  "searchStageAllGroup": {
+    "message": "שליחת כל התוצאות כקבוצה \"$1$\"",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
   }
 }

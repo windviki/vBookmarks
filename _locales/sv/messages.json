@@ -2583,5 +2583,19 @@
         "content": "$1"
       }
     }
+  },
+  "tabGroupsNewWindow": {
+    "message": "Nytt fönster"
+  },
+  "tabGroupsMergedWindowToast": {
+    "message": "Fönster sammanfogat som flikgrupp"
+  },
+  "searchStageAllGroup": {
+    "message": "Skicka alla resultat till gruppen \"$1$\"",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
   }
 }

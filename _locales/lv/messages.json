@@ -2583,5 +2583,19 @@
         "content": "$1"
       }
     }
+  },
+  "tabGroupsNewWindow": {
+    "message": "Jauns logs"
+  },
+  "tabGroupsMergedWindowToast": {
+    "message": "Logs ir apvienots kā ciļņu grupa"
+  },
+  "searchStageAllGroup": {
+    "message": "Nosūtīt visus rezultātus kā grupu \"$1$\"",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
   }
 }

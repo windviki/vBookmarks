@@ -2583,5 +2583,19 @@
         "content": "$1"
       }
     }
+  },
+  "tabGroupsNewWindow": {
+    "message": "Yeni pencere"
+  },
+  "tabGroupsMergedWindowToast": {
+    "message": "Pencere sekme grubu olarak birleştirildi"
+  },
+  "searchStageAllGroup": {
+    "message": "Tüm sonuçları \"$1$\" grubuna gönder",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
   }
 }

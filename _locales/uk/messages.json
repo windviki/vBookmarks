@@ -2583,5 +2583,19 @@
         "content": "$1"
       }
     }
+  },
+  "tabGroupsNewWindow": {
+    "message": "Нове вікно"
+  },
+  "tabGroupsMergedWindowToast": {
+    "message": "Вікно об’єднано в групу вкладок"
+  },
+  "searchStageAllGroup": {
+    "message": "Надіслати всі результати в групу «$1$»",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
   }
 }
