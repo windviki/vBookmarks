@@ -76,6 +76,8 @@ Runtime file lists live in `scripts/runtime-files.json` — the single source of
 
 `scripts/i18n.py` (stdlib only) is the single entry point: `audit` (code refs vs en keys), `missing` (per-locale report), `translate --locale fr --apply` (LLM-fills pending keys), `verify` (release gate — must be 0 errors). When adding **or modifying** a key: real translation in `en` + `zh_CN`, `[TODO:key]` placeholders **in place** (never reorder keys) in the other locales, then `translate --apply` + `verify` before every commit/packaging — TODO placeholders are an intermediate state, never a deliverable one. LLM endpoint config (`VBM_LLM_*` env / git-ignored `.env`), placeholder-integrity rules and menu-length warnings: `docs/agents/i18n.md`.
 
+**`_locales/*/messages.json` 格式契约（2026-08-26 起强制）**:key 必须**字母序**排列、**2 空格缩进**、UTF-8 明文、文件末尾换行——43 个 locale 同一排序（以 `en` 为基准）。新增或修改 key 时按字母序插入到正确位置（**不要追加到文件尾部**，否则各语种 key 序漂移、diff 不可读）。`scripts/i18n.py translate --apply` / `verify` 保持该顺序；手工编辑后用 `python3 -c "import json;f=open('_locales/en/messages.json');d=json.load(f);f.close();json.dump(d,open('_locales/en/messages.json','w'),ensure_ascii=False,indent=2,sort_keys=True);print('sorted')"` 之类工具核对排序后再提交。
+
 ### Release process (发布流程 = git发布 + 商店发布)
 
 One process, two sequential steps — full detail in `docs/agents/release.md`:
