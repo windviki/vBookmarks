@@ -3,7 +3,8 @@ import fs from 'node:fs';
 import {
     decideHeight, decideWidthMax, clampDragWidth,
     nextZoomLevel, ZOOM_MIN, ZOOM_MAX, ZOOM_STEP,
-    dragWidthDelta, popupMaxHeight, clampDragHeight, chaseBodyWidth
+    dragWidthDelta, popupMaxHeight, clampDragHeight, pacedDragWidth,
+    DRAG_SHRINK_PX_PER_MS
 } from '../src/resize-core.js';
 
 /**
@@ -245,30 +246,33 @@ describe('popup WIDTH drag clamp (pointerDragHandler)', () => {
     });
 });
 
-describe('popup width-chase rule (chaseBodyWidth)', () => {
-    // During an X drag the native window follows the document's laid-out
-    // width asynchronously (grow instant, narrow lagging — user-measured
-    // bubbleLag up to 235px on Chrome 151/dpr2). The document takes the
-    // bounded-LEAD pace: never more than LEAD px narrower than the achieved
-    // viewport (keeps the shrink's preferred-size pressure, bounds the
-    // visible right-edge strip by LEAD), and the raw pointer target the
-    // moment the viewport is within LEAD of it (grow / slow drags unpaced).
-    it('paces a lagging shrink: the document leads the achieved viewport by only LEAD px', () => {
-        expect(chaseBodyWidth(320, 640)).toBe(624);  // fast compression, mid-chase
-        expect(chaseBodyWidth(500, 560)).toBe(544);  // halfway caught up
-        expect(chaseBodyWidth(500, 516)).toBe(500);  // within LEAD → unpaced
+describe('popup shrink pace (pacedDragWidth)', () => {
+    // The window grows with zero lag (target verbatim) but narrows one
+    // commit behind; an uncapped fling leaves a v×τ strip (234px measured),
+    // a lead-starved pace caps the whole pipeline at ~660px/s (the
+    // slow-motion regression). The cap sits between: grow verbatim, shrink
+    // at 2.4px/ms — strip bounded ≈58px, full 320px traverse ≈130ms.
+    it('grow takes the pointer target verbatim at any jump size', () => {
+        expect(pacedDragWidth(640, 330, 8)).toBe(640);   // big grow, one hop
+        expect(pacedDragWidth(500, 480, 8)).toBe(500);   // small grow
+        expect(pacedDragWidth(500, 500, 8)).toBe(500);   // no change
     });
 
-    it('grow and caught-up drags take the raw pointer target', () => {
-        expect(chaseBodyWidth(640, 330)).toBe(640);  // expansion: target verbatim
-        expect(chaseBodyWidth(500, 500)).toBe(500);
-        expect(chaseBodyWidth(320, 320)).toBe(320);
-        expect(chaseBodyWidth(500, 501)).toBe(500);  // rounding residue ≤ LEAD
+    it('paces a shrink at the capped rate over the event delta', () => {
+        expect(pacedDragWidth(320, 640, 24)).toBe(640 - 2.4 * 24); // 582.4
+        expect(pacedDragWidth(500, 640, 8)).toBe(640 - 2.4 * 8);   // 620.8
     });
 
-    it('the lead is configurable', () => {
-        expect(chaseBodyWidth(320, 640, 8)).toBe(632);
-        expect(chaseBodyWidth(320, 640, 40)).toBe(600);
+    it('a small shrink within the step lands verbatim (slow drags unpaced)', () => {
+        expect(pacedDragWidth(630, 640, 16)).toBe(630);  // step 38.4 > 10
+        expect(pacedDragWidth(320, 322, 8)).toBe(320);
+    });
+
+    it('never overshoots below the target, and clamps degenerate dt', () => {
+        expect(pacedDragWidth(320, 321, 1000)).toBe(320);  // dt ceiling 100ms
+        expect(pacedDragWidth(320, 321, 0)).toBe(320);     // dt floor 1ms
+        expect(pacedDragWidth(320, 400, 100)).toBe(320);   // step 240 covers it
+        expect(DRAG_SHRINK_PX_PER_MS).toBe(2.4);
     });
 
     it('narrowing back is always reachable: the min never exceeds 320', () => {
@@ -328,9 +332,8 @@ describe('resizer source contract (4.0.1 width regression gate)', () => {
         // widen the root sticks at the widest width and the window can never
         // narrow (body shrank, innerWidth stayed pinned). The drag must write
         // documentElement's width alongside body's or narrowing is dead —
-        // since the paced-chase refactor both writes live in applyWidthChase
-        // (same value on both elements, every paced step and every settle).
-        expect(resizeJs).toMatch(/applyWidthChase[\s\S]*?document\.documentElement\.style\.width = `\$\{w\}px`[\s\S]*?body\.style\.width = `\$\{w\}px`/);
+        // both writes share one value (appliedWidth) in the paced handler.
+        expect(resizeJs).toMatch(/document\.documentElement\.style\.width = `\$\{appliedWidth\}px`[\s\S]*?body\.style\.width = `\$\{appliedWidth\}px`/);
     });
 
     it('flushes AFTER the final width write on drag end, not before', () => {

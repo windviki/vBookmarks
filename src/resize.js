@@ -7,15 +7,16 @@
  *  - the width/height edge-drag resizers: pointer events + capture (a popup
  *    widens LEFTWARD from its toolbar anchor, so the drag must survive the
  *    pointer leaving the window) with screen-edge clamps frozen at
- *    pointerdown. The width drag is PACED against the native window: the
- *    popup follows the document's laid-out width asynchronously (grow is
- *    instant, narrow lags — user-measured up to 235px), so root and body
- *    both take chaseBodyWidth's bounded-lead value instead of the raw
- *    pointer target — the shrink keeps its preferred-size pressure while
- *    the visible right-edge strip stays bounded by the LEAD constant, and
- *    an end-of-drag watchdog guarantees the document converges to the
- *    stored target even if the viewport stalls (chaseBodyWidth in
- *    resize-core.js);
+ *    pointerdown. The width drag is SHRINK-PACED: the native window follows
+ *    the document's laid-out width asynchronously and asymmetrically (grow
+ *    instant, narrow one-commit behind — user-measured up to a 234px strip
+ *    at a 9.8k px/s fling), so grow takes the pointer target verbatim while
+ *    shrink approaches it at DRAG_SHRINK_PX_PER_MS (pacedDragWidth in
+ *    resize-core.js), bounding the visible strip without starving the
+ *    window's distance-proportional chase. During the drag #search is
+ *    pinned to the WINDOW edge (body.width-dragging + the #search-ghost
+ *    placeholder) so the right-aligned header buttons hold the visible
+ *    edge instead of oscillating with the chase;
  *  - the extension zoom (Ctrl/Cmd+wheel, Ctrl/Cmd +/-/0).
  * The pure decisions (grow/stay/shrink, drag clamps, zoom steps) live in
  * resize-core.js; this module is only the DOM/chrome wiring around them.
@@ -45,7 +46,7 @@
  */
 import {
     decideHeight, decideWidthMax, clampDragWidth, nextZoomLevel,
-    dragWidthDelta, popupMaxHeight, clampDragHeight, chaseBodyWidth
+    dragWidthDelta, popupMaxHeight, clampDragHeight, pacedDragWidth
 } from './resize-core.js';
 import { isAutoResizeEnabled } from './settings.js';
 
@@ -142,31 +143,52 @@ export function initResize(ctx = {}) {
         screenX = 0,
         screenY = 0;
 
-    // Width-chase state (see chaseBodyWidth in resize-core.js): the pointer
-    // TARGET the user is dragging toward, which the document approaches at a
-    // bounded LEAD ahead of the viewport the native bubble has actually
-    // achieved. Non-zero from the first X move until the achieved viewport
-    // reaches the target; the resize listener below re-paces the document on
-    // every viewport step in between (also after pointerup — the bubble keeps
-    // moving through the drag's tail frames).
-    let widthChase = 0;
-    let chaseWatchdog = 0;
-    const applyWidthChase = () => {
-        if (!widthChase)
+    // Width-drag pacing state (pacedDragWidth in resize-core.js): the
+    // pointer's clamped TARGET (what persists in the store) vs the pace at
+    // which the document actually narrows toward it. Grow is verbatim; only
+    // shrink is paced, bounding the async window's visible right-edge strip
+    // without starving its distance-proportional chase (both failure modes
+    // are user-reported — see the kernel comment).
+    let appliedWidth = 0;
+    let handTarget = 0;
+    let lastMoveStamp = 0;
+
+    // Width-drag search-row pin: while an X drag is live, #search goes
+    // position:fixed against the WINDOW edge (body.width-dragging, neat.css)
+    // so the right-aligned quick-add / palette buttons hold the visible edge
+    // instead of oscillating with the window's async chase — only fixed
+    // elements escape body's overflow clip. A ghost div keeps the flow slot
+    // so nothing below jumps, and the JS-set inline top preserves the exact
+    // flow position (banners above may shift it).
+    const $search = document.getElementById('search');
+    let searchGhost = null;
+    const engageSearchPin = () => {
+        if (!$search || IS_PANEL || typeof document.createElement !== 'function')
             return;
-        const w = chaseBodyWidth(widthChase, window.innerWidth);
-        // Both elements carry the paced width: the popup's preferred size is
-        // the CONTENT extent (the max of the root box and the overflowing
-        // body — see the regression note in resize-core.js), so pacing only
-        // one of them either deadlocks the shrink or detaches the content.
-        document.documentElement.style.width = `${w}px`;
-        body.style.width = `${w}px`;
-        if (window.innerWidth <= widthChase + 0.5) {
-            widthChase = 0; // caught up — rest state: body == root == stored
-            if (chaseWatchdog) { clearTimeout(chaseWatchdog); chaseWatchdog = 0; }
-        }
+        const rect = typeof $search.getBoundingClientRect === 'function'
+            ? $search.getBoundingClientRect() : null;
+        if (!rect || rect.top == null)
+            return;
+        searchGhost = document.createElement('div');
+        searchGhost.id = 'search-ghost';
+        if (searchGhost.style)
+            searchGhost.style.height = `${rect.height}px`;
+        const parent = $search.parentNode;
+        if (parent && typeof parent.insertBefore === 'function')
+            parent.insertBefore(searchGhost, $search);
+        $search.style.top = `${rect.top}px`;
+        body.classList.add('width-dragging');
     };
-    window.addEventListener('resize', applyWidthChase);
+    const disengageSearchPin = () => {
+        if (!body.classList.contains('width-dragging'))
+            return;
+        body.classList.remove('width-dragging');
+        $search.style.top = '';
+        if (searchGhost && searchGhost.parentNode
+            && typeof searchGhost.parentNode.removeChild === 'function')
+            searchGhost.parentNode.removeChild(searchGhost);
+        searchGhost = null;
+    };
 
     // Drag the edge — POINTER events + capture (4.0.1 regression gate).
     // A Chrome popup grows LEFTWARD from its toolbar anchor, so a widen drag
@@ -181,28 +203,16 @@ export function initResize(ctx = {}) {
         resizerXDown = false;
         resizerYDown = false;
         currentMaxHeight = 0; // a cancelled/ended drag's ceiling must not leak
-        // Drag end while the bubble already caught up: settle the document to
-        // the exact target now. If it is still mid-chase, widthChase stays
-        // armed — the resize listener keeps pacing the document through the
-        // tail frames — and the watchdog below guarantees convergence: if the
-        // viewport ever stalls above the target (no further resize steps),
-        // snap the document to the stored target so the popup can never rest
-        // wider than the width the user chose.
-        applyWidthChase();
-        if (widthChase) {
-            if (chaseWatchdog)
-                clearTimeout(chaseWatchdog);
-            const target = widthChase;
-            const docEl = document.documentElement;
-            chaseWatchdog = setTimeout(() => {
-                chaseWatchdog = 0;
-                if (widthChase !== target)
-                    return; // a newer drag owns the state now
-                widthChase = 0;
-                docEl.style.width = `${target}px`;
-                body.style.width = `${target}px`;
-            }, 800);
+        // Finish the paced tail: the release takes the FULL hand target so
+        // the document (and the stored width) always ends where the user let
+        // go — the window then closes the last ≤ CAP×τ px by itself. Without
+        // this, a drag ended mid-pace would rest at the last paced step.
+        if (handTarget && appliedWidth !== handTarget) {
+            document.documentElement.style.width = `${handTarget}px`;
+            body.style.width = `${handTarget}px`;
+            appliedWidth = handTarget;
         }
+        disengageSearchPin();
         // Commit the final size synchronously: popup pagehide is NOT
         // guaranteed on close, so the debounced store write could be lost if
         // the popup closes right after the drag (the "widened but next open is
@@ -225,9 +235,10 @@ export function initResize(ctx = {}) {
         e.preventDefault();
         e.stopPropagation();
         resizerXDown = true;
-        // A new drag owns the width now: cancel any pending convergence
-        // watchdog left by the previous drag's tail.
-        if (chaseWatchdog) { clearTimeout(chaseWatchdog); chaseWatchdog = 0; }
+        appliedWidth = body.offsetWidth;
+        handTarget = appliedWidth;
+        lastMoveStamp = e.timeStamp || 0;
+        engageSearchPin();
         bodyWidth = body.offsetWidth;
         screenX = e.screenX;
         maxResizeWidth = onScreenMaxWidth();
@@ -271,20 +282,21 @@ export function initResize(ctx = {}) {
             // 320 < width < 640, and never wider than the screen leaves room
             // for (a wider popup pushes its resize handle off-screen).
             width = clampDragWidth(width, maxResizeWidth);
-            // The popup window sizes from the document's laid-out width
-            // (max of the root box and the overflowing body) and follows it
-            // ASYNCHRONOUSLY — growing with no lag but narrowing through a
-            // visible chase. Writing the raw target every move lets the
-            // content outrun the window edge by the full lag (the "右缘弹开
-            // 再填回" strip; right-aligned header buttons oscillating against
-            // the visible edge). Both elements instead take the PACED width
-            // (chase rule, resize-core.js): never more than LEAD px narrower
-            // than the viewport the window has achieved, so the shrink keeps
-            // its preferred-size pressure while the visible strip stays
-            // bounded — and the pointer target is taken verbatim the moment
-            // the window is within LEAD of it (grow / slow drags: unpaced).
-            widthChase = width;
-            applyWidthChase();
+            // The window sizes from the document's laid-out width (root AND
+            // body — both written, same value) and follows it asynchronously:
+            // growth at zero lag (pacedDragWidth passes it through verbatim),
+            // narrowing through a distance-proportional chase ≈ one commit
+            // behind. Pacing only the shrink bounds the visible right-edge
+            // strip at CAP×τ (~58px at 2.4px/ms) without starving the chase
+            // rate — the two user-reported failure modes (234px "右缘弹开"
+            // strip uncapped; 660px/s "慢动作" lead-starved) bracket it.
+            handTarget = width;
+            const dt = (e.timeStamp || lastMoveStamp + 16) - lastMoveStamp;
+            if (e.timeStamp)
+                lastMoveStamp = e.timeStamp;
+            appliedWidth = pacedDragWidth(width, appliedWidth, dt);
+            document.documentElement.style.width = `${appliedWidth}px`;
+            body.style.width = `${appliedWidth}px`;
             store.set('popupWidth', width);
             clearMenu();
         } else {

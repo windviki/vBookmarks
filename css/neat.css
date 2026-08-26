@@ -270,6 +270,26 @@ body.linux input {
     isolation: isolate;
 }
 
+/* Width-drag search-row pin (resize.js adds body.width-dragging at the X
+   pointerdown, removes it at drag end): #search goes position:fixed against
+   the WINDOW edge, so the right-aligned quick-add / palette buttons hold the
+   visible edge instead of oscillating with the native window's async chase
+   (only fixed elements escape body's overflow clip). The JS-set inline top
+   preserves the exact flow position (banners above may shift it); the
+   #search-ghost placeholder holds the flow slot so nothing below jumps. */
+body.width-dragging #search {
+    position: fixed;
+    /* inline top comes from resize.js (the flow position at drag start) */
+    inset-inline-start: 2px;
+    inset-inline-end: 2px;
+    margin: 0;
+}
+
+#search-ghost {
+    /* same margin box as #search — the ghost only holds vertical space */
+    margin: 2px 2px 4px;
+}
+
 /* Tokenized search field: inherits the theme instead of the native white
    input chrome (which glared in dark mode and showed a doubled native
    border in light mode). Same visual language as the dialog inputs:

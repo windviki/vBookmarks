@@ -235,6 +235,36 @@ const timeline = (rows, step) => rows
 
         await evalIn(INSTALL_SAMPLER);
 
+        // PinCheck: a live X drag must fix #search to the window edge
+        // (body.width-dragging + ghost). qOff should read 36 (fixed row:
+        // inner − 2 − 34), not 44 (flowing: body-relative + 8 border).
+        const pin = await evalIn(`(async () => {
+            const rx = document.getElementById('resizer-x');
+            rx.dispatchEvent(new PointerEvent('pointerdown', {
+                pointerId: 3, bubbles: true, cancelable: true,
+                screenX: 700, screenY: 300, clientX: 4, clientY: 300, buttons: 1 }));
+            await new Promise(r => setTimeout(r, 120));
+            const s = document.getElementById('search');
+            const cs = getComputedStyle(s);
+            const q = document.getElementById('quick-add-btn').getBoundingClientRect();
+            const out = {
+                cls: document.body.classList.contains('width-dragging'),
+                pos: cs.position, topStyle: s.style.top,
+                insetE: cs.getPropertyValue('inset-inline-end'),
+                ghost: !!document.getElementById('search-ghost'),
+                qOff: +(window.innerWidth - q.right).toFixed(1),
+                inner: window.innerWidth
+            };
+            document.dispatchEvent(new PointerEvent('pointerup', {
+                pointerId: 3, bubbles: true, cancelable: true, screenX: 700, screenY: 300 }));
+            await new Promise(r => setTimeout(r, 60));
+            out.clsAfter = document.body.classList.contains('width-dragging');
+            out.qOffAfter = +(window.innerWidth -
+                document.getElementById('quick-add-btn').getBoundingClientRect().right).toFixed(1);
+            return JSON.stringify(out);
+        })()`);
+        console.log('PinCheck:', pin);
+
         const phase = async (label, dragArgs, useTransition, verbose) => {
             await evalIn(`window.__vbmS.rows = []; window.__diag = { downs: 0, moves: 0, ups: 0, styleWrites: [] };
                 if (Array.isArray(window.__loaf)) window.__loaf.length = 0; true`);

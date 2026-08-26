@@ -41,35 +41,36 @@ export const decideWidthMax = ({ bodyWidth, leftRoom, rightRoom, hardMax = RESIZ
 export const clampDragWidth = (width, maxResizeWidth, hardMin = 320) =>
     Math.max(hardMin, Math.min(maxResizeWidth, width));
 
-// Width-pace rule for the X drag (pointerDragHandler + the drag-window
-// resize listener in resize.js). The native popup bubble follows the
-// document's laid-out width ASYNCHRONOUSLY, and asymmetrically: it grows
-// with zero lag but narrows through a visible chase (user-measured on
-// Chrome 151/dpr2 with scripts/console/probe-resize.js v3: bubbleLag up to
-// 235px and a 234px right-edge blank strip for ~55 frames during a fast
-// compression — the "右缘弹开再填回" report). Writing the raw pointer
-// target to the document on every move lets the content outrun the bubble
-// by exactly that lag. The rule below paces the DOCUMENT instead: while
-// the achieved viewport is still wider than the target, the document stays
-// only LEAD px narrower than the viewport — far enough that the popup's
-// preferred size keeps pulling the bubble down (the shrink engine), close
-// enough that the visible blank strip is bounded by LEAD instead of the
-// full lag. The pointer target is taken verbatim as soon as the viewport
-// is within LEAD of it (grow, and slow drags, behave like the unpaced
-// code).
-//
-// Regression note (2026-08, first attempt, user-reported "可以拉伸但无法
-// 缩短"): pinning the body TO the achieved viewport (body == innerWidth)
-// deadlocks the shrink on real Chrome — the popup sizes from the CONTENT
-// extent (the max of the root box and the overflowing body), so content ==
-// viewport means the preferred size never drops and the bubble never
-// narrows. Headless Chromium instead follows the ROOT element's box (the
-// harness evidence that misled the first design), which is why the Docker
-// diag could not catch it. The document must stay strictly narrower than
-// the viewport for the window to shrink at all.
-export const CHASE_LEAD_PX = 16;
-export const chaseBodyWidth = (targetW, viewportW, lead = CHASE_LEAD_PX) =>
-    Math.max(targetW, viewportW - lead);
+// Shrink-pace cap for the X drag (pointerDragHandler in resize.js). The
+// native window follows the document's laid-out width ASYNCHRONOUSLY and
+// ASYMMETRICALLY (user-measured on Chrome 151/dpr2 with
+// scripts/console/probe-resize.js v3): growth applies with zero lag at any
+// speed, while narrowing chases the preferred size at a rate proportional
+// to the remaining distance (one commit ≈ 24ms). Two failure modes bracket
+// the design space, both user-reported:
+//  - uncapped: a fast fling (up to ~9.8k px/s) lets the content outrun the
+//    window by v×τ — a 234px right-edge blank strip for ~55 frames (the
+//    original "右缘弹开再填回" report);
+//  - lead-starved (first fix attempt): keeping the document only 16px
+//    narrower than the achieved viewport caps the whole pipeline at
+//    ~16px/commit ≈ 660px/s — "慢动作不跟手", AND pinning the document TO
+//    the achieved viewport deadlocks the shrink entirely (the popup sizes
+//    from the CONTENT extent: content == viewport means the preferred size
+//    never drops).
+// The cap below sits between them: GROW takes the pointer target verbatim
+// (that path has no lag to hide), SHRINK approaches it at CAP px/ms — the
+// window follows at the same pace one commit behind, so the visible strip
+// is bounded by CAP×τ (~58px) while the full 320px traverse completes in
+// ~130ms. dtMs comes from the pointer event's timeStamp (coalesced or
+// zero-delta events are clamped to [1, 100]ms so the step is never zero or
+// unbounded).
+export const DRAG_SHRINK_PX_PER_MS = 2.4;
+export const pacedDragWidth = (targetW, appliedW, dtMs, rate = DRAG_SHRINK_PX_PER_MS) => {
+    if (targetW >= appliedW)
+        return targetW;
+    const step = rate * Math.min(100, Math.max(1, dtMs || 1));
+    return Math.max(targetW, appliedW - step);
+};
 
 // Zoom level for a Ctrl/Cmd+wheel or Ctrl/Cmd++/-/0 delta (neat.js zoom()).
 // 0 resets to the default → null. Otherwise ±10 steps clamped to [90, 150].
