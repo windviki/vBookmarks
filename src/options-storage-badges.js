@@ -32,6 +32,9 @@ export const STORAGE_LOCAL = 'local';
 // consistency test below pins that.
 export const OPTIONS_STORAGE_GROUPS = {
     general: [
+        // 2026-08-26: the recent-search display count is a local device-state
+        // preference (like autoResizePopup) — general is the mixed group.
+        { row: 'search-history-count', key: 'searchHistoryCount' },
         { row: 'click-new-tab', key: 'leftClickNewTab' },
         { row: 'open-new-tab-bg', key: 'middleClickBgTab' },
         { row: 'close-unused-folders', key: 'closeUnusedFolders' },
@@ -67,7 +70,8 @@ export const OPTIONS_STORAGE_GROUPS = {
         { row: 'tree-row-actions', key: 'treeRowActions' }
     ],
     'search-options': [
-        { row: 'search-after-enter', key: 'searchAfterEnter' }
+        { row: 'search-after-enter', key: 'searchAfterEnter' },
+        { row: 'search-history-enabled', key: 'searchHistoryEnabled' }
     ],
     'tabgroups-options': [
         { row: 'tabgroups-color-style', key: 'tabGroupsColorStyle' },
@@ -78,8 +82,7 @@ export const OPTIONS_STORAGE_GROUPS = {
         { row: 'recent-count', key: 'recentCount' }
     ],
     'stats-options': [
-        { row: 'stats-enabled', key: 'statsEnabled' },
-        { row: 'search-history-enabled', key: 'searchHistoryEnabled' }
+        { row: 'stats-enabled', key: 'statsEnabled' }
     ],
     'dead-scan-options': [
         { row: 'dead-proxy-server-input', key: 'deadProxyServer' },

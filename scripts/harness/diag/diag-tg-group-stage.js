@@ -52,6 +52,28 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
         console.log('CLICKED:', clicked);
         await sleep(1200);
 
+        // 2026-08-26 report: the member rows' 发送到暂存 planes must flip
+        // to the SOLID icon IMMEDIATELY (the pre-fix rows stayed hollow
+        // until the next view entry re-rendered them).
+        const flipCheck = await page.evaluate(() => {
+            // ONLY the group's own member rows must flip (other windows'
+            // rows stay hollow — they were not part of the send)
+            const head = document.querySelector('li.tabgroups-group');
+            const gid = head && head.dataset.groupId;
+            const rows = gid
+                ? [...document.querySelectorAll(`li.tabgroups-row[data-group-id="${gid}"] .tabgroups-stage`)]
+                : [];
+            return {
+                rowCount: rows.length,
+                allSolid: rows.length > 0 && rows.every(b => !!b.querySelector('svg.vbm-icon-stage-done')),
+                headSolid: (() => {
+                    const b = head && head.querySelector('.tabgroups-group-stage');
+                    return b ? !!b.querySelector('svg.vbm-icon-stage-done') : null;
+                })()
+            };
+        });
+        console.log('FLIP:', JSON.stringify(flipCheck));
+
         const out = await page.evaluate(async () => {
             const stored = await new Promise(res => chrome.storage.local.get('staging', res));
             let s = null;
@@ -68,7 +90,8 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
         const groupById = {};
         for (const g of out.groups || []) groupById[g.id] = g;
         const pass2 = clicked && !!named && out.items.length === 2
-            && out.items.every(i => (groupById[i.group] || {}).name === 'Probe Group');
+            && out.items.every(i => (groupById[i.group] || {}).name === 'Probe Group')
+            && flipCheck.rowCount === 2 && flipCheck.allSolid && flipCheck.headSolid === true;
         console.log(pass2 ? 'DIAG PASS' : 'DIAG FAIL');
         if (!pass2)
             process.exitCode = 1;

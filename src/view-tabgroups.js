@@ -1178,6 +1178,15 @@ export function initViewTabGroups(ctx = {}) {
         }
         stagingApi.addItems(entries);
         undo.showToast(_m('stagingAddedSummary', [`${entries.length}`, '0']));
+        // 2026-08-26 report: batch sends reflect immediately — flip the
+        // closed record's member planes + its head plane in place.
+        if ($list && $list.querySelectorAll) {
+            const esc = (typeof CSS !== 'undefined' && CSS.escape) ? CSS.escape(String(recordId)) : String(recordId);
+            const btns = $list.querySelectorAll(
+                `li[data-closed-id="${esc}"] .tabgroups-closed-stage, li[data-closed-id="${esc}"] .tabgroups-closed-stage-group`);
+            for (let i = 0, l = btns.length; i < l; i++)
+                flipStageBtn(btns[i], true, _m);
+        }
     };
 
     const stageClosedTab = (recordId, idx) => {
@@ -1187,6 +1196,15 @@ export function initViewTabGroups(ctx = {}) {
         if (!stagingApi || !tab || !bookmarkableUrl(tab.url))
             return;
         stagingApi.addItems([{ id: null, url: tab.url, title: tab.title || tab.url }]);
+        // flip the single member plane in place (the record head's all-
+        // staged verdict may legitimately stay hollow until the rest joins)
+        if ($list && $list.querySelectorAll) {
+            const esc = (typeof CSS !== 'undefined' && CSS.escape) ? CSS.escape(String(recordId)) : String(recordId);
+            const btn = $list.querySelector(
+                `li[data-closed-id="${esc}"][data-closed-tab="${idx}"] .tabgroups-closed-stage`);
+            if (btn)
+                flipStageBtn(btn, true, _m);
+        }
     };
 
     // A whole tab group: bookmarkable tabs by index as PURE snapshots into
@@ -1217,6 +1235,17 @@ export function initViewTabGroups(ctx = {}) {
             else
                 stagingApi.addItems(entries);
             undo.showToast(_m('stagedToast', [`${entries.length}`, groupTitle || '']));
+            // 2026-08-26 report: a batch send must reflect IMMEDIATELY —
+            // flip the group's member-row planes + the head plane in place
+            // (the window-head send's law), or the rows stay hollow until
+            // the next view entry re-renders them.
+            if ($list && $list.querySelectorAll) {
+                const esc = (typeof CSS !== 'undefined' && CSS.escape) ? CSS.escape(String(groupId)) : String(groupId);
+                const rows = $list.querySelectorAll(
+                    `li[data-group-id="${esc}"] .tabgroups-stage, li[data-group-id="${esc}"] .tabgroups-group-stage`);
+                for (let i = 0, l = rows.length; i < l; i++)
+                    flipStageBtn(rows[i], true, _m);
+            }
         };
         if (groupTabs.length > STAGE_GROUP_CONFIRM_LIMIT && dialogs && dialogs.ConfirmDialog) {
             dialogs.ConfirmDialog.open({

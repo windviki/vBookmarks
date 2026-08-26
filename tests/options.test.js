@@ -1041,6 +1041,17 @@ describe('classic-experience preset (v4 task-3 #20 + issue #49)', () => {
         expect(sb.localData.searchHistory).toBe(mru); // untouched
     });
 
+    // 2026-08-26 report: the recent-search COUNT select binds and persists
+    // (options 搜索 → 最近搜索显示条数, default 5).
+    it('the search-history count select binds to storage', async () => {
+        const sb = createSandbox();
+        await sb.start();
+        expect(sb.elements['search-history-count'].value).toBe('5'); // default
+        sb.elements['search-history-count'].value = '10';
+        await sb.elements['search-history-count'].fire('change');
+        expect(sb.localData.searchHistoryCount).toBe('10');
+    });
+
     it('the quick-add context-menu switch binds to storage and toggles independently', async () => {
         const sb = createSandbox();
         await sb.start();

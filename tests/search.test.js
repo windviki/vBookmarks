@@ -932,6 +932,24 @@ describe('search history area (§3.2/§4.3)', () => {
         expect(toasts).toEqual(['searchHistoryClosedToast']);
     });
 
+    // 2026-08-26 report: the area SHOWS only searchHistoryCount entries
+    // (options 搜索 → 最近搜索显示条数, default 5); the stored MRU keeps
+    // its own cap — the render crops.
+    it('renders only searchHistoryCount rows (default 5, cropped)', () => {
+        const mk = n => JSON.stringify(Array.from({ length: n }, (_, i) => ({ q: `q${i}`, ts: i, n: 0 })));
+        const ctx = setup({ storeData: { searchHistory: mk(8) } });
+        ctx.viewHooks.search.activate();
+        expect(ctx.els['search-history-area'].innerHTML.match(/search-history-row/g)).toHaveLength(5);
+        // an explicit count crops harder
+        const ctx2 = setup({ storeData: { searchHistory: mk(8), searchHistoryCount: '3' } });
+        ctx2.viewHooks.search.activate();
+        expect(ctx2.els['search-history-area'].innerHTML.match(/search-history-row/g)).toHaveLength(3);
+        // a bigger count shows more
+        const ctx3 = setup({ storeData: { searchHistory: mk(8), searchHistoryCount: '10' } });
+        ctx3.viewHooks.search.activate();
+        expect(ctx3.els['search-history-area'].innerHTML.match(/search-history-row/g)).toHaveLength(8);
+    });
+
     it('Enter on a focused row reruns it, Delete removes it', () => {
         const { els, viewHooks, store } = setup({ storeData: { searchHistory: HISTORY } });
         viewHooks.search.activate();

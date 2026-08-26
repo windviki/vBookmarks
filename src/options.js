@@ -271,6 +271,11 @@ const $ = id => document.getElementById(id);
             $('favicon-enrich-ddg').disabled = !$('favicon-enrich').checked;
         };
         $('favicon-enrich').addEventListener('change', syncDdgDisabled);
+        // 2026-08-26 report: how many recent-search rows the area shows
+        // (default 5); the area height follows the cropped rows.
+        const searchHistoryCount = $('search-history-count');
+        searchHistoryCount.value = await getSetting('searchHistoryCount', '5');
+        searchHistoryCount.addEventListener('change', () => setSetting('searchHistoryCount', searchHistoryCount.value));
         syncDdgDisabled();
         // 2026-08-26 report: the switch ONLY toggles the search-history AREA
         // (show/hide) — it never touches the stored MRU; re-enabling brings

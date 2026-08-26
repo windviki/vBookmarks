@@ -73,7 +73,7 @@
         // v4 task-2: non-empty folder delete confirmation (slice A2, §5.7)
         'confirmDeleteFolder',
         // v4 task-2: recent view + search history (slice B, §4.3/§5.3)
-        'recentCount', 'searchHistory', 'searchHistoryEnabled',
+        'recentCount', 'searchHistory', 'searchHistoryEnabled', 'searchHistoryCount',
         // separators & appearance
         'separators', 'separatorTitle', 'separatorURL', 'separatorUrl', 'separatorString',
         'separatorcolor', 'userstyle', 'customIcon', 'theme', 'uiLanguage',

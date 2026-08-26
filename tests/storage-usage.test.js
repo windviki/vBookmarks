@@ -80,7 +80,7 @@ const EXPECTED = {
     opens: 'other', popupHeight: 'other', popupWidth: 'other', zoom: 'other',
     searchQuery: 'other', scrollTop: 'other', focusID: 'other', focusSpot: 'other',
     autoResizePopup: 'other', activeView: 'other', viewState: 'other',
-    searchHistory: 'other', separators: 'other',
+    searchHistory: 'other', searchHistoryEnabled: 'other', searchHistoryCount: 'other', separators: 'other',
     separatorTitle: 'other', separatorURL: 'other', separatorUrl: 'other',
     separatorString: 'other', separatorcolor: 'other', userstyle: 'other',
     customIcon: 'other', currentVersion: 'other',

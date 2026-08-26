@@ -104,6 +104,39 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
         console.log(closeOk ? 'CLOSE PASS' : 'CLOSE FAIL');
         if (!closeOk)
             process.exitCode = 1;
+
+        // 2026-08-26 report: the idle 暂存全部 send must flip every result
+        // row's plane to the SOLID icon immediately (re-enable the area
+        // first so the flow is realistic).
+        await page.evaluate(async () => {
+            await new Promise(res => chrome.storage.sync.set({ searchHistoryEnabled: '1' }, res));
+        });
+        await page.reload({ waitUntil: 'load' });
+        await sleep(1200);
+        await page.click('#view-tab-search');
+        await sleep(600);
+        await page.type('#search-input', 'history click');
+        await sleep(900);
+        const stageAllOut = await page.evaluate(() => {
+            const btn = document.querySelector('.search-stage-all');
+            if (!btn)
+                return { hasBtn: false };
+            btn.click();
+            return { hasBtn: true };
+        });
+        await sleep(600);
+        const stageAllAfter = await page.evaluate(() => {
+            const rows = [...document.querySelectorAll('#results .staging-add-btn')];
+            return {
+                rowCount: rows.length,
+                allSolid: rows.length > 0 && rows.every(b => !!b.querySelector('svg.vbm-icon-stage-done'))
+            };
+        });
+        console.log('STAGEALL:', JSON.stringify({ stageAllOut, stageAllAfter }));
+        const stageAllOk = stageAllOut.hasBtn && stageAllAfter.rowCount >= 1 && stageAllAfter.allSolid;
+        console.log(stageAllOk ? 'STAGEALL PASS' : 'STAGEALL FAIL');
+        if (!stageAllOk)
+            process.exitCode = 1;
     } finally {
         await browser.close();
     }

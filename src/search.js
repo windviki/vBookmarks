@@ -108,6 +108,13 @@ export function initSearch(ctx = {}) {
 
     // --- Search history + last-query restore (§4.3) --------------------------
     const historyEnabled = () => !!store.get('searchHistoryEnabled', '1');
+    // 2026-08-26 report: how many MRU entries the area SHOWS (options 搜索 →
+    // 最近搜索显示条数, default 5). The stored MRU keeps its own cap — this
+    // only crops the render, and the area's height follows the cropped rows.
+    const historyCount = () => {
+        const n = parseInt(store.get('searchHistoryCount', '5'), 10);
+        return n > 0 ? n : 5;
+    };
     const readHistory = () => {
         try {
             const list = JSON.parse(store.get('searchHistory') || '[]');
@@ -299,7 +306,7 @@ export function initSearch(ctx = {}) {
             unparkRowFocus(parkedRow);
             return;
         }
-        const list = readHistory();
+        const list = readHistory().slice(0, historyCount());
         if (!list.length) {
             const hintHtml = `<ul role="list"><li class="empty-state" role="listitem"><i>${_m('searchViewHint')}</i></li></ul>`;
             if (hintHtml !== lastHistoryHtml) {
@@ -611,8 +618,14 @@ export function initSearch(ctx = {}) {
                     const entries = lastResults
                         .filter(r => !r.isFolder && r.url)
                         .map(r => ({ id: r.id, url: r.url, title: r.title }));
-                    if (entries.length)
+                    if (entries.length) {
                         ctx.stagingApi.addItemsToNamedGroup((searchInput.value || '').trim(), entries);
+                        // 2026-08-26 report: batch sends reflect immediately
+                        // — flip every result-row plane in place.
+                        if ($results && $results.querySelectorAll)
+                            for (const btn of $results.querySelectorAll('#results .staging-add-btn'))
+                                flipStageBtn(btn, true, _m);
+                    }
                 }
                 return;
             }
