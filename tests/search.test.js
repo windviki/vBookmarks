@@ -831,6 +831,27 @@ describe('pushSearchHistory (§4.3 pure MRU)', () => {
         expect(pushSearchHistory([{ q: 'a' }, { q: 'b' }], { q: 'c' }, 2)).toHaveLength(2);
     });
 
+    // 2026-08-26 report: the VIEW stores at the option's MAXIMUM (20) —
+    // the display count only crops the render, so switching 3/5/10/20 never
+    // loses recorded queries.
+    it('records cap at the store maximum 20; the display count only crops', () => {
+        const ctx = setup({});
+        const { els, viewHooks, store } = ctx;
+        viewHooks.search.activate();
+        // record 25 queries through the module's record path (the palette
+        // bridge + pagehide both ride recordHistory)
+        for (let i = 0; i < 25; i++)
+            ctx.s.record('q' + i, 0);
+        expect(JSON.parse(store.get('searchHistory'))).toHaveLength(20); // capped at 20
+        // re-activate to repaint: default display 5 → 5 rows
+        viewHooks.search.activate();
+        expect(els['search-history-area'].innerHTML.match(/search-history-row/g)).toHaveLength(5);
+        // switching the display count up shows the older stored entries
+        const ctx2 = setup({ storeData: { searchHistory: store.get('searchHistory'), searchHistoryCount: '20' } });
+        ctx2.viewHooks.search.activate();
+        expect(ctx2.els['search-history-area'].innerHTML.match(/search-history-row/g)).toHaveLength(20);
+    });
+
     it('tolerates malformed stored entries', () => {
         const list = [null, { q: 1 }, 'junk', { q: 'ok', ts: 2 }];
         expect(pushSearchHistory(list, { q: 'new', ts: 9, n: 1 }))

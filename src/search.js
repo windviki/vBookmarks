@@ -127,13 +127,20 @@ export function initSearch(ctx = {}) {
     // Records a query into the MRU history. `n` = the result count shown to
     // the user; callers outside this module (the palette, v4 task-4 #3) pass
     // their own hit count, the in-view timings default to lastResultCount.
+    // The STORED MRU cap is the option's MAXIMUM (20) — the options
+    // 最近搜索显示条数 only crops the RENDER, so switching the display
+    // count (3/5/10/20) never loses already-recorded queries (2026-08-26
+    // report: storing only the current display count would drop the older
+    // entries the moment the user picks a bigger number).
+    const HISTORY_STORE_CAP = 20;
     const recordHistory = (q, n) => {
         q = (q || '').trim();
         if (!q || !historyEnabled())
             return;
         store.set('searchHistory', JSON.stringify(
             pushSearchHistory(readHistory(),
-                { q, ts: Date.now(), n: n == null ? lastResultCount : n })));
+                { q, ts: Date.now(), n: n == null ? lastResultCount : n },
+                HISTORY_STORE_CAP)));
     };
     // Bucket → label helper lives in tree-render.js (shared with the recent
     // and stats views) — imported as relTimeLabel above.
