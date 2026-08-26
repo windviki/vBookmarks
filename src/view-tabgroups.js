@@ -1579,14 +1579,14 @@ export function initViewTabGroups(ctx = {}) {
         const ids = tabs.filter(t => String(t.groupId) === String(groupId)).map(t => t.id);
         if (!ids.length)
             return;
-        send({ type: TAB_GROUP_MSG.tabsMoveNewWindow, tabIds: ids }, () => refresh());
+        sendTabMove({ type: TAB_GROUP_MSG.tabsMoveNewWindow, tabIds: ids }, () => refresh());
     };
 
     // 单标签移到新窗口（右键菜单的 移动到新窗口）——同一条 SW 消息，单个 id。
     const moveTabToNewWindow = tabId => {
         if (tabId === undefined || tabId === null || tabId === '')
             return;
-        send({ type: TAB_GROUP_MSG.tabsMoveNewWindow, tabIds: [Number(tabId)] }, () => refresh());
+        sendTabMove({ type: TAB_GROUP_MSG.tabsMoveNewWindow, tabIds: [Number(tabId)] }, () => refresh());
     };
 
     // 窗口头拖曳并入 (the window-head drag): the dragged window's whole tab
@@ -1603,7 +1603,7 @@ export function initViewTabGroups(ctx = {}) {
         const from = widx >= 0 ? windows[widx] : null;
         if (!from || !from.tabs || !from.tabs.length)
             return;
-        send({
+        sendTabMove({
             type: TAB_GROUP_MSG.tabsMergeWindow,
             tabIds: from.tabs.map(t => t.id),
             groupIds: from.tabs.filter(t => !t.pinned).map(t => t.id),
@@ -1886,6 +1886,25 @@ export function initViewTabGroups(ctx = {}) {
             // Swallow lastError like sync-manager does: an asleep/updated SW
             // must never surface as an unchecked runtime error.
             chrome.runtime.sendMessage(msg, m => { void chrome.runtime.lastError; if (cb) cb(m); });
+    };
+
+    // 2026-08-26 report round: moving a cross-window ACTIVE tab makes Chrome
+    // focus the target window, stealing the foreground from the popup's own
+    // window. Capture the popup's window AFTER the move lands (call from the
+    // send/drop callbacks, which fire post-move) and re-focus it when it is
+    // no longer focused — a same-window move is a no-op here.
+    const refocusPopupWindow = () => {
+        if (!chrome.windows || !chrome.windows.getCurrent || !chrome.windows.update)
+            return;
+        chrome.windows.getCurrent(win => {
+            if (win && win.id !== undefined && !win.focused)
+                chrome.windows.update(win.id, { focused: true }, swallowLastError);
+        });
+    };
+    // The three cross-window move entry points share one send/callback shape
+    // (refresh after the SW lands + popup-window refocus).
+    const sendTabMove = (msg, done) => {
+        send(msg, () => { refocusPopupWindow(); if (done) done(); });
     };
 
     // A tab/group can vanish between the last refresh and the click (the
@@ -2496,10 +2515,11 @@ export function initViewTabGroups(ctx = {}) {
         if (closest('.tabgroups-new-window')) {
             e.preventDefault();
             // A fresh empty browser window (the toolbar's + next to 刷新).
-            // Creating it focuses the new window, which closes the popup —
-            // the same flow as the group's 移动到新窗口.
+            // focused:false keeps the popup's own window in front — the
+            // 2026-08-26 report round: a focused new window steals the
+            // foreground while the popup is open.
             if (chrome.windows && chrome.windows.create)
-                chrome.windows.create({}, () => void chrome.runtime.lastError);
+                chrome.windows.create({ focused: false }, () => void chrome.runtime.lastError);
             return;
         }
         if (closest('.tabgroups-refresh')) {
@@ -3154,7 +3174,9 @@ export function initViewTabGroups(ctx = {}) {
         }
         if (!dragTabId)
             return;
-        const li = closest('li.tabgroups-row');
+        // Tab drag: a row OR a window head is a drop target — the head means
+        // "append to that window's end" (2026-08-26 report round 2).
+        const li = closest('li.tabgroups-row, li.tabgroups-window-head');
         if (!li)
             return;
         e.preventDefault();
@@ -3165,7 +3187,7 @@ export function initViewTabGroups(ctx = {}) {
     });
     $list.addEventListener('dragleave', e => {
         const closest = (e.target && e.target.closest) ? e.target.closest.bind(e.target) : () => null;
-        const li = closest('li.tabgroups-row');
+        const li = closest('li.tabgroups-row, li.tabgroups-window-head');
         if (li && li.classList)
             li.classList.remove('drag-over');
     });
@@ -3184,12 +3206,25 @@ export function initViewTabGroups(ctx = {}) {
             return;
         }
         const targetLi = closest('li.tabgroups-row');
-        if (dragTabId && targetLi && targetLi.dataset && targetLi.dataset.tabId
+        // Window-head drop target (2026-08-26 report round 2): the tab joins
+        // that window's END — the head reads as "append here".
+        const winHead = closest('li.tabgroups-window-head');
+        if (dragTabId && winHead && winHead.dataset && winHead.dataset.windowId) {
+            const wid = Number(winHead.dataset.windowId);
+            if (chrome.tabs.move)
+                chrome.tabs.move(Number(dragTabId), { windowId: wid, index: -1 }, () => {
+                    swallowLastError();
+                    refocusPopupWindow();
+                });
+        } else if (dragTabId && targetLi && targetLi.dataset && targetLi.dataset.tabId
             && String(targetLi.dataset.tabId) !== String(dragTabId)) {
             const targetTab = tabById(targetLi.dataset.tabId);
             const targetWindowId = targetTab ? targetTab.windowId : currentWindowId;
             if (chrome.tabs.move)
-                chrome.tabs.move(Number(dragTabId), { windowId: targetWindowId, index: targetTab ? targetTab.index : -1 }, swallowLastError);
+                chrome.tabs.move(Number(dragTabId), { windowId: targetWindowId, index: targetTab ? targetTab.index : -1 }, () => {
+                    swallowLastError();
+                    refocusPopupWindow();
+                });
         }
         dragTabId = null;
         clearDragClasses();

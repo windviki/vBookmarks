@@ -448,6 +448,9 @@ describe('tab-groups SW batch tab management (tab-groups view)', () => {
         createTabGroupOpener().moveTabsToNewWindow([4, 5], () => { finished = true; });
         await flush();
         expect(chrome.windows.createCalls).toHaveLength(1);
+        // the fresh window opens in the BACKGROUND — a focused new window
+        // would steal the foreground from the popup (2026-08-26 report)
+        expect(chrome.windows.createCalls[0]).toEqual({ focused: false });
         expect(calls.moved[0]).toEqual([[4, 5], { windowId: 42, index: -1 }]);
         expect(calls.moved.slice(1)).toEqual([[4, { windowId: 42, index: -1 }], [5, { windowId: 42, index: -1 }]]);
         // the fresh window's blank tab is cleaned up, the window stays

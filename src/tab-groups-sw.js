@@ -349,7 +349,9 @@ export function createTabGroupOpener() {
 
     // Move a tab group to a fresh window. Chrome has no direct "move
     // group" API, so the whole member set is moved with tabs.move and the
-    // new window's initial blank tab is closed afterwards.
+    // new window's initial blank tab is closed afterwards. focused:false —
+    // the new window must not steal the foreground from the popup's own
+    // window (2026-08-26 report round).
     const moveTabsToNewWindow = (tabIds, done) => {
         const finish = () => { if (done) done(); };
         const ids = tabIds || [];
@@ -361,7 +363,7 @@ export function createTabGroupOpener() {
             finish();
             return;
         }
-        chrome.windows.create({ focused: true }, win => {
+        chrome.windows.create({ focused: false }, win => {
             if (chrome.runtime.lastError || !win) {
                 finish();
                 return;

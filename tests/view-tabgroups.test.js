@@ -1873,6 +1873,45 @@ describe('drag sorting', () => {
         });
         expect(chrome.tabs.moveCalls).toHaveLength(1);
     });
+
+    // 2026-08-26 report round 2: a WINDOW HEAD is also a tab-drop target —
+    // the tab appends to that window's END (index -1), any window included.
+    it('drop on a window head appends the tab to that window end', () => {
+        const { def, chrome, fire, closestOf } = setup({});
+        def().activate();
+        const sourceLi = { dataset: { tabId: '1' }, classList: makeClassList() };
+        fire('dragstart', {
+            target: { closest: closestOf({ 'li.tabgroups-row': sourceLi }) },
+            dataTransfer: { setData() {} }
+        });
+        const winHead = { dataset: { windowId: '7' }, classList: makeClassList() };
+        fire('drop', {
+            preventDefault() {},
+            target: { closest: closestOf({ 'li.tabgroups-window-head': winHead }) },
+            dataTransfer: {}
+        });
+        expect(chrome.tabs.moveCalls).toHaveLength(1);
+        expect(chrome.tabs.moveCalls[0]).toEqual([1, { windowId: 7, index: -1 }]);
+    });
+
+    // the same drop on a head of the tab's OWN window just re-ends it
+    it('drop on the own window head appends in the same window', () => {
+        const { def, chrome, fire, closestOf } = setup({});
+        def().activate();
+        const sourceLi = { dataset: { tabId: '1' }, classList: makeClassList() };
+        fire('dragstart', {
+            target: { closest: closestOf({ 'li.tabgroups-row': sourceLi }) },
+            dataTransfer: { setData() {} }
+        });
+        const winHead = { dataset: { windowId: '1' }, classList: makeClassList() };
+        fire('drop', {
+            preventDefault() {},
+            target: { closest: closestOf({ 'li.tabgroups-window-head': winHead }) },
+            dataTransfer: {}
+        });
+        expect(chrome.tabs.moveCalls).toHaveLength(1);
+        expect(chrome.tabs.moveCalls[0]).toEqual([1, { windowId: 1, index: -1 }]);
+    });
 });
 
 describe('selection mode folding + row icon parity', () => {

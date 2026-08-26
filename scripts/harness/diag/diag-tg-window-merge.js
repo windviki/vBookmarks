@@ -1,10 +1,12 @@
 // End-to-end probe for the 2026-08-26 tab-groups round:
 //   ① the window head's computed font-size == a tab row's (item 1)
-//   ② the toolbar 新建窗口 button renders left of 刷新 and creates a window
+//   ② the toolbar 新建窗口 button renders left of 刷新 and creates a
+//      BACKGROUND window (focused:false — the popup keeps the foreground)
 //   ③ dragging one window head onto another window's area merges the
 //      dragged window into the target as ONE tab group titled 窗口 N
 //      (HTML5 DnD simulated with synthetic DragEvents; the SW pipeline does
-//      the real chrome.tabs.move/group)
+//      the real chrome.tabs.move/group), and the POPUP's window stays
+//      focused afterwards (the move must not steal the foreground)
 const puppeteer = require('puppeteer');
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
@@ -34,7 +36,9 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
             const mk = urls => new Promise(res => chrome.windows.create({ url: urls, focused: false }, w => res(w.id)));
             const a = await mk(['http://a.example/1', 'http://a.example/2', 'http://a.example/3']);
             const b = await mk(['http://b.example/1', 'http://b.example/2', 'http://b.example/3']);
-            return { a, b };
+            // the popup's own window (for the focus assertions)
+            const popupWin = await new Promise(res => chrome.windows.getCurrent(res));
+            return { a, b, popup: popupWin.id };
         });
         await page.click('#view-tab-tabgroups');
         await sleep(900);
@@ -61,12 +65,17 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
         });
         console.log('FONTS/BUTTON:', JSON.stringify(fonts));
 
-        // ② the + button creates a fresh window
+        // ② the + button creates a fresh BACKGROUND window (report round 1)
         const before = await page.evaluate(() => new Promise(res => chrome.windows.getAll({}, w => res(w.length))));
         await page.click('.tabgroups-new-window');
         await sleep(700);
-        const after = await page.evaluate(() => new Promise(res => chrome.windows.getAll({}, w => res(w.length))));
-        console.log('NEWWINDOW:', JSON.stringify({ before, after, created: after === before + 1 }));
+        const newWinState = await page.evaluate(async popupId => {
+            const wins = await new Promise(res => chrome.windows.getAll({ populate: true }, res));
+            const fresh = wins.find(w => w.tabs && w.tabs.length === 1
+                && (w.tabs[0].url || '').startsWith('chrome://newtab') && w.id !== popupId);
+            return { count: wins.length, freshFocused: fresh ? fresh.focused : null };
+        }, winIds.popup);
+        console.log('NEWWINDOW:', JSON.stringify({ before, after: newWinState.count, created: newWinState.count === before + 1, freshFocused: newWinState.freshFocused }));
         // close the fresh empty window to keep the rest deterministic
         await page.evaluate(() => new Promise(res => chrome.windows.getAll({}, wins => {
             const empty = wins.find(w => w.tabs && w.tabs.length === 1 && (w.tabs[0].url || '').startsWith('chrome://newtab'));
@@ -79,7 +88,7 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
         await page.click('.tabgroups-refresh');
         await sleep(900);
 
-        // ③ drag window B's head onto window A's head
+        // ③ drag window B's head onto window A's head (B now has 2 tabs)
         const drag = await page.evaluate(win => {
             const heads = [...document.querySelectorAll('li.tabgroups-window-head')];
             if (heads.length < 2)
@@ -107,21 +116,35 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
             const sourceGone = !wins.some(w => w.id === win.b);
             const bTabs = target ? target.tabs.filter(t => (t.url || '').startsWith('http://b.example/')) : [];
             const grp = groups.find(g => g.windowId === win.a);
+            const popupWin = wins.find(w => w.id === win.popup);
+            // the moved tab from ④ sits at A's END (last index among A)
+            const movedAtEnd = (() => {
+                if (!target) return false;
+                const moved = target.tabs.find(t => t.url === 'http://b.example/1');
+                if (!moved) return false;
+                const aTabs = target.tabs.filter(t => (t.url || '').startsWith('http://a.example/'));
+                const lastA = aTabs[aTabs.length - 1];
+                return moved.index > lastA.index;
+            })();
             return {
                 sourceWindowClosed: sourceGone,
                 targetTabCount: target ? target.tabs.length : 0,
                 bTabsInTarget: bTabs.length,
                 bTabsGrouped: bTabs.every(t => t.groupId !== -1 && t.groupId !== undefined) && bTabs.length > 0,
                 groupTitle: grp ? grp.title : null,
-                groupWindowMatches: grp ? grp.windowId === win.a : false
+                groupWindowMatches: grp ? grp.windowId === win.a : false,
+                movedTabAppended: movedAtEnd,
+                popupStillFocused: popupWin ? popupWin.focused : null
             };
         }, winIds);
         console.log('OUTCOME:', JSON.stringify(outcome));
 
         const pass = fonts.headFont === fonts.rowFont && fonts.newWinBtn && fonts.newWinBeforeRefresh
-            && after === before + 1 && drag.ok && drag.marked
+            && newWinState.count === before + 1 && newWinState.freshFocused === false
+            && drag.ok && drag.marked
             && outcome.sourceWindowClosed && outcome.bTabsInTarget === 3
-            && outcome.bTabsGrouped && !!outcome.groupTitle && outcome.groupWindowMatches;
+            && outcome.bTabsGrouped && !!outcome.groupTitle && outcome.groupWindowMatches
+            && outcome.popupStillFocused === true;
         console.log(pass ? 'DIAG PASS' : 'DIAG FAIL');
         if (!pass)
             process.exitCode = 1;
