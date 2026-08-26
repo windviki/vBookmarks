@@ -37,6 +37,10 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
                 const n = await create({ parentId: folder.id, title: `geo anchored ${i}`, url });
                 items.push({ id: n.id, url, title: `geo anchored ${i}`, ts: now - i * 1000, group: 'g1' });
             }
+            // a LOOSE bookmarked row (no group) — the alignment baseline
+            const looseUrl = 'http://127.0.0.1:9/geo/loose';
+            const looseNode = await create({ parentId: bar.id, title: 'geo loose', url: looseUrl });
+            items.push({ id: looseNode.id, url: looseUrl, title: 'geo loose', ts: now, group: null });
             items.push({ id: null, url: 'http://127.0.0.1:9/geo/snap', title: 'geo snapshot', ts: now, group: null });
             const staging = {
                 v: 1,
@@ -56,13 +60,14 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
         const measure = width => page.evaluate(w => {
             document.body.style.width = w + 'px';
             const out = {};
-            const r = el => { if (!el) return null; const b = el.getBoundingClientRect(); return { x: Math.round(b.left * 10) / 10, right: Math.round(b.right * 10) / 10, y: Math.round(b.top * 10) / 10, w: Math.round(b.width * 10) / 10, h: Math.round(b.height * 10) / 10 }; };
+            const r = el => { if (!el) return null; const b = el.getBoundingClientRect(); return { x: Math.round(b.left * 10) / 10, right: Math.round(b.right * 10) / 10, cx: Math.round((b.left + b.right / 1) * 5) / 10, y: Math.round(b.top * 10) / 10, w: Math.round(b.width * 10) / 10, h: Math.round(b.height * 10) / 10 }; };
             const q = s => document.querySelector(s);
             const member = q('li.staging-member');
             const loose = q('#staging-items li.staging-row:not(.staging-member)');
             out.body = r(document.body);
             out.list = r(document.getElementById('staging-list'));
             out.groupHead = r(q('.staging-group-head'));
+            out.groupGlyph = r(q('.staging-group-head .staging-group-folder'));
             out.groupTitle = r(q('.staging-group-head .staging-section-title'));
             out.groupPlace = r(q('.staging-group-head .staging-group-place'));
             out.memberLi = r(member);
@@ -71,15 +76,30 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
             out.memberTitle = r(member && member.querySelector('i'));
             out.memberStar = r(member && member.querySelector('.staging-star'));
             out.looseLi = r(loose);
-            out.looseAnchor = r(loose && loose.querySelector('a'));
             out.looseFav = r(loose && loose.querySelector('.favicon-container'));
+            out.looseTitle = r(loose && loose.querySelector('i'));
             out.bucketHead = r(q('.staging-bucket-head'));
+            out.bucketStar = r(q('.staging-bucket-head .staging-bucket-star'));
             out.bucketTitle = r(q('.staging-bucket-head .staging-section-title'));
             out.sectionHead = r(document.getElementById('recent-head'));
             out.sectionTitle = r(q('#recent-head .staging-section-title'));
             out.timeHead = r(q('.recent-group-head'));
-            out.timeLabel = (() => { const el = q('.recent-group-head'); return el ? { x: el.getBoundingClientRect().left + parseFloat(getComputedStyle(el).paddingLeft), h: el.getBoundingClientRect().height } : null; })();
+            out.timeGlyph = r(q('.recent-group-head .recent-group-clock'));
             out.rowSubVisible = member ? getComputedStyle(member.querySelector('.row-sub')).display !== 'none' : null;
+            // the three alignment laws, computed (law: member fav left ==
+            // loose title left; head glyph center == member fav center; head
+            // title left == member title left)
+            const cx = el => { if (!el) return null; const b = el.getBoundingClientRect(); return Math.round((b.left + b.right) / 2 * 10) / 10; };
+            out.laws = {
+                memberFavLeft_equals_looseTitleLeft: member && loose
+                    ? [Math.round(member.querySelector('.favicon-container').getBoundingClientRect().left * 10) / 10,
+                       Math.round(loose.querySelector('i').getBoundingClientRect().left * 10) / 10] : null,
+                headGlyphCenter_equals_memberFavCenter: member && q('.staging-group-head .staging-group-folder')
+                    ? [cx(q('.staging-group-head .staging-group-folder')), cx(member.querySelector('.favicon-container'))] : null,
+                headTitleLeft_equals_memberTitleLeft: member && q('.staging-group-head .staging-section-title')
+                    ? [Math.round(q('.staging-group-head .staging-section-title').getBoundingClientRect().left * 10) / 10,
+                       Math.round(member.querySelector('i').getBoundingClientRect().left * 10) / 10] : null
+            };
             return out;
         }, width);
 

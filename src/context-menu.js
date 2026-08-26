@@ -870,13 +870,25 @@ export function initContextMenu(ctx = {}) {
         } else if (groupHead && groupHead.parentNode && groupHead.parentNode.classList
             && groupHead.parentNode.classList.contains('staging-group')
             && $stagingGroupContextMenu && ctx.staging) {
-            // velvet staging §3.5: the staging group head — fold/rename/
-            // dissolve (+ homing from ST5). Labels follow the fold state.
+            // velvet staging §3.5: the staging group head — open×4 (the
+            // folder menu's wording, member urls) / fold / rename /
+            // dissolve (+ homing from ST5). Labels follow the fold state;
+            // the open block greys out on an empty (manual) group.
             el = groupHead;
             menu = $stagingGroupContextMenu;
             const gid = groupHead.parentNode.dataset.groupId;
             $('staging-group-toggle').textContent =
                 _m(ctx.staging.isGroupCollapsed(gid) ? 'stagingGroupExpand' : 'stagingGroupCollapse');
+            const groupHasUrls = ctx.staging.groupUrls ? ctx.staging.groupUrls(gid).length : false;
+            for (const openId of ['staging-group-open-all', 'staging-group-open-group',
+                'staging-group-new-window', 'staging-group-new-incognito']) {
+                const openItem = $(openId);
+                if (openItem)
+                    openItem.classList.toggle('disabled', !groupHasUrls);
+            }
+            const openSep = $('staging-group-menu-sep0');
+            if (openSep)
+                openSep.style.display = groupHasUrls ? 'block' : 'none';
         } else if (groupHead && groupHead.parentNode && groupHead.parentNode.classList
             && groupHead.parentNode.classList.contains('dupes-group')
             && $dupesGroupContextMenu && ctx.dupesMenu) {
@@ -1844,11 +1856,40 @@ export function initContextMenu(ctx = {}) {
         const el = e.target;
         if (!el.classList.contains('menu-item'))
             return;
+        // Disabled entries (the open block on an empty manual group)
+        // dispatch nothing — the greyed item is visual state.
+        if (el.classList.contains('disabled'))
+            return;
         const gid = currentContext.parentNode.dataset.groupId;
         if (!gid || !ctx.staging)
             return;
         clearMenu();
+        // The group's member urls + name, resolved BEFORE clearMenu where
+        // convenient — the open entries act on the CURRENT membership.
+        const groupUrls = ctx.staging.groupUrls ? ctx.staging.groupUrls(gid) : [];
         switch (el.id) {
+            // Open×4: the folder menu's open family, verbatim wording, but
+            // on the staging group's member urls (snapshots included — a
+            // url is a url). >10 confirm + group naming ride the shared
+            // actions.
+            case 'staging-group-open-all':
+                if (groupUrls.length && ctx.actions)
+                    ctx.actions.openBookmarks(groupUrls);
+                break;
+            case 'staging-group-open-group': {
+                if (groupUrls.length && ctx.actions)
+                    ctx.actions.openBookmarksInGroup(groupUrls,
+                        ((ctx.staging.groupName && ctx.staging.groupName(gid)) || ''));
+                break;
+            }
+            case 'staging-group-new-window':
+                if (groupUrls.length && ctx.actions)
+                    ctx.actions.openBookmarksNewWindow(groupUrls);
+                break;
+            case 'staging-group-new-incognito':
+                if (groupUrls.length && ctx.actions)
+                    ctx.actions.openBookmarksNewWindow(groupUrls, true);
+                break;
             case 'staging-group-toggle':
                 ctx.staging.toggleGroupFold(gid);
                 break;

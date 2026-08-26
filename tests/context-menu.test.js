@@ -214,11 +214,15 @@ const setup = (opts = {}) => {
     el('DIV', 'hist-open-new-window');
     el('DIV', 'hist-open-incognito');
     el('DIV', 'hist-add-bookmark');
-    // velvet staging: the staging group-head menu + its items
+    // velvet staging: the staging group-head menu + its items (the open×4
+    // family + its separator ride first — the folder menu's wording)
     const stagingGroupMenu = el('MENU', 'staging-group-context-menu');
-    for (const gid of ['staging-group-toggle', 'staging-group-rename', 'staging-group-dissolve',
+    for (const gid of ['staging-group-open-all', 'staging-group-open-group',
+        'staging-group-new-window', 'staging-group-new-incognito',
+        'staging-group-toggle', 'staging-group-rename', 'staging-group-dissolve',
         'staging-group-select-all', 'staging-group-save-folder', 'staging-group-copy-folder'])
         el('DIV', gid).classList.add('menu-item');
+    el('HR', 'staging-group-menu-sep0');
     // velvet staging: the staging send entries (bookmark menu / hist-row menu)
     // + the separators the master switch hides with them
     for (const stageItem of ['hist-row-stage', 'add-to-staging', 'staging-remove-item', 'staging-fav-toggle', 'staging-group-assign'])
@@ -2971,6 +2975,9 @@ describe('staging group menu + staging-row entries (velvet staging §3.5/§2.4)'
         const groups = { g1: { collapsed: false } };
         return {
             calls, groups,
+            // the open×4 family reads these at open/dispatch time
+            groupUrls: () => ['http://a/', 'http://b/'],
+            groupName: () => 'Work',
             toggleGroupFold: gid => { calls.push(['toggle', gid]); groups[gid].collapsed = !groups[gid].collapsed; },
             renameGroup: gid => calls.push(['rename', gid]),
             dissolveGroup: gid => calls.push(['dissolve', gid]),
@@ -3030,6 +3037,56 @@ describe('staging group menu + staging-row entries (velvet staging §3.5/§2.4)'
         expect(staging.calls).toEqual([
             ['rename', 'g1'], ['dissolve', 'g1'], ['save', 'g1'], ['copy', 'g1']
         ]);
+    });
+
+    // 打开类条目 (2026-08-26): the folder menu's open family on the group's
+    // member urls — full batch, tab group (named after the group), new
+    // window, incognito window.
+    it('the open×4 entries dispatch the member urls through the shared actions', () => {
+        const staging = stagingApi();
+        const { el, stagingGroupMenu, menuItem, openOn, actionCalls } = setup({ staging });
+        const { head } = makeStagingGroupHead(el);
+        const urls = ['http://a/', 'http://b/'];
+        for (const id of ['staging-group-open-all', 'staging-group-open-group',
+            'staging-group-new-window', 'staging-group-new-incognito']) {
+            openOn(head);
+            fire(stagingGroupMenu, 'mouseup', makeEvent({ button: 0, target: menuItem(id) }));
+        }
+        expect(actionCalls).toEqual([
+            ['openBookmarks', urls],
+            ['openBookmarksInGroup', urls, 'Work'],
+            ['openBookmarksNewWindow', urls],
+            ['openBookmarksNewWindow', urls, true]
+        ]);
+    });
+
+    it('an empty group greys the open entries out and hides their separator', () => {
+        const staging = stagingApi();
+        staging.groupUrls = () => [];
+        const { byId, el, openOn } = setup({ staging });
+        const { head } = makeStagingGroupHead(el);
+        openOn(head);
+        for (const id of ['staging-group-open-all', 'staging-group-open-group',
+            'staging-group-new-window', 'staging-group-new-incognito'])
+            expect(byId[id].classList.contains('disabled'), id).toBe(true);
+        expect(byId['staging-group-menu-sep0'].style.display).toBe('none');
+        // a populated group keeps them live
+        staging.groupUrls = () => ['http://a/'];
+        openOn(head);
+        expect(byId['staging-group-open-all'].classList.contains('disabled')).toBe(false);
+        expect(byId['staging-group-menu-sep0'].style.display).toBe('block');
+    });
+
+    // Wiring contract: the open family + the tab-row new-window entry live in
+    // BOTH pages (the popup/sidepanel menu parity law).
+    it('the new menu ids exist in popup.html and sidepanel.html', () => {
+        for (const page of ['popup.html', 'sidepanel.html']) {
+            const html = fs.readFileSync(new URL(`../pages/${page}`, import.meta.url), 'utf8');
+            for (const id of ['staging-group-open-all', 'staging-group-open-group',
+                'staging-group-new-window', 'staging-group-new-incognito',
+                'staging-group-menu-sep0', 'tab-row-new-window'])
+                expect(html.includes(`id="${id}"`), `${page} ${id}`).toBe(true);
+        }
     });
 
     it('staging rows get the dedicated entries; unfav rows lose the id-dependent ones', () => {

@@ -281,7 +281,12 @@ import { deferIdle, mark as perfMark } from './idle.js';
         // velvet staging: folder rows flatten-send into the staging area
         'add-folder-to-staging': 'stagingAdd',
         // …and the staging group-head menu + the staging-row bookmark-menu
-        // entries (fav toggle label is state-set at open time)
+        // entries (fav toggle label is state-set at open time). The four
+        // open entries reuse the folder menu's wording verbatim.
+        'staging-group-open-all': 'openBookmarks',
+        'staging-group-open-group': 'openBookmarksInGroup',
+        'staging-group-new-window': 'openBookmarksNewWindow',
+        'staging-group-new-incognito': 'openBookmarksIncognitoWindow',
         'staging-group-rename': 'stagingGroupRename',
         'staging-group-dissolve': 'stagingGroupDissolve',
         'staging-group-delete': 'stagingGroupDelete',

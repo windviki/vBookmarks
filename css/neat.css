@@ -1828,20 +1828,24 @@ menu[type=context] hr {
     margin-inline-end: 2px; /* 18 + 16 + 2 + 4px gap = the 40px title axis */
 }
 
-/* Head leading glyph (2026-08-25 icon round): the group head carries the
-   tree's folder glyph and the recent time-bucket head a clock — both on the
-   bucket star's exact slot (2px lead + 4px tail + the head's 4px flex gap),
-   so every fold head reads glyph-then-title and the glyph column stacks on
-   the member rows' favicon column (40px narrow / 64px selecting). The
-   creation-time/range meta line this replaces is gone — the fold heads are
-   single-line again, vertically centered in the taller row like the bucket. */
+/* Head leading glyph (2026-08-25 icon round; alignment round 2026-08-26):
+   the group head carries the tree's folder glyph, the recent time-bucket
+   head a clock — each in the member rows' FAVICON slot exactly: a 20px well
+   with the 16px glyph centered, so the glyph's CENTER stacks on the member
+   favicon's CENTER (50px narrow / 51px wide) and the slot's 0 tail margin +
+   the head's 4px flex gap put the title on the member TITLE axis (64px
+   narrow / 70px wide). The creation-time/range meta line this replaces is
+   gone — the fold heads are single-line again, vertically centered in the
+   taller row like the bucket. */
 .staging-group-folder,
 .recent-group-clock {
     flex: none;
     display: inline-flex;
-    /* the star's exact slot: left edge on the member favicon column (40px) */
+    align-items: center;
+    justify-content: center;
+    width: 20px;
     margin-inline-start: 0;
-    margin-inline-end: 4px;
+    margin-inline-end: 0;
     color: var(--vbm-muted);
 }
 
@@ -1913,12 +1917,15 @@ body.panel-mode .recent-group-head {
 .staging-bucket-star {
     flex: none;
     display: inline-flex;
-    /* no extra lead — the chevron's own 2px margin + the 4px gap already
-       land the star's left edge on the member rows' favicon column (40px;
-       the old 2px lead parked it at 42, off its own documented column);
-       4px after keeps the title on the member title axis (64px). */
+    align-items: center;
+    justify-content: center;
+    /* the member favicon's exact well: 20px with the 16px star centered
+       (center-on-center with the member favicons, 50px) and a 0 tail margin
+       — the head's 4px flex gap alone steps the title onto the member TITLE
+       axis (64px), mirroring the group-folder/clock glyphs above */
+    width: 20px;
     margin-inline-start: 0;
-    margin-inline-end: 4px;
+    margin-inline-end: 0;
     color: var(--vbm-muted);
 }
 
@@ -1951,17 +1958,21 @@ body.panel-mode .recent-group-head {
     color: var(--vbm-accent);
 }
 
-/* The group quick tail (tabgroups-head language): order = [rename][place
-   归档][dissolve 解散][remove 移出暂存] — the DANGEROUS delete-group no
-   longer lives on the head; the rightmost slot is 移出暂存 (group + its
-   member items leave the staging area, tree untouched, confirm + toast
-   undo). 删除分组 stays only in the group context menu / selection mode.
-   Rename/dissolve are muted secondary actions (F2 + the group menu stay
-   as their keyboard paths); place is the primary homing action in accent. */
+/* The quick tail pins right as one unit. */
 .staging-group-head .head-icon-cluster {
-    margin-inline-start: auto; /* the quick tail pins right as one unit */
+    margin-inline-start: auto;
 }
 
+/* The group quick tail (2026-08-26 reorder): order = [open-all 全部打开][
+   open-as-tab-group 打开为标签组 — the selection rung's TABS glyph][rename
+   编辑][dissolve 解散][place 保存为文件夹][remove 移出暂存]. The open pair
+   leads as the primary consume actions (accent, with place); rename /
+   dissolve stay muted secondaries (F2 / the group menu keep them); the
+   DANGEROUS delete-group never lived on the head; the rightmost slot is
+   移出暂存 (group + members leave staging, tree untouched, confirm + toast
+   undo). */
+.staging-group-head .staging-group-open-all,
+.staging-group-head .staging-group-open-group,
 .staging-group-head .staging-group-rename,
 .staging-group-head .staging-group-dissolve,
 .staging-group-head .staging-group-place,
@@ -1969,13 +1980,16 @@ body.panel-mode .recent-group-head {
     visibility: visible;
 }
 
+.staging-group-head .staging-group-open-all,
+.staging-group-head .staging-group-open-group,
 .staging-group-head .staging-group-place {
     color: var(--vbm-accent);
 }
 
-/* 超窄（tabgroups 同法）：≤400px 容器收起组特有的 rename/dissolve（仍可
-   经 F2 / 组菜单到达），保留 place/remove 两键，标题获得全部剩余宽度。 */
+/* 超窄（tabgroups 同法）：≤400px 容器收起 open-group/rename/dissolve（仍可经
+   组菜单 / F2 到达），保留 open-all/place/remove 三键，标题获得剩余宽度。 */
 @container (max-width: 400px) {
+    #staging-list .staging-group-head .staging-group-open-group,
     #staging-list .staging-group-head .staging-group-rename,
     #staging-list .staging-group-head .staging-group-dissolve {
         display: none;
@@ -1983,16 +1997,16 @@ body.panel-mode .recent-group-head {
 }
 
 /* Hierarchy (the tabgroups law, not the flat dupes law — staging is a
-   workbench where members move between groups constantly): a row under
-   a head indents 24px so its FAVICON column (24px indent + the anchor's
-   16px slot = 40px) lands on the LOOSE row's TITLE column AND its head's
-   first content glyph (group head title / bucket head star, also 40px).
-   Loose rows keep their 16px icon / 40px title baseline — one glance
-   shows who is grouped and who is not, and the drop targets (head rows)
-   read as the columns their members hang off. A faint inset line on the
-   member rows' edge (the tabgroups color-line language, token-muted
-   instead of per-group colored) ties them to their head without adding
-   visual weight. */
+   workbench where members move between groups constantly). Alignment round
+   (2026-08-26), three laws measured on the rendered rects:
+     ① a member row's favicon LEFT edge sits on the LOOSE row's TITLE axis
+        (40px narrow / 46px wide-two-line);
+     ② the head's leading glyph CENTER stacks on the member favicon CENTER
+        (the glyph rides the favicon's own 20/22px well, centered — not a
+        16px glyph flush at the well's left edge);
+     ③ the head TITLE's left edge == the member TITLE's left edge (64px /
+        76px). A faint dashed trunk drops from the head's chevron center
+        (26px) with a per-member tick to the favicon column. */
 #staging-items li.vbm-row.staging-member {
     padding-inline-start: 24px;
     position: relative;
@@ -2061,20 +2075,66 @@ body.panel-mode .recent-group-head {
     display: none;
 }
 /* Selection mode keeps the tree lines (one visual law in both modes — the
-   geometry simply follows the checkbox axis: the head's chevron center sits
-   at 40px (8px lead + 14px checkbox + 6px margin + 4px flex gap + 16px
-   chevron ÷ 2), and the member rows' favicon column starts at 64px (28px
-   checkbox lead + the 36px anchor margin). */
+   geometry follows the checkbox axis but keeps the SAME stacking law: the
+   head's chevron center sits at 40px (8px lead + 14px checkbox + 6px
+   margin + 4px flex gap + 16px chevron ÷ 2), the member rows' favicon
+   column sits at 80px (28px checkbox lead + the 36px anchor margin + the
+   16px twisty slot), and the tick runs from the trunk to that column. */
 #staging-list ul.selecting li.vbm-row.staging-member > .staging-connector {
     inset-inline-start: 39.5px;
-    width: 24.5px;
+    width: 40.5px;
 }
 #staging-list ul.selecting li.vbm-row.staging-member > .staging-connector::after {
-    width: 24.5px;
+    width: 40.5px;
 }
 #staging-list ul.selecting li.staging-group.has-members::after,
 #staging-list ul.selecting li.staging-bucket.has-members::after {
     inset-inline-start: 39.5px;
+}
+
+/* Wide two-line alignment twin (2026-08-26 round): the ≥480px container and
+   panel-mode rows grow their own favicon slot (22px + 8px stride — see the
+   .vbm-row:has(.row-sub) rule), which pushes the LOOSE row's title axis from
+   40px to 46px. The head glyph well (+6px lead, 22px) and the member indent
+   (24→30px) both follow, so the three alignment laws hold in the wide form
+   exactly as in the narrow one: head glyph CENTER == member favicon center
+   (57px), head title == member title (76px), and the member favicon's LEFT
+   edge == the loose row's title axis (46px). The dashed tick grows to still
+   reach the favicon column. These MUST sit AFTER the narrow base rules
+   above — same specificity, later wins. */
+@container (min-width: 480px) {
+    .staging-bucket-star,
+    .staging-group-folder,
+    .recent-group-clock {
+        width: 22px;
+        margin-inline-start: 6px;
+        margin-inline-end: 4px;
+    }
+    #staging-items li.vbm-row.staging-member,
+    #recent-list li.vbm-row {
+        padding-inline-start: 30px;
+    }
+    #staging-items li.vbm-row.staging-member > .staging-connector,
+    #staging-items li.vbm-row.staging-member > .staging-connector::after {
+        width: 20.5px;
+    }
+}
+
+/* panel-mode twin (rows are always two-line there): see the block above */
+body.panel-mode .staging-bucket-star,
+body.panel-mode .staging-group-folder,
+body.panel-mode .recent-group-clock {
+    width: 22px;
+    margin-inline-start: 6px;
+    margin-inline-end: 4px;
+}
+body.panel-mode #staging-items li.vbm-row.staging-member,
+body.panel-mode #recent-list li.vbm-row {
+    padding-inline-start: 30px;
+}
+body.panel-mode #staging-items li.vbm-row.staging-member > .staging-connector,
+body.panel-mode #staging-items li.vbm-row.staging-member > .staging-connector::after {
+    width: 20.5px;
 }
 
 /* 折叠记忆轮 instant folds: the two big heads hide their regions with a
@@ -2098,16 +2158,16 @@ body.panel-mode .recent-group-head {
     margin-inline-start: 36px;
 }
 
-/* The heads' first content glyph must stack on that SAME 64px column (the
-   comment above claimed it did, but the arithmetic never held: the glyph
-   column landed at 54px — the hierarchy kinked 10px in selection mode.
-   Step both leading glyphs onto the member column). */
+/* The heads' first content glyph must stack on the member FAVICON column
+   (80px — 54px post-chevron baseline + the 26px step), center-on-center
+   like the normal mode; the earlier 10px step only reached the member's
+   twisty slot (64px), one column short of its favicon. */
 #staging-list ul.selecting .staging-group-head .staging-group-folder {
-    margin-inline-start: 10px;
+    margin-inline-start: 26px;
 }
 
 #staging-list ul.selecting .staging-bucket-head .staging-bucket-star {
-    margin-inline-start: 10px;
+    margin-inline-start: 26px;
 }
 
 /* Drag & drop between staging groups: the dragged source fades (the cut
@@ -2505,8 +2565,17 @@ li.staging-row.drag-over {
 
 /* The dead/dupes toolbar law: the summary fills the left, the action
    cluster pins to the right — the search view's idle result count and its
-   select-mode entry follow the same axis (the entry button right-aligns
-   like every other view's). */
+   暂存全部 + select-mode pair follow the same axis. The pair rides ONE
+   nowrap cluster (design-laws §2: 20px boxes, the cluster's own 4px gap,
+   no per-button margins), so the two icon centers share the vertical axis
+   with the rows' trailing plane buttons. */
+.search-toolbar .search-icon-cluster {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    flex: none;
+}
+
 .search-toolbar .search-result-count {
     margin-inline-end: auto;
 }
@@ -2662,6 +2731,7 @@ li.staging-row.drag-over {
 
 .staging-toolbar .staging-select-mode,
 .search-toolbar .search-select-mode,
+.search-toolbar .search-stage-all,
 .stats-toolbar .stats-select-mode {
     display: inline-flex;
     align-items: center;
@@ -2707,6 +2777,7 @@ li.staging-row.drag-over {
 
 .staging-toolbar .staging-select-mode:hover,
 .search-toolbar .search-select-mode:hover,
+.search-toolbar .search-stage-all:hover,
 .stats-toolbar .stats-select-mode:hover {
     background: var(--vbm-bg-hover);
 }
