@@ -1071,7 +1071,7 @@
     "message": "Pokaż ścieżkę folderu nadrzędnego w wierszach listy"
   },
   "optionShowRecentBookmarks": {
-    "message": "Pokaż ostatnio dodane zakładki na górze wyskakującego okna"
+    "message": "Pokaż kartę widoku Staging / Ostatnie"
   },
   "optionShowStatsView": {
     "message": "Pokaż kartę widoku statystyk"

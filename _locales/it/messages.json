@@ -1071,7 +1071,7 @@
     "message": "Mostra il percorso della cartella principale nelle righe dell'elenco"
   },
   "optionShowRecentBookmarks": {
-    "message": "Mostra segnalibri aggiunti di recente in cima al popup"
+    "message": "Mostra la scheda della vista Staging / Recenti"
   },
   "optionShowStatsView": {
     "message": "Mostra la scheda delle statistiche"

@@ -1071,7 +1071,7 @@
     "message": "Liste satırlarında üst klasör yolunu göster"
   },
   "optionShowRecentBookmarks": {
-    "message": "Açılır pencerenin üstünde son eklenen yer imlerini göster"
+    "message": "Staging/Son görünüm sekmesini göster"
   },
   "optionShowStatsView": {
     "message": "İstatistik görünümü sekmesini göster"

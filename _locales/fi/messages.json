@@ -1071,7 +1071,7 @@
     "message": "Näytä yläkansion polku listariveillä"
   },
   "optionShowRecentBookmarks": {
-    "message": "Näytä äskettäin lisätyt kirjanmerkit ponnahdusikkunan yläosassa"
+    "message": "Näytä Staging/viimeisimmät-näkymän välilehti"
   },
   "optionShowStatsView": {
     "message": "Näytä tilastot-välilehti"

@@ -1071,7 +1071,7 @@
     "message": "Afficher le chemin du dossier parent dans les lignes de liste"
   },
   "optionShowRecentBookmarks": {
-    "message": "Afficher les signets récemment ajoutés en haut de la popup"
+    "message": "Afficher l'onglet de vue Staging / Récentes"
   },
   "optionShowStatsView": {
     "message": "Afficher l'onglet des statistiques"

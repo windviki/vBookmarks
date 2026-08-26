@@ -1071,7 +1071,7 @@
     "message": "Hiển thị đường dẫn thư mục cha trên các hàng danh sách"
   },
   "optionShowRecentBookmarks": {
-    "message": "Hiển thị dấu trang thêm gần đây ở đầu cửa sổ bật lên"
+    "message": "Hiển thị tab chế độ xem Staging/Gần đây"
   },
   "optionShowStatsView": {
     "message": "Hiển thị tab xem thống kê"

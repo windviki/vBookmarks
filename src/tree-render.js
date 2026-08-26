@@ -158,7 +158,8 @@ export function initTreeRender(ctx = {}) {
     // report round: a disabled view stands down every cross-view entry).
     const treeRowActionsOn = () => store.get('treeRowActions', '1') === '1';
     const stagingRelayOn = () => store.get('stagingEnabled', '1') === '1'
-        && !!store.get('showRecentBookmarks', '1');
+        && !!store.get('showRecentBookmarks', '1')
+        && store.get('disableRecentView', '') !== '1';
     // A folder's staged verdict: EVERY descendant bookmark staged (unknown
     // children — a collapsed lazy folder — read as unstaged). The click is
     // the menu's flatten-send (sendFolder merges one sourceFolderId group).

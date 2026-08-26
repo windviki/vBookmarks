@@ -93,6 +93,23 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
         console.log(pass ? 'DIAG PASS' : 'DIAG FAIL');
         if (!pass)
             process.exitCode = 1;
+
+        // the view-tab right-click DISABLE path (disableRecentView) must
+        // stand down the same entries
+        await page.evaluate(async () => {
+            await new Promise(res => chrome.storage.sync.set({ showRecentBookmarks: '1', disableRecentView: '1' }, res));
+        });
+        await page.reload({ waitUntil: 'load' });
+        await sleep(1200);
+        const disableAfter = await page.evaluate(() => ({
+            treeRelay: !!document.querySelector('#tree .staging-add-btn'),
+            recentTab: !!document.getElementById('view-tab-recent')
+        }));
+        console.log('DISABLE:', JSON.stringify(disableAfter));
+        const disableOk = disableAfter.treeRelay === false && disableAfter.recentTab === false;
+        console.log(disableOk ? 'DISABLE PASS' : 'DISABLE FAIL');
+        if (!disableOk)
+            process.exitCode = 1;
     } finally {
         await browser.close();
     }

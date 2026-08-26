@@ -947,6 +947,16 @@ describe('staging view (velvet staging ST3)', () => {
         expect(vr2.api.isEnabled()).toBe(true);
     });
 
+    // 2026-08-26 report: the view-tab right-click Disable (disableRecentView)
+    // is the SAME contract — the tab hides and staging stands down.
+    it('a right-click DISABLED view (disableRecentView) stands down isEnabled too', () => {
+        const { viewRecent, def } = setup({
+            storeData: { showRecentBookmarks: '1', disableRecentView: '1', stagingEnabled: '1' }
+        });
+        expect(def().hidden).toBe(true);
+        expect(viewRecent.api.isEnabled()).toBe(false);
+    });
+
     it('the staging head folds the whole staging area and persists headCollapsed', () => {
         const { viewRecent, store, $list, def, click } = setup({});
         viewRecent.api.addItems([mkItem('1', 'http://a/', 'A')]);

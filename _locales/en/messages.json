@@ -1175,7 +1175,7 @@
     "message": "Show the parent folder path on list rows"
   },
   "optionShowRecentBookmarks": {
-    "message": "Show the recently added view tab"
+    "message": "Show the Staging / Recent view tab"
   },
   "optionShowStatsView": {
     "message": "Show the stats view tab"

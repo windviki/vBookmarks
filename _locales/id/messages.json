@@ -1071,7 +1071,7 @@
     "message": "Tampilkan jalur folder induk pada baris daftar"
   },
   "optionShowRecentBookmarks": {
-    "message": "Tampilkan bookmark yang baru ditambahkan di bagian atas popup"
+    "message": "Tampilkan tab tampilan Staging/Terbaru"
   },
   "optionShowStatsView": {
     "message": "Tampilkan tab statistik"

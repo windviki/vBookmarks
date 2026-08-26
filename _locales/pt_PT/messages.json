@@ -1068,7 +1068,7 @@
     "message": "Mostrar o caminho da pasta principal nas linhas da lista"
   },
   "optionShowRecentBookmarks": {
-    "message": "Mostrar marcadores adicionados recentemente no topo do pop-up"
+    "message": "Mostrar o separador de vista Staging / Recentes"
   },
   "optionShowStatsView": {
     "message": "Mostrar o separador de estatísticas"

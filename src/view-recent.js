@@ -63,14 +63,18 @@ export function initViewRecent(ctx = {}) {
 
     const $list = $('staging-list');
 
-    const enabled = () => !!store.get('showRecentBookmarks', '1');
+    // 2026-08-26 report: disabled = showRecentBookmarks off (options) OR
+    // disableRecentView '1' (the view-tab right-click Disable) — both hide
+    // the tab AND stand down every cross-view staging entry.
+    const enabled = () => !!store.get('showRecentBookmarks', '1')
+        && store.get('disableRecentView', '') !== '1';
     // The staging master switch (options 暂存和最近添加 → stagingEnabled,
     // default on): off collapses the view to the classic recently-added
     // list — no workbench chrome, no toolbar, and every other view's
     // staging entries hide (they read this through api.isEnabled).
-    // Disabling the VIEW (showRecentBookmarks off / disableRecentView) is
-    // the same contract — the 2026-08-26 report round: with the view
-    // hidden, every cross-view staging entry must stand down too.
+    // Disabling the VIEW is the same contract — the 2026-08-26 report
+    // round: with the view hidden, every cross-view staging entry must
+    // stand down too.
     const stagingOn = () => store.get('stagingEnabled', '1') === '1' && enabled();
     const recentCount = () => {
         const n = parseInt(store.get('recentCount', '20'), 10);

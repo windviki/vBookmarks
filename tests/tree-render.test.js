@@ -761,6 +761,15 @@ describe('tree-row quick actions (treeRowActions option)', () => {
         expect(html).not.toContain('staging-add-btn');
     });
 
+    // 2026-08-26 report: the view-tab right-click Disable
+    // (disableRecentView) drops the stage plane the same way.
+    it('a right-click DISABLED view drops the stage plane too', () => {
+        const tr = setup({ store: makeStore({ treeRowActions: '1', stagingEnabled: '1', showRecentBookmarks: '1', disableRecentView: '1' }) });
+        const html = tr.generateHTML([BM]);
+        expect(html).not.toContain('staging-add-btn');
+        expect(html).toContain('tree-row-edit'); // non-staging actions stay
+    });
+
     it('folder rows carry edit+delete; the folder plane needs a staging api', () => {
         const tr = setup({ store: makeStore({ treeRowActions: '1', stagingEnabled: '1', showRecentBookmarks: '1' }) });
         const html = tr.generateHTML([{ id: '5', parentId: '0', title: 'F', children: [BM] }]);

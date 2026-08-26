@@ -1071,7 +1071,7 @@
     "message": "Mostrar la ruta de la carpeta principal en las filas de la lista"
   },
   "optionShowRecentBookmarks": {
-    "message": "Mostrar marcadores agregados recientemente al inicio de la ventana emergente"
+    "message": "Mostrar la pestaña de vista Staging / Recientes"
   },
   "optionShowStatsView": {
     "message": "Mostrar la pestaña de vista de estadísticas"

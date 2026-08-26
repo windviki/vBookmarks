@@ -1087,7 +1087,7 @@
     "message": "在列表行上显示所在文件夹路径"
   },
   "optionShowRecentBookmarks": {
-    "message": "显示最近添加视图标签"
+    "message": "显示暂存/最近视图标签"
   },
   "optionShowStatsView": {
     "message": "显示统计视图标签"

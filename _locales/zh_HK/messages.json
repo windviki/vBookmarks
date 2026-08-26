@@ -1071,7 +1071,7 @@
     "message": "在清單列上顯示上層資料夾路徑"
   },
   "optionShowRecentBookmarks": {
-    "message": "在彈出視窗頂部顯示最近新增的書籤"
+    "message": "顯示暫存/最近視圖標籤"
   },
   "optionShowStatsView": {
     "message": "顯示統計檢視標籤"

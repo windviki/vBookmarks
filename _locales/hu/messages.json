@@ -1071,7 +1071,7 @@
     "message": "Szülőmappa elérési útjának megjelenítése a listasorokban"
   },
   "optionShowRecentBookmarks": {
-    "message": "Legutóbb hozzáadott könyvjelzők megjelenítése a felugró ablak tetején"
+    "message": "Staging/legutóbbi nézet fül megjelenítése"
   },
   "optionShowStatsView": {
     "message": "Statisztika nézet fül megjelenítése"

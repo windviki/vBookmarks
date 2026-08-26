@@ -1071,7 +1071,7 @@
     "message": "Visa sökvägen till överordnad mapp i listraderna"
   },
   "optionShowRecentBookmarks": {
-    "message": "Visa nyligen tillagda bokmärken överst i popupen"
+    "message": "Visa fliken för Staging/senaste vyn"
   },
   "optionShowStatsView": {
     "message": "Visa statistikfliken"

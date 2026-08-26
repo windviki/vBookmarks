@@ -1071,7 +1071,7 @@
     "message": "목록 행에 상위 폴더 경로 표시"
   },
   "optionShowRecentBookmarks": {
-    "message": "팝업 상단에 최근 추가된 북마크 표시"
+    "message": "스테이징/최근 보기 탭 표시"
   },
   "optionShowStatsView": {
     "message": "통계 보기 탭 표시"

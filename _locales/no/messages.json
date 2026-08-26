@@ -1071,7 +1071,7 @@
     "message": "Vis overordnet mappe-sti på listelinjer"
   },
   "optionShowRecentBookmarks": {
-    "message": "Vis nylig lagt til bokmerker øverst i popupen"
+    "message": "Vis fanen for Staging/nylig visning"
   },
   "optionShowStatsView": {
     "message": "Vis statistikk-fanen"

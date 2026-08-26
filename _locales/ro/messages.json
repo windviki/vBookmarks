@@ -1071,7 +1071,7 @@
     "message": "Afișează calea dosarului părinte pe rândurile listei"
   },
   "optionShowRecentBookmarks": {
-    "message": "Afișează marcajele adăugate recent în partea de sus a popup-ului"
+    "message": "Afișează fila vizualizării Staging/Recente"
   },
   "optionShowStatsView": {
     "message": "Afișează fila de statistici"

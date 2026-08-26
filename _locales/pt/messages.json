@@ -1071,7 +1071,7 @@
     "message": "Mostrar o caminho da pasta pai nas linhas da lista"
   },
   "optionShowRecentBookmarks": {
-    "message": "Mostrar marcadores adicionados recentemente no topo do pop-up"
+    "message": "Mostrar a aba de visualização Staging / Recentes"
   },
   "optionShowStatsView": {
     "message": "Mostrar guia de estatísticas"

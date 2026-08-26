@@ -1071,7 +1071,7 @@
     "message": "リスト行に親フォルダのパスを表示"
   },
   "optionShowRecentBookmarks": {
-    "message": "ポップアップの上部に最近追加したブックマークを表示"
+    "message": "ステージング/最近のビュータブを表示"
   },
   "optionShowStatsView": {
     "message": "統計ビュータブを表示"
