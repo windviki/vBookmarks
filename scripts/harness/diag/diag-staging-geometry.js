@@ -68,6 +68,9 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
             out.list = r(document.getElementById('staging-list'));
             out.groupHead = r(q('.staging-group-head'));
             out.groupGlyph = r(q('.staging-group-head .staging-group-folder'));
+            out.groupChevron = r(q('.staging-group-head .chevron'));
+            out.groupHeadPad = (() => { const el = q('.staging-group-head'); return el ? parseFloat(getComputedStyle(el).paddingInlineStart) : null; })();
+            out.headCheckboxRect = (() => { const el = q('.staging-group-head'); if (!el) return null; const cs = getComputedStyle(el, '::before'); const b = el.getBoundingClientRect(); return { x: Math.round((b.left + parseFloat(cs.marginInlineStart || 0)) * 10) / 10, w: cs.width }; })();
             out.groupTitle = r(q('.staging-group-head .staging-section-title'));
             out.groupPlace = r(q('.staging-group-head .staging-group-place'));
             out.memberLi = r(member);
@@ -108,6 +111,20 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
         const wide = await measure(800);
         console.log('NARROW:', JSON.stringify(narrow, null, 1));
         console.log('WIDE:', JSON.stringify(wide, null, 1));
+
+        // Selection-mode pass (2026-08-26 report round 3): the alignment
+        // laws must hold there too — enter selection mode and re-measure.
+        await page.evaluate(() => {
+            const btn = document.querySelector('.staging-select-mode');
+            if (btn)
+                btn.click();
+        });
+        await sleep(900);
+        const selNarrow = await measure(320);
+        await sleep(200);
+        const selWide = await measure(800);
+        console.log('SEL-NARROW:', JSON.stringify(selNarrow, null, 1));
+        console.log('SEL-WIDE:', JSON.stringify(selWide, null, 1));
     } finally {
         await browser.close();
     }

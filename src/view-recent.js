@@ -1062,11 +1062,12 @@ export function initViewRecent(ctx = {}) {
             const staged = !!staging.getByUrl(stagingState, url);
             if (btn.classList.contains('staged') === staged)
                 continue;
-            btn.classList.toggle('staged', staged);
-            btn.setAttribute('aria-pressed', staged ? 'true' : 'false');
-            const label = htmlspecialchars(_m(staged ? 'stagingRemove' : 'stagingAdd'));
-            btn.setAttribute('aria-label', label);
-            btn.title = label;
+            // The FULL flip (class + aria + labels + the inner svg): the
+            // recent region never repaints, and .staged alone only re-tints
+            // the hollow plane — the filled-plane swap needs the icon
+            // innerHTML, exactly like the row-click path (2026-08-26 report:
+            // a bucket-head send left never-sent rows hollow but accent).
+            flipStageBtn(btn, staged, _m);
         }
     };
 
