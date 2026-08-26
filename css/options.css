@@ -507,15 +507,19 @@ white-space: nowrap;
 .options-list li #pc-error:empty{
 	display: none;
 }
-/* The form footer's save/cancel pair splits the card evenly — the same
-   balanced band the backup group's export/import row uses. */
+/* Form footer: 保存命令 stays natural-width flush left, 取消 pins to the
+   card's right edge — the classic form-footer pair (the backup band's even
+   split stretched both buttons; here only Cancel was asked to align). */
 .options-list li:has(> button#pc-save){
 	display: flex;
+	align-items: center;
 	gap: 1em;
 }
 .options-list li:has(> button#pc-save) > button{
-	flex: 1 1 8em;
 	margin-__MSG_@@bidi_start_edge__: 0; /* the flex gap replaces the 1em offset */
+}
+.options-list li:has(> button#pc-save) > button#pc-cancel{
+	margin-__MSG_@@bidi_start_edge__: auto; /* the auto margin pins Cancel to the edge */
 }
 /* Command list rows: a flex head (slash/name left, Edit/Delete pinned to
    the card's right edge) over the summary hint — the buttons used to trail

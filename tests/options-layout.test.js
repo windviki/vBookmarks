@@ -247,11 +247,16 @@ describe('options page control alignment (2026-08-26 选项页修补)', () => {
         expect(ruleBody(optionsCss, '.options-list li #pc-error:empty{')).toContain('display: none');
     });
 
-    it('splits the form footer save/cancel pair evenly like the backup band', () => {
+    it('keeps Save natural-width left and pins Cancel to the card\'s right edge', () => {
         const li = ruleBody(optionsCss, '.options-list li:has(> button#pc-save){');
         expect(li).toContain('display: flex');
+        // buttons keep their natural width; the Cancel row-end gets the auto
+        // margin — the classic form-footer pair, not the backup band's split
         const btn = ruleBody(optionsCss, '.options-list li:has(> button#pc-save) > button{');
-        expect(btn).toContain('flex: 1 1 8em');
+        expect(btn).not.toContain('flex: 1 1');
+        const cancel = ruleBody(optionsCss,
+            '.options-list li:has(> button#pc-save) > button#pc-cancel{');
+        expect(cancel).toContain('margin-__MSG_@@bidi_start_edge__: auto');
     });
 
     it('lays the command-list head out as a flex row with the actions pinned right', () => {
