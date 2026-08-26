@@ -1505,4 +1505,45 @@ describe('search selection mode (velvet staging §3.6)', () => {
         expect(ctx.els.results.innerHTML).not.toContain('search-select-toolbar');
         expect(onEscape()).toBe(false); // falls through to the search Esc levels
     });
+
+    // G1 (2026-08-26 acceptance audit): the row hover 发送到暂存 plane's
+    // CLICK wiring — toggleStageItem through the shared relay (add on an
+    // unstaged row, remove on a staged one, the button flips in place).
+    it('the row hover 发送到暂存 button toggles the item through the relay', () => {
+        const staging = stageApi();
+        const calls = [];
+        const callsPush = (t, v) => calls.push([t, v]);
+        let staged = false;
+        staging.isStaged = () => staged;
+        staging.addItems = entries => { callsPush('add', entries); return { full: false, added: entries, dupes: [] }; };
+        staging.removeByUrl = url => callsPush('remove', url);
+        const ctx = setup({
+            stagingApi: staging,
+            fuzzyResults: [
+                { id: '11', title: 'GitHub', url: 'https://github.com/', isFolder: false, parentId: '1' }
+            ]
+        });
+        type(ctx.els, 'git');
+        expect(ctx.els.results.innerHTML).toContain('staging-add-btn');
+        // click → add (id + url snapshot)
+        ctx.els.results.trigger('click', {
+            target: { closest: sel => (sel === '.staging-add-btn'
+                ? { closest: s2 => (s2 === 'li' ? { dataset: { nodeId: '11' } } : null) }
+                : null) }
+        });
+        expect(calls).toEqual([['add', [{ id: '11', url: 'https://github.com/', title: 'GitHub' }]]]);
+        // the in-place flip (class + aria + svg) is the relay's own tested
+        // contract — this wiring test stops at the toggle dispatch
+        // now staged → click removes
+        staged = true;
+        ctx.els.results.trigger('click', {
+            target: { closest: sel => (sel === '.staging-add-btn'
+                ? { closest: s2 => (s2 === 'li' ? { dataset: { nodeId: '11' } } : null) }
+                : null) }
+        });
+        expect(calls).toEqual([
+            ['add', [{ id: '11', url: 'https://github.com/', title: 'GitHub' }]],
+            ['remove', 'https://github.com/']
+        ]);
+    });
 });

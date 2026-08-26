@@ -210,6 +210,7 @@ const setup = (opts = {}) => {
 
     const viewDupes = initViewDupes({
         store, views, treeRender, separatorManager, treeView, dialogs, undo, actions,
+        ...(opts.staging ? { staging: opts.staging } : {}),
         // Slice D: counts come from the visit-stats store; statsOff doubles
         // as the statsEnabled-off switch (most-visited greys out).
         visitStats: opts.visitStats || {
@@ -258,6 +259,39 @@ describe('view registration (§5.6)', () => {
         const { viewDupes } = setup({});
         expect(Object.keys(viewDupes).sort()).toEqual(
             ['cleanGroup', 'cleanHint', 'isCollapsed', 'refresh', 'setKeeper', 'stageGroup', 'toggleGroup']);
+    });
+
+    // G2 (2026-08-26 acceptance audit): the whole-group staging toggle —
+    // stageGroup sends every member as id/url/title snapshots, and a fully
+    // staged group flips back to removeByUrl per member.
+    it('stageGroup sends the whole group; a fully staged group removes instead', () => {
+        const staging = {
+            calls: [],
+            addItems: entries => { staging.calls.push(['add', entries]); return { full: false, added: entries, dupes: [] }; },
+            removeByUrl: url => staging.calls.push(['remove', url]),
+            isStaged: () => false,
+            isEnabled: () => true
+        };
+        const { viewDupes, def } = setup({ staging });
+        def().activate();
+        // the a.com group (2 members: 11 + the #x twin) stages as one batch
+        expect(viewDupes.stageGroup('https://a.com')).toBe(true);
+        expect(staging.calls).toHaveLength(1);
+        expect(staging.calls[0][0]).toBe('add');
+        const urls = staging.calls[0][1].map(e => e.url);
+        expect(urls).toEqual(expect.arrayContaining(['https://a.com/', 'https://a.com/#x']));
+        expect(staging.calls[0][1].every(e => e.id && e.url && typeof e.title === 'string')).toBe(true);
+        // every member staged → the same call REMOVES them all
+        staging.isStaged = () => true;
+        staging.calls.length = 0;
+        expect(viewDupes.stageGroup('https://a.com')).toBe(false);
+        const removed = staging.calls.map(c => c[1]).sort();
+        expect(staging.calls.every(c => c[0] === 'remove')).toBe(true);
+        expect(removed).toEqual([
+            'https://a.com/',
+            'https://a.com/#x',
+            'https://a.com/?utm_source=t'
+        ].sort());
     });
 
     it('badge() tracks the group count (0 hides the tab badge)', () => {
