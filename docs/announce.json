@@ -10,7 +10,7 @@
     "titleKey": "announceV410Title",
     "textKey": "announceV410Text",
     "textFallback": {
-      "en": "v4.1.0 adds the Tab groups view: every window's tabs and tab groups, managed next to your bookmarks."
+      "en": "v4.1.0 adds the Tab groups view and the Staging area: manage every window's tabs next to your bookmarks, and collect bookmarks from anywhere into a staging workbench for bulk organizing."
     },
     "link": [
       { "labelKey": "whatsNewChangelog", "url": "https://github.com/windviki/vBookmarks/blob/master/docs/README.md#v410" }

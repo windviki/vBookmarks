@@ -26,7 +26,7 @@
 | Tree | The classic hierarchical bookmark tree (startup view) | `Alt+1` |
 | Search | Dual-zone search: history on top, results below | `Alt+2` |
 | Tab groups | Every window's tabs and Chrome tab groups, next to your bookmarks | `Alt+3` |
-| Recent | Newest bookmarks, grouped Today / This week / This month / Older | `Alt+4` |
+| Staging / Recent | The staging workbench (inbox + your groups) over the recently-added list | `Alt+4` |
 | Stats | Local visit statistics + a recently-visited section | `Alt+5` |
 | Dead links | Dual-channel dead-link scanner with pause/resume | `Alt+6` |
 | Duplicates | Duplicate cleaner with six keeper strategies | `Alt+7` |
@@ -36,7 +36,7 @@
 (Tabs carry one 16px line icon per view plus a localized label; on narrow widths the label hides and the icon stays.)
 
 - **Badges**: the count on a tab tracks that view's pressing items (dead marks, dupe groups, tracked pages), refreshed live; turn them off with *Show count badges on the view tabs* (`showTabBadges`).
-- **Visibility**: Settings → the *Views* group hides (or fully disables) each feature view — Tab groups/Recent/Stats/Dead/Duplicates — individually, or the whole strip — see [§5](#5-getting-the-classic-look-and-feel-back).
+- **Visibility**: Settings → the *Views* group hides (or fully disables) each feature view — Tab groups/Staging/Stats/Dead/Duplicates — individually, or the whole strip — see [§5](#5-getting-the-classic-look-and-feel-back).
 - **Popup vs side panel**: both reopen on the view you left — the popup because *Remember the last active view* (`rememberView`) is on by default (turn it off to always boot on the tree), the side panel (opt-in via `openInSidePanel`, `Alt+Shift+B`) always, ready to be an always-on workspace. Closing the side panel via the toolbar toggle hands control straight back to the popup — the service worker learns of the close instantly (Chrome 142+) or probes with an alarm (114–141). Reopening also restores **where the focus was** — the search box, a header button, a view tab, a toolbar control or the exact list row (gated by *Remember previous state*: with that option off every open starts completely fresh).
 
 ## 2. Full keyboard reference
@@ -87,7 +87,7 @@ Inside every context menu (all seven are keyboard-bound — the separator menu's
 
 | Key | Where | Action |
 |---|---|---|
-| `R` | Search/Recent/Dead/Duplicates | **Reveal in tree** |
+| `R` | Search/Staging/Dead/Duplicates | **Reveal in tree** |
 | `K` | Duplicates | Pin the focused row as the group's **keeper** |
 | `M` | Dead links | Toggle a **dead mark** (the red ✕ syncs across all views) |
 | `Alt+1…7` | Anywhere outside open dialogs/palette | Jump to the Nth visible view (`Ctrl/Cmd+1…7` is the legacy twin — works on Chrome's popup/panel, but Edge reserves `Ctrl+1…8` for browser-tab switching) |
@@ -154,7 +154,7 @@ Your whole browser session next to your bookmarks: every window's tabs in real o
 
 ### 3.3 Staging
 
-![Recent view](images/guide/view-recent.png)
+![Staging workbench](images/guide/view-recent.png)
 
 The former *Recent* tab is now the **staging workbench**: a scratch desk for links you're not sure about yet, with the recently-added list folded in below. The top is your staging list — an *inbox* bucket of unstaged/unbookmarked items plus the groups you build yourself. Rows are dual-state: a solid ★ means the item is bookmarked, an outline ☆ means it's merely parked in staging. Below sits the foldable recent-adds section, still grouped **Today / This week (7 d) / This month (30 d) / Older** with the same tail labels as before.
 
@@ -226,7 +226,7 @@ Every new surface in 4.0 can be switched off. **The fastest route**: the *Restor
 | You want | Setting (options page → *Views* group, unless noted) |
 |---|---|
 | No tab strip — one tree + `Ctrl+F` search (the 3.x layout) | Turn off **Show view tabs** (`showViewTabs`). Tree and search remain the only views, shortcuts unchanged; jumping into a non-tree view then shows a toast with the Esc / command-palette way back to the tree |
-| An even quieter strip | Individually hide Stats/Dead/Duplicates (`showStatsView`/`showDeadView`/`showDupesView`) or Recent (`showRecentBookmarks`) — the tab and its `Alt+number` jump disappear; the palette command stays, so the view is still one `/stats` away |
+| An even quieter strip | Individually hide Stats/Dead/Duplicates (`showStatsView`/`showDeadView`/`showDupesView`) or Staging/Recent (`showRecentBookmarks`) — the tab and its `Alt+number` jump disappear; the palette command stays, so the view is still one `/stats` away |
 | Hide one view on the fly | Right-click a feature-view tab → **Hide** (or press **ContextMenu** / **Shift+F10** on the tab) — same as unchecking that view's *Show …* option. The tab and its `Alt+number` jump disappear; the palette command remains and entering that way shows the return-path toast. Tree and Search tabs are fixed — hiding one of them hides the whole strip instead (same as turning off *Show view tabs*) |
 | Disable a view entirely | Right-click a feature-view tab → **Disable**, or use the options page: each *Show … view* row has an **Enabled/Disabled** state and an **Enable/Disable** button. Disabled greys out that show option and removes every entry point and function of the view until re-enabled |
 | No command palette | Turn off **Enable the command palette** (`paletteEnabled`) — `Ctrl/Cmd+K` and the global wake-up both stand down |

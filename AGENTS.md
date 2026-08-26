@@ -58,7 +58,7 @@ npm test           # vitest in watch mode
 npm run test:run   # single run
 ```
 
-One suite per module/feature (~82); each module's row in `docs/agents/modules.md` names its own suite. Harness patterns: sandbox-eval for classic scripts, direct ESM import with chrome.*/DOM doubles on `globalThis` for the rest; shared stubs live in `tests/helpers/` (`dom`/`i18n`/`chrome`/`boot`/`classic` — use them in NEW tests). **Never copy the implementation under test into a test** — drive the real module; extract pure logic into a real module when it can't be imported (see "操作即模块" in Code Style). Full suite inventory, helper contracts and pitfalls: `docs/agents/testing.md`. `npm run lint` (ESLint flat config) is the lint gate.
+One suite per module/feature (~88); each module's row in `docs/agents/modules.md` names its own suite. Harness patterns: sandbox-eval for classic scripts, direct ESM import with chrome.*/DOM doubles on `globalThis` for the rest; shared stubs live in `tests/helpers/` (`dom`/`i18n`/`chrome`/`boot`/`classic` — use them in NEW tests). **Never copy the implementation under test into a test** — drive the real module; extract pure logic into a real module when it can't be imported (see "操作即模块" in Code Style). Full suite inventory, helper contracts and pitfalls: `docs/agents/testing.md`. `npm run lint` (ESLint flat config) is the lint gate.
 
 ### Build & packaging (release)
 

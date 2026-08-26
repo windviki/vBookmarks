@@ -39,7 +39,7 @@ Licensed under the [MIT License](http://www.opensource.org/licenses/mit-license.
 
 ## The view system
 
-- **Seven views**: **Tree** (the classic), **Search**, **Tab groups**, **Recent**, **Stats**, **Dead links**, **Duplicates**. The icon tab strip shows live count badges (dead marks, dupe groups, tracked pages) and each feature view (Tab groups/Recent/Stats/Dead links/Duplicates) can be hidden — or fully disabled — per view, or the whole strip can go for the classic single-pane layout.
+- **Seven views**: **Tree** (the classic), **Search**, **Tab groups**, **Staging** (the recent list lives inside), **Stats**, **Dead links**, **Duplicates**. The icon tab strip shows live count badges (dead marks, dupe groups, tracked pages) and each feature view (Tab groups/Staging/Stats/Dead links/Duplicates) can be hidden — or fully disabled — per view, or the whole strip can go for the classic single-pane layout.
 - **One keyboard model everywhere** — the tree's mature semantics (arrows, `Home`/`End`, `PageUp`/`PageDown`, `Enter`, `F2`, `Delete`, type-ahead) now work identically in every list view; `↑` past the first row steps up to the tab strip, then the search box; the strip itself is arrow/Home/End navigable with roving tabindex and RTL awareness; `Alt+1…7` jumps straight to a view (portable across Chrome and Edge, which reserves `Ctrl+1…8` for its own tabs).
 - **Layered `Esc`** — context menu → command palette → view-level action (e.g. pausing a scan) → clear search → back to tree → close, always peeling one layer at a time.
 - **Popup vs panel** — both reopen on the view you left (the popup via the default-on *remember the last view* switch — turn it off for the classic always-tree boot), and the side panel is ready to become your always-on bookmark workspace.
@@ -58,9 +58,10 @@ Licensed under the [MIT License](http://www.opensource.org/licenses/mit-license.
 - **Bookmarks meet tabs**: one click files a tab into your quick-add folder; a whole group saves as a bookmark folder and remembers its color and title, so *open as tab group* later restores it looking the same.
 - **Recently closed groups** live at the bottom (depth configurable 5–50): reopen the whole set, or restore/bookmark/forget individual tabs.
 
-## Recent view
+## Staging / Recent view
 
-- The old in-tree "recently added" strip grew up into its own tab: your newest bookmarks grouped into **Today / This week / This month / Older**, each row with a relative-time badge and a `path · exact time` second line.
+- The old in-tree "recently added" strip grew up into a **staging workbench** — a scratch desk for links you're not sure about yet (the full walkthrough lives in the [v4 guide](guide-v4.md) §3.3). Rows are dual-state: a solid ★ means the item is bookmarked, an outline ☆ means it's merely parked in staging. Build your own groups — drag rows between groups, drag group heads to reorder — and batch open / favorite / group / move / copy / delete / remove-from-staging with selection mode; destructive actions leave an undo toast.
+- Your newest bookmarks stay grouped into **Today / This week / This month / Older**, each row with a relative-time badge and a `path · exact time` second line.
 - `R` (or right-click) reveals any row in the tree; an optional one-time import from Chrome history (off by default, permission requested only if you opt in) back-fills older visits.
 
 ## Stats view — your actual usage
@@ -106,9 +107,9 @@ Licensed under the [MIT License](http://www.opensource.org/licenses/mit-license.
 
 ## Engineering
 
-- **Unit tests** across 79 Vitest suites, covering every module — including contract tests that pin the row-alignment geometry, the z-index layering table, per-theme badge contrast and the horizontal-scrollbar protection contract (every scrollable pane clips `overflow-x`, text slots ellipsis, fixed slots `flex: none`, zoom rules never alter geometry). The live count is `npm run test:run` output (and the CI badge).
-- **Docker harness**: zero-console-error smoke, a real-browser keyboard/view verification suite (tab-strip keyboard model, focus zones, header-row arrow chain, per-view ↑↓/past-top crossings with the in-list toolbar rungs — the dead view stacks two, custom palette commands end-to-end, banner keyboard reachability, search dual-zone, per-view rendering — 153 hard assertions), a scrollbar matrix probe (screen resolution × browser zoom × in-extension zoom × popup size sweep, no horizontal scrollbar on any pane — 752 assertions), and screenshot suites across 5 themes and 8 UI languages (with an RTL mirroring check).
-- Unified locale tooling (`scripts/i18n.py`): audit, missing-key reports, LLM batch translation, verify gate. Baseline grew from 75 to **345 keys** at 4.0 (**555** as of 4.1.0), all 43 locales aligned.
+- **Unit tests** across 88 Vitest suites, covering every module — including contract tests that pin the row-alignment geometry, the z-index layering table, per-theme badge contrast and the horizontal-scrollbar protection contract (every scrollable pane clips `overflow-x`, text slots ellipsis, fixed slots `flex: none`, zoom rules never alter geometry). The live count is `npm run test:run` output (and the CI badge).
+- **Docker harness**: zero-console-error smoke, a real-browser keyboard/view verification suite (tab-strip keyboard model, focus zones, header-row arrow chain, per-view ↑↓/past-top crossings with the in-list toolbar rungs — the dead view stacks two, the tab-groups view three nesting levels, custom palette commands end-to-end, banner keyboard reachability, search dual-zone, per-view rendering — 168 hard assertions), a scrollbar matrix probe (screen resolution × browser zoom × in-extension zoom × popup size sweep, no horizontal scrollbar on any pane, the staging and tab-groups panes included — 903 assertions), and screenshot suites across 5 themes and 8 UI languages (with an RTL mirroring check).
+- Unified locale tooling (`scripts/i18n.py`): audit, missing-key reports, LLM batch translation, verify gate. Baseline grew from 75 to **345 keys** at 4.0 (**684** as of 4.1.0), all 43 locales aligned.
 - **CI**: GitHub Actions runs the unit suites, the i18n gates and the release packaging on every push and PR.
 - Repository organized for the v4 era: `src/`, `pages/`, `css/`, `assets/`, `scripts/`; obsolete artifacts (old `release/*.crx`, MV2 leftovers) live on in git history.
 
@@ -210,7 +211,7 @@ python3 scripts/package.py         # → tmp/vBookmarks_<version>.zip
 
 ### v4.1.0
 
-*2026-08-21*
+*2026-08-26*
 
 #### New
 
