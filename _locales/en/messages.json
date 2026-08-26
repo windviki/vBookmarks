@@ -279,10 +279,10 @@
     "message": "Number of recently added bookmarks to show"
   },
   "optionSearchHistory": {
-    "message": "Record search history"
+    "message": "Show the search history area"
   },
   "optionSearchHistoryHint": {
-    "message": "Turning this off also clears the existing history."
+    "message": "Hide the recent-search area above the results — the recorded queries are kept."
   },
   "recentEmpty": {
     "message": "No recent bookmarks. Press Ctrl+D to bookmark the current page."

@@ -271,10 +271,10 @@
     "message": "Anzahl der anzuzeigenden kürzlich hinzugefügten Lesezeichen"
   },
   "optionSearchHistory": {
-    "message": "Suchverlauf aufzeichnen"
+    "message": "Suchverlaufsbereich anzeigen"
   },
   "optionSearchHistoryHint": {
-    "message": "Das Deaktivieren löscht auch den vorhandenen Verlauf."
+    "message": "Den Bereich für letzte Suchanfragen über den Ergebnissen ausblenden — aufgezeichnete Anfragen bleiben erhalten"
   },
   "recentEmpty": {
     "message": "Keine kürzlichen Lesezeichen. Drücken Sie Strg+D, um die aktuelle Seite als Lesezeichen zu speichern."

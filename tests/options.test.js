@@ -1028,6 +1028,19 @@ describe('classic-experience preset (v4 task-3 #20 + issue #49)', () => {
         expect(sb.elements['search-history-enabled'].checked).toBe(false);
     });
 
+    // 2026-08-26 report: the search-history switch is an AREA toggle only —
+    // turning it off must NOT wipe the stored MRU (re-enabling brings the
+    // recorded queries back).
+    it('the search-history switch only toggles the area — the MRU survives', async () => {
+        const mru = JSON.stringify([{ q: 'x', ts: 1, n: 0 }]);
+        const sb = createSandbox({ chromeLocalData: { searchHistory: mru } });
+        await sb.start();
+        sb.elements['search-history-enabled'].checked = false;
+        await sb.elements['search-history-enabled'].fire('change');
+        expect(sb.syncData.searchHistoryEnabled).toBe('');
+        expect(sb.localData.searchHistory).toBe(mru); // untouched
+    });
+
     it('the quick-add context-menu switch binds to storage and toggles independently', async () => {
         const sb = createSandbox();
         await sb.start();

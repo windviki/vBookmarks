@@ -271,10 +271,10 @@
     "message": "Rādāmo nesen pievienoto grāmatzīmju skaits"
   },
   "optionSearchHistory": {
-    "message": "Saglabāt meklēšanas vēsturi"
+    "message": "Rādīt meklēšanas vēstures apgabalu"
   },
   "optionSearchHistoryHint": {
-    "message": "Izslēdzot šo, tiks dzēsta arī esošā vēsture."
+    "message": "Paslēpt pēdējo meklējumu apgabalu virs rezultātiem — saglabātie vaicājumi tiek paturēti"
   },
   "recentEmpty": {
     "message": "Nav nesenas grāmatzīmes. Nospiediet Ctrl+D, lai pievienotu pašreizējo lapu grāmatzīmēm."

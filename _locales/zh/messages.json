@@ -271,10 +271,10 @@
     "message": "显示最近添加书签的数量"
   },
   "optionSearchHistory": {
-    "message": "记录搜索历史"
+    "message": "顯示最近搜索區域"
   },
   "optionSearchHistoryHint": {
-    "message": "关闭此选项也会清除现有历史记录。"
+    "message": "隱藏結果區上方的最近搜索區域——已記錄的查詢會保留。"
   },
   "recentEmpty": {
     "message": "没有最近书签。按Ctrl+D将当前页加入书签。"

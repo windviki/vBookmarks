@@ -271,10 +271,10 @@
     "message": "Število nedavno dodanih zaznamkov za prikaz"
   },
   "optionSearchHistory": {
-    "message": "Beleži zgodovino iskanja"
+    "message": "Prikaži območje zgodovine iskanja"
   },
   "optionSearchHistoryHint": {
-    "message": "Izklapljanje te možnosti tudi počisti obstoječo zgodovino."
+    "message": "Skrij območje nedavnih iskanj nad rezultati — zabeležena poizvedovanja ostanejo"
   },
   "recentEmpty": {
     "message": "Ni nedavnih zaznamkov. Pritisnite Ctrl+D, da dodate trenutno stran med zaznamke."

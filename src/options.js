@@ -272,12 +272,9 @@ const $ = id => document.getElementById(id);
         };
         $('favicon-enrich').addEventListener('change', syncDdgDisabled);
         syncDdgDisabled();
-        // Turning search history off also wipes the stored history (the hint
-        // under the checkbox tells the user so).
-        $('search-history-enabled').addEventListener('change', async () => {
-            if (!$('search-history-enabled').checked)
-                await setSetting('searchHistory', '[]');
-        });
+        // 2026-08-26 report: the switch ONLY toggles the search-history AREA
+        // (show/hide) — it never touches the stored MRU; re-enabling brings
+        // the recorded queries back. The area's close × shares this key.
         // v4 task-3 #20: one click back to the classic v3 chrome — palette,
         // quick-add star, tool button and view tabs all off. Each switch
         // above re-enables its feature individually.

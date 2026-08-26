@@ -271,10 +271,10 @@
     "message": "Aantal recent toegevoegde bladwijzers om weer te geven"
   },
   "optionSearchHistory": {
-    "message": "Zoekgeschiedenis opslaan"
+    "message": "Zoekgeschiedenisgebied weergeven"
   },
   "optionSearchHistoryHint": {
-    "message": "Dit uitschakelen wist ook de bestaande geschiedenis."
+    "message": "Het gebied met recente zoekopdrachten boven de resultaten verbergen — opgeslagen zoekopdrachten blijven bewaard"
   },
   "recentEmpty": {
     "message": "Geen recente bladwijzers. Druk op Ctrl+D om de huidige pagina als bladwijzer toe te voegen."

@@ -3,10 +3,10 @@
     "message": "最近添加书签的显示条数"
   },
   "optionSearchHistory": {
-    "message": "记录搜索历史"
+    "message": "显示最近搜索区域"
   },
   "optionSearchHistoryHint": {
-    "message": "关闭后将同时清空已有历史。"
+    "message": "隐藏结果区上方的最近搜索区域——已记录的查询会保留。"
   },
   "optionShowSyncStatus": {
     "message": "显示同步状态指示器"

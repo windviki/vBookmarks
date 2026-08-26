@@ -408,8 +408,9 @@ export function initSearch(ctx = {}) {
             const closeBtn = closest('#search-history-close');
             if (closeBtn) {
                 e.preventDefault();
+                // 2026-08-26 report: hiding the AREA only — the stored MRU
+                // survives, re-enabling 选项→搜索 brings it back.
                 store.set('searchHistoryEnabled', '');
-                store.set('searchHistory', '[]');
                 renderHistoryArea();
                 if (ctx.undo && ctx.undo.showToast)
                     ctx.undo.showToast(_m('searchHistoryClosedToast'));

@@ -910,9 +910,9 @@ describe('search history area (§3.2/§4.3)', () => {
     });
 
     // 2026-08-26 report: the head's close × hides the WHOLE history area —
-    // the same contract as the options 记录搜索历史 switch (off wipes the
-    // MRU too) + a toast pointing at 选项→搜索.
-    it('the close × hides the history area (enabled off + MRU wiped + toast)', () => {
+    // an AREA toggle only: the stored MRU survives (re-enabling 选项→搜索
+    // brings the queries back) + a toast pointing there.
+    it('the close × hides the area but KEEPS the MRU + toasts', () => {
         const toasts = [];
         const { els, viewHooks, store } = setup({
             storeData: { searchHistory: JSON.stringify([{ q: 'a', ts: 1, n: 0 }]) },
@@ -924,7 +924,8 @@ describe('search history area (§3.2/§4.3)', () => {
             target: { closest: sel => (sel === '#search-history-close' ? {} : null) }
         });
         expect(store.get('searchHistoryEnabled')).toBe('');
-        expect(store.get('searchHistory')).toBe('[]');
+        // the recorded query SURVIVES the hide
+        expect(JSON.parse(store.get('searchHistory'))).toEqual([{ q: 'a', ts: 1, n: 0 }]);
         // the area is GONE entirely (innerHTML cleared → the CSS :empty rule
         // hides the box) — no hint row, the results pane owns the view
         expect(els['search-history-area'].innerHTML).toBe('');

@@ -271,10 +271,10 @@
     "message": "Número de marcadores añadidos recientemente para mostrar"
   },
   "optionSearchHistory": {
-    "message": "Registrar historial de búsqueda"
+    "message": "Mostrar el área de historial de búsqueda"
   },
   "optionSearchHistoryHint": {
-    "message": "Al desactivar esto también se borra el historial existente."
+    "message": "Ocultar el área de búsquedas recientes sobre los resultados — las consultas registradas se conservan"
   },
   "recentEmpty": {
     "message": "No hay marcadores recientes. Presiona Ctrl+D para marcar la página actual."

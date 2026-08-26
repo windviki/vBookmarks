@@ -271,10 +271,10 @@
     "message": "Antal nyligt tilføjede bogmærker, der skal vises"
   },
   "optionSearchHistory": {
-    "message": "Registrer søgehistorik"
+    "message": "Vis søgehistorikområdet"
   },
   "optionSearchHistoryHint": {
-    "message": "Deaktivering af denne fjerner også den eksisterende historik."
+    "message": "Skjul området for nylige søgninger over resultaterne — gemte forespørgsler bevares"
   },
   "recentEmpty": {
     "message": "Ingen nylige bogmærker. Tryk Ctrl+D for at bogmærke den aktuelle side."

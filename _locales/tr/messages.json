@@ -271,10 +271,10 @@
     "message": "Gösterilecek yeni eklenen yer imi sayısı"
   },
   "optionSearchHistory": {
-    "message": "Arama geçmişini kaydet"
+    "message": "Arama geçmişi alanını göster"
   },
   "optionSearchHistoryHint": {
-    "message": "Bunu kapatmak mevcut geçmişi de temizler."
+    "message": "Sonuçların üzerindeki son aramalar alanını gizle — kaydedilen sorgular korunur"
   },
   "recentEmpty": {
     "message": "Son eklenen yer imi yok. Geçerli sayfayı yer imlerine eklemek için Ctrl+D tuşlarına basın."

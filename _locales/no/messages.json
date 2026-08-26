@@ -271,10 +271,10 @@
     "message": "Antall nylig lagt til bokmerker å vise"
   },
   "optionSearchHistory": {
-    "message": "Lagre søkehistorikk"
+    "message": "Vis søkehistorikkområdet"
   },
   "optionSearchHistoryHint": {
-    "message": "Å slå av dette sletter også eksisterende historikk."
+    "message": "Skjul området for nylige søk over resultatene — lagrede spørringer beholdes"
   },
   "recentEmpty": {
     "message": "Ingen nylige bokmerker. Trykk Ctrl+D for å bokmerke gjeldende side."

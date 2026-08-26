@@ -271,10 +271,10 @@
     "message": "Số lượng bookmark mới thêm vào để hiển thị"
   },
   "optionSearchHistory": {
-    "message": "Ghi lại lịch sử tìm kiếm"
+    "message": "Hiển thị khu vực lịch sử tìm kiếm"
   },
   "optionSearchHistoryHint": {
-    "message": "Tắt tùy chọn này cũng sẽ xóa lịch sử hiện tại."
+    "message": "Ẩn khu vực tìm kiếm gần đây phía trên kết quả — các truy vấn đã lưu được giữ lại"
   },
   "recentEmpty": {
     "message": "Không có bookmark gần đây. Nhấn Ctrl+D để đánh dấu trang hiện tại."

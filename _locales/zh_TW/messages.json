@@ -271,10 +271,10 @@
     "message": "顯示最近新增書籤的數量"
   },
   "optionSearchHistory": {
-    "message": "記錄搜尋記錄"
+    "message": "顯示最近搜索區域"
   },
   "optionSearchHistoryHint": {
-    "message": "關閉此選項也會清除現有記錄。"
+    "message": "隱藏結果區上方的最近搜索區域——已記錄的查詢會保留。"
   },
   "recentEmpty": {
     "message": "尚無最近書籤。按 Ctrl+D 可將目前頁面加入書籤。"

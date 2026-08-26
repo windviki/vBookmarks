@@ -271,10 +271,10 @@
     "message": "Počet nedávno pridaných záložiek na zobrazenie"
   },
   "optionSearchHistory": {
-    "message": "Zaznamenávať históriu vyhľadávania"
+    "message": "Zobraziť oblasť histórie vyhľadávania"
   },
   "optionSearchHistoryHint": {
-    "message": "Vypnutím sa tiež vymaže existujúca história."
+    "message": "Skryť oblasť nedávnych vyhľadávaní nad výsledkami — zaznamenané dopyty zostávajú"
   },
   "recentEmpty": {
     "message": "Žiadne nedávne záložky. Stlačte Ctrl+D na pridanie aktuálnej stránky do záložiek."

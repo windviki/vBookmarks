@@ -90,13 +90,17 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
         const closeAfter = await page.evaluate(async () => {
             const area = document.getElementById('search-history-area');
             const stored = await new Promise(res => chrome.storage.sync.get('searchHistoryEnabled', res));
+            const hist = await new Promise(res => chrome.storage.local.get('searchHistory', res));
             return {
                 areaEmpty: area ? area.innerHTML.trim().length === 0 : null,
-                enabled: stored.searchHistoryEnabled
+                enabled: stored.searchHistoryEnabled,
+                mruKept: (hist.searchHistory || '').includes('history click')
             };
         });
         console.log('CLOSE:', JSON.stringify({ closeOut, closeAfter }));
-        const closeOk = closeOut.hasBtn && closeAfter.enabled === '' && closeAfter.areaEmpty;
+        // the AREA hides; the recorded MRU SURVIVES (area-toggle semantics)
+        const closeOk = closeOut.hasBtn && closeAfter.enabled === ''
+            && closeAfter.areaEmpty && closeAfter.mruKept;
         console.log(closeOk ? 'CLOSE PASS' : 'CLOSE FAIL');
         if (!closeOk)
             process.exitCode = 1;

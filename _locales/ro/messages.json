@@ -271,10 +271,10 @@
     "message": "Numărul de marcaje recent adăugate de afișat"
   },
   "optionSearchHistory": {
-    "message": "Înregistrează istoricul căutărilor"
+    "message": "Afișează zona istoricului de căutări"
   },
   "optionSearchHistoryHint": {
-    "message": "Dacă dezactivați aceasta, se va șterge și istoricul existent."
+    "message": "Ascunde zona căutărilor recente deasupra rezultatelor — interogările înregistrate sunt păstrate"
   },
   "recentEmpty": {
     "message": "Niciun marcaj recent. Apăsați Ctrl+D pentru a marca pagina curentă."

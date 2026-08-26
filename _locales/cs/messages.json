@@ -271,10 +271,10 @@
     "message": "Počet nedávno přidaných záložek k zobrazení"
   },
   "optionSearchHistory": {
-    "message": "Ukládat historii vyhledávání"
+    "message": "Zobrazit oblast historie vyhledávání"
   },
   "optionSearchHistoryHint": {
-    "message": "Vypnutím této možnosti také smažete stávající historii."
+    "message": "Skrýt oblast nedávných hledání nad výsledky — zaznamenané dotazy zůstávají"
   },
   "recentEmpty": {
     "message": "Žádné nedávné záložky. Stiskněte Ctrl+D pro přidání aktuální stránky."

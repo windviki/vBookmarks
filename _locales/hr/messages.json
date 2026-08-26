@@ -271,10 +271,10 @@
     "message": "Broj nedavno dodanih oznaka za prikaz"
   },
   "optionSearchHistory": {
-    "message": "Bilježi povijest pretraživanja"
+    "message": "Prikaži područje povijesti pretraživanja"
   },
   "optionSearchHistoryHint": {
-    "message": "Isključivanjem se također briše postojeća povijest."
+    "message": "Sakrij područje nedavnih pretraga iznad rezultata — zabilježeni upiti ostaju"
   },
   "recentEmpty": {
     "message": "Nema nedavnih oznaka. Pritisnite Ctrl+D za označavanje trenutne stranice."

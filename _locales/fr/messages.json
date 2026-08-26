@@ -271,10 +271,10 @@
     "message": "Nombre de marque-pages récents à afficher"
   },
   "optionSearchHistory": {
-    "message": "Enregistrer l'historique des recherches"
+    "message": "Afficher la zone d'historique de recherche"
   },
   "optionSearchHistoryHint": {
-    "message": "Désactiver cette option efface également l'historique existant."
+    "message": "Masquer la zone de recherches récentes au-dessus des résultats — les requêtes enregistrées sont conservées"
   },
   "recentEmpty": {
     "message": "Aucun marque-page récent. Appuyez sur Ctrl+D pour ajouter la page actuelle."

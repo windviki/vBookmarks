@@ -271,10 +271,10 @@
     "message": "Numero di segnalibri aggiunti di recente da mostrare"
   },
   "optionSearchHistory": {
-    "message": "Registra cronologia ricerche"
+    "message": "Mostra l'area della cronologia di ricerca"
   },
   "optionSearchHistoryHint": {
-    "message": "Disattivando questa opzione si cancella anche la cronologia esistente."
+    "message": "Nascondi l'area delle ricerche recenti sopra i risultati — le query registrate vengono conservate"
   },
   "recentEmpty": {
     "message": "Nessun segnalibro recente. Premi Ctrl+D per aggiungere la pagina corrente ai segnalibri."

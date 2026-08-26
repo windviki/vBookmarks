@@ -271,10 +271,10 @@
     "message": "Número de favoritos adicionados recentemente a mostrar"
   },
   "optionSearchHistory": {
-    "message": "Registrar histórico de pesquisa"
+    "message": "Mostrar a área do histórico de pesquisa"
   },
   "optionSearchHistoryHint": {
-    "message": "Desativar isso também limpa o histórico existente."
+    "message": "Ocultar a área de pesquisas recentes acima dos resultados — as consultas registradas são mantidas"
   },
   "recentEmpty": {
     "message": "Sem favoritos recentes. Pressione Ctrl+D para adicionar a página atual aos favoritos."

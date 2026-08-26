@@ -271,10 +271,10 @@
     "message": "Äskettäin lisättyjen kirjanmerkkien määrä"
   },
   "optionSearchHistory": {
-    "message": "Tallenna hakuhistoria"
+    "message": "Näytä hakuhistoria-alue"
   },
   "optionSearchHistoryHint": {
-    "message": "Tämän poistaminen käytöstä tyhjentää myös olemassa olevan historian."
+    "message": "Piilota viimeaikaisten hakujen alue tulosten yläpuolelta — tallennetut kyselyt säilyvät"
   },
   "recentEmpty": {
     "message": "Ei äskettäisiä kirjanmerkkejä. Paina Ctrl+D lisätäksesi nykyisen sivun kirjanmerkkeihin."

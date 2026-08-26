@@ -271,10 +271,10 @@
     "message": "Näidatavate hiljuti lisatud järjehoidjate arv"
   },
   "optionSearchHistory": {
-    "message": "Salvesta otsinguajalugu"
+    "message": "Kuva otsinguajaloo ala"
   },
   "optionSearchHistoryHint": {
-    "message": "Selle väljalülitamine kustutab ka olemasoleva ajaloo."
+    "message": "Peida hiljutiste otsingute ala tulemuste kohal — salvestatud päringud säilivad"
   },
   "recentEmpty": {
     "message": "Hiljutisi järjehoidjaid pole. Vajuta Ctrl+D, et järjehoidjatesse lisada praegune leht."

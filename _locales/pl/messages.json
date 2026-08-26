@@ -271,10 +271,10 @@
     "message": "Liczba ostatnio dodanych zakładek do wyświetlenia"
   },
   "optionSearchHistory": {
-    "message": "Zapisuj historię wyszukiwania"
+    "message": "Pokaż obszar historii wyszukiwania"
   },
   "optionSearchHistoryHint": {
-    "message": "Wyłączenie tej opcji usuwa również istniejącą historię."
+    "message": "Ukryj obszar ostatnich wyszukiwań nad wynikami — zapisane zapytania zostają zachowane"
   },
   "recentEmpty": {
     "message": "Brak ostatnich zakładek. Naciśnij Ctrl+D, aby dodać bieżącą stronę."

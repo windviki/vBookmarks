@@ -271,10 +271,10 @@
     "message": "Neseniai pridėtų žymių rodymo skaičius"
   },
   "optionSearchHistory": {
-    "message": "Įrašyti paieškos istoriją"
+    "message": "Rodyti paieškos istorijos sritį"
   },
   "optionSearchHistoryHint": {
-    "message": "Išjungus tai taip pat išvaloma esama istorija."
+    "message": "Slėpti naujausių paieškų sritį virš rezultatų — įrašytos užklausos išlieka"
   },
   "recentEmpty": {
     "message": "Nėra neseniai pridėtų žymių. Paspauskite Ctrl+D, kad pridėtumėte dabartinį puslapį."

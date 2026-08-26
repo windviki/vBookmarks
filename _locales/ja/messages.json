@@ -271,10 +271,10 @@
     "message": "表示する最近追加したブックマークの数"
   },
   "optionSearchHistory": {
-    "message": "検索履歴を記録する"
+    "message": "検索履歴エリアを表示"
   },
   "optionSearchHistoryHint": {
-    "message": "オフにすると既存の履歴も消去されます。"
+    "message": "結果の上の最近の検索エリアを非表示 — 記録されたクエリは保持されます"
   },
   "recentEmpty": {
     "message": "最近のブックマークはありません。Ctrl+Dを押して現在のページをブックマークしてください。"

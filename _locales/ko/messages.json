@@ -271,10 +271,10 @@
     "message": "최근 추가된 북마크 표시 개수"
   },
   "optionSearchHistory": {
-    "message": "검색 기록 저장"
+    "message": "검색 기록 영역 표시"
   },
   "optionSearchHistoryHint": {
-    "message": "이 기능을 끄면 기존 기록도 삭제됩니다."
+    "message": "결과 위의 최근 검색 영역 숨기기 — 기록된 쿼리는 유지됩니다"
   },
   "recentEmpty": {
     "message": "최근 북마크가 없습니다. Ctrl+D를 눌러 현재 페이지를 북마크에 추가하세요."

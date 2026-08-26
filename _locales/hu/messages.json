@@ -271,10 +271,10 @@
     "message": "Megjelenítendő legutóbb hozzáadott könyvjelzők száma"
   },
   "optionSearchHistory": {
-    "message": "Keresési előzmények rögzítése"
+    "message": "Keresési előzmények területének megjelenítése"
   },
   "optionSearchHistoryHint": {
-    "message": "Ennek kikapcsolása törli a meglévő előzményeket is."
+    "message": "Az eredmények feletti közelmúltbeli keresések területének elrejtése — a rögzített lekérdezések megmaradnak"
   },
   "recentEmpty": {
     "message": "Nincsenek legutóbbi könyvjelzők. Nyomja meg a Ctrl+D billentyűt az aktuális oldal könyvjelzőkhöz adásához."
