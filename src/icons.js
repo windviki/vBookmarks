@@ -228,6 +228,16 @@ export const EXPAND_ALL_ICON =
     '<polyline points="4 9 8 13 12 9"/>' +
     '</svg>';
 
+// New browser window: the back window stack with a corner plus (the
+// folder-plus recipe applied to a window rect) — the tab-groups toolbar's
+// 新建窗口 entry.
+export const WINDOW_PLUS_ICON =
+    '<svg class="vbm-icon vbm-icon-window-plus" width="16" height="16" viewBox="0 0 16 16" ' +
+    'fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+    '<rect x="1.5" y="2.5" width="9" height="9" rx="1.2"/>' +
+    '<path d="M11.5 9.5V14.5"/><path d="M9 12h5"/>' +
+    '</svg>';
+
 // Dead-view toolbar glyphs (4.0.8): redo, list-with-x, flag-with-x and
 // selection-mode. Same 16px grid / 1.5px stroke / currentColor recipe.
 export const REDO_ICON =

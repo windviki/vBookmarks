@@ -31,6 +31,9 @@
  * - `vbm-tabs-wake` { tabIds } — wake sleeping tabs WITHOUT activating them
  *   (`chrome.tabs.reload`; a discarded tab reloads back into memory and
  *   stays in place, so the view's filled sleep glyph is a real toggle).
+ * - `vbm-tabs-merge-window` { tabIds, groupIds, title, windowId } — move a
+ *   dragged window's tabs into the target window and wrap the non-pinned
+ *   ones (`groupIds`) in one titled group (the window-head drag merge).
  *
  * Degradation: on Chrome too old for `chrome.tabs.group`/`chrome.tabGroups`
  * both open-* messages fall back to a plain batch-open; the tab-batch
@@ -50,7 +53,8 @@ export const TAB_GROUP_MSG = {
     tabsClose: 'vbm-tabs-close',
     tabsDiscard: 'vbm-tabs-discard',
     tabsWake: 'vbm-tabs-wake',
-    tabsMoveNewWindow: 'vbm-tabs-move-new-window'
+    tabsMoveNewWindow: 'vbm-tabs-move-new-window',
+    tabsMergeWindow: 'vbm-tabs-merge-window'
 };
 
 export function createTabGroupOpener() {
@@ -411,6 +415,39 @@ export function createTabGroupOpener() {
         });
     };
 
+    // Merge a dragged window into a target window as ONE tab group (the
+    // tabgroups view's window-head drag): every tab first moves into the
+    // target window, then the NON-PINNED survivors (`groupIds` — pinned tabs
+    // cannot join a group and stay as pinned tabs) are wrapped in a new
+    // group titled `title`. When the last tab leaves, Chrome closes the
+    // source window by itself — nothing to clean up here.
+    const mergeTabsAsGroup = (tabIds, groupIds, title, targetWindowId, done) => {
+        const finish = () => { if (done) done(); };
+        if (!tabIds || !tabIds.length || targetWindowId === undefined || targetWindowId === null) {
+            finish();
+            return;
+        }
+        moveTabsToWindow(tabIds, targetWindowId).then(movedIds => {
+            if (!canGroup()) {
+                finish();
+                return;
+            }
+            const groupSet = new Set((groupIds || []).map(String));
+            const ids = movedIds.filter(id => groupSet.has(String(id)));
+            if (!ids.length) {
+                finish();
+                return;
+            }
+            chrome.tabs.group({ tabIds: ids, createProperties: { windowId: targetWindowId } }, groupId => {
+                if (chrome.runtime.lastError || groupId === undefined) {
+                    finish(); // the tabs are already moved — the group is best-effort
+                    return;
+                }
+                chrome.tabGroups.update(groupId, { title: title || '', color: 'grey' }, finish);
+            });
+        });
+    };
+
     const onMessage = (msg, sender, sendResponse) => {
         if (!msg || !msg.type)
             return;
@@ -439,6 +476,11 @@ export function createTabGroupOpener() {
                 () => { if (sendResponse) sendResponse({ ok: true }); });
             return true;
         }
+        else if (msg.type === TAB_GROUP_MSG.tabsMergeWindow) {
+            mergeTabsAsGroup(msg.tabIds, msg.groupIds, msg.title, msg.windowId,
+                () => { if (sendResponse) sendResponse({ ok: true }); });
+            return true;
+        }
     };
 
     const start_ = () => {
@@ -459,6 +501,7 @@ export function createTabGroupOpener() {
         closeTabs,
         discardTabs,
         wakeTabs,
-        moveTabsToNewWindow
+        moveTabsToNewWindow,
+        mergeTabsAsGroup
     };
 }

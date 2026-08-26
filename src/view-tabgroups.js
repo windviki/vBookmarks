@@ -33,7 +33,7 @@
  * dropping callbacks.
  */
 
-import { VIEW_ICONS, STAR_ICON, STAR_ICON_FILLED, SELECT_ICON, FOLDER_STAR_ICON, FOLDER_PLUS_ICON, EDIT_ICON, SLEEP_ICON, SLEEP_ICON_FILLED, ACTIVATE_ICON, TRASH_ICON, REDO_ICON, COLLAPSE_ALL_ICON, EXPAND_ALL_ICON, PIN_ICON, PIN_ICON_FILLED, STAGE_ICON, STAGE_ICON_DONE, TABS_ICON } from './icons.js';
+import { VIEW_ICONS, STAR_ICON, STAR_ICON_FILLED, SELECT_ICON, FOLDER_STAR_ICON, FOLDER_PLUS_ICON, EDIT_ICON, SLEEP_ICON, SLEEP_ICON_FILLED, ACTIVATE_ICON, TRASH_ICON, REDO_ICON, COLLAPSE_ALL_ICON, EXPAND_ALL_ICON, PIN_ICON, PIN_ICON_FILLED, STAGE_ICON, STAGE_ICON_DONE, TABS_ICON, WINDOW_PLUS_ICON } from './icons.js';
 import { htmlspecialchars } from './escape.js';
 import { parkRowFocus, unparkRowFocus, parkToolbarFocus, restoreToolbarFocus } from './list-focus.js';
 import { paintListChunked } from './list-chunks.js';
@@ -506,8 +506,11 @@ export function initViewTabGroups(ctx = {}) {
             // The icon tail rides ONE nowrap cluster with the rows' 20px/4px
             // geometry (the fold buttons stand down while a filter is active
             // — folds are inert under a find). The select-mode entry joined
-            // the controls rung (rightmost, the every-view law).
+            // the controls rung (rightmost, the every-view law). 新建窗口
+            // sits left of 刷新 (a fresh empty window, the same gesture as
+            // the group's 移动到新窗口 but with nothing to carry over).
             '<span class="tabgroups-icon-cluster">' +
+            iconBtn('tabgroups-new-window', WINDOW_PLUS_ICON, 'tabGroupsNewWindow') +
             iconBtn('tabgroups-refresh', REDO_ICON, 'tabGroupsToolbarRefresh') +
             iconBtn('tabgroups-collapse-all', COLLAPSE_ALL_ICON, 'tabGroupsCollapseAll', !!filterNeedle()) +
             iconBtn('tabgroups-expand-all', EXPAND_ALL_ICON, 'tabGroupsExpandAll', !!filterNeedle()) +
@@ -888,6 +891,7 @@ export function initViewTabGroups(ctx = {}) {
                     `${winStaged ? STAGE_ICON_DONE : STAGE_ICON}</button>`;
                 return `<li class="tabgroups-window-head" data-window-id="${String(win.id)}">` +
                     `<span class="tabgroups-window-head-row" tabindex="-1" role="button" ` +
+                    (selecting ? '' : 'draggable="true" ') +
                     `aria-expanded="${isCollapsed ? 'false' : 'true'}" ` +
                     `aria-label="${htmlspecialchars(`${label} · ${toggleLabel}`)}" ` +
                     `title="${htmlspecialchars(toggleLabel)}">` +
@@ -1576,6 +1580,37 @@ export function initViewTabGroups(ctx = {}) {
         if (!ids.length)
             return;
         send({ type: TAB_GROUP_MSG.tabsMoveNewWindow, tabIds: ids }, () => refresh());
+    };
+
+    // 单标签移到新窗口（右键菜单的 移动到新窗口）——同一条 SW 消息，单个 id。
+    const moveTabToNewWindow = tabId => {
+        if (tabId === undefined || tabId === null || tabId === '')
+            return;
+        send({ type: TAB_GROUP_MSG.tabsMoveNewWindow, tabIds: [Number(tabId)] }, () => refresh());
+    };
+
+    // 窗口头拖曳并入 (the window-head drag): the dragged window's whole tab
+    // set moves into the target window as ONE Chrome tab group titled with
+    // the dragged window's own label (窗口 N). Pinned tabs move too but stay
+    // pinned — Chrome forbids them in groups, so the SW's groupIds subset
+    // skips them. When the last tab leaves, Chrome closes the source window
+    // by itself; the toast is the only farewell (Ctrl+Shift+T remains the
+    // browser's own regret path).
+    const mergeWindowAsGroup = (fromWid, toWid) => {
+        if (String(fromWid) === String(toWid))
+            return;
+        const widx = windows.findIndex(w => String(w.id) === String(fromWid));
+        const from = widx >= 0 ? windows[widx] : null;
+        if (!from || !from.tabs || !from.tabs.length)
+            return;
+        send({
+            type: TAB_GROUP_MSG.tabsMergeWindow,
+            tabIds: from.tabs.map(t => t.id),
+            groupIds: from.tabs.filter(t => !t.pinned).map(t => t.id),
+            title: _m('tabGroupsWindow', [`${widx + 1}`]),
+            windowId: Number(toWid)
+        }, () => refresh());
+        undo.showToast(_m('tabGroupsMergedWindowToast'));
     };
 
     // Close a whole window from its section head: confirm on the tab count,
@@ -2458,6 +2493,15 @@ export function initViewTabGroups(ctx = {}) {
                 saveSelectedAsFolder();
             return;
         }
+        if (closest('.tabgroups-new-window')) {
+            e.preventDefault();
+            // A fresh empty browser window (the toolbar's + next to 刷新).
+            // Creating it focuses the new window, which closes the popup —
+            // the same flow as the group's 移动到新窗口.
+            if (chrome.windows && chrome.windows.create)
+                chrome.windows.create({}, () => void chrome.runtime.lastError);
+            return;
+        }
         if (closest('.tabgroups-refresh')) {
             e.preventDefault();
             refresh();
@@ -3035,12 +3079,54 @@ export function initViewTabGroups(ctx = {}) {
     const clearDragClasses = () => {
         if (!$list.querySelectorAll)
             return;
-        const rows = $list.querySelectorAll('.drag-over, .dragging');
+        const rows = $list.querySelectorAll('.drag-over, .dragging, .window-drop-target');
         for (let i = 0, l = rows.length; i < l; i++)
-            rows[i].classList.remove('drag-over', 'dragging');
+            rows[i].classList.remove('drag-over', 'dragging', 'window-drop-target');
+    };
+    // Window-head drag (the merge gesture): the dragged window highlights
+    // the whole TARGET window section (head + rows share data-window-id), so
+    // the drop zone reads as the destination window, not one row.
+    let dragWindowId = null;
+    let dropTargetWindowId = null;
+    const setWindowDropTarget = wid => {
+        if (dropTargetWindowId === wid)
+            return;
+        if ($list.querySelectorAll) {
+            const prev = dropTargetWindowId !== null
+                ? $list.querySelectorAll(`li[data-window-id="${CSS.escape ? CSS.escape(String(dropTargetWindowId)) : dropTargetWindowId}"].window-drop-target`)
+                : [];
+            for (let i = 0, l = prev.length; i < l; i++)
+                prev[i].classList.remove('window-drop-target');
+            if (wid !== null) {
+                const next = $list.querySelectorAll(`li[data-window-id="${CSS.escape ? CSS.escape(String(wid)) : wid}"]`);
+                for (let i = 0, l = next.length; i < l; i++)
+                    next[i].classList.add('window-drop-target');
+            }
+        }
+        dropTargetWindowId = wid;
     };
     $list.addEventListener('dragstart', e => {
         const closest = (e.target && e.target.closest) ? e.target.closest.bind(e.target) : () => null;
+        // Window-head drag: the whole window is the payload (buttons inside
+        // the head never start a drag — a click there is an action).
+        const winHead = closest('.tabgroups-window-head-row');
+        if (winHead) {
+            if (selecting || (e.target && e.target.closest && e.target.closest('button'))) {
+                e.preventDefault();
+                return;
+            }
+            const li = winHead.closest('li');
+            dragWindowId = li && li.dataset ? li.dataset.windowId : null;
+            if (dragWindowId !== null && dragWindowId !== undefined) {
+                if (e.dataTransfer && e.dataTransfer.setData) {
+                    e.dataTransfer.setData('text/plain', dragWindowId);
+                    e.dataTransfer.effectAllowed = 'move';
+                }
+                if (li.classList)
+                    li.classList.add('dragging');
+            }
+            return;
+        }
         const li = closest('li.tabgroups-row');
         if (!li || !li.dataset || !li.dataset.tabId)
             return;
@@ -3051,9 +3137,23 @@ export function initViewTabGroups(ctx = {}) {
             li.classList.add('dragging');
     });
     $list.addEventListener('dragover', e => {
+        const closest = (e.target && e.target.closest) ? e.target.closest.bind(e.target) : () => null;
+        // Window-head drag: any row/head of ANOTHER window is the merge
+        // target (rows carry data-window-id; the group head between them
+        // does not — drop on a row or the window head).
+        if (dragWindowId !== null && dragWindowId !== undefined) {
+            const li = closest('li[data-window-id]');
+            const wid = li && li.dataset ? li.dataset.windowId : null;
+            if (wid === null || wid === undefined || String(wid) === String(dragWindowId))
+                return;
+            e.preventDefault();
+            if (e.dataTransfer)
+                e.dataTransfer.dropEffect = 'move';
+            setWindowDropTarget(wid);
+            return;
+        }
         if (!dragTabId)
             return;
-        const closest = (e.target && e.target.closest) ? e.target.closest.bind(e.target) : () => null;
         const li = closest('li.tabgroups-row');
         if (!li)
             return;
@@ -3072,6 +3172,17 @@ export function initViewTabGroups(ctx = {}) {
     $list.addEventListener('drop', e => {
         e.preventDefault();
         const closest = (e.target && e.target.closest) ? e.target.closest.bind(e.target) : () => null;
+        if (dragWindowId !== null && dragWindowId !== undefined) {
+            const li = closest('li[data-window-id]');
+            const wid = li && li.dataset ? li.dataset.windowId : null;
+            if (wid !== null && wid !== undefined)
+                mergeWindowAsGroup(dragWindowId, wid);
+            dragWindowId = null;
+            setWindowDropTarget(null);
+            clearDragClasses();
+            scheduleRefresh();
+            return;
+        }
         const targetLi = closest('li.tabgroups-row');
         if (dragTabId && targetLi && targetLi.dataset && targetLi.dataset.tabId
             && String(targetLi.dataset.tabId) !== String(dragTabId)) {
@@ -3086,6 +3197,8 @@ export function initViewTabGroups(ctx = {}) {
     });
     $list.addEventListener('dragend', () => {
         dragTabId = null;
+        dragWindowId = null;
+        setWindowDropTarget(null);
         clearDragClasses();
     });
 
@@ -3171,6 +3284,9 @@ export function initViewTabGroups(ctx = {}) {
         isCollapsed: gid => collapsed.has(String(gid)),
         ungroupGroup,
         moveGroupToNewWindow,
+        // 单标签移到新窗口（行右键菜单）与窗口头拖曳并入（drop 派发）。
+        moveTabToNewWindow,
+        mergeWindowAsGroup,
         // Closed-record surface (the closed-row context menus dispatch here;
         // every entry is state-checked against the live record list).
         restoreClosedGroup,

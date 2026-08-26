@@ -145,8 +145,10 @@ const makeChrome = ({ noTabGroups = false } = {}) => {
                 }
                 cb({ id, windowId: 7 });
             },
-            update(id, props) {
+            update(id, props, cb) {
                 calls.updated.push([id, props]);
+                if (cb)
+                    cb();
             }
         };
     }
@@ -452,6 +454,48 @@ describe('tab-groups SW batch tab management (tab-groups view)', () => {
         expect(calls.removed).toEqual(['blank-1']);
         expect(chrome.windows.removeCalls).toHaveLength(0);
         expect(finished).toBe(true);
+    });
+
+    // 窗口头拖曳并入 (2026-08-26): move every tab into the target window,
+    // then wrap the NON-PINNED survivors in one titled group.
+    it('mergeTabsAsGroup moves the tabs and groups the non-pinned subset with the title', async () => {
+        const { chrome, calls } = makeChrome();
+        globalThis.chrome = chrome;
+        let finished = false;
+        createTabGroupOpener().mergeTabsAsGroup([4, 5, 6], [4, 5], '窗口 2', 7,
+            () => { finished = true; });
+        await flush();
+        // every tab moved into the target window (the double's tabs live in
+        // window 1, the target is 7)
+        expect(calls.moved).toEqual([
+            [4, { windowId: 7, index: -1 }],
+            [5, { windowId: 7, index: -1 }],
+            [6, { windowId: 7, index: -1 }]
+        ]);
+        // only the groupIds subset reaches tabs.group, as a NEW group in the
+        // target window
+        expect(calls.grouped).toEqual([{ tabIds: [4, 5], createProperties: { windowId: 7 } }]);
+        expect(calls.updated).toEqual([['group-1', { title: '窗口 2', color: 'grey' }]]);
+        expect(finished).toBe(true);
+    });
+
+    it('mergeTabsAsGroup still moves the tabs when the group APIs are missing', async () => {
+        const { chrome, calls } = makeChrome({ noTabGroups: true });
+        globalThis.chrome = chrome;
+        createTabGroupOpener().mergeTabsAsGroup([4, 5], [4, 5], 'W', 7);
+        await flush();
+        expect(calls.moved).toHaveLength(2);
+        expect(calls.grouped).toHaveLength(0);
+        expect(calls.updated).toHaveLength(0);
+    });
+
+    it('mergeTabsAsGroup is a no-op without tab ids or a target window', async () => {
+        const { chrome, calls } = makeChrome();
+        globalThis.chrome = chrome;
+        createTabGroupOpener().mergeTabsAsGroup([], [4], 'W', 7);
+        createTabGroupOpener().mergeTabsAsGroup([4], [4], 'W', null);
+        await flush();
+        expect(calls.moved).toHaveLength(0);
     });
 
     it('moveTabsToNewWindow closes the fresh window when nothing could move', async () => {
