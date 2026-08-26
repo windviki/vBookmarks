@@ -118,6 +118,7 @@ const setup = (opts = {}) => {
     const bookmarksListeners = {};
 
     const chromeStub = {
+        ...(opts.chromeStorage ? { storage: opts.chromeStorage } : {}),
         i18n: {
             getMessage: (key, subs) => {
                 if (subs === undefined)
@@ -2249,6 +2250,72 @@ describe('staging interop (velvet staging §2.5, pure-snapshot revision)', () =>
     // chrome.tabs populate returns NUMBER groupIds while the DOM dataset is
     // a string — a strict === matched nothing and every send fell into the
     // "no bookmarkable tabs" toast.
+    // G6 (2026-08-26 acceptance audit): closed-record staging — a closed
+    // GROUP stages every recorded tab as PURE snapshots (0 bookmarkable →
+    // toast), a single closed TAB stages its own snapshot.
+    it('stageClosedGroup sends the record tabs as pure snapshots; empty → toast', () => {
+        const staging = stagingApi();
+        const ctx = setup({
+            stagingApi: staging,
+            storeData: { tabGroupsClosed: JSON.stringify([
+                { id: 'cg_1', title: 'Gone', tabs: [{ url: 'https://a/', title: 'A' }, { url: 'chrome://extensions/', title: 'Ext' }] }
+            ]) }
+        });
+        ctx.viewTabGroups.refresh();
+        ctx.viewTabGroups.stageClosedGroup('cg_1');
+        // only the bookmarkable tab lands; snapshots are id-null
+        expect(staging.calls).toHaveLength(1);
+        const [tag, entries] = staging.calls[0];
+        expect(tag).toBe('add');
+        expect(entries).toEqual([{ id: null, url: 'https://a/', title: 'A' }]);
+        // a record with no bookmarkable tabs toasts instead
+        const staging2 = stagingApi();
+        const ctx2 = setup({
+            stagingApi: staging2,
+            storeData: { tabGroupsClosed: JSON.stringify([
+                { id: 'cg_2', title: 'Ext Only', tabs: [{ url: 'chrome://extensions/', title: 'Ext' }] }
+            ]) }
+        });
+        ctx2.viewTabGroups.refresh();
+        ctx2.viewTabGroups.stageClosedGroup('cg_2');
+        expect(staging2.calls).toHaveLength(0);
+        expect(ctx2.undo.toastCalls).toContain('tabgroupStageNone');
+    });
+
+    it('stageClosedTab stages the single recorded tab snapshot', () => {
+        const staging = stagingApi();
+        const ctx = setup({
+            stagingApi: staging,
+            storeData: { tabGroupsClosed: JSON.stringify([
+                { id: 'cg_1', title: 'Gone', tabs: [{ url: 'https://a/', title: 'A' }, { url: 'https://b/', title: 'B' }] }
+            ]) }
+        });
+        ctx.viewTabGroups.refresh();
+        ctx.viewTabGroups.stageClosedTab('cg_1', 1);
+        expect(staging.calls).toEqual([['add', [{ id: null, url: 'https://b/', title: 'B' }], undefined]]);
+    });
+
+    // G7 (2026-08-26 acceptance audit): the live virtualScrollLab switch —
+    // the storage listener adopts the key and re-renders (the painter swap
+    // itself is e2e-verified by diag/diag-virtual-lab.js; this pins the
+    // view-side adoption wiring).
+    it('the storage listener adopts virtualScrollLab and re-renders', () => {
+        const storageListeners = [];
+        const adopts = [];
+        const { def, $list, store } = setup({
+            chromeStorage: { onChanged: { addListener(fn) { storageListeners.push(fn); } } }
+        });
+        store.adopt = (k, v) => adopts.push([k, v]);
+        def().activate();
+        expect($list.innerHTML).toContain('tabgroups-toolbar'); // painted once
+        expect(storageListeners).toHaveLength(1);
+        storageListeners[0]({ virtualScrollLab: { newValue: '1' } }, 'sync');
+        expect(adopts).toEqual([['virtualScrollLab', '1']]);
+        // unrelated keys never touch the adopt path
+        storageListeners[0]({ unrelated: { newValue: 'x' } }, 'local');
+        expect(adopts).toHaveLength(1);
+    });
+
     it('stageTabGroup sends the whole group into a group NAMED after it (numeric groupId safe)', () => {
         const staging = stagingApi();
         const ctx = setup({

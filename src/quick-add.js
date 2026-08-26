@@ -108,5 +108,11 @@ export const createQuickAdd = ({ store, document, body, chrome, quickAddBtn, qui
         }, true);
     };
 
+    // G9 (2026-08-26 acceptance audit): the star BUTTON click binding lives
+    // here (not in neat.js) so the wiring is module-testable — one click =
+    // quickAddCurrentTab, exactly like Ctrl/Cmd+D.
+    if (quickAddBtn && typeof quickAddBtn.addEventListener === 'function')
+        quickAddBtn.addEventListener('click', quickAddCurrentTab);
+
     return { showQuickAddToast, withCurrentTabBookmark, refreshQuickAddState, quickAddCurrentTab, bindQuickAddKey };
 };

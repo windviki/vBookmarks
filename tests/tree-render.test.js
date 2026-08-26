@@ -974,6 +974,29 @@ describe('buildTreeSnapshot (P1-1: single-walk tree snapshot)', () => {
         expect(snap.nodeTrees['bar']).toBeUndefined();  // roots are never rows
         expect(snap.nodeTrees['other']).toBeUndefined();
         expect([...snap.bookmarkIds].sort()).toEqual(['11', '13', '14', '20']);
+        // G8 (2026-08-26 acceptance audit): the urlIndex contract — every
+        // bookmark url maps to its FIRST tree-order id (duplicates keep the
+        // earliest), and non-url nodes never appear.
+        expect(snap.urlIndex.get('https://x.com/')).toBe('11');
+        expect(snap.urlIndex.get('https://y.com/')).toBe('13');
+        expect(snap.urlIndex.get('https://t.com/')).toBe('14');
+        expect(snap.urlIndex.get('https://o.com/')).toBe('20');
+        expect(snap.urlIndex.has('https://nope.com/')).toBe(false);
+    });
+
+    it('urlIndex keeps the FIRST id for a duplicated url (relink baseline)', () => {
+        const tr = setup();
+        const tree = [{
+            id: 'bar', parentId: '0', title: 'Bar', children: [
+                { id: '30', parentId: 'bar', title: 'A', url: 'https://d.com/' },
+                { id: '31', parentId: 'bar', title: 'A dupe', url: 'https://d.com/' },
+                { id: '32', parentId: 'bar', title: 'B', url: 'https://e.com/' }
+            ]
+        }];
+        const snap = tr.buildTreeSnapshot(tree, tree[0].children);
+        expect(snap.urlIndex.get('https://d.com/')).toBe('30'); // first, not last
+        expect(snap.urlIndex.get('https://e.com/')).toBe('32');
+        expect(snap.urlIndex.size).toBe(2);
     });
 
     it('honors a bar-only display subtree while paths/ids still cover the full tree', () => {

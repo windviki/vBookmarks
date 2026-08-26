@@ -26,33 +26,33 @@ quick-add/tool-button 模块层、tree-render。未发现新增错误路径。
 | 经典模式恢复 | ✅ 单测（含 treeRowActions） |
 | SW 书签事件 → rebuildIndex 崩溃 | ✅ 单测 + 修复（f44cc89） |
 
-## 覆盖缺口（按严重度，供后续批次补测）
+## 覆盖缺口（全部已闭合，2026-08-26 第二轮补齐）
 
-1. ~~宿主视图行内「发送到暂存」hover 按钮的点击接线~~ — ✅ 已补：search 行
-   按钮 toggle（add → remove）单测（tests/search.test.js）；view-dead /
-   view-stats 行按钮仍缺，随下次批次。
-2. ~~view-dupes 整组暂存 stageGroupByKey~~ — ✅ 已补：整组 add 快照 + 全暂存
-   反转为 remove 的单测（tests/view-dupes.test.js）。
-3. **view-dead 的 dead-stage-all / dead-stage-selected** 零测试（待补）。
-4. ~~view-tabgroups foldGroupSurgically（组折叠）~~ — ✅ 已补真机探针
-   `diag/diag-tg-group-fold.js`（折叠摘除成员 + aria-expanded + 展开还原）；
-   单测仍走 render() 回退（DOM 双元能力限制），可接受。
-5. **view-tabgroups 窗口头拖拽手势**视图层无测试（SW mergeTabsAsGroup 已测）——
-   `diag/diag-tg-window-merge.js` 已真机覆盖，单测缺口可接受。
-6. **view-tabgroups `stageClosedGroup` / `stageClosedTab`** 视图函数与
-   closed-group stage-all 菜单派发未测（待补）。
-7. **virtualScrollLab 视图采纳**（view-tabgroups/view-dupes 的 virtualLab=true
-   分支 + storage.onChanged live switch）无单测（virtual-list 内核已测）。
-8. **tree-render `buildTreeSnapshot.urlIndex`** 构建无直接断言（消费端人工
-   Map 已测）。
-9. **quick-add 星标按钮点击接线**（neat.js）未单测（模块函数与 Ctrl+D 已测；
-   tool-button 点击已测；真机只测可见性/Tab 焦点）。
-10. **context-menu `folder-new-incognito-window` 派发**无单测（action 与
-    staging-group-new-incognito 派发已测）。
+1. ✅ 宿主视图行内「发送到暂存」hover 按钮的点击接线 — search 行按钮
+   toggle（add → remove）单测（tests/search.test.js）；view-dead 三入口
+   （dead-stage-all / dead-stage-selected / 行按钮）单测（tests/view-dead.test.js）。
+2. ✅ view-dupes 整组暂存 stageGroupByKey — 整组 add 快照 + 全暂存反转为
+   remove 的单测（tests/view-dupes.test.js）。
+3. ✅ view-dead 暂存入口 — 同上（G1/G3 一起闭合）。
+4. ✅ view-tabgroups foldGroupSurgically（组折叠）— 真机探针
+   `diag/diag-tg-group-fold.js`（折叠摘除成员 + aria-expanded + 展开还原）。
+5. ✅ view-tabgroups 窗口头拖拽手势 — `diag/diag-tg-window-merge.js` 真机全链路
+   （视图层单测缺口由真机覆盖，接受）。
+6. ✅ view-tabgroups `stageClosedGroup` / `stageClosedTab` — 单测（纯快照、
+   0 bookmarkable → toast；stageClosedTab 补暴露进模块 API）。
+7. ✅ virtualScrollLab 视图采纳 — 单测（storage listener adopt + re-render 接线，
+   tests/view-tabgroups.test.js）+ `diag/diag-virtual-lab.js` 真机（开/关/live
+   switch/滚动重窗）。
+8. ✅ tree-render `buildTreeSnapshot.urlIndex` — 直接断言（全树映射 + 重复
+   URL 取首个 id，tests/tree-render.test.js）。
+9. ✅ quick-add 星标按钮点击接线 — 绑定下沉进 src/quick-add.js（模块可测），
+   单测「点击星标 → 创建书签」（tests/quick-add.test.js）。
+10. ✅ context-menu `folder-new-incognito-window` 派发 — 单测（urls + incognito
+    =true，tests/context-menu.test.js）。
 
 ## 验收建议
 
-- 缺口 3（view-dead 暂存入口）、6（closed-group 暂存）随下次改动批次补；
-- 缺口 7–10 风险低（内核/模块层已测），记录为已知覆盖边界；
-- 真机门禁（smoke/keyboard/scrollbar/menu + 本表已闭合的 diag）为发版前置；
-- 发版前重跑全量 vitest + 全部 diag 清单（见「已闭合的风险点」表）。
+- 全部门禁：vitest 全量 + lint + 真机 smoke/keyboard/scrollbar/menu + 本表
+  已闭合的全部 diag（发版前置）；
+- 新增 diag 均随代码提交（diag-search-history-click / diag-tg-group-stage /
+  diag-staging-disabled-view / diag-tg-group-fold 等）。

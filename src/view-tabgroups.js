@@ -3287,6 +3287,7 @@ export function initViewTabGroups(ctx = {}) {
         stageTabById,
         stageTabGroup,
         stageClosedGroup,
+        stageClosedTab,
         // Lazy context-menu dispatch (context-menu.js reads these through
         // neat.js's ctx.tabGroupsMenu getter).
         activateTab: tabId => focusTab(tabById(tabId)),

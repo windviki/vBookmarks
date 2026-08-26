@@ -36,7 +36,13 @@ beforeEach(() => {
         };
     };
 
-    quickAddBtn = { title: '', classList: makeClassList() };
+    quickAddBtn = {
+        title: '',
+        classList: makeClassList(),
+        _click: null,
+        addEventListener(type, fn) { if (type === 'click') this._click = fn; },
+        click() { if (this._click) this._click(); }
+    };
     quickAddToast = { textContent: '', classList: makeClassList() };
 
     body = { classList: makeClassList() };
@@ -238,5 +244,17 @@ describe('bindQuickAddKey — Ctrl/Cmd+D does the same', () => {
         fire(ev);
         expect(created).toEqual([]);
         expect(ev.preventDefault).not.toHaveBeenCalled();
+    });
+
+    // G9 (2026-08-26 acceptance audit): the star BUTTON's click wiring now
+    // lives in the module — a click runs the same flow as Ctrl/Cmd+D.
+    it('clicking the star button bookmarks the current tab (module-owned binding)', async () => {
+        tabs = [{ id: 7, url: 'https://click.example/', title: 'Click me' }];
+        searchResults = [];          // not bookmarked yet → create
+        quickAddBtn.click();
+        await flush();
+        expect(created).toHaveLength(1);
+        expect(created[0].url).toBe('https://click.example/');
+        expect(created[0].parentId).toBe('42');
     });
 });

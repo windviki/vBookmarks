@@ -269,7 +269,8 @@ const setup = (opts = {}) => {
     };
 
     const viewDead = initViewDead({
-        store, views, treeRender, separatorManager, treeView, actions, dialogs, undo
+        store, views, treeRender, separatorManager, treeView, actions, dialogs, undo,
+        ...(opts.staging ? { staging: opts.staging } : {})
     });
 
     const fire = (type, ev) => {
@@ -3570,5 +3571,66 @@ describe('row focus park/restore (4.0.1 focus law)', () => {
         // painted once and never re-serialized (no second dead-item-12 li)
         const all = JSON.stringify(ul.children.map(c => c.html));
         expect(all.match(/id="dead-item-12"/g) || []).toHaveLength(0);
+    });
+});
+
+describe('staging relay entries (G3 — 2026-08-26 acceptance audit)', () => {
+    const stageStub = (over = {}) => {
+        const calls = [];
+        const s = {
+            calls,
+            addItems: entries => { calls.push(['add', entries]); return { full: false, added: entries, dupes: [] }; },
+            removeByUrl: url => calls.push(['remove', url]),
+            isStaged: () => false,
+            isEnabled: () => true,
+            ...over
+        };
+        return s;
+    };
+    const scanCache = JSON.stringify({
+        ts: 1, scannedCount: 2,
+        results: { '11': { status: 'dead', code: 404 }, '12': { status: 'dead', code: 404 } }
+    });
+    const btnClosest = sel => (sel === '.staging-add-btn'
+        ? { closest: s2 => (s2 === 'li' ? { dataset: { nodeId: '11' } } : null) }
+        : null);
+
+    it('dead-stage-all sends every LISTED row as id/url/title snapshots', () => {
+        const staging = stageStub();
+        const ctx = setup({ staging, storeData: { deadLastScan: scanCache } });
+        ctx.def().activate();
+        expect(ctx.$list.innerHTML).toContain('staging-add-btn'); // relay on
+        ctx.clickOn({ closest: sel => (sel === '.dead-stage-all' ? {} : null) });
+        expect(staging.calls).toHaveLength(1);
+        const [tag, rows] = staging.calls[0];
+        expect(tag).toBe('add');
+        expect(rows.map(r => r.id).sort()).toEqual(['11', '12']);
+        expect(rows.every(r => r.url && r.title !== undefined)).toBe(true);
+    });
+
+    it('dead-stage-selected sends only the selection', () => {
+        const staging = stageStub();
+        const ctx = setup({ staging, storeData: { deadLastScan: scanCache } });
+        ctx.def().activate();
+        // enter selection mode, select row 12
+        ctx.clickOn({ closest: sel => (sel === '.dead-select-mode' ? {} : null) });
+        ctx.clickOn({ closest: sel => (sel === 'li' ? { dataset: { nodeId: '12' } } : null) });
+        ctx.clickOn({ closest: sel => (sel === '.dead-stage-selected' ? {} : null) });
+        expect(staging.calls).toHaveLength(1);
+        expect(staging.calls[0][1].map(r => r.id)).toEqual(['12']);
+    });
+
+    it('the row hover 发送到暂存 toggles through the shared relay', () => {
+        const staging = stageStub();
+        const ctx = setup({ staging, storeData: { deadLastScan: scanCache } });
+        ctx.def().activate();
+        ctx.clickOn({ closest: btnClosest });
+        expect(staging.calls).toEqual([['add', [expect.objectContaining({ id: '11', url: expect.any(String) })]]]);
+        const addedUrl = staging.calls[0][1][0].url;
+        // staged → click removes the SAME url
+        staging.isStaged = () => true;
+        staging.calls.length = 0;
+        ctx.clickOn({ closest: btnClosest });
+        expect(staging.calls).toEqual([['remove', addedUrl]]);
     });
 });

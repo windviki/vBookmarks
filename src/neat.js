@@ -917,7 +917,7 @@ import { deferIdle, mark as perfMark } from './idle.js';
         quickAddBtn, quickAddToast, _m
     });
     const quickAddCurrentTab = quickAdd.quickAddCurrentTab;
-    quickAddBtn.addEventListener('click', quickAddCurrentTab);
+    // the star's click binding lives inside createQuickAdd (module-testable)
     quickAdd.refreshQuickAddState();
     quickAdd.bindQuickAddKey();
 

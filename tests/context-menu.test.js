@@ -1730,6 +1730,16 @@ describe('folderContextHandler', () => {
         expect(ctx.folderMenu.style.opacity).toBe('0');
     });
 
+    // G10 (2026-08-26 acceptance audit): the folder menu's incognito
+    // dispatch — same urls, incognito=true through openBookmarksNewWindow.
+    it('folder-new-incognito-window dispatches the urls with incognito=true', () => {
+        const ctx = setup({ children: { '7': folderChildren } });
+        openFolderMenu(ctx);
+        fire(ctx.folderMenu, 'mouseup',
+            makeEvent({ button: 0, target: ctx.menuItem('folder-new-incognito-window') }));
+        expect(ctx.actionCalls).toEqual([['openBookmarksNewWindow', ['http://a/', 'http://c/'], true]]);
+    });
+
     it('hands the full url list to openBookmarks even above the confirm limit', () => {
         // The >10 ConfirmDialog gate lives in actions.openBookmarks and is
         // covered by tests/actions.test.js; the menu always passes the whole

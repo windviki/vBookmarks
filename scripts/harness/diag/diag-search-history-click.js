@@ -75,6 +75,31 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
         console.log(pass ? 'DIAG PASS' : 'DIAG FAIL');
         if (!pass)
             process.exitCode = 1;
+
+        // 2026-08-26 report: the head's close × hides the whole history
+        // area (same contract as the options switch — enabled off + MRU
+        // wiped) leaving the results pane alone.
+        const closeOut = await page.evaluate(() => {
+            const btn = document.querySelector('#search-history-close');
+            if (!btn)
+                return { hasBtn: false };
+            btn.click();
+            return { hasBtn: true };
+        });
+        await sleep(500);
+        const closeAfter = await page.evaluate(async () => {
+            const area = document.getElementById('search-history-area');
+            const stored = await new Promise(res => chrome.storage.sync.get('searchHistoryEnabled', res));
+            return {
+                areaEmpty: area ? area.innerHTML.trim().length === 0 : null,
+                enabled: stored.searchHistoryEnabled
+            };
+        });
+        console.log('CLOSE:', JSON.stringify({ closeOut, closeAfter }));
+        const closeOk = closeOut.hasBtn && closeAfter.enabled === '' && closeAfter.areaEmpty;
+        console.log(closeOk ? 'CLOSE PASS' : 'CLOSE FAIL');
+        if (!closeOk)
+            process.exitCode = 1;
     } finally {
         await browser.close();
     }
