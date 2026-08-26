@@ -2236,9 +2236,6 @@
   "stagingGroupDissolved": {
     "message": "Grupa izformēta — vienumi saglabāti sagatavošanas zonā"
   },
-  "stagingGroupCreated": {
-    "message": "Izveidots $1"
-  },
   "stagingGroupDelete": {
     "message": "Dzēst grupu (ar vienumiem)"
   },
@@ -2546,12 +2543,6 @@
         "content": "$1"
       }
     }
-  },
-  "recentGroupSince": {
-    "message": "Kopš $1"
-  },
-  "recentGroupBefore": {
-    "message": "Pirms $1"
   },
   "stagingGroupSelectAll": {
     "message": "Atlasīt visu grupā"

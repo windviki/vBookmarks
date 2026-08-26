@@ -2236,9 +2236,6 @@
   "stagingGroupDissolved": {
     "message": "Groep ontbonden — items behouden in de wachtruimte"
   },
-  "stagingGroupCreated": {
-    "message": "Gemaakt op $1"
-  },
   "stagingGroupDelete": {
     "message": "Groep verwijderen (met items)"
   },
@@ -2546,12 +2543,6 @@
         "content": "$1"
       }
     }
-  },
-  "recentGroupSince": {
-    "message": "Sinds $1"
-  },
-  "recentGroupBefore": {
-    "message": "Vóór $1"
   },
   "stagingGroupSelectAll": {
     "message": "Selecteer alles in deze groep"

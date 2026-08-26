@@ -2236,9 +2236,6 @@
   "stagingGroupDissolved": {
     "message": "グループを解散しました — 項目はステージング領域に保持されます"
   },
-  "stagingGroupCreated": {
-    "message": "$1に作成"
-  },
   "stagingGroupDelete": {
     "message": "グループを削除（項目を含む）"
   },
@@ -2546,12 +2543,6 @@
         "content": "$1"
       }
     }
-  },
-  "recentGroupSince": {
-    "message": "$1以降"
-  },
-  "recentGroupBefore": {
-    "message": "$1以前"
   },
   "stagingGroupSelectAll": {
     "message": "このグループをすべて選択"

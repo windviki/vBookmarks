@@ -2236,9 +2236,6 @@
   "stagingGroupDissolved": {
     "message": "分组已解散 — 项目保留在暂存区"
   },
-  "stagingGroupCreated": {
-    "message": "创建于 $1"
-  },
   "stagingGroupDelete": {
     "message": "删除分组（含项目）"
   },
@@ -2546,12 +2543,6 @@
         "content": "$1"
       }
     }
-  },
-  "recentGroupSince": {
-    "message": "自 $1 起"
-  },
-  "recentGroupBefore": {
-    "message": "$1 之前"
   },
   "stagingGroupSelectAll": {
     "message": "全选此组"

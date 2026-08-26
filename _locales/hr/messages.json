@@ -2236,9 +2236,6 @@
   "stagingGroupDissolved": {
     "message": "Grupa raspuštena — stavke zadržane u pripremnom području"
   },
-  "stagingGroupCreated": {
-    "message": "Stvoreno $1"
-  },
   "stagingGroupDelete": {
     "message": "Obriši grupu (sa stavkama)"
   },
@@ -2546,12 +2543,6 @@
         "content": "$1"
       }
     }
-  },
-  "recentGroupSince": {
-    "message": "Od $1"
-  },
-  "recentGroupBefore": {
-    "message": "Prije $1"
   },
   "stagingGroupSelectAll": {
     "message": "Odaberi sve u grupi"

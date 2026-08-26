@@ -2232,9 +2232,6 @@
   "stagingGroupDissolved": {
     "message": "Grupo dissolvido — itens mantidos na área de preparação"
   },
-  "stagingGroupCreated": {
-    "message": "Criado em $1"
-  },
   "stagingGroupDelete": {
     "message": "Eliminar grupo (com itens)"
   },
@@ -2542,12 +2539,6 @@
         "content": "$1"
       }
     }
-  },
-  "recentGroupSince": {
-    "message": "Desde $1"
-  },
-  "recentGroupBefore": {
-    "message": "Antes de $1"
   },
   "stagingGroupSelectAll": {
     "message": "Selecionar tudo neste grupo"

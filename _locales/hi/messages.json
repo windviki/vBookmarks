@@ -2236,9 +2236,6 @@
   "stagingGroupDissolved": {
     "message": "समूह भंग — आइटम स्टेजिंग क्षेत्र में रखे गए"
   },
-  "stagingGroupCreated": {
-    "message": "$1 को बनाया गया"
-  },
   "stagingGroupDelete": {
     "message": "समूह हटाएँ (आइटम सहित)"
   },
@@ -2546,12 +2543,6 @@
         "content": "$1"
       }
     }
-  },
-  "recentGroupSince": {
-    "message": "$1 से"
-  },
-  "recentGroupBefore": {
-    "message": "$1 से पहले"
   },
   "stagingGroupSelectAll": {
     "message": "इस समूह में सभी चुनें"

@@ -2236,9 +2236,6 @@
   "stagingGroupDissolved": {
     "message": "گروه منحل شد — موارد در منطقه موقت باقی ماندند"
   },
-  "stagingGroupCreated": {
-    "message": "ایجاد شده در $1"
-  },
   "stagingGroupDelete": {
     "message": "حذف گروه (با موارد)"
   },
@@ -2546,12 +2543,6 @@
         "content": "$1"
       }
     }
-  },
-  "recentGroupSince": {
-    "message": "از $1"
-  },
-  "recentGroupBefore": {
-    "message": "قبل از $1"
   },
   "stagingGroupSelectAll": {
     "message": "انتخاب همه در این گروه"

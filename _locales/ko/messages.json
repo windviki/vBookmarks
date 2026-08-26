@@ -2236,9 +2236,6 @@
   "stagingGroupDissolved": {
     "message": "그룹 해체됨 — 항목은 스테이징 영역에 유지됨"
   },
-  "stagingGroupCreated": {
-    "message": "$1에 생성됨"
-  },
   "stagingGroupDelete": {
     "message": "그룹 삭제(항목 포함)"
   },
@@ -2546,12 +2543,6 @@
         "content": "$1"
       }
     }
-  },
-  "recentGroupSince": {
-    "message": "$1 이후"
-  },
-  "recentGroupBefore": {
-    "message": "$1 이전"
   },
   "stagingGroupSelectAll": {
     "message": "이 그룹 모두 선택"

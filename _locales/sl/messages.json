@@ -2236,9 +2236,6 @@
   "stagingGroupDissolved": {
     "message": "Skupina razpuščena — elementi ostanejo v začasnem območju"
   },
-  "stagingGroupCreated": {
-    "message": "Ustvarjeno $1"
-  },
   "stagingGroupDelete": {
     "message": "Izbriši skupino (s predmeti)"
   },
@@ -2546,12 +2543,6 @@
         "content": "$1"
       }
     }
-  },
-  "recentGroupSince": {
-    "message": "Od $1"
-  },
-  "recentGroupBefore": {
-    "message": "Pred $1"
   },
   "stagingGroupSelectAll": {
     "message": "Izberi vse v tej skupini"

@@ -2236,9 +2236,6 @@
   "stagingGroupDissolved": {
     "message": "群組已解散——項目保留在暫存區"
   },
-  "stagingGroupCreated": {
-    "message": "於 $1 建立"
-  },
   "stagingGroupDelete": {
     "message": "刪除群組（含項目）"
   },
@@ -2546,12 +2543,6 @@
         "content": "$1"
       }
     }
-  },
-  "recentGroupSince": {
-    "message": "自 $1 起"
-  },
-  "recentGroupBefore": {
-    "message": "$1 之前"
   },
   "stagingGroupSelectAll": {
     "message": "全選此群組"

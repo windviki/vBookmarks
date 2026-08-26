@@ -2236,9 +2236,6 @@
   "stagingGroupDissolved": {
     "message": "Grupp upplöst — objekt behålls i väntelistan"
   },
-  "stagingGroupCreated": {
-    "message": "Skapad den $1"
-  },
   "stagingGroupDelete": {
     "message": "Ta bort grupp (med objekt)"
   },
@@ -2546,12 +2543,6 @@
         "content": "$1"
       }
     }
-  },
-  "recentGroupSince": {
-    "message": "Sedan $1"
-  },
-  "recentGroupBefore": {
-    "message": "Före $1"
   },
   "stagingGroupSelectAll": {
     "message": "Välj alla i gruppen"

@@ -2236,9 +2236,6 @@
   "stagingGroupDissolved": {
     "message": "Gruppo sciolto — elementi mantenuti nell'area di staging"
   },
-  "stagingGroupCreated": {
-    "message": "Creato il $1"
-  },
   "stagingGroupDelete": {
     "message": "Elimina gruppo (con elementi)"
   },
@@ -2546,12 +2543,6 @@
         "content": "$1"
       }
     }
-  },
-  "recentGroupSince": {
-    "message": "Dal $1"
-  },
-  "recentGroupBefore": {
-    "message": "Prima del $1"
   },
   "stagingGroupSelectAll": {
     "message": "Seleziona tutto nel gruppo"

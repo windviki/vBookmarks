@@ -2236,9 +2236,6 @@
   "stagingGroupDissolved": {
     "message": "Grup dizolvat — elementele păstrate în zona de pregătire"
   },
-  "stagingGroupCreated": {
-    "message": "Creat pe $1"
-  },
   "stagingGroupDelete": {
     "message": "Șterge grupul (cu elemente)"
   },
@@ -2546,12 +2543,6 @@
         "content": "$1"
       }
     }
-  },
-  "recentGroupSince": {
-    "message": "De la $1"
-  },
-  "recentGroupBefore": {
-    "message": "Înainte de $1"
   },
   "stagingGroupSelectAll": {
     "message": "Selectați tot în acest grup"

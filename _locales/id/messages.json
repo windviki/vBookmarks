@@ -2236,9 +2236,6 @@
   "stagingGroupDissolved": {
     "message": "Grup dibubarkan — item tetap di area pementasan"
   },
-  "stagingGroupCreated": {
-    "message": "Dibuat pada $1"
-  },
   "stagingGroupDelete": {
     "message": "Hapus grup (dengan item)"
   },
@@ -2546,12 +2543,6 @@
         "content": "$1"
       }
     }
-  },
-  "recentGroupSince": {
-    "message": "Sejak $1"
-  },
-  "recentGroupBefore": {
-    "message": "Sebelum $1"
   },
   "stagingGroupSelectAll": {
     "message": "Pilih semua di grup ini"

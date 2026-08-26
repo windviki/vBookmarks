@@ -2236,9 +2236,6 @@
   "stagingGroupDissolved": {
     "message": "Csoport feloldva – az elemek a gyűjtőben maradtak"
   },
-  "stagingGroupCreated": {
-    "message": "Létrehozva: $1"
-  },
   "stagingGroupDelete": {
     "message": "Csoport törlése (elemekkel)"
   },
@@ -2546,12 +2543,6 @@
         "content": "$1"
       }
     }
-  },
-  "recentGroupSince": {
-    "message": "$1 óta"
-  },
-  "recentGroupBefore": {
-    "message": "$1 előtt"
   },
   "stagingGroupSelectAll": {
     "message": "Csoport teljes kijelölése"
