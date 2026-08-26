@@ -14,6 +14,9 @@
   "addBookmarkTop": {
     "message": "Lägg flik högst upp"
   },
+  "addFolderMenu": {
+    "message": "Lägg till mapp"
+  },
   "addNewFolder": {
     "message": "Lägg till undermapp"
   },
@@ -32,23 +35,38 @@
   "announceDismiss": {
     "message": "Stäng"
   },
-  "announceV408Text": {
-    "message": "v4.0.8 är den favicon-förbättrade utgåvan: riktiga webbplatsikoner hämtas automatiskt för bokmärken som Chrome ännu inte har cachat."
-  },
   "announceV407Text": {
     "message": "v4.0.7 levererar den fullfjädrade vyn för döda länkar: skanna, markera, filtrera och sortera döda och begränsade länkar, med tidigare markeringar och tidsstämplar per rad."
   },
   "announceV407Title": {
     "message": "Nyheter i v4.0.7"
   },
+  "announceV408Text": {
+    "message": "v4.0.8 är den favicon-förbättrade utgåvan: riktiga webbplatsikoner hämtas automatiskt för bokmärken som Chrome ännu inte har cachat."
+  },
   "announceV408Title": {
     "message": "Nyheter i v4.0.8"
+  },
+  "announceV410Text": {
+    "message": "v4.1.0 lägger till vy för flikgrupper och arbetsområde: hantera alla fönsters flikar bredvid dina bokmärken, och samla bokmärken från var som helst till ett arbetsbord för massorganisering."
   },
   "announceV410Title": {
     "message": "Nyheter i v4.1.0"
   },
-  "announceV410Text": {
-    "message": "v4.1.0 lägger till vy för flikgrupper och arbetsområde: hantera alla fönsters flikar bredvid dina bokmärken, och samla bokmärken från var som helst till ett arbetsbord för massorganisering."
+  "bookmarkFolderNoFolders": {
+    "message": "Inga bokmärkesmappar"
+  },
+  "bookmarkFolderPickDialogTitle": {
+    "message": "Lägg till i bokmärkesmapp"
+  },
+  "bookmarkOpenInExistingGroup": {
+    "message": "Öppna i befintlig flikgrupp…"
+  },
+  "bookmarkOpenInNewGroup": {
+    "message": "Öppna i ny flikgrupp"
+  },
+  "bookmarkOpenInNewGroupSetup": {
+    "message": "Öppna i ny flikgrupp…"
   },
   "confirmDeleteFolder": {
     "message": "Den här mappen innehåller $count$ objekt. Du kan ångra borttagningen.",
@@ -57,9 +75,6 @@
         "content": "$1"
       }
     }
-  },
-  "confirmDeleteFolderButton": {
-    "message": "Ta bort"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "Är du säker på att du vill ta bort mappen $folderName$ och $bookmarkCount$ bokmärke(n) i den?",
@@ -71,6 +86,9 @@
         "content": "$1"
       }
     }
+  },
+  "confirmDeleteFolderButton": {
+    "message": "Ta bort"
   },
   "confirmDeleteFolderSubfolders": {
     "message": "Är du säker på att du vill ta bort mappen $folderName$ och $subFolderCount$ undermapp(ar) i den?",
@@ -124,11 +142,32 @@
       }
     }
   },
+  "contextMenuAddBookmark": {
+    "message": "Bokmärk denna sida med vBookmarks"
+  },
+  "copiedToast": {
+    "message": "Kopierat: $t$",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
+  },
   "copyAllTitlesAndUrls": {
     "message": "Kopiera alla titlar och URL:er till urklipp"
   },
+  "copyBookmark": {
+    "message": "Kopiera"
+  },
+  "copyMoveTo": {
+    "message": "Kopiera/flytta till…"
+  },
   "copyTitleAndUrl": {
     "message": "Kopiera titel och URL till urklipp"
+  },
+  "crossStorageMoveWarning": {
+    "description": "Warning when trying to move bookmarks across storage types",
+    "message": "Bokmärken kan inte flyttas mellan synkroniserad och lokal lagring. Använd kopiera/klistra in i stället."
   },
   "customIcon": {
     "message": "Anpassad ikon"
@@ -136,8 +175,14 @@
   "customIconDescription": {
     "message": "Ikonen måste vara 19*19 pixlar i storlek. Annars kommer den att storleksändras till denna dimension."
   },
+  "customIconPick": {
+    "message": "Välj fil…"
+  },
   "customSeparatorColorDescription": {
     "message": "Anpassa avskiljarfärg"
+  },
+  "customSeparatorStringDescription": {
+    "message": "Om URL:en för ett bokmärke innehåller denna sträng, kommer det att visas som avskiljare"
   },
   "customSeparatorTitleDescription": {
     "message": "Den verkliga titeln på bokmärket som visas som avskiljare"
@@ -145,28 +190,28 @@
   "customSeparatorUrlDescription": {
     "message": "Den verkliga URL:en för bokmärket som visas som avskiljare"
   },
-  "customSeparatorStringDescription": {
-    "message": "Om URL:en för ett bokmärke innehåller denna sträng, kommer det att visas som avskiljare"
-  },
   "customStyles": {
     "message": "Anpassade stilar"
-  },
-  "separatorOptions": {
-    "message": "Avgränsare"
   },
   "customStylesDescription": {
     "message": "Detta kräver vissa CSS-kunskaper. Ändra på egen risk. Det skulle vara klokt att dela kod via"
   },
-  "defaultIconButton": {
-    "message": "Använd standard"
+  "cutBookmark": {
+    "message": "Klipp ut"
   },
-  "defaultIconButtonOr": {
-    "message": "eller"
+  "cutToast": {
+    "message": "Klippt ut: $t$ — klistra in i målmapp (Esc avbryter)",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
   },
-  "customIconPick": {
-    "message": "Välj fil…"
+  "deadCancel": {
+    "message": "Avbryt"
   },
   "deadChecking": {
+    "description": "Progress line of the palette's dead-link scan mode; $done$ bookmarks checked out of $total$.",
     "message": "Kontrollerar $done$ / $total$…",
     "placeholders": {
       "done": {
@@ -177,8 +222,10 @@
         "content": "$2",
         "example": "120"
       }
-    },
-    "description": "Progress line of the palette's dead-link scan mode; $done$ bookmarks checked out of $total$."
+    }
+  },
+  "deadClearScan": {
+    "message": "Rensa skanningsresultat"
   },
   "deadConfirmAll": {
     "message": "Ta bort alla $count$ döda bokmärken? Detta kan inte ångras i ett steg.",
@@ -192,6 +239,15 @@
   "deadConfirmDelete": {
     "message": "Ta bort detta bokmärke?"
   },
+  "deadConfirmDeleteSelected": {
+    "message": "Ta bort de $count$ valda döda bokmärkena?",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
+  },
   "deadDeleteAll": {
     "message": "Ta bort alla $count$ bokmärken i det aktuella filtret?",
     "placeholders": {
@@ -201,27 +257,15 @@
       }
     }
   },
-  "deadDeleteAllNote": {
-    "message": "Under filtret Alla inkluderas blockerade bokmärken (tillgängliga via din proxy, troligen fortfarande aktiva) och tidigare markerade rader.",
-    "description": "Second line of the delete-all confirmation in the Dead links view."
-  },
-  "undoSingleStepNote": {
-    "message": "Ångra kan endast återställa den senaste borttagningen."
-  },
   "deadDeleteAllBtn": {
     "message": "Ta bort alla"
   },
+  "deadDeleteAllNote": {
+    "description": "Second line of the delete-all confirmation in the Dead links view.",
+    "message": "Under filtret Alla inkluderas blockerade bokmärken (tillgängliga via din proxy, troligen fortfarande aktiva) och tidigare markerade rader."
+  },
   "deadDeleteSelected": {
     "message": "Ta bort valda"
-  },
-  "deadConfirmDeleteSelected": {
-    "message": "Ta bort de $count$ valda döda bokmärkena?",
-    "placeholders": {
-      "count": {
-        "content": "$1",
-        "example": "8"
-      }
-    }
   },
   "deadDeleted": {
     "message": "Tog bort $count$ döda bokmärken",
@@ -232,8 +276,72 @@
       }
     }
   },
-  "deadClearScan": {
-    "message": "Rensa skanningsresultat"
+  "deadDetectTimeLabel": {
+    "message": "Upptäckt"
+  },
+  "deadFilterAll": {
+    "message": "Alla"
+  },
+  "deadFilterBlocked": {
+    "message": "Endast blockerade"
+  },
+  "deadFilterDead": {
+    "message": "Endast döda"
+  },
+  "deadFilterMarked": {
+    "message": "Tidigare markerade"
+  },
+  "deadLastScanAt": {
+    "message": "Senaste skanning: $time$",
+    "placeholders": {
+      "time": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadMark": {
+    "message": "Markera som död"
+  },
+  "deadMarkAll": {
+    "message": "Markera alla"
+  },
+  "deadMarkSelected": {
+    "message": "Markera valda"
+  },
+  "deadMarkStatusAll": {
+    "message": "Valfri status"
+  },
+  "deadMarkStatusMarked": {
+    "message": "Markerade"
+  },
+  "deadMarkStatusUnmarked": {
+    "message": "Omarkerade"
+  },
+  "deadMarkTimeLabel": {
+    "message": "Markerad"
+  },
+  "deadMarked": {
+    "message": "Döda rader markerade"
+  },
+  "deadMarkedBanner": {
+    "message": "Visar bokmärken som markerats tidigare. Klicka på Rescan för att starta en ny kontroll, eller hantera dem i listan nedan."
+  },
+  "deadMarkedBannerDismiss": {
+    "message": "Stäng"
+  },
+  "deadMarkedCount": {
+    "message": "Markerade $count$ bokmärken",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadMarkedNone": {
+    "message": "Inga bokmärken har markerats ännu"
+  },
+  "deadMarkedRow": {
+    "message": "Markerad"
   },
   "deadNone": {
     "message": "Inga döda länkar hittades"
@@ -241,34 +349,711 @@
   "deadNoneFiltered": {
     "message": "Inga döda länkar under detta filter — prova ett annat segment ovan"
   },
+  "deadPause": {
+    "message": "Pausa"
+  },
+  "deadPaused": {
+    "message": "Pausad"
+  },
+  "deadProxyAdd": {
+    "message": "Lägg till proxyserver för döda länkar"
+  },
+  "deadProxyChange": {
+    "message": "Ändra"
+  },
+  "deadProxyClear": {
+    "message": "Rensa"
+  },
+  "deadProxyControlled": {
+    "message": "Proxyinställningarna hanteras av ett annat tillägg."
+  },
+  "deadProxyDenied": {
+    "message": "Proxybehörighet beviljades inte."
+  },
+  "deadProxyInvalid": {
+    "message": "Ogiltig proxyadress — använd värd:port eller schema://värd:port (http/https/socks5, inga inloggningsuppgifter)."
+  },
+  "deadProxyLabel": {
+    "message": "Proxy: $server$",
+    "placeholders": {
+      "server": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadProxyNeverShow": {
+    "message": "Visa inte igen"
+  },
+  "deadProxyNone": {
+    "message": "(inte angiven)"
+  },
+  "deadProxyNudge": {
+    "message": "En proxy-omkontroll skiljer verkliga döda länkar från regionsspärrade — konfigurera här eller på alternativsidan."
+  },
+  "deadProxyPanelHint": {
+    "message": "Ange en proxyserver du redan har (tillägget tillhandahåller ingen), t.ex. 127.0.0.1:7890 eller socks5://127.0.0.1:1080."
+  },
+  "deadProxyRemove": {
+    "message": "Ta bort"
+  },
+  "deadProxyRemoved": {
+    "message": "Proxyserver borttagen"
+  },
+  "deadProxySaved": {
+    "message": "Proxy sparad — framtida skanningar gör om kontroller av direkta fel via den."
+  },
+  "deadProxyServerHint": {
+    "message": "Den sparade servern gör en ny kontroll av bokmärken som misslyckas direkt vid varje skanning av döda länkar, och skiljer riktiga döda länkar från regionsblockerade. Testa och spara testar servern (endast en nåbar server behålls); du kan också lägga till den från vyn över döda länkar."
+  },
+  "deadProxyTestSave": {
+    "message": "Testa och spara"
+  },
+  "deadProxyTestUrlLabel": {
+    "message": "Test-URL"
+  },
+  "deadProxyTesting": {
+    "message": "Testar…"
+  },
+  "deadProxyUnavailable": {
+    "message": "Proxy-API:et är inte tillgängligt i den här webbläsaren."
+  },
+  "deadProxyUnreachable": {
+    "message": "Proxyn otillgänglig — inte sparad."
+  },
   "deadRescan": {
     "message": "Skanna om"
+  },
+  "deadResume": {
+    "message": "Återuppta"
+  },
+  "deadRiskBanner": {
+    "message": "Rensning av döda länkar tar bort bokmärken i bulk. Säkerhetskopiera bokmärkena före första rensningen."
+  },
+  "deadSortByDetected": {
+    "message": "Identifieringstid"
+  },
+  "deadSortByMarked": {
+    "message": "Markeringstid"
+  },
+  "deadSortByPath": {
+    "message": "Mappssökväg"
+  },
+  "deadSortLabel": {
+    "message": "Sortera efter"
+  },
+  "deadStartHint": {
+    "message": "Börja skanna $n$ bokmärken",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadStatusBlocked": {
+    "message": "blockerad"
+  },
+  "deadUnmark": {
+    "message": "Ta bort dödmarkering"
+  },
+  "deadUnmarkAll": {
+    "message": "Rensa alla markeringar"
+  },
+  "deadUnmarkSelected": {
+    "message": "Avmarkera valda"
+  },
+  "defaultIconButton": {
+    "message": "Använd standard"
+  },
+  "defaultIconButtonOr": {
+    "message": "eller"
   },
   "delete": {
     "message": "Ta bort"
   },
+  "deleteEllipsis": {
+    "message": "Ta bort..."
+  },
+  "deleteSelected": {
+    "message": "Ta bort markerade"
+  },
   "deletedBookmark": {
+    "description": "Toast shown after a bookmark or separator was deleted; the toast offers an undo button. $title$ is the deleted row's title (empty for separators).",
     "message": "Tog bort $title$",
     "placeholders": {
       "title": {
         "content": "$1",
         "example": "Example"
       }
-    },
-    "description": "Toast shown after a bookmark or separator was deleted; the toast offers an undo button. $title$ is the deleted row's title (empty for separators)."
+    }
   },
   "deletedFolder": {
+    "description": "Toast shown after a bookmark folder (with its whole subtree) was deleted; the toast offers an undo button. $title$ is the folder name.",
     "message": "Tog bort mappen $title$",
     "placeholders": {
       "title": {
         "content": "$1",
         "example": "Bookmarks"
       }
-    },
-    "description": "Toast shown after a bookmark folder (with its whole subtree) was deleted; the toast offers an undo button. $title$ is the folder name."
+    }
+  },
+  "donationDismiss": {
+    "message": "Avvisa"
+  },
+  "donationGo": {
+    "message": "Donera"
+  },
+  "donationLater": {
+    "message": "Senare"
+  },
+  "donationMessage": {
+    "message": "Gillar du det? Donera för att stödja framtiden — eller betygsätt det i butiken: varje recension håller uppdateringarna igång."
+  },
+  "donationNever": {
+    "message": "Visa inte igen"
+  },
+  "donationRate": {
+    "message": "Betygsätt"
+  },
+  "donationRateTitle": {
+    "message": "Betygsätt vBookmarks i Chrome Web Store"
+  },
+  "donationV4GuideLink": {
+    "message": "Läs v4-guiden →"
+  },
+  "donationV4Notice": {
+    "message": "vBookmarks 4.0 är en komplett omskrivning med modern design, full av nya funktioner."
+  },
+  "dupesApplyAll": {
+    "message": "Tillämpa alla ($count$)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesApplySelected": {
+    "message": "Deduplicera valda ($count$)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesCleanAll": {
+    "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go.",
+    "message": "Rensa alla: $groups$ grupper, $count$ extra kopior",
+    "placeholders": {
+      "count": {
+        "content": "$2"
+      },
+      "groups": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesCleanRestHint": {
+    "message": "Behåll \"$title$\" och ta bort de andra $count$",
+    "placeholders": {
+      "count": {
+        "content": "$2"
+      },
+      "title": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesConfirmAll": {
+    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark).",
+    "message": "Ta bort $count$ extrakopior i $groups$ grupper? Det valda exemplaret i varje grupp behålls.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    }
+  },
+  "dupesConfirmGroup": {
+    "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept).",
+    "message": "Behåll \"$title$\" och ta bort de andra $count$ kopiorna?",
+    "placeholders": {
+      "count": {
+        "content": "$2"
+      },
+      "title": {
+        "content": "$1",
+        "example": "Example bookmark"
+      }
+    }
+  },
+  "dupesConfirmSelected": {
+    "message": "Ta bort $count$ dubblettbokmärken från de $groups$ valda grupperna?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    }
+  },
+  "dupesDone": {
+    "description": "Alert shown after the duplicate cleanup finished.",
+    "message": "Tog bort $count$ dubbletter av bokmärken",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesGroupCollapse": {
+    "description": "Dupes view group-head context menu: collapse an expanded duplicate group.",
+    "message": "Kollapsa grupp"
+  },
+  "dupesGroupCount": {
+    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL.",
+    "message": "$count$ dubbletter",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesGroupExpand": {
+    "description": "Dupes view group-head context menu: expand a collapsed duplicate group.",
+    "message": "Expandera grupp"
+  },
+  "dupesIgnoreScheme": {
+    "message": "Ignorera http/https-skillnader"
+  },
+  "dupesKeepThis": {
+    "message": "Behåll denna"
+  },
+  "dupesKeeperSet": {
+    "message": "Ange som behållare"
+  },
+  "dupesNone": {
+    "message": "Inga dubbletter hittades"
+  },
+  "dupesPreviewSummary": {
+    "message": "$groups$ grupper · $count$ som ska frigöras",
+    "placeholders": {
+      "count": {
+        "content": "$2"
+      },
+      "groups": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesRemoveRow": {
+    "message": "Ta bort denna kopia"
+  },
+  "dupesRiskBanner": {
+    "message": "Deduplicering tar bort dubblettbokmärken i bulk. Säkerhetskopiera bokmärkena innan."
+  },
+  "dupesScopeAll": {
+    "message": "Alla bokmärken"
+  },
+  "dupesScopeBar": {
+    "message": "Endast bokmärkesfältet"
+  },
+  "dupesStrategyBookmarkBar": {
+    "message": "Behåll den i bokmärkesfältet"
+  },
+  "dupesStrategyMostVisited": {
+    "message": "Behåll mest besökta"
+  },
+  "dupesStrategyNewest": {
+    "message": "Behåll nyaste"
+  },
+  "dupesStrategyOldest": {
+    "message": "Behåll äldsta"
+  },
+  "dupesStrategyShallowest": {
+    "message": "Behåll grundaste"
+  },
+  "dupesStrategyShortestTitle": {
+    "message": "Behåll kortaste titeln"
+  },
+  "edit": {
+    "message": "Redigera..."
+  },
+  "editBookmark": {
+    "message": "Redigera bokmärke"
+  },
+  "editFolder": {
+    "message": "Redigera mapp"
+  },
+  "errorOccured": {
+    "message": "Hoppsan, ett fel inträffade."
+  },
+  "extDesc": {
+    "description": "Tilläggbeskrivningen.",
+    "message": "En popup-bokmärkeshanterare. Förbättrade Neat Bookmarks. Snyggare än Neater Bookmarks."
+  },
+  "extName": {
+    "description": "vBookmarks",
+    "message": "vBookmarks"
+  },
+  "favGalleryAll": {
+    "description": "Favicon gallery source filter chip: show every source.",
+    "message": "Alla"
+  },
+  "favGalleryCompare": {
+    "description": "Favicon gallery toggle button: switch every icon to the generic placeholder it replaced (before/after comparison).",
+    "message": "Jämför med platshållare"
+  },
+  "favGalleryEmptyText": {
+    "description": "Favicon gallery empty-state body text.",
+    "message": "När popupen stöter på en bokmärkt webbplats som Chrome inte har någon ikon för, hämtar vBookmarks den riktiga ikonen och listar den här."
+  },
+  "favGalleryEmptyTitle": {
+    "description": "Favicon gallery empty-state heading.",
+    "message": "Inga uppdaterade ikoner ännu"
+  },
+  "favGalleryFailedHint": {
+    "description": "Favicon gallery hint under the failed-fetch section title.",
+    "message": "Misslyckade försök görs om efter 24 timmar, 3 dagar och 7 dagar, därefter ges de upp tills ikoncachen rensas."
+  },
+  "favGalleryFailedTitle": {
+    "description": "Favicon gallery heading of the muted section listing hosts whose icon fetch failed recently.",
+    "message": "Nyligen försökt, ingen ikon hittades"
+  },
+  "favGalleryGaveUp": {
+    "description": "Favicon gallery badge on a failed-strip host whose retries are exhausted (it stays untouched until the icon cache is cleared).",
+    "message": "Gav upp"
+  },
+  "favGalleryHint": {
+    "description": "Subtitle under the favicon gallery title, explaining the page is read-only.",
+    "message": "Ikoner som vBookmarks hämtade för bokmärkta webbplatser som Chrome inte hade cachat – var varje ikon kommer ifrån och vilka bokmärken som använder den. Endast visning."
+  },
+  "favGalleryLink": {
+    "description": "Options link (Icons group, right of the Clear icon cache button): opens the favicon gallery page listing the sites whose icons were refetched.",
+    "message": "Visa uppdaterade ikoner"
+  },
+  "favGalleryOrphan": {
+    "description": "Favicon gallery note on a card whose host no longer has any bookmark.",
+    "message": "Inget bokmärke finns kvar på den här värden – ikonen rensas med cachen."
+  },
+  "favGallerySearch": {
+    "description": "Placeholder of the favicon gallery filter input.",
+    "message": "Filtrera efter webbplats, titel eller sökväg"
+  },
+  "favGalleryShowingBefore": {
+    "description": "Favicon gallery toggle button while the placeholder comparison is shown: switch back to the real fetched icons.",
+    "message": "Tillbaka till riktiga ikoner"
+  },
+  "favGalleryStatBookmarks": {
+    "description": "Favicon gallery stats strip: how many bookmarks sit on the refreshed sites.",
+    "message": "$n$ bokmärken",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "favGalleryStatSites": {
+    "description": "Favicon gallery stats strip: how many sites have a refreshed icon.",
+    "message": "$n$ webbplatser",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "favGalleryTitle": {
+    "description": "Favicon gallery page title (h1 + document title).",
+    "message": "Uppdaterade webbplatsikoner"
+  },
+  "favGalleryVisits": {
+    "description": "Favicon gallery tooltip on a bookmark row's visit-count pill.",
+    "message": "$n$ registrerade öppningar",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "favSrcDirect": {
+    "description": "Favicon gallery source badge: the icon was fetched directly from the site itself.",
+    "message": "Direkt"
+  },
+  "favSrcLegacy": {
+    "description": "Favicon gallery source badge: cached before the source was recorded, so the origin is unknown.",
+    "message": "Tidigare cache"
+  },
+  "favSrcProxy": {
+    "description": "Favicon gallery source badge: the icon was fetched through the user's own proxy relay.",
+    "message": "Proxy"
+  },
+  "folderCopyConfirm": {
+    "message": "Kopiera listan med $n$ bokmärken?",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "folderCopyDone": {
+    "message": "Kopierade $n$ bokmärkesposter",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "folderCopyJson": {
+    "message": "JSON"
+  },
+  "folderCopyList": {
+    "message": "Kopiera titlar och adresser"
+  },
+  "folderCopyMarkdown": {
+    "message": "Markdown"
+  },
+  "folderCopyText": {
+    "message": "Oformaterad textlista"
+  },
+  "folderEmpty": {
+    "message": "(Tom)"
+  },
+  "folderPickCopyHere": {
+    "message": "Kopiera hit"
+  },
+  "folderPickFavNote": {
+    "message": "Obokmärkta objekt bokmärks här"
+  },
+  "folderPickFilter": {
+    "message": "Filtrera mappar…"
+  },
+  "folderPickMoveHere": {
+    "message": "Flytta hit"
+  },
+  "folderPickPinned": {
+    "message": "Fästa"
+  },
+  "folderPickRecent": {
+    "message": "Senaste"
+  },
+  "general": {
+    "message": "Allmänt"
+  },
+  "groupCopyToFolder": {
+    "message": "Kopiera till mapp…"
+  },
+  "groupPlaceTooltip": {
+    "message": "Spara denna grupp till en mapp…"
+  },
+  "groupSaveToFolder": {
+    "message": "Spara till mapp…"
+  },
+  "ignore": {
+    "message": "Ignorera"
+  },
+  "name": {
+    "description": "Namn på bokmärke eller mapp.",
+    "message": "Namn"
+  },
+  "noTitle": {
+    "description": "Titeln för bokmärken utan titel utan http(s)-URL eller mappar utan titel.",
+    "message": "(ingen titel)"
+  },
+  "nope": {
+    "message": "Avbryt"
+  },
+  "open": {
+    "description": "Åtgärd för att öppna bokmärken.",
+    "message": "Öppna"
+  },
+  "openBookmarks": {
+    "message": "Öppna alla bokmärken"
+  },
+  "openBookmarksInExistingGroup": {
+    "message": "Öppna alla i befintlig flikgrupp…"
+  },
+  "openBookmarksInGroup": {
+    "message": "Öppna alla i ny flikgrupp"
+  },
+  "openBookmarksInGroupSetup": {
+    "message": "Öppna alla i ny flikgrupp…"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "Öppna alla i inkognito"
+  },
+  "openBookmarksNewWindow": {
+    "message": "Öppna alla bokmärken i nytt fönster"
+  },
+  "openCommandPaletteCommand": {
+    "message": "Öppna kommandopalett"
+  },
+  "openIncognitoWindow": {
+    "message": "Öppna i inkognitofönster"
+  },
+  "openNewTab": {
+    "message": "Öppna i ny flik"
+  },
+  "openNewWindow": {
+    "message": "Öppna i nytt fönster"
+  },
+  "openSidePanelCommand": {
+    "message": "Öppna vBookmarks sidopanel"
+  },
+  "optionAnnounceEnabled": {
+    "message": "Visa meddelanden i produkten"
+  },
+  "optionAnnounceEnabledHint": {
+    "message": "Versionsinformation och tips från projektets GitHub-repository (hämtas högst var 6:e timme). Avaktivering stoppar även nätverkshämtningen."
+  },
+  "optionAutoRefreshSync": {
+    "message": "Uppdatera synkroniseringsstatus automatiskt"
+  },
+  "optionAutoResizePopup": {
+    "message": "Justera automatiskt popup-fönstrets storlek för att passa innehållet"
+  },
+  "optionClassicExperience": {
+    "message": "Återställ den klassiska rubriken"
+  },
+  "optionClassicExperienceHint": {
+    "message": "Stänger av kommandopaletten, snabbstjärnan, dess snabbmenypost på sidor, verktygsknappen och vyflikarna. Var och en kan återaktiveras individuellt i sitt avsnitt."
+  },
+  "optionClickNewTab": {
+    "message": "Vänsterklick öppnar bokmärke i ny flik."
+  },
+  "optionCloseUnusedFolders": {
+    "message": "Stäng oanvända mappar när en mapp öppnas."
+  },
+  "optionCollapseAddFolderMenu": {
+    "message": "Fäll ihop lägg-till-mapp-posterna"
+  },
+  "optionCollapseAddFolderMenuHint": {
+    "message": "Slå samman lägg-till-mapp-poster (före/efter/inuti på mapprader, före/efter på bokmärkesrader) till en undermenypost."
+  },
+  "optionCollapseSortMenu": {
+    "message": "Fäll ihop sorteringsposterna till en undermeny \"Sortera\""
+  },
+  "optionCollapseSortMenuHint": {
+    "message": "Gäller högerklicksmenyn för mappar. Aktiverad som standard."
+  },
+  "optionCollapseTabGroupMenu": {
+    "message": "Fäll ihop flikgruppsposterna till en undermeny \"Flikgrupper\""
+  },
+  "optionCollapseTabGroupMenuHint": {
+    "message": "Gäller högerklicksmenyerna för mappar och bokmärken. Av som standard; gör att menyer med låg höjd blir kortare på små skärmar eller vid hög zoom."
+  },
+  "optionConfirmDeleteFolder": {
+    "message": "Bekräfta innan du tar bort icke-tomma mappar"
+  },
+  "optionConfirmOpenFolder": {
+    "message": "Visa bekräftelse när många bokmärken öppnas från en mapp."
+  },
+  "optionDeadProxyServer": {
+    "message": "Proxyserver för döda länkar"
+  },
+  "optionDeadProxyStrip": {
+    "message": "Visa tipset om att lägga till en proxy i vyn över döda länkar"
+  },
+  "optionDeadProxyStripHint": {
+    "message": "Av döljer tipset där; proxyservern förblir konfigurerbar här, och en sparad server visar alltid sin hanteringsrad i vyn."
+  },
+  "optionDeadScanConcurrency": {
+    "message": "Samtidiga sökningar döda länkar (1-16)"
+  },
+  "optionDeadScanTimeout": {
+    "message": "Timeout för sökning döda länkar i sekunder (2-30)"
+  },
+  "optionFaviconBackup": {
+    "message": "Inkludera ikoncache i säkerhetskopior"
+  },
+  "optionFaviconBackupHint": {
+    "message": "Inkludera även den berikade faviconcachen (webbplatsdata, kan vara omfattande) i export/import av inställningar. Detta omfattar redan cachelagrade ikoner även när hämtning är avstängd. Avstängt håller säkerhetskopiorna små; ikonerna hämtas automatiskt ändå."
+  },
+  "optionFaviconCacheClear": {
+    "message": "Rensa ikoncachen"
+  },
+  "optionFaviconCacheClearConfirm": {
+    "message": "Rensa den berikade faviconcachen? Ikonerna hämtas automatiskt igen vid nästa öppning."
+  },
+  "optionFaviconCacheCleared": {
+    "message": "Ikoncachen rensad. Ikoner hämtas om vid nästa öppning."
+  },
+  "optionFaviconCacheEmpty": {
+    "message": "Ingen faviconcache att rensa."
+  },
+  "optionFaviconContrast": {
+    "message": "Invertera kontrastsvaga favicons"
+  },
+  "optionFaviconContrastHint": {
+    "message": "Vita ikoner på ljusa teman och svarta ikoner på mörka teman inverteras så att de förblir synliga. Varje ikon kontrolleras en gång vid inläsning – ingen påverkan på prestandan under surfning."
+  },
+  "optionFaviconEnrich": {
+    "message": "Hämta saknade webbplatsikoner"
+  },
+  "optionFaviconEnrichAgg": {
+    "message": "Tredjepartsikon som reserv"
+  },
+  "optionFaviconEnrichAggHint": {
+    "message": "När direkt hämtning misslyckas slås ikonen upp efter domän i en inbyggd lista med tredjeparts-ikontjänster ($providers$). En onåbar tjänst hoppas över och nästa i listan anropas — den anropas inte igen på 6 timmar.",
+    "placeholders": {
+      "providers": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionFaviconEnrichHint": {
+    "message": "För bokmärkta webbplatser där Chrome inte har någon cachad ikon, hämta den faktiska ikonen direkt från webbplatsen (/favicon.ico, sedan sidans deklarerade ikoner). Förfrågningar skickas endast till webbplatser du har bokmärkt."
+  },
+  "optionHighlightUnsynced": {
+    "message": "Dämpa osynkroniserade bokmärken"
+  },
+  "optionLanguage": {
+    "message": "Språk"
+  },
+  "optionLanguageAuto": {
+    "message": "Automatiskt"
+  },
+  "optionLanguageHint": {
+    "message": "Om språket ändras laddas den här sidan om."
+  },
+  "optionOnlyShowBookmarkBar": {
+    "message": "Visa endast bokmärken i bokmärkesfältet"
+  },
+  "optionOpenInSidePanel": {
+    "message": "Öppna i sidopanel istället för popup"
+  },
+  "optionOpenNewTab": {
+    "message": "Mittenklick eller kontroll-klick öppnar bokmärke i ny bakgrundsflik (istället för förgrund)."
+  },
+  "optionPaletteEnabled": {
+    "message": "Aktivera kommandopaletten (Ctrl/Cmd+K)"
+  },
+  "optionPopupStays": {
+    "message": "Popup förblir öppen när bokmärken öppnas (vänsterklick)."
+  },
+  "optionQuickAddContextMenu": {
+    "message": "Lägg till \"Bokmärk den här sidan med vBookmarks\" i sidans högerklicksmeny."
+  },
+  "optionQuickAddContextMenuHint": {
+    "message": "Fristående från stjärnknappen för snabbt tillägg; återställning av den klassiska upplevelsen stänger även av den här posten."
+  },
+  "optionQuickAddEnabled": {
+    "message": "Visa snabbstjärnknappen bredvid sökrutan"
+  },
+  "optionRecentCollapsed": {
+    "message": "Dölj avsnittet för nyligen tillagda som standard"
   },
   "optionRecentCount": {
     "message": "Antal nyligen tillagda bokmärken att visa"
+  },
+  "optionRememberPrevState": {
+    "message": "Kom ihåg föregående tillstånd (rullningsposition, öppnade mappar och senast fokuserade objekt)."
+  },
+  "optionRememberView": {
+    "message": "Kom ihåg den senast aktiva vyn och öppna den igen"
+  },
+  "optionSearchAfterEnter": {
+    "message": "Sök bokmärken endast när ENTER trycks (istället för omedelbar sökning)"
   },
   "optionSearchHistory": {
     "message": "Visa sökhistorikområdet"
@@ -276,17 +1061,496 @@
   "optionSearchHistoryHint": {
     "message": "Dölj området för senaste sökningar ovanför resultaten — sparade frågor behålls"
   },
+  "optionShowDeadView": {
+    "message": "Visa fliken för döda länkar"
+  },
+  "optionShowDupesView": {
+    "message": "Visa fliken för dubbletter"
+  },
+  "optionShowItemPath": {
+    "message": "Visa sökvägen till överordnad mapp i listraderna"
+  },
+  "optionShowRecentBookmarks": {
+    "message": "Visa nyligen tillagda bokmärken överst i popupen"
+  },
+  "optionShowStatsView": {
+    "message": "Visa statistikfliken"
+  },
+  "optionShowSyncStatus": {
+    "message": "Visa synkroniseringsstatusindikatorer"
+  },
+  "optionShowTabBadges": {
+    "message": "Visa antalsmärken på vyflikarna"
+  },
+  "optionShowTabGroupsView": {
+    "message": "Visa flikgruppsvyn"
+  },
+  "optionShowToolButton": {
+    "message": "Visa verktygsknappen (⋮) bredvid sökrutan"
+  },
+  "optionShowViewTabs": {
+    "message": "Visa vyflikar under sökrutan"
+  },
+  "optionStagingEnabled": {
+    "message": "Aktivera staging-området"
+  },
+  "optionStagingEnabledHint": {
+    "message": "När avstängd visar denna vy endast listan över nyligen tillagda, och alla staging-knappar eller menyposter i de andra vyerna döljs."
+  },
+  "optionStatsEnabled": {
+    "message": "Aktivera besöksstatistik"
+  },
+  "optionSyncRefreshInterval": {
+    "message": "Uppdateringsintervall"
+  },
+  "optionSyncRefreshIntervalSeconds": {
+    "message": "sekunder"
+  },
+  "optionTabGroupsClosedLimit": {
+    "message": "Antal stängda flikar/grupper att spara"
+  },
+  "optionTheme": {
+    "message": "Tema"
+  },
+  "optionThemeAuto": {
+    "message": "Följ systemet"
+  },
+  "optionThemeDark": {
+    "message": "Mörkt"
+  },
+  "optionThemeInk": {
+    "message": "Bläck (mörkt)"
+  },
+  "optionThemeLight": {
+    "message": "Ljust"
+  },
+  "optionThemePaper": {
+    "message": "Papper (ljust)"
+  },
+  "optionTreeRowActions": {
+    "message": "Hovringsåtgärder på trädrader (redigera / stage / ta bort)"
+  },
+  "optionVirtualScrollLab": {
+    "message": "Virtuell rullning (experimentell)"
+  },
+  "optionVirtualScrollLabHint": {
+    "message": "Vyn för flikgrupper och dubbletter renderar endast raderna nära visningsporten. Mycket snabbare på mycket stora listor; medan den är experimentell är rullningslägets position en uppskattning."
+  },
+  "optionZoom": {
+    "message": "Zoom"
+  },
+  "options": {
+    "message": "Alternativ"
+  },
+  "optionsDonate": {
+    "message": "Donera"
+  },
+  "optionsFooterText": {
+    "description": "Footer text for the Options page",
+    "message": "Skapad av $authorName$.",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionsGithubLink": {
+    "message": "GitHub"
+  },
+  "optionsGroupBackup": {
+    "message": "Säkerhetskopiering"
+  },
+  "optionsGroupContextMenu": {
+    "message": "Snabbmenyer"
+  },
+  "optionsGroupIcons": {
+    "message": "Ikoner"
+  },
+  "optionsGroupLabs": {
+    "message": "Labb"
+  },
+  "optionsGroupPalette": {
+    "message": "Kommandopalett"
+  },
+  "optionsGroupSort": {
+    "message": "Sortering"
+  },
+  "optionsGroupStats": {
+    "message": "Statistik"
+  },
+  "optionsGroupTools": {
+    "message": "Verktyg"
+  },
+  "optionsGroupViews": {
+    "message": "Vyer"
+  },
+  "optionsHomepageLink": {
+    "message": "Hemsida"
+  },
+  "optionsSince": {
+    "message": "Underhålls i $days$ dagar, baserat på Neat Bookmarks.",
+    "placeholders": {
+      "days": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionsStagingSection": {
+    "message": "Staging och nyligen tillagda"
+  },
+  "optionsStorageLocalTip": {
+    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting).",
+    "message": "Lagras endast på den här enheten — delas inte via Chrome-synkronisering."
+  },
+  "optionsStorageSyncTip": {
+    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting).",
+    "message": "Synkroniseras via ditt Chrome-konto — denna inställning delas mellan dina enheter."
+  },
+  "optionsVersion": {
+    "message": "vBookmarks version"
+  },
+  "paletteActionOpenUrl": {
+    "message": "Öppna URL"
+  },
+  "paletteActionOpenUrlGroup": {
+    "message": "Öppna bokmärkesmappgrupp"
+  },
+  "paletteActionUrlTemplate": {
+    "message": "Öppna URL-mall"
+  },
+  "paletteActionViewPreset": {
+    "message": "Öppna vy med förinställning"
+  },
+  "paletteClose": {
+    "message": "Stäng"
+  },
+  "paletteCmdDead": {
+    "message": "Hitta döda länkar"
+  },
+  "paletteCmdDupes": {
+    "message": "Rensa dubbletter av bokmärken"
+  },
+  "paletteCmdGoDead": {
+    "message": "Gå till vyn Döda länkar"
+  },
+  "paletteCmdGoDupes": {
+    "message": "Gå till vyn Dubbletter"
+  },
+  "paletteCmdGoRecent": {
+    "message": "Gå till vyn Senaste"
+  },
+  "paletteCmdGoSearch": {
+    "message": "Gå till vyn Sök"
+  },
+  "paletteCmdGoStats": {
+    "message": "Gå till vyn Statistik"
+  },
+  "paletteCmdGoTabGroups": {
+    "message": "Gå till flikgruppsvyn"
+  },
+  "paletteCmdGoTree": {
+    "message": "Gå till vyn Träd"
+  },
+  "paletteCmdLang": {
+    "message": "Byt språk…"
+  },
+  "paletteCmdLangUsage": {
+    "message": "Användning: /lang följt av en språkkod — t.ex. /lang en, /lang zh_CN, /lang ja."
+  },
+  "paletteCmdNewBookmark": {
+    "message": "Nytt bokmärke…"
+  },
+  "paletteCmdNewFolder": {
+    "message": "Ny mapp…"
+  },
+  "paletteCmdOptions": {
+    "message": "Öppna inställningssidan"
+  },
+  "paletteCmdQuickAdd": {
+    "message": "Bokmärk aktuell flik"
+  },
+  "paletteCmdSaveAsCommand": {
+    "message": "Spara \"$1\" som ett kommando…"
+  },
+  "paletteCmdSaveSession": {
+    "message": "Spara fönsterflikar som mapp"
+  },
+  "paletteCmdSearchInView": {
+    "message": "Sök '$query$' i vyn Sök",
+    "placeholders": {
+      "query": {
+        "content": "$1"
+      }
+    }
+  },
+  "paletteCmdTheme": {
+    "message": "Välj tema…"
+  },
+  "paletteCmdThemeUsage": {
+    "message": "Användning: /theme följt av ett temanamn — auto, light, dark, ink eller paper (ett unikt prefix fungerar, t.ex. /theme d)."
+  },
+  "paletteCmdToggleViewTabs": {
+    "message": "Växla flikvy"
+  },
+  "paletteCmdVersion": {
+    "message": "Versionsinfo"
+  },
+  "paletteCustomAction": {
+    "message": "Åtgärd"
+  },
+  "paletteCustomAdd": {
+    "message": "Lägg till kommando…"
+  },
+  "paletteCustomAliases": {
+    "message": "Alias (kommaseparerade)"
+  },
+  "paletteCustomBroken": {
+    "message": "Mappen för kommandot \"$1\" finns inte längre. Ta bort kommandot?"
+  },
+  "paletteCustomDeleteConfirm": {
+    "message": "Ta bort kommandot \"$1\"? Ändringen synkroniseras till alla dina enheter."
+  },
+  "paletteCustomEmpty": {
+    "message": "Inga anpassade kommandon ännu."
+  },
+  "paletteCustomErrAction": {
+    "message": "Välj en åtgärdstyp."
+  },
+  "paletteCustomErrAlias": {
+    "message": "Alias: samma regler som för snedstrecket (1–24 tecken med gemener, siffror eller bindestreck)."
+  },
+  "paletteCustomErrFolder": {
+    "message": "Välj en bokmärkesmapp."
+  },
+  "paletteCustomErrLimit": {
+    "message": "Kommandogränsen är nådd (100) – ta bort ett först."
+  },
+  "paletteCustomErrSlash": {
+    "message": "Snedstreck: 1–24 tecken med gemener, siffror eller bindestreck, och måste börja med bokstav eller siffra."
+  },
+  "paletteCustomErrTaken": {
+    "message": "Det snedstrecket eller aliaset är redan upptaget."
+  },
+  "paletteCustomErrTemplate": {
+    "message": "Mallen måste innehålla exakt ett %s."
+  },
+  "paletteCustomErrUrl": {
+    "message": "Endast URL:er med http:// eller https:// är tillåtna."
+  },
+  "paletteCustomErrView": {
+    "message": "Välj en vy."
+  },
+  "paletteCustomFolder": {
+    "message": "Bokmärkesmapp"
+  },
+  "paletteCustomHint": {
+    "message": "Anpassade snedstreckskommandon för kommandopaletten (Ctrl/Cmd+K). De synkroniseras med dina inställningar — max 100 poster."
+  },
+  "paletteCustomSave": {
+    "message": "Spara kommandot"
+  },
+  "paletteCustomScan": {
+    "message": "Starta skanningen vid inmatning"
+  },
+  "paletteCustomScope": {
+    "message": "Förinställt dedupliceringsomfång"
+  },
+  "paletteCustomSlash": {
+    "message": "Snedstreck (ordet efter /)"
+  },
+  "paletteCustomStrategy": {
+    "message": "Förinställd dedupliceringsstrategi"
+  },
+  "paletteCustomTag": {
+    "message": "anpassad"
+  },
+  "paletteCustomTemplate": {
+    "message": "URL-mall — %s ersätts av orden efter kommandot"
+  },
+  "paletteCustomUrl": {
+    "message": "URL"
+  },
+  "paletteCustomUsage": {
+    "message": "$1 / $2"
+  },
+  "paletteCustomView": {
+    "message": "Vy"
+  },
+  "paletteCustomWhere": {
+    "message": "Öppna i"
+  },
+  "paletteNoResults": {
+    "message": "Inga matchande resultat"
+  },
+  "palettePlaceholder": {
+    "message": "Sök bokmärken, mappar, kommandon…"
+  },
+  "paletteWhereBackground": {
+    "message": "Bakgrundsflikar"
+  },
+  "paletteWhereCurrent": {
+    "message": "Aktuell flik"
+  },
+  "paletteWhereTab": {
+    "message": "Ny flik"
+  },
+  "paletteWhereWindow": {
+    "message": "Nytt fönster"
+  },
+  "parentFolder": {
+    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
+    "message": "Överordnad mapp: \"$folderName$\"",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarksbar"
+      }
+    }
+  },
+  "pasteDone": {
+    "message": "Inklistrat"
+  },
+  "pasteGone": {
+    "message": "Bokmärket finns inte längre — urklipp rensat"
+  },
+  "pasteHere": {
+    "message": "Klistra in här"
+  },
+  "pinFolder": {
+    "message": "Fäst denna mapp"
+  },
+  "quickAddBookmark": {
+    "message": "Bokmärk denna sida (Ctrl+D)"
+  },
+  "quickAddBookmarkCommand": {
+    "message": "Lägg snabbt till aktuell flik som bokmärke"
+  },
+  "quickAdded": {
+    "message": "Bokmärke tillagt"
+  },
+  "quickAddedTo": {
+    "message": "Bokmärke tillagt i $folderName$",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarks bar"
+      }
+    }
+  },
+  "quickRemoveBookmark": {
+    "message": "Ta bort detta bokmärke (Ctrl+D)"
+  },
+  "quickRemoved": {
+    "message": "Bokmärke borttaget"
+  },
+  "recentBookmarks": {
+    "message": "Nyligen tillagda"
+  },
   "recentEmpty": {
     "message": "Inga nyligen bokmärken. Tryck Ctrl+D för att bokmärka aktuell sida."
+  },
+  "recentGroupMonth": {
+    "message": "Denna månad"
+  },
+  "recentGroupOlder": {
+    "message": "Äldre"
+  },
+  "recentGroupToday": {
+    "message": "Idag"
+  },
+  "recentGroupWeek": {
+    "message": "Denna vecka"
   },
   "recentRevealInTree": {
     "message": "Visa i träd"
   },
+  "recentSectionTitle": {
+    "message": "Nyligen tillagda"
+  },
+  "recentStageAll": {
+    "message": "Köa alla nyligen tillagda"
+  },
+  "recentStageGroup": {
+    "message": "Skicka $t$ till mellanlagringsområdet",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
+  },
+  "removeSeparator": {
+    "message": "Ta bort avskiljare"
+  },
+  "replaceUrl": {
+    "message": "Ersätt detta med aktuell URL"
+  },
+  "reportError": {
+    "message": "Rapportera fel"
+  },
+  "reportedToDeveloper": {
+    "description": "Ett meddelande för ett fel som inträffade i tillägget, har rapporterats till utvecklaren.",
+    "message": "Detta har rapporterats till utvecklaren."
+  },
+  "resetButton": {
+    "message": "Återställ"
+  },
+  "resetSettings": {
+    "message": "Återställ inställningar"
+  },
+  "resetSettingsDescription": {
+    "message": "Återställ vBookmarks till standardinställningar."
+  },
+  "revealOutsideBarAction": {
+    "message": "Visa alla och avslöja"
+  },
+  "revealOutsideBarHint": {
+    "message": "Endast bokmärkesfältet visas: målet ligger utanför det."
+  },
+  "riskBannerDismiss": {
+    "message": "Stäng"
+  },
+  "riskBannerHelp": {
+    "message": "Säkerhetskopierings- och återställningsguide"
+  },
+  "riskBannerNever": {
+    "message": "Visa inte igen"
+  },
+  "rowActionDelete": {
+    "message": "Radera"
+  },
+  "rowActionMark": {
+    "message": "Markera som död"
+  },
+  "rowActionReveal": {
+    "message": "Visa i träd"
+  },
+  "rowActionUnmark": {
+    "message": "Ta bort död-markering"
+  },
+  "save": {
+    "message": "Spara"
+  },
+  "searchBookmarks": {
+    "description": "Platshållartext för sökfältet.",
+    "message": "Sök bokmärken"
+  },
+  "searchClear": {
+    "message": "Rensa sökning"
+  },
   "searchHistoryClear": {
     "message": "Rensa alla"
   },
+  "searchHistoryClose": {
+    "message": "Dölj sökhistorik"
+  },
+  "searchHistoryClosedToast": {
+    "message": "Sökhistoriken är dold — aktivera den igen under Alternativ → Sök"
+  },
   "searchHistoryRemove": {
     "message": "Ta bort denna sökning"
+  },
+  "searchHistoryRerun": {
+    "message": "Sök igen"
   },
   "searchHistoryResultCount": {
     "message": "$n$ resultat",
@@ -298,6 +1562,895 @@
   },
   "searchHistoryTitle": {
     "message": "Senaste sökningar"
+  },
+  "searchNoResults": {
+    "message": "Inga matchande bokmärken"
+  },
+  "searchResultCount": {
+    "message": "$n$ resultat",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "searchStageAllGroup": {
+    "message": "Skicka alla resultat till gruppen \"$1$\"",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "searchViewHint": {
+    "message": "Skriv i rutan ovan för att söka dina bokmärken"
+  },
+  "selectAll": {
+    "message": "Alla"
+  },
+  "selectClear": {
+    "message": "Rensa"
+  },
+  "selectCount": {
+    "message": "$count$ valda",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "selectInvert": {
+    "message": "Invertera"
+  },
+  "selectModeEnter": {
+    "message": "Välj"
+  },
+  "selectModeExit": {
+    "message": "Avsluta markering"
+  },
+  "separatorOptions": {
+    "message": "Avgränsare"
+  },
+  "sessionEmpty": {
+    "message": "Inga flikar att spara"
+  },
+  "sessionFolderName": {
+    "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm.",
+    "message": "Session $date$",
+    "placeholders": {
+      "date": {
+        "content": "$1",
+        "example": "2026-07-18 15:04"
+      }
+    }
+  },
+  "sessionSaved": {
+    "description": "Alert shown after the current window's tabs were saved into a new bookmark folder.",
+    "message": "Sparade $count$ flikar i en ny mapp",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "12"
+      }
+    }
+  },
+  "settingsBackupHint": {
+    "message": "Export sparar alla inställningar (inklusive synkroniseringspreferenser) till en JSON-fil. Import sammanfogar en säkerhetskopia: inställningarna i filen skriver över de nuvarande, allt annat behålls."
+  },
+  "settingsExport": {
+    "message": "Exportera inställningar"
+  },
+  "settingsImport": {
+    "message": "Importera inställningar"
+  },
+  "settingsImportConfirm": {
+    "message": "Import kommer att skriva över alla inställningar som finns i säkerhetskopian (inställningar som inte finns i filen behålls) och ladda om denna sida. Fortsätta?"
+  },
+  "settingsImportDone": {
+    "message": "Inställningar importerade. Sidan kommer nu att laddas om."
+  },
+  "settingsImportError": {
+    "message": "Vissa inställningar kunde inte skrivas (lagringskvot eller ett tillfälligt fel). Importen slutfördes inte – försök igen."
+  },
+  "settingsImportInvalid": {
+    "message": "Ogiltig inställningsfil: inte en säkerhetskopia av vBookmarks-inställningar."
+  },
+  "sortByDate": {
+    "message": "Sortera efter tilläggsdatum"
+  },
+  "sortByDateAdded": {
+    "message": "Efter datum (nyast först)"
+  },
+  "sortByName": {
+    "message": "Sortera efter namn"
+  },
+  "sortByTitle": {
+    "message": "Efter titel"
+  },
+  "sortDone": {
+    "message": "Mapp sorterad"
+  },
+  "sortFolderContents": {
+    "message": "Sortera mappinnehåll"
+  },
+  "sortFoldersFirst": {
+    "message": "Behåll mappar överst"
+  },
+  "sortMenuOptions": {
+    "message": "Sortera"
+  },
+  "sortOptions": {
+    "message": "Sorteringsalternativ…"
+  },
+  "sortRecursive": {
+    "message": "Sortera även undermappar (rekursivt)"
+  },
+  "sortRecursiveSuffix": {
+    "message": "(rekursiv)"
+  },
+  "sortRecursiveWarning": {
+    "message": "Detta sorterar om bokmärken i varje undermapp."
+  },
+  "stagedToast": {
+    "message": "Köade $n$ flikar som gruppen ”$t$”",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "t": {
+        "content": "$2"
+      }
+    }
+  },
+  "stagingAdd": {
+    "message": "Skicka till staging"
+  },
+  "stagingAdded": {
+    "message": "Skickat till staging"
+  },
+  "stagingAddedSummary": {
+    "message": "Tillagt $n$ objekt; $m$ redan i väntelistan",
+    "placeholders": {
+      "m": {
+        "content": "$2"
+      },
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingAlready": {
+    "message": "Redan i väntelistan"
+  },
+  "stagingBucketFavAll": {
+    "message": "Favoritmarkera alla"
+  },
+  "stagingBucketTitle": {
+    "message": "Obokmärkta"
+  },
+  "stagingClear": {
+    "message": "Rensa kö"
+  },
+  "stagingClearConfirm": {
+    "message": "Rensa hela köområdet? Bokmärkesträdet påverkas inte."
+  },
+  "stagingClearConfirmOk": {
+    "message": "Rensa"
+  },
+  "stagingCleared": {
+    "message": "Köområdet rensat"
+  },
+  "stagingConfirmFolder": {
+    "message": "Köa $n$ bokmärken från denna mapp?",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingConfirmFolderOk": {
+    "message": "Scen"
+  },
+  "stagingCopyDone": {
+    "message": "Kopierade $n$ objekt",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingCount": {
+    "message": "$n$ i kö",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingDeleteConfirm": {
+    "message": "Ta bort $n$ objekt? Obokmärkta lämnar bara köområdet.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingDeleted": {
+    "message": "Tog bort $n$ bokmärken",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingEmpty": {
+    "message": "Inget är klart ännu. Skicka bokmärken hit från valfri vy — plan-knappen på en rad eller högerklicksmenyn — och organisera och arkivera dem i bulk."
+  },
+  "stagingFav": {
+    "message": "Favoritmarkera"
+  },
+  "stagingFavDone": {
+    "message": "Favoritmarkerade $n$ objekt",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingFolderEmpty": {
+    "message": "Denna mapp har inga bokmärken att köa"
+  },
+  "stagingFromHistory": {
+    "message": "Från historik"
+  },
+  "stagingFull": {
+    "message": "Väntelistan är full — ta bort några objekt först"
+  },
+  "stagingGroupAssign": {
+    "message": "Grupp…"
+  },
+  "stagingGroupAssignTitle": {
+    "message": "Tilldela till en grupp"
+  },
+  "stagingGroupCollapse": {
+    "message": "Kollapsa grupp"
+  },
+  "stagingGroupDelete": {
+    "message": "Ta bort grupp (med objekt)"
+  },
+  "stagingGroupDeleteConfirm": {
+    "message": "Ta bort gruppen \"$1\"? Dess $2 objekt(er) lämnar också mellanlagringsområdet."
+  },
+  "stagingGroupDeleted": {
+    "message": "Grupp borttagen — $1 objekt(er) borttagna"
+  },
+  "stagingGroupDissolve": {
+    "message": "Upplös grupp"
+  },
+  "stagingGroupDissolved": {
+    "message": "Grupp upplöst — objekt behålls i väntelistan"
+  },
+  "stagingGroupExpand": {
+    "message": "Expandera grupp"
+  },
+  "stagingGroupNamePrompt": {
+    "message": "Namn på ny grupp"
+  },
+  "stagingGroupNew": {
+    "message": "Ny grupp"
+  },
+  "stagingGroupNoGroups": {
+    "message": "Inga grupper ännu"
+  },
+  "stagingGroupRename": {
+    "message": "Byt namn på grupp…"
+  },
+  "stagingGroupSelectAll": {
+    "message": "Välj alla i gruppen"
+  },
+  "stagingGuideDismiss": {
+    "message": "Visa inte igen"
+  },
+  "stagingGuideText": {
+    "message": "Organisera bokmärken här — markera rader och gå in i markeringsläge för batchåtgärder."
+  },
+  "stagingMoveConfirm": {
+    "message": "Flytta $n$ objekt till vald mapp?",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingMoveConfirmOk": {
+    "message": "Flytta"
+  },
+  "stagingMoveCopy": {
+    "message": "Flytta/kopiera till…"
+  },
+  "stagingMoveDone": {
+    "message": "Flyttade $n$ objekt hem",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingNew": {
+    "message": "nya $n$",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingRemove": {
+    "message": "Ta bort från väntelistan"
+  },
+  "stagingRemoved": {
+    "message": "Borttagen från väntelistan"
+  },
+  "stagingRemovedCount": {
+    "message": "Tog bort $n$ objekt från köområdet",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingRowFav": {
+    "message": "Favoritmarkera detta objekt"
+  },
+  "stagingRowUnfav": {
+    "message": "Avfavoritmarkera detta objekt"
+  },
+  "stagingShortcutAdd": {
+    "message": "Lägg till genväg"
+  },
+  "stagingShortcutAlias": {
+    "message": "Alias"
+  },
+  "stagingShortcutBarLabel": {
+    "message": "Flytta till:"
+  },
+  "stagingShortcutEdit": {
+    "message": "Redigera genväg"
+  },
+  "stagingShortcutMove": {
+    "message": "Flytta markerade till $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingShortcutPickFolder": {
+    "message": "Välj målmapp…"
+  },
+  "stagingShortcutRemove": {
+    "message": "Ta bort genväg"
+  },
+  "stagingShortcutRemoved": {
+    "message": "Genväg borttagen"
+  },
+  "stagingShortcutSave": {
+    "message": "Spara"
+  },
+  "stagingShortcutTitle": {
+    "message": "Flytta till genväg"
+  },
+  "stagingUnfav": {
+    "message": "Avfavoritmarkera"
+  },
+  "stagingUnfavDone": {
+    "message": "Avmarkerat $n$ objekt",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "statsClearConfirm": {
+    "message": "Rensa besöksstatistik för $count$ bokmärken? Detta kan inte ångras.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "statsClearData": {
+    "message": "Rensa statistik"
+  },
+  "statsDisabledHint": {
+    "message": "Besöksstatistik är avstängd — aktivera i Inställningar → Vyer"
+  },
+  "statsEmpty": {
+    "message": "Statistik byggs upp när du öppnar bokmärken"
+  },
+  "statsHistoryAdd": {
+    "message": "Lägg till i bokmärken"
+  },
+  "statsHistoryBanner": {
+    "message": "Ge historikåtkomst för att fylla besöksstatistik med dina tidigare besök."
+  },
+  "statsHistoryBookmarked": {
+    "message": "Bokmärkt"
+  },
+  "statsHistoryDismiss": {
+    "message": "Visa inte igen"
+  },
+  "statsHistoryEnable": {
+    "message": "Aktivera"
+  },
+  "statsHistoryGuide": {
+    "message": "Ge åtkomst till historik för att lista dina senaste besök här."
+  },
+  "statsHistoryImported": {
+    "message": "Importerade tidigare besök för $count$ bokmärken",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "statsSectionBookmarks": {
+    "message": "Bokmärkesstatistik"
+  },
+  "statsSectionRecent": {
+    "message": "Senaste besök"
+  },
+  "statsShowUnbookmarked": {
+    "message": "Visa omarkerade"
+  },
+  "statsShowUnbookmarkedHint": {
+    "message": "Inkludera sidor från historiken som inte är sparade som bokmärken."
+  },
+  "statsSortByCount": {
+    "message": "Efter antal"
+  },
+  "statsSortByRecent": {
+    "message": "Efter senaste"
+  },
+  "statsVisitCount": {
+    "message": "Besökt $count$ gånger",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "storageUsageFree": {
+    "message": "Ledigt"
+  },
+  "storageUsageHint": {
+    "message": "Endast lokal lagring för tillägget (chrome.storage.local, cirka 10 MB-kvot): ikoncachen plus inställningar och andra lokala data. Synkroniserade inställningar, sessionsdata och själva bokmärkesbiblioteket räknas inte här."
+  },
+  "storageUsageIcon": {
+    "message": "Ikoncache"
+  },
+  "storageUsageOther": {
+    "message": "Övrigt"
+  },
+  "storageUsageSummary": {
+    "message": "Använt $1$ av $2$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      },
+      "2": {
+        "content": "$2"
+      }
+    }
+  },
+  "syncOptions": {
+    "message": "Synkroniseringsalternativ"
+  },
+  "syncStatusLocal": {
+    "message": "Endast lokalt — inte uppladdat"
+  },
+  "syncStatusSynced": {
+    "message": "Synkroniserat till ditt Google-konto"
+  },
+  "syncStatusUnsyncable": {
+    "message": "Kan inte synkroniseras"
+  },
+  "syncSuffixLocal": {
+    "message": "(Lokalt)"
+  },
+  "syncSuffixSynced": {
+    "message": "(Synkroniserat)"
+  },
+  "tabGroupColorBlue": {
+    "description": "Accessible name of the blue color swatch in the new-tab-group dialog.",
+    "message": "blå"
+  },
+  "tabGroupColorCyan": {
+    "description": "Accessible name of the cyan color swatch in the new-tab-group dialog.",
+    "message": "cyan"
+  },
+  "tabGroupColorGreen": {
+    "description": "Accessible name of the green color swatch in the new-tab-group dialog.",
+    "message": "grön"
+  },
+  "tabGroupColorGrey": {
+    "description": "Accessible name of the grey color swatch in the new-tab-group dialog.",
+    "message": "grå"
+  },
+  "tabGroupColorLabel": {
+    "message": "Färg"
+  },
+  "tabGroupColorOrange": {
+    "description": "Accessible name of the orange color swatch in the new-tab-group dialog.",
+    "message": "orange"
+  },
+  "tabGroupColorPink": {
+    "description": "Accessible name of the pink color swatch in the new-tab-group dialog.",
+    "message": "rosa"
+  },
+  "tabGroupColorPurple": {
+    "description": "Accessible name of the purple color swatch in the new-tab-group dialog.",
+    "message": "lila"
+  },
+  "tabGroupColorRed": {
+    "description": "Accessible name of the red color swatch in the new-tab-group dialog.",
+    "message": "röd"
+  },
+  "tabGroupColorYellow": {
+    "description": "Accessible name of the yellow color swatch in the new-tab-group dialog.",
+    "message": "gul"
+  },
+  "tabGroupDialogTitle": {
+    "message": "Ny flikgrupp"
+  },
+  "tabGroupNoGroups": {
+    "message": "Inga befintliga flikgrupper"
+  },
+  "tabGroupOptions": {
+    "message": "Flikgrupper"
+  },
+  "tabGroupPickDialogTitle": {
+    "message": "Öppna i befintlig flikgrupp"
+  },
+  "tabGroupTitleLabel": {
+    "message": "Grupptitel"
+  },
+  "tabGroupUntitled": {
+    "message": "Namnlös grupp"
+  },
+  "tabGroupsActivateGroup": {
+    "message": "Gå till flikgrupp"
+  },
+  "tabGroupsActivateTab": {
+    "message": "Gå till flik"
+  },
+  "tabGroupsAddBookmark": {
+    "message": "Bokmärk denna flik"
+  },
+  "tabGroupsBatchClosedTitle": {
+    "message": "Stängda flikar"
+  },
+  "tabGroupsBookmarkRemoved": {
+    "message": "Tog bort $count$ bokmärke(n)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsBookmarked": {
+    "message": "Bokmärkt"
+  },
+  "tabGroupsBookmarksAdded": {
+    "message": "Lade till $count$ bokmärke(n) i $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsClearClosedGroups": {
+    "message": "Rensa alla"
+  },
+  "tabGroupsClearedToast": {
+    "message": "Rensade $count$ stängda post(er)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCloseGroup": {
+    "message": "Stäng grupp"
+  },
+  "tabGroupsCloseWindow": {
+    "message": "Stäng fönster"
+  },
+  "tabGroupsClosedGroups": {
+    "message": "Nyligen stängda"
+  },
+  "tabGroupsClosedOpenTab": {
+    "message": "Öppna i ny flik"
+  },
+  "tabGroupsClosedTabRemovedToast": {
+    "message": "Tog bort från den stängda posten"
+  },
+  "tabGroupsClosedTimeLabel": {
+    "message": "Stängd:"
+  },
+  "tabGroupsClosedToast": {
+    "message": "Stängde $count$ flik(ar)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCollapseAll": {
+    "message": "Fäll ihop alla"
+  },
+  "tabGroupsCollapseGroup": {
+    "message": "Fäll ihop grupp"
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "Minimera fönster"
+  },
+  "tabGroupsColorStyle": {
+    "message": "Flikgruppsfärgstil"
+  },
+  "tabGroupsColorStyleEdge": {
+    "message": "Kantfärgband"
+  },
+  "tabGroupsColorStyleHint": {
+    "message": "Av visar endast färgpunkten. Kantfärgband ritar en färgad remsa längs gruppens vänstra kant. Färganslutningslinje ritar en färgad linje under gruppens punkt med en bock per rad, som binder samman hela gruppen till ett träd."
+  },
+  "tabGroupsColorStyleLine": {
+    "message": "Färganslutningslinje"
+  },
+  "tabGroupsColorStyleOff": {
+    "message": "Av (endast färgpunkt)"
+  },
+  "tabGroupsConfirmClearClosed": {
+    "message": "Rensa alla nyligen stängda poster? De kan inte längre öppnas härifrån."
+  },
+  "tabGroupsConfirmClose": {
+    "message": "Stänga $count$ flikar?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsConfirmSleep": {
+    "message": "Vila $count$ flikar?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCopyMoveCopy": {
+    "message": "Kopiera"
+  },
+  "tabGroupsCopyMoveDialog": {
+    "message": "Valda flikar tillhör redan en flikgrupp. Kopiera dem (öppna på ny plats) eller flytta dem (ta bort från nuvarande grupp)?"
+  },
+  "tabGroupsCopyMoveMove": {
+    "message": "Flytta"
+  },
+  "tabGroupsCurrentTab": {
+    "message": "Aktuell"
+  },
+  "tabGroupsCurrentWindow": {
+    "message": "Aktuellt fönster"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "Ta bort stängd flikgrupp"
+  },
+  "tabGroupsDiscarded": {
+    "message": "Vilande flik"
+  },
+  "tabGroupsExpandAll": {
+    "message": "Expandera alla"
+  },
+  "tabGroupsExpandGroup": {
+    "message": "Expandera grupp"
+  },
+  "tabGroupsExpandWindow": {
+    "message": "Expandera fönster"
+  },
+  "tabGroupsExpandedCollapse": {
+    "message": "Kollapsa"
+  },
+  "tabGroupsExpandedExpand": {
+    "message": "Expandera"
+  },
+  "tabGroupsFilterPlaceholder": {
+    "message": "Filtrera öppna flikar"
+  },
+  "tabGroupsGroupCount": {
+    "message": "$count$ flikar",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsGroupSavedToFolder": {
+    "message": "Sparade $count$ flikar i $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsMenuAddBookmark": {
+    "message": "Bokmärk flik"
+  },
+  "tabGroupsMenuSaveFolder": {
+    "message": "Spara som bokmärkesmapp"
+  },
+  "tabGroupsMergedWindowToast": {
+    "message": "Fönster sammanfogat som flikgrupp"
+  },
+  "tabGroupsMoveNewWindow": {
+    "message": "Flytta grupp till nytt fönster"
+  },
+  "tabGroupsNewWindow": {
+    "message": "Nytt fönster"
+  },
+  "tabGroupsNoMatchingTabs": {
+    "message": "Inga matchande flikar"
+  },
+  "tabGroupsOpenGroups": {
+    "message": "Öppna flikgrupper"
+  },
+  "tabGroupsPinTab": {
+    "message": "Fäst flik"
+  },
+  "tabGroupsPinned": {
+    "message": "Fäst flik"
+  },
+  "tabGroupsPinnedUngroupedToast": {
+    "message": "Fäst — borttagen från sin flikgrupp"
+  },
+  "tabGroupsRecordDeletedToast": {
+    "message": "Tog bort den stängda posten"
+  },
+  "tabGroupsRemoveBookmark": {
+    "message": "Ta bort bokmärke"
+  },
+  "tabGroupsRemoveClosedTab": {
+    "message": "Ta bort från sparad grupp"
+  },
+  "tabGroupsRenameDialog": {
+    "message": "Byt namn på flikgrupp"
+  },
+  "tabGroupsRenameGroup": {
+    "message": "Byt namn på grupp"
+  },
+  "tabGroupsReopenAction": {
+    "message": "Öppna igen"
+  },
+  "tabGroupsReopenGroup": {
+    "message": "Öppna flikgrupp igen"
+  },
+  "tabGroupsSaveFolder": {
+    "message": "Spara flikgrupp som bokmärkesmapp"
+  },
+  "tabGroupsSelectAddBookmarks": {
+    "message": "Lägg till i bokmärkesmapp…"
+  },
+  "tabGroupsSelectClose": {
+    "message": "Stäng"
+  },
+  "tabGroupsSelectNewGroup": {
+    "message": "Ny flikgrupp"
+  },
+  "tabGroupsSelectOpenInto": {
+    "message": "Öppna i befintlig flikgrupp…"
+  },
+  "tabGroupsSelectSaveFolder": {
+    "message": "Spara som bokmärkesmapp"
+  },
+  "tabGroupsSelectSleep": {
+    "message": "Vila"
+  },
+  "tabGroupsSleepGroup": {
+    "message": "Vila grupp"
+  },
+  "tabGroupsSleepTab": {
+    "message": "Vila flik"
+  },
+  "tabGroupsSleptToast": {
+    "message": "Lade $count$ flik(ar) i vila",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsSummary": {
+    "message": "$tabs$ flikar · $groups$ grupper",
+    "placeholders": {
+      "groups": {
+        "content": "$2"
+      },
+      "tabs": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsSyncCollapse": {
+    "message": "Synka ihopfällning med webbläsaren"
+  },
+  "tabGroupsSyncCollapseHint": {
+    "message": "När markerad uppdateras även webbläsarens flikgrupp när en grupp fälls ihop eller expanderas i denna vy. Av som standard så att vikningen förblir lokal."
+  },
+  "tabGroupsToolbarRefresh": {
+    "message": "Uppdatera"
+  },
+  "tabGroupsUngroupGroup": {
+    "message": "Avgruppera flikar"
+  },
+  "tabGroupsUngroupedTabs": {
+    "message": "Ogrupade flikar"
+  },
+  "tabGroupsUnpinTab": {
+    "message": "Lossa flik"
+  },
+  "tabGroupsViewEmpty": {
+    "message": "Inga flikar i detta fönster"
+  },
+  "tabGroupsWakeAction": {
+    "message": "Väck"
+  },
+  "tabGroupsWakeGroup": {
+    "message": "Väck flikgrupp"
+  },
+  "tabGroupsWakeTab": {
+    "message": "Väck flik"
+  },
+  "tabGroupsWindow": {
+    "message": "Fönster $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsWindowClosedTitle": {
+    "message": "Stängt fönster"
+  },
+  "tabGroupsWindowsCount": {
+    "message": "$n$ fönster",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabRowStage": {
+    "message": "Skicka till scen"
+  },
+  "tabgroupStageAll": {
+    "message": "Skicka grupp till scen"
+  },
+  "tabgroupStageConfirm": {
+    "message": "Skicka $n$ flikar till scen?",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabgroupStageNone": {
+    "message": "Inga bokmärkbara flikar i denna grupp"
   },
   "timeDaysAgo": {
     "message": "$n$ dagar sedan",
@@ -329,303 +2482,26 @@
   "timeYesterday": {
     "message": "igår"
   },
+  "toolButtonTitle": {
+    "message": "Verktyg (Ctrl+K)"
+  },
   "undoAction": {
     "message": "Ångra"
   },
-  "revealOutsideBarHint": {
-    "message": "Endast bokmärkesfältet visas: målet ligger utanför det."
+  "undoSingleStepNote": {
+    "message": "Ångra kan endast återställa den senaste borttagningen."
   },
-  "revealOutsideBarAction": {
-    "message": "Visa alla och avslöja"
+  "unpinFolder": {
+    "message": "Lossa denna mapp"
   },
-  "dupesCleanAll": {
-    "message": "Rensa alla: $groups$ grupper, $count$ extra kopior",
-    "placeholders": {
-      "groups": {
-        "content": "$1"
-      },
-      "count": {
-        "content": "$2"
-      }
-    },
-    "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go."
+  "url": {
+    "message": "URL"
   },
-  "dupesConfirmAll": {
-    "message": "Ta bort $count$ extrakopior i $groups$ grupper? Det valda exemplaret i varje grupp behålls.",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      },
-      "groups": {
-        "content": "$2"
-      }
-    },
-    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
+  "versionDialogCopied": {
+    "message": "Kopierat"
   },
-  "dupesConfirmSelected": {
-    "message": "Ta bort $count$ dubblettbokmärken från de $groups$ valda grupperna?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      },
-      "groups": {
-        "content": "$2"
-      }
-    }
-  },
-  "dupesConfirmGroup": {
-    "message": "Behåll \"$title$\" och ta bort de andra $count$ kopiorna?",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Example bookmark"
-      },
-      "count": {
-        "content": "$2"
-      }
-    },
-    "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."
-  },
-  "dupesDone": {
-    "message": "Tog bort $count$ dubbletter av bokmärken",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Alert shown after the duplicate cleanup finished."
-  },
-  "dupesGroupCount": {
-    "message": "$count$ dubbletter",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
-  },
-  "dupesGroupExpand": {
-    "description": "Dupes view group-head context menu: expand a collapsed duplicate group.",
-    "message": "Expandera grupp"
-  },
-  "dupesGroupCollapse": {
-    "description": "Dupes view group-head context menu: collapse an expanded duplicate group.",
-    "message": "Kollapsa grupp"
-  },
-  "dupesNone": {
-    "message": "Inga dubbletter hittades"
-  },
-  "deleteEllipsis": {
-    "message": "Ta bort..."
-  },
-  "donationMessage": {
-    "message": "Gillar du det? Donera för att stödja framtiden — eller betygsätt det i butiken: varje recension håller uppdateringarna igång."
-  },
-  "donationV4Notice": {
-    "message": "vBookmarks 4.0 är en komplett omskrivning med modern design, full av nya funktioner."
-  },
-  "donationV4GuideLink": {
-    "message": "Läs v4-guiden →"
-  },
-  "donationGo": {
-    "message": "Donera"
-  },
-  "donationRate": {
-    "message": "Betygsätt"
-  },
-  "donationRateTitle": {
-    "message": "Betygsätt vBookmarks i Chrome Web Store"
-  },
-  "donationLater": {
-    "message": "Senare"
-  },
-  "donationNever": {
-    "message": "Visa inte igen"
-  },
-  "donationDismiss": {
-    "message": "Avvisa"
-  },
-  "edit": {
-    "message": "Redigera..."
-  },
-  "editBookmark": {
-    "message": "Redigera bokmärke"
-  },
-  "editFolder": {
-    "message": "Redigera mapp"
-  },
-  "errorOccured": {
-    "message": "Hoppsan, ett fel inträffade."
-  },
-  "extDesc": {
-    "description": "Tilläggbeskrivningen.",
-    "message": "En popup-bokmärkeshanterare. Förbättrade Neat Bookmarks. Snyggare än Neater Bookmarks."
-  },
-  "extName": {
-    "description": "vBookmarks",
-    "message": "vBookmarks"
-  },
-  "folderEmpty": {
-    "message": "(Tom)"
-  },
-  "general": {
-    "message": "Allmänt"
-  },
-  "ignore": {
-    "message": "Ignorera"
-  },
-  "name": {
-    "description": "Namn på bokmärke eller mapp.",
-    "message": "Namn"
-  },
-  "nope": {
-    "message": "Avbryt"
-  },
-  "noTitle": {
-    "description": "Titeln för bokmärken utan titel utan http(s)-URL eller mappar utan titel.",
-    "message": "(ingen titel)"
-  },
-  "open": {
-    "description": "Åtgärd för att öppna bokmärken.",
-    "message": "Öppna"
-  },
-  "openBookmarks": {
-    "message": "Öppna alla bokmärken"
-  },
-  "openBookmarksIncognitoWindow": {
-    "message": "Öppna alla i inkognito"
-  },
-  "openBookmarksInGroup": {
-    "message": "Öppna alla i ny flikgrupp"
-  },
-  "openBookmarksInGroupSetup": {
-    "message": "Öppna alla i ny flikgrupp…"
-  },
-  "openBookmarksInExistingGroup": {
-    "message": "Öppna alla i befintlig flikgrupp…"
-  },
-  "tabGroupOptions": {
-    "message": "Flikgrupper"
-  },
-  "sortMenuOptions": {
-    "message": "Sortera"
-  },
-  "openBookmarksNewWindow": {
-    "message": "Öppna alla bokmärken i nytt fönster"
-  },
-  "openCommandPaletteCommand": {
-    "message": "Öppna kommandopalett"
-  },
-  "openIncognitoWindow": {
-    "message": "Öppna i inkognitofönster"
-  },
-  "openNewTab": {
-    "message": "Öppna i ny flik"
-  },
-  "bookmarkOpenInNewGroup": {
-    "message": "Öppna i ny flikgrupp"
-  },
-  "bookmarkOpenInNewGroupSetup": {
-    "message": "Öppna i ny flikgrupp…"
-  },
-  "bookmarkOpenInExistingGroup": {
-    "message": "Öppna i befintlig flikgrupp…"
-  },
-  "openNewWindow": {
-    "message": "Öppna i nytt fönster"
-  },
-  "openSidePanelCommand": {
-    "message": "Öppna vBookmarks sidopanel"
-  },
-  "optionAnnounceEnabled": {
-    "message": "Visa meddelanden i produkten"
-  },
-  "optionAnnounceEnabledHint": {
-    "message": "Versionsinformation och tips från projektets GitHub-repository (hämtas högst var 6:e timme). Avaktivering stoppar även nätverkshämtningen."
-  },
-  "optionClickNewTab": {
-    "message": "Vänsterklick öppnar bokmärke i ny flik."
-  },
-  "optionCloseUnusedFolders": {
-    "message": "Stäng oanvända mappar när en mapp öppnas."
-  },
-  "optionConfirmOpenFolder": {
-    "message": "Visa bekräftelse när många bokmärken öppnas från en mapp."
-  },
-  "optionConfirmDeleteFolder": {
-    "message": "Bekräfta innan du tar bort icke-tomma mappar"
-  },
-  "optionOnlyShowBookmarkBar": {
-    "message": "Visa endast bokmärken i bokmärkesfältet"
-  },
-  "optionSearchAfterEnter": {
-    "message": "Sök bokmärken endast när ENTER trycks (istället för omedelbar sökning)"
-  },
-  "optionOpenNewTab": {
-    "message": "Mittenklick eller kontroll-klick öppnar bokmärke i ny bakgrundsflik (istället för förgrund)."
-  },
-  "optionOpenInSidePanel": {
-    "message": "Öppna i sidopanel istället för popup"
-  },
-  "optionPopupStays": {
-    "message": "Popup förblir öppen när bokmärken öppnas (vänsterklick)."
-  },
-  "optionRememberPrevState": {
-    "message": "Kom ihåg föregående tillstånd (rullningsposition, öppnade mappar och senast fokuserade objekt)."
-  },
-  "options": {
-    "message": "Alternativ"
-  },
-  "optionsFooterText": {
-    "description": "Footer text for the Options page",
-    "message": "Skapad av $authorName$.",
-    "placeholders": {
-      "authorName": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionZoom": {
-    "message": "Zoom"
-  },
-  "optionTheme": {
-    "message": "Tema"
-  },
-  "optionThemeAuto": {
-    "message": "Följ systemet"
-  },
-  "optionThemeLight": {
-    "message": "Ljust"
-  },
-  "optionThemeDark": {
-    "message": "Mörkt"
-  },
-  "optionThemeInk": {
-    "message": "Bläck (mörkt)"
-  },
-  "optionThemePaper": {
-    "message": "Papper (ljust)"
-  },
-  "optionLanguage": {
-    "message": "Språk"
-  },
-  "optionLanguageAuto": {
-    "message": "Automatiskt"
-  },
-  "optionLanguageHint": {
-    "message": "Om språket ändras laddas den här sidan om."
-  },
-  "paletteClose": {
-    "message": "Stäng"
-  },
-  "paletteCmdVersion": {
-    "message": "Versionsinfo"
-  },
-  "paletteCmdLang": {
-    "message": "Byt språk…"
-  },
-  "paletteCmdLangUsage": {
-    "message": "Användning: /lang följt av en språkkod — t.ex. /lang en, /lang zh_CN, /lang ja."
+  "versionDialogCopy": {
+    "message": "Kopiera info"
   },
   "versionDialogTitle": {
     "message": "vBookmarks $version$",
@@ -634,15 +2510,6 @@
         "content": "$1"
       }
     }
-  },
-  "versionDialogCopy": {
-    "message": "Kopiera info"
-  },
-  "versionDialogCopied": {
-    "message": "Kopierat"
-  },
-  "versionMetaVersion": {
-    "message": "Tilläggsversion"
   },
   "versionMetaAnnounce": {
     "message": "Vad är nytt"
@@ -653,277 +2520,58 @@
   "versionMetaBrowser": {
     "message": "Webbläsare"
   },
-  "versionMetaOS": {
-    "message": "OS"
-  },
   "versionMetaChannel": {
     "message": "Kanal"
   },
   "versionMetaLanguage": {
     "message": "Språk"
   },
+  "versionMetaOS": {
+    "message": "OS"
+  },
   "versionMetaUserAgent": {
     "message": "Användaragent"
   },
-  "paletteCmdDead": {
-    "message": "Hitta döda länkar"
+  "versionMetaVersion": {
+    "message": "Tilläggsversion"
   },
-  "paletteCmdDupes": {
-    "message": "Rensa dubbletter av bokmärken"
+  "viewDead": {
+    "message": "Döda länkar"
   },
-  "paletteCmdNewBookmark": {
-    "message": "Nytt bokmärke…"
+  "viewDisable": {
+    "message": "Inaktivera"
   },
-  "paletteCmdNewFolder": {
-    "message": "Ny mapp…"
+  "viewDupes": {
+    "message": "Dubbletter"
   },
-  "paletteCmdQuickAdd": {
-    "message": "Bokmärk aktuell flik"
+  "viewEnable": {
+    "message": "Aktivera"
   },
-  "paletteCmdSaveSession": {
-    "message": "Spara fönsterflikar som mapp"
-  },
-  "paletteNoResults": {
-    "message": "Inga matchande resultat"
-  },
-  "palettePlaceholder": {
-    "message": "Sök bokmärken, mappar, kommandon…"
-  },
-  "parentFolder": {
-    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
-    "message": "Överordnad mapp: \"$folderName$\"",
+  "viewHiddenTabsHint": {
+    "message": "Du är i vyn $view$. Tryck på $back$ eller använd kommandopaletten för att återgå till trädet.",
     "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarksbar"
-      }
-    }
-  },
-  "removeSeparator": {
-    "message": "Ta bort avskiljare"
-  },
-  "replaceUrl": {
-    "message": "Ersätt detta med aktuell URL"
-  },
-  "reportedToDeveloper": {
-    "description": "Ett meddelande för ett fel som inträffade i tillägget, har rapporterats till utvecklaren.",
-    "message": "Detta har rapporterats till utvecklaren."
-  },
-  "reportError": {
-    "message": "Rapportera fel"
-  },
-  "resetButton": {
-    "message": "Återställ"
-  },
-  "resetSettings": {
-    "message": "Återställ inställningar"
-  },
-  "resetSettingsDescription": {
-    "message": "Återställ vBookmarks till standardinställningar."
-  },
-  "save": {
-    "message": "Spara"
-  },
-  "searchBookmarks": {
-    "description": "Platshållartext för sökfältet.",
-    "message": "Sök bokmärken"
-  },
-  "searchClear": {
-    "message": "Rensa sökning"
-  },
-  "searchNoResults": {
-    "message": "Inga matchande bokmärken"
-  },
-  "searchViewHint": {
-    "message": "Skriv i rutan ovan för att söka dina bokmärken"
-  },
-  "selectAll": {
-    "message": "Alla"
-  },
-  "selectClear": {
-    "message": "Rensa"
-  },
-  "selectCount": {
-    "message": "$count$ valda",
-    "placeholders": {
-      "count": {
+      "back": {
+        "content": "$2"
+      },
+      "view": {
         "content": "$1"
       }
     }
   },
-  "selectInvert": {
-    "message": "Invertera"
-  },
-  "selectModeEnter": {
-    "message": "Välj"
-  },
-  "selectModeExit": {
-    "message": "Avsluta markering"
-  },
-  "deadRiskBanner": {
-    "message": "Rensning av döda länkar tar bort bokmärken i bulk. Säkerhetskopiera bokmärkena före första rensningen."
-  },
-  "dupesRiskBanner": {
-    "message": "Deduplicering tar bort dubblettbokmärken i bulk. Säkerhetskopiera bokmärkena innan."
-  },
-  "riskBannerHelp": {
-    "message": "Säkerhetskopierings- och återställningsguide"
-  },
-  "riskBannerNever": {
-    "message": "Visa inte igen"
-  },
-  "riskBannerDismiss": {
-    "message": "Stäng"
-  },
-  "sessionEmpty": {
-    "message": "Inga flikar att spara"
-  },
-  "sessionFolderName": {
-    "message": "Session $date$",
-    "placeholders": {
-      "date": {
-        "content": "$1",
-        "example": "2026-07-18 15:04"
-      }
-    },
-    "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm."
-  },
-  "sessionSaved": {
-    "message": "Sparade $count$ flikar i en ny mapp",
-    "placeholders": {
-      "count": {
-        "content": "$1",
-        "example": "12"
-      }
-    },
-    "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
-  },
-  "url": {
-    "message": "URL"
-  },
-  "syncOptions": {
-    "message": "Synkroniseringsalternativ"
-  },
-  "optionShowSyncStatus": {
-    "message": "Visa synkroniseringsstatusindikatorer"
-  },
-  "optionHighlightUnsynced": {
-    "message": "Dämpa osynkroniserade bokmärken"
-  },
-  "optionAutoRefreshSync": {
-    "message": "Uppdatera synkroniseringsstatus automatiskt"
-  },
-  "optionSyncRefreshInterval": {
-    "message": "Uppdateringsintervall"
-  },
-  "optionSyncRefreshIntervalSeconds": {
-    "message": "sekunder"
-  },
-  "syncStatusSynced": {
-    "message": "Synkroniserat till ditt Google-konto"
-  },
-  "syncStatusLocal": {
-    "message": "Endast lokalt — inte uppladdat"
-  },
-  "syncStatusUnsyncable": {
-    "message": "Kan inte synkroniseras"
-  },
-  "syncSuffixSynced": {
-    "message": "(Synkroniserat)"
-  },
-  "syncSuffixLocal": {
-    "message": "(Lokalt)"
-  },
-  "optionAutoResizePopup": {
-    "message": "Justera automatiskt popup-fönstrets storlek för att passa innehållet"
-  },
-  "crossStorageMoveWarning": {
-    "message": "Bokmärken kan inte flyttas mellan synkroniserad och lokal lagring. Använd kopiera/klistra in i stället.",
-    "description": "Warning when trying to move bookmarks across storage types"
-  },
-  "recentBookmarks": {
-    "message": "Nyligen tillagda"
-  },
-  "optionShowRecentBookmarks": {
-    "message": "Visa nyligen tillagda bokmärken överst i popupen"
-  },
-  "optionShowStatsView": {
-    "message": "Visa statistikfliken"
-  },
-  "optionShowDeadView": {
-    "message": "Visa fliken för döda länkar"
-  },
-  "optionShowDupesView": {
-    "message": "Visa fliken för dubbletter"
-  },
-  "optionRecentCollapsed": {
-    "message": "Dölj avsnittet för nyligen tillagda som standard"
-  },
-  "optionsGroupViews": {
-    "message": "Vyer"
-  },
-  "optionsGroupSort": {
-    "message": "Sortering"
-  },
-  "optionsGroupStats": {
-    "message": "Statistik"
-  },
-  "optionsGroupTools": {
-    "message": "Verktyg"
-  },
-  "optionShowViewTabs": {
-    "message": "Visa vyflikar under sökrutan"
-  },
-  "optionRememberView": {
-    "message": "Kom ihåg den senast aktiva vyn och öppna den igen"
-  },
-  "optionShowTabBadges": {
-    "message": "Visa antalsmärken på vyflikarna"
-  },
-  "optionPaletteEnabled": {
-    "message": "Aktivera kommandopaletten (Ctrl/Cmd+K)"
-  },
-  "optionQuickAddEnabled": {
-    "message": "Visa snabbstjärnknappen bredvid sökrutan"
-  },
-  "optionQuickAddContextMenu": {
-    "message": "Lägg till \"Bokmärk den här sidan med vBookmarks\" i sidans högerklicksmeny."
-  },
-  "optionQuickAddContextMenuHint": {
-    "message": "Fristående från stjärnknappen för snabbt tillägg; återställning av den klassiska upplevelsen stänger även av den här posten."
-  },
-  "optionCollapseTabGroupMenu": {
-    "message": "Fäll ihop flikgruppsposterna till en undermeny \"Flikgrupper\""
-  },
-  "optionCollapseTabGroupMenuHint": {
-    "message": "Gäller högerklicksmenyerna för mappar och bokmärken. Av som standard; gör att menyer med låg höjd blir kortare på små skärmar eller vid hög zoom."
-  },
-  "optionCollapseSortMenu": {
-    "message": "Fäll ihop sorteringsposterna till en undermeny \"Sortera\""
-  },
-  "optionCollapseSortMenuHint": {
-    "message": "Gäller högerklicksmenyn för mappar. Aktiverad som standard."
-  },
-  "optionShowToolButton": {
-    "message": "Visa verktygsknappen (⋮) bredvid sökrutan"
-  },
-  "optionClassicExperience": {
-    "message": "Återställ den klassiska rubriken"
-  },
-  "optionClassicExperienceHint": {
-    "message": "Stänger av kommandopaletten, snabbstjärnan, dess snabbmenypost på sidor, verktygsknappen och vyflikarna. Var och en kan återaktiveras individuellt i sitt avsnitt."
-  },
-  "optionShowItemPath": {
-    "message": "Visa sökvägen till överordnad mapp i listraderna"
-  },
   "viewRecent": {
     "message": "Mellanlagring"
   },
-  "viewTree": {
-    "message": "Träd"
-  },
   "viewSearch": {
     "message": "Sök"
+  },
+  "viewStateDisabled": {
+    "message": "Inaktiverad"
+  },
+  "viewStateEnabled": {
+    "message": "Aktiverad"
+  },
+  "viewStats": {
+    "message": "Statistik"
   },
   "viewSwitchAnnounce": {
     "message": "$name$-vy",
@@ -933,870 +2581,17 @@
       }
     }
   },
-  "viewStateEnabled": {
-    "message": "Aktiverad"
-  },
-  "viewStateDisabled": {
-    "message": "Inaktiverad"
-  },
-  "viewEnable": {
-    "message": "Aktivera"
-  },
-  "viewDisable": {
+  "viewTabDisable": {
     "message": "Inaktivera"
+  },
+  "viewTabGroups": {
+    "message": "Flikgrupper"
   },
   "viewTabHide": {
     "message": "Dölj"
   },
-  "viewTabDisable": {
-    "message": "Inaktivera"
-  },
-  "sortFolderContents": {
-    "message": "Sortera mappinnehåll"
-  },
-  "sortByName": {
-    "message": "Sortera efter namn"
-  },
-  "sortByDate": {
-    "message": "Sortera efter tilläggsdatum"
-  },
-  "sortRecursiveSuffix": {
-    "message": "(rekursiv)"
-  },
-  "sortOptions": {
-    "message": "Sorteringsalternativ…"
-  },
-  "sortDone": {
-    "message": "Mapp sorterad"
-  },
-  "sortByTitle": {
-    "message": "Efter titel"
-  },
-  "sortByDateAdded": {
-    "message": "Efter datum (nyast först)"
-  },
-  "sortFoldersFirst": {
-    "message": "Behåll mappar överst"
-  },
-  "sortRecursive": {
-    "message": "Sortera även undermappar (rekursivt)"
-  },
-  "sortRecursiveWarning": {
-    "message": "Detta sorterar om bokmärken i varje undermapp."
-  },
-  "tabGroupDialogTitle": {
-    "message": "Ny flikgrupp"
-  },
-  "tabGroupTitleLabel": {
-    "message": "Grupptitel"
-  },
-  "tabGroupColorLabel": {
-    "message": "Färg"
-  },
-  "tabGroupColorGrey": {
-    "message": "grå",
-    "description": "Accessible name of the grey color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorBlue": {
-    "message": "blå",
-    "description": "Accessible name of the blue color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorRed": {
-    "message": "röd",
-    "description": "Accessible name of the red color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorYellow": {
-    "message": "gul",
-    "description": "Accessible name of the yellow color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorGreen": {
-    "message": "grön",
-    "description": "Accessible name of the green color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorPink": {
-    "message": "rosa",
-    "description": "Accessible name of the pink color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorPurple": {
-    "message": "lila",
-    "description": "Accessible name of the purple color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorCyan": {
-    "message": "cyan",
-    "description": "Accessible name of the cyan color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorOrange": {
-    "message": "orange",
-    "description": "Accessible name of the orange color swatch in the new-tab-group dialog."
-  },
-  "tabGroupUntitled": {
-    "message": "Namnlös grupp"
-  },
-  "tabGroupNoGroups": {
-    "message": "Inga befintliga flikgrupper"
-  },
-  "tabGroupPickDialogTitle": {
-    "message": "Öppna i befintlig flikgrupp"
-  },
-  "quickAddBookmark": {
-    "message": "Bokmärk denna sida (Ctrl+D)"
-  },
-  "quickAddBookmarkCommand": {
-    "message": "Lägg snabbt till aktuell flik som bokmärke"
-  },
-  "quickAdded": {
-    "message": "Bokmärke tillagt"
-  },
-  "quickAddedTo": {
-    "message": "Bokmärke tillagt i $folderName$",
-    "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarks bar"
-      }
-    }
-  },
-  "quickRemoved": {
-    "message": "Bokmärke borttaget"
-  },
-  "quickRemoveBookmark": {
-    "message": "Ta bort detta bokmärke (Ctrl+D)"
-  },
-  "toolButtonTitle": {
-    "message": "Verktyg (Ctrl+K)"
-  },
-  "contextMenuAddBookmark": {
-    "message": "Bokmärk denna sida med vBookmarks"
-  },
-  "deadFilterAll": {
-    "message": "Alla"
-  },
-  "deadFilterBlocked": {
-    "message": "Endast blockerade"
-  },
-  "deadFilterDead": {
-    "message": "Endast döda"
-  },
-  "deadFilterMarked": {
-    "message": "Tidigare markerade"
-  },
-  "deadLastScanAt": {
-    "message": "Senaste skanning: $time$",
-    "placeholders": {
-      "time": {
-        "content": "$1"
-      }
-    }
-  },
-  "deadMark": {
-    "message": "Markera som död"
-  },
-  "deadMarkAll": {
-    "message": "Markera alla"
-  },
-  "deadMarked": {
-    "message": "Döda rader markerade"
-  },
-  "deadMarkedCount": {
-    "message": "Markerade $count$ bokmärken",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "deadMarkedNone": {
-    "message": "Inga bokmärken har markerats ännu"
-  },
-  "deadMarkedRow": {
-    "message": "Markerad"
-  },
-  "deadMarkSelected": {
-    "message": "Markera valda"
-  },
-  "deadMarkStatusAll": {
-    "message": "Valfri status"
-  },
-  "deadMarkStatusMarked": {
-    "message": "Markerade"
-  },
-  "deadMarkStatusUnmarked": {
-    "message": "Omarkerade"
-  },
-  "deadMarkTimeLabel": {
-    "message": "Markerad"
-  },
-  "deadDetectTimeLabel": {
-    "message": "Upptäckt"
-  },
-  "deadSortLabel": {
-    "message": "Sortera efter"
-  },
-  "deadSortByDetected": {
-    "message": "Identifieringstid"
-  },
-  "deadSortByPath": {
-    "message": "Mappssökväg"
-  },
-  "deadSortByMarked": {
-    "message": "Markeringstid"
-  },
-  "deadMarkedBanner": {
-    "message": "Visar bokmärken som markerats tidigare. Klicka på Rescan för att starta en ny kontroll, eller hantera dem i listan nedan."
-  },
-  "deadMarkedBannerDismiss": {
-    "message": "Stäng"
-  },
-  "deadProxyAdd": {
-    "message": "Lägg till proxyserver för döda länkar"
-  },
-  "deadProxyLabel": {
-    "message": "Proxy: $server$",
-    "placeholders": {
-      "server": {
-        "content": "$1"
-      }
-    }
-  },
-  "deadProxyChange": {
-    "message": "Ändra"
-  },
-  "deadProxyRemove": {
-    "message": "Ta bort"
-  },
-  "deadProxyRemoved": {
-    "message": "Proxyserver borttagen"
-  },
-  "deadProxyPanelHint": {
-    "message": "Ange en proxyserver du redan har (tillägget tillhandahåller ingen), t.ex. 127.0.0.1:7890 eller socks5://127.0.0.1:1080."
-  },
-  "deadProxyTestUrlLabel": {
-    "message": "Test-URL"
-  },
-  "deadProxyTestSave": {
-    "message": "Testa och spara"
-  },
-  "deadProxyTesting": {
-    "message": "Testar…"
-  },
-  "deadProxySaved": {
-    "message": "Proxy sparad — framtida skanningar gör om kontroller av direkta fel via den."
-  },
-  "deadProxyInvalid": {
-    "message": "Ogiltig proxyadress — använd värd:port eller schema://värd:port (http/https/socks5, inga inloggningsuppgifter)."
-  },
-  "deadProxyUnreachable": {
-    "message": "Proxyn otillgänglig — inte sparad."
-  },
-  "deadProxyDenied": {
-    "message": "Proxybehörighet beviljades inte."
-  },
-  "deadProxyControlled": {
-    "message": "Proxyinställningarna hanteras av ett annat tillägg."
-  },
-  "deadProxyUnavailable": {
-    "message": "Proxy-API:et är inte tillgängligt i den här webbläsaren."
-  },
-  "deadProxyNudge": {
-    "message": "En proxy-omkontroll skiljer verkliga döda länkar från regionsspärrade — konfigurera här eller på alternativsidan."
-  },
-  "deadProxyNeverShow": {
-    "message": "Visa inte igen"
-  },
-  "deadStartHint": {
-    "message": "Börja skanna $n$ bokmärken",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "deadStatusBlocked": {
-    "message": "blockerad"
-  },
-  "deadUnmark": {
-    "message": "Ta bort dödmarkering"
-  },
-  "deadUnmarkAll": {
-    "message": "Rensa alla markeringar"
-  },
-  "deadUnmarkSelected": {
-    "message": "Avmarkera valda"
-  },
-  "dupesApplyAll": {
-    "message": "Tillämpa alla ($count$)",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "dupesApplySelected": {
-    "message": "Deduplicera valda ($count$)",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "dupesCleanRestHint": {
-    "message": "Behåll \"$title$\" och ta bort de andra $count$",
-    "placeholders": {
-      "title": {
-        "content": "$1"
-      },
-      "count": {
-        "content": "$2"
-      }
-    }
-  },
-  "dupesIgnoreScheme": {
-    "message": "Ignorera http/https-skillnader"
-  },
-  "dupesKeepThis": {
-    "message": "Behåll denna"
-  },
-  "dupesKeeperSet": {
-    "message": "Ange som behållare"
-  },
-  "dupesPreviewSummary": {
-    "message": "$groups$ grupper · $count$ som ska frigöras",
-    "placeholders": {
-      "groups": {
-        "content": "$1"
-      },
-      "count": {
-        "content": "$2"
-      }
-    }
-  },
-  "dupesRemoveRow": {
-    "message": "Ta bort denna kopia"
-  },
-  "dupesScopeAll": {
-    "message": "Alla bokmärken"
-  },
-  "dupesScopeBar": {
-    "message": "Endast bokmärkesfältet"
-  },
-  "dupesStrategyBookmarkBar": {
-    "message": "Behåll den i bokmärkesfältet"
-  },
-  "dupesStrategyMostVisited": {
-    "message": "Behåll mest besökta"
-  },
-  "dupesStrategyNewest": {
-    "message": "Behåll nyaste"
-  },
-  "dupesStrategyOldest": {
-    "message": "Behåll äldsta"
-  },
-  "dupesStrategyShallowest": {
-    "message": "Behåll grundaste"
-  },
-  "dupesStrategyShortestTitle": {
-    "message": "Behåll kortaste titeln"
-  },
-  "optionDeadProxyServer": {
-    "message": "Proxyserver för döda länkar"
-  },
-  "deadProxyServerHint": {
-    "message": "Den sparade servern gör en ny kontroll av bokmärken som misslyckas direkt vid varje skanning av döda länkar, och skiljer riktiga döda länkar från regionsblockerade. Testa och spara testar servern (endast en nåbar server behålls); du kan också lägga till den från vyn över döda länkar."
-  },
-  "deadProxyClear": {
-    "message": "Rensa"
-  },
-  "deadProxyNone": {
-    "message": "(inte angiven)"
-  },
-  "optionDeadProxyStrip": {
-    "message": "Visa tipset om att lägga till en proxy i vyn över döda länkar"
-  },
-  "optionDeadProxyStripHint": {
-    "message": "Av döljer tipset där; proxyservern förblir konfigurerbar här, och en sparad server visar alltid sin hanteringsrad i vyn."
-  },
-  "optionDeadScanConcurrency": {
-    "message": "Samtidiga sökningar döda länkar (1-16)"
-  },
-  "optionDeadScanTimeout": {
-    "message": "Timeout för sökning döda länkar i sekunder (2-30)"
-  },
-  "paletteCmdGoDead": {
-    "message": "Gå till vyn Döda länkar"
-  },
-  "paletteCmdGoDupes": {
-    "message": "Gå till vyn Dubbletter"
-  },
-  "paletteCmdGoRecent": {
-    "message": "Gå till vyn Senaste"
-  },
-  "paletteCmdGoSearch": {
-    "message": "Gå till vyn Sök"
-  },
-  "paletteCmdGoTree": {
-    "message": "Gå till vyn Träd"
-  },
-  "paletteCmdOptions": {
-    "message": "Öppna inställningssidan"
-  },
-  "paletteCmdSearchInView": {
-    "message": "Sök '$query$' i vyn Sök",
-    "placeholders": {
-      "query": {
-        "content": "$1"
-      }
-    }
-  },
-  "rowActionDelete": {
-    "message": "Radera"
-  },
-  "rowActionMark": {
-    "message": "Markera som död"
-  },
-  "rowActionReveal": {
-    "message": "Visa i träd"
-  },
-  "rowActionUnmark": {
-    "message": "Ta bort död-markering"
-  },
-  "viewDead": {
-    "message": "Döda länkar"
-  },
-  "viewDupes": {
-    "message": "Dubbletter"
-  },
-  "viewStats": {
-    "message": "Statistik"
-  },
-  "paletteCmdGoStats": {
-    "message": "Gå till vyn Statistik"
-  },
-  "optionStatsEnabled": {
-    "message": "Aktivera besöksstatistik"
-  },
-  "optionFaviconContrast": {
-    "message": "Invertera kontrastsvaga favicons"
-  },
-  "optionFaviconContrastHint": {
-    "message": "Vita ikoner på ljusa teman och svarta ikoner på mörka teman inverteras så att de förblir synliga. Varje ikon kontrolleras en gång vid inläsning – ingen påverkan på prestandan under surfning."
-  },
-  "optionFaviconEnrich": {
-    "message": "Hämta saknade webbplatsikoner"
-  },
-  "optionFaviconEnrichHint": {
-    "message": "För bokmärkta webbplatser där Chrome inte har någon cachad ikon, hämta den faktiska ikonen direkt från webbplatsen (/favicon.ico, sedan sidans deklarerade ikoner). Förfrågningar skickas endast till webbplatser du har bokmärkt."
-  },
-  "optionFaviconEnrichAgg": {
-    "message": "Tredjepartsikon som reserv"
-  },
-  "optionFaviconEnrichAggHint": {
-    "message": "När direkt hämtning misslyckas slås ikonen upp efter domän i en inbyggd lista med tredjeparts-ikontjänster ($providers$). En onåbar tjänst hoppas över och nästa i listan anropas — den anropas inte igen på 6 timmar.",
-    "placeholders": {
-      "providers": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionFaviconBackup": {
-    "message": "Inkludera ikoncache i säkerhetskopior"
-  },
-  "optionFaviconBackupHint": {
-    "message": "Inkludera även den berikade faviconcachen (webbplatsdata, kan vara omfattande) i export/import av inställningar. Detta omfattar redan cachelagrade ikoner även när hämtning är avstängd. Avstängt håller säkerhetskopiorna små; ikonerna hämtas automatiskt ändå."
-  },
-  "optionFaviconCacheClear": {
-    "message": "Rensa ikoncachen"
-  },
-  "optionFaviconCacheClearConfirm": {
-    "message": "Rensa den berikade faviconcachen? Ikonerna hämtas automatiskt igen vid nästa öppning."
-  },
-  "optionFaviconCacheEmpty": {
-    "message": "Ingen faviconcache att rensa."
-  },
-  "optionFaviconCacheCleared": {
-    "message": "Ikoncachen rensad. Ikoner hämtas om vid nästa öppning."
-  },
-  "favGalleryLink": {
-    "message": "Visa uppdaterade ikoner",
-    "description": "Options link (Icons group, right of the Clear icon cache button): opens the favicon gallery page listing the sites whose icons were refetched."
-  },
-  "favGalleryTitle": {
-    "message": "Uppdaterade webbplatsikoner",
-    "description": "Favicon gallery page title (h1 + document title)."
-  },
-  "favGalleryHint": {
-    "message": "Ikoner som vBookmarks hämtade för bokmärkta webbplatser som Chrome inte hade cachat – var varje ikon kommer ifrån och vilka bokmärken som använder den. Endast visning.",
-    "description": "Subtitle under the favicon gallery title, explaining the page is read-only."
-  },
-  "favGallerySearch": {
-    "message": "Filtrera efter webbplats, titel eller sökväg",
-    "description": "Placeholder of the favicon gallery filter input."
-  },
-  "favGalleryAll": {
-    "message": "Alla",
-    "description": "Favicon gallery source filter chip: show every source."
-  },
-  "favSrcDirect": {
-    "message": "Direkt",
-    "description": "Favicon gallery source badge: the icon was fetched directly from the site itself."
-  },
-  "favSrcProxy": {
-    "message": "Proxy",
-    "description": "Favicon gallery source badge: the icon was fetched through the user's own proxy relay."
-  },
-  "favSrcLegacy": {
-    "message": "Tidigare cache",
-    "description": "Favicon gallery source badge: cached before the source was recorded, so the origin is unknown."
-  },
-  "favGalleryCompare": {
-    "message": "Jämför med platshållare",
-    "description": "Favicon gallery toggle button: switch every icon to the generic placeholder it replaced (before/after comparison)."
-  },
-  "favGalleryShowingBefore": {
-    "message": "Tillbaka till riktiga ikoner",
-    "description": "Favicon gallery toggle button while the placeholder comparison is shown: switch back to the real fetched icons."
-  },
-  "favGalleryStatSites": {
-    "message": "$n$ webbplatser",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    },
-    "description": "Favicon gallery stats strip: how many sites have a refreshed icon."
-  },
-  "favGalleryStatBookmarks": {
-    "message": "$n$ bokmärken",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    },
-    "description": "Favicon gallery stats strip: how many bookmarks sit on the refreshed sites."
-  },
-  "favGalleryVisits": {
-    "message": "$n$ registrerade öppningar",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    },
-    "description": "Favicon gallery tooltip on a bookmark row's visit-count pill."
-  },
-  "favGalleryFailedTitle": {
-    "message": "Nyligen försökt, ingen ikon hittades",
-    "description": "Favicon gallery heading of the muted section listing hosts whose icon fetch failed recently."
-  },
-  "favGalleryFailedHint": {
-    "message": "Misslyckade försök görs om efter 24 timmar, 3 dagar och 7 dagar, därefter ges de upp tills ikoncachen rensas.",
-    "description": "Favicon gallery hint under the failed-fetch section title."
-  },
-  "favGalleryGaveUp": {
-    "message": "Gav upp",
-    "description": "Favicon gallery badge on a failed-strip host whose retries are exhausted (it stays untouched until the icon cache is cleared)."
-  },
-  "favGalleryOrphan": {
-    "message": "Inget bokmärke finns kvar på den här värden – ikonen rensas med cachen.",
-    "description": "Favicon gallery note on a card whose host no longer has any bookmark."
-  },
-  "favGalleryEmptyTitle": {
-    "message": "Inga uppdaterade ikoner ännu",
-    "description": "Favicon gallery empty-state heading."
-  },
-  "favGalleryEmptyText": {
-    "message": "När popupen stöter på en bokmärkt webbplats som Chrome inte har någon ikon för, hämtar vBookmarks den riktiga ikonen och listar den här.",
-    "description": "Favicon gallery empty-state body text."
-  },
-  "storageUsageIcon": {
-    "message": "Ikoncache"
-  },
-  "storageUsageOther": {
-    "message": "Övrigt"
-  },
-  "storageUsageSummary": {
-    "message": "Använt $1$ av $2$",
-    "placeholders": {
-      "1": {
-        "content": "$1"
-      },
-      "2": {
-        "content": "$2"
-      }
-    }
-  },
-  "storageUsageFree": {
-    "message": "Ledigt"
-  },
-  "storageUsageHint": {
-    "message": "Endast lokal lagring för tillägget (chrome.storage.local, cirka 10 MB-kvot): ikoncachen plus inställningar och andra lokala data. Synkroniserade inställningar, sessionsdata och själva bokmärkesbiblioteket räknas inte här."
-  },
-  "optionsDonate": {
-    "message": "Donera"
-  },
-  "optionsGithubLink": {
-    "message": "GitHub"
-  },
-  "optionsHomepageLink": {
-    "message": "Hemsida"
-  },
-  "optionsSince": {
-    "message": "Underhålls i $days$ dagar, baserat på Neat Bookmarks.",
-    "placeholders": {
-      "days": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionsVersion": {
-    "message": "vBookmarks version"
-  },
-  "statsSortByCount": {
-    "message": "Efter antal"
-  },
-  "statsSortByRecent": {
-    "message": "Efter senaste"
-  },
-  "statsShowUnbookmarked": {
-    "message": "Visa omarkerade"
-  },
-  "statsShowUnbookmarkedHint": {
-    "message": "Inkludera sidor från historiken som inte är sparade som bokmärken."
-  },
-  "statsEmpty": {
-    "message": "Statistik byggs upp när du öppnar bokmärken"
-  },
-  "statsDisabledHint": {
-    "message": "Besöksstatistik är avstängd — aktivera i Inställningar → Vyer"
-  },
-  "statsVisitCount": {
-    "message": "Besökt $count$ gånger",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "statsClearData": {
-    "message": "Rensa statistik"
-  },
-  "statsClearConfirm": {
-    "message": "Rensa besöksstatistik för $count$ bokmärken? Detta kan inte ångras.",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "statsHistoryBanner": {
-    "message": "Ge historikåtkomst för att fylla besöksstatistik med dina tidigare besök."
-  },
-  "statsHistoryEnable": {
-    "message": "Aktivera"
-  },
-  "statsHistoryDismiss": {
-    "message": "Visa inte igen"
-  },
-  "statsHistoryImported": {
-    "message": "Importerade tidigare besök för $count$ bokmärken",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "paletteCmdToggleViewTabs": {
-    "message": "Växla flikvy"
-  },
-  "paletteCmdTheme": {
-    "message": "Välj tema…"
-  },
-  "paletteCmdThemeUsage": {
-    "message": "Användning: /theme följt av ett temanamn — auto, light, dark, ink eller paper (ett unikt prefix fungerar, t.ex. /theme d)."
-  },
-  "paletteCustomTag": {
-    "message": "anpassad"
-  },
-  "paletteCustomDeleteConfirm": {
-    "message": "Ta bort kommandot \"$1\"? Ändringen synkroniseras till alla dina enheter."
-  },
-  "paletteCustomBroken": {
-    "message": "Mappen för kommandot \"$1\" finns inte längre. Ta bort kommandot?"
-  },
-  "paletteCmdSaveAsCommand": {
-    "message": "Spara \"$1\" som ett kommando…"
-  },
-  "paletteActionOpenUrl": {
-    "message": "Öppna URL"
-  },
-  "paletteActionOpenUrlGroup": {
-    "message": "Öppna bokmärkesmappgrupp"
-  },
-  "paletteActionViewPreset": {
-    "message": "Öppna vy med förinställning"
-  },
-  "paletteActionUrlTemplate": {
-    "message": "Öppna URL-mall"
-  },
-  "optionsGroupPalette": {
-    "message": "Kommandopalett"
-  },
-  "paletteCustomHint": {
-    "message": "Anpassade snedstreckskommandon för kommandopaletten (Ctrl/Cmd+K). De synkroniseras med dina inställningar — max 100 poster."
-  },
-  "paletteCustomAdd": {
-    "message": "Lägg till kommando…"
-  },
-  "paletteCustomUsage": {
-    "message": "$1 / $2"
-  },
-  "paletteCustomSlash": {
-    "message": "Snedstreck (ordet efter /)"
-  },
-  "paletteCustomAliases": {
-    "message": "Alias (kommaseparerade)"
-  },
-  "paletteCustomAction": {
-    "message": "Åtgärd"
-  },
-  "paletteCustomUrl": {
-    "message": "URL"
-  },
-  "paletteCustomTemplate": {
-    "message": "URL-mall — %s ersätts av orden efter kommandot"
-  },
-  "paletteCustomWhere": {
-    "message": "Öppna i"
-  },
-  "paletteCustomFolder": {
-    "message": "Bokmärkesmapp"
-  },
-  "paletteCustomView": {
-    "message": "Vy"
-  },
-  "paletteCustomStrategy": {
-    "message": "Förinställd dedupliceringsstrategi"
-  },
-  "paletteCustomScope": {
-    "message": "Förinställt dedupliceringsomfång"
-  },
-  "paletteCustomScan": {
-    "message": "Starta skanningen vid inmatning"
-  },
-  "paletteWhereCurrent": {
-    "message": "Aktuell flik"
-  },
-  "paletteWhereTab": {
-    "message": "Ny flik"
-  },
-  "paletteWhereWindow": {
-    "message": "Nytt fönster"
-  },
-  "paletteWhereBackground": {
-    "message": "Bakgrundsflikar"
-  },
-  "paletteCustomSave": {
-    "message": "Spara kommandot"
-  },
-  "paletteCustomErrSlash": {
-    "message": "Snedstreck: 1–24 tecken med gemener, siffror eller bindestreck, och måste börja med bokstav eller siffra."
-  },
-  "paletteCustomErrAlias": {
-    "message": "Alias: samma regler som för snedstrecket (1–24 tecken med gemener, siffror eller bindestreck)."
-  },
-  "paletteCustomErrTaken": {
-    "message": "Det snedstrecket eller aliaset är redan upptaget."
-  },
-  "paletteCustomErrUrl": {
-    "message": "Endast URL:er med http:// eller https:// är tillåtna."
-  },
-  "paletteCustomErrFolder": {
-    "message": "Välj en bokmärkesmapp."
-  },
-  "paletteCustomErrView": {
-    "message": "Välj en vy."
-  },
-  "paletteCustomErrTemplate": {
-    "message": "Mallen måste innehålla exakt ett %s."
-  },
-  "paletteCustomErrAction": {
-    "message": "Välj en åtgärdstyp."
-  },
-  "paletteCustomErrLimit": {
-    "message": "Kommandogränsen är nådd (100) – ta bort ett först."
-  },
-  "paletteCustomEmpty": {
-    "message": "Inga anpassade kommandon ännu."
-  },
-  "recentGroupToday": {
-    "message": "Idag"
-  },
-  "recentGroupWeek": {
-    "message": "Denna vecka"
-  },
-  "recentGroupMonth": {
-    "message": "Denna månad"
-  },
-  "recentGroupOlder": {
-    "message": "Äldre"
-  },
-  "searchHistoryRerun": {
-    "message": "Sök igen"
-  },
-  "optionsGroupBackup": {
-    "message": "Säkerhetskopiering"
-  },
-  "optionsGroupContextMenu": {
-    "message": "Snabbmenyer"
-  },
-  "optionsGroupIcons": {
-    "message": "Ikoner"
-  },
-  "settingsExport": {
-    "message": "Exportera inställningar"
-  },
-  "settingsImport": {
-    "message": "Importera inställningar"
-  },
-  "settingsBackupHint": {
-    "message": "Export sparar alla inställningar (inklusive synkroniseringspreferenser) till en JSON-fil. Import sammanfogar en säkerhetskopia: inställningarna i filen skriver över de nuvarande, allt annat behålls."
-  },
-  "settingsImportConfirm": {
-    "message": "Import kommer att skriva över alla inställningar som finns i säkerhetskopian (inställningar som inte finns i filen behålls) och ladda om denna sida. Fortsätta?"
-  },
-  "settingsImportInvalid": {
-    "message": "Ogiltig inställningsfil: inte en säkerhetskopia av vBookmarks-inställningar."
-  },
-  "settingsImportDone": {
-    "message": "Inställningar importerade. Sidan kommer nu att laddas om."
-  },
-  "settingsImportError": {
-    "message": "Vissa inställningar kunde inte skrivas (lagringskvot eller ett tillfälligt fel). Importen slutfördes inte – försök igen."
-  },
-  "statsSectionRecent": {
-    "message": "Senaste besök"
-  },
-  "statsSectionBookmarks": {
-    "message": "Bokmärkesstatistik"
-  },
-  "statsHistoryGuide": {
-    "message": "Ge åtkomst till historik för att lista dina senaste besök här."
-  },
-  "statsHistoryAdd": {
-    "message": "Lägg till i bokmärken"
-  },
-  "statsHistoryBookmarked": {
-    "message": "Bokmärkt"
-  },
-  "deadPause": {
-    "message": "Pausa"
-  },
-  "deadResume": {
-    "message": "Återuppta"
-  },
-  "deadCancel": {
-    "message": "Avbryt"
-  },
-  "deadPaused": {
-    "message": "Pausad"
+  "viewTree": {
+    "message": "Träd"
   },
   "whatsNewChangelog": {
     "message": "Ändringslogg"
@@ -1808,800 +2603,5 @@
         "content": "$1"
       }
     }
-  },
-  "viewHiddenTabsHint": {
-    "message": "Du är i vyn $view$. Tryck på $back$ eller använd kommandopaletten för att återgå till trädet.",
-    "placeholders": {
-      "view": {
-        "content": "$1"
-      },
-      "back": {
-        "content": "$2"
-      }
-    }
-  },
-  "viewTabGroups": {
-    "message": "Flikgrupper"
-  },
-  "optionShowTabGroupsView": {
-    "message": "Visa flikgruppsvyn"
-  },
-  "tabGroupsViewEmpty": {
-    "message": "Inga flikar i detta fönster"
-  },
-  "tabGroupsToolbarRefresh": {
-    "message": "Uppdatera"
-  },
-  "tabGroupsCollapseAll": {
-    "message": "Fäll ihop alla"
-  },
-  "tabGroupsExpandAll": {
-    "message": "Expandera alla"
-  },
-  "tabGroupsSummary": {
-    "message": "$tabs$ flikar · $groups$ grupper",
-    "placeholders": {
-      "tabs": {
-        "content": "$1"
-      },
-      "groups": {
-        "content": "$2"
-      }
-    }
-  },
-  "tabGroupsGroupCount": {
-    "message": "$count$ flikar",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsCurrentTab": {
-    "message": "Aktuell"
-  },
-  "tabGroupsAddBookmark": {
-    "message": "Bokmärk denna flik"
-  },
-  "tabGroupsSaveFolder": {
-    "message": "Spara flikgrupp som bokmärkesmapp"
-  },
-  "tabGroupsGroupSavedToFolder": {
-    "message": "Sparade $count$ flikar i $folder$",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      },
-      "folder": {
-        "content": "$2"
-      }
-    }
-  },
-  "tabGroupsBookmarksAdded": {
-    "message": "Lade till $count$ bokmärke(n) i $folder$",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      },
-      "folder": {
-        "content": "$2"
-      }
-    }
-  },
-  "tabGroupsSelectNewGroup": {
-    "message": "Ny flikgrupp"
-  },
-  "tabGroupsSelectOpenInto": {
-    "message": "Öppna i befintlig flikgrupp…"
-  },
-  "tabGroupsSelectSaveFolder": {
-    "message": "Spara som bokmärkesmapp"
-  },
-  "tabGroupsSelectClose": {
-    "message": "Stäng"
-  },
-  "tabGroupsSelectSleep": {
-    "message": "Vila"
-  },
-  "tabGroupsCopyMoveDialog": {
-    "message": "Valda flikar tillhör redan en flikgrupp. Kopiera dem (öppna på ny plats) eller flytta dem (ta bort från nuvarande grupp)?"
-  },
-  "tabGroupsCopyMoveCopy": {
-    "message": "Kopiera"
-  },
-  "tabGroupsCopyMoveMove": {
-    "message": "Flytta"
-  },
-  "tabGroupsConfirmClose": {
-    "message": "Stänga $count$ flikar?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsConfirmSleep": {
-    "message": "Vila $count$ flikar?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsClosedToast": {
-    "message": "Stängde $count$ flik(ar)",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsSleptToast": {
-    "message": "Lade $count$ flik(ar) i vila",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsBatchClosedTitle": {
-    "message": "Stängda flikar"
-  },
-  "tabGroupsPinnedUngroupedToast": {
-    "message": "Fäst — borttagen från sin flikgrupp"
-  },
-  "tabGroupsReopenAction": {
-    "message": "Öppna igen"
-  },
-  "tabGroupsWakeAction": {
-    "message": "Väck"
-  },
-  "tabGroupsRecordDeletedToast": {
-    "message": "Tog bort den stängda posten"
-  },
-  "tabGroupsClosedTabRemovedToast": {
-    "message": "Tog bort från den stängda posten"
-  },
-  "tabGroupsClearedToast": {
-    "message": "Rensade $count$ stängda post(er)",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "bookmarkFolderPickDialogTitle": {
-    "message": "Lägg till i bokmärkesmapp"
-  },
-  "bookmarkFolderNoFolders": {
-    "message": "Inga bokmärkesmappar"
-  },
-  "tabGroupsSelectAddBookmarks": {
-    "message": "Lägg till i bokmärkesmapp…"
-  },
-  "paletteCmdGoTabGroups": {
-    "message": "Gå till flikgruppsvyn"
-  },
-  "tabGroupsActivateGroup": {
-    "message": "Gå till flikgrupp"
-  },
-  "tabGroupsRenameGroup": {
-    "message": "Byt namn på grupp"
-  },
-  "tabGroupsRenameDialog": {
-    "message": "Byt namn på flikgrupp"
-  },
-  "tabGroupsCloseGroup": {
-    "message": "Stäng grupp"
-  },
-  "tabGroupsSleepGroup": {
-    "message": "Vila grupp"
-  },
-  "tabGroupsWakeGroup": {
-    "message": "Väck flikgrupp"
-  },
-  "tabGroupsActivateTab": {
-    "message": "Gå till flik"
-  },
-  "tabGroupsCollapseGroup": {
-    "message": "Fäll ihop grupp"
-  },
-  "tabGroupsExpandGroup": {
-    "message": "Expandera grupp"
-  },
-  "tabGroupsMenuAddBookmark": {
-    "message": "Bokmärk flik"
-  },
-  "tabGroupsMenuSaveFolder": {
-    "message": "Spara som bokmärkesmapp"
-  },
-  "tabGroupsSyncCollapse": {
-    "message": "Synka ihopfällning med webbläsaren"
-  },
-  "tabGroupsSyncCollapseHint": {
-    "message": "När markerad uppdateras även webbläsarens flikgrupp när en grupp fälls ihop eller expanderas i denna vy. Av som standard så att vikningen förblir lokal."
-  },
-  "tabGroupsColorStyle": {
-    "message": "Flikgruppsfärgstil"
-  },
-  "tabGroupsColorStyleHint": {
-    "message": "Av visar endast färgpunkten. Kantfärgband ritar en färgad remsa längs gruppens vänstra kant. Färganslutningslinje ritar en färgad linje under gruppens punkt med en bock per rad, som binder samman hela gruppen till ett träd."
-  },
-  "tabGroupsColorStyleOff": {
-    "message": "Av (endast färgpunkt)"
-  },
-  "tabGroupsColorStyleEdge": {
-    "message": "Kantfärgband"
-  },
-  "tabGroupsColorStyleLine": {
-    "message": "Färganslutningslinje"
-  },
-  "tabGroupsBookmarked": {
-    "message": "Bokmärkt"
-  },
-  "tabGroupsRemoveBookmark": {
-    "message": "Ta bort bokmärke"
-  },
-  "tabGroupsBookmarkRemoved": {
-    "message": "Tog bort $count$ bokmärke(n)",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsPinned": {
-    "message": "Fäst flik"
-  },
-  "tabGroupsDiscarded": {
-    "message": "Vilande flik"
-  },
-  "tabGroupsPinTab": {
-    "message": "Fäst flik"
-  },
-  "tabGroupsUnpinTab": {
-    "message": "Lossa flik"
-  },
-  "tabGroupsSleepTab": {
-    "message": "Vila flik"
-  },
-  "tabGroupsWakeTab": {
-    "message": "Väck flik"
-  },
-  "tabGroupsOpenGroups": {
-    "message": "Öppna flikgrupper"
-  },
-  "tabGroupsClosedGroups": {
-    "message": "Nyligen stängda"
-  },
-  "tabGroupsUngroupedTabs": {
-    "message": "Ogrupade flikar"
-  },
-  "tabGroupsUngroupGroup": {
-    "message": "Avgruppera flikar"
-  },
-  "tabGroupsMoveNewWindow": {
-    "message": "Flytta grupp till nytt fönster"
-  },
-  "tabGroupsWindow": {
-    "message": "Fönster $1$",
-    "placeholders": {
-      "1": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsCurrentWindow": {
-    "message": "Aktuellt fönster"
-  },
-  "tabGroupsReopenGroup": {
-    "message": "Öppna flikgrupp igen"
-  },
-  "tabGroupsDeleteClosedGroup": {
-    "message": "Ta bort stängd flikgrupp"
-  },
-  "tabGroupsCollapseWindow": {
-    "message": "Minimera fönster"
-  },
-  "tabGroupsCloseWindow": {
-    "message": "Stäng fönster"
-  },
-  "tabGroupsWindowClosedTitle": {
-    "message": "Stängt fönster"
-  },
-  "tabGroupsExpandWindow": {
-    "message": "Expandera fönster"
-  },
-  "tabGroupsClearClosedGroups": {
-    "message": "Rensa alla"
-  },
-  "tabGroupsConfirmClearClosed": {
-    "message": "Rensa alla nyligen stängda poster? De kan inte längre öppnas härifrån."
-  },
-  "tabGroupsFilterPlaceholder": {
-    "message": "Filtrera öppna flikar"
-  },
-  "tabGroupsNoMatchingTabs": {
-    "message": "Inga matchande flikar"
-  },
-  "tabGroupsClosedOpenTab": {
-    "message": "Öppna i ny flik"
-  },
-  "tabGroupsRemoveClosedTab": {
-    "message": "Ta bort från sparad grupp"
-  },
-  "tabGroupsClosedTimeLabel": {
-    "message": "Stängd:"
-  },
-  "tabGroupsExpandedExpand": {
-    "message": "Expandera"
-  },
-  "tabGroupsExpandedCollapse": {
-    "message": "Kollapsa"
-  },
-  "optionTabGroupsClosedLimit": {
-    "message": "Antal stängda flikar/grupper att spara"
-  },
-  "folderPickMoveHere": {
-    "message": "Flytta hit"
-  },
-  "folderPickCopyHere": {
-    "message": "Kopiera hit"
-  },
-  "folderPickFilter": {
-    "message": "Filtrera mappar…"
-  },
-  "folderPickFavNote": {
-    "message": "Obokmärkta objekt bokmärks här"
-  },
-  "folderPickPinned": {
-    "message": "Fästa"
-  },
-  "folderPickRecent": {
-    "message": "Senaste"
-  },
-  "pinFolder": {
-    "message": "Fäst denna mapp"
-  },
-  "unpinFolder": {
-    "message": "Lossa denna mapp"
-  },
-  "stagingAdd": {
-    "message": "Skicka till staging"
-  },
-  "stagingAdded": {
-    "message": "Skickat till staging"
-  },
-  "stagingAlready": {
-    "message": "Redan i väntelistan"
-  },
-  "stagingAddedSummary": {
-    "message": "Tillagt $n$ objekt; $m$ redan i väntelistan",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      },
-      "m": {
-        "content": "$2"
-      }
-    }
-  },
-  "stagingFull": {
-    "message": "Väntelistan är full — ta bort några objekt först"
-  },
-  "stagingFolderEmpty": {
-    "message": "Denna mapp har inga bokmärken att köa"
-  },
-  "stagingConfirmFolder": {
-    "message": "Köa $n$ bokmärken från denna mapp?",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingConfirmFolderOk": {
-    "message": "Scen"
-  },
-  "stagingRemove": {
-    "message": "Ta bort från väntelistan"
-  },
-  "stagingRemoved": {
-    "message": "Borttagen från väntelistan"
-  },
-  "recentStageAll": {
-    "message": "Köa alla nyligen tillagda"
-  },
-  "recentSectionTitle": {
-    "message": "Nyligen tillagda"
-  },
-  "stagingEmpty": {
-    "message": "Inget är klart ännu. Skicka bokmärken hit från valfri vy — plan-knappen på en rad eller högerklicksmenyn — och organisera och arkivera dem i bulk."
-  },
-  "stagingFromHistory": {
-    "message": "Från historik"
-  },
-  "stagingGroupExpand": {
-    "message": "Expandera grupp"
-  },
-  "stagingGroupCollapse": {
-    "message": "Kollapsa grupp"
-  },
-  "stagingGroupRename": {
-    "message": "Byt namn på grupp…"
-  },
-  "stagingGroupDissolve": {
-    "message": "Upplös grupp"
-  },
-  "stagingGroupDissolved": {
-    "message": "Grupp upplöst — objekt behålls i väntelistan"
-  },
-  "stagingGroupDelete": {
-    "message": "Ta bort grupp (med objekt)"
-  },
-  "stagingGroupDeleteConfirm": {
-    "message": "Ta bort gruppen \"$1\"? Dess $2 objekt(er) lämnar också mellanlagringsområdet."
-  },
-  "stagingGroupDeleted": {
-    "message": "Grupp borttagen — $1 objekt(er) borttagna"
-  },
-  "stagingGroupAssign": {
-    "message": "Grupp…"
-  },
-  "stagingGroupAssignTitle": {
-    "message": "Tilldela till en grupp"
-  },
-  "stagingGroupNew": {
-    "message": "Ny grupp"
-  },
-  "stagingGroupNamePrompt": {
-    "message": "Namn på ny grupp"
-  },
-  "stagingGroupNoGroups": {
-    "message": "Inga grupper ännu"
-  },
-  "stagingShortcutAdd": {
-    "message": "Lägg till genväg"
-  },
-  "stagingShortcutBarLabel": {
-    "message": "Flytta till:"
-  },
-  "stagingGuideText": {
-    "message": "Organisera bokmärken här — markera rader och gå in i markeringsläge för batchåtgärder."
-  },
-  "stagingGuideDismiss": {
-    "message": "Visa inte igen"
-  },
-  "stagingShortcutTitle": {
-    "message": "Flytta till genväg"
-  },
-  "stagingShortcutEdit": {
-    "message": "Redigera genväg"
-  },
-  "stagingShortcutAlias": {
-    "message": "Alias"
-  },
-  "stagingShortcutPickFolder": {
-    "message": "Välj målmapp…"
-  },
-  "stagingShortcutSave": {
-    "message": "Spara"
-  },
-  "stagingShortcutRemove": {
-    "message": "Ta bort genväg"
-  },
-  "stagingShortcutRemoved": {
-    "message": "Genväg borttagen"
-  },
-  "stagingShortcutMove": {
-    "message": "Flytta markerade till $1$",
-    "placeholders": {
-      "1": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingBucketTitle": {
-    "message": "Obokmärkta"
-  },
-  "stagingBucketFavAll": {
-    "message": "Favoritmarkera alla"
-  },
-  "stagingNew": {
-    "message": "nya $n$",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingRowFav": {
-    "message": "Favoritmarkera detta objekt"
-  },
-  "stagingRowUnfav": {
-    "message": "Avfavoritmarkera detta objekt"
-  },
-  "stagingFav": {
-    "message": "Favoritmarkera"
-  },
-  "stagingUnfav": {
-    "message": "Avfavoritmarkera"
-  },
-  "stagingFavDone": {
-    "message": "Favoritmarkerade $n$ objekt",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingUnfavDone": {
-    "message": "Avmarkerat $n$ objekt",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "groupSaveToFolder": {
-    "message": "Spara till mapp…"
-  },
-  "groupCopyToFolder": {
-    "message": "Kopiera till mapp…"
-  },
-  "stagingCount": {
-    "message": "$n$ i kö",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingMoveCopy": {
-    "message": "Flytta/kopiera till…"
-  },
-  "stagingMoveDone": {
-    "message": "Flyttade $n$ objekt hem",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingCopyDone": {
-    "message": "Kopierade $n$ objekt",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingMoveConfirm": {
-    "message": "Flytta $n$ objekt till vald mapp?",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingMoveConfirmOk": {
-    "message": "Flytta"
-  },
-  "stagingDeleteConfirm": {
-    "message": "Ta bort $n$ objekt? Obokmärkta lämnar bara köområdet.",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingDeleted": {
-    "message": "Tog bort $n$ bokmärken",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingRemovedCount": {
-    "message": "Tog bort $n$ objekt från köområdet",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingClear": {
-    "message": "Rensa kö"
-  },
-  "stagingClearConfirm": {
-    "message": "Rensa hela köområdet? Bokmärkesträdet påverkas inte."
-  },
-  "stagingClearConfirmOk": {
-    "message": "Rensa"
-  },
-  "stagingCleared": {
-    "message": "Köområdet rensat"
-  },
-  "groupPlaceTooltip": {
-    "message": "Spara denna grupp till en mapp…"
-  },
-  "copyBookmark": {
-    "message": "Kopiera"
-  },
-  "cutBookmark": {
-    "message": "Klipp ut"
-  },
-  "copyMoveTo": {
-    "message": "Kopiera/flytta till…"
-  },
-  "pasteHere": {
-    "message": "Klistra in här"
-  },
-  "copiedToast": {
-    "message": "Kopierat: $t$",
-    "placeholders": {
-      "t": {
-        "content": "$1"
-      }
-    }
-  },
-  "cutToast": {
-    "message": "Klippt ut: $t$ — klistra in i målmapp (Esc avbryter)",
-    "placeholders": {
-      "t": {
-        "content": "$1"
-      }
-    }
-  },
-  "pasteDone": {
-    "message": "Inklistrat"
-  },
-  "pasteGone": {
-    "message": "Bokmärket finns inte längre — urklipp rensat"
-  },
-  "folderCopyList": {
-    "message": "Kopiera titlar och adresser"
-  },
-  "folderCopyText": {
-    "message": "Oformaterad textlista"
-  },
-  "folderCopyMarkdown": {
-    "message": "Markdown"
-  },
-  "folderCopyJson": {
-    "message": "JSON"
-  },
-  "folderCopyConfirm": {
-    "message": "Kopiera listan med $n$ bokmärken?",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "folderCopyDone": {
-    "message": "Kopierade $n$ bokmärkesposter",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "addFolderMenu": {
-    "message": "Lägg till mapp"
-  },
-  "optionCollapseAddFolderMenu": {
-    "message": "Fäll ihop lägg-till-mapp-posterna"
-  },
-  "optionCollapseAddFolderMenuHint": {
-    "message": "Slå samman lägg-till-mapp-poster (före/efter/inuti på mapprader, före/efter på bokmärkesrader) till en undermenypost."
-  },
-  "tabRowStage": {
-    "message": "Skicka till scen"
-  },
-  "tabgroupStageAll": {
-    "message": "Skicka grupp till scen"
-  },
-  "tabgroupStageConfirm": {
-    "message": "Skicka $n$ flikar till scen?",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabgroupStageNone": {
-    "message": "Inga bokmärkbara flikar i denna grupp"
-  },
-  "stagedToast": {
-    "message": "Köade $n$ flikar som gruppen ”$t$”",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      },
-      "t": {
-        "content": "$2"
-      }
-    }
-  },
-  "searchResultCount": {
-    "message": "$n$ resultat",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "deleteSelected": {
-    "message": "Ta bort markerade"
-  },
-  "recentStageGroup": {
-    "message": "Skicka $t$ till mellanlagringsområdet",
-    "placeholders": {
-      "t": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingGroupSelectAll": {
-    "message": "Välj alla i gruppen"
-  },
-  "optionsGroupLabs": {
-    "message": "Labb"
-  },
-  "optionVirtualScrollLab": {
-    "message": "Virtuell rullning (experimentell)"
-  },
-  "optionVirtualScrollLabHint": {
-    "message": "Vyn för flikgrupper och dubbletter renderar endast raderna nära visningsporten. Mycket snabbare på mycket stora listor; medan den är experimentell är rullningslägets position en uppskattning."
-  },
-  "optionsStagingSection": {
-    "message": "Staging och nyligen tillagda"
-  },
-  "optionStagingEnabled": {
-    "message": "Aktivera staging-området"
-  },
-  "optionStagingEnabledHint": {
-    "message": "När avstängd visar denna vy endast listan över nyligen tillagda, och alla staging-knappar eller menyposter i de andra vyerna döljs."
-  },
-  "optionTreeRowActions": {
-    "message": "Hovringsåtgärder på trädrader (redigera / stage / ta bort)"
-  },
-  "optionsStorageSyncTip": {
-    "message": "Synkroniseras via ditt Chrome-konto — denna inställning delas mellan dina enheter.",
-    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
-  },
-  "optionsStorageLocalTip": {
-    "message": "Lagras endast på den här enheten — delas inte via Chrome-synkronisering.",
-    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
-  },
-  "tabGroupsWindowsCount": {
-    "message": "$n$ fönster",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsNewWindow": {
-    "message": "Nytt fönster"
-  },
-  "tabGroupsMergedWindowToast": {
-    "message": "Fönster sammanfogat som flikgrupp"
-  },
-  "searchStageAllGroup": {
-    "message": "Skicka alla resultat till gruppen \"$1$\"",
-    "placeholders": {
-      "1": {
-        "content": "$1"
-      }
-    }
-  },
-  "searchHistoryClose": {
-    "message": "Dölj sökhistorik"
-  },
-  "searchHistoryClosedToast": {
-    "message": "Sökhistoriken är dold — aktivera den igen under Alternativ → Sök"
   }
 }

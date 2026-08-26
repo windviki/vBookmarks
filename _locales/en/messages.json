@@ -14,6 +14,9 @@
   "addBookmarkTop": {
     "message": "Bookmark Current Tab To Top Of This"
   },
+  "addFolderMenu": {
+    "message": "Add folder"
+  },
   "addNewFolder": {
     "message": "Add Sub Folder"
   },
@@ -32,23 +35,41 @@
   "announceDismiss": {
     "message": "Dismiss"
   },
-  "announceV408Text": {
-    "message": "v4.0.8 is the favicon-enhanced release: real site icons are fetched automatically for bookmarks Chrome hasn't cached yet."
-  },
   "announceV407Text": {
     "message": "v4.0.7 delivers the fully-featured dead-link view: scan, mark, filter and sort dead and restricted links, with past marks and per-row timestamps."
   },
   "announceV407Title": {
     "message": "What's new in v4.0.7"
   },
+  "announceV408Text": {
+    "message": "v4.0.8 is the favicon-enhanced release: real site icons are fetched automatically for bookmarks Chrome hasn't cached yet."
+  },
   "announceV408Title": {
     "message": "What's new in v4.0.8"
+  },
+  "announceV410Text": {
+    "message": "v4.1.0 adds the Tab groups view and the Staging area: manage every window's tabs next to your bookmarks, and collect bookmarks from anywhere into a staging workbench for bulk organizing."
   },
   "announceV410Title": {
     "message": "What's new in v4.1.0"
   },
-  "announceV410Text": {
-    "message": "v4.1.0 adds the Tab groups view and the Staging area: manage every window's tabs next to your bookmarks, and collect bookmarks from anywhere into a staging workbench for bulk organizing."
+  "bookmarkFolderNoFolders": {
+    "message": "No bookmark folders"
+  },
+  "bookmarkFolderPickDialogTitle": {
+    "message": "Add to bookmark folder"
+  },
+  "bookmarkOpenInExistingGroup": {
+    "description": "Bookmark context-menu item: lets the user pick an existing browser tab group, then opens the bookmark into it.",
+    "message": "Open in existing tab group…"
+  },
+  "bookmarkOpenInNewGroup": {
+    "description": "Bookmark context-menu item: opens the bookmark in a new tab group named and colored after the bookmark.",
+    "message": "Open in new tab group"
+  },
+  "bookmarkOpenInNewGroupSetup": {
+    "description": "Bookmark context-menu item: opens a dialog to set the new tab group's title and color, then opens the bookmark into it.",
+    "message": "Open in new tab group…"
   },
   "confirmDeleteFolder": {
     "message": "This folder contains $count$ item(s). You can undo the deletion.",
@@ -57,9 +78,6 @@
         "content": "$1"
       }
     }
-  },
-  "confirmDeleteFolderButton": {
-    "message": "Delete"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "Are you sure you want to delete $folderName$ folder and $bookmarkCount$ bookmark(s) in it?",
@@ -71,6 +89,9 @@
         "content": "$1"
       }
     }
+  },
+  "confirmDeleteFolderButton": {
+    "message": "Delete"
   },
   "confirmDeleteFolderSubfolders": {
     "message": "Are you sure you want to delete $folderName$ folder and $subFolderCount$ sub-folder(s) in it?",
@@ -124,11 +145,33 @@
       }
     }
   },
+  "contextMenuAddBookmark": {
+    "description": "Page context menu item that saves the current page as a bookmark.",
+    "message": "Bookmark this page with vBookmarks"
+  },
+  "copiedToast": {
+    "message": "Copied: $t$",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
+  },
   "copyAllTitlesAndUrls": {
     "message": "Copy all titles and URLs to clipboard"
   },
+  "copyBookmark": {
+    "message": "Copy"
+  },
+  "copyMoveTo": {
+    "message": "Copy/move to…"
+  },
   "copyTitleAndUrl": {
     "message": "Copy title and URL to clipboard"
+  },
+  "crossStorageMoveWarning": {
+    "description": "Warning when trying to move bookmarks across storage types",
+    "message": "Cannot move bookmarks between synced and local storage. Use copy/paste instead."
   },
   "customIcon": {
     "message": "Custom icon"
@@ -136,8 +179,14 @@
   "customIconDescription": {
     "message": "The icon has to be in 19*19 pixel dimension. Else it'll be resized to this dimension."
   },
+  "customIconPick": {
+    "message": "Choose file…"
+  },
   "customSeparatorColorDescription": {
     "message": "Customize Separator Color"
+  },
+  "customSeparatorStringDescription": {
+    "message": "If URL of a bookmark contains this string, it will be shown as a separator"
   },
   "customSeparatorTitleDescription": {
     "message": "The real title of bookmark which is shown as a separator"
@@ -145,26 +194,25 @@
   "customSeparatorUrlDescription": {
     "message": "The real URL of bookmark which is shown as a separator"
   },
-  "customSeparatorStringDescription": {
-    "message": "If URL of a bookmark contains this string, it will be shown as a separator"
-  },
   "customStyles": {
     "message": "Custom Styles"
-  },
-  "separatorOptions": {
-    "message": "Separators"
   },
   "customStylesDescription": {
     "message": "This requires some CSS skills. Hack at your own risk. Code sharing would be wise done via"
   },
-  "defaultIconButton": {
-    "message": "Use default"
+  "cutBookmark": {
+    "message": "Cut"
   },
-  "defaultIconButtonOr": {
-    "message": "or"
+  "cutToast": {
+    "message": "Cut: $t$ — paste into a target folder (Esc cancels)",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
   },
-  "customIconPick": {
-    "message": "Choose file…"
+  "deadCancel": {
+    "message": "Cancel"
   },
   "deadChecking": {
     "description": "Progress line of the palette's dead-link scan mode; $done$ bookmarks checked out of $total$.",
@@ -180,6 +228,10 @@
       }
     }
   },
+  "deadClearScan": {
+    "description": "Batch button in the dead-link view after Clear all marks: wipe the current scan's dead/blocked verdicts. Marks survive and move to the past-marks category.",
+    "message": "Clear scan results"
+  },
   "deadConfirmAll": {
     "description": "Confirmation before batch-deleting every dead bookmark from the scan results. $count$ is the number of dead bookmarks.",
     "message": "Delete all $count$ dead bookmarks? This cannot be undone in one step.",
@@ -194,6 +246,15 @@
     "description": "Confirmation before deleting one bookmark from the palette's dead-link scan results.",
     "message": "Remove this bookmark?"
   },
+  "deadConfirmDeleteSelected": {
+    "message": "Delete the $count$ selected dead bookmarks?",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
+  },
   "deadDeleteAll": {
     "description": "Top row of the palette's dead-link scan results; deletes every dead bookmark in one batch. $count$ is the total.",
     "message": "Delete all $count$ bookmarks in the current filter?",
@@ -204,28 +265,15 @@
       }
     }
   },
-  "deadDeleteAllNote": {
-    "message": "Under the All filter this includes blocked bookmarks (reachable through your proxy, likely still alive) and previously marked rows.",
-    "description": "Delete-all confirmation in the Dead links view: the All-filter warning, shown on the confirmation's second line before undoSingleStepNote."
-  },
-  "undoSingleStepNote": {
-    "message": "Undo can only restore the most recent deletion.",
-    "description": "Appended to every batch-deletion confirmation (dead links view, duplicates view): undo() restores only the most recent deletion, not a whole batch."
-  },
   "deadDeleteAllBtn": {
     "message": "Delete all"
   },
+  "deadDeleteAllNote": {
+    "description": "Delete-all confirmation in the Dead links view: the All-filter warning, shown on the confirmation's second line before undoSingleStepNote.",
+    "message": "Under the All filter this includes blocked bookmarks (reachable through your proxy, likely still alive) and previously marked rows."
+  },
   "deadDeleteSelected": {
     "message": "Delete selected"
-  },
-  "deadConfirmDeleteSelected": {
-    "message": "Delete the $count$ selected dead bookmarks?",
-    "placeholders": {
-      "count": {
-        "content": "$1",
-        "example": "8"
-      }
-    }
   },
   "deadDeleted": {
     "message": "Deleted $count$ dead bookmarks",
@@ -236,9 +284,91 @@
       }
     }
   },
-  "deadClearScan": {
-    "message": "Clear scan results",
-    "description": "Batch button in the dead-link view after Clear all marks: wipe the current scan's dead/blocked verdicts. Marks survive and move to the past-marks category."
+  "deadDetectTimeLabel": {
+    "description": "Dead view row tooltip label: the absolute time a row's scan check returned its dead/blocked verdict (appended to the tooltip, and to the second line of the wide/panel layout).",
+    "message": "Detected at"
+  },
+  "deadFilterAll": {
+    "description": "Dead-link view filter segment: show the whole result set.",
+    "message": "All"
+  },
+  "deadFilterBlocked": {
+    "description": "Dead-link view filter segment: show only rows unreachable directly but reachable through the proxy.",
+    "message": "Blocked only"
+  },
+  "deadFilterDead": {
+    "description": "Dead-link view filter segment: show only rows dead on every channel.",
+    "message": "Dead only"
+  },
+  "deadFilterMarked": {
+    "description": "Dead-link view filter segment: show only the user's manually marked bookmarks from before (the marked-only view, results hidden).",
+    "message": "Previously marked"
+  },
+  "deadLastScanAt": {
+    "description": "Info row on top of the dead-link view when cached scan results exist; $time$ is the localized scan timestamp.",
+    "message": "Last scan: $time$",
+    "placeholders": {
+      "time": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadMark": {
+    "description": "Row button / context menu item that marks a bookmark as dead (red × overlay everywhere).",
+    "message": "Mark as dead"
+  },
+  "deadMarkAll": {
+    "description": "Batch button in the dead-link view: mark every dead/blocked row of the current result set.",
+    "message": "Mark all"
+  },
+  "deadMarkSelected": {
+    "description": "Dead view selection mode: mark every selected row as dead.",
+    "message": "Mark selected"
+  },
+  "deadMarkStatusAll": {
+    "description": "Dead view second toolbar (mark-status filter): show rows regardless of their mark status (distinct wording from the category toolbar's All).",
+    "message": "Any status"
+  },
+  "deadMarkStatusMarked": {
+    "description": "Dead view second toolbar (mark-status filter): show only rows carrying the user's dead mark.",
+    "message": "Marked"
+  },
+  "deadMarkStatusUnmarked": {
+    "description": "Dead view second toolbar (mark-status filter): show only rows without the user's dead mark.",
+    "message": "Unmarked"
+  },
+  "deadMarkTimeLabel": {
+    "description": "Dead view row tooltip label: the absolute time a row was marked dead (appended to the tooltip, and to the second line of the wide/panel layout).",
+    "message": "Marked at"
+  },
+  "deadMarked": {
+    "description": "Toast shown after the \"mark all\" batch action finished.",
+    "message": "Dead rows marked"
+  },
+  "deadMarkedBanner": {
+    "description": "Dead view tooltip banner above the toolbar when the previously-marked list is on screen (marked-only view after a cancelled scan / the 'Previously marked' filter, or the appended list under 全部 when a finished scan left marks that are now reachable): points to the rescan action and the handleable list below.",
+    "message": "Showing bookmarks marked previously. Click Rescan to start a new check, or handle them in the list below."
+  },
+  "deadMarkedBannerDismiss": {
+    "description": "Dead view marked-list tooltip banner: aria-label/title of the × that hides the hint for the session.",
+    "message": "Dismiss"
+  },
+  "deadMarkedCount": {
+    "description": "Dead view: count of user-marked bookmarks shown when no scan result list is on screen (a cancelled scan keeps the marks).",
+    "message": "Marked $count$ bookmarks",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadMarkedNone": {
+    "description": "Empty state of the past-marks (上次标注) category when the last scan left no marks; a scan has run, so this is a plain empty state, not the first-run start button.",
+    "message": "No bookmarks marked yet"
+  },
+  "deadMarkedRow": {
+    "description": "Dead view: per-row badge on a user-marked bookmark in the standalone marked-rows list (shown when no scan result row hosts the mark).",
+    "message": "Marked"
   },
   "deadNone": {
     "description": "Empty-state line of the palette's dead-link scan mode, shown when every bookmark checked out fine.",
@@ -248,12 +378,162 @@
     "description": "Empty-state line of the dead-link view when the active filter segment (dead only / blocked only) matches nothing but other segments have rows.",
     "message": "No dead links under this filter — try another segment above"
   },
+  "deadPause": {
+    "message": "Pause"
+  },
+  "deadPaused": {
+    "message": "Paused"
+  },
+  "deadProxyAdd": {
+    "description": "Dead view proxy strip: button that opens the inline add-proxy panel.",
+    "message": "Add a proxy server for dead-link checks"
+  },
+  "deadProxyChange": {
+    "description": "Dead view proxy strip: reopen the add panel prefilled with the configured proxy server.",
+    "message": "Change"
+  },
+  "deadProxyClear": {
+    "description": "Button clearing the saved dead-link proxy server on the options page.",
+    "message": "Clear"
+  },
+  "deadProxyControlled": {
+    "description": "Error when another extension controls Chrome's proxy settings (dead view add-proxy flow or scan gate).",
+    "message": "Proxy settings are managed by another extension"
+  },
+  "deadProxyDenied": {
+    "description": "Error when the user dismisses Chrome's proxy permission prompt (dead view add-proxy flow or scan gate).",
+    "message": "Proxy permission was not granted"
+  },
+  "deadProxyInvalid": {
+    "description": "Error of the dead view's add-proxy panel when the address does not parse.",
+    "message": "Invalid proxy address — use host:port or scheme://host:port (http/https/socks5, no credentials)"
+  },
+  "deadProxyLabel": {
+    "description": "Dead view proxy strip chip showing the configured proxy server; $server$ is scheme://host:port.",
+    "message": "Proxy: $server$",
+    "placeholders": {
+      "server": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadProxyNeverShow": {
+    "description": "Dead view proxy strip: hides the no-server add/nudge hint permanently; the proxy stays configurable from the options page.",
+    "message": "Don't show again"
+  },
+  "deadProxyNone": {
+    "description": "Placeholder shown when no dead-link proxy server is configured (options page).",
+    "message": "(not set)"
+  },
+  "deadProxyNudge": {
+    "description": "Dead view proxy strip nudge shown after a scan when no proxy is configured.",
+    "message": "A proxy re-check separates real dead links from region-blocked ones — configure it here or in the options page."
+  },
+  "deadProxyPanelHint": {
+    "description": "Hint line of the dead view's inline add-proxy panel.",
+    "message": "Enter a proxy server you already have (the extension provides none), e.g. 127.0.0.1:7890 or socks5://127.0.0.1:1080."
+  },
+  "deadProxyRemove": {
+    "description": "Dead view proxy strip: remove the configured proxy server.",
+    "message": "Remove"
+  },
+  "deadProxyRemoved": {
+    "description": "Toast after the dead view's proxy server was removed.",
+    "message": "Proxy server removed"
+  },
+  "deadProxySaved": {
+    "description": "Toast after a reachable proxy server was saved in the dead view.",
+    "message": "Proxy saved — future scans re-check direct failures through it"
+  },
+  "deadProxyServerHint": {
+    "description": "Hint under the options page's dead-link proxy server row.",
+    "message": "The saved server re-checks direct-failing bookmarks in every dead-link scan, separating real dead links from region-blocked ones. Test & save probes it (only a reachable server is kept); you can also add it from the dead-links view."
+  },
+  "deadProxyTestSave": {
+    "description": "Primary button of the dead view's add-proxy panel: probes the proxy and saves it only when reachable.",
+    "message": "Test & save"
+  },
+  "deadProxyTestUrlLabel": {
+    "description": "Label/tooltip of the reachability test URL field in the dead view's add-proxy panel.",
+    "message": "Test URL"
+  },
+  "deadProxyTesting": {
+    "description": "Busy state of the dead view's add-proxy panel while the reachability probe runs.",
+    "message": "Testing…"
+  },
+  "deadProxyUnavailable": {
+    "description": "Error when chrome.proxy is missing (dead view add-proxy flow or scan gate).",
+    "message": "The proxy API is unavailable in this browser"
+  },
+  "deadProxyUnreachable": {
+    "description": "Error of the dead view's add-proxy panel when the reachability probe failed.",
+    "message": "Proxy unreachable — not saved"
+  },
   "deadRescan": {
     "description": "Top row of the palette's dead-link scan results; starts the scan over.",
     "message": "Rescan"
   },
+  "deadResume": {
+    "message": "Resume"
+  },
+  "deadRiskBanner": {
+    "message": "Dead-link cleanup deletes bookmarks in bulk. Back up your bookmarks before the first cleanup."
+  },
+  "deadSortByDetected": {
+    "description": "Dead view sort dropdown option: order rows by when the scan checked them.",
+    "message": "Detection time"
+  },
+  "deadSortByMarked": {
+    "description": "Dead view sort dropdown option: order rows by when they were marked dead.",
+    "message": "Mark time"
+  },
+  "deadSortByPath": {
+    "description": "Dead view sort dropdown option: order rows by their folder path.",
+    "message": "Folder path"
+  },
+  "deadSortLabel": {
+    "description": "Dead view sort dropdown: aria-label of the trigger and the listbox.",
+    "message": "Sort by"
+  },
+  "deadStartHint": {
+    "description": "Executable empty state of the dead-link view before the first scan; $n$ is the scannable bookmark count.",
+    "message": "Start scanning $n$ bookmarks",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadStatusBlocked": {
+    "description": "Amber status pill of a blocked row (direct fetch failed, proxy channel reached the target).",
+    "message": "blocked"
+  },
+  "deadUnmark": {
+    "description": "Row button / context menu item that removes the dead mark from a bookmark.",
+    "message": "Remove dead mark"
+  },
+  "deadUnmarkAll": {
+    "description": "Batch button in the dead-link view: remove every dead mark.",
+    "message": "Clear all marks"
+  },
+  "deadUnmarkSelected": {
+    "description": "Dead view selection mode: remove the dead mark from every selected row.",
+    "message": "Unmark selected"
+  },
+  "defaultIconButton": {
+    "message": "Use default"
+  },
+  "defaultIconButtonOr": {
+    "message": "or"
+  },
   "delete": {
     "message": "Delete"
+  },
+  "deleteEllipsis": {
+    "message": "Delete..."
+  },
+  "deleteSelected": {
+    "message": "Delete selected"
   },
   "deletedBookmark": {
     "description": "Toast shown after a bookmark or separator was deleted; the toast offers an undo button. $title$ is the deleted row's title (empty for separators).",
@@ -275,8 +555,609 @@
       }
     }
   },
+  "donationDismiss": {
+    "message": "Dismiss"
+  },
+  "donationGo": {
+    "message": "Donate"
+  },
+  "donationLater": {
+    "message": "Later"
+  },
+  "donationMessage": {
+    "message": "Enjoying it? Donate to fuel its future — or rate it on the store: every review keeps the updates coming."
+  },
+  "donationNever": {
+    "message": "Don't show again"
+  },
+  "donationRate": {
+    "message": "Rate it"
+  },
+  "donationRateTitle": {
+    "message": "Rate vBookmarks on the Chrome Web Store"
+  },
+  "donationV4GuideLink": {
+    "message": "Read the v4 guide →"
+  },
+  "donationV4Notice": {
+    "message": "vBookmarks 4.0 is a complete remake with a modern design, packed with new features."
+  },
+  "dupesApplyAll": {
+    "description": "Primary button of the duplicates view: delete every non-keeper row across all groups; $count$ is the total doomed row count.",
+    "message": "Apply all ($count$)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesApplySelected": {
+    "description": "Dupes view selection mode: apply dedup to the selected groups; $count$ is the total doomed row count.",
+    "message": "Dedup selected ($count$)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesCleanAll": {
+    "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go.",
+    "message": "Clean all: $groups$ groups, $count$ extra copies",
+    "placeholders": {
+      "count": {
+        "content": "$2"
+      },
+      "groups": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesCleanRestHint": {
+    "description": "Tooltip/aria-label of the quick action on a duplicate group header: apply the configured keeper strategy to this group alone — keep $title$, delete the other $count$ rows.",
+    "message": "Keep \"$title$\" and remove the other $count$",
+    "placeholders": {
+      "count": {
+        "content": "$2"
+      },
+      "title": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesConfirmAll": {
+    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps the bookmark its keeper radio selected — the strategy default or a manual pick).",
+    "message": "Remove $count$ extra copies across $groups$ groups? The keeper selected in each group is kept.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    }
+  },
+  "dupesConfirmGroup": {
+    "description": "Confirmation before deleting the redundant copies of one duplicate group; $title$ is the group's current keeper (the strategy default or a manual radio pick — same wording as the group header's ✓ hint dupesCleanRestHint).",
+    "message": "Keep \"$title$\" and remove the other $count$ copies?",
+    "placeholders": {
+      "count": {
+        "content": "$2"
+      },
+      "title": {
+        "content": "$1",
+        "example": "Example bookmark"
+      }
+    }
+  },
+  "dupesConfirmSelected": {
+    "description": "Confirm dialog of the dupes selection-mode apply: $count$ doomed rows across $groups$ selected groups.",
+    "message": "Remove $count$ duplicate bookmarks from the $groups$ selected groups?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    }
+  },
+  "dupesDone": {
+    "description": "Alert shown after the duplicate cleanup finished.",
+    "message": "Removed $count$ duplicate bookmarks",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesGroupCollapse": {
+    "description": "Dupes view group-head context menu: collapse an expanded duplicate group.",
+    "message": "Collapse group"
+  },
+  "dupesGroupCount": {
+    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL.",
+    "message": "$count$ duplicates",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesGroupExpand": {
+    "description": "Dupes view group-head context menu: expand a collapsed duplicate group.",
+    "message": "Expand group"
+  },
+  "dupesIgnoreScheme": {
+    "description": "Duplicates view checkbox: treat http and https variants of an address as duplicates.",
+    "message": "Ignore http/https differences"
+  },
+  "dupesKeepThis": {
+    "description": "aria-label of the keeper radio on a duplicate member row.",
+    "message": "Keep this one"
+  },
+  "dupesKeeperSet": {
+    "description": "Context menu item on a duplicate member row: make it the keeper of its group.",
+    "message": "Set as keeper"
+  },
+  "dupesNone": {
+    "description": "Empty-state line of the palette's duplicate-cleanup mode.",
+    "message": "No duplicates found"
+  },
+  "dupesPreviewSummary": {
+    "description": "Summary text in the duplicates view toolbar; $groups$ duplicate groups, $count$ rows doomed by the current keeper choices.",
+    "message": "$groups$ groups · $count$ to be freed",
+    "placeholders": {
+      "count": {
+        "content": "$2"
+      },
+      "groups": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesRemoveRow": {
+    "description": "aria-label of the delete button on a duplicate member row.",
+    "message": "Delete this copy"
+  },
+  "dupesRiskBanner": {
+    "message": "Deduplication deletes duplicate bookmarks in bulk. Back up your bookmarks before applying it."
+  },
+  "dupesScopeAll": {
+    "description": "Duplicates view scope selector: scan the whole bookmark tree.",
+    "message": "All bookmarks"
+  },
+  "dupesScopeBar": {
+    "description": "Duplicates view scope selector: scan only the bookmarks-bar subtree.",
+    "message": "Bookmarks bar only"
+  },
+  "dupesStrategyBookmarkBar": {
+    "description": "Keeper strategy: prefer the copy inside the bookmarks-bar subtree (oldest wins there).",
+    "message": "Keep the one in the bookmarks bar"
+  },
+  "dupesStrategyMostVisited": {
+    "description": "Keeper strategy: keep the copy with the highest recorded visit count.",
+    "message": "Keep the most visited"
+  },
+  "dupesStrategyNewest": {
+    "description": "Keeper strategy: keep the bookmark added most recently.",
+    "message": "Keep newest"
+  },
+  "dupesStrategyOldest": {
+    "description": "Keeper strategy: keep the bookmark added earliest.",
+    "message": "Keep oldest"
+  },
+  "dupesStrategyShallowest": {
+    "description": "Keeper strategy: keep the copy closest to the root folder.",
+    "message": "Keep the shallowest"
+  },
+  "dupesStrategyShortestTitle": {
+    "description": "Keeper strategy: keep the copy with the shortest title.",
+    "message": "Keep the shortest title"
+  },
+  "edit": {
+    "message": "Edit..."
+  },
+  "editBookmark": {
+    "message": "Edit bookmark"
+  },
+  "editFolder": {
+    "message": "Edit folder"
+  },
+  "errorOccured": {
+    "message": "Oops, an error occurred."
+  },
+  "extDesc": {
+    "description": "The extension description.",
+    "message": "A popup bookmark manager. Enhanced Neat Bookmarks. Neater than Neater Bookmarks."
+  },
+  "extName": {
+    "description": "vBookmarks",
+    "message": "vBookmarks"
+  },
+  "favGalleryAll": {
+    "description": "Favicon gallery source filter chip: show every source.",
+    "message": "All"
+  },
+  "favGalleryCompare": {
+    "description": "Favicon gallery toggle button: switch every icon to the generic placeholder it replaced (before/after comparison).",
+    "message": "Compare with placeholder"
+  },
+  "favGalleryEmptyText": {
+    "description": "Favicon gallery empty-state body text.",
+    "message": "When the popup meets a bookmarked site Chrome has no icon for, vBookmarks fetches the real one and lists it here."
+  },
+  "favGalleryEmptyTitle": {
+    "description": "Favicon gallery empty-state heading.",
+    "message": "No refreshed icons yet"
+  },
+  "favGalleryFailedHint": {
+    "description": "Favicon gallery hint under the failed-fetch section title.",
+    "message": "Failures are retried after 24 h, 3 days and 7 days, then given up until the icon cache is cleared."
+  },
+  "favGalleryFailedTitle": {
+    "description": "Favicon gallery heading of the muted section listing hosts whose icon fetch failed recently.",
+    "message": "Recently tried, no icon found"
+  },
+  "favGalleryGaveUp": {
+    "description": "Favicon gallery badge on a failed-strip host whose retries are exhausted (it stays untouched until the icon cache is cleared).",
+    "message": "Gave up"
+  },
+  "favGalleryHint": {
+    "description": "Subtitle under the favicon gallery title, explaining the page is read-only.",
+    "message": "Icons vBookmarks fetched for bookmarked sites Chrome had not cached — where each one came from and which bookmarks use it. Display only."
+  },
+  "favGalleryLink": {
+    "description": "Options link (Icons group, right of the Clear icon cache button): opens the favicon gallery page listing the sites whose icons were refetched.",
+    "message": "View refreshed icons"
+  },
+  "favGalleryOrphan": {
+    "description": "Favicon gallery note on a card whose host no longer has any bookmark.",
+    "message": "No bookmark left on this host — the icon clears with the cache."
+  },
+  "favGallerySearch": {
+    "description": "Placeholder of the favicon gallery filter input.",
+    "message": "Filter by site, title or path"
+  },
+  "favGalleryShowingBefore": {
+    "description": "Favicon gallery toggle button while the placeholder comparison is shown: switch back to the real fetched icons.",
+    "message": "Back to real icons"
+  },
+  "favGalleryStatBookmarks": {
+    "description": "Favicon gallery stats strip: how many bookmarks sit on the refreshed sites.",
+    "message": "$n$ bookmarks",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "favGalleryStatSites": {
+    "description": "Favicon gallery stats strip: how many sites have a refreshed icon.",
+    "message": "$n$ sites",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "favGalleryTitle": {
+    "description": "Favicon gallery page title (h1 + document title).",
+    "message": "Refreshed site icons"
+  },
+  "favGalleryVisits": {
+    "description": "Favicon gallery tooltip on a bookmark row's visit-count pill.",
+    "message": "$n$ recorded opens",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "favSrcDirect": {
+    "description": "Favicon gallery source badge: the icon was fetched directly from the site itself.",
+    "message": "Direct"
+  },
+  "favSrcLegacy": {
+    "description": "Favicon gallery source badge: cached before the source was recorded, so the origin is unknown.",
+    "message": "Earlier cache"
+  },
+  "favSrcProxy": {
+    "description": "Favicon gallery source badge: the icon was fetched through the user's own proxy relay.",
+    "message": "Proxy"
+  },
+  "folderCopyConfirm": {
+    "message": "Copy the list of $n$ bookmarks?",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "folderCopyDone": {
+    "message": "Copied $n$ bookmark entries",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "folderCopyJson": {
+    "message": "JSON"
+  },
+  "folderCopyList": {
+    "message": "Copy titles and addresses"
+  },
+  "folderCopyMarkdown": {
+    "message": "Markdown"
+  },
+  "folderCopyText": {
+    "message": "Plain text list"
+  },
+  "folderEmpty": {
+    "description": "Row shown inside an expanded folder that has no children.",
+    "message": "(Empty)"
+  },
+  "folderPickCopyHere": {
+    "message": "Copy here"
+  },
+  "folderPickFavNote": {
+    "message": "Unbookmarked items will be bookmarked here"
+  },
+  "folderPickFilter": {
+    "message": "Filter folders…"
+  },
+  "folderPickMoveHere": {
+    "message": "Move here"
+  },
+  "folderPickPinned": {
+    "message": "Pinned"
+  },
+  "folderPickRecent": {
+    "message": "Recent"
+  },
+  "general": {
+    "message": "General"
+  },
+  "groupCopyToFolder": {
+    "message": "Copy to folder…"
+  },
+  "groupPlaceTooltip": {
+    "message": "Save this group to a folder…"
+  },
+  "groupSaveToFolder": {
+    "message": "Save to folder…"
+  },
+  "ignore": {
+    "message": "Ignore"
+  },
+  "name": {
+    "description": "Name of bookmark or folder.",
+    "message": "Name"
+  },
+  "noTitle": {
+    "description": "The title for untitled bookmarks with no http(s) URL or untitled folders.",
+    "message": "(no title)"
+  },
+  "nope": {
+    "message": "Cancel"
+  },
+  "open": {
+    "description": "Action to open bookmarks.",
+    "message": "Open"
+  },
+  "openBookmarks": {
+    "message": "Open All Bookmarks"
+  },
+  "openBookmarksInExistingGroup": {
+    "description": "Folder context-menu item: lets the user pick an existing browser tab group, then opens the folder's bookmarks into it.",
+    "message": "Open all in existing tab group…"
+  },
+  "openBookmarksInGroup": {
+    "description": "Folder context-menu item: opens every bookmark of the folder as tabs in one new browser tab group, titled and colored after the folder.",
+    "message": "Open all in new tab group"
+  },
+  "openBookmarksInGroupSetup": {
+    "description": "Folder context-menu item: opens a dialog to set the new tab group's title and color before opening the folder's bookmarks as one tab group.",
+    "message": "Open all in new tab group…"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "Open All Bookmarks in Incognito Window"
+  },
+  "openBookmarksNewWindow": {
+    "message": "Open All Bookmarks in New Window"
+  },
+  "openCommandPaletteCommand": {
+    "description": "Description of the keyboard shortcut command that opens the command palette.",
+    "message": "Open command palette"
+  },
+  "openIncognitoWindow": {
+    "message": "Open in Incognito Window"
+  },
+  "openNewTab": {
+    "message": "Open in New Tab"
+  },
+  "openNewWindow": {
+    "message": "Open in New Window"
+  },
+  "openSidePanelCommand": {
+    "description": "Description of the keyboard shortcut command that opens the side panel.",
+    "message": "Open vBookmarks side panel"
+  },
+  "optionAnnounceEnabled": {
+    "message": "Show in-product announcements"
+  },
+  "optionAnnounceEnabledHint": {
+    "message": "Release notes and tips from the project's GitHub repository (fetched at most every 6 hours). Off also stops the network fetch."
+  },
+  "optionAutoRefreshSync": {
+    "message": "Auto-refresh sync status"
+  },
+  "optionAutoResizePopup": {
+    "message": "Auto-resize popup window to fit content"
+  },
+  "optionClassicExperience": {
+    "message": "Restore the classic header"
+  },
+  "optionClassicExperienceHint": {
+    "message": "Turns off the command palette, the quick-add star, its page right-click entry, the tool button and the view tabs. Each can be re-enabled individually in its section."
+  },
+  "optionClickNewTab": {
+    "message": "Left-click opens bookmark in new tab."
+  },
+  "optionCloseUnusedFolders": {
+    "message": "Close unused folders when opening a folder."
+  },
+  "optionCollapseAddFolderMenu": {
+    "message": "Collapse the add-folder entries"
+  },
+  "optionCollapseAddFolderMenuHint": {
+    "message": "Merge the add-folder entries (before/after/inside on folder rows, before/after on bookmark rows) into one submenu entry."
+  },
+  "optionCollapseSortMenu": {
+    "description": "Options checkbox (issue #48 follow-up): folds the three sort items of the folder context menu into a single submenu entry.",
+    "message": "Collapse the sort entries into one \"Sort\" submenu"
+  },
+  "optionCollapseSortMenuHint": {
+    "message": "Applies to the folder right-click menu. On by default."
+  },
+  "optionCollapseTabGroupMenu": {
+    "description": "Options checkbox (issue #48 follow-up): folds the three tab-group items of the folder and bookmark context menus into a single submenu entry.",
+    "message": "Collapse the tab-group entries into one \"Tab groups\" submenu"
+  },
+  "optionCollapseTabGroupMenuHint": {
+    "message": "Applies to both the folder and bookmark right-click menus. Off by default; keeps low-height menus shorter on small/high-zoom screens."
+  },
+  "optionConfirmDeleteFolder": {
+    "message": "Confirm before deleting non-empty folders"
+  },
+  "optionConfirmOpenFolder": {
+    "message": "Display confirmation when opening a lot of bookmarks from a folder."
+  },
+  "optionDeadProxyServer": {
+    "description": "Options label for the user's own proxy server used by the dead-link scan's second channel.",
+    "message": "Dead-link proxy server"
+  },
+  "optionDeadProxyStrip": {
+    "description": "Options checkbox controlling the dead view's no-server proxy hint strip (add button + nudge + dismiss ×).",
+    "message": "Show the add-a-proxy hint in the dead-links view"
+  },
+  "optionDeadProxyStripHint": {
+    "description": "Hint under the options checkbox controlling the dead view's proxy hint strip.",
+    "message": "Off hides that hint there; the proxy server stays configurable here, and a saved server always shows its manage row in the view."
+  },
+  "optionDeadScanConcurrency": {
+    "description": "Advanced options label for the dead-link scan concurrency pool size.",
+    "message": "Dead-link scan concurrency (1-16)"
+  },
+  "optionDeadScanTimeout": {
+    "description": "Advanced options label for the per-request dead-link probe timeout.",
+    "message": "Dead-link scan timeout in seconds (2-30)"
+  },
+  "optionFaviconBackup": {
+    "description": "Options checkbox (Icons group): whether the settings export/import also carries the enriched favicon cache (per-site data, potentially large). Off by default to keep backups small.",
+    "message": "Include icon cache in backups"
+  },
+  "optionFaviconBackupHint": {
+    "description": "Hint under the include-icon-cache-in-backups checkbox.",
+    "message": "Also pack the enriched favicon cache (per-site data, potentially large) into the settings export/import. This covers icons already cached even while fetching is off. Off keeps backups small; icons are re-fetched automatically anyway."
+  },
+  "optionFaviconCacheClear": {
+    "description": "Options button: clear the favicon cache so icons are re-fetched on next open.",
+    "message": "Clear icon cache"
+  },
+  "optionFaviconCacheClearConfirm": {
+    "description": "Confirmation shown before clearing the favicon cache.",
+    "message": "Clear the enriched icon cache? Icons will be re-fetched automatically on next open."
+  },
+  "optionFaviconCacheCleared": {
+    "description": "Alert shown after clearing the favicon cache.",
+    "message": "Icon cache cleared. Icons will be re-fetched on next open."
+  },
+  "optionFaviconCacheEmpty": {
+    "description": "Alert shown when the user clicks Clear icon cache and no cache keys exist.",
+    "message": "No icon cache to clear."
+  },
+  "optionFaviconContrast": {
+    "description": "Options checkbox (Views group): invert near-monochrome favicons that are invisible on the opposite background (white icons on light themes, black icons on dark themes). On by default.",
+    "message": "Invert low-contrast favicons"
+  },
+  "optionFaviconContrastHint": {
+    "description": "Options hint under the favicon-contrast checkbox, explaining the low-overhead one-time-per-icon sampling.",
+    "message": "White icons on light themes and black icons on dark themes are inverted so they stay visible. Each icon is sampled once when it loads — no cost while browsing."
+  },
+  "optionFaviconEnrich": {
+    "description": "Options checkbox (Views group): for bookmarked sites Chrome has no cached icon for, fetch the real icon directly from the site (/favicon.ico, then the page’s declared icons). On by default.",
+    "message": "Fetch missing site icons"
+  },
+  "optionFaviconEnrichAgg": {
+    "description": "Options checkbox (Views group): sub-switch enabling the built-in list of third-party icon services (favicon.run, then icon.horse, then DuckDuckGo) as a last-resort fallback when direct fetching fails.",
+    "message": "Third-party icon fallback"
+  },
+  "optionFaviconEnrichAggHint": {
+    "message": "When direct fetching fails, look the icon up by domain from a built-in list of third-party icon services ($providers$). A service found unreachable is skipped and the next one is tried — it is not retried for 6 hours.",
+    "placeholders": {
+      "providers": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionFaviconEnrichHint": {
+    "description": "Hint under the favicon enrich checkbox.",
+    "message": "For bookmarked sites Chrome has no cached icon for, fetch the real icon directly from the site (/favicon.ico, then the page’s declared icons). Requests only go to sites you bookmarked."
+  },
+  "optionHighlightUnsynced": {
+    "message": "Dim unsynced bookmarks"
+  },
+  "optionLanguage": {
+    "description": "Options page: UI language dropdown under the theme selector.",
+    "message": "Language"
+  },
+  "optionLanguageAuto": {
+    "description": "Language dropdown option: follow the browser UI language.",
+    "message": "Auto"
+  },
+  "optionLanguageHint": {
+    "message": "Changing the language reloads this page."
+  },
+  "optionOnlyShowBookmarkBar": {
+    "message": "Only show bookmarks in Bookmark Bar"
+  },
+  "optionOpenInSidePanel": {
+    "message": "Open in side panel instead of popup"
+  },
+  "optionOpenNewTab": {
+    "message": "Middle-click or control-click opens bookmark in new background tab (instead of foreground)."
+  },
+  "optionPaletteEnabled": {
+    "message": "Enable the command palette (Ctrl/Cmd+K)"
+  },
+  "optionPopupStays": {
+    "message": "Popup stays open when opening (left-clicking) bookmarks."
+  },
+  "optionQuickAddContextMenu": {
+    "description": "Options checkbox (issue #49): controls the v4-only page context-menu quick-add entry.",
+    "message": "Add a \"Bookmark this page with vBookmarks\" entry to the page right-click menu"
+  },
+  "optionQuickAddContextMenuHint": {
+    "message": "Independent from the quick-add star button; the classic-experience restore also turns this entry off."
+  },
+  "optionQuickAddEnabled": {
+    "message": "Show the quick-add star button next to the search box"
+  },
+  "optionRecentCollapsed": {
+    "message": "Collapse the recently added section by default"
+  },
   "optionRecentCount": {
     "message": "Number of recently added bookmarks to show"
+  },
+  "optionRememberPrevState": {
+    "message": "Remember previous state (scroll position, opened folders and the last focused item)."
+  },
+  "optionRememberView": {
+    "message": "Remember the last active view and reopen it"
+  },
+  "optionSearchAfterEnter": {
+    "message": "Search bookmarks only when ENTER is pressed (instead of instant search)"
   },
   "optionSearchHistory": {
     "message": "Show the search history area"
@@ -284,17 +1165,538 @@
   "optionSearchHistoryHint": {
     "message": "Hide the recent-search area above the results — the recorded queries are kept."
   },
+  "optionShowDeadView": {
+    "message": "Show the dead-links view tab"
+  },
+  "optionShowDupesView": {
+    "message": "Show the duplicates view tab"
+  },
+  "optionShowItemPath": {
+    "message": "Show the parent folder path on list rows"
+  },
+  "optionShowRecentBookmarks": {
+    "message": "Show the recently added view tab"
+  },
+  "optionShowStatsView": {
+    "message": "Show the stats view tab"
+  },
+  "optionShowSyncStatus": {
+    "message": "Show sync status indicators"
+  },
+  "optionShowTabBadges": {
+    "message": "Show count badges on the view tabs"
+  },
+  "optionShowTabGroupsView": {
+    "message": "Show the tab groups view tab"
+  },
+  "optionShowToolButton": {
+    "message": "Show the tool button (⋮) next to the search box"
+  },
+  "optionShowViewTabs": {
+    "message": "Show view tabs below the search box"
+  },
+  "optionStagingEnabled": {
+    "message": "Enable the staging area"
+  },
+  "optionStagingEnabledHint": {
+    "message": "While off, this view keeps only the recently-added list, and every staging button or menu entry in the other views hides."
+  },
+  "optionStatsEnabled": {
+    "description": "Options checkbox (Views group): master switch for visit-statistics collection.",
+    "message": "Enable visit statistics"
+  },
+  "optionSyncRefreshInterval": {
+    "message": "Refresh interval"
+  },
+  "optionSyncRefreshIntervalSeconds": {
+    "message": "seconds"
+  },
+  "optionTabGroupsClosedLimit": {
+    "description": "Options-page select in the Views group: how many closed tab/group records the tab groups view remembers.",
+    "message": "Closed tab/group history to keep"
+  },
+  "optionTheme": {
+    "message": "Theme"
+  },
+  "optionThemeAuto": {
+    "message": "Follow system"
+  },
+  "optionThemeDark": {
+    "message": "Dark"
+  },
+  "optionThemeInk": {
+    "message": "Ink (dark)"
+  },
+  "optionThemeLight": {
+    "message": "Light"
+  },
+  "optionThemePaper": {
+    "message": "Paper (light)"
+  },
+  "optionTreeRowActions": {
+    "message": "Hover actions on tree rows (edit / stage / delete)"
+  },
+  "optionVirtualScrollLab": {
+    "message": "Virtual scrolling (experimental)"
+  },
+  "optionVirtualScrollLabHint": {
+    "message": "The tab groups and duplicates views render only the rows near the viewport. Much faster on very large lists; while experimental the scrollbar position is an estimate."
+  },
+  "optionZoom": {
+    "message": "Zoom"
+  },
+  "options": {
+    "message": "Options"
+  },
+  "optionsDonate": {
+    "description": "Options page header button linking to the donation page.",
+    "message": "Donate"
+  },
+  "optionsFooterText": {
+    "description": "Footer text for the Options page",
+    "message": "Built by $authorName$.",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionsGithubLink": {
+    "description": "Options page header link to the GitHub profile/repository.",
+    "message": "GitHub"
+  },
+  "optionsGroupBackup": {
+    "message": "Backup"
+  },
+  "optionsGroupContextMenu": {
+    "message": "Context menus"
+  },
+  "optionsGroupIcons": {
+    "message": "Icons"
+  },
+  "optionsGroupLabs": {
+    "message": "Labs"
+  },
+  "optionsGroupPalette": {
+    "message": "Command palette"
+  },
+  "optionsGroupSort": {
+    "description": "Options group (issue #33): default folder-content sort preferences, shared with the popup sort dialog.",
+    "message": "Sorting"
+  },
+  "optionsGroupStats": {
+    "message": "Statistics"
+  },
+  "optionsGroupTools": {
+    "message": "Tools"
+  },
+  "optionsGroupViews": {
+    "message": "Views"
+  },
+  "optionsHomepageLink": {
+    "description": "Options page header link to the plugin homepage.",
+    "message": "Homepage"
+  },
+  "optionsSince": {
+    "description": "Subtitle under the options page title: days since the 1.0 fork from Neat Bookmarks.",
+    "message": "Forked from Neat Bookmarks, maintained for $days$ days.",
+    "placeholders": {
+      "days": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionsStagingSection": {
+    "message": "Staging & recently added"
+  },
+  "optionsStorageLocalTip": {
+    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting).",
+    "message": "Stored on this device only — not shared through Chrome sync."
+  },
+  "optionsStorageSyncTip": {
+    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting).",
+    "message": "Synced through your Chrome account — this setting is shared across your devices."
+  },
+  "optionsVersion": {
+    "description": "Tooltip for the version number shown at the top-right of the options page.",
+    "message": "vBookmarks version"
+  },
+  "paletteActionOpenUrl": {
+    "message": "Open URL"
+  },
+  "paletteActionOpenUrlGroup": {
+    "message": "Open bookmark folder group"
+  },
+  "paletteActionUrlTemplate": {
+    "message": "Open URL template"
+  },
+  "paletteActionViewPreset": {
+    "message": "Open view with preset"
+  },
+  "paletteClose": {
+    "description": "Command palette: label of the visible footer button that closes the panel (the keyboard path is Esc).",
+    "message": "Close"
+  },
+  "paletteCmdDead": {
+    "description": "Command palette entry that switches the panel into dead-link scan mode (slash command /dead).",
+    "message": "Find dead links"
+  },
+  "paletteCmdDupes": {
+    "description": "Command palette entry that switches the panel into duplicate-bookmark cleanup mode (slash command /dupes).",
+    "message": "Clean duplicate bookmarks"
+  },
+  "paletteCmdGoDead": {
+    "description": "Command palette entry (slash command /dead) that switches to the dead-link scan view.",
+    "message": "Go to Dead links view"
+  },
+  "paletteCmdGoDupes": {
+    "description": "Command palette entry (slash command /dupes) that switches to the duplicate cleanup view.",
+    "message": "Go to Duplicates view"
+  },
+  "paletteCmdGoRecent": {
+    "description": "Command palette entry (slash command /recent, alias /staging) that switches to the staging (upgraded recent) view.",
+    "message": "Go to Staging view"
+  },
+  "paletteCmdGoSearch": {
+    "description": "Command palette entry (slash command /search) that switches to the search view.",
+    "message": "Go to Search view"
+  },
+  "paletteCmdGoStats": {
+    "description": "Command palette entry: switch to the visit-statistics view (slash alias /stats).",
+    "message": "Go to Stats view"
+  },
+  "paletteCmdGoTabGroups": {
+    "description": "Command palette entry: switch to the tab groups view (slash alias /tabgroups, /groups).",
+    "message": "Go to Tab groups view"
+  },
+  "paletteCmdGoTree": {
+    "description": "Command palette entry (slash command /tree) that switches to the bookmark tree view.",
+    "message": "Go to Tree view"
+  },
+  "paletteCmdLang": {
+    "description": "Command palette entry (slash command /lang) that switches the UI language.",
+    "message": "Switch language…"
+  },
+  "paletteCmdLangUsage": {
+    "message": "Usage: /lang followed by a locale code — e.g. /lang en, /lang zh_CN, /lang ja."
+  },
+  "paletteCmdNewBookmark": {
+    "description": "Command palette entry that bookmarks the current tab at the bottom of the quick-add folder.",
+    "message": "New bookmark…"
+  },
+  "paletteCmdNewFolder": {
+    "description": "Command palette entry that creates a folder at the bottom of the quick-add folder.",
+    "message": "New folder…"
+  },
+  "paletteCmdOptions": {
+    "description": "Command palette entry (slash command /options) that opens the extension options page.",
+    "message": "Open options page"
+  },
+  "paletteCmdQuickAdd": {
+    "description": "Command palette entry that bookmarks the current tab (same as the star button).",
+    "message": "Bookmark current tab"
+  },
+  "paletteCmdSaveAsCommand": {
+    "message": "Save \"$1\" as a command…"
+  },
+  "paletteCmdSaveSession": {
+    "description": "Command palette entry that saves every tab of the current window into a new bookmark folder (slash command /session).",
+    "message": "Save window tabs as folder"
+  },
+  "paletteCmdSearchInView": {
+    "description": "Bridge row appended to the command palette results for a non-empty plain query; jumps into the search view with that query.",
+    "message": "Search '$query$' in Search view",
+    "placeholders": {
+      "query": {
+        "content": "$1"
+      }
+    }
+  },
+  "paletteCmdTheme": {
+    "message": "Set theme…"
+  },
+  "paletteCmdThemeUsage": {
+    "message": "Usage: /theme followed by a theme name — auto, light, dark, ink or paper (a unique prefix works, e.g. /theme d)."
+  },
+  "paletteCmdToggleViewTabs": {
+    "message": "Toggle view tabs"
+  },
+  "paletteCmdVersion": {
+    "description": "Command palette entry (slash command /version) that opens a dialog with extension, announce and browser metadata.",
+    "message": "Version info"
+  },
+  "paletteCustomAction": {
+    "message": "Action"
+  },
+  "paletteCustomAdd": {
+    "message": "Add command…"
+  },
+  "paletteCustomAliases": {
+    "message": "Aliases (comma-separated)"
+  },
+  "paletteCustomBroken": {
+    "message": "The folder of command \"$1\" no longer exists. Delete the command?"
+  },
+  "paletteCustomDeleteConfirm": {
+    "message": "Delete the command \"$1\"? The change syncs to all your devices."
+  },
+  "paletteCustomEmpty": {
+    "message": "No custom commands yet."
+  },
+  "paletteCustomErrAction": {
+    "message": "Pick an action type."
+  },
+  "paletteCustomErrAlias": {
+    "message": "Aliases: same rules as the slash (1–24 chars of lowercase letters, digits or hyphens)."
+  },
+  "paletteCustomErrFolder": {
+    "message": "Pick a bookmark folder."
+  },
+  "paletteCustomErrLimit": {
+    "message": "Command limit reached (100) — delete one first."
+  },
+  "paletteCustomErrSlash": {
+    "message": "Slash: 1–24 chars of lowercase letters, digits or hyphens, starting with a letter or digit."
+  },
+  "paletteCustomErrTaken": {
+    "message": "That slash or alias is already taken."
+  },
+  "paletteCustomErrTemplate": {
+    "message": "The template must contain exactly one %s."
+  },
+  "paletteCustomErrUrl": {
+    "message": "Only http:// or https:// URLs are allowed."
+  },
+  "paletteCustomErrView": {
+    "message": "Pick a view."
+  },
+  "paletteCustomFolder": {
+    "message": "Bookmark folder"
+  },
+  "paletteCustomHint": {
+    "message": "Custom slash commands for the command palette (Ctrl/Cmd+K). They sync with your settings — 100 entries max."
+  },
+  "paletteCustomSave": {
+    "message": "Save command"
+  },
+  "paletteCustomScan": {
+    "message": "Start the scan on entry"
+  },
+  "paletteCustomScope": {
+    "message": "Dedup scope preset"
+  },
+  "paletteCustomSlash": {
+    "message": "Slash (the word after /)"
+  },
+  "paletteCustomStrategy": {
+    "message": "Dedup strategy preset"
+  },
+  "paletteCustomTag": {
+    "message": "custom"
+  },
+  "paletteCustomTemplate": {
+    "message": "URL template — %s is replaced by the words after the command"
+  },
+  "paletteCustomUrl": {
+    "message": "URL"
+  },
+  "paletteCustomUsage": {
+    "message": "$1 / $2"
+  },
+  "paletteCustomView": {
+    "message": "View"
+  },
+  "paletteCustomWhere": {
+    "message": "Open in"
+  },
+  "paletteNoResults": {
+    "description": "Shown in the command palette when nothing matches the query.",
+    "message": "No matching results"
+  },
+  "palettePlaceholder": {
+    "description": "Placeholder text for the command palette input field.",
+    "message": "Search bookmarks, folders, commands…"
+  },
+  "paletteWhereBackground": {
+    "message": "Background tabs"
+  },
+  "paletteWhereCurrent": {
+    "message": "Current tab"
+  },
+  "paletteWhereTab": {
+    "message": "New tab"
+  },
+  "paletteWhereWindow": {
+    "message": "New window"
+  },
+  "parentFolder": {
+    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
+    "message": "Parent folder: \"$folderName$\"",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarksbar"
+      }
+    }
+  },
+  "pasteDone": {
+    "message": "Pasted"
+  },
+  "pasteGone": {
+    "message": "The bookmark no longer exists — clipboard cleared"
+  },
+  "pasteHere": {
+    "message": "Paste here"
+  },
+  "pinFolder": {
+    "message": "Pin this folder"
+  },
+  "quickAddBookmark": {
+    "description": "Tooltip of the quick-add star button in the popup header.",
+    "message": "Bookmark this page (Ctrl+D)"
+  },
+  "quickAddBookmarkCommand": {
+    "description": "Description of the keyboard shortcut command that saves the current tab as a bookmark.",
+    "message": "Quick-add the current tab as a bookmark"
+  },
+  "quickAdded": {
+    "message": "Bookmark added"
+  },
+  "quickAddedTo": {
+    "description": "Toast shown after the star button bookmarks the current tab, naming the target folder.",
+    "message": "Bookmark added to $folderName$",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarks bar"
+      }
+    }
+  },
+  "quickRemoveBookmark": {
+    "description": "Tooltip of the quick-add star button when the current page is already bookmarked.",
+    "message": "Remove this bookmark (Ctrl+D)"
+  },
+  "quickRemoved": {
+    "description": "Toast shown after the star button removes a bookmark (second click on an already-bookmarked page).",
+    "message": "Bookmark removed"
+  },
+  "recentBookmarks": {
+    "description": "Header of the virtual recent bookmarks section at the top of the popup tree.",
+    "message": "Recently added"
+  },
   "recentEmpty": {
     "message": "No recent bookmarks. Press Ctrl+D to bookmark the current page."
+  },
+  "recentGroupMonth": {
+    "message": "This month"
+  },
+  "recentGroupOlder": {
+    "message": "Older"
+  },
+  "recentGroupToday": {
+    "message": "Today"
+  },
+  "recentGroupWeek": {
+    "message": "This week"
   },
   "recentRevealInTree": {
     "message": "Reveal in Tree"
   },
+  "recentSectionTitle": {
+    "message": "Recently added"
+  },
+  "recentStageAll": {
+    "message": "Stage all recently added"
+  },
+  "recentStageGroup": {
+    "message": "Send $t$ to the staging area",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
+  },
+  "removeSeparator": {
+    "message": "Remove Separator"
+  },
+  "replaceUrl": {
+    "message": "Replace this with current URL"
+  },
+  "reportError": {
+    "message": "Report Error"
+  },
+  "reportedToDeveloper": {
+    "description": "A message for an error occured in the extension, has been reported to the developer.",
+    "message": "This has been reported to the developer."
+  },
+  "resetButton": {
+    "message": "Reset"
+  },
+  "resetSettings": {
+    "message": "Reset settings"
+  },
+  "resetSettingsDescription": {
+    "message": "Reset vBookmarks to default settings."
+  },
+  "revealOutsideBarAction": {
+    "description": "Button on the outside-of-bar toast: temporarily show the whole tree (session only) and reveal the target.",
+    "message": "Show all and reveal"
+  },
+  "revealOutsideBarHint": {
+    "description": "Toast text when \"Reveal in tree\" targets a node outside the bookmarks bar while the only-show-bar setting is on.",
+    "message": "Only the bookmarks bar is shown: the target lies outside it."
+  },
+  "riskBannerDismiss": {
+    "message": "Dismiss"
+  },
+  "riskBannerHelp": {
+    "message": "Backup & restore guide"
+  },
+  "riskBannerNever": {
+    "message": "Don't show again"
+  },
+  "rowActionDelete": {
+    "description": "aria-label of the row button that deletes the bookmark.",
+    "message": "Delete"
+  },
+  "rowActionMark": {
+    "description": "aria-label of the row button that marks the bookmark as dead.",
+    "message": "Mark as dead"
+  },
+  "rowActionReveal": {
+    "description": "aria-label of the row button that reveals the bookmark in the tree view.",
+    "message": "Reveal in tree"
+  },
+  "rowActionUnmark": {
+    "description": "aria-label of the row button that removes the dead mark.",
+    "message": "Remove dead mark"
+  },
+  "save": {
+    "message": "Save"
+  },
+  "searchBookmarks": {
+    "description": "Placeholder text for search field.",
+    "message": "Search Bookmarks"
+  },
+  "searchClear": {
+    "message": "Clear search"
+  },
   "searchHistoryClear": {
     "message": "Clear all"
   },
+  "searchHistoryClose": {
+    "description": "Search history header: the × that hides the whole search-history area (re-enable in Options → Search).",
+    "message": "Hide search history"
+  },
+  "searchHistoryClosedToast": {
+    "description": "Toast after the search-history area's close × hides it.",
+    "message": "Search history hidden — re-enable it in Options → Search"
+  },
   "searchHistoryRemove": {
     "message": "Remove this search"
+  },
+  "searchHistoryRerun": {
+    "message": "Search again"
   },
   "searchHistoryResultCount": {
     "message": "$n$ result(s)",
@@ -306,6 +1708,994 @@
   },
   "searchHistoryTitle": {
     "message": "Recent searches"
+  },
+  "searchNoResults": {
+    "description": "Shown in the popup when a search returns no matching bookmarks.",
+    "message": "No matching bookmarks"
+  },
+  "searchResultCount": {
+    "message": "$n$ result(s)",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "searchStageAllGroup": {
+    "description": "Search results toolbar: stage every result into a staging group named after the query. Placeholder $1$ = the query.",
+    "message": "Stage all results as group \"$1$\"",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "searchViewHint": {
+    "message": "Type in the box above to search your bookmarks"
+  },
+  "selectAll": {
+    "description": "Selection mode (dead/dupes views): select every row/group.",
+    "message": "All"
+  },
+  "selectClear": {
+    "description": "Selection mode (dead/dupes views): clear the whole selection.",
+    "message": "Clear"
+  },
+  "selectCount": {
+    "description": "Selection mode (dead/dupes views): label with the current selection size.",
+    "message": "$count$ selected",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "selectInvert": {
+    "description": "Selection mode (dead/dupes views): invert the selection.",
+    "message": "Invert"
+  },
+  "selectModeEnter": {
+    "description": "Toolbar button that enters selection mode (dead/dupes views).",
+    "message": "Select"
+  },
+  "selectModeExit": {
+    "description": "Selection mode (dead/dupes views): leave the mode.",
+    "message": "Exit selection"
+  },
+  "separatorOptions": {
+    "message": "Separators"
+  },
+  "sessionEmpty": {
+    "description": "Alert shown when the current window has no tabs that can be bookmarked.",
+    "message": "No tabs to save"
+  },
+  "sessionFolderName": {
+    "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm.",
+    "message": "Session $date$",
+    "placeholders": {
+      "date": {
+        "content": "$1",
+        "example": "2026-07-18 15:04"
+      }
+    }
+  },
+  "sessionSaved": {
+    "description": "Alert shown after the current window's tabs were saved into a new bookmark folder.",
+    "message": "Saved $count$ tabs to a new folder",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "12"
+      }
+    }
+  },
+  "settingsBackupHint": {
+    "message": "Export saves all settings (including sync preferences) to a JSON file. Import merges a backup back: settings in the file overwrite the current ones, everything else is kept."
+  },
+  "settingsExport": {
+    "message": "Export settings"
+  },
+  "settingsImport": {
+    "message": "Import settings"
+  },
+  "settingsImportConfirm": {
+    "message": "Importing will overwrite every setting contained in the backup file (settings not in the file are kept) and reload this page. Continue?"
+  },
+  "settingsImportDone": {
+    "message": "Settings imported. The page will now reload."
+  },
+  "settingsImportError": {
+    "message": "Some settings could not be written (storage quota or a transient error). The import did not complete — please try again."
+  },
+  "settingsImportInvalid": {
+    "message": "Invalid settings file: not a vBookmarks settings backup."
+  },
+  "sortByDate": {
+    "description": "Folder context-menu item (issue #33): sort by date added (newest first), with the persisted folders-first/recursive options.",
+    "message": "Sort by date added"
+  },
+  "sortByDateAdded": {
+    "message": "By date added (newest first)"
+  },
+  "sortByName": {
+    "description": "Folder context-menu item (issue #33): sort the folder's contents by title, with the persisted folders-first/recursive options.",
+    "message": "Sort by name"
+  },
+  "sortByTitle": {
+    "message": "By title"
+  },
+  "sortDone": {
+    "description": "Toast shown after sorting a folder's contents; the Undo button restores the previous order.",
+    "message": "Folder sorted"
+  },
+  "sortFolderContents": {
+    "message": "Sort Folder Contents"
+  },
+  "sortFoldersFirst": {
+    "message": "Keep folders on top"
+  },
+  "sortMenuOptions": {
+    "description": "Collapsed folder context-menu entry that opens the sort submenu (sort by name / date / sort options). No ellipsis: it opens a submenu, not a dialog.",
+    "message": "Sort"
+  },
+  "sortOptions": {
+    "description": "Folder context-menu item (issue #33): opens the sort dialog for one-off options.",
+    "message": "Sort options…"
+  },
+  "sortRecursive": {
+    "message": "Also sort subfolders (recursive)"
+  },
+  "sortRecursiveSuffix": {
+    "description": "Appended to the direct sort menu items when the recursive option is on, e.g. \"Sort by name (recursive)\".",
+    "message": "(recursive)"
+  },
+  "sortRecursiveWarning": {
+    "message": "This reorders bookmarks in every subfolder."
+  },
+  "stagedToast": {
+    "message": "Staged $n$ tab(s) as the group “$t$”",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "t": {
+        "content": "$2"
+      }
+    }
+  },
+  "stagingAdd": {
+    "message": "Send to staging"
+  },
+  "stagingAdded": {
+    "message": "Sent to staging"
+  },
+  "stagingAddedSummary": {
+    "message": "Added $n$ item(s); $m$ already staged",
+    "placeholders": {
+      "m": {
+        "content": "$2"
+      },
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingAlready": {
+    "message": "Already in the staging area"
+  },
+  "stagingBucketFavAll": {
+    "message": "Favorite all"
+  },
+  "stagingBucketTitle": {
+    "message": "Unbookmarked"
+  },
+  "stagingClear": {
+    "message": "Clear staging"
+  },
+  "stagingClearConfirm": {
+    "message": "Clear the whole staging area? The bookmark tree is not touched."
+  },
+  "stagingClearConfirmOk": {
+    "message": "Clear"
+  },
+  "stagingCleared": {
+    "message": "Staging area cleared"
+  },
+  "stagingConfirmFolder": {
+    "message": "Stage $n$ bookmarks from this folder?",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingConfirmFolderOk": {
+    "message": "Stage"
+  },
+  "stagingCopyDone": {
+    "message": "Copied $n$ item(s)",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingCount": {
+    "message": "$n$ staged",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingDeleteConfirm": {
+    "message": "Delete $n$ item(s)? Unbookmarked ones just leave the staging area.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingDeleted": {
+    "message": "Deleted $n$ bookmark(s)",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingEmpty": {
+    "message": "Nothing staged yet. Send bookmarks here from any view — the plane button on a row, or the right-click menu — then organize and file them in bulk."
+  },
+  "stagingFav": {
+    "message": "Favorite"
+  },
+  "stagingFavDone": {
+    "message": "Favorited $n$ item(s)",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingFolderEmpty": {
+    "message": "This folder has no bookmarks to stage"
+  },
+  "stagingFromHistory": {
+    "message": "From history"
+  },
+  "stagingFull": {
+    "message": "The staging area is full — remove some items first"
+  },
+  "stagingGroupAssign": {
+    "message": "Group…"
+  },
+  "stagingGroupAssignTitle": {
+    "message": "Assign to a group"
+  },
+  "stagingGroupCollapse": {
+    "message": "Collapse group"
+  },
+  "stagingGroupDelete": {
+    "message": "Delete group (with items)"
+  },
+  "stagingGroupDeleteConfirm": {
+    "message": "Delete group \"$1\"? Its $2 item(s) leave the staging area too."
+  },
+  "stagingGroupDeleted": {
+    "message": "Group deleted — $1 item(s) removed"
+  },
+  "stagingGroupDissolve": {
+    "message": "Dissolve group"
+  },
+  "stagingGroupDissolved": {
+    "message": "Group dissolved — items kept in the staging area"
+  },
+  "stagingGroupExpand": {
+    "message": "Expand group"
+  },
+  "stagingGroupNamePrompt": {
+    "message": "New group name"
+  },
+  "stagingGroupNew": {
+    "message": "New group"
+  },
+  "stagingGroupNoGroups": {
+    "message": "No groups yet"
+  },
+  "stagingGroupRename": {
+    "message": "Rename group…"
+  },
+  "stagingGroupSelectAll": {
+    "message": "Select all in this group"
+  },
+  "stagingGuideDismiss": {
+    "message": "Don’t show again"
+  },
+  "stagingGuideText": {
+    "message": "Organize bookmarks here — select rows and enter selection mode for the batch actions."
+  },
+  "stagingMoveConfirm": {
+    "message": "Move $n$ item(s) to the chosen folder?",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingMoveConfirmOk": {
+    "message": "Move"
+  },
+  "stagingMoveCopy": {
+    "message": "Move/copy to…"
+  },
+  "stagingMoveDone": {
+    "message": "Moved $n$ item(s) home",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingNew": {
+    "message": "new $n$",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingRemove": {
+    "message": "Remove from staging area"
+  },
+  "stagingRemoved": {
+    "message": "Removed from the staging area"
+  },
+  "stagingRemovedCount": {
+    "message": "Removed $n$ item(s) from the staging area",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingRowFav": {
+    "message": "Favorite this item"
+  },
+  "stagingRowUnfav": {
+    "message": "Un-favorite this item"
+  },
+  "stagingShortcutAdd": {
+    "message": "Add shortcut"
+  },
+  "stagingShortcutAlias": {
+    "message": "Alias"
+  },
+  "stagingShortcutBarLabel": {
+    "message": "Move to:"
+  },
+  "stagingShortcutEdit": {
+    "message": "Edit shortcut"
+  },
+  "stagingShortcutMove": {
+    "message": "Move selected to $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingShortcutPickFolder": {
+    "message": "Pick target folder…"
+  },
+  "stagingShortcutRemove": {
+    "message": "Remove shortcut"
+  },
+  "stagingShortcutRemoved": {
+    "message": "Shortcut removed"
+  },
+  "stagingShortcutSave": {
+    "message": "Save"
+  },
+  "stagingShortcutTitle": {
+    "message": "Move-to shortcut"
+  },
+  "stagingUnfav": {
+    "message": "Un-favorite"
+  },
+  "stagingUnfavDone": {
+    "message": "Un-favorited $n$ item(s)",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "statsClearConfirm": {
+    "description": "Confirmation dialog text before wiping visit statistics; $count$ is the number of bookmark entries.",
+    "message": "Clear visit statistics for $count$ bookmarks? This cannot be undone.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "statsClearData": {
+    "description": "Button (stats view toolbar and options page) that wipes all collected visit statistics.",
+    "message": "Clear statistics"
+  },
+  "statsDisabledHint": {
+    "description": "Stats view empty state shown instead of data when the statsEnabled switch is off.",
+    "message": "Visit statistics are off — enable them in Options → Views"
+  },
+  "statsEmpty": {
+    "description": "Empty state of the stats view when no visit data has been collected yet.",
+    "message": "Statistics build up as you open bookmarks"
+  },
+  "statsHistoryAdd": {
+    "message": "Add to bookmarks"
+  },
+  "statsHistoryBanner": {
+    "description": "Banner text on top of the recent view: invites granting the optional history permission so visit statistics can be seeded with past visits.",
+    "message": "Grant history access to seed visit statistics with your past visits."
+  },
+  "statsHistoryBookmarked": {
+    "message": "Bookmarked"
+  },
+  "statsHistoryDismiss": {
+    "description": "aria-label of the dismiss button on the recent view's history-permission banner.",
+    "message": "Don't show again"
+  },
+  "statsHistoryEnable": {
+    "description": "Link inside the recent view's history-permission banner: requests the optional history permission.",
+    "message": "Enable"
+  },
+  "statsHistoryGuide": {
+    "message": "Grant history access to list your recent visits here."
+  },
+  "statsHistoryImported": {
+    "description": "Toast after the history import finished; $count$ is how many bookmarks received a seeded visit count.",
+    "message": "Imported past visits for $count$ bookmarks",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "statsSectionBookmarks": {
+    "message": "Bookmark statistics"
+  },
+  "statsSectionRecent": {
+    "message": "Recent visits"
+  },
+  "statsShowUnbookmarked": {
+    "message": "Show unbookmarked"
+  },
+  "statsShowUnbookmarkedHint": {
+    "message": "Include pages from your history that are not saved as bookmarks."
+  },
+  "statsSortByCount": {
+    "description": "Stats view sort segment: order rows by visit count, highest first.",
+    "message": "By count"
+  },
+  "statsSortByRecent": {
+    "description": "Stats view sort segment: order rows by most recent visit first.",
+    "message": "By recent"
+  },
+  "statsVisitCount": {
+    "description": "Aria label of the stats row count pill; $count$ is the visit count.",
+    "message": "Visited $count$ times",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "storageUsageFree": {
+    "description": "Storage usage bar legend segment: remaining space in chrome.storage.local.",
+    "message": "Free"
+  },
+  "storageUsageHint": {
+    "description": "Hint under the storage usage bar in the Icons group.",
+    "message": "Local extension storage only (chrome.storage.local, about 10 MB quota): the icon cache plus settings and other local data. Synced settings, session data and the bookmark library itself are not counted here."
+  },
+  "storageUsageIcon": {
+    "description": "Storage usage bar legend segment: bytes held by the favicon cache.",
+    "message": "Icon cache"
+  },
+  "storageUsageOther": {
+    "description": "Storage usage bar legend segment: bytes held by settings and any other data.",
+    "message": "Other"
+  },
+  "storageUsageSummary": {
+    "message": "Used $1$ of $2$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      },
+      "2": {
+        "content": "$2"
+      }
+    }
+  },
+  "syncOptions": {
+    "message": "Sync Options"
+  },
+  "syncStatusLocal": {
+    "message": "Local only — not uploaded"
+  },
+  "syncStatusSynced": {
+    "message": "Synced to your Google account"
+  },
+  "syncStatusUnsyncable": {
+    "message": "Cannot be synced"
+  },
+  "syncSuffixLocal": {
+    "message": "(Local)"
+  },
+  "syncSuffixSynced": {
+    "message": "(Synced)"
+  },
+  "tabGroupColorBlue": {
+    "description": "Accessible name of the blue color swatch in the new-tab-group dialog.",
+    "message": "Blue"
+  },
+  "tabGroupColorCyan": {
+    "description": "Accessible name of the cyan color swatch in the new-tab-group dialog.",
+    "message": "Cyan"
+  },
+  "tabGroupColorGreen": {
+    "description": "Accessible name of the green color swatch in the new-tab-group dialog.",
+    "message": "Green"
+  },
+  "tabGroupColorGrey": {
+    "description": "Accessible name of the grey color swatch in the new-tab-group dialog.",
+    "message": "Grey"
+  },
+  "tabGroupColorLabel": {
+    "description": "Label of the color swatches in the new-tab-group dialog.",
+    "message": "Color"
+  },
+  "tabGroupColorOrange": {
+    "description": "Accessible name of the orange color swatch in the new-tab-group dialog.",
+    "message": "Orange"
+  },
+  "tabGroupColorPink": {
+    "description": "Accessible name of the pink color swatch in the new-tab-group dialog.",
+    "message": "Pink"
+  },
+  "tabGroupColorPurple": {
+    "description": "Accessible name of the purple color swatch in the new-tab-group dialog.",
+    "message": "Purple"
+  },
+  "tabGroupColorRed": {
+    "description": "Accessible name of the red color swatch in the new-tab-group dialog.",
+    "message": "Red"
+  },
+  "tabGroupColorYellow": {
+    "description": "Accessible name of the yellow color swatch in the new-tab-group dialog.",
+    "message": "Yellow"
+  },
+  "tabGroupDialogTitle": {
+    "description": "Heading of the new-tab-group dialog (set title + color before opening).",
+    "message": "New tab group"
+  },
+  "tabGroupNoGroups": {
+    "description": "Empty state of the existing-group picker: there is no tab group to open into.",
+    "message": "No existing tab groups"
+  },
+  "tabGroupOptions": {
+    "description": "Collapsed folder/bookmark context-menu entry that opens the tab-group submenu (the three 'open all in a tab group' items). No ellipsis: it opens a submenu, not a dialog.",
+    "message": "Tab groups"
+  },
+  "tabGroupPickDialogTitle": {
+    "description": "Heading of the picker that lists the browser's existing tab groups.",
+    "message": "Open in existing tab group"
+  },
+  "tabGroupTitleLabel": {
+    "description": "Label of the group-title input in the new-tab-group dialog.",
+    "message": "Group title"
+  },
+  "tabGroupUntitled": {
+    "description": "Label shown in the existing-group picker for a tab group that has no title.",
+    "message": "Untitled group"
+  },
+  "tabGroupsActivateGroup": {
+    "description": "Group-head action in the tab groups view: focuses the group's first tab.",
+    "message": "Go to tab group"
+  },
+  "tabGroupsActivateTab": {
+    "description": "Tab row context-menu item in the tab groups view: focuses the tab.",
+    "message": "Go to tab"
+  },
+  "tabGroupsAddBookmark": {
+    "message": "Bookmark this tab"
+  },
+  "tabGroupsBatchClosedTitle": {
+    "description": "Title of the merged recently-closed record a batch close writes (one record for the whole selection).",
+    "message": "Closed tabs"
+  },
+  "tabGroupsBookmarkRemoved": {
+    "description": "Toast after removing a tab's bookmark from the tab groups view.",
+    "message": "Removed $count$ bookmark(s)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsBookmarked": {
+    "description": "Accessible label of the always-visible filled star on tab rows that are already bookmarked.",
+    "message": "Bookmarked"
+  },
+  "tabGroupsBookmarksAdded": {
+    "message": "Added $count$ bookmark(s) to $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsClearClosedGroups": {
+    "description": "Button on the closed tab groups section heading: removes all saved closed-group records.",
+    "message": "Clear all"
+  },
+  "tabGroupsClearedToast": {
+    "description": "Toast after clearing all recently-closed records; Undo restores the whole list.",
+    "message": "Cleared $count$ closed record(s)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCloseGroup": {
+    "description": "Group-head action in the tab groups view: closes every tab of the group.",
+    "message": "Close tab group"
+  },
+  "tabGroupsCloseWindow": {
+    "description": "Hover action on a window section head: closes the whole window (confirm; tabs land as one merged closed record).",
+    "message": "Close window"
+  },
+  "tabGroupsClosedGroups": {
+    "description": "Section heading in the tab groups view for collapsed groups.",
+    "message": "Recently closed"
+  },
+  "tabGroupsClosedOpenTab": {
+    "description": "Hover action on a saved tab inside a closed tab group row.",
+    "message": "Open in new tab"
+  },
+  "tabGroupsClosedTabRemovedToast": {
+    "description": "Toast after removing one tab from a closed record; Undo restores it.",
+    "message": "Removed from the closed record"
+  },
+  "tabGroupsClosedTimeLabel": {
+    "description": "Tooltip label before the close time of a recently closed tab in the tab groups view.",
+    "message": "Closed:"
+  },
+  "tabGroupsClosedToast": {
+    "description": "Toast after closing a single tab or tab group; the action button reopens it.",
+    "message": "Closed $count$ tab(s)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCollapseAll": {
+    "message": "Collapse all"
+  },
+  "tabGroupsCollapseGroup": {
+    "description": "Tab group context-menu item in the tab groups view.",
+    "message": "Collapse group"
+  },
+  "tabGroupsCollapseWindow": {
+    "description": "Window-head toggle in the tab groups view: folds the window section.",
+    "message": "Collapse window"
+  },
+  "tabGroupsColorStyle": {
+    "description": "Options page (Views group): how a tab group's color is drawn in the tab groups view.",
+    "message": "Tab group color style"
+  },
+  "tabGroupsColorStyleEdge": {
+    "description": "Tab group color style choice on the options page.",
+    "message": "Edge color band"
+  },
+  "tabGroupsColorStyleHint": {
+    "description": "Hint for the tab group color style selector on the options page.",
+    "message": "Off shows the color dot only. Edge color band draws a colored strip down the group's left edge. Color connector line draws a colored line under the group's dot with a tick per row, tying the whole group into one tree."
+  },
+  "tabGroupsColorStyleLine": {
+    "description": "Tab group color style choice on the options page.",
+    "message": "Color connector line"
+  },
+  "tabGroupsColorStyleOff": {
+    "description": "Tab group color style choice on the options page.",
+    "message": "Off (color dot only)"
+  },
+  "tabGroupsConfirmClearClosed": {
+    "description": "Confirmation dialog before clearing the tab groups view's recently-closed records list.",
+    "message": "Clear all recently closed records? They can no longer be reopened from here."
+  },
+  "tabGroupsConfirmClose": {
+    "message": "Close $count$ tabs?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsConfirmSleep": {
+    "message": "Sleep $count$ tabs?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCopyMoveCopy": {
+    "message": "Copy"
+  },
+  "tabGroupsCopyMoveDialog": {
+    "message": "Selected tabs already belong to a tab group. Copy them (open in a new place) or move them (remove from their current group)?"
+  },
+  "tabGroupsCopyMoveMove": {
+    "message": "Move"
+  },
+  "tabGroupsCurrentTab": {
+    "description": "Compact pill on the row of the tab that is active in its window (the row tint + pill together mark it).",
+    "message": "Current"
+  },
+  "tabGroupsCurrentWindow": {
+    "description": "Badge on the window section heading that contains the popup.",
+    "message": "Current window"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "description": "Button on a closed tab group row: removes the saved record.",
+    "message": "Delete closed tab group"
+  },
+  "tabGroupsDiscarded": {
+    "description": "Status icon aria/tooltip on discarded (sleeping) tab rows in the tab groups view.",
+    "message": "Sleeping tab"
+  },
+  "tabGroupsExpandAll": {
+    "message": "Expand all"
+  },
+  "tabGroupsExpandGroup": {
+    "description": "Tab group context-menu item in the tab groups view.",
+    "message": "Expand group"
+  },
+  "tabGroupsExpandWindow": {
+    "description": "Window-head toggle in the tab groups view: unfolds the window section.",
+    "message": "Expand window"
+  },
+  "tabGroupsExpandedCollapse": {
+    "description": "Context-menu item for a recently closed tab group in the tab groups view: hide its tabs.",
+    "message": "Collapse"
+  },
+  "tabGroupsExpandedExpand": {
+    "description": "Context-menu item for a recently closed tab group in the tab groups view: show its tabs.",
+    "message": "Expand"
+  },
+  "tabGroupsFilterPlaceholder": {
+    "description": "Placeholder of the instant filter input in the tab groups view toolbar: filters the listed tabs by title or URL.",
+    "message": "Filter open tabs"
+  },
+  "tabGroupsGroupCount": {
+    "message": "$count$ tabs",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsGroupSavedToFolder": {
+    "message": "Saved $count$ tabs to $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsMenuAddBookmark": {
+    "description": "Tab row context-menu item in the tab groups view: bookmarks the tab.",
+    "message": "Bookmark tab"
+  },
+  "tabGroupsMenuSaveFolder": {
+    "description": "Tab group context-menu item in the tab groups view: saves the group as a bookmark folder.",
+    "message": "Save as bookmark folder"
+  },
+  "tabGroupsMergedWindowToast": {
+    "description": "Toast after a window-head drag merged that window into another as one tab group.",
+    "message": "Window merged as a tab group"
+  },
+  "tabGroupsMoveNewWindow": {
+    "description": "Group context-menu item: move every tab of the group to a new window.",
+    "message": "Move group to new window"
+  },
+  "tabGroupsNewWindow": {
+    "description": "Tab-groups view: the toolbar button that opens a fresh empty browser window (left of Refresh).",
+    "message": "New window"
+  },
+  "tabGroupsNoMatchingTabs": {
+    "description": "Empty state in the tab groups view when the toolbar filter matches no open tab.",
+    "message": "No matching tabs"
+  },
+  "tabGroupsOpenGroups": {
+    "description": "Section heading in the tab groups view for expanded groups.",
+    "message": "Open tab groups"
+  },
+  "tabGroupsPinTab": {
+    "description": "Tab row context-menu item in the tab groups view.",
+    "message": "Pin tab"
+  },
+  "tabGroupsPinned": {
+    "description": "Status icon aria/tooltip on pinned tab rows in the tab groups view.",
+    "message": "Pinned tab"
+  },
+  "tabGroupsPinnedUngroupedToast": {
+    "description": "Toast when pinning a tab that belonged to a group: Chrome forbids pinned grouped tabs, so the tab leaves the group.",
+    "message": "Pinned — removed from its tab group"
+  },
+  "tabGroupsRecordDeletedToast": {
+    "description": "Toast after deleting one recently-closed record; Undo restores it.",
+    "message": "Removed the closed record"
+  },
+  "tabGroupsRemoveBookmark": {
+    "description": "Tab row control/menu item in the tab groups view: delete the bookmark(s) for this tab's URL again.",
+    "message": "Remove bookmark"
+  },
+  "tabGroupsRemoveClosedTab": {
+    "description": "Hover action on a saved tab inside a closed tab group row: removes that tab from the saved record.",
+    "message": "Remove from saved group"
+  },
+  "tabGroupsRenameDialog": {
+    "description": "Heading of the tab-group dialog when opened from the tab groups view to rename a group.",
+    "message": "Rename tab group"
+  },
+  "tabGroupsRenameGroup": {
+    "description": "Group-head action in the tab groups view: opens the title/color dialog for the group.",
+    "message": "Rename tab group"
+  },
+  "tabGroupsReopenAction": {
+    "description": "Toast action button: reopens the just-closed tab or tab group.",
+    "message": "Reopen"
+  },
+  "tabGroupsReopenGroup": {
+    "description": "Button on a closed tab group row: reopens its tabs as a group.",
+    "message": "Reopen tab group"
+  },
+  "tabGroupsSaveFolder": {
+    "message": "Save tab group as bookmark folder"
+  },
+  "tabGroupsSelectAddBookmarks": {
+    "description": "Selection-mode toolbar button in the tab groups view: adds the selected tabs as bookmarks into a chosen bookmark folder.",
+    "message": "Add to bookmark folder…"
+  },
+  "tabGroupsSelectClose": {
+    "message": "Close"
+  },
+  "tabGroupsSelectNewGroup": {
+    "message": "New tab group"
+  },
+  "tabGroupsSelectOpenInto": {
+    "message": "Open in existing tab group…"
+  },
+  "tabGroupsSelectSaveFolder": {
+    "message": "Save as bookmark folder"
+  },
+  "tabGroupsSelectSleep": {
+    "message": "Sleep"
+  },
+  "tabGroupsSleepGroup": {
+    "description": "Group-head action in the tab groups view: discards every tab of the group.",
+    "message": "Sleep tab group"
+  },
+  "tabGroupsSleepTab": {
+    "description": "Tab row control/menu item in the tab groups view: discard the tab (hollow crescent).",
+    "message": "Sleep tab"
+  },
+  "tabGroupsSleptToast": {
+    "description": "Toast after sleeping a single tab or tab group; the action button wakes it.",
+    "message": "Put $count$ tab(s) to sleep",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsSummary": {
+    "message": "$tabs$ tabs · $groups$ groups",
+    "placeholders": {
+      "groups": {
+        "content": "$2"
+      },
+      "tabs": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsSyncCollapse": {
+    "description": "Toolbar checkbox in the tab groups view: when checked, collapsing/expanding groups in the view also collapses/expands the browser tab groups.",
+    "message": "Sync collapse with browser"
+  },
+  "tabGroupsSyncCollapseHint": {
+    "description": "Tooltip for the collapse-sync checkbox in the tab groups view.",
+    "message": "When checked, collapsing or expanding a group in this view also updates the browser tab group. Off by default so view folding stays local."
+  },
+  "tabGroupsToolbarRefresh": {
+    "message": "Refresh"
+  },
+  "tabGroupsUngroupGroup": {
+    "description": "Group context-menu item: remove the group but keep its tabs.",
+    "message": "Ungroup tabs"
+  },
+  "tabGroupsUngroupedTabs": {
+    "description": "Section heading in the tab groups view for tabs without a group.",
+    "message": "Ungrouped tabs"
+  },
+  "tabGroupsUnpinTab": {
+    "description": "Tab row context-menu item in the tab groups view.",
+    "message": "Unpin tab"
+  },
+  "tabGroupsViewEmpty": {
+    "message": "No tabs in this window"
+  },
+  "tabGroupsWakeAction": {
+    "description": "Toast action button: wakes the just-slept tab(s).",
+    "message": "Wake"
+  },
+  "tabGroupsWakeGroup": {
+    "description": "Group header control/menu item in the tab groups view: wake every sleeping member.",
+    "message": "Wake tab group"
+  },
+  "tabGroupsWakeTab": {
+    "description": "Tab row control/menu item in the tab groups view: reload a sleeping tab in place (filled crescent).",
+    "message": "Wake tab"
+  },
+  "tabGroupsWindow": {
+    "description": "Window section heading in the tab groups view.",
+    "message": "Window $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsWindowClosedTitle": {
+    "description": "Title of the merged recently-closed record a window close writes.",
+    "message": "Closed window"
+  },
+  "tabGroupsWindowsCount": {
+    "message": "$n$ windows",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabRowStage": {
+    "message": "Send to staging"
+  },
+  "tabgroupStageAll": {
+    "message": "Send group to staging"
+  },
+  "tabgroupStageConfirm": {
+    "message": "Send $n$ tabs to staging?",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabgroupStageNone": {
+    "message": "No bookmarkable tabs in this group"
   },
   "timeDaysAgo": {
     "message": "$n$ days ago",
@@ -337,342 +2727,38 @@
   "timeYesterday": {
     "message": "yesterday"
   },
+  "toolButtonTitle": {
+    "description": "Tooltip of the toolbar button that opens the command palette for duplicate cleanup, dead-link scan, session save, etc.",
+    "message": "Tools (Ctrl+K)"
+  },
   "undoAction": {
     "description": "Label of the undo button on the deletion toast.",
     "message": "Undo"
   },
-  "revealOutsideBarHint": {
-    "description": "Toast text when \"Reveal in tree\" targets a node outside the bookmarks bar while the only-show-bar setting is on.",
-    "message": "Only the bookmarks bar is shown: the target lies outside it."
+  "undoSingleStepNote": {
+    "description": "Appended to every batch-deletion confirmation (dead links view, duplicates view): undo() restores only the most recent deletion, not a whole batch.",
+    "message": "Undo can only restore the most recent deletion."
   },
-  "revealOutsideBarAction": {
-    "description": "Button on the outside-of-bar toast: temporarily show the whole tree (session only) and reveal the target.",
-    "message": "Show all and reveal"
+  "unpinFolder": {
+    "message": "Unpin this folder"
   },
-  "dupesCleanAll": {
-    "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go.",
-    "message": "Clean all: $groups$ groups, $count$ extra copies",
-    "placeholders": {
-      "groups": {
-        "content": "$1"
-      },
-      "count": {
-        "content": "$2"
-      }
-    }
+  "url": {
+    "message": "URL"
   },
-  "dupesConfirmAll": {
-    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps the bookmark its keeper radio selected — the strategy default or a manual pick).",
-    "message": "Remove $count$ extra copies across $groups$ groups? The keeper selected in each group is kept.",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      },
-      "groups": {
-        "content": "$2"
-      }
-    }
+  "versionDialogCopied": {
+    "message": "Copied"
   },
-  "dupesConfirmSelected": {
-    "message": "Remove $count$ duplicate bookmarks from the $groups$ selected groups?",
-    "description": "Confirm dialog of the dupes selection-mode apply: $count$ doomed rows across $groups$ selected groups.",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      },
-      "groups": {
-        "content": "$2"
-      }
-    }
-  },
-  "dupesConfirmGroup": {
-    "description": "Confirmation before deleting the redundant copies of one duplicate group; $title$ is the group's current keeper (the strategy default or a manual radio pick — same wording as the group header's ✓ hint dupesCleanRestHint).",
-    "message": "Keep \"$title$\" and remove the other $count$ copies?",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Example bookmark"
-      },
-      "count": {
-        "content": "$2"
-      }
-    }
-  },
-  "dupesDone": {
-    "description": "Alert shown after the duplicate cleanup finished.",
-    "message": "Removed $count$ duplicate bookmarks",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "dupesGroupCount": {
-    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL.",
-    "message": "$count$ duplicates",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "dupesGroupExpand": {
-    "description": "Dupes view group-head context menu: expand a collapsed duplicate group.",
-    "message": "Expand group"
-  },
-  "dupesGroupCollapse": {
-    "description": "Dupes view group-head context menu: collapse an expanded duplicate group.",
-    "message": "Collapse group"
-  },
-  "dupesNone": {
-    "description": "Empty-state line of the palette's duplicate-cleanup mode.",
-    "message": "No duplicates found"
-  },
-  "deleteEllipsis": {
-    "message": "Delete..."
-  },
-  "donationMessage": {
-    "message": "Enjoying it? Donate to fuel its future — or rate it on the store: every review keeps the updates coming."
-  },
-  "donationV4Notice": {
-    "message": "vBookmarks 4.0 is a complete remake with a modern design, packed with new features."
-  },
-  "donationV4GuideLink": {
-    "message": "Read the v4 guide →"
-  },
-  "donationGo": {
-    "message": "Donate"
-  },
-  "donationRate": {
-    "message": "Rate it"
-  },
-  "donationRateTitle": {
-    "message": "Rate vBookmarks on the Chrome Web Store"
-  },
-  "donationLater": {
-    "message": "Later"
-  },
-  "donationNever": {
-    "message": "Don't show again"
-  },
-  "donationDismiss": {
-    "message": "Dismiss"
-  },
-  "edit": {
-    "message": "Edit..."
-  },
-  "editBookmark": {
-    "message": "Edit bookmark"
-  },
-  "editFolder": {
-    "message": "Edit folder"
-  },
-  "errorOccured": {
-    "message": "Oops, an error occurred."
-  },
-  "extDesc": {
-    "description": "The extension description.",
-    "message": "A popup bookmark manager. Enhanced Neat Bookmarks. Neater than Neater Bookmarks."
-  },
-  "extName": {
-    "description": "vBookmarks",
-    "message": "vBookmarks"
-  },
-  "folderEmpty": {
-    "description": "Row shown inside an expanded folder that has no children.",
-    "message": "(Empty)"
-  },
-  "general": {
-    "message": "General"
-  },
-  "ignore": {
-    "message": "Ignore"
-  },
-  "name": {
-    "description": "Name of bookmark or folder.",
-    "message": "Name"
-  },
-  "nope": {
-    "message": "Cancel"
-  },
-  "noTitle": {
-    "description": "The title for untitled bookmarks with no http(s) URL or untitled folders.",
-    "message": "(no title)"
-  },
-  "open": {
-    "description": "Action to open bookmarks.",
-    "message": "Open"
-  },
-  "openBookmarks": {
-    "message": "Open All Bookmarks"
-  },
-  "openBookmarksIncognitoWindow": {
-    "message": "Open All Bookmarks in Incognito Window"
-  },
-  "openBookmarksInGroup": {
-    "description": "Folder context-menu item: opens every bookmark of the folder as tabs in one new browser tab group, titled and colored after the folder.",
-    "message": "Open all in new tab group"
-  },
-  "openBookmarksInGroupSetup": {
-    "description": "Folder context-menu item: opens a dialog to set the new tab group's title and color before opening the folder's bookmarks as one tab group.",
-    "message": "Open all in new tab group…"
-  },
-  "openBookmarksInExistingGroup": {
-    "description": "Folder context-menu item: lets the user pick an existing browser tab group, then opens the folder's bookmarks into it.",
-    "message": "Open all in existing tab group…"
-  },
-  "tabGroupOptions": {
-    "description": "Collapsed folder/bookmark context-menu entry that opens the tab-group submenu (the three 'open all in a tab group' items). No ellipsis: it opens a submenu, not a dialog.",
-    "message": "Tab groups"
-  },
-  "sortMenuOptions": {
-    "description": "Collapsed folder context-menu entry that opens the sort submenu (sort by name / date / sort options). No ellipsis: it opens a submenu, not a dialog.",
-    "message": "Sort"
-  },
-  "openBookmarksNewWindow": {
-    "message": "Open All Bookmarks in New Window"
-  },
-  "openCommandPaletteCommand": {
-    "description": "Description of the keyboard shortcut command that opens the command palette.",
-    "message": "Open command palette"
-  },
-  "openIncognitoWindow": {
-    "message": "Open in Incognito Window"
-  },
-  "openNewTab": {
-    "message": "Open in New Tab"
-  },
-  "bookmarkOpenInNewGroup": {
-    "description": "Bookmark context-menu item: opens the bookmark in a new tab group named and colored after the bookmark.",
-    "message": "Open in new tab group"
-  },
-  "bookmarkOpenInNewGroupSetup": {
-    "description": "Bookmark context-menu item: opens a dialog to set the new tab group's title and color, then opens the bookmark into it.",
-    "message": "Open in new tab group…"
-  },
-  "bookmarkOpenInExistingGroup": {
-    "description": "Bookmark context-menu item: lets the user pick an existing browser tab group, then opens the bookmark into it.",
-    "message": "Open in existing tab group…"
-  },
-  "openNewWindow": {
-    "message": "Open in New Window"
-  },
-  "openSidePanelCommand": {
-    "description": "Description of the keyboard shortcut command that opens the side panel.",
-    "message": "Open vBookmarks side panel"
-  },
-  "optionAnnounceEnabled": {
-    "message": "Show in-product announcements"
-  },
-  "optionAnnounceEnabledHint": {
-    "message": "Release notes and tips from the project's GitHub repository (fetched at most every 6 hours). Off also stops the network fetch."
-  },
-  "optionClickNewTab": {
-    "message": "Left-click opens bookmark in new tab."
-  },
-  "optionCloseUnusedFolders": {
-    "message": "Close unused folders when opening a folder."
-  },
-  "optionConfirmOpenFolder": {
-    "message": "Display confirmation when opening a lot of bookmarks from a folder."
-  },
-  "optionConfirmDeleteFolder": {
-    "message": "Confirm before deleting non-empty folders"
-  },
-  "optionOnlyShowBookmarkBar": {
-    "message": "Only show bookmarks in Bookmark Bar"
-  },
-  "optionSearchAfterEnter": {
-    "message": "Search bookmarks only when ENTER is pressed (instead of instant search)"
-  },
-  "optionOpenNewTab": {
-    "message": "Middle-click or control-click opens bookmark in new background tab (instead of foreground)."
-  },
-  "optionOpenInSidePanel": {
-    "message": "Open in side panel instead of popup"
-  },
-  "optionPopupStays": {
-    "message": "Popup stays open when opening (left-clicking) bookmarks."
-  },
-  "optionRememberPrevState": {
-    "message": "Remember previous state (scroll position, opened folders and the last focused item)."
-  },
-  "options": {
-    "message": "Options"
-  },
-  "optionsFooterText": {
-    "description": "Footer text for the Options page",
-    "message": "Built by $authorName$.",
-    "placeholders": {
-      "authorName": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionZoom": {
-    "message": "Zoom"
-  },
-  "optionTheme": {
-    "message": "Theme"
-  },
-  "optionThemeAuto": {
-    "message": "Follow system"
-  },
-  "optionThemeLight": {
-    "message": "Light"
-  },
-  "optionThemeDark": {
-    "message": "Dark"
-  },
-  "optionThemeInk": {
-    "message": "Ink (dark)"
-  },
-  "optionThemePaper": {
-    "message": "Paper (light)"
-  },
-  "optionLanguage": {
-    "message": "Language",
-    "description": "Options page: UI language dropdown under the theme selector."
-  },
-  "optionLanguageAuto": {
-    "message": "Auto",
-    "description": "Language dropdown option: follow the browser UI language."
-  },
-  "optionLanguageHint": {
-    "message": "Changing the language reloads this page."
-  },
-  "paletteClose": {
-    "description": "Command palette: label of the visible footer button that closes the panel (the keyboard path is Esc).",
-    "message": "Close"
-  },
-  "paletteCmdVersion": {
-    "message": "Version info",
-    "description": "Command palette entry (slash command /version) that opens a dialog with extension, announce and browser metadata."
-  },
-  "paletteCmdLang": {
-    "message": "Switch language…",
-    "description": "Command palette entry (slash command /lang) that switches the UI language."
-  },
-  "paletteCmdLangUsage": {
-    "message": "Usage: /lang followed by a locale code — e.g. /lang en, /lang zh_CN, /lang ja."
+  "versionDialogCopy": {
+    "message": "Copy info"
   },
   "versionDialogTitle": {
-    "message": "vBookmarks $version$",
     "description": "Title of the /version dialog.",
+    "message": "vBookmarks $version$",
     "placeholders": {
       "version": {
         "content": "$1"
       }
     }
-  },
-  "versionDialogCopy": {
-    "message": "Copy info"
-  },
-  "versionDialogCopied": {
-    "message": "Copied"
-  },
-  "versionMetaVersion": {
-    "message": "Extension version"
   },
   "versionMetaAnnounce": {
     "message": "What's new"
@@ -683,298 +2769,61 @@
   "versionMetaBrowser": {
     "message": "Browser"
   },
-  "versionMetaOS": {
-    "message": "OS"
-  },
   "versionMetaChannel": {
     "message": "Channel"
   },
   "versionMetaLanguage": {
     "message": "Language"
   },
+  "versionMetaOS": {
+    "message": "OS"
+  },
   "versionMetaUserAgent": {
     "message": "User agent"
   },
-  "paletteCmdDead": {
-    "description": "Command palette entry that switches the panel into dead-link scan mode (slash command /dead).",
-    "message": "Find dead links"
+  "versionMetaVersion": {
+    "message": "Extension version"
   },
-  "paletteCmdDupes": {
-    "description": "Command palette entry that switches the panel into duplicate-bookmark cleanup mode (slash command /dupes).",
-    "message": "Clean duplicate bookmarks"
+  "viewDead": {
+    "description": "View tab title for the dead-link scan view.",
+    "message": "Dead links"
   },
-  "paletteCmdNewBookmark": {
-    "description": "Command palette entry that bookmarks the current tab at the bottom of the quick-add folder.",
-    "message": "New bookmark…"
+  "viewDisable": {
+    "message": "Disable"
   },
-  "paletteCmdNewFolder": {
-    "description": "Command palette entry that creates a folder at the bottom of the quick-add folder.",
-    "message": "New folder…"
+  "viewDupes": {
+    "description": "View tab title for the duplicate-bookmark cleanup view.",
+    "message": "Duplicates"
   },
-  "paletteCmdQuickAdd": {
-    "description": "Command palette entry that bookmarks the current tab (same as the star button).",
-    "message": "Bookmark current tab"
+  "viewEnable": {
+    "message": "Enable"
   },
-  "paletteCmdSaveSession": {
-    "description": "Command palette entry that saves every tab of the current window into a new bookmark folder (slash command /session).",
-    "message": "Save window tabs as folder"
-  },
-  "paletteNoResults": {
-    "description": "Shown in the command palette when nothing matches the query.",
-    "message": "No matching results"
-  },
-  "palettePlaceholder": {
-    "description": "Placeholder text for the command palette input field.",
-    "message": "Search bookmarks, folders, commands…"
-  },
-  "parentFolder": {
-    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
-    "message": "Parent folder: \"$folderName$\"",
+  "viewHiddenTabsHint": {
+    "message": "You're in the $view$ view. Press $back$ or use the command palette to return to the tree.",
     "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarksbar"
-      }
-    }
-  },
-  "removeSeparator": {
-    "message": "Remove Separator"
-  },
-  "replaceUrl": {
-    "message": "Replace this with current URL"
-  },
-  "reportedToDeveloper": {
-    "description": "A message for an error occured in the extension, has been reported to the developer.",
-    "message": "This has been reported to the developer."
-  },
-  "reportError": {
-    "message": "Report Error"
-  },
-  "resetButton": {
-    "message": "Reset"
-  },
-  "resetSettings": {
-    "message": "Reset settings"
-  },
-  "resetSettingsDescription": {
-    "message": "Reset vBookmarks to default settings."
-  },
-  "save": {
-    "message": "Save"
-  },
-  "searchBookmarks": {
-    "description": "Placeholder text for search field.",
-    "message": "Search Bookmarks"
-  },
-  "searchClear": {
-    "message": "Clear search"
-  },
-  "searchNoResults": {
-    "description": "Shown in the popup when a search returns no matching bookmarks.",
-    "message": "No matching bookmarks"
-  },
-  "searchViewHint": {
-    "message": "Type in the box above to search your bookmarks"
-  },
-  "selectAll": {
-    "message": "All",
-    "description": "Selection mode (dead/dupes views): select every row/group."
-  },
-  "selectClear": {
-    "message": "Clear",
-    "description": "Selection mode (dead/dupes views): clear the whole selection."
-  },
-  "selectCount": {
-    "message": "$count$ selected",
-    "description": "Selection mode (dead/dupes views): label with the current selection size.",
-    "placeholders": {
-      "count": {
+      "back": {
+        "content": "$2"
+      },
+      "view": {
         "content": "$1"
       }
     }
   },
-  "selectInvert": {
-    "message": "Invert",
-    "description": "Selection mode (dead/dupes views): invert the selection."
-  },
-  "selectModeEnter": {
-    "message": "Select",
-    "description": "Toolbar button that enters selection mode (dead/dupes views)."
-  },
-  "selectModeExit": {
-    "message": "Exit selection",
-    "description": "Selection mode (dead/dupes views): leave the mode."
-  },
-  "deadRiskBanner": {
-    "message": "Dead-link cleanup deletes bookmarks in bulk. Back up your bookmarks before the first cleanup."
-  },
-  "dupesRiskBanner": {
-    "message": "Deduplication deletes duplicate bookmarks in bulk. Back up your bookmarks before applying it."
-  },
-  "riskBannerHelp": {
-    "message": "Backup & restore guide"
-  },
-  "riskBannerNever": {
-    "message": "Don't show again"
-  },
-  "riskBannerDismiss": {
-    "message": "Dismiss"
-  },
-  "sessionEmpty": {
-    "description": "Alert shown when the current window has no tabs that can be bookmarked.",
-    "message": "No tabs to save"
-  },
-  "sessionFolderName": {
-    "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm.",
-    "message": "Session $date$",
-    "placeholders": {
-      "date": {
-        "content": "$1",
-        "example": "2026-07-18 15:04"
-      }
-    }
-  },
-  "sessionSaved": {
-    "description": "Alert shown after the current window's tabs were saved into a new bookmark folder.",
-    "message": "Saved $count$ tabs to a new folder",
-    "placeholders": {
-      "count": {
-        "content": "$1",
-        "example": "12"
-      }
-    }
-  },
-  "url": {
-    "message": "URL"
-  },
-  "syncOptions": {
-    "message": "Sync Options"
-  },
-  "optionShowSyncStatus": {
-    "message": "Show sync status indicators"
-  },
-  "optionHighlightUnsynced": {
-    "message": "Dim unsynced bookmarks"
-  },
-  "optionAutoRefreshSync": {
-    "message": "Auto-refresh sync status"
-  },
-  "optionSyncRefreshInterval": {
-    "message": "Refresh interval"
-  },
-  "optionSyncRefreshIntervalSeconds": {
-    "message": "seconds"
-  },
-  "syncStatusSynced": {
-    "message": "Synced to your Google account"
-  },
-  "syncStatusLocal": {
-    "message": "Local only — not uploaded"
-  },
-  "syncStatusUnsyncable": {
-    "message": "Cannot be synced"
-  },
-  "syncSuffixSynced": {
-    "message": "(Synced)"
-  },
-  "syncSuffixLocal": {
-    "message": "(Local)"
-  },
-  "optionAutoResizePopup": {
-    "message": "Auto-resize popup window to fit content"
-  },
-  "crossStorageMoveWarning": {
-    "message": "Cannot move bookmarks between synced and local storage. Use copy/paste instead.",
-    "description": "Warning when trying to move bookmarks across storage types"
-  },
-  "recentBookmarks": {
-    "message": "Recently added",
-    "description": "Header of the virtual recent bookmarks section at the top of the popup tree."
-  },
-  "optionShowRecentBookmarks": {
-    "message": "Show the recently added view tab"
-  },
-  "optionShowStatsView": {
-    "message": "Show the stats view tab"
-  },
-  "optionShowDeadView": {
-    "message": "Show the dead-links view tab"
-  },
-  "optionShowDupesView": {
-    "message": "Show the duplicates view tab"
-  },
-  "optionRecentCollapsed": {
-    "message": "Collapse the recently added section by default"
-  },
-  "optionsGroupViews": {
-    "message": "Views"
-  },
-  "optionsGroupSort": {
-    "message": "Sorting",
-    "description": "Options group (issue #33): default folder-content sort preferences, shared with the popup sort dialog."
-  },
-  "optionsGroupStats": {
-    "message": "Statistics"
-  },
-  "optionsGroupTools": {
-    "message": "Tools"
-  },
-  "optionShowViewTabs": {
-    "message": "Show view tabs below the search box"
-  },
-  "optionRememberView": {
-    "message": "Remember the last active view and reopen it"
-  },
-  "optionShowTabBadges": {
-    "message": "Show count badges on the view tabs"
-  },
-  "optionPaletteEnabled": {
-    "message": "Enable the command palette (Ctrl/Cmd+K)"
-  },
-  "optionQuickAddEnabled": {
-    "message": "Show the quick-add star button next to the search box"
-  },
-  "optionQuickAddContextMenu": {
-    "message": "Add a \"Bookmark this page with vBookmarks\" entry to the page right-click menu",
-    "description": "Options checkbox (issue #49): controls the v4-only page context-menu quick-add entry."
-  },
-  "optionQuickAddContextMenuHint": {
-    "message": "Independent from the quick-add star button; the classic-experience restore also turns this entry off."
-  },
-  "optionCollapseTabGroupMenu": {
-    "message": "Collapse the tab-group entries into one \"Tab groups\" submenu",
-    "description": "Options checkbox (issue #48 follow-up): folds the three tab-group items of the folder and bookmark context menus into a single submenu entry."
-  },
-  "optionCollapseTabGroupMenuHint": {
-    "message": "Applies to both the folder and bookmark right-click menus. Off by default; keeps low-height menus shorter on small/high-zoom screens."
-  },
-  "optionCollapseSortMenu": {
-    "message": "Collapse the sort entries into one \"Sort\" submenu",
-    "description": "Options checkbox (issue #48 follow-up): folds the three sort items of the folder context menu into a single submenu entry."
-  },
-  "optionCollapseSortMenuHint": {
-    "message": "Applies to the folder right-click menu. On by default."
-  },
-  "optionShowToolButton": {
-    "message": "Show the tool button (⋮) next to the search box"
-  },
-  "optionClassicExperience": {
-    "message": "Restore the classic header"
-  },
-  "optionClassicExperienceHint": {
-    "message": "Turns off the command palette, the quick-add star, its page right-click entry, the tool button and the view tabs. Each can be re-enabled individually in its section."
-  },
-  "optionShowItemPath": {
-    "message": "Show the parent folder path on list rows"
-  },
   "viewRecent": {
     "message": "Staging"
   },
-  "viewTree": {
-    "message": "Tree"
-  },
   "viewSearch": {
     "message": "Search"
+  },
+  "viewStateDisabled": {
+    "message": "Disabled"
+  },
+  "viewStateEnabled": {
+    "message": "Enabled"
+  },
+  "viewStats": {
+    "description": "View tab title for the visit-statistics view.",
+    "message": "Stats"
   },
   "viewSwitchAnnounce": {
     "message": "$name$ view",
@@ -984,1013 +2833,18 @@
       }
     }
   },
-  "viewStateEnabled": {
-    "message": "Enabled"
-  },
-  "viewStateDisabled": {
-    "message": "Disabled"
-  },
-  "viewEnable": {
-    "message": "Enable"
-  },
-  "viewDisable": {
+  "viewTabDisable": {
     "message": "Disable"
+  },
+  "viewTabGroups": {
+    "description": "View tab title for the browser tabs + tab groups view.",
+    "message": "Tab groups"
   },
   "viewTabHide": {
     "message": "Hide"
   },
-  "viewTabDisable": {
-    "message": "Disable"
-  },
-  "sortFolderContents": {
-    "message": "Sort Folder Contents"
-  },
-  "sortByName": {
-    "message": "Sort by name",
-    "description": "Folder context-menu item (issue #33): sort the folder's contents by title, with the persisted folders-first/recursive options."
-  },
-  "sortByDate": {
-    "message": "Sort by date added",
-    "description": "Folder context-menu item (issue #33): sort by date added (newest first), with the persisted folders-first/recursive options."
-  },
-  "sortRecursiveSuffix": {
-    "message": "(recursive)",
-    "description": "Appended to the direct sort menu items when the recursive option is on, e.g. \"Sort by name (recursive)\"."
-  },
-  "sortOptions": {
-    "message": "Sort options…",
-    "description": "Folder context-menu item (issue #33): opens the sort dialog for one-off options."
-  },
-  "sortDone": {
-    "message": "Folder sorted",
-    "description": "Toast shown after sorting a folder's contents; the Undo button restores the previous order."
-  },
-  "sortByTitle": {
-    "message": "By title"
-  },
-  "sortByDateAdded": {
-    "message": "By date added (newest first)"
-  },
-  "sortFoldersFirst": {
-    "message": "Keep folders on top"
-  },
-  "sortRecursive": {
-    "message": "Also sort subfolders (recursive)"
-  },
-  "sortRecursiveWarning": {
-    "message": "This reorders bookmarks in every subfolder."
-  },
-  "tabGroupDialogTitle": {
-    "description": "Heading of the new-tab-group dialog (set title + color before opening).",
-    "message": "New tab group"
-  },
-  "tabGroupTitleLabel": {
-    "description": "Label of the group-title input in the new-tab-group dialog.",
-    "message": "Group title"
-  },
-  "tabGroupColorLabel": {
-    "description": "Label of the color swatches in the new-tab-group dialog.",
-    "message": "Color"
-  },
-  "tabGroupColorGrey": {
-    "message": "Grey",
-    "description": "Accessible name of the grey color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorBlue": {
-    "message": "Blue",
-    "description": "Accessible name of the blue color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorRed": {
-    "message": "Red",
-    "description": "Accessible name of the red color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorYellow": {
-    "message": "Yellow",
-    "description": "Accessible name of the yellow color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorGreen": {
-    "message": "Green",
-    "description": "Accessible name of the green color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorPink": {
-    "message": "Pink",
-    "description": "Accessible name of the pink color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorPurple": {
-    "message": "Purple",
-    "description": "Accessible name of the purple color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorCyan": {
-    "message": "Cyan",
-    "description": "Accessible name of the cyan color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorOrange": {
-    "message": "Orange",
-    "description": "Accessible name of the orange color swatch in the new-tab-group dialog."
-  },
-  "tabGroupUntitled": {
-    "description": "Label shown in the existing-group picker for a tab group that has no title.",
-    "message": "Untitled group"
-  },
-  "tabGroupNoGroups": {
-    "description": "Empty state of the existing-group picker: there is no tab group to open into.",
-    "message": "No existing tab groups"
-  },
-  "tabGroupPickDialogTitle": {
-    "description": "Heading of the picker that lists the browser's existing tab groups.",
-    "message": "Open in existing tab group"
-  },
-  "quickAddBookmark": {
-    "message": "Bookmark this page (Ctrl+D)",
-    "description": "Tooltip of the quick-add star button in the popup header."
-  },
-  "quickAddBookmarkCommand": {
-    "description": "Description of the keyboard shortcut command that saves the current tab as a bookmark.",
-    "message": "Quick-add the current tab as a bookmark"
-  },
-  "quickAdded": {
-    "message": "Bookmark added"
-  },
-  "quickAddedTo": {
-    "message": "Bookmark added to $folderName$",
-    "description": "Toast shown after the star button bookmarks the current tab, naming the target folder.",
-    "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarks bar"
-      }
-    }
-  },
-  "quickRemoved": {
-    "message": "Bookmark removed",
-    "description": "Toast shown after the star button removes a bookmark (second click on an already-bookmarked page)."
-  },
-  "quickRemoveBookmark": {
-    "message": "Remove this bookmark (Ctrl+D)",
-    "description": "Tooltip of the quick-add star button when the current page is already bookmarked."
-  },
-  "toolButtonTitle": {
-    "message": "Tools (Ctrl+K)",
-    "description": "Tooltip of the toolbar button that opens the command palette for duplicate cleanup, dead-link scan, session save, etc."
-  },
-  "contextMenuAddBookmark": {
-    "message": "Bookmark this page with vBookmarks",
-    "description": "Page context menu item that saves the current page as a bookmark."
-  },
-  "deadFilterAll": {
-    "message": "All",
-    "description": "Dead-link view filter segment: show the whole result set."
-  },
-  "deadFilterBlocked": {
-    "message": "Blocked only",
-    "description": "Dead-link view filter segment: show only rows unreachable directly but reachable through the proxy."
-  },
-  "deadFilterDead": {
-    "message": "Dead only",
-    "description": "Dead-link view filter segment: show only rows dead on every channel."
-  },
-  "deadFilterMarked": {
-    "message": "Previously marked",
-    "description": "Dead-link view filter segment: show only the user's manually marked bookmarks from before (the marked-only view, results hidden)."
-  },
-  "deadLastScanAt": {
-    "message": "Last scan: $time$",
-    "description": "Info row on top of the dead-link view when cached scan results exist; $time$ is the localized scan timestamp.",
-    "placeholders": {
-      "time": {
-        "content": "$1"
-      }
-    }
-  },
-  "deadMark": {
-    "message": "Mark as dead",
-    "description": "Row button / context menu item that marks a bookmark as dead (red × overlay everywhere)."
-  },
-  "deadMarkAll": {
-    "message": "Mark all",
-    "description": "Batch button in the dead-link view: mark every dead/blocked row of the current result set."
-  },
-  "deadMarked": {
-    "message": "Dead rows marked",
-    "description": "Toast shown after the \"mark all\" batch action finished."
-  },
-  "deadMarkedCount": {
-    "message": "Marked $count$ bookmarks",
-    "description": "Dead view: count of user-marked bookmarks shown when no scan result list is on screen (a cancelled scan keeps the marks).",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "deadMarkedNone": {
-    "message": "No bookmarks marked yet",
-    "description": "Empty state of the past-marks (上次标注) category when the last scan left no marks; a scan has run, so this is a plain empty state, not the first-run start button."
-  },
-  "deadMarkedRow": {
-    "message": "Marked",
-    "description": "Dead view: per-row badge on a user-marked bookmark in the standalone marked-rows list (shown when no scan result row hosts the mark)."
-  },
-  "deadMarkSelected": {
-    "message": "Mark selected",
-    "description": "Dead view selection mode: mark every selected row as dead."
-  },
-  "deadMarkStatusAll": {
-    "message": "Any status",
-    "description": "Dead view second toolbar (mark-status filter): show rows regardless of their mark status (distinct wording from the category toolbar's All)."
-  },
-  "deadMarkStatusMarked": {
-    "message": "Marked",
-    "description": "Dead view second toolbar (mark-status filter): show only rows carrying the user's dead mark."
-  },
-  "deadMarkStatusUnmarked": {
-    "message": "Unmarked",
-    "description": "Dead view second toolbar (mark-status filter): show only rows without the user's dead mark."
-  },
-  "deadMarkTimeLabel": {
-    "message": "Marked at",
-    "description": "Dead view row tooltip label: the absolute time a row was marked dead (appended to the tooltip, and to the second line of the wide/panel layout)."
-  },
-  "deadDetectTimeLabel": {
-    "message": "Detected at",
-    "description": "Dead view row tooltip label: the absolute time a row's scan check returned its dead/blocked verdict (appended to the tooltip, and to the second line of the wide/panel layout)."
-  },
-  "deadSortLabel": {
-    "message": "Sort by",
-    "description": "Dead view sort dropdown: aria-label of the trigger and the listbox."
-  },
-  "deadSortByDetected": {
-    "message": "Detection time",
-    "description": "Dead view sort dropdown option: order rows by when the scan checked them."
-  },
-  "deadSortByPath": {
-    "message": "Folder path",
-    "description": "Dead view sort dropdown option: order rows by their folder path."
-  },
-  "deadSortByMarked": {
-    "message": "Mark time",
-    "description": "Dead view sort dropdown option: order rows by when they were marked dead."
-  },
-  "deadMarkedBanner": {
-    "message": "Showing bookmarks marked previously. Click Rescan to start a new check, or handle them in the list below.",
-    "description": "Dead view tooltip banner above the toolbar when the previously-marked list is on screen (marked-only view after a cancelled scan / the 'Previously marked' filter, or the appended list under 全部 when a finished scan left marks that are now reachable): points to the rescan action and the handleable list below."
-  },
-  "deadMarkedBannerDismiss": {
-    "message": "Dismiss",
-    "description": "Dead view marked-list tooltip banner: aria-label/title of the × that hides the hint for the session."
-  },
-  "deadProxyAdd": {
-    "message": "Add a proxy server for dead-link checks",
-    "description": "Dead view proxy strip: button that opens the inline add-proxy panel."
-  },
-  "deadProxyLabel": {
-    "message": "Proxy: $server$",
-    "description": "Dead view proxy strip chip showing the configured proxy server; $server$ is scheme://host:port.",
-    "placeholders": {
-      "server": {
-        "content": "$1"
-      }
-    }
-  },
-  "deadProxyChange": {
-    "message": "Change",
-    "description": "Dead view proxy strip: reopen the add panel prefilled with the configured proxy server."
-  },
-  "deadProxyRemove": {
-    "message": "Remove",
-    "description": "Dead view proxy strip: remove the configured proxy server."
-  },
-  "deadProxyRemoved": {
-    "message": "Proxy server removed",
-    "description": "Toast after the dead view's proxy server was removed."
-  },
-  "deadProxyPanelHint": {
-    "message": "Enter a proxy server you already have (the extension provides none), e.g. 127.0.0.1:7890 or socks5://127.0.0.1:1080.",
-    "description": "Hint line of the dead view's inline add-proxy panel."
-  },
-  "deadProxyTestUrlLabel": {
-    "message": "Test URL",
-    "description": "Label/tooltip of the reachability test URL field in the dead view's add-proxy panel."
-  },
-  "deadProxyTestSave": {
-    "message": "Test & save",
-    "description": "Primary button of the dead view's add-proxy panel: probes the proxy and saves it only when reachable."
-  },
-  "deadProxyTesting": {
-    "message": "Testing…",
-    "description": "Busy state of the dead view's add-proxy panel while the reachability probe runs."
-  },
-  "deadProxySaved": {
-    "message": "Proxy saved — future scans re-check direct failures through it",
-    "description": "Toast after a reachable proxy server was saved in the dead view."
-  },
-  "deadProxyInvalid": {
-    "message": "Invalid proxy address — use host:port or scheme://host:port (http/https/socks5, no credentials)",
-    "description": "Error of the dead view's add-proxy panel when the address does not parse."
-  },
-  "deadProxyUnreachable": {
-    "message": "Proxy unreachable — not saved",
-    "description": "Error of the dead view's add-proxy panel when the reachability probe failed."
-  },
-  "deadProxyDenied": {
-    "message": "Proxy permission was not granted",
-    "description": "Error when the user dismisses Chrome's proxy permission prompt (dead view add-proxy flow or scan gate)."
-  },
-  "deadProxyControlled": {
-    "message": "Proxy settings are managed by another extension",
-    "description": "Error when another extension controls Chrome's proxy settings (dead view add-proxy flow or scan gate)."
-  },
-  "deadProxyUnavailable": {
-    "message": "The proxy API is unavailable in this browser",
-    "description": "Error when chrome.proxy is missing (dead view add-proxy flow or scan gate)."
-  },
-  "deadProxyNudge": {
-    "message": "A proxy re-check separates real dead links from region-blocked ones — configure it here or in the options page.",
-    "description": "Dead view proxy strip nudge shown after a scan when no proxy is configured."
-  },
-  "deadProxyNeverShow": {
-    "message": "Don't show again",
-    "description": "Dead view proxy strip: hides the no-server add/nudge hint permanently; the proxy stays configurable from the options page."
-  },
-  "deadStartHint": {
-    "message": "Start scanning $n$ bookmarks",
-    "description": "Executable empty state of the dead-link view before the first scan; $n$ is the scannable bookmark count.",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "deadStatusBlocked": {
-    "message": "blocked",
-    "description": "Amber status pill of a blocked row (direct fetch failed, proxy channel reached the target)."
-  },
-  "deadUnmark": {
-    "message": "Remove dead mark",
-    "description": "Row button / context menu item that removes the dead mark from a bookmark."
-  },
-  "deadUnmarkAll": {
-    "message": "Clear all marks",
-    "description": "Batch button in the dead-link view: remove every dead mark."
-  },
-  "deadUnmarkSelected": {
-    "message": "Unmark selected",
-    "description": "Dead view selection mode: remove the dead mark from every selected row."
-  },
-  "dupesApplyAll": {
-    "message": "Apply all ($count$)",
-    "description": "Primary button of the duplicates view: delete every non-keeper row across all groups; $count$ is the total doomed row count.",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "dupesApplySelected": {
-    "message": "Dedup selected ($count$)",
-    "description": "Dupes view selection mode: apply dedup to the selected groups; $count$ is the total doomed row count.",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "dupesCleanRestHint": {
-    "message": "Keep \"$title$\" and remove the other $count$",
-    "description": "Tooltip/aria-label of the quick action on a duplicate group header: apply the configured keeper strategy to this group alone — keep $title$, delete the other $count$ rows.",
-    "placeholders": {
-      "title": {
-        "content": "$1"
-      },
-      "count": {
-        "content": "$2"
-      }
-    }
-  },
-  "dupesIgnoreScheme": {
-    "message": "Ignore http/https differences",
-    "description": "Duplicates view checkbox: treat http and https variants of an address as duplicates."
-  },
-  "dupesKeepThis": {
-    "message": "Keep this one",
-    "description": "aria-label of the keeper radio on a duplicate member row."
-  },
-  "dupesKeeperSet": {
-    "message": "Set as keeper",
-    "description": "Context menu item on a duplicate member row: make it the keeper of its group."
-  },
-  "dupesPreviewSummary": {
-    "message": "$groups$ groups · $count$ to be freed",
-    "description": "Summary text in the duplicates view toolbar; $groups$ duplicate groups, $count$ rows doomed by the current keeper choices.",
-    "placeholders": {
-      "groups": {
-        "content": "$1"
-      },
-      "count": {
-        "content": "$2"
-      }
-    }
-  },
-  "dupesRemoveRow": {
-    "message": "Delete this copy",
-    "description": "aria-label of the delete button on a duplicate member row."
-  },
-  "dupesScopeAll": {
-    "message": "All bookmarks",
-    "description": "Duplicates view scope selector: scan the whole bookmark tree."
-  },
-  "dupesScopeBar": {
-    "message": "Bookmarks bar only",
-    "description": "Duplicates view scope selector: scan only the bookmarks-bar subtree."
-  },
-  "dupesStrategyBookmarkBar": {
-    "message": "Keep the one in the bookmarks bar",
-    "description": "Keeper strategy: prefer the copy inside the bookmarks-bar subtree (oldest wins there)."
-  },
-  "dupesStrategyMostVisited": {
-    "message": "Keep the most visited",
-    "description": "Keeper strategy: keep the copy with the highest recorded visit count."
-  },
-  "dupesStrategyNewest": {
-    "message": "Keep newest",
-    "description": "Keeper strategy: keep the bookmark added most recently."
-  },
-  "dupesStrategyOldest": {
-    "message": "Keep oldest",
-    "description": "Keeper strategy: keep the bookmark added earliest."
-  },
-  "dupesStrategyShallowest": {
-    "message": "Keep the shallowest",
-    "description": "Keeper strategy: keep the copy closest to the root folder."
-  },
-  "dupesStrategyShortestTitle": {
-    "message": "Keep the shortest title",
-    "description": "Keeper strategy: keep the copy with the shortest title."
-  },
-  "optionDeadProxyServer": {
-    "message": "Dead-link proxy server",
-    "description": "Options label for the user's own proxy server used by the dead-link scan's second channel."
-  },
-  "deadProxyServerHint": {
-    "message": "The saved server re-checks direct-failing bookmarks in every dead-link scan, separating real dead links from region-blocked ones. Test & save probes it (only a reachable server is kept); you can also add it from the dead-links view.",
-    "description": "Hint under the options page's dead-link proxy server row."
-  },
-  "deadProxyClear": {
-    "message": "Clear",
-    "description": "Button clearing the saved dead-link proxy server on the options page."
-  },
-  "deadProxyNone": {
-    "message": "(not set)",
-    "description": "Placeholder shown when no dead-link proxy server is configured (options page)."
-  },
-  "optionDeadProxyStrip": {
-    "message": "Show the add-a-proxy hint in the dead-links view",
-    "description": "Options checkbox controlling the dead view's no-server proxy hint strip (add button + nudge + dismiss ×)."
-  },
-  "optionDeadProxyStripHint": {
-    "message": "Off hides that hint there; the proxy server stays configurable here, and a saved server always shows its manage row in the view.",
-    "description": "Hint under the options checkbox controlling the dead view's proxy hint strip."
-  },
-  "optionDeadScanConcurrency": {
-    "message": "Dead-link scan concurrency (1-16)",
-    "description": "Advanced options label for the dead-link scan concurrency pool size."
-  },
-  "optionDeadScanTimeout": {
-    "message": "Dead-link scan timeout in seconds (2-30)",
-    "description": "Advanced options label for the per-request dead-link probe timeout."
-  },
-  "paletteCmdGoDead": {
-    "message": "Go to Dead links view",
-    "description": "Command palette entry (slash command /dead) that switches to the dead-link scan view."
-  },
-  "paletteCmdGoDupes": {
-    "message": "Go to Duplicates view",
-    "description": "Command palette entry (slash command /dupes) that switches to the duplicate cleanup view."
-  },
-  "paletteCmdGoRecent": {
-    "message": "Go to Staging view",
-    "description": "Command palette entry (slash command /recent, alias /staging) that switches to the staging (upgraded recent) view."
-  },
-  "paletteCmdGoSearch": {
-    "message": "Go to Search view",
-    "description": "Command palette entry (slash command /search) that switches to the search view."
-  },
-  "paletteCmdGoTree": {
-    "message": "Go to Tree view",
-    "description": "Command palette entry (slash command /tree) that switches to the bookmark tree view."
-  },
-  "paletteCmdOptions": {
-    "message": "Open options page",
-    "description": "Command palette entry (slash command /options) that opens the extension options page."
-  },
-  "paletteCmdSearchInView": {
-    "message": "Search '$query$' in Search view",
-    "description": "Bridge row appended to the command palette results for a non-empty plain query; jumps into the search view with that query.",
-    "placeholders": {
-      "query": {
-        "content": "$1"
-      }
-    }
-  },
-  "rowActionDelete": {
-    "message": "Delete",
-    "description": "aria-label of the row button that deletes the bookmark."
-  },
-  "rowActionMark": {
-    "message": "Mark as dead",
-    "description": "aria-label of the row button that marks the bookmark as dead."
-  },
-  "rowActionReveal": {
-    "message": "Reveal in tree",
-    "description": "aria-label of the row button that reveals the bookmark in the tree view."
-  },
-  "rowActionUnmark": {
-    "message": "Remove dead mark",
-    "description": "aria-label of the row button that removes the dead mark."
-  },
-  "viewDead": {
-    "message": "Dead links",
-    "description": "View tab title for the dead-link scan view."
-  },
-  "viewDupes": {
-    "message": "Duplicates",
-    "description": "View tab title for the duplicate-bookmark cleanup view."
-  },
-  "viewStats": {
-    "message": "Stats",
-    "description": "View tab title for the visit-statistics view."
-  },
-  "paletteCmdGoStats": {
-    "message": "Go to Stats view",
-    "description": "Command palette entry: switch to the visit-statistics view (slash alias /stats)."
-  },
-  "optionStatsEnabled": {
-    "message": "Enable visit statistics",
-    "description": "Options checkbox (Views group): master switch for visit-statistics collection."
-  },
-  "optionFaviconContrast": {
-    "message": "Invert low-contrast favicons",
-    "description": "Options checkbox (Views group): invert near-monochrome favicons that are invisible on the opposite background (white icons on light themes, black icons on dark themes). On by default."
-  },
-  "optionFaviconContrastHint": {
-    "message": "White icons on light themes and black icons on dark themes are inverted so they stay visible. Each icon is sampled once when it loads — no cost while browsing.",
-    "description": "Options hint under the favicon-contrast checkbox, explaining the low-overhead one-time-per-icon sampling."
-  },
-  "optionFaviconEnrich": {
-    "message": "Fetch missing site icons",
-    "description": "Options checkbox (Views group): for bookmarked sites Chrome has no cached icon for, fetch the real icon directly from the site (/favicon.ico, then the page’s declared icons). On by default."
-  },
-  "optionFaviconEnrichHint": {
-    "message": "For bookmarked sites Chrome has no cached icon for, fetch the real icon directly from the site (/favicon.ico, then the page’s declared icons). Requests only go to sites you bookmarked.",
-    "description": "Hint under the favicon enrich checkbox."
-  },
-  "optionFaviconEnrichAgg": {
-    "message": "Third-party icon fallback",
-    "description": "Options checkbox (Views group): sub-switch enabling the built-in list of third-party icon services (favicon.run, then icon.horse, then DuckDuckGo) as a last-resort fallback when direct fetching fails."
-  },
-  "optionFaviconEnrichAggHint": {
-    "message": "When direct fetching fails, look the icon up by domain from a built-in list of third-party icon services ($providers$). A service found unreachable is skipped and the next one is tried — it is not retried for 6 hours.",
-    "placeholders": {
-      "providers": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionFaviconBackup": {
-    "message": "Include icon cache in backups",
-    "description": "Options checkbox (Icons group): whether the settings export/import also carries the enriched favicon cache (per-site data, potentially large). Off by default to keep backups small."
-  },
-  "optionFaviconBackupHint": {
-    "message": "Also pack the enriched favicon cache (per-site data, potentially large) into the settings export/import. This covers icons already cached even while fetching is off. Off keeps backups small; icons are re-fetched automatically anyway.",
-    "description": "Hint under the include-icon-cache-in-backups checkbox."
-  },
-  "optionFaviconCacheClear": {
-    "message": "Clear icon cache",
-    "description": "Options button: clear the favicon cache so icons are re-fetched on next open."
-  },
-  "optionFaviconCacheClearConfirm": {
-    "message": "Clear the enriched icon cache? Icons will be re-fetched automatically on next open.",
-    "description": "Confirmation shown before clearing the favicon cache."
-  },
-  "optionFaviconCacheEmpty": {
-    "message": "No icon cache to clear.",
-    "description": "Alert shown when the user clicks Clear icon cache and no cache keys exist."
-  },
-  "optionFaviconCacheCleared": {
-    "message": "Icon cache cleared. Icons will be re-fetched on next open.",
-    "description": "Alert shown after clearing the favicon cache."
-  },
-  "favGalleryLink": {
-    "message": "View refreshed icons",
-    "description": "Options link (Icons group, right of the Clear icon cache button): opens the favicon gallery page listing the sites whose icons were refetched."
-  },
-  "favGalleryTitle": {
-    "message": "Refreshed site icons",
-    "description": "Favicon gallery page title (h1 + document title)."
-  },
-  "favGalleryHint": {
-    "message": "Icons vBookmarks fetched for bookmarked sites Chrome had not cached — where each one came from and which bookmarks use it. Display only.",
-    "description": "Subtitle under the favicon gallery title, explaining the page is read-only."
-  },
-  "favGallerySearch": {
-    "message": "Filter by site, title or path",
-    "description": "Placeholder of the favicon gallery filter input."
-  },
-  "favGalleryAll": {
-    "message": "All",
-    "description": "Favicon gallery source filter chip: show every source."
-  },
-  "favSrcDirect": {
-    "message": "Direct",
-    "description": "Favicon gallery source badge: the icon was fetched directly from the site itself."
-  },
-  "favSrcProxy": {
-    "message": "Proxy",
-    "description": "Favicon gallery source badge: the icon was fetched through the user's own proxy relay."
-  },
-  "favSrcLegacy": {
-    "message": "Earlier cache",
-    "description": "Favicon gallery source badge: cached before the source was recorded, so the origin is unknown."
-  },
-  "favGalleryCompare": {
-    "message": "Compare with placeholder",
-    "description": "Favicon gallery toggle button: switch every icon to the generic placeholder it replaced (before/after comparison)."
-  },
-  "favGalleryShowingBefore": {
-    "message": "Back to real icons",
-    "description": "Favicon gallery toggle button while the placeholder comparison is shown: switch back to the real fetched icons."
-  },
-  "favGalleryStatSites": {
-    "message": "$n$ sites",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    },
-    "description": "Favicon gallery stats strip: how many sites have a refreshed icon."
-  },
-  "favGalleryStatBookmarks": {
-    "message": "$n$ bookmarks",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    },
-    "description": "Favicon gallery stats strip: how many bookmarks sit on the refreshed sites."
-  },
-  "favGalleryVisits": {
-    "message": "$n$ recorded opens",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    },
-    "description": "Favicon gallery tooltip on a bookmark row's visit-count pill."
-  },
-  "favGalleryFailedTitle": {
-    "message": "Recently tried, no icon found",
-    "description": "Favicon gallery heading of the muted section listing hosts whose icon fetch failed recently."
-  },
-  "favGalleryFailedHint": {
-    "message": "Failures are retried after 24 h, 3 days and 7 days, then given up until the icon cache is cleared.",
-    "description": "Favicon gallery hint under the failed-fetch section title."
-  },
-  "favGalleryGaveUp": {
-    "message": "Gave up",
-    "description": "Favicon gallery badge on a failed-strip host whose retries are exhausted (it stays untouched until the icon cache is cleared)."
-  },
-  "favGalleryOrphan": {
-    "message": "No bookmark left on this host — the icon clears with the cache.",
-    "description": "Favicon gallery note on a card whose host no longer has any bookmark."
-  },
-  "favGalleryEmptyTitle": {
-    "message": "No refreshed icons yet",
-    "description": "Favicon gallery empty-state heading."
-  },
-  "favGalleryEmptyText": {
-    "message": "When the popup meets a bookmarked site Chrome has no icon for, vBookmarks fetches the real one and lists it here.",
-    "description": "Favicon gallery empty-state body text."
-  },
-  "storageUsageIcon": {
-    "message": "Icon cache",
-    "description": "Storage usage bar legend segment: bytes held by the favicon cache."
-  },
-  "storageUsageOther": {
-    "message": "Other",
-    "description": "Storage usage bar legend segment: bytes held by settings and any other data."
-  },
-  "storageUsageSummary": {
-    "message": "Used $1$ of $2$",
-    "placeholders": {
-      "1": {
-        "content": "$1"
-      },
-      "2": {
-        "content": "$2"
-      }
-    }
-  },
-  "storageUsageFree": {
-    "message": "Free",
-    "description": "Storage usage bar legend segment: remaining space in chrome.storage.local."
-  },
-  "storageUsageHint": {
-    "message": "Local extension storage only (chrome.storage.local, about 10 MB quota): the icon cache plus settings and other local data. Synced settings, session data and the bookmark library itself are not counted here.",
-    "description": "Hint under the storage usage bar in the Icons group."
-  },
-  "optionsDonate": {
-    "message": "Donate",
-    "description": "Options page header button linking to the donation page."
-  },
-  "optionsGithubLink": {
-    "message": "GitHub",
-    "description": "Options page header link to the GitHub profile/repository."
-  },
-  "optionsHomepageLink": {
-    "message": "Homepage",
-    "description": "Options page header link to the plugin homepage."
-  },
-  "optionsSince": {
-    "message": "Forked from Neat Bookmarks, maintained for $days$ days.",
-    "placeholders": {
-      "days": {
-        "content": "$1"
-      }
-    },
-    "description": "Subtitle under the options page title: days since the 1.0 fork from Neat Bookmarks."
-  },
-  "optionsVersion": {
-    "message": "vBookmarks version",
-    "description": "Tooltip for the version number shown at the top-right of the options page."
-  },
-  "statsSortByCount": {
-    "message": "By count",
-    "description": "Stats view sort segment: order rows by visit count, highest first."
-  },
-  "statsSortByRecent": {
-    "message": "By recent",
-    "description": "Stats view sort segment: order rows by most recent visit first."
-  },
-  "statsShowUnbookmarked": {
-    "message": "Show unbookmarked"
-  },
-  "statsShowUnbookmarkedHint": {
-    "message": "Include pages from your history that are not saved as bookmarks."
-  },
-  "statsEmpty": {
-    "message": "Statistics build up as you open bookmarks",
-    "description": "Empty state of the stats view when no visit data has been collected yet."
-  },
-  "statsDisabledHint": {
-    "message": "Visit statistics are off — enable them in Options → Views",
-    "description": "Stats view empty state shown instead of data when the statsEnabled switch is off."
-  },
-  "statsVisitCount": {
-    "message": "Visited $count$ times",
-    "description": "Aria label of the stats row count pill; $count$ is the visit count.",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "statsClearData": {
-    "message": "Clear statistics",
-    "description": "Button (stats view toolbar and options page) that wipes all collected visit statistics."
-  },
-  "statsClearConfirm": {
-    "message": "Clear visit statistics for $count$ bookmarks? This cannot be undone.",
-    "description": "Confirmation dialog text before wiping visit statistics; $count$ is the number of bookmark entries.",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "statsHistoryBanner": {
-    "message": "Grant history access to seed visit statistics with your past visits.",
-    "description": "Banner text on top of the recent view: invites granting the optional history permission so visit statistics can be seeded with past visits."
-  },
-  "statsHistoryEnable": {
-    "message": "Enable",
-    "description": "Link inside the recent view's history-permission banner: requests the optional history permission."
-  },
-  "statsHistoryDismiss": {
-    "message": "Don't show again",
-    "description": "aria-label of the dismiss button on the recent view's history-permission banner."
-  },
-  "statsHistoryImported": {
-    "message": "Imported past visits for $count$ bookmarks",
-    "description": "Toast after the history import finished; $count$ is how many bookmarks received a seeded visit count.",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "paletteCmdToggleViewTabs": {
-    "message": "Toggle view tabs"
-  },
-  "paletteCmdTheme": {
-    "message": "Set theme…"
-  },
-  "paletteCmdThemeUsage": {
-    "message": "Usage: /theme followed by a theme name — auto, light, dark, ink or paper (a unique prefix works, e.g. /theme d)."
-  },
-  "paletteCustomTag": {
-    "message": "custom"
-  },
-  "paletteCustomDeleteConfirm": {
-    "message": "Delete the command \"$1\"? The change syncs to all your devices."
-  },
-  "paletteCustomBroken": {
-    "message": "The folder of command \"$1\" no longer exists. Delete the command?"
-  },
-  "paletteCmdSaveAsCommand": {
-    "message": "Save \"$1\" as a command…"
-  },
-  "paletteActionOpenUrl": {
-    "message": "Open URL"
-  },
-  "paletteActionOpenUrlGroup": {
-    "message": "Open bookmark folder group"
-  },
-  "paletteActionViewPreset": {
-    "message": "Open view with preset"
-  },
-  "paletteActionUrlTemplate": {
-    "message": "Open URL template"
-  },
-  "optionsGroupPalette": {
-    "message": "Command palette"
-  },
-  "paletteCustomHint": {
-    "message": "Custom slash commands for the command palette (Ctrl/Cmd+K). They sync with your settings — 100 entries max."
-  },
-  "paletteCustomAdd": {
-    "message": "Add command…"
-  },
-  "paletteCustomUsage": {
-    "message": "$1 / $2"
-  },
-  "paletteCustomSlash": {
-    "message": "Slash (the word after /)"
-  },
-  "paletteCustomAliases": {
-    "message": "Aliases (comma-separated)"
-  },
-  "paletteCustomAction": {
-    "message": "Action"
-  },
-  "paletteCustomUrl": {
-    "message": "URL"
-  },
-  "paletteCustomTemplate": {
-    "message": "URL template — %s is replaced by the words after the command"
-  },
-  "paletteCustomWhere": {
-    "message": "Open in"
-  },
-  "paletteCustomFolder": {
-    "message": "Bookmark folder"
-  },
-  "paletteCustomView": {
-    "message": "View"
-  },
-  "paletteCustomStrategy": {
-    "message": "Dedup strategy preset"
-  },
-  "paletteCustomScope": {
-    "message": "Dedup scope preset"
-  },
-  "paletteCustomScan": {
-    "message": "Start the scan on entry"
-  },
-  "paletteWhereCurrent": {
-    "message": "Current tab"
-  },
-  "paletteWhereTab": {
-    "message": "New tab"
-  },
-  "paletteWhereWindow": {
-    "message": "New window"
-  },
-  "paletteWhereBackground": {
-    "message": "Background tabs"
-  },
-  "paletteCustomSave": {
-    "message": "Save command"
-  },
-  "paletteCustomErrSlash": {
-    "message": "Slash: 1–24 chars of lowercase letters, digits or hyphens, starting with a letter or digit."
-  },
-  "paletteCustomErrAlias": {
-    "message": "Aliases: same rules as the slash (1–24 chars of lowercase letters, digits or hyphens)."
-  },
-  "paletteCustomErrTaken": {
-    "message": "That slash or alias is already taken."
-  },
-  "paletteCustomErrUrl": {
-    "message": "Only http:// or https:// URLs are allowed."
-  },
-  "paletteCustomErrFolder": {
-    "message": "Pick a bookmark folder."
-  },
-  "paletteCustomErrView": {
-    "message": "Pick a view."
-  },
-  "paletteCustomErrTemplate": {
-    "message": "The template must contain exactly one %s."
-  },
-  "paletteCustomErrAction": {
-    "message": "Pick an action type."
-  },
-  "paletteCustomErrLimit": {
-    "message": "Command limit reached (100) — delete one first."
-  },
-  "paletteCustomEmpty": {
-    "message": "No custom commands yet."
-  },
-  "recentGroupToday": {
-    "message": "Today"
-  },
-  "recentGroupWeek": {
-    "message": "This week"
-  },
-  "recentGroupMonth": {
-    "message": "This month"
-  },
-  "recentGroupOlder": {
-    "message": "Older"
-  },
-  "searchHistoryRerun": {
-    "message": "Search again"
-  },
-  "optionsGroupBackup": {
-    "message": "Backup"
-  },
-  "optionsGroupLabs": {
-    "message": "Labs"
-  },
-  "optionVirtualScrollLab": {
-    "message": "Virtual scrolling (experimental)"
-  },
-  "optionVirtualScrollLabHint": {
-    "message": "The tab groups and duplicates views render only the rows near the viewport. Much faster on very large lists; while experimental the scrollbar position is an estimate."
-  },
-  "optionsGroupContextMenu": {
-    "message": "Context menus"
-  },
-  "optionsGroupIcons": {
-    "message": "Icons"
-  },
-  "settingsExport": {
-    "message": "Export settings"
-  },
-  "settingsImport": {
-    "message": "Import settings"
-  },
-  "settingsBackupHint": {
-    "message": "Export saves all settings (including sync preferences) to a JSON file. Import merges a backup back: settings in the file overwrite the current ones, everything else is kept."
-  },
-  "settingsImportConfirm": {
-    "message": "Importing will overwrite every setting contained in the backup file (settings not in the file are kept) and reload this page. Continue?"
-  },
-  "settingsImportInvalid": {
-    "message": "Invalid settings file: not a vBookmarks settings backup."
-  },
-  "settingsImportDone": {
-    "message": "Settings imported. The page will now reload."
-  },
-  "settingsImportError": {
-    "message": "Some settings could not be written (storage quota or a transient error). The import did not complete — please try again."
-  },
-  "statsSectionRecent": {
-    "message": "Recent visits"
-  },
-  "statsSectionBookmarks": {
-    "message": "Bookmark statistics"
-  },
-  "statsHistoryGuide": {
-    "message": "Grant history access to list your recent visits here."
-  },
-  "statsHistoryAdd": {
-    "message": "Add to bookmarks"
-  },
-  "statsHistoryBookmarked": {
-    "message": "Bookmarked"
-  },
-  "deadPause": {
-    "message": "Pause"
-  },
-  "deadResume": {
-    "message": "Resume"
-  },
-  "deadCancel": {
-    "message": "Cancel"
-  },
-  "deadPaused": {
-    "message": "Paused"
+  "viewTree": {
+    "message": "Tree"
   },
   "whatsNewChangelog": {
     "message": "Changelog"
@@ -2002,859 +2856,5 @@
         "content": "$1"
       }
     }
-  },
-  "viewHiddenTabsHint": {
-    "message": "You're in the $view$ view. Press $back$ or use the command palette to return to the tree.",
-    "placeholders": {
-      "view": {
-        "content": "$1"
-      },
-      "back": {
-        "content": "$2"
-      }
-    }
-  },
-  "viewTabGroups": {
-    "message": "Tab groups",
-    "description": "View tab title for the browser tabs + tab groups view."
-  },
-  "optionShowTabGroupsView": {
-    "message": "Show the tab groups view tab"
-  },
-  "tabGroupsViewEmpty": {
-    "message": "No tabs in this window"
-  },
-  "tabGroupsToolbarRefresh": {
-    "message": "Refresh"
-  },
-  "tabGroupsCollapseAll": {
-    "message": "Collapse all"
-  },
-  "tabGroupsExpandAll": {
-    "message": "Expand all"
-  },
-  "tabGroupsSummary": {
-    "message": "$tabs$ tabs · $groups$ groups",
-    "placeholders": {
-      "tabs": {
-        "content": "$1"
-      },
-      "groups": {
-        "content": "$2"
-      }
-    }
-  },
-  "tabGroupsGroupCount": {
-    "message": "$count$ tabs",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsCurrentTab": {
-    "message": "Current",
-    "description": "Compact pill on the row of the tab that is active in its window (the row tint + pill together mark it)."
-  },
-  "tabGroupsAddBookmark": {
-    "message": "Bookmark this tab"
-  },
-  "tabGroupsSaveFolder": {
-    "message": "Save tab group as bookmark folder"
-  },
-  "tabGroupsGroupSavedToFolder": {
-    "message": "Saved $count$ tabs to $folder$",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      },
-      "folder": {
-        "content": "$2"
-      }
-    }
-  },
-  "tabGroupsBookmarksAdded": {
-    "message": "Added $count$ bookmark(s) to $folder$",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      },
-      "folder": {
-        "content": "$2"
-      }
-    }
-  },
-  "tabGroupsSelectNewGroup": {
-    "message": "New tab group"
-  },
-  "tabGroupsSelectOpenInto": {
-    "message": "Open in existing tab group…"
-  },
-  "tabGroupsSelectSaveFolder": {
-    "message": "Save as bookmark folder"
-  },
-  "tabGroupsSelectClose": {
-    "message": "Close"
-  },
-  "tabGroupsSelectSleep": {
-    "message": "Sleep"
-  },
-  "tabGroupsCopyMoveDialog": {
-    "message": "Selected tabs already belong to a tab group. Copy them (open in a new place) or move them (remove from their current group)?"
-  },
-  "tabGroupsCopyMoveCopy": {
-    "message": "Copy"
-  },
-  "tabGroupsCopyMoveMove": {
-    "message": "Move"
-  },
-  "tabGroupsConfirmClose": {
-    "message": "Close $count$ tabs?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsConfirmSleep": {
-    "message": "Sleep $count$ tabs?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsClosedToast": {
-    "message": "Closed $count$ tab(s)",
-    "description": "Toast after closing a single tab or tab group; the action button reopens it.",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsSleptToast": {
-    "message": "Put $count$ tab(s) to sleep",
-    "description": "Toast after sleeping a single tab or tab group; the action button wakes it.",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsBatchClosedTitle": {
-    "message": "Closed tabs",
-    "description": "Title of the merged recently-closed record a batch close writes (one record for the whole selection)."
-  },
-  "tabGroupsPinnedUngroupedToast": {
-    "message": "Pinned — removed from its tab group",
-    "description": "Toast when pinning a tab that belonged to a group: Chrome forbids pinned grouped tabs, so the tab leaves the group."
-  },
-  "tabGroupsReopenAction": {
-    "message": "Reopen",
-    "description": "Toast action button: reopens the just-closed tab or tab group."
-  },
-  "tabGroupsWakeAction": {
-    "message": "Wake",
-    "description": "Toast action button: wakes the just-slept tab(s)."
-  },
-  "tabGroupsRecordDeletedToast": {
-    "message": "Removed the closed record",
-    "description": "Toast after deleting one recently-closed record; Undo restores it."
-  },
-  "tabGroupsClosedTabRemovedToast": {
-    "message": "Removed from the closed record",
-    "description": "Toast after removing one tab from a closed record; Undo restores it."
-  },
-  "tabGroupsClearedToast": {
-    "message": "Cleared $count$ closed record(s)",
-    "description": "Toast after clearing all recently-closed records; Undo restores the whole list.",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "bookmarkFolderPickDialogTitle": {
-    "message": "Add to bookmark folder"
-  },
-  "bookmarkFolderNoFolders": {
-    "message": "No bookmark folders"
-  },
-  "tabGroupsSelectAddBookmarks": {
-    "message": "Add to bookmark folder…",
-    "description": "Selection-mode toolbar button in the tab groups view: adds the selected tabs as bookmarks into a chosen bookmark folder."
-  },
-  "paletteCmdGoTabGroups": {
-    "message": "Go to Tab groups view",
-    "description": "Command palette entry: switch to the tab groups view (slash alias /tabgroups, /groups)."
-  },
-  "tabGroupsActivateGroup": {
-    "message": "Go to tab group",
-    "description": "Group-head action in the tab groups view: focuses the group's first tab."
-  },
-  "tabGroupsRenameGroup": {
-    "message": "Rename tab group",
-    "description": "Group-head action in the tab groups view: opens the title/color dialog for the group."
-  },
-  "tabGroupsRenameDialog": {
-    "message": "Rename tab group",
-    "description": "Heading of the tab-group dialog when opened from the tab groups view to rename a group."
-  },
-  "tabGroupsCloseGroup": {
-    "message": "Close tab group",
-    "description": "Group-head action in the tab groups view: closes every tab of the group."
-  },
-  "tabGroupsSleepGroup": {
-    "message": "Sleep tab group",
-    "description": "Group-head action in the tab groups view: discards every tab of the group."
-  },
-  "tabGroupsWakeGroup": {
-    "message": "Wake tab group",
-    "description": "Group header control/menu item in the tab groups view: wake every sleeping member."
-  },
-  "tabGroupsActivateTab": {
-    "message": "Go to tab",
-    "description": "Tab row context-menu item in the tab groups view: focuses the tab."
-  },
-  "tabGroupsCollapseGroup": {
-    "message": "Collapse group",
-    "description": "Tab group context-menu item in the tab groups view."
-  },
-  "tabGroupsExpandGroup": {
-    "message": "Expand group",
-    "description": "Tab group context-menu item in the tab groups view."
-  },
-  "tabGroupsMenuAddBookmark": {
-    "message": "Bookmark tab",
-    "description": "Tab row context-menu item in the tab groups view: bookmarks the tab."
-  },
-  "tabGroupsMenuSaveFolder": {
-    "message": "Save as bookmark folder",
-    "description": "Tab group context-menu item in the tab groups view: saves the group as a bookmark folder."
-  },
-  "tabGroupsSyncCollapse": {
-    "message": "Sync collapse with browser",
-    "description": "Toolbar checkbox in the tab groups view: when checked, collapsing/expanding groups in the view also collapses/expands the browser tab groups."
-  },
-  "tabGroupsSyncCollapseHint": {
-    "message": "When checked, collapsing or expanding a group in this view also updates the browser tab group. Off by default so view folding stays local.",
-    "description": "Tooltip for the collapse-sync checkbox in the tab groups view."
-  },
-  "tabGroupsColorStyle": {
-    "message": "Tab group color style",
-    "description": "Options page (Views group): how a tab group's color is drawn in the tab groups view."
-  },
-  "tabGroupsColorStyleHint": {
-    "message": "Off shows the color dot only. Edge color band draws a colored strip down the group's left edge. Color connector line draws a colored line under the group's dot with a tick per row, tying the whole group into one tree.",
-    "description": "Hint for the tab group color style selector on the options page."
-  },
-  "tabGroupsColorStyleOff": {
-    "message": "Off (color dot only)",
-    "description": "Tab group color style choice on the options page."
-  },
-  "tabGroupsColorStyleEdge": {
-    "message": "Edge color band",
-    "description": "Tab group color style choice on the options page."
-  },
-  "tabGroupsColorStyleLine": {
-    "message": "Color connector line",
-    "description": "Tab group color style choice on the options page."
-  },
-  "tabGroupsBookmarked": {
-    "message": "Bookmarked",
-    "description": "Accessible label of the always-visible filled star on tab rows that are already bookmarked."
-  },
-  "tabGroupsRemoveBookmark": {
-    "message": "Remove bookmark",
-    "description": "Tab row control/menu item in the tab groups view: delete the bookmark(s) for this tab's URL again."
-  },
-  "tabGroupsBookmarkRemoved": {
-    "message": "Removed $count$ bookmark(s)",
-    "description": "Toast after removing a tab's bookmark from the tab groups view.",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsPinned": {
-    "message": "Pinned tab",
-    "description": "Status icon aria/tooltip on pinned tab rows in the tab groups view."
-  },
-  "tabGroupsDiscarded": {
-    "message": "Sleeping tab",
-    "description": "Status icon aria/tooltip on discarded (sleeping) tab rows in the tab groups view."
-  },
-  "tabGroupsPinTab": {
-    "message": "Pin tab",
-    "description": "Tab row context-menu item in the tab groups view."
-  },
-  "tabGroupsUnpinTab": {
-    "message": "Unpin tab",
-    "description": "Tab row context-menu item in the tab groups view."
-  },
-  "tabGroupsSleepTab": {
-    "message": "Sleep tab",
-    "description": "Tab row control/menu item in the tab groups view: discard the tab (hollow crescent)."
-  },
-  "tabGroupsWakeTab": {
-    "message": "Wake tab",
-    "description": "Tab row control/menu item in the tab groups view: reload a sleeping tab in place (filled crescent)."
-  },
-  "tabGroupsOpenGroups": {
-    "message": "Open tab groups",
-    "description": "Section heading in the tab groups view for expanded groups."
-  },
-  "tabGroupsClosedGroups": {
-    "message": "Recently closed",
-    "description": "Section heading in the tab groups view for collapsed groups."
-  },
-  "tabGroupsUngroupedTabs": {
-    "message": "Ungrouped tabs",
-    "description": "Section heading in the tab groups view for tabs without a group."
-  },
-  "tabGroupsUngroupGroup": {
-    "message": "Ungroup tabs",
-    "description": "Group context-menu item: remove the group but keep its tabs."
-  },
-  "tabGroupsMoveNewWindow": {
-    "message": "Move group to new window",
-    "description": "Group context-menu item: move every tab of the group to a new window."
-  },
-  "tabGroupsWindow": {
-    "message": "Window $1$",
-    "description": "Window section heading in the tab groups view.",
-    "placeholders": {
-      "1": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsCurrentWindow": {
-    "message": "Current window",
-    "description": "Badge on the window section heading that contains the popup."
-  },
-  "tabGroupsReopenGroup": {
-    "message": "Reopen tab group",
-    "description": "Button on a closed tab group row: reopens its tabs as a group."
-  },
-  "tabGroupsDeleteClosedGroup": {
-    "message": "Delete closed tab group",
-    "description": "Button on a closed tab group row: removes the saved record."
-  },
-  "tabGroupsCollapseWindow": {
-    "message": "Collapse window",
-    "description": "Window-head toggle in the tab groups view: folds the window section."
-  },
-  "tabGroupsCloseWindow": {
-    "message": "Close window",
-    "description": "Hover action on a window section head: closes the whole window (confirm; tabs land as one merged closed record)."
-  },
-  "tabGroupsWindowClosedTitle": {
-    "message": "Closed window",
-    "description": "Title of the merged recently-closed record a window close writes."
-  },
-  "tabGroupsExpandWindow": {
-    "message": "Expand window",
-    "description": "Window-head toggle in the tab groups view: unfolds the window section."
-  },
-  "tabGroupsClearClosedGroups": {
-    "message": "Clear all",
-    "description": "Button on the closed tab groups section heading: removes all saved closed-group records."
-  },
-  "tabGroupsConfirmClearClosed": {
-    "message": "Clear all recently closed records? They can no longer be reopened from here.",
-    "description": "Confirmation dialog before clearing the tab groups view's recently-closed records list."
-  },
-  "tabGroupsFilterPlaceholder": {
-    "message": "Filter open tabs",
-    "description": "Placeholder of the instant filter input in the tab groups view toolbar: filters the listed tabs by title or URL."
-  },
-  "tabGroupsNoMatchingTabs": {
-    "message": "No matching tabs",
-    "description": "Empty state in the tab groups view when the toolbar filter matches no open tab."
-  },
-  "tabGroupsClosedOpenTab": {
-    "message": "Open in new tab",
-    "description": "Hover action on a saved tab inside a closed tab group row."
-  },
-  "tabGroupsRemoveClosedTab": {
-    "message": "Remove from saved group",
-    "description": "Hover action on a saved tab inside a closed tab group row: removes that tab from the saved record."
-  },
-  "tabGroupsClosedTimeLabel": {
-    "message": "Closed:",
-    "description": "Tooltip label before the close time of a recently closed tab in the tab groups view."
-  },
-  "tabGroupsExpandedExpand": {
-    "message": "Expand",
-    "description": "Context-menu item for a recently closed tab group in the tab groups view: show its tabs."
-  },
-  "tabGroupsExpandedCollapse": {
-    "message": "Collapse",
-    "description": "Context-menu item for a recently closed tab group in the tab groups view: hide its tabs."
-  },
-  "optionTabGroupsClosedLimit": {
-    "message": "Closed tab/group history to keep",
-    "description": "Options-page select in the Views group: how many closed tab/group records the tab groups view remembers."
-  },
-  "folderPickMoveHere": {
-    "message": "Move here"
-  },
-  "folderPickCopyHere": {
-    "message": "Copy here"
-  },
-  "folderPickFilter": {
-    "message": "Filter folders…"
-  },
-  "folderPickFavNote": {
-    "message": "Unbookmarked items will be bookmarked here"
-  },
-  "folderPickPinned": {
-    "message": "Pinned"
-  },
-  "folderPickRecent": {
-    "message": "Recent"
-  },
-  "pinFolder": {
-    "message": "Pin this folder"
-  },
-  "unpinFolder": {
-    "message": "Unpin this folder"
-  },
-  "stagingAdd": {
-    "message": "Send to staging"
-  },
-  "stagingAdded": {
-    "message": "Sent to staging"
-  },
-  "stagingAlready": {
-    "message": "Already in the staging area"
-  },
-  "stagingAddedSummary": {
-    "message": "Added $n$ item(s); $m$ already staged",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      },
-      "m": {
-        "content": "$2"
-      }
-    }
-  },
-  "stagingFull": {
-    "message": "The staging area is full — remove some items first"
-  },
-  "stagingFolderEmpty": {
-    "message": "This folder has no bookmarks to stage"
-  },
-  "stagingConfirmFolder": {
-    "message": "Stage $n$ bookmarks from this folder?",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingConfirmFolderOk": {
-    "message": "Stage"
-  },
-  "stagingRemove": {
-    "message": "Remove from staging area"
-  },
-  "stagingRemoved": {
-    "message": "Removed from the staging area"
-  },
-  "recentStageAll": {
-    "message": "Stage all recently added"
-  },
-  "recentSectionTitle": {
-    "message": "Recently added"
-  },
-  "stagingEmpty": {
-    "message": "Nothing staged yet. Send bookmarks here from any view — the plane button on a row, or the right-click menu — then organize and file them in bulk."
-  },
-  "stagingFromHistory": {
-    "message": "From history"
-  },
-  "stagingGroupExpand": {
-    "message": "Expand group"
-  },
-  "stagingGroupCollapse": {
-    "message": "Collapse group"
-  },
-  "stagingGroupRename": {
-    "message": "Rename group…"
-  },
-  "stagingGroupDissolve": {
-    "message": "Dissolve group"
-  },
-  "stagingGroupDissolved": {
-    "message": "Group dissolved — items kept in the staging area"
-  },
-  "stagingGroupDelete": {
-    "message": "Delete group (with items)"
-  },
-  "stagingGroupDeleteConfirm": {
-    "message": "Delete group \"$1\"? Its $2 item(s) leave the staging area too."
-  },
-  "stagingGroupDeleted": {
-    "message": "Group deleted — $1 item(s) removed"
-  },
-  "stagingGroupAssign": {
-    "message": "Group…"
-  },
-  "stagingGroupAssignTitle": {
-    "message": "Assign to a group"
-  },
-  "stagingGroupNew": {
-    "message": "New group"
-  },
-  "stagingGroupNamePrompt": {
-    "message": "New group name"
-  },
-  "stagingGroupNoGroups": {
-    "message": "No groups yet"
-  },
-  "stagingShortcutAdd": {
-    "message": "Add shortcut"
-  },
-  "stagingShortcutBarLabel": {
-    "message": "Move to:"
-  },
-  "stagingGuideText": {
-    "message": "Organize bookmarks here — select rows and enter selection mode for the batch actions."
-  },
-  "stagingGuideDismiss": {
-    "message": "Don’t show again"
-  },
-  "stagingShortcutTitle": {
-    "message": "Move-to shortcut"
-  },
-  "stagingShortcutEdit": {
-    "message": "Edit shortcut"
-  },
-  "stagingShortcutAlias": {
-    "message": "Alias"
-  },
-  "stagingShortcutPickFolder": {
-    "message": "Pick target folder…"
-  },
-  "stagingShortcutSave": {
-    "message": "Save"
-  },
-  "stagingShortcutRemove": {
-    "message": "Remove shortcut"
-  },
-  "stagingShortcutRemoved": {
-    "message": "Shortcut removed"
-  },
-  "stagingShortcutMove": {
-    "message": "Move selected to $1$",
-    "placeholders": {
-      "1": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingBucketTitle": {
-    "message": "Unbookmarked"
-  },
-  "stagingBucketFavAll": {
-    "message": "Favorite all"
-  },
-  "stagingNew": {
-    "message": "new $n$",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingRowFav": {
-    "message": "Favorite this item"
-  },
-  "stagingRowUnfav": {
-    "message": "Un-favorite this item"
-  },
-  "stagingFav": {
-    "message": "Favorite"
-  },
-  "stagingUnfav": {
-    "message": "Un-favorite"
-  },
-  "stagingFavDone": {
-    "message": "Favorited $n$ item(s)",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingUnfavDone": {
-    "message": "Un-favorited $n$ item(s)",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "groupSaveToFolder": {
-    "message": "Save to folder…"
-  },
-  "groupCopyToFolder": {
-    "message": "Copy to folder…"
-  },
-  "stagingCount": {
-    "message": "$n$ staged",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingMoveCopy": {
-    "message": "Move/copy to…"
-  },
-  "stagingMoveDone": {
-    "message": "Moved $n$ item(s) home",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingCopyDone": {
-    "message": "Copied $n$ item(s)",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingMoveConfirm": {
-    "message": "Move $n$ item(s) to the chosen folder?",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingMoveConfirmOk": {
-    "message": "Move"
-  },
-  "stagingDeleteConfirm": {
-    "message": "Delete $n$ item(s)? Unbookmarked ones just leave the staging area.",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingDeleted": {
-    "message": "Deleted $n$ bookmark(s)",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingRemovedCount": {
-    "message": "Removed $n$ item(s) from the staging area",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingClear": {
-    "message": "Clear staging"
-  },
-  "stagingClearConfirm": {
-    "message": "Clear the whole staging area? The bookmark tree is not touched."
-  },
-  "stagingClearConfirmOk": {
-    "message": "Clear"
-  },
-  "stagingCleared": {
-    "message": "Staging area cleared"
-  },
-  "groupPlaceTooltip": {
-    "message": "Save this group to a folder…"
-  },
-  "copyBookmark": {
-    "message": "Copy"
-  },
-  "cutBookmark": {
-    "message": "Cut"
-  },
-  "copyMoveTo": {
-    "message": "Copy/move to…"
-  },
-  "pasteHere": {
-    "message": "Paste here"
-  },
-  "copiedToast": {
-    "message": "Copied: $t$",
-    "placeholders": {
-      "t": {
-        "content": "$1"
-      }
-    }
-  },
-  "cutToast": {
-    "message": "Cut: $t$ — paste into a target folder (Esc cancels)",
-    "placeholders": {
-      "t": {
-        "content": "$1"
-      }
-    }
-  },
-  "pasteDone": {
-    "message": "Pasted"
-  },
-  "pasteGone": {
-    "message": "The bookmark no longer exists — clipboard cleared"
-  },
-  "folderCopyList": {
-    "message": "Copy titles and addresses"
-  },
-  "folderCopyText": {
-    "message": "Plain text list"
-  },
-  "folderCopyMarkdown": {
-    "message": "Markdown"
-  },
-  "folderCopyJson": {
-    "message": "JSON"
-  },
-  "folderCopyConfirm": {
-    "message": "Copy the list of $n$ bookmarks?",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "folderCopyDone": {
-    "message": "Copied $n$ bookmark entries",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "addFolderMenu": {
-    "message": "Add folder"
-  },
-  "optionCollapseAddFolderMenu": {
-    "message": "Collapse the add-folder entries"
-  },
-  "optionCollapseAddFolderMenuHint": {
-    "message": "Merge the add-folder entries (before/after/inside on folder rows, before/after on bookmark rows) into one submenu entry."
-  },
-  "tabRowStage": {
-    "message": "Send to staging"
-  },
-  "tabgroupStageAll": {
-    "message": "Send group to staging"
-  },
-  "tabgroupStageConfirm": {
-    "message": "Send $n$ tabs to staging?",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabgroupStageNone": {
-    "message": "No bookmarkable tabs in this group"
-  },
-  "stagedToast": {
-    "message": "Staged $n$ tab(s) as the group “$t$”",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      },
-      "t": {
-        "content": "$2"
-      }
-    }
-  },
-  "searchResultCount": {
-    "message": "$n$ result(s)",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "deleteSelected": {
-    "message": "Delete selected"
-  },
-  "recentStageGroup": {
-    "message": "Send $t$ to the staging area",
-    "placeholders": {
-      "t": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingGroupSelectAll": {
-    "message": "Select all in this group"
-  },
-  "optionsStagingSection": {
-    "message": "Staging & recently added"
-  },
-  "optionStagingEnabled": {
-    "message": "Enable the staging area"
-  },
-  "optionStagingEnabledHint": {
-    "message": "While off, this view keeps only the recently-added list, and every staging button or menu entry in the other views hides."
-  },
-  "optionTreeRowActions": {
-    "message": "Hover actions on tree rows (edit / stage / delete)"
-  },
-  "optionsStorageSyncTip": {
-    "message": "Synced through your Chrome account — this setting is shared across your devices.",
-    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
-  },
-  "optionsStorageLocalTip": {
-    "message": "Stored on this device only — not shared through Chrome sync.",
-    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
-  },
-  "tabGroupsWindowsCount": {
-    "message": "$n$ windows",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsNewWindow": {
-    "message": "New window",
-    "description": "Tab-groups view: the toolbar button that opens a fresh empty browser window (left of Refresh)."
-  },
-  "tabGroupsMergedWindowToast": {
-    "message": "Window merged as a tab group",
-    "description": "Toast after a window-head drag merged that window into another as one tab group."
-  },
-  "searchStageAllGroup": {
-    "message": "Stage all results as group \"$1$\"",
-    "placeholders": {
-      "1": {
-        "content": "$1"
-      }
-    },
-    "description": "Search results toolbar: stage every result into a staging group named after the query. Placeholder $1$ = the query."
-  },
-  "searchHistoryClose": {
-    "message": "Hide search history",
-    "description": "Search history header: the × that hides the whole search-history area (re-enable in Options → Search)."
-  },
-  "searchHistoryClosedToast": {
-    "message": "Search history hidden — re-enable it in Options → Search",
-    "description": "Toast after the search-history area's close × hides it."
   }
 }

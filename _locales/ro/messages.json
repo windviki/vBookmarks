@@ -14,6 +14,9 @@
   "addBookmarkTop": {
     "message": "Adaugă fila curentă la vârf"
   },
+  "addFolderMenu": {
+    "message": "Adaugă folder"
+  },
   "addNewFolder": {
     "message": "Adaugă Subdosar"
   },
@@ -32,23 +35,38 @@
   "announceDismiss": {
     "message": "Închide"
   },
-  "announceV408Text": {
-    "message": "v4.0.8 aduce îmbunătățiri favicon: pictogramele reale ale site-urilor sunt preluate automat pentru marcajele pe care Chrome nu le-a salvat încă în cache."
-  },
   "announceV407Text": {
     "message": "v4.0.7 aduce vizualizarea completă a linkurilor moarte: scanați, marcați, filtrați și sortați linkurile moarte și restricționate, cu marcaje anterioare și timestamp-uri pe fiecare rând."
   },
   "announceV407Title": {
     "message": "Noutăți în v4.0.7"
   },
+  "announceV408Text": {
+    "message": "v4.0.8 aduce îmbunătățiri favicon: pictogramele reale ale site-urilor sunt preluate automat pentru marcajele pe care Chrome nu le-a salvat încă în cache."
+  },
   "announceV408Title": {
     "message": "Ce este nou în v4.0.8"
+  },
+  "announceV410Text": {
+    "message": "v4.1.0 adaugă vizualizarea grupurilor de file și zona de pregătire: gestionați filele fiecărei ferestre lângă marcaje și colectați marcaje de oriunde într-un spațiu de lucru pentru organizare în masă."
   },
   "announceV410Title": {
     "message": "Noutăți în v4.1.0"
   },
-  "announceV410Text": {
-    "message": "v4.1.0 adaugă vizualizarea grupurilor de file și zona de pregătire: gestionați filele fiecărei ferestre lângă marcaje și colectați marcaje de oriunde într-un spațiu de lucru pentru organizare în masă."
+  "bookmarkFolderNoFolders": {
+    "message": "Niciun dosar de marcaje"
+  },
+  "bookmarkFolderPickDialogTitle": {
+    "message": "Adaugă la dosarul de marcaje"
+  },
+  "bookmarkOpenInExistingGroup": {
+    "message": "Deschide în grup existent…"
+  },
+  "bookmarkOpenInNewGroup": {
+    "message": "Deschide în grup nou"
+  },
+  "bookmarkOpenInNewGroupSetup": {
+    "message": "Deschide în grup nou…"
   },
   "confirmDeleteFolder": {
     "message": "Acest dosar conține $count$ element(e). Puteți anula ștergerea.",
@@ -57,9 +75,6 @@
         "content": "$1"
       }
     }
-  },
-  "confirmDeleteFolderButton": {
-    "message": "Șterge"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "Sunteți sigur că doriți să ștergeți dosarul $folderName$ și $bookmarkCount$ semn(e) de carte din el?",
@@ -71,6 +86,9 @@
         "content": "$1"
       }
     }
+  },
+  "confirmDeleteFolderButton": {
+    "message": "Șterge"
   },
   "confirmDeleteFolderSubfolders": {
     "message": "Sunteți sigur că doriți să ștergeți dosarul $folderName$ și $subFolderCount$ subdosar(e) din el?",
@@ -124,11 +142,32 @@
       }
     }
   },
+  "contextMenuAddBookmark": {
+    "message": "Marchează această pagină cu vBookmarks"
+  },
+  "copiedToast": {
+    "message": "Copiat: $t$",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
+  },
   "copyAllTitlesAndUrls": {
     "message": "Copiază toate titlurile și URL-urile în clipboard"
   },
+  "copyBookmark": {
+    "message": "Copiază"
+  },
+  "copyMoveTo": {
+    "message": "Copiază/mută în…"
+  },
   "copyTitleAndUrl": {
     "message": "Copiază titlul și URL-ul"
+  },
+  "crossStorageMoveWarning": {
+    "description": "Warning when trying to move bookmarks across storage types",
+    "message": "Semnele de carte nu pot fi mutate între stocarea sincronizată și cea locală. Utilizați copiere/lipire."
   },
   "customIcon": {
     "message": "Iconiță personalizată"
@@ -136,8 +175,14 @@
   "customIconDescription": {
     "message": "Iconița trebuie să aibă dimensiunea 19x19 pixeli. Altfel va fi redimensionată la această dimensiune."
   },
+  "customIconPick": {
+    "message": "Alege fișier…"
+  },
   "customSeparatorColorDescription": {
     "message": "Personalizează Culoarea Separatorului"
+  },
+  "customSeparatorStringDescription": {
+    "message": "Dacă URL-ul unui semn de carte conține acest șir, va fi afișat ca separator"
   },
   "customSeparatorTitleDescription": {
     "message": "Titlul real al semnului de carte care este afișat ca separator"
@@ -145,28 +190,28 @@
   "customSeparatorUrlDescription": {
     "message": "URL-ul real al semnului de carte care este afișat ca separator"
   },
-  "customSeparatorStringDescription": {
-    "message": "Dacă URL-ul unui semn de carte conține acest șir, va fi afișat ca separator"
-  },
   "customStyles": {
     "message": "Stiluri Personalizate"
-  },
-  "separatorOptions": {
-    "message": "Separatoare"
   },
   "customStylesDescription": {
     "message": "Acest lucru necesită câteva cunoștințe CSS. Modificați pe propriul risc. Partajarea codului ar fi înțeleaptă prin"
   },
-  "defaultIconButton": {
-    "message": "Folosește implicit"
+  "cutBookmark": {
+    "message": "Taie"
   },
-  "defaultIconButtonOr": {
-    "message": "sau"
+  "cutToast": {
+    "message": "Tăiat: $t$ — lipiți într-un folder țintă (Esc anulează)",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
   },
-  "customIconPick": {
-    "message": "Alege fișier…"
+  "deadCancel": {
+    "message": "Anulare"
   },
   "deadChecking": {
+    "description": "Progress line of the palette's dead-link scan mode; $done$ bookmarks checked out of $total$.",
     "message": "Se verifică $done$ / $total$…",
     "placeholders": {
       "done": {
@@ -177,8 +222,10 @@
         "content": "$2",
         "example": "120"
       }
-    },
-    "description": "Progress line of the palette's dead-link scan mode; $done$ bookmarks checked out of $total$."
+    }
+  },
+  "deadClearScan": {
+    "message": "Șterge rezultatele scanării"
   },
   "deadConfirmAll": {
     "message": "Ștergeți toate cele $count$ marcaje moarte? Aceasta nu poate fi anulată într-un singur pas.",
@@ -192,6 +239,15 @@
   "deadConfirmDelete": {
     "message": "Eliminați acest marcaj?"
   },
+  "deadConfirmDeleteSelected": {
+    "message": "Ștergeți cele $count$ marcaje moarte selectate?",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
+  },
   "deadDeleteAll": {
     "message": "Ștergeți toate cele $count$ marcaje din filtrul curent?",
     "placeholders": {
@@ -201,27 +257,15 @@
       }
     }
   },
-  "deadDeleteAllNote": {
-    "message": "Sub filtrul Toate, aceasta include marcajele blocate (accesibile prin proxy-ul dumneavoastră, probabil încă active) și rândurile marcate anterior.",
-    "description": "Second line of the delete-all confirmation in the Dead links view."
-  },
-  "undoSingleStepNote": {
-    "message": "Anularea poate restaura doar cea mai recentă ștergere."
-  },
   "deadDeleteAllBtn": {
     "message": "Ștergeți tot"
   },
+  "deadDeleteAllNote": {
+    "description": "Second line of the delete-all confirmation in the Dead links view.",
+    "message": "Sub filtrul Toate, aceasta include marcajele blocate (accesibile prin proxy-ul dumneavoastră, probabil încă active) și rândurile marcate anterior."
+  },
   "deadDeleteSelected": {
     "message": "Ștergeți selectatele"
-  },
-  "deadConfirmDeleteSelected": {
-    "message": "Ștergeți cele $count$ marcaje moarte selectate?",
-    "placeholders": {
-      "count": {
-        "content": "$1",
-        "example": "8"
-      }
-    }
   },
   "deadDeleted": {
     "message": "$count$ marcaje moarte șterse",
@@ -232,8 +276,72 @@
       }
     }
   },
-  "deadClearScan": {
-    "message": "Șterge rezultatele scanării"
+  "deadDetectTimeLabel": {
+    "message": "Detectat la"
+  },
+  "deadFilterAll": {
+    "message": "Toate"
+  },
+  "deadFilterBlocked": {
+    "message": "Doar blocate"
+  },
+  "deadFilterDead": {
+    "message": "Doar moarte"
+  },
+  "deadFilterMarked": {
+    "message": "Marcate anterior"
+  },
+  "deadLastScanAt": {
+    "message": "Ultima scanare: $time$",
+    "placeholders": {
+      "time": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadMark": {
+    "message": "Marchează ca mort"
+  },
+  "deadMarkAll": {
+    "message": "Marchează toate"
+  },
+  "deadMarkSelected": {
+    "message": "Marcați selectatele"
+  },
+  "deadMarkStatusAll": {
+    "message": "Orice stare"
+  },
+  "deadMarkStatusMarked": {
+    "message": "Marcate"
+  },
+  "deadMarkStatusUnmarked": {
+    "message": "Nemarcate"
+  },
+  "deadMarkTimeLabel": {
+    "message": "Marcat la"
+  },
+  "deadMarked": {
+    "message": "Rânduri moarte marcate"
+  },
+  "deadMarkedBanner": {
+    "message": "Se afișează marcajele marcate anterior. Faceți clic pe Rescan pentru a începe o nouă verificare sau gestionați-le în lista de mai jos."
+  },
+  "deadMarkedBannerDismiss": {
+    "message": "Respinge"
+  },
+  "deadMarkedCount": {
+    "message": "$count$ semne de carte marcate",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadMarkedNone": {
+    "message": "Niciun semn de carte marcat încă"
+  },
+  "deadMarkedRow": {
+    "message": "Marcat"
   },
   "deadNone": {
     "message": "Nicio legătură moartă găsită"
@@ -241,34 +349,711 @@
   "deadNoneFiltered": {
     "message": "Nu există link-uri moarte sub acest filtru — încercați un alt segment de mai sus"
   },
+  "deadPause": {
+    "message": "Pauză"
+  },
+  "deadPaused": {
+    "message": "În pauză"
+  },
+  "deadProxyAdd": {
+    "message": "Adaugă un server proxy pentru verificarea linkurilor moarte"
+  },
+  "deadProxyChange": {
+    "message": "Schimbă"
+  },
+  "deadProxyClear": {
+    "message": "Șterge"
+  },
+  "deadProxyControlled": {
+    "message": "Setările proxy sunt gestionate de altă extensie."
+  },
+  "deadProxyDenied": {
+    "message": "Permisiunea pentru proxy nu a fost acordată."
+  },
+  "deadProxyInvalid": {
+    "message": "Adresă proxy invalidă — folosește host:port sau scheme://host:port (http/https/socks5, fără credențiale)."
+  },
+  "deadProxyLabel": {
+    "message": "Proxy: $server$",
+    "placeholders": {
+      "server": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadProxyNeverShow": {
+    "message": "Nu mai afișa"
+  },
+  "deadProxyNone": {
+    "message": "(nesetat)"
+  },
+  "deadProxyNudge": {
+    "message": "O reverificare prin proxy separă linkurile moarte reale de cele blocate regional — configurează aici sau în pagina de opțiuni."
+  },
+  "deadProxyPanelHint": {
+    "message": "Introdu un server proxy pe care îl ai deja (extensia nu oferă niciunul), ex. 127.0.0.1:7890 sau socks5://127.0.0.1:1080."
+  },
+  "deadProxyRemove": {
+    "message": "Elimină"
+  },
+  "deadProxyRemoved": {
+    "message": "Serverul proxy a fost eliminat"
+  },
+  "deadProxySaved": {
+    "message": "Proxy salvat — scanările viitoare reverifică eșecurile directe prin el."
+  },
+  "deadProxyServerHint": {
+    "message": "Serverul salvat reverifică, la fiecare scanare a linkurilor moarte, marcajele care nu au trecut verificarea directă, separând linkurile moarte reale de cele blocate pe regiuni. Testează și salvează îl probează (se păstrează doar un server accesibil); îl poți adăuga și din vizualizarea linkurilor moarte."
+  },
+  "deadProxyTestSave": {
+    "message": "Testează și salvează"
+  },
+  "deadProxyTestUrlLabel": {
+    "message": "URL de test"
+  },
+  "deadProxyTesting": {
+    "message": "Se testează…"
+  },
+  "deadProxyUnavailable": {
+    "message": "API-ul proxy nu este disponibil în acest browser."
+  },
+  "deadProxyUnreachable": {
+    "message": "Proxy inaccesibil — nu a fost salvat."
+  },
   "deadRescan": {
     "message": "Re-verificare"
+  },
+  "deadResume": {
+    "message": "Reluare"
+  },
+  "deadRiskBanner": {
+    "message": "Curățarea linkurilor moarte șterge marcajele în bloc. Faceți o copie de rezervă a marcajelor înainte de prima curățare."
+  },
+  "deadSortByDetected": {
+    "message": "Timp de detectare"
+  },
+  "deadSortByMarked": {
+    "message": "Timp de marcare"
+  },
+  "deadSortByPath": {
+    "message": "Cale folder"
+  },
+  "deadSortLabel": {
+    "message": "Sortează după"
+  },
+  "deadStartHint": {
+    "message": "Se începe scanarea a $n$ marcaje",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadStatusBlocked": {
+    "message": "blocat"
+  },
+  "deadUnmark": {
+    "message": "Elimină marcajul de mort"
+  },
+  "deadUnmarkAll": {
+    "message": "Curăță toate marcajele"
+  },
+  "deadUnmarkSelected": {
+    "message": "Anulați marcarea selectatelor"
+  },
+  "defaultIconButton": {
+    "message": "Folosește implicit"
+  },
+  "defaultIconButtonOr": {
+    "message": "sau"
   },
   "delete": {
     "message": "Șterge"
   },
+  "deleteEllipsis": {
+    "message": "Șterge..."
+  },
+  "deleteSelected": {
+    "message": "Ștergeți selecția"
+  },
   "deletedBookmark": {
+    "description": "Toast shown after a bookmark or separator was deleted; the toast offers an undo button. $title$ is the deleted row's title (empty for separators).",
     "message": "Șters $title$",
     "placeholders": {
       "title": {
         "content": "$1",
         "example": "Example"
       }
-    },
-    "description": "Toast shown after a bookmark or separator was deleted; the toast offers an undo button. $title$ is the deleted row's title (empty for separators)."
+    }
   },
   "deletedFolder": {
+    "description": "Toast shown after a bookmark folder (with its whole subtree) was deleted; the toast offers an undo button. $title$ is the folder name.",
     "message": "Dosar șters $title$",
     "placeholders": {
       "title": {
         "content": "$1",
         "example": "Bookmarks"
       }
-    },
-    "description": "Toast shown after a bookmark folder (with its whole subtree) was deleted; the toast offers an undo button. $title$ is the folder name."
+    }
+  },
+  "donationDismiss": {
+    "message": "Închide"
+  },
+  "donationGo": {
+    "message": "Donează"
+  },
+  "donationLater": {
+    "message": "Mai târziu"
+  },
+  "donationMessage": {
+    "message": "Îți place? Donează pentru viitorul său — sau evaluează-l în magazin: fiecare recenzie menține actualizările."
+  },
+  "donationNever": {
+    "message": "Nu mai afișa"
+  },
+  "donationRate": {
+    "message": "Evaluează"
+  },
+  "donationRateTitle": {
+    "message": "Evaluează vBookmarks în Chrome Web Store"
+  },
+  "donationV4GuideLink": {
+    "message": "Citește ghidul v4 →"
+  },
+  "donationV4Notice": {
+    "message": "vBookmarks 4.0 este o refacere completă cu un design modern, plin de funcții noi."
+  },
+  "dupesApplyAll": {
+    "message": "Aplică toate ($count$)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesApplySelected": {
+    "message": "Deduplicați selectatele ($count$)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesCleanAll": {
+    "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go.",
+    "message": "Curăță tot: $groups$ grupuri, $count$ copii suplimentare",
+    "placeholders": {
+      "count": {
+        "content": "$2"
+      },
+      "groups": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesCleanRestHint": {
+    "message": "Păstrează \"$title$\" și elimină celelalte $count$",
+    "placeholders": {
+      "count": {
+        "content": "$2"
+      },
+      "title": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesConfirmAll": {
+    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark).",
+    "message": "Eliminați $count$ copii suplimentare din $groups$ grupuri? Copia selectată în fiecare grup este păstrată.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    }
+  },
+  "dupesConfirmGroup": {
+    "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept).",
+    "message": "Păstrează \"$title$\" și elimină celelalte $count$ copii?",
+    "placeholders": {
+      "count": {
+        "content": "$2"
+      },
+      "title": {
+        "content": "$1",
+        "example": "Example bookmark"
+      }
+    }
+  },
+  "dupesConfirmSelected": {
+    "message": "Eliminați $count$ de marcaje duplicate din $groups$ grupuri selectate?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    }
+  },
+  "dupesDone": {
+    "description": "Alert shown after the duplicate cleanup finished.",
+    "message": "Eliminate $count$ marcaje duplicate",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesGroupCollapse": {
+    "description": "Dupes view group-head context menu: collapse an expanded duplicate group.",
+    "message": "Restrânge grupul"
+  },
+  "dupesGroupCount": {
+    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL.",
+    "message": "$count$ duplicate",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesGroupExpand": {
+    "description": "Dupes view group-head context menu: expand a collapsed duplicate group.",
+    "message": "Extinde grupul"
+  },
+  "dupesIgnoreScheme": {
+    "message": "Ignoră diferențele http/https"
+  },
+  "dupesKeepThis": {
+    "message": "Păstrează aceasta"
+  },
+  "dupesKeeperSet": {
+    "message": "Set ca păstrător"
+  },
+  "dupesNone": {
+    "message": "Niciun duplicat găsit"
+  },
+  "dupesPreviewSummary": {
+    "message": "$groups$ grupuri · $count$ de eliberat",
+    "placeholders": {
+      "count": {
+        "content": "$2"
+      },
+      "groups": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesRemoveRow": {
+    "message": "Șterge această copie"
+  },
+  "dupesRiskBanner": {
+    "message": "Deduplicarea șterge marcajele duplicate în bloc. Faceți o copie de rezervă a marcajelor înainte de a o aplica."
+  },
+  "dupesScopeAll": {
+    "message": "Toate marcajele"
+  },
+  "dupesScopeBar": {
+    "message": "Doar bara de marcaje"
+  },
+  "dupesStrategyBookmarkBar": {
+    "message": "Păstrează cel din bara de marcaje"
+  },
+  "dupesStrategyMostVisited": {
+    "message": "Păstrează cel mai vizitat"
+  },
+  "dupesStrategyNewest": {
+    "message": "Păstrează cel mai nou"
+  },
+  "dupesStrategyOldest": {
+    "message": "Păstrează cel mai vechi"
+  },
+  "dupesStrategyShallowest": {
+    "message": "Păstrează cel mai superficial"
+  },
+  "dupesStrategyShortestTitle": {
+    "message": "Păstrează titlul cel mai scurt"
+  },
+  "edit": {
+    "message": "Editare..."
+  },
+  "editBookmark": {
+    "message": "Editare semn de carte"
+  },
+  "editFolder": {
+    "message": "Editare dosar"
+  },
+  "errorOccured": {
+    "message": "Ups, a apărut o eroare."
+  },
+  "extDesc": {
+    "description": "The extension description.",
+    "message": "Un manager de semne de carte popup. Neat Bookmarks îmbunătățit. Mai ordonat decât Neater Bookmarks."
+  },
+  "extName": {
+    "description": "vBookmarks",
+    "message": "vBookmarks"
+  },
+  "favGalleryAll": {
+    "description": "Favicon gallery source filter chip: show every source.",
+    "message": "Toate"
+  },
+  "favGalleryCompare": {
+    "description": "Favicon gallery toggle button: switch every icon to the generic placeholder it replaced (before/after comparison).",
+    "message": "Compară cu imaginea de rezervă"
+  },
+  "favGalleryEmptyText": {
+    "description": "Favicon gallery empty-state body text.",
+    "message": "Când popup-ul întâlnește un site marcat pentru care Chrome nu are pictogramă, vBookmarks preia cea reală și o listează aici."
+  },
+  "favGalleryEmptyTitle": {
+    "description": "Favicon gallery empty-state heading.",
+    "message": "Nicio pictogramă actualizată încă"
+  },
+  "favGalleryFailedHint": {
+    "description": "Favicon gallery hint under the failed-fetch section title.",
+    "message": "Eșecurile sunt reîncercate după 24 h, 3 zile și 7 zile, apoi se renunță până când cache-ul de pictograme este golit."
+  },
+  "favGalleryFailedTitle": {
+    "description": "Favicon gallery heading of the muted section listing hosts whose icon fetch failed recently.",
+    "message": "Încercate recent, fără pictogramă găsită"
+  },
+  "favGalleryGaveUp": {
+    "description": "Favicon gallery badge on a failed-strip host whose retries are exhausted (it stays untouched until the icon cache is cleared).",
+    "message": "Renunțat"
+  },
+  "favGalleryHint": {
+    "description": "Subtitle under the favicon gallery title, explaining the page is read-only.",
+    "message": "Pictogramele pe care vBookmarks le-a preluat pentru site-urile marcate pe care Chrome nu le-a stocat în cache — de unde provine fiecare și ce marcaje o folosesc. Doar pentru afișare."
+  },
+  "favGalleryLink": {
+    "description": "Options link (Icons group, right of the Clear icon cache button): opens the favicon gallery page listing the sites whose icons were refetched.",
+    "message": "Vezi pictogramele actualizate"
+  },
+  "favGalleryOrphan": {
+    "description": "Favicon gallery note on a card whose host no longer has any bookmark.",
+    "message": "Niciun marcaj rămas pe acest host — pictograma se șterge odată cu cache-ul."
+  },
+  "favGallerySearch": {
+    "description": "Placeholder of the favicon gallery filter input.",
+    "message": "Filtrează după site, titlu sau cale"
+  },
+  "favGalleryShowingBefore": {
+    "description": "Favicon gallery toggle button while the placeholder comparison is shown: switch back to the real fetched icons.",
+    "message": "Înapoi la pictogramele reale"
+  },
+  "favGalleryStatBookmarks": {
+    "description": "Favicon gallery stats strip: how many bookmarks sit on the refreshed sites.",
+    "message": "$n$ marcaje",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "favGalleryStatSites": {
+    "description": "Favicon gallery stats strip: how many sites have a refreshed icon.",
+    "message": "$n$ site-uri",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "favGalleryTitle": {
+    "description": "Favicon gallery page title (h1 + document title).",
+    "message": "Pictograme de site actualizate"
+  },
+  "favGalleryVisits": {
+    "description": "Favicon gallery tooltip on a bookmark row's visit-count pill.",
+    "message": "$n$ deschideri înregistrate",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "favSrcDirect": {
+    "description": "Favicon gallery source badge: the icon was fetched directly from the site itself.",
+    "message": "Direct"
+  },
+  "favSrcLegacy": {
+    "description": "Favicon gallery source badge: cached before the source was recorded, so the origin is unknown.",
+    "message": "Cache anterior"
+  },
+  "favSrcProxy": {
+    "description": "Favicon gallery source badge: the icon was fetched through the user's own proxy relay.",
+    "message": "Proxy"
+  },
+  "folderCopyConfirm": {
+    "message": "Copiați lista celor $n$ marcaje?",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "folderCopyDone": {
+    "message": "S-au copiat $n$ intrări de marcaje",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "folderCopyJson": {
+    "message": "JSON"
+  },
+  "folderCopyList": {
+    "message": "Copiază titluri și adrese"
+  },
+  "folderCopyMarkdown": {
+    "message": "Markdown"
+  },
+  "folderCopyText": {
+    "message": "Listă text simplu"
+  },
+  "folderEmpty": {
+    "message": "(Gol)"
+  },
+  "folderPickCopyHere": {
+    "message": "Copiază aici"
+  },
+  "folderPickFavNote": {
+    "message": "Elementele nemarcate vor fi marcate aici"
+  },
+  "folderPickFilter": {
+    "message": "Filtrează dosarele…"
+  },
+  "folderPickMoveHere": {
+    "message": "Mută aici"
+  },
+  "folderPickPinned": {
+    "message": "Fixate"
+  },
+  "folderPickRecent": {
+    "message": "Recente"
+  },
+  "general": {
+    "message": "General"
+  },
+  "groupCopyToFolder": {
+    "message": "Copiază în folder…"
+  },
+  "groupPlaceTooltip": {
+    "message": "Salvați acest grup într-un folder…"
+  },
+  "groupSaveToFolder": {
+    "message": "Salvează în folder…"
+  },
+  "ignore": {
+    "message": "Ignoră"
+  },
+  "name": {
+    "description": "Name of bookmark or folder.",
+    "message": "Nume"
+  },
+  "noTitle": {
+    "description": "The title for untitled bookmarks with no http(s) URL or untitled folders.",
+    "message": "(fără titlu)"
+  },
+  "nope": {
+    "message": "Anulare"
+  },
+  "open": {
+    "description": "Action to open bookmarks.",
+    "message": "Deschide"
+  },
+  "openBookmarks": {
+    "message": "Deschide Toate Semnele de Carte"
+  },
+  "openBookmarksInExistingGroup": {
+    "message": "Deschide tot în grup existent…"
+  },
+  "openBookmarksInGroup": {
+    "message": "Deschide tot în grup nou"
+  },
+  "openBookmarksInGroupSetup": {
+    "message": "Deschide tot în grup nou…"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "Deschide în fereastră incognito"
+  },
+  "openBookmarksNewWindow": {
+    "message": "Deschide în fereastră nouă"
+  },
+  "openCommandPaletteCommand": {
+    "message": "Deschide paleta de comenzi"
+  },
+  "openIncognitoWindow": {
+    "message": "Deschide în Fereastră Incognito"
+  },
+  "openNewTab": {
+    "message": "Deschide în Tab Nou"
+  },
+  "openNewWindow": {
+    "message": "Deschide în Fereastră Nouă"
+  },
+  "openSidePanelCommand": {
+    "message": "Deschide panoul lateral vBookmarks"
+  },
+  "optionAnnounceEnabled": {
+    "message": "Afișează anunțurile din produs"
+  },
+  "optionAnnounceEnabledHint": {
+    "message": "Note de lansare și sfaturi din depozitul GitHub al proiectului (preluate cel mult o dată la 6 ore). Dacă este dezactivat, se oprește și preluarea din rețea."
+  },
+  "optionAutoRefreshSync": {
+    "message": "Actualizare automată a stării sincronizării"
+  },
+  "optionAutoResizePopup": {
+    "message": "Redimensionează automat fereastra popup pentru a se potrivi cu conținutul"
+  },
+  "optionClassicExperience": {
+    "message": "Restabiliți antetul clasic"
+  },
+  "optionClassicExperienceHint": {
+    "message": "Dezactivează paleta de comenzi, steaua de adăugare rapidă, intrarea acesteia din meniul contextual al paginii, butonul de instrumente și filele de vizualizare. Fiecare poate fi reactivată individual în secțiunea sa."
+  },
+  "optionClickNewTab": {
+    "message": "Click stânga deschide semnul de carte în tab nou."
+  },
+  "optionCloseUnusedFolders": {
+    "message": "Închide dosarele neutilizate la deschiderea unui dosar."
+  },
+  "optionCollapseAddFolderMenu": {
+    "message": "Restrânge intrările de adăugare folder"
+  },
+  "optionCollapseAddFolderMenuHint": {
+    "message": "Combină intrările de adăugare folder (înainte/după/în interior pe rândurile de foldere, înainte/după pe rândurile de marcaje) într-o singură intrare de submeniu."
+  },
+  "optionCollapseSortMenu": {
+    "message": "Comprimă intrările de sortare într-un singur submeniu „Sortare”."
+  },
+  "optionCollapseSortMenuHint": {
+    "message": "Se aplică meniului contextual pentru foldere. Activat implicit."
+  },
+  "optionCollapseTabGroupMenu": {
+    "message": "Comprimă intrările pentru grupuri de file într-un singur submeniu „Grupuri de file”."
+  },
+  "optionCollapseTabGroupMenuHint": {
+    "message": "Se aplică atât meniului contextual pentru foldere, cât și celui pentru marcaje. Dezactivat implicit; păstrează meniurile cu înălțime mică mai scurte pe ecranele mici sau cu zoom mare."
+  },
+  "optionConfirmDeleteFolder": {
+    "message": "Confirmă înainte de a șterge dosarele negoale"
+  },
+  "optionConfirmOpenFolder": {
+    "message": "Afișează confirmare la deschiderea multor semne de carte dintr-un dosar."
+  },
+  "optionDeadProxyServer": {
+    "message": "Server proxy pentru linkuri moarte"
+  },
+  "optionDeadProxyStrip": {
+    "message": "Afișează sugestia de adăugare a unui proxy în vizualizarea linkurilor moarte"
+  },
+  "optionDeadProxyStripHint": {
+    "message": "Dezactivarea ascunde acea sugestie acolo; serverul proxy rămâne configurabil aici, iar un server salvat afișează întotdeauna rândul său de gestionare în vizualizare."
+  },
+  "optionDeadScanConcurrency": {
+    "message": "Concurență scanare linkuri moarte (1-16)"
+  },
+  "optionDeadScanTimeout": {
+    "message": "Timeout scanare linkuri moarte în secunde (2-30)"
+  },
+  "optionFaviconBackup": {
+    "message": "Include cache-ul de pictograme în copiile de rezervă"
+  },
+  "optionFaviconBackupHint": {
+    "message": "Includeți și cache-ul de favicon îmbogățit (date per site, potențial mari) în exportul/importul de setări. Aceasta acoperă pictogramele deja stocate în cache chiar și când preluarea este dezactivată. Cu opțiunea dezactivată, backup-urile rămân mici; pictogramele sunt oricum preluate din nou automat."
+  },
+  "optionFaviconCacheClear": {
+    "message": "Șterge cache-ul pictogramelor"
+  },
+  "optionFaviconCacheClearConfirm": {
+    "message": "Ștergeți cache-ul de pictograme îmbogățit? Pictogramele vor fi preluate din nou automat la următoarea deschidere."
+  },
+  "optionFaviconCacheCleared": {
+    "message": "Cache-ul pictogramelor a fost șters. Pictogramele vor fi preluate din nou la următoarea deschidere."
+  },
+  "optionFaviconCacheEmpty": {
+    "message": "Nu există cache de pictograme de șters."
+  },
+  "optionFaviconContrast": {
+    "message": "Inversează faviconurile cu contrast scăzut"
+  },
+  "optionFaviconContrastHint": {
+    "message": "Faviconurile albe pe temele deschise și cele negre pe temele închise sunt inversate pentru a rămâne vizibile. Fiecare favicon este eșantionat o singură dată la încărcare — fără cost în timpul navigării."
+  },
+  "optionFaviconEnrich": {
+    "message": "Preia pictogramele lipsă ale site-urilor"
+  },
+  "optionFaviconEnrichAgg": {
+    "message": "Fallback pentru pictograme de la terți"
+  },
+  "optionFaviconEnrichAggHint": {
+    "message": "Când preluarea directă eșuează, caută pictograma după domeniu într-o listă încorporată de servicii terțe de pictograme ($providers$). Un serviciu găsit inaccesibil este omis și se încearcă următorul — nu este reîncercat timp de 6 ore.",
+    "placeholders": {
+      "providers": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionFaviconEnrichHint": {
+    "message": "Pentru site-urile marcate pentru care Chrome nu are nicio pictogramă în cache, preia pictograma reală direct de pe site (/favicon.ico, apoi pictogramele declarate ale paginii). Cererile sunt trimise doar către site-urile pe care le-ați marcat."
+  },
+  "optionHighlightUnsynced": {
+    "message": "Atenuează marcajele nesincronizate"
+  },
+  "optionLanguage": {
+    "message": "Limbă"
+  },
+  "optionLanguageAuto": {
+    "message": "Automat"
+  },
+  "optionLanguageHint": {
+    "message": "Schimbarea limbii reîncarcă această pagină."
+  },
+  "optionOnlyShowBookmarkBar": {
+    "message": "Afișează doar semne de carte în Bara de Semne de Carte"
+  },
+  "optionOpenInSidePanel": {
+    "message": "Deschide în panoul lateral în loc de popup"
+  },
+  "optionOpenNewTab": {
+    "message": "Click mijlociu sau control-click deschide semnul de carte în tab nou de fundal (în loc de prim-plan)."
+  },
+  "optionPaletteEnabled": {
+    "message": "Activează paleta de comenzi (Ctrl/Cmd+K)"
+  },
+  "optionPopupStays": {
+    "message": "Popup-ul rămâne deschis la deschiderea (click stânga) semnelor de carte."
+  },
+  "optionQuickAddContextMenu": {
+    "message": "Adaugă o intrare \"Salvează această pagină în semne de carte cu vBookmarks\" în meniul cu clic dreapta al paginii"
+  },
+  "optionQuickAddContextMenuHint": {
+    "message": "Independent de butonul stea de adăugare rapidă; restaurarea experienței clasice dezactivează și această intrare."
+  },
+  "optionQuickAddEnabled": {
+    "message": "Afișează butonul cu stea pentru adăugare rapidă lângă caseta de căutare"
+  },
+  "optionRecentCollapsed": {
+    "message": "Restrânge secțiunea adăugate recent în mod implicit"
   },
   "optionRecentCount": {
     "message": "Numărul de marcaje recent adăugate de afișat"
+  },
+  "optionRememberPrevState": {
+    "message": "Reține starea anterioară (poziția de derulare, folderele deschise și ultimul element focalizat)."
+  },
+  "optionRememberView": {
+    "message": "Reține ultima vizualizare activă și redeschide-o"
+  },
+  "optionSearchAfterEnter": {
+    "message": "Caută semne de carte doar când este apăsat ENTER (în loc de căutare instantă)"
   },
   "optionSearchHistory": {
     "message": "Afișează zona istoricului de căutări"
@@ -276,17 +1061,496 @@
   "optionSearchHistoryHint": {
     "message": "Ascunde zona căutărilor recente deasupra rezultatelor — interogările înregistrate sunt păstrate"
   },
+  "optionShowDeadView": {
+    "message": "Afișează fila de linkuri moarte"
+  },
+  "optionShowDupesView": {
+    "message": "Afișează fila de duplicate"
+  },
+  "optionShowItemPath": {
+    "message": "Afișează calea dosarului părinte pe rândurile listei"
+  },
+  "optionShowRecentBookmarks": {
+    "message": "Afișează marcajele adăugate recent în partea de sus a popup-ului"
+  },
+  "optionShowStatsView": {
+    "message": "Afișează fila de statistici"
+  },
+  "optionShowSyncStatus": {
+    "message": "Afișați indicatorii de stare a sincronizării"
+  },
+  "optionShowTabBadges": {
+    "message": "Afișează ecusoane cu numere pe filele de vizualizare"
+  },
+  "optionShowTabGroupsView": {
+    "message": "Afișează fila de vizualizare a grupurilor de file"
+  },
+  "optionShowToolButton": {
+    "message": "Afișează butonul de instrumente (⋮) lângă caseta de căutare"
+  },
+  "optionShowViewTabs": {
+    "message": "Afișează filele de vizualizare sub caseta de căutare"
+  },
+  "optionStagingEnabled": {
+    "message": "Activează zona de staging"
+  },
+  "optionStagingEnabledHint": {
+    "message": "Când este dezactivată, această vizualizare păstrează doar lista adăugate recent, iar fiecare buton sau element de meniu de staging din celelalte vizualizări este ascuns."
+  },
+  "optionStatsEnabled": {
+    "message": "Activează statisticile de vizită"
+  },
+  "optionSyncRefreshInterval": {
+    "message": "Interval de actualizare"
+  },
+  "optionSyncRefreshIntervalSeconds": {
+    "message": "secunde"
+  },
+  "optionTabGroupsClosedLimit": {
+    "message": "Istoricul filelor/grupurilor închise de păstrat"
+  },
+  "optionTheme": {
+    "message": "Temă"
+  },
+  "optionThemeAuto": {
+    "message": "Urmează sistemul"
+  },
+  "optionThemeDark": {
+    "message": "Întunecat"
+  },
+  "optionThemeInk": {
+    "message": "Cerneală (întunecat)"
+  },
+  "optionThemeLight": {
+    "message": "Luminos"
+  },
+  "optionThemePaper": {
+    "message": "Hârtie (luminos)"
+  },
+  "optionTreeRowActions": {
+    "message": "Acțiuni la hover pe rândurile din arbore (editare / staging / ștergere)"
+  },
+  "optionVirtualScrollLab": {
+    "message": "Derulare virtuală (experimental)"
+  },
+  "optionVirtualScrollLabHint": {
+    "message": "Vizualizările pentru grupuri de file și duplicate afișează doar rândurile din apropierea zonei vizibile. Mult mai rapid pe liste foarte mari; în faza experimentală, poziția barei de derulare este estimată."
+  },
+  "optionZoom": {
+    "message": "Zoom"
+  },
+  "options": {
+    "message": "Opțiuni"
+  },
+  "optionsDonate": {
+    "message": "Donează"
+  },
+  "optionsFooterText": {
+    "description": "Footer text for the Options page",
+    "message": "Construit de $authorName$.",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionsGithubLink": {
+    "message": "GitHub"
+  },
+  "optionsGroupBackup": {
+    "message": "Copie de rezervă"
+  },
+  "optionsGroupContextMenu": {
+    "message": "Meniuri contextuale"
+  },
+  "optionsGroupIcons": {
+    "message": "Pictograme"
+  },
+  "optionsGroupLabs": {
+    "message": "Laborator"
+  },
+  "optionsGroupPalette": {
+    "message": "Paletă de comenzi"
+  },
+  "optionsGroupSort": {
+    "message": "Sortare"
+  },
+  "optionsGroupStats": {
+    "message": "Statistici"
+  },
+  "optionsGroupTools": {
+    "message": "Unelte"
+  },
+  "optionsGroupViews": {
+    "message": "Vizualizări"
+  },
+  "optionsHomepageLink": {
+    "message": "Pagina principală"
+  },
+  "optionsSince": {
+    "message": "Derivat din Neat Bookmarks, menținut timp de $days$ de zile.",
+    "placeholders": {
+      "days": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionsStagingSection": {
+    "message": "Staging și adăugate recent"
+  },
+  "optionsStorageLocalTip": {
+    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting).",
+    "message": "Stocat doar pe acest dispozitiv — nu este partajat prin sincronizarea Chrome."
+  },
+  "optionsStorageSyncTip": {
+    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting).",
+    "message": "Sincronizat prin contul Chrome — această setare este partajată pe dispozitivele tale."
+  },
+  "optionsVersion": {
+    "message": "Versiunea vBookmarks"
+  },
+  "paletteActionOpenUrl": {
+    "message": "Deschide URL"
+  },
+  "paletteActionOpenUrlGroup": {
+    "message": "Deschide grupul de foldere de marcaje"
+  },
+  "paletteActionUrlTemplate": {
+    "message": "Deschide șablonul URL"
+  },
+  "paletteActionViewPreset": {
+    "message": "Deschide vizualizarea cu presetare"
+  },
+  "paletteClose": {
+    "message": "Închide"
+  },
+  "paletteCmdDead": {
+    "message": "Găsește legături moarte"
+  },
+  "paletteCmdDupes": {
+    "message": "Curăță marcaje duplicate"
+  },
+  "paletteCmdGoDead": {
+    "message": "Mergi la vizualizarea Linkuri moarte"
+  },
+  "paletteCmdGoDupes": {
+    "message": "Mergi la vizualizarea Duplicate"
+  },
+  "paletteCmdGoRecent": {
+    "message": "Mergi la vizualizarea Recente"
+  },
+  "paletteCmdGoSearch": {
+    "message": "Mergi la vizualizarea Căutare"
+  },
+  "paletteCmdGoStats": {
+    "message": "Mergi la vizualizarea Statistici"
+  },
+  "paletteCmdGoTabGroups": {
+    "message": "Mergi la vizualizarea grupurilor de file"
+  },
+  "paletteCmdGoTree": {
+    "message": "Mergi la vizualizarea Arbore"
+  },
+  "paletteCmdLang": {
+    "message": "Schimbă limba…"
+  },
+  "paletteCmdLangUsage": {
+    "message": "Utilizare: /lang urmat de un cod de localizare — ex. /lang en, /lang zh_CN, /lang ja."
+  },
+  "paletteCmdNewBookmark": {
+    "message": "Marcaj nou…"
+  },
+  "paletteCmdNewFolder": {
+    "message": "Dosar nou…"
+  },
+  "paletteCmdOptions": {
+    "message": "Deschide pagina de opțiuni"
+  },
+  "paletteCmdQuickAdd": {
+    "message": "Marchează fila curentă"
+  },
+  "paletteCmdSaveAsCommand": {
+    "message": "Salvează \"$1\" ca o comandă…"
+  },
+  "paletteCmdSaveSession": {
+    "message": "Salvează filele ferestrei ca dosar"
+  },
+  "paletteCmdSearchInView": {
+    "message": "Caută '$query$' în vizualizarea Căutare",
+    "placeholders": {
+      "query": {
+        "content": "$1"
+      }
+    }
+  },
+  "paletteCmdTheme": {
+    "message": "Setează tema…"
+  },
+  "paletteCmdThemeUsage": {
+    "message": "Utilizare: /theme urmat de un nume de temă — auto, light, dark, ink sau paper (funcționează un prefix unic, ex. /theme d)."
+  },
+  "paletteCmdToggleViewTabs": {
+    "message": "Comută filele de vizualizare"
+  },
+  "paletteCmdVersion": {
+    "message": "Informații versiune"
+  },
+  "paletteCustomAction": {
+    "message": "Acțiune"
+  },
+  "paletteCustomAdd": {
+    "message": "Adaugă comandă…"
+  },
+  "paletteCustomAliases": {
+    "message": "Aliasuri (separate prin virgule)"
+  },
+  "paletteCustomBroken": {
+    "message": "Folderul comenzii \"$1\" nu mai există. Ștergi comanda?"
+  },
+  "paletteCustomDeleteConfirm": {
+    "message": "Ștergi comanda \"$1\"? Modificarea se sincronizează pe toate dispozitivele."
+  },
+  "paletteCustomEmpty": {
+    "message": "Nicio comandă personalizată încă."
+  },
+  "paletteCustomErrAction": {
+    "message": "Alege un tip de acțiune."
+  },
+  "paletteCustomErrAlias": {
+    "message": "Aliasuri: aceleași reguli ca la slash (1–24 de caractere, litere mici, cifre sau cratime)."
+  },
+  "paletteCustomErrFolder": {
+    "message": "Alege un folder de marcaje."
+  },
+  "paletteCustomErrLimit": {
+    "message": "Limită de comenzi atinsă (100) — șterge mai întâi una."
+  },
+  "paletteCustomErrSlash": {
+    "message": "Slash: 1–24 de caractere — litere mici, cifre sau cratime, începând cu o literă sau cifră."
+  },
+  "paletteCustomErrTaken": {
+    "message": "Acest slash sau alias este deja folosit."
+  },
+  "paletteCustomErrTemplate": {
+    "message": "Șablonul trebuie să conțină exact un %s."
+  },
+  "paletteCustomErrUrl": {
+    "message": "Sunt permise doar URL-uri http:// sau https://."
+  },
+  "paletteCustomErrView": {
+    "message": "Alege o vizualizare."
+  },
+  "paletteCustomFolder": {
+    "message": "Folder de marcaje"
+  },
+  "paletteCustomHint": {
+    "message": "Comenzi slash personalizate pentru paleta de comenzi (Ctrl/Cmd+K). Se sincronizează cu setările tale — maximum 100 de intrări."
+  },
+  "paletteCustomSave": {
+    "message": "Salvează comanda"
+  },
+  "paletteCustomScan": {
+    "message": "Pornește scanarea la introducere"
+  },
+  "paletteCustomScope": {
+    "message": "Domeniu de deduplicare predefinit"
+  },
+  "paletteCustomSlash": {
+    "message": "Slash (cuvântul de după /)"
+  },
+  "paletteCustomStrategy": {
+    "message": "Strategie de deduplicare predefinită"
+  },
+  "paletteCustomTag": {
+    "message": "personalizat"
+  },
+  "paletteCustomTemplate": {
+    "message": "Șablon URL — %s este înlocuit cu cuvintele de după comandă"
+  },
+  "paletteCustomUrl": {
+    "message": "URL"
+  },
+  "paletteCustomUsage": {
+    "message": "$1 / $2"
+  },
+  "paletteCustomView": {
+    "message": "Vizualizare"
+  },
+  "paletteCustomWhere": {
+    "message": "Deschide în"
+  },
+  "paletteNoResults": {
+    "message": "Niciun rezultat potrivit"
+  },
+  "palettePlaceholder": {
+    "message": "Caută marcaje, dosare, comenzi…"
+  },
+  "paletteWhereBackground": {
+    "message": "File în fundal"
+  },
+  "paletteWhereCurrent": {
+    "message": "Fila curentă"
+  },
+  "paletteWhereTab": {
+    "message": "Filă nouă"
+  },
+  "paletteWhereWindow": {
+    "message": "Fereastră nouă"
+  },
+  "parentFolder": {
+    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
+    "message": "Dosar părinte: \"$folderName$\"",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarksbar"
+      }
+    }
+  },
+  "pasteDone": {
+    "message": "Lipit"
+  },
+  "pasteGone": {
+    "message": "Marcajul nu mai există — clipboard golit"
+  },
+  "pasteHere": {
+    "message": "Lipește aici"
+  },
+  "pinFolder": {
+    "message": "Fixează acest dosar"
+  },
+  "quickAddBookmark": {
+    "message": "Marchează această pagină (Ctrl+D)"
+  },
+  "quickAddBookmarkCommand": {
+    "message": "Adăugați rapid fila curentă ca semn de carte"
+  },
+  "quickAdded": {
+    "message": "Marcaj adăugat"
+  },
+  "quickAddedTo": {
+    "message": "Marcaj adăugat în $folderName$",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarks bar"
+      }
+    }
+  },
+  "quickRemoveBookmark": {
+    "message": "Elimină acest marcaj (Ctrl+D)"
+  },
+  "quickRemoved": {
+    "message": "Marcaj eliminat"
+  },
+  "recentBookmarks": {
+    "message": "Adăugate recent"
+  },
   "recentEmpty": {
     "message": "Niciun marcaj recent. Apăsați Ctrl+D pentru a marca pagina curentă."
+  },
+  "recentGroupMonth": {
+    "message": "Luna aceasta"
+  },
+  "recentGroupOlder": {
+    "message": "Mai vechi"
+  },
+  "recentGroupToday": {
+    "message": "Astăzi"
+  },
+  "recentGroupWeek": {
+    "message": "Săptămâna aceasta"
   },
   "recentRevealInTree": {
     "message": "Arată în arbore"
   },
+  "recentSectionTitle": {
+    "message": "Adăugate recent"
+  },
+  "recentStageAll": {
+    "message": "Pregătește toate adăugate recent"
+  },
+  "recentStageGroup": {
+    "message": "Trimiteți $t$ în zona de pregătire",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
+  },
+  "removeSeparator": {
+    "message": "Elimină Separator"
+  },
+  "replaceUrl": {
+    "message": "Înlocuiește acesta cu URL-ul curent"
+  },
+  "reportError": {
+    "message": "Raportează Eroare"
+  },
+  "reportedToDeveloper": {
+    "description": "A message for an error occured in the extension, has been reported to the developer.",
+    "message": "Acest lucru a fost raportat dezvoltatorului."
+  },
+  "resetButton": {
+    "message": "Resetare"
+  },
+  "resetSettings": {
+    "message": "Resetare setări"
+  },
+  "resetSettingsDescription": {
+    "message": "Resetează vBookmarks la setările implicite."
+  },
+  "revealOutsideBarAction": {
+    "message": "Afișează tot și dezvăluie"
+  },
+  "revealOutsideBarHint": {
+    "message": "Se afișează doar bara de marcaje: ținta se află în afara acesteia."
+  },
+  "riskBannerDismiss": {
+    "message": "Închide"
+  },
+  "riskBannerHelp": {
+    "message": "Ghid de backup și restaurare"
+  },
+  "riskBannerNever": {
+    "message": "Nu mai afișa"
+  },
+  "rowActionDelete": {
+    "message": "Șterge"
+  },
+  "rowActionMark": {
+    "message": "Marchează ca mort"
+  },
+  "rowActionReveal": {
+    "message": "Arată în arbore"
+  },
+  "rowActionUnmark": {
+    "message": "Elimină marcajul de mort"
+  },
+  "save": {
+    "message": "Salvează"
+  },
+  "searchBookmarks": {
+    "description": "Placeholder text for search field.",
+    "message": "Caută Semne de Carte"
+  },
+  "searchClear": {
+    "message": "Șterge căutarea"
+  },
   "searchHistoryClear": {
     "message": "Curăță tot"
   },
+  "searchHistoryClose": {
+    "message": "Ascunde istoricul căutărilor"
+  },
+  "searchHistoryClosedToast": {
+    "message": "Istoricul căutărilor este ascuns — reactivați-l în Opțiuni → Căutare"
+  },
   "searchHistoryRemove": {
     "message": "Elimină această căutare"
+  },
+  "searchHistoryRerun": {
+    "message": "Caută din nou"
   },
   "searchHistoryResultCount": {
     "message": "$n$ rezultat(e)",
@@ -298,6 +1562,895 @@
   },
   "searchHistoryTitle": {
     "message": "Căutări recente"
+  },
+  "searchNoResults": {
+    "message": "Nicio marcaj potrivit"
+  },
+  "searchResultCount": {
+    "message": "$n$ rezultat(e)",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "searchStageAllGroup": {
+    "message": "Trimite toate rezultatele ca grupul \"$1$\"",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "searchViewHint": {
+    "message": "Tastați în caseta de mai sus pentru a căuta marcajele"
+  },
+  "selectAll": {
+    "message": "Toate"
+  },
+  "selectClear": {
+    "message": "Curăță"
+  },
+  "selectCount": {
+    "message": "$count$ selectate",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "selectInvert": {
+    "message": "Inversează"
+  },
+  "selectModeEnter": {
+    "message": "Selectare"
+  },
+  "selectModeExit": {
+    "message": "Ieșire din selecție"
+  },
+  "separatorOptions": {
+    "message": "Separatoare"
+  },
+  "sessionEmpty": {
+    "message": "Nicio filă de salvat"
+  },
+  "sessionFolderName": {
+    "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm.",
+    "message": "Sesiune $date$",
+    "placeholders": {
+      "date": {
+        "content": "$1",
+        "example": "2026-07-18 15:04"
+      }
+    }
+  },
+  "sessionSaved": {
+    "description": "Alert shown after the current window's tabs were saved into a new bookmark folder.",
+    "message": "Salvate $count$ file într-un dosar nou",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "12"
+      }
+    }
+  },
+  "settingsBackupHint": {
+    "message": "Exportul salvează toate setările (inclusiv preferințele de sincronizare) într-un fișier JSON. Importul îmbină o copie de rezervă: setările din fișier suprascriu cele curente, restul se păstrează."
+  },
+  "settingsExport": {
+    "message": "Exportă setări"
+  },
+  "settingsImport": {
+    "message": "Importă setări"
+  },
+  "settingsImportConfirm": {
+    "message": "Importul va suprascrie fiecare setare conținută în fișierul de rezervă (setările care nu sunt în fișier se păstrează) și va reîncărca această pagină. Continuați?"
+  },
+  "settingsImportDone": {
+    "message": "Setări importate. Pagina se va reîncărca acum."
+  },
+  "settingsImportError": {
+    "message": "Unele setări nu au putut fi scrise (cotă de stocare sau o eroare tranzitorie). Importul nu s-a finalizat — încercați din nou."
+  },
+  "settingsImportInvalid": {
+    "message": "Fișier de setări invalid: nu este o copie de rezervă a setărilor vBookmarks."
+  },
+  "sortByDate": {
+    "message": "După data adăugării"
+  },
+  "sortByDateAdded": {
+    "message": "După data adăugării (cele mai noi primele)"
+  },
+  "sortByName": {
+    "message": "După nume"
+  },
+  "sortByTitle": {
+    "message": "După titlu"
+  },
+  "sortDone": {
+    "message": "Folder sortat"
+  },
+  "sortFolderContents": {
+    "message": "Sortează conținutul folderului"
+  },
+  "sortFoldersFirst": {
+    "message": "Păstrează folderele deasupra"
+  },
+  "sortMenuOptions": {
+    "message": "Sortare"
+  },
+  "sortOptions": {
+    "message": "Opțiuni de sortare…"
+  },
+  "sortRecursive": {
+    "message": "Sortează și subfolderele (recursiv)"
+  },
+  "sortRecursiveSuffix": {
+    "message": "(recursiv)"
+  },
+  "sortRecursiveWarning": {
+    "message": "Aceasta reordonează marcajele din fiecare subdosar."
+  },
+  "stagedToast": {
+    "message": "S-au pus în așteptare $n$ file ca grupul „$t$”",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "t": {
+        "content": "$2"
+      }
+    }
+  },
+  "stagingAdd": {
+    "message": "Trimite în staging"
+  },
+  "stagingAdded": {
+    "message": "Trimis în staging"
+  },
+  "stagingAddedSummary": {
+    "message": "Adăugat $n$ element(e); $m$ deja pregătite",
+    "placeholders": {
+      "m": {
+        "content": "$2"
+      },
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingAlready": {
+    "message": "Deja în zona de pregătire"
+  },
+  "stagingBucketFavAll": {
+    "message": "Marchează toate"
+  },
+  "stagingBucketTitle": {
+    "message": "Nemarcate"
+  },
+  "stagingClear": {
+    "message": "Golește zona de așteptare"
+  },
+  "stagingClearConfirm": {
+    "message": "Goliți întreaga zonă de așteptare? Arborele de marcaje nu este atins."
+  },
+  "stagingClearConfirmOk": {
+    "message": "Șterge"
+  },
+  "stagingCleared": {
+    "message": "Zona de așteptare a fost golită"
+  },
+  "stagingConfirmFolder": {
+    "message": "Pregătiți $n$ marcaje din acest dosar?",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingConfirmFolderOk": {
+    "message": "Pregătește"
+  },
+  "stagingCopyDone": {
+    "message": "S-au copiat $n$ element(e)",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingCount": {
+    "message": "$n$ în așteptare",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingDeleteConfirm": {
+    "message": "Ștergeți $n$ element(e)? Cele nemarcate părăsesc doar zona de așteptare.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingDeleted": {
+    "message": "S-au șters $n$ marcaj(e)",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingEmpty": {
+    "message": "Nimic pus în așteptare. Trimite marcaje aici din orice vizualizare — butonul avion de pe un rând sau meniul cu clic drept — apoi organizează și arhivează-le în masă."
+  },
+  "stagingFav": {
+    "message": "Marchează"
+  },
+  "stagingFavDone": {
+    "message": "Marcate $n$ element(e)",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingFolderEmpty": {
+    "message": "Acest dosar nu are marcaje de pregătit"
+  },
+  "stagingFromHistory": {
+    "message": "Din istoric"
+  },
+  "stagingFull": {
+    "message": "Zona de pregătire este plină — eliminați mai întâi unele elemente"
+  },
+  "stagingGroupAssign": {
+    "message": "Grup…"
+  },
+  "stagingGroupAssignTitle": {
+    "message": "Atribuie unui grup"
+  },
+  "stagingGroupCollapse": {
+    "message": "Restrânge grupul"
+  },
+  "stagingGroupDelete": {
+    "message": "Șterge grupul (cu elemente)"
+  },
+  "stagingGroupDeleteConfirm": {
+    "message": "Ștergeți grupul \"$1\"? Cele $2 element(e) părăsesc și zona de pregătire."
+  },
+  "stagingGroupDeleted": {
+    "message": "Grup șters — $1 element(e) eliminate"
+  },
+  "stagingGroupDissolve": {
+    "message": "Dizolvă grupul"
+  },
+  "stagingGroupDissolved": {
+    "message": "Grup dizolvat — elementele păstrate în zona de pregătire"
+  },
+  "stagingGroupExpand": {
+    "message": "Extinde grupul"
+  },
+  "stagingGroupNamePrompt": {
+    "message": "Numele noului grup"
+  },
+  "stagingGroupNew": {
+    "message": "Grup nou"
+  },
+  "stagingGroupNoGroups": {
+    "message": "Niciun grup încă"
+  },
+  "stagingGroupRename": {
+    "message": "Redenumește grupul…"
+  },
+  "stagingGroupSelectAll": {
+    "message": "Selectați tot în acest grup"
+  },
+  "stagingGuideDismiss": {
+    "message": "Nu mai afișa"
+  },
+  "stagingGuideText": {
+    "message": "Organizați marcajele aici — selectați rândurile și intrați în modul de selecție pentru acțiunile în lot."
+  },
+  "stagingMoveConfirm": {
+    "message": "Mutați $n$ element(e) în folderul ales?",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingMoveConfirmOk": {
+    "message": "Mută"
+  },
+  "stagingMoveCopy": {
+    "message": "Mută/copiază în…"
+  },
+  "stagingMoveDone": {
+    "message": "S-au mutat $n$ element(e) acasă",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingNew": {
+    "message": "nou $n$",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingRemove": {
+    "message": "Elimină din zona de pregătire"
+  },
+  "stagingRemoved": {
+    "message": "Eliminat din zona de pregătire"
+  },
+  "stagingRemovedCount": {
+    "message": "S-au eliminat $n$ element(e) din zona de așteptare",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingRowFav": {
+    "message": "Marchează acest element"
+  },
+  "stagingRowUnfav": {
+    "message": "Anulează marcarea acestui element"
+  },
+  "stagingShortcutAdd": {
+    "message": "Adaugă scurtătură"
+  },
+  "stagingShortcutAlias": {
+    "message": "Alias"
+  },
+  "stagingShortcutBarLabel": {
+    "message": "Mută la:"
+  },
+  "stagingShortcutEdit": {
+    "message": "Editează scurtătura"
+  },
+  "stagingShortcutMove": {
+    "message": "Mută selecția în $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingShortcutPickFolder": {
+    "message": "Alege folderul țintă…"
+  },
+  "stagingShortcutRemove": {
+    "message": "Elimină scurtătura"
+  },
+  "stagingShortcutRemoved": {
+    "message": "Scurtătură eliminată"
+  },
+  "stagingShortcutSave": {
+    "message": "Salvează"
+  },
+  "stagingShortcutTitle": {
+    "message": "Scurtătură de mutare"
+  },
+  "stagingUnfav": {
+    "message": "Anulează marcarea"
+  },
+  "stagingUnfavDone": {
+    "message": "S-au eliminat $n$ element(e) din favorite",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "statsClearConfirm": {
+    "message": "Ștergeți statisticile de vizită pentru $count$ marcaje? Această acțiune nu poate fi anulată.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "statsClearData": {
+    "message": "Șterge statisticile"
+  },
+  "statsDisabledHint": {
+    "message": "Statisticile de vizită sunt dezactivate — activați-le în Opțiuni → Vizualizări"
+  },
+  "statsEmpty": {
+    "message": "Statisticile se acumulează pe măsură ce deschideți marcajele"
+  },
+  "statsHistoryAdd": {
+    "message": "Adaugă la marcaje"
+  },
+  "statsHistoryBanner": {
+    "message": "Acordați acces la istoric pentru a popula statisticile de vizitare cu vizitele dvs. anterioare."
+  },
+  "statsHistoryBookmarked": {
+    "message": "Marcat"
+  },
+  "statsHistoryDismiss": {
+    "message": "Nu mai afișa"
+  },
+  "statsHistoryEnable": {
+    "message": "Activați"
+  },
+  "statsHistoryGuide": {
+    "message": "Acordați acces la istoric pentru a lista vizitele recente aici."
+  },
+  "statsHistoryImported": {
+    "message": "Vizite anterioare importate pentru $count$ marcaje",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "statsSectionBookmarks": {
+    "message": "Statistici marcaje"
+  },
+  "statsSectionRecent": {
+    "message": "Vizite recente"
+  },
+  "statsShowUnbookmarked": {
+    "message": "Afișează nemarcate"
+  },
+  "statsShowUnbookmarkedHint": {
+    "message": "Includeți paginile din istoric care nu sunt salvate ca marcaje."
+  },
+  "statsSortByCount": {
+    "message": "După număr"
+  },
+  "statsSortByRecent": {
+    "message": "După recent"
+  },
+  "statsVisitCount": {
+    "message": "Vizitat de $count$ ori",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "storageUsageFree": {
+    "message": "Liber"
+  },
+  "storageUsageHint": {
+    "message": "Numai stocarea locală a extensiei (chrome.storage.local, cotă de aproximativ 10 MB): cache-ul de icoane plus setările și alte date locale. Setările sincronizate, datele de sesiune și biblioteca de marcaje în sine nu sunt numărate aici."
+  },
+  "storageUsageIcon": {
+    "message": "Cache de icoane"
+  },
+  "storageUsageOther": {
+    "message": "Altele"
+  },
+  "storageUsageSummary": {
+    "message": "Folosit $1$ din $2$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      },
+      "2": {
+        "content": "$2"
+      }
+    }
+  },
+  "syncOptions": {
+    "message": "Opțiuni de sincronizare"
+  },
+  "syncStatusLocal": {
+    "message": "Doar local — neîncărcat"
+  },
+  "syncStatusSynced": {
+    "message": "Sincronizat cu contul Google"
+  },
+  "syncStatusUnsyncable": {
+    "message": "Nu poate fi sincronizat"
+  },
+  "syncSuffixLocal": {
+    "message": "(Local)"
+  },
+  "syncSuffixSynced": {
+    "message": "(Sincronizat)"
+  },
+  "tabGroupColorBlue": {
+    "description": "Accessible name of the blue color swatch in the new-tab-group dialog.",
+    "message": "Albastru"
+  },
+  "tabGroupColorCyan": {
+    "description": "Accessible name of the cyan color swatch in the new-tab-group dialog.",
+    "message": "Cyan"
+  },
+  "tabGroupColorGreen": {
+    "description": "Accessible name of the green color swatch in the new-tab-group dialog.",
+    "message": "Verde"
+  },
+  "tabGroupColorGrey": {
+    "description": "Accessible name of the grey color swatch in the new-tab-group dialog.",
+    "message": "Gri"
+  },
+  "tabGroupColorLabel": {
+    "message": "Culoare"
+  },
+  "tabGroupColorOrange": {
+    "description": "Accessible name of the orange color swatch in the new-tab-group dialog.",
+    "message": "Portocaliu"
+  },
+  "tabGroupColorPink": {
+    "description": "Accessible name of the pink color swatch in the new-tab-group dialog.",
+    "message": "Roz"
+  },
+  "tabGroupColorPurple": {
+    "description": "Accessible name of the purple color swatch in the new-tab-group dialog.",
+    "message": "Violet"
+  },
+  "tabGroupColorRed": {
+    "description": "Accessible name of the red color swatch in the new-tab-group dialog.",
+    "message": "Roșu"
+  },
+  "tabGroupColorYellow": {
+    "description": "Accessible name of the yellow color swatch in the new-tab-group dialog.",
+    "message": "Galben"
+  },
+  "tabGroupDialogTitle": {
+    "message": "Grup nou de file"
+  },
+  "tabGroupNoGroups": {
+    "message": "Nu există grupuri de file"
+  },
+  "tabGroupOptions": {
+    "message": "Grupuri de file"
+  },
+  "tabGroupPickDialogTitle": {
+    "message": "Deschide într-un grup de file existent"
+  },
+  "tabGroupTitleLabel": {
+    "message": "Titlul grupului"
+  },
+  "tabGroupUntitled": {
+    "message": "Grup fără titlu"
+  },
+  "tabGroupsActivateGroup": {
+    "message": "Mergi la grup"
+  },
+  "tabGroupsActivateTab": {
+    "message": "Mergi la filă"
+  },
+  "tabGroupsAddBookmark": {
+    "message": "Adaugă fila la marcaje"
+  },
+  "tabGroupsBatchClosedTitle": {
+    "message": "File închise"
+  },
+  "tabGroupsBookmarkRemoved": {
+    "message": "S-au eliminat $count$ marcaj(e)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsBookmarked": {
+    "message": "Marcate"
+  },
+  "tabGroupsBookmarksAdded": {
+    "message": "Adăugate $count$ marcaj(e) în $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsClearClosedGroups": {
+    "message": "Șterge tot"
+  },
+  "tabGroupsClearedToast": {
+    "message": "S-au șters $count$ înregistrare(i) închise",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCloseGroup": {
+    "message": "Închide grupul"
+  },
+  "tabGroupsCloseWindow": {
+    "message": "Închide fereastra"
+  },
+  "tabGroupsClosedGroups": {
+    "message": "Închise recent"
+  },
+  "tabGroupsClosedOpenTab": {
+    "message": "Deschide în filă nouă"
+  },
+  "tabGroupsClosedTabRemovedToast": {
+    "message": "Eliminat din înregistrarea închisă"
+  },
+  "tabGroupsClosedTimeLabel": {
+    "message": "Închis:"
+  },
+  "tabGroupsClosedToast": {
+    "message": "S-au închis $count$ filă(fi)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCollapseAll": {
+    "message": "Restrânge tot"
+  },
+  "tabGroupsCollapseGroup": {
+    "message": "Restrânge grupul"
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "Restrânge fereastra"
+  },
+  "tabGroupsColorStyle": {
+    "message": "Stilul culorii grupului de file"
+  },
+  "tabGroupsColorStyleEdge": {
+    "message": "Bandă de culoare pe margine"
+  },
+  "tabGroupsColorStyleHint": {
+    "message": "Oprit afișează doar punctul colorat. Banda de culoare pe margine trasează o bandă colorată pe marginea stângă a grupului. Linia de conectare colorată trasează o linie colorată sub punctul grupului, cu o bifă pe rând, legând întregul grup într-un singur arbore."
+  },
+  "tabGroupsColorStyleLine": {
+    "message": "Linie de conectare colorată"
+  },
+  "tabGroupsColorStyleOff": {
+    "message": "Oprit (doar punctul colorat)"
+  },
+  "tabGroupsConfirmClearClosed": {
+    "message": "Ștergeți toate înregistrările închise recent? Nu mai pot fi redeschise de aici."
+  },
+  "tabGroupsConfirmClose": {
+    "message": "Închizi $count$ file?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsConfirmSleep": {
+    "message": "Adormi $count$ file?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCopyMoveCopy": {
+    "message": "Copiază"
+  },
+  "tabGroupsCopyMoveDialog": {
+    "message": "Filele selectate aparțin deja unui grup de file. Vrei să le copiezi (deschide într-un loc nou) sau să le muți (elimină din grupul curent)?"
+  },
+  "tabGroupsCopyMoveMove": {
+    "message": "Mută"
+  },
+  "tabGroupsCurrentTab": {
+    "message": "Curent"
+  },
+  "tabGroupsCurrentWindow": {
+    "message": "Fereastra curentă"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "Șterge grupul de file închis"
+  },
+  "tabGroupsDiscarded": {
+    "message": "Filă adormită"
+  },
+  "tabGroupsExpandAll": {
+    "message": "Extinde tot"
+  },
+  "tabGroupsExpandGroup": {
+    "message": "Extinde grupul"
+  },
+  "tabGroupsExpandWindow": {
+    "message": "Extinde fereastra"
+  },
+  "tabGroupsExpandedCollapse": {
+    "message": "Restrânge"
+  },
+  "tabGroupsExpandedExpand": {
+    "message": "Extinde"
+  },
+  "tabGroupsFilterPlaceholder": {
+    "message": "Filtrează filele deschise"
+  },
+  "tabGroupsGroupCount": {
+    "message": "$count$ file",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsGroupSavedToFolder": {
+    "message": "Salvate $count$ file în $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsMenuAddBookmark": {
+    "message": "Marcaj filă"
+  },
+  "tabGroupsMenuSaveFolder": {
+    "message": "Salvează ca dosar"
+  },
+  "tabGroupsMergedWindowToast": {
+    "message": "Fereastră fuzionată ca grup de file"
+  },
+  "tabGroupsMoveNewWindow": {
+    "message": "Mută grupul în fereastră nouă"
+  },
+  "tabGroupsNewWindow": {
+    "message": "Fereastră nouă"
+  },
+  "tabGroupsNoMatchingTabs": {
+    "message": "Nicio filă potrivită"
+  },
+  "tabGroupsOpenGroups": {
+    "message": "Grupuri de file deschise"
+  },
+  "tabGroupsPinTab": {
+    "message": "Fixare filă"
+  },
+  "tabGroupsPinned": {
+    "message": "Filă fixată"
+  },
+  "tabGroupsPinnedUngroupedToast": {
+    "message": "Fixat — eliminat din grupul de file"
+  },
+  "tabGroupsRecordDeletedToast": {
+    "message": "Înregistrarea închisă a fost eliminată"
+  },
+  "tabGroupsRemoveBookmark": {
+    "message": "Elimină marcajul"
+  },
+  "tabGroupsRemoveClosedTab": {
+    "message": "Elimină din grupul salvat"
+  },
+  "tabGroupsRenameDialog": {
+    "message": "Redenumește grupul de file"
+  },
+  "tabGroupsRenameGroup": {
+    "message": "Redenumește grupul"
+  },
+  "tabGroupsReopenAction": {
+    "message": "Redeschide"
+  },
+  "tabGroupsReopenGroup": {
+    "message": "Redeschide grupul de file"
+  },
+  "tabGroupsSaveFolder": {
+    "message": "Salvează grupul de file ca dosar de marcaje"
+  },
+  "tabGroupsSelectAddBookmarks": {
+    "message": "Adaugă la dosarul de marcaje…"
+  },
+  "tabGroupsSelectClose": {
+    "message": "Închide"
+  },
+  "tabGroupsSelectNewGroup": {
+    "message": "Grup de file nou"
+  },
+  "tabGroupsSelectOpenInto": {
+    "message": "Deschide în grupul de file existent…"
+  },
+  "tabGroupsSelectSaveFolder": {
+    "message": "Salvează ca dosar de marcaje"
+  },
+  "tabGroupsSelectSleep": {
+    "message": "Adormire"
+  },
+  "tabGroupsSleepGroup": {
+    "message": "Adormire grup"
+  },
+  "tabGroupsSleepTab": {
+    "message": "Adormi fila"
+  },
+  "tabGroupsSleptToast": {
+    "message": "S-au adormit $count$ filă(fi)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsSummary": {
+    "message": "$tabs$ file · $groups$ grupuri",
+    "placeholders": {
+      "groups": {
+        "content": "$2"
+      },
+      "tabs": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsSyncCollapse": {
+    "message": "Sincronizează colapsarea cu browserul"
+  },
+  "tabGroupsSyncCollapseHint": {
+    "message": "Când este bifat, colapsarea sau extinderea unui grup în această vizualizare actualizează și grupul de file din browser. Dezactivat implicit, astfel încât plierea vizualizării rămâne locală."
+  },
+  "tabGroupsToolbarRefresh": {
+    "message": "Reîmprospătează"
+  },
+  "tabGroupsUngroupGroup": {
+    "message": "Degrupează filele"
+  },
+  "tabGroupsUngroupedTabs": {
+    "message": "File negrupate"
+  },
+  "tabGroupsUnpinTab": {
+    "message": "Anulare fixare filă"
+  },
+  "tabGroupsViewEmpty": {
+    "message": "Nicio filă în această fereastră"
+  },
+  "tabGroupsWakeAction": {
+    "message": "Trezește"
+  },
+  "tabGroupsWakeGroup": {
+    "message": "Activează grupul"
+  },
+  "tabGroupsWakeTab": {
+    "message": "Trezește fila"
+  },
+  "tabGroupsWindow": {
+    "message": "Fereastră $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsWindowClosedTitle": {
+    "message": "Fereastră închisă"
+  },
+  "tabGroupsWindowsCount": {
+    "message": "$n$ ferestre",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabRowStage": {
+    "message": "Trimite în staging"
+  },
+  "tabgroupStageAll": {
+    "message": "Trimite grupul în staging"
+  },
+  "tabgroupStageConfirm": {
+    "message": "Trimite $n$ file în staging?",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabgroupStageNone": {
+    "message": "Nicio filă marcată în acest grup"
   },
   "timeDaysAgo": {
     "message": "acum $n$ zile",
@@ -329,303 +2482,26 @@
   "timeYesterday": {
     "message": "ieri"
   },
+  "toolButtonTitle": {
+    "message": "Unelte (Ctrl+K)"
+  },
   "undoAction": {
     "message": "Anulare"
   },
-  "revealOutsideBarHint": {
-    "message": "Se afișează doar bara de marcaje: ținta se află în afara acesteia."
+  "undoSingleStepNote": {
+    "message": "Anularea poate restaura doar cea mai recentă ștergere."
   },
-  "revealOutsideBarAction": {
-    "message": "Afișează tot și dezvăluie"
+  "unpinFolder": {
+    "message": "Anulează fixarea dosarului"
   },
-  "dupesCleanAll": {
-    "message": "Curăță tot: $groups$ grupuri, $count$ copii suplimentare",
-    "placeholders": {
-      "groups": {
-        "content": "$1"
-      },
-      "count": {
-        "content": "$2"
-      }
-    },
-    "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go."
+  "url": {
+    "message": "URL"
   },
-  "dupesConfirmAll": {
-    "message": "Eliminați $count$ copii suplimentare din $groups$ grupuri? Copia selectată în fiecare grup este păstrată.",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      },
-      "groups": {
-        "content": "$2"
-      }
-    },
-    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
+  "versionDialogCopied": {
+    "message": "Copiat"
   },
-  "dupesConfirmSelected": {
-    "message": "Eliminați $count$ de marcaje duplicate din $groups$ grupuri selectate?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      },
-      "groups": {
-        "content": "$2"
-      }
-    }
-  },
-  "dupesConfirmGroup": {
-    "message": "Păstrează \"$title$\" și elimină celelalte $count$ copii?",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Example bookmark"
-      },
-      "count": {
-        "content": "$2"
-      }
-    },
-    "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."
-  },
-  "dupesDone": {
-    "message": "Eliminate $count$ marcaje duplicate",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Alert shown after the duplicate cleanup finished."
-  },
-  "dupesGroupCount": {
-    "message": "$count$ duplicate",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
-  },
-  "dupesGroupExpand": {
-    "description": "Dupes view group-head context menu: expand a collapsed duplicate group.",
-    "message": "Extinde grupul"
-  },
-  "dupesGroupCollapse": {
-    "description": "Dupes view group-head context menu: collapse an expanded duplicate group.",
-    "message": "Restrânge grupul"
-  },
-  "dupesNone": {
-    "message": "Niciun duplicat găsit"
-  },
-  "deleteEllipsis": {
-    "message": "Șterge..."
-  },
-  "donationMessage": {
-    "message": "Îți place? Donează pentru viitorul său — sau evaluează-l în magazin: fiecare recenzie menține actualizările."
-  },
-  "donationV4Notice": {
-    "message": "vBookmarks 4.0 este o refacere completă cu un design modern, plin de funcții noi."
-  },
-  "donationV4GuideLink": {
-    "message": "Citește ghidul v4 →"
-  },
-  "donationGo": {
-    "message": "Donează"
-  },
-  "donationRate": {
-    "message": "Evaluează"
-  },
-  "donationRateTitle": {
-    "message": "Evaluează vBookmarks în Chrome Web Store"
-  },
-  "donationLater": {
-    "message": "Mai târziu"
-  },
-  "donationNever": {
-    "message": "Nu mai afișa"
-  },
-  "donationDismiss": {
-    "message": "Închide"
-  },
-  "edit": {
-    "message": "Editare..."
-  },
-  "editBookmark": {
-    "message": "Editare semn de carte"
-  },
-  "editFolder": {
-    "message": "Editare dosar"
-  },
-  "errorOccured": {
-    "message": "Ups, a apărut o eroare."
-  },
-  "extDesc": {
-    "description": "The extension description.",
-    "message": "Un manager de semne de carte popup. Neat Bookmarks îmbunătățit. Mai ordonat decât Neater Bookmarks."
-  },
-  "extName": {
-    "description": "vBookmarks",
-    "message": "vBookmarks"
-  },
-  "folderEmpty": {
-    "message": "(Gol)"
-  },
-  "general": {
-    "message": "General"
-  },
-  "ignore": {
-    "message": "Ignoră"
-  },
-  "name": {
-    "description": "Name of bookmark or folder.",
-    "message": "Nume"
-  },
-  "nope": {
-    "message": "Anulare"
-  },
-  "noTitle": {
-    "description": "The title for untitled bookmarks with no http(s) URL or untitled folders.",
-    "message": "(fără titlu)"
-  },
-  "open": {
-    "description": "Action to open bookmarks.",
-    "message": "Deschide"
-  },
-  "openBookmarks": {
-    "message": "Deschide Toate Semnele de Carte"
-  },
-  "openBookmarksIncognitoWindow": {
-    "message": "Deschide în fereastră incognito"
-  },
-  "openBookmarksInGroup": {
-    "message": "Deschide tot în grup nou"
-  },
-  "openBookmarksInGroupSetup": {
-    "message": "Deschide tot în grup nou…"
-  },
-  "openBookmarksInExistingGroup": {
-    "message": "Deschide tot în grup existent…"
-  },
-  "tabGroupOptions": {
-    "message": "Grupuri de file"
-  },
-  "sortMenuOptions": {
-    "message": "Sortare"
-  },
-  "openBookmarksNewWindow": {
-    "message": "Deschide în fereastră nouă"
-  },
-  "openCommandPaletteCommand": {
-    "message": "Deschide paleta de comenzi"
-  },
-  "openIncognitoWindow": {
-    "message": "Deschide în Fereastră Incognito"
-  },
-  "openNewTab": {
-    "message": "Deschide în Tab Nou"
-  },
-  "bookmarkOpenInNewGroup": {
-    "message": "Deschide în grup nou"
-  },
-  "bookmarkOpenInNewGroupSetup": {
-    "message": "Deschide în grup nou…"
-  },
-  "bookmarkOpenInExistingGroup": {
-    "message": "Deschide în grup existent…"
-  },
-  "openNewWindow": {
-    "message": "Deschide în Fereastră Nouă"
-  },
-  "openSidePanelCommand": {
-    "message": "Deschide panoul lateral vBookmarks"
-  },
-  "optionAnnounceEnabled": {
-    "message": "Afișează anunțurile din produs"
-  },
-  "optionAnnounceEnabledHint": {
-    "message": "Note de lansare și sfaturi din depozitul GitHub al proiectului (preluate cel mult o dată la 6 ore). Dacă este dezactivat, se oprește și preluarea din rețea."
-  },
-  "optionClickNewTab": {
-    "message": "Click stânga deschide semnul de carte în tab nou."
-  },
-  "optionCloseUnusedFolders": {
-    "message": "Închide dosarele neutilizate la deschiderea unui dosar."
-  },
-  "optionConfirmOpenFolder": {
-    "message": "Afișează confirmare la deschiderea multor semne de carte dintr-un dosar."
-  },
-  "optionConfirmDeleteFolder": {
-    "message": "Confirmă înainte de a șterge dosarele negoale"
-  },
-  "optionOnlyShowBookmarkBar": {
-    "message": "Afișează doar semne de carte în Bara de Semne de Carte"
-  },
-  "optionSearchAfterEnter": {
-    "message": "Caută semne de carte doar când este apăsat ENTER (în loc de căutare instantă)"
-  },
-  "optionOpenNewTab": {
-    "message": "Click mijlociu sau control-click deschide semnul de carte în tab nou de fundal (în loc de prim-plan)."
-  },
-  "optionOpenInSidePanel": {
-    "message": "Deschide în panoul lateral în loc de popup"
-  },
-  "optionPopupStays": {
-    "message": "Popup-ul rămâne deschis la deschiderea (click stânga) semnelor de carte."
-  },
-  "optionRememberPrevState": {
-    "message": "Reține starea anterioară (poziția de derulare, folderele deschise și ultimul element focalizat)."
-  },
-  "options": {
-    "message": "Opțiuni"
-  },
-  "optionsFooterText": {
-    "description": "Footer text for the Options page",
-    "message": "Construit de $authorName$.",
-    "placeholders": {
-      "authorName": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionZoom": {
-    "message": "Zoom"
-  },
-  "optionTheme": {
-    "message": "Temă"
-  },
-  "optionThemeAuto": {
-    "message": "Urmează sistemul"
-  },
-  "optionThemeLight": {
-    "message": "Luminos"
-  },
-  "optionThemeDark": {
-    "message": "Întunecat"
-  },
-  "optionThemeInk": {
-    "message": "Cerneală (întunecat)"
-  },
-  "optionThemePaper": {
-    "message": "Hârtie (luminos)"
-  },
-  "optionLanguage": {
-    "message": "Limbă"
-  },
-  "optionLanguageAuto": {
-    "message": "Automat"
-  },
-  "optionLanguageHint": {
-    "message": "Schimbarea limbii reîncarcă această pagină."
-  },
-  "paletteClose": {
-    "message": "Închide"
-  },
-  "paletteCmdVersion": {
-    "message": "Informații versiune"
-  },
-  "paletteCmdLang": {
-    "message": "Schimbă limba…"
-  },
-  "paletteCmdLangUsage": {
-    "message": "Utilizare: /lang urmat de un cod de localizare — ex. /lang en, /lang zh_CN, /lang ja."
+  "versionDialogCopy": {
+    "message": "Copiază informațiile"
   },
   "versionDialogTitle": {
     "message": "vBookmarks $version$",
@@ -634,15 +2510,6 @@
         "content": "$1"
       }
     }
-  },
-  "versionDialogCopy": {
-    "message": "Copiază informațiile"
-  },
-  "versionDialogCopied": {
-    "message": "Copiat"
-  },
-  "versionMetaVersion": {
-    "message": "Versiune extensie"
   },
   "versionMetaAnnounce": {
     "message": "Ce e nou"
@@ -653,277 +2520,58 @@
   "versionMetaBrowser": {
     "message": "Browser"
   },
-  "versionMetaOS": {
-    "message": "Sistem de operare"
-  },
   "versionMetaChannel": {
     "message": "Canal"
   },
   "versionMetaLanguage": {
     "message": "Limbă"
   },
+  "versionMetaOS": {
+    "message": "Sistem de operare"
+  },
   "versionMetaUserAgent": {
     "message": "Agent utilizator"
   },
-  "paletteCmdDead": {
-    "message": "Găsește legături moarte"
+  "versionMetaVersion": {
+    "message": "Versiune extensie"
   },
-  "paletteCmdDupes": {
-    "message": "Curăță marcaje duplicate"
+  "viewDead": {
+    "message": "Linkuri moarte"
   },
-  "paletteCmdNewBookmark": {
-    "message": "Marcaj nou…"
+  "viewDisable": {
+    "message": "Dezactivează"
   },
-  "paletteCmdNewFolder": {
-    "message": "Dosar nou…"
+  "viewDupes": {
+    "message": "Duplicate"
   },
-  "paletteCmdQuickAdd": {
-    "message": "Marchează fila curentă"
+  "viewEnable": {
+    "message": "Activează"
   },
-  "paletteCmdSaveSession": {
-    "message": "Salvează filele ferestrei ca dosar"
-  },
-  "paletteNoResults": {
-    "message": "Niciun rezultat potrivit"
-  },
-  "palettePlaceholder": {
-    "message": "Caută marcaje, dosare, comenzi…"
-  },
-  "parentFolder": {
-    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
-    "message": "Dosar părinte: \"$folderName$\"",
+  "viewHiddenTabsHint": {
+    "message": "Te afli în vizualizarea $view$. Apasă $back$ sau folosește paleta de comenzi pentru a reveni la arbore.",
     "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarksbar"
-      }
-    }
-  },
-  "removeSeparator": {
-    "message": "Elimină Separator"
-  },
-  "replaceUrl": {
-    "message": "Înlocuiește acesta cu URL-ul curent"
-  },
-  "reportedToDeveloper": {
-    "description": "A message for an error occured in the extension, has been reported to the developer.",
-    "message": "Acest lucru a fost raportat dezvoltatorului."
-  },
-  "reportError": {
-    "message": "Raportează Eroare"
-  },
-  "resetButton": {
-    "message": "Resetare"
-  },
-  "resetSettings": {
-    "message": "Resetare setări"
-  },
-  "resetSettingsDescription": {
-    "message": "Resetează vBookmarks la setările implicite."
-  },
-  "save": {
-    "message": "Salvează"
-  },
-  "searchBookmarks": {
-    "description": "Placeholder text for search field.",
-    "message": "Caută Semne de Carte"
-  },
-  "searchClear": {
-    "message": "Șterge căutarea"
-  },
-  "searchNoResults": {
-    "message": "Nicio marcaj potrivit"
-  },
-  "searchViewHint": {
-    "message": "Tastați în caseta de mai sus pentru a căuta marcajele"
-  },
-  "selectAll": {
-    "message": "Toate"
-  },
-  "selectClear": {
-    "message": "Curăță"
-  },
-  "selectCount": {
-    "message": "$count$ selectate",
-    "placeholders": {
-      "count": {
+      "back": {
+        "content": "$2"
+      },
+      "view": {
         "content": "$1"
       }
     }
   },
-  "selectInvert": {
-    "message": "Inversează"
-  },
-  "selectModeEnter": {
-    "message": "Selectare"
-  },
-  "selectModeExit": {
-    "message": "Ieșire din selecție"
-  },
-  "deadRiskBanner": {
-    "message": "Curățarea linkurilor moarte șterge marcajele în bloc. Faceți o copie de rezervă a marcajelor înainte de prima curățare."
-  },
-  "dupesRiskBanner": {
-    "message": "Deduplicarea șterge marcajele duplicate în bloc. Faceți o copie de rezervă a marcajelor înainte de a o aplica."
-  },
-  "riskBannerHelp": {
-    "message": "Ghid de backup și restaurare"
-  },
-  "riskBannerNever": {
-    "message": "Nu mai afișa"
-  },
-  "riskBannerDismiss": {
-    "message": "Închide"
-  },
-  "sessionEmpty": {
-    "message": "Nicio filă de salvat"
-  },
-  "sessionFolderName": {
-    "message": "Sesiune $date$",
-    "placeholders": {
-      "date": {
-        "content": "$1",
-        "example": "2026-07-18 15:04"
-      }
-    },
-    "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm."
-  },
-  "sessionSaved": {
-    "message": "Salvate $count$ file într-un dosar nou",
-    "placeholders": {
-      "count": {
-        "content": "$1",
-        "example": "12"
-      }
-    },
-    "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
-  },
-  "url": {
-    "message": "URL"
-  },
-  "syncOptions": {
-    "message": "Opțiuni de sincronizare"
-  },
-  "optionShowSyncStatus": {
-    "message": "Afișați indicatorii de stare a sincronizării"
-  },
-  "optionHighlightUnsynced": {
-    "message": "Atenuează marcajele nesincronizate"
-  },
-  "optionAutoRefreshSync": {
-    "message": "Actualizare automată a stării sincronizării"
-  },
-  "optionSyncRefreshInterval": {
-    "message": "Interval de actualizare"
-  },
-  "optionSyncRefreshIntervalSeconds": {
-    "message": "secunde"
-  },
-  "syncStatusSynced": {
-    "message": "Sincronizat cu contul Google"
-  },
-  "syncStatusLocal": {
-    "message": "Doar local — neîncărcat"
-  },
-  "syncStatusUnsyncable": {
-    "message": "Nu poate fi sincronizat"
-  },
-  "syncSuffixSynced": {
-    "message": "(Sincronizat)"
-  },
-  "syncSuffixLocal": {
-    "message": "(Local)"
-  },
-  "optionAutoResizePopup": {
-    "message": "Redimensionează automat fereastra popup pentru a se potrivi cu conținutul"
-  },
-  "crossStorageMoveWarning": {
-    "message": "Semnele de carte nu pot fi mutate între stocarea sincronizată și cea locală. Utilizați copiere/lipire.",
-    "description": "Warning when trying to move bookmarks across storage types"
-  },
-  "recentBookmarks": {
-    "message": "Adăugate recent"
-  },
-  "optionShowRecentBookmarks": {
-    "message": "Afișează marcajele adăugate recent în partea de sus a popup-ului"
-  },
-  "optionShowStatsView": {
-    "message": "Afișează fila de statistici"
-  },
-  "optionShowDeadView": {
-    "message": "Afișează fila de linkuri moarte"
-  },
-  "optionShowDupesView": {
-    "message": "Afișează fila de duplicate"
-  },
-  "optionRecentCollapsed": {
-    "message": "Restrânge secțiunea adăugate recent în mod implicit"
-  },
-  "optionsGroupViews": {
-    "message": "Vizualizări"
-  },
-  "optionsGroupSort": {
-    "message": "Sortare"
-  },
-  "optionsGroupStats": {
-    "message": "Statistici"
-  },
-  "optionsGroupTools": {
-    "message": "Unelte"
-  },
-  "optionShowViewTabs": {
-    "message": "Afișează filele de vizualizare sub caseta de căutare"
-  },
-  "optionRememberView": {
-    "message": "Reține ultima vizualizare activă și redeschide-o"
-  },
-  "optionShowTabBadges": {
-    "message": "Afișează ecusoane cu numere pe filele de vizualizare"
-  },
-  "optionPaletteEnabled": {
-    "message": "Activează paleta de comenzi (Ctrl/Cmd+K)"
-  },
-  "optionQuickAddEnabled": {
-    "message": "Afișează butonul cu stea pentru adăugare rapidă lângă caseta de căutare"
-  },
-  "optionQuickAddContextMenu": {
-    "message": "Adaugă o intrare \"Salvează această pagină în semne de carte cu vBookmarks\" în meniul cu clic dreapta al paginii"
-  },
-  "optionQuickAddContextMenuHint": {
-    "message": "Independent de butonul stea de adăugare rapidă; restaurarea experienței clasice dezactivează și această intrare."
-  },
-  "optionCollapseTabGroupMenu": {
-    "message": "Comprimă intrările pentru grupuri de file într-un singur submeniu „Grupuri de file”."
-  },
-  "optionCollapseTabGroupMenuHint": {
-    "message": "Se aplică atât meniului contextual pentru foldere, cât și celui pentru marcaje. Dezactivat implicit; păstrează meniurile cu înălțime mică mai scurte pe ecranele mici sau cu zoom mare."
-  },
-  "optionCollapseSortMenu": {
-    "message": "Comprimă intrările de sortare într-un singur submeniu „Sortare”."
-  },
-  "optionCollapseSortMenuHint": {
-    "message": "Se aplică meniului contextual pentru foldere. Activat implicit."
-  },
-  "optionShowToolButton": {
-    "message": "Afișează butonul de instrumente (⋮) lângă caseta de căutare"
-  },
-  "optionClassicExperience": {
-    "message": "Restabiliți antetul clasic"
-  },
-  "optionClassicExperienceHint": {
-    "message": "Dezactivează paleta de comenzi, steaua de adăugare rapidă, intrarea acesteia din meniul contextual al paginii, butonul de instrumente și filele de vizualizare. Fiecare poate fi reactivată individual în secțiunea sa."
-  },
-  "optionShowItemPath": {
-    "message": "Afișează calea dosarului părinte pe rândurile listei"
-  },
   "viewRecent": {
     "message": "Staging"
   },
-  "viewTree": {
-    "message": "Arbore"
-  },
   "viewSearch": {
     "message": "Căutare"
+  },
+  "viewStateDisabled": {
+    "message": "Dezactivat"
+  },
+  "viewStateEnabled": {
+    "message": "Activat"
+  },
+  "viewStats": {
+    "message": "Statistici"
   },
   "viewSwitchAnnounce": {
     "message": "Vizualizare $name$",
@@ -933,870 +2581,17 @@
       }
     }
   },
-  "viewStateEnabled": {
-    "message": "Activat"
-  },
-  "viewStateDisabled": {
-    "message": "Dezactivat"
-  },
-  "viewEnable": {
-    "message": "Activează"
-  },
-  "viewDisable": {
+  "viewTabDisable": {
     "message": "Dezactivează"
+  },
+  "viewTabGroups": {
+    "message": "Grupuri de file"
   },
   "viewTabHide": {
     "message": "Ascunde"
   },
-  "viewTabDisable": {
-    "message": "Dezactivează"
-  },
-  "sortFolderContents": {
-    "message": "Sortează conținutul folderului"
-  },
-  "sortByName": {
-    "message": "După nume"
-  },
-  "sortByDate": {
-    "message": "După data adăugării"
-  },
-  "sortRecursiveSuffix": {
-    "message": "(recursiv)"
-  },
-  "sortOptions": {
-    "message": "Opțiuni de sortare…"
-  },
-  "sortDone": {
-    "message": "Folder sortat"
-  },
-  "sortByTitle": {
-    "message": "După titlu"
-  },
-  "sortByDateAdded": {
-    "message": "După data adăugării (cele mai noi primele)"
-  },
-  "sortFoldersFirst": {
-    "message": "Păstrează folderele deasupra"
-  },
-  "sortRecursive": {
-    "message": "Sortează și subfolderele (recursiv)"
-  },
-  "sortRecursiveWarning": {
-    "message": "Aceasta reordonează marcajele din fiecare subdosar."
-  },
-  "tabGroupDialogTitle": {
-    "message": "Grup nou de file"
-  },
-  "tabGroupTitleLabel": {
-    "message": "Titlul grupului"
-  },
-  "tabGroupColorLabel": {
-    "message": "Culoare"
-  },
-  "tabGroupColorGrey": {
-    "message": "Gri",
-    "description": "Accessible name of the grey color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorBlue": {
-    "message": "Albastru",
-    "description": "Accessible name of the blue color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorRed": {
-    "message": "Roșu",
-    "description": "Accessible name of the red color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorYellow": {
-    "message": "Galben",
-    "description": "Accessible name of the yellow color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorGreen": {
-    "message": "Verde",
-    "description": "Accessible name of the green color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorPink": {
-    "message": "Roz",
-    "description": "Accessible name of the pink color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorPurple": {
-    "message": "Violet",
-    "description": "Accessible name of the purple color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorCyan": {
-    "message": "Cyan",
-    "description": "Accessible name of the cyan color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorOrange": {
-    "message": "Portocaliu",
-    "description": "Accessible name of the orange color swatch in the new-tab-group dialog."
-  },
-  "tabGroupUntitled": {
-    "message": "Grup fără titlu"
-  },
-  "tabGroupNoGroups": {
-    "message": "Nu există grupuri de file"
-  },
-  "tabGroupPickDialogTitle": {
-    "message": "Deschide într-un grup de file existent"
-  },
-  "quickAddBookmark": {
-    "message": "Marchează această pagină (Ctrl+D)"
-  },
-  "quickAddBookmarkCommand": {
-    "message": "Adăugați rapid fila curentă ca semn de carte"
-  },
-  "quickAdded": {
-    "message": "Marcaj adăugat"
-  },
-  "quickAddedTo": {
-    "message": "Marcaj adăugat în $folderName$",
-    "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarks bar"
-      }
-    }
-  },
-  "quickRemoved": {
-    "message": "Marcaj eliminat"
-  },
-  "quickRemoveBookmark": {
-    "message": "Elimină acest marcaj (Ctrl+D)"
-  },
-  "toolButtonTitle": {
-    "message": "Unelte (Ctrl+K)"
-  },
-  "contextMenuAddBookmark": {
-    "message": "Marchează această pagină cu vBookmarks"
-  },
-  "deadFilterAll": {
-    "message": "Toate"
-  },
-  "deadFilterBlocked": {
-    "message": "Doar blocate"
-  },
-  "deadFilterDead": {
-    "message": "Doar moarte"
-  },
-  "deadFilterMarked": {
-    "message": "Marcate anterior"
-  },
-  "deadLastScanAt": {
-    "message": "Ultima scanare: $time$",
-    "placeholders": {
-      "time": {
-        "content": "$1"
-      }
-    }
-  },
-  "deadMark": {
-    "message": "Marchează ca mort"
-  },
-  "deadMarkAll": {
-    "message": "Marchează toate"
-  },
-  "deadMarked": {
-    "message": "Rânduri moarte marcate"
-  },
-  "deadMarkedCount": {
-    "message": "$count$ semne de carte marcate",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "deadMarkedNone": {
-    "message": "Niciun semn de carte marcat încă"
-  },
-  "deadMarkedRow": {
-    "message": "Marcat"
-  },
-  "deadMarkSelected": {
-    "message": "Marcați selectatele"
-  },
-  "deadMarkStatusAll": {
-    "message": "Orice stare"
-  },
-  "deadMarkStatusMarked": {
-    "message": "Marcate"
-  },
-  "deadMarkStatusUnmarked": {
-    "message": "Nemarcate"
-  },
-  "deadMarkTimeLabel": {
-    "message": "Marcat la"
-  },
-  "deadDetectTimeLabel": {
-    "message": "Detectat la"
-  },
-  "deadSortLabel": {
-    "message": "Sortează după"
-  },
-  "deadSortByDetected": {
-    "message": "Timp de detectare"
-  },
-  "deadSortByPath": {
-    "message": "Cale folder"
-  },
-  "deadSortByMarked": {
-    "message": "Timp de marcare"
-  },
-  "deadMarkedBanner": {
-    "message": "Se afișează marcajele marcate anterior. Faceți clic pe Rescan pentru a începe o nouă verificare sau gestionați-le în lista de mai jos."
-  },
-  "deadMarkedBannerDismiss": {
-    "message": "Respinge"
-  },
-  "deadProxyAdd": {
-    "message": "Adaugă un server proxy pentru verificarea linkurilor moarte"
-  },
-  "deadProxyLabel": {
-    "message": "Proxy: $server$",
-    "placeholders": {
-      "server": {
-        "content": "$1"
-      }
-    }
-  },
-  "deadProxyChange": {
-    "message": "Schimbă"
-  },
-  "deadProxyRemove": {
-    "message": "Elimină"
-  },
-  "deadProxyRemoved": {
-    "message": "Serverul proxy a fost eliminat"
-  },
-  "deadProxyPanelHint": {
-    "message": "Introdu un server proxy pe care îl ai deja (extensia nu oferă niciunul), ex. 127.0.0.1:7890 sau socks5://127.0.0.1:1080."
-  },
-  "deadProxyTestUrlLabel": {
-    "message": "URL de test"
-  },
-  "deadProxyTestSave": {
-    "message": "Testează și salvează"
-  },
-  "deadProxyTesting": {
-    "message": "Se testează…"
-  },
-  "deadProxySaved": {
-    "message": "Proxy salvat — scanările viitoare reverifică eșecurile directe prin el."
-  },
-  "deadProxyInvalid": {
-    "message": "Adresă proxy invalidă — folosește host:port sau scheme://host:port (http/https/socks5, fără credențiale)."
-  },
-  "deadProxyUnreachable": {
-    "message": "Proxy inaccesibil — nu a fost salvat."
-  },
-  "deadProxyDenied": {
-    "message": "Permisiunea pentru proxy nu a fost acordată."
-  },
-  "deadProxyControlled": {
-    "message": "Setările proxy sunt gestionate de altă extensie."
-  },
-  "deadProxyUnavailable": {
-    "message": "API-ul proxy nu este disponibil în acest browser."
-  },
-  "deadProxyNudge": {
-    "message": "O reverificare prin proxy separă linkurile moarte reale de cele blocate regional — configurează aici sau în pagina de opțiuni."
-  },
-  "deadProxyNeverShow": {
-    "message": "Nu mai afișa"
-  },
-  "deadStartHint": {
-    "message": "Se începe scanarea a $n$ marcaje",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "deadStatusBlocked": {
-    "message": "blocat"
-  },
-  "deadUnmark": {
-    "message": "Elimină marcajul de mort"
-  },
-  "deadUnmarkAll": {
-    "message": "Curăță toate marcajele"
-  },
-  "deadUnmarkSelected": {
-    "message": "Anulați marcarea selectatelor"
-  },
-  "dupesApplyAll": {
-    "message": "Aplică toate ($count$)",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "dupesApplySelected": {
-    "message": "Deduplicați selectatele ($count$)",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "dupesCleanRestHint": {
-    "message": "Păstrează \"$title$\" și elimină celelalte $count$",
-    "placeholders": {
-      "title": {
-        "content": "$1"
-      },
-      "count": {
-        "content": "$2"
-      }
-    }
-  },
-  "dupesIgnoreScheme": {
-    "message": "Ignoră diferențele http/https"
-  },
-  "dupesKeepThis": {
-    "message": "Păstrează aceasta"
-  },
-  "dupesKeeperSet": {
-    "message": "Set ca păstrător"
-  },
-  "dupesPreviewSummary": {
-    "message": "$groups$ grupuri · $count$ de eliberat",
-    "placeholders": {
-      "groups": {
-        "content": "$1"
-      },
-      "count": {
-        "content": "$2"
-      }
-    }
-  },
-  "dupesRemoveRow": {
-    "message": "Șterge această copie"
-  },
-  "dupesScopeAll": {
-    "message": "Toate marcajele"
-  },
-  "dupesScopeBar": {
-    "message": "Doar bara de marcaje"
-  },
-  "dupesStrategyBookmarkBar": {
-    "message": "Păstrează cel din bara de marcaje"
-  },
-  "dupesStrategyMostVisited": {
-    "message": "Păstrează cel mai vizitat"
-  },
-  "dupesStrategyNewest": {
-    "message": "Păstrează cel mai nou"
-  },
-  "dupesStrategyOldest": {
-    "message": "Păstrează cel mai vechi"
-  },
-  "dupesStrategyShallowest": {
-    "message": "Păstrează cel mai superficial"
-  },
-  "dupesStrategyShortestTitle": {
-    "message": "Păstrează titlul cel mai scurt"
-  },
-  "optionDeadProxyServer": {
-    "message": "Server proxy pentru linkuri moarte"
-  },
-  "deadProxyServerHint": {
-    "message": "Serverul salvat reverifică, la fiecare scanare a linkurilor moarte, marcajele care nu au trecut verificarea directă, separând linkurile moarte reale de cele blocate pe regiuni. Testează și salvează îl probează (se păstrează doar un server accesibil); îl poți adăuga și din vizualizarea linkurilor moarte."
-  },
-  "deadProxyClear": {
-    "message": "Șterge"
-  },
-  "deadProxyNone": {
-    "message": "(nesetat)"
-  },
-  "optionDeadProxyStrip": {
-    "message": "Afișează sugestia de adăugare a unui proxy în vizualizarea linkurilor moarte"
-  },
-  "optionDeadProxyStripHint": {
-    "message": "Dezactivarea ascunde acea sugestie acolo; serverul proxy rămâne configurabil aici, iar un server salvat afișează întotdeauna rândul său de gestionare în vizualizare."
-  },
-  "optionDeadScanConcurrency": {
-    "message": "Concurență scanare linkuri moarte (1-16)"
-  },
-  "optionDeadScanTimeout": {
-    "message": "Timeout scanare linkuri moarte în secunde (2-30)"
-  },
-  "paletteCmdGoDead": {
-    "message": "Mergi la vizualizarea Linkuri moarte"
-  },
-  "paletteCmdGoDupes": {
-    "message": "Mergi la vizualizarea Duplicate"
-  },
-  "paletteCmdGoRecent": {
-    "message": "Mergi la vizualizarea Recente"
-  },
-  "paletteCmdGoSearch": {
-    "message": "Mergi la vizualizarea Căutare"
-  },
-  "paletteCmdGoTree": {
-    "message": "Mergi la vizualizarea Arbore"
-  },
-  "paletteCmdOptions": {
-    "message": "Deschide pagina de opțiuni"
-  },
-  "paletteCmdSearchInView": {
-    "message": "Caută '$query$' în vizualizarea Căutare",
-    "placeholders": {
-      "query": {
-        "content": "$1"
-      }
-    }
-  },
-  "rowActionDelete": {
-    "message": "Șterge"
-  },
-  "rowActionMark": {
-    "message": "Marchează ca mort"
-  },
-  "rowActionReveal": {
-    "message": "Arată în arbore"
-  },
-  "rowActionUnmark": {
-    "message": "Elimină marcajul de mort"
-  },
-  "viewDead": {
-    "message": "Linkuri moarte"
-  },
-  "viewDupes": {
-    "message": "Duplicate"
-  },
-  "viewStats": {
-    "message": "Statistici"
-  },
-  "paletteCmdGoStats": {
-    "message": "Mergi la vizualizarea Statistici"
-  },
-  "optionStatsEnabled": {
-    "message": "Activează statisticile de vizită"
-  },
-  "optionFaviconContrast": {
-    "message": "Inversează faviconurile cu contrast scăzut"
-  },
-  "optionFaviconContrastHint": {
-    "message": "Faviconurile albe pe temele deschise și cele negre pe temele închise sunt inversate pentru a rămâne vizibile. Fiecare favicon este eșantionat o singură dată la încărcare — fără cost în timpul navigării."
-  },
-  "optionFaviconEnrich": {
-    "message": "Preia pictogramele lipsă ale site-urilor"
-  },
-  "optionFaviconEnrichHint": {
-    "message": "Pentru site-urile marcate pentru care Chrome nu are nicio pictogramă în cache, preia pictograma reală direct de pe site (/favicon.ico, apoi pictogramele declarate ale paginii). Cererile sunt trimise doar către site-urile pe care le-ați marcat."
-  },
-  "optionFaviconEnrichAgg": {
-    "message": "Fallback pentru pictograme de la terți"
-  },
-  "optionFaviconEnrichAggHint": {
-    "message": "Când preluarea directă eșuează, caută pictograma după domeniu într-o listă încorporată de servicii terțe de pictograme ($providers$). Un serviciu găsit inaccesibil este omis și se încearcă următorul — nu este reîncercat timp de 6 ore.",
-    "placeholders": {
-      "providers": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionFaviconBackup": {
-    "message": "Include cache-ul de pictograme în copiile de rezervă"
-  },
-  "optionFaviconBackupHint": {
-    "message": "Includeți și cache-ul de favicon îmbogățit (date per site, potențial mari) în exportul/importul de setări. Aceasta acoperă pictogramele deja stocate în cache chiar și când preluarea este dezactivată. Cu opțiunea dezactivată, backup-urile rămân mici; pictogramele sunt oricum preluate din nou automat."
-  },
-  "optionFaviconCacheClear": {
-    "message": "Șterge cache-ul pictogramelor"
-  },
-  "optionFaviconCacheClearConfirm": {
-    "message": "Ștergeți cache-ul de pictograme îmbogățit? Pictogramele vor fi preluate din nou automat la următoarea deschidere."
-  },
-  "optionFaviconCacheEmpty": {
-    "message": "Nu există cache de pictograme de șters."
-  },
-  "optionFaviconCacheCleared": {
-    "message": "Cache-ul pictogramelor a fost șters. Pictogramele vor fi preluate din nou la următoarea deschidere."
-  },
-  "favGalleryLink": {
-    "message": "Vezi pictogramele actualizate",
-    "description": "Options link (Icons group, right of the Clear icon cache button): opens the favicon gallery page listing the sites whose icons were refetched."
-  },
-  "favGalleryTitle": {
-    "message": "Pictograme de site actualizate",
-    "description": "Favicon gallery page title (h1 + document title)."
-  },
-  "favGalleryHint": {
-    "message": "Pictogramele pe care vBookmarks le-a preluat pentru site-urile marcate pe care Chrome nu le-a stocat în cache — de unde provine fiecare și ce marcaje o folosesc. Doar pentru afișare.",
-    "description": "Subtitle under the favicon gallery title, explaining the page is read-only."
-  },
-  "favGallerySearch": {
-    "message": "Filtrează după site, titlu sau cale",
-    "description": "Placeholder of the favicon gallery filter input."
-  },
-  "favGalleryAll": {
-    "message": "Toate",
-    "description": "Favicon gallery source filter chip: show every source."
-  },
-  "favSrcDirect": {
-    "message": "Direct",
-    "description": "Favicon gallery source badge: the icon was fetched directly from the site itself."
-  },
-  "favSrcProxy": {
-    "message": "Proxy",
-    "description": "Favicon gallery source badge: the icon was fetched through the user's own proxy relay."
-  },
-  "favSrcLegacy": {
-    "message": "Cache anterior",
-    "description": "Favicon gallery source badge: cached before the source was recorded, so the origin is unknown."
-  },
-  "favGalleryCompare": {
-    "message": "Compară cu imaginea de rezervă",
-    "description": "Favicon gallery toggle button: switch every icon to the generic placeholder it replaced (before/after comparison)."
-  },
-  "favGalleryShowingBefore": {
-    "message": "Înapoi la pictogramele reale",
-    "description": "Favicon gallery toggle button while the placeholder comparison is shown: switch back to the real fetched icons."
-  },
-  "favGalleryStatSites": {
-    "message": "$n$ site-uri",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    },
-    "description": "Favicon gallery stats strip: how many sites have a refreshed icon."
-  },
-  "favGalleryStatBookmarks": {
-    "message": "$n$ marcaje",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    },
-    "description": "Favicon gallery stats strip: how many bookmarks sit on the refreshed sites."
-  },
-  "favGalleryVisits": {
-    "message": "$n$ deschideri înregistrate",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    },
-    "description": "Favicon gallery tooltip on a bookmark row's visit-count pill."
-  },
-  "favGalleryFailedTitle": {
-    "message": "Încercate recent, fără pictogramă găsită",
-    "description": "Favicon gallery heading of the muted section listing hosts whose icon fetch failed recently."
-  },
-  "favGalleryFailedHint": {
-    "message": "Eșecurile sunt reîncercate după 24 h, 3 zile și 7 zile, apoi se renunță până când cache-ul de pictograme este golit.",
-    "description": "Favicon gallery hint under the failed-fetch section title."
-  },
-  "favGalleryGaveUp": {
-    "message": "Renunțat",
-    "description": "Favicon gallery badge on a failed-strip host whose retries are exhausted (it stays untouched until the icon cache is cleared)."
-  },
-  "favGalleryOrphan": {
-    "message": "Niciun marcaj rămas pe acest host — pictograma se șterge odată cu cache-ul.",
-    "description": "Favicon gallery note on a card whose host no longer has any bookmark."
-  },
-  "favGalleryEmptyTitle": {
-    "message": "Nicio pictogramă actualizată încă",
-    "description": "Favicon gallery empty-state heading."
-  },
-  "favGalleryEmptyText": {
-    "message": "Când popup-ul întâlnește un site marcat pentru care Chrome nu are pictogramă, vBookmarks preia cea reală și o listează aici.",
-    "description": "Favicon gallery empty-state body text."
-  },
-  "storageUsageIcon": {
-    "message": "Cache de icoane"
-  },
-  "storageUsageOther": {
-    "message": "Altele"
-  },
-  "storageUsageSummary": {
-    "message": "Folosit $1$ din $2$",
-    "placeholders": {
-      "1": {
-        "content": "$1"
-      },
-      "2": {
-        "content": "$2"
-      }
-    }
-  },
-  "storageUsageFree": {
-    "message": "Liber"
-  },
-  "storageUsageHint": {
-    "message": "Numai stocarea locală a extensiei (chrome.storage.local, cotă de aproximativ 10 MB): cache-ul de icoane plus setările și alte date locale. Setările sincronizate, datele de sesiune și biblioteca de marcaje în sine nu sunt numărate aici."
-  },
-  "optionsDonate": {
-    "message": "Donează"
-  },
-  "optionsGithubLink": {
-    "message": "GitHub"
-  },
-  "optionsHomepageLink": {
-    "message": "Pagina principală"
-  },
-  "optionsSince": {
-    "message": "Derivat din Neat Bookmarks, menținut timp de $days$ de zile.",
-    "placeholders": {
-      "days": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionsVersion": {
-    "message": "Versiunea vBookmarks"
-  },
-  "statsSortByCount": {
-    "message": "După număr"
-  },
-  "statsSortByRecent": {
-    "message": "După recent"
-  },
-  "statsShowUnbookmarked": {
-    "message": "Afișează nemarcate"
-  },
-  "statsShowUnbookmarkedHint": {
-    "message": "Includeți paginile din istoric care nu sunt salvate ca marcaje."
-  },
-  "statsEmpty": {
-    "message": "Statisticile se acumulează pe măsură ce deschideți marcajele"
-  },
-  "statsDisabledHint": {
-    "message": "Statisticile de vizită sunt dezactivate — activați-le în Opțiuni → Vizualizări"
-  },
-  "statsVisitCount": {
-    "message": "Vizitat de $count$ ori",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "statsClearData": {
-    "message": "Șterge statisticile"
-  },
-  "statsClearConfirm": {
-    "message": "Ștergeți statisticile de vizită pentru $count$ marcaje? Această acțiune nu poate fi anulată.",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "statsHistoryBanner": {
-    "message": "Acordați acces la istoric pentru a popula statisticile de vizitare cu vizitele dvs. anterioare."
-  },
-  "statsHistoryEnable": {
-    "message": "Activați"
-  },
-  "statsHistoryDismiss": {
-    "message": "Nu mai afișa"
-  },
-  "statsHistoryImported": {
-    "message": "Vizite anterioare importate pentru $count$ marcaje",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "paletteCmdToggleViewTabs": {
-    "message": "Comută filele de vizualizare"
-  },
-  "paletteCmdTheme": {
-    "message": "Setează tema…"
-  },
-  "paletteCmdThemeUsage": {
-    "message": "Utilizare: /theme urmat de un nume de temă — auto, light, dark, ink sau paper (funcționează un prefix unic, ex. /theme d)."
-  },
-  "paletteCustomTag": {
-    "message": "personalizat"
-  },
-  "paletteCustomDeleteConfirm": {
-    "message": "Ștergi comanda \"$1\"? Modificarea se sincronizează pe toate dispozitivele."
-  },
-  "paletteCustomBroken": {
-    "message": "Folderul comenzii \"$1\" nu mai există. Ștergi comanda?"
-  },
-  "paletteCmdSaveAsCommand": {
-    "message": "Salvează \"$1\" ca o comandă…"
-  },
-  "paletteActionOpenUrl": {
-    "message": "Deschide URL"
-  },
-  "paletteActionOpenUrlGroup": {
-    "message": "Deschide grupul de foldere de marcaje"
-  },
-  "paletteActionViewPreset": {
-    "message": "Deschide vizualizarea cu presetare"
-  },
-  "paletteActionUrlTemplate": {
-    "message": "Deschide șablonul URL"
-  },
-  "optionsGroupPalette": {
-    "message": "Paletă de comenzi"
-  },
-  "paletteCustomHint": {
-    "message": "Comenzi slash personalizate pentru paleta de comenzi (Ctrl/Cmd+K). Se sincronizează cu setările tale — maximum 100 de intrări."
-  },
-  "paletteCustomAdd": {
-    "message": "Adaugă comandă…"
-  },
-  "paletteCustomUsage": {
-    "message": "$1 / $2"
-  },
-  "paletteCustomSlash": {
-    "message": "Slash (cuvântul de după /)"
-  },
-  "paletteCustomAliases": {
-    "message": "Aliasuri (separate prin virgule)"
-  },
-  "paletteCustomAction": {
-    "message": "Acțiune"
-  },
-  "paletteCustomUrl": {
-    "message": "URL"
-  },
-  "paletteCustomTemplate": {
-    "message": "Șablon URL — %s este înlocuit cu cuvintele de după comandă"
-  },
-  "paletteCustomWhere": {
-    "message": "Deschide în"
-  },
-  "paletteCustomFolder": {
-    "message": "Folder de marcaje"
-  },
-  "paletteCustomView": {
-    "message": "Vizualizare"
-  },
-  "paletteCustomStrategy": {
-    "message": "Strategie de deduplicare predefinită"
-  },
-  "paletteCustomScope": {
-    "message": "Domeniu de deduplicare predefinit"
-  },
-  "paletteCustomScan": {
-    "message": "Pornește scanarea la introducere"
-  },
-  "paletteWhereCurrent": {
-    "message": "Fila curentă"
-  },
-  "paletteWhereTab": {
-    "message": "Filă nouă"
-  },
-  "paletteWhereWindow": {
-    "message": "Fereastră nouă"
-  },
-  "paletteWhereBackground": {
-    "message": "File în fundal"
-  },
-  "paletteCustomSave": {
-    "message": "Salvează comanda"
-  },
-  "paletteCustomErrSlash": {
-    "message": "Slash: 1–24 de caractere — litere mici, cifre sau cratime, începând cu o literă sau cifră."
-  },
-  "paletteCustomErrAlias": {
-    "message": "Aliasuri: aceleași reguli ca la slash (1–24 de caractere, litere mici, cifre sau cratime)."
-  },
-  "paletteCustomErrTaken": {
-    "message": "Acest slash sau alias este deja folosit."
-  },
-  "paletteCustomErrUrl": {
-    "message": "Sunt permise doar URL-uri http:// sau https://."
-  },
-  "paletteCustomErrFolder": {
-    "message": "Alege un folder de marcaje."
-  },
-  "paletteCustomErrView": {
-    "message": "Alege o vizualizare."
-  },
-  "paletteCustomErrTemplate": {
-    "message": "Șablonul trebuie să conțină exact un %s."
-  },
-  "paletteCustomErrAction": {
-    "message": "Alege un tip de acțiune."
-  },
-  "paletteCustomErrLimit": {
-    "message": "Limită de comenzi atinsă (100) — șterge mai întâi una."
-  },
-  "paletteCustomEmpty": {
-    "message": "Nicio comandă personalizată încă."
-  },
-  "recentGroupToday": {
-    "message": "Astăzi"
-  },
-  "recentGroupWeek": {
-    "message": "Săptămâna aceasta"
-  },
-  "recentGroupMonth": {
-    "message": "Luna aceasta"
-  },
-  "recentGroupOlder": {
-    "message": "Mai vechi"
-  },
-  "searchHistoryRerun": {
-    "message": "Caută din nou"
-  },
-  "optionsGroupBackup": {
-    "message": "Copie de rezervă"
-  },
-  "optionsGroupContextMenu": {
-    "message": "Meniuri contextuale"
-  },
-  "optionsGroupIcons": {
-    "message": "Pictograme"
-  },
-  "settingsExport": {
-    "message": "Exportă setări"
-  },
-  "settingsImport": {
-    "message": "Importă setări"
-  },
-  "settingsBackupHint": {
-    "message": "Exportul salvează toate setările (inclusiv preferințele de sincronizare) într-un fișier JSON. Importul îmbină o copie de rezervă: setările din fișier suprascriu cele curente, restul se păstrează."
-  },
-  "settingsImportConfirm": {
-    "message": "Importul va suprascrie fiecare setare conținută în fișierul de rezervă (setările care nu sunt în fișier se păstrează) și va reîncărca această pagină. Continuați?"
-  },
-  "settingsImportInvalid": {
-    "message": "Fișier de setări invalid: nu este o copie de rezervă a setărilor vBookmarks."
-  },
-  "settingsImportDone": {
-    "message": "Setări importate. Pagina se va reîncărca acum."
-  },
-  "settingsImportError": {
-    "message": "Unele setări nu au putut fi scrise (cotă de stocare sau o eroare tranzitorie). Importul nu s-a finalizat — încercați din nou."
-  },
-  "statsSectionRecent": {
-    "message": "Vizite recente"
-  },
-  "statsSectionBookmarks": {
-    "message": "Statistici marcaje"
-  },
-  "statsHistoryGuide": {
-    "message": "Acordați acces la istoric pentru a lista vizitele recente aici."
-  },
-  "statsHistoryAdd": {
-    "message": "Adaugă la marcaje"
-  },
-  "statsHistoryBookmarked": {
-    "message": "Marcat"
-  },
-  "deadPause": {
-    "message": "Pauză"
-  },
-  "deadResume": {
-    "message": "Reluare"
-  },
-  "deadCancel": {
-    "message": "Anulare"
-  },
-  "deadPaused": {
-    "message": "În pauză"
+  "viewTree": {
+    "message": "Arbore"
   },
   "whatsNewChangelog": {
     "message": "Jurnal de modificări"
@@ -1808,800 +2603,5 @@
         "content": "$1"
       }
     }
-  },
-  "viewHiddenTabsHint": {
-    "message": "Te afli în vizualizarea $view$. Apasă $back$ sau folosește paleta de comenzi pentru a reveni la arbore.",
-    "placeholders": {
-      "view": {
-        "content": "$1"
-      },
-      "back": {
-        "content": "$2"
-      }
-    }
-  },
-  "viewTabGroups": {
-    "message": "Grupuri de file"
-  },
-  "optionShowTabGroupsView": {
-    "message": "Afișează fila de vizualizare a grupurilor de file"
-  },
-  "tabGroupsViewEmpty": {
-    "message": "Nicio filă în această fereastră"
-  },
-  "tabGroupsToolbarRefresh": {
-    "message": "Reîmprospătează"
-  },
-  "tabGroupsCollapseAll": {
-    "message": "Restrânge tot"
-  },
-  "tabGroupsExpandAll": {
-    "message": "Extinde tot"
-  },
-  "tabGroupsSummary": {
-    "message": "$tabs$ file · $groups$ grupuri",
-    "placeholders": {
-      "tabs": {
-        "content": "$1"
-      },
-      "groups": {
-        "content": "$2"
-      }
-    }
-  },
-  "tabGroupsGroupCount": {
-    "message": "$count$ file",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsCurrentTab": {
-    "message": "Curent"
-  },
-  "tabGroupsAddBookmark": {
-    "message": "Adaugă fila la marcaje"
-  },
-  "tabGroupsSaveFolder": {
-    "message": "Salvează grupul de file ca dosar de marcaje"
-  },
-  "tabGroupsGroupSavedToFolder": {
-    "message": "Salvate $count$ file în $folder$",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      },
-      "folder": {
-        "content": "$2"
-      }
-    }
-  },
-  "tabGroupsBookmarksAdded": {
-    "message": "Adăugate $count$ marcaj(e) în $folder$",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      },
-      "folder": {
-        "content": "$2"
-      }
-    }
-  },
-  "tabGroupsSelectNewGroup": {
-    "message": "Grup de file nou"
-  },
-  "tabGroupsSelectOpenInto": {
-    "message": "Deschide în grupul de file existent…"
-  },
-  "tabGroupsSelectSaveFolder": {
-    "message": "Salvează ca dosar de marcaje"
-  },
-  "tabGroupsSelectClose": {
-    "message": "Închide"
-  },
-  "tabGroupsSelectSleep": {
-    "message": "Adormire"
-  },
-  "tabGroupsCopyMoveDialog": {
-    "message": "Filele selectate aparțin deja unui grup de file. Vrei să le copiezi (deschide într-un loc nou) sau să le muți (elimină din grupul curent)?"
-  },
-  "tabGroupsCopyMoveCopy": {
-    "message": "Copiază"
-  },
-  "tabGroupsCopyMoveMove": {
-    "message": "Mută"
-  },
-  "tabGroupsConfirmClose": {
-    "message": "Închizi $count$ file?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsConfirmSleep": {
-    "message": "Adormi $count$ file?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsClosedToast": {
-    "message": "S-au închis $count$ filă(fi)",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsSleptToast": {
-    "message": "S-au adormit $count$ filă(fi)",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsBatchClosedTitle": {
-    "message": "File închise"
-  },
-  "tabGroupsPinnedUngroupedToast": {
-    "message": "Fixat — eliminat din grupul de file"
-  },
-  "tabGroupsReopenAction": {
-    "message": "Redeschide"
-  },
-  "tabGroupsWakeAction": {
-    "message": "Trezește"
-  },
-  "tabGroupsRecordDeletedToast": {
-    "message": "Înregistrarea închisă a fost eliminată"
-  },
-  "tabGroupsClosedTabRemovedToast": {
-    "message": "Eliminat din înregistrarea închisă"
-  },
-  "tabGroupsClearedToast": {
-    "message": "S-au șters $count$ înregistrare(i) închise",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "bookmarkFolderPickDialogTitle": {
-    "message": "Adaugă la dosarul de marcaje"
-  },
-  "bookmarkFolderNoFolders": {
-    "message": "Niciun dosar de marcaje"
-  },
-  "tabGroupsSelectAddBookmarks": {
-    "message": "Adaugă la dosarul de marcaje…"
-  },
-  "paletteCmdGoTabGroups": {
-    "message": "Mergi la vizualizarea grupurilor de file"
-  },
-  "tabGroupsActivateGroup": {
-    "message": "Mergi la grup"
-  },
-  "tabGroupsRenameGroup": {
-    "message": "Redenumește grupul"
-  },
-  "tabGroupsRenameDialog": {
-    "message": "Redenumește grupul de file"
-  },
-  "tabGroupsCloseGroup": {
-    "message": "Închide grupul"
-  },
-  "tabGroupsSleepGroup": {
-    "message": "Adormire grup"
-  },
-  "tabGroupsWakeGroup": {
-    "message": "Activează grupul"
-  },
-  "tabGroupsActivateTab": {
-    "message": "Mergi la filă"
-  },
-  "tabGroupsCollapseGroup": {
-    "message": "Restrânge grupul"
-  },
-  "tabGroupsExpandGroup": {
-    "message": "Extinde grupul"
-  },
-  "tabGroupsMenuAddBookmark": {
-    "message": "Marcaj filă"
-  },
-  "tabGroupsMenuSaveFolder": {
-    "message": "Salvează ca dosar"
-  },
-  "tabGroupsSyncCollapse": {
-    "message": "Sincronizează colapsarea cu browserul"
-  },
-  "tabGroupsSyncCollapseHint": {
-    "message": "Când este bifat, colapsarea sau extinderea unui grup în această vizualizare actualizează și grupul de file din browser. Dezactivat implicit, astfel încât plierea vizualizării rămâne locală."
-  },
-  "tabGroupsColorStyle": {
-    "message": "Stilul culorii grupului de file"
-  },
-  "tabGroupsColorStyleHint": {
-    "message": "Oprit afișează doar punctul colorat. Banda de culoare pe margine trasează o bandă colorată pe marginea stângă a grupului. Linia de conectare colorată trasează o linie colorată sub punctul grupului, cu o bifă pe rând, legând întregul grup într-un singur arbore."
-  },
-  "tabGroupsColorStyleOff": {
-    "message": "Oprit (doar punctul colorat)"
-  },
-  "tabGroupsColorStyleEdge": {
-    "message": "Bandă de culoare pe margine"
-  },
-  "tabGroupsColorStyleLine": {
-    "message": "Linie de conectare colorată"
-  },
-  "tabGroupsBookmarked": {
-    "message": "Marcate"
-  },
-  "tabGroupsRemoveBookmark": {
-    "message": "Elimină marcajul"
-  },
-  "tabGroupsBookmarkRemoved": {
-    "message": "S-au eliminat $count$ marcaj(e)",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsPinned": {
-    "message": "Filă fixată"
-  },
-  "tabGroupsDiscarded": {
-    "message": "Filă adormită"
-  },
-  "tabGroupsPinTab": {
-    "message": "Fixare filă"
-  },
-  "tabGroupsUnpinTab": {
-    "message": "Anulare fixare filă"
-  },
-  "tabGroupsSleepTab": {
-    "message": "Adormi fila"
-  },
-  "tabGroupsWakeTab": {
-    "message": "Trezește fila"
-  },
-  "tabGroupsOpenGroups": {
-    "message": "Grupuri de file deschise"
-  },
-  "tabGroupsClosedGroups": {
-    "message": "Închise recent"
-  },
-  "tabGroupsUngroupedTabs": {
-    "message": "File negrupate"
-  },
-  "tabGroupsUngroupGroup": {
-    "message": "Degrupează filele"
-  },
-  "tabGroupsMoveNewWindow": {
-    "message": "Mută grupul în fereastră nouă"
-  },
-  "tabGroupsWindow": {
-    "message": "Fereastră $1$",
-    "placeholders": {
-      "1": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsCurrentWindow": {
-    "message": "Fereastra curentă"
-  },
-  "tabGroupsReopenGroup": {
-    "message": "Redeschide grupul de file"
-  },
-  "tabGroupsDeleteClosedGroup": {
-    "message": "Șterge grupul de file închis"
-  },
-  "tabGroupsCollapseWindow": {
-    "message": "Restrânge fereastra"
-  },
-  "tabGroupsCloseWindow": {
-    "message": "Închide fereastra"
-  },
-  "tabGroupsWindowClosedTitle": {
-    "message": "Fereastră închisă"
-  },
-  "tabGroupsExpandWindow": {
-    "message": "Extinde fereastra"
-  },
-  "tabGroupsClearClosedGroups": {
-    "message": "Șterge tot"
-  },
-  "tabGroupsConfirmClearClosed": {
-    "message": "Ștergeți toate înregistrările închise recent? Nu mai pot fi redeschise de aici."
-  },
-  "tabGroupsFilterPlaceholder": {
-    "message": "Filtrează filele deschise"
-  },
-  "tabGroupsNoMatchingTabs": {
-    "message": "Nicio filă potrivită"
-  },
-  "tabGroupsClosedOpenTab": {
-    "message": "Deschide în filă nouă"
-  },
-  "tabGroupsRemoveClosedTab": {
-    "message": "Elimină din grupul salvat"
-  },
-  "tabGroupsClosedTimeLabel": {
-    "message": "Închis:"
-  },
-  "tabGroupsExpandedExpand": {
-    "message": "Extinde"
-  },
-  "tabGroupsExpandedCollapse": {
-    "message": "Restrânge"
-  },
-  "optionTabGroupsClosedLimit": {
-    "message": "Istoricul filelor/grupurilor închise de păstrat"
-  },
-  "folderPickMoveHere": {
-    "message": "Mută aici"
-  },
-  "folderPickCopyHere": {
-    "message": "Copiază aici"
-  },
-  "folderPickFilter": {
-    "message": "Filtrează dosarele…"
-  },
-  "folderPickFavNote": {
-    "message": "Elementele nemarcate vor fi marcate aici"
-  },
-  "folderPickPinned": {
-    "message": "Fixate"
-  },
-  "folderPickRecent": {
-    "message": "Recente"
-  },
-  "pinFolder": {
-    "message": "Fixează acest dosar"
-  },
-  "unpinFolder": {
-    "message": "Anulează fixarea dosarului"
-  },
-  "stagingAdd": {
-    "message": "Trimite în staging"
-  },
-  "stagingAdded": {
-    "message": "Trimis în staging"
-  },
-  "stagingAlready": {
-    "message": "Deja în zona de pregătire"
-  },
-  "stagingAddedSummary": {
-    "message": "Adăugat $n$ element(e); $m$ deja pregătite",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      },
-      "m": {
-        "content": "$2"
-      }
-    }
-  },
-  "stagingFull": {
-    "message": "Zona de pregătire este plină — eliminați mai întâi unele elemente"
-  },
-  "stagingFolderEmpty": {
-    "message": "Acest dosar nu are marcaje de pregătit"
-  },
-  "stagingConfirmFolder": {
-    "message": "Pregătiți $n$ marcaje din acest dosar?",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingConfirmFolderOk": {
-    "message": "Pregătește"
-  },
-  "stagingRemove": {
-    "message": "Elimină din zona de pregătire"
-  },
-  "stagingRemoved": {
-    "message": "Eliminat din zona de pregătire"
-  },
-  "recentStageAll": {
-    "message": "Pregătește toate adăugate recent"
-  },
-  "recentSectionTitle": {
-    "message": "Adăugate recent"
-  },
-  "stagingEmpty": {
-    "message": "Nimic pus în așteptare. Trimite marcaje aici din orice vizualizare — butonul avion de pe un rând sau meniul cu clic drept — apoi organizează și arhivează-le în masă."
-  },
-  "stagingFromHistory": {
-    "message": "Din istoric"
-  },
-  "stagingGroupExpand": {
-    "message": "Extinde grupul"
-  },
-  "stagingGroupCollapse": {
-    "message": "Restrânge grupul"
-  },
-  "stagingGroupRename": {
-    "message": "Redenumește grupul…"
-  },
-  "stagingGroupDissolve": {
-    "message": "Dizolvă grupul"
-  },
-  "stagingGroupDissolved": {
-    "message": "Grup dizolvat — elementele păstrate în zona de pregătire"
-  },
-  "stagingGroupDelete": {
-    "message": "Șterge grupul (cu elemente)"
-  },
-  "stagingGroupDeleteConfirm": {
-    "message": "Ștergeți grupul \"$1\"? Cele $2 element(e) părăsesc și zona de pregătire."
-  },
-  "stagingGroupDeleted": {
-    "message": "Grup șters — $1 element(e) eliminate"
-  },
-  "stagingGroupAssign": {
-    "message": "Grup…"
-  },
-  "stagingGroupAssignTitle": {
-    "message": "Atribuie unui grup"
-  },
-  "stagingGroupNew": {
-    "message": "Grup nou"
-  },
-  "stagingGroupNamePrompt": {
-    "message": "Numele noului grup"
-  },
-  "stagingGroupNoGroups": {
-    "message": "Niciun grup încă"
-  },
-  "stagingShortcutAdd": {
-    "message": "Adaugă scurtătură"
-  },
-  "stagingShortcutBarLabel": {
-    "message": "Mută la:"
-  },
-  "stagingGuideText": {
-    "message": "Organizați marcajele aici — selectați rândurile și intrați în modul de selecție pentru acțiunile în lot."
-  },
-  "stagingGuideDismiss": {
-    "message": "Nu mai afișa"
-  },
-  "stagingShortcutTitle": {
-    "message": "Scurtătură de mutare"
-  },
-  "stagingShortcutEdit": {
-    "message": "Editează scurtătura"
-  },
-  "stagingShortcutAlias": {
-    "message": "Alias"
-  },
-  "stagingShortcutPickFolder": {
-    "message": "Alege folderul țintă…"
-  },
-  "stagingShortcutSave": {
-    "message": "Salvează"
-  },
-  "stagingShortcutRemove": {
-    "message": "Elimină scurtătura"
-  },
-  "stagingShortcutRemoved": {
-    "message": "Scurtătură eliminată"
-  },
-  "stagingShortcutMove": {
-    "message": "Mută selecția în $1$",
-    "placeholders": {
-      "1": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingBucketTitle": {
-    "message": "Nemarcate"
-  },
-  "stagingBucketFavAll": {
-    "message": "Marchează toate"
-  },
-  "stagingNew": {
-    "message": "nou $n$",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingRowFav": {
-    "message": "Marchează acest element"
-  },
-  "stagingRowUnfav": {
-    "message": "Anulează marcarea acestui element"
-  },
-  "stagingFav": {
-    "message": "Marchează"
-  },
-  "stagingUnfav": {
-    "message": "Anulează marcarea"
-  },
-  "stagingFavDone": {
-    "message": "Marcate $n$ element(e)",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingUnfavDone": {
-    "message": "S-au eliminat $n$ element(e) din favorite",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "groupSaveToFolder": {
-    "message": "Salvează în folder…"
-  },
-  "groupCopyToFolder": {
-    "message": "Copiază în folder…"
-  },
-  "stagingCount": {
-    "message": "$n$ în așteptare",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingMoveCopy": {
-    "message": "Mută/copiază în…"
-  },
-  "stagingMoveDone": {
-    "message": "S-au mutat $n$ element(e) acasă",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingCopyDone": {
-    "message": "S-au copiat $n$ element(e)",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingMoveConfirm": {
-    "message": "Mutați $n$ element(e) în folderul ales?",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingMoveConfirmOk": {
-    "message": "Mută"
-  },
-  "stagingDeleteConfirm": {
-    "message": "Ștergeți $n$ element(e)? Cele nemarcate părăsesc doar zona de așteptare.",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingDeleted": {
-    "message": "S-au șters $n$ marcaj(e)",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingRemovedCount": {
-    "message": "S-au eliminat $n$ element(e) din zona de așteptare",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingClear": {
-    "message": "Golește zona de așteptare"
-  },
-  "stagingClearConfirm": {
-    "message": "Goliți întreaga zonă de așteptare? Arborele de marcaje nu este atins."
-  },
-  "stagingClearConfirmOk": {
-    "message": "Șterge"
-  },
-  "stagingCleared": {
-    "message": "Zona de așteptare a fost golită"
-  },
-  "groupPlaceTooltip": {
-    "message": "Salvați acest grup într-un folder…"
-  },
-  "copyBookmark": {
-    "message": "Copiază"
-  },
-  "cutBookmark": {
-    "message": "Taie"
-  },
-  "copyMoveTo": {
-    "message": "Copiază/mută în…"
-  },
-  "pasteHere": {
-    "message": "Lipește aici"
-  },
-  "copiedToast": {
-    "message": "Copiat: $t$",
-    "placeholders": {
-      "t": {
-        "content": "$1"
-      }
-    }
-  },
-  "cutToast": {
-    "message": "Tăiat: $t$ — lipiți într-un folder țintă (Esc anulează)",
-    "placeholders": {
-      "t": {
-        "content": "$1"
-      }
-    }
-  },
-  "pasteDone": {
-    "message": "Lipit"
-  },
-  "pasteGone": {
-    "message": "Marcajul nu mai există — clipboard golit"
-  },
-  "folderCopyList": {
-    "message": "Copiază titluri și adrese"
-  },
-  "folderCopyText": {
-    "message": "Listă text simplu"
-  },
-  "folderCopyMarkdown": {
-    "message": "Markdown"
-  },
-  "folderCopyJson": {
-    "message": "JSON"
-  },
-  "folderCopyConfirm": {
-    "message": "Copiați lista celor $n$ marcaje?",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "folderCopyDone": {
-    "message": "S-au copiat $n$ intrări de marcaje",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "addFolderMenu": {
-    "message": "Adaugă folder"
-  },
-  "optionCollapseAddFolderMenu": {
-    "message": "Restrânge intrările de adăugare folder"
-  },
-  "optionCollapseAddFolderMenuHint": {
-    "message": "Combină intrările de adăugare folder (înainte/după/în interior pe rândurile de foldere, înainte/după pe rândurile de marcaje) într-o singură intrare de submeniu."
-  },
-  "tabRowStage": {
-    "message": "Trimite în staging"
-  },
-  "tabgroupStageAll": {
-    "message": "Trimite grupul în staging"
-  },
-  "tabgroupStageConfirm": {
-    "message": "Trimite $n$ file în staging?",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabgroupStageNone": {
-    "message": "Nicio filă marcată în acest grup"
-  },
-  "stagedToast": {
-    "message": "S-au pus în așteptare $n$ file ca grupul „$t$”",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      },
-      "t": {
-        "content": "$2"
-      }
-    }
-  },
-  "searchResultCount": {
-    "message": "$n$ rezultat(e)",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "deleteSelected": {
-    "message": "Ștergeți selecția"
-  },
-  "recentStageGroup": {
-    "message": "Trimiteți $t$ în zona de pregătire",
-    "placeholders": {
-      "t": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingGroupSelectAll": {
-    "message": "Selectați tot în acest grup"
-  },
-  "optionsGroupLabs": {
-    "message": "Laborator"
-  },
-  "optionVirtualScrollLab": {
-    "message": "Derulare virtuală (experimental)"
-  },
-  "optionVirtualScrollLabHint": {
-    "message": "Vizualizările pentru grupuri de file și duplicate afișează doar rândurile din apropierea zonei vizibile. Mult mai rapid pe liste foarte mari; în faza experimentală, poziția barei de derulare este estimată."
-  },
-  "optionsStagingSection": {
-    "message": "Staging și adăugate recent"
-  },
-  "optionStagingEnabled": {
-    "message": "Activează zona de staging"
-  },
-  "optionStagingEnabledHint": {
-    "message": "Când este dezactivată, această vizualizare păstrează doar lista adăugate recent, iar fiecare buton sau element de meniu de staging din celelalte vizualizări este ascuns."
-  },
-  "optionTreeRowActions": {
-    "message": "Acțiuni la hover pe rândurile din arbore (editare / staging / ștergere)"
-  },
-  "optionsStorageSyncTip": {
-    "message": "Sincronizat prin contul Chrome — această setare este partajată pe dispozitivele tale.",
-    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
-  },
-  "optionsStorageLocalTip": {
-    "message": "Stocat doar pe acest dispozitiv — nu este partajat prin sincronizarea Chrome.",
-    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
-  },
-  "tabGroupsWindowsCount": {
-    "message": "$n$ ferestre",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsNewWindow": {
-    "message": "Fereastră nouă"
-  },
-  "tabGroupsMergedWindowToast": {
-    "message": "Fereastră fuzionată ca grup de file"
-  },
-  "searchStageAllGroup": {
-    "message": "Trimite toate rezultatele ca grupul \"$1$\"",
-    "placeholders": {
-      "1": {
-        "content": "$1"
-      }
-    }
-  },
-  "searchHistoryClose": {
-    "message": "Ascunde istoricul căutărilor"
-  },
-  "searchHistoryClosedToast": {
-    "message": "Istoricul căutărilor este ascuns — reactivați-l în Opțiuni → Căutare"
   }
 }

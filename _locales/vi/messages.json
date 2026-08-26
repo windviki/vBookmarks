@@ -14,6 +14,9 @@
   "addBookmarkTop": {
     "message": "Đánh dấu tab này vào đầu"
   },
+  "addFolderMenu": {
+    "message": "Thêm thư mục"
+  },
   "addNewFolder": {
     "message": "Thêm Thư Mục Con"
   },
@@ -32,23 +35,38 @@
   "announceDismiss": {
     "message": "Bỏ qua"
   },
-  "announceV408Text": {
-    "message": "v4.0.8 là bản phát hành tăng cường favicon: biểu tượng trang web thực được tự động tải cho các dấu trang mà Chrome chưa lưu vào bộ nhớ cache."
-  },
   "announceV407Text": {
     "message": "v4.0.7 mang đến chế độ xem liên kết hỏng đầy đủ tính năng: quét, đánh dấu, lọc và sắp xếp các liên kết hỏng và bị hạn chế, kèm theo các dấu đã đặt trước và mốc thời gian trên từng hàng."
   },
   "announceV407Title": {
     "message": "Có gì mới trong v4.0.7"
   },
+  "announceV408Text": {
+    "message": "v4.0.8 là bản phát hành tăng cường favicon: biểu tượng trang web thực được tự động tải cho các dấu trang mà Chrome chưa lưu vào bộ nhớ cache."
+  },
   "announceV408Title": {
     "message": "Có gì mới trong v4.0.8"
+  },
+  "announceV410Text": {
+    "message": "v4.1.0 新增标签组视图和暂存区：在书签旁管理每个窗口的标签页，并将任意位置的书签收集到暂存工作台进行批量整理。"
   },
   "announceV410Title": {
     "message": "v4.1.0 的新功能"
   },
-  "announceV410Text": {
-    "message": "v4.1.0 新增标签组视图和暂存区：在书签旁管理每个窗口的标签页，并将任意位置的书签收集到暂存工作台进行批量整理。"
+  "bookmarkFolderNoFolders": {
+    "message": "Không có thư mục dấu trang"
+  },
+  "bookmarkFolderPickDialogTitle": {
+    "message": "Thêm vào thư mục dấu trang"
+  },
+  "bookmarkOpenInExistingGroup": {
+    "message": "Mở vào nhóm tab hiện có…"
+  },
+  "bookmarkOpenInNewGroup": {
+    "message": "Mở vào nhóm tab mới"
+  },
+  "bookmarkOpenInNewGroupSetup": {
+    "message": "Mở vào nhóm tab mới…"
   },
   "confirmDeleteFolder": {
     "message": "Thư mục này chứa $count$ (mục). Bạn có thể hoàn tác việc xóa.",
@@ -57,9 +75,6 @@
         "content": "$1"
       }
     }
-  },
-  "confirmDeleteFolderButton": {
-    "message": "Xóa"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "Bạn có chắc chắn muốn xóa thư mục $folderName$ và $bookmarkCount$ dấu trang trong đó?",
@@ -71,6 +86,9 @@
         "content": "$1"
       }
     }
+  },
+  "confirmDeleteFolderButton": {
+    "message": "Xóa"
   },
   "confirmDeleteFolderSubfolders": {
     "message": "Bạn có chắc chắn muốn xóa thư mục $folderName$ và $subFolderCount$ thư mục con trong đó?",
@@ -124,11 +142,32 @@
       }
     }
   },
+  "contextMenuAddBookmark": {
+    "message": "Đánh dấu trang này bằng vBookmarks"
+  },
+  "copiedToast": {
+    "message": "Đã sao chép: $t$",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
+  },
   "copyAllTitlesAndUrls": {
     "message": "Sao chép tất cả tiêu đề và URL vào clipboard"
   },
+  "copyBookmark": {
+    "message": "Sao chép"
+  },
+  "copyMoveTo": {
+    "message": "Sao chép/di chuyển đến…"
+  },
   "copyTitleAndUrl": {
     "message": "Sao chép tiêu đề & URL"
+  },
+  "crossStorageMoveWarning": {
+    "description": "Warning when trying to move bookmarks across storage types",
+    "message": "Không thể di chuyển dấu trang giữa lưu trữ đã đồng bộ hóa và lưu trữ cục bộ. Hãy sử dụng sao chép/dán."
   },
   "customIcon": {
     "message": "Biểu tượng tùy chỉnh"
@@ -136,8 +175,14 @@
   "customIconDescription": {
     "message": "Biểu tượng phải có kích thước 19x19 pixel. Nếu không sẽ được thay đổi kích thước thành kích thước này."
   },
+  "customIconPick": {
+    "message": "Chọn tệp…"
+  },
   "customSeparatorColorDescription": {
     "message": "Tùy chỉnh Màu Dòng Kẻ"
+  },
+  "customSeparatorStringDescription": {
+    "message": "Nếu URL của dấu trang chứa chuỗi này, nó sẽ được hiển thị như một dòng kẻ"
   },
   "customSeparatorTitleDescription": {
     "message": "Tiêu đề thực của dấu trang được hiển thị như một dòng kẻ"
@@ -145,28 +190,28 @@
   "customSeparatorUrlDescription": {
     "message": "URL thực của dấu trang được hiển thị như một dòng kẻ"
   },
-  "customSeparatorStringDescription": {
-    "message": "Nếu URL của dấu trang chứa chuỗi này, nó sẽ được hiển thị như một dòng kẻ"
-  },
   "customStyles": {
     "message": "Kiểu Tùy Chỉnh"
-  },
-  "separatorOptions": {
-    "message": "Dấu phân cách"
   },
   "customStylesDescription": {
     "message": "Điều này yêu cầu một số kỹ năng CSS. Sửa đổi theo rủi ro của bạn. Chia sẻ mã sẽ khôn ngoan thông qua"
   },
-  "defaultIconButton": {
-    "message": "Sử dụng mặc định"
+  "cutBookmark": {
+    "message": "Cắt"
   },
-  "defaultIconButtonOr": {
-    "message": "hoặc"
+  "cutToast": {
+    "message": "Đã cắt: $t$ — dán vào thư mục đích (Esc để hủy)",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
   },
-  "customIconPick": {
-    "message": "Chọn tệp…"
+  "deadCancel": {
+    "message": "Hủy"
   },
   "deadChecking": {
+    "description": "Progress line of the palette's dead-link scan mode; $done$ bookmarks checked out of $total$.",
     "message": "Đang kiểm tra $done$ / $total$…",
     "placeholders": {
       "done": {
@@ -177,8 +222,10 @@
         "content": "$2",
         "example": "120"
       }
-    },
-    "description": "Progress line of the palette's dead-link scan mode; $done$ bookmarks checked out of $total$."
+    }
+  },
+  "deadClearScan": {
+    "message": "Xóa kết quả quét"
   },
   "deadConfirmAll": {
     "message": "Xóa tất cả $count$ dấu trang chết? Hành động này không thể hoàn tác trong một bước.",
@@ -192,6 +239,15 @@
   "deadConfirmDelete": {
     "message": "Xóa dấu trang này?"
   },
+  "deadConfirmDeleteSelected": {
+    "message": "Xóa $count$ dấu trang chết đã chọn?",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
+  },
   "deadDeleteAll": {
     "message": "Xóa tất cả $count$ dấu trang trong bộ lọc hiện tại?",
     "placeholders": {
@@ -201,27 +257,15 @@
       }
     }
   },
-  "deadDeleteAllNote": {
-    "message": "Trong bộ lọc Tất cả, điều này bao gồm các dấu trang bị chặn (có thể truy cập qua proxy của bạn, có khả năng vẫn còn hoạt động) và các hàng đã được đánh dấu trước đó.",
-    "description": "Second line of the delete-all confirmation in the Dead links view."
-  },
-  "undoSingleStepNote": {
-    "message": "Hoàn tác chỉ có thể khôi phục thao tác xóa gần nhất."
-  },
   "deadDeleteAllBtn": {
     "message": "Xóa tất cả"
   },
+  "deadDeleteAllNote": {
+    "description": "Second line of the delete-all confirmation in the Dead links view.",
+    "message": "Trong bộ lọc Tất cả, điều này bao gồm các dấu trang bị chặn (có thể truy cập qua proxy của bạn, có khả năng vẫn còn hoạt động) và các hàng đã được đánh dấu trước đó."
+  },
   "deadDeleteSelected": {
     "message": "Xóa mục đã chọn"
-  },
-  "deadConfirmDeleteSelected": {
-    "message": "Xóa $count$ dấu trang chết đã chọn?",
-    "placeholders": {
-      "count": {
-        "content": "$1",
-        "example": "8"
-      }
-    }
   },
   "deadDeleted": {
     "message": "Đã xóa $count$ dấu trang chết",
@@ -232,8 +276,72 @@
       }
     }
   },
-  "deadClearScan": {
-    "message": "Xóa kết quả quét"
+  "deadDetectTimeLabel": {
+    "message": "Thời gian phát hiện"
+  },
+  "deadFilterAll": {
+    "message": "Tất cả"
+  },
+  "deadFilterBlocked": {
+    "message": "Chỉ bị chặn"
+  },
+  "deadFilterDead": {
+    "message": "Chỉ hỏng"
+  },
+  "deadFilterMarked": {
+    "message": "Đã đánh dấu trước đó"
+  },
+  "deadLastScanAt": {
+    "message": "Lần quét cuối: $time$",
+    "placeholders": {
+      "time": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadMark": {
+    "message": "Đánh dấu hỏng"
+  },
+  "deadMarkAll": {
+    "message": "Đánh dấu tất cả"
+  },
+  "deadMarkSelected": {
+    "message": "Đánh dấu mục đã chọn"
+  },
+  "deadMarkStatusAll": {
+    "message": "Mọi trạng thái"
+  },
+  "deadMarkStatusMarked": {
+    "message": "Đã đánh dấu"
+  },
+  "deadMarkStatusUnmarked": {
+    "message": "Chưa đánh dấu"
+  },
+  "deadMarkTimeLabel": {
+    "message": "Thời gian đánh dấu"
+  },
+  "deadMarked": {
+    "message": "Các hàng hỏng đã được đánh dấu"
+  },
+  "deadMarkedBanner": {
+    "message": "Đang hiển thị các bookmark đã được đánh dấu trước đó. Nhấp Rescan để bắt đầu kiểm tra mới hoặc xử lý chúng trong danh sách bên dưới."
+  },
+  "deadMarkedBannerDismiss": {
+    "message": "Bỏ qua"
+  },
+  "deadMarkedCount": {
+    "message": "Đã đánh dấu $count$ dấu trang",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadMarkedNone": {
+    "message": "Chưa có dấu trang nào được đánh dấu"
+  },
+  "deadMarkedRow": {
+    "message": "Đã đánh dấu"
   },
   "deadNone": {
     "message": "Không tìm thấy liên kết hỏng"
@@ -241,34 +349,711 @@
   "deadNoneFiltered": {
     "message": "Không có liên kết chết trong bộ lọc này — hãy thử một đoạn khác phía trên."
   },
+  "deadPause": {
+    "message": "Tạm dừng"
+  },
+  "deadPaused": {
+    "message": "Đã tạm dừng"
+  },
+  "deadProxyAdd": {
+    "message": "Thêm máy chủ proxy để kiểm tra liên kết hỏng"
+  },
+  "deadProxyChange": {
+    "message": "Đổi"
+  },
+  "deadProxyClear": {
+    "message": "Xóa"
+  },
+  "deadProxyControlled": {
+    "message": "Cài đặt proxy đang được quản lý bởi tiện ích mở rộng khác"
+  },
+  "deadProxyDenied": {
+    "message": "Quyền sử dụng proxy chưa được cấp"
+  },
+  "deadProxyInvalid": {
+    "message": "Địa chỉ proxy không hợp lệ — dùng host:port hoặc scheme://host:port (http/https/socks5, không kèm thông tin xác thực)"
+  },
+  "deadProxyLabel": {
+    "message": "Proxy: $server$",
+    "placeholders": {
+      "server": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadProxyNeverShow": {
+    "message": "Không hiển thị lại"
+  },
+  "deadProxyNone": {
+    "message": "(chưa đặt)"
+  },
+  "deadProxyNudge": {
+    "message": "Kiểm tra lại qua proxy giúp phân biệt liên kết chết thực sự với liên kết bị chặn theo vùng — hãy cấu hình tại đây hoặc trong trang tùy chọn."
+  },
+  "deadProxyPanelHint": {
+    "message": "Nhập một máy chủ proxy bạn đã có (tiện ích không cung cấp sẵn), ví dụ: 127.0.0.1:7890 hoặc socks5://127.0.0.1:1080."
+  },
+  "deadProxyRemove": {
+    "message": "Xóa"
+  },
+  "deadProxyRemoved": {
+    "message": "Đã xóa máy chủ proxy"
+  },
+  "deadProxySaved": {
+    "message": "Đã lưu proxy — các lần quét sau sẽ kiểm tra lại các lỗi kết nối trực tiếp qua nó."
+  },
+  "deadProxyServerHint": {
+    "message": "Máy chủ đã lưu sẽ kiểm tra lại các dấu trang không vượt qua kiểm tra trực tiếp trong mỗi lần quét liên kết chết, giúp phân biệt liên kết chết thực sự với liên kết bị chặn theo khu vực. Kiểm tra và lưu sẽ thử nghiệm máy chủ đó (chỉ giữ lại máy chủ truy cập được); bạn cũng có thể thêm máy chủ từ chế độ xem liên kết chết."
+  },
+  "deadProxyTestSave": {
+    "message": "Kiểm tra và lưu"
+  },
+  "deadProxyTestUrlLabel": {
+    "message": "URL kiểm tra"
+  },
+  "deadProxyTesting": {
+    "message": "Đang kiểm tra…"
+  },
+  "deadProxyUnavailable": {
+    "message": "API proxy không khả dụng trong trình duyệt này"
+  },
+  "deadProxyUnreachable": {
+    "message": "Không thể kết nối tới proxy — chưa lưu"
+  },
   "deadRescan": {
     "message": "Quét lại"
+  },
+  "deadResume": {
+    "message": "Tiếp tục"
+  },
+  "deadRiskBanner": {
+    "message": "Dọn dẹp liên kết hỏng sẽ xóa hàng loạt dấu trang. Hãy sao lưu dấu trang trước lần dọn dẹp đầu tiên."
+  },
+  "deadSortByDetected": {
+    "message": "Thời gian phát hiện"
+  },
+  "deadSortByMarked": {
+    "message": "Thời gian đánh dấu"
+  },
+  "deadSortByPath": {
+    "message": "Đường dẫn thư mục"
+  },
+  "deadSortLabel": {
+    "message": "Sắp xếp theo"
+  },
+  "deadStartHint": {
+    "message": "Bắt đầu quét $n$ bookmark",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadStatusBlocked": {
+    "message": "bị chặn"
+  },
+  "deadUnmark": {
+    "message": "Xóa dấu hỏng"
+  },
+  "deadUnmarkAll": {
+    "message": "Xóa tất cả dấu"
+  },
+  "deadUnmarkSelected": {
+    "message": "Bỏ đánh dấu mục đã chọn"
+  },
+  "defaultIconButton": {
+    "message": "Sử dụng mặc định"
+  },
+  "defaultIconButtonOr": {
+    "message": "hoặc"
   },
   "delete": {
     "message": "Xóa"
   },
+  "deleteEllipsis": {
+    "message": "Xóa..."
+  },
+  "deleteSelected": {
+    "message": "Xóa mục đã chọn"
+  },
   "deletedBookmark": {
+    "description": "Toast shown after a bookmark or separator was deleted; the toast offers an undo button. $title$ is the deleted row's title (empty for separators).",
     "message": "Đã xóa $title$",
     "placeholders": {
       "title": {
         "content": "$1",
         "example": "Example"
       }
-    },
-    "description": "Toast shown after a bookmark or separator was deleted; the toast offers an undo button. $title$ is the deleted row's title (empty for separators)."
+    }
   },
   "deletedFolder": {
+    "description": "Toast shown after a bookmark folder (with its whole subtree) was deleted; the toast offers an undo button. $title$ is the folder name.",
     "message": "Đã xóa thư mục $title$",
     "placeholders": {
       "title": {
         "content": "$1",
         "example": "Bookmarks"
       }
-    },
-    "description": "Toast shown after a bookmark folder (with its whole subtree) was deleted; the toast offers an undo button. $title$ is the folder name."
+    }
+  },
+  "donationDismiss": {
+    "message": "Bỏ qua"
+  },
+  "donationGo": {
+    "message": "Quyên góp"
+  },
+  "donationLater": {
+    "message": "Để sau"
+  },
+  "donationMessage": {
+    "message": "Bạn thấy thích? Hãy quyên góp để tiếp sức cho tương lai — hoặc đánh giá trên cửa hàng: mỗi đánh giá giúp các bản cập nhật tiếp tục."
+  },
+  "donationNever": {
+    "message": "Không hiển thị lại"
+  },
+  "donationRate": {
+    "message": "Đánh giá"
+  },
+  "donationRateTitle": {
+    "message": "Đánh giá vBookmarks trên Chrome Web Store"
+  },
+  "donationV4GuideLink": {
+    "message": "Đọc hướng dẫn v4 →"
+  },
+  "donationV4Notice": {
+    "message": "vBookmarks 4.0 được thiết kế lại hoàn toàn với giao diện hiện đại, tràn đầy tính năng mới."
+  },
+  "dupesApplyAll": {
+    "message": "Áp dụng tất cả ($count$)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesApplySelected": {
+    "message": "Xóa trùng lặp mục đã chọn ($count$)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesCleanAll": {
+    "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go.",
+    "message": "Dọn sạch tất cả: $groups$ nhóm, $count$ bản sao thừa",
+    "placeholders": {
+      "count": {
+        "content": "$2"
+      },
+      "groups": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesCleanRestHint": {
+    "message": "Giữ \"$title$\" và xóa $count$ cái còn lại",
+    "placeholders": {
+      "count": {
+        "content": "$2"
+      },
+      "title": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesConfirmAll": {
+    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark).",
+    "message": "Xóa $count$ bản sao thừa trong $groups$ nhóm? Bản giữ lại được chọn trong mỗi nhóm sẽ được giữ.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    }
+  },
+  "dupesConfirmGroup": {
+    "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept).",
+    "message": "Giữ \"$title$\" và xóa $count$ bản sao khác?",
+    "placeholders": {
+      "count": {
+        "content": "$2"
+      },
+      "title": {
+        "content": "$1",
+        "example": "Example bookmark"
+      }
+    }
+  },
+  "dupesConfirmSelected": {
+    "message": "Xóa $count$ dấu trang trùng lặp khỏi $groups$ nhóm đã chọn?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    }
+  },
+  "dupesDone": {
+    "description": "Alert shown after the duplicate cleanup finished.",
+    "message": "Đã xóa $count$ dấu trang trùng lặp",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesGroupCollapse": {
+    "description": "Dupes view group-head context menu: collapse an expanded duplicate group.",
+    "message": "Thu gọn nhóm"
+  },
+  "dupesGroupCount": {
+    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL.",
+    "message": "$count$ bản trùng",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesGroupExpand": {
+    "description": "Dupes view group-head context menu: expand a collapsed duplicate group.",
+    "message": "Mở rộng nhóm"
+  },
+  "dupesIgnoreScheme": {
+    "message": "Bỏ qua khác biệt http/https"
+  },
+  "dupesKeepThis": {
+    "message": "Giữ cái này"
+  },
+  "dupesKeeperSet": {
+    "message": "Đặt làm giữ"
+  },
+  "dupesNone": {
+    "message": "Không tìm thấy bản trùng"
+  },
+  "dupesPreviewSummary": {
+    "message": "$groups$ nhóm · $count$ sẽ được giải phóng",
+    "placeholders": {
+      "count": {
+        "content": "$2"
+      },
+      "groups": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesRemoveRow": {
+    "message": "Xóa bản sao này"
+  },
+  "dupesRiskBanner": {
+    "message": "Khử trùng lặp sẽ xóa hàng loạt dấu trang trùng lặp. Hãy sao lưu dấu trang trước khi áp dụng."
+  },
+  "dupesScopeAll": {
+    "message": "Tất cả dấu trang"
+  },
+  "dupesScopeBar": {
+    "message": "Chỉ thanh dấu trang"
+  },
+  "dupesStrategyBookmarkBar": {
+    "message": "Giữ cái trong thanh dấu trang"
+  },
+  "dupesStrategyMostVisited": {
+    "message": "Giữ cái truy cập nhiều nhất"
+  },
+  "dupesStrategyNewest": {
+    "message": "Giữ mới nhất"
+  },
+  "dupesStrategyOldest": {
+    "message": "Giữ cũ nhất"
+  },
+  "dupesStrategyShallowest": {
+    "message": "Giữ cái nông nhất"
+  },
+  "dupesStrategyShortestTitle": {
+    "message": "Giữ tiêu đề ngắn nhất"
+  },
+  "edit": {
+    "message": "Chỉnh sửa..."
+  },
+  "editBookmark": {
+    "message": "Chỉnh sửa dấu trang"
+  },
+  "editFolder": {
+    "message": "Chỉnh sửa thư mục"
+  },
+  "errorOccured": {
+    "message": "Ồ, đã xảy ra lỗi."
+  },
+  "extDesc": {
+    "description": "The extension description.",
+    "message": "Trình quản lý dấu trang dạng popup. Cải tiến Neat Bookmarks. Gọn gàng hơn Neater Bookmarks."
+  },
+  "extName": {
+    "description": "vBookmarks",
+    "message": "vBookmarks"
+  },
+  "favGalleryAll": {
+    "description": "Favicon gallery source filter chip: show every source.",
+    "message": "Tất cả"
+  },
+  "favGalleryCompare": {
+    "description": "Favicon gallery toggle button: switch every icon to the generic placeholder it replaced (before/after comparison).",
+    "message": "So sánh với biểu tượng giữ chỗ"
+  },
+  "favGalleryEmptyText": {
+    "description": "Favicon gallery empty-state body text.",
+    "message": "Khi popup gặp một trang đã đánh dấu mà Chrome không có biểu tượng, vBookmarks sẽ tải biểu tượng thực và liệt kê tại đây."
+  },
+  "favGalleryEmptyTitle": {
+    "description": "Favicon gallery empty-state heading.",
+    "message": "Chưa có biểu tượng làm mới nào"
+  },
+  "favGalleryFailedHint": {
+    "description": "Favicon gallery hint under the failed-fetch section title.",
+    "message": "Các lần thất bại sẽ được thử lại sau 24 giờ, 3 ngày và 7 ngày, sau đó bỏ cuộc cho đến khi bộ đệm biểu tượng được xóa."
+  },
+  "favGalleryFailedTitle": {
+    "description": "Favicon gallery heading of the muted section listing hosts whose icon fetch failed recently.",
+    "message": "Đã thử gần đây, không tìm thấy biểu tượng"
+  },
+  "favGalleryGaveUp": {
+    "description": "Favicon gallery badge on a failed-strip host whose retries are exhausted (it stays untouched until the icon cache is cleared).",
+    "message": "Đã bỏ cuộc"
+  },
+  "favGalleryHint": {
+    "description": "Subtitle under the favicon gallery title, explaining the page is read-only.",
+    "message": "Các biểu tượng vBookmarks đã lấy cho các trang đã đánh dấu mà Chrome chưa lưu vào bộ nhớ đệm — nguồn gốc của từng biểu tượng và dấu trang nào sử dụng nó. Chỉ để hiển thị."
+  },
+  "favGalleryLink": {
+    "description": "Options link (Icons group, right of the Clear icon cache button): opens the favicon gallery page listing the sites whose icons were refetched.",
+    "message": "Xem biểu tượng đã làm mới"
+  },
+  "favGalleryOrphan": {
+    "description": "Favicon gallery note on a card whose host no longer has any bookmark.",
+    "message": "Không còn dấu trang nào trên trang web này — biểu tượng sẽ bị xóa cùng bộ nhớ đệm."
+  },
+  "favGallerySearch": {
+    "description": "Placeholder of the favicon gallery filter input.",
+    "message": "Lọc theo trang, tiêu đề hoặc đường dẫn"
+  },
+  "favGalleryShowingBefore": {
+    "description": "Favicon gallery toggle button while the placeholder comparison is shown: switch back to the real fetched icons.",
+    "message": "Quay lại biểu tượng thật"
+  },
+  "favGalleryStatBookmarks": {
+    "description": "Favicon gallery stats strip: how many bookmarks sit on the refreshed sites.",
+    "message": "$n$ dấu trang",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "favGalleryStatSites": {
+    "description": "Favicon gallery stats strip: how many sites have a refreshed icon.",
+    "message": "$n$ trang web",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "favGalleryTitle": {
+    "description": "Favicon gallery page title (h1 + document title).",
+    "message": "Biểu tượng trang web đã làm mới"
+  },
+  "favGalleryVisits": {
+    "description": "Favicon gallery tooltip on a bookmark row's visit-count pill.",
+    "message": "$n$ lần mở đã ghi nhận",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "favSrcDirect": {
+    "description": "Favicon gallery source badge: the icon was fetched directly from the site itself.",
+    "message": "Trực tiếp"
+  },
+  "favSrcLegacy": {
+    "description": "Favicon gallery source badge: cached before the source was recorded, so the origin is unknown.",
+    "message": "Bộ nhớ đệm trước đó"
+  },
+  "favSrcProxy": {
+    "description": "Favicon gallery source badge: the icon was fetched through the user's own proxy relay.",
+    "message": "Proxy"
+  },
+  "folderCopyConfirm": {
+    "message": "Sao chép danh sách $n$ dấu trang?",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "folderCopyDone": {
+    "message": "Đã sao chép $n$ mục dấu trang",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "folderCopyJson": {
+    "message": "JSON"
+  },
+  "folderCopyList": {
+    "message": "Sao chép tiêu đề và địa chỉ"
+  },
+  "folderCopyMarkdown": {
+    "message": "Markdown"
+  },
+  "folderCopyText": {
+    "message": "Danh sách văn bản thuần"
+  },
+  "folderEmpty": {
+    "message": "(Trống)"
+  },
+  "folderPickCopyHere": {
+    "message": "Sao chép đến đây"
+  },
+  "folderPickFavNote": {
+    "message": "Các mục chưa đánh dấu sẽ được đánh dấu tại đây"
+  },
+  "folderPickFilter": {
+    "message": "Lọc thư mục…"
+  },
+  "folderPickMoveHere": {
+    "message": "Di chuyển đến đây"
+  },
+  "folderPickPinned": {
+    "message": "Đã ghim"
+  },
+  "folderPickRecent": {
+    "message": "Gần đây"
+  },
+  "general": {
+    "message": "Chung"
+  },
+  "groupCopyToFolder": {
+    "message": "Sao chép vào thư mục…"
+  },
+  "groupPlaceTooltip": {
+    "message": "Lưu nhóm này vào một thư mục…"
+  },
+  "groupSaveToFolder": {
+    "message": "Lưu vào thư mục…"
+  },
+  "ignore": {
+    "message": "Bỏ qua"
+  },
+  "name": {
+    "description": "Name of bookmark or folder.",
+    "message": "Tên"
+  },
+  "noTitle": {
+    "description": "The title for untitled bookmarks with no http(s) URL or untitled folders.",
+    "message": "(không tiêu đề)"
+  },
+  "nope": {
+    "message": "Hủy"
+  },
+  "open": {
+    "description": "Action to open bookmarks.",
+    "message": "Mở"
+  },
+  "openBookmarks": {
+    "message": "Mở Tất Cả Dấu Trang"
+  },
+  "openBookmarksInExistingGroup": {
+    "message": "Mở hết vào nhóm tab hiện có…"
+  },
+  "openBookmarksInGroup": {
+    "message": "Mở tất cả trong nhóm tab mới"
+  },
+  "openBookmarksInGroupSetup": {
+    "message": "Mở hết vào nhóm tab mới…"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "Mở tất cả trong cửa sổ ẩn danh"
+  },
+  "openBookmarksNewWindow": {
+    "message": "Mở tất cả trong cửa sổ mới"
+  },
+  "openCommandPaletteCommand": {
+    "message": "Mở bảng lệnh"
+  },
+  "openIncognitoWindow": {
+    "message": "Mở trong Cửa Sổ Ẩn Danh"
+  },
+  "openNewTab": {
+    "message": "Mở trong Tab Mới"
+  },
+  "openNewWindow": {
+    "message": "Mở trong Cửa Sổ Mới"
+  },
+  "openSidePanelCommand": {
+    "message": "Mở bảng điều khiển bên vBookmarks"
+  },
+  "optionAnnounceEnabled": {
+    "message": "Hiển thị thông báo trong sản phẩm"
+  },
+  "optionAnnounceEnabledHint": {
+    "message": "Ghi chú phát hành và mẹo từ kho GitHub của dự án (tìm nạp tối đa mỗi 6 giờ). Tắt cũng ngừng tìm nạp từ mạng."
+  },
+  "optionAutoRefreshSync": {
+    "message": "Tự động làm mới trạng thái đồng bộ"
+  },
+  "optionAutoResizePopup": {
+    "message": "Tự động điều chỉnh kích thước cửa sổ popup để phù hợp với nội dung"
+  },
+  "optionClassicExperience": {
+    "message": "Khôi phục thanh tiêu đề cổ điển"
+  },
+  "optionClassicExperienceHint": {
+    "message": "Tắt bảng lệnh, ngôi sao thêm nhanh, mục chuột phải trên trang, nút công cụ và các tab xem. Từng mục có thể được bật lại riêng lẻ trong mục của nó."
+  },
+  "optionClickNewTab": {
+    "message": "Nhấp chuột trái mở dấu trang trong tab mới."
+  },
+  "optionCloseUnusedFolders": {
+    "message": "Đóng các thư mục không sử dụng khi mở một thư mục."
+  },
+  "optionCollapseAddFolderMenu": {
+    "message": "Thu gọn các mục thêm thư mục"
+  },
+  "optionCollapseAddFolderMenuHint": {
+    "message": "将添加文件夹条目（文件夹行上的前/后/内部，书签行上的前/后）合并为一个子菜单条目。"
+  },
+  "optionCollapseSortMenu": {
+    "message": "Thu gọn các mục sắp xếp thành một menu con \"Sắp xếp\""
+  },
+  "optionCollapseSortMenuHint": {
+    "message": "Áp dụng cho menu chuột phải của thư mục. Bật theo mặc định."
+  },
+  "optionCollapseTabGroupMenu": {
+    "message": "Thu gọn các mục nhóm tab thành một menu con \"Nhóm tab\""
+  },
+  "optionCollapseTabGroupMenuHint": {
+    "message": "Áp dụng cho cả menu chuột phải của thư mục và dấu trang. Tắt theo mặc định; giúp menu ngắn hơn trên màn hình nhỏ hoặc khi phóng to."
+  },
+  "optionConfirmDeleteFolder": {
+    "message": "Xác nhận trước khi xóa thư mục không rỗng"
+  },
+  "optionConfirmOpenFolder": {
+    "message": "Hiển thị xác nhận khi mở nhiều dấu trang từ một thư mục."
+  },
+  "optionDeadProxyServer": {
+    "message": "Máy chủ proxy cho liên kết hỏng"
+  },
+  "optionDeadProxyStrip": {
+    "message": "Hiển thị gợi ý thêm proxy trong chế độ xem liên kết chết"
+  },
+  "optionDeadProxyStripHint": {
+    "message": "Tắt sẽ ẩn gợi ý đó ở đó; máy chủ proxy vẫn có thể định cấu hình tại đây, và máy chủ đã lưu luôn hiển thị hàng quản lý của nó trong chế độ xem."
+  },
+  "optionDeadScanConcurrency": {
+    "message": "Độ đồng thời quét liên kết chết (1-16)"
+  },
+  "optionDeadScanTimeout": {
+    "message": "Thời gian chờ quét liên kết chết (giây) (2-30)"
+  },
+  "optionFaviconBackup": {
+    "message": "Bao gồm cache biểu tượng trong bản sao lưu"
+  },
+  "optionFaviconBackupHint": {
+    "message": "Cũng đóng gói bộ nhớ đệm biểu tượng nâng cao (dữ liệu theo từng trang web, có thể lớn) vào xuất/nhập cài đặt. Điều này bao gồm các biểu tượng đã được lưu trữ ngay cả khi tính năng tải biểu tượng bị tắt. Tắt tùy chọn này giúp bản sao lưu nhỏ; các biểu tượng sẽ được tải lại tự động."
+  },
+  "optionFaviconCacheClear": {
+    "message": "Xóa bộ đệm biểu tượng"
+  },
+  "optionFaviconCacheClearConfirm": {
+    "message": "Xóa bộ nhớ đệm biểu tượng nâng cao? Các biểu tượng sẽ được tải lại tự động khi mở lần sau."
+  },
+  "optionFaviconCacheCleared": {
+    "message": "Đã xóa bộ đệm biểu tượng. Biểu tượng sẽ được tải lại khi mở lần sau."
+  },
+  "optionFaviconCacheEmpty": {
+    "message": "Không có bộ nhớ đệm biểu tượng nào để xóa."
+  },
+  "optionFaviconContrast": {
+    "message": "Đảo ngược favicon có độ tương phản thấp"
+  },
+  "optionFaviconContrastHint": {
+    "message": "Biểu tượng màu trắng trên nền sáng và màu đen trên nền tối sẽ được đảo ngược để luôn hiển thị rõ. Mỗi biểu tượng được lấy mẫu một lần khi tải — không tốn chi phí khi duyệt web."
+  },
+  "optionFaviconEnrich": {
+    "message": "Tải biểu tượng còn thiếu"
+  },
+  "optionFaviconEnrichAgg": {
+    "message": "Dự phòng biểu tượng từ bên thứ ba"
+  },
+  "optionFaviconEnrichAggHint": {
+    "message": "Khi tải trực tiếp thất bại, hãy tra cứu biểu tượng theo tên miền từ danh sách tích hợp các dịch vụ biểu tượng của bên thứ ba ($providers$). Dịch vụ không truy cập được sẽ bị bỏ qua và thử dịch vụ tiếp theo — dịch vụ đó sẽ không được thử lại trong 6 giờ.",
+    "placeholders": {
+      "providers": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionFaviconEnrichHint": {
+    "message": "Đối với các trang đã đánh dấu mà Chrome không có biểu tượng trong bộ nhớ cache, hãy tải trực tiếp biểu tượng thực từ trang web (/favicon.ico, sau đó là các biểu tượng được khai báo của trang). Yêu cầu chỉ gửi đến các trang bạn đã đánh dấu."
+  },
+  "optionHighlightUnsynced": {
+    "message": "Làm mờ dấu trang chưa đồng bộ"
+  },
+  "optionLanguage": {
+    "message": "Ngôn ngữ"
+  },
+  "optionLanguageAuto": {
+    "message": "Tự động"
+  },
+  "optionLanguageHint": {
+    "message": "Đổi ngôn ngữ sẽ tải lại trang này."
+  },
+  "optionOnlyShowBookmarkBar": {
+    "message": "Chỉ hiển thị dấu trang trong Thanh Dấu Trang"
+  },
+  "optionOpenInSidePanel": {
+    "message": "Mở trong bảng điều khiển bên thay vì cửa sổ bật lên"
+  },
+  "optionOpenNewTab": {
+    "message": "Nhấp chuột giữa hoặc control-nhấp mở dấu trang trong tab nền mới (thay vì tab nền trước)."
+  },
+  "optionPaletteEnabled": {
+    "message": "Bật bảng lệnh (Ctrl/Cmd+K)"
+  },
+  "optionPopupStays": {
+    "message": "Popup vẫn mở khi mở dấu trang (nhấp chuột trái)."
+  },
+  "optionQuickAddContextMenu": {
+    "message": "Thêm mục \"Đánh dấu trang này bằng vBookmarks\" vào menu chuột phải trên trang"
+  },
+  "optionQuickAddContextMenuHint": {
+    "message": "Độc lập với nút ngôi sao thêm nhanh; khôi phục trải nghiệm cổ điển cũng tắt mục này."
+  },
+  "optionQuickAddEnabled": {
+    "message": "Hiện nút ngôi sao thêm nhanh bên cạnh ô tìm kiếm"
+  },
+  "optionRecentCollapsed": {
+    "message": "Thu gọn phần thêm gần đây theo mặc định"
   },
   "optionRecentCount": {
     "message": "Số lượng bookmark mới thêm vào để hiển thị"
+  },
+  "optionRememberPrevState": {
+    "message": "Ghi nhớ trạng thái trước đó (vị trí cuộn, thư mục đã mở và mục được tập trung cuối cùng)."
+  },
+  "optionRememberView": {
+    "message": "Ghi nhớ chế độ xem cuối cùng và mở lại"
+  },
+  "optionSearchAfterEnter": {
+    "message": "Tìm kiếm dấu trang chỉ khi nhấn ENTER (thay vì tìm kiếm tức thì)"
   },
   "optionSearchHistory": {
     "message": "Hiển thị khu vực lịch sử tìm kiếm"
@@ -276,17 +1061,496 @@
   "optionSearchHistoryHint": {
     "message": "Ẩn khu vực tìm kiếm gần đây phía trên kết quả — các truy vấn đã lưu được giữ lại"
   },
+  "optionShowDeadView": {
+    "message": "Hiển thị tab xem liên kết chết"
+  },
+  "optionShowDupesView": {
+    "message": "Hiển thị tab xem trùng lặp"
+  },
+  "optionShowItemPath": {
+    "message": "Hiển thị đường dẫn thư mục cha trên các hàng danh sách"
+  },
+  "optionShowRecentBookmarks": {
+    "message": "Hiển thị dấu trang thêm gần đây ở đầu cửa sổ bật lên"
+  },
+  "optionShowStatsView": {
+    "message": "Hiển thị tab xem thống kê"
+  },
+  "optionShowSyncStatus": {
+    "message": "Hiển thị chỉ báo trạng thái đồng bộ"
+  },
+  "optionShowTabBadges": {
+    "message": "Hiện huy hiệu số lượng trên các tab chế độ xem"
+  },
+  "optionShowTabGroupsView": {
+    "message": "Hiển thị tab chế độ xem nhóm tab"
+  },
+  "optionShowToolButton": {
+    "message": "Hiện nút công cụ (⋮) bên cạnh ô tìm kiếm"
+  },
+  "optionShowViewTabs": {
+    "message": "Hiển thị các tab chế độ xem bên dưới ô tìm kiếm"
+  },
+  "optionStagingEnabled": {
+    "message": "启用暂存区"
+  },
+  "optionStagingEnabledHint": {
+    "message": "关闭时，此视图仅保留最近添加的列表，其他视图中的暂存按钮或菜单项将全部隐藏。"
+  },
+  "optionStatsEnabled": {
+    "message": "Bật thống kê lượt truy cập"
+  },
+  "optionSyncRefreshInterval": {
+    "message": "Khoảng thời gian làm mới"
+  },
+  "optionSyncRefreshIntervalSeconds": {
+    "message": "giây"
+  },
+  "optionTabGroupsClosedLimit": {
+    "message": "Lịch sử tab/nhóm đã đóng cần giữ"
+  },
+  "optionTheme": {
+    "message": "Giao diện"
+  },
+  "optionThemeAuto": {
+    "message": "Theo hệ thống"
+  },
+  "optionThemeDark": {
+    "message": "Tối"
+  },
+  "optionThemeInk": {
+    "message": "Mực (tối)"
+  },
+  "optionThemeLight": {
+    "message": "Sáng"
+  },
+  "optionThemePaper": {
+    "message": "Giấy (sáng)"
+  },
+  "optionTreeRowActions": {
+    "message": "树行悬停操作（编辑 / 暂存 / 删除）"
+  },
+  "optionVirtualScrollLab": {
+    "message": "虚拟滚动（实验性）"
+  },
+  "optionVirtualScrollLabHint": {
+    "message": "标签组和重复项视图仅渲染视口附近的行。在非常大的列表上速度更快；实验阶段滚动条位置为估算值。"
+  },
+  "optionZoom": {
+    "message": "Thu phóng"
+  },
+  "options": {
+    "message": "Tùy Chọn"
+  },
+  "optionsDonate": {
+    "message": "Quyên góp"
+  },
+  "optionsFooterText": {
+    "description": "Footer text for the Options page",
+    "message": "Xây dựng bởi $authorName$.",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionsGithubLink": {
+    "message": "GitHub"
+  },
+  "optionsGroupBackup": {
+    "message": "Sao lưu"
+  },
+  "optionsGroupContextMenu": {
+    "message": "Menu ngữ cảnh"
+  },
+  "optionsGroupIcons": {
+    "message": "Biểu tượng"
+  },
+  "optionsGroupLabs": {
+    "message": "实验室"
+  },
+  "optionsGroupPalette": {
+    "message": "Bảng lệnh"
+  },
+  "optionsGroupSort": {
+    "message": "Sắp xếp"
+  },
+  "optionsGroupStats": {
+    "message": "Thống kê"
+  },
+  "optionsGroupTools": {
+    "message": "Công cụ"
+  },
+  "optionsGroupViews": {
+    "message": "Chế độ xem"
+  },
+  "optionsHomepageLink": {
+    "message": "Trang chủ"
+  },
+  "optionsSince": {
+    "message": "Được fork từ Neat Bookmarks, duy trì trong $days$ ngày.",
+    "placeholders": {
+      "days": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionsStagingSection": {
+    "message": "暂存与最近添加"
+  },
+  "optionsStorageLocalTip": {
+    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting).",
+    "message": "仅存储在此设备上 — 不通过 Chrome 同步共享。"
+  },
+  "optionsStorageSyncTip": {
+    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting).",
+    "message": "通过 Chrome 账户同步 — 此设置跨设备共享。"
+  },
+  "optionsVersion": {
+    "message": "Phiên bản vBookmarks"
+  },
+  "paletteActionOpenUrl": {
+    "message": "Mở URL"
+  },
+  "paletteActionOpenUrlGroup": {
+    "message": "Mở nhóm thư mục dấu trang"
+  },
+  "paletteActionUrlTemplate": {
+    "message": "Mở URL theo mẫu"
+  },
+  "paletteActionViewPreset": {
+    "message": "Mở chế độ xem với cấu hình đặt sẵn"
+  },
+  "paletteClose": {
+    "message": "Đóng"
+  },
+  "paletteCmdDead": {
+    "message": "Tìm liên kết hỏng"
+  },
+  "paletteCmdDupes": {
+    "message": "Dọn dấu trang trùng lặp"
+  },
+  "paletteCmdGoDead": {
+    "message": "Đi tới chế độ xem Liên kết chết"
+  },
+  "paletteCmdGoDupes": {
+    "message": "Đi tới chế độ xem Trùng lặp"
+  },
+  "paletteCmdGoRecent": {
+    "message": "Đi tới chế độ xem Gần đây"
+  },
+  "paletteCmdGoSearch": {
+    "message": "Đi tới chế độ xem Tìm kiếm"
+  },
+  "paletteCmdGoStats": {
+    "message": "Đi tới chế độ xem Thống kê"
+  },
+  "paletteCmdGoTabGroups": {
+    "message": "Đi tới chế độ xem Nhóm tab"
+  },
+  "paletteCmdGoTree": {
+    "message": "Đi tới chế độ xem Cây"
+  },
+  "paletteCmdLang": {
+    "message": "Chuyển ngôn ngữ…"
+  },
+  "paletteCmdLangUsage": {
+    "message": "Cách dùng: /lang theo sau là mã ngôn ngữ — ví dụ: /lang en, /lang zh_CN, /lang ja."
+  },
+  "paletteCmdNewBookmark": {
+    "message": "Dấu trang mới…"
+  },
+  "paletteCmdNewFolder": {
+    "message": "Thư mục mới…"
+  },
+  "paletteCmdOptions": {
+    "message": "Mở trang tùy chọn"
+  },
+  "paletteCmdQuickAdd": {
+    "message": "Đánh dấu tab hiện tại"
+  },
+  "paletteCmdSaveAsCommand": {
+    "message": "Lưu \"$1\" thành một lệnh…"
+  },
+  "paletteCmdSaveSession": {
+    "message": "Lưu các tab cửa sổ thành thư mục"
+  },
+  "paletteCmdSearchInView": {
+    "message": "Tìm kiếm '$query$' trong chế độ xem Tìm kiếm",
+    "placeholders": {
+      "query": {
+        "content": "$1"
+      }
+    }
+  },
+  "paletteCmdTheme": {
+    "message": "Đặt giao diện…"
+  },
+  "paletteCmdThemeUsage": {
+    "message": "Cách dùng: /theme kèm tên giao diện — auto, light, dark, ink hoặc paper (tiền tố duy nhất cũng được, ví dụ: /theme d)."
+  },
+  "paletteCmdToggleViewTabs": {
+    "message": "Bật/tắt tab xem"
+  },
+  "paletteCmdVersion": {
+    "message": "Thông tin phiên bản"
+  },
+  "paletteCustomAction": {
+    "message": "Hành động"
+  },
+  "paletteCustomAdd": {
+    "message": "Thêm lệnh…"
+  },
+  "paletteCustomAliases": {
+    "message": "Bí danh (phân tách bằng dấu phẩy)"
+  },
+  "paletteCustomBroken": {
+    "message": "Thư mục của lệnh \"$1\" không còn tồn tại. Xóa lệnh này?"
+  },
+  "paletteCustomDeleteConfirm": {
+    "message": "Xóa lệnh \"$1\"? Thay đổi sẽ được đồng bộ đến tất cả thiết bị của bạn."
+  },
+  "paletteCustomEmpty": {
+    "message": "Chưa có lệnh tùy chỉnh nào."
+  },
+  "paletteCustomErrAction": {
+    "message": "Chọn một loại hành động."
+  },
+  "paletteCustomErrAlias": {
+    "message": "Bí danh: cùng quy tắc như slash (1–24 ký tự chữ thường, chữ số hoặc dấu gạch nối)."
+  },
+  "paletteCustomErrFolder": {
+    "message": "Chọn một thư mục dấu trang."
+  },
+  "paletteCustomErrLimit": {
+    "message": "Đã đạt giới hạn lệnh (100) — hãy xóa một lệnh trước."
+  },
+  "paletteCustomErrSlash": {
+    "message": "Slash: 1–24 ký tự chữ thường, chữ số hoặc dấu gạch nối, bắt đầu bằng chữ cái hoặc chữ số."
+  },
+  "paletteCustomErrTaken": {
+    "message": "Slash hoặc bí danh này đã được sử dụng."
+  },
+  "paletteCustomErrTemplate": {
+    "message": "Mẫu phải chứa chính xác một %s."
+  },
+  "paletteCustomErrUrl": {
+    "message": "Chỉ cho phép URL http:// hoặc https://."
+  },
+  "paletteCustomErrView": {
+    "message": "Chọn một chế độ xem."
+  },
+  "paletteCustomFolder": {
+    "message": "Thư mục dấu trang"
+  },
+  "paletteCustomHint": {
+    "message": "Lệnh gạch chéo tùy chỉnh cho bảng lệnh (Ctrl/Cmd+K). Chúng đồng bộ với cài đặt của bạn — tối đa 100 mục."
+  },
+  "paletteCustomSave": {
+    "message": "Lưu lệnh"
+  },
+  "paletteCustomScan": {
+    "message": "Bắt đầu quét khi nhập"
+  },
+  "paletteCustomScope": {
+    "message": "Cài đặt sẵn phạm vi khử trùng lặp"
+  },
+  "paletteCustomSlash": {
+    "message": "Slash (từ sau /)"
+  },
+  "paletteCustomStrategy": {
+    "message": "Cài đặt sẵn chiến lược khử trùng lặp"
+  },
+  "paletteCustomTag": {
+    "message": "tùy chỉnh"
+  },
+  "paletteCustomTemplate": {
+    "message": "Mẫu URL — %s được thay thế bằng các từ sau lệnh"
+  },
+  "paletteCustomUrl": {
+    "message": "URL"
+  },
+  "paletteCustomUsage": {
+    "message": "$1 / $2"
+  },
+  "paletteCustomView": {
+    "message": "Chế độ xem"
+  },
+  "paletteCustomWhere": {
+    "message": "Mở trong"
+  },
+  "paletteNoResults": {
+    "message": "Không có kết quả phù hợp"
+  },
+  "palettePlaceholder": {
+    "message": "Tìm kiếm dấu trang, thư mục, lệnh…"
+  },
+  "paletteWhereBackground": {
+    "message": "Tab nền"
+  },
+  "paletteWhereCurrent": {
+    "message": "Tab hiện tại"
+  },
+  "paletteWhereTab": {
+    "message": "Tab mới"
+  },
+  "paletteWhereWindow": {
+    "message": "Cửa sổ mới"
+  },
+  "parentFolder": {
+    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
+    "message": "Thư mục cha: \"$folderName$\"",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarksbar"
+      }
+    }
+  },
+  "pasteDone": {
+    "message": "Đã dán"
+  },
+  "pasteGone": {
+    "message": "Dấu trang không còn tồn tại — đã xóa bộ nhớ tạm"
+  },
+  "pasteHere": {
+    "message": "Dán vào đây"
+  },
+  "pinFolder": {
+    "message": "Ghim thư mục này"
+  },
+  "quickAddBookmark": {
+    "message": "Đánh dấu trang này (Ctrl+D)"
+  },
+  "quickAddBookmarkCommand": {
+    "message": "Thêm nhanh tab hiện tại làm dấu trang"
+  },
+  "quickAdded": {
+    "message": "Đã thêm dấu trang"
+  },
+  "quickAddedTo": {
+    "message": "Đã thêm dấu trang vào $folderName$",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarks bar"
+      }
+    }
+  },
+  "quickRemoveBookmark": {
+    "message": "Xóa dấu trang này (Ctrl+D)"
+  },
+  "quickRemoved": {
+    "message": "Đã xóa dấu trang"
+  },
+  "recentBookmarks": {
+    "message": "Đã thêm gần đây"
+  },
   "recentEmpty": {
     "message": "Không có bookmark gần đây. Nhấn Ctrl+D để đánh dấu trang hiện tại."
+  },
+  "recentGroupMonth": {
+    "message": "Tháng này"
+  },
+  "recentGroupOlder": {
+    "message": "Cũ hơn"
+  },
+  "recentGroupToday": {
+    "message": "Hôm nay"
+  },
+  "recentGroupWeek": {
+    "message": "Tuần này"
   },
   "recentRevealInTree": {
     "message": "Hiện trong cây"
   },
+  "recentSectionTitle": {
+    "message": "Mới thêm"
+  },
+  "recentStageAll": {
+    "message": "Đưa tất cả mục mới thêm vào vùng chờ"
+  },
+  "recentStageGroup": {
+    "message": "将 $t$ 发送到暂存区",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
+  },
+  "removeSeparator": {
+    "message": "Xóa Dòng Kẻ"
+  },
+  "replaceUrl": {
+    "message": "Thay thế điều này bằng URL hiện tại"
+  },
+  "reportError": {
+    "message": "Báo Cáo Lỗi"
+  },
+  "reportedToDeveloper": {
+    "description": "A message for an error occured in the extension, has been reported to the developer.",
+    "message": "Điều này đã được báo cáo cho nhà phát triển."
+  },
+  "resetButton": {
+    "message": "Đặt lại"
+  },
+  "resetSettings": {
+    "message": "Đặt lại cài đặt"
+  },
+  "resetSettingsDescription": {
+    "message": "Đặt lại vBookmarks về cài đặt mặc định."
+  },
+  "revealOutsideBarAction": {
+    "message": "Hiện tất cả và định vị"
+  },
+  "revealOutsideBarHint": {
+    "message": "Chỉ có thanh dấu trang được hiển thị: mục tiêu nằm ngoài thanh này."
+  },
+  "riskBannerDismiss": {
+    "message": "Bỏ qua"
+  },
+  "riskBannerHelp": {
+    "message": "Hướng dẫn sao lưu và khôi phục"
+  },
+  "riskBannerNever": {
+    "message": "Không hiển thị lại"
+  },
+  "rowActionDelete": {
+    "message": "Xóa"
+  },
+  "rowActionMark": {
+    "message": "Đánh dấu chết"
+  },
+  "rowActionReveal": {
+    "message": "Hiển thị trong cây"
+  },
+  "rowActionUnmark": {
+    "message": "Xóa dấu chết"
+  },
+  "save": {
+    "message": "Lưu"
+  },
+  "searchBookmarks": {
+    "description": "Placeholder text for search field.",
+    "message": "Tìm kiếm Dấu Trang"
+  },
+  "searchClear": {
+    "message": "Xóa tìm kiếm"
+  },
   "searchHistoryClear": {
     "message": "Xóa tất cả"
   },
+  "searchHistoryClose": {
+    "message": "Ẩn lịch sử tìm kiếm"
+  },
+  "searchHistoryClosedToast": {
+    "message": "Lịch sử tìm kiếm đã ẩn — bật lại trong Tùy chọn → Tìm kiếm"
+  },
   "searchHistoryRemove": {
     "message": "Xóa tìm kiếm này"
+  },
+  "searchHistoryRerun": {
+    "message": "Tìm lại"
   },
   "searchHistoryResultCount": {
     "message": "$n$ kết quả",
@@ -298,6 +1562,895 @@
   },
   "searchHistoryTitle": {
     "message": "Tìm kiếm gần đây"
+  },
+  "searchNoResults": {
+    "message": "Không có dấu trang phù hợp"
+  },
+  "searchResultCount": {
+    "message": "$n$ kết quả",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "searchStageAllGroup": {
+    "message": "Gửi tất cả kết quả vào nhóm \"$1$\"",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "searchViewHint": {
+    "message": "Nhập vào ô bên trên để tìm kiếm bookmark của bạn"
+  },
+  "selectAll": {
+    "message": "Tất cả"
+  },
+  "selectClear": {
+    "message": "Bỏ chọn"
+  },
+  "selectCount": {
+    "message": "Đã chọn $count$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "selectInvert": {
+    "message": "Đảo ngược"
+  },
+  "selectModeEnter": {
+    "message": "Chọn"
+  },
+  "selectModeExit": {
+    "message": "Thoát chọn"
+  },
+  "separatorOptions": {
+    "message": "Dấu phân cách"
+  },
+  "sessionEmpty": {
+    "message": "Không có tab để lưu"
+  },
+  "sessionFolderName": {
+    "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm.",
+    "message": "Phiên $date$",
+    "placeholders": {
+      "date": {
+        "content": "$1",
+        "example": "2026-07-18 15:04"
+      }
+    }
+  },
+  "sessionSaved": {
+    "description": "Alert shown after the current window's tabs were saved into a new bookmark folder.",
+    "message": "Đã lưu $count$ tab vào thư mục mới",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "12"
+      }
+    }
+  },
+  "settingsBackupHint": {
+    "message": "Xuất lưu tất cả cài đặt (bao gồm tùy chọn đồng bộ) vào một tệp JSON. Nhập sẽ hợp nhất bản sao lưu: cài đặt trong tệp ghi đè lên cài đặt hiện tại, mọi thứ khác được giữ nguyên."
+  },
+  "settingsExport": {
+    "message": "Xuất cài đặt"
+  },
+  "settingsImport": {
+    "message": "Nhập cài đặt"
+  },
+  "settingsImportConfirm": {
+    "message": "Việc nhập sẽ ghi đè mọi cài đặt có trong tệp sao lưu (cài đặt không có trong tệp được giữ lại) và tải lại trang này. Tiếp tục?"
+  },
+  "settingsImportDone": {
+    "message": "Đã nhập cài đặt. Trang sẽ tải lại ngay bây giờ."
+  },
+  "settingsImportError": {
+    "message": "Không thể ghi một số cài đặt (do dung lượng lưu trữ hoặc lỗi tạm thời). Việc nhập không hoàn tất — vui lòng thử lại."
+  },
+  "settingsImportInvalid": {
+    "message": "Tệp cài đặt không hợp lệ: không phải bản sao lưu cài đặt vBookmarks."
+  },
+  "sortByDate": {
+    "message": "Sắp xếp theo ngày thêm"
+  },
+  "sortByDateAdded": {
+    "message": "Theo ngày thêm (mới nhất trước)"
+  },
+  "sortByName": {
+    "message": "Sắp xếp theo tên"
+  },
+  "sortByTitle": {
+    "message": "Theo tiêu đề"
+  },
+  "sortDone": {
+    "message": "Đã sắp xếp thư mục"
+  },
+  "sortFolderContents": {
+    "message": "Sắp xếp nội dung thư mục"
+  },
+  "sortFoldersFirst": {
+    "message": "Giữ thư mục ở trên"
+  },
+  "sortMenuOptions": {
+    "message": "Sắp xếp"
+  },
+  "sortOptions": {
+    "message": "Tùy chọn sắp xếp…"
+  },
+  "sortRecursive": {
+    "message": "Sắp xếp cả thư mục con (đệ quy)"
+  },
+  "sortRecursiveSuffix": {
+    "message": "(đệ quy)"
+  },
+  "sortRecursiveWarning": {
+    "message": "Thao tác này sắp xếp lại các dấu trang trong mọi thư mục con."
+  },
+  "stagedToast": {
+    "message": "Đã xếp $n$ tab thành nhóm “$t$”",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "t": {
+        "content": "$2"
+      }
+    }
+  },
+  "stagingAdd": {
+    "message": "Gửi đến vùng tạm"
+  },
+  "stagingAdded": {
+    "message": "Đã gửi đến vùng tạm"
+  },
+  "stagingAddedSummary": {
+    "message": "Đã thêm $n$ mục; $m$ mục đã có",
+    "placeholders": {
+      "m": {
+        "content": "$2"
+      },
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingAlready": {
+    "message": "Đã có trong vùng chờ"
+  },
+  "stagingBucketFavAll": {
+    "message": "Yêu thích tất cả"
+  },
+  "stagingBucketTitle": {
+    "message": "Chưa đánh dấu"
+  },
+  "stagingClear": {
+    "message": "Xóa khu vực xếp"
+  },
+  "stagingClearConfirm": {
+    "message": "Xóa toàn bộ khu vực xếp? Cây dấu trang không bị ảnh hưởng."
+  },
+  "stagingClearConfirmOk": {
+    "message": "Xóa"
+  },
+  "stagingCleared": {
+    "message": "Đã xóa khu vực xếp"
+  },
+  "stagingConfirmFolder": {
+    "message": "Đưa $n$ dấu trang từ thư mục này vào vùng chờ?",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingConfirmFolderOk": {
+    "message": "Lưu"
+  },
+  "stagingCopyDone": {
+    "message": "Đã sao chép $n$ mục",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingCount": {
+    "message": "$n$ đã xếp",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingDeleteConfirm": {
+    "message": "Xóa $n$ mục? Các mục không đánh dấu sẽ rời khỏi khu vực xếp.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingDeleted": {
+    "message": "Đã xóa $n$ dấu trang",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingEmpty": {
+    "message": "Chưa có gì được xếp tạm. Gửi dấu trang vào đây từ bất kỳ chế độ xem nào — nút máy bay trên hàng hoặc menu chuột phải — sau đó sắp xếp và lưu trữ hàng loạt."
+  },
+  "stagingFav": {
+    "message": "Yêu thích"
+  },
+  "stagingFavDone": {
+    "message": "Đã yêu thích $n$ mục",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingFolderEmpty": {
+    "message": "Thư mục này không có dấu trang để đưa vào vùng chờ"
+  },
+  "stagingFromHistory": {
+    "message": "Từ lịch sử"
+  },
+  "stagingFull": {
+    "message": "Vùng chờ đã đầy — hãy xóa bớt một số mục"
+  },
+  "stagingGroupAssign": {
+    "message": "Nhóm…"
+  },
+  "stagingGroupAssignTitle": {
+    "message": "Gán vào nhóm"
+  },
+  "stagingGroupCollapse": {
+    "message": "Thu gọn nhóm"
+  },
+  "stagingGroupDelete": {
+    "message": "Xóa nhóm (kèm mục)"
+  },
+  "stagingGroupDeleteConfirm": {
+    "message": "Xóa nhóm \"$1\"? $2 mục của nhóm cũng sẽ rời khỏi khu vực tạm."
+  },
+  "stagingGroupDeleted": {
+    "message": "Đã xóa nhóm — $1 mục đã bị xóa"
+  },
+  "stagingGroupDissolve": {
+    "message": "Giải tán nhóm"
+  },
+  "stagingGroupDissolved": {
+    "message": "Đã giải tán nhóm — các mục vẫn giữ trong vùng chờ"
+  },
+  "stagingGroupExpand": {
+    "message": "Mở rộng nhóm"
+  },
+  "stagingGroupNamePrompt": {
+    "message": "Tên nhóm mới"
+  },
+  "stagingGroupNew": {
+    "message": "Nhóm mới"
+  },
+  "stagingGroupNoGroups": {
+    "message": "Chưa có nhóm nào"
+  },
+  "stagingGroupRename": {
+    "message": "Đổi tên nhóm…"
+  },
+  "stagingGroupSelectAll": {
+    "message": "Chọn tất cả trong nhóm này"
+  },
+  "stagingGuideDismiss": {
+    "message": "不再显示"
+  },
+  "stagingGuideText": {
+    "message": "在此整理书签 — 选择行并进入选择模式以执行批量操作。"
+  },
+  "stagingMoveConfirm": {
+    "message": "Di chuyển $n$ mục đến thư mục đã chọn?",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingMoveConfirmOk": {
+    "message": "Di chuyển"
+  },
+  "stagingMoveCopy": {
+    "message": "Di chuyển/sao chép đến…"
+  },
+  "stagingMoveDone": {
+    "message": "Đã di chuyển $n$ mục về nhà",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingNew": {
+    "message": "mới $n$",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingRemove": {
+    "message": "Xóa khỏi vùng chờ"
+  },
+  "stagingRemoved": {
+    "message": "Đã xóa khỏi vùng chờ"
+  },
+  "stagingRemovedCount": {
+    "message": "Đã xóa $n$ mục khỏi khu vực xếp",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingRowFav": {
+    "message": "Yêu thích mục này"
+  },
+  "stagingRowUnfav": {
+    "message": "Bỏ yêu thích mục này"
+  },
+  "stagingShortcutAdd": {
+    "message": "Thêm lối tắt"
+  },
+  "stagingShortcutAlias": {
+    "message": "Bí danh"
+  },
+  "stagingShortcutBarLabel": {
+    "message": "Di chuyển đến:"
+  },
+  "stagingShortcutEdit": {
+    "message": "Sửa lối tắt"
+  },
+  "stagingShortcutMove": {
+    "message": "Di chuyển đã chọn đến $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingShortcutPickFolder": {
+    "message": "Chọn thư mục đích…"
+  },
+  "stagingShortcutRemove": {
+    "message": "Xóa lối tắt"
+  },
+  "stagingShortcutRemoved": {
+    "message": "Đã xóa lối tắt"
+  },
+  "stagingShortcutSave": {
+    "message": "Lưu"
+  },
+  "stagingShortcutTitle": {
+    "message": "Lối tắt di chuyển"
+  },
+  "stagingUnfav": {
+    "message": "Bỏ yêu thích"
+  },
+  "stagingUnfavDone": {
+    "message": "Đã bỏ đánh dấu $n$ mục",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "statsClearConfirm": {
+    "message": "Xóa thống kê lượt truy cập cho $count$ dấu trang? Hành động này không thể hoàn tác.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "statsClearData": {
+    "message": "Xóa thống kê"
+  },
+  "statsDisabledHint": {
+    "message": "Thống kê lượt truy cập đã tắt — bật trong Tùy chọn → Chế độ xem"
+  },
+  "statsEmpty": {
+    "message": "Thống kê được tích lũy khi bạn mở dấu trang"
+  },
+  "statsHistoryAdd": {
+    "message": "Thêm vào dấu trang"
+  },
+  "statsHistoryBanner": {
+    "message": "Cấp quyền truy cập lịch sử để gieo số liệu thống kê truy cập từ các lần truy cập trước đây của bạn."
+  },
+  "statsHistoryBookmarked": {
+    "message": "Đã đánh dấu"
+  },
+  "statsHistoryDismiss": {
+    "message": "Không hiển thị lại"
+  },
+  "statsHistoryEnable": {
+    "message": "Bật"
+  },
+  "statsHistoryGuide": {
+    "message": "Cấp quyền truy cập lịch sử để liệt kê các lượt truy cập gần đây của bạn tại đây."
+  },
+  "statsHistoryImported": {
+    "message": "Đã nhập các lần truy cập trước đây cho $count$ dấu trang",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "statsSectionBookmarks": {
+    "message": "Thống kê dấu trang"
+  },
+  "statsSectionRecent": {
+    "message": "Lượt truy cập gần đây"
+  },
+  "statsShowUnbookmarked": {
+    "message": "Hiển thị chưa đánh dấu"
+  },
+  "statsShowUnbookmarkedHint": {
+    "message": "Bao gồm các trang từ lịch sử chưa được lưu dưới dạng dấu trang."
+  },
+  "statsSortByCount": {
+    "message": "Theo số lượng"
+  },
+  "statsSortByRecent": {
+    "message": "Theo gần đây"
+  },
+  "statsVisitCount": {
+    "message": "Đã truy cập $count$ lần",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "storageUsageFree": {
+    "message": "Trống"
+  },
+  "storageUsageHint": {
+    "message": "Chỉ bộ nhớ mở rộng cục bộ (chrome.storage.local, hạn mức khoảng 10 MB): bộ nhớ biểu tượng cộng với cài đặt và dữ liệu cục bộ khác. Cài đặt đồng bộ, dữ liệu phiên và thư viện dấu trang không được tính ở đây."
+  },
+  "storageUsageIcon": {
+    "message": "Bộ nhớ biểu tượng"
+  },
+  "storageUsageOther": {
+    "message": "Khác"
+  },
+  "storageUsageSummary": {
+    "message": "Đã sử dụng $1$ trên $2$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      },
+      "2": {
+        "content": "$2"
+      }
+    }
+  },
+  "syncOptions": {
+    "message": "Tùy chọn đồng bộ hóa"
+  },
+  "syncStatusLocal": {
+    "message": "Chỉ cục bộ — chưa tải lên"
+  },
+  "syncStatusSynced": {
+    "message": "Đã đồng bộ với tài khoản Google của bạn"
+  },
+  "syncStatusUnsyncable": {
+    "message": "Không thể đồng bộ"
+  },
+  "syncSuffixLocal": {
+    "message": "(Cục bộ)"
+  },
+  "syncSuffixSynced": {
+    "message": "(Đã đồng bộ)"
+  },
+  "tabGroupColorBlue": {
+    "description": "Accessible name of the blue color swatch in the new-tab-group dialog.",
+    "message": "Xanh dương"
+  },
+  "tabGroupColorCyan": {
+    "description": "Accessible name of the cyan color swatch in the new-tab-group dialog.",
+    "message": "Xanh lơ"
+  },
+  "tabGroupColorGreen": {
+    "description": "Accessible name of the green color swatch in the new-tab-group dialog.",
+    "message": "Xanh lá"
+  },
+  "tabGroupColorGrey": {
+    "description": "Accessible name of the grey color swatch in the new-tab-group dialog.",
+    "message": "Xám"
+  },
+  "tabGroupColorLabel": {
+    "message": "Màu"
+  },
+  "tabGroupColorOrange": {
+    "description": "Accessible name of the orange color swatch in the new-tab-group dialog.",
+    "message": "Cam"
+  },
+  "tabGroupColorPink": {
+    "description": "Accessible name of the pink color swatch in the new-tab-group dialog.",
+    "message": "Hồng"
+  },
+  "tabGroupColorPurple": {
+    "description": "Accessible name of the purple color swatch in the new-tab-group dialog.",
+    "message": "Tím"
+  },
+  "tabGroupColorRed": {
+    "description": "Accessible name of the red color swatch in the new-tab-group dialog.",
+    "message": "Đỏ"
+  },
+  "tabGroupColorYellow": {
+    "description": "Accessible name of the yellow color swatch in the new-tab-group dialog.",
+    "message": "Vàng"
+  },
+  "tabGroupDialogTitle": {
+    "message": "Nhóm tab mới"
+  },
+  "tabGroupNoGroups": {
+    "message": "Không có nhóm tab nào"
+  },
+  "tabGroupOptions": {
+    "message": "Nhóm tab"
+  },
+  "tabGroupPickDialogTitle": {
+    "message": "Mở vào nhóm tab hiện có"
+  },
+  "tabGroupTitleLabel": {
+    "message": "Tên nhóm"
+  },
+  "tabGroupUntitled": {
+    "message": "Nhóm chưa đặt tên"
+  },
+  "tabGroupsActivateGroup": {
+    "message": "Đi tới nhóm tab"
+  },
+  "tabGroupsActivateTab": {
+    "message": "Đi tới tab"
+  },
+  "tabGroupsAddBookmark": {
+    "message": "Đánh dấu tab này"
+  },
+  "tabGroupsBatchClosedTitle": {
+    "message": "Đã đóng tab"
+  },
+  "tabGroupsBookmarkRemoved": {
+    "message": "Đã xóa $count$ dấu trang",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsBookmarked": {
+    "message": "Đã đánh dấu"
+  },
+  "tabGroupsBookmarksAdded": {
+    "message": "Đã thêm $count$ dấu trang vào $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsClearClosedGroups": {
+    "message": "Xóa tất cả"
+  },
+  "tabGroupsClearedToast": {
+    "message": "Đã xóa $count$ bản ghi đã đóng",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCloseGroup": {
+    "message": "Đóng nhóm tab"
+  },
+  "tabGroupsCloseWindow": {
+    "message": "Đóng cửa sổ"
+  },
+  "tabGroupsClosedGroups": {
+    "message": "Đã đóng gần đây"
+  },
+  "tabGroupsClosedOpenTab": {
+    "message": "Mở trong tab mới"
+  },
+  "tabGroupsClosedTabRemovedToast": {
+    "message": "Đã xóa khỏi bản ghi đã đóng"
+  },
+  "tabGroupsClosedTimeLabel": {
+    "message": "Đã đóng:"
+  },
+  "tabGroupsClosedToast": {
+    "message": "Đã đóng $count$ tab",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCollapseAll": {
+    "message": "Thu gọn tất cả"
+  },
+  "tabGroupsCollapseGroup": {
+    "message": "Thu gọn nhóm"
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "Thu gọn cửa sổ"
+  },
+  "tabGroupsColorStyle": {
+    "message": "Kiểu màu nhóm tab"
+  },
+  "tabGroupsColorStyleEdge": {
+    "message": "Dải màu cạnh"
+  },
+  "tabGroupsColorStyleHint": {
+    "message": "Tắt chỉ hiển thị chấm màu. Dải màu cạnh vẽ một dải màu dọc theo mép trái của nhóm. Đường nối màu vẽ một đường màu dưới chấm của nhóm với dấu tích cho mỗi hàng, liên kết toàn bộ nhóm thành một cây."
+  },
+  "tabGroupsColorStyleLine": {
+    "message": "Đường nối màu"
+  },
+  "tabGroupsColorStyleOff": {
+    "message": "Tắt (chỉ chấm màu)"
+  },
+  "tabGroupsConfirmClearClosed": {
+    "message": "Xóa tất cả bản ghi đã đóng gần đây? Chúng sẽ không thể mở lại từ đây."
+  },
+  "tabGroupsConfirmClose": {
+    "message": "Đóng $count$ tab?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsConfirmSleep": {
+    "message": "Cho $count$ tab ngủ?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCopyMoveCopy": {
+    "message": "Sao chép"
+  },
+  "tabGroupsCopyMoveDialog": {
+    "message": "Các tab đã chọn thuộc về một nhóm tab. Bạn muốn sao chép (mở ở vị trí mới) hay di chuyển (xóa khỏi nhóm hiện tại)?"
+  },
+  "tabGroupsCopyMoveMove": {
+    "message": "Di chuyển"
+  },
+  "tabGroupsCurrentTab": {
+    "message": "Hiện tại"
+  },
+  "tabGroupsCurrentWindow": {
+    "message": "Cửa sổ hiện tại"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "Xóa nhóm tab đã đóng"
+  },
+  "tabGroupsDiscarded": {
+    "message": "Tab ngủ"
+  },
+  "tabGroupsExpandAll": {
+    "message": "Mở rộng tất cả"
+  },
+  "tabGroupsExpandGroup": {
+    "message": "Mở rộng nhóm"
+  },
+  "tabGroupsExpandWindow": {
+    "message": "Mở rộng cửa sổ"
+  },
+  "tabGroupsExpandedCollapse": {
+    "message": "Thu gọn"
+  },
+  "tabGroupsExpandedExpand": {
+    "message": "Mở rộng"
+  },
+  "tabGroupsFilterPlaceholder": {
+    "message": "Lọc tab đang mở"
+  },
+  "tabGroupsGroupCount": {
+    "message": "$count$ tab",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsGroupSavedToFolder": {
+    "message": "Đã lưu $count$ tab vào $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsMenuAddBookmark": {
+    "message": "Đánh dấu tab"
+  },
+  "tabGroupsMenuSaveFolder": {
+    "message": "Lưu dưới dạng thư mục dấu trang"
+  },
+  "tabGroupsMergedWindowToast": {
+    "message": "Đã hợp nhất cửa sổ thành một nhóm thẻ"
+  },
+  "tabGroupsMoveNewWindow": {
+    "message": "Chuyển nhóm sang cửa sổ mới"
+  },
+  "tabGroupsNewWindow": {
+    "message": "Cửa sổ mới"
+  },
+  "tabGroupsNoMatchingTabs": {
+    "message": "Không có tab khớp"
+  },
+  "tabGroupsOpenGroups": {
+    "message": "Nhóm tab đang mở"
+  },
+  "tabGroupsPinTab": {
+    "message": "Ghim tab"
+  },
+  "tabGroupsPinned": {
+    "message": "Tab đã ghim"
+  },
+  "tabGroupsPinnedUngroupedToast": {
+    "message": "Đã ghim — gỡ khỏi nhóm tab"
+  },
+  "tabGroupsRecordDeletedToast": {
+    "message": "Đã xóa bản ghi đã đóng"
+  },
+  "tabGroupsRemoveBookmark": {
+    "message": "Xóa dấu trang"
+  },
+  "tabGroupsRemoveClosedTab": {
+    "message": "Xóa khỏi nhóm đã lưu"
+  },
+  "tabGroupsRenameDialog": {
+    "message": "Đổi tên nhóm tab"
+  },
+  "tabGroupsRenameGroup": {
+    "message": "Đổi tên nhóm tab"
+  },
+  "tabGroupsReopenAction": {
+    "message": "Mở lại"
+  },
+  "tabGroupsReopenGroup": {
+    "message": "Mở lại nhóm tab"
+  },
+  "tabGroupsSaveFolder": {
+    "message": "Lưu nhóm tab dưới dạng thư mục dấu trang"
+  },
+  "tabGroupsSelectAddBookmarks": {
+    "message": "Thêm vào thư mục dấu trang…"
+  },
+  "tabGroupsSelectClose": {
+    "message": "Đóng"
+  },
+  "tabGroupsSelectNewGroup": {
+    "message": "Nhóm tab mới"
+  },
+  "tabGroupsSelectOpenInto": {
+    "message": "Mở trong nhóm tab hiện có…"
+  },
+  "tabGroupsSelectSaveFolder": {
+    "message": "Lưu dưới dạng thư mục dấu trang"
+  },
+  "tabGroupsSelectSleep": {
+    "message": "Ngủ"
+  },
+  "tabGroupsSleepGroup": {
+    "message": "Cho nhóm tab ngủ"
+  },
+  "tabGroupsSleepTab": {
+    "message": "Ngủ tab"
+  },
+  "tabGroupsSleptToast": {
+    "message": "Đã đưa $count$ tab vào chế độ ngủ",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsSummary": {
+    "message": "$tabs$ tab · $groups$ nhóm",
+    "placeholders": {
+      "groups": {
+        "content": "$2"
+      },
+      "tabs": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsSyncCollapse": {
+    "message": "Đồng bộ thu gọn với trình duyệt"
+  },
+  "tabGroupsSyncCollapseHint": {
+    "message": "Khi được chọn, việc thu gọn hoặc mở rộng một nhóm trong chế độ xem này cũng cập nhật nhóm tab của trình duyệt. Tắt theo mặc định để việc gấp chế độ xem chỉ mang tính cục bộ."
+  },
+  "tabGroupsToolbarRefresh": {
+    "message": "Làm mới"
+  },
+  "tabGroupsUngroupGroup": {
+    "message": "Tách nhóm tab"
+  },
+  "tabGroupsUngroupedTabs": {
+    "message": "Tab chưa nhóm"
+  },
+  "tabGroupsUnpinTab": {
+    "message": "Bỏ ghim tab"
+  },
+  "tabGroupsViewEmpty": {
+    "message": "Không có tab nào trong cửa sổ này"
+  },
+  "tabGroupsWakeAction": {
+    "message": "Đánh thức"
+  },
+  "tabGroupsWakeGroup": {
+    "message": "Đánh thức nhóm tab"
+  },
+  "tabGroupsWakeTab": {
+    "message": "Đánh thức tab"
+  },
+  "tabGroupsWindow": {
+    "message": "Cửa sổ $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsWindowClosedTitle": {
+    "message": "Cửa sổ đã đóng"
+  },
+  "tabGroupsWindowsCount": {
+    "message": "$n$ cửa sổ",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabRowStage": {
+    "message": "Đưa vào vùng chờ"
+  },
+  "tabgroupStageAll": {
+    "message": "Đưa nhóm vào vùng chờ"
+  },
+  "tabgroupStageConfirm": {
+    "message": "Đưa $n$ tab vào vùng chờ?",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabgroupStageNone": {
+    "message": "Không có tab nào có thể đánh dấu trong nhóm này"
   },
   "timeDaysAgo": {
     "message": "$n$ ngày trước",
@@ -329,303 +2482,26 @@
   "timeYesterday": {
     "message": "hôm qua"
   },
+  "toolButtonTitle": {
+    "message": "Công cụ (Ctrl+K)"
+  },
   "undoAction": {
     "message": "Hoàn tác"
   },
-  "revealOutsideBarHint": {
-    "message": "Chỉ có thanh dấu trang được hiển thị: mục tiêu nằm ngoài thanh này."
+  "undoSingleStepNote": {
+    "message": "Hoàn tác chỉ có thể khôi phục thao tác xóa gần nhất."
   },
-  "revealOutsideBarAction": {
-    "message": "Hiện tất cả và định vị"
+  "unpinFolder": {
+    "message": "Bỏ ghim thư mục này"
   },
-  "dupesCleanAll": {
-    "message": "Dọn sạch tất cả: $groups$ nhóm, $count$ bản sao thừa",
-    "placeholders": {
-      "groups": {
-        "content": "$1"
-      },
-      "count": {
-        "content": "$2"
-      }
-    },
-    "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go."
+  "url": {
+    "message": "URL"
   },
-  "dupesConfirmAll": {
-    "message": "Xóa $count$ bản sao thừa trong $groups$ nhóm? Bản giữ lại được chọn trong mỗi nhóm sẽ được giữ.",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      },
-      "groups": {
-        "content": "$2"
-      }
-    },
-    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
+  "versionDialogCopied": {
+    "message": "Đã sao chép"
   },
-  "dupesConfirmSelected": {
-    "message": "Xóa $count$ dấu trang trùng lặp khỏi $groups$ nhóm đã chọn?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      },
-      "groups": {
-        "content": "$2"
-      }
-    }
-  },
-  "dupesConfirmGroup": {
-    "message": "Giữ \"$title$\" và xóa $count$ bản sao khác?",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Example bookmark"
-      },
-      "count": {
-        "content": "$2"
-      }
-    },
-    "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."
-  },
-  "dupesDone": {
-    "message": "Đã xóa $count$ dấu trang trùng lặp",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Alert shown after the duplicate cleanup finished."
-  },
-  "dupesGroupCount": {
-    "message": "$count$ bản trùng",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
-  },
-  "dupesGroupExpand": {
-    "description": "Dupes view group-head context menu: expand a collapsed duplicate group.",
-    "message": "Mở rộng nhóm"
-  },
-  "dupesGroupCollapse": {
-    "description": "Dupes view group-head context menu: collapse an expanded duplicate group.",
-    "message": "Thu gọn nhóm"
-  },
-  "dupesNone": {
-    "message": "Không tìm thấy bản trùng"
-  },
-  "deleteEllipsis": {
-    "message": "Xóa..."
-  },
-  "donationMessage": {
-    "message": "Bạn thấy thích? Hãy quyên góp để tiếp sức cho tương lai — hoặc đánh giá trên cửa hàng: mỗi đánh giá giúp các bản cập nhật tiếp tục."
-  },
-  "donationV4Notice": {
-    "message": "vBookmarks 4.0 được thiết kế lại hoàn toàn với giao diện hiện đại, tràn đầy tính năng mới."
-  },
-  "donationV4GuideLink": {
-    "message": "Đọc hướng dẫn v4 →"
-  },
-  "donationGo": {
-    "message": "Quyên góp"
-  },
-  "donationRate": {
-    "message": "Đánh giá"
-  },
-  "donationRateTitle": {
-    "message": "Đánh giá vBookmarks trên Chrome Web Store"
-  },
-  "donationLater": {
-    "message": "Để sau"
-  },
-  "donationNever": {
-    "message": "Không hiển thị lại"
-  },
-  "donationDismiss": {
-    "message": "Bỏ qua"
-  },
-  "edit": {
-    "message": "Chỉnh sửa..."
-  },
-  "editBookmark": {
-    "message": "Chỉnh sửa dấu trang"
-  },
-  "editFolder": {
-    "message": "Chỉnh sửa thư mục"
-  },
-  "errorOccured": {
-    "message": "Ồ, đã xảy ra lỗi."
-  },
-  "extDesc": {
-    "description": "The extension description.",
-    "message": "Trình quản lý dấu trang dạng popup. Cải tiến Neat Bookmarks. Gọn gàng hơn Neater Bookmarks."
-  },
-  "extName": {
-    "description": "vBookmarks",
-    "message": "vBookmarks"
-  },
-  "folderEmpty": {
-    "message": "(Trống)"
-  },
-  "general": {
-    "message": "Chung"
-  },
-  "ignore": {
-    "message": "Bỏ qua"
-  },
-  "name": {
-    "description": "Name of bookmark or folder.",
-    "message": "Tên"
-  },
-  "nope": {
-    "message": "Hủy"
-  },
-  "noTitle": {
-    "description": "The title for untitled bookmarks with no http(s) URL or untitled folders.",
-    "message": "(không tiêu đề)"
-  },
-  "open": {
-    "description": "Action to open bookmarks.",
-    "message": "Mở"
-  },
-  "openBookmarks": {
-    "message": "Mở Tất Cả Dấu Trang"
-  },
-  "openBookmarksIncognitoWindow": {
-    "message": "Mở tất cả trong cửa sổ ẩn danh"
-  },
-  "openBookmarksInGroup": {
-    "message": "Mở tất cả trong nhóm tab mới"
-  },
-  "openBookmarksInGroupSetup": {
-    "message": "Mở hết vào nhóm tab mới…"
-  },
-  "openBookmarksInExistingGroup": {
-    "message": "Mở hết vào nhóm tab hiện có…"
-  },
-  "tabGroupOptions": {
-    "message": "Nhóm tab"
-  },
-  "sortMenuOptions": {
-    "message": "Sắp xếp"
-  },
-  "openBookmarksNewWindow": {
-    "message": "Mở tất cả trong cửa sổ mới"
-  },
-  "openCommandPaletteCommand": {
-    "message": "Mở bảng lệnh"
-  },
-  "openIncognitoWindow": {
-    "message": "Mở trong Cửa Sổ Ẩn Danh"
-  },
-  "openNewTab": {
-    "message": "Mở trong Tab Mới"
-  },
-  "bookmarkOpenInNewGroup": {
-    "message": "Mở vào nhóm tab mới"
-  },
-  "bookmarkOpenInNewGroupSetup": {
-    "message": "Mở vào nhóm tab mới…"
-  },
-  "bookmarkOpenInExistingGroup": {
-    "message": "Mở vào nhóm tab hiện có…"
-  },
-  "openNewWindow": {
-    "message": "Mở trong Cửa Sổ Mới"
-  },
-  "openSidePanelCommand": {
-    "message": "Mở bảng điều khiển bên vBookmarks"
-  },
-  "optionAnnounceEnabled": {
-    "message": "Hiển thị thông báo trong sản phẩm"
-  },
-  "optionAnnounceEnabledHint": {
-    "message": "Ghi chú phát hành và mẹo từ kho GitHub của dự án (tìm nạp tối đa mỗi 6 giờ). Tắt cũng ngừng tìm nạp từ mạng."
-  },
-  "optionClickNewTab": {
-    "message": "Nhấp chuột trái mở dấu trang trong tab mới."
-  },
-  "optionCloseUnusedFolders": {
-    "message": "Đóng các thư mục không sử dụng khi mở một thư mục."
-  },
-  "optionConfirmOpenFolder": {
-    "message": "Hiển thị xác nhận khi mở nhiều dấu trang từ một thư mục."
-  },
-  "optionConfirmDeleteFolder": {
-    "message": "Xác nhận trước khi xóa thư mục không rỗng"
-  },
-  "optionOnlyShowBookmarkBar": {
-    "message": "Chỉ hiển thị dấu trang trong Thanh Dấu Trang"
-  },
-  "optionSearchAfterEnter": {
-    "message": "Tìm kiếm dấu trang chỉ khi nhấn ENTER (thay vì tìm kiếm tức thì)"
-  },
-  "optionOpenNewTab": {
-    "message": "Nhấp chuột giữa hoặc control-nhấp mở dấu trang trong tab nền mới (thay vì tab nền trước)."
-  },
-  "optionOpenInSidePanel": {
-    "message": "Mở trong bảng điều khiển bên thay vì cửa sổ bật lên"
-  },
-  "optionPopupStays": {
-    "message": "Popup vẫn mở khi mở dấu trang (nhấp chuột trái)."
-  },
-  "optionRememberPrevState": {
-    "message": "Ghi nhớ trạng thái trước đó (vị trí cuộn, thư mục đã mở và mục được tập trung cuối cùng)."
-  },
-  "options": {
-    "message": "Tùy Chọn"
-  },
-  "optionsFooterText": {
-    "description": "Footer text for the Options page",
-    "message": "Xây dựng bởi $authorName$.",
-    "placeholders": {
-      "authorName": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionZoom": {
-    "message": "Thu phóng"
-  },
-  "optionTheme": {
-    "message": "Giao diện"
-  },
-  "optionThemeAuto": {
-    "message": "Theo hệ thống"
-  },
-  "optionThemeLight": {
-    "message": "Sáng"
-  },
-  "optionThemeDark": {
-    "message": "Tối"
-  },
-  "optionThemeInk": {
-    "message": "Mực (tối)"
-  },
-  "optionThemePaper": {
-    "message": "Giấy (sáng)"
-  },
-  "optionLanguage": {
-    "message": "Ngôn ngữ"
-  },
-  "optionLanguageAuto": {
-    "message": "Tự động"
-  },
-  "optionLanguageHint": {
-    "message": "Đổi ngôn ngữ sẽ tải lại trang này."
-  },
-  "paletteClose": {
-    "message": "Đóng"
-  },
-  "paletteCmdVersion": {
-    "message": "Thông tin phiên bản"
-  },
-  "paletteCmdLang": {
-    "message": "Chuyển ngôn ngữ…"
-  },
-  "paletteCmdLangUsage": {
-    "message": "Cách dùng: /lang theo sau là mã ngôn ngữ — ví dụ: /lang en, /lang zh_CN, /lang ja."
+  "versionDialogCopy": {
+    "message": "Sao chép thông tin"
   },
   "versionDialogTitle": {
     "message": "vBookmarks $version$",
@@ -634,15 +2510,6 @@
         "content": "$1"
       }
     }
-  },
-  "versionDialogCopy": {
-    "message": "Sao chép thông tin"
-  },
-  "versionDialogCopied": {
-    "message": "Đã sao chép"
-  },
-  "versionMetaVersion": {
-    "message": "Phiên bản tiện ích"
   },
   "versionMetaAnnounce": {
     "message": "Có gì mới"
@@ -653,277 +2520,58 @@
   "versionMetaBrowser": {
     "message": "Trình duyệt"
   },
-  "versionMetaOS": {
-    "message": "Hệ điều hành"
-  },
   "versionMetaChannel": {
     "message": "Kênh"
   },
   "versionMetaLanguage": {
     "message": "Ngôn ngữ"
   },
+  "versionMetaOS": {
+    "message": "Hệ điều hành"
+  },
   "versionMetaUserAgent": {
     "message": "User agent"
   },
-  "paletteCmdDead": {
-    "message": "Tìm liên kết hỏng"
+  "versionMetaVersion": {
+    "message": "Phiên bản tiện ích"
   },
-  "paletteCmdDupes": {
-    "message": "Dọn dấu trang trùng lặp"
+  "viewDead": {
+    "message": "Liên kết chết"
   },
-  "paletteCmdNewBookmark": {
-    "message": "Dấu trang mới…"
+  "viewDisable": {
+    "message": "Tắt"
   },
-  "paletteCmdNewFolder": {
-    "message": "Thư mục mới…"
+  "viewDupes": {
+    "message": "Trùng lặp"
   },
-  "paletteCmdQuickAdd": {
-    "message": "Đánh dấu tab hiện tại"
+  "viewEnable": {
+    "message": "Bật"
   },
-  "paletteCmdSaveSession": {
-    "message": "Lưu các tab cửa sổ thành thư mục"
-  },
-  "paletteNoResults": {
-    "message": "Không có kết quả phù hợp"
-  },
-  "palettePlaceholder": {
-    "message": "Tìm kiếm dấu trang, thư mục, lệnh…"
-  },
-  "parentFolder": {
-    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
-    "message": "Thư mục cha: \"$folderName$\"",
+  "viewHiddenTabsHint": {
+    "message": "Bạn đang ở chế độ $view$. Nhấn $back$ hoặc dùng bảng lệnh để quay lại cây.",
     "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarksbar"
-      }
-    }
-  },
-  "removeSeparator": {
-    "message": "Xóa Dòng Kẻ"
-  },
-  "replaceUrl": {
-    "message": "Thay thế điều này bằng URL hiện tại"
-  },
-  "reportedToDeveloper": {
-    "description": "A message for an error occured in the extension, has been reported to the developer.",
-    "message": "Điều này đã được báo cáo cho nhà phát triển."
-  },
-  "reportError": {
-    "message": "Báo Cáo Lỗi"
-  },
-  "resetButton": {
-    "message": "Đặt lại"
-  },
-  "resetSettings": {
-    "message": "Đặt lại cài đặt"
-  },
-  "resetSettingsDescription": {
-    "message": "Đặt lại vBookmarks về cài đặt mặc định."
-  },
-  "save": {
-    "message": "Lưu"
-  },
-  "searchBookmarks": {
-    "description": "Placeholder text for search field.",
-    "message": "Tìm kiếm Dấu Trang"
-  },
-  "searchClear": {
-    "message": "Xóa tìm kiếm"
-  },
-  "searchNoResults": {
-    "message": "Không có dấu trang phù hợp"
-  },
-  "searchViewHint": {
-    "message": "Nhập vào ô bên trên để tìm kiếm bookmark của bạn"
-  },
-  "selectAll": {
-    "message": "Tất cả"
-  },
-  "selectClear": {
-    "message": "Bỏ chọn"
-  },
-  "selectCount": {
-    "message": "Đã chọn $count$",
-    "placeholders": {
-      "count": {
+      "back": {
+        "content": "$2"
+      },
+      "view": {
         "content": "$1"
       }
     }
   },
-  "selectInvert": {
-    "message": "Đảo ngược"
-  },
-  "selectModeEnter": {
-    "message": "Chọn"
-  },
-  "selectModeExit": {
-    "message": "Thoát chọn"
-  },
-  "deadRiskBanner": {
-    "message": "Dọn dẹp liên kết hỏng sẽ xóa hàng loạt dấu trang. Hãy sao lưu dấu trang trước lần dọn dẹp đầu tiên."
-  },
-  "dupesRiskBanner": {
-    "message": "Khử trùng lặp sẽ xóa hàng loạt dấu trang trùng lặp. Hãy sao lưu dấu trang trước khi áp dụng."
-  },
-  "riskBannerHelp": {
-    "message": "Hướng dẫn sao lưu và khôi phục"
-  },
-  "riskBannerNever": {
-    "message": "Không hiển thị lại"
-  },
-  "riskBannerDismiss": {
-    "message": "Bỏ qua"
-  },
-  "sessionEmpty": {
-    "message": "Không có tab để lưu"
-  },
-  "sessionFolderName": {
-    "message": "Phiên $date$",
-    "placeholders": {
-      "date": {
-        "content": "$1",
-        "example": "2026-07-18 15:04"
-      }
-    },
-    "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm."
-  },
-  "sessionSaved": {
-    "message": "Đã lưu $count$ tab vào thư mục mới",
-    "placeholders": {
-      "count": {
-        "content": "$1",
-        "example": "12"
-      }
-    },
-    "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
-  },
-  "url": {
-    "message": "URL"
-  },
-  "syncOptions": {
-    "message": "Tùy chọn đồng bộ hóa"
-  },
-  "optionShowSyncStatus": {
-    "message": "Hiển thị chỉ báo trạng thái đồng bộ"
-  },
-  "optionHighlightUnsynced": {
-    "message": "Làm mờ dấu trang chưa đồng bộ"
-  },
-  "optionAutoRefreshSync": {
-    "message": "Tự động làm mới trạng thái đồng bộ"
-  },
-  "optionSyncRefreshInterval": {
-    "message": "Khoảng thời gian làm mới"
-  },
-  "optionSyncRefreshIntervalSeconds": {
-    "message": "giây"
-  },
-  "syncStatusSynced": {
-    "message": "Đã đồng bộ với tài khoản Google của bạn"
-  },
-  "syncStatusLocal": {
-    "message": "Chỉ cục bộ — chưa tải lên"
-  },
-  "syncStatusUnsyncable": {
-    "message": "Không thể đồng bộ"
-  },
-  "syncSuffixSynced": {
-    "message": "(Đã đồng bộ)"
-  },
-  "syncSuffixLocal": {
-    "message": "(Cục bộ)"
-  },
-  "optionAutoResizePopup": {
-    "message": "Tự động điều chỉnh kích thước cửa sổ popup để phù hợp với nội dung"
-  },
-  "crossStorageMoveWarning": {
-    "message": "Không thể di chuyển dấu trang giữa lưu trữ đã đồng bộ hóa và lưu trữ cục bộ. Hãy sử dụng sao chép/dán.",
-    "description": "Warning when trying to move bookmarks across storage types"
-  },
-  "recentBookmarks": {
-    "message": "Đã thêm gần đây"
-  },
-  "optionShowRecentBookmarks": {
-    "message": "Hiển thị dấu trang thêm gần đây ở đầu cửa sổ bật lên"
-  },
-  "optionShowStatsView": {
-    "message": "Hiển thị tab xem thống kê"
-  },
-  "optionShowDeadView": {
-    "message": "Hiển thị tab xem liên kết chết"
-  },
-  "optionShowDupesView": {
-    "message": "Hiển thị tab xem trùng lặp"
-  },
-  "optionRecentCollapsed": {
-    "message": "Thu gọn phần thêm gần đây theo mặc định"
-  },
-  "optionsGroupViews": {
-    "message": "Chế độ xem"
-  },
-  "optionsGroupSort": {
-    "message": "Sắp xếp"
-  },
-  "optionsGroupStats": {
-    "message": "Thống kê"
-  },
-  "optionsGroupTools": {
-    "message": "Công cụ"
-  },
-  "optionShowViewTabs": {
-    "message": "Hiển thị các tab chế độ xem bên dưới ô tìm kiếm"
-  },
-  "optionRememberView": {
-    "message": "Ghi nhớ chế độ xem cuối cùng và mở lại"
-  },
-  "optionShowTabBadges": {
-    "message": "Hiện huy hiệu số lượng trên các tab chế độ xem"
-  },
-  "optionPaletteEnabled": {
-    "message": "Bật bảng lệnh (Ctrl/Cmd+K)"
-  },
-  "optionQuickAddEnabled": {
-    "message": "Hiện nút ngôi sao thêm nhanh bên cạnh ô tìm kiếm"
-  },
-  "optionQuickAddContextMenu": {
-    "message": "Thêm mục \"Đánh dấu trang này bằng vBookmarks\" vào menu chuột phải trên trang"
-  },
-  "optionQuickAddContextMenuHint": {
-    "message": "Độc lập với nút ngôi sao thêm nhanh; khôi phục trải nghiệm cổ điển cũng tắt mục này."
-  },
-  "optionCollapseTabGroupMenu": {
-    "message": "Thu gọn các mục nhóm tab thành một menu con \"Nhóm tab\""
-  },
-  "optionCollapseTabGroupMenuHint": {
-    "message": "Áp dụng cho cả menu chuột phải của thư mục và dấu trang. Tắt theo mặc định; giúp menu ngắn hơn trên màn hình nhỏ hoặc khi phóng to."
-  },
-  "optionCollapseSortMenu": {
-    "message": "Thu gọn các mục sắp xếp thành một menu con \"Sắp xếp\""
-  },
-  "optionCollapseSortMenuHint": {
-    "message": "Áp dụng cho menu chuột phải của thư mục. Bật theo mặc định."
-  },
-  "optionShowToolButton": {
-    "message": "Hiện nút công cụ (⋮) bên cạnh ô tìm kiếm"
-  },
-  "optionClassicExperience": {
-    "message": "Khôi phục thanh tiêu đề cổ điển"
-  },
-  "optionClassicExperienceHint": {
-    "message": "Tắt bảng lệnh, ngôi sao thêm nhanh, mục chuột phải trên trang, nút công cụ và các tab xem. Từng mục có thể được bật lại riêng lẻ trong mục của nó."
-  },
-  "optionShowItemPath": {
-    "message": "Hiển thị đường dẫn thư mục cha trên các hàng danh sách"
-  },
   "viewRecent": {
     "message": "Staging"
   },
-  "viewTree": {
-    "message": "Cây"
-  },
   "viewSearch": {
     "message": "Tìm kiếm"
+  },
+  "viewStateDisabled": {
+    "message": "Đã tắt"
+  },
+  "viewStateEnabled": {
+    "message": "Đã bật"
+  },
+  "viewStats": {
+    "message": "Thống kê"
   },
   "viewSwitchAnnounce": {
     "message": "Chế độ xem $name$",
@@ -933,870 +2581,17 @@
       }
     }
   },
-  "viewStateEnabled": {
-    "message": "Đã bật"
-  },
-  "viewStateDisabled": {
-    "message": "Đã tắt"
-  },
-  "viewEnable": {
-    "message": "Bật"
-  },
-  "viewDisable": {
+  "viewTabDisable": {
     "message": "Tắt"
+  },
+  "viewTabGroups": {
+    "message": "Nhóm tab"
   },
   "viewTabHide": {
     "message": "Ẩn"
   },
-  "viewTabDisable": {
-    "message": "Tắt"
-  },
-  "sortFolderContents": {
-    "message": "Sắp xếp nội dung thư mục"
-  },
-  "sortByName": {
-    "message": "Sắp xếp theo tên"
-  },
-  "sortByDate": {
-    "message": "Sắp xếp theo ngày thêm"
-  },
-  "sortRecursiveSuffix": {
-    "message": "(đệ quy)"
-  },
-  "sortOptions": {
-    "message": "Tùy chọn sắp xếp…"
-  },
-  "sortDone": {
-    "message": "Đã sắp xếp thư mục"
-  },
-  "sortByTitle": {
-    "message": "Theo tiêu đề"
-  },
-  "sortByDateAdded": {
-    "message": "Theo ngày thêm (mới nhất trước)"
-  },
-  "sortFoldersFirst": {
-    "message": "Giữ thư mục ở trên"
-  },
-  "sortRecursive": {
-    "message": "Sắp xếp cả thư mục con (đệ quy)"
-  },
-  "sortRecursiveWarning": {
-    "message": "Thao tác này sắp xếp lại các dấu trang trong mọi thư mục con."
-  },
-  "tabGroupDialogTitle": {
-    "message": "Nhóm tab mới"
-  },
-  "tabGroupTitleLabel": {
-    "message": "Tên nhóm"
-  },
-  "tabGroupColorLabel": {
-    "message": "Màu"
-  },
-  "tabGroupColorGrey": {
-    "message": "Xám",
-    "description": "Accessible name of the grey color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorBlue": {
-    "message": "Xanh dương",
-    "description": "Accessible name of the blue color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorRed": {
-    "message": "Đỏ",
-    "description": "Accessible name of the red color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorYellow": {
-    "message": "Vàng",
-    "description": "Accessible name of the yellow color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorGreen": {
-    "message": "Xanh lá",
-    "description": "Accessible name of the green color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorPink": {
-    "message": "Hồng",
-    "description": "Accessible name of the pink color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorPurple": {
-    "message": "Tím",
-    "description": "Accessible name of the purple color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorCyan": {
-    "message": "Xanh lơ",
-    "description": "Accessible name of the cyan color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorOrange": {
-    "message": "Cam",
-    "description": "Accessible name of the orange color swatch in the new-tab-group dialog."
-  },
-  "tabGroupUntitled": {
-    "message": "Nhóm chưa đặt tên"
-  },
-  "tabGroupNoGroups": {
-    "message": "Không có nhóm tab nào"
-  },
-  "tabGroupPickDialogTitle": {
-    "message": "Mở vào nhóm tab hiện có"
-  },
-  "quickAddBookmark": {
-    "message": "Đánh dấu trang này (Ctrl+D)"
-  },
-  "quickAddBookmarkCommand": {
-    "message": "Thêm nhanh tab hiện tại làm dấu trang"
-  },
-  "quickAdded": {
-    "message": "Đã thêm dấu trang"
-  },
-  "quickAddedTo": {
-    "message": "Đã thêm dấu trang vào $folderName$",
-    "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarks bar"
-      }
-    }
-  },
-  "quickRemoved": {
-    "message": "Đã xóa dấu trang"
-  },
-  "quickRemoveBookmark": {
-    "message": "Xóa dấu trang này (Ctrl+D)"
-  },
-  "toolButtonTitle": {
-    "message": "Công cụ (Ctrl+K)"
-  },
-  "contextMenuAddBookmark": {
-    "message": "Đánh dấu trang này bằng vBookmarks"
-  },
-  "deadFilterAll": {
-    "message": "Tất cả"
-  },
-  "deadFilterBlocked": {
-    "message": "Chỉ bị chặn"
-  },
-  "deadFilterDead": {
-    "message": "Chỉ hỏng"
-  },
-  "deadFilterMarked": {
-    "message": "Đã đánh dấu trước đó"
-  },
-  "deadLastScanAt": {
-    "message": "Lần quét cuối: $time$",
-    "placeholders": {
-      "time": {
-        "content": "$1"
-      }
-    }
-  },
-  "deadMark": {
-    "message": "Đánh dấu hỏng"
-  },
-  "deadMarkAll": {
-    "message": "Đánh dấu tất cả"
-  },
-  "deadMarked": {
-    "message": "Các hàng hỏng đã được đánh dấu"
-  },
-  "deadMarkedCount": {
-    "message": "Đã đánh dấu $count$ dấu trang",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "deadMarkedNone": {
-    "message": "Chưa có dấu trang nào được đánh dấu"
-  },
-  "deadMarkedRow": {
-    "message": "Đã đánh dấu"
-  },
-  "deadMarkSelected": {
-    "message": "Đánh dấu mục đã chọn"
-  },
-  "deadMarkStatusAll": {
-    "message": "Mọi trạng thái"
-  },
-  "deadMarkStatusMarked": {
-    "message": "Đã đánh dấu"
-  },
-  "deadMarkStatusUnmarked": {
-    "message": "Chưa đánh dấu"
-  },
-  "deadMarkTimeLabel": {
-    "message": "Thời gian đánh dấu"
-  },
-  "deadDetectTimeLabel": {
-    "message": "Thời gian phát hiện"
-  },
-  "deadSortLabel": {
-    "message": "Sắp xếp theo"
-  },
-  "deadSortByDetected": {
-    "message": "Thời gian phát hiện"
-  },
-  "deadSortByPath": {
-    "message": "Đường dẫn thư mục"
-  },
-  "deadSortByMarked": {
-    "message": "Thời gian đánh dấu"
-  },
-  "deadMarkedBanner": {
-    "message": "Đang hiển thị các bookmark đã được đánh dấu trước đó. Nhấp Rescan để bắt đầu kiểm tra mới hoặc xử lý chúng trong danh sách bên dưới."
-  },
-  "deadMarkedBannerDismiss": {
-    "message": "Bỏ qua"
-  },
-  "deadProxyAdd": {
-    "message": "Thêm máy chủ proxy để kiểm tra liên kết hỏng"
-  },
-  "deadProxyLabel": {
-    "message": "Proxy: $server$",
-    "placeholders": {
-      "server": {
-        "content": "$1"
-      }
-    }
-  },
-  "deadProxyChange": {
-    "message": "Đổi"
-  },
-  "deadProxyRemove": {
-    "message": "Xóa"
-  },
-  "deadProxyRemoved": {
-    "message": "Đã xóa máy chủ proxy"
-  },
-  "deadProxyPanelHint": {
-    "message": "Nhập một máy chủ proxy bạn đã có (tiện ích không cung cấp sẵn), ví dụ: 127.0.0.1:7890 hoặc socks5://127.0.0.1:1080."
-  },
-  "deadProxyTestUrlLabel": {
-    "message": "URL kiểm tra"
-  },
-  "deadProxyTestSave": {
-    "message": "Kiểm tra và lưu"
-  },
-  "deadProxyTesting": {
-    "message": "Đang kiểm tra…"
-  },
-  "deadProxySaved": {
-    "message": "Đã lưu proxy — các lần quét sau sẽ kiểm tra lại các lỗi kết nối trực tiếp qua nó."
-  },
-  "deadProxyInvalid": {
-    "message": "Địa chỉ proxy không hợp lệ — dùng host:port hoặc scheme://host:port (http/https/socks5, không kèm thông tin xác thực)"
-  },
-  "deadProxyUnreachable": {
-    "message": "Không thể kết nối tới proxy — chưa lưu"
-  },
-  "deadProxyDenied": {
-    "message": "Quyền sử dụng proxy chưa được cấp"
-  },
-  "deadProxyControlled": {
-    "message": "Cài đặt proxy đang được quản lý bởi tiện ích mở rộng khác"
-  },
-  "deadProxyUnavailable": {
-    "message": "API proxy không khả dụng trong trình duyệt này"
-  },
-  "deadProxyNudge": {
-    "message": "Kiểm tra lại qua proxy giúp phân biệt liên kết chết thực sự với liên kết bị chặn theo vùng — hãy cấu hình tại đây hoặc trong trang tùy chọn."
-  },
-  "deadProxyNeverShow": {
-    "message": "Không hiển thị lại"
-  },
-  "deadStartHint": {
-    "message": "Bắt đầu quét $n$ bookmark",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "deadStatusBlocked": {
-    "message": "bị chặn"
-  },
-  "deadUnmark": {
-    "message": "Xóa dấu hỏng"
-  },
-  "deadUnmarkAll": {
-    "message": "Xóa tất cả dấu"
-  },
-  "deadUnmarkSelected": {
-    "message": "Bỏ đánh dấu mục đã chọn"
-  },
-  "dupesApplyAll": {
-    "message": "Áp dụng tất cả ($count$)",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "dupesApplySelected": {
-    "message": "Xóa trùng lặp mục đã chọn ($count$)",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "dupesCleanRestHint": {
-    "message": "Giữ \"$title$\" và xóa $count$ cái còn lại",
-    "placeholders": {
-      "title": {
-        "content": "$1"
-      },
-      "count": {
-        "content": "$2"
-      }
-    }
-  },
-  "dupesIgnoreScheme": {
-    "message": "Bỏ qua khác biệt http/https"
-  },
-  "dupesKeepThis": {
-    "message": "Giữ cái này"
-  },
-  "dupesKeeperSet": {
-    "message": "Đặt làm giữ"
-  },
-  "dupesPreviewSummary": {
-    "message": "$groups$ nhóm · $count$ sẽ được giải phóng",
-    "placeholders": {
-      "groups": {
-        "content": "$1"
-      },
-      "count": {
-        "content": "$2"
-      }
-    }
-  },
-  "dupesRemoveRow": {
-    "message": "Xóa bản sao này"
-  },
-  "dupesScopeAll": {
-    "message": "Tất cả dấu trang"
-  },
-  "dupesScopeBar": {
-    "message": "Chỉ thanh dấu trang"
-  },
-  "dupesStrategyBookmarkBar": {
-    "message": "Giữ cái trong thanh dấu trang"
-  },
-  "dupesStrategyMostVisited": {
-    "message": "Giữ cái truy cập nhiều nhất"
-  },
-  "dupesStrategyNewest": {
-    "message": "Giữ mới nhất"
-  },
-  "dupesStrategyOldest": {
-    "message": "Giữ cũ nhất"
-  },
-  "dupesStrategyShallowest": {
-    "message": "Giữ cái nông nhất"
-  },
-  "dupesStrategyShortestTitle": {
-    "message": "Giữ tiêu đề ngắn nhất"
-  },
-  "optionDeadProxyServer": {
-    "message": "Máy chủ proxy cho liên kết hỏng"
-  },
-  "deadProxyServerHint": {
-    "message": "Máy chủ đã lưu sẽ kiểm tra lại các dấu trang không vượt qua kiểm tra trực tiếp trong mỗi lần quét liên kết chết, giúp phân biệt liên kết chết thực sự với liên kết bị chặn theo khu vực. Kiểm tra và lưu sẽ thử nghiệm máy chủ đó (chỉ giữ lại máy chủ truy cập được); bạn cũng có thể thêm máy chủ từ chế độ xem liên kết chết."
-  },
-  "deadProxyClear": {
-    "message": "Xóa"
-  },
-  "deadProxyNone": {
-    "message": "(chưa đặt)"
-  },
-  "optionDeadProxyStrip": {
-    "message": "Hiển thị gợi ý thêm proxy trong chế độ xem liên kết chết"
-  },
-  "optionDeadProxyStripHint": {
-    "message": "Tắt sẽ ẩn gợi ý đó ở đó; máy chủ proxy vẫn có thể định cấu hình tại đây, và máy chủ đã lưu luôn hiển thị hàng quản lý của nó trong chế độ xem."
-  },
-  "optionDeadScanConcurrency": {
-    "message": "Độ đồng thời quét liên kết chết (1-16)"
-  },
-  "optionDeadScanTimeout": {
-    "message": "Thời gian chờ quét liên kết chết (giây) (2-30)"
-  },
-  "paletteCmdGoDead": {
-    "message": "Đi tới chế độ xem Liên kết chết"
-  },
-  "paletteCmdGoDupes": {
-    "message": "Đi tới chế độ xem Trùng lặp"
-  },
-  "paletteCmdGoRecent": {
-    "message": "Đi tới chế độ xem Gần đây"
-  },
-  "paletteCmdGoSearch": {
-    "message": "Đi tới chế độ xem Tìm kiếm"
-  },
-  "paletteCmdGoTree": {
-    "message": "Đi tới chế độ xem Cây"
-  },
-  "paletteCmdOptions": {
-    "message": "Mở trang tùy chọn"
-  },
-  "paletteCmdSearchInView": {
-    "message": "Tìm kiếm '$query$' trong chế độ xem Tìm kiếm",
-    "placeholders": {
-      "query": {
-        "content": "$1"
-      }
-    }
-  },
-  "rowActionDelete": {
-    "message": "Xóa"
-  },
-  "rowActionMark": {
-    "message": "Đánh dấu chết"
-  },
-  "rowActionReveal": {
-    "message": "Hiển thị trong cây"
-  },
-  "rowActionUnmark": {
-    "message": "Xóa dấu chết"
-  },
-  "viewDead": {
-    "message": "Liên kết chết"
-  },
-  "viewDupes": {
-    "message": "Trùng lặp"
-  },
-  "viewStats": {
-    "message": "Thống kê"
-  },
-  "paletteCmdGoStats": {
-    "message": "Đi tới chế độ xem Thống kê"
-  },
-  "optionStatsEnabled": {
-    "message": "Bật thống kê lượt truy cập"
-  },
-  "optionFaviconContrast": {
-    "message": "Đảo ngược favicon có độ tương phản thấp"
-  },
-  "optionFaviconContrastHint": {
-    "message": "Biểu tượng màu trắng trên nền sáng và màu đen trên nền tối sẽ được đảo ngược để luôn hiển thị rõ. Mỗi biểu tượng được lấy mẫu một lần khi tải — không tốn chi phí khi duyệt web."
-  },
-  "optionFaviconEnrich": {
-    "message": "Tải biểu tượng còn thiếu"
-  },
-  "optionFaviconEnrichHint": {
-    "message": "Đối với các trang đã đánh dấu mà Chrome không có biểu tượng trong bộ nhớ cache, hãy tải trực tiếp biểu tượng thực từ trang web (/favicon.ico, sau đó là các biểu tượng được khai báo của trang). Yêu cầu chỉ gửi đến các trang bạn đã đánh dấu."
-  },
-  "optionFaviconEnrichAgg": {
-    "message": "Dự phòng biểu tượng từ bên thứ ba"
-  },
-  "optionFaviconEnrichAggHint": {
-    "message": "Khi tải trực tiếp thất bại, hãy tra cứu biểu tượng theo tên miền từ danh sách tích hợp các dịch vụ biểu tượng của bên thứ ba ($providers$). Dịch vụ không truy cập được sẽ bị bỏ qua và thử dịch vụ tiếp theo — dịch vụ đó sẽ không được thử lại trong 6 giờ.",
-    "placeholders": {
-      "providers": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionFaviconBackup": {
-    "message": "Bao gồm cache biểu tượng trong bản sao lưu"
-  },
-  "optionFaviconBackupHint": {
-    "message": "Cũng đóng gói bộ nhớ đệm biểu tượng nâng cao (dữ liệu theo từng trang web, có thể lớn) vào xuất/nhập cài đặt. Điều này bao gồm các biểu tượng đã được lưu trữ ngay cả khi tính năng tải biểu tượng bị tắt. Tắt tùy chọn này giúp bản sao lưu nhỏ; các biểu tượng sẽ được tải lại tự động."
-  },
-  "optionFaviconCacheClear": {
-    "message": "Xóa bộ đệm biểu tượng"
-  },
-  "optionFaviconCacheClearConfirm": {
-    "message": "Xóa bộ nhớ đệm biểu tượng nâng cao? Các biểu tượng sẽ được tải lại tự động khi mở lần sau."
-  },
-  "optionFaviconCacheEmpty": {
-    "message": "Không có bộ nhớ đệm biểu tượng nào để xóa."
-  },
-  "optionFaviconCacheCleared": {
-    "message": "Đã xóa bộ đệm biểu tượng. Biểu tượng sẽ được tải lại khi mở lần sau."
-  },
-  "favGalleryLink": {
-    "message": "Xem biểu tượng đã làm mới",
-    "description": "Options link (Icons group, right of the Clear icon cache button): opens the favicon gallery page listing the sites whose icons were refetched."
-  },
-  "favGalleryTitle": {
-    "message": "Biểu tượng trang web đã làm mới",
-    "description": "Favicon gallery page title (h1 + document title)."
-  },
-  "favGalleryHint": {
-    "message": "Các biểu tượng vBookmarks đã lấy cho các trang đã đánh dấu mà Chrome chưa lưu vào bộ nhớ đệm — nguồn gốc của từng biểu tượng và dấu trang nào sử dụng nó. Chỉ để hiển thị.",
-    "description": "Subtitle under the favicon gallery title, explaining the page is read-only."
-  },
-  "favGallerySearch": {
-    "message": "Lọc theo trang, tiêu đề hoặc đường dẫn",
-    "description": "Placeholder of the favicon gallery filter input."
-  },
-  "favGalleryAll": {
-    "message": "Tất cả",
-    "description": "Favicon gallery source filter chip: show every source."
-  },
-  "favSrcDirect": {
-    "message": "Trực tiếp",
-    "description": "Favicon gallery source badge: the icon was fetched directly from the site itself."
-  },
-  "favSrcProxy": {
-    "message": "Proxy",
-    "description": "Favicon gallery source badge: the icon was fetched through the user's own proxy relay."
-  },
-  "favSrcLegacy": {
-    "message": "Bộ nhớ đệm trước đó",
-    "description": "Favicon gallery source badge: cached before the source was recorded, so the origin is unknown."
-  },
-  "favGalleryCompare": {
-    "message": "So sánh với biểu tượng giữ chỗ",
-    "description": "Favicon gallery toggle button: switch every icon to the generic placeholder it replaced (before/after comparison)."
-  },
-  "favGalleryShowingBefore": {
-    "message": "Quay lại biểu tượng thật",
-    "description": "Favicon gallery toggle button while the placeholder comparison is shown: switch back to the real fetched icons."
-  },
-  "favGalleryStatSites": {
-    "message": "$n$ trang web",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    },
-    "description": "Favicon gallery stats strip: how many sites have a refreshed icon."
-  },
-  "favGalleryStatBookmarks": {
-    "message": "$n$ dấu trang",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    },
-    "description": "Favicon gallery stats strip: how many bookmarks sit on the refreshed sites."
-  },
-  "favGalleryVisits": {
-    "message": "$n$ lần mở đã ghi nhận",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    },
-    "description": "Favicon gallery tooltip on a bookmark row's visit-count pill."
-  },
-  "favGalleryFailedTitle": {
-    "message": "Đã thử gần đây, không tìm thấy biểu tượng",
-    "description": "Favicon gallery heading of the muted section listing hosts whose icon fetch failed recently."
-  },
-  "favGalleryFailedHint": {
-    "message": "Các lần thất bại sẽ được thử lại sau 24 giờ, 3 ngày và 7 ngày, sau đó bỏ cuộc cho đến khi bộ đệm biểu tượng được xóa.",
-    "description": "Favicon gallery hint under the failed-fetch section title."
-  },
-  "favGalleryGaveUp": {
-    "message": "Đã bỏ cuộc",
-    "description": "Favicon gallery badge on a failed-strip host whose retries are exhausted (it stays untouched until the icon cache is cleared)."
-  },
-  "favGalleryOrphan": {
-    "message": "Không còn dấu trang nào trên trang web này — biểu tượng sẽ bị xóa cùng bộ nhớ đệm.",
-    "description": "Favicon gallery note on a card whose host no longer has any bookmark."
-  },
-  "favGalleryEmptyTitle": {
-    "message": "Chưa có biểu tượng làm mới nào",
-    "description": "Favicon gallery empty-state heading."
-  },
-  "favGalleryEmptyText": {
-    "message": "Khi popup gặp một trang đã đánh dấu mà Chrome không có biểu tượng, vBookmarks sẽ tải biểu tượng thực và liệt kê tại đây.",
-    "description": "Favicon gallery empty-state body text."
-  },
-  "storageUsageIcon": {
-    "message": "Bộ nhớ biểu tượng"
-  },
-  "storageUsageOther": {
-    "message": "Khác"
-  },
-  "storageUsageSummary": {
-    "message": "Đã sử dụng $1$ trên $2$",
-    "placeholders": {
-      "1": {
-        "content": "$1"
-      },
-      "2": {
-        "content": "$2"
-      }
-    }
-  },
-  "storageUsageFree": {
-    "message": "Trống"
-  },
-  "storageUsageHint": {
-    "message": "Chỉ bộ nhớ mở rộng cục bộ (chrome.storage.local, hạn mức khoảng 10 MB): bộ nhớ biểu tượng cộng với cài đặt và dữ liệu cục bộ khác. Cài đặt đồng bộ, dữ liệu phiên và thư viện dấu trang không được tính ở đây."
-  },
-  "optionsDonate": {
-    "message": "Quyên góp"
-  },
-  "optionsGithubLink": {
-    "message": "GitHub"
-  },
-  "optionsHomepageLink": {
-    "message": "Trang chủ"
-  },
-  "optionsSince": {
-    "message": "Được fork từ Neat Bookmarks, duy trì trong $days$ ngày.",
-    "placeholders": {
-      "days": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionsVersion": {
-    "message": "Phiên bản vBookmarks"
-  },
-  "statsSortByCount": {
-    "message": "Theo số lượng"
-  },
-  "statsSortByRecent": {
-    "message": "Theo gần đây"
-  },
-  "statsShowUnbookmarked": {
-    "message": "Hiển thị chưa đánh dấu"
-  },
-  "statsShowUnbookmarkedHint": {
-    "message": "Bao gồm các trang từ lịch sử chưa được lưu dưới dạng dấu trang."
-  },
-  "statsEmpty": {
-    "message": "Thống kê được tích lũy khi bạn mở dấu trang"
-  },
-  "statsDisabledHint": {
-    "message": "Thống kê lượt truy cập đã tắt — bật trong Tùy chọn → Chế độ xem"
-  },
-  "statsVisitCount": {
-    "message": "Đã truy cập $count$ lần",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "statsClearData": {
-    "message": "Xóa thống kê"
-  },
-  "statsClearConfirm": {
-    "message": "Xóa thống kê lượt truy cập cho $count$ dấu trang? Hành động này không thể hoàn tác.",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "statsHistoryBanner": {
-    "message": "Cấp quyền truy cập lịch sử để gieo số liệu thống kê truy cập từ các lần truy cập trước đây của bạn."
-  },
-  "statsHistoryEnable": {
-    "message": "Bật"
-  },
-  "statsHistoryDismiss": {
-    "message": "Không hiển thị lại"
-  },
-  "statsHistoryImported": {
-    "message": "Đã nhập các lần truy cập trước đây cho $count$ dấu trang",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "paletteCmdToggleViewTabs": {
-    "message": "Bật/tắt tab xem"
-  },
-  "paletteCmdTheme": {
-    "message": "Đặt giao diện…"
-  },
-  "paletteCmdThemeUsage": {
-    "message": "Cách dùng: /theme kèm tên giao diện — auto, light, dark, ink hoặc paper (tiền tố duy nhất cũng được, ví dụ: /theme d)."
-  },
-  "paletteCustomTag": {
-    "message": "tùy chỉnh"
-  },
-  "paletteCustomDeleteConfirm": {
-    "message": "Xóa lệnh \"$1\"? Thay đổi sẽ được đồng bộ đến tất cả thiết bị của bạn."
-  },
-  "paletteCustomBroken": {
-    "message": "Thư mục của lệnh \"$1\" không còn tồn tại. Xóa lệnh này?"
-  },
-  "paletteCmdSaveAsCommand": {
-    "message": "Lưu \"$1\" thành một lệnh…"
-  },
-  "paletteActionOpenUrl": {
-    "message": "Mở URL"
-  },
-  "paletteActionOpenUrlGroup": {
-    "message": "Mở nhóm thư mục dấu trang"
-  },
-  "paletteActionViewPreset": {
-    "message": "Mở chế độ xem với cấu hình đặt sẵn"
-  },
-  "paletteActionUrlTemplate": {
-    "message": "Mở URL theo mẫu"
-  },
-  "optionsGroupPalette": {
-    "message": "Bảng lệnh"
-  },
-  "paletteCustomHint": {
-    "message": "Lệnh gạch chéo tùy chỉnh cho bảng lệnh (Ctrl/Cmd+K). Chúng đồng bộ với cài đặt của bạn — tối đa 100 mục."
-  },
-  "paletteCustomAdd": {
-    "message": "Thêm lệnh…"
-  },
-  "paletteCustomUsage": {
-    "message": "$1 / $2"
-  },
-  "paletteCustomSlash": {
-    "message": "Slash (từ sau /)"
-  },
-  "paletteCustomAliases": {
-    "message": "Bí danh (phân tách bằng dấu phẩy)"
-  },
-  "paletteCustomAction": {
-    "message": "Hành động"
-  },
-  "paletteCustomUrl": {
-    "message": "URL"
-  },
-  "paletteCustomTemplate": {
-    "message": "Mẫu URL — %s được thay thế bằng các từ sau lệnh"
-  },
-  "paletteCustomWhere": {
-    "message": "Mở trong"
-  },
-  "paletteCustomFolder": {
-    "message": "Thư mục dấu trang"
-  },
-  "paletteCustomView": {
-    "message": "Chế độ xem"
-  },
-  "paletteCustomStrategy": {
-    "message": "Cài đặt sẵn chiến lược khử trùng lặp"
-  },
-  "paletteCustomScope": {
-    "message": "Cài đặt sẵn phạm vi khử trùng lặp"
-  },
-  "paletteCustomScan": {
-    "message": "Bắt đầu quét khi nhập"
-  },
-  "paletteWhereCurrent": {
-    "message": "Tab hiện tại"
-  },
-  "paletteWhereTab": {
-    "message": "Tab mới"
-  },
-  "paletteWhereWindow": {
-    "message": "Cửa sổ mới"
-  },
-  "paletteWhereBackground": {
-    "message": "Tab nền"
-  },
-  "paletteCustomSave": {
-    "message": "Lưu lệnh"
-  },
-  "paletteCustomErrSlash": {
-    "message": "Slash: 1–24 ký tự chữ thường, chữ số hoặc dấu gạch nối, bắt đầu bằng chữ cái hoặc chữ số."
-  },
-  "paletteCustomErrAlias": {
-    "message": "Bí danh: cùng quy tắc như slash (1–24 ký tự chữ thường, chữ số hoặc dấu gạch nối)."
-  },
-  "paletteCustomErrTaken": {
-    "message": "Slash hoặc bí danh này đã được sử dụng."
-  },
-  "paletteCustomErrUrl": {
-    "message": "Chỉ cho phép URL http:// hoặc https://."
-  },
-  "paletteCustomErrFolder": {
-    "message": "Chọn một thư mục dấu trang."
-  },
-  "paletteCustomErrView": {
-    "message": "Chọn một chế độ xem."
-  },
-  "paletteCustomErrTemplate": {
-    "message": "Mẫu phải chứa chính xác một %s."
-  },
-  "paletteCustomErrAction": {
-    "message": "Chọn một loại hành động."
-  },
-  "paletteCustomErrLimit": {
-    "message": "Đã đạt giới hạn lệnh (100) — hãy xóa một lệnh trước."
-  },
-  "paletteCustomEmpty": {
-    "message": "Chưa có lệnh tùy chỉnh nào."
-  },
-  "recentGroupToday": {
-    "message": "Hôm nay"
-  },
-  "recentGroupWeek": {
-    "message": "Tuần này"
-  },
-  "recentGroupMonth": {
-    "message": "Tháng này"
-  },
-  "recentGroupOlder": {
-    "message": "Cũ hơn"
-  },
-  "searchHistoryRerun": {
-    "message": "Tìm lại"
-  },
-  "optionsGroupBackup": {
-    "message": "Sao lưu"
-  },
-  "optionsGroupContextMenu": {
-    "message": "Menu ngữ cảnh"
-  },
-  "optionsGroupIcons": {
-    "message": "Biểu tượng"
-  },
-  "settingsExport": {
-    "message": "Xuất cài đặt"
-  },
-  "settingsImport": {
-    "message": "Nhập cài đặt"
-  },
-  "settingsBackupHint": {
-    "message": "Xuất lưu tất cả cài đặt (bao gồm tùy chọn đồng bộ) vào một tệp JSON. Nhập sẽ hợp nhất bản sao lưu: cài đặt trong tệp ghi đè lên cài đặt hiện tại, mọi thứ khác được giữ nguyên."
-  },
-  "settingsImportConfirm": {
-    "message": "Việc nhập sẽ ghi đè mọi cài đặt có trong tệp sao lưu (cài đặt không có trong tệp được giữ lại) và tải lại trang này. Tiếp tục?"
-  },
-  "settingsImportInvalid": {
-    "message": "Tệp cài đặt không hợp lệ: không phải bản sao lưu cài đặt vBookmarks."
-  },
-  "settingsImportDone": {
-    "message": "Đã nhập cài đặt. Trang sẽ tải lại ngay bây giờ."
-  },
-  "settingsImportError": {
-    "message": "Không thể ghi một số cài đặt (do dung lượng lưu trữ hoặc lỗi tạm thời). Việc nhập không hoàn tất — vui lòng thử lại."
-  },
-  "statsSectionRecent": {
-    "message": "Lượt truy cập gần đây"
-  },
-  "statsSectionBookmarks": {
-    "message": "Thống kê dấu trang"
-  },
-  "statsHistoryGuide": {
-    "message": "Cấp quyền truy cập lịch sử để liệt kê các lượt truy cập gần đây của bạn tại đây."
-  },
-  "statsHistoryAdd": {
-    "message": "Thêm vào dấu trang"
-  },
-  "statsHistoryBookmarked": {
-    "message": "Đã đánh dấu"
-  },
-  "deadPause": {
-    "message": "Tạm dừng"
-  },
-  "deadResume": {
-    "message": "Tiếp tục"
-  },
-  "deadCancel": {
-    "message": "Hủy"
-  },
-  "deadPaused": {
-    "message": "Đã tạm dừng"
+  "viewTree": {
+    "message": "Cây"
   },
   "whatsNewChangelog": {
     "message": "Nhật ký thay đổi"
@@ -1808,800 +2603,5 @@
         "content": "$1"
       }
     }
-  },
-  "viewHiddenTabsHint": {
-    "message": "Bạn đang ở chế độ $view$. Nhấn $back$ hoặc dùng bảng lệnh để quay lại cây.",
-    "placeholders": {
-      "view": {
-        "content": "$1"
-      },
-      "back": {
-        "content": "$2"
-      }
-    }
-  },
-  "viewTabGroups": {
-    "message": "Nhóm tab"
-  },
-  "optionShowTabGroupsView": {
-    "message": "Hiển thị tab chế độ xem nhóm tab"
-  },
-  "tabGroupsViewEmpty": {
-    "message": "Không có tab nào trong cửa sổ này"
-  },
-  "tabGroupsToolbarRefresh": {
-    "message": "Làm mới"
-  },
-  "tabGroupsCollapseAll": {
-    "message": "Thu gọn tất cả"
-  },
-  "tabGroupsExpandAll": {
-    "message": "Mở rộng tất cả"
-  },
-  "tabGroupsSummary": {
-    "message": "$tabs$ tab · $groups$ nhóm",
-    "placeholders": {
-      "tabs": {
-        "content": "$1"
-      },
-      "groups": {
-        "content": "$2"
-      }
-    }
-  },
-  "tabGroupsGroupCount": {
-    "message": "$count$ tab",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsCurrentTab": {
-    "message": "Hiện tại"
-  },
-  "tabGroupsAddBookmark": {
-    "message": "Đánh dấu tab này"
-  },
-  "tabGroupsSaveFolder": {
-    "message": "Lưu nhóm tab dưới dạng thư mục dấu trang"
-  },
-  "tabGroupsGroupSavedToFolder": {
-    "message": "Đã lưu $count$ tab vào $folder$",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      },
-      "folder": {
-        "content": "$2"
-      }
-    }
-  },
-  "tabGroupsBookmarksAdded": {
-    "message": "Đã thêm $count$ dấu trang vào $folder$",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      },
-      "folder": {
-        "content": "$2"
-      }
-    }
-  },
-  "tabGroupsSelectNewGroup": {
-    "message": "Nhóm tab mới"
-  },
-  "tabGroupsSelectOpenInto": {
-    "message": "Mở trong nhóm tab hiện có…"
-  },
-  "tabGroupsSelectSaveFolder": {
-    "message": "Lưu dưới dạng thư mục dấu trang"
-  },
-  "tabGroupsSelectClose": {
-    "message": "Đóng"
-  },
-  "tabGroupsSelectSleep": {
-    "message": "Ngủ"
-  },
-  "tabGroupsCopyMoveDialog": {
-    "message": "Các tab đã chọn thuộc về một nhóm tab. Bạn muốn sao chép (mở ở vị trí mới) hay di chuyển (xóa khỏi nhóm hiện tại)?"
-  },
-  "tabGroupsCopyMoveCopy": {
-    "message": "Sao chép"
-  },
-  "tabGroupsCopyMoveMove": {
-    "message": "Di chuyển"
-  },
-  "tabGroupsConfirmClose": {
-    "message": "Đóng $count$ tab?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsConfirmSleep": {
-    "message": "Cho $count$ tab ngủ?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsClosedToast": {
-    "message": "Đã đóng $count$ tab",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsSleptToast": {
-    "message": "Đã đưa $count$ tab vào chế độ ngủ",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsBatchClosedTitle": {
-    "message": "Đã đóng tab"
-  },
-  "tabGroupsPinnedUngroupedToast": {
-    "message": "Đã ghim — gỡ khỏi nhóm tab"
-  },
-  "tabGroupsReopenAction": {
-    "message": "Mở lại"
-  },
-  "tabGroupsWakeAction": {
-    "message": "Đánh thức"
-  },
-  "tabGroupsRecordDeletedToast": {
-    "message": "Đã xóa bản ghi đã đóng"
-  },
-  "tabGroupsClosedTabRemovedToast": {
-    "message": "Đã xóa khỏi bản ghi đã đóng"
-  },
-  "tabGroupsClearedToast": {
-    "message": "Đã xóa $count$ bản ghi đã đóng",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "bookmarkFolderPickDialogTitle": {
-    "message": "Thêm vào thư mục dấu trang"
-  },
-  "bookmarkFolderNoFolders": {
-    "message": "Không có thư mục dấu trang"
-  },
-  "tabGroupsSelectAddBookmarks": {
-    "message": "Thêm vào thư mục dấu trang…"
-  },
-  "paletteCmdGoTabGroups": {
-    "message": "Đi tới chế độ xem Nhóm tab"
-  },
-  "tabGroupsActivateGroup": {
-    "message": "Đi tới nhóm tab"
-  },
-  "tabGroupsRenameGroup": {
-    "message": "Đổi tên nhóm tab"
-  },
-  "tabGroupsRenameDialog": {
-    "message": "Đổi tên nhóm tab"
-  },
-  "tabGroupsCloseGroup": {
-    "message": "Đóng nhóm tab"
-  },
-  "tabGroupsSleepGroup": {
-    "message": "Cho nhóm tab ngủ"
-  },
-  "tabGroupsWakeGroup": {
-    "message": "Đánh thức nhóm tab"
-  },
-  "tabGroupsActivateTab": {
-    "message": "Đi tới tab"
-  },
-  "tabGroupsCollapseGroup": {
-    "message": "Thu gọn nhóm"
-  },
-  "tabGroupsExpandGroup": {
-    "message": "Mở rộng nhóm"
-  },
-  "tabGroupsMenuAddBookmark": {
-    "message": "Đánh dấu tab"
-  },
-  "tabGroupsMenuSaveFolder": {
-    "message": "Lưu dưới dạng thư mục dấu trang"
-  },
-  "tabGroupsSyncCollapse": {
-    "message": "Đồng bộ thu gọn với trình duyệt"
-  },
-  "tabGroupsSyncCollapseHint": {
-    "message": "Khi được chọn, việc thu gọn hoặc mở rộng một nhóm trong chế độ xem này cũng cập nhật nhóm tab của trình duyệt. Tắt theo mặc định để việc gấp chế độ xem chỉ mang tính cục bộ."
-  },
-  "tabGroupsColorStyle": {
-    "message": "Kiểu màu nhóm tab"
-  },
-  "tabGroupsColorStyleHint": {
-    "message": "Tắt chỉ hiển thị chấm màu. Dải màu cạnh vẽ một dải màu dọc theo mép trái của nhóm. Đường nối màu vẽ một đường màu dưới chấm của nhóm với dấu tích cho mỗi hàng, liên kết toàn bộ nhóm thành một cây."
-  },
-  "tabGroupsColorStyleOff": {
-    "message": "Tắt (chỉ chấm màu)"
-  },
-  "tabGroupsColorStyleEdge": {
-    "message": "Dải màu cạnh"
-  },
-  "tabGroupsColorStyleLine": {
-    "message": "Đường nối màu"
-  },
-  "tabGroupsBookmarked": {
-    "message": "Đã đánh dấu"
-  },
-  "tabGroupsRemoveBookmark": {
-    "message": "Xóa dấu trang"
-  },
-  "tabGroupsBookmarkRemoved": {
-    "message": "Đã xóa $count$ dấu trang",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsPinned": {
-    "message": "Tab đã ghim"
-  },
-  "tabGroupsDiscarded": {
-    "message": "Tab ngủ"
-  },
-  "tabGroupsPinTab": {
-    "message": "Ghim tab"
-  },
-  "tabGroupsUnpinTab": {
-    "message": "Bỏ ghim tab"
-  },
-  "tabGroupsSleepTab": {
-    "message": "Ngủ tab"
-  },
-  "tabGroupsWakeTab": {
-    "message": "Đánh thức tab"
-  },
-  "tabGroupsOpenGroups": {
-    "message": "Nhóm tab đang mở"
-  },
-  "tabGroupsClosedGroups": {
-    "message": "Đã đóng gần đây"
-  },
-  "tabGroupsUngroupedTabs": {
-    "message": "Tab chưa nhóm"
-  },
-  "tabGroupsUngroupGroup": {
-    "message": "Tách nhóm tab"
-  },
-  "tabGroupsMoveNewWindow": {
-    "message": "Chuyển nhóm sang cửa sổ mới"
-  },
-  "tabGroupsWindow": {
-    "message": "Cửa sổ $1$",
-    "placeholders": {
-      "1": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsCurrentWindow": {
-    "message": "Cửa sổ hiện tại"
-  },
-  "tabGroupsReopenGroup": {
-    "message": "Mở lại nhóm tab"
-  },
-  "tabGroupsDeleteClosedGroup": {
-    "message": "Xóa nhóm tab đã đóng"
-  },
-  "tabGroupsCollapseWindow": {
-    "message": "Thu gọn cửa sổ"
-  },
-  "tabGroupsCloseWindow": {
-    "message": "Đóng cửa sổ"
-  },
-  "tabGroupsWindowClosedTitle": {
-    "message": "Cửa sổ đã đóng"
-  },
-  "tabGroupsExpandWindow": {
-    "message": "Mở rộng cửa sổ"
-  },
-  "tabGroupsClearClosedGroups": {
-    "message": "Xóa tất cả"
-  },
-  "tabGroupsConfirmClearClosed": {
-    "message": "Xóa tất cả bản ghi đã đóng gần đây? Chúng sẽ không thể mở lại từ đây."
-  },
-  "tabGroupsFilterPlaceholder": {
-    "message": "Lọc tab đang mở"
-  },
-  "tabGroupsNoMatchingTabs": {
-    "message": "Không có tab khớp"
-  },
-  "tabGroupsClosedOpenTab": {
-    "message": "Mở trong tab mới"
-  },
-  "tabGroupsRemoveClosedTab": {
-    "message": "Xóa khỏi nhóm đã lưu"
-  },
-  "tabGroupsClosedTimeLabel": {
-    "message": "Đã đóng:"
-  },
-  "tabGroupsExpandedExpand": {
-    "message": "Mở rộng"
-  },
-  "tabGroupsExpandedCollapse": {
-    "message": "Thu gọn"
-  },
-  "optionTabGroupsClosedLimit": {
-    "message": "Lịch sử tab/nhóm đã đóng cần giữ"
-  },
-  "folderPickMoveHere": {
-    "message": "Di chuyển đến đây"
-  },
-  "folderPickCopyHere": {
-    "message": "Sao chép đến đây"
-  },
-  "folderPickFilter": {
-    "message": "Lọc thư mục…"
-  },
-  "folderPickFavNote": {
-    "message": "Các mục chưa đánh dấu sẽ được đánh dấu tại đây"
-  },
-  "folderPickPinned": {
-    "message": "Đã ghim"
-  },
-  "folderPickRecent": {
-    "message": "Gần đây"
-  },
-  "pinFolder": {
-    "message": "Ghim thư mục này"
-  },
-  "unpinFolder": {
-    "message": "Bỏ ghim thư mục này"
-  },
-  "stagingAdd": {
-    "message": "Gửi đến vùng tạm"
-  },
-  "stagingAdded": {
-    "message": "Đã gửi đến vùng tạm"
-  },
-  "stagingAlready": {
-    "message": "Đã có trong vùng chờ"
-  },
-  "stagingAddedSummary": {
-    "message": "Đã thêm $n$ mục; $m$ mục đã có",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      },
-      "m": {
-        "content": "$2"
-      }
-    }
-  },
-  "stagingFull": {
-    "message": "Vùng chờ đã đầy — hãy xóa bớt một số mục"
-  },
-  "stagingFolderEmpty": {
-    "message": "Thư mục này không có dấu trang để đưa vào vùng chờ"
-  },
-  "stagingConfirmFolder": {
-    "message": "Đưa $n$ dấu trang từ thư mục này vào vùng chờ?",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingConfirmFolderOk": {
-    "message": "Lưu"
-  },
-  "stagingRemove": {
-    "message": "Xóa khỏi vùng chờ"
-  },
-  "stagingRemoved": {
-    "message": "Đã xóa khỏi vùng chờ"
-  },
-  "recentStageAll": {
-    "message": "Đưa tất cả mục mới thêm vào vùng chờ"
-  },
-  "recentSectionTitle": {
-    "message": "Mới thêm"
-  },
-  "stagingEmpty": {
-    "message": "Chưa có gì được xếp tạm. Gửi dấu trang vào đây từ bất kỳ chế độ xem nào — nút máy bay trên hàng hoặc menu chuột phải — sau đó sắp xếp và lưu trữ hàng loạt."
-  },
-  "stagingFromHistory": {
-    "message": "Từ lịch sử"
-  },
-  "stagingGroupExpand": {
-    "message": "Mở rộng nhóm"
-  },
-  "stagingGroupCollapse": {
-    "message": "Thu gọn nhóm"
-  },
-  "stagingGroupRename": {
-    "message": "Đổi tên nhóm…"
-  },
-  "stagingGroupDissolve": {
-    "message": "Giải tán nhóm"
-  },
-  "stagingGroupDissolved": {
-    "message": "Đã giải tán nhóm — các mục vẫn giữ trong vùng chờ"
-  },
-  "stagingGroupDelete": {
-    "message": "Xóa nhóm (kèm mục)"
-  },
-  "stagingGroupDeleteConfirm": {
-    "message": "Xóa nhóm \"$1\"? $2 mục của nhóm cũng sẽ rời khỏi khu vực tạm."
-  },
-  "stagingGroupDeleted": {
-    "message": "Đã xóa nhóm — $1 mục đã bị xóa"
-  },
-  "stagingGroupAssign": {
-    "message": "Nhóm…"
-  },
-  "stagingGroupAssignTitle": {
-    "message": "Gán vào nhóm"
-  },
-  "stagingGroupNew": {
-    "message": "Nhóm mới"
-  },
-  "stagingGroupNamePrompt": {
-    "message": "Tên nhóm mới"
-  },
-  "stagingGroupNoGroups": {
-    "message": "Chưa có nhóm nào"
-  },
-  "stagingShortcutAdd": {
-    "message": "Thêm lối tắt"
-  },
-  "stagingShortcutBarLabel": {
-    "message": "Di chuyển đến:"
-  },
-  "stagingGuideText": {
-    "message": "在此整理书签 — 选择行并进入选择模式以执行批量操作。"
-  },
-  "stagingGuideDismiss": {
-    "message": "不再显示"
-  },
-  "stagingShortcutTitle": {
-    "message": "Lối tắt di chuyển"
-  },
-  "stagingShortcutEdit": {
-    "message": "Sửa lối tắt"
-  },
-  "stagingShortcutAlias": {
-    "message": "Bí danh"
-  },
-  "stagingShortcutPickFolder": {
-    "message": "Chọn thư mục đích…"
-  },
-  "stagingShortcutSave": {
-    "message": "Lưu"
-  },
-  "stagingShortcutRemove": {
-    "message": "Xóa lối tắt"
-  },
-  "stagingShortcutRemoved": {
-    "message": "Đã xóa lối tắt"
-  },
-  "stagingShortcutMove": {
-    "message": "Di chuyển đã chọn đến $1$",
-    "placeholders": {
-      "1": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingBucketTitle": {
-    "message": "Chưa đánh dấu"
-  },
-  "stagingBucketFavAll": {
-    "message": "Yêu thích tất cả"
-  },
-  "stagingNew": {
-    "message": "mới $n$",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingRowFav": {
-    "message": "Yêu thích mục này"
-  },
-  "stagingRowUnfav": {
-    "message": "Bỏ yêu thích mục này"
-  },
-  "stagingFav": {
-    "message": "Yêu thích"
-  },
-  "stagingUnfav": {
-    "message": "Bỏ yêu thích"
-  },
-  "stagingFavDone": {
-    "message": "Đã yêu thích $n$ mục",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingUnfavDone": {
-    "message": "Đã bỏ đánh dấu $n$ mục",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "groupSaveToFolder": {
-    "message": "Lưu vào thư mục…"
-  },
-  "groupCopyToFolder": {
-    "message": "Sao chép vào thư mục…"
-  },
-  "stagingCount": {
-    "message": "$n$ đã xếp",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingMoveCopy": {
-    "message": "Di chuyển/sao chép đến…"
-  },
-  "stagingMoveDone": {
-    "message": "Đã di chuyển $n$ mục về nhà",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingCopyDone": {
-    "message": "Đã sao chép $n$ mục",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingMoveConfirm": {
-    "message": "Di chuyển $n$ mục đến thư mục đã chọn?",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingMoveConfirmOk": {
-    "message": "Di chuyển"
-  },
-  "stagingDeleteConfirm": {
-    "message": "Xóa $n$ mục? Các mục không đánh dấu sẽ rời khỏi khu vực xếp.",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingDeleted": {
-    "message": "Đã xóa $n$ dấu trang",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingRemovedCount": {
-    "message": "Đã xóa $n$ mục khỏi khu vực xếp",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingClear": {
-    "message": "Xóa khu vực xếp"
-  },
-  "stagingClearConfirm": {
-    "message": "Xóa toàn bộ khu vực xếp? Cây dấu trang không bị ảnh hưởng."
-  },
-  "stagingClearConfirmOk": {
-    "message": "Xóa"
-  },
-  "stagingCleared": {
-    "message": "Đã xóa khu vực xếp"
-  },
-  "groupPlaceTooltip": {
-    "message": "Lưu nhóm này vào một thư mục…"
-  },
-  "copyBookmark": {
-    "message": "Sao chép"
-  },
-  "cutBookmark": {
-    "message": "Cắt"
-  },
-  "copyMoveTo": {
-    "message": "Sao chép/di chuyển đến…"
-  },
-  "pasteHere": {
-    "message": "Dán vào đây"
-  },
-  "copiedToast": {
-    "message": "Đã sao chép: $t$",
-    "placeholders": {
-      "t": {
-        "content": "$1"
-      }
-    }
-  },
-  "cutToast": {
-    "message": "Đã cắt: $t$ — dán vào thư mục đích (Esc để hủy)",
-    "placeholders": {
-      "t": {
-        "content": "$1"
-      }
-    }
-  },
-  "pasteDone": {
-    "message": "Đã dán"
-  },
-  "pasteGone": {
-    "message": "Dấu trang không còn tồn tại — đã xóa bộ nhớ tạm"
-  },
-  "folderCopyList": {
-    "message": "Sao chép tiêu đề và địa chỉ"
-  },
-  "folderCopyText": {
-    "message": "Danh sách văn bản thuần"
-  },
-  "folderCopyMarkdown": {
-    "message": "Markdown"
-  },
-  "folderCopyJson": {
-    "message": "JSON"
-  },
-  "folderCopyConfirm": {
-    "message": "Sao chép danh sách $n$ dấu trang?",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "folderCopyDone": {
-    "message": "Đã sao chép $n$ mục dấu trang",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "addFolderMenu": {
-    "message": "Thêm thư mục"
-  },
-  "optionCollapseAddFolderMenu": {
-    "message": "Thu gọn các mục thêm thư mục"
-  },
-  "optionCollapseAddFolderMenuHint": {
-    "message": "将添加文件夹条目（文件夹行上的前/后/内部，书签行上的前/后）合并为一个子菜单条目。"
-  },
-  "tabRowStage": {
-    "message": "Đưa vào vùng chờ"
-  },
-  "tabgroupStageAll": {
-    "message": "Đưa nhóm vào vùng chờ"
-  },
-  "tabgroupStageConfirm": {
-    "message": "Đưa $n$ tab vào vùng chờ?",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabgroupStageNone": {
-    "message": "Không có tab nào có thể đánh dấu trong nhóm này"
-  },
-  "stagedToast": {
-    "message": "Đã xếp $n$ tab thành nhóm “$t$”",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      },
-      "t": {
-        "content": "$2"
-      }
-    }
-  },
-  "searchResultCount": {
-    "message": "$n$ kết quả",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "deleteSelected": {
-    "message": "Xóa mục đã chọn"
-  },
-  "recentStageGroup": {
-    "message": "将 $t$ 发送到暂存区",
-    "placeholders": {
-      "t": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingGroupSelectAll": {
-    "message": "Chọn tất cả trong nhóm này"
-  },
-  "optionsGroupLabs": {
-    "message": "实验室"
-  },
-  "optionVirtualScrollLab": {
-    "message": "虚拟滚动（实验性）"
-  },
-  "optionVirtualScrollLabHint": {
-    "message": "标签组和重复项视图仅渲染视口附近的行。在非常大的列表上速度更快；实验阶段滚动条位置为估算值。"
-  },
-  "optionsStagingSection": {
-    "message": "暂存与最近添加"
-  },
-  "optionStagingEnabled": {
-    "message": "启用暂存区"
-  },
-  "optionStagingEnabledHint": {
-    "message": "关闭时，此视图仅保留最近添加的列表，其他视图中的暂存按钮或菜单项将全部隐藏。"
-  },
-  "optionTreeRowActions": {
-    "message": "树行悬停操作（编辑 / 暂存 / 删除）"
-  },
-  "optionsStorageSyncTip": {
-    "message": "通过 Chrome 账户同步 — 此设置跨设备共享。",
-    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
-  },
-  "optionsStorageLocalTip": {
-    "message": "仅存储在此设备上 — 不通过 Chrome 同步共享。",
-    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
-  },
-  "tabGroupsWindowsCount": {
-    "message": "$n$ cửa sổ",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsNewWindow": {
-    "message": "Cửa sổ mới"
-  },
-  "tabGroupsMergedWindowToast": {
-    "message": "Đã hợp nhất cửa sổ thành một nhóm thẻ"
-  },
-  "searchStageAllGroup": {
-    "message": "Gửi tất cả kết quả vào nhóm \"$1$\"",
-    "placeholders": {
-      "1": {
-        "content": "$1"
-      }
-    }
-  },
-  "searchHistoryClose": {
-    "message": "Ẩn lịch sử tìm kiếm"
-  },
-  "searchHistoryClosedToast": {
-    "message": "Lịch sử tìm kiếm đã ẩn — bật lại trong Tùy chọn → Tìm kiếm"
   }
 }

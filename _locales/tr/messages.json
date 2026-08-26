@@ -14,6 +14,9 @@
   "addBookmarkTop": {
     "message": "Sekmeyi bunun üstüne ekle"
   },
+  "addFolderMenu": {
+    "message": "Klasör ekle"
+  },
   "addNewFolder": {
     "message": "Alt klasör ekle"
   },
@@ -32,23 +35,38 @@
   "announceDismiss": {
     "message": "Kapat"
   },
-  "announceV408Text": {
-    "message": "v4.0.8, favicon geliştirmeli sürümdür: Chrome'un henüz önbelleğine almadığı yer imleri için gerçek site simgeleri otomatik olarak alınır."
-  },
   "announceV407Text": {
     "message": "v4.0.7, tam özellikli ölü bağlantı görünümünü sunar: ölü ve kısıtlı bağlantıları tarayın, işaretleyin, filtreleyin ve sıralayın; geçmiş işaretler ve satır başına zaman damgalarıyla."
   },
   "announceV407Title": {
     "message": "v4.0.7'deki Yenilikler"
   },
+  "announceV408Text": {
+    "message": "v4.0.8, favicon geliştirmeli sürümdür: Chrome'un henüz önbelleğine almadığı yer imleri için gerçek site simgeleri otomatik olarak alınır."
+  },
   "announceV408Title": {
     "message": "v4.0.8'deki yenilikler"
+  },
+  "announceV410Text": {
+    "message": "v4.1.0, Sekme grupları görünümü ve Hazırlık alanı ekler: tüm pencerelerin sekmelerini yer imlerinizin yanında yönetin ve yer imlerini her yerden toplu düzenleme için bir hazırlık çalışma alanına toplayın."
   },
   "announceV410Title": {
     "message": "v4.1.0'daki yenilikler"
   },
-  "announceV410Text": {
-    "message": "v4.1.0, Sekme grupları görünümü ve Hazırlık alanı ekler: tüm pencerelerin sekmelerini yer imlerinizin yanında yönetin ve yer imlerini her yerden toplu düzenleme için bir hazırlık çalışma alanına toplayın."
+  "bookmarkFolderNoFolders": {
+    "message": "Yer imi klasörü yok"
+  },
+  "bookmarkFolderPickDialogTitle": {
+    "message": "Yer imi klasörüne ekle"
+  },
+  "bookmarkOpenInExistingGroup": {
+    "message": "Mevcut sekme grubunda aç…"
+  },
+  "bookmarkOpenInNewGroup": {
+    "message": "Yeni sekme grubunda aç"
+  },
+  "bookmarkOpenInNewGroupSetup": {
+    "message": "Yeni sekme grubunda aç…"
   },
   "confirmDeleteFolder": {
     "message": "Bu klasörde $count$ öğe bulunuyor. Silme işlemini geri alabilirsiniz.",
@@ -57,9 +75,6 @@
         "content": "$1"
       }
     }
-  },
-  "confirmDeleteFolderButton": {
-    "message": "Sil"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "$folderName$ klasörünü ve içindeki $bookmarkCount$ yer imini silmek istediğinizden emin misiniz?",
@@ -71,6 +86,9 @@
         "content": "$1"
       }
     }
+  },
+  "confirmDeleteFolderButton": {
+    "message": "Sil"
   },
   "confirmDeleteFolderSubfolders": {
     "message": "$folderName$ klasörünü ve içindeki $subFolderCount$ alt klasörü silmek istediğinizden emin misiniz?",
@@ -124,11 +142,32 @@
       }
     }
   },
+  "contextMenuAddBookmark": {
+    "message": "Bu sayfayı vBookmarks ile yer imlerine ekle"
+  },
+  "copiedToast": {
+    "message": "Kopyalandı: $t$",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
+  },
   "copyAllTitlesAndUrls": {
     "message": "Tüm başlıkları ve URL'leri panoya kopyala"
   },
+  "copyBookmark": {
+    "message": "Kopyala"
+  },
+  "copyMoveTo": {
+    "message": "Kopyala/taşı…"
+  },
   "copyTitleAndUrl": {
     "message": "Başlığı ve URL'yi panoya kopyala"
+  },
+  "crossStorageMoveWarning": {
+    "description": "Warning when trying to move bookmarks across storage types",
+    "message": "Yer imleri eşitlenen ve yerel depolama alanı arasında taşınamaz. Bunun yerine kopyala/yapıştır kullanın."
   },
   "customIcon": {
     "message": "Özel simge"
@@ -136,8 +175,14 @@
   "customIconDescription": {
     "message": "Simge 19*19 piksel boyutunda olmalıdır. Aksi takdirde bu boyuta yeniden boyutlandırılacaktır."
   },
+  "customIconPick": {
+    "message": "Dosya seç…"
+  },
   "customSeparatorColorDescription": {
     "message": "Ayırıcı Rengini Özelleştir"
+  },
+  "customSeparatorStringDescription": {
+    "message": "Bir yer iminin URL'si bu dizeyi içeriyorsa, ayırıcı olarak gösterilecektir"
   },
   "customSeparatorTitleDescription": {
     "message": "Ayırıcı olarak gösterilen yer iminin gerçek başlığı"
@@ -145,28 +190,28 @@
   "customSeparatorUrlDescription": {
     "message": "Ayırıcı olarak gösterilen yer iminin gerçek URL'si"
   },
-  "customSeparatorStringDescription": {
-    "message": "Bir yer iminin URL'si bu dizeyi içeriyorsa, ayırıcı olarak gösterilecektir"
-  },
   "customStyles": {
     "message": "Özel stiller"
-  },
-  "separatorOptions": {
-    "message": "Ayırıcılar"
   },
   "customStylesDescription": {
     "message": "Bu bazı CSS becerileri gerektirir. Kendi sorumluluğunuzda düzenleyin. Kod paylaşımını üzerinden yapmak akıllıca olacaktır"
   },
-  "defaultIconButton": {
-    "message": "Varsayılanı kullan"
+  "cutBookmark": {
+    "message": "Kes"
   },
-  "defaultIconButtonOr": {
-    "message": "veya"
+  "cutToast": {
+    "message": "Kesildi: $t$ — hedef klasöre yapıştırın (Esc iptal eder)",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
   },
-  "customIconPick": {
-    "message": "Dosya seç…"
+  "deadCancel": {
+    "message": "İptal"
   },
   "deadChecking": {
+    "description": "Progress line of the palette's dead-link scan mode; $done$ bookmarks checked out of $total$.",
     "message": "$done$ / $total$ kontrol ediliyor…",
     "placeholders": {
       "done": {
@@ -177,8 +222,10 @@
         "content": "$2",
         "example": "120"
       }
-    },
-    "description": "Progress line of the palette's dead-link scan mode; $done$ bookmarks checked out of $total$."
+    }
+  },
+  "deadClearScan": {
+    "message": "Tarama sonuçlarını temizle"
   },
   "deadConfirmAll": {
     "message": "Tüm $count$ ölü yer imlerini silmek istiyor musunuz? Bu işlem tek adımda geri alınamaz.",
@@ -192,6 +239,15 @@
   "deadConfirmDelete": {
     "message": "Bu yer imi silinsin mi?"
   },
+  "deadConfirmDeleteSelected": {
+    "message": "Seçili $count$ ölü yer imi silinsin mi?",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
+  },
   "deadDeleteAll": {
     "message": "Geçerli filtredeki $count$ yer iminin tümü silinsin mi?",
     "placeholders": {
@@ -201,27 +257,15 @@
       }
     }
   },
-  "deadDeleteAllNote": {
-    "message": "Tüm filtresi altında bu, engellenmiş yer imlerini (proxy üzerinden erişilebilir, muhtemelen hâlâ mevcut) ve daha önce işaretlenmiş satırları içerir.",
-    "description": "Second line of the delete-all confirmation in the Dead links view."
-  },
-  "undoSingleStepNote": {
-    "message": "Geri alma yalnızca en son silmeyi geri getirebilir."
-  },
   "deadDeleteAllBtn": {
     "message": "Tümünü sil"
   },
+  "deadDeleteAllNote": {
+    "description": "Second line of the delete-all confirmation in the Dead links view.",
+    "message": "Tüm filtresi altında bu, engellenmiş yer imlerini (proxy üzerinden erişilebilir, muhtemelen hâlâ mevcut) ve daha önce işaretlenmiş satırları içerir."
+  },
   "deadDeleteSelected": {
     "message": "Seçilenleri sil"
-  },
-  "deadConfirmDeleteSelected": {
-    "message": "Seçili $count$ ölü yer imi silinsin mi?",
-    "placeholders": {
-      "count": {
-        "content": "$1",
-        "example": "8"
-      }
-    }
   },
   "deadDeleted": {
     "message": "$count$ ölü yer imi silindi",
@@ -232,8 +276,72 @@
       }
     }
   },
-  "deadClearScan": {
-    "message": "Tarama sonuçlarını temizle"
+  "deadDetectTimeLabel": {
+    "message": "Tespit zamanı"
+  },
+  "deadFilterAll": {
+    "message": "Tümü"
+  },
+  "deadFilterBlocked": {
+    "message": "Yalnızca Engellenenler"
+  },
+  "deadFilterDead": {
+    "message": "Yalnızca Ölü"
+  },
+  "deadFilterMarked": {
+    "message": "Önceden işaretlenmiş"
+  },
+  "deadLastScanAt": {
+    "message": "Son tarama: $time$",
+    "placeholders": {
+      "time": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadMark": {
+    "message": "Ölü Olarak İşaretle"
+  },
+  "deadMarkAll": {
+    "message": "Tümünü İşaretle"
+  },
+  "deadMarkSelected": {
+    "message": "Seçilenleri işaretle"
+  },
+  "deadMarkStatusAll": {
+    "message": "Herhangi bir durum"
+  },
+  "deadMarkStatusMarked": {
+    "message": "İşaretli"
+  },
+  "deadMarkStatusUnmarked": {
+    "message": "İşaretsiz"
+  },
+  "deadMarkTimeLabel": {
+    "message": "İşaretlenme zamanı"
+  },
+  "deadMarked": {
+    "message": "Ölü satırlar işaretlendi"
+  },
+  "deadMarkedBanner": {
+    "message": "Daha önce işaretlenmiş yer imleri gösteriliyor. Yeni bir kontrol başlatmak için Rescan'a tıklayın veya aşağıdaki listede bunları işleyin."
+  },
+  "deadMarkedBannerDismiss": {
+    "message": "Kapat"
+  },
+  "deadMarkedCount": {
+    "message": "İşaretlenmiş $count$ yer imi",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadMarkedNone": {
+    "message": "Henüz işaretlenmiş yer imi yok"
+  },
+  "deadMarkedRow": {
+    "message": "İşaretli"
   },
   "deadNone": {
     "message": "Ölü bağlantı bulunamadı"
@@ -241,34 +349,711 @@
   "deadNoneFiltered": {
     "message": "Bu filtre altında ölü bağlantı yok — yukarıdaki başka bir bölümü deneyin."
   },
+  "deadPause": {
+    "message": "Duraklat"
+  },
+  "deadPaused": {
+    "message": "Duraklatıldı"
+  },
+  "deadProxyAdd": {
+    "message": "Ölü bağlantı kontrolleri için bir proxy sunucusu ekle"
+  },
+  "deadProxyChange": {
+    "message": "Değiştir"
+  },
+  "deadProxyClear": {
+    "message": "Temizle"
+  },
+  "deadProxyControlled": {
+    "message": "Proxy ayarları başka bir uzantı tarafından yönetiliyor"
+  },
+  "deadProxyDenied": {
+    "message": "Proxy izni verilmedi"
+  },
+  "deadProxyInvalid": {
+    "message": "Geçersiz proxy adresi — host:port veya scheme://host:port kullanın (http/https/socks5, kimlik bilgisi yok)"
+  },
+  "deadProxyLabel": {
+    "message": "Proxy: $server$",
+    "placeholders": {
+      "server": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadProxyNeverShow": {
+    "message": "Bir daha gösterme"
+  },
+  "deadProxyNone": {
+    "message": "(ayarlanmadı)"
+  },
+  "deadProxyNudge": {
+    "message": "Proxy yeniden kontrolü, gerçek ölü bağlantıları bölge engelli olanlardan ayırır — buradan veya seçenekler sayfasından yapılandırın."
+  },
+  "deadProxyPanelHint": {
+    "message": "Sahip olduğunuz bir proxy sunucusunu girin (uzantı hiçbirini sağlamaz), örn. 127.0.0.1:7890 veya socks5://127.0.0.1:1080."
+  },
+  "deadProxyRemove": {
+    "message": "Kaldır"
+  },
+  "deadProxyRemoved": {
+    "message": "Proxy sunucusu kaldırıldı"
+  },
+  "deadProxySaved": {
+    "message": "Proxy kaydedildi — sonraki taramalar doğrudan başarısız sonuçları bunun üzerinden yeniden kontrol eder"
+  },
+  "deadProxyServerHint": {
+    "message": "Kaydedilen sunucu, her ölü bağlantı taramasında doğrudan başarısız olan yer imlerini yeniden denetler ve gerçek ölü bağlantıları bölge engelli olanlardan ayırır. Test et ve kaydet, sunucuyu yoklar (yalnızca erişilebilir bir sunucu saklanır); ayrıca ölü bağlantılar görünümünden ekleyebilirsiniz."
+  },
+  "deadProxyTestSave": {
+    "message": "Test et ve kaydet"
+  },
+  "deadProxyTestUrlLabel": {
+    "message": "Test URL'si"
+  },
+  "deadProxyTesting": {
+    "message": "Test ediliyor…"
+  },
+  "deadProxyUnavailable": {
+    "message": "Proxy API'si bu tarayıcıda kullanılamıyor"
+  },
+  "deadProxyUnreachable": {
+    "message": "Proxy erişilemez — kaydedilmedi"
+  },
   "deadRescan": {
     "message": "Yeniden Tara"
+  },
+  "deadResume": {
+    "message": "Devam et"
+  },
+  "deadRiskBanner": {
+    "message": "Ölü bağlantı temizliği yer imlerini toplu olarak siler. İlk temizlikten önce yer imlerinizi yedekleyin."
+  },
+  "deadSortByDetected": {
+    "message": "Algılama zamanı"
+  },
+  "deadSortByMarked": {
+    "message": "İşaretleme zamanı"
+  },
+  "deadSortByPath": {
+    "message": "Klasör yolu"
+  },
+  "deadSortLabel": {
+    "message": "Sıralama ölçütü"
+  },
+  "deadStartHint": {
+    "message": "$n$ yer imini taramaya başla",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadStatusBlocked": {
+    "message": "engellendi"
+  },
+  "deadUnmark": {
+    "message": "Ölü işaretini kaldır"
+  },
+  "deadUnmarkAll": {
+    "message": "Tüm işaretleri temizle"
+  },
+  "deadUnmarkSelected": {
+    "message": "Seçilenlerin işaretini kaldır"
+  },
+  "defaultIconButton": {
+    "message": "Varsayılanı kullan"
+  },
+  "defaultIconButtonOr": {
+    "message": "veya"
   },
   "delete": {
     "message": "Sil"
   },
+  "deleteEllipsis": {
+    "message": "Sil..."
+  },
+  "deleteSelected": {
+    "message": "Seçilenleri sil"
+  },
   "deletedBookmark": {
+    "description": "Toast shown after a bookmark or separator was deleted; the toast offers an undo button. $title$ is the deleted row's title (empty for separators).",
     "message": "$title$ silindi",
     "placeholders": {
       "title": {
         "content": "$1",
         "example": "Example"
       }
-    },
-    "description": "Toast shown after a bookmark or separator was deleted; the toast offers an undo button. $title$ is the deleted row's title (empty for separators)."
+    }
   },
   "deletedFolder": {
+    "description": "Toast shown after a bookmark folder (with its whole subtree) was deleted; the toast offers an undo button. $title$ is the folder name.",
     "message": "$title$ klasörü silindi",
     "placeholders": {
       "title": {
         "content": "$1",
         "example": "Bookmarks"
       }
-    },
-    "description": "Toast shown after a bookmark folder (with its whole subtree) was deleted; the toast offers an undo button. $title$ is the folder name."
+    }
+  },
+  "donationDismiss": {
+    "message": "Yoksay"
+  },
+  "donationGo": {
+    "message": "Bağış Yap"
+  },
+  "donationLater": {
+    "message": "Sonra"
+  },
+  "donationMessage": {
+    "message": "Beğeniyor musunuz? Geleceğini desteklemek için bağış yapın — veya mağazada puanlayın: her yorum güncellemelerin devam etmesini sağlar."
+  },
+  "donationNever": {
+    "message": "Tekrar Gösterme"
+  },
+  "donationRate": {
+    "message": "Puanla"
+  },
+  "donationRateTitle": {
+    "message": "vBookmarks'ı Chrome Web Mağazası'nda puanlayın"
+  },
+  "donationV4GuideLink": {
+    "message": "v4 rehberini okuyun →"
+  },
+  "donationV4Notice": {
+    "message": "vBookmarks 4.0, modern bir tasarım ve yeni özelliklerle dolu tamamen yeni bir sürümdür."
+  },
+  "dupesApplyAll": {
+    "message": "Tümünü uygula ($count$)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesApplySelected": {
+    "message": "Seçilenleri tekilleştir ($count$)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesCleanAll": {
+    "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go.",
+    "message": "Tümünü temizle: $groups$ grup, $count$ fazla kopya",
+    "placeholders": {
+      "count": {
+        "content": "$2"
+      },
+      "groups": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesCleanRestHint": {
+    "message": "\"$title$\" tut, diğer $count$ öğeyi kaldır",
+    "placeholders": {
+      "count": {
+        "content": "$2"
+      },
+      "title": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesConfirmAll": {
+    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark).",
+    "message": "$count$ fazla kopya, $groups$ grup genelinde kaldırılsın mı? Her grupta seçilen korunan saklanır.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    }
+  },
+  "dupesConfirmGroup": {
+    "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept).",
+    "message": "\"$title$\" kalsın ve diğer $count$ kopya kaldırılsın mı?",
+    "placeholders": {
+      "count": {
+        "content": "$2"
+      },
+      "title": {
+        "content": "$1",
+        "example": "Example bookmark"
+      }
+    }
+  },
+  "dupesConfirmSelected": {
+    "message": "Seçili $groups$ grupta bulunan $count$ yinelenen yer imi kaldırılsın mı?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    }
+  },
+  "dupesDone": {
+    "description": "Alert shown after the duplicate cleanup finished.",
+    "message": "$count$ yinelenen yer imi silindi",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesGroupCollapse": {
+    "description": "Dupes view group-head context menu: collapse an expanded duplicate group.",
+    "message": "Grubu daralt"
+  },
+  "dupesGroupCount": {
+    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL.",
+    "message": "$count$ yinelenen",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesGroupExpand": {
+    "description": "Dupes view group-head context menu: expand a collapsed duplicate group.",
+    "message": "Grubu genişlet"
+  },
+  "dupesIgnoreScheme": {
+    "message": "http/https farklarını yoksay"
+  },
+  "dupesKeepThis": {
+    "message": "Bunu sakla"
+  },
+  "dupesKeeperSet": {
+    "message": "Koruyucu yap"
+  },
+  "dupesNone": {
+    "message": "Yinelenen bulunamadı"
+  },
+  "dupesPreviewSummary": {
+    "message": "$groups$ grup · $count$ serbest bırakılacak",
+    "placeholders": {
+      "count": {
+        "content": "$2"
+      },
+      "groups": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesRemoveRow": {
+    "message": "Bu kopyayı sil"
+  },
+  "dupesRiskBanner": {
+    "message": "Yineleme kaldırma, kopya yer imlerini toplu olarak siler. Uygulamadan önce yer imlerinizi yedekleyin."
+  },
+  "dupesScopeAll": {
+    "message": "Tüm yer imleri"
+  },
+  "dupesScopeBar": {
+    "message": "Yalnızca yer imi çubuğu"
+  },
+  "dupesStrategyBookmarkBar": {
+    "message": "Yer imi çubuğundakini sakla"
+  },
+  "dupesStrategyMostVisited": {
+    "message": "En çok ziyaret edileni sakla"
+  },
+  "dupesStrategyNewest": {
+    "message": "En yenisini sakla"
+  },
+  "dupesStrategyOldest": {
+    "message": "En eskisini sakla"
+  },
+  "dupesStrategyShallowest": {
+    "message": "En sığ olanı sakla"
+  },
+  "dupesStrategyShortestTitle": {
+    "message": "En kısa başlığı sakla"
+  },
+  "edit": {
+    "message": "Düzenle..."
+  },
+  "editBookmark": {
+    "message": "Yer imini düzenle"
+  },
+  "editFolder": {
+    "message": "Klasörü düzenle"
+  },
+  "errorOccured": {
+    "message": "Hata oluştu."
+  },
+  "extDesc": {
+    "description": "Eklentinin açıklaması.",
+    "message": "Açılır pencere yer imi yöneticisi. Geliştirilmiş Neat Bookmarks. Neater Bookmarks'tan daha düzenli."
+  },
+  "extName": {
+    "description": "vBookmarks",
+    "message": "vBookmarks"
+  },
+  "favGalleryAll": {
+    "description": "Favicon gallery source filter chip: show every source.",
+    "message": "Tümü"
+  },
+  "favGalleryCompare": {
+    "description": "Favicon gallery toggle button: switch every icon to the generic placeholder it replaced (before/after comparison).",
+    "message": "Yer tutucuyla karşılaştır"
+  },
+  "favGalleryEmptyText": {
+    "description": "Favicon gallery empty-state body text.",
+    "message": "Açılır pencere, Chrome'un simgesi olmayan yer imli bir siteyle karşılaştığında, vBookmarks gerçek simgeyi getirir ve burada listeler."
+  },
+  "favGalleryEmptyTitle": {
+    "description": "Favicon gallery empty-state heading.",
+    "message": "Henüz yenilenen simge yok"
+  },
+  "favGalleryFailedHint": {
+    "description": "Favicon gallery hint under the failed-fetch section title.",
+    "message": "Başarısızlıklar 24 saat, 3 gün ve 7 gün sonra yeniden denenir, ardından ikon önbelleği temizlenene kadar vazgeçilir."
+  },
+  "favGalleryFailedTitle": {
+    "description": "Favicon gallery heading of the muted section listing hosts whose icon fetch failed recently.",
+    "message": "Son denendi, simge bulunamadı"
+  },
+  "favGalleryGaveUp": {
+    "description": "Favicon gallery badge on a failed-strip host whose retries are exhausted (it stays untouched until the icon cache is cleared).",
+    "message": "Vazgeçildi"
+  },
+  "favGalleryHint": {
+    "description": "Subtitle under the favicon gallery title, explaining the page is read-only.",
+    "message": "Chrome'un önbelleğe almadığı yer imli siteler için vBookmarks'ın getirdiği simgeler — her birinin nereden geldiği ve hangi yer imlerinin kullandığı. Yalnızca görüntüleme."
+  },
+  "favGalleryLink": {
+    "description": "Options link (Icons group, right of the Clear icon cache button): opens the favicon gallery page listing the sites whose icons were refetched.",
+    "message": "Yenilenen simgeleri görüntüle"
+  },
+  "favGalleryOrphan": {
+    "description": "Favicon gallery note on a card whose host no longer has any bookmark.",
+    "message": "Bu sitede hiç yer imi kalmadı — simge önbellekle birlikte temizlenir."
+  },
+  "favGallerySearch": {
+    "description": "Placeholder of the favicon gallery filter input.",
+    "message": "Siteye, başlığa veya yola göre filtrele"
+  },
+  "favGalleryShowingBefore": {
+    "description": "Favicon gallery toggle button while the placeholder comparison is shown: switch back to the real fetched icons.",
+    "message": "Gerçek simgelere dön"
+  },
+  "favGalleryStatBookmarks": {
+    "description": "Favicon gallery stats strip: how many bookmarks sit on the refreshed sites.",
+    "message": "$n$ yer imi",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "favGalleryStatSites": {
+    "description": "Favicon gallery stats strip: how many sites have a refreshed icon.",
+    "message": "$n$ site",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "favGalleryTitle": {
+    "description": "Favicon gallery page title (h1 + document title).",
+    "message": "Yenilenen site simgeleri"
+  },
+  "favGalleryVisits": {
+    "description": "Favicon gallery tooltip on a bookmark row's visit-count pill.",
+    "message": "$n$ kayıtlı açılış",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "favSrcDirect": {
+    "description": "Favicon gallery source badge: the icon was fetched directly from the site itself.",
+    "message": "Doğrudan"
+  },
+  "favSrcLegacy": {
+    "description": "Favicon gallery source badge: cached before the source was recorded, so the origin is unknown.",
+    "message": "Önceki önbellek"
+  },
+  "favSrcProxy": {
+    "description": "Favicon gallery source badge: the icon was fetched through the user's own proxy relay.",
+    "message": "Vekil"
+  },
+  "folderCopyConfirm": {
+    "message": "$n$ yer iminin listesi kopyalansın mı?",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "folderCopyDone": {
+    "message": "$n$ yer imi girişi kopyalandı",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "folderCopyJson": {
+    "message": "JSON"
+  },
+  "folderCopyList": {
+    "message": "Başlıkları ve adresleri kopyala"
+  },
+  "folderCopyMarkdown": {
+    "message": "Markdown"
+  },
+  "folderCopyText": {
+    "message": "Düz metin listesi"
+  },
+  "folderEmpty": {
+    "message": "(Boş)"
+  },
+  "folderPickCopyHere": {
+    "message": "Buraya kopyala"
+  },
+  "folderPickFavNote": {
+    "message": "Yer imi eklenmemiş öğeler buraya eklenecek"
+  },
+  "folderPickFilter": {
+    "message": "Klasörleri filtrele…"
+  },
+  "folderPickMoveHere": {
+    "message": "Buraya taşı"
+  },
+  "folderPickPinned": {
+    "message": "Sabitlenmiş"
+  },
+  "folderPickRecent": {
+    "message": "Son"
+  },
+  "general": {
+    "message": "Genel"
+  },
+  "groupCopyToFolder": {
+    "message": "Klasöre kopyala…"
+  },
+  "groupPlaceTooltip": {
+    "message": "Bu grubu bir klasöre kaydet…"
+  },
+  "groupSaveToFolder": {
+    "message": "Klasöre kaydet…"
+  },
+  "ignore": {
+    "message": "Yoksay"
+  },
+  "name": {
+    "description": "Yer imi veya klasörün adı.",
+    "message": "Ad"
+  },
+  "noTitle": {
+    "description": "Http(s) URL'si olmayan başlıksız yer imleri veya başlıksız klasörler için başlık.",
+    "message": "(başlık yok)"
+  },
+  "nope": {
+    "message": "İptal"
+  },
+  "open": {
+    "description": "Yer imlerini açma eylemi.",
+    "message": "Aç"
+  },
+  "openBookmarks": {
+    "message": "Tüm yer imlerini aç"
+  },
+  "openBookmarksInExistingGroup": {
+    "message": "Tümünü mevcut sekme grubunda aç…"
+  },
+  "openBookmarksInGroup": {
+    "message": "Tümünü yeni sekme grubunda aç"
+  },
+  "openBookmarksInGroupSetup": {
+    "message": "Tümünü yeni sekme grubunda aç…"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "Tüm yer imlerini gizli pencerede aç"
+  },
+  "openBookmarksNewWindow": {
+    "message": "Tüm yer imlerini yeni pencerede aç"
+  },
+  "openCommandPaletteCommand": {
+    "message": "Komut paletini aç"
+  },
+  "openIncognitoWindow": {
+    "message": "Gizli pencerede aç"
+  },
+  "openNewTab": {
+    "message": "Yeni sekmede aç"
+  },
+  "openNewWindow": {
+    "message": "Yeni pencerede aç"
+  },
+  "openSidePanelCommand": {
+    "message": "vBookmarks yan panelini aç"
+  },
+  "optionAnnounceEnabled": {
+    "message": "Ürün içi duyuruları göster"
+  },
+  "optionAnnounceEnabledHint": {
+    "message": "Projenin GitHub deposundaki sürüm notları ve ipuçları (en fazla 6 saatte bir getirilir). Kapalı olması ağ isteğini de durdurur."
+  },
+  "optionAutoRefreshSync": {
+    "message": "Senkronizasyon durumunu otomatik yenile"
+  },
+  "optionAutoResizePopup": {
+    "message": "Açılır pencere boyutunu içeriğe göre otomatik olarak ayarla"
+  },
+  "optionClassicExperience": {
+    "message": "Klasik başlığı geri yükle"
+  },
+  "optionClassicExperienceHint": {
+    "message": "Komut paletini, hızlı ekleme yıldızını, sayfa sağ tıklama öğesini, araç düğmesini ve görünüm sekmelerini kapatır. Her biri kendi bölümünden ayrı ayrı yeniden etkinleştirilebilir."
+  },
+  "optionClickNewTab": {
+    "message": "Sol tık yer imini yeni sekmede açar."
+  },
+  "optionCloseUnusedFolders": {
+    "message": "Klasör açılırken kullanılmayan klasörleri kapat."
+  },
+  "optionCollapseAddFolderMenu": {
+    "message": "Klasör ekleme girişlerini daralt"
+  },
+  "optionCollapseAddFolderMenuHint": {
+    "message": "将添加文件夹条目（文件夹行上的之前/之后/内部，书签行上的之前/之后）合并为一个子菜单条目。"
+  },
+  "optionCollapseSortMenu": {
+    "message": "Sıralama girdilerini tek bir \"Sırala\" alt menüsünde birleştir"
+  },
+  "optionCollapseSortMenuHint": {
+    "message": "Klasör sağ tık menüsüne uygulanır. Varsayılan olarak açıktır."
+  },
+  "optionCollapseTabGroupMenu": {
+    "message": "Sekme grubu girdilerini tek bir \"Sekme grupları\" alt menüsünde birleştir"
+  },
+  "optionCollapseTabGroupMenuHint": {
+    "message": "Hem klasör hem de yer imi sağ tık menülerine uygulanır. Varsayılan olarak kapalıdır. Küçük veya yüksek yakınlaştırmalı ekranlarda menülerin daha kısa kalmasını sağlar."
+  },
+  "optionConfirmDeleteFolder": {
+    "message": "Boş olmayan klasörleri silmeden önce onayla"
+  },
+  "optionConfirmOpenFolder": {
+    "message": "Bir klasörden birçok yer imi açarken onay göster."
+  },
+  "optionDeadProxyServer": {
+    "message": "Ölü bağlantı proxy sunucusu"
+  },
+  "optionDeadProxyStrip": {
+    "message": "Ölü bağlantılar görünümünde proxy ekleme ipucunu göster"
+  },
+  "optionDeadProxyStripHint": {
+    "message": "Kapalı, oradaki ipucunu gizler; proxy sunucusu burada yapılandırılabilir kalır ve kaydedilmiş bir sunucu görünümde her zaman yönetim satırını gösterir."
+  },
+  "optionDeadScanConcurrency": {
+    "message": "Ölü bağlantı tarama eşzamanlılığı (1-16)"
+  },
+  "optionDeadScanTimeout": {
+    "message": "Ölü bağlantı tarama zaman aşımı (saniye) (2-30)"
+  },
+  "optionFaviconBackup": {
+    "message": "Yedeklere simge önbelleğini ekle"
+  },
+  "optionFaviconBackupHint": {
+    "message": "Ayrıca zenginleştirilmiş favicon önbelleğini (site başına veri, potansiyel olarak büyük) ayarlar dışa/içe aktarmasına dahil et. Bu, getirme kapalıyken bile zaten önbelleğe alınmış simgeleri kapsar. Kapalı, yedekleri küçük tutar; simgeler zaten otomatik olarak yeniden getirilir."
+  },
+  "optionFaviconCacheClear": {
+    "message": "Simge önbelleğini temizle"
+  },
+  "optionFaviconCacheClearConfirm": {
+    "message": "Zenginleştirilmiş simge önbelleği temizlensin mi? Simgeler bir sonraki açılışta otomatik olarak yeniden alınacak."
+  },
+  "optionFaviconCacheCleared": {
+    "message": "Simge önbelleği temizlendi. Simgeler bir sonraki açılışta yeniden getirilecek."
+  },
+  "optionFaviconCacheEmpty": {
+    "message": "Temizlenecek simge önbelleği yok."
+  },
+  "optionFaviconContrast": {
+    "message": "Düşük kontrastlı favicon'ları ters çevir"
+  },
+  "optionFaviconContrastHint": {
+    "message": "Açık temalardaki beyaz simgeler ve koyu temalardaki siyah simgeler, görünür kalmaları için ters çevrilir. Her simge yüklendiğinde bir kez örneklenir; gezinme sırasında ek maliyet yoktur."
+  },
+  "optionFaviconEnrich": {
+    "message": "Eksik site simgelerini getir"
+  },
+  "optionFaviconEnrichAgg": {
+    "message": "Üçüncü taraf simge yedeği"
+  },
+  "optionFaviconEnrichAggHint": {
+    "message": "Doğrudan getirme başarısız olursa, simgeyi üçüncü taraf simge hizmetlerinin yerleşik listesindeki alan adına göre arayın ($providers$). Erişilemeyen bir hizmet atlanır ve bir sonraki denenir — 6 saat boyunca yeniden denenmez.",
+    "placeholders": {
+      "providers": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionFaviconEnrichHint": {
+    "message": "Chrome'un önbelleğinde simgesi olmayan yer imlerindeki siteler için gerçek simgeyi doğrudan siteden alın (/favicon.ico, ardından sayfanın bildirdiği simgeler). İstekler yalnızca yer imlerinize eklediğiniz sitelere gönderilir."
+  },
+  "optionHighlightUnsynced": {
+    "message": "Senkronize edilmemiş yer imlerini karart"
+  },
+  "optionLanguage": {
+    "message": "Dil"
+  },
+  "optionLanguageAuto": {
+    "message": "Otomatik"
+  },
+  "optionLanguageHint": {
+    "message": "Dili değiştirmek bu sayfayı yeniden yükler."
+  },
+  "optionOnlyShowBookmarkBar": {
+    "message": "Sadece yer imleri çubuğundaki yer imlerini göster"
+  },
+  "optionOpenInSidePanel": {
+    "message": "Açılır pencere yerine yan panelde aç"
+  },
+  "optionOpenNewTab": {
+    "message": "Orta tık veya kontrol-tık yer imini yeni arka plan sekmesinde açar (ön plan yerine)."
+  },
+  "optionPaletteEnabled": {
+    "message": "Komut paletini etkinleştir (Ctrl/Cmd+K)"
+  },
+  "optionPopupStays": {
+    "message": "Yer imleri açılırken (sol tık) açılır pencere açık kalır."
+  },
+  "optionQuickAddContextMenu": {
+    "message": "Sayfa sağ tıklama menüsüne \"vBookmarks ile bu sayfayı yer imlerine ekle\" girişi ekle"
+  },
+  "optionQuickAddContextMenuHint": {
+    "message": "Hızlı ekleme yıldız düğmesinden bağımsızdır; klasik deneyim geri yükleme bu girişi de kapatır."
+  },
+  "optionQuickAddEnabled": {
+    "message": "Arama kutusunun yanında hızlı ekleme yıldız düğmesini göster"
+  },
+  "optionRecentCollapsed": {
+    "message": "Son eklenen bölümünü varsayılan olarak daralt"
   },
   "optionRecentCount": {
     "message": "Gösterilecek yeni eklenen yer imi sayısı"
+  },
+  "optionRememberPrevState": {
+    "message": "Önceki durumu hatırla (kaydırma konumu, açık klasörler ve son odaklanan öğe)."
+  },
+  "optionRememberView": {
+    "message": "Son etkin görünümü hatırla ve onu yeniden aç"
+  },
+  "optionSearchAfterEnter": {
+    "message": "Yer imlerini sadece ENTER basıldığında ara (anlık arama yerine)"
   },
   "optionSearchHistory": {
     "message": "Arama geçmişi alanını göster"
@@ -276,17 +1061,496 @@
   "optionSearchHistoryHint": {
     "message": "Sonuçların üzerindeki son aramalar alanını gizle — kaydedilen sorgular korunur"
   },
+  "optionShowDeadView": {
+    "message": "Ölü bağlantılar görünümü sekmesini göster"
+  },
+  "optionShowDupesView": {
+    "message": "Yinelenenler görünümü sekmesini göster"
+  },
+  "optionShowItemPath": {
+    "message": "Liste satırlarında üst klasör yolunu göster"
+  },
+  "optionShowRecentBookmarks": {
+    "message": "Açılır pencerenin üstünde son eklenen yer imlerini göster"
+  },
+  "optionShowStatsView": {
+    "message": "İstatistik görünümü sekmesini göster"
+  },
+  "optionShowSyncStatus": {
+    "message": "Senkronizasyon durumu göstergelerini göster"
+  },
+  "optionShowTabBadges": {
+    "message": "Görünüm sekmelerinde sayı rozetlerini göster"
+  },
+  "optionShowTabGroupsView": {
+    "message": "Sekme grupları görünüm sekmesini göster"
+  },
+  "optionShowToolButton": {
+    "message": "Arama kutusunun yanında araç düğmesini (⋮) göster"
+  },
+  "optionShowViewTabs": {
+    "message": "Arama kutusunun altında görünüm sekmelerini göster"
+  },
+  "optionStagingEnabled": {
+    "message": "Hazırlama alanını etkinleştir"
+  },
+  "optionStagingEnabledHint": {
+    "message": "Kapalıyken, bu görünüm yalnızca yeni eklenenler listesini tutar ve diğer görünümlerdeki tüm hazırlama düğmeleri veya menü girişleri gizlenir."
+  },
+  "optionStatsEnabled": {
+    "message": "Ziyaret istatistiklerini etkinleştir"
+  },
+  "optionSyncRefreshInterval": {
+    "message": "Yenileme aralığı"
+  },
+  "optionSyncRefreshIntervalSeconds": {
+    "message": "saniye"
+  },
+  "optionTabGroupsClosedLimit": {
+    "message": "Kapatılan sekme/grup geçmişi saklansın"
+  },
+  "optionTheme": {
+    "message": "Tema"
+  },
+  "optionThemeAuto": {
+    "message": "Sistemi takip et"
+  },
+  "optionThemeDark": {
+    "message": "Koyu"
+  },
+  "optionThemeInk": {
+    "message": "Mürekkep (koyu)"
+  },
+  "optionThemeLight": {
+    "message": "Açık"
+  },
+  "optionThemePaper": {
+    "message": "Kağıt (açık)"
+  },
+  "optionTreeRowActions": {
+    "message": "Ağaç satırlarında üzerine gelme eylemleri (düzenle / hazırla / sil)"
+  },
+  "optionVirtualScrollLab": {
+    "message": "Sanal kaydırma (deneysel)"
+  },
+  "optionVirtualScrollLabHint": {
+    "message": "Sekme grupları ve yinelenenler görünümleri yalnızca görünüm alanına yakın satırları işler. Çok büyük listelerde çok daha hızlıdır; deneysel iken kaydırma çubuğu konumu tahminidir."
+  },
+  "optionZoom": {
+    "message": "Yakınlaştırma"
+  },
+  "options": {
+    "message": "Seçenekler"
+  },
+  "optionsDonate": {
+    "message": "Bağış Yap"
+  },
+  "optionsFooterText": {
+    "description": "Footer text for the Options page",
+    "message": "$authorName$ tarafından oluşturuldu.",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionsGithubLink": {
+    "message": "GitHub"
+  },
+  "optionsGroupBackup": {
+    "message": "Yedekle"
+  },
+  "optionsGroupContextMenu": {
+    "message": "Bağlam menüleri"
+  },
+  "optionsGroupIcons": {
+    "message": "Simgeler"
+  },
+  "optionsGroupLabs": {
+    "message": "Laboratuvarlar"
+  },
+  "optionsGroupPalette": {
+    "message": "Komut paleti"
+  },
+  "optionsGroupSort": {
+    "message": "Sıralama"
+  },
+  "optionsGroupStats": {
+    "message": "İstatistikler"
+  },
+  "optionsGroupTools": {
+    "message": "Araçlar"
+  },
+  "optionsGroupViews": {
+    "message": "Görünümler"
+  },
+  "optionsHomepageLink": {
+    "message": "Ana sayfa"
+  },
+  "optionsSince": {
+    "message": "Neat Bookmarks'tan çatallanmıştır; $days$ gündür bakımı yapılmaktadır.",
+    "placeholders": {
+      "days": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionsStagingSection": {
+    "message": "Hazırlama ve yeni eklenenler"
+  },
+  "optionsStorageLocalTip": {
+    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting).",
+    "message": "Yalnızca bu cihazda saklanır — Chrome senkronizasyonu ile paylaşılmaz."
+  },
+  "optionsStorageSyncTip": {
+    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting).",
+    "message": "Chrome hesabınız üzerinden senkronize edilir — bu ayar cihazlarınız arasında paylaşılır."
+  },
+  "optionsVersion": {
+    "message": "vBookmarks sürümü"
+  },
+  "paletteActionOpenUrl": {
+    "message": "URL Aç"
+  },
+  "paletteActionOpenUrlGroup": {
+    "message": "Yer imi klasör grubunu aç"
+  },
+  "paletteActionUrlTemplate": {
+    "message": "URL şablonu aç"
+  },
+  "paletteActionViewPreset": {
+    "message": "Ön ayarlı görünümü aç"
+  },
+  "paletteClose": {
+    "message": "Kapat"
+  },
+  "paletteCmdDead": {
+    "message": "Ölü bağlantıları bul"
+  },
+  "paletteCmdDupes": {
+    "message": "Yinelenen yer imlerini temizle"
+  },
+  "paletteCmdGoDead": {
+    "message": "Ölü bağlantılar görünümüne git"
+  },
+  "paletteCmdGoDupes": {
+    "message": "Yinelenenler görünümüne git"
+  },
+  "paletteCmdGoRecent": {
+    "message": "Son görünümüne git"
+  },
+  "paletteCmdGoSearch": {
+    "message": "Arama görünümüne git"
+  },
+  "paletteCmdGoStats": {
+    "message": "İstatistikler görünümüne git"
+  },
+  "paletteCmdGoTabGroups": {
+    "message": "Sekme grupları görünümüne git"
+  },
+  "paletteCmdGoTree": {
+    "message": "Ağaç görünümüne git"
+  },
+  "paletteCmdLang": {
+    "message": "Dil değiştir…"
+  },
+  "paletteCmdLangUsage": {
+    "message": "Kullanım: /lang ardından bir yerel ayar kodu — örn. /lang en, /lang zh_CN, /lang ja."
+  },
+  "paletteCmdNewBookmark": {
+    "message": "Yeni yer imi…"
+  },
+  "paletteCmdNewFolder": {
+    "message": "Yeni klasör…"
+  },
+  "paletteCmdOptions": {
+    "message": "Seçenekler sayfasını aç"
+  },
+  "paletteCmdQuickAdd": {
+    "message": "Geçerli sekmeyi yer imlerine ekle"
+  },
+  "paletteCmdSaveAsCommand": {
+    "message": "\"$1\"i komut olarak kaydet…"
+  },
+  "paletteCmdSaveSession": {
+    "message": "Pencere sekmelerini klasör olarak kaydet"
+  },
+  "paletteCmdSearchInView": {
+    "message": "Arama görünümünde '$query$' ara",
+    "placeholders": {
+      "query": {
+        "content": "$1"
+      }
+    }
+  },
+  "paletteCmdTheme": {
+    "message": "Tema ayarla…"
+  },
+  "paletteCmdThemeUsage": {
+    "message": "Kullanım: /theme ardından bir tema adı — auto, light, dark, ink veya paper (benzersiz bir önek çalışır, örn. /theme d)."
+  },
+  "paletteCmdToggleViewTabs": {
+    "message": "Sekme görünümünü değiştir"
+  },
+  "paletteCmdVersion": {
+    "message": "Sürüm bilgisi"
+  },
+  "paletteCustomAction": {
+    "message": "Eylem"
+  },
+  "paletteCustomAdd": {
+    "message": "Komut ekle…"
+  },
+  "paletteCustomAliases": {
+    "message": "Takma adlar (virgülle ayrılmış)"
+  },
+  "paletteCustomBroken": {
+    "message": "\"$1\" komutunun klasörü artık mevcut değil. Komut silinsin mi?"
+  },
+  "paletteCustomDeleteConfirm": {
+    "message": "\"$1\" komutu silinsin mi? Değişiklik tüm cihazlarınıza eşitlenir."
+  },
+  "paletteCustomEmpty": {
+    "message": "Henüz özel komut yok."
+  },
+  "paletteCustomErrAction": {
+    "message": "Bir eylem türü seçin."
+  },
+  "paletteCustomErrAlias": {
+    "message": "Takma adlar: eğik çizgiyle aynı kurallar (1–24 karakter; yalnızca küçük harf, rakam veya tire)."
+  },
+  "paletteCustomErrFolder": {
+    "message": "Bir yer imi klasörü seçin."
+  },
+  "paletteCustomErrLimit": {
+    "message": "Komut sınırına ulaşıldı (100) — önce birini silin."
+  },
+  "paletteCustomErrSlash": {
+    "message": "Eğik çizgi: 1–24 karakter; yalnızca küçük harf, rakam veya tire içerebilir; bir harf veya rakamla başlamalıdır."
+  },
+  "paletteCustomErrTaken": {
+    "message": "Bu eğik çizgi veya takma ad zaten kullanılıyor."
+  },
+  "paletteCustomErrTemplate": {
+    "message": "Şablon tam olarak bir %s içermelidir."
+  },
+  "paletteCustomErrUrl": {
+    "message": "Yalnızca http:// veya https:// URL'lerine izin verilir."
+  },
+  "paletteCustomErrView": {
+    "message": "Bir görünüm seçin."
+  },
+  "paletteCustomFolder": {
+    "message": "Yer imi klasörü"
+  },
+  "paletteCustomHint": {
+    "message": "Komut paleti için özel eğik çizgi komutları (Ctrl/Cmd+K). Ayarlarınızla eşitlenir — en fazla 100 giriş."
+  },
+  "paletteCustomSave": {
+    "message": "Komutu kaydet"
+  },
+  "paletteCustomScan": {
+    "message": "Girişte taramayı başlat"
+  },
+  "paletteCustomScope": {
+    "message": "Tekilleştirme kapsamı ön ayarı"
+  },
+  "paletteCustomSlash": {
+    "message": "Eğik çizgi ( / sonrası kelime)"
+  },
+  "paletteCustomStrategy": {
+    "message": "Tekilleştirme stratejisi ön ayarı"
+  },
+  "paletteCustomTag": {
+    "message": "özel"
+  },
+  "paletteCustomTemplate": {
+    "message": "URL şablonu — %s, komuttan sonraki kelimelerle değiştirilir"
+  },
+  "paletteCustomUrl": {
+    "message": "URL"
+  },
+  "paletteCustomUsage": {
+    "message": "$1 / $2"
+  },
+  "paletteCustomView": {
+    "message": "Görünüm"
+  },
+  "paletteCustomWhere": {
+    "message": "Açılacağı yer"
+  },
+  "paletteNoResults": {
+    "message": "Eşleşen sonuç yok"
+  },
+  "palettePlaceholder": {
+    "message": "Yer imleri, klasörler, komutlar ara…"
+  },
+  "paletteWhereBackground": {
+    "message": "Arka plan sekmeleri"
+  },
+  "paletteWhereCurrent": {
+    "message": "Geçerli sekme"
+  },
+  "paletteWhereTab": {
+    "message": "Yeni sekme"
+  },
+  "paletteWhereWindow": {
+    "message": "Yeni pencere"
+  },
+  "parentFolder": {
+    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
+    "message": "Üst klasör: \"$folderName$\"",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarksbar"
+      }
+    }
+  },
+  "pasteDone": {
+    "message": "Yapıştırıldı"
+  },
+  "pasteGone": {
+    "message": "Yer imi artık yok — pano temizlendi"
+  },
+  "pasteHere": {
+    "message": "Buraya yapıştır"
+  },
+  "pinFolder": {
+    "message": "Bu klasörü sabitle"
+  },
+  "quickAddBookmark": {
+    "message": "Bu sayfayı yer imlerine ekle (Ctrl+D)"
+  },
+  "quickAddBookmarkCommand": {
+    "message": "Geçerli sekmeyi yer imi olarak hızlı ekle"
+  },
+  "quickAdded": {
+    "message": "Yer imi eklendi"
+  },
+  "quickAddedTo": {
+    "message": "Yer imi $folderName$ klasörüne eklendi",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarks bar"
+      }
+    }
+  },
+  "quickRemoveBookmark": {
+    "message": "Bu yer imini kaldır (Ctrl+D)"
+  },
+  "quickRemoved": {
+    "message": "Yer imi kaldırıldı"
+  },
+  "recentBookmarks": {
+    "message": "Son eklenenler"
+  },
   "recentEmpty": {
     "message": "Son eklenen yer imi yok. Geçerli sayfayı yer imlerine eklemek için Ctrl+D tuşlarına basın."
+  },
+  "recentGroupMonth": {
+    "message": "Bu ay"
+  },
+  "recentGroupOlder": {
+    "message": "Daha eski"
+  },
+  "recentGroupToday": {
+    "message": "Bugün"
+  },
+  "recentGroupWeek": {
+    "message": "Bu hafta"
   },
   "recentRevealInTree": {
     "message": "Ağaçta Göster"
   },
+  "recentSectionTitle": {
+    "message": "Son eklenenler"
+  },
+  "recentStageAll": {
+    "message": "Son eklenenlerin tümünü bekleme alanına al"
+  },
+  "recentStageGroup": {
+    "message": "$t$ öğesini hazırlık alanına gönder",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
+  },
+  "removeSeparator": {
+    "message": "Ayırıcıyı kaldır"
+  },
+  "replaceUrl": {
+    "message": "Bunu mevcut URL ile değiştir"
+  },
+  "reportError": {
+    "message": "Hata raporu"
+  },
+  "reportedToDeveloper": {
+    "description": "Eklentide oluşan bir hata için mesaj, geliştiriciye rapor edildi.",
+    "message": "Bu geliştiriciye rapor edildi."
+  },
+  "resetButton": {
+    "message": "Sıfırla"
+  },
+  "resetSettings": {
+    "message": "Ayarları sıfırla"
+  },
+  "resetSettingsDescription": {
+    "message": "vBookmarks'ı varsayılan ayarlara sıfırla."
+  },
+  "revealOutsideBarAction": {
+    "message": "Tümünü göster ve ortaya çıkar"
+  },
+  "revealOutsideBarHint": {
+    "message": "Yalnızca yer imleri çubuğu gösteriliyor: hedef bunun dışında."
+  },
+  "riskBannerDismiss": {
+    "message": "Kapat"
+  },
+  "riskBannerHelp": {
+    "message": "Yedekleme ve geri yükleme kılavuzu"
+  },
+  "riskBannerNever": {
+    "message": "Tekrar gösterme"
+  },
+  "rowActionDelete": {
+    "message": "Sil"
+  },
+  "rowActionMark": {
+    "message": "Ölü olarak işaretle"
+  },
+  "rowActionReveal": {
+    "message": "Ağaçta göster"
+  },
+  "rowActionUnmark": {
+    "message": "Ölü işaretini kaldır"
+  },
+  "save": {
+    "message": "Kaydet"
+  },
+  "searchBookmarks": {
+    "description": "Arama alanı için yer tutucu metin.",
+    "message": "Yer imlerini ara"
+  },
+  "searchClear": {
+    "message": "Aramayı Temizle"
+  },
   "searchHistoryClear": {
     "message": "Tümünü Temizle"
   },
+  "searchHistoryClose": {
+    "message": "Arama geçmişini gizle"
+  },
+  "searchHistoryClosedToast": {
+    "message": "Arama geçmişi gizlendi — Seçenekler → Ara bölümünden yeniden etkinleştirin"
+  },
   "searchHistoryRemove": {
     "message": "Bu Aramayı Kaldır"
+  },
+  "searchHistoryRerun": {
+    "message": "Tekrar ara"
   },
   "searchHistoryResultCount": {
     "message": "$n$ sonuç",
@@ -298,6 +1562,895 @@
   },
   "searchHistoryTitle": {
     "message": "Son Aramalar"
+  },
+  "searchNoResults": {
+    "message": "Eşleşen yer imi yok"
+  },
+  "searchResultCount": {
+    "message": "$n$ sonuç",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "searchStageAllGroup": {
+    "message": "Tüm sonuçları \"$1$\" grubuna gönder",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "searchViewHint": {
+    "message": "Yer imlerinizi aramak için yukarıdaki kutuya yazın"
+  },
+  "selectAll": {
+    "message": "Tümü"
+  },
+  "selectClear": {
+    "message": "Temizle"
+  },
+  "selectCount": {
+    "message": "$count$ seçili",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "selectInvert": {
+    "message": "Tersini seç"
+  },
+  "selectModeEnter": {
+    "message": "Seç"
+  },
+  "selectModeExit": {
+    "message": "Seçimden çık"
+  },
+  "separatorOptions": {
+    "message": "Ayırıcılar"
+  },
+  "sessionEmpty": {
+    "message": "Kaydedilecek sekme yok"
+  },
+  "sessionFolderName": {
+    "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm.",
+    "message": "Oturum $date$",
+    "placeholders": {
+      "date": {
+        "content": "$1",
+        "example": "2026-07-18 15:04"
+      }
+    }
+  },
+  "sessionSaved": {
+    "description": "Alert shown after the current window's tabs were saved into a new bookmark folder.",
+    "message": "$count$ sekme yeni bir klasöre kaydedildi",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "12"
+      }
+    }
+  },
+  "settingsBackupHint": {
+    "message": "Dışa aktarma tüm ayarları (eşitleme tercihleri dahil) bir JSON dosyasına kaydeder. İçe aktarma bir yedekle birleştirir: dosyadaki ayarlar mevcut olanların üzerine yazılır, diğer her şey korunur."
+  },
+  "settingsExport": {
+    "message": "Ayarları dışa aktar"
+  },
+  "settingsImport": {
+    "message": "Ayarları içe aktar"
+  },
+  "settingsImportConfirm": {
+    "message": "İçe aktarma, yedekleme dosyasındaki tüm ayarların üzerine yazacaktır (dosyada olmayan ayarlar korunur) ve bu sayfayı yeniden yükleyecektir. Devam edilsin mi?"
+  },
+  "settingsImportDone": {
+    "message": "Ayarlar içe aktarıldı. Sayfa şimdi yeniden yüklenecek."
+  },
+  "settingsImportError": {
+    "message": "Bazı ayarlar yazılamadı (depolama kotası veya geçici bir hata). İçe aktarma tamamlanmadı — lütfen tekrar deneyin."
+  },
+  "settingsImportInvalid": {
+    "message": "Geçersiz ayar dosyası: bir vBookmarks ayar yedeklemesi değil."
+  },
+  "sortByDate": {
+    "message": "Eklenme tarihine göre sırala"
+  },
+  "sortByDateAdded": {
+    "message": "Eklenme tarihine göre (önce en yeni)"
+  },
+  "sortByName": {
+    "message": "Ada göre sırala"
+  },
+  "sortByTitle": {
+    "message": "Başlığa göre"
+  },
+  "sortDone": {
+    "message": "Klasör sıralandı"
+  },
+  "sortFolderContents": {
+    "message": "Klasör İçeriğini Sırala"
+  },
+  "sortFoldersFirst": {
+    "message": "Klasörler üstte kalsın"
+  },
+  "sortMenuOptions": {
+    "message": "Sırala"
+  },
+  "sortOptions": {
+    "message": "Sıralama seçenekleri…"
+  },
+  "sortRecursive": {
+    "message": "Alt klasörleri de sırala (özyinelemeli)"
+  },
+  "sortRecursiveSuffix": {
+    "message": "(özyinelemeli)"
+  },
+  "sortRecursiveWarning": {
+    "message": "Bu, her alt klasördeki yer imlerini yeniden sıralar."
+  },
+  "stagedToast": {
+    "message": "$n$ sekme “$t$” grubu olarak hazırlandı",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "t": {
+        "content": "$2"
+      }
+    }
+  },
+  "stagingAdd": {
+    "message": "Sahneye gönder"
+  },
+  "stagingAdded": {
+    "message": "Sahneye gönderildi"
+  },
+  "stagingAddedSummary": {
+    "message": "$n$ öğe eklendi; $m$ zaten beklemede",
+    "placeholders": {
+      "m": {
+        "content": "$2"
+      },
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingAlready": {
+    "message": "Zaten bekleme alanında"
+  },
+  "stagingBucketFavAll": {
+    "message": "Tümünü favorilere ekle"
+  },
+  "stagingBucketTitle": {
+    "message": "Yer imi eklenmemiş"
+  },
+  "stagingClear": {
+    "message": "Hazırlık alanını temizle"
+  },
+  "stagingClearConfirm": {
+    "message": "Tüm hazırlık alanı temizlensin mi? Yer imi ağacına dokunulmaz."
+  },
+  "stagingClearConfirmOk": {
+    "message": "Temizle"
+  },
+  "stagingCleared": {
+    "message": "Hazırlık alanı temizlendi"
+  },
+  "stagingConfirmFolder": {
+    "message": "Bu klasörden $n$ yer imi bekleme alanına eklensin mi?",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingConfirmFolderOk": {
+    "message": "Aşamala"
+  },
+  "stagingCopyDone": {
+    "message": "$n$ öğe kopyalandı",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingCount": {
+    "message": "$n$ hazır",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingDeleteConfirm": {
+    "message": "$n$ öğe silinsin mi? Favorisi kaldırılmış olanlar yalnızca hazırlık alanından çıkar.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingDeleted": {
+    "message": "$n$ yer imi silindi",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingEmpty": {
+    "message": "Henüz hiçbir şey hazırlanmadı. Yer imlerini herhangi bir görünümden buraya gönderin — satırdaki uçak düğmesi veya sağ tıklama menüsü — ardından toplu olarak düzenleyin ve dosyalayın."
+  },
+  "stagingFav": {
+    "message": "Favorilere ekle"
+  },
+  "stagingFavDone": {
+    "message": "$n$ öğe favorilere eklendi",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingFolderEmpty": {
+    "message": "Bu klasörde bekleme alanına eklenecek yer imi yok"
+  },
+  "stagingFromHistory": {
+    "message": "Geçmişten"
+  },
+  "stagingFull": {
+    "message": "Bekleme alanı dolu — önce bazı öğeleri kaldırın"
+  },
+  "stagingGroupAssign": {
+    "message": "Grupla…"
+  },
+  "stagingGroupAssignTitle": {
+    "message": "Bir gruba ata"
+  },
+  "stagingGroupCollapse": {
+    "message": "Grubu daralt"
+  },
+  "stagingGroupDelete": {
+    "message": "Grubu sil (öğelerle)"
+  },
+  "stagingGroupDeleteConfirm": {
+    "message": "\"$1\" grubu silinsin mi? $2 öğe de hazırlık alanından çıkar."
+  },
+  "stagingGroupDeleted": {
+    "message": "Grup silindi — $1 öğe kaldırıldı"
+  },
+  "stagingGroupDissolve": {
+    "message": "Grubu dağıt"
+  },
+  "stagingGroupDissolved": {
+    "message": "Grup dağıtıldı — öğeler bekleme alanında kaldı"
+  },
+  "stagingGroupExpand": {
+    "message": "Grubu genişlet"
+  },
+  "stagingGroupNamePrompt": {
+    "message": "Yeni grup adı"
+  },
+  "stagingGroupNew": {
+    "message": "Yeni grup"
+  },
+  "stagingGroupNoGroups": {
+    "message": "Henüz grup yok"
+  },
+  "stagingGroupRename": {
+    "message": "Grubu yeniden adlandır…"
+  },
+  "stagingGroupSelectAll": {
+    "message": "Bu gruptaki tümünü seç"
+  },
+  "stagingGuideDismiss": {
+    "message": "Tekrar gösterme"
+  },
+  "stagingGuideText": {
+    "message": "Yer imlerini burada düzenleyin — satırları seçin ve toplu işlemler için seçim moduna girin."
+  },
+  "stagingMoveConfirm": {
+    "message": "$n$ öğe seçilen klasöre taşınsın mı?",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingMoveConfirmOk": {
+    "message": "Taşı"
+  },
+  "stagingMoveCopy": {
+    "message": "Taşı/kopyala…"
+  },
+  "stagingMoveDone": {
+    "message": "$n$ öğe ana dizine taşındı",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingNew": {
+    "message": "yeni $n$",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingRemove": {
+    "message": "Bekleme alanından kaldır"
+  },
+  "stagingRemoved": {
+    "message": "Bekleme alanından kaldırıldı"
+  },
+  "stagingRemovedCount": {
+    "message": "$n$ öğe hazırlık alanından kaldırıldı",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingRowFav": {
+    "message": "Bu öğeyi favorilere ekle"
+  },
+  "stagingRowUnfav": {
+    "message": "Bu öğeyi favorilerden çıkar"
+  },
+  "stagingShortcutAdd": {
+    "message": "Kısayol ekle"
+  },
+  "stagingShortcutAlias": {
+    "message": "Takma ad"
+  },
+  "stagingShortcutBarLabel": {
+    "message": "Taşı:"
+  },
+  "stagingShortcutEdit": {
+    "message": "Kısayolu düzenle"
+  },
+  "stagingShortcutMove": {
+    "message": "Seçilenleri $1$ konumuna taşı",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingShortcutPickFolder": {
+    "message": "Hedef klasörü seç…"
+  },
+  "stagingShortcutRemove": {
+    "message": "Kısayolu kaldır"
+  },
+  "stagingShortcutRemoved": {
+    "message": "Kısayol kaldırıldı"
+  },
+  "stagingShortcutSave": {
+    "message": "Kaydet"
+  },
+  "stagingShortcutTitle": {
+    "message": "Taşıma kısayolu"
+  },
+  "stagingUnfav": {
+    "message": "Favorilerden çıkar"
+  },
+  "stagingUnfavDone": {
+    "message": "$n$ öğenin favorisi kaldırıldı",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "statsClearConfirm": {
+    "message": "$count$ yer imi için ziyaret istatistikleri temizlensin mi? Bu işlem geri alınamaz.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "statsClearData": {
+    "message": "İstatistikleri temizle"
+  },
+  "statsDisabledHint": {
+    "message": "Ziyaret istatistikleri kapalı — Seçenekler → Görünümler'den etkinleştirin"
+  },
+  "statsEmpty": {
+    "message": "İstatistikler, yer imlerini açtıkça oluşur"
+  },
+  "statsHistoryAdd": {
+    "message": "Yer imlerine ekle"
+  },
+  "statsHistoryBanner": {
+    "message": "Geçmiş ziyaretlerinizle ziyaret istatistiklerini beslemek için geçmiş erişimi verin."
+  },
+  "statsHistoryBookmarked": {
+    "message": "Yer imlerine eklendi"
+  },
+  "statsHistoryDismiss": {
+    "message": "Tekrar gösterme"
+  },
+  "statsHistoryEnable": {
+    "message": "Etkinleştir"
+  },
+  "statsHistoryGuide": {
+    "message": "Burada son ziyaretlerinizi listelemek için geçmiş erişimine izin verin."
+  },
+  "statsHistoryImported": {
+    "message": "$count$ yer imi için geçmiş ziyaretler içe aktarıldı",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "statsSectionBookmarks": {
+    "message": "Yer imi istatistikleri"
+  },
+  "statsSectionRecent": {
+    "message": "Son ziyaretler"
+  },
+  "statsShowUnbookmarked": {
+    "message": "İşaretlenmemişleri göster"
+  },
+  "statsShowUnbookmarkedHint": {
+    "message": "Yer imi olarak kaydedilmemiş geçmiş sayfalarını dahil et."
+  },
+  "statsSortByCount": {
+    "message": "Sayıya göre"
+  },
+  "statsSortByRecent": {
+    "message": "Güncelliğe göre"
+  },
+  "statsVisitCount": {
+    "message": "$count$ kez ziyaret edildi",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "storageUsageFree": {
+    "message": "Boş"
+  },
+  "storageUsageHint": {
+    "message": "Yalnızca yerel uzantı depolaması (chrome.storage.local, yaklaşık 10 MB kota): simge önbelleği ile ayarlar ve diğer yerel veriler. Eşitlenmiş ayarlar, oturum verileri ve yer imi kitaplığının kendisi buraya dahil edilmez."
+  },
+  "storageUsageIcon": {
+    "message": "Simge önbelleği"
+  },
+  "storageUsageOther": {
+    "message": "Diğer"
+  },
+  "storageUsageSummary": {
+    "message": "$1$ / $2$ kullanıldı",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      },
+      "2": {
+        "content": "$2"
+      }
+    }
+  },
+  "syncOptions": {
+    "message": "Senkronizasyon Seçenekleri"
+  },
+  "syncStatusLocal": {
+    "message": "Yalnızca yerel — yüklenmedi"
+  },
+  "syncStatusSynced": {
+    "message": "Google hesabınıza senkronize edildi"
+  },
+  "syncStatusUnsyncable": {
+    "message": "Senkronize edilemez"
+  },
+  "syncSuffixLocal": {
+    "message": "(Yerel)"
+  },
+  "syncSuffixSynced": {
+    "message": "(Senkronize)"
+  },
+  "tabGroupColorBlue": {
+    "description": "Accessible name of the blue color swatch in the new-tab-group dialog.",
+    "message": "Mavi"
+  },
+  "tabGroupColorCyan": {
+    "description": "Accessible name of the cyan color swatch in the new-tab-group dialog.",
+    "message": "Camgöbeği"
+  },
+  "tabGroupColorGreen": {
+    "description": "Accessible name of the green color swatch in the new-tab-group dialog.",
+    "message": "Yeşil"
+  },
+  "tabGroupColorGrey": {
+    "description": "Accessible name of the grey color swatch in the new-tab-group dialog.",
+    "message": "Gri"
+  },
+  "tabGroupColorLabel": {
+    "message": "Renk"
+  },
+  "tabGroupColorOrange": {
+    "description": "Accessible name of the orange color swatch in the new-tab-group dialog.",
+    "message": "Turuncu"
+  },
+  "tabGroupColorPink": {
+    "description": "Accessible name of the pink color swatch in the new-tab-group dialog.",
+    "message": "Pembe"
+  },
+  "tabGroupColorPurple": {
+    "description": "Accessible name of the purple color swatch in the new-tab-group dialog.",
+    "message": "Mor"
+  },
+  "tabGroupColorRed": {
+    "description": "Accessible name of the red color swatch in the new-tab-group dialog.",
+    "message": "Kırmızı"
+  },
+  "tabGroupColorYellow": {
+    "description": "Accessible name of the yellow color swatch in the new-tab-group dialog.",
+    "message": "Sarı"
+  },
+  "tabGroupDialogTitle": {
+    "message": "Yeni sekme grubu"
+  },
+  "tabGroupNoGroups": {
+    "message": "Mevcut sekme grubu yok"
+  },
+  "tabGroupOptions": {
+    "message": "Sekme grupları"
+  },
+  "tabGroupPickDialogTitle": {
+    "message": "Mevcut sekme grubunda aç"
+  },
+  "tabGroupTitleLabel": {
+    "message": "Grup adı"
+  },
+  "tabGroupUntitled": {
+    "message": "Adsız grup"
+  },
+  "tabGroupsActivateGroup": {
+    "message": "Grup sekmesine git"
+  },
+  "tabGroupsActivateTab": {
+    "message": "Sekmeye git"
+  },
+  "tabGroupsAddBookmark": {
+    "message": "Bu sekmeyi yer imlerine ekle"
+  },
+  "tabGroupsBatchClosedTitle": {
+    "message": "Kapatılan sekmeler"
+  },
+  "tabGroupsBookmarkRemoved": {
+    "message": "$count$ yer imi kaldırıldı",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsBookmarked": {
+    "message": "Yer imlerine eklendi"
+  },
+  "tabGroupsBookmarksAdded": {
+    "message": "$count$ yer imi $folder$ konumuna eklendi",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsClearClosedGroups": {
+    "message": "Tümünü temizle"
+  },
+  "tabGroupsClearedToast": {
+    "message": "$count$ kapalı kayıt temizlendi",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCloseGroup": {
+    "message": "Sekme grubunu kapat"
+  },
+  "tabGroupsCloseWindow": {
+    "message": "Pencereyi kapat"
+  },
+  "tabGroupsClosedGroups": {
+    "message": "Son kapatılanlar"
+  },
+  "tabGroupsClosedOpenTab": {
+    "message": "Yeni sekmede aç"
+  },
+  "tabGroupsClosedTabRemovedToast": {
+    "message": "Kapalı kayıttan kaldırıldı"
+  },
+  "tabGroupsClosedTimeLabel": {
+    "message": "Kapatılma:"
+  },
+  "tabGroupsClosedToast": {
+    "message": "$count$ sekme kapatıldı",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCollapseAll": {
+    "message": "Tümünü daralt"
+  },
+  "tabGroupsCollapseGroup": {
+    "message": "Grubu daralt"
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "Pencereyi daralt"
+  },
+  "tabGroupsColorStyle": {
+    "message": "Sekme grubu renk stili"
+  },
+  "tabGroupsColorStyleEdge": {
+    "message": "Kenar renk bandı"
+  },
+  "tabGroupsColorStyleHint": {
+    "message": "Kapalı, yalnızca renk noktasını gösterir. Kenar renk bandı, grubun sol kenarına renkli bir şerit çizer. Renk bağlantı çizgisi, grubun noktasının altına satır başına bir işaretle renkli bir çizgi çizer ve tüm grubu tek bir ağaç halinde birleştirir."
+  },
+  "tabGroupsColorStyleLine": {
+    "message": "Renk bağlantı çizgisi"
+  },
+  "tabGroupsColorStyleOff": {
+    "message": "Kapalı (yalnızca renk noktası)"
+  },
+  "tabGroupsConfirmClearClosed": {
+    "message": "Tüm son kapatılan kayıtlar silinsin mi? Artık buradan yeniden açılamayacaklar."
+  },
+  "tabGroupsConfirmClose": {
+    "message": "$count$ sekme kapatılsın mı?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsConfirmSleep": {
+    "message": "$count$ sekme uyutulsun mu?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCopyMoveCopy": {
+    "message": "Kopyala"
+  },
+  "tabGroupsCopyMoveDialog": {
+    "message": "Seçili sekmeler zaten bir sekme grubuna ait. Kopyalamak (yeni bir yerde aç) veya taşımak (mevcut gruptan kaldırmak) ister misiniz?"
+  },
+  "tabGroupsCopyMoveMove": {
+    "message": "Taşı"
+  },
+  "tabGroupsCurrentTab": {
+    "message": "Geçerli"
+  },
+  "tabGroupsCurrentWindow": {
+    "message": "Geçerli pencere"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "Kapatılan sekme grubunu sil"
+  },
+  "tabGroupsDiscarded": {
+    "message": "Uyuyan sekme"
+  },
+  "tabGroupsExpandAll": {
+    "message": "Tümünü genişlet"
+  },
+  "tabGroupsExpandGroup": {
+    "message": "Grubu genişlet"
+  },
+  "tabGroupsExpandWindow": {
+    "message": "Pencereyi genişlet"
+  },
+  "tabGroupsExpandedCollapse": {
+    "message": "Daralt"
+  },
+  "tabGroupsExpandedExpand": {
+    "message": "Genişlet"
+  },
+  "tabGroupsFilterPlaceholder": {
+    "message": "Açık sekmeleri filtrele"
+  },
+  "tabGroupsGroupCount": {
+    "message": "$count$ sekme",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsGroupSavedToFolder": {
+    "message": "$count$ sekme $folder$ konumuna kaydedildi",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsMenuAddBookmark": {
+    "message": "Sekmeyi yer imlerine ekle"
+  },
+  "tabGroupsMenuSaveFolder": {
+    "message": "Yer imi klasörü olarak kaydet"
+  },
+  "tabGroupsMergedWindowToast": {
+    "message": "Pencere sekme grubu olarak birleştirildi"
+  },
+  "tabGroupsMoveNewWindow": {
+    "message": "Grubu yeni pencereye taşı"
+  },
+  "tabGroupsNewWindow": {
+    "message": "Yeni pencere"
+  },
+  "tabGroupsNoMatchingTabs": {
+    "message": "Eşleşen sekme yok"
+  },
+  "tabGroupsOpenGroups": {
+    "message": "Açık sekme grupları"
+  },
+  "tabGroupsPinTab": {
+    "message": "Sekmeyi sabitle"
+  },
+  "tabGroupsPinned": {
+    "message": "Sabitlenmiş sekme"
+  },
+  "tabGroupsPinnedUngroupedToast": {
+    "message": "Sabitlendi — sekme grubundan çıkarıldı"
+  },
+  "tabGroupsRecordDeletedToast": {
+    "message": "Kapalı kayıt silindi"
+  },
+  "tabGroupsRemoveBookmark": {
+    "message": "Yer imini kaldır"
+  },
+  "tabGroupsRemoveClosedTab": {
+    "message": "Kayıtlı gruptan kaldır"
+  },
+  "tabGroupsRenameDialog": {
+    "message": "Sekme grubunu yeniden adlandır"
+  },
+  "tabGroupsRenameGroup": {
+    "message": "Sekme grubunu yeniden adlandır"
+  },
+  "tabGroupsReopenAction": {
+    "message": "Yeniden aç"
+  },
+  "tabGroupsReopenGroup": {
+    "message": "Sekme grubunu yeniden aç"
+  },
+  "tabGroupsSaveFolder": {
+    "message": "Sekme grubunu yer imi klasörü olarak kaydet"
+  },
+  "tabGroupsSelectAddBookmarks": {
+    "message": "Yer imi klasörüne ekle…"
+  },
+  "tabGroupsSelectClose": {
+    "message": "Kapat"
+  },
+  "tabGroupsSelectNewGroup": {
+    "message": "Yeni sekme grubu"
+  },
+  "tabGroupsSelectOpenInto": {
+    "message": "Mevcut sekme grubunda aç…"
+  },
+  "tabGroupsSelectSaveFolder": {
+    "message": "Yer imi klasörü olarak kaydet"
+  },
+  "tabGroupsSelectSleep": {
+    "message": "Uyut"
+  },
+  "tabGroupsSleepGroup": {
+    "message": "Sekme grubunu uyut"
+  },
+  "tabGroupsSleepTab": {
+    "message": "Sekmeyi uyut"
+  },
+  "tabGroupsSleptToast": {
+    "message": "$count$ sekme uyutuldu",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsSummary": {
+    "message": "$tabs$ sekme · $groups$ grup",
+    "placeholders": {
+      "groups": {
+        "content": "$2"
+      },
+      "tabs": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsSyncCollapse": {
+    "message": "Tarayıcıyla senkronize daralt"
+  },
+  "tabGroupsSyncCollapseHint": {
+    "message": "İşaretlendiğinde, bu görünümde bir grubu daraltmak veya genişletmek tarayıcı sekme grubunu da günceller. Varsayılan olarak kapalıdır, böylece görünüm katlaması yerel kalır."
+  },
+  "tabGroupsToolbarRefresh": {
+    "message": "Yenile"
+  },
+  "tabGroupsUngroupGroup": {
+    "message": "Grupları çöz"
+  },
+  "tabGroupsUngroupedTabs": {
+    "message": "Gruplanmamış sekmeler"
+  },
+  "tabGroupsUnpinTab": {
+    "message": "Sabitlemeyi kaldır"
+  },
+  "tabGroupsViewEmpty": {
+    "message": "Bu pencerede sekme yok"
+  },
+  "tabGroupsWakeAction": {
+    "message": "Uyandır"
+  },
+  "tabGroupsWakeGroup": {
+    "message": "Sekme grubunu uyandır"
+  },
+  "tabGroupsWakeTab": {
+    "message": "Sekmeyi uyandır"
+  },
+  "tabGroupsWindow": {
+    "message": "Pencere $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsWindowClosedTitle": {
+    "message": "Kapatılan pencere"
+  },
+  "tabGroupsWindowsCount": {
+    "message": "$n$ pencere",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabRowStage": {
+    "message": "Aşamaya gönder"
+  },
+  "tabgroupStageAll": {
+    "message": "Grubu aşamaya gönder"
+  },
+  "tabgroupStageConfirm": {
+    "message": "$n$ sekmeyi aşamaya gönderilsin mi?",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabgroupStageNone": {
+    "message": "Bu grupta yer imine eklenebilir sekme yok"
   },
   "timeDaysAgo": {
     "message": "$n$ gün önce",
@@ -329,303 +2482,26 @@
   "timeYesterday": {
     "message": "dün"
   },
+  "toolButtonTitle": {
+    "message": "Araçlar (Ctrl+K)"
+  },
   "undoAction": {
     "message": "Geri Al"
   },
-  "revealOutsideBarHint": {
-    "message": "Yalnızca yer imleri çubuğu gösteriliyor: hedef bunun dışında."
+  "undoSingleStepNote": {
+    "message": "Geri alma yalnızca en son silmeyi geri getirebilir."
   },
-  "revealOutsideBarAction": {
-    "message": "Tümünü göster ve ortaya çıkar"
+  "unpinFolder": {
+    "message": "Bu klasörün sabitlemesini kaldır"
   },
-  "dupesCleanAll": {
-    "message": "Tümünü temizle: $groups$ grup, $count$ fazla kopya",
-    "placeholders": {
-      "groups": {
-        "content": "$1"
-      },
-      "count": {
-        "content": "$2"
-      }
-    },
-    "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go."
+  "url": {
+    "message": "URL"
   },
-  "dupesConfirmAll": {
-    "message": "$count$ fazla kopya, $groups$ grup genelinde kaldırılsın mı? Her grupta seçilen korunan saklanır.",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      },
-      "groups": {
-        "content": "$2"
-      }
-    },
-    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
+  "versionDialogCopied": {
+    "message": "Kopyalandı"
   },
-  "dupesConfirmSelected": {
-    "message": "Seçili $groups$ grupta bulunan $count$ yinelenen yer imi kaldırılsın mı?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      },
-      "groups": {
-        "content": "$2"
-      }
-    }
-  },
-  "dupesConfirmGroup": {
-    "message": "\"$title$\" kalsın ve diğer $count$ kopya kaldırılsın mı?",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Example bookmark"
-      },
-      "count": {
-        "content": "$2"
-      }
-    },
-    "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."
-  },
-  "dupesDone": {
-    "message": "$count$ yinelenen yer imi silindi",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Alert shown after the duplicate cleanup finished."
-  },
-  "dupesGroupCount": {
-    "message": "$count$ yinelenen",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
-  },
-  "dupesGroupExpand": {
-    "description": "Dupes view group-head context menu: expand a collapsed duplicate group.",
-    "message": "Grubu genişlet"
-  },
-  "dupesGroupCollapse": {
-    "description": "Dupes view group-head context menu: collapse an expanded duplicate group.",
-    "message": "Grubu daralt"
-  },
-  "dupesNone": {
-    "message": "Yinelenen bulunamadı"
-  },
-  "deleteEllipsis": {
-    "message": "Sil..."
-  },
-  "donationMessage": {
-    "message": "Beğeniyor musunuz? Geleceğini desteklemek için bağış yapın — veya mağazada puanlayın: her yorum güncellemelerin devam etmesini sağlar."
-  },
-  "donationV4Notice": {
-    "message": "vBookmarks 4.0, modern bir tasarım ve yeni özelliklerle dolu tamamen yeni bir sürümdür."
-  },
-  "donationV4GuideLink": {
-    "message": "v4 rehberini okuyun →"
-  },
-  "donationGo": {
-    "message": "Bağış Yap"
-  },
-  "donationRate": {
-    "message": "Puanla"
-  },
-  "donationRateTitle": {
-    "message": "vBookmarks'ı Chrome Web Mağazası'nda puanlayın"
-  },
-  "donationLater": {
-    "message": "Sonra"
-  },
-  "donationNever": {
-    "message": "Tekrar Gösterme"
-  },
-  "donationDismiss": {
-    "message": "Yoksay"
-  },
-  "edit": {
-    "message": "Düzenle..."
-  },
-  "editBookmark": {
-    "message": "Yer imini düzenle"
-  },
-  "editFolder": {
-    "message": "Klasörü düzenle"
-  },
-  "errorOccured": {
-    "message": "Hata oluştu."
-  },
-  "extDesc": {
-    "description": "Eklentinin açıklaması.",
-    "message": "Açılır pencere yer imi yöneticisi. Geliştirilmiş Neat Bookmarks. Neater Bookmarks'tan daha düzenli."
-  },
-  "extName": {
-    "description": "vBookmarks",
-    "message": "vBookmarks"
-  },
-  "folderEmpty": {
-    "message": "(Boş)"
-  },
-  "general": {
-    "message": "Genel"
-  },
-  "ignore": {
-    "message": "Yoksay"
-  },
-  "name": {
-    "description": "Yer imi veya klasörün adı.",
-    "message": "Ad"
-  },
-  "nope": {
-    "message": "İptal"
-  },
-  "noTitle": {
-    "description": "Http(s) URL'si olmayan başlıksız yer imleri veya başlıksız klasörler için başlık.",
-    "message": "(başlık yok)"
-  },
-  "open": {
-    "description": "Yer imlerini açma eylemi.",
-    "message": "Aç"
-  },
-  "openBookmarks": {
-    "message": "Tüm yer imlerini aç"
-  },
-  "openBookmarksIncognitoWindow": {
-    "message": "Tüm yer imlerini gizli pencerede aç"
-  },
-  "openBookmarksInGroup": {
-    "message": "Tümünü yeni sekme grubunda aç"
-  },
-  "openBookmarksInGroupSetup": {
-    "message": "Tümünü yeni sekme grubunda aç…"
-  },
-  "openBookmarksInExistingGroup": {
-    "message": "Tümünü mevcut sekme grubunda aç…"
-  },
-  "tabGroupOptions": {
-    "message": "Sekme grupları"
-  },
-  "sortMenuOptions": {
-    "message": "Sırala"
-  },
-  "openBookmarksNewWindow": {
-    "message": "Tüm yer imlerini yeni pencerede aç"
-  },
-  "openCommandPaletteCommand": {
-    "message": "Komut paletini aç"
-  },
-  "openIncognitoWindow": {
-    "message": "Gizli pencerede aç"
-  },
-  "openNewTab": {
-    "message": "Yeni sekmede aç"
-  },
-  "bookmarkOpenInNewGroup": {
-    "message": "Yeni sekme grubunda aç"
-  },
-  "bookmarkOpenInNewGroupSetup": {
-    "message": "Yeni sekme grubunda aç…"
-  },
-  "bookmarkOpenInExistingGroup": {
-    "message": "Mevcut sekme grubunda aç…"
-  },
-  "openNewWindow": {
-    "message": "Yeni pencerede aç"
-  },
-  "openSidePanelCommand": {
-    "message": "vBookmarks yan panelini aç"
-  },
-  "optionAnnounceEnabled": {
-    "message": "Ürün içi duyuruları göster"
-  },
-  "optionAnnounceEnabledHint": {
-    "message": "Projenin GitHub deposundaki sürüm notları ve ipuçları (en fazla 6 saatte bir getirilir). Kapalı olması ağ isteğini de durdurur."
-  },
-  "optionClickNewTab": {
-    "message": "Sol tık yer imini yeni sekmede açar."
-  },
-  "optionCloseUnusedFolders": {
-    "message": "Klasör açılırken kullanılmayan klasörleri kapat."
-  },
-  "optionConfirmOpenFolder": {
-    "message": "Bir klasörden birçok yer imi açarken onay göster."
-  },
-  "optionConfirmDeleteFolder": {
-    "message": "Boş olmayan klasörleri silmeden önce onayla"
-  },
-  "optionOnlyShowBookmarkBar": {
-    "message": "Sadece yer imleri çubuğundaki yer imlerini göster"
-  },
-  "optionSearchAfterEnter": {
-    "message": "Yer imlerini sadece ENTER basıldığında ara (anlık arama yerine)"
-  },
-  "optionOpenNewTab": {
-    "message": "Orta tık veya kontrol-tık yer imini yeni arka plan sekmesinde açar (ön plan yerine)."
-  },
-  "optionOpenInSidePanel": {
-    "message": "Açılır pencere yerine yan panelde aç"
-  },
-  "optionPopupStays": {
-    "message": "Yer imleri açılırken (sol tık) açılır pencere açık kalır."
-  },
-  "optionRememberPrevState": {
-    "message": "Önceki durumu hatırla (kaydırma konumu, açık klasörler ve son odaklanan öğe)."
-  },
-  "options": {
-    "message": "Seçenekler"
-  },
-  "optionsFooterText": {
-    "description": "Footer text for the Options page",
-    "message": "$authorName$ tarafından oluşturuldu.",
-    "placeholders": {
-      "authorName": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionZoom": {
-    "message": "Yakınlaştırma"
-  },
-  "optionTheme": {
-    "message": "Tema"
-  },
-  "optionThemeAuto": {
-    "message": "Sistemi takip et"
-  },
-  "optionThemeLight": {
-    "message": "Açık"
-  },
-  "optionThemeDark": {
-    "message": "Koyu"
-  },
-  "optionThemeInk": {
-    "message": "Mürekkep (koyu)"
-  },
-  "optionThemePaper": {
-    "message": "Kağıt (açık)"
-  },
-  "optionLanguage": {
-    "message": "Dil"
-  },
-  "optionLanguageAuto": {
-    "message": "Otomatik"
-  },
-  "optionLanguageHint": {
-    "message": "Dili değiştirmek bu sayfayı yeniden yükler."
-  },
-  "paletteClose": {
-    "message": "Kapat"
-  },
-  "paletteCmdVersion": {
-    "message": "Sürüm bilgisi"
-  },
-  "paletteCmdLang": {
-    "message": "Dil değiştir…"
-  },
-  "paletteCmdLangUsage": {
-    "message": "Kullanım: /lang ardından bir yerel ayar kodu — örn. /lang en, /lang zh_CN, /lang ja."
+  "versionDialogCopy": {
+    "message": "Bilgileri kopyala"
   },
   "versionDialogTitle": {
     "message": "vBookmarks $version$",
@@ -634,15 +2510,6 @@
         "content": "$1"
       }
     }
-  },
-  "versionDialogCopy": {
-    "message": "Bilgileri kopyala"
-  },
-  "versionDialogCopied": {
-    "message": "Kopyalandı"
-  },
-  "versionMetaVersion": {
-    "message": "Uzantı sürümü"
   },
   "versionMetaAnnounce": {
     "message": "Yenilikler"
@@ -653,277 +2520,58 @@
   "versionMetaBrowser": {
     "message": "Tarayıcı"
   },
-  "versionMetaOS": {
-    "message": "İşletim sistemi"
-  },
   "versionMetaChannel": {
     "message": "Kanal"
   },
   "versionMetaLanguage": {
     "message": "Dil"
   },
+  "versionMetaOS": {
+    "message": "İşletim sistemi"
+  },
   "versionMetaUserAgent": {
     "message": "Kullanıcı aracısı"
   },
-  "paletteCmdDead": {
-    "message": "Ölü bağlantıları bul"
+  "versionMetaVersion": {
+    "message": "Uzantı sürümü"
   },
-  "paletteCmdDupes": {
-    "message": "Yinelenen yer imlerini temizle"
+  "viewDead": {
+    "message": "Ölü bağlantılar"
   },
-  "paletteCmdNewBookmark": {
-    "message": "Yeni yer imi…"
+  "viewDisable": {
+    "message": "Devre dışı bırak"
   },
-  "paletteCmdNewFolder": {
-    "message": "Yeni klasör…"
+  "viewDupes": {
+    "message": "Yinelenenler"
   },
-  "paletteCmdQuickAdd": {
-    "message": "Geçerli sekmeyi yer imlerine ekle"
+  "viewEnable": {
+    "message": "Etkinleştir"
   },
-  "paletteCmdSaveSession": {
-    "message": "Pencere sekmelerini klasör olarak kaydet"
-  },
-  "paletteNoResults": {
-    "message": "Eşleşen sonuç yok"
-  },
-  "palettePlaceholder": {
-    "message": "Yer imleri, klasörler, komutlar ara…"
-  },
-  "parentFolder": {
-    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
-    "message": "Üst klasör: \"$folderName$\"",
+  "viewHiddenTabsHint": {
+    "message": "$view$ görünümündesiniz. Ağaca dönmek için $back$ tuşuna basın veya komut paletini kullanın.",
     "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarksbar"
-      }
-    }
-  },
-  "removeSeparator": {
-    "message": "Ayırıcıyı kaldır"
-  },
-  "replaceUrl": {
-    "message": "Bunu mevcut URL ile değiştir"
-  },
-  "reportedToDeveloper": {
-    "description": "Eklentide oluşan bir hata için mesaj, geliştiriciye rapor edildi.",
-    "message": "Bu geliştiriciye rapor edildi."
-  },
-  "reportError": {
-    "message": "Hata raporu"
-  },
-  "resetButton": {
-    "message": "Sıfırla"
-  },
-  "resetSettings": {
-    "message": "Ayarları sıfırla"
-  },
-  "resetSettingsDescription": {
-    "message": "vBookmarks'ı varsayılan ayarlara sıfırla."
-  },
-  "save": {
-    "message": "Kaydet"
-  },
-  "searchBookmarks": {
-    "description": "Arama alanı için yer tutucu metin.",
-    "message": "Yer imlerini ara"
-  },
-  "searchClear": {
-    "message": "Aramayı Temizle"
-  },
-  "searchNoResults": {
-    "message": "Eşleşen yer imi yok"
-  },
-  "searchViewHint": {
-    "message": "Yer imlerinizi aramak için yukarıdaki kutuya yazın"
-  },
-  "selectAll": {
-    "message": "Tümü"
-  },
-  "selectClear": {
-    "message": "Temizle"
-  },
-  "selectCount": {
-    "message": "$count$ seçili",
-    "placeholders": {
-      "count": {
+      "back": {
+        "content": "$2"
+      },
+      "view": {
         "content": "$1"
       }
     }
   },
-  "selectInvert": {
-    "message": "Tersini seç"
-  },
-  "selectModeEnter": {
-    "message": "Seç"
-  },
-  "selectModeExit": {
-    "message": "Seçimden çık"
-  },
-  "deadRiskBanner": {
-    "message": "Ölü bağlantı temizliği yer imlerini toplu olarak siler. İlk temizlikten önce yer imlerinizi yedekleyin."
-  },
-  "dupesRiskBanner": {
-    "message": "Yineleme kaldırma, kopya yer imlerini toplu olarak siler. Uygulamadan önce yer imlerinizi yedekleyin."
-  },
-  "riskBannerHelp": {
-    "message": "Yedekleme ve geri yükleme kılavuzu"
-  },
-  "riskBannerNever": {
-    "message": "Tekrar gösterme"
-  },
-  "riskBannerDismiss": {
-    "message": "Kapat"
-  },
-  "sessionEmpty": {
-    "message": "Kaydedilecek sekme yok"
-  },
-  "sessionFolderName": {
-    "message": "Oturum $date$",
-    "placeholders": {
-      "date": {
-        "content": "$1",
-        "example": "2026-07-18 15:04"
-      }
-    },
-    "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm."
-  },
-  "sessionSaved": {
-    "message": "$count$ sekme yeni bir klasöre kaydedildi",
-    "placeholders": {
-      "count": {
-        "content": "$1",
-        "example": "12"
-      }
-    },
-    "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
-  },
-  "url": {
-    "message": "URL"
-  },
-  "syncOptions": {
-    "message": "Senkronizasyon Seçenekleri"
-  },
-  "optionShowSyncStatus": {
-    "message": "Senkronizasyon durumu göstergelerini göster"
-  },
-  "optionHighlightUnsynced": {
-    "message": "Senkronize edilmemiş yer imlerini karart"
-  },
-  "optionAutoRefreshSync": {
-    "message": "Senkronizasyon durumunu otomatik yenile"
-  },
-  "optionSyncRefreshInterval": {
-    "message": "Yenileme aralığı"
-  },
-  "optionSyncRefreshIntervalSeconds": {
-    "message": "saniye"
-  },
-  "syncStatusSynced": {
-    "message": "Google hesabınıza senkronize edildi"
-  },
-  "syncStatusLocal": {
-    "message": "Yalnızca yerel — yüklenmedi"
-  },
-  "syncStatusUnsyncable": {
-    "message": "Senkronize edilemez"
-  },
-  "syncSuffixSynced": {
-    "message": "(Senkronize)"
-  },
-  "syncSuffixLocal": {
-    "message": "(Yerel)"
-  },
-  "optionAutoResizePopup": {
-    "message": "Açılır pencere boyutunu içeriğe göre otomatik olarak ayarla"
-  },
-  "crossStorageMoveWarning": {
-    "message": "Yer imleri eşitlenen ve yerel depolama alanı arasında taşınamaz. Bunun yerine kopyala/yapıştır kullanın.",
-    "description": "Warning when trying to move bookmarks across storage types"
-  },
-  "recentBookmarks": {
-    "message": "Son eklenenler"
-  },
-  "optionShowRecentBookmarks": {
-    "message": "Açılır pencerenin üstünde son eklenen yer imlerini göster"
-  },
-  "optionShowStatsView": {
-    "message": "İstatistik görünümü sekmesini göster"
-  },
-  "optionShowDeadView": {
-    "message": "Ölü bağlantılar görünümü sekmesini göster"
-  },
-  "optionShowDupesView": {
-    "message": "Yinelenenler görünümü sekmesini göster"
-  },
-  "optionRecentCollapsed": {
-    "message": "Son eklenen bölümünü varsayılan olarak daralt"
-  },
-  "optionsGroupViews": {
-    "message": "Görünümler"
-  },
-  "optionsGroupSort": {
-    "message": "Sıralama"
-  },
-  "optionsGroupStats": {
-    "message": "İstatistikler"
-  },
-  "optionsGroupTools": {
-    "message": "Araçlar"
-  },
-  "optionShowViewTabs": {
-    "message": "Arama kutusunun altında görünüm sekmelerini göster"
-  },
-  "optionRememberView": {
-    "message": "Son etkin görünümü hatırla ve onu yeniden aç"
-  },
-  "optionShowTabBadges": {
-    "message": "Görünüm sekmelerinde sayı rozetlerini göster"
-  },
-  "optionPaletteEnabled": {
-    "message": "Komut paletini etkinleştir (Ctrl/Cmd+K)"
-  },
-  "optionQuickAddEnabled": {
-    "message": "Arama kutusunun yanında hızlı ekleme yıldız düğmesini göster"
-  },
-  "optionQuickAddContextMenu": {
-    "message": "Sayfa sağ tıklama menüsüne \"vBookmarks ile bu sayfayı yer imlerine ekle\" girişi ekle"
-  },
-  "optionQuickAddContextMenuHint": {
-    "message": "Hızlı ekleme yıldız düğmesinden bağımsızdır; klasik deneyim geri yükleme bu girişi de kapatır."
-  },
-  "optionCollapseTabGroupMenu": {
-    "message": "Sekme grubu girdilerini tek bir \"Sekme grupları\" alt menüsünde birleştir"
-  },
-  "optionCollapseTabGroupMenuHint": {
-    "message": "Hem klasör hem de yer imi sağ tık menülerine uygulanır. Varsayılan olarak kapalıdır. Küçük veya yüksek yakınlaştırmalı ekranlarda menülerin daha kısa kalmasını sağlar."
-  },
-  "optionCollapseSortMenu": {
-    "message": "Sıralama girdilerini tek bir \"Sırala\" alt menüsünde birleştir"
-  },
-  "optionCollapseSortMenuHint": {
-    "message": "Klasör sağ tık menüsüne uygulanır. Varsayılan olarak açıktır."
-  },
-  "optionShowToolButton": {
-    "message": "Arama kutusunun yanında araç düğmesini (⋮) göster"
-  },
-  "optionClassicExperience": {
-    "message": "Klasik başlığı geri yükle"
-  },
-  "optionClassicExperienceHint": {
-    "message": "Komut paletini, hızlı ekleme yıldızını, sayfa sağ tıklama öğesini, araç düğmesini ve görünüm sekmelerini kapatır. Her biri kendi bölümünden ayrı ayrı yeniden etkinleştirilebilir."
-  },
-  "optionShowItemPath": {
-    "message": "Liste satırlarında üst klasör yolunu göster"
-  },
   "viewRecent": {
     "message": "Aşamalı"
   },
-  "viewTree": {
-    "message": "Ağaç"
-  },
   "viewSearch": {
     "message": "Arama"
+  },
+  "viewStateDisabled": {
+    "message": "Devre dışı"
+  },
+  "viewStateEnabled": {
+    "message": "Etkin"
+  },
+  "viewStats": {
+    "message": "İstatistikler"
   },
   "viewSwitchAnnounce": {
     "message": "$name$ görünümü",
@@ -933,870 +2581,17 @@
       }
     }
   },
-  "viewStateEnabled": {
-    "message": "Etkin"
-  },
-  "viewStateDisabled": {
-    "message": "Devre dışı"
-  },
-  "viewEnable": {
-    "message": "Etkinleştir"
-  },
-  "viewDisable": {
+  "viewTabDisable": {
     "message": "Devre dışı bırak"
+  },
+  "viewTabGroups": {
+    "message": "Sekme grupları"
   },
   "viewTabHide": {
     "message": "Gizle"
   },
-  "viewTabDisable": {
-    "message": "Devre dışı bırak"
-  },
-  "sortFolderContents": {
-    "message": "Klasör İçeriğini Sırala"
-  },
-  "sortByName": {
-    "message": "Ada göre sırala"
-  },
-  "sortByDate": {
-    "message": "Eklenme tarihine göre sırala"
-  },
-  "sortRecursiveSuffix": {
-    "message": "(özyinelemeli)"
-  },
-  "sortOptions": {
-    "message": "Sıralama seçenekleri…"
-  },
-  "sortDone": {
-    "message": "Klasör sıralandı"
-  },
-  "sortByTitle": {
-    "message": "Başlığa göre"
-  },
-  "sortByDateAdded": {
-    "message": "Eklenme tarihine göre (önce en yeni)"
-  },
-  "sortFoldersFirst": {
-    "message": "Klasörler üstte kalsın"
-  },
-  "sortRecursive": {
-    "message": "Alt klasörleri de sırala (özyinelemeli)"
-  },
-  "sortRecursiveWarning": {
-    "message": "Bu, her alt klasördeki yer imlerini yeniden sıralar."
-  },
-  "tabGroupDialogTitle": {
-    "message": "Yeni sekme grubu"
-  },
-  "tabGroupTitleLabel": {
-    "message": "Grup adı"
-  },
-  "tabGroupColorLabel": {
-    "message": "Renk"
-  },
-  "tabGroupColorGrey": {
-    "message": "Gri",
-    "description": "Accessible name of the grey color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorBlue": {
-    "message": "Mavi",
-    "description": "Accessible name of the blue color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorRed": {
-    "message": "Kırmızı",
-    "description": "Accessible name of the red color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorYellow": {
-    "message": "Sarı",
-    "description": "Accessible name of the yellow color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorGreen": {
-    "message": "Yeşil",
-    "description": "Accessible name of the green color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorPink": {
-    "message": "Pembe",
-    "description": "Accessible name of the pink color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorPurple": {
-    "message": "Mor",
-    "description": "Accessible name of the purple color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorCyan": {
-    "message": "Camgöbeği",
-    "description": "Accessible name of the cyan color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorOrange": {
-    "message": "Turuncu",
-    "description": "Accessible name of the orange color swatch in the new-tab-group dialog."
-  },
-  "tabGroupUntitled": {
-    "message": "Adsız grup"
-  },
-  "tabGroupNoGroups": {
-    "message": "Mevcut sekme grubu yok"
-  },
-  "tabGroupPickDialogTitle": {
-    "message": "Mevcut sekme grubunda aç"
-  },
-  "quickAddBookmark": {
-    "message": "Bu sayfayı yer imlerine ekle (Ctrl+D)"
-  },
-  "quickAddBookmarkCommand": {
-    "message": "Geçerli sekmeyi yer imi olarak hızlı ekle"
-  },
-  "quickAdded": {
-    "message": "Yer imi eklendi"
-  },
-  "quickAddedTo": {
-    "message": "Yer imi $folderName$ klasörüne eklendi",
-    "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarks bar"
-      }
-    }
-  },
-  "quickRemoved": {
-    "message": "Yer imi kaldırıldı"
-  },
-  "quickRemoveBookmark": {
-    "message": "Bu yer imini kaldır (Ctrl+D)"
-  },
-  "toolButtonTitle": {
-    "message": "Araçlar (Ctrl+K)"
-  },
-  "contextMenuAddBookmark": {
-    "message": "Bu sayfayı vBookmarks ile yer imlerine ekle"
-  },
-  "deadFilterAll": {
-    "message": "Tümü"
-  },
-  "deadFilterBlocked": {
-    "message": "Yalnızca Engellenenler"
-  },
-  "deadFilterDead": {
-    "message": "Yalnızca Ölü"
-  },
-  "deadFilterMarked": {
-    "message": "Önceden işaretlenmiş"
-  },
-  "deadLastScanAt": {
-    "message": "Son tarama: $time$",
-    "placeholders": {
-      "time": {
-        "content": "$1"
-      }
-    }
-  },
-  "deadMark": {
-    "message": "Ölü Olarak İşaretle"
-  },
-  "deadMarkAll": {
-    "message": "Tümünü İşaretle"
-  },
-  "deadMarked": {
-    "message": "Ölü satırlar işaretlendi"
-  },
-  "deadMarkedCount": {
-    "message": "İşaretlenmiş $count$ yer imi",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "deadMarkedNone": {
-    "message": "Henüz işaretlenmiş yer imi yok"
-  },
-  "deadMarkedRow": {
-    "message": "İşaretli"
-  },
-  "deadMarkSelected": {
-    "message": "Seçilenleri işaretle"
-  },
-  "deadMarkStatusAll": {
-    "message": "Herhangi bir durum"
-  },
-  "deadMarkStatusMarked": {
-    "message": "İşaretli"
-  },
-  "deadMarkStatusUnmarked": {
-    "message": "İşaretsiz"
-  },
-  "deadMarkTimeLabel": {
-    "message": "İşaretlenme zamanı"
-  },
-  "deadDetectTimeLabel": {
-    "message": "Tespit zamanı"
-  },
-  "deadSortLabel": {
-    "message": "Sıralama ölçütü"
-  },
-  "deadSortByDetected": {
-    "message": "Algılama zamanı"
-  },
-  "deadSortByPath": {
-    "message": "Klasör yolu"
-  },
-  "deadSortByMarked": {
-    "message": "İşaretleme zamanı"
-  },
-  "deadMarkedBanner": {
-    "message": "Daha önce işaretlenmiş yer imleri gösteriliyor. Yeni bir kontrol başlatmak için Rescan'a tıklayın veya aşağıdaki listede bunları işleyin."
-  },
-  "deadMarkedBannerDismiss": {
-    "message": "Kapat"
-  },
-  "deadProxyAdd": {
-    "message": "Ölü bağlantı kontrolleri için bir proxy sunucusu ekle"
-  },
-  "deadProxyLabel": {
-    "message": "Proxy: $server$",
-    "placeholders": {
-      "server": {
-        "content": "$1"
-      }
-    }
-  },
-  "deadProxyChange": {
-    "message": "Değiştir"
-  },
-  "deadProxyRemove": {
-    "message": "Kaldır"
-  },
-  "deadProxyRemoved": {
-    "message": "Proxy sunucusu kaldırıldı"
-  },
-  "deadProxyPanelHint": {
-    "message": "Sahip olduğunuz bir proxy sunucusunu girin (uzantı hiçbirini sağlamaz), örn. 127.0.0.1:7890 veya socks5://127.0.0.1:1080."
-  },
-  "deadProxyTestUrlLabel": {
-    "message": "Test URL'si"
-  },
-  "deadProxyTestSave": {
-    "message": "Test et ve kaydet"
-  },
-  "deadProxyTesting": {
-    "message": "Test ediliyor…"
-  },
-  "deadProxySaved": {
-    "message": "Proxy kaydedildi — sonraki taramalar doğrudan başarısız sonuçları bunun üzerinden yeniden kontrol eder"
-  },
-  "deadProxyInvalid": {
-    "message": "Geçersiz proxy adresi — host:port veya scheme://host:port kullanın (http/https/socks5, kimlik bilgisi yok)"
-  },
-  "deadProxyUnreachable": {
-    "message": "Proxy erişilemez — kaydedilmedi"
-  },
-  "deadProxyDenied": {
-    "message": "Proxy izni verilmedi"
-  },
-  "deadProxyControlled": {
-    "message": "Proxy ayarları başka bir uzantı tarafından yönetiliyor"
-  },
-  "deadProxyUnavailable": {
-    "message": "Proxy API'si bu tarayıcıda kullanılamıyor"
-  },
-  "deadProxyNudge": {
-    "message": "Proxy yeniden kontrolü, gerçek ölü bağlantıları bölge engelli olanlardan ayırır — buradan veya seçenekler sayfasından yapılandırın."
-  },
-  "deadProxyNeverShow": {
-    "message": "Bir daha gösterme"
-  },
-  "deadStartHint": {
-    "message": "$n$ yer imini taramaya başla",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "deadStatusBlocked": {
-    "message": "engellendi"
-  },
-  "deadUnmark": {
-    "message": "Ölü işaretini kaldır"
-  },
-  "deadUnmarkAll": {
-    "message": "Tüm işaretleri temizle"
-  },
-  "deadUnmarkSelected": {
-    "message": "Seçilenlerin işaretini kaldır"
-  },
-  "dupesApplyAll": {
-    "message": "Tümünü uygula ($count$)",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "dupesApplySelected": {
-    "message": "Seçilenleri tekilleştir ($count$)",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "dupesCleanRestHint": {
-    "message": "\"$title$\" tut, diğer $count$ öğeyi kaldır",
-    "placeholders": {
-      "title": {
-        "content": "$1"
-      },
-      "count": {
-        "content": "$2"
-      }
-    }
-  },
-  "dupesIgnoreScheme": {
-    "message": "http/https farklarını yoksay"
-  },
-  "dupesKeepThis": {
-    "message": "Bunu sakla"
-  },
-  "dupesKeeperSet": {
-    "message": "Koruyucu yap"
-  },
-  "dupesPreviewSummary": {
-    "message": "$groups$ grup · $count$ serbest bırakılacak",
-    "placeholders": {
-      "groups": {
-        "content": "$1"
-      },
-      "count": {
-        "content": "$2"
-      }
-    }
-  },
-  "dupesRemoveRow": {
-    "message": "Bu kopyayı sil"
-  },
-  "dupesScopeAll": {
-    "message": "Tüm yer imleri"
-  },
-  "dupesScopeBar": {
-    "message": "Yalnızca yer imi çubuğu"
-  },
-  "dupesStrategyBookmarkBar": {
-    "message": "Yer imi çubuğundakini sakla"
-  },
-  "dupesStrategyMostVisited": {
-    "message": "En çok ziyaret edileni sakla"
-  },
-  "dupesStrategyNewest": {
-    "message": "En yenisini sakla"
-  },
-  "dupesStrategyOldest": {
-    "message": "En eskisini sakla"
-  },
-  "dupesStrategyShallowest": {
-    "message": "En sığ olanı sakla"
-  },
-  "dupesStrategyShortestTitle": {
-    "message": "En kısa başlığı sakla"
-  },
-  "optionDeadProxyServer": {
-    "message": "Ölü bağlantı proxy sunucusu"
-  },
-  "deadProxyServerHint": {
-    "message": "Kaydedilen sunucu, her ölü bağlantı taramasında doğrudan başarısız olan yer imlerini yeniden denetler ve gerçek ölü bağlantıları bölge engelli olanlardan ayırır. Test et ve kaydet, sunucuyu yoklar (yalnızca erişilebilir bir sunucu saklanır); ayrıca ölü bağlantılar görünümünden ekleyebilirsiniz."
-  },
-  "deadProxyClear": {
-    "message": "Temizle"
-  },
-  "deadProxyNone": {
-    "message": "(ayarlanmadı)"
-  },
-  "optionDeadProxyStrip": {
-    "message": "Ölü bağlantılar görünümünde proxy ekleme ipucunu göster"
-  },
-  "optionDeadProxyStripHint": {
-    "message": "Kapalı, oradaki ipucunu gizler; proxy sunucusu burada yapılandırılabilir kalır ve kaydedilmiş bir sunucu görünümde her zaman yönetim satırını gösterir."
-  },
-  "optionDeadScanConcurrency": {
-    "message": "Ölü bağlantı tarama eşzamanlılığı (1-16)"
-  },
-  "optionDeadScanTimeout": {
-    "message": "Ölü bağlantı tarama zaman aşımı (saniye) (2-30)"
-  },
-  "paletteCmdGoDead": {
-    "message": "Ölü bağlantılar görünümüne git"
-  },
-  "paletteCmdGoDupes": {
-    "message": "Yinelenenler görünümüne git"
-  },
-  "paletteCmdGoRecent": {
-    "message": "Son görünümüne git"
-  },
-  "paletteCmdGoSearch": {
-    "message": "Arama görünümüne git"
-  },
-  "paletteCmdGoTree": {
-    "message": "Ağaç görünümüne git"
-  },
-  "paletteCmdOptions": {
-    "message": "Seçenekler sayfasını aç"
-  },
-  "paletteCmdSearchInView": {
-    "message": "Arama görünümünde '$query$' ara",
-    "placeholders": {
-      "query": {
-        "content": "$1"
-      }
-    }
-  },
-  "rowActionDelete": {
-    "message": "Sil"
-  },
-  "rowActionMark": {
-    "message": "Ölü olarak işaretle"
-  },
-  "rowActionReveal": {
-    "message": "Ağaçta göster"
-  },
-  "rowActionUnmark": {
-    "message": "Ölü işaretini kaldır"
-  },
-  "viewDead": {
-    "message": "Ölü bağlantılar"
-  },
-  "viewDupes": {
-    "message": "Yinelenenler"
-  },
-  "viewStats": {
-    "message": "İstatistikler"
-  },
-  "paletteCmdGoStats": {
-    "message": "İstatistikler görünümüne git"
-  },
-  "optionStatsEnabled": {
-    "message": "Ziyaret istatistiklerini etkinleştir"
-  },
-  "optionFaviconContrast": {
-    "message": "Düşük kontrastlı favicon'ları ters çevir"
-  },
-  "optionFaviconContrastHint": {
-    "message": "Açık temalardaki beyaz simgeler ve koyu temalardaki siyah simgeler, görünür kalmaları için ters çevrilir. Her simge yüklendiğinde bir kez örneklenir; gezinme sırasında ek maliyet yoktur."
-  },
-  "optionFaviconEnrich": {
-    "message": "Eksik site simgelerini getir"
-  },
-  "optionFaviconEnrichHint": {
-    "message": "Chrome'un önbelleğinde simgesi olmayan yer imlerindeki siteler için gerçek simgeyi doğrudan siteden alın (/favicon.ico, ardından sayfanın bildirdiği simgeler). İstekler yalnızca yer imlerinize eklediğiniz sitelere gönderilir."
-  },
-  "optionFaviconEnrichAgg": {
-    "message": "Üçüncü taraf simge yedeği"
-  },
-  "optionFaviconEnrichAggHint": {
-    "message": "Doğrudan getirme başarısız olursa, simgeyi üçüncü taraf simge hizmetlerinin yerleşik listesindeki alan adına göre arayın ($providers$). Erişilemeyen bir hizmet atlanır ve bir sonraki denenir — 6 saat boyunca yeniden denenmez.",
-    "placeholders": {
-      "providers": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionFaviconBackup": {
-    "message": "Yedeklere simge önbelleğini ekle"
-  },
-  "optionFaviconBackupHint": {
-    "message": "Ayrıca zenginleştirilmiş favicon önbelleğini (site başına veri, potansiyel olarak büyük) ayarlar dışa/içe aktarmasına dahil et. Bu, getirme kapalıyken bile zaten önbelleğe alınmış simgeleri kapsar. Kapalı, yedekleri küçük tutar; simgeler zaten otomatik olarak yeniden getirilir."
-  },
-  "optionFaviconCacheClear": {
-    "message": "Simge önbelleğini temizle"
-  },
-  "optionFaviconCacheClearConfirm": {
-    "message": "Zenginleştirilmiş simge önbelleği temizlensin mi? Simgeler bir sonraki açılışta otomatik olarak yeniden alınacak."
-  },
-  "optionFaviconCacheEmpty": {
-    "message": "Temizlenecek simge önbelleği yok."
-  },
-  "optionFaviconCacheCleared": {
-    "message": "Simge önbelleği temizlendi. Simgeler bir sonraki açılışta yeniden getirilecek."
-  },
-  "favGalleryLink": {
-    "message": "Yenilenen simgeleri görüntüle",
-    "description": "Options link (Icons group, right of the Clear icon cache button): opens the favicon gallery page listing the sites whose icons were refetched."
-  },
-  "favGalleryTitle": {
-    "message": "Yenilenen site simgeleri",
-    "description": "Favicon gallery page title (h1 + document title)."
-  },
-  "favGalleryHint": {
-    "message": "Chrome'un önbelleğe almadığı yer imli siteler için vBookmarks'ın getirdiği simgeler — her birinin nereden geldiği ve hangi yer imlerinin kullandığı. Yalnızca görüntüleme.",
-    "description": "Subtitle under the favicon gallery title, explaining the page is read-only."
-  },
-  "favGallerySearch": {
-    "message": "Siteye, başlığa veya yola göre filtrele",
-    "description": "Placeholder of the favicon gallery filter input."
-  },
-  "favGalleryAll": {
-    "message": "Tümü",
-    "description": "Favicon gallery source filter chip: show every source."
-  },
-  "favSrcDirect": {
-    "message": "Doğrudan",
-    "description": "Favicon gallery source badge: the icon was fetched directly from the site itself."
-  },
-  "favSrcProxy": {
-    "message": "Vekil",
-    "description": "Favicon gallery source badge: the icon was fetched through the user's own proxy relay."
-  },
-  "favSrcLegacy": {
-    "message": "Önceki önbellek",
-    "description": "Favicon gallery source badge: cached before the source was recorded, so the origin is unknown."
-  },
-  "favGalleryCompare": {
-    "message": "Yer tutucuyla karşılaştır",
-    "description": "Favicon gallery toggle button: switch every icon to the generic placeholder it replaced (before/after comparison)."
-  },
-  "favGalleryShowingBefore": {
-    "message": "Gerçek simgelere dön",
-    "description": "Favicon gallery toggle button while the placeholder comparison is shown: switch back to the real fetched icons."
-  },
-  "favGalleryStatSites": {
-    "message": "$n$ site",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    },
-    "description": "Favicon gallery stats strip: how many sites have a refreshed icon."
-  },
-  "favGalleryStatBookmarks": {
-    "message": "$n$ yer imi",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    },
-    "description": "Favicon gallery stats strip: how many bookmarks sit on the refreshed sites."
-  },
-  "favGalleryVisits": {
-    "message": "$n$ kayıtlı açılış",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    },
-    "description": "Favicon gallery tooltip on a bookmark row's visit-count pill."
-  },
-  "favGalleryFailedTitle": {
-    "message": "Son denendi, simge bulunamadı",
-    "description": "Favicon gallery heading of the muted section listing hosts whose icon fetch failed recently."
-  },
-  "favGalleryFailedHint": {
-    "message": "Başarısızlıklar 24 saat, 3 gün ve 7 gün sonra yeniden denenir, ardından ikon önbelleği temizlenene kadar vazgeçilir.",
-    "description": "Favicon gallery hint under the failed-fetch section title."
-  },
-  "favGalleryGaveUp": {
-    "message": "Vazgeçildi",
-    "description": "Favicon gallery badge on a failed-strip host whose retries are exhausted (it stays untouched until the icon cache is cleared)."
-  },
-  "favGalleryOrphan": {
-    "message": "Bu sitede hiç yer imi kalmadı — simge önbellekle birlikte temizlenir.",
-    "description": "Favicon gallery note on a card whose host no longer has any bookmark."
-  },
-  "favGalleryEmptyTitle": {
-    "message": "Henüz yenilenen simge yok",
-    "description": "Favicon gallery empty-state heading."
-  },
-  "favGalleryEmptyText": {
-    "message": "Açılır pencere, Chrome'un simgesi olmayan yer imli bir siteyle karşılaştığında, vBookmarks gerçek simgeyi getirir ve burada listeler.",
-    "description": "Favicon gallery empty-state body text."
-  },
-  "storageUsageIcon": {
-    "message": "Simge önbelleği"
-  },
-  "storageUsageOther": {
-    "message": "Diğer"
-  },
-  "storageUsageSummary": {
-    "message": "$1$ / $2$ kullanıldı",
-    "placeholders": {
-      "1": {
-        "content": "$1"
-      },
-      "2": {
-        "content": "$2"
-      }
-    }
-  },
-  "storageUsageFree": {
-    "message": "Boş"
-  },
-  "storageUsageHint": {
-    "message": "Yalnızca yerel uzantı depolaması (chrome.storage.local, yaklaşık 10 MB kota): simge önbelleği ile ayarlar ve diğer yerel veriler. Eşitlenmiş ayarlar, oturum verileri ve yer imi kitaplığının kendisi buraya dahil edilmez."
-  },
-  "optionsDonate": {
-    "message": "Bağış Yap"
-  },
-  "optionsGithubLink": {
-    "message": "GitHub"
-  },
-  "optionsHomepageLink": {
-    "message": "Ana sayfa"
-  },
-  "optionsSince": {
-    "message": "Neat Bookmarks'tan çatallanmıştır; $days$ gündür bakımı yapılmaktadır.",
-    "placeholders": {
-      "days": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionsVersion": {
-    "message": "vBookmarks sürümü"
-  },
-  "statsSortByCount": {
-    "message": "Sayıya göre"
-  },
-  "statsSortByRecent": {
-    "message": "Güncelliğe göre"
-  },
-  "statsShowUnbookmarked": {
-    "message": "İşaretlenmemişleri göster"
-  },
-  "statsShowUnbookmarkedHint": {
-    "message": "Yer imi olarak kaydedilmemiş geçmiş sayfalarını dahil et."
-  },
-  "statsEmpty": {
-    "message": "İstatistikler, yer imlerini açtıkça oluşur"
-  },
-  "statsDisabledHint": {
-    "message": "Ziyaret istatistikleri kapalı — Seçenekler → Görünümler'den etkinleştirin"
-  },
-  "statsVisitCount": {
-    "message": "$count$ kez ziyaret edildi",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "statsClearData": {
-    "message": "İstatistikleri temizle"
-  },
-  "statsClearConfirm": {
-    "message": "$count$ yer imi için ziyaret istatistikleri temizlensin mi? Bu işlem geri alınamaz.",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "statsHistoryBanner": {
-    "message": "Geçmiş ziyaretlerinizle ziyaret istatistiklerini beslemek için geçmiş erişimi verin."
-  },
-  "statsHistoryEnable": {
-    "message": "Etkinleştir"
-  },
-  "statsHistoryDismiss": {
-    "message": "Tekrar gösterme"
-  },
-  "statsHistoryImported": {
-    "message": "$count$ yer imi için geçmiş ziyaretler içe aktarıldı",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "paletteCmdToggleViewTabs": {
-    "message": "Sekme görünümünü değiştir"
-  },
-  "paletteCmdTheme": {
-    "message": "Tema ayarla…"
-  },
-  "paletteCmdThemeUsage": {
-    "message": "Kullanım: /theme ardından bir tema adı — auto, light, dark, ink veya paper (benzersiz bir önek çalışır, örn. /theme d)."
-  },
-  "paletteCustomTag": {
-    "message": "özel"
-  },
-  "paletteCustomDeleteConfirm": {
-    "message": "\"$1\" komutu silinsin mi? Değişiklik tüm cihazlarınıza eşitlenir."
-  },
-  "paletteCustomBroken": {
-    "message": "\"$1\" komutunun klasörü artık mevcut değil. Komut silinsin mi?"
-  },
-  "paletteCmdSaveAsCommand": {
-    "message": "\"$1\"i komut olarak kaydet…"
-  },
-  "paletteActionOpenUrl": {
-    "message": "URL Aç"
-  },
-  "paletteActionOpenUrlGroup": {
-    "message": "Yer imi klasör grubunu aç"
-  },
-  "paletteActionViewPreset": {
-    "message": "Ön ayarlı görünümü aç"
-  },
-  "paletteActionUrlTemplate": {
-    "message": "URL şablonu aç"
-  },
-  "optionsGroupPalette": {
-    "message": "Komut paleti"
-  },
-  "paletteCustomHint": {
-    "message": "Komut paleti için özel eğik çizgi komutları (Ctrl/Cmd+K). Ayarlarınızla eşitlenir — en fazla 100 giriş."
-  },
-  "paletteCustomAdd": {
-    "message": "Komut ekle…"
-  },
-  "paletteCustomUsage": {
-    "message": "$1 / $2"
-  },
-  "paletteCustomSlash": {
-    "message": "Eğik çizgi ( / sonrası kelime)"
-  },
-  "paletteCustomAliases": {
-    "message": "Takma adlar (virgülle ayrılmış)"
-  },
-  "paletteCustomAction": {
-    "message": "Eylem"
-  },
-  "paletteCustomUrl": {
-    "message": "URL"
-  },
-  "paletteCustomTemplate": {
-    "message": "URL şablonu — %s, komuttan sonraki kelimelerle değiştirilir"
-  },
-  "paletteCustomWhere": {
-    "message": "Açılacağı yer"
-  },
-  "paletteCustomFolder": {
-    "message": "Yer imi klasörü"
-  },
-  "paletteCustomView": {
-    "message": "Görünüm"
-  },
-  "paletteCustomStrategy": {
-    "message": "Tekilleştirme stratejisi ön ayarı"
-  },
-  "paletteCustomScope": {
-    "message": "Tekilleştirme kapsamı ön ayarı"
-  },
-  "paletteCustomScan": {
-    "message": "Girişte taramayı başlat"
-  },
-  "paletteWhereCurrent": {
-    "message": "Geçerli sekme"
-  },
-  "paletteWhereTab": {
-    "message": "Yeni sekme"
-  },
-  "paletteWhereWindow": {
-    "message": "Yeni pencere"
-  },
-  "paletteWhereBackground": {
-    "message": "Arka plan sekmeleri"
-  },
-  "paletteCustomSave": {
-    "message": "Komutu kaydet"
-  },
-  "paletteCustomErrSlash": {
-    "message": "Eğik çizgi: 1–24 karakter; yalnızca küçük harf, rakam veya tire içerebilir; bir harf veya rakamla başlamalıdır."
-  },
-  "paletteCustomErrAlias": {
-    "message": "Takma adlar: eğik çizgiyle aynı kurallar (1–24 karakter; yalnızca küçük harf, rakam veya tire)."
-  },
-  "paletteCustomErrTaken": {
-    "message": "Bu eğik çizgi veya takma ad zaten kullanılıyor."
-  },
-  "paletteCustomErrUrl": {
-    "message": "Yalnızca http:// veya https:// URL'lerine izin verilir."
-  },
-  "paletteCustomErrFolder": {
-    "message": "Bir yer imi klasörü seçin."
-  },
-  "paletteCustomErrView": {
-    "message": "Bir görünüm seçin."
-  },
-  "paletteCustomErrTemplate": {
-    "message": "Şablon tam olarak bir %s içermelidir."
-  },
-  "paletteCustomErrAction": {
-    "message": "Bir eylem türü seçin."
-  },
-  "paletteCustomErrLimit": {
-    "message": "Komut sınırına ulaşıldı (100) — önce birini silin."
-  },
-  "paletteCustomEmpty": {
-    "message": "Henüz özel komut yok."
-  },
-  "recentGroupToday": {
-    "message": "Bugün"
-  },
-  "recentGroupWeek": {
-    "message": "Bu hafta"
-  },
-  "recentGroupMonth": {
-    "message": "Bu ay"
-  },
-  "recentGroupOlder": {
-    "message": "Daha eski"
-  },
-  "searchHistoryRerun": {
-    "message": "Tekrar ara"
-  },
-  "optionsGroupBackup": {
-    "message": "Yedekle"
-  },
-  "optionsGroupContextMenu": {
-    "message": "Bağlam menüleri"
-  },
-  "optionsGroupIcons": {
-    "message": "Simgeler"
-  },
-  "settingsExport": {
-    "message": "Ayarları dışa aktar"
-  },
-  "settingsImport": {
-    "message": "Ayarları içe aktar"
-  },
-  "settingsBackupHint": {
-    "message": "Dışa aktarma tüm ayarları (eşitleme tercihleri dahil) bir JSON dosyasına kaydeder. İçe aktarma bir yedekle birleştirir: dosyadaki ayarlar mevcut olanların üzerine yazılır, diğer her şey korunur."
-  },
-  "settingsImportConfirm": {
-    "message": "İçe aktarma, yedekleme dosyasındaki tüm ayarların üzerine yazacaktır (dosyada olmayan ayarlar korunur) ve bu sayfayı yeniden yükleyecektir. Devam edilsin mi?"
-  },
-  "settingsImportInvalid": {
-    "message": "Geçersiz ayar dosyası: bir vBookmarks ayar yedeklemesi değil."
-  },
-  "settingsImportDone": {
-    "message": "Ayarlar içe aktarıldı. Sayfa şimdi yeniden yüklenecek."
-  },
-  "settingsImportError": {
-    "message": "Bazı ayarlar yazılamadı (depolama kotası veya geçici bir hata). İçe aktarma tamamlanmadı — lütfen tekrar deneyin."
-  },
-  "statsSectionRecent": {
-    "message": "Son ziyaretler"
-  },
-  "statsSectionBookmarks": {
-    "message": "Yer imi istatistikleri"
-  },
-  "statsHistoryGuide": {
-    "message": "Burada son ziyaretlerinizi listelemek için geçmiş erişimine izin verin."
-  },
-  "statsHistoryAdd": {
-    "message": "Yer imlerine ekle"
-  },
-  "statsHistoryBookmarked": {
-    "message": "Yer imlerine eklendi"
-  },
-  "deadPause": {
-    "message": "Duraklat"
-  },
-  "deadResume": {
-    "message": "Devam et"
-  },
-  "deadCancel": {
-    "message": "İptal"
-  },
-  "deadPaused": {
-    "message": "Duraklatıldı"
+  "viewTree": {
+    "message": "Ağaç"
   },
   "whatsNewChangelog": {
     "message": "Değişiklik günlüğü"
@@ -1808,800 +2603,5 @@
         "content": "$1"
       }
     }
-  },
-  "viewHiddenTabsHint": {
-    "message": "$view$ görünümündesiniz. Ağaca dönmek için $back$ tuşuna basın veya komut paletini kullanın.",
-    "placeholders": {
-      "view": {
-        "content": "$1"
-      },
-      "back": {
-        "content": "$2"
-      }
-    }
-  },
-  "viewTabGroups": {
-    "message": "Sekme grupları"
-  },
-  "optionShowTabGroupsView": {
-    "message": "Sekme grupları görünüm sekmesini göster"
-  },
-  "tabGroupsViewEmpty": {
-    "message": "Bu pencerede sekme yok"
-  },
-  "tabGroupsToolbarRefresh": {
-    "message": "Yenile"
-  },
-  "tabGroupsCollapseAll": {
-    "message": "Tümünü daralt"
-  },
-  "tabGroupsExpandAll": {
-    "message": "Tümünü genişlet"
-  },
-  "tabGroupsSummary": {
-    "message": "$tabs$ sekme · $groups$ grup",
-    "placeholders": {
-      "tabs": {
-        "content": "$1"
-      },
-      "groups": {
-        "content": "$2"
-      }
-    }
-  },
-  "tabGroupsGroupCount": {
-    "message": "$count$ sekme",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsCurrentTab": {
-    "message": "Geçerli"
-  },
-  "tabGroupsAddBookmark": {
-    "message": "Bu sekmeyi yer imlerine ekle"
-  },
-  "tabGroupsSaveFolder": {
-    "message": "Sekme grubunu yer imi klasörü olarak kaydet"
-  },
-  "tabGroupsGroupSavedToFolder": {
-    "message": "$count$ sekme $folder$ konumuna kaydedildi",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      },
-      "folder": {
-        "content": "$2"
-      }
-    }
-  },
-  "tabGroupsBookmarksAdded": {
-    "message": "$count$ yer imi $folder$ konumuna eklendi",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      },
-      "folder": {
-        "content": "$2"
-      }
-    }
-  },
-  "tabGroupsSelectNewGroup": {
-    "message": "Yeni sekme grubu"
-  },
-  "tabGroupsSelectOpenInto": {
-    "message": "Mevcut sekme grubunda aç…"
-  },
-  "tabGroupsSelectSaveFolder": {
-    "message": "Yer imi klasörü olarak kaydet"
-  },
-  "tabGroupsSelectClose": {
-    "message": "Kapat"
-  },
-  "tabGroupsSelectSleep": {
-    "message": "Uyut"
-  },
-  "tabGroupsCopyMoveDialog": {
-    "message": "Seçili sekmeler zaten bir sekme grubuna ait. Kopyalamak (yeni bir yerde aç) veya taşımak (mevcut gruptan kaldırmak) ister misiniz?"
-  },
-  "tabGroupsCopyMoveCopy": {
-    "message": "Kopyala"
-  },
-  "tabGroupsCopyMoveMove": {
-    "message": "Taşı"
-  },
-  "tabGroupsConfirmClose": {
-    "message": "$count$ sekme kapatılsın mı?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsConfirmSleep": {
-    "message": "$count$ sekme uyutulsun mu?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsClosedToast": {
-    "message": "$count$ sekme kapatıldı",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsSleptToast": {
-    "message": "$count$ sekme uyutuldu",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsBatchClosedTitle": {
-    "message": "Kapatılan sekmeler"
-  },
-  "tabGroupsPinnedUngroupedToast": {
-    "message": "Sabitlendi — sekme grubundan çıkarıldı"
-  },
-  "tabGroupsReopenAction": {
-    "message": "Yeniden aç"
-  },
-  "tabGroupsWakeAction": {
-    "message": "Uyandır"
-  },
-  "tabGroupsRecordDeletedToast": {
-    "message": "Kapalı kayıt silindi"
-  },
-  "tabGroupsClosedTabRemovedToast": {
-    "message": "Kapalı kayıttan kaldırıldı"
-  },
-  "tabGroupsClearedToast": {
-    "message": "$count$ kapalı kayıt temizlendi",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "bookmarkFolderPickDialogTitle": {
-    "message": "Yer imi klasörüne ekle"
-  },
-  "bookmarkFolderNoFolders": {
-    "message": "Yer imi klasörü yok"
-  },
-  "tabGroupsSelectAddBookmarks": {
-    "message": "Yer imi klasörüne ekle…"
-  },
-  "paletteCmdGoTabGroups": {
-    "message": "Sekme grupları görünümüne git"
-  },
-  "tabGroupsActivateGroup": {
-    "message": "Grup sekmesine git"
-  },
-  "tabGroupsRenameGroup": {
-    "message": "Sekme grubunu yeniden adlandır"
-  },
-  "tabGroupsRenameDialog": {
-    "message": "Sekme grubunu yeniden adlandır"
-  },
-  "tabGroupsCloseGroup": {
-    "message": "Sekme grubunu kapat"
-  },
-  "tabGroupsSleepGroup": {
-    "message": "Sekme grubunu uyut"
-  },
-  "tabGroupsWakeGroup": {
-    "message": "Sekme grubunu uyandır"
-  },
-  "tabGroupsActivateTab": {
-    "message": "Sekmeye git"
-  },
-  "tabGroupsCollapseGroup": {
-    "message": "Grubu daralt"
-  },
-  "tabGroupsExpandGroup": {
-    "message": "Grubu genişlet"
-  },
-  "tabGroupsMenuAddBookmark": {
-    "message": "Sekmeyi yer imlerine ekle"
-  },
-  "tabGroupsMenuSaveFolder": {
-    "message": "Yer imi klasörü olarak kaydet"
-  },
-  "tabGroupsSyncCollapse": {
-    "message": "Tarayıcıyla senkronize daralt"
-  },
-  "tabGroupsSyncCollapseHint": {
-    "message": "İşaretlendiğinde, bu görünümde bir grubu daraltmak veya genişletmek tarayıcı sekme grubunu da günceller. Varsayılan olarak kapalıdır, böylece görünüm katlaması yerel kalır."
-  },
-  "tabGroupsColorStyle": {
-    "message": "Sekme grubu renk stili"
-  },
-  "tabGroupsColorStyleHint": {
-    "message": "Kapalı, yalnızca renk noktasını gösterir. Kenar renk bandı, grubun sol kenarına renkli bir şerit çizer. Renk bağlantı çizgisi, grubun noktasının altına satır başına bir işaretle renkli bir çizgi çizer ve tüm grubu tek bir ağaç halinde birleştirir."
-  },
-  "tabGroupsColorStyleOff": {
-    "message": "Kapalı (yalnızca renk noktası)"
-  },
-  "tabGroupsColorStyleEdge": {
-    "message": "Kenar renk bandı"
-  },
-  "tabGroupsColorStyleLine": {
-    "message": "Renk bağlantı çizgisi"
-  },
-  "tabGroupsBookmarked": {
-    "message": "Yer imlerine eklendi"
-  },
-  "tabGroupsRemoveBookmark": {
-    "message": "Yer imini kaldır"
-  },
-  "tabGroupsBookmarkRemoved": {
-    "message": "$count$ yer imi kaldırıldı",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsPinned": {
-    "message": "Sabitlenmiş sekme"
-  },
-  "tabGroupsDiscarded": {
-    "message": "Uyuyan sekme"
-  },
-  "tabGroupsPinTab": {
-    "message": "Sekmeyi sabitle"
-  },
-  "tabGroupsUnpinTab": {
-    "message": "Sabitlemeyi kaldır"
-  },
-  "tabGroupsSleepTab": {
-    "message": "Sekmeyi uyut"
-  },
-  "tabGroupsWakeTab": {
-    "message": "Sekmeyi uyandır"
-  },
-  "tabGroupsOpenGroups": {
-    "message": "Açık sekme grupları"
-  },
-  "tabGroupsClosedGroups": {
-    "message": "Son kapatılanlar"
-  },
-  "tabGroupsUngroupedTabs": {
-    "message": "Gruplanmamış sekmeler"
-  },
-  "tabGroupsUngroupGroup": {
-    "message": "Grupları çöz"
-  },
-  "tabGroupsMoveNewWindow": {
-    "message": "Grubu yeni pencereye taşı"
-  },
-  "tabGroupsWindow": {
-    "message": "Pencere $1$",
-    "placeholders": {
-      "1": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsCurrentWindow": {
-    "message": "Geçerli pencere"
-  },
-  "tabGroupsReopenGroup": {
-    "message": "Sekme grubunu yeniden aç"
-  },
-  "tabGroupsDeleteClosedGroup": {
-    "message": "Kapatılan sekme grubunu sil"
-  },
-  "tabGroupsCollapseWindow": {
-    "message": "Pencereyi daralt"
-  },
-  "tabGroupsCloseWindow": {
-    "message": "Pencereyi kapat"
-  },
-  "tabGroupsWindowClosedTitle": {
-    "message": "Kapatılan pencere"
-  },
-  "tabGroupsExpandWindow": {
-    "message": "Pencereyi genişlet"
-  },
-  "tabGroupsClearClosedGroups": {
-    "message": "Tümünü temizle"
-  },
-  "tabGroupsConfirmClearClosed": {
-    "message": "Tüm son kapatılan kayıtlar silinsin mi? Artık buradan yeniden açılamayacaklar."
-  },
-  "tabGroupsFilterPlaceholder": {
-    "message": "Açık sekmeleri filtrele"
-  },
-  "tabGroupsNoMatchingTabs": {
-    "message": "Eşleşen sekme yok"
-  },
-  "tabGroupsClosedOpenTab": {
-    "message": "Yeni sekmede aç"
-  },
-  "tabGroupsRemoveClosedTab": {
-    "message": "Kayıtlı gruptan kaldır"
-  },
-  "tabGroupsClosedTimeLabel": {
-    "message": "Kapatılma:"
-  },
-  "tabGroupsExpandedExpand": {
-    "message": "Genişlet"
-  },
-  "tabGroupsExpandedCollapse": {
-    "message": "Daralt"
-  },
-  "optionTabGroupsClosedLimit": {
-    "message": "Kapatılan sekme/grup geçmişi saklansın"
-  },
-  "folderPickMoveHere": {
-    "message": "Buraya taşı"
-  },
-  "folderPickCopyHere": {
-    "message": "Buraya kopyala"
-  },
-  "folderPickFilter": {
-    "message": "Klasörleri filtrele…"
-  },
-  "folderPickFavNote": {
-    "message": "Yer imi eklenmemiş öğeler buraya eklenecek"
-  },
-  "folderPickPinned": {
-    "message": "Sabitlenmiş"
-  },
-  "folderPickRecent": {
-    "message": "Son"
-  },
-  "pinFolder": {
-    "message": "Bu klasörü sabitle"
-  },
-  "unpinFolder": {
-    "message": "Bu klasörün sabitlemesini kaldır"
-  },
-  "stagingAdd": {
-    "message": "Sahneye gönder"
-  },
-  "stagingAdded": {
-    "message": "Sahneye gönderildi"
-  },
-  "stagingAlready": {
-    "message": "Zaten bekleme alanında"
-  },
-  "stagingAddedSummary": {
-    "message": "$n$ öğe eklendi; $m$ zaten beklemede",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      },
-      "m": {
-        "content": "$2"
-      }
-    }
-  },
-  "stagingFull": {
-    "message": "Bekleme alanı dolu — önce bazı öğeleri kaldırın"
-  },
-  "stagingFolderEmpty": {
-    "message": "Bu klasörde bekleme alanına eklenecek yer imi yok"
-  },
-  "stagingConfirmFolder": {
-    "message": "Bu klasörden $n$ yer imi bekleme alanına eklensin mi?",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingConfirmFolderOk": {
-    "message": "Aşamala"
-  },
-  "stagingRemove": {
-    "message": "Bekleme alanından kaldır"
-  },
-  "stagingRemoved": {
-    "message": "Bekleme alanından kaldırıldı"
-  },
-  "recentStageAll": {
-    "message": "Son eklenenlerin tümünü bekleme alanına al"
-  },
-  "recentSectionTitle": {
-    "message": "Son eklenenler"
-  },
-  "stagingEmpty": {
-    "message": "Henüz hiçbir şey hazırlanmadı. Yer imlerini herhangi bir görünümden buraya gönderin — satırdaki uçak düğmesi veya sağ tıklama menüsü — ardından toplu olarak düzenleyin ve dosyalayın."
-  },
-  "stagingFromHistory": {
-    "message": "Geçmişten"
-  },
-  "stagingGroupExpand": {
-    "message": "Grubu genişlet"
-  },
-  "stagingGroupCollapse": {
-    "message": "Grubu daralt"
-  },
-  "stagingGroupRename": {
-    "message": "Grubu yeniden adlandır…"
-  },
-  "stagingGroupDissolve": {
-    "message": "Grubu dağıt"
-  },
-  "stagingGroupDissolved": {
-    "message": "Grup dağıtıldı — öğeler bekleme alanında kaldı"
-  },
-  "stagingGroupDelete": {
-    "message": "Grubu sil (öğelerle)"
-  },
-  "stagingGroupDeleteConfirm": {
-    "message": "\"$1\" grubu silinsin mi? $2 öğe de hazırlık alanından çıkar."
-  },
-  "stagingGroupDeleted": {
-    "message": "Grup silindi — $1 öğe kaldırıldı"
-  },
-  "stagingGroupAssign": {
-    "message": "Grupla…"
-  },
-  "stagingGroupAssignTitle": {
-    "message": "Bir gruba ata"
-  },
-  "stagingGroupNew": {
-    "message": "Yeni grup"
-  },
-  "stagingGroupNamePrompt": {
-    "message": "Yeni grup adı"
-  },
-  "stagingGroupNoGroups": {
-    "message": "Henüz grup yok"
-  },
-  "stagingShortcutAdd": {
-    "message": "Kısayol ekle"
-  },
-  "stagingShortcutBarLabel": {
-    "message": "Taşı:"
-  },
-  "stagingGuideText": {
-    "message": "Yer imlerini burada düzenleyin — satırları seçin ve toplu işlemler için seçim moduna girin."
-  },
-  "stagingGuideDismiss": {
-    "message": "Tekrar gösterme"
-  },
-  "stagingShortcutTitle": {
-    "message": "Taşıma kısayolu"
-  },
-  "stagingShortcutEdit": {
-    "message": "Kısayolu düzenle"
-  },
-  "stagingShortcutAlias": {
-    "message": "Takma ad"
-  },
-  "stagingShortcutPickFolder": {
-    "message": "Hedef klasörü seç…"
-  },
-  "stagingShortcutSave": {
-    "message": "Kaydet"
-  },
-  "stagingShortcutRemove": {
-    "message": "Kısayolu kaldır"
-  },
-  "stagingShortcutRemoved": {
-    "message": "Kısayol kaldırıldı"
-  },
-  "stagingShortcutMove": {
-    "message": "Seçilenleri $1$ konumuna taşı",
-    "placeholders": {
-      "1": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingBucketTitle": {
-    "message": "Yer imi eklenmemiş"
-  },
-  "stagingBucketFavAll": {
-    "message": "Tümünü favorilere ekle"
-  },
-  "stagingNew": {
-    "message": "yeni $n$",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingRowFav": {
-    "message": "Bu öğeyi favorilere ekle"
-  },
-  "stagingRowUnfav": {
-    "message": "Bu öğeyi favorilerden çıkar"
-  },
-  "stagingFav": {
-    "message": "Favorilere ekle"
-  },
-  "stagingUnfav": {
-    "message": "Favorilerden çıkar"
-  },
-  "stagingFavDone": {
-    "message": "$n$ öğe favorilere eklendi",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingUnfavDone": {
-    "message": "$n$ öğenin favorisi kaldırıldı",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "groupSaveToFolder": {
-    "message": "Klasöre kaydet…"
-  },
-  "groupCopyToFolder": {
-    "message": "Klasöre kopyala…"
-  },
-  "stagingCount": {
-    "message": "$n$ hazır",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingMoveCopy": {
-    "message": "Taşı/kopyala…"
-  },
-  "stagingMoveDone": {
-    "message": "$n$ öğe ana dizine taşındı",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingCopyDone": {
-    "message": "$n$ öğe kopyalandı",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingMoveConfirm": {
-    "message": "$n$ öğe seçilen klasöre taşınsın mı?",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingMoveConfirmOk": {
-    "message": "Taşı"
-  },
-  "stagingDeleteConfirm": {
-    "message": "$n$ öğe silinsin mi? Favorisi kaldırılmış olanlar yalnızca hazırlık alanından çıkar.",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingDeleted": {
-    "message": "$n$ yer imi silindi",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingRemovedCount": {
-    "message": "$n$ öğe hazırlık alanından kaldırıldı",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingClear": {
-    "message": "Hazırlık alanını temizle"
-  },
-  "stagingClearConfirm": {
-    "message": "Tüm hazırlık alanı temizlensin mi? Yer imi ağacına dokunulmaz."
-  },
-  "stagingClearConfirmOk": {
-    "message": "Temizle"
-  },
-  "stagingCleared": {
-    "message": "Hazırlık alanı temizlendi"
-  },
-  "groupPlaceTooltip": {
-    "message": "Bu grubu bir klasöre kaydet…"
-  },
-  "copyBookmark": {
-    "message": "Kopyala"
-  },
-  "cutBookmark": {
-    "message": "Kes"
-  },
-  "copyMoveTo": {
-    "message": "Kopyala/taşı…"
-  },
-  "pasteHere": {
-    "message": "Buraya yapıştır"
-  },
-  "copiedToast": {
-    "message": "Kopyalandı: $t$",
-    "placeholders": {
-      "t": {
-        "content": "$1"
-      }
-    }
-  },
-  "cutToast": {
-    "message": "Kesildi: $t$ — hedef klasöre yapıştırın (Esc iptal eder)",
-    "placeholders": {
-      "t": {
-        "content": "$1"
-      }
-    }
-  },
-  "pasteDone": {
-    "message": "Yapıştırıldı"
-  },
-  "pasteGone": {
-    "message": "Yer imi artık yok — pano temizlendi"
-  },
-  "folderCopyList": {
-    "message": "Başlıkları ve adresleri kopyala"
-  },
-  "folderCopyText": {
-    "message": "Düz metin listesi"
-  },
-  "folderCopyMarkdown": {
-    "message": "Markdown"
-  },
-  "folderCopyJson": {
-    "message": "JSON"
-  },
-  "folderCopyConfirm": {
-    "message": "$n$ yer iminin listesi kopyalansın mı?",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "folderCopyDone": {
-    "message": "$n$ yer imi girişi kopyalandı",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "addFolderMenu": {
-    "message": "Klasör ekle"
-  },
-  "optionCollapseAddFolderMenu": {
-    "message": "Klasör ekleme girişlerini daralt"
-  },
-  "optionCollapseAddFolderMenuHint": {
-    "message": "将添加文件夹条目（文件夹行上的之前/之后/内部，书签行上的之前/之后）合并为一个子菜单条目。"
-  },
-  "tabRowStage": {
-    "message": "Aşamaya gönder"
-  },
-  "tabgroupStageAll": {
-    "message": "Grubu aşamaya gönder"
-  },
-  "tabgroupStageConfirm": {
-    "message": "$n$ sekmeyi aşamaya gönderilsin mi?",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabgroupStageNone": {
-    "message": "Bu grupta yer imine eklenebilir sekme yok"
-  },
-  "stagedToast": {
-    "message": "$n$ sekme “$t$” grubu olarak hazırlandı",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      },
-      "t": {
-        "content": "$2"
-      }
-    }
-  },
-  "searchResultCount": {
-    "message": "$n$ sonuç",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "deleteSelected": {
-    "message": "Seçilenleri sil"
-  },
-  "recentStageGroup": {
-    "message": "$t$ öğesini hazırlık alanına gönder",
-    "placeholders": {
-      "t": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingGroupSelectAll": {
-    "message": "Bu gruptaki tümünü seç"
-  },
-  "optionsGroupLabs": {
-    "message": "Laboratuvarlar"
-  },
-  "optionVirtualScrollLab": {
-    "message": "Sanal kaydırma (deneysel)"
-  },
-  "optionVirtualScrollLabHint": {
-    "message": "Sekme grupları ve yinelenenler görünümleri yalnızca görünüm alanına yakın satırları işler. Çok büyük listelerde çok daha hızlıdır; deneysel iken kaydırma çubuğu konumu tahminidir."
-  },
-  "optionsStagingSection": {
-    "message": "Hazırlama ve yeni eklenenler"
-  },
-  "optionStagingEnabled": {
-    "message": "Hazırlama alanını etkinleştir"
-  },
-  "optionStagingEnabledHint": {
-    "message": "Kapalıyken, bu görünüm yalnızca yeni eklenenler listesini tutar ve diğer görünümlerdeki tüm hazırlama düğmeleri veya menü girişleri gizlenir."
-  },
-  "optionTreeRowActions": {
-    "message": "Ağaç satırlarında üzerine gelme eylemleri (düzenle / hazırla / sil)"
-  },
-  "optionsStorageSyncTip": {
-    "message": "Chrome hesabınız üzerinden senkronize edilir — bu ayar cihazlarınız arasında paylaşılır.",
-    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
-  },
-  "optionsStorageLocalTip": {
-    "message": "Yalnızca bu cihazda saklanır — Chrome senkronizasyonu ile paylaşılmaz.",
-    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
-  },
-  "tabGroupsWindowsCount": {
-    "message": "$n$ pencere",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsNewWindow": {
-    "message": "Yeni pencere"
-  },
-  "tabGroupsMergedWindowToast": {
-    "message": "Pencere sekme grubu olarak birleştirildi"
-  },
-  "searchStageAllGroup": {
-    "message": "Tüm sonuçları \"$1$\" grubuna gönder",
-    "placeholders": {
-      "1": {
-        "content": "$1"
-      }
-    }
-  },
-  "searchHistoryClose": {
-    "message": "Arama geçmişini gizle"
-  },
-  "searchHistoryClosedToast": {
-    "message": "Arama geçmişi gizlendi — Seçenekler → Ara bölümünden yeniden etkinleştirin"
   }
 }

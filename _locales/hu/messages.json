@@ -14,6 +14,9 @@
   "addBookmarkTop": {
     "message": "Lap Könyvjelzőzése Tetejére"
   },
+  "addFolderMenu": {
+    "message": "Mappa hozzáadása"
+  },
   "addNewFolder": {
     "message": "Almappa Hozzáadása"
   },
@@ -32,23 +35,38 @@
   "announceDismiss": {
     "message": "Bezárás"
   },
-  "announceV408Text": {
-    "message": "A v4.0.8 a favicon-támogatással bővített kiadás: a valódi webhelyikonok automatikusan letöltődnek azokhoz a könyvjelzőkhöz, amelyeket a Chrome még nem gyorsítótárazott."
-  },
   "announceV407Text": {
     "message": "A v4.0.7 teljes értékű holt link-nézetet biztosít: holt és korlátozott linkek szkennelése, megjelölése, szűrése és rendezése, korábbi jelölésekkel és soronkénti időbélyegekkel."
   },
   "announceV407Title": {
     "message": "Újdonságok a v4.0.7-ben"
   },
+  "announceV408Text": {
+    "message": "A v4.0.8 a favicon-támogatással bővített kiadás: a valódi webhelyikonok automatikusan letöltődnek azokhoz a könyvjelzőkhöz, amelyeket a Chrome még nem gyorsítótárazott."
+  },
   "announceV408Title": {
     "message": "Újdonságok a v4.0.8-ban"
+  },
+  "announceV410Text": {
+    "message": "A v4.1.0 új lapcsoport-nézetet és előkészítő területet ad hozzá: kezelje minden ablak lapjait a könyvjelzők mellett, és gyűjtsön könyvjelzőket bárhonnan egy előkészítő munkafelületre a tömeges rendszerezéshez."
   },
   "announceV410Title": {
     "message": "A v4.1.0 újdonságai"
   },
-  "announceV410Text": {
-    "message": "A v4.1.0 új lapcsoport-nézetet és előkészítő területet ad hozzá: kezelje minden ablak lapjait a könyvjelzők mellett, és gyűjtsön könyvjelzőket bárhonnan egy előkészítő munkafelületre a tömeges rendszerezéshez."
+  "bookmarkFolderNoFolders": {
+    "message": "Nincs könyvjelzőmappa"
+  },
+  "bookmarkFolderPickDialogTitle": {
+    "message": "Hozzáadás könyvjelzőmappához"
+  },
+  "bookmarkOpenInExistingGroup": {
+    "message": "Megnyitás meglévő lapcsoportban…"
+  },
+  "bookmarkOpenInNewGroup": {
+    "message": "Megnyitás új lapcsoportban"
+  },
+  "bookmarkOpenInNewGroupSetup": {
+    "message": "Megnyitás új lapcsoportban…"
   },
   "confirmDeleteFolder": {
     "message": "Ez a mappa $count$ elemet tartalmaz. A törlés visszavonható.",
@@ -57,9 +75,6 @@
         "content": "$1"
       }
     }
-  },
-  "confirmDeleteFolderButton": {
-    "message": "Törlés"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "Biztosan törli a(z) $folderName$ mappát és a benne lévő $bookmarkCount$ könyvjelzőt?",
@@ -71,6 +86,9 @@
         "content": "$1"
       }
     }
+  },
+  "confirmDeleteFolderButton": {
+    "message": "Törlés"
   },
   "confirmDeleteFolderSubfolders": {
     "message": "Biztosan törli a(z) $folderName$ mappát és a benne lévő $subFolderCount$ almappát?",
@@ -124,11 +142,32 @@
       }
     }
   },
+  "contextMenuAddBookmark": {
+    "message": "Oldal könyvjelzőzése a vBookmarks segítségével"
+  },
+  "copiedToast": {
+    "message": "Másolva: $t$",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
+  },
   "copyAllTitlesAndUrls": {
     "message": "Összes cím és URL másolása vágólapra"
   },
+  "copyBookmark": {
+    "message": "Másolás"
+  },
+  "copyMoveTo": {
+    "message": "Másolás/áthelyezés…"
+  },
   "copyTitleAndUrl": {
     "message": "Cím és URL másolása vágólapra"
+  },
+  "crossStorageMoveWarning": {
+    "description": "Warning when trying to move bookmarks across storage types",
+    "message": "A könyvjelzők nem helyezhetők át a szinkronizált és a helyi tárhely között. Használja a másolás/beillesztés funkciót."
   },
   "customIcon": {
     "message": "Egyéni ikon"
@@ -136,8 +175,14 @@
   "customIconDescription": {
     "message": "Az ikonnak 19x19 pixel méretűnek kell lennie. Egyébként átméretezésre kerül erre a méretre."
   },
+  "customIconPick": {
+    "message": "Fájl kiválasztása…"
+  },
   "customSeparatorColorDescription": {
     "message": "Elválasztó Színének Testreszabása"
+  },
+  "customSeparatorStringDescription": {
+    "message": "Ha egy könyvjelző URL-je tartalmazza ezt a karakterláncot, elválasztóként jelenik meg"
   },
   "customSeparatorTitleDescription": {
     "message": "A könyvjelző valós címe, amely elválasztóként jelenik meg"
@@ -145,28 +190,28 @@
   "customSeparatorUrlDescription": {
     "message": "A könyvjelző valós URL-je, amely elválasztóként jelenik meg"
   },
-  "customSeparatorStringDescription": {
-    "message": "Ha egy könyvjelző URL-je tartalmazza ezt a karakterláncot, elválasztóként jelenik meg"
-  },
   "customStyles": {
     "message": "Egyéni Stílusok"
-  },
-  "separatorOptions": {
-    "message": "Elválasztók"
   },
   "customStylesDescription": {
     "message": "Ehhez némi CSS ismeret szükséges. Módosítsa saját felelősségére. A kódmegosztás okos lenne a következőn keresztül"
   },
-  "defaultIconButton": {
-    "message": "Alapértelmezett használata"
+  "cutBookmark": {
+    "message": "Kivágás"
   },
-  "defaultIconButtonOr": {
-    "message": "vagy"
+  "cutToast": {
+    "message": "Kivágva: $t$ — illessze be a célmappába (Esc megszakítja)",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
   },
-  "customIconPick": {
-    "message": "Fájl kiválasztása…"
+  "deadCancel": {
+    "message": "Mégse"
   },
   "deadChecking": {
+    "description": "Progress line of the palette's dead-link scan mode; $done$ bookmarks checked out of $total$.",
     "message": "Ellenőrzés: $done$ / $total$…",
     "placeholders": {
       "done": {
@@ -177,8 +222,10 @@
         "content": "$2",
         "example": "120"
       }
-    },
-    "description": "Progress line of the palette's dead-link scan mode; $done$ bookmarks checked out of $total$."
+    }
+  },
+  "deadClearScan": {
+    "message": "Vizsgálati eredmények törlése"
   },
   "deadConfirmAll": {
     "message": "Törli az összes $count$ hibás könyvjelzőt? Ez egy lépésben nem vonható vissza.",
@@ -192,6 +239,15 @@
   "deadConfirmDelete": {
     "message": "Eltávolítja ezt a könyvjelzőt?"
   },
+  "deadConfirmDeleteSelected": {
+    "message": "Törli a kiválasztott $count$ hibás könyvjelzőt?",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
+  },
   "deadDeleteAll": {
     "message": "Törölje az összes $count$ könyvjelzőt az aktuális szűrőből?",
     "placeholders": {
@@ -201,27 +257,15 @@
       }
     }
   },
-  "deadDeleteAllNote": {
-    "message": "Az „Összes” szűrő alatt ez magában foglalja a blokkolt könyvjelzőket (amelyek a proxy-n keresztül elérhetők, és valószínűleg még élnek), valamint a korábban megjelölt sorokat.",
-    "description": "Second line of the delete-all confirmation in the Dead links view."
-  },
-  "undoSingleStepNote": {
-    "message": "A visszavonás csak a legutóbbi törlést tudja visszaállítani."
-  },
   "deadDeleteAllBtn": {
     "message": "Összes törlése"
   },
+  "deadDeleteAllNote": {
+    "description": "Second line of the delete-all confirmation in the Dead links view.",
+    "message": "Az „Összes” szűrő alatt ez magában foglalja a blokkolt könyvjelzőket (amelyek a proxy-n keresztül elérhetők, és valószínűleg még élnek), valamint a korábban megjelölt sorokat."
+  },
   "deadDeleteSelected": {
     "message": "Kijelöltek törlése"
-  },
-  "deadConfirmDeleteSelected": {
-    "message": "Törli a kiválasztott $count$ hibás könyvjelzőt?",
-    "placeholders": {
-      "count": {
-        "content": "$1",
-        "example": "8"
-      }
-    }
   },
   "deadDeleted": {
     "message": "$count$ hibás könyvjelző törölve",
@@ -232,8 +276,72 @@
       }
     }
   },
-  "deadClearScan": {
-    "message": "Vizsgálati eredmények törlése"
+  "deadDetectTimeLabel": {
+    "message": "Észlelve"
+  },
+  "deadFilterAll": {
+    "message": "Összes"
+  },
+  "deadFilterBlocked": {
+    "message": "Csak tiltott"
+  },
+  "deadFilterDead": {
+    "message": "Csak halott"
+  },
+  "deadFilterMarked": {
+    "message": "Korábban megjelöltek"
+  },
+  "deadLastScanAt": {
+    "message": "Utolsó vizsgálat: $time$",
+    "placeholders": {
+      "time": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadMark": {
+    "message": "Megjelölés halottként"
+  },
+  "deadMarkAll": {
+    "message": "Összes megjelölése"
+  },
+  "deadMarkSelected": {
+    "message": "Kijelöltek megjelölése"
+  },
+  "deadMarkStatusAll": {
+    "message": "Bármilyen állapot"
+  },
+  "deadMarkStatusMarked": {
+    "message": "Megjelölve"
+  },
+  "deadMarkStatusUnmarked": {
+    "message": "Jelöletlen"
+  },
+  "deadMarkTimeLabel": {
+    "message": "Megjelölve"
+  },
+  "deadMarked": {
+    "message": "Halott sorok megjelölve"
+  },
+  "deadMarkedBanner": {
+    "message": "A korábban megjelölt könyvjelzők láthatók. Kattintson az Újraellenőrzés gombra egy új ellenőrzés indításához, vagy kezelje őket az alábbi listában."
+  },
+  "deadMarkedBannerDismiss": {
+    "message": "Elvetés"
+  },
+  "deadMarkedCount": {
+    "message": "$count$ könyvjelző megjelölve",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadMarkedNone": {
+    "message": "Még nincs megjelölt könyvjelző"
+  },
+  "deadMarkedRow": {
+    "message": "Megjelölve"
   },
   "deadNone": {
     "message": "Nincs hibás hivatkozás"
@@ -241,34 +349,711 @@
   "deadNoneFiltered": {
     "message": "Nincs holt link ebben a szűrőben — próbálkozz egy másik szegmenssel fent."
   },
+  "deadPause": {
+    "message": "Szünet"
+  },
+  "deadPaused": {
+    "message": "Szüneteltetve"
+  },
+  "deadProxyAdd": {
+    "message": "Proxykiszolgáló hozzáadása a hibás linkek ellenőrzéséhez"
+  },
+  "deadProxyChange": {
+    "message": "Módosítás"
+  },
+  "deadProxyClear": {
+    "message": "Törlés"
+  },
+  "deadProxyControlled": {
+    "message": "A proxybeállításokat egy másik bővítmény kezeli."
+  },
+  "deadProxyDenied": {
+    "message": "A proxyengedély nem lett megadva."
+  },
+  "deadProxyInvalid": {
+    "message": "Érvénytelen proxycím — használjon host:port vagy séma://host:port formátumot (http/https/socks5, hitelesítés nélkül)."
+  },
+  "deadProxyLabel": {
+    "message": "Proxy: $server$",
+    "placeholders": {
+      "server": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadProxyNeverShow": {
+    "message": "Ne mutassa többé"
+  },
+  "deadProxyNone": {
+    "message": "(nincs beállítva)"
+  },
+  "deadProxyNudge": {
+    "message": "A proxy újraellenőrzés elválasztja a valóban nem működő linkeket a régió által blokkoltaktól — állítsd be itt vagy a beállítások oldalon."
+  },
+  "deadProxyPanelHint": {
+    "message": "Adjon meg egy már meglévő proxykiszolgálót (a bővítmény nem biztosít sajátot), pl. 127.0.0.1:7890 vagy socks5://127.0.0.1:1080."
+  },
+  "deadProxyRemove": {
+    "message": "Eltávolítás"
+  },
+  "deadProxyRemoved": {
+    "message": "Proxykiszolgáló eltávolítva"
+  },
+  "deadProxySaved": {
+    "message": "Proxy mentve — a későbbi vizsgálatok ezen keresztül ellenőrzik újra a közvetlenül elérhetetlen linkeket."
+  },
+  "deadProxyServerHint": {
+    "message": "A mentett szerver minden megszűnt link ellenőrzésekor újraellenőrzi a közvetlen ellenőrzésen elbukott könyvjelzőket, elkülönítve a valóban megszűnt linkeket a régiókorlátozottaktól. A Tesztelés és mentés gomb kipróbálja (csak elérhető szerver marad meg); a megszűnt linkek nézetéből is hozzáadhatja."
+  },
+  "deadProxyTestSave": {
+    "message": "Tesztelés és mentés"
+  },
+  "deadProxyTestUrlLabel": {
+    "message": "Teszt URL"
+  },
+  "deadProxyTesting": {
+    "message": "Tesztelés…"
+  },
+  "deadProxyUnavailable": {
+    "message": "A proxy API nem érhető el ebben a böngészőben."
+  },
+  "deadProxyUnreachable": {
+    "message": "Proxy nem érhető el — nincs mentve."
+  },
   "deadRescan": {
     "message": "Újravizsgálás"
+  },
+  "deadResume": {
+    "message": "Folytatás"
+  },
+  "deadRiskBanner": {
+    "message": "A hibás linkek tisztítása tömegesen törli a könyvjelzőket. Az első tisztítás előtt készítsen biztonsági másolatot a könyvjelzőiről."
+  },
+  "deadSortByDetected": {
+    "message": "Észlelés ideje"
+  },
+  "deadSortByMarked": {
+    "message": "Megjelölés ideje"
+  },
+  "deadSortByPath": {
+    "message": "Mappa útvonala"
+  },
+  "deadSortLabel": {
+    "message": "Rendezés"
+  },
+  "deadStartHint": {
+    "message": "$n$ könyvjelző vizsgálatának elindítása",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadStatusBlocked": {
+    "message": "tiltott"
+  },
+  "deadUnmark": {
+    "message": "Halott jelölés eltávolítása"
+  },
+  "deadUnmarkAll": {
+    "message": "Összes jelölés törlése"
+  },
+  "deadUnmarkSelected": {
+    "message": "Kijelöltek megjelölésének törlése"
+  },
+  "defaultIconButton": {
+    "message": "Alapértelmezett használata"
+  },
+  "defaultIconButtonOr": {
+    "message": "vagy"
   },
   "delete": {
     "message": "Törlés"
   },
+  "deleteEllipsis": {
+    "message": "Törlés..."
+  },
+  "deleteSelected": {
+    "message": "Kijelöltek törlése"
+  },
   "deletedBookmark": {
+    "description": "Toast shown after a bookmark or separator was deleted; the toast offers an undo button. $title$ is the deleted row's title (empty for separators).",
     "message": "Törölve: $title$",
     "placeholders": {
       "title": {
         "content": "$1",
         "example": "Example"
       }
-    },
-    "description": "Toast shown after a bookmark or separator was deleted; the toast offers an undo button. $title$ is the deleted row's title (empty for separators)."
+    }
   },
   "deletedFolder": {
+    "description": "Toast shown after a bookmark folder (with its whole subtree) was deleted; the toast offers an undo button. $title$ is the folder name.",
     "message": "Törölve: $title$ mappa",
     "placeholders": {
       "title": {
         "content": "$1",
         "example": "Bookmarks"
       }
-    },
-    "description": "Toast shown after a bookmark folder (with its whole subtree) was deleted; the toast offers an undo button. $title$ is the folder name."
+    }
+  },
+  "donationDismiss": {
+    "message": "Elvetés"
+  },
+  "donationGo": {
+    "message": "Adományozás"
+  },
+  "donationLater": {
+    "message": "Később"
+  },
+  "donationMessage": {
+    "message": "Tetszik? Adományozzon a jövőjéért – vagy értékelje a boltban: minden értékelés új frissítéseket hoz."
+  },
+  "donationNever": {
+    "message": "Ne jelenjen meg többet"
+  },
+  "donationRate": {
+    "message": "Értékeld"
+  },
+  "donationRateTitle": {
+    "message": "vBookmarks értékelése a Chrome Web Store-ban"
+  },
+  "donationV4GuideLink": {
+    "message": "Olvasd el a v4-es útmutatót →"
+  },
+  "donationV4Notice": {
+    "message": "A vBookmarks 4.0 teljesen újragondolt, modern dizájnnal és rengeteg új funkcióval."
+  },
+  "dupesApplyAll": {
+    "message": "Összes alkalmazása ($count$)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesApplySelected": {
+    "message": "Kijelöltek ismétlődésmentesítése ($count$)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesCleanAll": {
+    "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go.",
+    "message": "Összes tisztítása: $groups$ csoport, $count$ másolat",
+    "placeholders": {
+      "count": {
+        "content": "$2"
+      },
+      "groups": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesCleanRestHint": {
+    "message": "Tartsd meg a \"$title$\"-t, és távolítsd el a többi $count$ darabot.",
+    "placeholders": {
+      "count": {
+        "content": "$2"
+      },
+      "title": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesConfirmAll": {
+    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark).",
+    "message": "Eltávolítja a(z) $count$ extra másolatot $groups$ csoportból? Minden csoportban a kiválasztott példány megmarad.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    }
+  },
+  "dupesConfirmGroup": {
+    "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept).",
+    "message": "Megtartsa a(z) \"$title$\" elemet, és törölje a többi $count$ másolatot?",
+    "placeholders": {
+      "count": {
+        "content": "$2"
+      },
+      "title": {
+        "content": "$1",
+        "example": "Example bookmark"
+      }
+    }
+  },
+  "dupesConfirmSelected": {
+    "message": "Eltávolítja a(z) $count$ ismétlődő könyvjelzőt a kiválasztott $groups$ csoportból?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    }
+  },
+  "dupesDone": {
+    "description": "Alert shown after the duplicate cleanup finished.",
+    "message": "$count$ duplikált könyvjelző eltávolítva",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesGroupCollapse": {
+    "description": "Dupes view group-head context menu: collapse an expanded duplicate group.",
+    "message": "Csoport összecsukása"
+  },
+  "dupesGroupCount": {
+    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL.",
+    "message": "$count$ duplikátum",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesGroupExpand": {
+    "description": "Dupes view group-head context menu: expand a collapsed duplicate group.",
+    "message": "Csoport kibontása"
+  },
+  "dupesIgnoreScheme": {
+    "message": "http/https különbségek figyelmen kívül hagyása"
+  },
+  "dupesKeepThis": {
+    "message": "Tartsd meg ezt"
+  },
+  "dupesKeeperSet": {
+    "message": "Megtartónak jelöl"
+  },
+  "dupesNone": {
+    "message": "Nincs duplikátum"
+  },
+  "dupesPreviewSummary": {
+    "message": "$groups$ csoport · $count$ felszabadítandó",
+    "placeholders": {
+      "count": {
+        "content": "$2"
+      },
+      "groups": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesRemoveRow": {
+    "message": "E másolat törlése"
+  },
+  "dupesRiskBanner": {
+    "message": "A deduplikáció tömegesen törli az ismétlődő könyvjelzőket. Alkalmazás előtt készítsen biztonsági másolatot a könyvjelzőiről."
+  },
+  "dupesScopeAll": {
+    "message": "Összes könyvjelző"
+  },
+  "dupesScopeBar": {
+    "message": "Csak a könyvjelzősáv"
+  },
+  "dupesStrategyBookmarkBar": {
+    "message": "Tartsd meg a könyvjelzősávban lévőt"
+  },
+  "dupesStrategyMostVisited": {
+    "message": "Tartsd meg a leglátogatottabbat"
+  },
+  "dupesStrategyNewest": {
+    "message": "Tartsd meg a legújabbat"
+  },
+  "dupesStrategyOldest": {
+    "message": "Tartsd meg a legrégebbit"
+  },
+  "dupesStrategyShallowest": {
+    "message": "Tartsd meg a legsekélyebbet"
+  },
+  "dupesStrategyShortestTitle": {
+    "message": "Tartsd meg a legrövidebb címet"
+  },
+  "edit": {
+    "message": "Szerkesztés..."
+  },
+  "editBookmark": {
+    "message": "Könyvjelző szerkesztése"
+  },
+  "editFolder": {
+    "message": "Mappa szerkesztése"
+  },
+  "errorOccured": {
+    "message": "Hoppá, hiba történt."
+  },
+  "extDesc": {
+    "description": "The extension description.",
+    "message": "Egy felugró könyvjelzőkezelő. Fejlesztett Neat Bookmarks. Rendezettebb, mint a Neater Bookmarks."
+  },
+  "extName": {
+    "description": "vBookmarks",
+    "message": "vBookmarks"
+  },
+  "favGalleryAll": {
+    "description": "Favicon gallery source filter chip: show every source.",
+    "message": "Összes"
+  },
+  "favGalleryCompare": {
+    "description": "Favicon gallery toggle button: switch every icon to the generic placeholder it replaced (before/after comparison).",
+    "message": "Összehasonlítás a helyettesítő ikonnal"
+  },
+  "favGalleryEmptyText": {
+    "description": "Favicon gallery empty-state body text.",
+    "message": "Amikor a felugró ablak olyan könyvjelzőzött webhelyet talál, amelyhez a Chrome nem tárol ikont, a vBookmarks lekéri a valódit, és itt listázza."
+  },
+  "favGalleryEmptyTitle": {
+    "description": "Favicon gallery empty-state heading.",
+    "message": "Még nincsenek frissített ikonok"
+  },
+  "favGalleryFailedHint": {
+    "description": "Favicon gallery hint under the failed-fetch section title.",
+    "message": "A sikertelen próbálkozásokat 24 óra, 3 nap és 7 nap múlva megismételjük, majd feladjuk, amíg az ikon-gyorsítótár törlésre nem kerül."
+  },
+  "favGalleryFailedTitle": {
+    "description": "Favicon gallery heading of the muted section listing hosts whose icon fetch failed recently.",
+    "message": "Legutóbb próbálva, ikon nem található"
+  },
+  "favGalleryGaveUp": {
+    "description": "Favicon gallery badge on a failed-strip host whose retries are exhausted (it stays untouched until the icon cache is cleared).",
+    "message": "Feladva"
+  },
+  "favGalleryHint": {
+    "description": "Subtitle under the favicon gallery title, explaining the page is read-only.",
+    "message": "Azok az ikonok, amelyeket a vBookmarks olyan könyvjelzőzött webhelyekhez beszerzett, amelyekhez a Chrome nem tárolt ikont – hogy honnan származnak, és melyik könyvjelző használja őket. Csak megjelenítésre."
+  },
+  "favGalleryLink": {
+    "description": "Options link (Icons group, right of the Clear icon cache button): opens the favicon gallery page listing the sites whose icons were refetched.",
+    "message": "Frissített ikonok megtekintése"
+  },
+  "favGalleryOrphan": {
+    "description": "Favicon gallery note on a card whose host no longer has any bookmark.",
+    "message": "Ezen a gazdagépen nem maradt könyvjelző – az ikon a gyorsítótárral együtt törlődik."
+  },
+  "favGallerySearch": {
+    "description": "Placeholder of the favicon gallery filter input.",
+    "message": "Szűrés webhely, cím vagy útvonal szerint"
+  },
+  "favGalleryShowingBefore": {
+    "description": "Favicon gallery toggle button while the placeholder comparison is shown: switch back to the real fetched icons.",
+    "message": "Vissza a valódi ikonokhoz"
+  },
+  "favGalleryStatBookmarks": {
+    "description": "Favicon gallery stats strip: how many bookmarks sit on the refreshed sites.",
+    "message": "$n$ könyvjelző",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "favGalleryStatSites": {
+    "description": "Favicon gallery stats strip: how many sites have a refreshed icon.",
+    "message": "$n$ webhely",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "favGalleryTitle": {
+    "description": "Favicon gallery page title (h1 + document title).",
+    "message": "Frissített webhelyikonok"
+  },
+  "favGalleryVisits": {
+    "description": "Favicon gallery tooltip on a bookmark row's visit-count pill.",
+    "message": "$n$ rögzített megnyitás",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "favSrcDirect": {
+    "description": "Favicon gallery source badge: the icon was fetched directly from the site itself.",
+    "message": "Közvetlen"
+  },
+  "favSrcLegacy": {
+    "description": "Favicon gallery source badge: cached before the source was recorded, so the origin is unknown.",
+    "message": "Korábbi gyorsítótár"
+  },
+  "favSrcProxy": {
+    "description": "Favicon gallery source badge: the icon was fetched through the user's own proxy relay.",
+    "message": "Proxy"
+  },
+  "folderCopyConfirm": {
+    "message": "Másolja a(z) $n$ könyvjelző listáját?",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "folderCopyDone": {
+    "message": "$n$ könyvjelző bejegyzés másolva",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "folderCopyJson": {
+    "message": "JSON"
+  },
+  "folderCopyList": {
+    "message": "Címek és címek másolása"
+  },
+  "folderCopyMarkdown": {
+    "message": "Markdown"
+  },
+  "folderCopyText": {
+    "message": "Egyszerű szöveges lista"
+  },
+  "folderEmpty": {
+    "message": "(Üres)"
+  },
+  "folderPickCopyHere": {
+    "message": "Másolás ide"
+  },
+  "folderPickFavNote": {
+    "message": "A nem könyvjelzőzött elemek itt kerülnek könyvjelzőzésre"
+  },
+  "folderPickFilter": {
+    "message": "Mappák szűrése…"
+  },
+  "folderPickMoveHere": {
+    "message": "Ide helyezés"
+  },
+  "folderPickPinned": {
+    "message": "Rögzített"
+  },
+  "folderPickRecent": {
+    "message": "Legutóbbi"
+  },
+  "general": {
+    "message": "Általános"
+  },
+  "groupCopyToFolder": {
+    "message": "Másolás mappába…"
+  },
+  "groupPlaceTooltip": {
+    "message": "Csoport mentése mappába…"
+  },
+  "groupSaveToFolder": {
+    "message": "Mentés mappába…"
+  },
+  "ignore": {
+    "message": "Mellőzés"
+  },
+  "name": {
+    "description": "Name of bookmark or folder.",
+    "message": "Név"
+  },
+  "noTitle": {
+    "description": "The title for untitled bookmarks with no http(s) URL or untitled folders.",
+    "message": "(nincs cím)"
+  },
+  "nope": {
+    "message": "Mégse"
+  },
+  "open": {
+    "description": "Action to open bookmarks.",
+    "message": "Megnyitás"
+  },
+  "openBookmarks": {
+    "message": "Összes Könyvjelző Megnyitása"
+  },
+  "openBookmarksInExistingGroup": {
+    "message": "Összes megnyitása meglévő lapcsoportban…"
+  },
+  "openBookmarksInGroup": {
+    "message": "Megnyitás új lapcsoportban"
+  },
+  "openBookmarksInGroupSetup": {
+    "message": "Összes megnyitása új lapcsoportban…"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "Könyvjelzők Megnyitása Inkognitóban"
+  },
+  "openBookmarksNewWindow": {
+    "message": "Könyvjelzők Megnyitása Új Ablakban"
+  },
+  "openCommandPaletteCommand": {
+    "message": "Parancspaletta megnyitása"
+  },
+  "openIncognitoWindow": {
+    "message": "Megnyitás Inkognitó Ablakban"
+  },
+  "openNewTab": {
+    "message": "Megnyitás Új Lapon"
+  },
+  "openNewWindow": {
+    "message": "Megnyitás Új Ablakban"
+  },
+  "openSidePanelCommand": {
+    "message": "vBookmarks oldalsáv megnyitása"
+  },
+  "optionAnnounceEnabled": {
+    "message": "Alkalmazáson belüli bejelentések megjelenítése"
+  },
+  "optionAnnounceEnabledHint": {
+    "message": "Kiadási megjegyzések és tippek a projekt GitHub-tárházából (legfeljebb 6 óránként lekérve). A kikapcsolás a hálózati lekérést is leállítja."
+  },
+  "optionAutoRefreshSync": {
+    "message": "Szinkronizálási állapot automatikus frissítése"
+  },
+  "optionAutoResizePopup": {
+    "message": "Felugró ablak automatikus átméretezése a tartalomhoz igazítva"
+  },
+  "optionClassicExperience": {
+    "message": "A klasszikus fejléc visszaállítása"
+  },
+  "optionClassicExperienceHint": {
+    "message": "Kikapcsolja a parancspalettát, a gyors hozzáadás csillagot, annak jobb gombos menübejegyzését az oldalakon, az eszközgombot és a nézetfüleket. Mindegyik külön-külön újra engedélyezhető a saját szakaszában."
+  },
+  "optionClickNewTab": {
+    "message": "Bal kattintás új lapon nyitja meg a könyvjelzőt."
+  },
+  "optionCloseUnusedFolders": {
+    "message": "Nem használt mappák bezárása mappa megnyitásakor."
+  },
+  "optionCollapseAddFolderMenu": {
+    "message": "Mappahozzáadás-bejegyzések összecsukása"
+  },
+  "optionCollapseAddFolderMenuHint": {
+    "message": "A mappasorokon (előtte/utána/belül) és a könyvjelzősorokon (előtte/utána) megjelenő mappa-hozzáadási bejegyzéseket egyesítse egy almenübe."
+  },
+  "optionCollapseSortMenu": {
+    "message": "A rendezési bejegyzések összecsukása egy „Rendezés…” almenübe"
+  },
+  "optionCollapseSortMenuHint": {
+    "message": "A mappa helyi menüjére vonatkozik. Alapértelmezésben bekapcsolt."
+  },
+  "optionCollapseTabGroupMenu": {
+    "message": "A lapcsoport-bejegyzések összecsukása egy „Lapcsoportok…” almenübe"
+  },
+  "optionCollapseTabGroupMenuHint": {
+    "message": "A mappák és a könyvjelzők helyi menüire egyaránt vonatkozik. Alapértelmezésben kikapcsolt; kis méretű vagy nagy nagyítású képernyőkön a menük alacsonyabbak maradnak."
+  },
+  "optionConfirmDeleteFolder": {
+    "message": "Nem üres mappák törlésének megerősítése"
+  },
+  "optionConfirmOpenFolder": {
+    "message": "Megerősítés megjelenítése, amikor sok könyvjelzőt nyit meg egy mappából."
+  },
+  "optionDeadProxyServer": {
+    "message": "Hibás linkek proxykiszolgálója"
+  },
+  "optionDeadProxyStrip": {
+    "message": "Jelenítse meg a proxy hozzáadására vonatkozó tippet a holt linkek nézetében"
+  },
+  "optionDeadProxyStripHint": {
+    "message": "A kikapcsolás elrejti ott ezt a tippet; a proxy szerver itt továbbra is beállítható, és egy mentett szerver mindig megjeleníti a kezelési sorát a nézetben."
+  },
+  "optionDeadScanConcurrency": {
+    "message": "Holt hivatkozás vizsgálat párhuzamossága (1-16)"
+  },
+  "optionDeadScanTimeout": {
+    "message": "Holt hivatkozás vizsgálat időtúllépés másodpercben (2-30)"
+  },
+  "optionFaviconBackup": {
+    "message": "Ikon-gyorsítótár belefoglalása a biztonsági mentésekbe"
+  },
+  "optionFaviconBackupHint": {
+    "message": "A beállítások exportálásába/importálásába a bővített favicon-gyorsítótár (webhelyenkénti adatok, amelyek nagyok lehetnek) is beletartozik. Ez a már gyorsítótárazott ikonokat is magában foglalja, akkor is, ha a letöltés ki van kapcsolva. Kikapcsolva a biztonsági mentés kicsi marad; az ikonok úgyis automatikusan újra letöltődnek."
+  },
+  "optionFaviconCacheClear": {
+    "message": "Ikongyorsítótár törlése"
+  },
+  "optionFaviconCacheClearConfirm": {
+    "message": "Törli a bővített ikon-gyorsítótárat? Az ikonok a következő megnyitáskor automatikusan újra letöltődnek."
+  },
+  "optionFaviconCacheCleared": {
+    "message": "Az ikongyorsítótár törölve. Az ikonok a következő megnyitáskor újra lekérésre kerülnek."
+  },
+  "optionFaviconCacheEmpty": {
+    "message": "Nincs törlendő ikon-gyorsítótár."
+  },
+  "optionFaviconContrast": {
+    "message": "Alacsony kontrasztú faviconok invertálása"
+  },
+  "optionFaviconContrastHint": {
+    "message": "A világos témák fehér ikonjai és a sötét témák fekete ikonjai invertálva lesznek, hogy láthatók maradjanak. Minden ikon a betöltésekor egyszer kerül mintavételezésre – böngészés közben nincs többletterhelés."
+  },
+  "optionFaviconEnrich": {
+    "message": "Hiányzó webhelyikonok lekérése"
+  },
+  "optionFaviconEnrichAgg": {
+    "message": "Harmadik féltől származó ikon-tartalék"
+  },
+  "optionFaviconEnrichAggHint": {
+    "message": "Ha a közvetlen letöltés sikertelen, a rendszer a tartomány alapján keresi az ikont a beépített harmadik féltől származó ikonszolgáltatók listájában ($providers$). Az elérhetetlen szolgáltatást kihagyja, és a következőt próbálja ki – 6 órán keresztül nem próbálkozik újra vele.",
+    "placeholders": {
+      "providers": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionFaviconEnrichHint": {
+    "message": "Azon könyvjelzőzött webhelyeknél, amelyekhez a Chrome nem rendelkezik gyorsítótárazott ikonnal, töltse le a tényleges ikont közvetlenül a webhelyről (/favicon.ico, majd az oldal által deklarált ikonok). A kérések csak az Ön által könyvjelzőzött webhelyekre irányulnak."
+  },
+  "optionHighlightUnsynced": {
+    "message": "Szinkronizálatlan könyvjelzők halványítása"
+  },
+  "optionLanguage": {
+    "message": "Nyelv"
+  },
+  "optionLanguageAuto": {
+    "message": "Automatikus"
+  },
+  "optionLanguageHint": {
+    "message": "A nyelv módosítása újratölti ezt az oldalt."
+  },
+  "optionOnlyShowBookmarkBar": {
+    "message": "Csak a könyvjelzők megjelenítése a Könyvjelzőlécen"
+  },
+  "optionOpenInSidePanel": {
+    "message": "Megnyitás oldalsávban a felugró ablak helyett"
+  },
+  "optionOpenNewTab": {
+    "message": "Középső kattintás vagy control-kattintás új háttér lapon nyitja meg a könyvjelzőt (előtér helyett)."
+  },
+  "optionPaletteEnabled": {
+    "message": "A parancspaletta engedélyezése (Ctrl/Cmd+K)"
+  },
+  "optionPopupStays": {
+    "message": "A felugró ablak nyitva marad a könyvjelzők megnyitásakor (bal kattintás)."
+  },
+  "optionQuickAddContextMenu": {
+    "message": "„Könyvjelzőzés a vBookmarks segítségével” bejegyzés hozzáadása az oldal jobb gombos menüjéhez"
+  },
+  "optionQuickAddContextMenuHint": {
+    "message": "Független a gyors hozzáadás csillaggombjától; a klasszikus élmény visszaállítása ezt a bejegyzést is kikapcsolja."
+  },
+  "optionQuickAddEnabled": {
+    "message": "A gyors hozzáadás csillaggomb megjelenítése a keresőmező mellett"
+  },
+  "optionRecentCollapsed": {
+    "message": "Legutóbb hozzáadott szakasz összecsukása alapértelmezés szerint"
   },
   "optionRecentCount": {
     "message": "Megjelenítendő legutóbb hozzáadott könyvjelzők száma"
+  },
+  "optionRememberPrevState": {
+    "message": "Emlékezzen az előző állapotra (görgetési pozíció, megnyitott mappák és az utoljára fókuszált elem)."
+  },
+  "optionRememberView": {
+    "message": "Az utolsó aktív nézet megjegyzése és újranyitása"
+  },
+  "optionSearchAfterEnter": {
+    "message": "Könyvjelzők keresése csak az ENTER lenyomásakor (azonnali keresés helyett)"
   },
   "optionSearchHistory": {
     "message": "Keresési előzmények területének megjelenítése"
@@ -276,17 +1061,496 @@
   "optionSearchHistoryHint": {
     "message": "Az eredmények feletti közelmúltbeli keresések területének elrejtése — a rögzített lekérdezések megmaradnak"
   },
+  "optionShowDeadView": {
+    "message": "Hibás hivatkozások nézet fül megjelenítése"
+  },
+  "optionShowDupesView": {
+    "message": "Ismétlődések nézet fül megjelenítése"
+  },
+  "optionShowItemPath": {
+    "message": "Szülőmappa elérési útjának megjelenítése a listasorokban"
+  },
+  "optionShowRecentBookmarks": {
+    "message": "Legutóbb hozzáadott könyvjelzők megjelenítése a felugró ablak tetején"
+  },
+  "optionShowStatsView": {
+    "message": "Statisztika nézet fül megjelenítése"
+  },
+  "optionShowSyncStatus": {
+    "message": "Szinkronizálási állapotjelzők megjelenítése"
+  },
+  "optionShowTabBadges": {
+    "message": "Számjelvények megjelenítése a nézetfüleken"
+  },
+  "optionShowTabGroupsView": {
+    "message": "Lapcsoportok nézetének megjelenítése"
+  },
+  "optionShowToolButton": {
+    "message": "Az eszközgomb (⋮) megjelenítése a keresőmező mellett"
+  },
+  "optionShowViewTabs": {
+    "message": "Nézetfülek megjelenítése a keresőmező alatt"
+  },
+  "optionStagingEnabled": {
+    "message": "Staging terület engedélyezése"
+  },
+  "optionStagingEnabledHint": {
+    "message": "Kikapcsolva ez a nézet csak a legutóbb hozzáadott listát tartja meg, és a többi nézetben minden staging gomb vagy menüpont elrejtve jelenik meg."
+  },
+  "optionStatsEnabled": {
+    "message": "Látogatási statisztikák engedélyezése"
+  },
+  "optionSyncRefreshInterval": {
+    "message": "Frissítési időköz"
+  },
+  "optionSyncRefreshIntervalSeconds": {
+    "message": "másodperc"
+  },
+  "optionTabGroupsClosedLimit": {
+    "message": "Megőrzendő bezárt lap/csoport előzmények"
+  },
+  "optionTheme": {
+    "message": "Téma"
+  },
+  "optionThemeAuto": {
+    "message": "Rendszer követése"
+  },
+  "optionThemeDark": {
+    "message": "Sötét"
+  },
+  "optionThemeInk": {
+    "message": "Tinta (sötét)"
+  },
+  "optionThemeLight": {
+    "message": "Világos"
+  },
+  "optionThemePaper": {
+    "message": "Papír (világos)"
+  },
+  "optionTreeRowActions": {
+    "message": "Műveletek a fa sorokon (szerkesztés / staging / törlés)"
+  },
+  "optionVirtualScrollLab": {
+    "message": "Virtuális görgetés (kísérleti)"
+  },
+  "optionVirtualScrollLabHint": {
+    "message": "A lapcsoportok és ismétlődések nézetei csak a nézetablak közelében lévő sorokat jelenítik meg. Nagyon nagy listákon sokkal gyorsabb; kísérleti fázisban a görgetősáv pozíciója becsült."
+  },
+  "optionZoom": {
+    "message": "Nagyítás"
+  },
+  "options": {
+    "message": "Beállítások"
+  },
+  "optionsDonate": {
+    "message": "Adomány"
+  },
+  "optionsFooterText": {
+    "description": "Footer text for the Options page",
+    "message": "Készítette $authorName$.",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionsGithubLink": {
+    "message": "GitHub"
+  },
+  "optionsGroupBackup": {
+    "message": "Biztonsági mentés"
+  },
+  "optionsGroupContextMenu": {
+    "message": "Helyi menük"
+  },
+  "optionsGroupIcons": {
+    "message": "Ikonok"
+  },
+  "optionsGroupLabs": {
+    "message": "Laboratórium"
+  },
+  "optionsGroupPalette": {
+    "message": "Parancspaletta"
+  },
+  "optionsGroupSort": {
+    "message": "Rendezés"
+  },
+  "optionsGroupStats": {
+    "message": "Statisztikák"
+  },
+  "optionsGroupTools": {
+    "message": "Eszközök"
+  },
+  "optionsGroupViews": {
+    "message": "Nézetek"
+  },
+  "optionsHomepageLink": {
+    "message": "Kezdőlap"
+  },
+  "optionsSince": {
+    "message": "A Neat Bookmarks forkja, $days$ napja karbantartva.",
+    "placeholders": {
+      "days": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionsStagingSection": {
+    "message": "Staging és legutóbb hozzáadottak"
+  },
+  "optionsStorageLocalTip": {
+    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting).",
+    "message": "Csak ezen az eszközön tárolva — nem oszlik meg a Chrome-szinkronizáláson keresztül."
+  },
+  "optionsStorageSyncTip": {
+    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting).",
+    "message": "A Chrome-fiókodon keresztül szinkronizálva — ez a beállítás megosztott az eszközeid között."
+  },
+  "optionsVersion": {
+    "message": "vBookmarks verzió"
+  },
+  "paletteActionOpenUrl": {
+    "message": "URL megnyitása"
+  },
+  "paletteActionOpenUrlGroup": {
+    "message": "Könyvjelzőmappa-csoport megnyitása"
+  },
+  "paletteActionUrlTemplate": {
+    "message": "URL-sablon megnyitása"
+  },
+  "paletteActionViewPreset": {
+    "message": "Nézet megnyitása előbeállítással"
+  },
+  "paletteClose": {
+    "message": "Bezárás"
+  },
+  "paletteCmdDead": {
+    "message": "Hibás hivatkozások keresése"
+  },
+  "paletteCmdDupes": {
+    "message": "Duplikált könyvjelzők tisztítása"
+  },
+  "paletteCmdGoDead": {
+    "message": "Ugrás a holt hivatkozások nézethez"
+  },
+  "paletteCmdGoDupes": {
+    "message": "Ugrás a duplikátumok nézethez"
+  },
+  "paletteCmdGoRecent": {
+    "message": "Ugrás a legutóbbi nézethez"
+  },
+  "paletteCmdGoSearch": {
+    "message": "Ugrás a kereső nézethez"
+  },
+  "paletteCmdGoStats": {
+    "message": "Ugrás a statisztikák nézethez"
+  },
+  "paletteCmdGoTabGroups": {
+    "message": "Ugrás a lapcsoportok nézetére"
+  },
+  "paletteCmdGoTree": {
+    "message": "Ugrás a fa nézethez"
+  },
+  "paletteCmdLang": {
+    "message": "Nyelvváltás…"
+  },
+  "paletteCmdLangUsage": {
+    "message": "Használat: /lang, majd egy területi kód — pl. /lang en, /lang zh_CN, /lang ja."
+  },
+  "paletteCmdNewBookmark": {
+    "message": "Új könyvjelző…"
+  },
+  "paletteCmdNewFolder": {
+    "message": "Új mappa…"
+  },
+  "paletteCmdOptions": {
+    "message": "Beállítások oldal megnyitása"
+  },
+  "paletteCmdQuickAdd": {
+    "message": "Aktuális lap könyvjelzőzése"
+  },
+  "paletteCmdSaveAsCommand": {
+    "message": "Mentés \"$1\" parancsként…"
+  },
+  "paletteCmdSaveSession": {
+    "message": "Ablak lapjainak mentése mappaként"
+  },
+  "paletteCmdSearchInView": {
+    "message": "Keresés '$query$' a kereső nézetben",
+    "placeholders": {
+      "query": {
+        "content": "$1"
+      }
+    }
+  },
+  "paletteCmdTheme": {
+    "message": "Téma beállítása…"
+  },
+  "paletteCmdThemeUsage": {
+    "message": "Használat: /theme után egy témnév — auto, light, dark, ink vagy paper (egyedi előtag is működik, pl. /theme d)."
+  },
+  "paletteCmdToggleViewTabs": {
+    "message": "Lapok nézetének váltása"
+  },
+  "paletteCmdVersion": {
+    "message": "Verzióinformáció"
+  },
+  "paletteCustomAction": {
+    "message": "Művelet"
+  },
+  "paletteCustomAdd": {
+    "message": "Parancs hozzáadása…"
+  },
+  "paletteCustomAliases": {
+    "message": "Aliasok (vesszővel elválasztva)"
+  },
+  "paletteCustomBroken": {
+    "message": "A(z) \"$1\" parancs mappája már nem létezik. Törli a parancsot?"
+  },
+  "paletteCustomDeleteConfirm": {
+    "message": "Törli a(z) \"$1\" parancsot? A módosítás szinkronizálódik az összes eszközére."
+  },
+  "paletteCustomEmpty": {
+    "message": "Még nincsenek egyéni parancsok."
+  },
+  "paletteCustomErrAction": {
+    "message": "Válasszon művelettípust."
+  },
+  "paletteCustomErrAlias": {
+    "message": "Aliasok: ugyanazok a szabályok, mint a perjelnél (1–24 karakter: kisbetű, számjegy vagy kötőjel)."
+  },
+  "paletteCustomErrFolder": {
+    "message": "Válasszon egy könyvjelzőmappát."
+  },
+  "paletteCustomErrLimit": {
+    "message": "Parancslimit elérve (100) — előbb töröljön egyet."
+  },
+  "paletteCustomErrSlash": {
+    "message": "Perjel: 1–24 karakter (kisbetű, számjegy vagy kötőjel), betűvel vagy számjeggyel kezdve."
+  },
+  "paletteCustomErrTaken": {
+    "message": "Ez a perjel vagy alias már foglalt."
+  },
+  "paletteCustomErrTemplate": {
+    "message": "A sablonnak pontosan egy %s-t kell tartalmaznia."
+  },
+  "paletteCustomErrUrl": {
+    "message": "Csak http:// vagy https:// URL-ek engedélyezettek."
+  },
+  "paletteCustomErrView": {
+    "message": "Válasszon egy nézetet."
+  },
+  "paletteCustomFolder": {
+    "message": "Könyvjelzőmappa"
+  },
+  "paletteCustomHint": {
+    "message": "Egyéni perjeles parancsok a parancspalettához (Ctrl/Cmd+K). A beállításaival szinkronizálódnak — legfeljebb 100 bejegyzés."
+  },
+  "paletteCustomSave": {
+    "message": "Parancs mentése"
+  },
+  "paletteCustomScan": {
+    "message": "Vizsgálat indítása bevitelkor"
+  },
+  "paletteCustomScope": {
+    "message": "Dedup-hatókör előbeállítása"
+  },
+  "paletteCustomSlash": {
+    "message": "Perjel (a / utáni szó)"
+  },
+  "paletteCustomStrategy": {
+    "message": "Dedup-stratégia előbeállítása"
+  },
+  "paletteCustomTag": {
+    "message": "egyéni"
+  },
+  "paletteCustomTemplate": {
+    "message": "URL-sablon — a %s helyére a parancs utáni szavak kerülnek"
+  },
+  "paletteCustomUrl": {
+    "message": "URL"
+  },
+  "paletteCustomUsage": {
+    "message": "$1 / $2"
+  },
+  "paletteCustomView": {
+    "message": "Nézet"
+  },
+  "paletteCustomWhere": {
+    "message": "Megnyitás itt"
+  },
+  "paletteNoResults": {
+    "message": "Nincs találat"
+  },
+  "palettePlaceholder": {
+    "message": "Könyvjelzők, mappák, parancsok keresése…"
+  },
+  "paletteWhereBackground": {
+    "message": "Háttérlapok"
+  },
+  "paletteWhereCurrent": {
+    "message": "Aktuális lap"
+  },
+  "paletteWhereTab": {
+    "message": "Új lap"
+  },
+  "paletteWhereWindow": {
+    "message": "Új ablak"
+  },
+  "parentFolder": {
+    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
+    "message": "Szülőmappa: \"$folderName$\"",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarksbar"
+      }
+    }
+  },
+  "pasteDone": {
+    "message": "Beillesztve"
+  },
+  "pasteGone": {
+    "message": "A könyvjelző már nem létezik — vágólap törölve"
+  },
+  "pasteHere": {
+    "message": "Beillesztés ide"
+  },
+  "pinFolder": {
+    "message": "Mappa rögzítése"
+  },
+  "quickAddBookmark": {
+    "message": "Oldal könyvjelzőzése (Ctrl+D)"
+  },
+  "quickAddBookmarkCommand": {
+    "message": "Az aktuális lap gyors hozzáadása könyvjelzőként"
+  },
+  "quickAdded": {
+    "message": "Könyvjelző hozzáadva"
+  },
+  "quickAddedTo": {
+    "message": "Könyvjelző hozzáadva: $folderName$",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarks bar"
+      }
+    }
+  },
+  "quickRemoveBookmark": {
+    "message": "Könyvjelző eltávolítása (Ctrl+D)"
+  },
+  "quickRemoved": {
+    "message": "Könyvjelző eltávolítva"
+  },
+  "recentBookmarks": {
+    "message": "Legutóbb hozzáadott"
+  },
   "recentEmpty": {
     "message": "Nincsenek legutóbbi könyvjelzők. Nyomja meg a Ctrl+D billentyűt az aktuális oldal könyvjelzőkhöz adásához."
+  },
+  "recentGroupMonth": {
+    "message": "Ebben a hónapban"
+  },
+  "recentGroupOlder": {
+    "message": "Régebbi"
+  },
+  "recentGroupToday": {
+    "message": "Ma"
+  },
+  "recentGroupWeek": {
+    "message": "Ezen a héten"
   },
   "recentRevealInTree": {
     "message": "Megjelenítés a fában"
   },
+  "recentSectionTitle": {
+    "message": "Legutóbb hozzáadva"
+  },
+  "recentStageAll": {
+    "message": "Összes újonnan hozzáadott gyűjtése"
+  },
+  "recentStageGroup": {
+    "message": "Küldés a $t$ előkészítő területre",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
+  },
+  "removeSeparator": {
+    "message": "Elválasztó Eltávolítása"
+  },
+  "replaceUrl": {
+    "message": "Cserélje le ezt a jelenlegi URL-rel"
+  },
+  "reportError": {
+    "message": "Hiba Jelentése"
+  },
+  "reportedToDeveloper": {
+    "description": "A message for an error occured in the extension, has been reported to the developer.",
+    "message": "Ezt jelentették a fejlesztőnek."
+  },
+  "resetButton": {
+    "message": "Visszaállítás"
+  },
+  "resetSettings": {
+    "message": "Beállítások visszaállítása"
+  },
+  "resetSettingsDescription": {
+    "message": "vBookmarks visszaállítása alapértelmezett beállításokra."
+  },
+  "revealOutsideBarAction": {
+    "message": "Mindent megmutat, és megjeleníti a célt"
+  },
+  "revealOutsideBarHint": {
+    "message": "Csak a könyvjelzősáv látható: a cél azon kívül van."
+  },
+  "riskBannerDismiss": {
+    "message": "Bezárás"
+  },
+  "riskBannerHelp": {
+    "message": "Biztonsági mentés és visszaállítás útmutató"
+  },
+  "riskBannerNever": {
+    "message": "Ne jelenítse meg többé"
+  },
+  "rowActionDelete": {
+    "message": "Törlés"
+  },
+  "rowActionMark": {
+    "message": "Jelöld meg holtnak"
+  },
+  "rowActionReveal": {
+    "message": "Megjelenítés a fában"
+  },
+  "rowActionUnmark": {
+    "message": "Holt jelölés eltávolítása"
+  },
+  "save": {
+    "message": "Mentés"
+  },
+  "searchBookmarks": {
+    "description": "Placeholder text for search field.",
+    "message": "Könyvjelzők Keresése"
+  },
+  "searchClear": {
+    "message": "Keresés törlése"
+  },
   "searchHistoryClear": {
     "message": "Összes törlése"
   },
+  "searchHistoryClose": {
+    "message": "Keresési előzmények elrejtése"
+  },
+  "searchHistoryClosedToast": {
+    "message": "A keresési előzmények elrejtve — kapcsolja vissza a Beállítások → Keresés menüben"
+  },
   "searchHistoryRemove": {
     "message": "Keresés eltávolítása"
+  },
+  "searchHistoryRerun": {
+    "message": "Új keresés"
   },
   "searchHistoryResultCount": {
     "message": "$n$ találat",
@@ -298,6 +1562,895 @@
   },
   "searchHistoryTitle": {
     "message": "Legutóbbi keresések"
+  },
+  "searchNoResults": {
+    "message": "Nincs megfelelő könyvjelző"
+  },
+  "searchResultCount": {
+    "message": "$n$ találat",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "searchStageAllGroup": {
+    "message": "Összes találat átmozgatása „$1$” csoportba",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "searchViewHint": {
+    "message": "Írjon a fenti mezőbe a könyvjelzők kereséséhez"
+  },
+  "selectAll": {
+    "message": "Összes"
+  },
+  "selectClear": {
+    "message": "Törlés"
+  },
+  "selectCount": {
+    "message": "$count$ kiválasztva",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "selectInvert": {
+    "message": "Megfordítás"
+  },
+  "selectModeEnter": {
+    "message": "Kijelölés"
+  },
+  "selectModeExit": {
+    "message": "Kijelölés befejezése"
+  },
+  "separatorOptions": {
+    "message": "Elválasztók"
+  },
+  "sessionEmpty": {
+    "message": "Nincs menthető lap"
+  },
+  "sessionFolderName": {
+    "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm.",
+    "message": "Munkamenet $date$",
+    "placeholders": {
+      "date": {
+        "content": "$1",
+        "example": "2026-07-18 15:04"
+      }
+    }
+  },
+  "sessionSaved": {
+    "description": "Alert shown after the current window's tabs were saved into a new bookmark folder.",
+    "message": "$count$ lap mentve egy új mappába",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "12"
+      }
+    }
+  },
+  "settingsBackupHint": {
+    "message": "Exportálás: minden beállítás (beleértve a szinkronizálási beállításokat is) JSON-fájlba mentése. Importálás: a biztonsági mentés visszaolvasztása: a fájlban lévő beállítások felülírják a jelenlegieket, a többi megmarad."
+  },
+  "settingsExport": {
+    "message": "Beállítások exportálása"
+  },
+  "settingsImport": {
+    "message": "Beállítások importálása"
+  },
+  "settingsImportConfirm": {
+    "message": "Az importálás felülírja a biztonsági mentési fájlban található összes beállítást (a fájlban nem szereplő beállítások megmaradnak), és újratölti ezt az oldalt. Folytatja?"
+  },
+  "settingsImportDone": {
+    "message": "Beállítások importálva. Az oldal most újratöltődik."
+  },
+  "settingsImportError": {
+    "message": "Néhány beállítás nem írható (tárhelykvóta vagy átmeneti hiba miatt). Az importálás nem fejeződött be – kérjük, próbálja újra."
+  },
+  "settingsImportInvalid": {
+    "message": "Érvénytelen beállításfájl: nem vBookmarks beállítások biztonsági mentése."
+  },
+  "sortByDate": {
+    "message": "Rendezés dátum szerint"
+  },
+  "sortByDateAdded": {
+    "message": "Hozzáadás dátuma szerint (újabbak elöl)"
+  },
+  "sortByName": {
+    "message": "Rendezés név szerint"
+  },
+  "sortByTitle": {
+    "message": "Cím szerint"
+  },
+  "sortDone": {
+    "message": "Mappa rendezve"
+  },
+  "sortFolderContents": {
+    "message": "Mappa tartalmának rendezése"
+  },
+  "sortFoldersFirst": {
+    "message": "Mappák legyenek felül"
+  },
+  "sortMenuOptions": {
+    "message": "Rendezés"
+  },
+  "sortOptions": {
+    "message": "Rendezési opciók…"
+  },
+  "sortRecursive": {
+    "message": "Almappák rendezése is (rekurzív)"
+  },
+  "sortRecursiveSuffix": {
+    "message": "(rekurzív)"
+  },
+  "sortRecursiveWarning": {
+    "message": "Ez átrendezi a könyvjelzőket minden almappában."
+  },
+  "stagedToast": {
+    "message": "$n$ lap előkészítve „$t$” csoportként",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "t": {
+        "content": "$2"
+      }
+    }
+  },
+  "stagingAdd": {
+    "message": "Küldés a várólistára"
+  },
+  "stagingAdded": {
+    "message": "Elküldve a várólistára"
+  },
+  "stagingAddedSummary": {
+    "message": "$n$ elem hozzáadva; $m$ már gyűjtőben",
+    "placeholders": {
+      "m": {
+        "content": "$2"
+      },
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingAlready": {
+    "message": "Már a gyűjtőben van"
+  },
+  "stagingBucketFavAll": {
+    "message": "Összes kedvencnek jelölése"
+  },
+  "stagingBucketTitle": {
+    "message": "Nem könyvjelzőzött"
+  },
+  "stagingClear": {
+    "message": "Előkészítő törlése"
+  },
+  "stagingClearConfirm": {
+    "message": "Törli a teljes előkészítő területet? A könyvjelzőfa nem érintett."
+  },
+  "stagingClearConfirmOk": {
+    "message": "Törlés"
+  },
+  "stagingCleared": {
+    "message": "Előkészítő terület törölve"
+  },
+  "stagingConfirmFolder": {
+    "message": "Gyűjti $n$ könyvjelzőt ebből a mappából?",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingConfirmFolderOk": {
+    "message": "Előkészítés"
+  },
+  "stagingCopyDone": {
+    "message": "$n$ elem másolva",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingCount": {
+    "message": "$n$ előkészítve",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingDeleteConfirm": {
+    "message": "Törli $n$ elemet? A nem könyvjelzőzöttek csak elhagyják az előkészítő területet.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingDeleted": {
+    "message": "$n$ könyvjelző törölve",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingEmpty": {
+    "message": "Még nincs semmi előkészítve. Küldjön ide könyvjelzőket bármely nézetből — a sorban lévő repülő gombbal vagy a jobb egérgombos menüvel — majd rendezze és helyezze el őket tömegesen."
+  },
+  "stagingFav": {
+    "message": "Kedvenc"
+  },
+  "stagingFavDone": {
+    "message": "$n$ elem kedvencnek jelölve",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingFolderEmpty": {
+    "message": "Ebben a mappában nincs könyvjelző a gyűjtéshez"
+  },
+  "stagingFromHistory": {
+    "message": "Előzményekből"
+  },
+  "stagingFull": {
+    "message": "A gyűjtő megtelt – előbb távolítson el néhány elemet"
+  },
+  "stagingGroupAssign": {
+    "message": "Csoport…"
+  },
+  "stagingGroupAssignTitle": {
+    "message": "Hozzárendelés csoporthoz"
+  },
+  "stagingGroupCollapse": {
+    "message": "Csoport összecsukása"
+  },
+  "stagingGroupDelete": {
+    "message": "Csoport törlése (elemekkel)"
+  },
+  "stagingGroupDeleteConfirm": {
+    "message": "Törli a(z) \"$1\" csoportot? $2 eleme is elhagyja az előkészítő területet."
+  },
+  "stagingGroupDeleted": {
+    "message": "Csoport törölve — $1 elem eltávolítva"
+  },
+  "stagingGroupDissolve": {
+    "message": "Csoport feloldása"
+  },
+  "stagingGroupDissolved": {
+    "message": "Csoport feloldva – az elemek a gyűjtőben maradtak"
+  },
+  "stagingGroupExpand": {
+    "message": "Csoport kibontása"
+  },
+  "stagingGroupNamePrompt": {
+    "message": "Új csoport neve"
+  },
+  "stagingGroupNew": {
+    "message": "Új csoport"
+  },
+  "stagingGroupNoGroups": {
+    "message": "Még nincs csoport"
+  },
+  "stagingGroupRename": {
+    "message": "Csoport átnevezése…"
+  },
+  "stagingGroupSelectAll": {
+    "message": "Csoport teljes kijelölése"
+  },
+  "stagingGuideDismiss": {
+    "message": "Ne mutasd újra"
+  },
+  "stagingGuideText": {
+    "message": "Rendezze itt a könyvjelzőket — válasszon sorokat, és lépjen kijelölési módba a tömeges műveletekhez."
+  },
+  "stagingMoveConfirm": {
+    "message": "Áthelyezi $n$ elemet a kiválasztott mappába?",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingMoveConfirmOk": {
+    "message": "Áthelyezés"
+  },
+  "stagingMoveCopy": {
+    "message": "Áthelyezés/másolás…"
+  },
+  "stagingMoveDone": {
+    "message": "$n$ elem áthelyezve",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingNew": {
+    "message": "új $n$",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingRemove": {
+    "message": "Eltávolítás a gyűjtőből"
+  },
+  "stagingRemoved": {
+    "message": "Eltávolítva a gyűjtőből"
+  },
+  "stagingRemovedCount": {
+    "message": "$n$ elem eltávolítva az előkészítő területről",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingRowFav": {
+    "message": "Elem kedvencnek jelölése"
+  },
+  "stagingRowUnfav": {
+    "message": "Elem kedvenc jelölésének törlése"
+  },
+  "stagingShortcutAdd": {
+    "message": "Parancsikon hozzáadása"
+  },
+  "stagingShortcutAlias": {
+    "message": "Alias"
+  },
+  "stagingShortcutBarLabel": {
+    "message": "Áthelyezés ide:"
+  },
+  "stagingShortcutEdit": {
+    "message": "Parancsikon szerkesztése"
+  },
+  "stagingShortcutMove": {
+    "message": "Kijelöltek áthelyezése ide: $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingShortcutPickFolder": {
+    "message": "Célmappa kiválasztása…"
+  },
+  "stagingShortcutRemove": {
+    "message": "Parancsikon eltávolítása"
+  },
+  "stagingShortcutRemoved": {
+    "message": "Parancsikon eltávolítva"
+  },
+  "stagingShortcutSave": {
+    "message": "Mentés"
+  },
+  "stagingShortcutTitle": {
+    "message": "Áthelyezési parancsikon"
+  },
+  "stagingUnfav": {
+    "message": "Kedvenc törlése"
+  },
+  "stagingUnfavDone": {
+    "message": "$n$ elem kedvenc jelölése törölve",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "statsClearConfirm": {
+    "message": "Törli $count$ könyvjelző látogatási statisztikáit? Ez nem vonható vissza.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "statsClearData": {
+    "message": "Statisztikák törlése"
+  },
+  "statsDisabledHint": {
+    "message": "A látogatási statisztikák ki vannak kapcsolva — engedélyezd a Beállítások → Nézetek alatt"
+  },
+  "statsEmpty": {
+    "message": "A statisztikák a könyvjelzők megnyitásával épülnek fel"
+  },
+  "statsHistoryAdd": {
+    "message": "Hozzáadás a könyvjelzőkhöz"
+  },
+  "statsHistoryBanner": {
+    "message": "Engedélyezze az előzmények elérését a múltbeli látogatások statisztikáinak feltöltéséhez."
+  },
+  "statsHistoryBookmarked": {
+    "message": "Könyvjelzőzve"
+  },
+  "statsHistoryDismiss": {
+    "message": "Ne mutassa többé"
+  },
+  "statsHistoryEnable": {
+    "message": "Engedélyez"
+  },
+  "statsHistoryGuide": {
+    "message": "A legutóbbi látogatások listázásához adjon hozzáférési engedélyt az előzményekhez."
+  },
+  "statsHistoryImported": {
+    "message": "$count$ könyvjelző múltbeli látogatásai importálva.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "statsSectionBookmarks": {
+    "message": "Könyvjelző statisztikák"
+  },
+  "statsSectionRecent": {
+    "message": "Legutóbbi látogatások"
+  },
+  "statsShowUnbookmarked": {
+    "message": "Nem megjelöltek mutatása"
+  },
+  "statsShowUnbookmarkedHint": {
+    "message": "A történet azon oldalainak belefoglalása, amelyek nincsenek könyvjelzőként mentve."
+  },
+  "statsSortByCount": {
+    "message": "Darabszám szerint"
+  },
+  "statsSortByRecent": {
+    "message": "Legutóbbi szerint"
+  },
+  "statsVisitCount": {
+    "message": "Látogatva $count$ alkalommal",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "storageUsageFree": {
+    "message": "Szabad"
+  },
+  "storageUsageHint": {
+    "message": "Csak a helyi bővítménytár (chrome.storage.local, körülbelül 10 MB kvóta): az ikon-gyorsítótár, valamint a beállítások és egyéb helyi adatok. A szinkronizált beállítások, munkamenet-adatok és a könyvjelzőtár nem számítanak bele."
+  },
+  "storageUsageIcon": {
+    "message": "Ikon-gyorsítótár"
+  },
+  "storageUsageOther": {
+    "message": "Egyéb"
+  },
+  "storageUsageSummary": {
+    "message": "Felhasznált: $1$ / $2$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      },
+      "2": {
+        "content": "$2"
+      }
+    }
+  },
+  "syncOptions": {
+    "message": "Szinkronizálási beállítások"
+  },
+  "syncStatusLocal": {
+    "message": "Csak helyi – nincs feltöltve"
+  },
+  "syncStatusSynced": {
+    "message": "Szinkronizálva a Google-fiókjával"
+  },
+  "syncStatusUnsyncable": {
+    "message": "Nem szinkronizálható"
+  },
+  "syncSuffixLocal": {
+    "message": "(Helyi)"
+  },
+  "syncSuffixSynced": {
+    "message": "(Szinkronizált)"
+  },
+  "tabGroupColorBlue": {
+    "description": "Accessible name of the blue color swatch in the new-tab-group dialog.",
+    "message": "Kék"
+  },
+  "tabGroupColorCyan": {
+    "description": "Accessible name of the cyan color swatch in the new-tab-group dialog.",
+    "message": "Cián"
+  },
+  "tabGroupColorGreen": {
+    "description": "Accessible name of the green color swatch in the new-tab-group dialog.",
+    "message": "Zöld"
+  },
+  "tabGroupColorGrey": {
+    "description": "Accessible name of the grey color swatch in the new-tab-group dialog.",
+    "message": "Szürke"
+  },
+  "tabGroupColorLabel": {
+    "message": "Szín"
+  },
+  "tabGroupColorOrange": {
+    "description": "Accessible name of the orange color swatch in the new-tab-group dialog.",
+    "message": "Narancssárga"
+  },
+  "tabGroupColorPink": {
+    "description": "Accessible name of the pink color swatch in the new-tab-group dialog.",
+    "message": "Rózsaszín"
+  },
+  "tabGroupColorPurple": {
+    "description": "Accessible name of the purple color swatch in the new-tab-group dialog.",
+    "message": "Lila"
+  },
+  "tabGroupColorRed": {
+    "description": "Accessible name of the red color swatch in the new-tab-group dialog.",
+    "message": "Piros"
+  },
+  "tabGroupColorYellow": {
+    "description": "Accessible name of the yellow color swatch in the new-tab-group dialog.",
+    "message": "Sárga"
+  },
+  "tabGroupDialogTitle": {
+    "message": "Új lapcsoport"
+  },
+  "tabGroupNoGroups": {
+    "message": "Nincsenek meglévő lapcsoportok"
+  },
+  "tabGroupOptions": {
+    "message": "Lapcsoportok"
+  },
+  "tabGroupPickDialogTitle": {
+    "message": "Megnyitás meglévő lapcsoportban"
+  },
+  "tabGroupTitleLabel": {
+    "message": "Csoport neve"
+  },
+  "tabGroupUntitled": {
+    "message": "Névtelen csoport"
+  },
+  "tabGroupsActivateGroup": {
+    "message": "Ugrás a lapcsoporthoz"
+  },
+  "tabGroupsActivateTab": {
+    "message": "Ugrás a lapra"
+  },
+  "tabGroupsAddBookmark": {
+    "message": "Lap könyvjelzőzése"
+  },
+  "tabGroupsBatchClosedTitle": {
+    "message": "Bezárt lapok"
+  },
+  "tabGroupsBookmarkRemoved": {
+    "message": "$count$ könyvjelző eltávolítva",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsBookmarked": {
+    "message": "Könyvjelzőzve"
+  },
+  "tabGroupsBookmarksAdded": {
+    "message": "$count$ könyvjelző hozzáadva: $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsClearClosedGroups": {
+    "message": "Összes törlése"
+  },
+  "tabGroupsClearedToast": {
+    "message": "$count$ bezárt rekord törölve",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCloseGroup": {
+    "message": "Lapcsoport bezárása"
+  },
+  "tabGroupsCloseWindow": {
+    "message": "Ablak bezárása"
+  },
+  "tabGroupsClosedGroups": {
+    "message": "Legutóbb bezárt"
+  },
+  "tabGroupsClosedOpenTab": {
+    "message": "Megnyitás új lapon"
+  },
+  "tabGroupsClosedTabRemovedToast": {
+    "message": "Eltávolítva a bezárt rekordból"
+  },
+  "tabGroupsClosedTimeLabel": {
+    "message": "Bezárva:"
+  },
+  "tabGroupsClosedToast": {
+    "message": "$count$ lap bezárva",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCollapseAll": {
+    "message": "Összecsukás"
+  },
+  "tabGroupsCollapseGroup": {
+    "message": "Csoport összecsukása"
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "Ablak összecsukása"
+  },
+  "tabGroupsColorStyle": {
+    "message": "Lapcsoport színstílusa"
+  },
+  "tabGroupsColorStyleEdge": {
+    "message": "Szélsáv"
+  },
+  "tabGroupsColorStyleHint": {
+    "message": "A Ki csak a színpontot mutatja. A Szélsáv színes csíkot rajzol a csoport bal szélére. A Színösszekötő vonal színes vonalat húz a csoport pontja alá, soronként egy jelöléssel, így a teljes csoport egy fává kapcsolódik."
+  },
+  "tabGroupsColorStyleLine": {
+    "message": "Színösszekötő vonal"
+  },
+  "tabGroupsColorStyleOff": {
+    "message": "Ki (csak színpont)"
+  },
+  "tabGroupsConfirmClearClosed": {
+    "message": "Törli az összes nemrég bezárt rekordot? Innen már nem nyithatók meg újra."
+  },
+  "tabGroupsConfirmClose": {
+    "message": "Bezárja a(z) $count$ lapot?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsConfirmSleep": {
+    "message": "Alvó állapotba helyezi a(z) $count$ lapot?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCopyMoveCopy": {
+    "message": "Másolás"
+  },
+  "tabGroupsCopyMoveDialog": {
+    "message": "A kijelölt lapok már egy lapcsoporthoz tartoznak. Másolja őket (megnyitás új helyen) vagy mozgassa (eltávolítás a jelenlegi csoportból)?"
+  },
+  "tabGroupsCopyMoveMove": {
+    "message": "Mozgatás"
+  },
+  "tabGroupsCurrentTab": {
+    "message": "Aktuális"
+  },
+  "tabGroupsCurrentWindow": {
+    "message": "Aktuális ablak"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "Bezárt lapcsoport törlése"
+  },
+  "tabGroupsDiscarded": {
+    "message": "Alvó lap"
+  },
+  "tabGroupsExpandAll": {
+    "message": "Kinyitás"
+  },
+  "tabGroupsExpandGroup": {
+    "message": "Csoport kinyitása"
+  },
+  "tabGroupsExpandWindow": {
+    "message": "Ablak kibontása"
+  },
+  "tabGroupsExpandedCollapse": {
+    "message": "Összecsukás"
+  },
+  "tabGroupsExpandedExpand": {
+    "message": "Kibontás"
+  },
+  "tabGroupsFilterPlaceholder": {
+    "message": "Nyitott lapok szűrése"
+  },
+  "tabGroupsGroupCount": {
+    "message": "$count$ lap",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsGroupSavedToFolder": {
+    "message": "$count$ lap mentve: $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsMenuAddBookmark": {
+    "message": "Lap könyvjelzőzése"
+  },
+  "tabGroupsMenuSaveFolder": {
+    "message": "Mentés könyvjelzőmappaként"
+  },
+  "tabGroupsMergedWindowToast": {
+    "message": "Az ablak lapcsoportként egyesítve"
+  },
+  "tabGroupsMoveNewWindow": {
+    "message": "Csoport új ablakba"
+  },
+  "tabGroupsNewWindow": {
+    "message": "Új ablak"
+  },
+  "tabGroupsNoMatchingTabs": {
+    "message": "Nincs egyező lap"
+  },
+  "tabGroupsOpenGroups": {
+    "message": "Megnyitott lapcsoportok"
+  },
+  "tabGroupsPinTab": {
+    "message": "Lap rögzítése"
+  },
+  "tabGroupsPinned": {
+    "message": "Rögzített lap"
+  },
+  "tabGroupsPinnedUngroupedToast": {
+    "message": "Rögzítve — eltávolítva a lapcsoportból"
+  },
+  "tabGroupsRecordDeletedToast": {
+    "message": "A bezárt rekord eltávolítva"
+  },
+  "tabGroupsRemoveBookmark": {
+    "message": "Könyvjelző eltávolítása"
+  },
+  "tabGroupsRemoveClosedTab": {
+    "message": "Eltávolítás a mentett csoportból"
+  },
+  "tabGroupsRenameDialog": {
+    "message": "Lapcsoport átnevezése"
+  },
+  "tabGroupsRenameGroup": {
+    "message": "Lapcsoport átnevezése"
+  },
+  "tabGroupsReopenAction": {
+    "message": "Újranyitás"
+  },
+  "tabGroupsReopenGroup": {
+    "message": "Lapcsoport újranyitása"
+  },
+  "tabGroupsSaveFolder": {
+    "message": "Lapcsoport mentése könyvjelzőmappaként"
+  },
+  "tabGroupsSelectAddBookmarks": {
+    "message": "Hozzáadás könyvjelzőmappához…"
+  },
+  "tabGroupsSelectClose": {
+    "message": "Bezárás"
+  },
+  "tabGroupsSelectNewGroup": {
+    "message": "Új lapcsoport"
+  },
+  "tabGroupsSelectOpenInto": {
+    "message": "Megnyitás meglévő lapcsoportban…"
+  },
+  "tabGroupsSelectSaveFolder": {
+    "message": "Mentés könyvjelzőmappaként"
+  },
+  "tabGroupsSelectSleep": {
+    "message": "Alvás"
+  },
+  "tabGroupsSleepGroup": {
+    "message": "Lapcsoport alvó állapotba"
+  },
+  "tabGroupsSleepTab": {
+    "message": "Lap elaltatása"
+  },
+  "tabGroupsSleptToast": {
+    "message": "$count$ lap elaltatva",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsSummary": {
+    "message": "$tabs$ lap · $groups$ csoport",
+    "placeholders": {
+      "groups": {
+        "content": "$2"
+      },
+      "tabs": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsSyncCollapse": {
+    "message": "Szinkronizálás a böngészővel"
+  },
+  "tabGroupsSyncCollapseHint": {
+    "message": "Ha be van jelölve, a csoport összecsukása vagy kibontása ebben a nézetben frissíti a böngésző lapcsoportját is. Alapértelmezés szerint ki van kapcsolva, így a nézet összecsukása helyi marad."
+  },
+  "tabGroupsToolbarRefresh": {
+    "message": "Frissítés"
+  },
+  "tabGroupsUngroupGroup": {
+    "message": "Csoportosítás megszüntetése"
+  },
+  "tabGroupsUngroupedTabs": {
+    "message": "Csoportosítatlan lapok"
+  },
+  "tabGroupsUnpinTab": {
+    "message": "Lap rögzítésének feloldása"
+  },
+  "tabGroupsViewEmpty": {
+    "message": "Nincs lap ebben az ablakban"
+  },
+  "tabGroupsWakeAction": {
+    "message": "Ébresztés"
+  },
+  "tabGroupsWakeGroup": {
+    "message": "Lapcsoport ébresztése"
+  },
+  "tabGroupsWakeTab": {
+    "message": "Lap ébresztése"
+  },
+  "tabGroupsWindow": {
+    "message": "$1$. ablak",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsWindowClosedTitle": {
+    "message": "Bezárt ablak"
+  },
+  "tabGroupsWindowsCount": {
+    "message": "$n$ ablak",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabRowStage": {
+    "message": "Küldés a várólistára"
+  },
+  "tabgroupStageAll": {
+    "message": "Csoport küldése a várólistára"
+  },
+  "tabgroupStageConfirm": {
+    "message": "Küldjük a(z) $n$ lapot a várólistára?",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabgroupStageNone": {
+    "message": "Nincs könyvjelzőzhető lap ebben a csoportban"
   },
   "timeDaysAgo": {
     "message": "$n$ napja",
@@ -329,303 +2482,26 @@
   "timeYesterday": {
     "message": "tegnap"
   },
+  "toolButtonTitle": {
+    "message": "Eszközök (Ctrl+K)"
+  },
   "undoAction": {
     "message": "Visszavonás"
   },
-  "revealOutsideBarHint": {
-    "message": "Csak a könyvjelzősáv látható: a cél azon kívül van."
+  "undoSingleStepNote": {
+    "message": "A visszavonás csak a legutóbbi törlést tudja visszaállítani."
   },
-  "revealOutsideBarAction": {
-    "message": "Mindent megmutat, és megjeleníti a célt"
+  "unpinFolder": {
+    "message": "Mappa rögzítésének feloldása"
   },
-  "dupesCleanAll": {
-    "message": "Összes tisztítása: $groups$ csoport, $count$ másolat",
-    "placeholders": {
-      "groups": {
-        "content": "$1"
-      },
-      "count": {
-        "content": "$2"
-      }
-    },
-    "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go."
+  "url": {
+    "message": "URL"
   },
-  "dupesConfirmAll": {
-    "message": "Eltávolítja a(z) $count$ extra másolatot $groups$ csoportból? Minden csoportban a kiválasztott példány megmarad.",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      },
-      "groups": {
-        "content": "$2"
-      }
-    },
-    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
+  "versionDialogCopied": {
+    "message": "Másolva"
   },
-  "dupesConfirmSelected": {
-    "message": "Eltávolítja a(z) $count$ ismétlődő könyvjelzőt a kiválasztott $groups$ csoportból?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      },
-      "groups": {
-        "content": "$2"
-      }
-    }
-  },
-  "dupesConfirmGroup": {
-    "message": "Megtartsa a(z) \"$title$\" elemet, és törölje a többi $count$ másolatot?",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Example bookmark"
-      },
-      "count": {
-        "content": "$2"
-      }
-    },
-    "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."
-  },
-  "dupesDone": {
-    "message": "$count$ duplikált könyvjelző eltávolítva",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Alert shown after the duplicate cleanup finished."
-  },
-  "dupesGroupCount": {
-    "message": "$count$ duplikátum",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
-  },
-  "dupesGroupExpand": {
-    "description": "Dupes view group-head context menu: expand a collapsed duplicate group.",
-    "message": "Csoport kibontása"
-  },
-  "dupesGroupCollapse": {
-    "description": "Dupes view group-head context menu: collapse an expanded duplicate group.",
-    "message": "Csoport összecsukása"
-  },
-  "dupesNone": {
-    "message": "Nincs duplikátum"
-  },
-  "deleteEllipsis": {
-    "message": "Törlés..."
-  },
-  "donationMessage": {
-    "message": "Tetszik? Adományozzon a jövőjéért – vagy értékelje a boltban: minden értékelés új frissítéseket hoz."
-  },
-  "donationV4Notice": {
-    "message": "A vBookmarks 4.0 teljesen újragondolt, modern dizájnnal és rengeteg új funkcióval."
-  },
-  "donationV4GuideLink": {
-    "message": "Olvasd el a v4-es útmutatót →"
-  },
-  "donationGo": {
-    "message": "Adományozás"
-  },
-  "donationRate": {
-    "message": "Értékeld"
-  },
-  "donationRateTitle": {
-    "message": "vBookmarks értékelése a Chrome Web Store-ban"
-  },
-  "donationLater": {
-    "message": "Később"
-  },
-  "donationNever": {
-    "message": "Ne jelenjen meg többet"
-  },
-  "donationDismiss": {
-    "message": "Elvetés"
-  },
-  "edit": {
-    "message": "Szerkesztés..."
-  },
-  "editBookmark": {
-    "message": "Könyvjelző szerkesztése"
-  },
-  "editFolder": {
-    "message": "Mappa szerkesztése"
-  },
-  "errorOccured": {
-    "message": "Hoppá, hiba történt."
-  },
-  "extDesc": {
-    "description": "The extension description.",
-    "message": "Egy felugró könyvjelzőkezelő. Fejlesztett Neat Bookmarks. Rendezettebb, mint a Neater Bookmarks."
-  },
-  "extName": {
-    "description": "vBookmarks",
-    "message": "vBookmarks"
-  },
-  "folderEmpty": {
-    "message": "(Üres)"
-  },
-  "general": {
-    "message": "Általános"
-  },
-  "ignore": {
-    "message": "Mellőzés"
-  },
-  "name": {
-    "description": "Name of bookmark or folder.",
-    "message": "Név"
-  },
-  "nope": {
-    "message": "Mégse"
-  },
-  "noTitle": {
-    "description": "The title for untitled bookmarks with no http(s) URL or untitled folders.",
-    "message": "(nincs cím)"
-  },
-  "open": {
-    "description": "Action to open bookmarks.",
-    "message": "Megnyitás"
-  },
-  "openBookmarks": {
-    "message": "Összes Könyvjelző Megnyitása"
-  },
-  "openBookmarksIncognitoWindow": {
-    "message": "Könyvjelzők Megnyitása Inkognitóban"
-  },
-  "openBookmarksInGroup": {
-    "message": "Megnyitás új lapcsoportban"
-  },
-  "openBookmarksInGroupSetup": {
-    "message": "Összes megnyitása új lapcsoportban…"
-  },
-  "openBookmarksInExistingGroup": {
-    "message": "Összes megnyitása meglévő lapcsoportban…"
-  },
-  "tabGroupOptions": {
-    "message": "Lapcsoportok"
-  },
-  "sortMenuOptions": {
-    "message": "Rendezés"
-  },
-  "openBookmarksNewWindow": {
-    "message": "Könyvjelzők Megnyitása Új Ablakban"
-  },
-  "openCommandPaletteCommand": {
-    "message": "Parancspaletta megnyitása"
-  },
-  "openIncognitoWindow": {
-    "message": "Megnyitás Inkognitó Ablakban"
-  },
-  "openNewTab": {
-    "message": "Megnyitás Új Lapon"
-  },
-  "bookmarkOpenInNewGroup": {
-    "message": "Megnyitás új lapcsoportban"
-  },
-  "bookmarkOpenInNewGroupSetup": {
-    "message": "Megnyitás új lapcsoportban…"
-  },
-  "bookmarkOpenInExistingGroup": {
-    "message": "Megnyitás meglévő lapcsoportban…"
-  },
-  "openNewWindow": {
-    "message": "Megnyitás Új Ablakban"
-  },
-  "openSidePanelCommand": {
-    "message": "vBookmarks oldalsáv megnyitása"
-  },
-  "optionAnnounceEnabled": {
-    "message": "Alkalmazáson belüli bejelentések megjelenítése"
-  },
-  "optionAnnounceEnabledHint": {
-    "message": "Kiadási megjegyzések és tippek a projekt GitHub-tárházából (legfeljebb 6 óránként lekérve). A kikapcsolás a hálózati lekérést is leállítja."
-  },
-  "optionClickNewTab": {
-    "message": "Bal kattintás új lapon nyitja meg a könyvjelzőt."
-  },
-  "optionCloseUnusedFolders": {
-    "message": "Nem használt mappák bezárása mappa megnyitásakor."
-  },
-  "optionConfirmOpenFolder": {
-    "message": "Megerősítés megjelenítése, amikor sok könyvjelzőt nyit meg egy mappából."
-  },
-  "optionConfirmDeleteFolder": {
-    "message": "Nem üres mappák törlésének megerősítése"
-  },
-  "optionOnlyShowBookmarkBar": {
-    "message": "Csak a könyvjelzők megjelenítése a Könyvjelzőlécen"
-  },
-  "optionSearchAfterEnter": {
-    "message": "Könyvjelzők keresése csak az ENTER lenyomásakor (azonnali keresés helyett)"
-  },
-  "optionOpenNewTab": {
-    "message": "Középső kattintás vagy control-kattintás új háttér lapon nyitja meg a könyvjelzőt (előtér helyett)."
-  },
-  "optionOpenInSidePanel": {
-    "message": "Megnyitás oldalsávban a felugró ablak helyett"
-  },
-  "optionPopupStays": {
-    "message": "A felugró ablak nyitva marad a könyvjelzők megnyitásakor (bal kattintás)."
-  },
-  "optionRememberPrevState": {
-    "message": "Emlékezzen az előző állapotra (görgetési pozíció, megnyitott mappák és az utoljára fókuszált elem)."
-  },
-  "options": {
-    "message": "Beállítások"
-  },
-  "optionsFooterText": {
-    "description": "Footer text for the Options page",
-    "message": "Készítette $authorName$.",
-    "placeholders": {
-      "authorName": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionZoom": {
-    "message": "Nagyítás"
-  },
-  "optionTheme": {
-    "message": "Téma"
-  },
-  "optionThemeAuto": {
-    "message": "Rendszer követése"
-  },
-  "optionThemeLight": {
-    "message": "Világos"
-  },
-  "optionThemeDark": {
-    "message": "Sötét"
-  },
-  "optionThemeInk": {
-    "message": "Tinta (sötét)"
-  },
-  "optionThemePaper": {
-    "message": "Papír (világos)"
-  },
-  "optionLanguage": {
-    "message": "Nyelv"
-  },
-  "optionLanguageAuto": {
-    "message": "Automatikus"
-  },
-  "optionLanguageHint": {
-    "message": "A nyelv módosítása újratölti ezt az oldalt."
-  },
-  "paletteClose": {
-    "message": "Bezárás"
-  },
-  "paletteCmdVersion": {
-    "message": "Verzióinformáció"
-  },
-  "paletteCmdLang": {
-    "message": "Nyelvváltás…"
-  },
-  "paletteCmdLangUsage": {
-    "message": "Használat: /lang, majd egy területi kód — pl. /lang en, /lang zh_CN, /lang ja."
+  "versionDialogCopy": {
+    "message": "Adatok másolása"
   },
   "versionDialogTitle": {
     "message": "vBookmarks $version$",
@@ -634,15 +2510,6 @@
         "content": "$1"
       }
     }
-  },
-  "versionDialogCopy": {
-    "message": "Adatok másolása"
-  },
-  "versionDialogCopied": {
-    "message": "Másolva"
-  },
-  "versionMetaVersion": {
-    "message": "Bővítmény verziója"
   },
   "versionMetaAnnounce": {
     "message": "Újdonságok"
@@ -653,277 +2520,58 @@
   "versionMetaBrowser": {
     "message": "Böngésző"
   },
-  "versionMetaOS": {
-    "message": "Operációs rendszer"
-  },
   "versionMetaChannel": {
     "message": "Csatorna"
   },
   "versionMetaLanguage": {
     "message": "Nyelv"
   },
+  "versionMetaOS": {
+    "message": "Operációs rendszer"
+  },
   "versionMetaUserAgent": {
     "message": "Felhasználói ügynök"
   },
-  "paletteCmdDead": {
-    "message": "Hibás hivatkozások keresése"
+  "versionMetaVersion": {
+    "message": "Bővítmény verziója"
   },
-  "paletteCmdDupes": {
-    "message": "Duplikált könyvjelzők tisztítása"
+  "viewDead": {
+    "message": "Holt hivatkozások"
   },
-  "paletteCmdNewBookmark": {
-    "message": "Új könyvjelző…"
+  "viewDisable": {
+    "message": "Letiltás"
   },
-  "paletteCmdNewFolder": {
-    "message": "Új mappa…"
+  "viewDupes": {
+    "message": "Duplikátumok"
   },
-  "paletteCmdQuickAdd": {
-    "message": "Aktuális lap könyvjelzőzése"
+  "viewEnable": {
+    "message": "Engedélyezés"
   },
-  "paletteCmdSaveSession": {
-    "message": "Ablak lapjainak mentése mappaként"
-  },
-  "paletteNoResults": {
-    "message": "Nincs találat"
-  },
-  "palettePlaceholder": {
-    "message": "Könyvjelzők, mappák, parancsok keresése…"
-  },
-  "parentFolder": {
-    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
-    "message": "Szülőmappa: \"$folderName$\"",
+  "viewHiddenTabsHint": {
+    "message": "A(z) $view$ nézetben van. A fához való visszatéréshez nyomja meg a(z) $back$ gombot, vagy használja a parancspalettát.",
     "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarksbar"
-      }
-    }
-  },
-  "removeSeparator": {
-    "message": "Elválasztó Eltávolítása"
-  },
-  "replaceUrl": {
-    "message": "Cserélje le ezt a jelenlegi URL-rel"
-  },
-  "reportedToDeveloper": {
-    "description": "A message for an error occured in the extension, has been reported to the developer.",
-    "message": "Ezt jelentették a fejlesztőnek."
-  },
-  "reportError": {
-    "message": "Hiba Jelentése"
-  },
-  "resetButton": {
-    "message": "Visszaállítás"
-  },
-  "resetSettings": {
-    "message": "Beállítások visszaállítása"
-  },
-  "resetSettingsDescription": {
-    "message": "vBookmarks visszaállítása alapértelmezett beállításokra."
-  },
-  "save": {
-    "message": "Mentés"
-  },
-  "searchBookmarks": {
-    "description": "Placeholder text for search field.",
-    "message": "Könyvjelzők Keresése"
-  },
-  "searchClear": {
-    "message": "Keresés törlése"
-  },
-  "searchNoResults": {
-    "message": "Nincs megfelelő könyvjelző"
-  },
-  "searchViewHint": {
-    "message": "Írjon a fenti mezőbe a könyvjelzők kereséséhez"
-  },
-  "selectAll": {
-    "message": "Összes"
-  },
-  "selectClear": {
-    "message": "Törlés"
-  },
-  "selectCount": {
-    "message": "$count$ kiválasztva",
-    "placeholders": {
-      "count": {
+      "back": {
+        "content": "$2"
+      },
+      "view": {
         "content": "$1"
       }
     }
   },
-  "selectInvert": {
-    "message": "Megfordítás"
-  },
-  "selectModeEnter": {
-    "message": "Kijelölés"
-  },
-  "selectModeExit": {
-    "message": "Kijelölés befejezése"
-  },
-  "deadRiskBanner": {
-    "message": "A hibás linkek tisztítása tömegesen törli a könyvjelzőket. Az első tisztítás előtt készítsen biztonsági másolatot a könyvjelzőiről."
-  },
-  "dupesRiskBanner": {
-    "message": "A deduplikáció tömegesen törli az ismétlődő könyvjelzőket. Alkalmazás előtt készítsen biztonsági másolatot a könyvjelzőiről."
-  },
-  "riskBannerHelp": {
-    "message": "Biztonsági mentés és visszaállítás útmutató"
-  },
-  "riskBannerNever": {
-    "message": "Ne jelenítse meg többé"
-  },
-  "riskBannerDismiss": {
-    "message": "Bezárás"
-  },
-  "sessionEmpty": {
-    "message": "Nincs menthető lap"
-  },
-  "sessionFolderName": {
-    "message": "Munkamenet $date$",
-    "placeholders": {
-      "date": {
-        "content": "$1",
-        "example": "2026-07-18 15:04"
-      }
-    },
-    "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm."
-  },
-  "sessionSaved": {
-    "message": "$count$ lap mentve egy új mappába",
-    "placeholders": {
-      "count": {
-        "content": "$1",
-        "example": "12"
-      }
-    },
-    "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
-  },
-  "url": {
-    "message": "URL"
-  },
-  "syncOptions": {
-    "message": "Szinkronizálási beállítások"
-  },
-  "optionShowSyncStatus": {
-    "message": "Szinkronizálási állapotjelzők megjelenítése"
-  },
-  "optionHighlightUnsynced": {
-    "message": "Szinkronizálatlan könyvjelzők halványítása"
-  },
-  "optionAutoRefreshSync": {
-    "message": "Szinkronizálási állapot automatikus frissítése"
-  },
-  "optionSyncRefreshInterval": {
-    "message": "Frissítési időköz"
-  },
-  "optionSyncRefreshIntervalSeconds": {
-    "message": "másodperc"
-  },
-  "syncStatusSynced": {
-    "message": "Szinkronizálva a Google-fiókjával"
-  },
-  "syncStatusLocal": {
-    "message": "Csak helyi – nincs feltöltve"
-  },
-  "syncStatusUnsyncable": {
-    "message": "Nem szinkronizálható"
-  },
-  "syncSuffixSynced": {
-    "message": "(Szinkronizált)"
-  },
-  "syncSuffixLocal": {
-    "message": "(Helyi)"
-  },
-  "optionAutoResizePopup": {
-    "message": "Felugró ablak automatikus átméretezése a tartalomhoz igazítva"
-  },
-  "crossStorageMoveWarning": {
-    "message": "A könyvjelzők nem helyezhetők át a szinkronizált és a helyi tárhely között. Használja a másolás/beillesztés funkciót.",
-    "description": "Warning when trying to move bookmarks across storage types"
-  },
-  "recentBookmarks": {
-    "message": "Legutóbb hozzáadott"
-  },
-  "optionShowRecentBookmarks": {
-    "message": "Legutóbb hozzáadott könyvjelzők megjelenítése a felugró ablak tetején"
-  },
-  "optionShowStatsView": {
-    "message": "Statisztika nézet fül megjelenítése"
-  },
-  "optionShowDeadView": {
-    "message": "Hibás hivatkozások nézet fül megjelenítése"
-  },
-  "optionShowDupesView": {
-    "message": "Ismétlődések nézet fül megjelenítése"
-  },
-  "optionRecentCollapsed": {
-    "message": "Legutóbb hozzáadott szakasz összecsukása alapértelmezés szerint"
-  },
-  "optionsGroupViews": {
-    "message": "Nézetek"
-  },
-  "optionsGroupSort": {
-    "message": "Rendezés"
-  },
-  "optionsGroupStats": {
-    "message": "Statisztikák"
-  },
-  "optionsGroupTools": {
-    "message": "Eszközök"
-  },
-  "optionShowViewTabs": {
-    "message": "Nézetfülek megjelenítése a keresőmező alatt"
-  },
-  "optionRememberView": {
-    "message": "Az utolsó aktív nézet megjegyzése és újranyitása"
-  },
-  "optionShowTabBadges": {
-    "message": "Számjelvények megjelenítése a nézetfüleken"
-  },
-  "optionPaletteEnabled": {
-    "message": "A parancspaletta engedélyezése (Ctrl/Cmd+K)"
-  },
-  "optionQuickAddEnabled": {
-    "message": "A gyors hozzáadás csillaggomb megjelenítése a keresőmező mellett"
-  },
-  "optionQuickAddContextMenu": {
-    "message": "„Könyvjelzőzés a vBookmarks segítségével” bejegyzés hozzáadása az oldal jobb gombos menüjéhez"
-  },
-  "optionQuickAddContextMenuHint": {
-    "message": "Független a gyors hozzáadás csillaggombjától; a klasszikus élmény visszaállítása ezt a bejegyzést is kikapcsolja."
-  },
-  "optionCollapseTabGroupMenu": {
-    "message": "A lapcsoport-bejegyzések összecsukása egy „Lapcsoportok…” almenübe"
-  },
-  "optionCollapseTabGroupMenuHint": {
-    "message": "A mappák és a könyvjelzők helyi menüire egyaránt vonatkozik. Alapértelmezésben kikapcsolt; kis méretű vagy nagy nagyítású képernyőkön a menük alacsonyabbak maradnak."
-  },
-  "optionCollapseSortMenu": {
-    "message": "A rendezési bejegyzések összecsukása egy „Rendezés…” almenübe"
-  },
-  "optionCollapseSortMenuHint": {
-    "message": "A mappa helyi menüjére vonatkozik. Alapértelmezésben bekapcsolt."
-  },
-  "optionShowToolButton": {
-    "message": "Az eszközgomb (⋮) megjelenítése a keresőmező mellett"
-  },
-  "optionClassicExperience": {
-    "message": "A klasszikus fejléc visszaállítása"
-  },
-  "optionClassicExperienceHint": {
-    "message": "Kikapcsolja a parancspalettát, a gyors hozzáadás csillagot, annak jobb gombos menübejegyzését az oldalakon, az eszközgombot és a nézetfüleket. Mindegyik külön-külön újra engedélyezhető a saját szakaszában."
-  },
-  "optionShowItemPath": {
-    "message": "Szülőmappa elérési útjának megjelenítése a listasorokban"
-  },
   "viewRecent": {
     "message": "Staging"
   },
-  "viewTree": {
-    "message": "Fa"
-  },
   "viewSearch": {
     "message": "Keresés"
+  },
+  "viewStateDisabled": {
+    "message": "Letiltva"
+  },
+  "viewStateEnabled": {
+    "message": "Engedélyezve"
+  },
+  "viewStats": {
+    "message": "Statisztikák"
   },
   "viewSwitchAnnounce": {
     "message": "$name$ nézet",
@@ -933,870 +2581,17 @@
       }
     }
   },
-  "viewStateEnabled": {
-    "message": "Engedélyezve"
-  },
-  "viewStateDisabled": {
-    "message": "Letiltva"
-  },
-  "viewEnable": {
-    "message": "Engedélyezés"
-  },
-  "viewDisable": {
+  "viewTabDisable": {
     "message": "Letiltás"
+  },
+  "viewTabGroups": {
+    "message": "Lapcsoportok"
   },
   "viewTabHide": {
     "message": "Elrejtés"
   },
-  "viewTabDisable": {
-    "message": "Letiltás"
-  },
-  "sortFolderContents": {
-    "message": "Mappa tartalmának rendezése"
-  },
-  "sortByName": {
-    "message": "Rendezés név szerint"
-  },
-  "sortByDate": {
-    "message": "Rendezés dátum szerint"
-  },
-  "sortRecursiveSuffix": {
-    "message": "(rekurzív)"
-  },
-  "sortOptions": {
-    "message": "Rendezési opciók…"
-  },
-  "sortDone": {
-    "message": "Mappa rendezve"
-  },
-  "sortByTitle": {
-    "message": "Cím szerint"
-  },
-  "sortByDateAdded": {
-    "message": "Hozzáadás dátuma szerint (újabbak elöl)"
-  },
-  "sortFoldersFirst": {
-    "message": "Mappák legyenek felül"
-  },
-  "sortRecursive": {
-    "message": "Almappák rendezése is (rekurzív)"
-  },
-  "sortRecursiveWarning": {
-    "message": "Ez átrendezi a könyvjelzőket minden almappában."
-  },
-  "tabGroupDialogTitle": {
-    "message": "Új lapcsoport"
-  },
-  "tabGroupTitleLabel": {
-    "message": "Csoport neve"
-  },
-  "tabGroupColorLabel": {
-    "message": "Szín"
-  },
-  "tabGroupColorGrey": {
-    "message": "Szürke",
-    "description": "Accessible name of the grey color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorBlue": {
-    "message": "Kék",
-    "description": "Accessible name of the blue color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorRed": {
-    "message": "Piros",
-    "description": "Accessible name of the red color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorYellow": {
-    "message": "Sárga",
-    "description": "Accessible name of the yellow color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorGreen": {
-    "message": "Zöld",
-    "description": "Accessible name of the green color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorPink": {
-    "message": "Rózsaszín",
-    "description": "Accessible name of the pink color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorPurple": {
-    "message": "Lila",
-    "description": "Accessible name of the purple color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorCyan": {
-    "message": "Cián",
-    "description": "Accessible name of the cyan color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorOrange": {
-    "message": "Narancssárga",
-    "description": "Accessible name of the orange color swatch in the new-tab-group dialog."
-  },
-  "tabGroupUntitled": {
-    "message": "Névtelen csoport"
-  },
-  "tabGroupNoGroups": {
-    "message": "Nincsenek meglévő lapcsoportok"
-  },
-  "tabGroupPickDialogTitle": {
-    "message": "Megnyitás meglévő lapcsoportban"
-  },
-  "quickAddBookmark": {
-    "message": "Oldal könyvjelzőzése (Ctrl+D)"
-  },
-  "quickAddBookmarkCommand": {
-    "message": "Az aktuális lap gyors hozzáadása könyvjelzőként"
-  },
-  "quickAdded": {
-    "message": "Könyvjelző hozzáadva"
-  },
-  "quickAddedTo": {
-    "message": "Könyvjelző hozzáadva: $folderName$",
-    "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarks bar"
-      }
-    }
-  },
-  "quickRemoved": {
-    "message": "Könyvjelző eltávolítva"
-  },
-  "quickRemoveBookmark": {
-    "message": "Könyvjelző eltávolítása (Ctrl+D)"
-  },
-  "toolButtonTitle": {
-    "message": "Eszközök (Ctrl+K)"
-  },
-  "contextMenuAddBookmark": {
-    "message": "Oldal könyvjelzőzése a vBookmarks segítségével"
-  },
-  "deadFilterAll": {
-    "message": "Összes"
-  },
-  "deadFilterBlocked": {
-    "message": "Csak tiltott"
-  },
-  "deadFilterDead": {
-    "message": "Csak halott"
-  },
-  "deadFilterMarked": {
-    "message": "Korábban megjelöltek"
-  },
-  "deadLastScanAt": {
-    "message": "Utolsó vizsgálat: $time$",
-    "placeholders": {
-      "time": {
-        "content": "$1"
-      }
-    }
-  },
-  "deadMark": {
-    "message": "Megjelölés halottként"
-  },
-  "deadMarkAll": {
-    "message": "Összes megjelölése"
-  },
-  "deadMarked": {
-    "message": "Halott sorok megjelölve"
-  },
-  "deadMarkedCount": {
-    "message": "$count$ könyvjelző megjelölve",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "deadMarkedNone": {
-    "message": "Még nincs megjelölt könyvjelző"
-  },
-  "deadMarkedRow": {
-    "message": "Megjelölve"
-  },
-  "deadMarkSelected": {
-    "message": "Kijelöltek megjelölése"
-  },
-  "deadMarkStatusAll": {
-    "message": "Bármilyen állapot"
-  },
-  "deadMarkStatusMarked": {
-    "message": "Megjelölve"
-  },
-  "deadMarkStatusUnmarked": {
-    "message": "Jelöletlen"
-  },
-  "deadMarkTimeLabel": {
-    "message": "Megjelölve"
-  },
-  "deadDetectTimeLabel": {
-    "message": "Észlelve"
-  },
-  "deadSortLabel": {
-    "message": "Rendezés"
-  },
-  "deadSortByDetected": {
-    "message": "Észlelés ideje"
-  },
-  "deadSortByPath": {
-    "message": "Mappa útvonala"
-  },
-  "deadSortByMarked": {
-    "message": "Megjelölés ideje"
-  },
-  "deadMarkedBanner": {
-    "message": "A korábban megjelölt könyvjelzők láthatók. Kattintson az Újraellenőrzés gombra egy új ellenőrzés indításához, vagy kezelje őket az alábbi listában."
-  },
-  "deadMarkedBannerDismiss": {
-    "message": "Elvetés"
-  },
-  "deadProxyAdd": {
-    "message": "Proxykiszolgáló hozzáadása a hibás linkek ellenőrzéséhez"
-  },
-  "deadProxyLabel": {
-    "message": "Proxy: $server$",
-    "placeholders": {
-      "server": {
-        "content": "$1"
-      }
-    }
-  },
-  "deadProxyChange": {
-    "message": "Módosítás"
-  },
-  "deadProxyRemove": {
-    "message": "Eltávolítás"
-  },
-  "deadProxyRemoved": {
-    "message": "Proxykiszolgáló eltávolítva"
-  },
-  "deadProxyPanelHint": {
-    "message": "Adjon meg egy már meglévő proxykiszolgálót (a bővítmény nem biztosít sajátot), pl. 127.0.0.1:7890 vagy socks5://127.0.0.1:1080."
-  },
-  "deadProxyTestUrlLabel": {
-    "message": "Teszt URL"
-  },
-  "deadProxyTestSave": {
-    "message": "Tesztelés és mentés"
-  },
-  "deadProxyTesting": {
-    "message": "Tesztelés…"
-  },
-  "deadProxySaved": {
-    "message": "Proxy mentve — a későbbi vizsgálatok ezen keresztül ellenőrzik újra a közvetlenül elérhetetlen linkeket."
-  },
-  "deadProxyInvalid": {
-    "message": "Érvénytelen proxycím — használjon host:port vagy séma://host:port formátumot (http/https/socks5, hitelesítés nélkül)."
-  },
-  "deadProxyUnreachable": {
-    "message": "Proxy nem érhető el — nincs mentve."
-  },
-  "deadProxyDenied": {
-    "message": "A proxyengedély nem lett megadva."
-  },
-  "deadProxyControlled": {
-    "message": "A proxybeállításokat egy másik bővítmény kezeli."
-  },
-  "deadProxyUnavailable": {
-    "message": "A proxy API nem érhető el ebben a böngészőben."
-  },
-  "deadProxyNudge": {
-    "message": "A proxy újraellenőrzés elválasztja a valóban nem működő linkeket a régió által blokkoltaktól — állítsd be itt vagy a beállítások oldalon."
-  },
-  "deadProxyNeverShow": {
-    "message": "Ne mutassa többé"
-  },
-  "deadStartHint": {
-    "message": "$n$ könyvjelző vizsgálatának elindítása",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "deadStatusBlocked": {
-    "message": "tiltott"
-  },
-  "deadUnmark": {
-    "message": "Halott jelölés eltávolítása"
-  },
-  "deadUnmarkAll": {
-    "message": "Összes jelölés törlése"
-  },
-  "deadUnmarkSelected": {
-    "message": "Kijelöltek megjelölésének törlése"
-  },
-  "dupesApplyAll": {
-    "message": "Összes alkalmazása ($count$)",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "dupesApplySelected": {
-    "message": "Kijelöltek ismétlődésmentesítése ($count$)",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "dupesCleanRestHint": {
-    "message": "Tartsd meg a \"$title$\"-t, és távolítsd el a többi $count$ darabot.",
-    "placeholders": {
-      "title": {
-        "content": "$1"
-      },
-      "count": {
-        "content": "$2"
-      }
-    }
-  },
-  "dupesIgnoreScheme": {
-    "message": "http/https különbségek figyelmen kívül hagyása"
-  },
-  "dupesKeepThis": {
-    "message": "Tartsd meg ezt"
-  },
-  "dupesKeeperSet": {
-    "message": "Megtartónak jelöl"
-  },
-  "dupesPreviewSummary": {
-    "message": "$groups$ csoport · $count$ felszabadítandó",
-    "placeholders": {
-      "groups": {
-        "content": "$1"
-      },
-      "count": {
-        "content": "$2"
-      }
-    }
-  },
-  "dupesRemoveRow": {
-    "message": "E másolat törlése"
-  },
-  "dupesScopeAll": {
-    "message": "Összes könyvjelző"
-  },
-  "dupesScopeBar": {
-    "message": "Csak a könyvjelzősáv"
-  },
-  "dupesStrategyBookmarkBar": {
-    "message": "Tartsd meg a könyvjelzősávban lévőt"
-  },
-  "dupesStrategyMostVisited": {
-    "message": "Tartsd meg a leglátogatottabbat"
-  },
-  "dupesStrategyNewest": {
-    "message": "Tartsd meg a legújabbat"
-  },
-  "dupesStrategyOldest": {
-    "message": "Tartsd meg a legrégebbit"
-  },
-  "dupesStrategyShallowest": {
-    "message": "Tartsd meg a legsekélyebbet"
-  },
-  "dupesStrategyShortestTitle": {
-    "message": "Tartsd meg a legrövidebb címet"
-  },
-  "optionDeadProxyServer": {
-    "message": "Hibás linkek proxykiszolgálója"
-  },
-  "deadProxyServerHint": {
-    "message": "A mentett szerver minden megszűnt link ellenőrzésekor újraellenőrzi a közvetlen ellenőrzésen elbukott könyvjelzőket, elkülönítve a valóban megszűnt linkeket a régiókorlátozottaktól. A Tesztelés és mentés gomb kipróbálja (csak elérhető szerver marad meg); a megszűnt linkek nézetéből is hozzáadhatja."
-  },
-  "deadProxyClear": {
-    "message": "Törlés"
-  },
-  "deadProxyNone": {
-    "message": "(nincs beállítva)"
-  },
-  "optionDeadProxyStrip": {
-    "message": "Jelenítse meg a proxy hozzáadására vonatkozó tippet a holt linkek nézetében"
-  },
-  "optionDeadProxyStripHint": {
-    "message": "A kikapcsolás elrejti ott ezt a tippet; a proxy szerver itt továbbra is beállítható, és egy mentett szerver mindig megjeleníti a kezelési sorát a nézetben."
-  },
-  "optionDeadScanConcurrency": {
-    "message": "Holt hivatkozás vizsgálat párhuzamossága (1-16)"
-  },
-  "optionDeadScanTimeout": {
-    "message": "Holt hivatkozás vizsgálat időtúllépés másodpercben (2-30)"
-  },
-  "paletteCmdGoDead": {
-    "message": "Ugrás a holt hivatkozások nézethez"
-  },
-  "paletteCmdGoDupes": {
-    "message": "Ugrás a duplikátumok nézethez"
-  },
-  "paletteCmdGoRecent": {
-    "message": "Ugrás a legutóbbi nézethez"
-  },
-  "paletteCmdGoSearch": {
-    "message": "Ugrás a kereső nézethez"
-  },
-  "paletteCmdGoTree": {
-    "message": "Ugrás a fa nézethez"
-  },
-  "paletteCmdOptions": {
-    "message": "Beállítások oldal megnyitása"
-  },
-  "paletteCmdSearchInView": {
-    "message": "Keresés '$query$' a kereső nézetben",
-    "placeholders": {
-      "query": {
-        "content": "$1"
-      }
-    }
-  },
-  "rowActionDelete": {
-    "message": "Törlés"
-  },
-  "rowActionMark": {
-    "message": "Jelöld meg holtnak"
-  },
-  "rowActionReveal": {
-    "message": "Megjelenítés a fában"
-  },
-  "rowActionUnmark": {
-    "message": "Holt jelölés eltávolítása"
-  },
-  "viewDead": {
-    "message": "Holt hivatkozások"
-  },
-  "viewDupes": {
-    "message": "Duplikátumok"
-  },
-  "viewStats": {
-    "message": "Statisztikák"
-  },
-  "paletteCmdGoStats": {
-    "message": "Ugrás a statisztikák nézethez"
-  },
-  "optionStatsEnabled": {
-    "message": "Látogatási statisztikák engedélyezése"
-  },
-  "optionFaviconContrast": {
-    "message": "Alacsony kontrasztú faviconok invertálása"
-  },
-  "optionFaviconContrastHint": {
-    "message": "A világos témák fehér ikonjai és a sötét témák fekete ikonjai invertálva lesznek, hogy láthatók maradjanak. Minden ikon a betöltésekor egyszer kerül mintavételezésre – böngészés közben nincs többletterhelés."
-  },
-  "optionFaviconEnrich": {
-    "message": "Hiányzó webhelyikonok lekérése"
-  },
-  "optionFaviconEnrichHint": {
-    "message": "Azon könyvjelzőzött webhelyeknél, amelyekhez a Chrome nem rendelkezik gyorsítótárazott ikonnal, töltse le a tényleges ikont közvetlenül a webhelyről (/favicon.ico, majd az oldal által deklarált ikonok). A kérések csak az Ön által könyvjelzőzött webhelyekre irányulnak."
-  },
-  "optionFaviconEnrichAgg": {
-    "message": "Harmadik féltől származó ikon-tartalék"
-  },
-  "optionFaviconEnrichAggHint": {
-    "message": "Ha a közvetlen letöltés sikertelen, a rendszer a tartomány alapján keresi az ikont a beépített harmadik féltől származó ikonszolgáltatók listájában ($providers$). Az elérhetetlen szolgáltatást kihagyja, és a következőt próbálja ki – 6 órán keresztül nem próbálkozik újra vele.",
-    "placeholders": {
-      "providers": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionFaviconBackup": {
-    "message": "Ikon-gyorsítótár belefoglalása a biztonsági mentésekbe"
-  },
-  "optionFaviconBackupHint": {
-    "message": "A beállítások exportálásába/importálásába a bővített favicon-gyorsítótár (webhelyenkénti adatok, amelyek nagyok lehetnek) is beletartozik. Ez a már gyorsítótárazott ikonokat is magában foglalja, akkor is, ha a letöltés ki van kapcsolva. Kikapcsolva a biztonsági mentés kicsi marad; az ikonok úgyis automatikusan újra letöltődnek."
-  },
-  "optionFaviconCacheClear": {
-    "message": "Ikongyorsítótár törlése"
-  },
-  "optionFaviconCacheClearConfirm": {
-    "message": "Törli a bővített ikon-gyorsítótárat? Az ikonok a következő megnyitáskor automatikusan újra letöltődnek."
-  },
-  "optionFaviconCacheEmpty": {
-    "message": "Nincs törlendő ikon-gyorsítótár."
-  },
-  "optionFaviconCacheCleared": {
-    "message": "Az ikongyorsítótár törölve. Az ikonok a következő megnyitáskor újra lekérésre kerülnek."
-  },
-  "favGalleryLink": {
-    "message": "Frissített ikonok megtekintése",
-    "description": "Options link (Icons group, right of the Clear icon cache button): opens the favicon gallery page listing the sites whose icons were refetched."
-  },
-  "favGalleryTitle": {
-    "message": "Frissített webhelyikonok",
-    "description": "Favicon gallery page title (h1 + document title)."
-  },
-  "favGalleryHint": {
-    "message": "Azok az ikonok, amelyeket a vBookmarks olyan könyvjelzőzött webhelyekhez beszerzett, amelyekhez a Chrome nem tárolt ikont – hogy honnan származnak, és melyik könyvjelző használja őket. Csak megjelenítésre.",
-    "description": "Subtitle under the favicon gallery title, explaining the page is read-only."
-  },
-  "favGallerySearch": {
-    "message": "Szűrés webhely, cím vagy útvonal szerint",
-    "description": "Placeholder of the favicon gallery filter input."
-  },
-  "favGalleryAll": {
-    "message": "Összes",
-    "description": "Favicon gallery source filter chip: show every source."
-  },
-  "favSrcDirect": {
-    "message": "Közvetlen",
-    "description": "Favicon gallery source badge: the icon was fetched directly from the site itself."
-  },
-  "favSrcProxy": {
-    "message": "Proxy",
-    "description": "Favicon gallery source badge: the icon was fetched through the user's own proxy relay."
-  },
-  "favSrcLegacy": {
-    "message": "Korábbi gyorsítótár",
-    "description": "Favicon gallery source badge: cached before the source was recorded, so the origin is unknown."
-  },
-  "favGalleryCompare": {
-    "message": "Összehasonlítás a helyettesítő ikonnal",
-    "description": "Favicon gallery toggle button: switch every icon to the generic placeholder it replaced (before/after comparison)."
-  },
-  "favGalleryShowingBefore": {
-    "message": "Vissza a valódi ikonokhoz",
-    "description": "Favicon gallery toggle button while the placeholder comparison is shown: switch back to the real fetched icons."
-  },
-  "favGalleryStatSites": {
-    "message": "$n$ webhely",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    },
-    "description": "Favicon gallery stats strip: how many sites have a refreshed icon."
-  },
-  "favGalleryStatBookmarks": {
-    "message": "$n$ könyvjelző",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    },
-    "description": "Favicon gallery stats strip: how many bookmarks sit on the refreshed sites."
-  },
-  "favGalleryVisits": {
-    "message": "$n$ rögzített megnyitás",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    },
-    "description": "Favicon gallery tooltip on a bookmark row's visit-count pill."
-  },
-  "favGalleryFailedTitle": {
-    "message": "Legutóbb próbálva, ikon nem található",
-    "description": "Favicon gallery heading of the muted section listing hosts whose icon fetch failed recently."
-  },
-  "favGalleryFailedHint": {
-    "message": "A sikertelen próbálkozásokat 24 óra, 3 nap és 7 nap múlva megismételjük, majd feladjuk, amíg az ikon-gyorsítótár törlésre nem kerül.",
-    "description": "Favicon gallery hint under the failed-fetch section title."
-  },
-  "favGalleryGaveUp": {
-    "message": "Feladva",
-    "description": "Favicon gallery badge on a failed-strip host whose retries are exhausted (it stays untouched until the icon cache is cleared)."
-  },
-  "favGalleryOrphan": {
-    "message": "Ezen a gazdagépen nem maradt könyvjelző – az ikon a gyorsítótárral együtt törlődik.",
-    "description": "Favicon gallery note on a card whose host no longer has any bookmark."
-  },
-  "favGalleryEmptyTitle": {
-    "message": "Még nincsenek frissített ikonok",
-    "description": "Favicon gallery empty-state heading."
-  },
-  "favGalleryEmptyText": {
-    "message": "Amikor a felugró ablak olyan könyvjelzőzött webhelyet talál, amelyhez a Chrome nem tárol ikont, a vBookmarks lekéri a valódit, és itt listázza.",
-    "description": "Favicon gallery empty-state body text."
-  },
-  "storageUsageIcon": {
-    "message": "Ikon-gyorsítótár"
-  },
-  "storageUsageOther": {
-    "message": "Egyéb"
-  },
-  "storageUsageSummary": {
-    "message": "Felhasznált: $1$ / $2$",
-    "placeholders": {
-      "1": {
-        "content": "$1"
-      },
-      "2": {
-        "content": "$2"
-      }
-    }
-  },
-  "storageUsageFree": {
-    "message": "Szabad"
-  },
-  "storageUsageHint": {
-    "message": "Csak a helyi bővítménytár (chrome.storage.local, körülbelül 10 MB kvóta): az ikon-gyorsítótár, valamint a beállítások és egyéb helyi adatok. A szinkronizált beállítások, munkamenet-adatok és a könyvjelzőtár nem számítanak bele."
-  },
-  "optionsDonate": {
-    "message": "Adomány"
-  },
-  "optionsGithubLink": {
-    "message": "GitHub"
-  },
-  "optionsHomepageLink": {
-    "message": "Kezdőlap"
-  },
-  "optionsSince": {
-    "message": "A Neat Bookmarks forkja, $days$ napja karbantartva.",
-    "placeholders": {
-      "days": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionsVersion": {
-    "message": "vBookmarks verzió"
-  },
-  "statsSortByCount": {
-    "message": "Darabszám szerint"
-  },
-  "statsSortByRecent": {
-    "message": "Legutóbbi szerint"
-  },
-  "statsShowUnbookmarked": {
-    "message": "Nem megjelöltek mutatása"
-  },
-  "statsShowUnbookmarkedHint": {
-    "message": "A történet azon oldalainak belefoglalása, amelyek nincsenek könyvjelzőként mentve."
-  },
-  "statsEmpty": {
-    "message": "A statisztikák a könyvjelzők megnyitásával épülnek fel"
-  },
-  "statsDisabledHint": {
-    "message": "A látogatási statisztikák ki vannak kapcsolva — engedélyezd a Beállítások → Nézetek alatt"
-  },
-  "statsVisitCount": {
-    "message": "Látogatva $count$ alkalommal",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "statsClearData": {
-    "message": "Statisztikák törlése"
-  },
-  "statsClearConfirm": {
-    "message": "Törli $count$ könyvjelző látogatási statisztikáit? Ez nem vonható vissza.",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "statsHistoryBanner": {
-    "message": "Engedélyezze az előzmények elérését a múltbeli látogatások statisztikáinak feltöltéséhez."
-  },
-  "statsHistoryEnable": {
-    "message": "Engedélyez"
-  },
-  "statsHistoryDismiss": {
-    "message": "Ne mutassa többé"
-  },
-  "statsHistoryImported": {
-    "message": "$count$ könyvjelző múltbeli látogatásai importálva.",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "paletteCmdToggleViewTabs": {
-    "message": "Lapok nézetének váltása"
-  },
-  "paletteCmdTheme": {
-    "message": "Téma beállítása…"
-  },
-  "paletteCmdThemeUsage": {
-    "message": "Használat: /theme után egy témnév — auto, light, dark, ink vagy paper (egyedi előtag is működik, pl. /theme d)."
-  },
-  "paletteCustomTag": {
-    "message": "egyéni"
-  },
-  "paletteCustomDeleteConfirm": {
-    "message": "Törli a(z) \"$1\" parancsot? A módosítás szinkronizálódik az összes eszközére."
-  },
-  "paletteCustomBroken": {
-    "message": "A(z) \"$1\" parancs mappája már nem létezik. Törli a parancsot?"
-  },
-  "paletteCmdSaveAsCommand": {
-    "message": "Mentés \"$1\" parancsként…"
-  },
-  "paletteActionOpenUrl": {
-    "message": "URL megnyitása"
-  },
-  "paletteActionOpenUrlGroup": {
-    "message": "Könyvjelzőmappa-csoport megnyitása"
-  },
-  "paletteActionViewPreset": {
-    "message": "Nézet megnyitása előbeállítással"
-  },
-  "paletteActionUrlTemplate": {
-    "message": "URL-sablon megnyitása"
-  },
-  "optionsGroupPalette": {
-    "message": "Parancspaletta"
-  },
-  "paletteCustomHint": {
-    "message": "Egyéni perjeles parancsok a parancspalettához (Ctrl/Cmd+K). A beállításaival szinkronizálódnak — legfeljebb 100 bejegyzés."
-  },
-  "paletteCustomAdd": {
-    "message": "Parancs hozzáadása…"
-  },
-  "paletteCustomUsage": {
-    "message": "$1 / $2"
-  },
-  "paletteCustomSlash": {
-    "message": "Perjel (a / utáni szó)"
-  },
-  "paletteCustomAliases": {
-    "message": "Aliasok (vesszővel elválasztva)"
-  },
-  "paletteCustomAction": {
-    "message": "Művelet"
-  },
-  "paletteCustomUrl": {
-    "message": "URL"
-  },
-  "paletteCustomTemplate": {
-    "message": "URL-sablon — a %s helyére a parancs utáni szavak kerülnek"
-  },
-  "paletteCustomWhere": {
-    "message": "Megnyitás itt"
-  },
-  "paletteCustomFolder": {
-    "message": "Könyvjelzőmappa"
-  },
-  "paletteCustomView": {
-    "message": "Nézet"
-  },
-  "paletteCustomStrategy": {
-    "message": "Dedup-stratégia előbeállítása"
-  },
-  "paletteCustomScope": {
-    "message": "Dedup-hatókör előbeállítása"
-  },
-  "paletteCustomScan": {
-    "message": "Vizsgálat indítása bevitelkor"
-  },
-  "paletteWhereCurrent": {
-    "message": "Aktuális lap"
-  },
-  "paletteWhereTab": {
-    "message": "Új lap"
-  },
-  "paletteWhereWindow": {
-    "message": "Új ablak"
-  },
-  "paletteWhereBackground": {
-    "message": "Háttérlapok"
-  },
-  "paletteCustomSave": {
-    "message": "Parancs mentése"
-  },
-  "paletteCustomErrSlash": {
-    "message": "Perjel: 1–24 karakter (kisbetű, számjegy vagy kötőjel), betűvel vagy számjeggyel kezdve."
-  },
-  "paletteCustomErrAlias": {
-    "message": "Aliasok: ugyanazok a szabályok, mint a perjelnél (1–24 karakter: kisbetű, számjegy vagy kötőjel)."
-  },
-  "paletteCustomErrTaken": {
-    "message": "Ez a perjel vagy alias már foglalt."
-  },
-  "paletteCustomErrUrl": {
-    "message": "Csak http:// vagy https:// URL-ek engedélyezettek."
-  },
-  "paletteCustomErrFolder": {
-    "message": "Válasszon egy könyvjelzőmappát."
-  },
-  "paletteCustomErrView": {
-    "message": "Válasszon egy nézetet."
-  },
-  "paletteCustomErrTemplate": {
-    "message": "A sablonnak pontosan egy %s-t kell tartalmaznia."
-  },
-  "paletteCustomErrAction": {
-    "message": "Válasszon művelettípust."
-  },
-  "paletteCustomErrLimit": {
-    "message": "Parancslimit elérve (100) — előbb töröljön egyet."
-  },
-  "paletteCustomEmpty": {
-    "message": "Még nincsenek egyéni parancsok."
-  },
-  "recentGroupToday": {
-    "message": "Ma"
-  },
-  "recentGroupWeek": {
-    "message": "Ezen a héten"
-  },
-  "recentGroupMonth": {
-    "message": "Ebben a hónapban"
-  },
-  "recentGroupOlder": {
-    "message": "Régebbi"
-  },
-  "searchHistoryRerun": {
-    "message": "Új keresés"
-  },
-  "optionsGroupBackup": {
-    "message": "Biztonsági mentés"
-  },
-  "optionsGroupContextMenu": {
-    "message": "Helyi menük"
-  },
-  "optionsGroupIcons": {
-    "message": "Ikonok"
-  },
-  "settingsExport": {
-    "message": "Beállítások exportálása"
-  },
-  "settingsImport": {
-    "message": "Beállítások importálása"
-  },
-  "settingsBackupHint": {
-    "message": "Exportálás: minden beállítás (beleértve a szinkronizálási beállításokat is) JSON-fájlba mentése. Importálás: a biztonsági mentés visszaolvasztása: a fájlban lévő beállítások felülírják a jelenlegieket, a többi megmarad."
-  },
-  "settingsImportConfirm": {
-    "message": "Az importálás felülírja a biztonsági mentési fájlban található összes beállítást (a fájlban nem szereplő beállítások megmaradnak), és újratölti ezt az oldalt. Folytatja?"
-  },
-  "settingsImportInvalid": {
-    "message": "Érvénytelen beállításfájl: nem vBookmarks beállítások biztonsági mentése."
-  },
-  "settingsImportDone": {
-    "message": "Beállítások importálva. Az oldal most újratöltődik."
-  },
-  "settingsImportError": {
-    "message": "Néhány beállítás nem írható (tárhelykvóta vagy átmeneti hiba miatt). Az importálás nem fejeződött be – kérjük, próbálja újra."
-  },
-  "statsSectionRecent": {
-    "message": "Legutóbbi látogatások"
-  },
-  "statsSectionBookmarks": {
-    "message": "Könyvjelző statisztikák"
-  },
-  "statsHistoryGuide": {
-    "message": "A legutóbbi látogatások listázásához adjon hozzáférési engedélyt az előzményekhez."
-  },
-  "statsHistoryAdd": {
-    "message": "Hozzáadás a könyvjelzőkhöz"
-  },
-  "statsHistoryBookmarked": {
-    "message": "Könyvjelzőzve"
-  },
-  "deadPause": {
-    "message": "Szünet"
-  },
-  "deadResume": {
-    "message": "Folytatás"
-  },
-  "deadCancel": {
-    "message": "Mégse"
-  },
-  "deadPaused": {
-    "message": "Szüneteltetve"
+  "viewTree": {
+    "message": "Fa"
   },
   "whatsNewChangelog": {
     "message": "Változásnapló"
@@ -1808,800 +2603,5 @@
         "content": "$1"
       }
     }
-  },
-  "viewHiddenTabsHint": {
-    "message": "A(z) $view$ nézetben van. A fához való visszatéréshez nyomja meg a(z) $back$ gombot, vagy használja a parancspalettát.",
-    "placeholders": {
-      "view": {
-        "content": "$1"
-      },
-      "back": {
-        "content": "$2"
-      }
-    }
-  },
-  "viewTabGroups": {
-    "message": "Lapcsoportok"
-  },
-  "optionShowTabGroupsView": {
-    "message": "Lapcsoportok nézetének megjelenítése"
-  },
-  "tabGroupsViewEmpty": {
-    "message": "Nincs lap ebben az ablakban"
-  },
-  "tabGroupsToolbarRefresh": {
-    "message": "Frissítés"
-  },
-  "tabGroupsCollapseAll": {
-    "message": "Összecsukás"
-  },
-  "tabGroupsExpandAll": {
-    "message": "Kinyitás"
-  },
-  "tabGroupsSummary": {
-    "message": "$tabs$ lap · $groups$ csoport",
-    "placeholders": {
-      "tabs": {
-        "content": "$1"
-      },
-      "groups": {
-        "content": "$2"
-      }
-    }
-  },
-  "tabGroupsGroupCount": {
-    "message": "$count$ lap",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsCurrentTab": {
-    "message": "Aktuális"
-  },
-  "tabGroupsAddBookmark": {
-    "message": "Lap könyvjelzőzése"
-  },
-  "tabGroupsSaveFolder": {
-    "message": "Lapcsoport mentése könyvjelzőmappaként"
-  },
-  "tabGroupsGroupSavedToFolder": {
-    "message": "$count$ lap mentve: $folder$",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      },
-      "folder": {
-        "content": "$2"
-      }
-    }
-  },
-  "tabGroupsBookmarksAdded": {
-    "message": "$count$ könyvjelző hozzáadva: $folder$",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      },
-      "folder": {
-        "content": "$2"
-      }
-    }
-  },
-  "tabGroupsSelectNewGroup": {
-    "message": "Új lapcsoport"
-  },
-  "tabGroupsSelectOpenInto": {
-    "message": "Megnyitás meglévő lapcsoportban…"
-  },
-  "tabGroupsSelectSaveFolder": {
-    "message": "Mentés könyvjelzőmappaként"
-  },
-  "tabGroupsSelectClose": {
-    "message": "Bezárás"
-  },
-  "tabGroupsSelectSleep": {
-    "message": "Alvás"
-  },
-  "tabGroupsCopyMoveDialog": {
-    "message": "A kijelölt lapok már egy lapcsoporthoz tartoznak. Másolja őket (megnyitás új helyen) vagy mozgassa (eltávolítás a jelenlegi csoportból)?"
-  },
-  "tabGroupsCopyMoveCopy": {
-    "message": "Másolás"
-  },
-  "tabGroupsCopyMoveMove": {
-    "message": "Mozgatás"
-  },
-  "tabGroupsConfirmClose": {
-    "message": "Bezárja a(z) $count$ lapot?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsConfirmSleep": {
-    "message": "Alvó állapotba helyezi a(z) $count$ lapot?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsClosedToast": {
-    "message": "$count$ lap bezárva",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsSleptToast": {
-    "message": "$count$ lap elaltatva",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsBatchClosedTitle": {
-    "message": "Bezárt lapok"
-  },
-  "tabGroupsPinnedUngroupedToast": {
-    "message": "Rögzítve — eltávolítva a lapcsoportból"
-  },
-  "tabGroupsReopenAction": {
-    "message": "Újranyitás"
-  },
-  "tabGroupsWakeAction": {
-    "message": "Ébresztés"
-  },
-  "tabGroupsRecordDeletedToast": {
-    "message": "A bezárt rekord eltávolítva"
-  },
-  "tabGroupsClosedTabRemovedToast": {
-    "message": "Eltávolítva a bezárt rekordból"
-  },
-  "tabGroupsClearedToast": {
-    "message": "$count$ bezárt rekord törölve",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "bookmarkFolderPickDialogTitle": {
-    "message": "Hozzáadás könyvjelzőmappához"
-  },
-  "bookmarkFolderNoFolders": {
-    "message": "Nincs könyvjelzőmappa"
-  },
-  "tabGroupsSelectAddBookmarks": {
-    "message": "Hozzáadás könyvjelzőmappához…"
-  },
-  "paletteCmdGoTabGroups": {
-    "message": "Ugrás a lapcsoportok nézetére"
-  },
-  "tabGroupsActivateGroup": {
-    "message": "Ugrás a lapcsoporthoz"
-  },
-  "tabGroupsRenameGroup": {
-    "message": "Lapcsoport átnevezése"
-  },
-  "tabGroupsRenameDialog": {
-    "message": "Lapcsoport átnevezése"
-  },
-  "tabGroupsCloseGroup": {
-    "message": "Lapcsoport bezárása"
-  },
-  "tabGroupsSleepGroup": {
-    "message": "Lapcsoport alvó állapotba"
-  },
-  "tabGroupsWakeGroup": {
-    "message": "Lapcsoport ébresztése"
-  },
-  "tabGroupsActivateTab": {
-    "message": "Ugrás a lapra"
-  },
-  "tabGroupsCollapseGroup": {
-    "message": "Csoport összecsukása"
-  },
-  "tabGroupsExpandGroup": {
-    "message": "Csoport kinyitása"
-  },
-  "tabGroupsMenuAddBookmark": {
-    "message": "Lap könyvjelzőzése"
-  },
-  "tabGroupsMenuSaveFolder": {
-    "message": "Mentés könyvjelzőmappaként"
-  },
-  "tabGroupsSyncCollapse": {
-    "message": "Szinkronizálás a böngészővel"
-  },
-  "tabGroupsSyncCollapseHint": {
-    "message": "Ha be van jelölve, a csoport összecsukása vagy kibontása ebben a nézetben frissíti a böngésző lapcsoportját is. Alapértelmezés szerint ki van kapcsolva, így a nézet összecsukása helyi marad."
-  },
-  "tabGroupsColorStyle": {
-    "message": "Lapcsoport színstílusa"
-  },
-  "tabGroupsColorStyleHint": {
-    "message": "A Ki csak a színpontot mutatja. A Szélsáv színes csíkot rajzol a csoport bal szélére. A Színösszekötő vonal színes vonalat húz a csoport pontja alá, soronként egy jelöléssel, így a teljes csoport egy fává kapcsolódik."
-  },
-  "tabGroupsColorStyleOff": {
-    "message": "Ki (csak színpont)"
-  },
-  "tabGroupsColorStyleEdge": {
-    "message": "Szélsáv"
-  },
-  "tabGroupsColorStyleLine": {
-    "message": "Színösszekötő vonal"
-  },
-  "tabGroupsBookmarked": {
-    "message": "Könyvjelzőzve"
-  },
-  "tabGroupsRemoveBookmark": {
-    "message": "Könyvjelző eltávolítása"
-  },
-  "tabGroupsBookmarkRemoved": {
-    "message": "$count$ könyvjelző eltávolítva",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsPinned": {
-    "message": "Rögzített lap"
-  },
-  "tabGroupsDiscarded": {
-    "message": "Alvó lap"
-  },
-  "tabGroupsPinTab": {
-    "message": "Lap rögzítése"
-  },
-  "tabGroupsUnpinTab": {
-    "message": "Lap rögzítésének feloldása"
-  },
-  "tabGroupsSleepTab": {
-    "message": "Lap elaltatása"
-  },
-  "tabGroupsWakeTab": {
-    "message": "Lap ébresztése"
-  },
-  "tabGroupsOpenGroups": {
-    "message": "Megnyitott lapcsoportok"
-  },
-  "tabGroupsClosedGroups": {
-    "message": "Legutóbb bezárt"
-  },
-  "tabGroupsUngroupedTabs": {
-    "message": "Csoportosítatlan lapok"
-  },
-  "tabGroupsUngroupGroup": {
-    "message": "Csoportosítás megszüntetése"
-  },
-  "tabGroupsMoveNewWindow": {
-    "message": "Csoport új ablakba"
-  },
-  "tabGroupsWindow": {
-    "message": "$1$. ablak",
-    "placeholders": {
-      "1": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsCurrentWindow": {
-    "message": "Aktuális ablak"
-  },
-  "tabGroupsReopenGroup": {
-    "message": "Lapcsoport újranyitása"
-  },
-  "tabGroupsDeleteClosedGroup": {
-    "message": "Bezárt lapcsoport törlése"
-  },
-  "tabGroupsCollapseWindow": {
-    "message": "Ablak összecsukása"
-  },
-  "tabGroupsCloseWindow": {
-    "message": "Ablak bezárása"
-  },
-  "tabGroupsWindowClosedTitle": {
-    "message": "Bezárt ablak"
-  },
-  "tabGroupsExpandWindow": {
-    "message": "Ablak kibontása"
-  },
-  "tabGroupsClearClosedGroups": {
-    "message": "Összes törlése"
-  },
-  "tabGroupsConfirmClearClosed": {
-    "message": "Törli az összes nemrég bezárt rekordot? Innen már nem nyithatók meg újra."
-  },
-  "tabGroupsFilterPlaceholder": {
-    "message": "Nyitott lapok szűrése"
-  },
-  "tabGroupsNoMatchingTabs": {
-    "message": "Nincs egyező lap"
-  },
-  "tabGroupsClosedOpenTab": {
-    "message": "Megnyitás új lapon"
-  },
-  "tabGroupsRemoveClosedTab": {
-    "message": "Eltávolítás a mentett csoportból"
-  },
-  "tabGroupsClosedTimeLabel": {
-    "message": "Bezárva:"
-  },
-  "tabGroupsExpandedExpand": {
-    "message": "Kibontás"
-  },
-  "tabGroupsExpandedCollapse": {
-    "message": "Összecsukás"
-  },
-  "optionTabGroupsClosedLimit": {
-    "message": "Megőrzendő bezárt lap/csoport előzmények"
-  },
-  "folderPickMoveHere": {
-    "message": "Ide helyezés"
-  },
-  "folderPickCopyHere": {
-    "message": "Másolás ide"
-  },
-  "folderPickFilter": {
-    "message": "Mappák szűrése…"
-  },
-  "folderPickFavNote": {
-    "message": "A nem könyvjelzőzött elemek itt kerülnek könyvjelzőzésre"
-  },
-  "folderPickPinned": {
-    "message": "Rögzített"
-  },
-  "folderPickRecent": {
-    "message": "Legutóbbi"
-  },
-  "pinFolder": {
-    "message": "Mappa rögzítése"
-  },
-  "unpinFolder": {
-    "message": "Mappa rögzítésének feloldása"
-  },
-  "stagingAdd": {
-    "message": "Küldés a várólistára"
-  },
-  "stagingAdded": {
-    "message": "Elküldve a várólistára"
-  },
-  "stagingAlready": {
-    "message": "Már a gyűjtőben van"
-  },
-  "stagingAddedSummary": {
-    "message": "$n$ elem hozzáadva; $m$ már gyűjtőben",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      },
-      "m": {
-        "content": "$2"
-      }
-    }
-  },
-  "stagingFull": {
-    "message": "A gyűjtő megtelt – előbb távolítson el néhány elemet"
-  },
-  "stagingFolderEmpty": {
-    "message": "Ebben a mappában nincs könyvjelző a gyűjtéshez"
-  },
-  "stagingConfirmFolder": {
-    "message": "Gyűjti $n$ könyvjelzőt ebből a mappából?",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingConfirmFolderOk": {
-    "message": "Előkészítés"
-  },
-  "stagingRemove": {
-    "message": "Eltávolítás a gyűjtőből"
-  },
-  "stagingRemoved": {
-    "message": "Eltávolítva a gyűjtőből"
-  },
-  "recentStageAll": {
-    "message": "Összes újonnan hozzáadott gyűjtése"
-  },
-  "recentSectionTitle": {
-    "message": "Legutóbb hozzáadva"
-  },
-  "stagingEmpty": {
-    "message": "Még nincs semmi előkészítve. Küldjön ide könyvjelzőket bármely nézetből — a sorban lévő repülő gombbal vagy a jobb egérgombos menüvel — majd rendezze és helyezze el őket tömegesen."
-  },
-  "stagingFromHistory": {
-    "message": "Előzményekből"
-  },
-  "stagingGroupExpand": {
-    "message": "Csoport kibontása"
-  },
-  "stagingGroupCollapse": {
-    "message": "Csoport összecsukása"
-  },
-  "stagingGroupRename": {
-    "message": "Csoport átnevezése…"
-  },
-  "stagingGroupDissolve": {
-    "message": "Csoport feloldása"
-  },
-  "stagingGroupDissolved": {
-    "message": "Csoport feloldva – az elemek a gyűjtőben maradtak"
-  },
-  "stagingGroupDelete": {
-    "message": "Csoport törlése (elemekkel)"
-  },
-  "stagingGroupDeleteConfirm": {
-    "message": "Törli a(z) \"$1\" csoportot? $2 eleme is elhagyja az előkészítő területet."
-  },
-  "stagingGroupDeleted": {
-    "message": "Csoport törölve — $1 elem eltávolítva"
-  },
-  "stagingGroupAssign": {
-    "message": "Csoport…"
-  },
-  "stagingGroupAssignTitle": {
-    "message": "Hozzárendelés csoporthoz"
-  },
-  "stagingGroupNew": {
-    "message": "Új csoport"
-  },
-  "stagingGroupNamePrompt": {
-    "message": "Új csoport neve"
-  },
-  "stagingGroupNoGroups": {
-    "message": "Még nincs csoport"
-  },
-  "stagingShortcutAdd": {
-    "message": "Parancsikon hozzáadása"
-  },
-  "stagingShortcutBarLabel": {
-    "message": "Áthelyezés ide:"
-  },
-  "stagingGuideText": {
-    "message": "Rendezze itt a könyvjelzőket — válasszon sorokat, és lépjen kijelölési módba a tömeges műveletekhez."
-  },
-  "stagingGuideDismiss": {
-    "message": "Ne mutasd újra"
-  },
-  "stagingShortcutTitle": {
-    "message": "Áthelyezési parancsikon"
-  },
-  "stagingShortcutEdit": {
-    "message": "Parancsikon szerkesztése"
-  },
-  "stagingShortcutAlias": {
-    "message": "Alias"
-  },
-  "stagingShortcutPickFolder": {
-    "message": "Célmappa kiválasztása…"
-  },
-  "stagingShortcutSave": {
-    "message": "Mentés"
-  },
-  "stagingShortcutRemove": {
-    "message": "Parancsikon eltávolítása"
-  },
-  "stagingShortcutRemoved": {
-    "message": "Parancsikon eltávolítva"
-  },
-  "stagingShortcutMove": {
-    "message": "Kijelöltek áthelyezése ide: $1$",
-    "placeholders": {
-      "1": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingBucketTitle": {
-    "message": "Nem könyvjelzőzött"
-  },
-  "stagingBucketFavAll": {
-    "message": "Összes kedvencnek jelölése"
-  },
-  "stagingNew": {
-    "message": "új $n$",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingRowFav": {
-    "message": "Elem kedvencnek jelölése"
-  },
-  "stagingRowUnfav": {
-    "message": "Elem kedvenc jelölésének törlése"
-  },
-  "stagingFav": {
-    "message": "Kedvenc"
-  },
-  "stagingUnfav": {
-    "message": "Kedvenc törlése"
-  },
-  "stagingFavDone": {
-    "message": "$n$ elem kedvencnek jelölve",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingUnfavDone": {
-    "message": "$n$ elem kedvenc jelölése törölve",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "groupSaveToFolder": {
-    "message": "Mentés mappába…"
-  },
-  "groupCopyToFolder": {
-    "message": "Másolás mappába…"
-  },
-  "stagingCount": {
-    "message": "$n$ előkészítve",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingMoveCopy": {
-    "message": "Áthelyezés/másolás…"
-  },
-  "stagingMoveDone": {
-    "message": "$n$ elem áthelyezve",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingCopyDone": {
-    "message": "$n$ elem másolva",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingMoveConfirm": {
-    "message": "Áthelyezi $n$ elemet a kiválasztott mappába?",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingMoveConfirmOk": {
-    "message": "Áthelyezés"
-  },
-  "stagingDeleteConfirm": {
-    "message": "Törli $n$ elemet? A nem könyvjelzőzöttek csak elhagyják az előkészítő területet.",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingDeleted": {
-    "message": "$n$ könyvjelző törölve",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingRemovedCount": {
-    "message": "$n$ elem eltávolítva az előkészítő területről",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingClear": {
-    "message": "Előkészítő törlése"
-  },
-  "stagingClearConfirm": {
-    "message": "Törli a teljes előkészítő területet? A könyvjelzőfa nem érintett."
-  },
-  "stagingClearConfirmOk": {
-    "message": "Törlés"
-  },
-  "stagingCleared": {
-    "message": "Előkészítő terület törölve"
-  },
-  "groupPlaceTooltip": {
-    "message": "Csoport mentése mappába…"
-  },
-  "copyBookmark": {
-    "message": "Másolás"
-  },
-  "cutBookmark": {
-    "message": "Kivágás"
-  },
-  "copyMoveTo": {
-    "message": "Másolás/áthelyezés…"
-  },
-  "pasteHere": {
-    "message": "Beillesztés ide"
-  },
-  "copiedToast": {
-    "message": "Másolva: $t$",
-    "placeholders": {
-      "t": {
-        "content": "$1"
-      }
-    }
-  },
-  "cutToast": {
-    "message": "Kivágva: $t$ — illessze be a célmappába (Esc megszakítja)",
-    "placeholders": {
-      "t": {
-        "content": "$1"
-      }
-    }
-  },
-  "pasteDone": {
-    "message": "Beillesztve"
-  },
-  "pasteGone": {
-    "message": "A könyvjelző már nem létezik — vágólap törölve"
-  },
-  "folderCopyList": {
-    "message": "Címek és címek másolása"
-  },
-  "folderCopyText": {
-    "message": "Egyszerű szöveges lista"
-  },
-  "folderCopyMarkdown": {
-    "message": "Markdown"
-  },
-  "folderCopyJson": {
-    "message": "JSON"
-  },
-  "folderCopyConfirm": {
-    "message": "Másolja a(z) $n$ könyvjelző listáját?",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "folderCopyDone": {
-    "message": "$n$ könyvjelző bejegyzés másolva",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "addFolderMenu": {
-    "message": "Mappa hozzáadása"
-  },
-  "optionCollapseAddFolderMenu": {
-    "message": "Mappahozzáadás-bejegyzések összecsukása"
-  },
-  "optionCollapseAddFolderMenuHint": {
-    "message": "A mappasorokon (előtte/utána/belül) és a könyvjelzősorokon (előtte/utána) megjelenő mappa-hozzáadási bejegyzéseket egyesítse egy almenübe."
-  },
-  "tabRowStage": {
-    "message": "Küldés a várólistára"
-  },
-  "tabgroupStageAll": {
-    "message": "Csoport küldése a várólistára"
-  },
-  "tabgroupStageConfirm": {
-    "message": "Küldjük a(z) $n$ lapot a várólistára?",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabgroupStageNone": {
-    "message": "Nincs könyvjelzőzhető lap ebben a csoportban"
-  },
-  "stagedToast": {
-    "message": "$n$ lap előkészítve „$t$” csoportként",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      },
-      "t": {
-        "content": "$2"
-      }
-    }
-  },
-  "searchResultCount": {
-    "message": "$n$ találat",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "deleteSelected": {
-    "message": "Kijelöltek törlése"
-  },
-  "recentStageGroup": {
-    "message": "Küldés a $t$ előkészítő területre",
-    "placeholders": {
-      "t": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingGroupSelectAll": {
-    "message": "Csoport teljes kijelölése"
-  },
-  "optionsGroupLabs": {
-    "message": "Laboratórium"
-  },
-  "optionVirtualScrollLab": {
-    "message": "Virtuális görgetés (kísérleti)"
-  },
-  "optionVirtualScrollLabHint": {
-    "message": "A lapcsoportok és ismétlődések nézetei csak a nézetablak közelében lévő sorokat jelenítik meg. Nagyon nagy listákon sokkal gyorsabb; kísérleti fázisban a görgetősáv pozíciója becsült."
-  },
-  "optionsStagingSection": {
-    "message": "Staging és legutóbb hozzáadottak"
-  },
-  "optionStagingEnabled": {
-    "message": "Staging terület engedélyezése"
-  },
-  "optionStagingEnabledHint": {
-    "message": "Kikapcsolva ez a nézet csak a legutóbb hozzáadott listát tartja meg, és a többi nézetben minden staging gomb vagy menüpont elrejtve jelenik meg."
-  },
-  "optionTreeRowActions": {
-    "message": "Műveletek a fa sorokon (szerkesztés / staging / törlés)"
-  },
-  "optionsStorageSyncTip": {
-    "message": "A Chrome-fiókodon keresztül szinkronizálva — ez a beállítás megosztott az eszközeid között.",
-    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
-  },
-  "optionsStorageLocalTip": {
-    "message": "Csak ezen az eszközön tárolva — nem oszlik meg a Chrome-szinkronizáláson keresztül.",
-    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
-  },
-  "tabGroupsWindowsCount": {
-    "message": "$n$ ablak",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsNewWindow": {
-    "message": "Új ablak"
-  },
-  "tabGroupsMergedWindowToast": {
-    "message": "Az ablak lapcsoportként egyesítve"
-  },
-  "searchStageAllGroup": {
-    "message": "Összes találat átmozgatása „$1$” csoportba",
-    "placeholders": {
-      "1": {
-        "content": "$1"
-      }
-    }
-  },
-  "searchHistoryClose": {
-    "message": "Keresési előzmények elrejtése"
-  },
-  "searchHistoryClosedToast": {
-    "message": "A keresési előzmények elrejtve — kapcsolja vissza a Beállítások → Keresés menüben"
   }
 }

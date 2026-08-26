@@ -14,6 +14,9 @@
   "addBookmarkTop": {
     "message": "বর্তমান ট্যাব এর উপরে যোগ করুন"
   },
+  "addFolderMenu": {
+    "message": "ফোল্ডার যোগ করুন"
+  },
   "addNewFolder": {
     "message": "সাবফোল্ডার যোগ করুন"
   },
@@ -32,23 +35,38 @@
   "announceDismiss": {
     "message": "বন্ধ করুন"
   },
-  "announceV408Text": {
-    "message": "v4.0.8 হলো favicon-উন্নত রিলিজ: Chrome এখনও যেসব বুকমার্কের জন্য আইকন ক্যাশ করেনি, সেগুলোর প্রকৃত সাইট আইকন স্বয়ংক্রিয়ভাবে আনা হয়।"
-  },
   "announceV407Text": {
     "message": "v4.0.7 সম্পূর্ণ মৃত-লিংক ভিউ সরবরাহ করে: মৃত এবং সীমাবদ্ধ লিংক স্ক্যান, চিহ্নিত, ফিল্টার এবং সাজান, সাথে পূর্ববর্তী চিহ্ন এবং প্রতি-সারির টাইমস্ট্যাম্প।"
   },
   "announceV407Title": {
     "message": "v4.0.7-এ নতুন কী আছে"
   },
+  "announceV408Text": {
+    "message": "v4.0.8 হলো favicon-উন্নত রিলিজ: Chrome এখনও যেসব বুকমার্কের জন্য আইকন ক্যাশ করেনি, সেগুলোর প্রকৃত সাইট আইকন স্বয়ংক্রিয়ভাবে আনা হয়।"
+  },
   "announceV408Title": {
     "message": "v4.0.8-এ নতুন কী আছে"
+  },
+  "announceV410Text": {
+    "message": "v4.1.0 ট্যাব গ্রুপ ভিউ এবং স্টেজিং এলাকা যোগ করে: আপনার বুকমার্কের পাশে প্রতিটি উইন্ডোর ট্যাব পরিচালনা করুন, এবং যেকোনো জায়গা থেকে বুকমার্ক সংগ্রহ করে স্টেজিং ওয়ার্কবেঞ্চে বাল্ক সংগঠিত করুন।"
   },
   "announceV410Title": {
     "message": "v4.1.0-এ নতুন কী"
   },
-  "announceV410Text": {
-    "message": "v4.1.0 ট্যাব গ্রুপ ভিউ এবং স্টেজিং এলাকা যোগ করে: আপনার বুকমার্কের পাশে প্রতিটি উইন্ডোর ট্যাব পরিচালনা করুন, এবং যেকোনো জায়গা থেকে বুকমার্ক সংগ্রহ করে স্টেজিং ওয়ার্কবেঞ্চে বাল্ক সংগঠিত করুন।"
+  "bookmarkFolderNoFolders": {
+    "message": "কোনো বুকমার্ক ফোল্ডার নেই"
+  },
+  "bookmarkFolderPickDialogTitle": {
+    "message": "বুকমার্ক ফোল্ডারে যোগ করুন"
+  },
+  "bookmarkOpenInExistingGroup": {
+    "message": "বিদ্যমান ট্যাব গ্রুপে খুলুন…"
+  },
+  "bookmarkOpenInNewGroup": {
+    "message": "নতুন ট্যাব গ্রুপে খুলুন"
+  },
+  "bookmarkOpenInNewGroupSetup": {
+    "message": "নতুন ট্যাব গ্রুপে খুলুন…"
   },
   "confirmDeleteFolder": {
     "message": "এই ফোল্ডারে $count$টি আইটেম রয়েছে। আপনি মুছে ফেলা পূর্বাবস্থায় ফিরিয়ে আনতে পারেন।",
@@ -57,9 +75,6 @@
         "content": "$1"
       }
     }
-  },
-  "confirmDeleteFolderButton": {
-    "message": "মুছুন"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "আপনি কি $folderName$ ফোল্ডার এবং এর মধ্যে $bookmarkCount$ বুকমার্ক মুছে ফেলতে নিশ্চিত?",
@@ -71,6 +86,9 @@
         "content": "$1"
       }
     }
+  },
+  "confirmDeleteFolderButton": {
+    "message": "মুছুন"
   },
   "confirmDeleteFolderSubfolders": {
     "message": "আপনি কি $folderName$ ফোল্ডার এবং এর মধ্যে $subFolderCount$ সাবফোল্ডার মুছে ফেলতে নিশ্চিত?",
@@ -124,11 +142,32 @@
       }
     }
   },
+  "contextMenuAddBookmark": {
+    "message": "vBookmarks দিয়ে এই পৃষ্ঠা বুকমার্ক করুন"
+  },
+  "copiedToast": {
+    "message": "কপি হয়েছে: $t$",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
+  },
   "copyAllTitlesAndUrls": {
     "message": "সব শিরোনাম এবং URL ক্লিপবোর্ডে কপি করুন"
   },
+  "copyBookmark": {
+    "message": "কপি"
+  },
+  "copyMoveTo": {
+    "message": "কপি/সরান…"
+  },
   "copyTitleAndUrl": {
     "message": "শিরোনাম ও URL ক্লিপবোর্ডে কপি"
+  },
+  "crossStorageMoveWarning": {
+    "description": "Warning when trying to move bookmarks across storage types",
+    "message": "সিঙ্ক করা এবং লোকাল স্টোরেজের মধ্যে বুকমার্ক সরানো যাবে না। অনুলিপি/পেস্ট ব্যবহার করুন।"
   },
   "customIcon": {
     "message": "কাস্টম আইকন"
@@ -136,8 +175,14 @@
   "customIconDescription": {
     "message": "আইকনটি 19*19 পিক্সেল ডাইমেনশনের হতে হবে। অন্যথায় এটি এই ডাইমেনশনে রিসাইজ করা হবে।"
   },
+  "customIconPick": {
+    "message": "ফাইল নির্বাচন করুন…"
+  },
   "customSeparatorColorDescription": {
     "message": "সেপারেটর কাস্টমাইজ করুন"
+  },
+  "customSeparatorStringDescription": {
+    "message": "যদি কোনো বুকমার্কের URL এই স্ট্রিং ধারণ করে, তবে এটি সেপারেটর হিসাবে দেখানো হবে"
   },
   "customSeparatorTitleDescription": {
     "message": "সেপারেটর হিসাবে দেখানো বুকমার্কের আসল শিরোনাম"
@@ -145,28 +190,28 @@
   "customSeparatorUrlDescription": {
     "message": "সেপারেটর হিসাবে দেখানো বুকমার্কের আসল URL"
   },
-  "customSeparatorStringDescription": {
-    "message": "যদি কোনো বুকমার্কের URL এই স্ট্রিং ধারণ করে, তবে এটি সেপারেটর হিসাবে দেখানো হবে"
-  },
   "customStyles": {
     "message": "কাস্টম স্টাইল"
-  },
-  "separatorOptions": {
-    "message": "বিভাজক"
   },
   "customStylesDescription": {
     "message": "এর জন্য কিছু CSS দক্ষতা প্রয়োজন। নিজের ঝুঁকিতে হ্যাক করুন। কোড শেয়ারিং করা বুদ্ধিমানের কাজ হবে"
   },
-  "defaultIconButton": {
-    "message": "ডিফল্ট ব্যবহার করুন"
+  "cutBookmark": {
+    "message": "কাট"
   },
-  "defaultIconButtonOr": {
-    "message": "অথবা"
+  "cutToast": {
+    "message": "কাট: $t$ — টার্গেট ফোল্ডারে পেস্ট করুন (Esc বাতিল করে)",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
   },
-  "customIconPick": {
-    "message": "ফাইল নির্বাচন করুন…"
+  "deadCancel": {
+    "message": "বাতিল"
   },
   "deadChecking": {
+    "description": "Progress line of the palette's dead-link scan mode; $done$ bookmarks checked out of $total$.",
     "message": "$done$ / $total$ চেক করা হচ্ছে…",
     "placeholders": {
       "done": {
@@ -177,8 +222,10 @@
         "content": "$2",
         "example": "120"
       }
-    },
-    "description": "Progress line of the palette's dead-link scan mode; $done$ bookmarks checked out of $total$."
+    }
+  },
+  "deadClearScan": {
+    "message": "স্ক্যান ফলাফল পরিষ্কার করুন"
   },
   "deadConfirmAll": {
     "message": "সব $count$টি মৃত বুকমার্ক মুছবেন? এটি এক ধাপে পূর্বাবস্থায় ফিরিয়ে আনা যাবে না।",
@@ -192,6 +239,15 @@
   "deadConfirmDelete": {
     "message": "এই বুকমার্কটি সরিয়ে ফেলবেন?"
   },
+  "deadConfirmDeleteSelected": {
+    "message": "নির্বাচিত $count$টি মৃত বুকমার্ক মুছবেন?",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
+  },
   "deadDeleteAll": {
     "message": "বর্তমান ফিল্টারের $count$টি বুকমার্ক মুছে ফেলবেন?",
     "placeholders": {
@@ -201,27 +257,15 @@
       }
     }
   },
-  "deadDeleteAllNote": {
-    "message": "সব ফিল্টারে, এর মধ্যে ব্লক করা বুকমার্কগুলো (আপনার প্রক্সির মাধ্যমে অ্যাক্সেসযোগ্য, সম্ভবত এখনও সক্রিয়) এবং আগে চিহ্নিত সারিগুলো অন্তর্ভুক্ত।",
-    "description": "Second line of the delete-all confirmation in the Dead links view."
-  },
-  "undoSingleStepNote": {
-    "message": "পূর্বাবস্থায় ফেরানো কেবল সর্বশেষ মুছে ফেলা আইটেমটি পুনরুদ্ধার করতে পারে।"
-  },
   "deadDeleteAllBtn": {
     "message": "সব মুছুন"
   },
+  "deadDeleteAllNote": {
+    "description": "Second line of the delete-all confirmation in the Dead links view.",
+    "message": "সব ফিল্টারে, এর মধ্যে ব্লক করা বুকমার্কগুলো (আপনার প্রক্সির মাধ্যমে অ্যাক্সেসযোগ্য, সম্ভবত এখনও সক্রিয়) এবং আগে চিহ্নিত সারিগুলো অন্তর্ভুক্ত।"
+  },
   "deadDeleteSelected": {
     "message": "নির্বাচিত মুছুন"
-  },
-  "deadConfirmDeleteSelected": {
-    "message": "নির্বাচিত $count$টি মৃত বুকমার্ক মুছবেন?",
-    "placeholders": {
-      "count": {
-        "content": "$1",
-        "example": "8"
-      }
-    }
   },
   "deadDeleted": {
     "message": "$count$টি মৃত বুকমার্ক মুছে ফেলা হয়েছে",
@@ -232,8 +276,72 @@
       }
     }
   },
-  "deadClearScan": {
-    "message": "স্ক্যান ফলাফল পরিষ্কার করুন"
+  "deadDetectTimeLabel": {
+    "message": "সনাক্ত হয়েছে"
+  },
+  "deadFilterAll": {
+    "message": "সব"
+  },
+  "deadFilterBlocked": {
+    "message": "শুধু ব্লক করা"
+  },
+  "deadFilterDead": {
+    "message": "শুধু মৃত"
+  },
+  "deadFilterMarked": {
+    "message": "পূর্বে চিহ্নিত"
+  },
+  "deadLastScanAt": {
+    "message": "শেষ স্ক্যান: $time$",
+    "placeholders": {
+      "time": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadMark": {
+    "message": "মৃত হিসাবে চিহ্নিত করুন"
+  },
+  "deadMarkAll": {
+    "message": "সব চিহ্নিত করুন"
+  },
+  "deadMarkSelected": {
+    "message": "নির্বাচিত চিহ্নিত করুন"
+  },
+  "deadMarkStatusAll": {
+    "message": "যেকোনো অবস্থা"
+  },
+  "deadMarkStatusMarked": {
+    "message": "চিহ্নিত"
+  },
+  "deadMarkStatusUnmarked": {
+    "message": "অচিহ্নিত"
+  },
+  "deadMarkTimeLabel": {
+    "message": "চিহ্নিত হয়েছে"
+  },
+  "deadMarked": {
+    "message": "মৃত সারি চিহ্নিত করা হয়েছে"
+  },
+  "deadMarkedBanner": {
+    "message": "পূর্বে চিহ্নিত বুকমার্ক দেখানো হচ্ছে। নতুন পরীক্ষা শুরু করতে পুনরায় স্ক্যান-এ ক্লিক করুন, অথবা নিচের তালিকায় সেগুলি পরিচালনা করুন।"
+  },
+  "deadMarkedBannerDismiss": {
+    "message": "বাদ দিন"
+  },
+  "deadMarkedCount": {
+    "message": "চিহ্নিত $count$ বুকমার্ক",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadMarkedNone": {
+    "message": "এখনও কোনো বুকমার্ক চিহ্নিত করা হয়নি"
+  },
+  "deadMarkedRow": {
+    "message": "চিহ্নিত"
   },
   "deadNone": {
     "message": "কোনো মৃত লিঙ্ক পাওয়া যায়নি"
@@ -241,34 +349,711 @@
   "deadNoneFiltered": {
     "message": "এই ফিল্টারের অধীনে কোনো মৃত লিঙ্ক নেই — উপরের অন্য একটি সেগমেন্ট চেষ্টা করুন"
   },
+  "deadPause": {
+    "message": "বিরতি"
+  },
+  "deadPaused": {
+    "message": "বিরতিতে"
+  },
+  "deadProxyAdd": {
+    "message": "ডেড-লিংক পরীক্ষার জন্য একটি প্রক্সি সার্ভার যোগ করুন"
+  },
+  "deadProxyChange": {
+    "message": "পরিবর্তন"
+  },
+  "deadProxyClear": {
+    "message": "পরিষ্কার করুন"
+  },
+  "deadProxyControlled": {
+    "message": "প্রক্সি সেটিংস অন্য একটি এক্সটেনশন দ্বারা পরিচালিত"
+  },
+  "deadProxyDenied": {
+    "message": "প্রক্সি ব্যবহারের অনুমতি দেওয়া হয়নি"
+  },
+  "deadProxyInvalid": {
+    "message": "অবৈধ প্রক্সি ঠিকানা — host:port বা scheme://host:port ব্যবহার করুন (http/https/socks5, কোনো শংসাপত্র ছাড়া)।"
+  },
+  "deadProxyLabel": {
+    "message": "প্রক্সি: $server$",
+    "placeholders": {
+      "server": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadProxyNeverShow": {
+    "message": "আবার দেখাবেন না"
+  },
+  "deadProxyNone": {
+    "message": "(সেট করা হয়নি)"
+  },
+  "deadProxyNudge": {
+    "message": "একটি প্রক্সি পুনঃপরীক্ষা প্রকৃত মৃত লিঙ্কগুলিকে অঞ্চল-অবরুদ্ধ লিঙ্কগুলি থেকে আলাদা করে — এটি এখানে বা অপশন পৃষ্ঠায় কনফিগার করুন।"
+  },
+  "deadProxyPanelHint": {
+    "message": "আপনার কাছে থাকা একটি প্রক্সি সার্ভার লিখুন (এক্সটেনশন কোনো প্রক্সি সরবরাহ করে না), যেমন 127.0.0.1:7890 বা socks5://127.0.0.1:1080।"
+  },
+  "deadProxyRemove": {
+    "message": "মুছুন"
+  },
+  "deadProxyRemoved": {
+    "message": "প্রক্সি সার্ভার মুছে ফেলা হয়েছে"
+  },
+  "deadProxySaved": {
+    "message": "প্রক্সি সংরক্ষিত — ভবিষ্যতে স্ক্যানে সরাসরি ব্যর্থ লিংকগুলো এটি দিয়ে পুনরায় পরীক্ষা করা হবে।"
+  },
+  "deadProxyServerHint": {
+    "message": "সংরক্ষিত সার্ভার প্রতিটি মৃত-লিংক স্ক্যানে সরাসরি-ব্যর্থ বুকমার্কগুলি পুনঃপরীক্ষা করে, প্রকৃত মৃত লিংকগুলিকে অঞ্চল-অবরুদ্ধগুলির থেকে আলাদা করে। পরীক্ষা ও সংরক্ষণ এটি যাচাই করে (শুধুমাত্র একটি অ্যাক্সেসযোগ্য সার্ভার রাখা হয়); আপনি মৃত-লিংক ভিউ থেকেও এটি যোগ করতে পারেন।"
+  },
+  "deadProxyTestSave": {
+    "message": "পরীক্ষা ও সংরক্ষণ"
+  },
+  "deadProxyTestUrlLabel": {
+    "message": "পরীক্ষার URL"
+  },
+  "deadProxyTesting": {
+    "message": "পরীক্ষা করা হচ্ছে…"
+  },
+  "deadProxyUnavailable": {
+    "message": "এই ব্রাউজারে প্রক্সি API উপলব্ধ নয়"
+  },
+  "deadProxyUnreachable": {
+    "message": "প্রক্সিতে পৌঁছানো যায়নি — সংরক্ষণ করা হয়নি"
+  },
   "deadRescan": {
     "message": "পুনরায় স্ক্যান"
+  },
+  "deadResume": {
+    "message": "পুনরায় শুরু"
+  },
+  "deadRiskBanner": {
+    "message": "ডেড-লিংক পরিষ্কার করার সময় অনেক বুকমার্ক একসাথে মুছে যায়। প্রথম পরিষ্কারের আগে আপনার বুকমার্কগুলোর ব্যাকআপ নিন।"
+  },
+  "deadSortByDetected": {
+    "message": "শনাক্তকরণ সময়"
+  },
+  "deadSortByMarked": {
+    "message": "চিহ্নিত করার সময়"
+  },
+  "deadSortByPath": {
+    "message": "ফোল্ডার পাথ"
+  },
+  "deadSortLabel": {
+    "message": "সাজান"
+  },
+  "deadStartHint": {
+    "message": "$n$টি বুকমার্ক স্ক্যান করা শুরু করুন",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadStatusBlocked": {
+    "message": "ব্লক করা"
+  },
+  "deadUnmark": {
+    "message": "মৃত চিহ্ন সরান"
+  },
+  "deadUnmarkAll": {
+    "message": "সব চিহ্ন মুছুন"
+  },
+  "deadUnmarkSelected": {
+    "message": "নির্বাচিত চিহ্নমুক্ত করুন"
+  },
+  "defaultIconButton": {
+    "message": "ডিফল্ট ব্যবহার করুন"
+  },
+  "defaultIconButtonOr": {
+    "message": "অথবা"
   },
   "delete": {
     "message": "মুছে ফেলুন"
   },
+  "deleteEllipsis": {
+    "message": "মুছে ফেলুন..."
+  },
+  "deleteSelected": {
+    "message": "নির্বাচিত মুছুন"
+  },
   "deletedBookmark": {
+    "description": "Toast shown after a bookmark or separator was deleted; the toast offers an undo button. $title$ is the deleted row's title (empty for separators).",
     "message": "$title$ মুছে ফেলা হয়েছে",
     "placeholders": {
       "title": {
         "content": "$1",
         "example": "Example"
       }
-    },
-    "description": "Toast shown after a bookmark or separator was deleted; the toast offers an undo button. $title$ is the deleted row's title (empty for separators)."
+    }
   },
   "deletedFolder": {
+    "description": "Toast shown after a bookmark folder (with its whole subtree) was deleted; the toast offers an undo button. $title$ is the folder name.",
     "message": "$title$ ফোল্ডার মুছে ফেলা হয়েছে",
     "placeholders": {
       "title": {
         "content": "$1",
         "example": "Bookmarks"
       }
-    },
-    "description": "Toast shown after a bookmark folder (with its whole subtree) was deleted; the toast offers an undo button. $title$ is the folder name."
+    }
+  },
+  "donationDismiss": {
+    "message": "বাতিল করুন"
+  },
+  "donationGo": {
+    "message": "দান করুন"
+  },
+  "donationLater": {
+    "message": "পরে"
+  },
+  "donationMessage": {
+    "message": "আনন্দ পাচ্ছেন? এর ভবিষ্যত জ্বালাতে দান করুন — বা স্টোরে রেট দিন: প্রতিটি রিভিউ আপডেট আসতে রাখে।"
+  },
+  "donationNever": {
+    "message": "আবার দেখাবেন না"
+  },
+  "donationRate": {
+    "message": "রেট দিন"
+  },
+  "donationRateTitle": {
+    "message": "Chrome ওয়েব স্টোরে vBookmarks-কে রেট দিন"
+  },
+  "donationV4GuideLink": {
+    "message": "v4 গাইড পড়ুন →"
+  },
+  "donationV4Notice": {
+    "message": "vBookmarks 4.0 একটি আধুনিক ডিজাইনসহ সম্পূর্ণ নতুন সংস্করণ, নতুন বৈশিষ্ট্যে ভরপুর।"
+  },
+  "dupesApplyAll": {
+    "message": "সব প্রয়োগ করুন ($count$)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesApplySelected": {
+    "message": "নির্বাচিত ডিডুপ করুন ($count$)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesCleanAll": {
+    "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go.",
+    "message": "সব পরিষ্কার করুন: $groups$ গ্রুপ, $count$ অতিরিক্ত কপি",
+    "placeholders": {
+      "count": {
+        "content": "$2"
+      },
+      "groups": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesCleanRestHint": {
+    "message": "\"$title$\" রেখে বাকি $count$ টি সরান",
+    "placeholders": {
+      "count": {
+        "content": "$2"
+      },
+      "title": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesConfirmAll": {
+    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark).",
+    "message": "$count$টি অতিরিক্ত কপি, $groups$টি গ্রুপ জুড়ে মুছে ফেলা হবে? প্রতিটি গ্রুপে নির্বাচিত কপিটি রাখা হবে।",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    }
+  },
+  "dupesConfirmGroup": {
+    "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept).",
+    "message": "\"$title$\" রাখবেন এবং বাকি $count$টি কপি মুছে ফেলবেন?",
+    "placeholders": {
+      "count": {
+        "content": "$2"
+      },
+      "title": {
+        "content": "$1",
+        "example": "Example bookmark"
+      }
+    }
+  },
+  "dupesConfirmSelected": {
+    "message": "$groups$ নির্বাচিত গ্রুপ থেকে $count$টি সদৃশ বুকমার্ক মুছবেন?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    }
+  },
+  "dupesDone": {
+    "description": "Alert shown after the duplicate cleanup finished.",
+    "message": "$count$টি ডুপ্লিকেট বুকমার্ক সরানো হয়েছে",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesGroupCollapse": {
+    "description": "Dupes view group-head context menu: collapse an expanded duplicate group.",
+    "message": "গ্রুপ সংকুচিত করুন"
+  },
+  "dupesGroupCount": {
+    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL.",
+    "message": "$count$টি ডুপ্লিকেট",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesGroupExpand": {
+    "description": "Dupes view group-head context menu: expand a collapsed duplicate group.",
+    "message": "গ্রুপ প্রসারিত করুন"
+  },
+  "dupesIgnoreScheme": {
+    "message": "http/https পার্থক্য উপেক্ষা করুন"
+  },
+  "dupesKeepThis": {
+    "message": "এটি রাখুন"
+  },
+  "dupesKeeperSet": {
+    "message": "রক্ষক সেট করুন"
+  },
+  "dupesNone": {
+    "message": "কোনো ডুপ্লিকেট পাওয়া যায়নি"
+  },
+  "dupesPreviewSummary": {
+    "message": "$groups$ গোষ্ঠী · $count$ মুক্ত হবে",
+    "placeholders": {
+      "count": {
+        "content": "$2"
+      },
+      "groups": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesRemoveRow": {
+    "message": "এই কপি মুছুন"
+  },
+  "dupesRiskBanner": {
+    "message": "ডুপ্লিকেট অপসারণ একসাথে অনেকগুলো সদৃশ বুকমার্ক মুছে ফেলে। এটি প্রয়োগের আগে আপনার বুকমার্কগুলোর ব্যাকআপ নিন।"
+  },
+  "dupesScopeAll": {
+    "message": "সব বুকমার্ক"
+  },
+  "dupesScopeBar": {
+    "message": "শুধু বুকমার্ক বার"
+  },
+  "dupesStrategyBookmarkBar": {
+    "message": "বুকমার্ক বারে থাকাটি রাখুন"
+  },
+  "dupesStrategyMostVisited": {
+    "message": "সর্বাধিক দেখা রাখুন"
+  },
+  "dupesStrategyNewest": {
+    "message": "নতুনতম রাখুন"
+  },
+  "dupesStrategyOldest": {
+    "message": "পুরাতনতম রাখুন"
+  },
+  "dupesStrategyShallowest": {
+    "message": "সর্বনিম্ন গভীর রাখুন"
+  },
+  "dupesStrategyShortestTitle": {
+    "message": "সংক্ষিপ্ত শিরোনাম রাখুন"
+  },
+  "edit": {
+    "message": "সম্পাদনা..."
+  },
+  "editBookmark": {
+    "message": "বুকমার্ক সম্পাদনা করুন"
+  },
+  "editFolder": {
+    "message": "ফোল্ডার সম্পাদনা করুন"
+  },
+  "errorOccured": {
+    "message": "ওহো, একটি ত্রুটি ঘটেছে।"
+  },
+  "extDesc": {
+    "description": "এক্সটেনশনের বর্ণনা।",
+    "message": "একটি পপআপ বুকমার্ক ম্যানেজার। উন্নত Neat Bookmarks। Neater Bookmarks থেকে আরও পরিষ্কার।"
+  },
+  "extName": {
+    "description": "vBookmarks",
+    "message": "vBookmarks"
+  },
+  "favGalleryAll": {
+    "description": "Favicon gallery source filter chip: show every source.",
+    "message": "সব"
+  },
+  "favGalleryCompare": {
+    "description": "Favicon gallery toggle button: switch every icon to the generic placeholder it replaced (before/after comparison).",
+    "message": "প্লেসহোল্ডারের সাথে তুলনা করুন"
+  },
+  "favGalleryEmptyText": {
+    "description": "Favicon gallery empty-state body text.",
+    "message": "যখন পপআপটি এমন একটি বুকমার্ক করা সাইট দেখে যার জন্য Chrome-এর কোনো আইকন নেই, vBookmarks আসল আইকনটি এনে এখানে তালিকাভুক্ত করে।"
+  },
+  "favGalleryEmptyTitle": {
+    "description": "Favicon gallery empty-state heading.",
+    "message": "এখনও কোনো আপডেট হওয়া আইকন নেই"
+  },
+  "favGalleryFailedHint": {
+    "description": "Favicon gallery hint under the failed-fetch section title.",
+    "message": "ব্যর্থ প্রচেষ্টাগুলি ২৪ ঘণ্টা, ৩ দিন এবং ৭ দিন পরে পুনরায় চেষ্টা করা হয়, তারপর আইকন ক্যাশে সাফ না করা পর্যন্ত ছেড়ে দেওয়া হয়।"
+  },
+  "favGalleryFailedTitle": {
+    "description": "Favicon gallery heading of the muted section listing hosts whose icon fetch failed recently.",
+    "message": "সম্প্রতি চেষ্টা করা হয়েছে, কোনো আইকন পাওয়া যায়নি"
+  },
+  "favGalleryGaveUp": {
+    "description": "Favicon gallery badge on a failed-strip host whose retries are exhausted (it stays untouched until the icon cache is cleared).",
+    "message": "পরিত্যক্ত"
+  },
+  "favGalleryHint": {
+    "description": "Subtitle under the favicon gallery title, explaining the page is read-only.",
+    "message": "Chrome ক্যাশে করেনি এমন বুকমার্ক করা সাইটগুলির জন্য vBookmarks যে আইকনগুলো এনেছে — প্রতিটি কোথা থেকে এসেছে এবং কোন বুকমার্ক এটি ব্যবহার করে। শুধু প্রদর্শনের জন্য।"
+  },
+  "favGalleryLink": {
+    "description": "Options link (Icons group, right of the Clear icon cache button): opens the favicon gallery page listing the sites whose icons were refetched.",
+    "message": "আপডেট হওয়া আইকন দেখুন"
+  },
+  "favGalleryOrphan": {
+    "description": "Favicon gallery note on a card whose host no longer has any bookmark.",
+    "message": "এই হোস্টে আর কোনো বুকমার্ক নেই — আইকনটি ক্যাশের সাথে মুছে যাবে।"
+  },
+  "favGallerySearch": {
+    "description": "Placeholder of the favicon gallery filter input.",
+    "message": "সাইট, শিরোনাম বা পাথ অনুসারে ফিল্টার করুন"
+  },
+  "favGalleryShowingBefore": {
+    "description": "Favicon gallery toggle button while the placeholder comparison is shown: switch back to the real fetched icons.",
+    "message": "আসল আইকনে ফিরুন"
+  },
+  "favGalleryStatBookmarks": {
+    "description": "Favicon gallery stats strip: how many bookmarks sit on the refreshed sites.",
+    "message": "$n$টি বুকমার্ক",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "favGalleryStatSites": {
+    "description": "Favicon gallery stats strip: how many sites have a refreshed icon.",
+    "message": "$n$টি সাইট",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "favGalleryTitle": {
+    "description": "Favicon gallery page title (h1 + document title).",
+    "message": "আপডেট হওয়া সাইট আইকন"
+  },
+  "favGalleryVisits": {
+    "description": "Favicon gallery tooltip on a bookmark row's visit-count pill.",
+    "message": "$n$টি রেকর্ড করা খোলা",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "favSrcDirect": {
+    "description": "Favicon gallery source badge: the icon was fetched directly from the site itself.",
+    "message": "সরাসরি"
+  },
+  "favSrcLegacy": {
+    "description": "Favicon gallery source badge: cached before the source was recorded, so the origin is unknown.",
+    "message": "আগের ক্যাশে"
+  },
+  "favSrcProxy": {
+    "description": "Favicon gallery source badge: the icon was fetched through the user's own proxy relay.",
+    "message": "প্রক্সি"
+  },
+  "folderCopyConfirm": {
+    "message": "$n$টি বুকমার্কের তালিকা কপি করবেন?",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "folderCopyDone": {
+    "message": "$n$টি বুকমার্ক এন্ট্রি কপি হয়েছে",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "folderCopyJson": {
+    "message": "JSON"
+  },
+  "folderCopyList": {
+    "message": "শিরোনাম ও ঠিকানা কপি করুন"
+  },
+  "folderCopyMarkdown": {
+    "message": "মার্কডাউন"
+  },
+  "folderCopyText": {
+    "message": "সাধারণ টেক্সট তালিকা"
+  },
+  "folderEmpty": {
+    "message": "(খালি)"
+  },
+  "folderPickCopyHere": {
+    "message": "এখানে কপি করুন"
+  },
+  "folderPickFavNote": {
+    "message": "বুকমার্ক না করা আইটেম এখানে বুকমার্ক হবে"
+  },
+  "folderPickFilter": {
+    "message": "ফোল্ডার ফিল্টার…"
+  },
+  "folderPickMoveHere": {
+    "message": "এখানে সরান"
+  },
+  "folderPickPinned": {
+    "message": "পিন করা"
+  },
+  "folderPickRecent": {
+    "message": "সাম্প্রতিক"
+  },
+  "general": {
+    "message": "সাধারণ"
+  },
+  "groupCopyToFolder": {
+    "message": "ফোল্ডারে কপি…"
+  },
+  "groupPlaceTooltip": {
+    "message": "এই গ্রুপটি একটি ফোল্ডারে সংরক্ষণ করুন…"
+  },
+  "groupSaveToFolder": {
+    "message": "ফোল্ডারে সংরক্ষণ…"
+  },
+  "ignore": {
+    "message": "উপেক্ষা করুন"
+  },
+  "name": {
+    "description": "বুকমার্ক বা ফোল্ডারের নাম।",
+    "message": "নাম"
+  },
+  "noTitle": {
+    "description": "http(s) URL ছাড়া অনামী বুকমার্ক বা অনামী ফোল্ডারের জন্য শিরোনাম।",
+    "message": "(কোনো শিরোনাম নেই)"
+  },
+  "nope": {
+    "message": "বাতিল"
+  },
+  "open": {
+    "description": "বুকমার্ক খোলার ক্রিয়া।",
+    "message": "খুলুন"
+  },
+  "openBookmarks": {
+    "message": "সব বুকমার্ক খুলুন"
+  },
+  "openBookmarksInExistingGroup": {
+    "message": "বিদ্যমান ট্যাব গ্রুপে সব খুলুন…"
+  },
+  "openBookmarksInGroup": {
+    "message": "সব নতুন ট্যাব গ্রুপে খুলুন"
+  },
+  "openBookmarksInGroupSetup": {
+    "message": "নতুন ট্যাব গ্রুপে সব খুলুন…"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "ইনকগনিটো উইন্ডোতে সব বুকমার্ক খুলুন"
+  },
+  "openBookmarksNewWindow": {
+    "message": "নতুন উইন্ডোতে সব বুকমার্ক খুলুন"
+  },
+  "openCommandPaletteCommand": {
+    "message": "কমান্ড প্যালেট খুলুন"
+  },
+  "openIncognitoWindow": {
+    "message": "ইনকগনিটো উইন্ডোতে খুলুন"
+  },
+  "openNewTab": {
+    "message": "নতুন ট্যাবে খুলুন"
+  },
+  "openNewWindow": {
+    "message": "নতুন উইন্ডোতে খুলুন"
+  },
+  "openSidePanelCommand": {
+    "message": "vBookmarks সাইড প্যানেল খুলুন"
+  },
+  "optionAnnounceEnabled": {
+    "message": "পণ্যের মধ্যে ঘোষণা দেখান"
+  },
+  "optionAnnounceEnabledHint": {
+    "message": "প্রকল্পের GitHub রিপোজিটরি থেকে রিলিজ নোট এবং টিপস (সর্বোচ্চ প্রতি ৬ ঘণ্টায় আনা হয়)। বন্ধ করলে নেটওয়ার্ক থেকে আনা বন্ধ হয়ে যায়।"
+  },
+  "optionAutoRefreshSync": {
+    "message": "সিঙ্ক স্ট্যাটাস অটো-রিফ্রেশ করুন"
+  },
+  "optionAutoResizePopup": {
+    "message": "বিষয়বস্তু অনুযায়ী পপআপ উইন্ডো স্বয়ংক্রিয়ভাবে আকার পরিবর্তন করুন"
+  },
+  "optionClassicExperience": {
+    "message": "ক্লাসিক হেডার পুনরুদ্ধার করুন"
+  },
+  "optionClassicExperienceHint": {
+    "message": "কমান্ড প্যালেট, দ্রুত যোগ করার স্টার, পেজের ডান-ক্লিক এন্ট্রি, টুল বাটন এবং ভিউ ট্যাব বন্ধ করে দেয়। প্রতিটি নিজ নিজ বিভাগে আলাদাভাবে আবার চালু করা যেতে পারে।"
+  },
+  "optionClickNewTab": {
+    "message": "বাম ক্লিক বুকমার্ক নতুন ট্যাবে খোলে।"
+  },
+  "optionCloseUnusedFolders": {
+    "message": "ফোল্ডার খোলার সময় অব্যবহৃত ফোল্ডার বন্ধ করুন।"
+  },
+  "optionCollapseAddFolderMenu": {
+    "message": "ফোল্ডার যোগ করার এন্ট্রিগুলো সংকুচিত করুন"
+  },
+  "optionCollapseAddFolderMenuHint": {
+    "message": "ফোল্ডার যোগ করার এন্ট্রিগুলি (ফোল্ডার সারিতে আগে/পরে/ভিতরে, বুকমার্ক সারিতে আগে/পরে) একটি সাবমেনু এন্ট্রিতে একীভূত করুন।"
+  },
+  "optionCollapseSortMenu": {
+    "message": "সর্ট এন্ট্রিগুলোকে একটি \"সাজান…\" সাবমেনুতে সংকুচিত করুন"
+  },
+  "optionCollapseSortMenuHint": {
+    "message": "ফোল্ডারের ডান-ক্লিক মেনুতে প্রযোজ্য। ডিফল্টভাবে চালু।"
+  },
+  "optionCollapseTabGroupMenu": {
+    "message": "ট্যাব-গ্রুপ এন্ট্রিগুলোকে একটি \"ট্যাব গ্রুপ…\" সাবমেনুতে সংকুচিত করুন"
+  },
+  "optionCollapseTabGroupMenuHint": {
+    "message": "ফোল্ডার এবং বুকমার্কের ডান-ক্লিক মেনু দুটির ক্ষেত্রেই প্রযোজ্য। ডিফল্টভাবে বন্ধ; ছোট/উচ্চ-জুম স্ক্রিনে কম-উচ্চতার মেনু আরও ছোট রাখে।"
+  },
+  "optionConfirmDeleteFolder": {
+    "message": "অ-খালি ফোল্ডার মুছার আগে নিশ্চিতকরণ"
+  },
+  "optionConfirmOpenFolder": {
+    "message": "ফোল্ডার থেকে অনেক বুকমার্ক খোলার সময় নিশ্চিতকরণ দেখান।"
+  },
+  "optionDeadProxyServer": {
+    "message": "ডেড-লিংক প্রক্সি সার্ভার"
+  },
+  "optionDeadProxyStrip": {
+    "message": "মৃত-লিঙ্ক দৃশ্যে প্রক্সি যোগ করার ইঙ্গিত দেখান"
+  },
+  "optionDeadProxyStripHint": {
+    "message": "বন্ধ করলে সেখানে সেই ইঙ্গিত লুকানো হয়; প্রক্সি সার্ভার এখানে কনফিগারযোগ্য থাকে এবং সংরক্ষিত সার্ভার সবসময় দৃশ্যে তার ব্যবস্থাপনা সারি দেখায়।"
+  },
+  "optionDeadScanConcurrency": {
+    "message": "মৃত লিঙ্ক স্ক্যান সমবর্তিতা (১-১৬)"
+  },
+  "optionDeadScanTimeout": {
+    "message": "মৃত লিঙ্ক স্ক্যান টাইমআউট সেকেন্ডে (২-৩০)"
+  },
+  "optionFaviconBackup": {
+    "message": "ব্যাকআপে আইকন ক্যাশ অন্তর্ভুক্ত করুন"
+  },
+  "optionFaviconBackupHint": {
+    "message": "সমৃদ্ধ ফেভিকন ক্যাশে (প্রতি-সাইট ডেটা, সম্ভবত বড়) সেটিংস রপ্তানি/আমদানিতে অন্তর্ভুক্ত করুন। এটি ইতিমধ্যে ক্যাশে করা আইকনগুলোকে কভার করে, এমনকি যখন ফেভিকন আনা বন্ধ থাকে। বন্ধ রাখলে ব্যাকআপ ছোট হয়; আইকনগুলো যেকোনোভাবে স্বয়ংক্রিয়ভাবে পুনরায় আনা হবে।"
+  },
+  "optionFaviconCacheClear": {
+    "message": "আইকন ক্যাশে সাফ করুন"
+  },
+  "optionFaviconCacheClearConfirm": {
+    "message": "সমৃদ্ধ আইকন ক্যাশে মুছে ফেলবেন? পরের বার খোলার সময় আইকনগুলো স্বয়ংক্রিয়ভাবে পুনরায় আনা হবে।"
+  },
+  "optionFaviconCacheCleared": {
+    "message": "আইকন ক্যাশে সাফ করা হয়েছে। পরবর্তী খোলায় আইকনগুলি পুনরায় আনা হবে।"
+  },
+  "optionFaviconCacheEmpty": {
+    "message": "মুছে ফেলার মতো কোনো আইকন ক্যাশে নেই।"
+  },
+  "optionFaviconContrast": {
+    "message": "কম কনট্রাস্টের ফেভিকন উল্টান"
+  },
+  "optionFaviconContrastHint": {
+    "message": "হালকা থিমে সাদা আইকন এবং গাঢ় থিমে কালো আইকন উল্টানো হয় যাতে সেগুলি দৃশ্যমান থাকে। প্রতিটি আইকন লোড হওয়ার সময় একবার নমুনা নেওয়া হয় — ব্রাউজ করার সময় কোনো খরচ নেই।"
+  },
+  "optionFaviconEnrich": {
+    "message": "অনুপস্থিত সাইট আইকন আনুন"
+  },
+  "optionFaviconEnrichAgg": {
+    "message": "তৃতীয় পক্ষের আইকন ফলব্যাক"
+  },
+  "optionFaviconEnrichAggHint": {
+    "message": "সরাসরি ফেচ ব্যর্থ হলে, একটি অন্তর্নির্মিত তৃতীয়-পক্ষ আইকন পরিষেবার তালিকা থেকে ডোমেইন অনুযায়ী আইকনটি সন্ধান করুন ($providers$)। কোনো পরিষেবা অপ্রাপ্য হলে তা বাদ দেওয়া হয় এবং পরেরটি চেষ্টা করা হয় — ৬ ঘণ্টার জন্য এটি পুনরায় চেষ্টা করা হয় না।",
+    "placeholders": {
+      "providers": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionFaviconEnrichHint": {
+    "message": "যে বুকমার্ক করা সাইটগুলির জন্য Chrome-এ কোনো ক্যাশ করা আইকন নেই, সাইট থেকে সরাসরি আসল আইকন আনুন (/favicon.ico, তারপর পেজের ঘোষিত আইকন)। অনুরোধ শুধুমাত্র আপনার বুকমার্ক করা সাইটগুলিতে যায়।"
+  },
+  "optionHighlightUnsynced": {
+    "message": "সিঙ্কহীন বুকমার্ক ম্লান করুন"
+  },
+  "optionLanguage": {
+    "message": "ভাষা"
+  },
+  "optionLanguageAuto": {
+    "message": "স্বয়ংক্রিয়"
+  },
+  "optionLanguageHint": {
+    "message": "ভাষা পরিবর্তন করলে এই পৃষ্ঠাটি পুনরায় লোড হবে।"
+  },
+  "optionOnlyShowBookmarkBar": {
+    "message": "শুধু বুকমার্ক বারে বুকমার্ক দেখান"
+  },
+  "optionOpenInSidePanel": {
+    "message": "পপআপের পরিবর্তে সাইড প্যানেলে খুলুন"
+  },
+  "optionOpenNewTab": {
+    "message": "মিডল ক্লিক বা কন্ট্রোল-ক্লিক বুকমার্ক নতুন ব্যাকগ্রাউন্ড ট্যাবে খোলে (ফোরগ্রাউন্ডের পরিবর্তে)।"
+  },
+  "optionPaletteEnabled": {
+    "message": "কমান্ড প্যালেট সক্ষম করুন (Ctrl/Cmd+K)"
+  },
+  "optionPopupStays": {
+    "message": "বুকমার্ক খোলার সময় (বাম ক্লিক) পপআপ খোলা থাকে।"
+  },
+  "optionQuickAddContextMenu": {
+    "message": "পৃষ্ঠার রাইট-ক্লিক মেনুতে \"vBookmarks দিয়ে এই পৃষ্ঠাটি বুকমার্ক করুন\" একটি এন্ট্রি যোগ করুন"
+  },
+  "optionQuickAddContextMenuHint": {
+    "message": "দ্রুত-যোগ তারকা বোতাম থেকে স্বাধীন; ক্লাসিক-অভিজ্ঞতা পুনরুদ্ধার এই এন্ট্রিটিও বন্ধ করে দেয়।"
+  },
+  "optionQuickAddEnabled": {
+    "message": "সার্চ বক্সের পাশে দ্রুত-যোগ স্টার বোতাম দেখান"
+  },
+  "optionRecentCollapsed": {
+    "message": "ডিফল্টভাবে সম্প্রতি যোগ করা বিভাগটি সংকুচিত করুন"
   },
   "optionRecentCount": {
     "message": "প্রদর্শনের জন্য সম্প্রতি যোগ করা বুকমার্কের সংখ্যা"
+  },
+  "optionRememberPrevState": {
+    "message": "পূর্ববর্তী অবস্থা মনে রাখুন (স্ক্রোল অবস্থান, খোলা ফোল্ডার এবং শেষ ফোকাস করা আইটেম)।"
+  },
+  "optionRememberView": {
+    "message": "শেষ সক্রিয় ভিউটি মনে রাখুন এবং এটি পুনরায় খুলুন"
+  },
+  "optionSearchAfterEnter": {
+    "message": "শুধু ENTER চাপলে বুকমার্ক খোঁজুন (তাত্ক্ষণিক অনুসন্ধানের পরিবর্তে)"
   },
   "optionSearchHistory": {
     "message": "অনুসন্ধানের ইতিহাস এলাকা দেখান"
@@ -276,17 +1061,496 @@
   "optionSearchHistoryHint": {
     "message": "ফলাফলের উপরের সাম্প্রতিক অনুসন্ধান এলাকা লুকান — রেকর্ড করা প্রশ্ন সংরক্ষিত থাকে"
   },
+  "optionShowDeadView": {
+    "message": "মৃত-লিঙ্ক ভিউ ট্যাব দেখান"
+  },
+  "optionShowDupesView": {
+    "message": "ডুপ্লিকেট ভিউ ট্যাব দেখান"
+  },
+  "optionShowItemPath": {
+    "message": "তালিকার সারিতে প্যারেন্ট ফোল্ডার পথ দেখান"
+  },
+  "optionShowRecentBookmarks": {
+    "message": "পপআপের শীর্ষে সম্প্রতি যোগ করা বুকমার্ক দেখান"
+  },
+  "optionShowStatsView": {
+    "message": "পরিসংখ্যান ভিউ ট্যাব দেখান"
+  },
+  "optionShowSyncStatus": {
+    "message": "সিঙ্ক স্ট্যাটাস ইনডিকেটর দেখান"
+  },
+  "optionShowTabBadges": {
+    "message": "ভিউ ট্যাবে সংখ্যা ব্যাজ দেখান"
+  },
+  "optionShowTabGroupsView": {
+    "message": "ট্যাব গ্রুপ ভিউ ট্যাব দেখান"
+  },
+  "optionShowToolButton": {
+    "message": "সার্চ বক্সের পাশে টুল বোতাম (⋮) দেখান"
+  },
+  "optionShowViewTabs": {
+    "message": "অনুসন্ধান বক্সের নীচে দৃশ্য ট্যাব দেখান"
+  },
+  "optionStagingEnabled": {
+    "message": "স্টেজিং এলাকা সক্রিয় করুন"
+  },
+  "optionStagingEnabledHint": {
+    "message": "বন্ধ থাকলে, এই ভিউ শুধুমাত্র সম্প্রতি যোগ করা তালিকা রাখে, এবং অন্যান্য ভিউতে প্রতিটি স্টেজিং বাটন বা মেনু এন্ট্রি লুকিয়ে থাকে।"
+  },
+  "optionStatsEnabled": {
+    "message": "ভিজিট পরিসংখ্যান সক্রিয় করুন"
+  },
+  "optionSyncRefreshInterval": {
+    "message": "রিফ্রেশ ইন্টারভাল"
+  },
+  "optionSyncRefreshIntervalSeconds": {
+    "message": "সেকেন্ড"
+  },
+  "optionTabGroupsClosedLimit": {
+    "message": "রাখতে হবে বন্ধ ট্যাব/গ্রুপের ইতিহাস"
+  },
+  "optionTheme": {
+    "message": "থিম"
+  },
+  "optionThemeAuto": {
+    "message": "সিস্টেম অনুসরণ করুন"
+  },
+  "optionThemeDark": {
+    "message": "গাঢ়"
+  },
+  "optionThemeInk": {
+    "message": "কালি (গাঢ়)"
+  },
+  "optionThemeLight": {
+    "message": "হালকা"
+  },
+  "optionThemePaper": {
+    "message": "কাগজ (হালকা)"
+  },
+  "optionTreeRowActions": {
+    "message": "ট্রি সারিতে হোভার অ্যাকশন (সম্পাদনা / স্টেজ / মুছুন)"
+  },
+  "optionVirtualScrollLab": {
+    "message": "ভার্চুয়াল স্ক্রলিং (পরীক্ষামূলক)"
+  },
+  "optionVirtualScrollLabHint": {
+    "message": "ট্যাব গ্রুপ এবং ডুপ্লিকেট ভিউ শুধুমাত্র ভিউপোর্টের কাছাকাছি সারিগুলি রেন্ডার করে। খুব বড় তালিকায় অনেক দ্রুত; পরীক্ষামূলক অবস্থায় স্ক্রলবার অবস্থান আনুমানিক।"
+  },
+  "optionZoom": {
+    "message": "জুম"
+  },
+  "options": {
+    "message": "অপশন"
+  },
+  "optionsDonate": {
+    "message": "অনুদান করুন"
+  },
+  "optionsFooterText": {
+    "description": "Footer text for the Options page",
+    "message": "$authorName$ দ্বারা তৈরি।",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionsGithubLink": {
+    "message": "GitHub"
+  },
+  "optionsGroupBackup": {
+    "message": "ব্যাকআপ"
+  },
+  "optionsGroupContextMenu": {
+    "message": "প্রসঙ্গ মেনু"
+  },
+  "optionsGroupIcons": {
+    "message": "আইকন"
+  },
+  "optionsGroupLabs": {
+    "message": "ল্যাব"
+  },
+  "optionsGroupPalette": {
+    "message": "কমান্ড প্যালেট"
+  },
+  "optionsGroupSort": {
+    "message": "সাজানো"
+  },
+  "optionsGroupStats": {
+    "message": "পরিসংখ্যান"
+  },
+  "optionsGroupTools": {
+    "message": "সরঞ্জাম"
+  },
+  "optionsGroupViews": {
+    "message": "দৃশ্যসমূহ"
+  },
+  "optionsHomepageLink": {
+    "message": "হোমপেজ"
+  },
+  "optionsSince": {
+    "message": "Neat Bookmarks থেকে ফর্ক করা হয়েছে এবং $days$ দিন ধরে রক্ষণাবেক্ষিত।",
+    "placeholders": {
+      "days": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionsStagingSection": {
+    "message": "স্টেজিং ও সম্প্রতি যোগ করা"
+  },
+  "optionsStorageLocalTip": {
+    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting).",
+    "message": "শুধুমাত্র এই ডিভাইসে সংরক্ষিত — Chrome সিঙ্কের মাধ্যমে ভাগ করা হয়নি।"
+  },
+  "optionsStorageSyncTip": {
+    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting).",
+    "message": "আপনার Chrome অ্যাকাউন্টের মাধ্যমে সিঙ্ক হয়েছে — এই সেটিংটি আপনার ডিভাইসগুলিতে ভাগ করা হয়েছে।"
+  },
+  "optionsVersion": {
+    "message": "vBookmarks সংস্করণ"
+  },
+  "paletteActionOpenUrl": {
+    "message": "URL খুলুন"
+  },
+  "paletteActionOpenUrlGroup": {
+    "message": "বুকমার্ক ফোল্ডার গ্রুপ খুলুন"
+  },
+  "paletteActionUrlTemplate": {
+    "message": "URL টেমপ্লেট খুলুন"
+  },
+  "paletteActionViewPreset": {
+    "message": "প্রিসেটসহ ভিউ খুলুন"
+  },
+  "paletteClose": {
+    "message": "বন্ধ"
+  },
+  "paletteCmdDead": {
+    "message": "মৃত লিঙ্ক খুঁজুন"
+  },
+  "paletteCmdDupes": {
+    "message": "ডুপ্লিকেট বুকমার্ক পরিষ্কার করুন"
+  },
+  "paletteCmdGoDead": {
+    "message": "মৃত লিঙ্ক ভিউতে যান"
+  },
+  "paletteCmdGoDupes": {
+    "message": "ডুপ্লিকেট ভিউতে যান"
+  },
+  "paletteCmdGoRecent": {
+    "message": "সাম্প্রতিক ভিউতে যান"
+  },
+  "paletteCmdGoSearch": {
+    "message": "অনুসন্ধান ভিউতে যান"
+  },
+  "paletteCmdGoStats": {
+    "message": "পরিসংখ্যান ভিউতে যান"
+  },
+  "paletteCmdGoTabGroups": {
+    "message": "ট্যাব গ্রুপ ভিউতে যান"
+  },
+  "paletteCmdGoTree": {
+    "message": "ট্রি ভিউতে যান"
+  },
+  "paletteCmdLang": {
+    "message": "ভাষা পরিবর্তন করুন…"
+  },
+  "paletteCmdLangUsage": {
+    "message": "ব্যবহার: /lang এর পরে লোকেল কোড দিন — যেমন /lang en, /lang zh_CN, /lang ja।"
+  },
+  "paletteCmdNewBookmark": {
+    "message": "নতুন বুকমার্ক…"
+  },
+  "paletteCmdNewFolder": {
+    "message": "নতুন ফোল্ডার…"
+  },
+  "paletteCmdOptions": {
+    "message": "বিকল্প পাতা খুলুন"
+  },
+  "paletteCmdQuickAdd": {
+    "message": "বর্তমান ট্যাব বুকমার্ক করুন"
+  },
+  "paletteCmdSaveAsCommand": {
+    "message": "\"$1\" কমান্ড হিসেবে সংরক্ষণ করুন…"
+  },
+  "paletteCmdSaveSession": {
+    "message": "উইন্ডো ট্যাবগুলো ফোল্ডার হিসেবে সংরক্ষণ করুন"
+  },
+  "paletteCmdSearchInView": {
+    "message": "অনুসন্ধান ভিউতে '$query$' অনুসন্ধান করুন",
+    "placeholders": {
+      "query": {
+        "content": "$1"
+      }
+    }
+  },
+  "paletteCmdTheme": {
+    "message": "থিম সেট করুন…"
+  },
+  "paletteCmdThemeUsage": {
+    "message": "ব্যবহার: /theme এর পরে একটি থিমের নাম — auto, light, dark, ink বা paper (একটি অনন্য উপসর্গ কাজ করে, যেমন /theme d)।"
+  },
+  "paletteCmdToggleViewTabs": {
+    "message": "ট্যাব দৃশ্য টগল করুন"
+  },
+  "paletteCmdVersion": {
+    "message": "সংস্করণ তথ্য"
+  },
+  "paletteCustomAction": {
+    "message": "ক্রিয়া"
+  },
+  "paletteCustomAdd": {
+    "message": "কমান্ড যোগ করুন…"
+  },
+  "paletteCustomAliases": {
+    "message": "ডাকনাম (কমা-বিচ্ছিন্ন)"
+  },
+  "paletteCustomBroken": {
+    "message": "\"$1\" কমান্ডের ফোল্ডারটি আর নেই। কমান্ডটি মুছে ফেলবেন?"
+  },
+  "paletteCustomDeleteConfirm": {
+    "message": "\"$1\" কমান্ডটি মুছে ফেলবেন? পরিবর্তনটি আপনার সব ডিভাইসে সিঙ্ক হবে।"
+  },
+  "paletteCustomEmpty": {
+    "message": "এখনও কোনো কাস্টম কমান্ড নেই।"
+  },
+  "paletteCustomErrAction": {
+    "message": "একটি ক্রিয়ার ধরন নির্বাচন করুন।"
+  },
+  "paletteCustomErrAlias": {
+    "message": "ডাকনাম: স্ল্যাশের মতো একই নিয়ম (ছোট হাতের অক্ষর, সংখ্যা বা হাইফেনের ১–২৪ অক্ষর)।"
+  },
+  "paletteCustomErrFolder": {
+    "message": "একটি বুকমার্ক ফোল্ডার নির্বাচন করুন।"
+  },
+  "paletteCustomErrLimit": {
+    "message": "কমান্ড সীমা পূর্ণ হয়েছে (১০০) — আগে একটি মুছুন।"
+  },
+  "paletteCustomErrSlash": {
+    "message": "স্ল্যাশ: ছোট হাতের অক্ষর, সংখ্যা বা হাইফেনের ১–২৪ অক্ষর; অক্ষর বা সংখ্যা দিয়ে শুরু হতে হবে।"
+  },
+  "paletteCustomErrTaken": {
+    "message": "এই স্ল্যাশ বা ডাকনামটি ইতিমধ্যে ব্যবহৃত হচ্ছে।"
+  },
+  "paletteCustomErrTemplate": {
+    "message": "টেমপ্লেটে অবশ্যই ঠিক একটি %s থাকতে হবে।"
+  },
+  "paletteCustomErrUrl": {
+    "message": "শুধুমাত্র http:// বা https:// URL অনুমোদিত।"
+  },
+  "paletteCustomErrView": {
+    "message": "একটি দৃশ্য নির্বাচন করুন।"
+  },
+  "paletteCustomFolder": {
+    "message": "বুকমার্ক ফোল্ডার"
+  },
+  "paletteCustomHint": {
+    "message": "কমান্ড প্যালেটের জন্য কাস্টম স্ল্যাশ কমান্ড (Ctrl/Cmd+K)। এগুলো আপনার সেটিংসের সাথে সিঙ্ক হয় — সর্বোচ্চ ১০০টি এন্ট্রি।"
+  },
+  "paletteCustomSave": {
+    "message": "কমান্ড সংরক্ষণ করুন"
+  },
+  "paletteCustomScan": {
+    "message": "প্রবেশের সময় স্ক্যান শুরু করুন"
+  },
+  "paletteCustomScope": {
+    "message": "ডেডুপ পরিধি প্রিসেট"
+  },
+  "paletteCustomSlash": {
+    "message": "স্ল্যাশ (/ এর পরে শব্দ)"
+  },
+  "paletteCustomStrategy": {
+    "message": "ডেডুপ কৌশল প্রিসেট"
+  },
+  "paletteCustomTag": {
+    "message": "কাস্টম"
+  },
+  "paletteCustomTemplate": {
+    "message": "URL টেমপ্লেট — %s কমান্ডের পরে শব্দ দ্বারা প্রতিস্থাপিত হয়।"
+  },
+  "paletteCustomUrl": {
+    "message": "URL"
+  },
+  "paletteCustomUsage": {
+    "message": "$1 / $2"
+  },
+  "paletteCustomView": {
+    "message": "দৃশ্য"
+  },
+  "paletteCustomWhere": {
+    "message": "খোলার স্থান"
+  },
+  "paletteNoResults": {
+    "message": "কোনো মিল পাওয়া যায়নি"
+  },
+  "palettePlaceholder": {
+    "message": "বুকমার্ক, ফোল্ডার, কমান্ড অনুসন্ধান করুন…"
+  },
+  "paletteWhereBackground": {
+    "message": "পটভূমির ট্যাব"
+  },
+  "paletteWhereCurrent": {
+    "message": "বর্তমান ট্যাব"
+  },
+  "paletteWhereTab": {
+    "message": "নতুন ট্যাব"
+  },
+  "paletteWhereWindow": {
+    "message": "নতুন উইন্ডো"
+  },
+  "parentFolder": {
+    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
+    "message": "প্যারেন্ট ফোল্ডার: \"$folderName$\"",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarksbar"
+      }
+    }
+  },
+  "pasteDone": {
+    "message": "পেস্ট হয়েছে"
+  },
+  "pasteGone": {
+    "message": "বুকমার্কটি আর নেই — ক্লিপবোর্ড পরিষ্কার হয়েছে"
+  },
+  "pasteHere": {
+    "message": "এখানে পেস্ট করুন"
+  },
+  "pinFolder": {
+    "message": "এই ফোল্ডার পিন করুন"
+  },
+  "quickAddBookmark": {
+    "message": "এই পৃষ্ঠা বুকমার্ক করুন (Ctrl+D)"
+  },
+  "quickAddBookmarkCommand": {
+    "message": "বর্তমান ট্যাবটিকে বুকমার্ক হিসাবে দ্রুত যোগ করুন"
+  },
+  "quickAdded": {
+    "message": "বুকমার্ক যোগ করা হয়েছে"
+  },
+  "quickAddedTo": {
+    "message": "$folderName$-এ বুকমার্ক যোগ করা হয়েছে",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarks bar"
+      }
+    }
+  },
+  "quickRemoveBookmark": {
+    "message": "এই বুকমার্ক সরান (Ctrl+D)"
+  },
+  "quickRemoved": {
+    "message": "বুকমার্ক সরানো হয়েছে"
+  },
+  "recentBookmarks": {
+    "message": "সম্প্রতি যোগ করা হয়েছে"
+  },
   "recentEmpty": {
     "message": "কোনও সাম্প্রতিক বুকমার্ক নেই। বর্তমান পৃষ্ঠা বুকমার্ক করতে Ctrl+D টিপুন।"
+  },
+  "recentGroupMonth": {
+    "message": "এই মাস"
+  },
+  "recentGroupOlder": {
+    "message": "পুরাতন"
+  },
+  "recentGroupToday": {
+    "message": "আজ"
+  },
+  "recentGroupWeek": {
+    "message": "এই সপ্তাহ"
   },
   "recentRevealInTree": {
     "message": "ট্রিতে দেখান"
   },
+  "recentSectionTitle": {
+    "message": "সাম্প্রতিক যোগ করা"
+  },
+  "recentStageAll": {
+    "message": "সাম্প্রতিক যোগ করা সব স্টেজ করুন"
+  },
+  "recentStageGroup": {
+    "message": "Send $t$ to the staging area",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
+  },
+  "removeSeparator": {
+    "message": "সেপারেটর সরান"
+  },
+  "replaceUrl": {
+    "message": "বর্তমান URL দিয়ে প্রতিস্থাপন"
+  },
+  "reportError": {
+    "message": "ত্রুটি রিপোর্ট করুন"
+  },
+  "reportedToDeveloper": {
+    "description": "এক্সটেনশনে ঘটা একটি ত্রুটির জন্য বার্তা, ডেভেলপারকে রিপোর্ট করা হয়েছে।",
+    "message": "এটি ডেভেলপারকে রিপোর্ট করা হয়েছে।"
+  },
+  "resetButton": {
+    "message": "রিসেট করুন"
+  },
+  "resetSettings": {
+    "message": "সেটিংস রিসেট করুন"
+  },
+  "resetSettingsDescription": {
+    "message": "vBookmarks ডিফল্ট সেটিংসে রিসেট করুন।"
+  },
+  "revealOutsideBarAction": {
+    "message": "সব দেখান এবং প্রকাশ করুন"
+  },
+  "revealOutsideBarHint": {
+    "message": "শুধু বুকমার্ক বার দেখানো হয়েছে: লক্ষ্যটি এর বাইরে।"
+  },
+  "riskBannerDismiss": {
+    "message": "বন্ধ করুন"
+  },
+  "riskBannerHelp": {
+    "message": "ব্যাকআপ ও পুনরুদ্ধার নির্দেশিকা"
+  },
+  "riskBannerNever": {
+    "message": "আবার দেখাবেন না"
+  },
+  "rowActionDelete": {
+    "message": "মুছুন"
+  },
+  "rowActionMark": {
+    "message": "মৃত হিসেবে চিহ্নিত করুন"
+  },
+  "rowActionReveal": {
+    "message": "ট্রিতে প্রকাশ করুন"
+  },
+  "rowActionUnmark": {
+    "message": "মৃত চিহ্ন সরান"
+  },
+  "save": {
+    "message": "সংরক্ষণ করুন"
+  },
+  "searchBookmarks": {
+    "description": "সার্চ ফিল্ডের জন্য প্লেসহোল্ডার টেক্সট।",
+    "message": "বুকমার্ক খুঁজুন"
+  },
+  "searchClear": {
+    "message": "অনুসন্ধান মুছুন"
+  },
   "searchHistoryClear": {
     "message": "সব মুছুন"
   },
+  "searchHistoryClose": {
+    "message": "অনুসন্ধানের ইতিহাস লুকান"
+  },
+  "searchHistoryClosedToast": {
+    "message": "অনুসন্ধানের ইতিহাস লুকানো হয়েছে — এটি আবার চালু করুন বিকল্প → অনুসন্ধান"
+  },
   "searchHistoryRemove": {
     "message": "এই অনুসন্ধান সরান"
+  },
+  "searchHistoryRerun": {
+    "message": "আবার অনুসন্ধান করুন"
   },
   "searchHistoryResultCount": {
     "message": "$n$টি ফলাফল",
@@ -298,6 +1562,895 @@
   },
   "searchHistoryTitle": {
     "message": "সাম্প্রতিক অনুসন্ধান"
+  },
+  "searchNoResults": {
+    "message": "কোনো মিলে যাওয়া বুকমার্ক নেই"
+  },
+  "searchResultCount": {
+    "message": "$n$টি ফলাফল",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "searchStageAllGroup": {
+    "message": "সব ফলাফল \"$1$\" গ্রুপ হিসেবে স্টেজ করুন",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "searchViewHint": {
+    "message": "আপনার বুকমার্ক অনুসন্ধান করতে উপরের বক্সে টাইপ করুন"
+  },
+  "selectAll": {
+    "message": "সব"
+  },
+  "selectClear": {
+    "message": "সাফ করুন"
+  },
+  "selectCount": {
+    "message": "$count$টি নির্বাচিত",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "selectInvert": {
+    "message": "উল্টান"
+  },
+  "selectModeEnter": {
+    "message": "নির্বাচন করুন"
+  },
+  "selectModeExit": {
+    "message": "নির্বাচন বন্ধ করুন"
+  },
+  "separatorOptions": {
+    "message": "বিভাজক"
+  },
+  "sessionEmpty": {
+    "message": "সংরক্ষণ করার মতো কোনো ট্যাব নেই"
+  },
+  "sessionFolderName": {
+    "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm.",
+    "message": "সেশন $date$",
+    "placeholders": {
+      "date": {
+        "content": "$1",
+        "example": "2026-07-18 15:04"
+      }
+    }
+  },
+  "sessionSaved": {
+    "description": "Alert shown after the current window's tabs were saved into a new bookmark folder.",
+    "message": "$count$টি ট্যাব একটি নতুন ফোল্ডারে সংরক্ষিত হয়েছে",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "12"
+      }
+    }
+  },
+  "settingsBackupHint": {
+    "message": "রপ্তানি সমস্ত সেটিংস (সিঙ্ক পছন্দ সহ) একটি JSON ফাইলে সংরক্ষণ করে। আমদানি একটি ব্যাকআপ মার্জ করে: ফাইলের সেটিংস বর্তমানগুলিকে ওভাররাইট করে, বাকি সবকিছু রক্ষিত থাকে।"
+  },
+  "settingsExport": {
+    "message": "সেটিংস রপ্তানি"
+  },
+  "settingsImport": {
+    "message": "সেটিংস আমদানি"
+  },
+  "settingsImportConfirm": {
+    "message": "আমদানি ব্যাকআপ ফাইলে থাকা প্রতিটি সেটিং ওভাররাইট করবে (ফাইলে না থাকা সেটিংস রক্ষিত থাকে) এবং এই পৃষ্ঠাটি পুনরায় লোড করবে। চালিয়ে যান?"
+  },
+  "settingsImportDone": {
+    "message": "সেটিংস আমদানি করা হয়েছে। পৃষ্ঠাটি এখন পুনরায় লোড হবে।"
+  },
+  "settingsImportError": {
+    "message": "কিছু সেটিংস লেখা যায়নি (স্টোরেজ কোটা বা অস্থায়ী ত্রুটি)। আমদানি সম্পূর্ণ হয়নি — আবার চেষ্টা করুন।"
+  },
+  "settingsImportInvalid": {
+    "message": "অবৈধ সেটিংস ফাইল: এটি একটি vBookmarks সেটিংস ব্যাকআপ নয়।"
+  },
+  "sortByDate": {
+    "message": "যোগের তারিখ অনুসারে সাজান"
+  },
+  "sortByDateAdded": {
+    "message": "তারিখ অনুসারে (নতুন প্রথম)"
+  },
+  "sortByName": {
+    "message": "নাম অনুসারে সাজান"
+  },
+  "sortByTitle": {
+    "message": "শিরোনাম অনুসারে"
+  },
+  "sortDone": {
+    "message": "ফোল্ডার সাজানো হয়েছে"
+  },
+  "sortFolderContents": {
+    "message": "ফোল্ডার সাজান"
+  },
+  "sortFoldersFirst": {
+    "message": "ফোল্ডার উপরে রাখুন"
+  },
+  "sortMenuOptions": {
+    "message": "সাজান"
+  },
+  "sortOptions": {
+    "message": "সাজানোর বিকল্প…"
+  },
+  "sortRecursive": {
+    "message": "সাবফোল্ডারও সাজান (পুনরাবৃত্ত)"
+  },
+  "sortRecursiveSuffix": {
+    "message": "(পুনরাবৃত্ত)"
+  },
+  "sortRecursiveWarning": {
+    "message": "এটি প্রতিটি সাবফোল্ডারের বুকমার্কগুলো পুনর্বিন্যাস করে।"
+  },
+  "stagedToast": {
+    "message": "$n$টি ট্যাব “$t$” গ্রুপ হিসেবে স্টেজ হয়েছে",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "t": {
+        "content": "$2"
+      }
+    }
+  },
+  "stagingAdd": {
+    "message": "স্টেজিংয়ে পাঠান"
+  },
+  "stagingAdded": {
+    "message": "স্টেজিংয়ে পাঠানো হয়েছে"
+  },
+  "stagingAddedSummary": {
+    "message": "$n$টি আইটেম যোগ হয়েছে; $m$টি আগে থেকেই স্টেজ করা",
+    "placeholders": {
+      "m": {
+        "content": "$2"
+      },
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingAlready": {
+    "message": "ইতিমধ্যে স্টেজিং এলাকায় আছে"
+  },
+  "stagingBucketFavAll": {
+    "message": "সব ফেভারিট করুন"
+  },
+  "stagingBucketTitle": {
+    "message": "বুকমার্ক করা হয়নি"
+  },
+  "stagingClear": {
+    "message": "স্টেজিং পরিষ্কার করুন"
+  },
+  "stagingClearConfirm": {
+    "message": "পুরো স্টেজিং এলাকা পরিষ্কার করবেন? বুকমার্ক ট্রি স্পর্শ করা হবে না।"
+  },
+  "stagingClearConfirmOk": {
+    "message": "মুছুন"
+  },
+  "stagingCleared": {
+    "message": "স্টেজিং এলাকা পরিষ্কার হয়েছে"
+  },
+  "stagingConfirmFolder": {
+    "message": "এই ফোল্ডার থেকে $n$টি বুকমার্ক স্টেজ করবেন?",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingConfirmFolderOk": {
+    "message": "স্টেজ"
+  },
+  "stagingCopyDone": {
+    "message": "$n$টি আইটেম কপি হয়েছে",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingCount": {
+    "message": "$n$ স্টেজড",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingDeleteConfirm": {
+    "message": "$n$টি আইটেম মুছবেন? বুকমার্ক নয় এমনগুলো শুধু স্টেজিং এলাকা ছেড়ে যাবে।",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingDeleted": {
+    "message": "$n$টি বুকমার্ক মুছে ফেলা হয়েছে",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingEmpty": {
+    "message": "এখনও কিছু স্টেজ করা হয়নি। যেকোনো ভিউ থেকে বুকমার্ক এখানে পাঠান — একটি সারিতে থাকা প্লেন বোতাম, বা ডান-ক্লিক মেনু — তারপর সেগুলো বাল্কে সাজান ও ফাইল করুন।"
+  },
+  "stagingFav": {
+    "message": "ফেভারিট"
+  },
+  "stagingFavDone": {
+    "message": "$n$টি আইটেম ফেভারিট হয়েছে",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingFolderEmpty": {
+    "message": "এই ফোল্ডারে স্টেজ করার মতো বুকমার্ক নেই"
+  },
+  "stagingFromHistory": {
+    "message": "ইতিহাস থেকে"
+  },
+  "stagingFull": {
+    "message": "স্টেজিং এলাকা পূর্ণ — আগে কিছু আইটেম সরান"
+  },
+  "stagingGroupAssign": {
+    "message": "গ্রুপ…"
+  },
+  "stagingGroupAssignTitle": {
+    "message": "একটি গ্রুপে নির্ধারণ করুন"
+  },
+  "stagingGroupCollapse": {
+    "message": "গ্রুপ সংকুচিত করুন"
+  },
+  "stagingGroupDelete": {
+    "message": "গ্রুপ মুছুন (আইটেমসহ)"
+  },
+  "stagingGroupDeleteConfirm": {
+    "message": "\"$1\" গ্রুপটি মুছবেন? এর $2টি আইটেমও স্টেজিং এলাকা ছেড়ে যাবে।"
+  },
+  "stagingGroupDeleted": {
+    "message": "গ্রুপ মুছে ফেলা হয়েছে — $1টি আইটেম সরানো হয়েছে"
+  },
+  "stagingGroupDissolve": {
+    "message": "গ্রুপ ভেঙে দিন"
+  },
+  "stagingGroupDissolved": {
+    "message": "গ্রুপ ভেঙে গেছে — আইটেম স্টেজিং এলাকায় রাখা হয়েছে"
+  },
+  "stagingGroupExpand": {
+    "message": "গ্রুপ প্রসারিত করুন"
+  },
+  "stagingGroupNamePrompt": {
+    "message": "নতুন গ্রুপের নাম"
+  },
+  "stagingGroupNew": {
+    "message": "নতুন গ্রুপ"
+  },
+  "stagingGroupNoGroups": {
+    "message": "এখনও কোনো গ্রুপ নেই"
+  },
+  "stagingGroupRename": {
+    "message": "গ্রুপের নাম পরিবর্তন…"
+  },
+  "stagingGroupSelectAll": {
+    "message": "এই গ্রুপের সব নির্বাচন করুন"
+  },
+  "stagingGuideDismiss": {
+    "message": "আবার দেখাবেন না"
+  },
+  "stagingGuideText": {
+    "message": "এখানে বুকমার্ক সাজান — সারি নির্বাচন করুন এবং ব্যাচ অ্যাকশনের জন্য নির্বাচন মোডে প্রবেশ করুন।"
+  },
+  "stagingMoveConfirm": {
+    "message": "নির্বাচিত ফোল্ডারে $n$টি আইটেম সরানো হবে?",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingMoveConfirmOk": {
+    "message": "সরান"
+  },
+  "stagingMoveCopy": {
+    "message": "সরান/কপি করুন…"
+  },
+  "stagingMoveDone": {
+    "message": "$n$টি আইটেম হোমে সরানো হয়েছে",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingNew": {
+    "message": "নতুন $n$",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingRemove": {
+    "message": "স্টেজিং এলাকা থেকে সরান"
+  },
+  "stagingRemoved": {
+    "message": "স্টেজিং এলাকা থেকে সরানো হয়েছে"
+  },
+  "stagingRemovedCount": {
+    "message": "স্টেজিং এলাকা থেকে $n$টি আইটেম সরানো হয়েছে",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingRowFav": {
+    "message": "এই আইটেমটি ফেভারিট করুন"
+  },
+  "stagingRowUnfav": {
+    "message": "এই আইটেমটি আন-ফেভারিট করুন"
+  },
+  "stagingShortcutAdd": {
+    "message": "শর্টকাট যোগ করুন"
+  },
+  "stagingShortcutAlias": {
+    "message": "উপনাম"
+  },
+  "stagingShortcutBarLabel": {
+    "message": "এখানে সরান:"
+  },
+  "stagingShortcutEdit": {
+    "message": "শর্টকাট সম্পাদনা করুন"
+  },
+  "stagingShortcutMove": {
+    "message": "নির্বাচিত $1$-এ স্থানান্তর করুন",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingShortcutPickFolder": {
+    "message": "লক্ষ্য ফোল্ডার নির্বাচন করুন…"
+  },
+  "stagingShortcutRemove": {
+    "message": "শর্টকাট সরান"
+  },
+  "stagingShortcutRemoved": {
+    "message": "শর্টকাট সরানো হয়েছে"
+  },
+  "stagingShortcutSave": {
+    "message": "সংরক্ষণ করুন"
+  },
+  "stagingShortcutTitle": {
+    "message": "স্থানান্তর শর্টকাট"
+  },
+  "stagingUnfav": {
+    "message": "আন-ফেভারিট"
+  },
+  "stagingUnfavDone": {
+    "message": "$n$টি আইটেম আন-ফেভারিট হয়েছে",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "statsClearConfirm": {
+    "message": "$count$ বুকমার্কের জন্য ভিজিট পরিসংখ্যান মুছবেন? এটি পূর্বাবস্থায় ফেরানো যাবে না।",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "statsClearData": {
+    "message": "পরিসংখ্যান মুছুন"
+  },
+  "statsDisabledHint": {
+    "message": "ভিজিট পরিসংখ্যান বন্ধ — বিকল্প → ভিউতে এটি সক্রিয় করুন"
+  },
+  "statsEmpty": {
+    "message": "বুকমার্ক খোলার সাথে সাথে পরিসংখ্যান তৈরি হয়"
+  },
+  "statsHistoryAdd": {
+    "message": "বুকমার্কে যোগ করুন"
+  },
+  "statsHistoryBanner": {
+    "message": "আপনার পূর্ববর্তী ভিজিটের ভিত্তিতে ভিজিট পরিসংখ্যান তৈরি করতে ইতিহাস অ্যাক্সেস দিন।"
+  },
+  "statsHistoryBookmarked": {
+    "message": "বুকমার্ক করা হয়েছে"
+  },
+  "statsHistoryDismiss": {
+    "message": "আর দেখাবেন না"
+  },
+  "statsHistoryEnable": {
+    "message": "সক্ষম করুন"
+  },
+  "statsHistoryGuide": {
+    "message": "আপনার সাম্প্রতিক ভিজিট তালিকাভুক্ত করতে ইতিহাস অ্যাক্সেস মঞ্জুর করুন।"
+  },
+  "statsHistoryImported": {
+    "message": "$count$ টি বুকমার্কের জন্য পূর্ববর্তী ভিজিট ইম্পোর্ট করা হয়েছে",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "statsSectionBookmarks": {
+    "message": "বুকমার্ক পরিসংখ্যান"
+  },
+  "statsSectionRecent": {
+    "message": "সাম্প্রতিক ভিজিট"
+  },
+  "statsShowUnbookmarked": {
+    "message": "অমার্কড দেখান"
+  },
+  "statsShowUnbookmarkedHint": {
+    "message": "ইতিহাসের যে পৃষ্ঠাগুলি বুকমার্ক হিসাবে সংরক্ষিত নয় সেগুলি অন্তর্ভুক্ত করুন।"
+  },
+  "statsSortByCount": {
+    "message": "গণনা অনুসারে"
+  },
+  "statsSortByRecent": {
+    "message": "সাম্প্রতিক অনুসারে"
+  },
+  "statsVisitCount": {
+    "message": "$count$ বার দেখা হয়েছে",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "storageUsageFree": {
+    "message": "মুক্ত"
+  },
+  "storageUsageHint": {
+    "message": "শুধুমাত্র স্থানীয় এক্সটেনশন স্টোরেজ (chrome.storage.local, প্রায় ১০ MB কোটা): আইকন ক্যাশে এবং সেটিংস ও অন্যান্য স্থানীয় ডেটা। সিঙ্ক করা সেটিংস, সেশন ডেটা এবং বুকমার্ক লাইব্রেরি এখানে গণনা করা হয় না।"
+  },
+  "storageUsageIcon": {
+    "message": "আইকন ক্যাশে"
+  },
+  "storageUsageOther": {
+    "message": "অন্যান্য"
+  },
+  "storageUsageSummary": {
+    "message": "$2$ এর মধ্যে $1$ ব্যবহৃত",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      },
+      "2": {
+        "content": "$2"
+      }
+    }
+  },
+  "syncOptions": {
+    "message": "সিঙ্ক অপশন"
+  },
+  "syncStatusLocal": {
+    "message": "শুধুমাত্র স্থানীয় — আপলোড করা হয়নি"
+  },
+  "syncStatusSynced": {
+    "message": "আপনার Google অ্যাকাউন্টে সিঙ্ক হয়েছে"
+  },
+  "syncStatusUnsyncable": {
+    "message": "সিঙ্ক করা যাবে না"
+  },
+  "syncSuffixLocal": {
+    "message": "(স্থানীয়)"
+  },
+  "syncSuffixSynced": {
+    "message": "(সিঙ্ক হয়েছে)"
+  },
+  "tabGroupColorBlue": {
+    "description": "Accessible name of the blue color swatch in the new-tab-group dialog.",
+    "message": "নীল"
+  },
+  "tabGroupColorCyan": {
+    "description": "Accessible name of the cyan color swatch in the new-tab-group dialog.",
+    "message": "সায়ান"
+  },
+  "tabGroupColorGreen": {
+    "description": "Accessible name of the green color swatch in the new-tab-group dialog.",
+    "message": "সবুজ"
+  },
+  "tabGroupColorGrey": {
+    "description": "Accessible name of the grey color swatch in the new-tab-group dialog.",
+    "message": "ধূসর"
+  },
+  "tabGroupColorLabel": {
+    "message": "রঙ"
+  },
+  "tabGroupColorOrange": {
+    "description": "Accessible name of the orange color swatch in the new-tab-group dialog.",
+    "message": "কমলা"
+  },
+  "tabGroupColorPink": {
+    "description": "Accessible name of the pink color swatch in the new-tab-group dialog.",
+    "message": "গোলাপী"
+  },
+  "tabGroupColorPurple": {
+    "description": "Accessible name of the purple color swatch in the new-tab-group dialog.",
+    "message": "বেগুনি"
+  },
+  "tabGroupColorRed": {
+    "description": "Accessible name of the red color swatch in the new-tab-group dialog.",
+    "message": "লাল"
+  },
+  "tabGroupColorYellow": {
+    "description": "Accessible name of the yellow color swatch in the new-tab-group dialog.",
+    "message": "হলুদ"
+  },
+  "tabGroupDialogTitle": {
+    "message": "নতুন ট্যাব গ্রুপ"
+  },
+  "tabGroupNoGroups": {
+    "message": "কোনো বিদ্যমান ট্যাব গ্রুপ নেই"
+  },
+  "tabGroupOptions": {
+    "message": "ট্যাব গ্রুপ"
+  },
+  "tabGroupPickDialogTitle": {
+    "message": "বিদ্যমান ট্যাব গ্রুপে খুলুন"
+  },
+  "tabGroupTitleLabel": {
+    "message": "গ্রুপের শিরোনাম"
+  },
+  "tabGroupUntitled": {
+    "message": "নামহীন গ্রুপ"
+  },
+  "tabGroupsActivateGroup": {
+    "message": "ট্যাব গ্রুপে যান"
+  },
+  "tabGroupsActivateTab": {
+    "message": "ট্যাবে যান"
+  },
+  "tabGroupsAddBookmark": {
+    "message": "এই ট্যাব বুকমার্ক করুন"
+  },
+  "tabGroupsBatchClosedTitle": {
+    "message": "বন্ধ ট্যাব"
+  },
+  "tabGroupsBookmarkRemoved": {
+    "message": "$count$টি বুকমার্ক সরানো হয়েছে",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsBookmarked": {
+    "message": "বুকমার্ক করা হয়েছে"
+  },
+  "tabGroupsBookmarksAdded": {
+    "message": "$count$ বুকমার্ক $folder$-এ যোগ হয়েছে",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsClearClosedGroups": {
+    "message": "সব মুছুন"
+  },
+  "tabGroupsClearedToast": {
+    "message": "$count$টি বন্ধ রেকর্ড মুছে ফেলা হয়েছে",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCloseGroup": {
+    "message": "ট্যাব গ্রুপ বন্ধ করুন"
+  },
+  "tabGroupsCloseWindow": {
+    "message": "উইন্ডো বন্ধ করুন"
+  },
+  "tabGroupsClosedGroups": {
+    "message": "সম্প্রতি বন্ধ হয়েছে"
+  },
+  "tabGroupsClosedOpenTab": {
+    "message": "নতুন ট্যাবে খুলুন"
+  },
+  "tabGroupsClosedTabRemovedToast": {
+    "message": "বন্ধ রেকর্ড থেকে সরানো হয়েছে"
+  },
+  "tabGroupsClosedTimeLabel": {
+    "message": "বন্ধ হয়েছে:"
+  },
+  "tabGroupsClosedToast": {
+    "message": "$count$টি ট্যাব বন্ধ হয়েছে",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCollapseAll": {
+    "message": "সব সংকুচিত করুন"
+  },
+  "tabGroupsCollapseGroup": {
+    "message": "গ্রুপ সংকুচিত করুন"
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "উইন্ডো সঙ্কুচিত করুন"
+  },
+  "tabGroupsColorStyle": {
+    "message": "ট্যাব গ্রুপের রঙের শৈলী"
+  },
+  "tabGroupsColorStyleEdge": {
+    "message": "এজ কালার ব্যান্ড"
+  },
+  "tabGroupsColorStyleHint": {
+    "message": "বন্ধ থাকলে শুধু রঙের বিন্দু দেখায়। এজ কালার ব্যান্ড গ্রুপের বাম প্রান্তে একটি রঙিন স্ট্রিপ আঁকে। কালার কানেক্টর লাইন গ্রুপের বিন্দুর নিচে একটি রঙিন রেখা আঁকে, প্রতিটি সারিতে একটি টিক সহ, পুরো গ্রুপটিকে একটি গাছের মতো যুক্ত করে।"
+  },
+  "tabGroupsColorStyleLine": {
+    "message": "কালার কানেক্টর লাইন"
+  },
+  "tabGroupsColorStyleOff": {
+    "message": "বন্ধ (শুধু রঙের বিন্দু)"
+  },
+  "tabGroupsConfirmClearClosed": {
+    "message": "সব সাম্প্রতিক বন্ধ রেকর্ড মুছে ফেলবেন? এগুলো আর এখান থেকে পুনরায় খোলা যাবে না।"
+  },
+  "tabGroupsConfirmClose": {
+    "message": "$count$ ট্যাব বন্ধ করবেন?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsConfirmSleep": {
+    "message": "$count$ ট্যাব স্লিপ করবেন?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCopyMoveCopy": {
+    "message": "কপি"
+  },
+  "tabGroupsCopyMoveDialog": {
+    "message": "নির্বাচিত ট্যাবগুলো ইতিমধ্যে একটি ট্যাব গ্রুপের অন্তর্গত। সেগুলো কপি করুন (নতুন জায়গায় খুলুন) বা সরান (বর্তমান গ্রুপ থেকে সরান)?"
+  },
+  "tabGroupsCopyMoveMove": {
+    "message": "সরান"
+  },
+  "tabGroupsCurrentTab": {
+    "message": "বর্তমান"
+  },
+  "tabGroupsCurrentWindow": {
+    "message": "বর্তমান উইন্ডো"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "বন্ধ ট্যাব গ্রুপ মুছুন"
+  },
+  "tabGroupsDiscarded": {
+    "message": "সুপ্ত ট্যাব"
+  },
+  "tabGroupsExpandAll": {
+    "message": "সব প্রসারিত করুন"
+  },
+  "tabGroupsExpandGroup": {
+    "message": "গ্রুপ প্রসারিত করুন"
+  },
+  "tabGroupsExpandWindow": {
+    "message": "উইন্ডো প্রসারিত করুন"
+  },
+  "tabGroupsExpandedCollapse": {
+    "message": "সংকুচিত করুন"
+  },
+  "tabGroupsExpandedExpand": {
+    "message": "প্রসারিত করুন"
+  },
+  "tabGroupsFilterPlaceholder": {
+    "message": "খোলা ট্যাব ফিল্টার করুন"
+  },
+  "tabGroupsGroupCount": {
+    "message": "$count$ ট্যাব",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsGroupSavedToFolder": {
+    "message": "$count$ ট্যাব $folder$-এ সংরক্ষিত হয়েছে",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsMenuAddBookmark": {
+    "message": "ট্যাব বুকমার্ক করুন"
+  },
+  "tabGroupsMenuSaveFolder": {
+    "message": "বুকমার্ক ফোল্ডার হিসেবে সংরক্ষণ"
+  },
+  "tabGroupsMergedWindowToast": {
+    "message": "উইন্ডোটি ট্যাব গ্রুপ হিসেবে একত্রিত হয়েছে"
+  },
+  "tabGroupsMoveNewWindow": {
+    "message": "নতুন উইন্ডোতে সরান"
+  },
+  "tabGroupsNewWindow": {
+    "message": "নতুন উইন্ডো"
+  },
+  "tabGroupsNoMatchingTabs": {
+    "message": "কোনো মিলে যাওয়া ট্যাব নেই"
+  },
+  "tabGroupsOpenGroups": {
+    "message": "খোলা ট্যাব গ্রুপ"
+  },
+  "tabGroupsPinTab": {
+    "message": "ট্যাব পিন করুন"
+  },
+  "tabGroupsPinned": {
+    "message": "পিন করা ট্যাব"
+  },
+  "tabGroupsPinnedUngroupedToast": {
+    "message": "পিন করা হয়েছে — ট্যাব গ্রুপ থেকে সরানো হয়েছে"
+  },
+  "tabGroupsRecordDeletedToast": {
+    "message": "বন্ধ রেকর্ডটি মুছে ফেলা হয়েছে"
+  },
+  "tabGroupsRemoveBookmark": {
+    "message": "বুকমার্ক সরান"
+  },
+  "tabGroupsRemoveClosedTab": {
+    "message": "সংরক্ষিত গ্রুপ থেকে সরান"
+  },
+  "tabGroupsRenameDialog": {
+    "message": "ট্যাব গ্রুপের নাম পরিবর্তন করুন"
+  },
+  "tabGroupsRenameGroup": {
+    "message": "ট্যাব গ্রুপের নাম পরিবর্তন করুন"
+  },
+  "tabGroupsReopenAction": {
+    "message": "পুনরায় খুলুন"
+  },
+  "tabGroupsReopenGroup": {
+    "message": "ট্যাব গ্রুপ পুনরায় খুলুন"
+  },
+  "tabGroupsSaveFolder": {
+    "message": "ট্যাব গ্রুপ বুকমার্ক ফোল্ডার হিসেবে সংরক্ষণ করুন"
+  },
+  "tabGroupsSelectAddBookmarks": {
+    "message": "বুকমার্ক ফোল্ডারে যোগ করুন…"
+  },
+  "tabGroupsSelectClose": {
+    "message": "বন্ধ করুন"
+  },
+  "tabGroupsSelectNewGroup": {
+    "message": "নতুন ট্যাব গ্রুপ"
+  },
+  "tabGroupsSelectOpenInto": {
+    "message": "বিদ্যমান ট্যাব গ্রুপে খুলুন…"
+  },
+  "tabGroupsSelectSaveFolder": {
+    "message": "বুকমার্ক ফোল্ডার হিসেবে সংরক্ষণ করুন"
+  },
+  "tabGroupsSelectSleep": {
+    "message": "স্লিপ"
+  },
+  "tabGroupsSleepGroup": {
+    "message": "ট্যাব গ্রুপ স্লিপ করুন"
+  },
+  "tabGroupsSleepTab": {
+    "message": "ট্যাব ঘুমাতে দিন"
+  },
+  "tabGroupsSleptToast": {
+    "message": "$count$টি ট্যাব ঘুমিয়ে রাখা হয়েছে",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsSummary": {
+    "message": "$tabs$ ট্যাব · $groups$ গ্রুপ",
+    "placeholders": {
+      "groups": {
+        "content": "$2"
+      },
+      "tabs": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsSyncCollapse": {
+    "message": "ব্রাউজারের সাথে সিঙ্ক করুন"
+  },
+  "tabGroupsSyncCollapseHint": {
+    "message": "চেক করলে, এই ভিউতে একটি গ্রুপ ভাঁজ বা প্রসারিত করলে ব্রাউজার ট্যাব গ্রুপও আপডেট হবে। ডিফল্টভাবে বন্ধ থাকে, তাই ভিউ ভাঁজ স্থানীয় থাকে।"
+  },
+  "tabGroupsToolbarRefresh": {
+    "message": "রিফ্রেশ"
+  },
+  "tabGroupsUngroupGroup": {
+    "message": "গ্রুপ ভাঙুন"
+  },
+  "tabGroupsUngroupedTabs": {
+    "message": "গ্রুপবিহীন ট্যাব"
+  },
+  "tabGroupsUnpinTab": {
+    "message": "ট্যাব আনপিন করুন"
+  },
+  "tabGroupsViewEmpty": {
+    "message": "এই উইন্ডোতে কোনো ট্যাব নেই"
+  },
+  "tabGroupsWakeAction": {
+    "message": "জাগান"
+  },
+  "tabGroupsWakeGroup": {
+    "message": "ট্যাব গ্রুপ জাগান"
+  },
+  "tabGroupsWakeTab": {
+    "message": "ট্যাব জাগান"
+  },
+  "tabGroupsWindow": {
+    "message": "উইন্ডো $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsWindowClosedTitle": {
+    "message": "উইন্ডো বন্ধ হয়েছে"
+  },
+  "tabGroupsWindowsCount": {
+    "message": "$n$ উইন্ডো",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabRowStage": {
+    "message": "স্টেজিংয়ে পাঠান"
+  },
+  "tabgroupStageAll": {
+    "message": "গ্রুপ স্টেজিংয়ে পাঠান"
+  },
+  "tabgroupStageConfirm": {
+    "message": "$n$ ট্যাব স্টেজিংয়ে পাঠাবেন?",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabgroupStageNone": {
+    "message": "এই গ্রুপে বুকমার্কযোগ্য ট্যাব নেই"
   },
   "timeDaysAgo": {
     "message": "$n$ দিন আগে",
@@ -329,303 +2482,26 @@
   "timeYesterday": {
     "message": "গতকাল"
   },
+  "toolButtonTitle": {
+    "message": "সরঞ্জাম (Ctrl+K)"
+  },
   "undoAction": {
     "message": "পূর্বাবস্থায় ফিরুন"
   },
-  "revealOutsideBarHint": {
-    "message": "শুধু বুকমার্ক বার দেখানো হয়েছে: লক্ষ্যটি এর বাইরে।"
+  "undoSingleStepNote": {
+    "message": "পূর্বাবস্থায় ফেরানো কেবল সর্বশেষ মুছে ফেলা আইটেমটি পুনরুদ্ধার করতে পারে।"
   },
-  "revealOutsideBarAction": {
-    "message": "সব দেখান এবং প্রকাশ করুন"
+  "unpinFolder": {
+    "message": "এই ফোল্ডার আনপিন করুন"
   },
-  "dupesCleanAll": {
-    "message": "সব পরিষ্কার করুন: $groups$ গ্রুপ, $count$ অতিরিক্ত কপি",
-    "placeholders": {
-      "groups": {
-        "content": "$1"
-      },
-      "count": {
-        "content": "$2"
-      }
-    },
-    "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go."
+  "url": {
+    "message": "URL"
   },
-  "dupesConfirmAll": {
-    "message": "$count$টি অতিরিক্ত কপি, $groups$টি গ্রুপ জুড়ে মুছে ফেলা হবে? প্রতিটি গ্রুপে নির্বাচিত কপিটি রাখা হবে।",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      },
-      "groups": {
-        "content": "$2"
-      }
-    },
-    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
+  "versionDialogCopied": {
+    "message": "কপি হয়েছে"
   },
-  "dupesConfirmSelected": {
-    "message": "$groups$ নির্বাচিত গ্রুপ থেকে $count$টি সদৃশ বুকমার্ক মুছবেন?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      },
-      "groups": {
-        "content": "$2"
-      }
-    }
-  },
-  "dupesConfirmGroup": {
-    "message": "\"$title$\" রাখবেন এবং বাকি $count$টি কপি মুছে ফেলবেন?",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Example bookmark"
-      },
-      "count": {
-        "content": "$2"
-      }
-    },
-    "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."
-  },
-  "dupesDone": {
-    "message": "$count$টি ডুপ্লিকেট বুকমার্ক সরানো হয়েছে",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Alert shown after the duplicate cleanup finished."
-  },
-  "dupesGroupCount": {
-    "message": "$count$টি ডুপ্লিকেট",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
-  },
-  "dupesGroupExpand": {
-    "description": "Dupes view group-head context menu: expand a collapsed duplicate group.",
-    "message": "গ্রুপ প্রসারিত করুন"
-  },
-  "dupesGroupCollapse": {
-    "description": "Dupes view group-head context menu: collapse an expanded duplicate group.",
-    "message": "গ্রুপ সংকুচিত করুন"
-  },
-  "dupesNone": {
-    "message": "কোনো ডুপ্লিকেট পাওয়া যায়নি"
-  },
-  "deleteEllipsis": {
-    "message": "মুছে ফেলুন..."
-  },
-  "donationMessage": {
-    "message": "আনন্দ পাচ্ছেন? এর ভবিষ্যত জ্বালাতে দান করুন — বা স্টোরে রেট দিন: প্রতিটি রিভিউ আপডেট আসতে রাখে।"
-  },
-  "donationV4Notice": {
-    "message": "vBookmarks 4.0 একটি আধুনিক ডিজাইনসহ সম্পূর্ণ নতুন সংস্করণ, নতুন বৈশিষ্ট্যে ভরপুর।"
-  },
-  "donationV4GuideLink": {
-    "message": "v4 গাইড পড়ুন →"
-  },
-  "donationGo": {
-    "message": "দান করুন"
-  },
-  "donationRate": {
-    "message": "রেট দিন"
-  },
-  "donationRateTitle": {
-    "message": "Chrome ওয়েব স্টোরে vBookmarks-কে রেট দিন"
-  },
-  "donationLater": {
-    "message": "পরে"
-  },
-  "donationNever": {
-    "message": "আবার দেখাবেন না"
-  },
-  "donationDismiss": {
-    "message": "বাতিল করুন"
-  },
-  "edit": {
-    "message": "সম্পাদনা..."
-  },
-  "editBookmark": {
-    "message": "বুকমার্ক সম্পাদনা করুন"
-  },
-  "editFolder": {
-    "message": "ফোল্ডার সম্পাদনা করুন"
-  },
-  "errorOccured": {
-    "message": "ওহো, একটি ত্রুটি ঘটেছে।"
-  },
-  "extDesc": {
-    "description": "এক্সটেনশনের বর্ণনা।",
-    "message": "একটি পপআপ বুকমার্ক ম্যানেজার। উন্নত Neat Bookmarks। Neater Bookmarks থেকে আরও পরিষ্কার।"
-  },
-  "extName": {
-    "description": "vBookmarks",
-    "message": "vBookmarks"
-  },
-  "folderEmpty": {
-    "message": "(খালি)"
-  },
-  "general": {
-    "message": "সাধারণ"
-  },
-  "ignore": {
-    "message": "উপেক্ষা করুন"
-  },
-  "name": {
-    "description": "বুকমার্ক বা ফোল্ডারের নাম।",
-    "message": "নাম"
-  },
-  "nope": {
-    "message": "বাতিল"
-  },
-  "noTitle": {
-    "description": "http(s) URL ছাড়া অনামী বুকমার্ক বা অনামী ফোল্ডারের জন্য শিরোনাম।",
-    "message": "(কোনো শিরোনাম নেই)"
-  },
-  "open": {
-    "description": "বুকমার্ক খোলার ক্রিয়া।",
-    "message": "খুলুন"
-  },
-  "openBookmarks": {
-    "message": "সব বুকমার্ক খুলুন"
-  },
-  "openBookmarksIncognitoWindow": {
-    "message": "ইনকগনিটো উইন্ডোতে সব বুকমার্ক খুলুন"
-  },
-  "openBookmarksInGroup": {
-    "message": "সব নতুন ট্যাব গ্রুপে খুলুন"
-  },
-  "openBookmarksInGroupSetup": {
-    "message": "নতুন ট্যাব গ্রুপে সব খুলুন…"
-  },
-  "openBookmarksInExistingGroup": {
-    "message": "বিদ্যমান ট্যাব গ্রুপে সব খুলুন…"
-  },
-  "tabGroupOptions": {
-    "message": "ট্যাব গ্রুপ"
-  },
-  "sortMenuOptions": {
-    "message": "সাজান"
-  },
-  "openBookmarksNewWindow": {
-    "message": "নতুন উইন্ডোতে সব বুকমার্ক খুলুন"
-  },
-  "openCommandPaletteCommand": {
-    "message": "কমান্ড প্যালেট খুলুন"
-  },
-  "openIncognitoWindow": {
-    "message": "ইনকগনিটো উইন্ডোতে খুলুন"
-  },
-  "openNewTab": {
-    "message": "নতুন ট্যাবে খুলুন"
-  },
-  "bookmarkOpenInNewGroup": {
-    "message": "নতুন ট্যাব গ্রুপে খুলুন"
-  },
-  "bookmarkOpenInNewGroupSetup": {
-    "message": "নতুন ট্যাব গ্রুপে খুলুন…"
-  },
-  "bookmarkOpenInExistingGroup": {
-    "message": "বিদ্যমান ট্যাব গ্রুপে খুলুন…"
-  },
-  "openNewWindow": {
-    "message": "নতুন উইন্ডোতে খুলুন"
-  },
-  "openSidePanelCommand": {
-    "message": "vBookmarks সাইড প্যানেল খুলুন"
-  },
-  "optionAnnounceEnabled": {
-    "message": "পণ্যের মধ্যে ঘোষণা দেখান"
-  },
-  "optionAnnounceEnabledHint": {
-    "message": "প্রকল্পের GitHub রিপোজিটরি থেকে রিলিজ নোট এবং টিপস (সর্বোচ্চ প্রতি ৬ ঘণ্টায় আনা হয়)। বন্ধ করলে নেটওয়ার্ক থেকে আনা বন্ধ হয়ে যায়।"
-  },
-  "optionClickNewTab": {
-    "message": "বাম ক্লিক বুকমার্ক নতুন ট্যাবে খোলে।"
-  },
-  "optionCloseUnusedFolders": {
-    "message": "ফোল্ডার খোলার সময় অব্যবহৃত ফোল্ডার বন্ধ করুন।"
-  },
-  "optionConfirmOpenFolder": {
-    "message": "ফোল্ডার থেকে অনেক বুকমার্ক খোলার সময় নিশ্চিতকরণ দেখান।"
-  },
-  "optionConfirmDeleteFolder": {
-    "message": "অ-খালি ফোল্ডার মুছার আগে নিশ্চিতকরণ"
-  },
-  "optionOnlyShowBookmarkBar": {
-    "message": "শুধু বুকমার্ক বারে বুকমার্ক দেখান"
-  },
-  "optionSearchAfterEnter": {
-    "message": "শুধু ENTER চাপলে বুকমার্ক খোঁজুন (তাত্ক্ষণিক অনুসন্ধানের পরিবর্তে)"
-  },
-  "optionOpenNewTab": {
-    "message": "মিডল ক্লিক বা কন্ট্রোল-ক্লিক বুকমার্ক নতুন ব্যাকগ্রাউন্ড ট্যাবে খোলে (ফোরগ্রাউন্ডের পরিবর্তে)।"
-  },
-  "optionOpenInSidePanel": {
-    "message": "পপআপের পরিবর্তে সাইড প্যানেলে খুলুন"
-  },
-  "optionPopupStays": {
-    "message": "বুকমার্ক খোলার সময় (বাম ক্লিক) পপআপ খোলা থাকে।"
-  },
-  "optionRememberPrevState": {
-    "message": "পূর্ববর্তী অবস্থা মনে রাখুন (স্ক্রোল অবস্থান, খোলা ফোল্ডার এবং শেষ ফোকাস করা আইটেম)।"
-  },
-  "options": {
-    "message": "অপশন"
-  },
-  "optionsFooterText": {
-    "description": "Footer text for the Options page",
-    "message": "$authorName$ দ্বারা তৈরি।",
-    "placeholders": {
-      "authorName": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionZoom": {
-    "message": "জুম"
-  },
-  "optionTheme": {
-    "message": "থিম"
-  },
-  "optionThemeAuto": {
-    "message": "সিস্টেম অনুসরণ করুন"
-  },
-  "optionThemeLight": {
-    "message": "হালকা"
-  },
-  "optionThemeDark": {
-    "message": "গাঢ়"
-  },
-  "optionThemeInk": {
-    "message": "কালি (গাঢ়)"
-  },
-  "optionThemePaper": {
-    "message": "কাগজ (হালকা)"
-  },
-  "optionLanguage": {
-    "message": "ভাষা"
-  },
-  "optionLanguageAuto": {
-    "message": "স্বয়ংক্রিয়"
-  },
-  "optionLanguageHint": {
-    "message": "ভাষা পরিবর্তন করলে এই পৃষ্ঠাটি পুনরায় লোড হবে।"
-  },
-  "paletteClose": {
-    "message": "বন্ধ"
-  },
-  "paletteCmdVersion": {
-    "message": "সংস্করণ তথ্য"
-  },
-  "paletteCmdLang": {
-    "message": "ভাষা পরিবর্তন করুন…"
-  },
-  "paletteCmdLangUsage": {
-    "message": "ব্যবহার: /lang এর পরে লোকেল কোড দিন — যেমন /lang en, /lang zh_CN, /lang ja।"
+  "versionDialogCopy": {
+    "message": "তথ্য কপি করুন"
   },
   "versionDialogTitle": {
     "message": "vBookmarks $version$",
@@ -634,15 +2510,6 @@
         "content": "$1"
       }
     }
-  },
-  "versionDialogCopy": {
-    "message": "তথ্য কপি করুন"
-  },
-  "versionDialogCopied": {
-    "message": "কপি হয়েছে"
-  },
-  "versionMetaVersion": {
-    "message": "এক্সটেনশন সংস্করণ"
   },
   "versionMetaAnnounce": {
     "message": "নতুন কী আছে"
@@ -653,277 +2520,58 @@
   "versionMetaBrowser": {
     "message": "ব্রাউজার"
   },
-  "versionMetaOS": {
-    "message": "OS"
-  },
   "versionMetaChannel": {
     "message": "চ্যানেল"
   },
   "versionMetaLanguage": {
     "message": "ভাষা"
   },
+  "versionMetaOS": {
+    "message": "OS"
+  },
   "versionMetaUserAgent": {
     "message": "ইউজার এজেন্ট"
   },
-  "paletteCmdDead": {
-    "message": "মৃত লিঙ্ক খুঁজুন"
+  "versionMetaVersion": {
+    "message": "এক্সটেনশন সংস্করণ"
   },
-  "paletteCmdDupes": {
-    "message": "ডুপ্লিকেট বুকমার্ক পরিষ্কার করুন"
+  "viewDead": {
+    "message": "মৃত লিঙ্ক"
   },
-  "paletteCmdNewBookmark": {
-    "message": "নতুন বুকমার্ক…"
+  "viewDisable": {
+    "message": "নিষ্ক্রিয় করুন"
   },
-  "paletteCmdNewFolder": {
-    "message": "নতুন ফোল্ডার…"
+  "viewDupes": {
+    "message": "ডুপ্লিকেট"
   },
-  "paletteCmdQuickAdd": {
-    "message": "বর্তমান ট্যাব বুকমার্ক করুন"
+  "viewEnable": {
+    "message": "সক্রিয় করুন"
   },
-  "paletteCmdSaveSession": {
-    "message": "উইন্ডো ট্যাবগুলো ফোল্ডার হিসেবে সংরক্ষণ করুন"
-  },
-  "paletteNoResults": {
-    "message": "কোনো মিল পাওয়া যায়নি"
-  },
-  "palettePlaceholder": {
-    "message": "বুকমার্ক, ফোল্ডার, কমান্ড অনুসন্ধান করুন…"
-  },
-  "parentFolder": {
-    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
-    "message": "প্যারেন্ট ফোল্ডার: \"$folderName$\"",
+  "viewHiddenTabsHint": {
+    "message": "আপনি $view$ ভিউতে আছেন। ট্রিতে ফিরে যেতে $back$ চাপুন বা কমান্ড প্যালেট ব্যবহার করুন।",
     "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarksbar"
-      }
-    }
-  },
-  "removeSeparator": {
-    "message": "সেপারেটর সরান"
-  },
-  "replaceUrl": {
-    "message": "বর্তমান URL দিয়ে প্রতিস্থাপন"
-  },
-  "reportedToDeveloper": {
-    "description": "এক্সটেনশনে ঘটা একটি ত্রুটির জন্য বার্তা, ডেভেলপারকে রিপোর্ট করা হয়েছে।",
-    "message": "এটি ডেভেলপারকে রিপোর্ট করা হয়েছে।"
-  },
-  "reportError": {
-    "message": "ত্রুটি রিপোর্ট করুন"
-  },
-  "resetButton": {
-    "message": "রিসেট করুন"
-  },
-  "resetSettings": {
-    "message": "সেটিংস রিসেট করুন"
-  },
-  "resetSettingsDescription": {
-    "message": "vBookmarks ডিফল্ট সেটিংসে রিসেট করুন।"
-  },
-  "save": {
-    "message": "সংরক্ষণ করুন"
-  },
-  "searchBookmarks": {
-    "description": "সার্চ ফিল্ডের জন্য প্লেসহোল্ডার টেক্সট।",
-    "message": "বুকমার্ক খুঁজুন"
-  },
-  "searchClear": {
-    "message": "অনুসন্ধান মুছুন"
-  },
-  "searchNoResults": {
-    "message": "কোনো মিলে যাওয়া বুকমার্ক নেই"
-  },
-  "searchViewHint": {
-    "message": "আপনার বুকমার্ক অনুসন্ধান করতে উপরের বক্সে টাইপ করুন"
-  },
-  "selectAll": {
-    "message": "সব"
-  },
-  "selectClear": {
-    "message": "সাফ করুন"
-  },
-  "selectCount": {
-    "message": "$count$টি নির্বাচিত",
-    "placeholders": {
-      "count": {
+      "back": {
+        "content": "$2"
+      },
+      "view": {
         "content": "$1"
       }
     }
   },
-  "selectInvert": {
-    "message": "উল্টান"
-  },
-  "selectModeEnter": {
-    "message": "নির্বাচন করুন"
-  },
-  "selectModeExit": {
-    "message": "নির্বাচন বন্ধ করুন"
-  },
-  "deadRiskBanner": {
-    "message": "ডেড-লিংক পরিষ্কার করার সময় অনেক বুকমার্ক একসাথে মুছে যায়। প্রথম পরিষ্কারের আগে আপনার বুকমার্কগুলোর ব্যাকআপ নিন।"
-  },
-  "dupesRiskBanner": {
-    "message": "ডুপ্লিকেট অপসারণ একসাথে অনেকগুলো সদৃশ বুকমার্ক মুছে ফেলে। এটি প্রয়োগের আগে আপনার বুকমার্কগুলোর ব্যাকআপ নিন।"
-  },
-  "riskBannerHelp": {
-    "message": "ব্যাকআপ ও পুনরুদ্ধার নির্দেশিকা"
-  },
-  "riskBannerNever": {
-    "message": "আবার দেখাবেন না"
-  },
-  "riskBannerDismiss": {
-    "message": "বন্ধ করুন"
-  },
-  "sessionEmpty": {
-    "message": "সংরক্ষণ করার মতো কোনো ট্যাব নেই"
-  },
-  "sessionFolderName": {
-    "message": "সেশন $date$",
-    "placeholders": {
-      "date": {
-        "content": "$1",
-        "example": "2026-07-18 15:04"
-      }
-    },
-    "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm."
-  },
-  "sessionSaved": {
-    "message": "$count$টি ট্যাব একটি নতুন ফোল্ডারে সংরক্ষিত হয়েছে",
-    "placeholders": {
-      "count": {
-        "content": "$1",
-        "example": "12"
-      }
-    },
-    "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
-  },
-  "url": {
-    "message": "URL"
-  },
-  "syncOptions": {
-    "message": "সিঙ্ক অপশন"
-  },
-  "optionShowSyncStatus": {
-    "message": "সিঙ্ক স্ট্যাটাস ইনডিকেটর দেখান"
-  },
-  "optionHighlightUnsynced": {
-    "message": "সিঙ্কহীন বুকমার্ক ম্লান করুন"
-  },
-  "optionAutoRefreshSync": {
-    "message": "সিঙ্ক স্ট্যাটাস অটো-রিফ্রেশ করুন"
-  },
-  "optionSyncRefreshInterval": {
-    "message": "রিফ্রেশ ইন্টারভাল"
-  },
-  "optionSyncRefreshIntervalSeconds": {
-    "message": "সেকেন্ড"
-  },
-  "syncStatusSynced": {
-    "message": "আপনার Google অ্যাকাউন্টে সিঙ্ক হয়েছে"
-  },
-  "syncStatusLocal": {
-    "message": "শুধুমাত্র স্থানীয় — আপলোড করা হয়নি"
-  },
-  "syncStatusUnsyncable": {
-    "message": "সিঙ্ক করা যাবে না"
-  },
-  "syncSuffixSynced": {
-    "message": "(সিঙ্ক হয়েছে)"
-  },
-  "syncSuffixLocal": {
-    "message": "(স্থানীয়)"
-  },
-  "optionAutoResizePopup": {
-    "message": "বিষয়বস্তু অনুযায়ী পপআপ উইন্ডো স্বয়ংক্রিয়ভাবে আকার পরিবর্তন করুন"
-  },
-  "crossStorageMoveWarning": {
-    "message": "সিঙ্ক করা এবং লোকাল স্টোরেজের মধ্যে বুকমার্ক সরানো যাবে না। অনুলিপি/পেস্ট ব্যবহার করুন।",
-    "description": "Warning when trying to move bookmarks across storage types"
-  },
-  "recentBookmarks": {
-    "message": "সম্প্রতি যোগ করা হয়েছে"
-  },
-  "optionShowRecentBookmarks": {
-    "message": "পপআপের শীর্ষে সম্প্রতি যোগ করা বুকমার্ক দেখান"
-  },
-  "optionShowStatsView": {
-    "message": "পরিসংখ্যান ভিউ ট্যাব দেখান"
-  },
-  "optionShowDeadView": {
-    "message": "মৃত-লিঙ্ক ভিউ ট্যাব দেখান"
-  },
-  "optionShowDupesView": {
-    "message": "ডুপ্লিকেট ভিউ ট্যাব দেখান"
-  },
-  "optionRecentCollapsed": {
-    "message": "ডিফল্টভাবে সম্প্রতি যোগ করা বিভাগটি সংকুচিত করুন"
-  },
-  "optionsGroupViews": {
-    "message": "দৃশ্যসমূহ"
-  },
-  "optionsGroupSort": {
-    "message": "সাজানো"
-  },
-  "optionsGroupStats": {
-    "message": "পরিসংখ্যান"
-  },
-  "optionsGroupTools": {
-    "message": "সরঞ্জাম"
-  },
-  "optionShowViewTabs": {
-    "message": "অনুসন্ধান বক্সের নীচে দৃশ্য ট্যাব দেখান"
-  },
-  "optionRememberView": {
-    "message": "শেষ সক্রিয় ভিউটি মনে রাখুন এবং এটি পুনরায় খুলুন"
-  },
-  "optionShowTabBadges": {
-    "message": "ভিউ ট্যাবে সংখ্যা ব্যাজ দেখান"
-  },
-  "optionPaletteEnabled": {
-    "message": "কমান্ড প্যালেট সক্ষম করুন (Ctrl/Cmd+K)"
-  },
-  "optionQuickAddEnabled": {
-    "message": "সার্চ বক্সের পাশে দ্রুত-যোগ স্টার বোতাম দেখান"
-  },
-  "optionQuickAddContextMenu": {
-    "message": "পৃষ্ঠার রাইট-ক্লিক মেনুতে \"vBookmarks দিয়ে এই পৃষ্ঠাটি বুকমার্ক করুন\" একটি এন্ট্রি যোগ করুন"
-  },
-  "optionQuickAddContextMenuHint": {
-    "message": "দ্রুত-যোগ তারকা বোতাম থেকে স্বাধীন; ক্লাসিক-অভিজ্ঞতা পুনরুদ্ধার এই এন্ট্রিটিও বন্ধ করে দেয়।"
-  },
-  "optionCollapseTabGroupMenu": {
-    "message": "ট্যাব-গ্রুপ এন্ট্রিগুলোকে একটি \"ট্যাব গ্রুপ…\" সাবমেনুতে সংকুচিত করুন"
-  },
-  "optionCollapseTabGroupMenuHint": {
-    "message": "ফোল্ডার এবং বুকমার্কের ডান-ক্লিক মেনু দুটির ক্ষেত্রেই প্রযোজ্য। ডিফল্টভাবে বন্ধ; ছোট/উচ্চ-জুম স্ক্রিনে কম-উচ্চতার মেনু আরও ছোট রাখে।"
-  },
-  "optionCollapseSortMenu": {
-    "message": "সর্ট এন্ট্রিগুলোকে একটি \"সাজান…\" সাবমেনুতে সংকুচিত করুন"
-  },
-  "optionCollapseSortMenuHint": {
-    "message": "ফোল্ডারের ডান-ক্লিক মেনুতে প্রযোজ্য। ডিফল্টভাবে চালু।"
-  },
-  "optionShowToolButton": {
-    "message": "সার্চ বক্সের পাশে টুল বোতাম (⋮) দেখান"
-  },
-  "optionClassicExperience": {
-    "message": "ক্লাসিক হেডার পুনরুদ্ধার করুন"
-  },
-  "optionClassicExperienceHint": {
-    "message": "কমান্ড প্যালেট, দ্রুত যোগ করার স্টার, পেজের ডান-ক্লিক এন্ট্রি, টুল বাটন এবং ভিউ ট্যাব বন্ধ করে দেয়। প্রতিটি নিজ নিজ বিভাগে আলাদাভাবে আবার চালু করা যেতে পারে।"
-  },
-  "optionShowItemPath": {
-    "message": "তালিকার সারিতে প্যারেন্ট ফোল্ডার পথ দেখান"
-  },
   "viewRecent": {
     "message": "স্টেজিং"
   },
-  "viewTree": {
-    "message": "ট্রি"
-  },
   "viewSearch": {
     "message": "অনুসন্ধান"
+  },
+  "viewStateDisabled": {
+    "message": "নিষ্ক্রিয়"
+  },
+  "viewStateEnabled": {
+    "message": "সক্রিয়"
+  },
+  "viewStats": {
+    "message": "পরিসংখ্যান"
   },
   "viewSwitchAnnounce": {
     "message": "$name$ দৃশ্য",
@@ -933,870 +2581,17 @@
       }
     }
   },
-  "viewStateEnabled": {
-    "message": "সক্রিয়"
-  },
-  "viewStateDisabled": {
-    "message": "নিষ্ক্রিয়"
-  },
-  "viewEnable": {
-    "message": "সক্রিয় করুন"
-  },
-  "viewDisable": {
+  "viewTabDisable": {
     "message": "নিষ্ক্রিয় করুন"
+  },
+  "viewTabGroups": {
+    "message": "ট্যাব গ্রুপ"
   },
   "viewTabHide": {
     "message": "লুকান"
   },
-  "viewTabDisable": {
-    "message": "নিষ্ক্রিয় করুন"
-  },
-  "sortFolderContents": {
-    "message": "ফোল্ডার সাজান"
-  },
-  "sortByName": {
-    "message": "নাম অনুসারে সাজান"
-  },
-  "sortByDate": {
-    "message": "যোগের তারিখ অনুসারে সাজান"
-  },
-  "sortRecursiveSuffix": {
-    "message": "(পুনরাবৃত্ত)"
-  },
-  "sortOptions": {
-    "message": "সাজানোর বিকল্প…"
-  },
-  "sortDone": {
-    "message": "ফোল্ডার সাজানো হয়েছে"
-  },
-  "sortByTitle": {
-    "message": "শিরোনাম অনুসারে"
-  },
-  "sortByDateAdded": {
-    "message": "তারিখ অনুসারে (নতুন প্রথম)"
-  },
-  "sortFoldersFirst": {
-    "message": "ফোল্ডার উপরে রাখুন"
-  },
-  "sortRecursive": {
-    "message": "সাবফোল্ডারও সাজান (পুনরাবৃত্ত)"
-  },
-  "sortRecursiveWarning": {
-    "message": "এটি প্রতিটি সাবফোল্ডারের বুকমার্কগুলো পুনর্বিন্যাস করে।"
-  },
-  "tabGroupDialogTitle": {
-    "message": "নতুন ট্যাব গ্রুপ"
-  },
-  "tabGroupTitleLabel": {
-    "message": "গ্রুপের শিরোনাম"
-  },
-  "tabGroupColorLabel": {
-    "message": "রঙ"
-  },
-  "tabGroupColorGrey": {
-    "message": "ধূসর",
-    "description": "Accessible name of the grey color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorBlue": {
-    "message": "নীল",
-    "description": "Accessible name of the blue color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorRed": {
-    "message": "লাল",
-    "description": "Accessible name of the red color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorYellow": {
-    "message": "হলুদ",
-    "description": "Accessible name of the yellow color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorGreen": {
-    "message": "সবুজ",
-    "description": "Accessible name of the green color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorPink": {
-    "message": "গোলাপী",
-    "description": "Accessible name of the pink color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorPurple": {
-    "message": "বেগুনি",
-    "description": "Accessible name of the purple color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorCyan": {
-    "message": "সায়ান",
-    "description": "Accessible name of the cyan color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorOrange": {
-    "message": "কমলা",
-    "description": "Accessible name of the orange color swatch in the new-tab-group dialog."
-  },
-  "tabGroupUntitled": {
-    "message": "নামহীন গ্রুপ"
-  },
-  "tabGroupNoGroups": {
-    "message": "কোনো বিদ্যমান ট্যাব গ্রুপ নেই"
-  },
-  "tabGroupPickDialogTitle": {
-    "message": "বিদ্যমান ট্যাব গ্রুপে খুলুন"
-  },
-  "quickAddBookmark": {
-    "message": "এই পৃষ্ঠা বুকমার্ক করুন (Ctrl+D)"
-  },
-  "quickAddBookmarkCommand": {
-    "message": "বর্তমান ট্যাবটিকে বুকমার্ক হিসাবে দ্রুত যোগ করুন"
-  },
-  "quickAdded": {
-    "message": "বুকমার্ক যোগ করা হয়েছে"
-  },
-  "quickAddedTo": {
-    "message": "$folderName$-এ বুকমার্ক যোগ করা হয়েছে",
-    "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarks bar"
-      }
-    }
-  },
-  "quickRemoved": {
-    "message": "বুকমার্ক সরানো হয়েছে"
-  },
-  "quickRemoveBookmark": {
-    "message": "এই বুকমার্ক সরান (Ctrl+D)"
-  },
-  "toolButtonTitle": {
-    "message": "সরঞ্জাম (Ctrl+K)"
-  },
-  "contextMenuAddBookmark": {
-    "message": "vBookmarks দিয়ে এই পৃষ্ঠা বুকমার্ক করুন"
-  },
-  "deadFilterAll": {
-    "message": "সব"
-  },
-  "deadFilterBlocked": {
-    "message": "শুধু ব্লক করা"
-  },
-  "deadFilterDead": {
-    "message": "শুধু মৃত"
-  },
-  "deadFilterMarked": {
-    "message": "পূর্বে চিহ্নিত"
-  },
-  "deadLastScanAt": {
-    "message": "শেষ স্ক্যান: $time$",
-    "placeholders": {
-      "time": {
-        "content": "$1"
-      }
-    }
-  },
-  "deadMark": {
-    "message": "মৃত হিসাবে চিহ্নিত করুন"
-  },
-  "deadMarkAll": {
-    "message": "সব চিহ্নিত করুন"
-  },
-  "deadMarked": {
-    "message": "মৃত সারি চিহ্নিত করা হয়েছে"
-  },
-  "deadMarkedCount": {
-    "message": "চিহ্নিত $count$ বুকমার্ক",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "deadMarkedNone": {
-    "message": "এখনও কোনো বুকমার্ক চিহ্নিত করা হয়নি"
-  },
-  "deadMarkedRow": {
-    "message": "চিহ্নিত"
-  },
-  "deadMarkSelected": {
-    "message": "নির্বাচিত চিহ্নিত করুন"
-  },
-  "deadMarkStatusAll": {
-    "message": "যেকোনো অবস্থা"
-  },
-  "deadMarkStatusMarked": {
-    "message": "চিহ্নিত"
-  },
-  "deadMarkStatusUnmarked": {
-    "message": "অচিহ্নিত"
-  },
-  "deadMarkTimeLabel": {
-    "message": "চিহ্নিত হয়েছে"
-  },
-  "deadDetectTimeLabel": {
-    "message": "সনাক্ত হয়েছে"
-  },
-  "deadSortLabel": {
-    "message": "সাজান"
-  },
-  "deadSortByDetected": {
-    "message": "শনাক্তকরণ সময়"
-  },
-  "deadSortByPath": {
-    "message": "ফোল্ডার পাথ"
-  },
-  "deadSortByMarked": {
-    "message": "চিহ্নিত করার সময়"
-  },
-  "deadMarkedBanner": {
-    "message": "পূর্বে চিহ্নিত বুকমার্ক দেখানো হচ্ছে। নতুন পরীক্ষা শুরু করতে পুনরায় স্ক্যান-এ ক্লিক করুন, অথবা নিচের তালিকায় সেগুলি পরিচালনা করুন।"
-  },
-  "deadMarkedBannerDismiss": {
-    "message": "বাদ দিন"
-  },
-  "deadProxyAdd": {
-    "message": "ডেড-লিংক পরীক্ষার জন্য একটি প্রক্সি সার্ভার যোগ করুন"
-  },
-  "deadProxyLabel": {
-    "message": "প্রক্সি: $server$",
-    "placeholders": {
-      "server": {
-        "content": "$1"
-      }
-    }
-  },
-  "deadProxyChange": {
-    "message": "পরিবর্তন"
-  },
-  "deadProxyRemove": {
-    "message": "মুছুন"
-  },
-  "deadProxyRemoved": {
-    "message": "প্রক্সি সার্ভার মুছে ফেলা হয়েছে"
-  },
-  "deadProxyPanelHint": {
-    "message": "আপনার কাছে থাকা একটি প্রক্সি সার্ভার লিখুন (এক্সটেনশন কোনো প্রক্সি সরবরাহ করে না), যেমন 127.0.0.1:7890 বা socks5://127.0.0.1:1080।"
-  },
-  "deadProxyTestUrlLabel": {
-    "message": "পরীক্ষার URL"
-  },
-  "deadProxyTestSave": {
-    "message": "পরীক্ষা ও সংরক্ষণ"
-  },
-  "deadProxyTesting": {
-    "message": "পরীক্ষা করা হচ্ছে…"
-  },
-  "deadProxySaved": {
-    "message": "প্রক্সি সংরক্ষিত — ভবিষ্যতে স্ক্যানে সরাসরি ব্যর্থ লিংকগুলো এটি দিয়ে পুনরায় পরীক্ষা করা হবে।"
-  },
-  "deadProxyInvalid": {
-    "message": "অবৈধ প্রক্সি ঠিকানা — host:port বা scheme://host:port ব্যবহার করুন (http/https/socks5, কোনো শংসাপত্র ছাড়া)।"
-  },
-  "deadProxyUnreachable": {
-    "message": "প্রক্সিতে পৌঁছানো যায়নি — সংরক্ষণ করা হয়নি"
-  },
-  "deadProxyDenied": {
-    "message": "প্রক্সি ব্যবহারের অনুমতি দেওয়া হয়নি"
-  },
-  "deadProxyControlled": {
-    "message": "প্রক্সি সেটিংস অন্য একটি এক্সটেনশন দ্বারা পরিচালিত"
-  },
-  "deadProxyUnavailable": {
-    "message": "এই ব্রাউজারে প্রক্সি API উপলব্ধ নয়"
-  },
-  "deadProxyNudge": {
-    "message": "একটি প্রক্সি পুনঃপরীক্ষা প্রকৃত মৃত লিঙ্কগুলিকে অঞ্চল-অবরুদ্ধ লিঙ্কগুলি থেকে আলাদা করে — এটি এখানে বা অপশন পৃষ্ঠায় কনফিগার করুন।"
-  },
-  "deadProxyNeverShow": {
-    "message": "আবার দেখাবেন না"
-  },
-  "deadStartHint": {
-    "message": "$n$টি বুকমার্ক স্ক্যান করা শুরু করুন",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "deadStatusBlocked": {
-    "message": "ব্লক করা"
-  },
-  "deadUnmark": {
-    "message": "মৃত চিহ্ন সরান"
-  },
-  "deadUnmarkAll": {
-    "message": "সব চিহ্ন মুছুন"
-  },
-  "deadUnmarkSelected": {
-    "message": "নির্বাচিত চিহ্নমুক্ত করুন"
-  },
-  "dupesApplyAll": {
-    "message": "সব প্রয়োগ করুন ($count$)",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "dupesApplySelected": {
-    "message": "নির্বাচিত ডিডুপ করুন ($count$)",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "dupesCleanRestHint": {
-    "message": "\"$title$\" রেখে বাকি $count$ টি সরান",
-    "placeholders": {
-      "title": {
-        "content": "$1"
-      },
-      "count": {
-        "content": "$2"
-      }
-    }
-  },
-  "dupesIgnoreScheme": {
-    "message": "http/https পার্থক্য উপেক্ষা করুন"
-  },
-  "dupesKeepThis": {
-    "message": "এটি রাখুন"
-  },
-  "dupesKeeperSet": {
-    "message": "রক্ষক সেট করুন"
-  },
-  "dupesPreviewSummary": {
-    "message": "$groups$ গোষ্ঠী · $count$ মুক্ত হবে",
-    "placeholders": {
-      "groups": {
-        "content": "$1"
-      },
-      "count": {
-        "content": "$2"
-      }
-    }
-  },
-  "dupesRemoveRow": {
-    "message": "এই কপি মুছুন"
-  },
-  "dupesScopeAll": {
-    "message": "সব বুকমার্ক"
-  },
-  "dupesScopeBar": {
-    "message": "শুধু বুকমার্ক বার"
-  },
-  "dupesStrategyBookmarkBar": {
-    "message": "বুকমার্ক বারে থাকাটি রাখুন"
-  },
-  "dupesStrategyMostVisited": {
-    "message": "সর্বাধিক দেখা রাখুন"
-  },
-  "dupesStrategyNewest": {
-    "message": "নতুনতম রাখুন"
-  },
-  "dupesStrategyOldest": {
-    "message": "পুরাতনতম রাখুন"
-  },
-  "dupesStrategyShallowest": {
-    "message": "সর্বনিম্ন গভীর রাখুন"
-  },
-  "dupesStrategyShortestTitle": {
-    "message": "সংক্ষিপ্ত শিরোনাম রাখুন"
-  },
-  "optionDeadProxyServer": {
-    "message": "ডেড-লিংক প্রক্সি সার্ভার"
-  },
-  "deadProxyServerHint": {
-    "message": "সংরক্ষিত সার্ভার প্রতিটি মৃত-লিংক স্ক্যানে সরাসরি-ব্যর্থ বুকমার্কগুলি পুনঃপরীক্ষা করে, প্রকৃত মৃত লিংকগুলিকে অঞ্চল-অবরুদ্ধগুলির থেকে আলাদা করে। পরীক্ষা ও সংরক্ষণ এটি যাচাই করে (শুধুমাত্র একটি অ্যাক্সেসযোগ্য সার্ভার রাখা হয়); আপনি মৃত-লিংক ভিউ থেকেও এটি যোগ করতে পারেন।"
-  },
-  "deadProxyClear": {
-    "message": "পরিষ্কার করুন"
-  },
-  "deadProxyNone": {
-    "message": "(সেট করা হয়নি)"
-  },
-  "optionDeadProxyStrip": {
-    "message": "মৃত-লিঙ্ক দৃশ্যে প্রক্সি যোগ করার ইঙ্গিত দেখান"
-  },
-  "optionDeadProxyStripHint": {
-    "message": "বন্ধ করলে সেখানে সেই ইঙ্গিত লুকানো হয়; প্রক্সি সার্ভার এখানে কনফিগারযোগ্য থাকে এবং সংরক্ষিত সার্ভার সবসময় দৃশ্যে তার ব্যবস্থাপনা সারি দেখায়।"
-  },
-  "optionDeadScanConcurrency": {
-    "message": "মৃত লিঙ্ক স্ক্যান সমবর্তিতা (১-১৬)"
-  },
-  "optionDeadScanTimeout": {
-    "message": "মৃত লিঙ্ক স্ক্যান টাইমআউট সেকেন্ডে (২-৩০)"
-  },
-  "paletteCmdGoDead": {
-    "message": "মৃত লিঙ্ক ভিউতে যান"
-  },
-  "paletteCmdGoDupes": {
-    "message": "ডুপ্লিকেট ভিউতে যান"
-  },
-  "paletteCmdGoRecent": {
-    "message": "সাম্প্রতিক ভিউতে যান"
-  },
-  "paletteCmdGoSearch": {
-    "message": "অনুসন্ধান ভিউতে যান"
-  },
-  "paletteCmdGoTree": {
-    "message": "ট্রি ভিউতে যান"
-  },
-  "paletteCmdOptions": {
-    "message": "বিকল্প পাতা খুলুন"
-  },
-  "paletteCmdSearchInView": {
-    "message": "অনুসন্ধান ভিউতে '$query$' অনুসন্ধান করুন",
-    "placeholders": {
-      "query": {
-        "content": "$1"
-      }
-    }
-  },
-  "rowActionDelete": {
-    "message": "মুছুন"
-  },
-  "rowActionMark": {
-    "message": "মৃত হিসেবে চিহ্নিত করুন"
-  },
-  "rowActionReveal": {
-    "message": "ট্রিতে প্রকাশ করুন"
-  },
-  "rowActionUnmark": {
-    "message": "মৃত চিহ্ন সরান"
-  },
-  "viewDead": {
-    "message": "মৃত লিঙ্ক"
-  },
-  "viewDupes": {
-    "message": "ডুপ্লিকেট"
-  },
-  "viewStats": {
-    "message": "পরিসংখ্যান"
-  },
-  "paletteCmdGoStats": {
-    "message": "পরিসংখ্যান ভিউতে যান"
-  },
-  "optionStatsEnabled": {
-    "message": "ভিজিট পরিসংখ্যান সক্রিয় করুন"
-  },
-  "optionFaviconContrast": {
-    "message": "কম কনট্রাস্টের ফেভিকন উল্টান"
-  },
-  "optionFaviconContrastHint": {
-    "message": "হালকা থিমে সাদা আইকন এবং গাঢ় থিমে কালো আইকন উল্টানো হয় যাতে সেগুলি দৃশ্যমান থাকে। প্রতিটি আইকন লোড হওয়ার সময় একবার নমুনা নেওয়া হয় — ব্রাউজ করার সময় কোনো খরচ নেই।"
-  },
-  "optionFaviconEnrich": {
-    "message": "অনুপস্থিত সাইট আইকন আনুন"
-  },
-  "optionFaviconEnrichHint": {
-    "message": "যে বুকমার্ক করা সাইটগুলির জন্য Chrome-এ কোনো ক্যাশ করা আইকন নেই, সাইট থেকে সরাসরি আসল আইকন আনুন (/favicon.ico, তারপর পেজের ঘোষিত আইকন)। অনুরোধ শুধুমাত্র আপনার বুকমার্ক করা সাইটগুলিতে যায়।"
-  },
-  "optionFaviconEnrichAgg": {
-    "message": "তৃতীয় পক্ষের আইকন ফলব্যাক"
-  },
-  "optionFaviconEnrichAggHint": {
-    "message": "সরাসরি ফেচ ব্যর্থ হলে, একটি অন্তর্নির্মিত তৃতীয়-পক্ষ আইকন পরিষেবার তালিকা থেকে ডোমেইন অনুযায়ী আইকনটি সন্ধান করুন ($providers$)। কোনো পরিষেবা অপ্রাপ্য হলে তা বাদ দেওয়া হয় এবং পরেরটি চেষ্টা করা হয় — ৬ ঘণ্টার জন্য এটি পুনরায় চেষ্টা করা হয় না।",
-    "placeholders": {
-      "providers": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionFaviconBackup": {
-    "message": "ব্যাকআপে আইকন ক্যাশ অন্তর্ভুক্ত করুন"
-  },
-  "optionFaviconBackupHint": {
-    "message": "সমৃদ্ধ ফেভিকন ক্যাশে (প্রতি-সাইট ডেটা, সম্ভবত বড়) সেটিংস রপ্তানি/আমদানিতে অন্তর্ভুক্ত করুন। এটি ইতিমধ্যে ক্যাশে করা আইকনগুলোকে কভার করে, এমনকি যখন ফেভিকন আনা বন্ধ থাকে। বন্ধ রাখলে ব্যাকআপ ছোট হয়; আইকনগুলো যেকোনোভাবে স্বয়ংক্রিয়ভাবে পুনরায় আনা হবে।"
-  },
-  "optionFaviconCacheClear": {
-    "message": "আইকন ক্যাশে সাফ করুন"
-  },
-  "optionFaviconCacheClearConfirm": {
-    "message": "সমৃদ্ধ আইকন ক্যাশে মুছে ফেলবেন? পরের বার খোলার সময় আইকনগুলো স্বয়ংক্রিয়ভাবে পুনরায় আনা হবে।"
-  },
-  "optionFaviconCacheEmpty": {
-    "message": "মুছে ফেলার মতো কোনো আইকন ক্যাশে নেই।"
-  },
-  "optionFaviconCacheCleared": {
-    "message": "আইকন ক্যাশে সাফ করা হয়েছে। পরবর্তী খোলায় আইকনগুলি পুনরায় আনা হবে।"
-  },
-  "favGalleryLink": {
-    "message": "আপডেট হওয়া আইকন দেখুন",
-    "description": "Options link (Icons group, right of the Clear icon cache button): opens the favicon gallery page listing the sites whose icons were refetched."
-  },
-  "favGalleryTitle": {
-    "message": "আপডেট হওয়া সাইট আইকন",
-    "description": "Favicon gallery page title (h1 + document title)."
-  },
-  "favGalleryHint": {
-    "message": "Chrome ক্যাশে করেনি এমন বুকমার্ক করা সাইটগুলির জন্য vBookmarks যে আইকনগুলো এনেছে — প্রতিটি কোথা থেকে এসেছে এবং কোন বুকমার্ক এটি ব্যবহার করে। শুধু প্রদর্শনের জন্য।",
-    "description": "Subtitle under the favicon gallery title, explaining the page is read-only."
-  },
-  "favGallerySearch": {
-    "message": "সাইট, শিরোনাম বা পাথ অনুসারে ফিল্টার করুন",
-    "description": "Placeholder of the favicon gallery filter input."
-  },
-  "favGalleryAll": {
-    "message": "সব",
-    "description": "Favicon gallery source filter chip: show every source."
-  },
-  "favSrcDirect": {
-    "message": "সরাসরি",
-    "description": "Favicon gallery source badge: the icon was fetched directly from the site itself."
-  },
-  "favSrcProxy": {
-    "message": "প্রক্সি",
-    "description": "Favicon gallery source badge: the icon was fetched through the user's own proxy relay."
-  },
-  "favSrcLegacy": {
-    "message": "আগের ক্যাশে",
-    "description": "Favicon gallery source badge: cached before the source was recorded, so the origin is unknown."
-  },
-  "favGalleryCompare": {
-    "message": "প্লেসহোল্ডারের সাথে তুলনা করুন",
-    "description": "Favicon gallery toggle button: switch every icon to the generic placeholder it replaced (before/after comparison)."
-  },
-  "favGalleryShowingBefore": {
-    "message": "আসল আইকনে ফিরুন",
-    "description": "Favicon gallery toggle button while the placeholder comparison is shown: switch back to the real fetched icons."
-  },
-  "favGalleryStatSites": {
-    "message": "$n$টি সাইট",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    },
-    "description": "Favicon gallery stats strip: how many sites have a refreshed icon."
-  },
-  "favGalleryStatBookmarks": {
-    "message": "$n$টি বুকমার্ক",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    },
-    "description": "Favicon gallery stats strip: how many bookmarks sit on the refreshed sites."
-  },
-  "favGalleryVisits": {
-    "message": "$n$টি রেকর্ড করা খোলা",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    },
-    "description": "Favicon gallery tooltip on a bookmark row's visit-count pill."
-  },
-  "favGalleryFailedTitle": {
-    "message": "সম্প্রতি চেষ্টা করা হয়েছে, কোনো আইকন পাওয়া যায়নি",
-    "description": "Favicon gallery heading of the muted section listing hosts whose icon fetch failed recently."
-  },
-  "favGalleryFailedHint": {
-    "message": "ব্যর্থ প্রচেষ্টাগুলি ২৪ ঘণ্টা, ৩ দিন এবং ৭ দিন পরে পুনরায় চেষ্টা করা হয়, তারপর আইকন ক্যাশে সাফ না করা পর্যন্ত ছেড়ে দেওয়া হয়।",
-    "description": "Favicon gallery hint under the failed-fetch section title."
-  },
-  "favGalleryGaveUp": {
-    "message": "পরিত্যক্ত",
-    "description": "Favicon gallery badge on a failed-strip host whose retries are exhausted (it stays untouched until the icon cache is cleared)."
-  },
-  "favGalleryOrphan": {
-    "message": "এই হোস্টে আর কোনো বুকমার্ক নেই — আইকনটি ক্যাশের সাথে মুছে যাবে।",
-    "description": "Favicon gallery note on a card whose host no longer has any bookmark."
-  },
-  "favGalleryEmptyTitle": {
-    "message": "এখনও কোনো আপডেট হওয়া আইকন নেই",
-    "description": "Favicon gallery empty-state heading."
-  },
-  "favGalleryEmptyText": {
-    "message": "যখন পপআপটি এমন একটি বুকমার্ক করা সাইট দেখে যার জন্য Chrome-এর কোনো আইকন নেই, vBookmarks আসল আইকনটি এনে এখানে তালিকাভুক্ত করে।",
-    "description": "Favicon gallery empty-state body text."
-  },
-  "storageUsageIcon": {
-    "message": "আইকন ক্যাশে"
-  },
-  "storageUsageOther": {
-    "message": "অন্যান্য"
-  },
-  "storageUsageSummary": {
-    "message": "$2$ এর মধ্যে $1$ ব্যবহৃত",
-    "placeholders": {
-      "1": {
-        "content": "$1"
-      },
-      "2": {
-        "content": "$2"
-      }
-    }
-  },
-  "storageUsageFree": {
-    "message": "মুক্ত"
-  },
-  "storageUsageHint": {
-    "message": "শুধুমাত্র স্থানীয় এক্সটেনশন স্টোরেজ (chrome.storage.local, প্রায় ১০ MB কোটা): আইকন ক্যাশে এবং সেটিংস ও অন্যান্য স্থানীয় ডেটা। সিঙ্ক করা সেটিংস, সেশন ডেটা এবং বুকমার্ক লাইব্রেরি এখানে গণনা করা হয় না।"
-  },
-  "optionsDonate": {
-    "message": "অনুদান করুন"
-  },
-  "optionsGithubLink": {
-    "message": "GitHub"
-  },
-  "optionsHomepageLink": {
-    "message": "হোমপেজ"
-  },
-  "optionsSince": {
-    "message": "Neat Bookmarks থেকে ফর্ক করা হয়েছে এবং $days$ দিন ধরে রক্ষণাবেক্ষিত।",
-    "placeholders": {
-      "days": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionsVersion": {
-    "message": "vBookmarks সংস্করণ"
-  },
-  "statsSortByCount": {
-    "message": "গণনা অনুসারে"
-  },
-  "statsSortByRecent": {
-    "message": "সাম্প্রতিক অনুসারে"
-  },
-  "statsShowUnbookmarked": {
-    "message": "অমার্কড দেখান"
-  },
-  "statsShowUnbookmarkedHint": {
-    "message": "ইতিহাসের যে পৃষ্ঠাগুলি বুকমার্ক হিসাবে সংরক্ষিত নয় সেগুলি অন্তর্ভুক্ত করুন।"
-  },
-  "statsEmpty": {
-    "message": "বুকমার্ক খোলার সাথে সাথে পরিসংখ্যান তৈরি হয়"
-  },
-  "statsDisabledHint": {
-    "message": "ভিজিট পরিসংখ্যান বন্ধ — বিকল্প → ভিউতে এটি সক্রিয় করুন"
-  },
-  "statsVisitCount": {
-    "message": "$count$ বার দেখা হয়েছে",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "statsClearData": {
-    "message": "পরিসংখ্যান মুছুন"
-  },
-  "statsClearConfirm": {
-    "message": "$count$ বুকমার্কের জন্য ভিজিট পরিসংখ্যান মুছবেন? এটি পূর্বাবস্থায় ফেরানো যাবে না।",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "statsHistoryBanner": {
-    "message": "আপনার পূর্ববর্তী ভিজিটের ভিত্তিতে ভিজিট পরিসংখ্যান তৈরি করতে ইতিহাস অ্যাক্সেস দিন।"
-  },
-  "statsHistoryEnable": {
-    "message": "সক্ষম করুন"
-  },
-  "statsHistoryDismiss": {
-    "message": "আর দেখাবেন না"
-  },
-  "statsHistoryImported": {
-    "message": "$count$ টি বুকমার্কের জন্য পূর্ববর্তী ভিজিট ইম্পোর্ট করা হয়েছে",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "paletteCmdToggleViewTabs": {
-    "message": "ট্যাব দৃশ্য টগল করুন"
-  },
-  "paletteCmdTheme": {
-    "message": "থিম সেট করুন…"
-  },
-  "paletteCmdThemeUsage": {
-    "message": "ব্যবহার: /theme এর পরে একটি থিমের নাম — auto, light, dark, ink বা paper (একটি অনন্য উপসর্গ কাজ করে, যেমন /theme d)।"
-  },
-  "paletteCustomTag": {
-    "message": "কাস্টম"
-  },
-  "paletteCustomDeleteConfirm": {
-    "message": "\"$1\" কমান্ডটি মুছে ফেলবেন? পরিবর্তনটি আপনার সব ডিভাইসে সিঙ্ক হবে।"
-  },
-  "paletteCustomBroken": {
-    "message": "\"$1\" কমান্ডের ফোল্ডারটি আর নেই। কমান্ডটি মুছে ফেলবেন?"
-  },
-  "paletteCmdSaveAsCommand": {
-    "message": "\"$1\" কমান্ড হিসেবে সংরক্ষণ করুন…"
-  },
-  "paletteActionOpenUrl": {
-    "message": "URL খুলুন"
-  },
-  "paletteActionOpenUrlGroup": {
-    "message": "বুকমার্ক ফোল্ডার গ্রুপ খুলুন"
-  },
-  "paletteActionViewPreset": {
-    "message": "প্রিসেটসহ ভিউ খুলুন"
-  },
-  "paletteActionUrlTemplate": {
-    "message": "URL টেমপ্লেট খুলুন"
-  },
-  "optionsGroupPalette": {
-    "message": "কমান্ড প্যালেট"
-  },
-  "paletteCustomHint": {
-    "message": "কমান্ড প্যালেটের জন্য কাস্টম স্ল্যাশ কমান্ড (Ctrl/Cmd+K)। এগুলো আপনার সেটিংসের সাথে সিঙ্ক হয় — সর্বোচ্চ ১০০টি এন্ট্রি।"
-  },
-  "paletteCustomAdd": {
-    "message": "কমান্ড যোগ করুন…"
-  },
-  "paletteCustomUsage": {
-    "message": "$1 / $2"
-  },
-  "paletteCustomSlash": {
-    "message": "স্ল্যাশ (/ এর পরে শব্দ)"
-  },
-  "paletteCustomAliases": {
-    "message": "ডাকনাম (কমা-বিচ্ছিন্ন)"
-  },
-  "paletteCustomAction": {
-    "message": "ক্রিয়া"
-  },
-  "paletteCustomUrl": {
-    "message": "URL"
-  },
-  "paletteCustomTemplate": {
-    "message": "URL টেমপ্লেট — %s কমান্ডের পরে শব্দ দ্বারা প্রতিস্থাপিত হয়।"
-  },
-  "paletteCustomWhere": {
-    "message": "খোলার স্থান"
-  },
-  "paletteCustomFolder": {
-    "message": "বুকমার্ক ফোল্ডার"
-  },
-  "paletteCustomView": {
-    "message": "দৃশ্য"
-  },
-  "paletteCustomStrategy": {
-    "message": "ডেডুপ কৌশল প্রিসেট"
-  },
-  "paletteCustomScope": {
-    "message": "ডেডুপ পরিধি প্রিসেট"
-  },
-  "paletteCustomScan": {
-    "message": "প্রবেশের সময় স্ক্যান শুরু করুন"
-  },
-  "paletteWhereCurrent": {
-    "message": "বর্তমান ট্যাব"
-  },
-  "paletteWhereTab": {
-    "message": "নতুন ট্যাব"
-  },
-  "paletteWhereWindow": {
-    "message": "নতুন উইন্ডো"
-  },
-  "paletteWhereBackground": {
-    "message": "পটভূমির ট্যাব"
-  },
-  "paletteCustomSave": {
-    "message": "কমান্ড সংরক্ষণ করুন"
-  },
-  "paletteCustomErrSlash": {
-    "message": "স্ল্যাশ: ছোট হাতের অক্ষর, সংখ্যা বা হাইফেনের ১–২৪ অক্ষর; অক্ষর বা সংখ্যা দিয়ে শুরু হতে হবে।"
-  },
-  "paletteCustomErrAlias": {
-    "message": "ডাকনাম: স্ল্যাশের মতো একই নিয়ম (ছোট হাতের অক্ষর, সংখ্যা বা হাইফেনের ১–২৪ অক্ষর)।"
-  },
-  "paletteCustomErrTaken": {
-    "message": "এই স্ল্যাশ বা ডাকনামটি ইতিমধ্যে ব্যবহৃত হচ্ছে।"
-  },
-  "paletteCustomErrUrl": {
-    "message": "শুধুমাত্র http:// বা https:// URL অনুমোদিত।"
-  },
-  "paletteCustomErrFolder": {
-    "message": "একটি বুকমার্ক ফোল্ডার নির্বাচন করুন।"
-  },
-  "paletteCustomErrView": {
-    "message": "একটি দৃশ্য নির্বাচন করুন।"
-  },
-  "paletteCustomErrTemplate": {
-    "message": "টেমপ্লেটে অবশ্যই ঠিক একটি %s থাকতে হবে।"
-  },
-  "paletteCustomErrAction": {
-    "message": "একটি ক্রিয়ার ধরন নির্বাচন করুন।"
-  },
-  "paletteCustomErrLimit": {
-    "message": "কমান্ড সীমা পূর্ণ হয়েছে (১০০) — আগে একটি মুছুন।"
-  },
-  "paletteCustomEmpty": {
-    "message": "এখনও কোনো কাস্টম কমান্ড নেই।"
-  },
-  "recentGroupToday": {
-    "message": "আজ"
-  },
-  "recentGroupWeek": {
-    "message": "এই সপ্তাহ"
-  },
-  "recentGroupMonth": {
-    "message": "এই মাস"
-  },
-  "recentGroupOlder": {
-    "message": "পুরাতন"
-  },
-  "searchHistoryRerun": {
-    "message": "আবার অনুসন্ধান করুন"
-  },
-  "optionsGroupBackup": {
-    "message": "ব্যাকআপ"
-  },
-  "optionsGroupContextMenu": {
-    "message": "প্রসঙ্গ মেনু"
-  },
-  "optionsGroupIcons": {
-    "message": "আইকন"
-  },
-  "settingsExport": {
-    "message": "সেটিংস রপ্তানি"
-  },
-  "settingsImport": {
-    "message": "সেটিংস আমদানি"
-  },
-  "settingsBackupHint": {
-    "message": "রপ্তানি সমস্ত সেটিংস (সিঙ্ক পছন্দ সহ) একটি JSON ফাইলে সংরক্ষণ করে। আমদানি একটি ব্যাকআপ মার্জ করে: ফাইলের সেটিংস বর্তমানগুলিকে ওভাররাইট করে, বাকি সবকিছু রক্ষিত থাকে।"
-  },
-  "settingsImportConfirm": {
-    "message": "আমদানি ব্যাকআপ ফাইলে থাকা প্রতিটি সেটিং ওভাররাইট করবে (ফাইলে না থাকা সেটিংস রক্ষিত থাকে) এবং এই পৃষ্ঠাটি পুনরায় লোড করবে। চালিয়ে যান?"
-  },
-  "settingsImportInvalid": {
-    "message": "অবৈধ সেটিংস ফাইল: এটি একটি vBookmarks সেটিংস ব্যাকআপ নয়।"
-  },
-  "settingsImportDone": {
-    "message": "সেটিংস আমদানি করা হয়েছে। পৃষ্ঠাটি এখন পুনরায় লোড হবে।"
-  },
-  "settingsImportError": {
-    "message": "কিছু সেটিংস লেখা যায়নি (স্টোরেজ কোটা বা অস্থায়ী ত্রুটি)। আমদানি সম্পূর্ণ হয়নি — আবার চেষ্টা করুন।"
-  },
-  "statsSectionRecent": {
-    "message": "সাম্প্রতিক ভিজিট"
-  },
-  "statsSectionBookmarks": {
-    "message": "বুকমার্ক পরিসংখ্যান"
-  },
-  "statsHistoryGuide": {
-    "message": "আপনার সাম্প্রতিক ভিজিট তালিকাভুক্ত করতে ইতিহাস অ্যাক্সেস মঞ্জুর করুন।"
-  },
-  "statsHistoryAdd": {
-    "message": "বুকমার্কে যোগ করুন"
-  },
-  "statsHistoryBookmarked": {
-    "message": "বুকমার্ক করা হয়েছে"
-  },
-  "deadPause": {
-    "message": "বিরতি"
-  },
-  "deadResume": {
-    "message": "পুনরায় শুরু"
-  },
-  "deadCancel": {
-    "message": "বাতিল"
-  },
-  "deadPaused": {
-    "message": "বিরতিতে"
+  "viewTree": {
+    "message": "ট্রি"
   },
   "whatsNewChangelog": {
     "message": "পরিবর্তন লগ"
@@ -1808,800 +2603,5 @@
         "content": "$1"
       }
     }
-  },
-  "viewHiddenTabsHint": {
-    "message": "আপনি $view$ ভিউতে আছেন। ট্রিতে ফিরে যেতে $back$ চাপুন বা কমান্ড প্যালেট ব্যবহার করুন।",
-    "placeholders": {
-      "view": {
-        "content": "$1"
-      },
-      "back": {
-        "content": "$2"
-      }
-    }
-  },
-  "viewTabGroups": {
-    "message": "ট্যাব গ্রুপ"
-  },
-  "optionShowTabGroupsView": {
-    "message": "ট্যাব গ্রুপ ভিউ ট্যাব দেখান"
-  },
-  "tabGroupsViewEmpty": {
-    "message": "এই উইন্ডোতে কোনো ট্যাব নেই"
-  },
-  "tabGroupsToolbarRefresh": {
-    "message": "রিফ্রেশ"
-  },
-  "tabGroupsCollapseAll": {
-    "message": "সব সংকুচিত করুন"
-  },
-  "tabGroupsExpandAll": {
-    "message": "সব প্রসারিত করুন"
-  },
-  "tabGroupsSummary": {
-    "message": "$tabs$ ট্যাব · $groups$ গ্রুপ",
-    "placeholders": {
-      "tabs": {
-        "content": "$1"
-      },
-      "groups": {
-        "content": "$2"
-      }
-    }
-  },
-  "tabGroupsGroupCount": {
-    "message": "$count$ ট্যাব",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsCurrentTab": {
-    "message": "বর্তমান"
-  },
-  "tabGroupsAddBookmark": {
-    "message": "এই ট্যাব বুকমার্ক করুন"
-  },
-  "tabGroupsSaveFolder": {
-    "message": "ট্যাব গ্রুপ বুকমার্ক ফোল্ডার হিসেবে সংরক্ষণ করুন"
-  },
-  "tabGroupsGroupSavedToFolder": {
-    "message": "$count$ ট্যাব $folder$-এ সংরক্ষিত হয়েছে",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      },
-      "folder": {
-        "content": "$2"
-      }
-    }
-  },
-  "tabGroupsBookmarksAdded": {
-    "message": "$count$ বুকমার্ক $folder$-এ যোগ হয়েছে",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      },
-      "folder": {
-        "content": "$2"
-      }
-    }
-  },
-  "tabGroupsSelectNewGroup": {
-    "message": "নতুন ট্যাব গ্রুপ"
-  },
-  "tabGroupsSelectOpenInto": {
-    "message": "বিদ্যমান ট্যাব গ্রুপে খুলুন…"
-  },
-  "tabGroupsSelectSaveFolder": {
-    "message": "বুকমার্ক ফোল্ডার হিসেবে সংরক্ষণ করুন"
-  },
-  "tabGroupsSelectClose": {
-    "message": "বন্ধ করুন"
-  },
-  "tabGroupsSelectSleep": {
-    "message": "স্লিপ"
-  },
-  "tabGroupsCopyMoveDialog": {
-    "message": "নির্বাচিত ট্যাবগুলো ইতিমধ্যে একটি ট্যাব গ্রুপের অন্তর্গত। সেগুলো কপি করুন (নতুন জায়গায় খুলুন) বা সরান (বর্তমান গ্রুপ থেকে সরান)?"
-  },
-  "tabGroupsCopyMoveCopy": {
-    "message": "কপি"
-  },
-  "tabGroupsCopyMoveMove": {
-    "message": "সরান"
-  },
-  "tabGroupsConfirmClose": {
-    "message": "$count$ ট্যাব বন্ধ করবেন?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsConfirmSleep": {
-    "message": "$count$ ট্যাব স্লিপ করবেন?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsClosedToast": {
-    "message": "$count$টি ট্যাব বন্ধ হয়েছে",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsSleptToast": {
-    "message": "$count$টি ট্যাব ঘুমিয়ে রাখা হয়েছে",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsBatchClosedTitle": {
-    "message": "বন্ধ ট্যাব"
-  },
-  "tabGroupsPinnedUngroupedToast": {
-    "message": "পিন করা হয়েছে — ট্যাব গ্রুপ থেকে সরানো হয়েছে"
-  },
-  "tabGroupsReopenAction": {
-    "message": "পুনরায় খুলুন"
-  },
-  "tabGroupsWakeAction": {
-    "message": "জাগান"
-  },
-  "tabGroupsRecordDeletedToast": {
-    "message": "বন্ধ রেকর্ডটি মুছে ফেলা হয়েছে"
-  },
-  "tabGroupsClosedTabRemovedToast": {
-    "message": "বন্ধ রেকর্ড থেকে সরানো হয়েছে"
-  },
-  "tabGroupsClearedToast": {
-    "message": "$count$টি বন্ধ রেকর্ড মুছে ফেলা হয়েছে",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "bookmarkFolderPickDialogTitle": {
-    "message": "বুকমার্ক ফোল্ডারে যোগ করুন"
-  },
-  "bookmarkFolderNoFolders": {
-    "message": "কোনো বুকমার্ক ফোল্ডার নেই"
-  },
-  "tabGroupsSelectAddBookmarks": {
-    "message": "বুকমার্ক ফোল্ডারে যোগ করুন…"
-  },
-  "paletteCmdGoTabGroups": {
-    "message": "ট্যাব গ্রুপ ভিউতে যান"
-  },
-  "tabGroupsActivateGroup": {
-    "message": "ট্যাব গ্রুপে যান"
-  },
-  "tabGroupsRenameGroup": {
-    "message": "ট্যাব গ্রুপের নাম পরিবর্তন করুন"
-  },
-  "tabGroupsRenameDialog": {
-    "message": "ট্যাব গ্রুপের নাম পরিবর্তন করুন"
-  },
-  "tabGroupsCloseGroup": {
-    "message": "ট্যাব গ্রুপ বন্ধ করুন"
-  },
-  "tabGroupsSleepGroup": {
-    "message": "ট্যাব গ্রুপ স্লিপ করুন"
-  },
-  "tabGroupsWakeGroup": {
-    "message": "ট্যাব গ্রুপ জাগান"
-  },
-  "tabGroupsActivateTab": {
-    "message": "ট্যাবে যান"
-  },
-  "tabGroupsCollapseGroup": {
-    "message": "গ্রুপ সংকুচিত করুন"
-  },
-  "tabGroupsExpandGroup": {
-    "message": "গ্রুপ প্রসারিত করুন"
-  },
-  "tabGroupsMenuAddBookmark": {
-    "message": "ট্যাব বুকমার্ক করুন"
-  },
-  "tabGroupsMenuSaveFolder": {
-    "message": "বুকমার্ক ফোল্ডার হিসেবে সংরক্ষণ"
-  },
-  "tabGroupsSyncCollapse": {
-    "message": "ব্রাউজারের সাথে সিঙ্ক করুন"
-  },
-  "tabGroupsSyncCollapseHint": {
-    "message": "চেক করলে, এই ভিউতে একটি গ্রুপ ভাঁজ বা প্রসারিত করলে ব্রাউজার ট্যাব গ্রুপও আপডেট হবে। ডিফল্টভাবে বন্ধ থাকে, তাই ভিউ ভাঁজ স্থানীয় থাকে।"
-  },
-  "tabGroupsColorStyle": {
-    "message": "ট্যাব গ্রুপের রঙের শৈলী"
-  },
-  "tabGroupsColorStyleHint": {
-    "message": "বন্ধ থাকলে শুধু রঙের বিন্দু দেখায়। এজ কালার ব্যান্ড গ্রুপের বাম প্রান্তে একটি রঙিন স্ট্রিপ আঁকে। কালার কানেক্টর লাইন গ্রুপের বিন্দুর নিচে একটি রঙিন রেখা আঁকে, প্রতিটি সারিতে একটি টিক সহ, পুরো গ্রুপটিকে একটি গাছের মতো যুক্ত করে।"
-  },
-  "tabGroupsColorStyleOff": {
-    "message": "বন্ধ (শুধু রঙের বিন্দু)"
-  },
-  "tabGroupsColorStyleEdge": {
-    "message": "এজ কালার ব্যান্ড"
-  },
-  "tabGroupsColorStyleLine": {
-    "message": "কালার কানেক্টর লাইন"
-  },
-  "tabGroupsBookmarked": {
-    "message": "বুকমার্ক করা হয়েছে"
-  },
-  "tabGroupsRemoveBookmark": {
-    "message": "বুকমার্ক সরান"
-  },
-  "tabGroupsBookmarkRemoved": {
-    "message": "$count$টি বুকমার্ক সরানো হয়েছে",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsPinned": {
-    "message": "পিন করা ট্যাব"
-  },
-  "tabGroupsDiscarded": {
-    "message": "সুপ্ত ট্যাব"
-  },
-  "tabGroupsPinTab": {
-    "message": "ট্যাব পিন করুন"
-  },
-  "tabGroupsUnpinTab": {
-    "message": "ট্যাব আনপিন করুন"
-  },
-  "tabGroupsSleepTab": {
-    "message": "ট্যাব ঘুমাতে দিন"
-  },
-  "tabGroupsWakeTab": {
-    "message": "ট্যাব জাগান"
-  },
-  "tabGroupsOpenGroups": {
-    "message": "খোলা ট্যাব গ্রুপ"
-  },
-  "tabGroupsClosedGroups": {
-    "message": "সম্প্রতি বন্ধ হয়েছে"
-  },
-  "tabGroupsUngroupedTabs": {
-    "message": "গ্রুপবিহীন ট্যাব"
-  },
-  "tabGroupsUngroupGroup": {
-    "message": "গ্রুপ ভাঙুন"
-  },
-  "tabGroupsMoveNewWindow": {
-    "message": "নতুন উইন্ডোতে সরান"
-  },
-  "tabGroupsWindow": {
-    "message": "উইন্ডো $1$",
-    "placeholders": {
-      "1": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsCurrentWindow": {
-    "message": "বর্তমান উইন্ডো"
-  },
-  "tabGroupsReopenGroup": {
-    "message": "ট্যাব গ্রুপ পুনরায় খুলুন"
-  },
-  "tabGroupsDeleteClosedGroup": {
-    "message": "বন্ধ ট্যাব গ্রুপ মুছুন"
-  },
-  "tabGroupsCollapseWindow": {
-    "message": "উইন্ডো সঙ্কুচিত করুন"
-  },
-  "tabGroupsCloseWindow": {
-    "message": "উইন্ডো বন্ধ করুন"
-  },
-  "tabGroupsWindowClosedTitle": {
-    "message": "উইন্ডো বন্ধ হয়েছে"
-  },
-  "tabGroupsExpandWindow": {
-    "message": "উইন্ডো প্রসারিত করুন"
-  },
-  "tabGroupsClearClosedGroups": {
-    "message": "সব মুছুন"
-  },
-  "tabGroupsConfirmClearClosed": {
-    "message": "সব সাম্প্রতিক বন্ধ রেকর্ড মুছে ফেলবেন? এগুলো আর এখান থেকে পুনরায় খোলা যাবে না।"
-  },
-  "tabGroupsFilterPlaceholder": {
-    "message": "খোলা ট্যাব ফিল্টার করুন"
-  },
-  "tabGroupsNoMatchingTabs": {
-    "message": "কোনো মিলে যাওয়া ট্যাব নেই"
-  },
-  "tabGroupsClosedOpenTab": {
-    "message": "নতুন ট্যাবে খুলুন"
-  },
-  "tabGroupsRemoveClosedTab": {
-    "message": "সংরক্ষিত গ্রুপ থেকে সরান"
-  },
-  "tabGroupsClosedTimeLabel": {
-    "message": "বন্ধ হয়েছে:"
-  },
-  "tabGroupsExpandedExpand": {
-    "message": "প্রসারিত করুন"
-  },
-  "tabGroupsExpandedCollapse": {
-    "message": "সংকুচিত করুন"
-  },
-  "optionTabGroupsClosedLimit": {
-    "message": "রাখতে হবে বন্ধ ট্যাব/গ্রুপের ইতিহাস"
-  },
-  "folderPickMoveHere": {
-    "message": "এখানে সরান"
-  },
-  "folderPickCopyHere": {
-    "message": "এখানে কপি করুন"
-  },
-  "folderPickFilter": {
-    "message": "ফোল্ডার ফিল্টার…"
-  },
-  "folderPickFavNote": {
-    "message": "বুকমার্ক না করা আইটেম এখানে বুকমার্ক হবে"
-  },
-  "folderPickPinned": {
-    "message": "পিন করা"
-  },
-  "folderPickRecent": {
-    "message": "সাম্প্রতিক"
-  },
-  "pinFolder": {
-    "message": "এই ফোল্ডার পিন করুন"
-  },
-  "unpinFolder": {
-    "message": "এই ফোল্ডার আনপিন করুন"
-  },
-  "stagingAdd": {
-    "message": "স্টেজিংয়ে পাঠান"
-  },
-  "stagingAdded": {
-    "message": "স্টেজিংয়ে পাঠানো হয়েছে"
-  },
-  "stagingAlready": {
-    "message": "ইতিমধ্যে স্টেজিং এলাকায় আছে"
-  },
-  "stagingAddedSummary": {
-    "message": "$n$টি আইটেম যোগ হয়েছে; $m$টি আগে থেকেই স্টেজ করা",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      },
-      "m": {
-        "content": "$2"
-      }
-    }
-  },
-  "stagingFull": {
-    "message": "স্টেজিং এলাকা পূর্ণ — আগে কিছু আইটেম সরান"
-  },
-  "stagingFolderEmpty": {
-    "message": "এই ফোল্ডারে স্টেজ করার মতো বুকমার্ক নেই"
-  },
-  "stagingConfirmFolder": {
-    "message": "এই ফোল্ডার থেকে $n$টি বুকমার্ক স্টেজ করবেন?",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingConfirmFolderOk": {
-    "message": "স্টেজ"
-  },
-  "stagingRemove": {
-    "message": "স্টেজিং এলাকা থেকে সরান"
-  },
-  "stagingRemoved": {
-    "message": "স্টেজিং এলাকা থেকে সরানো হয়েছে"
-  },
-  "recentStageAll": {
-    "message": "সাম্প্রতিক যোগ করা সব স্টেজ করুন"
-  },
-  "recentSectionTitle": {
-    "message": "সাম্প্রতিক যোগ করা"
-  },
-  "stagingEmpty": {
-    "message": "এখনও কিছু স্টেজ করা হয়নি। যেকোনো ভিউ থেকে বুকমার্ক এখানে পাঠান — একটি সারিতে থাকা প্লেন বোতাম, বা ডান-ক্লিক মেনু — তারপর সেগুলো বাল্কে সাজান ও ফাইল করুন।"
-  },
-  "stagingFromHistory": {
-    "message": "ইতিহাস থেকে"
-  },
-  "stagingGroupExpand": {
-    "message": "গ্রুপ প্রসারিত করুন"
-  },
-  "stagingGroupCollapse": {
-    "message": "গ্রুপ সংকুচিত করুন"
-  },
-  "stagingGroupRename": {
-    "message": "গ্রুপের নাম পরিবর্তন…"
-  },
-  "stagingGroupDissolve": {
-    "message": "গ্রুপ ভেঙে দিন"
-  },
-  "stagingGroupDissolved": {
-    "message": "গ্রুপ ভেঙে গেছে — আইটেম স্টেজিং এলাকায় রাখা হয়েছে"
-  },
-  "stagingGroupDelete": {
-    "message": "গ্রুপ মুছুন (আইটেমসহ)"
-  },
-  "stagingGroupDeleteConfirm": {
-    "message": "\"$1\" গ্রুপটি মুছবেন? এর $2টি আইটেমও স্টেজিং এলাকা ছেড়ে যাবে।"
-  },
-  "stagingGroupDeleted": {
-    "message": "গ্রুপ মুছে ফেলা হয়েছে — $1টি আইটেম সরানো হয়েছে"
-  },
-  "stagingGroupAssign": {
-    "message": "গ্রুপ…"
-  },
-  "stagingGroupAssignTitle": {
-    "message": "একটি গ্রুপে নির্ধারণ করুন"
-  },
-  "stagingGroupNew": {
-    "message": "নতুন গ্রুপ"
-  },
-  "stagingGroupNamePrompt": {
-    "message": "নতুন গ্রুপের নাম"
-  },
-  "stagingGroupNoGroups": {
-    "message": "এখনও কোনো গ্রুপ নেই"
-  },
-  "stagingShortcutAdd": {
-    "message": "শর্টকাট যোগ করুন"
-  },
-  "stagingShortcutBarLabel": {
-    "message": "এখানে সরান:"
-  },
-  "stagingGuideText": {
-    "message": "এখানে বুকমার্ক সাজান — সারি নির্বাচন করুন এবং ব্যাচ অ্যাকশনের জন্য নির্বাচন মোডে প্রবেশ করুন।"
-  },
-  "stagingGuideDismiss": {
-    "message": "আবার দেখাবেন না"
-  },
-  "stagingShortcutTitle": {
-    "message": "স্থানান্তর শর্টকাট"
-  },
-  "stagingShortcutEdit": {
-    "message": "শর্টকাট সম্পাদনা করুন"
-  },
-  "stagingShortcutAlias": {
-    "message": "উপনাম"
-  },
-  "stagingShortcutPickFolder": {
-    "message": "লক্ষ্য ফোল্ডার নির্বাচন করুন…"
-  },
-  "stagingShortcutSave": {
-    "message": "সংরক্ষণ করুন"
-  },
-  "stagingShortcutRemove": {
-    "message": "শর্টকাট সরান"
-  },
-  "stagingShortcutRemoved": {
-    "message": "শর্টকাট সরানো হয়েছে"
-  },
-  "stagingShortcutMove": {
-    "message": "নির্বাচিত $1$-এ স্থানান্তর করুন",
-    "placeholders": {
-      "1": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingBucketTitle": {
-    "message": "বুকমার্ক করা হয়নি"
-  },
-  "stagingBucketFavAll": {
-    "message": "সব ফেভারিট করুন"
-  },
-  "stagingNew": {
-    "message": "নতুন $n$",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingRowFav": {
-    "message": "এই আইটেমটি ফেভারিট করুন"
-  },
-  "stagingRowUnfav": {
-    "message": "এই আইটেমটি আন-ফেভারিট করুন"
-  },
-  "stagingFav": {
-    "message": "ফেভারিট"
-  },
-  "stagingUnfav": {
-    "message": "আন-ফেভারিট"
-  },
-  "stagingFavDone": {
-    "message": "$n$টি আইটেম ফেভারিট হয়েছে",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingUnfavDone": {
-    "message": "$n$টি আইটেম আন-ফেভারিট হয়েছে",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "groupSaveToFolder": {
-    "message": "ফোল্ডারে সংরক্ষণ…"
-  },
-  "groupCopyToFolder": {
-    "message": "ফোল্ডারে কপি…"
-  },
-  "stagingCount": {
-    "message": "$n$ স্টেজড",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingMoveCopy": {
-    "message": "সরান/কপি করুন…"
-  },
-  "stagingMoveDone": {
-    "message": "$n$টি আইটেম হোমে সরানো হয়েছে",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingCopyDone": {
-    "message": "$n$টি আইটেম কপি হয়েছে",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingMoveConfirm": {
-    "message": "নির্বাচিত ফোল্ডারে $n$টি আইটেম সরানো হবে?",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingMoveConfirmOk": {
-    "message": "সরান"
-  },
-  "stagingDeleteConfirm": {
-    "message": "$n$টি আইটেম মুছবেন? বুকমার্ক নয় এমনগুলো শুধু স্টেজিং এলাকা ছেড়ে যাবে।",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingDeleted": {
-    "message": "$n$টি বুকমার্ক মুছে ফেলা হয়েছে",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingRemovedCount": {
-    "message": "স্টেজিং এলাকা থেকে $n$টি আইটেম সরানো হয়েছে",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingClear": {
-    "message": "স্টেজিং পরিষ্কার করুন"
-  },
-  "stagingClearConfirm": {
-    "message": "পুরো স্টেজিং এলাকা পরিষ্কার করবেন? বুকমার্ক ট্রি স্পর্শ করা হবে না।"
-  },
-  "stagingClearConfirmOk": {
-    "message": "মুছুন"
-  },
-  "stagingCleared": {
-    "message": "স্টেজিং এলাকা পরিষ্কার হয়েছে"
-  },
-  "groupPlaceTooltip": {
-    "message": "এই গ্রুপটি একটি ফোল্ডারে সংরক্ষণ করুন…"
-  },
-  "copyBookmark": {
-    "message": "কপি"
-  },
-  "cutBookmark": {
-    "message": "কাট"
-  },
-  "copyMoveTo": {
-    "message": "কপি/সরান…"
-  },
-  "pasteHere": {
-    "message": "এখানে পেস্ট করুন"
-  },
-  "copiedToast": {
-    "message": "কপি হয়েছে: $t$",
-    "placeholders": {
-      "t": {
-        "content": "$1"
-      }
-    }
-  },
-  "cutToast": {
-    "message": "কাট: $t$ — টার্গেট ফোল্ডারে পেস্ট করুন (Esc বাতিল করে)",
-    "placeholders": {
-      "t": {
-        "content": "$1"
-      }
-    }
-  },
-  "pasteDone": {
-    "message": "পেস্ট হয়েছে"
-  },
-  "pasteGone": {
-    "message": "বুকমার্কটি আর নেই — ক্লিপবোর্ড পরিষ্কার হয়েছে"
-  },
-  "folderCopyList": {
-    "message": "শিরোনাম ও ঠিকানা কপি করুন"
-  },
-  "folderCopyText": {
-    "message": "সাধারণ টেক্সট তালিকা"
-  },
-  "folderCopyMarkdown": {
-    "message": "মার্কডাউন"
-  },
-  "folderCopyJson": {
-    "message": "JSON"
-  },
-  "folderCopyConfirm": {
-    "message": "$n$টি বুকমার্কের তালিকা কপি করবেন?",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "folderCopyDone": {
-    "message": "$n$টি বুকমার্ক এন্ট্রি কপি হয়েছে",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "addFolderMenu": {
-    "message": "ফোল্ডার যোগ করুন"
-  },
-  "optionCollapseAddFolderMenu": {
-    "message": "ফোল্ডার যোগ করার এন্ট্রিগুলো সংকুচিত করুন"
-  },
-  "optionCollapseAddFolderMenuHint": {
-    "message": "ফোল্ডার যোগ করার এন্ট্রিগুলি (ফোল্ডার সারিতে আগে/পরে/ভিতরে, বুকমার্ক সারিতে আগে/পরে) একটি সাবমেনু এন্ট্রিতে একীভূত করুন।"
-  },
-  "tabRowStage": {
-    "message": "স্টেজিংয়ে পাঠান"
-  },
-  "tabgroupStageAll": {
-    "message": "গ্রুপ স্টেজিংয়ে পাঠান"
-  },
-  "tabgroupStageConfirm": {
-    "message": "$n$ ট্যাব স্টেজিংয়ে পাঠাবেন?",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabgroupStageNone": {
-    "message": "এই গ্রুপে বুকমার্কযোগ্য ট্যাব নেই"
-  },
-  "stagedToast": {
-    "message": "$n$টি ট্যাব “$t$” গ্রুপ হিসেবে স্টেজ হয়েছে",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      },
-      "t": {
-        "content": "$2"
-      }
-    }
-  },
-  "searchResultCount": {
-    "message": "$n$টি ফলাফল",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "deleteSelected": {
-    "message": "নির্বাচিত মুছুন"
-  },
-  "recentStageGroup": {
-    "message": "Send $t$ to the staging area",
-    "placeholders": {
-      "t": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingGroupSelectAll": {
-    "message": "এই গ্রুপের সব নির্বাচন করুন"
-  },
-  "optionsGroupLabs": {
-    "message": "ল্যাব"
-  },
-  "optionVirtualScrollLab": {
-    "message": "ভার্চুয়াল স্ক্রলিং (পরীক্ষামূলক)"
-  },
-  "optionVirtualScrollLabHint": {
-    "message": "ট্যাব গ্রুপ এবং ডুপ্লিকেট ভিউ শুধুমাত্র ভিউপোর্টের কাছাকাছি সারিগুলি রেন্ডার করে। খুব বড় তালিকায় অনেক দ্রুত; পরীক্ষামূলক অবস্থায় স্ক্রলবার অবস্থান আনুমানিক।"
-  },
-  "optionsStagingSection": {
-    "message": "স্টেজিং ও সম্প্রতি যোগ করা"
-  },
-  "optionStagingEnabled": {
-    "message": "স্টেজিং এলাকা সক্রিয় করুন"
-  },
-  "optionStagingEnabledHint": {
-    "message": "বন্ধ থাকলে, এই ভিউ শুধুমাত্র সম্প্রতি যোগ করা তালিকা রাখে, এবং অন্যান্য ভিউতে প্রতিটি স্টেজিং বাটন বা মেনু এন্ট্রি লুকিয়ে থাকে।"
-  },
-  "optionTreeRowActions": {
-    "message": "ট্রি সারিতে হোভার অ্যাকশন (সম্পাদনা / স্টেজ / মুছুন)"
-  },
-  "optionsStorageSyncTip": {
-    "message": "আপনার Chrome অ্যাকাউন্টের মাধ্যমে সিঙ্ক হয়েছে — এই সেটিংটি আপনার ডিভাইসগুলিতে ভাগ করা হয়েছে।",
-    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
-  },
-  "optionsStorageLocalTip": {
-    "message": "শুধুমাত্র এই ডিভাইসে সংরক্ষিত — Chrome সিঙ্কের মাধ্যমে ভাগ করা হয়নি।",
-    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
-  },
-  "tabGroupsWindowsCount": {
-    "message": "$n$ উইন্ডো",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsNewWindow": {
-    "message": "নতুন উইন্ডো"
-  },
-  "tabGroupsMergedWindowToast": {
-    "message": "উইন্ডোটি ট্যাব গ্রুপ হিসেবে একত্রিত হয়েছে"
-  },
-  "searchStageAllGroup": {
-    "message": "সব ফলাফল \"$1$\" গ্রুপ হিসেবে স্টেজ করুন",
-    "placeholders": {
-      "1": {
-        "content": "$1"
-      }
-    }
-  },
-  "searchHistoryClose": {
-    "message": "অনুসন্ধানের ইতিহাস লুকান"
-  },
-  "searchHistoryClosedToast": {
-    "message": "অনুসন্ধানের ইতিহাস লুকানো হয়েছে — এটি আবার চালু করুন বিকল্প → অনুসন্ধান"
   }
 }

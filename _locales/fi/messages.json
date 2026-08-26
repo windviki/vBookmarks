@@ -14,6 +14,9 @@
   "addBookmarkTop": {
     "message": "Lisää välilehti tämän yläpuolelle"
   },
+  "addFolderMenu": {
+    "message": "Lisää kansio"
+  },
   "addNewFolder": {
     "message": "Lisää Alikansio"
   },
@@ -32,23 +35,38 @@
   "announceDismiss": {
     "message": "Sulje"
   },
-  "announceV408Text": {
-    "message": "v4.0.8 on favicon-parannettu versio: oikeat sivustokuvakkeet haetaan automaattisesti kirjanmerkeille, joita Chrome ei ole vielä tallentanut välimuistiin."
-  },
   "announceV407Text": {
     "message": "v4.0.7 tuo täysimittaisen toimimattomien linkkien näkymän: skannaa, merkitse, suodata ja lajittele toimimattomat ja rajoitetut linkit, sekä aiemmat merkinnät ja rivikohtaiset aikaleimat."
   },
   "announceV407Title": {
     "message": "Uutta versiossa 4.0.7"
   },
+  "announceV408Text": {
+    "message": "v4.0.8 on favicon-parannettu versio: oikeat sivustokuvakkeet haetaan automaattisesti kirjanmerkeille, joita Chrome ei ole vielä tallentanut välimuistiin."
+  },
   "announceV408Title": {
     "message": "Mitä uutta v4.0.8:ssa"
+  },
+  "announceV410Text": {
+    "message": "v4.1.0 lisää välilehtiryhmien näkymän ja työalueen: hallitse kaikkien ikkunoiden välilehtiä kirjanmerkkiesi vieressä ja kerää kirjanmerkkejä mistä tahansa työalueelle joukkokäsittelyä varten."
   },
   "announceV410Title": {
     "message": "Uutta v4.1.0:ssa"
   },
-  "announceV410Text": {
-    "message": "v4.1.0 lisää välilehtiryhmien näkymän ja työalueen: hallitse kaikkien ikkunoiden välilehtiä kirjanmerkkiesi vieressä ja kerää kirjanmerkkejä mistä tahansa työalueelle joukkokäsittelyä varten."
+  "bookmarkFolderNoFolders": {
+    "message": "Ei kirjanmerkkejä"
+  },
+  "bookmarkFolderPickDialogTitle": {
+    "message": "Lisää kirjanmerkkeihin"
+  },
+  "bookmarkOpenInExistingGroup": {
+    "message": "Avaa olemassa olevassa välilehtiryhmässä…"
+  },
+  "bookmarkOpenInNewGroup": {
+    "message": "Avaa uudessa välilehtiryhmässä"
+  },
+  "bookmarkOpenInNewGroupSetup": {
+    "message": "Avaa uudessa välilehtiryhmässä…"
   },
   "confirmDeleteFolder": {
     "message": "Tämä kansio sisältää $count$ kohdetta. Voit peruuttaa poiston.",
@@ -57,9 +75,6 @@
         "content": "$1"
       }
     }
-  },
-  "confirmDeleteFolderButton": {
-    "message": "Poista"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "Haluatko varmasti poistaa $folderName$-kansion ja sen sisällä olevat $bookmarkCount$ kirjanmerkkiä?",
@@ -71,6 +86,9 @@
         "content": "$1"
       }
     }
+  },
+  "confirmDeleteFolderButton": {
+    "message": "Poista"
   },
   "confirmDeleteFolderSubfolders": {
     "message": "Haluatko varmasti poistaa $folderName$-kansion ja sen sisällä olevat $subFolderCount$ alikansiota?",
@@ -124,11 +142,32 @@
       }
     }
   },
+  "contextMenuAddBookmark": {
+    "message": "Lisää tämä sivu kirjanmerkkeihin vBookmarksilla"
+  },
+  "copiedToast": {
+    "message": "Kopioitu: $t$",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
+  },
   "copyAllTitlesAndUrls": {
     "message": "Kopioi kaikki otsikot ja URL-osoitteet leikepöydälle"
   },
+  "copyBookmark": {
+    "message": "Kopioi"
+  },
+  "copyMoveTo": {
+    "message": "Kopioi/siirrä…"
+  },
   "copyTitleAndUrl": {
     "message": "Kopioi otsikko ja URL"
+  },
+  "crossStorageMoveWarning": {
+    "description": "Warning when trying to move bookmarks across storage types",
+    "message": "Kirjanmerkkejä ei voi siirtää synkronoidun ja paikallisen tallennustilan välillä. Käytä sen sijaan kopioi/liitä -toimintoa."
   },
   "customIcon": {
     "message": "Mukautettu kuvake"
@@ -136,8 +175,14 @@
   "customIconDescription": {
     "message": "Kuvakkeen on oltava 19x19 pikselin kokoinen. Muuten se skaalataan tähän kokoon."
   },
+  "customIconPick": {
+    "message": "Valitse tiedosto…"
+  },
   "customSeparatorColorDescription": {
     "message": "Mukauta Erottimen Väriä"
+  },
+  "customSeparatorStringDescription": {
+    "message": "Jos kirjanmerkin URL-osoite sisältää tämän merkkijonon, se näytetään erottimena"
   },
   "customSeparatorTitleDescription": {
     "message": "Kirjanmerkin todellinen otsikko, joka näytetään erottimena"
@@ -145,28 +190,28 @@
   "customSeparatorUrlDescription": {
     "message": "Kirjanmerkin todellinen URL-osoite, joka näytetään erottimena"
   },
-  "customSeparatorStringDescription": {
-    "message": "Jos kirjanmerkin URL-osoite sisältää tämän merkkijonon, se näytetään erottimena"
-  },
   "customStyles": {
     "message": "Mukautetut Tyylit"
-  },
-  "separatorOptions": {
-    "message": "Erottimet"
   },
   "customStylesDescription": {
     "message": "Tämä vaatii CSS-taitoja. Muokkaa omalla vastuullasi. Koodin jakaminen olisi viisasta tehdä kautta"
   },
-  "defaultIconButton": {
-    "message": "Käytä oletusta"
+  "cutBookmark": {
+    "message": "Leikkaa"
   },
-  "defaultIconButtonOr": {
-    "message": "tai"
+  "cutToast": {
+    "message": "Leikattu: $t$ — liitä kohdekansioon (Esc peruuttaa)",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
   },
-  "customIconPick": {
-    "message": "Valitse tiedosto…"
+  "deadCancel": {
+    "message": "Peruuta"
   },
   "deadChecking": {
+    "description": "Progress line of the palette's dead-link scan mode; $done$ bookmarks checked out of $total$.",
     "message": "Tarkistetaan $done$ / $total$…",
     "placeholders": {
       "done": {
@@ -177,8 +222,10 @@
         "content": "$2",
         "example": "120"
       }
-    },
-    "description": "Progress line of the palette's dead-link scan mode; $done$ bookmarks checked out of $total$."
+    }
+  },
+  "deadClearScan": {
+    "message": "Tyhjennä skannaustulokset"
   },
   "deadConfirmAll": {
     "message": "Poistetaanko kaikki $count$ kuollutta kirjanmerkkiä? Tätä ei voi kumota yhdellä kertaa.",
@@ -192,6 +239,15 @@
   "deadConfirmDelete": {
     "message": "Poistetaanko tämä kirjanmerkki?"
   },
+  "deadConfirmDeleteSelected": {
+    "message": "Poistetaanko $count$ valittua kuollutta kirjanmerkkiä?",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
+  },
   "deadDeleteAll": {
     "message": "Poistetaanko kaikki $count$ kirjanmerkkiä nykyisestä suodattimesta?",
     "placeholders": {
@@ -201,27 +257,15 @@
       }
     }
   },
-  "deadDeleteAllNote": {
-    "message": "Kaikki-suodattimessa tämä sisältää estetyt kirjanmerkit (tavoitettavissa välityspalvelimen kautta, todennäköisesti edelleen toimivia) ja aiemmin merkityt rivit.",
-    "description": "Second line of the delete-all confirmation in the Dead links view."
-  },
-  "undoSingleStepNote": {
-    "message": "Kumoaminen palauttaa vain viimeisimmän poiston."
-  },
   "deadDeleteAllBtn": {
     "message": "Poista kaikki"
   },
+  "deadDeleteAllNote": {
+    "description": "Second line of the delete-all confirmation in the Dead links view.",
+    "message": "Kaikki-suodattimessa tämä sisältää estetyt kirjanmerkit (tavoitettavissa välityspalvelimen kautta, todennäköisesti edelleen toimivia) ja aiemmin merkityt rivit."
+  },
   "deadDeleteSelected": {
     "message": "Poista valitut"
-  },
-  "deadConfirmDeleteSelected": {
-    "message": "Poistetaanko $count$ valittua kuollutta kirjanmerkkiä?",
-    "placeholders": {
-      "count": {
-        "content": "$1",
-        "example": "8"
-      }
-    }
   },
   "deadDeleted": {
     "message": "Poistettu $count$ kuollutta kirjanmerkkiä",
@@ -232,8 +276,72 @@
       }
     }
   },
-  "deadClearScan": {
-    "message": "Tyhjennä skannaustulokset"
+  "deadDetectTimeLabel": {
+    "message": "Havaitsemisaika"
+  },
+  "deadFilterAll": {
+    "message": "Kaikki"
+  },
+  "deadFilterBlocked": {
+    "message": "Vain estetyt"
+  },
+  "deadFilterDead": {
+    "message": "Vain kuolleet"
+  },
+  "deadFilterMarked": {
+    "message": "Aiemmin merkityt"
+  },
+  "deadLastScanAt": {
+    "message": "Viimeisin skannaus: $time$",
+    "placeholders": {
+      "time": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadMark": {
+    "message": "Merkitse kuolleeksi"
+  },
+  "deadMarkAll": {
+    "message": "Merkitse kaikki"
+  },
+  "deadMarkSelected": {
+    "message": "Merkitse valitut"
+  },
+  "deadMarkStatusAll": {
+    "message": "Kaikki tilat"
+  },
+  "deadMarkStatusMarked": {
+    "message": "Merkitty"
+  },
+  "deadMarkStatusUnmarked": {
+    "message": "Merkitsemätön"
+  },
+  "deadMarkTimeLabel": {
+    "message": "Merkintäaika"
+  },
+  "deadMarked": {
+    "message": "Kuolleet rivit merkitty"
+  },
+  "deadMarkedBanner": {
+    "message": "Näytetään aiemmin merkityt kirjanmerkit. Aloita uusi tarkistus napsauttamalla Skannaa uudelleen tai käsittele ne alla olevassa luettelossa."
+  },
+  "deadMarkedBannerDismiss": {
+    "message": "Sulje"
+  },
+  "deadMarkedCount": {
+    "message": "Kirjanmerkkejä merkitty: $count$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadMarkedNone": {
+    "message": "Ei vielä merkittyjä kirjanmerkkejä"
+  },
+  "deadMarkedRow": {
+    "message": "Merkitty"
   },
   "deadNone": {
     "message": "Ei rikkinäisiä linkkejä"
@@ -241,34 +349,711 @@
   "deadNoneFiltered": {
     "message": "Tällä suodattimella ei ole kuolleita linkkejä — kokeile toista segmenttiä yllä"
   },
+  "deadPause": {
+    "message": "Keskeytä"
+  },
+  "deadPaused": {
+    "message": "Keskeytetty"
+  },
+  "deadProxyAdd": {
+    "message": "Lisää välityspalvelin kuolleiden linkkien tarkistuksia varten"
+  },
+  "deadProxyChange": {
+    "message": "Muuta"
+  },
+  "deadProxyClear": {
+    "message": "Tyhjennä"
+  },
+  "deadProxyControlled": {
+    "message": "Välityspalvelimen asetuksia hallinnoi toinen laajennus"
+  },
+  "deadProxyDenied": {
+    "message": "Välityspalvelimen käyttöoikeutta ei myönnetty"
+  },
+  "deadProxyInvalid": {
+    "message": "Virheellinen välityspalvelinosoite — käytä muotoa host:port tai scheme://host:port (http/https/socks5, ei tunnistetietoja)"
+  },
+  "deadProxyLabel": {
+    "message": "Välityspalvelin: $server$",
+    "placeholders": {
+      "server": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadProxyNeverShow": {
+    "message": "Älä näytä uudelleen"
+  },
+  "deadProxyNone": {
+    "message": "(ei asetettu)"
+  },
+  "deadProxyNudge": {
+    "message": "Välityspalvelimen uudelleentarkistus erottaa todelliset kuolleet linkit alueellisesti estetyistä — määritä se tässä tai asetussivulla."
+  },
+  "deadProxyPanelHint": {
+    "message": "Anna välityspalvelin, joka sinulla jo on (laajennus ei tarjoa sellaista), esim. 127.0.0.1:7890 tai socks5://127.0.0.1:1080."
+  },
+  "deadProxyRemove": {
+    "message": "Poista"
+  },
+  "deadProxyRemoved": {
+    "message": "Välityspalvelin poistettu"
+  },
+  "deadProxySaved": {
+    "message": "Välityspalvelin tallennettu — tulevat tarkistukset tarkistavat suorat epäonnistumiset sen kautta"
+  },
+  "deadProxyServerHint": {
+    "message": "Tallennettu palvelin tarkistaa uudelleen suorissa tarkistuksissa epäonnistuneet kirjanmerkit jokaisessa kuolleiden linkkien skannauksessa, erottaen todelliset kuolleet linkit alueellisesti estetyistä. Testaa ja tallenna -toiminto kokeilee sitä (vain toimiva palvelin säilytetään); voit myös lisätä sen kuolleiden linkkien näkymästä."
+  },
+  "deadProxyTestSave": {
+    "message": "Testaa ja tallenna"
+  },
+  "deadProxyTestUrlLabel": {
+    "message": "Testi-URL"
+  },
+  "deadProxyTesting": {
+    "message": "Testataan…"
+  },
+  "deadProxyUnavailable": {
+    "message": "Välityspalvelimen API ei ole käytettävissä tässä selaimessa"
+  },
+  "deadProxyUnreachable": {
+    "message": "Välityspalvelin ei tavoitettavissa — ei tallennettu"
+  },
   "deadRescan": {
     "message": "Uudelleenskannaa"
+  },
+  "deadResume": {
+    "message": "Jatka"
+  },
+  "deadRiskBanner": {
+    "message": "Kuolleiden linkkien siivous poistaa kirjanmerkkejä joukolla. Varmuuskopioi kirjanmerkkisi ennen ensimmäistä siivousta."
+  },
+  "deadSortByDetected": {
+    "message": "Havaitsemisaika"
+  },
+  "deadSortByMarked": {
+    "message": "Merkintäaika"
+  },
+  "deadSortByPath": {
+    "message": "Kansiopolku"
+  },
+  "deadSortLabel": {
+    "message": "Lajitteluperuste"
+  },
+  "deadStartHint": {
+    "message": "Aloitetaan $n$ kirjanmerkin skannaus",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadStatusBlocked": {
+    "message": "estetty"
+  },
+  "deadUnmark": {
+    "message": "Poista kuollut-merkintä"
+  },
+  "deadUnmarkAll": {
+    "message": "Tyhjennä kaikki merkinnät"
+  },
+  "deadUnmarkSelected": {
+    "message": "Poista merkinnät valituilta"
+  },
+  "defaultIconButton": {
+    "message": "Käytä oletusta"
+  },
+  "defaultIconButtonOr": {
+    "message": "tai"
   },
   "delete": {
     "message": "Poista"
   },
+  "deleteEllipsis": {
+    "message": "Poista..."
+  },
+  "deleteSelected": {
+    "message": "Poista valitut"
+  },
   "deletedBookmark": {
+    "description": "Toast shown after a bookmark or separator was deleted; the toast offers an undo button. $title$ is the deleted row's title (empty for separators).",
     "message": "Poistettu $title$",
     "placeholders": {
       "title": {
         "content": "$1",
         "example": "Example"
       }
-    },
-    "description": "Toast shown after a bookmark or separator was deleted; the toast offers an undo button. $title$ is the deleted row's title (empty for separators)."
+    }
   },
   "deletedFolder": {
+    "description": "Toast shown after a bookmark folder (with its whole subtree) was deleted; the toast offers an undo button. $title$ is the folder name.",
     "message": "Poistettu kansio $title$",
     "placeholders": {
       "title": {
         "content": "$1",
         "example": "Bookmarks"
       }
-    },
-    "description": "Toast shown after a bookmark folder (with its whole subtree) was deleted; the toast offers an undo button. $title$ is the folder name."
+    }
+  },
+  "donationDismiss": {
+    "message": "Hylkää"
+  },
+  "donationGo": {
+    "message": "Lahjoita"
+  },
+  "donationLater": {
+    "message": "Myöhemmin"
+  },
+  "donationMessage": {
+    "message": "Pidätkö siitä? Lahjoita tukeaksesi sen tulevaisuutta — tai arvioi se kaupassa: jokainen arvostelu varmistaa päivitysten jatkumisen."
+  },
+  "donationNever": {
+    "message": "Älä näytä uudelleen"
+  },
+  "donationRate": {
+    "message": "Arvioi"
+  },
+  "donationRateTitle": {
+    "message": "Arvioi vBookmarks Chrome Web Store -kaupassa"
+  },
+  "donationV4GuideLink": {
+    "message": "Lue v4-opas →"
+  },
+  "donationV4Notice": {
+    "message": "vBookmarks 4.0 on täysin uusittu versio, jossa on moderni muotoilu ja täynnä uusia ominaisuuksia."
+  },
+  "dupesApplyAll": {
+    "message": "Käytä kaikkia ($count$)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesApplySelected": {
+    "message": "Poista päällekkäiset valituista ($count$)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesCleanAll": {
+    "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go.",
+    "message": "Tyhjennä kaikki: $groups$ ryhmää, $count$ ylimääräistä kopiota",
+    "placeholders": {
+      "count": {
+        "content": "$2"
+      },
+      "groups": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesCleanRestHint": {
+    "message": "Säilytä \"$title$\" ja poista muut $count$",
+    "placeholders": {
+      "count": {
+        "content": "$2"
+      },
+      "title": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesConfirmAll": {
+    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark).",
+    "message": "Poistetaanko $count$ ylimääräistä kopiota $groups$ ryhmästä? Kussakin ryhmässä valittu kohde säilytetään.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    }
+  },
+  "dupesConfirmGroup": {
+    "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept).",
+    "message": "Säilytetäänkö \"$title$\" ja poistetaan muut $count$ kopiota?",
+    "placeholders": {
+      "count": {
+        "content": "$2"
+      },
+      "title": {
+        "content": "$1",
+        "example": "Example bookmark"
+      }
+    }
+  },
+  "dupesConfirmSelected": {
+    "message": "Poistetaanko $count$ päällekkäistä kirjanmerkkiä valituista $groups$ ryhmistä?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    }
+  },
+  "dupesDone": {
+    "description": "Alert shown after the duplicate cleanup finished.",
+    "message": "Poistettu $count$ kaksoiskappaletta",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesGroupCollapse": {
+    "description": "Dupes view group-head context menu: collapse an expanded duplicate group.",
+    "message": "Kutista ryhmä"
+  },
+  "dupesGroupCount": {
+    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL.",
+    "message": "$count$ kaksoiskappaletta",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesGroupExpand": {
+    "description": "Dupes view group-head context menu: expand a collapsed duplicate group.",
+    "message": "Laajenna ryhmä"
+  },
+  "dupesIgnoreScheme": {
+    "message": "Ohita http/https-eroavaisuudet"
+  },
+  "dupesKeepThis": {
+    "message": "Pidä tämä"
+  },
+  "dupesKeeperSet": {
+    "message": "Aseta säilyttäjäksi"
+  },
+  "dupesNone": {
+    "message": "Ei kaksoiskappaleita"
+  },
+  "dupesPreviewSummary": {
+    "message": "$groups$ ryhmää · $count$ vapautetaan",
+    "placeholders": {
+      "count": {
+        "content": "$2"
+      },
+      "groups": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesRemoveRow": {
+    "message": "Poista tämä kopio"
+  },
+  "dupesRiskBanner": {
+    "message": "Kaksoiskappaleiden poisto poistaa kirjanmerkkejä joukolla. Varmuuskopioi kirjanmerkkisi ennen poiston käyttöä."
+  },
+  "dupesScopeAll": {
+    "message": "Kaikki kirjanmerkit"
+  },
+  "dupesScopeBar": {
+    "message": "Vain kirjanmerkkipalkki"
+  },
+  "dupesStrategyBookmarkBar": {
+    "message": "Säilytä kirjanmerkkipalkissa oleva"
+  },
+  "dupesStrategyMostVisited": {
+    "message": "Säilytä eniten vieraillut"
+  },
+  "dupesStrategyNewest": {
+    "message": "Säilytä uusin"
+  },
+  "dupesStrategyOldest": {
+    "message": "Säilytä vanhin"
+  },
+  "dupesStrategyShallowest": {
+    "message": "Säilytä matalin"
+  },
+  "dupesStrategyShortestTitle": {
+    "message": "Säilytä lyhyin otsikko"
+  },
+  "edit": {
+    "message": "Muokkaa..."
+  },
+  "editBookmark": {
+    "message": "Muokkaa kirjanmerkkiä"
+  },
+  "editFolder": {
+    "message": "Muokkaa kansiota"
+  },
+  "errorOccured": {
+    "message": "Hups, tapahtui virhe."
+  },
+  "extDesc": {
+    "description": "The extension description.",
+    "message": "Ponnahdusikkuna-kirjanmerkkienhallinta. Paranneltu Neat Bookmarks. Siistimpi kuin Neater Bookmarks."
+  },
+  "extName": {
+    "description": "vBookmarks",
+    "message": "vBookmarks"
+  },
+  "favGalleryAll": {
+    "description": "Favicon gallery source filter chip: show every source.",
+    "message": "Kaikki"
+  },
+  "favGalleryCompare": {
+    "description": "Favicon gallery toggle button: switch every icon to the generic placeholder it replaced (before/after comparison).",
+    "message": "Vertaa paikkamerkkiin"
+  },
+  "favGalleryEmptyText": {
+    "description": "Favicon gallery empty-state body text.",
+    "message": "Kun ponnahdusikkuna kohtaa kirjanmerkityn sivuston, jolle Chromella ei ole kuvaketta, vBookmarks hakee oikean kuvakkeen ja listaa sen tähän."
+  },
+  "favGalleryEmptyTitle": {
+    "description": "Favicon gallery empty-state heading.",
+    "message": "Ei vielä päivitettyjä kuvakkeita"
+  },
+  "favGalleryFailedHint": {
+    "description": "Favicon gallery hint under the failed-fetch section title.",
+    "message": "Epäonnistumisia yritetään uudelleen 24 tunnin, 3 päivän ja 7 päivän kuluttua, minkä jälkeen niistä luovutaan, kunnes kuvakevälimuisti tyhjennetään."
+  },
+  "favGalleryFailedTitle": {
+    "description": "Favicon gallery heading of the muted section listing hosts whose icon fetch failed recently.",
+    "message": "Hiljattain yritetty, kuvaketta ei löytynyt"
+  },
+  "favGalleryGaveUp": {
+    "description": "Favicon gallery badge on a failed-strip host whose retries are exhausted (it stays untouched until the icon cache is cleared).",
+    "message": "Luovutettu"
+  },
+  "favGalleryHint": {
+    "description": "Subtitle under the favicon gallery title, explaining the page is read-only.",
+    "message": "Kuvakkeet, jotka vBookmarks haki kirjanmerkityille sivustoille, joille Chrome ei ollut tallentanut kuvaketta — mistä kukin on peräisin ja mitkä kirjanmerkit sitä käyttävät. Vain tietoa."
+  },
+  "favGalleryLink": {
+    "description": "Options link (Icons group, right of the Clear icon cache button): opens the favicon gallery page listing the sites whose icons were refetched.",
+    "message": "Näytä päivitetyt kuvakkeet"
+  },
+  "favGalleryOrphan": {
+    "description": "Favicon gallery note on a card whose host no longer has any bookmark.",
+    "message": "Tällä isännällä ei ole enää kirjanmerkkejä — kuvake poistuu välimuistin mukana."
+  },
+  "favGallerySearch": {
+    "description": "Placeholder of the favicon gallery filter input.",
+    "message": "Suodata sivuston, otsikon tai polun mukaan"
+  },
+  "favGalleryShowingBefore": {
+    "description": "Favicon gallery toggle button while the placeholder comparison is shown: switch back to the real fetched icons.",
+    "message": "Takaisin oikeisiin kuvakkeisiin"
+  },
+  "favGalleryStatBookmarks": {
+    "description": "Favicon gallery stats strip: how many bookmarks sit on the refreshed sites.",
+    "message": "$n$ kirjanmerkkiä",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "favGalleryStatSites": {
+    "description": "Favicon gallery stats strip: how many sites have a refreshed icon.",
+    "message": "$n$ sivustoa",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "favGalleryTitle": {
+    "description": "Favicon gallery page title (h1 + document title).",
+    "message": "Päivitetyt sivustokuvakkeet"
+  },
+  "favGalleryVisits": {
+    "description": "Favicon gallery tooltip on a bookmark row's visit-count pill.",
+    "message": "$n$ tallennettua avausta",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "favSrcDirect": {
+    "description": "Favicon gallery source badge: the icon was fetched directly from the site itself.",
+    "message": "Suora"
+  },
+  "favSrcLegacy": {
+    "description": "Favicon gallery source badge: cached before the source was recorded, so the origin is unknown.",
+    "message": "Aiempi välimuisti"
+  },
+  "favSrcProxy": {
+    "description": "Favicon gallery source badge: the icon was fetched through the user's own proxy relay.",
+    "message": "Välityspalvelin"
+  },
+  "folderCopyConfirm": {
+    "message": "Kopioidaanko $n$ kirjanmerkin luettelo?",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "folderCopyDone": {
+    "message": "Kopioitu $n$ kirjanmerkkiä",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "folderCopyJson": {
+    "message": "JSON"
+  },
+  "folderCopyList": {
+    "message": "Kopioi otsikot ja osoitteet"
+  },
+  "folderCopyMarkdown": {
+    "message": "Markdown"
+  },
+  "folderCopyText": {
+    "message": "Tekstilista"
+  },
+  "folderEmpty": {
+    "message": "(Tyhjä)"
+  },
+  "folderPickCopyHere": {
+    "message": "Kopioi tähän"
+  },
+  "folderPickFavNote": {
+    "message": "Kirjanmerkitsemättömät kohteet kirjanmerkitään tähän"
+  },
+  "folderPickFilter": {
+    "message": "Suodata kansioita…"
+  },
+  "folderPickMoveHere": {
+    "message": "Siirrä tähän"
+  },
+  "folderPickPinned": {
+    "message": "Kiinnitetyt"
+  },
+  "folderPickRecent": {
+    "message": "Viimeisimmät"
+  },
+  "general": {
+    "message": "Yleinen"
+  },
+  "groupCopyToFolder": {
+    "message": "Kopioi kansioon…"
+  },
+  "groupPlaceTooltip": {
+    "message": "Tallenna tämä ryhmä kansioon…"
+  },
+  "groupSaveToFolder": {
+    "message": "Tallenna kansioon…"
+  },
+  "ignore": {
+    "message": "Ohita"
+  },
+  "name": {
+    "description": "Name of bookmark or folder.",
+    "message": "Nimi"
+  },
+  "noTitle": {
+    "description": "The title for untitled bookmarks with no http(s) URL or untitled folders.",
+    "message": "(ei otsikkoa)"
+  },
+  "nope": {
+    "message": "Peruuta"
+  },
+  "open": {
+    "description": "Action to open bookmarks.",
+    "message": "Avaa"
+  },
+  "openBookmarks": {
+    "message": "Avaa Kaikki Kirjanmerkit"
+  },
+  "openBookmarksInExistingGroup": {
+    "message": "Avaa kaikki olemassa olevassa välilehtiryhmässä…"
+  },
+  "openBookmarksInGroup": {
+    "message": "Avaa kaikki uuteen välilehtiryhmään"
+  },
+  "openBookmarksInGroupSetup": {
+    "message": "Avaa kaikki uudessa välilehtiryhmässä…"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "Avaa kirjanmerkit incognitossa"
+  },
+  "openBookmarksNewWindow": {
+    "message": "Avaa kirjanmerkit uudessa ikkunassa"
+  },
+  "openCommandPaletteCommand": {
+    "message": "Avaa komentopaletti"
+  },
+  "openIncognitoWindow": {
+    "message": "Avaa Incognito-ikkunassa"
+  },
+  "openNewTab": {
+    "message": "Avaa Uudessa Välilehdessä"
+  },
+  "openNewWindow": {
+    "message": "Avaa Uudessa Ikkunassa"
+  },
+  "openSidePanelCommand": {
+    "message": "Avaa vBookmarks-sivupaneeli"
+  },
+  "optionAnnounceEnabled": {
+    "message": "Näytä sovelluksen sisäiset ilmoitukset"
+  },
+  "optionAnnounceEnabledHint": {
+    "message": "Julkaisutiedotteet ja vinkit projektin GitHub-arkistosta (haetaan enintään 6 tunnin välein). Pois päältä -tila estää myös verkkohaun."
+  },
+  "optionAutoRefreshSync": {
+    "message": "Päivitä synkronointitila automaattisesti"
+  },
+  "optionAutoResizePopup": {
+    "message": "Säädä ponnahdusikkunan koko automaattisesti sisällön mukaan"
+  },
+  "optionClassicExperience": {
+    "message": "Palauta klassinen ylätunniste"
+  },
+  "optionClassicExperienceHint": {
+    "message": "Kytkee pois komentopaletin, pikalisäys-tähden, sen sivun kontekstivalikkokohdan, työkalupainikkeen ja näkymävälilehdet. Jokainen voidaan ottaa käyttöön erikseen omassa osiossaan."
+  },
+  "optionClickNewTab": {
+    "message": "Vasen klikkaus avaa kirjanmerkin uudessa välilehdessä."
+  },
+  "optionCloseUnusedFolders": {
+    "message": "Sulje käyttämättömät kansiot, kun kansio avataan."
+  },
+  "optionCollapseAddFolderMenu": {
+    "message": "Tiivistä kansioiden lisäysvalinnat"
+  },
+  "optionCollapseAddFolderMenuHint": {
+    "message": "Yhdistä lisää-kansio -merkinnät (ennen/jälkeen/sisällä kansioriveillä, ennen/jälkeen kirjanmerkkiriveillä) yhdeksi alavalikon kohteeksi."
+  },
+  "optionCollapseSortMenu": {
+    "message": "Tiivistä lajittelumerkinnät yhdeksi \"Lajittele…\"-alavalikoksi"
+  },
+  "optionCollapseSortMenuHint": {
+    "message": "Koskee kansion pikavalikkoa. Oletuksena päällä."
+  },
+  "optionCollapseTabGroupMenu": {
+    "message": "Tiivistä välilehtiryhmämerkinnät yhdeksi \"Välilehtiryhmät…\"-alavalikoksi"
+  },
+  "optionCollapseTabGroupMenuHint": {
+    "message": "Koskee sekä kansio- että kirjanmerkkipikavalikoita. Oletuksena pois käytöstä; pitää matalat valikot lyhyempinä pienillä tai suuren zoomauksen näytöillä."
+  },
+  "optionConfirmDeleteFolder": {
+    "message": "Vahvista ennen ei-tyhjien kansioiden poistamista"
+  },
+  "optionConfirmOpenFolder": {
+    "message": "Näytä vahvistus, kun avataan paljon kirjanmerkkejä kansiosta."
+  },
+  "optionDeadProxyServer": {
+    "message": "Kuolleiden linkkien välityspalvelin"
+  },
+  "optionDeadProxyStrip": {
+    "message": "Näytä välityspalvelimen lisäysvihje kuolleiden linkkien näkymässä"
+  },
+  "optionDeadProxyStripHint": {
+    "message": "Poistaminen käytöstä piilottaa vihjeen siellä; välityspalvelin on edelleen määritettävissä täällä, ja tallennettu palvelin näyttää aina hallintarivinsä kyseisessä näkymässä."
+  },
+  "optionDeadScanConcurrency": {
+    "message": "Kuolleen linkin skannauksen rinnakkaisuus (1-16)"
+  },
+  "optionDeadScanTimeout": {
+    "message": "Kuolleen linkin skannauksen aikakatkaisu sekunteina (2-30)"
+  },
+  "optionFaviconBackup": {
+    "message": "Sisällytä favicon-välimuisti varmuuskopioihin"
+  },
+  "optionFaviconBackupHint": {
+    "message": "Sisällytä myös rikastettu favicon-välimuisti (sivustokohtaiset tiedot, mahdollisesti suuria) asetusten vientiin/tuontiin. Tämä kattaa jo välimuistissa olevat kuvakkeet, vaikka nouto on pois päältä. Kun nouto on pois päältä, varmuuskopiot pysyvät pieninä; kuvakkeet noudetaan automaattisesti uudelleen joka tapauksessa."
+  },
+  "optionFaviconCacheClear": {
+    "message": "Tyhjennä kuvakevälimuisti"
+  },
+  "optionFaviconCacheClearConfirm": {
+    "message": "Tyhjennetäänkö rikastettu kuvakevälimuisti? Kuvakkeet haetaan automaattisesti uudelleen seuraavalla avauskerralla."
+  },
+  "optionFaviconCacheCleared": {
+    "message": "Kuvakevälimuisti tyhjennetty. Kuvakkeet haetaan uudelleen seuraavalla avauksella."
+  },
+  "optionFaviconCacheEmpty": {
+    "message": "Ei tyhjennettävää kuvakevälimuistia."
+  },
+  "optionFaviconContrast": {
+    "message": "Käännä matalakontrastiset faviconit"
+  },
+  "optionFaviconContrastHint": {
+    "message": "Valkoiset kuvakkeet vaaleissa teemoissa ja mustat kuvakkeet tummissa teemoissa käännetään, jotta ne pysyvät näkyvinä. Jokainen kuvake analysoidaan kerran latauksen yhteydessä — ei lisäkuormitusta selauksen aikana."
+  },
+  "optionFaviconEnrich": {
+    "message": "Hae puuttuvat sivustokuvakkeet"
+  },
+  "optionFaviconEnrichAgg": {
+    "message": "Kolmannen osapuolen varakuvakkeet"
+  },
+  "optionFaviconEnrichAggHint": {
+    "message": "Jos suora haku epäonnistuu, hae kuvaketta verkkotunnuksen perusteella sisäänrakennetusta kolmannen osapuolen kuvakepalveluiden luettelosta ($providers$). Tavoittamattomaksi havaittu palvelu ohitetaan ja seuraavaa yritetään — sitä ei yritetä uudelleen 6 tuntiin.",
+    "placeholders": {
+      "providers": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionFaviconEnrichHint": {
+    "message": "Niille kirjanmerkeissä oleville sivustoille, joille Chromella ei ole välimuistissa kuvaketta, hae oikea kuvake suoraan sivustolta (/favicon.ico, sitten sivun ilmoittamat kuvakkeet). Pyynnöt lähetetään vain sivustoille, jotka olet lisännyt kirjanmerkkeihin."
+  },
+  "optionHighlightUnsynced": {
+    "message": "Himmennä synkronoimattomat kirjanmerkit"
+  },
+  "optionLanguage": {
+    "message": "Kieli"
+  },
+  "optionLanguageAuto": {
+    "message": "Automaattinen"
+  },
+  "optionLanguageHint": {
+    "message": "Kielen vaihtaminen lataa tämän sivun uudelleen."
+  },
+  "optionOnlyShowBookmarkBar": {
+    "message": "Näytä vain kirjanmerkit Kirjanmerkkipalkissa"
+  },
+  "optionOpenInSidePanel": {
+    "message": "Avaa sivupaneelissa ponnahdusikkunan sijaan"
+  },
+  "optionOpenNewTab": {
+    "message": "Keskellä klikkaus tai control-klikkaus avaa kirjanmerkin uudessa taustavälilehdessä (sen sijaan että avaisi etuvälilehdessä)."
+  },
+  "optionPaletteEnabled": {
+    "message": "Ota komentopaletti käyttöön (Ctrl/Cmd+K)"
+  },
+  "optionPopupStays": {
+    "message": "Ponnahdusikkuna pysyy auki, kun kirjanmerkkejä avataan (vasen klikkaus)."
+  },
+  "optionQuickAddContextMenu": {
+    "message": "Lisää \"Lisää sivu kirjanmerkkeihin vBookmarksilla\" -vaihtoehto sivun oikean painikkeen valikkoon."
+  },
+  "optionQuickAddContextMenuHint": {
+    "message": "Riippumaton pikalisäyksen tähtipainikkeesta; klassisen kokemuksen palautus poistaa käytöstä myös tämän merkinnän."
+  },
+  "optionQuickAddEnabled": {
+    "message": "Näytä pikalisäystähti hakukentän vieressä"
+  },
+  "optionRecentCollapsed": {
+    "message": "Tiivistä äskettäin lisätyt -osio oletuksena"
   },
   "optionRecentCount": {
     "message": "Äskettäin lisättyjen kirjanmerkkien määrä"
+  },
+  "optionRememberPrevState": {
+    "message": "Muista edellinen tila (vierityssijainti, avatut kansiot ja viimeksi kohdistettu kohde)."
+  },
+  "optionRememberView": {
+    "message": "Muista viimeisin aktiivinen näkymä ja avaa se uudelleen"
+  },
+  "optionSearchAfterEnter": {
+    "message": "Etsi kirjanmerkkejä vain kun ENTERiä painetaan (sen sijaan että etsisi heti)"
   },
   "optionSearchHistory": {
     "message": "Näytä hakuhistoria-alue"
@@ -276,17 +1061,496 @@
   "optionSearchHistoryHint": {
     "message": "Piilota viimeaikaisten hakujen alue tulosten yläpuolelta — tallennetut kyselyt säilyvät"
   },
+  "optionShowDeadView": {
+    "message": "Näytä kuolleet linkit -välilehti"
+  },
+  "optionShowDupesView": {
+    "message": "Näytä kaksoiskappaleet -välilehti"
+  },
+  "optionShowItemPath": {
+    "message": "Näytä yläkansion polku listariveillä"
+  },
+  "optionShowRecentBookmarks": {
+    "message": "Näytä äskettäin lisätyt kirjanmerkit ponnahdusikkunan yläosassa"
+  },
+  "optionShowStatsView": {
+    "message": "Näytä tilastot-välilehti"
+  },
+  "optionShowSyncStatus": {
+    "message": "Näytä synkronointitilan ilmaisimet"
+  },
+  "optionShowTabBadges": {
+    "message": "Näytä lukumäärämerkit näkymävälilehdissä"
+  },
+  "optionShowTabGroupsView": {
+    "message": "Näytä välilehtiryhmien näkymä"
+  },
+  "optionShowToolButton": {
+    "message": "Näytä työkalu-painike (⋮) hakukentän vieressä"
+  },
+  "optionShowViewTabs": {
+    "message": "Näytä näkymävälilehdet hakukentän alla"
+  },
+  "optionStagingEnabled": {
+    "message": "Ota vaiheistusalue käyttöön"
+  },
+  "optionStagingEnabledHint": {
+    "message": "Kun pois päältä, tämä näkymä näyttää vain äskettäin lisätyt, ja kaikki vaiheistuspainikkeet tai -valikkokohdat muissa näkymissä piilotetaan."
+  },
+  "optionStatsEnabled": {
+    "message": "Ota käyttöön vierailutilastot"
+  },
+  "optionSyncRefreshInterval": {
+    "message": "Päivitysväli"
+  },
+  "optionSyncRefreshIntervalSeconds": {
+    "message": "sekuntia"
+  },
+  "optionTabGroupsClosedLimit": {
+    "message": "Säilytettävä suljettujen välilehtien/ryhmien historia"
+  },
+  "optionTheme": {
+    "message": "Teema"
+  },
+  "optionThemeAuto": {
+    "message": "Järjestelmän mukaan"
+  },
+  "optionThemeDark": {
+    "message": "Tumma"
+  },
+  "optionThemeInk": {
+    "message": "Muste (tumma)"
+  },
+  "optionThemeLight": {
+    "message": "Vaalea"
+  },
+  "optionThemePaper": {
+    "message": "Paperi (vaalea)"
+  },
+  "optionTreeRowActions": {
+    "message": "Viehiöt puuriveillä (muokkaa / vaiheista / poista)"
+  },
+  "optionVirtualScrollLab": {
+    "message": "Virtuaalinen vieritys (kokeellinen)"
+  },
+  "optionVirtualScrollLabHint": {
+    "message": "Välilehtiryhmien ja kaksoiskappaleiden näkymät renderöivät vain näkymän lähellä olevat rivit. Paljon nopeampi erittäin suurissa luetteloissa; kokeellisessa vaiheessa vierityspalkin sijainti on arvio."
+  },
+  "optionZoom": {
+    "message": "Zoomaus"
+  },
+  "options": {
+    "message": "Asetukset"
+  },
+  "optionsDonate": {
+    "message": "Lahjoita"
+  },
+  "optionsFooterText": {
+    "description": "Footer text for the Options page",
+    "message": "Luonut $authorName$.",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionsGithubLink": {
+    "message": "GitHub"
+  },
+  "optionsGroupBackup": {
+    "message": "Varmuuskopio"
+  },
+  "optionsGroupContextMenu": {
+    "message": "Kontekstivalikot"
+  },
+  "optionsGroupIcons": {
+    "message": "Kuvakkeet"
+  },
+  "optionsGroupLabs": {
+    "message": "Laboratorio"
+  },
+  "optionsGroupPalette": {
+    "message": "Komentopaletti"
+  },
+  "optionsGroupSort": {
+    "message": "Lajittelu"
+  },
+  "optionsGroupStats": {
+    "message": "Tilastot"
+  },
+  "optionsGroupTools": {
+    "message": "Työkalut"
+  },
+  "optionsGroupViews": {
+    "message": "Näkymät"
+  },
+  "optionsHomepageLink": {
+    "message": "Kotisivu"
+  },
+  "optionsSince": {
+    "message": "Haarautettu Neat Bookmarksista, ylläpidetty $days$ päivää.",
+    "placeholders": {
+      "days": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionsStagingSection": {
+    "message": "Vaiheistus ja äskettäin lisätyt"
+  },
+  "optionsStorageLocalTip": {
+    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting).",
+    "message": "Tallennettu vain tähän laitteeseen — ei jaeta Chrome-synkronoinnin kautta."
+  },
+  "optionsStorageSyncTip": {
+    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting).",
+    "message": "Synkronoitu Chrome-tilisi kautta — tämä asetus jaetaan laitteidesi välillä."
+  },
+  "optionsVersion": {
+    "message": "vBookmarks-versio"
+  },
+  "paletteActionOpenUrl": {
+    "message": "Avaa URL"
+  },
+  "paletteActionOpenUrlGroup": {
+    "message": "Avaa kirjanmerkkikansion ryhmä"
+  },
+  "paletteActionUrlTemplate": {
+    "message": "Avaa URL-malli"
+  },
+  "paletteActionViewPreset": {
+    "message": "Avaa näkymä esiasetuksella"
+  },
+  "paletteClose": {
+    "message": "Sulje"
+  },
+  "paletteCmdDead": {
+    "message": "Etsi rikkinäiset linkit"
+  },
+  "paletteCmdDupes": {
+    "message": "Siivoa kaksoiskappaleet"
+  },
+  "paletteCmdGoDead": {
+    "message": "Siirry kuolleiden linkkien näkymään"
+  },
+  "paletteCmdGoDupes": {
+    "message": "Siirry kopioiden näkymään"
+  },
+  "paletteCmdGoRecent": {
+    "message": "Siirry viimeaikaisten näkymään"
+  },
+  "paletteCmdGoSearch": {
+    "message": "Siirry hakunäkymään"
+  },
+  "paletteCmdGoStats": {
+    "message": "Siirry tilastonäkymään"
+  },
+  "paletteCmdGoTabGroups": {
+    "message": "Siirry välilehtiryhmien näkymään"
+  },
+  "paletteCmdGoTree": {
+    "message": "Siirry puunäkymään"
+  },
+  "paletteCmdLang": {
+    "message": "Vaihda kieltä…"
+  },
+  "paletteCmdLangUsage": {
+    "message": "Käyttö: /lang ja sen jälkeen lokaalikoodi — esim. /lang en, /lang zh_CN, /lang ja."
+  },
+  "paletteCmdNewBookmark": {
+    "message": "Uusi kirjanmerkki…"
+  },
+  "paletteCmdNewFolder": {
+    "message": "Uusi kansio…"
+  },
+  "paletteCmdOptions": {
+    "message": "Avaa asetussivu"
+  },
+  "paletteCmdQuickAdd": {
+    "message": "Lisää nykyinen välilehti kirjanmerkiksi"
+  },
+  "paletteCmdSaveAsCommand": {
+    "message": "Tallenna \"$1\" komentona…"
+  },
+  "paletteCmdSaveSession": {
+    "message": "Tallenna ikkunan välilehdet kansioksi"
+  },
+  "paletteCmdSearchInView": {
+    "message": "Hae '$query$' hakunäkymässä",
+    "placeholders": {
+      "query": {
+        "content": "$1"
+      }
+    }
+  },
+  "paletteCmdTheme": {
+    "message": "Aseta teema…"
+  },
+  "paletteCmdThemeUsage": {
+    "message": "Käyttö: /theme ja teeman nimi — auto, light, dark, ink tai paper (yksilöllinen etuliite toimii, esim. /theme d)."
+  },
+  "paletteCmdToggleViewTabs": {
+    "message": "Vaihda välilehtien näyttö"
+  },
+  "paletteCmdVersion": {
+    "message": "Versiotiedot"
+  },
+  "paletteCustomAction": {
+    "message": "Toiminto"
+  },
+  "paletteCustomAdd": {
+    "message": "Lisää komento…"
+  },
+  "paletteCustomAliases": {
+    "message": "Aliakset (pilkuilla erotettuna)"
+  },
+  "paletteCustomBroken": {
+    "message": "Komennon \"$1\" kansiota ei ole enää olemassa. Poistetaanko komento?"
+  },
+  "paletteCustomDeleteConfirm": {
+    "message": "Poistetaanko komento \"$1\"? Muutos synkronoituu kaikkiin laitteisiisi."
+  },
+  "paletteCustomEmpty": {
+    "message": "Ei mukautettuja komentoja vielä."
+  },
+  "paletteCustomErrAction": {
+    "message": "Valitse toiminnon tyyppi."
+  },
+  "paletteCustomErrAlias": {
+    "message": "Aliakset: samat säännöt kuin kauttaviivalla (1–24 merkkiä pieniä kirjaimia, numeroita tai väliviivoja)."
+  },
+  "paletteCustomErrFolder": {
+    "message": "Valitse kirjanmerkkikansio."
+  },
+  "paletteCustomErrLimit": {
+    "message": "Komentoraja (100) on saavutettu — poista ensin yksi."
+  },
+  "paletteCustomErrSlash": {
+    "message": "Kauttaviiva: 1–24 merkkiä, jotka koostuvat pienistä kirjaimista, numeroista tai väliviivoista ja alkavat kirjaimella tai numerolla."
+  },
+  "paletteCustomErrTaken": {
+    "message": "Tämä kauttaviiva tai alias on jo varattu."
+  },
+  "paletteCustomErrTemplate": {
+    "message": "Mallissa on oltava täsmälleen yksi %s."
+  },
+  "paletteCustomErrUrl": {
+    "message": "Vain http://- tai https://-alkuiset URL-osoitteet ovat sallittuja."
+  },
+  "paletteCustomErrView": {
+    "message": "Valitse näkymä."
+  },
+  "paletteCustomFolder": {
+    "message": "Kirjanmerkkikansio"
+  },
+  "paletteCustomHint": {
+    "message": "Mukautetut kauttaviivakomennot komentopaletille (Ctrl/Cmd+K). Ne synkronoituvat asetustesi kanssa — enintään 100 merkintää."
+  },
+  "paletteCustomSave": {
+    "message": "Tallenna komento"
+  },
+  "paletteCustomScan": {
+    "message": "Aloita skannaus syötettäessä"
+  },
+  "paletteCustomScope": {
+    "message": "Dedup-laajuuden esiasetus"
+  },
+  "paletteCustomSlash": {
+    "message": "Kauttaviiva (sana /-merkin jälkeen)"
+  },
+  "paletteCustomStrategy": {
+    "message": "Dedup-strategian esiasetus"
+  },
+  "paletteCustomTag": {
+    "message": "mukautettu"
+  },
+  "paletteCustomTemplate": {
+    "message": "URL-malli — %s korvataan komennon jälkeisillä sanoilla"
+  },
+  "paletteCustomUrl": {
+    "message": "URL"
+  },
+  "paletteCustomUsage": {
+    "message": "$1 / $2"
+  },
+  "paletteCustomView": {
+    "message": "Näkymä"
+  },
+  "paletteCustomWhere": {
+    "message": "Avaa"
+  },
+  "paletteNoResults": {
+    "message": "Ei vastaavia tuloksia"
+  },
+  "palettePlaceholder": {
+    "message": "Hae kirjanmerkkejä, kansioita, komentoja…"
+  },
+  "paletteWhereBackground": {
+    "message": "Taustavälilehdet"
+  },
+  "paletteWhereCurrent": {
+    "message": "Nykyinen välilehti"
+  },
+  "paletteWhereTab": {
+    "message": "Uusi välilehti"
+  },
+  "paletteWhereWindow": {
+    "message": "Uusi ikkuna"
+  },
+  "parentFolder": {
+    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
+    "message": "Yläkansio: \"$folderName$\"",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarksbar"
+      }
+    }
+  },
+  "pasteDone": {
+    "message": "Liitetty"
+  },
+  "pasteGone": {
+    "message": "Kirjanmerkkiä ei enää ole — leikepöytä tyhjennetty"
+  },
+  "pasteHere": {
+    "message": "Liitä tähän"
+  },
+  "pinFolder": {
+    "message": "Kiinnitä tämä kansio"
+  },
+  "quickAddBookmark": {
+    "message": "Lisää tämä sivu kirjanmerkkeihin (Ctrl+D)"
+  },
+  "quickAddBookmarkCommand": {
+    "message": "Lisää nykyinen välilehti nopeasti kirjanmerkiksi"
+  },
+  "quickAdded": {
+    "message": "Kirjanmerkki lisätty"
+  },
+  "quickAddedTo": {
+    "message": "Kirjanmerkki lisätty kohteeseen $folderName$",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarks bar"
+      }
+    }
+  },
+  "quickRemoveBookmark": {
+    "message": "Poista tämä kirjanmerkki (Ctrl+D)"
+  },
+  "quickRemoved": {
+    "message": "Kirjanmerkki poistettu"
+  },
+  "recentBookmarks": {
+    "message": "Äskettäin lisätyt"
+  },
   "recentEmpty": {
     "message": "Ei äskettäisiä kirjanmerkkejä. Paina Ctrl+D lisätäksesi nykyisen sivun kirjanmerkkeihin."
+  },
+  "recentGroupMonth": {
+    "message": "Tässä kuussa"
+  },
+  "recentGroupOlder": {
+    "message": "Vanhemmat"
+  },
+  "recentGroupToday": {
+    "message": "Tänään"
+  },
+  "recentGroupWeek": {
+    "message": "Tällä viikolla"
   },
   "recentRevealInTree": {
     "message": "Näytä puussa"
   },
+  "recentSectionTitle": {
+    "message": "Äskettäin lisätyt"
+  },
+  "recentStageAll": {
+    "message": "Lisää kaikki äskettäin lisätyt"
+  },
+  "recentStageGroup": {
+    "message": "Lähetä $t$ esikatselualueelle",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
+  },
+  "removeSeparator": {
+    "message": "Poista Erotin"
+  },
+  "replaceUrl": {
+    "message": "Korvaa nykyisellä URL-osoitteella"
+  },
+  "reportError": {
+    "message": "Raportoi Virheestä"
+  },
+  "reportedToDeveloper": {
+    "description": "A message for an error occured in the extension, has been reported to the developer.",
+    "message": "Tämä on raportoitu kehittäjälle."
+  },
+  "resetButton": {
+    "message": "Nollaa"
+  },
+  "resetSettings": {
+    "message": "Nollaa asetukset"
+  },
+  "resetSettingsDescription": {
+    "message": "Nollaa vBookmarks oletusasetuksiin."
+  },
+  "revealOutsideBarAction": {
+    "message": "Näytä kaikki ja paljasta"
+  },
+  "revealOutsideBarHint": {
+    "message": "Vain kirjanmerkkipalkki näytetään: kohde on sen ulkopuolella."
+  },
+  "riskBannerDismiss": {
+    "message": "Sulje"
+  },
+  "riskBannerHelp": {
+    "message": "Varmuuskopiointi- ja palautusopas"
+  },
+  "riskBannerNever": {
+    "message": "Älä näytä uudelleen"
+  },
+  "rowActionDelete": {
+    "message": "Poista"
+  },
+  "rowActionMark": {
+    "message": "Merkitse kuolleeksi"
+  },
+  "rowActionReveal": {
+    "message": "Näytä puussa"
+  },
+  "rowActionUnmark": {
+    "message": "Poista kuolleen merkintä"
+  },
+  "save": {
+    "message": "Tallenna"
+  },
+  "searchBookmarks": {
+    "description": "Placeholder text for search field.",
+    "message": "Etsi Kirjanmerkkejä"
+  },
+  "searchClear": {
+    "message": "Tyhjennä haku"
+  },
   "searchHistoryClear": {
     "message": "Tyhjennä kaikki"
   },
+  "searchHistoryClose": {
+    "message": "Piilota hakuhistoria"
+  },
+  "searchHistoryClosedToast": {
+    "message": "Hakuhistoria on piilotettu — ota se uudelleen käyttöön Asetukset → Haku"
+  },
   "searchHistoryRemove": {
     "message": "Poista tämä haku"
+  },
+  "searchHistoryRerun": {
+    "message": "Hae uudelleen"
   },
   "searchHistoryResultCount": {
     "message": "$n$ tulosta",
@@ -298,6 +1562,895 @@
   },
   "searchHistoryTitle": {
     "message": "Äskettäiset haut"
+  },
+  "searchNoResults": {
+    "message": "Ei vastaavia kirjanmerkkejä"
+  },
+  "searchResultCount": {
+    "message": "$n$ tulosta",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "searchStageAllGroup": {
+    "message": "Siirrä kaikki tulokset ryhmään \"$1$\"",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "searchViewHint": {
+    "message": "Kirjoita yllä olevaan kenttään hakeaksesi kirjanmerkkejäsi"
+  },
+  "selectAll": {
+    "message": "Kaikki"
+  },
+  "selectClear": {
+    "message": "Tyhjennä"
+  },
+  "selectCount": {
+    "message": "$count$ valittu",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "selectInvert": {
+    "message": "Käännä valinta"
+  },
+  "selectModeEnter": {
+    "message": "Valitse"
+  },
+  "selectModeExit": {
+    "message": "Poistu valinnasta"
+  },
+  "separatorOptions": {
+    "message": "Erottimet"
+  },
+  "sessionEmpty": {
+    "message": "Ei tallennettavia välilehtiä"
+  },
+  "sessionFolderName": {
+    "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm.",
+    "message": "Istunto $date$",
+    "placeholders": {
+      "date": {
+        "content": "$1",
+        "example": "2026-07-18 15:04"
+      }
+    }
+  },
+  "sessionSaved": {
+    "description": "Alert shown after the current window's tabs were saved into a new bookmark folder.",
+    "message": "Tallennettu $count$ välilehteä uuteen kansioon",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "12"
+      }
+    }
+  },
+  "settingsBackupHint": {
+    "message": "Vienti tallentaa kaikki asetukset (mukaan lukien synkronointiasetukset) JSON-tiedostoon. Tuonti yhdistää varmuuskopion takaisin: tiedoston asetukset korvaavat nykyiset, muut säilyvät."
+  },
+  "settingsExport": {
+    "message": "Vie asetukset"
+  },
+  "settingsImport": {
+    "message": "Tuo asetukset"
+  },
+  "settingsImportConfirm": {
+    "message": "Tuominen korvaa kaikki varmuuskopiotiedostossa olevat asetukset (tiedostossa olemattomat asetukset säilyvät) ja lataa tämän sivun uudelleen. Jatketaanko?"
+  },
+  "settingsImportDone": {
+    "message": "Asetukset tuotu. Sivu ladataan nyt uudelleen."
+  },
+  "settingsImportError": {
+    "message": "Joitakin asetuksia ei voitu tallentaa (tallennustilan ylittyminen tai tilapäinen virhe). Tuontia ei suoritettu loppuun — yritä uudelleen."
+  },
+  "settingsImportInvalid": {
+    "message": "Virheellinen asetustiedosto: ei ole vBookmarks-asetusten varmuuskopio."
+  },
+  "sortByDate": {
+    "message": "Lajittele lisäyspäivän mukaan"
+  },
+  "sortByDateAdded": {
+    "message": "Lisäyspäivän mukaan (uusin ensin)"
+  },
+  "sortByName": {
+    "message": "Lajittele nimen mukaan"
+  },
+  "sortByTitle": {
+    "message": "Otsikon mukaan"
+  },
+  "sortDone": {
+    "message": "Kansio lajiteltu"
+  },
+  "sortFolderContents": {
+    "message": "Järjestä kansion sisältö"
+  },
+  "sortFoldersFirst": {
+    "message": "Pidä kansiot ylhäällä"
+  },
+  "sortMenuOptions": {
+    "message": "Lajittele"
+  },
+  "sortOptions": {
+    "message": "Lajitteluasetukset…"
+  },
+  "sortRecursive": {
+    "message": "Järjestä myös alikansiot (rekursiivinen)"
+  },
+  "sortRecursiveSuffix": {
+    "message": "(rekursiivinen)"
+  },
+  "sortRecursiveWarning": {
+    "message": "Tämä järjestää kirjanmerkit uudelleen jokaisessa alikansiossa."
+  },
+  "stagedToast": {
+    "message": "Asetettu $n$ välilehteä odottamaan ryhmänä ”$t$”",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "t": {
+        "content": "$2"
+      }
+    }
+  },
+  "stagingAdd": {
+    "message": "Lähetä odottamaan"
+  },
+  "stagingAdded": {
+    "message": "Lähetetty odottamaan"
+  },
+  "stagingAddedSummary": {
+    "message": "Lisätty $n$ kohdetta; $m$ jo odotuslistalla",
+    "placeholders": {
+      "m": {
+        "content": "$2"
+      },
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingAlready": {
+    "message": "Jo odotuslistalla"
+  },
+  "stagingBucketFavAll": {
+    "message": "Suosikki kaikki"
+  },
+  "stagingBucketTitle": {
+    "message": "Kirjanmerkitsemättömät"
+  },
+  "stagingClear": {
+    "message": "Tyhjennä odotusalue"
+  },
+  "stagingClearConfirm": {
+    "message": "Tyhjennetäänkö koko odotusalue? Kirjanmerkkihakemistoa ei muuteta."
+  },
+  "stagingClearConfirmOk": {
+    "message": "Tyhjennä"
+  },
+  "stagingCleared": {
+    "message": "Odotusalue tyhjennetty"
+  },
+  "stagingConfirmFolder": {
+    "message": "Lisätäänkö $n$ kirjanmerkkiä tästä kansiosta?",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingConfirmFolderOk": {
+    "message": "Vaiheista"
+  },
+  "stagingCopyDone": {
+    "message": "Kopioitu $n$ kohdetta",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingCount": {
+    "message": "$n$ odottaa",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingDeleteConfirm": {
+    "message": "Poistetaanko $n$ kohdetta? Ei-kirjanmerkityt poistuvat vain odotusalueelta.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingDeleted": {
+    "message": "Poistettu $n$ kirjanmerkkiä",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingEmpty": {
+    "message": "Ei vielä mitään jonossa. Lähetä kirjanmerkkejä tähän mistä tahansa näkymästä — rivin lentokonepainikkeesta tai hiiren kakkospainikkeen valikosta — ja järjestä sekä arkistoi ne joukkona."
+  },
+  "stagingFav": {
+    "message": "Suosikki"
+  },
+  "stagingFavDone": {
+    "message": "Suosikiksi merkitty $n$ kohdetta",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingFolderEmpty": {
+    "message": "Tässä kansiossa ei ole kirjanmerkkejä odotuslistalle"
+  },
+  "stagingFromHistory": {
+    "message": "Historiasta"
+  },
+  "stagingFull": {
+    "message": "Odotuslista on täynnä — poista ensin joitakin kohteita"
+  },
+  "stagingGroupAssign": {
+    "message": "Ryhmä…"
+  },
+  "stagingGroupAssignTitle": {
+    "message": "Määritä ryhmään"
+  },
+  "stagingGroupCollapse": {
+    "message": "Kutista ryhmä"
+  },
+  "stagingGroupDelete": {
+    "message": "Poista ryhmä (kohteineen)"
+  },
+  "stagingGroupDeleteConfirm": {
+    "message": "Poistetaanko ryhmä \"$1\"? Sen $2 kohdetta poistuu myös esitysalueelta."
+  },
+  "stagingGroupDeleted": {
+    "message": "Ryhmä poistettu — $1 kohdetta poistettu"
+  },
+  "stagingGroupDissolve": {
+    "message": "Hajota ryhmä"
+  },
+  "stagingGroupDissolved": {
+    "message": "Ryhmä hajotettu — kohteet säilytetty odotuslistalla"
+  },
+  "stagingGroupExpand": {
+    "message": "Laajenna ryhmä"
+  },
+  "stagingGroupNamePrompt": {
+    "message": "Uuden ryhmän nimi"
+  },
+  "stagingGroupNew": {
+    "message": "Uusi ryhmä"
+  },
+  "stagingGroupNoGroups": {
+    "message": "Ei ryhmiä vielä"
+  },
+  "stagingGroupRename": {
+    "message": "Nimeä ryhmä uudelleen…"
+  },
+  "stagingGroupSelectAll": {
+    "message": "Valitse kaikki tässä ryhmässä"
+  },
+  "stagingGuideDismiss": {
+    "message": "Älä näytä uudelleen"
+  },
+  "stagingGuideText": {
+    "message": "Järjestä kirjanmerkit tässä — valitse rivit ja siirry valintatilaan erätoimintoja varten."
+  },
+  "stagingMoveConfirm": {
+    "message": "Siirretäänkö $n$ kohdetta valittuun kansioon?",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingMoveConfirmOk": {
+    "message": "Siirrä"
+  },
+  "stagingMoveCopy": {
+    "message": "Siirrä/kopioi…"
+  },
+  "stagingMoveDone": {
+    "message": "Siirretty $n$ kohdetta kotiin",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingNew": {
+    "message": "uusi $n$",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingRemove": {
+    "message": "Poista odotuslistalta"
+  },
+  "stagingRemoved": {
+    "message": "Poistettu odotuslistalta"
+  },
+  "stagingRemovedCount": {
+    "message": "Poistettu $n$ kohdetta odotusalueelta",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingRowFav": {
+    "message": "Lisää tämä kohde suosikkeihin"
+  },
+  "stagingRowUnfav": {
+    "message": "Poista tämä kohde suosikeista"
+  },
+  "stagingShortcutAdd": {
+    "message": "Lisää pikakuvake"
+  },
+  "stagingShortcutAlias": {
+    "message": "Alias"
+  },
+  "stagingShortcutBarLabel": {
+    "message": "Siirrä kohteeseen:"
+  },
+  "stagingShortcutEdit": {
+    "message": "Muokkaa pikakuvaketta"
+  },
+  "stagingShortcutMove": {
+    "message": "Siirrä valittu kohteeseen $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingShortcutPickFolder": {
+    "message": "Valitse kohdekansio…"
+  },
+  "stagingShortcutRemove": {
+    "message": "Poista pikakuvake"
+  },
+  "stagingShortcutRemoved": {
+    "message": "Pikakuvake poistettu"
+  },
+  "stagingShortcutSave": {
+    "message": "Tallenna"
+  },
+  "stagingShortcutTitle": {
+    "message": "Siirrä pikakuvake"
+  },
+  "stagingUnfav": {
+    "message": "Poista suosikki"
+  },
+  "stagingUnfavDone": {
+    "message": "Suosikista poistettu $n$ kohdetta",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "statsClearConfirm": {
+    "message": "Tyhjennä vierailutilastot $count$ kirjanmerkille? Tätä ei voi peruuttaa.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "statsClearData": {
+    "message": "Tyhjennä tilastot"
+  },
+  "statsDisabledHint": {
+    "message": "Vierailutilastot ovat pois päältä — ota ne käyttöön kohdassa Asetukset → Näkymät"
+  },
+  "statsEmpty": {
+    "message": "Tilastot kertyvät, kun avaat kirjanmerkkejä"
+  },
+  "statsHistoryAdd": {
+    "message": "Lisää kirjanmerkkeihin"
+  },
+  "statsHistoryBanner": {
+    "message": "Myönnä historiatietojen käyttöoikeus, jotta tilastot saavat alkutiedot aiemmista vierailuistasi."
+  },
+  "statsHistoryBookmarked": {
+    "message": "Kirjanmerkitty"
+  },
+  "statsHistoryDismiss": {
+    "message": "Älä näytä uudelleen"
+  },
+  "statsHistoryEnable": {
+    "message": "Ota käyttöön"
+  },
+  "statsHistoryGuide": {
+    "message": "Myönnä historian käyttöoikeus listataksesi viimeisimmät vierailusi tähän."
+  },
+  "statsHistoryImported": {
+    "message": "Tuotiin aiemmat vierailut $count$ kirjanmerkille",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "statsSectionBookmarks": {
+    "message": "Kirjanmerkkitilastot"
+  },
+  "statsSectionRecent": {
+    "message": "Viimeisimmät vierailut"
+  },
+  "statsShowUnbookmarked": {
+    "message": "Näytä merkitsemättömät"
+  },
+  "statsShowUnbookmarkedHint": {
+    "message": "Sisällytä historian sivut, joita ei ole tallennettu kirjanmerkeiksi."
+  },
+  "statsSortByCount": {
+    "message": "Määrän mukaan"
+  },
+  "statsSortByRecent": {
+    "message": "Viimeaikaisuuden mukaan"
+  },
+  "statsVisitCount": {
+    "message": "Vierailtu $count$ kertaa",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "storageUsageFree": {
+    "message": "Vapaa"
+  },
+  "storageUsageHint": {
+    "message": "Vain paikallinen laajennuksen tallennustila (chrome.storage.local, noin 10 megatavun kiintiö): kuvakevälimuisti sekä asetukset ja muut paikalliset tiedot. Synkronoidut asetukset, istuntotiedot ja kirjanmerkkikirjasto eivät sisälly tähän."
+  },
+  "storageUsageIcon": {
+    "message": "Kuvakkeiden välimuisti"
+  },
+  "storageUsageOther": {
+    "message": "Muu"
+  },
+  "storageUsageSummary": {
+    "message": "Käytetty $1$ / $2$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      },
+      "2": {
+        "content": "$2"
+      }
+    }
+  },
+  "syncOptions": {
+    "message": "Synkronointiasetukset"
+  },
+  "syncStatusLocal": {
+    "message": "Vain paikallinen — ei ladattu"
+  },
+  "syncStatusSynced": {
+    "message": "Synkronoitu Google-tilillesi"
+  },
+  "syncStatusUnsyncable": {
+    "message": "Ei voida synkronoida"
+  },
+  "syncSuffixLocal": {
+    "message": "(Paikallinen)"
+  },
+  "syncSuffixSynced": {
+    "message": "(Synkronoitu)"
+  },
+  "tabGroupColorBlue": {
+    "description": "Accessible name of the blue color swatch in the new-tab-group dialog.",
+    "message": "Sininen"
+  },
+  "tabGroupColorCyan": {
+    "description": "Accessible name of the cyan color swatch in the new-tab-group dialog.",
+    "message": "Syaani"
+  },
+  "tabGroupColorGreen": {
+    "description": "Accessible name of the green color swatch in the new-tab-group dialog.",
+    "message": "Vihreä"
+  },
+  "tabGroupColorGrey": {
+    "description": "Accessible name of the grey color swatch in the new-tab-group dialog.",
+    "message": "Harmaa"
+  },
+  "tabGroupColorLabel": {
+    "message": "Väri"
+  },
+  "tabGroupColorOrange": {
+    "description": "Accessible name of the orange color swatch in the new-tab-group dialog.",
+    "message": "Oranssi"
+  },
+  "tabGroupColorPink": {
+    "description": "Accessible name of the pink color swatch in the new-tab-group dialog.",
+    "message": "Vaaleanpunainen"
+  },
+  "tabGroupColorPurple": {
+    "description": "Accessible name of the purple color swatch in the new-tab-group dialog.",
+    "message": "Violetti"
+  },
+  "tabGroupColorRed": {
+    "description": "Accessible name of the red color swatch in the new-tab-group dialog.",
+    "message": "Punainen"
+  },
+  "tabGroupColorYellow": {
+    "description": "Accessible name of the yellow color swatch in the new-tab-group dialog.",
+    "message": "Keltainen"
+  },
+  "tabGroupDialogTitle": {
+    "message": "Uusi välilehtiryhmä"
+  },
+  "tabGroupNoGroups": {
+    "message": "Ei olemassa olevia välilehtiryhmiä"
+  },
+  "tabGroupOptions": {
+    "message": "Välilehtiryhmät"
+  },
+  "tabGroupPickDialogTitle": {
+    "message": "Avaa olemassa olevassa välilehtiryhmässä"
+  },
+  "tabGroupTitleLabel": {
+    "message": "Ryhmän otsikko"
+  },
+  "tabGroupUntitled": {
+    "message": "Nimetön ryhmä"
+  },
+  "tabGroupsActivateGroup": {
+    "message": "Siirry välilehtiryhmään"
+  },
+  "tabGroupsActivateTab": {
+    "message": "Siirry välilehteen"
+  },
+  "tabGroupsAddBookmark": {
+    "message": "Lisää tämä välilehti kirjanmerkkeihin"
+  },
+  "tabGroupsBatchClosedTitle": {
+    "message": "Suljetut välilehdet"
+  },
+  "tabGroupsBookmarkRemoved": {
+    "message": "Poistettu $count$ kirjanmerkkiä",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsBookmarked": {
+    "message": "Tallennettu"
+  },
+  "tabGroupsBookmarksAdded": {
+    "message": "Lisätty $count$ kirjanmerkkiä kohteeseen $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsClearClosedGroups": {
+    "message": "Tyhjennä kaikki"
+  },
+  "tabGroupsClearedToast": {
+    "message": "Tyhjennettiin $count$ suljettua tietuetta",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCloseGroup": {
+    "message": "Sulje ryhmä"
+  },
+  "tabGroupsCloseWindow": {
+    "message": "Sulje ikkuna"
+  },
+  "tabGroupsClosedGroups": {
+    "message": "Äskettäin suljetut"
+  },
+  "tabGroupsClosedOpenTab": {
+    "message": "Avaa uudessa välilehdessä"
+  },
+  "tabGroupsClosedTabRemovedToast": {
+    "message": "Poistettiin suljetusta tietueesta"
+  },
+  "tabGroupsClosedTimeLabel": {
+    "message": "Suljettu:"
+  },
+  "tabGroupsClosedToast": {
+    "message": "Suljettiin $count$ välilehteä",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCollapseAll": {
+    "message": "Kutista kaikki"
+  },
+  "tabGroupsCollapseGroup": {
+    "message": "Kutista ryhmä"
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "Kutista ikkuna"
+  },
+  "tabGroupsColorStyle": {
+    "message": "Välilehtiryhmän väri tyyli"
+  },
+  "tabGroupsColorStyleEdge": {
+    "message": "Reunaväri"
+  },
+  "tabGroupsColorStyleHint": {
+    "message": "Pois näyttää vain väripisteen. Reunaväri piirtää värillisen nauhan ryhmän vasempaan reunaan. Väriyhdistäjä piirtää värillisen viivan ryhmän pisteen alle, yhdistäen koko ryhmän yhdeksi puuksi."
+  },
+  "tabGroupsColorStyleLine": {
+    "message": "Väriyhdistäjäviiva"
+  },
+  "tabGroupsColorStyleOff": {
+    "message": "Pois (vain väripiste)"
+  },
+  "tabGroupsConfirmClearClosed": {
+    "message": "Poistetaanko kaikki viimeaikaiset suljetut tiedot? Niitä ei voi enää avata täältä."
+  },
+  "tabGroupsConfirmClose": {
+    "message": "Suljetaanko $count$ välilehteä?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsConfirmSleep": {
+    "message": "Nukutetaanko $count$ välilehteä?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCopyMoveCopy": {
+    "message": "Kopioi"
+  },
+  "tabGroupsCopyMoveDialog": {
+    "message": "Valitut välilehdet kuuluvat jo välilehtiryhmään. Kopioidaanko ne (avataan uuteen paikkaan) vai siirretäänkö ne (poistetaan nykyisestä ryhmästä)?"
+  },
+  "tabGroupsCopyMoveMove": {
+    "message": "Siirrä"
+  },
+  "tabGroupsCurrentTab": {
+    "message": "Nykyinen"
+  },
+  "tabGroupsCurrentWindow": {
+    "message": "Nykyinen ikkuna"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "Poista suljettu välilehtiryhmä"
+  },
+  "tabGroupsDiscarded": {
+    "message": "Nukkuva välilehti"
+  },
+  "tabGroupsExpandAll": {
+    "message": "Laajenna kaikki"
+  },
+  "tabGroupsExpandGroup": {
+    "message": "Laajenna ryhmä"
+  },
+  "tabGroupsExpandWindow": {
+    "message": "Laajenna ikkuna"
+  },
+  "tabGroupsExpandedCollapse": {
+    "message": "Kutista"
+  },
+  "tabGroupsExpandedExpand": {
+    "message": "Laajenna"
+  },
+  "tabGroupsFilterPlaceholder": {
+    "message": "Suodata avoimia välilehtiä"
+  },
+  "tabGroupsGroupCount": {
+    "message": "$count$ välilehteä",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsGroupSavedToFolder": {
+    "message": "Tallennettu $count$ välilehteä kohteeseen $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsMenuAddBookmark": {
+    "message": "Lisää kirjanmerkki"
+  },
+  "tabGroupsMenuSaveFolder": {
+    "message": "Tallenna kirjanmerkkeinä"
+  },
+  "tabGroupsMergedWindowToast": {
+    "message": "Ikkuna yhdistetty välilehtiryhmäksi"
+  },
+  "tabGroupsMoveNewWindow": {
+    "message": "Siirrä ryhmä uuteen ikkunaan"
+  },
+  "tabGroupsNewWindow": {
+    "message": "Uusi ikkuna"
+  },
+  "tabGroupsNoMatchingTabs": {
+    "message": "Ei vastaavia välilehtiä"
+  },
+  "tabGroupsOpenGroups": {
+    "message": "Avoimet välilehtiryhmät"
+  },
+  "tabGroupsPinTab": {
+    "message": "Kiinnitä välilehti"
+  },
+  "tabGroupsPinned": {
+    "message": "Kiinnitetty välilehti"
+  },
+  "tabGroupsPinnedUngroupedToast": {
+    "message": "Kiinnitetty — poistettu välilehtiryhmästä"
+  },
+  "tabGroupsRecordDeletedToast": {
+    "message": "Poistettiin suljettu tietue"
+  },
+  "tabGroupsRemoveBookmark": {
+    "message": "Poista kirjanmerkki"
+  },
+  "tabGroupsRemoveClosedTab": {
+    "message": "Poista tallennetusta ryhmästä"
+  },
+  "tabGroupsRenameDialog": {
+    "message": "Nimeä välilehtiryhmä"
+  },
+  "tabGroupsRenameGroup": {
+    "message": "Nimeä ryhmä"
+  },
+  "tabGroupsReopenAction": {
+    "message": "Avaa uudelleen"
+  },
+  "tabGroupsReopenGroup": {
+    "message": "Avaa välilehtiryhmä uudelleen"
+  },
+  "tabGroupsSaveFolder": {
+    "message": "Tallenna välilehtiryhmä kirjanmerkkeinä"
+  },
+  "tabGroupsSelectAddBookmarks": {
+    "message": "Lisää kirjanmerkkeihin…"
+  },
+  "tabGroupsSelectClose": {
+    "message": "Sulje"
+  },
+  "tabGroupsSelectNewGroup": {
+    "message": "Uusi välilehtiryhmä"
+  },
+  "tabGroupsSelectOpenInto": {
+    "message": "Avaa olemassa olevassa ryhmässä…"
+  },
+  "tabGroupsSelectSaveFolder": {
+    "message": "Tallenna kirjanmerkkeinä"
+  },
+  "tabGroupsSelectSleep": {
+    "message": "Nuku"
+  },
+  "tabGroupsSleepGroup": {
+    "message": "Nukuta ryhmä"
+  },
+  "tabGroupsSleepTab": {
+    "message": "Nukuta välilehti"
+  },
+  "tabGroupsSleptToast": {
+    "message": "Asetettiin $count$ välilehteä lepotilaan",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsSummary": {
+    "message": "$tabs$ välilehteä · $groups$ ryhmää",
+    "placeholders": {
+      "groups": {
+        "content": "$2"
+      },
+      "tabs": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsSyncCollapse": {
+    "message": "Synkronoi selaimen kanssa"
+  },
+  "tabGroupsSyncCollapseHint": {
+    "message": "Kun valittu, ryhmän kutistaminen tai laajentaminen tässä näkymässä päivittää myös selaimen välilehtiryhmän. Oletuksena pois päältä, jotta näkymän taitto pysyy paikallisena."
+  },
+  "tabGroupsToolbarRefresh": {
+    "message": "Päivitä"
+  },
+  "tabGroupsUngroupGroup": {
+    "message": "Poista ryhmitys"
+  },
+  "tabGroupsUngroupedTabs": {
+    "message": "Ryhmittelemättömät välilehdet"
+  },
+  "tabGroupsUnpinTab": {
+    "message": "Irrota välilehti"
+  },
+  "tabGroupsViewEmpty": {
+    "message": "Ei välilehtiä tässä ikkunassa"
+  },
+  "tabGroupsWakeAction": {
+    "message": "Herätä"
+  },
+  "tabGroupsWakeGroup": {
+    "message": "Herätä välilehtiryhmä"
+  },
+  "tabGroupsWakeTab": {
+    "message": "Herätä välilehti"
+  },
+  "tabGroupsWindow": {
+    "message": "Ikkuna $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsWindowClosedTitle": {
+    "message": "Suljettu ikkuna"
+  },
+  "tabGroupsWindowsCount": {
+    "message": "$n$ ikkunaa",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabRowStage": {
+    "message": "Lähetä välitykseen"
+  },
+  "tabgroupStageAll": {
+    "message": "Lähetä ryhmä välitykseen"
+  },
+  "tabgroupStageConfirm": {
+    "message": "Lähetetäänkö $n$ välilehteä välitykseen?",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabgroupStageNone": {
+    "message": "Tässä ryhmässä ei ole kirjanmerkitäviä välilehtiä"
   },
   "timeDaysAgo": {
     "message": "$n$ päivää sitten",
@@ -329,303 +2482,26 @@
   "timeYesterday": {
     "message": "eilen"
   },
+  "toolButtonTitle": {
+    "message": "Työkalut (Ctrl+K)"
+  },
   "undoAction": {
     "message": "Kumoa"
   },
-  "revealOutsideBarHint": {
-    "message": "Vain kirjanmerkkipalkki näytetään: kohde on sen ulkopuolella."
+  "undoSingleStepNote": {
+    "message": "Kumoaminen palauttaa vain viimeisimmän poiston."
   },
-  "revealOutsideBarAction": {
-    "message": "Näytä kaikki ja paljasta"
+  "unpinFolder": {
+    "message": "Irrota tämän kansion kiinnitys"
   },
-  "dupesCleanAll": {
-    "message": "Tyhjennä kaikki: $groups$ ryhmää, $count$ ylimääräistä kopiota",
-    "placeholders": {
-      "groups": {
-        "content": "$1"
-      },
-      "count": {
-        "content": "$2"
-      }
-    },
-    "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go."
+  "url": {
+    "message": "URL"
   },
-  "dupesConfirmAll": {
-    "message": "Poistetaanko $count$ ylimääräistä kopiota $groups$ ryhmästä? Kussakin ryhmässä valittu kohde säilytetään.",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      },
-      "groups": {
-        "content": "$2"
-      }
-    },
-    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
+  "versionDialogCopied": {
+    "message": "Kopioitu"
   },
-  "dupesConfirmSelected": {
-    "message": "Poistetaanko $count$ päällekkäistä kirjanmerkkiä valituista $groups$ ryhmistä?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      },
-      "groups": {
-        "content": "$2"
-      }
-    }
-  },
-  "dupesConfirmGroup": {
-    "message": "Säilytetäänkö \"$title$\" ja poistetaan muut $count$ kopiota?",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Example bookmark"
-      },
-      "count": {
-        "content": "$2"
-      }
-    },
-    "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."
-  },
-  "dupesDone": {
-    "message": "Poistettu $count$ kaksoiskappaletta",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Alert shown after the duplicate cleanup finished."
-  },
-  "dupesGroupCount": {
-    "message": "$count$ kaksoiskappaletta",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
-  },
-  "dupesGroupExpand": {
-    "description": "Dupes view group-head context menu: expand a collapsed duplicate group.",
-    "message": "Laajenna ryhmä"
-  },
-  "dupesGroupCollapse": {
-    "description": "Dupes view group-head context menu: collapse an expanded duplicate group.",
-    "message": "Kutista ryhmä"
-  },
-  "dupesNone": {
-    "message": "Ei kaksoiskappaleita"
-  },
-  "deleteEllipsis": {
-    "message": "Poista..."
-  },
-  "donationMessage": {
-    "message": "Pidätkö siitä? Lahjoita tukeaksesi sen tulevaisuutta — tai arvioi se kaupassa: jokainen arvostelu varmistaa päivitysten jatkumisen."
-  },
-  "donationV4Notice": {
-    "message": "vBookmarks 4.0 on täysin uusittu versio, jossa on moderni muotoilu ja täynnä uusia ominaisuuksia."
-  },
-  "donationV4GuideLink": {
-    "message": "Lue v4-opas →"
-  },
-  "donationGo": {
-    "message": "Lahjoita"
-  },
-  "donationRate": {
-    "message": "Arvioi"
-  },
-  "donationRateTitle": {
-    "message": "Arvioi vBookmarks Chrome Web Store -kaupassa"
-  },
-  "donationLater": {
-    "message": "Myöhemmin"
-  },
-  "donationNever": {
-    "message": "Älä näytä uudelleen"
-  },
-  "donationDismiss": {
-    "message": "Hylkää"
-  },
-  "edit": {
-    "message": "Muokkaa..."
-  },
-  "editBookmark": {
-    "message": "Muokkaa kirjanmerkkiä"
-  },
-  "editFolder": {
-    "message": "Muokkaa kansiota"
-  },
-  "errorOccured": {
-    "message": "Hups, tapahtui virhe."
-  },
-  "extDesc": {
-    "description": "The extension description.",
-    "message": "Ponnahdusikkuna-kirjanmerkkienhallinta. Paranneltu Neat Bookmarks. Siistimpi kuin Neater Bookmarks."
-  },
-  "extName": {
-    "description": "vBookmarks",
-    "message": "vBookmarks"
-  },
-  "folderEmpty": {
-    "message": "(Tyhjä)"
-  },
-  "general": {
-    "message": "Yleinen"
-  },
-  "ignore": {
-    "message": "Ohita"
-  },
-  "name": {
-    "description": "Name of bookmark or folder.",
-    "message": "Nimi"
-  },
-  "nope": {
-    "message": "Peruuta"
-  },
-  "noTitle": {
-    "description": "The title for untitled bookmarks with no http(s) URL or untitled folders.",
-    "message": "(ei otsikkoa)"
-  },
-  "open": {
-    "description": "Action to open bookmarks.",
-    "message": "Avaa"
-  },
-  "openBookmarks": {
-    "message": "Avaa Kaikki Kirjanmerkit"
-  },
-  "openBookmarksIncognitoWindow": {
-    "message": "Avaa kirjanmerkit incognitossa"
-  },
-  "openBookmarksInGroup": {
-    "message": "Avaa kaikki uuteen välilehtiryhmään"
-  },
-  "openBookmarksInGroupSetup": {
-    "message": "Avaa kaikki uudessa välilehtiryhmässä…"
-  },
-  "openBookmarksInExistingGroup": {
-    "message": "Avaa kaikki olemassa olevassa välilehtiryhmässä…"
-  },
-  "tabGroupOptions": {
-    "message": "Välilehtiryhmät"
-  },
-  "sortMenuOptions": {
-    "message": "Lajittele"
-  },
-  "openBookmarksNewWindow": {
-    "message": "Avaa kirjanmerkit uudessa ikkunassa"
-  },
-  "openCommandPaletteCommand": {
-    "message": "Avaa komentopaletti"
-  },
-  "openIncognitoWindow": {
-    "message": "Avaa Incognito-ikkunassa"
-  },
-  "openNewTab": {
-    "message": "Avaa Uudessa Välilehdessä"
-  },
-  "bookmarkOpenInNewGroup": {
-    "message": "Avaa uudessa välilehtiryhmässä"
-  },
-  "bookmarkOpenInNewGroupSetup": {
-    "message": "Avaa uudessa välilehtiryhmässä…"
-  },
-  "bookmarkOpenInExistingGroup": {
-    "message": "Avaa olemassa olevassa välilehtiryhmässä…"
-  },
-  "openNewWindow": {
-    "message": "Avaa Uudessa Ikkunassa"
-  },
-  "openSidePanelCommand": {
-    "message": "Avaa vBookmarks-sivupaneeli"
-  },
-  "optionAnnounceEnabled": {
-    "message": "Näytä sovelluksen sisäiset ilmoitukset"
-  },
-  "optionAnnounceEnabledHint": {
-    "message": "Julkaisutiedotteet ja vinkit projektin GitHub-arkistosta (haetaan enintään 6 tunnin välein). Pois päältä -tila estää myös verkkohaun."
-  },
-  "optionClickNewTab": {
-    "message": "Vasen klikkaus avaa kirjanmerkin uudessa välilehdessä."
-  },
-  "optionCloseUnusedFolders": {
-    "message": "Sulje käyttämättömät kansiot, kun kansio avataan."
-  },
-  "optionConfirmOpenFolder": {
-    "message": "Näytä vahvistus, kun avataan paljon kirjanmerkkejä kansiosta."
-  },
-  "optionConfirmDeleteFolder": {
-    "message": "Vahvista ennen ei-tyhjien kansioiden poistamista"
-  },
-  "optionOnlyShowBookmarkBar": {
-    "message": "Näytä vain kirjanmerkit Kirjanmerkkipalkissa"
-  },
-  "optionSearchAfterEnter": {
-    "message": "Etsi kirjanmerkkejä vain kun ENTERiä painetaan (sen sijaan että etsisi heti)"
-  },
-  "optionOpenNewTab": {
-    "message": "Keskellä klikkaus tai control-klikkaus avaa kirjanmerkin uudessa taustavälilehdessä (sen sijaan että avaisi etuvälilehdessä)."
-  },
-  "optionOpenInSidePanel": {
-    "message": "Avaa sivupaneelissa ponnahdusikkunan sijaan"
-  },
-  "optionPopupStays": {
-    "message": "Ponnahdusikkuna pysyy auki, kun kirjanmerkkejä avataan (vasen klikkaus)."
-  },
-  "optionRememberPrevState": {
-    "message": "Muista edellinen tila (vierityssijainti, avatut kansiot ja viimeksi kohdistettu kohde)."
-  },
-  "options": {
-    "message": "Asetukset"
-  },
-  "optionsFooterText": {
-    "description": "Footer text for the Options page",
-    "message": "Luonut $authorName$.",
-    "placeholders": {
-      "authorName": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionZoom": {
-    "message": "Zoomaus"
-  },
-  "optionTheme": {
-    "message": "Teema"
-  },
-  "optionThemeAuto": {
-    "message": "Järjestelmän mukaan"
-  },
-  "optionThemeLight": {
-    "message": "Vaalea"
-  },
-  "optionThemeDark": {
-    "message": "Tumma"
-  },
-  "optionThemeInk": {
-    "message": "Muste (tumma)"
-  },
-  "optionThemePaper": {
-    "message": "Paperi (vaalea)"
-  },
-  "optionLanguage": {
-    "message": "Kieli"
-  },
-  "optionLanguageAuto": {
-    "message": "Automaattinen"
-  },
-  "optionLanguageHint": {
-    "message": "Kielen vaihtaminen lataa tämän sivun uudelleen."
-  },
-  "paletteClose": {
-    "message": "Sulje"
-  },
-  "paletteCmdVersion": {
-    "message": "Versiotiedot"
-  },
-  "paletteCmdLang": {
-    "message": "Vaihda kieltä…"
-  },
-  "paletteCmdLangUsage": {
-    "message": "Käyttö: /lang ja sen jälkeen lokaalikoodi — esim. /lang en, /lang zh_CN, /lang ja."
+  "versionDialogCopy": {
+    "message": "Kopioi tiedot"
   },
   "versionDialogTitle": {
     "message": "vBookmarks $version$",
@@ -634,15 +2510,6 @@
         "content": "$1"
       }
     }
-  },
-  "versionDialogCopy": {
-    "message": "Kopioi tiedot"
-  },
-  "versionDialogCopied": {
-    "message": "Kopioitu"
-  },
-  "versionMetaVersion": {
-    "message": "Laajennuksen versio"
   },
   "versionMetaAnnounce": {
     "message": "Mitä uutta"
@@ -653,277 +2520,58 @@
   "versionMetaBrowser": {
     "message": "Selain"
   },
-  "versionMetaOS": {
-    "message": "Käyttöjärjestelmä"
-  },
   "versionMetaChannel": {
     "message": "Kanava"
   },
   "versionMetaLanguage": {
     "message": "Kieli"
   },
+  "versionMetaOS": {
+    "message": "Käyttöjärjestelmä"
+  },
   "versionMetaUserAgent": {
     "message": "Käyttäjäagentti"
   },
-  "paletteCmdDead": {
-    "message": "Etsi rikkinäiset linkit"
+  "versionMetaVersion": {
+    "message": "Laajennuksen versio"
   },
-  "paletteCmdDupes": {
-    "message": "Siivoa kaksoiskappaleet"
+  "viewDead": {
+    "message": "Kuolleet linkit"
   },
-  "paletteCmdNewBookmark": {
-    "message": "Uusi kirjanmerkki…"
+  "viewDisable": {
+    "message": "Poista käytöstä"
   },
-  "paletteCmdNewFolder": {
-    "message": "Uusi kansio…"
+  "viewDupes": {
+    "message": "Kopiot"
   },
-  "paletteCmdQuickAdd": {
-    "message": "Lisää nykyinen välilehti kirjanmerkiksi"
+  "viewEnable": {
+    "message": "Ota käyttöön"
   },
-  "paletteCmdSaveSession": {
-    "message": "Tallenna ikkunan välilehdet kansioksi"
-  },
-  "paletteNoResults": {
-    "message": "Ei vastaavia tuloksia"
-  },
-  "palettePlaceholder": {
-    "message": "Hae kirjanmerkkejä, kansioita, komentoja…"
-  },
-  "parentFolder": {
-    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
-    "message": "Yläkansio: \"$folderName$\"",
+  "viewHiddenTabsHint": {
+    "message": "Olet $view$-näkymässä. Paina $back$ tai käytä komentopalettia palataksesi puuhun.",
     "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarksbar"
-      }
-    }
-  },
-  "removeSeparator": {
-    "message": "Poista Erotin"
-  },
-  "replaceUrl": {
-    "message": "Korvaa nykyisellä URL-osoitteella"
-  },
-  "reportedToDeveloper": {
-    "description": "A message for an error occured in the extension, has been reported to the developer.",
-    "message": "Tämä on raportoitu kehittäjälle."
-  },
-  "reportError": {
-    "message": "Raportoi Virheestä"
-  },
-  "resetButton": {
-    "message": "Nollaa"
-  },
-  "resetSettings": {
-    "message": "Nollaa asetukset"
-  },
-  "resetSettingsDescription": {
-    "message": "Nollaa vBookmarks oletusasetuksiin."
-  },
-  "save": {
-    "message": "Tallenna"
-  },
-  "searchBookmarks": {
-    "description": "Placeholder text for search field.",
-    "message": "Etsi Kirjanmerkkejä"
-  },
-  "searchClear": {
-    "message": "Tyhjennä haku"
-  },
-  "searchNoResults": {
-    "message": "Ei vastaavia kirjanmerkkejä"
-  },
-  "searchViewHint": {
-    "message": "Kirjoita yllä olevaan kenttään hakeaksesi kirjanmerkkejäsi"
-  },
-  "selectAll": {
-    "message": "Kaikki"
-  },
-  "selectClear": {
-    "message": "Tyhjennä"
-  },
-  "selectCount": {
-    "message": "$count$ valittu",
-    "placeholders": {
-      "count": {
+      "back": {
+        "content": "$2"
+      },
+      "view": {
         "content": "$1"
       }
     }
   },
-  "selectInvert": {
-    "message": "Käännä valinta"
-  },
-  "selectModeEnter": {
-    "message": "Valitse"
-  },
-  "selectModeExit": {
-    "message": "Poistu valinnasta"
-  },
-  "deadRiskBanner": {
-    "message": "Kuolleiden linkkien siivous poistaa kirjanmerkkejä joukolla. Varmuuskopioi kirjanmerkkisi ennen ensimmäistä siivousta."
-  },
-  "dupesRiskBanner": {
-    "message": "Kaksoiskappaleiden poisto poistaa kirjanmerkkejä joukolla. Varmuuskopioi kirjanmerkkisi ennen poiston käyttöä."
-  },
-  "riskBannerHelp": {
-    "message": "Varmuuskopiointi- ja palautusopas"
-  },
-  "riskBannerNever": {
-    "message": "Älä näytä uudelleen"
-  },
-  "riskBannerDismiss": {
-    "message": "Sulje"
-  },
-  "sessionEmpty": {
-    "message": "Ei tallennettavia välilehtiä"
-  },
-  "sessionFolderName": {
-    "message": "Istunto $date$",
-    "placeholders": {
-      "date": {
-        "content": "$1",
-        "example": "2026-07-18 15:04"
-      }
-    },
-    "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm."
-  },
-  "sessionSaved": {
-    "message": "Tallennettu $count$ välilehteä uuteen kansioon",
-    "placeholders": {
-      "count": {
-        "content": "$1",
-        "example": "12"
-      }
-    },
-    "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
-  },
-  "url": {
-    "message": "URL"
-  },
-  "syncOptions": {
-    "message": "Synkronointiasetukset"
-  },
-  "optionShowSyncStatus": {
-    "message": "Näytä synkronointitilan ilmaisimet"
-  },
-  "optionHighlightUnsynced": {
-    "message": "Himmennä synkronoimattomat kirjanmerkit"
-  },
-  "optionAutoRefreshSync": {
-    "message": "Päivitä synkronointitila automaattisesti"
-  },
-  "optionSyncRefreshInterval": {
-    "message": "Päivitysväli"
-  },
-  "optionSyncRefreshIntervalSeconds": {
-    "message": "sekuntia"
-  },
-  "syncStatusSynced": {
-    "message": "Synkronoitu Google-tilillesi"
-  },
-  "syncStatusLocal": {
-    "message": "Vain paikallinen — ei ladattu"
-  },
-  "syncStatusUnsyncable": {
-    "message": "Ei voida synkronoida"
-  },
-  "syncSuffixSynced": {
-    "message": "(Synkronoitu)"
-  },
-  "syncSuffixLocal": {
-    "message": "(Paikallinen)"
-  },
-  "optionAutoResizePopup": {
-    "message": "Säädä ponnahdusikkunan koko automaattisesti sisällön mukaan"
-  },
-  "crossStorageMoveWarning": {
-    "message": "Kirjanmerkkejä ei voi siirtää synkronoidun ja paikallisen tallennustilan välillä. Käytä sen sijaan kopioi/liitä -toimintoa.",
-    "description": "Warning when trying to move bookmarks across storage types"
-  },
-  "recentBookmarks": {
-    "message": "Äskettäin lisätyt"
-  },
-  "optionShowRecentBookmarks": {
-    "message": "Näytä äskettäin lisätyt kirjanmerkit ponnahdusikkunan yläosassa"
-  },
-  "optionShowStatsView": {
-    "message": "Näytä tilastot-välilehti"
-  },
-  "optionShowDeadView": {
-    "message": "Näytä kuolleet linkit -välilehti"
-  },
-  "optionShowDupesView": {
-    "message": "Näytä kaksoiskappaleet -välilehti"
-  },
-  "optionRecentCollapsed": {
-    "message": "Tiivistä äskettäin lisätyt -osio oletuksena"
-  },
-  "optionsGroupViews": {
-    "message": "Näkymät"
-  },
-  "optionsGroupSort": {
-    "message": "Lajittelu"
-  },
-  "optionsGroupStats": {
-    "message": "Tilastot"
-  },
-  "optionsGroupTools": {
-    "message": "Työkalut"
-  },
-  "optionShowViewTabs": {
-    "message": "Näytä näkymävälilehdet hakukentän alla"
-  },
-  "optionRememberView": {
-    "message": "Muista viimeisin aktiivinen näkymä ja avaa se uudelleen"
-  },
-  "optionShowTabBadges": {
-    "message": "Näytä lukumäärämerkit näkymävälilehdissä"
-  },
-  "optionPaletteEnabled": {
-    "message": "Ota komentopaletti käyttöön (Ctrl/Cmd+K)"
-  },
-  "optionQuickAddEnabled": {
-    "message": "Näytä pikalisäystähti hakukentän vieressä"
-  },
-  "optionQuickAddContextMenu": {
-    "message": "Lisää \"Lisää sivu kirjanmerkkeihin vBookmarksilla\" -vaihtoehto sivun oikean painikkeen valikkoon."
-  },
-  "optionQuickAddContextMenuHint": {
-    "message": "Riippumaton pikalisäyksen tähtipainikkeesta; klassisen kokemuksen palautus poistaa käytöstä myös tämän merkinnän."
-  },
-  "optionCollapseTabGroupMenu": {
-    "message": "Tiivistä välilehtiryhmämerkinnät yhdeksi \"Välilehtiryhmät…\"-alavalikoksi"
-  },
-  "optionCollapseTabGroupMenuHint": {
-    "message": "Koskee sekä kansio- että kirjanmerkkipikavalikoita. Oletuksena pois käytöstä; pitää matalat valikot lyhyempinä pienillä tai suuren zoomauksen näytöillä."
-  },
-  "optionCollapseSortMenu": {
-    "message": "Tiivistä lajittelumerkinnät yhdeksi \"Lajittele…\"-alavalikoksi"
-  },
-  "optionCollapseSortMenuHint": {
-    "message": "Koskee kansion pikavalikkoa. Oletuksena päällä."
-  },
-  "optionShowToolButton": {
-    "message": "Näytä työkalu-painike (⋮) hakukentän vieressä"
-  },
-  "optionClassicExperience": {
-    "message": "Palauta klassinen ylätunniste"
-  },
-  "optionClassicExperienceHint": {
-    "message": "Kytkee pois komentopaletin, pikalisäys-tähden, sen sivun kontekstivalikkokohdan, työkalupainikkeen ja näkymävälilehdet. Jokainen voidaan ottaa käyttöön erikseen omassa osiossaan."
-  },
-  "optionShowItemPath": {
-    "message": "Näytä yläkansion polku listariveillä"
-  },
   "viewRecent": {
     "message": "Vaiheistus"
   },
-  "viewTree": {
-    "message": "Puu"
-  },
   "viewSearch": {
     "message": "Haku"
+  },
+  "viewStateDisabled": {
+    "message": "Ei käytössä"
+  },
+  "viewStateEnabled": {
+    "message": "Käytössä"
+  },
+  "viewStats": {
+    "message": "Tilastot"
   },
   "viewSwitchAnnounce": {
     "message": "$name$-näkymä",
@@ -933,870 +2581,17 @@
       }
     }
   },
-  "viewStateEnabled": {
-    "message": "Käytössä"
-  },
-  "viewStateDisabled": {
-    "message": "Ei käytössä"
-  },
-  "viewEnable": {
-    "message": "Ota käyttöön"
-  },
-  "viewDisable": {
+  "viewTabDisable": {
     "message": "Poista käytöstä"
+  },
+  "viewTabGroups": {
+    "message": "Välilehtiryhmät"
   },
   "viewTabHide": {
     "message": "Piilota"
   },
-  "viewTabDisable": {
-    "message": "Poista käytöstä"
-  },
-  "sortFolderContents": {
-    "message": "Järjestä kansion sisältö"
-  },
-  "sortByName": {
-    "message": "Lajittele nimen mukaan"
-  },
-  "sortByDate": {
-    "message": "Lajittele lisäyspäivän mukaan"
-  },
-  "sortRecursiveSuffix": {
-    "message": "(rekursiivinen)"
-  },
-  "sortOptions": {
-    "message": "Lajitteluasetukset…"
-  },
-  "sortDone": {
-    "message": "Kansio lajiteltu"
-  },
-  "sortByTitle": {
-    "message": "Otsikon mukaan"
-  },
-  "sortByDateAdded": {
-    "message": "Lisäyspäivän mukaan (uusin ensin)"
-  },
-  "sortFoldersFirst": {
-    "message": "Pidä kansiot ylhäällä"
-  },
-  "sortRecursive": {
-    "message": "Järjestä myös alikansiot (rekursiivinen)"
-  },
-  "sortRecursiveWarning": {
-    "message": "Tämä järjestää kirjanmerkit uudelleen jokaisessa alikansiossa."
-  },
-  "tabGroupDialogTitle": {
-    "message": "Uusi välilehtiryhmä"
-  },
-  "tabGroupTitleLabel": {
-    "message": "Ryhmän otsikko"
-  },
-  "tabGroupColorLabel": {
-    "message": "Väri"
-  },
-  "tabGroupColorGrey": {
-    "message": "Harmaa",
-    "description": "Accessible name of the grey color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorBlue": {
-    "message": "Sininen",
-    "description": "Accessible name of the blue color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorRed": {
-    "message": "Punainen",
-    "description": "Accessible name of the red color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorYellow": {
-    "message": "Keltainen",
-    "description": "Accessible name of the yellow color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorGreen": {
-    "message": "Vihreä",
-    "description": "Accessible name of the green color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorPink": {
-    "message": "Vaaleanpunainen",
-    "description": "Accessible name of the pink color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorPurple": {
-    "message": "Violetti",
-    "description": "Accessible name of the purple color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorCyan": {
-    "message": "Syaani",
-    "description": "Accessible name of the cyan color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorOrange": {
-    "message": "Oranssi",
-    "description": "Accessible name of the orange color swatch in the new-tab-group dialog."
-  },
-  "tabGroupUntitled": {
-    "message": "Nimetön ryhmä"
-  },
-  "tabGroupNoGroups": {
-    "message": "Ei olemassa olevia välilehtiryhmiä"
-  },
-  "tabGroupPickDialogTitle": {
-    "message": "Avaa olemassa olevassa välilehtiryhmässä"
-  },
-  "quickAddBookmark": {
-    "message": "Lisää tämä sivu kirjanmerkkeihin (Ctrl+D)"
-  },
-  "quickAddBookmarkCommand": {
-    "message": "Lisää nykyinen välilehti nopeasti kirjanmerkiksi"
-  },
-  "quickAdded": {
-    "message": "Kirjanmerkki lisätty"
-  },
-  "quickAddedTo": {
-    "message": "Kirjanmerkki lisätty kohteeseen $folderName$",
-    "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarks bar"
-      }
-    }
-  },
-  "quickRemoved": {
-    "message": "Kirjanmerkki poistettu"
-  },
-  "quickRemoveBookmark": {
-    "message": "Poista tämä kirjanmerkki (Ctrl+D)"
-  },
-  "toolButtonTitle": {
-    "message": "Työkalut (Ctrl+K)"
-  },
-  "contextMenuAddBookmark": {
-    "message": "Lisää tämä sivu kirjanmerkkeihin vBookmarksilla"
-  },
-  "deadFilterAll": {
-    "message": "Kaikki"
-  },
-  "deadFilterBlocked": {
-    "message": "Vain estetyt"
-  },
-  "deadFilterDead": {
-    "message": "Vain kuolleet"
-  },
-  "deadFilterMarked": {
-    "message": "Aiemmin merkityt"
-  },
-  "deadLastScanAt": {
-    "message": "Viimeisin skannaus: $time$",
-    "placeholders": {
-      "time": {
-        "content": "$1"
-      }
-    }
-  },
-  "deadMark": {
-    "message": "Merkitse kuolleeksi"
-  },
-  "deadMarkAll": {
-    "message": "Merkitse kaikki"
-  },
-  "deadMarked": {
-    "message": "Kuolleet rivit merkitty"
-  },
-  "deadMarkedCount": {
-    "message": "Kirjanmerkkejä merkitty: $count$",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "deadMarkedNone": {
-    "message": "Ei vielä merkittyjä kirjanmerkkejä"
-  },
-  "deadMarkedRow": {
-    "message": "Merkitty"
-  },
-  "deadMarkSelected": {
-    "message": "Merkitse valitut"
-  },
-  "deadMarkStatusAll": {
-    "message": "Kaikki tilat"
-  },
-  "deadMarkStatusMarked": {
-    "message": "Merkitty"
-  },
-  "deadMarkStatusUnmarked": {
-    "message": "Merkitsemätön"
-  },
-  "deadMarkTimeLabel": {
-    "message": "Merkintäaika"
-  },
-  "deadDetectTimeLabel": {
-    "message": "Havaitsemisaika"
-  },
-  "deadSortLabel": {
-    "message": "Lajitteluperuste"
-  },
-  "deadSortByDetected": {
-    "message": "Havaitsemisaika"
-  },
-  "deadSortByPath": {
-    "message": "Kansiopolku"
-  },
-  "deadSortByMarked": {
-    "message": "Merkintäaika"
-  },
-  "deadMarkedBanner": {
-    "message": "Näytetään aiemmin merkityt kirjanmerkit. Aloita uusi tarkistus napsauttamalla Skannaa uudelleen tai käsittele ne alla olevassa luettelossa."
-  },
-  "deadMarkedBannerDismiss": {
-    "message": "Sulje"
-  },
-  "deadProxyAdd": {
-    "message": "Lisää välityspalvelin kuolleiden linkkien tarkistuksia varten"
-  },
-  "deadProxyLabel": {
-    "message": "Välityspalvelin: $server$",
-    "placeholders": {
-      "server": {
-        "content": "$1"
-      }
-    }
-  },
-  "deadProxyChange": {
-    "message": "Muuta"
-  },
-  "deadProxyRemove": {
-    "message": "Poista"
-  },
-  "deadProxyRemoved": {
-    "message": "Välityspalvelin poistettu"
-  },
-  "deadProxyPanelHint": {
-    "message": "Anna välityspalvelin, joka sinulla jo on (laajennus ei tarjoa sellaista), esim. 127.0.0.1:7890 tai socks5://127.0.0.1:1080."
-  },
-  "deadProxyTestUrlLabel": {
-    "message": "Testi-URL"
-  },
-  "deadProxyTestSave": {
-    "message": "Testaa ja tallenna"
-  },
-  "deadProxyTesting": {
-    "message": "Testataan…"
-  },
-  "deadProxySaved": {
-    "message": "Välityspalvelin tallennettu — tulevat tarkistukset tarkistavat suorat epäonnistumiset sen kautta"
-  },
-  "deadProxyInvalid": {
-    "message": "Virheellinen välityspalvelinosoite — käytä muotoa host:port tai scheme://host:port (http/https/socks5, ei tunnistetietoja)"
-  },
-  "deadProxyUnreachable": {
-    "message": "Välityspalvelin ei tavoitettavissa — ei tallennettu"
-  },
-  "deadProxyDenied": {
-    "message": "Välityspalvelimen käyttöoikeutta ei myönnetty"
-  },
-  "deadProxyControlled": {
-    "message": "Välityspalvelimen asetuksia hallinnoi toinen laajennus"
-  },
-  "deadProxyUnavailable": {
-    "message": "Välityspalvelimen API ei ole käytettävissä tässä selaimessa"
-  },
-  "deadProxyNudge": {
-    "message": "Välityspalvelimen uudelleentarkistus erottaa todelliset kuolleet linkit alueellisesti estetyistä — määritä se tässä tai asetussivulla."
-  },
-  "deadProxyNeverShow": {
-    "message": "Älä näytä uudelleen"
-  },
-  "deadStartHint": {
-    "message": "Aloitetaan $n$ kirjanmerkin skannaus",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "deadStatusBlocked": {
-    "message": "estetty"
-  },
-  "deadUnmark": {
-    "message": "Poista kuollut-merkintä"
-  },
-  "deadUnmarkAll": {
-    "message": "Tyhjennä kaikki merkinnät"
-  },
-  "deadUnmarkSelected": {
-    "message": "Poista merkinnät valituilta"
-  },
-  "dupesApplyAll": {
-    "message": "Käytä kaikkia ($count$)",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "dupesApplySelected": {
-    "message": "Poista päällekkäiset valituista ($count$)",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "dupesCleanRestHint": {
-    "message": "Säilytä \"$title$\" ja poista muut $count$",
-    "placeholders": {
-      "title": {
-        "content": "$1"
-      },
-      "count": {
-        "content": "$2"
-      }
-    }
-  },
-  "dupesIgnoreScheme": {
-    "message": "Ohita http/https-eroavaisuudet"
-  },
-  "dupesKeepThis": {
-    "message": "Pidä tämä"
-  },
-  "dupesKeeperSet": {
-    "message": "Aseta säilyttäjäksi"
-  },
-  "dupesPreviewSummary": {
-    "message": "$groups$ ryhmää · $count$ vapautetaan",
-    "placeholders": {
-      "groups": {
-        "content": "$1"
-      },
-      "count": {
-        "content": "$2"
-      }
-    }
-  },
-  "dupesRemoveRow": {
-    "message": "Poista tämä kopio"
-  },
-  "dupesScopeAll": {
-    "message": "Kaikki kirjanmerkit"
-  },
-  "dupesScopeBar": {
-    "message": "Vain kirjanmerkkipalkki"
-  },
-  "dupesStrategyBookmarkBar": {
-    "message": "Säilytä kirjanmerkkipalkissa oleva"
-  },
-  "dupesStrategyMostVisited": {
-    "message": "Säilytä eniten vieraillut"
-  },
-  "dupesStrategyNewest": {
-    "message": "Säilytä uusin"
-  },
-  "dupesStrategyOldest": {
-    "message": "Säilytä vanhin"
-  },
-  "dupesStrategyShallowest": {
-    "message": "Säilytä matalin"
-  },
-  "dupesStrategyShortestTitle": {
-    "message": "Säilytä lyhyin otsikko"
-  },
-  "optionDeadProxyServer": {
-    "message": "Kuolleiden linkkien välityspalvelin"
-  },
-  "deadProxyServerHint": {
-    "message": "Tallennettu palvelin tarkistaa uudelleen suorissa tarkistuksissa epäonnistuneet kirjanmerkit jokaisessa kuolleiden linkkien skannauksessa, erottaen todelliset kuolleet linkit alueellisesti estetyistä. Testaa ja tallenna -toiminto kokeilee sitä (vain toimiva palvelin säilytetään); voit myös lisätä sen kuolleiden linkkien näkymästä."
-  },
-  "deadProxyClear": {
-    "message": "Tyhjennä"
-  },
-  "deadProxyNone": {
-    "message": "(ei asetettu)"
-  },
-  "optionDeadProxyStrip": {
-    "message": "Näytä välityspalvelimen lisäysvihje kuolleiden linkkien näkymässä"
-  },
-  "optionDeadProxyStripHint": {
-    "message": "Poistaminen käytöstä piilottaa vihjeen siellä; välityspalvelin on edelleen määritettävissä täällä, ja tallennettu palvelin näyttää aina hallintarivinsä kyseisessä näkymässä."
-  },
-  "optionDeadScanConcurrency": {
-    "message": "Kuolleen linkin skannauksen rinnakkaisuus (1-16)"
-  },
-  "optionDeadScanTimeout": {
-    "message": "Kuolleen linkin skannauksen aikakatkaisu sekunteina (2-30)"
-  },
-  "paletteCmdGoDead": {
-    "message": "Siirry kuolleiden linkkien näkymään"
-  },
-  "paletteCmdGoDupes": {
-    "message": "Siirry kopioiden näkymään"
-  },
-  "paletteCmdGoRecent": {
-    "message": "Siirry viimeaikaisten näkymään"
-  },
-  "paletteCmdGoSearch": {
-    "message": "Siirry hakunäkymään"
-  },
-  "paletteCmdGoTree": {
-    "message": "Siirry puunäkymään"
-  },
-  "paletteCmdOptions": {
-    "message": "Avaa asetussivu"
-  },
-  "paletteCmdSearchInView": {
-    "message": "Hae '$query$' hakunäkymässä",
-    "placeholders": {
-      "query": {
-        "content": "$1"
-      }
-    }
-  },
-  "rowActionDelete": {
-    "message": "Poista"
-  },
-  "rowActionMark": {
-    "message": "Merkitse kuolleeksi"
-  },
-  "rowActionReveal": {
-    "message": "Näytä puussa"
-  },
-  "rowActionUnmark": {
-    "message": "Poista kuolleen merkintä"
-  },
-  "viewDead": {
-    "message": "Kuolleet linkit"
-  },
-  "viewDupes": {
-    "message": "Kopiot"
-  },
-  "viewStats": {
-    "message": "Tilastot"
-  },
-  "paletteCmdGoStats": {
-    "message": "Siirry tilastonäkymään"
-  },
-  "optionStatsEnabled": {
-    "message": "Ota käyttöön vierailutilastot"
-  },
-  "optionFaviconContrast": {
-    "message": "Käännä matalakontrastiset faviconit"
-  },
-  "optionFaviconContrastHint": {
-    "message": "Valkoiset kuvakkeet vaaleissa teemoissa ja mustat kuvakkeet tummissa teemoissa käännetään, jotta ne pysyvät näkyvinä. Jokainen kuvake analysoidaan kerran latauksen yhteydessä — ei lisäkuormitusta selauksen aikana."
-  },
-  "optionFaviconEnrich": {
-    "message": "Hae puuttuvat sivustokuvakkeet"
-  },
-  "optionFaviconEnrichHint": {
-    "message": "Niille kirjanmerkeissä oleville sivustoille, joille Chromella ei ole välimuistissa kuvaketta, hae oikea kuvake suoraan sivustolta (/favicon.ico, sitten sivun ilmoittamat kuvakkeet). Pyynnöt lähetetään vain sivustoille, jotka olet lisännyt kirjanmerkkeihin."
-  },
-  "optionFaviconEnrichAgg": {
-    "message": "Kolmannen osapuolen varakuvakkeet"
-  },
-  "optionFaviconEnrichAggHint": {
-    "message": "Jos suora haku epäonnistuu, hae kuvaketta verkkotunnuksen perusteella sisäänrakennetusta kolmannen osapuolen kuvakepalveluiden luettelosta ($providers$). Tavoittamattomaksi havaittu palvelu ohitetaan ja seuraavaa yritetään — sitä ei yritetä uudelleen 6 tuntiin.",
-    "placeholders": {
-      "providers": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionFaviconBackup": {
-    "message": "Sisällytä favicon-välimuisti varmuuskopioihin"
-  },
-  "optionFaviconBackupHint": {
-    "message": "Sisällytä myös rikastettu favicon-välimuisti (sivustokohtaiset tiedot, mahdollisesti suuria) asetusten vientiin/tuontiin. Tämä kattaa jo välimuistissa olevat kuvakkeet, vaikka nouto on pois päältä. Kun nouto on pois päältä, varmuuskopiot pysyvät pieninä; kuvakkeet noudetaan automaattisesti uudelleen joka tapauksessa."
-  },
-  "optionFaviconCacheClear": {
-    "message": "Tyhjennä kuvakevälimuisti"
-  },
-  "optionFaviconCacheClearConfirm": {
-    "message": "Tyhjennetäänkö rikastettu kuvakevälimuisti? Kuvakkeet haetaan automaattisesti uudelleen seuraavalla avauskerralla."
-  },
-  "optionFaviconCacheEmpty": {
-    "message": "Ei tyhjennettävää kuvakevälimuistia."
-  },
-  "optionFaviconCacheCleared": {
-    "message": "Kuvakevälimuisti tyhjennetty. Kuvakkeet haetaan uudelleen seuraavalla avauksella."
-  },
-  "favGalleryLink": {
-    "message": "Näytä päivitetyt kuvakkeet",
-    "description": "Options link (Icons group, right of the Clear icon cache button): opens the favicon gallery page listing the sites whose icons were refetched."
-  },
-  "favGalleryTitle": {
-    "message": "Päivitetyt sivustokuvakkeet",
-    "description": "Favicon gallery page title (h1 + document title)."
-  },
-  "favGalleryHint": {
-    "message": "Kuvakkeet, jotka vBookmarks haki kirjanmerkityille sivustoille, joille Chrome ei ollut tallentanut kuvaketta — mistä kukin on peräisin ja mitkä kirjanmerkit sitä käyttävät. Vain tietoa.",
-    "description": "Subtitle under the favicon gallery title, explaining the page is read-only."
-  },
-  "favGallerySearch": {
-    "message": "Suodata sivuston, otsikon tai polun mukaan",
-    "description": "Placeholder of the favicon gallery filter input."
-  },
-  "favGalleryAll": {
-    "message": "Kaikki",
-    "description": "Favicon gallery source filter chip: show every source."
-  },
-  "favSrcDirect": {
-    "message": "Suora",
-    "description": "Favicon gallery source badge: the icon was fetched directly from the site itself."
-  },
-  "favSrcProxy": {
-    "message": "Välityspalvelin",
-    "description": "Favicon gallery source badge: the icon was fetched through the user's own proxy relay."
-  },
-  "favSrcLegacy": {
-    "message": "Aiempi välimuisti",
-    "description": "Favicon gallery source badge: cached before the source was recorded, so the origin is unknown."
-  },
-  "favGalleryCompare": {
-    "message": "Vertaa paikkamerkkiin",
-    "description": "Favicon gallery toggle button: switch every icon to the generic placeholder it replaced (before/after comparison)."
-  },
-  "favGalleryShowingBefore": {
-    "message": "Takaisin oikeisiin kuvakkeisiin",
-    "description": "Favicon gallery toggle button while the placeholder comparison is shown: switch back to the real fetched icons."
-  },
-  "favGalleryStatSites": {
-    "message": "$n$ sivustoa",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    },
-    "description": "Favicon gallery stats strip: how many sites have a refreshed icon."
-  },
-  "favGalleryStatBookmarks": {
-    "message": "$n$ kirjanmerkkiä",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    },
-    "description": "Favicon gallery stats strip: how many bookmarks sit on the refreshed sites."
-  },
-  "favGalleryVisits": {
-    "message": "$n$ tallennettua avausta",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    },
-    "description": "Favicon gallery tooltip on a bookmark row's visit-count pill."
-  },
-  "favGalleryFailedTitle": {
-    "message": "Hiljattain yritetty, kuvaketta ei löytynyt",
-    "description": "Favicon gallery heading of the muted section listing hosts whose icon fetch failed recently."
-  },
-  "favGalleryFailedHint": {
-    "message": "Epäonnistumisia yritetään uudelleen 24 tunnin, 3 päivän ja 7 päivän kuluttua, minkä jälkeen niistä luovutaan, kunnes kuvakevälimuisti tyhjennetään.",
-    "description": "Favicon gallery hint under the failed-fetch section title."
-  },
-  "favGalleryGaveUp": {
-    "message": "Luovutettu",
-    "description": "Favicon gallery badge on a failed-strip host whose retries are exhausted (it stays untouched until the icon cache is cleared)."
-  },
-  "favGalleryOrphan": {
-    "message": "Tällä isännällä ei ole enää kirjanmerkkejä — kuvake poistuu välimuistin mukana.",
-    "description": "Favicon gallery note on a card whose host no longer has any bookmark."
-  },
-  "favGalleryEmptyTitle": {
-    "message": "Ei vielä päivitettyjä kuvakkeita",
-    "description": "Favicon gallery empty-state heading."
-  },
-  "favGalleryEmptyText": {
-    "message": "Kun ponnahdusikkuna kohtaa kirjanmerkityn sivuston, jolle Chromella ei ole kuvaketta, vBookmarks hakee oikean kuvakkeen ja listaa sen tähän.",
-    "description": "Favicon gallery empty-state body text."
-  },
-  "storageUsageIcon": {
-    "message": "Kuvakkeiden välimuisti"
-  },
-  "storageUsageOther": {
-    "message": "Muu"
-  },
-  "storageUsageSummary": {
-    "message": "Käytetty $1$ / $2$",
-    "placeholders": {
-      "1": {
-        "content": "$1"
-      },
-      "2": {
-        "content": "$2"
-      }
-    }
-  },
-  "storageUsageFree": {
-    "message": "Vapaa"
-  },
-  "storageUsageHint": {
-    "message": "Vain paikallinen laajennuksen tallennustila (chrome.storage.local, noin 10 megatavun kiintiö): kuvakevälimuisti sekä asetukset ja muut paikalliset tiedot. Synkronoidut asetukset, istuntotiedot ja kirjanmerkkikirjasto eivät sisälly tähän."
-  },
-  "optionsDonate": {
-    "message": "Lahjoita"
-  },
-  "optionsGithubLink": {
-    "message": "GitHub"
-  },
-  "optionsHomepageLink": {
-    "message": "Kotisivu"
-  },
-  "optionsSince": {
-    "message": "Haarautettu Neat Bookmarksista, ylläpidetty $days$ päivää.",
-    "placeholders": {
-      "days": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionsVersion": {
-    "message": "vBookmarks-versio"
-  },
-  "statsSortByCount": {
-    "message": "Määrän mukaan"
-  },
-  "statsSortByRecent": {
-    "message": "Viimeaikaisuuden mukaan"
-  },
-  "statsShowUnbookmarked": {
-    "message": "Näytä merkitsemättömät"
-  },
-  "statsShowUnbookmarkedHint": {
-    "message": "Sisällytä historian sivut, joita ei ole tallennettu kirjanmerkeiksi."
-  },
-  "statsEmpty": {
-    "message": "Tilastot kertyvät, kun avaat kirjanmerkkejä"
-  },
-  "statsDisabledHint": {
-    "message": "Vierailutilastot ovat pois päältä — ota ne käyttöön kohdassa Asetukset → Näkymät"
-  },
-  "statsVisitCount": {
-    "message": "Vierailtu $count$ kertaa",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "statsClearData": {
-    "message": "Tyhjennä tilastot"
-  },
-  "statsClearConfirm": {
-    "message": "Tyhjennä vierailutilastot $count$ kirjanmerkille? Tätä ei voi peruuttaa.",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "statsHistoryBanner": {
-    "message": "Myönnä historiatietojen käyttöoikeus, jotta tilastot saavat alkutiedot aiemmista vierailuistasi."
-  },
-  "statsHistoryEnable": {
-    "message": "Ota käyttöön"
-  },
-  "statsHistoryDismiss": {
-    "message": "Älä näytä uudelleen"
-  },
-  "statsHistoryImported": {
-    "message": "Tuotiin aiemmat vierailut $count$ kirjanmerkille",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "paletteCmdToggleViewTabs": {
-    "message": "Vaihda välilehtien näyttö"
-  },
-  "paletteCmdTheme": {
-    "message": "Aseta teema…"
-  },
-  "paletteCmdThemeUsage": {
-    "message": "Käyttö: /theme ja teeman nimi — auto, light, dark, ink tai paper (yksilöllinen etuliite toimii, esim. /theme d)."
-  },
-  "paletteCustomTag": {
-    "message": "mukautettu"
-  },
-  "paletteCustomDeleteConfirm": {
-    "message": "Poistetaanko komento \"$1\"? Muutos synkronoituu kaikkiin laitteisiisi."
-  },
-  "paletteCustomBroken": {
-    "message": "Komennon \"$1\" kansiota ei ole enää olemassa. Poistetaanko komento?"
-  },
-  "paletteCmdSaveAsCommand": {
-    "message": "Tallenna \"$1\" komentona…"
-  },
-  "paletteActionOpenUrl": {
-    "message": "Avaa URL"
-  },
-  "paletteActionOpenUrlGroup": {
-    "message": "Avaa kirjanmerkkikansion ryhmä"
-  },
-  "paletteActionViewPreset": {
-    "message": "Avaa näkymä esiasetuksella"
-  },
-  "paletteActionUrlTemplate": {
-    "message": "Avaa URL-malli"
-  },
-  "optionsGroupPalette": {
-    "message": "Komentopaletti"
-  },
-  "paletteCustomHint": {
-    "message": "Mukautetut kauttaviivakomennot komentopaletille (Ctrl/Cmd+K). Ne synkronoituvat asetustesi kanssa — enintään 100 merkintää."
-  },
-  "paletteCustomAdd": {
-    "message": "Lisää komento…"
-  },
-  "paletteCustomUsage": {
-    "message": "$1 / $2"
-  },
-  "paletteCustomSlash": {
-    "message": "Kauttaviiva (sana /-merkin jälkeen)"
-  },
-  "paletteCustomAliases": {
-    "message": "Aliakset (pilkuilla erotettuna)"
-  },
-  "paletteCustomAction": {
-    "message": "Toiminto"
-  },
-  "paletteCustomUrl": {
-    "message": "URL"
-  },
-  "paletteCustomTemplate": {
-    "message": "URL-malli — %s korvataan komennon jälkeisillä sanoilla"
-  },
-  "paletteCustomWhere": {
-    "message": "Avaa"
-  },
-  "paletteCustomFolder": {
-    "message": "Kirjanmerkkikansio"
-  },
-  "paletteCustomView": {
-    "message": "Näkymä"
-  },
-  "paletteCustomStrategy": {
-    "message": "Dedup-strategian esiasetus"
-  },
-  "paletteCustomScope": {
-    "message": "Dedup-laajuuden esiasetus"
-  },
-  "paletteCustomScan": {
-    "message": "Aloita skannaus syötettäessä"
-  },
-  "paletteWhereCurrent": {
-    "message": "Nykyinen välilehti"
-  },
-  "paletteWhereTab": {
-    "message": "Uusi välilehti"
-  },
-  "paletteWhereWindow": {
-    "message": "Uusi ikkuna"
-  },
-  "paletteWhereBackground": {
-    "message": "Taustavälilehdet"
-  },
-  "paletteCustomSave": {
-    "message": "Tallenna komento"
-  },
-  "paletteCustomErrSlash": {
-    "message": "Kauttaviiva: 1–24 merkkiä, jotka koostuvat pienistä kirjaimista, numeroista tai väliviivoista ja alkavat kirjaimella tai numerolla."
-  },
-  "paletteCustomErrAlias": {
-    "message": "Aliakset: samat säännöt kuin kauttaviivalla (1–24 merkkiä pieniä kirjaimia, numeroita tai väliviivoja)."
-  },
-  "paletteCustomErrTaken": {
-    "message": "Tämä kauttaviiva tai alias on jo varattu."
-  },
-  "paletteCustomErrUrl": {
-    "message": "Vain http://- tai https://-alkuiset URL-osoitteet ovat sallittuja."
-  },
-  "paletteCustomErrFolder": {
-    "message": "Valitse kirjanmerkkikansio."
-  },
-  "paletteCustomErrView": {
-    "message": "Valitse näkymä."
-  },
-  "paletteCustomErrTemplate": {
-    "message": "Mallissa on oltava täsmälleen yksi %s."
-  },
-  "paletteCustomErrAction": {
-    "message": "Valitse toiminnon tyyppi."
-  },
-  "paletteCustomErrLimit": {
-    "message": "Komentoraja (100) on saavutettu — poista ensin yksi."
-  },
-  "paletteCustomEmpty": {
-    "message": "Ei mukautettuja komentoja vielä."
-  },
-  "recentGroupToday": {
-    "message": "Tänään"
-  },
-  "recentGroupWeek": {
-    "message": "Tällä viikolla"
-  },
-  "recentGroupMonth": {
-    "message": "Tässä kuussa"
-  },
-  "recentGroupOlder": {
-    "message": "Vanhemmat"
-  },
-  "searchHistoryRerun": {
-    "message": "Hae uudelleen"
-  },
-  "optionsGroupBackup": {
-    "message": "Varmuuskopio"
-  },
-  "optionsGroupContextMenu": {
-    "message": "Kontekstivalikot"
-  },
-  "optionsGroupIcons": {
-    "message": "Kuvakkeet"
-  },
-  "settingsExport": {
-    "message": "Vie asetukset"
-  },
-  "settingsImport": {
-    "message": "Tuo asetukset"
-  },
-  "settingsBackupHint": {
-    "message": "Vienti tallentaa kaikki asetukset (mukaan lukien synkronointiasetukset) JSON-tiedostoon. Tuonti yhdistää varmuuskopion takaisin: tiedoston asetukset korvaavat nykyiset, muut säilyvät."
-  },
-  "settingsImportConfirm": {
-    "message": "Tuominen korvaa kaikki varmuuskopiotiedostossa olevat asetukset (tiedostossa olemattomat asetukset säilyvät) ja lataa tämän sivun uudelleen. Jatketaanko?"
-  },
-  "settingsImportInvalid": {
-    "message": "Virheellinen asetustiedosto: ei ole vBookmarks-asetusten varmuuskopio."
-  },
-  "settingsImportDone": {
-    "message": "Asetukset tuotu. Sivu ladataan nyt uudelleen."
-  },
-  "settingsImportError": {
-    "message": "Joitakin asetuksia ei voitu tallentaa (tallennustilan ylittyminen tai tilapäinen virhe). Tuontia ei suoritettu loppuun — yritä uudelleen."
-  },
-  "statsSectionRecent": {
-    "message": "Viimeisimmät vierailut"
-  },
-  "statsSectionBookmarks": {
-    "message": "Kirjanmerkkitilastot"
-  },
-  "statsHistoryGuide": {
-    "message": "Myönnä historian käyttöoikeus listataksesi viimeisimmät vierailusi tähän."
-  },
-  "statsHistoryAdd": {
-    "message": "Lisää kirjanmerkkeihin"
-  },
-  "statsHistoryBookmarked": {
-    "message": "Kirjanmerkitty"
-  },
-  "deadPause": {
-    "message": "Keskeytä"
-  },
-  "deadResume": {
-    "message": "Jatka"
-  },
-  "deadCancel": {
-    "message": "Peruuta"
-  },
-  "deadPaused": {
-    "message": "Keskeytetty"
+  "viewTree": {
+    "message": "Puu"
   },
   "whatsNewChangelog": {
     "message": "Muutosloki"
@@ -1808,800 +2603,5 @@
         "content": "$1"
       }
     }
-  },
-  "viewHiddenTabsHint": {
-    "message": "Olet $view$-näkymässä. Paina $back$ tai käytä komentopalettia palataksesi puuhun.",
-    "placeholders": {
-      "view": {
-        "content": "$1"
-      },
-      "back": {
-        "content": "$2"
-      }
-    }
-  },
-  "viewTabGroups": {
-    "message": "Välilehtiryhmät"
-  },
-  "optionShowTabGroupsView": {
-    "message": "Näytä välilehtiryhmien näkymä"
-  },
-  "tabGroupsViewEmpty": {
-    "message": "Ei välilehtiä tässä ikkunassa"
-  },
-  "tabGroupsToolbarRefresh": {
-    "message": "Päivitä"
-  },
-  "tabGroupsCollapseAll": {
-    "message": "Kutista kaikki"
-  },
-  "tabGroupsExpandAll": {
-    "message": "Laajenna kaikki"
-  },
-  "tabGroupsSummary": {
-    "message": "$tabs$ välilehteä · $groups$ ryhmää",
-    "placeholders": {
-      "tabs": {
-        "content": "$1"
-      },
-      "groups": {
-        "content": "$2"
-      }
-    }
-  },
-  "tabGroupsGroupCount": {
-    "message": "$count$ välilehteä",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsCurrentTab": {
-    "message": "Nykyinen"
-  },
-  "tabGroupsAddBookmark": {
-    "message": "Lisää tämä välilehti kirjanmerkkeihin"
-  },
-  "tabGroupsSaveFolder": {
-    "message": "Tallenna välilehtiryhmä kirjanmerkkeinä"
-  },
-  "tabGroupsGroupSavedToFolder": {
-    "message": "Tallennettu $count$ välilehteä kohteeseen $folder$",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      },
-      "folder": {
-        "content": "$2"
-      }
-    }
-  },
-  "tabGroupsBookmarksAdded": {
-    "message": "Lisätty $count$ kirjanmerkkiä kohteeseen $folder$",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      },
-      "folder": {
-        "content": "$2"
-      }
-    }
-  },
-  "tabGroupsSelectNewGroup": {
-    "message": "Uusi välilehtiryhmä"
-  },
-  "tabGroupsSelectOpenInto": {
-    "message": "Avaa olemassa olevassa ryhmässä…"
-  },
-  "tabGroupsSelectSaveFolder": {
-    "message": "Tallenna kirjanmerkkeinä"
-  },
-  "tabGroupsSelectClose": {
-    "message": "Sulje"
-  },
-  "tabGroupsSelectSleep": {
-    "message": "Nuku"
-  },
-  "tabGroupsCopyMoveDialog": {
-    "message": "Valitut välilehdet kuuluvat jo välilehtiryhmään. Kopioidaanko ne (avataan uuteen paikkaan) vai siirretäänkö ne (poistetaan nykyisestä ryhmästä)?"
-  },
-  "tabGroupsCopyMoveCopy": {
-    "message": "Kopioi"
-  },
-  "tabGroupsCopyMoveMove": {
-    "message": "Siirrä"
-  },
-  "tabGroupsConfirmClose": {
-    "message": "Suljetaanko $count$ välilehteä?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsConfirmSleep": {
-    "message": "Nukutetaanko $count$ välilehteä?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsClosedToast": {
-    "message": "Suljettiin $count$ välilehteä",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsSleptToast": {
-    "message": "Asetettiin $count$ välilehteä lepotilaan",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsBatchClosedTitle": {
-    "message": "Suljetut välilehdet"
-  },
-  "tabGroupsPinnedUngroupedToast": {
-    "message": "Kiinnitetty — poistettu välilehtiryhmästä"
-  },
-  "tabGroupsReopenAction": {
-    "message": "Avaa uudelleen"
-  },
-  "tabGroupsWakeAction": {
-    "message": "Herätä"
-  },
-  "tabGroupsRecordDeletedToast": {
-    "message": "Poistettiin suljettu tietue"
-  },
-  "tabGroupsClosedTabRemovedToast": {
-    "message": "Poistettiin suljetusta tietueesta"
-  },
-  "tabGroupsClearedToast": {
-    "message": "Tyhjennettiin $count$ suljettua tietuetta",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "bookmarkFolderPickDialogTitle": {
-    "message": "Lisää kirjanmerkkeihin"
-  },
-  "bookmarkFolderNoFolders": {
-    "message": "Ei kirjanmerkkejä"
-  },
-  "tabGroupsSelectAddBookmarks": {
-    "message": "Lisää kirjanmerkkeihin…"
-  },
-  "paletteCmdGoTabGroups": {
-    "message": "Siirry välilehtiryhmien näkymään"
-  },
-  "tabGroupsActivateGroup": {
-    "message": "Siirry välilehtiryhmään"
-  },
-  "tabGroupsRenameGroup": {
-    "message": "Nimeä ryhmä"
-  },
-  "tabGroupsRenameDialog": {
-    "message": "Nimeä välilehtiryhmä"
-  },
-  "tabGroupsCloseGroup": {
-    "message": "Sulje ryhmä"
-  },
-  "tabGroupsSleepGroup": {
-    "message": "Nukuta ryhmä"
-  },
-  "tabGroupsWakeGroup": {
-    "message": "Herätä välilehtiryhmä"
-  },
-  "tabGroupsActivateTab": {
-    "message": "Siirry välilehteen"
-  },
-  "tabGroupsCollapseGroup": {
-    "message": "Kutista ryhmä"
-  },
-  "tabGroupsExpandGroup": {
-    "message": "Laajenna ryhmä"
-  },
-  "tabGroupsMenuAddBookmark": {
-    "message": "Lisää kirjanmerkki"
-  },
-  "tabGroupsMenuSaveFolder": {
-    "message": "Tallenna kirjanmerkkeinä"
-  },
-  "tabGroupsSyncCollapse": {
-    "message": "Synkronoi selaimen kanssa"
-  },
-  "tabGroupsSyncCollapseHint": {
-    "message": "Kun valittu, ryhmän kutistaminen tai laajentaminen tässä näkymässä päivittää myös selaimen välilehtiryhmän. Oletuksena pois päältä, jotta näkymän taitto pysyy paikallisena."
-  },
-  "tabGroupsColorStyle": {
-    "message": "Välilehtiryhmän väri tyyli"
-  },
-  "tabGroupsColorStyleHint": {
-    "message": "Pois näyttää vain väripisteen. Reunaväri piirtää värillisen nauhan ryhmän vasempaan reunaan. Väriyhdistäjä piirtää värillisen viivan ryhmän pisteen alle, yhdistäen koko ryhmän yhdeksi puuksi."
-  },
-  "tabGroupsColorStyleOff": {
-    "message": "Pois (vain väripiste)"
-  },
-  "tabGroupsColorStyleEdge": {
-    "message": "Reunaväri"
-  },
-  "tabGroupsColorStyleLine": {
-    "message": "Väriyhdistäjäviiva"
-  },
-  "tabGroupsBookmarked": {
-    "message": "Tallennettu"
-  },
-  "tabGroupsRemoveBookmark": {
-    "message": "Poista kirjanmerkki"
-  },
-  "tabGroupsBookmarkRemoved": {
-    "message": "Poistettu $count$ kirjanmerkkiä",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsPinned": {
-    "message": "Kiinnitetty välilehti"
-  },
-  "tabGroupsDiscarded": {
-    "message": "Nukkuva välilehti"
-  },
-  "tabGroupsPinTab": {
-    "message": "Kiinnitä välilehti"
-  },
-  "tabGroupsUnpinTab": {
-    "message": "Irrota välilehti"
-  },
-  "tabGroupsSleepTab": {
-    "message": "Nukuta välilehti"
-  },
-  "tabGroupsWakeTab": {
-    "message": "Herätä välilehti"
-  },
-  "tabGroupsOpenGroups": {
-    "message": "Avoimet välilehtiryhmät"
-  },
-  "tabGroupsClosedGroups": {
-    "message": "Äskettäin suljetut"
-  },
-  "tabGroupsUngroupedTabs": {
-    "message": "Ryhmittelemättömät välilehdet"
-  },
-  "tabGroupsUngroupGroup": {
-    "message": "Poista ryhmitys"
-  },
-  "tabGroupsMoveNewWindow": {
-    "message": "Siirrä ryhmä uuteen ikkunaan"
-  },
-  "tabGroupsWindow": {
-    "message": "Ikkuna $1$",
-    "placeholders": {
-      "1": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsCurrentWindow": {
-    "message": "Nykyinen ikkuna"
-  },
-  "tabGroupsReopenGroup": {
-    "message": "Avaa välilehtiryhmä uudelleen"
-  },
-  "tabGroupsDeleteClosedGroup": {
-    "message": "Poista suljettu välilehtiryhmä"
-  },
-  "tabGroupsCollapseWindow": {
-    "message": "Kutista ikkuna"
-  },
-  "tabGroupsCloseWindow": {
-    "message": "Sulje ikkuna"
-  },
-  "tabGroupsWindowClosedTitle": {
-    "message": "Suljettu ikkuna"
-  },
-  "tabGroupsExpandWindow": {
-    "message": "Laajenna ikkuna"
-  },
-  "tabGroupsClearClosedGroups": {
-    "message": "Tyhjennä kaikki"
-  },
-  "tabGroupsConfirmClearClosed": {
-    "message": "Poistetaanko kaikki viimeaikaiset suljetut tiedot? Niitä ei voi enää avata täältä."
-  },
-  "tabGroupsFilterPlaceholder": {
-    "message": "Suodata avoimia välilehtiä"
-  },
-  "tabGroupsNoMatchingTabs": {
-    "message": "Ei vastaavia välilehtiä"
-  },
-  "tabGroupsClosedOpenTab": {
-    "message": "Avaa uudessa välilehdessä"
-  },
-  "tabGroupsRemoveClosedTab": {
-    "message": "Poista tallennetusta ryhmästä"
-  },
-  "tabGroupsClosedTimeLabel": {
-    "message": "Suljettu:"
-  },
-  "tabGroupsExpandedExpand": {
-    "message": "Laajenna"
-  },
-  "tabGroupsExpandedCollapse": {
-    "message": "Kutista"
-  },
-  "optionTabGroupsClosedLimit": {
-    "message": "Säilytettävä suljettujen välilehtien/ryhmien historia"
-  },
-  "folderPickMoveHere": {
-    "message": "Siirrä tähän"
-  },
-  "folderPickCopyHere": {
-    "message": "Kopioi tähän"
-  },
-  "folderPickFilter": {
-    "message": "Suodata kansioita…"
-  },
-  "folderPickFavNote": {
-    "message": "Kirjanmerkitsemättömät kohteet kirjanmerkitään tähän"
-  },
-  "folderPickPinned": {
-    "message": "Kiinnitetyt"
-  },
-  "folderPickRecent": {
-    "message": "Viimeisimmät"
-  },
-  "pinFolder": {
-    "message": "Kiinnitä tämä kansio"
-  },
-  "unpinFolder": {
-    "message": "Irrota tämän kansion kiinnitys"
-  },
-  "stagingAdd": {
-    "message": "Lähetä odottamaan"
-  },
-  "stagingAdded": {
-    "message": "Lähetetty odottamaan"
-  },
-  "stagingAlready": {
-    "message": "Jo odotuslistalla"
-  },
-  "stagingAddedSummary": {
-    "message": "Lisätty $n$ kohdetta; $m$ jo odotuslistalla",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      },
-      "m": {
-        "content": "$2"
-      }
-    }
-  },
-  "stagingFull": {
-    "message": "Odotuslista on täynnä — poista ensin joitakin kohteita"
-  },
-  "stagingFolderEmpty": {
-    "message": "Tässä kansiossa ei ole kirjanmerkkejä odotuslistalle"
-  },
-  "stagingConfirmFolder": {
-    "message": "Lisätäänkö $n$ kirjanmerkkiä tästä kansiosta?",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingConfirmFolderOk": {
-    "message": "Vaiheista"
-  },
-  "stagingRemove": {
-    "message": "Poista odotuslistalta"
-  },
-  "stagingRemoved": {
-    "message": "Poistettu odotuslistalta"
-  },
-  "recentStageAll": {
-    "message": "Lisää kaikki äskettäin lisätyt"
-  },
-  "recentSectionTitle": {
-    "message": "Äskettäin lisätyt"
-  },
-  "stagingEmpty": {
-    "message": "Ei vielä mitään jonossa. Lähetä kirjanmerkkejä tähän mistä tahansa näkymästä — rivin lentokonepainikkeesta tai hiiren kakkospainikkeen valikosta — ja järjestä sekä arkistoi ne joukkona."
-  },
-  "stagingFromHistory": {
-    "message": "Historiasta"
-  },
-  "stagingGroupExpand": {
-    "message": "Laajenna ryhmä"
-  },
-  "stagingGroupCollapse": {
-    "message": "Kutista ryhmä"
-  },
-  "stagingGroupRename": {
-    "message": "Nimeä ryhmä uudelleen…"
-  },
-  "stagingGroupDissolve": {
-    "message": "Hajota ryhmä"
-  },
-  "stagingGroupDissolved": {
-    "message": "Ryhmä hajotettu — kohteet säilytetty odotuslistalla"
-  },
-  "stagingGroupDelete": {
-    "message": "Poista ryhmä (kohteineen)"
-  },
-  "stagingGroupDeleteConfirm": {
-    "message": "Poistetaanko ryhmä \"$1\"? Sen $2 kohdetta poistuu myös esitysalueelta."
-  },
-  "stagingGroupDeleted": {
-    "message": "Ryhmä poistettu — $1 kohdetta poistettu"
-  },
-  "stagingGroupAssign": {
-    "message": "Ryhmä…"
-  },
-  "stagingGroupAssignTitle": {
-    "message": "Määritä ryhmään"
-  },
-  "stagingGroupNew": {
-    "message": "Uusi ryhmä"
-  },
-  "stagingGroupNamePrompt": {
-    "message": "Uuden ryhmän nimi"
-  },
-  "stagingGroupNoGroups": {
-    "message": "Ei ryhmiä vielä"
-  },
-  "stagingShortcutAdd": {
-    "message": "Lisää pikakuvake"
-  },
-  "stagingShortcutBarLabel": {
-    "message": "Siirrä kohteeseen:"
-  },
-  "stagingGuideText": {
-    "message": "Järjestä kirjanmerkit tässä — valitse rivit ja siirry valintatilaan erätoimintoja varten."
-  },
-  "stagingGuideDismiss": {
-    "message": "Älä näytä uudelleen"
-  },
-  "stagingShortcutTitle": {
-    "message": "Siirrä pikakuvake"
-  },
-  "stagingShortcutEdit": {
-    "message": "Muokkaa pikakuvaketta"
-  },
-  "stagingShortcutAlias": {
-    "message": "Alias"
-  },
-  "stagingShortcutPickFolder": {
-    "message": "Valitse kohdekansio…"
-  },
-  "stagingShortcutSave": {
-    "message": "Tallenna"
-  },
-  "stagingShortcutRemove": {
-    "message": "Poista pikakuvake"
-  },
-  "stagingShortcutRemoved": {
-    "message": "Pikakuvake poistettu"
-  },
-  "stagingShortcutMove": {
-    "message": "Siirrä valittu kohteeseen $1$",
-    "placeholders": {
-      "1": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingBucketTitle": {
-    "message": "Kirjanmerkitsemättömät"
-  },
-  "stagingBucketFavAll": {
-    "message": "Suosikki kaikki"
-  },
-  "stagingNew": {
-    "message": "uusi $n$",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingRowFav": {
-    "message": "Lisää tämä kohde suosikkeihin"
-  },
-  "stagingRowUnfav": {
-    "message": "Poista tämä kohde suosikeista"
-  },
-  "stagingFav": {
-    "message": "Suosikki"
-  },
-  "stagingUnfav": {
-    "message": "Poista suosikki"
-  },
-  "stagingFavDone": {
-    "message": "Suosikiksi merkitty $n$ kohdetta",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingUnfavDone": {
-    "message": "Suosikista poistettu $n$ kohdetta",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "groupSaveToFolder": {
-    "message": "Tallenna kansioon…"
-  },
-  "groupCopyToFolder": {
-    "message": "Kopioi kansioon…"
-  },
-  "stagingCount": {
-    "message": "$n$ odottaa",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingMoveCopy": {
-    "message": "Siirrä/kopioi…"
-  },
-  "stagingMoveDone": {
-    "message": "Siirretty $n$ kohdetta kotiin",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingCopyDone": {
-    "message": "Kopioitu $n$ kohdetta",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingMoveConfirm": {
-    "message": "Siirretäänkö $n$ kohdetta valittuun kansioon?",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingMoveConfirmOk": {
-    "message": "Siirrä"
-  },
-  "stagingDeleteConfirm": {
-    "message": "Poistetaanko $n$ kohdetta? Ei-kirjanmerkityt poistuvat vain odotusalueelta.",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingDeleted": {
-    "message": "Poistettu $n$ kirjanmerkkiä",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingRemovedCount": {
-    "message": "Poistettu $n$ kohdetta odotusalueelta",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingClear": {
-    "message": "Tyhjennä odotusalue"
-  },
-  "stagingClearConfirm": {
-    "message": "Tyhjennetäänkö koko odotusalue? Kirjanmerkkihakemistoa ei muuteta."
-  },
-  "stagingClearConfirmOk": {
-    "message": "Tyhjennä"
-  },
-  "stagingCleared": {
-    "message": "Odotusalue tyhjennetty"
-  },
-  "groupPlaceTooltip": {
-    "message": "Tallenna tämä ryhmä kansioon…"
-  },
-  "copyBookmark": {
-    "message": "Kopioi"
-  },
-  "cutBookmark": {
-    "message": "Leikkaa"
-  },
-  "copyMoveTo": {
-    "message": "Kopioi/siirrä…"
-  },
-  "pasteHere": {
-    "message": "Liitä tähän"
-  },
-  "copiedToast": {
-    "message": "Kopioitu: $t$",
-    "placeholders": {
-      "t": {
-        "content": "$1"
-      }
-    }
-  },
-  "cutToast": {
-    "message": "Leikattu: $t$ — liitä kohdekansioon (Esc peruuttaa)",
-    "placeholders": {
-      "t": {
-        "content": "$1"
-      }
-    }
-  },
-  "pasteDone": {
-    "message": "Liitetty"
-  },
-  "pasteGone": {
-    "message": "Kirjanmerkkiä ei enää ole — leikepöytä tyhjennetty"
-  },
-  "folderCopyList": {
-    "message": "Kopioi otsikot ja osoitteet"
-  },
-  "folderCopyText": {
-    "message": "Tekstilista"
-  },
-  "folderCopyMarkdown": {
-    "message": "Markdown"
-  },
-  "folderCopyJson": {
-    "message": "JSON"
-  },
-  "folderCopyConfirm": {
-    "message": "Kopioidaanko $n$ kirjanmerkin luettelo?",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "folderCopyDone": {
-    "message": "Kopioitu $n$ kirjanmerkkiä",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "addFolderMenu": {
-    "message": "Lisää kansio"
-  },
-  "optionCollapseAddFolderMenu": {
-    "message": "Tiivistä kansioiden lisäysvalinnat"
-  },
-  "optionCollapseAddFolderMenuHint": {
-    "message": "Yhdistä lisää-kansio -merkinnät (ennen/jälkeen/sisällä kansioriveillä, ennen/jälkeen kirjanmerkkiriveillä) yhdeksi alavalikon kohteeksi."
-  },
-  "tabRowStage": {
-    "message": "Lähetä välitykseen"
-  },
-  "tabgroupStageAll": {
-    "message": "Lähetä ryhmä välitykseen"
-  },
-  "tabgroupStageConfirm": {
-    "message": "Lähetetäänkö $n$ välilehteä välitykseen?",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabgroupStageNone": {
-    "message": "Tässä ryhmässä ei ole kirjanmerkitäviä välilehtiä"
-  },
-  "stagedToast": {
-    "message": "Asetettu $n$ välilehteä odottamaan ryhmänä ”$t$”",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      },
-      "t": {
-        "content": "$2"
-      }
-    }
-  },
-  "searchResultCount": {
-    "message": "$n$ tulosta",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "deleteSelected": {
-    "message": "Poista valitut"
-  },
-  "recentStageGroup": {
-    "message": "Lähetä $t$ esikatselualueelle",
-    "placeholders": {
-      "t": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingGroupSelectAll": {
-    "message": "Valitse kaikki tässä ryhmässä"
-  },
-  "optionsGroupLabs": {
-    "message": "Laboratorio"
-  },
-  "optionVirtualScrollLab": {
-    "message": "Virtuaalinen vieritys (kokeellinen)"
-  },
-  "optionVirtualScrollLabHint": {
-    "message": "Välilehtiryhmien ja kaksoiskappaleiden näkymät renderöivät vain näkymän lähellä olevat rivit. Paljon nopeampi erittäin suurissa luetteloissa; kokeellisessa vaiheessa vierityspalkin sijainti on arvio."
-  },
-  "optionsStagingSection": {
-    "message": "Vaiheistus ja äskettäin lisätyt"
-  },
-  "optionStagingEnabled": {
-    "message": "Ota vaiheistusalue käyttöön"
-  },
-  "optionStagingEnabledHint": {
-    "message": "Kun pois päältä, tämä näkymä näyttää vain äskettäin lisätyt, ja kaikki vaiheistuspainikkeet tai -valikkokohdat muissa näkymissä piilotetaan."
-  },
-  "optionTreeRowActions": {
-    "message": "Viehiöt puuriveillä (muokkaa / vaiheista / poista)"
-  },
-  "optionsStorageSyncTip": {
-    "message": "Synkronoitu Chrome-tilisi kautta — tämä asetus jaetaan laitteidesi välillä.",
-    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
-  },
-  "optionsStorageLocalTip": {
-    "message": "Tallennettu vain tähän laitteeseen — ei jaeta Chrome-synkronoinnin kautta.",
-    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
-  },
-  "tabGroupsWindowsCount": {
-    "message": "$n$ ikkunaa",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsNewWindow": {
-    "message": "Uusi ikkuna"
-  },
-  "tabGroupsMergedWindowToast": {
-    "message": "Ikkuna yhdistetty välilehtiryhmäksi"
-  },
-  "searchStageAllGroup": {
-    "message": "Siirrä kaikki tulokset ryhmään \"$1$\"",
-    "placeholders": {
-      "1": {
-        "content": "$1"
-      }
-    }
-  },
-  "searchHistoryClose": {
-    "message": "Piilota hakuhistoria"
-  },
-  "searchHistoryClosedToast": {
-    "message": "Hakuhistoria on piilotettu — ota se uudelleen käyttöön Asetukset → Haku"
   }
 }

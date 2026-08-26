@@ -14,6 +14,9 @@
   "addBookmarkTop": {
     "message": "Додади обележувач на врвот"
   },
+  "addFolderMenu": {
+    "message": "Додај папка"
+  },
   "addNewFolder": {
     "message": "Додади подпапка"
   },
@@ -32,23 +35,38 @@
   "announceDismiss": {
     "message": "Затвори"
   },
-  "announceV408Text": {
-    "message": "v4.0.8 е изданието со подобрени favicon-и: вистинските икони на сајтовите автоматски се преземаат за обележувачите што Chrome сè уште не ги кеширал."
-  },
   "announceV407Text": {
     "message": "v4.0.7 нуди целосно функционален приказ на мртви врски: скенирање, означување, филтрирање и сортирање на мртви и ограничени врски, со претходни ознаки и временски печати по ред."
   },
   "announceV407Title": {
     "message": "Што е ново во v4.0.7"
   },
+  "announceV408Text": {
+    "message": "v4.0.8 е изданието со подобрени favicon-и: вистинските икони на сајтовите автоматски се преземаат за обележувачите што Chrome сè уште не ги кеширал."
+  },
   "announceV408Title": {
     "message": "Што е ново во v4.0.8"
+  },
+  "announceV410Text": {
+    "message": "v4.1.0 додава приказ на јазичиња во групи и простор за подготвување: управувајте со јазичињата на секој прозорец покрај вашите обележувачи, и собирајте обележувачи од било каде во работна површина за масовно организирање."
   },
   "announceV410Title": {
     "message": "Што е ново во v4.1.0"
   },
-  "announceV410Text": {
-    "message": "v4.1.0 додава приказ на јазичиња во групи и простор за подготвување: управувајте со јазичињата на секој прозорец покрај вашите обележувачи, и собирајте обележувачи од било каде во работна површина за масовно организирање."
+  "bookmarkFolderNoFolders": {
+    "message": "Нема папки со обележувачи"
+  },
+  "bookmarkFolderPickDialogTitle": {
+    "message": "Додај во папка со обележувачи"
+  },
+  "bookmarkOpenInExistingGroup": {
+    "message": "Отвори во постоечка група јазичиња…"
+  },
+  "bookmarkOpenInNewGroup": {
+    "message": "Отвори во нова група јазичиња"
+  },
+  "bookmarkOpenInNewGroupSetup": {
+    "message": "Отвори во нова група јазичиња…"
   },
   "confirmDeleteFolder": {
     "message": "Оваа папка содржи $count$ ставка(и). Можете да го отповикнете бришењето.",
@@ -57,9 +75,6 @@
         "content": "$1"
       }
     }
-  },
-  "confirmDeleteFolderButton": {
-    "message": "Избриши"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "Дали сте сигурни дека сакате да го избришете $folderName$ папка и $bookmarkCount$ ознака (и) во неа?",
@@ -71,6 +86,9 @@
         "content": "$1"
       }
     }
+  },
+  "confirmDeleteFolderButton": {
+    "message": "Избриши"
   },
   "confirmDeleteFolderSubfolders": {
     "message": "Дали сте сигурни дека сакате да го избришете $folderName$ папка и $subFolderCount$ под-фолдер (а) во неа?",
@@ -124,11 +142,31 @@
       }
     }
   },
+  "contextMenuAddBookmark": {
+    "message": "Обележи ја оваа страница со vBookmarks"
+  },
+  "copiedToast": {
+    "message": "Копирано: $t$",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
+  },
   "copyAllTitlesAndUrls": {
     "message": "Копирај ги сите наслови и URL-адреси"
   },
+  "copyBookmark": {
+    "message": "Копирај"
+  },
+  "copyMoveTo": {
+    "message": "Копирај/премести…"
+  },
   "copyTitleAndUrl": {
     "message": "Копирај наслов и URL"
+  },
+  "crossStorageMoveWarning": {
+    "message": "Не може да се преместуваат обележувачи помеѓу синхронизирано и локално складирање. Користете копирај/залепи наместо тоа."
   },
   "customIcon": {
     "message": "Своја икона"
@@ -136,8 +174,14 @@
   "customIconDescription": {
     "message": "Иконата мора да биде 19x19 пиксели. Во спротивно ќе биде променета големина."
   },
+  "customIconPick": {
+    "message": "Избери датотека…"
+  },
   "customSeparatorColorDescription": {
     "message": "Прилагоди боја на разделник"
+  },
+  "customSeparatorStringDescription": {
+    "message": "Ако URL на обележувач го содржи овој текст, ќе се прикаже како разделник"
   },
   "customSeparatorTitleDescription": {
     "message": "Вистинскиот наслов на обележувачот прикажан како разделник"
@@ -145,28 +189,28 @@
   "customSeparatorUrlDescription": {
     "message": "Вистинската URL на обележувачот прикажана како разделник"
   },
-  "customSeparatorStringDescription": {
-    "message": "Ако URL на обележувач го содржи овој текст, ќе се прикаже како разделник"
-  },
   "customStyles": {
     "message": "Прилагодено Стилови"
-  },
-  "separatorOptions": {
-    "message": "Сепаратори"
   },
   "customStylesDescription": {
     "message": "Потребни се CSS вештини. Променувајте на сопствен ризик."
   },
-  "defaultIconButton": {
-    "message": "Користи стандардно"
+  "cutBookmark": {
+    "message": "Исечи"
   },
-  "defaultIconButtonOr": {
-    "message": "или"
+  "cutToast": {
+    "message": "Исечено: $t$ — залепете во целната папка (Esc откажува)",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
   },
-  "customIconPick": {
-    "message": "Избери датотека…"
+  "deadCancel": {
+    "message": "Откажи"
   },
   "deadChecking": {
+    "description": "Progress line of the palette's dead-link scan mode; $done$ bookmarks checked out of $total$.",
     "message": "Проверка $done$ / $total$…",
     "placeholders": {
       "done": {
@@ -177,8 +221,10 @@
         "content": "$2",
         "example": "120"
       }
-    },
-    "description": "Progress line of the palette's dead-link scan mode; $done$ bookmarks checked out of $total$."
+    }
+  },
+  "deadClearScan": {
+    "message": "Исчисти ги резултатите од скенирањето"
   },
   "deadConfirmAll": {
     "message": "Избриши ги сите $count$ мртви обележувачи? Ова не може да се врати во еден чекор.",
@@ -192,6 +238,15 @@
   "deadConfirmDelete": {
     "message": "Да го отстранам овој обележувач?"
   },
+  "deadConfirmDeleteSelected": {
+    "message": "Да се избришат $count$ избрани мртви обележувачи?",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
+  },
   "deadDeleteAll": {
     "message": "Да се избришат сите $count$ обележувачи во тековниот филтер?",
     "placeholders": {
@@ -201,27 +256,15 @@
       }
     }
   },
-  "deadDeleteAllNote": {
-    "message": "Под филтерот „Сите“ ова вклучува блокирани обележувачи (достапни преку вашиот прокси, најверојатно сè уште активни) и претходно означени редови.",
-    "description": "Second line of the delete-all confirmation in the Dead links view."
-  },
-  "undoSingleStepNote": {
-    "message": "Поништувањето може да го врати само последното бришење."
-  },
   "deadDeleteAllBtn": {
     "message": "Избриши ги сите"
   },
+  "deadDeleteAllNote": {
+    "description": "Second line of the delete-all confirmation in the Dead links view.",
+    "message": "Под филтерот „Сите“ ова вклучува блокирани обележувачи (достапни преку вашиот прокси, најверојатно сè уште активни) и претходно означени редови."
+  },
   "deadDeleteSelected": {
     "message": "Избриши ги избраните"
-  },
-  "deadConfirmDeleteSelected": {
-    "message": "Да се избришат $count$ избрани мртви обележувачи?",
-    "placeholders": {
-      "count": {
-        "content": "$1",
-        "example": "8"
-      }
-    }
   },
   "deadDeleted": {
     "message": "Избришани $count$ мртви обележувачи",
@@ -232,8 +275,72 @@
       }
     }
   },
-  "deadClearScan": {
-    "message": "Исчисти ги резултатите од скенирањето"
+  "deadDetectTimeLabel": {
+    "message": "Откриено на"
+  },
+  "deadFilterAll": {
+    "message": "Сите"
+  },
+  "deadFilterBlocked": {
+    "message": "Само блокирани"
+  },
+  "deadFilterDead": {
+    "message": "Само мртви"
+  },
+  "deadFilterMarked": {
+    "message": "Претходно означени"
+  },
+  "deadLastScanAt": {
+    "message": "Последно скенирање: $time$",
+    "placeholders": {
+      "time": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadMark": {
+    "message": "Означи како мртов"
+  },
+  "deadMarkAll": {
+    "message": "Означи сите"
+  },
+  "deadMarkSelected": {
+    "message": "Означи ги избраните"
+  },
+  "deadMarkStatusAll": {
+    "message": "Било кој статус"
+  },
+  "deadMarkStatusMarked": {
+    "message": "Обележани"
+  },
+  "deadMarkStatusUnmarked": {
+    "message": "Необележани"
+  },
+  "deadMarkTimeLabel": {
+    "message": "Означено на"
+  },
+  "deadMarked": {
+    "message": "Означени мртви редови"
+  },
+  "deadMarkedBanner": {
+    "message": "Прикажани се претходно означени обележувачи. Кликнете на Rescan за да започнете нова проверка, или обработете ги во списокот подолу."
+  },
+  "deadMarkedBannerDismiss": {
+    "message": "Затвори"
+  },
+  "deadMarkedCount": {
+    "message": "Означени $count$ обележувачи",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadMarkedNone": {
+    "message": "Сè уште нема обележани обележувачи"
+  },
+  "deadMarkedRow": {
+    "message": "Означено"
   },
   "deadNone": {
     "message": "Нема пронајдени мртви врски"
@@ -241,34 +348,711 @@
   "deadNoneFiltered": {
     "message": "Нема мртви линкови под овој филтер — пробај друг сегмент погоре"
   },
+  "deadPause": {
+    "message": "Паузирај"
+  },
+  "deadPaused": {
+    "message": "Паузирано"
+  },
+  "deadProxyAdd": {
+    "message": "Додај прокси сервер за проверка на мртви врски"
+  },
+  "deadProxyChange": {
+    "message": "Промени"
+  },
+  "deadProxyClear": {
+    "message": "Исчисти"
+  },
+  "deadProxyControlled": {
+    "message": "Поставките за прокси ги управува друга екстензија"
+  },
+  "deadProxyDenied": {
+    "message": "Дозволата за прокси не е дадена"
+  },
+  "deadProxyInvalid": {
+    "message": "Невалидна прокси адреса — користете host:port или scheme://host:port (http/https/socks5, без акредитиви)"
+  },
+  "deadProxyLabel": {
+    "message": "Прокси: $server$",
+    "placeholders": {
+      "server": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadProxyNeverShow": {
+    "message": "Повеќе не прикажувај"
+  },
+  "deadProxyNone": {
+    "message": "(не е поставено)"
+  },
+  "deadProxyNudge": {
+    "message": "Повторната проверка преку прокси ги одделува вистинските мртви врски од оние што се блокирани според регионот — поставете ја овде или на страницата со опции."
+  },
+  "deadProxyPanelHint": {
+    "message": "Внесете прокси сервер што веќе го имате (екстензијата не обезбедува), на пр. 127.0.0.1:7890 или socks5://127.0.0.1:1080."
+  },
+  "deadProxyRemove": {
+    "message": "Отстрани"
+  },
+  "deadProxyRemoved": {
+    "message": "Прокси серверот е отстранет"
+  },
+  "deadProxySaved": {
+    "message": "Проксито е зачувано — идните скенирања повторно ги проверуваат директните неуспеси преку него"
+  },
+  "deadProxyServerHint": {
+    "message": "Зачуваниот сервер ги преиспитува обележувачите што не поминале директни проверки при секое скенирање за мртви линкови и ги одвојува вистинските мртви линкови од регионално блокираните. Копчето „Тестирај и зачувај“ го тестира (се задржува само достапен сервер); можете да го додадете и од прегледот на мртви линкови."
+  },
+  "deadProxyTestSave": {
+    "message": "Тестирај и зачувај"
+  },
+  "deadProxyTestUrlLabel": {
+    "message": "Тест URL"
+  },
+  "deadProxyTesting": {
+    "message": "Тестирање…"
+  },
+  "deadProxyUnavailable": {
+    "message": "API-то за прокси е недостапно во овој прелистувач"
+  },
+  "deadProxyUnreachable": {
+    "message": "Проксито е недостапно — не е зачувано"
+  },
   "deadRescan": {
     "message": "Повторно скенирај"
+  },
+  "deadResume": {
+    "message": "Продолжи"
+  },
+  "deadRiskBanner": {
+    "message": "Чистењето на мртви врски масовно брише обележувачи. Направете резервна копија на обележувачите пред првото чистење."
+  },
+  "deadSortByDetected": {
+    "message": "Време на откривање"
+  },
+  "deadSortByMarked": {
+    "message": "Време на обележување"
+  },
+  "deadSortByPath": {
+    "message": "Патека на папка"
+  },
+  "deadSortLabel": {
+    "message": "Сортирај по"
+  },
+  "deadStartHint": {
+    "message": "Започни скенирање на $n$ обележувачи",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadStatusBlocked": {
+    "message": "блокирано"
+  },
+  "deadUnmark": {
+    "message": "Отстрани ознака за мртов"
+  },
+  "deadUnmarkAll": {
+    "message": "Исчисти ги сите ознаки"
+  },
+  "deadUnmarkSelected": {
+    "message": "Одзначи ги избраните"
+  },
+  "defaultIconButton": {
+    "message": "Користи стандардно"
+  },
+  "defaultIconButtonOr": {
+    "message": "или"
   },
   "delete": {
     "message": "Избришете"
   },
+  "deleteEllipsis": {
+    "message": "Избришете ..."
+  },
+  "deleteSelected": {
+    "message": "Избриши избрани"
+  },
   "deletedBookmark": {
+    "description": "Toast shown after a bookmark or separator was deleted; the toast offers an undo button. $title$ is the deleted row's title (empty for separators).",
     "message": "Избришан $title$",
     "placeholders": {
       "title": {
         "content": "$1",
         "example": "Example"
       }
-    },
-    "description": "Toast shown after a bookmark or separator was deleted; the toast offers an undo button. $title$ is the deleted row's title (empty for separators)."
+    }
   },
   "deletedFolder": {
+    "description": "Toast shown after a bookmark folder (with its whole subtree) was deleted; the toast offers an undo button. $title$ is the folder name.",
     "message": "Избришана папка $title$",
     "placeholders": {
       "title": {
         "content": "$1",
         "example": "Bookmarks"
       }
-    },
-    "description": "Toast shown after a bookmark folder (with its whole subtree) was deleted; the toast offers an undo button. $title$ is the folder name."
+    }
+  },
+  "donationDismiss": {
+    "message": "Откажи"
+  },
+  "donationGo": {
+    "message": "Донирај"
+  },
+  "donationLater": {
+    "message": "Подоцна"
+  },
+  "donationMessage": {
+    "message": "Уживате? Донирајте за да ја поттикнете неговата иднина — или оценете го во продавницата: секоја рецензија обезбедува континуирани ажурирања."
+  },
+  "donationNever": {
+    "message": "Не прикажувај повторно"
+  },
+  "donationRate": {
+    "message": "Оценете го"
+  },
+  "donationRateTitle": {
+    "message": "Оценете го vBookmarks на Chrome Web Store"
+  },
+  "donationV4GuideLink": {
+    "message": "Прочитај го водичот за v4 →"
+  },
+  "donationV4Notice": {
+    "message": "vBookmarks 4.0 е целосна преработка со современ дизајн, исполнета со нови функции."
+  },
+  "dupesApplyAll": {
+    "message": "Примени сите ($count$)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesApplySelected": {
+    "message": "Отстрани дупликати од избраните ($count$)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesCleanAll": {
+    "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go.",
+    "message": "Исчисти сè: $groups$ групи, $count$ дополнителни копии",
+    "placeholders": {
+      "count": {
+        "content": "$2"
+      },
+      "groups": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesCleanRestHint": {
+    "message": "Задржи го \"$title$\" и отстрани ги другите $count$",
+    "placeholders": {
+      "count": {
+        "content": "$2"
+      },
+      "title": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesConfirmAll": {
+    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark).",
+    "message": "Да се отстранат $count$ дополнителни копии во $groups$ групи? Избраната копија во секоја група се задржува.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    }
+  },
+  "dupesConfirmGroup": {
+    "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept).",
+    "message": "Задржи „$title$“ и отстрани ги другите $count$ копии?",
+    "placeholders": {
+      "count": {
+        "content": "$2"
+      },
+      "title": {
+        "content": "$1",
+        "example": "Example bookmark"
+      }
+    }
+  },
+  "dupesConfirmSelected": {
+    "message": "Да се отстранат $count$ дуплирани обележувачи од избраните $groups$ групи?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    }
+  },
+  "dupesDone": {
+    "description": "Alert shown after the duplicate cleanup finished.",
+    "message": "Отстранети $count$ дупликат обележувачи",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesGroupCollapse": {
+    "description": "Dupes view group-head context menu: collapse an expanded duplicate group.",
+    "message": "Собери група"
+  },
+  "dupesGroupCount": {
+    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL.",
+    "message": "$count$ дупликати",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesGroupExpand": {
+    "description": "Dupes view group-head context menu: expand a collapsed duplicate group.",
+    "message": "Прошири група"
+  },
+  "dupesIgnoreScheme": {
+    "message": "Игнорирај разлики http/https"
+  },
+  "dupesKeepThis": {
+    "message": "Задржи го овој"
+  },
+  "dupesKeeperSet": {
+    "message": "Постави чувар"
+  },
+  "dupesNone": {
+    "message": "Нема пронајдени дупликати"
+  },
+  "dupesPreviewSummary": {
+    "message": "$groups$ групи · $count$ за ослободување",
+    "placeholders": {
+      "count": {
+        "content": "$2"
+      },
+      "groups": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesRemoveRow": {
+    "message": "Избриши ја оваа копија"
+  },
+  "dupesRiskBanner": {
+    "message": "Дедупликацијата масовно брише дупликат обележувачи. Направете резервна копија на обележувачите пред да ја примените."
+  },
+  "dupesScopeAll": {
+    "message": "Сите обележувачи"
+  },
+  "dupesScopeBar": {
+    "message": "Само лента со обележувачи"
+  },
+  "dupesStrategyBookmarkBar": {
+    "message": "Задржи го оној во лентата со обележувачи"
+  },
+  "dupesStrategyMostVisited": {
+    "message": "Задржи го најпосетуваниот"
+  },
+  "dupesStrategyNewest": {
+    "message": "Задржи го најновиот"
+  },
+  "dupesStrategyOldest": {
+    "message": "Задржи го најстариот"
+  },
+  "dupesStrategyShallowest": {
+    "message": "Задржи го најплиткиот"
+  },
+  "dupesStrategyShortestTitle": {
+    "message": "Задржи го најкраткиот наслов"
+  },
+  "edit": {
+    "message": "Измени ..."
+  },
+  "editBookmark": {
+    "message": "Измени обележите"
+  },
+  "editFolder": {
+    "message": "Измени папка"
+  },
+  "errorOccured": {
+    "message": "Упс, грешка грешка."
+  },
+  "extDesc": {
+    "description": "The extension description.",
+    "message": "А neater обележувачи дрво скокачки прозорец."
+  },
+  "extName": {
+    "description": "The extension name.",
+    "message": "Neater Ознаки"
+  },
+  "favGalleryAll": {
+    "description": "Favicon gallery source filter chip: show every source.",
+    "message": "Сите"
+  },
+  "favGalleryCompare": {
+    "description": "Favicon gallery toggle button: switch every icon to the generic placeholder it replaced (before/after comparison).",
+    "message": "Спореди со резервната икона"
+  },
+  "favGalleryEmptyText": {
+    "description": "Favicon gallery empty-state body text.",
+    "message": "Кога поп-ап прозорецот ќе наиде на обележан сајт за кој Chrome нема икона, vBookmarks ја презема вистинската и ја прикажува тука."
+  },
+  "favGalleryEmptyTitle": {
+    "description": "Favicon gallery empty-state heading.",
+    "message": "Сè уште нема освежени икони"
+  },
+  "favGalleryFailedHint": {
+    "description": "Favicon gallery hint under the failed-fetch section title.",
+    "message": "Неуспесите се повторуваат по 24 часа, 3 дена и 7 дена, а потоа се отфрлаат додека не се исчисти кешот на иконите."
+  },
+  "favGalleryFailedTitle": {
+    "description": "Favicon gallery heading of the muted section listing hosts whose icon fetch failed recently.",
+    "message": "Неодамна пробувано, нема најдена икона"
+  },
+  "favGalleryGaveUp": {
+    "description": "Favicon gallery badge on a failed-strip host whose retries are exhausted (it stays untouched until the icon cache is cleared).",
+    "message": "Откажано"
+  },
+  "favGalleryHint": {
+    "description": "Subtitle under the favicon gallery title, explaining the page is read-only.",
+    "message": "Икони што vBookmarks ги презеде за обележани сајтови кои Chrome не ги имаше кеширано — од каде доаѓа секоја и кои обележувачи ја користат. Само приказ."
+  },
+  "favGalleryLink": {
+    "description": "Options link (Icons group, right of the Clear icon cache button): opens the favicon gallery page listing the sites whose icons were refetched.",
+    "message": "Прикажи освежени икони"
+  },
+  "favGalleryOrphan": {
+    "description": "Favicon gallery note on a card whose host no longer has any bookmark.",
+    "message": "Нема преостанат обележувач на овој домаќин — иконата се брише со кешот."
+  },
+  "favGallerySearch": {
+    "description": "Placeholder of the favicon gallery filter input.",
+    "message": "Филтрирај по сајт, наслов или патека"
+  },
+  "favGalleryShowingBefore": {
+    "description": "Favicon gallery toggle button while the placeholder comparison is shown: switch back to the real fetched icons.",
+    "message": "Назад на вистинските икони"
+  },
+  "favGalleryStatBookmarks": {
+    "description": "Favicon gallery stats strip: how many bookmarks sit on the refreshed sites.",
+    "message": "$n$ обележувачи",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "favGalleryStatSites": {
+    "description": "Favicon gallery stats strip: how many sites have a refreshed icon.",
+    "message": "$n$ сајтови",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "favGalleryTitle": {
+    "description": "Favicon gallery page title (h1 + document title).",
+    "message": "Освежени икони на сајтови"
+  },
+  "favGalleryVisits": {
+    "description": "Favicon gallery tooltip on a bookmark row's visit-count pill.",
+    "message": "$n$ евидентирани отворања",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "favSrcDirect": {
+    "description": "Favicon gallery source badge: the icon was fetched directly from the site itself.",
+    "message": "Директно"
+  },
+  "favSrcLegacy": {
+    "description": "Favicon gallery source badge: cached before the source was recorded, so the origin is unknown.",
+    "message": "Поранешен кеш"
+  },
+  "favSrcProxy": {
+    "description": "Favicon gallery source badge: the icon was fetched through the user's own proxy relay.",
+    "message": "Прокси"
+  },
+  "folderCopyConfirm": {
+    "message": "Да го копирам списокот од $n$ обележувачи?",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "folderCopyDone": {
+    "message": "Копирани $n$ записи за обележувачи",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "folderCopyJson": {
+    "message": "JSON"
+  },
+  "folderCopyList": {
+    "message": "Копирај наслови и адреси"
+  },
+  "folderCopyMarkdown": {
+    "message": "Markdown"
+  },
+  "folderCopyText": {
+    "message": "Обичен текстуален список"
+  },
+  "folderEmpty": {
+    "message": "(Празно)"
+  },
+  "folderPickCopyHere": {
+    "message": "Копирај овде"
+  },
+  "folderPickFavNote": {
+    "message": "Необележаните ставки ќе бидат обележани овде"
+  },
+  "folderPickFilter": {
+    "message": "Филтрирај папки…"
+  },
+  "folderPickMoveHere": {
+    "message": "Премести овде"
+  },
+  "folderPickPinned": {
+    "message": "Закачени"
+  },
+  "folderPickRecent": {
+    "message": "Скорешни"
+  },
+  "general": {
+    "message": "Општи поставувања"
+  },
+  "groupCopyToFolder": {
+    "message": "Копирај во папка…"
+  },
+  "groupPlaceTooltip": {
+    "message": "Зачувај ја групата во папка…"
+  },
+  "groupSaveToFolder": {
+    "message": "Зачувај во папка…"
+  },
+  "ignore": {
+    "message": "Игнорирај"
+  },
+  "name": {
+    "description": "Name of bookmark or folder.",
+    "message": "Име"
+  },
+  "noTitle": {
+    "description": "The title for untitled bookmarks with no http(s) URL or untitled folders.",
+    "message": "(Нема наслов)"
+  },
+  "nope": {
+    "message": "Откажи"
+  },
+  "open": {
+    "description": "Action to open bookmarks.",
+    "message": "Отворете"
+  },
+  "openBookmarks": {
+    "message": "Отвори ги сите обележувачи"
+  },
+  "openBookmarksInExistingGroup": {
+    "message": "Отвори сè во постоечка група јазичиња…"
+  },
+  "openBookmarksInGroup": {
+    "message": "Отвори сè во нова група јазичиња"
+  },
+  "openBookmarksInGroupSetup": {
+    "message": "Отвори сè во нова група јазичиња…"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "Отвори обележувачи во инкогнито"
+  },
+  "openBookmarksNewWindow": {
+    "message": "Отвори обележувачи во нов прозорец"
+  },
+  "openCommandPaletteCommand": {
+    "message": "Отвори командна палета"
+  },
+  "openIncognitoWindow": {
+    "message": "Отвори во инкогнито прозорецот"
+  },
+  "openNewTab": {
+    "message": "Отвори во ново јазиче"
+  },
+  "openNewWindow": {
+    "message": "Отвори во нов прозорец"
+  },
+  "openSidePanelCommand": {
+    "message": "Отвори страничен панел на vBookmarks"
+  },
+  "optionAnnounceEnabled": {
+    "message": "Прикажувај известувања во производот"
+  },
+  "optionAnnounceEnabledHint": {
+    "message": "Белешки за изданија и совети од GitHub складиштето на проектот (се преземаат најмногу еднаш на секои 6 часа). Исклучувањето исто така го запира мрежното преземање."
+  },
+  "optionAutoRefreshSync": {
+    "message": "Автоматско освежување на статусот на синхронизација"
+  },
+  "optionAutoResizePopup": {
+    "message": "Автоматско менување на големината на прозорецот за да одговара на содржината"
+  },
+  "optionClassicExperience": {
+    "message": "Врати го класичното заглавие"
+  },
+  "optionClassicExperienceHint": {
+    "message": "Ги исклучува командната палета, ѕвездичката за брзо додавање, ставката во контекстното мени на страницата, копчето за алатки и јазичињата за преглед. Секоја од нив може повторно да се вклучи поединечно во својот дел."
+  },
+  "optionClickNewTab": {
+    "message": "Лево кликнете отвора обележувач во нов таб."
+  },
+  "optionCloseUnusedFolders": {
+    "message": "Затвори неискористени папки при отварање фолдер."
+  },
+  "optionCollapseAddFolderMenu": {
+    "message": "Собери ги записите за додавање папка"
+  },
+  "optionCollapseAddFolderMenuHint": {
+    "message": "Спој ги записите за додавање папка (пред/по/внатре на редовите со папки, пред/по на редовите со обележувачи) во еден запис од подменито."
+  },
+  "optionCollapseSortMenu": {
+    "message": "Собери ги записите за сортирање во едно подмени „Сортирање“"
+  },
+  "optionCollapseSortMenuHint": {
+    "message": "Се однесува на менито со десно копче за папки. Вклучено по дифолт."
+  },
+  "optionCollapseTabGroupMenu": {
+    "message": "Собери ги записите за групите јазичиња во едно подмени „Групи на јазичиња“"
+  },
+  "optionCollapseTabGroupMenuHint": {
+    "message": "Се однесува и на менијата со десно копче за папки и за обележувачи. Исклучено по дифолт; ги прави менијата со мала висина пократки на екрани со мала големина/високо зумирање."
+  },
+  "optionConfirmDeleteFolder": {
+    "message": "Потврди пред бришење на непразни папки"
+  },
+  "optionConfirmOpenFolder": {
+    "message": "Прикаже потврда кога се отвара многу обележувачите од папка."
+  },
+  "optionDeadProxyServer": {
+    "message": "Прокси сервер за мртви врски"
+  },
+  "optionDeadProxyStrip": {
+    "message": "Прикажувај го советот за додавање прокси во прегледот на мртви линкови"
+  },
+  "optionDeadProxyStripHint": {
+    "message": "Кога опцијата е исклучена, советот не се прикажува таму; прокси-серверот останува конфигурабилен овде, а зачуваниот сервер секогаш го прикажува својот ред за управување во прегледот."
+  },
+  "optionDeadScanConcurrency": {
+    "message": "Истовременост при скенирање на мртви врски (1-16)"
+  },
+  "optionDeadScanTimeout": {
+    "message": "Време на истек при скенирање на мртви врски во секунди (2-30)"
+  },
+  "optionFaviconBackup": {
+    "message": "Вклучи го кешот на икони во резервните копии"
+  },
+  "optionFaviconBackupHint": {
+    "message": "Вклучи го и кешот на збогатените фавикони (податоци по сајт, потенцијално големи) во извозот/увозот на поставките. Ова опфаќа веќе кеширани икони дури и кога преземањето е исклучено. Исклученото одржува резервни копии мали; иконите и онака автоматски се преземаат повторно."
+  },
+  "optionFaviconCacheClear": {
+    "message": "Исчисти го кешот на икони"
+  },
+  "optionFaviconCacheClearConfirm": {
+    "message": "Да се исчисти кешот на збогатените икони? Иконите автоматски ќе се преземат повторно при следното отворање."
+  },
+  "optionFaviconCacheCleared": {
+    "message": "Кешот на икони е исчистен. Иконите повторно ќе се преземат при следното отворање."
+  },
+  "optionFaviconCacheEmpty": {
+    "message": "Нема кеш на икони за чистење."
+  },
+  "optionFaviconContrast": {
+    "message": "Инвертирај нискоконтрастни favicons"
+  },
+  "optionFaviconContrastHint": {
+    "message": "Белите икони на светли теми и црните икони на темни теми се инвертираат за да останат видливи. Секоја икона се анализира еднаш кога ќе се вчита — без трошок додека прелистувате."
+  },
+  "optionFaviconEnrich": {
+    "message": "Преземи ги иконите што недостасуваат"
+  },
+  "optionFaviconEnrichAgg": {
+    "message": "Резервна икона од трета страна"
+  },
+  "optionFaviconEnrichAggHint": {
+    "message": "Кога директното преземање не успее, иконата се бара по доменот од вградената листа на услуги на трети страни ($providers$). Ако услугата е недостапна, таа се прескокнува и се обидува следната — истата не се повторува во рок од 6 часа.",
+    "placeholders": {
+      "providers": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionFaviconEnrichHint": {
+    "message": "За обележани сајтови за кои Chrome нема кеширана икона, преземете ја вистинската икона директно од сајтот (/favicon.ico, а потоа и декларираните икони на страницата). Барањата одат само до сајтовите што сте ги обележале."
+  },
+  "optionHighlightUnsynced": {
+    "message": "Затемни несинхронизирани обележувачи"
+  },
+  "optionLanguage": {
+    "message": "Јазик"
+  },
+  "optionLanguageAuto": {
+    "message": "Авто"
+  },
+  "optionLanguageHint": {
+    "message": "Промената на јазикот ја вчитува страницата повторно."
+  },
+  "optionOnlyShowBookmarkBar": {
+    "message": "Прикажи само обележувачи од лентата со обележувачи"
+  },
+  "optionOpenInSidePanel": {
+    "message": "Отвори во страничен панел наместо во скокачки прозорец"
+  },
+  "optionOpenNewTab": {
+    "message": "Среден клик или контрола-клик се отвора во нов обележувач заднинско јазиче (наместо на преден план)."
+  },
+  "optionPaletteEnabled": {
+    "message": "Овозможи командна палета (Ctrl/Cmd+K)"
+  },
+  "optionPopupStays": {
+    "message": "Скокачки останува отворен при отварање (лево-клик) обележувачи."
+  },
+  "optionQuickAddContextMenu": {
+    "message": "Додај ставка „Обележи ја оваа страница со vBookmarks“ во менито со десен клик на страницата"
+  },
+  "optionQuickAddContextMenuHint": {
+    "message": "Независно од копчето со ѕвезда за брзо додавање; враќањето на класичното искуство исто така ја исклучува оваа ставка."
+  },
+  "optionQuickAddEnabled": {
+    "message": "Прикажувај го копчето со ѕвезда за брзо додавање веднаш до полето за пребарување"
+  },
+  "optionRecentCollapsed": {
+    "message": "Собери го делот за неодамна додадени по дифолт"
   },
   "optionRecentCount": {
     "message": "Број на неодамна додадени обележувачи за прикажување"
+  },
+  "optionRememberPrevState": {
+    "message": "Запомни ја претходната состојба (позиција на лизгање, отворени папки и последната фокусирана ставка)."
+  },
+  "optionRememberView": {
+    "message": "Запомни го последниот активен приказ и отвори го повторно"
+  },
+  "optionSearchAfterEnter": {
+    "message": "Пребарувај обележувачи само кога е притиснато ENTER (наместо инстантно пребарување)"
   },
   "optionSearchHistory": {
     "message": "Прикажи област за историја на пребарување"
@@ -276,17 +1060,496 @@
   "optionSearchHistoryHint": {
     "message": "Скриј ја областа за скорешни пребарувања над резултатите — запишаните прашања се задржуваат"
   },
+  "optionShowDeadView": {
+    "message": "Прикажи го табот за приказ на мртви врски"
+  },
+  "optionShowDupesView": {
+    "message": "Прикажи го табот за приказ на дупликати"
+  },
+  "optionShowItemPath": {
+    "message": "Прикажи ја патеката на родителската папка во редовите на списокот"
+  },
+  "optionShowRecentBookmarks": {
+    "message": "Прикажи неодамна додадени обележувачи на врвот на скокачкиот прозорец"
+  },
+  "optionShowStatsView": {
+    "message": "Прикажи го табот за приказ на статистики"
+  },
+  "optionShowSyncStatus": {
+    "message": "Прикажи индикатори за статус на синхронизација"
+  },
+  "optionShowTabBadges": {
+    "message": "Прикажувај ознаки со броеви на јазичињата за преглед"
+  },
+  "optionShowTabGroupsView": {
+    "message": "Прикажи го приказот на групи на јазичиња"
+  },
+  "optionShowToolButton": {
+    "message": "Прикажувај го копчето за алатки (⋮) веднаш до полето за пребарување"
+  },
+  "optionShowViewTabs": {
+    "message": "Прикажи ги картичките за приказ под полето за пребарување"
+  },
+  "optionStagingEnabled": {
+    "message": "Овозможи ја областа за подготовка"
+  },
+  "optionStagingEnabledHint": {
+    "message": "Додека е исклучено, овој приказ ги задржува само неодамна додадените ставки, а сите копчиња или менија за подготовка во другите прикази се кријат."
+  },
+  "optionStatsEnabled": {
+    "message": "Овозможи статистики за посети"
+  },
+  "optionSyncRefreshInterval": {
+    "message": "Интервал на освежување"
+  },
+  "optionSyncRefreshIntervalSeconds": {
+    "message": "секунди"
+  },
+  "optionTabGroupsClosedLimit": {
+    "message": "Историја на затворени јазичиња/групи за чување"
+  },
+  "optionTheme": {
+    "message": "Тема"
+  },
+  "optionThemeAuto": {
+    "message": "Следи го системот"
+  },
+  "optionThemeDark": {
+    "message": "Темна"
+  },
+  "optionThemeInk": {
+    "message": "Мастило (темна)"
+  },
+  "optionThemeLight": {
+    "message": "Светла"
+  },
+  "optionThemePaper": {
+    "message": "Хартија (светла)"
+  },
+  "optionTreeRowActions": {
+    "message": "Дејства при лебдење на редовите (уреди / подготви / избриши)"
+  },
+  "optionVirtualScrollLab": {
+    "message": "Виртуелно лизгање (експериментално)"
+  },
+  "optionVirtualScrollLabHint": {
+    "message": "Приказите на групи јазичиња и дупликати прикажуваат само редови блиску до видикот. Многу побрзо на многу големи списоци; додека е експериментално, позицијата на лизгачот е проценка."
+  },
+  "optionZoom": {
+    "message": "Зум"
+  },
+  "options": {
+    "message": "Опци"
+  },
+  "optionsDonate": {
+    "message": "Донирај"
+  },
+  "optionsFooterText": {
+    "description": "Footer text for the Options page",
+    "message": "Изградено од $authorName$.",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionsGithubLink": {
+    "message": "GitHub"
+  },
+  "optionsGroupBackup": {
+    "message": "Резервна копија"
+  },
+  "optionsGroupContextMenu": {
+    "message": "Контекстни менија"
+  },
+  "optionsGroupIcons": {
+    "message": "Икони"
+  },
+  "optionsGroupLabs": {
+    "message": "Лабораторија"
+  },
+  "optionsGroupPalette": {
+    "message": "Командна палета"
+  },
+  "optionsGroupSort": {
+    "message": "Сортирање"
+  },
+  "optionsGroupStats": {
+    "message": "Статистика"
+  },
+  "optionsGroupTools": {
+    "message": "Алатки"
+  },
+  "optionsGroupViews": {
+    "message": "Прикази"
+  },
+  "optionsHomepageLink": {
+    "message": "Почетна страница"
+  },
+  "optionsSince": {
+    "message": "Форк од Neat Bookmarks, одржуван $days$ дена.",
+    "placeholders": {
+      "days": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionsStagingSection": {
+    "message": "Подготовка и неодамна додадени"
+  },
+  "optionsStorageLocalTip": {
+    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting).",
+    "message": "Се чува само на овој уред — не се споделува преку Chrome синхронизација."
+  },
+  "optionsStorageSyncTip": {
+    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting).",
+    "message": "Се синхронизира преку вашата Chrome сметка — оваа поставка е споделена на сите ваши уреди."
+  },
+  "optionsVersion": {
+    "message": "Верзија на vBookmarks"
+  },
+  "paletteActionOpenUrl": {
+    "message": "Отвори URL"
+  },
+  "paletteActionOpenUrlGroup": {
+    "message": "Отвори група папки со обележувачи"
+  },
+  "paletteActionUrlTemplate": {
+    "message": "Отвори шаблон за URL"
+  },
+  "paletteActionViewPreset": {
+    "message": "Отвори преглед со претходно поставување"
+  },
+  "paletteClose": {
+    "message": "Затвори"
+  },
+  "paletteCmdDead": {
+    "message": "Најди мртви врски"
+  },
+  "paletteCmdDupes": {
+    "message": "Исчисти дупликат обележувачи"
+  },
+  "paletteCmdGoDead": {
+    "message": "Оди на преглед за мртви врски"
+  },
+  "paletteCmdGoDupes": {
+    "message": "Оди на преглед за дупликати"
+  },
+  "paletteCmdGoRecent": {
+    "message": "Оди на преглед за неодамнешни"
+  },
+  "paletteCmdGoSearch": {
+    "message": "Оди на преглед за пребарување"
+  },
+  "paletteCmdGoStats": {
+    "message": "Оди на преглед за статистики"
+  },
+  "paletteCmdGoTabGroups": {
+    "message": "Оди до приказот на групи на јазичиња"
+  },
+  "paletteCmdGoTree": {
+    "message": "Оди на преглед на дрво"
+  },
+  "paletteCmdLang": {
+    "message": "Смени јазик…"
+  },
+  "paletteCmdLangUsage": {
+    "message": "Употреба: /lang проследено со код на локализација — на пр. /lang en, /lang zh_CN, /lang ja."
+  },
+  "paletteCmdNewBookmark": {
+    "message": "Нов обележувач…"
+  },
+  "paletteCmdNewFolder": {
+    "message": "Нова папка…"
+  },
+  "paletteCmdOptions": {
+    "message": "Отвори страница за опции"
+  },
+  "paletteCmdQuickAdd": {
+    "message": "Обележи го тековното јазиче"
+  },
+  "paletteCmdSaveAsCommand": {
+    "message": "Зачувај \"$1\" како команда…"
+  },
+  "paletteCmdSaveSession": {
+    "message": "Зачувај ги јазичињата од прозорецот како папка"
+  },
+  "paletteCmdSearchInView": {
+    "message": "Пребарај '$query$' во преглед за пребарување",
+    "placeholders": {
+      "query": {
+        "content": "$1"
+      }
+    }
+  },
+  "paletteCmdTheme": {
+    "message": "Постави тема…"
+  },
+  "paletteCmdThemeUsage": {
+    "message": "Употреба: /theme проследено со име на тема — auto, light, dark, ink или paper (уникатен префикс работи, на пр. /theme d)."
+  },
+  "paletteCmdToggleViewTabs": {
+    "message": "Префрли приказ на јазичиња"
+  },
+  "paletteCmdVersion": {
+    "message": "Информации за верзијата"
+  },
+  "paletteCustomAction": {
+    "message": "Дејство"
+  },
+  "paletteCustomAdd": {
+    "message": "Додај команда…"
+  },
+  "paletteCustomAliases": {
+    "message": "Алијаси (одвоени со запирка)"
+  },
+  "paletteCustomBroken": {
+    "message": "Папката на командата \"$1\" повеќе не постои. Да се избрише командата?"
+  },
+  "paletteCustomDeleteConfirm": {
+    "message": "Да се избрише командата \"$1\"? Промената се синхронизира на сите ваши уреди."
+  },
+  "paletteCustomEmpty": {
+    "message": "Сè уште нема прилагодени команди."
+  },
+  "paletteCustomErrAction": {
+    "message": "Изберете тип на дејство."
+  },
+  "paletteCustomErrAlias": {
+    "message": "Алијаси: исти правила како кај слешот (1–24 знаци, мали букви, цифри или цртички)."
+  },
+  "paletteCustomErrFolder": {
+    "message": "Изберете папка за обележувачи."
+  },
+  "paletteCustomErrLimit": {
+    "message": "Достигнато е ограничувањето на команди (100) — прво избришете една."
+  },
+  "paletteCustomErrSlash": {
+    "message": "Слеш: 1–24 знаци, мали букви, цифри или цртички, почнувајќи со буква или цифра."
+  },
+  "paletteCustomErrTaken": {
+    "message": "Тој слеш или алијас е веќе заземен."
+  },
+  "paletteCustomErrTemplate": {
+    "message": "Шаблонот мора да содржи точно еден %s."
+  },
+  "paletteCustomErrUrl": {
+    "message": "Дозволени се само http:// или https:// URL-адреси."
+  },
+  "paletteCustomErrView": {
+    "message": "Изберете приказ."
+  },
+  "paletteCustomFolder": {
+    "message": "Папка за обележувачи"
+  },
+  "paletteCustomHint": {
+    "message": "Прилагодени команди со коса црта за командната палета (Ctrl/Cmd+K). Тие се синхронизираат со вашите поставки — најмногу 100 записи."
+  },
+  "paletteCustomSave": {
+    "message": "Зачувај команда"
+  },
+  "paletteCustomScan": {
+    "message": "Започни го скенирањето при внес"
+  },
+  "paletteCustomScope": {
+    "message": "Пресет за опсег на дедупликација"
+  },
+  "paletteCustomSlash": {
+    "message": "Слеш (зборот по /)"
+  },
+  "paletteCustomStrategy": {
+    "message": "Пресет за стратегија за дедупликација"
+  },
+  "paletteCustomTag": {
+    "message": "прилагодено"
+  },
+  "paletteCustomTemplate": {
+    "message": "Шаблон за URL — %s се заменува со зборовите по командата"
+  },
+  "paletteCustomUrl": {
+    "message": "URL"
+  },
+  "paletteCustomUsage": {
+    "message": "$1 / $2"
+  },
+  "paletteCustomView": {
+    "message": "Приказ"
+  },
+  "paletteCustomWhere": {
+    "message": "Отвори во"
+  },
+  "paletteNoResults": {
+    "message": "Нема совпаѓачки резултати"
+  },
+  "palettePlaceholder": {
+    "message": "Пребарај обележувачи, папки, команди…"
+  },
+  "paletteWhereBackground": {
+    "message": "Јазичиња во позадина"
+  },
+  "paletteWhereCurrent": {
+    "message": "Тековно јазиче"
+  },
+  "paletteWhereTab": {
+    "message": "Ново јазиче"
+  },
+  "paletteWhereWindow": {
+    "message": "Нов прозорец"
+  },
+  "parentFolder": {
+    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
+    "message": "Папка: \" $folderName$ \"",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarksbar"
+      }
+    }
+  },
+  "pasteDone": {
+    "message": "Залепено"
+  },
+  "pasteGone": {
+    "message": "Обележувачот повеќе не постои — клипбордот е исчистен"
+  },
+  "pasteHere": {
+    "message": "Залепи тука"
+  },
+  "pinFolder": {
+    "message": "Закачи ја оваа папка"
+  },
+  "quickAddBookmark": {
+    "message": "Обележи ја оваа страница (Ctrl+D)"
+  },
+  "quickAddBookmarkCommand": {
+    "message": "Брзо додај го тековното јазиче како обележувач"
+  },
+  "quickAdded": {
+    "message": "Обележувачот е додаден"
+  },
+  "quickAddedTo": {
+    "message": "Обележувачот е додаден во $folderName$",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarks bar"
+      }
+    }
+  },
+  "quickRemoveBookmark": {
+    "message": "Отстрани го овој обележувач (Ctrl+D)"
+  },
+  "quickRemoved": {
+    "message": "Обележувачот е отстранет"
+  },
+  "recentBookmarks": {
+    "message": "Неодамна додадени"
+  },
   "recentEmpty": {
     "message": "Нема неодамнешни обележувачи. Притиснете Ctrl+D за да ја обележите тековната страница."
+  },
+  "recentGroupMonth": {
+    "message": "Овој месец"
+  },
+  "recentGroupOlder": {
+    "message": "Постари"
+  },
+  "recentGroupToday": {
+    "message": "Денес"
+  },
+  "recentGroupWeek": {
+    "message": "Оваа недела"
   },
   "recentRevealInTree": {
     "message": "Прикажи во дрво"
   },
+  "recentSectionTitle": {
+    "message": "Скорешно додадени"
+  },
+  "recentStageAll": {
+    "message": "Подготви ги сите скорешно додадени"
+  },
+  "recentStageGroup": {
+    "message": "Испрати $t$ во просторот за подготвка",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
+  },
+  "removeSeparator": {
+    "message": "Отстрани разделник"
+  },
+  "replaceUrl": {
+    "message": "Замени со тековната URL"
+  },
+  "reportError": {
+    "message": "Извештај Грешка"
+  },
+  "reportedToDeveloper": {
+    "description": "A message for an error occured in the extension, has been reported to the developer.",
+    "message": "Ова е забележано на инвеститорот."
+  },
+  "resetButton": {
+    "message": "Ресетирај"
+  },
+  "resetSettings": {
+    "message": "Ресетирање Подесувања"
+  },
+  "resetSettingsDescription": {
+    "message": "Ресетирај ги vBookmarks на стандардни поставки."
+  },
+  "revealOutsideBarAction": {
+    "message": "Прикажи сè и откриј"
+  },
+  "revealOutsideBarHint": {
+    "message": "Прикажана е само лентата со обележувачи: целта е надвор од неа."
+  },
+  "riskBannerDismiss": {
+    "message": "Затвори"
+  },
+  "riskBannerHelp": {
+    "message": "Водич за резервна копија и враќање"
+  },
+  "riskBannerNever": {
+    "message": "Не прикажувај повторно"
+  },
+  "rowActionDelete": {
+    "message": "Избриши"
+  },
+  "rowActionMark": {
+    "message": "Означи како мртва"
+  },
+  "rowActionReveal": {
+    "message": "Прикажи во дрвото"
+  },
+  "rowActionUnmark": {
+    "message": "Отстрани ознака за мртва"
+  },
+  "save": {
+    "message": "Зачувај"
+  },
+  "searchBookmarks": {
+    "description": "Placeholder text for search field.",
+    "message": "Пребарување Ознаки"
+  },
+  "searchClear": {
+    "message": "Исчисти пребарување"
+  },
   "searchHistoryClear": {
     "message": "Исчисти сè"
   },
+  "searchHistoryClose": {
+    "message": "Сокриј историја на пребарување"
+  },
+  "searchHistoryClosedToast": {
+    "message": "Историјата на пребарување е скриена — повторно вклучете ја во Опции → Пребарување"
+  },
   "searchHistoryRemove": {
     "message": "Отстрани го ова пребарување"
+  },
+  "searchHistoryRerun": {
+    "message": "Повторно пребарај"
   },
   "searchHistoryResultCount": {
     "message": "$n$ резултат(и)",
@@ -298,6 +1561,895 @@
   },
   "searchHistoryTitle": {
     "message": "Неодамнешни пребарувања"
+  },
+  "searchNoResults": {
+    "message": "Нема совпаѓачки обележувачи"
+  },
+  "searchResultCount": {
+    "message": "$n$ резултат(и)",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "searchStageAllGroup": {
+    "message": "Испрати ги сите резултати како група „$1$“",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "searchViewHint": {
+    "message": "Внесете во полето погоре за да ги пребарувате вашите обележувачи"
+  },
+  "selectAll": {
+    "message": "Сите"
+  },
+  "selectClear": {
+    "message": "Исчисти"
+  },
+  "selectCount": {
+    "message": "$count$ избрани",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "selectInvert": {
+    "message": "Инвертирај"
+  },
+  "selectModeEnter": {
+    "message": "Избери"
+  },
+  "selectModeExit": {
+    "message": "Излези од избор"
+  },
+  "separatorOptions": {
+    "message": "Сепаратори"
+  },
+  "sessionEmpty": {
+    "message": "Нема јазичиња за зачувување"
+  },
+  "sessionFolderName": {
+    "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm.",
+    "message": "Сесија $date$",
+    "placeholders": {
+      "date": {
+        "content": "$1",
+        "example": "2026-07-18 15:04"
+      }
+    }
+  },
+  "sessionSaved": {
+    "description": "Alert shown after the current window's tabs were saved into a new bookmark folder.",
+    "message": "Зачувани $count$ јазичиња во нова папка",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "12"
+      }
+    }
+  },
+  "settingsBackupHint": {
+    "message": "Извозот ги зачувува сите поставки (вклучувајќи ги преференциите за синхронизација) во JSON датотека. Увозот спојува резервна копија: поставките во датотеката ги препишуваат тековните, а сè друго останува."
+  },
+  "settingsExport": {
+    "message": "Извези поставки"
+  },
+  "settingsImport": {
+    "message": "Увези поставки"
+  },
+  "settingsImportConfirm": {
+    "message": "Увозот ќе ги препише сите поставки содржани во резервната датотека (поставките што не се во датотеката се задржуваат) и ќе ја превчита оваа страница. Продолжи?"
+  },
+  "settingsImportDone": {
+    "message": "Поставките се увезени. Страницата сега ќе се превчита."
+  },
+  "settingsImportError": {
+    "message": "Некои поставки не можеа да се запишат (квота за складирање или привремена грешка). Увозот не заврши — обидете се повторно."
+  },
+  "settingsImportInvalid": {
+    "message": "Невалидна датотека со поставки: не е резервна копија на vBookmarks."
+  },
+  "sortByDate": {
+    "message": "Сортирај по датум на додавање"
+  },
+  "sortByDateAdded": {
+    "message": "По датум на додавање (најнови први)"
+  },
+  "sortByName": {
+    "message": "Сортирај по име"
+  },
+  "sortByTitle": {
+    "message": "По наслов"
+  },
+  "sortDone": {
+    "message": "Папката е сортирана"
+  },
+  "sortFolderContents": {
+    "message": "Подреди содржина на папка"
+  },
+  "sortFoldersFirst": {
+    "message": "Чувај папки на врвот"
+  },
+  "sortMenuOptions": {
+    "message": "Сортирање"
+  },
+  "sortOptions": {
+    "message": "Опции за сортирање…"
+  },
+  "sortRecursive": {
+    "message": "Подреди и подпапки (рекурзивно)"
+  },
+  "sortRecursiveSuffix": {
+    "message": "(рекурзивно)"
+  },
+  "sortRecursiveWarning": {
+    "message": "Ова ги преуредува обележувачите во секоја потпапка."
+  },
+  "stagedToast": {
+    "message": "Подготвени $n$ јазичиња како група „$t$“",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "t": {
+        "content": "$2"
+      }
+    }
+  },
+  "stagingAdd": {
+    "message": "Испрати во сцена"
+  },
+  "stagingAdded": {
+    "message": "Испратено во сцена"
+  },
+  "stagingAddedSummary": {
+    "message": "Додадени $n$ ставки; $m$ веќе подготвени",
+    "placeholders": {
+      "m": {
+        "content": "$2"
+      },
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingAlready": {
+    "message": "Веќе е во подрачјето за подготовка"
+  },
+  "stagingBucketFavAll": {
+    "message": "Обележи ги сите како омилени"
+  },
+  "stagingBucketTitle": {
+    "message": "Необележани"
+  },
+  "stagingClear": {
+    "message": "Исчисти ја областа за подготовка"
+  },
+  "stagingClearConfirm": {
+    "message": "Да ја исчистам целата област за подготовка? Дрвото на обележувачи не се допира."
+  },
+  "stagingClearConfirmOk": {
+    "message": "Исчисти"
+  },
+  "stagingCleared": {
+    "message": "Областа за подготовка е исчистена"
+  },
+  "stagingConfirmFolder": {
+    "message": "Подготви $n$ обележувачи од оваа папка?",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingConfirmFolderOk": {
+    "message": "Постави"
+  },
+  "stagingCopyDone": {
+    "message": "Копирани $n$ ставки",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingCount": {
+    "message": "$n$ подготвени",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingDeleteConfirm": {
+    "message": "Избриши $n$ ставки? Оние што не се обележани само ја напуштаат областа за подготовка.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingDeleted": {
+    "message": "Избришани $n$ обележувачи",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingEmpty": {
+    "message": "Сè уште ништо не е подготвено. Испратете обележувачи овде од кој било приказ — копчето за авион на ред, или менито со десен клик — потоа организирајте и подредете ги во групи."
+  },
+  "stagingFav": {
+    "message": "Омилена"
+  },
+  "stagingFavDone": {
+    "message": "Обележани $n$ ставки како омилени",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingFolderEmpty": {
+    "message": "Оваа папка нема обележувачи за подготовка"
+  },
+  "stagingFromHistory": {
+    "message": "Од историја"
+  },
+  "stagingFull": {
+    "message": "Подрачјето за подготовка е полно — прво отстранете некои ставки"
+  },
+  "stagingGroupAssign": {
+    "message": "Група…"
+  },
+  "stagingGroupAssignTitle": {
+    "message": "Додели во група"
+  },
+  "stagingGroupCollapse": {
+    "message": "Собери група"
+  },
+  "stagingGroupDelete": {
+    "message": "Избриши група (со ставки)"
+  },
+  "stagingGroupDeleteConfirm": {
+    "message": "Да се избрише групата \"$1\"? Нејзините $2 ставки исто така ќе ја напуштат областа за подготвување."
+  },
+  "stagingGroupDeleted": {
+    "message": "Групата е избришана — отстранети $1 ставки"
+  },
+  "stagingGroupDissolve": {
+    "message": "Распушти група"
+  },
+  "stagingGroupDissolved": {
+    "message": "Групата е распуштена — ставките се задржани во подрачјето за подготовка"
+  },
+  "stagingGroupExpand": {
+    "message": "Прошири група"
+  },
+  "stagingGroupNamePrompt": {
+    "message": "Име на новата група"
+  },
+  "stagingGroupNew": {
+    "message": "Нова група"
+  },
+  "stagingGroupNoGroups": {
+    "message": "Сè уште нема групи"
+  },
+  "stagingGroupRename": {
+    "message": "Преименувај група…"
+  },
+  "stagingGroupSelectAll": {
+    "message": "Избери ги сите во групава"
+  },
+  "stagingGuideDismiss": {
+    "message": "Не прикажувај повторно"
+  },
+  "stagingGuideText": {
+    "message": "Организирајте обележувачи овде — изберете редови и влезете во режим на селекција за групни дејства."
+  },
+  "stagingMoveConfirm": {
+    "message": "Премести $n$ ставки во избраната папка?",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingMoveConfirmOk": {
+    "message": "Премести"
+  },
+  "stagingMoveCopy": {
+    "message": "Премести/копирај…"
+  },
+  "stagingMoveDone": {
+    "message": "Преместени $n$ ставки дома",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingNew": {
+    "message": "нови $n$",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingRemove": {
+    "message": "Отстрани од подрачјето за подготовка"
+  },
+  "stagingRemoved": {
+    "message": "Отстрането од подрачјето за подготовка"
+  },
+  "stagingRemovedCount": {
+    "message": "Отстранети $n$ ставки од областа за подготовка",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingRowFav": {
+    "message": "Обележи ја оваа ставка како омилена"
+  },
+  "stagingRowUnfav": {
+    "message": "Отстрани ја омиленоста на оваа ставка"
+  },
+  "stagingShortcutAdd": {
+    "message": "Додај кратенка"
+  },
+  "stagingShortcutAlias": {
+    "message": "Псевдоним"
+  },
+  "stagingShortcutBarLabel": {
+    "message": "Премести во:"
+  },
+  "stagingShortcutEdit": {
+    "message": "Уреди кратенка"
+  },
+  "stagingShortcutMove": {
+    "message": "Премести избрано во $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingShortcutPickFolder": {
+    "message": "Избери целна папка…"
+  },
+  "stagingShortcutRemove": {
+    "message": "Отстрани кратенка"
+  },
+  "stagingShortcutRemoved": {
+    "message": "Кратенката е отстранета"
+  },
+  "stagingShortcutSave": {
+    "message": "Зачувај"
+  },
+  "stagingShortcutTitle": {
+    "message": "Кратенка за преместување"
+  },
+  "stagingUnfav": {
+    "message": "Не-омилена"
+  },
+  "stagingUnfavDone": {
+    "message": "Отстранета омиленоста на $n$ ставки",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "statsClearConfirm": {
+    "message": "Да се исчистат статистиките за посети за $count$ обележувачи? Ова не може да се врати.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "statsClearData": {
+    "message": "Исчисти статистики"
+  },
+  "statsDisabledHint": {
+    "message": "Статистиките за посети се исклучени — овозможете ги во Опции → Прегледи"
+  },
+  "statsEmpty": {
+    "message": "Статистиките се градат додека отворате обележувачи"
+  },
+  "statsHistoryAdd": {
+    "message": "Додај во обележувачи"
+  },
+  "statsHistoryBanner": {
+    "message": "Овозможи пристап до историјата за да се земат статистики за посети од твоите минати посети."
+  },
+  "statsHistoryBookmarked": {
+    "message": "Обележано"
+  },
+  "statsHistoryDismiss": {
+    "message": "Не прикажувај повторно"
+  },
+  "statsHistoryEnable": {
+    "message": "Овозможи"
+  },
+  "statsHistoryGuide": {
+    "message": "Дозволи пристап до историјата за да ги наведеш твоите неодамнешни посети овде."
+  },
+  "statsHistoryImported": {
+    "message": "Увезени минати посети за $count$ обележувачи",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "statsSectionBookmarks": {
+    "message": "Статистика за обележувачи"
+  },
+  "statsSectionRecent": {
+    "message": "Неодамнешни посети"
+  },
+  "statsShowUnbookmarked": {
+    "message": "Прикажи необележани"
+  },
+  "statsShowUnbookmarkedHint": {
+    "message": "Вклучи страници од историјата што не се зачувани како обележувачи."
+  },
+  "statsSortByCount": {
+    "message": "По број"
+  },
+  "statsSortByRecent": {
+    "message": "По неодамнешни"
+  },
+  "statsVisitCount": {
+    "message": "Посетено $count$ пати",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "storageUsageFree": {
+    "message": "Слободно"
+  },
+  "storageUsageHint": {
+    "message": "Само локално складиште на екстензијата (chrome.storage.local, квота од околу 10 MB): кешот на икони плус поставки и други локални податоци. Синхронизираните поставки, податоците за сесијата и самата библиотека на обележувачи не се бројат тука."
+  },
+  "storageUsageIcon": {
+    "message": "Кеш на икони"
+  },
+  "storageUsageOther": {
+    "message": "Друго"
+  },
+  "storageUsageSummary": {
+    "message": "Искористено $1$ од $2$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      },
+      "2": {
+        "content": "$2"
+      }
+    }
+  },
+  "syncOptions": {
+    "message": "Опции за синхронизација"
+  },
+  "syncStatusLocal": {
+    "message": "Само локално — не е прикачено"
+  },
+  "syncStatusSynced": {
+    "message": "Синхронизирано со вашата Google сметка"
+  },
+  "syncStatusUnsyncable": {
+    "message": "Не може да се синхронизира"
+  },
+  "syncSuffixLocal": {
+    "message": "(Локално)"
+  },
+  "syncSuffixSynced": {
+    "message": "(Синхронизирано)"
+  },
+  "tabGroupColorBlue": {
+    "description": "Accessible name of the blue color swatch in the new-tab-group dialog.",
+    "message": "Сина"
+  },
+  "tabGroupColorCyan": {
+    "description": "Accessible name of the cyan color swatch in the new-tab-group dialog.",
+    "message": "Цијан"
+  },
+  "tabGroupColorGreen": {
+    "description": "Accessible name of the green color swatch in the new-tab-group dialog.",
+    "message": "Зелена"
+  },
+  "tabGroupColorGrey": {
+    "description": "Accessible name of the grey color swatch in the new-tab-group dialog.",
+    "message": "Сива"
+  },
+  "tabGroupColorLabel": {
+    "message": "Боја"
+  },
+  "tabGroupColorOrange": {
+    "description": "Accessible name of the orange color swatch in the new-tab-group dialog.",
+    "message": "Портокалова"
+  },
+  "tabGroupColorPink": {
+    "description": "Accessible name of the pink color swatch in the new-tab-group dialog.",
+    "message": "Розова"
+  },
+  "tabGroupColorPurple": {
+    "description": "Accessible name of the purple color swatch in the new-tab-group dialog.",
+    "message": "Виолетова"
+  },
+  "tabGroupColorRed": {
+    "description": "Accessible name of the red color swatch in the new-tab-group dialog.",
+    "message": "Црвена"
+  },
+  "tabGroupColorYellow": {
+    "description": "Accessible name of the yellow color swatch in the new-tab-group dialog.",
+    "message": "Жолта"
+  },
+  "tabGroupDialogTitle": {
+    "message": "Нова група јазичиња"
+  },
+  "tabGroupNoGroups": {
+    "message": "Нема постоечки групи јазичиња"
+  },
+  "tabGroupOptions": {
+    "message": "Групи на јазичиња"
+  },
+  "tabGroupPickDialogTitle": {
+    "message": "Отвори во постоечка група јазичиња"
+  },
+  "tabGroupTitleLabel": {
+    "message": "Наслов на групата"
+  },
+  "tabGroupUntitled": {
+    "message": "Група без наслов"
+  },
+  "tabGroupsActivateGroup": {
+    "message": "Оди во група јазичиња"
+  },
+  "tabGroupsActivateTab": {
+    "message": "Оди на јазиче"
+  },
+  "tabGroupsAddBookmark": {
+    "message": "Обележи го ова јазиче"
+  },
+  "tabGroupsBatchClosedTitle": {
+    "message": "Затворени јазичиња"
+  },
+  "tabGroupsBookmarkRemoved": {
+    "message": "Отстранети $count$ обележувач(и)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsBookmarked": {
+    "message": "Обележано"
+  },
+  "tabGroupsBookmarksAdded": {
+    "message": "Додадени $count$ обележувач(и) во $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsClearClosedGroups": {
+    "message": "Исчисти сè"
+  },
+  "tabGroupsClearedToast": {
+    "message": "Исчистени $count$ затворени записи",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCloseGroup": {
+    "message": "Затвори група јазичиња"
+  },
+  "tabGroupsCloseWindow": {
+    "message": "Затвори прозорец"
+  },
+  "tabGroupsClosedGroups": {
+    "message": "Неодамна затворени"
+  },
+  "tabGroupsClosedOpenTab": {
+    "message": "Отвори во ново јазиче"
+  },
+  "tabGroupsClosedTabRemovedToast": {
+    "message": "Отстрането од затворениот запис"
+  },
+  "tabGroupsClosedTimeLabel": {
+    "message": "Затворено:"
+  },
+  "tabGroupsClosedToast": {
+    "message": "Затворени $count$ јазичиња",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCollapseAll": {
+    "message": "Собери ги сите"
+  },
+  "tabGroupsCollapseGroup": {
+    "message": "Собери група"
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "Собери прозорец"
+  },
+  "tabGroupsColorStyle": {
+    "message": "Стил на боја на група јазичиња"
+  },
+  "tabGroupsColorStyleEdge": {
+    "message": "Лента на работ"
+  },
+  "tabGroupsColorStyleHint": {
+    "message": "Исклучено прикажува само точка со боја. Лента на работ црта обоена лента по левиот раб на групата. Линија за поврзување црта обоена линија под точката на групата со ознака по ред, поврзувајќи ја целата група во едно дрво."
+  },
+  "tabGroupsColorStyleLine": {
+    "message": "Линија за поврзување"
+  },
+  "tabGroupsColorStyleOff": {
+    "message": "Исклучено (само точка со боја)"
+  },
+  "tabGroupsConfirmClearClosed": {
+    "message": "Дали да се избришат сите неодамна затворени записи? Тие повеќе нема да можат да се отворат од тука."
+  },
+  "tabGroupsConfirmClose": {
+    "message": "Затвори $count$ јазичиња?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsConfirmSleep": {
+    "message": "Замри $count$ јазичиња?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCopyMoveCopy": {
+    "message": "Копирај"
+  },
+  "tabGroupsCopyMoveDialog": {
+    "message": "Избраните јазичиња веќе припаѓаат на група јазичиња. Дали сакате да ги копирате (отворете ги на ново место) или да ги преместите (отстранете ги од тековната група)?"
+  },
+  "tabGroupsCopyMoveMove": {
+    "message": "Премести"
+  },
+  "tabGroupsCurrentTab": {
+    "message": "Тековна"
+  },
+  "tabGroupsCurrentWindow": {
+    "message": "Тековен прозорец"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "Избриши затворена група јазичиња"
+  },
+  "tabGroupsDiscarded": {
+    "message": "Заспана картичка"
+  },
+  "tabGroupsExpandAll": {
+    "message": "Рашири ги сите"
+  },
+  "tabGroupsExpandGroup": {
+    "message": "Рашири група"
+  },
+  "tabGroupsExpandWindow": {
+    "message": "Рашири прозорец"
+  },
+  "tabGroupsExpandedCollapse": {
+    "message": "Собери"
+  },
+  "tabGroupsExpandedExpand": {
+    "message": "Прошири"
+  },
+  "tabGroupsFilterPlaceholder": {
+    "message": "Филтрирај отворени јазичиња"
+  },
+  "tabGroupsGroupCount": {
+    "message": "$count$ јазичиња",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsGroupSavedToFolder": {
+    "message": "Зачувани $count$ јазичиња во $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsMenuAddBookmark": {
+    "message": "Обележи јазиче"
+  },
+  "tabGroupsMenuSaveFolder": {
+    "message": "Зачувај како папка со обележувачи"
+  },
+  "tabGroupsMergedWindowToast": {
+    "message": "Прозорецот е споен како група јазичиња"
+  },
+  "tabGroupsMoveNewWindow": {
+    "message": "Премести во нов прозорец"
+  },
+  "tabGroupsNewWindow": {
+    "message": "Нов прозорец"
+  },
+  "tabGroupsNoMatchingTabs": {
+    "message": "Нема соодветни јазичиња"
+  },
+  "tabGroupsOpenGroups": {
+    "message": "Отворени групи јазичиња"
+  },
+  "tabGroupsPinTab": {
+    "message": "Закачи картичка"
+  },
+  "tabGroupsPinned": {
+    "message": "Закачена картичка"
+  },
+  "tabGroupsPinnedUngroupedToast": {
+    "message": "Закачено — отстрането од својата група јазичиња"
+  },
+  "tabGroupsRecordDeletedToast": {
+    "message": "Отстранет затворениот запис"
+  },
+  "tabGroupsRemoveBookmark": {
+    "message": "Отстрани обележувач"
+  },
+  "tabGroupsRemoveClosedTab": {
+    "message": "Отстрани од зачуваната група"
+  },
+  "tabGroupsRenameDialog": {
+    "message": "Преименувај група јазичиња"
+  },
+  "tabGroupsRenameGroup": {
+    "message": "Преименувај група јазичиња"
+  },
+  "tabGroupsReopenAction": {
+    "message": "Отвори повторно"
+  },
+  "tabGroupsReopenGroup": {
+    "message": "Повторно отвори група јазичиња"
+  },
+  "tabGroupsSaveFolder": {
+    "message": "Зачувај ја групата јазичиња како папка со обележувачи"
+  },
+  "tabGroupsSelectAddBookmarks": {
+    "message": "Додај во папка со обележувачи…"
+  },
+  "tabGroupsSelectClose": {
+    "message": "Затвори"
+  },
+  "tabGroupsSelectNewGroup": {
+    "message": "Нова група јазичиња"
+  },
+  "tabGroupsSelectOpenInto": {
+    "message": "Отвори во постоечка група јазичиња…"
+  },
+  "tabGroupsSelectSaveFolder": {
+    "message": "Зачувај како папка со обележувачи"
+  },
+  "tabGroupsSelectSleep": {
+    "message": "Замри"
+  },
+  "tabGroupsSleepGroup": {
+    "message": "Замри група јазичиња"
+  },
+  "tabGroupsSleepTab": {
+    "message": "Заспиј јазиче"
+  },
+  "tabGroupsSleptToast": {
+    "message": "Ставени $count$ јазичиња во сон",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsSummary": {
+    "message": "$tabs$ јазичиња · $groups$ групи",
+    "placeholders": {
+      "groups": {
+        "content": "$2"
+      },
+      "tabs": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsSyncCollapse": {
+    "message": "Синхронизирај собирање со прелистувачот"
+  },
+  "tabGroupsSyncCollapseHint": {
+    "message": "Кога е означено, собирањето или проширувањето на група во овој приказ исто така го ажурира таб-групата во прелистувачот. Исклучено по дифолт, така што преклопувањето на приказот останува локално."
+  },
+  "tabGroupsToolbarRefresh": {
+    "message": "Освежи"
+  },
+  "tabGroupsUngroupGroup": {
+    "message": "Разгрупирај група"
+  },
+  "tabGroupsUngroupedTabs": {
+    "message": "Негрупирани јазичиња"
+  },
+  "tabGroupsUnpinTab": {
+    "message": "Откачи картичка"
+  },
+  "tabGroupsViewEmpty": {
+    "message": "Нема јазичиња во овој прозорец"
+  },
+  "tabGroupsWakeAction": {
+    "message": "Разбуди"
+  },
+  "tabGroupsWakeGroup": {
+    "message": "Разбуди група јазичиња"
+  },
+  "tabGroupsWakeTab": {
+    "message": "Разбуди јазиче"
+  },
+  "tabGroupsWindow": {
+    "message": "Прозорец $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsWindowClosedTitle": {
+    "message": "Затворен прозорец"
+  },
+  "tabGroupsWindowsCount": {
+    "message": "$n$ прозорци",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabRowStage": {
+    "message": "Испрати во сцена"
+  },
+  "tabgroupStageAll": {
+    "message": "Испрати група во сцена"
+  },
+  "tabgroupStageConfirm": {
+    "message": "Да се испратат $n$ јазичиња во сцена?",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabgroupStageNone": {
+    "message": "Нема обележливи јазичиња во оваа група"
   },
   "timeDaysAgo": {
     "message": "пред $n$ дена",
@@ -329,303 +2481,26 @@
   "timeYesterday": {
     "message": "вчера"
   },
+  "toolButtonTitle": {
+    "message": "Алатки (Ctrl+K)"
+  },
   "undoAction": {
     "message": "Врати"
   },
-  "revealOutsideBarHint": {
-    "message": "Прикажана е само лентата со обележувачи: целта е надвор од неа."
+  "undoSingleStepNote": {
+    "message": "Поништувањето може да го врати само последното бришење."
   },
-  "revealOutsideBarAction": {
-    "message": "Прикажи сè и откриј"
+  "unpinFolder": {
+    "message": "Откачи ја оваа папка"
   },
-  "dupesCleanAll": {
-    "message": "Исчисти сè: $groups$ групи, $count$ дополнителни копии",
-    "placeholders": {
-      "groups": {
-        "content": "$1"
-      },
-      "count": {
-        "content": "$2"
-      }
-    },
-    "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go."
+  "url": {
+    "message": "Рачно"
   },
-  "dupesConfirmAll": {
-    "message": "Да се отстранат $count$ дополнителни копии во $groups$ групи? Избраната копија во секоја група се задржува.",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      },
-      "groups": {
-        "content": "$2"
-      }
-    },
-    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
+  "versionDialogCopied": {
+    "message": "Копирано"
   },
-  "dupesConfirmSelected": {
-    "message": "Да се отстранат $count$ дуплирани обележувачи од избраните $groups$ групи?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      },
-      "groups": {
-        "content": "$2"
-      }
-    }
-  },
-  "dupesConfirmGroup": {
-    "message": "Задржи „$title$“ и отстрани ги другите $count$ копии?",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Example bookmark"
-      },
-      "count": {
-        "content": "$2"
-      }
-    },
-    "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."
-  },
-  "dupesDone": {
-    "message": "Отстранети $count$ дупликат обележувачи",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Alert shown after the duplicate cleanup finished."
-  },
-  "dupesGroupCount": {
-    "message": "$count$ дупликати",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
-  },
-  "dupesGroupExpand": {
-    "description": "Dupes view group-head context menu: expand a collapsed duplicate group.",
-    "message": "Прошири група"
-  },
-  "dupesGroupCollapse": {
-    "description": "Dupes view group-head context menu: collapse an expanded duplicate group.",
-    "message": "Собери група"
-  },
-  "dupesNone": {
-    "message": "Нема пронајдени дупликати"
-  },
-  "deleteEllipsis": {
-    "message": "Избришете ..."
-  },
-  "donationMessage": {
-    "message": "Уживате? Донирајте за да ја поттикнете неговата иднина — или оценете го во продавницата: секоја рецензија обезбедува континуирани ажурирања."
-  },
-  "donationV4Notice": {
-    "message": "vBookmarks 4.0 е целосна преработка со современ дизајн, исполнета со нови функции."
-  },
-  "donationV4GuideLink": {
-    "message": "Прочитај го водичот за v4 →"
-  },
-  "donationGo": {
-    "message": "Донирај"
-  },
-  "donationRate": {
-    "message": "Оценете го"
-  },
-  "donationRateTitle": {
-    "message": "Оценете го vBookmarks на Chrome Web Store"
-  },
-  "donationLater": {
-    "message": "Подоцна"
-  },
-  "donationNever": {
-    "message": "Не прикажувај повторно"
-  },
-  "donationDismiss": {
-    "message": "Откажи"
-  },
-  "edit": {
-    "message": "Измени ..."
-  },
-  "editBookmark": {
-    "message": "Измени обележите"
-  },
-  "editFolder": {
-    "message": "Измени папка"
-  },
-  "errorOccured": {
-    "message": "Упс, грешка грешка."
-  },
-  "extDesc": {
-    "description": "The extension description.",
-    "message": "А neater обележувачи дрво скокачки прозорец."
-  },
-  "extName": {
-    "description": "The extension name.",
-    "message": "Neater Ознаки"
-  },
-  "folderEmpty": {
-    "message": "(Празно)"
-  },
-  "general": {
-    "message": "Општи поставувања"
-  },
-  "ignore": {
-    "message": "Игнорирај"
-  },
-  "name": {
-    "description": "Name of bookmark or folder.",
-    "message": "Име"
-  },
-  "nope": {
-    "message": "Откажи"
-  },
-  "noTitle": {
-    "description": "The title for untitled bookmarks with no http(s) URL or untitled folders.",
-    "message": "(Нема наслов)"
-  },
-  "open": {
-    "description": "Action to open bookmarks.",
-    "message": "Отворете"
-  },
-  "openBookmarks": {
-    "message": "Отвори ги сите обележувачи"
-  },
-  "openBookmarksIncognitoWindow": {
-    "message": "Отвори обележувачи во инкогнито"
-  },
-  "openBookmarksInGroup": {
-    "message": "Отвори сè во нова група јазичиња"
-  },
-  "openBookmarksInGroupSetup": {
-    "message": "Отвори сè во нова група јазичиња…"
-  },
-  "openBookmarksInExistingGroup": {
-    "message": "Отвори сè во постоечка група јазичиња…"
-  },
-  "tabGroupOptions": {
-    "message": "Групи на јазичиња"
-  },
-  "sortMenuOptions": {
-    "message": "Сортирање"
-  },
-  "openBookmarksNewWindow": {
-    "message": "Отвори обележувачи во нов прозорец"
-  },
-  "openCommandPaletteCommand": {
-    "message": "Отвори командна палета"
-  },
-  "openIncognitoWindow": {
-    "message": "Отвори во инкогнито прозорецот"
-  },
-  "openNewTab": {
-    "message": "Отвори во ново јазиче"
-  },
-  "bookmarkOpenInNewGroup": {
-    "message": "Отвори во нова група јазичиња"
-  },
-  "bookmarkOpenInNewGroupSetup": {
-    "message": "Отвори во нова група јазичиња…"
-  },
-  "bookmarkOpenInExistingGroup": {
-    "message": "Отвори во постоечка група јазичиња…"
-  },
-  "openNewWindow": {
-    "message": "Отвори во нов прозорец"
-  },
-  "openSidePanelCommand": {
-    "message": "Отвори страничен панел на vBookmarks"
-  },
-  "optionAnnounceEnabled": {
-    "message": "Прикажувај известувања во производот"
-  },
-  "optionAnnounceEnabledHint": {
-    "message": "Белешки за изданија и совети од GitHub складиштето на проектот (се преземаат најмногу еднаш на секои 6 часа). Исклучувањето исто така го запира мрежното преземање."
-  },
-  "optionClickNewTab": {
-    "message": "Лево кликнете отвора обележувач во нов таб."
-  },
-  "optionCloseUnusedFolders": {
-    "message": "Затвори неискористени папки при отварање фолдер."
-  },
-  "optionConfirmOpenFolder": {
-    "message": "Прикаже потврда кога се отвара многу обележувачите од папка."
-  },
-  "optionConfirmDeleteFolder": {
-    "message": "Потврди пред бришење на непразни папки"
-  },
-  "optionOnlyShowBookmarkBar": {
-    "message": "Прикажи само обележувачи од лентата со обележувачи"
-  },
-  "optionSearchAfterEnter": {
-    "message": "Пребарувај обележувачи само кога е притиснато ENTER (наместо инстантно пребарување)"
-  },
-  "optionOpenNewTab": {
-    "message": "Среден клик или контрола-клик се отвора во нов обележувач заднинско јазиче (наместо на преден план)."
-  },
-  "optionOpenInSidePanel": {
-    "message": "Отвори во страничен панел наместо во скокачки прозорец"
-  },
-  "optionPopupStays": {
-    "message": "Скокачки останува отворен при отварање (лево-клик) обележувачи."
-  },
-  "optionRememberPrevState": {
-    "message": "Запомни ја претходната состојба (позиција на лизгање, отворени папки и последната фокусирана ставка)."
-  },
-  "options": {
-    "message": "Опци"
-  },
-  "optionsFooterText": {
-    "message": "Изградено од $authorName$.",
-    "placeholders": {
-      "authorName": {
-        "content": "$1"
-      }
-    },
-    "description": "Footer text for the Options page"
-  },
-  "optionZoom": {
-    "message": "Зум"
-  },
-  "optionTheme": {
-    "message": "Тема"
-  },
-  "optionThemeAuto": {
-    "message": "Следи го системот"
-  },
-  "optionThemeLight": {
-    "message": "Светла"
-  },
-  "optionThemeDark": {
-    "message": "Темна"
-  },
-  "optionThemeInk": {
-    "message": "Мастило (темна)"
-  },
-  "optionThemePaper": {
-    "message": "Хартија (светла)"
-  },
-  "optionLanguage": {
-    "message": "Јазик"
-  },
-  "optionLanguageAuto": {
-    "message": "Авто"
-  },
-  "optionLanguageHint": {
-    "message": "Промената на јазикот ја вчитува страницата повторно."
-  },
-  "paletteClose": {
-    "message": "Затвори"
-  },
-  "paletteCmdVersion": {
-    "message": "Информации за верзијата"
-  },
-  "paletteCmdLang": {
-    "message": "Смени јазик…"
-  },
-  "paletteCmdLangUsage": {
-    "message": "Употреба: /lang проследено со код на локализација — на пр. /lang en, /lang zh_CN, /lang ja."
+  "versionDialogCopy": {
+    "message": "Копирај информации"
   },
   "versionDialogTitle": {
     "message": "vBookmarks $version$",
@@ -634,15 +2509,6 @@
         "content": "$1"
       }
     }
-  },
-  "versionDialogCopy": {
-    "message": "Копирај информации"
-  },
-  "versionDialogCopied": {
-    "message": "Копирано"
-  },
-  "versionMetaVersion": {
-    "message": "Верзија на додатокот"
   },
   "versionMetaAnnounce": {
     "message": "Што е ново"
@@ -653,276 +2519,58 @@
   "versionMetaBrowser": {
     "message": "Прелистувач"
   },
-  "versionMetaOS": {
-    "message": "ОС"
-  },
   "versionMetaChannel": {
     "message": "Канал"
   },
   "versionMetaLanguage": {
     "message": "Јазик"
   },
+  "versionMetaOS": {
+    "message": "ОС"
+  },
   "versionMetaUserAgent": {
     "message": "Кориснички агент"
   },
-  "paletteCmdDead": {
-    "message": "Најди мртви врски"
+  "versionMetaVersion": {
+    "message": "Верзија на додатокот"
   },
-  "paletteCmdDupes": {
-    "message": "Исчисти дупликат обележувачи"
+  "viewDead": {
+    "message": "Мртви врски"
   },
-  "paletteCmdNewBookmark": {
-    "message": "Нов обележувач…"
+  "viewDisable": {
+    "message": "Оневозможи"
   },
-  "paletteCmdNewFolder": {
-    "message": "Нова папка…"
+  "viewDupes": {
+    "message": "Дупликати"
   },
-  "paletteCmdQuickAdd": {
-    "message": "Обележи го тековното јазиче"
+  "viewEnable": {
+    "message": "Овозможи"
   },
-  "paletteCmdSaveSession": {
-    "message": "Зачувај ги јазичињата од прозорецот како папка"
-  },
-  "paletteNoResults": {
-    "message": "Нема совпаѓачки резултати"
-  },
-  "palettePlaceholder": {
-    "message": "Пребарај обележувачи, папки, команди…"
-  },
-  "parentFolder": {
-    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
-    "message": "Папка: \" $folderName$ \"",
+  "viewHiddenTabsHint": {
+    "message": "Се наоѓате во прегледот $view$. Притиснете $back$ или користете ја командната палета за да се вратите во дрвото.",
     "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarksbar"
-      }
-    }
-  },
-  "removeSeparator": {
-    "message": "Отстрани разделник"
-  },
-  "replaceUrl": {
-    "message": "Замени со тековната URL"
-  },
-  "reportedToDeveloper": {
-    "description": "A message for an error occured in the extension, has been reported to the developer.",
-    "message": "Ова е забележано на инвеститорот."
-  },
-  "reportError": {
-    "message": "Извештај Грешка"
-  },
-  "resetButton": {
-    "message": "Ресетирај"
-  },
-  "resetSettings": {
-    "message": "Ресетирање Подесувања"
-  },
-  "resetSettingsDescription": {
-    "message": "Ресетирај ги vBookmarks на стандардни поставки."
-  },
-  "save": {
-    "message": "Зачувај"
-  },
-  "searchBookmarks": {
-    "description": "Placeholder text for search field.",
-    "message": "Пребарување Ознаки"
-  },
-  "searchClear": {
-    "message": "Исчисти пребарување"
-  },
-  "searchNoResults": {
-    "message": "Нема совпаѓачки обележувачи"
-  },
-  "searchViewHint": {
-    "message": "Внесете во полето погоре за да ги пребарувате вашите обележувачи"
-  },
-  "selectAll": {
-    "message": "Сите"
-  },
-  "selectClear": {
-    "message": "Исчисти"
-  },
-  "selectCount": {
-    "message": "$count$ избрани",
-    "placeholders": {
-      "count": {
+      "back": {
+        "content": "$2"
+      },
+      "view": {
         "content": "$1"
       }
     }
   },
-  "selectInvert": {
-    "message": "Инвертирај"
-  },
-  "selectModeEnter": {
-    "message": "Избери"
-  },
-  "selectModeExit": {
-    "message": "Излези од избор"
-  },
-  "deadRiskBanner": {
-    "message": "Чистењето на мртви врски масовно брише обележувачи. Направете резервна копија на обележувачите пред првото чистење."
-  },
-  "dupesRiskBanner": {
-    "message": "Дедупликацијата масовно брише дупликат обележувачи. Направете резервна копија на обележувачите пред да ја примените."
-  },
-  "riskBannerHelp": {
-    "message": "Водич за резервна копија и враќање"
-  },
-  "riskBannerNever": {
-    "message": "Не прикажувај повторно"
-  },
-  "riskBannerDismiss": {
-    "message": "Затвори"
-  },
-  "sessionEmpty": {
-    "message": "Нема јазичиња за зачувување"
-  },
-  "sessionFolderName": {
-    "message": "Сесија $date$",
-    "placeholders": {
-      "date": {
-        "content": "$1",
-        "example": "2026-07-18 15:04"
-      }
-    },
-    "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm."
-  },
-  "sessionSaved": {
-    "message": "Зачувани $count$ јазичиња во нова папка",
-    "placeholders": {
-      "count": {
-        "content": "$1",
-        "example": "12"
-      }
-    },
-    "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
-  },
-  "url": {
-    "message": "Рачно"
-  },
-  "syncOptions": {
-    "message": "Опции за синхронизација"
-  },
-  "optionShowSyncStatus": {
-    "message": "Прикажи индикатори за статус на синхронизација"
-  },
-  "optionHighlightUnsynced": {
-    "message": "Затемни несинхронизирани обележувачи"
-  },
-  "optionAutoRefreshSync": {
-    "message": "Автоматско освежување на статусот на синхронизација"
-  },
-  "optionSyncRefreshInterval": {
-    "message": "Интервал на освежување"
-  },
-  "optionSyncRefreshIntervalSeconds": {
-    "message": "секунди"
-  },
-  "syncStatusSynced": {
-    "message": "Синхронизирано со вашата Google сметка"
-  },
-  "syncStatusLocal": {
-    "message": "Само локално — не е прикачено"
-  },
-  "syncStatusUnsyncable": {
-    "message": "Не може да се синхронизира"
-  },
-  "syncSuffixSynced": {
-    "message": "(Синхронизирано)"
-  },
-  "syncSuffixLocal": {
-    "message": "(Локално)"
-  },
-  "optionAutoResizePopup": {
-    "message": "Автоматско менување на големината на прозорецот за да одговара на содржината"
-  },
-  "crossStorageMoveWarning": {
-    "message": "Не може да се преместуваат обележувачи помеѓу синхронизирано и локално складирање. Користете копирај/залепи наместо тоа."
-  },
-  "recentBookmarks": {
-    "message": "Неодамна додадени"
-  },
-  "optionShowRecentBookmarks": {
-    "message": "Прикажи неодамна додадени обележувачи на врвот на скокачкиот прозорец"
-  },
-  "optionShowStatsView": {
-    "message": "Прикажи го табот за приказ на статистики"
-  },
-  "optionShowDeadView": {
-    "message": "Прикажи го табот за приказ на мртви врски"
-  },
-  "optionShowDupesView": {
-    "message": "Прикажи го табот за приказ на дупликати"
-  },
-  "optionRecentCollapsed": {
-    "message": "Собери го делот за неодамна додадени по дифолт"
-  },
-  "optionsGroupViews": {
-    "message": "Прикази"
-  },
-  "optionsGroupSort": {
-    "message": "Сортирање"
-  },
-  "optionsGroupStats": {
-    "message": "Статистика"
-  },
-  "optionsGroupTools": {
-    "message": "Алатки"
-  },
-  "optionShowViewTabs": {
-    "message": "Прикажи ги картичките за приказ под полето за пребарување"
-  },
-  "optionRememberView": {
-    "message": "Запомни го последниот активен приказ и отвори го повторно"
-  },
-  "optionShowTabBadges": {
-    "message": "Прикажувај ознаки со броеви на јазичињата за преглед"
-  },
-  "optionPaletteEnabled": {
-    "message": "Овозможи командна палета (Ctrl/Cmd+K)"
-  },
-  "optionQuickAddEnabled": {
-    "message": "Прикажувај го копчето со ѕвезда за брзо додавање веднаш до полето за пребарување"
-  },
-  "optionQuickAddContextMenu": {
-    "message": "Додај ставка „Обележи ја оваа страница со vBookmarks“ во менито со десен клик на страницата"
-  },
-  "optionQuickAddContextMenuHint": {
-    "message": "Независно од копчето со ѕвезда за брзо додавање; враќањето на класичното искуство исто така ја исклучува оваа ставка."
-  },
-  "optionCollapseTabGroupMenu": {
-    "message": "Собери ги записите за групите јазичиња во едно подмени „Групи на јазичиња“"
-  },
-  "optionCollapseTabGroupMenuHint": {
-    "message": "Се однесува и на менијата со десно копче за папки и за обележувачи. Исклучено по дифолт; ги прави менијата со мала висина пократки на екрани со мала големина/високо зумирање."
-  },
-  "optionCollapseSortMenu": {
-    "message": "Собери ги записите за сортирање во едно подмени „Сортирање“"
-  },
-  "optionCollapseSortMenuHint": {
-    "message": "Се однесува на менито со десно копче за папки. Вклучено по дифолт."
-  },
-  "optionShowToolButton": {
-    "message": "Прикажувај го копчето за алатки (⋮) веднаш до полето за пребарување"
-  },
-  "optionClassicExperience": {
-    "message": "Врати го класичното заглавие"
-  },
-  "optionClassicExperienceHint": {
-    "message": "Ги исклучува командната палета, ѕвездичката за брзо додавање, ставката во контекстното мени на страницата, копчето за алатки и јазичињата за преглед. Секоја од нив може повторно да се вклучи поединечно во својот дел."
-  },
-  "optionShowItemPath": {
-    "message": "Прикажи ја патеката на родителската папка во редовите на списокот"
-  },
   "viewRecent": {
     "message": "Подготовка"
   },
-  "viewTree": {
-    "message": "Дрво"
-  },
   "viewSearch": {
     "message": "Пребарување"
+  },
+  "viewStateDisabled": {
+    "message": "Оневозможено"
+  },
+  "viewStateEnabled": {
+    "message": "Овозможено"
+  },
+  "viewStats": {
+    "message": "Статистики"
   },
   "viewSwitchAnnounce": {
     "message": "$name$ приказ",
@@ -932,870 +2580,17 @@
       }
     }
   },
-  "viewStateEnabled": {
-    "message": "Овозможено"
-  },
-  "viewStateDisabled": {
-    "message": "Оневозможено"
-  },
-  "viewEnable": {
-    "message": "Овозможи"
-  },
-  "viewDisable": {
+  "viewTabDisable": {
     "message": "Оневозможи"
+  },
+  "viewTabGroups": {
+    "message": "Групи на јазичиња"
   },
   "viewTabHide": {
     "message": "Скриј"
   },
-  "viewTabDisable": {
-    "message": "Оневозможи"
-  },
-  "sortFolderContents": {
-    "message": "Подреди содржина на папка"
-  },
-  "sortByName": {
-    "message": "Сортирај по име"
-  },
-  "sortByDate": {
-    "message": "Сортирај по датум на додавање"
-  },
-  "sortRecursiveSuffix": {
-    "message": "(рекурзивно)"
-  },
-  "sortOptions": {
-    "message": "Опции за сортирање…"
-  },
-  "sortDone": {
-    "message": "Папката е сортирана"
-  },
-  "sortByTitle": {
-    "message": "По наслов"
-  },
-  "sortByDateAdded": {
-    "message": "По датум на додавање (најнови први)"
-  },
-  "sortFoldersFirst": {
-    "message": "Чувај папки на врвот"
-  },
-  "sortRecursive": {
-    "message": "Подреди и подпапки (рекурзивно)"
-  },
-  "sortRecursiveWarning": {
-    "message": "Ова ги преуредува обележувачите во секоја потпапка."
-  },
-  "tabGroupDialogTitle": {
-    "message": "Нова група јазичиња"
-  },
-  "tabGroupTitleLabel": {
-    "message": "Наслов на групата"
-  },
-  "tabGroupColorLabel": {
-    "message": "Боја"
-  },
-  "tabGroupColorGrey": {
-    "message": "Сива",
-    "description": "Accessible name of the grey color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorBlue": {
-    "message": "Сина",
-    "description": "Accessible name of the blue color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorRed": {
-    "message": "Црвена",
-    "description": "Accessible name of the red color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorYellow": {
-    "message": "Жолта",
-    "description": "Accessible name of the yellow color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorGreen": {
-    "message": "Зелена",
-    "description": "Accessible name of the green color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorPink": {
-    "message": "Розова",
-    "description": "Accessible name of the pink color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorPurple": {
-    "message": "Виолетова",
-    "description": "Accessible name of the purple color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorCyan": {
-    "message": "Цијан",
-    "description": "Accessible name of the cyan color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorOrange": {
-    "message": "Портокалова",
-    "description": "Accessible name of the orange color swatch in the new-tab-group dialog."
-  },
-  "tabGroupUntitled": {
-    "message": "Група без наслов"
-  },
-  "tabGroupNoGroups": {
-    "message": "Нема постоечки групи јазичиња"
-  },
-  "tabGroupPickDialogTitle": {
-    "message": "Отвори во постоечка група јазичиња"
-  },
-  "quickAddBookmark": {
-    "message": "Обележи ја оваа страница (Ctrl+D)"
-  },
-  "quickAddBookmarkCommand": {
-    "message": "Брзо додај го тековното јазиче како обележувач"
-  },
-  "quickAdded": {
-    "message": "Обележувачот е додаден"
-  },
-  "quickAddedTo": {
-    "message": "Обележувачот е додаден во $folderName$",
-    "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarks bar"
-      }
-    }
-  },
-  "quickRemoved": {
-    "message": "Обележувачот е отстранет"
-  },
-  "quickRemoveBookmark": {
-    "message": "Отстрани го овој обележувач (Ctrl+D)"
-  },
-  "toolButtonTitle": {
-    "message": "Алатки (Ctrl+K)"
-  },
-  "contextMenuAddBookmark": {
-    "message": "Обележи ја оваа страница со vBookmarks"
-  },
-  "deadFilterAll": {
-    "message": "Сите"
-  },
-  "deadFilterBlocked": {
-    "message": "Само блокирани"
-  },
-  "deadFilterDead": {
-    "message": "Само мртви"
-  },
-  "deadFilterMarked": {
-    "message": "Претходно означени"
-  },
-  "deadLastScanAt": {
-    "message": "Последно скенирање: $time$",
-    "placeholders": {
-      "time": {
-        "content": "$1"
-      }
-    }
-  },
-  "deadMark": {
-    "message": "Означи како мртов"
-  },
-  "deadMarkAll": {
-    "message": "Означи сите"
-  },
-  "deadMarked": {
-    "message": "Означени мртви редови"
-  },
-  "deadMarkedCount": {
-    "message": "Означени $count$ обележувачи",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "deadMarkedNone": {
-    "message": "Сè уште нема обележани обележувачи"
-  },
-  "deadMarkedRow": {
-    "message": "Означено"
-  },
-  "deadMarkSelected": {
-    "message": "Означи ги избраните"
-  },
-  "deadMarkStatusAll": {
-    "message": "Било кој статус"
-  },
-  "deadMarkStatusMarked": {
-    "message": "Обележани"
-  },
-  "deadMarkStatusUnmarked": {
-    "message": "Необележани"
-  },
-  "deadMarkTimeLabel": {
-    "message": "Означено на"
-  },
-  "deadDetectTimeLabel": {
-    "message": "Откриено на"
-  },
-  "deadSortLabel": {
-    "message": "Сортирај по"
-  },
-  "deadSortByDetected": {
-    "message": "Време на откривање"
-  },
-  "deadSortByPath": {
-    "message": "Патека на папка"
-  },
-  "deadSortByMarked": {
-    "message": "Време на обележување"
-  },
-  "deadMarkedBanner": {
-    "message": "Прикажани се претходно означени обележувачи. Кликнете на Rescan за да започнете нова проверка, или обработете ги во списокот подолу."
-  },
-  "deadMarkedBannerDismiss": {
-    "message": "Затвори"
-  },
-  "deadProxyAdd": {
-    "message": "Додај прокси сервер за проверка на мртви врски"
-  },
-  "deadProxyLabel": {
-    "message": "Прокси: $server$",
-    "placeholders": {
-      "server": {
-        "content": "$1"
-      }
-    }
-  },
-  "deadProxyChange": {
-    "message": "Промени"
-  },
-  "deadProxyRemove": {
-    "message": "Отстрани"
-  },
-  "deadProxyRemoved": {
-    "message": "Прокси серверот е отстранет"
-  },
-  "deadProxyPanelHint": {
-    "message": "Внесете прокси сервер што веќе го имате (екстензијата не обезбедува), на пр. 127.0.0.1:7890 или socks5://127.0.0.1:1080."
-  },
-  "deadProxyTestUrlLabel": {
-    "message": "Тест URL"
-  },
-  "deadProxyTestSave": {
-    "message": "Тестирај и зачувај"
-  },
-  "deadProxyTesting": {
-    "message": "Тестирање…"
-  },
-  "deadProxySaved": {
-    "message": "Проксито е зачувано — идните скенирања повторно ги проверуваат директните неуспеси преку него"
-  },
-  "deadProxyInvalid": {
-    "message": "Невалидна прокси адреса — користете host:port или scheme://host:port (http/https/socks5, без акредитиви)"
-  },
-  "deadProxyUnreachable": {
-    "message": "Проксито е недостапно — не е зачувано"
-  },
-  "deadProxyDenied": {
-    "message": "Дозволата за прокси не е дадена"
-  },
-  "deadProxyControlled": {
-    "message": "Поставките за прокси ги управува друга екстензија"
-  },
-  "deadProxyUnavailable": {
-    "message": "API-то за прокси е недостапно во овој прелистувач"
-  },
-  "deadProxyNudge": {
-    "message": "Повторната проверка преку прокси ги одделува вистинските мртви врски од оние што се блокирани според регионот — поставете ја овде или на страницата со опции."
-  },
-  "deadProxyNeverShow": {
-    "message": "Повеќе не прикажувај"
-  },
-  "deadStartHint": {
-    "message": "Започни скенирање на $n$ обележувачи",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "deadStatusBlocked": {
-    "message": "блокирано"
-  },
-  "deadUnmark": {
-    "message": "Отстрани ознака за мртов"
-  },
-  "deadUnmarkAll": {
-    "message": "Исчисти ги сите ознаки"
-  },
-  "deadUnmarkSelected": {
-    "message": "Одзначи ги избраните"
-  },
-  "dupesApplyAll": {
-    "message": "Примени сите ($count$)",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "dupesApplySelected": {
-    "message": "Отстрани дупликати од избраните ($count$)",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "dupesCleanRestHint": {
-    "message": "Задржи го \"$title$\" и отстрани ги другите $count$",
-    "placeholders": {
-      "title": {
-        "content": "$1"
-      },
-      "count": {
-        "content": "$2"
-      }
-    }
-  },
-  "dupesIgnoreScheme": {
-    "message": "Игнорирај разлики http/https"
-  },
-  "dupesKeepThis": {
-    "message": "Задржи го овој"
-  },
-  "dupesKeeperSet": {
-    "message": "Постави чувар"
-  },
-  "dupesPreviewSummary": {
-    "message": "$groups$ групи · $count$ за ослободување",
-    "placeholders": {
-      "groups": {
-        "content": "$1"
-      },
-      "count": {
-        "content": "$2"
-      }
-    }
-  },
-  "dupesRemoveRow": {
-    "message": "Избриши ја оваа копија"
-  },
-  "dupesScopeAll": {
-    "message": "Сите обележувачи"
-  },
-  "dupesScopeBar": {
-    "message": "Само лента со обележувачи"
-  },
-  "dupesStrategyBookmarkBar": {
-    "message": "Задржи го оној во лентата со обележувачи"
-  },
-  "dupesStrategyMostVisited": {
-    "message": "Задржи го најпосетуваниот"
-  },
-  "dupesStrategyNewest": {
-    "message": "Задржи го најновиот"
-  },
-  "dupesStrategyOldest": {
-    "message": "Задржи го најстариот"
-  },
-  "dupesStrategyShallowest": {
-    "message": "Задржи го најплиткиот"
-  },
-  "dupesStrategyShortestTitle": {
-    "message": "Задржи го најкраткиот наслов"
-  },
-  "optionDeadProxyServer": {
-    "message": "Прокси сервер за мртви врски"
-  },
-  "deadProxyServerHint": {
-    "message": "Зачуваниот сервер ги преиспитува обележувачите што не поминале директни проверки при секое скенирање за мртви линкови и ги одвојува вистинските мртви линкови од регионално блокираните. Копчето „Тестирај и зачувај“ го тестира (се задржува само достапен сервер); можете да го додадете и од прегледот на мртви линкови."
-  },
-  "deadProxyClear": {
-    "message": "Исчисти"
-  },
-  "deadProxyNone": {
-    "message": "(не е поставено)"
-  },
-  "optionDeadProxyStrip": {
-    "message": "Прикажувај го советот за додавање прокси во прегледот на мртви линкови"
-  },
-  "optionDeadProxyStripHint": {
-    "message": "Кога опцијата е исклучена, советот не се прикажува таму; прокси-серверот останува конфигурабилен овде, а зачуваниот сервер секогаш го прикажува својот ред за управување во прегледот."
-  },
-  "optionDeadScanConcurrency": {
-    "message": "Истовременост при скенирање на мртви врски (1-16)"
-  },
-  "optionDeadScanTimeout": {
-    "message": "Време на истек при скенирање на мртви врски во секунди (2-30)"
-  },
-  "paletteCmdGoDead": {
-    "message": "Оди на преглед за мртви врски"
-  },
-  "paletteCmdGoDupes": {
-    "message": "Оди на преглед за дупликати"
-  },
-  "paletteCmdGoRecent": {
-    "message": "Оди на преглед за неодамнешни"
-  },
-  "paletteCmdGoSearch": {
-    "message": "Оди на преглед за пребарување"
-  },
-  "paletteCmdGoTree": {
-    "message": "Оди на преглед на дрво"
-  },
-  "paletteCmdOptions": {
-    "message": "Отвори страница за опции"
-  },
-  "paletteCmdSearchInView": {
-    "message": "Пребарај '$query$' во преглед за пребарување",
-    "placeholders": {
-      "query": {
-        "content": "$1"
-      }
-    }
-  },
-  "rowActionDelete": {
-    "message": "Избриши"
-  },
-  "rowActionMark": {
-    "message": "Означи како мртва"
-  },
-  "rowActionReveal": {
-    "message": "Прикажи во дрвото"
-  },
-  "rowActionUnmark": {
-    "message": "Отстрани ознака за мртва"
-  },
-  "viewDead": {
-    "message": "Мртви врски"
-  },
-  "viewDupes": {
-    "message": "Дупликати"
-  },
-  "viewStats": {
-    "message": "Статистики"
-  },
-  "paletteCmdGoStats": {
-    "message": "Оди на преглед за статистики"
-  },
-  "optionStatsEnabled": {
-    "message": "Овозможи статистики за посети"
-  },
-  "optionFaviconContrast": {
-    "message": "Инвертирај нискоконтрастни favicons"
-  },
-  "optionFaviconContrastHint": {
-    "message": "Белите икони на светли теми и црните икони на темни теми се инвертираат за да останат видливи. Секоја икона се анализира еднаш кога ќе се вчита — без трошок додека прелистувате."
-  },
-  "optionFaviconEnrich": {
-    "message": "Преземи ги иконите што недостасуваат"
-  },
-  "optionFaviconEnrichHint": {
-    "message": "За обележани сајтови за кои Chrome нема кеширана икона, преземете ја вистинската икона директно од сајтот (/favicon.ico, а потоа и декларираните икони на страницата). Барањата одат само до сајтовите што сте ги обележале."
-  },
-  "optionFaviconEnrichAgg": {
-    "message": "Резервна икона од трета страна"
-  },
-  "optionFaviconEnrichAggHint": {
-    "message": "Кога директното преземање не успее, иконата се бара по доменот од вградената листа на услуги на трети страни ($providers$). Ако услугата е недостапна, таа се прескокнува и се обидува следната — истата не се повторува во рок од 6 часа.",
-    "placeholders": {
-      "providers": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionFaviconBackup": {
-    "message": "Вклучи го кешот на икони во резервните копии"
-  },
-  "optionFaviconBackupHint": {
-    "message": "Вклучи го и кешот на збогатените фавикони (податоци по сајт, потенцијално големи) во извозот/увозот на поставките. Ова опфаќа веќе кеширани икони дури и кога преземањето е исклучено. Исклученото одржува резервни копии мали; иконите и онака автоматски се преземаат повторно."
-  },
-  "optionFaviconCacheClear": {
-    "message": "Исчисти го кешот на икони"
-  },
-  "optionFaviconCacheClearConfirm": {
-    "message": "Да се исчисти кешот на збогатените икони? Иконите автоматски ќе се преземат повторно при следното отворање."
-  },
-  "optionFaviconCacheEmpty": {
-    "message": "Нема кеш на икони за чистење."
-  },
-  "optionFaviconCacheCleared": {
-    "message": "Кешот на икони е исчистен. Иконите повторно ќе се преземат при следното отворање."
-  },
-  "favGalleryLink": {
-    "message": "Прикажи освежени икони",
-    "description": "Options link (Icons group, right of the Clear icon cache button): opens the favicon gallery page listing the sites whose icons were refetched."
-  },
-  "favGalleryTitle": {
-    "message": "Освежени икони на сајтови",
-    "description": "Favicon gallery page title (h1 + document title)."
-  },
-  "favGalleryHint": {
-    "message": "Икони што vBookmarks ги презеде за обележани сајтови кои Chrome не ги имаше кеширано — од каде доаѓа секоја и кои обележувачи ја користат. Само приказ.",
-    "description": "Subtitle under the favicon gallery title, explaining the page is read-only."
-  },
-  "favGallerySearch": {
-    "message": "Филтрирај по сајт, наслов или патека",
-    "description": "Placeholder of the favicon gallery filter input."
-  },
-  "favGalleryAll": {
-    "message": "Сите",
-    "description": "Favicon gallery source filter chip: show every source."
-  },
-  "favSrcDirect": {
-    "message": "Директно",
-    "description": "Favicon gallery source badge: the icon was fetched directly from the site itself."
-  },
-  "favSrcProxy": {
-    "message": "Прокси",
-    "description": "Favicon gallery source badge: the icon was fetched through the user's own proxy relay."
-  },
-  "favSrcLegacy": {
-    "message": "Поранешен кеш",
-    "description": "Favicon gallery source badge: cached before the source was recorded, so the origin is unknown."
-  },
-  "favGalleryCompare": {
-    "message": "Спореди со резервната икона",
-    "description": "Favicon gallery toggle button: switch every icon to the generic placeholder it replaced (before/after comparison)."
-  },
-  "favGalleryShowingBefore": {
-    "message": "Назад на вистинските икони",
-    "description": "Favicon gallery toggle button while the placeholder comparison is shown: switch back to the real fetched icons."
-  },
-  "favGalleryStatSites": {
-    "message": "$n$ сајтови",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    },
-    "description": "Favicon gallery stats strip: how many sites have a refreshed icon."
-  },
-  "favGalleryStatBookmarks": {
-    "message": "$n$ обележувачи",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    },
-    "description": "Favicon gallery stats strip: how many bookmarks sit on the refreshed sites."
-  },
-  "favGalleryVisits": {
-    "message": "$n$ евидентирани отворања",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    },
-    "description": "Favicon gallery tooltip on a bookmark row's visit-count pill."
-  },
-  "favGalleryFailedTitle": {
-    "message": "Неодамна пробувано, нема најдена икона",
-    "description": "Favicon gallery heading of the muted section listing hosts whose icon fetch failed recently."
-  },
-  "favGalleryFailedHint": {
-    "message": "Неуспесите се повторуваат по 24 часа, 3 дена и 7 дена, а потоа се отфрлаат додека не се исчисти кешот на иконите.",
-    "description": "Favicon gallery hint under the failed-fetch section title."
-  },
-  "favGalleryGaveUp": {
-    "message": "Откажано",
-    "description": "Favicon gallery badge on a failed-strip host whose retries are exhausted (it stays untouched until the icon cache is cleared)."
-  },
-  "favGalleryOrphan": {
-    "message": "Нема преостанат обележувач на овој домаќин — иконата се брише со кешот.",
-    "description": "Favicon gallery note on a card whose host no longer has any bookmark."
-  },
-  "favGalleryEmptyTitle": {
-    "message": "Сè уште нема освежени икони",
-    "description": "Favicon gallery empty-state heading."
-  },
-  "favGalleryEmptyText": {
-    "message": "Кога поп-ап прозорецот ќе наиде на обележан сајт за кој Chrome нема икона, vBookmarks ја презема вистинската и ја прикажува тука.",
-    "description": "Favicon gallery empty-state body text."
-  },
-  "storageUsageIcon": {
-    "message": "Кеш на икони"
-  },
-  "storageUsageOther": {
-    "message": "Друго"
-  },
-  "storageUsageSummary": {
-    "message": "Искористено $1$ од $2$",
-    "placeholders": {
-      "1": {
-        "content": "$1"
-      },
-      "2": {
-        "content": "$2"
-      }
-    }
-  },
-  "storageUsageFree": {
-    "message": "Слободно"
-  },
-  "storageUsageHint": {
-    "message": "Само локално складиште на екстензијата (chrome.storage.local, квота од околу 10 MB): кешот на икони плус поставки и други локални податоци. Синхронизираните поставки, податоците за сесијата и самата библиотека на обележувачи не се бројат тука."
-  },
-  "optionsDonate": {
-    "message": "Донирај"
-  },
-  "optionsGithubLink": {
-    "message": "GitHub"
-  },
-  "optionsHomepageLink": {
-    "message": "Почетна страница"
-  },
-  "optionsSince": {
-    "message": "Форк од Neat Bookmarks, одржуван $days$ дена.",
-    "placeholders": {
-      "days": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionsVersion": {
-    "message": "Верзија на vBookmarks"
-  },
-  "statsSortByCount": {
-    "message": "По број"
-  },
-  "statsSortByRecent": {
-    "message": "По неодамнешни"
-  },
-  "statsShowUnbookmarked": {
-    "message": "Прикажи необележани"
-  },
-  "statsShowUnbookmarkedHint": {
-    "message": "Вклучи страници од историјата што не се зачувани како обележувачи."
-  },
-  "statsEmpty": {
-    "message": "Статистиките се градат додека отворате обележувачи"
-  },
-  "statsDisabledHint": {
-    "message": "Статистиките за посети се исклучени — овозможете ги во Опции → Прегледи"
-  },
-  "statsVisitCount": {
-    "message": "Посетено $count$ пати",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "statsClearData": {
-    "message": "Исчисти статистики"
-  },
-  "statsClearConfirm": {
-    "message": "Да се исчистат статистиките за посети за $count$ обележувачи? Ова не може да се врати.",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "statsHistoryBanner": {
-    "message": "Овозможи пристап до историјата за да се земат статистики за посети од твоите минати посети."
-  },
-  "statsHistoryEnable": {
-    "message": "Овозможи"
-  },
-  "statsHistoryDismiss": {
-    "message": "Не прикажувај повторно"
-  },
-  "statsHistoryImported": {
-    "message": "Увезени минати посети за $count$ обележувачи",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "paletteCmdToggleViewTabs": {
-    "message": "Префрли приказ на јазичиња"
-  },
-  "paletteCmdTheme": {
-    "message": "Постави тема…"
-  },
-  "paletteCmdThemeUsage": {
-    "message": "Употреба: /theme проследено со име на тема — auto, light, dark, ink или paper (уникатен префикс работи, на пр. /theme d)."
-  },
-  "paletteCustomTag": {
-    "message": "прилагодено"
-  },
-  "paletteCustomDeleteConfirm": {
-    "message": "Да се избрише командата \"$1\"? Промената се синхронизира на сите ваши уреди."
-  },
-  "paletteCustomBroken": {
-    "message": "Папката на командата \"$1\" повеќе не постои. Да се избрише командата?"
-  },
-  "paletteCmdSaveAsCommand": {
-    "message": "Зачувај \"$1\" како команда…"
-  },
-  "paletteActionOpenUrl": {
-    "message": "Отвори URL"
-  },
-  "paletteActionOpenUrlGroup": {
-    "message": "Отвори група папки со обележувачи"
-  },
-  "paletteActionViewPreset": {
-    "message": "Отвори преглед со претходно поставување"
-  },
-  "paletteActionUrlTemplate": {
-    "message": "Отвори шаблон за URL"
-  },
-  "optionsGroupPalette": {
-    "message": "Командна палета"
-  },
-  "paletteCustomHint": {
-    "message": "Прилагодени команди со коса црта за командната палета (Ctrl/Cmd+K). Тие се синхронизираат со вашите поставки — најмногу 100 записи."
-  },
-  "paletteCustomAdd": {
-    "message": "Додај команда…"
-  },
-  "paletteCustomUsage": {
-    "message": "$1 / $2"
-  },
-  "paletteCustomSlash": {
-    "message": "Слеш (зборот по /)"
-  },
-  "paletteCustomAliases": {
-    "message": "Алијаси (одвоени со запирка)"
-  },
-  "paletteCustomAction": {
-    "message": "Дејство"
-  },
-  "paletteCustomUrl": {
-    "message": "URL"
-  },
-  "paletteCustomTemplate": {
-    "message": "Шаблон за URL — %s се заменува со зборовите по командата"
-  },
-  "paletteCustomWhere": {
-    "message": "Отвори во"
-  },
-  "paletteCustomFolder": {
-    "message": "Папка за обележувачи"
-  },
-  "paletteCustomView": {
-    "message": "Приказ"
-  },
-  "paletteCustomStrategy": {
-    "message": "Пресет за стратегија за дедупликација"
-  },
-  "paletteCustomScope": {
-    "message": "Пресет за опсег на дедупликација"
-  },
-  "paletteCustomScan": {
-    "message": "Започни го скенирањето при внес"
-  },
-  "paletteWhereCurrent": {
-    "message": "Тековно јазиче"
-  },
-  "paletteWhereTab": {
-    "message": "Ново јазиче"
-  },
-  "paletteWhereWindow": {
-    "message": "Нов прозорец"
-  },
-  "paletteWhereBackground": {
-    "message": "Јазичиња во позадина"
-  },
-  "paletteCustomSave": {
-    "message": "Зачувај команда"
-  },
-  "paletteCustomErrSlash": {
-    "message": "Слеш: 1–24 знаци, мали букви, цифри или цртички, почнувајќи со буква или цифра."
-  },
-  "paletteCustomErrAlias": {
-    "message": "Алијаси: исти правила како кај слешот (1–24 знаци, мали букви, цифри или цртички)."
-  },
-  "paletteCustomErrTaken": {
-    "message": "Тој слеш или алијас е веќе заземен."
-  },
-  "paletteCustomErrUrl": {
-    "message": "Дозволени се само http:// или https:// URL-адреси."
-  },
-  "paletteCustomErrFolder": {
-    "message": "Изберете папка за обележувачи."
-  },
-  "paletteCustomErrView": {
-    "message": "Изберете приказ."
-  },
-  "paletteCustomErrTemplate": {
-    "message": "Шаблонот мора да содржи точно еден %s."
-  },
-  "paletteCustomErrAction": {
-    "message": "Изберете тип на дејство."
-  },
-  "paletteCustomErrLimit": {
-    "message": "Достигнато е ограничувањето на команди (100) — прво избришете една."
-  },
-  "paletteCustomEmpty": {
-    "message": "Сè уште нема прилагодени команди."
-  },
-  "recentGroupToday": {
-    "message": "Денес"
-  },
-  "recentGroupWeek": {
-    "message": "Оваа недела"
-  },
-  "recentGroupMonth": {
-    "message": "Овој месец"
-  },
-  "recentGroupOlder": {
-    "message": "Постари"
-  },
-  "searchHistoryRerun": {
-    "message": "Повторно пребарај"
-  },
-  "optionsGroupBackup": {
-    "message": "Резервна копија"
-  },
-  "optionsGroupContextMenu": {
-    "message": "Контекстни менија"
-  },
-  "optionsGroupIcons": {
-    "message": "Икони"
-  },
-  "settingsExport": {
-    "message": "Извези поставки"
-  },
-  "settingsImport": {
-    "message": "Увези поставки"
-  },
-  "settingsBackupHint": {
-    "message": "Извозот ги зачувува сите поставки (вклучувајќи ги преференциите за синхронизација) во JSON датотека. Увозот спојува резервна копија: поставките во датотеката ги препишуваат тековните, а сè друго останува."
-  },
-  "settingsImportConfirm": {
-    "message": "Увозот ќе ги препише сите поставки содржани во резервната датотека (поставките што не се во датотеката се задржуваат) и ќе ја превчита оваа страница. Продолжи?"
-  },
-  "settingsImportInvalid": {
-    "message": "Невалидна датотека со поставки: не е резервна копија на vBookmarks."
-  },
-  "settingsImportDone": {
-    "message": "Поставките се увезени. Страницата сега ќе се превчита."
-  },
-  "settingsImportError": {
-    "message": "Некои поставки не можеа да се запишат (квота за складирање или привремена грешка). Увозот не заврши — обидете се повторно."
-  },
-  "statsSectionRecent": {
-    "message": "Неодамнешни посети"
-  },
-  "statsSectionBookmarks": {
-    "message": "Статистика за обележувачи"
-  },
-  "statsHistoryGuide": {
-    "message": "Дозволи пристап до историјата за да ги наведеш твоите неодамнешни посети овде."
-  },
-  "statsHistoryAdd": {
-    "message": "Додај во обележувачи"
-  },
-  "statsHistoryBookmarked": {
-    "message": "Обележано"
-  },
-  "deadPause": {
-    "message": "Паузирај"
-  },
-  "deadResume": {
-    "message": "Продолжи"
-  },
-  "deadCancel": {
-    "message": "Откажи"
-  },
-  "deadPaused": {
-    "message": "Паузирано"
+  "viewTree": {
+    "message": "Дрво"
   },
   "whatsNewChangelog": {
     "message": "Евиденција на промени"
@@ -1807,800 +2602,5 @@
         "content": "$1"
       }
     }
-  },
-  "viewHiddenTabsHint": {
-    "message": "Се наоѓате во прегледот $view$. Притиснете $back$ или користете ја командната палета за да се вратите во дрвото.",
-    "placeholders": {
-      "view": {
-        "content": "$1"
-      },
-      "back": {
-        "content": "$2"
-      }
-    }
-  },
-  "viewTabGroups": {
-    "message": "Групи на јазичиња"
-  },
-  "optionShowTabGroupsView": {
-    "message": "Прикажи го приказот на групи на јазичиња"
-  },
-  "tabGroupsViewEmpty": {
-    "message": "Нема јазичиња во овој прозорец"
-  },
-  "tabGroupsToolbarRefresh": {
-    "message": "Освежи"
-  },
-  "tabGroupsCollapseAll": {
-    "message": "Собери ги сите"
-  },
-  "tabGroupsExpandAll": {
-    "message": "Рашири ги сите"
-  },
-  "tabGroupsSummary": {
-    "message": "$tabs$ јазичиња · $groups$ групи",
-    "placeholders": {
-      "tabs": {
-        "content": "$1"
-      },
-      "groups": {
-        "content": "$2"
-      }
-    }
-  },
-  "tabGroupsGroupCount": {
-    "message": "$count$ јазичиња",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsCurrentTab": {
-    "message": "Тековна"
-  },
-  "tabGroupsAddBookmark": {
-    "message": "Обележи го ова јазиче"
-  },
-  "tabGroupsSaveFolder": {
-    "message": "Зачувај ја групата јазичиња како папка со обележувачи"
-  },
-  "tabGroupsGroupSavedToFolder": {
-    "message": "Зачувани $count$ јазичиња во $folder$",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      },
-      "folder": {
-        "content": "$2"
-      }
-    }
-  },
-  "tabGroupsBookmarksAdded": {
-    "message": "Додадени $count$ обележувач(и) во $folder$",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      },
-      "folder": {
-        "content": "$2"
-      }
-    }
-  },
-  "tabGroupsSelectNewGroup": {
-    "message": "Нова група јазичиња"
-  },
-  "tabGroupsSelectOpenInto": {
-    "message": "Отвори во постоечка група јазичиња…"
-  },
-  "tabGroupsSelectSaveFolder": {
-    "message": "Зачувај како папка со обележувачи"
-  },
-  "tabGroupsSelectClose": {
-    "message": "Затвори"
-  },
-  "tabGroupsSelectSleep": {
-    "message": "Замри"
-  },
-  "tabGroupsCopyMoveDialog": {
-    "message": "Избраните јазичиња веќе припаѓаат на група јазичиња. Дали сакате да ги копирате (отворете ги на ново место) или да ги преместите (отстранете ги од тековната група)?"
-  },
-  "tabGroupsCopyMoveCopy": {
-    "message": "Копирај"
-  },
-  "tabGroupsCopyMoveMove": {
-    "message": "Премести"
-  },
-  "tabGroupsConfirmClose": {
-    "message": "Затвори $count$ јазичиња?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsConfirmSleep": {
-    "message": "Замри $count$ јазичиња?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsClosedToast": {
-    "message": "Затворени $count$ јазичиња",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsSleptToast": {
-    "message": "Ставени $count$ јазичиња во сон",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsBatchClosedTitle": {
-    "message": "Затворени јазичиња"
-  },
-  "tabGroupsPinnedUngroupedToast": {
-    "message": "Закачено — отстрането од својата група јазичиња"
-  },
-  "tabGroupsReopenAction": {
-    "message": "Отвори повторно"
-  },
-  "tabGroupsWakeAction": {
-    "message": "Разбуди"
-  },
-  "tabGroupsRecordDeletedToast": {
-    "message": "Отстранет затворениот запис"
-  },
-  "tabGroupsClosedTabRemovedToast": {
-    "message": "Отстрането од затворениот запис"
-  },
-  "tabGroupsClearedToast": {
-    "message": "Исчистени $count$ затворени записи",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "bookmarkFolderPickDialogTitle": {
-    "message": "Додај во папка со обележувачи"
-  },
-  "bookmarkFolderNoFolders": {
-    "message": "Нема папки со обележувачи"
-  },
-  "tabGroupsSelectAddBookmarks": {
-    "message": "Додај во папка со обележувачи…"
-  },
-  "paletteCmdGoTabGroups": {
-    "message": "Оди до приказот на групи на јазичиња"
-  },
-  "tabGroupsActivateGroup": {
-    "message": "Оди во група јазичиња"
-  },
-  "tabGroupsRenameGroup": {
-    "message": "Преименувај група јазичиња"
-  },
-  "tabGroupsRenameDialog": {
-    "message": "Преименувај група јазичиња"
-  },
-  "tabGroupsCloseGroup": {
-    "message": "Затвори група јазичиња"
-  },
-  "tabGroupsSleepGroup": {
-    "message": "Замри група јазичиња"
-  },
-  "tabGroupsWakeGroup": {
-    "message": "Разбуди група јазичиња"
-  },
-  "tabGroupsActivateTab": {
-    "message": "Оди на јазиче"
-  },
-  "tabGroupsCollapseGroup": {
-    "message": "Собери група"
-  },
-  "tabGroupsExpandGroup": {
-    "message": "Рашири група"
-  },
-  "tabGroupsMenuAddBookmark": {
-    "message": "Обележи јазиче"
-  },
-  "tabGroupsMenuSaveFolder": {
-    "message": "Зачувај како папка со обележувачи"
-  },
-  "tabGroupsSyncCollapse": {
-    "message": "Синхронизирај собирање со прелистувачот"
-  },
-  "tabGroupsSyncCollapseHint": {
-    "message": "Кога е означено, собирањето или проширувањето на група во овој приказ исто така го ажурира таб-групата во прелистувачот. Исклучено по дифолт, така што преклопувањето на приказот останува локално."
-  },
-  "tabGroupsColorStyle": {
-    "message": "Стил на боја на група јазичиња"
-  },
-  "tabGroupsColorStyleHint": {
-    "message": "Исклучено прикажува само точка со боја. Лента на работ црта обоена лента по левиот раб на групата. Линија за поврзување црта обоена линија под точката на групата со ознака по ред, поврзувајќи ја целата група во едно дрво."
-  },
-  "tabGroupsColorStyleOff": {
-    "message": "Исклучено (само точка со боја)"
-  },
-  "tabGroupsColorStyleEdge": {
-    "message": "Лента на работ"
-  },
-  "tabGroupsColorStyleLine": {
-    "message": "Линија за поврзување"
-  },
-  "tabGroupsBookmarked": {
-    "message": "Обележано"
-  },
-  "tabGroupsRemoveBookmark": {
-    "message": "Отстрани обележувач"
-  },
-  "tabGroupsBookmarkRemoved": {
-    "message": "Отстранети $count$ обележувач(и)",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsPinned": {
-    "message": "Закачена картичка"
-  },
-  "tabGroupsDiscarded": {
-    "message": "Заспана картичка"
-  },
-  "tabGroupsPinTab": {
-    "message": "Закачи картичка"
-  },
-  "tabGroupsUnpinTab": {
-    "message": "Откачи картичка"
-  },
-  "tabGroupsSleepTab": {
-    "message": "Заспиј јазиче"
-  },
-  "tabGroupsWakeTab": {
-    "message": "Разбуди јазиче"
-  },
-  "tabGroupsOpenGroups": {
-    "message": "Отворени групи јазичиња"
-  },
-  "tabGroupsClosedGroups": {
-    "message": "Неодамна затворени"
-  },
-  "tabGroupsUngroupedTabs": {
-    "message": "Негрупирани јазичиња"
-  },
-  "tabGroupsUngroupGroup": {
-    "message": "Разгрупирај група"
-  },
-  "tabGroupsMoveNewWindow": {
-    "message": "Премести во нов прозорец"
-  },
-  "tabGroupsWindow": {
-    "message": "Прозорец $1$",
-    "placeholders": {
-      "1": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsCurrentWindow": {
-    "message": "Тековен прозорец"
-  },
-  "tabGroupsReopenGroup": {
-    "message": "Повторно отвори група јазичиња"
-  },
-  "tabGroupsDeleteClosedGroup": {
-    "message": "Избриши затворена група јазичиња"
-  },
-  "tabGroupsCollapseWindow": {
-    "message": "Собери прозорец"
-  },
-  "tabGroupsCloseWindow": {
-    "message": "Затвори прозорец"
-  },
-  "tabGroupsWindowClosedTitle": {
-    "message": "Затворен прозорец"
-  },
-  "tabGroupsExpandWindow": {
-    "message": "Рашири прозорец"
-  },
-  "tabGroupsClearClosedGroups": {
-    "message": "Исчисти сè"
-  },
-  "tabGroupsConfirmClearClosed": {
-    "message": "Дали да се избришат сите неодамна затворени записи? Тие повеќе нема да можат да се отворат од тука."
-  },
-  "tabGroupsFilterPlaceholder": {
-    "message": "Филтрирај отворени јазичиња"
-  },
-  "tabGroupsNoMatchingTabs": {
-    "message": "Нема соодветни јазичиња"
-  },
-  "tabGroupsClosedOpenTab": {
-    "message": "Отвори во ново јазиче"
-  },
-  "tabGroupsRemoveClosedTab": {
-    "message": "Отстрани од зачуваната група"
-  },
-  "tabGroupsClosedTimeLabel": {
-    "message": "Затворено:"
-  },
-  "tabGroupsExpandedExpand": {
-    "message": "Прошири"
-  },
-  "tabGroupsExpandedCollapse": {
-    "message": "Собери"
-  },
-  "optionTabGroupsClosedLimit": {
-    "message": "Историја на затворени јазичиња/групи за чување"
-  },
-  "folderPickMoveHere": {
-    "message": "Премести овде"
-  },
-  "folderPickCopyHere": {
-    "message": "Копирај овде"
-  },
-  "folderPickFilter": {
-    "message": "Филтрирај папки…"
-  },
-  "folderPickFavNote": {
-    "message": "Необележаните ставки ќе бидат обележани овде"
-  },
-  "folderPickPinned": {
-    "message": "Закачени"
-  },
-  "folderPickRecent": {
-    "message": "Скорешни"
-  },
-  "pinFolder": {
-    "message": "Закачи ја оваа папка"
-  },
-  "unpinFolder": {
-    "message": "Откачи ја оваа папка"
-  },
-  "stagingAdd": {
-    "message": "Испрати во сцена"
-  },
-  "stagingAdded": {
-    "message": "Испратено во сцена"
-  },
-  "stagingAlready": {
-    "message": "Веќе е во подрачјето за подготовка"
-  },
-  "stagingAddedSummary": {
-    "message": "Додадени $n$ ставки; $m$ веќе подготвени",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      },
-      "m": {
-        "content": "$2"
-      }
-    }
-  },
-  "stagingFull": {
-    "message": "Подрачјето за подготовка е полно — прво отстранете некои ставки"
-  },
-  "stagingFolderEmpty": {
-    "message": "Оваа папка нема обележувачи за подготовка"
-  },
-  "stagingConfirmFolder": {
-    "message": "Подготви $n$ обележувачи од оваа папка?",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingConfirmFolderOk": {
-    "message": "Постави"
-  },
-  "stagingRemove": {
-    "message": "Отстрани од подрачјето за подготовка"
-  },
-  "stagingRemoved": {
-    "message": "Отстрането од подрачјето за подготовка"
-  },
-  "recentStageAll": {
-    "message": "Подготви ги сите скорешно додадени"
-  },
-  "recentSectionTitle": {
-    "message": "Скорешно додадени"
-  },
-  "stagingEmpty": {
-    "message": "Сè уште ништо не е подготвено. Испратете обележувачи овде од кој било приказ — копчето за авион на ред, или менито со десен клик — потоа организирајте и подредете ги во групи."
-  },
-  "stagingFromHistory": {
-    "message": "Од историја"
-  },
-  "stagingGroupExpand": {
-    "message": "Прошири група"
-  },
-  "stagingGroupCollapse": {
-    "message": "Собери група"
-  },
-  "stagingGroupRename": {
-    "message": "Преименувај група…"
-  },
-  "stagingGroupDissolve": {
-    "message": "Распушти група"
-  },
-  "stagingGroupDissolved": {
-    "message": "Групата е распуштена — ставките се задржани во подрачјето за подготовка"
-  },
-  "stagingGroupDelete": {
-    "message": "Избриши група (со ставки)"
-  },
-  "stagingGroupDeleteConfirm": {
-    "message": "Да се избрише групата \"$1\"? Нејзините $2 ставки исто така ќе ја напуштат областа за подготвување."
-  },
-  "stagingGroupDeleted": {
-    "message": "Групата е избришана — отстранети $1 ставки"
-  },
-  "stagingGroupAssign": {
-    "message": "Група…"
-  },
-  "stagingGroupAssignTitle": {
-    "message": "Додели во група"
-  },
-  "stagingGroupNew": {
-    "message": "Нова група"
-  },
-  "stagingGroupNamePrompt": {
-    "message": "Име на новата група"
-  },
-  "stagingGroupNoGroups": {
-    "message": "Сè уште нема групи"
-  },
-  "stagingShortcutAdd": {
-    "message": "Додај кратенка"
-  },
-  "stagingShortcutBarLabel": {
-    "message": "Премести во:"
-  },
-  "stagingGuideText": {
-    "message": "Организирајте обележувачи овде — изберете редови и влезете во режим на селекција за групни дејства."
-  },
-  "stagingGuideDismiss": {
-    "message": "Не прикажувај повторно"
-  },
-  "stagingShortcutTitle": {
-    "message": "Кратенка за преместување"
-  },
-  "stagingShortcutEdit": {
-    "message": "Уреди кратенка"
-  },
-  "stagingShortcutAlias": {
-    "message": "Псевдоним"
-  },
-  "stagingShortcutPickFolder": {
-    "message": "Избери целна папка…"
-  },
-  "stagingShortcutSave": {
-    "message": "Зачувај"
-  },
-  "stagingShortcutRemove": {
-    "message": "Отстрани кратенка"
-  },
-  "stagingShortcutRemoved": {
-    "message": "Кратенката е отстранета"
-  },
-  "stagingShortcutMove": {
-    "message": "Премести избрано во $1$",
-    "placeholders": {
-      "1": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingBucketTitle": {
-    "message": "Необележани"
-  },
-  "stagingBucketFavAll": {
-    "message": "Обележи ги сите како омилени"
-  },
-  "stagingNew": {
-    "message": "нови $n$",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingRowFav": {
-    "message": "Обележи ја оваа ставка како омилена"
-  },
-  "stagingRowUnfav": {
-    "message": "Отстрани ја омиленоста на оваа ставка"
-  },
-  "stagingFav": {
-    "message": "Омилена"
-  },
-  "stagingUnfav": {
-    "message": "Не-омилена"
-  },
-  "stagingFavDone": {
-    "message": "Обележани $n$ ставки како омилени",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingUnfavDone": {
-    "message": "Отстранета омиленоста на $n$ ставки",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "groupSaveToFolder": {
-    "message": "Зачувај во папка…"
-  },
-  "groupCopyToFolder": {
-    "message": "Копирај во папка…"
-  },
-  "stagingCount": {
-    "message": "$n$ подготвени",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingMoveCopy": {
-    "message": "Премести/копирај…"
-  },
-  "stagingMoveDone": {
-    "message": "Преместени $n$ ставки дома",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingCopyDone": {
-    "message": "Копирани $n$ ставки",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingMoveConfirm": {
-    "message": "Премести $n$ ставки во избраната папка?",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingMoveConfirmOk": {
-    "message": "Премести"
-  },
-  "stagingDeleteConfirm": {
-    "message": "Избриши $n$ ставки? Оние што не се обележани само ја напуштаат областа за подготовка.",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingDeleted": {
-    "message": "Избришани $n$ обележувачи",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingRemovedCount": {
-    "message": "Отстранети $n$ ставки од областа за подготовка",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingClear": {
-    "message": "Исчисти ја областа за подготовка"
-  },
-  "stagingClearConfirm": {
-    "message": "Да ја исчистам целата област за подготовка? Дрвото на обележувачи не се допира."
-  },
-  "stagingClearConfirmOk": {
-    "message": "Исчисти"
-  },
-  "stagingCleared": {
-    "message": "Областа за подготовка е исчистена"
-  },
-  "groupPlaceTooltip": {
-    "message": "Зачувај ја групата во папка…"
-  },
-  "copyBookmark": {
-    "message": "Копирај"
-  },
-  "cutBookmark": {
-    "message": "Исечи"
-  },
-  "copyMoveTo": {
-    "message": "Копирај/премести…"
-  },
-  "pasteHere": {
-    "message": "Залепи тука"
-  },
-  "copiedToast": {
-    "message": "Копирано: $t$",
-    "placeholders": {
-      "t": {
-        "content": "$1"
-      }
-    }
-  },
-  "cutToast": {
-    "message": "Исечено: $t$ — залепете во целната папка (Esc откажува)",
-    "placeholders": {
-      "t": {
-        "content": "$1"
-      }
-    }
-  },
-  "pasteDone": {
-    "message": "Залепено"
-  },
-  "pasteGone": {
-    "message": "Обележувачот повеќе не постои — клипбордот е исчистен"
-  },
-  "folderCopyList": {
-    "message": "Копирај наслови и адреси"
-  },
-  "folderCopyText": {
-    "message": "Обичен текстуален список"
-  },
-  "folderCopyMarkdown": {
-    "message": "Markdown"
-  },
-  "folderCopyJson": {
-    "message": "JSON"
-  },
-  "folderCopyConfirm": {
-    "message": "Да го копирам списокот од $n$ обележувачи?",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "folderCopyDone": {
-    "message": "Копирани $n$ записи за обележувачи",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "addFolderMenu": {
-    "message": "Додај папка"
-  },
-  "optionCollapseAddFolderMenu": {
-    "message": "Собери ги записите за додавање папка"
-  },
-  "optionCollapseAddFolderMenuHint": {
-    "message": "Спој ги записите за додавање папка (пред/по/внатре на редовите со папки, пред/по на редовите со обележувачи) во еден запис од подменито."
-  },
-  "tabRowStage": {
-    "message": "Испрати во сцена"
-  },
-  "tabgroupStageAll": {
-    "message": "Испрати група во сцена"
-  },
-  "tabgroupStageConfirm": {
-    "message": "Да се испратат $n$ јазичиња во сцена?",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabgroupStageNone": {
-    "message": "Нема обележливи јазичиња во оваа група"
-  },
-  "stagedToast": {
-    "message": "Подготвени $n$ јазичиња како група „$t$“",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      },
-      "t": {
-        "content": "$2"
-      }
-    }
-  },
-  "searchResultCount": {
-    "message": "$n$ резултат(и)",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "deleteSelected": {
-    "message": "Избриши избрани"
-  },
-  "recentStageGroup": {
-    "message": "Испрати $t$ во просторот за подготвка",
-    "placeholders": {
-      "t": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingGroupSelectAll": {
-    "message": "Избери ги сите во групава"
-  },
-  "optionsGroupLabs": {
-    "message": "Лабораторија"
-  },
-  "optionVirtualScrollLab": {
-    "message": "Виртуелно лизгање (експериментално)"
-  },
-  "optionVirtualScrollLabHint": {
-    "message": "Приказите на групи јазичиња и дупликати прикажуваат само редови блиску до видикот. Многу побрзо на многу големи списоци; додека е експериментално, позицијата на лизгачот е проценка."
-  },
-  "optionsStagingSection": {
-    "message": "Подготовка и неодамна додадени"
-  },
-  "optionStagingEnabled": {
-    "message": "Овозможи ја областа за подготовка"
-  },
-  "optionStagingEnabledHint": {
-    "message": "Додека е исклучено, овој приказ ги задржува само неодамна додадените ставки, а сите копчиња или менија за подготовка во другите прикази се кријат."
-  },
-  "optionTreeRowActions": {
-    "message": "Дејства при лебдење на редовите (уреди / подготви / избриши)"
-  },
-  "optionsStorageSyncTip": {
-    "message": "Се синхронизира преку вашата Chrome сметка — оваа поставка е споделена на сите ваши уреди.",
-    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
-  },
-  "optionsStorageLocalTip": {
-    "message": "Се чува само на овој уред — не се споделува преку Chrome синхронизација.",
-    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
-  },
-  "tabGroupsWindowsCount": {
-    "message": "$n$ прозорци",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsNewWindow": {
-    "message": "Нов прозорец"
-  },
-  "tabGroupsMergedWindowToast": {
-    "message": "Прозорецот е споен како група јазичиња"
-  },
-  "searchStageAllGroup": {
-    "message": "Испрати ги сите резултати како група „$1$“",
-    "placeholders": {
-      "1": {
-        "content": "$1"
-      }
-    }
-  },
-  "searchHistoryClose": {
-    "message": "Сокриј историја на пребарување"
-  },
-  "searchHistoryClosedToast": {
-    "message": "Историјата на пребарување е скриена — повторно вклучете ја во Опции → Пребарување"
   }
 }

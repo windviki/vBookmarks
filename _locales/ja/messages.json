@@ -14,6 +14,9 @@
   "addBookmarkTop": {
     "message": "このトップに現在のタブを追加します"
   },
+  "addFolderMenu": {
+    "message": "フォルダを追加"
+  },
   "addNewFolder": {
     "message": "フォルダを追加"
   },
@@ -32,23 +35,38 @@
   "announceDismiss": {
     "message": "閉じる"
   },
-  "announceV408Text": {
-    "message": "v4.0.8はファビコン強化版です。Chromeがまだキャッシュしていないブックマークの実サイトアイコンを自動的に取得します。"
-  },
   "announceV407Text": {
     "message": "v4.0.7 では、多機能なデッドリンクビューを提供します。デッドリンクやアクセス制限のあるリンクをスキャン、マーク、フィルタリング、並べ替えでき、過去のマークと行ごとのタイムスタンプも表示されます。"
   },
   "announceV407Title": {
     "message": "v4.0.7 の新機能"
   },
+  "announceV408Text": {
+    "message": "v4.0.8はファビコン強化版です。Chromeがまだキャッシュしていないブックマークの実サイトアイコンを自動的に取得します。"
+  },
   "announceV408Title": {
     "message": "v4.0.8の新機能"
+  },
+  "announceV410Text": {
+    "message": "v4.1.0 では、タブグループビューとステージングエリアが追加されました。ブックマークの横で各ウィンドウのタブを管理し、どこからでもブックマークをステージングワークベンチに集めて一括整理できます。"
   },
   "announceV410Title": {
     "message": "v4.1.0 の新機能"
   },
-  "announceV410Text": {
-    "message": "v4.1.0 では、タブグループビューとステージングエリアが追加されました。ブックマークの横で各ウィンドウのタブを管理し、どこからでもブックマークをステージングワークベンチに集めて一括整理できます。"
+  "bookmarkFolderNoFolders": {
+    "message": "ブックマークフォルダーがありません"
+  },
+  "bookmarkFolderPickDialogTitle": {
+    "message": "ブックマークフォルダーに追加"
+  },
+  "bookmarkOpenInExistingGroup": {
+    "message": "既存タブグループで開く…"
+  },
+  "bookmarkOpenInNewGroup": {
+    "message": "新規タブグループで開く"
+  },
+  "bookmarkOpenInNewGroupSetup": {
+    "message": "新規タブグループで開く…"
   },
   "confirmDeleteFolder": {
     "message": "このフォルダには$count$個のアイテムが含まれています。削除は元に戻せます。",
@@ -57,9 +75,6 @@
         "content": "$1"
       }
     }
-  },
-  "confirmDeleteFolderButton": {
-    "message": "削除"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "$folderName$ フォルダと $bookmarkCount$ 個のブックマークを削除します。よろしいですか。",
@@ -71,6 +86,9 @@
         "content": "$1"
       }
     }
+  },
+  "confirmDeleteFolderButton": {
+    "message": "削除"
   },
   "confirmDeleteFolderSubfolders": {
     "message": "$folderName$ フォルダと $subFolderCount$ 個のサブフォルダを削除します。よろしいですか。",
@@ -124,11 +142,32 @@
       }
     }
   },
+  "contextMenuAddBookmark": {
+    "message": "vBookmarksでこのページをブックマーク"
+  },
+  "copiedToast": {
+    "message": "コピーしました: $t$",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
+  },
   "copyAllTitlesAndUrls": {
     "message": "クリップボードへのすべてのタイトルとURLをコピー"
   },
+  "copyBookmark": {
+    "message": "コピー"
+  },
+  "copyMoveTo": {
+    "message": "コピー/移動先…"
+  },
   "copyTitleAndUrl": {
     "message": "タイトルとURLをコピー"
+  },
+  "crossStorageMoveWarning": {
+    "description": "Warning when trying to move bookmarks across storage types",
+    "message": "同期済みとローカルストレージの間でブックマークを移動できません。コピー/貼り付けを使用してください。"
   },
   "customIcon": {
     "message": "カスタムアイコン"
@@ -136,8 +175,14 @@
   "customIconDescription": {
     "message": "アイコンは19* 19ピクセルのディメンションである必要があります。それ以外は、この寸法にリサイズされます。"
   },
+  "customIconPick": {
+    "message": "ファイルを選択…"
+  },
   "customSeparatorColorDescription": {
     "message": "区切り文字の色をカスタマイズ"
+  },
+  "customSeparatorStringDescription": {
+    "message": "ブックマークのURLは、この文字列が含まれている場合は、区切り文字として表示されます"
   },
   "customSeparatorTitleDescription": {
     "message": "セパレータとして表示され、このブックマークのタイトル"
@@ -145,28 +190,28 @@
   "customSeparatorUrlDescription": {
     "message": "セパレータとして表示され、このブックマークのURL"
   },
-  "customSeparatorStringDescription": {
-    "message": "ブックマークのURLは、この文字列が含まれている場合は、区切り文字として表示されます"
-  },
   "customStyles": {
     "message": "カスタムスタイル"
-  },
-  "separatorOptions": {
-    "message": "区切り線"
   },
   "customStylesDescription": {
     "message": "これは、いくつかのCSSのスキルが必要です。ご自身の責任でハック。コードの共有は行わ経由してのが賢明だろう "
   },
-  "defaultIconButton": {
-    "message": "デフォルトを使用"
+  "cutBookmark": {
+    "message": "切り取り"
   },
-  "defaultIconButtonOr": {
-    "message": " または "
+  "cutToast": {
+    "message": "切り取り: $t$ — 対象フォルダに貼り付け（Escでキャンセル）",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
   },
-  "customIconPick": {
-    "message": "ファイルを選択…"
+  "deadCancel": {
+    "message": "キャンセル"
   },
   "deadChecking": {
+    "description": "Progress line of the palette's dead-link scan mode; $done$ bookmarks checked out of $total$.",
     "message": "$done$ / $total$ を確認中…",
     "placeholders": {
       "done": {
@@ -177,8 +222,10 @@
         "content": "$2",
         "example": "120"
       }
-    },
-    "description": "Progress line of the palette's dead-link scan mode; $done$ bookmarks checked out of $total$."
+    }
+  },
+  "deadClearScan": {
+    "message": "スキャン結果をクリア"
   },
   "deadConfirmAll": {
     "message": "すべての$count$個の無効なブックマークを削除しますか？この操作は元に戻せません。",
@@ -192,6 +239,15 @@
   "deadConfirmDelete": {
     "message": "このブックマークを削除しますか？"
   },
+  "deadConfirmDeleteSelected": {
+    "message": "選択中の $count$ 個の無効なブックマークを削除しますか？",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
+  },
   "deadDeleteAll": {
     "message": "現在のフィルター内の $count$ 個のブックマークをすべて削除しますか？",
     "placeholders": {
@@ -201,27 +257,15 @@
       }
     }
   },
-  "deadDeleteAllNote": {
-    "message": "「すべて」フィルターでは、これにはブロックされたブックマーク（プロキシ経由で到達可能で、まだ有効な可能性が高い）と、以前マークされた行が含まれます。",
-    "description": "Second line of the delete-all confirmation in the Dead links view."
-  },
-  "undoSingleStepNote": {
-    "message": "元に戻せるのは最後の削除のみです。"
-  },
   "deadDeleteAllBtn": {
     "message": "すべて削除"
   },
+  "deadDeleteAllNote": {
+    "description": "Second line of the delete-all confirmation in the Dead links view.",
+    "message": "「すべて」フィルターでは、これにはブロックされたブックマーク（プロキシ経由で到達可能で、まだ有効な可能性が高い）と、以前マークされた行が含まれます。"
+  },
   "deadDeleteSelected": {
     "message": "選択を削除"
-  },
-  "deadConfirmDeleteSelected": {
-    "message": "選択中の $count$ 個の無効なブックマークを削除しますか？",
-    "placeholders": {
-      "count": {
-        "content": "$1",
-        "example": "8"
-      }
-    }
   },
   "deadDeleted": {
     "message": "$count$ 個の無効なブックマークを削除しました",
@@ -232,8 +276,72 @@
       }
     }
   },
-  "deadClearScan": {
-    "message": "スキャン結果をクリア"
+  "deadDetectTimeLabel": {
+    "message": "検出日時"
+  },
+  "deadFilterAll": {
+    "message": "すべて"
+  },
+  "deadFilterBlocked": {
+    "message": "ブロックのみ"
+  },
+  "deadFilterDead": {
+    "message": "デッドのみ"
+  },
+  "deadFilterMarked": {
+    "message": "以前マーク済み"
+  },
+  "deadLastScanAt": {
+    "message": "最終スキャン: $time$",
+    "placeholders": {
+      "time": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadMark": {
+    "message": "デッドとしてマーク"
+  },
+  "deadMarkAll": {
+    "message": "すべてマーク"
+  },
+  "deadMarkSelected": {
+    "message": "選択済みをマーク"
+  },
+  "deadMarkStatusAll": {
+    "message": "すべてのステータス"
+  },
+  "deadMarkStatusMarked": {
+    "message": "マーク済み"
+  },
+  "deadMarkStatusUnmarked": {
+    "message": "未マーク"
+  },
+  "deadMarkTimeLabel": {
+    "message": "マーク日時"
+  },
+  "deadMarked": {
+    "message": "マークされたデッド行"
+  },
+  "deadMarkedBanner": {
+    "message": "以前マークしたブックマークを表示しています。「再スキャン」をクリックして新しいチェックを開始するか、以下のリストで処理してください。"
+  },
+  "deadMarkedBannerDismiss": {
+    "message": "閉じる"
+  },
+  "deadMarkedCount": {
+    "message": "マーク済みブックマーク $count$ 件",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadMarkedNone": {
+    "message": "マーク済みのブックマークはまだありません"
+  },
+  "deadMarkedRow": {
+    "message": "マーク済み"
   },
   "deadNone": {
     "message": "無効なリンクは見つかりませんでした"
@@ -241,34 +349,711 @@
   "deadNoneFiltered": {
     "message": "このフィルターにデッドリンクはありません — 上の別のセグメントをお試しください"
   },
+  "deadPause": {
+    "message": "一時停止"
+  },
+  "deadPaused": {
+    "message": "一時停止中"
+  },
+  "deadProxyAdd": {
+    "message": "リンク切れチェック用のプロキシサーバーを追加"
+  },
+  "deadProxyChange": {
+    "message": "変更"
+  },
+  "deadProxyClear": {
+    "message": "クリア"
+  },
+  "deadProxyControlled": {
+    "message": "プロキシ設定は別の拡張機能によって管理されています"
+  },
+  "deadProxyDenied": {
+    "message": "プロキシの権限が付与されていません"
+  },
+  "deadProxyInvalid": {
+    "message": "無効なプロキシアドレスです — host:port または scheme://host:port を使用してください（http/https/socks5、認証情報なし）"
+  },
+  "deadProxyLabel": {
+    "message": "プロキシ: $server$",
+    "placeholders": {
+      "server": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadProxyNeverShow": {
+    "message": "今後表示しない"
+  },
+  "deadProxyNone": {
+    "message": "（未設定）"
+  },
+  "deadProxyNudge": {
+    "message": "プロキシ再チェックで、実際に無効なリンクと地域制限されたリンクを区別できます。ここまたはオプションページで設定してください。"
+  },
+  "deadProxyPanelHint": {
+    "message": "既にお持ちのプロキシサーバーを入力してください（拡張機能はプロキシを提供しません）。例: 127.0.0.1:7890 または socks5://127.0.0.1:1080"
+  },
+  "deadProxyRemove": {
+    "message": "削除"
+  },
+  "deadProxyRemoved": {
+    "message": "プロキシサーバーを削除しました"
+  },
+  "deadProxySaved": {
+    "message": "プロキシを保存しました。今後のスキャンでは直接失敗したリンクをこのプロキシ経由で再チェックします"
+  },
+  "deadProxyServerHint": {
+    "message": "保存されたサーバーは、デッドリンクスキャンのたびに直接チェックに失敗したブックマークを再チェックし、実際の無効リンクと地域制限によるブロックを区別します。「テストして保存」でプローブを実行します（到達可能なサーバーのみが保持されます）。デッドリンクビューから追加することもできます。"
+  },
+  "deadProxyTestSave": {
+    "message": "テストして保存"
+  },
+  "deadProxyTestUrlLabel": {
+    "message": "テストURL"
+  },
+  "deadProxyTesting": {
+    "message": "テスト中…"
+  },
+  "deadProxyUnavailable": {
+    "message": "このブラウザではプロキシAPIを利用できません"
+  },
+  "deadProxyUnreachable": {
+    "message": "プロキシに到達できません — 保存されていません"
+  },
   "deadRescan": {
     "message": "再スキャン"
+  },
+  "deadResume": {
+    "message": "再開"
+  },
+  "deadRiskBanner": {
+    "message": "リンク切れ整理はブックマークを一括削除します。初回の整理前にバックアップしてください。"
+  },
+  "deadSortByDetected": {
+    "message": "検出日時"
+  },
+  "deadSortByMarked": {
+    "message": "マーク日時"
+  },
+  "deadSortByPath": {
+    "message": "フォルダパス"
+  },
+  "deadSortLabel": {
+    "message": "並べ替え"
+  },
+  "deadStartHint": {
+    "message": "$n$個のブックマークのスキャンを開始",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadStatusBlocked": {
+    "message": "ブロック済み"
+  },
+  "deadUnmark": {
+    "message": "デッドマークを解除"
+  },
+  "deadUnmarkAll": {
+    "message": "すべてのマークを消去"
+  },
+  "deadUnmarkSelected": {
+    "message": "選択済みのマークを解除"
+  },
+  "defaultIconButton": {
+    "message": "デフォルトを使用"
+  },
+  "defaultIconButtonOr": {
+    "message": " または "
   },
   "delete": {
     "message": "削除"
   },
+  "deleteEllipsis": {
+    "message": "削除..."
+  },
+  "deleteSelected": {
+    "message": "選択した項目を削除"
+  },
   "deletedBookmark": {
+    "description": "Toast shown after a bookmark or separator was deleted; the toast offers an undo button. $title$ is the deleted row's title (empty for separators).",
     "message": "$title$ を削除しました",
     "placeholders": {
       "title": {
         "content": "$1",
         "example": "Example"
       }
-    },
-    "description": "Toast shown after a bookmark or separator was deleted; the toast offers an undo button. $title$ is the deleted row's title (empty for separators)."
+    }
   },
   "deletedFolder": {
+    "description": "Toast shown after a bookmark folder (with its whole subtree) was deleted; the toast offers an undo button. $title$ is the folder name.",
     "message": "フォルダ $title$ を削除しました",
     "placeholders": {
       "title": {
         "content": "$1",
         "example": "Bookmarks"
       }
-    },
-    "description": "Toast shown after a bookmark folder (with its whole subtree) was deleted; the toast offers an undo button. $title$ is the folder name."
+    }
+  },
+  "donationDismiss": {
+    "message": "いいえ"
+  },
+  "donationGo": {
+    "message": "寄付する"
+  },
+  "donationLater": {
+    "message": "後で"
+  },
+  "donationMessage": {
+    "message": "気に入っていただけましたか？寄付で将来を支えるか、ストアで評価してください。すべてのレビューが更新を続けます。"
+  },
+  "donationNever": {
+    "message": "再表示しない"
+  },
+  "donationRate": {
+    "message": "評価する"
+  },
+  "donationRateTitle": {
+    "message": "Chrome ウェブストアで vBookmarks を評価"
+  },
+  "donationV4GuideLink": {
+    "message": "v4 ガイドを読む →"
+  },
+  "donationV4Notice": {
+    "message": "vBookmarks 4.0 はモダンなデザインで全面リニューアルされ、新機能が満載です。"
+  },
+  "dupesApplyAll": {
+    "message": "すべて適用（$count$）",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesApplySelected": {
+    "message": "選択済みを重複整理 ($count$)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesCleanAll": {
+    "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go.",
+    "message": "すべて削除: $groups$ グループ、$count$ 個の重複",
+    "placeholders": {
+      "count": {
+        "content": "$2"
+      },
+      "groups": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesCleanRestHint": {
+    "message": "\"$title$\" を保持し、他の $count$ を削除",
+    "placeholders": {
+      "count": {
+        "content": "$2"
+      },
+      "title": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesConfirmAll": {
+    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark).",
+    "message": "$groups$ グループ内の重複コピー $count$ 件を削除しますか？各グループで選択されたキーパーは保持されます。",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    }
+  },
+  "dupesConfirmGroup": {
+    "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept).",
+    "message": "「$title$」を保持し、他のコピー $count$ 件を削除しますか？",
+    "placeholders": {
+      "count": {
+        "content": "$2"
+      },
+      "title": {
+        "content": "$1",
+        "example": "Example bookmark"
+      }
+    }
+  },
+  "dupesConfirmSelected": {
+    "message": "選択中の $groups$ グループから重複ブックマーク $count$ 件を削除しますか？",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    }
+  },
+  "dupesDone": {
+    "description": "Alert shown after the duplicate cleanup finished.",
+    "message": "$count$ 個の重複ブックマークを削除しました",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesGroupCollapse": {
+    "description": "Dupes view group-head context menu: collapse an expanded duplicate group.",
+    "message": "グループを折りたたみ"
+  },
+  "dupesGroupCount": {
+    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL.",
+    "message": "$count$ 個の重複",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesGroupExpand": {
+    "description": "Dupes view group-head context menu: expand a collapsed duplicate group.",
+    "message": "グループを展開"
+  },
+  "dupesIgnoreScheme": {
+    "message": "http/httpsの違いを無視"
+  },
+  "dupesKeepThis": {
+    "message": "これを保持"
+  },
+  "dupesKeeperSet": {
+    "message": "キーパーに設定"
+  },
+  "dupesNone": {
+    "message": "重複は見つかりませんでした"
+  },
+  "dupesPreviewSummary": {
+    "message": "$groups$ グループ · $count$ 件解放予定",
+    "placeholders": {
+      "count": {
+        "content": "$2"
+      },
+      "groups": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesRemoveRow": {
+    "message": "このコピーを削除"
+  },
+  "dupesRiskBanner": {
+    "message": "重複整理は重複ブックマークを一括削除します。実行前にバックアップしてください。"
+  },
+  "dupesScopeAll": {
+    "message": "すべてのブックマーク"
+  },
+  "dupesScopeBar": {
+    "message": "ブックマークバーのみ"
+  },
+  "dupesStrategyBookmarkBar": {
+    "message": "ブックマークバー内のものを保持"
+  },
+  "dupesStrategyMostVisited": {
+    "message": "最多訪問を保持"
+  },
+  "dupesStrategyNewest": {
+    "message": "最新を保持"
+  },
+  "dupesStrategyOldest": {
+    "message": "最古を保持"
+  },
+  "dupesStrategyShallowest": {
+    "message": "最も浅いものを保持"
+  },
+  "dupesStrategyShortestTitle": {
+    "message": "最も短いタイトルを保持"
+  },
+  "edit": {
+    "message": "編集..."
+  },
+  "editBookmark": {
+    "message": "ブックマークの編集"
+  },
+  "editFolder": {
+    "message": "フォルダの編集"
+  },
+  "errorOccured": {
+    "message": "エラーが発生しました"
+  },
+  "extDesc": {
+    "description": "詳細な説明",
+    "message": "すっきりしたツリー構造のブックマーク"
+  },
+  "extName": {
+    "description": "拡張名",
+    "message": "vBookmarks"
+  },
+  "favGalleryAll": {
+    "description": "Favicon gallery source filter chip: show every source.",
+    "message": "すべて"
+  },
+  "favGalleryCompare": {
+    "description": "Favicon gallery toggle button: switch every icon to the generic placeholder it replaced (before/after comparison).",
+    "message": "プレースホルダーと比較"
+  },
+  "favGalleryEmptyText": {
+    "description": "Favicon gallery empty-state body text.",
+    "message": "ポップアップが、Chrome にアイコンのないブックマーク済みサイトを検出すると、vBookmarks が実際のアイコンを取得してここに一覧表示します。"
+  },
+  "favGalleryEmptyTitle": {
+    "description": "Favicon gallery empty-state heading.",
+    "message": "更新済みアイコンはまだありません"
+  },
+  "favGalleryFailedHint": {
+    "description": "Favicon gallery hint under the failed-fetch section title.",
+    "message": "失敗は24時間後、3日後、7日後に再試行され、その後はアイコンキャッシュがクリアされるまで放棄されます。"
+  },
+  "favGalleryFailedTitle": {
+    "description": "Favicon gallery heading of the muted section listing hosts whose icon fetch failed recently.",
+    "message": "最近試行したがアイコンなし"
+  },
+  "favGalleryGaveUp": {
+    "description": "Favicon gallery badge on a failed-strip host whose retries are exhausted (it stays untouched until the icon cache is cleared).",
+    "message": "放棄しました"
+  },
+  "favGalleryHint": {
+    "description": "Subtitle under the favicon gallery title, explaining the page is read-only.",
+    "message": "vBookmarks が、Chrome がキャッシュしていないブックマーク済みサイトから取得したアイコンです。各アイコンの取得元と、そのアイコンを使用するブックマークを表示します。表示専用です。"
+  },
+  "favGalleryLink": {
+    "description": "Options link (Icons group, right of the Clear icon cache button): opens the favicon gallery page listing the sites whose icons were refetched.",
+    "message": "更新済みアイコンを表示"
+  },
+  "favGalleryOrphan": {
+    "description": "Favicon gallery note on a card whose host no longer has any bookmark.",
+    "message": "このホストにはブックマークが残っていません。アイコンはキャッシュと一緒に消去されます。"
+  },
+  "favGallerySearch": {
+    "description": "Placeholder of the favicon gallery filter input.",
+    "message": "サイト、タイトル、パスで絞り込み"
+  },
+  "favGalleryShowingBefore": {
+    "description": "Favicon gallery toggle button while the placeholder comparison is shown: switch back to the real fetched icons.",
+    "message": "実際のアイコンに戻る"
+  },
+  "favGalleryStatBookmarks": {
+    "description": "Favicon gallery stats strip: how many bookmarks sit on the refreshed sites.",
+    "message": "$n$ブックマーク",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "favGalleryStatSites": {
+    "description": "Favicon gallery stats strip: how many sites have a refreshed icon.",
+    "message": "$n$サイト",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "favGalleryTitle": {
+    "description": "Favicon gallery page title (h1 + document title).",
+    "message": "更新済みサイトアイコン"
+  },
+  "favGalleryVisits": {
+    "description": "Favicon gallery tooltip on a bookmark row's visit-count pill.",
+    "message": "$n$回のオープン記録",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "favSrcDirect": {
+    "description": "Favicon gallery source badge: the icon was fetched directly from the site itself.",
+    "message": "直接"
+  },
+  "favSrcLegacy": {
+    "description": "Favicon gallery source badge: cached before the source was recorded, so the origin is unknown.",
+    "message": "以前のキャッシュ"
+  },
+  "favSrcProxy": {
+    "description": "Favicon gallery source badge: the icon was fetched through the user's own proxy relay.",
+    "message": "プロキシ"
+  },
+  "folderCopyConfirm": {
+    "message": "$n$件のブックマークの一覧をコピーしますか？",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "folderCopyDone": {
+    "message": "$n$件のブックマークエントリをコピーしました",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "folderCopyJson": {
+    "message": "JSON"
+  },
+  "folderCopyList": {
+    "message": "タイトルとアドレスをコピー"
+  },
+  "folderCopyMarkdown": {
+    "message": "Markdown"
+  },
+  "folderCopyText": {
+    "message": "プレーンテキスト一覧"
+  },
+  "folderEmpty": {
+    "message": "(空)"
+  },
+  "folderPickCopyHere": {
+    "message": "ここにコピー"
+  },
+  "folderPickFavNote": {
+    "message": "未ブックマークの項目はここにブックマークされます"
+  },
+  "folderPickFilter": {
+    "message": "フォルダを絞り込み…"
+  },
+  "folderPickMoveHere": {
+    "message": "ここに移動"
+  },
+  "folderPickPinned": {
+    "message": "固定"
+  },
+  "folderPickRecent": {
+    "message": "最近"
+  },
+  "general": {
+    "message": "全般"
+  },
+  "groupCopyToFolder": {
+    "message": "フォルダにコピー…"
+  },
+  "groupPlaceTooltip": {
+    "message": "このグループをフォルダに保存…"
+  },
+  "groupSaveToFolder": {
+    "message": "フォルダに保存…"
+  },
+  "ignore": {
+    "message": "無視"
+  },
+  "name": {
+    "description": "ブックマークとフォルダの名前",
+    "message": "名前"
+  },
+  "noTitle": {
+    "description": "名前の無いブックマークのための名前",
+    "message": "無題"
+  },
+  "nope": {
+    "message": "キャンセル"
+  },
+  "open": {
+    "description": "ブックマークを開く",
+    "message": "開く"
+  },
+  "openBookmarks": {
+    "message": "すべてのブックマークを開く"
+  },
+  "openBookmarksInExistingGroup": {
+    "message": "すべてを既存タブグループで開く…"
+  },
+  "openBookmarksInGroup": {
+    "message": "すべてを新しいタブグループで開く"
+  },
+  "openBookmarksInGroupSetup": {
+    "message": "すべてを新規タブグループで開く…"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "すべてをシークレットで開く"
+  },
+  "openBookmarksNewWindow": {
+    "message": "すべてを新規ウィンドウで開く"
+  },
+  "openCommandPaletteCommand": {
+    "message": "コマンドパレットを開く"
+  },
+  "openIncognitoWindow": {
+    "message": "シークレットウィンドウで開く"
+  },
+  "openNewTab": {
+    "message": "新しいタブで開く"
+  },
+  "openNewWindow": {
+    "message": "新しいウィンドウで開く"
+  },
+  "openSidePanelCommand": {
+    "message": "vBookmarks サイドパネルを開く"
+  },
+  "optionAnnounceEnabled": {
+    "message": "製品内のお知らせを表示"
+  },
+  "optionAnnounceEnabledHint": {
+    "message": "プロジェクトのGitHubリポジトリからのリリースノートとヒント（最大6時間ごとに取得）。オフにするとネットワーク取得も停止します。"
+  },
+  "optionAutoRefreshSync": {
+    "message": "同期ステータスを自動更新"
+  },
+  "optionAutoResizePopup": {
+    "message": "ポップアップウィンドウのサイズをコンテンツに合わせて自動調整する"
+  },
+  "optionClassicExperience": {
+    "message": "クラシックヘッダーを復元"
+  },
+  "optionClassicExperienceHint": {
+    "message": "コマンドパレット、クイック追加スターとそのページの右クリックエントリ、ツールボタン、ビュータブをオフにします。各項目はそれぞれのセクションで個別に再び有効にできます。"
+  },
+  "optionClickNewTab": {
+    "message": "ブックマークを新しいタブで開く"
+  },
+  "optionCloseUnusedFolders": {
+    "message": "フォルダを開くとき、アクティブでないフォルダを閉じる"
+  },
+  "optionCollapseAddFolderMenu": {
+    "message": "フォルダ追加エントリを折りたたむ"
+  },
+  "optionCollapseAddFolderMenuHint": {
+    "message": "将添加文件夹的条目（文件夹行上的前/后/内部，书签行上的前/后）合并为一个子菜单条目。"
+  },
+  "optionCollapseSortMenu": {
+    "message": "並べ替え項目を1つの「並べ替え…」サブメニューに折りたたむ"
+  },
+  "optionCollapseSortMenuHint": {
+    "message": "フォルダーの右クリックメニューに適用されます。デフォルトではオンです。"
+  },
+  "optionCollapseTabGroupMenu": {
+    "message": "タブグループの項目を1つの「タブグループ…」サブメニューに折りたたむ"
+  },
+  "optionCollapseTabGroupMenuHint": {
+    "message": "フォルダーとブックマークの右クリックメニューの両方に適用されます。デフォルトではオフです。小さい画面や高ズームの画面で、メニューの高さを低く抑えられます。"
+  },
+  "optionConfirmDeleteFolder": {
+    "message": "空でないフォルダを削除する前に確認する"
+  },
+  "optionConfirmOpenFolder": {
+    "message": "フォルダから多くのブックマークを開くとき、警告する"
+  },
+  "optionDeadProxyServer": {
+    "message": "リンク切れプロキシサーバー"
+  },
+  "optionDeadProxyStrip": {
+    "message": "リンク切れビューにプロキシ追加のヒントを表示"
+  },
+  "optionDeadProxyStripHint": {
+    "message": "オフにすると、そのビュー内ではヒントが非表示になります。プロキシサーバーはここで設定可能で、保存済みサーバーは常にビューに管理行が表示されます。"
+  },
+  "optionDeadScanConcurrency": {
+    "message": "デッドリンクスキャンの同時実行数 (1-16)"
+  },
+  "optionDeadScanTimeout": {
+    "message": "デッドリンクスキャンのタイムアウト秒数 (2-30)"
+  },
+  "optionFaviconBackup": {
+    "message": "バックアップにアイコンキャッシュを含める"
+  },
+  "optionFaviconBackupHint": {
+    "message": "また、拡充ファビコンキャッシュ（サイトごとのデータで、大きくなる可能性があります）を設定のエクスポート/インポートに含めます。これには、取得がオフの場合でも、すでにキャッシュされているアイコンが含まれます。オフのままだとバックアップは小さくなりますが、アイコンは自動的に再取得されます。"
+  },
+  "optionFaviconCacheClear": {
+    "message": "アイコンキャッシュをクリア"
+  },
+  "optionFaviconCacheClearConfirm": {
+    "message": "拡充アイコンキャッシュをクリアしますか？アイコンは次回開いたときに自動的に再取得されます。"
+  },
+  "optionFaviconCacheCleared": {
+    "message": "アイコンキャッシュがクリアされました。次回開いたときに再取得されます。"
+  },
+  "optionFaviconCacheEmpty": {
+    "message": "クリアするアイコンキャッシュはありません。"
+  },
+  "optionFaviconContrast": {
+    "message": "低コントラストのファビコンを反転"
+  },
+  "optionFaviconContrastHint": {
+    "message": "ライトテーマの白いアイコンとダークテーマの黒いアイコンは反転され、視認性が保たれます。各アイコンは読み込み時に一度だけサンプリングされるため、閲覧中の負荷はありません。"
+  },
+  "optionFaviconEnrich": {
+    "message": "不足しているサイトアイコンを取得"
+  },
+  "optionFaviconEnrichAgg": {
+    "message": "サードパーティアイコンへのフォールバック"
+  },
+  "optionFaviconEnrichAggHint": {
+    "message": "直接取得に失敗した場合、組み込みのサードパーティ製アイコンサービスリスト（$providers$）からドメインでアイコンを検索します。到達できないサービスはスキップされ、次のサービスが試行されます。再試行は6時間行われません。",
+    "placeholders": {
+      "providers": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionFaviconEnrichHint": {
+    "message": "Chrome にキャッシュアイコンがないブックマーク済みサイトでは、実際のアイコンをサイトから直接取得します（/favicon.ico、次にページで宣言されたアイコン）。リクエストはブックマークしたサイトにのみ送信されます。"
+  },
+  "optionHighlightUnsynced": {
+    "message": "未同期ブックマークを暗く表示"
+  },
+  "optionLanguage": {
+    "message": "言語"
+  },
+  "optionLanguageAuto": {
+    "message": "自動"
+  },
+  "optionLanguageHint": {
+    "message": "言語を変更すると、このページが再読み込みされます。"
+  },
+  "optionOnlyShowBookmarkBar": {
+    "message": "ブックマークバーのブックマークのみを表示する"
+  },
+  "optionOpenInSidePanel": {
+    "message": "ポップアップではなくサイドパネルで開く"
+  },
+  "optionOpenNewTab": {
+    "message": "マウスホイール・クリック、または「Ctrl」キーを押しながらクリックしたとき、ブックマークを新しい背面タブで開く"
+  },
+  "optionPaletteEnabled": {
+    "message": "コマンドパレットを有効にする (Ctrl/Cmd+K)"
+  },
+  "optionPopupStays": {
+    "message": "ブックマークをクリックしたとき、ポップアップを表示したままにする"
+  },
+  "optionQuickAddContextMenu": {
+    "message": "ページの右クリック メニューに「vBookmarks でこのページをブックマーク」項目を追加する"
+  },
+  "optionQuickAddContextMenuHint": {
+    "message": "クイック追加スター ボタンとは独立しています。クラシック エクスペリエンスの復元時には、この項目もオフになります。"
+  },
+  "optionQuickAddEnabled": {
+    "message": "検索ボックスの横にクイック追加の星ボタンを表示"
+  },
+  "optionRecentCollapsed": {
+    "message": "最近追加したセクションをデフォルトで折りたたむ"
   },
   "optionRecentCount": {
     "message": "表示する最近追加したブックマークの数"
+  },
+  "optionRememberPrevState": {
+    "message": "前回の状態（スクロール位置、開いているフォルダー、最後にフォーカスした項目）を記憶する。"
+  },
+  "optionRememberView": {
+    "message": "最後にアクティブだったビューを記憶して再度開く"
+  },
+  "optionSearchAfterEnter": {
+    "message": "Enter キーが押されたときにのみブックマークを検索する (インスタント検索ではなく)"
   },
   "optionSearchHistory": {
     "message": "検索履歴エリアを表示"
@@ -276,17 +1061,496 @@
   "optionSearchHistoryHint": {
     "message": "結果の上の最近の検索エリアを非表示 — 記録されたクエリは保持されます"
   },
+  "optionShowDeadView": {
+    "message": "デッドリンクビュータブを表示"
+  },
+  "optionShowDupesView": {
+    "message": "重複ビュータブを表示"
+  },
+  "optionShowItemPath": {
+    "message": "リスト行に親フォルダのパスを表示"
+  },
+  "optionShowRecentBookmarks": {
+    "message": "ポップアップの上部に最近追加したブックマークを表示"
+  },
+  "optionShowStatsView": {
+    "message": "統計ビュータブを表示"
+  },
+  "optionShowSyncStatus": {
+    "message": "同期ステータスインジケーターを表示"
+  },
+  "optionShowTabBadges": {
+    "message": "ビュータブに件数バッジを表示"
+  },
+  "optionShowTabGroupsView": {
+    "message": "タブグループビュータブを表示"
+  },
+  "optionShowToolButton": {
+    "message": "検索ボックスの横にツールボタン (⋮) を表示"
+  },
+  "optionShowViewTabs": {
+    "message": "検索ボックスの下にビュータブを表示"
+  },
+  "optionStagingEnabled": {
+    "message": "ステージング領域を有効にする"
+  },
+  "optionStagingEnabledHint": {
+    "message": "オフにすると、このビューには最近追加されたリストのみが表示され、他のビューのステージングボタンやメニュー項目はすべて非表示になります。"
+  },
+  "optionStatsEnabled": {
+    "message": "訪問統計を有効にする"
+  },
+  "optionSyncRefreshInterval": {
+    "message": "更新間隔"
+  },
+  "optionSyncRefreshIntervalSeconds": {
+    "message": "秒"
+  },
+  "optionTabGroupsClosedLimit": {
+    "message": "保持的已关闭标签页/组历史记录"
+  },
+  "optionTheme": {
+    "message": "テーマ"
+  },
+  "optionThemeAuto": {
+    "message": "システムに従う"
+  },
+  "optionThemeDark": {
+    "message": "ダーク"
+  },
+  "optionThemeInk": {
+    "message": "インク (ダーク)"
+  },
+  "optionThemeLight": {
+    "message": "ライト"
+  },
+  "optionThemePaper": {
+    "message": "ペーパー (ライト)"
+  },
+  "optionTreeRowActions": {
+    "message": "ツリー行のホバーアクション（編集／ステージ／削除）"
+  },
+  "optionVirtualScrollLab": {
+    "message": "仮想スクロール（実験的）"
+  },
+  "optionVirtualScrollLabHint": {
+    "message": "タブグループと重複ビューでは、ビューポート付近の行のみをレンダリングします。非常に大きなリストでは大幅に高速化されますが、実験的な機能のため、スクロールバーの位置は概算です。"
+  },
+  "optionZoom": {
+    "message": "拡大"
+  },
+  "options": {
+    "message": "オプション"
+  },
+  "optionsDonate": {
+    "message": "寄付"
+  },
+  "optionsFooterText": {
+    "description": "Footer text for the Options page",
+    "message": "作成者 $authorName$.",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionsGithubLink": {
+    "message": "GitHub"
+  },
+  "optionsGroupBackup": {
+    "message": "バックアップ"
+  },
+  "optionsGroupContextMenu": {
+    "message": "コンテキストメニュー"
+  },
+  "optionsGroupIcons": {
+    "message": "アイコン"
+  },
+  "optionsGroupLabs": {
+    "message": "ラボ"
+  },
+  "optionsGroupPalette": {
+    "message": "コマンドパレット"
+  },
+  "optionsGroupSort": {
+    "message": "並べ替え"
+  },
+  "optionsGroupStats": {
+    "message": "統計"
+  },
+  "optionsGroupTools": {
+    "message": "ツール"
+  },
+  "optionsGroupViews": {
+    "message": "ビュー"
+  },
+  "optionsHomepageLink": {
+    "message": "ホームページ"
+  },
+  "optionsSince": {
+    "message": "Neat Bookmarks からフォークして、$days$ 日間メンテナンスしています。",
+    "placeholders": {
+      "days": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionsStagingSection": {
+    "message": "ステージングと最近追加"
+  },
+  "optionsStorageLocalTip": {
+    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting).",
+    "message": "このデバイスにのみ保存されます — Chrome 同期では共有されません。"
+  },
+  "optionsStorageSyncTip": {
+    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting).",
+    "message": "Chrome アカウントを通じて同期されます — この設定はデバイス間で共有されます。"
+  },
+  "optionsVersion": {
+    "message": "vBookmarks バージョン"
+  },
+  "paletteActionOpenUrl": {
+    "message": "URLを開く"
+  },
+  "paletteActionOpenUrlGroup": {
+    "message": "ブックマークフォルダーグループを開く"
+  },
+  "paletteActionUrlTemplate": {
+    "message": "URLテンプレートを開く"
+  },
+  "paletteActionViewPreset": {
+    "message": "プリセット付きビューを開く"
+  },
+  "paletteClose": {
+    "message": "閉じる"
+  },
+  "paletteCmdDead": {
+    "message": "無効なリンクを検索"
+  },
+  "paletteCmdDupes": {
+    "message": "重複ブックマークを削除"
+  },
+  "paletteCmdGoDead": {
+    "message": "デッドリンクビューに移動"
+  },
+  "paletteCmdGoDupes": {
+    "message": "重複ビューに移動"
+  },
+  "paletteCmdGoRecent": {
+    "message": "最近ビューに移動"
+  },
+  "paletteCmdGoSearch": {
+    "message": "検索ビューに移動"
+  },
+  "paletteCmdGoStats": {
+    "message": "統計ビューに移動"
+  },
+  "paletteCmdGoTabGroups": {
+    "message": "タブグループビューへ移動"
+  },
+  "paletteCmdGoTree": {
+    "message": "ツリービューに移動"
+  },
+  "paletteCmdLang": {
+    "message": "言語を切り替える…"
+  },
+  "paletteCmdLangUsage": {
+    "message": "使用方法: /lang の後にロケールコードを指定 — 例: /lang en、/lang zh_CN、/lang ja。"
+  },
+  "paletteCmdNewBookmark": {
+    "message": "新しいブックマーク…"
+  },
+  "paletteCmdNewFolder": {
+    "message": "新しいフォルダ…"
+  },
+  "paletteCmdOptions": {
+    "message": "オプションページを開く"
+  },
+  "paletteCmdQuickAdd": {
+    "message": "現在のタブをブックマーク"
+  },
+  "paletteCmdSaveAsCommand": {
+    "message": "「$1」をコマンドとして保存…"
+  },
+  "paletteCmdSaveSession": {
+    "message": "ウィンドウのタブをフォルダとして保存"
+  },
+  "paletteCmdSearchInView": {
+    "message": "検索ビューで '$query$' を検索",
+    "placeholders": {
+      "query": {
+        "content": "$1"
+      }
+    }
+  },
+  "paletteCmdTheme": {
+    "message": "テーマを設定…"
+  },
+  "paletteCmdThemeUsage": {
+    "message": "使い方: /theme の後にテーマ名を指定 — auto、light、dark、ink、paper（一意のプレフィックスも可。例: /theme d）"
+  },
+  "paletteCmdToggleViewTabs": {
+    "message": "ビュータブの切り替え"
+  },
+  "paletteCmdVersion": {
+    "message": "バージョン情報"
+  },
+  "paletteCustomAction": {
+    "message": "アクション"
+  },
+  "paletteCustomAdd": {
+    "message": "コマンドを追加…"
+  },
+  "paletteCustomAliases": {
+    "message": "エイリアス（カンマ区切り）"
+  },
+  "paletteCustomBroken": {
+    "message": "コマンド「$1」のフォルダーが存在しません。コマンドを削除しますか？"
+  },
+  "paletteCustomDeleteConfirm": {
+    "message": "コマンド「$1」を削除しますか？ この変更はすべてのデバイスに同期されます。"
+  },
+  "paletteCustomEmpty": {
+    "message": "カスタムコマンドはまだありません。"
+  },
+  "paletteCustomErrAction": {
+    "message": "アクションの種類を選択してください。"
+  },
+  "paletteCustomErrAlias": {
+    "message": "エイリアス: スラッシュと同じ規則（小文字・数字・ハイフンの1〜24文字）。"
+  },
+  "paletteCustomErrFolder": {
+    "message": "ブックマークフォルダーを選択してください。"
+  },
+  "paletteCustomErrLimit": {
+    "message": "コマンド数の上限（100）に達しました。先に1つ削除してください。"
+  },
+  "paletteCustomErrSlash": {
+    "message": "スラッシュ: 小文字・数字・ハイフンの1〜24文字。先頭は英字または数字。"
+  },
+  "paletteCustomErrTaken": {
+    "message": "そのスラッシュまたはエイリアスは既に使用されています。"
+  },
+  "paletteCustomErrTemplate": {
+    "message": "テンプレートには %s がちょうど1つ必要です。"
+  },
+  "paletteCustomErrUrl": {
+    "message": "許可されるのは http:// または https:// のURLのみです。"
+  },
+  "paletteCustomErrView": {
+    "message": "表示を選択してください。"
+  },
+  "paletteCustomFolder": {
+    "message": "ブックマークフォルダー"
+  },
+  "paletteCustomHint": {
+    "message": "コマンドパレット用のカスタムスラッシュコマンド（Ctrl/Cmd+K）。設定と同期されます — 最大100件。"
+  },
+  "paletteCustomSave": {
+    "message": "コマンドを保存"
+  },
+  "paletteCustomScan": {
+    "message": "入力時にスキャンを開始"
+  },
+  "paletteCustomScope": {
+    "message": "重複排除スコーププリセット"
+  },
+  "paletteCustomSlash": {
+    "message": "スラッシュ（/ の後の語）"
+  },
+  "paletteCustomStrategy": {
+    "message": "重複排除戦略プリセット"
+  },
+  "paletteCustomTag": {
+    "message": "カスタム"
+  },
+  "paletteCustomTemplate": {
+    "message": "URLテンプレート — %s はコマンド後の語に置き換えられます"
+  },
+  "paletteCustomUrl": {
+    "message": "URL"
+  },
+  "paletteCustomUsage": {
+    "message": "$1 / $2"
+  },
+  "paletteCustomView": {
+    "message": "表示"
+  },
+  "paletteCustomWhere": {
+    "message": "開く場所"
+  },
+  "paletteNoResults": {
+    "message": "一致する結果はありません"
+  },
+  "palettePlaceholder": {
+    "message": "ブックマーク、フォルダ、コマンドを検索…"
+  },
+  "paletteWhereBackground": {
+    "message": "バックグラウンドタブ"
+  },
+  "paletteWhereCurrent": {
+    "message": "現在のタブ"
+  },
+  "paletteWhereTab": {
+    "message": "新しいタブ"
+  },
+  "paletteWhereWindow": {
+    "message": "新しいウィンドウ"
+  },
+  "parentFolder": {
+    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
+    "message": "フォルダ名 \"$folderName$\"",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarksbar"
+      }
+    }
+  },
+  "pasteDone": {
+    "message": "貼り付けました"
+  },
+  "pasteGone": {
+    "message": "ブックマークが存在しなくなったため、クリップボードをクリアしました"
+  },
+  "pasteHere": {
+    "message": "ここに貼り付け"
+  },
+  "pinFolder": {
+    "message": "このフォルダを固定"
+  },
+  "quickAddBookmark": {
+    "message": "このページをブックマーク（Ctrl+D）"
+  },
+  "quickAddBookmarkCommand": {
+    "message": "現在のタブをブックマークとしてクイック追加"
+  },
+  "quickAdded": {
+    "message": "ブックマークを追加しました"
+  },
+  "quickAddedTo": {
+    "message": "$folderName$ にブックマークを追加しました",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarks bar"
+      }
+    }
+  },
+  "quickRemoveBookmark": {
+    "message": "このブックマークを削除 (Ctrl+D)"
+  },
+  "quickRemoved": {
+    "message": "ブックマークを削除しました"
+  },
+  "recentBookmarks": {
+    "message": "最近追加したもの"
+  },
   "recentEmpty": {
     "message": "最近のブックマークはありません。Ctrl+Dを押して現在のページをブックマークしてください。"
+  },
+  "recentGroupMonth": {
+    "message": "今月"
+  },
+  "recentGroupOlder": {
+    "message": "過去"
+  },
+  "recentGroupToday": {
+    "message": "今日"
+  },
+  "recentGroupWeek": {
+    "message": "今週"
   },
   "recentRevealInTree": {
     "message": "ツリーで表示"
   },
+  "recentSectionTitle": {
+    "message": "最近追加"
+  },
+  "recentStageAll": {
+    "message": "最近追加したものをすべてステージング"
+  },
+  "recentStageGroup": {
+    "message": "$t$ をステージングエリアに送る",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
+  },
+  "removeSeparator": {
+    "message": "区切り文字を削除"
+  },
+  "replaceUrl": {
+    "message": "現在のURLに置き換えてください"
+  },
+  "reportError": {
+    "message": "エラーレポート"
+  },
+  "reportedToDeveloper": {
+    "description": "拡張エラーで発生した、開発者に報告してください",
+    "message": "開発者にエラーメッセージを報告"
+  },
+  "resetButton": {
+    "message": "リセットされます"
+  },
+  "resetSettings": {
+    "message": "設定をリセットします"
+  },
+  "resetSettingsDescription": {
+    "message": "デフォルトの設定にvBookmarksをリセットします"
+  },
+  "revealOutsideBarAction": {
+    "message": "すべて表示して対象を表示"
+  },
+  "revealOutsideBarHint": {
+    "message": "ブックマークバーのみ表示中です。対象はその外側にあります。"
+  },
+  "riskBannerDismiss": {
+    "message": "閉じる"
+  },
+  "riskBannerHelp": {
+    "message": "バックアップと復元のガイド"
+  },
+  "riskBannerNever": {
+    "message": "今後表示しない"
+  },
+  "rowActionDelete": {
+    "message": "削除"
+  },
+  "rowActionMark": {
+    "message": "デッドとしてマーク"
+  },
+  "rowActionReveal": {
+    "message": "ツリー内で表示"
+  },
+  "rowActionUnmark": {
+    "message": "デッドマークを解除"
+  },
+  "save": {
+    "message": "保存"
+  },
+  "searchBookmarks": {
+    "description": "検索フィールドのためのプレースホルダーテキスト",
+    "message": "ブックマークの検索"
+  },
+  "searchClear": {
+    "message": "検索をクリア"
+  },
   "searchHistoryClear": {
     "message": "すべて消去"
   },
+  "searchHistoryClose": {
+    "message": "検索履歴を非表示"
+  },
+  "searchHistoryClosedToast": {
+    "message": "検索履歴は非表示です — オプション → 検索で再度有効にできます"
+  },
   "searchHistoryRemove": {
     "message": "この検索を削除"
+  },
+  "searchHistoryRerun": {
+    "message": "再検索"
   },
   "searchHistoryResultCount": {
     "message": "$n$件の結果",
@@ -298,6 +1562,895 @@
   },
   "searchHistoryTitle": {
     "message": "最近の検索"
+  },
+  "searchNoResults": {
+    "message": "一致するブックマークはありません"
+  },
+  "searchResultCount": {
+    "message": "$n$件の結果",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "searchStageAllGroup": {
+    "message": "すべての結果をグループ「$1$」としてステージング",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "searchViewHint": {
+    "message": "上のボックスに入力してブックマークを検索"
+  },
+  "selectAll": {
+    "message": "すべて"
+  },
+  "selectClear": {
+    "message": "クリア"
+  },
+  "selectCount": {
+    "message": "$count$ 件を選択中",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "selectInvert": {
+    "message": "反転"
+  },
+  "selectModeEnter": {
+    "message": "選択"
+  },
+  "selectModeExit": {
+    "message": "選択を終了"
+  },
+  "separatorOptions": {
+    "message": "区切り線"
+  },
+  "sessionEmpty": {
+    "message": "保存するタブがありません"
+  },
+  "sessionFolderName": {
+    "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm.",
+    "message": "セッション $date$",
+    "placeholders": {
+      "date": {
+        "content": "$1",
+        "example": "2026-07-18 15:04"
+      }
+    }
+  },
+  "sessionSaved": {
+    "description": "Alert shown after the current window's tabs were saved into a new bookmark folder.",
+    "message": "$count$ 個のタブを新しいフォルダに保存しました",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "12"
+      }
+    }
+  },
+  "settingsBackupHint": {
+    "message": "エクスポートはすべての設定（同期設定を含む）をJSONファイルに保存します。インポートはバックアップを結合します。ファイル内の設定が現在の設定を上書きし、その他は保持されます。"
+  },
+  "settingsExport": {
+    "message": "設定をエクスポート"
+  },
+  "settingsImport": {
+    "message": "設定をインポート"
+  },
+  "settingsImportConfirm": {
+    "message": "インポートを実行すると、バックアップファイルに含まれるすべての設定が上書きされ（ファイルにない設定は保持されます）、このページがリロードされます。続行しますか？"
+  },
+  "settingsImportDone": {
+    "message": "設定がインポートされました。ページをリロードします。"
+  },
+  "settingsImportError": {
+    "message": "一部の設定を書き込めませんでした（ストレージ容量または一時的なエラー）。インポートは完了しませんでした。もう一度お試しください。"
+  },
+  "settingsImportInvalid": {
+    "message": "無効な設定ファイルです。vBookmarksの設定バックアップではありません。"
+  },
+  "sortByDate": {
+    "message": "追加日順に並べ替え"
+  },
+  "sortByDateAdded": {
+    "message": "追加日順（新しい順）"
+  },
+  "sortByName": {
+    "message": "名前順に並べ替え"
+  },
+  "sortByTitle": {
+    "message": "タイトル順"
+  },
+  "sortDone": {
+    "message": "フォルダーを並べ替えました"
+  },
+  "sortFolderContents": {
+    "message": "フォルダを並べ替え"
+  },
+  "sortFoldersFirst": {
+    "message": "フォルダを先頭に"
+  },
+  "sortMenuOptions": {
+    "message": "並べ替え"
+  },
+  "sortOptions": {
+    "message": "並べ替えオプション…"
+  },
+  "sortRecursive": {
+    "message": "サブフォルダも並べ替え（再帰的）"
+  },
+  "sortRecursiveSuffix": {
+    "message": "（再帰）"
+  },
+  "sortRecursiveWarning": {
+    "message": "すべてのサブフォルダーのブックマークの並び順が変更されます。"
+  },
+  "stagedToast": {
+    "message": "$n$個のタブをグループ「$t$」としてステージしました",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "t": {
+        "content": "$2"
+      }
+    }
+  },
+  "stagingAdd": {
+    "message": "ステージングに送る"
+  },
+  "stagingAdded": {
+    "message": "ステージングに送信しました"
+  },
+  "stagingAddedSummary": {
+    "message": "$n$ 件追加、$m$ 件はすでにステージング済み",
+    "placeholders": {
+      "m": {
+        "content": "$2"
+      },
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingAlready": {
+    "message": "すでにステージング領域にあります"
+  },
+  "stagingBucketFavAll": {
+    "message": "すべてお気に入り"
+  },
+  "stagingBucketTitle": {
+    "message": "未ブックマーク"
+  },
+  "stagingClear": {
+    "message": "ステージをクリア"
+  },
+  "stagingClearConfirm": {
+    "message": "ステージ領域全体をクリアしますか？ブックマークツリーには影響しません。"
+  },
+  "stagingClearConfirmOk": {
+    "message": "クリア"
+  },
+  "stagingCleared": {
+    "message": "ステージ領域をクリアしました"
+  },
+  "stagingConfirmFolder": {
+    "message": "このフォルダから $n$ 件のブックマークをステージングしますか？",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingConfirmFolderOk": {
+    "message": "ステージ"
+  },
+  "stagingCopyDone": {
+    "message": "$n$件をコピーしました",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingCount": {
+    "message": "$n$件ステージ済み",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingDeleteConfirm": {
+    "message": "$n$件を削除しますか？ブックマークされていないものはステージ領域から外れるだけです。",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingDeleted": {
+    "message": "$n$件のブックマークを削除しました",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingEmpty": {
+    "message": "まだステージングされていません。任意のビューからブックマークをここに送信してください（行の飛行機ボタンまたは右クリックメニュー）。その後、一括で整理・ファイリングできます。"
+  },
+  "stagingFav": {
+    "message": "お気に入り"
+  },
+  "stagingFavDone": {
+    "message": "$n$ 件をお気に入りにしました",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingFolderEmpty": {
+    "message": "このフォルダにはステージングするブックマークがありません"
+  },
+  "stagingFromHistory": {
+    "message": "履歴から"
+  },
+  "stagingFull": {
+    "message": "ステージング領域がいっぱいです — 先に項目を削除してください"
+  },
+  "stagingGroupAssign": {
+    "message": "グループ…"
+  },
+  "stagingGroupAssignTitle": {
+    "message": "グループに割り当て"
+  },
+  "stagingGroupCollapse": {
+    "message": "グループを折りたたむ"
+  },
+  "stagingGroupDelete": {
+    "message": "グループを削除（項目を含む）"
+  },
+  "stagingGroupDeleteConfirm": {
+    "message": "グループ「$1」を削除しますか？$2 個の項目もステージング領域から削除されます。"
+  },
+  "stagingGroupDeleted": {
+    "message": "グループを削除しました — $1 個の項目を削除"
+  },
+  "stagingGroupDissolve": {
+    "message": "グループを解散"
+  },
+  "stagingGroupDissolved": {
+    "message": "グループを解散しました — 項目はステージング領域に保持されます"
+  },
+  "stagingGroupExpand": {
+    "message": "グループを展開"
+  },
+  "stagingGroupNamePrompt": {
+    "message": "新しいグループ名"
+  },
+  "stagingGroupNew": {
+    "message": "新しいグループ"
+  },
+  "stagingGroupNoGroups": {
+    "message": "グループはまだありません"
+  },
+  "stagingGroupRename": {
+    "message": "グループ名を変更…"
+  },
+  "stagingGroupSelectAll": {
+    "message": "このグループをすべて選択"
+  },
+  "stagingGuideDismiss": {
+    "message": "今後表示しない"
+  },
+  "stagingGuideText": {
+    "message": "ここでブックマークを整理 — 行を選択して選択モードに入り、一括操作を行います。"
+  },
+  "stagingMoveConfirm": {
+    "message": "選択したフォルダに$n$件を移動しますか？",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingMoveConfirmOk": {
+    "message": "移動"
+  },
+  "stagingMoveCopy": {
+    "message": "移動/コピー先…"
+  },
+  "stagingMoveDone": {
+    "message": "$n$件をホームに移動しました",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingNew": {
+    "message": "新規 $n$",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingRemove": {
+    "message": "ステージング領域から削除"
+  },
+  "stagingRemoved": {
+    "message": "ステージング領域から削除しました"
+  },
+  "stagingRemovedCount": {
+    "message": "ステージ領域から$n$件を削除しました",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingRowFav": {
+    "message": "この項目をお気に入り"
+  },
+  "stagingRowUnfav": {
+    "message": "この項目のお気に入りを解除"
+  },
+  "stagingShortcutAdd": {
+    "message": "ショートカットを追加"
+  },
+  "stagingShortcutAlias": {
+    "message": "エイリアス"
+  },
+  "stagingShortcutBarLabel": {
+    "message": "移動先:"
+  },
+  "stagingShortcutEdit": {
+    "message": "ショートカットを編集"
+  },
+  "stagingShortcutMove": {
+    "message": "選択項目を$1$へ移動",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingShortcutPickFolder": {
+    "message": "ターゲットフォルダを選択…"
+  },
+  "stagingShortcutRemove": {
+    "message": "ショートカットを削除"
+  },
+  "stagingShortcutRemoved": {
+    "message": "ショートカットを削除しました"
+  },
+  "stagingShortcutSave": {
+    "message": "保存"
+  },
+  "stagingShortcutTitle": {
+    "message": "移動先ショートカット"
+  },
+  "stagingUnfav": {
+    "message": "お気に入り解除"
+  },
+  "stagingUnfavDone": {
+    "message": "$n$ 件のお気に入りを解除しました",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "statsClearConfirm": {
+    "message": "$count$ 件のブックマークの訪問統計をクリアしますか？この操作は元に戻せません。",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "statsClearData": {
+    "message": "統計をクリア"
+  },
+  "statsDisabledHint": {
+    "message": "訪問統計がオフです — オプション → ビューで有効にしてください"
+  },
+  "statsEmpty": {
+    "message": "ブックマークを開くと統計が蓄積されます"
+  },
+  "statsHistoryAdd": {
+    "message": "ブックマークに追加"
+  },
+  "statsHistoryBanner": {
+    "message": "過去の訪問データで訪問統計を生成するために履歴アクセスを許可してください。"
+  },
+  "statsHistoryBookmarked": {
+    "message": "ブックマーク済み"
+  },
+  "statsHistoryDismiss": {
+    "message": "今後表示しない"
+  },
+  "statsHistoryEnable": {
+    "message": "有効にする"
+  },
+  "statsHistoryGuide": {
+    "message": "ここに最近の訪問を表示するには、履歴へのアクセスを許可してください。"
+  },
+  "statsHistoryImported": {
+    "message": "$count$ 個のブックマークの過去の訪問データをインポートしました",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "statsSectionBookmarks": {
+    "message": "ブックマーク統計"
+  },
+  "statsSectionRecent": {
+    "message": "最近の訪問"
+  },
+  "statsShowUnbookmarked": {
+    "message": "未登録を表示"
+  },
+  "statsShowUnbookmarkedHint": {
+    "message": "履歴の中でブックマークとして保存されていないページを含めます。"
+  },
+  "statsSortByCount": {
+    "message": "回数順"
+  },
+  "statsSortByRecent": {
+    "message": "最近順"
+  },
+  "statsVisitCount": {
+    "message": "$count$ 回訪問",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "storageUsageFree": {
+    "message": "空き容量"
+  },
+  "storageUsageHint": {
+    "message": "ローカル拡張ストレージのみ（chrome.storage.local、約10MBの割り当て）：アイコンキャッシュと設定、その他のローカルデータが含まれます。同期設定、セッションデータ、ブックマークライブラリ自体はここには含まれません。"
+  },
+  "storageUsageIcon": {
+    "message": "アイコンキャッシュ"
+  },
+  "storageUsageOther": {
+    "message": "その他"
+  },
+  "storageUsageSummary": {
+    "message": "使用済み $1$ / $2$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      },
+      "2": {
+        "content": "$2"
+      }
+    }
+  },
+  "syncOptions": {
+    "message": "同期オプション"
+  },
+  "syncStatusLocal": {
+    "message": "ローカルのみ — 未アップロード"
+  },
+  "syncStatusSynced": {
+    "message": "Googleアカウントに同期済み"
+  },
+  "syncStatusUnsyncable": {
+    "message": "同期不可"
+  },
+  "syncSuffixLocal": {
+    "message": "(ローカル)"
+  },
+  "syncSuffixSynced": {
+    "message": "(同期済み)"
+  },
+  "tabGroupColorBlue": {
+    "description": "Accessible name of the blue color swatch in the new-tab-group dialog.",
+    "message": "ブルー"
+  },
+  "tabGroupColorCyan": {
+    "description": "Accessible name of the cyan color swatch in the new-tab-group dialog.",
+    "message": "シアン"
+  },
+  "tabGroupColorGreen": {
+    "description": "Accessible name of the green color swatch in the new-tab-group dialog.",
+    "message": "グリーン"
+  },
+  "tabGroupColorGrey": {
+    "description": "Accessible name of the grey color swatch in the new-tab-group dialog.",
+    "message": "グレー"
+  },
+  "tabGroupColorLabel": {
+    "message": "色"
+  },
+  "tabGroupColorOrange": {
+    "description": "Accessible name of the orange color swatch in the new-tab-group dialog.",
+    "message": "オレンジ"
+  },
+  "tabGroupColorPink": {
+    "description": "Accessible name of the pink color swatch in the new-tab-group dialog.",
+    "message": "ピンク"
+  },
+  "tabGroupColorPurple": {
+    "description": "Accessible name of the purple color swatch in the new-tab-group dialog.",
+    "message": "パープル"
+  },
+  "tabGroupColorRed": {
+    "description": "Accessible name of the red color swatch in the new-tab-group dialog.",
+    "message": "レッド"
+  },
+  "tabGroupColorYellow": {
+    "description": "Accessible name of the yellow color swatch in the new-tab-group dialog.",
+    "message": "イエロー"
+  },
+  "tabGroupDialogTitle": {
+    "message": "新規タブグループ"
+  },
+  "tabGroupNoGroups": {
+    "message": "既存のタブグループはありません"
+  },
+  "tabGroupOptions": {
+    "message": "タブグループ"
+  },
+  "tabGroupPickDialogTitle": {
+    "message": "既存のタブグループで開く"
+  },
+  "tabGroupTitleLabel": {
+    "message": "グループ名"
+  },
+  "tabGroupUntitled": {
+    "message": "無題グループ"
+  },
+  "tabGroupsActivateGroup": {
+    "message": "グループへ移動"
+  },
+  "tabGroupsActivateTab": {
+    "message": "タブへ移動"
+  },
+  "tabGroupsAddBookmark": {
+    "message": "このタブをブックマーク"
+  },
+  "tabGroupsBatchClosedTitle": {
+    "message": "閉じたタブ"
+  },
+  "tabGroupsBookmarkRemoved": {
+    "message": "$count$ 件のブックマークを削除しました",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsBookmarked": {
+    "message": "ブックマーク済み"
+  },
+  "tabGroupsBookmarksAdded": {
+    "message": "$count$ 件のブックマークを $folder$ に追加しました",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsClearClosedGroups": {
+    "message": "すべてクリア"
+  },
+  "tabGroupsClearedToast": {
+    "message": "$count$ 件の閉じた記録を消去しました",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCloseGroup": {
+    "message": "タブグループを閉じる"
+  },
+  "tabGroupsCloseWindow": {
+    "message": "ウィンドウを閉じる"
+  },
+  "tabGroupsClosedGroups": {
+    "message": "最近閉じたグループ"
+  },
+  "tabGroupsClosedOpenTab": {
+    "message": "新しいタブで開く"
+  },
+  "tabGroupsClosedTabRemovedToast": {
+    "message": "閉じた記録から削除しました"
+  },
+  "tabGroupsClosedTimeLabel": {
+    "message": "閉じた日時:"
+  },
+  "tabGroupsClosedToast": {
+    "message": "$count$ 件のタブを閉じました",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCollapseAll": {
+    "message": "すべて折りたたむ"
+  },
+  "tabGroupsCollapseGroup": {
+    "message": "グループを折りたたむ"
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "ウィンドウを折りたたむ"
+  },
+  "tabGroupsColorStyle": {
+    "message": "タブグループの色スタイル"
+  },
+  "tabGroupsColorStyleEdge": {
+    "message": "エッジカラーバンド"
+  },
+  "tabGroupsColorStyleHint": {
+    "message": "オフにすると色ドットのみ表示。エッジカラーバンドはグループの左端に色付きの帯を表示。カラーコネクタ線はグループのドットの下に色付きの線を表示し、行ごとに目盛りを付けてグループ全体を1つのツリーにまとめます。"
+  },
+  "tabGroupsColorStyleLine": {
+    "message": "カラーコネクタ線"
+  },
+  "tabGroupsColorStyleOff": {
+    "message": "オフ（色ドットのみ）"
+  },
+  "tabGroupsConfirmClearClosed": {
+    "message": "最近閉じた記録をすべてクリアしますか？ここから再度開くことはできなくなります。"
+  },
+  "tabGroupsConfirmClose": {
+    "message": "$count$ タブを閉じますか？",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsConfirmSleep": {
+    "message": "$count$ タブをスリープしますか？",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCopyMoveCopy": {
+    "message": "コピー"
+  },
+  "tabGroupsCopyMoveDialog": {
+    "message": "選択したタブは既にタブグループに属しています。コピー（新しい場所で開く）または移動（現在のグループから削除）しますか？"
+  },
+  "tabGroupsCopyMoveMove": {
+    "message": "移動"
+  },
+  "tabGroupsCurrentTab": {
+    "message": "現在"
+  },
+  "tabGroupsCurrentWindow": {
+    "message": "現在のウィンドウ"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "閉じたタブグループを削除"
+  },
+  "tabGroupsDiscarded": {
+    "message": "スリープタブ"
+  },
+  "tabGroupsExpandAll": {
+    "message": "すべて展開"
+  },
+  "tabGroupsExpandGroup": {
+    "message": "グループを展開"
+  },
+  "tabGroupsExpandWindow": {
+    "message": "ウィンドウを展開"
+  },
+  "tabGroupsExpandedCollapse": {
+    "message": "折りたたむ"
+  },
+  "tabGroupsExpandedExpand": {
+    "message": "展開"
+  },
+  "tabGroupsFilterPlaceholder": {
+    "message": "開いているタブをフィルタ"
+  },
+  "tabGroupsGroupCount": {
+    "message": "$count$ タブ",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsGroupSavedToFolder": {
+    "message": "$count$ タブを $folder$ に保存しました",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsMenuAddBookmark": {
+    "message": "タブをブックマーク"
+  },
+  "tabGroupsMenuSaveFolder": {
+    "message": "ブックマークフォルダーとして保存"
+  },
+  "tabGroupsMergedWindowToast": {
+    "message": "ウィンドウをタブグループとして統合しました"
+  },
+  "tabGroupsMoveNewWindow": {
+    "message": "新しいウィンドウに移動"
+  },
+  "tabGroupsNewWindow": {
+    "message": "新しいウィンドウ"
+  },
+  "tabGroupsNoMatchingTabs": {
+    "message": "一致するタブがありません"
+  },
+  "tabGroupsOpenGroups": {
+    "message": "開いているタブグループ"
+  },
+  "tabGroupsPinTab": {
+    "message": "タブを固定"
+  },
+  "tabGroupsPinned": {
+    "message": "固定タブ"
+  },
+  "tabGroupsPinnedUngroupedToast": {
+    "message": "ピン留め — タブグループから削除しました"
+  },
+  "tabGroupsRecordDeletedToast": {
+    "message": "閉じた記録を削除しました"
+  },
+  "tabGroupsRemoveBookmark": {
+    "message": "ブックマークを削除"
+  },
+  "tabGroupsRemoveClosedTab": {
+    "message": "保存済みグループから削除"
+  },
+  "tabGroupsRenameDialog": {
+    "message": "タブグループ名を変更"
+  },
+  "tabGroupsRenameGroup": {
+    "message": "タブグループ名を変更"
+  },
+  "tabGroupsReopenAction": {
+    "message": "再度開く"
+  },
+  "tabGroupsReopenGroup": {
+    "message": "タブグループを再度開く"
+  },
+  "tabGroupsSaveFolder": {
+    "message": "タブグループをブックマークフォルダーとして保存"
+  },
+  "tabGroupsSelectAddBookmarks": {
+    "message": "ブックマークフォルダーに追加…"
+  },
+  "tabGroupsSelectClose": {
+    "message": "閉じる"
+  },
+  "tabGroupsSelectNewGroup": {
+    "message": "新しいタブグループ"
+  },
+  "tabGroupsSelectOpenInto": {
+    "message": "既存のタブグループで開く…"
+  },
+  "tabGroupsSelectSaveFolder": {
+    "message": "ブックマークフォルダーとして保存"
+  },
+  "tabGroupsSelectSleep": {
+    "message": "スリープ"
+  },
+  "tabGroupsSleepGroup": {
+    "message": "タブグループをスリープ"
+  },
+  "tabGroupsSleepTab": {
+    "message": "タブをスリープ"
+  },
+  "tabGroupsSleptToast": {
+    "message": "$count$ 件のタブをスリープしました",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsSummary": {
+    "message": "$tabs$ タブ · $groups$ グループ",
+    "placeholders": {
+      "groups": {
+        "content": "$2"
+      },
+      "tabs": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsSyncCollapse": {
+    "message": "与浏览器同步折叠"
+  },
+  "tabGroupsSyncCollapseHint": {
+    "message": "勾选后，在此视图中折叠或展开分组也会更新浏览器标签组。默认关闭，以便视图折叠保持本地状态。"
+  },
+  "tabGroupsToolbarRefresh": {
+    "message": "更新"
+  },
+  "tabGroupsUngroupGroup": {
+    "message": "グループ解除"
+  },
+  "tabGroupsUngroupedTabs": {
+    "message": "グループ化されていないタブ"
+  },
+  "tabGroupsUnpinTab": {
+    "message": "タブの固定を解除"
+  },
+  "tabGroupsViewEmpty": {
+    "message": "このウィンドウにタブはありません"
+  },
+  "tabGroupsWakeAction": {
+    "message": "スリープ解除"
+  },
+  "tabGroupsWakeGroup": {
+    "message": "タブグループを復元"
+  },
+  "tabGroupsWakeTab": {
+    "message": "タブを復元"
+  },
+  "tabGroupsWindow": {
+    "message": "ウィンドウ $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsWindowClosedTitle": {
+    "message": "閉じたウィンドウ"
+  },
+  "tabGroupsWindowsCount": {
+    "message": "$n$ 個のウィンドウ",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabRowStage": {
+    "message": "ステージングに送る"
+  },
+  "tabgroupStageAll": {
+    "message": "グループをステージングへ"
+  },
+  "tabgroupStageConfirm": {
+    "message": "$n$ 個のタブをステージングに送りますか？",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabgroupStageNone": {
+    "message": "このグループにはブックマーク可能なタブがありません"
   },
   "timeDaysAgo": {
     "message": "$n$日前",
@@ -329,303 +2482,26 @@
   "timeYesterday": {
     "message": "昨日"
   },
+  "toolButtonTitle": {
+    "message": "ツール (Ctrl+K)"
+  },
   "undoAction": {
     "message": "元に戻す"
   },
-  "revealOutsideBarHint": {
-    "message": "ブックマークバーのみ表示中です。対象はその外側にあります。"
+  "undoSingleStepNote": {
+    "message": "元に戻せるのは最後の削除のみです。"
   },
-  "revealOutsideBarAction": {
-    "message": "すべて表示して対象を表示"
+  "unpinFolder": {
+    "message": "このフォルダの固定を解除"
   },
-  "dupesCleanAll": {
-    "message": "すべて削除: $groups$ グループ、$count$ 個の重複",
-    "placeholders": {
-      "groups": {
-        "content": "$1"
-      },
-      "count": {
-        "content": "$2"
-      }
-    },
-    "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go."
+  "url": {
+    "message": "URL"
   },
-  "dupesConfirmAll": {
-    "message": "$groups$ グループ内の重複コピー $count$ 件を削除しますか？各グループで選択されたキーパーは保持されます。",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      },
-      "groups": {
-        "content": "$2"
-      }
-    },
-    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
+  "versionDialogCopied": {
+    "message": "コピーしました"
   },
-  "dupesConfirmSelected": {
-    "message": "選択中の $groups$ グループから重複ブックマーク $count$ 件を削除しますか？",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      },
-      "groups": {
-        "content": "$2"
-      }
-    }
-  },
-  "dupesConfirmGroup": {
-    "message": "「$title$」を保持し、他のコピー $count$ 件を削除しますか？",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Example bookmark"
-      },
-      "count": {
-        "content": "$2"
-      }
-    },
-    "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."
-  },
-  "dupesDone": {
-    "message": "$count$ 個の重複ブックマークを削除しました",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Alert shown after the duplicate cleanup finished."
-  },
-  "dupesGroupCount": {
-    "message": "$count$ 個の重複",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
-  },
-  "dupesGroupExpand": {
-    "description": "Dupes view group-head context menu: expand a collapsed duplicate group.",
-    "message": "グループを展開"
-  },
-  "dupesGroupCollapse": {
-    "description": "Dupes view group-head context menu: collapse an expanded duplicate group.",
-    "message": "グループを折りたたみ"
-  },
-  "dupesNone": {
-    "message": "重複は見つかりませんでした"
-  },
-  "deleteEllipsis": {
-    "message": "削除..."
-  },
-  "donationMessage": {
-    "message": "気に入っていただけましたか？寄付で将来を支えるか、ストアで評価してください。すべてのレビューが更新を続けます。"
-  },
-  "donationV4Notice": {
-    "message": "vBookmarks 4.0 はモダンなデザインで全面リニューアルされ、新機能が満載です。"
-  },
-  "donationV4GuideLink": {
-    "message": "v4 ガイドを読む →"
-  },
-  "donationGo": {
-    "message": "寄付する"
-  },
-  "donationRate": {
-    "message": "評価する"
-  },
-  "donationRateTitle": {
-    "message": "Chrome ウェブストアで vBookmarks を評価"
-  },
-  "donationLater": {
-    "message": "後で"
-  },
-  "donationNever": {
-    "message": "再表示しない"
-  },
-  "donationDismiss": {
-    "message": "いいえ"
-  },
-  "edit": {
-    "message": "編集..."
-  },
-  "editBookmark": {
-    "message": "ブックマークの編集"
-  },
-  "editFolder": {
-    "message": "フォルダの編集"
-  },
-  "errorOccured": {
-    "message": "エラーが発生しました"
-  },
-  "extDesc": {
-    "description": "詳細な説明",
-    "message": "すっきりしたツリー構造のブックマーク"
-  },
-  "extName": {
-    "description": "拡張名",
-    "message": "vBookmarks"
-  },
-  "folderEmpty": {
-    "message": "(空)"
-  },
-  "general": {
-    "message": "全般"
-  },
-  "ignore": {
-    "message": "無視"
-  },
-  "name": {
-    "description": "ブックマークとフォルダの名前",
-    "message": "名前"
-  },
-  "nope": {
-    "message": "キャンセル"
-  },
-  "noTitle": {
-    "description": "名前の無いブックマークのための名前",
-    "message": "無題"
-  },
-  "open": {
-    "description": "ブックマークを開く",
-    "message": "開く"
-  },
-  "openBookmarks": {
-    "message": "すべてのブックマークを開く"
-  },
-  "openBookmarksIncognitoWindow": {
-    "message": "すべてをシークレットで開く"
-  },
-  "openBookmarksInGroup": {
-    "message": "すべてを新しいタブグループで開く"
-  },
-  "openBookmarksInGroupSetup": {
-    "message": "すべてを新規タブグループで開く…"
-  },
-  "openBookmarksInExistingGroup": {
-    "message": "すべてを既存タブグループで開く…"
-  },
-  "tabGroupOptions": {
-    "message": "タブグループ"
-  },
-  "sortMenuOptions": {
-    "message": "並べ替え"
-  },
-  "openBookmarksNewWindow": {
-    "message": "すべてを新規ウィンドウで開く"
-  },
-  "openCommandPaletteCommand": {
-    "message": "コマンドパレットを開く"
-  },
-  "openIncognitoWindow": {
-    "message": "シークレットウィンドウで開く"
-  },
-  "openNewTab": {
-    "message": "新しいタブで開く"
-  },
-  "bookmarkOpenInNewGroup": {
-    "message": "新規タブグループで開く"
-  },
-  "bookmarkOpenInNewGroupSetup": {
-    "message": "新規タブグループで開く…"
-  },
-  "bookmarkOpenInExistingGroup": {
-    "message": "既存タブグループで開く…"
-  },
-  "openNewWindow": {
-    "message": "新しいウィンドウで開く"
-  },
-  "openSidePanelCommand": {
-    "message": "vBookmarks サイドパネルを開く"
-  },
-  "optionAnnounceEnabled": {
-    "message": "製品内のお知らせを表示"
-  },
-  "optionAnnounceEnabledHint": {
-    "message": "プロジェクトのGitHubリポジトリからのリリースノートとヒント（最大6時間ごとに取得）。オフにするとネットワーク取得も停止します。"
-  },
-  "optionClickNewTab": {
-    "message": "ブックマークを新しいタブで開く"
-  },
-  "optionCloseUnusedFolders": {
-    "message": "フォルダを開くとき、アクティブでないフォルダを閉じる"
-  },
-  "optionConfirmOpenFolder": {
-    "message": "フォルダから多くのブックマークを開くとき、警告する"
-  },
-  "optionConfirmDeleteFolder": {
-    "message": "空でないフォルダを削除する前に確認する"
-  },
-  "optionOnlyShowBookmarkBar": {
-    "message": "ブックマークバーのブックマークのみを表示する"
-  },
-  "optionSearchAfterEnter": {
-    "message": "Enter キーが押されたときにのみブックマークを検索する (インスタント検索ではなく)"
-  },
-  "optionOpenNewTab": {
-    "message": "マウスホイール・クリック、または「Ctrl」キーを押しながらクリックしたとき、ブックマークを新しい背面タブで開く"
-  },
-  "optionOpenInSidePanel": {
-    "message": "ポップアップではなくサイドパネルで開く"
-  },
-  "optionPopupStays": {
-    "message": "ブックマークをクリックしたとき、ポップアップを表示したままにする"
-  },
-  "optionRememberPrevState": {
-    "message": "前回の状態（スクロール位置、開いているフォルダー、最後にフォーカスした項目）を記憶する。"
-  },
-  "options": {
-    "message": "オプション"
-  },
-  "optionsFooterText": {
-    "description": "Footer text for the Options page",
-    "message": "作成者 $authorName$.",
-    "placeholders": {
-      "authorName": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionZoom": {
-    "message": "拡大"
-  },
-  "optionTheme": {
-    "message": "テーマ"
-  },
-  "optionThemeAuto": {
-    "message": "システムに従う"
-  },
-  "optionThemeLight": {
-    "message": "ライト"
-  },
-  "optionThemeDark": {
-    "message": "ダーク"
-  },
-  "optionThemeInk": {
-    "message": "インク (ダーク)"
-  },
-  "optionThemePaper": {
-    "message": "ペーパー (ライト)"
-  },
-  "optionLanguage": {
-    "message": "言語"
-  },
-  "optionLanguageAuto": {
-    "message": "自動"
-  },
-  "optionLanguageHint": {
-    "message": "言語を変更すると、このページが再読み込みされます。"
-  },
-  "paletteClose": {
-    "message": "閉じる"
-  },
-  "paletteCmdVersion": {
-    "message": "バージョン情報"
-  },
-  "paletteCmdLang": {
-    "message": "言語を切り替える…"
-  },
-  "paletteCmdLangUsage": {
-    "message": "使用方法: /lang の後にロケールコードを指定 — 例: /lang en、/lang zh_CN、/lang ja。"
+  "versionDialogCopy": {
+    "message": "情報をコピー"
   },
   "versionDialogTitle": {
     "message": "vBookmarks $version$",
@@ -634,15 +2510,6 @@
         "content": "$1"
       }
     }
-  },
-  "versionDialogCopy": {
-    "message": "情報をコピー"
-  },
-  "versionDialogCopied": {
-    "message": "コピーしました"
-  },
-  "versionMetaVersion": {
-    "message": "拡張機能バージョン"
   },
   "versionMetaAnnounce": {
     "message": "新機能"
@@ -653,277 +2520,58 @@
   "versionMetaBrowser": {
     "message": "ブラウザ"
   },
-  "versionMetaOS": {
-    "message": "OS"
-  },
   "versionMetaChannel": {
     "message": "チャンネル"
   },
   "versionMetaLanguage": {
     "message": "言語"
   },
+  "versionMetaOS": {
+    "message": "OS"
+  },
   "versionMetaUserAgent": {
     "message": "ユーザーエージェント"
   },
-  "paletteCmdDead": {
-    "message": "無効なリンクを検索"
+  "versionMetaVersion": {
+    "message": "拡張機能バージョン"
   },
-  "paletteCmdDupes": {
-    "message": "重複ブックマークを削除"
+  "viewDead": {
+    "message": "デッドリンク"
   },
-  "paletteCmdNewBookmark": {
-    "message": "新しいブックマーク…"
+  "viewDisable": {
+    "message": "無効にする"
   },
-  "paletteCmdNewFolder": {
-    "message": "新しいフォルダ…"
+  "viewDupes": {
+    "message": "重複"
   },
-  "paletteCmdQuickAdd": {
-    "message": "現在のタブをブックマーク"
+  "viewEnable": {
+    "message": "有効にする"
   },
-  "paletteCmdSaveSession": {
-    "message": "ウィンドウのタブをフォルダとして保存"
-  },
-  "paletteNoResults": {
-    "message": "一致する結果はありません"
-  },
-  "palettePlaceholder": {
-    "message": "ブックマーク、フォルダ、コマンドを検索…"
-  },
-  "parentFolder": {
-    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
-    "message": "フォルダ名 \"$folderName$\"",
+  "viewHiddenTabsHint": {
+    "message": "現在 $view$ ビューを表示中です。ツリーに戻るには、$back$ を押すか、コマンドパレットを使用してください。",
     "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarksbar"
-      }
-    }
-  },
-  "removeSeparator": {
-    "message": "区切り文字を削除"
-  },
-  "replaceUrl": {
-    "message": "現在のURLに置き換えてください"
-  },
-  "reportedToDeveloper": {
-    "description": "拡張エラーで発生した、開発者に報告してください",
-    "message": "開発者にエラーメッセージを報告"
-  },
-  "reportError": {
-    "message": "エラーレポート"
-  },
-  "resetButton": {
-    "message": "リセットされます"
-  },
-  "resetSettings": {
-    "message": "設定をリセットします"
-  },
-  "resetSettingsDescription": {
-    "message": "デフォルトの設定にvBookmarksをリセットします"
-  },
-  "save": {
-    "message": "保存"
-  },
-  "searchBookmarks": {
-    "description": "検索フィールドのためのプレースホルダーテキスト",
-    "message": "ブックマークの検索"
-  },
-  "searchClear": {
-    "message": "検索をクリア"
-  },
-  "searchNoResults": {
-    "message": "一致するブックマークはありません"
-  },
-  "searchViewHint": {
-    "message": "上のボックスに入力してブックマークを検索"
-  },
-  "selectAll": {
-    "message": "すべて"
-  },
-  "selectClear": {
-    "message": "クリア"
-  },
-  "selectCount": {
-    "message": "$count$ 件を選択中",
-    "placeholders": {
-      "count": {
+      "back": {
+        "content": "$2"
+      },
+      "view": {
         "content": "$1"
       }
     }
   },
-  "selectInvert": {
-    "message": "反転"
-  },
-  "selectModeEnter": {
-    "message": "選択"
-  },
-  "selectModeExit": {
-    "message": "選択を終了"
-  },
-  "deadRiskBanner": {
-    "message": "リンク切れ整理はブックマークを一括削除します。初回の整理前にバックアップしてください。"
-  },
-  "dupesRiskBanner": {
-    "message": "重複整理は重複ブックマークを一括削除します。実行前にバックアップしてください。"
-  },
-  "riskBannerHelp": {
-    "message": "バックアップと復元のガイド"
-  },
-  "riskBannerNever": {
-    "message": "今後表示しない"
-  },
-  "riskBannerDismiss": {
-    "message": "閉じる"
-  },
-  "sessionEmpty": {
-    "message": "保存するタブがありません"
-  },
-  "sessionFolderName": {
-    "message": "セッション $date$",
-    "placeholders": {
-      "date": {
-        "content": "$1",
-        "example": "2026-07-18 15:04"
-      }
-    },
-    "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm."
-  },
-  "sessionSaved": {
-    "message": "$count$ 個のタブを新しいフォルダに保存しました",
-    "placeholders": {
-      "count": {
-        "content": "$1",
-        "example": "12"
-      }
-    },
-    "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
-  },
-  "url": {
-    "message": "URL"
-  },
-  "syncOptions": {
-    "message": "同期オプション"
-  },
-  "optionShowSyncStatus": {
-    "message": "同期ステータスインジケーターを表示"
-  },
-  "optionHighlightUnsynced": {
-    "message": "未同期ブックマークを暗く表示"
-  },
-  "optionAutoRefreshSync": {
-    "message": "同期ステータスを自動更新"
-  },
-  "optionSyncRefreshInterval": {
-    "message": "更新間隔"
-  },
-  "optionSyncRefreshIntervalSeconds": {
-    "message": "秒"
-  },
-  "syncStatusSynced": {
-    "message": "Googleアカウントに同期済み"
-  },
-  "syncStatusLocal": {
-    "message": "ローカルのみ — 未アップロード"
-  },
-  "syncStatusUnsyncable": {
-    "message": "同期不可"
-  },
-  "syncSuffixSynced": {
-    "message": "(同期済み)"
-  },
-  "syncSuffixLocal": {
-    "message": "(ローカル)"
-  },
-  "optionAutoResizePopup": {
-    "message": "ポップアップウィンドウのサイズをコンテンツに合わせて自動調整する"
-  },
-  "crossStorageMoveWarning": {
-    "message": "同期済みとローカルストレージの間でブックマークを移動できません。コピー/貼り付けを使用してください。",
-    "description": "Warning when trying to move bookmarks across storage types"
-  },
-  "recentBookmarks": {
-    "message": "最近追加したもの"
-  },
-  "optionShowRecentBookmarks": {
-    "message": "ポップアップの上部に最近追加したブックマークを表示"
-  },
-  "optionShowStatsView": {
-    "message": "統計ビュータブを表示"
-  },
-  "optionShowDeadView": {
-    "message": "デッドリンクビュータブを表示"
-  },
-  "optionShowDupesView": {
-    "message": "重複ビュータブを表示"
-  },
-  "optionRecentCollapsed": {
-    "message": "最近追加したセクションをデフォルトで折りたたむ"
-  },
-  "optionsGroupViews": {
-    "message": "ビュー"
-  },
-  "optionsGroupSort": {
-    "message": "並べ替え"
-  },
-  "optionsGroupStats": {
-    "message": "統計"
-  },
-  "optionsGroupTools": {
-    "message": "ツール"
-  },
-  "optionShowViewTabs": {
-    "message": "検索ボックスの下にビュータブを表示"
-  },
-  "optionRememberView": {
-    "message": "最後にアクティブだったビューを記憶して再度開く"
-  },
-  "optionShowTabBadges": {
-    "message": "ビュータブに件数バッジを表示"
-  },
-  "optionPaletteEnabled": {
-    "message": "コマンドパレットを有効にする (Ctrl/Cmd+K)"
-  },
-  "optionQuickAddEnabled": {
-    "message": "検索ボックスの横にクイック追加の星ボタンを表示"
-  },
-  "optionQuickAddContextMenu": {
-    "message": "ページの右クリック メニューに「vBookmarks でこのページをブックマーク」項目を追加する"
-  },
-  "optionQuickAddContextMenuHint": {
-    "message": "クイック追加スター ボタンとは独立しています。クラシック エクスペリエンスの復元時には、この項目もオフになります。"
-  },
-  "optionCollapseTabGroupMenu": {
-    "message": "タブグループの項目を1つの「タブグループ…」サブメニューに折りたたむ"
-  },
-  "optionCollapseTabGroupMenuHint": {
-    "message": "フォルダーとブックマークの右クリックメニューの両方に適用されます。デフォルトではオフです。小さい画面や高ズームの画面で、メニューの高さを低く抑えられます。"
-  },
-  "optionCollapseSortMenu": {
-    "message": "並べ替え項目を1つの「並べ替え…」サブメニューに折りたたむ"
-  },
-  "optionCollapseSortMenuHint": {
-    "message": "フォルダーの右クリックメニューに適用されます。デフォルトではオンです。"
-  },
-  "optionShowToolButton": {
-    "message": "検索ボックスの横にツールボタン (⋮) を表示"
-  },
-  "optionClassicExperience": {
-    "message": "クラシックヘッダーを復元"
-  },
-  "optionClassicExperienceHint": {
-    "message": "コマンドパレット、クイック追加スターとそのページの右クリックエントリ、ツールボタン、ビュータブをオフにします。各項目はそれぞれのセクションで個別に再び有効にできます。"
-  },
-  "optionShowItemPath": {
-    "message": "リスト行に親フォルダのパスを表示"
-  },
   "viewRecent": {
     "message": "ステージング"
   },
-  "viewTree": {
-    "message": "ツリー"
-  },
   "viewSearch": {
     "message": "検索"
+  },
+  "viewStateDisabled": {
+    "message": "無効"
+  },
+  "viewStateEnabled": {
+    "message": "有効"
+  },
+  "viewStats": {
+    "message": "統計"
   },
   "viewSwitchAnnounce": {
     "message": "$name$ビュー",
@@ -933,870 +2581,17 @@
       }
     }
   },
-  "viewStateEnabled": {
-    "message": "有効"
+  "viewTabDisable": {
+    "message": "無効化"
   },
-  "viewStateDisabled": {
-    "message": "無効"
-  },
-  "viewEnable": {
-    "message": "有効にする"
-  },
-  "viewDisable": {
-    "message": "無効にする"
+  "viewTabGroups": {
+    "message": "タブグループ"
   },
   "viewTabHide": {
     "message": "非表示"
   },
-  "viewTabDisable": {
-    "message": "無効化"
-  },
-  "sortFolderContents": {
-    "message": "フォルダを並べ替え"
-  },
-  "sortByName": {
-    "message": "名前順に並べ替え"
-  },
-  "sortByDate": {
-    "message": "追加日順に並べ替え"
-  },
-  "sortRecursiveSuffix": {
-    "message": "（再帰）"
-  },
-  "sortOptions": {
-    "message": "並べ替えオプション…"
-  },
-  "sortDone": {
-    "message": "フォルダーを並べ替えました"
-  },
-  "sortByTitle": {
-    "message": "タイトル順"
-  },
-  "sortByDateAdded": {
-    "message": "追加日順（新しい順）"
-  },
-  "sortFoldersFirst": {
-    "message": "フォルダを先頭に"
-  },
-  "sortRecursive": {
-    "message": "サブフォルダも並べ替え（再帰的）"
-  },
-  "sortRecursiveWarning": {
-    "message": "すべてのサブフォルダーのブックマークの並び順が変更されます。"
-  },
-  "tabGroupDialogTitle": {
-    "message": "新規タブグループ"
-  },
-  "tabGroupTitleLabel": {
-    "message": "グループ名"
-  },
-  "tabGroupColorLabel": {
-    "message": "色"
-  },
-  "tabGroupColorGrey": {
-    "message": "グレー",
-    "description": "Accessible name of the grey color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorBlue": {
-    "message": "ブルー",
-    "description": "Accessible name of the blue color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorRed": {
-    "message": "レッド",
-    "description": "Accessible name of the red color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorYellow": {
-    "message": "イエロー",
-    "description": "Accessible name of the yellow color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorGreen": {
-    "message": "グリーン",
-    "description": "Accessible name of the green color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorPink": {
-    "message": "ピンク",
-    "description": "Accessible name of the pink color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorPurple": {
-    "message": "パープル",
-    "description": "Accessible name of the purple color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorCyan": {
-    "message": "シアン",
-    "description": "Accessible name of the cyan color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorOrange": {
-    "message": "オレンジ",
-    "description": "Accessible name of the orange color swatch in the new-tab-group dialog."
-  },
-  "tabGroupUntitled": {
-    "message": "無題グループ"
-  },
-  "tabGroupNoGroups": {
-    "message": "既存のタブグループはありません"
-  },
-  "tabGroupPickDialogTitle": {
-    "message": "既存のタブグループで開く"
-  },
-  "quickAddBookmark": {
-    "message": "このページをブックマーク（Ctrl+D）"
-  },
-  "quickAddBookmarkCommand": {
-    "message": "現在のタブをブックマークとしてクイック追加"
-  },
-  "quickAdded": {
-    "message": "ブックマークを追加しました"
-  },
-  "quickAddedTo": {
-    "message": "$folderName$ にブックマークを追加しました",
-    "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarks bar"
-      }
-    }
-  },
-  "quickRemoved": {
-    "message": "ブックマークを削除しました"
-  },
-  "quickRemoveBookmark": {
-    "message": "このブックマークを削除 (Ctrl+D)"
-  },
-  "toolButtonTitle": {
-    "message": "ツール (Ctrl+K)"
-  },
-  "contextMenuAddBookmark": {
-    "message": "vBookmarksでこのページをブックマーク"
-  },
-  "deadFilterAll": {
-    "message": "すべて"
-  },
-  "deadFilterBlocked": {
-    "message": "ブロックのみ"
-  },
-  "deadFilterDead": {
-    "message": "デッドのみ"
-  },
-  "deadFilterMarked": {
-    "message": "以前マーク済み"
-  },
-  "deadLastScanAt": {
-    "message": "最終スキャン: $time$",
-    "placeholders": {
-      "time": {
-        "content": "$1"
-      }
-    }
-  },
-  "deadMark": {
-    "message": "デッドとしてマーク"
-  },
-  "deadMarkAll": {
-    "message": "すべてマーク"
-  },
-  "deadMarked": {
-    "message": "マークされたデッド行"
-  },
-  "deadMarkedCount": {
-    "message": "マーク済みブックマーク $count$ 件",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "deadMarkedNone": {
-    "message": "マーク済みのブックマークはまだありません"
-  },
-  "deadMarkedRow": {
-    "message": "マーク済み"
-  },
-  "deadMarkSelected": {
-    "message": "選択済みをマーク"
-  },
-  "deadMarkStatusAll": {
-    "message": "すべてのステータス"
-  },
-  "deadMarkStatusMarked": {
-    "message": "マーク済み"
-  },
-  "deadMarkStatusUnmarked": {
-    "message": "未マーク"
-  },
-  "deadMarkTimeLabel": {
-    "message": "マーク日時"
-  },
-  "deadDetectTimeLabel": {
-    "message": "検出日時"
-  },
-  "deadSortLabel": {
-    "message": "並べ替え"
-  },
-  "deadSortByDetected": {
-    "message": "検出日時"
-  },
-  "deadSortByPath": {
-    "message": "フォルダパス"
-  },
-  "deadSortByMarked": {
-    "message": "マーク日時"
-  },
-  "deadMarkedBanner": {
-    "message": "以前マークしたブックマークを表示しています。「再スキャン」をクリックして新しいチェックを開始するか、以下のリストで処理してください。"
-  },
-  "deadMarkedBannerDismiss": {
-    "message": "閉じる"
-  },
-  "deadProxyAdd": {
-    "message": "リンク切れチェック用のプロキシサーバーを追加"
-  },
-  "deadProxyLabel": {
-    "message": "プロキシ: $server$",
-    "placeholders": {
-      "server": {
-        "content": "$1"
-      }
-    }
-  },
-  "deadProxyChange": {
-    "message": "変更"
-  },
-  "deadProxyRemove": {
-    "message": "削除"
-  },
-  "deadProxyRemoved": {
-    "message": "プロキシサーバーを削除しました"
-  },
-  "deadProxyPanelHint": {
-    "message": "既にお持ちのプロキシサーバーを入力してください（拡張機能はプロキシを提供しません）。例: 127.0.0.1:7890 または socks5://127.0.0.1:1080"
-  },
-  "deadProxyTestUrlLabel": {
-    "message": "テストURL"
-  },
-  "deadProxyTestSave": {
-    "message": "テストして保存"
-  },
-  "deadProxyTesting": {
-    "message": "テスト中…"
-  },
-  "deadProxySaved": {
-    "message": "プロキシを保存しました。今後のスキャンでは直接失敗したリンクをこのプロキシ経由で再チェックします"
-  },
-  "deadProxyInvalid": {
-    "message": "無効なプロキシアドレスです — host:port または scheme://host:port を使用してください（http/https/socks5、認証情報なし）"
-  },
-  "deadProxyUnreachable": {
-    "message": "プロキシに到達できません — 保存されていません"
-  },
-  "deadProxyDenied": {
-    "message": "プロキシの権限が付与されていません"
-  },
-  "deadProxyControlled": {
-    "message": "プロキシ設定は別の拡張機能によって管理されています"
-  },
-  "deadProxyUnavailable": {
-    "message": "このブラウザではプロキシAPIを利用できません"
-  },
-  "deadProxyNudge": {
-    "message": "プロキシ再チェックで、実際に無効なリンクと地域制限されたリンクを区別できます。ここまたはオプションページで設定してください。"
-  },
-  "deadProxyNeverShow": {
-    "message": "今後表示しない"
-  },
-  "deadStartHint": {
-    "message": "$n$個のブックマークのスキャンを開始",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "deadStatusBlocked": {
-    "message": "ブロック済み"
-  },
-  "deadUnmark": {
-    "message": "デッドマークを解除"
-  },
-  "deadUnmarkAll": {
-    "message": "すべてのマークを消去"
-  },
-  "deadUnmarkSelected": {
-    "message": "選択済みのマークを解除"
-  },
-  "dupesApplyAll": {
-    "message": "すべて適用（$count$）",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "dupesApplySelected": {
-    "message": "選択済みを重複整理 ($count$)",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "dupesCleanRestHint": {
-    "message": "\"$title$\" を保持し、他の $count$ を削除",
-    "placeholders": {
-      "title": {
-        "content": "$1"
-      },
-      "count": {
-        "content": "$2"
-      }
-    }
-  },
-  "dupesIgnoreScheme": {
-    "message": "http/httpsの違いを無視"
-  },
-  "dupesKeepThis": {
-    "message": "これを保持"
-  },
-  "dupesKeeperSet": {
-    "message": "キーパーに設定"
-  },
-  "dupesPreviewSummary": {
-    "message": "$groups$ グループ · $count$ 件解放予定",
-    "placeholders": {
-      "groups": {
-        "content": "$1"
-      },
-      "count": {
-        "content": "$2"
-      }
-    }
-  },
-  "dupesRemoveRow": {
-    "message": "このコピーを削除"
-  },
-  "dupesScopeAll": {
-    "message": "すべてのブックマーク"
-  },
-  "dupesScopeBar": {
-    "message": "ブックマークバーのみ"
-  },
-  "dupesStrategyBookmarkBar": {
-    "message": "ブックマークバー内のものを保持"
-  },
-  "dupesStrategyMostVisited": {
-    "message": "最多訪問を保持"
-  },
-  "dupesStrategyNewest": {
-    "message": "最新を保持"
-  },
-  "dupesStrategyOldest": {
-    "message": "最古を保持"
-  },
-  "dupesStrategyShallowest": {
-    "message": "最も浅いものを保持"
-  },
-  "dupesStrategyShortestTitle": {
-    "message": "最も短いタイトルを保持"
-  },
-  "optionDeadProxyServer": {
-    "message": "リンク切れプロキシサーバー"
-  },
-  "deadProxyServerHint": {
-    "message": "保存されたサーバーは、デッドリンクスキャンのたびに直接チェックに失敗したブックマークを再チェックし、実際の無効リンクと地域制限によるブロックを区別します。「テストして保存」でプローブを実行します（到達可能なサーバーのみが保持されます）。デッドリンクビューから追加することもできます。"
-  },
-  "deadProxyClear": {
-    "message": "クリア"
-  },
-  "deadProxyNone": {
-    "message": "（未設定）"
-  },
-  "optionDeadProxyStrip": {
-    "message": "リンク切れビューにプロキシ追加のヒントを表示"
-  },
-  "optionDeadProxyStripHint": {
-    "message": "オフにすると、そのビュー内ではヒントが非表示になります。プロキシサーバーはここで設定可能で、保存済みサーバーは常にビューに管理行が表示されます。"
-  },
-  "optionDeadScanConcurrency": {
-    "message": "デッドリンクスキャンの同時実行数 (1-16)"
-  },
-  "optionDeadScanTimeout": {
-    "message": "デッドリンクスキャンのタイムアウト秒数 (2-30)"
-  },
-  "paletteCmdGoDead": {
-    "message": "デッドリンクビューに移動"
-  },
-  "paletteCmdGoDupes": {
-    "message": "重複ビューに移動"
-  },
-  "paletteCmdGoRecent": {
-    "message": "最近ビューに移動"
-  },
-  "paletteCmdGoSearch": {
-    "message": "検索ビューに移動"
-  },
-  "paletteCmdGoTree": {
-    "message": "ツリービューに移動"
-  },
-  "paletteCmdOptions": {
-    "message": "オプションページを開く"
-  },
-  "paletteCmdSearchInView": {
-    "message": "検索ビューで '$query$' を検索",
-    "placeholders": {
-      "query": {
-        "content": "$1"
-      }
-    }
-  },
-  "rowActionDelete": {
-    "message": "削除"
-  },
-  "rowActionMark": {
-    "message": "デッドとしてマーク"
-  },
-  "rowActionReveal": {
-    "message": "ツリー内で表示"
-  },
-  "rowActionUnmark": {
-    "message": "デッドマークを解除"
-  },
-  "viewDead": {
-    "message": "デッドリンク"
-  },
-  "viewDupes": {
-    "message": "重複"
-  },
-  "viewStats": {
-    "message": "統計"
-  },
-  "paletteCmdGoStats": {
-    "message": "統計ビューに移動"
-  },
-  "optionStatsEnabled": {
-    "message": "訪問統計を有効にする"
-  },
-  "optionFaviconContrast": {
-    "message": "低コントラストのファビコンを反転"
-  },
-  "optionFaviconContrastHint": {
-    "message": "ライトテーマの白いアイコンとダークテーマの黒いアイコンは反転され、視認性が保たれます。各アイコンは読み込み時に一度だけサンプリングされるため、閲覧中の負荷はありません。"
-  },
-  "optionFaviconEnrich": {
-    "message": "不足しているサイトアイコンを取得"
-  },
-  "optionFaviconEnrichHint": {
-    "message": "Chrome にキャッシュアイコンがないブックマーク済みサイトでは、実際のアイコンをサイトから直接取得します（/favicon.ico、次にページで宣言されたアイコン）。リクエストはブックマークしたサイトにのみ送信されます。"
-  },
-  "optionFaviconEnrichAgg": {
-    "message": "サードパーティアイコンへのフォールバック"
-  },
-  "optionFaviconEnrichAggHint": {
-    "message": "直接取得に失敗した場合、組み込みのサードパーティ製アイコンサービスリスト（$providers$）からドメインでアイコンを検索します。到達できないサービスはスキップされ、次のサービスが試行されます。再試行は6時間行われません。",
-    "placeholders": {
-      "providers": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionFaviconBackup": {
-    "message": "バックアップにアイコンキャッシュを含める"
-  },
-  "optionFaviconBackupHint": {
-    "message": "また、拡充ファビコンキャッシュ（サイトごとのデータで、大きくなる可能性があります）を設定のエクスポート/インポートに含めます。これには、取得がオフの場合でも、すでにキャッシュされているアイコンが含まれます。オフのままだとバックアップは小さくなりますが、アイコンは自動的に再取得されます。"
-  },
-  "optionFaviconCacheClear": {
-    "message": "アイコンキャッシュをクリア"
-  },
-  "optionFaviconCacheClearConfirm": {
-    "message": "拡充アイコンキャッシュをクリアしますか？アイコンは次回開いたときに自動的に再取得されます。"
-  },
-  "optionFaviconCacheEmpty": {
-    "message": "クリアするアイコンキャッシュはありません。"
-  },
-  "optionFaviconCacheCleared": {
-    "message": "アイコンキャッシュがクリアされました。次回開いたときに再取得されます。"
-  },
-  "favGalleryLink": {
-    "message": "更新済みアイコンを表示",
-    "description": "Options link (Icons group, right of the Clear icon cache button): opens the favicon gallery page listing the sites whose icons were refetched."
-  },
-  "favGalleryTitle": {
-    "message": "更新済みサイトアイコン",
-    "description": "Favicon gallery page title (h1 + document title)."
-  },
-  "favGalleryHint": {
-    "message": "vBookmarks が、Chrome がキャッシュしていないブックマーク済みサイトから取得したアイコンです。各アイコンの取得元と、そのアイコンを使用するブックマークを表示します。表示専用です。",
-    "description": "Subtitle under the favicon gallery title, explaining the page is read-only."
-  },
-  "favGallerySearch": {
-    "message": "サイト、タイトル、パスで絞り込み",
-    "description": "Placeholder of the favicon gallery filter input."
-  },
-  "favGalleryAll": {
-    "message": "すべて",
-    "description": "Favicon gallery source filter chip: show every source."
-  },
-  "favSrcDirect": {
-    "message": "直接",
-    "description": "Favicon gallery source badge: the icon was fetched directly from the site itself."
-  },
-  "favSrcProxy": {
-    "message": "プロキシ",
-    "description": "Favicon gallery source badge: the icon was fetched through the user's own proxy relay."
-  },
-  "favSrcLegacy": {
-    "message": "以前のキャッシュ",
-    "description": "Favicon gallery source badge: cached before the source was recorded, so the origin is unknown."
-  },
-  "favGalleryCompare": {
-    "message": "プレースホルダーと比較",
-    "description": "Favicon gallery toggle button: switch every icon to the generic placeholder it replaced (before/after comparison)."
-  },
-  "favGalleryShowingBefore": {
-    "message": "実際のアイコンに戻る",
-    "description": "Favicon gallery toggle button while the placeholder comparison is shown: switch back to the real fetched icons."
-  },
-  "favGalleryStatSites": {
-    "message": "$n$サイト",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    },
-    "description": "Favicon gallery stats strip: how many sites have a refreshed icon."
-  },
-  "favGalleryStatBookmarks": {
-    "message": "$n$ブックマーク",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    },
-    "description": "Favicon gallery stats strip: how many bookmarks sit on the refreshed sites."
-  },
-  "favGalleryVisits": {
-    "message": "$n$回のオープン記録",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    },
-    "description": "Favicon gallery tooltip on a bookmark row's visit-count pill."
-  },
-  "favGalleryFailedTitle": {
-    "message": "最近試行したがアイコンなし",
-    "description": "Favicon gallery heading of the muted section listing hosts whose icon fetch failed recently."
-  },
-  "favGalleryFailedHint": {
-    "message": "失敗は24時間後、3日後、7日後に再試行され、その後はアイコンキャッシュがクリアされるまで放棄されます。",
-    "description": "Favicon gallery hint under the failed-fetch section title."
-  },
-  "favGalleryGaveUp": {
-    "message": "放棄しました",
-    "description": "Favicon gallery badge on a failed-strip host whose retries are exhausted (it stays untouched until the icon cache is cleared)."
-  },
-  "favGalleryOrphan": {
-    "message": "このホストにはブックマークが残っていません。アイコンはキャッシュと一緒に消去されます。",
-    "description": "Favicon gallery note on a card whose host no longer has any bookmark."
-  },
-  "favGalleryEmptyTitle": {
-    "message": "更新済みアイコンはまだありません",
-    "description": "Favicon gallery empty-state heading."
-  },
-  "favGalleryEmptyText": {
-    "message": "ポップアップが、Chrome にアイコンのないブックマーク済みサイトを検出すると、vBookmarks が実際のアイコンを取得してここに一覧表示します。",
-    "description": "Favicon gallery empty-state body text."
-  },
-  "storageUsageIcon": {
-    "message": "アイコンキャッシュ"
-  },
-  "storageUsageOther": {
-    "message": "その他"
-  },
-  "storageUsageSummary": {
-    "message": "使用済み $1$ / $2$",
-    "placeholders": {
-      "1": {
-        "content": "$1"
-      },
-      "2": {
-        "content": "$2"
-      }
-    }
-  },
-  "storageUsageFree": {
-    "message": "空き容量"
-  },
-  "storageUsageHint": {
-    "message": "ローカル拡張ストレージのみ（chrome.storage.local、約10MBの割り当て）：アイコンキャッシュと設定、その他のローカルデータが含まれます。同期設定、セッションデータ、ブックマークライブラリ自体はここには含まれません。"
-  },
-  "optionsDonate": {
-    "message": "寄付"
-  },
-  "optionsGithubLink": {
-    "message": "GitHub"
-  },
-  "optionsHomepageLink": {
-    "message": "ホームページ"
-  },
-  "optionsSince": {
-    "message": "Neat Bookmarks からフォークして、$days$ 日間メンテナンスしています。",
-    "placeholders": {
-      "days": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionsVersion": {
-    "message": "vBookmarks バージョン"
-  },
-  "statsSortByCount": {
-    "message": "回数順"
-  },
-  "statsSortByRecent": {
-    "message": "最近順"
-  },
-  "statsShowUnbookmarked": {
-    "message": "未登録を表示"
-  },
-  "statsShowUnbookmarkedHint": {
-    "message": "履歴の中でブックマークとして保存されていないページを含めます。"
-  },
-  "statsEmpty": {
-    "message": "ブックマークを開くと統計が蓄積されます"
-  },
-  "statsDisabledHint": {
-    "message": "訪問統計がオフです — オプション → ビューで有効にしてください"
-  },
-  "statsVisitCount": {
-    "message": "$count$ 回訪問",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "statsClearData": {
-    "message": "統計をクリア"
-  },
-  "statsClearConfirm": {
-    "message": "$count$ 件のブックマークの訪問統計をクリアしますか？この操作は元に戻せません。",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "statsHistoryBanner": {
-    "message": "過去の訪問データで訪問統計を生成するために履歴アクセスを許可してください。"
-  },
-  "statsHistoryEnable": {
-    "message": "有効にする"
-  },
-  "statsHistoryDismiss": {
-    "message": "今後表示しない"
-  },
-  "statsHistoryImported": {
-    "message": "$count$ 個のブックマークの過去の訪問データをインポートしました",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "paletteCmdToggleViewTabs": {
-    "message": "ビュータブの切り替え"
-  },
-  "paletteCmdTheme": {
-    "message": "テーマを設定…"
-  },
-  "paletteCmdThemeUsage": {
-    "message": "使い方: /theme の後にテーマ名を指定 — auto、light、dark、ink、paper（一意のプレフィックスも可。例: /theme d）"
-  },
-  "paletteCustomTag": {
-    "message": "カスタム"
-  },
-  "paletteCustomDeleteConfirm": {
-    "message": "コマンド「$1」を削除しますか？ この変更はすべてのデバイスに同期されます。"
-  },
-  "paletteCustomBroken": {
-    "message": "コマンド「$1」のフォルダーが存在しません。コマンドを削除しますか？"
-  },
-  "paletteCmdSaveAsCommand": {
-    "message": "「$1」をコマンドとして保存…"
-  },
-  "paletteActionOpenUrl": {
-    "message": "URLを開く"
-  },
-  "paletteActionOpenUrlGroup": {
-    "message": "ブックマークフォルダーグループを開く"
-  },
-  "paletteActionViewPreset": {
-    "message": "プリセット付きビューを開く"
-  },
-  "paletteActionUrlTemplate": {
-    "message": "URLテンプレートを開く"
-  },
-  "optionsGroupPalette": {
-    "message": "コマンドパレット"
-  },
-  "paletteCustomHint": {
-    "message": "コマンドパレット用のカスタムスラッシュコマンド（Ctrl/Cmd+K）。設定と同期されます — 最大100件。"
-  },
-  "paletteCustomAdd": {
-    "message": "コマンドを追加…"
-  },
-  "paletteCustomUsage": {
-    "message": "$1 / $2"
-  },
-  "paletteCustomSlash": {
-    "message": "スラッシュ（/ の後の語）"
-  },
-  "paletteCustomAliases": {
-    "message": "エイリアス（カンマ区切り）"
-  },
-  "paletteCustomAction": {
-    "message": "アクション"
-  },
-  "paletteCustomUrl": {
-    "message": "URL"
-  },
-  "paletteCustomTemplate": {
-    "message": "URLテンプレート — %s はコマンド後の語に置き換えられます"
-  },
-  "paletteCustomWhere": {
-    "message": "開く場所"
-  },
-  "paletteCustomFolder": {
-    "message": "ブックマークフォルダー"
-  },
-  "paletteCustomView": {
-    "message": "表示"
-  },
-  "paletteCustomStrategy": {
-    "message": "重複排除戦略プリセット"
-  },
-  "paletteCustomScope": {
-    "message": "重複排除スコーププリセット"
-  },
-  "paletteCustomScan": {
-    "message": "入力時にスキャンを開始"
-  },
-  "paletteWhereCurrent": {
-    "message": "現在のタブ"
-  },
-  "paletteWhereTab": {
-    "message": "新しいタブ"
-  },
-  "paletteWhereWindow": {
-    "message": "新しいウィンドウ"
-  },
-  "paletteWhereBackground": {
-    "message": "バックグラウンドタブ"
-  },
-  "paletteCustomSave": {
-    "message": "コマンドを保存"
-  },
-  "paletteCustomErrSlash": {
-    "message": "スラッシュ: 小文字・数字・ハイフンの1〜24文字。先頭は英字または数字。"
-  },
-  "paletteCustomErrAlias": {
-    "message": "エイリアス: スラッシュと同じ規則（小文字・数字・ハイフンの1〜24文字）。"
-  },
-  "paletteCustomErrTaken": {
-    "message": "そのスラッシュまたはエイリアスは既に使用されています。"
-  },
-  "paletteCustomErrUrl": {
-    "message": "許可されるのは http:// または https:// のURLのみです。"
-  },
-  "paletteCustomErrFolder": {
-    "message": "ブックマークフォルダーを選択してください。"
-  },
-  "paletteCustomErrView": {
-    "message": "表示を選択してください。"
-  },
-  "paletteCustomErrTemplate": {
-    "message": "テンプレートには %s がちょうど1つ必要です。"
-  },
-  "paletteCustomErrAction": {
-    "message": "アクションの種類を選択してください。"
-  },
-  "paletteCustomErrLimit": {
-    "message": "コマンド数の上限（100）に達しました。先に1つ削除してください。"
-  },
-  "paletteCustomEmpty": {
-    "message": "カスタムコマンドはまだありません。"
-  },
-  "recentGroupToday": {
-    "message": "今日"
-  },
-  "recentGroupWeek": {
-    "message": "今週"
-  },
-  "recentGroupMonth": {
-    "message": "今月"
-  },
-  "recentGroupOlder": {
-    "message": "過去"
-  },
-  "searchHistoryRerun": {
-    "message": "再検索"
-  },
-  "optionsGroupBackup": {
-    "message": "バックアップ"
-  },
-  "optionsGroupContextMenu": {
-    "message": "コンテキストメニュー"
-  },
-  "optionsGroupIcons": {
-    "message": "アイコン"
-  },
-  "settingsExport": {
-    "message": "設定をエクスポート"
-  },
-  "settingsImport": {
-    "message": "設定をインポート"
-  },
-  "settingsBackupHint": {
-    "message": "エクスポートはすべての設定（同期設定を含む）をJSONファイルに保存します。インポートはバックアップを結合します。ファイル内の設定が現在の設定を上書きし、その他は保持されます。"
-  },
-  "settingsImportConfirm": {
-    "message": "インポートを実行すると、バックアップファイルに含まれるすべての設定が上書きされ（ファイルにない設定は保持されます）、このページがリロードされます。続行しますか？"
-  },
-  "settingsImportInvalid": {
-    "message": "無効な設定ファイルです。vBookmarksの設定バックアップではありません。"
-  },
-  "settingsImportDone": {
-    "message": "設定がインポートされました。ページをリロードします。"
-  },
-  "settingsImportError": {
-    "message": "一部の設定を書き込めませんでした（ストレージ容量または一時的なエラー）。インポートは完了しませんでした。もう一度お試しください。"
-  },
-  "statsSectionRecent": {
-    "message": "最近の訪問"
-  },
-  "statsSectionBookmarks": {
-    "message": "ブックマーク統計"
-  },
-  "statsHistoryGuide": {
-    "message": "ここに最近の訪問を表示するには、履歴へのアクセスを許可してください。"
-  },
-  "statsHistoryAdd": {
-    "message": "ブックマークに追加"
-  },
-  "statsHistoryBookmarked": {
-    "message": "ブックマーク済み"
-  },
-  "deadPause": {
-    "message": "一時停止"
-  },
-  "deadResume": {
-    "message": "再開"
-  },
-  "deadCancel": {
-    "message": "キャンセル"
-  },
-  "deadPaused": {
-    "message": "一時停止中"
+  "viewTree": {
+    "message": "ツリー"
   },
   "whatsNewChangelog": {
     "message": "変更履歴"
@@ -1808,800 +2603,5 @@
         "content": "$1"
       }
     }
-  },
-  "viewHiddenTabsHint": {
-    "message": "現在 $view$ ビューを表示中です。ツリーに戻るには、$back$ を押すか、コマンドパレットを使用してください。",
-    "placeholders": {
-      "view": {
-        "content": "$1"
-      },
-      "back": {
-        "content": "$2"
-      }
-    }
-  },
-  "viewTabGroups": {
-    "message": "タブグループ"
-  },
-  "optionShowTabGroupsView": {
-    "message": "タブグループビュータブを表示"
-  },
-  "tabGroupsViewEmpty": {
-    "message": "このウィンドウにタブはありません"
-  },
-  "tabGroupsToolbarRefresh": {
-    "message": "更新"
-  },
-  "tabGroupsCollapseAll": {
-    "message": "すべて折りたたむ"
-  },
-  "tabGroupsExpandAll": {
-    "message": "すべて展開"
-  },
-  "tabGroupsSummary": {
-    "message": "$tabs$ タブ · $groups$ グループ",
-    "placeholders": {
-      "tabs": {
-        "content": "$1"
-      },
-      "groups": {
-        "content": "$2"
-      }
-    }
-  },
-  "tabGroupsGroupCount": {
-    "message": "$count$ タブ",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsCurrentTab": {
-    "message": "現在"
-  },
-  "tabGroupsAddBookmark": {
-    "message": "このタブをブックマーク"
-  },
-  "tabGroupsSaveFolder": {
-    "message": "タブグループをブックマークフォルダーとして保存"
-  },
-  "tabGroupsGroupSavedToFolder": {
-    "message": "$count$ タブを $folder$ に保存しました",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      },
-      "folder": {
-        "content": "$2"
-      }
-    }
-  },
-  "tabGroupsBookmarksAdded": {
-    "message": "$count$ 件のブックマークを $folder$ に追加しました",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      },
-      "folder": {
-        "content": "$2"
-      }
-    }
-  },
-  "tabGroupsSelectNewGroup": {
-    "message": "新しいタブグループ"
-  },
-  "tabGroupsSelectOpenInto": {
-    "message": "既存のタブグループで開く…"
-  },
-  "tabGroupsSelectSaveFolder": {
-    "message": "ブックマークフォルダーとして保存"
-  },
-  "tabGroupsSelectClose": {
-    "message": "閉じる"
-  },
-  "tabGroupsSelectSleep": {
-    "message": "スリープ"
-  },
-  "tabGroupsCopyMoveDialog": {
-    "message": "選択したタブは既にタブグループに属しています。コピー（新しい場所で開く）または移動（現在のグループから削除）しますか？"
-  },
-  "tabGroupsCopyMoveCopy": {
-    "message": "コピー"
-  },
-  "tabGroupsCopyMoveMove": {
-    "message": "移動"
-  },
-  "tabGroupsConfirmClose": {
-    "message": "$count$ タブを閉じますか？",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsConfirmSleep": {
-    "message": "$count$ タブをスリープしますか？",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsClosedToast": {
-    "message": "$count$ 件のタブを閉じました",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsSleptToast": {
-    "message": "$count$ 件のタブをスリープしました",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsBatchClosedTitle": {
-    "message": "閉じたタブ"
-  },
-  "tabGroupsPinnedUngroupedToast": {
-    "message": "ピン留め — タブグループから削除しました"
-  },
-  "tabGroupsReopenAction": {
-    "message": "再度開く"
-  },
-  "tabGroupsWakeAction": {
-    "message": "スリープ解除"
-  },
-  "tabGroupsRecordDeletedToast": {
-    "message": "閉じた記録を削除しました"
-  },
-  "tabGroupsClosedTabRemovedToast": {
-    "message": "閉じた記録から削除しました"
-  },
-  "tabGroupsClearedToast": {
-    "message": "$count$ 件の閉じた記録を消去しました",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "bookmarkFolderPickDialogTitle": {
-    "message": "ブックマークフォルダーに追加"
-  },
-  "bookmarkFolderNoFolders": {
-    "message": "ブックマークフォルダーがありません"
-  },
-  "tabGroupsSelectAddBookmarks": {
-    "message": "ブックマークフォルダーに追加…"
-  },
-  "paletteCmdGoTabGroups": {
-    "message": "タブグループビューへ移動"
-  },
-  "tabGroupsActivateGroup": {
-    "message": "グループへ移動"
-  },
-  "tabGroupsRenameGroup": {
-    "message": "タブグループ名を変更"
-  },
-  "tabGroupsRenameDialog": {
-    "message": "タブグループ名を変更"
-  },
-  "tabGroupsCloseGroup": {
-    "message": "タブグループを閉じる"
-  },
-  "tabGroupsSleepGroup": {
-    "message": "タブグループをスリープ"
-  },
-  "tabGroupsWakeGroup": {
-    "message": "タブグループを復元"
-  },
-  "tabGroupsActivateTab": {
-    "message": "タブへ移動"
-  },
-  "tabGroupsCollapseGroup": {
-    "message": "グループを折りたたむ"
-  },
-  "tabGroupsExpandGroup": {
-    "message": "グループを展開"
-  },
-  "tabGroupsMenuAddBookmark": {
-    "message": "タブをブックマーク"
-  },
-  "tabGroupsMenuSaveFolder": {
-    "message": "ブックマークフォルダーとして保存"
-  },
-  "tabGroupsSyncCollapse": {
-    "message": "与浏览器同步折叠"
-  },
-  "tabGroupsSyncCollapseHint": {
-    "message": "勾选后，在此视图中折叠或展开分组也会更新浏览器标签组。默认关闭，以便视图折叠保持本地状态。"
-  },
-  "tabGroupsColorStyle": {
-    "message": "タブグループの色スタイル"
-  },
-  "tabGroupsColorStyleHint": {
-    "message": "オフにすると色ドットのみ表示。エッジカラーバンドはグループの左端に色付きの帯を表示。カラーコネクタ線はグループのドットの下に色付きの線を表示し、行ごとに目盛りを付けてグループ全体を1つのツリーにまとめます。"
-  },
-  "tabGroupsColorStyleOff": {
-    "message": "オフ（色ドットのみ）"
-  },
-  "tabGroupsColorStyleEdge": {
-    "message": "エッジカラーバンド"
-  },
-  "tabGroupsColorStyleLine": {
-    "message": "カラーコネクタ線"
-  },
-  "tabGroupsBookmarked": {
-    "message": "ブックマーク済み"
-  },
-  "tabGroupsRemoveBookmark": {
-    "message": "ブックマークを削除"
-  },
-  "tabGroupsBookmarkRemoved": {
-    "message": "$count$ 件のブックマークを削除しました",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsPinned": {
-    "message": "固定タブ"
-  },
-  "tabGroupsDiscarded": {
-    "message": "スリープタブ"
-  },
-  "tabGroupsPinTab": {
-    "message": "タブを固定"
-  },
-  "tabGroupsUnpinTab": {
-    "message": "タブの固定を解除"
-  },
-  "tabGroupsSleepTab": {
-    "message": "タブをスリープ"
-  },
-  "tabGroupsWakeTab": {
-    "message": "タブを復元"
-  },
-  "tabGroupsOpenGroups": {
-    "message": "開いているタブグループ"
-  },
-  "tabGroupsClosedGroups": {
-    "message": "最近閉じたグループ"
-  },
-  "tabGroupsUngroupedTabs": {
-    "message": "グループ化されていないタブ"
-  },
-  "tabGroupsUngroupGroup": {
-    "message": "グループ解除"
-  },
-  "tabGroupsMoveNewWindow": {
-    "message": "新しいウィンドウに移動"
-  },
-  "tabGroupsWindow": {
-    "message": "ウィンドウ $1$",
-    "placeholders": {
-      "1": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsCurrentWindow": {
-    "message": "現在のウィンドウ"
-  },
-  "tabGroupsReopenGroup": {
-    "message": "タブグループを再度開く"
-  },
-  "tabGroupsDeleteClosedGroup": {
-    "message": "閉じたタブグループを削除"
-  },
-  "tabGroupsCollapseWindow": {
-    "message": "ウィンドウを折りたたむ"
-  },
-  "tabGroupsCloseWindow": {
-    "message": "ウィンドウを閉じる"
-  },
-  "tabGroupsWindowClosedTitle": {
-    "message": "閉じたウィンドウ"
-  },
-  "tabGroupsExpandWindow": {
-    "message": "ウィンドウを展開"
-  },
-  "tabGroupsClearClosedGroups": {
-    "message": "すべてクリア"
-  },
-  "tabGroupsConfirmClearClosed": {
-    "message": "最近閉じた記録をすべてクリアしますか？ここから再度開くことはできなくなります。"
-  },
-  "tabGroupsFilterPlaceholder": {
-    "message": "開いているタブをフィルタ"
-  },
-  "tabGroupsNoMatchingTabs": {
-    "message": "一致するタブがありません"
-  },
-  "tabGroupsClosedOpenTab": {
-    "message": "新しいタブで開く"
-  },
-  "tabGroupsRemoveClosedTab": {
-    "message": "保存済みグループから削除"
-  },
-  "tabGroupsClosedTimeLabel": {
-    "message": "閉じた日時:"
-  },
-  "tabGroupsExpandedExpand": {
-    "message": "展開"
-  },
-  "tabGroupsExpandedCollapse": {
-    "message": "折りたたむ"
-  },
-  "optionTabGroupsClosedLimit": {
-    "message": "保持的已关闭标签页/组历史记录"
-  },
-  "folderPickMoveHere": {
-    "message": "ここに移動"
-  },
-  "folderPickCopyHere": {
-    "message": "ここにコピー"
-  },
-  "folderPickFilter": {
-    "message": "フォルダを絞り込み…"
-  },
-  "folderPickFavNote": {
-    "message": "未ブックマークの項目はここにブックマークされます"
-  },
-  "folderPickPinned": {
-    "message": "固定"
-  },
-  "folderPickRecent": {
-    "message": "最近"
-  },
-  "pinFolder": {
-    "message": "このフォルダを固定"
-  },
-  "unpinFolder": {
-    "message": "このフォルダの固定を解除"
-  },
-  "stagingAdd": {
-    "message": "ステージングに送る"
-  },
-  "stagingAdded": {
-    "message": "ステージングに送信しました"
-  },
-  "stagingAlready": {
-    "message": "すでにステージング領域にあります"
-  },
-  "stagingAddedSummary": {
-    "message": "$n$ 件追加、$m$ 件はすでにステージング済み",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      },
-      "m": {
-        "content": "$2"
-      }
-    }
-  },
-  "stagingFull": {
-    "message": "ステージング領域がいっぱいです — 先に項目を削除してください"
-  },
-  "stagingFolderEmpty": {
-    "message": "このフォルダにはステージングするブックマークがありません"
-  },
-  "stagingConfirmFolder": {
-    "message": "このフォルダから $n$ 件のブックマークをステージングしますか？",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingConfirmFolderOk": {
-    "message": "ステージ"
-  },
-  "stagingRemove": {
-    "message": "ステージング領域から削除"
-  },
-  "stagingRemoved": {
-    "message": "ステージング領域から削除しました"
-  },
-  "recentStageAll": {
-    "message": "最近追加したものをすべてステージング"
-  },
-  "recentSectionTitle": {
-    "message": "最近追加"
-  },
-  "stagingEmpty": {
-    "message": "まだステージングされていません。任意のビューからブックマークをここに送信してください（行の飛行機ボタンまたは右クリックメニュー）。その後、一括で整理・ファイリングできます。"
-  },
-  "stagingFromHistory": {
-    "message": "履歴から"
-  },
-  "stagingGroupExpand": {
-    "message": "グループを展開"
-  },
-  "stagingGroupCollapse": {
-    "message": "グループを折りたたむ"
-  },
-  "stagingGroupRename": {
-    "message": "グループ名を変更…"
-  },
-  "stagingGroupDissolve": {
-    "message": "グループを解散"
-  },
-  "stagingGroupDissolved": {
-    "message": "グループを解散しました — 項目はステージング領域に保持されます"
-  },
-  "stagingGroupDelete": {
-    "message": "グループを削除（項目を含む）"
-  },
-  "stagingGroupDeleteConfirm": {
-    "message": "グループ「$1」を削除しますか？$2 個の項目もステージング領域から削除されます。"
-  },
-  "stagingGroupDeleted": {
-    "message": "グループを削除しました — $1 個の項目を削除"
-  },
-  "stagingGroupAssign": {
-    "message": "グループ…"
-  },
-  "stagingGroupAssignTitle": {
-    "message": "グループに割り当て"
-  },
-  "stagingGroupNew": {
-    "message": "新しいグループ"
-  },
-  "stagingGroupNamePrompt": {
-    "message": "新しいグループ名"
-  },
-  "stagingGroupNoGroups": {
-    "message": "グループはまだありません"
-  },
-  "stagingShortcutAdd": {
-    "message": "ショートカットを追加"
-  },
-  "stagingShortcutBarLabel": {
-    "message": "移動先:"
-  },
-  "stagingGuideText": {
-    "message": "ここでブックマークを整理 — 行を選択して選択モードに入り、一括操作を行います。"
-  },
-  "stagingGuideDismiss": {
-    "message": "今後表示しない"
-  },
-  "stagingShortcutTitle": {
-    "message": "移動先ショートカット"
-  },
-  "stagingShortcutEdit": {
-    "message": "ショートカットを編集"
-  },
-  "stagingShortcutAlias": {
-    "message": "エイリアス"
-  },
-  "stagingShortcutPickFolder": {
-    "message": "ターゲットフォルダを選択…"
-  },
-  "stagingShortcutSave": {
-    "message": "保存"
-  },
-  "stagingShortcutRemove": {
-    "message": "ショートカットを削除"
-  },
-  "stagingShortcutRemoved": {
-    "message": "ショートカットを削除しました"
-  },
-  "stagingShortcutMove": {
-    "message": "選択項目を$1$へ移動",
-    "placeholders": {
-      "1": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingBucketTitle": {
-    "message": "未ブックマーク"
-  },
-  "stagingBucketFavAll": {
-    "message": "すべてお気に入り"
-  },
-  "stagingNew": {
-    "message": "新規 $n$",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingRowFav": {
-    "message": "この項目をお気に入り"
-  },
-  "stagingRowUnfav": {
-    "message": "この項目のお気に入りを解除"
-  },
-  "stagingFav": {
-    "message": "お気に入り"
-  },
-  "stagingUnfav": {
-    "message": "お気に入り解除"
-  },
-  "stagingFavDone": {
-    "message": "$n$ 件をお気に入りにしました",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingUnfavDone": {
-    "message": "$n$ 件のお気に入りを解除しました",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "groupSaveToFolder": {
-    "message": "フォルダに保存…"
-  },
-  "groupCopyToFolder": {
-    "message": "フォルダにコピー…"
-  },
-  "stagingCount": {
-    "message": "$n$件ステージ済み",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingMoveCopy": {
-    "message": "移動/コピー先…"
-  },
-  "stagingMoveDone": {
-    "message": "$n$件をホームに移動しました",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingCopyDone": {
-    "message": "$n$件をコピーしました",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingMoveConfirm": {
-    "message": "選択したフォルダに$n$件を移動しますか？",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingMoveConfirmOk": {
-    "message": "移動"
-  },
-  "stagingDeleteConfirm": {
-    "message": "$n$件を削除しますか？ブックマークされていないものはステージ領域から外れるだけです。",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingDeleted": {
-    "message": "$n$件のブックマークを削除しました",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingRemovedCount": {
-    "message": "ステージ領域から$n$件を削除しました",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingClear": {
-    "message": "ステージをクリア"
-  },
-  "stagingClearConfirm": {
-    "message": "ステージ領域全体をクリアしますか？ブックマークツリーには影響しません。"
-  },
-  "stagingClearConfirmOk": {
-    "message": "クリア"
-  },
-  "stagingCleared": {
-    "message": "ステージ領域をクリアしました"
-  },
-  "groupPlaceTooltip": {
-    "message": "このグループをフォルダに保存…"
-  },
-  "copyBookmark": {
-    "message": "コピー"
-  },
-  "cutBookmark": {
-    "message": "切り取り"
-  },
-  "copyMoveTo": {
-    "message": "コピー/移動先…"
-  },
-  "pasteHere": {
-    "message": "ここに貼り付け"
-  },
-  "copiedToast": {
-    "message": "コピーしました: $t$",
-    "placeholders": {
-      "t": {
-        "content": "$1"
-      }
-    }
-  },
-  "cutToast": {
-    "message": "切り取り: $t$ — 対象フォルダに貼り付け（Escでキャンセル）",
-    "placeholders": {
-      "t": {
-        "content": "$1"
-      }
-    }
-  },
-  "pasteDone": {
-    "message": "貼り付けました"
-  },
-  "pasteGone": {
-    "message": "ブックマークが存在しなくなったため、クリップボードをクリアしました"
-  },
-  "folderCopyList": {
-    "message": "タイトルとアドレスをコピー"
-  },
-  "folderCopyText": {
-    "message": "プレーンテキスト一覧"
-  },
-  "folderCopyMarkdown": {
-    "message": "Markdown"
-  },
-  "folderCopyJson": {
-    "message": "JSON"
-  },
-  "folderCopyConfirm": {
-    "message": "$n$件のブックマークの一覧をコピーしますか？",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "folderCopyDone": {
-    "message": "$n$件のブックマークエントリをコピーしました",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "addFolderMenu": {
-    "message": "フォルダを追加"
-  },
-  "optionCollapseAddFolderMenu": {
-    "message": "フォルダ追加エントリを折りたたむ"
-  },
-  "optionCollapseAddFolderMenuHint": {
-    "message": "将添加文件夹的条目（文件夹行上的前/后/内部，书签行上的前/后）合并为一个子菜单条目。"
-  },
-  "tabRowStage": {
-    "message": "ステージングに送る"
-  },
-  "tabgroupStageAll": {
-    "message": "グループをステージングへ"
-  },
-  "tabgroupStageConfirm": {
-    "message": "$n$ 個のタブをステージングに送りますか？",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabgroupStageNone": {
-    "message": "このグループにはブックマーク可能なタブがありません"
-  },
-  "stagedToast": {
-    "message": "$n$個のタブをグループ「$t$」としてステージしました",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      },
-      "t": {
-        "content": "$2"
-      }
-    }
-  },
-  "searchResultCount": {
-    "message": "$n$件の結果",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "deleteSelected": {
-    "message": "選択した項目を削除"
-  },
-  "recentStageGroup": {
-    "message": "$t$ をステージングエリアに送る",
-    "placeholders": {
-      "t": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingGroupSelectAll": {
-    "message": "このグループをすべて選択"
-  },
-  "optionsGroupLabs": {
-    "message": "ラボ"
-  },
-  "optionVirtualScrollLab": {
-    "message": "仮想スクロール（実験的）"
-  },
-  "optionVirtualScrollLabHint": {
-    "message": "タブグループと重複ビューでは、ビューポート付近の行のみをレンダリングします。非常に大きなリストでは大幅に高速化されますが、実験的な機能のため、スクロールバーの位置は概算です。"
-  },
-  "optionsStagingSection": {
-    "message": "ステージングと最近追加"
-  },
-  "optionStagingEnabled": {
-    "message": "ステージング領域を有効にする"
-  },
-  "optionStagingEnabledHint": {
-    "message": "オフにすると、このビューには最近追加されたリストのみが表示され、他のビューのステージングボタンやメニュー項目はすべて非表示になります。"
-  },
-  "optionTreeRowActions": {
-    "message": "ツリー行のホバーアクション（編集／ステージ／削除）"
-  },
-  "optionsStorageSyncTip": {
-    "message": "Chrome アカウントを通じて同期されます — この設定はデバイス間で共有されます。",
-    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
-  },
-  "optionsStorageLocalTip": {
-    "message": "このデバイスにのみ保存されます — Chrome 同期では共有されません。",
-    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
-  },
-  "tabGroupsWindowsCount": {
-    "message": "$n$ 個のウィンドウ",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsNewWindow": {
-    "message": "新しいウィンドウ"
-  },
-  "tabGroupsMergedWindowToast": {
-    "message": "ウィンドウをタブグループとして統合しました"
-  },
-  "searchStageAllGroup": {
-    "message": "すべての結果をグループ「$1$」としてステージング",
-    "placeholders": {
-      "1": {
-        "content": "$1"
-      }
-    }
-  },
-  "searchHistoryClose": {
-    "message": "検索履歴を非表示"
-  },
-  "searchHistoryClosedToast": {
-    "message": "検索履歴は非表示です — オプション → 検索で再度有効にできます"
   }
 }

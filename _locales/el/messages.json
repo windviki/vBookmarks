@@ -14,6 +14,9 @@
   "addBookmarkTop": {
     "message": "Προσθήκη στην αρχή"
   },
+  "addFolderMenu": {
+    "message": "Προσθήκη φακέλου"
+  },
   "addNewFolder": {
     "message": "Προσθήκη υποφακέλου"
   },
@@ -32,23 +35,38 @@
   "announceDismiss": {
     "message": "Κλείσιμο"
   },
-  "announceV408Text": {
-    "message": "Η v4.0.8 είναι η έκδοση με βελτιωμένα favicon: τα πραγματικά εικονίδια ιστότοπων ανακτώνται αυτόματα για σελιδοδείκτες που το Chrome δεν έχει αποθηκεύσει ακόμη στην προσωρινή μνήμη."
-  },
   "announceV407Text": {
     "message": "Η έκδοση v4.0.7 παρέχει την πλήρως λειτουργική προβολή νεκρών συνδέσμων: σάρωση, επισήμανση, φιλτράρισμα και ταξινόμηση νεκρών και περιορισμένων συνδέσμων, με προηγούμενες επισημάνσεις και χρονικές σημάνσεις ανά γραμμή."
   },
   "announceV407Title": {
     "message": "Τι νέο υπάρχει στην v4.0.7"
   },
+  "announceV408Text": {
+    "message": "Η v4.0.8 είναι η έκδοση με βελτιωμένα favicon: τα πραγματικά εικονίδια ιστότοπων ανακτώνται αυτόματα για σελιδοδείκτες που το Chrome δεν έχει αποθηκεύσει ακόμη στην προσωρινή μνήμη."
+  },
   "announceV408Title": {
     "message": "Τι νέο στην v4.0.8"
+  },
+  "announceV410Text": {
+    "message": "Η έκδοση v4.1.0 προσθέτει την προβολή ομάδων καρτελών και την περιοχή προετοιμασίας: διαχειριστείτε τις καρτέλες κάθε παραθύρου δίπλα στους σελιδοδείκτες σας και συλλέξτε σελιδοδείκτες από οπουδήποτε σε έναν πάγκο εργασίας για μαζική οργάνωση."
   },
   "announceV410Title": {
     "message": "Τι νέο υπάρχει στην έκδοση v4.1.0"
   },
-  "announceV410Text": {
-    "message": "Η έκδοση v4.1.0 προσθέτει την προβολή ομάδων καρτελών και την περιοχή προετοιμασίας: διαχειριστείτε τις καρτέλες κάθε παραθύρου δίπλα στους σελιδοδείκτες σας και συλλέξτε σελιδοδείκτες από οπουδήποτε σε έναν πάγκο εργασίας για μαζική οργάνωση."
+  "bookmarkFolderNoFolders": {
+    "message": "Δεν υπάρχουν φάκελοι σελιδοδεικτών"
+  },
+  "bookmarkFolderPickDialogTitle": {
+    "message": "Προσθήκη σε φάκελο σελιδοδεικτών"
+  },
+  "bookmarkOpenInExistingGroup": {
+    "message": "Άνοιγμα σε υπάρχουσα ομάδα καρτελών…"
+  },
+  "bookmarkOpenInNewGroup": {
+    "message": "Άνοιγμα σε νέα ομάδα καρτελών"
+  },
+  "bookmarkOpenInNewGroupSetup": {
+    "message": "Άνοιγμα σε νέα ομάδα καρτελών…"
   },
   "confirmDeleteFolder": {
     "message": "Αυτός ο φάκελος περιέχει $count$ στοιχείο(α). Μπορείτε να αναιρέσετε τη διαγραφή.",
@@ -57,9 +75,6 @@
         "content": "$1"
       }
     }
-  },
-  "confirmDeleteFolderButton": {
-    "message": "Διαγραφή"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "Είστε σίγουροι ότι θέλετε να διαγράψετε το φάκελο $folderName$ και $bookmarkCount$ σελιδοδείκτες σε αυτόν;",
@@ -71,6 +86,9 @@
         "content": "$1"
       }
     }
+  },
+  "confirmDeleteFolderButton": {
+    "message": "Διαγραφή"
   },
   "confirmDeleteFolderSubfolders": {
     "message": "Είστε σίγουροι ότι θέλετε να διαγράψετε το φάκελο $folderName$ και $subFolderCount$ υποφακέλους σε αυτόν;",
@@ -124,11 +142,32 @@
       }
     }
   },
+  "contextMenuAddBookmark": {
+    "message": "Προσθήκη σελιδοδείκτη με vBookmarks"
+  },
+  "copiedToast": {
+    "message": "Αντιγράφηκε: $t$",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
+  },
   "copyAllTitlesAndUrls": {
     "message": "Αντιγραφή όλων των τίτλων και URLs στο clipboard"
   },
+  "copyBookmark": {
+    "message": "Αντιγραφή"
+  },
+  "copyMoveTo": {
+    "message": "Αντιγραφή/μετακίνηση σε…"
+  },
   "copyTitleAndUrl": {
     "message": "Αντιγραφή τίτλου & URL"
+  },
+  "crossStorageMoveWarning": {
+    "description": "Warning when trying to move bookmarks across storage types",
+    "message": "Δεν είναι δυνατή η μετακίνηση σελιδεδεικτών μεταξύ συγχρονισμένης και τοπικής αποθήκευσης. Χρησιμοποιήστε αντιγραφή/επικόλληση."
   },
   "customIcon": {
     "message": "Προσαρμοσμένο εικονίδιο"
@@ -136,8 +175,14 @@
   "customIconDescription": {
     "message": "Το εικονίδιο πρέπει να έχει διαστάσεις 19x19 pixel. Διαφορετικά θα αλλάξει μέγεθος σε αυτές τις διαστάσεις."
   },
+  "customIconPick": {
+    "message": "Επιλογή αρχείου…"
+  },
   "customSeparatorColorDescription": {
     "message": "Προσαρμογή Χρώματος Διαχωριστικού"
+  },
+  "customSeparatorStringDescription": {
+    "message": "Αν το URL ενός σελιδοδείκτη περιέχει αυτό το string, θα εμφανιστεί ως διαχωριστικό"
   },
   "customSeparatorTitleDescription": {
     "message": "Ο πραγματικός τίτλος του σελιδοδείκτη που εμφανίζεται ως διαχωριστικό"
@@ -145,28 +190,28 @@
   "customSeparatorUrlDescription": {
     "message": "Το πραγματικό URL του σελιδοδείκτη που εμφανίζεται ως διαχωριστικό"
   },
-  "customSeparatorStringDescription": {
-    "message": "Αν το URL ενός σελιδοδείκτη περιέχει αυτό το string, θα εμφανιστεί ως διαχωριστικό"
-  },
   "customStyles": {
     "message": "Προσαρμοσμένα Στυλ"
-  },
-  "separatorOptions": {
-    "message": "Διαχωριστικά"
   },
   "customStylesDescription": {
     "message": "Αυτό απαιτεί κάποιες γνώσεις CSS. Τροποποιήστε με δική σας ευθύνη. Η κοινή χρήση κώδικα θα ήταν σοφή μέσω"
   },
-  "defaultIconButton": {
-    "message": "Χρήση προεπιλογής"
+  "cutBookmark": {
+    "message": "Αποκοπή"
   },
-  "defaultIconButtonOr": {
-    "message": "ή"
+  "cutToast": {
+    "message": "Αποκόπηκε: $t$ — επικολλήστε σε φάκελο προορισμού (Esc ακυρώνει)",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
   },
-  "customIconPick": {
-    "message": "Επιλογή αρχείου…"
+  "deadCancel": {
+    "message": "Ακύρωση"
   },
   "deadChecking": {
+    "description": "Progress line of the palette's dead-link scan mode; $done$ bookmarks checked out of $total$.",
     "message": "Έλεγχος $done$ / $total$…",
     "placeholders": {
       "done": {
@@ -177,8 +222,10 @@
         "content": "$2",
         "example": "120"
       }
-    },
-    "description": "Progress line of the palette's dead-link scan mode; $done$ bookmarks checked out of $total$."
+    }
+  },
+  "deadClearScan": {
+    "message": "Εκκαθάριση αποτελεσμάτων σάρωσης"
   },
   "deadConfirmAll": {
     "message": "Διαγραφή όλων των $count$ νεκρών σελιδοδεικτών; Αυτό δεν μπορεί να αναιρεθεί σε ένα βήμα.",
@@ -192,6 +239,15 @@
   "deadConfirmDelete": {
     "message": "Αφαίρεση αυτού του σελιδοδείκτη;"
   },
+  "deadConfirmDeleteSelected": {
+    "message": "Διαγραφή των $count$ επιλεγμένων νεκρών σελιδοδεικτών;",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
+  },
   "deadDeleteAll": {
     "message": "Διαγραφή όλων των $count$ σελιδοδεικτών στο τρέχον φίλτρο;",
     "placeholders": {
@@ -201,27 +257,15 @@
       }
     }
   },
-  "deadDeleteAllNote": {
-    "message": "Στο φίλτρο «Όλα» αυτό περιλαμβάνει αποκλεισμένους σελιδοδείκτες (προσβάσιμους μέσω του διακομιστή μεσολάβησης, πιθανώς ενεργούς) και προηγουμένως επισημασμένες σειρές.",
-    "description": "Second line of the delete-all confirmation in the Dead links view."
-  },
-  "undoSingleStepNote": {
-    "message": "Η αναίρεση μπορεί να επαναφέρει μόνο την πιο πρόσφατη διαγραφή."
-  },
   "deadDeleteAllBtn": {
     "message": "Διαγραφή όλων"
   },
+  "deadDeleteAllNote": {
+    "description": "Second line of the delete-all confirmation in the Dead links view.",
+    "message": "Στο φίλτρο «Όλα» αυτό περιλαμβάνει αποκλεισμένους σελιδοδείκτες (προσβάσιμους μέσω του διακομιστή μεσολάβησης, πιθανώς ενεργούς) και προηγουμένως επισημασμένες σειρές."
+  },
   "deadDeleteSelected": {
     "message": "Διαγραφή επιλεγμένων"
-  },
-  "deadConfirmDeleteSelected": {
-    "message": "Διαγραφή των $count$ επιλεγμένων νεκρών σελιδοδεικτών;",
-    "placeholders": {
-      "count": {
-        "content": "$1",
-        "example": "8"
-      }
-    }
   },
   "deadDeleted": {
     "message": "Διαγράφηκαν $count$ νεκροί σελιδοδείκτες",
@@ -232,8 +276,72 @@
       }
     }
   },
-  "deadClearScan": {
-    "message": "Εκκαθάριση αποτελεσμάτων σάρωσης"
+  "deadDetectTimeLabel": {
+    "message": "Εντοπίστηκε στις"
+  },
+  "deadFilterAll": {
+    "message": "Όλα"
+  },
+  "deadFilterBlocked": {
+    "message": "Μόνο αποκλεισμένα"
+  },
+  "deadFilterDead": {
+    "message": "Μόνο νεκρά"
+  },
+  "deadFilterMarked": {
+    "message": "Προηγουμένως επισημασμένα"
+  },
+  "deadLastScanAt": {
+    "message": "Τελευταία σάρωση: $time$",
+    "placeholders": {
+      "time": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadMark": {
+    "message": "Σήμανση ως νεκρού"
+  },
+  "deadMarkAll": {
+    "message": "Σήμανση όλων"
+  },
+  "deadMarkSelected": {
+    "message": "Σήμανση επιλεγμένων"
+  },
+  "deadMarkStatusAll": {
+    "message": "Οποιαδήποτε κατάσταση"
+  },
+  "deadMarkStatusMarked": {
+    "message": "Σημειωμένα"
+  },
+  "deadMarkStatusUnmarked": {
+    "message": "Μη σημειωμένα"
+  },
+  "deadMarkTimeLabel": {
+    "message": "Σημειώθηκε στις"
+  },
+  "deadMarked": {
+    "message": "Νεκρές γραμμές επισημάνθηκαν"
+  },
+  "deadMarkedBanner": {
+    "message": "Εμφάνιση σελιδοδεικτών που επισημάνθηκαν προηγουμένως. Κάντε κλικ στην Επανασάρωση για νέο έλεγχο ή διαχειριστείτε τους στην παρακάτω λίστα."
+  },
+  "deadMarkedBannerDismiss": {
+    "message": "Κλείσιμο"
+  },
+  "deadMarkedCount": {
+    "message": "Σημειώθηκαν $count$ σελιδοδείκτες",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadMarkedNone": {
+    "message": "Δεν έχουν επισημανθεί σελιδοδείκτες ακόμα"
+  },
+  "deadMarkedRow": {
+    "message": "Σημειωμένο"
   },
   "deadNone": {
     "message": "Δεν βρέθηκαν νεκροί σύνδεσμοι"
@@ -241,34 +349,711 @@
   "deadNoneFiltered": {
     "message": "Δεν υπάρχουν νεκροί σύνδεσμοι σε αυτό το φίλτρο — δοκιμάστε άλλο τμήμα παραπάνω"
   },
+  "deadPause": {
+    "message": "Παύση"
+  },
+  "deadPaused": {
+    "message": "Σε παύση"
+  },
+  "deadProxyAdd": {
+    "message": "Προσθήκη διακομιστή μεσολάβησης για ελέγχους νεκρών συνδέσμων"
+  },
+  "deadProxyChange": {
+    "message": "Αλλαγή"
+  },
+  "deadProxyClear": {
+    "message": "Εκκαθάριση"
+  },
+  "deadProxyControlled": {
+    "message": "Οι ρυθμίσεις μεσολάβησης διαχειρίζονται από άλλη επέκταση"
+  },
+  "deadProxyDenied": {
+    "message": "Δεν παραχωρήθηκε άδεια για τον διακομιστή μεσολάβησης"
+  },
+  "deadProxyInvalid": {
+    "message": "Μη έγκυρη διεύθυνση μεσολάβησης — χρησιμοποιήστε host:port ή scheme://host:port (http/https/socks5, χωρίς διαπιστευτήρια)"
+  },
+  "deadProxyLabel": {
+    "message": "Μεσολάβηση: $server$",
+    "placeholders": {
+      "server": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadProxyNeverShow": {
+    "message": "Να μην εμφανιστεί ξανά"
+  },
+  "deadProxyNone": {
+    "message": "(δεν έχει οριστεί)"
+  },
+  "deadProxyNudge": {
+    "message": "Ένας επανέλεγχος μέσω διακομιστή μεσολάβησης διαχωρίζει τους πραγματικά νεκρούς συνδέσμους από αυτούς που είναι αποκλεισμένοι λόγω περιοχής — ρυθμίστε το εδώ ή στη σελίδα επιλογών."
+  },
+  "deadProxyPanelHint": {
+    "message": "Εισάγετε έναν διακομιστή μεσολάβησης που ήδη έχετε (η επέκταση δεν παρέχει κανένα), π.χ. 127.0.0.1:7890 ή socks5://127.0.0.1:1080."
+  },
+  "deadProxyRemove": {
+    "message": "Κατάργηση"
+  },
+  "deadProxyRemoved": {
+    "message": "Ο διακομιστής μεσολάβησης καταργήθηκε"
+  },
+  "deadProxySaved": {
+    "message": "Ο διακομιστής μεσολάβησης αποθηκεύτηκε — οι μελλοντικές σαρώσεις θα επανελέγχουν τις αποτυχίες άμεσης σύνδεσης μέσω αυτού."
+  },
+  "deadProxyServerHint": {
+    "message": "Ο αποθηκευμένος διακομιστής επανελέγχει τους σελιδοδείκτες που αποτυγχάνουν στους άμεσους ελέγχους σε κάθε σάρωση νεκρών συνδέσμων, διαχωρίζοντας τους πραγματικά νεκρούς συνδέσμους από αυτούς που είναι αποκλεισμένοι λόγω περιοχής. Η επιλογή «Δοκιμή και αποθήκευση» τον ελέγχει (διατηρείται μόνο ένας προσβάσιμος διακομιστής)· μπορείτε επίσης να τον προσθέσετε από την προβολή νεκρών συνδέσμων."
+  },
+  "deadProxyTestSave": {
+    "message": "Δοκιμή & αποθήκευση"
+  },
+  "deadProxyTestUrlLabel": {
+    "message": "URL δοκιμής"
+  },
+  "deadProxyTesting": {
+    "message": "Δοκιμή…"
+  },
+  "deadProxyUnavailable": {
+    "message": "Το API μεσολάβησης δεν είναι διαθέσιμο σε αυτό το πρόγραμμα περιήγησης"
+  },
+  "deadProxyUnreachable": {
+    "message": "Ο διακομιστής μεσολάβησης δεν είναι προσβάσιμος — δεν αποθηκεύτηκε"
+  },
   "deadRescan": {
     "message": "Επανάληψη σάρωσης"
+  },
+  "deadResume": {
+    "message": "Συνέχιση"
+  },
+  "deadRiskBanner": {
+    "message": "Η εκκαθάριση νεκρών συνδέσμων διαγράφει σελιδοδείκτες μαζικά. Δημιουργήστε αντίγραφο ασφαλείας των σελιδοδεικτών σας πριν από την πρώτη εκκαθάριση."
+  },
+  "deadSortByDetected": {
+    "message": "Χρόνος ανίχνευσης"
+  },
+  "deadSortByMarked": {
+    "message": "Χρόνος σημείωσης"
+  },
+  "deadSortByPath": {
+    "message": "Διαδρομή φακέλου"
+  },
+  "deadSortLabel": {
+    "message": "Ταξινόμηση κατά"
+  },
+  "deadStartHint": {
+    "message": "Έναρξη σάρωσης $n$ σελιδοδεικτών",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadStatusBlocked": {
+    "message": "αποκλεισμένο"
+  },
+  "deadUnmark": {
+    "message": "Αφαίρεση σήμανσης νεκρού"
+  },
+  "deadUnmarkAll": {
+    "message": "Εκκαθάριση όλων των σημάνσεων"
+  },
+  "deadUnmarkSelected": {
+    "message": "Αφαίρεση σήμανσης επιλεγμένων"
+  },
+  "defaultIconButton": {
+    "message": "Χρήση προεπιλογής"
+  },
+  "defaultIconButtonOr": {
+    "message": "ή"
   },
   "delete": {
     "message": "Διαγραφή"
   },
+  "deleteEllipsis": {
+    "message": "Διαγραφή..."
+  },
+  "deleteSelected": {
+    "message": "Διαγραφή επιλεγμένων"
+  },
   "deletedBookmark": {
+    "description": "Toast shown after a bookmark or separator was deleted; the toast offers an undo button. $title$ is the deleted row's title (empty for separators).",
     "message": "Διαγράφηκε ο $title$",
     "placeholders": {
       "title": {
         "content": "$1",
         "example": "Example"
       }
-    },
-    "description": "Toast shown after a bookmark or separator was deleted; the toast offers an undo button. $title$ is the deleted row's title (empty for separators)."
+    }
   },
   "deletedFolder": {
+    "description": "Toast shown after a bookmark folder (with its whole subtree) was deleted; the toast offers an undo button. $title$ is the folder name.",
     "message": "Διαγράφηκε ο φάκελος $title$",
     "placeholders": {
       "title": {
         "content": "$1",
         "example": "Bookmarks"
       }
-    },
-    "description": "Toast shown after a bookmark folder (with its whole subtree) was deleted; the toast offers an undo button. $title$ is the folder name."
+    }
+  },
+  "donationDismiss": {
+    "message": "Αγνόηση"
+  },
+  "donationGo": {
+    "message": "Δωρεά"
+  },
+  "donationLater": {
+    "message": "Αργότερα"
+  },
+  "donationMessage": {
+    "message": "Σας αρέσει; Κάντε δωρεά για να στηρίξετε το μέλλον του — ή βαθμολογήστε το στο κατάστημα: κάθε κριτική διατηρεί τις ενημερώσεις."
+  },
+  "donationNever": {
+    "message": "Να μην εμφανιστεί ξανά"
+  },
+  "donationRate": {
+    "message": "Βαθμολογήστε το"
+  },
+  "donationRateTitle": {
+    "message": "Βαθμολογήστε το vBookmarks στο Chrome Web Store"
+  },
+  "donationV4GuideLink": {
+    "message": "Διαβάστε τον οδηγό v4 →"
+  },
+  "donationV4Notice": {
+    "message": "Το vBookmarks 4.0 είναι μια πλήρης ανακατασκευή με μοντέρνο σχεδιασμό, γεμάτο νέες δυνατότητες."
+  },
+  "dupesApplyAll": {
+    "message": "Εφαρμογή όλων ($count$)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesApplySelected": {
+    "message": "Αφαίρεση διπλοτύπων επιλεγμένων ($count$)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesCleanAll": {
+    "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go.",
+    "message": "Εκκαθάριση όλων: $groups$ ομάδες, $count$ επιπλέον αντίγραφα",
+    "placeholders": {
+      "count": {
+        "content": "$2"
+      },
+      "groups": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesCleanRestHint": {
+    "message": "Κρατήστε το \"$title$\" και αφαιρέστε τα άλλα $count$",
+    "placeholders": {
+      "count": {
+        "content": "$2"
+      },
+      "title": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesConfirmAll": {
+    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark).",
+    "message": "Να αφαιρεθούν $count$ επιπλέον αντίγραφα από $groups$ ομάδες; Το επιλεγμένο στοιχείο σε κάθε ομάδα διατηρείται.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    }
+  },
+  "dupesConfirmGroup": {
+    "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept).",
+    "message": "Να διατηρηθεί το \"$title$\" και να αφαιρεθούν τα άλλα $count$ αντίγραφα;",
+    "placeholders": {
+      "count": {
+        "content": "$2"
+      },
+      "title": {
+        "content": "$1",
+        "example": "Example bookmark"
+      }
+    }
+  },
+  "dupesConfirmSelected": {
+    "message": "Να αφαιρεθούν $count$ διπλότυποι σελιδοδείκτες από τις $groups$ επιλεγμένες ομάδες;",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    }
+  },
+  "dupesDone": {
+    "description": "Alert shown after the duplicate cleanup finished.",
+    "message": "Αφαιρέθηκαν $count$ διπλότυποι σελιδοδείκτες",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesGroupCollapse": {
+    "description": "Dupes view group-head context menu: collapse an expanded duplicate group.",
+    "message": "Σύμπτυξη ομάδας"
+  },
+  "dupesGroupCount": {
+    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL.",
+    "message": "$count$ διπλότυπα",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesGroupExpand": {
+    "description": "Dupes view group-head context menu: expand a collapsed duplicate group.",
+    "message": "Ανάπτυξη ομάδας"
+  },
+  "dupesIgnoreScheme": {
+    "message": "Αγνόηση διαφορών http/https"
+  },
+  "dupesKeepThis": {
+    "message": "Κρατήστε αυτό"
+  },
+  "dupesKeeperSet": {
+    "message": "Ορισμός ως φύλακας"
+  },
+  "dupesNone": {
+    "message": "Δεν βρέθηκαν διπλότυπα"
+  },
+  "dupesPreviewSummary": {
+    "message": "$groups$ ομάδες · $count$ προς απελευθέρωση",
+    "placeholders": {
+      "count": {
+        "content": "$2"
+      },
+      "groups": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesRemoveRow": {
+    "message": "Διαγραφή αυτού του αντιγράφου"
+  },
+  "dupesRiskBanner": {
+    "message": "Η αφαίρεση διπλοτύπων διαγράφει μαζικά διπλότυπους σελιδοδείκτες. Δημιουργήστε αντίγραφο ασφαλείας των σελιδοδεικτών σας πριν την εφαρμογή."
+  },
+  "dupesScopeAll": {
+    "message": "Όλοι οι σελιδοδείκτες"
+  },
+  "dupesScopeBar": {
+    "message": "Μόνο η γραμμή σελιδοδεικτών"
+  },
+  "dupesStrategyBookmarkBar": {
+    "message": "Κρατήστε αυτό στη γραμμή σελιδοδεικτών"
+  },
+  "dupesStrategyMostVisited": {
+    "message": "Κρατήστε το πιο επισκέψιμο"
+  },
+  "dupesStrategyNewest": {
+    "message": "Κρατήστε το νεότερο"
+  },
+  "dupesStrategyOldest": {
+    "message": "Κρατήστε το παλαιότερο"
+  },
+  "dupesStrategyShallowest": {
+    "message": "Κρατήστε το πιο ρηχό"
+  },
+  "dupesStrategyShortestTitle": {
+    "message": "Κρατήστε τον συντομότερο τίτλο"
+  },
+  "edit": {
+    "message": "Επεξεργασία..."
+  },
+  "editBookmark": {
+    "message": "Επεξεργασία σελιδοδείκτη"
+  },
+  "editFolder": {
+    "message": "Επεξεργασία φακέλου"
+  },
+  "errorOccured": {
+    "message": "Ωχ, συνέβη ένα σφάλμα."
+  },
+  "extDesc": {
+    "description": "The extension description.",
+    "message": "Ένας popup διαχειριστής σελιδοδείκτων. Βελτιωμένο Neat Bookmarks. Πιο τακτοποιημένο από το Neater Bookmarks."
+  },
+  "extName": {
+    "description": "vBookmarks",
+    "message": "vBookmarks"
+  },
+  "favGalleryAll": {
+    "description": "Favicon gallery source filter chip: show every source.",
+    "message": "Όλα"
+  },
+  "favGalleryCompare": {
+    "description": "Favicon gallery toggle button: switch every icon to the generic placeholder it replaced (before/after comparison).",
+    "message": "Σύγκριση με το προσωρινό εικονίδιο"
+  },
+  "favGalleryEmptyText": {
+    "description": "Favicon gallery empty-state body text.",
+    "message": "Όταν το αναδυόμενο παράθυρο συναντά έναν σελιδοσημειωμένο ιστότοπο για τον οποίο το Chrome δεν έχει εικονίδιο, το vBookmarks ανακτά το πραγματικό και το εμφανίζει εδώ."
+  },
+  "favGalleryEmptyTitle": {
+    "description": "Favicon gallery empty-state heading.",
+    "message": "Δεν υπάρχουν ακόμη ανανεωμένα εικονίδια"
+  },
+  "favGalleryFailedHint": {
+    "description": "Favicon gallery hint under the failed-fetch section title.",
+    "message": "Οι αποτυχίες επαναλαμβάνονται μετά από 24 ώρες, 3 ημέρες και 7 ημέρες, και στη συνέχεια εγκαταλείπονται μέχρι να εκκαθαριστεί η προσωρινή μνήμη εικονιδίων."
+  },
+  "favGalleryFailedTitle": {
+    "description": "Favicon gallery heading of the muted section listing hosts whose icon fetch failed recently.",
+    "message": "Δοκιμάστηκε πρόσφατα, δεν βρέθηκε εικονίδιο"
+  },
+  "favGalleryGaveUp": {
+    "description": "Favicon gallery badge on a failed-strip host whose retries are exhausted (it stays untouched until the icon cache is cleared).",
+    "message": "Εγκαταλείφθηκε"
+  },
+  "favGalleryHint": {
+    "description": "Subtitle under the favicon gallery title, explaining the page is read-only.",
+    "message": "Εικονίδια που το vBookmarks ανέκτησε για σελιδοσημειωμένους ιστότοπους για τους οποίους το Chrome δεν είχε εικονίδιο στην κρυφή μνήμη — από πού προήλθε το καθένα και ποιοι σελιδοδείκτες το χρησιμοποιούν. Μόνο προβολή."
+  },
+  "favGalleryLink": {
+    "description": "Options link (Icons group, right of the Clear icon cache button): opens the favicon gallery page listing the sites whose icons were refetched.",
+    "message": "Προβολή ανανεωμένων εικονιδίων"
+  },
+  "favGalleryOrphan": {
+    "description": "Favicon gallery note on a card whose host no longer has any bookmark.",
+    "message": "Δεν έχει μείνει κανένας σελιδοδείκτης για αυτόν τον ιστότοπο — το εικονίδιο διαγράφεται με την κρυφή μνήμη."
+  },
+  "favGallerySearch": {
+    "description": "Placeholder of the favicon gallery filter input.",
+    "message": "Φιλτράρισμα κατά ιστότοπο, τίτλο ή διαδρομή"
+  },
+  "favGalleryShowingBefore": {
+    "description": "Favicon gallery toggle button while the placeholder comparison is shown: switch back to the real fetched icons.",
+    "message": "Επιστροφή στα πραγματικά εικονίδια"
+  },
+  "favGalleryStatBookmarks": {
+    "description": "Favicon gallery stats strip: how many bookmarks sit on the refreshed sites.",
+    "message": "$n$ σελιδοδείκτες",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "favGalleryStatSites": {
+    "description": "Favicon gallery stats strip: how many sites have a refreshed icon.",
+    "message": "$n$ ιστότοποι",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "favGalleryTitle": {
+    "description": "Favicon gallery page title (h1 + document title).",
+    "message": "Ανανεωμένα εικονίδια ιστότοπων"
+  },
+  "favGalleryVisits": {
+    "description": "Favicon gallery tooltip on a bookmark row's visit-count pill.",
+    "message": "$n$ καταγεγραμμένα ανοίγματα",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "favSrcDirect": {
+    "description": "Favicon gallery source badge: the icon was fetched directly from the site itself.",
+    "message": "Απευθείας"
+  },
+  "favSrcLegacy": {
+    "description": "Favicon gallery source badge: cached before the source was recorded, so the origin is unknown.",
+    "message": "Παλαιότερη κρυφή μνήμη"
+  },
+  "favSrcProxy": {
+    "description": "Favicon gallery source badge: the icon was fetched through the user's own proxy relay.",
+    "message": "Μέσω διακομιστή μεσολάβησης"
+  },
+  "folderCopyConfirm": {
+    "message": "Αντιγραφή της λίστας των $n$ σελιδοδεικτών;",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "folderCopyDone": {
+    "message": "Αντιγράφηκαν $n$ καταχωρήσεις σελιδοδεικτών",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "folderCopyJson": {
+    "message": "JSON"
+  },
+  "folderCopyList": {
+    "message": "Αντιγραφή τίτλων και διευθύνσεων"
+  },
+  "folderCopyMarkdown": {
+    "message": "Markdown"
+  },
+  "folderCopyText": {
+    "message": "Λίστα απλού κειμένου"
+  },
+  "folderEmpty": {
+    "message": "(Κενό)"
+  },
+  "folderPickCopyHere": {
+    "message": "Αντιγραφή εδώ"
+  },
+  "folderPickFavNote": {
+    "message": "Τα μη σελιδοποιημένα στοιχεία θα προστεθούν εδώ"
+  },
+  "folderPickFilter": {
+    "message": "Φίλτρο φακέλων…"
+  },
+  "folderPickMoveHere": {
+    "message": "Μετακίνηση εδώ"
+  },
+  "folderPickPinned": {
+    "message": "Καρφιτσωμένα"
+  },
+  "folderPickRecent": {
+    "message": "Πρόσφατα"
+  },
+  "general": {
+    "message": "Γενικά"
+  },
+  "groupCopyToFolder": {
+    "message": "Αντιγραφή σε φάκελο…"
+  },
+  "groupPlaceTooltip": {
+    "message": "Αποθήκευση αυτής της ομάδας σε φάκελο…"
+  },
+  "groupSaveToFolder": {
+    "message": "Αποθήκευση σε φάκελο…"
+  },
+  "ignore": {
+    "message": "Αγνόηση"
+  },
+  "name": {
+    "description": "Name of bookmark or folder.",
+    "message": "Όνομα"
+  },
+  "noTitle": {
+    "description": "The title for untitled bookmarks with no http(s) URL or untitled folders.",
+    "message": "(χωρίς τίτλο)"
+  },
+  "nope": {
+    "message": "Ακύρωση"
+  },
+  "open": {
+    "description": "Action to open bookmarks.",
+    "message": "Άνοιγμα"
+  },
+  "openBookmarks": {
+    "message": "Άνοιγμα Όλων των Σελιδοδεικτών"
+  },
+  "openBookmarksInExistingGroup": {
+    "message": "Άνοιγμα όλων σε υπάρχουσα ομάδα καρτελών…"
+  },
+  "openBookmarksInGroup": {
+    "message": "Άνοιγμα όλων σε νέα ομάδα καρτελών"
+  },
+  "openBookmarksInGroupSetup": {
+    "message": "Άνοιγμα όλων σε νέα ομάδα καρτελών…"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "Άνοιγμα σε ανώνυμη περιήγηση"
+  },
+  "openBookmarksNewWindow": {
+    "message": "Άνοιγμα σε νέο παράθυρο"
+  },
+  "openCommandPaletteCommand": {
+    "message": "Άνοιγμα παλέτας εντολών"
+  },
+  "openIncognitoWindow": {
+    "message": "Άνοιγμα ανώνυμης περιήγησης"
+  },
+  "openNewTab": {
+    "message": "Άνοιγμα σε Νέα Καρτέλα"
+  },
+  "openNewWindow": {
+    "message": "Άνοιγμα σε Νέο Παράθυρο"
+  },
+  "openSidePanelCommand": {
+    "message": "Άνοιγμα πλευρικού πίνακα vBookmarks"
+  },
+  "optionAnnounceEnabled": {
+    "message": "Εμφάνιση ανακοινώσεων εντός προϊόντος"
+  },
+  "optionAnnounceEnabledHint": {
+    "message": "Σημειώσεις έκδοσης και συμβουλές από το αποθετήριο GitHub του έργου (ανακτώνται το πολύ κάθε 6 ώρες). Η απενεργοποίηση σταματά επίσης την ανάκτηση από το δίκτυο."
+  },
+  "optionAutoRefreshSync": {
+    "message": "Αυτόματη ενημέρωση κατάστασης συγχρονισμού"
+  },
+  "optionAutoResizePopup": {
+    "message": "Αυτόματη προσαρμογή μεγέθους παραθύρου popup ανάλογα με το περιεχόμενο"
+  },
+  "optionClassicExperience": {
+    "message": "Επαναφορά κλασικής κεφαλίδας"
+  },
+  "optionClassicExperienceHint": {
+    "message": "Απενεργοποιεί την παλέτα εντολών, το αστέρι γρήγορης προσθήκης, την καταχώριση στο μενού δεξιού κλικ της σελίδας, το κουμπί εργαλείου και τις καρτέλες προβολής. Κάθε ένα μπορεί να ενεργοποιηθεί ξανά ξεχωριστά στην ενότητά του."
+  },
+  "optionClickNewTab": {
+    "message": "Αριστερό κλικ ανοίγει σελιδοδείκτη σε νέα καρτέλα."
+  },
+  "optionCloseUnusedFolders": {
+    "message": "Κλείσιμο μη χρησιμοποιούμενων φακέλων κατά το άνοιγμα φακέλου."
+  },
+  "optionCollapseAddFolderMenu": {
+    "message": "Σύμπτυξη καταχωρήσεων προσθήκης φακέλου"
+  },
+  "optionCollapseAddFolderMenuHint": {
+    "message": "Συγχώνευση των καταχωρίσεων προσθήκης φακέλου (πριν/μετά/μέσα σε σειρές φακέλων, πριν/μετά σε σειρές σελιδοδεικτών) σε μία καταχώριση υπομενού."
+  },
+  "optionCollapseSortMenu": {
+    "message": "Συμπτύξτε τις καταχωρίσεις ταξινόμησης σε ένα υπομενού \"Sort…\""
+  },
+  "optionCollapseSortMenuHint": {
+    "message": "Ισχύει για το μενού δεξιού κλικ φακέλων. Ενεργοποιημένο από προεπιλογή."
+  },
+  "optionCollapseTabGroupMenu": {
+    "message": "Συμπτύξτε τις καταχωρίσεις ομάδων καρτελών σε ένα υπομενού \"Tab groups…\""
+  },
+  "optionCollapseTabGroupMenuHint": {
+    "message": "Ισχύει τόσο για τα μενού δεξιού κλικ φακέλων όσο και σελιδοδεικτών. Απενεργοποιημένο από προεπιλογή· διατηρεί τα μενού χαμηλού ύψους πιο σύντομα σε οθόνες μικρές/μεγάλης μεγέθυνσης."
+  },
+  "optionConfirmDeleteFolder": {
+    "message": "Επιβεβαίωση πριν από διαγραφή μη κενών φακέλων"
+  },
+  "optionConfirmOpenFolder": {
+    "message": "Εμφάνιση επιβεβαίωσης κατά το άνοιγμα πολλών σελιδοδεικτών από φάκελο."
+  },
+  "optionDeadProxyServer": {
+    "message": "Διακομιστής μεσολάβησης για νεκρούς συνδέσμους"
+  },
+  "optionDeadProxyStrip": {
+    "message": "Εμφάνιση της υπόδειξης προσθήκης διακομιστή μεσολάβησης στην προβολή νεκρών συνδέσμων"
+  },
+  "optionDeadProxyStripHint": {
+    "message": "Η απενεργοποίηση κρύβει αυτή την υπόδειξη εκεί· ο διακομιστής μεσολάβησης παραμένει διαμορφώσιμος εδώ, και ένας αποθηκευμένος διακομιστής δείχνει πάντα τη γραμμή διαχείρισής του στην προβολή."
+  },
+  "optionDeadScanConcurrency": {
+    "message": "Ταυτόχρονη σάρωση νεκρών συνδέσμων (1-16)"
+  },
+  "optionDeadScanTimeout": {
+    "message": "Χρονικό όριο σάρωσης νεκρών συνδέσμων σε δευτερόλεπτα (2-30)"
+  },
+  "optionFaviconBackup": {
+    "message": "Συμπερίληψη προσωρινής μνήμης εικονιδίων στα αντίγραφα ασφαλείας"
+  },
+  "optionFaviconBackupHint": {
+    "message": "Συμπεριλάβετε επίσης την προσωρινή μνήμη εμπλουτισμένων favicon (δεδομένα ανά ιστότοπο, δυνητικά μεγάλα) στην εξαγωγή/εισαγωγή ρυθμίσεων. Αυτό καλύπτει τα εικονίδια που έχουν ήδη αποθηκευτεί στην προσωρινή μνήμη, ακόμη και όταν η λήψη είναι απενεργοποιημένη. Η απενεργοποίηση διατηρεί τα αντίγραφα ασφαλείας μικρά· τα εικονίδια ανακτώνται ξανά αυτόματα ούτως ή άλλως."
+  },
+  "optionFaviconCacheClear": {
+    "message": "Εκκαθάριση κρυφής μνήμης εικονιδίων"
+  },
+  "optionFaviconCacheClearConfirm": {
+    "message": "Εκκαθάριση της προσωρινής μνήμης εμπλουτισμένων εικονιδίων; Θα ανακτηθούν ξανά αυτόματα στο επόμενο άνοιγμα."
+  },
+  "optionFaviconCacheCleared": {
+    "message": "Η κρυφή μνήμη εικονιδίων εκκαθαρίστηκε. Τα εικονίδια θα ανακτηθούν ξανά στο επόμενο άνοιγμα."
+  },
+  "optionFaviconCacheEmpty": {
+    "message": "Δεν υπάρχει προσωρινή μνήμη εικονιδίων για εκκαθάριση."
+  },
+  "optionFaviconContrast": {
+    "message": "Αντιστροφή favicons χαμηλής αντίθεσης"
+  },
+  "optionFaviconContrastHint": {
+    "message": "Τα λευκά εικονίδια σε ανοιχτά θέματα και τα μαύρα εικονίδια σε σκούρα θέματα αντιστρέφονται για να παραμένουν ορατά. Κάθε εικονίδιο ελέγχεται μία φορά κατά τη φόρτωσή του — χωρίς επιβάρυνση κατά την περιήγηση."
+  },
+  "optionFaviconEnrich": {
+    "message": "Λήψη εικονιδίων που λείπουν"
+  },
+  "optionFaviconEnrichAgg": {
+    "message": "Εναλλακτικό εικονίδιο τρίτων"
+  },
+  "optionFaviconEnrichAggHint": {
+    "message": "Όταν η άμεση λήψη αποτύχει, το εικονίδιο αναζητείται μέσω τομέα από μια ενσωματωμένη λίστα υπηρεσιών εικονιδίων τρίτων ($providers$). Μια υπηρεσία που βρίσκεται μη προσβάσιμη παραλείπεται και δοκιμάζεται η επόμενη — δεν γίνεται νέα προσπάθεια για 6 ώρες.",
+    "placeholders": {
+      "providers": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionFaviconEnrichHint": {
+    "message": "Για ιστοσελίδες με σελιδοδείκτες όπου το Chrome δεν έχει αποθηκευμένο εικονίδιο, ανακτώνται το πραγματικό εικονίδιο απευθείας από τον ιστότοπο (/favicon.ico, έπειτα τα δηλωμένα εικονίδια της σελίδας). Τα αιτήματα γίνονται μόνο σε ιστότοπους που έχετε σελιδοδείκτες."
+  },
+  "optionHighlightUnsynced": {
+    "message": "Να θαμπώνουν οι μη συγχρονισμένοι σελιδοδείκτες"
+  },
+  "optionLanguage": {
+    "message": "Γλώσσα"
+  },
+  "optionLanguageAuto": {
+    "message": "Αυτόματη"
+  },
+  "optionLanguageHint": {
+    "message": "Η αλλαγή γλώσσας επαναφορτώνει αυτή τη σελίδα."
+  },
+  "optionOnlyShowBookmarkBar": {
+    "message": "Εμφάνιση μόνο σελιδοδεικτών στη Γραμμή Σελιδοδεικτών"
+  },
+  "optionOpenInSidePanel": {
+    "message": "Άνοιγμα σε πλευρικό πίνακα αντί για αναδυόμενο παράθυρο"
+  },
+  "optionOpenNewTab": {
+    "message": "Μέσο κλικ ή control-κλικ ανοίγει σελιδοδείκτη σε νέα καρτέλα παρασκηνίου (αντί για προσκήνιο)."
+  },
+  "optionPaletteEnabled": {
+    "message": "Ενεργοποίηση παλέτας εντολών (Ctrl/Cmd+K)"
+  },
+  "optionPopupStays": {
+    "message": "Το popup παραμένει ανοιχτό κατά το άνοιγμα (αριστερό κλικ) σελιδοδεικτών."
+  },
+  "optionQuickAddContextMenu": {
+    "message": "Προσθήκη μιας επιλογής «Προσθήκη σελιδοδείκτη για αυτή τη σελίδα με το vBookmarks» στο μενού δεξιού κλικ της σελίδας"
+  },
+  "optionQuickAddContextMenuHint": {
+    "message": "Ανεξάρτητη από το κουμπί αστεριού γρήγορης προσθήκης· η επαναφορά της κλασικής εμπειρίας απενεργοποιεί επίσης αυτήν την επιλογή."
+  },
+  "optionQuickAddEnabled": {
+    "message": "Εμφάνιση του κουμπιού αστεριού γρήγορης προσθήκης δίπλα στο πεδίο αναζήτησης"
+  },
+  "optionRecentCollapsed": {
+    "message": "Σύμπτυξη της ενότητας πρόσφατων από προεπιλογή"
   },
   "optionRecentCount": {
     "message": "Αριθμός πρόσφατων σελιδοδεικτών προς εμφάνιση"
+  },
+  "optionRememberPrevState": {
+    "message": "Απομνημόνευση της προηγούμενης κατάστασης (θέση κύλισης, ανοιχτοί φάκελοι και το τελευταίο εστιασμένο στοιχείο)."
+  },
+  "optionRememberView": {
+    "message": "Να θυμάται την τελευταία ενεργή προβολή και να την ανοίγει ξανά"
+  },
+  "optionSearchAfterEnter": {
+    "message": "Αναζήτηση σελιδοδεικτών μόνο όταν πατηθεί το ENTER (αντί για άμεση αναζήτηση)"
   },
   "optionSearchHistory": {
     "message": "Εμφάνιση περιοχής ιστορικού αναζήτησης"
@@ -276,17 +1061,496 @@
   "optionSearchHistoryHint": {
     "message": "Απόκρυψη της περιοχής πρόσφατων αναζητήσεων πάνω από τα αποτελέσματα — τα καταγεγραμμένα ερωτήματα διατηρούνται"
   },
+  "optionShowDeadView": {
+    "message": "Εμφάνιση καρτέλας προβολής νεκρών συνδέσμων"
+  },
+  "optionShowDupesView": {
+    "message": "Εμφάνιση καρτέλας προβολής διπλοτύπων"
+  },
+  "optionShowItemPath": {
+    "message": "Εμφάνιση διαδρομής γονικού φακέλου στις γραμμές λίστας"
+  },
+  "optionShowRecentBookmarks": {
+    "message": "Εμφάνιση πρόσφατα προστεθέντων σελιδοδεικτών στην κορυφή του αναδυόμενου παραθύρου"
+  },
+  "optionShowStatsView": {
+    "message": "Εμφάνιση καρτέλας προβολής στατιστικών"
+  },
+  "optionShowSyncStatus": {
+    "message": "Εμφάνιση δεικτών κατάστασης συγχρονισμού"
+  },
+  "optionShowTabBadges": {
+    "message": "Εμφάνιση σημάτων αριθμού στις καρτέλες προβολής"
+  },
+  "optionShowTabGroupsView": {
+    "message": "Εμφάνιση της καρτέλας προβολής ομάδων καρτελών"
+  },
+  "optionShowToolButton": {
+    "message": "Εμφάνιση του κουμπιού εργαλείων (⋮) δίπλα στο πεδίο αναζήτησης"
+  },
+  "optionShowViewTabs": {
+    "message": "Εμφάνιση καρτελών προβολής κάτω από το πλαίσιο αναζήτησης"
+  },
+  "optionStagingEnabled": {
+    "message": "Ενεργοποίηση περιοχής σταδίων"
+  },
+  "optionStagingEnabledHint": {
+    "message": "Όταν είναι απενεργοποιημένο, αυτή η προβολή διατηρεί μόνο τη λίστα πρόσφατων προσθηκών και κάθε κουμπί ή καταχώρηση μενού σταδίων στις άλλες προβολές κρύβεται."
+  },
+  "optionStatsEnabled": {
+    "message": "Ενεργοποίηση στατιστικών επισκέψεων"
+  },
+  "optionSyncRefreshInterval": {
+    "message": "Διάστημα ενημέρωσης"
+  },
+  "optionSyncRefreshIntervalSeconds": {
+    "message": "δευτερόλεπτα"
+  },
+  "optionTabGroupsClosedLimit": {
+    "message": "Ιστορικό κλειστών καρτελών/ομάδων για διατήρηση"
+  },
+  "optionTheme": {
+    "message": "Θέμα"
+  },
+  "optionThemeAuto": {
+    "message": "Ακολουθία συστήματος"
+  },
+  "optionThemeDark": {
+    "message": "Σκοτεινό"
+  },
+  "optionThemeInk": {
+    "message": "Μελάνι (σκοτεινό)"
+  },
+  "optionThemeLight": {
+    "message": "Φωτεινό"
+  },
+  "optionThemePaper": {
+    "message": "Χαρτί (φωτεινό)"
+  },
+  "optionTreeRowActions": {
+    "message": "Ενέργειες αιώρησης σε γραμμές δέντρου (επεξεργασία / στάδιο / διαγραφή)"
+  },
+  "optionVirtualScrollLab": {
+    "message": "Εικονική κύλιση (πειραματική)"
+  },
+  "optionVirtualScrollLabHint": {
+    "message": "Οι προβολές ομάδων καρτελών και διπλοτύπων εμφανίζουν μόνο τις σειρές κοντά στη θύρα προβολής. Πολύ πιο γρήγορο σε πολύ μεγάλες λίστες· ενώ είναι πειραματικό, η θέση της γραμμής κύλισης είναι εκτίμηση."
+  },
+  "optionZoom": {
+    "message": "Μεγέθυνση"
+  },
+  "options": {
+    "message": "Επιλογές"
+  },
+  "optionsDonate": {
+    "message": "Δωρεά"
+  },
+  "optionsFooterText": {
+    "description": "Footer text for the Options page",
+    "message": "Δημιουργήθηκε από $authorName$.",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionsGithubLink": {
+    "message": "GitHub"
+  },
+  "optionsGroupBackup": {
+    "message": "Αντίγραφο ασφαλείας"
+  },
+  "optionsGroupContextMenu": {
+    "message": "Μενού περιβάλλοντος"
+  },
+  "optionsGroupIcons": {
+    "message": "Εικονίδια"
+  },
+  "optionsGroupLabs": {
+    "message": "Εργαστήρια"
+  },
+  "optionsGroupPalette": {
+    "message": "Παλέτα εντολών"
+  },
+  "optionsGroupSort": {
+    "message": "Ταξινόμηση"
+  },
+  "optionsGroupStats": {
+    "message": "Στατιστικά"
+  },
+  "optionsGroupTools": {
+    "message": "Εργαλεία"
+  },
+  "optionsGroupViews": {
+    "message": "Προβολές"
+  },
+  "optionsHomepageLink": {
+    "message": "Αρχική σελίδα"
+  },
+  "optionsSince": {
+    "message": "Προέρχεται από το Neat Bookmarks, συντηρείται για $days$ ημέρες.",
+    "placeholders": {
+      "days": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionsStagingSection": {
+    "message": "Στάδια & πρόσφατα προστιθέμενα"
+  },
+  "optionsStorageLocalTip": {
+    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting).",
+    "message": "Αποθηκεύεται μόνο σε αυτή τη συσκευή — δεν συγχρονίζεται μέσω του Chrome."
+  },
+  "optionsStorageSyncTip": {
+    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting).",
+    "message": "Συγχρονίζεται μέσω του λογαριασμού σας στο Chrome — αυτή η ρύθμιση είναι κοινή σε όλες τις συσκευές σας."
+  },
+  "optionsVersion": {
+    "message": "Έκδοση vBookmarks"
+  },
+  "paletteActionOpenUrl": {
+    "message": "Άνοιγμα URL"
+  },
+  "paletteActionOpenUrlGroup": {
+    "message": "Άνοιγμα ομάδας φακέλου σελιδοδεικτών"
+  },
+  "paletteActionUrlTemplate": {
+    "message": "Άνοιγμα προτύπου URL"
+  },
+  "paletteActionViewPreset": {
+    "message": "Άνοιγμα προβολής με προεπιλογή"
+  },
+  "paletteClose": {
+    "message": "Κλείσιμο"
+  },
+  "paletteCmdDead": {
+    "message": "Εύρεση νεκρών συνδέσμων"
+  },
+  "paletteCmdDupes": {
+    "message": "Εκκαθάριση διπλότυπων σελιδοδεικτών"
+  },
+  "paletteCmdGoDead": {
+    "message": "Μετάβαση στην προβολή νεκρών συνδέσμων"
+  },
+  "paletteCmdGoDupes": {
+    "message": "Μετάβαση στην προβολή διπλοτύπων"
+  },
+  "paletteCmdGoRecent": {
+    "message": "Μετάβαση στην προβολή πρόσφατων"
+  },
+  "paletteCmdGoSearch": {
+    "message": "Μετάβαση στην προβολή αναζήτησης"
+  },
+  "paletteCmdGoStats": {
+    "message": "Μετάβαση στην προβολή στατιστικών"
+  },
+  "paletteCmdGoTabGroups": {
+    "message": "Μετάβαση στην προβολή ομάδων καρτελών"
+  },
+  "paletteCmdGoTree": {
+    "message": "Μετάβαση στην προβολή δέντρου"
+  },
+  "paletteCmdLang": {
+    "message": "Αλλαγή γλώσσας…"
+  },
+  "paletteCmdLangUsage": {
+    "message": "Χρήση: /lang ακολουθούμενο από έναν κωδικό τοπικών ρυθμίσεων — π.χ. /lang en, /lang zh_CN, /lang ja."
+  },
+  "paletteCmdNewBookmark": {
+    "message": "Νέος σελιδοδείκτης…"
+  },
+  "paletteCmdNewFolder": {
+    "message": "Νέος φάκελος…"
+  },
+  "paletteCmdOptions": {
+    "message": "Άνοιγμα σελίδας επιλογών"
+  },
+  "paletteCmdQuickAdd": {
+    "message": "Σελιδοδείκτης τρέχουσας καρτέλας"
+  },
+  "paletteCmdSaveAsCommand": {
+    "message": "Αποθήκευση \"$1\" ως εντολή…"
+  },
+  "paletteCmdSaveSession": {
+    "message": "Αποθήκευση καρτελών παραθύρου ως φάκελο"
+  },
+  "paletteCmdSearchInView": {
+    "message": "Αναζήτηση '$query$' στην προβολή αναζήτησης",
+    "placeholders": {
+      "query": {
+        "content": "$1"
+      }
+    }
+  },
+  "paletteCmdTheme": {
+    "message": "Ορισμός θέματος…"
+  },
+  "paletteCmdThemeUsage": {
+    "message": "Χρήση: /theme ακολουθούμενο από όνομα θέματος — auto, light, dark, ink ή paper (λειτουργεί μοναδικό πρόθεμα, π.χ. /theme d)."
+  },
+  "paletteCmdToggleViewTabs": {
+    "message": "Εναλλαγή προβολής καρτελών"
+  },
+  "paletteCmdVersion": {
+    "message": "Πληροφορίες έκδοσης"
+  },
+  "paletteCustomAction": {
+    "message": "Ενέργεια"
+  },
+  "paletteCustomAdd": {
+    "message": "Προσθήκη εντολής…"
+  },
+  "paletteCustomAliases": {
+    "message": "Ψευδώνυμα (διαχωρισμένα με κόμμα)"
+  },
+  "paletteCustomBroken": {
+    "message": "Ο φάκελος της εντολής \"$1\" δεν υπάρχει πλέον. Διαγραφή της εντολής;"
+  },
+  "paletteCustomDeleteConfirm": {
+    "message": "Διαγραφή της εντολής \"$1\"; Η αλλαγή συγχρονίζεται σε όλες τις συσκευές σας."
+  },
+  "paletteCustomEmpty": {
+    "message": "Δεν υπάρχουν ακόμη προσαρμοσμένες εντολές."
+  },
+  "paletteCustomErrAction": {
+    "message": "Επιλέξτε έναν τύπο ενέργειας."
+  },
+  "paletteCustomErrAlias": {
+    "message": "Ψευδώνυμα: ίδιοι κανόνες με το κάθετο (1–24 χαρακτήρες από πεζά γράμματα, ψηφία ή παύλες)."
+  },
+  "paletteCustomErrFolder": {
+    "message": "Επιλέξτε ένα φάκελο σελιδοδεικτών."
+  },
+  "paletteCustomErrLimit": {
+    "message": "Έχει φτάσει το όριο εντολών (100) — διαγράψτε μία πρώτα."
+  },
+  "paletteCustomErrSlash": {
+    "message": "Κάθετο: 1–24 χαρακτήρες από πεζά γράμματα, ψηφία ή παύλες, με πρώτο χαρακτήρα γράμμα ή ψηφίο."
+  },
+  "paletteCustomErrTaken": {
+    "message": "Αυτό το κάθετο ή ψευδώνυμο χρησιμοποιείται ήδη."
+  },
+  "paletteCustomErrTemplate": {
+    "message": "Το πρότυπο πρέπει να περιέχει ακριβώς ένα %s."
+  },
+  "paletteCustomErrUrl": {
+    "message": "Επιτρέπονται μόνο διευθύνσεις URL http:// ή https://."
+  },
+  "paletteCustomErrView": {
+    "message": "Επιλέξτε μια προβολή."
+  },
+  "paletteCustomFolder": {
+    "message": "Φάκελος σελιδοδεικτών"
+  },
+  "paletteCustomHint": {
+    "message": "Προσαρμοσμένες εντολές με κάθετο για την παλέτα εντολών (Ctrl/Cmd+K). Συγχρονίζονται με τις ρυθμίσεις σας — έως 100 εγγραφές."
+  },
+  "paletteCustomSave": {
+    "message": "Αποθήκευση εντολής"
+  },
+  "paletteCustomScan": {
+    "message": "Έναρξη σάρωσης κατά την εισαγωγή"
+  },
+  "paletteCustomScope": {
+    "message": "Προεπιλογή εμβέλειας αφαίρεσης διπλοτύπων"
+  },
+  "paletteCustomSlash": {
+    "message": "Κάθετο (η λέξη μετά το /)"
+  },
+  "paletteCustomStrategy": {
+    "message": "Προεπιλογή στρατηγικής αφαίρεσης διπλοτύπων"
+  },
+  "paletteCustomTag": {
+    "message": "προσαρμοσμένο"
+  },
+  "paletteCustomTemplate": {
+    "message": "Πρότυπο URL — το %s αντικαθίσταται από τις λέξεις μετά την εντολή"
+  },
+  "paletteCustomUrl": {
+    "message": "URL"
+  },
+  "paletteCustomUsage": {
+    "message": "$1 / $2"
+  },
+  "paletteCustomView": {
+    "message": "Προβολή"
+  },
+  "paletteCustomWhere": {
+    "message": "Άνοιγμα σε"
+  },
+  "paletteNoResults": {
+    "message": "Δεν υπάρχουν αντίστοιχα αποτελέσματα"
+  },
+  "palettePlaceholder": {
+    "message": "Αναζήτηση σελιδοδεικτών, φακέλων, εντολών…"
+  },
+  "paletteWhereBackground": {
+    "message": "Καρτέλες παρασκηνίου"
+  },
+  "paletteWhereCurrent": {
+    "message": "Τρέχουσα καρτέλα"
+  },
+  "paletteWhereTab": {
+    "message": "Νέα καρτέλα"
+  },
+  "paletteWhereWindow": {
+    "message": "Νέο παράθυρο"
+  },
+  "parentFolder": {
+    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
+    "message": "Γονικός φάκελος: \"$folderName$\"",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarksbar"
+      }
+    }
+  },
+  "pasteDone": {
+    "message": "Επικολλήθηκε"
+  },
+  "pasteGone": {
+    "message": "Ο σελιδοδείκτης δεν υπάρχει πλέον — το πρόχειρο καθαρίστηκε"
+  },
+  "pasteHere": {
+    "message": "Επικόλληση εδώ"
+  },
+  "pinFolder": {
+    "message": "Καρφίτσωμα αυτού του φακέλου"
+  },
+  "quickAddBookmark": {
+    "message": "Προσθήκη σελιδοδείκτη (Ctrl+D)"
+  },
+  "quickAddBookmarkCommand": {
+    "message": "Γρήγορη προσθήκη της τρέχουσας καρτέλας ως σελιδοδείκτη"
+  },
+  "quickAdded": {
+    "message": "Ο σελιδοδείκτης προστέθηκε"
+  },
+  "quickAddedTo": {
+    "message": "Ο σελιδοδείκτης προστέθηκε στο $folderName$",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarks bar"
+      }
+    }
+  },
+  "quickRemoveBookmark": {
+    "message": "Αφαίρεση σελιδοδείκτη (Ctrl+D)"
+  },
+  "quickRemoved": {
+    "message": "Ο σελιδοδείκτης αφαιρέθηκε"
+  },
+  "recentBookmarks": {
+    "message": "Πρόσφατα προστέθηκαν"
+  },
   "recentEmpty": {
     "message": "Δεν υπάρχουν πρόσφατοι σελιδοδείκτες. Πατήστε Ctrl+D για σελιδοδείκτη στην τρέχουσα σελίδα."
+  },
+  "recentGroupMonth": {
+    "message": "Αυτόν τον μήνα"
+  },
+  "recentGroupOlder": {
+    "message": "Παλαιότερα"
+  },
+  "recentGroupToday": {
+    "message": "Σήμερα"
+  },
+  "recentGroupWeek": {
+    "message": "Αυτή την εβδομάδα"
   },
   "recentRevealInTree": {
     "message": "Εμφάνιση στο Δέντρο"
   },
+  "recentSectionTitle": {
+    "message": "Πρόσφατα προστέθηκαν"
+  },
+  "recentStageAll": {
+    "message": "Προσωρινή αποθήκευση όλων των πρόσφατων"
+  },
+  "recentStageGroup": {
+    "message": "Αποστολή $t$ στην περιοχή προσωρινής αποθήκευσης",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
+  },
+  "removeSeparator": {
+    "message": "Αφαίρεση Διαχωριστικού"
+  },
+  "replaceUrl": {
+    "message": "Αντικατάσταση αυτού με τρέχον URL"
+  },
+  "reportError": {
+    "message": "Αναφορά Σφάλματος"
+  },
+  "reportedToDeveloper": {
+    "description": "A message for an error occured in the extension, has been reported to the developer.",
+    "message": "Αυτό έχει αναφερθεί στον προγραμματιστή."
+  },
+  "resetButton": {
+    "message": "Επαναφορά"
+  },
+  "resetSettings": {
+    "message": "Επαναφορά ρυθμίσεων"
+  },
+  "resetSettingsDescription": {
+    "message": "Επαναφορά του vBookmarks στις προεπιλεγμένες ρυθμίσεις."
+  },
+  "revealOutsideBarAction": {
+    "message": "Εμφάνιση όλων και αποκάλυψη"
+  },
+  "revealOutsideBarHint": {
+    "message": "Εμφανίζεται μόνο η γραμμή σελιδοδεικτών: ο στόχος βρίσκεται εκτός αυτής."
+  },
+  "riskBannerDismiss": {
+    "message": "Κλείσιμο"
+  },
+  "riskBannerHelp": {
+    "message": "Οδηγός αντιγράφων ασφαλείας & επαναφοράς"
+  },
+  "riskBannerNever": {
+    "message": "Να μην εμφανιστεί ξανά"
+  },
+  "rowActionDelete": {
+    "message": "Διαγραφή"
+  },
+  "rowActionMark": {
+    "message": "Σήμανση ως νεκρού"
+  },
+  "rowActionReveal": {
+    "message": "Εμφάνιση στο δέντρο"
+  },
+  "rowActionUnmark": {
+    "message": "Αφαίρεση σήμανσης νεκρού"
+  },
+  "save": {
+    "message": "Αποθήκευση"
+  },
+  "searchBookmarks": {
+    "description": "Placeholder text for search field.",
+    "message": "Αναζήτηση Σελιδοδεικτών"
+  },
+  "searchClear": {
+    "message": "Εκκαθάριση αναζήτησης"
+  },
   "searchHistoryClear": {
     "message": "Εκκαθάριση όλων"
   },
+  "searchHistoryClose": {
+    "message": "Απόκρυψη ιστορικού αναζήτησης"
+  },
+  "searchHistoryClosedToast": {
+    "message": "Το ιστορικό αναζήτησης είναι κρυφό — ενεργοποιήστε το ξανά στις Επιλογές → Αναζήτηση"
+  },
   "searchHistoryRemove": {
     "message": "Αφαίρεση αυτής της αναζήτησης"
+  },
+  "searchHistoryRerun": {
+    "message": "Επαναζήτηση"
   },
   "searchHistoryResultCount": {
     "message": "$n$ αποτέλεσμα(τα)",
@@ -298,6 +1562,895 @@
   },
   "searchHistoryTitle": {
     "message": "Πρόσφατες αναζητήσεις"
+  },
+  "searchNoResults": {
+    "message": "Δεν βρέθηκαν αντίστοιχοι σελιδοδείκτες"
+  },
+  "searchResultCount": {
+    "message": "$n$ αποτελέσματα",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "searchStageAllGroup": {
+    "message": "Αποστολή όλων των αποτελεσμάτων ως ομάδα \"$1$\"",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "searchViewHint": {
+    "message": "Πληκτρολογήστε στο παραπάνω πλαίσιο για αναζήτηση των σελιδοδεικτών σας"
+  },
+  "selectAll": {
+    "message": "Όλα"
+  },
+  "selectClear": {
+    "message": "Εκκαθάριση"
+  },
+  "selectCount": {
+    "message": "$count$ επιλεγμένα",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "selectInvert": {
+    "message": "Αντιστροφή"
+  },
+  "selectModeEnter": {
+    "message": "Επιλογή"
+  },
+  "selectModeExit": {
+    "message": "Έξοδος επιλογής"
+  },
+  "separatorOptions": {
+    "message": "Διαχωριστικά"
+  },
+  "sessionEmpty": {
+    "message": "Δεν υπάρχουν καρτέλες προς αποθήκευση"
+  },
+  "sessionFolderName": {
+    "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm.",
+    "message": "Συνεδρία $date$",
+    "placeholders": {
+      "date": {
+        "content": "$1",
+        "example": "2026-07-18 15:04"
+      }
+    }
+  },
+  "sessionSaved": {
+    "description": "Alert shown after the current window's tabs were saved into a new bookmark folder.",
+    "message": "Αποθηκεύτηκαν $count$ καρτέλες σε νέο φάκελο",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "12"
+      }
+    }
+  },
+  "settingsBackupHint": {
+    "message": "Η εξαγωγή αποθηκεύει όλες τις ρυθμίσεις (συμπεριλαμβανομένων των προτιμήσεων συγχρονισμού) σε ένα αρχείο JSON. Η εισαγωγή συγχωνεύει ένα αντίγραφο ασφαλείας: οι ρυθμίσεις στο αρχείο αντικαθιστούν τις τρέχουσες, όλα τα υπόλοιπα διατηρούνται."
+  },
+  "settingsExport": {
+    "message": "Εξαγωγή ρυθμίσεων"
+  },
+  "settingsImport": {
+    "message": "Εισαγωγή ρυθμίσεων"
+  },
+  "settingsImportConfirm": {
+    "message": "Η εισαγωγή θα αντικαταστήσει κάθε ρύθμιση που περιέχεται στο αρχείο αντιγράφου ασφαλείας (οι ρυθμίσεις που δεν βρίσκονται στο αρχείο διατηρούνται) και θα επαναφορτώσει αυτήν τη σελίδα. Συνέχεια;"
+  },
+  "settingsImportDone": {
+    "message": "Οι ρυθμίσεις εισήχθησαν. Η σελίδα θα επαναφορτωθεί τώρα."
+  },
+  "settingsImportError": {
+    "message": "Ορισμένες ρυθμίσεις δεν ήταν δυνατό να αποθηκευτούν (όριο αποθήκευσης ή προσωρινό σφάλμα). Η εισαγωγή δεν ολοκληρώθηκε — παρακαλώ δοκιμάστε ξανά."
+  },
+  "settingsImportInvalid": {
+    "message": "Μη έγκυρο αρχείο ρυθμίσεων: δεν είναι αντίγραφο ασφαλείας ρυθμίσεων του vBookmarks."
+  },
+  "sortByDate": {
+    "message": "Ταξινόμηση ημερομηνίας"
+  },
+  "sortByDateAdded": {
+    "message": "Κατά ημερομηνία προσθήκης (νεότερα πρώτα)"
+  },
+  "sortByName": {
+    "message": "Ταξινόμηση με όνομα"
+  },
+  "sortByTitle": {
+    "message": "Κατά τίτλο"
+  },
+  "sortDone": {
+    "message": "Ο φάκελος ταξινομήθηκε"
+  },
+  "sortFolderContents": {
+    "message": "Ταξινόμηση περιεχομένων φακέλου"
+  },
+  "sortFoldersFirst": {
+    "message": "Διατήρηση φακέλων στην κορυφή"
+  },
+  "sortMenuOptions": {
+    "message": "Ταξινόμηση"
+  },
+  "sortOptions": {
+    "message": "Επιλογές ταξινόμησης…"
+  },
+  "sortRecursive": {
+    "message": "Ταξινόμηση και υποφακέλων (αναδρομικά)"
+  },
+  "sortRecursiveSuffix": {
+    "message": "(αναδρομικά)"
+  },
+  "sortRecursiveWarning": {
+    "message": "Αυτό αναδιατάσσει τους σελιδοδείκτες σε κάθε υποφάκελο."
+  },
+  "stagedToast": {
+    "message": "Σε αναμονή $n$ καρτέλες ως ομάδα «$t$»",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "t": {
+        "content": "$2"
+      }
+    }
+  },
+  "stagingAdd": {
+    "message": "Αποστολή σε staging"
+  },
+  "stagingAdded": {
+    "message": "Στάλθηκε στο staging"
+  },
+  "stagingAddedSummary": {
+    "message": "Προστέθηκαν $n$ στοιχείο(α)· $m$ ήδη στην περιοχή",
+    "placeholders": {
+      "m": {
+        "content": "$2"
+      },
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingAlready": {
+    "message": "Ήδη στην περιοχή"
+  },
+  "stagingBucketFavAll": {
+    "message": "Προσθήκη όλων στα αγαπημένα"
+  },
+  "stagingBucketTitle": {
+    "message": "Μη σελιδοποιημένα"
+  },
+  "stagingClear": {
+    "message": "Εκκαθάριση αναμονής"
+  },
+  "stagingClearConfirm": {
+    "message": "Εκκαθάριση όλης της περιοχής αναμονής; Το δέντρο σελιδοδεικτών δεν επηρεάζεται."
+  },
+  "stagingClearConfirmOk": {
+    "message": "Εκκαθάριση"
+  },
+  "stagingCleared": {
+    "message": "Η περιοχή αναμονής εκκαθαρίστηκε"
+  },
+  "stagingConfirmFolder": {
+    "message": "Προσωρινή αποθήκευση $n$ σελιδοδεικτών από αυτόν τον φάκελο;",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingConfirmFolderOk": {
+    "message": "Στάδιο"
+  },
+  "stagingCopyDone": {
+    "message": "Αντιγράφηκαν $n$ στοιχεία",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingCount": {
+    "message": "$n$ σε αναμονή",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingDeleteConfirm": {
+    "message": "Διαγραφή $n$ στοιχείων; Όσα δεν είναι σελιδοδείκτες απλώς φεύγουν από την περιοχή αναμονής.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingDeleted": {
+    "message": "Διαγράφηκαν $n$ σελιδοδείκτες",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingEmpty": {
+    "message": "Δεν υπάρχουν ακόμη αντικείμενα. Στείλτε σελιδοδείκτες εδώ από οποιαδήποτε προβολή — το κουμπί αεροπλάνου σε μια σειρά ή το μενού δεξιού κλικ — και οργανώστε τους μαζικά."
+  },
+  "stagingFav": {
+    "message": "Αγαπημένο"
+  },
+  "stagingFavDone": {
+    "message": "Προστέθηκαν $n$ στα αγαπημένα",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingFolderEmpty": {
+    "message": "Αυτός ο φάκελος δεν έχει σελιδοδείκτες για προσωρινή αποθήκευση"
+  },
+  "stagingFromHistory": {
+    "message": "Από το ιστορικό"
+  },
+  "stagingFull": {
+    "message": "Η περιοχή είναι γεμάτη — αφαιρέστε πρώτα κάποια στοιχεία"
+  },
+  "stagingGroupAssign": {
+    "message": "Ομάδα…"
+  },
+  "stagingGroupAssignTitle": {
+    "message": "Ανάθεση σε ομάδα"
+  },
+  "stagingGroupCollapse": {
+    "message": "Σύμπτυξη ομάδας"
+  },
+  "stagingGroupDelete": {
+    "message": "Διαγραφή ομάδας (με στοιχεία)"
+  },
+  "stagingGroupDeleteConfirm": {
+    "message": "Διαγραφή ομάδας \"$1\"; Τα $2 στοιχείο(α) της απομακρύνονται επίσης από την περιοχή προσωρινής αποθήκευσης."
+  },
+  "stagingGroupDeleted": {
+    "message": "Η ομάδα διαγράφηκε — αφαιρέθηκαν $1 στοιχείο(α)"
+  },
+  "stagingGroupDissolve": {
+    "message": "Διάλυση ομάδας"
+  },
+  "stagingGroupDissolved": {
+    "message": "Η ομάδα διαλύθηκε — τα στοιχεία παραμένουν στην περιοχή"
+  },
+  "stagingGroupExpand": {
+    "message": "Ανάπτυξη ομάδας"
+  },
+  "stagingGroupNamePrompt": {
+    "message": "Όνομα νέας ομάδας"
+  },
+  "stagingGroupNew": {
+    "message": "Νέα ομάδα"
+  },
+  "stagingGroupNoGroups": {
+    "message": "Δεν υπάρχουν ακόμη ομάδες"
+  },
+  "stagingGroupRename": {
+    "message": "Μετονομασία ομάδας…"
+  },
+  "stagingGroupSelectAll": {
+    "message": "Επιλογή όλων στην ομάδα"
+  },
+  "stagingGuideDismiss": {
+    "message": "Να μην εμφανιστεί ξανά"
+  },
+  "stagingGuideText": {
+    "message": "Οργανώστε τους σελιδοδείκτες εδώ — επιλέξτε γραμμές και ενεργοποιήστε τη λειτουργία επιλογής για μαζικές ενέργειες."
+  },
+  "stagingMoveConfirm": {
+    "message": "Μετακίνηση $n$ στοιχείων στον επιλεγμένο φάκελο;",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingMoveConfirmOk": {
+    "message": "Μετακίνηση"
+  },
+  "stagingMoveCopy": {
+    "message": "Μετακίνηση/αντιγραφή σε…"
+  },
+  "stagingMoveDone": {
+    "message": "Μετακινήθηκαν $n$ στοιχεία στην αρχική θέση",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingNew": {
+    "message": "νέα $n$",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingRemove": {
+    "message": "Αφαίρεση από την περιοχή"
+  },
+  "stagingRemoved": {
+    "message": "Αφαιρέθηκε από την περιοχή"
+  },
+  "stagingRemovedCount": {
+    "message": "Αφαιρέθηκαν $n$ στοιχεία από την περιοχή αναμονής",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingRowFav": {
+    "message": "Προσθήκη στα αγαπημένα"
+  },
+  "stagingRowUnfav": {
+    "message": "Αφαίρεση από αγαπημένα"
+  },
+  "stagingShortcutAdd": {
+    "message": "Προσθήκη συντόμευσης"
+  },
+  "stagingShortcutAlias": {
+    "message": "Ψευδώνυμο"
+  },
+  "stagingShortcutBarLabel": {
+    "message": "Μετακίνηση σε:"
+  },
+  "stagingShortcutEdit": {
+    "message": "Επεξεργασία συντόμευσης"
+  },
+  "stagingShortcutMove": {
+    "message": "Μετακίνηση επιλεγμένων σε $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingShortcutPickFolder": {
+    "message": "Επιλογή φακέλου προορισμού…"
+  },
+  "stagingShortcutRemove": {
+    "message": "Αφαίρεση συντόμευσης"
+  },
+  "stagingShortcutRemoved": {
+    "message": "Η συντόμευση αφαιρέθηκε"
+  },
+  "stagingShortcutSave": {
+    "message": "Αποθήκευση"
+  },
+  "stagingShortcutTitle": {
+    "message": "Συντόμευση μετακίνησης"
+  },
+  "stagingUnfav": {
+    "message": "Όχι αγαπημένο"
+  },
+  "stagingUnfavDone": {
+    "message": "Αφαιρέθηκαν $n$ από αγαπημένα",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "statsClearConfirm": {
+    "message": "Εκκαθάριση στατιστικών επισκέψεων για $count$ σελιδοδείκτες; Αυτή η ενέργεια δεν μπορεί να αναιρεθεί.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "statsClearData": {
+    "message": "Εκκαθάριση στατιστικών"
+  },
+  "statsDisabledHint": {
+    "message": "Τα στατιστικά επισκέψεων είναι απενεργοποιημένα — ενεργοποιήστε τα στις Επιλογές → Προβολές"
+  },
+  "statsEmpty": {
+    "message": "Τα στατιστικά συσσωρεύονται καθώς ανοίγετε σελιδοδείκτες"
+  },
+  "statsHistoryAdd": {
+    "message": "Προσθήκη σε σελιδοδείκτες"
+  },
+  "statsHistoryBanner": {
+    "message": "Χορηγήστε πρόσβαση στο ιστορικό για να τροφοδοτήσετε στατιστικά επισκέψεων με τις προηγούμενες επισκέψεις σας."
+  },
+  "statsHistoryBookmarked": {
+    "message": "Προστέθηκε στους σελιδοδείκτες"
+  },
+  "statsHistoryDismiss": {
+    "message": "Να μην εμφανίζεται ξανά"
+  },
+  "statsHistoryEnable": {
+    "message": "Ενεργοποίηση"
+  },
+  "statsHistoryGuide": {
+    "message": "Παραχωρήστε πρόσβαση στο ιστορικό για να εμφανίζονται οι πρόσφατες επισκέψεις σας εδώ."
+  },
+  "statsHistoryImported": {
+    "message": "Εισαγωγή προηγούμενων επισκέψεων για $count$ σελιδοδείκτες",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "statsSectionBookmarks": {
+    "message": "Στατιστικά σελιδοδεικτών"
+  },
+  "statsSectionRecent": {
+    "message": "Πρόσφατες επισκέψεις"
+  },
+  "statsShowUnbookmarked": {
+    "message": "Εμφάνιση μη σελιδοδεικτών"
+  },
+  "statsShowUnbookmarkedHint": {
+    "message": "Συμπερίληψη σελίδων από το ιστορικό που δεν έχουν αποθηκευτεί ως σελιδοδείκτες."
+  },
+  "statsSortByCount": {
+    "message": "Ανά αριθμό"
+  },
+  "statsSortByRecent": {
+    "message": "Ανά πρόσφατο"
+  },
+  "statsVisitCount": {
+    "message": "Επισκέφθηκε $count$ φορές",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "storageUsageFree": {
+    "message": "Ελεύθερος χώρος"
+  },
+  "storageUsageHint": {
+    "message": "Μόνο τοπική αποθήκευση επέκτασης (chrome.storage.local, όριο περίπου 10 MB): το cache εικονιδίων συν ρυθμίσεις και άλλα τοπικά δεδομένα. Οι συγχρονισμένες ρυθμίσεις, τα δεδομένα περιόδου λειτουργίας και η ίδια η βιβλιοθήκη σελιδοδεικτών δεν υπολογίζονται εδώ."
+  },
+  "storageUsageIcon": {
+    "message": "Cache εικονιδίων"
+  },
+  "storageUsageOther": {
+    "message": "Άλλα"
+  },
+  "storageUsageSummary": {
+    "message": "Χρήση: $1$ από $2$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      },
+      "2": {
+        "content": "$2"
+      }
+    }
+  },
+  "syncOptions": {
+    "message": "Επιλογές συγχρονισμού"
+  },
+  "syncStatusLocal": {
+    "message": "Μόνο τοπικά — δεν μεταφορτώθηκε"
+  },
+  "syncStatusSynced": {
+    "message": "Συγχρονίστηκε με τον λογαριασμό σας Google"
+  },
+  "syncStatusUnsyncable": {
+    "message": "Δεν είναι δυνατός ο συγχρονισμός"
+  },
+  "syncSuffixLocal": {
+    "message": "(Τοπικά)"
+  },
+  "syncSuffixSynced": {
+    "message": "(Συγχρονίστηκε)"
+  },
+  "tabGroupColorBlue": {
+    "description": "Accessible name of the blue color swatch in the new-tab-group dialog.",
+    "message": "Μπλε"
+  },
+  "tabGroupColorCyan": {
+    "description": "Accessible name of the cyan color swatch in the new-tab-group dialog.",
+    "message": "Κυανό"
+  },
+  "tabGroupColorGreen": {
+    "description": "Accessible name of the green color swatch in the new-tab-group dialog.",
+    "message": "Πράσινο"
+  },
+  "tabGroupColorGrey": {
+    "description": "Accessible name of the grey color swatch in the new-tab-group dialog.",
+    "message": "Γκρι"
+  },
+  "tabGroupColorLabel": {
+    "message": "Χρώμα"
+  },
+  "tabGroupColorOrange": {
+    "description": "Accessible name of the orange color swatch in the new-tab-group dialog.",
+    "message": "Πορτοκαλί"
+  },
+  "tabGroupColorPink": {
+    "description": "Accessible name of the pink color swatch in the new-tab-group dialog.",
+    "message": "Ροζ"
+  },
+  "tabGroupColorPurple": {
+    "description": "Accessible name of the purple color swatch in the new-tab-group dialog.",
+    "message": "Μωβ"
+  },
+  "tabGroupColorRed": {
+    "description": "Accessible name of the red color swatch in the new-tab-group dialog.",
+    "message": "Κόκκινο"
+  },
+  "tabGroupColorYellow": {
+    "description": "Accessible name of the yellow color swatch in the new-tab-group dialog.",
+    "message": "Κίτρινο"
+  },
+  "tabGroupDialogTitle": {
+    "message": "Νέα ομάδα καρτελών"
+  },
+  "tabGroupNoGroups": {
+    "message": "Δεν υπάρχουν υπάρχουσες ομάδες καρτελών"
+  },
+  "tabGroupOptions": {
+    "message": "Ομάδες καρτελών"
+  },
+  "tabGroupPickDialogTitle": {
+    "message": "Άνοιγμα σε υπάρχουσα ομάδα καρτελών"
+  },
+  "tabGroupTitleLabel": {
+    "message": "Τίτλος ομάδας"
+  },
+  "tabGroupUntitled": {
+    "message": "Ομάδα χωρίς τίτλο"
+  },
+  "tabGroupsActivateGroup": {
+    "message": "Μετάβαση σε ομάδα καρτελών"
+  },
+  "tabGroupsActivateTab": {
+    "message": "Μετάβαση σε καρτέλα"
+  },
+  "tabGroupsAddBookmark": {
+    "message": "Προσθήκη σελιδοδείκτη σε αυτήν την καρτέλα"
+  },
+  "tabGroupsBatchClosedTitle": {
+    "message": "Κλειστές καρτέλες"
+  },
+  "tabGroupsBookmarkRemoved": {
+    "message": "Αφαιρέθηκαν $count$ σελιδοδείκτες",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsBookmarked": {
+    "message": "Προστέθηκε στα σελιδοδείκτες"
+  },
+  "tabGroupsBookmarksAdded": {
+    "message": "Προστέθηκαν $count$ σελιδοδείκτες στον $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsClearClosedGroups": {
+    "message": "Εκκαθάριση όλων"
+  },
+  "tabGroupsClearedToast": {
+    "message": "Εκκαθαρίστηκαν $count$ κλειστές εγγραφές",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCloseGroup": {
+    "message": "Κλείσιμο ομάδας"
+  },
+  "tabGroupsCloseWindow": {
+    "message": "Κλείσιμο παραθύρου"
+  },
+  "tabGroupsClosedGroups": {
+    "message": "Πρόσφατα κλειστά"
+  },
+  "tabGroupsClosedOpenTab": {
+    "message": "Άνοιγμα σε νέα καρτέλα"
+  },
+  "tabGroupsClosedTabRemovedToast": {
+    "message": "Αφαιρέθηκε από την κλειστή εγγραφή"
+  },
+  "tabGroupsClosedTimeLabel": {
+    "message": "Κλείσιμο:"
+  },
+  "tabGroupsClosedToast": {
+    "message": "Έκλεισαν $count$ καρτέλα(ες)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCollapseAll": {
+    "message": "Σύμπτυξη όλων"
+  },
+  "tabGroupsCollapseGroup": {
+    "message": "Σύμπτυξη ομάδας"
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "Σύμπτυξη παραθύρου"
+  },
+  "tabGroupsColorStyle": {
+    "message": "Στυλ χρώματος ομάδας καρτελών"
+  },
+  "tabGroupsColorStyleEdge": {
+    "message": "Χρωματική λωρίδα άκρης"
+  },
+  "tabGroupsColorStyleHint": {
+    "message": "Το Off εμφανίζει μόνο την κουκκίδα χρώματος. Η χρωματική λωρίδα άκρης σχεδιάζει μια χρωματιστή λωρίδα στο αριστερό άκρο της ομάδας. Η γραμμή σύνδεσης χρώματος σχεδιάζει μια χρωματιστή γραμμή κάτω από την κουκκίδα της ομάδας με ένα σημάδι ανά σειρά, συνδέοντας όλη την ομάδα σε ένα δέντρο."
+  },
+  "tabGroupsColorStyleLine": {
+    "message": "Γραμμή σύνδεσης χρώματος"
+  },
+  "tabGroupsColorStyleOff": {
+    "message": "Off (μόνο κουκκίδα χρώματος)"
+  },
+  "tabGroupsConfirmClearClosed": {
+    "message": "Να διαγραφούν όλες οι πρόσφατες εγγραφές; Δεν θα μπορούν να ανοιχτούν ξανά από εδώ."
+  },
+  "tabGroupsConfirmClose": {
+    "message": "Κλείσιμο $count$ καρτελών;",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsConfirmSleep": {
+    "message": "Αναστολή $count$ καρτελών;",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCopyMoveCopy": {
+    "message": "Αντιγραφή"
+  },
+  "tabGroupsCopyMoveDialog": {
+    "message": "Οι επιλεγμένες καρτέλες ανήκουν ήδη σε μια ομάδα καρτελών. Να τις αντιγράψω (άνοιγμα σε νέα θέση) ή να τις μετακινήσω (αφαίρεση από την τρέχουσα ομάδα);"
+  },
+  "tabGroupsCopyMoveMove": {
+    "message": "Μετακίνηση"
+  },
+  "tabGroupsCurrentTab": {
+    "message": "Τρέχον"
+  },
+  "tabGroupsCurrentWindow": {
+    "message": "Τρέχον παράθυρο"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "Διαγραφή κλειστής ομάδας καρτελών"
+  },
+  "tabGroupsDiscarded": {
+    "message": "Καρτέλα σε αναστολή"
+  },
+  "tabGroupsExpandAll": {
+    "message": "Επέκταση όλων"
+  },
+  "tabGroupsExpandGroup": {
+    "message": "Επέκταση ομάδας"
+  },
+  "tabGroupsExpandWindow": {
+    "message": "Επέκταση παραθύρου"
+  },
+  "tabGroupsExpandedCollapse": {
+    "message": "Σύμπτυξη"
+  },
+  "tabGroupsExpandedExpand": {
+    "message": "Ανάπτυξη"
+  },
+  "tabGroupsFilterPlaceholder": {
+    "message": "Φίλτρο ανοιχτών καρτελών"
+  },
+  "tabGroupsGroupCount": {
+    "message": "$count$ καρτέλες",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsGroupSavedToFolder": {
+    "message": "Αποθηκεύτηκαν $count$ καρτέλες στον $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsMenuAddBookmark": {
+    "message": "Σελιδοδείκτης καρτέλας"
+  },
+  "tabGroupsMenuSaveFolder": {
+    "message": "Αποθήκευση ως φάκελο σελιδοδεικτών"
+  },
+  "tabGroupsMergedWindowToast": {
+    "message": "Το παράθυρο συγχωνεύτηκε ως ομάδα καρτελών"
+  },
+  "tabGroupsMoveNewWindow": {
+    "message": "Μετακίνηση σε νέο παράθυρο"
+  },
+  "tabGroupsNewWindow": {
+    "message": "Νέο παράθυρο"
+  },
+  "tabGroupsNoMatchingTabs": {
+    "message": "Δεν υπάρχουν αντίστοιχες καρτέλες"
+  },
+  "tabGroupsOpenGroups": {
+    "message": "Ανοιχτές ομάδες καρτελών"
+  },
+  "tabGroupsPinTab": {
+    "message": "Καρφίτσωμα καρτέλας"
+  },
+  "tabGroupsPinned": {
+    "message": "Καρφιτσωμένη καρτέλα"
+  },
+  "tabGroupsPinnedUngroupedToast": {
+    "message": "Καρφιτσωμένη — αφαιρέθηκε από την ομάδα καρτελών"
+  },
+  "tabGroupsRecordDeletedToast": {
+    "message": "Αφαιρέθηκε η κλειστή εγγραφή"
+  },
+  "tabGroupsRemoveBookmark": {
+    "message": "Αφαίρεση σελιδοδείκτη"
+  },
+  "tabGroupsRemoveClosedTab": {
+    "message": "Αφαίρεση από αποθηκευμένη ομάδα"
+  },
+  "tabGroupsRenameDialog": {
+    "message": "Μετονομασία ομάδας καρτελών"
+  },
+  "tabGroupsRenameGroup": {
+    "message": "Μετονομασία ομάδας"
+  },
+  "tabGroupsReopenAction": {
+    "message": "Άνοιγμα ξανά"
+  },
+  "tabGroupsReopenGroup": {
+    "message": "Επανάνοιγμα ομάδας καρτελών"
+  },
+  "tabGroupsSaveFolder": {
+    "message": "Αποθήκευση ομάδας καρτελών ως φάκελο σελιδοδεικτών"
+  },
+  "tabGroupsSelectAddBookmarks": {
+    "message": "Προσθήκη σε φάκελο σελιδοδεικτών…"
+  },
+  "tabGroupsSelectClose": {
+    "message": "Κλείσιμο"
+  },
+  "tabGroupsSelectNewGroup": {
+    "message": "Νέα ομάδα καρτελών"
+  },
+  "tabGroupsSelectOpenInto": {
+    "message": "Άνοιγμα σε υπάρχουσα ομάδα καρτελών…"
+  },
+  "tabGroupsSelectSaveFolder": {
+    "message": "Αποθήκευση ως φάκελο σελιδοδεικτών"
+  },
+  "tabGroupsSelectSleep": {
+    "message": "Αναστολή"
+  },
+  "tabGroupsSleepGroup": {
+    "message": "Αναστολή ομάδας"
+  },
+  "tabGroupsSleepTab": {
+    "message": "Αναστολή καρτέλας"
+  },
+  "tabGroupsSleptToast": {
+    "message": "Τέθηκαν σε αναστολή $count$ καρτέλα(ες)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsSummary": {
+    "message": "$tabs$ καρτέλες · $groups$ ομάδες",
+    "placeholders": {
+      "groups": {
+        "content": "$2"
+      },
+      "tabs": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsSyncCollapse": {
+    "message": "Συγχρονισμός σύμπτυξης με το πρόγραμμα περιήγησης"
+  },
+  "tabGroupsSyncCollapseHint": {
+    "message": "Όταν είναι επιλεγμένο, η σύμπτυξη ή επέκταση μιας ομάδας σε αυτή την προβολή ενημερώνει επίσης την ομάδα καρτελών του προγράμματος περιήγησης. Απενεργοποιημένο από προεπιλογή, ώστε η αναδίπλωση της προβολής να παραμένει τοπική."
+  },
+  "tabGroupsToolbarRefresh": {
+    "message": "Ανανέωση"
+  },
+  "tabGroupsUngroupGroup": {
+    "message": "Κατάργηση ομαδοποίησης"
+  },
+  "tabGroupsUngroupedTabs": {
+    "message": "Μη ομαδοποιημένες καρτέλες"
+  },
+  "tabGroupsUnpinTab": {
+    "message": "Ξεκαρφίτσωμα καρτέλας"
+  },
+  "tabGroupsViewEmpty": {
+    "message": "Δεν υπάρχουν καρτέλες σε αυτό το παράθυρο"
+  },
+  "tabGroupsWakeAction": {
+    "message": "Ενεργοποίηση"
+  },
+  "tabGroupsWakeGroup": {
+    "message": "Ενεργοποίηση ομάδας καρτελών"
+  },
+  "tabGroupsWakeTab": {
+    "message": "Ενεργοποίηση καρτέλας"
+  },
+  "tabGroupsWindow": {
+    "message": "Παράθυρο $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsWindowClosedTitle": {
+    "message": "Κλειστό παράθυρο"
+  },
+  "tabGroupsWindowsCount": {
+    "message": "$n$ παράθυρα",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabRowStage": {
+    "message": "Αποστολή σε στάδιο"
+  },
+  "tabgroupStageAll": {
+    "message": "Αποστολή ομάδας σε στάδιο"
+  },
+  "tabgroupStageConfirm": {
+    "message": "Αποστολή $n$ καρτελών σε στάδιο;",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabgroupStageNone": {
+    "message": "Δεν υπάρχουν καρτέλες για σελιδοδείκτη σε αυτή την ομάδα"
   },
   "timeDaysAgo": {
     "message": "πριν $n$ ημέρες",
@@ -329,303 +2482,26 @@
   "timeYesterday": {
     "message": "χθες"
   },
+  "toolButtonTitle": {
+    "message": "Εργαλεία (Ctrl+K)"
+  },
   "undoAction": {
     "message": "Αναίρεση"
   },
-  "revealOutsideBarHint": {
-    "message": "Εμφανίζεται μόνο η γραμμή σελιδοδεικτών: ο στόχος βρίσκεται εκτός αυτής."
+  "undoSingleStepNote": {
+    "message": "Η αναίρεση μπορεί να επαναφέρει μόνο την πιο πρόσφατη διαγραφή."
   },
-  "revealOutsideBarAction": {
-    "message": "Εμφάνιση όλων και αποκάλυψη"
+  "unpinFolder": {
+    "message": "Ξεκαρφίτσωμα αυτού του φακέλου"
   },
-  "dupesCleanAll": {
-    "message": "Εκκαθάριση όλων: $groups$ ομάδες, $count$ επιπλέον αντίγραφα",
-    "placeholders": {
-      "groups": {
-        "content": "$1"
-      },
-      "count": {
-        "content": "$2"
-      }
-    },
-    "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go."
+  "url": {
+    "message": "URL"
   },
-  "dupesConfirmAll": {
-    "message": "Να αφαιρεθούν $count$ επιπλέον αντίγραφα από $groups$ ομάδες; Το επιλεγμένο στοιχείο σε κάθε ομάδα διατηρείται.",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      },
-      "groups": {
-        "content": "$2"
-      }
-    },
-    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
+  "versionDialogCopied": {
+    "message": "Αντιγράφηκε"
   },
-  "dupesConfirmSelected": {
-    "message": "Να αφαιρεθούν $count$ διπλότυποι σελιδοδείκτες από τις $groups$ επιλεγμένες ομάδες;",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      },
-      "groups": {
-        "content": "$2"
-      }
-    }
-  },
-  "dupesConfirmGroup": {
-    "message": "Να διατηρηθεί το \"$title$\" και να αφαιρεθούν τα άλλα $count$ αντίγραφα;",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Example bookmark"
-      },
-      "count": {
-        "content": "$2"
-      }
-    },
-    "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."
-  },
-  "dupesDone": {
-    "message": "Αφαιρέθηκαν $count$ διπλότυποι σελιδοδείκτες",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Alert shown after the duplicate cleanup finished."
-  },
-  "dupesGroupCount": {
-    "message": "$count$ διπλότυπα",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
-  },
-  "dupesGroupExpand": {
-    "description": "Dupes view group-head context menu: expand a collapsed duplicate group.",
-    "message": "Ανάπτυξη ομάδας"
-  },
-  "dupesGroupCollapse": {
-    "description": "Dupes view group-head context menu: collapse an expanded duplicate group.",
-    "message": "Σύμπτυξη ομάδας"
-  },
-  "dupesNone": {
-    "message": "Δεν βρέθηκαν διπλότυπα"
-  },
-  "deleteEllipsis": {
-    "message": "Διαγραφή..."
-  },
-  "donationMessage": {
-    "message": "Σας αρέσει; Κάντε δωρεά για να στηρίξετε το μέλλον του — ή βαθμολογήστε το στο κατάστημα: κάθε κριτική διατηρεί τις ενημερώσεις."
-  },
-  "donationV4Notice": {
-    "message": "Το vBookmarks 4.0 είναι μια πλήρης ανακατασκευή με μοντέρνο σχεδιασμό, γεμάτο νέες δυνατότητες."
-  },
-  "donationV4GuideLink": {
-    "message": "Διαβάστε τον οδηγό v4 →"
-  },
-  "donationGo": {
-    "message": "Δωρεά"
-  },
-  "donationRate": {
-    "message": "Βαθμολογήστε το"
-  },
-  "donationRateTitle": {
-    "message": "Βαθμολογήστε το vBookmarks στο Chrome Web Store"
-  },
-  "donationLater": {
-    "message": "Αργότερα"
-  },
-  "donationNever": {
-    "message": "Να μην εμφανιστεί ξανά"
-  },
-  "donationDismiss": {
-    "message": "Αγνόηση"
-  },
-  "edit": {
-    "message": "Επεξεργασία..."
-  },
-  "editBookmark": {
-    "message": "Επεξεργασία σελιδοδείκτη"
-  },
-  "editFolder": {
-    "message": "Επεξεργασία φακέλου"
-  },
-  "errorOccured": {
-    "message": "Ωχ, συνέβη ένα σφάλμα."
-  },
-  "extDesc": {
-    "description": "The extension description.",
-    "message": "Ένας popup διαχειριστής σελιδοδείκτων. Βελτιωμένο Neat Bookmarks. Πιο τακτοποιημένο από το Neater Bookmarks."
-  },
-  "extName": {
-    "description": "vBookmarks",
-    "message": "vBookmarks"
-  },
-  "folderEmpty": {
-    "message": "(Κενό)"
-  },
-  "general": {
-    "message": "Γενικά"
-  },
-  "ignore": {
-    "message": "Αγνόηση"
-  },
-  "name": {
-    "description": "Name of bookmark or folder.",
-    "message": "Όνομα"
-  },
-  "nope": {
-    "message": "Ακύρωση"
-  },
-  "noTitle": {
-    "description": "The title for untitled bookmarks with no http(s) URL or untitled folders.",
-    "message": "(χωρίς τίτλο)"
-  },
-  "open": {
-    "description": "Action to open bookmarks.",
-    "message": "Άνοιγμα"
-  },
-  "openBookmarks": {
-    "message": "Άνοιγμα Όλων των Σελιδοδεικτών"
-  },
-  "openBookmarksIncognitoWindow": {
-    "message": "Άνοιγμα σε ανώνυμη περιήγηση"
-  },
-  "openBookmarksInGroup": {
-    "message": "Άνοιγμα όλων σε νέα ομάδα καρτελών"
-  },
-  "openBookmarksInGroupSetup": {
-    "message": "Άνοιγμα όλων σε νέα ομάδα καρτελών…"
-  },
-  "openBookmarksInExistingGroup": {
-    "message": "Άνοιγμα όλων σε υπάρχουσα ομάδα καρτελών…"
-  },
-  "tabGroupOptions": {
-    "message": "Ομάδες καρτελών"
-  },
-  "sortMenuOptions": {
-    "message": "Ταξινόμηση"
-  },
-  "openBookmarksNewWindow": {
-    "message": "Άνοιγμα σε νέο παράθυρο"
-  },
-  "openCommandPaletteCommand": {
-    "message": "Άνοιγμα παλέτας εντολών"
-  },
-  "openIncognitoWindow": {
-    "message": "Άνοιγμα ανώνυμης περιήγησης"
-  },
-  "openNewTab": {
-    "message": "Άνοιγμα σε Νέα Καρτέλα"
-  },
-  "bookmarkOpenInNewGroup": {
-    "message": "Άνοιγμα σε νέα ομάδα καρτελών"
-  },
-  "bookmarkOpenInNewGroupSetup": {
-    "message": "Άνοιγμα σε νέα ομάδα καρτελών…"
-  },
-  "bookmarkOpenInExistingGroup": {
-    "message": "Άνοιγμα σε υπάρχουσα ομάδα καρτελών…"
-  },
-  "openNewWindow": {
-    "message": "Άνοιγμα σε Νέο Παράθυρο"
-  },
-  "openSidePanelCommand": {
-    "message": "Άνοιγμα πλευρικού πίνακα vBookmarks"
-  },
-  "optionAnnounceEnabled": {
-    "message": "Εμφάνιση ανακοινώσεων εντός προϊόντος"
-  },
-  "optionAnnounceEnabledHint": {
-    "message": "Σημειώσεις έκδοσης και συμβουλές από το αποθετήριο GitHub του έργου (ανακτώνται το πολύ κάθε 6 ώρες). Η απενεργοποίηση σταματά επίσης την ανάκτηση από το δίκτυο."
-  },
-  "optionClickNewTab": {
-    "message": "Αριστερό κλικ ανοίγει σελιδοδείκτη σε νέα καρτέλα."
-  },
-  "optionCloseUnusedFolders": {
-    "message": "Κλείσιμο μη χρησιμοποιούμενων φακέλων κατά το άνοιγμα φακέλου."
-  },
-  "optionConfirmOpenFolder": {
-    "message": "Εμφάνιση επιβεβαίωσης κατά το άνοιγμα πολλών σελιδοδεικτών από φάκελο."
-  },
-  "optionConfirmDeleteFolder": {
-    "message": "Επιβεβαίωση πριν από διαγραφή μη κενών φακέλων"
-  },
-  "optionOnlyShowBookmarkBar": {
-    "message": "Εμφάνιση μόνο σελιδοδεικτών στη Γραμμή Σελιδοδεικτών"
-  },
-  "optionSearchAfterEnter": {
-    "message": "Αναζήτηση σελιδοδεικτών μόνο όταν πατηθεί το ENTER (αντί για άμεση αναζήτηση)"
-  },
-  "optionOpenNewTab": {
-    "message": "Μέσο κλικ ή control-κλικ ανοίγει σελιδοδείκτη σε νέα καρτέλα παρασκηνίου (αντί για προσκήνιο)."
-  },
-  "optionOpenInSidePanel": {
-    "message": "Άνοιγμα σε πλευρικό πίνακα αντί για αναδυόμενο παράθυρο"
-  },
-  "optionPopupStays": {
-    "message": "Το popup παραμένει ανοιχτό κατά το άνοιγμα (αριστερό κλικ) σελιδοδεικτών."
-  },
-  "optionRememberPrevState": {
-    "message": "Απομνημόνευση της προηγούμενης κατάστασης (θέση κύλισης, ανοιχτοί φάκελοι και το τελευταίο εστιασμένο στοιχείο)."
-  },
-  "options": {
-    "message": "Επιλογές"
-  },
-  "optionsFooterText": {
-    "description": "Footer text for the Options page",
-    "message": "Δημιουργήθηκε από $authorName$.",
-    "placeholders": {
-      "authorName": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionZoom": {
-    "message": "Μεγέθυνση"
-  },
-  "optionTheme": {
-    "message": "Θέμα"
-  },
-  "optionThemeAuto": {
-    "message": "Ακολουθία συστήματος"
-  },
-  "optionThemeLight": {
-    "message": "Φωτεινό"
-  },
-  "optionThemeDark": {
-    "message": "Σκοτεινό"
-  },
-  "optionThemeInk": {
-    "message": "Μελάνι (σκοτεινό)"
-  },
-  "optionThemePaper": {
-    "message": "Χαρτί (φωτεινό)"
-  },
-  "optionLanguage": {
-    "message": "Γλώσσα"
-  },
-  "optionLanguageAuto": {
-    "message": "Αυτόματη"
-  },
-  "optionLanguageHint": {
-    "message": "Η αλλαγή γλώσσας επαναφορτώνει αυτή τη σελίδα."
-  },
-  "paletteClose": {
-    "message": "Κλείσιμο"
-  },
-  "paletteCmdVersion": {
-    "message": "Πληροφορίες έκδοσης"
-  },
-  "paletteCmdLang": {
-    "message": "Αλλαγή γλώσσας…"
-  },
-  "paletteCmdLangUsage": {
-    "message": "Χρήση: /lang ακολουθούμενο από έναν κωδικό τοπικών ρυθμίσεων — π.χ. /lang en, /lang zh_CN, /lang ja."
+  "versionDialogCopy": {
+    "message": "Αντιγραφή πληροφοριών"
   },
   "versionDialogTitle": {
     "message": "vBookmarks $version$",
@@ -634,15 +2510,6 @@
         "content": "$1"
       }
     }
-  },
-  "versionDialogCopy": {
-    "message": "Αντιγραφή πληροφοριών"
-  },
-  "versionDialogCopied": {
-    "message": "Αντιγράφηκε"
-  },
-  "versionMetaVersion": {
-    "message": "Έκδοση επέκτασης"
   },
   "versionMetaAnnounce": {
     "message": "Τι νέο υπάρχει"
@@ -653,277 +2520,58 @@
   "versionMetaBrowser": {
     "message": "Πρόγραμμα περιήγησης"
   },
-  "versionMetaOS": {
-    "message": "Λειτουργικό σύστημα"
-  },
   "versionMetaChannel": {
     "message": "Κανάλι"
   },
   "versionMetaLanguage": {
     "message": "Γλώσσα"
   },
+  "versionMetaOS": {
+    "message": "Λειτουργικό σύστημα"
+  },
   "versionMetaUserAgent": {
     "message": "Παράγοντας χρήστη"
   },
-  "paletteCmdDead": {
-    "message": "Εύρεση νεκρών συνδέσμων"
+  "versionMetaVersion": {
+    "message": "Έκδοση επέκτασης"
   },
-  "paletteCmdDupes": {
-    "message": "Εκκαθάριση διπλότυπων σελιδοδεικτών"
+  "viewDead": {
+    "message": "Νεκροί σύνδεσμοι"
   },
-  "paletteCmdNewBookmark": {
-    "message": "Νέος σελιδοδείκτης…"
+  "viewDisable": {
+    "message": "Απενεργοποίηση"
   },
-  "paletteCmdNewFolder": {
-    "message": "Νέος φάκελος…"
+  "viewDupes": {
+    "message": "Διπλότυπα"
   },
-  "paletteCmdQuickAdd": {
-    "message": "Σελιδοδείκτης τρέχουσας καρτέλας"
+  "viewEnable": {
+    "message": "Ενεργοποίηση"
   },
-  "paletteCmdSaveSession": {
-    "message": "Αποθήκευση καρτελών παραθύρου ως φάκελο"
-  },
-  "paletteNoResults": {
-    "message": "Δεν υπάρχουν αντίστοιχα αποτελέσματα"
-  },
-  "palettePlaceholder": {
-    "message": "Αναζήτηση σελιδοδεικτών, φακέλων, εντολών…"
-  },
-  "parentFolder": {
-    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
-    "message": "Γονικός φάκελος: \"$folderName$\"",
+  "viewHiddenTabsHint": {
+    "message": "Βρίσκεστε στην προβολή $view$. Πατήστε $back$ ή χρησιμοποιήστε την παλέτα εντολών για να επιστρέψετε στο δέντρο.",
     "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarksbar"
-      }
-    }
-  },
-  "removeSeparator": {
-    "message": "Αφαίρεση Διαχωριστικού"
-  },
-  "replaceUrl": {
-    "message": "Αντικατάσταση αυτού με τρέχον URL"
-  },
-  "reportedToDeveloper": {
-    "description": "A message for an error occured in the extension, has been reported to the developer.",
-    "message": "Αυτό έχει αναφερθεί στον προγραμματιστή."
-  },
-  "reportError": {
-    "message": "Αναφορά Σφάλματος"
-  },
-  "resetButton": {
-    "message": "Επαναφορά"
-  },
-  "resetSettings": {
-    "message": "Επαναφορά ρυθμίσεων"
-  },
-  "resetSettingsDescription": {
-    "message": "Επαναφορά του vBookmarks στις προεπιλεγμένες ρυθμίσεις."
-  },
-  "save": {
-    "message": "Αποθήκευση"
-  },
-  "searchBookmarks": {
-    "description": "Placeholder text for search field.",
-    "message": "Αναζήτηση Σελιδοδεικτών"
-  },
-  "searchClear": {
-    "message": "Εκκαθάριση αναζήτησης"
-  },
-  "searchNoResults": {
-    "message": "Δεν βρέθηκαν αντίστοιχοι σελιδοδείκτες"
-  },
-  "searchViewHint": {
-    "message": "Πληκτρολογήστε στο παραπάνω πλαίσιο για αναζήτηση των σελιδοδεικτών σας"
-  },
-  "selectAll": {
-    "message": "Όλα"
-  },
-  "selectClear": {
-    "message": "Εκκαθάριση"
-  },
-  "selectCount": {
-    "message": "$count$ επιλεγμένα",
-    "placeholders": {
-      "count": {
+      "back": {
+        "content": "$2"
+      },
+      "view": {
         "content": "$1"
       }
     }
   },
-  "selectInvert": {
-    "message": "Αντιστροφή"
-  },
-  "selectModeEnter": {
-    "message": "Επιλογή"
-  },
-  "selectModeExit": {
-    "message": "Έξοδος επιλογής"
-  },
-  "deadRiskBanner": {
-    "message": "Η εκκαθάριση νεκρών συνδέσμων διαγράφει σελιδοδείκτες μαζικά. Δημιουργήστε αντίγραφο ασφαλείας των σελιδοδεικτών σας πριν από την πρώτη εκκαθάριση."
-  },
-  "dupesRiskBanner": {
-    "message": "Η αφαίρεση διπλοτύπων διαγράφει μαζικά διπλότυπους σελιδοδείκτες. Δημιουργήστε αντίγραφο ασφαλείας των σελιδοδεικτών σας πριν την εφαρμογή."
-  },
-  "riskBannerHelp": {
-    "message": "Οδηγός αντιγράφων ασφαλείας & επαναφοράς"
-  },
-  "riskBannerNever": {
-    "message": "Να μην εμφανιστεί ξανά"
-  },
-  "riskBannerDismiss": {
-    "message": "Κλείσιμο"
-  },
-  "sessionEmpty": {
-    "message": "Δεν υπάρχουν καρτέλες προς αποθήκευση"
-  },
-  "sessionFolderName": {
-    "message": "Συνεδρία $date$",
-    "placeholders": {
-      "date": {
-        "content": "$1",
-        "example": "2026-07-18 15:04"
-      }
-    },
-    "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm."
-  },
-  "sessionSaved": {
-    "message": "Αποθηκεύτηκαν $count$ καρτέλες σε νέο φάκελο",
-    "placeholders": {
-      "count": {
-        "content": "$1",
-        "example": "12"
-      }
-    },
-    "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
-  },
-  "url": {
-    "message": "URL"
-  },
-  "syncOptions": {
-    "message": "Επιλογές συγχρονισμού"
-  },
-  "optionShowSyncStatus": {
-    "message": "Εμφάνιση δεικτών κατάστασης συγχρονισμού"
-  },
-  "optionHighlightUnsynced": {
-    "message": "Να θαμπώνουν οι μη συγχρονισμένοι σελιδοδείκτες"
-  },
-  "optionAutoRefreshSync": {
-    "message": "Αυτόματη ενημέρωση κατάστασης συγχρονισμού"
-  },
-  "optionSyncRefreshInterval": {
-    "message": "Διάστημα ενημέρωσης"
-  },
-  "optionSyncRefreshIntervalSeconds": {
-    "message": "δευτερόλεπτα"
-  },
-  "syncStatusSynced": {
-    "message": "Συγχρονίστηκε με τον λογαριασμό σας Google"
-  },
-  "syncStatusLocal": {
-    "message": "Μόνο τοπικά — δεν μεταφορτώθηκε"
-  },
-  "syncStatusUnsyncable": {
-    "message": "Δεν είναι δυνατός ο συγχρονισμός"
-  },
-  "syncSuffixSynced": {
-    "message": "(Συγχρονίστηκε)"
-  },
-  "syncSuffixLocal": {
-    "message": "(Τοπικά)"
-  },
-  "optionAutoResizePopup": {
-    "message": "Αυτόματη προσαρμογή μεγέθους παραθύρου popup ανάλογα με το περιεχόμενο"
-  },
-  "crossStorageMoveWarning": {
-    "message": "Δεν είναι δυνατή η μετακίνηση σελιδεδεικτών μεταξύ συγχρονισμένης και τοπικής αποθήκευσης. Χρησιμοποιήστε αντιγραφή/επικόλληση.",
-    "description": "Warning when trying to move bookmarks across storage types"
-  },
-  "recentBookmarks": {
-    "message": "Πρόσφατα προστέθηκαν"
-  },
-  "optionShowRecentBookmarks": {
-    "message": "Εμφάνιση πρόσφατα προστεθέντων σελιδοδεικτών στην κορυφή του αναδυόμενου παραθύρου"
-  },
-  "optionShowStatsView": {
-    "message": "Εμφάνιση καρτέλας προβολής στατιστικών"
-  },
-  "optionShowDeadView": {
-    "message": "Εμφάνιση καρτέλας προβολής νεκρών συνδέσμων"
-  },
-  "optionShowDupesView": {
-    "message": "Εμφάνιση καρτέλας προβολής διπλοτύπων"
-  },
-  "optionRecentCollapsed": {
-    "message": "Σύμπτυξη της ενότητας πρόσφατων από προεπιλογή"
-  },
-  "optionsGroupViews": {
-    "message": "Προβολές"
-  },
-  "optionsGroupSort": {
-    "message": "Ταξινόμηση"
-  },
-  "optionsGroupStats": {
-    "message": "Στατιστικά"
-  },
-  "optionsGroupTools": {
-    "message": "Εργαλεία"
-  },
-  "optionShowViewTabs": {
-    "message": "Εμφάνιση καρτελών προβολής κάτω από το πλαίσιο αναζήτησης"
-  },
-  "optionRememberView": {
-    "message": "Να θυμάται την τελευταία ενεργή προβολή και να την ανοίγει ξανά"
-  },
-  "optionShowTabBadges": {
-    "message": "Εμφάνιση σημάτων αριθμού στις καρτέλες προβολής"
-  },
-  "optionPaletteEnabled": {
-    "message": "Ενεργοποίηση παλέτας εντολών (Ctrl/Cmd+K)"
-  },
-  "optionQuickAddEnabled": {
-    "message": "Εμφάνιση του κουμπιού αστεριού γρήγορης προσθήκης δίπλα στο πεδίο αναζήτησης"
-  },
-  "optionQuickAddContextMenu": {
-    "message": "Προσθήκη μιας επιλογής «Προσθήκη σελιδοδείκτη για αυτή τη σελίδα με το vBookmarks» στο μενού δεξιού κλικ της σελίδας"
-  },
-  "optionQuickAddContextMenuHint": {
-    "message": "Ανεξάρτητη από το κουμπί αστεριού γρήγορης προσθήκης· η επαναφορά της κλασικής εμπειρίας απενεργοποιεί επίσης αυτήν την επιλογή."
-  },
-  "optionCollapseTabGroupMenu": {
-    "message": "Συμπτύξτε τις καταχωρίσεις ομάδων καρτελών σε ένα υπομενού \"Tab groups…\""
-  },
-  "optionCollapseTabGroupMenuHint": {
-    "message": "Ισχύει τόσο για τα μενού δεξιού κλικ φακέλων όσο και σελιδοδεικτών. Απενεργοποιημένο από προεπιλογή· διατηρεί τα μενού χαμηλού ύψους πιο σύντομα σε οθόνες μικρές/μεγάλης μεγέθυνσης."
-  },
-  "optionCollapseSortMenu": {
-    "message": "Συμπτύξτε τις καταχωρίσεις ταξινόμησης σε ένα υπομενού \"Sort…\""
-  },
-  "optionCollapseSortMenuHint": {
-    "message": "Ισχύει για το μενού δεξιού κλικ φακέλων. Ενεργοποιημένο από προεπιλογή."
-  },
-  "optionShowToolButton": {
-    "message": "Εμφάνιση του κουμπιού εργαλείων (⋮) δίπλα στο πεδίο αναζήτησης"
-  },
-  "optionClassicExperience": {
-    "message": "Επαναφορά κλασικής κεφαλίδας"
-  },
-  "optionClassicExperienceHint": {
-    "message": "Απενεργοποιεί την παλέτα εντολών, το αστέρι γρήγορης προσθήκης, την καταχώριση στο μενού δεξιού κλικ της σελίδας, το κουμπί εργαλείου και τις καρτέλες προβολής. Κάθε ένα μπορεί να ενεργοποιηθεί ξανά ξεχωριστά στην ενότητά του."
-  },
-  "optionShowItemPath": {
-    "message": "Εμφάνιση διαδρομής γονικού φακέλου στις γραμμές λίστας"
-  },
   "viewRecent": {
     "message": "Σταδιακή προβολή"
   },
-  "viewTree": {
-    "message": "Δέντρο"
-  },
   "viewSearch": {
     "message": "Αναζήτηση"
+  },
+  "viewStateDisabled": {
+    "message": "Απενεργοποιημένο"
+  },
+  "viewStateEnabled": {
+    "message": "Ενεργοποιημένο"
+  },
+  "viewStats": {
+    "message": "Στατιστικά"
   },
   "viewSwitchAnnounce": {
     "message": "Προβολή $name$",
@@ -933,870 +2581,17 @@
       }
     }
   },
-  "viewStateEnabled": {
-    "message": "Ενεργοποιημένο"
-  },
-  "viewStateDisabled": {
-    "message": "Απενεργοποιημένο"
-  },
-  "viewEnable": {
-    "message": "Ενεργοποίηση"
-  },
-  "viewDisable": {
+  "viewTabDisable": {
     "message": "Απενεργοποίηση"
+  },
+  "viewTabGroups": {
+    "message": "Ομάδες καρτελών"
   },
   "viewTabHide": {
     "message": "Απόκρυψη"
   },
-  "viewTabDisable": {
-    "message": "Απενεργοποίηση"
-  },
-  "sortFolderContents": {
-    "message": "Ταξινόμηση περιεχομένων φακέλου"
-  },
-  "sortByName": {
-    "message": "Ταξινόμηση με όνομα"
-  },
-  "sortByDate": {
-    "message": "Ταξινόμηση ημερομηνίας"
-  },
-  "sortRecursiveSuffix": {
-    "message": "(αναδρομικά)"
-  },
-  "sortOptions": {
-    "message": "Επιλογές ταξινόμησης…"
-  },
-  "sortDone": {
-    "message": "Ο φάκελος ταξινομήθηκε"
-  },
-  "sortByTitle": {
-    "message": "Κατά τίτλο"
-  },
-  "sortByDateAdded": {
-    "message": "Κατά ημερομηνία προσθήκης (νεότερα πρώτα)"
-  },
-  "sortFoldersFirst": {
-    "message": "Διατήρηση φακέλων στην κορυφή"
-  },
-  "sortRecursive": {
-    "message": "Ταξινόμηση και υποφακέλων (αναδρομικά)"
-  },
-  "sortRecursiveWarning": {
-    "message": "Αυτό αναδιατάσσει τους σελιδοδείκτες σε κάθε υποφάκελο."
-  },
-  "tabGroupDialogTitle": {
-    "message": "Νέα ομάδα καρτελών"
-  },
-  "tabGroupTitleLabel": {
-    "message": "Τίτλος ομάδας"
-  },
-  "tabGroupColorLabel": {
-    "message": "Χρώμα"
-  },
-  "tabGroupColorGrey": {
-    "message": "Γκρι",
-    "description": "Accessible name of the grey color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorBlue": {
-    "message": "Μπλε",
-    "description": "Accessible name of the blue color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorRed": {
-    "message": "Κόκκινο",
-    "description": "Accessible name of the red color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorYellow": {
-    "message": "Κίτρινο",
-    "description": "Accessible name of the yellow color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorGreen": {
-    "message": "Πράσινο",
-    "description": "Accessible name of the green color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorPink": {
-    "message": "Ροζ",
-    "description": "Accessible name of the pink color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorPurple": {
-    "message": "Μωβ",
-    "description": "Accessible name of the purple color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorCyan": {
-    "message": "Κυανό",
-    "description": "Accessible name of the cyan color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorOrange": {
-    "message": "Πορτοκαλί",
-    "description": "Accessible name of the orange color swatch in the new-tab-group dialog."
-  },
-  "tabGroupUntitled": {
-    "message": "Ομάδα χωρίς τίτλο"
-  },
-  "tabGroupNoGroups": {
-    "message": "Δεν υπάρχουν υπάρχουσες ομάδες καρτελών"
-  },
-  "tabGroupPickDialogTitle": {
-    "message": "Άνοιγμα σε υπάρχουσα ομάδα καρτελών"
-  },
-  "quickAddBookmark": {
-    "message": "Προσθήκη σελιδοδείκτη (Ctrl+D)"
-  },
-  "quickAddBookmarkCommand": {
-    "message": "Γρήγορη προσθήκη της τρέχουσας καρτέλας ως σελιδοδείκτη"
-  },
-  "quickAdded": {
-    "message": "Ο σελιδοδείκτης προστέθηκε"
-  },
-  "quickAddedTo": {
-    "message": "Ο σελιδοδείκτης προστέθηκε στο $folderName$",
-    "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarks bar"
-      }
-    }
-  },
-  "quickRemoved": {
-    "message": "Ο σελιδοδείκτης αφαιρέθηκε"
-  },
-  "quickRemoveBookmark": {
-    "message": "Αφαίρεση σελιδοδείκτη (Ctrl+D)"
-  },
-  "toolButtonTitle": {
-    "message": "Εργαλεία (Ctrl+K)"
-  },
-  "contextMenuAddBookmark": {
-    "message": "Προσθήκη σελιδοδείκτη με vBookmarks"
-  },
-  "deadFilterAll": {
-    "message": "Όλα"
-  },
-  "deadFilterBlocked": {
-    "message": "Μόνο αποκλεισμένα"
-  },
-  "deadFilterDead": {
-    "message": "Μόνο νεκρά"
-  },
-  "deadFilterMarked": {
-    "message": "Προηγουμένως επισημασμένα"
-  },
-  "deadLastScanAt": {
-    "message": "Τελευταία σάρωση: $time$",
-    "placeholders": {
-      "time": {
-        "content": "$1"
-      }
-    }
-  },
-  "deadMark": {
-    "message": "Σήμανση ως νεκρού"
-  },
-  "deadMarkAll": {
-    "message": "Σήμανση όλων"
-  },
-  "deadMarked": {
-    "message": "Νεκρές γραμμές επισημάνθηκαν"
-  },
-  "deadMarkedCount": {
-    "message": "Σημειώθηκαν $count$ σελιδοδείκτες",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "deadMarkedNone": {
-    "message": "Δεν έχουν επισημανθεί σελιδοδείκτες ακόμα"
-  },
-  "deadMarkedRow": {
-    "message": "Σημειωμένο"
-  },
-  "deadMarkSelected": {
-    "message": "Σήμανση επιλεγμένων"
-  },
-  "deadMarkStatusAll": {
-    "message": "Οποιαδήποτε κατάσταση"
-  },
-  "deadMarkStatusMarked": {
-    "message": "Σημειωμένα"
-  },
-  "deadMarkStatusUnmarked": {
-    "message": "Μη σημειωμένα"
-  },
-  "deadMarkTimeLabel": {
-    "message": "Σημειώθηκε στις"
-  },
-  "deadDetectTimeLabel": {
-    "message": "Εντοπίστηκε στις"
-  },
-  "deadSortLabel": {
-    "message": "Ταξινόμηση κατά"
-  },
-  "deadSortByDetected": {
-    "message": "Χρόνος ανίχνευσης"
-  },
-  "deadSortByPath": {
-    "message": "Διαδρομή φακέλου"
-  },
-  "deadSortByMarked": {
-    "message": "Χρόνος σημείωσης"
-  },
-  "deadMarkedBanner": {
-    "message": "Εμφάνιση σελιδοδεικτών που επισημάνθηκαν προηγουμένως. Κάντε κλικ στην Επανασάρωση για νέο έλεγχο ή διαχειριστείτε τους στην παρακάτω λίστα."
-  },
-  "deadMarkedBannerDismiss": {
-    "message": "Κλείσιμο"
-  },
-  "deadProxyAdd": {
-    "message": "Προσθήκη διακομιστή μεσολάβησης για ελέγχους νεκρών συνδέσμων"
-  },
-  "deadProxyLabel": {
-    "message": "Μεσολάβηση: $server$",
-    "placeholders": {
-      "server": {
-        "content": "$1"
-      }
-    }
-  },
-  "deadProxyChange": {
-    "message": "Αλλαγή"
-  },
-  "deadProxyRemove": {
-    "message": "Κατάργηση"
-  },
-  "deadProxyRemoved": {
-    "message": "Ο διακομιστής μεσολάβησης καταργήθηκε"
-  },
-  "deadProxyPanelHint": {
-    "message": "Εισάγετε έναν διακομιστή μεσολάβησης που ήδη έχετε (η επέκταση δεν παρέχει κανένα), π.χ. 127.0.0.1:7890 ή socks5://127.0.0.1:1080."
-  },
-  "deadProxyTestUrlLabel": {
-    "message": "URL δοκιμής"
-  },
-  "deadProxyTestSave": {
-    "message": "Δοκιμή & αποθήκευση"
-  },
-  "deadProxyTesting": {
-    "message": "Δοκιμή…"
-  },
-  "deadProxySaved": {
-    "message": "Ο διακομιστής μεσολάβησης αποθηκεύτηκε — οι μελλοντικές σαρώσεις θα επανελέγχουν τις αποτυχίες άμεσης σύνδεσης μέσω αυτού."
-  },
-  "deadProxyInvalid": {
-    "message": "Μη έγκυρη διεύθυνση μεσολάβησης — χρησιμοποιήστε host:port ή scheme://host:port (http/https/socks5, χωρίς διαπιστευτήρια)"
-  },
-  "deadProxyUnreachable": {
-    "message": "Ο διακομιστής μεσολάβησης δεν είναι προσβάσιμος — δεν αποθηκεύτηκε"
-  },
-  "deadProxyDenied": {
-    "message": "Δεν παραχωρήθηκε άδεια για τον διακομιστή μεσολάβησης"
-  },
-  "deadProxyControlled": {
-    "message": "Οι ρυθμίσεις μεσολάβησης διαχειρίζονται από άλλη επέκταση"
-  },
-  "deadProxyUnavailable": {
-    "message": "Το API μεσολάβησης δεν είναι διαθέσιμο σε αυτό το πρόγραμμα περιήγησης"
-  },
-  "deadProxyNudge": {
-    "message": "Ένας επανέλεγχος μέσω διακομιστή μεσολάβησης διαχωρίζει τους πραγματικά νεκρούς συνδέσμους από αυτούς που είναι αποκλεισμένοι λόγω περιοχής — ρυθμίστε το εδώ ή στη σελίδα επιλογών."
-  },
-  "deadProxyNeverShow": {
-    "message": "Να μην εμφανιστεί ξανά"
-  },
-  "deadStartHint": {
-    "message": "Έναρξη σάρωσης $n$ σελιδοδεικτών",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "deadStatusBlocked": {
-    "message": "αποκλεισμένο"
-  },
-  "deadUnmark": {
-    "message": "Αφαίρεση σήμανσης νεκρού"
-  },
-  "deadUnmarkAll": {
-    "message": "Εκκαθάριση όλων των σημάνσεων"
-  },
-  "deadUnmarkSelected": {
-    "message": "Αφαίρεση σήμανσης επιλεγμένων"
-  },
-  "dupesApplyAll": {
-    "message": "Εφαρμογή όλων ($count$)",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "dupesApplySelected": {
-    "message": "Αφαίρεση διπλοτύπων επιλεγμένων ($count$)",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "dupesCleanRestHint": {
-    "message": "Κρατήστε το \"$title$\" και αφαιρέστε τα άλλα $count$",
-    "placeholders": {
-      "title": {
-        "content": "$1"
-      },
-      "count": {
-        "content": "$2"
-      }
-    }
-  },
-  "dupesIgnoreScheme": {
-    "message": "Αγνόηση διαφορών http/https"
-  },
-  "dupesKeepThis": {
-    "message": "Κρατήστε αυτό"
-  },
-  "dupesKeeperSet": {
-    "message": "Ορισμός ως φύλακας"
-  },
-  "dupesPreviewSummary": {
-    "message": "$groups$ ομάδες · $count$ προς απελευθέρωση",
-    "placeholders": {
-      "groups": {
-        "content": "$1"
-      },
-      "count": {
-        "content": "$2"
-      }
-    }
-  },
-  "dupesRemoveRow": {
-    "message": "Διαγραφή αυτού του αντιγράφου"
-  },
-  "dupesScopeAll": {
-    "message": "Όλοι οι σελιδοδείκτες"
-  },
-  "dupesScopeBar": {
-    "message": "Μόνο η γραμμή σελιδοδεικτών"
-  },
-  "dupesStrategyBookmarkBar": {
-    "message": "Κρατήστε αυτό στη γραμμή σελιδοδεικτών"
-  },
-  "dupesStrategyMostVisited": {
-    "message": "Κρατήστε το πιο επισκέψιμο"
-  },
-  "dupesStrategyNewest": {
-    "message": "Κρατήστε το νεότερο"
-  },
-  "dupesStrategyOldest": {
-    "message": "Κρατήστε το παλαιότερο"
-  },
-  "dupesStrategyShallowest": {
-    "message": "Κρατήστε το πιο ρηχό"
-  },
-  "dupesStrategyShortestTitle": {
-    "message": "Κρατήστε τον συντομότερο τίτλο"
-  },
-  "optionDeadProxyServer": {
-    "message": "Διακομιστής μεσολάβησης για νεκρούς συνδέσμους"
-  },
-  "deadProxyServerHint": {
-    "message": "Ο αποθηκευμένος διακομιστής επανελέγχει τους σελιδοδείκτες που αποτυγχάνουν στους άμεσους ελέγχους σε κάθε σάρωση νεκρών συνδέσμων, διαχωρίζοντας τους πραγματικά νεκρούς συνδέσμους από αυτούς που είναι αποκλεισμένοι λόγω περιοχής. Η επιλογή «Δοκιμή και αποθήκευση» τον ελέγχει (διατηρείται μόνο ένας προσβάσιμος διακομιστής)· μπορείτε επίσης να τον προσθέσετε από την προβολή νεκρών συνδέσμων."
-  },
-  "deadProxyClear": {
-    "message": "Εκκαθάριση"
-  },
-  "deadProxyNone": {
-    "message": "(δεν έχει οριστεί)"
-  },
-  "optionDeadProxyStrip": {
-    "message": "Εμφάνιση της υπόδειξης προσθήκης διακομιστή μεσολάβησης στην προβολή νεκρών συνδέσμων"
-  },
-  "optionDeadProxyStripHint": {
-    "message": "Η απενεργοποίηση κρύβει αυτή την υπόδειξη εκεί· ο διακομιστής μεσολάβησης παραμένει διαμορφώσιμος εδώ, και ένας αποθηκευμένος διακομιστής δείχνει πάντα τη γραμμή διαχείρισής του στην προβολή."
-  },
-  "optionDeadScanConcurrency": {
-    "message": "Ταυτόχρονη σάρωση νεκρών συνδέσμων (1-16)"
-  },
-  "optionDeadScanTimeout": {
-    "message": "Χρονικό όριο σάρωσης νεκρών συνδέσμων σε δευτερόλεπτα (2-30)"
-  },
-  "paletteCmdGoDead": {
-    "message": "Μετάβαση στην προβολή νεκρών συνδέσμων"
-  },
-  "paletteCmdGoDupes": {
-    "message": "Μετάβαση στην προβολή διπλοτύπων"
-  },
-  "paletteCmdGoRecent": {
-    "message": "Μετάβαση στην προβολή πρόσφατων"
-  },
-  "paletteCmdGoSearch": {
-    "message": "Μετάβαση στην προβολή αναζήτησης"
-  },
-  "paletteCmdGoTree": {
-    "message": "Μετάβαση στην προβολή δέντρου"
-  },
-  "paletteCmdOptions": {
-    "message": "Άνοιγμα σελίδας επιλογών"
-  },
-  "paletteCmdSearchInView": {
-    "message": "Αναζήτηση '$query$' στην προβολή αναζήτησης",
-    "placeholders": {
-      "query": {
-        "content": "$1"
-      }
-    }
-  },
-  "rowActionDelete": {
-    "message": "Διαγραφή"
-  },
-  "rowActionMark": {
-    "message": "Σήμανση ως νεκρού"
-  },
-  "rowActionReveal": {
-    "message": "Εμφάνιση στο δέντρο"
-  },
-  "rowActionUnmark": {
-    "message": "Αφαίρεση σήμανσης νεκρού"
-  },
-  "viewDead": {
-    "message": "Νεκροί σύνδεσμοι"
-  },
-  "viewDupes": {
-    "message": "Διπλότυπα"
-  },
-  "viewStats": {
-    "message": "Στατιστικά"
-  },
-  "paletteCmdGoStats": {
-    "message": "Μετάβαση στην προβολή στατιστικών"
-  },
-  "optionStatsEnabled": {
-    "message": "Ενεργοποίηση στατιστικών επισκέψεων"
-  },
-  "optionFaviconContrast": {
-    "message": "Αντιστροφή favicons χαμηλής αντίθεσης"
-  },
-  "optionFaviconContrastHint": {
-    "message": "Τα λευκά εικονίδια σε ανοιχτά θέματα και τα μαύρα εικονίδια σε σκούρα θέματα αντιστρέφονται για να παραμένουν ορατά. Κάθε εικονίδιο ελέγχεται μία φορά κατά τη φόρτωσή του — χωρίς επιβάρυνση κατά την περιήγηση."
-  },
-  "optionFaviconEnrich": {
-    "message": "Λήψη εικονιδίων που λείπουν"
-  },
-  "optionFaviconEnrichHint": {
-    "message": "Για ιστοσελίδες με σελιδοδείκτες όπου το Chrome δεν έχει αποθηκευμένο εικονίδιο, ανακτώνται το πραγματικό εικονίδιο απευθείας από τον ιστότοπο (/favicon.ico, έπειτα τα δηλωμένα εικονίδια της σελίδας). Τα αιτήματα γίνονται μόνο σε ιστότοπους που έχετε σελιδοδείκτες."
-  },
-  "optionFaviconEnrichAgg": {
-    "message": "Εναλλακτικό εικονίδιο τρίτων"
-  },
-  "optionFaviconEnrichAggHint": {
-    "message": "Όταν η άμεση λήψη αποτύχει, το εικονίδιο αναζητείται μέσω τομέα από μια ενσωματωμένη λίστα υπηρεσιών εικονιδίων τρίτων ($providers$). Μια υπηρεσία που βρίσκεται μη προσβάσιμη παραλείπεται και δοκιμάζεται η επόμενη — δεν γίνεται νέα προσπάθεια για 6 ώρες.",
-    "placeholders": {
-      "providers": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionFaviconBackup": {
-    "message": "Συμπερίληψη προσωρινής μνήμης εικονιδίων στα αντίγραφα ασφαλείας"
-  },
-  "optionFaviconBackupHint": {
-    "message": "Συμπεριλάβετε επίσης την προσωρινή μνήμη εμπλουτισμένων favicon (δεδομένα ανά ιστότοπο, δυνητικά μεγάλα) στην εξαγωγή/εισαγωγή ρυθμίσεων. Αυτό καλύπτει τα εικονίδια που έχουν ήδη αποθηκευτεί στην προσωρινή μνήμη, ακόμη και όταν η λήψη είναι απενεργοποιημένη. Η απενεργοποίηση διατηρεί τα αντίγραφα ασφαλείας μικρά· τα εικονίδια ανακτώνται ξανά αυτόματα ούτως ή άλλως."
-  },
-  "optionFaviconCacheClear": {
-    "message": "Εκκαθάριση κρυφής μνήμης εικονιδίων"
-  },
-  "optionFaviconCacheClearConfirm": {
-    "message": "Εκκαθάριση της προσωρινής μνήμης εμπλουτισμένων εικονιδίων; Θα ανακτηθούν ξανά αυτόματα στο επόμενο άνοιγμα."
-  },
-  "optionFaviconCacheEmpty": {
-    "message": "Δεν υπάρχει προσωρινή μνήμη εικονιδίων για εκκαθάριση."
-  },
-  "optionFaviconCacheCleared": {
-    "message": "Η κρυφή μνήμη εικονιδίων εκκαθαρίστηκε. Τα εικονίδια θα ανακτηθούν ξανά στο επόμενο άνοιγμα."
-  },
-  "favGalleryLink": {
-    "message": "Προβολή ανανεωμένων εικονιδίων",
-    "description": "Options link (Icons group, right of the Clear icon cache button): opens the favicon gallery page listing the sites whose icons were refetched."
-  },
-  "favGalleryTitle": {
-    "message": "Ανανεωμένα εικονίδια ιστότοπων",
-    "description": "Favicon gallery page title (h1 + document title)."
-  },
-  "favGalleryHint": {
-    "message": "Εικονίδια που το vBookmarks ανέκτησε για σελιδοσημειωμένους ιστότοπους για τους οποίους το Chrome δεν είχε εικονίδιο στην κρυφή μνήμη — από πού προήλθε το καθένα και ποιοι σελιδοδείκτες το χρησιμοποιούν. Μόνο προβολή.",
-    "description": "Subtitle under the favicon gallery title, explaining the page is read-only."
-  },
-  "favGallerySearch": {
-    "message": "Φιλτράρισμα κατά ιστότοπο, τίτλο ή διαδρομή",
-    "description": "Placeholder of the favicon gallery filter input."
-  },
-  "favGalleryAll": {
-    "message": "Όλα",
-    "description": "Favicon gallery source filter chip: show every source."
-  },
-  "favSrcDirect": {
-    "message": "Απευθείας",
-    "description": "Favicon gallery source badge: the icon was fetched directly from the site itself."
-  },
-  "favSrcProxy": {
-    "message": "Μέσω διακομιστή μεσολάβησης",
-    "description": "Favicon gallery source badge: the icon was fetched through the user's own proxy relay."
-  },
-  "favSrcLegacy": {
-    "message": "Παλαιότερη κρυφή μνήμη",
-    "description": "Favicon gallery source badge: cached before the source was recorded, so the origin is unknown."
-  },
-  "favGalleryCompare": {
-    "message": "Σύγκριση με το προσωρινό εικονίδιο",
-    "description": "Favicon gallery toggle button: switch every icon to the generic placeholder it replaced (before/after comparison)."
-  },
-  "favGalleryShowingBefore": {
-    "message": "Επιστροφή στα πραγματικά εικονίδια",
-    "description": "Favicon gallery toggle button while the placeholder comparison is shown: switch back to the real fetched icons."
-  },
-  "favGalleryStatSites": {
-    "message": "$n$ ιστότοποι",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    },
-    "description": "Favicon gallery stats strip: how many sites have a refreshed icon."
-  },
-  "favGalleryStatBookmarks": {
-    "message": "$n$ σελιδοδείκτες",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    },
-    "description": "Favicon gallery stats strip: how many bookmarks sit on the refreshed sites."
-  },
-  "favGalleryVisits": {
-    "message": "$n$ καταγεγραμμένα ανοίγματα",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    },
-    "description": "Favicon gallery tooltip on a bookmark row's visit-count pill."
-  },
-  "favGalleryFailedTitle": {
-    "message": "Δοκιμάστηκε πρόσφατα, δεν βρέθηκε εικονίδιο",
-    "description": "Favicon gallery heading of the muted section listing hosts whose icon fetch failed recently."
-  },
-  "favGalleryFailedHint": {
-    "message": "Οι αποτυχίες επαναλαμβάνονται μετά από 24 ώρες, 3 ημέρες και 7 ημέρες, και στη συνέχεια εγκαταλείπονται μέχρι να εκκαθαριστεί η προσωρινή μνήμη εικονιδίων.",
-    "description": "Favicon gallery hint under the failed-fetch section title."
-  },
-  "favGalleryGaveUp": {
-    "message": "Εγκαταλείφθηκε",
-    "description": "Favicon gallery badge on a failed-strip host whose retries are exhausted (it stays untouched until the icon cache is cleared)."
-  },
-  "favGalleryOrphan": {
-    "message": "Δεν έχει μείνει κανένας σελιδοδείκτης για αυτόν τον ιστότοπο — το εικονίδιο διαγράφεται με την κρυφή μνήμη.",
-    "description": "Favicon gallery note on a card whose host no longer has any bookmark."
-  },
-  "favGalleryEmptyTitle": {
-    "message": "Δεν υπάρχουν ακόμη ανανεωμένα εικονίδια",
-    "description": "Favicon gallery empty-state heading."
-  },
-  "favGalleryEmptyText": {
-    "message": "Όταν το αναδυόμενο παράθυρο συναντά έναν σελιδοσημειωμένο ιστότοπο για τον οποίο το Chrome δεν έχει εικονίδιο, το vBookmarks ανακτά το πραγματικό και το εμφανίζει εδώ.",
-    "description": "Favicon gallery empty-state body text."
-  },
-  "storageUsageIcon": {
-    "message": "Cache εικονιδίων"
-  },
-  "storageUsageOther": {
-    "message": "Άλλα"
-  },
-  "storageUsageSummary": {
-    "message": "Χρήση: $1$ από $2$",
-    "placeholders": {
-      "1": {
-        "content": "$1"
-      },
-      "2": {
-        "content": "$2"
-      }
-    }
-  },
-  "storageUsageFree": {
-    "message": "Ελεύθερος χώρος"
-  },
-  "storageUsageHint": {
-    "message": "Μόνο τοπική αποθήκευση επέκτασης (chrome.storage.local, όριο περίπου 10 MB): το cache εικονιδίων συν ρυθμίσεις και άλλα τοπικά δεδομένα. Οι συγχρονισμένες ρυθμίσεις, τα δεδομένα περιόδου λειτουργίας και η ίδια η βιβλιοθήκη σελιδοδεικτών δεν υπολογίζονται εδώ."
-  },
-  "optionsDonate": {
-    "message": "Δωρεά"
-  },
-  "optionsGithubLink": {
-    "message": "GitHub"
-  },
-  "optionsHomepageLink": {
-    "message": "Αρχική σελίδα"
-  },
-  "optionsSince": {
-    "message": "Προέρχεται από το Neat Bookmarks, συντηρείται για $days$ ημέρες.",
-    "placeholders": {
-      "days": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionsVersion": {
-    "message": "Έκδοση vBookmarks"
-  },
-  "statsSortByCount": {
-    "message": "Ανά αριθμό"
-  },
-  "statsSortByRecent": {
-    "message": "Ανά πρόσφατο"
-  },
-  "statsShowUnbookmarked": {
-    "message": "Εμφάνιση μη σελιδοδεικτών"
-  },
-  "statsShowUnbookmarkedHint": {
-    "message": "Συμπερίληψη σελίδων από το ιστορικό που δεν έχουν αποθηκευτεί ως σελιδοδείκτες."
-  },
-  "statsEmpty": {
-    "message": "Τα στατιστικά συσσωρεύονται καθώς ανοίγετε σελιδοδείκτες"
-  },
-  "statsDisabledHint": {
-    "message": "Τα στατιστικά επισκέψεων είναι απενεργοποιημένα — ενεργοποιήστε τα στις Επιλογές → Προβολές"
-  },
-  "statsVisitCount": {
-    "message": "Επισκέφθηκε $count$ φορές",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "statsClearData": {
-    "message": "Εκκαθάριση στατιστικών"
-  },
-  "statsClearConfirm": {
-    "message": "Εκκαθάριση στατιστικών επισκέψεων για $count$ σελιδοδείκτες; Αυτή η ενέργεια δεν μπορεί να αναιρεθεί.",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "statsHistoryBanner": {
-    "message": "Χορηγήστε πρόσβαση στο ιστορικό για να τροφοδοτήσετε στατιστικά επισκέψεων με τις προηγούμενες επισκέψεις σας."
-  },
-  "statsHistoryEnable": {
-    "message": "Ενεργοποίηση"
-  },
-  "statsHistoryDismiss": {
-    "message": "Να μην εμφανίζεται ξανά"
-  },
-  "statsHistoryImported": {
-    "message": "Εισαγωγή προηγούμενων επισκέψεων για $count$ σελιδοδείκτες",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "paletteCmdToggleViewTabs": {
-    "message": "Εναλλαγή προβολής καρτελών"
-  },
-  "paletteCmdTheme": {
-    "message": "Ορισμός θέματος…"
-  },
-  "paletteCmdThemeUsage": {
-    "message": "Χρήση: /theme ακολουθούμενο από όνομα θέματος — auto, light, dark, ink ή paper (λειτουργεί μοναδικό πρόθεμα, π.χ. /theme d)."
-  },
-  "paletteCustomTag": {
-    "message": "προσαρμοσμένο"
-  },
-  "paletteCustomDeleteConfirm": {
-    "message": "Διαγραφή της εντολής \"$1\"; Η αλλαγή συγχρονίζεται σε όλες τις συσκευές σας."
-  },
-  "paletteCustomBroken": {
-    "message": "Ο φάκελος της εντολής \"$1\" δεν υπάρχει πλέον. Διαγραφή της εντολής;"
-  },
-  "paletteCmdSaveAsCommand": {
-    "message": "Αποθήκευση \"$1\" ως εντολή…"
-  },
-  "paletteActionOpenUrl": {
-    "message": "Άνοιγμα URL"
-  },
-  "paletteActionOpenUrlGroup": {
-    "message": "Άνοιγμα ομάδας φακέλου σελιδοδεικτών"
-  },
-  "paletteActionViewPreset": {
-    "message": "Άνοιγμα προβολής με προεπιλογή"
-  },
-  "paletteActionUrlTemplate": {
-    "message": "Άνοιγμα προτύπου URL"
-  },
-  "optionsGroupPalette": {
-    "message": "Παλέτα εντολών"
-  },
-  "paletteCustomHint": {
-    "message": "Προσαρμοσμένες εντολές με κάθετο για την παλέτα εντολών (Ctrl/Cmd+K). Συγχρονίζονται με τις ρυθμίσεις σας — έως 100 εγγραφές."
-  },
-  "paletteCustomAdd": {
-    "message": "Προσθήκη εντολής…"
-  },
-  "paletteCustomUsage": {
-    "message": "$1 / $2"
-  },
-  "paletteCustomSlash": {
-    "message": "Κάθετο (η λέξη μετά το /)"
-  },
-  "paletteCustomAliases": {
-    "message": "Ψευδώνυμα (διαχωρισμένα με κόμμα)"
-  },
-  "paletteCustomAction": {
-    "message": "Ενέργεια"
-  },
-  "paletteCustomUrl": {
-    "message": "URL"
-  },
-  "paletteCustomTemplate": {
-    "message": "Πρότυπο URL — το %s αντικαθίσταται από τις λέξεις μετά την εντολή"
-  },
-  "paletteCustomWhere": {
-    "message": "Άνοιγμα σε"
-  },
-  "paletteCustomFolder": {
-    "message": "Φάκελος σελιδοδεικτών"
-  },
-  "paletteCustomView": {
-    "message": "Προβολή"
-  },
-  "paletteCustomStrategy": {
-    "message": "Προεπιλογή στρατηγικής αφαίρεσης διπλοτύπων"
-  },
-  "paletteCustomScope": {
-    "message": "Προεπιλογή εμβέλειας αφαίρεσης διπλοτύπων"
-  },
-  "paletteCustomScan": {
-    "message": "Έναρξη σάρωσης κατά την εισαγωγή"
-  },
-  "paletteWhereCurrent": {
-    "message": "Τρέχουσα καρτέλα"
-  },
-  "paletteWhereTab": {
-    "message": "Νέα καρτέλα"
-  },
-  "paletteWhereWindow": {
-    "message": "Νέο παράθυρο"
-  },
-  "paletteWhereBackground": {
-    "message": "Καρτέλες παρασκηνίου"
-  },
-  "paletteCustomSave": {
-    "message": "Αποθήκευση εντολής"
-  },
-  "paletteCustomErrSlash": {
-    "message": "Κάθετο: 1–24 χαρακτήρες από πεζά γράμματα, ψηφία ή παύλες, με πρώτο χαρακτήρα γράμμα ή ψηφίο."
-  },
-  "paletteCustomErrAlias": {
-    "message": "Ψευδώνυμα: ίδιοι κανόνες με το κάθετο (1–24 χαρακτήρες από πεζά γράμματα, ψηφία ή παύλες)."
-  },
-  "paletteCustomErrTaken": {
-    "message": "Αυτό το κάθετο ή ψευδώνυμο χρησιμοποιείται ήδη."
-  },
-  "paletteCustomErrUrl": {
-    "message": "Επιτρέπονται μόνο διευθύνσεις URL http:// ή https://."
-  },
-  "paletteCustomErrFolder": {
-    "message": "Επιλέξτε ένα φάκελο σελιδοδεικτών."
-  },
-  "paletteCustomErrView": {
-    "message": "Επιλέξτε μια προβολή."
-  },
-  "paletteCustomErrTemplate": {
-    "message": "Το πρότυπο πρέπει να περιέχει ακριβώς ένα %s."
-  },
-  "paletteCustomErrAction": {
-    "message": "Επιλέξτε έναν τύπο ενέργειας."
-  },
-  "paletteCustomErrLimit": {
-    "message": "Έχει φτάσει το όριο εντολών (100) — διαγράψτε μία πρώτα."
-  },
-  "paletteCustomEmpty": {
-    "message": "Δεν υπάρχουν ακόμη προσαρμοσμένες εντολές."
-  },
-  "recentGroupToday": {
-    "message": "Σήμερα"
-  },
-  "recentGroupWeek": {
-    "message": "Αυτή την εβδομάδα"
-  },
-  "recentGroupMonth": {
-    "message": "Αυτόν τον μήνα"
-  },
-  "recentGroupOlder": {
-    "message": "Παλαιότερα"
-  },
-  "searchHistoryRerun": {
-    "message": "Επαναζήτηση"
-  },
-  "optionsGroupBackup": {
-    "message": "Αντίγραφο ασφαλείας"
-  },
-  "optionsGroupContextMenu": {
-    "message": "Μενού περιβάλλοντος"
-  },
-  "optionsGroupIcons": {
-    "message": "Εικονίδια"
-  },
-  "settingsExport": {
-    "message": "Εξαγωγή ρυθμίσεων"
-  },
-  "settingsImport": {
-    "message": "Εισαγωγή ρυθμίσεων"
-  },
-  "settingsBackupHint": {
-    "message": "Η εξαγωγή αποθηκεύει όλες τις ρυθμίσεις (συμπεριλαμβανομένων των προτιμήσεων συγχρονισμού) σε ένα αρχείο JSON. Η εισαγωγή συγχωνεύει ένα αντίγραφο ασφαλείας: οι ρυθμίσεις στο αρχείο αντικαθιστούν τις τρέχουσες, όλα τα υπόλοιπα διατηρούνται."
-  },
-  "settingsImportConfirm": {
-    "message": "Η εισαγωγή θα αντικαταστήσει κάθε ρύθμιση που περιέχεται στο αρχείο αντιγράφου ασφαλείας (οι ρυθμίσεις που δεν βρίσκονται στο αρχείο διατηρούνται) και θα επαναφορτώσει αυτήν τη σελίδα. Συνέχεια;"
-  },
-  "settingsImportInvalid": {
-    "message": "Μη έγκυρο αρχείο ρυθμίσεων: δεν είναι αντίγραφο ασφαλείας ρυθμίσεων του vBookmarks."
-  },
-  "settingsImportDone": {
-    "message": "Οι ρυθμίσεις εισήχθησαν. Η σελίδα θα επαναφορτωθεί τώρα."
-  },
-  "settingsImportError": {
-    "message": "Ορισμένες ρυθμίσεις δεν ήταν δυνατό να αποθηκευτούν (όριο αποθήκευσης ή προσωρινό σφάλμα). Η εισαγωγή δεν ολοκληρώθηκε — παρακαλώ δοκιμάστε ξανά."
-  },
-  "statsSectionRecent": {
-    "message": "Πρόσφατες επισκέψεις"
-  },
-  "statsSectionBookmarks": {
-    "message": "Στατιστικά σελιδοδεικτών"
-  },
-  "statsHistoryGuide": {
-    "message": "Παραχωρήστε πρόσβαση στο ιστορικό για να εμφανίζονται οι πρόσφατες επισκέψεις σας εδώ."
-  },
-  "statsHistoryAdd": {
-    "message": "Προσθήκη σε σελιδοδείκτες"
-  },
-  "statsHistoryBookmarked": {
-    "message": "Προστέθηκε στους σελιδοδείκτες"
-  },
-  "deadPause": {
-    "message": "Παύση"
-  },
-  "deadResume": {
-    "message": "Συνέχιση"
-  },
-  "deadCancel": {
-    "message": "Ακύρωση"
-  },
-  "deadPaused": {
-    "message": "Σε παύση"
+  "viewTree": {
+    "message": "Δέντρο"
   },
   "whatsNewChangelog": {
     "message": "Αρχείο αλλαγών"
@@ -1808,800 +2603,5 @@
         "content": "$1"
       }
     }
-  },
-  "viewHiddenTabsHint": {
-    "message": "Βρίσκεστε στην προβολή $view$. Πατήστε $back$ ή χρησιμοποιήστε την παλέτα εντολών για να επιστρέψετε στο δέντρο.",
-    "placeholders": {
-      "view": {
-        "content": "$1"
-      },
-      "back": {
-        "content": "$2"
-      }
-    }
-  },
-  "viewTabGroups": {
-    "message": "Ομάδες καρτελών"
-  },
-  "optionShowTabGroupsView": {
-    "message": "Εμφάνιση της καρτέλας προβολής ομάδων καρτελών"
-  },
-  "tabGroupsViewEmpty": {
-    "message": "Δεν υπάρχουν καρτέλες σε αυτό το παράθυρο"
-  },
-  "tabGroupsToolbarRefresh": {
-    "message": "Ανανέωση"
-  },
-  "tabGroupsCollapseAll": {
-    "message": "Σύμπτυξη όλων"
-  },
-  "tabGroupsExpandAll": {
-    "message": "Επέκταση όλων"
-  },
-  "tabGroupsSummary": {
-    "message": "$tabs$ καρτέλες · $groups$ ομάδες",
-    "placeholders": {
-      "tabs": {
-        "content": "$1"
-      },
-      "groups": {
-        "content": "$2"
-      }
-    }
-  },
-  "tabGroupsGroupCount": {
-    "message": "$count$ καρτέλες",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsCurrentTab": {
-    "message": "Τρέχον"
-  },
-  "tabGroupsAddBookmark": {
-    "message": "Προσθήκη σελιδοδείκτη σε αυτήν την καρτέλα"
-  },
-  "tabGroupsSaveFolder": {
-    "message": "Αποθήκευση ομάδας καρτελών ως φάκελο σελιδοδεικτών"
-  },
-  "tabGroupsGroupSavedToFolder": {
-    "message": "Αποθηκεύτηκαν $count$ καρτέλες στον $folder$",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      },
-      "folder": {
-        "content": "$2"
-      }
-    }
-  },
-  "tabGroupsBookmarksAdded": {
-    "message": "Προστέθηκαν $count$ σελιδοδείκτες στον $folder$",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      },
-      "folder": {
-        "content": "$2"
-      }
-    }
-  },
-  "tabGroupsSelectNewGroup": {
-    "message": "Νέα ομάδα καρτελών"
-  },
-  "tabGroupsSelectOpenInto": {
-    "message": "Άνοιγμα σε υπάρχουσα ομάδα καρτελών…"
-  },
-  "tabGroupsSelectSaveFolder": {
-    "message": "Αποθήκευση ως φάκελο σελιδοδεικτών"
-  },
-  "tabGroupsSelectClose": {
-    "message": "Κλείσιμο"
-  },
-  "tabGroupsSelectSleep": {
-    "message": "Αναστολή"
-  },
-  "tabGroupsCopyMoveDialog": {
-    "message": "Οι επιλεγμένες καρτέλες ανήκουν ήδη σε μια ομάδα καρτελών. Να τις αντιγράψω (άνοιγμα σε νέα θέση) ή να τις μετακινήσω (αφαίρεση από την τρέχουσα ομάδα);"
-  },
-  "tabGroupsCopyMoveCopy": {
-    "message": "Αντιγραφή"
-  },
-  "tabGroupsCopyMoveMove": {
-    "message": "Μετακίνηση"
-  },
-  "tabGroupsConfirmClose": {
-    "message": "Κλείσιμο $count$ καρτελών;",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsConfirmSleep": {
-    "message": "Αναστολή $count$ καρτελών;",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsClosedToast": {
-    "message": "Έκλεισαν $count$ καρτέλα(ες)",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsSleptToast": {
-    "message": "Τέθηκαν σε αναστολή $count$ καρτέλα(ες)",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsBatchClosedTitle": {
-    "message": "Κλειστές καρτέλες"
-  },
-  "tabGroupsPinnedUngroupedToast": {
-    "message": "Καρφιτσωμένη — αφαιρέθηκε από την ομάδα καρτελών"
-  },
-  "tabGroupsReopenAction": {
-    "message": "Άνοιγμα ξανά"
-  },
-  "tabGroupsWakeAction": {
-    "message": "Ενεργοποίηση"
-  },
-  "tabGroupsRecordDeletedToast": {
-    "message": "Αφαιρέθηκε η κλειστή εγγραφή"
-  },
-  "tabGroupsClosedTabRemovedToast": {
-    "message": "Αφαιρέθηκε από την κλειστή εγγραφή"
-  },
-  "tabGroupsClearedToast": {
-    "message": "Εκκαθαρίστηκαν $count$ κλειστές εγγραφές",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "bookmarkFolderPickDialogTitle": {
-    "message": "Προσθήκη σε φάκελο σελιδοδεικτών"
-  },
-  "bookmarkFolderNoFolders": {
-    "message": "Δεν υπάρχουν φάκελοι σελιδοδεικτών"
-  },
-  "tabGroupsSelectAddBookmarks": {
-    "message": "Προσθήκη σε φάκελο σελιδοδεικτών…"
-  },
-  "paletteCmdGoTabGroups": {
-    "message": "Μετάβαση στην προβολή ομάδων καρτελών"
-  },
-  "tabGroupsActivateGroup": {
-    "message": "Μετάβαση σε ομάδα καρτελών"
-  },
-  "tabGroupsRenameGroup": {
-    "message": "Μετονομασία ομάδας"
-  },
-  "tabGroupsRenameDialog": {
-    "message": "Μετονομασία ομάδας καρτελών"
-  },
-  "tabGroupsCloseGroup": {
-    "message": "Κλείσιμο ομάδας"
-  },
-  "tabGroupsSleepGroup": {
-    "message": "Αναστολή ομάδας"
-  },
-  "tabGroupsWakeGroup": {
-    "message": "Ενεργοποίηση ομάδας καρτελών"
-  },
-  "tabGroupsActivateTab": {
-    "message": "Μετάβαση σε καρτέλα"
-  },
-  "tabGroupsCollapseGroup": {
-    "message": "Σύμπτυξη ομάδας"
-  },
-  "tabGroupsExpandGroup": {
-    "message": "Επέκταση ομάδας"
-  },
-  "tabGroupsMenuAddBookmark": {
-    "message": "Σελιδοδείκτης καρτέλας"
-  },
-  "tabGroupsMenuSaveFolder": {
-    "message": "Αποθήκευση ως φάκελο σελιδοδεικτών"
-  },
-  "tabGroupsSyncCollapse": {
-    "message": "Συγχρονισμός σύμπτυξης με το πρόγραμμα περιήγησης"
-  },
-  "tabGroupsSyncCollapseHint": {
-    "message": "Όταν είναι επιλεγμένο, η σύμπτυξη ή επέκταση μιας ομάδας σε αυτή την προβολή ενημερώνει επίσης την ομάδα καρτελών του προγράμματος περιήγησης. Απενεργοποιημένο από προεπιλογή, ώστε η αναδίπλωση της προβολής να παραμένει τοπική."
-  },
-  "tabGroupsColorStyle": {
-    "message": "Στυλ χρώματος ομάδας καρτελών"
-  },
-  "tabGroupsColorStyleHint": {
-    "message": "Το Off εμφανίζει μόνο την κουκκίδα χρώματος. Η χρωματική λωρίδα άκρης σχεδιάζει μια χρωματιστή λωρίδα στο αριστερό άκρο της ομάδας. Η γραμμή σύνδεσης χρώματος σχεδιάζει μια χρωματιστή γραμμή κάτω από την κουκκίδα της ομάδας με ένα σημάδι ανά σειρά, συνδέοντας όλη την ομάδα σε ένα δέντρο."
-  },
-  "tabGroupsColorStyleOff": {
-    "message": "Off (μόνο κουκκίδα χρώματος)"
-  },
-  "tabGroupsColorStyleEdge": {
-    "message": "Χρωματική λωρίδα άκρης"
-  },
-  "tabGroupsColorStyleLine": {
-    "message": "Γραμμή σύνδεσης χρώματος"
-  },
-  "tabGroupsBookmarked": {
-    "message": "Προστέθηκε στα σελιδοδείκτες"
-  },
-  "tabGroupsRemoveBookmark": {
-    "message": "Αφαίρεση σελιδοδείκτη"
-  },
-  "tabGroupsBookmarkRemoved": {
-    "message": "Αφαιρέθηκαν $count$ σελιδοδείκτες",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsPinned": {
-    "message": "Καρφιτσωμένη καρτέλα"
-  },
-  "tabGroupsDiscarded": {
-    "message": "Καρτέλα σε αναστολή"
-  },
-  "tabGroupsPinTab": {
-    "message": "Καρφίτσωμα καρτέλας"
-  },
-  "tabGroupsUnpinTab": {
-    "message": "Ξεκαρφίτσωμα καρτέλας"
-  },
-  "tabGroupsSleepTab": {
-    "message": "Αναστολή καρτέλας"
-  },
-  "tabGroupsWakeTab": {
-    "message": "Ενεργοποίηση καρτέλας"
-  },
-  "tabGroupsOpenGroups": {
-    "message": "Ανοιχτές ομάδες καρτελών"
-  },
-  "tabGroupsClosedGroups": {
-    "message": "Πρόσφατα κλειστά"
-  },
-  "tabGroupsUngroupedTabs": {
-    "message": "Μη ομαδοποιημένες καρτέλες"
-  },
-  "tabGroupsUngroupGroup": {
-    "message": "Κατάργηση ομαδοποίησης"
-  },
-  "tabGroupsMoveNewWindow": {
-    "message": "Μετακίνηση σε νέο παράθυρο"
-  },
-  "tabGroupsWindow": {
-    "message": "Παράθυρο $1$",
-    "placeholders": {
-      "1": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsCurrentWindow": {
-    "message": "Τρέχον παράθυρο"
-  },
-  "tabGroupsReopenGroup": {
-    "message": "Επανάνοιγμα ομάδας καρτελών"
-  },
-  "tabGroupsDeleteClosedGroup": {
-    "message": "Διαγραφή κλειστής ομάδας καρτελών"
-  },
-  "tabGroupsCollapseWindow": {
-    "message": "Σύμπτυξη παραθύρου"
-  },
-  "tabGroupsCloseWindow": {
-    "message": "Κλείσιμο παραθύρου"
-  },
-  "tabGroupsWindowClosedTitle": {
-    "message": "Κλειστό παράθυρο"
-  },
-  "tabGroupsExpandWindow": {
-    "message": "Επέκταση παραθύρου"
-  },
-  "tabGroupsClearClosedGroups": {
-    "message": "Εκκαθάριση όλων"
-  },
-  "tabGroupsConfirmClearClosed": {
-    "message": "Να διαγραφούν όλες οι πρόσφατες εγγραφές; Δεν θα μπορούν να ανοιχτούν ξανά από εδώ."
-  },
-  "tabGroupsFilterPlaceholder": {
-    "message": "Φίλτρο ανοιχτών καρτελών"
-  },
-  "tabGroupsNoMatchingTabs": {
-    "message": "Δεν υπάρχουν αντίστοιχες καρτέλες"
-  },
-  "tabGroupsClosedOpenTab": {
-    "message": "Άνοιγμα σε νέα καρτέλα"
-  },
-  "tabGroupsRemoveClosedTab": {
-    "message": "Αφαίρεση από αποθηκευμένη ομάδα"
-  },
-  "tabGroupsClosedTimeLabel": {
-    "message": "Κλείσιμο:"
-  },
-  "tabGroupsExpandedExpand": {
-    "message": "Ανάπτυξη"
-  },
-  "tabGroupsExpandedCollapse": {
-    "message": "Σύμπτυξη"
-  },
-  "optionTabGroupsClosedLimit": {
-    "message": "Ιστορικό κλειστών καρτελών/ομάδων για διατήρηση"
-  },
-  "folderPickMoveHere": {
-    "message": "Μετακίνηση εδώ"
-  },
-  "folderPickCopyHere": {
-    "message": "Αντιγραφή εδώ"
-  },
-  "folderPickFilter": {
-    "message": "Φίλτρο φακέλων…"
-  },
-  "folderPickFavNote": {
-    "message": "Τα μη σελιδοποιημένα στοιχεία θα προστεθούν εδώ"
-  },
-  "folderPickPinned": {
-    "message": "Καρφιτσωμένα"
-  },
-  "folderPickRecent": {
-    "message": "Πρόσφατα"
-  },
-  "pinFolder": {
-    "message": "Καρφίτσωμα αυτού του φακέλου"
-  },
-  "unpinFolder": {
-    "message": "Ξεκαρφίτσωμα αυτού του φακέλου"
-  },
-  "stagingAdd": {
-    "message": "Αποστολή σε staging"
-  },
-  "stagingAdded": {
-    "message": "Στάλθηκε στο staging"
-  },
-  "stagingAlready": {
-    "message": "Ήδη στην περιοχή"
-  },
-  "stagingAddedSummary": {
-    "message": "Προστέθηκαν $n$ στοιχείο(α)· $m$ ήδη στην περιοχή",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      },
-      "m": {
-        "content": "$2"
-      }
-    }
-  },
-  "stagingFull": {
-    "message": "Η περιοχή είναι γεμάτη — αφαιρέστε πρώτα κάποια στοιχεία"
-  },
-  "stagingFolderEmpty": {
-    "message": "Αυτός ο φάκελος δεν έχει σελιδοδείκτες για προσωρινή αποθήκευση"
-  },
-  "stagingConfirmFolder": {
-    "message": "Προσωρινή αποθήκευση $n$ σελιδοδεικτών από αυτόν τον φάκελο;",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingConfirmFolderOk": {
-    "message": "Στάδιο"
-  },
-  "stagingRemove": {
-    "message": "Αφαίρεση από την περιοχή"
-  },
-  "stagingRemoved": {
-    "message": "Αφαιρέθηκε από την περιοχή"
-  },
-  "recentStageAll": {
-    "message": "Προσωρινή αποθήκευση όλων των πρόσφατων"
-  },
-  "recentSectionTitle": {
-    "message": "Πρόσφατα προστέθηκαν"
-  },
-  "stagingEmpty": {
-    "message": "Δεν υπάρχουν ακόμη αντικείμενα. Στείλτε σελιδοδείκτες εδώ από οποιαδήποτε προβολή — το κουμπί αεροπλάνου σε μια σειρά ή το μενού δεξιού κλικ — και οργανώστε τους μαζικά."
-  },
-  "stagingFromHistory": {
-    "message": "Από το ιστορικό"
-  },
-  "stagingGroupExpand": {
-    "message": "Ανάπτυξη ομάδας"
-  },
-  "stagingGroupCollapse": {
-    "message": "Σύμπτυξη ομάδας"
-  },
-  "stagingGroupRename": {
-    "message": "Μετονομασία ομάδας…"
-  },
-  "stagingGroupDissolve": {
-    "message": "Διάλυση ομάδας"
-  },
-  "stagingGroupDissolved": {
-    "message": "Η ομάδα διαλύθηκε — τα στοιχεία παραμένουν στην περιοχή"
-  },
-  "stagingGroupDelete": {
-    "message": "Διαγραφή ομάδας (με στοιχεία)"
-  },
-  "stagingGroupDeleteConfirm": {
-    "message": "Διαγραφή ομάδας \"$1\"; Τα $2 στοιχείο(α) της απομακρύνονται επίσης από την περιοχή προσωρινής αποθήκευσης."
-  },
-  "stagingGroupDeleted": {
-    "message": "Η ομάδα διαγράφηκε — αφαιρέθηκαν $1 στοιχείο(α)"
-  },
-  "stagingGroupAssign": {
-    "message": "Ομάδα…"
-  },
-  "stagingGroupAssignTitle": {
-    "message": "Ανάθεση σε ομάδα"
-  },
-  "stagingGroupNew": {
-    "message": "Νέα ομάδα"
-  },
-  "stagingGroupNamePrompt": {
-    "message": "Όνομα νέας ομάδας"
-  },
-  "stagingGroupNoGroups": {
-    "message": "Δεν υπάρχουν ακόμη ομάδες"
-  },
-  "stagingShortcutAdd": {
-    "message": "Προσθήκη συντόμευσης"
-  },
-  "stagingShortcutBarLabel": {
-    "message": "Μετακίνηση σε:"
-  },
-  "stagingGuideText": {
-    "message": "Οργανώστε τους σελιδοδείκτες εδώ — επιλέξτε γραμμές και ενεργοποιήστε τη λειτουργία επιλογής για μαζικές ενέργειες."
-  },
-  "stagingGuideDismiss": {
-    "message": "Να μην εμφανιστεί ξανά"
-  },
-  "stagingShortcutTitle": {
-    "message": "Συντόμευση μετακίνησης"
-  },
-  "stagingShortcutEdit": {
-    "message": "Επεξεργασία συντόμευσης"
-  },
-  "stagingShortcutAlias": {
-    "message": "Ψευδώνυμο"
-  },
-  "stagingShortcutPickFolder": {
-    "message": "Επιλογή φακέλου προορισμού…"
-  },
-  "stagingShortcutSave": {
-    "message": "Αποθήκευση"
-  },
-  "stagingShortcutRemove": {
-    "message": "Αφαίρεση συντόμευσης"
-  },
-  "stagingShortcutRemoved": {
-    "message": "Η συντόμευση αφαιρέθηκε"
-  },
-  "stagingShortcutMove": {
-    "message": "Μετακίνηση επιλεγμένων σε $1$",
-    "placeholders": {
-      "1": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingBucketTitle": {
-    "message": "Μη σελιδοποιημένα"
-  },
-  "stagingBucketFavAll": {
-    "message": "Προσθήκη όλων στα αγαπημένα"
-  },
-  "stagingNew": {
-    "message": "νέα $n$",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingRowFav": {
-    "message": "Προσθήκη στα αγαπημένα"
-  },
-  "stagingRowUnfav": {
-    "message": "Αφαίρεση από αγαπημένα"
-  },
-  "stagingFav": {
-    "message": "Αγαπημένο"
-  },
-  "stagingUnfav": {
-    "message": "Όχι αγαπημένο"
-  },
-  "stagingFavDone": {
-    "message": "Προστέθηκαν $n$ στα αγαπημένα",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingUnfavDone": {
-    "message": "Αφαιρέθηκαν $n$ από αγαπημένα",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "groupSaveToFolder": {
-    "message": "Αποθήκευση σε φάκελο…"
-  },
-  "groupCopyToFolder": {
-    "message": "Αντιγραφή σε φάκελο…"
-  },
-  "stagingCount": {
-    "message": "$n$ σε αναμονή",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingMoveCopy": {
-    "message": "Μετακίνηση/αντιγραφή σε…"
-  },
-  "stagingMoveDone": {
-    "message": "Μετακινήθηκαν $n$ στοιχεία στην αρχική θέση",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingCopyDone": {
-    "message": "Αντιγράφηκαν $n$ στοιχεία",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingMoveConfirm": {
-    "message": "Μετακίνηση $n$ στοιχείων στον επιλεγμένο φάκελο;",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingMoveConfirmOk": {
-    "message": "Μετακίνηση"
-  },
-  "stagingDeleteConfirm": {
-    "message": "Διαγραφή $n$ στοιχείων; Όσα δεν είναι σελιδοδείκτες απλώς φεύγουν από την περιοχή αναμονής.",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingDeleted": {
-    "message": "Διαγράφηκαν $n$ σελιδοδείκτες",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingRemovedCount": {
-    "message": "Αφαιρέθηκαν $n$ στοιχεία από την περιοχή αναμονής",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingClear": {
-    "message": "Εκκαθάριση αναμονής"
-  },
-  "stagingClearConfirm": {
-    "message": "Εκκαθάριση όλης της περιοχής αναμονής; Το δέντρο σελιδοδεικτών δεν επηρεάζεται."
-  },
-  "stagingClearConfirmOk": {
-    "message": "Εκκαθάριση"
-  },
-  "stagingCleared": {
-    "message": "Η περιοχή αναμονής εκκαθαρίστηκε"
-  },
-  "groupPlaceTooltip": {
-    "message": "Αποθήκευση αυτής της ομάδας σε φάκελο…"
-  },
-  "copyBookmark": {
-    "message": "Αντιγραφή"
-  },
-  "cutBookmark": {
-    "message": "Αποκοπή"
-  },
-  "copyMoveTo": {
-    "message": "Αντιγραφή/μετακίνηση σε…"
-  },
-  "pasteHere": {
-    "message": "Επικόλληση εδώ"
-  },
-  "copiedToast": {
-    "message": "Αντιγράφηκε: $t$",
-    "placeholders": {
-      "t": {
-        "content": "$1"
-      }
-    }
-  },
-  "cutToast": {
-    "message": "Αποκόπηκε: $t$ — επικολλήστε σε φάκελο προορισμού (Esc ακυρώνει)",
-    "placeholders": {
-      "t": {
-        "content": "$1"
-      }
-    }
-  },
-  "pasteDone": {
-    "message": "Επικολλήθηκε"
-  },
-  "pasteGone": {
-    "message": "Ο σελιδοδείκτης δεν υπάρχει πλέον — το πρόχειρο καθαρίστηκε"
-  },
-  "folderCopyList": {
-    "message": "Αντιγραφή τίτλων και διευθύνσεων"
-  },
-  "folderCopyText": {
-    "message": "Λίστα απλού κειμένου"
-  },
-  "folderCopyMarkdown": {
-    "message": "Markdown"
-  },
-  "folderCopyJson": {
-    "message": "JSON"
-  },
-  "folderCopyConfirm": {
-    "message": "Αντιγραφή της λίστας των $n$ σελιδοδεικτών;",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "folderCopyDone": {
-    "message": "Αντιγράφηκαν $n$ καταχωρήσεις σελιδοδεικτών",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "addFolderMenu": {
-    "message": "Προσθήκη φακέλου"
-  },
-  "optionCollapseAddFolderMenu": {
-    "message": "Σύμπτυξη καταχωρήσεων προσθήκης φακέλου"
-  },
-  "optionCollapseAddFolderMenuHint": {
-    "message": "Συγχώνευση των καταχωρίσεων προσθήκης φακέλου (πριν/μετά/μέσα σε σειρές φακέλων, πριν/μετά σε σειρές σελιδοδεικτών) σε μία καταχώριση υπομενού."
-  },
-  "tabRowStage": {
-    "message": "Αποστολή σε στάδιο"
-  },
-  "tabgroupStageAll": {
-    "message": "Αποστολή ομάδας σε στάδιο"
-  },
-  "tabgroupStageConfirm": {
-    "message": "Αποστολή $n$ καρτελών σε στάδιο;",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabgroupStageNone": {
-    "message": "Δεν υπάρχουν καρτέλες για σελιδοδείκτη σε αυτή την ομάδα"
-  },
-  "stagedToast": {
-    "message": "Σε αναμονή $n$ καρτέλες ως ομάδα «$t$»",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      },
-      "t": {
-        "content": "$2"
-      }
-    }
-  },
-  "searchResultCount": {
-    "message": "$n$ αποτελέσματα",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "deleteSelected": {
-    "message": "Διαγραφή επιλεγμένων"
-  },
-  "recentStageGroup": {
-    "message": "Αποστολή $t$ στην περιοχή προσωρινής αποθήκευσης",
-    "placeholders": {
-      "t": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingGroupSelectAll": {
-    "message": "Επιλογή όλων στην ομάδα"
-  },
-  "optionsGroupLabs": {
-    "message": "Εργαστήρια"
-  },
-  "optionVirtualScrollLab": {
-    "message": "Εικονική κύλιση (πειραματική)"
-  },
-  "optionVirtualScrollLabHint": {
-    "message": "Οι προβολές ομάδων καρτελών και διπλοτύπων εμφανίζουν μόνο τις σειρές κοντά στη θύρα προβολής. Πολύ πιο γρήγορο σε πολύ μεγάλες λίστες· ενώ είναι πειραματικό, η θέση της γραμμής κύλισης είναι εκτίμηση."
-  },
-  "optionsStagingSection": {
-    "message": "Στάδια & πρόσφατα προστιθέμενα"
-  },
-  "optionStagingEnabled": {
-    "message": "Ενεργοποίηση περιοχής σταδίων"
-  },
-  "optionStagingEnabledHint": {
-    "message": "Όταν είναι απενεργοποιημένο, αυτή η προβολή διατηρεί μόνο τη λίστα πρόσφατων προσθηκών και κάθε κουμπί ή καταχώρηση μενού σταδίων στις άλλες προβολές κρύβεται."
-  },
-  "optionTreeRowActions": {
-    "message": "Ενέργειες αιώρησης σε γραμμές δέντρου (επεξεργασία / στάδιο / διαγραφή)"
-  },
-  "optionsStorageSyncTip": {
-    "message": "Συγχρονίζεται μέσω του λογαριασμού σας στο Chrome — αυτή η ρύθμιση είναι κοινή σε όλες τις συσκευές σας.",
-    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
-  },
-  "optionsStorageLocalTip": {
-    "message": "Αποθηκεύεται μόνο σε αυτή τη συσκευή — δεν συγχρονίζεται μέσω του Chrome.",
-    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
-  },
-  "tabGroupsWindowsCount": {
-    "message": "$n$ παράθυρα",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsNewWindow": {
-    "message": "Νέο παράθυρο"
-  },
-  "tabGroupsMergedWindowToast": {
-    "message": "Το παράθυρο συγχωνεύτηκε ως ομάδα καρτελών"
-  },
-  "searchStageAllGroup": {
-    "message": "Αποστολή όλων των αποτελεσμάτων ως ομάδα \"$1$\"",
-    "placeholders": {
-      "1": {
-        "content": "$1"
-      }
-    }
-  },
-  "searchHistoryClose": {
-    "message": "Απόκρυψη ιστορικού αναζήτησης"
-  },
-  "searchHistoryClosedToast": {
-    "message": "Το ιστορικό αναζήτησης είναι κρυφό — ενεργοποιήστε το ξανά στις Επιλογές → Αναζήτηση"
   }
 }

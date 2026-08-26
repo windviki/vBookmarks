@@ -14,6 +14,9 @@
   "addBookmarkTop": {
     "message": "إضافة التبويب الحالي أعلى هذا"
   },
+  "addFolderMenu": {
+    "message": "إضافة مجلد"
+  },
   "addNewFolder": {
     "message": "إضافة مجلد فرعي"
   },
@@ -32,23 +35,38 @@
   "announceDismiss": {
     "message": "إغلاق"
   },
-  "announceV408Text": {
-    "message": "v4.0.8 هو إصدار محسّن للأيقونات: يتم جلب أيقونات المواقع الحقيقية تلقائيًا للإشارات المرجعية التي لم يقم Chrome بتخزينها مؤقتًا بعد."
-  },
   "announceV407Text": {
     "message": "يوفّر الإصدار 4.0.7 عرضًا متكاملًا للروابط المعطلة: فحص الروابط المعطلة والمقيدة وتمييزها وتصفيتها وفرزها، مع العلامات السابقة والطوابع الزمنية لكل صف."
   },
   "announceV407Title": {
     "message": "ما الجديد في v4.0.7"
   },
+  "announceV408Text": {
+    "message": "v4.0.8 هو إصدار محسّن للأيقونات: يتم جلب أيقونات المواقع الحقيقية تلقائيًا للإشارات المرجعية التي لم يقم Chrome بتخزينها مؤقتًا بعد."
+  },
   "announceV408Title": {
     "message": "ما الجديد في v4.0.8"
+  },
+  "announceV410Text": {
+    "message": "v4.1.0 新增标签组视图和暂存区：在书签旁管理每个窗口的标签页，并将任意位置的书签收集到暂存工作台进行批量整理。"
   },
   "announceV410Title": {
     "message": "ما الجديد في v4.1.0"
   },
-  "announceV410Text": {
-    "message": "v4.1.0 新增标签组视图和暂存区：在书签旁管理每个窗口的标签页，并将任意位置的书签收集到暂存工作台进行批量整理。"
+  "bookmarkFolderNoFolders": {
+    "message": "لا توجد مجلدات علامات مرجعية"
+  },
+  "bookmarkFolderPickDialogTitle": {
+    "message": "إضافة إلى مجلد العلامات المرجعية"
+  },
+  "bookmarkOpenInExistingGroup": {
+    "message": "فتح في مجموعة تبويبات موجودة…"
+  },
+  "bookmarkOpenInNewGroup": {
+    "message": "فتح في مجموعة تبويبات جديدة"
+  },
+  "bookmarkOpenInNewGroupSetup": {
+    "message": "فتح في مجموعة تبويبات جديدة…"
   },
   "confirmDeleteFolder": {
     "message": "يحتوي هذا المجلد على $count$ عنصر(عناصر). يمكنك التراجع عن الحذف.",
@@ -57,9 +75,6 @@
         "content": "$1"
       }
     }
-  },
-  "confirmDeleteFolderButton": {
-    "message": "حذف"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "هل أنت متأكد من أنك تريد حذف مجلد $folderName$ و $bookmarkCount$ علامة مرجعية فيه؟",
@@ -71,6 +86,9 @@
         "content": "$1"
       }
     }
+  },
+  "confirmDeleteFolderButton": {
+    "message": "حذف"
   },
   "confirmDeleteFolderSubfolders": {
     "message": "هل أنت متأكد من أنك تريد حذف مجلد $folderName$ و $subFolderCount$ مجلد فرعي فيه؟",
@@ -124,11 +142,32 @@
       }
     }
   },
+  "contextMenuAddBookmark": {
+    "message": "إضافة إشارة مرجعية لهذه الصفحة باستخدام vBookmarks"
+  },
+  "copiedToast": {
+    "message": "تم النسخ: $t$",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
+  },
   "copyAllTitlesAndUrls": {
     "message": "نسخ جميع العناوين وعناوين URL إلى الحافظة"
   },
+  "copyBookmark": {
+    "message": "نسخ"
+  },
+  "copyMoveTo": {
+    "message": "نسخ/نقل إلى…"
+  },
   "copyTitleAndUrl": {
     "message": "نسخ العنوان وعنوان URL إلى الحافظة"
+  },
+  "crossStorageMoveWarning": {
+    "description": "تحذير عند محاولة نقل الإشارات المرجعية عبر أنواع التخزين",
+    "message": "لا يمكن نقل الإشارات المرجعية بين التخزين المتزامن والتخزين المحلي. استخدم النسخ/اللصق بدلاً من ذلك."
   },
   "customIcon": {
     "message": "أيقونة مخصصة"
@@ -136,8 +175,14 @@
   "customIconDescription": {
     "message": "يجب أن تكون الأيقونة بقياس 19*19 بكسل. وإلا سيتم تغيير حجمها إلى هذا القياس."
   },
+  "customIconPick": {
+    "message": "اختيار ملف…"
+  },
   "customSeparatorColorDescription": {
     "message": "تخصيص لون الفاصل"
+  },
+  "customSeparatorStringDescription": {
+    "message": "إذا احتوى عنوان URL للعلامة المرجعية على هذه السلسلة، سيتم عرضها كفاصل"
   },
   "customSeparatorTitleDescription": {
     "message": "العنوان الحقيقي للعلامة المرجعية التي تظهر كفاصل"
@@ -145,28 +190,28 @@
   "customSeparatorUrlDescription": {
     "message": "عنوان URL الحقيقي للعلامة المرجعية التي تظهر كفاصل"
   },
-  "customSeparatorStringDescription": {
-    "message": "إذا احتوى عنوان URL للعلامة المرجعية على هذه السلسلة، سيتم عرضها كفاصل"
-  },
   "customStyles": {
     "message": "أنماط مخصصة"
-  },
-  "separatorOptions": {
-    "message": "الفواصل"
   },
   "customStylesDescription": {
     "message": "يتطلب هذا بعض مهارات CSS. قم بالتعديل على مسؤوليتك الخاصة. سيكون من الحكمة مشاركة الكود عبر"
   },
-  "defaultIconButton": {
-    "message": "استخدام الافتراضي"
+  "cutBookmark": {
+    "message": "قص"
   },
-  "defaultIconButtonOr": {
-    "message": "أو"
+  "cutToast": {
+    "message": "قص: $t$ — الصق في المجلد الهدف (Esc للإلغاء)",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
   },
-  "customIconPick": {
-    "message": "اختيار ملف…"
+  "deadCancel": {
+    "message": "إلغاء"
   },
   "deadChecking": {
+    "description": "Progress line of the palette's dead-link scan mode; $done$ bookmarks checked out of $total$.",
     "message": "جارٍ التحقق $done$ / $total$…",
     "placeholders": {
       "done": {
@@ -177,8 +222,10 @@
         "content": "$2",
         "example": "120"
       }
-    },
-    "description": "Progress line of the palette's dead-link scan mode; $done$ bookmarks checked out of $total$."
+    }
+  },
+  "deadClearScan": {
+    "message": "مسح نتائج الفحص"
   },
   "deadConfirmAll": {
     "message": "هل تريد حذف جميع الإشارات المرجعية المعطلة ($count$)؟ لا يمكن التراجع عن هذا في خطوة واحدة.",
@@ -192,6 +239,15 @@
   "deadConfirmDelete": {
     "message": "إزالة هذه الإشارة المرجعية؟"
   },
+  "deadConfirmDeleteSelected": {
+    "message": "حذف $count$ من الإشارات المرجعية المعطلة المحددة؟",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
+  },
   "deadDeleteAll": {
     "message": "حذف كل $count$ من الإشارات المرجعية في الفلتر الحالي؟",
     "placeholders": {
@@ -201,27 +257,15 @@
       }
     }
   },
-  "deadDeleteAllNote": {
-    "message": "تحت عامل تصفية \"الكل\"، يشمل ذلك الإشارات المرجعية المحظورة (التي يمكن الوصول إليها عبر الوكيل، وربما لا تزال نشطة) والصفوف المعلَّمة سابقًا.",
-    "description": "Second line of the delete-all confirmation in the Dead links view."
-  },
-  "undoSingleStepNote": {
-    "message": "يمكن للتراجع استعادة آخر عملية حذف فقط."
-  },
   "deadDeleteAllBtn": {
     "message": "حذف الكل"
   },
+  "deadDeleteAllNote": {
+    "description": "Second line of the delete-all confirmation in the Dead links view.",
+    "message": "تحت عامل تصفية \"الكل\"، يشمل ذلك الإشارات المرجعية المحظورة (التي يمكن الوصول إليها عبر الوكيل، وربما لا تزال نشطة) والصفوف المعلَّمة سابقًا."
+  },
   "deadDeleteSelected": {
     "message": "حذف المحدد"
-  },
-  "deadConfirmDeleteSelected": {
-    "message": "حذف $count$ من الإشارات المرجعية المعطلة المحددة؟",
-    "placeholders": {
-      "count": {
-        "content": "$1",
-        "example": "8"
-      }
-    }
   },
   "deadDeleted": {
     "message": "تم حذف $count$ إشارات مرجعية معطلة",
@@ -232,8 +276,72 @@
       }
     }
   },
-  "deadClearScan": {
-    "message": "مسح نتائج الفحص"
+  "deadDetectTimeLabel": {
+    "message": "اكتُشف في"
+  },
+  "deadFilterAll": {
+    "message": "الكل"
+  },
+  "deadFilterBlocked": {
+    "message": "محظور فقط"
+  },
+  "deadFilterDead": {
+    "message": "معطلة فقط"
+  },
+  "deadFilterMarked": {
+    "message": "معلَّمة سابقًا"
+  },
+  "deadLastScanAt": {
+    "message": "آخر فحص: $time$",
+    "placeholders": {
+      "time": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadMark": {
+    "message": "وضع علامة كمعطلة"
+  },
+  "deadMarkAll": {
+    "message": "وضع علامة على الكل"
+  },
+  "deadMarkSelected": {
+    "message": "وضع علامة على المحدد"
+  },
+  "deadMarkStatusAll": {
+    "message": "أي حالة"
+  },
+  "deadMarkStatusMarked": {
+    "message": "موسوم"
+  },
+  "deadMarkStatusUnmarked": {
+    "message": "غير موسوم"
+  },
+  "deadMarkTimeLabel": {
+    "message": "وُسم في"
+  },
+  "deadMarked": {
+    "message": "تم وضع علامة على الصفوف المعطلة"
+  },
+  "deadMarkedBanner": {
+    "message": "يتم عرض الإشارات المرجعية المعلّمة سابقًا. انقر فوق 'إعادة الفحص' لبدء فحص جديد، أو عالجها في القائمة أدناه."
+  },
+  "deadMarkedBannerDismiss": {
+    "message": "إغلاق"
+  },
+  "deadMarkedCount": {
+    "message": "تم وضع علامة على $count$ إشارات مرجعية",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadMarkedNone": {
+    "message": "لا توجد إشارات مرجعية معلّمة بعد"
+  },
+  "deadMarkedRow": {
+    "message": "مُعلَّم"
   },
   "deadNone": {
     "message": "لم يتم العثور على روابط معطلة"
@@ -241,34 +349,711 @@
   "deadNoneFiltered": {
     "message": "لا توجد روابط معطلة ضمن هذا الفلتر — جرب مقطعًا آخر أعلاه"
   },
+  "deadPause": {
+    "message": "إيقاف مؤقت"
+  },
+  "deadPaused": {
+    "message": "متوقف مؤقتًا"
+  },
+  "deadProxyAdd": {
+    "message": "أضف خادم وكيل لفحوصات الروابط المعطلة"
+  },
+  "deadProxyChange": {
+    "message": "تغيير"
+  },
+  "deadProxyClear": {
+    "message": "مسح"
+  },
+  "deadProxyControlled": {
+    "message": "إعدادات الوكيل تدار بواسطة إضافة أخرى"
+  },
+  "deadProxyDenied": {
+    "message": "لم يتم منح إذن الوكيل"
+  },
+  "deadProxyInvalid": {
+    "message": "عنوان وكيل غير صالح — استخدم host:port أو scheme://host:port (http/https/socks5، بدون بيانات اعتماد)"
+  },
+  "deadProxyLabel": {
+    "message": "الوكيل: $server$",
+    "placeholders": {
+      "server": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadProxyNeverShow": {
+    "message": "لا تظهر مرة أخرى"
+  },
+  "deadProxyNone": {
+    "message": "(غير محدد)"
+  },
+  "deadProxyNudge": {
+    "message": "إعادة فحص البروكسي تفصل الروابط المعطلة فعلياً عن تلك المحجوبة حسب المنطقة — قم بتكوين ذلك هنا أو في صفحة الخيارات."
+  },
+  "deadProxyPanelHint": {
+    "message": "أدخل خادم وكيل تمتلكه بالفعل (الإضافة لا توفر أيًا)، مثال: 127.0.0.1:7890 أو socks5://127.0.0.1:1080."
+  },
+  "deadProxyRemove": {
+    "message": "إزالة"
+  },
+  "deadProxyRemoved": {
+    "message": "تمت إزالة الخادم الوكيل"
+  },
+  "deadProxySaved": {
+    "message": "تم حفظ الوكيل — ستعيد عمليات الفحص المستقبلية فحص حالات الفشل المباشر من خلاله."
+  },
+  "deadProxyServerHint": {
+    "message": "يقوم الخادم المحفوظ بإعادة فحص الإشارات المرجعية التي تفشل في الفحص المباشر في كل فحص للروابط المعطلة، لفصل الروابط المعطلة فعليًا عن المحجوبة إقليميًا. يقوم خيار الاختبار والحفظ باختباره (لا يُحتفظ إلا بالخادم القابل للوصول)؛ ويمكنك أيضًا إضافته من عرض الروابط المعطلة."
+  },
+  "deadProxyTestSave": {
+    "message": "اختبار وحفظ"
+  },
+  "deadProxyTestUrlLabel": {
+    "message": "رابط الاختبار"
+  },
+  "deadProxyTesting": {
+    "message": "جارٍ الاختبار…"
+  },
+  "deadProxyUnavailable": {
+    "message": "واجهة برمجة التطبيقات للوكيل غير متاحة في هذا المتصفح"
+  },
+  "deadProxyUnreachable": {
+    "message": "الوكيل غير قابل للوصول — لم يتم الحفظ"
+  },
   "deadRescan": {
     "message": "إعادة المسح"
+  },
+  "deadResume": {
+    "message": "استئناف"
+  },
+  "deadRiskBanner": {
+    "message": "تنظيف الروابط المعطلة يحذف الإشارات المرجعية بشكل جماعي. قم بعمل نسخة احتياطية من الإشارات المرجعية قبل أول عملية تنظيف."
+  },
+  "deadSortByDetected": {
+    "message": "وقت الاكتشاف"
+  },
+  "deadSortByMarked": {
+    "message": "وقت الوسم"
+  },
+  "deadSortByPath": {
+    "message": "مسار المجلد"
+  },
+  "deadSortLabel": {
+    "message": "ترتيب حسب"
+  },
+  "deadStartHint": {
+    "message": "بدء فحص $n$ إشارة مرجعية",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadStatusBlocked": {
+    "message": "محظور"
+  },
+  "deadUnmark": {
+    "message": "إزالة علامة المعطلة"
+  },
+  "deadUnmarkAll": {
+    "message": "مسح جميع العلامات"
+  },
+  "deadUnmarkSelected": {
+    "message": "إزالة العلامة عن المحدد"
+  },
+  "defaultIconButton": {
+    "message": "استخدام الافتراضي"
+  },
+  "defaultIconButtonOr": {
+    "message": "أو"
   },
   "delete": {
     "message": "حذف"
   },
+  "deleteEllipsis": {
+    "message": "حذف..."
+  },
+  "deleteSelected": {
+    "message": "حذف المحدد"
+  },
   "deletedBookmark": {
+    "description": "Toast shown after a bookmark or separator was deleted; the toast offers an undo button. $title$ is the deleted row's title (empty for separators).",
     "message": "تم حذف $title$",
     "placeholders": {
       "title": {
         "content": "$1",
         "example": "Example"
       }
-    },
-    "description": "Toast shown after a bookmark or separator was deleted; the toast offers an undo button. $title$ is the deleted row's title (empty for separators)."
+    }
   },
   "deletedFolder": {
+    "description": "Toast shown after a bookmark folder (with its whole subtree) was deleted; the toast offers an undo button. $title$ is the folder name.",
     "message": "تم حذف المجلد $title$",
     "placeholders": {
       "title": {
         "content": "$1",
         "example": "Bookmarks"
       }
-    },
-    "description": "Toast shown after a bookmark folder (with its whole subtree) was deleted; the toast offers an undo button. $title$ is the folder name."
+    }
+  },
+  "donationDismiss": {
+    "message": "تجاهل"
+  },
+  "donationGo": {
+    "message": "تبرع"
+  },
+  "donationLater": {
+    "message": "لاحقًا"
+  },
+  "donationMessage": {
+    "message": "هل أعجبك؟ تبرّع لدعم مستقبله، أو قيّمه في المتجر: فكل تقييم يضمن استمرار التحديثات."
+  },
+  "donationNever": {
+    "message": "لا تظهر مرة أخرى"
+  },
+  "donationRate": {
+    "message": "قيّمه"
+  },
+  "donationRateTitle": {
+    "message": "قيّم vBookmarks على متجر Chrome الإلكتروني"
+  },
+  "donationV4GuideLink": {
+    "message": "اقرأ دليل v4 ←"
+  },
+  "donationV4Notice": {
+    "message": "vBookmarks 4.0 هو إصدار جديد كلياً بتصميم عصري، ومليء بالميزات الجديدة."
+  },
+  "dupesApplyAll": {
+    "message": "تطبيق الكل ($count$)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesApplySelected": {
+    "message": "إزالة التكرار من المحدد ($count$)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesCleanAll": {
+    "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go.",
+    "message": "تنظيف الكل: $groups$ مجموعات، $count$ نسخ إضافية",
+    "placeholders": {
+      "count": {
+        "content": "$2"
+      },
+      "groups": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesCleanRestHint": {
+    "message": "احتفظ بـ \"$title$\" وأزل $count$ الأخرى",
+    "placeholders": {
+      "count": {
+        "content": "$2"
+      },
+      "title": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesConfirmAll": {
+    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark).",
+    "message": "إزالة $count$ نسخ إضافية عبر $groups$ مجموعات؟ سيتم الاحتفاظ بالعنصر المحدد في كل مجموعة.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    }
+  },
+  "dupesConfirmGroup": {
+    "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept).",
+    "message": "الاحتفاظ بـ \"$title$\" وإزالة النسخ $count$ الأخرى؟",
+    "placeholders": {
+      "count": {
+        "content": "$2"
+      },
+      "title": {
+        "content": "$1",
+        "example": "Example bookmark"
+      }
+    }
+  },
+  "dupesConfirmSelected": {
+    "message": "هل تريد إزالة $count$ إشارة مرجعية مكررة من المجموعات المحددة ($groups$)؟",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    }
+  },
+  "dupesDone": {
+    "description": "Alert shown after the duplicate cleanup finished.",
+    "message": "تمت إزالة $count$ إشارات مرجعية مكررة",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesGroupCollapse": {
+    "description": "Dupes view group-head context menu: collapse an expanded duplicate group.",
+    "message": "طي المجموعة"
+  },
+  "dupesGroupCount": {
+    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL.",
+    "message": "$count$ مكررات",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesGroupExpand": {
+    "description": "Dupes view group-head context menu: expand a collapsed duplicate group.",
+    "message": "توسيع المجموعة"
+  },
+  "dupesIgnoreScheme": {
+    "message": "تجاهل اختلافات http/https"
+  },
+  "dupesKeepThis": {
+    "message": "احتفظ بهذا"
+  },
+  "dupesKeeperSet": {
+    "message": "تعيين كحافظ"
+  },
+  "dupesNone": {
+    "message": "لم يتم العثور على مكررات"
+  },
+  "dupesPreviewSummary": {
+    "message": "$groups$ مجموعات · $count$ سيتم تحريرها",
+    "placeholders": {
+      "count": {
+        "content": "$2"
+      },
+      "groups": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesRemoveRow": {
+    "message": "حذف هذه النسخة"
+  },
+  "dupesRiskBanner": {
+    "message": "إزالة التكرارات تحذف الإشارات المرجعية المكررة بشكل جماعي. قم بعمل نسخة احتياطية من الإشارات المرجعية قبل تطبيقها."
+  },
+  "dupesScopeAll": {
+    "message": "جميع الإشارات المرجعية"
+  },
+  "dupesScopeBar": {
+    "message": "شريط الإشارات فقط"
+  },
+  "dupesStrategyBookmarkBar": {
+    "message": "احتفظ بالذي في شريط الإشارات"
+  },
+  "dupesStrategyMostVisited": {
+    "message": "احتفظ بالأكثر زيارة"
+  },
+  "dupesStrategyNewest": {
+    "message": "احتفظ بالأحدث"
+  },
+  "dupesStrategyOldest": {
+    "message": "احتفظ بالأقدم"
+  },
+  "dupesStrategyShallowest": {
+    "message": "احتفظ بالأقل عمقًا"
+  },
+  "dupesStrategyShortestTitle": {
+    "message": "احتفظ بأقصر عنوان"
+  },
+  "edit": {
+    "message": "تحرير..."
+  },
+  "editBookmark": {
+    "message": "تحرير علامة مرجعية"
+  },
+  "editFolder": {
+    "message": "تحرير مجلد"
+  },
+  "errorOccured": {
+    "message": "عفواً، حدث خطأ."
+  },
+  "extDesc": {
+    "description": "وصف الامتداد.",
+    "message": "مدير علامات مرجعية منبثق. Neat Bookmarks محسّن. أنظم من Neater Bookmarks."
+  },
+  "extName": {
+    "description": "vBookmarks",
+    "message": "vBookmarks"
+  },
+  "favGalleryAll": {
+    "description": "Favicon gallery source filter chip: show every source.",
+    "message": "الكل"
+  },
+  "favGalleryCompare": {
+    "description": "Favicon gallery toggle button: switch every icon to the generic placeholder it replaced (before/after comparison).",
+    "message": "قارن مع الرمز النائب"
+  },
+  "favGalleryEmptyText": {
+    "description": "Favicon gallery empty-state body text.",
+    "message": "عندما تصادف النافذة المنبثقة موقعًا مضافًا إلى الإشارات المرجعية ليس لدى Chrome أيقونة له، يجلب vBookmarks الأيقونة الحقيقية ويعرضها هنا."
+  },
+  "favGalleryEmptyTitle": {
+    "description": "Favicon gallery empty-state heading.",
+    "message": "لا توجد أيقونات محدّثة بعد"
+  },
+  "favGalleryFailedHint": {
+    "description": "Favicon gallery hint under the failed-fetch section title.",
+    "message": "تتم إعادة المحاولة بعد 24 ساعة و3 أيام و7 أيام، ثم يُتخلى عنها حتى يتم مسح ذاكرة التخزين المؤقت للأيقونات."
+  },
+  "favGalleryFailedTitle": {
+    "description": "Favicon gallery heading of the muted section listing hosts whose icon fetch failed recently.",
+    "message": "تمت المحاولة مؤخرًا دون العثور على أيقونة"
+  },
+  "favGalleryGaveUp": {
+    "description": "Favicon gallery badge on a failed-strip host whose retries are exhausted (it stays untouched until the icon cache is cleared).",
+    "message": "تم التخلي عنها"
+  },
+  "favGalleryHint": {
+    "description": "Subtitle under the favicon gallery title, explaining the page is read-only.",
+    "message": "أيقونات جلبها vBookmarks للمواقع المفضلة التي لم يخزّنها Chrome — من أين جاءت كل واحدة وأي الإشارات المرجعية تستخدمها. للعرض فقط."
+  },
+  "favGalleryLink": {
+    "description": "Options link (Icons group, right of the Clear icon cache button): opens the favicon gallery page listing the sites whose icons were refetched.",
+    "message": "عرض الأيقونات المحدّثة"
+  },
+  "favGalleryOrphan": {
+    "description": "Favicon gallery note on a card whose host no longer has any bookmark.",
+    "message": "لم يتبقَّ أي إشارة مرجعية على هذا المضيف — ستُمسح الأيقونة مع الذاكرة المؤقتة."
+  },
+  "favGallerySearch": {
+    "description": "Placeholder of the favicon gallery filter input.",
+    "message": "تصفية حسب الموقع أو العنوان أو المسار"
+  },
+  "favGalleryShowingBefore": {
+    "description": "Favicon gallery toggle button while the placeholder comparison is shown: switch back to the real fetched icons.",
+    "message": "العودة إلى الأيقونات الحقيقية"
+  },
+  "favGalleryStatBookmarks": {
+    "description": "Favicon gallery stats strip: how many bookmarks sit on the refreshed sites.",
+    "message": "$n$ من الإشارات المرجعية",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "favGalleryStatSites": {
+    "description": "Favicon gallery stats strip: how many sites have a refreshed icon.",
+    "message": "$n$ من المواقع",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "favGalleryTitle": {
+    "description": "Favicon gallery page title (h1 + document title).",
+    "message": "أيقونات المواقع المحدّثة"
+  },
+  "favGalleryVisits": {
+    "description": "Favicon gallery tooltip on a bookmark row's visit-count pill.",
+    "message": "$n$ عملية فتح مسجلة",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "favSrcDirect": {
+    "description": "Favicon gallery source badge: the icon was fetched directly from the site itself.",
+    "message": "مباشر"
+  },
+  "favSrcLegacy": {
+    "description": "Favicon gallery source badge: cached before the source was recorded, so the origin is unknown.",
+    "message": "الذاكرة المؤقتة السابقة"
+  },
+  "favSrcProxy": {
+    "description": "Favicon gallery source badge: the icon was fetched through the user's own proxy relay.",
+    "message": "وكيل"
+  },
+  "folderCopyConfirm": {
+    "message": "نسخ قائمة $n$ إشارة مرجعية؟",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "folderCopyDone": {
+    "message": "تم نسخ $n$ إدخال إشارة مرجعية",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "folderCopyJson": {
+    "message": "JSON"
+  },
+  "folderCopyList": {
+    "message": "نسخ العناوين والروابط"
+  },
+  "folderCopyMarkdown": {
+    "message": "ماركداون"
+  },
+  "folderCopyText": {
+    "message": "قائمة نصية"
+  },
+  "folderEmpty": {
+    "message": "(فارغ)"
+  },
+  "folderPickCopyHere": {
+    "message": "انسخ هنا"
+  },
+  "folderPickFavNote": {
+    "message": "سيتم وضع العناصر غير المفضلة هنا"
+  },
+  "folderPickFilter": {
+    "message": "تصفية المجلدات…"
+  },
+  "folderPickMoveHere": {
+    "message": "انقل هنا"
+  },
+  "folderPickPinned": {
+    "message": "مثبت"
+  },
+  "folderPickRecent": {
+    "message": "الأحدث"
+  },
+  "general": {
+    "message": "عام"
+  },
+  "groupCopyToFolder": {
+    "message": "نسخ إلى مجلد…"
+  },
+  "groupPlaceTooltip": {
+    "message": "حفظ هذه المجموعة في مجلد…"
+  },
+  "groupSaveToFolder": {
+    "message": "حفظ في مجلد…"
+  },
+  "ignore": {
+    "message": "تجاهل"
+  },
+  "name": {
+    "description": "اسم العلامة المرجعية أو المجلد.",
+    "message": "الاسم"
+  },
+  "noTitle": {
+    "description": "العنوان للعلامات المرجعية بدون عنوان بدون URL http(s) أو المجلدات بدون عنوان.",
+    "message": "(بلا عنوان)"
+  },
+  "nope": {
+    "message": "إلغاء"
+  },
+  "open": {
+    "description": "إجراء لفتح العلامات المرجعية.",
+    "message": "فتح"
+  },
+  "openBookmarks": {
+    "message": "فتح جميع العلامات المرجعية"
+  },
+  "openBookmarksInExistingGroup": {
+    "message": "فتح الكل في مجموعة تبويبات موجودة…"
+  },
+  "openBookmarksInGroup": {
+    "message": "فتح الكل في مجموعة تبويب جديدة"
+  },
+  "openBookmarksInGroupSetup": {
+    "message": "فتح الكل في مجموعة تبويبات جديدة…"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "فتح العلامات في نافذة متخفية"
+  },
+  "openBookmarksNewWindow": {
+    "message": "فتح العلامات في نافذة جديدة"
+  },
+  "openCommandPaletteCommand": {
+    "message": "فتح لوحة الأوامر"
+  },
+  "openIncognitoWindow": {
+    "message": "فتح في نافذة متخفية"
+  },
+  "openNewTab": {
+    "message": "فتح في علامة تبويب جديدة"
+  },
+  "openNewWindow": {
+    "message": "فتح في نافذة جديدة"
+  },
+  "openSidePanelCommand": {
+    "message": "فتح اللوحة الجانبية لـ vBookmarks"
+  },
+  "optionAnnounceEnabled": {
+    "message": "عرض الإعلانات داخل المنتج"
+  },
+  "optionAnnounceEnabledHint": {
+    "message": "ملاحظات الإصدار والنصائح من مستودع GitHub الخاص بالمشروع (يتم جلبها كل 6 ساعات كحد أقصى). إيقاف التشغيل يوقف أيضًا جلب الشبكة."
+  },
+  "optionAutoRefreshSync": {
+    "message": "تحديث حالة المزامنة تلقائياً"
+  },
+  "optionAutoResizePopup": {
+    "message": "ضبط حجم النافذة المنبثقة تلقائيًا لتناسب المحتوى"
+  },
+  "optionClassicExperience": {
+    "message": "استعادة الترويسة الكلاسيكية"
+  },
+  "optionClassicExperienceHint": {
+    "message": "يُوقف تشغيل لوحة الأوامر، ونجمة الإضافة السريعة، ومدخل الصفحة في قائمة النقر بزر الماوس الأيمن، وزر الأداة، وعلامات التبويب. يمكن إعادة تمكين كل منها على حدة في قسمها."
+  },
+  "optionClickNewTab": {
+    "message": "النقر الأيسر يفتح العلامة المرجعية في علامة تبويب جديدة."
+  },
+  "optionCloseUnusedFolders": {
+    "message": "إغلاق المجلدات غير المستخدمة عند فتح مجلد."
+  },
+  "optionCollapseAddFolderMenu": {
+    "message": "طي إدخالات إضافة المجلد"
+  },
+  "optionCollapseAddFolderMenuHint": {
+    "message": "دمج إدخالات إضافة المجلد (قبل/بعد/داخل صفوف المجلدات، قبل/بعد صفوف الإشارات المرجعية) في إدخال قائمة فرعية واحد."
+  },
+  "optionCollapseSortMenu": {
+    "message": "طي عناصر الفرز في قائمة فرعية واحدة \"فرز\""
+  },
+  "optionCollapseSortMenuHint": {
+    "message": "ينطبق على قائمة النقر بزر الماوس الأيمن للمجلدات. مفعّل افتراضيًا."
+  },
+  "optionCollapseTabGroupMenu": {
+    "message": "طي عناصر مجموعات التبويبات في قائمة فرعية واحدة \"مجموعات التبويبات\""
+  },
+  "optionCollapseTabGroupMenuHint": {
+    "message": "ينطبق على قوائم النقر بزر الماوس الأيمن لكل من المجلدات والإشارات المرجعية. معطّل افتراضيًا؛ يجعل القوائم منخفضة الارتفاع أقصر على الشاشات الصغيرة أو ذات التكبير العالي."
+  },
+  "optionConfirmDeleteFolder": {
+    "message": "تأكيد قبل حذف المجلدات غير الفارغة"
+  },
+  "optionConfirmOpenFolder": {
+    "message": "عرض تأكيد عند فتح العديد من العلامات المرجعية من مجلد."
+  },
+  "optionDeadProxyServer": {
+    "message": "خادم وكيل الروابط المعطلة"
+  },
+  "optionDeadProxyStrip": {
+    "message": "إظهار تلميح إضافة بروكسي في عرض الروابط المعطلة"
+  },
+  "optionDeadProxyStripHint": {
+    "message": "عند الإيقاف، يتم إخفاء هذا التلميح هناك؛ يبقى خادم البروكسي قابلاً للتكوين هنا، ويعرض الخادم المحفوظ دائمًا صف الإدارة الخاص به في العرض."
+  },
+  "optionDeadScanConcurrency": {
+    "message": "توازي فحص الروابط المعطلة (1-16)"
+  },
+  "optionDeadScanTimeout": {
+    "message": "مهلة فحص الروابط المعطلة بالثواني (2-30)"
+  },
+  "optionFaviconBackup": {
+    "message": "تضمين كاش الأيقونات في النسخ الاحتياطية"
+  },
+  "optionFaviconBackupHint": {
+    "message": "قم أيضًا بتضمين ذاكرة الأيقونات المحسّنة (بيانات خاصة بكل موقع، وقد تكون كبيرة) في تصدير/استيراد الإعدادات. وهذا يشمل الأيقونات المخزنة مؤقتًا حتى عند تعطيل الجلب. ويؤدي تعطيل هذا الخيار إلى إبقاء النسخ الاحتياطية صغيرة؛ وستتم إعادة جلب الأيقونات تلقائيًا على أي حال."
+  },
+  "optionFaviconCacheClear": {
+    "message": "مسح كاش الأيقونات"
+  },
+  "optionFaviconCacheClearConfirm": {
+    "message": "مسح ذاكرة الأيقونات المحسّنة؟ سيتم إعادة جلب الأيقونات تلقائيًا عند الفتح التالي."
+  },
+  "optionFaviconCacheCleared": {
+    "message": "تم مسح كاش الأيقونات. ستتم إعادة الجلب عند الفتح التالي."
+  },
+  "optionFaviconCacheEmpty": {
+    "message": "لا توجد ذاكرة أيقونات لمسحها."
+  },
+  "optionFaviconContrast": {
+    "message": "عكس الأيقونات منخفضة التباين"
+  },
+  "optionFaviconContrastHint": {
+    "message": "يتم عكس الأيقونات البيضاء في السمات الفاتحة والأيقونات السوداء في السمات الداكنة حتى تبقى مرئية. يتم تحليل كل أيقونة مرة واحدة عند تحميلها — دون أي تكلفة أثناء التصفح."
+  },
+  "optionFaviconEnrich": {
+    "message": "جلب أيقونات المواقع المفقودة"
+  },
+  "optionFaviconEnrichAgg": {
+    "message": "الاحتياطي لأيقونة الطرف الثالث"
+  },
+  "optionFaviconEnrichAggHint": {
+    "message": "عندما يفشل الجلب المباشر، يتم البحث عن الأيقونة حسب النطاق من قائمة مدمجة لخدمات الأيقونات التابعة لجهات خارجية ($providers$). تتم تخطي الخدمة التي يتعذر الوصول إليها ويتم تجربة الخدمة التالية — ولا تتم إعادة المحاولة لمدة 6 ساعات.",
+    "placeholders": {
+      "providers": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionFaviconEnrichHint": {
+    "message": "بالنسبة للمواقع المفضلة التي لا يحتوي Chrome على أيقونة مخبأة لها، يتم جلب الأيقونة الفعلية مباشرة من الموقع (/favicon.ico، ثم الأيقونات المعلنة في الصفحة). تُرسل الطلبات فقط إلى المواقع التي أضفتها إلى المفضلة."
+  },
+  "optionHighlightUnsynced": {
+    "message": "تعتيم الإشارات المرجعية غير المتزامنة"
+  },
+  "optionLanguage": {
+    "message": "اللغة"
+  },
+  "optionLanguageAuto": {
+    "message": "تلقائي"
+  },
+  "optionLanguageHint": {
+    "message": "تغيير اللغة يعيد تحميل هذه الصفحة."
+  },
+  "optionOnlyShowBookmarkBar": {
+    "message": "إظهار العلامات المرجعية في شريط العلامات المرجعية فقط"
+  },
+  "optionOpenInSidePanel": {
+    "message": "الفتح في اللوحة الجانبية بدلاً من النافذة المنبثقة"
+  },
+  "optionOpenNewTab": {
+    "message": "النقر الأوسط أو التحكم+النقر يفتح العلامة المرجعية في علامة تبويب خلفية جديدة (بدلاً من المقدمة)."
+  },
+  "optionPaletteEnabled": {
+    "message": "تفعيل لوحة الأوامر (Ctrl/Cmd+K)"
+  },
+  "optionPopupStays": {
+    "message": "النافذة المنبثقة تظل مفتوحة عند فتح (النقر الأيسر) العلامات المرجعية."
+  },
+  "optionQuickAddContextMenu": {
+    "message": "أضف خيار \"حفظ هذه الصفحة باستخدام vBookmarks\" إلى قائمة النقر بزر الماوس الأيمن"
+  },
+  "optionQuickAddContextMenuHint": {
+    "message": "مستقل عن زر الإضافة السريعة؛ استعادة التجربة الكلاسيكية تُعطِّل هذا الخيار أيضًا."
+  },
+  "optionQuickAddEnabled": {
+    "message": "إظهار زر النجمة للإضافة السريعة بجانب مربع البحث"
+  },
+  "optionRecentCollapsed": {
+    "message": "طي قسم المضافة حديثًا افتراضيًا"
   },
   "optionRecentCount": {
     "message": "عدد الإشارات المرجعية المضافة حديثًا للعرض"
+  },
+  "optionRememberPrevState": {
+    "message": "تذكر الحالة السابقة (موضع التمرير، المجلدات المفتوحة، وآخر عنصر تم التركيز عليه)."
+  },
+  "optionRememberView": {
+    "message": "تذكر آخر عرض نشط وأعد فتحه"
+  },
+  "optionSearchAfterEnter": {
+    "message": "البحث عن العلامات المرجعية فقط عند الضغط على ENTER (بدلاً من البحث الفوري)"
   },
   "optionSearchHistory": {
     "message": "إظهار منطقة سجل البحث"
@@ -276,17 +1061,496 @@
   "optionSearchHistoryHint": {
     "message": "إخفاء منطقة البحث الحديثة أعلى النتائج — تبقى الاستعلامات المسجلة محفوظة"
   },
+  "optionShowDeadView": {
+    "message": "إظهار علامة تبويب الروابط المعطلة"
+  },
+  "optionShowDupesView": {
+    "message": "إظهار علامة تبويب التكرارات"
+  },
+  "optionShowItemPath": {
+    "message": "إظهار مسار المجلد الأصلي في صفوف القائمة"
+  },
+  "optionShowRecentBookmarks": {
+    "message": "عرض الإشارات المرجعية المضافة حديثًا في أعلى النافذة المنبثقة"
+  },
+  "optionShowStatsView": {
+    "message": "إظهار علامة تبويب الإحصائيات"
+  },
+  "optionShowSyncStatus": {
+    "message": "إظهار مؤشرات حالة المزامنة"
+  },
+  "optionShowTabBadges": {
+    "message": "إظهار شارات العدد على علامات تبويب العرض"
+  },
+  "optionShowTabGroupsView": {
+    "message": "إظهار تبويب عرض مجموعات التبويبات"
+  },
+  "optionShowToolButton": {
+    "message": "إظهار زر الأدوات (⋮) بجانب مربع البحث"
+  },
+  "optionShowViewTabs": {
+    "message": "إظهار علامات تبويب العرض أسفل مربع البحث"
+  },
+  "optionStagingEnabled": {
+    "message": "تفعيل منطقة المرحلة"
+  },
+  "optionStagingEnabledHint": {
+    "message": "عند إيقاف هذا الخيار، تعرض هذه الصفحة قائمة الإضافات الحديثة فقط، وتُخفى جميع أزرار أو خيارات المرحلة في الصفحات الأخرى."
+  },
+  "optionStatsEnabled": {
+    "message": "تمكين إحصائيات الزيارة"
+  },
+  "optionSyncRefreshInterval": {
+    "message": "فترة التحديث"
+  },
+  "optionSyncRefreshIntervalSeconds": {
+    "message": "ثواني"
+  },
+  "optionTabGroupsClosedLimit": {
+    "message": "保留已关闭标签页/组的历史记录"
+  },
+  "optionTheme": {
+    "message": "المظهر"
+  },
+  "optionThemeAuto": {
+    "message": "اتباع النظام"
+  },
+  "optionThemeDark": {
+    "message": "داكن"
+  },
+  "optionThemeInk": {
+    "message": "حبر (داكن)"
+  },
+  "optionThemeLight": {
+    "message": "فاتح"
+  },
+  "optionThemePaper": {
+    "message": "ورق (فاتح)"
+  },
+  "optionTreeRowActions": {
+    "message": "إجراءات التمرير على صفوف الشجرة (تعديل / مرحلة / حذف)"
+  },
+  "optionVirtualScrollLab": {
+    "message": "التمرير الافتراضي (تجريبي)"
+  },
+  "optionVirtualScrollLabHint": {
+    "message": "تعرض طرق عرض مجموعات التبويبات والمكررات الصفوف القريبة من نافذة العرض فقط. أسرع بكثير في القوائم الكبيرة جدًا؛ بينما يكون موضع شريط التمرير تقديريًا أثناء التجربة."
+  },
+  "optionZoom": {
+    "message": "تكبير"
+  },
+  "options": {
+    "message": "خيارات"
+  },
+  "optionsDonate": {
+    "message": "تبرع"
+  },
+  "optionsFooterText": {
+    "description": "Footer text for the Options page",
+    "message": "تم إنشاؤه بواسطة $authorName$.",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionsGithubLink": {
+    "message": "GitHub"
+  },
+  "optionsGroupBackup": {
+    "message": "نسخ احتياطي"
+  },
+  "optionsGroupContextMenu": {
+    "message": "قوائم السياق"
+  },
+  "optionsGroupIcons": {
+    "message": "الأيقونات"
+  },
+  "optionsGroupLabs": {
+    "message": "المختبرات"
+  },
+  "optionsGroupPalette": {
+    "message": "لوحة الأوامر"
+  },
+  "optionsGroupSort": {
+    "message": "الفرز"
+  },
+  "optionsGroupStats": {
+    "message": "الإحصائيات"
+  },
+  "optionsGroupTools": {
+    "message": "الأدوات"
+  },
+  "optionsGroupViews": {
+    "message": "العروض"
+  },
+  "optionsHomepageLink": {
+    "message": "الصفحة الرئيسية"
+  },
+  "optionsSince": {
+    "message": "متفرع من Neat Bookmarks، تمت صيانته لمدة $days$ يومًا.",
+    "placeholders": {
+      "days": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionsStagingSection": {
+    "message": "المرحلة والإضافات الحديثة"
+  },
+  "optionsStorageLocalTip": {
+    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting).",
+    "message": "仅存储在此设备上 — 不通过 Chrome 同步共享。"
+  },
+  "optionsStorageSyncTip": {
+    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting).",
+    "message": "通过 Chrome 账户同步 — 此设置在你的所有设备间共享。"
+  },
+  "optionsVersion": {
+    "message": "إصدار vBookmarks"
+  },
+  "paletteActionOpenUrl": {
+    "message": "فتح الرابط"
+  },
+  "paletteActionOpenUrlGroup": {
+    "message": "فتح مجموعة مجلدات الإشارات المرجعية"
+  },
+  "paletteActionUrlTemplate": {
+    "message": "فتح قالب الرابط"
+  },
+  "paletteActionViewPreset": {
+    "message": "فتح العرض بالإعداد المسبق"
+  },
+  "paletteClose": {
+    "message": "إغلاق"
+  },
+  "paletteCmdDead": {
+    "message": "البحث عن الروابط المعطلة"
+  },
+  "paletteCmdDupes": {
+    "message": "تنظيف الإشارات المرجعية المكررة"
+  },
+  "paletteCmdGoDead": {
+    "message": "الانتقال إلى عرض الروابط المعطلة"
+  },
+  "paletteCmdGoDupes": {
+    "message": "الانتقال إلى عرض المكررات"
+  },
+  "paletteCmdGoRecent": {
+    "message": "الانتقال إلى عرض الأخيرة"
+  },
+  "paletteCmdGoSearch": {
+    "message": "الانتقال إلى عرض البحث"
+  },
+  "paletteCmdGoStats": {
+    "message": "الانتقال إلى عرض الإحصائيات"
+  },
+  "paletteCmdGoTabGroups": {
+    "message": "الانتقال إلى عرض مجموعات التبويبات"
+  },
+  "paletteCmdGoTree": {
+    "message": "الانتقال إلى عرض الشجرة"
+  },
+  "paletteCmdLang": {
+    "message": "تبديل اللغة…"
+  },
+  "paletteCmdLangUsage": {
+    "message": "الاستخدام: /lang متبوعًا برمز اللغة — مثل: /lang en، /lang zh_CN، /lang ja."
+  },
+  "paletteCmdNewBookmark": {
+    "message": "إشارة مرجعية جديدة…"
+  },
+  "paletteCmdNewFolder": {
+    "message": "مجلد جديد…"
+  },
+  "paletteCmdOptions": {
+    "message": "فتح صفحة الخيارات"
+  },
+  "paletteCmdQuickAdd": {
+    "message": "إشارة مرجعية للتبويب الحالي"
+  },
+  "paletteCmdSaveAsCommand": {
+    "message": "حفظ \"$1\" كأمر…"
+  },
+  "paletteCmdSaveSession": {
+    "message": "حفظ تبويبات النافذة كمجلد"
+  },
+  "paletteCmdSearchInView": {
+    "message": "البحث عن '$query$' في عرض البحث",
+    "placeholders": {
+      "query": {
+        "content": "$1"
+      }
+    }
+  },
+  "paletteCmdTheme": {
+    "message": "تعيين المظهر…"
+  },
+  "paletteCmdThemeUsage": {
+    "message": "الاستخدام: /theme متبوعًا باسم المظهر — auto أو light أو dark أو ink أو paper (تعمل بادئة فريدة، مثل /theme d)."
+  },
+  "paletteCmdToggleViewTabs": {
+    "message": "تبديل علامات التبويب"
+  },
+  "paletteCmdVersion": {
+    "message": "معلومات الإصدار"
+  },
+  "paletteCustomAction": {
+    "message": "الإجراء"
+  },
+  "paletteCustomAdd": {
+    "message": "إضافة أمر…"
+  },
+  "paletteCustomAliases": {
+    "message": "الأسماء المستعارة (مفصولة بفواصل)"
+  },
+  "paletteCustomBroken": {
+    "message": "مجلد الأمر \"$1\" لم يعد موجودًا. هل تريد حذف الأمر؟"
+  },
+  "paletteCustomDeleteConfirm": {
+    "message": "حذف الأمر \"$1\"؟ ستتم مزامنة التغيير مع جميع أجهزتك."
+  },
+  "paletteCustomEmpty": {
+    "message": "لا توجد أوامر مخصصة بعد."
+  },
+  "paletteCustomErrAction": {
+    "message": "اختر نوع الإجراء."
+  },
+  "paletteCustomErrAlias": {
+    "message": "الأسماء المستعارة: نفس قواعد الشرطة المائلة (من 1 إلى 24 حرفًا من الأحرف الصغيرة أو الأرقام أو الواصلات)."
+  },
+  "paletteCustomErrFolder": {
+    "message": "اختر مجلد الإشارات المرجعية."
+  },
+  "paletteCustomErrLimit": {
+    "message": "تم بلوغ الحد الأقصى للأوامر (100) — احذف واحدًا أولاً."
+  },
+  "paletteCustomErrSlash": {
+    "message": "الشرطة المائلة: من 1 إلى 24 حرفًا من الأحرف الصغيرة أو الأرقام أو الواصلات، تبدأ بحرف أو رقم."
+  },
+  "paletteCustomErrTaken": {
+    "message": "الشرطة المائلة أو الاسم المستعار مستخدم بالفعل."
+  },
+  "paletteCustomErrTemplate": {
+    "message": "يجب أن يحتوي القالب على %s واحد بالضبط."
+  },
+  "paletteCustomErrUrl": {
+    "message": "يُسمح فقط بعناوين URL بصيغة http:// أو https://."
+  },
+  "paletteCustomErrView": {
+    "message": "اختر عرضًا."
+  },
+  "paletteCustomFolder": {
+    "message": "مجلد الإشارات المرجعية"
+  },
+  "paletteCustomHint": {
+    "message": "أوامر الشرطة المائلة المخصصة للوحة الأوامر (Ctrl/Cmd+K). تتم مزامنتها مع إعداداتك — بحد أقصى 100 إدخال."
+  },
+  "paletteCustomSave": {
+    "message": "حفظ الأمر"
+  },
+  "paletteCustomScan": {
+    "message": "بدء الفحص عند الإدخال"
+  },
+  "paletteCustomScope": {
+    "message": "إعداد مسبق لنطاق إزالة التكرار"
+  },
+  "paletteCustomSlash": {
+    "message": "الشرطة المائلة (الكلمة بعد /)"
+  },
+  "paletteCustomStrategy": {
+    "message": "إعداد مسبق لاستراتيجية إزالة التكرار"
+  },
+  "paletteCustomTag": {
+    "message": "مخصص"
+  },
+  "paletteCustomTemplate": {
+    "message": "قالب URL — %s يُستبدل بالكلمات بعد الأمر"
+  },
+  "paletteCustomUrl": {
+    "message": "URL"
+  },
+  "paletteCustomUsage": {
+    "message": "$1 / $2"
+  },
+  "paletteCustomView": {
+    "message": "العرض"
+  },
+  "paletteCustomWhere": {
+    "message": "فتح في"
+  },
+  "paletteNoResults": {
+    "message": "لا توجد نتائج مطابقة"
+  },
+  "palettePlaceholder": {
+    "message": "ابحث عن إشارات مرجعية، مجلدات، أوامر…"
+  },
+  "paletteWhereBackground": {
+    "message": "تبويبات الخلفية"
+  },
+  "paletteWhereCurrent": {
+    "message": "التبويب الحالي"
+  },
+  "paletteWhereTab": {
+    "message": "تبويب جديد"
+  },
+  "paletteWhereWindow": {
+    "message": "نافذة جديدة"
+  },
+  "parentFolder": {
+    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
+    "message": "المجلد الأصلي: \"$folderName$\"",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarksbar"
+      }
+    }
+  },
+  "pasteDone": {
+    "message": "تم اللصق"
+  },
+  "pasteGone": {
+    "message": "لم تعد الإشارة المرجعية موجودة — تم مسح الحافظة"
+  },
+  "pasteHere": {
+    "message": "لصق هنا"
+  },
+  "pinFolder": {
+    "message": "ثبّت هذا المجلد"
+  },
+  "quickAddBookmark": {
+    "message": "إضافة إشارة مرجعية لهذه الصفحة (Ctrl+D)"
+  },
+  "quickAddBookmarkCommand": {
+    "message": "إضافة سريعة للتبويب الحالي كإشارة مرجعية"
+  },
+  "quickAdded": {
+    "message": "تمت إضافة الإشارة المرجعية"
+  },
+  "quickAddedTo": {
+    "message": "تمت إضافة الإشارة المرجعية إلى $folderName$",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarks bar"
+      }
+    }
+  },
+  "quickRemoveBookmark": {
+    "message": "إزالة هذه الإشارة المرجعية (Ctrl+D)"
+  },
+  "quickRemoved": {
+    "message": "تمت إزالة الإشارة المرجعية"
+  },
+  "recentBookmarks": {
+    "message": "المضافة حديثًا"
+  },
   "recentEmpty": {
     "message": "لا توجد إشارات مرجعية حديثة. اضغط Ctrl+D لوضع إشارة مرجعية للصفحة الحالية."
+  },
+  "recentGroupMonth": {
+    "message": "هذا الشهر"
+  },
+  "recentGroupOlder": {
+    "message": "أقدم"
+  },
+  "recentGroupToday": {
+    "message": "اليوم"
+  },
+  "recentGroupWeek": {
+    "message": "هذا الأسبوع"
   },
   "recentRevealInTree": {
     "message": "إظهار في الشجرة"
   },
+  "recentSectionTitle": {
+    "message": "تمت الإضافة مؤخرًا"
+  },
+  "recentStageAll": {
+    "message": "تجميع كل ما تمت إضافته مؤخرًا"
+  },
+  "recentStageGroup": {
+    "message": "إرسال $t$ إلى منطقة التدريج",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
+  },
+  "removeSeparator": {
+    "message": "إزالة الفاصل"
+  },
+  "replaceUrl": {
+    "message": "استبدال هذا بعنوان URL الحالي"
+  },
+  "reportError": {
+    "message": "الإبلاغ عن خطأ"
+  },
+  "reportedToDeveloper": {
+    "description": "تم الإبلاغ عن رسالة لخطأ حدث في الامتداد إلى المطور.",
+    "message": "تم الإبلاغ عن هذا إلى المطور."
+  },
+  "resetButton": {
+    "message": "إعادة تعيين"
+  },
+  "resetSettings": {
+    "message": "إعادة تعيين الإعدادات"
+  },
+  "resetSettingsDescription": {
+    "message": "إعادة تعيين vBookmarks إلى الإعدادات الافتراضية."
+  },
+  "revealOutsideBarAction": {
+    "message": "إظهار الكل وكشف الهدف"
+  },
+  "revealOutsideBarHint": {
+    "message": "يُعرض شريط الإشارات المرجعية فقط: الوجهة خارجه."
+  },
+  "riskBannerDismiss": {
+    "message": "تجاهل"
+  },
+  "riskBannerHelp": {
+    "message": "دليل النسخ الاحتياطي والاستعادة"
+  },
+  "riskBannerNever": {
+    "message": "لا تظهر مرة أخرى"
+  },
+  "rowActionDelete": {
+    "message": "حذف"
+  },
+  "rowActionMark": {
+    "message": "وضع علامة كمعطل"
+  },
+  "rowActionReveal": {
+    "message": "إظهار في الشجرة"
+  },
+  "rowActionUnmark": {
+    "message": "إزالة علامة التعطل"
+  },
+  "save": {
+    "message": "حفظ"
+  },
+  "searchBookmarks": {
+    "description": "نص عنصر نائب لحقل البحث.",
+    "message": "بحث في العلامات المرجعية"
+  },
+  "searchClear": {
+    "message": "مسح البحث"
+  },
   "searchHistoryClear": {
     "message": "مسح الكل"
   },
+  "searchHistoryClose": {
+    "message": "إخفاء سجل البحث"
+  },
+  "searchHistoryClosedToast": {
+    "message": "تم إخفاء سجل البحث — أعد تفعيله في الخيارات ← البحث"
+  },
   "searchHistoryRemove": {
     "message": "إزالة هذا البحث"
+  },
+  "searchHistoryRerun": {
+    "message": "أعد البحث"
   },
   "searchHistoryResultCount": {
     "message": "$n$ نتيجة",
@@ -298,6 +1562,895 @@
   },
   "searchHistoryTitle": {
     "message": "عمليات البحث الأخيرة"
+  },
+  "searchNoResults": {
+    "message": "لا توجد إشارات مرجعية مطابقة"
+  },
+  "searchResultCount": {
+    "message": "$n$ نتيجة",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "searchStageAllGroup": {
+    "message": "تجهيز كل النتائج كمجموعة \"$1$\"",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "searchViewHint": {
+    "message": "اكتب في المربع أعلاه للبحث في إشاراتك المرجعية"
+  },
+  "selectAll": {
+    "message": "الكل"
+  },
+  "selectClear": {
+    "message": "مسح"
+  },
+  "selectCount": {
+    "message": "تم تحديد $count$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "selectInvert": {
+    "message": "عكس التحديد"
+  },
+  "selectModeEnter": {
+    "message": "تحديد"
+  },
+  "selectModeExit": {
+    "message": "إنهاء التحديد"
+  },
+  "separatorOptions": {
+    "message": "الفواصل"
+  },
+  "sessionEmpty": {
+    "message": "لا توجد تبويبات للحفظ"
+  },
+  "sessionFolderName": {
+    "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm.",
+    "message": "جلسة $date$",
+    "placeholders": {
+      "date": {
+        "content": "$1",
+        "example": "2026-07-18 15:04"
+      }
+    }
+  },
+  "sessionSaved": {
+    "description": "Alert shown after the current window's tabs were saved into a new bookmark folder.",
+    "message": "تم حفظ $count$ تبويبًا في مجلد جديد",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "12"
+      }
+    }
+  },
+  "settingsBackupHint": {
+    "message": "يقوم التصدير بحفظ جميع الإعدادات (بما في ذلك تفضيلات المزامنة) في ملف JSON. الاستيراد يدمج النسخة الاحتياطية: الإعدادات في الملف تحل محل الإعدادات الحالية، ويتم الاحتفاظ بكل شيء آخر."
+  },
+  "settingsExport": {
+    "message": "تصدير الإعدادات"
+  },
+  "settingsImport": {
+    "message": "استيراد الإعدادات"
+  },
+  "settingsImportConfirm": {
+    "message": "سيؤدي الاستيراد إلى استبدال كل إعداد موجود في ملف النسخ الاحتياطي (يتم الاحتفاظ بالإعدادات غير الموجودة في الملف) وإعادة تحميل هذه الصفحة. هل تريد المتابعة؟"
+  },
+  "settingsImportDone": {
+    "message": "تم استيراد الإعدادات. سيتم الآن إعادة تحميل الصفحة."
+  },
+  "settingsImportError": {
+    "message": "تعذر كتابة بعض الإعدادات (بسبب تجاوز مساحة التخزين أو خطأ مؤقت). لم يكتمل الاستيراد — يرجى المحاولة مرة أخرى."
+  },
+  "settingsImportInvalid": {
+    "message": "ملف إعدادات غير صالح: ليس نسخة احتياطية لإعدادات vBookmarks."
+  },
+  "sortByDate": {
+    "message": "فرز حسب تاريخ الإضافة"
+  },
+  "sortByDateAdded": {
+    "message": "حسب تاريخ الإضافة (الأحدث أولاً)"
+  },
+  "sortByName": {
+    "message": "فرز بالاسم"
+  },
+  "sortByTitle": {
+    "message": "حسب العنوان"
+  },
+  "sortDone": {
+    "message": "تم فرز المجلد"
+  },
+  "sortFolderContents": {
+    "message": "فرز محتويات المجلد"
+  },
+  "sortFoldersFirst": {
+    "message": "إبقاء المجلدات في الأعلى"
+  },
+  "sortMenuOptions": {
+    "message": "فرز"
+  },
+  "sortOptions": {
+    "message": "خيارات الفرز…"
+  },
+  "sortRecursive": {
+    "message": "فرز المجلدات الفرعية أيضًا (تكراري)"
+  },
+  "sortRecursiveSuffix": {
+    "message": "(متكرر)"
+  },
+  "sortRecursiveWarning": {
+    "message": "سيؤدي هذا إلى إعادة ترتيب الإشارات المرجعية في كل مجلد فرعي."
+  },
+  "stagedToast": {
+    "message": "تم وضع $n$ تبويب في الانتظار كمجموعة \"$t$\"",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "t": {
+        "content": "$2"
+      }
+    }
+  },
+  "stagingAdd": {
+    "message": "إرسال إلى المرحلة"
+  },
+  "stagingAdded": {
+    "message": "تم الإرسال إلى المرحلة"
+  },
+  "stagingAddedSummary": {
+    "message": "تمت إضافة $n$ عنصر؛ $m$ موجود بالفعل",
+    "placeholders": {
+      "m": {
+        "content": "$2"
+      },
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingAlready": {
+    "message": "موجود بالفعل في منطقة التجميع"
+  },
+  "stagingBucketFavAll": {
+    "message": "تفضيل الكل"
+  },
+  "stagingBucketTitle": {
+    "message": "غير مفضل"
+  },
+  "stagingClear": {
+    "message": "مسح الانتظار"
+  },
+  "stagingClearConfirm": {
+    "message": "مسح منطقة الانتظار بالكامل؟ لن تتأثر شجرة الإشارات المرجعية."
+  },
+  "stagingClearConfirmOk": {
+    "message": "مسح"
+  },
+  "stagingCleared": {
+    "message": "تم مسح منطقة الانتظار"
+  },
+  "stagingConfirmFolder": {
+    "message": "تجميع $n$ إشارة مرجعية من هذا المجلد؟",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingConfirmFolderOk": {
+    "message": "مرحلة"
+  },
+  "stagingCopyDone": {
+    "message": "تم نسخ $n$ عنصر",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingCount": {
+    "message": "$n$ في الانتظار",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingDeleteConfirm": {
+    "message": "حذف $n$ عنصر؟ غير المحفوظة ستغادر منطقة الانتظار فقط.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingDeleted": {
+    "message": "تم حذف $n$ إشارة مرجعية",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingEmpty": {
+    "message": "尚未暂存任何内容。可从任意视图将书签发送至此——点击行上的飞机按钮或右键菜单——然后批量整理和归档。"
+  },
+  "stagingFav": {
+    "message": "تفضيل"
+  },
+  "stagingFavDone": {
+    "message": "تم تفضيل $n$ عنصر",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingFolderEmpty": {
+    "message": "لا يحتوي هذا المجلد على إشارات مرجعية للتجميع"
+  },
+  "stagingFromHistory": {
+    "message": "من السجل"
+  },
+  "stagingFull": {
+    "message": "منطقة التجميع ممتلئة — أزل بعض العناصر أولاً"
+  },
+  "stagingGroupAssign": {
+    "message": "مجموعة…"
+  },
+  "stagingGroupAssignTitle": {
+    "message": "تعيين إلى مجموعة"
+  },
+  "stagingGroupCollapse": {
+    "message": "طي المجموعة"
+  },
+  "stagingGroupDelete": {
+    "message": "حذف المجموعة (مع العناصر)"
+  },
+  "stagingGroupDeleteConfirm": {
+    "message": "حذف المجموعة \"$1\"؟ ستغادر عناصرها ($2) منطقة التجهيز أيضًا."
+  },
+  "stagingGroupDeleted": {
+    "message": "تم حذف المجموعة — تمت إزالة $1 عنصرًا"
+  },
+  "stagingGroupDissolve": {
+    "message": "حل المجموعة"
+  },
+  "stagingGroupDissolved": {
+    "message": "تم حل المجموعة — بقيت العناصر في منطقة التجميع"
+  },
+  "stagingGroupExpand": {
+    "message": "توسيع المجموعة"
+  },
+  "stagingGroupNamePrompt": {
+    "message": "اسم المجموعة الجديدة"
+  },
+  "stagingGroupNew": {
+    "message": "مجموعة جديدة"
+  },
+  "stagingGroupNoGroups": {
+    "message": "لا توجد مجموعات بعد"
+  },
+  "stagingGroupRename": {
+    "message": "إعادة تسمية المجموعة…"
+  },
+  "stagingGroupSelectAll": {
+    "message": "تحديد الكل في هذه المجموعة"
+  },
+  "stagingGuideDismiss": {
+    "message": "لا تظهر مرة أخرى"
+  },
+  "stagingGuideText": {
+    "message": "نظّم الإشارات المرجعية هنا — حدد الصفوف وأدخل وضع التحديد للإجراءات الجماعية."
+  },
+  "stagingMoveConfirm": {
+    "message": "نقل $n$ عنصر إلى المجلد المختار؟",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingMoveConfirmOk": {
+    "message": "نقل"
+  },
+  "stagingMoveCopy": {
+    "message": "نقل/نسخ إلى…"
+  },
+  "stagingMoveDone": {
+    "message": "تم نقل $n$ عنصر إلى الرئيسية",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingNew": {
+    "message": "جديد $n$",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingRemove": {
+    "message": "إزالة من منطقة التجميع"
+  },
+  "stagingRemoved": {
+    "message": "تمت الإزالة من منطقة التجميع"
+  },
+  "stagingRemovedCount": {
+    "message": "تمت إزالة $n$ عنصر من منطقة الانتظار",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingRowFav": {
+    "message": "تفضيل هذا العنصر"
+  },
+  "stagingRowUnfav": {
+    "message": "إلغاء تفضيل هذا العنصر"
+  },
+  "stagingShortcutAdd": {
+    "message": "إضافة اختصار"
+  },
+  "stagingShortcutAlias": {
+    "message": "الاسم المستعار"
+  },
+  "stagingShortcutBarLabel": {
+    "message": "الانتقال إلى:"
+  },
+  "stagingShortcutEdit": {
+    "message": "تعديل الاختصار"
+  },
+  "stagingShortcutMove": {
+    "message": "نقل المحدد إلى $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingShortcutPickFolder": {
+    "message": "اختر المجلد الهدف…"
+  },
+  "stagingShortcutRemove": {
+    "message": "إزالة الاختصار"
+  },
+  "stagingShortcutRemoved": {
+    "message": "تمت إزالة الاختصار"
+  },
+  "stagingShortcutSave": {
+    "message": "حفظ"
+  },
+  "stagingShortcutTitle": {
+    "message": "اختصار النقل"
+  },
+  "stagingUnfav": {
+    "message": "إلغاء التفضيل"
+  },
+  "stagingUnfavDone": {
+    "message": "تم إلغاء تفضيل $n$ عنصر",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "statsClearConfirm": {
+    "message": "مسح إحصائيات الزيارة لـ $count$ إشارة مرجعية؟ لا يمكن التراجع عن ذلك.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "statsClearData": {
+    "message": "مسح الإحصائيات"
+  },
+  "statsDisabledHint": {
+    "message": "إحصائيات الزيارة معطلة — قم بتمكينها في الخيارات → طرق العرض"
+  },
+  "statsEmpty": {
+    "message": "تتراكم الإحصائيات عند فتح الإشارات المرجعية"
+  },
+  "statsHistoryAdd": {
+    "message": "إضافة إلى الإشارات المرجعية"
+  },
+  "statsHistoryBanner": {
+    "message": "امنح الإذن بالوصول إلى السجل لملء إحصائيات الزيارات بزياراتك السابقة."
+  },
+  "statsHistoryBookmarked": {
+    "message": "تمت الإشارة"
+  },
+  "statsHistoryDismiss": {
+    "message": "لا تظهر مرة أخرى"
+  },
+  "statsHistoryEnable": {
+    "message": "تمكين"
+  },
+  "statsHistoryGuide": {
+    "message": "امنح الوصول إلى سجل التصفح لعرض زياراتك الأخيرة هنا."
+  },
+  "statsHistoryImported": {
+    "message": "تم استيراد الزيارات السابقة لـ $count$ إشارة مرجعية",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "statsSectionBookmarks": {
+    "message": "إحصائيات الإشارات المرجعية"
+  },
+  "statsSectionRecent": {
+    "message": "الزيارات الأخيرة"
+  },
+  "statsShowUnbookmarked": {
+    "message": "عرض غير المحفوظة"
+  },
+  "statsShowUnbookmarkedHint": {
+    "message": "تضمين الصفحات من السجل غير المحفوظة كإشارات مرجعية."
+  },
+  "statsSortByCount": {
+    "message": "حسب العدد"
+  },
+  "statsSortByRecent": {
+    "message": "حسب الأحدث"
+  },
+  "statsVisitCount": {
+    "message": "تمت الزيارة $count$ مرة",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "storageUsageFree": {
+    "message": "المساحة الحرة"
+  },
+  "storageUsageHint": {
+    "message": "مساحة التخزين المحلية للإضافة فقط (chrome.storage.local، حوالي 10 ميغابايت): كاش الأيقونات بالإضافة إلى الإعدادات والبيانات المحلية الأخرى. الإعدادات المتزامنة وبيانات الجلسة ومكتبة الإشارات المرجعية نفسها لا تُحتسب هنا."
+  },
+  "storageUsageIcon": {
+    "message": "كاش الأيقونات"
+  },
+  "storageUsageOther": {
+    "message": "أخرى"
+  },
+  "storageUsageSummary": {
+    "message": "المستخدم $1$ من $2$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      },
+      "2": {
+        "content": "$2"
+      }
+    }
+  },
+  "syncOptions": {
+    "message": "خيارات المزامنة"
+  },
+  "syncStatusLocal": {
+    "message": "محلي فقط — لم يتم الرفع"
+  },
+  "syncStatusSynced": {
+    "message": "متزامن مع حساب Google الخاص بك"
+  },
+  "syncStatusUnsyncable": {
+    "message": "لا يمكن المزامنة"
+  },
+  "syncSuffixLocal": {
+    "message": "(محلي)"
+  },
+  "syncSuffixSynced": {
+    "message": "(متزامن)"
+  },
+  "tabGroupColorBlue": {
+    "description": "Accessible name of the blue color swatch in the new-tab-group dialog.",
+    "message": "أزرق"
+  },
+  "tabGroupColorCyan": {
+    "description": "Accessible name of the cyan color swatch in the new-tab-group dialog.",
+    "message": "سماوي"
+  },
+  "tabGroupColorGreen": {
+    "description": "Accessible name of the green color swatch in the new-tab-group dialog.",
+    "message": "أخضر"
+  },
+  "tabGroupColorGrey": {
+    "description": "Accessible name of the grey color swatch in the new-tab-group dialog.",
+    "message": "رمادي"
+  },
+  "tabGroupColorLabel": {
+    "message": "اللون"
+  },
+  "tabGroupColorOrange": {
+    "description": "Accessible name of the orange color swatch in the new-tab-group dialog.",
+    "message": "برتقالي"
+  },
+  "tabGroupColorPink": {
+    "description": "Accessible name of the pink color swatch in the new-tab-group dialog.",
+    "message": "وردي"
+  },
+  "tabGroupColorPurple": {
+    "description": "Accessible name of the purple color swatch in the new-tab-group dialog.",
+    "message": "بنفسجي"
+  },
+  "tabGroupColorRed": {
+    "description": "Accessible name of the red color swatch in the new-tab-group dialog.",
+    "message": "أحمر"
+  },
+  "tabGroupColorYellow": {
+    "description": "Accessible name of the yellow color swatch in the new-tab-group dialog.",
+    "message": "أصفر"
+  },
+  "tabGroupDialogTitle": {
+    "message": "مجموعة تبويبات جديدة"
+  },
+  "tabGroupNoGroups": {
+    "message": "لا توجد مجموعات تبويبات حالية"
+  },
+  "tabGroupOptions": {
+    "message": "مجموعات التبويبات"
+  },
+  "tabGroupPickDialogTitle": {
+    "message": "فتح في مجموعة تبويبات موجودة"
+  },
+  "tabGroupTitleLabel": {
+    "message": "عنوان المجموعة"
+  },
+  "tabGroupUntitled": {
+    "message": "مجموعة بدون عنوان"
+  },
+  "tabGroupsActivateGroup": {
+    "message": "الانتقال إلى مجموعة التبويبات"
+  },
+  "tabGroupsActivateTab": {
+    "message": "الانتقال إلى التبويب"
+  },
+  "tabGroupsAddBookmark": {
+    "message": "إضافة علامة مرجعية لهذا التبويب"
+  },
+  "tabGroupsBatchClosedTitle": {
+    "message": "الألسنة المغلقة"
+  },
+  "tabGroupsBookmarkRemoved": {
+    "message": "تمت إزالة $count$ إشارة مرجعية",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsBookmarked": {
+    "message": "تمت الإشارة المرجعية"
+  },
+  "tabGroupsBookmarksAdded": {
+    "message": "تمت إضافة $count$ علامة (علامات) مرجعية إلى $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsClearClosedGroups": {
+    "message": "مسح الكل"
+  },
+  "tabGroupsClearedToast": {
+    "message": "تم مسح $count$ سجل مغلق",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCloseGroup": {
+    "message": "إغلاق مجموعة التبويبات"
+  },
+  "tabGroupsCloseWindow": {
+    "message": "إغلاق النافذة"
+  },
+  "tabGroupsClosedGroups": {
+    "message": "أُغلقت مؤخرًا"
+  },
+  "tabGroupsClosedOpenTab": {
+    "message": "فتح في تبويب جديد"
+  },
+  "tabGroupsClosedTabRemovedToast": {
+    "message": "تمت الإزالة من السجل المغلق"
+  },
+  "tabGroupsClosedTimeLabel": {
+    "message": "أُغلقت:"
+  },
+  "tabGroupsClosedToast": {
+    "message": "أغلق $count$ علامة تبويب",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCollapseAll": {
+    "message": "طي الكل"
+  },
+  "tabGroupsCollapseGroup": {
+    "message": "طي المجموعة"
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "طي النافذة"
+  },
+  "tabGroupsColorStyle": {
+    "message": "نمط لون مجموعة التبويبات"
+  },
+  "tabGroupsColorStyleEdge": {
+    "message": "شريط اللون الحوافي"
+  },
+  "tabGroupsColorStyleHint": {
+    "message": "عند إيقاف التشغيل، تظهر نقطة اللون فقط. شريط اللون الحوافي يرسم شريطًا ملونًا على الحافة اليسرى للمجموعة. خط الموصل الملون يرسم خطًا تحت نقطة المجموعة مع علامة لكل صف، مما يربط المجموعة بأكملها في شجرة واحدة."
+  },
+  "tabGroupsColorStyleLine": {
+    "message": "خط الموصل الملون"
+  },
+  "tabGroupsColorStyleOff": {
+    "message": "إيقاف (نقطة اللون فقط)"
+  },
+  "tabGroupsConfirmClearClosed": {
+    "message": "مسح جميع السجلات المغلقة مؤخرًا؟ لن يمكن إعادة فتحها من هنا بعد الآن."
+  },
+  "tabGroupsConfirmClose": {
+    "message": "إغلاق $count$ تبويبات؟",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsConfirmSleep": {
+    "message": "إسبات $count$ تبويبات؟",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCopyMoveCopy": {
+    "message": "نسخ"
+  },
+  "tabGroupsCopyMoveDialog": {
+    "message": "التبويبات المحددة تنتمي بالفعل إلى مجموعة تبويبات. هل تريد نسخها (فتحها في مكان جديد) أو نقلها (إزالتها من مجموعتها الحالية)؟"
+  },
+  "tabGroupsCopyMoveMove": {
+    "message": "نقل"
+  },
+  "tabGroupsCurrentTab": {
+    "message": "الحالي"
+  },
+  "tabGroupsCurrentWindow": {
+    "message": "النافذة الحالية"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "حذف مجموعة التبويبات المغلقة"
+  },
+  "tabGroupsDiscarded": {
+    "message": "علامة تبويب نائمة"
+  },
+  "tabGroupsExpandAll": {
+    "message": "توسيع الكل"
+  },
+  "tabGroupsExpandGroup": {
+    "message": "توسيع المجموعة"
+  },
+  "tabGroupsExpandWindow": {
+    "message": "توسيع النافذة"
+  },
+  "tabGroupsExpandedCollapse": {
+    "message": "طي"
+  },
+  "tabGroupsExpandedExpand": {
+    "message": "توسيع"
+  },
+  "tabGroupsFilterPlaceholder": {
+    "message": "تصفية علامات التبويب المفتوحة"
+  },
+  "tabGroupsGroupCount": {
+    "message": "$count$ تبويبات",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsGroupSavedToFolder": {
+    "message": "تم حفظ $count$ تبويبات في $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsMenuAddBookmark": {
+    "message": "إضافة علامة مرجعية للتبويب"
+  },
+  "tabGroupsMenuSaveFolder": {
+    "message": "حفظ كمجلد علامات مرجعية"
+  },
+  "tabGroupsMergedWindowToast": {
+    "message": "تم دمج النافذة كمجموعة علامات تبويب"
+  },
+  "tabGroupsMoveNewWindow": {
+    "message": "نقل المجموعة لنافذة جديدة"
+  },
+  "tabGroupsNewWindow": {
+    "message": "نافذة جديدة"
+  },
+  "tabGroupsNoMatchingTabs": {
+    "message": "لا توجد علامات تبويب مطابقة"
+  },
+  "tabGroupsOpenGroups": {
+    "message": "مجموعات التبويبات المفتوحة"
+  },
+  "tabGroupsPinTab": {
+    "message": "تثبيت علامة التبويب"
+  },
+  "tabGroupsPinned": {
+    "message": "علامة تبويب مثبتة"
+  },
+  "tabGroupsPinnedUngroupedToast": {
+    "message": "مثبّت — أُزيل من مجموعة الألسنة"
+  },
+  "tabGroupsRecordDeletedToast": {
+    "message": "تمت إزالة السجل المغلق"
+  },
+  "tabGroupsRemoveBookmark": {
+    "message": "إزالة الإشارة المرجعية"
+  },
+  "tabGroupsRemoveClosedTab": {
+    "message": "إزالة من المجموعة المحفوظة"
+  },
+  "tabGroupsRenameDialog": {
+    "message": "إعادة تسمية مجموعة التبويبات"
+  },
+  "tabGroupsRenameGroup": {
+    "message": "إعادة تسمية مجموعة التبويبات"
+  },
+  "tabGroupsReopenAction": {
+    "message": "إعادة فتح"
+  },
+  "tabGroupsReopenGroup": {
+    "message": "إعادة فتح مجموعة التبويبات"
+  },
+  "tabGroupsSaveFolder": {
+    "message": "حفظ مجموعة التبويبات كمجلد علامات مرجعية"
+  },
+  "tabGroupsSelectAddBookmarks": {
+    "message": "إضافة إلى مجلد العلامات المرجعية…"
+  },
+  "tabGroupsSelectClose": {
+    "message": "إغلاق"
+  },
+  "tabGroupsSelectNewGroup": {
+    "message": "مجموعة تبويبات جديدة"
+  },
+  "tabGroupsSelectOpenInto": {
+    "message": "فتح في مجموعة تبويبات موجودة…"
+  },
+  "tabGroupsSelectSaveFolder": {
+    "message": "حفظ كمجلد علامات مرجعية"
+  },
+  "tabGroupsSelectSleep": {
+    "message": "إسبات"
+  },
+  "tabGroupsSleepGroup": {
+    "message": "إسبات مجموعة التبويبات"
+  },
+  "tabGroupsSleepTab": {
+    "message": "إسبات التبويب"
+  },
+  "tabGroupsSleptToast": {
+    "message": "وضع $count$ علامة تبويب في وضع السكون",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsSummary": {
+    "message": "$tabs$ تبويبات · $groups$ مجموعات",
+    "placeholders": {
+      "groups": {
+        "content": "$2"
+      },
+      "tabs": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsSyncCollapse": {
+    "message": "مزامنة الطي مع المتصفح"
+  },
+  "tabGroupsSyncCollapseHint": {
+    "message": "عند التحديد، يؤدي طي مجموعة أو توسيعها في هذا العرض إلى تحديث مجموعة علامات تبويب المتصفح أيضًا. معطّل افتراضيًا ليبقى طي العرض محليًا."
+  },
+  "tabGroupsToolbarRefresh": {
+    "message": "تحديث"
+  },
+  "tabGroupsUngroupGroup": {
+    "message": "إلغاء تجميع التبويبات"
+  },
+  "tabGroupsUngroupedTabs": {
+    "message": "تبويبات غير مجمعة"
+  },
+  "tabGroupsUnpinTab": {
+    "message": "إلغاء تثبيت علامة التبويب"
+  },
+  "tabGroupsViewEmpty": {
+    "message": "لا توجد تبويبات في هذه النافذة"
+  },
+  "tabGroupsWakeAction": {
+    "message": "إيقاظ"
+  },
+  "tabGroupsWakeGroup": {
+    "message": "تنشيط مجموعة التبويبات"
+  },
+  "tabGroupsWakeTab": {
+    "message": "تنشيط التبويب"
+  },
+  "tabGroupsWindow": {
+    "message": "النافذة $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsWindowClosedTitle": {
+    "message": "تم إغلاق النافذة"
+  },
+  "tabGroupsWindowsCount": {
+    "message": "$n$ نافذة",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabRowStage": {
+    "message": "إرسال إلى المرحلة"
+  },
+  "tabgroupStageAll": {
+    "message": "إرسال المجموعة للمرحلة"
+  },
+  "tabgroupStageConfirm": {
+    "message": "إرسال $n$ علامات تبويب إلى المرحلة؟",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabgroupStageNone": {
+    "message": "لا توجد تبويبات قابلة للإشارة المرجعية في هذه المجموعة"
   },
   "timeDaysAgo": {
     "message": "قبل $n$ يومًا",
@@ -329,303 +2482,26 @@
   "timeYesterday": {
     "message": "أمس"
   },
+  "toolButtonTitle": {
+    "message": "أدوات (Ctrl+K)"
+  },
   "undoAction": {
     "message": "تراجع"
   },
-  "revealOutsideBarHint": {
-    "message": "يُعرض شريط الإشارات المرجعية فقط: الوجهة خارجه."
+  "undoSingleStepNote": {
+    "message": "يمكن للتراجع استعادة آخر عملية حذف فقط."
   },
-  "revealOutsideBarAction": {
-    "message": "إظهار الكل وكشف الهدف"
+  "unpinFolder": {
+    "message": "إلغاء تثبيت هذا المجلد"
   },
-  "dupesCleanAll": {
-    "message": "تنظيف الكل: $groups$ مجموعات، $count$ نسخ إضافية",
-    "placeholders": {
-      "groups": {
-        "content": "$1"
-      },
-      "count": {
-        "content": "$2"
-      }
-    },
-    "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go."
+  "url": {
+    "message": "URL"
   },
-  "dupesConfirmAll": {
-    "message": "إزالة $count$ نسخ إضافية عبر $groups$ مجموعات؟ سيتم الاحتفاظ بالعنصر المحدد في كل مجموعة.",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      },
-      "groups": {
-        "content": "$2"
-      }
-    },
-    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
+  "versionDialogCopied": {
+    "message": "تم النسخ"
   },
-  "dupesConfirmSelected": {
-    "message": "هل تريد إزالة $count$ إشارة مرجعية مكررة من المجموعات المحددة ($groups$)؟",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      },
-      "groups": {
-        "content": "$2"
-      }
-    }
-  },
-  "dupesConfirmGroup": {
-    "message": "الاحتفاظ بـ \"$title$\" وإزالة النسخ $count$ الأخرى؟",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Example bookmark"
-      },
-      "count": {
-        "content": "$2"
-      }
-    },
-    "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."
-  },
-  "dupesDone": {
-    "message": "تمت إزالة $count$ إشارات مرجعية مكررة",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Alert shown after the duplicate cleanup finished."
-  },
-  "dupesGroupCount": {
-    "message": "$count$ مكررات",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
-  },
-  "dupesGroupExpand": {
-    "description": "Dupes view group-head context menu: expand a collapsed duplicate group.",
-    "message": "توسيع المجموعة"
-  },
-  "dupesGroupCollapse": {
-    "description": "Dupes view group-head context menu: collapse an expanded duplicate group.",
-    "message": "طي المجموعة"
-  },
-  "dupesNone": {
-    "message": "لم يتم العثور على مكررات"
-  },
-  "deleteEllipsis": {
-    "message": "حذف..."
-  },
-  "donationMessage": {
-    "message": "هل أعجبك؟ تبرّع لدعم مستقبله، أو قيّمه في المتجر: فكل تقييم يضمن استمرار التحديثات."
-  },
-  "donationV4Notice": {
-    "message": "vBookmarks 4.0 هو إصدار جديد كلياً بتصميم عصري، ومليء بالميزات الجديدة."
-  },
-  "donationV4GuideLink": {
-    "message": "اقرأ دليل v4 ←"
-  },
-  "donationGo": {
-    "message": "تبرع"
-  },
-  "donationRate": {
-    "message": "قيّمه"
-  },
-  "donationRateTitle": {
-    "message": "قيّم vBookmarks على متجر Chrome الإلكتروني"
-  },
-  "donationLater": {
-    "message": "لاحقًا"
-  },
-  "donationNever": {
-    "message": "لا تظهر مرة أخرى"
-  },
-  "donationDismiss": {
-    "message": "تجاهل"
-  },
-  "edit": {
-    "message": "تحرير..."
-  },
-  "editBookmark": {
-    "message": "تحرير علامة مرجعية"
-  },
-  "editFolder": {
-    "message": "تحرير مجلد"
-  },
-  "errorOccured": {
-    "message": "عفواً، حدث خطأ."
-  },
-  "extDesc": {
-    "description": "وصف الامتداد.",
-    "message": "مدير علامات مرجعية منبثق. Neat Bookmarks محسّن. أنظم من Neater Bookmarks."
-  },
-  "extName": {
-    "description": "vBookmarks",
-    "message": "vBookmarks"
-  },
-  "folderEmpty": {
-    "message": "(فارغ)"
-  },
-  "general": {
-    "message": "عام"
-  },
-  "ignore": {
-    "message": "تجاهل"
-  },
-  "name": {
-    "description": "اسم العلامة المرجعية أو المجلد.",
-    "message": "الاسم"
-  },
-  "nope": {
-    "message": "إلغاء"
-  },
-  "noTitle": {
-    "description": "العنوان للعلامات المرجعية بدون عنوان بدون URL http(s) أو المجلدات بدون عنوان.",
-    "message": "(بلا عنوان)"
-  },
-  "open": {
-    "description": "إجراء لفتح العلامات المرجعية.",
-    "message": "فتح"
-  },
-  "openBookmarks": {
-    "message": "فتح جميع العلامات المرجعية"
-  },
-  "openBookmarksIncognitoWindow": {
-    "message": "فتح العلامات في نافذة متخفية"
-  },
-  "openBookmarksInGroup": {
-    "message": "فتح الكل في مجموعة تبويب جديدة"
-  },
-  "openBookmarksInGroupSetup": {
-    "message": "فتح الكل في مجموعة تبويبات جديدة…"
-  },
-  "openBookmarksInExistingGroup": {
-    "message": "فتح الكل في مجموعة تبويبات موجودة…"
-  },
-  "tabGroupOptions": {
-    "message": "مجموعات التبويبات"
-  },
-  "sortMenuOptions": {
-    "message": "فرز"
-  },
-  "openBookmarksNewWindow": {
-    "message": "فتح العلامات في نافذة جديدة"
-  },
-  "openCommandPaletteCommand": {
-    "message": "فتح لوحة الأوامر"
-  },
-  "openIncognitoWindow": {
-    "message": "فتح في نافذة متخفية"
-  },
-  "openNewTab": {
-    "message": "فتح في علامة تبويب جديدة"
-  },
-  "bookmarkOpenInNewGroup": {
-    "message": "فتح في مجموعة تبويبات جديدة"
-  },
-  "bookmarkOpenInNewGroupSetup": {
-    "message": "فتح في مجموعة تبويبات جديدة…"
-  },
-  "bookmarkOpenInExistingGroup": {
-    "message": "فتح في مجموعة تبويبات موجودة…"
-  },
-  "openNewWindow": {
-    "message": "فتح في نافذة جديدة"
-  },
-  "openSidePanelCommand": {
-    "message": "فتح اللوحة الجانبية لـ vBookmarks"
-  },
-  "optionAnnounceEnabled": {
-    "message": "عرض الإعلانات داخل المنتج"
-  },
-  "optionAnnounceEnabledHint": {
-    "message": "ملاحظات الإصدار والنصائح من مستودع GitHub الخاص بالمشروع (يتم جلبها كل 6 ساعات كحد أقصى). إيقاف التشغيل يوقف أيضًا جلب الشبكة."
-  },
-  "optionClickNewTab": {
-    "message": "النقر الأيسر يفتح العلامة المرجعية في علامة تبويب جديدة."
-  },
-  "optionCloseUnusedFolders": {
-    "message": "إغلاق المجلدات غير المستخدمة عند فتح مجلد."
-  },
-  "optionConfirmOpenFolder": {
-    "message": "عرض تأكيد عند فتح العديد من العلامات المرجعية من مجلد."
-  },
-  "optionConfirmDeleteFolder": {
-    "message": "تأكيد قبل حذف المجلدات غير الفارغة"
-  },
-  "optionOnlyShowBookmarkBar": {
-    "message": "إظهار العلامات المرجعية في شريط العلامات المرجعية فقط"
-  },
-  "optionSearchAfterEnter": {
-    "message": "البحث عن العلامات المرجعية فقط عند الضغط على ENTER (بدلاً من البحث الفوري)"
-  },
-  "optionOpenNewTab": {
-    "message": "النقر الأوسط أو التحكم+النقر يفتح العلامة المرجعية في علامة تبويب خلفية جديدة (بدلاً من المقدمة)."
-  },
-  "optionOpenInSidePanel": {
-    "message": "الفتح في اللوحة الجانبية بدلاً من النافذة المنبثقة"
-  },
-  "optionPopupStays": {
-    "message": "النافذة المنبثقة تظل مفتوحة عند فتح (النقر الأيسر) العلامات المرجعية."
-  },
-  "optionRememberPrevState": {
-    "message": "تذكر الحالة السابقة (موضع التمرير، المجلدات المفتوحة، وآخر عنصر تم التركيز عليه)."
-  },
-  "options": {
-    "message": "خيارات"
-  },
-  "optionsFooterText": {
-    "description": "Footer text for the Options page",
-    "message": "تم إنشاؤه بواسطة $authorName$.",
-    "placeholders": {
-      "authorName": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionZoom": {
-    "message": "تكبير"
-  },
-  "optionTheme": {
-    "message": "المظهر"
-  },
-  "optionThemeAuto": {
-    "message": "اتباع النظام"
-  },
-  "optionThemeLight": {
-    "message": "فاتح"
-  },
-  "optionThemeDark": {
-    "message": "داكن"
-  },
-  "optionThemeInk": {
-    "message": "حبر (داكن)"
-  },
-  "optionThemePaper": {
-    "message": "ورق (فاتح)"
-  },
-  "optionLanguage": {
-    "message": "اللغة"
-  },
-  "optionLanguageAuto": {
-    "message": "تلقائي"
-  },
-  "optionLanguageHint": {
-    "message": "تغيير اللغة يعيد تحميل هذه الصفحة."
-  },
-  "paletteClose": {
-    "message": "إغلاق"
-  },
-  "paletteCmdVersion": {
-    "message": "معلومات الإصدار"
-  },
-  "paletteCmdLang": {
-    "message": "تبديل اللغة…"
-  },
-  "paletteCmdLangUsage": {
-    "message": "الاستخدام: /lang متبوعًا برمز اللغة — مثل: /lang en، /lang zh_CN، /lang ja."
+  "versionDialogCopy": {
+    "message": "نسخ المعلومات"
   },
   "versionDialogTitle": {
     "message": "vBookmarks $version$",
@@ -634,15 +2510,6 @@
         "content": "$1"
       }
     }
-  },
-  "versionDialogCopy": {
-    "message": "نسخ المعلومات"
-  },
-  "versionDialogCopied": {
-    "message": "تم النسخ"
-  },
-  "versionMetaVersion": {
-    "message": "إصدار الامتداد"
   },
   "versionMetaAnnounce": {
     "message": "ما الجديد"
@@ -653,277 +2520,58 @@
   "versionMetaBrowser": {
     "message": "المتصفح"
   },
-  "versionMetaOS": {
-    "message": "نظام التشغيل"
-  },
   "versionMetaChannel": {
     "message": "القناة"
   },
   "versionMetaLanguage": {
     "message": "اللغة"
   },
+  "versionMetaOS": {
+    "message": "نظام التشغيل"
+  },
   "versionMetaUserAgent": {
     "message": "وكيل المستخدم"
   },
-  "paletteCmdDead": {
-    "message": "البحث عن الروابط المعطلة"
+  "versionMetaVersion": {
+    "message": "إصدار الامتداد"
   },
-  "paletteCmdDupes": {
-    "message": "تنظيف الإشارات المرجعية المكررة"
+  "viewDead": {
+    "message": "الروابط المعطلة"
   },
-  "paletteCmdNewBookmark": {
-    "message": "إشارة مرجعية جديدة…"
+  "viewDisable": {
+    "message": "تعطيل"
   },
-  "paletteCmdNewFolder": {
-    "message": "مجلد جديد…"
+  "viewDupes": {
+    "message": "المكررات"
   },
-  "paletteCmdQuickAdd": {
-    "message": "إشارة مرجعية للتبويب الحالي"
+  "viewEnable": {
+    "message": "تفعيل"
   },
-  "paletteCmdSaveSession": {
-    "message": "حفظ تبويبات النافذة كمجلد"
-  },
-  "paletteNoResults": {
-    "message": "لا توجد نتائج مطابقة"
-  },
-  "palettePlaceholder": {
-    "message": "ابحث عن إشارات مرجعية، مجلدات، أوامر…"
-  },
-  "parentFolder": {
-    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
-    "message": "المجلد الأصلي: \"$folderName$\"",
+  "viewHiddenTabsHint": {
+    "message": "أنت في العرض $view$. اضغط على $back$ أو استخدم لوحة الأوامر للعودة إلى الشجرة.",
     "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarksbar"
-      }
-    }
-  },
-  "removeSeparator": {
-    "message": "إزالة الفاصل"
-  },
-  "replaceUrl": {
-    "message": "استبدال هذا بعنوان URL الحالي"
-  },
-  "reportedToDeveloper": {
-    "description": "تم الإبلاغ عن رسالة لخطأ حدث في الامتداد إلى المطور.",
-    "message": "تم الإبلاغ عن هذا إلى المطور."
-  },
-  "reportError": {
-    "message": "الإبلاغ عن خطأ"
-  },
-  "resetButton": {
-    "message": "إعادة تعيين"
-  },
-  "resetSettings": {
-    "message": "إعادة تعيين الإعدادات"
-  },
-  "resetSettingsDescription": {
-    "message": "إعادة تعيين vBookmarks إلى الإعدادات الافتراضية."
-  },
-  "save": {
-    "message": "حفظ"
-  },
-  "searchBookmarks": {
-    "description": "نص عنصر نائب لحقل البحث.",
-    "message": "بحث في العلامات المرجعية"
-  },
-  "searchClear": {
-    "message": "مسح البحث"
-  },
-  "searchNoResults": {
-    "message": "لا توجد إشارات مرجعية مطابقة"
-  },
-  "searchViewHint": {
-    "message": "اكتب في المربع أعلاه للبحث في إشاراتك المرجعية"
-  },
-  "selectAll": {
-    "message": "الكل"
-  },
-  "selectClear": {
-    "message": "مسح"
-  },
-  "selectCount": {
-    "message": "تم تحديد $count$",
-    "placeholders": {
-      "count": {
+      "back": {
+        "content": "$2"
+      },
+      "view": {
         "content": "$1"
       }
     }
   },
-  "selectInvert": {
-    "message": "عكس التحديد"
-  },
-  "selectModeEnter": {
-    "message": "تحديد"
-  },
-  "selectModeExit": {
-    "message": "إنهاء التحديد"
-  },
-  "deadRiskBanner": {
-    "message": "تنظيف الروابط المعطلة يحذف الإشارات المرجعية بشكل جماعي. قم بعمل نسخة احتياطية من الإشارات المرجعية قبل أول عملية تنظيف."
-  },
-  "dupesRiskBanner": {
-    "message": "إزالة التكرارات تحذف الإشارات المرجعية المكررة بشكل جماعي. قم بعمل نسخة احتياطية من الإشارات المرجعية قبل تطبيقها."
-  },
-  "riskBannerHelp": {
-    "message": "دليل النسخ الاحتياطي والاستعادة"
-  },
-  "riskBannerNever": {
-    "message": "لا تظهر مرة أخرى"
-  },
-  "riskBannerDismiss": {
-    "message": "تجاهل"
-  },
-  "sessionEmpty": {
-    "message": "لا توجد تبويبات للحفظ"
-  },
-  "sessionFolderName": {
-    "message": "جلسة $date$",
-    "placeholders": {
-      "date": {
-        "content": "$1",
-        "example": "2026-07-18 15:04"
-      }
-    },
-    "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm."
-  },
-  "sessionSaved": {
-    "message": "تم حفظ $count$ تبويبًا في مجلد جديد",
-    "placeholders": {
-      "count": {
-        "content": "$1",
-        "example": "12"
-      }
-    },
-    "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
-  },
-  "url": {
-    "message": "URL"
-  },
-  "syncOptions": {
-    "message": "خيارات المزامنة"
-  },
-  "optionShowSyncStatus": {
-    "message": "إظهار مؤشرات حالة المزامنة"
-  },
-  "optionHighlightUnsynced": {
-    "message": "تعتيم الإشارات المرجعية غير المتزامنة"
-  },
-  "optionAutoRefreshSync": {
-    "message": "تحديث حالة المزامنة تلقائياً"
-  },
-  "optionSyncRefreshInterval": {
-    "message": "فترة التحديث"
-  },
-  "optionSyncRefreshIntervalSeconds": {
-    "message": "ثواني"
-  },
-  "syncStatusSynced": {
-    "message": "متزامن مع حساب Google الخاص بك"
-  },
-  "syncStatusLocal": {
-    "message": "محلي فقط — لم يتم الرفع"
-  },
-  "syncStatusUnsyncable": {
-    "message": "لا يمكن المزامنة"
-  },
-  "syncSuffixSynced": {
-    "message": "(متزامن)"
-  },
-  "syncSuffixLocal": {
-    "message": "(محلي)"
-  },
-  "optionAutoResizePopup": {
-    "message": "ضبط حجم النافذة المنبثقة تلقائيًا لتناسب المحتوى"
-  },
-  "crossStorageMoveWarning": {
-    "message": "لا يمكن نقل الإشارات المرجعية بين التخزين المتزامن والتخزين المحلي. استخدم النسخ/اللصق بدلاً من ذلك.",
-    "description": "تحذير عند محاولة نقل الإشارات المرجعية عبر أنواع التخزين"
-  },
-  "recentBookmarks": {
-    "message": "المضافة حديثًا"
-  },
-  "optionShowRecentBookmarks": {
-    "message": "عرض الإشارات المرجعية المضافة حديثًا في أعلى النافذة المنبثقة"
-  },
-  "optionShowStatsView": {
-    "message": "إظهار علامة تبويب الإحصائيات"
-  },
-  "optionShowDeadView": {
-    "message": "إظهار علامة تبويب الروابط المعطلة"
-  },
-  "optionShowDupesView": {
-    "message": "إظهار علامة تبويب التكرارات"
-  },
-  "optionRecentCollapsed": {
-    "message": "طي قسم المضافة حديثًا افتراضيًا"
-  },
-  "optionsGroupViews": {
-    "message": "العروض"
-  },
-  "optionsGroupSort": {
-    "message": "الفرز"
-  },
-  "optionsGroupStats": {
-    "message": "الإحصائيات"
-  },
-  "optionsGroupTools": {
-    "message": "الأدوات"
-  },
-  "optionShowViewTabs": {
-    "message": "إظهار علامات تبويب العرض أسفل مربع البحث"
-  },
-  "optionRememberView": {
-    "message": "تذكر آخر عرض نشط وأعد فتحه"
-  },
-  "optionShowTabBadges": {
-    "message": "إظهار شارات العدد على علامات تبويب العرض"
-  },
-  "optionPaletteEnabled": {
-    "message": "تفعيل لوحة الأوامر (Ctrl/Cmd+K)"
-  },
-  "optionQuickAddEnabled": {
-    "message": "إظهار زر النجمة للإضافة السريعة بجانب مربع البحث"
-  },
-  "optionQuickAddContextMenu": {
-    "message": "أضف خيار \"حفظ هذه الصفحة باستخدام vBookmarks\" إلى قائمة النقر بزر الماوس الأيمن"
-  },
-  "optionQuickAddContextMenuHint": {
-    "message": "مستقل عن زر الإضافة السريعة؛ استعادة التجربة الكلاسيكية تُعطِّل هذا الخيار أيضًا."
-  },
-  "optionCollapseTabGroupMenu": {
-    "message": "طي عناصر مجموعات التبويبات في قائمة فرعية واحدة \"مجموعات التبويبات\""
-  },
-  "optionCollapseTabGroupMenuHint": {
-    "message": "ينطبق على قوائم النقر بزر الماوس الأيمن لكل من المجلدات والإشارات المرجعية. معطّل افتراضيًا؛ يجعل القوائم منخفضة الارتفاع أقصر على الشاشات الصغيرة أو ذات التكبير العالي."
-  },
-  "optionCollapseSortMenu": {
-    "message": "طي عناصر الفرز في قائمة فرعية واحدة \"فرز\""
-  },
-  "optionCollapseSortMenuHint": {
-    "message": "ينطبق على قائمة النقر بزر الماوس الأيمن للمجلدات. مفعّل افتراضيًا."
-  },
-  "optionShowToolButton": {
-    "message": "إظهار زر الأدوات (⋮) بجانب مربع البحث"
-  },
-  "optionClassicExperience": {
-    "message": "استعادة الترويسة الكلاسيكية"
-  },
-  "optionClassicExperienceHint": {
-    "message": "يُوقف تشغيل لوحة الأوامر، ونجمة الإضافة السريعة، ومدخل الصفحة في قائمة النقر بزر الماوس الأيمن، وزر الأداة، وعلامات التبويب. يمكن إعادة تمكين كل منها على حدة في قسمها."
-  },
-  "optionShowItemPath": {
-    "message": "إظهار مسار المجلد الأصلي في صفوف القائمة"
-  },
   "viewRecent": {
     "message": "المرحلة التجريبية"
   },
-  "viewTree": {
-    "message": "الشجرة"
-  },
   "viewSearch": {
     "message": "بحث"
+  },
+  "viewStateDisabled": {
+    "message": "معطّل"
+  },
+  "viewStateEnabled": {
+    "message": "مفعّل"
+  },
+  "viewStats": {
+    "message": "الإحصائيات"
   },
   "viewSwitchAnnounce": {
     "message": "عرض $name$",
@@ -933,870 +2581,17 @@
       }
     }
   },
-  "viewStateEnabled": {
-    "message": "مفعّل"
-  },
-  "viewStateDisabled": {
-    "message": "معطّل"
-  },
-  "viewEnable": {
-    "message": "تفعيل"
-  },
-  "viewDisable": {
+  "viewTabDisable": {
     "message": "تعطيل"
+  },
+  "viewTabGroups": {
+    "message": "مجموعات التبويبات"
   },
   "viewTabHide": {
     "message": "إخفاء"
   },
-  "viewTabDisable": {
-    "message": "تعطيل"
-  },
-  "sortFolderContents": {
-    "message": "فرز محتويات المجلد"
-  },
-  "sortByName": {
-    "message": "فرز بالاسم"
-  },
-  "sortByDate": {
-    "message": "فرز حسب تاريخ الإضافة"
-  },
-  "sortRecursiveSuffix": {
-    "message": "(متكرر)"
-  },
-  "sortOptions": {
-    "message": "خيارات الفرز…"
-  },
-  "sortDone": {
-    "message": "تم فرز المجلد"
-  },
-  "sortByTitle": {
-    "message": "حسب العنوان"
-  },
-  "sortByDateAdded": {
-    "message": "حسب تاريخ الإضافة (الأحدث أولاً)"
-  },
-  "sortFoldersFirst": {
-    "message": "إبقاء المجلدات في الأعلى"
-  },
-  "sortRecursive": {
-    "message": "فرز المجلدات الفرعية أيضًا (تكراري)"
-  },
-  "sortRecursiveWarning": {
-    "message": "سيؤدي هذا إلى إعادة ترتيب الإشارات المرجعية في كل مجلد فرعي."
-  },
-  "tabGroupDialogTitle": {
-    "message": "مجموعة تبويبات جديدة"
-  },
-  "tabGroupTitleLabel": {
-    "message": "عنوان المجموعة"
-  },
-  "tabGroupColorLabel": {
-    "message": "اللون"
-  },
-  "tabGroupColorGrey": {
-    "message": "رمادي",
-    "description": "Accessible name of the grey color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorBlue": {
-    "message": "أزرق",
-    "description": "Accessible name of the blue color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorRed": {
-    "message": "أحمر",
-    "description": "Accessible name of the red color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorYellow": {
-    "message": "أصفر",
-    "description": "Accessible name of the yellow color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorGreen": {
-    "message": "أخضر",
-    "description": "Accessible name of the green color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorPink": {
-    "message": "وردي",
-    "description": "Accessible name of the pink color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorPurple": {
-    "message": "بنفسجي",
-    "description": "Accessible name of the purple color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorCyan": {
-    "message": "سماوي",
-    "description": "Accessible name of the cyan color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorOrange": {
-    "message": "برتقالي",
-    "description": "Accessible name of the orange color swatch in the new-tab-group dialog."
-  },
-  "tabGroupUntitled": {
-    "message": "مجموعة بدون عنوان"
-  },
-  "tabGroupNoGroups": {
-    "message": "لا توجد مجموعات تبويبات حالية"
-  },
-  "tabGroupPickDialogTitle": {
-    "message": "فتح في مجموعة تبويبات موجودة"
-  },
-  "quickAddBookmark": {
-    "message": "إضافة إشارة مرجعية لهذه الصفحة (Ctrl+D)"
-  },
-  "quickAddBookmarkCommand": {
-    "message": "إضافة سريعة للتبويب الحالي كإشارة مرجعية"
-  },
-  "quickAdded": {
-    "message": "تمت إضافة الإشارة المرجعية"
-  },
-  "quickAddedTo": {
-    "message": "تمت إضافة الإشارة المرجعية إلى $folderName$",
-    "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarks bar"
-      }
-    }
-  },
-  "quickRemoved": {
-    "message": "تمت إزالة الإشارة المرجعية"
-  },
-  "quickRemoveBookmark": {
-    "message": "إزالة هذه الإشارة المرجعية (Ctrl+D)"
-  },
-  "toolButtonTitle": {
-    "message": "أدوات (Ctrl+K)"
-  },
-  "contextMenuAddBookmark": {
-    "message": "إضافة إشارة مرجعية لهذه الصفحة باستخدام vBookmarks"
-  },
-  "deadFilterAll": {
-    "message": "الكل"
-  },
-  "deadFilterBlocked": {
-    "message": "محظور فقط"
-  },
-  "deadFilterDead": {
-    "message": "معطلة فقط"
-  },
-  "deadFilterMarked": {
-    "message": "معلَّمة سابقًا"
-  },
-  "deadLastScanAt": {
-    "message": "آخر فحص: $time$",
-    "placeholders": {
-      "time": {
-        "content": "$1"
-      }
-    }
-  },
-  "deadMark": {
-    "message": "وضع علامة كمعطلة"
-  },
-  "deadMarkAll": {
-    "message": "وضع علامة على الكل"
-  },
-  "deadMarked": {
-    "message": "تم وضع علامة على الصفوف المعطلة"
-  },
-  "deadMarkedCount": {
-    "message": "تم وضع علامة على $count$ إشارات مرجعية",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "deadMarkedNone": {
-    "message": "لا توجد إشارات مرجعية معلّمة بعد"
-  },
-  "deadMarkedRow": {
-    "message": "مُعلَّم"
-  },
-  "deadMarkSelected": {
-    "message": "وضع علامة على المحدد"
-  },
-  "deadMarkStatusAll": {
-    "message": "أي حالة"
-  },
-  "deadMarkStatusMarked": {
-    "message": "موسوم"
-  },
-  "deadMarkStatusUnmarked": {
-    "message": "غير موسوم"
-  },
-  "deadMarkTimeLabel": {
-    "message": "وُسم في"
-  },
-  "deadDetectTimeLabel": {
-    "message": "اكتُشف في"
-  },
-  "deadSortLabel": {
-    "message": "ترتيب حسب"
-  },
-  "deadSortByDetected": {
-    "message": "وقت الاكتشاف"
-  },
-  "deadSortByPath": {
-    "message": "مسار المجلد"
-  },
-  "deadSortByMarked": {
-    "message": "وقت الوسم"
-  },
-  "deadMarkedBanner": {
-    "message": "يتم عرض الإشارات المرجعية المعلّمة سابقًا. انقر فوق 'إعادة الفحص' لبدء فحص جديد، أو عالجها في القائمة أدناه."
-  },
-  "deadMarkedBannerDismiss": {
-    "message": "إغلاق"
-  },
-  "deadProxyAdd": {
-    "message": "أضف خادم وكيل لفحوصات الروابط المعطلة"
-  },
-  "deadProxyLabel": {
-    "message": "الوكيل: $server$",
-    "placeholders": {
-      "server": {
-        "content": "$1"
-      }
-    }
-  },
-  "deadProxyChange": {
-    "message": "تغيير"
-  },
-  "deadProxyRemove": {
-    "message": "إزالة"
-  },
-  "deadProxyRemoved": {
-    "message": "تمت إزالة الخادم الوكيل"
-  },
-  "deadProxyPanelHint": {
-    "message": "أدخل خادم وكيل تمتلكه بالفعل (الإضافة لا توفر أيًا)، مثال: 127.0.0.1:7890 أو socks5://127.0.0.1:1080."
-  },
-  "deadProxyTestUrlLabel": {
-    "message": "رابط الاختبار"
-  },
-  "deadProxyTestSave": {
-    "message": "اختبار وحفظ"
-  },
-  "deadProxyTesting": {
-    "message": "جارٍ الاختبار…"
-  },
-  "deadProxySaved": {
-    "message": "تم حفظ الوكيل — ستعيد عمليات الفحص المستقبلية فحص حالات الفشل المباشر من خلاله."
-  },
-  "deadProxyInvalid": {
-    "message": "عنوان وكيل غير صالح — استخدم host:port أو scheme://host:port (http/https/socks5، بدون بيانات اعتماد)"
-  },
-  "deadProxyUnreachable": {
-    "message": "الوكيل غير قابل للوصول — لم يتم الحفظ"
-  },
-  "deadProxyDenied": {
-    "message": "لم يتم منح إذن الوكيل"
-  },
-  "deadProxyControlled": {
-    "message": "إعدادات الوكيل تدار بواسطة إضافة أخرى"
-  },
-  "deadProxyUnavailable": {
-    "message": "واجهة برمجة التطبيقات للوكيل غير متاحة في هذا المتصفح"
-  },
-  "deadProxyNudge": {
-    "message": "إعادة فحص البروكسي تفصل الروابط المعطلة فعلياً عن تلك المحجوبة حسب المنطقة — قم بتكوين ذلك هنا أو في صفحة الخيارات."
-  },
-  "deadProxyNeverShow": {
-    "message": "لا تظهر مرة أخرى"
-  },
-  "deadStartHint": {
-    "message": "بدء فحص $n$ إشارة مرجعية",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "deadStatusBlocked": {
-    "message": "محظور"
-  },
-  "deadUnmark": {
-    "message": "إزالة علامة المعطلة"
-  },
-  "deadUnmarkAll": {
-    "message": "مسح جميع العلامات"
-  },
-  "deadUnmarkSelected": {
-    "message": "إزالة العلامة عن المحدد"
-  },
-  "dupesApplyAll": {
-    "message": "تطبيق الكل ($count$)",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "dupesApplySelected": {
-    "message": "إزالة التكرار من المحدد ($count$)",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "dupesCleanRestHint": {
-    "message": "احتفظ بـ \"$title$\" وأزل $count$ الأخرى",
-    "placeholders": {
-      "title": {
-        "content": "$1"
-      },
-      "count": {
-        "content": "$2"
-      }
-    }
-  },
-  "dupesIgnoreScheme": {
-    "message": "تجاهل اختلافات http/https"
-  },
-  "dupesKeepThis": {
-    "message": "احتفظ بهذا"
-  },
-  "dupesKeeperSet": {
-    "message": "تعيين كحافظ"
-  },
-  "dupesPreviewSummary": {
-    "message": "$groups$ مجموعات · $count$ سيتم تحريرها",
-    "placeholders": {
-      "groups": {
-        "content": "$1"
-      },
-      "count": {
-        "content": "$2"
-      }
-    }
-  },
-  "dupesRemoveRow": {
-    "message": "حذف هذه النسخة"
-  },
-  "dupesScopeAll": {
-    "message": "جميع الإشارات المرجعية"
-  },
-  "dupesScopeBar": {
-    "message": "شريط الإشارات فقط"
-  },
-  "dupesStrategyBookmarkBar": {
-    "message": "احتفظ بالذي في شريط الإشارات"
-  },
-  "dupesStrategyMostVisited": {
-    "message": "احتفظ بالأكثر زيارة"
-  },
-  "dupesStrategyNewest": {
-    "message": "احتفظ بالأحدث"
-  },
-  "dupesStrategyOldest": {
-    "message": "احتفظ بالأقدم"
-  },
-  "dupesStrategyShallowest": {
-    "message": "احتفظ بالأقل عمقًا"
-  },
-  "dupesStrategyShortestTitle": {
-    "message": "احتفظ بأقصر عنوان"
-  },
-  "optionDeadProxyServer": {
-    "message": "خادم وكيل الروابط المعطلة"
-  },
-  "deadProxyServerHint": {
-    "message": "يقوم الخادم المحفوظ بإعادة فحص الإشارات المرجعية التي تفشل في الفحص المباشر في كل فحص للروابط المعطلة، لفصل الروابط المعطلة فعليًا عن المحجوبة إقليميًا. يقوم خيار الاختبار والحفظ باختباره (لا يُحتفظ إلا بالخادم القابل للوصول)؛ ويمكنك أيضًا إضافته من عرض الروابط المعطلة."
-  },
-  "deadProxyClear": {
-    "message": "مسح"
-  },
-  "deadProxyNone": {
-    "message": "(غير محدد)"
-  },
-  "optionDeadProxyStrip": {
-    "message": "إظهار تلميح إضافة بروكسي في عرض الروابط المعطلة"
-  },
-  "optionDeadProxyStripHint": {
-    "message": "عند الإيقاف، يتم إخفاء هذا التلميح هناك؛ يبقى خادم البروكسي قابلاً للتكوين هنا، ويعرض الخادم المحفوظ دائمًا صف الإدارة الخاص به في العرض."
-  },
-  "optionDeadScanConcurrency": {
-    "message": "توازي فحص الروابط المعطلة (1-16)"
-  },
-  "optionDeadScanTimeout": {
-    "message": "مهلة فحص الروابط المعطلة بالثواني (2-30)"
-  },
-  "paletteCmdGoDead": {
-    "message": "الانتقال إلى عرض الروابط المعطلة"
-  },
-  "paletteCmdGoDupes": {
-    "message": "الانتقال إلى عرض المكررات"
-  },
-  "paletteCmdGoRecent": {
-    "message": "الانتقال إلى عرض الأخيرة"
-  },
-  "paletteCmdGoSearch": {
-    "message": "الانتقال إلى عرض البحث"
-  },
-  "paletteCmdGoTree": {
-    "message": "الانتقال إلى عرض الشجرة"
-  },
-  "paletteCmdOptions": {
-    "message": "فتح صفحة الخيارات"
-  },
-  "paletteCmdSearchInView": {
-    "message": "البحث عن '$query$' في عرض البحث",
-    "placeholders": {
-      "query": {
-        "content": "$1"
-      }
-    }
-  },
-  "rowActionDelete": {
-    "message": "حذف"
-  },
-  "rowActionMark": {
-    "message": "وضع علامة كمعطل"
-  },
-  "rowActionReveal": {
-    "message": "إظهار في الشجرة"
-  },
-  "rowActionUnmark": {
-    "message": "إزالة علامة التعطل"
-  },
-  "viewDead": {
-    "message": "الروابط المعطلة"
-  },
-  "viewDupes": {
-    "message": "المكررات"
-  },
-  "viewStats": {
-    "message": "الإحصائيات"
-  },
-  "paletteCmdGoStats": {
-    "message": "الانتقال إلى عرض الإحصائيات"
-  },
-  "optionStatsEnabled": {
-    "message": "تمكين إحصائيات الزيارة"
-  },
-  "optionFaviconContrast": {
-    "message": "عكس الأيقونات منخفضة التباين"
-  },
-  "optionFaviconContrastHint": {
-    "message": "يتم عكس الأيقونات البيضاء في السمات الفاتحة والأيقونات السوداء في السمات الداكنة حتى تبقى مرئية. يتم تحليل كل أيقونة مرة واحدة عند تحميلها — دون أي تكلفة أثناء التصفح."
-  },
-  "optionFaviconEnrich": {
-    "message": "جلب أيقونات المواقع المفقودة"
-  },
-  "optionFaviconEnrichHint": {
-    "message": "بالنسبة للمواقع المفضلة التي لا يحتوي Chrome على أيقونة مخبأة لها، يتم جلب الأيقونة الفعلية مباشرة من الموقع (/favicon.ico، ثم الأيقونات المعلنة في الصفحة). تُرسل الطلبات فقط إلى المواقع التي أضفتها إلى المفضلة."
-  },
-  "optionFaviconEnrichAgg": {
-    "message": "الاحتياطي لأيقونة الطرف الثالث"
-  },
-  "optionFaviconEnrichAggHint": {
-    "message": "عندما يفشل الجلب المباشر، يتم البحث عن الأيقونة حسب النطاق من قائمة مدمجة لخدمات الأيقونات التابعة لجهات خارجية ($providers$). تتم تخطي الخدمة التي يتعذر الوصول إليها ويتم تجربة الخدمة التالية — ولا تتم إعادة المحاولة لمدة 6 ساعات.",
-    "placeholders": {
-      "providers": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionFaviconBackup": {
-    "message": "تضمين كاش الأيقونات في النسخ الاحتياطية"
-  },
-  "optionFaviconBackupHint": {
-    "message": "قم أيضًا بتضمين ذاكرة الأيقونات المحسّنة (بيانات خاصة بكل موقع، وقد تكون كبيرة) في تصدير/استيراد الإعدادات. وهذا يشمل الأيقونات المخزنة مؤقتًا حتى عند تعطيل الجلب. ويؤدي تعطيل هذا الخيار إلى إبقاء النسخ الاحتياطية صغيرة؛ وستتم إعادة جلب الأيقونات تلقائيًا على أي حال."
-  },
-  "optionFaviconCacheClear": {
-    "message": "مسح كاش الأيقونات"
-  },
-  "optionFaviconCacheClearConfirm": {
-    "message": "مسح ذاكرة الأيقونات المحسّنة؟ سيتم إعادة جلب الأيقونات تلقائيًا عند الفتح التالي."
-  },
-  "optionFaviconCacheEmpty": {
-    "message": "لا توجد ذاكرة أيقونات لمسحها."
-  },
-  "optionFaviconCacheCleared": {
-    "message": "تم مسح كاش الأيقونات. ستتم إعادة الجلب عند الفتح التالي."
-  },
-  "favGalleryLink": {
-    "message": "عرض الأيقونات المحدّثة",
-    "description": "Options link (Icons group, right of the Clear icon cache button): opens the favicon gallery page listing the sites whose icons were refetched."
-  },
-  "favGalleryTitle": {
-    "message": "أيقونات المواقع المحدّثة",
-    "description": "Favicon gallery page title (h1 + document title)."
-  },
-  "favGalleryHint": {
-    "message": "أيقونات جلبها vBookmarks للمواقع المفضلة التي لم يخزّنها Chrome — من أين جاءت كل واحدة وأي الإشارات المرجعية تستخدمها. للعرض فقط.",
-    "description": "Subtitle under the favicon gallery title, explaining the page is read-only."
-  },
-  "favGallerySearch": {
-    "message": "تصفية حسب الموقع أو العنوان أو المسار",
-    "description": "Placeholder of the favicon gallery filter input."
-  },
-  "favGalleryAll": {
-    "message": "الكل",
-    "description": "Favicon gallery source filter chip: show every source."
-  },
-  "favSrcDirect": {
-    "message": "مباشر",
-    "description": "Favicon gallery source badge: the icon was fetched directly from the site itself."
-  },
-  "favSrcProxy": {
-    "message": "وكيل",
-    "description": "Favicon gallery source badge: the icon was fetched through the user's own proxy relay."
-  },
-  "favSrcLegacy": {
-    "message": "الذاكرة المؤقتة السابقة",
-    "description": "Favicon gallery source badge: cached before the source was recorded, so the origin is unknown."
-  },
-  "favGalleryCompare": {
-    "message": "قارن مع الرمز النائب",
-    "description": "Favicon gallery toggle button: switch every icon to the generic placeholder it replaced (before/after comparison)."
-  },
-  "favGalleryShowingBefore": {
-    "message": "العودة إلى الأيقونات الحقيقية",
-    "description": "Favicon gallery toggle button while the placeholder comparison is shown: switch back to the real fetched icons."
-  },
-  "favGalleryStatSites": {
-    "message": "$n$ من المواقع",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    },
-    "description": "Favicon gallery stats strip: how many sites have a refreshed icon."
-  },
-  "favGalleryStatBookmarks": {
-    "message": "$n$ من الإشارات المرجعية",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    },
-    "description": "Favicon gallery stats strip: how many bookmarks sit on the refreshed sites."
-  },
-  "favGalleryVisits": {
-    "message": "$n$ عملية فتح مسجلة",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    },
-    "description": "Favicon gallery tooltip on a bookmark row's visit-count pill."
-  },
-  "favGalleryFailedTitle": {
-    "message": "تمت المحاولة مؤخرًا دون العثور على أيقونة",
-    "description": "Favicon gallery heading of the muted section listing hosts whose icon fetch failed recently."
-  },
-  "favGalleryFailedHint": {
-    "message": "تتم إعادة المحاولة بعد 24 ساعة و3 أيام و7 أيام، ثم يُتخلى عنها حتى يتم مسح ذاكرة التخزين المؤقت للأيقونات.",
-    "description": "Favicon gallery hint under the failed-fetch section title."
-  },
-  "favGalleryGaveUp": {
-    "message": "تم التخلي عنها",
-    "description": "Favicon gallery badge on a failed-strip host whose retries are exhausted (it stays untouched until the icon cache is cleared)."
-  },
-  "favGalleryOrphan": {
-    "message": "لم يتبقَّ أي إشارة مرجعية على هذا المضيف — ستُمسح الأيقونة مع الذاكرة المؤقتة.",
-    "description": "Favicon gallery note on a card whose host no longer has any bookmark."
-  },
-  "favGalleryEmptyTitle": {
-    "message": "لا توجد أيقونات محدّثة بعد",
-    "description": "Favicon gallery empty-state heading."
-  },
-  "favGalleryEmptyText": {
-    "message": "عندما تصادف النافذة المنبثقة موقعًا مضافًا إلى الإشارات المرجعية ليس لدى Chrome أيقونة له، يجلب vBookmarks الأيقونة الحقيقية ويعرضها هنا.",
-    "description": "Favicon gallery empty-state body text."
-  },
-  "storageUsageIcon": {
-    "message": "كاش الأيقونات"
-  },
-  "storageUsageOther": {
-    "message": "أخرى"
-  },
-  "storageUsageSummary": {
-    "message": "المستخدم $1$ من $2$",
-    "placeholders": {
-      "1": {
-        "content": "$1"
-      },
-      "2": {
-        "content": "$2"
-      }
-    }
-  },
-  "storageUsageFree": {
-    "message": "المساحة الحرة"
-  },
-  "storageUsageHint": {
-    "message": "مساحة التخزين المحلية للإضافة فقط (chrome.storage.local، حوالي 10 ميغابايت): كاش الأيقونات بالإضافة إلى الإعدادات والبيانات المحلية الأخرى. الإعدادات المتزامنة وبيانات الجلسة ومكتبة الإشارات المرجعية نفسها لا تُحتسب هنا."
-  },
-  "optionsDonate": {
-    "message": "تبرع"
-  },
-  "optionsGithubLink": {
-    "message": "GitHub"
-  },
-  "optionsHomepageLink": {
-    "message": "الصفحة الرئيسية"
-  },
-  "optionsSince": {
-    "message": "متفرع من Neat Bookmarks، تمت صيانته لمدة $days$ يومًا.",
-    "placeholders": {
-      "days": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionsVersion": {
-    "message": "إصدار vBookmarks"
-  },
-  "statsSortByCount": {
-    "message": "حسب العدد"
-  },
-  "statsSortByRecent": {
-    "message": "حسب الأحدث"
-  },
-  "statsShowUnbookmarked": {
-    "message": "عرض غير المحفوظة"
-  },
-  "statsShowUnbookmarkedHint": {
-    "message": "تضمين الصفحات من السجل غير المحفوظة كإشارات مرجعية."
-  },
-  "statsEmpty": {
-    "message": "تتراكم الإحصائيات عند فتح الإشارات المرجعية"
-  },
-  "statsDisabledHint": {
-    "message": "إحصائيات الزيارة معطلة — قم بتمكينها في الخيارات → طرق العرض"
-  },
-  "statsVisitCount": {
-    "message": "تمت الزيارة $count$ مرة",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "statsClearData": {
-    "message": "مسح الإحصائيات"
-  },
-  "statsClearConfirm": {
-    "message": "مسح إحصائيات الزيارة لـ $count$ إشارة مرجعية؟ لا يمكن التراجع عن ذلك.",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "statsHistoryBanner": {
-    "message": "امنح الإذن بالوصول إلى السجل لملء إحصائيات الزيارات بزياراتك السابقة."
-  },
-  "statsHistoryEnable": {
-    "message": "تمكين"
-  },
-  "statsHistoryDismiss": {
-    "message": "لا تظهر مرة أخرى"
-  },
-  "statsHistoryImported": {
-    "message": "تم استيراد الزيارات السابقة لـ $count$ إشارة مرجعية",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "paletteCmdToggleViewTabs": {
-    "message": "تبديل علامات التبويب"
-  },
-  "paletteCmdTheme": {
-    "message": "تعيين المظهر…"
-  },
-  "paletteCmdThemeUsage": {
-    "message": "الاستخدام: /theme متبوعًا باسم المظهر — auto أو light أو dark أو ink أو paper (تعمل بادئة فريدة، مثل /theme d)."
-  },
-  "paletteCustomTag": {
-    "message": "مخصص"
-  },
-  "paletteCustomDeleteConfirm": {
-    "message": "حذف الأمر \"$1\"؟ ستتم مزامنة التغيير مع جميع أجهزتك."
-  },
-  "paletteCustomBroken": {
-    "message": "مجلد الأمر \"$1\" لم يعد موجودًا. هل تريد حذف الأمر؟"
-  },
-  "paletteCmdSaveAsCommand": {
-    "message": "حفظ \"$1\" كأمر…"
-  },
-  "paletteActionOpenUrl": {
-    "message": "فتح الرابط"
-  },
-  "paletteActionOpenUrlGroup": {
-    "message": "فتح مجموعة مجلدات الإشارات المرجعية"
-  },
-  "paletteActionViewPreset": {
-    "message": "فتح العرض بالإعداد المسبق"
-  },
-  "paletteActionUrlTemplate": {
-    "message": "فتح قالب الرابط"
-  },
-  "optionsGroupPalette": {
-    "message": "لوحة الأوامر"
-  },
-  "paletteCustomHint": {
-    "message": "أوامر الشرطة المائلة المخصصة للوحة الأوامر (Ctrl/Cmd+K). تتم مزامنتها مع إعداداتك — بحد أقصى 100 إدخال."
-  },
-  "paletteCustomAdd": {
-    "message": "إضافة أمر…"
-  },
-  "paletteCustomUsage": {
-    "message": "$1 / $2"
-  },
-  "paletteCustomSlash": {
-    "message": "الشرطة المائلة (الكلمة بعد /)"
-  },
-  "paletteCustomAliases": {
-    "message": "الأسماء المستعارة (مفصولة بفواصل)"
-  },
-  "paletteCustomAction": {
-    "message": "الإجراء"
-  },
-  "paletteCustomUrl": {
-    "message": "URL"
-  },
-  "paletteCustomTemplate": {
-    "message": "قالب URL — %s يُستبدل بالكلمات بعد الأمر"
-  },
-  "paletteCustomWhere": {
-    "message": "فتح في"
-  },
-  "paletteCustomFolder": {
-    "message": "مجلد الإشارات المرجعية"
-  },
-  "paletteCustomView": {
-    "message": "العرض"
-  },
-  "paletteCustomStrategy": {
-    "message": "إعداد مسبق لاستراتيجية إزالة التكرار"
-  },
-  "paletteCustomScope": {
-    "message": "إعداد مسبق لنطاق إزالة التكرار"
-  },
-  "paletteCustomScan": {
-    "message": "بدء الفحص عند الإدخال"
-  },
-  "paletteWhereCurrent": {
-    "message": "التبويب الحالي"
-  },
-  "paletteWhereTab": {
-    "message": "تبويب جديد"
-  },
-  "paletteWhereWindow": {
-    "message": "نافذة جديدة"
-  },
-  "paletteWhereBackground": {
-    "message": "تبويبات الخلفية"
-  },
-  "paletteCustomSave": {
-    "message": "حفظ الأمر"
-  },
-  "paletteCustomErrSlash": {
-    "message": "الشرطة المائلة: من 1 إلى 24 حرفًا من الأحرف الصغيرة أو الأرقام أو الواصلات، تبدأ بحرف أو رقم."
-  },
-  "paletteCustomErrAlias": {
-    "message": "الأسماء المستعارة: نفس قواعد الشرطة المائلة (من 1 إلى 24 حرفًا من الأحرف الصغيرة أو الأرقام أو الواصلات)."
-  },
-  "paletteCustomErrTaken": {
-    "message": "الشرطة المائلة أو الاسم المستعار مستخدم بالفعل."
-  },
-  "paletteCustomErrUrl": {
-    "message": "يُسمح فقط بعناوين URL بصيغة http:// أو https://."
-  },
-  "paletteCustomErrFolder": {
-    "message": "اختر مجلد الإشارات المرجعية."
-  },
-  "paletteCustomErrView": {
-    "message": "اختر عرضًا."
-  },
-  "paletteCustomErrTemplate": {
-    "message": "يجب أن يحتوي القالب على %s واحد بالضبط."
-  },
-  "paletteCustomErrAction": {
-    "message": "اختر نوع الإجراء."
-  },
-  "paletteCustomErrLimit": {
-    "message": "تم بلوغ الحد الأقصى للأوامر (100) — احذف واحدًا أولاً."
-  },
-  "paletteCustomEmpty": {
-    "message": "لا توجد أوامر مخصصة بعد."
-  },
-  "recentGroupToday": {
-    "message": "اليوم"
-  },
-  "recentGroupWeek": {
-    "message": "هذا الأسبوع"
-  },
-  "recentGroupMonth": {
-    "message": "هذا الشهر"
-  },
-  "recentGroupOlder": {
-    "message": "أقدم"
-  },
-  "searchHistoryRerun": {
-    "message": "أعد البحث"
-  },
-  "optionsGroupBackup": {
-    "message": "نسخ احتياطي"
-  },
-  "optionsGroupContextMenu": {
-    "message": "قوائم السياق"
-  },
-  "optionsGroupIcons": {
-    "message": "الأيقونات"
-  },
-  "settingsExport": {
-    "message": "تصدير الإعدادات"
-  },
-  "settingsImport": {
-    "message": "استيراد الإعدادات"
-  },
-  "settingsBackupHint": {
-    "message": "يقوم التصدير بحفظ جميع الإعدادات (بما في ذلك تفضيلات المزامنة) في ملف JSON. الاستيراد يدمج النسخة الاحتياطية: الإعدادات في الملف تحل محل الإعدادات الحالية، ويتم الاحتفاظ بكل شيء آخر."
-  },
-  "settingsImportConfirm": {
-    "message": "سيؤدي الاستيراد إلى استبدال كل إعداد موجود في ملف النسخ الاحتياطي (يتم الاحتفاظ بالإعدادات غير الموجودة في الملف) وإعادة تحميل هذه الصفحة. هل تريد المتابعة؟"
-  },
-  "settingsImportInvalid": {
-    "message": "ملف إعدادات غير صالح: ليس نسخة احتياطية لإعدادات vBookmarks."
-  },
-  "settingsImportDone": {
-    "message": "تم استيراد الإعدادات. سيتم الآن إعادة تحميل الصفحة."
-  },
-  "settingsImportError": {
-    "message": "تعذر كتابة بعض الإعدادات (بسبب تجاوز مساحة التخزين أو خطأ مؤقت). لم يكتمل الاستيراد — يرجى المحاولة مرة أخرى."
-  },
-  "statsSectionRecent": {
-    "message": "الزيارات الأخيرة"
-  },
-  "statsSectionBookmarks": {
-    "message": "إحصائيات الإشارات المرجعية"
-  },
-  "statsHistoryGuide": {
-    "message": "امنح الوصول إلى سجل التصفح لعرض زياراتك الأخيرة هنا."
-  },
-  "statsHistoryAdd": {
-    "message": "إضافة إلى الإشارات المرجعية"
-  },
-  "statsHistoryBookmarked": {
-    "message": "تمت الإشارة"
-  },
-  "deadPause": {
-    "message": "إيقاف مؤقت"
-  },
-  "deadResume": {
-    "message": "استئناف"
-  },
-  "deadCancel": {
-    "message": "إلغاء"
-  },
-  "deadPaused": {
-    "message": "متوقف مؤقتًا"
+  "viewTree": {
+    "message": "الشجرة"
   },
   "whatsNewChangelog": {
     "message": "سجل التغييرات"
@@ -1808,800 +2603,5 @@
         "content": "$1"
       }
     }
-  },
-  "viewHiddenTabsHint": {
-    "message": "أنت في العرض $view$. اضغط على $back$ أو استخدم لوحة الأوامر للعودة إلى الشجرة.",
-    "placeholders": {
-      "view": {
-        "content": "$1"
-      },
-      "back": {
-        "content": "$2"
-      }
-    }
-  },
-  "viewTabGroups": {
-    "message": "مجموعات التبويبات"
-  },
-  "optionShowTabGroupsView": {
-    "message": "إظهار تبويب عرض مجموعات التبويبات"
-  },
-  "tabGroupsViewEmpty": {
-    "message": "لا توجد تبويبات في هذه النافذة"
-  },
-  "tabGroupsToolbarRefresh": {
-    "message": "تحديث"
-  },
-  "tabGroupsCollapseAll": {
-    "message": "طي الكل"
-  },
-  "tabGroupsExpandAll": {
-    "message": "توسيع الكل"
-  },
-  "tabGroupsSummary": {
-    "message": "$tabs$ تبويبات · $groups$ مجموعات",
-    "placeholders": {
-      "tabs": {
-        "content": "$1"
-      },
-      "groups": {
-        "content": "$2"
-      }
-    }
-  },
-  "tabGroupsGroupCount": {
-    "message": "$count$ تبويبات",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsCurrentTab": {
-    "message": "الحالي"
-  },
-  "tabGroupsAddBookmark": {
-    "message": "إضافة علامة مرجعية لهذا التبويب"
-  },
-  "tabGroupsSaveFolder": {
-    "message": "حفظ مجموعة التبويبات كمجلد علامات مرجعية"
-  },
-  "tabGroupsGroupSavedToFolder": {
-    "message": "تم حفظ $count$ تبويبات في $folder$",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      },
-      "folder": {
-        "content": "$2"
-      }
-    }
-  },
-  "tabGroupsBookmarksAdded": {
-    "message": "تمت إضافة $count$ علامة (علامات) مرجعية إلى $folder$",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      },
-      "folder": {
-        "content": "$2"
-      }
-    }
-  },
-  "tabGroupsSelectNewGroup": {
-    "message": "مجموعة تبويبات جديدة"
-  },
-  "tabGroupsSelectOpenInto": {
-    "message": "فتح في مجموعة تبويبات موجودة…"
-  },
-  "tabGroupsSelectSaveFolder": {
-    "message": "حفظ كمجلد علامات مرجعية"
-  },
-  "tabGroupsSelectClose": {
-    "message": "إغلاق"
-  },
-  "tabGroupsSelectSleep": {
-    "message": "إسبات"
-  },
-  "tabGroupsCopyMoveDialog": {
-    "message": "التبويبات المحددة تنتمي بالفعل إلى مجموعة تبويبات. هل تريد نسخها (فتحها في مكان جديد) أو نقلها (إزالتها من مجموعتها الحالية)؟"
-  },
-  "tabGroupsCopyMoveCopy": {
-    "message": "نسخ"
-  },
-  "tabGroupsCopyMoveMove": {
-    "message": "نقل"
-  },
-  "tabGroupsConfirmClose": {
-    "message": "إغلاق $count$ تبويبات؟",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsConfirmSleep": {
-    "message": "إسبات $count$ تبويبات؟",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsClosedToast": {
-    "message": "أغلق $count$ علامة تبويب",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsSleptToast": {
-    "message": "وضع $count$ علامة تبويب في وضع السكون",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsBatchClosedTitle": {
-    "message": "الألسنة المغلقة"
-  },
-  "tabGroupsPinnedUngroupedToast": {
-    "message": "مثبّت — أُزيل من مجموعة الألسنة"
-  },
-  "tabGroupsReopenAction": {
-    "message": "إعادة فتح"
-  },
-  "tabGroupsWakeAction": {
-    "message": "إيقاظ"
-  },
-  "tabGroupsRecordDeletedToast": {
-    "message": "تمت إزالة السجل المغلق"
-  },
-  "tabGroupsClosedTabRemovedToast": {
-    "message": "تمت الإزالة من السجل المغلق"
-  },
-  "tabGroupsClearedToast": {
-    "message": "تم مسح $count$ سجل مغلق",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "bookmarkFolderPickDialogTitle": {
-    "message": "إضافة إلى مجلد العلامات المرجعية"
-  },
-  "bookmarkFolderNoFolders": {
-    "message": "لا توجد مجلدات علامات مرجعية"
-  },
-  "tabGroupsSelectAddBookmarks": {
-    "message": "إضافة إلى مجلد العلامات المرجعية…"
-  },
-  "paletteCmdGoTabGroups": {
-    "message": "الانتقال إلى عرض مجموعات التبويبات"
-  },
-  "tabGroupsActivateGroup": {
-    "message": "الانتقال إلى مجموعة التبويبات"
-  },
-  "tabGroupsRenameGroup": {
-    "message": "إعادة تسمية مجموعة التبويبات"
-  },
-  "tabGroupsRenameDialog": {
-    "message": "إعادة تسمية مجموعة التبويبات"
-  },
-  "tabGroupsCloseGroup": {
-    "message": "إغلاق مجموعة التبويبات"
-  },
-  "tabGroupsSleepGroup": {
-    "message": "إسبات مجموعة التبويبات"
-  },
-  "tabGroupsWakeGroup": {
-    "message": "تنشيط مجموعة التبويبات"
-  },
-  "tabGroupsActivateTab": {
-    "message": "الانتقال إلى التبويب"
-  },
-  "tabGroupsCollapseGroup": {
-    "message": "طي المجموعة"
-  },
-  "tabGroupsExpandGroup": {
-    "message": "توسيع المجموعة"
-  },
-  "tabGroupsMenuAddBookmark": {
-    "message": "إضافة علامة مرجعية للتبويب"
-  },
-  "tabGroupsMenuSaveFolder": {
-    "message": "حفظ كمجلد علامات مرجعية"
-  },
-  "tabGroupsSyncCollapse": {
-    "message": "مزامنة الطي مع المتصفح"
-  },
-  "tabGroupsSyncCollapseHint": {
-    "message": "عند التحديد، يؤدي طي مجموعة أو توسيعها في هذا العرض إلى تحديث مجموعة علامات تبويب المتصفح أيضًا. معطّل افتراضيًا ليبقى طي العرض محليًا."
-  },
-  "tabGroupsColorStyle": {
-    "message": "نمط لون مجموعة التبويبات"
-  },
-  "tabGroupsColorStyleHint": {
-    "message": "عند إيقاف التشغيل، تظهر نقطة اللون فقط. شريط اللون الحوافي يرسم شريطًا ملونًا على الحافة اليسرى للمجموعة. خط الموصل الملون يرسم خطًا تحت نقطة المجموعة مع علامة لكل صف، مما يربط المجموعة بأكملها في شجرة واحدة."
-  },
-  "tabGroupsColorStyleOff": {
-    "message": "إيقاف (نقطة اللون فقط)"
-  },
-  "tabGroupsColorStyleEdge": {
-    "message": "شريط اللون الحوافي"
-  },
-  "tabGroupsColorStyleLine": {
-    "message": "خط الموصل الملون"
-  },
-  "tabGroupsBookmarked": {
-    "message": "تمت الإشارة المرجعية"
-  },
-  "tabGroupsRemoveBookmark": {
-    "message": "إزالة الإشارة المرجعية"
-  },
-  "tabGroupsBookmarkRemoved": {
-    "message": "تمت إزالة $count$ إشارة مرجعية",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsPinned": {
-    "message": "علامة تبويب مثبتة"
-  },
-  "tabGroupsDiscarded": {
-    "message": "علامة تبويب نائمة"
-  },
-  "tabGroupsPinTab": {
-    "message": "تثبيت علامة التبويب"
-  },
-  "tabGroupsUnpinTab": {
-    "message": "إلغاء تثبيت علامة التبويب"
-  },
-  "tabGroupsSleepTab": {
-    "message": "إسبات التبويب"
-  },
-  "tabGroupsWakeTab": {
-    "message": "تنشيط التبويب"
-  },
-  "tabGroupsOpenGroups": {
-    "message": "مجموعات التبويبات المفتوحة"
-  },
-  "tabGroupsClosedGroups": {
-    "message": "أُغلقت مؤخرًا"
-  },
-  "tabGroupsUngroupedTabs": {
-    "message": "تبويبات غير مجمعة"
-  },
-  "tabGroupsUngroupGroup": {
-    "message": "إلغاء تجميع التبويبات"
-  },
-  "tabGroupsMoveNewWindow": {
-    "message": "نقل المجموعة لنافذة جديدة"
-  },
-  "tabGroupsWindow": {
-    "message": "النافذة $1$",
-    "placeholders": {
-      "1": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsCurrentWindow": {
-    "message": "النافذة الحالية"
-  },
-  "tabGroupsReopenGroup": {
-    "message": "إعادة فتح مجموعة التبويبات"
-  },
-  "tabGroupsDeleteClosedGroup": {
-    "message": "حذف مجموعة التبويبات المغلقة"
-  },
-  "tabGroupsCollapseWindow": {
-    "message": "طي النافذة"
-  },
-  "tabGroupsCloseWindow": {
-    "message": "إغلاق النافذة"
-  },
-  "tabGroupsWindowClosedTitle": {
-    "message": "تم إغلاق النافذة"
-  },
-  "tabGroupsExpandWindow": {
-    "message": "توسيع النافذة"
-  },
-  "tabGroupsClearClosedGroups": {
-    "message": "مسح الكل"
-  },
-  "tabGroupsConfirmClearClosed": {
-    "message": "مسح جميع السجلات المغلقة مؤخرًا؟ لن يمكن إعادة فتحها من هنا بعد الآن."
-  },
-  "tabGroupsFilterPlaceholder": {
-    "message": "تصفية علامات التبويب المفتوحة"
-  },
-  "tabGroupsNoMatchingTabs": {
-    "message": "لا توجد علامات تبويب مطابقة"
-  },
-  "tabGroupsClosedOpenTab": {
-    "message": "فتح في تبويب جديد"
-  },
-  "tabGroupsRemoveClosedTab": {
-    "message": "إزالة من المجموعة المحفوظة"
-  },
-  "tabGroupsClosedTimeLabel": {
-    "message": "أُغلقت:"
-  },
-  "tabGroupsExpandedExpand": {
-    "message": "توسيع"
-  },
-  "tabGroupsExpandedCollapse": {
-    "message": "طي"
-  },
-  "optionTabGroupsClosedLimit": {
-    "message": "保留已关闭标签页/组的历史记录"
-  },
-  "folderPickMoveHere": {
-    "message": "انقل هنا"
-  },
-  "folderPickCopyHere": {
-    "message": "انسخ هنا"
-  },
-  "folderPickFilter": {
-    "message": "تصفية المجلدات…"
-  },
-  "folderPickFavNote": {
-    "message": "سيتم وضع العناصر غير المفضلة هنا"
-  },
-  "folderPickPinned": {
-    "message": "مثبت"
-  },
-  "folderPickRecent": {
-    "message": "الأحدث"
-  },
-  "pinFolder": {
-    "message": "ثبّت هذا المجلد"
-  },
-  "unpinFolder": {
-    "message": "إلغاء تثبيت هذا المجلد"
-  },
-  "stagingAdd": {
-    "message": "إرسال إلى المرحلة"
-  },
-  "stagingAdded": {
-    "message": "تم الإرسال إلى المرحلة"
-  },
-  "stagingAlready": {
-    "message": "موجود بالفعل في منطقة التجميع"
-  },
-  "stagingAddedSummary": {
-    "message": "تمت إضافة $n$ عنصر؛ $m$ موجود بالفعل",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      },
-      "m": {
-        "content": "$2"
-      }
-    }
-  },
-  "stagingFull": {
-    "message": "منطقة التجميع ممتلئة — أزل بعض العناصر أولاً"
-  },
-  "stagingFolderEmpty": {
-    "message": "لا يحتوي هذا المجلد على إشارات مرجعية للتجميع"
-  },
-  "stagingConfirmFolder": {
-    "message": "تجميع $n$ إشارة مرجعية من هذا المجلد؟",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingConfirmFolderOk": {
-    "message": "مرحلة"
-  },
-  "stagingRemove": {
-    "message": "إزالة من منطقة التجميع"
-  },
-  "stagingRemoved": {
-    "message": "تمت الإزالة من منطقة التجميع"
-  },
-  "recentStageAll": {
-    "message": "تجميع كل ما تمت إضافته مؤخرًا"
-  },
-  "recentSectionTitle": {
-    "message": "تمت الإضافة مؤخرًا"
-  },
-  "stagingEmpty": {
-    "message": "尚未暂存任何内容。可从任意视图将书签发送至此——点击行上的飞机按钮或右键菜单——然后批量整理和归档。"
-  },
-  "stagingFromHistory": {
-    "message": "من السجل"
-  },
-  "stagingGroupExpand": {
-    "message": "توسيع المجموعة"
-  },
-  "stagingGroupCollapse": {
-    "message": "طي المجموعة"
-  },
-  "stagingGroupRename": {
-    "message": "إعادة تسمية المجموعة…"
-  },
-  "stagingGroupDissolve": {
-    "message": "حل المجموعة"
-  },
-  "stagingGroupDissolved": {
-    "message": "تم حل المجموعة — بقيت العناصر في منطقة التجميع"
-  },
-  "stagingGroupDelete": {
-    "message": "حذف المجموعة (مع العناصر)"
-  },
-  "stagingGroupDeleteConfirm": {
-    "message": "حذف المجموعة \"$1\"؟ ستغادر عناصرها ($2) منطقة التجهيز أيضًا."
-  },
-  "stagingGroupDeleted": {
-    "message": "تم حذف المجموعة — تمت إزالة $1 عنصرًا"
-  },
-  "stagingGroupAssign": {
-    "message": "مجموعة…"
-  },
-  "stagingGroupAssignTitle": {
-    "message": "تعيين إلى مجموعة"
-  },
-  "stagingGroupNew": {
-    "message": "مجموعة جديدة"
-  },
-  "stagingGroupNamePrompt": {
-    "message": "اسم المجموعة الجديدة"
-  },
-  "stagingGroupNoGroups": {
-    "message": "لا توجد مجموعات بعد"
-  },
-  "stagingShortcutAdd": {
-    "message": "إضافة اختصار"
-  },
-  "stagingShortcutBarLabel": {
-    "message": "الانتقال إلى:"
-  },
-  "stagingGuideText": {
-    "message": "نظّم الإشارات المرجعية هنا — حدد الصفوف وأدخل وضع التحديد للإجراءات الجماعية."
-  },
-  "stagingGuideDismiss": {
-    "message": "لا تظهر مرة أخرى"
-  },
-  "stagingShortcutTitle": {
-    "message": "اختصار النقل"
-  },
-  "stagingShortcutEdit": {
-    "message": "تعديل الاختصار"
-  },
-  "stagingShortcutAlias": {
-    "message": "الاسم المستعار"
-  },
-  "stagingShortcutPickFolder": {
-    "message": "اختر المجلد الهدف…"
-  },
-  "stagingShortcutSave": {
-    "message": "حفظ"
-  },
-  "stagingShortcutRemove": {
-    "message": "إزالة الاختصار"
-  },
-  "stagingShortcutRemoved": {
-    "message": "تمت إزالة الاختصار"
-  },
-  "stagingShortcutMove": {
-    "message": "نقل المحدد إلى $1$",
-    "placeholders": {
-      "1": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingBucketTitle": {
-    "message": "غير مفضل"
-  },
-  "stagingBucketFavAll": {
-    "message": "تفضيل الكل"
-  },
-  "stagingNew": {
-    "message": "جديد $n$",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingRowFav": {
-    "message": "تفضيل هذا العنصر"
-  },
-  "stagingRowUnfav": {
-    "message": "إلغاء تفضيل هذا العنصر"
-  },
-  "stagingFav": {
-    "message": "تفضيل"
-  },
-  "stagingUnfav": {
-    "message": "إلغاء التفضيل"
-  },
-  "stagingFavDone": {
-    "message": "تم تفضيل $n$ عنصر",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingUnfavDone": {
-    "message": "تم إلغاء تفضيل $n$ عنصر",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "groupSaveToFolder": {
-    "message": "حفظ في مجلد…"
-  },
-  "groupCopyToFolder": {
-    "message": "نسخ إلى مجلد…"
-  },
-  "stagingCount": {
-    "message": "$n$ في الانتظار",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingMoveCopy": {
-    "message": "نقل/نسخ إلى…"
-  },
-  "stagingMoveDone": {
-    "message": "تم نقل $n$ عنصر إلى الرئيسية",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingCopyDone": {
-    "message": "تم نسخ $n$ عنصر",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingMoveConfirm": {
-    "message": "نقل $n$ عنصر إلى المجلد المختار؟",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingMoveConfirmOk": {
-    "message": "نقل"
-  },
-  "stagingDeleteConfirm": {
-    "message": "حذف $n$ عنصر؟ غير المحفوظة ستغادر منطقة الانتظار فقط.",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingDeleted": {
-    "message": "تم حذف $n$ إشارة مرجعية",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingRemovedCount": {
-    "message": "تمت إزالة $n$ عنصر من منطقة الانتظار",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingClear": {
-    "message": "مسح الانتظار"
-  },
-  "stagingClearConfirm": {
-    "message": "مسح منطقة الانتظار بالكامل؟ لن تتأثر شجرة الإشارات المرجعية."
-  },
-  "stagingClearConfirmOk": {
-    "message": "مسح"
-  },
-  "stagingCleared": {
-    "message": "تم مسح منطقة الانتظار"
-  },
-  "groupPlaceTooltip": {
-    "message": "حفظ هذه المجموعة في مجلد…"
-  },
-  "copyBookmark": {
-    "message": "نسخ"
-  },
-  "cutBookmark": {
-    "message": "قص"
-  },
-  "copyMoveTo": {
-    "message": "نسخ/نقل إلى…"
-  },
-  "pasteHere": {
-    "message": "لصق هنا"
-  },
-  "copiedToast": {
-    "message": "تم النسخ: $t$",
-    "placeholders": {
-      "t": {
-        "content": "$1"
-      }
-    }
-  },
-  "cutToast": {
-    "message": "قص: $t$ — الصق في المجلد الهدف (Esc للإلغاء)",
-    "placeholders": {
-      "t": {
-        "content": "$1"
-      }
-    }
-  },
-  "pasteDone": {
-    "message": "تم اللصق"
-  },
-  "pasteGone": {
-    "message": "لم تعد الإشارة المرجعية موجودة — تم مسح الحافظة"
-  },
-  "folderCopyList": {
-    "message": "نسخ العناوين والروابط"
-  },
-  "folderCopyText": {
-    "message": "قائمة نصية"
-  },
-  "folderCopyMarkdown": {
-    "message": "ماركداون"
-  },
-  "folderCopyJson": {
-    "message": "JSON"
-  },
-  "folderCopyConfirm": {
-    "message": "نسخ قائمة $n$ إشارة مرجعية؟",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "folderCopyDone": {
-    "message": "تم نسخ $n$ إدخال إشارة مرجعية",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "addFolderMenu": {
-    "message": "إضافة مجلد"
-  },
-  "optionCollapseAddFolderMenu": {
-    "message": "طي إدخالات إضافة المجلد"
-  },
-  "optionCollapseAddFolderMenuHint": {
-    "message": "دمج إدخالات إضافة المجلد (قبل/بعد/داخل صفوف المجلدات، قبل/بعد صفوف الإشارات المرجعية) في إدخال قائمة فرعية واحد."
-  },
-  "tabRowStage": {
-    "message": "إرسال إلى المرحلة"
-  },
-  "tabgroupStageAll": {
-    "message": "إرسال المجموعة للمرحلة"
-  },
-  "tabgroupStageConfirm": {
-    "message": "إرسال $n$ علامات تبويب إلى المرحلة؟",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabgroupStageNone": {
-    "message": "لا توجد تبويبات قابلة للإشارة المرجعية في هذه المجموعة"
-  },
-  "stagedToast": {
-    "message": "تم وضع $n$ تبويب في الانتظار كمجموعة \"$t$\"",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      },
-      "t": {
-        "content": "$2"
-      }
-    }
-  },
-  "searchResultCount": {
-    "message": "$n$ نتيجة",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "deleteSelected": {
-    "message": "حذف المحدد"
-  },
-  "recentStageGroup": {
-    "message": "إرسال $t$ إلى منطقة التدريج",
-    "placeholders": {
-      "t": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingGroupSelectAll": {
-    "message": "تحديد الكل في هذه المجموعة"
-  },
-  "optionsGroupLabs": {
-    "message": "المختبرات"
-  },
-  "optionVirtualScrollLab": {
-    "message": "التمرير الافتراضي (تجريبي)"
-  },
-  "optionVirtualScrollLabHint": {
-    "message": "تعرض طرق عرض مجموعات التبويبات والمكررات الصفوف القريبة من نافذة العرض فقط. أسرع بكثير في القوائم الكبيرة جدًا؛ بينما يكون موضع شريط التمرير تقديريًا أثناء التجربة."
-  },
-  "optionsStagingSection": {
-    "message": "المرحلة والإضافات الحديثة"
-  },
-  "optionStagingEnabled": {
-    "message": "تفعيل منطقة المرحلة"
-  },
-  "optionStagingEnabledHint": {
-    "message": "عند إيقاف هذا الخيار، تعرض هذه الصفحة قائمة الإضافات الحديثة فقط، وتُخفى جميع أزرار أو خيارات المرحلة في الصفحات الأخرى."
-  },
-  "optionTreeRowActions": {
-    "message": "إجراءات التمرير على صفوف الشجرة (تعديل / مرحلة / حذف)"
-  },
-  "optionsStorageSyncTip": {
-    "message": "通过 Chrome 账户同步 — 此设置在你的所有设备间共享。",
-    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
-  },
-  "optionsStorageLocalTip": {
-    "message": "仅存储在此设备上 — 不通过 Chrome 同步共享。",
-    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
-  },
-  "tabGroupsWindowsCount": {
-    "message": "$n$ نافذة",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsNewWindow": {
-    "message": "نافذة جديدة"
-  },
-  "tabGroupsMergedWindowToast": {
-    "message": "تم دمج النافذة كمجموعة علامات تبويب"
-  },
-  "searchStageAllGroup": {
-    "message": "تجهيز كل النتائج كمجموعة \"$1$\"",
-    "placeholders": {
-      "1": {
-        "content": "$1"
-      }
-    }
-  },
-  "searchHistoryClose": {
-    "message": "إخفاء سجل البحث"
-  },
-  "searchHistoryClosedToast": {
-    "message": "تم إخفاء سجل البحث — أعد تفعيله في الخيارات ← البحث"
   }
 }

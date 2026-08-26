@@ -14,6 +14,9 @@
   "addBookmarkTop": {
     "message": "Pridėti skirtuką į šio viršų"
   },
+  "addFolderMenu": {
+    "message": "Pridėti aplanką"
+  },
   "addNewFolder": {
     "message": "Pridėti pakatalogį"
   },
@@ -32,23 +35,38 @@
   "announceDismiss": {
     "message": "Atmesti"
   },
-  "announceV408Text": {
-    "message": "v4.0.8 yra patobulintų favicon'ų leidimas: tikros svetainių piktogramos automatiškai gaunamos žymėms, kurių Chrome dar nėra įrašęs į talpyklą."
-  },
   "announceV407Text": {
     "message": "v4.0.7 pristato pilnavertį neveikiančių nuorodų rodinį: nuskaityti, pažymėti, filtruoti ir rūšiuoti neveikiančias bei apribotas nuorodas, su ankstesniais žymėjimais ir kiekvienos eilutės laiko žymomis."
   },
   "announceV407Title": {
     "message": "Kas naujo v4.0.7 versijoje"
   },
+  "announceV408Text": {
+    "message": "v4.0.8 yra patobulintų favicon'ų leidimas: tikros svetainių piktogramos automatiškai gaunamos žymėms, kurių Chrome dar nėra įrašęs į talpyklą."
+  },
   "announceV408Title": {
     "message": "Kas naujo v4.0.8"
+  },
+  "announceV410Text": {
+    "message": "v4.1.0 prideda skirtukų grupių rodinį ir paruošimo sritį: tvarkykite kiekvieno lango skirtukus šalia žymių ir rinkite žymes iš bet kur į paruošimo darbo stalą masiniam organizavimui."
   },
   "announceV410Title": {
     "message": "Kas naujo v4.1.0"
   },
-  "announceV410Text": {
-    "message": "v4.1.0 prideda skirtukų grupių rodinį ir paruošimo sritį: tvarkykite kiekvieno lango skirtukus šalia žymių ir rinkite žymes iš bet kur į paruošimo darbo stalą masiniam organizavimui."
+  "bookmarkFolderNoFolders": {
+    "message": "Nėra žymių aplankų"
+  },
+  "bookmarkFolderPickDialogTitle": {
+    "message": "Pridėti prie žymių aplanko"
+  },
+  "bookmarkOpenInExistingGroup": {
+    "message": "Atidaryti esamoje skirtukų grupėje…"
+  },
+  "bookmarkOpenInNewGroup": {
+    "message": "Atidaryti naujoje skirtukų grupėje"
+  },
+  "bookmarkOpenInNewGroupSetup": {
+    "message": "Atidaryti naujoje skirtukų grupėje…"
   },
   "confirmDeleteFolder": {
     "message": "Šiame aplanke yra $count$ elementas(-ai). Galite atšaukti ištrynimą.",
@@ -57,9 +75,6 @@
         "content": "$1"
       }
     }
-  },
-  "confirmDeleteFolderButton": {
-    "message": "Ištrinti"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "Ar tikrai norite ištrinti aplanką $folderName$ ir $bookmarkCount$ žymelę(-es) jame?",
@@ -71,6 +86,9 @@
         "content": "$1"
       }
     }
+  },
+  "confirmDeleteFolderButton": {
+    "message": "Ištrinti"
   },
   "confirmDeleteFolderSubfolders": {
     "message": "Ar tikrai norite ištrinti aplanką $folderName$ ir $subFolderCount$ pakatalogį(-ius) jame?",
@@ -124,11 +142,32 @@
       }
     }
   },
+  "contextMenuAddBookmark": {
+    "message": "Pridėti šį puslapį prie žymių naudojant vBookmarks"
+  },
+  "copiedToast": {
+    "message": "Nukopijuota: $t$",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
+  },
   "copyAllTitlesAndUrls": {
     "message": "Kopijuoti visus pavadinimus ir URL į iškarpinę"
   },
+  "copyBookmark": {
+    "message": "Kopijuoti"
+  },
+  "copyMoveTo": {
+    "message": "Kopijuoti/perkelti…"
+  },
   "copyTitleAndUrl": {
     "message": "Kopijuoti pavadinimą ir URL"
+  },
+  "crossStorageMoveWarning": {
+    "description": "Warning when trying to move bookmarks across storage types",
+    "message": "Žymelių perkelti iš sinchronizuotos į vietinę saugyklą negalima. Vietoj to naudokite kopijavimą/įkėlimą."
   },
   "customIcon": {
     "message": "Tinkinta piktograma"
@@ -136,8 +175,14 @@
   "customIconDescription": {
     "message": "Piktograma turi būti 19*19 pikselių dydžio. Kitaip ji bus pakeista į šį dydį."
   },
+  "customIconPick": {
+    "message": "Pasirinkti failą…"
+  },
   "customSeparatorColorDescription": {
     "message": "Tinkinti skirtuko spalvą"
+  },
+  "customSeparatorStringDescription": {
+    "message": "Jei žymelės URL turi šį eilutę, ji bus rodoma kaip skirtukas"
   },
   "customSeparatorTitleDescription": {
     "message": "Tikrasis žymelės pavadinimas, rodomas kaip skirtukas"
@@ -145,28 +190,28 @@
   "customSeparatorUrlDescription": {
     "message": "Tikrasis žymelės URL, rodomas kaip skirtukas"
   },
-  "customSeparatorStringDescription": {
-    "message": "Jei žymelės URL turi šį eilutę, ji bus rodoma kaip skirtukas"
-  },
   "customStyles": {
     "message": "Tinkinti stiliai"
-  },
-  "separatorOptions": {
-    "message": "Atskyrikliai"
   },
   "customStylesDescription": {
     "message": "Tai reikalauja kai kurių CSS žinių. Keiskite savo rizika. Būtų protinga dalintis kodu per"
   },
-  "defaultIconButton": {
-    "message": "Naudoti numatytąjį"
+  "cutBookmark": {
+    "message": "Iškirpti"
   },
-  "defaultIconButtonOr": {
-    "message": "arba"
+  "cutToast": {
+    "message": "Iškirpta: $t$ — įklijuokite į tikslinį aplanką (Esc atšaukia)",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
   },
-  "customIconPick": {
-    "message": "Pasirinkti failą…"
+  "deadCancel": {
+    "message": "Atšaukti"
   },
   "deadChecking": {
+    "description": "Progress line of the palette's dead-link scan mode; $done$ bookmarks checked out of $total$.",
     "message": "Tikrinama $done$ / $total$…",
     "placeholders": {
       "done": {
@@ -177,8 +222,10 @@
         "content": "$2",
         "example": "120"
       }
-    },
-    "description": "Progress line of the palette's dead-link scan mode; $done$ bookmarks checked out of $total$."
+    }
+  },
+  "deadClearScan": {
+    "message": "Valyti nuskaitymo rezultatus"
   },
   "deadConfirmAll": {
     "message": "Ištrinti visus $count$ negyvus žymes? Šio veiksmo negalima atšaukti vienu žingsniu.",
@@ -192,6 +239,15 @@
   "deadConfirmDelete": {
     "message": "Pašalinti šią žymę?"
   },
+  "deadConfirmDeleteSelected": {
+    "message": "Ištrinti $count$ pasirinktus negyvus žymes?",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
+  },
   "deadDeleteAll": {
     "message": "Ištrinti visas $count$ žymes dabartiniame filtre?",
     "placeholders": {
@@ -201,27 +257,15 @@
       }
     }
   },
-  "deadDeleteAllNote": {
-    "message": "Naudojant filtrą „Viskas“, tai apima užblokuotas žymes (pasiekiamas per tarpinį serverį, tikėtinai vis dar veikiančias) ir anksčiau pažymėtas eilutes.",
-    "description": "Second line of the delete-all confirmation in the Dead links view."
-  },
-  "undoSingleStepNote": {
-    "message": "Atšaukti galima tik paskutinį ištrynimą."
-  },
   "deadDeleteAllBtn": {
     "message": "Ištrinti visus"
   },
+  "deadDeleteAllNote": {
+    "description": "Second line of the delete-all confirmation in the Dead links view.",
+    "message": "Naudojant filtrą „Viskas“, tai apima užblokuotas žymes (pasiekiamas per tarpinį serverį, tikėtinai vis dar veikiančias) ir anksčiau pažymėtas eilutes."
+  },
   "deadDeleteSelected": {
     "message": "Ištrinti pasirinktus"
-  },
-  "deadConfirmDeleteSelected": {
-    "message": "Ištrinti $count$ pasirinktus negyvus žymes?",
-    "placeholders": {
-      "count": {
-        "content": "$1",
-        "example": "8"
-      }
-    }
   },
   "deadDeleted": {
     "message": "Ištrinta $count$ negyvų žymių",
@@ -232,8 +276,72 @@
       }
     }
   },
-  "deadClearScan": {
-    "message": "Valyti nuskaitymo rezultatus"
+  "deadDetectTimeLabel": {
+    "message": "Aptikta"
+  },
+  "deadFilterAll": {
+    "message": "Visi"
+  },
+  "deadFilterBlocked": {
+    "message": "Tik užblokuoti"
+  },
+  "deadFilterDead": {
+    "message": "Tik negyvi"
+  },
+  "deadFilterMarked": {
+    "message": "Anksčiau pažymėti"
+  },
+  "deadLastScanAt": {
+    "message": "Paskutinis nuskaitymas: $time$",
+    "placeholders": {
+      "time": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadMark": {
+    "message": "Pažymėti negyvu"
+  },
+  "deadMarkAll": {
+    "message": "Pažymėti visus"
+  },
+  "deadMarkSelected": {
+    "message": "Pažymėti pasirinktus"
+  },
+  "deadMarkStatusAll": {
+    "message": "Bet kokia būsena"
+  },
+  "deadMarkStatusMarked": {
+    "message": "Pažymėti"
+  },
+  "deadMarkStatusUnmarked": {
+    "message": "Nepažymėti"
+  },
+  "deadMarkTimeLabel": {
+    "message": "Pažymėta"
+  },
+  "deadMarked": {
+    "message": "Negyvos eilutės pažymėtos"
+  },
+  "deadMarkedBanner": {
+    "message": "Rodomi anksčiau pažymėti žymės. Spustelėkite „Rescan“, kad pradėtumėte naują patikrą, arba tvarkykite juos žemiau esančiame sąraše."
+  },
+  "deadMarkedBannerDismiss": {
+    "message": "Atmesti"
+  },
+  "deadMarkedCount": {
+    "message": "Pažymėta žymių: $count$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadMarkedNone": {
+    "message": "Dar nėra pažymėtų žymių"
+  },
+  "deadMarkedRow": {
+    "message": "Pažymėta"
   },
   "deadNone": {
     "message": "Nerasta neveikiančių nuorodų"
@@ -241,34 +349,711 @@
   "deadNoneFiltered": {
     "message": "Po šiuo filtru nėra negyvų nuorodų — pabandykite kitą segmentą aukščiau"
   },
+  "deadPause": {
+    "message": "Pristabdyti"
+  },
+  "deadPaused": {
+    "message": "Pristabdyta"
+  },
+  "deadProxyAdd": {
+    "message": "Pridėti tarpinį serverį negyvų nuorodų tikrinimui"
+  },
+  "deadProxyChange": {
+    "message": "Keisti"
+  },
+  "deadProxyClear": {
+    "message": "Išvalyti"
+  },
+  "deadProxyControlled": {
+    "message": "Tarpinio serverio nustatymus valdo kitas plėtinys"
+  },
+  "deadProxyDenied": {
+    "message": "Tarpinio serverio leidimas nesuteiktas"
+  },
+  "deadProxyInvalid": {
+    "message": "Neteisingas tarpinio serverio adresas — naudokite host:port arba scheme://host:port (http/https/socks5, be prisijungimo duomenų)"
+  },
+  "deadProxyLabel": {
+    "message": "Tarpinis serveris: $server$",
+    "placeholders": {
+      "server": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadProxyNeverShow": {
+    "message": "Nerodyti daugiau"
+  },
+  "deadProxyNone": {
+    "message": "(nenustatyta)"
+  },
+  "deadProxyNudge": {
+    "message": "Tarpinio serverio pakartotinis patikrinimas atskiria tikrai neveikiančias nuorodas nuo regionu blokuotų — nustatykite jį čia arba parinkčių puslapyje."
+  },
+  "deadProxyPanelHint": {
+    "message": "Įveskite turimą tarpinį serverį (plėtinys jų neteikia), pvz., 127.0.0.1:7890 arba socks5://127.0.0.1:1080."
+  },
+  "deadProxyRemove": {
+    "message": "Pašalinti"
+  },
+  "deadProxyRemoved": {
+    "message": "Tarpinis serveris pašalintas"
+  },
+  "deadProxySaved": {
+    "message": "Tarpinis serveris išsaugotas — būsimuose nuskaitymuose tiesioginių patikrų nesėkmės bus tikrinamos per jį."
+  },
+  "deadProxyServerHint": {
+    "message": "Išsaugotas serveris kiekvieno neveikiančių nuorodų nuskaitymo metu pakartotinai tikrina tiesiogiai nepraėjusias žymes, atskirdamas tikrai neveikiančias nuorodas nuo regionu blokuotų. „Bandyti ir išsaugoti“ jį patikrina (išlaikomas tik pasiekiamas serveris); taip pat galite jį pridėti iš neveikiančių nuorodų rodinio."
+  },
+  "deadProxyTestSave": {
+    "message": "Testuoti ir išsaugoti"
+  },
+  "deadProxyTestUrlLabel": {
+    "message": "Testavimo URL"
+  },
+  "deadProxyTesting": {
+    "message": "Tikrinama…"
+  },
+  "deadProxyUnavailable": {
+    "message": "Šioje naršyklėje tarpinio serverio API nepasiekiama"
+  },
+  "deadProxyUnreachable": {
+    "message": "Tarpinis serveris nepasiekiamas — neišsaugotas"
+  },
   "deadRescan": {
     "message": "Nuskaityti iš naujo"
+  },
+  "deadResume": {
+    "message": "Tęsti"
+  },
+  "deadRiskBanner": {
+    "message": "Negyvų nuorodų valymas masiškai ištrina žymes. Prieš pirmą valymą sukurkite žymių atsarginę kopiją."
+  },
+  "deadSortByDetected": {
+    "message": "Aptikimo laikas"
+  },
+  "deadSortByMarked": {
+    "message": "Pažymėjimo laikas"
+  },
+  "deadSortByPath": {
+    "message": "Aplanko kelias"
+  },
+  "deadSortLabel": {
+    "message": "Rūšiuoti pagal"
+  },
+  "deadStartHint": {
+    "message": "Pradėti $n$ žymių nuskaitymą",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadStatusBlocked": {
+    "message": "užblokuota"
+  },
+  "deadUnmark": {
+    "message": "Pašalinti negyvos žymą"
+  },
+  "deadUnmarkAll": {
+    "message": "Išvalyti visus žymėjimus"
+  },
+  "deadUnmarkSelected": {
+    "message": "Atžymėti pasirinktus"
+  },
+  "defaultIconButton": {
+    "message": "Naudoti numatytąjį"
+  },
+  "defaultIconButtonOr": {
+    "message": "arba"
   },
   "delete": {
     "message": "Ištrinti"
   },
+  "deleteEllipsis": {
+    "message": "Ištrinti..."
+  },
+  "deleteSelected": {
+    "message": "Ištrinti pasirinktus"
+  },
   "deletedBookmark": {
+    "description": "Toast shown after a bookmark or separator was deleted; the toast offers an undo button. $title$ is the deleted row's title (empty for separators).",
     "message": "Pašalinta $title$",
     "placeholders": {
       "title": {
         "content": "$1",
         "example": "Example"
       }
-    },
-    "description": "Toast shown after a bookmark or separator was deleted; the toast offers an undo button. $title$ is the deleted row's title (empty for separators)."
+    }
   },
   "deletedFolder": {
+    "description": "Toast shown after a bookmark folder (with its whole subtree) was deleted; the toast offers an undo button. $title$ is the folder name.",
     "message": "Pašalintas aplankas $title$",
     "placeholders": {
       "title": {
         "content": "$1",
         "example": "Bookmarks"
       }
-    },
-    "description": "Toast shown after a bookmark folder (with its whole subtree) was deleted; the toast offers an undo button. $title$ is the folder name."
+    }
+  },
+  "donationDismiss": {
+    "message": "Atmesti"
+  },
+  "donationGo": {
+    "message": "Paaukoti"
+  },
+  "donationLater": {
+    "message": "Vėliau"
+  },
+  "donationMessage": {
+    "message": "Patinka? Paaukokite jos ateičiai — arba įvertinkite parduotuvėje: kiekvienas atsiliepimas skatina atnaujinimus."
+  },
+  "donationNever": {
+    "message": "Nerodyti daugiau"
+  },
+  "donationRate": {
+    "message": "Įvertinkite"
+  },
+  "donationRateTitle": {
+    "message": "Įvertinkite vBookmarks „Chrome Web Store“"
+  },
+  "donationV4GuideLink": {
+    "message": "Skaityti v4 vadovą →"
+  },
+  "donationV4Notice": {
+    "message": "vBookmarks 4.0 – tai visiškai nauja versija su moderniu dizainu ir daugybe naujų funkcijų."
+  },
+  "dupesApplyAll": {
+    "message": "Taikyti visus ($count$)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesApplySelected": {
+    "message": "Pašalinti dublikatus pasirinktuose ($count$)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesCleanAll": {
+    "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go.",
+    "message": "Išvalyti visus: $groups$ grupės, $count$ papildomų kopijų",
+    "placeholders": {
+      "count": {
+        "content": "$2"
+      },
+      "groups": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesCleanRestHint": {
+    "message": "Palikti \"$title$\" ir pašalinti kitus $count$",
+    "placeholders": {
+      "count": {
+        "content": "$2"
+      },
+      "title": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesConfirmAll": {
+    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark).",
+    "message": "Pašalinti $count$ papildomų kopijų iš $groups$ grupių? Kiekvienoje grupėje pasirinkta kopija bus išsaugota.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    }
+  },
+  "dupesConfirmGroup": {
+    "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept).",
+    "message": "Išsaugoti „$title$“ ir pašalinti kitas $count$ kopijas?",
+    "placeholders": {
+      "count": {
+        "content": "$2"
+      },
+      "title": {
+        "content": "$1",
+        "example": "Example bookmark"
+      }
+    }
+  },
+  "dupesConfirmSelected": {
+    "message": "Pašalinti $count$ adresyno dublikatus iš $groups$ pasirinktų grupių?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    }
+  },
+  "dupesDone": {
+    "description": "Alert shown after the duplicate cleanup finished.",
+    "message": "Pašalinta $count$ dublikatų žymių",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesGroupCollapse": {
+    "description": "Dupes view group-head context menu: collapse an expanded duplicate group.",
+    "message": "Suskleisti grupę"
+  },
+  "dupesGroupCount": {
+    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL.",
+    "message": "$count$ dublikatai",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesGroupExpand": {
+    "description": "Dupes view group-head context menu: expand a collapsed duplicate group.",
+    "message": "Išskleisti grupę"
+  },
+  "dupesIgnoreScheme": {
+    "message": "Nepaisyti http/https skirtumų"
+  },
+  "dupesKeepThis": {
+    "message": "Palikti šį"
+  },
+  "dupesKeeperSet": {
+    "message": "Nustatyti kaip išlaikomą"
+  },
+  "dupesNone": {
+    "message": "Dublikatų nerasta"
+  },
+  "dupesPreviewSummary": {
+    "message": "$groups$ grupės · $count$ bus atlaisvinta",
+    "placeholders": {
+      "count": {
+        "content": "$2"
+      },
+      "groups": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesRemoveRow": {
+    "message": "Ištrinti šią kopiją"
+  },
+  "dupesRiskBanner": {
+    "message": "Dublikatų šalinimas masiškai ištrina pasikartojančias žymes. Prieš taikydami jį, pasidarykite žymių atsarginę kopiją."
+  },
+  "dupesScopeAll": {
+    "message": "Visos žymės"
+  },
+  "dupesScopeBar": {
+    "message": "Tik žymių juosta"
+  },
+  "dupesStrategyBookmarkBar": {
+    "message": "Palikti esančią žymių juostoje"
+  },
+  "dupesStrategyMostVisited": {
+    "message": "Palikti dažniausiai lankomą"
+  },
+  "dupesStrategyNewest": {
+    "message": "Palikti naujausią"
+  },
+  "dupesStrategyOldest": {
+    "message": "Palikti seniausią"
+  },
+  "dupesStrategyShallowest": {
+    "message": "Palikti paviršutiniškiausią"
+  },
+  "dupesStrategyShortestTitle": {
+    "message": "Palikti trumpiausią pavadinimą"
+  },
+  "edit": {
+    "message": "Redaguoti..."
+  },
+  "editBookmark": {
+    "message": "Redaguoti žymelę"
+  },
+  "editFolder": {
+    "message": "Redaguoti aplanką"
+  },
+  "errorOccured": {
+    "message": "Oi, įvyko klaida."
+  },
+  "extDesc": {
+    "description": "Plėtinio aprašymas.",
+    "message": "Iškylantis žymelių tvarkyklė. Patobulintas Neat Bookmarks. Tvarkingesnis už Neater Bookmarks."
+  },
+  "extName": {
+    "description": "vBookmarks",
+    "message": "vBookmarks"
+  },
+  "favGalleryAll": {
+    "description": "Favicon gallery source filter chip: show every source.",
+    "message": "Visos"
+  },
+  "favGalleryCompare": {
+    "description": "Favicon gallery toggle button: switch every icon to the generic placeholder it replaced (before/after comparison).",
+    "message": "Palyginti su laikina piktograma"
+  },
+  "favGalleryEmptyText": {
+    "description": "Favicon gallery empty-state body text.",
+    "message": "Kai iššokantis langas aptinka žymėtą svetainę, kuriai „Chrome“ neturi piktogramos, vBookmarks parsiunčia tikrąją ir pateikia ją čia."
+  },
+  "favGalleryEmptyTitle": {
+    "description": "Favicon gallery empty-state heading.",
+    "message": "Atnaujintų piktogramų dar nėra"
+  },
+  "favGalleryFailedHint": {
+    "description": "Favicon gallery hint under the failed-fetch section title.",
+    "message": "Nesėkmės bandomos pakartoti po 24 val., 3 dienų ir 7 dienų, tada atsisakoma, kol neišvaloma piktogramų talpykla."
+  },
+  "favGalleryFailedTitle": {
+    "description": "Favicon gallery heading of the muted section listing hosts whose icon fetch failed recently.",
+    "message": "Neseniai bandyta, piktograma nerasta"
+  },
+  "favGalleryGaveUp": {
+    "description": "Favicon gallery badge on a failed-strip host whose retries are exhausted (it stays untouched until the icon cache is cleared).",
+    "message": "Atsisakyta"
+  },
+  "favGalleryHint": {
+    "description": "Subtitle under the favicon gallery title, explaining the page is read-only.",
+    "message": "vBookmarks gautos piktogramos žymėtoms svetainėms, kurių „Chrome“ nebuvo podėlyje – čia nurodyta, iš kur kiekviena gauta ir kurios žymės ją naudoja. Tik peržiūrai."
+  },
+  "favGalleryLink": {
+    "description": "Options link (Icons group, right of the Clear icon cache button): opens the favicon gallery page listing the sites whose icons were refetched.",
+    "message": "Peržiūrėti atnaujintas piktogramas"
+  },
+  "favGalleryOrphan": {
+    "description": "Favicon gallery note on a card whose host no longer has any bookmark.",
+    "message": "Šiame hoste nebeliko žymių – piktograma bus išvalyta kartu su podėliu."
+  },
+  "favGallerySearch": {
+    "description": "Placeholder of the favicon gallery filter input.",
+    "message": "Filtruoti pagal svetainę, pavadinimą arba kelią"
+  },
+  "favGalleryShowingBefore": {
+    "description": "Favicon gallery toggle button while the placeholder comparison is shown: switch back to the real fetched icons.",
+    "message": "Grįžti prie tikrų piktogramų"
+  },
+  "favGalleryStatBookmarks": {
+    "description": "Favicon gallery stats strip: how many bookmarks sit on the refreshed sites.",
+    "message": "$n$ žymių",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "favGalleryStatSites": {
+    "description": "Favicon gallery stats strip: how many sites have a refreshed icon.",
+    "message": "$n$ svetainių",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "favGalleryTitle": {
+    "description": "Favicon gallery page title (h1 + document title).",
+    "message": "Atnaujintos svetainių piktogramos"
+  },
+  "favGalleryVisits": {
+    "description": "Favicon gallery tooltip on a bookmark row's visit-count pill.",
+    "message": "$n$ užfiksuotų atidarymų",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "favSrcDirect": {
+    "description": "Favicon gallery source badge: the icon was fetched directly from the site itself.",
+    "message": "Tiesiogiai"
+  },
+  "favSrcLegacy": {
+    "description": "Favicon gallery source badge: cached before the source was recorded, so the origin is unknown.",
+    "message": "Ankstesnis podėlis"
+  },
+  "favSrcProxy": {
+    "description": "Favicon gallery source badge: the icon was fetched through the user's own proxy relay.",
+    "message": "Tarpinis serveris"
+  },
+  "folderCopyConfirm": {
+    "message": "Kopijuoti $n$ žymių sąrašą?",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "folderCopyDone": {
+    "message": "Nukopijuota $n$ žymių įrašų",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "folderCopyJson": {
+    "message": "JSON"
+  },
+  "folderCopyList": {
+    "message": "Kopijuoti pavadinimus ir adresus"
+  },
+  "folderCopyMarkdown": {
+    "message": "Markdown"
+  },
+  "folderCopyText": {
+    "message": "Paprasto teksto sąrašas"
+  },
+  "folderEmpty": {
+    "message": "(Tuščia)"
+  },
+  "folderPickCopyHere": {
+    "message": "Kopijuoti čia"
+  },
+  "folderPickFavNote": {
+    "message": "Neįtraukti į žymes elementai bus įtraukti čia"
+  },
+  "folderPickFilter": {
+    "message": "Filtruoti aplankus…"
+  },
+  "folderPickMoveHere": {
+    "message": "Perkelti čia"
+  },
+  "folderPickPinned": {
+    "message": "Prisegti"
+  },
+  "folderPickRecent": {
+    "message": "Naujausi"
+  },
+  "general": {
+    "message": "Bendri"
+  },
+  "groupCopyToFolder": {
+    "message": "Kopijuoti į aplanką…"
+  },
+  "groupPlaceTooltip": {
+    "message": "Išsaugoti šią grupę į aplanką…"
+  },
+  "groupSaveToFolder": {
+    "message": "Išsaugoti į aplanką…"
+  },
+  "ignore": {
+    "message": "Ignoruoti"
+  },
+  "name": {
+    "description": "Žymelės ar aplanko pavadinimas.",
+    "message": "Pavadinimas"
+  },
+  "noTitle": {
+    "description": "Pavadinimas bevardėms žymelėms be http(s) URL arba bevardžiems aplankams.",
+    "message": "(be pavadinimo)"
+  },
+  "nope": {
+    "message": "Atšaukti"
+  },
+  "open": {
+    "description": "Veiksmas žymelių atidarymui.",
+    "message": "Atidaryti"
+  },
+  "openBookmarks": {
+    "message": "Atidaryti visas žymeles"
+  },
+  "openBookmarksInExistingGroup": {
+    "message": "Atidaryti visus esamoje skirtukų grupėje…"
+  },
+  "openBookmarksInGroup": {
+    "message": "Atidaryti visus naujoje grupėje"
+  },
+  "openBookmarksInGroupSetup": {
+    "message": "Atidaryti visus naujoje skirtukų grupėje…"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "Atidaryti žymeles inkognito lange"
+  },
+  "openBookmarksNewWindow": {
+    "message": "Atidaryti žymeles naujame lange"
+  },
+  "openCommandPaletteCommand": {
+    "message": "Atidaryti komandų paletę"
+  },
+  "openIncognitoWindow": {
+    "message": "Atidaryti incognito lange"
+  },
+  "openNewTab": {
+    "message": "Atidaryti naujame skirtuke"
+  },
+  "openNewWindow": {
+    "message": "Atidaryti naujame lange"
+  },
+  "openSidePanelCommand": {
+    "message": "Atidaryti vBookmarks šoninį skydelį"
+  },
+  "optionAnnounceEnabled": {
+    "message": "Rodyti pranešimus produkto viduje"
+  },
+  "optionAnnounceEnabledHint": {
+    "message": "Leidimo pastabos ir patarimai iš projekto GitHub saugyklos (gaunami ne dažniau kaip kas 6 valandas). Išjungus taip pat sustabdoma tinklo užklausa."
+  },
+  "optionAutoRefreshSync": {
+    "message": "Automatiškai atnaujinti sinchronizavimo būklę"
+  },
+  "optionAutoResizePopup": {
+    "message": "Automatiškai keisti iškylančio lango dydį pagal turinį"
+  },
+  "optionClassicExperience": {
+    "message": "Atkurti klasikinę antraštę"
+  },
+  "optionClassicExperienceHint": {
+    "message": "Išjungia komandų paletę, greitojo pridėjimo žvaigždutę, jos dešiniojo pelės mygtuko įrašą puslapyje, įrankių mygtuką ir skirtukus. Kiekvieną iš jų galima atskirai vėl įjungti atitinkamame skyriuje."
+  },
+  "optionClickNewTab": {
+    "message": "Kairysis paspaudimas atidaro žymelę naujame skirtuke."
+  },
+  "optionCloseUnusedFolders": {
+    "message": "Užverti nenaudojamus aplankus atidarant aplanką."
+  },
+  "optionCollapseAddFolderMenu": {
+    "message": "Sutraukti aplanko pridėjimo elementus"
+  },
+  "optionCollapseAddFolderMenuHint": {
+    "message": "Sujungti aplankų pridėjimo įrašus (prieš/po/viduje aplankų eilutėse, prieš/po žymių eilutėse) į vieną submeniu įrašą."
+  },
+  "optionCollapseSortMenu": {
+    "message": "Suskleisti rūšiavimo įrašus į vieną „Rūšiuoti…“ submeniu"
+  },
+  "optionCollapseSortMenuHint": {
+    "message": "Taikoma aplanko kontekstiniam meniu. Pagal numatymą įjungta."
+  },
+  "optionCollapseTabGroupMenu": {
+    "message": "Suskleisti skirtukų grupių įrašus į vieną „Skirtukų grupės…“ submeniu"
+  },
+  "optionCollapseTabGroupMenuHint": {
+    "message": "Taikoma aplankų ir skirtukų kontekstiniams meniu. Pagal numatymą išjungta; mažo dydžio arba didelio priartinimo ekranuose meniu lieka žemesnis."
+  },
+  "optionConfirmDeleteFolder": {
+    "message": "Patvirtinti prieš ištrinant netuščius aplankus"
+  },
+  "optionConfirmOpenFolder": {
+    "message": "Rodyti patvirtinimą atidarant daug žymelių iš aplanko."
+  },
+  "optionDeadProxyServer": {
+    "message": "Negyvų nuorodų tarpinis serveris"
+  },
+  "optionDeadProxyStrip": {
+    "message": "Rodyti proxy pridėjimo užuominą neveikiančių nuorodų rodinyje"
+  },
+  "optionDeadProxyStripHint": {
+    "message": "Išjungus, ta užuomina ten paslepiama; proxy serverį vis tiek galima konfigūruoti čia, o išsaugotas serveris visada rodo savo valdymo eilutę rodinyje"
+  },
+  "optionDeadScanConcurrency": {
+    "message": "Neveikiančių nuorodų nuskaitymo gretinimas (1–16)"
+  },
+  "optionDeadScanTimeout": {
+    "message": "Neveikiančių nuorodų nuskaitymo skirtasis laikas sekundėmis (2–30)"
+  },
+  "optionFaviconBackup": {
+    "message": "Įtraukti piktogramų talpyklą į atsargines kopijas"
+  },
+  "optionFaviconBackupHint": {
+    "message": "Taip pat įtraukite papildytą piktogramų talpyklą (svetainės duomenys, gali būti dideli) į nustatymų eksportą/importą. Tai apima jau talpykloje saugomas piktogramas, net kai gavimas išjungtas. Išjungus atsarginės kopijos lieka mažos; piktogramos vis tiek bus automatiškai gautos iš naujo."
+  },
+  "optionFaviconCacheClear": {
+    "message": "Išvalyti piktogramų talpyklą"
+  },
+  "optionFaviconCacheClearConfirm": {
+    "message": "Išvalyti papildytą piktogramų talpyklą? Piktogramos bus automatiškai iš naujo gautos kitą kartą atidarant."
+  },
+  "optionFaviconCacheCleared": {
+    "message": "Piktogramų talpykla išvalyta. Piktogramos bus gautos iš naujo kitą kartą atidarius."
+  },
+  "optionFaviconCacheEmpty": {
+    "message": "Nėra piktogramų talpyklos, kurią būtų galima išvalyti."
+  },
+  "optionFaviconContrast": {
+    "message": "Apversti žemo kontrasto svetainių piktogramas"
+  },
+  "optionFaviconContrastHint": {
+    "message": "Baltos piktogramos šviesiose temose ir juodos piktogramos tamsiose temose yra apverčiamos, kad jos liktų matomos. Kiekviena piktograma yra imama vieną kartą, kai įkeliama – jokios papildomos apkrovos naršant."
+  },
+  "optionFaviconEnrich": {
+    "message": "Gauti trūkstamas svetainių piktogramas"
+  },
+  "optionFaviconEnrichAgg": {
+    "message": "Trečiosios šalies atsarginis piktogramų šaltinis"
+  },
+  "optionFaviconEnrichAggHint": {
+    "message": "Kai tiesioginis gavimas nepavyksta, piktogramos ieškoma pagal domeną iš įtaisyto trečiųjų šalių piktogramų paslaugų sąrašo ($providers$). Nepasiekiama paslauga praleidžiama ir bandoma kita – ji nebandoma iš naujo 6 valandas.",
+    "placeholders": {
+      "providers": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionFaviconEnrichHint": {
+    "message": "Svetainėms, kurioms Chrome neturi išsaugotos piktogramos, gaukite tikrą piktogramą tiesiogiai iš svetainės (/favicon.ico, tada svetainės deklaruotos piktogramos). Užklausos siunčiamos tik į jūsų įsimintas svetaines."
+  },
+  "optionHighlightUnsynced": {
+    "message": "Pritemdyti nesinchronizuotas žymes"
+  },
+  "optionLanguage": {
+    "message": "Kalba"
+  },
+  "optionLanguageAuto": {
+    "message": "Automatiškai"
+  },
+  "optionLanguageHint": {
+    "message": "Kalbos perjungimas perkrauna šį puslapį."
+  },
+  "optionOnlyShowBookmarkBar": {
+    "message": "Rodyti tik žymeles žymelių juostoje"
+  },
+  "optionOpenInSidePanel": {
+    "message": "Atidaryti šoniniame skydelyje vietoj iššokančio lango"
+  },
+  "optionOpenNewTab": {
+    "message": "Vidurinis paspaudimas arba control-paspaudimas atidaro žymelę naujame fono skirtuke (vietoj priekinio plano)."
+  },
+  "optionPaletteEnabled": {
+    "message": "Įjungti komandų paletę (Ctrl/Cmd+K)"
+  },
+  "optionPopupStays": {
+    "message": "Iškylantis langas lieka atidarytas atidarant (kairysis paspaudimas) žymeles."
+  },
+  "optionQuickAddContextMenu": {
+    "message": "Pridėti \"Išsaugoti puslapį su vBookmarks\" į puslapio dešiniojo pelės mygtuko meniu"
+  },
+  "optionQuickAddContextMenuHint": {
+    "message": "Nepriklauso nuo greitosios žvaigždutės mygtuko; atkūrus klasikinę patirtį šis įrašas taip pat išjungiamas."
+  },
+  "optionQuickAddEnabled": {
+    "message": "Rodyti greitojo pridėjimo žvaigždutės mygtuką šalia paieškos laukelio"
+  },
+  "optionRecentCollapsed": {
+    "message": "Sutraukti neseniai pridėtų elementų skyrių pagal numatymą"
   },
   "optionRecentCount": {
     "message": "Neseniai pridėtų žymių rodymo skaičius"
+  },
+  "optionRememberPrevState": {
+    "message": "Prisiminti ankstesnę būseną (slinkties padėtis, atidaryti aplankai ir paskutinis fokusuotas elementas)."
+  },
+  "optionRememberView": {
+    "message": "Įsiminti paskutinį aktyvų rodinį ir atidaryti jį iš naujo"
+  },
+  "optionSearchAfterEnter": {
+    "message": "Ieškoti žymelių tik paspaudus ENTER (vietoj momentinės paieškos)"
   },
   "optionSearchHistory": {
     "message": "Rodyti paieškos istorijos sritį"
@@ -276,17 +1061,496 @@
   "optionSearchHistoryHint": {
     "message": "Slėpti naujausių paieškų sritį virš rezultatų — įrašytos užklausos išlieka"
   },
+  "optionShowDeadView": {
+    "message": "Rodyti negyvų nuorodų rodinio skirtuką"
+  },
+  "optionShowDupesView": {
+    "message": "Rodyti dublikatų rodinio skirtuką"
+  },
+  "optionShowItemPath": {
+    "message": "Rodyti pagrindinio aplanko kelią sąrašo eilutėse"
+  },
+  "optionShowRecentBookmarks": {
+    "message": "Rodyti neseniai pridėtas žymes iššokančio lango viršuje"
+  },
+  "optionShowStatsView": {
+    "message": "Rodyti statistikos rodinio skirtuką"
+  },
+  "optionShowSyncStatus": {
+    "message": "Rodyti sinchronizavimo būklės indikatorius"
+  },
+  "optionShowTabBadges": {
+    "message": "Rodyti skaičių ženkliukus rodinių skirtukuose"
+  },
+  "optionShowTabGroupsView": {
+    "message": "Rodyti skirtukų grupių rodinį"
+  },
+  "optionShowToolButton": {
+    "message": "Rodyti įrankių mygtuką (⋮) šalia paieškos laukelio"
+  },
+  "optionShowViewTabs": {
+    "message": "Rodyti rodinių skirtukus po paieškos lauku"
+  },
+  "optionStagingEnabled": {
+    "message": "Įgalinti prelaidos sritį"
+  },
+  "optionStagingEnabledHint": {
+    "message": "Kai išjungta, šis rodinys rodo tik neseniai pridėtų sąrašą, o visi prelaidos mygtukai ar meniu punktai kituose rodiniuose paslepiami."
+  },
+  "optionStatsEnabled": {
+    "message": "Įjungti lankomumo statistiką"
+  },
+  "optionSyncRefreshInterval": {
+    "message": "Atnaujinimo intervalas"
+  },
+  "optionSyncRefreshIntervalSeconds": {
+    "message": "sekundžių"
+  },
+  "optionTabGroupsClosedLimit": {
+    "message": "Išsaugoti uždarų skirtukų/grupių istoriją"
+  },
+  "optionTheme": {
+    "message": "Tema"
+  },
+  "optionThemeAuto": {
+    "message": "Sekti sistemą"
+  },
+  "optionThemeDark": {
+    "message": "Tamsi"
+  },
+  "optionThemeInk": {
+    "message": "Rašalas (tamsi)"
+  },
+  "optionThemeLight": {
+    "message": "Šviesi"
+  },
+  "optionThemePaper": {
+    "message": "Popierius (šviesi)"
+  },
+  "optionTreeRowActions": {
+    "message": "Veiksmai užvedus pelę ant medžio eilučių (redaguoti / prelaida / ištrinti)"
+  },
+  "optionVirtualScrollLab": {
+    "message": "Virtualus slinkimas (eksperimentinis)"
+  },
+  "optionVirtualScrollLabHint": {
+    "message": "Skirtukų grupių ir dublikatų rodiniai atvaizduoja tik eilutes šalia rodymo srities. Daug greičiau labai dideliuose sąrašuose; eksperimentiniu režimu slinkties juostos padėtis yra apytikslė."
+  },
+  "optionZoom": {
+    "message": "Mastelis"
+  },
+  "options": {
+    "message": "Parametrai"
+  },
+  "optionsDonate": {
+    "message": "Paremkite"
+  },
+  "optionsFooterText": {
+    "description": "Footer text for the Options page",
+    "message": "Sukūrė $authorName$.",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionsGithubLink": {
+    "message": "GitHub"
+  },
+  "optionsGroupBackup": {
+    "message": "Atsarginė kopija"
+  },
+  "optionsGroupContextMenu": {
+    "message": "Kontekstiniai meniu"
+  },
+  "optionsGroupIcons": {
+    "message": "Piktogramos"
+  },
+  "optionsGroupLabs": {
+    "message": "Laboratorija"
+  },
+  "optionsGroupPalette": {
+    "message": "Komandų paletė"
+  },
+  "optionsGroupSort": {
+    "message": "Rūšiavimas"
+  },
+  "optionsGroupStats": {
+    "message": "Statistika"
+  },
+  "optionsGroupTools": {
+    "message": "Įrankiai"
+  },
+  "optionsGroupViews": {
+    "message": "Rodiniai"
+  },
+  "optionsHomepageLink": {
+    "message": "Pagrindinis puslapis"
+  },
+  "optionsSince": {
+    "message": "Išsišakojęs iš Neat Bookmarks, palaikomas $days$ dienas.",
+    "placeholders": {
+      "days": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionsStagingSection": {
+    "message": "Prelaida ir neseniai pridėta"
+  },
+  "optionsStorageLocalTip": {
+    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting).",
+    "message": "Saugoma tik šiame įrenginyje — nėra bendrinama per „Chrome“ sinchronizavimą."
+  },
+  "optionsStorageSyncTip": {
+    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting).",
+    "message": "Sinchronizuojama per „Chrome“ paskyrą — šis nustatymas bendrinamas visuose įrenginiuose."
+  },
+  "optionsVersion": {
+    "message": "vBookmarks versija"
+  },
+  "paletteActionOpenUrl": {
+    "message": "Atidaryti URL"
+  },
+  "paletteActionOpenUrlGroup": {
+    "message": "Atidaryti žymių aplankų grupę"
+  },
+  "paletteActionUrlTemplate": {
+    "message": "Atidaryti URL šabloną"
+  },
+  "paletteActionViewPreset": {
+    "message": "Atidaryti rodinį su išankstiniu nustatymu"
+  },
+  "paletteClose": {
+    "message": "Uždaryti"
+  },
+  "paletteCmdDead": {
+    "message": "Rasti neveikiančias nuorodas"
+  },
+  "paletteCmdDupes": {
+    "message": "Išvalyti dublikatus žymes"
+  },
+  "paletteCmdGoDead": {
+    "message": "Eiti į neveikiančias nuorodas"
+  },
+  "paletteCmdGoDupes": {
+    "message": "Eiti į dublikatus"
+  },
+  "paletteCmdGoRecent": {
+    "message": "Eiti į naujausius"
+  },
+  "paletteCmdGoSearch": {
+    "message": "Eiti į paiešką"
+  },
+  "paletteCmdGoStats": {
+    "message": "Eiti į statistiką"
+  },
+  "paletteCmdGoTabGroups": {
+    "message": "Eiti į skirtukų grupių rodinį"
+  },
+  "paletteCmdGoTree": {
+    "message": "Eiti į medį"
+  },
+  "paletteCmdLang": {
+    "message": "Perjungti kalbą…"
+  },
+  "paletteCmdLangUsage": {
+    "message": "Naudojimas: po /lang eina lokalės kodas — pvz., /lang en, /lang zh_CN, /lang ja."
+  },
+  "paletteCmdNewBookmark": {
+    "message": "Nauja žymė…"
+  },
+  "paletteCmdNewFolder": {
+    "message": "Naujas aplankas…"
+  },
+  "paletteCmdOptions": {
+    "message": "Atidaryti nustatymus"
+  },
+  "paletteCmdQuickAdd": {
+    "message": "Pridėti dabartinį skirtuką prie žymių"
+  },
+  "paletteCmdSaveAsCommand": {
+    "message": "Išsaugoti „$1“ kaip komandą…"
+  },
+  "paletteCmdSaveSession": {
+    "message": "Išsaugoti lango skirtukus kaip aplanką"
+  },
+  "paletteCmdSearchInView": {
+    "message": "Ieškoti '$query$' paieškos rodinyje",
+    "placeholders": {
+      "query": {
+        "content": "$1"
+      }
+    }
+  },
+  "paletteCmdTheme": {
+    "message": "Nustatyti temą…"
+  },
+  "paletteCmdThemeUsage": {
+    "message": "Naudojimas: /theme su temos pavadinimu — auto, light, dark, ink arba paper (veikia unikalus priešdėlis, pvz., /theme d)."
+  },
+  "paletteCmdToggleViewTabs": {
+    "message": "Perjungti rodymo skirtukus"
+  },
+  "paletteCmdVersion": {
+    "message": "Versijos informacija"
+  },
+  "paletteCustomAction": {
+    "message": "Veiksmas"
+  },
+  "paletteCustomAdd": {
+    "message": "Pridėti komandą…"
+  },
+  "paletteCustomAliases": {
+    "message": "Aliasai (atskirti kableliais)"
+  },
+  "paletteCustomBroken": {
+    "message": "Komandos „$1“ aplankas nebėra. Ištrinti komandą?"
+  },
+  "paletteCustomDeleteConfirm": {
+    "message": "Ištrinti komandą „$1“? Pakeitimas sinchronizuojamas visuose jūsų įrenginiuose."
+  },
+  "paletteCustomEmpty": {
+    "message": "Pasirinktinių komandų dar nėra."
+  },
+  "paletteCustomErrAction": {
+    "message": "Pasirinkite veiksmo tipą."
+  },
+  "paletteCustomErrAlias": {
+    "message": "Aliasai: tos pačios taisyklės kaip ir pasvirajam brūkšniui (1–24 simboliai, mažosios raidės, skaitmenys ar brūkšneliai)."
+  },
+  "paletteCustomErrFolder": {
+    "message": "Pasirinkite adresyno aplanką."
+  },
+  "paletteCustomErrLimit": {
+    "message": "Pasiekta komandų riba (100) — pirmiausia ištrinkite vieną."
+  },
+  "paletteCustomErrSlash": {
+    "message": "Pasvirasis brūkšnys: 1–24 simboliai (mažosios raidės, skaitmenys ar brūkšneliai), pradedant raide ar skaitmeniu."
+  },
+  "paletteCustomErrTaken": {
+    "message": "Šis pasvirasis brūkšnys ar aliasas jau naudojamas."
+  },
+  "paletteCustomErrTemplate": {
+    "message": "Šablonas turi turėti tiksliai vieną %s."
+  },
+  "paletteCustomErrUrl": {
+    "message": "Leidžiami tik http:// arba https:// URL."
+  },
+  "paletteCustomErrView": {
+    "message": "Pasirinkite rodinį."
+  },
+  "paletteCustomFolder": {
+    "message": "Adresyno aplankas"
+  },
+  "paletteCustomHint": {
+    "message": "Pasirinktinės pasvirojo brūkšnio komandos komandų paletei (Ctrl/Cmd+K). Jos sinchronizuojamos su jūsų nustatymais — daugiausia 100 įrašų."
+  },
+  "paletteCustomSave": {
+    "message": "Išsaugoti komandą"
+  },
+  "paletteCustomScan": {
+    "message": "Pradėti nuskaitymą įvedus"
+  },
+  "paletteCustomScope": {
+    "message": "Dublikatų šalinimo apimties išankstinis nustatymas"
+  },
+  "paletteCustomSlash": {
+    "message": "Pasvirasis brūkšnys (žodis po /)"
+  },
+  "paletteCustomStrategy": {
+    "message": "Dublikatų šalinimo strategijos išankstinis nustatymas"
+  },
+  "paletteCustomTag": {
+    "message": "pasirinktinis"
+  },
+  "paletteCustomTemplate": {
+    "message": "URL šablonas — %s pakeičiamas žodžiais po komandos"
+  },
+  "paletteCustomUrl": {
+    "message": "URL"
+  },
+  "paletteCustomUsage": {
+    "message": "$1 / $2"
+  },
+  "paletteCustomView": {
+    "message": "Rodinys"
+  },
+  "paletteCustomWhere": {
+    "message": "Atidaryti"
+  },
+  "paletteNoResults": {
+    "message": "Atitikmenų nerasta"
+  },
+  "palettePlaceholder": {
+    "message": "Ieškoti žymių, aplankų, komandų…"
+  },
+  "paletteWhereBackground": {
+    "message": "Foniniai skirtukai"
+  },
+  "paletteWhereCurrent": {
+    "message": "Dabartinis skirtukas"
+  },
+  "paletteWhereTab": {
+    "message": "Naujas skirtukas"
+  },
+  "paletteWhereWindow": {
+    "message": "Naujas langas"
+  },
+  "parentFolder": {
+    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
+    "message": "Tėvinis aplankas: \"$folderName$\"",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarksbar"
+      }
+    }
+  },
+  "pasteDone": {
+    "message": "Įklijuota"
+  },
+  "pasteGone": {
+    "message": "Žymės nebėra — iškarpinė išvalyta"
+  },
+  "pasteHere": {
+    "message": "Įklijuoti čia"
+  },
+  "pinFolder": {
+    "message": "Prisegti šį aplanką"
+  },
+  "quickAddBookmark": {
+    "message": "Pridėti šį puslapį prie žymių (Ctrl+D)"
+  },
+  "quickAddBookmarkCommand": {
+    "message": "Greitai pridėti esamą skirtuką kaip adresyno įrašą"
+  },
+  "quickAdded": {
+    "message": "Žymė pridėta"
+  },
+  "quickAddedTo": {
+    "message": "Žymelė pridėta į $folderName$",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarks bar"
+      }
+    }
+  },
+  "quickRemoveBookmark": {
+    "message": "Pašalinti šią žymelę (Ctrl+D)"
+  },
+  "quickRemoved": {
+    "message": "Žymelė pašalinta"
+  },
+  "recentBookmarks": {
+    "message": "Neseniai pridėta"
+  },
   "recentEmpty": {
     "message": "Nėra neseniai pridėtų žymių. Paspauskite Ctrl+D, kad pridėtumėte dabartinį puslapį."
+  },
+  "recentGroupMonth": {
+    "message": "Šis mėnuo"
+  },
+  "recentGroupOlder": {
+    "message": "Senesni"
+  },
+  "recentGroupToday": {
+    "message": "Šiandien"
+  },
+  "recentGroupWeek": {
+    "message": "Ši savaitė"
   },
   "recentRevealInTree": {
     "message": "Rodyti medyje"
   },
+  "recentSectionTitle": {
+    "message": "Naujausiai pridėta"
+  },
+  "recentStageAll": {
+    "message": "Paruošti visus naujausius"
+  },
+  "recentStageGroup": {
+    "message": "Siųsti $t$ į paruošimo sritį",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
+  },
+  "removeSeparator": {
+    "message": "Pašalinti skirtuką"
+  },
+  "replaceUrl": {
+    "message": "Pakeisti dabartiniu URL"
+  },
+  "reportError": {
+    "message": "Pranešti apie klaidą"
+  },
+  "reportedToDeveloper": {
+    "description": "Pranešimas apie klaidą plėtinyje, pranešta kūrėjui.",
+    "message": "Tai pranešta kūrėjui."
+  },
+  "resetButton": {
+    "message": "Atstatyti"
+  },
+  "resetSettings": {
+    "message": "Atstatyti nustatymus"
+  },
+  "resetSettingsDescription": {
+    "message": "Atstatyti vBookmarks į numatytuosius nustatymus."
+  },
+  "revealOutsideBarAction": {
+    "message": "Rodyti viską ir atskleisti"
+  },
+  "revealOutsideBarHint": {
+    "message": "Rodoma tik adresyno juosta: tikslas yra už jos ribų."
+  },
+  "riskBannerDismiss": {
+    "message": "Atmesti"
+  },
+  "riskBannerHelp": {
+    "message": "Atsarginės kopijos ir atkūrimo vadovas"
+  },
+  "riskBannerNever": {
+    "message": "Daugiau nerodyti"
+  },
+  "rowActionDelete": {
+    "message": "Ištrinti"
+  },
+  "rowActionMark": {
+    "message": "Pažymėti kaip neveikiančią"
+  },
+  "rowActionReveal": {
+    "message": "Rodyti medyje"
+  },
+  "rowActionUnmark": {
+    "message": "Pašalinti neveikiančios žymę"
+  },
+  "save": {
+    "message": "Išsaugoti"
+  },
+  "searchBookmarks": {
+    "description": "Placeholder tekstas paieškos laukui.",
+    "message": "Ieškoti žymelių"
+  },
+  "searchClear": {
+    "message": "Išvalyti paiešką"
+  },
   "searchHistoryClear": {
     "message": "Išvalyti viską"
   },
+  "searchHistoryClose": {
+    "message": "Slėpti paieškos istoriją"
+  },
+  "searchHistoryClosedToast": {
+    "message": "Paieškos istorija paslėpta — įjunkite ją vėl parinktyse → Paieška"
+  },
   "searchHistoryRemove": {
     "message": "Pašalinti šią paiešką"
+  },
+  "searchHistoryRerun": {
+    "message": "Ieškoti dar kartą"
   },
   "searchHistoryResultCount": {
     "message": "$n$ rezultatas(-ai)",
@@ -298,6 +1562,895 @@
   },
   "searchHistoryTitle": {
     "message": "Neseniai atliktos paieškos"
+  },
+  "searchNoResults": {
+    "message": "Atitinkančių žymių nerasta"
+  },
+  "searchResultCount": {
+    "message": "$n$ rezultatai",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "searchStageAllGroup": {
+    "message": "Siųsti visus rezultatus kaip grupę „$1$“",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "searchViewHint": {
+    "message": "Įveskite aukščiau esančiame lauke, kad ieškotumėte savo žymių"
+  },
+  "selectAll": {
+    "message": "Visi"
+  },
+  "selectClear": {
+    "message": "Išvalyti"
+  },
+  "selectCount": {
+    "message": "Pasirinkta: $count$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "selectInvert": {
+    "message": "Apversti"
+  },
+  "selectModeEnter": {
+    "message": "Pasirinkti"
+  },
+  "selectModeExit": {
+    "message": "Baigti pasirinkimą"
+  },
+  "separatorOptions": {
+    "message": "Atskyrikliai"
+  },
+  "sessionEmpty": {
+    "message": "Nėra skirtukų išsaugoti"
+  },
+  "sessionFolderName": {
+    "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm.",
+    "message": "Sesija $date$",
+    "placeholders": {
+      "date": {
+        "content": "$1",
+        "example": "2026-07-18 15:04"
+      }
+    }
+  },
+  "sessionSaved": {
+    "description": "Alert shown after the current window's tabs were saved into a new bookmark folder.",
+    "message": "Išsaugota $count$ skirtukų naujame aplanke",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "12"
+      }
+    }
+  },
+  "settingsBackupHint": {
+    "message": "Eksportavimas išsaugo visus nustatymus (įskaitant sinchronizavimo nuostatas) į JSON failą. Importavimas sujungia atsarginę kopiją: failo nustatymai perrašo esamus, o visa kita išlieka."
+  },
+  "settingsExport": {
+    "message": "Eksportuoti nustatymus"
+  },
+  "settingsImport": {
+    "message": "Importuoti nustatymus"
+  },
+  "settingsImportConfirm": {
+    "message": "Importuojant bus perrašyti visi atsarginėje kopijoje esantys nustatymai (faile nesantys nustatymai išlieka) ir šis puslapis bus perkrautas. Tęsti?"
+  },
+  "settingsImportDone": {
+    "message": "Nustatymai importuoti. Puslapis bus perkrautas."
+  },
+  "settingsImportError": {
+    "message": "Kai kurių nustatymų nepavyko įrašyti (viršyta saugyklos kvota arba laikina klaida). Importavimas nebaigtas – bandykite dar kartą."
+  },
+  "settingsImportInvalid": {
+    "message": "Netinkamas nustatymų failas: tai nėra vBookmarks nustatymų atsarginė kopija."
+  },
+  "sortByDate": {
+    "message": "Pagal pridėjimo datą"
+  },
+  "sortByDateAdded": {
+    "message": "Pagal pridėjimo datą (naujausi pirmi)"
+  },
+  "sortByName": {
+    "message": "Rūšiuoti pagal pavadinimą"
+  },
+  "sortByTitle": {
+    "message": "Pagal pavadinimą"
+  },
+  "sortDone": {
+    "message": "Aplankas surūšiuotas"
+  },
+  "sortFolderContents": {
+    "message": "Rūšiuoti aplanko turinį"
+  },
+  "sortFoldersFirst": {
+    "message": "Aplankus viršuje"
+  },
+  "sortMenuOptions": {
+    "message": "Rūšiuoti"
+  },
+  "sortOptions": {
+    "message": "Rūšiavimo parinktys…"
+  },
+  "sortRecursive": {
+    "message": "Rūšiuoti ir poaplankius (rekursyviai)"
+  },
+  "sortRecursiveSuffix": {
+    "message": "(rekursyviai)"
+  },
+  "sortRecursiveWarning": {
+    "message": "Tai perrikiuoja žymes kiekviename poaplankyje."
+  },
+  "stagedToast": {
+    "message": "Paruošta $n$ skirtukų kaip grupė „$t$“",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "t": {
+        "content": "$2"
+      }
+    }
+  },
+  "stagingAdd": {
+    "message": "Siųsti į sceną"
+  },
+  "stagingAdded": {
+    "message": "Išsiųsta į sceną"
+  },
+  "stagingAddedSummary": {
+    "message": "Įtraukta $n$ elementų; $m$ jau paruošta",
+    "placeholders": {
+      "m": {
+        "content": "$2"
+      },
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingAlready": {
+    "message": "Jau paruošimo srityje"
+  },
+  "stagingBucketFavAll": {
+    "message": "Pažymėti visus mėgstamiausiais"
+  },
+  "stagingBucketTitle": {
+    "message": "Neįtraukta į žymes"
+  },
+  "stagingClear": {
+    "message": "Išvalyti paruošimą"
+  },
+  "stagingClearConfirm": {
+    "message": "Išvalyti visą paruošimo sritį? Žymių medis nepakeičiamas."
+  },
+  "stagingClearConfirmOk": {
+    "message": "Išvalyti"
+  },
+  "stagingCleared": {
+    "message": "Paruošimo sritis išvalyta"
+  },
+  "stagingConfirmFolder": {
+    "message": "Paruošti $n$ žymes iš šio aplanko?",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingConfirmFolderOk": {
+    "message": "Scenarijus"
+  },
+  "stagingCopyDone": {
+    "message": "Nukopijuota $n$ elem.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingCount": {
+    "message": "$n$ paruošta",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingDeleteConfirm": {
+    "message": "Ištrinti $n$ elem.? Neįtrauktos tik palieka paruošimo sritį.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingDeleted": {
+    "message": "Ištrinta $n$ žymų",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingEmpty": {
+    "message": "Dar nieko neįdėta. Siųskite žymes čia iš bet kurio rodinio — mygtuką lėktuve eilutėje arba dešiniuoju pelės klavišu — tada tvarkykite ir archyvuokite jas masiškai."
+  },
+  "stagingFav": {
+    "message": "Mėgstamiausias"
+  },
+  "stagingFavDone": {
+    "message": "Pažymėta mėgstamiausiais: $n$ elementų",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingFolderEmpty": {
+    "message": "Šiame aplanke nėra žymių, kurias būtų galima paruošti"
+  },
+  "stagingFromHistory": {
+    "message": "Iš istorijos"
+  },
+  "stagingFull": {
+    "message": "Paruošimo sritis pilna — pirmiausia pašalinkite kai kuriuos elementus"
+  },
+  "stagingGroupAssign": {
+    "message": "Grupė…"
+  },
+  "stagingGroupAssignTitle": {
+    "message": "Priskirti grupei"
+  },
+  "stagingGroupCollapse": {
+    "message": "Sutraukti grupę"
+  },
+  "stagingGroupDelete": {
+    "message": "Ištrinti grupę (su elementais)"
+  },
+  "stagingGroupDeleteConfirm": {
+    "message": "Ištrinti grupę \"$1\"? Jos $2 elementas(-ai) taip pat paliks laukimo sritį."
+  },
+  "stagingGroupDeleted": {
+    "message": "Grupė ištrinta — pašalinta $1 elementas(-ai)"
+  },
+  "stagingGroupDissolve": {
+    "message": "Išskirstyti grupę"
+  },
+  "stagingGroupDissolved": {
+    "message": "Grupė išskirstyta — elementai išliko paruošimo srityje"
+  },
+  "stagingGroupExpand": {
+    "message": "Išskleisti grupę"
+  },
+  "stagingGroupNamePrompt": {
+    "message": "Naujos grupės pavadinimas"
+  },
+  "stagingGroupNew": {
+    "message": "Nauja grupė"
+  },
+  "stagingGroupNoGroups": {
+    "message": "Grupių dar nėra"
+  },
+  "stagingGroupRename": {
+    "message": "Pervadinti grupę…"
+  },
+  "stagingGroupSelectAll": {
+    "message": "Pasirinkti visus grupėje"
+  },
+  "stagingGuideDismiss": {
+    "message": "Nerodyti daugiau"
+  },
+  "stagingGuideText": {
+    "message": "Tvarkykite žymes čia — pasirinkite eilutes ir įjunkite žymėjimo režimą grupinėms operacijoms."
+  },
+  "stagingMoveConfirm": {
+    "message": "Perkelti $n$ elem. į pasirinktą aplanką?",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingMoveConfirmOk": {
+    "message": "Perkelti"
+  },
+  "stagingMoveCopy": {
+    "message": "Perkelti/kopijuoti…"
+  },
+  "stagingMoveDone": {
+    "message": "Perkelta $n$ elem. į pradžią",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingNew": {
+    "message": "nauja $n$",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingRemove": {
+    "message": "Pašalinti iš paruošimo srities"
+  },
+  "stagingRemoved": {
+    "message": "Pašalinta iš paruošimo srities"
+  },
+  "stagingRemovedCount": {
+    "message": "Pašalinta $n$ elem. iš paruošimo srities",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingRowFav": {
+    "message": "Pažymėti šį elementą mėgstamiausiu"
+  },
+  "stagingRowUnfav": {
+    "message": "Atžymėti šį elementą iš mėgstamiausių"
+  },
+  "stagingShortcutAdd": {
+    "message": "Pridėti nuorodą"
+  },
+  "stagingShortcutAlias": {
+    "message": "Pseudonimas"
+  },
+  "stagingShortcutBarLabel": {
+    "message": "Perkelti į:"
+  },
+  "stagingShortcutEdit": {
+    "message": "Redaguoti nuorodą"
+  },
+  "stagingShortcutMove": {
+    "message": "Perkelti pasirinktus į $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingShortcutPickFolder": {
+    "message": "Pasirinkti paskirties aplanką…"
+  },
+  "stagingShortcutRemove": {
+    "message": "Pašalinti nuorodą"
+  },
+  "stagingShortcutRemoved": {
+    "message": "Nuoroda pašalinta"
+  },
+  "stagingShortcutSave": {
+    "message": "Išsaugoti"
+  },
+  "stagingShortcutTitle": {
+    "message": "Perkėlimo nuoroda"
+  },
+  "stagingUnfav": {
+    "message": "Ne mėgstamiausias"
+  },
+  "stagingUnfavDone": {
+    "message": "Atžymėta iš mėgstamiausių: $n$ elementų",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "statsClearConfirm": {
+    "message": "Išvalyti $count$ žymių lankomumo statistiką? Šis veiksmas negrįžtamas.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "statsClearData": {
+    "message": "Išvalyti statistiką"
+  },
+  "statsDisabledHint": {
+    "message": "Lankomumo statistika išjungta – įjunkite Nustatymai → Rodiniai"
+  },
+  "statsEmpty": {
+    "message": "Statistika kaupiasi atidarant žymes"
+  },
+  "statsHistoryAdd": {
+    "message": "Pridėti prie adresyno"
+  },
+  "statsHistoryBanner": {
+    "message": "Suteikti prieigą prie naršymo istorijos, kad apsilankymų statistika būtų užpildyta jūsų ankstesniais apsilankymais."
+  },
+  "statsHistoryBookmarked": {
+    "message": "Pažymėta"
+  },
+  "statsHistoryDismiss": {
+    "message": "Nerodyti daugiau"
+  },
+  "statsHistoryEnable": {
+    "message": "Įgalinti"
+  },
+  "statsHistoryGuide": {
+    "message": "Suteikite istorijos prieigą, kad čia būtų rodomi jūsų naujausi apsilankymai."
+  },
+  "statsHistoryImported": {
+    "message": "Importuoti ankstesni apsilankymai $count$ žymelėms",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "statsSectionBookmarks": {
+    "message": "Adresyno statistika"
+  },
+  "statsSectionRecent": {
+    "message": "Naujausi apsilankymai"
+  },
+  "statsShowUnbookmarked": {
+    "message": "Rodyti nepažymėtus"
+  },
+  "statsShowUnbookmarkedHint": {
+    "message": "Įtraukti istorijos puslapius, kurie neišsaugoti kaip adresyno žymės."
+  },
+  "statsSortByCount": {
+    "message": "Pagal skaičių"
+  },
+  "statsSortByRecent": {
+    "message": "Pagal naujumą"
+  },
+  "statsVisitCount": {
+    "message": "Lankyta $count$ kartų",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "storageUsageFree": {
+    "message": "Laisva vieta"
+  },
+  "storageUsageHint": {
+    "message": "Tik vietinė plėtinio saugykla (chrome.storage.local, maždaug 10 MB kvota): piktogramų talpykla, nustatymai ir kiti vietiniai duomenys. Sinchronizuoti nustatymai, sesijos duomenys ir pati žymių biblioteka čia neskaičiuojami."
+  },
+  "storageUsageIcon": {
+    "message": "Piktogramų talpykla"
+  },
+  "storageUsageOther": {
+    "message": "Kita"
+  },
+  "storageUsageSummary": {
+    "message": "Naudojama $1$ iš $2$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      },
+      "2": {
+        "content": "$2"
+      }
+    }
+  },
+  "syncOptions": {
+    "message": "Sinchronizavimo parinktys"
+  },
+  "syncStatusLocal": {
+    "message": "Tik vietinis – neįkelta"
+  },
+  "syncStatusSynced": {
+    "message": "Sinchronizuota su jūsų Google paskyra"
+  },
+  "syncStatusUnsyncable": {
+    "message": "Negalima sinchronizuoti"
+  },
+  "syncSuffixLocal": {
+    "message": "(Vietinis)"
+  },
+  "syncSuffixSynced": {
+    "message": "(Sinchronizuota)"
+  },
+  "tabGroupColorBlue": {
+    "description": "Accessible name of the blue color swatch in the new-tab-group dialog.",
+    "message": "Mėlyna"
+  },
+  "tabGroupColorCyan": {
+    "description": "Accessible name of the cyan color swatch in the new-tab-group dialog.",
+    "message": "Žydra"
+  },
+  "tabGroupColorGreen": {
+    "description": "Accessible name of the green color swatch in the new-tab-group dialog.",
+    "message": "Žalia"
+  },
+  "tabGroupColorGrey": {
+    "description": "Accessible name of the grey color swatch in the new-tab-group dialog.",
+    "message": "Pilka"
+  },
+  "tabGroupColorLabel": {
+    "message": "Spalva"
+  },
+  "tabGroupColorOrange": {
+    "description": "Accessible name of the orange color swatch in the new-tab-group dialog.",
+    "message": "Oranžinė"
+  },
+  "tabGroupColorPink": {
+    "description": "Accessible name of the pink color swatch in the new-tab-group dialog.",
+    "message": "Rožinė"
+  },
+  "tabGroupColorPurple": {
+    "description": "Accessible name of the purple color swatch in the new-tab-group dialog.",
+    "message": "Violetinė"
+  },
+  "tabGroupColorRed": {
+    "description": "Accessible name of the red color swatch in the new-tab-group dialog.",
+    "message": "Raudona"
+  },
+  "tabGroupColorYellow": {
+    "description": "Accessible name of the yellow color swatch in the new-tab-group dialog.",
+    "message": "Geltona"
+  },
+  "tabGroupDialogTitle": {
+    "message": "Nauja skirtukų grupė"
+  },
+  "tabGroupNoGroups": {
+    "message": "Nėra esamų skirtukų grupių"
+  },
+  "tabGroupOptions": {
+    "message": "Skirtukų grupės"
+  },
+  "tabGroupPickDialogTitle": {
+    "message": "Atidaryti esamoje skirtukų grupėje"
+  },
+  "tabGroupTitleLabel": {
+    "message": "Grupės pavadinimas"
+  },
+  "tabGroupUntitled": {
+    "message": "Nepavadinta grupė"
+  },
+  "tabGroupsActivateGroup": {
+    "message": "Eiti į skirtukų grupę"
+  },
+  "tabGroupsActivateTab": {
+    "message": "Eiti į skirtuką"
+  },
+  "tabGroupsAddBookmark": {
+    "message": "Įtraukti skirtuką į žymes"
+  },
+  "tabGroupsBatchClosedTitle": {
+    "message": "Uždaryti skirtukai"
+  },
+  "tabGroupsBookmarkRemoved": {
+    "message": "Pašalinta $count$ žymė(-ės)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsBookmarked": {
+    "message": "Pažymėta"
+  },
+  "tabGroupsBookmarksAdded": {
+    "message": "Pridėta $count$ žymė(-ės) į $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsClearClosedGroups": {
+    "message": "Išvalyti visus"
+  },
+  "tabGroupsClearedToast": {
+    "message": "Išvalyta $count$ uždarytų įrašų",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCloseGroup": {
+    "message": "Uždaryti grupę"
+  },
+  "tabGroupsCloseWindow": {
+    "message": "Uždaryti langą"
+  },
+  "tabGroupsClosedGroups": {
+    "message": "Neseniai uždaryta"
+  },
+  "tabGroupsClosedOpenTab": {
+    "message": "Atidaryti naujoje kortelėje"
+  },
+  "tabGroupsClosedTabRemovedToast": {
+    "message": "Pašalinta iš uždarytų įrašų"
+  },
+  "tabGroupsClosedTimeLabel": {
+    "message": "Uždaryta:"
+  },
+  "tabGroupsClosedToast": {
+    "message": "Uždaryta $count$ skirtukų",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCollapseAll": {
+    "message": "Sutraukti viską"
+  },
+  "tabGroupsCollapseGroup": {
+    "message": "Sutraukti grupę"
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "Sutraukti langą"
+  },
+  "tabGroupsColorStyle": {
+    "message": "Skirtukų grupės spalvos stilius"
+  },
+  "tabGroupsColorStyleEdge": {
+    "message": "Krašto spalvos juosta"
+  },
+  "tabGroupsColorStyleHint": {
+    "message": "Išjungta rodo tik spalvos tašką. Krašto spalvos juosta nubrėžia spalvotą juostą palei grupės kairįjį kraštą. Spalvos jungiamoji linija nubrėžia spalvotą liniją po grupės tašku su brūkšneliu kiekvienai eilutei, sujungdama visą grupę į vieną medį."
+  },
+  "tabGroupsColorStyleLine": {
+    "message": "Spalvos jungiamoji linija"
+  },
+  "tabGroupsColorStyleOff": {
+    "message": "Išjungta (tik spalvos taškas)"
+  },
+  "tabGroupsConfirmClearClosed": {
+    "message": "Išvalyti visus neseniai uždarytus įrašus? Jų nebebus galima atidaryti iš čia."
+  },
+  "tabGroupsConfirmClose": {
+    "message": "Uždaryti $count$ skirtukų?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsConfirmSleep": {
+    "message": "Užmigdyti $count$ skirtukų?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCopyMoveCopy": {
+    "message": "Kopijuoti"
+  },
+  "tabGroupsCopyMoveDialog": {
+    "message": "Pasirinkti skirtukai jau priklauso skirtukų grupei. Kopijuoti juos (atidaryti naujoje vietoje) ar perkelti (pašalinti iš dabartinės grupės)?"
+  },
+  "tabGroupsCopyMoveMove": {
+    "message": "Perkelti"
+  },
+  "tabGroupsCurrentTab": {
+    "message": "Dabartinis"
+  },
+  "tabGroupsCurrentWindow": {
+    "message": "Dabartinis langas"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "Ištrinti uždarą skirtukų grupę"
+  },
+  "tabGroupsDiscarded": {
+    "message": "Miegantis skirtukas"
+  },
+  "tabGroupsExpandAll": {
+    "message": "Išskleisti viską"
+  },
+  "tabGroupsExpandGroup": {
+    "message": "Išskleisti grupę"
+  },
+  "tabGroupsExpandWindow": {
+    "message": "Išplėsti langą"
+  },
+  "tabGroupsExpandedCollapse": {
+    "message": "Suskleisti"
+  },
+  "tabGroupsExpandedExpand": {
+    "message": "Išskleisti"
+  },
+  "tabGroupsFilterPlaceholder": {
+    "message": "Filtruoti atidarytas korteles"
+  },
+  "tabGroupsGroupCount": {
+    "message": "$count$ skirtukų",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsGroupSavedToFolder": {
+    "message": "Išsaugota $count$ skirtukų į $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsMenuAddBookmark": {
+    "message": "Įtraukti į žymes"
+  },
+  "tabGroupsMenuSaveFolder": {
+    "message": "Išsaugoti kaip aplanką"
+  },
+  "tabGroupsMergedWindowToast": {
+    "message": "Langas sujungtas kaip kortelių grupė"
+  },
+  "tabGroupsMoveNewWindow": {
+    "message": "Perkelti grupę į naują langą"
+  },
+  "tabGroupsNewWindow": {
+    "message": "Naujas langas"
+  },
+  "tabGroupsNoMatchingTabs": {
+    "message": "Atitinkančių kortelių nėra"
+  },
+  "tabGroupsOpenGroups": {
+    "message": "Atidarytos skirtukų grupės"
+  },
+  "tabGroupsPinTab": {
+    "message": "Prisegti skirtuką"
+  },
+  "tabGroupsPinned": {
+    "message": "Prisegta skirtukas"
+  },
+  "tabGroupsPinnedUngroupedToast": {
+    "message": "Prisegta — pašalinta iš skirtukų grupės"
+  },
+  "tabGroupsRecordDeletedToast": {
+    "message": "Pašalintas uždarytas įrašas"
+  },
+  "tabGroupsRemoveBookmark": {
+    "message": "Pašalinti žymę"
+  },
+  "tabGroupsRemoveClosedTab": {
+    "message": "Pašalinti iš išsaugotos grupės"
+  },
+  "tabGroupsRenameDialog": {
+    "message": "Pervadinti skirtukų grupę"
+  },
+  "tabGroupsRenameGroup": {
+    "message": "Pervadinti grupę"
+  },
+  "tabGroupsReopenAction": {
+    "message": "Atidaryti"
+  },
+  "tabGroupsReopenGroup": {
+    "message": "Atidaryti skirtukų grupę"
+  },
+  "tabGroupsSaveFolder": {
+    "message": "Išsaugoti skirtukų grupę kaip žymių aplanką"
+  },
+  "tabGroupsSelectAddBookmarks": {
+    "message": "Pridėti prie žymių aplanko…"
+  },
+  "tabGroupsSelectClose": {
+    "message": "Uždaryti"
+  },
+  "tabGroupsSelectNewGroup": {
+    "message": "Nauja skirtukų grupė"
+  },
+  "tabGroupsSelectOpenInto": {
+    "message": "Atidaryti esamoje skirtukų grupėje…"
+  },
+  "tabGroupsSelectSaveFolder": {
+    "message": "Išsaugoti kaip žymių aplanką"
+  },
+  "tabGroupsSelectSleep": {
+    "message": "Užmigdyti"
+  },
+  "tabGroupsSleepGroup": {
+    "message": "Užmigdyti grupę"
+  },
+  "tabGroupsSleepTab": {
+    "message": "Užmigdyti skirtuką"
+  },
+  "tabGroupsSleptToast": {
+    "message": "Užmigdyti $count$ skirtukai",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsSummary": {
+    "message": "$tabs$ skirtukų · $groups$ grupės",
+    "placeholders": {
+      "groups": {
+        "content": "$2"
+      },
+      "tabs": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsSyncCollapse": {
+    "message": "Sinchronizuoti sutraukimą su naršykle"
+  },
+  "tabGroupsSyncCollapseHint": {
+    "message": "Kai pažymėta, grupės sutraukimas ar išskleidimas šiame rodinyje taip pat atnaujina naršyklės skirtukų grupę. Pagal nutylėjimą išjungta, kad rodinio lankstymas liktų vietinis."
+  },
+  "tabGroupsToolbarRefresh": {
+    "message": "Atnaujinti"
+  },
+  "tabGroupsUngroupGroup": {
+    "message": "Išgrupuoti skirtukus"
+  },
+  "tabGroupsUngroupedTabs": {
+    "message": "Negrupuoti skirtukai"
+  },
+  "tabGroupsUnpinTab": {
+    "message": "Atsegti skirtuką"
+  },
+  "tabGroupsViewEmpty": {
+    "message": "Šiame lange nėra skirtukų"
+  },
+  "tabGroupsWakeAction": {
+    "message": "Pažadinti"
+  },
+  "tabGroupsWakeGroup": {
+    "message": "Pažadinti skirtukų grupę"
+  },
+  "tabGroupsWakeTab": {
+    "message": "Pažadinti skirtuką"
+  },
+  "tabGroupsWindow": {
+    "message": "Langas $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsWindowClosedTitle": {
+    "message": "Uždarytas langas"
+  },
+  "tabGroupsWindowsCount": {
+    "message": "$n$ langai",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabRowStage": {
+    "message": "Siųsti į sceną"
+  },
+  "tabgroupStageAll": {
+    "message": "Siųsti grupę į sceną"
+  },
+  "tabgroupStageConfirm": {
+    "message": "Siųsti $n$ skirtukus į sceną?",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabgroupStageNone": {
+    "message": "Šioje grupėje nėra žymėtinų skirtukų"
   },
   "timeDaysAgo": {
     "message": "Prieš $n$ dienas",
@@ -329,303 +2482,26 @@
   "timeYesterday": {
     "message": "vakar"
   },
+  "toolButtonTitle": {
+    "message": "Įrankiai (Ctrl+K)"
+  },
   "undoAction": {
     "message": "Atšaukti"
   },
-  "revealOutsideBarHint": {
-    "message": "Rodoma tik adresyno juosta: tikslas yra už jos ribų."
+  "undoSingleStepNote": {
+    "message": "Atšaukti galima tik paskutinį ištrynimą."
   },
-  "revealOutsideBarAction": {
-    "message": "Rodyti viską ir atskleisti"
+  "unpinFolder": {
+    "message": "Atsegti šį aplanką"
   },
-  "dupesCleanAll": {
-    "message": "Išvalyti visus: $groups$ grupės, $count$ papildomų kopijų",
-    "placeholders": {
-      "groups": {
-        "content": "$1"
-      },
-      "count": {
-        "content": "$2"
-      }
-    },
-    "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go."
+  "url": {
+    "message": "URL"
   },
-  "dupesConfirmAll": {
-    "message": "Pašalinti $count$ papildomų kopijų iš $groups$ grupių? Kiekvienoje grupėje pasirinkta kopija bus išsaugota.",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      },
-      "groups": {
-        "content": "$2"
-      }
-    },
-    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
+  "versionDialogCopied": {
+    "message": "Nukopijuota"
   },
-  "dupesConfirmSelected": {
-    "message": "Pašalinti $count$ adresyno dublikatus iš $groups$ pasirinktų grupių?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      },
-      "groups": {
-        "content": "$2"
-      }
-    }
-  },
-  "dupesConfirmGroup": {
-    "message": "Išsaugoti „$title$“ ir pašalinti kitas $count$ kopijas?",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Example bookmark"
-      },
-      "count": {
-        "content": "$2"
-      }
-    },
-    "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."
-  },
-  "dupesDone": {
-    "message": "Pašalinta $count$ dublikatų žymių",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Alert shown after the duplicate cleanup finished."
-  },
-  "dupesGroupCount": {
-    "message": "$count$ dublikatai",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
-  },
-  "dupesGroupExpand": {
-    "description": "Dupes view group-head context menu: expand a collapsed duplicate group.",
-    "message": "Išskleisti grupę"
-  },
-  "dupesGroupCollapse": {
-    "description": "Dupes view group-head context menu: collapse an expanded duplicate group.",
-    "message": "Suskleisti grupę"
-  },
-  "dupesNone": {
-    "message": "Dublikatų nerasta"
-  },
-  "deleteEllipsis": {
-    "message": "Ištrinti..."
-  },
-  "donationMessage": {
-    "message": "Patinka? Paaukokite jos ateičiai — arba įvertinkite parduotuvėje: kiekvienas atsiliepimas skatina atnaujinimus."
-  },
-  "donationV4Notice": {
-    "message": "vBookmarks 4.0 – tai visiškai nauja versija su moderniu dizainu ir daugybe naujų funkcijų."
-  },
-  "donationV4GuideLink": {
-    "message": "Skaityti v4 vadovą →"
-  },
-  "donationGo": {
-    "message": "Paaukoti"
-  },
-  "donationRate": {
-    "message": "Įvertinkite"
-  },
-  "donationRateTitle": {
-    "message": "Įvertinkite vBookmarks „Chrome Web Store“"
-  },
-  "donationLater": {
-    "message": "Vėliau"
-  },
-  "donationNever": {
-    "message": "Nerodyti daugiau"
-  },
-  "donationDismiss": {
-    "message": "Atmesti"
-  },
-  "edit": {
-    "message": "Redaguoti..."
-  },
-  "editBookmark": {
-    "message": "Redaguoti žymelę"
-  },
-  "editFolder": {
-    "message": "Redaguoti aplanką"
-  },
-  "errorOccured": {
-    "message": "Oi, įvyko klaida."
-  },
-  "extDesc": {
-    "description": "Plėtinio aprašymas.",
-    "message": "Iškylantis žymelių tvarkyklė. Patobulintas Neat Bookmarks. Tvarkingesnis už Neater Bookmarks."
-  },
-  "extName": {
-    "description": "vBookmarks",
-    "message": "vBookmarks"
-  },
-  "folderEmpty": {
-    "message": "(Tuščia)"
-  },
-  "general": {
-    "message": "Bendri"
-  },
-  "ignore": {
-    "message": "Ignoruoti"
-  },
-  "name": {
-    "description": "Žymelės ar aplanko pavadinimas.",
-    "message": "Pavadinimas"
-  },
-  "nope": {
-    "message": "Atšaukti"
-  },
-  "noTitle": {
-    "description": "Pavadinimas bevardėms žymelėms be http(s) URL arba bevardžiems aplankams.",
-    "message": "(be pavadinimo)"
-  },
-  "open": {
-    "description": "Veiksmas žymelių atidarymui.",
-    "message": "Atidaryti"
-  },
-  "openBookmarks": {
-    "message": "Atidaryti visas žymeles"
-  },
-  "openBookmarksIncognitoWindow": {
-    "message": "Atidaryti žymeles inkognito lange"
-  },
-  "openBookmarksInGroup": {
-    "message": "Atidaryti visus naujoje grupėje"
-  },
-  "openBookmarksInGroupSetup": {
-    "message": "Atidaryti visus naujoje skirtukų grupėje…"
-  },
-  "openBookmarksInExistingGroup": {
-    "message": "Atidaryti visus esamoje skirtukų grupėje…"
-  },
-  "tabGroupOptions": {
-    "message": "Skirtukų grupės"
-  },
-  "sortMenuOptions": {
-    "message": "Rūšiuoti"
-  },
-  "openBookmarksNewWindow": {
-    "message": "Atidaryti žymeles naujame lange"
-  },
-  "openCommandPaletteCommand": {
-    "message": "Atidaryti komandų paletę"
-  },
-  "openIncognitoWindow": {
-    "message": "Atidaryti incognito lange"
-  },
-  "openNewTab": {
-    "message": "Atidaryti naujame skirtuke"
-  },
-  "bookmarkOpenInNewGroup": {
-    "message": "Atidaryti naujoje skirtukų grupėje"
-  },
-  "bookmarkOpenInNewGroupSetup": {
-    "message": "Atidaryti naujoje skirtukų grupėje…"
-  },
-  "bookmarkOpenInExistingGroup": {
-    "message": "Atidaryti esamoje skirtukų grupėje…"
-  },
-  "openNewWindow": {
-    "message": "Atidaryti naujame lange"
-  },
-  "openSidePanelCommand": {
-    "message": "Atidaryti vBookmarks šoninį skydelį"
-  },
-  "optionAnnounceEnabled": {
-    "message": "Rodyti pranešimus produkto viduje"
-  },
-  "optionAnnounceEnabledHint": {
-    "message": "Leidimo pastabos ir patarimai iš projekto GitHub saugyklos (gaunami ne dažniau kaip kas 6 valandas). Išjungus taip pat sustabdoma tinklo užklausa."
-  },
-  "optionClickNewTab": {
-    "message": "Kairysis paspaudimas atidaro žymelę naujame skirtuke."
-  },
-  "optionCloseUnusedFolders": {
-    "message": "Užverti nenaudojamus aplankus atidarant aplanką."
-  },
-  "optionConfirmOpenFolder": {
-    "message": "Rodyti patvirtinimą atidarant daug žymelių iš aplanko."
-  },
-  "optionConfirmDeleteFolder": {
-    "message": "Patvirtinti prieš ištrinant netuščius aplankus"
-  },
-  "optionOnlyShowBookmarkBar": {
-    "message": "Rodyti tik žymeles žymelių juostoje"
-  },
-  "optionSearchAfterEnter": {
-    "message": "Ieškoti žymelių tik paspaudus ENTER (vietoj momentinės paieškos)"
-  },
-  "optionOpenNewTab": {
-    "message": "Vidurinis paspaudimas arba control-paspaudimas atidaro žymelę naujame fono skirtuke (vietoj priekinio plano)."
-  },
-  "optionOpenInSidePanel": {
-    "message": "Atidaryti šoniniame skydelyje vietoj iššokančio lango"
-  },
-  "optionPopupStays": {
-    "message": "Iškylantis langas lieka atidarytas atidarant (kairysis paspaudimas) žymeles."
-  },
-  "optionRememberPrevState": {
-    "message": "Prisiminti ankstesnę būseną (slinkties padėtis, atidaryti aplankai ir paskutinis fokusuotas elementas)."
-  },
-  "options": {
-    "message": "Parametrai"
-  },
-  "optionsFooterText": {
-    "description": "Footer text for the Options page",
-    "message": "Sukūrė $authorName$.",
-    "placeholders": {
-      "authorName": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionZoom": {
-    "message": "Mastelis"
-  },
-  "optionTheme": {
-    "message": "Tema"
-  },
-  "optionThemeAuto": {
-    "message": "Sekti sistemą"
-  },
-  "optionThemeLight": {
-    "message": "Šviesi"
-  },
-  "optionThemeDark": {
-    "message": "Tamsi"
-  },
-  "optionThemeInk": {
-    "message": "Rašalas (tamsi)"
-  },
-  "optionThemePaper": {
-    "message": "Popierius (šviesi)"
-  },
-  "optionLanguage": {
-    "message": "Kalba"
-  },
-  "optionLanguageAuto": {
-    "message": "Automatiškai"
-  },
-  "optionLanguageHint": {
-    "message": "Kalbos perjungimas perkrauna šį puslapį."
-  },
-  "paletteClose": {
-    "message": "Uždaryti"
-  },
-  "paletteCmdVersion": {
-    "message": "Versijos informacija"
-  },
-  "paletteCmdLang": {
-    "message": "Perjungti kalbą…"
-  },
-  "paletteCmdLangUsage": {
-    "message": "Naudojimas: po /lang eina lokalės kodas — pvz., /lang en, /lang zh_CN, /lang ja."
+  "versionDialogCopy": {
+    "message": "Kopijuoti informaciją"
   },
   "versionDialogTitle": {
     "message": "vBookmarks $version$",
@@ -634,15 +2510,6 @@
         "content": "$1"
       }
     }
-  },
-  "versionDialogCopy": {
-    "message": "Kopijuoti informaciją"
-  },
-  "versionDialogCopied": {
-    "message": "Nukopijuota"
-  },
-  "versionMetaVersion": {
-    "message": "Plėtinio versija"
   },
   "versionMetaAnnounce": {
     "message": "Kas naujo"
@@ -653,277 +2520,58 @@
   "versionMetaBrowser": {
     "message": "Naršyklė"
   },
-  "versionMetaOS": {
-    "message": "OS"
-  },
   "versionMetaChannel": {
     "message": "Kanalas"
   },
   "versionMetaLanguage": {
     "message": "Kalba"
   },
+  "versionMetaOS": {
+    "message": "OS"
+  },
   "versionMetaUserAgent": {
     "message": "Vartotojo agentas"
   },
-  "paletteCmdDead": {
-    "message": "Rasti neveikiančias nuorodas"
+  "versionMetaVersion": {
+    "message": "Plėtinio versija"
   },
-  "paletteCmdDupes": {
-    "message": "Išvalyti dublikatus žymes"
+  "viewDead": {
+    "message": "Neveikiančios nuorodos"
   },
-  "paletteCmdNewBookmark": {
-    "message": "Nauja žymė…"
+  "viewDisable": {
+    "message": "Išjungti"
   },
-  "paletteCmdNewFolder": {
-    "message": "Naujas aplankas…"
+  "viewDupes": {
+    "message": "Dublikatai"
   },
-  "paletteCmdQuickAdd": {
-    "message": "Pridėti dabartinį skirtuką prie žymių"
+  "viewEnable": {
+    "message": "Įjungti"
   },
-  "paletteCmdSaveSession": {
-    "message": "Išsaugoti lango skirtukus kaip aplanką"
-  },
-  "paletteNoResults": {
-    "message": "Atitikmenų nerasta"
-  },
-  "palettePlaceholder": {
-    "message": "Ieškoti žymių, aplankų, komandų…"
-  },
-  "parentFolder": {
-    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
-    "message": "Tėvinis aplankas: \"$folderName$\"",
+  "viewHiddenTabsHint": {
+    "message": "Jūs esate $view$ rodinyje. Paspauskite $back$ arba naudokite komandų skydelį, kad grįžtumėte į medį.",
     "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarksbar"
-      }
-    }
-  },
-  "removeSeparator": {
-    "message": "Pašalinti skirtuką"
-  },
-  "replaceUrl": {
-    "message": "Pakeisti dabartiniu URL"
-  },
-  "reportedToDeveloper": {
-    "description": "Pranešimas apie klaidą plėtinyje, pranešta kūrėjui.",
-    "message": "Tai pranešta kūrėjui."
-  },
-  "reportError": {
-    "message": "Pranešti apie klaidą"
-  },
-  "resetButton": {
-    "message": "Atstatyti"
-  },
-  "resetSettings": {
-    "message": "Atstatyti nustatymus"
-  },
-  "resetSettingsDescription": {
-    "message": "Atstatyti vBookmarks į numatytuosius nustatymus."
-  },
-  "save": {
-    "message": "Išsaugoti"
-  },
-  "searchBookmarks": {
-    "description": "Placeholder tekstas paieškos laukui.",
-    "message": "Ieškoti žymelių"
-  },
-  "searchClear": {
-    "message": "Išvalyti paiešką"
-  },
-  "searchNoResults": {
-    "message": "Atitinkančių žymių nerasta"
-  },
-  "searchViewHint": {
-    "message": "Įveskite aukščiau esančiame lauke, kad ieškotumėte savo žymių"
-  },
-  "selectAll": {
-    "message": "Visi"
-  },
-  "selectClear": {
-    "message": "Išvalyti"
-  },
-  "selectCount": {
-    "message": "Pasirinkta: $count$",
-    "placeholders": {
-      "count": {
+      "back": {
+        "content": "$2"
+      },
+      "view": {
         "content": "$1"
       }
     }
   },
-  "selectInvert": {
-    "message": "Apversti"
-  },
-  "selectModeEnter": {
-    "message": "Pasirinkti"
-  },
-  "selectModeExit": {
-    "message": "Baigti pasirinkimą"
-  },
-  "deadRiskBanner": {
-    "message": "Negyvų nuorodų valymas masiškai ištrina žymes. Prieš pirmą valymą sukurkite žymių atsarginę kopiją."
-  },
-  "dupesRiskBanner": {
-    "message": "Dublikatų šalinimas masiškai ištrina pasikartojančias žymes. Prieš taikydami jį, pasidarykite žymių atsarginę kopiją."
-  },
-  "riskBannerHelp": {
-    "message": "Atsarginės kopijos ir atkūrimo vadovas"
-  },
-  "riskBannerNever": {
-    "message": "Daugiau nerodyti"
-  },
-  "riskBannerDismiss": {
-    "message": "Atmesti"
-  },
-  "sessionEmpty": {
-    "message": "Nėra skirtukų išsaugoti"
-  },
-  "sessionFolderName": {
-    "message": "Sesija $date$",
-    "placeholders": {
-      "date": {
-        "content": "$1",
-        "example": "2026-07-18 15:04"
-      }
-    },
-    "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm."
-  },
-  "sessionSaved": {
-    "message": "Išsaugota $count$ skirtukų naujame aplanke",
-    "placeholders": {
-      "count": {
-        "content": "$1",
-        "example": "12"
-      }
-    },
-    "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
-  },
-  "url": {
-    "message": "URL"
-  },
-  "syncOptions": {
-    "message": "Sinchronizavimo parinktys"
-  },
-  "optionShowSyncStatus": {
-    "message": "Rodyti sinchronizavimo būklės indikatorius"
-  },
-  "optionHighlightUnsynced": {
-    "message": "Pritemdyti nesinchronizuotas žymes"
-  },
-  "optionAutoRefreshSync": {
-    "message": "Automatiškai atnaujinti sinchronizavimo būklę"
-  },
-  "optionSyncRefreshInterval": {
-    "message": "Atnaujinimo intervalas"
-  },
-  "optionSyncRefreshIntervalSeconds": {
-    "message": "sekundžių"
-  },
-  "syncStatusSynced": {
-    "message": "Sinchronizuota su jūsų Google paskyra"
-  },
-  "syncStatusLocal": {
-    "message": "Tik vietinis – neįkelta"
-  },
-  "syncStatusUnsyncable": {
-    "message": "Negalima sinchronizuoti"
-  },
-  "syncSuffixSynced": {
-    "message": "(Sinchronizuota)"
-  },
-  "syncSuffixLocal": {
-    "message": "(Vietinis)"
-  },
-  "optionAutoResizePopup": {
-    "message": "Automatiškai keisti iškylančio lango dydį pagal turinį"
-  },
-  "crossStorageMoveWarning": {
-    "message": "Žymelių perkelti iš sinchronizuotos į vietinę saugyklą negalima. Vietoj to naudokite kopijavimą/įkėlimą.",
-    "description": "Warning when trying to move bookmarks across storage types"
-  },
-  "recentBookmarks": {
-    "message": "Neseniai pridėta"
-  },
-  "optionShowRecentBookmarks": {
-    "message": "Rodyti neseniai pridėtas žymes iššokančio lango viršuje"
-  },
-  "optionShowStatsView": {
-    "message": "Rodyti statistikos rodinio skirtuką"
-  },
-  "optionShowDeadView": {
-    "message": "Rodyti negyvų nuorodų rodinio skirtuką"
-  },
-  "optionShowDupesView": {
-    "message": "Rodyti dublikatų rodinio skirtuką"
-  },
-  "optionRecentCollapsed": {
-    "message": "Sutraukti neseniai pridėtų elementų skyrių pagal numatymą"
-  },
-  "optionsGroupViews": {
-    "message": "Rodiniai"
-  },
-  "optionsGroupSort": {
-    "message": "Rūšiavimas"
-  },
-  "optionsGroupStats": {
-    "message": "Statistika"
-  },
-  "optionsGroupTools": {
-    "message": "Įrankiai"
-  },
-  "optionShowViewTabs": {
-    "message": "Rodyti rodinių skirtukus po paieškos lauku"
-  },
-  "optionRememberView": {
-    "message": "Įsiminti paskutinį aktyvų rodinį ir atidaryti jį iš naujo"
-  },
-  "optionShowTabBadges": {
-    "message": "Rodyti skaičių ženkliukus rodinių skirtukuose"
-  },
-  "optionPaletteEnabled": {
-    "message": "Įjungti komandų paletę (Ctrl/Cmd+K)"
-  },
-  "optionQuickAddEnabled": {
-    "message": "Rodyti greitojo pridėjimo žvaigždutės mygtuką šalia paieškos laukelio"
-  },
-  "optionQuickAddContextMenu": {
-    "message": "Pridėti \"Išsaugoti puslapį su vBookmarks\" į puslapio dešiniojo pelės mygtuko meniu"
-  },
-  "optionQuickAddContextMenuHint": {
-    "message": "Nepriklauso nuo greitosios žvaigždutės mygtuko; atkūrus klasikinę patirtį šis įrašas taip pat išjungiamas."
-  },
-  "optionCollapseTabGroupMenu": {
-    "message": "Suskleisti skirtukų grupių įrašus į vieną „Skirtukų grupės…“ submeniu"
-  },
-  "optionCollapseTabGroupMenuHint": {
-    "message": "Taikoma aplankų ir skirtukų kontekstiniams meniu. Pagal numatymą išjungta; mažo dydžio arba didelio priartinimo ekranuose meniu lieka žemesnis."
-  },
-  "optionCollapseSortMenu": {
-    "message": "Suskleisti rūšiavimo įrašus į vieną „Rūšiuoti…“ submeniu"
-  },
-  "optionCollapseSortMenuHint": {
-    "message": "Taikoma aplanko kontekstiniam meniu. Pagal numatymą įjungta."
-  },
-  "optionShowToolButton": {
-    "message": "Rodyti įrankių mygtuką (⋮) šalia paieškos laukelio"
-  },
-  "optionClassicExperience": {
-    "message": "Atkurti klasikinę antraštę"
-  },
-  "optionClassicExperienceHint": {
-    "message": "Išjungia komandų paletę, greitojo pridėjimo žvaigždutę, jos dešiniojo pelės mygtuko įrašą puslapyje, įrankių mygtuką ir skirtukus. Kiekvieną iš jų galima atskirai vėl įjungti atitinkamame skyriuje."
-  },
-  "optionShowItemPath": {
-    "message": "Rodyti pagrindinio aplanko kelią sąrašo eilutėse"
-  },
   "viewRecent": {
     "message": "Scenarijus"
   },
-  "viewTree": {
-    "message": "Medis"
-  },
   "viewSearch": {
     "message": "Paieška"
+  },
+  "viewStateDisabled": {
+    "message": "Išjungta"
+  },
+  "viewStateEnabled": {
+    "message": "Įjungta"
+  },
+  "viewStats": {
+    "message": "Statistika"
   },
   "viewSwitchAnnounce": {
     "message": "$name$ rodinys",
@@ -933,870 +2581,17 @@
       }
     }
   },
-  "viewStateEnabled": {
-    "message": "Įjungta"
-  },
-  "viewStateDisabled": {
-    "message": "Išjungta"
-  },
-  "viewEnable": {
-    "message": "Įjungti"
-  },
-  "viewDisable": {
+  "viewTabDisable": {
     "message": "Išjungti"
+  },
+  "viewTabGroups": {
+    "message": "Skirtukų grupės"
   },
   "viewTabHide": {
     "message": "Slėpti"
   },
-  "viewTabDisable": {
-    "message": "Išjungti"
-  },
-  "sortFolderContents": {
-    "message": "Rūšiuoti aplanko turinį"
-  },
-  "sortByName": {
-    "message": "Rūšiuoti pagal pavadinimą"
-  },
-  "sortByDate": {
-    "message": "Pagal pridėjimo datą"
-  },
-  "sortRecursiveSuffix": {
-    "message": "(rekursyviai)"
-  },
-  "sortOptions": {
-    "message": "Rūšiavimo parinktys…"
-  },
-  "sortDone": {
-    "message": "Aplankas surūšiuotas"
-  },
-  "sortByTitle": {
-    "message": "Pagal pavadinimą"
-  },
-  "sortByDateAdded": {
-    "message": "Pagal pridėjimo datą (naujausi pirmi)"
-  },
-  "sortFoldersFirst": {
-    "message": "Aplankus viršuje"
-  },
-  "sortRecursive": {
-    "message": "Rūšiuoti ir poaplankius (rekursyviai)"
-  },
-  "sortRecursiveWarning": {
-    "message": "Tai perrikiuoja žymes kiekviename poaplankyje."
-  },
-  "tabGroupDialogTitle": {
-    "message": "Nauja skirtukų grupė"
-  },
-  "tabGroupTitleLabel": {
-    "message": "Grupės pavadinimas"
-  },
-  "tabGroupColorLabel": {
-    "message": "Spalva"
-  },
-  "tabGroupColorGrey": {
-    "message": "Pilka",
-    "description": "Accessible name of the grey color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorBlue": {
-    "message": "Mėlyna",
-    "description": "Accessible name of the blue color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorRed": {
-    "message": "Raudona",
-    "description": "Accessible name of the red color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorYellow": {
-    "message": "Geltona",
-    "description": "Accessible name of the yellow color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorGreen": {
-    "message": "Žalia",
-    "description": "Accessible name of the green color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorPink": {
-    "message": "Rožinė",
-    "description": "Accessible name of the pink color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorPurple": {
-    "message": "Violetinė",
-    "description": "Accessible name of the purple color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorCyan": {
-    "message": "Žydra",
-    "description": "Accessible name of the cyan color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorOrange": {
-    "message": "Oranžinė",
-    "description": "Accessible name of the orange color swatch in the new-tab-group dialog."
-  },
-  "tabGroupUntitled": {
-    "message": "Nepavadinta grupė"
-  },
-  "tabGroupNoGroups": {
-    "message": "Nėra esamų skirtukų grupių"
-  },
-  "tabGroupPickDialogTitle": {
-    "message": "Atidaryti esamoje skirtukų grupėje"
-  },
-  "quickAddBookmark": {
-    "message": "Pridėti šį puslapį prie žymių (Ctrl+D)"
-  },
-  "quickAddBookmarkCommand": {
-    "message": "Greitai pridėti esamą skirtuką kaip adresyno įrašą"
-  },
-  "quickAdded": {
-    "message": "Žymė pridėta"
-  },
-  "quickAddedTo": {
-    "message": "Žymelė pridėta į $folderName$",
-    "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarks bar"
-      }
-    }
-  },
-  "quickRemoved": {
-    "message": "Žymelė pašalinta"
-  },
-  "quickRemoveBookmark": {
-    "message": "Pašalinti šią žymelę (Ctrl+D)"
-  },
-  "toolButtonTitle": {
-    "message": "Įrankiai (Ctrl+K)"
-  },
-  "contextMenuAddBookmark": {
-    "message": "Pridėti šį puslapį prie žymių naudojant vBookmarks"
-  },
-  "deadFilterAll": {
-    "message": "Visi"
-  },
-  "deadFilterBlocked": {
-    "message": "Tik užblokuoti"
-  },
-  "deadFilterDead": {
-    "message": "Tik negyvi"
-  },
-  "deadFilterMarked": {
-    "message": "Anksčiau pažymėti"
-  },
-  "deadLastScanAt": {
-    "message": "Paskutinis nuskaitymas: $time$",
-    "placeholders": {
-      "time": {
-        "content": "$1"
-      }
-    }
-  },
-  "deadMark": {
-    "message": "Pažymėti negyvu"
-  },
-  "deadMarkAll": {
-    "message": "Pažymėti visus"
-  },
-  "deadMarked": {
-    "message": "Negyvos eilutės pažymėtos"
-  },
-  "deadMarkedCount": {
-    "message": "Pažymėta žymių: $count$",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "deadMarkedNone": {
-    "message": "Dar nėra pažymėtų žymių"
-  },
-  "deadMarkedRow": {
-    "message": "Pažymėta"
-  },
-  "deadMarkSelected": {
-    "message": "Pažymėti pasirinktus"
-  },
-  "deadMarkStatusAll": {
-    "message": "Bet kokia būsena"
-  },
-  "deadMarkStatusMarked": {
-    "message": "Pažymėti"
-  },
-  "deadMarkStatusUnmarked": {
-    "message": "Nepažymėti"
-  },
-  "deadMarkTimeLabel": {
-    "message": "Pažymėta"
-  },
-  "deadDetectTimeLabel": {
-    "message": "Aptikta"
-  },
-  "deadSortLabel": {
-    "message": "Rūšiuoti pagal"
-  },
-  "deadSortByDetected": {
-    "message": "Aptikimo laikas"
-  },
-  "deadSortByPath": {
-    "message": "Aplanko kelias"
-  },
-  "deadSortByMarked": {
-    "message": "Pažymėjimo laikas"
-  },
-  "deadMarkedBanner": {
-    "message": "Rodomi anksčiau pažymėti žymės. Spustelėkite „Rescan“, kad pradėtumėte naują patikrą, arba tvarkykite juos žemiau esančiame sąraše."
-  },
-  "deadMarkedBannerDismiss": {
-    "message": "Atmesti"
-  },
-  "deadProxyAdd": {
-    "message": "Pridėti tarpinį serverį negyvų nuorodų tikrinimui"
-  },
-  "deadProxyLabel": {
-    "message": "Tarpinis serveris: $server$",
-    "placeholders": {
-      "server": {
-        "content": "$1"
-      }
-    }
-  },
-  "deadProxyChange": {
-    "message": "Keisti"
-  },
-  "deadProxyRemove": {
-    "message": "Pašalinti"
-  },
-  "deadProxyRemoved": {
-    "message": "Tarpinis serveris pašalintas"
-  },
-  "deadProxyPanelHint": {
-    "message": "Įveskite turimą tarpinį serverį (plėtinys jų neteikia), pvz., 127.0.0.1:7890 arba socks5://127.0.0.1:1080."
-  },
-  "deadProxyTestUrlLabel": {
-    "message": "Testavimo URL"
-  },
-  "deadProxyTestSave": {
-    "message": "Testuoti ir išsaugoti"
-  },
-  "deadProxyTesting": {
-    "message": "Tikrinama…"
-  },
-  "deadProxySaved": {
-    "message": "Tarpinis serveris išsaugotas — būsimuose nuskaitymuose tiesioginių patikrų nesėkmės bus tikrinamos per jį."
-  },
-  "deadProxyInvalid": {
-    "message": "Neteisingas tarpinio serverio adresas — naudokite host:port arba scheme://host:port (http/https/socks5, be prisijungimo duomenų)"
-  },
-  "deadProxyUnreachable": {
-    "message": "Tarpinis serveris nepasiekiamas — neišsaugotas"
-  },
-  "deadProxyDenied": {
-    "message": "Tarpinio serverio leidimas nesuteiktas"
-  },
-  "deadProxyControlled": {
-    "message": "Tarpinio serverio nustatymus valdo kitas plėtinys"
-  },
-  "deadProxyUnavailable": {
-    "message": "Šioje naršyklėje tarpinio serverio API nepasiekiama"
-  },
-  "deadProxyNudge": {
-    "message": "Tarpinio serverio pakartotinis patikrinimas atskiria tikrai neveikiančias nuorodas nuo regionu blokuotų — nustatykite jį čia arba parinkčių puslapyje."
-  },
-  "deadProxyNeverShow": {
-    "message": "Nerodyti daugiau"
-  },
-  "deadStartHint": {
-    "message": "Pradėti $n$ žymių nuskaitymą",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "deadStatusBlocked": {
-    "message": "užblokuota"
-  },
-  "deadUnmark": {
-    "message": "Pašalinti negyvos žymą"
-  },
-  "deadUnmarkAll": {
-    "message": "Išvalyti visus žymėjimus"
-  },
-  "deadUnmarkSelected": {
-    "message": "Atžymėti pasirinktus"
-  },
-  "dupesApplyAll": {
-    "message": "Taikyti visus ($count$)",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "dupesApplySelected": {
-    "message": "Pašalinti dublikatus pasirinktuose ($count$)",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "dupesCleanRestHint": {
-    "message": "Palikti \"$title$\" ir pašalinti kitus $count$",
-    "placeholders": {
-      "title": {
-        "content": "$1"
-      },
-      "count": {
-        "content": "$2"
-      }
-    }
-  },
-  "dupesIgnoreScheme": {
-    "message": "Nepaisyti http/https skirtumų"
-  },
-  "dupesKeepThis": {
-    "message": "Palikti šį"
-  },
-  "dupesKeeperSet": {
-    "message": "Nustatyti kaip išlaikomą"
-  },
-  "dupesPreviewSummary": {
-    "message": "$groups$ grupės · $count$ bus atlaisvinta",
-    "placeholders": {
-      "groups": {
-        "content": "$1"
-      },
-      "count": {
-        "content": "$2"
-      }
-    }
-  },
-  "dupesRemoveRow": {
-    "message": "Ištrinti šią kopiją"
-  },
-  "dupesScopeAll": {
-    "message": "Visos žymės"
-  },
-  "dupesScopeBar": {
-    "message": "Tik žymių juosta"
-  },
-  "dupesStrategyBookmarkBar": {
-    "message": "Palikti esančią žymių juostoje"
-  },
-  "dupesStrategyMostVisited": {
-    "message": "Palikti dažniausiai lankomą"
-  },
-  "dupesStrategyNewest": {
-    "message": "Palikti naujausią"
-  },
-  "dupesStrategyOldest": {
-    "message": "Palikti seniausią"
-  },
-  "dupesStrategyShallowest": {
-    "message": "Palikti paviršutiniškiausią"
-  },
-  "dupesStrategyShortestTitle": {
-    "message": "Palikti trumpiausią pavadinimą"
-  },
-  "optionDeadProxyServer": {
-    "message": "Negyvų nuorodų tarpinis serveris"
-  },
-  "deadProxyServerHint": {
-    "message": "Išsaugotas serveris kiekvieno neveikiančių nuorodų nuskaitymo metu pakartotinai tikrina tiesiogiai nepraėjusias žymes, atskirdamas tikrai neveikiančias nuorodas nuo regionu blokuotų. „Bandyti ir išsaugoti“ jį patikrina (išlaikomas tik pasiekiamas serveris); taip pat galite jį pridėti iš neveikiančių nuorodų rodinio."
-  },
-  "deadProxyClear": {
-    "message": "Išvalyti"
-  },
-  "deadProxyNone": {
-    "message": "(nenustatyta)"
-  },
-  "optionDeadProxyStrip": {
-    "message": "Rodyti proxy pridėjimo užuominą neveikiančių nuorodų rodinyje"
-  },
-  "optionDeadProxyStripHint": {
-    "message": "Išjungus, ta užuomina ten paslepiama; proxy serverį vis tiek galima konfigūruoti čia, o išsaugotas serveris visada rodo savo valdymo eilutę rodinyje"
-  },
-  "optionDeadScanConcurrency": {
-    "message": "Neveikiančių nuorodų nuskaitymo gretinimas (1–16)"
-  },
-  "optionDeadScanTimeout": {
-    "message": "Neveikiančių nuorodų nuskaitymo skirtasis laikas sekundėmis (2–30)"
-  },
-  "paletteCmdGoDead": {
-    "message": "Eiti į neveikiančias nuorodas"
-  },
-  "paletteCmdGoDupes": {
-    "message": "Eiti į dublikatus"
-  },
-  "paletteCmdGoRecent": {
-    "message": "Eiti į naujausius"
-  },
-  "paletteCmdGoSearch": {
-    "message": "Eiti į paiešką"
-  },
-  "paletteCmdGoTree": {
-    "message": "Eiti į medį"
-  },
-  "paletteCmdOptions": {
-    "message": "Atidaryti nustatymus"
-  },
-  "paletteCmdSearchInView": {
-    "message": "Ieškoti '$query$' paieškos rodinyje",
-    "placeholders": {
-      "query": {
-        "content": "$1"
-      }
-    }
-  },
-  "rowActionDelete": {
-    "message": "Ištrinti"
-  },
-  "rowActionMark": {
-    "message": "Pažymėti kaip neveikiančią"
-  },
-  "rowActionReveal": {
-    "message": "Rodyti medyje"
-  },
-  "rowActionUnmark": {
-    "message": "Pašalinti neveikiančios žymę"
-  },
-  "viewDead": {
-    "message": "Neveikiančios nuorodos"
-  },
-  "viewDupes": {
-    "message": "Dublikatai"
-  },
-  "viewStats": {
-    "message": "Statistika"
-  },
-  "paletteCmdGoStats": {
-    "message": "Eiti į statistiką"
-  },
-  "optionStatsEnabled": {
-    "message": "Įjungti lankomumo statistiką"
-  },
-  "optionFaviconContrast": {
-    "message": "Apversti žemo kontrasto svetainių piktogramas"
-  },
-  "optionFaviconContrastHint": {
-    "message": "Baltos piktogramos šviesiose temose ir juodos piktogramos tamsiose temose yra apverčiamos, kad jos liktų matomos. Kiekviena piktograma yra imama vieną kartą, kai įkeliama – jokios papildomos apkrovos naršant."
-  },
-  "optionFaviconEnrich": {
-    "message": "Gauti trūkstamas svetainių piktogramas"
-  },
-  "optionFaviconEnrichHint": {
-    "message": "Svetainėms, kurioms Chrome neturi išsaugotos piktogramos, gaukite tikrą piktogramą tiesiogiai iš svetainės (/favicon.ico, tada svetainės deklaruotos piktogramos). Užklausos siunčiamos tik į jūsų įsimintas svetaines."
-  },
-  "optionFaviconEnrichAgg": {
-    "message": "Trečiosios šalies atsarginis piktogramų šaltinis"
-  },
-  "optionFaviconEnrichAggHint": {
-    "message": "Kai tiesioginis gavimas nepavyksta, piktogramos ieškoma pagal domeną iš įtaisyto trečiųjų šalių piktogramų paslaugų sąrašo ($providers$). Nepasiekiama paslauga praleidžiama ir bandoma kita – ji nebandoma iš naujo 6 valandas.",
-    "placeholders": {
-      "providers": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionFaviconBackup": {
-    "message": "Įtraukti piktogramų talpyklą į atsargines kopijas"
-  },
-  "optionFaviconBackupHint": {
-    "message": "Taip pat įtraukite papildytą piktogramų talpyklą (svetainės duomenys, gali būti dideli) į nustatymų eksportą/importą. Tai apima jau talpykloje saugomas piktogramas, net kai gavimas išjungtas. Išjungus atsarginės kopijos lieka mažos; piktogramos vis tiek bus automatiškai gautos iš naujo."
-  },
-  "optionFaviconCacheClear": {
-    "message": "Išvalyti piktogramų talpyklą"
-  },
-  "optionFaviconCacheClearConfirm": {
-    "message": "Išvalyti papildytą piktogramų talpyklą? Piktogramos bus automatiškai iš naujo gautos kitą kartą atidarant."
-  },
-  "optionFaviconCacheEmpty": {
-    "message": "Nėra piktogramų talpyklos, kurią būtų galima išvalyti."
-  },
-  "optionFaviconCacheCleared": {
-    "message": "Piktogramų talpykla išvalyta. Piktogramos bus gautos iš naujo kitą kartą atidarius."
-  },
-  "favGalleryLink": {
-    "message": "Peržiūrėti atnaujintas piktogramas",
-    "description": "Options link (Icons group, right of the Clear icon cache button): opens the favicon gallery page listing the sites whose icons were refetched."
-  },
-  "favGalleryTitle": {
-    "message": "Atnaujintos svetainių piktogramos",
-    "description": "Favicon gallery page title (h1 + document title)."
-  },
-  "favGalleryHint": {
-    "message": "vBookmarks gautos piktogramos žymėtoms svetainėms, kurių „Chrome“ nebuvo podėlyje – čia nurodyta, iš kur kiekviena gauta ir kurios žymės ją naudoja. Tik peržiūrai.",
-    "description": "Subtitle under the favicon gallery title, explaining the page is read-only."
-  },
-  "favGallerySearch": {
-    "message": "Filtruoti pagal svetainę, pavadinimą arba kelią",
-    "description": "Placeholder of the favicon gallery filter input."
-  },
-  "favGalleryAll": {
-    "message": "Visos",
-    "description": "Favicon gallery source filter chip: show every source."
-  },
-  "favSrcDirect": {
-    "message": "Tiesiogiai",
-    "description": "Favicon gallery source badge: the icon was fetched directly from the site itself."
-  },
-  "favSrcProxy": {
-    "message": "Tarpinis serveris",
-    "description": "Favicon gallery source badge: the icon was fetched through the user's own proxy relay."
-  },
-  "favSrcLegacy": {
-    "message": "Ankstesnis podėlis",
-    "description": "Favicon gallery source badge: cached before the source was recorded, so the origin is unknown."
-  },
-  "favGalleryCompare": {
-    "message": "Palyginti su laikina piktograma",
-    "description": "Favicon gallery toggle button: switch every icon to the generic placeholder it replaced (before/after comparison)."
-  },
-  "favGalleryShowingBefore": {
-    "message": "Grįžti prie tikrų piktogramų",
-    "description": "Favicon gallery toggle button while the placeholder comparison is shown: switch back to the real fetched icons."
-  },
-  "favGalleryStatSites": {
-    "message": "$n$ svetainių",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    },
-    "description": "Favicon gallery stats strip: how many sites have a refreshed icon."
-  },
-  "favGalleryStatBookmarks": {
-    "message": "$n$ žymių",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    },
-    "description": "Favicon gallery stats strip: how many bookmarks sit on the refreshed sites."
-  },
-  "favGalleryVisits": {
-    "message": "$n$ užfiksuotų atidarymų",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    },
-    "description": "Favicon gallery tooltip on a bookmark row's visit-count pill."
-  },
-  "favGalleryFailedTitle": {
-    "message": "Neseniai bandyta, piktograma nerasta",
-    "description": "Favicon gallery heading of the muted section listing hosts whose icon fetch failed recently."
-  },
-  "favGalleryFailedHint": {
-    "message": "Nesėkmės bandomos pakartoti po 24 val., 3 dienų ir 7 dienų, tada atsisakoma, kol neišvaloma piktogramų talpykla.",
-    "description": "Favicon gallery hint under the failed-fetch section title."
-  },
-  "favGalleryGaveUp": {
-    "message": "Atsisakyta",
-    "description": "Favicon gallery badge on a failed-strip host whose retries are exhausted (it stays untouched until the icon cache is cleared)."
-  },
-  "favGalleryOrphan": {
-    "message": "Šiame hoste nebeliko žymių – piktograma bus išvalyta kartu su podėliu.",
-    "description": "Favicon gallery note on a card whose host no longer has any bookmark."
-  },
-  "favGalleryEmptyTitle": {
-    "message": "Atnaujintų piktogramų dar nėra",
-    "description": "Favicon gallery empty-state heading."
-  },
-  "favGalleryEmptyText": {
-    "message": "Kai iššokantis langas aptinka žymėtą svetainę, kuriai „Chrome“ neturi piktogramos, vBookmarks parsiunčia tikrąją ir pateikia ją čia.",
-    "description": "Favicon gallery empty-state body text."
-  },
-  "storageUsageIcon": {
-    "message": "Piktogramų talpykla"
-  },
-  "storageUsageOther": {
-    "message": "Kita"
-  },
-  "storageUsageSummary": {
-    "message": "Naudojama $1$ iš $2$",
-    "placeholders": {
-      "1": {
-        "content": "$1"
-      },
-      "2": {
-        "content": "$2"
-      }
-    }
-  },
-  "storageUsageFree": {
-    "message": "Laisva vieta"
-  },
-  "storageUsageHint": {
-    "message": "Tik vietinė plėtinio saugykla (chrome.storage.local, maždaug 10 MB kvota): piktogramų talpykla, nustatymai ir kiti vietiniai duomenys. Sinchronizuoti nustatymai, sesijos duomenys ir pati žymių biblioteka čia neskaičiuojami."
-  },
-  "optionsDonate": {
-    "message": "Paremkite"
-  },
-  "optionsGithubLink": {
-    "message": "GitHub"
-  },
-  "optionsHomepageLink": {
-    "message": "Pagrindinis puslapis"
-  },
-  "optionsSince": {
-    "message": "Išsišakojęs iš Neat Bookmarks, palaikomas $days$ dienas.",
-    "placeholders": {
-      "days": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionsVersion": {
-    "message": "vBookmarks versija"
-  },
-  "statsSortByCount": {
-    "message": "Pagal skaičių"
-  },
-  "statsSortByRecent": {
-    "message": "Pagal naujumą"
-  },
-  "statsShowUnbookmarked": {
-    "message": "Rodyti nepažymėtus"
-  },
-  "statsShowUnbookmarkedHint": {
-    "message": "Įtraukti istorijos puslapius, kurie neišsaugoti kaip adresyno žymės."
-  },
-  "statsEmpty": {
-    "message": "Statistika kaupiasi atidarant žymes"
-  },
-  "statsDisabledHint": {
-    "message": "Lankomumo statistika išjungta – įjunkite Nustatymai → Rodiniai"
-  },
-  "statsVisitCount": {
-    "message": "Lankyta $count$ kartų",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "statsClearData": {
-    "message": "Išvalyti statistiką"
-  },
-  "statsClearConfirm": {
-    "message": "Išvalyti $count$ žymių lankomumo statistiką? Šis veiksmas negrįžtamas.",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "statsHistoryBanner": {
-    "message": "Suteikti prieigą prie naršymo istorijos, kad apsilankymų statistika būtų užpildyta jūsų ankstesniais apsilankymais."
-  },
-  "statsHistoryEnable": {
-    "message": "Įgalinti"
-  },
-  "statsHistoryDismiss": {
-    "message": "Nerodyti daugiau"
-  },
-  "statsHistoryImported": {
-    "message": "Importuoti ankstesni apsilankymai $count$ žymelėms",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "paletteCmdToggleViewTabs": {
-    "message": "Perjungti rodymo skirtukus"
-  },
-  "paletteCmdTheme": {
-    "message": "Nustatyti temą…"
-  },
-  "paletteCmdThemeUsage": {
-    "message": "Naudojimas: /theme su temos pavadinimu — auto, light, dark, ink arba paper (veikia unikalus priešdėlis, pvz., /theme d)."
-  },
-  "paletteCustomTag": {
-    "message": "pasirinktinis"
-  },
-  "paletteCustomDeleteConfirm": {
-    "message": "Ištrinti komandą „$1“? Pakeitimas sinchronizuojamas visuose jūsų įrenginiuose."
-  },
-  "paletteCustomBroken": {
-    "message": "Komandos „$1“ aplankas nebėra. Ištrinti komandą?"
-  },
-  "paletteCmdSaveAsCommand": {
-    "message": "Išsaugoti „$1“ kaip komandą…"
-  },
-  "paletteActionOpenUrl": {
-    "message": "Atidaryti URL"
-  },
-  "paletteActionOpenUrlGroup": {
-    "message": "Atidaryti žymių aplankų grupę"
-  },
-  "paletteActionViewPreset": {
-    "message": "Atidaryti rodinį su išankstiniu nustatymu"
-  },
-  "paletteActionUrlTemplate": {
-    "message": "Atidaryti URL šabloną"
-  },
-  "optionsGroupPalette": {
-    "message": "Komandų paletė"
-  },
-  "paletteCustomHint": {
-    "message": "Pasirinktinės pasvirojo brūkšnio komandos komandų paletei (Ctrl/Cmd+K). Jos sinchronizuojamos su jūsų nustatymais — daugiausia 100 įrašų."
-  },
-  "paletteCustomAdd": {
-    "message": "Pridėti komandą…"
-  },
-  "paletteCustomUsage": {
-    "message": "$1 / $2"
-  },
-  "paletteCustomSlash": {
-    "message": "Pasvirasis brūkšnys (žodis po /)"
-  },
-  "paletteCustomAliases": {
-    "message": "Aliasai (atskirti kableliais)"
-  },
-  "paletteCustomAction": {
-    "message": "Veiksmas"
-  },
-  "paletteCustomUrl": {
-    "message": "URL"
-  },
-  "paletteCustomTemplate": {
-    "message": "URL šablonas — %s pakeičiamas žodžiais po komandos"
-  },
-  "paletteCustomWhere": {
-    "message": "Atidaryti"
-  },
-  "paletteCustomFolder": {
-    "message": "Adresyno aplankas"
-  },
-  "paletteCustomView": {
-    "message": "Rodinys"
-  },
-  "paletteCustomStrategy": {
-    "message": "Dublikatų šalinimo strategijos išankstinis nustatymas"
-  },
-  "paletteCustomScope": {
-    "message": "Dublikatų šalinimo apimties išankstinis nustatymas"
-  },
-  "paletteCustomScan": {
-    "message": "Pradėti nuskaitymą įvedus"
-  },
-  "paletteWhereCurrent": {
-    "message": "Dabartinis skirtukas"
-  },
-  "paletteWhereTab": {
-    "message": "Naujas skirtukas"
-  },
-  "paletteWhereWindow": {
-    "message": "Naujas langas"
-  },
-  "paletteWhereBackground": {
-    "message": "Foniniai skirtukai"
-  },
-  "paletteCustomSave": {
-    "message": "Išsaugoti komandą"
-  },
-  "paletteCustomErrSlash": {
-    "message": "Pasvirasis brūkšnys: 1–24 simboliai (mažosios raidės, skaitmenys ar brūkšneliai), pradedant raide ar skaitmeniu."
-  },
-  "paletteCustomErrAlias": {
-    "message": "Aliasai: tos pačios taisyklės kaip ir pasvirajam brūkšniui (1–24 simboliai, mažosios raidės, skaitmenys ar brūkšneliai)."
-  },
-  "paletteCustomErrTaken": {
-    "message": "Šis pasvirasis brūkšnys ar aliasas jau naudojamas."
-  },
-  "paletteCustomErrUrl": {
-    "message": "Leidžiami tik http:// arba https:// URL."
-  },
-  "paletteCustomErrFolder": {
-    "message": "Pasirinkite adresyno aplanką."
-  },
-  "paletteCustomErrView": {
-    "message": "Pasirinkite rodinį."
-  },
-  "paletteCustomErrTemplate": {
-    "message": "Šablonas turi turėti tiksliai vieną %s."
-  },
-  "paletteCustomErrAction": {
-    "message": "Pasirinkite veiksmo tipą."
-  },
-  "paletteCustomErrLimit": {
-    "message": "Pasiekta komandų riba (100) — pirmiausia ištrinkite vieną."
-  },
-  "paletteCustomEmpty": {
-    "message": "Pasirinktinių komandų dar nėra."
-  },
-  "recentGroupToday": {
-    "message": "Šiandien"
-  },
-  "recentGroupWeek": {
-    "message": "Ši savaitė"
-  },
-  "recentGroupMonth": {
-    "message": "Šis mėnuo"
-  },
-  "recentGroupOlder": {
-    "message": "Senesni"
-  },
-  "searchHistoryRerun": {
-    "message": "Ieškoti dar kartą"
-  },
-  "optionsGroupBackup": {
-    "message": "Atsarginė kopija"
-  },
-  "optionsGroupContextMenu": {
-    "message": "Kontekstiniai meniu"
-  },
-  "optionsGroupIcons": {
-    "message": "Piktogramos"
-  },
-  "settingsExport": {
-    "message": "Eksportuoti nustatymus"
-  },
-  "settingsImport": {
-    "message": "Importuoti nustatymus"
-  },
-  "settingsBackupHint": {
-    "message": "Eksportavimas išsaugo visus nustatymus (įskaitant sinchronizavimo nuostatas) į JSON failą. Importavimas sujungia atsarginę kopiją: failo nustatymai perrašo esamus, o visa kita išlieka."
-  },
-  "settingsImportConfirm": {
-    "message": "Importuojant bus perrašyti visi atsarginėje kopijoje esantys nustatymai (faile nesantys nustatymai išlieka) ir šis puslapis bus perkrautas. Tęsti?"
-  },
-  "settingsImportInvalid": {
-    "message": "Netinkamas nustatymų failas: tai nėra vBookmarks nustatymų atsarginė kopija."
-  },
-  "settingsImportDone": {
-    "message": "Nustatymai importuoti. Puslapis bus perkrautas."
-  },
-  "settingsImportError": {
-    "message": "Kai kurių nustatymų nepavyko įrašyti (viršyta saugyklos kvota arba laikina klaida). Importavimas nebaigtas – bandykite dar kartą."
-  },
-  "statsSectionRecent": {
-    "message": "Naujausi apsilankymai"
-  },
-  "statsSectionBookmarks": {
-    "message": "Adresyno statistika"
-  },
-  "statsHistoryGuide": {
-    "message": "Suteikite istorijos prieigą, kad čia būtų rodomi jūsų naujausi apsilankymai."
-  },
-  "statsHistoryAdd": {
-    "message": "Pridėti prie adresyno"
-  },
-  "statsHistoryBookmarked": {
-    "message": "Pažymėta"
-  },
-  "deadPause": {
-    "message": "Pristabdyti"
-  },
-  "deadResume": {
-    "message": "Tęsti"
-  },
-  "deadCancel": {
-    "message": "Atšaukti"
-  },
-  "deadPaused": {
-    "message": "Pristabdyta"
+  "viewTree": {
+    "message": "Medis"
   },
   "whatsNewChangelog": {
     "message": "Pakeitimų istorija"
@@ -1808,800 +2603,5 @@
         "content": "$1"
       }
     }
-  },
-  "viewHiddenTabsHint": {
-    "message": "Jūs esate $view$ rodinyje. Paspauskite $back$ arba naudokite komandų skydelį, kad grįžtumėte į medį.",
-    "placeholders": {
-      "view": {
-        "content": "$1"
-      },
-      "back": {
-        "content": "$2"
-      }
-    }
-  },
-  "viewTabGroups": {
-    "message": "Skirtukų grupės"
-  },
-  "optionShowTabGroupsView": {
-    "message": "Rodyti skirtukų grupių rodinį"
-  },
-  "tabGroupsViewEmpty": {
-    "message": "Šiame lange nėra skirtukų"
-  },
-  "tabGroupsToolbarRefresh": {
-    "message": "Atnaujinti"
-  },
-  "tabGroupsCollapseAll": {
-    "message": "Sutraukti viską"
-  },
-  "tabGroupsExpandAll": {
-    "message": "Išskleisti viską"
-  },
-  "tabGroupsSummary": {
-    "message": "$tabs$ skirtukų · $groups$ grupės",
-    "placeholders": {
-      "tabs": {
-        "content": "$1"
-      },
-      "groups": {
-        "content": "$2"
-      }
-    }
-  },
-  "tabGroupsGroupCount": {
-    "message": "$count$ skirtukų",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsCurrentTab": {
-    "message": "Dabartinis"
-  },
-  "tabGroupsAddBookmark": {
-    "message": "Įtraukti skirtuką į žymes"
-  },
-  "tabGroupsSaveFolder": {
-    "message": "Išsaugoti skirtukų grupę kaip žymių aplanką"
-  },
-  "tabGroupsGroupSavedToFolder": {
-    "message": "Išsaugota $count$ skirtukų į $folder$",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      },
-      "folder": {
-        "content": "$2"
-      }
-    }
-  },
-  "tabGroupsBookmarksAdded": {
-    "message": "Pridėta $count$ žymė(-ės) į $folder$",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      },
-      "folder": {
-        "content": "$2"
-      }
-    }
-  },
-  "tabGroupsSelectNewGroup": {
-    "message": "Nauja skirtukų grupė"
-  },
-  "tabGroupsSelectOpenInto": {
-    "message": "Atidaryti esamoje skirtukų grupėje…"
-  },
-  "tabGroupsSelectSaveFolder": {
-    "message": "Išsaugoti kaip žymių aplanką"
-  },
-  "tabGroupsSelectClose": {
-    "message": "Uždaryti"
-  },
-  "tabGroupsSelectSleep": {
-    "message": "Užmigdyti"
-  },
-  "tabGroupsCopyMoveDialog": {
-    "message": "Pasirinkti skirtukai jau priklauso skirtukų grupei. Kopijuoti juos (atidaryti naujoje vietoje) ar perkelti (pašalinti iš dabartinės grupės)?"
-  },
-  "tabGroupsCopyMoveCopy": {
-    "message": "Kopijuoti"
-  },
-  "tabGroupsCopyMoveMove": {
-    "message": "Perkelti"
-  },
-  "tabGroupsConfirmClose": {
-    "message": "Uždaryti $count$ skirtukų?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsConfirmSleep": {
-    "message": "Užmigdyti $count$ skirtukų?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsClosedToast": {
-    "message": "Uždaryta $count$ skirtukų",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsSleptToast": {
-    "message": "Užmigdyti $count$ skirtukai",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsBatchClosedTitle": {
-    "message": "Uždaryti skirtukai"
-  },
-  "tabGroupsPinnedUngroupedToast": {
-    "message": "Prisegta — pašalinta iš skirtukų grupės"
-  },
-  "tabGroupsReopenAction": {
-    "message": "Atidaryti"
-  },
-  "tabGroupsWakeAction": {
-    "message": "Pažadinti"
-  },
-  "tabGroupsRecordDeletedToast": {
-    "message": "Pašalintas uždarytas įrašas"
-  },
-  "tabGroupsClosedTabRemovedToast": {
-    "message": "Pašalinta iš uždarytų įrašų"
-  },
-  "tabGroupsClearedToast": {
-    "message": "Išvalyta $count$ uždarytų įrašų",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "bookmarkFolderPickDialogTitle": {
-    "message": "Pridėti prie žymių aplanko"
-  },
-  "bookmarkFolderNoFolders": {
-    "message": "Nėra žymių aplankų"
-  },
-  "tabGroupsSelectAddBookmarks": {
-    "message": "Pridėti prie žymių aplanko…"
-  },
-  "paletteCmdGoTabGroups": {
-    "message": "Eiti į skirtukų grupių rodinį"
-  },
-  "tabGroupsActivateGroup": {
-    "message": "Eiti į skirtukų grupę"
-  },
-  "tabGroupsRenameGroup": {
-    "message": "Pervadinti grupę"
-  },
-  "tabGroupsRenameDialog": {
-    "message": "Pervadinti skirtukų grupę"
-  },
-  "tabGroupsCloseGroup": {
-    "message": "Uždaryti grupę"
-  },
-  "tabGroupsSleepGroup": {
-    "message": "Užmigdyti grupę"
-  },
-  "tabGroupsWakeGroup": {
-    "message": "Pažadinti skirtukų grupę"
-  },
-  "tabGroupsActivateTab": {
-    "message": "Eiti į skirtuką"
-  },
-  "tabGroupsCollapseGroup": {
-    "message": "Sutraukti grupę"
-  },
-  "tabGroupsExpandGroup": {
-    "message": "Išskleisti grupę"
-  },
-  "tabGroupsMenuAddBookmark": {
-    "message": "Įtraukti į žymes"
-  },
-  "tabGroupsMenuSaveFolder": {
-    "message": "Išsaugoti kaip aplanką"
-  },
-  "tabGroupsSyncCollapse": {
-    "message": "Sinchronizuoti sutraukimą su naršykle"
-  },
-  "tabGroupsSyncCollapseHint": {
-    "message": "Kai pažymėta, grupės sutraukimas ar išskleidimas šiame rodinyje taip pat atnaujina naršyklės skirtukų grupę. Pagal nutylėjimą išjungta, kad rodinio lankstymas liktų vietinis."
-  },
-  "tabGroupsColorStyle": {
-    "message": "Skirtukų grupės spalvos stilius"
-  },
-  "tabGroupsColorStyleHint": {
-    "message": "Išjungta rodo tik spalvos tašką. Krašto spalvos juosta nubrėžia spalvotą juostą palei grupės kairįjį kraštą. Spalvos jungiamoji linija nubrėžia spalvotą liniją po grupės tašku su brūkšneliu kiekvienai eilutei, sujungdama visą grupę į vieną medį."
-  },
-  "tabGroupsColorStyleOff": {
-    "message": "Išjungta (tik spalvos taškas)"
-  },
-  "tabGroupsColorStyleEdge": {
-    "message": "Krašto spalvos juosta"
-  },
-  "tabGroupsColorStyleLine": {
-    "message": "Spalvos jungiamoji linija"
-  },
-  "tabGroupsBookmarked": {
-    "message": "Pažymėta"
-  },
-  "tabGroupsRemoveBookmark": {
-    "message": "Pašalinti žymę"
-  },
-  "tabGroupsBookmarkRemoved": {
-    "message": "Pašalinta $count$ žymė(-ės)",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsPinned": {
-    "message": "Prisegta skirtukas"
-  },
-  "tabGroupsDiscarded": {
-    "message": "Miegantis skirtukas"
-  },
-  "tabGroupsPinTab": {
-    "message": "Prisegti skirtuką"
-  },
-  "tabGroupsUnpinTab": {
-    "message": "Atsegti skirtuką"
-  },
-  "tabGroupsSleepTab": {
-    "message": "Užmigdyti skirtuką"
-  },
-  "tabGroupsWakeTab": {
-    "message": "Pažadinti skirtuką"
-  },
-  "tabGroupsOpenGroups": {
-    "message": "Atidarytos skirtukų grupės"
-  },
-  "tabGroupsClosedGroups": {
-    "message": "Neseniai uždaryta"
-  },
-  "tabGroupsUngroupedTabs": {
-    "message": "Negrupuoti skirtukai"
-  },
-  "tabGroupsUngroupGroup": {
-    "message": "Išgrupuoti skirtukus"
-  },
-  "tabGroupsMoveNewWindow": {
-    "message": "Perkelti grupę į naują langą"
-  },
-  "tabGroupsWindow": {
-    "message": "Langas $1$",
-    "placeholders": {
-      "1": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsCurrentWindow": {
-    "message": "Dabartinis langas"
-  },
-  "tabGroupsReopenGroup": {
-    "message": "Atidaryti skirtukų grupę"
-  },
-  "tabGroupsDeleteClosedGroup": {
-    "message": "Ištrinti uždarą skirtukų grupę"
-  },
-  "tabGroupsCollapseWindow": {
-    "message": "Sutraukti langą"
-  },
-  "tabGroupsCloseWindow": {
-    "message": "Uždaryti langą"
-  },
-  "tabGroupsWindowClosedTitle": {
-    "message": "Uždarytas langas"
-  },
-  "tabGroupsExpandWindow": {
-    "message": "Išplėsti langą"
-  },
-  "tabGroupsClearClosedGroups": {
-    "message": "Išvalyti visus"
-  },
-  "tabGroupsConfirmClearClosed": {
-    "message": "Išvalyti visus neseniai uždarytus įrašus? Jų nebebus galima atidaryti iš čia."
-  },
-  "tabGroupsFilterPlaceholder": {
-    "message": "Filtruoti atidarytas korteles"
-  },
-  "tabGroupsNoMatchingTabs": {
-    "message": "Atitinkančių kortelių nėra"
-  },
-  "tabGroupsClosedOpenTab": {
-    "message": "Atidaryti naujoje kortelėje"
-  },
-  "tabGroupsRemoveClosedTab": {
-    "message": "Pašalinti iš išsaugotos grupės"
-  },
-  "tabGroupsClosedTimeLabel": {
-    "message": "Uždaryta:"
-  },
-  "tabGroupsExpandedExpand": {
-    "message": "Išskleisti"
-  },
-  "tabGroupsExpandedCollapse": {
-    "message": "Suskleisti"
-  },
-  "optionTabGroupsClosedLimit": {
-    "message": "Išsaugoti uždarų skirtukų/grupių istoriją"
-  },
-  "folderPickMoveHere": {
-    "message": "Perkelti čia"
-  },
-  "folderPickCopyHere": {
-    "message": "Kopijuoti čia"
-  },
-  "folderPickFilter": {
-    "message": "Filtruoti aplankus…"
-  },
-  "folderPickFavNote": {
-    "message": "Neįtraukti į žymes elementai bus įtraukti čia"
-  },
-  "folderPickPinned": {
-    "message": "Prisegti"
-  },
-  "folderPickRecent": {
-    "message": "Naujausi"
-  },
-  "pinFolder": {
-    "message": "Prisegti šį aplanką"
-  },
-  "unpinFolder": {
-    "message": "Atsegti šį aplanką"
-  },
-  "stagingAdd": {
-    "message": "Siųsti į sceną"
-  },
-  "stagingAdded": {
-    "message": "Išsiųsta į sceną"
-  },
-  "stagingAlready": {
-    "message": "Jau paruošimo srityje"
-  },
-  "stagingAddedSummary": {
-    "message": "Įtraukta $n$ elementų; $m$ jau paruošta",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      },
-      "m": {
-        "content": "$2"
-      }
-    }
-  },
-  "stagingFull": {
-    "message": "Paruošimo sritis pilna — pirmiausia pašalinkite kai kuriuos elementus"
-  },
-  "stagingFolderEmpty": {
-    "message": "Šiame aplanke nėra žymių, kurias būtų galima paruošti"
-  },
-  "stagingConfirmFolder": {
-    "message": "Paruošti $n$ žymes iš šio aplanko?",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingConfirmFolderOk": {
-    "message": "Scenarijus"
-  },
-  "stagingRemove": {
-    "message": "Pašalinti iš paruošimo srities"
-  },
-  "stagingRemoved": {
-    "message": "Pašalinta iš paruošimo srities"
-  },
-  "recentStageAll": {
-    "message": "Paruošti visus naujausius"
-  },
-  "recentSectionTitle": {
-    "message": "Naujausiai pridėta"
-  },
-  "stagingEmpty": {
-    "message": "Dar nieko neįdėta. Siųskite žymes čia iš bet kurio rodinio — mygtuką lėktuve eilutėje arba dešiniuoju pelės klavišu — tada tvarkykite ir archyvuokite jas masiškai."
-  },
-  "stagingFromHistory": {
-    "message": "Iš istorijos"
-  },
-  "stagingGroupExpand": {
-    "message": "Išskleisti grupę"
-  },
-  "stagingGroupCollapse": {
-    "message": "Sutraukti grupę"
-  },
-  "stagingGroupRename": {
-    "message": "Pervadinti grupę…"
-  },
-  "stagingGroupDissolve": {
-    "message": "Išskirstyti grupę"
-  },
-  "stagingGroupDissolved": {
-    "message": "Grupė išskirstyta — elementai išliko paruošimo srityje"
-  },
-  "stagingGroupDelete": {
-    "message": "Ištrinti grupę (su elementais)"
-  },
-  "stagingGroupDeleteConfirm": {
-    "message": "Ištrinti grupę \"$1\"? Jos $2 elementas(-ai) taip pat paliks laukimo sritį."
-  },
-  "stagingGroupDeleted": {
-    "message": "Grupė ištrinta — pašalinta $1 elementas(-ai)"
-  },
-  "stagingGroupAssign": {
-    "message": "Grupė…"
-  },
-  "stagingGroupAssignTitle": {
-    "message": "Priskirti grupei"
-  },
-  "stagingGroupNew": {
-    "message": "Nauja grupė"
-  },
-  "stagingGroupNamePrompt": {
-    "message": "Naujos grupės pavadinimas"
-  },
-  "stagingGroupNoGroups": {
-    "message": "Grupių dar nėra"
-  },
-  "stagingShortcutAdd": {
-    "message": "Pridėti nuorodą"
-  },
-  "stagingShortcutBarLabel": {
-    "message": "Perkelti į:"
-  },
-  "stagingGuideText": {
-    "message": "Tvarkykite žymes čia — pasirinkite eilutes ir įjunkite žymėjimo režimą grupinėms operacijoms."
-  },
-  "stagingGuideDismiss": {
-    "message": "Nerodyti daugiau"
-  },
-  "stagingShortcutTitle": {
-    "message": "Perkėlimo nuoroda"
-  },
-  "stagingShortcutEdit": {
-    "message": "Redaguoti nuorodą"
-  },
-  "stagingShortcutAlias": {
-    "message": "Pseudonimas"
-  },
-  "stagingShortcutPickFolder": {
-    "message": "Pasirinkti paskirties aplanką…"
-  },
-  "stagingShortcutSave": {
-    "message": "Išsaugoti"
-  },
-  "stagingShortcutRemove": {
-    "message": "Pašalinti nuorodą"
-  },
-  "stagingShortcutRemoved": {
-    "message": "Nuoroda pašalinta"
-  },
-  "stagingShortcutMove": {
-    "message": "Perkelti pasirinktus į $1$",
-    "placeholders": {
-      "1": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingBucketTitle": {
-    "message": "Neįtraukta į žymes"
-  },
-  "stagingBucketFavAll": {
-    "message": "Pažymėti visus mėgstamiausiais"
-  },
-  "stagingNew": {
-    "message": "nauja $n$",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingRowFav": {
-    "message": "Pažymėti šį elementą mėgstamiausiu"
-  },
-  "stagingRowUnfav": {
-    "message": "Atžymėti šį elementą iš mėgstamiausių"
-  },
-  "stagingFav": {
-    "message": "Mėgstamiausias"
-  },
-  "stagingUnfav": {
-    "message": "Ne mėgstamiausias"
-  },
-  "stagingFavDone": {
-    "message": "Pažymėta mėgstamiausiais: $n$ elementų",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingUnfavDone": {
-    "message": "Atžymėta iš mėgstamiausių: $n$ elementų",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "groupSaveToFolder": {
-    "message": "Išsaugoti į aplanką…"
-  },
-  "groupCopyToFolder": {
-    "message": "Kopijuoti į aplanką…"
-  },
-  "stagingCount": {
-    "message": "$n$ paruošta",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingMoveCopy": {
-    "message": "Perkelti/kopijuoti…"
-  },
-  "stagingMoveDone": {
-    "message": "Perkelta $n$ elem. į pradžią",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingCopyDone": {
-    "message": "Nukopijuota $n$ elem.",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingMoveConfirm": {
-    "message": "Perkelti $n$ elem. į pasirinktą aplanką?",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingMoveConfirmOk": {
-    "message": "Perkelti"
-  },
-  "stagingDeleteConfirm": {
-    "message": "Ištrinti $n$ elem.? Neįtrauktos tik palieka paruošimo sritį.",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingDeleted": {
-    "message": "Ištrinta $n$ žymų",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingRemovedCount": {
-    "message": "Pašalinta $n$ elem. iš paruošimo srities",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingClear": {
-    "message": "Išvalyti paruošimą"
-  },
-  "stagingClearConfirm": {
-    "message": "Išvalyti visą paruošimo sritį? Žymių medis nepakeičiamas."
-  },
-  "stagingClearConfirmOk": {
-    "message": "Išvalyti"
-  },
-  "stagingCleared": {
-    "message": "Paruošimo sritis išvalyta"
-  },
-  "groupPlaceTooltip": {
-    "message": "Išsaugoti šią grupę į aplanką…"
-  },
-  "copyBookmark": {
-    "message": "Kopijuoti"
-  },
-  "cutBookmark": {
-    "message": "Iškirpti"
-  },
-  "copyMoveTo": {
-    "message": "Kopijuoti/perkelti…"
-  },
-  "pasteHere": {
-    "message": "Įklijuoti čia"
-  },
-  "copiedToast": {
-    "message": "Nukopijuota: $t$",
-    "placeholders": {
-      "t": {
-        "content": "$1"
-      }
-    }
-  },
-  "cutToast": {
-    "message": "Iškirpta: $t$ — įklijuokite į tikslinį aplanką (Esc atšaukia)",
-    "placeholders": {
-      "t": {
-        "content": "$1"
-      }
-    }
-  },
-  "pasteDone": {
-    "message": "Įklijuota"
-  },
-  "pasteGone": {
-    "message": "Žymės nebėra — iškarpinė išvalyta"
-  },
-  "folderCopyList": {
-    "message": "Kopijuoti pavadinimus ir adresus"
-  },
-  "folderCopyText": {
-    "message": "Paprasto teksto sąrašas"
-  },
-  "folderCopyMarkdown": {
-    "message": "Markdown"
-  },
-  "folderCopyJson": {
-    "message": "JSON"
-  },
-  "folderCopyConfirm": {
-    "message": "Kopijuoti $n$ žymių sąrašą?",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "folderCopyDone": {
-    "message": "Nukopijuota $n$ žymių įrašų",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "addFolderMenu": {
-    "message": "Pridėti aplanką"
-  },
-  "optionCollapseAddFolderMenu": {
-    "message": "Sutraukti aplanko pridėjimo elementus"
-  },
-  "optionCollapseAddFolderMenuHint": {
-    "message": "Sujungti aplankų pridėjimo įrašus (prieš/po/viduje aplankų eilutėse, prieš/po žymių eilutėse) į vieną submeniu įrašą."
-  },
-  "tabRowStage": {
-    "message": "Siųsti į sceną"
-  },
-  "tabgroupStageAll": {
-    "message": "Siųsti grupę į sceną"
-  },
-  "tabgroupStageConfirm": {
-    "message": "Siųsti $n$ skirtukus į sceną?",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabgroupStageNone": {
-    "message": "Šioje grupėje nėra žymėtinų skirtukų"
-  },
-  "stagedToast": {
-    "message": "Paruošta $n$ skirtukų kaip grupė „$t$“",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      },
-      "t": {
-        "content": "$2"
-      }
-    }
-  },
-  "searchResultCount": {
-    "message": "$n$ rezultatai",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "deleteSelected": {
-    "message": "Ištrinti pasirinktus"
-  },
-  "recentStageGroup": {
-    "message": "Siųsti $t$ į paruošimo sritį",
-    "placeholders": {
-      "t": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingGroupSelectAll": {
-    "message": "Pasirinkti visus grupėje"
-  },
-  "optionsGroupLabs": {
-    "message": "Laboratorija"
-  },
-  "optionVirtualScrollLab": {
-    "message": "Virtualus slinkimas (eksperimentinis)"
-  },
-  "optionVirtualScrollLabHint": {
-    "message": "Skirtukų grupių ir dublikatų rodiniai atvaizduoja tik eilutes šalia rodymo srities. Daug greičiau labai dideliuose sąrašuose; eksperimentiniu režimu slinkties juostos padėtis yra apytikslė."
-  },
-  "optionsStagingSection": {
-    "message": "Prelaida ir neseniai pridėta"
-  },
-  "optionStagingEnabled": {
-    "message": "Įgalinti prelaidos sritį"
-  },
-  "optionStagingEnabledHint": {
-    "message": "Kai išjungta, šis rodinys rodo tik neseniai pridėtų sąrašą, o visi prelaidos mygtukai ar meniu punktai kituose rodiniuose paslepiami."
-  },
-  "optionTreeRowActions": {
-    "message": "Veiksmai užvedus pelę ant medžio eilučių (redaguoti / prelaida / ištrinti)"
-  },
-  "optionsStorageSyncTip": {
-    "message": "Sinchronizuojama per „Chrome“ paskyrą — šis nustatymas bendrinamas visuose įrenginiuose.",
-    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
-  },
-  "optionsStorageLocalTip": {
-    "message": "Saugoma tik šiame įrenginyje — nėra bendrinama per „Chrome“ sinchronizavimą.",
-    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
-  },
-  "tabGroupsWindowsCount": {
-    "message": "$n$ langai",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsNewWindow": {
-    "message": "Naujas langas"
-  },
-  "tabGroupsMergedWindowToast": {
-    "message": "Langas sujungtas kaip kortelių grupė"
-  },
-  "searchStageAllGroup": {
-    "message": "Siųsti visus rezultatus kaip grupę „$1$“",
-    "placeholders": {
-      "1": {
-        "content": "$1"
-      }
-    }
-  },
-  "searchHistoryClose": {
-    "message": "Slėpti paieškos istoriją"
-  },
-  "searchHistoryClosedToast": {
-    "message": "Paieškos istorija paslėpta — įjunkite ją vėl parinktyse → Paieška"
   }
 }

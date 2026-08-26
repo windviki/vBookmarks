@@ -1,95 +1,929 @@
 {
-  "optionRecentCount": {
-    "message": "最近添加书签的显示条数"
+  "accessibility": {
+    "message": "无障碍"
   },
-  "optionSearchHistory": {
-    "message": "显示最近搜索区域"
+  "addBookmarkAfter": {
+    "message": "在此后添加书签"
   },
-  "optionSearchHistoryHint": {
-    "message": "隐藏结果区上方的最近搜索区域——已记录的查询会保留。"
+  "addBookmarkBefore": {
+    "message": "在此前添加书签"
   },
-  "optionShowSyncStatus": {
-    "message": "显示同步状态指示器"
+  "addBookmarkBottom": {
+    "message": "添加书签至底部"
+  },
+  "addBookmarkTop": {
+    "message": "添加书签至顶部"
+  },
+  "addFolderMenu": {
+    "message": "添加文件夹"
+  },
+  "addNewFolder": {
+    "message": "添加子文件夹"
+  },
+  "addNewFolderAfter": {
+    "message": "在此后添加文件夹"
+  },
+  "addNewFolderBefore": {
+    "message": "在此前添加文件夹"
+  },
+  "addSeparator": {
+    "message": "添加分隔线"
+  },
+  "advancedOptions": {
+    "message": "高级选项"
+  },
+  "announceDismiss": {
+    "message": "关闭"
+  },
+  "announceV407Text": {
+    "message": "v4.0.7 全功能的死链视图：扫描、标注、筛选与排序死链/受限链接，保留过往标注与每次检测时间。"
+  },
+  "announceV407Title": {
+    "message": "v4.0.7 更新内容"
+  },
+  "announceV408Text": {
+    "message": "v4.0.8 图标加强版：自动为 Chrome 未缓存的收藏网站拉取真实图标。"
+  },
+  "announceV408Title": {
+    "message": "v4.0.8 更新内容"
+  },
+  "announceV410Text": {
+    "message": "v4.1.0 新增标签组视图与暂存区：在书签旁管理各窗口的标签页，并从任意入口收集书签到暂存工作台批量整理。"
+  },
+  "announceV410Title": {
+    "message": "v4.1.0 新变化"
+  },
+  "bookmarkFolderNoFolders": {
+    "message": "没有书签文件夹"
+  },
+  "bookmarkFolderPickDialogTitle": {
+    "message": "添加到书签文件夹"
+  },
+  "bookmarkOpenInExistingGroup": {
+    "message": "打开到已有标签组…"
+  },
+  "bookmarkOpenInNewGroup": {
+    "message": "打开到新标签组"
+  },
+  "bookmarkOpenInNewGroupSetup": {
+    "message": "打开到新标签组并设置…"
+  },
+  "confirmDeleteFolder": {
+    "message": "该文件夹包含 $count$ 个项目，删除后可撤销。",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmDeleteFolderBookmarks": {
+    "message": "确定要删除文件夹 $folderName$ 及其中的 $bookmarkCount$ 个书签吗？",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$2"
+      },
+      "folderName": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmDeleteFolderButton": {
+    "message": "删除"
+  },
+  "confirmDeleteFolderSubfolders": {
+    "message": "确定要删除文件夹 $folderName$ 及其中的 $subFolderCount$ 个子文件夹吗？",
+    "placeholders": {
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
+  },
+  "confirmDeleteFolderSubfoldersBookmarks": {
+    "message": "确定要删除文件夹 $folderName$、其中的 $subFolderCount$ 个子文件夹和 $bookmarkCount$ 个书签吗？",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$3"
+      },
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
+  },
+  "confirmOpenBookmarks": {
+    "description": "Confirmation message for opening all bookmarks.",
+    "message": "确定要打开全部 $count$ 个书签吗？",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmOpenBookmarksNewIncognitoWindow": {
+    "description": "Confirmation message for opening all bookmarks in a new incognito window.",
+    "message": "确定要在新的无痕窗口中打开全部 $count$ 个书签吗？",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmOpenBookmarksNewWindow": {
+    "description": "Confirmation message for opening all bookmarks in a new window.",
+    "message": "确定要在新窗口中打开全部 $count$ 个书签吗？",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "contextMenuAddBookmark": {
+    "message": "用 vBookmarks 收藏此页面"
+  },
+  "copiedToast": {
+    "message": "已复制:$t$",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
+  },
+  "copyAllTitlesAndUrls": {
+    "message": "复制所有标题和网址到剪贴板"
+  },
+  "copyBookmark": {
+    "message": "复制"
+  },
+  "copyMoveTo": {
+    "message": "复制/移动到…"
+  },
+  "copyTitleAndUrl": {
+    "message": "复制标题和网址"
+  },
+  "crossStorageMoveWarning": {
+    "message": "无法在同步存储和本地存储之间移动书签，请改用复制/粘贴。"
+  },
+  "customIcon": {
+    "message": "自定义图标"
+  },
+  "customIconDescription": {
+    "message": "图标尺寸必须为 19×19 像素，否则将自动调整为此尺寸。"
+  },
+  "customIconPick": {
+    "message": "选择文件…"
+  },
+  "customSeparatorColorDescription": {
+    "message": "自定义分隔线颜色"
+  },
+  "customSeparatorStringDescription": {
+    "message": "如果书签的网址包含此字符串，则将其显示为分隔线"
+  },
+  "customSeparatorTitleDescription": {
+    "message": "作为分隔线显示的书签的实际标题"
+  },
+  "customSeparatorUrlDescription": {
+    "message": "作为分隔线显示的书签的实际网址"
+  },
+  "customStyles": {
+    "message": "自定义样式"
+  },
+  "customStylesDescription": {
+    "message": "这需要一定的 CSS 技能。自行修改风险自负。建议通过以下方式分享代码："
+  },
+  "cutBookmark": {
+    "message": "剪切"
+  },
+  "cutToast": {
+    "message": "已剪切:$t$ —— 去目标文件夹粘贴(Esc 取消)",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadCancel": {
+    "message": "取消"
+  },
+  "deadChecking": {
+    "description": "Progress line of the palette's dead-link scan mode; $done$ bookmarks checked out of $total$.",
+    "message": "正在检测 $done$ / $total$…",
+    "placeholders": {
+      "done": {
+        "content": "$1",
+        "example": "12"
+      },
+      "total": {
+        "content": "$2",
+        "example": "120"
+      }
+    }
+  },
+  "deadClearScan": {
+    "description": "Batch button in the dead-link view after Clear all marks: wipe the current scan's dead/blocked verdicts. Marks survive and move to the past-marks category.",
+    "message": "清除扫描结果"
+  },
+  "deadConfirmAll": {
+    "message": "删除全部 $count$ 个失效书签？此操作无法一步撤销。",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "12"
+      }
+    }
+  },
+  "deadConfirmDelete": {
+    "message": "删除这条书签？"
+  },
+  "deadConfirmDeleteSelected": {
+    "message": "删除所选的 $count$ 个失效书签？",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
+  },
+  "deadDeleteAll": {
+    "message": "删除当前筛选下的全部 $count$ 个书签?",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
+  },
+  "deadDeleteAllBtn": {
+    "message": "删除全部"
+  },
+  "deadDeleteAllNote": {
+    "description": "Delete-all confirmation in the Dead links view: the All-filter warning, shown on the confirmation's second line before undoSingleStepNote.",
+    "message": "「全部」筛选下包含受限书签(代理服务器可达,大概率并未失效)以及过去标注的行。"
+  },
+  "deadDeleteSelected": {
+    "message": "删除所选"
+  },
+  "deadDeleted": {
+    "message": "已删除 $count$ 个失效书签",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
+  },
+  "deadDetectTimeLabel": {
+    "description": "死链视图行 tooltip 标签：该行扫描判定死链/受限的绝对时间（追加在 tooltip 与宽/面板布局的第二行右侧）。",
+    "message": "检测于"
+  },
+  "deadFilterAll": {
+    "message": "全部"
+  },
+  "deadFilterBlocked": {
+    "message": "仅受限"
+  },
+  "deadFilterDead": {
+    "message": "仅死链"
+  },
+  "deadFilterMarked": {
+    "message": "过去标注"
+  },
+  "deadLastScanAt": {
+    "message": "上次扫描：$time$",
+    "placeholders": {
+      "time": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadMark": {
+    "message": "标记为死链"
+  },
+  "deadMarkAll": {
+    "message": "全部标记"
+  },
+  "deadMarkSelected": {
+    "description": "Dead view selection mode: mark every selected row as dead.",
+    "message": "标记所选"
+  },
+  "deadMarkStatusAll": {
+    "description": "死链视图第二工具条（标注状态筛选）：不论标注状态显示所有行，与分类工具条的“全部”措辞区分。",
+    "message": "任意状态"
+  },
+  "deadMarkStatusMarked": {
+    "description": "死链视图第二工具条（标注状态筛选）：只显示带死链标注的行。",
+    "message": "已标注"
+  },
+  "deadMarkStatusUnmarked": {
+    "description": "死链视图第二工具条（标注状态筛选）：只显示未带死链标注的行。",
+    "message": "未标注"
+  },
+  "deadMarkTimeLabel": {
+    "description": "死链视图行 tooltip 标签：该行被标注为死链的绝对时间（追加在 tooltip 与宽/面板布局的第二行右侧）。",
+    "message": "标记于"
+  },
+  "deadMarked": {
+    "message": "死链行已全部标记"
+  },
+  "deadMarkedBanner": {
+    "description": "死链视图：显示过去标注列表时工具栏上方的提示横幅（取消扫描或\"过去标注\"筛选的仅标注视图，以及\"全部\"视图下扫描完成后仍有过去标注追加于下方时），说明当前列表、指向重新扫描，并提示可在下方处理书签。",
+    "message": "正在显示过去标注的书签。点击\"重新扫描\"可开始新一轮检测，也可在下方列表中处理这些书签。"
+  },
+  "deadMarkedBannerDismiss": {
+    "description": "死链已标注列表横幅：× 按钮的 aria-label/title（会话级隐藏）。",
+    "message": "关闭提示"
+  },
+  "deadMarkedCount": {
+    "message": "已标记 $count$ 个书签",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadMarkedNone": {
+    "description": "Empty state of the past-marks (上次标注) category when the last scan left no marks; a scan has run, so this is a plain empty state, not the first-run start button.",
+    "message": "还没有标记过书签"
+  },
+  "deadMarkedRow": {
+    "description": "死链视图：独立标记列表中用户标记书签的行内徽标（无扫描结果行承载该标记时显示）。",
+    "message": "已标记"
+  },
+  "deadNone": {
+    "message": "没有发现死链"
+  },
+  "deadNoneFiltered": {
+    "message": "当前过滤条件下没有死链，试试上方其他分段"
+  },
+  "deadPause": {
+    "message": "暂停"
+  },
+  "deadPaused": {
+    "message": "已暂停"
+  },
+  "deadProxyAdd": {
+    "message": "添加代理服务器用于死链检测"
+  },
+  "deadProxyChange": {
+    "message": "更换"
+  },
+  "deadProxyClear": {
+    "message": "清除"
+  },
+  "deadProxyControlled": {
+    "message": "代理设置正由其他扩展管理，无法使用"
+  },
+  "deadProxyDenied": {
+    "message": "未授予代理权限"
+  },
+  "deadProxyInvalid": {
+    "message": "代理地址无效——请使用 host:port 或 scheme://host:port（支持 http/https/socks5，不支持账号密码）"
+  },
+  "deadProxyLabel": {
+    "message": "代理：$server$",
+    "placeholders": {
+      "server": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadProxyNeverShow": {
+    "message": "不再显示"
+  },
+  "deadProxyNone": {
+    "message": "（未设置）"
+  },
+  "deadProxyNudge": {
+    "message": "代理复查可区分真正的死链与区域受限——可在此处或设置页配置。"
+  },
+  "deadProxyPanelHint": {
+    "message": "输入你已有的代理服务器地址（扩展本身不提供代理），如 127.0.0.1:7890 或 socks5://127.0.0.1:1080。"
+  },
+  "deadProxyRemove": {
+    "message": "移除"
+  },
+  "deadProxyRemoved": {
+    "message": "已移除代理服务器"
+  },
+  "deadProxySaved": {
+    "message": "代理已保存——之后的扫描会用它复核直连失败的书签"
+  },
+  "deadProxyServerHint": {
+    "message": "保存后每次死链扫描都会用它复核直连失败的书签,区分真正的死链与区域受限。点\"测试并保存\"会探测可达性(只保留可达的服务器);也可在死链视图中添加。"
+  },
+  "deadProxyTestSave": {
+    "message": "测试并保存"
+  },
+  "deadProxyTestUrlLabel": {
+    "message": "测试 URL"
+  },
+  "deadProxyTesting": {
+    "message": "正在测试…"
+  },
+  "deadProxyUnavailable": {
+    "message": "当前浏览器不支持代理接口"
+  },
+  "deadProxyUnreachable": {
+    "message": "代理不可达，未保存"
+  },
+  "deadRescan": {
+    "message": "重新检测"
+  },
+  "deadResume": {
+    "message": "继续"
+  },
+  "deadRiskBanner": {
+    "message": "死链清理会批量删除书签，首次清理前请先备份书签。"
+  },
+  "deadSortByDetected": {
+    "description": "死链视图排序下拉选项：按扫描判定先后排列。",
+    "message": "检测时间"
+  },
+  "deadSortByMarked": {
+    "description": "死链视图排序下拉选项：按标注为死链的时间排列。",
+    "message": "标记时间"
+  },
+  "deadSortByPath": {
+    "description": "死链视图排序下拉选项：按书签所在文件夹路径排列。",
+    "message": "路径顺序"
+  },
+  "deadSortLabel": {
+    "description": "死链视图排序下拉：触发器与列表框的 aria-label。",
+    "message": "排序方式"
+  },
+  "deadStartHint": {
+    "message": "开始扫描 $n$ 个书签",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadStatusBlocked": {
+    "message": "受限"
+  },
+  "deadUnmark": {
+    "message": "取消死链标记"
+  },
+  "deadUnmarkAll": {
+    "message": "清除所有标记"
+  },
+  "deadUnmarkSelected": {
+    "description": "Dead view selection mode: remove the dead mark from every selected row.",
+    "message": "取消标记所选"
+  },
+  "defaultIconButton": {
+    "message": "使用默认图标"
+  },
+  "defaultIconButtonOr": {
+    "message": "或"
+  },
+  "delete": {
+    "message": "删除"
+  },
+  "deleteEllipsis": {
+    "message": "删除..."
+  },
+  "deleteSelected": {
+    "message": "删除所选"
+  },
+  "deletedBookmark": {
+    "description": "Toast shown after a bookmark or separator was deleted; the toast offers an undo button. $title$ is the deleted row's title (empty for separators).",
+    "message": "已删除 $title$",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Example"
+      }
+    }
+  },
+  "deletedFolder": {
+    "description": "Toast shown after a bookmark folder (with its whole subtree) was deleted; the toast offers an undo button. $title$ is the folder name.",
+    "message": "已删除文件夹 $title$",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Bookmarks"
+      }
+    }
+  },
+  "donationDismiss": {
+    "message": "忽略"
+  },
+  "donationGo": {
+    "message": "支持一下"
+  },
+  "donationLater": {
+    "message": "稍后"
+  },
+  "donationMessage": {
+    "message": "喜欢它吗？捐赠助力它的未来，或前往商店评分——每条评价都是我们持续更新与进步的动力。"
+  },
+  "donationNever": {
+    "message": "不再显示"
+  },
+  "donationRate": {
+    "message": "去评分"
+  },
+  "donationRateTitle": {
+    "message": "前往 Chrome 应用商店为 vBookmarks 评分"
+  },
+  "donationV4GuideLink": {
+    "message": "阅读 v4 新特性指南 →"
+  },
+  "donationV4Notice": {
+    "message": "vBookmarks 4.0 是采用现代化设计的完全重制版本，带来大量新功能。"
+  },
+  "dupesApplyAll": {
+    "message": "全部应用（$count$）",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesApplySelected": {
+    "description": "Dupes view selection mode: apply dedup to the selected groups; $count$ is the total doomed row count.",
+    "message": "去重所选（$count$）",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesCleanAll": {
+    "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go.",
+    "message": "全部清理：$groups$ 组、$count$ 条多余副本",
+    "placeholders": {
+      "count": {
+        "content": "$2"
+      },
+      "groups": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesCleanRestHint": {
+    "description": "Tooltip/aria-label of the quick action on a duplicate group header: apply the configured keeper strategy to this group alone — keep $title$, delete the other $count$ rows.",
+    "message": "保留“$title$”，删除其余 $count$ 项",
+    "placeholders": {
+      "count": {
+        "content": "$2"
+      },
+      "title": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesConfirmAll": {
+    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps the bookmark its keeper radio selected — the strategy default or a manual pick).",
+    "message": "删除 $groups$ 组共 $count$ 条多余副本？每组保留当前选定的保留项。",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    }
+  },
+  "dupesConfirmGroup": {
+    "description": "Confirmation before deleting the redundant copies of one duplicate group; $title$ is the group's current keeper (the strategy default or a manual radio pick — same wording as the group header's ✓ hint dupesCleanRestHint).",
+    "message": "保留“$title$”，删除其余 $count$ 条副本？",
+    "placeholders": {
+      "count": {
+        "content": "$2"
+      },
+      "title": {
+        "content": "$1",
+        "example": "示例书签"
+      }
+    }
+  },
+  "dupesConfirmSelected": {
+    "description": "Confirm dialog of the dupes selection-mode apply: $count$ doomed rows across $groups$ selected groups.",
+    "message": "从所选的 $groups$ 个重复组中删除 $count$ 条重复书签？",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    }
   },
   "dupesDone": {
+    "description": "Alert shown after the duplicate cleanup finished.",
     "message": "已删除 $count$ 条重复书签",
     "placeholders": {
       "count": {
         "content": "$1"
       }
-    },
-    "description": "Alert shown after the duplicate cleanup finished."
+    }
   },
-  "addBookmarkTop": {
-    "message": "添加书签至顶部"
+  "dupesGroupCollapse": {
+    "description": "Dupes view group-head context menu: collapse an expanded duplicate group.",
+    "message": "收起分组"
+  },
+  "dupesGroupCount": {
+    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL.",
+    "message": "$count$ 条重复",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesGroupExpand": {
+    "description": "Dupes view group-head context menu: expand a collapsed duplicate group.",
+    "message": "展开分组"
+  },
+  "dupesIgnoreScheme": {
+    "message": "忽略 http/https 差异"
+  },
+  "dupesKeepThis": {
+    "message": "保留此条"
+  },
+  "dupesKeeperSet": {
+    "message": "设为保留项"
+  },
+  "dupesNone": {
+    "message": "没有发现重复书签"
+  },
+  "dupesPreviewSummary": {
+    "message": "$groups$ 组 · 将释放 $count$ 条",
+    "placeholders": {
+      "count": {
+        "content": "$2"
+      },
+      "groups": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesRemoveRow": {
+    "message": "删除此条"
+  },
+  "dupesRiskBanner": {
+    "message": "去重会批量删除重复书签，应用去重前请先备份书签。"
+  },
+  "dupesScopeAll": {
+    "message": "全部书签"
+  },
+  "dupesScopeBar": {
+    "message": "仅书签栏"
+  },
+  "dupesStrategyBookmarkBar": {
+    "message": "保留书签栏中的"
+  },
+  "dupesStrategyMostVisited": {
+    "message": "保留最常访问"
+  },
+  "dupesStrategyNewest": {
+    "message": "保留最新"
+  },
+  "dupesStrategyOldest": {
+    "message": "保留最早"
+  },
+  "dupesStrategyShallowest": {
+    "message": "保留最浅层级"
+  },
+  "dupesStrategyShortestTitle": {
+    "message": "保留最短标题"
+  },
+  "edit": {
+    "message": "编辑..."
+  },
+  "editBookmark": {
+    "message": "编辑书签"
+  },
+  "editFolder": {
+    "message": "编辑文件夹"
   },
   "errorOccured": {
     "message": "哎呀，出错了。"
   },
-  "optionShowRecentBookmarks": {
-    "message": "显示最近添加视图标签"
+  "extDesc": {
+    "message": "一个弹出式书签管理器。增强版 Neat Bookmarks。比 Neater Bookmarks 更整洁。"
   },
-  "optionShowStatsView": {
-    "message": "显示统计视图标签"
+  "extName": {
+    "message": "vBookmarks"
   },
-  "optionShowDeadView": {
-    "message": "显示死链视图标签"
+  "favGalleryAll": {
+    "description": "Favicon gallery source filter chip: show every source.",
+    "message": "全部"
   },
-  "optionShowDupesView": {
-    "message": "显示重复书签视图标签"
+  "favGalleryCompare": {
+    "description": "Favicon gallery toggle button: switch every icon to the generic placeholder it replaced (before/after comparison).",
+    "message": "对比占位图标"
   },
-  "optionRecentCollapsed": {
-    "message": "默认收起“最近添加”分区"
+  "favGalleryEmptyText": {
+    "description": "Favicon gallery empty-state body text.",
+    "message": "当弹窗遇到 Chrome 没有缓存图标的已收藏站点时，vBookmarks 会自动抓取真实图标并列在这里。"
   },
-  "optionsGroupViews": {
-    "message": "视图"
+  "favGalleryEmptyTitle": {
+    "description": "Favicon gallery empty-state heading.",
+    "message": "还没有补全过图标"
   },
-  "optionsGroupSort": {
-    "message": "排序",
-    "description": "选项分组（issue #33）：文件夹内容排序的默认偏好，与 popup 排序对话框共享。"
+  "favGalleryFailedHint": {
+    "description": "Favicon gallery hint under the failed-fetch section title.",
+    "message": "失败的站点会在 24 小时、3 天、7 天后各重试一次，仍失败则放弃，直到清空图标缓存后才会重新尝试。"
   },
-  "optionsGroupTools": {
-    "message": "工具"
+  "favGalleryFailedTitle": {
+    "description": "Favicon gallery heading of the muted section listing hosts whose icon fetch failed recently.",
+    "message": "近期尝试过但未找到图标"
   },
-  "optionsGroupStats": {
-    "message": "统计"
+  "favGalleryGaveUp": {
+    "description": "Favicon gallery badge on a failed-strip host whose retries are exhausted (it stays untouched until the icon cache is cleared).",
+    "message": "已放弃"
   },
-  "optionShowViewTabs": {
-    "message": "在搜索框下方显示视图标签栏"
+  "favGalleryHint": {
+    "description": "Subtitle under the favicon gallery title, explaining the page is read-only.",
+    "message": "这里列出 vBookmarks 为 Chrome 尚未缓存图标的已收藏站点抓取的图标——每个图标来自哪里、被哪些书签使用。本页仅供展示。"
   },
-  "optionRememberView": {
-    "message": "记住上次所在的视图并在打开时恢复"
+  "favGalleryLink": {
+    "description": "Options link (Icons group, right of the Clear icon cache button): opens the favicon gallery page listing the sites whose icons were refetched.",
+    "message": "查看已补全的图标"
   },
-  "optionShowTabBadges": {
-    "message": "在视图标签上显示数量角标"
+  "favGalleryOrphan": {
+    "description": "Favicon gallery note on a card whose host no longer has any bookmark.",
+    "message": "该站点下已无书签——图标会随缓存一起清除。"
   },
-  "optionPaletteEnabled": {
-    "message": "启用命令面板（Ctrl/Cmd+K）"
+  "favGallerySearch": {
+    "description": "Placeholder of the favicon gallery filter input.",
+    "message": "按站点、标题或路径过滤"
   },
-  "optionQuickAddEnabled": {
-    "message": "在搜索框旁显示快速收藏星标按钮"
+  "favGalleryShowingBefore": {
+    "description": "Favicon gallery toggle button while the placeholder comparison is shown: switch back to the real fetched icons.",
+    "message": "返回真实图标"
   },
-  "optionQuickAddContextMenu": {
-    "message": "在页面右键菜单添加“用 vBookmarks 收藏此页”条目",
-    "description": "选项复选框（issue #49）：控制 v4 新增的页面右键菜单快速收藏条目。"
+  "favGalleryStatBookmarks": {
+    "description": "Favicon gallery stats strip: how many bookmarks sit on the refreshed sites.",
+    "message": "$n$ 条书签",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
   },
-  "optionQuickAddContextMenuHint": {
-    "message": "与快速收藏星标按钮相互独立；“一键恢复经典界面”也会一并关闭该条目。"
+  "favGalleryStatSites": {
+    "description": "Favicon gallery stats strip: how many sites have a refreshed icon.",
+    "message": "$n$ 个站点",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
   },
-  "optionCollapseTabGroupMenu": {
-    "message": "将标签页组条目折叠为一个“标签页组”子菜单"
+  "favGalleryTitle": {
+    "description": "Favicon gallery page title (h1 + document title).",
+    "message": "已补全的网站图标"
   },
-  "optionCollapseTabGroupMenuHint": {
-    "message": "适用于文件夹和书签的右键菜单。默认关闭；在小屏或高缩放屏幕上可缩短菜单高度。"
+  "favGalleryVisits": {
+    "description": "Favicon gallery tooltip on a bookmark row's visit-count pill.",
+    "message": "已记录打开 $n$ 次",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
   },
-  "optionCollapseSortMenu": {
-    "message": "将排序条目折叠为一个“排序”子菜单"
+  "favSrcDirect": {
+    "description": "Favicon gallery source badge: the icon was fetched directly from the site itself.",
+    "message": "直连"
   },
-  "optionCollapseSortMenuHint": {
-    "message": "适用于文件夹的右键菜单。默认开启。"
+  "favSrcLegacy": {
+    "description": "Favicon gallery source badge: cached before the source was recorded, so the origin is unknown.",
+    "message": "早期缓存"
   },
-  "optionShowToolButton": {
-    "message": "在搜索框旁显示工具按钮（⋮）"
+  "favSrcProxy": {
+    "description": "Favicon gallery source badge: the icon was fetched through the user's own proxy relay.",
+    "message": "代理"
+  },
+  "folderCopyConfirm": {
+    "message": "复制 $n$ 条书签的清单?",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "folderCopyDone": {
+    "message": "已复制 $n$ 条书签条目",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "folderCopyJson": {
+    "message": "JSON"
+  },
+  "folderCopyList": {
+    "message": "复制标题和地址"
+  },
+  "folderCopyMarkdown": {
+    "message": "Markdown"
+  },
+  "folderCopyText": {
+    "message": "文本清单"
+  },
+  "folderEmpty": {
+    "message": "（空文件夹）"
+  },
+  "folderPickCopyHere": {
+    "message": "复制到此处"
+  },
+  "folderPickFavNote": {
+    "message": "未收藏的条目将收藏到此处"
+  },
+  "folderPickFilter": {
+    "message": "过滤文件夹…"
+  },
+  "folderPickMoveHere": {
+    "message": "移动到此处"
+  },
+  "folderPickPinned": {
+    "message": "已固定"
+  },
+  "folderPickRecent": {
+    "message": "最近"
+  },
+  "general": {
+    "message": "常规"
+  },
+  "groupCopyToFolder": {
+    "message": "复制到文件夹…"
+  },
+  "groupPlaceTooltip": {
+    "message": "将此分组保存到文件夹…"
+  },
+  "groupSaveToFolder": {
+    "message": "保存到文件夹…"
+  },
+  "ignore": {
+    "message": "忽略"
+  },
+  "name": {
+    "message": "名称"
+  },
+  "noTitle": {
+    "message": "（无标题）"
+  },
+  "nope": {
+    "message": "取消"
+  },
+  "open": {
+    "message": "打开"
+  },
+  "openBookmarks": {
+    "message": "打开所有书签"
+  },
+  "openBookmarksInExistingGroup": {
+    "message": "全部打开到已有标签组…"
+  },
+  "openBookmarksInGroup": {
+    "message": "全部打开为标签组"
+  },
+  "openBookmarksInGroupSetup": {
+    "message": "全部打开为标签组并设置…"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "在无痕窗口中打开所有书签"
+  },
+  "openBookmarksNewWindow": {
+    "message": "在新窗口中打开所有书签"
+  },
+  "openCommandPaletteCommand": {
+    "message": "打开命令面板"
+  },
+  "openIncognitoWindow": {
+    "message": "在无痕窗口中打开"
+  },
+  "openNewTab": {
+    "message": "在新标签页中打开"
+  },
+  "openNewWindow": {
+    "message": "在新窗口中打开"
+  },
+  "openSidePanelCommand": {
+    "message": "打开 vBookmarks 侧栏"
+  },
+  "optionAnnounceEnabled": {
+    "message": "显示应用内公告"
+  },
+  "optionAnnounceEnabledHint": {
+    "message": "来自项目 GitHub 仓库的版本更新与提示（至多每 6 小时拉取一次）。关闭同时停用联网。"
+  },
+  "optionAutoRefreshSync": {
+    "message": "自动刷新同步状态"
+  },
+  "optionAutoResizePopup": {
+    "message": "自动调整弹出窗口大小以适配内容"
   },
   "optionClassicExperience": {
     "message": "一键恢复经典界面"
@@ -97,20 +931,644 @@
   "optionClassicExperienceHint": {
     "message": "关闭命令面板、快速收藏星标、页面右键收藏条目、工具按钮与视图标签；每一项都可在各自分区单独重新开启。"
   },
+  "optionClickNewTab": {
+    "message": "左键单击在新标签页中打开书签。"
+  },
+  "optionCloseUnusedFolders": {
+    "message": "打开文件夹时关闭未使用的文件夹。"
+  },
+  "optionCollapseAddFolderMenu": {
+    "message": "折叠添加文件夹条目"
+  },
+  "optionCollapseAddFolderMenuHint": {
+    "message": "把右键菜单的添加文件夹条目（文件夹行：此前/此后/子文件夹；书签行：此前/此后）合并为一个二级菜单条目。"
+  },
+  "optionCollapseSortMenu": {
+    "message": "将排序条目折叠为一个“排序”子菜单"
+  },
+  "optionCollapseSortMenuHint": {
+    "message": "适用于文件夹的右键菜单。默认开启。"
+  },
+  "optionCollapseTabGroupMenu": {
+    "message": "将标签页组条目折叠为一个“标签页组”子菜单"
+  },
+  "optionCollapseTabGroupMenuHint": {
+    "message": "适用于文件夹和书签的右键菜单。默认关闭；在小屏或高缩放屏幕上可缩短菜单高度。"
+  },
+  "optionConfirmDeleteFolder": {
+    "message": "删除非空文件夹前确认"
+  },
+  "optionConfirmOpenFolder": {
+    "message": "从文件夹打开大量书签时显示确认。"
+  },
+  "optionDeadProxyServer": {
+    "message": "死链检测代理服务器"
+  },
+  "optionDeadProxyStrip": {
+    "message": "在死链视图显示\"添加代理\"提示"
+  },
+  "optionDeadProxyStripHint": {
+    "message": "关闭后隐藏死链视图里的无代理提示;代理服务器仍可在此页配置,已保存的代理在视图中始终显示管理行。"
+  },
+  "optionDeadScanConcurrency": {
+    "message": "死链扫描并发数（1-16）"
+  },
+  "optionDeadScanTimeout": {
+    "message": "死链扫描超时秒数（2-30）"
+  },
+  "optionFaviconBackup": {
+    "message": "备份时包含图标缓存"
+  },
+  "optionFaviconBackupHint": {
+    "message": "把补全的图标缓存（按站点的数据，体积可能较大）一并纳入设置导出/导入；即使已关闭补全，已缓存的图标也会一并携带。关闭可保持备份精简；图标本就会自动重新补全。"
+  },
+  "optionFaviconCacheClear": {
+    "message": "清除图标缓存"
+  },
+  "optionFaviconCacheClearConfirm": {
+    "description": "清除 favicon 缓存前显示的确认提示。",
+    "message": "确定清除补全的图标缓存？图标会在下次打开时自动重新补全。"
+  },
+  "optionFaviconCacheCleared": {
+    "message": "图标缓存已清除，将在下次打开时重新补全。"
+  },
+  "optionFaviconCacheEmpty": {
+    "description": "用户点击“清除图标缓存”但没有缓存键时显示的提示。",
+    "message": "没有可清除的图标缓存。"
+  },
+  "optionFaviconContrast": {
+    "message": "反转低对比度图标"
+  },
+  "optionFaviconContrastHint": {
+    "message": "浅色主题上的白色图标和深色主题上的黑色图标会被反转，以便保持可见。每个图标在加载时采样一次，浏览时不会产生额外开销。"
+  },
+  "optionFaviconEnrich": {
+    "message": "补全缺失的网站图标"
+  },
+  "optionFaviconEnrichAgg": {
+    "message": "用第三方图标服务兜底"
+  },
+  "optionFaviconEnrichAggHint": {
+    "message": "直连获取失败时，从内置第三方图标服务按域名取图（$providers$ 自动切换）。检测到某服务不可达时切换下一家，6 小时内不再重复尝试该服务。",
+    "placeholders": {
+      "providers": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionFaviconEnrichHint": {
+    "message": "对 Chrome 尚未缓存图标的收藏网站，直接从站点获取真实图标（/favicon.ico → 页面图标声明）。请求只发往你已收藏的网站。"
+  },
+  "optionHighlightUnsynced": {
+    "message": "变淡显示未同步的书签"
+  },
+  "optionLanguage": {
+    "message": "语言"
+  },
+  "optionLanguageAuto": {
+    "message": "自动"
+  },
+  "optionLanguageHint": {
+    "message": "切换语言后会重新加载本页面。"
+  },
+  "optionOnlyShowBookmarkBar": {
+    "message": "仅显示书签栏中的书签"
+  },
+  "optionOpenInSidePanel": {
+    "message": "在侧栏中打开（替代弹窗）"
+  },
+  "optionOpenNewTab": {
+    "message": "中键单击或按住 Ctrl 单击在后台新标签页中打开书签（而非前台）。"
+  },
+  "optionPaletteEnabled": {
+    "message": "启用命令面板（Ctrl/Cmd+K）"
+  },
+  "optionPopupStays": {
+    "message": "打开（左键单击）书签时弹出窗口保持打开。"
+  },
+  "optionQuickAddContextMenu": {
+    "description": "选项复选框（issue #49）：控制 v4 新增的页面右键菜单快速收藏条目。",
+    "message": "在页面右键菜单添加“用 vBookmarks 收藏此页”条目"
+  },
+  "optionQuickAddContextMenuHint": {
+    "message": "与快速收藏星标按钮相互独立；“一键恢复经典界面”也会一并关闭该条目。"
+  },
+  "optionQuickAddEnabled": {
+    "message": "在搜索框旁显示快速收藏星标按钮"
+  },
+  "optionRecentCollapsed": {
+    "message": "默认收起“最近添加”分区"
+  },
+  "optionRecentCount": {
+    "message": "最近添加书签的显示条数"
+  },
+  "optionRememberPrevState": {
+    "message": "记住之前的状态（滚动位置、已打开的文件夹和上次聚焦的书签）。"
+  },
+  "optionRememberView": {
+    "message": "记住上次所在的视图并在打开时恢复"
+  },
+  "optionSearchAfterEnter": {
+    "message": "仅在按下回车键时搜索书签（而非即时搜索）"
+  },
+  "optionSearchHistory": {
+    "message": "显示最近搜索区域"
+  },
+  "optionSearchHistoryHint": {
+    "message": "隐藏结果区上方的最近搜索区域——已记录的查询会保留。"
+  },
+  "optionShowDeadView": {
+    "message": "显示死链视图标签"
+  },
+  "optionShowDupesView": {
+    "message": "显示重复书签视图标签"
+  },
   "optionShowItemPath": {
     "message": "在列表行上显示所在文件夹路径"
+  },
+  "optionShowRecentBookmarks": {
+    "message": "显示最近添加视图标签"
+  },
+  "optionShowStatsView": {
+    "message": "显示统计视图标签"
+  },
+  "optionShowSyncStatus": {
+    "message": "显示同步状态指示器"
+  },
+  "optionShowTabBadges": {
+    "message": "在视图标签上显示数量角标"
+  },
+  "optionShowTabGroupsView": {
+    "message": "显示标签组视图标签页"
+  },
+  "optionShowToolButton": {
+    "message": "在搜索框旁显示工具按钮（⋮）"
+  },
+  "optionShowViewTabs": {
+    "message": "在搜索框下方显示视图标签栏"
+  },
+  "optionStagingEnabled": {
+    "message": "启用暂存功能"
+  },
+  "optionStagingEnabledHint": {
+    "message": "禁用后本视图只保留最近添加列表，其他所有视图的暂存按钮和菜单项全部隐藏。"
+  },
+  "optionStatsEnabled": {
+    "description": "选项页复选框（视图分组）：访问统计采集的总开关。",
+    "message": "启用访问统计"
+  },
+  "optionSyncRefreshInterval": {
+    "message": "刷新间隔"
+  },
+  "optionSyncRefreshIntervalSeconds": {
+    "message": "秒"
+  },
+  "optionTabGroupsClosedLimit": {
+    "message": "关闭标签/标签组历史保留条数"
+  },
+  "optionTheme": {
+    "message": "主题"
+  },
+  "optionThemeAuto": {
+    "message": "跟随系统"
+  },
+  "optionThemeDark": {
+    "message": "深色"
+  },
+  "optionThemeInk": {
+    "message": "Ink（深色）"
+  },
+  "optionThemeLight": {
+    "message": "浅色"
+  },
+  "optionThemePaper": {
+    "message": "Paper（浅色）"
+  },
+  "optionTreeRowActions": {
+    "message": "书签行悬浮快捷按钮（编辑/暂存/删除）"
+  },
+  "optionVirtualScrollLab": {
+    "message": "虚拟滚动（实验性）"
+  },
+  "optionVirtualScrollLabHint": {
+    "message": "标签组与去重视图只渲染视口附近的行，超大列表明显更快。实验阶段滚动条位置为估算值。"
+  },
+  "optionZoom": {
+    "message": "缩放"
+  },
+  "options": {
+    "message": "选项"
+  },
+  "optionsDonate": {
+    "message": "捐赠"
+  },
+  "optionsFooterText": {
+    "description": "Footer text for the Options page",
+    "message": "由 $authorName$ 构建。",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionsGithubLink": {
+    "message": "GitHub"
+  },
+  "optionsGroupBackup": {
+    "message": "备份"
+  },
+  "optionsGroupContextMenu": {
+    "message": "右键菜单"
+  },
+  "optionsGroupIcons": {
+    "message": "图标"
+  },
+  "optionsGroupLabs": {
+    "message": "实验室"
+  },
+  "optionsGroupPalette": {
+    "message": "命令面板"
+  },
+  "optionsGroupSort": {
+    "description": "选项分组（issue #33）：文件夹内容排序的默认偏好，与 popup 排序对话框共享。",
+    "message": "排序"
+  },
+  "optionsGroupStats": {
+    "message": "统计"
+  },
+  "optionsGroupTools": {
+    "message": "工具"
+  },
+  "optionsGroupViews": {
+    "message": "视图"
+  },
+  "optionsHomepageLink": {
+    "message": "主页"
+  },
+  "optionsSince": {
+    "message": "自 Neat Bookmarks 分支而来，已持续维护 $days$ 天。",
+    "placeholders": {
+      "days": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionsStagingSection": {
+    "message": "暂存和最近添加"
+  },
+  "optionsStorageLocalTip": {
+    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting).",
+    "message": "仅保存在本设备的本地存储，不会通过 Chrome 同步。"
+  },
+  "optionsStorageSyncTip": {
+    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting).",
+    "message": "已保存到 Chrome 同步（云端），随账号在多设备间保持一致。"
+  },
+  "optionsVersion": {
+    "message": "vBookmarks 版本号"
+  },
+  "paletteActionOpenUrl": {
+    "message": "打开 URL"
+  },
+  "paletteActionOpenUrlGroup": {
+    "message": "打开书签文件夹分组"
+  },
+  "paletteActionUrlTemplate": {
+    "message": "打开 URL 模板"
+  },
+  "paletteActionViewPreset": {
+    "message": "带预设打开视图"
+  },
+  "paletteClose": {
+    "message": "关闭"
+  },
+  "paletteCmdDead": {
+    "message": "检测死链"
+  },
+  "paletteCmdDupes": {
+    "message": "清理重复书签"
+  },
+  "paletteCmdGoDead": {
+    "message": "切换到死链视图"
+  },
+  "paletteCmdGoDupes": {
+    "message": "切换到重复书签视图"
+  },
+  "paletteCmdGoRecent": {
+    "message": "切换到暂存/最近视图"
+  },
+  "paletteCmdGoSearch": {
+    "message": "切换到搜索视图"
+  },
+  "paletteCmdGoStats": {
+    "description": "命令面板条目：切换到访问统计视图（slash 别名 /stats）。",
+    "message": "切换到统计视图"
+  },
+  "paletteCmdGoTabGroups": {
+    "description": "Command palette entry: switch to the tab groups view (slash alias /tabgroups, /groups).",
+    "message": "切换到标签组视图"
+  },
+  "paletteCmdGoTree": {
+    "message": "切换到书签树视图"
+  },
+  "paletteCmdLang": {
+    "message": "切换语言…"
+  },
+  "paletteCmdLangUsage": {
+    "message": "用法：/lang 加语言代码——例如 /lang en、/lang zh_CN、/lang ja。"
+  },
+  "paletteCmdNewBookmark": {
+    "message": "新建书签…"
+  },
+  "paletteCmdNewFolder": {
+    "message": "新建文件夹…"
+  },
+  "paletteCmdOptions": {
+    "message": "打开选项页"
+  },
+  "paletteCmdQuickAdd": {
+    "message": "收藏当前标签页"
+  },
+  "paletteCmdSaveAsCommand": {
+    "message": "把「$1」存为指令…"
+  },
+  "paletteCmdSaveSession": {
+    "message": "保存当前窗口标签为文件夹"
+  },
+  "paletteCmdSearchInView": {
+    "message": "在搜索视图中搜索“$query$”",
+    "placeholders": {
+      "query": {
+        "content": "$1"
+      }
+    }
+  },
+  "paletteCmdTheme": {
+    "message": "切换主题…"
+  },
+  "paletteCmdThemeUsage": {
+    "message": "用法：/theme 加主题名——auto、light、dark、ink 或 paper（唯一前缀即可，如 /theme d）。"
+  },
+  "paletteCmdToggleViewTabs": {
+    "message": "切换视图标签栏显隐"
+  },
+  "paletteCmdVersion": {
+    "message": "版本信息"
+  },
+  "paletteCustomAction": {
+    "message": "动作"
+  },
+  "paletteCustomAdd": {
+    "message": "新增指令…"
+  },
+  "paletteCustomAliases": {
+    "message": "别名（逗号分隔）"
+  },
+  "paletteCustomBroken": {
+    "message": "指令「$1」指向的文件夹已不存在。是否删除该指令？"
+  },
+  "paletteCustomDeleteConfirm": {
+    "message": "删除指令「$1」？该改动会同步到你的所有设备。"
+  },
+  "paletteCustomEmpty": {
+    "message": "还没有自定义指令。"
+  },
+  "paletteCustomErrAction": {
+    "message": "请选择动作类型。"
+  },
+  "paletteCustomErrAlias": {
+    "message": "别名规则同 Slash 名（1–24 位小写字母、数字或连字符）。"
+  },
+  "paletteCustomErrFolder": {
+    "message": "请选择一个书签文件夹。"
+  },
+  "paletteCustomErrLimit": {
+    "message": "指令已达上限（100 条）——请先删除一条。"
+  },
+  "paletteCustomErrSlash": {
+    "message": "Slash 名：1–24 位小写字母、数字或连字符，且以字母或数字开头。"
+  },
+  "paletteCustomErrTaken": {
+    "message": "该 Slash 名或别名已被占用。"
+  },
+  "paletteCustomErrTemplate": {
+    "message": "模板必须且只能包含一个 %s。"
+  },
+  "paletteCustomErrUrl": {
+    "message": "只允许 http:// 或 https:// 的 URL。"
+  },
+  "paletteCustomErrView": {
+    "message": "请选择视图。"
+  },
+  "paletteCustomFolder": {
+    "message": "书签文件夹"
+  },
+  "paletteCustomHint": {
+    "message": "命令面板（Ctrl/Cmd+K）的自定义 slash 指令。随设置跨设备同步，上限 100 条。"
+  },
+  "paletteCustomSave": {
+    "message": "保存指令"
+  },
+  "paletteCustomScan": {
+    "message": "进入后立即开始扫描"
+  },
+  "paletteCustomScope": {
+    "message": "去重范围预设"
+  },
+  "paletteCustomSlash": {
+    "message": "Slash 名（/ 之后的词）"
+  },
+  "paletteCustomStrategy": {
+    "message": "去重策略预设"
+  },
+  "paletteCustomTag": {
+    "message": "自定义"
+  },
+  "paletteCustomTemplate": {
+    "message": "URL 模板——%s 会被替换为指令后输入的词"
+  },
+  "paletteCustomUrl": {
+    "message": "URL"
+  },
+  "paletteCustomUsage": {
+    "message": "$1 / $2"
+  },
+  "paletteCustomView": {
+    "message": "视图"
+  },
+  "paletteCustomWhere": {
+    "message": "打开位置"
+  },
+  "paletteNoResults": {
+    "message": "没有匹配结果"
+  },
+  "palettePlaceholder": {
+    "message": "搜索书签、文件夹、命令…"
+  },
+  "paletteWhereBackground": {
+    "message": "后台标签页"
+  },
+  "paletteWhereCurrent": {
+    "message": "当前标签页"
+  },
+  "paletteWhereTab": {
+    "message": "新标签页"
+  },
+  "paletteWhereWindow": {
+    "message": "新窗口"
+  },
+  "parentFolder": {
+    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
+    "message": "父文件夹：“$folderName$”",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarksbar"
+      }
+    }
+  },
+  "pasteDone": {
+    "message": "已粘贴"
+  },
+  "pasteGone": {
+    "message": "书签已不存在,剪贴板已清空"
+  },
+  "pasteHere": {
+    "message": "粘贴到此处"
+  },
+  "pinFolder": {
+    "message": "固定此文件夹"
+  },
+  "quickAddBookmark": {
+    "message": "收藏当前页面 (Ctrl+D)"
+  },
+  "quickAddBookmarkCommand": {
+    "message": "将当前标签页快速保存为书签"
+  },
+  "quickAdded": {
+    "message": "已添加书签"
+  },
+  "quickAddedTo": {
+    "message": "书签已添加到 $folderName$",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarks bar"
+      }
+    }
+  },
+  "quickRemoveBookmark": {
+    "message": "移除该书签 (Ctrl+D)"
+  },
+  "quickRemoved": {
+    "message": "书签已移除"
+  },
+  "recentBookmarks": {
+    "message": "最近添加"
   },
   "recentEmpty": {
     "message": "暂无最近添加的书签。按 Ctrl+D 收藏当前页。"
   },
+  "recentGroupMonth": {
+    "message": "本月"
+  },
+  "recentGroupOlder": {
+    "message": "更早"
+  },
+  "recentGroupToday": {
+    "message": "今天"
+  },
+  "recentGroupWeek": {
+    "message": "本周"
+  },
   "recentRevealInTree": {
     "message": "在树中定位"
+  },
+  "recentSectionTitle": {
+    "message": "最近添加"
+  },
+  "recentStageAll": {
+    "message": "全部暂存"
+  },
+  "recentStageGroup": {
+    "message": "将$t$发送到暂存区",
+    "placeholders": {
+      "t": {
+        "content": "$1"
+      }
+    }
+  },
+  "removeSeparator": {
+    "message": "移除分隔线"
+  },
+  "replaceUrl": {
+    "message": "替换为当前网址"
+  },
+  "reportError": {
+    "message": "报告错误"
+  },
+  "reportedToDeveloper": {
+    "message": "已向开发者报告。"
+  },
+  "resetButton": {
+    "message": "重置"
+  },
+  "resetSettings": {
+    "message": "重置设置"
+  },
+  "resetSettingsDescription": {
+    "message": "将 vBookmarks 重置为默认设置。"
+  },
+  "revealOutsideBarAction": {
+    "message": "显示全部并定位"
+  },
+  "revealOutsideBarHint": {
+    "message": "当前仅显示书签栏：目标不在书签栏内。"
+  },
+  "riskBannerDismiss": {
+    "message": "关闭"
+  },
+  "riskBannerHelp": {
+    "message": "备份与恢复帮助"
+  },
+  "riskBannerNever": {
+    "message": "不再提示"
+  },
+  "rowActionDelete": {
+    "message": "删除"
+  },
+  "rowActionMark": {
+    "message": "标记为死链"
+  },
+  "rowActionReveal": {
+    "message": "在树中定位"
+  },
+  "rowActionUnmark": {
+    "message": "取消死链标记"
+  },
+  "save": {
+    "message": "保存"
+  },
+  "searchBookmarks": {
+    "message": "搜索书签"
+  },
+  "searchClear": {
+    "message": "清除搜索"
   },
   "searchHistoryClear": {
     "message": "清空全部"
   },
+  "searchHistoryClose": {
+    "message": "隐藏最近搜索"
+  },
+  "searchHistoryClosedToast": {
+    "message": "最近搜索区域已隐藏，可在 选项→搜索 中重新开启"
+  },
   "searchHistoryRemove": {
     "message": "移除该记录"
+  },
+  "searchHistoryRerun": {
+    "message": "重新搜索"
   },
   "searchHistoryResultCount": {
     "message": "$n$ 条结果",
@@ -122,6 +1580,929 @@
   },
   "searchHistoryTitle": {
     "message": "最近搜索"
+  },
+  "searchNoResults": {
+    "message": "未找到匹配的书签"
+  },
+  "searchResultCount": {
+    "message": "$n$ 条结果",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "searchStageAllGroup": {
+    "message": "将全部结果暂存为分组「$1$」",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "searchViewHint": {
+    "message": "在上方输入框中输入关键字搜索书签"
+  },
+  "selectAll": {
+    "description": "Selection mode (dead/dupes views): select every row/group.",
+    "message": "全选"
+  },
+  "selectClear": {
+    "description": "Selection mode (dead/dupes views): clear the whole selection.",
+    "message": "清空"
+  },
+  "selectCount": {
+    "description": "Selection mode (dead/dupes views): label with the current selection size.",
+    "message": "已选 $count$ 项",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "selectInvert": {
+    "description": "Selection mode (dead/dupes views): invert the selection.",
+    "message": "反选"
+  },
+  "selectModeEnter": {
+    "description": "Toolbar button that enters selection mode (dead/dupes views).",
+    "message": "选择"
+  },
+  "selectModeExit": {
+    "description": "Selection mode (dead/dupes views): leave the mode.",
+    "message": "退出选择"
+  },
+  "separatorOptions": {
+    "message": "分割线"
+  },
+  "sessionEmpty": {
+    "message": "没有可保存的标签页"
+  },
+  "sessionFolderName": {
+    "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm.",
+    "message": "会话 $date$",
+    "placeholders": {
+      "date": {
+        "content": "$1",
+        "example": "2026-07-18 15:04"
+      }
+    }
+  },
+  "sessionSaved": {
+    "description": "Alert shown after the current window's tabs were saved into a new bookmark folder.",
+    "message": "已保存 $count$ 个标签页到新文件夹",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "12"
+      }
+    }
+  },
+  "settingsBackupHint": {
+    "message": "导出会将所有设置（含同步偏好）保存为 JSON 文件；导入为合并写回：文件中的设置覆盖当前值，未涉及的设置保持不变。"
+  },
+  "settingsExport": {
+    "message": "导出设置"
+  },
+  "settingsImport": {
+    "message": "导入设置"
+  },
+  "settingsImportConfirm": {
+    "message": "导入将覆盖备份文件中包含的所有设置（文件未涉及的设置保留），并重新加载本页面。确定继续吗？"
+  },
+  "settingsImportDone": {
+    "message": "设置已导入，页面即将重新加载。"
+  },
+  "settingsImportError": {
+    "message": "部分设置未能写入（存储配额不足或临时错误），导入未完成，请重试。"
+  },
+  "settingsImportInvalid": {
+    "message": "无效的设置文件：这不是 vBookmarks 的设置备份。"
+  },
+  "sortByDate": {
+    "description": "文件夹右键菜单项（issue #33）：按添加时间排序（新在前），套用已保存的文件夹在前/递归选项。",
+    "message": "按添加时间排序"
+  },
+  "sortByDateAdded": {
+    "message": "按添加时间（新的在前）"
+  },
+  "sortByName": {
+    "description": "文件夹右键菜单项（issue #33）：按标题排序，套用已保存的文件夹在前/递归选项。",
+    "message": "按名称排序"
+  },
+  "sortByTitle": {
+    "message": "按标题"
+  },
+  "sortDone": {
+    "description": "排序完成后弹出的 toast；撤销按钮恢复原顺序。",
+    "message": "文件夹已排序"
+  },
+  "sortFolderContents": {
+    "message": "排序文件夹内容"
+  },
+  "sortFoldersFirst": {
+    "message": "子文件夹排在前面"
+  },
+  "sortMenuOptions": {
+    "message": "排序"
+  },
+  "sortOptions": {
+    "description": "文件夹右键菜单项（issue #33）：打开排序对话框进行一次性配置。",
+    "message": "排序选项…"
+  },
+  "sortRecursive": {
+    "message": "同时排序子文件夹（递归）"
+  },
+  "sortRecursiveSuffix": {
+    "description": "递归开启时追加到直接排序菜单项，如“按名称排序（递归）”。",
+    "message": "（递归）"
+  },
+  "sortRecursiveWarning": {
+    "message": "将重排所有子文件夹内的书签。"
+  },
+  "stagedToast": {
+    "message": "已暂存 $n$ 个标签页为分组「$t$」",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "t": {
+        "content": "$2"
+      }
+    }
+  },
+  "stagingAdd": {
+    "message": "发送到暂存"
+  },
+  "stagingAdded": {
+    "message": "已发送到暂存"
+  },
+  "stagingAddedSummary": {
+    "message": "已新增 $n$ 条，$m$ 条已在暂存区",
+    "placeholders": {
+      "m": {
+        "content": "$2"
+      },
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingAlready": {
+    "message": "已在暂存区"
+  },
+  "stagingBucketFavAll": {
+    "message": "收藏全部"
+  },
+  "stagingBucketTitle": {
+    "message": "未收藏"
+  },
+  "stagingClear": {
+    "message": "清空暂存"
+  },
+  "stagingClearConfirm": {
+    "message": "清空整个暂存区?不会改动书签树。"
+  },
+  "stagingClearConfirmOk": {
+    "message": "清空"
+  },
+  "stagingCleared": {
+    "message": "暂存区已清空"
+  },
+  "stagingConfirmFolder": {
+    "message": "将暂存该文件夹的 $n$ 条书签？",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingConfirmFolderOk": {
+    "message": "暂存"
+  },
+  "stagingCopyDone": {
+    "message": "已复制 $n$ 条",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingCount": {
+    "message": "已暂存 $n$ 条",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingDeleteConfirm": {
+    "message": "删除 $n$ 条?未收藏的条目只会移出暂存区。",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingDeleted": {
+    "message": "已删除 $n$ 个书签",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingEmpty": {
+    "message": "还没有暂存内容。在任意视图通过行上的纸飞机按钮或右键菜单发送书签到这里，即可快速整理、批量归置。"
+  },
+  "stagingFav": {
+    "message": "收藏"
+  },
+  "stagingFavDone": {
+    "message": "已收藏 $n$ 条",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingFolderEmpty": {
+    "message": "该文件夹没有可暂存的书签"
+  },
+  "stagingFromHistory": {
+    "message": "来自历史"
+  },
+  "stagingFull": {
+    "message": "暂存区已满，请先清理"
+  },
+  "stagingGroupAssign": {
+    "message": "分组…"
+  },
+  "stagingGroupAssignTitle": {
+    "message": "指派到分组"
+  },
+  "stagingGroupCollapse": {
+    "message": "折叠分组"
+  },
+  "stagingGroupDelete": {
+    "message": "删除分组（连同条目）"
+  },
+  "stagingGroupDeleteConfirm": {
+    "message": "删除分组「$1」？其中 $2 个条目也会一并移出暂存区。"
+  },
+  "stagingGroupDeleted": {
+    "message": "分组已删除，移出 $1 个条目"
+  },
+  "stagingGroupDissolve": {
+    "message": "解散分组"
+  },
+  "stagingGroupDissolved": {
+    "message": "分组已解散，条目保留在暂存区"
+  },
+  "stagingGroupExpand": {
+    "message": "展开分组"
+  },
+  "stagingGroupNamePrompt": {
+    "message": "新分组名称"
+  },
+  "stagingGroupNew": {
+    "message": "新建分组"
+  },
+  "stagingGroupNoGroups": {
+    "message": "还没有分组"
+  },
+  "stagingGroupRename": {
+    "message": "重命名分组…"
+  },
+  "stagingGroupSelectAll": {
+    "message": "全选本组"
+  },
+  "stagingGuideDismiss": {
+    "message": "不再提醒"
+  },
+  "stagingGuideText": {
+    "message": "在这里整理书签——选择行并进入选择模式，可获得更多批量操作。"
+  },
+  "stagingMoveConfirm": {
+    "message": "将 $n$ 条移动到所选文件夹?",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingMoveConfirmOk": {
+    "message": "移动"
+  },
+  "stagingMoveCopy": {
+    "message": "移动/复制到…"
+  },
+  "stagingMoveDone": {
+    "message": "已归位 $n$ 条",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingNew": {
+    "message": "新 $n$",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingRemove": {
+    "message": "移出暂存区"
+  },
+  "stagingRemoved": {
+    "message": "已移出暂存区"
+  },
+  "stagingRemovedCount": {
+    "message": "已从暂存区移出 $n$ 条",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingRowFav": {
+    "message": "收藏此条目"
+  },
+  "stagingRowUnfav": {
+    "message": "取消收藏此条目"
+  },
+  "stagingShortcutAdd": {
+    "message": "添加快捷"
+  },
+  "stagingShortcutAlias": {
+    "message": "别名"
+  },
+  "stagingShortcutBarLabel": {
+    "message": "收藏到："
+  },
+  "stagingShortcutEdit": {
+    "message": "编辑快捷方式"
+  },
+  "stagingShortcutMove": {
+    "message": "移动所选到 $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "stagingShortcutPickFolder": {
+    "message": "选择目标文件夹…"
+  },
+  "stagingShortcutRemove": {
+    "message": "删除快捷方式"
+  },
+  "stagingShortcutRemoved": {
+    "message": "已删除快捷方式"
+  },
+  "stagingShortcutSave": {
+    "message": "保存"
+  },
+  "stagingShortcutTitle": {
+    "message": "移动到文件夹快捷方式"
+  },
+  "stagingUnfav": {
+    "message": "取消收藏"
+  },
+  "stagingUnfavDone": {
+    "message": "已取消收藏 $n$ 条",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "statsClearConfirm": {
+    "description": "清空访问统计前的确认对话框文案；$count$ 为书签条目数。",
+    "message": "确定清空 $count$ 个书签的访问统计？此操作不可撤销。",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "statsClearData": {
+    "description": "清空全部访问统计数据的按钮（统计视图工具行与选项页）。",
+    "message": "清空统计"
+  },
+  "statsDisabledHint": {
+    "description": "statsEnabled 关闭时统计视图显示的引导文案。",
+    "message": "访问统计已关闭——可在选项页\"视图\"分组开启"
+  },
+  "statsEmpty": {
+    "description": "统计视图尚无数据时的空态文案。",
+    "message": "统计会随着你打开书签而积累"
+  },
+  "statsHistoryAdd": {
+    "message": "加入收藏"
+  },
+  "statsHistoryBanner": {
+    "description": "Banner text on top of the recent view: invites granting the optional history permission so visit statistics can be seeded with past visits.",
+    "message": "开启历史记录权限，把过往访问导入访问统计。"
+  },
+  "statsHistoryBookmarked": {
+    "message": "已收藏"
+  },
+  "statsHistoryDismiss": {
+    "description": "aria-label of the dismiss button on the recent view's history-permission banner.",
+    "message": "不再提示"
+  },
+  "statsHistoryEnable": {
+    "description": "Link inside the recent view's history-permission banner: requests the optional history permission.",
+    "message": "开启"
+  },
+  "statsHistoryGuide": {
+    "message": "开启历史记录权限后，此处显示你的最近访问"
+  },
+  "statsHistoryImported": {
+    "description": "Toast after the history import finished; $count$ is how many bookmarks received a seeded visit count.",
+    "message": "已导入 $count$ 个书签的历史访问",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "statsSectionBookmarks": {
+    "message": "书签统计"
+  },
+  "statsSectionRecent": {
+    "message": "最近访问"
+  },
+  "statsShowUnbookmarked": {
+    "message": "显示未收藏书签"
+  },
+  "statsShowUnbookmarkedHint": {
+    "message": "在统计中包含历史记录里未收藏为书签的页面。"
+  },
+  "statsSortByCount": {
+    "description": "统计视图排序段：按访问次数降序。",
+    "message": "按次数"
+  },
+  "statsSortByRecent": {
+    "description": "统计视图排序段：按最近访问时间降序。",
+    "message": "按最近"
+  },
+  "statsVisitCount": {
+    "description": "统计行次数 pill 的 aria 标签；$count$ 为访问次数。",
+    "message": "访问 $count$ 次",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "storageUsageFree": {
+    "message": "剩余"
+  },
+  "storageUsageHint": {
+    "message": "仅统计本地扩展存储（chrome.storage.local，约 10MB 配额）：图标缓存以及设置等本地数据。已同步的设置、会话数据和书签库本体不计入。"
+  },
+  "storageUsageIcon": {
+    "message": "图标缓存"
+  },
+  "storageUsageOther": {
+    "message": "其他"
+  },
+  "storageUsageSummary": {
+    "message": "已用 $1$ / 共 $2$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      },
+      "2": {
+        "content": "$2"
+      }
+    }
+  },
+  "syncOptions": {
+    "message": "同步选项"
+  },
+  "syncStatusLocal": {
+    "message": "仅本地，不上传"
+  },
+  "syncStatusSynced": {
+    "message": "已同步至 Google 账号"
+  },
+  "syncStatusUnsyncable": {
+    "message": "无法同步"
+  },
+  "syncSuffixLocal": {
+    "message": "（仅本地）"
+  },
+  "syncSuffixSynced": {
+    "message": "（已同步）"
+  },
+  "tabGroupColorBlue": {
+    "description": "Accessible name of the blue color swatch in the new-tab-group dialog.",
+    "message": "蓝"
+  },
+  "tabGroupColorCyan": {
+    "description": "Accessible name of the cyan color swatch in the new-tab-group dialog.",
+    "message": "青"
+  },
+  "tabGroupColorGreen": {
+    "description": "Accessible name of the green color swatch in the new-tab-group dialog.",
+    "message": "绿"
+  },
+  "tabGroupColorGrey": {
+    "description": "Accessible name of the grey color swatch in the new-tab-group dialog.",
+    "message": "灰"
+  },
+  "tabGroupColorLabel": {
+    "message": "颜色"
+  },
+  "tabGroupColorOrange": {
+    "description": "Accessible name of the orange color swatch in the new-tab-group dialog.",
+    "message": "橙"
+  },
+  "tabGroupColorPink": {
+    "description": "Accessible name of the pink color swatch in the new-tab-group dialog.",
+    "message": "粉"
+  },
+  "tabGroupColorPurple": {
+    "description": "Accessible name of the purple color swatch in the new-tab-group dialog.",
+    "message": "紫"
+  },
+  "tabGroupColorRed": {
+    "description": "Accessible name of the red color swatch in the new-tab-group dialog.",
+    "message": "红"
+  },
+  "tabGroupColorYellow": {
+    "description": "Accessible name of the yellow color swatch in the new-tab-group dialog.",
+    "message": "黄"
+  },
+  "tabGroupDialogTitle": {
+    "message": "新建标签组"
+  },
+  "tabGroupNoGroups": {
+    "message": "当前没有已有标签组"
+  },
+  "tabGroupOptions": {
+    "message": "标签页组"
+  },
+  "tabGroupPickDialogTitle": {
+    "message": "打开到已有标签组"
+  },
+  "tabGroupTitleLabel": {
+    "message": "组标题"
+  },
+  "tabGroupUntitled": {
+    "message": "未命名标签组"
+  },
+  "tabGroupsActivateGroup": {
+    "message": "转到标签组"
+  },
+  "tabGroupsActivateTab": {
+    "message": "转到标签页"
+  },
+  "tabGroupsAddBookmark": {
+    "message": "收藏此标签页"
+  },
+  "tabGroupsBatchClosedTitle": {
+    "description": "Title of the merged recently-closed record a batch close writes (one record for the whole selection).",
+    "message": "已关闭的标签页"
+  },
+  "tabGroupsBookmarkRemoved": {
+    "message": "已取消收藏 $count$ 项",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsBookmarked": {
+    "message": "已收藏"
+  },
+  "tabGroupsBookmarksAdded": {
+    "message": "已将 $count$ 个书签添加到 $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsClearClosedGroups": {
+    "message": "清空"
+  },
+  "tabGroupsClearedToast": {
+    "description": "Toast after clearing all recently-closed records; Undo restores the whole list.",
+    "message": "已清空 $count$ 条关闭记录",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCloseGroup": {
+    "message": "关闭标签组"
+  },
+  "tabGroupsCloseWindow": {
+    "description": "Hover action on a window section head: closes the whole window (confirm; tabs land as one merged closed record).",
+    "message": "关闭窗口"
+  },
+  "tabGroupsClosedGroups": {
+    "message": "最近关闭"
+  },
+  "tabGroupsClosedOpenTab": {
+    "message": "在新标签页打开"
+  },
+  "tabGroupsClosedTabRemovedToast": {
+    "description": "Toast after removing one tab from a closed record; Undo restores it.",
+    "message": "已从记录中移除"
+  },
+  "tabGroupsClosedTimeLabel": {
+    "message": "关闭时间："
+  },
+  "tabGroupsClosedToast": {
+    "description": "Toast after closing a single tab or tab group; the action button reopens it.",
+    "message": "已关闭 $count$ 个标签页",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCollapseAll": {
+    "message": "全部折叠"
+  },
+  "tabGroupsCollapseGroup": {
+    "message": "折叠标签组"
+  },
+  "tabGroupsCollapseWindow": {
+    "message": "收起窗口"
+  },
+  "tabGroupsColorStyle": {
+    "message": "标签组颜色样式"
+  },
+  "tabGroupsColorStyleEdge": {
+    "message": "靠边颜色条带"
+  },
+  "tabGroupsColorStyleHint": {
+    "message": "“关闭”仅显示颜色圆点；“靠边颜色条带”在标签组左侧画一条颜色条带；“颜色连接线”在组头圆点下方画竖线、每行带横线，把整个标签组串成一棵树。"
+  },
+  "tabGroupsColorStyleLine": {
+    "message": "颜色连接线"
+  },
+  "tabGroupsColorStyleOff": {
+    "message": "关闭（仅颜色圆点）"
+  },
+  "tabGroupsConfirmClearClosed": {
+    "message": "清空全部「最近关闭」记录？清空后将无法从这里恢复。"
+  },
+  "tabGroupsConfirmClose": {
+    "message": "关闭 $count$ 个标签页？",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsConfirmSleep": {
+    "message": "睡眠 $count$ 个标签页？",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsCopyMoveCopy": {
+    "message": "复制"
+  },
+  "tabGroupsCopyMoveDialog": {
+    "message": "选中的标签页中有已属于标签组的标签。是复制（在新位置重新打开）还是移动（从原标签组移出）？"
+  },
+  "tabGroupsCopyMoveMove": {
+    "message": "移动"
+  },
+  "tabGroupsCurrentTab": {
+    "description": "Compact pill on the row of the tab that is active in its window (the row tint + pill together mark it).",
+    "message": "当前"
+  },
+  "tabGroupsCurrentWindow": {
+    "message": "当前窗口"
+  },
+  "tabGroupsDeleteClosedGroup": {
+    "message": "删除关闭的标签组"
+  },
+  "tabGroupsDiscarded": {
+    "message": "已睡眠标签页"
+  },
+  "tabGroupsExpandAll": {
+    "message": "全部展开"
+  },
+  "tabGroupsExpandGroup": {
+    "message": "展开标签组"
+  },
+  "tabGroupsExpandWindow": {
+    "message": "展开窗口"
+  },
+  "tabGroupsExpandedCollapse": {
+    "message": "折叠"
+  },
+  "tabGroupsExpandedExpand": {
+    "message": "展开"
+  },
+  "tabGroupsFilterPlaceholder": {
+    "message": "筛选打开的标签页"
+  },
+  "tabGroupsGroupCount": {
+    "message": "$count$ 个标签页",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsGroupSavedToFolder": {
+    "message": "已将 $count$ 个标签页保存到 $folder$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folder": {
+        "content": "$2"
+      }
+    }
+  },
+  "tabGroupsMenuAddBookmark": {
+    "message": "收藏标签页"
+  },
+  "tabGroupsMenuSaveFolder": {
+    "message": "保存为书签文件夹"
+  },
+  "tabGroupsMergedWindowToast": {
+    "message": "窗口已并入为标签组"
+  },
+  "tabGroupsMoveNewWindow": {
+    "message": "移动到新窗口"
+  },
+  "tabGroupsNewWindow": {
+    "message": "新建窗口"
+  },
+  "tabGroupsNoMatchingTabs": {
+    "message": "没有匹配的标签页"
+  },
+  "tabGroupsOpenGroups": {
+    "message": "打开的标签组"
+  },
+  "tabGroupsPinTab": {
+    "message": "固定标签页"
+  },
+  "tabGroupsPinned": {
+    "message": "已固定标签页"
+  },
+  "tabGroupsPinnedUngroupedToast": {
+    "description": "Toast when pinning a tab that belonged to a group: Chrome forbids pinned grouped tabs, so the tab leaves the group.",
+    "message": "已固定，并已移出标签组"
+  },
+  "tabGroupsRecordDeletedToast": {
+    "description": "Toast after deleting one recently-closed record; Undo restores it.",
+    "message": "已删除关闭记录"
+  },
+  "tabGroupsRemoveBookmark": {
+    "message": "取消收藏"
+  },
+  "tabGroupsRemoveClosedTab": {
+    "message": "从已保存组移除"
+  },
+  "tabGroupsRenameDialog": {
+    "message": "重命名标签组"
+  },
+  "tabGroupsRenameGroup": {
+    "message": "重命名标签组"
+  },
+  "tabGroupsReopenAction": {
+    "description": "Toast action button: reopens the just-closed tab or tab group.",
+    "message": "重新打开"
+  },
+  "tabGroupsReopenGroup": {
+    "message": "重新打开标签组"
+  },
+  "tabGroupsSaveFolder": {
+    "message": "将标签组保存为书签文件夹"
+  },
+  "tabGroupsSelectAddBookmarks": {
+    "message": "添加到书签文件夹…"
+  },
+  "tabGroupsSelectClose": {
+    "message": "关闭"
+  },
+  "tabGroupsSelectNewGroup": {
+    "message": "新建标签组"
+  },
+  "tabGroupsSelectOpenInto": {
+    "message": "打开到已有标签组…"
+  },
+  "tabGroupsSelectSaveFolder": {
+    "message": "保存为书签文件夹"
+  },
+  "tabGroupsSelectSleep": {
+    "message": "睡眠"
+  },
+  "tabGroupsSleepGroup": {
+    "message": "睡眠标签组"
+  },
+  "tabGroupsSleepTab": {
+    "message": "睡眠标签页"
+  },
+  "tabGroupsSleptToast": {
+    "description": "Toast after sleeping a single tab or tab group; the action button wakes it.",
+    "message": "已休眠 $count$ 个标签页",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsSummary": {
+    "message": "$tabs$ 个标签页 · $groups$ 个标签组",
+    "placeholders": {
+      "groups": {
+        "content": "$2"
+      },
+      "tabs": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsSyncCollapse": {
+    "message": "展开折叠同步到浏览器"
+  },
+  "tabGroupsSyncCollapseHint": {
+    "message": "选中后，在视图内折叠或展开标签组会同步更新浏览器标签组。默认关闭，视图内的折叠只保留在本地。"
+  },
+  "tabGroupsToolbarRefresh": {
+    "message": "刷新"
+  },
+  "tabGroupsUngroupGroup": {
+    "message": "取消分组"
+  },
+  "tabGroupsUngroupedTabs": {
+    "message": "未分组标签页"
+  },
+  "tabGroupsUnpinTab": {
+    "message": "取消固定标签页"
+  },
+  "tabGroupsViewEmpty": {
+    "message": "此窗口没有标签页"
+  },
+  "tabGroupsWakeAction": {
+    "description": "Toast action button: wakes the just-slept tab(s).",
+    "message": "唤醒"
+  },
+  "tabGroupsWakeGroup": {
+    "message": "唤醒标签组"
+  },
+  "tabGroupsWakeTab": {
+    "message": "唤醒标签页"
+  },
+  "tabGroupsWindow": {
+    "message": "窗口 $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabGroupsWindowClosedTitle": {
+    "description": "Title of the merged recently-closed record a window close writes.",
+    "message": "已关闭的窗口"
+  },
+  "tabGroupsWindowsCount": {
+    "message": "$n$ 个窗口",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabRowStage": {
+    "message": "发送到暂存"
+  },
+  "tabgroupStageAll": {
+    "message": "整组发送到暂存"
+  },
+  "tabgroupStageConfirm": {
+    "message": "发送 $n$ 个标签页到暂存?",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "tabgroupStageNone": {
+    "message": "该组没有可收藏的标签页"
   },
   "timeDaysAgo": {
     "message": "$n$ 天前",
@@ -153,766 +2534,27 @@
   "timeYesterday": {
     "message": "昨天"
   },
-  "viewRecent": {
-    "message": "暂存区"
-  },
-  "viewTree": {
-    "message": "书签树"
-  },
-  "viewSearch": {
-    "message": "搜索"
-  },
-  "viewSwitchAnnounce": {
-    "message": "$name$视图",
-    "placeholders": {
-      "name": {
-        "content": "$1"
-      }
-    }
-  },
-  "viewStateEnabled": {
-    "message": "已经启用"
-  },
-  "viewStateDisabled": {
-    "message": "已经禁用"
-  },
-  "viewEnable": {
-    "message": "启用"
-  },
-  "viewDisable": {
-    "message": "禁用"
-  },
-  "viewTabHide": {
-    "message": "隐藏"
-  },
-  "viewTabDisable": {
-    "message": "禁用"
-  },
-  "dupesConfirmAll": {
-    "message": "删除 $groups$ 组共 $count$ 条多余副本？每组保留当前选定的保留项。",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      },
-      "groups": {
-        "content": "$2"
-      }
-    },
-    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps the bookmark its keeper radio selected — the strategy default or a manual pick)."
-  },
-  "dupesConfirmSelected": {
-    "message": "从所选的 $groups$ 个重复组中删除 $count$ 条重复书签？",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      },
-      "groups": {
-        "content": "$2"
-      }
-    },
-    "description": "Confirm dialog of the dupes selection-mode apply: $count$ doomed rows across $groups$ selected groups."
-  },
-  "accessibility": {
-    "message": "无障碍"
-  },
-  "paletteCmdNewBookmark": {
-    "message": "新建书签…"
-  },
-  "optionTheme": {
-    "message": "主题"
-  },
-  "confirmOpenBookmarksNewWindow": {
-    "message": "确定要在新窗口中打开全部 $count$ 个书签吗？",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Confirmation message for opening all bookmarks in a new window."
-  },
-  "resetButton": {
-    "message": "重置"
-  },
-  "addBookmarkBefore": {
-    "message": "在此前添加书签"
-  },
-  "syncOptions": {
-    "message": "同步选项"
-  },
-  "deletedFolder": {
-    "message": "已删除文件夹 $title$",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Bookmarks"
-      }
-    },
-    "description": "Toast shown after a bookmark folder (with its whole subtree) was deleted; the toast offers an undo button. $title$ is the folder name."
-  },
-  "quickAddBookmark": {
-    "message": "收藏当前页面 (Ctrl+D)"
-  },
-  "quickAddBookmarkCommand": {
-    "message": "将当前标签页快速保存为书签"
-  },
-  "dupesCleanAll": {
-    "message": "全部清理：$groups$ 组、$count$ 条多余副本",
-    "placeholders": {
-      "groups": {
-        "content": "$1"
-      },
-      "count": {
-        "content": "$2"
-      }
-    },
-    "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go."
-  },
-  "deadChecking": {
-    "message": "正在检测 $done$ / $total$…",
-    "placeholders": {
-      "done": {
-        "content": "$1",
-        "example": "12"
-      },
-      "total": {
-        "content": "$2",
-        "example": "120"
-      }
-    },
-    "description": "Progress line of the palette's dead-link scan mode; $done$ bookmarks checked out of $total$."
-  },
-  "deadConfirmAll": {
-    "message": "删除全部 $count$ 个失效书签？此操作无法一步撤销。",
-    "placeholders": {
-      "count": {
-        "content": "$1",
-        "example": "12"
-      }
-    }
-  },
-  "deadConfirmDelete": {
-    "message": "删除这条书签？"
-  },
-  "deadDeleteAll": {
-    "message": "删除当前筛选下的全部 $count$ 个书签?",
-    "placeholders": {
-      "count": {
-        "content": "$1",
-        "example": "8"
-      }
-    }
-  },
-  "deadDeleteAllNote": {
-    "message": "「全部」筛选下包含受限书签(代理服务器可达,大概率并未失效)以及过去标注的行。",
-    "description": "Delete-all confirmation in the Dead links view: the All-filter warning, shown on the confirmation's second line before undoSingleStepNote."
-  },
-  "undoSingleStepNote": {
-    "message": "撤销只能恢复最近一次删除。",
-    "description": "Appended to every batch-deletion confirmation (dead links view, duplicates view): undo() restores only the most recent deletion, not a whole batch."
-  },
-  "deadDeleteAllBtn": {
-    "message": "删除全部"
-  },
-  "deadDeleteSelected": {
-    "message": "删除所选"
-  },
-  "deadConfirmDeleteSelected": {
-    "message": "删除所选的 $count$ 个失效书签？",
-    "placeholders": {
-      "count": {
-        "content": "$1",
-        "example": "8"
-      }
-    }
-  },
-  "deadDeleted": {
-    "message": "已删除 $count$ 个失效书签",
-    "placeholders": {
-      "count": {
-        "content": "$1",
-        "example": "8"
-      }
-    }
-  },
-  "deadClearScan": {
-    "message": "清除扫描结果",
-    "description": "Batch button in the dead-link view after Clear all marks: wipe the current scan's dead/blocked verdicts. Marks survive and move to the past-marks category."
-  },
-  "deadNone": {
-    "message": "没有发现死链"
-  },
-  "deadNoneFiltered": {
-    "message": "当前过滤条件下没有死链，试试上方其他分段"
-  },
-  "deadRescan": {
-    "message": "重新检测"
-  },
-  "openSidePanelCommand": {
-    "message": "打开 vBookmarks 侧栏"
-  },
-  "optionAnnounceEnabledHint": {
-    "message": "来自项目 GitHub 仓库的版本更新与提示（至多每 6 小时拉取一次）。关闭同时停用联网。"
-  },
-  "optionAnnounceEnabled": {
-    "message": "显示应用内公告"
-  },
-  "optionThemeAuto": {
-    "message": "跟随系统"
-  },
-  "edit": {
-    "message": "编辑..."
-  },
-  "customIconDescription": {
-    "message": "图标尺寸必须为 19×19 像素，否则将自动调整为此尺寸。"
-  },
-  "resetSettingsDescription": {
-    "message": "将 vBookmarks 重置为默认设置。"
-  },
-  "defaultIconButtonOr": {
-    "message": "或"
-  },
-  "customIconPick": {
-    "message": "选择文件…"
-  },
-  "optionSyncRefreshIntervalSeconds": {
-    "message": "秒"
-  },
-  "syncStatusSynced": {
-    "message": "已同步至 Google 账号"
-  },
-  "syncStatusLocal": {
-    "message": "仅本地，不上传"
-  },
-  "syncStatusUnsyncable": {
-    "message": "无法同步"
-  },
-  "syncSuffixSynced": {
-    "message": "（已同步）"
-  },
-  "syncSuffixLocal": {
-    "message": "（仅本地）"
-  },
-  "advancedOptions": {
-    "message": "高级选项"
-  },
-  "announceV407Text": {
-    "message": "v4.0.7 全功能的死链视图：扫描、标注、筛选与排序死链/受限链接，保留过往标注与每次检测时间。"
-  },
-  "announceV407Title": {
-    "message": "v4.0.7 更新内容"
-  },
-  "announceV408Title": {
-    "message": "v4.0.8 更新内容"
-  },
-  "announceV410Title": {
-    "message": "v4.1.0 新变化"
-  },
-  "announceV410Text": {
-    "message": "v4.1.0 新增标签组视图与暂存区：在书签旁管理各窗口的标签页，并从任意入口收集书签到暂存工作台批量整理。"
-  },
-  "announceV408Text": {
-    "message": "v4.0.8 图标加强版：自动为 Chrome 未缓存的收藏网站拉取真实图标。"
-  },
-  "announceDismiss": {
-    "message": "关闭"
-  },
-  "extName": {
-    "message": "vBookmarks"
-  },
-  "removeSeparator": {
-    "message": "移除分隔线"
-  },
-  "resetSettings": {
-    "message": "重置设置"
-  },
-  "customSeparatorTitleDescription": {
-    "message": "作为分隔线显示的书签的实际标题"
-  },
-  "donationMessage": {
-    "message": "喜欢它吗？捐赠助力它的未来，或前往商店评分——每条评价都是我们持续更新与进步的动力。"
-  },
-  "donationV4Notice": {
-    "message": "vBookmarks 4.0 是采用现代化设计的完全重制版本，带来大量新功能。"
-  },
-  "donationV4GuideLink": {
-    "message": "阅读 v4 新特性指南 →"
-  },
-  "optionClickNewTab": {
-    "message": "左键单击在新标签页中打开书签。"
-  },
-  "confirmOpenBookmarksNewIncognitoWindow": {
-    "message": "确定要在新的无痕窗口中打开全部 $count$ 个书签吗？",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Confirmation message for opening all bookmarks in a new incognito window."
-  },
-  "nope": {
-    "message": "取消"
-  },
-  "openIncognitoWindow": {
-    "message": "在无痕窗口中打开"
-  },
-  "paletteCmdQuickAdd": {
-    "message": "收藏当前标签页"
-  },
-  "sessionEmpty": {
-    "message": "没有可保存的标签页"
-  },
-  "sortByDateAdded": {
-    "message": "按添加时间（新的在前）"
-  },
-  "recentBookmarks": {
-    "message": "最近添加"
-  },
-  "copyAllTitlesAndUrls": {
-    "message": "复制所有标题和网址到剪贴板"
-  },
-  "searchBookmarks": {
-    "message": "搜索书签"
-  },
-  "searchClear": {
-    "message": "清除搜索"
-  },
-  "reportError": {
-    "message": "报告错误"
-  },
-  "addNewFolderAfter": {
-    "message": "在此后添加文件夹"
-  },
-  "editBookmark": {
-    "message": "编辑书签"
-  },
-  "editFolder": {
-    "message": "编辑文件夹"
-  },
-  "parentFolder": {
-    "message": "父文件夹：“$folderName$”",
-    "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarksbar"
-      }
-    },
-    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list."
-  },
-  "optionSyncRefreshInterval": {
-    "message": "刷新间隔"
-  },
-  "openBookmarks": {
-    "message": "打开所有书签"
-  },
-  "openBookmarksInGroup": {
-    "message": "全部打开为标签组"
-  },
-  "openBookmarksInGroupSetup": {
-    "message": "全部打开为标签组并设置…"
-  },
-  "openBookmarksInExistingGroup": {
-    "message": "全部打开到已有标签组…"
-  },
-  "tabGroupOptions": {
-    "message": "标签页组"
-  },
-  "sortMenuOptions": {
-    "message": "排序"
-  },
-  "optionConfirmOpenFolder": {
-    "message": "从文件夹打开大量书签时显示确认。"
-  },
-  "optionConfirmDeleteFolder": {
-    "message": "删除非空文件夹前确认"
-  },
-  "addSeparator": {
-    "message": "添加分隔线"
-  },
-  "confirmDeleteFolderSubfoldersBookmarks": {
-    "message": "确定要删除文件夹 $folderName$、其中的 $subFolderCount$ 个子文件夹和 $bookmarkCount$ 个书签吗？",
-    "placeholders": {
-      "bookmarkCount": {
-        "content": "$3"
-      },
-      "folderName": {
-        "content": "$1"
-      },
-      "subFolderCount": {
-        "content": "$2"
-      }
-    }
-  },
-  "paletteCmdSaveSession": {
-    "message": "保存当前窗口标签为文件夹"
-  },
-  "paletteCmdNewFolder": {
-    "message": "新建文件夹…"
-  },
-  "customSeparatorStringDescription": {
-    "message": "如果书签的网址包含此字符串，则将其显示为分隔线"
-  },
-  "customStylesDescription": {
-    "message": "这需要一定的 CSS 技能。自行修改风险自负。建议通过以下方式分享代码："
-  },
-  "optionCloseUnusedFolders": {
-    "message": "打开文件夹时关闭未使用的文件夹。"
-  },
-  "optionPopupStays": {
-    "message": "打开（左键单击）书签时弹出窗口保持打开。"
-  },
-  "confirmOpenBookmarks": {
-    "message": "确定要打开全部 $count$ 个书签吗？",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Confirmation message for opening all bookmarks."
-  },
-  "url": {
-    "message": "网址"
-  },
-  "palettePlaceholder": {
-    "message": "搜索书签、文件夹、命令…"
-  },
-  "addNewFolderBefore": {
-    "message": "在此前添加文件夹"
-  },
-  "customIcon": {
-    "message": "自定义图标"
-  },
-  "folderEmpty": {
-    "message": "（空文件夹）"
-  },
-  "save": {
-    "message": "保存"
+  "toolButtonTitle": {
+    "message": "工具 (Ctrl+K)"
   },
   "undoAction": {
     "message": "撤销"
   },
-  "revealOutsideBarHint": {
-    "message": "当前仅显示书签栏：目标不在书签栏内。"
+  "undoSingleStepNote": {
+    "description": "Appended to every batch-deletion confirmation (dead links view, duplicates view): undo() restores only the most recent deletion, not a whole batch.",
+    "message": "撤销只能恢复最近一次删除。"
   },
-  "revealOutsideBarAction": {
-    "message": "显示全部并定位"
+  "unpinFolder": {
+    "message": "取消固定此文件夹"
   },
-  "optionOnlyShowBookmarkBar": {
-    "message": "仅显示书签栏中的书签"
+  "url": {
+    "message": "网址"
   },
-  "sortRecursive": {
-    "message": "同时排序子文件夹（递归）"
+  "versionDialogCopied": {
+    "message": "已复制"
   },
-  "noTitle": {
-    "message": "（无标题）"
-  },
-  "sortByTitle": {
-    "message": "按标题"
-  },
-  "defaultIconButton": {
-    "message": "使用默认图标"
-  },
-  "customSeparatorColorDescription": {
-    "message": "自定义分隔线颜色"
-  },
-  "sessionSaved": {
-    "message": "已保存 $count$ 个标签页到新文件夹",
-    "placeholders": {
-      "count": {
-        "content": "$1",
-        "example": "12"
-      }
-    },
-    "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
-  },
-  "sortFoldersFirst": {
-    "message": "子文件夹排在前面"
-  },
-  "optionSearchAfterEnter": {
-    "message": "仅在按下回车键时搜索书签（而非即时搜索）"
-  },
-  "paletteNoResults": {
-    "message": "没有匹配结果"
-  },
-  "openCommandPaletteCommand": {
-    "message": "打开命令面板"
-  },
-  "searchNoResults": {
-    "message": "未找到匹配的书签"
-  },
-  "searchViewHint": {
-    "message": "在上方输入框中输入关键字搜索书签"
-  },
-  "selectAll": {
-    "message": "全选",
-    "description": "Selection mode (dead/dupes views): select every row/group."
-  },
-  "selectClear": {
-    "message": "清空",
-    "description": "Selection mode (dead/dupes views): clear the whole selection."
-  },
-  "selectCount": {
-    "message": "已选 $count$ 项",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Selection mode (dead/dupes views): label with the current selection size."
-  },
-  "selectInvert": {
-    "message": "反选",
-    "description": "Selection mode (dead/dupes views): invert the selection."
-  },
-  "selectModeEnter": {
-    "message": "选择",
-    "description": "Toolbar button that enters selection mode (dead/dupes views)."
-  },
-  "selectModeExit": {
-    "message": "退出选择",
-    "description": "Selection mode (dead/dupes views): leave the mode."
-  },
-  "deadRiskBanner": {
-    "message": "死链清理会批量删除书签，首次清理前请先备份书签。"
-  },
-  "dupesRiskBanner": {
-    "message": "去重会批量删除重复书签，应用去重前请先备份书签。"
-  },
-  "riskBannerHelp": {
-    "message": "备份与恢复帮助"
-  },
-  "riskBannerNever": {
-    "message": "不再提示"
-  },
-  "riskBannerDismiss": {
-    "message": "关闭"
-  },
-  "sessionFolderName": {
-    "message": "会话 $date$",
-    "placeholders": {
-      "date": {
-        "content": "$1",
-        "example": "2026-07-18 15:04"
-      }
-    },
-    "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm."
-  },
-  "sortRecursiveWarning": {
-    "message": "将重排所有子文件夹内的书签。"
-  },
-  "tabGroupDialogTitle": {
-    "message": "新建标签组"
-  },
-  "tabGroupTitleLabel": {
-    "message": "组标题"
-  },
-  "tabGroupColorLabel": {
-    "message": "颜色"
-  },
-  "tabGroupColorGrey": {
-    "message": "灰",
-    "description": "Accessible name of the grey color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorBlue": {
-    "message": "蓝",
-    "description": "Accessible name of the blue color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorRed": {
-    "message": "红",
-    "description": "Accessible name of the red color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorYellow": {
-    "message": "黄",
-    "description": "Accessible name of the yellow color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorGreen": {
-    "message": "绿",
-    "description": "Accessible name of the green color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorPink": {
-    "message": "粉",
-    "description": "Accessible name of the pink color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorPurple": {
-    "message": "紫",
-    "description": "Accessible name of the purple color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorCyan": {
-    "message": "青",
-    "description": "Accessible name of the cyan color swatch in the new-tab-group dialog."
-  },
-  "tabGroupColorOrange": {
-    "message": "橙",
-    "description": "Accessible name of the orange color swatch in the new-tab-group dialog."
-  },
-  "tabGroupUntitled": {
-    "message": "未命名标签组"
-  },
-  "tabGroupNoGroups": {
-    "message": "当前没有已有标签组"
-  },
-  "tabGroupPickDialogTitle": {
-    "message": "打开到已有标签组"
-  },
-  "optionsFooterText": {
-    "message": "由 $authorName$ 构建。",
-    "placeholders": {
-      "authorName": {
-        "content": "$1"
-      }
-    },
-    "description": "Footer text for the Options page"
-  },
-  "quickAdded": {
-    "message": "已添加书签"
-  },
-  "quickAddedTo": {
-    "message": "书签已添加到 $folderName$",
-    "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarks bar"
-      }
-    }
-  },
-  "quickRemoved": {
-    "message": "书签已移除"
-  },
-  "quickRemoveBookmark": {
-    "message": "移除该书签 (Ctrl+D)"
-  },
-  "toolButtonTitle": {
-    "message": "工具 (Ctrl+K)"
-  },
-  "optionThemeDark": {
-    "message": "深色"
-  },
-  "optionThemeInk": {
-    "message": "Ink（深色）"
-  },
-  "optionThemePaper": {
-    "message": "Paper（浅色）"
-  },
-  "optionLanguage": {
-    "message": "语言"
-  },
-  "optionLanguageAuto": {
-    "message": "自动"
-  },
-  "optionLanguageHint": {
-    "message": "切换语言后会重新加载本页面。"
-  },
-  "sortFolderContents": {
-    "message": "排序文件夹内容"
-  },
-  "sortByName": {
-    "message": "按名称排序",
-    "description": "文件夹右键菜单项（issue #33）：按标题排序，套用已保存的文件夹在前/递归选项。"
-  },
-  "sortByDate": {
-    "message": "按添加时间排序",
-    "description": "文件夹右键菜单项（issue #33）：按添加时间排序（新在前），套用已保存的文件夹在前/递归选项。"
-  },
-  "sortRecursiveSuffix": {
-    "message": "（递归）",
-    "description": "递归开启时追加到直接排序菜单项，如“按名称排序（递归）”。"
-  },
-  "sortOptions": {
-    "message": "排序选项…",
-    "description": "文件夹右键菜单项（issue #33）：打开排序对话框进行一次性配置。"
-  },
-  "sortDone": {
-    "message": "文件夹已排序",
-    "description": "排序完成后弹出的 toast；撤销按钮恢复原顺序。"
-  },
-  "confirmDeleteFolder": {
-    "message": "该文件夹包含 $count$ 个项目，删除后可撤销。",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "confirmDeleteFolderButton": {
-    "message": "删除"
-  },
-  "confirmDeleteFolderBookmarks": {
-    "message": "确定要删除文件夹 $folderName$ 及其中的 $bookmarkCount$ 个书签吗？",
-    "placeholders": {
-      "bookmarkCount": {
-        "content": "$2"
-      },
-      "folderName": {
-        "content": "$1"
-      }
-    }
-  },
-  "dupesGroupCount": {
-    "message": "$count$ 条重复",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
-  },
-  "dupesGroupExpand": {
-    "message": "展开分组",
-    "description": "Dupes view group-head context menu: expand a collapsed duplicate group."
-  },
-  "dupesGroupCollapse": {
-    "message": "收起分组",
-    "description": "Dupes view group-head context menu: collapse an expanded duplicate group."
-  },
-  "openNewTab": {
-    "message": "在新标签页中打开"
-  },
-  "bookmarkOpenInNewGroup": {
-    "message": "打开到新标签组"
-  },
-  "bookmarkOpenInNewGroupSetup": {
-    "message": "打开到新标签组并设置…"
-  },
-  "bookmarkOpenInExistingGroup": {
-    "message": "打开到已有标签组…"
-  },
-  "addBookmarkAfter": {
-    "message": "在此后添加书签"
-  },
-  "ignore": {
-    "message": "忽略"
-  },
-  "open": {
-    "message": "打开"
-  },
-  "optionOpenNewTab": {
-    "message": "中键单击或按住 Ctrl 单击在后台新标签页中打开书签（而非前台）。"
-  },
-  "options": {
-    "message": "选项"
-  },
-  "replaceUrl": {
-    "message": "替换为当前网址"
-  },
-  "name": {
-    "message": "名称"
-  },
-  "optionHighlightUnsynced": {
-    "message": "变淡显示未同步的书签"
-  },
-  "donationDismiss": {
-    "message": "忽略"
-  },
-  "paletteClose": {
-    "message": "关闭"
-  },
-  "paletteCmdVersion": {
-    "message": "版本信息"
-  },
-  "paletteCmdLang": {
-    "message": "切换语言…"
-  },
-  "paletteCmdLangUsage": {
-    "message": "用法：/lang 加语言代码——例如 /lang en、/lang zh_CN、/lang ja。"
+  "versionDialogCopy": {
+    "message": "复制信息"
   },
   "versionDialogTitle": {
     "message": "vBookmarks $version$",
@@ -921,15 +2563,6 @@
         "content": "$1"
       }
     }
-  },
-  "versionDialogCopy": {
-    "message": "复制信息"
-  },
-  "versionDialogCopied": {
-    "message": "已复制"
-  },
-  "versionMetaVersion": {
-    "message": "扩展版本"
   },
   "versionMetaAnnounce": {
     "message": "本次更新"
@@ -940,895 +2573,79 @@
   "versionMetaBrowser": {
     "message": "浏览器"
   },
-  "versionMetaOS": {
-    "message": "操作系统"
-  },
   "versionMetaChannel": {
     "message": "通道"
   },
   "versionMetaLanguage": {
     "message": "语言"
   },
+  "versionMetaOS": {
+    "message": "操作系统"
+  },
   "versionMetaUserAgent": {
     "message": "User agent"
   },
-  "paletteCmdDead": {
-    "message": "检测死链"
-  },
-  "paletteCmdDupes": {
-    "message": "清理重复书签"
-  },
-  "general": {
-    "message": "常规"
-  },
-  "customSeparatorUrlDescription": {
-    "message": "作为分隔线显示的书签的实际网址"
-  },
-  "openNewWindow": {
-    "message": "在新窗口中打开"
-  },
-  "dupesNone": {
-    "message": "没有发现重复书签"
-  },
-  "optionOpenInSidePanel": {
-    "message": "在侧栏中打开（替代弹窗）"
-  },
-  "extDesc": {
-    "message": "一个弹出式书签管理器。增强版 Neat Bookmarks。比 Neater Bookmarks 更整洁。"
-  },
-  "optionAutoResizePopup": {
-    "message": "自动调整弹出窗口大小以适配内容"
-  },
-  "crossStorageMoveWarning": {
-    "message": "无法在同步存储和本地存储之间移动书签，请改用复制/粘贴。"
-  },
-  "deletedBookmark": {
-    "message": "已删除 $title$",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Example"
-      }
-    },
-    "description": "Toast shown after a bookmark or separator was deleted; the toast offers an undo button. $title$ is the deleted row's title (empty for separators)."
-  },
-  "optionRememberPrevState": {
-    "message": "记住之前的状态（滚动位置、已打开的文件夹和上次聚焦的书签）。"
-  },
-  "optionAutoRefreshSync": {
-    "message": "自动刷新同步状态"
-  },
-  "openBookmarksNewWindow": {
-    "message": "在新窗口中打开所有书签"
-  },
-  "addNewFolder": {
-    "message": "添加子文件夹"
-  },
-  "copyTitleAndUrl": {
-    "message": "复制标题和网址"
-  },
-  "openBookmarksIncognitoWindow": {
-    "message": "在无痕窗口中打开所有书签"
-  },
-  "optionThemeLight": {
-    "message": "浅色"
-  },
-  "optionZoom": {
-    "message": "缩放"
-  },
-  "confirmDeleteFolderSubfolders": {
-    "message": "确定要删除文件夹 $folderName$ 及其中的 $subFolderCount$ 个子文件夹吗？",
-    "placeholders": {
-      "folderName": {
-        "content": "$1"
-      },
-      "subFolderCount": {
-        "content": "$2"
-      }
-    }
-  },
-  "dupesConfirmGroup": {
-    "message": "保留“$title$”，删除其余 $count$ 条副本？",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "示例书签"
-      },
-      "count": {
-        "content": "$2"
-      }
-    },
-    "description": "Confirmation before deleting the redundant copies of one duplicate group; $title$ is the group's current keeper (the strategy default or a manual radio pick — same wording as the group header's ✓ hint dupesCleanRestHint)."
-  },
-  "reportedToDeveloper": {
-    "message": "已向开发者报告。"
-  },
-  "delete": {
-    "message": "删除"
-  },
-  "customStyles": {
-    "message": "自定义样式"
-  },
-  "separatorOptions": {
-    "message": "分割线"
-  },
-  "deleteEllipsis": {
-    "message": "删除..."
-  },
-  "addBookmarkBottom": {
-    "message": "添加书签至底部"
-  },
-  "contextMenuAddBookmark": {
-    "message": "用 vBookmarks 收藏此页面"
-  },
-  "deadFilterAll": {
-    "message": "全部"
-  },
-  "deadFilterBlocked": {
-    "message": "仅受限"
-  },
-  "deadFilterDead": {
-    "message": "仅死链"
-  },
-  "deadFilterMarked": {
-    "message": "过去标注"
-  },
-  "deadLastScanAt": {
-    "message": "上次扫描：$time$",
-    "placeholders": {
-      "time": {
-        "content": "$1"
-      }
-    }
-  },
-  "deadMark": {
-    "message": "标记为死链"
-  },
-  "deadMarkAll": {
-    "message": "全部标记"
-  },
-  "deadMarked": {
-    "message": "死链行已全部标记"
-  },
-  "deadMarkedCount": {
-    "message": "已标记 $count$ 个书签",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "deadMarkedNone": {
-    "message": "还没有标记过书签",
-    "description": "Empty state of the past-marks (上次标注) category when the last scan left no marks; a scan has run, so this is a plain empty state, not the first-run start button."
-  },
-  "deadMarkedRow": {
-    "message": "已标记",
-    "description": "死链视图：独立标记列表中用户标记书签的行内徽标（无扫描结果行承载该标记时显示）。"
-  },
-  "deadMarkSelected": {
-    "message": "标记所选",
-    "description": "Dead view selection mode: mark every selected row as dead."
-  },
-  "deadMarkStatusAll": {
-    "message": "任意状态",
-    "description": "死链视图第二工具条（标注状态筛选）：不论标注状态显示所有行，与分类工具条的“全部”措辞区分。"
-  },
-  "deadMarkStatusMarked": {
-    "message": "已标注",
-    "description": "死链视图第二工具条（标注状态筛选）：只显示带死链标注的行。"
-  },
-  "deadMarkStatusUnmarked": {
-    "message": "未标注",
-    "description": "死链视图第二工具条（标注状态筛选）：只显示未带死链标注的行。"
-  },
-  "deadMarkTimeLabel": {
-    "message": "标记于",
-    "description": "死链视图行 tooltip 标签：该行被标注为死链的绝对时间（追加在 tooltip 与宽/面板布局的第二行右侧）。"
-  },
-  "deadDetectTimeLabel": {
-    "message": "检测于",
-    "description": "死链视图行 tooltip 标签：该行扫描判定死链/受限的绝对时间（追加在 tooltip 与宽/面板布局的第二行右侧）。"
-  },
-  "deadSortLabel": {
-    "message": "排序方式",
-    "description": "死链视图排序下拉：触发器与列表框的 aria-label。"
-  },
-  "deadSortByDetected": {
-    "message": "检测时间",
-    "description": "死链视图排序下拉选项：按扫描判定先后排列。"
-  },
-  "deadSortByPath": {
-    "message": "路径顺序",
-    "description": "死链视图排序下拉选项：按书签所在文件夹路径排列。"
-  },
-  "deadSortByMarked": {
-    "message": "标记时间",
-    "description": "死链视图排序下拉选项：按标注为死链的时间排列。"
-  },
-  "deadMarkedBanner": {
-    "message": "正在显示过去标注的书签。点击\"重新扫描\"可开始新一轮检测，也可在下方列表中处理这些书签。",
-    "description": "死链视图：显示过去标注列表时工具栏上方的提示横幅（取消扫描或\"过去标注\"筛选的仅标注视图，以及\"全部\"视图下扫描完成后仍有过去标注追加于下方时），说明当前列表、指向重新扫描，并提示可在下方处理书签。"
-  },
-  "deadMarkedBannerDismiss": {
-    "message": "关闭提示",
-    "description": "死链已标注列表横幅：× 按钮的 aria-label/title（会话级隐藏）。"
-  },
-  "deadProxyAdd": {
-    "message": "添加代理服务器用于死链检测"
-  },
-  "deadProxyLabel": {
-    "message": "代理：$server$",
-    "placeholders": {
-      "server": {
-        "content": "$1"
-      }
-    }
-  },
-  "deadProxyChange": {
-    "message": "更换"
-  },
-  "deadProxyRemove": {
-    "message": "移除"
-  },
-  "deadProxyRemoved": {
-    "message": "已移除代理服务器"
-  },
-  "deadProxyPanelHint": {
-    "message": "输入你已有的代理服务器地址（扩展本身不提供代理），如 127.0.0.1:7890 或 socks5://127.0.0.1:1080。"
-  },
-  "deadProxyTestUrlLabel": {
-    "message": "测试 URL"
-  },
-  "deadProxyTestSave": {
-    "message": "测试并保存"
-  },
-  "deadProxyTesting": {
-    "message": "正在测试…"
-  },
-  "deadProxySaved": {
-    "message": "代理已保存——之后的扫描会用它复核直连失败的书签"
-  },
-  "deadProxyInvalid": {
-    "message": "代理地址无效——请使用 host:port 或 scheme://host:port（支持 http/https/socks5，不支持账号密码）"
-  },
-  "deadProxyUnreachable": {
-    "message": "代理不可达，未保存"
-  },
-  "deadProxyDenied": {
-    "message": "未授予代理权限"
-  },
-  "deadProxyControlled": {
-    "message": "代理设置正由其他扩展管理，无法使用"
-  },
-  "deadProxyUnavailable": {
-    "message": "当前浏览器不支持代理接口"
-  },
-  "deadProxyNudge": {
-    "message": "代理复查可区分真正的死链与区域受限——可在此处或设置页配置。"
-  },
-  "deadStartHint": {
-    "message": "开始扫描 $n$ 个书签",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "deadStatusBlocked": {
-    "message": "受限"
-  },
-  "deadUnmark": {
-    "message": "取消死链标记"
-  },
-  "deadUnmarkAll": {
-    "message": "清除所有标记"
-  },
-  "deadUnmarkSelected": {
-    "message": "取消标记所选",
-    "description": "Dead view selection mode: remove the dead mark from every selected row."
-  },
-  "donationGo": {
-    "message": "支持一下"
-  },
-  "donationRate": {
-    "message": "去评分"
-  },
-  "donationRateTitle": {
-    "message": "前往 Chrome 应用商店为 vBookmarks 评分"
-  },
-  "donationLater": {
-    "message": "稍后"
-  },
-  "donationNever": {
-    "message": "不再显示"
-  },
-  "dupesApplyAll": {
-    "message": "全部应用（$count$）",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "dupesApplySelected": {
-    "message": "去重所选（$count$）",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Dupes view selection mode: apply dedup to the selected groups; $count$ is the total doomed row count."
-  },
-  "dupesCleanRestHint": {
-    "message": "保留“$title$”，删除其余 $count$ 项",
-    "description": "Tooltip/aria-label of the quick action on a duplicate group header: apply the configured keeper strategy to this group alone — keep $title$, delete the other $count$ rows.",
-    "placeholders": {
-      "title": {
-        "content": "$1"
-      },
-      "count": {
-        "content": "$2"
-      }
-    }
-  },
-  "dupesIgnoreScheme": {
-    "message": "忽略 http/https 差异"
-  },
-  "dupesKeepThis": {
-    "message": "保留此条"
-  },
-  "dupesKeeperSet": {
-    "message": "设为保留项"
-  },
-  "dupesPreviewSummary": {
-    "message": "$groups$ 组 · 将释放 $count$ 条",
-    "placeholders": {
-      "groups": {
-        "content": "$1"
-      },
-      "count": {
-        "content": "$2"
-      }
-    }
-  },
-  "dupesRemoveRow": {
-    "message": "删除此条"
-  },
-  "dupesScopeAll": {
-    "message": "全部书签"
-  },
-  "dupesScopeBar": {
-    "message": "仅书签栏"
-  },
-  "dupesStrategyBookmarkBar": {
-    "message": "保留书签栏中的"
-  },
-  "dupesStrategyMostVisited": {
-    "message": "保留最常访问"
-  },
-  "dupesStrategyNewest": {
-    "message": "保留最新"
-  },
-  "dupesStrategyOldest": {
-    "message": "保留最早"
-  },
-  "dupesStrategyShallowest": {
-    "message": "保留最浅层级"
-  },
-  "dupesStrategyShortestTitle": {
-    "message": "保留最短标题"
-  },
-  "optionDeadProxyServer": {
-    "message": "死链检测代理服务器"
-  },
-  "deadProxyServerHint": {
-    "message": "保存后每次死链扫描都会用它复核直连失败的书签,区分真正的死链与区域受限。点\"测试并保存\"会探测可达性(只保留可达的服务器);也可在死链视图中添加。"
-  },
-  "deadProxyClear": {
-    "message": "清除"
-  },
-  "deadProxyNone": {
-    "message": "（未设置）"
-  },
-  "optionDeadScanConcurrency": {
-    "message": "死链扫描并发数（1-16）"
-  },
-  "optionDeadScanTimeout": {
-    "message": "死链扫描超时秒数（2-30）"
-  },
-  "paletteCmdGoDead": {
-    "message": "切换到死链视图"
-  },
-  "paletteCmdGoDupes": {
-    "message": "切换到重复书签视图"
-  },
-  "paletteCmdGoRecent": {
-    "message": "切换到暂存/最近视图"
-  },
-  "paletteCmdGoSearch": {
-    "message": "切换到搜索视图"
-  },
-  "paletteCmdGoTree": {
-    "message": "切换到书签树视图"
-  },
-  "paletteCmdOptions": {
-    "message": "打开选项页"
-  },
-  "paletteCmdSearchInView": {
-    "message": "在搜索视图中搜索“$query$”",
-    "placeholders": {
-      "query": {
-        "content": "$1"
-      }
-    }
-  },
-  "rowActionDelete": {
-    "message": "删除"
-  },
-  "rowActionMark": {
-    "message": "标记为死链"
-  },
-  "rowActionReveal": {
-    "message": "在树中定位"
-  },
-  "rowActionUnmark": {
-    "message": "取消死链标记"
+  "versionMetaVersion": {
+    "message": "扩展版本"
   },
   "viewDead": {
     "message": "死链"
   },
+  "viewDisable": {
+    "message": "禁用"
+  },
   "viewDupes": {
     "message": "重复书签"
   },
-  "viewStats": {
-    "message": "统计",
-    "description": "访问统计视图的标签页标题。"
+  "viewEnable": {
+    "message": "启用"
   },
-  "paletteCmdGoStats": {
-    "message": "切换到统计视图",
-    "description": "命令面板条目：切换到访问统计视图（slash 别名 /stats）。"
-  },
-  "optionStatsEnabled": {
-    "message": "启用访问统计",
-    "description": "选项页复选框（视图分组）：访问统计采集的总开关。"
-  },
-  "optionFaviconContrast": {
-    "message": "反转低对比度图标"
-  },
-  "optionFaviconContrastHint": {
-    "message": "浅色主题上的白色图标和深色主题上的黑色图标会被反转，以便保持可见。每个图标在加载时采样一次，浏览时不会产生额外开销。"
-  },
-  "optionFaviconEnrich": {
-    "message": "补全缺失的网站图标"
-  },
-  "optionFaviconEnrichHint": {
-    "message": "对 Chrome 尚未缓存图标的收藏网站，直接从站点获取真实图标（/favicon.ico → 页面图标声明）。请求只发往你已收藏的网站。"
-  },
-  "optionFaviconEnrichAgg": {
-    "message": "用第三方图标服务兜底"
-  },
-  "optionFaviconEnrichAggHint": {
-    "message": "直连获取失败时，从内置第三方图标服务按域名取图（$providers$ 自动切换）。检测到某服务不可达时切换下一家，6 小时内不再重复尝试该服务。",
+  "viewHiddenTabsHint": {
+    "message": "当前位于$view$视图，你可以通过 $back$ 键或命令面板回到树视图。",
     "placeholders": {
-      "providers": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionFaviconBackup": {
-    "message": "备份时包含图标缓存"
-  },
-  "optionFaviconBackupHint": {
-    "message": "把补全的图标缓存（按站点的数据，体积可能较大）一并纳入设置导出/导入；即使已关闭补全，已缓存的图标也会一并携带。关闭可保持备份精简；图标本就会自动重新补全。"
-  },
-  "optionFaviconCacheClear": {
-    "message": "清除图标缓存"
-  },
-  "optionFaviconCacheClearConfirm": {
-    "message": "确定清除补全的图标缓存？图标会在下次打开时自动重新补全。",
-    "description": "清除 favicon 缓存前显示的确认提示。"
-  },
-  "optionFaviconCacheEmpty": {
-    "message": "没有可清除的图标缓存。",
-    "description": "用户点击“清除图标缓存”但没有缓存键时显示的提示。"
-  },
-  "optionFaviconCacheCleared": {
-    "message": "图标缓存已清除，将在下次打开时重新补全。"
-  },
-  "favGalleryLink": {
-    "message": "查看已补全的图标",
-    "description": "Options link (Icons group, right of the Clear icon cache button): opens the favicon gallery page listing the sites whose icons were refetched."
-  },
-  "favGalleryTitle": {
-    "message": "已补全的网站图标",
-    "description": "Favicon gallery page title (h1 + document title)."
-  },
-  "favGalleryHint": {
-    "message": "这里列出 vBookmarks 为 Chrome 尚未缓存图标的已收藏站点抓取的图标——每个图标来自哪里、被哪些书签使用。本页仅供展示。",
-    "description": "Subtitle under the favicon gallery title, explaining the page is read-only."
-  },
-  "favGallerySearch": {
-    "message": "按站点、标题或路径过滤",
-    "description": "Placeholder of the favicon gallery filter input."
-  },
-  "favGalleryAll": {
-    "message": "全部",
-    "description": "Favicon gallery source filter chip: show every source."
-  },
-  "favSrcDirect": {
-    "message": "直连",
-    "description": "Favicon gallery source badge: the icon was fetched directly from the site itself."
-  },
-  "favSrcProxy": {
-    "message": "代理",
-    "description": "Favicon gallery source badge: the icon was fetched through the user's own proxy relay."
-  },
-  "favSrcLegacy": {
-    "message": "早期缓存",
-    "description": "Favicon gallery source badge: cached before the source was recorded, so the origin is unknown."
-  },
-  "favGalleryCompare": {
-    "message": "对比占位图标",
-    "description": "Favicon gallery toggle button: switch every icon to the generic placeholder it replaced (before/after comparison)."
-  },
-  "favGalleryShowingBefore": {
-    "message": "返回真实图标",
-    "description": "Favicon gallery toggle button while the placeholder comparison is shown: switch back to the real fetched icons."
-  },
-  "favGalleryStatSites": {
-    "message": "$n$ 个站点",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    },
-    "description": "Favicon gallery stats strip: how many sites have a refreshed icon."
-  },
-  "favGalleryStatBookmarks": {
-    "message": "$n$ 条书签",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    },
-    "description": "Favicon gallery stats strip: how many bookmarks sit on the refreshed sites."
-  },
-  "favGalleryVisits": {
-    "message": "已记录打开 $n$ 次",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    },
-    "description": "Favicon gallery tooltip on a bookmark row's visit-count pill."
-  },
-  "favGalleryFailedTitle": {
-    "message": "近期尝试过但未找到图标",
-    "description": "Favicon gallery heading of the muted section listing hosts whose icon fetch failed recently."
-  },
-  "favGalleryFailedHint": {
-    "message": "失败的站点会在 24 小时、3 天、7 天后各重试一次，仍失败则放弃，直到清空图标缓存后才会重新尝试。",
-    "description": "Favicon gallery hint under the failed-fetch section title."
-  },
-  "favGalleryGaveUp": {
-    "message": "已放弃",
-    "description": "Favicon gallery badge on a failed-strip host whose retries are exhausted (it stays untouched until the icon cache is cleared)."
-  },
-  "favGalleryOrphan": {
-    "message": "该站点下已无书签——图标会随缓存一起清除。",
-    "description": "Favicon gallery note on a card whose host no longer has any bookmark."
-  },
-  "favGalleryEmptyTitle": {
-    "message": "还没有补全过图标",
-    "description": "Favicon gallery empty-state heading."
-  },
-  "favGalleryEmptyText": {
-    "message": "当弹窗遇到 Chrome 没有缓存图标的已收藏站点时，vBookmarks 会自动抓取真实图标并列在这里。",
-    "description": "Favicon gallery empty-state body text."
-  },
-  "storageUsageIcon": {
-    "message": "图标缓存"
-  },
-  "storageUsageOther": {
-    "message": "其他"
-  },
-  "storageUsageSummary": {
-    "message": "已用 $1$ / 共 $2$",
-    "placeholders": {
-      "1": {
-        "content": "$1"
-      },
-      "2": {
+      "back": {
         "content": "$2"
-      }
-    }
-  },
-  "storageUsageFree": {
-    "message": "剩余"
-  },
-  "storageUsageHint": {
-    "message": "仅统计本地扩展存储（chrome.storage.local，约 10MB 配额）：图标缓存以及设置等本地数据。已同步的设置、会话数据和书签库本体不计入。"
-  },
-  "optionsDonate": {
-    "message": "捐赠"
-  },
-  "optionsGithubLink": {
-    "message": "GitHub"
-  },
-  "optionsHomepageLink": {
-    "message": "主页"
-  },
-  "optionsSince": {
-    "message": "自 Neat Bookmarks 分支而来，已持续维护 $days$ 天。",
-    "placeholders": {
-      "days": {
+      },
+      "view": {
         "content": "$1"
       }
     }
   },
-  "optionsVersion": {
-    "message": "vBookmarks 版本号"
+  "viewRecent": {
+    "message": "暂存区"
   },
-  "statsSortByCount": {
-    "message": "按次数",
-    "description": "统计视图排序段：按访问次数降序。"
+  "viewSearch": {
+    "message": "搜索"
   },
-  "statsSortByRecent": {
-    "message": "按最近",
-    "description": "统计视图排序段：按最近访问时间降序。"
+  "viewStateDisabled": {
+    "message": "已经禁用"
   },
-  "statsShowUnbookmarked": {
-    "message": "显示未收藏书签"
+  "viewStateEnabled": {
+    "message": "已经启用"
   },
-  "statsShowUnbookmarkedHint": {
-    "message": "在统计中包含历史记录里未收藏为书签的页面。"
+  "viewStats": {
+    "description": "访问统计视图的标签页标题。",
+    "message": "统计"
   },
-  "statsEmpty": {
-    "message": "统计会随着你打开书签而积累",
-    "description": "统计视图尚无数据时的空态文案。"
-  },
-  "statsDisabledHint": {
-    "message": "访问统计已关闭——可在选项页\"视图\"分组开启",
-    "description": "statsEnabled 关闭时统计视图显示的引导文案。"
-  },
-  "statsVisitCount": {
-    "message": "访问 $count$ 次",
-    "description": "统计行次数 pill 的 aria 标签；$count$ 为访问次数。",
+  "viewSwitchAnnounce": {
+    "message": "$name$视图",
     "placeholders": {
-      "count": {
+      "name": {
         "content": "$1"
       }
     }
   },
-  "statsClearData": {
-    "message": "清空统计",
-    "description": "清空全部访问统计数据的按钮（统计视图工具行与选项页）。"
+  "viewTabDisable": {
+    "message": "禁用"
   },
-  "statsClearConfirm": {
-    "message": "确定清空 $count$ 个书签的访问统计？此操作不可撤销。",
-    "description": "清空访问统计前的确认对话框文案；$count$ 为书签条目数。",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
+  "viewTabGroups": {
+    "message": "标签组"
   },
-  "statsHistoryBanner": {
-    "message": "开启历史记录权限，把过往访问导入访问统计。",
-    "description": "Banner text on top of the recent view: invites granting the optional history permission so visit statistics can be seeded with past visits."
+  "viewTabHide": {
+    "message": "隐藏"
   },
-  "statsHistoryEnable": {
-    "message": "开启",
-    "description": "Link inside the recent view's history-permission banner: requests the optional history permission."
-  },
-  "statsHistoryDismiss": {
-    "message": "不再提示",
-    "description": "aria-label of the dismiss button on the recent view's history-permission banner."
-  },
-  "statsHistoryImported": {
-    "message": "已导入 $count$ 个书签的历史访问",
-    "description": "Toast after the history import finished; $count$ is how many bookmarks received a seeded visit count.",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "paletteCmdToggleViewTabs": {
-    "message": "切换视图标签栏显隐"
-  },
-  "paletteCmdTheme": {
-    "message": "切换主题…"
-  },
-  "paletteCmdThemeUsage": {
-    "message": "用法：/theme 加主题名——auto、light、dark、ink 或 paper（唯一前缀即可，如 /theme d）。"
-  },
-  "paletteCustomTag": {
-    "message": "自定义"
-  },
-  "paletteCustomDeleteConfirm": {
-    "message": "删除指令「$1」？该改动会同步到你的所有设备。"
-  },
-  "paletteCustomBroken": {
-    "message": "指令「$1」指向的文件夹已不存在。是否删除该指令？"
-  },
-  "paletteCmdSaveAsCommand": {
-    "message": "把「$1」存为指令…"
-  },
-  "paletteActionOpenUrl": {
-    "message": "打开 URL"
-  },
-  "paletteActionOpenUrlGroup": {
-    "message": "打开书签文件夹分组"
-  },
-  "paletteActionViewPreset": {
-    "message": "带预设打开视图"
-  },
-  "paletteActionUrlTemplate": {
-    "message": "打开 URL 模板"
-  },
-  "optionsGroupPalette": {
-    "message": "命令面板"
-  },
-  "paletteCustomHint": {
-    "message": "命令面板（Ctrl/Cmd+K）的自定义 slash 指令。随设置跨设备同步，上限 100 条。"
-  },
-  "paletteCustomAdd": {
-    "message": "新增指令…"
-  },
-  "paletteCustomUsage": {
-    "message": "$1 / $2"
-  },
-  "paletteCustomSlash": {
-    "message": "Slash 名（/ 之后的词）"
-  },
-  "paletteCustomAliases": {
-    "message": "别名（逗号分隔）"
-  },
-  "paletteCustomAction": {
-    "message": "动作"
-  },
-  "paletteCustomUrl": {
-    "message": "URL"
-  },
-  "paletteCustomTemplate": {
-    "message": "URL 模板——%s 会被替换为指令后输入的词"
-  },
-  "paletteCustomWhere": {
-    "message": "打开位置"
-  },
-  "paletteCustomFolder": {
-    "message": "书签文件夹"
-  },
-  "paletteCustomView": {
-    "message": "视图"
-  },
-  "paletteCustomStrategy": {
-    "message": "去重策略预设"
-  },
-  "paletteCustomScope": {
-    "message": "去重范围预设"
-  },
-  "paletteCustomScan": {
-    "message": "进入后立即开始扫描"
-  },
-  "paletteWhereCurrent": {
-    "message": "当前标签页"
-  },
-  "paletteWhereTab": {
-    "message": "新标签页"
-  },
-  "paletteWhereWindow": {
-    "message": "新窗口"
-  },
-  "paletteWhereBackground": {
-    "message": "后台标签页"
-  },
-  "paletteCustomSave": {
-    "message": "保存指令"
-  },
-  "paletteCustomErrSlash": {
-    "message": "Slash 名：1–24 位小写字母、数字或连字符，且以字母或数字开头。"
-  },
-  "paletteCustomErrAlias": {
-    "message": "别名规则同 Slash 名（1–24 位小写字母、数字或连字符）。"
-  },
-  "paletteCustomErrTaken": {
-    "message": "该 Slash 名或别名已被占用。"
-  },
-  "paletteCustomErrUrl": {
-    "message": "只允许 http:// 或 https:// 的 URL。"
-  },
-  "paletteCustomErrFolder": {
-    "message": "请选择一个书签文件夹。"
-  },
-  "paletteCustomErrView": {
-    "message": "请选择视图。"
-  },
-  "paletteCustomErrTemplate": {
-    "message": "模板必须且只能包含一个 %s。"
-  },
-  "paletteCustomErrAction": {
-    "message": "请选择动作类型。"
-  },
-  "paletteCustomErrLimit": {
-    "message": "指令已达上限（100 条）——请先删除一条。"
-  },
-  "paletteCustomEmpty": {
-    "message": "还没有自定义指令。"
-  },
-  "recentGroupToday": {
-    "message": "今天"
-  },
-  "recentGroupWeek": {
-    "message": "本周"
-  },
-  "recentGroupMonth": {
-    "message": "本月"
-  },
-  "recentGroupOlder": {
-    "message": "更早"
-  },
-  "searchHistoryRerun": {
-    "message": "重新搜索"
-  },
-  "optionsGroupBackup": {
-    "message": "备份"
-  },
-  "optionsGroupIcons": {
-    "message": "图标"
-  },
-  "optionsGroupContextMenu": {
-    "message": "右键菜单"
-  },
-  "settingsExport": {
-    "message": "导出设置"
-  },
-  "settingsImport": {
-    "message": "导入设置"
-  },
-  "settingsBackupHint": {
-    "message": "导出会将所有设置（含同步偏好）保存为 JSON 文件；导入为合并写回：文件中的设置覆盖当前值，未涉及的设置保持不变。"
-  },
-  "settingsImportConfirm": {
-    "message": "导入将覆盖备份文件中包含的所有设置（文件未涉及的设置保留），并重新加载本页面。确定继续吗？"
-  },
-  "settingsImportInvalid": {
-    "message": "无效的设置文件：这不是 vBookmarks 的设置备份。"
-  },
-  "settingsImportDone": {
-    "message": "设置已导入，页面即将重新加载。"
-  },
-  "settingsImportError": {
-    "message": "部分设置未能写入（存储配额不足或临时错误），导入未完成，请重试。"
-  },
-  "statsSectionRecent": {
-    "message": "最近访问"
-  },
-  "statsSectionBookmarks": {
-    "message": "书签统计"
-  },
-  "statsHistoryGuide": {
-    "message": "开启历史记录权限后，此处显示你的最近访问"
-  },
-  "statsHistoryAdd": {
-    "message": "加入收藏"
-  },
-  "statsHistoryBookmarked": {
-    "message": "已收藏"
-  },
-  "deadPause": {
-    "message": "暂停"
-  },
-  "deadResume": {
-    "message": "继续"
-  },
-  "deadCancel": {
-    "message": "取消"
-  },
-  "deadPaused": {
-    "message": "已暂停"
+  "viewTree": {
+    "message": "书签树"
   },
   "whatsNewChangelog": {
     "message": "更新日志"
@@ -1840,822 +2657,5 @@
         "content": "$1"
       }
     }
-  },
-  "deadProxyNeverShow": {
-    "message": "不再显示"
-  },
-  "optionDeadProxyStrip": {
-    "message": "在死链视图显示\"添加代理\"提示"
-  },
-  "optionDeadProxyStripHint": {
-    "message": "关闭后隐藏死链视图里的无代理提示;代理服务器仍可在此页配置,已保存的代理在视图中始终显示管理行。"
-  },
-  "viewHiddenTabsHint": {
-    "message": "当前位于$view$视图，你可以通过 $back$ 键或命令面板回到树视图。",
-    "placeholders": {
-      "view": {
-        "content": "$1"
-      },
-      "back": {
-        "content": "$2"
-      }
-    }
-  },
-  "viewTabGroups": {
-    "message": "标签组"
-  },
-  "optionShowTabGroupsView": {
-    "message": "显示标签组视图标签页"
-  },
-  "tabGroupsViewEmpty": {
-    "message": "此窗口没有标签页"
-  },
-  "tabGroupsToolbarRefresh": {
-    "message": "刷新"
-  },
-  "tabGroupsCollapseAll": {
-    "message": "全部折叠"
-  },
-  "tabGroupsExpandAll": {
-    "message": "全部展开"
-  },
-  "tabGroupsSummary": {
-    "message": "$tabs$ 个标签页 · $groups$ 个标签组",
-    "placeholders": {
-      "tabs": {
-        "content": "$1"
-      },
-      "groups": {
-        "content": "$2"
-      }
-    }
-  },
-  "tabGroupsGroupCount": {
-    "message": "$count$ 个标签页",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsCurrentTab": {
-    "message": "当前",
-    "description": "Compact pill on the row of the tab that is active in its window (the row tint + pill together mark it)."
-  },
-  "tabGroupsAddBookmark": {
-    "message": "收藏此标签页"
-  },
-  "tabGroupsSaveFolder": {
-    "message": "将标签组保存为书签文件夹"
-  },
-  "tabGroupsGroupSavedToFolder": {
-    "message": "已将 $count$ 个标签页保存到 $folder$",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      },
-      "folder": {
-        "content": "$2"
-      }
-    }
-  },
-  "tabGroupsBookmarksAdded": {
-    "message": "已将 $count$ 个书签添加到 $folder$",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      },
-      "folder": {
-        "content": "$2"
-      }
-    }
-  },
-  "tabGroupsSelectNewGroup": {
-    "message": "新建标签组"
-  },
-  "tabGroupsSelectOpenInto": {
-    "message": "打开到已有标签组…"
-  },
-  "tabGroupsSelectSaveFolder": {
-    "message": "保存为书签文件夹"
-  },
-  "tabGroupsSelectClose": {
-    "message": "关闭"
-  },
-  "tabGroupsSelectSleep": {
-    "message": "睡眠"
-  },
-  "tabGroupsCopyMoveDialog": {
-    "message": "选中的标签页中有已属于标签组的标签。是复制（在新位置重新打开）还是移动（从原标签组移出）？"
-  },
-  "tabGroupsCopyMoveCopy": {
-    "message": "复制"
-  },
-  "tabGroupsCopyMoveMove": {
-    "message": "移动"
-  },
-  "tabGroupsConfirmClose": {
-    "message": "关闭 $count$ 个标签页？",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsConfirmSleep": {
-    "message": "睡眠 $count$ 个标签页？",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsClosedToast": {
-    "message": "已关闭 $count$ 个标签页",
-    "description": "Toast after closing a single tab or tab group; the action button reopens it.",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsSleptToast": {
-    "message": "已休眠 $count$ 个标签页",
-    "description": "Toast after sleeping a single tab or tab group; the action button wakes it.",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsBatchClosedTitle": {
-    "message": "已关闭的标签页",
-    "description": "Title of the merged recently-closed record a batch close writes (one record for the whole selection)."
-  },
-  "tabGroupsPinnedUngroupedToast": {
-    "message": "已固定，并已移出标签组",
-    "description": "Toast when pinning a tab that belonged to a group: Chrome forbids pinned grouped tabs, so the tab leaves the group."
-  },
-  "tabGroupsReopenAction": {
-    "message": "重新打开",
-    "description": "Toast action button: reopens the just-closed tab or tab group."
-  },
-  "tabGroupsWakeAction": {
-    "message": "唤醒",
-    "description": "Toast action button: wakes the just-slept tab(s)."
-  },
-  "tabGroupsRecordDeletedToast": {
-    "message": "已删除关闭记录",
-    "description": "Toast after deleting one recently-closed record; Undo restores it."
-  },
-  "tabGroupsClosedTabRemovedToast": {
-    "message": "已从记录中移除",
-    "description": "Toast after removing one tab from a closed record; Undo restores it."
-  },
-  "tabGroupsClearedToast": {
-    "message": "已清空 $count$ 条关闭记录",
-    "description": "Toast after clearing all recently-closed records; Undo restores the whole list.",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "bookmarkFolderPickDialogTitle": {
-    "message": "添加到书签文件夹"
-  },
-  "bookmarkFolderNoFolders": {
-    "message": "没有书签文件夹"
-  },
-  "tabGroupsSelectAddBookmarks": {
-    "message": "添加到书签文件夹…"
-  },
-  "paletteCmdGoTabGroups": {
-    "message": "切换到标签组视图",
-    "description": "Command palette entry: switch to the tab groups view (slash alias /tabgroups, /groups)."
-  },
-  "tabGroupsActivateGroup": {
-    "message": "转到标签组"
-  },
-  "tabGroupsRenameGroup": {
-    "message": "重命名标签组"
-  },
-  "tabGroupsRenameDialog": {
-    "message": "重命名标签组"
-  },
-  "tabGroupsCloseGroup": {
-    "message": "关闭标签组"
-  },
-  "tabGroupsSleepGroup": {
-    "message": "睡眠标签组"
-  },
-  "tabGroupsWakeGroup": {
-    "message": "唤醒标签组"
-  },
-  "tabGroupsActivateTab": {
-    "message": "转到标签页"
-  },
-  "tabGroupsCollapseGroup": {
-    "message": "折叠标签组"
-  },
-  "tabGroupsExpandGroup": {
-    "message": "展开标签组"
-  },
-  "tabGroupsMenuAddBookmark": {
-    "message": "收藏标签页"
-  },
-  "tabGroupsMenuSaveFolder": {
-    "message": "保存为书签文件夹"
-  },
-  "tabGroupsSyncCollapse": {
-    "message": "展开折叠同步到浏览器"
-  },
-  "tabGroupsSyncCollapseHint": {
-    "message": "选中后，在视图内折叠或展开标签组会同步更新浏览器标签组。默认关闭，视图内的折叠只保留在本地。"
-  },
-  "tabGroupsColorStyle": {
-    "message": "标签组颜色样式"
-  },
-  "tabGroupsColorStyleHint": {
-    "message": "“关闭”仅显示颜色圆点；“靠边颜色条带”在标签组左侧画一条颜色条带；“颜色连接线”在组头圆点下方画竖线、每行带横线，把整个标签组串成一棵树。"
-  },
-  "tabGroupsColorStyleOff": {
-    "message": "关闭（仅颜色圆点）"
-  },
-  "tabGroupsColorStyleEdge": {
-    "message": "靠边颜色条带"
-  },
-  "tabGroupsColorStyleLine": {
-    "message": "颜色连接线"
-  },
-  "tabGroupsBookmarked": {
-    "message": "已收藏"
-  },
-  "tabGroupsRemoveBookmark": {
-    "message": "取消收藏"
-  },
-  "tabGroupsBookmarkRemoved": {
-    "message": "已取消收藏 $count$ 项",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsPinned": {
-    "message": "已固定标签页"
-  },
-  "tabGroupsDiscarded": {
-    "message": "已睡眠标签页"
-  },
-  "tabGroupsPinTab": {
-    "message": "固定标签页"
-  },
-  "tabGroupsUnpinTab": {
-    "message": "取消固定标签页"
-  },
-  "tabGroupsSleepTab": {
-    "message": "睡眠标签页"
-  },
-  "tabGroupsWakeTab": {
-    "message": "唤醒标签页"
-  },
-  "tabGroupsOpenGroups": {
-    "message": "打开的标签组"
-  },
-  "tabGroupsClosedGroups": {
-    "message": "最近关闭"
-  },
-  "tabGroupsUngroupedTabs": {
-    "message": "未分组标签页"
-  },
-  "tabGroupsUngroupGroup": {
-    "message": "取消分组"
-  },
-  "tabGroupsMoveNewWindow": {
-    "message": "移动到新窗口"
-  },
-  "tabGroupsWindow": {
-    "message": "窗口 $1$",
-    "placeholders": {
-      "1": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsCurrentWindow": {
-    "message": "当前窗口"
-  },
-  "tabGroupsReopenGroup": {
-    "message": "重新打开标签组"
-  },
-  "tabGroupsDeleteClosedGroup": {
-    "message": "删除关闭的标签组"
-  },
-  "tabGroupsCollapseWindow": {
-    "message": "收起窗口"
-  },
-  "tabGroupsCloseWindow": {
-    "message": "关闭窗口",
-    "description": "Hover action on a window section head: closes the whole window (confirm; tabs land as one merged closed record)."
-  },
-  "tabGroupsWindowClosedTitle": {
-    "message": "已关闭的窗口",
-    "description": "Title of the merged recently-closed record a window close writes."
-  },
-  "tabGroupsExpandWindow": {
-    "message": "展开窗口"
-  },
-  "tabGroupsClearClosedGroups": {
-    "message": "清空"
-  },
-  "tabGroupsConfirmClearClosed": {
-    "message": "清空全部「最近关闭」记录？清空后将无法从这里恢复。"
-  },
-  "tabGroupsFilterPlaceholder": {
-    "message": "筛选打开的标签页"
-  },
-  "tabGroupsNoMatchingTabs": {
-    "message": "没有匹配的标签页"
-  },
-  "tabGroupsClosedOpenTab": {
-    "message": "在新标签页打开"
-  },
-  "tabGroupsRemoveClosedTab": {
-    "message": "从已保存组移除"
-  },
-  "tabGroupsClosedTimeLabel": {
-    "message": "关闭时间："
-  },
-  "tabGroupsExpandedExpand": {
-    "message": "展开"
-  },
-  "tabGroupsExpandedCollapse": {
-    "message": "折叠"
-  },
-  "optionTabGroupsClosedLimit": {
-    "message": "关闭标签/标签组历史保留条数"
-  },
-  "folderPickMoveHere": {
-    "message": "移动到此处"
-  },
-  "folderPickCopyHere": {
-    "message": "复制到此处"
-  },
-  "folderPickFilter": {
-    "message": "过滤文件夹…"
-  },
-  "folderPickFavNote": {
-    "message": "未收藏的条目将收藏到此处"
-  },
-  "folderPickPinned": {
-    "message": "已固定"
-  },
-  "folderPickRecent": {
-    "message": "最近"
-  },
-  "pinFolder": {
-    "message": "固定此文件夹"
-  },
-  "unpinFolder": {
-    "message": "取消固定此文件夹"
-  },
-  "stagingAdd": {
-    "message": "发送到暂存"
-  },
-  "stagingAdded": {
-    "message": "已发送到暂存"
-  },
-  "stagingAlready": {
-    "message": "已在暂存区"
-  },
-  "stagingAddedSummary": {
-    "message": "已新增 $n$ 条，$m$ 条已在暂存区",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      },
-      "m": {
-        "content": "$2"
-      }
-    }
-  },
-  "stagingFull": {
-    "message": "暂存区已满，请先清理"
-  },
-  "stagingFolderEmpty": {
-    "message": "该文件夹没有可暂存的书签"
-  },
-  "stagingConfirmFolder": {
-    "message": "将暂存该文件夹的 $n$ 条书签？",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingConfirmFolderOk": {
-    "message": "暂存"
-  },
-  "stagingRemove": {
-    "message": "移出暂存区"
-  },
-  "stagingRemoved": {
-    "message": "已移出暂存区"
-  },
-  "recentStageAll": {
-    "message": "全部暂存"
-  },
-  "recentSectionTitle": {
-    "message": "最近添加"
-  },
-  "stagingEmpty": {
-    "message": "还没有暂存内容。在任意视图通过行上的纸飞机按钮或右键菜单发送书签到这里，即可快速整理、批量归置。"
-  },
-  "stagingFromHistory": {
-    "message": "来自历史"
-  },
-  "stagingGroupExpand": {
-    "message": "展开分组"
-  },
-  "stagingGroupCollapse": {
-    "message": "折叠分组"
-  },
-  "stagingGroupRename": {
-    "message": "重命名分组…"
-  },
-  "stagingGroupDissolve": {
-    "message": "解散分组"
-  },
-  "stagingGroupDissolved": {
-    "message": "分组已解散，条目保留在暂存区"
-  },
-  "stagingGroupDelete": {
-    "message": "删除分组（连同条目）"
-  },
-  "stagingGroupDeleteConfirm": {
-    "message": "删除分组「$1」？其中 $2 个条目也会一并移出暂存区。"
-  },
-  "stagingGroupDeleted": {
-    "message": "分组已删除，移出 $1 个条目"
-  },
-  "stagingGroupAssign": {
-    "message": "分组…"
-  },
-  "stagingGroupAssignTitle": {
-    "message": "指派到分组"
-  },
-  "stagingGroupNew": {
-    "message": "新建分组"
-  },
-  "stagingGroupNamePrompt": {
-    "message": "新分组名称"
-  },
-  "stagingGroupNoGroups": {
-    "message": "还没有分组"
-  },
-  "stagingShortcutAdd": {
-    "message": "添加快捷"
-  },
-  "stagingShortcutBarLabel": {
-    "message": "收藏到："
-  },
-  "stagingGuideText": {
-    "message": "在这里整理书签——选择行并进入选择模式，可获得更多批量操作。"
-  },
-  "stagingGuideDismiss": {
-    "message": "不再提醒"
-  },
-  "stagingShortcutTitle": {
-    "message": "移动到文件夹快捷方式"
-  },
-  "stagingShortcutEdit": {
-    "message": "编辑快捷方式"
-  },
-  "stagingShortcutAlias": {
-    "message": "别名"
-  },
-  "stagingShortcutPickFolder": {
-    "message": "选择目标文件夹…"
-  },
-  "stagingShortcutSave": {
-    "message": "保存"
-  },
-  "stagingShortcutRemove": {
-    "message": "删除快捷方式"
-  },
-  "stagingShortcutRemoved": {
-    "message": "已删除快捷方式"
-  },
-  "stagingShortcutMove": {
-    "message": "移动所选到 $1$",
-    "placeholders": {
-      "1": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingBucketTitle": {
-    "message": "未收藏"
-  },
-  "stagingBucketFavAll": {
-    "message": "收藏全部"
-  },
-  "stagingNew": {
-    "message": "新 $n$",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingRowFav": {
-    "message": "收藏此条目"
-  },
-  "stagingRowUnfav": {
-    "message": "取消收藏此条目"
-  },
-  "stagingFav": {
-    "message": "收藏"
-  },
-  "stagingUnfav": {
-    "message": "取消收藏"
-  },
-  "stagingFavDone": {
-    "message": "已收藏 $n$ 条",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingUnfavDone": {
-    "message": "已取消收藏 $n$ 条",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "groupSaveToFolder": {
-    "message": "保存到文件夹…"
-  },
-  "groupCopyToFolder": {
-    "message": "复制到文件夹…"
-  },
-  "stagingCount": {
-    "message": "已暂存 $n$ 条",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingMoveCopy": {
-    "message": "移动/复制到…"
-  },
-  "stagingMoveDone": {
-    "message": "已归位 $n$ 条",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingCopyDone": {
-    "message": "已复制 $n$ 条",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingMoveConfirm": {
-    "message": "将 $n$ 条移动到所选文件夹?",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingMoveConfirmOk": {
-    "message": "移动"
-  },
-  "stagingDeleteConfirm": {
-    "message": "删除 $n$ 条?未收藏的条目只会移出暂存区。",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingDeleted": {
-    "message": "已删除 $n$ 个书签",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingRemovedCount": {
-    "message": "已从暂存区移出 $n$ 条",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingClear": {
-    "message": "清空暂存"
-  },
-  "stagingClearConfirm": {
-    "message": "清空整个暂存区?不会改动书签树。"
-  },
-  "stagingClearConfirmOk": {
-    "message": "清空"
-  },
-  "stagingCleared": {
-    "message": "暂存区已清空"
-  },
-  "groupPlaceTooltip": {
-    "message": "将此分组保存到文件夹…"
-  },
-  "copyBookmark": {
-    "message": "复制"
-  },
-  "cutBookmark": {
-    "message": "剪切"
-  },
-  "copyMoveTo": {
-    "message": "复制/移动到…"
-  },
-  "pasteHere": {
-    "message": "粘贴到此处"
-  },
-  "copiedToast": {
-    "message": "已复制:$t$",
-    "placeholders": {
-      "t": {
-        "content": "$1"
-      }
-    }
-  },
-  "cutToast": {
-    "message": "已剪切:$t$ —— 去目标文件夹粘贴(Esc 取消)",
-    "placeholders": {
-      "t": {
-        "content": "$1"
-      }
-    }
-  },
-  "pasteDone": {
-    "message": "已粘贴"
-  },
-  "pasteGone": {
-    "message": "书签已不存在,剪贴板已清空"
-  },
-  "folderCopyList": {
-    "message": "复制标题和地址"
-  },
-  "folderCopyText": {
-    "message": "文本清单"
-  },
-  "folderCopyMarkdown": {
-    "message": "Markdown"
-  },
-  "folderCopyJson": {
-    "message": "JSON"
-  },
-  "folderCopyConfirm": {
-    "message": "复制 $n$ 条书签的清单?",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "folderCopyDone": {
-    "message": "已复制 $n$ 条书签条目",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "addFolderMenu": {
-    "message": "添加文件夹"
-  },
-  "optionCollapseAddFolderMenu": {
-    "message": "折叠添加文件夹条目"
-  },
-  "optionCollapseAddFolderMenuHint": {
-    "message": "把右键菜单的添加文件夹条目（文件夹行：此前/此后/子文件夹；书签行：此前/此后）合并为一个二级菜单条目。"
-  },
-  "tabRowStage": {
-    "message": "发送到暂存"
-  },
-  "tabgroupStageAll": {
-    "message": "整组发送到暂存"
-  },
-  "tabgroupStageConfirm": {
-    "message": "发送 $n$ 个标签页到暂存?",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabgroupStageNone": {
-    "message": "该组没有可收藏的标签页"
-  },
-  "stagedToast": {
-    "message": "已暂存 $n$ 个标签页为分组「$t$」",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      },
-      "t": {
-        "content": "$2"
-      }
-    }
-  },
-  "searchResultCount": {
-    "message": "$n$ 条结果",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "deleteSelected": {
-    "message": "删除所选"
-  },
-  "recentStageGroup": {
-    "message": "将$t$发送到暂存区",
-    "placeholders": {
-      "t": {
-        "content": "$1"
-      }
-    }
-  },
-  "stagingGroupSelectAll": {
-    "message": "全选本组"
-  },
-  "optionsGroupLabs": {
-    "message": "实验室"
-  },
-  "optionVirtualScrollLab": {
-    "message": "虚拟滚动（实验性）"
-  },
-  "optionVirtualScrollLabHint": {
-    "message": "标签组与去重视图只渲染视口附近的行，超大列表明显更快。实验阶段滚动条位置为估算值。"
-  },
-  "optionsStagingSection": {
-    "message": "暂存和最近添加"
-  },
-  "optionStagingEnabled": {
-    "message": "启用暂存功能"
-  },
-  "optionStagingEnabledHint": {
-    "message": "禁用后本视图只保留最近添加列表，其他所有视图的暂存按钮和菜单项全部隐藏。"
-  },
-  "optionTreeRowActions": {
-    "message": "书签行悬浮快捷按钮（编辑/暂存/删除）"
-  },
-  "optionsStorageSyncTip": {
-    "message": "已保存到 Chrome 同步（云端），随账号在多设备间保持一致。",
-    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
-  },
-  "optionsStorageLocalTip": {
-    "message": "仅保存在本设备的本地存储，不会通过 Chrome 同步。",
-    "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting)."
-  },
-  "tabGroupsWindowsCount": {
-    "message": "$n$ 个窗口",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "tabGroupsNewWindow": {
-    "message": "新建窗口"
-  },
-  "tabGroupsMergedWindowToast": {
-    "message": "窗口已并入为标签组"
-  },
-  "searchStageAllGroup": {
-    "message": "将全部结果暂存为分组「$1$」",
-    "placeholders": {
-      "1": {
-        "content": "$1"
-      }
-    }
-  },
-  "searchHistoryClose": {
-    "message": "隐藏最近搜索"
-  },
-  "searchHistoryClosedToast": {
-    "message": "最近搜索区域已隐藏，可在 选项→搜索 中重新开启"
   }
 }
