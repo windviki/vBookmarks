@@ -342,7 +342,11 @@ const SEED = `
     // FOLDER menu on it).
     await page.click('#view-tab-tabgroups'); await sleep(900);
     await page.keyboard.press('ArrowDown'); await sleep(300);
-    check('tabgroups ↓ from strip: the controls toolbar rung (refresh)', await $(() =>
+    check('tabgroups ↓ from strip: the controls toolbar rung (new window)', await $(() =>
+        document.activeElement && document.activeElement.classList.contains('tabgroups-new-window')),
+        await activeDesc());
+    await page.keyboard.press('ArrowRight'); await sleep(200);
+    check('tabgroups controls rung →: refresh', await $(() =>
         document.activeElement && document.activeElement.classList.contains('tabgroups-refresh')),
         await activeDesc());
     await page.keyboard.press('ArrowRight'); await sleep(200);
