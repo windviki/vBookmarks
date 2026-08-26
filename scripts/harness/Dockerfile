@@ -10,7 +10,7 @@ COPY vBookmarks /ext
 # Real-browser verify gate + smoke (image CMD); the screenshot suites share
 # the same image (screenshots/run.sh runs only /work/shots-*.js).
 COPY smoke.js verify-keyboard.js verify-scrollbars.js verify-menu-overflow.js verify-menu-collapse.js verify-menu-extreme.js verify-menu-overlong.js verify-rightclick-repeat.js verify-bmlet.js perf-popup.js /work/
-COPY shots.js shots-matrix.js shots-i18n.js shots-palette.js shots-guide.js shots-tabgroups.js shots-tabgroups-view.js /work/
+COPY shots.js shots-matrix.js shots-i18n.js shots-palette.js shots-guide.js shots-tabgroups.js shots-tabgroups-view.js shots-store.js /work/
 COPY diag /work/diag
 WORKDIR /work
 CMD ["node", "/work/smoke.js"]

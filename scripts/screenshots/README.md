@@ -15,8 +15,9 @@ scripts/screenshots/
 ├── shots-i18n.js       # 7 UI languages × 15 surfaces, light theme
 ├── shots-palette.js    # palette + recent/stats/dupes/dead views
 ├── shots-guide.js      # guide-only states for docs/guide-v4*.md
-└── shots-tabgroups.js       # tab-group menus & dialogs, SW-side verified
-└── shots-tabgroups-view.js   # tab-groups view: tabs/groups, selection, group menu
+├── shots-tabgroups.js       # tab-group menus & dialogs, SW-side verified
+├── shots-tabgroups-view.js   # tab-groups view: tabs/groups, selection, group menu
+└── shots-store.js      # WebStore specs: 1400×560 theme strip + 1280×800 promo
 ```
 
 ## Usage
@@ -25,6 +26,21 @@ scripts/screenshots/
 scripts/screenshots/run.sh            # all suites
 scripts/harness/rerun.sh shots.js     # a single suite ad-hoc
 ```
+
+## Store assets (shots-store)
+
+`shots-store.js` produces the two WebStore image specs from live popup states
+instead of hand assembly (velvet §6.3 F): `store/strip.png` (1400×560, the
+four explicit themes side by side) and `store/promo.png` (1280×800, main popup
+with the bookmark context menu plus search/recent/stats/dead minis, aligned
+with the hand-made `assets/store/vBookmarks-v4.png` layout). Every capture is
+seeded and hermetic (non-extension requests are aborted), so re-runs are
+deterministic. Workflow: run the suite → review `tmp/shots/store/` → copy the
+keepers over `assets/store/` → upload via the Developer Dashboard (the store
+listing itself is not API-managed; see `scripts/webstore/README.md` for what
+the `listing` commands can and cannot do). Raw tiles are kept under
+`store/tiles/` for manual re-mixing. `classic` joins the strip theme list when
+the velvet classic theme lands.
 
 ## Output layout
 
@@ -39,6 +55,9 @@ tmp/shots/
 ├── tabgroups/NN-<name>.png              # shots-tabgroups (30-33)
 ├── tabgroups-view/NN-<name>.png          # shots-tabgroups-view (34-36)
 ├── guide/<name>.png                     # shots-guide
+├── store/strip.png                      # shots-store — 1400×560, 4 theme tiles
+├── store/promo.png                      # shots-store — 1280×800 collage
+├── store/tiles/<name>.png               # shots-store — raw capture tiles
 ├── smoke/                               # harness smoke.js diagnostic shots
 ├── verify-menu/                         # verify-menu-overflow/collapse captures
 ├── verify-menu-extreme/<combo>.png      # verify-menu-extreme: 1 shot per DPR×zoom×size combo
