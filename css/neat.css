@@ -5706,16 +5706,6 @@ visibly smaller next to them. */
     white-space: nowrap;
     font-weight: 500;
 }
-#tabgroups-list ul li.tabgroups-closed-group .tab-group-dot {
-    flex: none;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: var(--tg-color);
-    /* the LIVE group head's dot recipe (`.tabgroups-group .tab-group-dot`):
-       a 6px trailing gap — without it the dot glued itself to the title */
-    margin-inline-end: 6px;
-}
 #tabgroups-list ul li.tabgroups-closed-group .count-pill {
     background: var(--vbm-bg-selected);
     color: var(--vbm-fg-selected);
@@ -5861,6 +5851,11 @@ visibly smaller next to them. */
 #tabgroups-list ul li.tabgroups-closed-tab {
     display: flex;
     align-items: center;
+    /* Tree-law level-0 lead (2026-08-26): standalone closed tabs share the
+       closed-group heads' icon column (their ::before slot + the favicon
+       well land on 24..44, title axis 48 — same numbers as the open
+       section). */
+    padding-inline-start: 8px;
     /* the shared right-edge rhythm: 4px row padding + 4px control margin */
     padding-inline-end: 4px;
 }
@@ -5883,7 +5878,9 @@ visibly smaller next to them. */
    as the open-tab sections above it. Standalone closed-tab records stay
    flush, level with the closed-group heads. */
 #tabgroups-list ul li.tabgroups-closed-tab.tabgroups-closed-member {
-    padding-inline-start: 24px;
+    /* TREE_INDENT child law: the expanded member's favicon left edge lands
+       on the closed head's title axis (48) — same as the open section. */
+    padding-inline-start: 32px;
 }
 #tabgroups-list ul li.tabgroups-closed-tab > a.tree-item-link {
     flex: 1;
@@ -6093,10 +6090,13 @@ li.tabgroups-row.tabgroups-current {
 .tabgroups-group .chevron::before { content: '▾'; }
 .tabgroups-group .chevron.collapsed::before { content: '▸'; }
 .rtl .tabgroups-group .chevron.collapsed::before { content: '◂'; }
-.tabgroups-group .tab-group-dot {
+#tabgroups-list .tab-group-dot {
     /* the FOLDER-ICON analog lives in the level-0 icon column: a 20px well
        (the rows' favicon-slot footprint) centering the 10px color dot, so
-       the dot's center == the tab favicons' center below it */
+       the dot's center == the tab favicons' center below it. Scoped to the
+       list so BOTH the live group head and the recently-closed group head
+       share one recipe (the picker dialog's dots live outside the list and
+       keep the plain circle). */
     flex: none;
     display: inline-flex;
     align-items: center;
@@ -6107,7 +6107,7 @@ li.tabgroups-row.tabgroups-current {
     background: none;
     margin-inline-end: 4px;
 }
-.tabgroups-group .tab-group-dot::before {
+#tabgroups-list .tab-group-dot::before {
     content: '';
     width: 10px;
     height: 10px;

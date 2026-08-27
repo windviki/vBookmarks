@@ -36,7 +36,16 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
                 { id: null, url: 'https://member.example/1', title: 'Member One', ts: now, group: 'g1' },
                 { id: null, url: 'https://member.example/2', title: 'Member Two', ts: now, group: 'g1' }
             ];
+            // A recently-closed group record for the closed-section grid
+            const closed = [{
+                id: 'cg_1', color: 'blue', title: '已关闭分组', savedAt: now - 60e3,
+                tabs: [
+                    { url: 'https://closed.example/1', title: 'Closed Tab 1' },
+                    { url: 'https://closed.example/2', title: 'Closed Tab 2' }
+                ]
+            }];
             await new Promise(res => chrome.storage.local.set({
+                tabGroupsClosed: JSON.stringify(closed),
                 staging: JSON.stringify({ v: 1, items, groups: [{ id: 'g1', name: '工作分组', collapsed: false, createdAt: now, sourceFolderId: null, sourceTabGroup: null, manual: true }], recentCollapsed: false, unfavCollapsed: false, headCollapsed: false, recentGroupCollapsed: {}, lastSeenTs: 0 }),
                 searchHistoryEnabled: '1',
                 deadLastScan: JSON.stringify({ ts: now - 3600e3, scannedCount: 3, results: { [dead1.id]: { status: 'dead', code: 404 } } }),
@@ -55,7 +64,7 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
         await page.reload({ waitUntil: 'load' });
         await sleep(1800);
 
-        const dump = sel => page.evaluate(sel => {
+        const dump = sel => page.evaluate(async sel => {
             const pick = (label, root, parts) => {
                 if (!root) return { [label]: 'ABSENT' };
                 const out = { label };
@@ -119,7 +128,7 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
             // tabgroups
             await page.click('#view-tab-tabgroups').catch(() => {});
             await sleep(900);
-            const tg = await page.evaluate(() => {
+            const tg = await page.evaluate(async () => {
                 const out = [];
                 const wh = document.querySelector('.tabgroups-window-head-row');
                 if (wh) {
@@ -138,6 +147,30 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
                 }
                 const favs = [...document.querySelectorAll('#tabgroups-list li.tabgroups-row .favicon-container')].filter(el => el.getClientRects().length).slice(0, 3);
                 out.push({ label: 'tabFavicons', xs: favs.map(f => `${Math.round(f.getBoundingClientRect().left)}..${Math.round(f.getBoundingClientRect().right)}`) });
+                const ch = document.querySelector('.tabgroups-closed-head');
+                if (ch) {
+                    const d = ch.querySelector('.tab-group-dot');
+                    const t = ch.querySelector('.tabgroups-group-title');
+                    const dr = d ? d.getBoundingClientRect() : null;
+                    out.push({ label: 'closedGroupHead', dot: dr ? `${Math.round(dr.left)}..${Math.round(dr.right)}` : '-', title: t ? Math.round(t.getBoundingClientRect().left) : '-' });
+                }
+                const cm = document.querySelector('li.tabgroups-closed-tab.tabgroups-closed-member > a.tree-item-link .favicon-container');
+                if (cm) {
+                    const r = cm.getBoundingClientRect();
+                    out.push({ label: 'closedMemberFav', xs: `${Math.round(r.left)}..${Math.round(r.right)}` });
+                }
+                const cs = document.querySelector('li.tabgroups-closed-tab:not(.tabgroups-closed-member) > a.tree-item-link .favicon-container');
+                if (cs) {
+                    const r = cs.getBoundingClientRect();
+                    out.push({ label: 'closedStandaloneFav', xs: `${Math.round(r.left)}..${Math.round(r.right)}` });
+                }
+                // expand the closed group and measure its members
+                if (ch) {
+                    ch.click();
+                    await new Promise(r2 => setTimeout(r2, 400));
+                    const cmx = [...document.querySelectorAll('li.tabgroups-closed-tab.tabgroups-closed-member > a.tree-item-link .favicon-container')].filter(el => el.getClientRects().length).map(el => `${Math.round(el.getBoundingClientRect().left)}..${Math.round(el.getBoundingClientRect().right)}`);
+                    out.push({ label: 'closedMemberFavs', xs: cmx });
+                }
                 return out;
             });
             console.log(`W=${w} TABGROUPS ${JSON.stringify(tg)}`);
