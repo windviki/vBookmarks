@@ -1791,13 +1791,13 @@ menu[type=context] hr {
     flex: none;
     width: 16px;
     /* The two BIG section heads (暂存 / Recently added) park their title on
-       the level-0 TEXT axis: chevron 8..24 + a reserved empty icon slot
-       (24..44 — the same column every fold head's glyph well and every
-       loose row's favicon occupies below) + 4px gap = title @ 48, exactly
-       on the fold-head/loose-row title line (2026-08-26 tree-law restack;
-       the old 12px margin parked the title at 40, a column nothing below
-       uses any more). The bucket/group/recent heads override this below. */
-    margin-inline-end: 20px;
+       the level-0 ICON left edge: chevron 8..24, then the title starts at
+       24 — exactly where every fold head's glyph well and every loose row's
+       favicon begins below (2026-08-26 user call: the reserved empty slot
+       at 24..44 read as dead whitespace; the text belongs on the icon
+       edge). The -4px tail cancels the head's own flex gap. The
+       bucket/group/recent heads override this below. */
+    margin-inline-end: -4px;
     text-align: center;
     color: var(--vbm-muted);
     /* The ▾/▸ TEXT glyph rides the text baseline, sitting visibly lower

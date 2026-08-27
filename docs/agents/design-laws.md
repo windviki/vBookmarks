@@ -37,7 +37,7 @@ danger 红只给破坏性动作，且放**行的最右 / 图标条的最后**。
   chevron 贴 8px 前导（与大区头、树顶层折叠器同一条竖列）；**同层无容器行**（书签/未分组标签/暂存 loose 行）用 16px ::before 占位把自己的图标中心对到头字形中心（树的书签-文件夹法则）；**子层行缩进到"图标左缘 == 父标题左缘"**（TREE_INDENT 语义；暂存 32px、标签组 grouped 32px）。
 - 暂存头部 flex 自带 4px gap 会把井推到 28 —— chevron 用 `margin-inline-end:-4px` 抵消（选择模式有更高优先级规则自持）。
 - 标签组色点 = 文件夹图标位：包 20px 井居中 10px 圆点，与未分组标签 favicon 同柱心；连接线变量 `--tg-line-x` 从点心推。
-- 大区头（折叠整区）另用 32px 更高更重的一级，chevron 同 8px 前导。
+- 大区头（折叠整区）另用 32px 更高更重的一级，chevron 同 8px 前导；标题直接落在**下方图标列左缘 24px**（chevron 尾距 -4 抵消 flex gap，不留空图标位——用户实测空槽读作大段空白）。
 - 树形虚线连接线：干从 chevron 中心垂下、tick 到成员图标左缘；选择模式几何随复选框轴平移且**有自己的校准常数**（diag-staging-verify）。
 - 宽视图（≥480 容器 / panel-mode）井 +2px（22），标题轴 50，成员缩进 34；选择模式的宽档常数独立、勿混用。
 - 任何新改动必须重跑 `diag/diag-hierarchy-probe.js`（实测坐标）+ `diag/diag-staging-verify.js`（ALL-PASS 门禁）。
