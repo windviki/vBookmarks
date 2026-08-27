@@ -468,7 +468,8 @@ export function initViewDupes(ctx = {}) {
             keeper.title || L.noTitle, `${doomed}`));
         return `<li class="dupes-group${selecting && selected.has(group.key) ? ' sel' : ''}" data-key="${key}">` +
             `<span class="group-head" tabindex="-1" role="button" aria-expanded="${isCollapsed ? 'false' : 'true'}">` +
-            `<span class="chevron${isCollapsed ? ' collapsed' : ''}"></span>` +
+            // 小组头折叠指示器 = 树的 twisty SVG（2026-08-27 统一块）
+            `<span class="chevron${isCollapsed ? ' collapsed' : ''}">${CHEVRON_ICON}</span>` +
             `<span class="dupes-key" dir="auto" title="${key}">${htmlspecialchars(midTruncate(group.key))}</span>` +
             `<span class="count-pill" aria-label="${L.groupCount(`${group.items.length}`)}">${group.items.length}</span>` +
             // velvet staging relay: the whole group joins the workbench (all

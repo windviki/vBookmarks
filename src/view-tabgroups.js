@@ -33,7 +33,7 @@
  * dropping callbacks.
  */
 
-import { VIEW_ICONS, STAR_ICON, STAR_ICON_FILLED, SELECT_ICON, FOLDER_STAR_ICON, FOLDER_PLUS_ICON, EDIT_ICON, SLEEP_ICON, SLEEP_ICON_FILLED, ACTIVATE_ICON, TRASH_ICON, REDO_ICON, COLLAPSE_ALL_ICON, EXPAND_ALL_ICON, PIN_ICON, PIN_ICON_FILLED, STAGE_ICON, STAGE_ICON_DONE, TABS_ICON, WINDOW_PLUS_ICON } from './icons.js';
+import { VIEW_ICONS, STAR_ICON, STAR_ICON_FILLED, SELECT_ICON, FOLDER_STAR_ICON, FOLDER_PLUS_ICON, EDIT_ICON, SLEEP_ICON, SLEEP_ICON_FILLED, ACTIVATE_ICON, TRASH_ICON, REDO_ICON, COLLAPSE_ALL_ICON, EXPAND_ALL_ICON, PIN_ICON, PIN_ICON_FILLED, STAGE_ICON, STAGE_ICON_DONE, TABS_ICON, WINDOW_PLUS_ICON, CHEVRON_ICON } from './icons.js';
 import { htmlspecialchars } from './escape.js';
 import { parkRowFocus, unparkRowFocus, parkToolbarFocus, restoreToolbarFocus } from './list-focus.js';
 import { paintListChunked } from './list-chunks.js';
@@ -594,7 +594,9 @@ export function initViewTabGroups(ctx = {}) {
         // (go-to, rename) keep their places to the left of that tail.
         return `<li class="tabgroups-group tg-${htmlspecialchars(color)}${selecting && memberTabs.every(t => selected.has(String(t.id))) ? ' sel' : ''}" id="tabgroups-group-${gid}" data-group-id="${gid}">` +
             `<span class="tabgroups-group-head" tabindex="-1" role="button" aria-expanded="${isCollapsed ? 'false' : 'true'}" title="${htmlspecialchars(title)}">` +
-            `<span class="chevron${isCollapsed ? ' collapsed' : ''}" aria-hidden="true"></span>` +
+            // 小组头折叠指示器 = 树的 twisty SVG（2026-08-27 统一块；窗口
+            // 大区头保留实心三角 ▾/▸）。
+            `<span class="chevron${isCollapsed ? ' collapsed' : ''}" aria-hidden="true">${CHEVRON_ICON}</span>` +
             `<span class="tab-group-dot tg-${htmlspecialchars(color)}"></span>` +
             `<span class="tabgroups-group-title" dir="auto">${htmlspecialchars(title)}</span>` +
             `<span class="count-pill" aria-label="${htmlspecialchars(G.count(`${memberTabs.length}`))}">${memberTabs.length}</span>` +
@@ -774,7 +776,8 @@ export function initViewTabGroups(ctx = {}) {
         const closedAtFull = new Date(record.savedAt || 0).toLocaleString();
         let html = `<li class="tabgroups-closed-group tg-${htmlspecialchars(color)}" data-closed-id="${htmlspecialchars(record.id)}">` +
             `<span class="tabgroups-closed-head" tabindex="-1" role="button" aria-expanded="${isExpanded ? 'true' : 'false'}">` +
-            `<span class="chevron${isExpanded ? '' : ' collapsed'}"></span>` +
+            // 小组头 = 树形 twisty SVG（同上，2026-08-27 统一块）
+            `<span class="chevron${isExpanded ? '' : ' collapsed'}">${CHEVRON_ICON}</span>` +
             `<span class="tab-group-dot tg-${htmlspecialchars(color)}"></span>` +
             `<span class="tabgroups-group-title" dir="auto">${htmlspecialchars(title)}</span>` +
             `<span class="tabgroups-closed-meta" title="${htmlspecialchars(closedAtFull)}">${htmlspecialchars(closedAt)}</span>` +

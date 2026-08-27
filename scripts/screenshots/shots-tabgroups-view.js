@@ -216,15 +216,18 @@ const SEED = `
             offCenter: centers.map(c => Math.abs(c - rowMid))
         };
     });
-    if (align.slotCount !== 4)
-        throw new Error(`expected 4 row icon columns, got ${align.slotCount}`);
+    // 5 columns since the 发送到暂存 stage column joined the tail (pin /
+    // sleep / bookmark-star / stage / close) — the suite still counted the
+    // pre-stage 4 and hard-failed every run since.
+    if (align.slotCount !== 5)
+        throw new Error(`expected 5 row icon columns, got ${align.slotCount}`);
     if (Math.abs(align.headRight - align.rowRight) > 1)
         throw new Error(`group-head and row icon strips are not aligned (${align.headRight} vs ${align.rowRight})`);
     for (const off of align.offCenter)
         if (off > 1)
             throw new Error(`row icon is not vertically centered (off by ${off}px)`);
 
-    // --- 4.1.0: selection mode keeps the same four columns -------------------
+    // --- 4.1.0: selection mode keeps the same columns (5 since the stage column)
     await page.evaluate(() => document.querySelector('.tabgroups-select-mode').click());
     await sleep(500);
     const selAlign = await page.evaluate(() => {
@@ -232,8 +235,8 @@ const SEED = `
         return rows.map(r => r.querySelectorAll(':scope > .tabgroups-slot, :scope > .tabgroups-star, :scope > .tabgroups-status-icon').length);
     });
     for (const n of selAlign)
-        if (n !== 4)
-            throw new Error(`selection-mode row has ${n} icon columns, expected 4`);
+        if (n !== 5)
+            throw new Error(`selection-mode row has ${n} icon columns, expected 5`);
     await page.screenshot({ path: '/tmp/shots/tabgroups-view/37-tabgroups-selection-align.png' });
     await page.evaluate(() => document.querySelector('.tabgroups-select-exit').click());
     await sleep(400);

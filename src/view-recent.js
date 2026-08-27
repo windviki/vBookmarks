@@ -37,7 +37,7 @@
 
 import { relTimeLabel } from './tree-render.js';
 import { paintListChunked } from './list-chunks.js';
-import { VIEW_ICONS, STAGE_ICON, STAGE_ICON_DONE, STAGE_REMOVE_ICON, STAR_ICON, STAR_ICON_FILLED, STAR_X_ICON, SELECT_ICON, FOLDER_STAR_ICON, FOLDER_PLUS_ICON, FOLDER_ICON, CLOCK_ICON, EDIT_ICON, TRASH_ICON, LIST_X_ICON, OPEN_ICON, TABS_ICON, GROUP_ICON, UNGROUP_ICON, SCISSORS_ICON, COLLAPSE_ALL_ICON, EXPAND_ALL_ICON } from './icons.js';
+import { VIEW_ICONS, STAGE_ICON, STAGE_ICON_DONE, STAGE_REMOVE_ICON, STAR_ICON, STAR_ICON_FILLED, STAR_X_ICON, SELECT_ICON, FOLDER_STAR_ICON, FOLDER_PLUS_ICON, FOLDER_ICON, CLOCK_ICON, EDIT_ICON, TRASH_ICON, LIST_X_ICON, OPEN_ICON, TABS_ICON, GROUP_ICON, UNGROUP_ICON, SCISSORS_ICON, COLLAPSE_ALL_ICON, EXPAND_ALL_ICON, CHEVRON_ICON } from './icons.js';
 import { htmlspecialchars } from './escape.js';
 import { parkRowFocus, unparkRowFocus, parkToolbarFocus, restoreToolbarFocus } from './list-focus.js';
 import { flipStageBtn } from './staging-relay.js';
@@ -328,8 +328,11 @@ export function initViewRecent(ctx = {}) {
         return `<li class="staging-bucket${selCls}${count ? ' has-members' : ''}" role="presentation"><span class="staging-bucket-head" ` +
             `tabindex="-1" role="button" aria-expanded="${collapsed ? 'false' : 'true'}">` +
             // the fold chevron leads — the same leading position as the group
-            // head, the section head, the tree and the dupes/tabgroups heads
-            `<span class="chevron${collapsed ? ' collapsed' : ''}" aria-hidden="true"></span>` +
+            // head, the section head, the tree and the dupes/tabgroups heads.
+            // 2026-08-27: the SMALL heads carry the tree's twisty SVG (the
+            // CSS rotates it open like #tree); only the two BIG section
+            // heads keep the solid ▾/▸ text glyph.
+            `<span class="chevron${collapsed ? ' collapsed' : ''}" aria-hidden="true">${CHEVRON_ICON}</span>` +
             `<i class="staging-bucket-star" aria-hidden="true">${STAR_ICON}</i>` +
             `<span class="staging-section-title">${_m('stagingBucketTitle')}</span>` +
             `<span class="count-pill" aria-label="${count}">${countText}</span>` +
@@ -401,7 +404,7 @@ export function initViewRecent(ctx = {}) {
         return `<li class="staging-group${selCls}${count ? ' has-members' : ''}" data-group-id="${g.id}" role="presentation">` +
             `<span class="group-head staging-group-head" tabindex="-1" role="button" ` +
             `aria-expanded="${collapsed ? 'false' : 'true'}" title="${gname}"${dragAttr}>` +
-            `<span class="chevron${collapsed ? ' collapsed' : ''}" aria-hidden="true"></span>` +
+            `<span class="chevron${collapsed ? ' collapsed' : ''}" aria-hidden="true">${CHEVRON_ICON}</span>` +
             // 2026-08-25 icon round: the tree's folder glyph leads the title
             // on the bucket star's slot — every fold head reads glyph-then-
             // title, and the glyph column stacks on the member favicon column.
@@ -598,7 +601,10 @@ export function initViewRecent(ctx = {}) {
             pieces.push(`<li class="recent-group-li${collapsed ? ' collapsed' : ''}" data-recent-group="${g}" role="presentation">` +
                 `<span class="group-head recent-group-head" role="button" tabindex="-1" ` +
                 `aria-expanded="${collapsed ? 'false' : 'true'}" title="${htmlspecialchars(label)}">` +
-                `<span class="chevron${collapsed ? ' collapsed' : ''}" aria-hidden="true"></span>` +
+                // the SMALL time-bucket head carries the tree twisty SVG
+                // (2026-08-27 small-head restyle); the big #recent-head
+                // below keeps the solid triangle.
+                `<span class="chevron${collapsed ? ' collapsed' : ''}" aria-hidden="true">${CHEVRON_ICON}</span>` +
                 // 2026-08-25 icon round: the clock glyph leads on the bucket
                 // star's slot — the time buckets read glyph-then-title like
                 // the staging heads above (folder / hollow star).

@@ -1750,7 +1750,11 @@ menu[type=context] hr {
     padding-block: 0;
     flex-wrap: nowrap;
     gap: 4px;
-    font-size: 12px;
+    /* rejoin the body→view chain: the .staging-toolbar base pins 11px and
+       would shrink this head's chevron away from the window/recent big-head
+       chevrons (the 2026-08-27 same-source law). Small-text descendants pin
+       their own sizes (title 14, pill 9, entry labels 12 below). */
+    font-size: inherit;
 }
 .staging-head-main .staging-section-title,
 #recent-head .staging-section-title {
@@ -1759,6 +1763,13 @@ menu[type=context] hr {
 }
 #recent-head {
     height: 32px;
+}
+/* 2026-08-27 大区头一级统一（窗口头 round）：两个大头的 12px 容器字号钉
+   退役——它会连折叠指示器一起压到 12，与标签组窗口头 chevron（继承 body
+   菜单字号、从不钉死）形成平台相关的尺寸漂移。三个大区头的 chevron 现在
+   走同一条 body→view 继承链，构造上恒等；只有确实要小字号的子孙单独钉回
+   （入口标签 12px、标题 14px、pill 自带 9px）。 */
+.staging-toolbar .staging-entry-label {
     font-size: 12px;
 }
 
@@ -1892,25 +1903,73 @@ body.panel-mode .recent-group-head {
     min-height: 3.34em;
 }
 
-.staging-section-head .chevron::before,
-.staging-bucket-head .chevron::before,
-.staging-group-head .chevron::before,
-.recent-group-head .chevron::before {
+/* 实心三角（▾/▸）从 2026-08-27 起只属于大区头一级——.staging-section-head
+   就是那两个大头（暂存主头 / #recent-head）；小组头的折叠指示器见下方
+   「树视图 twisty」统一块。 */
+.staging-section-head .chevron::before {
     content: '▾';
 }
 
-.staging-section-head .chevron.collapsed::before,
-.staging-bucket-head .chevron.collapsed::before,
-.staging-group-head .chevron.collapsed::before,
-.recent-group-head .chevron.collapsed::before {
+.staging-section-head .chevron.collapsed::before {
     content: '▸';
 }
 
-.rtl .staging-section-head .chevron.collapsed::before,
-.rtl .staging-bucket-head .chevron.collapsed::before,
-.rtl .staging-group-head .chevron.collapsed::before,
-.rtl .recent-group-head .chevron.collapsed::before {
+.rtl .staging-section-head .chevron.collapsed::before {
     content: '◂';
+}
+
+/* —— 小组头折叠指示器 = 树视图文件夹的 twisty 折线 ">"（2026-08-27）——
+   标签组分组头、已关闭分组头、暂存虚拟分组 / 收件桶、最近添加时间桶、
+   去重分组头全部换装 icons.js 的 CHEVRON_ICON（树的同一条 16px 折线，
+   stroke-round），样式与 #tree 的 <b class="twisty"> 完全一致：展开旋转
+   90°指向下方、收起复位指右，同样的 .15s 过渡；RTL 用 scaleX(-1) 镜像
+   （收起指左），展开时叠加旋转——四条状态律逐条对齐树视图。 */
+.staging-bucket-head .chevron,
+.staging-group-head .chevron,
+.recent-group-head .chevron,
+.dupes-group .chevron,
+.tabgroups-group .chevron,
+#tabgroups-list ul li.tabgroups-closed-group .tabgroups-closed-head .chevron {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform .15s ease-out;
+}
+
+.staging-bucket-head .chevron svg,
+.staging-group-head .chevron svg,
+.recent-group-head .chevron svg,
+.dupes-group .chevron svg,
+.tabgroups-group .chevron svg,
+#tabgroups-list ul li.tabgroups-closed-group .tabgroups-closed-head .chevron svg {
+    display: block;
+}
+
+.staging-bucket-head .chevron:not(.collapsed),
+.staging-group-head .chevron:not(.collapsed),
+.recent-group-head .chevron:not(.collapsed),
+.dupes-group .chevron:not(.collapsed),
+.tabgroups-group .chevron:not(.collapsed),
+#tabgroups-list ul li.tabgroups-closed-group .tabgroups-closed-head .chevron:not(.collapsed) {
+    transform: rotate(90deg);
+}
+
+.rtl .staging-bucket-head .chevron,
+.rtl .staging-group-head .chevron,
+.rtl .recent-group-head .chevron,
+.rtl .dupes-group .chevron,
+.rtl .tabgroups-group .chevron,
+.rtl #tabgroups-list ul li.tabgroups-closed-group .tabgroups-closed-head .chevron {
+    transform: scaleX(-1);
+}
+
+.rtl .staging-bucket-head .chevron:not(.collapsed),
+.rtl .staging-group-head .chevron:not(.collapsed),
+.rtl .recent-group-head .chevron:not(.collapsed),
+.rtl .dupes-group .chevron:not(.collapsed),
+.rtl .tabgroups-group .chevron:not(.collapsed),
+.rtl #tabgroups-list ul li.tabgroups-closed-group .tabgroups-closed-head .chevron:not(.collapsed) {
+    transform: scaleX(-1) rotate(90deg);
 }
 
 /* The count pill joins the dupes/tabgroups shared pill recipe (14px /
@@ -2036,20 +2095,34 @@ body.panel-mode .recent-group-head {
     padding-inline-start: 8px;
 }
 
-/* Tree-structure connector (the tabgroups color-line law, muted for the
-   workbench): the flat inset edge line became a REAL tree drawing — a thin
-   1px LIGHT DASHED trunk drops from the head's chevron/star center (16px)
-   and every member row gets a dashed tick from the trunk to its icon slot
-   (40px); the last member closes the trunk with an elbow. Dashes are 3px
-   on / 3px off in a faint muted token — structure without per-group color. */
+/* Tree-structure connector — RE-DRAWN 2026-08-27: the dashed trunk now
+   descends from the PARENT NODE'S ICON AXIS, not from under the chevron.
+   It starts at the head glyph's center column (folder/star/clock well,
+   24..44 → center 34), springs out from BELOW that icon (+12px top offset:
+   the well's lower edge sits at +10, so a strip of clear space always
+   separates glyph from first dash) and every member row repeats the drop
+   on the same axis, growing one tick to its favicon LEFT edge at 48 —
+   the tree child law's contact point. The last member closes the trunk
+   with an elbow. Dashes go finer and quieter (2px stroke / 3px pitch /
+   30% muted vs the old 3/3 @ 42%), matching the small-head twisty restyle.
+   Three custom properties own the geometry so the wide/panel grids
+   redefine constants instead of duplicating pixel math:
+     --stg-trunk-x  the 1px trunk column (icon center − 0.5px)
+     --stg-tick-w   the tick run from that column to the favicon left edge.
+   Selection mode keeps its OWN checkbox-axis calibration below (round 3),
+   deliberately not re-derived here. */
 #staging-list {
-    --staging-line: color-mix(in srgb, var(--vbm-muted) 42%, transparent);
+    --staging-line: color-mix(in srgb, var(--vbm-muted) 30%, transparent);
+}
+#staging-items {
+    --stg-trunk-x: 33.5px; /* narrow grid: well 24..44, center 34 */
+    --stg-tick-w: 14.5px;  /* trunk column → member favicon left edge 48 */
 }
 #staging-items li.vbm-row.staging-member > .staging-connector {
     position: absolute;
     inset-block: 0;
-    inset-inline-start: 15.5px; /* the chevron's center (16px) */
-    width: 32.5px;              /* the tick's run to the icon column at 48 */
+    inset-inline-start: var(--stg-trunk-x);
+    width: var(--stg-tick-w);
     pointer-events: none;
 }
 #staging-items li.vbm-row.staging-member > .staging-connector::before {
@@ -2059,25 +2132,26 @@ body.panel-mode .recent-group-head {
     inset-inline-start: 0;
     width: 1px;
     background: repeating-linear-gradient(to bottom,
-        var(--staging-line) 0 3px, transparent 3px 6px);
+        var(--staging-line) 0 2px, transparent 2px 5px);
 }
 #staging-items li.vbm-row.staging-member > .staging-connector::after {
     content: '';
     position: absolute;
     inset-inline-start: 0;
     top: calc(50% - 0.5px);
-    width: 14.5px;
+    width: var(--stg-tick-w);
     height: 1px;
     background: repeating-linear-gradient(to right,
-        var(--staging-line) 0 3px, transparent 3px 6px);
+        var(--staging-line) 0 2px, transparent 2px 5px);
 }
 /* the group's LAST member closes the trunk with an elbow at the tick */
 #staging-items li.vbm-row.staging-member.staging-last > .staging-connector::before {
     bottom: calc(50% - 0.5px);
 }
-/* the head grows the trunk's first half, from its own chevron/star center
-   down to the first member — only when members actually follow (empty
-   manual groups must not dangle a line), and never while folded */
+/* the head grows the trunk's first half, out of its own icon's underside —
+   never over the glyph itself (+12px leaves the well's lower half clear)
+   — down to the first member; only when members follow (empty manual
+   groups must not dangle a line) and never while folded */
 #staging-items li.staging-group,
 #staging-items li.staging-bucket {
     position: relative;
@@ -2086,25 +2160,28 @@ body.panel-mode .recent-group-head {
 #staging-items li.staging-bucket.has-members::after {
     content: '';
     position: absolute;
-    inset-inline-start: 15.5px;
-    top: 50%;
+    inset-inline-start: var(--stg-trunk-x);
+    top: calc(50% + 12px);
     bottom: 0;
     width: 1px;
     background: repeating-linear-gradient(to bottom,
-        var(--staging-line) 0 3px, transparent 3px 6px);
+        var(--staging-line) 0 2px, transparent 2px 5px);
     pointer-events: none;
 }
 #staging-items li.staging-group.has-members:has(.chevron.collapsed)::after,
 #staging-items li.staging-bucket.has-members:has(.chevron.collapsed)::after {
     display: none;
 }
-/* Selection mode keeps the tree lines (one visual law in both modes — the
-   geometry follows the checkbox axis but keeps the SAME stacking law: the
-   head's chevron center sits at 40px (8px lead + 14px checkbox + 6px
-   margin + 4px flex gap + 16px chevron ÷ 2), the member rows' favicon
-   column sits at 52px (28px checkbox lead + the 24px anchor margin from
-   the round-3 realignment below), and the tick runs from the trunk to
-   that column. */
+/* Selection mode keeps its own checkbox-axis calibration (round 3), which
+   stays CHEVRON-anchored by design: there the head's glyph well re-docks
+   ONTO the member favicon column (both at 52..72 — center-on-center per
+   the round-3 report), so an icon-axis trunk would have nothing to run
+   through but favicon ink. The chevron still owns a clear gutter column
+   @32..48 in this mode (its center 40 = 8 lead + 14 checkbox + 6 margin +
+   4 gap + 16 ÷ 2), the member rows keep a bare 28..52 lead, and the tick
+   runs from the trunk to the favicon column at 52. The small-head twisty
+   restyle doesn't move any of those boxes — only the glyph inside changed
+   — so these constants carry over untouched. */
 #staging-list ul.selecting li.vbm-row.staging-member > .staging-connector {
     inset-inline-start: 39.5px;
     width: 12.5px;
@@ -2167,9 +2244,12 @@ body.panel-mode .recent-group-head {
     #recent-list li.vbm-row {
         padding-inline-start: 34px;
     }
-    #staging-items li.vbm-row.staging-member > .staging-connector,
-    #staging-items li.vbm-row.staging-member > .staging-connector::after {
-        width: 34.5px;
+    /* wide grid constants for the icon-axis trunk: wells grow to 22px
+       (@24..46 → center 35), member rows pad 34 so their favicon left
+       edge lands on title axis 50 */
+    #staging-items {
+        --stg-trunk-x: 34.5px;
+        --stg-tick-w: 15.5px;
     }
     /* selecting twin (round 3): the checkbox axis (28px) + the 30px step
        put the member favicon on the wide loose title axis (58px); the head
@@ -2201,9 +2281,10 @@ body.panel-mode #staging-list ul:not(.selecting) li.vbm-row.staging-member,
 body.panel-mode #recent-list li.vbm-row {
     padding-inline-start: 34px;
 }
-body.panel-mode #staging-items li.vbm-row.staging-member > .staging-connector,
-body.panel-mode #staging-items li.vbm-row.staging-member > .staging-connector::after {
-    width: 34.5px;
+body.panel-mode #staging-items {
+    /* panel-mode twin of the wide grid constants (icon-axis trunk) */
+    --stg-trunk-x: 34.5px;
+    --stg-tick-w: 15.5px;
 }
 body.panel-mode #staging-list ul.selecting li.vbm-row.staging-member > a.tree-item-link {
     margin-inline-start: 30px;
@@ -5283,21 +5364,9 @@ visibly smaller next to them. */
 .dupes-group .chevron {
     flex: none;
     width: 16px;
-    text-align: center;
     color: var(--vbm-muted);
 }
-
-.dupes-group .chevron::before {
-    content: '▾';
-}
-
-.dupes-group .chevron.collapsed::before {
-    content: '▸';
-}
-
-.rtl .dupes-group .chevron.collapsed::before {
-    content: '◂';
-}
+/* 折叠指示器换树形 twisty SVG（统一的「小组头 = 树律」块，2026-08-27） */
 
 .dupes-group .dupes-key {
     flex: 1;
@@ -5850,18 +5919,9 @@ visibly smaller next to them. */
 #tabgroups-list ul li.tabgroups-closed-group .tabgroups-closed-head .chevron {
     flex: none;
     width: 16px;
-    text-align: center;
     color: var(--vbm-muted);
 }
-#tabgroups-list ul li.tabgroups-closed-group .tabgroups-closed-head .chevron::before {
-    content: '▾';
-}
-#tabgroups-list ul li.tabgroups-closed-group .tabgroups-closed-head .chevron.collapsed::before {
-    content: '▸';
-}
-.rtl #tabgroups-list ul li.tabgroups-closed-group .tabgroups-closed-head .chevron.collapsed::before {
-    content: '◂';
-}
+/* 折叠指示器 = 树形 twisty SVG（见暂存区的统一小组头块，2026-08-27） */
 #tabgroups-list ul li.tabgroups-closed-tab {
     display: flex;
     align-items: center;
@@ -5920,10 +5980,11 @@ visibly smaller next to them. */
    from the previous window by a hairline. The WHOLE row is the fold control
    (a focusable role=button span), so it hovers, focuses and answers keys
    exactly like a group head — the chevron alone used to be the only live
-   target. No font-size pin: the head title is EXACTLY the tab rows' size
-   (they inherit the body base — the old 12px pin read smaller than the rows
-   wherever `font: menu` resolves above 12px); the bold em carries the
-   hierarchy instead. */
+   target. The BIG-HEAD tier law (2026-08-27): the title rides the staging/
+   recent big heads' language (14px / 600) instead of inheriting the row
+   base, while the fold chevron keeps its own inherited size — the three
+   big heads' chevrons share ONE body→view chain and stay identical by
+   construction. */
 #tabgroups-list ul li.tabgroups-window-head {
     display: block;
     padding: 6px 0 0;
@@ -5951,13 +6012,18 @@ visibly smaller next to them. */
     outline: 2px solid var(--vbm-focus-ring);
     outline-offset: -2px;
 }
-/* Same text chevron as the group / closed-group heads (one fold glyph for
-   all three levels of this view). */
+/* Big-head fold chevron: same text glyph as before (▾/▸, ◂ under RTL) at
+   the UNPINNED body size (design note above), and its -6px tail cancels the
+   head row's 6px flex gap so the title starts flush at 24 — the icon-column
+   LEFT edge everything below uses (the groups' dot wells @24..44, ungrouped
+   tabs' favicon wells @24..44). Same compact chevron→title recipe as the
+   two staging-region big heads (their -4px tail cancels their own gap). */
 #tabgroups-list ul li.tabgroups-window-head .chevron {
     flex: none;
     width: 16px;
     text-align: center;
     color: var(--vbm-muted);
+    margin-inline-end: -6px;
 }
 #tabgroups-list ul li.tabgroups-window-head .chevron::before { content: '▾'; }
 #tabgroups-list ul li.tabgroups-window-head .chevron.collapsed::before { content: '▸'; }
@@ -5969,7 +6035,8 @@ visibly smaller next to them. */
     text-overflow: ellipsis;
     white-space: nowrap;
     font-style: normal;
-    font-weight: 700;
+    font-size: 14px;
+    font-weight: 600;
 }
 /* the count pill closes the row on the same right-edge column as the group
    head's last control (4px row padding + 4px pill margin = 8px) */
@@ -6098,12 +6165,10 @@ li.tabgroups-row.tabgroups-current {
 .tabgroups-group .chevron {
     flex: none;
     width: 16px;
-    text-align: center;
     color: var(--vbm-muted);
 }
-.tabgroups-group .chevron::before { content: '▾'; }
-.tabgroups-group .chevron.collapsed::before { content: '▸'; }
-.rtl .tabgroups-group .chevron.collapsed::before { content: '◂'; }
+/* 折叠指示器 = 树形 twisty SVG（见暂存区的统一小组头块，2026-08-27）；
+   实心三角只保留给上面的窗口大区头 */
 #tabgroups-list .tab-group-dot {
     /* the FOLDER-ICON analog lives in the level-0 icon column: a 20px well
        (the rows' favicon-slot footprint) centering the 10px color dot, so

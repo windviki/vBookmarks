@@ -212,9 +212,12 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
             })();
             out.manualEmptyHead = !!document.querySelector('li.staging-group[data-group-id="g3"]');
             out.guideBanner = !!document.querySelector('.staging-guide-banner');
-            // collapsed chevron: exactly one glyph source
-            const cs = getComputedStyle(firstGroupHead.querySelector('.chevron'), '::before');
-            out.chevronExpanded = getComputedStyle(firstGroupHead.querySelector('.chevron'), '::before').content;
+            // 2026-08-27 small-head restyle: the fold indicator is the TREE's
+            // twisty SVG now (rotated 90° while expanded) — no ::before glyph.
+            // Capture the expanded state before the collapse click below.
+            const chevBox = firstGroupHead.querySelector('.chevron');
+            out.chevronSvg = !!chevBox.querySelector('svg.vbm-icon-chevron');
+            out.chevronExpandedTransform = getComputedStyle(chevBox).transform;
             return out;
         });
         // collapse a group and inspect the chevron (post-collapse)
@@ -222,11 +225,12 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
             document.querySelector('.staging-group-head').click();
             return new Promise(r => setTimeout(() => {
                 // RE-QUERY: the innerHTML swap replaced the head node — the
-                // pre-click reference is detached (computed ::before = '').
+                // pre-click reference is detached (computed style = empty).
                 const head = document.querySelector('.staging-group-head');
                 const chev = head.querySelector('.chevron');
                 r({
-                    content: getComputedStyle(chev, '::before').content,
+                    transform: getComputedStyle(chev).transform,
+                    svg: !!chev.querySelector('svg.vbm-icon-chevron'),
                     cls: chev.className,
                     aria: head.getAttribute('aria-expanded')
                 });
@@ -239,7 +243,9 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
 
         const checks = [];
         const ck = (name, ok) => checks.push(`${ok ? 'PASS' : 'FAIL'} ${name}`);
-        ck('collapsed chevron = single ▸ glyph (no overlap)', collapsedChevron.content.includes('▸'));
+        ck('small-head fold indicator = the tree twisty SVG', css.chevronSvg && collapsedChevron.svg
+            && collapsedChevron.transform === 'none'
+            && css.chevronExpandedTransform !== 'none');
         ck('group head fixed height 28', Math.abs(css.groupHead.h - 28) < 1.5);
         ck('bucket head fixed height 28', Math.abs(css.bucketHead.h - 28) < 1.5);
         // the axis law binds each tail's RIGHTMOST button (row remove /
