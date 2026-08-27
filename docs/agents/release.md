@@ -39,6 +39,8 @@ scripts/harness/run.sh --dist                # full dist harness — 4.1.0 发�
 
 **Step 1 — git发布**(repo-side: version bump → changelog → commit → tag → package → push):
 
+- **商店图重拍(视觉有改动时必跑)**: `scripts/screenshots/update-store-assets.sh` — Docker 重跑 `shots-store.js` 并把六张候选(strip / promo×3 / themes / options,覆盖全部 7 视图)同步进 `assets/store/`,随本次发版一起提交。上传时从 6 张里挑 5 张(themes 可并入 strip 腾位)。字体前提:`scripts/screenshots/fonts/fetch.sh` 一次性拉取(本地,git-ignored)。
+
 1. **Version check**: `git tag --sort=-v:refname | head -1` gives the highest tag (format `v<version>`, e.g. `v4.0.3`). The current version — authoritative source is `manifest.json`, mirrored in `package.json` — must be **greater** than the highest tag; if development did not bump it, bump it first.
 2. **Changelog basis**: every commit between the current version and the previous version tag.
 3. **Bilingual changelog**: update `docs/README.md` (English) + `docs/README.zh.md` (Chinese) — the repo convention is symmetric bilingual entries.

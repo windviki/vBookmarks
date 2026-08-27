@@ -25,6 +25,7 @@ scripts/screenshots/
 ```bash
 scripts/screenshots/run.sh            # all suites
 scripts/harness/rerun.sh shots.js     # a single suite ad-hoc
+scripts/screenshots/update-store-assets.sh   # re-shoot shots-store + sync assets/store (release Step 1)
 ```
 
 ## Store assets (shots-store)

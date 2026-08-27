@@ -83,7 +83,7 @@ Runtime file lists live in `scripts/runtime-files.json` — the single source of
 One process, two sequential steps — full detail in `docs/agents/release.md`:
 
 - **Step 0 — smoke gate (发版前置必跑)**: `scripts/harness/run.sh --smoke-only` (source root), `--dist --smoke-only` (dist tree), `--dist` (full harness — 强制门禁). The vitest suites never import `src/neat.js`, so only the real-browser gate catches init-time crashes; the same smokes run in CI on every push/PR. Harness internals + gotchas: `docs/agents/testing.md`.
-- **Step 1 — git发布**: current version (`manifest.json`) must exceed the highest `v*` tag → bilingual changelog in `docs/README.md` + `docs/README.zh.md` (gap-fill, don't rewrite; basis = commits since the previous tag) → commit → `git tag v<version>` → `npm run package` → push commits + tag.
+- **Step 1 — git发布**: current version (`manifest.json`) must exceed the highest `v*` tag → bilingual changelog in `docs/README.md` + `docs/README.zh.md` (gap-fill, don't rewrite; basis = commits since the previous tag) → **store images: if the release touched any captured view (or any visual), re-shoot via `scripts/screenshots/update-store-assets.sh` and commit the `assets/store/*.png` diff together with the release** → commit → `git tag v<version>` → `npm run package` → push commits + tag.
 - **Step 2 — 商店发布**: `node scripts/webstore/publish.js check` first (offline-verifies Step 1), then `upload --yes` / `publish --yes` (dry-run by default; credentials only in the git-ignored `.env`; `npm run test:webstore` is the offline contract test).
 
 ### Manual checklist & real-browser harness

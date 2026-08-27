@@ -452,6 +452,17 @@ const SEED = `
         const page = await openThemed('light');
         await activateView(page, 'tabgroups');
         await sleep(900);
+        // Master's tree-law rework persists view-local fold state; expand any
+        // collapsed window/group head so the plain tile shows the rows (the
+        // selection capture below gets this for free — entering selection
+        // opens every fold).
+        await page.evaluate(() => {
+            for (const chev of document.querySelectorAll('#tabgroups-list .chevron.collapsed')) {
+                const row = chev.closest('[role="button"], li');
+                if (row) row.click();
+            }
+        });
+        await sleep(600);
         const rows = await page.evaluate(
             () => document.querySelectorAll('#views .view:not([hidden]) ul li').length);
         if (!rows) errors.push('view-tabgroups: view rendered zero rows');
