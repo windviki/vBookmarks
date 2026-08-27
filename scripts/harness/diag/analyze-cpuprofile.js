@@ -58,3 +58,32 @@ if (process.argv.includes('--callers')) {
     [...callers.entries()].sort((a, b) => b[1] - a[1]).slice(0, 15)
         .forEach(([k, v]) => console.log(`${fmt(v)}  ${k}`));
 }
+
+// --calls <fn>: count distinct call-path nodes for a function and their hit
+// split (a repeated full re-render from DIFFERENT callers shows up as
+// separate nodes with comparable hit counts).
+if (process.argv.includes('--calls')) {
+    const fn = process.argv[process.argv.indexOf('--calls') + 1];
+    const nodes = prof.nodes.filter(n => (n.callFrame || {}).functionName === fn);
+    const total = nodes.reduce((a, n) => a + (n.hitCount || 0), 0);
+    console.log(`\n== call-path nodes for ${fn}: ${nodes.length} distinct, ${total} hits ==`);
+    nodes.map(n => ({
+        n,
+        hits: n.hitCount || 0
+    })).sort((a, b) => b.hits - a.hits).slice(0, 6).forEach(({ n, hits }) => {
+        const idToNode = new Map(prof.nodes.map(x => [x.id, x]));
+        const chain = [];
+        let cur = n;
+        const parent = new Map();
+        for (const x of prof.nodes)
+            for (const c of x.children || [])
+                parent.set(c, x.id);
+        while (parent.get(cur.id)) {
+            cur = idToNode.get(parent.get(cur.id));
+            const f = (cur.callFrame || {}).functionName || '(anonymous)';
+            if (f !== fn) chain.push(f);
+            if (chain.length >= 3) break;
+        }
+        console.log(`${fmt(hits)}  hits=${hits}  callers: ${chain.join(' ← ')}`);
+    });
+}

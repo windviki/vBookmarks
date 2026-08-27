@@ -239,6 +239,12 @@ const openPopup = async (browser, extId) => {
         syncSeed.deadMarkFilter = '';
         syncSeed.virtualScrollLab = '';
         syncSeed.opens = seed.opensJson;
+        // A/B knob: measure the cold-open price of the per-row quick-action
+        // tails (treeRowActions='0' removes edit/stage/delete from all rows).
+        if (process.env.VBM_PERF_NO_TREETAILS === '1') {
+            localSeed.treeRowActions = '0';
+            syncSeed.treeRowActions = '0';
+        }
         await seedPage.evaluate(([l, s]) => Promise.all([
             new Promise(r => chrome.storage.local.set(l, r)),
             new Promise(r => chrome.storage.sync.set(s, r))
@@ -271,6 +277,24 @@ const openPopup = async (browser, extId) => {
             await p.goto(`chrome-extension://${extId}/pages/popup.html`, { waitUntil: 'load', timeout: 120000 });
             console.log('stage: cold run ' + (i + 1) + ' loaded; settle ' + SETTLE_MS + 'ms');
             await sleep(SETTLE_MS);
+            if (i === 0) {
+                const sz = await p.evaluate(() => {
+                    const t = document.getElementById('tree');
+                    const row = t && t.querySelector('li.child');
+                    return {
+                        treeHtmlLen: t ? t.innerHTML.length : -1,
+                        treeLis: t ? t.getElementsByTagName('li').length : -1,
+                        bodyHtmlLen: document.body ? document.body.innerHTML.length : -1,
+                        sampleRowLen: row ? row.innerHTML.length : -1,
+                        sampleRowHead: row ? row.innerHTML.slice(0, 1500) : ''
+                    };
+                }).catch(() => null);
+                if (sz) {
+                    out.treeSize = { treeHtmlLen: sz.treeHtmlLen, treeLis: sz.treeLis, bodyHtmlLen: sz.bodyHtmlLen, sampleRowLen: sz.sampleRowLen };
+                    console.log('tree size:', JSON.stringify(out.treeSize));
+                    console.log('sample row head:\n' + sz.sampleRowHead);
+                }
+            }
             if (PROFILE) {
                 const prof = (await cdp.send('Profiler.stop')).profile;
                 fs.writeFileSync(outDir + '/cold.cpuprofile', JSON.stringify(prof));
