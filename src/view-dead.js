@@ -1236,7 +1236,25 @@ export function initViewDead(ctx = {}) {
     // recent + dupes + stats), so every matching row is painted.
     const OVERLAY_ROW_PREFIXES = ['neat-tree-item-', 'results-item-', 'recent-item-', 'dupes-item-', 'stats-item-'];
     let overlaidIds = new Set();
-    const overlayRows = id => {
+    // 2026-08-27 perf round (maintainer's real profile, 5154 dead marks): the
+    // staging-row lookup below used to run one FULL-DOCUMENT attribute
+    // querySelector per marked id — measured at 50% of a cold open and 97%
+    // of a dupes regroup on the real tree, because every mark re-scanned the
+    // whole document after every chunk paint. The staging index is now built
+    // ONCE per refresh pass: a single querySelectorAll scoped to
+    // #staging-items (which only exists while the staging view is rendered —
+    // zero cost on every other view), then O(1) Map lookups per id.
+    const stagingIndex = () => {
+        const idx = new Map();
+        const list = document.getElementById('staging-items');
+        if (!list || !list.querySelectorAll)
+            return idx;
+        const rows = list.querySelectorAll('.staging-row[data-node-id]');
+        for (let i = 0; i < rows.length; i++)
+            idx.set(rows[i].getAttribute('data-node-id'), rows[i]);
+        return idx;
+    };
+    const overlayRows = (id, staged) => {
         const rows = [];
         for (let i = 0, l = OVERLAY_ROW_PREFIXES.length; i < l; i++) {
             const row = document.getElementById(OVERLAY_ROW_PREFIXES[i] + id);
@@ -1245,13 +1263,13 @@ export function initViewDead(ctx = {}) {
         }
         // velvet staging §2.4: bookmarked staging rows key their DOM id by
         // the DATA index (the unfav rows share the axis), so the id→row
-        // lookup goes through data-node-id there. Only bookmarked rows
-        // carry the attribute — unbookmarked snapshots have no dead/live
-        // state to paint.
-        if (document.querySelector) {
-            const staged = document.querySelector(`.staging-row[data-node-id="${id}"]`);
-            if (staged)
-                rows.push(staged);
+        // lookup goes through the prebuilt staging index. Only bookmarked
+        // rows carry the attribute — unbookmarked snapshots have no dead/
+        // live state to paint.
+        if (staged) {
+            const row = staged.get(id);
+            if (row)
+                rows.push(row);
         }
         return rows;
     };
@@ -1281,9 +1299,10 @@ export function initViewDead(ctx = {}) {
             : false;
         if (deadMarks.size === 0 && overlaidIds.size === 0 && !hasStale)
             return;
+        const staged = stagingIndex();
         const touched = new Set();
         for (const id of deadMarks) {
-            const rows = overlayRows(id);
+            const rows = overlayRows(id, staged);
             if (!rows.length)
                 continue;
             let painted = false;
@@ -1297,7 +1316,7 @@ export function initViewDead(ctx = {}) {
         for (const id of overlaidIds) {
             if (deadMarks.has(id))
                 continue;
-            for (const li of overlayRows(id)) {
+            for (const li of overlayRows(id, staged)) {
                 const fav = li.querySelector ? li.querySelector('.favicon-container') : null;
                 if (!fav)
                     continue;

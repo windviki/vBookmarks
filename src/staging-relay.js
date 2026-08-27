@@ -21,12 +21,17 @@ export const isStagedUrl = (api, url) =>
 
 // The hover 发送到暂存 toggle (the stats-view recipe verbatim:
 // .staging-add-btn + .staged accent + staged → the filled plane).
-export const stageBtnHtml = (api, item, _m) => {
+// `icons` lets heavy-list callers (the tree row tail) pass the sprite-sheet
+// <use> variants — every inline SVG copy dropped ~280 bytes per row of
+// cold-open innerHTML (2026-08-27 perf round); the default stays inline.
+export const stageBtnHtml = (api, item, _m, icons) => {
+    const off = (icons && icons.off) || STAGE_ICON;
+    const done = (icons && icons.done) || STAGE_ICON_DONE;
     const staged = isStagedUrl(api, item.url);
     const label = _m(staged ? 'stagingRemove' : 'stagingAdd');
     return `<button type="button" class="row-btn staging-add-btn${staged ? ' staged' : ''}" ` +
         `aria-pressed="${staged}" aria-label="${htmlspecialchars(label)}" ` +
-        `title="${htmlspecialchars(label)}">${staged ? STAGE_ICON_DONE : STAGE_ICON}</button>`;
+        `title="${htmlspecialchars(label)}">${staged ? done : off}</button>`;
 };
 
 // Reflect a toggle on the live button without a re-render.

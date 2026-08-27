@@ -212,7 +212,7 @@ python3 scripts/package.py         # → tmp/vBookmarks_<version>.zip
 
 ### v4.1.0
 
-*2026-08-26*
+*2026-08-27*
 
 #### New
 
@@ -229,6 +229,10 @@ python3 scripts/package.py         # → tmp/vBookmarks_<version>.zip
 - **Chunked list rendering + content-visibility for heavy views**: tab-groups first paint dropped from 1064 ms to 239 ms; the duplicates view regroups 57% faster; the dead-link scanner renders its results incrementally instead of in one blocking burst.
 - **Surgical fold/collapse updates**: folding or collapsing no longer rebuilds whole lists — only the affected rows change, so folding a big group stays instant.
 - **One-time favicon placeholder parsing**: the placeholder template is parsed once and reused, and i18n labels are hoisted per render instead of re-fetched for every row.
+
+#### Polish
+
+- **One tree language across the tree, staging, recent and tab-groups views**: every fold head sits on the tree's exact three-slot grid (chevron lead / icon well / title axis), and member rows indent so their icons line up under their head's title. The big section heads read at 14px with their titles parked on the icon-column edge below, every small group head now folds with the tree's thin chevron twisty (only the three biggest heads keep the solid triangle), and the staging workbench's dashed hierarchy lines were redrawn — they now descend from the parent icon's axis, start below the icon itself and use finer, quieter dashes. Tab-groups' selection mode drops its inert fold chevron, and the options page gets an alignment pass (dropdowns right-align to the card edge, standard form footers).
 
 #### Fixed
 

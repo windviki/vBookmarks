@@ -57,7 +57,14 @@ else
         | tar xf - -C "$CTX/vBookmarks"
 fi
 cp "$REPO_ROOT"/scripts/harness/{Dockerfile,smoke.js,verify-keyboard.js,verify-scrollbars.js,verify-menu-overflow.js,verify-menu-collapse.js,verify-menu-extreme.js,verify-menu-overlong.js,verify-rightclick-repeat.js,verify-bmlet.js,perf-popup.js} "$CTX/"
-cp "$REPO_ROOT"/scripts/screenshots/{shots.js,shots-matrix.js,shots-i18n.js,shots-palette.js,shots-guide.js,shots-tabgroups.js,shots-tabgroups-view.js} "$CTX/"
+cp "$REPO_ROOT"/scripts/screenshots/{shots.js,shots-matrix.js,shots-i18n.js,shots-palette.js,shots-guide.js,shots-tabgroups.js,shots-tabgroups-view.js,shots-store.js} "$CTX/"
+# Store-shot typography (the Dockerfile COPYs it unconditionally): seed the
+# dir even when the git-ignored TTFs were never fetched, or the build fails
+# on a missing path — same contract as rerun.sh.
+mkdir -p "$CTX/fonts"
+if [ -d "$REPO_ROOT/scripts/screenshots/fonts" ]; then
+    cp -r "$REPO_ROOT"/scripts/screenshots/fonts/. "$CTX/fonts/"
+fi
 cp -r "$REPO_ROOT"/scripts/harness/diag "$CTX/diag"
 
 docker build -q -t "$IMAGE" "$CTX" >/dev/null

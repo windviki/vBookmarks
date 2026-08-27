@@ -778,6 +778,36 @@ describe('tree-row quick actions (treeRowActions option)', () => {
         // no ctx.staging injected → folderStageBtnHtml yields nothing
         expect(html).not.toContain('staging-add-btn');
     });
+
+    // 2026-08-27 real-data perf round: the tail icons are SVG-sprite <use>
+    // references (icons.js ICON_SPRITE_SHEET), not per-row inline <svg> —
+    // 3 inline copies per row × 5000+ rows dominated the cold-open parse.
+    it('tail buttons reference the sprite sheet and carry NO inline svg', () => {
+        const tr = setup({ store: makeStore({ treeRowActions: '1', stagingEnabled: '1', showRecentBookmarks: '1' }) });
+        const html = tr.generateHTML([BM]);
+        expect(html).toContain('<use href="#vbm-ic-edit"/>');
+        expect(html).toContain('<use href="#vbm-ic-trash"/>');
+        expect(html).toContain('<use href="#vbm-ic-stage"/>');
+        // the tail block carries no inline svg (sprite svgs have no viewBox —
+        // every inline icon did); scoped from the tail onward because the
+        // row's folder/bookmark chrome may still embed other svgs
+        const tail = html.slice(html.indexOf('tree-row-edit'));
+        expect(tail).not.toContain('viewBox');
+    });
+
+    it('the sprite sheet symbols mirror the inline icons byte-for-byte', async () => {
+        const icons = await import('../src/icons.js');
+        for (const [name, inline] of [['edit', icons.EDIT_ICON], ['trash', icons.TRASH_ICON], ['stage', icons.STAGE_ICON], ['stage-done', icons.STAGE_ICON_DONE]]) {
+            const inner = inline.slice(inline.indexOf('>') + 1, inline.lastIndexOf('</svg>'));
+            expect(icons.ICON_SPRITE_SHEET, name).toContain(inner);
+            // presentation attributes survived the move onto the <symbol>
+            for (const attr of ['fill=', 'stroke=', 'stroke-width='])
+                expect(icons.ICON_SPRITE_SHEET, `${name}:${attr}`).toContain(attr);
+        }
+        // the referencing button svg keeps the class hooks + a use per icon
+        for (const name of ['edit', 'trash', 'stage', 'stage-done'])
+            expect(icons.spriteIcon(name)).toContain(`class="vbm-icon vbm-icon-${name}"`);
+    });
 });
 
 describe('generateHTML', () => {

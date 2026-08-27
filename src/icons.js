@@ -380,3 +380,31 @@ export const VIEW_ICONS = {
         '<path d="M6 3h4a2 2 0 0 1 2 2v5.5"/>' +
         '<circle cx="8" cy="8" r="1.4"/>')
 };
+// —— SVG sprite sheet（2026-08-27 真实数据 perf 轮）——
+// 树视图行尾三键（编辑/暂存/删除）在每一行都内联 2-3 个完整 <svg>，5161 行的
+// 真实书签树因此比 4.0.8 多出 ~4MB 行标记，innerHTML 解析独占冷开 profile。
+// 四个字形改为文档级 <symbol> 只定义一次（ICON_SPRITE_SHEET，由渲染端幂等
+// 注入），行内用 <use> 引用；spriteIcon() 保留 vbm-icon / vbm-icon-X 类钩子，
+// 样式与测试断言不变。字形路径与内联图标逐字节一致（契约测试看管）。
+export const spriteIcon = name =>
+    `<svg class="vbm-icon vbm-icon-${name}" width="16" height="16" aria-hidden="true"><use href="#vbm-ic-${name}"/></svg>`;
+
+export const ICON_SPRITE_SHEET =
+    '<svg id="vbm-icon-sheet" xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">' +
+    '<symbol id="vbm-ic-edit" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">' +
+    '<path d="M2.5 13.5h11"/>' +
+    '<path d="M9.2 2.9a1.5 1.5 0 0 1 2.1 2.1l-5.6 5.6-2.7.6.6-2.7z"/>' +
+    '</symbol>' +
+    '<symbol id="vbm-ic-trash" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">' +
+    '<path d="M3 4.5h10"/>' +
+    '<path d="M6 4.5V3.2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v1.3"/>' +
+    '<path d="M4.4 4.5l.6 8.1a1.2 1.2 0 0 0 1.2 1.1h3.6a1.2 1.2 0 0 0 1.2-1.1l.6-8.1"/>' +
+    '</symbol>' +
+    '<symbol id="vbm-ic-stage" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">' +
+    `<path d="${STAGE_PLANE_PATH}"/>` +
+    '<path d="M14.7 1.3L7.3 8.7"/>' +
+    '</symbol>' +
+    '<symbol id="vbm-ic-stage-done" viewBox="0 0 16 16" fill="currentColor" stroke="currentColor" stroke-width="1" stroke-linejoin="round">' +
+    `<path d="${STAGE_PLANE_PATH}"/>` +
+    '</symbol>' +
+    '</svg>';

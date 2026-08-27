@@ -1,4 +1,4 @@
-import { FOLDER_ICON, DOCUMENT_CODE_ICON, CHEVRON_ICON, EDIT_ICON, TRASH_ICON, STAGE_ICON, STAGE_ICON_DONE } from './icons.js';
+import { FOLDER_ICON, DOCUMENT_CODE_ICON, CHEVRON_ICON, spriteIcon, ICON_SPRITE_SHEET } from './icons.js';
 import { htmlspecialchars } from './escape.js';
 import { stageBtnHtml as relayStageBtnHtml } from './staging-relay.js';
 
@@ -35,6 +35,26 @@ import { stageBtnHtml as relayStageBtnHtml } from './staging-relay.js';
  */
 
 const httpsPattern = /^https?:\/\//i;
+
+// —— 行尾图标精灵（2026-08-27 真实数据 perf 轮）——
+// 树行尾的编辑/暂存/删除按钮改用 icons.js 的 <symbol> 精灵表：每行省
+// ~800B 的内联 SVG，5000+ 行真实树的冷开 innerHTML 解析因此显著下降。
+// STAGE_SPRITE 传给 staging-relay 的 stageBtnHtml；表在首次树渲染前幂等
+// 注入 document（<use> 活解析，测试替身没有 insertAdjacentHTML 时静默跳过）。
+const STAGE_SPRITE = { off: spriteIcon('stage'), done: spriteIcon('stage-done') };
+let spriteSheetInstalled = false;
+const ensureIconSheet = () => {
+    if (spriteSheetInstalled)
+        return;
+    try {
+        if (typeof document !== 'undefined' && document.body &&
+            typeof document.body.insertAdjacentHTML === 'function' &&
+            !document.getElementById('vbm-icon-sheet')) {
+            document.body.insertAdjacentHTML('afterbegin', ICON_SPRITE_SHEET);
+            spriteSheetInstalled = true;
+        }
+    } catch (_) { /* 下一轮渲染重试 */ }
+};
 
 // v4 task-4 #2: per-level tree indent, shared by every place that computes a
 // row's -webkit-padding-start (generateHTML here, actions.js add-node,
@@ -186,7 +206,7 @@ export function initTreeRender(ctx = {}) {
         const label = htmlspecialchars(_m(staged ? 'stagingAlready' : 'stagingAdd'));
         return `<button type="button" class="row-btn staging-add-btn${staged ? ' staged' : ''}" ` +
             `aria-pressed="${staged}" aria-label="${label}" title="${label}">` +
-            `${staged ? STAGE_ICON_DONE : STAGE_ICON}</button>`;
+            `${staged ? STAGE_SPRITE.done : STAGE_SPRITE.off}</button>`;
     };
     const treeRowTail = (url, isFolder, folderNode) => {
         if (!treeRowActionsOn())
@@ -195,13 +215,13 @@ export function initTreeRender(ctx = {}) {
         const editLabel = esc(_m(isFolder ? 'editFolder' : 'editBookmark'));
         const delLabel = esc(_m('rowActionDelete'));
         let html = `<button type="button" class="row-btn tree-row-btn tree-row-edit" ` +
-            `aria-label="${editLabel}" title="${editLabel}">${EDIT_ICON}</button>`;
+            `aria-label="${editLabel}" title="${editLabel}">${spriteIcon('edit')}</button>`;
         if (stagingRelayOn())
             html += isFolder
                 ? folderStageBtnHtml(folderNode)
-                : (url ? relayStageBtnHtml(ctx.staging, { url }, _m) : '');
+                : (url ? relayStageBtnHtml(ctx.staging, { url }, _m, STAGE_SPRITE) : '');
         html += `<button type="button" class="row-btn tree-row-btn tree-row-delete" ` +
-            `aria-label="${delLabel}" title="${delLabel}">${TRASH_ICON}</button>`;
+            `aria-label="${delLabel}" title="${delLabel}">${spriteIcon('trash')}</button>`;
         return html;
     };
 
@@ -374,6 +394,7 @@ export function initTreeRender(ctx = {}) {
     };
 
     const generateHTML = (data, level) => {
+        ensureIconSheet();
         if (!level)
             level = 0;
         const paddingStart = TREE_INDENT * level;
