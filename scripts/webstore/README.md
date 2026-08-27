@@ -93,7 +93,34 @@ node scripts/webstore/publish.js publish --type TRUSTED_TESTERS --yes
 
 # 7) 从测试用户恢复到所有人(再发一次 DEFAULT_PUBLISH 全量)
 node scripts/webstore/publish.js publish --type DEFAULT_PUBLISH --yes
+
+# 8) listing 元信息·取回:公开详情页快照(?hl=en / zh-CN 各一份;凭据齐备时附带
+#    官方 item 状态)→ tmp/webstore/listing-current.*.json,并与仓库 extName/extDesc 比对
+node scripts/webstore/publish.js listing            # dry-run 打印将抓取的 URL
+node scripts/webstore/publish.js listing --yes      # 真正抓取
+
+# 9) listing 元信息·更新草稿(纯离线):名称/简介(_locales extName/extDesc)+
+#    详述(docs/README pitch 段)+ What's new(changelog 当前版本节)+ 截图清单
+#    (assets/store 逐张核对尺寸规格)→ listing-proposal.{en,zh-CN}.md + .json
+node scripts/webstore/publish.js listing-draft
 ```
+
+## listing 元信息(为什么是「快照 + 草稿」)
+
+**官方 CWS API V2 的 REST 面只有 upload / publish / fetchStatus / cancelSubmission /
+setPublishedDeployPercentage —— 没有 listing(名称/简介/详述/截图)的读写端点**
+(Dashboard 内部接口也未开放)。因此本目录对 listing 的自动化边界是:
+
+- **取回**(`listing`):抓公开详情页解析 og meta 与页面图片直链,存快照供比对。
+  实测(2026-08)详情页无 ld+json、无 itemprop,截图/评分/版本由 XHR 渲染,
+  静态 HTML 拿不到 —— 对应快照字段留空,不硬猜。
+- **更新**(`listing-draft`):从仓库规范源生成可粘贴的双语草稿,人工核对后
+  粘贴进 Developer Dashboard → 包 → Store listing,图片按清单手动上传 ——
+  与商店素材「人工挑选、手动上传」同一纪律。规范源改动(改 extDesc、发新版)
+  后重跑一次即得最新草稿;线上现值用 `listing --yes` 快照做 diff。
+- 若未来 Google 为 V2 开放 listing 端点,接入点就是本文件里已隔离的
+  `runListing` / `runListingDraft`(纯函数部分在 `parseDetailPage` / `buildProposal`,
+  均有离线单测)。
 
 参数:
 
@@ -119,7 +146,7 @@ Node 全局 fetch(undici)默认**不读** `HTTP(S)_PROXY` 环境变量。本环�
 ## 测试
 
 ```bash
-npm run test:webstore          # 等价于: node --test scripts/webstore/upload-test.js
+npm run test:webstore          # 等价于: node --test scripts/webstore/upload-test.js scripts/webstore/listing-test.js
 ```
 
 `upload-test.js` 全离线(mock 全局 fetch),验证:
@@ -127,6 +154,10 @@ npm run test:webstore          # 等价于: node --test scripts/webstore/upload-
   IN_PROGRESS 轮询、`publish('default')` 兼容);
 - 打包产物 CWS 结构合规(zip 根含 manifest.json、version 一致、icons 齐全、description ≤ 132);
 - 权限清单快照(供审核自查)。
+
+`listing-test.js` 全离线,验证 listing 纯函数:详情页解析(`parseDetailPage`:
+ld+json 优先 / og 兜底 / 商店标题后缀剥除 / lh3 图片直链收集)、changelog 节摘取、
+README pitch 摘取、PNG 尺寸读取与规格核对、`buildProposal` 双语草稿组装。
 
 ## 安全与版本控制约定
 

@@ -7,3 +7,6 @@ dist/
 .idea/
 .claude/
 .qoder/
+# Local font downloads for the store-shot pipeline (fetch via
+# scripts/screenshots/fonts/fetch.sh; OFL-licensed, not committed)
+scripts/screenshots/fonts/*.ttf

@@ -24,6 +24,8 @@
 #                      forms the group / joins it (popup-closing-safe)
 #   shots-tabgroups-view.js — the tab-groups VIEW (4.1.0): current-window
 #                      tabs + groups, selection mode, group-head context menu
+#   shots-store.js    — WebStore candidates (≤5 shown): 1400×560 theme strip,
+#                      1280×800 promo collage + themes split + options panorama
 #
 # Usage: scripts/screenshots/run.sh
 set -euo pipefail
@@ -40,12 +42,16 @@ mkdir -p "$CTX/vBookmarks" "$OUT"
 (cd "$REPO_ROOT" && tar cf - --exclude=./.git --exclude=./node_modules --exclude=./tmp --exclude=./.env --exclude=./.claude --exclude=./.env.example .) \
     | tar xf - -C "$CTX/vBookmarks"
 cp "$REPO_ROOT"/scripts/harness/{Dockerfile,smoke.js,verify-keyboard.js,verify-scrollbars.js,verify-menu-overflow.js,verify-menu-collapse.js,verify-menu-extreme.js,verify-menu-overlong.js,verify-rightclick-repeat.js,verify-bmlet.js,perf-popup.js} "$CTX/"
-cp "$REPO_ROOT"/scripts/screenshots/{shots.js,shots-matrix.js,shots-i18n.js,shots-palette.js,shots-guide.js,shots-tabgroups.js,shots-tabgroups-view.js} "$CTX/"
+cp "$REPO_ROOT"/scripts/screenshots/{shots.js,shots-matrix.js,shots-i18n.js,shots-palette.js,shots-guide.js,shots-tabgroups.js,shots-tabgroups-view.js,shots-store.js} "$CTX/"
+mkdir -p "$CTX/fonts"
+if [ -d "$REPO_ROOT/scripts/screenshots/fonts" ]; then
+    cp -r "$REPO_ROOT"/scripts/screenshots/fonts/. "$CTX/fonts/"
+fi
 cp -r "$REPO_ROOT"/scripts/harness/diag "$CTX/diag"
 
 docker build -q -t "$IMAGE" "$CTX" >/dev/null
 
-for suite in shots.js shots-matrix.js shots-i18n.js shots-palette.js shots-guide.js shots-tabgroups.js shots-tabgroups-view.js; do
+for suite in shots.js shots-matrix.js shots-i18n.js shots-palette.js shots-guide.js shots-tabgroups.js shots-tabgroups-view.js shots-store.js; do
     name="vbm-shots-$$-${suite%.js}"
     docker rm -f "$name" >/dev/null 2>&1 || true
     docker create --name "$name" "$IMAGE" node "/work/$suite" >/dev/null

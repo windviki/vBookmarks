@@ -182,6 +182,7 @@ scripts/screenshots/run.sh    # 纯视觉拍照——套件输出到 tmp/shots/
 #   scripts/screenshots/shots-palette.js 命令面板 + 四个功能视图
 #   scripts/screenshots/shots-guide.js   指南配图（搜索双区、选项页视图分组）
 #   scripts/screenshots/shots-tabgroups.js 标签组菜单与对话框全流程（service worker 侧验证）
+#   scripts/screenshots/shots-store.js   商店候选图（7 视图全覆盖，上传时选 5）：条带/拼贴×3/主题对开/选项页全景
 #   scripts/console/      浏览器控制台探针；scripts/harness/diag/ node 诊断探针（按需）
 
 # 语言流水线（scripts/i18n.py，仅标准库）

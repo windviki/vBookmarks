@@ -15,8 +15,9 @@ scripts/screenshots/
 ├── shots-i18n.js       # 7 UI languages × 15 surfaces, light theme
 ├── shots-palette.js    # palette + recent/stats/dupes/dead views
 ├── shots-guide.js      # guide-only states for docs/guide-v4*.md
-└── shots-tabgroups.js       # tab-group menus & dialogs, SW-side verified
-└── shots-tabgroups-view.js   # tab-groups view: tabs/groups, selection, group menu
+├── shots-tabgroups.js       # tab-group menus & dialogs, SW-side verified
+├── shots-tabgroups-view.js   # tab-groups view: tabs/groups, selection, group menu
+└── shots-store.js      # WebStore specs: 1400×560 theme strip + 1280×800 promo
 ```
 
 ## Usage
@@ -25,6 +26,54 @@ scripts/screenshots/
 scripts/screenshots/run.sh            # all suites
 scripts/harness/rerun.sh shots.js     # a single suite ad-hoc
 ```
+
+## Store assets (shots-store)
+
+The store shows at most FIVE screenshots; `shots-store.js` emits six
+candidates covering all seven views, all from live states instead of hand
+assembly (velvet §6.3 F) — pick the five keepers at upload time (`themes`
+folds into `strip` if a slot is needed):
+
+- `store/strip.png` — 1400×560, the four explicit themes side by side;
+- `store/promo.png` — 1280×800, sheet 1 (entry points): left the main popup
+  with the context menu and its collapsible entry expanded in place; right
+  two columns of stacked pairs — search (normal over selection, the
+  selection tiles cropped below the view-tab strip) and tab-groups;
+- `store/promo2.png` — 1280×800, sheet 2 (the staging workbench): left the
+  command palette long shot; right columns — staging upper region (groups) +
+  staging selection, staging recent region + stats;
+- `store/promo3.png` — 1280×800, sheet 3 (cleanup): dead-links and
+  duplicates, each normal over selection;
+- `store/themes.png` — 1280×800, the two crafted themes split full-bleed
+  (ink | paper);
+- `store/options.png` — 1280×800, the whole options page in one frame: a
+  wide-viewport capture with the multicol grid forced to six columns
+  (`.options-page{max-width:none}` + `column-count:6`), scaled into the
+  frame — a true panorama, unlike the hand-made options shot that shows only
+  half the groups.
+
+Every popup tile is clipped to the live `#container` box (overlays may extend
+it downward), so no tile carries the viewport's dead right margin. Plain tiles
+trim trailing dead space to the measured content bottom; selection tiles start
+below the view-tab strip. Popup width is pinned to 400px via the `popupWidth`
+setting so overlays (palette) compose inside the frame. Composite geometry is
+pre-calculated from each tile's measured PNG aspect — tiles are never
+cover-cropped.
+
+Every capture is seeded and hermetic (non-extension requests are aborted), so
+re-runs are deterministic. Typography: Inter + Noto Sans SC (思源黑体) are
+installed by the Dockerfile from `scripts/screenshots/fonts/` (git-ignored;
+run `fonts/fetch.sh` once through the proxy) and forced via an injected
+stylesheet — without them the captures fall back to the base image's
+bitmap-ish CJK font. The composites are synced to
+`assets/store/vBookmarks-{strip,promo,promo2,promo3,themes,options}.png`
+(excluded from the package zip like every store asset — `package.py`
+EXCLUDE_FILES); re-run the suite after visual changes and re-copy the keepers.
+Upload happens via the Developer Dashboard (the store listing itself is not
+API-managed; see `scripts/webstore/README.md` for what the `listing` commands
+can and cannot do). Raw tiles are kept under `store/tiles/` for manual
+re-mixing. `classic` joins the strip theme list when the velvet classic theme
+lands.
 
 ## Output layout
 
@@ -39,6 +88,11 @@ tmp/shots/
 ├── tabgroups/NN-<name>.png              # shots-tabgroups (30-33)
 ├── tabgroups-view/NN-<name>.png          # shots-tabgroups-view (34-36)
 ├── guide/<name>.png                     # shots-guide
+├── store/strip.png                      # shots-store — 1400×560, 4 theme tiles
+├── store/promo.png                      # shots-store — 1280×800 collage
+├── store/themes.png                     # shots-store — 1280×800 ink|paper split
+├── store/options.png                    # shots-store — 1280×800 options panorama
+├── store/tiles/<name>.png               # shots-store — raw capture tiles
 ├── smoke/                               # harness smoke.js diagnostic shots
 ├── verify-menu/                         # verify-menu-overflow/collapse captures
 ├── verify-menu-extreme/<combo>.png      # verify-menu-extreme: 1 shot per DPR×zoom×size combo

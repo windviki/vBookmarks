@@ -6,7 +6,7 @@
     "test": "vitest",
     "test:run": "vitest run",
     "test:ci": "vitest run --reporter=default --reporter=json --outputFile=tmp/vitest-count.json && node -e \"const r=require('./tmp/vitest-count.json'); console.log('=== Test count: ' + r.numTotalTests + ' cases / ' + r.numPassedTests + ' passed (README/AGENTS reference) ===')\"",
-    "test:webstore": "node --test scripts/webstore/upload-test.js",
+    "test:webstore": "node --test scripts/webstore/upload-test.js scripts/webstore/listing-test.js",
     "lint": "ESLINT_USE_FLAT_CONFIG=true eslint src tests",
     "build": "node scripts/build.mjs",
     "package": "npm run build && python3 scripts/package.py --root dist",

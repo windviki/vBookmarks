@@ -48,7 +48,7 @@
 | §3.3 C3 URL 直开（popup/palette 侧）+ `/copy` | ⬜ | 无 | 实施（§3.3） |
 | §4 通知系统 | ✅ | announce.js（raw.githubusercontent 静态 JSON、TTL 6h、ETag、Seen LRU 100、`announceEnabled`、display 三枚举、500 字/10 条上限、转义）+ github-source.js + github-mirrors.js + docs/announce.json + `tests/announce.test.js` schema 校验，全部落地 | 剩两项打磨（§4.2） |
 | §5.1 E1 独立大屏页 | ⬜ | 无 standalone.html | 实施（§5.1） |
-| §6 F 商店素材自动化 | ⬜ | 无 shots-store.js | 实施（§6.3） |
+| §6 F 商店素材自动化 | 🟡 | `shots-store.js` 已提前落地（2026-08-26，feature/webstore-store-assets：1400×560 四主题 strip + 1280×800 promo 拼图，Docker 全绿）；listing 元信息「取回/草稿」随批落地（publish.js `listing`/`listing-draft`——官方 V2 REST 无 listing 端点，快照+草稿形态） | 剩视觉定稿后重拍（§6.3） |
 
 ### 0.2 4.0.8/4.1.0 超出 task-1-final 的增量（须纳入 velvet 视觉覆盖）
 
@@ -476,9 +476,11 @@ B3 macro/引用、C4 中成本（结果批量操作/作用域搜索/参数化 `/
 4. **P2 维持不启动**：`content-visibility`/分片渲染/虚拟滚动的启动判据（>100ms 长任务或明显滚动掉帧）在 velvet 不重新评估——velvet 的改动不在渲染热路径上。
 5. **staging 预算**：暂存视图 ≤500 行 + 组头的整块 innerHTML 替换在死链视图同量级已验证；修剪 = 一次 Set 查找。
 
-### 6.3 F 商店素材自动化 ⬜
+### 6.3 F 商店素材自动化 🟡（拼图与 listing 取回/草稿已提前落地，剩视觉定稿后重拍）
 
 维持 task-1-final 原案：`scripts/screenshots/shots-store.js` 高 DPR 截取关键态 → 合成页拼图（临时 HTML grid + 整页截图，零 canvas）→ `assets/store/`。
+
+> **提前落地记录（2026-08-26，feature/webstore-store-assets）**：`shots-store.js` 已按本节规格实施并通过 Docker 实跑（四主题瓦片 + 带右键菜单主卡 + search/recent/stats/dead/palette/选项页整页共 11 瓦片 → 产出 6 张候选覆盖全部 7 视图（上传时人工选 5；瓦片按 #container 实际盒裁剪 + popupWidth 钉宽 400 + Inter/Noto Sans SC 强制排版；批量视图以选择模式入镜）：`strip.png` 1400×560 四主题条带、`promo.png` 1280×800 入口①（左:树+右键菜单完整长卡;右两列上下堆叠:search 正常+选择、tabgroups 正常+选择,选择瓦片统一裁掉 tab 条以上）、`promo2.png` 1280×800 暂存工作台②（左:命令面板长图;右两列:暂存上区+暂存选择、暂存最近区+统计）、`promo3.png` 1280×800 清理③（dead/dupes 各正常+选择堆叠列）、`themes.png` 1280×800 ink|paper 重点主题对开、`options.png` 1280×800 选项页真全景——宽视口 + 强制 6 栏（覆盖 `.options-page` 的 max-width:1760）把 20 组设置整页装进一框，手工参考图只敢放一半组；用例构造复用既有套件机制（data: URL 带 ASCII 标题的离线标签页 + `chrome.tabs.group`/`tabGroups.update` 造两组、staging local 键按模型灌双态分组行、同 URL 三份造去重组）；非扩展请求全 abort 保离线确定性；classic 主题落地后往 `STRIP_THEMES` 加一项即可）。listing 元信息同步升级：官方 V2 REST 无 listing 端点，故以 `publish.js listing`（公开页快照 + extName/extDesc 比对）与 `listing-draft`（规范源双语草稿 + 截图册规格核对）落地「取回/更新准备」，上传纪律不变。
 - 规格：**1400×560**（strip：tree-light / tree-dark / ink / paper / classic / palette 横向拼）与 **1280×800**（promo：主 popup + 2–4 视图小图 + 菜单，对齐 `vBookmarks-v4.png` 版式）。
 - 视觉素材在 §1.6/§1.7 定稿后拍摄（切片依赖排后）；ink/paper/classic 三版必须出现。
 - 产出随仓库提交，人工挑选、手动上传，不接 WebStore API。
@@ -503,7 +505,7 @@ B3 macro/引用、C4 中成本（结果批量操作/作用域搜索/参数化 `/
 | **S10** | §3.1/3.2/3.3（search-tokens / fuzzy 多词 / popup 侧 URL 直开） | 无（可并行） | ⬜ |
 | **S11** | §5.1 E1 standalone 页（含 `/open` 命令与入口按钮） | S8（共享主题文件；若先行需自带 link 列表，推荐排后） | ⬜ |
 | **S12** | §4.2 通知打磨（tip 频率纪律 + AGENTS.md 发布步骤 + velvet 首发 announce.json） | 无（可并行） | 🟡 |
-| **S13** | §6.3 F shots-store.js + 全量截图重拍 | S8（视觉终态） | ⬜ |
+| **S13** | §6.3 F shots-store.js（✅ 已提前落地）+ 全量截图重拍（待视觉定稿） | S8（视觉终态） | 🟡 |
 
 ### 7.2 回归门禁（4.1.0 基线刷新）
 
@@ -586,7 +588,7 @@ B3 macro/引用、C4 中成本（结果批量操作/作用域搜索/参数化 `/
 | C1 token / C2 多词 / C3 | S10 | ⬜ |
 | E1 standalone + `/open` | S11 | ⬜ |
 | announce tip 纪律 + 发布流程步骤 | S12 | 🟡 |
-| shots-store 商店图 | S13 | ⬜ |
+| shots-store 商店图 | S13 | 🟡 首产已出（tmp/shots/store/），定稿后重拍 |
 | 通知系统主体 / 20 命令 / hide·disable / favicon 补全·画廊 / storage-usage / i18n-live·/lang / /version / dist 管线 / P1·H1-9 / tabgroups 视图 / ×场景着色 / span penalty | — | ✅ 已落地 |
 
 ---

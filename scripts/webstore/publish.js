@@ -18,7 +18,19 @@
  *   node scripts/webstore/publish.js upload [--file 路径] [--skip-check]
  *   node scripts/webstore/publish.js publish [--type T] [--deploy N] [--skip-check]
  *   node scripts/webstore/publish.js all [--deploy N] [--file 路径] [--skip-check]
+ *   node scripts/webstore/publish.js listing [--yes]      取回线上 listing 元信息(公开页快照 + item 状态)
+ *   node scripts/webstore/publish.js listing-draft        依据仓库规范源生成 listing 更新草稿(离线)
  *   node scripts/webstore/publish.js help
+ *
+ * listing 说明(为什么是「快照 + 草稿」而不是直接改线上):
+ *   CWS API V2 的 REST 面只有 upload/publish/fetchStatus/cancelSubmission/
+ *   setPublishedDeployPercentage —— 官方不提供 listing(名称/简介/详述/截图)
+ *   的读写端点,DashBoard 内部接口也未开放。因此本脚本对 listing 的能力是:
+ *   - listing       「取回」:抓取公开详情页(?hl= 按语言)解析 ld+json/og 元信息
+ *                   存快照(tmp/webstore/),与 item 状态一并打印,供比对审查;
+ *   - listing-draft 「更新」:从仓库规范源(_locales extName/extDesc、docs/README
+ *                   pitch 与 changelog、assets/store 图册)生成可粘贴的双语草稿,
+ *                   人工核对后贴进 Dashboard —— 与「人工挑选、手动上传」同一纪律。
  *
  * 凭据来源(优先级从高到低):
  *   1) 真实环境变量  CWS_* (GitHub Actions secrets 等)
@@ -197,6 +209,218 @@ async function gitReleaseCheck(zipPath) {
 }
 
 // ---------------------------------------------------------------------------
+// listing 元信息(取回解析 + 草稿构建)—— 纯函数,离线单测覆盖(listing-test.js)
+// ---------------------------------------------------------------------------
+
+/** 从 HTML 里抽出全部 <script type="application/ld+json"> 的解析结果(容错)。 */
+export function extractJsonLdObjects(html) {
+    const out = [];
+    const re = /<script[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi;
+    for (let m; (m = re.exec(html));) {
+        try { out.push(JSON.parse(m[1].trim())); } catch { /* 页面噪声,跳过 */ }
+    }
+    return out;
+}
+
+/** 深度收集 @type 命中任一类型名的节点(@graph/数组均下钻)。 */
+function collectByType(node, typeRe, acc = []) {
+    if (Array.isArray(node)) {
+        for (const n of node) collectByType(n, typeRe, acc);
+    } else if (node && typeof node === 'object') {
+        const t = node['@type'];
+        const types = Array.isArray(t) ? t : t ? [t] : [];
+        if (types.some(x => typeRe.test(x))) acc.push(node);
+        for (const v of Object.values(node)) collectByType(v, typeRe, acc);
+    }
+    return acc;
+}
+
+/** 取 meta property/name=… 的 content。 */
+function metaContent(html, key) {
+    const re = new RegExp(`<meta[^>]+(?:property|name)=["']${key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}["'][^>]*content=["']([^"']*)["']`, 'i');
+    const alt = new RegExp(`<meta[^>]+content=["']([^"']*)["'][^>]*(?:property|name)=["']${key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}["']`, 'i');
+    const m = html.match(re) ?? html.match(alt);
+    return m ? m[1] : '';
+}
+
+/**
+ * 解析 CWS 公开详情页 HTML → listing 元信息快照。
+ * 现状(2026-08 实测):详情页无 ld+json、无 itemprop,名称/简介来自 og meta,
+ * 图片是 lh3.googleusercontent.com 直链(截图/评分/版本由 XHR 渲染,静态
+ * HTML 拿不到 —— 对应字段留空,不硬猜)。拿不到任何字段时返回 null。
+ */
+export function parseDetailPage(html) {
+    if (!html) return null;
+    const nodes = [];
+    for (const blob of extractJsonLdObjects(html))
+        nodes.push(...collectByType(blob, /SoftwareApplication|WebApplication/i));
+    const app = nodes[0] ?? null;
+    const screenshots = app && app.screenshot !== undefined
+        ? (Array.isArray(app.screenshot) ? app.screenshot : [app.screenshot])
+            .map(s => (typeof s === 'string' ? s : s?.url)).filter(Boolean)
+        : [];
+    // og:title 带「 - Chrome Web Store / - Chrome 应用商店」后缀,剥掉。
+    const stripSuffix = s => String(s ?? '')
+        .replace(/\s*-\s*Chrome Web Store\s*$/i, '')
+        .replace(/\s*-\s*Chrome 应用商店\s*$/, '');
+    const name = stripSuffix(app?.name ?? metaContent(html, 'og:title'));
+    const description = String(app?.description ?? metaContent(html, 'og:description') ?? '');
+    if (!name && !description) return null;
+    // 页面里的图片直链(图标与截图混排,无法从静态 HTML 区分,单独列出不冒名 screenshots)。
+    const imageUrls = [...new Set(
+        [...html.matchAll(/https:\/\/lh3\.googleusercontent\.com\/[A-Za-z0-9_\-]+/g)].map(m => m[0])
+    )].slice(0, 12);
+    return {
+        name,
+        description,
+        version: app?.softwareVersion ? String(app.softwareVersion) : '',
+        url: app?.url ? String(app.url) : '',
+        screenshots,
+        imageUrls,
+        ratingValue: app?.aggregateRating?.ratingValue ?? null,
+        ratingCount: app?.aggregateRating?.ratingCount ?? app?.aggregateRating?.reviewCount ?? null,
+        parsedAt: new Date().toISOString()
+    };
+}
+
+/** 读取 messages.json 里的商店文案(extName/extDesc —— manifest i18n 的规范源)。 */
+export function extractLocaleCopy(messages) {
+    return {
+        name: messages?.extName?.message ?? '',
+        description: messages?.extDesc?.message ?? ''
+    };
+}
+
+/**
+ * 摘取 changelog 中指定版本的整节文本(从 `### v<version>` 到下一个 `### v`)。
+ * 找不到该版本标题时返回 ''。
+ */
+export function extractChangelogSection(readme, version) {
+    if (!readme) return '';
+    const re = new RegExp(`^### v${version.replace(/\./g, '\\.')}\\s*$`, 'm');
+    const m = readme.match(re);
+    if (!m) return '';
+    const start = m.index + m[0].length;
+    const rest = readme.slice(start);
+    const next = rest.search(/^### v\d+\S*\s*$/m);
+    return (next === -1 ? rest : rest.slice(0, next)).trim();
+}
+
+/** 摘取 README 的 pitch(首个 `**…**` 加粗引导段 + 其后的特性子弹列表)。 */
+export function extractReadmePitch(readme) {
+    if (!readme) return { lead: '', bullets: [] };
+    // 引导段是「行首加粗、后接同段正文」的段落(README 现状:**lead.** One click
+    // …),取整段并去掉加粗记号即可。
+    const leadMatch = readme.match(/^\*\*.*$/m);
+    const lead = leadMatch ? leadMatch[0].replace(/\*\*/g, '').trim() : '';
+    const bullets = [];
+    if (leadMatch) {
+        const rest = readme.slice(leadMatch.index + leadMatch[0].length);
+        for (const line of rest.split(/\r?\n/)) {
+            if (/^- /.test(line)) bullets.push(line.slice(2).trim());
+            else if (bullets.length) break;
+        }
+    }
+    return { lead, bullets };
+}
+
+/** PNG 尺寸读取(IHDR 定长头);非 PNG 返回 null。 */
+export function pngSize(buf) {
+    if (!buf || buf.length < 24) return null;
+    const sig = Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]);
+    if (!buf.subarray(0, 8).equals(sig)) return null;
+    return { width: buf.readUInt32BE(16), height: buf.readUInt32BE(20) };
+}
+
+/** WebStore 图片规格(官方:截图 1280×800 或 640×400,marquee 1400×560)。 */
+export const IMAGE_SPECS = [
+    { label: 'screenshot 1280×800', width: 1280, height: 800 },
+    { label: 'screenshot 640×400', width: 640, height: 400 },
+    { label: 'marquee 1400×560', width: 1400, height: 560 },
+    { label: 'small tile 440×280', width: 440, height: 280 }
+];
+
+function specMatch({ width, height }) {
+    return IMAGE_SPECS.find(s => s.width === width && s.height === height)?.label ?? null;
+}
+
+/**
+ * 生成 listing 更新草稿。输入全部来自仓库规范源;输出 JSON + 双语 Markdown
+ * (可直接贴进 Dashboard 的 Store listing 标签)。
+ */
+export function buildProposal({ version, en, zh, changelogEn, changelogZh, pitchEn, pitchZh, assets }) {
+    const shots = assets.map(a => ({
+        file: a.file,
+        width: a.size?.width ?? null,
+        height: a.size?.height ?? null,
+        spec: a.size ? specMatch(a.size) : null
+    }));
+    const json = {
+        generatedAt: new Date().toISOString(),
+        version,
+        en,
+        zh,
+        whatsNew: { en: changelogEn, 'zh-CN': changelogZh },
+        screenshots: shots
+    };
+    const fmt = (title, copy, changelog, pitch) => `# vBookmarks — Store listing proposal (${title}, v${version})
+
+> 由 \`node scripts/webstore/publish.js listing-draft\` 生成。核对后把下列各栏
+> 粘贴进 Developer Dashboard → 包 → Store listing;图片按清单手动上传。
+> 线上现值用 \`node scripts/webstore/publish.js listing --yes\` 快照比对。
+
+## Name
+
+${copy.name}
+
+## Summary (${copy.description.length}/132 chars)
+
+${copy.description}
+
+## Detailed description
+
+**${pitch.lead}**
+
+${pitch.bullets.map(b => `- ${b}`).join('\n')}
+
+## What's new (v${version})
+
+${changelog || '_(docs README 中未找到该版本的 changelog 节)_'}
+`;
+    const roster = shots.length
+        ? shots.map(s => `- \`${s.file}\` — ${s.width ?? '?'}×${s.height ?? '?'}${s.spec ? ` ✓ ${s.spec}` : ' ⚠ 非标准尺寸'}`).join('\n')
+        : '- _(assets/store/ 下没有图片)_';
+    const mdEn = `${fmt('EN', en, changelogEn, pitchEn)}
+
+## Screenshots to attach (assets/store/)
+
+${roster}
+`;
+    const mdZh = `${fmt('zh-CN', zh, changelogZh, pitchZh)}
+
+## 截图清单(assets/store/)
+
+${roster}
+`;
+    return { json, mdEn, mdZh };
+}
+
+/** 抓取公开详情页(带 hl 语言参数;走 installProxyIfNeeded 的全局代理)。 */
+export async function fetchDetailPage(extensionId, hl) {
+    const url = `https://chromewebstore.google.com/detail/${extensionId}${hl ? `?hl=${hl}` : ''}`;
+    const res = await fetch(url, {
+        headers: {
+            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',
+            'Accept-Language': hl || 'en'
+        },
+        signal: AbortSignal.timeout(20000),
+        redirect: 'follow'
+    });
+    if (!res.ok) throw new Error(`HTTP ${res.status} for ${url}`);
+    return { url: res.url, html: await res.text() };
+}
+
+// ---------------------------------------------------------------------------
 // 凭据 / 产物 / CLI
 // ---------------------------------------------------------------------------
 
@@ -223,6 +447,14 @@ function buildStore() {
         clientSecret: process.env.CWS_CLIENT_SECRET || undefined,
         refreshToken: process.env.CWS_REFRESH_TOKEN,
     });
+}
+
+/** listing 用:凭据缺失不致命(公开页抓取不凭据),返回 null 降级。 */
+function tryBuildStore() {
+    const ready = process.env.CWS_PUBLISHER_ID && process.env.CWS_CLIENT_ID
+        && process.env.CWS_REFRESH_TOKEN
+        && (process.env.CWS_EXTENSION_ID || extensionId);
+    return ready ? buildStore() : null;
 }
 
 /** 候选产物路径(当前版本)。 */
@@ -281,8 +513,135 @@ const METHODS = {
     upload: { needStore: true, desc: '上传 zip(不发布)' },
     publish: { needStore: true, desc: '发布草稿' },
     all: { needStore: true, desc: '上传并发布' },
+    listing: { needStore: false, desc: '取回线上 listing 元信息(公开页快照 + item 状态;--yes 联网)' },
+    'listing-draft': { needStore: false, desc: '生成 listing 更新草稿(离线,写 tmp/webstore/)' },
     help: { needStore: false, desc: '显示帮助' },
 };
+
+/** listing 输出目录。 */
+const LISTING_DIR = `${REPO_ROOT}tmp/webstore`;
+
+/** 读仓库语言文件里的商店文案。 */
+function localeCopy(lang) {
+    const p = `${REPO_ROOT}_locales/${lang}/messages.json`;
+    return extractLocaleCopy(JSON.parse(fs.readFileSync(p, 'utf8')));
+}
+
+/**
+ * listing — 「取回」:抓公开详情页(?hl=en / ?hl=zh-CN)解析 ld+json/og 元信息
+ * 存快照;凭据齐时附带官方 item 状态;与仓库规范源(extName/extDesc)比对提示。
+ * --yes 才联网;默认 dry-run 只打印将抓取的 URL。
+ */
+async function runListing(yes) {
+    if (!extensionId) {
+        console.error('✖ 无法推导 extensionId(manifest.homepage_url 缺失,且未设 CWS_EXTENSION_ID)。');
+        process.exit(2);
+    }
+    console.log(`vBookmarks v${version} | extensionId=${extensionId}`);
+    if (!yes) {
+        console.log('\n[dry-run] 将执行:');
+        console.log(`  - GET https://chromewebstore.google.com/detail/${extensionId}?hl=en    → 解析 → ${LISTING_DIR}/listing-current.en.json`);
+        console.log(`  - GET https://chromewebstore.google.com/detail/${extensionId}?hl=zh-CN → 解析 → ${LISTING_DIR}/listing-current.zh-CN.json`);
+        console.log('  - (凭据齐备时)items.fetchStatus 官方状态');
+        console.log('加 --yes 真正执行。');
+        return;
+    }
+
+    await installProxyIfNeeded();
+    fs.mkdirSync(LISTING_DIR, { recursive: true });
+
+    for (const hl of ['en', 'zh-CN']) {
+        try {
+            const { url, html } = await fetchDetailPage(extensionId, hl);
+            const parsed = parseDetailPage(html);
+            if (!parsed) {
+                console.error(`⚠ ${hl}:详情页抓到了(${url})但解析不出 listing 元信息 — 页面结构可能已变,或被反爬页拦下。`);
+                continue;
+            }
+            parsed.fetchedUrl = url;
+            const out = `${LISTING_DIR}/listing-current.${hl}.json`;
+            fs.writeFileSync(out, JSON.stringify(parsed, null, 2) + '\n');
+            console.log(`\n[${hl}] ${parsed.name}`);
+            console.log(`  描述(${parsed.description.length} 字符): ${parsed.description.slice(0, 100)}${parsed.description.length > 100 ? '…' : ''}`);
+            console.log(`  版本: ${parsed.version || '?'} | 评分: ${parsed.ratingValue ?? '?'}(${parsed.ratingCount ?? '?'} 条)| 官方截图 ${parsed.screenshots.length} 张 · 页面图片直链 ${parsed.imageUrls.length} 条`);
+            console.log(`  → 快照 ${out.replace(REPO_ROOT, '')}`);
+        } catch (err) {
+            console.error(`⚠ ${hl}:抓取失败: ${err.message}`);
+            console.error('  (公开页偶尔要求人机验证;可浏览器打开详情页人工核对。)');
+        }
+    }
+
+    const store = tryBuildStore();
+    if (store) {
+        try {
+            const st = await store.get();
+            const out = `${LISTING_DIR}/item-status.json`;
+            fs.writeFileSync(out, JSON.stringify(st, null, 2) + '\n');
+            console.log(`\n[status] uploadState=${st.lastAsyncUploadState ?? st.uploadState ?? '?'} → ${out.replace(REPO_ROOT, '')}`);
+        } catch (err) {
+            console.error(`⚠ item 状态查询失败: ${err.message}`);
+        }
+    } else {
+        console.log('\n[status] 未配置 CWS_* 凭据,跳过官方 item 状态(只做了公开页快照)。');
+    }
+
+    // 与仓库规范源比对 — 名称/简介不一致即提示(发版常忘改商店文案)。
+    const repo = localeCopy('en');
+    const snapPath = `${LISTING_DIR}/listing-current.en.json`;
+    if (fs.existsSync(snapPath)) {
+        const live = JSON.parse(fs.readFileSync(snapPath, 'utf8'));
+        if (live.name && repo.name && live.name !== repo.name)
+            console.log(`\n[diff] 名称不一致:线上「${live.name}」≠ 仓库 extName「${repo.name}」。`);
+        if (live.description && repo.description && live.description !== repo.description)
+            console.log(`[diff] 简介不一致:线上 ${live.description.length} 字符 ≠ 仓库 extDesc ${repo.description.length} 字符 — 若本次发版改了文案,记得同步 Dashboard(草稿见 listing-draft)。`);
+    }
+    console.log('\n完成。官方 API 不提供 listing 写端点 —— 更新请核对 listing-draft 产出后到 Dashboard 手动粘贴。');
+}
+
+/**
+ * listing-draft — 「更新准备」(纯离线):从仓库规范源汇总双语文案 + 版本
+ * what's-new + 截图册(带尺寸规格核对),生成可直接对照粘贴的草稿。
+ */
+function runListingDraft() {
+    const manifestCopy = {
+        name: manifest.name.startsWith('__MSG_') ? localeCopy('en').name : manifest.name,
+        description: manifest.description.startsWith('__MSG_') ? localeCopy('en').description : manifest.description
+    };
+    const en = localeCopy('en');
+    const zh = localeCopy('zh_CN');
+    const read = p => { try { return fs.readFileSync(p, 'utf8'); } catch { return ''; } };
+    const readmeEn = read(`${REPO_ROOT}docs/README.md`);
+    const readmeZh = read(`${REPO_ROOT}docs/README.zh.md`);
+    const changelogEn = extractChangelogSection(readmeEn, version);
+    const changelogZh = extractChangelogSection(readmeZh, version);
+    const pitchEn = extractReadmePitch(readmeEn);
+    const pitchZh = extractReadmePitch(readmeZh);
+    const assets = fs.readdirSync(`${REPO_ROOT}assets/store`, { withFileTypes: true })
+        .filter(e => e.isFile() && e.name.toLowerCase().endsWith('.png'))
+        .map(e => {
+            const size = pngSize(fs.readFileSync(`${REPO_ROOT}assets/store/${e.name}`));
+            return { file: e.name, size };
+        });
+
+    const { json, mdEn, mdZh } = buildProposal({ version, en, zh, changelogEn, changelogZh, pitchEn, pitchZh, assets });
+
+    fs.mkdirSync(LISTING_DIR, { recursive: true });
+    fs.writeFileSync(`${LISTING_DIR}/listing-proposal.json`, JSON.stringify(json, null, 2) + '\n');
+    fs.writeFileSync(`${LISTING_DIR}/listing-proposal.en.md`, mdEn);
+    fs.writeFileSync(`${LISTING_DIR}/listing-proposal.zh-CN.md`, mdZh);
+
+    console.log(`vBookmarks v${version} listing 更新草稿已生成:`);
+    console.log(`  ${LISTING_DIR}/listing-proposal.en.md`);
+    console.log(`  ${LISTING_DIR}/listing-proposal.zh-CN.md`);
+    console.log(`  ${LISTING_DIR}/listing-proposal.json`);
+    if (manifestCopy.description.length > 132)
+        console.error(`⚠ extDesc ${manifestCopy.description.length}/132 字符,超出 manifest/CWS 上限 — 先修 _locales。`);
+    for (const s of json.screenshots.filter(x => x.spec))
+        console.log(`  ✓ ${s.file} ${s.width}×${s.height}(${s.spec})`);
+    for (const s of json.screenshots.filter(x => !x.spec))
+        console.log(`  ⚠ ${s.file} ${s.width ?? '?'}×${s.height ?? '?'} 非标准尺寸(截图规格 1280×800 / 640×400;marquee 1400×560;小图 440×280)`);
+    console.log('\n人工核对后粘贴到 Developer Dashboard → Store listing;线上现值可用 listing --yes 快照比对。');
+}
 
 async function main() {
     const { cmd, type, deploy, file, skipCheck, yes } = parseArgs();
@@ -316,8 +675,12 @@ async function main() {
         }
     }
 
+    // listing 两命令不走产物 zip 路径(listing-draft 纯离线,listing 只读)。
+    if (cmd === 'listing') return runListing(yes);
+    if (cmd === 'listing-draft') return runListingDraft();
+
     const store = METHODS[cmd].needStore ? buildStore() : null;
-    const zip = cmd === 'check' ? null : findZip(file);
+    const zip = findZip(file);
     console.log(`vBookmarks v${version} | extensionId=${extensionId}`);
     console.log(`产物: ${zip}`);
     if (file) console.log(`(--file 指定)`);
@@ -374,7 +737,17 @@ async function helpText() {
   node scripts/webstore/publish.js upload [--file 路径]         上传产物
   node scripts/webstore/publish.js publish [--type T] [--deploy N]
   node scripts/webstore/publish.js all [--deploy N] [--file 路径] 上传 + 发布
+  node scripts/webstore/publish.js listing [--yes]              取回线上 listing 元信息快照
+  node scripts/webstore/publish.js listing-draft                生成 listing 更新草稿(离线)
   node scripts/webstore/publish.js help
+
+listing(元信息):
+  官方 CWS API V2 不提供 listing(名称/简介/详述/截图)读写端点,因此:
+  - listing       抓公开详情页(?hl=en / zh-CN)解析快照到 tmp/webstore/,
+                  附官方 item 状态(需凭据),并与仓库 extName/extDesc 比对;
+  - listing-draft 从规范源(_locales、docs README、assets/store)生成
+                  listing-proposal.{en,zh-CN}.md + .json,人工核对后粘贴进
+                  Developer Dashboard → Store listing。
 
 参数:
   --file 路径  指定要上传的 zip(默认自动选 tmp/vBookmarks_<version>.zip)
