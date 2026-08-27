@@ -47,12 +47,14 @@ hand-picked extra), all from live states instead of hand assembly
   half the groups.
 
 Every capture is seeded and hermetic (non-extension requests are aborted), so
-re-runs are deterministic. Workflow: run the suite → review `tmp/shots/store/`
-→ copy the keepers over `assets/store/` → upload via the Developer Dashboard
-(the store listing itself is not API-managed; see `scripts/webstore/README.md`
-for what the `listing` commands can and cannot do). Raw tiles are kept under
-`store/tiles/` for manual re-mixing. `classic` joins the strip theme list when
-the velvet classic theme lands.
+re-runs are deterministic. The four composites are synced to
+`assets/store/vBookmarks-{strip,promo,themes,options}.png` (excluded from the
+package zip like every store asset — `package.py` EXCLUDE_FILES); re-run the
+suite after visual changes and re-copy the keepers. Upload happens via the
+Developer Dashboard (the store listing itself is not API-managed; see
+`scripts/webstore/README.md` for what the `listing` commands can and cannot
+do). Raw tiles are kept under `store/tiles/` for manual re-mixing. `classic`
+joins the strip theme list when the velvet classic theme lands.
 
 ## Output layout
 

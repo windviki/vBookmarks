@@ -78,6 +78,11 @@ EXCLUDE_FILES = {
     'assets/store/vBookmarks-v4.png',
     'assets/store/vBookmarks-v4-options.png',
     'assets/store/vBookmarks-v4-sidepanel.png',
+    # shots-store.js candidates (re-shot per release from tmp/shots/store/)
+    'assets/store/vBookmarks-strip.png',
+    'assets/store/vBookmarks-promo.png',
+    'assets/store/vBookmarks-themes.png',
+    'assets/store/vBookmarks-options.png',
     # Dev/tooling files
     'AGENTS.md',
     'package.json',
