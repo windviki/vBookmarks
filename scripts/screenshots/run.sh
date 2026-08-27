@@ -24,8 +24,8 @@
 #                      forms the group / joins it (popup-closing-safe)
 #   shots-tabgroups-view.js — the tab-groups VIEW (4.1.0): current-window
 #                      tabs + groups, selection mode, group-head context menu
-#   shots-store.js    — WebStore specs from live states: 1400×560 theme strip
-#                      + 1280×800 promo collage → tmp/shots/store/
+#   shots-store.js    — WebStore candidates (≤5 shown): 1400×560 theme strip,
+#                      1280×800 promo collage + themes split + options panorama
 #
 # Usage: scripts/screenshots/run.sh
 set -euo pipefail

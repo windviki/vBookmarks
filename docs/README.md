@@ -182,7 +182,7 @@ scripts/screenshots/run.sh    # visual capture ONLY — suites into tmp/shots/
 #   scripts/screenshots/shots-palette.js palette + the four feature views
 #   scripts/screenshots/shots-guide.js   guide screenshots (search dual zone, options Views group)
 #   scripts/screenshots/shots-tabgroups.js tab-group menus & dialogs, verified from the service worker
-#   scripts/screenshots/shots-store.js   WebStore specs: 1400×560 theme strip + 1280×800 promo
+#   scripts/screenshots/shots-store.js   WebStore candidates (≤5 shown): strip/promo/themes/options
 #   scripts/console/       browser-console probes; scripts/harness/diag/ node probes (on demand)
 
 # Locale pipeline (scripts/i18n.py, stdlib only)

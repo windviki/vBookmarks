@@ -29,16 +29,28 @@ scripts/harness/rerun.sh shots.js     # a single suite ad-hoc
 
 ## Store assets (shots-store)
 
-`shots-store.js` produces the two WebStore image specs from live popup states
-instead of hand assembly (velvet §6.3 F): `store/strip.png` (1400×560, the
-four explicit themes side by side) and `store/promo.png` (1280×800, main popup
-with the bookmark context menu plus search/recent/stats/dead minis, aligned
-with the hand-made `assets/store/vBookmarks-v4.png` layout). Every capture is
-seeded and hermetic (non-extension requests are aborted), so re-runs are
-deterministic. Workflow: run the suite → review `tmp/shots/store/` → copy the
-keepers over `assets/store/` → upload via the Developer Dashboard (the store
-listing itself is not API-managed; see `scripts/webstore/README.md` for what
-the `listing` commands can and cannot do). Raw tiles are kept under
+The store shows at most FIVE screenshots; `shots-store.js` emits a candidate
+set of four (the fifth slot stays free for the existing brand marquee or a
+hand-picked extra), all from live states instead of hand assembly
+(velvet §6.3 F):
+
+- `store/strip.png` — 1400×560, the four explicit themes side by side;
+- `store/promo.png` — 1280×800, main popup with the bookmark context menu
+  plus search/recent/stats/dead minis, aligned with the hand-made
+  `assets/store/vBookmarks-v4.png` layout;
+- `store/themes.png` — 1280×800, the two crafted themes split full-bleed
+  (ink | paper);
+- `store/options.png` — 1280×800, the whole options page in one frame: a
+  wide-viewport capture with the multicol grid forced to six columns
+  (`.options-page{max-width:none}` + `column-count:6`), scaled into the
+  frame — a true panorama, unlike the hand-made options shot that shows only
+  half the groups.
+
+Every capture is seeded and hermetic (non-extension requests are aborted), so
+re-runs are deterministic. Workflow: run the suite → review `tmp/shots/store/`
+→ copy the keepers over `assets/store/` → upload via the Developer Dashboard
+(the store listing itself is not API-managed; see `scripts/webstore/README.md`
+for what the `listing` commands can and cannot do). Raw tiles are kept under
 `store/tiles/` for manual re-mixing. `classic` joins the strip theme list when
 the velvet classic theme lands.
 
@@ -57,6 +69,8 @@ tmp/shots/
 ├── guide/<name>.png                     # shots-guide
 ├── store/strip.png                      # shots-store — 1400×560, 4 theme tiles
 ├── store/promo.png                      # shots-store — 1280×800 collage
+├── store/themes.png                     # shots-store — 1280×800 ink|paper split
+├── store/options.png                    # shots-store — 1280×800 options panorama
 ├── store/tiles/<name>.png               # shots-store — raw capture tiles
 ├── smoke/                               # harness smoke.js diagnostic shots
 ├── verify-menu/                         # verify-menu-overflow/collapse captures

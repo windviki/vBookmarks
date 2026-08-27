@@ -1,18 +1,25 @@
 // vBookmarks store-asset composer (velvet §6.3 F / task-1 N7) — the WebStore
-// image specs, produced from live popup states instead of hand assembly:
+// image specs, produced from live popup states instead of hand assembly.
+// The store shows at most FIVE screenshots; this suite emits a candidate set
+// of four (the fifth slot stays free for the existing brand marquee or a
+// hand-picked extra):
 //
-//   strip  1400×560 — four theme tiles (light/dark/ink/paper) side by side
-//   promo  1280×800 — main popup + context menu, plus four view minis
-//                     (search / recent / stats / dead), aligned with the
-//                     layout of the hand-made assets/store/vBookmarks-v4.png
+//   strip    1400×560 — four theme tiles (light/dark/ink/paper) side by side
+//   promo    1280×800 — main popup + context menu, plus four view minis
+//                       (search / recent / stats / dead), aligned with the
+//                       layout of the hand-made assets/store/vBookmarks-v4.png
+//   themes   1280×800 — the two crafted themes split full-bleed: ink | paper
+//   options  1280×800 — the options page as a multi-column panorama (one
+//                       full-page capture sliced into columns, so all 20
+//                       sections read at a glance)
 //
 // Pipeline: capture each state at deviceScaleFactor 2 (crisp when downscaled)
 // → compose via a temporary HTML grid of <img> tiles → one full-page
 // screenshot at the exact store canvas size. Zero canvas dependency.
 //
-// Output: /tmp/shots/store/strip.png (1400×560) + promo.png (1280×800), plus
-// the raw tiles under tiles/ for manual re-mixing. Human picks and copies the
-// keepers into assets/store/ — nothing here is auto-uploaded.
+// Output: /tmp/shots/store/{strip,promo,themes,options}.png, plus the raw
+// tiles under tiles/ for manual re-mixing. Human picks and copies the keepers
+// into assets/store/ — nothing here is auto-uploaded.
 const puppeteer = require('puppeteer');
 const fs = require('fs');
 const path = require('path');
@@ -263,6 +270,50 @@ const SEED = `
         await page.close();
     }
 
+    // --- 4b. options page full-page capture (panorama source) -----------------
+    // Physics of the "all 20 sections in one 1280×800 frame" goal: the
+    // multicol sheet is ~6540 column-px at 340px columns, so it only fits one
+    // frame when the grid spreads to SIX columns (5 or fewer stay too tall).
+    // That needs the viewport wide enough AND the container's max-width:1760
+    // overridden — hence the injected style. Scale in the composite is ~0.54,
+    // a legible-at-zoom overview (the hand-made vBookmarks-v4-options.png
+    // dodge was showing only half the groups; this is the real panorama).
+    {
+        const page = await browser.newPage();
+        watch(page, 'options');
+        await page.setViewport({ width: 2400, height: 1200, deviceScaleFactor: 1 });
+        await page.goto(`chrome-extension://${extId}/pages/options.html`, { waitUntil: 'domcontentloaded' });
+        await sleep(1000);
+        await page.evaluate(() => new Promise(r => chrome.storage.sync.set({ theme: 'light' }, r)));
+        await page.reload({ waitUntil: 'domcontentloaded' });
+        await sleep(1200);
+        // Spread the multicol sheet past its max-width:1760 cap so six 340px
+        // columns fit — the only geometry where the whole page matches the
+        // 1280×800 frame aspect. Injected post-load (a pre-load injection has
+        // no documentElement yet).
+        await page.evaluate(() => {
+            const s = document.createElement('style');
+            s.textContent = '.options-page{max-width:none !important;} .options-grid{column-count:6 !important;}';
+            document.head.appendChild(s);
+        });
+        await sleep(600);
+        const geo = await page.evaluate(() => ({
+            sections: document.querySelectorAll('section:not([hidden])').length,
+            vw: document.documentElement.clientWidth,
+            sh: document.documentElement.scrollHeight
+        }));
+        if (!geo.sections) errors.push('options page rendered zero sections');
+        // fullPage would widen to scrollWidth if anything overflows; clamp to
+        // the viewport band so the panorama keeps the intended aspect.
+        await page.screenshot({
+            path: `${OUT}/tiles/options-full.png`,
+            clip: { x: 0, y: 0, width: geo.vw, height: Math.min(geo.sh, 4000) },
+            captureBeyondViewport: true
+        });
+        console.log(`  tiles/options-full.png (clip ${geo.vw}x${Math.min(geo.sh, 4000)})`);
+        await page.close();
+    }
+
     await browser.close();
 
     // --- 5. composites ---------------------------------------------------------
@@ -324,6 +375,59 @@ const SEED = `
                     `<div class="card"><img src="${rel(tile)}"></div>`).join('\n')}
             </div>
         </div>`);
+
+    // themes 1280×800: the two crafted themes split full-bleed (ink | paper).
+    await compose('themes.html', 1280, 800, `
+        <div style="display:grid; grid-template-columns:1fr 1fr; height:100vh;">
+            <div class="card" style="border-radius:0; border-width:0 1px 0 0; box-shadow:none;">
+                <img src="${rel('tree-ink')}">
+            </div>
+            <div class="card" style="border-radius:0; border-width:0; box-shadow:none;">
+                <img src="${rel('tree-paper')}">
+            </div>
+        </div>`);
+
+    // options 1280×800: the whole options page in one frame. The wide-viewport
+    // capture turns the masonry into a short, wide sheet; scale it to the
+    // frame width and center it. If it is still too tall for one frame, fall
+    // back to slicing it into full-height columns (adaptive count).
+    {
+        const buf = fs.readFileSync(path.join(OUT, 'tiles/options-full.png'));
+        const natW = buf.readUInt32BE(16), natH = buf.readUInt32BE(20);
+        const PAD = 24, GAP = 18, COLH = 800 - PAD * 2, CONTENTW = 1280 - PAD * 2;
+        const dispH1 = CONTENTW * natH / natW;
+        if (dispH1 <= COLH) {
+            await compose('options.html', 1280, 800, `
+                <div style="height:100vh; padding:${PAD}px; background:#f4f6f9;
+                            display:flex; align-items:flex-start; justify-content:center;">
+                    <div class="card" style="width:${CONTENTW}px;">
+                        <img src="${rel('options-full')}" style="width:100%; height:auto; object-fit:unset;">
+                    </div>
+                </div>`);
+        } else {
+            let best = null;
+            for (let n = 2; n <= 5; n++) {
+                const colW = (CONTENTW - GAP * (n - 1)) / n;
+                const coverage = (colW * natH / natW) / (n * COLH);
+                // coverage ≥ 1 = the n columns carry the whole page; prefer
+                // the tightest fit (least idle column height).
+                const score = coverage >= 1 ? coverage - 1 : 1 - coverage;
+                if (!best || score < best.score) best = { n, colW, score };
+            }
+            const cols = [];
+            for (let i = 0; i < best.n; i++) {
+                // Inline sizing overrides the shared `.card img` height:100% +
+                // object-fit:cover rules — those would pin the img box inside
+                // the card and make the -i×COLH shift show nothing.
+                cols.push(`<div class="card" style="width:${best.colW.toFixed(1)}px; height:${COLH}px;">
+                        <img src="${rel('options-full')}" style="width:100%; height:auto; object-fit:unset; margin-top:${-i * COLH}px;">
+                    </div>`);
+            }
+            await compose('options.html', 1280, 800, `
+                <div style="display:flex; gap:${GAP}px; height:100vh; padding:${PAD}px;
+                            background:#f4f6f9; align-items:flex-start;">${cols.join('\n')}</div>`);
+        }
+    }
 
     console.log(errors.length ? 'ERRORS:\n' + errors.join('\n') : 'NO ERRORS (store shots)');
     process.exit(errors.length ? 1 : 0);
