@@ -3487,6 +3487,14 @@ body[data-theme="ink"].highlight-unsynced #tree li.unsynced-subtree > span.tree-
     color: var(--vbm-muted);
 }
 
+/* Placeholder bookmark glyph: deliberately QUIETER than the row text in
+   every theme (same treatment as doc-code above) — riding the row foreground
+   made it out-shout the accent folder icons on dark/ink/paper while reading
+   as washed-out gray on light. */
+.vbm-icon-doc {
+    color: var(--vbm-muted);
+}
+
 .palette-row .palette-title {
     overflow: hidden;
     text-overflow: ellipsis;

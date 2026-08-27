@@ -3,12 +3,14 @@
 // The store shows at most FIVE screenshots; this suite emits exactly five:
 //
 //   strip    1400×560 — four theme tiles (light/dark/ink/paper) side by side
-//   promo    1280×800 — sheet 1, the views as entry points: main popup
-//                       (tree + context menu) plus search / staging-recent /
-//                       tab-groups / stats minis, aligned with the hand-made
-//                       assets/store/vBookmarks-v4.png layout
-//   promo2   1280×800 — sheet 2, the maintenance crew: dead-link scanner /
-//                       duplicate cleaner minis + the command palette
+//   promo    1280×800 — sheet 1, views as entry points: main popup (tree +
+//                       fully expanded context menu) plus the two batch
+//                       workhorses in selection mode (staging / tab-groups),
+//                       aligned with the hand-made vBookmarks-v4.png layout
+//   promo2   1280×800 — sheet 2, the maintenance crew in selection mode:
+//                       dead-link scanner / duplicate cleaner + the palette
+//   promo3   1280×800 — sheet 3, find & measure: search results / stats,
+//                       two large cards
 //   themes   1280×800 — the two crafted themes split full-bleed: ink | paper
 //   options  1280×800 — the options page as one panorama (see below)
 //
@@ -20,7 +22,7 @@
 // → compose via a temporary HTML grid of <img> tiles → one full-page
 // screenshot at the exact store canvas size. Zero canvas dependency.
 //
-// Output: /tmp/shots/store/{strip,promo,promo2,themes,options}.png, plus the
+// Output: /tmp/shots/store/{strip,promo,promo2,promo3,themes,options}.png, plus the
 // raw tiles under tiles/ for manual re-mixing. The keepers are synced to
 // assets/store/ and uploaded via the Developer Dashboard by a human — nothing
 // here is auto-uploaded.
@@ -35,24 +37,37 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
 
 // Strip: four theme tiles (classic joins this list when velvet S5 lands).
 const STRIP_THEMES = ['light', 'dark', 'ink', 'paper'];
-// Promo sheet 1 minis: view id on the tab bar → tile name. Capture order
-// matters: search LAST — its typed query persists in storage and would
-// otherwise leak into the boxes of every page opened afterwards. The
-// composite grid places the tiles in display order regardless.
-const SHEET1_VIEWS = [
-    ['recent', 'view-recent'],
-    ['tabgroups', 'view-tabgroups'],
+// Promo sheets: all seven views covered, the four batch-capable ones shown
+// in their selection modes (Q5). Capture order matters: search LAST — its
+// typed query persists in storage and would otherwise leak into the boxes of
+// every page opened afterwards. The composites place tiles in display order.
+const SELECTION_VIEWS = [
+    ['recent', 'view-recent-sel'],
+    ['tabgroups', 'view-tabgroups-sel'],
+    ['dead', 'view-dead-sel'],
+    ['dupes', 'view-dupes-sel']
+];
+const SHEET1_MINIS = ['view-recent-sel', 'view-tabgroups-sel'];
+const SHEET2_MINIS = ['view-dead-sel', 'view-dupes-sel', 'palette-open'];
+// stats first, search last (query-leak discipline).
+const PLAIN_VIEWS = [
     ['stats', 'view-stats'],
-    ['dead', 'view-dead'],
-    ['dupes', 'view-dupes'],
     ['search', 'view-search']
 ];
-// Display order per sheet (row-major).
-const SHEET1_GRID = ['view-search', 'view-recent', 'view-tabgroups', 'view-stats'];
-const SHEET2_GRID = ['view-dead', 'view-dupes', 'palette-open'];
+
+// Store typography (Q2): Inter for Latin + Noto Sans SC (思源黑体) for CJK,
+// installed OS-level by the Dockerfile from scripts/screenshots/fonts/
+// (fetch.sh); this override forces them over the containers' bare
+// message-box stack so every capture renders with the intended faces.
+const FONT_CSS = "*{font-family:'Inter','Noto Sans SC','Noto Sans CJK SC',system-ui,sans-serif !important;}";
 
 const SEED = `
 (async () => {
+    // Widen the popup to a photogenic 400px — the real window hugs content,
+    // but the fake test page would otherwise render a skinny 320px column
+    // with dead margin (and an overflowing palette overlay on top of it).
+    await new Promise(r => chrome.storage.local.set({ popupWidth: '400' }, r));
+    await new Promise(r => chrome.storage.sync.set({ popupWidth: '400' }, r));
     const create = p => new Promise(r => chrome.bookmarks.create(p, r));
     const work = await create({ parentId: '1', title: '工作区' });
     const github = await create({ parentId: work.id, title: 'GitHub', url: 'https://github.com/vBookmarks' });
@@ -200,8 +215,13 @@ const SEED = `
         const page = await browser.newPage();
         watch(page, `tile-${theme}`);
         await page.setViewport({ width: 400, height: viewportHeight, deviceScaleFactor: dpr });
-        await page.evaluateOnNewDocument(t => {
-            try { localStorage.setItem('theme', t); } catch (e) {}
+        await page.evaluateOnNewDocument((t, css) => {
+            try {
+                localStorage.setItem('theme', t);
+                const s = document.createElement('style');
+                s.textContent = css;
+                document.documentElement.appendChild(s);
+            } catch (e) {}
             // Recent view: fudge dateAdded by index range so the coarse time
             // groups all render (bookmarks.create rejects past dateAdded).
             const DAY = 86400e3;
@@ -210,7 +230,7 @@ const SEED = `
                 const age = i => (i >= 9 ? 45 * DAY : i >= 6 ? 20 * DAY : i >= 3 ? 5 * DAY : 0);
                 cb(items.map((it, i) => (age(i) ? { ...it, dateAdded: Date.now() - age(i) } : it)));
             });
-        }, theme);
+        }, theme, FONT_CSS);
         await page.goto(`chrome-extension://${extId}/pages/popup.html`, { waitUntil: 'domcontentloaded' });
         // theme is a SYNC_KEYS member — the read path routes to the sync area,
         // so the canonical write must go to storage.sync (a local write is
@@ -233,19 +253,25 @@ const SEED = `
         }
     };
 
-    // Clip to the real UI box: #container plus any overlay (context menu /
-    // palette) that extends past it. Capturing the raw viewport would ship a
-    // dead right margin — the popup hugs its content in real Chrome windows.
+    // Clip to the real UI box: #container plus any visible overlay (context
+    // menu / palette / open submenu flyouts) that extends past it — expanded
+    // flyouts legitimately widen the frame, everything else is dead margin.
     const shootTile = async (page, name, { height = 'content' } = {}) => {
         const box = await page.evaluate(hMode => {
             const c = document.getElementById('container');
             const r = c ? c.getBoundingClientRect()
                 : { left: 0, top: 0, width: innerWidth, bottom: innerHeight };
             let bottom = r.bottom;
-            for (const id of ['bookmark-context-menu', 'folder-context-menu', 'command-palette']) {
-                const m = document.getElementById(id);
-                const shown = m && !m.hidden && getComputedStyle(m).opacity !== '0';
-                if (shown) bottom = Math.max(bottom, m.getBoundingClientRect().bottom);
+            for (const sel of ['#bookmark-context-menu', '#folder-context-menu',
+                '#command-palette', '.submenu']) {
+                for (const m of document.querySelectorAll(sel)) {
+                    const shown = !m.hidden && getComputedStyle(m).opacity !== '0'
+                        && parseFloat(m.style.left || '-999') > -900;
+                    if (!shown) continue;
+                    const mr = m.getBoundingClientRect();
+                    bottom = Math.max(bottom, mr.bottom);
+                    r.width = Math.max(r.width, mr.right - r.left);
+                }
             }
             const height2 = hMode === 'viewport' ? innerHeight : Math.min(bottom + 2, innerHeight);
             return { x: 0, y: 0, width: Math.ceil(r.width), height: Math.ceil(height2) };
@@ -264,10 +290,15 @@ const SEED = `
 
     // --- 2. light-tree page keeps going: context menu overlay ----------------
     // The promo's main card mirrors vBookmarks-v4.png top-left: expanded tree
-    // with the bookmark context menu open over it. Tall viewport so the long
-    // menu is not cut mid-item at the frame bottom.
+    // with the bookmark context menu open and its collapsible entry expanded
+    // (Q3). At a 400px popup width the side-flyout geometry cannot fit more
+    // than one panel, so we expand the information-densest trigger (tab
+    // groups) in the module's own stack-below fallback placement — a natural
+    // menu continuation instead of an overlapping fan-out. openSubmenuFor is
+    // IIFE-internal, hence the DOM replication.
     {
-        const page = await openThemed('light', 2, 800);
+        const page = await openThemed('light', 2, 1000);
+        await expandTree(page);
         const link = await page.evaluate(() => {
             const a = [...document.querySelectorAll('#tree a.tree-item-link')]
                 .find(a => (a.querySelector('i')?.textContent || '').includes('GitHub'));
@@ -281,30 +312,101 @@ const SEED = `
         });
         if (!link) errors.push('contextmenu dispatch failed');
         await sleep(500);
-        const menuOpen = await page.evaluate(() => {
-            const m = document.getElementById('bookmark-context-menu');
-            return m && m.style.opacity === '1';
+        const state = await page.evaluate(() => {
+            const menu = document.getElementById('bookmark-context-menu');
+            if (!menu || menu.style.opacity !== '1') return { open: false };
+            return { open: true };
         });
-        if (!menuOpen) errors.push('bookmark menu did not open');
+        if (!state.open) errors.push('bookmark menu did not open');
+        else {
+            // The visibly rendered collapsible varies by build gating (the
+            // tab-group trigger is display:none in this environment), so pick
+            // whichever has-submenu entry is actually laid out and expand it
+            // in place — flipping ABOVE when near the frame bottom, the same
+            // viewport flip positionMenu applies near screen edges.
+            const forced = await page.evaluate(() => {
+                for (const id of ['bookmark-add-collapse', 'bookmark-tab-group-collapse']) {
+                    const e = document.getElementById(id);
+                    if (!e || !e.dataset) continue;
+                    if (e.getBoundingClientRect().width === 0) continue;
+                    const sub = document.getElementById(e.dataset.submenu);
+                    if (!sub) continue;
+                    const r = e.getBoundingClientRect();
+                    sub.style.maxHeight = '';
+                    sub.style.maxWidth = '';
+                    sub.style.left = `${r.left + window.scrollX}px`;
+                    sub.style.top = `${r.bottom + window.scrollY + 2}px`;
+                    sub.style.opacity = '1';
+                    sub.style.transform = 'scale(1)';
+                    e.setAttribute('aria-expanded', 'true');
+                    return id;
+                }
+                return null;
+            });
+            if (!forced)
+                errors.push('no laid-out submenu trigger to expand');
+            await sleep(300);
+        }
         await shootTile(page, 'tree-menu-light', { height: 'viewport' });
         await page.close();
     }
 
-    // --- 3. view minis (all seven views across the two promo sheets) ---------
-    // search is driven through the real input (typed query → results + mark
-    // highlighting, like the reference collage); the other views via tab click.
-    for (const [viewId, tile] of SHEET1_VIEWS) {
+    // --- 3. view tiles (all seven views across the three promo sheets) -------
+    // Batch-capable views are captured in their SELECTION MODES with rows
+    // ticked — enter via the view's select-mode entry, tick via its
+    // select-all control (real UI paths, like shots-guide's dupes/dead).
+    const activateView = (page, id) => page.evaluate(vid => {
+        const tab = document.querySelector(`#view-tab-${vid}`);
+        if (!tab) throw new Error('view tab not found: ' + vid);
+        tab.click();
+    }, id);
+
+    for (const [viewId, tile] of SELECTION_VIEWS) {
+        const page = await openThemed('light');
+        await activateView(page, viewId);
+        await sleep(900);
+        const entered = await page.evaluate(() => {
+            const root = document.querySelector('#views .view:not([hidden])');
+            if (!root) return false;
+            const btn = [...root.querySelectorAll('button, [role=button], i, a')]
+                .find(b => /select-mode/.test(b.className));
+            if (!btn) return false;
+            btn.click();
+            return true;
+        });
+        if (!entered) errors.push(`${tile}: no select-mode entry`);
+        await sleep(500);
+        await page.evaluate(() => {
+            const root = document.querySelector('#views .view:not([hidden])');
+            const all = root && [...root.querySelectorAll('button, [role=button]')]
+                .find(b => /select-all/.test(b.className));
+            if (all) all.click();
+        });
+        await sleep(500);
+        const sel = await page.evaluate(() => {
+            const root = document.querySelector('#views .view:not([hidden])');
+            return {
+                exit: !!root.querySelector('[class*="select-exit"]'),
+                ticked: root.querySelectorAll('.sel, [aria-checked="true"], .selected').length
+            };
+        });
+        if (!sel.exit || !sel.ticked)
+            errors.push(`${tile}: selection state wrong: ${JSON.stringify(sel)}`);
+        await shootTile(page, tile);
+        await page.close();
+    }
+
+    // Plain states: search is driven through the real input (typed query →
+    // results + mark highlighting, like the reference collage); shot LAST so
+    // its query cannot leak into earlier pages.
+    for (const [viewId, tile] of PLAIN_VIEWS) {
         const page = await openThemed('light');
         if (viewId === 'search') {
             await page.click('#search-input');
             await page.keyboard.type('git', { delay: 60 });
             await sleep(900);
         } else {
-            await page.evaluate(id => {
-                const tab = document.querySelector(`#view-tab-${id}`);
-                if (!tab) throw new Error('view tab not found: ' + id);
-                tab.click();
-            }, viewId);
+            await activateView(page, viewId);
             await sleep(900);
         }
         const rows = await page.evaluate(
@@ -350,7 +452,8 @@ const SEED = `
         // Injected post-load (a pre-load injection has no documentElement yet).
         await page.evaluate(() => {
             const s = document.createElement('style');
-            s.textContent = '.options-page{max-width:none !important;} .options-grid{column-count:6 !important;}';
+            s.textContent = '.options-page{max-width:none !important;} .options-grid{column-count:6 !important;} '
+                + "*{font-family:'Inter','Noto Sans SC','Noto Sans CJK SC',system-ui,sans-serif !important;}";
             document.head.appendChild(s);
         });
         await sleep(600);
@@ -407,53 +510,79 @@ const SEED = `
         await cBrowser.close();
     };
 
+    // Pre-calculate every tile's real pixel size (Q: no blind cover-crop):
+    // each composite box derives width/height FROM the tile's own aspect so
+    // the full popup view lands in the frame untouched.
+    const pngSizeOf = name => {
+        const buf = fs.readFileSync(path.join(OUT, 'tiles', `${name}.png`));
+        return { w: buf.readUInt32BE(16), h: buf.readUInt32BE(20) };
+    };
     const rel = n => `tiles/${n}.png`;
+    // <img> that renders the WHOLE tile at an exact precomputed size
+    // (aspect already matches the box — plain 100%/auto would fight it).
+    const tileImg = (name, w, h) =>
+        `<img src="${rel(name)}" style="width:${w.toFixed(1)}px;height:${h.toFixed(1)}px;object-fit:fill;">`;
 
-    // strip 1400×560: full-bleed band of the four themes, thin gaps.
-    await compose('strip.html', 1400, 560, `
-        <div style="display:grid; grid-template-columns:repeat(${STRIP_THEMES.length}, 1fr);
-                    gap:14px; height:100vh; padding:0;">
-            ${STRIP_THEMES.map(t =>
-                `<div class="card" style="border-radius:0; border-width:0 1px 0 0; box-shadow:none;">
-                     <img src="${rel(`tree-${t}`)}">
-                 </div>`).join('\n')}
-        </div>`);
+    /** Row of cards sharing one height, every aspect preserved. */
+    const rowCards = (names, innerW, gap, maxH, opts = {}) => {
+        const sumA = names.reduce((t, n) => t + pngSizeOf(n).w / pngSizeOf(n).h, 0);
+        const h = Math.min(maxH, (innerW - gap * (names.length - 1)) / sumA);
+        return names.map(n => {
+            const a = pngSizeOf(n).w / pngSizeOf(n).h;
+            return `<div class="card" style="flex:none;width:${(a * h).toFixed(1)}px;height:${h.toFixed(1)}px;">
+                    ${tileImg(n, a * h, h)}
+                </div>`;
+        }).join('\n');
+    };
 
-    // promo 1280×800 (sheet 1): main popup (tree + context menu) + 2×2 view
-    // minis covering the entry-point views: search / staging-recent /
-    // tab-groups / stats.
-    await compose('promo.html', 1280, 800, `
-        <div style="display:flex; gap:34px; height:100vh; padding:46px 38px;
-                    background:#f4f6f9;">
-            <div class="card" style="flex:none; width:472px;">
-                <img src="${rel('tree-menu-light')}">
-            </div>
-            <div style="flex:1; display:grid; grid-template-columns:1fr 1fr;
-                        grid-template-rows:1fr 1fr; gap:22px;">
-                ${SHEET1_GRID.map(tile =>
-                    `<div class="card"><img src="${rel(tile)}"></div>`).join('\n')}
-            </div>
-        </div>`);
+    // strip 1400×560: the four themes in a centered band whose height comes
+    // from their own aspect (full tile width visible — no cover-cropping);
+    // leftover canvas height becomes neutral top/bottom margins.
+    {
+        const W = 1400, H = 560, GAP = 12;
+        const tiles = STRIP_THEMES.map(t => `tree-${t}`);
+        const sumA = tiles.reduce((t, n) => t + pngSizeOf(n).w / pngSizeOf(n).h, 0);
+        const bandH = Math.min(H, (W - GAP * (tiles.length - 1)) / sumA);
+        const cards = tiles.map(n => {
+            const a = pngSizeOf(n).w / pngSizeOf(n).h;
+            return `<div class="card" style="flex:none;width:${(a * bandH).toFixed(1)}px;height:${bandH.toFixed(1)}px;
+                        border-radius:0;border-width:0 1px 0 0;box-shadow:none;">
+                    ${tileImg(n, a * bandH, bandH)}
+                </div>`;
+        }).join('\n');
+        await compose('strip.html', W, H, `
+            <div style="display:flex; gap:${GAP}px; height:100vh; background:#f4f6f9;
+                        align-items:center; justify-content:center;">${cards}</div>`);
+    }
 
-    // promo2 1280×800 (sheet 2): the maintenance crew — dead-link scanner,
-    // duplicate cleaner, command palette — three large minis.
-    await compose('promo2.html', 1280, 800, `
-        <div style="display:flex; gap:26px; height:100vh; padding:46px 38px;
-                    background:#f4f6f9;">
-            ${SHEET2_GRID.map(tile =>
-                `<div class="card" style="flex:1;"><img src="${rel(tile)}"></div>`).join('\n')}
-        </div>`);
+    // promo sheets: one shared row height derived from the tiles' own aspects
+    // (h = min(frame height, inner width / Σaspect)) so every popup view lands
+    // complete — nothing cropped right, nothing letterboxed left.
+    const sheetRow = (htmlName, names) => {
+        const PAD = 40, GAP = 24, MAXH = 800 - PAD * 2;
+        const innerW = 1280 - PAD * 2;
+        const cards = rowCards(names, innerW, GAP, MAXH);
+        return compose(htmlName, 1280, 800, `
+            <div style="display:flex; gap:${GAP}px; height:100vh; padding:${PAD}px;
+                        background:#f4f6f9; align-items:center; justify-content:center;">${cards}</div>`);
+    };
 
-    // themes 1280×800: the two crafted themes split full-bleed (ink | paper).
-    await compose('themes.html', 1280, 800, `
-        <div style="display:grid; grid-template-columns:1fr 1fr; height:100vh;">
-            <div class="card" style="border-radius:0; border-width:0 1px 0 0; box-shadow:none;">
-                <img src="${rel('tree-ink')}">
-            </div>
-            <div class="card" style="border-radius:0; border-width:0; box-shadow:none;">
-                <img src="${rel('tree-paper')}">
-            </div>
-        </div>`);
+    // sheet 1 · entry points: main popup (tree + fully expanded context menu)
+    await sheetRow('promo.html', ['tree-menu-light', ...SHEET1_MINIS]);
+    // sheet 2 · maintenance crew in selection modes + palette
+    await sheetRow('promo2.html', [...SHEET2_MINIS]);
+    // sheet 3 · find & measure: search / stats
+    await sheetRow('promo3.html', PLAIN_VIEWS.map(([, tile]) => tile));
+
+    // themes 1280×800: ink | paper pair at shared aspect-derived size,
+    // centered on the canvas (both tiles fully visible).
+    {
+        const PAIR = ['tree-ink', 'tree-paper'];
+        const cards = rowCards(PAIR, 1280 - 48, 20, 800 - 32);
+        await compose('themes.html', 1280, 800, `
+            <div style="height:100vh; background:#f4f6f9; display:flex; gap:20px;
+                        align-items:center; justify-content:center;">${cards}</div>`);
+    }
 
     // options 1280×800: the whole options page in one frame. The wide-viewport
     // capture turns the masonry into a short, wide sheet; scale it to the

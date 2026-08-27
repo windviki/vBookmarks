@@ -29,17 +29,21 @@ scripts/harness/rerun.sh shots.js     # a single suite ad-hoc
 
 ## Store assets (shots-store)
 
-The store shows at most FIVE screenshots; `shots-store.js` emits exactly five
-candidates, all from live states instead of hand assembly (velvet §6.3 F):
+The store shows at most FIVE screenshots; `shots-store.js` emits six
+candidates covering all seven views, all from live states instead of hand
+assembly (velvet §6.3 F) — pick the five keepers at upload time (`themes`
+folds into `strip` if a slot is needed):
 
 - `store/strip.png` — 1400×560, the four explicit themes side by side;
-- `store/promo.png` — 1280×800, sheet 1 (views as entry points): main popup
-  with the bookmark context menu plus search / staging-recent / tab-groups /
-  stats minis, aligned with the hand-made `assets/store/vBookmarks-v4.png`
-  layout;
-- `store/promo2.png` — 1280×800, sheet 2 (the maintenance crew): dead-link
-  scanner / duplicate cleaner / command palette, three large minis — together
-  with sheet 1 all seven views are covered;
+- `store/promo.png` — 1280×800, sheet 1 (entry points): main popup with the
+  context menu and its collapsible entry expanded in place, plus
+  staging-recent and tab-groups minis in their SELECTION MODES;
+- `store/promo2.png` — 1280×800, sheet 2 (maintenance): dead-link scanner
+  and duplicate cleaner in selection modes + the command palette;
+- `store/promo3.png` — 1280×800, sheet 3 (find & measure): search results
+  and visit statistics, two large cards;
+- `store/themes.png` — 1280×800, the two crafted themes split full-bleed
+  (ink | paper);
 - `store/options.png` — 1280×800, the whole options page in one frame: a
   wide-viewport capture with the multicol grid forced to six columns
   (`.options-page{max-width:none}` + `column-count:6`), scaled into the
@@ -47,17 +51,24 @@ candidates, all from live states instead of hand assembly (velvet §6.3 F):
   half the groups.
 
 Every popup tile is clipped to the live `#container` box (overlays may extend
-it downward), so no tile carries the viewport's dead right margin.
+it downward), so no tile carries the viewport's dead right margin. Popup width
+is pinned to 400px via the `popupWidth` setting so overlays (palette) compose
+inside the frame.
 
 Every capture is seeded and hermetic (non-extension requests are aborted), so
-re-runs are deterministic. The five composites are synced to
-`assets/store/vBookmarks-{strip,promo,promo2,themes,options}.png` (excluded from the
-package zip like every store asset — `package.py` EXCLUDE_FILES); re-run the
-suite after visual changes and re-copy the keepers. Upload happens via the
-Developer Dashboard (the store listing itself is not API-managed; see
-`scripts/webstore/README.md` for what the `listing` commands can and cannot
-do). Raw tiles are kept under `store/tiles/` for manual re-mixing. `classic`
-joins the strip theme list when the velvet classic theme lands.
+re-runs are deterministic. Typography: Inter + Noto Sans SC (思源黑体) are
+installed by the Dockerfile from `scripts/screenshots/fonts/` (git-ignored;
+run `fonts/fetch.sh` once through the proxy) and forced via an injected
+stylesheet — without them the captures fall back to the base image's
+bitmap-ish CJK font. The composites are synced to
+`assets/store/vBookmarks-{strip,promo,promo2,promo3,themes,options}.png`
+(excluded from the package zip like every store asset — `package.py`
+EXCLUDE_FILES); re-run the suite after visual changes and re-copy the keepers.
+Upload happens via the Developer Dashboard (the store listing itself is not
+API-managed; see `scripts/webstore/README.md` for what the `listing` commands
+can and cannot do). Raw tiles are kept under `store/tiles/` for manual
+re-mixing. `classic` joins the strip theme list when the velvet classic theme
+lands.
 
 ## Output layout
 

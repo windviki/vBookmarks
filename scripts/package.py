@@ -82,6 +82,7 @@ EXCLUDE_FILES = {
     'assets/store/vBookmarks-strip.png',
     'assets/store/vBookmarks-promo.png',
     'assets/store/vBookmarks-promo2.png',
+    'assets/store/vBookmarks-promo3.png',
     'assets/store/vBookmarks-themes.png',
     'assets/store/vBookmarks-options.png',
     # Dev/tooling files
