@@ -411,13 +411,37 @@ const SEED = `
         await page.close();
     }
 
-    // --- 3. staging regions (upper = groups, recent = timeline) + selection --
+    // --- 3. staging: full top (groups region) + folded-to-recent + selection -
     {
         const page = await openThemed('light');
         await activateView(page, 'recent');
         await sleep(900);
-        await shootTile(page, 'view-staging-upper', { top: 'tabs', bottomSel: '#recent-head' });
-        await shootTile(page, 'view-staging-recent', { top: 'tabs', topSel: '#recent-head', bottom: 'container' });
+        // Normal tile keeps the FULL top chrome (search bar + tabs) and stops
+        // at the recently-added section head — groups region only.
+        await shootTile(page, 'view-staging-upper', { bottomSel: '#recent-head' });
+        // Recent-region tile: same full top, but with the staging group
+        // FOLDED so only the recently-added timeline is expanded (per spec).
+        await page.evaluate(() => {
+            const raw = chrome.storage.local.get;
+            return new Promise(resolve => {
+                chrome.storage.local.get(['staging'], r => {
+                    const st = JSON.parse(r.staging || '{}');
+                    st.groups = (st.groups || []).map(g => ({ ...g, collapsed: true }));
+                    chrome.storage.local.set({ staging: JSON.stringify(st) }, resolve);
+                });
+            });
+        });
+        await page.reload({ waitUntil: 'domcontentloaded' });
+        await activateView(page, 'recent');
+        await sleep(1200);
+        const recentVisible = await page.evaluate(() => {
+            const head = document.getElementById('recent-head');
+            return head && !head.classList.contains('collapsed');
+        });
+        if (!recentVisible) errors.push('view-staging-recent: recent head not expanded');
+        await shootTile(page, 'view-staging-recent');
+        // selection: batch bar + ticked rows, header cropped off (the only
+        // tile type that loses the top chrome)
         await enterSelection(page, 'view-staging-sel');
         await shootTile(page, 'view-staging-sel', { top: 'tabs' });
         await page.close();
