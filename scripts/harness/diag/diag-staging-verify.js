@@ -254,17 +254,18 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
         ck('bucket fav-all vertically centered', vCenter(css.bucketFav, css.bucketHead));
         ck('select-mode right-aligned inside the toolbar (8px inset)', css.selectBtn && Math.abs(css.selectBtn.right - (css.listRight - 8)) < 1.5);
         ck('summary stays left of the action cluster', css.summaryRight < css.newGroupBtn.left);
-        ck('member rows indent 24px (icon column = loose row title column)',
+        // TREE-LAW restack (2026-08-26): level-0 grid [chevron @8..24][icon
+        // well @24..44][title @48]; members indent so their favicon LEFT
+        // edge lands on the head title axis (the TREE_INDENT child law).
+        ck('member rows sit one 24px level under loose rows (favicon step)',
             css.memberFavX !== null && css.looseFavX !== null &&
-            Math.abs(css.memberFavX - css.looseFavX - 24) < 1.5 &&
-            css.looseTitleX !== null && Math.abs(css.memberFavX - css.looseTitleX) < 1.5);
-        ck('member favicon column = head leading glyph column (folder/star, tabgroups hierarchy)',
-            css.memberFavX !== null && css.groupGlyph && Math.abs(css.memberFavX - css.groupGlyph.left) < 1.5);
-        // the 2026-08-25 icon-round law: the head's leading glyph LEFT-ALIGNS
-        // with the LOOSE (ungrouped) row's TITLE column — the folder reads as
-        // sitting exactly where an ungrouped row's text begins
-        ck('head folder glyph left-aligns with the loose row title column',
-            css.groupGlyph && css.looseTitle && Math.abs(css.groupGlyph.left - css.looseTitle.left) < 1.5);
+            Math.abs(css.memberFavX - css.looseFavX - 24) < 1.5);
+        ck('member favicon left edge == head title axis (tree child law)',
+            css.memberFavX !== null && css.groupTitle && Math.abs(css.memberFavX - css.groupTitle.left) < 1.5);
+        ck('head leading glyph shares the level-0 icon column with loose favicons',
+            css.groupGlyph && css.looseFavX !== null && Math.abs(css.groupGlyph.left - css.looseFavX) < 1.5);
+        ck('head title left-aligns with the loose row title (level-0 text axis)',
+            css.groupTitle && css.looseTitle && Math.abs(css.groupTitle.left - css.looseTitle.left) < 1.5);
         // one optical y-axis per head: chevron/folder/star/clock centers vs
         // the title's LINE-BOX center, and the title's INK center too
         ck('head glyphs share one optical y-axis with their titles (line box)',
@@ -285,7 +286,7 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
         ck('narrow rows are the same 28px height as the heads',
             css.stagingRowLi && Math.abs(css.stagingRowLi.h - 28) < 1.5);
         ck('manual empty group renders its head', css.manualEmptyHead);
-        ck('group head chevron starts at the 18px fold lead (center on the loose favicon)', css.groupChevLeft !== null && Math.abs(css.groupChevLeft - css.listLeft - 18) < 1.5);
+        ck('group head chevron starts at the 8px fold lead (flush like the tree twisty)', css.groupChevLeft !== null && Math.abs(css.groupChevLeft - css.listLeft - 8) < 1.5);
         ck('group quick tail always visible (tabgroups law)', css.groupPlaceVisible === 'visible');
         // ≤400px container (this probe runs at 320px body): the group-
         // specific pair hides, the row-shared place/delete stay
@@ -295,8 +296,8 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
             css.groupRemove && Math.abs(css.groupRemove.right - (css.listRight - 8)) < 1.5);
         ck('scissors divider separates the recent region', css.cut);
         ck('guide strip renders above the toolbar', css.guideBanner);
-        ck('time-bucket head glyph starts on the shared 40px lead column',
-            css.timeHeadLeft !== null && Math.abs(css.timeHeadLeft - (css.listLeft + 40)) < 1.5);
+        ck('time-bucket head glyph starts on the 24px level-0 icon column',
+            css.timeHeadLeft !== null && Math.abs(css.timeHeadLeft - (css.listLeft + 24)) < 1.5);
         // the three same send buttons of the recent region: ONE right
         // axis (all end 8px off the list edge) and ONE vertical-center
         // OFFSET (each centers in its own --vbm-row-h host row — the
@@ -367,9 +368,9 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
             Math.abs(selGeo.g1FavX - selGeo.groupGlyphX) < 1.5 &&
             selGeo.bucketFavX !== null && selGeo.bucketStarX !== null &&
             Math.abs(selGeo.bucketFavX - selGeo.bucketStarX) < 1.5);
-        ck('selection member content keeps the 36px step off the loose baseline',
+        ck('selection member content keeps the 24px level step off the loose baseline (same tree-law step as normal mode)',
             selGeo.g1FavX !== null && selGeo.looseFavX !== null &&
-            Math.abs((selGeo.g1FavX - selGeo.looseFavX) - 36) < 1.5);
+            Math.abs((selGeo.g1FavX - selGeo.looseFavX) - 24) < 1.5);
         ck('selection action rung is iconified (9 glyph buttons)', selGeo.actionIcons === 9);
         ck('move-to shortcut rung renders chip + icon-only add + edit-mode toggle',
             selGeo.shortcutChips === 1 && selGeo.shortcutAdd && selGeo.shortcutEditModeBtn);

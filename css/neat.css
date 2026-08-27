@@ -1806,37 +1806,43 @@ menu[type=context] hr {
 }
 
 /* The THREE fold heads (virtual group / inbox bucket / recent time bucket)
-   are PEERS of the ungrouped bookmark rows, not of the two big section
-   heads: the chevron's CENTER lands on the loose row's favicon center
-   (16px ::before slot + 10px into the 20px container = 26px → the chevron
-   spans 18–34px), and the title's left edge lands on the loose row's TITLE
-   axis (40px = 18 + 16 + 2px margin + 4px gap). 2026-08 size law: the title
-   font IS the row font — both inherit the body base (the old 12px pin read
-   smaller than the rows on platforms where `font: menu` > 12px), and
-   line-height mirrors .tree-item-link's 1.67em so a two-line head (title +
-   head-sub meta) is exactly as tall as a two-line member row. */
+   are PEERS of the ungrouped bookmark rows — and since the 2026-08-26 tree-
+   law restack they sit on the TREE's exact triple-slot grid, not the old
+   "chevron rides the loose-favicon column" hybrid:
+     [chevron 16 @ 8..24][glyph well 20 @ 24..44][title @ 48]
+   — chevron flush at the 8px lead like the tree's top-level twisty and the
+   two big section heads above (one trunk column: 8..24 everywhere), the
+   well occupying the SAME 24..44 column the loose rows' favicons occupy
+   (§tree: same-level non-folder items center their icon on the folder-icon
+   column), and the title axis 48 == the members' favicon LEFT edge below
+   (TREE_INDENT semantics: a child row's icon left edge lands on its
+   parent's text left edge). 2026-08 size law: the title font IS the row
+   font — both inherit the body base, and line-height mirrors
+   .tree-item-link's 1.67em so a two-line head is exactly as tall as a
+   two-line member row. */
 .staging-bucket-head,
 .staging-group-head,
 .recent-group-head {
-    padding-inline-start: 18px;
+    padding-inline-start: 8px;
     line-height: 1.67em;
 }
 
 .staging-bucket-head .chevron,
 .staging-group-head .chevron,
 .recent-group-head .chevron {
-    margin-inline-end: 2px; /* 18 + 16 + 2 + 4px gap = the 40px title axis */
+    /* the head's own 4px flex gap would push the well to 28 — cancel it so
+       the well sits at the tree-exact 24..44 column (title axis 48). The
+       selection-mode block below re-owns this property. */
+    margin-inline-end: -4px;
 }
 
-/* Head leading glyph (2026-08-25 icon round; alignment round 2026-08-26):
+/* Head leading glyph (2026-08-25 icon round; tree-law restack 2026-08-26):
    the group head carries the tree's folder glyph, the recent time-bucket
-   head a clock — each in the member rows' FAVICON slot exactly: a 20px well
-   with the 16px glyph centered, so the glyph's CENTER stacks on the member
-   favicon's CENTER (50px narrow / 51px wide) and the slot's 0 tail margin +
-   the head's 4px flex gap put the title on the member TITLE axis (64px
-   narrow / 70px wide). The creation-time/range meta line this replaces is
-   gone — the fold heads are single-line again, vertically centered in the
-   taller row like the bucket. */
+   head a clock — each in the level-0 ICON column (24..44 narrow): a 20px
+   well with the 16px glyph centered, so head glyph / loose-row favicon /
+   member favicon stacks read one axis per level exactly like the tree's
+   folder-icon column. The slot's tail margin stays 0; the head's 4px flex
+   gap opens the title at 48. */
 .staging-group-folder,
 .recent-group-clock {
     flex: none;
@@ -1859,10 +1865,10 @@ menu[type=context] hr {
 }
 
 /* Recent time-bucket rows hang under their head like staging members
-   (2026-08-25): the same 24px inline indent puts their favicon column on
-   the head's leading glyph column — one hierarchy law across both areas. */
+   (2026-08-25), and since the tree-law restack (2026-08-26) they share the
+   member indent too: favicon left edge == the head's title axis (48). */
 #recent-list li.vbm-row {
-    padding-inline-start: 24px;
+    padding-inline-start: 32px;
 }
 
 @container (min-width: 480px) {
@@ -1996,20 +2002,34 @@ body.panel-mode .recent-group-head {
     }
 }
 
-/* Hierarchy (the tabgroups law, not the flat dupes law — staging is a
-   workbench where members move between groups constantly). Alignment round
-   (2026-08-26), three laws measured on the rendered rects:
-     ① a member row's favicon LEFT edge sits on the LOOSE row's TITLE axis
-        (40px narrow / 46px wide-two-line);
-     ② the head's leading glyph CENTER stacks on the member favicon CENTER
-        (the glyph rides the favicon's own 20/22px well, centered — not a
-        16px glyph flush at the well's left edge);
-     ③ the head TITLE's left edge == the member TITLE's left edge (64px /
-        76px). A faint dashed trunk drops from the head's chevron center
-        (26px) with a per-member tick to the favicon column. */
+/* Hierarchy — the TREE's exact three-slot law, restacked 2026-08-26 (the
+   previous hybrid centered the head chevron on the loose favicon column
+   and put heads/members on ONE x, reading flat). Measured narrow axes:
+     level 0:  [chevron 16 @ 8..24][icon well 20 @ 24..44][title @ 48]
+               — heads lead with the chevron; LOOSE rows reserve the same
+               16px slot via ::before so their favicon centers stack on the
+               head glyph center (the tree's folder-vs-bookmark rule);
+     level 1:  member rows indent to put their favicon LEFT edge on the
+               head title axis (48 = parent text left edge), the
+               TREE_INDENT child law.
+   A faint dashed trunk drops from the head's chevron center (16px) with a
+   per-member tick to the favicon column at 48; the last member closes the
+   trunk with an elbow. Dashes are 3px on / 3px off in a faint muted token. */
 #staging-items li.vbm-row.staging-member {
-    padding-inline-start: 24px;
+    padding-inline-start: 24px; /* pre-restack value — kept as the
+        SELECTION-MODE base (its geometry below assumes it); normal mode
+        overrides to 32 in the tree-law rule that follows */
     position: relative;
+}
+#staging-list ul:not(.selecting) li.vbm-row.staging-member {
+    /* TREE_INDENT child law: member favicon left edge == head title axis */
+    padding-inline-start: 32px;
+}
+#staging-items li.vbm-row:not(.staging-member):not(.staging-empty) {
+    /* loose rows sit at LEVEL 0: the reserved twisty slot lands their
+       favicon well on the head glyph column (24..44) and their title on
+       the head title axis (48) */
+    padding-inline-start: 8px;
 }
 
 /* Tree-structure connector (the tabgroups color-line law, muted for the
@@ -2024,8 +2044,8 @@ body.panel-mode .recent-group-head {
 #staging-items li.vbm-row.staging-member > .staging-connector {
     position: absolute;
     inset-block: 0;
-    inset-inline-start: 25.5px; /* the chevron's center (26px) */
-    width: 14.5px;              /* the tick's run to the icon slot at 40px */
+    inset-inline-start: 15.5px; /* the chevron's center (16px) */
+    width: 32.5px;              /* the tick's run to the icon column at 48 */
     pointer-events: none;
 }
 #staging-items li.vbm-row.staging-member > .staging-connector::before {
@@ -2062,7 +2082,7 @@ body.panel-mode .recent-group-head {
 #staging-items li.staging-bucket.has-members::after {
     content: '';
     position: absolute;
-    inset-inline-start: 25.5px;
+    inset-inline-start: 15.5px;
     top: 50%;
     bottom: 0;
     width: 1px;
@@ -2122,31 +2142,30 @@ body.panel-mode .recent-group-head {
 }
 
 
-/* Wide two-line alignment twin (2026-08-26 round): the ≥480px container and
-   panel-mode rows grow their own favicon slot (22px + 8px stride — see the
-   .vbm-row:has(.row-sub) rule), which pushes the LOOSE row's title axis from
-   40px to 46px. The head glyph well (+6px lead, 22px) and the member indent
-   (24→30px) both follow, so the three alignment laws hold in the wide form
-   exactly as in the narrow one: head glyph CENTER == member favicon center
-   (57px), head title == member title (76px), and the member favicon's LEFT
-   edge == the loose row's title axis (46px). The dashed tick grows to still
-   reach the favicon column. These MUST sit AFTER the narrow base rules
-   above — same specificity, later wins. */
+/* Wide two-line alignment twin (2026-08-26 tree-law restack): the ≥480px
+   container and panel-mode rows grow their own favicon slot (22px — see the
+   .vbm-row:has(.row-sub) rule). The level-0 grid becomes
+   [chevron @8..24][well 22 @24..46][title @50], so the member indent
+   follows to 34px (favicon left edge == head title axis 50) and the tick
+   grows to still reach the favicon column. Scoped to :not(.selecting) —
+   the selection-mode geometry below keeps its own round-3 calibration.
+   These MUST sit AFTER the narrow base rules above — same specificity,
+   later wins. */
 @container (min-width: 480px) {
-    .staging-bucket-star,
-    .staging-group-folder,
-    .recent-group-clock {
+    #staging-list ul:not(.selecting) .staging-bucket-star,
+    #staging-list ul:not(.selecting) .staging-group-folder,
+    #staging-list ul:not(.selecting) .recent-group-clock {
         width: 22px;
-        margin-inline-start: 6px;
-        margin-inline-end: 4px;
+        margin-inline-start: 0;
+        margin-inline-end: 0;
     }
-    #staging-items li.vbm-row.staging-member,
+    #staging-list ul:not(.selecting) li.vbm-row.staging-member,
     #recent-list li.vbm-row {
-        padding-inline-start: 30px;
+        padding-inline-start: 34px;
     }
     #staging-items li.vbm-row.staging-member > .staging-connector,
     #staging-items li.vbm-row.staging-member > .staging-connector::after {
-        width: 20.5px;
+        width: 34.5px;
     }
     /* selecting twin (round 3): the checkbox axis (28px) + the 30px step
        put the member favicon on the wide loose title axis (58px); the head
@@ -2156,7 +2175,7 @@ body.panel-mode .recent-group-head {
         margin-inline-start: 30px;
     }
     #staging-list ul.selecting .staging-group-head .staging-group-folder,
-    #staging-list ul.selecting .staging-bucket-head .staging-bucket-star {
+    #staging-list ul.selecting .staging-group-head .staging-bucket-star {
         margin-inline-start: 6px;
         margin-inline-end: 4px;
     }
@@ -2167,26 +2186,26 @@ body.panel-mode .recent-group-head {
 }
 
 /* panel-mode twin (rows are always two-line there): see the block above */
-body.panel-mode .staging-bucket-star,
-body.panel-mode .staging-group-folder,
-body.panel-mode .recent-group-clock {
+body.panel-mode #staging-list ul:not(.selecting) .staging-bucket-star,
+body.panel-mode #staging-list ul:not(.selecting) .staging-group-folder,
+body.panel-mode #staging-list ul:not(.selecting) .recent-group-clock {
     width: 22px;
-    margin-inline-start: 6px;
-    margin-inline-end: 4px;
+    margin-inline-start: 0;
+    margin-inline-end: 0;
 }
-body.panel-mode #staging-items li.vbm-row.staging-member,
+body.panel-mode #staging-list ul:not(.selecting) li.vbm-row.staging-member,
 body.panel-mode #recent-list li.vbm-row {
-    padding-inline-start: 30px;
+    padding-inline-start: 34px;
 }
 body.panel-mode #staging-items li.vbm-row.staging-member > .staging-connector,
 body.panel-mode #staging-items li.vbm-row.staging-member > .staging-connector::after {
-    width: 20.5px;
+    width: 34.5px;
 }
 body.panel-mode #staging-list ul.selecting li.vbm-row.staging-member > a.tree-item-link {
     margin-inline-start: 30px;
 }
 body.panel-mode #staging-list ul.selecting .staging-group-head .staging-group-folder,
-body.panel-mode #staging-list ul.selecting .staging-bucket-head .staging-bucket-star {
+body.panel-mode #staging-list ul.selecting .staging-group-head .staging-bucket-star {
     margin-inline-start: 6px;
     margin-inline-end: 4px;
 }
@@ -5521,15 +5540,16 @@ visibly smaller next to them. */
     box-shadow: inset -3px 0 0 var(--tg-color, transparent);
 }
 
-/* Connector geometry: the group head's dot spans 24px…34px (8px row padding
-   + 16px chevron), so its center sits at 29px — the trunk is centered there
-   and the tick runs from the trunk to the member row's icon slot at 40px.
+/* Connector geometry (tree-law restack 2026-08-26): the group head's dot
+   is centered in a 20px well spanning 24..44, so its center sits at 34px —
+   the trunk is centered there and the tick runs from the trunk to the
+   member row's icon slot at 48px (the head title axis).
    In selection mode every row's content shifts by the checkbox slot
    (14px + 6px), so the trunk and tick shift with it. */
 #tabgroups-list ul.color-line {
-    --tg-line-x: 27.5px;   /* trunk inline-start (dot center − half width) */
+    --tg-line-x: 32.5px;   /* trunk inline-start (dot center − half width) */
     --tg-line-w: 3px;      /* trunk width — wider than the edge band */
-    --tg-tick-w: 12.5px;   /* trunk center → member icon slot */
+    --tg-tick-w: 15.5px;   /* trunk center → member icon slot at 48 */
 }
 #tabgroups-list ul.color-line.selecting {
     /* + the checkbox slot (14px box + 6px gap) shifts the trunk with the
@@ -6040,7 +6060,14 @@ li.tabgroups-row.tabgroups-current {
 }
 .tabgroups-toolbar .tabgroups-close-selected { color: var(--vbm-danger); }
 
-/* Group header: chevron + color dot + title + created time + count + save. */
+/* Group header: chevron + color dot + title + created time + count + save.
+   Tree-law grid (2026-08-26, mirroring the staging restack and the tree):
+   [chevron 16 @ 8..24][dot WELL 20 @ 24..44 — a centered 10px circle on
+   the level-0 icon column, exactly where ungrouped tabs' favicons sit via
+   their ::before slot][title @ 48]. Previously the bare 10px dot rode the
+   chevron's tail (center 29 ≠ favicon center 26) — it read as off-column.
+   Grouped member tabs indent to put their favicon LEFT edge on the title
+   axis 48 — the TREE_INDENT child law. */
 .tabgroups-group .tabgroups-group-head {
     display: flex;
     align-items: center;
@@ -6067,12 +6094,25 @@ li.tabgroups-row.tabgroups-current {
 .tabgroups-group .chevron.collapsed::before { content: '▸'; }
 .rtl .tabgroups-group .chevron.collapsed::before { content: '◂'; }
 .tabgroups-group .tab-group-dot {
+    /* the FOLDER-ICON analog lives in the level-0 icon column: a 20px well
+       (the rows' favicon-slot footprint) centering the 10px color dot, so
+       the dot's center == the tab favicons' center below it */
     flex: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 0;
+    background: none;
+    margin-inline-end: 4px;
+}
+.tabgroups-group .tab-group-dot::before {
+    content: '';
     width: 10px;
     height: 10px;
     border-radius: 50%;
     background: var(--tg-color);
-    margin-inline-end: 6px;
 }
 .tabgroups-group .tabgroups-group-title {
     flex: 1;
@@ -6105,16 +6145,21 @@ li.tabgroups-row.tabgroups-current {
 #tabgroups-list ul li.tabgroups-row {
     display: flex;
     align-items: center;
+    /* Tree-law level-0 lead (2026-08-26): the row's ::before twisty slot +
+       its favicon well land on 24..44 — the group dot's column. */
+    padding-inline-start: 8px;
     /* Same right-edge rhythm as the group head: last icon/button ends 8px
        from the container (4px row padding + 4px control margin), matching
        dead/dupes rows and their toolbars. */
     padding-inline-end: 4px;
 }
 /* Tree-view alignment: grouped rows are children of the group head. The
-   24px step makes a member row's icon left edge land exactly on the group
-   head's title left edge (40px), the same rule the tree uses. */
+   32px step makes a member row's icon left edge land exactly on the group
+   head's title left edge (48px) — the same rule the tree uses
+   (TREE_INDENT semantics; restacked from 24 when the head went to the
+   [chevron @8][well @24..44][title @48] grid). */
 #tabgroups-list ul li.tabgroups-row.grouped {
-    padding-inline-start: 24px;
+    padding-inline-start: 32px;
 }
 #tabgroups-list ul li.tabgroups-row > a {
     flex: 1;
