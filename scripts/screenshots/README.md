@@ -35,13 +35,15 @@ assembly (velvet §6.3 F) — pick the five keepers at upload time (`themes`
 folds into `strip` if a slot is needed):
 
 - `store/strip.png` — 1400×560, the four explicit themes side by side;
-- `store/promo.png` — 1280×800, sheet 1 (entry points): main popup with the
-  context menu and its collapsible entry expanded in place, plus
-  staging-recent and tab-groups minis in their SELECTION MODES;
-- `store/promo2.png` — 1280×800, sheet 2 (maintenance): dead-link scanner
-  and duplicate cleaner in selection modes + the command palette;
-- `store/promo3.png` — 1280×800, sheet 3 (find & measure): search results
-  and visit statistics, two large cards;
+- `store/promo.png` — 1280×800, sheet 1 (entry points): left the main popup
+  with the context menu and its collapsible entry expanded in place; right
+  two columns of stacked pairs — search (normal over selection, the
+  selection tiles cropped below the view-tab strip) and tab-groups;
+- `store/promo2.png` — 1280×800, sheet 2 (the staging workbench): left the
+  command palette long shot; right columns — staging upper region (groups) +
+  staging selection, staging recent region + stats;
+- `store/promo3.png` — 1280×800, sheet 3 (cleanup): dead-links and
+  duplicates, each normal over selection;
 - `store/themes.png` — 1280×800, the two crafted themes split full-bleed
   (ink | paper);
 - `store/options.png` — 1280×800, the whole options page in one frame: a
@@ -51,9 +53,12 @@ folds into `strip` if a slot is needed):
   half the groups.
 
 Every popup tile is clipped to the live `#container` box (overlays may extend
-it downward), so no tile carries the viewport's dead right margin. Popup width
-is pinned to 400px via the `popupWidth` setting so overlays (palette) compose
-inside the frame.
+it downward), so no tile carries the viewport's dead right margin. Plain tiles
+trim trailing dead space to the measured content bottom; selection tiles start
+below the view-tab strip. Popup width is pinned to 400px via the `popupWidth`
+setting so overlays (palette) compose inside the frame. Composite geometry is
+pre-calculated from each tile's measured PNG aspect — tiles are never
+cover-cropped.
 
 Every capture is seeded and hermetic (non-extension requests are aborted), so
 re-runs are deterministic. Typography: Inter + Noto Sans SC (思源黑体) are
