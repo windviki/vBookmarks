@@ -87,3 +87,32 @@ if (process.argv.includes('--calls')) {
         console.log(`${fmt(hits)}  hits=${hits}  callers: ${chain.join(' ← ')}`);
     });
 }
+
+// --subtree <fn>: hit distribution among the DIRECT callees inside <fn>'s
+// call-path nodes (what the big self-time block actually consists of).
+if (process.argv.includes('--subtree')) {
+    const fn = process.argv[process.argv.indexOf('--subtree') + 1];
+    const idToNode = new Map(prof.nodes.map(n => [n.id, n]));
+    const byId = new Map();
+    for (const n of prof.nodes) {
+        if ((n.callFrame || {}).functionName !== fn) continue;
+        for (const c of n.children || []) {
+            const cn = idToNode.get(c);
+            if (!cn) continue;
+            // aggregate whole subtree hits per direct callee
+            let sum = 0;
+            const stack = [c];
+            while (stack.length) {
+                const x = stack.pop();
+                sum += (idToNode.get(x) || {}).hitCount || 0;
+                for (const cc of (idToNode.get(x) || {}).children || []) stack.push(cc);
+            }
+            const cf = cn.callFrame || {};
+            const key = `${cf.functionName || '(anonymous)'} @ ${(cf.url || '').replace(/^.*\//, '')}:${cf.lineNumber}`;
+            byId.set(key, (byId.get(key) || 0) + sum);
+        }
+    }
+    console.log(`\n== direct callees inside ${fn} (subtree hits) ==`);
+    [...byId.entries()].sort((a, b) => b[1] - a[1]).slice(0, 12)
+        .forEach(([k, v]) => console.log(`${String(v).padStart(6)} hits  ${k}`));
+}

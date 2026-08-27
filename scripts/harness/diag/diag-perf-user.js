@@ -23,7 +23,14 @@ const SEED_TABS = 50;
 // VBM_PERF_PROFILE=1 → single-run CPU-profile mode: one cold open and one
 // dupes trigger, each under the CDP Profiler domain, .cpuprofile JSONs dumped
 // next to perf.json for hotspot triage. Skips the full run matrix.
-const PROFILE = process.env.VBM_PERF_PROFILE === '1';
+// VBM_PERF_TRACE=1 → capture a DevTools timeline (tracing) around the cold
+// open and dump trace.json — stage attribution (ParseHTML / RecalculateStyles
+// / Layout / Scripting) for the wall-vs-scripting gap. TRACE implies the
+// single-run shape of PROFILE.
+// VBM_PERF_VIRTUAL=1 → seed virtualScrollLab='1' (the LAB virtual painter,
+// tabgroups+dupes views) so both painter modes can be A/B'd on the same data.
+const PROFILE = process.env.VBM_PERF_PROFILE === '1' || process.env.VBM_PERF_TRACE === '1';
+const TRACE = process.env.VBM_PERF_TRACE === '1';
 
 const SETTINGS_PATH = '/work/seed/settings-user.json';
 const FAV_PATH = '/work/seed/favorites-user.html';
@@ -131,6 +138,28 @@ const openPopup = async (browser, extId) => {
     await sleep(1200);
     return page;
 };
+
+// Longtask instrumentation: main-thread busy time is the user-felt metric
+// (jank), immune to idle settle time and frame-spreading — wall alone read
+// a cv:auto frame-spread as a REGRESSION while the busy total had dropped.
+// Installed per measurement page; read back after the settle beat.
+const installLongtasks = p => p.evaluateOnNewDocument(() => {
+    window.__lt = { entries: [] };
+    try {
+        new PerformanceObserver(list => {
+            for (const e of list.getEntries())
+                window.__lt.entries.push({ start: Math.round(e.startTime), dur: Math.round(e.duration) });
+        }).observe({ entryTypes: ['longtask'] });
+    } catch (_) { /* longtask unsupported — totals stay empty */ }
+});
+const readLongtasks = p => p.evaluate(() => {
+    const e = (window.__lt && window.__lt.entries) || [];
+    return {
+        count: e.length,
+        totalMs: e.reduce((a, x) => a + x.dur, 0),
+        maxMs: e.reduce((a, x) => Math.max(a, x.dur), 0)
+    };
+}).catch(() => ({ count: 0, totalMs: 0, maxMs: 0 }));
 
 (async () => {
     const outDir = '/tmp/shots/perf';
@@ -245,6 +274,13 @@ const openPopup = async (browser, extId) => {
             localSeed.treeRowActions = '0';
             syncSeed.treeRowActions = '0';
         }
+        // VBM_PERF_VIRTUAL=1: turn the LAB virtual painter ON (tabgroups +
+        // dupes lists) — the seed pins it OFF by default so both sides of the
+        // A/B stay deterministic.
+        if (process.env.VBM_PERF_VIRTUAL === '1') {
+            localSeed.virtualScrollLab = '1';
+            syncSeed.virtualScrollLab = '1';
+        }
         await seedPage.evaluate(([l, s]) => Promise.all([
             new Promise(r => chrome.storage.local.set(l, r)),
             new Promise(r => chrome.storage.sync.set(s, r))
@@ -267,9 +303,20 @@ const openPopup = async (browser, extId) => {
             await cdp.send('Performance.enable');
             await p.setViewport({ width: 400, height: 620 });
             await p.evaluateOnNewDocument(() => { window.close = () => {}; });
+            installLongtasks(p);
             p.setDefaultTimeout(120000);
             if (PROFILE)
                 await cdp.send('Profiler.enable');
+            if (TRACE) {
+                await p.tracing.start({
+                    path: outDir + '/trace.json',
+                    categories: [
+                        'devtools.timeline',
+                        'disabled-by-default-devtools.timeline',
+                        'v8.execute'
+                    ]
+                });
+            }
             const t0 = Date.now();
             console.log('stage: cold run ' + (i + 1) + ' goto');
             if (PROFILE)
@@ -299,15 +346,59 @@ const openPopup = async (browser, extId) => {
                 const prof = (await cdp.send('Profiler.stop')).profile;
                 fs.writeFileSync(outDir + '/cold.cpuprofile', JSON.stringify(prof));
                 console.log('cold.cpuprofile written');
+                // visual evidence for the cv round: top / scrolled-to rows
+                await p.screenshot({ path: outDir + '/tree-cv-top.png' });
+                await p.evaluate(() => {
+                    const t = document.getElementById('tree');
+                    if (t)
+                        t.scrollTop = 20000;
+                });
+                await sleep(900);
+                await p.screenshot({ path: outDir + '/tree-cv-scrolled.png' });
+                const vis = await p.evaluate(() => {
+                    const rows = [...document.querySelectorAll('#tree li.child a')];
+                    const inView = rows.filter(a => {
+                        const r = a.getBoundingClientRect();
+                        return r.bottom > 0 && r.top < 620;
+                    });
+                    return {
+                        total: rows.length,
+                        inView: inView.length,
+                        withIcons: inView.filter(a => {
+                            const f = a.querySelector('.favicon-container');
+                            return f && f.children.length > 0;
+                        }).length
+                    };
+                }).catch(() => null);
+                console.log('scrolled render:', JSON.stringify(vis));
+            }
+            if (TRACE) {
+                await p.tracing.stop();
+                console.log('trace.json written');
             }
             const m = (await cdp.send('Performance.getMetrics')).metrics;
             const pick = k => (m.find(x => x.name === k) || { value: 0 }).value;
+            const lt = await readLongtasks(p);
+            const nav = await p.evaluate(() => {
+                const n = (performance.getEntriesByType('navigation') || [])[0] || {};
+                return {
+                    responseEnd: Math.round(n.responseEnd || 0),
+                    dclEnd: Math.round(n.domContentLoadedEventEnd || 0),
+                    loadEnd: Math.round(n.loadEventEnd || 0)
+                };
+            }).catch(() => ({}));
             cold.push({
                 wallMs: Date.now() - t0,
                 scriptingMs: +(pick('ScriptDuration') * 1000).toFixed(1),
                 renderingMs: +(pick('RenderingDuration') * 1000).toFixed(1),
                 paintingMs: +(pick('PaintingDuration') * 1000).toFixed(1),
-                layoutCount: pick('LayoutCount')
+                layoutCount: pick('LayoutCount'),
+                busyMs: lt.totalMs,
+                longtasks: lt.count,
+                maxTaskMs: lt.maxMs,
+                responseEnd: nav.responseEnd,
+                dclEnd: nav.dclEnd,
+                loadEnd: nav.loadEnd
             });
             p.close();
         }
@@ -316,11 +407,11 @@ const openPopup = async (browser, extId) => {
         }
         out.popupColdOpen = cold;
         console.log('\n== popup cold open, REAL tree fully expanded (ms) ==');
-        console.log('run | wall | scripting | rendering | painting | layouts');
+        console.log('run | wall | scripting | rendering | painting | layouts | busy | longtasks | maxTask | respEnd | dclEnd | loadEnd');
         cold.forEach((r, i) =>
-            console.log(`${i + 1}   | ${r.wallMs} | ${r.scriptingMs} | ${r.renderingMs} | ${r.paintingMs} | ${r.layoutCount}`));
+            console.log(`${i + 1}   | ${r.wallMs} | ${r.scriptingMs} | ${r.renderingMs} | ${r.paintingMs} | ${r.layoutCount} | ${r.busyMs} | ${r.longtasks} | ${r.maxTaskMs} | ${r.responseEnd} | ${r.dclEnd} | ${r.loadEnd}`));
         const med = k => median(cold.map(r => r[k]));
-        console.log(`med | ${med('wallMs')} | ${med('scriptingMs')} | ${med('renderingMs')} | ${med('paintingMs')} | ${med('layoutCount')}`);
+        console.log(`med | ${med('wallMs')} | ${med('scriptingMs')} | ${med('renderingMs')} | ${med('paintingMs')} | ${med('layoutCount')} | ${med('busyMs')} | ${med('longtasks')} | ${med('maxTaskMs')} | ${med('responseEnd')} | ${med('dclEnd')} | ${med('loadEnd')}`);
 
         // --- Phase 2: dupes regroup on bookmark event ×DUPES_RUNS -------------
         const dupes = [];

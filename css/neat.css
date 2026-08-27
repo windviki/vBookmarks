@@ -7270,10 +7270,17 @@ body.panel-mode #stats-list ul li.vbm-row > a.tree-item-link .row-badge.time {
    视图要等好几秒"。content-visibility:auto 让视口外的行跳过布局与绘制
    （contain-intrinsic-size 提供滚动条估算高度，auto 前缀记住每行实际高度，
    两行 dupes 行/宽面板行二次渲染后即准确）。焦点行按规范自动转为"相关"
-   会被渲染，键盘走格不受影响；树视图（#tree）冷开路径已优化且对齐/连线
-   几何敏感，不纳入本批；最近视图（recent）行数受 recentCount 限制（默认
-   ~20 行）无屏外收益，且实测其 computed overflow-x 读取会被 cv 干扰
-   （verify-scrollbars 门禁回归），一并排除。Chrome 85+，最低 114。 */
+   会被渲染，键盘走格不受影响；最近视图（recent）行数受 recentCount 限制
+   （默认 ~20 行）无屏外收益，且实测其 computed overflow-x 读取会被 cv 干扰
+   （verify-scrollbars 门禁回归），一并排除。Chrome 85+，最低 114。
+   2026-08-27 真实数据 perf 轮：树视图（#tree）补入——维护者 5161 URL 真实
+   树全展开的冷开 trace 显示 UpdateLayoutTree+2.0s / Layout+0.4s / Paint
+   +0.8s 全在屏外行上，列表批当初"几何敏感"的顾虑逐项复核过：树的行高=
+   .tree-item-link 的 1.67em（intrinsic 用同一公式，首估即准）；tooltip 适
+   配自 H2 起就是 mouseover/focusin 单行按需，无全量 scrollWidth 遍历；
+   dead × / sync 点是行内绝对定位，不改行盒。revealInTree 的 scrollTo+focus
+   使目标行自动"相关"。滚动条估算由 auto 前缀首滚后自愈。 */
+#tree ul li,
 #tabgroups-list ul li.vbm-row,
 #tabgroups-list ul li.tabgroups-group,
 #tabgroups-list ul li.tabgroups-window-head,
@@ -7287,6 +7294,11 @@ body.panel-mode #stats-list ul li.vbm-row > a.tree-item-link .row-badge.time {
 #staging-list #staging-items li.vbm-row {
     content-visibility: auto;
     contain-intrinsic-size: auto var(--vbm-row-h);
+}
+/* 树行没有 --vbm-row-h 的 28px 高度——其行盒 = .tree-item-link 的行高
+   1.67em（继承 body 字号），intrinsic 估算用同一公式而不是列表行的 28 */
+#tree ul li {
+    contain-intrinsic-size: auto 1.67em;
 }
 
 /* 虚拟滚动（virtualScrollLab 实验室）例外：虚拟画笔只保留视口窗口行，
