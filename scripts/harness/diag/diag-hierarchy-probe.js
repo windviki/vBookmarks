@@ -174,6 +174,28 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
                 return out;
             });
             console.log(`W=${w} TABGROUPS ${JSON.stringify(tg)}`);
+            // selection-mode pass: dot / favicons / trunk on one axis?
+            await page.evaluate(() => { const b = document.querySelector('.tabgroups-select-mode'); if (b) b.click(); });
+            await sleep(700);
+            const sel = await page.evaluate(() => {
+                const vis = el => !!(el && el.getClientRects().length);
+                const r = el => { const b = el.getBoundingClientRect(); return `${Math.round(b.left)}..${Math.round(b.right)}`; };
+                const dot = document.querySelector('ul.selecting .tabgroups-group-head .tab-group-dot');
+                const uFav = [...document.querySelectorAll('ul.selecting li.tabgroups-row:not(.grouped) .favicon-container')].find(vis);
+                const gFav = [...document.querySelectorAll('ul.selecting li.tabgroups-row.grouped .favicon-container')].find(vis);
+                const conn = [...document.querySelectorAll('ul.selecting li.tabgroups-row.grouped > .tg-connector')].find(vis);
+                const chev = document.querySelector('ul.selecting .tabgroups-group-head .chevron');
+                return {
+                    dot: dot ? r(dot) : null,
+                    chevronHidden: chev ? getComputedStyle(chev).display === 'none' : null,
+                    ungroupedFav: uFav ? r(uFav) : null,
+                    groupedFav: gFav ? r(gFav) : null,
+                    trunkLeft: conn ? Math.round(parseFloat(getComputedStyle(conn).left) * 10) / 10 : null
+                };
+            });
+            console.log(`W=${w} TG-SELECT ${JSON.stringify(sel)}`);
+            await page.evaluate(() => { const b = document.querySelector('.tabgroups-select-mode'); if (b) b.click(); });
+            await sleep(500);
             await page.screenshot({ path: `/tmp/shots/hier-${w}-tabgroups.png` });
         }
         // computed-style chain for one member row and one loose row

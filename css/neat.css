@@ -1790,10 +1790,14 @@ menu[type=context] hr {
 .recent-group-head .chevron {
     flex: none;
     width: 16px;
-    /* 12px margin + the 4px gap = a 16px lead to content: the head's
-       first content glyph lands on the LOOSE row's TITLE column (40px),
-       which is also where the member rows' icon column now sits. */
-    margin-inline-end: 12px;
+    /* The two BIG section heads (暂存 / Recently added) park their title on
+       the level-0 TEXT axis: chevron 8..24 + a reserved empty icon slot
+       (24..44 — the same column every fold head's glyph well and every
+       loose row's favicon occupies below) + 4px gap = title @ 48, exactly
+       on the fold-head/loose-row title line (2026-08-26 tree-law restack;
+       the old 12px margin parked the title at 40, a column nothing below
+       uses any more). The bucket/group/recent heads override this below. */
+    margin-inline-end: 20px;
     text-align: center;
     color: var(--vbm-muted);
     /* The ▾/▸ TEXT glyph rides the text baseline, sitting visibly lower
@@ -5552,13 +5556,15 @@ visibly smaller next to them. */
     --tg-tick-w: 15.5px;   /* trunk center → member icon slot at 48 */
 }
 #tabgroups-list ul.color-line.selecting {
-    /* + the checkbox slot (14px box + 6px gap) shifts the trunk with the
-       head's dot. The tick is SHORTER, though: selection mode drops the
-       anchor's 16px twisty placeholder, so the favicon slot sits at
-       8+20+24=52px and the tick only spans 47.5→52 (a 20.5px tick would
-       cross 16px underneath the favicon). */
-    --tg-line-x: 47.5px;
-    --tg-tick-w: 4.5px;
+    /* Selection drops the group head's INERT chevron (below) — the head is
+       a selection toggle there, not a fold — so its dot well lands straight
+       after the checkbox slot: [checkbox 8..28][dot well 28..48 center 38],
+       exactly the ungrouped tabs' favicon column (8 + slot-free ::before
+       none + well = 28..48). The trunk drops from the dot center (38) and
+       the tick runs to the member row's icon slot at 52 (the grouped row's
+       a carries the 24px tree step). */
+    --tg-line-x: 36.5px;
+    --tg-tick-w: 15.5px;
 }
 #tabgroups-list ul.color-line li.tabgroups-row.grouped {
     position: relative;
@@ -6220,6 +6226,14 @@ li.tabgroups-row.tabgroups-current {
    CONTENT gets the tree step so members read as children of the group head. */
 #tabgroups-list ul.selecting li.tabgroups-row.grouped > a {
     margin-inline-start: 24px;
+}
+/* Selection mode takes the chevron OFF the group head: clicking a head
+   toggles the group's membership there (folds are inert), and the bare
+   chevron used to shove the dot well off the rows' icon column. With it
+   gone the dot well lands at 28..48 — dead on the ungrouped tabs'
+   favicon column — and the selection trunk (36.5) hangs from its center. */
+#tabgroups-list ul.selecting .tabgroups-group-head .chevron {
+    display: none;
 }
 #tabgroups-list ul.selecting li.vbm-row > a { margin-inline-end: 0; }
 #tabgroups-list ul.selecting li.vbm-row > a::before { content: none; }
