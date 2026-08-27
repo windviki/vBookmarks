@@ -29,26 +29,29 @@ scripts/harness/rerun.sh shots.js     # a single suite ad-hoc
 
 ## Store assets (shots-store)
 
-The store shows at most FIVE screenshots; `shots-store.js` emits a candidate
-set of four (the fifth slot stays free for the existing brand marquee or a
-hand-picked extra), all from live states instead of hand assembly
-(velvet §6.3 F):
+The store shows at most FIVE screenshots; `shots-store.js` emits exactly five
+candidates, all from live states instead of hand assembly (velvet §6.3 F):
 
 - `store/strip.png` — 1400×560, the four explicit themes side by side;
-- `store/promo.png` — 1280×800, main popup with the bookmark context menu
-  plus search/recent/stats/dead minis, aligned with the hand-made
-  `assets/store/vBookmarks-v4.png` layout;
-- `store/themes.png` — 1280×800, the two crafted themes split full-bleed
-  (ink | paper);
+- `store/promo.png` — 1280×800, sheet 1 (views as entry points): main popup
+  with the bookmark context menu plus search / staging-recent / tab-groups /
+  stats minis, aligned with the hand-made `assets/store/vBookmarks-v4.png`
+  layout;
+- `store/promo2.png` — 1280×800, sheet 2 (the maintenance crew): dead-link
+  scanner / duplicate cleaner / command palette, three large minis — together
+  with sheet 1 all seven views are covered;
 - `store/options.png` — 1280×800, the whole options page in one frame: a
   wide-viewport capture with the multicol grid forced to six columns
   (`.options-page{max-width:none}` + `column-count:6`), scaled into the
   frame — a true panorama, unlike the hand-made options shot that shows only
   half the groups.
 
+Every popup tile is clipped to the live `#container` box (overlays may extend
+it downward), so no tile carries the viewport's dead right margin.
+
 Every capture is seeded and hermetic (non-extension requests are aborted), so
-re-runs are deterministic. The four composites are synced to
-`assets/store/vBookmarks-{strip,promo,themes,options}.png` (excluded from the
+re-runs are deterministic. The five composites are synced to
+`assets/store/vBookmarks-{strip,promo,promo2,themes,options}.png` (excluded from the
 package zip like every store asset — `package.py` EXCLUDE_FILES); re-run the
 suite after visual changes and re-copy the keepers. Upload happens via the
 Developer Dashboard (the store listing itself is not API-managed; see

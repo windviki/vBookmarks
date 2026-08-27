@@ -1,25 +1,29 @@
 // vBookmarks store-asset composer (velvet §6.3 F / task-1 N7) — the WebStore
 // image specs, produced from live popup states instead of hand assembly.
-// The store shows at most FIVE screenshots; this suite emits a candidate set
-// of four (the fifth slot stays free for the existing brand marquee or a
-// hand-picked extra):
+// The store shows at most FIVE screenshots; this suite emits exactly five:
 //
 //   strip    1400×560 — four theme tiles (light/dark/ink/paper) side by side
-//   promo    1280×800 — main popup + context menu, plus four view minis
-//                       (search / recent / stats / dead), aligned with the
-//                       layout of the hand-made assets/store/vBookmarks-v4.png
+//   promo    1280×800 — sheet 1, the views as entry points: main popup
+//                       (tree + context menu) plus search / staging-recent /
+//                       tab-groups / stats minis, aligned with the hand-made
+//                       assets/store/vBookmarks-v4.png layout
+//   promo2   1280×800 — sheet 2, the maintenance crew: dead-link scanner /
+//                       duplicate cleaner minis + the command palette
 //   themes   1280×800 — the two crafted themes split full-bleed: ink | paper
-//   options  1280×800 — the options page as a multi-column panorama (one
-//                       full-page capture sliced into columns, so all 20
-//                       sections read at a glance)
+//   options  1280×800 — the options page as one panorama (see below)
+//
+// Every popup tile is clipped to the #container box (menus/palettes may
+// extend it downward) — the viewport-width dead margin on the right would
+// otherwise read as a broken layout in the composites.
 //
 // Pipeline: capture each state at deviceScaleFactor 2 (crisp when downscaled)
 // → compose via a temporary HTML grid of <img> tiles → one full-page
 // screenshot at the exact store canvas size. Zero canvas dependency.
 //
-// Output: /tmp/shots/store/{strip,promo,themes,options}.png, plus the raw
-// tiles under tiles/ for manual re-mixing. Human picks and copies the keepers
-// into assets/store/ — nothing here is auto-uploaded.
+// Output: /tmp/shots/store/{strip,promo,promo2,themes,options}.png, plus the
+// raw tiles under tiles/ for manual re-mixing. The keepers are synced to
+// assets/store/ and uploaded via the Developer Dashboard by a human — nothing
+// here is auto-uploaded.
 const puppeteer = require('puppeteer');
 const fs = require('fs');
 const path = require('path');
@@ -31,18 +35,21 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
 
 // Strip: four theme tiles (classic joins this list when velvet S5 lands).
 const STRIP_THEMES = ['light', 'dark', 'ink', 'paper'];
-// Promo minis: view id on the tab bar → tile name. Capture order matters:
-// search LAST — its typed query persists in storage and would otherwise leak
-// into the boxes of every page opened afterwards. The composite grid places
-// the tiles in display order regardless.
-const PROMO_VIEWS = [
+// Promo sheet 1 minis: view id on the tab bar → tile name. Capture order
+// matters: search LAST — its typed query persists in storage and would
+// otherwise leak into the boxes of every page opened afterwards. The
+// composite grid places the tiles in display order regardless.
+const SHEET1_VIEWS = [
     ['recent', 'view-recent'],
+    ['tabgroups', 'view-tabgroups'],
     ['stats', 'view-stats'],
     ['dead', 'view-dead'],
+    ['dupes', 'view-dupes'],
     ['search', 'view-search']
 ];
-// Display order of the same tiles inside the promo grid (row-major).
-const PROMO_GRID = ['view-search', 'view-recent', 'view-stats', 'view-dead'];
+// Display order per sheet (row-major).
+const SHEET1_GRID = ['view-search', 'view-recent', 'view-tabgroups', 'view-stats'];
+const SHEET2_GRID = ['view-dead', 'view-dupes', 'palette-open'];
 
 const SEED = `
 (async () => {
@@ -52,12 +59,13 @@ const SEED = `
     await create({ parentId: work.id, title: 'Linear — Issues', url: 'https://linear.app/issues' });
     const figma = await create({ parentId: work.id, title: 'Figma — Design System', url: 'https://www.figma.com/files/design-system' });
     const devref = await create({ parentId: work.id, title: '开发参考' });
-    await create({ parentId: devref.id, title: 'MDN Web Docs', url: 'https://developer.mozilla.org/docs/Web' });
+    const mdn = await create({ parentId: devref.id, title: 'MDN Web Docs', url: 'https://developer.mozilla.org/docs/Web' });
     await create({ parentId: devref.id, title: 'Chrome Extensions Docs', url: 'https://developer.chrome.com/docs/extensions' });
     await create({ parentId: devref.id, title: 'Can I Use', url: 'https://caniuse.com' });
     const later = await create({ parentId: work.id, title: '稍后读' });
     const so = await create({ parentId: later.id, title: 'Stack Overflow', url: 'https://stackoverflow.com/questions/tagged/chrome-extension' });
     await create({ parentId: later.id, title: 'GitHub (old)', url: 'https://github.com/vBookmarks' });
+    const mdnCopy = await create({ parentId: later.id, title: 'MDN Web Docs (copy)', url: 'https://developer.mozilla.org/docs/Web' });
     const dead1 = await create({ parentId: later.id, title: 'Dead Link (example)', url: 'https://example.invalid/dead-page' });
     const dead2 = await create({ parentId: later.id, title: 'Bogus host', url: 'https://thishost.does.not.exist.example/' });
     const other = await create({ parentId: '1', title: '其他收藏' });
@@ -67,15 +75,30 @@ const SEED = `
     await create({ parentId: other.id, title: 'Vercel Dashboard', url: 'https://vercel.com/dashboard' });
     await create({ parentId: other.id, title: 'Archive Page (bookmarklet)', url: 'javascript:void(location.href="https://web.archive.org/web/*/"+location.href)' });
 
-    // Dead-link marks so the dead tile shows verdict chips without a rescan.
-    // Ids are looked up by URL — the seed runs against a fresh profile every time.
+    // Ids by URL — the seed runs against a fresh profile every time.
     const all = await new Promise(r => chrome.bookmarks.getTree(r));
     const byUrl = {};
     (function walk(nodes) { for (const n of nodes) { if (n.url) byUrl[n.url] = n.id; if (n.children) walk(n.children); } })(all);
+
+    // Real Chrome tabs in two named groups + one loose tab → the tab-groups
+    // view renders live browser data. data: URLs load offline and carry
+    // their page title in the markup — ASCII only, non-ASCII mojibakes in
+    // data: URLs without an explicit charset.
+    const mk = async t => new Promise(r => chrome.tabs.create({ url: t.url, active: false }, r));
+    const tA1 = await mk({ url: 'data:text/html,<title>GitHub - vBookmarks</title><h1>gh</h1>' });
+    const tA2 = await mk({ url: 'data:text/html,<title>Linear - Issues</title><h1>lin</h1>' });
+    const tA3 = await mk({ url: 'data:text/html,<title>Figma - Design System</title><h1>fig</h1>' });
+    const tB1 = await mk({ url: 'data:text/html,<title>MDN Web Docs</title><h1>mdn</h1>' });
+    const tB2 = await mk({ url: 'data:text/html,<title>Can I Use</title><h1>ciu</h1>' });
+    const gA = await new Promise(r => chrome.tabs.group({ tabIds: [tA1.id, tA2.id, tA3.id] }, r));
+    const gB = await new Promise(r => chrome.tabs.group({ tabIds: [tB1.id, tB2.id] }, r));
+    await new Promise(r => chrome.tabGroups.update(gA, { title: '工作区', color: 'blue' }, r));
+    await new Promise(r => chrome.tabGroups.update(gB, { title: '开发参考', color: 'green' }, r));
+
     await new Promise(r => chrome.storage.local.set({
         deadLastScan: JSON.stringify({
             ts: Date.now() - 1800e3,
-            scannedCount: 14,
+            scannedCount: 16,
             results: {
                 [byUrl['https://example.invalid/dead-page']]: { status: 'dead', code: 404 },
                 [byUrl['https://thishost.does.not.exist.example/']]: { status: 'dead', code: 0, error: 'ERR_NAME_NOT_RESOLVED' }
@@ -87,6 +110,26 @@ const SEED = `
             [figma.id]:   { c: 12,  t: Date.now() - 7200e3 },
             [hn.id]:      { c: 7,   t: Date.now() - 6 * 86400e3 },
             [dead1.id]:   { c: 2,   t: Date.now() - 20 * 86400e3 }
+        }),
+        // Staging workbench: one named group holding all rows — starred and
+        // plain (id:null) side by side, the dual-state rows being the feature
+        // shot. Keep the unbookmarked inbox empty: it renders ABOVE the
+        // groups and would push the group rows below the tile fold.
+        staging: JSON.stringify({
+            v: 1,
+            items: [
+                { id: byUrl['https://github.com/vBookmarks'], url: 'https://github.com/vBookmarks', title: 'GitHub', ts: Date.now() - 300e3, group: 'stg1' },
+                { id: byUrl['https://www.figma.com/files/design-system'], url: 'https://www.figma.com/files/design-system', title: 'Figma — Design System', ts: Date.now() - 240e3, group: 'stg1' },
+                { id: null, url: 'https://alistapart.com/topics/typography', title: 'A List Apart — Typography', ts: Date.now() - 180e3, group: 'stg1' },
+                { id: byUrl['https://news.ycombinator.com'], url: 'https://news.ycombinator.com', title: 'Hacker News', ts: Date.now() - 120e3, group: 'stg1' },
+                { id: null, url: 'https://planet.mozilla.org', title: 'Planet Mozilla', ts: Date.now() - 60e3, group: 'stg1' }
+            ],
+            groups: [
+                { id: 'stg1', name: '稍后整理', collapsed: false, createdAt: Date.now() - 600e3 }
+            ],
+            recentCollapsed: false,
+            unfavCollapsed: false,
+            lastSeenTs: 0
         }),
         currentVersion: chrome.runtime.getManifest().version,
         donationFactor: 1,
@@ -148,15 +191,15 @@ const SEED = `
     await seedPage.goto(`chrome-extension://${extId}/pages/popup.html`, { waitUntil: 'domcontentloaded' });
     await sleep(600);
     await seedPage.evaluate(SEED);
-    await sleep(600);
+    await sleep(800);
     await seedPage.close();
 
     // Theme in BOTH stores (localStorage prefill + storage) then reload —
     // same discipline as shots-matrix; otherwise values leak across pages.
-    const openThemed = async (theme, dpr = 2) => {
+    const openThemed = async (theme, dpr = 2, viewportHeight = 640) => {
         const page = await browser.newPage();
         watch(page, `tile-${theme}`);
-        await page.setViewport({ width: 400, height: 640, deviceScaleFactor: dpr });
+        await page.setViewport({ width: 400, height: viewportHeight, deviceScaleFactor: dpr });
         await page.evaluateOnNewDocument(t => {
             try { localStorage.setItem('theme', t); } catch (e) {}
             // Recent view: fudge dateAdded by index range so the coarse time
@@ -190,9 +233,25 @@ const SEED = `
         }
     };
 
-    const shootTile = async (page, name) => {
-        await page.screenshot({ path: `${OUT}/tiles/${name}.png` });
-        console.log(`  tiles/${name}.png`);
+    // Clip to the real UI box: #container plus any overlay (context menu /
+    // palette) that extends past it. Capturing the raw viewport would ship a
+    // dead right margin — the popup hugs its content in real Chrome windows.
+    const shootTile = async (page, name, { height = 'content' } = {}) => {
+        const box = await page.evaluate(hMode => {
+            const c = document.getElementById('container');
+            const r = c ? c.getBoundingClientRect()
+                : { left: 0, top: 0, width: innerWidth, bottom: innerHeight };
+            let bottom = r.bottom;
+            for (const id of ['bookmark-context-menu', 'folder-context-menu', 'command-palette']) {
+                const m = document.getElementById(id);
+                const shown = m && !m.hidden && getComputedStyle(m).opacity !== '0';
+                if (shown) bottom = Math.max(bottom, m.getBoundingClientRect().bottom);
+            }
+            const height2 = hMode === 'viewport' ? innerHeight : Math.min(bottom + 2, innerHeight);
+            return { x: 0, y: 0, width: Math.ceil(r.width), height: Math.ceil(height2) };
+        }, height);
+        await page.screenshot({ path: `${OUT}/tiles/${name}.png`, clip: box });
+        console.log(`  tiles/${name}.png (${box.width}x${box.height})`);
     };
 
     // --- 1. the four theme tree tiles (strip sources) -----------------------
@@ -205,9 +264,10 @@ const SEED = `
 
     // --- 2. light-tree page keeps going: context menu overlay ----------------
     // The promo's main card mirrors vBookmarks-v4.png top-left: expanded tree
-    // with the bookmark context menu open over it.
+    // with the bookmark context menu open over it. Tall viewport so the long
+    // menu is not cut mid-item at the frame bottom.
     {
-        const page = (await browser.pages()).find(p => p.url().includes('popup.html'));
+        const page = await openThemed('light', 2, 800);
         const link = await page.evaluate(() => {
             const a = [...document.querySelectorAll('#tree a.tree-item-link')]
                 .find(a => (a.querySelector('i')?.textContent || '').includes('GitHub'));
@@ -226,14 +286,14 @@ const SEED = `
             return m && m.style.opacity === '1';
         });
         if (!menuOpen) errors.push('bookmark menu did not open');
-        await shootTile(page, 'tree-menu-light');
+        await shootTile(page, 'tree-menu-light', { height: 'viewport' });
         await page.close();
     }
 
-    // --- 3. view minis --------------------------------------------------------
+    // --- 3. view minis (all seven views across the two promo sheets) ---------
     // search is driven through the real input (typed query → results + mark
     // highlighting, like the reference collage); the other views via tab click.
-    for (const [viewId, tile] of PROMO_VIEWS) {
+    for (const [viewId, tile] of SHEET1_VIEWS) {
         const page = await openThemed('light');
         if (viewId === 'search') {
             await page.click('#search-input');
@@ -255,7 +315,7 @@ const SEED = `
     }
 
     // --- 4. palette open ------------------------------------------------------
-    // Shot last on its own page; closed by reload rather than Esc (CDP cannot
+    // Shot on its own page; closed by close() rather than Esc (CDP cannot
     // deliver Escape — docs/cdp-escape-limitation.md).
     {
         const page = await openThemed('light');
@@ -270,11 +330,11 @@ const SEED = `
         await page.close();
     }
 
-    // --- 4b. options page full-page capture (panorama source) -----------------
+    // --- 5. options page full-page capture (panorama source) -----------------
     // Physics of the "all 20 sections in one 1280×800 frame" goal: the
     // multicol sheet is ~6540 column-px at 340px columns, so it only fits one
     // frame when the grid spreads to SIX columns (5 or fewer stay too tall).
-    // That needs the viewport wide enough AND the container's max-width:1760
+    // That needs the viewport wide enough AND the .options-page max-width cap
     // overridden — hence the injected style. Scale in the composite is ~0.54,
     // a legible-at-zoom overview (the hand-made vBookmarks-v4-options.png
     // dodge was showing only half the groups; this is the real panorama).
@@ -287,10 +347,7 @@ const SEED = `
         await page.evaluate(() => new Promise(r => chrome.storage.sync.set({ theme: 'light' }, r)));
         await page.reload({ waitUntil: 'domcontentloaded' });
         await sleep(1200);
-        // Spread the multicol sheet past its max-width:1760 cap so six 340px
-        // columns fit — the only geometry where the whole page matches the
-        // 1280×800 frame aspect. Injected post-load (a pre-load injection has
-        // no documentElement yet).
+        // Injected post-load (a pre-load injection has no documentElement yet).
         await page.evaluate(() => {
             const s = document.createElement('style');
             s.textContent = '.options-page{max-width:none !important;} .options-grid{column-count:6 !important;}';
@@ -316,9 +373,9 @@ const SEED = `
 
     await browser.close();
 
-    // --- 5. composites ---------------------------------------------------------
-    // Card look shared by both canvases: rounded frame + hairline border +
-    // soft shadow so white-theme popups read against the white backdrop.
+    // --- 6. composites ---------------------------------------------------------
+    // Card look shared by all canvases: rounded frame + hairline border +
+    // soft shadow so white-theme popups read against the light backdrop.
     const cardCss = `
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html, body { width: 100%; height: 100%; background: #fff; font-family: system-ui, sans-serif; }
@@ -362,7 +419,9 @@ const SEED = `
                  </div>`).join('\n')}
         </div>`);
 
-    // promo 1280×800: main popup (tree + context menu) + 2×2 view minis.
+    // promo 1280×800 (sheet 1): main popup (tree + context menu) + 2×2 view
+    // minis covering the entry-point views: search / staging-recent /
+    // tab-groups / stats.
     await compose('promo.html', 1280, 800, `
         <div style="display:flex; gap:34px; height:100vh; padding:46px 38px;
                     background:#f4f6f9;">
@@ -371,9 +430,18 @@ const SEED = `
             </div>
             <div style="flex:1; display:grid; grid-template-columns:1fr 1fr;
                         grid-template-rows:1fr 1fr; gap:22px;">
-                ${PROMO_GRID.map(tile =>
+                ${SHEET1_GRID.map(tile =>
                     `<div class="card"><img src="${rel(tile)}"></div>`).join('\n')}
             </div>
+        </div>`);
+
+    // promo2 1280×800 (sheet 2): the maintenance crew — dead-link scanner,
+    // duplicate cleaner, command palette — three large minis.
+    await compose('promo2.html', 1280, 800, `
+        <div style="display:flex; gap:26px; height:100vh; padding:46px 38px;
+                    background:#f4f6f9;">
+            ${SHEET2_GRID.map(tile =>
+                `<div class="card" style="flex:1;"><img src="${rel(tile)}"></div>`).join('\n')}
         </div>`);
 
     // themes 1280×800: the two crafted themes split full-bleed (ink | paper).
