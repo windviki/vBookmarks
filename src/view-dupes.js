@@ -75,7 +75,7 @@
  */
 
 import { findDupes, pickKeeper, planDeletion } from './dupes.js';
-import { VIEW_ICONS, CHECK_ICON, CHEVRON_ICON, SELECT_ICON, TRASH_ICON, STAGE_ICON, STAGE_ICON_DONE, COLLAPSE_ALL_ICON, EXPAND_ALL_ICON, spriteIcon } from './icons.js';
+import { VIEW_ICONS, CHEVRON_ICON, SELECT_ICON, STAGE_ICON, COLLAPSE_ALL_ICON, EXPAND_ALL_ICON, spriteIcon } from './icons.js';
 import { stageBtnHtml as relayStageBtnHtml, flipStageBtn, toggleStageItem, isStagedUrl } from './staging-relay.js';
 import { initDropdowns } from './dropdown.js';
 import { makeRiskBanner, RISK_HELP_URL } from './risk-banner.js';
