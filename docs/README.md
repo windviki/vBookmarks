@@ -212,7 +212,7 @@ python3 scripts/package.py         # → tmp/vBookmarks_<version>.zip
 
 ### v4.1.0
 
-*2026-08-27*
+*2026-08-28*
 
 #### New
 
