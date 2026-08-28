@@ -1095,7 +1095,7 @@
     "message": "Näita vaatekaarte otsingukasti all"
   },
   "optionStagingEnabled": {
-    "message": "Luba staging-ala"
+    "message": "Luba ooteala"
   },
   "optionStagingEnabledHint": {
     "message": "Kui see on välja lülitatud, kuvab see vaade ainult hiljuti lisatud loendit ning kõik staging-nupud ja menüükirjed teistes vaadetes peidetakse."
@@ -1240,7 +1240,7 @@
     "message": "Mine dublikaatide vaatesse"
   },
   "paletteCmdGoRecent": {
-    "message": "Mine hiljutiste vaatesse"
+    "message": "Mine ooteala vaatesse"
   },
   "paletteCmdGoSearch": {
     "message": "Mine otsinguvaatesse"
@@ -2439,10 +2439,10 @@
     }
   },
   "tabRowStage": {
-    "message": "Saada lavale"
+    "message": "Saada ootealale"
   },
   "tabgroupStageAll": {
-    "message": "Saada grupp lavale"
+    "message": "Saada grupp ootealale"
   },
   "tabgroupStageConfirm": {
     "message": "Saada $n$ vahekaarti lavale?",
@@ -2562,7 +2562,7 @@
     }
   },
   "viewRecent": {
-    "message": "Lavastamine"
+    "message": "Ooteala"
   },
   "viewSearch": {
     "message": "Otsing"

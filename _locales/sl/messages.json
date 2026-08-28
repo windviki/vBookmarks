@@ -1240,7 +1240,7 @@
     "message": "Pojdi na pogled dvojnikov"
   },
   "paletteCmdGoRecent": {
-    "message": "Pojdi na pogled nedavnih"
+    "message": "Pojdi na pogled Staging"
   },
   "paletteCmdGoSearch": {
     "message": "Pojdi na pogled iskanja"
@@ -1249,7 +1249,7 @@
     "message": "Pojdi na pogled statistike"
   },
   "paletteCmdGoTabGroups": {
-    "message": "Pojdi na pogled zavihkov"
+    "message": "Pojdi na pogled skupin zavihkov"
   },
   "paletteCmdGoTree": {
     "message": "Pojdi na drevesni pogled"

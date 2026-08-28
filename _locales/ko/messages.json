@@ -1240,7 +1240,7 @@
     "message": "중복 보기로 이동"
   },
   "paletteCmdGoRecent": {
-    "message": "최근 보기로 이동"
+    "message": "스테이징 보기로 이동"
   },
   "paletteCmdGoSearch": {
     "message": "검색 보기로 이동"

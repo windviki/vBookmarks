@@ -63,10 +63,10 @@
     "message": "打开到已有标签组…"
   },
   "bookmarkOpenInNewGroup": {
-    "message": "打开到新标签组"
+    "message": "打开为标签组"
   },
   "bookmarkOpenInNewGroupSetup": {
-    "message": "打开到新标签组并设置…"
+    "message": "打开为标签组并设置…"
   },
   "confirmDeleteFolder": {
     "message": "该文件夹包含 $count$ 个项目，删除后可撤销。",
@@ -228,7 +228,7 @@
     "message": "清除扫描结果"
   },
   "deadConfirmAll": {
-    "message": "删除全部 $count$ 个失效书签？此操作无法一步撤销。",
+    "message": "删除全部 $count$ 条死链？此操作无法一步撤销。",
     "placeholders": {
       "count": {
         "content": "$1",
@@ -240,7 +240,7 @@
     "message": "删除这条书签？"
   },
   "deadConfirmDeleteSelected": {
-    "message": "删除所选的 $count$ 个失效书签？",
+    "message": "删除所选的 $count$ 条死链？",
     "placeholders": {
       "count": {
         "content": "$1",
@@ -249,7 +249,7 @@
     }
   },
   "deadDeleteAll": {
-    "message": "删除当前筛选下的全部 $count$ 个书签?",
+    "message": "删除当前筛选下的全部 $count$ 个书签？",
     "placeholders": {
       "count": {
         "content": "$1",
@@ -262,13 +262,13 @@
   },
   "deadDeleteAllNote": {
     "description": "Delete-all confirmation in the Dead links view: the All-filter warning, shown on the confirmation's second line before undoSingleStepNote.",
-    "message": "「全部」筛选下包含受限书签(代理服务器可达,大概率并未失效)以及过去标注的行。"
+    "message": "「全部」筛选下包含受限书签（代理服务器可达，大概率并未失效）以及过去标注的行。"
   },
   "deadDeleteSelected": {
     "message": "删除所选"
   },
   "deadDeleted": {
-    "message": "已删除 $count$ 个失效书签",
+    "message": "已删除 $count$ 条死链",
     "placeholders": {
       "count": {
         "content": "$1",
@@ -413,7 +413,7 @@
     "message": "代理已保存——之后的扫描会用它复核直连失败的书签"
   },
   "deadProxyServerHint": {
-    "message": "保存后每次死链扫描都会用它复核直连失败的书签,区分真正的死链与区域受限。点\"测试并保存\"会探测可达性(只保留可达的服务器);也可在死链视图中添加。"
+    "message": "保存后每次死链扫描都会用它复核直连失败的书签，区分真正的死链与区域受限。点“测试并保存”会探测可达性（只保留可达的服务器）；也可在死链视图中新增。"
   },
   "deadProxyTestSave": {
     "message": "测试并保存"
@@ -431,7 +431,7 @@
     "message": "代理不可达，未保存"
   },
   "deadRescan": {
-    "message": "重新检测"
+    "message": "重新扫描"
   },
   "deadResume": {
     "message": "继续"
@@ -805,7 +805,7 @@
     "message": "代理"
   },
   "folderCopyConfirm": {
-    "message": "复制 $n$ 条书签的清单?",
+    "message": "复制 $n$ 条书签的清单？",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -950,7 +950,7 @@
     "message": "适用于文件夹的右键菜单。默认开启。"
   },
   "optionCollapseTabGroupMenu": {
-    "message": "将标签页组条目折叠为一个“标签页组”子菜单"
+    "message": "将标签组条目折叠为一个「标签组」子菜单"
   },
   "optionCollapseTabGroupMenuHint": {
     "message": "适用于文件夹和书签的右键菜单。默认关闭；在小屏或高缩放屏幕上可缩短菜单高度。"
@@ -968,7 +968,7 @@
     "message": "在死链视图显示\"添加代理\"提示"
   },
   "optionDeadProxyStripHint": {
-    "message": "关闭后隐藏死链视图里的无代理提示;代理服务器仍可在此页配置,已保存的代理在视图中始终显示管理行。"
+    "message": "关闭后隐藏死链视图里的无代理提示；代理服务器仍可在此页配置，已保存的代理在视图中始终显示管理行。"
   },
   "optionDeadScanConcurrency": {
     "message": "死链扫描并发数（1-16）"
@@ -1090,7 +1090,7 @@
     "message": "在列表行上显示所在文件夹路径"
   },
   "optionShowRecentBookmarks": {
-    "message": "显示暂存/最近视图标签"
+    "message": "显示暂存和最近视图标签"
   },
   "optionShowStatsView": {
     "message": "显示统计视图标签"
@@ -1258,7 +1258,7 @@
     "message": "切换到重复书签视图"
   },
   "paletteCmdGoRecent": {
-    "message": "切换到暂存/最近视图"
+    "message": "切换到暂存和最近视图"
   },
   "paletteCmdGoSearch": {
     "message": "切换到搜索视图"
@@ -1434,7 +1434,7 @@
     "message": "已粘贴"
   },
   "pasteGone": {
-    "message": "书签已不存在,剪贴板已清空"
+    "message": "书签已不存在，剪贴板已清空"
   },
   "pasteHere": {
     "message": "粘贴到此处"
@@ -1556,7 +1556,7 @@
     "message": "搜索书签"
   },
   "searchClear": {
-    "message": "清除搜索"
+    "message": "清空搜索"
   },
   "searchHistoryClear": {
     "message": "清空全部"
@@ -1735,10 +1735,10 @@
     }
   },
   "stagingAdd": {
-    "message": "发送到暂存"
+    "message": "发送到暂存区"
   },
   "stagingAdded": {
-    "message": "已发送到暂存"
+    "message": "已发送到暂存区"
   },
   "stagingAddedSummary": {
     "message": "已新增 $n$ 条，$m$ 条已在暂存区",
@@ -1761,10 +1761,10 @@
     "message": "未收藏"
   },
   "stagingClear": {
-    "message": "清空暂存"
+    "message": "清空暂存区"
   },
   "stagingClearConfirm": {
-    "message": "清空整个暂存区?不会改动书签树。"
+    "message": "清空整个暂存区？不会改动书签树。"
   },
   "stagingClearConfirmOk": {
     "message": "清空"
@@ -1800,7 +1800,7 @@
     }
   },
   "stagingDeleteConfirm": {
-    "message": "删除 $n$ 条?未收藏的条目只会移出暂存区。",
+    "message": "删除 $n$ 条？未收藏的条目只会移出暂存区。",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -1887,7 +1887,7 @@
     "message": "在这里整理书签——选择行并进入选择模式，可获得更多批量操作。"
   },
   "stagingMoveConfirm": {
-    "message": "将 $n$ 条移动到所选文件夹?",
+    "message": "将 $n$ 条移动到所选文件夹？",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -2149,7 +2149,7 @@
     "message": "当前没有已有标签组"
   },
   "tabGroupOptions": {
-    "message": "标签页组"
+    "message": "标签组"
   },
   "tabGroupPickDialogTitle": {
     "message": "打开到已有标签组"
@@ -2161,7 +2161,7 @@
     "message": "未命名标签组"
   },
   "tabGroupsActivateGroup": {
-    "message": "转到标签组"
+    "message": "切换到标签组"
   },
   "tabGroupsActivateTab": {
     "message": "转到标签页"
@@ -2491,13 +2491,13 @@
     }
   },
   "tabRowStage": {
-    "message": "发送到暂存"
+    "message": "发送到暂存区"
   },
   "tabgroupStageAll": {
-    "message": "整组发送到暂存"
+    "message": "整组发送到暂存区"
   },
   "tabgroupStageConfirm": {
-    "message": "发送 $n$ 个标签页到暂存?",
+    "message": "发送 $n$ 个标签页到暂存区？",
     "placeholders": {
       "n": {
         "content": "$1"

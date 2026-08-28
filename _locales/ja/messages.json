@@ -1240,7 +1240,7 @@
     "message": "重複ビューに移動"
   },
   "paletteCmdGoRecent": {
-    "message": "最近ビューに移動"
+    "message": "ステージングビューに移動"
   },
   "paletteCmdGoSearch": {
     "message": "検索ビューに移動"
@@ -1249,7 +1249,7 @@
     "message": "統計ビューに移動"
   },
   "paletteCmdGoTabGroups": {
-    "message": "タブグループビューへ移動"
+    "message": "タブグループビューに移動"
   },
   "paletteCmdGoTree": {
     "message": "ツリービューに移動"
