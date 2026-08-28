@@ -48,7 +48,7 @@
     "message": "Co nowego w v4.0.8"
   },
   "announceV410Text": {
-    "message": "v4.1.0 dodaje widok grup kart oraz obszar roboczy: zarządzaj kartami każdego okna obok zakładek i zbieraj zakładki z dowolnego miejsca do obszaru roboczego do masowej organizacji."
+    "message": "v4.1.0 dodaje widok grup kart oraz obszar roboczy: zarządzaj kartami każdego okna obok zakładek i zbieraj zakładki z dowolnego miejsca do poczekalni do masowej organizacji."
   },
   "announceV410Title": {
     "message": "Co nowego w v4.1.0"
@@ -871,13 +871,13 @@
     "message": "Otwórz wszystkie zakładki"
   },
   "openBookmarksInExistingGroup": {
-    "message": "Otwórz wszystko w istniejącej grupie kart…"
+    "message": "Otwórz wszystko w istniejącej…"
   },
   "openBookmarksInGroup": {
     "message": "Otwórz wszystkie w grupie kart"
   },
   "openBookmarksInGroupSetup": {
-    "message": "Otwórz wszystko w nowej grupie kart…"
+    "message": "Otwórz wszystko w nowej grupie…"
   },
   "openBookmarksIncognitoWindow": {
     "message": "Otwórz zakładki w incognito"
@@ -928,7 +928,7 @@
     "message": "Zwiń pozycje dodawania folderu"
   },
   "optionCollapseAddFolderMenuHint": {
-    "message": "将添加文件夹条目（文件夹行上的之前/之后/内部，书签行上的之前/之后）合并为一个子菜单条目。"
+    "message": "Scala wpisy dodawania folderu (przed/po/wewnątrz na wierszach folderów, przed/po na wierszach zakładek) w jeden wpis podmenu."
   },
   "optionCollapseSortMenu": {
     "message": "Zwiń wpisy sortowania do jednego podmenu „Sortuj”"
@@ -1095,10 +1095,10 @@
     "message": "Pokaż karty widoków pod polem wyszukiwania"
   },
   "optionStagingEnabled": {
-    "message": "Włącz obszar przechowywania"
+    "message": "Włącz poczekalnię"
   },
   "optionStagingEnabledHint": {
-    "message": "Gdy wyłączone, ten widok zawiera tylko listę ostatnio dodanych, a wszystkie przyciski lub pozycje menu przechowywania w innych widokach są ukryte."
+    "message": "Gdy wyłączona, ten widok zachowuje tylko listę ostatnio dodanych; każdy przycisk lub pozycja menu poczekalni w innych widokach jest ukryty."
   },
   "optionStatsEnabled": {
     "message": "Włącz statystyki odwiedzin"
@@ -1199,7 +1199,7 @@
     }
   },
   "optionsStagingSection": {
-    "message": "Przechowywanie i ostatnio dodane"
+    "message": "Poczekalnia i ostatnio dodane"
   },
   "optionsStorageLocalTip": {
     "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting).",
@@ -1471,10 +1471,10 @@
     "message": "Ostatnio dodane"
   },
   "recentStageAll": {
-    "message": "Dodaj wszystkie ostatnie"
+    "message": "Wyślij ostatnio dodane do poczekalni"
   },
   "recentStageGroup": {
-    "message": "Wyślij $t$ do obszaru roboczego",
+    "message": "Wyślij $t$ do poczekalni",
     "placeholders": {
       "t": {
         "content": "$1"
@@ -1723,7 +1723,7 @@
     }
   },
   "stagingAlready": {
-    "message": "Już w obszarze roboczym"
+    "message": "Już w poczekalni"
   },
   "stagingBucketFavAll": {
     "message": "Dodaj wszystkie do ulubionych"
@@ -1735,7 +1735,7 @@
     "message": "Wyczyść poczekalnię"
   },
   "stagingClearConfirm": {
-    "message": "Wyczyścić całą poczekalnię? Drzewo zakładek nie zostanie zmienione."
+    "message": "Wyczyścić całą poczekalnię? Drzewo zakładek nie jest ruszane."
   },
   "stagingClearConfirmOk": {
     "message": "Wyczyść"
@@ -1787,7 +1787,7 @@
     }
   },
   "stagingEmpty": {
-    "message": "还没有暂存内容。从任意视图将书签发送到这里——点击行上的飞机按钮或右键菜单——然后批量整理和归档。"
+    "message": "Nic nie czeka. Wysyłaj zakładki tutaj z dowolnego widoku — przyciskiem samolotu na wierszu albo z menu kontekstowego — a potem porządkuj i rozkładaj je hurtowo."
   },
   "stagingFav": {
     "message": "Ulubione"
@@ -1807,7 +1807,7 @@
     "message": "Z historii"
   },
   "stagingFull": {
-    "message": "Obszar roboczy jest pełny — usuń najpierw niektóre elementy"
+    "message": "Poczekalnia jest pełna — usuń najpierw kilka elementów"
   },
   "stagingGroupAssign": {
     "message": "Grupuj…"
@@ -1888,10 +1888,10 @@
     }
   },
   "stagingRemove": {
-    "message": "Usuń z obszaru roboczego"
+    "message": "Usuń z poczekalni"
   },
   "stagingRemoved": {
-    "message": "Usunięto z obszaru roboczego"
+    "message": "Usunięto z poczekalni"
   },
   "stagingRemovedCount": {
     "message": "Usunięto $n$ z poczekalni",
@@ -2439,10 +2439,10 @@
     }
   },
   "tabRowStage": {
-    "message": "Przenieś do poczekalni"
+    "message": "Wyślij do poczekalni"
   },
   "tabgroupStageAll": {
-    "message": "Przenieś grupę do poczekalni"
+    "message": "Wyślij grupę do poczekalni"
   },
   "tabgroupStageConfirm": {
     "message": "Przenieść $n$ kart do poczekalni?",
@@ -2562,7 +2562,7 @@
     }
   },
   "viewRecent": {
-    "message": "Staging"
+    "message": "Poczekalnia"
   },
   "viewSearch": {
     "message": "Szukaj"

@@ -421,7 +421,7 @@
     "message": "Proxy erişilemez — kaydedilmedi"
   },
   "deadRescan": {
-    "message": "Yeniden Tara"
+    "message": "Yeniden tara"
   },
   "deadResume": {
     "message": "Devam et"
@@ -928,7 +928,7 @@
     "message": "Klasör ekleme girişlerini daralt"
   },
   "optionCollapseAddFolderMenuHint": {
-    "message": "将添加文件夹条目（文件夹行上的之前/之后/内部，书签行上的之前/之后）合并为一个子菜单条目。"
+    "message": "Klasör satırlarındaki (önce/sonra/içine) ve yer imi satırlarındaki (önce/sonra) klasör ekleme girişlerini tek bir alt menü girişinde birleştir."
   },
   "optionCollapseSortMenu": {
     "message": "Sıralama girdilerini tek bir \"Sırala\" alt menüsünde birleştir"
@@ -1095,10 +1095,10 @@
     "message": "Arama kutusunun altında görünüm sekmelerini göster"
   },
   "optionStagingEnabled": {
-    "message": "Hazırlama alanını etkinleştir"
+    "message": "Hazırlık alanını etkinleştir"
   },
   "optionStagingEnabledHint": {
-    "message": "Kapalıyken, bu görünüm yalnızca yeni eklenenler listesini tutar ve diğer görünümlerdeki tüm hazırlama düğmeleri veya menü girişleri gizlenir."
+    "message": "Kapalıyken bu görünüm yalnızca son eklenenler listesini tutar; diğer görünümlerdeki tüm hazırlık düğmeleri ve menü ögeleri gizlenir."
   },
   "optionStatsEnabled": {
     "message": "Ziyaret istatistiklerini etkinleştir"
@@ -1199,7 +1199,7 @@
     }
   },
   "optionsStagingSection": {
-    "message": "Hazırlama ve yeni eklenenler"
+    "message": "Hazırlık alanı ve son eklenenler"
   },
   "optionsStorageLocalTip": {
     "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting).",
@@ -1471,10 +1471,10 @@
     "message": "Son eklenenler"
   },
   "recentStageAll": {
-    "message": "Son eklenenlerin tümünü bekleme alanına al"
+    "message": "Son eklenenlerin tümünü hazırlık alanına gönder"
   },
   "recentStageGroup": {
-    "message": "$t$ öğesini hazırlık alanına gönder",
+    "message": "$t$ ögesini hazırlık alanına gönder",
     "placeholders": {
       "t": {
         "content": "$1"
@@ -1541,7 +1541,7 @@
     "message": "Aramayı Temizle"
   },
   "searchHistoryClear": {
-    "message": "Tümünü Temizle"
+    "message": "Tümünü temizle"
   },
   "searchHistoryClose": {
     "message": "Arama geçmişini gizle"
@@ -1706,10 +1706,10 @@
     }
   },
   "stagingAdd": {
-    "message": "Sahneye gönder"
+    "message": "Hazırlık alanına gönder"
   },
   "stagingAdded": {
-    "message": "Sahneye gönderildi"
+    "message": "Hazırlık alanına gönderildi"
   },
   "stagingAddedSummary": {
     "message": "$n$ öğe eklendi; $m$ zaten beklemede",
@@ -1723,7 +1723,7 @@
     }
   },
   "stagingAlready": {
-    "message": "Zaten bekleme alanında"
+    "message": "Zaten hazırlık alanında"
   },
   "stagingBucketFavAll": {
     "message": "Tümünü favorilere ekle"
@@ -1744,7 +1744,7 @@
     "message": "Hazırlık alanı temizlendi"
   },
   "stagingConfirmFolder": {
-    "message": "Bu klasörden $n$ yer imi bekleme alanına eklensin mi?",
+    "message": "Bu klasörden $n$ yer imi hazırlık alanına eklensin mi?",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -1763,7 +1763,7 @@
     }
   },
   "stagingCount": {
-    "message": "$n$ hazır",
+    "message": "$n$ hazırlandı",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -1787,7 +1787,7 @@
     }
   },
   "stagingEmpty": {
-    "message": "Henüz hiçbir şey hazırlanmadı. Yer imlerini herhangi bir görünümden buraya gönderin — satırdaki uçak düğmesi veya sağ tıklama menüsü — ardından toplu olarak düzenleyin ve dosyalayın."
+    "message": "Henüz hiçbir şey hazırlanmadı. Yer imlerini herhangi bir görünümden buraya gönderin — satırdaki uçak düğmesi veya sağ tık menüsü — ardından toplu olarak düzenleyip yerleştirin."
   },
   "stagingFav": {
     "message": "Favorilere ekle"
@@ -1801,13 +1801,13 @@
     }
   },
   "stagingFolderEmpty": {
-    "message": "Bu klasörde bekleme alanına eklenecek yer imi yok"
+    "message": "Bu klasörde hazırlık alanına eklenecek yer imi yok"
   },
   "stagingFromHistory": {
     "message": "Geçmişten"
   },
   "stagingFull": {
-    "message": "Bekleme alanı dolu — önce bazı öğeleri kaldırın"
+    "message": "Hazırlık alanı dolu — önce bazı ögeleri kaldırın"
   },
   "stagingGroupAssign": {
     "message": "Grupla…"
@@ -1831,7 +1831,7 @@
     "message": "Grubu dağıt"
   },
   "stagingGroupDissolved": {
-    "message": "Grup dağıtıldı — öğeler bekleme alanında kaldı"
+    "message": "Grup dağıtıldı — öğeler hazırlık alanında kaldı"
   },
   "stagingGroupExpand": {
     "message": "Grubu genişlet"
@@ -1888,10 +1888,10 @@
     }
   },
   "stagingRemove": {
-    "message": "Bekleme alanından kaldır"
+    "message": "Hazırlık alanından kaldır"
   },
   "stagingRemoved": {
-    "message": "Bekleme alanından kaldırıldı"
+    "message": "Hazırlık alanından kaldırıldı"
   },
   "stagingRemovedCount": {
     "message": "$n$ öğe hazırlık alanından kaldırıldı",
@@ -2439,10 +2439,10 @@
     }
   },
   "tabRowStage": {
-    "message": "Aşamaya gönder"
+    "message": "Hazırlık alanına gönder"
   },
   "tabgroupStageAll": {
-    "message": "Grubu aşamaya gönder"
+    "message": "Grubu hazırlık alanına gönder"
   },
   "tabgroupStageConfirm": {
     "message": "$n$ sekmeyi aşamaya gönderilsin mi?",
@@ -2562,7 +2562,7 @@
     }
   },
   "viewRecent": {
-    "message": "Aşamalı"
+    "message": "Hazırlık Alanı"
   },
   "viewSearch": {
     "message": "Arama"

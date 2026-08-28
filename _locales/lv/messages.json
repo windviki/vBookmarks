@@ -1095,10 +1095,10 @@
     "message": "Rādīt skatu cilnes zem meklēšanas lodziņa"
   },
   "optionStagingEnabled": {
-    "message": "Iespējot staging apgabalu"
+    "message": "Ieslēgt sagatavošanas zonu"
   },
   "optionStagingEnabledHint": {
-    "message": "Kamēr izslēgts, šis skats saglabā tikai nesen pievienoto sarakstu, un visas staging pogas vai izvēlnes ieraksti citos skatos tiek paslēpti."
+    "message": "Kamēr izslēgts, šis skats saglabā tikai neseno pievienojumu sarakstu; visas sagatavošanas pogas un izvēļņu ieraksti citos skatos tiek paslēpti."
   },
   "optionStatsEnabled": {
     "message": "Iespējot apmeklējumu statistiku"
@@ -1199,7 +1199,7 @@
     }
   },
   "optionsStagingSection": {
-    "message": "Staging un nesen pievienotie"
+    "message": "Sagatavošana un nesenie pievienojumi"
   },
   "optionsStorageLocalTip": {
     "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting).",
@@ -1471,7 +1471,7 @@
     "message": "Nesen pievienotie"
   },
   "recentStageAll": {
-    "message": "Sagatavot visus nesen pievienotos"
+    "message": "Nosūtīt neseno pievienojumu uz sagatavošanas zonu"
   },
   "recentStageGroup": {
     "message": "Nosūtīt $t$ uz sagatavošanas zonu",
@@ -1706,10 +1706,10 @@
     }
   },
   "stagingAdd": {
-    "message": "Nosūtīt uz sagatavi"
+    "message": "Nosūtīt uz sagatavošanas zonu"
   },
   "stagingAdded": {
-    "message": "Nosūtīts uz sagatavi"
+    "message": "Nosūtīts uz sagatavošanas zonu"
   },
   "stagingAddedSummary": {
     "message": "Pievienots $n$ vienums(-i); $m$ jau sagatavoti",
@@ -1723,7 +1723,7 @@
     }
   },
   "stagingAlready": {
-    "message": "Jau ir sagatavošanas zonā"
+    "message": "Jau sagatavošanas zonā"
   },
   "stagingBucketFavAll": {
     "message": "Atzīmēt visus kā favorītus"
@@ -1732,10 +1732,10 @@
     "message": "Neatzīmētie"
   },
   "stagingClear": {
-    "message": "Notīrīt sagatavošanu"
+    "message": "Notīrīt sagatavošanas zonu"
   },
   "stagingClearConfirm": {
-    "message": "Notīrīt visu sagatavošanas apgabalu? Grāmatzīmju koks netiks skarts."
+    "message": "Notīrīt visu sagatavošanas zonu? Grāmatzīmju koks netiek aizskarts."
   },
   "stagingClearConfirmOk": {
     "message": "Notīrīt"
@@ -1763,7 +1763,7 @@
     }
   },
   "stagingCount": {
-    "message": "$n$ sagatavoti",
+    "message": "$n$ sagatavots",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -1787,7 +1787,7 @@
     }
   },
   "stagingEmpty": {
-    "message": "Vēl nekas nav sagatavots. Nosūtiet grāmatzīmes šeit no jebkura skata — lidmašīnas poga rindā vai konteksta izvēlne — pēc tam kārtojiet un ievietojiet tās grupās."
+    "message": "Pagaidām nekas nav sagatavots. Sūtiet grāmatzīmes šurp no jebkura skata — lidmašīnas pogu rindā vai ar peles labo pogu — tad kārtojiet un glabājiet tās masveidā."
   },
   "stagingFav": {
     "message": "Favorīts"
@@ -1807,7 +1807,7 @@
     "message": "No vēstures"
   },
   "stagingFull": {
-    "message": "Sagatavošanas zona ir pilna — vispirms noņemiet dažus vienumus"
+    "message": "Sagatavošanas zona pilna — vispirms noņemiet dažus vienumus"
   },
   "stagingGroupAssign": {
     "message": "Grupa…"
@@ -2439,10 +2439,10 @@
     }
   },
   "tabRowStage": {
-    "message": "Nosūtīt uz sagatavi"
+    "message": "Nosūtīt uz sagatavošanas zonu"
   },
   "tabgroupStageAll": {
-    "message": "Nosūtīt grupu uz sagatavi"
+    "message": "Nosūtīt grupu uz sagatavošanas zonu"
   },
   "tabgroupStageConfirm": {
     "message": "Nosūtīt $n$ cilnes uz sagatavi?",
@@ -2562,7 +2562,7 @@
     }
   },
   "viewRecent": {
-    "message": "Staging"
+    "message": "Sagatavošana"
   },
   "viewSearch": {
     "message": "Meklēt"

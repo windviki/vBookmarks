@@ -48,10 +48,10 @@
     "message": "Novidades na v4.0.8"
   },
   "announceV410Text": {
-    "message": "v4.1.0 新增标签组视图和暂存区：在书签旁管理每个窗口的标签页，并将任意位置的书签收集到暂存工作台进行批量整理。"
+    "message": "A v4.1.0 adiciona a vista de grupos de separadores e a área de preparação: gira os separadores de cada janela ao lado dos seus marcadores e reúne marcadores de qualquer lugar numa área de preparação para organizar em massa."
   },
   "announceV410Title": {
-    "message": "v4.1.0 的新功能"
+    "message": "Novidades na v4.1.0"
   },
   "bookmarkFolderNoFolders": {
     "message": "Nenhuma pasta de favoritos"
@@ -871,7 +871,7 @@
     "message": "Abrir todos os favoritos"
   },
   "openBookmarksInExistingGroup": {
-    "message": "Abrir tudo em grupo de abas existente…"
+    "message": "Abrir tudo em grupo existente…"
   },
   "openBookmarksInGroup": {
     "message": "Abrir tudo em novo grupo de abas"
@@ -928,7 +928,7 @@
     "message": "Recolher entradas de adicionar pasta"
   },
   "optionCollapseAddFolderMenuHint": {
-    "message": "将添加文件夹条目（文件夹行上的之前/之后/内部，书签行上的之前/之后）合并为一个子菜单条目。"
+    "message": "Combina as entradas de adicionar pasta (antes/depois/dentro em linhas de pastas, antes/depois em linhas de marcadores) numa única entrada de submenu."
   },
   "optionCollapseSortMenu": {
     "message": "Recolher as entradas de classificação em um submenu \"Classificar\""
@@ -1095,10 +1095,10 @@
     "message": "Mostrar abas de exibição abaixo da caixa de pesquisa"
   },
   "optionStagingEnabled": {
-    "message": "Ativar a área de staging"
+    "message": "Ativar a área de preparação"
   },
   "optionStagingEnabledHint": {
-    "message": "Quando desativado, esta visualização mantém apenas a lista de adicionados recentemente, e todos os botões ou entradas de menu de staging nas outras visualizações ficam ocultos."
+    "message": "Desligada, esta vista mantém apenas a lista de adições recentes, e todo botão ou item de menu de preparação nas outras vistas fica oculto."
   },
   "optionStatsEnabled": {
     "message": "Ativar estatísticas de visitas"
@@ -1199,15 +1199,15 @@
     }
   },
   "optionsStagingSection": {
-    "message": "Staging e adicionados recentemente"
+    "message": "Preparação e adições recentes"
   },
   "optionsStorageLocalTip": {
     "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting).",
-    "message": "仅存储在此设备上 — 不通过 Chrome 同步共享。"
+    "message": "Guardado apenas neste dispositivo — não é partilhado pela sincronização do Chrome."
   },
   "optionsStorageSyncTip": {
     "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting).",
-    "message": "通过您的 Chrome 账户同步 — 此设置可在您的设备间共享。"
+    "message": "Sincronizado pela sua conta Chrome — esta definição é partilhada entre os seus dispositivos."
   },
   "optionsVersion": {
     "message": "Versão do vBookmarks"
@@ -1471,7 +1471,7 @@
     "message": "Adicionados recentemente"
   },
   "recentStageAll": {
-    "message": "Preparar todos os recentes"
+    "message": "Enviar adições recentes para a preparação"
   },
   "recentStageGroup": {
     "message": "Enviar $t$ para a área de preparação",
@@ -1706,10 +1706,10 @@
     }
   },
   "stagingAdd": {
-    "message": "Enviar para staging"
+    "message": "Enviar para a preparação"
   },
   "stagingAdded": {
-    "message": "Enviado para staging"
+    "message": "Enviado para a preparação"
   },
   "stagingAddedSummary": {
     "message": "Adicionados $n$ item(ns); $m$ já estavam",
@@ -1723,7 +1723,7 @@
     }
   },
   "stagingAlready": {
-    "message": "Já está na área de preparação"
+    "message": "Já na área de preparação"
   },
   "stagingBucketFavAll": {
     "message": "Favoritar todos"
@@ -1732,10 +1732,10 @@
     "message": "Não marcados"
   },
   "stagingClear": {
-    "message": "Limpar área de espera"
+    "message": "Limpar a preparação"
   },
   "stagingClearConfirm": {
-    "message": "Limpar toda a área de espera? A árvore de marcadores não é alterada."
+    "message": "Limpar toda a área de preparação? A árvore de marcadores não é tocada."
   },
   "stagingClearConfirmOk": {
     "message": "Limpar"
@@ -1763,7 +1763,7 @@
     }
   },
   "stagingCount": {
-    "message": "$n$ em espera",
+    "message": "$n$ em preparação",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -1787,7 +1787,7 @@
     }
   },
   "stagingEmpty": {
-    "message": "Ainda nada em espera. Envie marcadores para cá de qualquer vista — o botão de avião numa linha ou o menu de clique direito — e depois organize e arquive em massa."
+    "message": "Nada em preparação ainda. Envie marcadores para cá de qualquer vista — o botão do avião numa linha, ou o menu de contexto — e depois organize e arquive-os em lote."
   },
   "stagingFav": {
     "message": "Favoritar"
@@ -2439,10 +2439,10 @@
     }
   },
   "tabRowStage": {
-    "message": "Enviar para palco"
+    "message": "Enviar para a preparação"
   },
   "tabgroupStageAll": {
-    "message": "Enviar grupo para palco"
+    "message": "Enviar grupo para a preparação"
   },
   "tabgroupStageConfirm": {
     "message": "Enviar $n$ abas para o palco?",

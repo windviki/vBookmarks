@@ -27,7 +27,7 @@
     "message": "Tilføj Mappe Før Dette"
   },
   "addSeparator": {
-    "message": "Tilføj Skillelinje"
+    "message": "Tilføj skillelinje"
   },
   "advancedOptions": {
     "message": "Avancerede Indstillinger"
@@ -421,7 +421,7 @@
     "message": "Proxy utilgængelig – ikke gemt"
   },
   "deadRescan": {
-    "message": "Genscan"
+    "message": "Genskan"
   },
   "deadResume": {
     "message": "Genoptag"
@@ -1723,7 +1723,7 @@
     }
   },
   "stagingAlready": {
-    "message": "Allerede i klaringsområdet"
+    "message": "Allerede i staging-områdett"
   },
   "stagingBucketFavAll": {
     "message": "Favorit alle"
@@ -1831,7 +1831,7 @@
     "message": "Opløs gruppe"
   },
   "stagingGroupDissolved": {
-    "message": "Gruppe opløst — elementer beholdt i klaringsområdet"
+    "message": "Gruppe opløst — elementer beholdt i staging-områdett"
   },
   "stagingGroupExpand": {
     "message": "Udvid gruppe"
@@ -1888,10 +1888,10 @@
     }
   },
   "stagingRemove": {
-    "message": "Fjern fra klaringsområde"
+    "message": "Fjern fra staging-området"
   },
   "stagingRemoved": {
-    "message": "Fjernet fra klaringsområdet"
+    "message": "Fjernet fra staging-områdett"
   },
   "stagingRemovedCount": {
     "message": "Fjernede $n$ element(er) fra klarområdet",

@@ -928,7 +928,7 @@
     "message": "Contraer entradas de añadir carpeta"
   },
   "optionCollapseAddFolderMenuHint": {
-    "message": "将添加文件夹条目（文件夹行上的之前/之后/内部，书签行上的之前/之后）合并为一个子菜单条目。"
+    "message": "Combina las entradas de añadir carpeta (antes/después/dentro en filas de carpetas, antes/después en filas de marcadores) en una sola entrada de submenú."
   },
   "optionCollapseSortMenu": {
     "message": "Contraer las opciones de ordenación en un submenú \"Ordenar…\""
@@ -1098,7 +1098,7 @@
     "message": "Activar el área de preparación"
   },
   "optionStagingEnabledHint": {
-    "message": "Mientras esté desactivada, esta vista solo muestra la lista de añadidos recientes y se ocultan todos los botones o entradas de menú de preparación en las demás vistas."
+    "message": "Mientras esté desactivada, esta vista conserva solo la lista de añadidos recientes, y todo botón o entrada de menú de preparación de las demás vistas se oculta."
   },
   "optionStatsEnabled": {
     "message": "Habilitar estadísticas de visitas"
@@ -1199,7 +1199,7 @@
     }
   },
   "optionsStagingSection": {
-    "message": "Área de preparación y añadidos recientes"
+    "message": "Preparación y añadidos recientes"
   },
   "optionsStorageLocalTip": {
     "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting).",
@@ -1471,7 +1471,7 @@
     "message": "Añadidos recientemente"
   },
   "recentStageAll": {
-    "message": "Preparar todos los recientes"
+    "message": "Enviar lo añadido recientemente a preparación"
   },
   "recentStageGroup": {
     "message": "Enviar $t$ al área de preparación",
@@ -1706,10 +1706,10 @@
     }
   },
   "stagingAdd": {
-    "message": "Enviar a staging"
+    "message": "Enviar a preparación"
   },
   "stagingAdded": {
-    "message": "Enviado a staging"
+    "message": "Enviado a preparación"
   },
   "stagingAddedSummary": {
     "message": "Se añadieron $n$ elemento(s); $m$ ya estaban en la zona",
@@ -1723,7 +1723,7 @@
     }
   },
   "stagingAlready": {
-    "message": "Ya está en la zona de preparación"
+    "message": "Ya está en el área de preparación"
   },
   "stagingBucketFavAll": {
     "message": "Marcar todos como favoritos"
@@ -1732,10 +1732,10 @@
     "message": "Sin marcar"
   },
   "stagingClear": {
-    "message": "Vaciar área de espera"
+    "message": "Vaciar preparación"
   },
   "stagingClearConfirm": {
-    "message": "¿Vaciar toda el área de espera? El árbol de marcadores no se toca."
+    "message": "¿Vaciar toda el área de preparación? El árbol de marcadores no se toca."
   },
   "stagingClearConfirmOk": {
     "message": "Borrar"
@@ -1763,7 +1763,7 @@
     }
   },
   "stagingCount": {
-    "message": "$n$ en espera",
+    "message": "$n$ en preparación",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -1787,7 +1787,7 @@
     }
   },
   "stagingEmpty": {
-    "message": "Aún no hay nada en espera. Envía marcadores aquí desde cualquier vista — con el botón de avión en una fila o el menú contextual — y luego organízalos y archívalos en lote."
+    "message": "Nada en preparación todavía. Envía marcadores aquí desde cualquier vista — el botón del avión de una fila, o el menú contextual — y organízalos y archívalos en lote."
   },
   "stagingFav": {
     "message": "Favorito"
@@ -1807,7 +1807,7 @@
     "message": "Del historial"
   },
   "stagingFull": {
-    "message": "La zona de preparación está llena: elimina algunos elementos primero"
+    "message": "El área de preparación está llena — quita antes algunos elementos"
   },
   "stagingGroupAssign": {
     "message": "Agrupar…"
@@ -1831,7 +1831,7 @@
     "message": "Disolver grupo"
   },
   "stagingGroupDissolved": {
-    "message": "Grupo disuelto: los elementos se conservan en la zona de preparación"
+    "message": "Grupo disuelto: los elementos se conservan en la área de preparación"
   },
   "stagingGroupExpand": {
     "message": "Expandir grupo"
@@ -1888,10 +1888,10 @@
     }
   },
   "stagingRemove": {
-    "message": "Eliminar de la zona de preparación"
+    "message": "Quitar del área de preparación"
   },
   "stagingRemoved": {
-    "message": "Eliminado de la zona de preparación"
+    "message": "Eliminado de la área de preparación"
   },
   "stagingRemovedCount": {
     "message": "Se quitaron $n$ elemento(s) del área de espera",
@@ -2439,10 +2439,10 @@
     }
   },
   "tabRowStage": {
-    "message": "Enviar a staging"
+    "message": "Enviar a preparación"
   },
   "tabgroupStageAll": {
-    "message": "Enviar grupo a staging"
+    "message": "Enviar el grupo a preparación"
   },
   "tabgroupStageConfirm": {
     "message": "¿Enviar $n$ pestañas a staging?",
@@ -2562,7 +2562,7 @@
     }
   },
   "viewRecent": {
-    "message": "Puesta en escena"
+    "message": "Preparación"
   },
   "viewSearch": {
     "message": "Búsqueda"

@@ -27,7 +27,7 @@
     "message": "添加資料夾到此之前"
   },
   "addSeparator": {
-    "message": "添加分隔符"
+    "message": "新增分隔線"
   },
   "advancedOptions": {
     "message": "進階設定"
@@ -185,7 +185,7 @@
     "message": "如果任一書籤URL含有以下字符串，將被顯示為分割條"
   },
   "customSeparatorTitleDescription": {
-    "message": "被用作分割條的書籤節點的标题"
+    "message": "被用作分隔線的書籤節點標題"
   },
   "customSeparatorUrlDescription": {
     "message": "被用作分割條的書籤節點的URL"
@@ -194,7 +194,7 @@
     "message": "定制CSS"
   },
   "customStylesDescription": {
-    "message": "注意：无CSS知識請勿冒險修改。推薦將代碼共享到 "
+    "message": "注意：無 CSS 知識請勿冒險修改。推薦將程式碼分享到 "
   },
   "cutBookmark": {
     "message": "剪下"
@@ -628,16 +628,16 @@
     "message": "忽略 http/https 差異"
   },
   "dupesKeepThis": {
-    "message": "保留这一个"
+    "message": "保留這一個"
   },
   "dupesKeeperSet": {
-    "message": "设为保留"
+    "message": "設為保留"
   },
   "dupesNone": {
     "message": "找不到重複項目"
   },
   "dupesPreviewSummary": {
-    "message": "$groups$ 组 · $count$ 个将被释放",
+    "message": "$groups$ 組 · $count$ 個將被釋出",
     "placeholders": {
       "count": {
         "content": "$2"
@@ -648,22 +648,22 @@
     }
   },
   "dupesRemoveRow": {
-    "message": "删除此副本"
+    "message": "刪除此副本"
   },
   "dupesRiskBanner": {
     "message": "去重功能會大量刪除重複書籤。套用前請先備份書籤。"
   },
   "dupesScopeAll": {
-    "message": "所有书签"
+    "message": "所有書籤"
   },
   "dupesScopeBar": {
-    "message": "仅书签栏"
+    "message": "僅書籤列"
   },
   "dupesStrategyBookmarkBar": {
-    "message": "保留书签栏中的那个"
+    "message": "保留書籤列中的那個"
   },
   "dupesStrategyMostVisited": {
-    "message": "保留最常访问的"
+    "message": "保留最常造訪的"
   },
   "dupesStrategyNewest": {
     "message": "保留最新的"
@@ -672,10 +672,10 @@
     "message": "保留最旧的"
   },
   "dupesStrategyShallowest": {
-    "message": "保留层次最浅的"
+    "message": "保留層次最淺的"
   },
   "dupesStrategyShortestTitle": {
-    "message": "保留标题最短的"
+    "message": "保留標題最短的"
   },
   "edit": {
     "message": "編輯 ..."
@@ -958,13 +958,13 @@
     "message": "關閉會在該處隱藏該提示；代理伺服器仍可在此設定，而已儲存的伺服器一律會在檢視中顯示其管理列。"
   },
   "optionDeadScanConcurrency": {
-    "message": "失效链接扫描并发数 (1-16)"
+    "message": "失效連結掃描並行數 (1-16)"
   },
   "optionDeadScanTimeout": {
-    "message": "失效链接扫描超时秒数 (2-30)"
+    "message": "失效連結掃描逾時秒數 (2-30)"
   },
   "optionFaviconBackup": {
-    "message": "备份时包含图标缓存"
+    "message": "備份時包含圖示快取"
   },
   "optionFaviconBackupHint": {
     "message": "也將增強的圖示快取（每個網站的資料，可能很大）打包到設定匯出/匯入中。這涵蓋即使關閉擷取時已快取的圖示。關閉可讓備份保持輕量；圖示反正會自動重新擷取。"
@@ -1101,7 +1101,7 @@
     "message": "關閉時，此檢視僅保留近期新增清單，其他檢視中的暫存按鈕或選單項目將全部隱藏。"
   },
   "optionStatsEnabled": {
-    "message": "启用访问统计"
+    "message": "啟用造訪統計"
   },
   "optionSyncRefreshInterval": {
     "message": "刷新間隔"
@@ -1234,25 +1234,25 @@
     "message": "清除重複書籤"
   },
   "paletteCmdGoDead": {
-    "message": "前往失效链接视图"
+    "message": "前往失效連結檢視"
   },
   "paletteCmdGoDupes": {
-    "message": "前往重复项视图"
+    "message": "前往重複項檢視"
   },
   "paletteCmdGoRecent": {
     "message": "切換到暫存/最近視圖"
   },
   "paletteCmdGoSearch": {
-    "message": "前往搜索视图"
+    "message": "前往搜尋檢視"
   },
   "paletteCmdGoStats": {
-    "message": "前往统计视图"
+    "message": "前往統計檢視"
   },
   "paletteCmdGoTabGroups": {
     "message": "前往分頁群組檢視"
   },
   "paletteCmdGoTree": {
-    "message": "前往树形视图"
+    "message": "前往樹狀檢視"
   },
   "paletteCmdLang": {
     "message": "切換語言…"
@@ -1267,7 +1267,7 @@
     "message": "新增資料夾…"
   },
   "paletteCmdOptions": {
-    "message": "开启选项页面"
+    "message": "開啟選項頁面"
   },
   "paletteCmdQuickAdd": {
     "message": "將目前分頁加入書籤"
@@ -1279,7 +1279,7 @@
     "message": "將視窗分頁儲存為資料夾"
   },
   "paletteCmdSearchInView": {
-    "message": "在搜索视图中搜寻 '$query$'",
+    "message": "在搜尋檢視中搜尋 '$query$'",
     "placeholders": {
       "query": {
         "content": "$1"
@@ -1519,16 +1519,16 @@
     "message": "不要再顯示"
   },
   "rowActionDelete": {
-    "message": "删除"
+    "message": "刪除"
   },
   "rowActionMark": {
-    "message": "标记为失效"
+    "message": "標記為失效"
   },
   "rowActionReveal": {
     "message": "在树中显示"
   },
   "rowActionUnmark": {
-    "message": "移除失效标记"
+    "message": "移除失效標記"
   },
   "save": {
     "message": "儲存"
@@ -1787,7 +1787,7 @@
     }
   },
   "stagingEmpty": {
-    "message": "尚未暂存任何项目。可從任何檢視將書籤傳送到這裡——使用列上的飛機按鈕或右鍵選單——然後批次整理與歸檔。"
+    "message": "尚未暫存任何項目。可從任何檢視將書籤傳送到這裡——使用列上的飛機按鈕或右鍵選單——然後批次整理與歸檔。"
   },
   "stagingFav": {
     "message": "加入最愛"
@@ -1819,13 +1819,13 @@
     "message": "收合群組"
   },
   "stagingGroupDelete": {
-    "message": "删除群组（含项目）"
+    "message": "刪除群組（含項目）"
   },
   "stagingGroupDeleteConfirm": {
-    "message": "删除群组「$1」？其 $2 个项目也会一并移出暂存区。"
+    "message": "刪除群組「$1」？其 $2 個項目也會一併移出暫存區。"
   },
   "stagingGroupDeleted": {
-    "message": "群组已删除 — 已移除 $1 个项目"
+    "message": "群組已刪除 — 已移除 $1 個項目"
   },
   "stagingGroupDissolve": {
     "message": "解散群組"
@@ -1954,7 +1954,7 @@
     }
   },
   "statsClearConfirm": {
-    "message": "清除 $count$ 个书签的访问统计资料？此动作无法还原。",
+    "message": "清除 $count$ 個書籤的造訪統計資料？此動作無法還原。",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -1962,13 +1962,13 @@
     }
   },
   "statsClearData": {
-    "message": "清除统计资料"
+    "message": "清除統計資料"
   },
   "statsDisabledHint": {
-    "message": "访问统计已关闭——可在选项→视图中启用"
+    "message": "造訪統計已關閉——可在選項→檢視中啟用"
   },
   "statsEmpty": {
-    "message": "统计数据会在您开启书签时逐步累积"
+    "message": "統計資料會在您開啟書籤時逐步累積"
   },
   "statsHistoryAdd": {
     "message": "加入書籤"
@@ -2015,7 +2015,7 @@
     "message": "依最近"
   },
   "statsVisitCount": {
-    "message": "已访问 $count$ 次",
+    "message": "已造訪 $count$ 次",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -2393,7 +2393,7 @@
     "message": "与浏览器同步折叠"
   },
   "tabGroupsSyncCollapseHint": {
-    "message": "勾选后，在此视图中折叠或展开群组也会更新浏览器标签页群组。默认关闭，因此视图折叠仅限本地。"
+    "message": "勾選後，在此檢視中摺疊或展開群組也會更新瀏覽器分頁群組。預設關閉，因此檢視摺疊僅限本機。"
   },
   "tabGroupsToolbarRefresh": {
     "message": "重新整理"
@@ -2545,7 +2545,7 @@
     "message": "停用"
   },
   "viewDupes": {
-    "message": "重复项"
+    "message": "重複項"
   },
   "viewEnable": {
     "message": "啟用"
@@ -2562,7 +2562,7 @@
     }
   },
   "viewRecent": {
-    "message": "暂存"
+    "message": "暫存"
   },
   "viewSearch": {
     "message": "搜尋"
@@ -2574,7 +2574,7 @@
     "message": "已經啟用"
   },
   "viewStats": {
-    "message": "统计"
+    "message": "統計"
   },
   "viewSwitchAnnounce": {
     "message": "$name$ 檢視",

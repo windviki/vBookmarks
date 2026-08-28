@@ -27,7 +27,7 @@
     "message": "Přidat Složku Před Toto"
   },
   "addSeparator": {
-    "message": "Přidat Oddělovač"
+    "message": "Přidat oddělovač"
   },
   "advancedOptions": {
     "message": "Pokročilé Možnosti"
@@ -928,7 +928,7 @@
     "message": "Sbalit položky přidání složky"
   },
   "optionCollapseAddFolderMenuHint": {
-    "message": "将添加文件夹条目（文件夹行上的前/后/内部，书签行上的前/后）合并为一个子菜单条目。"
+    "message": "Sloučí položky přidání složky (před/za/uvnitř na řádcích složek, před/za na řádcích záložek) do jediné položky podnabídky."
   },
   "optionCollapseSortMenu": {
     "message": "Sbalit položky řazení do jedné podnabídky \"Seřadit…\""
@@ -1203,11 +1203,11 @@
   },
   "optionsStorageLocalTip": {
     "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting).",
-    "message": "仅存储在此设备上 — 不通过 Chrome 同步共享。"
+    "message": "Uloženo pouze v tomto zařízení — nesdílí se přes synchronizaci Chrome."
   },
   "optionsStorageSyncTip": {
     "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting).",
-    "message": "通过您的 Chrome 账户同步 — 此设置会在您的设备间共享。"
+    "message": "Synchronizováno přes váš účet Chrome — toto nastavení je sdíleno mezi vašimi zařízeními."
   },
   "optionsVersion": {
     "message": "Verze vBookmarks"

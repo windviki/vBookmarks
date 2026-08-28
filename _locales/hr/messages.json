@@ -871,7 +871,7 @@
     "message": "Otvori sve oznake"
   },
   "openBookmarksInExistingGroup": {
-    "message": "Otvori sve u postojećoj grupi kartica…"
+    "message": "Otvori sve u postojećoj grupi…"
   },
   "openBookmarksInGroup": {
     "message": "Otvori sve u novoj grupi kartica"
@@ -1095,10 +1095,10 @@
     "message": "Prikaži kartice prikaza ispod okvira za pretraživanje"
   },
   "optionStagingEnabled": {
-    "message": "Omogući područje pripreme"
+    "message": "Omogući pripremno područje"
   },
   "optionStagingEnabledHint": {
-    "message": "Kada je isključeno, ovaj prikaz zadržava samo popis nedavno dodanih, a svi gumbi ili stavke izbornika za pripremu u ostalim prikazima se skrivaju."
+    "message": "Dok je isključeno, ovaj prikaz zadržava samo popis nedavno dodanih; svaki gumb ili stavka izbornika pripreme u ostalim prikazima skriva se."
   },
   "optionStatsEnabled": {
     "message": "Omogući statistiku posjeta"
@@ -1199,7 +1199,7 @@
     }
   },
   "optionsStagingSection": {
-    "message": "Pripravljanje i nedavno dodano"
+    "message": "Priprema i nedavno dodano"
   },
   "optionsStorageLocalTip": {
     "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting).",
@@ -1471,7 +1471,7 @@
     "message": "Nedavno dodano"
   },
   "recentStageAll": {
-    "message": "Pripremi sve nedavno dodane"
+    "message": "Pošalji nedavno dodane u pripremno područje"
   },
   "recentStageGroup": {
     "message": "Pošalji $t$ u pripremno područje",
@@ -1706,7 +1706,7 @@
     }
   },
   "stagingAdd": {
-    "message": "Pošalji u pripremu"
+    "message": "Pošalji u pripremno područje"
   },
   "stagingAdded": {
     "message": "Poslano u pripremu"
@@ -1735,7 +1735,7 @@
     "message": "Očisti pripremu"
   },
   "stagingClearConfirm": {
-    "message": "Očistiti cijelo područje pripreme? Stablo oznaka se ne dira."
+    "message": "Očistiti cijelo pripremno područje? Stablo zabilješki se ne dira."
   },
   "stagingClearConfirmOk": {
     "message": "Očisti"
@@ -1752,7 +1752,7 @@
     }
   },
   "stagingConfirmFolderOk": {
-    "message": "Pozornica"
+    "message": "Priprema"
   },
   "stagingCopyDone": {
     "message": "Kopirano $n$ stavki",
@@ -1763,7 +1763,7 @@
     }
   },
   "stagingCount": {
-    "message": "$n$ pripremljeno",
+    "message": "$n$ u pripremi",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -1787,7 +1787,7 @@
     }
   },
   "stagingEmpty": {
-    "message": "Još ništa nije pripremljeno. Pošaljite ovdje oznake iz bilo kojeg prikaza — gumb aviona na retku ili izbornik desnim klikom — zatim ih organizirajte i pohranite u grupi."
+    "message": "Još ništa u pripremi. Pošaljite zabilješke ovamo iz bilo kojeg prikaza — gumb aviona na retku ili kontekstni izbornik — a zatim ih masovno rasporedite i posložite."
   },
   "stagingFav": {
     "message": "Favorit"
@@ -2439,10 +2439,10 @@
     }
   },
   "tabRowStage": {
-    "message": "Pošalji u pripremu"
+    "message": "Pošalji u pripremno područje"
   },
   "tabgroupStageAll": {
-    "message": "Pošalji grupu u pripremu"
+    "message": "Pošalji grupu u pripremno područje"
   },
   "tabgroupStageConfirm": {
     "message": "Poslati $n$ kartica u pripremu?",
@@ -2562,7 +2562,7 @@
     }
   },
   "viewRecent": {
-    "message": "Pozornica"
+    "message": "Priprema"
   },
   "viewSearch": {
     "message": "Pretraživanje"

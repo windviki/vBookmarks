@@ -880,7 +880,7 @@
     "message": "باز کردن همه در گروه برگه جدید…"
   },
   "openBookmarksIncognitoWindow": {
-    "message": "باز کردن همه نشانک‌ها در پنجره ناشناس"
+    "message": "باز کردن همه در پنجره ناشناس"
   },
   "openBookmarksNewWindow": {
     "message": "باز کردن همه نشانک‌ها در پنجره جدید"
@@ -1095,10 +1095,10 @@
     "message": "نمایش تب‌های نما در زیر کادر جستجو"
   },
   "optionStagingEnabled": {
-    "message": "فعالسازی ناحیه مرحلهبندی"
+    "message": "فعال‌سازی منطقه موقت"
   },
   "optionStagingEnabledHint": {
-    "message": "در حالت خاموش، این نما فقط فهرست موارد اخیراً اضافهشده را نگه میدارد و تمام دکمهها یا گزینههای منوی مرحلهبندی در سایر نماها پنهان میشوند."
+    "message": "تا وقتی خاموش است، این نمایش فقط فهرست تازه‌اضافه‌شده‌ها را نگه می‌دارد و هر دکمه یا مورد منوی منطقه موقت در نمایش‌های دیگر پنهان می‌شود."
   },
   "optionStatsEnabled": {
     "message": "فعال‌سازی آمار بازدید"
@@ -1199,7 +1199,7 @@
     }
   },
   "optionsStagingSection": {
-    "message": "مرحلهبندی و موارد اخیراً اضافهشده"
+    "message": "منطقه موقت و تازه‌اضافه‌شده‌ها"
   },
   "optionsStorageLocalTip": {
     "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting).",
@@ -1471,7 +1471,7 @@
     "message": "اخیراً اضافهشده"
   },
   "recentStageAll": {
-    "message": "مرحلهبندی همه موارد اخیر"
+    "message": "ارسال تازه‌اضافه‌شده‌ها به منطقه موقت"
   },
   "recentStageGroup": {
     "message": "ارسال $t$ به منطقه موقت",
@@ -1706,10 +1706,10 @@
     }
   },
   "stagingAdd": {
-    "message": "ارسال به مرحله"
+    "message": "ارسال به منطقه موقت"
   },
   "stagingAdded": {
-    "message": "به مرحله ارسال شد"
+    "message": "به منطقه موقت ارسال شد"
   },
   "stagingAddedSummary": {
     "message": "$n$ مورد اضافه شد؛ $m$ مورد از قبل موجود بود",
@@ -1732,10 +1732,10 @@
     "message": "نشانهنشده"
   },
   "stagingClear": {
-    "message": "پاک‌سازی ناحیه انتظار"
+    "message": "پاک کردن منطقه موقت"
   },
   "stagingClearConfirm": {
-    "message": "کل ناحیه انتظار پاک شود؟ درخت نشانک‌ها تغییری نمی‌کند."
+    "message": "کل منطقه موقت پاک شود؟ به درخت نشانک‌ها دست نمی‌خورد."
   },
   "stagingClearConfirmOk": {
     "message": "پاک کردن"
@@ -1744,7 +1744,7 @@
     "message": "ناحیه انتظار پاک شد"
   },
   "stagingConfirmFolder": {
-    "message": "$n$ نشانک از این پوشه مرحلهبندی شود؟",
+    "message": "$n$ نشانک از این پوشه منطقه موقت شود؟",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -1752,7 +1752,7 @@
     }
   },
   "stagingConfirmFolderOk": {
-    "message": "مرحله"
+    "message": "منطقه موقت"
   },
   "stagingCopyDone": {
     "message": "$n$ مورد کپی شد",
@@ -1763,7 +1763,7 @@
     }
   },
   "stagingCount": {
-    "message": "$n$ در انتظار",
+    "message": "$n$ در منطقه موقت",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -1787,7 +1787,7 @@
     }
   },
   "stagingEmpty": {
-    "message": "هنوز چیزی مرحلهبندی نشده است. نشانکها را از هر نمای — دکمه هواپیما در یک ردیف یا منوی راستکلیک — به اینجا بفرستید، سپس آنها را بهصورت گروهی سازماندهی و بایگانی کنید."
+    "message": "هنوز چیزی در منطقه موقت نیست. نشانک‌ها را از هر نمایشی به اینجا بفرستید — دکمه هواپیمای روی ردیف یا منوی راست‌کلیک — سپس آن‌ها را دسته‌جمعی سازماندهی و بایگانی کنید."
   },
   "stagingFav": {
     "message": "نشانهگذاری"
@@ -1801,13 +1801,13 @@
     }
   },
   "stagingFolderEmpty": {
-    "message": "این پوشه نشانهای برای مرحلهبندی ندارد"
+    "message": "این پوشه نشانهای برای منطقه موقت ندارد"
   },
   "stagingFromHistory": {
     "message": "از تاریخچه"
   },
   "stagingFull": {
-    "message": "منطقه موقت پر است — ابتدا برخی موارد را حذف کنید"
+    "message": "منطقه موقت پر است — ابتدا چند مورد را حذف کنید"
   },
   "stagingGroupAssign": {
     "message": "گروه…"
@@ -2439,10 +2439,10 @@
     }
   },
   "tabRowStage": {
-    "message": "ارسال به مرحله"
+    "message": "ارسال به منطقه موقت"
   },
   "tabgroupStageAll": {
-    "message": "ارسال گروه به مرحله"
+    "message": "ارسال گروه به منطقه موقت"
   },
   "tabgroupStageConfirm": {
     "message": "ارسال $n$ برگه به مرحله؟",
@@ -2562,7 +2562,7 @@
     }
   },
   "viewRecent": {
-    "message": "مرحلهبندی"
+    "message": "منطقه موقت"
   },
   "viewSearch": {
     "message": "جستجو"

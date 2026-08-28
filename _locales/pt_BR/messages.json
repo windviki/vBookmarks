@@ -51,7 +51,7 @@
     "message": "v4.1.0 adiciona a visualização de grupos de abas e a área de preparação: gerencie as abas de cada janela ao lado de seus favoritos e colete favoritos de qualquer lugar em uma bancada de preparação para organização em massa."
   },
   "announceV410Title": {
-    "message": "v4.1.0 的新功能"
+    "message": "Novidades na v4.1.0"
   },
   "bookmarkFolderNoFolders": {
     "message": "Nenhuma pasta de favoritos"
@@ -925,7 +925,7 @@
     "message": "Recolher entradas de adicionar pasta"
   },
   "optionCollapseAddFolderMenuHint": {
-    "message": "将添加文件夹的条目（文件夹行上的前/后/内部，书签行上的前/后）合并为一个子菜单条目。"
+    "message": "Combina as entradas de adicionar pasta (antes/depois/dentro em linhas de pastas, antes/depois em linhas de favoritos) em uma única entrada de submenu."
   },
   "optionCollapseSortMenu": {
     "message": "Recolher os itens de classificação em um submenu \"Classificar\""
@@ -1092,10 +1092,10 @@
     "message": "Mostrar abas de visualização abaixo da caixa de pesquisa"
   },
   "optionStagingEnabled": {
-    "message": "Ativar a área de staging"
+    "message": "Ativar a área de preparação"
   },
   "optionStagingEnabledHint": {
-    "message": "Quando desativado, esta visualização mantém apenas a lista de adicionados recentemente, e todos os botões ou entradas de menu de staging nas outras visualizações ficam ocultos."
+    "message": "Desligada, esta visualização mantém apenas a lista de adições recentes, e todo botão ou item de menu de preparação nas outras visualizações fica oculto."
   },
   "optionStatsEnabled": {
     "message": "Ativar estatísticas de visitas"
@@ -1196,7 +1196,7 @@
     }
   },
   "optionsStagingSection": {
-    "message": "Staging e adicionados recentemente"
+    "message": "Preparação e adições recentes"
   },
   "optionsStorageLocalTip": {
     "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting).",
@@ -1468,7 +1468,7 @@
     "message": "Adicionados recentemente"
   },
   "recentStageAll": {
-    "message": "Preparar todos os recentes"
+    "message": "Enviar adições recentes para a preparação"
   },
   "recentStageGroup": {
     "message": "Enviar $t$ para a área de preparação",
@@ -1702,10 +1702,10 @@
     }
   },
   "stagingAdd": {
-    "message": "Enviar para staging"
+    "message": "Enviar para a preparação"
   },
   "stagingAdded": {
-    "message": "Enviado para staging"
+    "message": "Enviado para a preparação"
   },
   "stagingAddedSummary": {
     "message": "$n$ item(ns) adicionado(s); $m$ já estavam",
@@ -1719,7 +1719,7 @@
     }
   },
   "stagingAlready": {
-    "message": "Já está na área de preparação"
+    "message": "Já na área de preparação"
   },
   "stagingBucketFavAll": {
     "message": "Favoritar todos"
@@ -1728,10 +1728,10 @@
     "message": "Não marcados"
   },
   "stagingClear": {
-    "message": "Limpar área"
+    "message": "Limpar a preparação"
   },
   "stagingClearConfirm": {
-    "message": "Limpar toda a área? A árvore de favoritos não é alterada."
+    "message": "Limpar toda a área de preparação? A árvore de favoritos não é tocada."
   },
   "stagingClearConfirmOk": {
     "message": "Limpar"
@@ -1759,7 +1759,7 @@
     }
   },
   "stagingCount": {
-    "message": "$n$ na área",
+    "message": "$n$ em preparação",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -1783,7 +1783,7 @@
     }
   },
   "stagingEmpty": {
-    "message": "Nada em espera ainda. Envie marcadores para cá de qualquer visualização — o botão de avião em uma linha ou o menu de clique direito — e depois organize e arquive em lote."
+    "message": "Nada em preparação ainda. Envie favoritos para cá de qualquer visualização — o botão do avião numa linha, ou o menu de contexto — e depois organize e arquive-os em lote."
   },
   "stagingFav": {
     "message": "Favoritar"
@@ -2435,10 +2435,10 @@
     }
   },
   "tabRowStage": {
-    "message": "Enviar para palco"
+    "message": "Enviar para a preparação"
   },
   "tabgroupStageAll": {
-    "message": "Enviar grupo para palco"
+    "message": "Enviar grupo para a preparação"
   },
   "tabgroupStageConfirm": {
     "message": "Enviar $n$ abas para o palco?",

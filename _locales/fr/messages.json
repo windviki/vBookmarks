@@ -48,7 +48,7 @@
     "message": "Nouveautés de v4.0.8"
   },
   "announceV410Text": {
-    "message": "v4.1.0 新增标签组视图和暂存区：在书签旁管理每个窗口的标签页，并将任意位置的书签收集到暂存工作台进行批量整理。"
+    "message": "v4.1.0 ajoute la vue Groupes d’onglets et la zone de préparation : gérez les onglets de chaque fenêtre à côté de vos favoris, et rassemblez des favoris venus de partout dans une zone de préparation pour les organiser en lot."
   },
   "announceV410Title": {
     "message": "Nouveautés de v4.1.0"
@@ -838,7 +838,7 @@
     "message": "Récents"
   },
   "general": {
-    "message": "General"
+    "message": "Général"
   },
   "groupCopyToFolder": {
     "message": "Copier dans un dossier…"
@@ -871,7 +871,7 @@
     "message": "Ouvrir tous les favoris"
   },
   "openBookmarksInExistingGroup": {
-    "message": "Tout ouvrir dans un groupe existant…"
+    "message": "Tout ouvrir dans un groupe…"
   },
   "openBookmarksInGroup": {
     "message": "Tout ouvrir dans un groupe"
@@ -928,7 +928,7 @@
     "message": "Réduire les entrées d'ajout de dossier"
   },
   "optionCollapseAddFolderMenuHint": {
-    "message": "将添加文件夹条目（文件夹行上的之前/之后/内部，书签行上的之前/之后）合并为一个子菜单条目。"
+    "message": "Fusionne les entrées d’ajout de dossier (avant/après/à l’intérieur sur les lignes de dossiers, avant/après sur les lignes de favoris) en une seule entrée de sous-menu."
   },
   "optionCollapseSortMenu": {
     "message": "Réduire les entrées de tri en un sous-menu «Trier…»"
@@ -1098,7 +1098,7 @@
     "message": "Activer la zone de préparation"
   },
   "optionStagingEnabledHint": {
-    "message": "Lorsque désactivé, cette vue ne conserve que la liste des ajouts récents, et tous les boutons ou entrées de menu de préparation des autres vues sont masqués."
+    "message": "Désactivée, cette vue ne garde que la liste des derniers ajouts ; tout bouton ou entrée de menu de préparation des autres vues est masqué."
   },
   "optionStatsEnabled": {
     "message": "Activer les statistiques de visites"
@@ -1199,15 +1199,15 @@
     }
   },
   "optionsStagingSection": {
-    "message": "Préparation et ajouts récents"
+    "message": "Préparation et derniers ajouts"
   },
   "optionsStorageLocalTip": {
     "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting).",
-    "message": "仅存储在此设备上 — 不通过 Chrome 同步共享。"
+    "message": "Stocké sur cet appareil uniquement — non partagé via la synchronisation Chrome."
   },
   "optionsStorageSyncTip": {
     "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting).",
-    "message": "通过您的 Chrome 账户同步 — 此设置可在您的设备间共享。"
+    "message": "Synchronisé via votre compte Chrome — ce réglage est partagé entre vos appareils."
   },
   "optionsVersion": {
     "message": "Version de vBookmarks"
@@ -1471,7 +1471,7 @@
     "message": "Ajoutés récemment"
   },
   "recentStageAll": {
-    "message": "Mettre en staging tous les récents"
+    "message": "Envoyer les derniers ajouts en zone de préparation"
   },
   "recentStageGroup": {
     "message": "Envoyer $t$ vers la zone de préparation",
@@ -1706,13 +1706,13 @@
     }
   },
   "stagingAdd": {
-    "message": "Envoyer en staging"
+    "message": "Envoyer en zone de préparation"
   },
   "stagingAdded": {
-    "message": "Envoyé en staging"
+    "message": "Envoyé en zone de préparation"
   },
   "stagingAddedSummary": {
-    "message": "$n$ élément(s) ajouté(s) ; $m$ déjà en staging",
+    "message": "$n$ élément(s) ajouté(s) ; $m$ déjà en zone de préparation",
     "placeholders": {
       "m": {
         "content": "$2"
@@ -1723,7 +1723,7 @@
     }
   },
   "stagingAlready": {
-    "message": "Déjà dans la zone de staging"
+    "message": "Déjà dans la zone de préparation"
   },
   "stagingBucketFavAll": {
     "message": "Tout mettre en favori"
@@ -1732,10 +1732,10 @@
     "message": "Non mis en favori"
   },
   "stagingClear": {
-    "message": "Vider la zone d'attente"
+    "message": "Vider la zone de préparation"
   },
   "stagingClearConfirm": {
-    "message": "Vider toute la zone d'attente ? L'arborescence des signets n'est pas touchée."
+    "message": "Vider toute la zone de préparation ? L’arborescence des favoris n’est pas touchée."
   },
   "stagingClearConfirmOk": {
     "message": "Effacer"
@@ -1744,7 +1744,7 @@
     "message": "Zone d'attente vidée"
   },
   "stagingConfirmFolder": {
-    "message": "Mettre $n$ signets de ce dossier en staging ?",
+    "message": "Mettre $n$ signets de ce dossier en zone de préparation ?",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -1763,7 +1763,7 @@
     }
   },
   "stagingCount": {
-    "message": "$n$ en attente",
+    "message": "$n$ en préparation",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -1787,7 +1787,7 @@
     }
   },
   "stagingEmpty": {
-    "message": "暂存区暂无内容。可从任意视图将书签发送至此——点击行上的飞机按钮或使用右键菜单——然后批量整理归档。"
+    "message": "Rien en préparation pour l’instant. Envoyez des favoris ici depuis n’importe quelle vue — le bouton avion d’une ligne, ou le menu contextuel — puis organisez et rangez-les en lot."
   },
   "stagingFav": {
     "message": "Favori"
@@ -1801,13 +1801,13 @@
     }
   },
   "stagingFolderEmpty": {
-    "message": "Ce dossier ne contient aucun signet à mettre en staging"
+    "message": "Ce dossier ne contient aucun signet à mettre en zone de préparation"
   },
   "stagingFromHistory": {
     "message": "Depuis l'historique"
   },
   "stagingFull": {
-    "message": "La zone de staging est pleine — retirez d'abord des éléments"
+    "message": "La zone de préparation est pleine — retirez d’abord quelques éléments"
   },
   "stagingGroupAssign": {
     "message": "Groupe…"
@@ -1822,7 +1822,7 @@
     "message": "Supprimer le groupe (avec éléments)"
   },
   "stagingGroupDeleteConfirm": {
-    "message": "Supprimer le groupe \"$1\" ? Ses $2 élément(s) quitteront aussi la zone de staging."
+    "message": "Supprimer le groupe \"$1\" ? Ses $2 élément(s) quitteront aussi la zone de préparation."
   },
   "stagingGroupDeleted": {
     "message": "Groupe supprimé — $1 élément(s) retiré(s)"
@@ -1831,7 +1831,7 @@
     "message": "Dissoudre le groupe"
   },
   "stagingGroupDissolved": {
-    "message": "Groupe dissous — les éléments sont conservés dans la zone de staging"
+    "message": "Groupe dissous — les éléments sont conservés dans la zone de préparation"
   },
   "stagingGroupExpand": {
     "message": "Développer le groupe"
@@ -1888,10 +1888,10 @@
     }
   },
   "stagingRemove": {
-    "message": "Retirer de la zone de staging"
+    "message": "Retirer de la zone de préparation"
   },
   "stagingRemoved": {
-    "message": "Retiré de la zone de staging"
+    "message": "Retiré de la zone de préparation"
   },
   "stagingRemovedCount": {
     "message": "$n$ élément(s) retiré(s) de la zone d'attente",
@@ -2439,10 +2439,10 @@
     }
   },
   "tabRowStage": {
-    "message": "Envoyer en staging"
+    "message": "Envoyer en zone de préparation"
   },
   "tabgroupStageAll": {
-    "message": "Envoyer le groupe en staging"
+    "message": "Envoyer le groupe en préparation"
   },
   "tabgroupStageConfirm": {
     "message": "Envoyer $n$ onglets en staging ?",
@@ -2562,7 +2562,7 @@
     }
   },
   "viewRecent": {
-    "message": "Mise en scène"
+    "message": "Préparation"
   },
   "viewSearch": {
     "message": "Recherche"

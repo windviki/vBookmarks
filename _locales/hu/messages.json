@@ -871,7 +871,7 @@
     "message": "Összes Könyvjelző Megnyitása"
   },
   "openBookmarksInExistingGroup": {
-    "message": "Összes megnyitása meglévő lapcsoportban…"
+    "message": "Összes megnyitása csoportban…"
   },
   "openBookmarksInGroup": {
     "message": "Megnyitás új lapcsoportban"
@@ -1095,10 +1095,10 @@
     "message": "Nézetfülek megjelenítése a keresőmező alatt"
   },
   "optionStagingEnabled": {
-    "message": "Staging terület engedélyezése"
+    "message": "Előkészítő terület engedélyezése"
   },
   "optionStagingEnabledHint": {
-    "message": "Kikapcsolva ez a nézet csak a legutóbb hozzáadott listát tartja meg, és a többi nézetben minden staging gomb vagy menüpont elrejtve jelenik meg."
+    "message": "Kikapcsolva ez a nézet csak a nemrég hozzáadottak listáját tartja; minden előkészítő gomb vagy menüelem a többi nézetben elrejt."
   },
   "optionStatsEnabled": {
     "message": "Látogatási statisztikák engedélyezése"
@@ -1199,7 +1199,7 @@
     }
   },
   "optionsStagingSection": {
-    "message": "Staging és legutóbb hozzáadottak"
+    "message": "Előkészítés és nemrég hozzáadottak"
   },
   "optionsStorageLocalTip": {
     "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting).",
@@ -1471,10 +1471,10 @@
     "message": "Legutóbb hozzáadva"
   },
   "recentStageAll": {
-    "message": "Összes újonnan hozzáadott gyűjtése"
+    "message": "Nemrég hozzáadottak küldése az előkészítő területre"
   },
   "recentStageGroup": {
-    "message": "Küldés a $t$ előkészítő területre",
+    "message": "$t$ küldése az előkészítő területre",
     "placeholders": {
       "t": {
         "content": "$1"
@@ -1706,10 +1706,10 @@
     }
   },
   "stagingAdd": {
-    "message": "Küldés a várólistára"
+    "message": "Küldés az előkészítő területre"
   },
   "stagingAdded": {
-    "message": "Elküldve a várólistára"
+    "message": "Elküldve a az előkészítő területre"
   },
   "stagingAddedSummary": {
     "message": "$n$ elem hozzáadva; $m$ már gyűjtőben",
@@ -1723,7 +1723,7 @@
     }
   },
   "stagingAlready": {
-    "message": "Már a gyűjtőben van"
+    "message": "Már az előkészítő területen van"
   },
   "stagingBucketFavAll": {
     "message": "Összes kedvencnek jelölése"
@@ -1732,7 +1732,7 @@
     "message": "Nem könyvjelzőzött"
   },
   "stagingClear": {
-    "message": "Előkészítő törlése"
+    "message": "Előkészítő terület törlése"
   },
   "stagingClearConfirm": {
     "message": "Törli a teljes előkészítő területet? A könyvjelzőfa nem érintett."
@@ -1787,7 +1787,7 @@
     }
   },
   "stagingEmpty": {
-    "message": "Még nincs semmi előkészítve. Küldjön ide könyvjelzőket bármely nézetből — a sorban lévő repülő gombbal vagy a jobb egérgombos menüvel — majd rendezze és helyezze el őket tömegesen."
+    "message": "Még nincs semmi előkészítve. Küldjön könyvjelzőket ide bármelyik nézetből — a sor repülőgombjával vagy a jobb kattintásos menüből —, majd rendezze és rendezze_tárolja őket tömegesen."
   },
   "stagingFav": {
     "message": "Kedvenc"
@@ -1807,7 +1807,7 @@
     "message": "Előzményekből"
   },
   "stagingFull": {
-    "message": "A gyűjtő megtelt – előbb távolítson el néhány elemet"
+    "message": "Az előkészítő terület megtelt — előbb távolítson el néhány elemet"
   },
   "stagingGroupAssign": {
     "message": "Csoport…"
@@ -1831,7 +1831,7 @@
     "message": "Csoport feloldása"
   },
   "stagingGroupDissolved": {
-    "message": "Csoport feloldva – az elemek a gyűjtőben maradtak"
+    "message": "Csoport feloldva – az elemek az előkészítő területben maradtak"
   },
   "stagingGroupExpand": {
     "message": "Csoport kibontása"
@@ -1888,10 +1888,10 @@
     }
   },
   "stagingRemove": {
-    "message": "Eltávolítás a gyűjtőből"
+    "message": "Eltávolítás az előkészítőből"
   },
   "stagingRemoved": {
-    "message": "Eltávolítva a gyűjtőből"
+    "message": "Eltávolítva a az előkészítő területről"
   },
   "stagingRemovedCount": {
     "message": "$n$ elem eltávolítva az előkészítő területről",
@@ -2439,10 +2439,10 @@
     }
   },
   "tabRowStage": {
-    "message": "Küldés a várólistára"
+    "message": "Küldés az előkészítő területre"
   },
   "tabgroupStageAll": {
-    "message": "Csoport küldése a várólistára"
+    "message": "Csoport küldése előkészítőbe"
   },
   "tabgroupStageConfirm": {
     "message": "Küldjük a(z) $n$ lapot a várólistára?",
@@ -2562,7 +2562,7 @@
     }
   },
   "viewRecent": {
-    "message": "Staging"
+    "message": "Előkészítés"
   },
   "viewSearch": {
     "message": "Keresés"

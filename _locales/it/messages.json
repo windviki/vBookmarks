@@ -27,10 +27,10 @@
     "message": "Aggiungi cartella prima di questo"
   },
   "addSeparator": {
-    "message": "Add Separator"
+    "message": "Aggiungi separatore"
   },
   "advancedOptions": {
-    "message": "Advanced Options"
+    "message": "Opzioni avanzate"
   },
   "announceDismiss": {
     "message": "Chiudi"
@@ -48,7 +48,7 @@
     "message": "Novità nella v4.0.8"
   },
   "announceV410Text": {
-    "message": "v4.1.0 aggiunge la vista Gruppi di schede e l'Area di staging: gestisci le schede di ogni finestra accanto ai segnalibri e raccogli segnalibri da qualsiasi luogo in un'area di lavoro per organizzazioni in blocco."
+    "message": "v4.1.0 aggiunge la vista Gruppi di schede e l'Area di preparazione: gestisci le schede di ogni finestra accanto ai segnalibri e raccogli segnalibri da qualsiasi luogo in un'area di lavoro per organizzazioni in blocco."
   },
   "announceV410Title": {
     "message": "Novità in v4.1.0"
@@ -838,7 +838,7 @@
     "message": "Recenti"
   },
   "general": {
-    "message": "Impostazioni generali"
+    "message": "Generale"
   },
   "groupCopyToFolder": {
     "message": "Copia in cartella…"
@@ -1095,10 +1095,10 @@
     "message": "Mostra schede vista sotto la casella di ricerca"
   },
   "optionStagingEnabled": {
-    "message": "Abilita l'area di staging"
+    "message": "Abilita l’area di preparazione"
   },
   "optionStagingEnabledHint": {
-    "message": "Se disattivata, questa vista mostra solo l'elenco dei recenti e tutti i pulsanti o le voci di menu di staging nelle altre viste vengono nascosti."
+    "message": "Se disattivata, questa vista mantiene solo l’elenco degli ultimi aggiunti, e ogni pulsante o voce di menu di preparazione nelle altre viste viene nascosto."
   },
   "optionStatsEnabled": {
     "message": "Abilita statistiche di visita"
@@ -1199,7 +1199,7 @@
     }
   },
   "optionsStagingSection": {
-    "message": "Area di staging e aggiunti di recente"
+    "message": "Preparazione e ultimi aggiunti"
   },
   "optionsStorageLocalTip": {
     "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting).",
@@ -1471,10 +1471,10 @@
     "message": "Aggiunti di recente"
   },
   "recentStageAll": {
-    "message": "Metti in staging tutti i recenti"
+    "message": "Invia gli aggiunti di recente in preparazione"
   },
   "recentStageGroup": {
-    "message": "Invia $t$ all'area di staging",
+    "message": "Invia $t$ nell’area di preparazione",
     "placeholders": {
       "t": {
         "content": "$1"
@@ -1706,13 +1706,13 @@
     }
   },
   "stagingAdd": {
-    "message": "Invia a staging"
+    "message": "Invia in preparazione"
   },
   "stagingAdded": {
-    "message": "Inviato a staging"
+    "message": "Inviato a preparazione"
   },
   "stagingAddedSummary": {
-    "message": "Aggiunti $n$ elemento/i; $m$ già in staging",
+    "message": "Aggiunti $n$ elemento/i; $m$ già in preparazione",
     "placeholders": {
       "m": {
         "content": "$2"
@@ -1723,7 +1723,7 @@
     }
   },
   "stagingAlready": {
-    "message": "Già nell'area di staging"
+    "message": "Già nell’area di preparazione"
   },
   "stagingBucketFavAll": {
     "message": "Aggiungi tutti ai preferiti"
@@ -1732,10 +1732,10 @@
     "message": "Non salvati"
   },
   "stagingClear": {
-    "message": "Svuota area di attesa"
+    "message": "Svuota la preparazione"
   },
   "stagingClearConfirm": {
-    "message": "Svuotare l'intera area di attesa? L'albero dei segnalibri non verrà toccato."
+    "message": "Svuotare tutta l’area di preparazione? L’albero dei segnalibri non viene toccato."
   },
   "stagingClearConfirmOk": {
     "message": "Cancella"
@@ -1744,7 +1744,7 @@
     "message": "Area di attesa svuotata"
   },
   "stagingConfirmFolder": {
-    "message": "Mettere in staging $n$ segnalibri da questa cartella?",
+    "message": "Mettere in preparazione $n$ segnalibri da questa cartella?",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -1763,7 +1763,7 @@
     }
   },
   "stagingCount": {
-    "message": "$n$ in attesa",
+    "message": "$n$ in preparazione",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -1787,7 +1787,7 @@
     }
   },
   "stagingEmpty": {
-    "message": "Nessun elemento in coda. Invia qui i segnalibri da qualsiasi vista — con il pulsante aereo su una riga o il menu contestuale — poi organizzali e archiviali in blocco."
+    "message": "Niente in preparazione per ora. Invia qui segnalibri da qualsiasi vista — il pulsante aereo di una riga, o il menu contestuale — quindi organizzali e archiviali in blocco."
   },
   "stagingFav": {
     "message": "Preferito"
@@ -1801,13 +1801,13 @@
     }
   },
   "stagingFolderEmpty": {
-    "message": "Questa cartella non ha segnalibri da mettere in staging"
+    "message": "Questa cartella non ha segnalibri da mettere in preparazione"
   },
   "stagingFromHistory": {
     "message": "Dalla cronologia"
   },
   "stagingFull": {
-    "message": "L'area di staging è piena — rimuovi alcuni elementi prima"
+    "message": "L’area di preparazione è piena — rimuovi prima alcuni elementi"
   },
   "stagingGroupAssign": {
     "message": "Gruppo…"
@@ -1822,7 +1822,7 @@
     "message": "Elimina gruppo (con elementi)"
   },
   "stagingGroupDeleteConfirm": {
-    "message": "Eliminare il gruppo \"$1\"? I suoi $2 elementi lasceranno anche l'area di staging."
+    "message": "Eliminare il gruppo \"$1\"? I suoi $2 elementi lasceranno anche l'area di preparazione."
   },
   "stagingGroupDeleted": {
     "message": "Gruppo eliminato — $1 elemento/i rimosso/i"
@@ -1831,7 +1831,7 @@
     "message": "Sciogli gruppo"
   },
   "stagingGroupDissolved": {
-    "message": "Gruppo sciolto — elementi mantenuti nell'area di staging"
+    "message": "Gruppo sciolto — elementi mantenuti nell'area di preparazione"
   },
   "stagingGroupExpand": {
     "message": "Espandi gruppo"
@@ -1888,10 +1888,10 @@
     }
   },
   "stagingRemove": {
-    "message": "Rimuovi dall'area di staging"
+    "message": "Rimuovi dall’area di preparazione"
   },
   "stagingRemoved": {
-    "message": "Rimosso dall'area di staging"
+    "message": "Rimosso dall'area di preparazione"
   },
   "stagingRemovedCount": {
     "message": "Rimossi $n$ elementi dall'area di attesa",
@@ -2439,10 +2439,10 @@
     }
   },
   "tabRowStage": {
-    "message": "Invia a staging"
+    "message": "Invia in preparazione"
   },
   "tabgroupStageAll": {
-    "message": "Invia gruppo a staging"
+    "message": "Invia il gruppo in preparazione"
   },
   "tabgroupStageConfirm": {
     "message": "Inviare $n$ schede a staging?",
@@ -2562,7 +2562,7 @@
     }
   },
   "viewRecent": {
-    "message": "Staging"
+    "message": "Preparazione"
   },
   "viewSearch": {
     "message": "Ricerca"

@@ -1474,7 +1474,7 @@
     "message": "हाल ही में जोड़े गए सभी को स्टेज करें"
   },
   "recentStageGroup": {
-    "message": "Send $t$ को स्टेजिंग क्षेत्र में भेजें",
+    "message": "$t$ को स्टेजिंग क्षेत्र में भेजें",
     "placeholders": {
       "t": {
         "content": "$1"

@@ -871,7 +871,7 @@
     "message": "Odpri vse zaznamke"
   },
   "openBookmarksInExistingGroup": {
-    "message": "Odpri vse v obstoječi skupini zavihkov…"
+    "message": "Odpri vse v obstoječi skupini…"
   },
   "openBookmarksInGroup": {
     "message": "Odpri vse v novi skupini zavihkov"
@@ -2588,7 +2588,7 @@
     "message": "Onemogoči"
   },
   "viewTabGroups": {
-    "message": "Zavihki"
+    "message": "Skupine zavihkov"
   },
   "viewTabHide": {
     "message": "Skrij"

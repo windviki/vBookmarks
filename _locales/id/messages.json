@@ -48,10 +48,10 @@
     "message": "Apa yang baru di v4.0.8"
   },
   "announceV410Text": {
-    "message": "v4.1.0 添加了标签组视图和暂存区：在书签旁管理每个窗口的标签页，并将任意位置的书签收集到暂存工作台进行批量整理。"
+    "message": "v4.1.0 menambahkan tampilan Grup tab dan Area penampungan: kelola tab setiap jendela di samping markah Anda, dan kumpulkan markah dari mana pun ke meja kerja penampungan untuk pengaturan massal."
   },
   "announceV410Title": {
-    "message": "v4.1.0 中的新功能"
+    "message": "Apa yang baru di v4.1.0"
   },
   "bookmarkFolderNoFolders": {
     "message": "Tidak ada folder markah"
@@ -880,7 +880,7 @@
     "message": "Buka semua di grup tab baru…"
   },
   "openBookmarksIncognitoWindow": {
-    "message": "Buka Semua Markah di Jendela Samaran"
+    "message": "Buka Semua di Jendela Samaran"
   },
   "openBookmarksNewWindow": {
     "message": "Buka Semua Markah di Jendela Baru"
@@ -928,7 +928,7 @@
     "message": "Ciutkan entri tambah-folder"
   },
   "optionCollapseAddFolderMenuHint": {
-    "message": "Gabungkan entri tambah-folder (sebelum/sesudah/di dalam pada baris folder, sebelum/sesudah pada baris bookmark) menjadi satu entri submenu."
+    "message": "Gabungkan entri tambah-folder (sebelum/sesudah/di dalam pada baris folder, sebelum/sesudah pada baris markah) menjadi satu entri submenu."
   },
   "optionCollapseSortMenu": {
     "message": "Ciutkan entri pengurutan menjadi satu submenu \"Urutkan…\""
@@ -1095,10 +1095,10 @@
     "message": "Tampilkan tab tampilan di bawah kotak pencarian"
   },
   "optionStagingEnabled": {
-    "message": "启用暂存区"
+    "message": "Aktifkan area penampungan"
   },
   "optionStagingEnabledHint": {
-    "message": "关闭后，此视图仅保留最近添加的列表，其他视图中的暂存按钮或菜单项将全部隐藏。"
+    "message": "Saat nonaktif, tampilan ini hanya menyimpan daftar yang baru ditambahkan, dan setiap tombol atau entri menu penampungan di tampilan lain disembunyikan."
   },
   "optionStatsEnabled": {
     "message": "Aktifkan statistik kunjungan"
@@ -1131,7 +1131,7 @@
     "message": "Kertas (terang)"
   },
   "optionTreeRowActions": {
-    "message": "树行悬停操作（编辑 / 暂存 / 删除）"
+    "message": "Aksi saat melayang pada baris pohon (sunting / tampung / hapus)"
   },
   "optionVirtualScrollLab": {
     "message": "Gulir virtual (eksperimental)"
@@ -1199,15 +1199,15 @@
     }
   },
   "optionsStagingSection": {
-    "message": "暂存与最近添加"
+    "message": "Penampungan & baru ditambahkan"
   },
   "optionsStorageLocalTip": {
     "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting).",
-    "message": "仅存储在此设备上 — 不通过 Chrome 同步共享。"
+    "message": "Tersimpan di perangkat ini saja — tidak dibagikan lewat sinkronisasi Chrome."
   },
   "optionsStorageSyncTip": {
     "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting).",
-    "message": "通过 Chrome 账户同步 — 此设置会在您的设备间共享。"
+    "message": "Disinkronkan lewat akun Chrome Anda — setelan ini dibagi di antara perangkat Anda."
   },
   "optionsVersion": {
     "message": "Versi vBookmarks"
@@ -1471,10 +1471,10 @@
     "message": "Baru ditambahkan"
   },
   "recentStageAll": {
-    "message": "Pentaskan semua yang baru ditambahkan"
+    "message": "Kirim semua yang baru ditambahkan ke area penampungan"
   },
   "recentStageGroup": {
-    "message": "Kirim $t$ ke area pementasan",
+    "message": "Kirim $t$ ke area penampungan",
     "placeholders": {
       "t": {
         "content": "$1"
@@ -1706,13 +1706,13 @@
     }
   },
   "stagingAdd": {
-    "message": "Kirim ke staging"
+    "message": "Kirim ke area penampungan"
   },
   "stagingAdded": {
     "message": "Terkirim ke staging"
   },
   "stagingAddedSummary": {
-    "message": "Menambahkan $n$ item; $m$ sudah dipentaskan",
+    "message": "Menambahkan $n$ item; $m$ sudah ditampung",
     "placeholders": {
       "m": {
         "content": "$2"
@@ -1723,7 +1723,7 @@
     }
   },
   "stagingAlready": {
-    "message": "Sudah ada di area pementasan"
+    "message": "Sudah ada di area penampungan"
   },
   "stagingBucketFavAll": {
     "message": "Favoritkan semua"
@@ -1732,16 +1732,16 @@
     "message": "Belum dibookmark"
   },
   "stagingClear": {
-    "message": "Bersihkan pementasan"
+    "message": "Bersihkan area penampungan"
   },
   "stagingClearConfirm": {
-    "message": "Bersihkan seluruh area pementasan? Pohon bookmark tidak disentuh."
+    "message": "Bersihkan seluruh area penampungan? Pohon markah tidak tersentuh."
   },
   "stagingClearConfirmOk": {
     "message": "Bersihkan"
   },
   "stagingCleared": {
-    "message": "Area pementasan dibersihkan"
+    "message": "Area penampungan dibersihkan"
   },
   "stagingConfirmFolder": {
     "message": "Pentaskan $n$ bookmark dari folder ini?",
@@ -1763,7 +1763,7 @@
     }
   },
   "stagingCount": {
-    "message": "$n$ dipentaskan",
+    "message": "$n$ ditampung",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -1771,7 +1771,7 @@
     }
   },
   "stagingDeleteConfirm": {
-    "message": "Hapus $n$ item? Yang tidak dibookmark hanya meninggalkan area pementasan.",
+    "message": "Hapus $n$ item? Yang tidak dibookmark hanya meninggalkan area penampungan.",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -1787,7 +1787,7 @@
     }
   },
   "stagingEmpty": {
-    "message": "Belum ada yang dipentaskan. Kirim bookmark ke sini dari tampilan mana pun — tombol pesawat di baris, atau menu klik kanan — lalu atur dan simpan secara massal."
+    "message": "Belum ada yang ditampung. Kirim markah ke sini dari tampilan mana pun — tombol pesawat pada baris, atau menu klik kanan — lalu atur dan kelompokkan secara massal."
   },
   "stagingFav": {
     "message": "Favorit"
@@ -1801,13 +1801,13 @@
     }
   },
   "stagingFolderEmpty": {
-    "message": "Folder ini tidak memiliki bookmark untuk dipentaskan"
+    "message": "Folder ini tidak memiliki bookmark untuk ditampung"
   },
   "stagingFromHistory": {
     "message": "Dari riwayat"
   },
   "stagingFull": {
-    "message": "Area pementasan penuh — hapus beberapa item dulu"
+    "message": "Area penampungan penuh — hapus beberapa item dulu"
   },
   "stagingGroupAssign": {
     "message": "Grup…"
@@ -1822,7 +1822,7 @@
     "message": "Hapus grup (dengan item)"
   },
   "stagingGroupDeleteConfirm": {
-    "message": "Hapus grup \"$1\"? $2 itemnya juga keluar dari area pementasan."
+    "message": "Hapus grup \"$1\"? $2 itemnya juga keluar dari area penampungan."
   },
   "stagingGroupDeleted": {
     "message": "Grup dihapus — $1 item dihapus"
@@ -1831,7 +1831,7 @@
     "message": "Bubarkan grup"
   },
   "stagingGroupDissolved": {
-    "message": "Grup dibubarkan — item tetap di area pementasan"
+    "message": "Grup dibubarkan — item tetap di area penampungan"
   },
   "stagingGroupExpand": {
     "message": "Perluas grup"
@@ -1888,13 +1888,13 @@
     }
   },
   "stagingRemove": {
-    "message": "Hapus dari area pementasan"
+    "message": "Hapus dari area penampungan"
   },
   "stagingRemoved": {
-    "message": "Dihapus dari area pementasan"
+    "message": "Dihapus dari area penampungan"
   },
   "stagingRemovedCount": {
-    "message": "Menghapus $n$ item dari area pementasan",
+    "message": "Menghapus $n$ item dari area penampungan",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -2439,10 +2439,10 @@
     }
   },
   "tabRowStage": {
-    "message": "Kirim ke panggung"
+    "message": "Kirim ke area penampungan"
   },
   "tabgroupStageAll": {
-    "message": "Kirim grup ke panggung"
+    "message": "Kirim grup ke area penampungan"
   },
   "tabgroupStageConfirm": {
     "message": "Kirim $n$ tab ke panggung?",
@@ -2562,7 +2562,7 @@
     }
   },
   "viewRecent": {
-    "message": "Penyimpanan Sementara"
+    "message": "Area Penampungan"
   },
   "viewSearch": {
     "message": "Cari"

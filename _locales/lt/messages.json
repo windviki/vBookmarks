@@ -871,13 +871,13 @@
     "message": "Atidaryti visas žymeles"
   },
   "openBookmarksInExistingGroup": {
-    "message": "Atidaryti visus esamoje skirtukų grupėje…"
+    "message": "Atidaryti visus esamoje grupėje…"
   },
   "openBookmarksInGroup": {
     "message": "Atidaryti visus naujoje grupėje"
   },
   "openBookmarksInGroupSetup": {
-    "message": "Atidaryti visus naujoje skirtukų grupėje…"
+    "message": "Atidaryti visus naujoje grupėje…"
   },
   "openBookmarksIncognitoWindow": {
     "message": "Atidaryti žymeles inkognito lange"
@@ -1095,10 +1095,10 @@
     "message": "Rodyti rodinių skirtukus po paieškos lauku"
   },
   "optionStagingEnabled": {
-    "message": "Įgalinti prelaidos sritį"
+    "message": "Įjungti paruošimo sritį"
   },
   "optionStagingEnabledHint": {
-    "message": "Kai išjungta, šis rodinys rodo tik neseniai pridėtų sąrašą, o visi prelaidos mygtukai ar meniu punktai kituose rodiniuose paslepiami."
+    "message": "Išjungus šis rodinys saugo tik neseniai pridėtų sąrašą; visi paruošimo mygtukai ar meniu punktai kituose rodiniuose slepiami."
   },
   "optionStatsEnabled": {
     "message": "Įjungti lankomumo statistiką"
@@ -1199,7 +1199,7 @@
     }
   },
   "optionsStagingSection": {
-    "message": "Prelaida ir neseniai pridėta"
+    "message": "Paruošimas ir neseniai pridėti"
   },
   "optionsStorageLocalTip": {
     "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting).",
@@ -1471,7 +1471,7 @@
     "message": "Naujausiai pridėta"
   },
   "recentStageAll": {
-    "message": "Paruošti visus naujausius"
+    "message": "Siųsti neseniai pridėtus į paruošimą"
   },
   "recentStageGroup": {
     "message": "Siųsti $t$ į paruošimo sritį",
@@ -1706,10 +1706,10 @@
     }
   },
   "stagingAdd": {
-    "message": "Siųsti į sceną"
+    "message": "Siųsti į paruošimą"
   },
   "stagingAdded": {
-    "message": "Išsiųsta į sceną"
+    "message": "Išsiųsta į paruošimo sritį"
   },
   "stagingAddedSummary": {
     "message": "Įtraukta $n$ elementų; $m$ jau paruošta",
@@ -1723,7 +1723,7 @@
     }
   },
   "stagingAlready": {
-    "message": "Jau paruošimo srityje"
+    "message": "Jau paruošimų srityje"
   },
   "stagingBucketFavAll": {
     "message": "Pažymėti visus mėgstamiausiais"
@@ -1735,7 +1735,7 @@
     "message": "Išvalyti paruošimą"
   },
   "stagingClearConfirm": {
-    "message": "Išvalyti visą paruošimo sritį? Žymių medis nepakeičiamas."
+    "message": "Išvalyti visą paruošimo sritį? Žymų medis neliečiamas."
   },
   "stagingClearConfirmOk": {
     "message": "Išvalyti"
@@ -1752,7 +1752,7 @@
     }
   },
   "stagingConfirmFolderOk": {
-    "message": "Scenarijus"
+    "message": "Paruošimas"
   },
   "stagingCopyDone": {
     "message": "Nukopijuota $n$ elem.",
@@ -1787,7 +1787,7 @@
     }
   },
   "stagingEmpty": {
-    "message": "Dar nieko neįdėta. Siųskite žymes čia iš bet kurio rodinio — mygtuką lėktuve eilutėje arba dešiniuoju pelės klavišu — tada tvarkykite ir archyvuokite jas masiškai."
+    "message": "Kol kas nieko neparuota. Siųskite žymes čia iš bet kurio rodinio — lėktuvo mygtuku eilutėje arba per kontekstinį meniu — tada rūšiuokite ir skirstykite jas masiškai."
   },
   "stagingFav": {
     "message": "Mėgstamiausias"
@@ -2439,10 +2439,10 @@
     }
   },
   "tabRowStage": {
-    "message": "Siųsti į sceną"
+    "message": "Siųsti į paruošimą"
   },
   "tabgroupStageAll": {
-    "message": "Siųsti grupę į sceną"
+    "message": "Siųsti grupę į paruošimą"
   },
   "tabgroupStageConfirm": {
     "message": "Siųsti $n$ skirtukus į sceną?",
@@ -2562,7 +2562,7 @@
     }
   },
   "viewRecent": {
-    "message": "Scenarijus"
+    "message": "Paruošimas"
   },
   "viewSearch": {
     "message": "Paieška"

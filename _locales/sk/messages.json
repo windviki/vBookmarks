@@ -60,7 +60,7 @@
     "message": "Pridať do priečinka záložiek"
   },
   "bookmarkOpenInExistingGroup": {
-    "message": "Otvoriť v existujúcej skupine kariet…"
+    "message": "Otvoriť v existujúcej skupine…"
   },
   "bookmarkOpenInNewGroup": {
     "message": "Otvoriť v novej skupine kariet"
@@ -871,13 +871,13 @@
     "message": "Otvoriť všetky záložky"
   },
   "openBookmarksInExistingGroup": {
-    "message": "Otvoriť všetko v existujúcej skupine kariet…"
+    "message": "Otvoriť všetko v existujúcej…"
   },
   "openBookmarksInGroup": {
     "message": "Otvoriť v novej skupine"
   },
   "openBookmarksInGroupSetup": {
-    "message": "Otvoriť všetko v novej skupine kariet…"
+    "message": "Otvoriť všetko v novej skupine…"
   },
   "openBookmarksIncognitoWindow": {
     "message": "Otvoriť v inkognito okne"

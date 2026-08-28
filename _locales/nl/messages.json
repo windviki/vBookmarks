@@ -48,7 +48,7 @@
     "message": "Wat is er nieuw in v4.0.8"
   },
   "announceV410Text": {
-    "message": "v4.1.0 voegt de tabgroepenweergave en het staginggebied toe: beheer de tabbladen van elk venster naast uw bladwijzers en verzamel bladwijzers van overal in een stagingwerkbank voor bulkorganisatie."
+    "message": "v4.1.0 voegt de tabgroepenweergave en het wachtruimte toe: beheer de tabbladen van elk venster naast uw bladwijzers en verzamel bladwijzers van overal in een wachtruimtewerkbank voor bulkorganisatie."
   },
   "announceV410Title": {
     "message": "Nieuw in v4.1.0"
@@ -928,7 +928,7 @@
     "message": "Map-toevoegen-items samenvouwen"
   },
   "optionCollapseAddFolderMenuHint": {
-    "message": "将添加文件夹条目（文件夹行上的之前/之后/内部，书签行上的之前/之后）合并为一个子菜单条目。"
+    "message": "Voegt de map-toevoegen-items (voor/na/binnen op maprijen, voor/na op bladwijzerrijen) samen tot één submenu-item."
   },
   "optionCollapseSortMenu": {
     "message": "Sorteeritems samenvouwen tot één submenu \"Sorteren…\""
@@ -1095,10 +1095,10 @@
     "message": "Weergavetabbladen onder het zoekvak tonen"
   },
   "optionStagingEnabled": {
-    "message": "Staging-gebied inschakelen"
+    "message": "Wachtruimte inschakelen"
   },
   "optionStagingEnabledHint": {
-    "message": "Wanneer uitgeschakeld, toont deze weergave alleen de recent toegevoegde lijst en worden alle staging-knoppen of menu-items in de andere weergaven verborgen."
+    "message": "Uitgeschakeld houdt deze weergave alleen de lijst onlangs toegevoegden bij; elke wachtruimteknop of menu-item in de andere weergaven verbergt."
   },
   "optionStatsEnabled": {
     "message": "Bezoekstatistieken inschakelen"
@@ -1199,7 +1199,7 @@
     }
   },
   "optionsStagingSection": {
-    "message": "Staging en recent toegevoegd"
+    "message": "Wachtruimte & onlangs toegevoegd"
   },
   "optionsStorageLocalTip": {
     "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting).",
@@ -1471,10 +1471,10 @@
     "message": "Recent toegevoegd"
   },
   "recentStageAll": {
-    "message": "Alle recent toegevoegde wachten"
+    "message": "Onlangs toegevoegden naar wachtruimte sturen"
   },
   "recentStageGroup": {
-    "message": "Stuur $t$ naar het staginggebied",
+    "message": "$t$ naar de wachtruimte sturen",
     "placeholders": {
       "t": {
         "content": "$1"
@@ -1706,10 +1706,10 @@
     }
   },
   "stagingAdd": {
-    "message": "Naar staging sturen"
+    "message": "Naar wachtruimte sturen"
   },
   "stagingAdded": {
-    "message": "Naar staging verzonden"
+    "message": "Naar wachtruimte verzonden"
   },
   "stagingAddedSummary": {
     "message": "$n$ item(s) toegevoegd; $m$ al in wachtruimte",
@@ -1732,16 +1732,16 @@
     "message": "Niet-bladwijzer"
   },
   "stagingClear": {
-    "message": "Staging wissen"
+    "message": "Wachtruimte wissen"
   },
   "stagingClearConfirm": {
-    "message": "Hele staginggebied wissen? De bladwijzerboom wordt niet aangeraakt."
+    "message": "De hele wachtruimte wissen? De bladwijzerboom blijft onaangeroerd."
   },
   "stagingClearConfirmOk": {
     "message": "Wissen"
   },
   "stagingCleared": {
-    "message": "Staginggebied gewist"
+    "message": "Wachtruimtegebied gewist"
   },
   "stagingConfirmFolder": {
     "message": "$n$ bladwijzers uit deze map wachten?",
@@ -1752,7 +1752,7 @@
     }
   },
   "stagingConfirmFolderOk": {
-    "message": "Staging"
+    "message": "Wachtruimte"
   },
   "stagingCopyDone": {
     "message": "$n$ item(s) gekopieerd",
@@ -1763,7 +1763,7 @@
     }
   },
   "stagingCount": {
-    "message": "$n$ klaargezet",
+    "message": "$n$ in wachtruimte",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -1771,7 +1771,7 @@
     }
   },
   "stagingDeleteConfirm": {
-    "message": "$n$ item(s) verwijderen? Niet-bladwijzeritems verlaten alleen het staginggebied.",
+    "message": "$n$ item(s) verwijderen? Niet-bladwijzeritems verlaten alleen het wachtruimte.",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -1787,7 +1787,7 @@
     }
   },
   "stagingEmpty": {
-    "message": "Nog niets klaargezet. Stuur hier bladwijzers naartoe vanuit elke weergave — via de vliegtuigknop op een rij of het rechtsklikmenu — en organiseer en archiveer ze vervolgens in bulk."
+    "message": "Nog niets in de wachtruimte. Stuur bladwijzers hierheen vanuit elke weergave — de vliegtuigknop op een rij, of het rechtermenu — en organiseer en berg ze daarna in bulk op."
   },
   "stagingFav": {
     "message": "Favoriet"
@@ -1822,7 +1822,7 @@
     "message": "Groep verwijderen (met items)"
   },
   "stagingGroupDeleteConfirm": {
-    "message": "Groep \"$1\" verwijderen? De $2 item(s) verlaten ook het staginggebied."
+    "message": "Groep \"$1\" verwijderen? De $2 item(s) verlaten ook het wachtruimte."
   },
   "stagingGroupDeleted": {
     "message": "Groep verwijderd — $1 item(s) verwijderd"
@@ -1888,13 +1888,13 @@
     }
   },
   "stagingRemove": {
-    "message": "Verwijderen uit wachtruimte"
+    "message": "Uit de wachtruimte verwijderen"
   },
   "stagingRemoved": {
     "message": "Verwijderd uit de wachtruimte"
   },
   "stagingRemovedCount": {
-    "message": "$n$ item(s) verwijderd uit staginggebied",
+    "message": "$n$ item(s) verwijderd uit wachtruimte",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -2439,10 +2439,10 @@
     }
   },
   "tabRowStage": {
-    "message": "Naar staging"
+    "message": "Naar wachtruimte sturen"
   },
   "tabgroupStageAll": {
-    "message": "Groep naar staging"
+    "message": "Groep naar wachtruimte sturen"
   },
   "tabgroupStageConfirm": {
     "message": "$n$ tabbladen naar staging sturen?",
@@ -2562,7 +2562,7 @@
     }
   },
   "viewRecent": {
-    "message": "Staging"
+    "message": "Wachtruimte"
   },
   "viewSearch": {
     "message": "Zoeken"

@@ -1474,7 +1474,7 @@
     "message": "সাম্প্রতিক যোগ করা সব স্টেজ করুন"
   },
   "recentStageGroup": {
-    "message": "Send $t$ to the staging area",
+    "message": "$t$-কে স্টেজিংয়ে পাঠান",
     "placeholders": {
       "t": {
         "content": "$1"

@@ -925,7 +925,7 @@
     "message": "Recolher entradas de adicionar pasta"
   },
   "optionCollapseAddFolderMenuHint": {
-    "message": "将添加文件夹条目（文件夹行上的之前/之后/内部，书签行上的之前/之后）合并为一个子菜单条目。"
+    "message": "Combina as entradas de adicionar pasta (antes/depois/dentro em linhas de pastas, antes/depois em linhas de marcadores) numa única entrada de submenu."
   },
   "optionCollapseSortMenu": {
     "message": "Colapsar as entradas de ordenação num submenu \"Ordenar\""
@@ -1092,10 +1092,10 @@
     "message": "Mostrar separadores de vista abaixo da caixa de pesquisa"
   },
   "optionStagingEnabled": {
-    "message": "Ativar a área de staging"
+    "message": "Ativar a área de preparação"
   },
   "optionStagingEnabledHint": {
-    "message": "Quando desativado, esta vista mantém apenas a lista de adicionados recentemente, e todos os botões ou entradas de menu de staging nas outras vistas ficam ocultos."
+    "message": "Desligada, esta vista mantém apenas a lista de adições recentes, e todo botão ou item de menu de preparação nas outras vistas fica oculto."
   },
   "optionStatsEnabled": {
     "message": "Ativar estatísticas de visitas"
@@ -1196,7 +1196,7 @@
     }
   },
   "optionsStagingSection": {
-    "message": "Staging e adicionados recentemente"
+    "message": "Preparação e adições recentes"
   },
   "optionsStorageLocalTip": {
     "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting).",
@@ -1468,7 +1468,7 @@
     "message": "Adicionados recentemente"
   },
   "recentStageAll": {
-    "message": "Preparar todos os recentes"
+    "message": "Enviar adições recentes para a preparação"
   },
   "recentStageGroup": {
     "message": "Enviar $t$ para a área de preparação",
@@ -1702,10 +1702,10 @@
     }
   },
   "stagingAdd": {
-    "message": "Enviar para ensaio"
+    "message": "Enviar para a preparação"
   },
   "stagingAdded": {
-    "message": "Enviado para ensaio"
+    "message": "Enviado para a preparação"
   },
   "stagingAddedSummary": {
     "message": "Adicionados $n$ item(ns); $m$ já preparados",
@@ -1719,7 +1719,7 @@
     }
   },
   "stagingAlready": {
-    "message": "Já está na área de preparação"
+    "message": "Já na área de preparação"
   },
   "stagingBucketFavAll": {
     "message": "Favoritar todos"
@@ -1728,10 +1728,10 @@
     "message": "Não marcados"
   },
   "stagingClear": {
-    "message": "Limpar área de espera"
+    "message": "Limpar a preparação"
   },
   "stagingClearConfirm": {
-    "message": "Limpar toda a área de espera? A árvore de marcadores não é alterada."
+    "message": "Limpar toda a área de preparação? A árvore de marcadores não é tocada."
   },
   "stagingClearConfirmOk": {
     "message": "Limpar"
@@ -1759,7 +1759,7 @@
     }
   },
   "stagingCount": {
-    "message": "$n$ em espera",
+    "message": "$n$ em preparação",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -1783,7 +1783,7 @@
     }
   },
   "stagingEmpty": {
-    "message": "Ainda não há nada em espera. Envie marcadores para aqui a partir de qualquer vista — o botão de avião numa linha ou o menu de clique com o botão direito — e depois organize e arquive-os em massa."
+    "message": "Nada em preparação ainda. Envie marcadores para aqui de qualquer vista — o botão do avião numa linha, ou o menu de contexto — e depois organize e arquive-os em lote."
   },
   "stagingFav": {
     "message": "Favorito"
@@ -2246,7 +2246,7 @@
     "message": "Janela atual"
   },
   "tabGroupsDeleteClosedGroup": {
-    "message": "Eliminar grupo de separadores fechado"
+    "message": "Eliminar grupo fechado"
   },
   "tabGroupsDiscarded": {
     "message": "Separador em repouso"
@@ -2435,10 +2435,10 @@
     }
   },
   "tabRowStage": {
-    "message": "Enviar para palco"
+    "message": "Enviar para a preparação"
   },
   "tabgroupStageAll": {
-    "message": "Enviar grupo para palco"
+    "message": "Enviar grupo para a preparação"
   },
   "tabgroupStageConfirm": {
     "message": "Enviar $n$ separadores para palco?",

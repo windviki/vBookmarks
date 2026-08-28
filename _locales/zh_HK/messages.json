@@ -185,7 +185,7 @@
     "message": "如果任一書籤URL含有以下字符串，將被顯示為分割條"
   },
   "customSeparatorTitleDescription": {
-    "message": "被用作分割條的書籤節點的标题"
+    "message": "被用作分隔線的書籤節點標題"
   },
   "customSeparatorUrlDescription": {
     "message": "被用作分割條的書籤節點的URL"
@@ -194,7 +194,7 @@
     "message": "定制CSS"
   },
   "customStylesDescription": {
-    "message": "注意：无CSS知識請勿冒險修改。推薦將代碼共享到 "
+    "message": "注意：無 CSS 知識請勿冒險修改。建議將程式碼分享到 "
   },
   "cutBookmark": {
     "message": "剪下"
@@ -982,10 +982,10 @@
     "message": "沒有可清除的圖示快取。"
   },
   "optionFaviconContrast": {
-    "message": "反白低对比度网站图标"
+    "message": "反白低對比度網站圖示"
   },
   "optionFaviconContrastHint": {
-    "message": "浅色主题上的白色图标和深色主题上的黑色图标会被反白，以确保仍然可见。每个图标在加载时採样一次——浏览期间不会产生额外成本。"
+    "message": "淺色主題上的白色圖示和深色主題上的黑色圖示會被反白，以確保仍然可見。每個圖示在載入時取樣一次——瀏覽期間不耗用資源。"
   },
   "optionFaviconEnrich": {
     "message": "擷取遺失的網站圖示"

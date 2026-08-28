@@ -1095,10 +1095,10 @@
     "message": "Visa vyflikar under sökrutan"
   },
   "optionStagingEnabled": {
-    "message": "Aktivera staging-området"
+    "message": "Aktivera mellanlagringen"
   },
   "optionStagingEnabledHint": {
-    "message": "När avstängd visar denna vy endast listan över nyligen tillagda, och alla staging-knappar eller menyposter i de andra vyerna döljs."
+    "message": "Medan den är av stänger behåller denna vyn bara listan över senast tillagda; varje mellanlagringsknapp eller menypost i de andra vyerna döljs."
   },
   "optionStatsEnabled": {
     "message": "Aktivera besöksstatistik"
@@ -1199,7 +1199,7 @@
     }
   },
   "optionsStagingSection": {
-    "message": "Staging och nyligen tillagda"
+    "message": "Mellanlagring och senast tillagda"
   },
   "optionsStorageLocalTip": {
     "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting).",
@@ -1471,10 +1471,10 @@
     "message": "Nyligen tillagda"
   },
   "recentStageAll": {
-    "message": "Köa alla nyligen tillagda"
+    "message": "Skicka senast tillagda till mellanlagringen"
   },
   "recentStageGroup": {
-    "message": "Skicka $t$ till mellanlagringsområdet",
+    "message": "Skicka $t$ till mellanlagringen",
     "placeholders": {
       "t": {
         "content": "$1"
@@ -1619,7 +1619,7 @@
   },
   "sessionFolderName": {
     "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm.",
-    "message": "Session $date$",
+    "message": "Sessionsmapp ($date$)",
     "placeholders": {
       "date": {
         "content": "$1",
@@ -1706,10 +1706,10 @@
     }
   },
   "stagingAdd": {
-    "message": "Skicka till staging"
+    "message": "Skicka till mellanlagringen"
   },
   "stagingAdded": {
-    "message": "Skickat till staging"
+    "message": "Skickat till mellanlagringen"
   },
   "stagingAddedSummary": {
     "message": "Tillagt $n$ objekt; $m$ redan i väntelistan",
@@ -1723,7 +1723,7 @@
     }
   },
   "stagingAlready": {
-    "message": "Redan i väntelistan"
+    "message": "Redan i mellanlagringen"
   },
   "stagingBucketFavAll": {
     "message": "Favoritmarkera alla"
@@ -1732,10 +1732,10 @@
     "message": "Obokmärkta"
   },
   "stagingClear": {
-    "message": "Rensa kö"
+    "message": "Rensa mellanlagringen"
   },
   "stagingClearConfirm": {
-    "message": "Rensa hela köområdet? Bokmärkesträdet påverkas inte."
+    "message": "Rensa hela mellanlagringen? Bokmärkesträdet röras inte."
   },
   "stagingClearConfirmOk": {
     "message": "Rensa"
@@ -1763,7 +1763,7 @@
     }
   },
   "stagingCount": {
-    "message": "$n$ i kö",
+    "message": "$n$ mellanlagrade",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -1787,7 +1787,7 @@
     }
   },
   "stagingEmpty": {
-    "message": "Inget är klart ännu. Skicka bokmärken hit från valfri vy — plan-knappen på en rad eller högerklicksmenyn — och organisera och arkivera dem i bulk."
+    "message": "Ingenting mellanlagrat ännu. Skicka bokmärken hit från vilken vy som helst — radens flygplansknapp eller högerklicksmenyn — och organisera och sortera dem sedan i bulk."
   },
   "stagingFav": {
     "message": "Favoritmarkera"
@@ -1807,7 +1807,7 @@
     "message": "Från historik"
   },
   "stagingFull": {
-    "message": "Väntelistan är full — ta bort några objekt först"
+    "message": "Mellanlagringen är full — ta bort några objekt först"
   },
   "stagingGroupAssign": {
     "message": "Grupp…"
@@ -1888,7 +1888,7 @@
     }
   },
   "stagingRemove": {
-    "message": "Ta bort från väntelistan"
+    "message": "Ta bort från mellanlagringen"
   },
   "stagingRemoved": {
     "message": "Borttagen från väntelistan"
@@ -2439,10 +2439,10 @@
     }
   },
   "tabRowStage": {
-    "message": "Skicka till scen"
+    "message": "Skicka till mellanlagringen"
   },
   "tabgroupStageAll": {
-    "message": "Skicka grupp till scen"
+    "message": "Skicka gruppen till mellanlagringen"
   },
   "tabgroupStageConfirm": {
     "message": "Skicka $n$ flikar till scen?",

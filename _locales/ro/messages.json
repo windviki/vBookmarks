@@ -27,7 +27,7 @@
     "message": "Adaugă Dosar Înainte de Acesta"
   },
   "addSeparator": {
-    "message": "Adaugă Separator"
+    "message": "Adaugă separator"
   },
   "advancedOptions": {
     "message": "Opțiuni Avansate"
@@ -1095,10 +1095,10 @@
     "message": "Afișează filele de vizualizare sub caseta de căutare"
   },
   "optionStagingEnabled": {
-    "message": "Activează zona de staging"
+    "message": "Activează zona de pregătire"
   },
   "optionStagingEnabledHint": {
-    "message": "Când este dezactivată, această vizualizare păstrează doar lista adăugate recent, iar fiecare buton sau element de meniu de staging din celelalte vizualizări este ascuns."
+    "message": "Cât timp este dezactivată, această vizualizare păstrează doar lista adăugărilor recente, iar fiecare buton sau intrare de meniu de pregătire din celelalte vizualizări se ascunde."
   },
   "optionStatsEnabled": {
     "message": "Activează statisticile de vizită"
@@ -1199,7 +1199,7 @@
     }
   },
   "optionsStagingSection": {
-    "message": "Staging și adăugate recent"
+    "message": "Pregătire și adăugări recente"
   },
   "optionsStorageLocalTip": {
     "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting).",
@@ -1471,10 +1471,10 @@
     "message": "Adăugate recent"
   },
   "recentStageAll": {
-    "message": "Pregătește toate adăugate recent"
+    "message": "Trimite adăugările recente în zona de pregătire"
   },
   "recentStageGroup": {
-    "message": "Trimiteți $t$ în zona de pregătire",
+    "message": "Trimite $t$ în zona de pregătire",
     "placeholders": {
       "t": {
         "content": "$1"
@@ -1706,10 +1706,10 @@
     }
   },
   "stagingAdd": {
-    "message": "Trimite în staging"
+    "message": "Trimite în zona de pregătire"
   },
   "stagingAdded": {
-    "message": "Trimis în staging"
+    "message": "Trimis în zona de pregătire"
   },
   "stagingAddedSummary": {
     "message": "Adăugat $n$ element(e); $m$ deja pregătite",
@@ -1732,10 +1732,10 @@
     "message": "Nemarcate"
   },
   "stagingClear": {
-    "message": "Golește zona de așteptare"
+    "message": "Golește zona de pregătire"
   },
   "stagingClearConfirm": {
-    "message": "Goliți întreaga zonă de așteptare? Arborele de marcaje nu este atins."
+    "message": "Golești toată zona de pregătire? Arborele de marcaje nu este atins."
   },
   "stagingClearConfirmOk": {
     "message": "Șterge"
@@ -1763,7 +1763,7 @@
     }
   },
   "stagingCount": {
-    "message": "$n$ în așteptare",
+    "message": "$n$ în pregătire",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -1787,7 +1787,7 @@
     }
   },
   "stagingEmpty": {
-    "message": "Nimic pus în așteptare. Trimite marcaje aici din orice vizualizare — butonul avion de pe un rând sau meniul cu clic drept — apoi organizează și arhivează-le în masă."
+    "message": "Nimic în pregătire deocamdată. Trimite marcaje aici din orice vizualizare — butonul avion de pe un rând sau meniul contextual — apoi organizează-le și arhivează-le în masă."
   },
   "stagingFav": {
     "message": "Marchează"
@@ -1807,7 +1807,7 @@
     "message": "Din istoric"
   },
   "stagingFull": {
-    "message": "Zona de pregătire este plină — eliminați mai întâi unele elemente"
+    "message": "Zona de pregătire este plină — elimină mai întâi câteva elemente"
   },
   "stagingGroupAssign": {
     "message": "Grup…"
@@ -2439,10 +2439,10 @@
     }
   },
   "tabRowStage": {
-    "message": "Trimite în staging"
+    "message": "Trimite în zona de pregătire"
   },
   "tabgroupStageAll": {
-    "message": "Trimite grupul în staging"
+    "message": "Trimite grupul în zona de pregătire"
   },
   "tabgroupStageConfirm": {
     "message": "Trimite $n$ file în staging?",
@@ -2562,7 +2562,7 @@
     }
   },
   "viewRecent": {
-    "message": "Staging"
+    "message": "Pregătire"
   },
   "viewSearch": {
     "message": "Căutare"

@@ -1095,10 +1095,10 @@
     "message": "הצג לשוניות תצוגה מתחת לתיבת החיפוש"
   },
   "optionStagingEnabled": {
-    "message": "הפעל אזור ההמתנה"
+    "message": "הפעל את אזור ההכנה"
   },
   "optionStagingEnabledHint": {
-    "message": "כאשר כבוי, תצוגה זו מציגה רק את רשימת הפריטים שנוספו לאחרונה, וכל כפתורי או תפריטי ההמתנה בתצוגות האחרות מוסתרים."
+    "message": "כשכבוי, תצוגה זו שומרת רק את רשימת הנוספים לאחרונה, וכל כפתור או פריט תפריט של הכנה בשאר התצוגות מוסתר."
   },
   "optionStatsEnabled": {
     "message": "הפעל סטטיסטיקות ביקור"
@@ -1199,7 +1199,7 @@
     }
   },
   "optionsStagingSection": {
-    "message": "שלב ונוספו לאחרונה"
+    "message": "הכנה ונוספים לאחרונה"
   },
   "optionsStorageLocalTip": {
     "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting).",
@@ -1471,7 +1471,7 @@
     "message": "נוספו לאחרונה"
   },
   "recentStageAll": {
-    "message": "העבר את כל החדשות"
+    "message": "שלח את הנוספים לאחרונה לאזור ההכנה"
   },
   "recentStageGroup": {
     "message": "שלח את $t$ לאזור ההכנה",
@@ -1706,7 +1706,7 @@
     }
   },
   "stagingAdd": {
-    "message": "שלח לסטייג'ינג"
+    "message": "שלח לאזור ההכנה"
   },
   "stagingAdded": {
     "message": "נשלח לסטייג'ינג"
@@ -1723,7 +1723,7 @@
     }
   },
   "stagingAlready": {
-    "message": "כבר באזור ההמתנה"
+    "message": "כבר באזור ההכנה"
   },
   "stagingBucketFavAll": {
     "message": "סמן הכל כמועדף"
@@ -1732,16 +1732,16 @@
     "message": "לא מסומן"
   },
   "stagingClear": {
-    "message": "ניקוי אזור ההמתנה"
+    "message": "נקה את אזור ההכנה"
   },
   "stagingClearConfirm": {
-    "message": "לנקות את כל אזור ההמתנה? עץ הסימניות לא ייפגע."
+    "message": "לנקות את כל אזור ההכנה? עץ הסימניות אינו מושפע."
   },
   "stagingClearConfirmOk": {
     "message": "נקה"
   },
   "stagingCleared": {
-    "message": "אזור ההמתנה נוקה"
+    "message": "אזור ההכנה נוקה"
   },
   "stagingConfirmFolder": {
     "message": "להעביר $n$ סימניות מתיקייה זו?",
@@ -1763,7 +1763,7 @@
     }
   },
   "stagingCount": {
-    "message": "$n$ בהמתנה",
+    "message": "$n$ בהכנה",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -1771,7 +1771,7 @@
     }
   },
   "stagingDeleteConfirm": {
-    "message": "למחוק $n$ פריטים? לא מסומנים פשוט עוזבים את אזור ההמתנה.",
+    "message": "למחוק $n$ פריטים? לא מסומנים פשוט עוזבים את אזור ההכנה.",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -1787,7 +1787,7 @@
     }
   },
   "stagingEmpty": {
-    "message": "עדיין לא נבחרו סימניות. שלחו סימניות לכאן מכל תצוגה — כפתור המטוס בשורה או תפריט הלחיצה הימנית — ואז ארגנו ומיינו אותן בכמות."
+    "message": "שום דבר לא בהכנה עדיין. שלחו סימניות לכאן מכל תצוגה — כפתור המטוס בשורה, או תפריט הלחיצה הימנית — ואז ארגנו וסדרו אותן באופן מרוכז."
   },
   "stagingFav": {
     "message": "מועדף"
@@ -1807,7 +1807,7 @@
     "message": "מהיסטוריה"
   },
   "stagingFull": {
-    "message": "אזור ההמתנה מלא — הסר תחילה פריטים"
+    "message": "אזור ההכנה מלא — הסר קודם כמה פריטים"
   },
   "stagingGroupAssign": {
     "message": "קבוצה…"
@@ -1822,7 +1822,7 @@
     "message": "מחק קבוצה (עם פריטים)"
   },
   "stagingGroupDeleteConfirm": {
-    "message": "למחוק קבוצה \"$1\"? $2 הפריטים שלה יוסרו גם מאזור ההמתנה."
+    "message": "למחוק קבוצה \"$1\"? $2 הפריטים שלה יוסרו גם מאזור ההכנה."
   },
   "stagingGroupDeleted": {
     "message": "הקבוצה נמחקה — $1 פריטים הוסרו"
@@ -1831,7 +1831,7 @@
     "message": "פרק קבוצה"
   },
   "stagingGroupDissolved": {
-    "message": "הקבוצה פורקה — פריטים נשמרו באזור ההמתנה"
+    "message": "הקבוצה פורקה — פריטים נשמרו באזור ההכנה"
   },
   "stagingGroupExpand": {
     "message": "הרחב קבוצה"
@@ -1888,13 +1888,13 @@
     }
   },
   "stagingRemove": {
-    "message": "הסר מאזור ההמתנה"
+    "message": "הסר מאזור ההכנה"
   },
   "stagingRemoved": {
-    "message": "הוסר מאזור ההמתנה"
+    "message": "הוסר מאזור ההכנה"
   },
   "stagingRemovedCount": {
-    "message": "הוסרו $n$ פריטים מאזור ההמתנה",
+    "message": "הוסרו $n$ פריטים מאזור ההכנה",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -2439,10 +2439,10 @@
     }
   },
   "tabRowStage": {
-    "message": "שלח לשלב"
+    "message": "שלח לאזור ההכנה"
   },
   "tabgroupStageAll": {
-    "message": "שלח קבוצה לשלב"
+    "message": "שלח את הקבוצה לאזור ההכנה"
   },
   "tabgroupStageConfirm": {
     "message": "לשלוח $n$ לשוניות לשלב?",
@@ -2562,7 +2562,7 @@
     }
   },
   "viewRecent": {
-    "message": "שלב ביניים"
+    "message": "הכנה"
   },
   "viewSearch": {
     "message": "חיפוש"

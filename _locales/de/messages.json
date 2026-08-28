@@ -928,7 +928,7 @@
     "message": "Ordner-hinzufügen-Einträge einklappen"
   },
   "optionCollapseAddFolderMenuHint": {
-    "message": "将添加文件夹条目（文件夹行上的之前/之后/内部，书签行上的之前/之后）合并为一个子菜单条目。"
+    "message": "Fasst die Ordner-hinzufügen-Einträge (davor/danach/hinein auf Ordnerzeilen, davor/danach auf Lesezeichenzeilen) zu einem einzelnen Untermenüeintrag zusammen."
   },
   "optionCollapseSortMenu": {
     "message": "Die Sortiereinträge zu einem Untermenü „Sortieren…“ zusammenfassen"
@@ -1098,7 +1098,7 @@
     "message": "Staging-Bereich aktivieren"
   },
   "optionStagingEnabledHint": {
-    "message": "Wenn deaktiviert, zeigt diese Ansicht nur die kürzlich hinzugefügte Liste, und alle Staging-Schaltflächen oder Menüeinträge in den anderen Ansichten werden ausgeblendet."
+    "message": "Ausgeschaltet behält diese Ansicht nur die Liste der zuletzt hinzugefügten; jede Staging-Schaltfläche oder jeder Menüeintrag in den anderen Ansichten wird ausgeblendet."
   },
   "optionStatsEnabled": {
     "message": "Besuchsstatistik aktivieren"
@@ -1199,7 +1199,7 @@
     }
   },
   "optionsStagingSection": {
-    "message": "Staging & kürzlich hinzugefügt"
+    "message": "Staging & zuletzt hinzugefügt"
   },
   "optionsStorageLocalTip": {
     "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting).",
@@ -1471,10 +1471,10 @@
     "message": "Kürzlich hinzugefügt"
   },
   "recentStageAll": {
-    "message": "Alle kürzlich hinzugefügten sammeln"
+    "message": "Kürzlich hinzugefügte in den Staging-Bereich senden"
   },
   "recentStageGroup": {
-    "message": "$t$ an den Staging-Bereich senden",
+    "message": "$t$ in den Staging-Bereich senden",
     "placeholders": {
       "t": {
         "content": "$1"
@@ -1706,7 +1706,7 @@
     }
   },
   "stagingAdd": {
-    "message": "Zur Staging senden"
+    "message": "In den Staging-Bereich senden"
   },
   "stagingAdded": {
     "message": "An Staging gesendet"
@@ -1723,7 +1723,7 @@
     }
   },
   "stagingAlready": {
-    "message": "Bereits in der Sammelmappe"
+    "message": "Bereits im Staging-Bereich"
   },
   "stagingBucketFavAll": {
     "message": "Alle als Favorit markieren"
@@ -1732,10 +1732,10 @@
     "message": "Nicht gespeichert"
   },
   "stagingClear": {
-    "message": "Staging leeren"
+    "message": "Staging-Bereich leeren"
   },
   "stagingClearConfirm": {
-    "message": "Den gesamten Staging-Bereich leeren? Der Lesezeichenbaum bleibt unberührt."
+    "message": "Den ganzen Staging-Bereich leeren? Der Lesezeichenbaum bleibt unberührt."
   },
   "stagingClearConfirmOk": {
     "message": "Löschen"
@@ -1763,7 +1763,7 @@
     }
   },
   "stagingCount": {
-    "message": "$n$ bereitgestellt",
+    "message": "$n$ im Staging",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -1787,7 +1787,7 @@
     }
   },
   "stagingEmpty": {
-    "message": "Noch nichts vorgemerkt. Senden Sie Lesezeichen von jeder Ansicht hierher – über die Schaltfläche in der Zeile oder das Kontextmenü – und organisieren Sie sie dann in großen Mengen."
+    "message": "Noch nichts im Staging. Senden Sie Lesezeichen aus jeder Ansicht hierher — das Flugzeug-Symbol einer Zeile oder das Kontextmenü — und sortieren bzw. ordnen Sie sie dann gesammelt."
   },
   "stagingFav": {
     "message": "Favorit"
@@ -1807,7 +1807,7 @@
     "message": "Aus Verlauf"
   },
   "stagingFull": {
-    "message": "Die Sammelmappe ist voll – entfernen Sie zuerst einige Elemente"
+    "message": "Der Staging-Bereich ist voll — entferne zuerst einige Einträge"
   },
   "stagingGroupAssign": {
     "message": "Gruppe…"
@@ -1831,7 +1831,7 @@
     "message": "Gruppe auflösen"
   },
   "stagingGroupDissolved": {
-    "message": "Gruppe aufgelöst – Elemente bleiben in der Sammelmappe"
+    "message": "Gruppe aufgelöst – Elemente bleiben in der Staging-Bereich"
   },
   "stagingGroupExpand": {
     "message": "Gruppe erweitern"
@@ -1888,10 +1888,10 @@
     }
   },
   "stagingRemove": {
-    "message": "Aus Sammelmappe entfernen"
+    "message": "Aus dem Staging-Bereich entfernen"
   },
   "stagingRemoved": {
-    "message": "Aus der Sammelmappe entfernt"
+    "message": "Aus der Staging-Bereich entfernt"
   },
   "stagingRemovedCount": {
     "message": "$n$ Element(e) aus dem Staging-Bereich entfernt",
@@ -2439,10 +2439,10 @@
     }
   },
   "tabRowStage": {
-    "message": "An Staging senden"
+    "message": "In den Staging-Bereich senden"
   },
   "tabgroupStageAll": {
-    "message": "Gruppe an Staging senden"
+    "message": "Gruppe in den Staging-Bereich"
   },
   "tabgroupStageConfirm": {
     "message": "$n$ Tabs an Staging senden?",

@@ -27,7 +27,7 @@
     "message": "Lisää Kansio Tämän Edelle"
   },
   "addSeparator": {
-    "message": "Lisää Erotin"
+    "message": "Lisää erotin"
   },
   "advancedOptions": {
     "message": "Lisäasetukset"
@@ -60,7 +60,7 @@
     "message": "Lisää kirjanmerkkeihin"
   },
   "bookmarkOpenInExistingGroup": {
-    "message": "Avaa olemassa olevassa välilehtiryhmässä…"
+    "message": "Avaa olemassa olevassa ryhmässä…"
   },
   "bookmarkOpenInNewGroup": {
     "message": "Avaa uudessa välilehtiryhmässä"
@@ -871,13 +871,13 @@
     "message": "Avaa Kaikki Kirjanmerkit"
   },
   "openBookmarksInExistingGroup": {
-    "message": "Avaa kaikki olemassa olevassa välilehtiryhmässä…"
+    "message": "Avaa kaikki olemassa olevassa…"
   },
   "openBookmarksInGroup": {
     "message": "Avaa kaikki uuteen välilehtiryhmään"
   },
   "openBookmarksInGroupSetup": {
-    "message": "Avaa kaikki uudessa välilehtiryhmässä…"
+    "message": "Avaa kaikki uudessa ryhmässä…"
   },
   "openBookmarksIncognitoWindow": {
     "message": "Avaa kirjanmerkit incognitossa"
@@ -1095,10 +1095,10 @@
     "message": "Näytä näkymävälilehdet hakukentän alla"
   },
   "optionStagingEnabled": {
-    "message": "Ota vaiheistusalue käyttöön"
+    "message": "Ota odotusalue käyttöön"
   },
   "optionStagingEnabledHint": {
-    "message": "Kun pois päältä, tämä näkymä näyttää vain äskettäin lisätyt, ja kaikki vaiheistuspainikkeet tai -valikkokohdat muissa näkymissä piilotetaan."
+    "message": "Kun tämä on pois käytöstä, tämä näkymä säilyttää vain viimeksi lisätyt, ja jokainen odotusalueen painike tai valikkokohta muissa näkymissä piilotetaan."
   },
   "optionStatsEnabled": {
     "message": "Ota käyttöön vierailutilastot"
@@ -1199,7 +1199,7 @@
     }
   },
   "optionsStagingSection": {
-    "message": "Vaiheistus ja äskettäin lisätyt"
+    "message": "Odotusalue ja viimeksi lisätyt"
   },
   "optionsStorageLocalTip": {
     "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting).",
@@ -1471,10 +1471,10 @@
     "message": "Äskettäin lisätyt"
   },
   "recentStageAll": {
-    "message": "Lisää kaikki äskettäin lisätyt"
+    "message": "Lähetä viimeksi lisätyt odotusalueelle"
   },
   "recentStageGroup": {
-    "message": "Lähetä $t$ esikatselualueelle",
+    "message": "Lähetä $t$ odotusalueelle",
     "placeholders": {
       "t": {
         "content": "$1"
@@ -1706,10 +1706,10 @@
     }
   },
   "stagingAdd": {
-    "message": "Lähetä odottamaan"
+    "message": "Lähetä odotusalueelle"
   },
   "stagingAdded": {
-    "message": "Lähetetty odottamaan"
+    "message": "Lähetetty odotusalueelle"
   },
   "stagingAddedSummary": {
     "message": "Lisätty $n$ kohdetta; $m$ jo odotuslistalla",
@@ -1723,7 +1723,7 @@
     }
   },
   "stagingAlready": {
-    "message": "Jo odotuslistalla"
+    "message": "Jo odotusalueella"
   },
   "stagingBucketFavAll": {
     "message": "Suosikki kaikki"
@@ -1735,7 +1735,7 @@
     "message": "Tyhjennä odotusalue"
   },
   "stagingClearConfirm": {
-    "message": "Tyhjennetäänkö koko odotusalue? Kirjanmerkkihakemistoa ei muuteta."
+    "message": "Tyhjennetäänkö koko odotusalue? Kirjanmerkkipuuta ei kosketeta."
   },
   "stagingClearConfirmOk": {
     "message": "Tyhjennä"
@@ -1763,7 +1763,7 @@
     }
   },
   "stagingCount": {
-    "message": "$n$ odottaa",
+    "message": "$n$ odotettavana",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -1787,7 +1787,7 @@
     }
   },
   "stagingEmpty": {
-    "message": "Ei vielä mitään jonossa. Lähetä kirjanmerkkejä tähän mistä tahansa näkymästä — rivin lentokonepainikkeesta tai hiiren kakkospainikkeen valikosta — ja järjestä sekä arkistoi ne joukkona."
+    "message": "Mitään ei ole vielä odotettavana. Lähetä kirjanmerkkejä tänne mistä tahansa näkymästä — rivin lentokonepainikkeella tai pikavalikosta — ja järjestä sekä arkistoi ne sitten massaesioperaationa."
   },
   "stagingFav": {
     "message": "Suosikki"
@@ -1801,13 +1801,13 @@
     }
   },
   "stagingFolderEmpty": {
-    "message": "Tässä kansiossa ei ole kirjanmerkkejä odotuslistalle"
+    "message": "Tässä kansiossa ei ole kirjanmerkkejä odotusalueelle"
   },
   "stagingFromHistory": {
     "message": "Historiasta"
   },
   "stagingFull": {
-    "message": "Odotuslista on täynnä — poista ensin joitakin kohteita"
+    "message": "Odotusalue on täynnä — poista ensin joitakin kohteita"
   },
   "stagingGroupAssign": {
     "message": "Ryhmä…"
@@ -1888,10 +1888,10 @@
     }
   },
   "stagingRemove": {
-    "message": "Poista odotuslistalta"
+    "message": "Poista odotusalueelta"
   },
   "stagingRemoved": {
-    "message": "Poistettu odotuslistalta"
+    "message": "Poistettu odotusalueelta"
   },
   "stagingRemovedCount": {
     "message": "Poistettu $n$ kohdetta odotusalueelta",
@@ -2439,10 +2439,10 @@
     }
   },
   "tabRowStage": {
-    "message": "Lähetä välitykseen"
+    "message": "Lähetä odotusalueelle"
   },
   "tabgroupStageAll": {
-    "message": "Lähetä ryhmä välitykseen"
+    "message": "Lähetä ryhmä odotusalueelle"
   },
   "tabgroupStageConfirm": {
     "message": "Lähetetäänkö $n$ välilehteä välitykseen?",
@@ -2562,7 +2562,7 @@
     }
   },
   "viewRecent": {
-    "message": "Vaiheistus"
+    "message": "Odotusalue"
   },
   "viewSearch": {
     "message": "Haku"

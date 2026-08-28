@@ -60,7 +60,7 @@
     "message": "Добавить в папку закладок"
   },
   "bookmarkOpenInExistingGroup": {
-    "message": "Открыть в существующей группе вкладок…"
+    "message": "Открыть в существующей группе…"
   },
   "bookmarkOpenInNewGroup": {
     "message": "Открыть в новой группе вкладок"
@@ -871,7 +871,7 @@
     "message": "Открыть все закладки"
   },
   "openBookmarksInExistingGroup": {
-    "message": "Открыть все в существующей группе вкладок…"
+    "message": "Открыть все в существующей…"
   },
   "openBookmarksInGroup": {
     "message": "Открыть все в новой группе вкладок"
@@ -928,7 +928,7 @@
     "message": "Свернуть пункты добавления папки"
   },
   "optionCollapseAddFolderMenuHint": {
-    "message": "将添加文件夹条目（文件夹行上的之前/之后/内部，书签行上的之前/之后）合并为一个子菜单条目。"
+    "message": "Объединяет записи добавления папки (до/после/внутри на строках папок, до/после на строках закладок) в один пункт подменю."
   },
   "optionCollapseSortMenu": {
     "message": "Свернуть пункты сортировки в одно подменю «Сортировка»"
@@ -1095,10 +1095,10 @@
     "message": "Показывать вкладки видов под строкой поиска"
   },
   "optionStagingEnabled": {
-    "message": "Включить промежуточную зону"
+    "message": "Включить область подготовки"
   },
   "optionStagingEnabledHint": {
-    "message": "Когда выключено, этот вид показывает только список недавно добавленных, а все кнопки и пункты меню промежуточной зоны в других видах скрываются."
+    "message": "Пока выключена, этот режим хранит только список недавних добавлений; все кнопки и пункты меню подготовки в других режимах скрываются."
   },
   "optionStatsEnabled": {
     "message": "Включить статистику посещений"
@@ -1199,15 +1199,15 @@
     }
   },
   "optionsStagingSection": {
-    "message": "Промежуточная зона и недавно добавленные"
+    "message": "Подготовка и недавние добавления"
   },
   "optionsStorageLocalTip": {
     "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting).",
-    "message": "仅存储在此设备上 — 不通过 Chrome 同步共享。"
+    "message": "Хранится только на этом устройстве — не передаётся через синхронизацию Chrome."
   },
   "optionsStorageSyncTip": {
     "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting).",
-    "message": "通过您的 Chrome 账户同步 — 此设置将在您的设备间共享。"
+    "message": "Синхронизируется через аккаунт Chrome — эта настройка общая для ваших устройств."
   },
   "optionsVersion": {
     "message": "Версия vBookmarks"
@@ -1471,7 +1471,7 @@
     "message": "Недавно добавленные"
   },
   "recentStageAll": {
-    "message": "Отложить все недавние"
+    "message": "Отправить недавние добавления в подготовку"
   },
   "recentStageGroup": {
     "message": "Отправить $t$ в область подготовки",
@@ -1706,10 +1706,10 @@
     }
   },
   "stagingAdd": {
-    "message": "Отправить в staging"
+    "message": "Отправить в подготовку"
   },
   "stagingAdded": {
-    "message": "Отправлено в staging"
+    "message": "Отправлено в подготовку"
   },
   "stagingAddedSummary": {
     "message": "Добавлено: $n$; уже было: $m$",
@@ -1723,7 +1723,7 @@
     }
   },
   "stagingAlready": {
-    "message": "Уже в отложенном"
+    "message": "Уже в области подготовки"
   },
   "stagingBucketFavAll": {
     "message": "Добавить все в избранное"
@@ -1732,10 +1732,10 @@
     "message": "Без закладок"
   },
   "stagingClear": {
-    "message": "Очистить очередь"
+    "message": "Очистить подготовку"
   },
   "stagingClearConfirm": {
-    "message": "Очистить всю очередь? Дерево закладок не изменится."
+    "message": "Очистить всю область подготовки? Дерево закладок не затрагивается."
   },
   "stagingClearConfirmOk": {
     "message": "Очистить"
@@ -1763,7 +1763,7 @@
     }
   },
   "stagingCount": {
-    "message": "В очереди: $n$",
+    "message": "$n$ в подготовке",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -1787,7 +1787,7 @@
     }
   },
   "stagingEmpty": {
-    "message": "Пока ничего не добавлено. Отправляйте сюда закладки из любого вида — кнопкой самолёта в строке или через контекстное меню — затем сортируйте и раскладывайте их пакетно."
+    "message": "Пока ничего не подготовлено. Отправляйте закладки сюда из любого режима — кнопкой-самолётом на строке или через контекстное меню — затем разбирайте и раскладывайте их пакетно."
   },
   "stagingFav": {
     "message": "В избранное"
@@ -1807,7 +1807,7 @@
     "message": "Из истории"
   },
   "stagingFull": {
-    "message": "Область отложенного заполнена — удалите некоторые элементы"
+    "message": "Область подготовки заполнена — сначала уберите часть элементов"
   },
   "stagingGroupAssign": {
     "message": "Группа…"
@@ -1888,10 +1888,10 @@
     }
   },
   "stagingRemove": {
-    "message": "Убрать из отложенного"
+    "message": "Убрать из области подготовки"
   },
   "stagingRemoved": {
-    "message": "Убрано из отложенного"
+    "message": "Убрано из области подготовкиовки"
   },
   "stagingRemovedCount": {
     "message": "Удалено из очереди: $n$",
@@ -2439,10 +2439,10 @@
     }
   },
   "tabRowStage": {
-    "message": "В очередь"
+    "message": "Отправить в подготовку"
   },
   "tabgroupStageAll": {
-    "message": "Группу в очередь"
+    "message": "Отправить группу в подготовку"
   },
   "tabgroupStageConfirm": {
     "message": "Отправить $n$ вкладок в очередь?",
@@ -2562,7 +2562,7 @@
     }
   },
   "viewRecent": {
-    "message": "Промежуточное хранение"
+    "message": "Подготовка"
   },
   "viewSearch": {
     "message": "Поиск"

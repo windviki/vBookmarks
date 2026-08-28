@@ -112,7 +112,43 @@ SUSPECT_ALLOWLIST = {
     # terms — "Markdown" and "JSON" are not translated in any locale.
     'folderCopyMarkdown',
     'folderCopyJson',
+    # 2026-08-28 审阅轮扩充：品牌/链接文字与技术词在多数语言保留原形
+    # （fr/es 等已真正翻译的 locale 不会 == en，不受影响）。
+    'optionsGithubLink',   # the visible link text is just "GitHub"
+    'versionDialogTitle',  # "vBookmarks" brand
+    'versionMetaOS',       # "OS:" value label
+    'versionMetaUserAgent',
+    'optionZoom',          # "Zoom"
+    'deadPause',           # "Pause"
+    'favSrcProxy',         # "Proxy"
+    'deadProxyLabel',      # "Proxy: $server$" (prefix untranslated by convention)
+    'stagingShortcutAlias',  # "Alias"
+    'optionLanguageAuto',  # "auto" enum-style value
+    'favSrcDirect',        # "Direct"
 }
+
+# 2026-08-28 审阅轮新增机检 --------------------------------------------------
+# 1) 串语检测：这些 locale 之外的 messages 出现 CJK 统一表文字即 ERROR
+#    （th/vi/id/tr 曾整句混入中文——verify 当时只查占位符与长度，全放行了）。
+CJK_SCRIPT_LOCALES = {'zh', 'zh_CN', 'zh_HK', 'zh_TW', 'ja'}
+CJK_CHAR_RE = re.compile(r'[\u4e00-\u9fff]')
+# 2) 简繁检测：zh_TW/zh_HK 里出现简体专属字形即 ERROR（当轮 25+ 键中招）。
+#    只列简繁字形确实不同的常用对，避免简繁同形字误报。
+SIMPLIFIED_TRADITIONAL_PAIRS = (
+    '暂暫 删刪 设設 为為 后後 记記 区區 线線 击擊 选選 环環 闭閉 从從 发發'
+    '变變 见見 观觀 规規 检檢 体體 备備 书書 档檔 页頁 签簽 开開 问問 题題'
+    '访訪 统統 项項 组組 视視 隐隱 认認 样樣 边邊 门門 过過 还還 进進 当當'
+    '执執 扫掃 测測 类類 无無 标標 读讀 怀懷 号號 码碼 单單 张張 级級 联聯'
+    '时時 间間 风風 终終 语語 华華 层層 浅淺 识識 货貨 复復 确确 个個'
+).split()
+
+def simplified_hits(text):
+    hits = []
+    for pair in SIMPLIFIED_TRADITIONAL_PAIRS:
+        s = pair[0]
+        if s in text:
+            hits.append(s)
+    return hits
 
 # locale -> language name used in the translation prompt
 LOCALE_NAMES = {
@@ -180,21 +216,56 @@ PROMPT_SYSTEM = (
     '熟悉浏览器扩展产品的界面文案风格，译文准确、精炼、地道。'
 )
 
+# 2026-08-28 翻译审阅轮定案的术语表：staging 在各语言的既定译法（维护者人工
+# 校订）。translate 时拼进 prompt——上次大面积"舞台/剧本/试验阶段"错译与
+# 同 locale 多键漂移的根因就是缺这张表。新增语言/改译法时同步维护这里。
+STAGING_TERMS = {
+    'fr': 'zone de préparation', 'es': 'área de preparación',
+    'it': 'area di preparazione', 'pt': 'área de preparação',
+    'pt_BR': 'área de preparação', 'pt_PT': 'área de preparação',
+    'de': 'Staging-Bereich', 'nl': 'wachtruimte',
+    'ru': 'область подготовки', 'uk': 'область підготовки',
+    'pl': 'poczekalnia', 'ar': 'منطقة الإعداد',
+    'bg': 'подготвителна зона', 'el': 'περιοχή προετοιμασίας',
+    'he': 'אזור ההכנה', 'tr': 'hazırlık alanı',
+    'lt': 'paruošimo sritis', 'lv': 'sagatavošanas zona',
+    'mk': 'подготвителна зона', 'hr': 'pripremno područje',
+    'hu': 'előkészítő terület', 'ro': 'zona de pregătire',
+    'da': 'staging-området', 'sv': 'mellanlagringen',
+    'fi': 'odotusalue', 'et': 'ooteala', 'fa': 'منطقه موقت',
+    'id': 'area penampungan', 'vi': 'vùng chờ',
+    'th': 'พื้นที่จัดเตรียม', 'bn': 'স্টেজিং', 'hi': 'स्टेजिंग',
+    'zh': '暂存区', 'zh_CN': '暂存区', 'zh_HK': '暫存區', 'zh_TW': '暫存區',
+    'cs': 'staging', 'sk': 'staging', 'no': 'staging-området',
+    'ja': 'ステージング', 'ko': '스테이징',
+}
+
 PROMPT_USER_TEMPLATE = """以下是 Chrome 书签管理扩展 vBookmarks 的界面文案，请从英文翻译为{language}。
 
-下面以 JSON 数组逐条给出待翻译条目，每项包含：key（键名）、english（英文原文）、category（用途类别：右键菜单项 / 对话框文本 / 设置选项 / 扩展清单描述 / 一般界面元素）。
+下面以 JSON 数组逐条给出待翻译条目，每项包含：key（键名）、english（英文原文）、category（用途类别：右键菜单项 / 对话框文本 / 设置选项 / 扩展清单描述 / 一般界面元素）；右键菜单项额外带 budget（字符上限，CJK 文字减半），译文必须在 budget 之内。
 
 翻译要求：
-1. 准确但精炼，符合目标语言的软件界面表达习惯。
-2. 用途类别为"右键菜单项"的文案必须短促：尽量不超过 20 个字符或 6 个单词，参考英文原文的长度。
-3. 用途类别为"设置选项"或"对话框文本"的文案可以自然完整，但避免冗余。
-4. 保留 $name$、$1 等占位符原样不动，不得翻译、改写或增删。
-5. 品牌名 vBookmarks 不翻译。
-6. 输出严格的 JSON 对象，格式为 {{"key": "译文", ...}}，键集合必须与输入完全一致；不要输出任何其他内容（不要解释、不要使用 Markdown 代码块）。
+1. 输出语言只能是{language}——严禁输出中文、英文或任何第三种语言（品牌 vBookmarks、以及 Proxy / Zoom / Alias / Markdown / JSON 这类目标语言惯例保留的技术词除外）。
+2. 术语必须遵循下表（本扩展的核心概念，已人工定案；同批所有条目必须使用同一译法）：
+   - staging（暂存区/工作台概念）= {staging_term}
+   - tab group = 目标语言中 Chrome 浏览器的官方术语
+   - separator = 目标语言中的"分隔线/分隔符"术语；bookmark 一律按"书签"概念翻译，不得译成"收藏/favorite"
+3. 准确但精炼，符合目标语言的软件界面表达习惯。
+4. 右键菜单项必须短促：不超过 budget 字符（参考英文原文长度）。
+5. 设置选项与对话框文本可自然完整，但避免冗余。
+6. 大小写遵循目标语言惯例：非英语语言一律句式大小写（仅句首/专有名词大写），严禁模仿英文 Title Case。
+7. {script_note}保留 $name$、$1 等占位符原样不动，不得翻译、改写或增删；品牌名 vBookmarks 不翻译。
+8. 输出严格的 JSON 对象，格式为 {{"key": "译文", ...}}，键集合必须与输入完全一致；不要输出任何其他内容（不要解释、不要使用 Markdown 代码块）。
 
 待翻译条目（JSON 数组）：
 {items}
 """
+
+# zh_TW/zh_HK 批次附加的字形叮嘱（2026-08-28 简繁混排事故后常驻）
+SCRIPT_NOTES = {
+    'zh_TW': '必须使用台湾正体字形与用语（暂存/刪除/新增/分隔線/設定/書籤），严禁任何简体字形（暂→暫、删→刪、添加→新增、分隔符→分隔線）；',
+    'zh_HK': '必須使用香港繁體字形與用語，嚴禁任何簡體字形；',
+}
 
 PROMPT_SHORTEN_TEMPLATE = """以下是 Chrome 书签管理扩展 vBookmarks 的右键菜单项文案（{language}），现有译文过长，超出了菜单宽度限制，需要缩短。
 
@@ -640,6 +711,8 @@ def llm_translate_chunk(items, language, cfg, template=PROMPT_USER_TEMPLATE,
     """One LLM request for a chunk of items; returns {key: translation}."""
     payload = json.dumps(items, ensure_ascii=False, indent=2)
     user = template.format(language=language, items=payload,
+                           staging_term='(未在术语表中——按"暂存/准备区"概念意译并保持全批一致)',
+                           script_note='',
                            **(extra_format or {}))
     messages = [
         {'role': 'system', 'content': PROMPT_SYSTEM},
@@ -730,6 +803,11 @@ def cmd_translate(args):
               f'(缺失 {len(analysis["missing"])}, TODO {len(analysis["todo"])}), 目标语言: {language}')
 
         translations = {}
+        # per-locale prompt context: the settled staging term + script notes
+        extra_format = {
+            'staging_term': STAGING_TERMS.get(loc, '（未定案——意译为"暂存/准备区"概念并保持全批一致）'),
+            'script_note': SCRIPT_NOTES.get(loc, ''),
+        }
         try:
             for start in range(0, len(pending), TRANSLATE_CHUNK_SIZE):
                 chunk = pending[start:start + TRANSLATE_CHUNK_SIZE]
@@ -737,9 +815,15 @@ def cmd_translate(args):
                     'key': key,
                     'english': en_data[key]['message'],
                     'category': CATEGORY_LABELS_ZH[categories[key]],
+                    # menu items carry their character budget up front so the
+                    # FIRST translation fits (verify --fix used to clean up
+                    # after — now it should have nothing to do)
+                    **({'budget': max_len_for(en_data[key]['message'])}
+                       if categories[key] == 'menu' else {}),
                 } for key in chunk]
                 print(f'  请求 LLM: 键 {start + 1}-{start + len(chunk)}/{len(pending)} ...')
-                result = llm_translate_chunk(items, language, cfg)
+                result = llm_translate_chunk(items, language, cfg,
+                                             extra_format=extra_format)
                 validate_translations(chunk, result, en_data)
                 translations.update(result)
         except (RuntimeError, ValueError) as e:
@@ -822,6 +906,23 @@ def cmd_verify(args):
             if len(msg) > limit:
                 warnings.append((loc, f'菜单项过长: {key} ({len(msg)}ch > {limit}ch): "{msg}"'))
                 overflow.setdefault(loc, []).append((key, msg, limit))
+
+        # 2026-08-28 机检 1 — 串语：非 CJK 语系的译文里出现汉字即错
+        # （th/vi/id/tr 曾整句混入中文而旧 verify 全放行）。
+        if loc not in CJK_SCRIPT_LOCALES:
+            for key, entry in data.items():
+                msg = entry.get('message', '')
+                if msg and not is_todo_message(msg) and CJK_CHAR_RE.search(msg):
+                    errors.append((loc, f'串语（译文含汉字）: {key}: "{msg[:40]}"'))
+        # 机检 2 — 简繁：zh_TW/zh_HK 出现简体专属字形即错（当轮 25+ 键中招）。
+        if loc in ('zh_TW', 'zh_HK'):
+            for key, entry in data.items():
+                msg = entry.get('message', '')
+                if msg and not is_todo_message(msg):
+                    hits = simplified_hits(msg)
+                    if hits:
+                        errors.append((loc, f'简体字形混入繁体: {key} '
+                                            f'({" ".join(sorted(set(hits)))}): "{msg[:40]}"'))
 
     for loc, msg in errors:
         print(f'[ERROR]   {loc}: {msg}')

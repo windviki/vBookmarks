@@ -27,7 +27,7 @@
     "message": "Legg Til Mappe Før Dette"
   },
   "addSeparator": {
-    "message": "Legg Til Skillelinje"
+    "message": "Legg til skillelinje"
   },
   "advancedOptions": {
     "message": "Avanserte Alternativer"
@@ -48,7 +48,7 @@
     "message": "Hva er nytt i v4.0.8"
   },
   "announceV410Text": {
-    "message": "v4.1.0 新增标签组视图和暂存区：在书签旁管理每个窗口的标签页，并将任意位置的书签收集到暂存工作台进行批量整理。"
+    "message": "v4.1.0 legger til fanegruppe-visningen og staging-området: håndter fanene i hvert vindu ved siden av bokmerkene dine, og saml bokmerker fra hvor som helst i et staging-område for masssortering."
   },
   "announceV410Title": {
     "message": "Nyheter i v4.1.0"
@@ -871,7 +871,7 @@
     "message": "Åpne Alle Bokmerker"
   },
   "openBookmarksInExistingGroup": {
-    "message": "Åpne alle i eksisterende fanegruppe…"
+    "message": "Åpne alle i eksisterende gruppe…"
   },
   "openBookmarksInGroup": {
     "message": "Åpne alle i ny fane-gruppe"
@@ -1203,11 +1203,11 @@
   },
   "optionsStorageLocalTip": {
     "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting).",
-    "message": "仅存储在此设备上 — 不通过 Chrome 同步共享。"
+    "message": "Lagret kun på denne enheten — deles ikke via Chrome-synkronisering."
   },
   "optionsStorageSyncTip": {
     "description": "Tooltip of the cloud / crossed-cloud storage badge on the options page (synced vs device-local setting).",
-    "message": "通过 Chrome 账户同步 — 此设置在你的设备间共享。"
+    "message": "Synkronisert via Chrome-kontoen din — denne innstillingen deles mellom enhetene dine."
   },
   "optionsVersion": {
     "message": "vBookmarks-versjon"
