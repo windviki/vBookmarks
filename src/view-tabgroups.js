@@ -33,7 +33,7 @@
  * dropping callbacks.
  */
 
-import { VIEW_ICONS, STAR_ICON, STAR_ICON_FILLED, SELECT_ICON, FOLDER_STAR_ICON, FOLDER_PLUS_ICON, EDIT_ICON, SLEEP_ICON, SLEEP_ICON_FILLED, ACTIVATE_ICON, TRASH_ICON, REDO_ICON, COLLAPSE_ALL_ICON, EXPAND_ALL_ICON, PIN_ICON, PIN_ICON_FILLED, STAGE_ICON, STAGE_ICON_DONE, TABS_ICON, WINDOW_PLUS_ICON, CHEVRON_ICON, spriteIcon } from './icons.js';
+import { VIEW_ICONS, STAR_ICON, SELECT_ICON, FOLDER_STAR_ICON, FOLDER_PLUS_ICON, SLEEP_ICON, TRASH_ICON, REDO_ICON, COLLAPSE_ALL_ICON, EXPAND_ALL_ICON, TABS_ICON, WINDOW_PLUS_ICON, CHEVRON_ICON, spriteIcon } from './icons.js';
 
     // 2026-08-28 行级图标精灵化（perf 任务①）：行/组头乘数大的按钮图标引用
     // 文档级 <symbol>（icons.js ICON_SPRITE_SHEET，neat.js 启动注入），每行省
@@ -1099,6 +1099,7 @@ export function initViewTabGroups(ctx = {}) {
                 tryScrollToCurrent(null);   // target may sit in the head batch
             },
             onChunk: (el, from, end) => {
+                refitDragMarks();
                 tryUnparkRow();
                 onRowsRendered();
                 tryScrollToCurrent(end);
@@ -3160,8 +3161,8 @@ export function initViewTabGroups(ctx = {}) {
     // the drop zone reads as the destination window, not one row.
     let dragWindowId = null;
     let dropTargetWindowId = null;
-    const setWindowDropTarget = wid => {
-        if (dropTargetWindowId === wid)
+    const setWindowDropTarget = (wid, force) => {
+        if (!force && dropTargetWindowId === wid)
             return;
         if ($list.querySelectorAll) {
             const prev = dropTargetWindowId !== null
@@ -3176,6 +3177,35 @@ export function initViewTabGroups(ctx = {}) {
             }
         }
         dropTargetWindowId = wid;
+    };
+    // Mid-drag rewindows (the browser auto-scrolls the list while a drag
+    // hovers its edge → scroll → the painter re-applies the window from
+    // pieces[] HTML) rebuild every row node: the drag session's visual
+    // state — the .dragging source row, the merge target's
+    // .window-drop-target section — dies with the old nodes. The session
+    // ids live in this closure, so re-apply them onto the fresh nodes
+    // right after each chunk. (The DROP itself never needed this: it reads
+    // dataset off whatever node is under the cursor at release; the
+    // per-row .drag-over indicator is likewise re-added by the browser's
+    // next dragover. The orphan case — source row scrolled OUT of the
+    // window — finds no node and skips; the drag continues regardless.)
+    const refitDragMarks = () => {
+        if (!$list.querySelector)
+            return;
+        if (dragTabId !== null && dragTabId !== undefined) {
+            const src = $list.querySelector(
+                `li.tabgroups-row[data-tab-id="${CSS.escape ? CSS.escape(dragTabId) : dragTabId}"]`);
+            if (src && src.classList && !src.classList.contains('dragging'))
+                src.classList.add('dragging');
+        }
+        if (dragWindowId !== null && dragWindowId !== undefined) {
+            const head = $list.querySelector(
+                `li.tabgroups-window-head[data-window-id="${CSS.escape ? CSS.escape(String(dragWindowId)) : dragWindowId}"]`);
+            if (head && head.classList && !head.classList.contains('dragging'))
+                head.classList.add('dragging');
+        }
+        if (dropTargetWindowId !== null && dropTargetWindowId !== undefined)
+            setWindowDropTarget(dropTargetWindowId, true);
     };
     $list.addEventListener('dragstart', e => {
         const closest = (e.target && e.target.closest) ? e.target.closest.bind(e.target) : () => null;
