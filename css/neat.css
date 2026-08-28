@@ -854,8 +854,21 @@ menu[type=context] .menu-item:focus {
     animation-duration: 3s;
 }
 
+/* position:fixed (2026-08-28 edge-drag audit): the clone follows the cursor
+   to the popup's edge, and an absolutely-positioned body child EXTENDS the
+   document's scrollable overflow there (repro diag-edge-drag.js: the body's
+   scrollWidth grows +86px with the clone out) — in the real popup the
+   viewport is exactly the body width, so that overflow made the whole view
+   horizontally scrollable mid-drag: a wheel/trackpad pan (or the browser's
+   HTML5-drag edge auto-scroll) shifted the view left with a blank strip on
+   the right. Fixed-position boxes never contribute to scrollable overflow,
+   which kills the whole class in every direction. The coordinate math in
+   dnd.js is unchanged: body sits at the viewport origin and never scrolls
+   (its overflow:hidden propagates to the viewport), so viewport coords ==
+   the old body-absolute coords, including the /zoomLevel conversions —
+   CSS zoom applies to this element either way. */
 #bookmark-clone {
-    position: absolute;
+    position: fixed;
     left: -999px;
     margin: -1em 0 0 -24px;
     white-space: nowrap;
@@ -885,7 +898,9 @@ menu[type=context] .menu-item:focus {
 #drop-overlay {
     display: block;
     width: 100%;
-    position: absolute;
+    /* fixed for the same overflow reason as #bookmark-clone (its left/width
+       on a deeply indented row can poke past the body's right edge) */
+    position: fixed;
     left: -999px;
     pointer-events: none;
     margin: -1px 0 0;
