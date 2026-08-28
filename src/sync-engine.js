@@ -15,12 +15,18 @@
  * which fabricated green dots, and its cache-write shapes never matched
  * its cache reads anyway).
  *
- * Refresh triggers: the seven chrome.bookmarks event classes, the
- * `vbm-sync-refresh` chrome.alarms periodical (driven by the
- * autoRefreshSync / syncRefreshInterval settings in chrome.storage.sync)
+ * Refresh triggers: the seven chrome.bookmarks event classes (the four
+ * id-bearing ones batched into one debounced pass, and all four disabled
+ * on Chrome <138 — node.syncing is undefined there, so recomputes can only
+ * re-derive "unknown"), the `vbm-sync-refresh` chrome.alarms periodical
+ * (driven by the autoRefreshSync / syncRefreshInterval settings in
+ * chrome.storage.sync, and gated on showSyncStatus + Chrome ≥138 as well)
  * and two fire-and-forget runtime messages from pages:
  *   { type: 'vbm-sync-refresh' }                    → recompute the whole tree
  *   { type: 'vbm-sync-status-request', ids: [...] } → recompute these ids
+ *
+ * The message handlers stay live on old Chrome: they are what paints the
+ * 'unsyncable' markers (blacklisted URL schemes) when a page asks.
  *
  * The module only touches the chrome global inside functions, so tests can
  * inject a double on globalThis before calling createSyncEngine().
@@ -51,6 +57,27 @@ const _m = (key, fallback) => {
         return chrome.i18n.getMessage(key) || fallback;
     } catch (error) {
         return fallback;
+    }
+};
+
+// Chrome 138+ exposes node.syncing; below it the tree walk can only stamp
+// every node "unknown", so the periodic alarm and the event-driven
+// recomputes are pure IPC waste and stay off (page-driven status requests
+// still run — they paint the 'unsyncable' markers on old Chrome). No
+// SW-side version probe existed when this gate was added
+// (src/version-info.js's parseBrowser is page-side display logic that
+// prefers the Edg/OPR distributor tokens over the engine version), so this
+// is the minimal parse: every Chromium UA carries the engine version in
+// its Chrome/ token. Fail-open — an unparsable UA keeps the engine fully
+// active (worst case = the old behavior).
+const SYNCING_SINCE_CHROME = 138;
+const syncingSupported = () => {
+    try {
+        const ua = (typeof navigator !== 'undefined' && navigator.userAgent) || '';
+        const m = /Chrome\/(\d+)/.exec(ua);
+        return !m || +m[1] >= SYNCING_SINCE_CHROME;
+    } catch (error) {
+        return true;
     }
 };
 
@@ -114,16 +141,36 @@ export const createSyncEngine = () => {
     // Debounced publish: bursts of bookmark events (imports, bulk moves)
     // collapse into one session write. Losing a write to a SW shutdown is
     // fine — the next event or alarm rebuilds the map from scratch.
+    let lastFingerprint = null;
     const flush = () => {
         clearTimeout(flushTimer);
         flushTimer = setTimeout(() => {
             flushTimer = null;
             try {
+                // Skip the rewrite when the published map is unchanged — the
+                // page side diffs before dispatching, but the SW wake +
+                // serialize + session write + onChanged fan-out still cost.
+                // The fingerprint ignores `ts` (recomputeAll re-stamps it on
+                // every run) and walks sorted ids, so a delete+re-set can't
+                // reorder an unchanged map into a different string.
+                const fingerprint = JSON.stringify([...statusMap.keys()].sort()
+                    .map(id => {
+                        const entry = statusMap.get(id);
+                        return [id, entry.indicator, entry.tooltip];
+                    }));
+                if (fingerprint === lastFingerprint) {
+                    return;
+                }
                 const write = chrome.storage.session.set({
                     [SYNC_STORAGE_KEY]: Object.fromEntries(statusMap)
                 });
-                if (write && typeof write.catch === 'function') {
-                    write.catch(() => {});
+                if (write && typeof write.then === 'function') {
+                    // Mark published only once the write lands: a rejected
+                    // write keeps the old fingerprint, so the next trigger
+                    // still republishes (the pre-diff retry semantics).
+                    write.then(() => { lastFingerprint = fingerprint; }, () => {});
+                } else {
+                    lastFingerprint = fingerprint;
                 }
             } catch (error) {
                 // Session area rejected the write — the next trigger republishes.
@@ -165,6 +212,25 @@ export const createSyncEngine = () => {
         flush();
     };
 
+    // Burst collector for the four id-bearing bookmark events: a recursive
+    // folder sort fires one onMoved per moved node, and wiring each event
+    // straight to recomputeIds would serialize N chrome.bookmarks.get IPCs
+    // (the visit-stats onMoved debounce, src/visit-stats-sw.js, exists for
+    // the same reason). Ids gather in a Set; 300ms after the last event a
+    // single recomputeIds pass walks them (one flush at its end).
+    let pendingIds = new Set();
+    let idsTimer = null;
+    const scheduleRecompute = id => {
+        pendingIds.add(id);
+        clearTimeout(idsTimer);
+        idsTimer = setTimeout(() => {
+            idsTimer = null;
+            const ids = [...pendingIds];
+            pendingIds = new Set();
+            recomputeIds(ids);
+        }, 300);
+    };
+
     // autoRefreshSync may be stored as 'true'/'false' strings (options.js)
     // or booleans (older versions) — treat both false spellings as off.
     // chrome.alarms hard-rejects periods below 0.5 minutes, so legacy 20-29s
@@ -173,7 +239,13 @@ export const createSyncEngine = () => {
         if (!chrome.alarms) {
             return;
         }
-        const enabled = settings.autoRefreshSync !== 'false' && settings.autoRefreshSync !== false;
+        // Gated on showSyncStatus too (same off-spellings): with the
+        // indicators hidden the periodic republish serves nobody. And on
+        // Chrome <138 (see syncingSupported) node.syncing is undefined, so a
+        // timed recompute can only re-derive the same all-unknown map.
+        const enabled = settings.autoRefreshSync !== 'false' && settings.autoRefreshSync !== false
+            && settings.showSyncStatus !== 'false' && settings.showSyncStatus !== false
+            && syncingSupported();
         if (!enabled) {
             const cleared = chrome.alarms.clear(REFRESH_ALARM);
             if (cleared && typeof cleared.catch === 'function') {
@@ -195,7 +267,7 @@ export const createSyncEngine = () => {
         for (const key of Object.keys(settings)) {
             if (key in changes) {
                 settings[key] = changes[key].newValue;
-                if (key === 'autoRefreshSync' || key === 'syncRefreshInterval') {
+                if (key === 'autoRefreshSync' || key === 'syncRefreshInterval' || key === 'showSyncStatus') {
                     alarmTouched = true;
                 }
             }
@@ -207,14 +279,20 @@ export const createSyncEngine = () => {
 
     const start = () => {
         // The seven bookmark event classes the old page-side manager watched.
-        chrome.bookmarks.onCreated.addListener(id => recomputeIds([id]));
-        chrome.bookmarks.onChanged.addListener(id => recomputeIds([id]));
+        // The four id-bearing recompute triggers go through the debounced
+        // collector and stay off entirely on Chrome <138 (see
+        // syncingSupported); onRemoved/onImport* are immediate as before —
+        // they keep the published map honest, not recompute it.
+        if (syncingSupported()) {
+            chrome.bookmarks.onCreated.addListener(id => scheduleRecompute(id));
+            chrome.bookmarks.onChanged.addListener(id => scheduleRecompute(id));
+            chrome.bookmarks.onMoved.addListener(id => scheduleRecompute(id));
+            chrome.bookmarks.onChildrenReordered.addListener(id => scheduleRecompute(id));
+        }
         chrome.bookmarks.onRemoved.addListener(id => {
             statusMap.delete(id);
             flush();
         });
-        chrome.bookmarks.onMoved.addListener(id => recomputeIds([id]));
-        chrome.bookmarks.onChildrenReordered.addListener(id => recomputeIds([id]));
         chrome.bookmarks.onImportBegan.addListener(() => {
             statusMap.clear();
             flush();

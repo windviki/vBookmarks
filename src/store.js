@@ -8,9 +8,12 @@
  *    legacy synchronous call sites can read/write settings synchronously.
  *    At script evaluation time the mirror is synchronously pre-filled with the
  *    extension's known keys from localStorage (zero regression for old users),
- *    then asynchronously overlaid with chrome.storage.local, which is the
- *    source of truth. `store.ready` resolves once the overlay and the
- *    migration below have finished; pages must gate their init on it.
+ *    then asynchronously overlaid with an ENUMERATED key set (KNOWN_KEYS +
+ *    SYNC_KEYS + DATA_KEYS + the migration/cleanup keys — see LOCAL_BOOT_KEYS)
+ *    from chrome.storage.local, which is the source of truth; the MB-scale
+ *    favicon cache and the dead-scan blobs are deliberately not mirrored.
+ *    `store.ready` resolves once the overlay and the migration below have
+ *    finished; pages must gate their init on it.
  *    A second mirror covers the chrome.storage.sync area (SYNC_KEYS). Access
  *    is AREA-TRANSPARENT since the 2026-08 storage audit: store.get/set/
  *    remove/adopt (and the getSetting/setSetting/removeSetting helpers)
@@ -128,6 +131,27 @@
         // 4.1.0 实验室: virtual scrolling for the tab-groups/dupes views
         // (options Labs group; local — a per-device experiment, default off)
         'virtualScrollLab'
+    ];
+
+    // Data keys the mirror must serve at boot beyond KNOWN_KEYS (2026-08 perf
+    // audit): read synchronously via store.get by feature modules, but they
+    // are chrome.storage-native datasets, not settings — they never lived in
+    // localStorage, so they stay out of KNOWN_KEYS (which doubles as the
+    // localStorage pre-fill/migration list). Enumerated so init() can fetch
+    // exactly these; every store.get call site resolves to a static key, so
+    // no dynamic family is missed.
+    const DATA_KEYS = [
+        // dead view: per-bookmark mark sets (JSON, bookmark-id keyed, local)
+        'deadMarks', 'deadMarkTimes',
+        // visit-stats counters (JSON, bookmark-id keyed, local)
+        'visitStats',
+        // announcement cache + seen list (remote cache / local bookkeeping)
+        'vbmAnnounce', 'vbmAnnounceSeen',
+        // dupes view snapshot cache (JSON — the deadLastScan recipe, but the
+        // dupes view hydrates synchronously from the mirror at init)
+        'dupesLastResult',
+        // risk-banner version acks (view-dead / view-dupes)
+        'deadRiskAck', 'dupesRiskAck'
     ];
 
     // Keys that live in chrome.storage.sync (user preferences synced across
@@ -386,9 +410,21 @@
         resolveReady = resolve;
     });
 
+    // The exact local-area keys init() fetches: the mirror catalogs plus the
+    // sync catalog (local residue feeds the local→sync migration below) plus
+    // the migration flag and the retired deadProxyTemplate key (its cleanup
+    // below reads the mirror). Deliberately NEVER null — a full-area get
+    // pulls the MB-scale favicon cache (vbmFavicon:<host> data URLs) and the
+    // dead-scan blobs (vbmDeadScan/deadLastScan) into memory before first
+    // paint; favicon-enrich.js hydrates its own index and view-dead.js reads
+    // those blobs directly, so neither needs the mirror.
+    const LOCAL_BOOT_KEYS = [...new Set([
+        ...KNOWN_KEYS, ...SYNC_KEYS, ...DATA_KEYS, MIGRATION_FLAG, 'deadProxyTemplate'
+    ])];
+
     const init = async () => {
         try {
-            const data = await chrome.storage.local.get(null);
+            const data = await chrome.storage.local.get(LOCAL_BOOT_KEYS);
             // 1b. chrome.storage is the source of truth: overlay onto the mirror
             for (const key in data) {
                 mirror[key] = data[key];

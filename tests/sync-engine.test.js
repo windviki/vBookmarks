@@ -157,6 +157,7 @@ describe('createSyncEngine', () => {
 
     afterEach(() => {
         vi.useRealTimers();
+        vi.unstubAllGlobals();
         delete globalThis.chrome;
     });
 
@@ -206,6 +207,26 @@ describe('createSyncEngine', () => {
             createSyncEngine().start();
             expect(double.calls.alarmCreate).toHaveLength(0);
             expect(double.calls.alarmClear).toEqual([REFRESH_ALARM]);
+        });
+
+        it('clears the alarm instead when showSyncStatus is off', () => {
+            double.chrome.storage.syncValues = { showSyncStatus: 'false' };
+            createSyncEngine().start();
+            expect(double.calls.alarmCreate).toHaveLength(0);
+            expect(double.calls.alarmClear).toEqual([REFRESH_ALARM]);
+        });
+
+        it('reschedules the alarm when showSyncStatus toggles', () => {
+            createSyncEngine().start();
+            expect(double.calls.alarmCreate).toHaveLength(1);
+            double.listeners.storage[0]({ showSyncStatus: { newValue: 'false' } }, 'sync');
+            expect(double.calls.alarmClear).toEqual([REFRESH_ALARM]);
+            double.listeners.storage[0]({ showSyncStatus: { newValue: 'true' } }, 'sync');
+            expect(double.calls.alarmCreate).toHaveLength(2);
+            expect(double.calls.alarmCreate.at(-1)).toEqual({
+                name: REFRESH_ALARM,
+                info: { periodInMinutes: 1 }
+            });
         });
 
         it('reschedules the alarm when the sync settings change', () => {
@@ -286,6 +307,31 @@ describe('createSyncEngine', () => {
             expect(double.calls.sessionSet).toHaveLength(1);
         });
 
+        it('skips the session rewrite when the recomputed map is unchanged', async () => {
+            double.chrome.bookmarks.tree = tree();
+            const engine = createSyncEngine();
+            engine.start();
+            await engine.recomputeAll();
+            vi.advanceTimersByTime(500);
+            await flushMicrotasks(); // let the write's .then mark the fingerprint
+            expect(double.calls.sessionSet).toHaveLength(1);
+
+            // Same tree: recomputeAll re-stamps `ts`, but the fingerprint
+            // ignores it — the identical map must not be republished.
+            await engine.recomputeAll();
+            vi.advanceTimersByTime(500);
+            expect(double.calls.sessionSet).toHaveLength(1);
+
+            // A real status change republishes.
+            const changed = tree();
+            changed[0].children[0].children[0].syncing = false; // id '10'
+            double.chrome.bookmarks.tree = changed;
+            await engine.recomputeAll();
+            vi.advanceTimersByTime(500);
+            expect(double.calls.sessionSet).toHaveLength(2);
+            expect(double.chrome.storage.sessionBlob['10'].indicator).toBe('local');
+        });
+
         it('skips the publish silently when storage.session is unavailable', async () => {
             delete double.chrome.storage.session;
             double.chrome.bookmarks.tree = tree();
@@ -357,14 +403,39 @@ describe('createSyncEngine', () => {
             expect(double.calls.getTree).toBe(before);
         });
 
-        it('recomputes created/changed/moved nodes by id', async () => {
+        it('recomputes created/changed/moved nodes by id after the batched event window', async () => {
             double.chrome.bookmarks.nodes['9'] = { id: '9', title: 'n', url: 'https://n.example/', syncing: true };
             const engine = createSyncEngine();
             engine.start();
             double.listeners.bookmarks.onCreated[0]('9');
-            await flushMicrotasks();
-            vi.advanceTimersByTime(500);
+            vi.advanceTimersByTime(300);  // the debounced collector window
+            await flushMicrotasks();      // the recomputeIds pass resolves
+            vi.advanceTimersByTime(500);  // the flush debounce
             expect(double.chrome.storage.sessionBlob['9'].indicator).toBe('synced');
+        });
+
+        it('collapses a burst of bookmark events into one debounced recompute pass', async () => {
+            double.chrome.bookmarks.nodes['9'] = { id: '9', title: 'n', url: 'https://n.example/', syncing: true };
+            double.chrome.bookmarks.nodes['10'] = { id: '10', title: 'm', url: 'https://m.example/', syncing: false };
+            const engine = createSyncEngine();
+            engine.start();
+            // A recursive folder sort fires one event per node — plus a
+            // duplicate id the Set must dedupe.
+            double.listeners.bookmarks.onCreated[0]('9');
+            double.listeners.bookmarks.onMoved[0]('10');
+            double.listeners.bookmarks.onChanged[0]('9');
+            double.listeners.bookmarks.onChildrenReordered[0]('0');
+            // Nothing is fetched before the 300ms window closes…
+            await flushMicrotasks();
+            expect(double.calls.bookmarkGet).toHaveLength(0);
+            // …then one pass walks the deduped ids in insertion order…
+            vi.advanceTimersByTime(300);
+            await flushMicrotasks();
+            expect(double.calls.bookmarkGet).toEqual(['9', '10', '0']);
+            // …with a single flush at its end.
+            vi.advanceTimersByTime(500);
+            expect(double.calls.sessionSet).toHaveLength(1);
+            expect(double.chrome.storage.sessionBlob['10'].indicator).toBe('local');
         });
 
         it('drops removed nodes from the published map', async () => {
@@ -416,6 +487,54 @@ describe('createSyncEngine', () => {
             await flushMicrotasks();
             expect(double.calls.getTree).toBe(before);
             expect(double.calls.bookmarkGet).toHaveLength(0);
+        });
+    });
+
+    describe('Chrome version gate (node.syncing needs Chrome ≥138)', () => {
+        const UA_137 = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36';
+
+        it('skips the alarm and the four recompute event classes below Chrome 138', () => {
+            vi.stubGlobal('navigator', { userAgent: UA_137 });
+            createSyncEngine().start();
+            // No periodic recompute — the walk could only re-derive "unknown".
+            expect(double.calls.alarmCreate).toHaveLength(0);
+            expect(double.calls.alarmClear).toEqual([REFRESH_ALARM]);
+            // The four id-bearing recompute triggers stay off…
+            for (const name of ['onCreated', 'onChanged', 'onMoved', 'onChildrenReordered']) {
+                expect(double.listeners.bookmarks[name] || []).toHaveLength(0);
+            }
+            // …while the map-honesty events and the message handler stay live.
+            expect(double.listeners.bookmarks.onRemoved).toHaveLength(1);
+            expect(double.listeners.bookmarks.onImportBegan).toHaveLength(1);
+            expect(double.listeners.bookmarks.onImportEnded).toHaveLength(1);
+            expect(double.listeners.message).toHaveLength(1);
+        });
+
+        it('still answers page status requests below Chrome 138 (unsyncable markers)', async () => {
+            vi.stubGlobal('navigator', { userAgent: UA_137 });
+            double.chrome.bookmarks.nodes['7'] = { id: '7', title: 'c', url: 'chrome://extensions/' };
+            const engine = createSyncEngine();
+            engine.start();
+            double.listeners.message[0]({ type: 'vbm-sync-status-request', ids: ['7'] });
+            await flushMicrotasks();
+            vi.advanceTimersByTime(500);
+            expect(double.chrome.storage.sessionBlob['7'].indicator).toBe('unsyncable');
+        });
+
+        it('runs the full engine on Chrome 138+', () => {
+            vi.stubGlobal('navigator', { userAgent: UA_137.replace('Chrome/137', 'Chrome/138') });
+            createSyncEngine().start();
+            expect(double.calls.alarmCreate).toEqual([
+                { name: REFRESH_ALARM, info: { periodInMinutes: 1 } }
+            ]);
+            expect(double.listeners.bookmarks.onMoved).toHaveLength(1);
+        });
+
+        it('fails open when the UA carries no Chrome token', () => {
+            vi.stubGlobal('navigator', { userAgent: 'SomeBot/1.0' });
+            createSyncEngine().start();
+            expect(double.calls.alarmCreate).toHaveLength(1);
+            expect(double.listeners.bookmarks.onMoved).toHaveLength(1);
         });
     });
 });

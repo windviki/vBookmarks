@@ -17,9 +17,11 @@ const createSandbox = ({
     const syncData = chromeSyncData;
     const localSetCalls = [];
     const syncSetCalls = [];
+    const localGetCalls = [];
 
-    const makeArea = (data, record) => ({
+    const makeArea = (data, record, getRecord) => ({
         get: async keys => {
+            if (getRecord) getRecord.push(keys);
             if (keys === null || keys === undefined) return { ...data };
             if (typeof keys === 'string') return { [keys]: data[keys] };
             if (Array.isArray(keys)) {
@@ -45,7 +47,7 @@ const createSandbox = ({
 
     const chrome = {
         storage: {
-            local: makeArea(localData, localSetCalls),
+            local: makeArea(localData, localSetCalls, localGetCalls),
             sync: makeArea(syncData, syncSetCalls)
         }
     };
@@ -66,7 +68,7 @@ const createSandbox = ({
         window, chrome, localStorage, document
     );
 
-    return { window, chrome, localStorage, lsData, localData, syncData, localSetCalls, syncSetCalls };
+    return { window, chrome, localStorage, lsData, localData, syncData, localSetCalls, syncSetCalls, localGetCalls };
 };
 
 afterEach(() => {
@@ -182,6 +184,61 @@ describe('store.js', () => {
             await sb.window.store.ready;
             expect(sb.window.store.get('nope')).toBeUndefined();
             expect(sb.window.store.get('nope', '')).toBe('');
+        });
+    });
+
+    describe('init fetch enumeration (2026-08 perf audit)', () => {
+        it('fetches only the enumerated boot keys — favicon cache bytes are never requested', async () => {
+            const sb = createSandbox({
+                chromeLocalData: {
+                    __migrated_v1: '1',
+                    zoom: '120',
+                    visitStats: '{"1":{"c":2,"t":3}}',
+                    deadMarks: '["5"]',
+                    dupesLastResult: '{"ts":1,"groups":[]}',
+                    'vbmFavicon:example.com': 'data:image/png;base64,AAAA',
+                    vbmFaviconIdx: '{"v":1,"hosts":{}}',
+                    deadLastScan: '{"ts":1}',
+                    vbmDeadScan: '{"state":"done"}'
+                }
+            });
+            await sb.window.store.ready;
+
+            // The boot read names the catalog — never a whole-area get(null)
+            const bootKeys = sb.localGetCalls[0];
+            expect(Array.isArray(bootKeys)).toBe(true);
+            expect(bootKeys).toEqual(expect.arrayContaining([
+                'zoom', 'visitStats', 'deadMarks', 'dupesLastResult', '__migrated_v1'
+            ]));
+            expect(bootKeys.some(k => k.startsWith('vbmFavicon'))).toBe(false);
+            expect(bootKeys).not.toContain('deadLastScan');
+            expect(bootKeys).not.toContain('vbmDeadScan');
+
+            // The mirror serves known + data keys...
+            expect(sb.window.store.get('zoom')).toBe('120');
+            expect(sb.window.store.get('visitStats')).toBe('{"1":{"c":2,"t":3}}');
+            expect(sb.window.store.get('deadMarks')).toBe('["5"]');
+            // ...but not the heavy blobs
+            expect(sb.window.store.get('vbmFaviconIdx')).toBeUndefined();
+            expect(sb.window.store.get('deadLastScan')).toBeUndefined();
+            // and the stored blobs themselves are left untouched
+            expect(sb.localData['vbmFavicon:example.com']).toBe('data:image/png;base64,AAAA');
+            expect(sb.localData.deadLastScan).toBe('{"ts":1}');
+        });
+
+        it('still runs the v1 migration alongside the enumerated fetch', async () => {
+            const sb = createSandbox({
+                localStorageData: { popupHeight: '400' },
+                chromeLocalData: { 'vbmFavicon:example.com': 'data:image/png;base64,AAAA' }
+            });
+            await sb.window.store.ready;
+
+            expect(sb.localData.__migrated_v1).toBe('1');
+            expect(sb.localData.popupHeight).toBe('400');
+            expect(sb.window.store.get('popupHeight')).toBe('400');
+            // the favicon key was neither requested nor mirrored nor touched
+            expect(sb.window.store.get('vbmFavicon:example.com')).toBeUndefined();
+            expect(sb.localData['vbmFavicon:example.com']).toBe('data:image/png;base64,AAAA');
         });
     });
 
