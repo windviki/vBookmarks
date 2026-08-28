@@ -73,8 +73,12 @@
         if (IS_PANEL) {
             return;
         }
-        // Restore size
-        const popupHeight = await getSetting('popupHeight', '');
+        // Restore size — the two reads run in parallel (the serialized awaits
+        // painted the popup at the default size first, then visibly resized).
+        const [popupHeight, popupWidth] = await Promise.all([
+            getSetting('popupHeight', ''),
+            getSetting('popupWidth', '')
+        ]);
         if (popupHeight) {
             let height = parseInt(popupHeight);
             if (height > 600) {
@@ -84,7 +88,6 @@
             document.body.style.height = `${height}px`;
         }
 
-        const popupWidth = await getSetting('popupWidth', '');
         if (popupWidth) {
             const width = parseInt(popupWidth);
             document.body.style.width = `${width}px`;

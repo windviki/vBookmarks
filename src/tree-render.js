@@ -169,6 +169,36 @@ export function initTreeRender(ctx = {}) {
     const getRememberState = ctx.getRememberState;
     const _m = chrome.i18n.getMessage;
 
+    // Per-render-pass snapshot state (2026-08 perf audit). Two row-level
+    // costs used to scale with the whole tree per pass: nodeHtml re-read
+    // getOpens().includes(id) per folder row (Array.includes → O(folders ×
+    // opens)), and folderStageBtnHtml re-walked each folder's subtree (see
+    // folderStagedInfo). A pass now converts opens to a Set ONCE (lazily —
+    // rememberState off never touches getOpens, same short-circuit as the
+    // old expression) and shares one folder-verdict memo. The wrapper
+    // resets when the outermost synchronous pass ends, so the async
+    // lazy-expand getChildren callback reads fresh state exactly as before;
+    // a nested call (the recursive child render, a synchronous getChildren
+    // double) reuses the outer pass.
+    let renderPass = null; // { opens: Set|null, staged: Map } | null
+    const withRenderPass = fn => {
+        if (renderPass)
+            return fn();
+        renderPass = { opens: null, staged: new Map() };
+        try {
+            return fn();
+        } finally {
+            renderPass = null;
+        }
+    };
+    const opensHas = id => {
+        if (!renderPass)
+            return getOpens().includes(id);
+        if (!renderPass.opens)
+            renderPass.opens = new Set(getOpens());
+        return renderPass.opens.has(id);
+    };
+
     // Tree-row hover quick actions [编辑][暂存][删除] (options 书签树 →
     // treeRowActions, default on). Bookmarks get all three; folders skip
     // the plane (a folder "stage" is the context menu's flatten-send). The
@@ -183,26 +213,42 @@ export function initTreeRender(ctx = {}) {
     // A folder's staged verdict: EVERY descendant bookmark staged (unknown
     // children — a collapsed lazy folder — read as unstaged). The click is
     // the menu's flatten-send (sendFolder merges one sourceFolderId group).
-    const folderStagedUrls = folderNode => {
-        const urls = [];
-        const walk = n => {
-            for (const c of (n && n.children) || []) {
-                if (c.url) {
-                    if (!separatorManager.isSeparator(c.title, c.url))
-                        urls.push(c.url);
-                } else {
-                    walk(c);
+    // 2026-08 perf audit: the verdict used to re-walk the folder's ENTIRE
+    // subtree per row (O(n·depth) per full-tree render — and each isStaged
+    // is itself a linear scan of the staging items). It is now bottom-up
+    // with a per-render-pass memo (renderPass above): a folder's verdict =
+    // its own rows' and child folders' verdicts combined, so one pass
+    // visits every node once. Outside a pass (single-row renders like
+    // actions.js add-node) a throwaway map keeps the same result.
+    const folderStagedInfo = (folderNode, memo) => {
+        const hit = memo.get(folderNode);
+        if (hit)
+            return hit;
+        let count = 0;
+        let allStaged = true;
+        for (const c of (folderNode && folderNode.children) || []) {
+            if (c.url) {
+                if (!separatorManager.isSeparator(c.title, c.url)) {
+                    count++;
+                    if (allStaged && !ctx.staging.isStaged(c.url))
+                        allStaged = false;
                 }
+            } else {
+                const sub = folderStagedInfo(c, memo);
+                count += sub.count;
+                if (allStaged && !sub.allStaged)
+                    allStaged = false;
             }
-        };
-        walk(folderNode);
-        return urls;
+        }
+        const info = { count, allStaged };
+        memo.set(folderNode, info);
+        return info;
     };
     const folderStageBtnHtml = folderNode => {
         if (!ctx.staging || !ctx.staging.isStaged)
             return '';
-        const urls = folderStagedUrls(folderNode);
-        const staged = urls.length > 0 && urls.every(u => ctx.staging.isStaged(u));
+        const info = folderStagedInfo(folderNode, renderPass ? renderPass.staged : new Map());
+        const staged = info.count > 0 && info.allStaged;
         const label = htmlspecialchars(_m(staged ? 'stagingAlready' : 'stagingAdd'));
         return `<button type="button" class="row-btn staging-add-btn${staged ? ' staged' : ''}" ` +
             `aria-pressed="${staged}" aria-label="${label}" title="${label}">` +
@@ -413,8 +459,10 @@ export function initTreeRender(ctx = {}) {
             return `<ul role="${group}" data-level="${level}"><li class="empty-folder" style="-webkit-padding-start: ${paddingStart + SLOT_WIDTH}px"><i>${_m('folderEmpty')}</i></li></ul>`;
         }
         let html = `<ul role="${group}" data-level="${level}">`;
-        for (let i = 0, l = data.length; i < l; i++)
-            html += nodeHtml(data[i], level, paddingStart);
+        withRenderPass(() => {
+            for (let i = 0, l = data.length; i < l; i++)
+                html += nodeHtml(data[i], level, paddingStart);
+        });
         html += '</ul>';
         return html;
     };
@@ -441,7 +489,7 @@ export function initTreeRender(ctx = {}) {
         // 子树淡显（body.highlight-unsynced 规则在 neat.css），替代旧版
         // 满树绿点的噪音式指示。
         const unsyncedCls = (d.syncing === false) ? ' unsynced-subtree' : '';
-        const isOpen = getRememberState() && getOpens().includes(id);
+        const isOpen = getRememberState() && opensHas(id);
         const open = isOpen ? 'open' : '';
         const ariaStr = isFolder ? `aria-expanded="${isOpen}"` : '';
         let html = `<li class="${classStr}${unsyncedCls} ${open}" ${idHTML} level="${level}" role="treeitem" ${ariaStr} data-parentid="${parentID}">`;
@@ -492,8 +540,10 @@ export function initTreeRender(ctx = {}) {
     const generateTreeBlocks = data => {
         ensureIconSheet();
         const blocks = [];
-        for (let i = 0, l = data.length; i < l; i++)
-            blocks.push(nodeHtml(data[i], 0, 0));
+        withRenderPass(() => {
+            for (let i = 0, l = data.length; i < l; i++)
+                blocks.push(nodeHtml(data[i], 0, 0));
+        });
         return blocks;
     };
 

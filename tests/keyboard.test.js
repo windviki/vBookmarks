@@ -509,12 +509,17 @@ const setup = (opts = {}) => {
         for (const fn of (doc._listeners[type] || []))
             fn.call(doc, ev);
     };
-    // Rows for the type-ahead tests: visible list + one hidden row.
+    // Rows for the type-ahead tests: a top-level (visible) list + one row
+    // inside a CLOSED folder's child ul — the real collapse contract
+    // (tree-view.js only flips the folder li's .open class; CSS
+    // `#tree ul ul { height: 0 }` vs `#tree .open>ul` clips the subtree).
     const buildTypeRows = () => {
         const visUl = el('UL');
-        visUl.offsetHeight = 100;
+        visUl.parentNode = tree;
+        const hidFolder = el('LI');
+        hidFolder.classList.add('parent'); // no .open → collapsed
         const hidUl = el('UL');
-        hidUl.offsetHeight = 0;
+        hidUl.parentNode = hidFolder;
         const mk = (text, ul = visUl) => {
             const li = el('LI');
             li.parentNode = ul;
@@ -529,10 +534,11 @@ const setup = (opts = {}) => {
             beta: mk('Beta'),
             bravo: mk('Bravo'),
             dot: mk('.dot'),
-            hidden: mk('Hidden', hidUl)
+            hidden: mk('Hidden', hidUl),
+            hive: mk('Hive')
         };
         tree._qsa['ul>li'] = [rows.alpha.li, rows.beta.li, rows.bravo.li,
-            rows.dot.li, rows.hidden.li];
+            rows.dot.li, rows.hidden.li, rows.hive.li];
         return rows;
     };
     // A row with a laid-out position for the PageUp/PageDown tests.
@@ -1596,12 +1602,34 @@ describe('treeKeyDown — type-ahead', () => {
         expect(rows.beta.a.focused).toBe(false);
     });
 
-    it('skips rows in collapsed (zero-height) containers', () => {
+    it('skips rows in collapsed folders and lands on a later visible match', () => {
         const { tree, doc, buildTypeRows } = setup({});
         const rows = buildTypeRows();
         doc.activeElement = rows.bravo.a;
         fire(tree, 'keydown', makeEvent({ key: 'h' }));
+        expect(rows.hidden.a.focused).toBe(false); // collapsed subtree: skipped
+        expect(rows.hive.a.focused).toBe(true);    // scan continues past it
+    });
+
+    it('the wraparound scan skips collapsed rows too (no match → no-op)', () => {
+        const { tree, doc, buildTypeRows } = setup({});
+        const rows = buildTypeRows();
+        // active row sits BELOW the collapsed one: 'h' matches only Hidden
+        // (skipped) and the active Hive itself — nothing must move.
+        doc.activeElement = rows.hive.a;
+        fire(tree, 'keydown', makeEvent({ key: 'h' }));
         expect(rows.hidden.a.focused).toBe(false);
+        expect(rows.hive.a.focused).toBe(false); // the active row never re-focuses itself
+    });
+
+    it('no match anywhere is a no-op (but the buffer timer still arms)', () => {
+        const { tree, doc, buildTypeRows } = setup({});
+        const rows = buildTypeRows();
+        doc.activeElement = rows.alpha.a;
+        fire(tree, 'keydown', makeEvent({ key: 'z' }));
+        for (const r of Object.values(rows))
+            expect(r.a.focused).toBe(false);
+        expect(timeouts[0][1]).toBe(500); // keyBuffer expiry unchanged
     });
 });
 

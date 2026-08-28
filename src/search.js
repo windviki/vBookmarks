@@ -1058,6 +1058,36 @@ export function initSearch(ctx = {}) {
         }
     };
 
+    // 2026-08 perf audit — keystroke debounce state. Every keystroke used to
+    // run the full VBMFuzzy.rank + innerHTML rebuild synchronously. Now the
+    // input handler ranks the FIRST keystroke of a burst immediately (the
+    // view switch + first results stay snappy) and collapses continuations
+    // within 100ms into ONE trailing re-rank. 100ms matches the codebase's
+    // other UI-settle timers (view-manager/wake-up).
+    let inputRankTimer = null;
+    let rankPending = false;
+    const runPendingRank = () => {
+        if (!rankPending)
+            return;
+        rankPending = false;
+        // A view switch mid-burst (Ctrl+digit / a tab click) leaves the mode
+        // but keeps the box (the re-entry contract) — a pending re-rank must
+        // not yank the user back into the search view.
+        if (searchMode)
+            search(null);
+    };
+    const inputRankTick = () => {
+        inputRankTimer = null;
+        runPendingRank();
+    };
+    // Enter/↓ read the results DOM directly: a burst-pending rank must land
+    // first, or a fast type+Enter would act on the previous query's rows.
+    const flushPendingRank = () => {
+        clearTimeout(inputRankTimer);
+        inputRankTimer = null;
+        runPendingRank();
+    };
+
     searchInput.addEventListener('input', () => {
         updateClearBtn();
         if (!searchInput.value.length) {
@@ -1070,11 +1100,23 @@ export function initSearch(ctx = {}) {
             // same law as quitSearchMode — the bar never survives the query).
             if (selecting)
                 setSelecting(false);
+            // A burst-pending re-rank dies with the box (the reset below is
+            // immediate, never debounced).
+            rankPending = false;
+            clearTimeout(inputRankTimer);
+            inputRankTimer = null;
             // keep focus on input
             // do not restore focus to item
             quitSearchMode(true);
+        } else if (inputRankTimer) {
+            // Burst continuation: slide the trailing re-rank.
+            rankPending = true;
+            clearTimeout(inputRankTimer);
+            inputRankTimer = setTimeout(inputRankTick, 100);
         } else {
+            // First keystroke of a burst: rank immediately.
             search(null);
+            inputRankTimer = setTimeout(inputRankTick, 100);
         }
     });
 
@@ -1116,6 +1158,7 @@ export function initSearch(ctx = {}) {
             e.preventDefault();
             if (searchMode) {
                 // may be the no-results empty state, which has no focusable row
+                flushPendingRank();
                 const firstResult = $results.querySelector('ul>li:first-child a');
                 if (firstResult)
                     firstResult.focus();
@@ -1148,6 +1191,9 @@ export function initSearch(ctx = {}) {
                 recordHistory(searchInput.value);
                 search(e);
             } else {
+                // A burst-pending rank must land before the first-row read,
+                // or a fast type+Enter opens the previous query's top hit.
+                flushPendingRank();
                 const item = $results.querySelector('ul>li:first-child a');
                 if (item) {
                     item.focus();

@@ -666,19 +666,28 @@ export function initKeyboard(ctx = {}) {
                     keyBuffer = '';
                 }, 500);
                 const lis = this.querySelectorAll('ul>li');
-                const items = [];
-                for (let i = 0, l = lis.length; i < l; i++) {
-                    const li = lis[i];
-                    if (li.parentNode.offsetHeight)
-                        items.push(li.firstElementChild);
-                }
                 const pattern = new RegExp(`^${escapeRegExp(keyBuffer)}`, 'i');
-                const batch = [];
+                const activeElement = document.activeElement;
+                // One lazy pass with an early exit (2026-08 perf audit): the
+                // old shape built a full items array first — with a
+                // li.parentNode.offsetHeight layout read per row — then walked
+                // it twice. Visibility now rides the DOM contract instead:
+                // closing a folder only flips its .open class (tree-view.js)
+                // and CSS clips the child ul (`#tree ul ul { height: 0 }` vs
+                // `#tree .open>ul { height: auto }`), so a row is hidden
+                // exactly when its containing ul sits under a closed folder
+                // li. (The display:none-container case the offsetHeight read
+                // also caught is unreachable here — a hidden list holds no
+                // focus, so no keydown arrives.)
                 let startFind = false;
                 let found = false;
-                const activeElement = document.activeElement;
-                for (let i = 0, l = items.length; i < l; i++) {
-                    const item = items[i];
+                let firstAbove = null; // wraparound: the first visible match above the active row
+                for (let i = 0, l = lis.length; i < l; i++) {
+                    const li = lis[i];
+                    const folderLi = li.parentNode.parentNode;
+                    if (folderLi && folderLi.tagName === 'LI' && !folderLi.classList.contains('open'))
+                        continue;
+                    const item = li.firstElementChild;
                     if (item === activeElement) {
                         startFind = true;
                     } else if (startFind) {
@@ -687,19 +696,12 @@ export function initKeyboard(ctx = {}) {
                             item.focus();
                             break;
                         }
-                    } else {
-                        batch.push(item);
+                    } else if (!firstAbove && pattern.test(item.textContent.trim())) {
+                        firstAbove = item;
                     }
                 }
-                if (!found) {
-                    for (let i = 0, l = batch.length; i < l; i++) {
-                        const item = batch[i];
-                        if (pattern.test(item.textContent.trim())) {
-                            item.focus();
-                            break;
-                        }
-                    }
-                }
+                if (!found && firstAbove)
+                    firstAbove.focus();
             }
         }
     };

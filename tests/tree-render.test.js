@@ -80,7 +80,8 @@ const setup = (env = {}) => initTreeRender({
     store: env.store || makeStore(),
     separatorManager: env.separatorManager || makeSeparatorManager(),
     getOpens: env.getOpens || (() => []),
-    getRememberState: env.getRememberState || (() => true)
+    getRememberState: env.getRememberState || (() => true),
+    ...(env.staging ? { staging: env.staging } : {})
 });
 
 const FAV_E = 'chrome-extension://test/_favicon/?pageUrl=http%3A%2F%2Fe.com%2F&size=32';
@@ -807,6 +808,64 @@ describe('tree-row quick actions (treeRowActions option)', () => {
         // the referencing button svg keeps the class hooks + a use per icon
         for (const name of ['edit', 'trash', 'stage', 'stage-done', 'stage-remove', 'pin', 'pin-filled', 'sleep', 'sleep-filled', 'star', 'star-filled', 'check', 'activate', 'folder-star', 'tabs', 'open', 'ungroup', 'flag'])
             expect(icons.spriteIcon(name)).toContain(`class="vbm-icon vbm-icon-${name}"`);
+    });
+});
+
+describe('per-render-pass memoization (2026-08 perf audit)', () => {
+    // A nested chain with every folder open: F1 [A, F2 [B, F3 [C]]].
+    const NESTED = [
+        { id: '1', parentId: '0', title: 'F1', dateGroupModified: 1, children: [
+            { id: '11', parentId: '1', title: 'A', url: 'http://a/' },
+            { id: '12', parentId: '1', title: 'F2', dateGroupModified: 1, children: [
+                { id: '121', parentId: '12', title: 'B', url: 'http://b/' },
+                { id: '122', parentId: '12', title: 'F3', dateGroupModified: 1, children: [
+                    { id: '1221', parentId: '122', title: 'C', url: 'http://c/' }
+                ] }
+            ] }
+        ] }
+    ];
+    const OPENS = ['1', '12', '122'];
+    const ROW_STORE = makeStore({ treeRowActions: '1', stagingEnabled: '1', showRecentBookmarks: '1' });
+
+    it('converts opens to a Set once per pass, not one getOpens read per row', () => {
+        let opensReads = 0;
+        const tr = setup({ getOpens: () => { opensReads++; return OPENS; } });
+        const html = tr.generateHTML(NESTED);
+        expect(opensReads).toBe(1); // 6 rows, one read
+        expect(html).toContain('id="neat-tree-item-1221"'); // the open chain rendered
+    });
+
+    it('rememberState off never reads opens (the short-circuit is preserved)', () => {
+        let opensReads = 0;
+        const tr = setup({
+            getOpens: () => { opensReads++; return OPENS; },
+            getRememberState: () => false
+        });
+        const html = tr.generateHTML(NESTED);
+        expect(opensReads).toBe(0);
+        expect(html).not.toContain('id="neat-tree-item-1221"'); // closed: no children
+    });
+
+    it('folder staged verdicts are bottom-up memoized — one verdict-side isStaged call per bookmark', () => {
+        const stagedCalls = [];
+        const staging = { isStaged: url => { stagedCalls.push(url); return true; } };
+        const tr = setup({ store: ROW_STORE, staging, getOpens: () => OPENS });
+        const html = tr.generateHTML(NESTED);
+        // 3 bookmark-row planes + 3 verdict-side calls. The unmemoized shape
+        // re-walked each folder's subtree per row: 3 + (3+2+1) = 9 calls.
+        expect(stagedCalls).toHaveLength(6);
+        // all staged → all three folder planes show the solid plane
+        expect(html.match(/staging-add-btn staged/g)).toHaveLength(6); // 3 rows + 3 folders
+        expect(html.match(/aria-pressed="true"/g)).toHaveLength(6);
+    });
+
+    it('a partially staged subtree marks only the fully staged folder', () => {
+        const staging = { isStaged: url => url !== 'http://b/' };
+        const tr = setup({ store: ROW_STORE, staging, getOpens: () => OPENS });
+        const html = tr.generateHTML(NESTED);
+        // staged: bookmark rows A + C and folder F3 (C only); F1/F2 contain B
+        expect(html.match(/staging-add-btn staged/g)).toHaveLength(3);
+        expect(html.match(/aria-pressed="false"/g)).toHaveLength(3);
     });
 });
 

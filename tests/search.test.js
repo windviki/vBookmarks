@@ -1,4 +1,15 @@
-import { describe, it, expect, beforeAll, vi } from 'vitest';
+import { describe, it, expect, beforeAll, beforeEach, afterEach, vi } from 'vitest';
+
+// The input handler's keystroke debounce (2026-08 perf audit) needs fake
+// timers suite-wide; type() below advances past the 100ms trailing window so
+// every typed query lands ranked, exactly like the old synchronous shape.
+// Only the timeout pair is faked — Date/nextTick stay real.
+beforeEach(() => {
+    vi.useFakeTimers({ toFake: ['setTimeout', 'clearTimeout'] });
+});
+afterEach(() => {
+    vi.useRealTimers();
+});
 
 // search.js touches page globals (document/window/chrome) only inside
 // initSearch, so the real module imports cleanly in node once the globals
@@ -248,6 +259,16 @@ const setup = (opts = {}) => {
 const type = (els, value) => {
     els['search-input'].value = value;
     els['search-input'].trigger('input');
+    // Flush the debounce window: a following type() then starts a fresh burst
+    // (immediate rank), so multi-query tests read exactly as before.
+    vi.advanceTimersByTime(100);
+};
+
+// Raw keystroke without the flush — the debounce tests drive the burst
+// themselves (the trailing rank stays pending until they advance the clock).
+const typeRaw = (els, value) => {
+    els['search-input'].value = value;
+    els['search-input'].trigger('input');
 };
 
 describe('search execution + rendering', () => {
@@ -479,6 +500,68 @@ describe('flat index lifecycle', () => {
         s.quit();
         type(els, 'git');
         expect(fuzzy.calls).toHaveLength(2);
+    });
+});
+
+describe('keystroke debounce (2026-08 perf audit)', () => {
+    it('ranks the first keystroke immediately, then collapses a burst into one trailing pass', () => {
+        const { els, fuzzy, s } = setup({});
+        typeRaw(els, 'g');
+        expect(fuzzy.calls).toHaveLength(1); // first-keystroke latency unchanged
+        expect(fuzzy.calls[0].query).toBe('g');
+        typeRaw(els, 'gi');
+        typeRaw(els, 'git');
+        expect(fuzzy.calls).toHaveLength(1); // continuations deferred
+        expect(s.isActive()).toBe(true);     // mode entry stayed synchronous
+        vi.advanceTimersByTime(99);
+        expect(fuzzy.calls).toHaveLength(1);
+        vi.advanceTimersByTime(1);           // the 100ms trailing edge
+        expect(fuzzy.calls).toHaveLength(2);
+        expect(fuzzy.calls[1].query).toBe('git'); // latest value, not a stale one
+    });
+
+    it('after the trailing window the next keystroke ranks immediately again', () => {
+        const { els, fuzzy } = setup({});
+        typeRaw(els, 'g');
+        vi.advanceTimersByTime(100); // window expires with nothing pending
+        typeRaw(els, 'git');
+        expect(fuzzy.calls).toHaveLength(2); // no 100ms wait
+        expect(fuzzy.calls[1].query).toBe('git');
+    });
+
+    it('clearing the box mid-burst resets immediately and abandons the pending rank', () => {
+        const { els, fuzzy, store, s } = setup({});
+        typeRaw(els, 'git');
+        expect(fuzzy.calls).toHaveLength(1);
+        typeRaw(els, 'g');      // continuation: pending
+        typeRaw(els, '');       // clear: immediate reset, no debounce wait
+        expect(s.isActive()).toBe(false);
+        expect(store.get('searchQuery')).toBe('');
+        vi.advanceTimersByTime(200);
+        expect(fuzzy.calls).toHaveLength(1); // the pending rank never fired
+    });
+
+    it('Enter flushes a burst-pending rank before reading the first row', () => {
+        const { els, fuzzy } = setup({});
+        typeRaw(els, 'g');
+        expect(fuzzy.calls).toHaveLength(1);
+        typeRaw(els, 'git');    // pending
+        els['search-input'].trigger('keydown', { key: 'Enter' });
+        expect(fuzzy.calls).toHaveLength(2); // flushed synchronously
+        expect(fuzzy.calls[1].query).toBe('git');
+        vi.advanceTimersByTime(100);
+        expect(fuzzy.calls).toHaveLength(2); // the timer was consumed
+    });
+
+    it('↓ flushes a burst-pending rank before focusing the first row', () => {
+        const { els, fuzzy } = setup({});
+        const firstRow = makeEl();
+        els.results._qs['ul>li:first-child a'] = firstRow;
+        typeRaw(els, 'git');    // pending
+        els['search-input'].selectionEnd = 3;
+        els['search-input'].trigger('keydown', { key: 'ArrowDown' });
+        expect(fuzzy.calls).toHaveLength(1); // one flush, one rank
+        expect(firstRow.focused).toBe(true);
     });
 });
 
