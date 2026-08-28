@@ -175,6 +175,9 @@
   "customIconDescription": {
     "message": "Ikonet skal være i 19x19 pixel dimensioner. Ellers bliver det ændret til denne dimension."
   },
+  "customIconNotImage": {
+    "message": "Ikke et billede. Prøv et andet."
+  },
   "customIconPick": {
     "message": "Vælg fil…"
   },
@@ -1500,8 +1503,14 @@
   "resetSettings": {
     "message": "Nulstil indstillinger"
   },
+  "resetSettingsConfirm": {
+    "message": "Nulstil alle vBookmarks-indstillinger til standard? Dette påvirker alle synkroniserede enheder og genindlæser denne side."
+  },
   "resetSettingsDescription": {
     "message": "Nulstil vBookmarks til standardindstillinger."
+  },
+  "resetSettingsDone": {
+    "message": "vBookmarks er blevet nulstillet."
   },
   "revealOutsideBarAction": {
     "message": "Vis alle og fremhæv"

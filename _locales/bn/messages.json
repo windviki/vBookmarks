@@ -175,6 +175,9 @@
   "customIconDescription": {
     "message": "আইকনটি 19*19 পিক্সেল ডাইমেনশনের হতে হবে। অন্যথায় এটি এই ডাইমেনশনে রিসাইজ করা হবে।"
   },
+  "customIconNotImage": {
+    "message": "এটি একটি ছবি নয়। অন্য একটি চেষ্টা করুন।"
+  },
   "customIconPick": {
     "message": "ফাইল নির্বাচন করুন…"
   },
@@ -1500,8 +1503,14 @@
   "resetSettings": {
     "message": "সেটিংস রিসেট করুন"
   },
+  "resetSettingsConfirm": {
+    "message": "সব vBookmarks সেটিংস ডিফল্টে রিসেট করবেন? এটি প্রতিটি সিঙ্ক ডিভাইসকে প্রভাবিত করবে এবং এই পৃষ্ঠাটি পুনরায় লোড করবে।"
+  },
   "resetSettingsDescription": {
     "message": "vBookmarks ডিফল্ট সেটিংসে রিসেট করুন।"
+  },
+  "resetSettingsDone": {
+    "message": "vBookmarks রিসেট করা হয়েছে।"
   },
   "revealOutsideBarAction": {
     "message": "সব দেখান এবং প্রকাশ করুন"

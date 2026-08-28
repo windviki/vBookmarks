@@ -175,6 +175,9 @@
   "customIconDescription": {
     "message": "Biểu tượng phải có kích thước 19x19 pixel. Nếu không sẽ được thay đổi kích thước thành kích thước này."
   },
+  "customIconNotImage": {
+    "message": "Không phải hình ảnh. Hãy thử hình khác."
+  },
   "customIconPick": {
     "message": "Chọn tệp…"
   },
@@ -1500,8 +1503,14 @@
   "resetSettings": {
     "message": "Đặt lại cài đặt"
   },
+  "resetSettingsConfirm": {
+    "message": "Đặt lại tất cả cài đặt vBookmarks về mặc định? Điều này ảnh hưởng đến mọi thiết bị đồng bộ và tải lại trang này."
+  },
   "resetSettingsDescription": {
     "message": "Đặt lại vBookmarks về cài đặt mặc định."
+  },
+  "resetSettingsDone": {
+    "message": "vBookmarks đã được đặt lại."
   },
   "revealOutsideBarAction": {
     "message": "Hiện tất cả và định vị"

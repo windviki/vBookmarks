@@ -179,6 +179,10 @@
   "customIconDescription": {
     "message": "The icon has to be in 19*19 pixel dimension. Else it'll be resized to this dimension."
   },
+  "customIconNotImage": {
+    "description": "Alert shown when the file picked for the custom action icon is not an image.",
+    "message": "Not an image. Try another one."
+  },
   "customIconPick": {
     "message": "Choose file…"
   },
@@ -1638,8 +1642,16 @@
   "resetSettings": {
     "message": "Reset settings"
   },
+  "resetSettingsConfirm": {
+    "description": "Confirmation shown before resetting all settings to their defaults.",
+    "message": "Reset all vBookmarks settings to their defaults? This affects every synced device and reloads this page."
+  },
   "resetSettingsDescription": {
     "message": "Reset vBookmarks to default settings."
+  },
+  "resetSettingsDone": {
+    "description": "Alert shown after all settings have been reset, just before the page reloads.",
+    "message": "vBookmarks has been reset."
   },
   "revealOutsideBarAction": {
     "description": "Button on the outside-of-bar toast: temporarily show the whole tree (session only) and reveal the target.",

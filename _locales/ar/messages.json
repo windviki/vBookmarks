@@ -175,6 +175,9 @@
   "customIconDescription": {
     "message": "يجب أن تكون الأيقونة بقياس 19*19 بكسل. وإلا سيتم تغيير حجمها إلى هذا القياس."
   },
+  "customIconNotImage": {
+    "message": "ليست صورة. جرّب صورة أخرى."
+  },
   "customIconPick": {
     "message": "اختيار ملف…"
   },
@@ -1500,8 +1503,14 @@
   "resetSettings": {
     "message": "إعادة تعيين الإعدادات"
   },
+  "resetSettingsConfirm": {
+    "message": "إعادة تعيين جميع إعدادات vBookmarks إلى الافتراضية؟ سيؤثر هذا على كل الأجهزة المتزامنة وسيعيد تحميل هذه الصفحة."
+  },
   "resetSettingsDescription": {
     "message": "إعادة تعيين vBookmarks إلى الإعدادات الافتراضية."
+  },
+  "resetSettingsDone": {
+    "message": "تمت إعادة تعيين vBookmarks."
   },
   "revealOutsideBarAction": {
     "message": "إظهار الكل وكشف الهدف"

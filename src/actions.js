@@ -873,6 +873,12 @@ export function initActions(ctx = {}) {
                                 url: isBookmark ? url : ''
                             },
                             n => {
+                                // A rejected update (Chrome refuses
+                                // root-folder renames) yields no node —
+                                // suppress the warning and leave the row as
+                                // it is instead of throwing on n.title.
+                                if (chrome.runtime.lastError || !n)
+                                    return;
                                 const title = n.title;
                                 const url = n.url;
                                 let li = $(`neat-tree-item-${id}`);
@@ -962,7 +968,12 @@ export function initActions(ctx = {}) {
         // kept counting children after P3.3 — this reconnects the consumer.
         deleteBookmarks: (id, bookmarkCount, folderCount) => {
             const li = $(`neat-tree-item-${id}`);
-            const item = li.querySelector('span');
+            // The tree row can be absent (e.g. onlyShowBMBar hides the Other
+            // bookmarks root, or the palette acted on a stale index) — with
+            // no row there is nothing to confirm/delete; callers gate roots.
+            const item = li && li.querySelector('span');
+            if (!item)
+                return;
             const folderName = item.textContent.trim();
             const doDelete = () => {
                 undo.capture(id);

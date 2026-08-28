@@ -170,7 +170,10 @@ export function initPalette(ctx = {}) {
 
     // Flatten a bookmark tree: a node with children is a folder, everything
     // else a bookmark; the synthetic root ('0') is skipped, and separator
-    // bookmarks are tree chrome, not jump targets.
+    // bookmarks are tree chrome, not jump targets. Folder items carry
+    // parentId so the Delete/F2 handlers can refuse the Chrome root folders
+    // (parentId '0' — bar/other/mobile), which Chrome itself makes
+    // undeletable/unrenamable (same guard as keyboard.js's parentid check).
     const flattenTree = tree => {
         const items = [];
         const walk = nodes => {
@@ -180,6 +183,7 @@ export function initPalette(ctx = {}) {
                     if (node.id !== '0') {
                         items.push({
                             id: node.id,
+                            parentId: node.parentId || '',
                             title: node.title || '',
                             url: '',
                             dateAdded: node.dateAdded || 0,
@@ -612,7 +616,7 @@ export function initPalette(ctx = {}) {
             for (let i = 0, l = hits.length; i < l; i++) {
                 const hit = hits[i];
                 addRow(hit.isFolder ?
-                    { kind: 'folder', id: hit.id, title: hit.title, positions: hit.positions } :
+                    { kind: 'folder', id: hit.id, parentId: hit.parentId, title: hit.title, positions: hit.positions } :
                     { kind: 'bookmark', id: hit.id, title: hit.title, url: hit.url, positions: hit.positions });
             }
             // §4.4 bridge row: a non-empty plain query always ends with the
@@ -828,6 +832,12 @@ export function initPalette(ctx = {}) {
                     actions.deleteBookmark(row.id);
                     close();
                 } else if (row.kind === 'folder') {
+                    // Chrome root folders (parentId '0' — bar/other/mobile)
+                    // are undeletable: Chrome rejects removeTree on them, so
+                    // refuse up front like the tree/keyboard guards do (a
+                    // missing parentId means the same — refuse when unsure).
+                    if (!row.parentId || row.parentId === '0')
+                        break;
                     // Delete a folder — needs children count for the toast.
                     // chrome.bookmarks API must be called; we keep it simple:
                     // fall back to context-menu delete which does the full flow.
@@ -850,6 +860,10 @@ export function initPalette(ctx = {}) {
                 {
                     const row = rows[selected >= 0 ? selected : 0];
                     if (!row)
+                        break;
+                    // Chrome rejects root-folder renames (update() fails with
+                    // an undefined node) — refuse them like the tree's F2 does.
+                    if (row.kind === 'folder' && (!row.parentId || row.parentId === '0'))
                         break;
                     if (row.kind === 'bookmark' || row.kind === 'folder') {
                         actions.editBookmarkFolder(row.id);

@@ -175,6 +175,9 @@
   "customIconDescription": {
     "message": "האייקון חייב להיות במידות 19x19 פיקסלים. אחרת ישנה את גודלו למידות אלו."
   },
+  "customIconNotImage": {
+    "message": "לא תמונה. נסה אחרת."
+  },
   "customIconPick": {
     "message": "בחר קובץ…"
   },
@@ -1500,8 +1503,14 @@
   "resetSettings": {
     "message": "איפוס הגדרות"
   },
+  "resetSettingsConfirm": {
+    "message": "לאפס את כל הגדרות vBookmarks לברירת המחדל? זה משפיע על כל המכשירים המסונכרנים ומרענן את הדף הזה."
+  },
   "resetSettingsDescription": {
     "message": "אפס את vBookmarks להגדרות ברירת המחדל."
+  },
+  "resetSettingsDone": {
+    "message": "vBookmarks אופס."
   },
   "revealOutsideBarAction": {
     "message": "הצג הכול וגלה"

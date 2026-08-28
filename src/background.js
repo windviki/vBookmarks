@@ -253,6 +253,12 @@ chrome.commands.onCommand.addListener(async command => {
             const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
             if (!tab || !tab.url)
                 return;
+            // Search-first dedup (same contract as the popup star and the
+            // stats/tab-groups ☆): the URL already bookmarked anywhere means
+            // skip — a repeat invocation must not mint a duplicate.
+            const existing = await chrome.bookmarks.search({ url: tab.url });
+            if (existing && existing.length)
+                return;
             const data = await chrome.storage.local.get({ quickAddFolderId: '1' });
             await chrome.bookmarks.create({
                 title: tab.title || tab.url,
@@ -363,11 +369,22 @@ if (chrome.contextMenus) {
         if (info.menuItemId !== QUICK_ADD_MENU_ID || !tab || !tab.url) {
             return;
         }
-        chrome.storage.local.get({ quickAddFolderId: '1' }, data => {
-            chrome.bookmarks.create({
-                title: tab.title || tab.url,
-                url: tab.url,
-                parentId: data.quickAddFolderId || '1'
+        // Same search-first dedup as the quick-add command above: an
+        // already-bookmarked URL is skipped instead of duplicated.
+        chrome.bookmarks.search({ url: tab.url }, existing => {
+            if (existing && existing.length)
+                return;
+            chrome.storage.local.get({ quickAddFolderId: '1' }, data => {
+                chrome.bookmarks.create({
+                    title: tab.title || tab.url,
+                    url: tab.url,
+                    parentId: data.quickAddFolderId || '1'
+                }, () => {
+                    // A deleted quickAddFolderId fails the create — suppress
+                    // the unchecked-lastError warning; the menu click has no
+                    // feedback surface to recover to.
+                    void chrome.runtime.lastError;
+                });
             });
         });
     });

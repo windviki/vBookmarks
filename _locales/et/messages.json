@@ -175,6 +175,9 @@
   "customIconDescription": {
     "message": "Ikoon peab olema 19*19 piksli suurune. Vastasel korral muudetakse see selle suuruseni."
   },
+  "customIconNotImage": {
+    "message": "Pilt pole. Proovi teist."
+  },
   "customIconPick": {
     "message": "Vali fail…"
   },
@@ -1500,8 +1503,14 @@
   "resetSettings": {
     "message": "Lähtesta seaded"
   },
+  "resetSettingsConfirm": {
+    "message": "Lähtesta kõik vBookmarksi seaded vaikeseadetele? See mõjutab kõiki sünkroonitud seadmeid ja laadib selle lehe uuesti."
+  },
   "resetSettingsDescription": {
     "message": "Lähtesta vBookmarks vaikeseadetele."
+  },
+  "resetSettingsDone": {
+    "message": "vBookmarks on lähtestatud."
   },
   "revealOutsideBarAction": {
     "message": "Kuva kõik ja paljasta"

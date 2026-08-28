@@ -175,6 +175,9 @@
   "customIconDescription": {
     "message": "Simge 19*19 piksel boyutunda olmalıdır. Aksi takdirde bu boyuta yeniden boyutlandırılacaktır."
   },
+  "customIconNotImage": {
+    "message": "Bu bir görsel değil. Başka bir tane deneyin."
+  },
   "customIconPick": {
     "message": "Dosya seç…"
   },
@@ -1500,8 +1503,14 @@
   "resetSettings": {
     "message": "Ayarları sıfırla"
   },
+  "resetSettingsConfirm": {
+    "message": "Tüm vBookmarks ayarları varsayılanlarına sıfırlansın mı? Bu, senkronize edilen tüm cihazları etkiler ve bu sayfayı yeniden yükler."
+  },
   "resetSettingsDescription": {
     "message": "vBookmarks'ı varsayılan ayarlara sıfırla."
+  },
+  "resetSettingsDone": {
+    "message": "vBookmarks sıfırlandı."
   },
   "revealOutsideBarAction": {
     "message": "Tümünü göster ve ortaya çıkar"

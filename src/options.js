@@ -571,7 +571,10 @@ const $ = id => document.getElementById(id);
         let syncRefreshIntervalTimer = null;
         syncRefreshInterval.addEventListener('input', () => {
             const val = parseInt(syncRefreshInterval.value);
-            if (val >= 20 && val <= 300) {
+            // Same floor as the input's min=30 and the service worker's
+            // clamp (chrome.alarms rejects periods under 30s) — the JS gate
+            // used to accept 20-299, storing values the SW then overrode.
+            if (val >= 30 && val <= 300) {
                 clearTimeout(syncRefreshIntervalTimer);
                 syncRefreshIntervalTimer = setTimeout(() => {
                     setSetting('syncRefreshInterval', val, true);
@@ -590,13 +593,23 @@ const $ = id => document.getElementById(id);
                 zoom.value = changes.zoom.newValue ?? 100;
             }
         });
-        zoom.addEventListener('input', async () => {
+        // Debounced like syncRefreshInterval above: a drag/stepper burst is
+        // dozens of input events/sec, each one a chrome.storage write. An
+        // empty/unparseable value (parseInt → NaN) is skipped outright —
+        // never stored.
+        let zoomTimer = null;
+        zoom.addEventListener('input', () => {
             const val = parseInt(zoom.value);
-            if (val === 100) {
-                await removeSetting('zoom');
-            } else {
-                await setSetting('zoom', val);
-            }
+            if (!Number.isFinite(val))
+                return;
+            clearTimeout(zoomTimer);
+            zoomTimer = setTimeout(() => {
+                if (val === 100) {
+                    removeSetting('zoom');
+                } else {
+                    setSetting('zoom', val);
+                }
+            }, 200);
         });
 
         // Settings backup (fourth-round item 12). Export packs the full
@@ -780,7 +793,7 @@ const $ = id => document.getElementById(id);
                         };
                         reader.readAsDataURL(file);
                     } else {
-                        alert('Not an image. Try another one.');
+                        alert(_m('customIconNotImage'));
                     }
                 }
             });
@@ -848,8 +861,13 @@ const $ = id => document.getElementById(id);
         bindClampedNumber('dead-scan-timeout', 'deadScanTimeout', 8, 2, 30);
 
         $('reset-button').addEventListener('click', () => {
+            // The shared destructive-action contract (see the favicon-cache
+            // clear above): confirm first — one misclick wipes every setting
+            // on every synced device.
+            if (!confirm(_m('resetSettingsConfirm')))
+                return;
             store.clearAll().then(() => {
-                alert('vBookmarks has been reset.');
+                alert(_m('resetSettingsDone'));
                 location.reload();
             });
         }, false);

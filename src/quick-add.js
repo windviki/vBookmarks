@@ -78,6 +78,12 @@ export const createQuickAdd = ({ store, document, body, chrome, quickAddBtn, qui
                     url: tab.url,
                     parentId
                 }, () => {
+                    // The create failed (e.g. the configured quickAddFolderId
+                    // was deleted) — suppress the warning and skip the star
+                    // flip + toast: showing "added" feedback for a failed
+                    // create would be a false success.
+                    if (chrome.runtime.lastError)
+                        return;
                     quickAddBtn.classList.add('starred');
                     quickAddBtn.title = _m('quickRemoveBookmark');
                     // Show target folder name for discoverability

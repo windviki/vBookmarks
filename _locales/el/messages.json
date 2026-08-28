@@ -175,6 +175,9 @@
   "customIconDescription": {
     "message": "Το εικονίδιο πρέπει να έχει διαστάσεις 19x19 pixel. Διαφορετικά θα αλλάξει μέγεθος σε αυτές τις διαστάσεις."
   },
+  "customIconNotImage": {
+    "message": "Δεν είναι εικόνα. Δοκιμάστε άλλη."
+  },
   "customIconPick": {
     "message": "Επιλογή αρχείου…"
   },
@@ -1500,8 +1503,14 @@
   "resetSettings": {
     "message": "Επαναφορά ρυθμίσεων"
   },
+  "resetSettingsConfirm": {
+    "message": "Επαναφορά όλων των ρυθμίσεων του vBookmarks στις προεπιλογές; Αυτό επηρεάζει κάθε συγχρονισμένη συσκευή και φορτώνει ξανά αυτή τη σελίδα."
+  },
   "resetSettingsDescription": {
     "message": "Επαναφορά του vBookmarks στις προεπιλεγμένες ρυθμίσεις."
+  },
+  "resetSettingsDone": {
+    "message": "Το vBookmarks επαναφέρθηκε."
   },
   "revealOutsideBarAction": {
     "message": "Εμφάνιση όλων και αποκάλυψη"

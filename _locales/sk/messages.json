@@ -175,6 +175,9 @@
   "customIconDescription": {
     "message": "Ikona musí mať rozmery 19*19 pixelov. Inak bude zmenšená na tento rozmer."
   },
+  "customIconNotImage": {
+    "message": "Nie je to obrázok. Skúste iný."
+  },
   "customIconPick": {
     "message": "Vybrať súbor…"
   },
@@ -1500,8 +1503,14 @@
   "resetSettings": {
     "message": "Resetovať nastavenia"
   },
+  "resetSettingsConfirm": {
+    "message": "Obnoviť všetky nastavenia vBookmarks na predvolené hodnoty? Toto ovplyvní všetky synchronizované zariadenia a znova načíta túto stránku."
+  },
   "resetSettingsDescription": {
     "message": "Resetovať vBookmarks na predvolené nastavenia."
+  },
+  "resetSettingsDone": {
+    "message": "vBookmarks bol obnovený."
   },
   "revealOutsideBarAction": {
     "message": "Zobraziť všetko a odhaliť"

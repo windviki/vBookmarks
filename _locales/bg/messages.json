@@ -175,6 +175,9 @@
   "customIconDescription": {
     "message": "Иконата трябва да бъде с размери 19*19 пиксела. В противен случай ще бъде преоразмерена до този размер."
   },
+  "customIconNotImage": {
+    "message": "Не е изображение. Опитайте друго."
+  },
   "customIconPick": {
     "message": "Изберете файл…"
   },
@@ -1500,8 +1503,14 @@
   "resetSettings": {
     "message": "Нулиране на настройки"
   },
+  "resetSettingsConfirm": {
+    "message": "Да се нулират ли всички настройки на vBookmarks до стандартните? Това засяга всяко синхронизирано устройство и презарежда тази страница."
+  },
   "resetSettingsDescription": {
     "message": "Нулиране на vBookmarks до настройки по подразбиране."
+  },
+  "resetSettingsDone": {
+    "message": "vBookmarks е нулиран."
   },
   "revealOutsideBarAction": {
     "message": "Показване на всички и разкриване"

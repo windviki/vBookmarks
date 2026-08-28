@@ -175,6 +175,9 @@
   "customIconDescription": {
     "message": "Kuvakkeen on oltava 19x19 pikselin kokoinen. Muuten se skaalataan tähän kokoon."
   },
+  "customIconNotImage": {
+    "message": "Ei ole kuva. Kokeile toista."
+  },
   "customIconPick": {
     "message": "Valitse tiedosto…"
   },
@@ -1500,8 +1503,14 @@
   "resetSettings": {
     "message": "Nollaa asetukset"
   },
+  "resetSettingsConfirm": {
+    "message": "Palautetaanko kaikki vBookmarks-asetukset oletusarvoihin? Tämä vaikuttaa kaikkiin synkronoituihin laitteisiin ja lataa tämän sivun uudelleen."
+  },
   "resetSettingsDescription": {
     "message": "Nollaa vBookmarks oletusasetuksiin."
+  },
+  "resetSettingsDone": {
+    "message": "vBookmarks on palautettu."
   },
   "revealOutsideBarAction": {
     "message": "Näytä kaikki ja paljasta"

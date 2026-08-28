@@ -174,6 +174,10 @@
   "customIconDescription": {
     "message": "图标尺寸必须为 19×19 像素，否则将自动调整为此尺寸。"
   },
+  "customIconNotImage": {
+    "description": "为自定义工具栏图标选择了非图片文件时显示的提示。",
+    "message": "不是图片文件，请重新选择。"
+  },
   "customIconPick": {
     "message": "选择文件…"
   },
@@ -1519,8 +1523,16 @@
   "resetSettings": {
     "message": "重置设置"
   },
+  "resetSettingsConfirm": {
+    "description": "将所有设置重置为默认值前显示的确认提示。",
+    "message": "确定将所有 vBookmarks 设置重置为默认值吗？这会应用到所有同步设备，并重新加载本页面。"
+  },
   "resetSettingsDescription": {
     "message": "将 vBookmarks 重置为默认设置。"
+  },
+  "resetSettingsDone": {
+    "description": "所有设置重置完成后、页面重新加载前显示的提示。",
+    "message": "vBookmarks 已重置。"
   },
   "revealOutsideBarAction": {
     "message": "显示全部并定位"

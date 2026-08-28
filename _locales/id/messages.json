@@ -175,6 +175,9 @@
   "customIconDescription": {
     "message": "Ikon harus berukuran 19x19 piksel. Jika tidak akan diubah ukurannya menjadi ukuran ini."
   },
+  "customIconNotImage": {
+    "message": "Bukan gambar. Coba yang lain."
+  },
   "customIconPick": {
     "message": "Pilih berkas…"
   },
@@ -1500,8 +1503,14 @@
   "resetSettings": {
     "message": "Reset pengaturan"
   },
+  "resetSettingsConfirm": {
+    "message": "Setel ulang semua pengaturan vBookmarks ke default? Ini memengaruhi semua perangkat tersinkron dan memuat ulang halaman ini."
+  },
   "resetSettingsDescription": {
     "message": "Reset vBookmarks ke pengaturan default."
+  },
+  "resetSettingsDone": {
+    "message": "vBookmarks telah disetel ulang."
   },
   "revealOutsideBarAction": {
     "message": "Tampilkan semua dan perlihatkan"

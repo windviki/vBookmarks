@@ -175,6 +175,9 @@
   "customIconDescription": {
     "message": "Значок должен быть в 19x19 пикселей. Иначе он будет изменен до размера (?)."
   },
+  "customIconNotImage": {
+    "message": "Не изображение. Попробуйте другое."
+  },
   "customIconPick": {
     "message": "Выбрать файл…"
   },
@@ -1500,8 +1503,14 @@
   "resetSettings": {
     "message": "Сброс настроек"
   },
+  "resetSettingsConfirm": {
+    "message": "Сбросить все настройки vBookmarks к значениям по умолчанию? Это повлияет на все синхронизированные устройства и перезагрузит эту страницу."
+  },
   "resetSettingsDescription": {
     "message": "Сброс vBookmarks к настройкам по умолчанию  "
+  },
+  "resetSettingsDone": {
+    "message": "vBookmarks был сброшен."
   },
   "revealOutsideBarAction": {
     "message": "Показать все и раскрыть"

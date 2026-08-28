@@ -922,7 +922,7 @@ describe('options.js dead-scan clamps + reset', () => {
     // its tests live in tests/options-proxy.test.js.
 
     describe('reset button', () => {
-        it('wipes local + sync storage, alerts and reloads', async () => {
+        it('confirms first, then wipes local + sync storage, alerts and reloads', async () => {
             const sb = createSandbox({
                 chromeLocalData: { theme: 'dark', deadScanConcurrency: '7' },
                 chromeSyncData: { showSyncStatus: 'true' }
@@ -931,10 +931,82 @@ describe('options.js dead-scan clamps + reset', () => {
             await sb.elements['reset-button'].fire('click');
             for (let i = 0; i < 10; i++)
                 await new Promise(r => setTimeout(r, 0));
+            // the shared destructive-action contract: confirm before wipe
+            expect(sb.confirms).toEqual(['resetSettingsConfirm']);
             expect(sb.localData).toEqual({});
             expect(sb.syncData).toEqual({});
-            expect(sb.alerts).toContain('vBookmarks has been reset.');
+            expect(sb.alerts).toContain('resetSettingsDone');
             expect(sb.location.reload).toHaveBeenCalledTimes(1);
+        });
+
+        it('a cancelled reset confirm wipes nothing', async () => {
+            const sb = createSandbox({
+                chromeLocalData: { theme: 'dark' },
+                chromeSyncData: { showSyncStatus: 'true' }
+            });
+            await sb.start();
+            sb.setConfirm(false);
+            await sb.elements['reset-button'].fire('click');
+            for (let i = 0; i < 10; i++)
+                await new Promise(r => setTimeout(r, 0));
+            expect(sb.confirms).toEqual(['resetSettingsConfirm']);
+            // theme migrated to the sync area at startup; everything survives
+            expect(sb.syncData.theme).toBe('dark');
+            expect(sb.syncData.showSyncStatus).toBe('true');
+            expect(sb.alerts).toHaveLength(0);
+            expect(sb.location.reload).not.toHaveBeenCalled();
+        });
+    });
+
+    describe('zoom input', () => {
+        it('debounces a rapid input burst into one trailing write', async () => {
+            const sb = createSandbox();
+            await sb.start();
+            const zoom = sb.elements['zoom-input'];
+            zoom.value = '110';
+            await zoom.fire('input');
+            zoom.value = '120';
+            await zoom.fire('input');
+            // still inside the 200ms window: nothing written yet
+            expect('zoom' in sb.localData).toBe(false);
+            await new Promise(r => setTimeout(r, 250));
+            expect(sb.localData.zoom).toBe(120); // the last value wins
+        });
+
+        it('skips the write entirely for an unparseable value (NaN guard)', async () => {
+            const sb = createSandbox();
+            await sb.start();
+            const zoom = sb.elements['zoom-input'];
+            zoom.value = '';
+            await zoom.fire('input');
+            await new Promise(r => setTimeout(r, 250));
+            expect('zoom' in sb.localData).toBe(false);
+        });
+
+        it('removes the setting when the zoom returns to 100', async () => {
+            const sb = createSandbox({ chromeLocalData: { zoom: 120 } });
+            await sb.start();
+            const zoom = sb.elements['zoom-input'];
+            zoom.value = '100';
+            await zoom.fire('input');
+            await new Promise(r => setTimeout(r, 250));
+            expect('zoom' in sb.localData).toBe(false);
+        });
+    });
+
+    describe('syncRefreshInterval gate', () => {
+        it('rejects values below the 30s floor, accepts 30 (aligned with the input min and the SW clamp)', async () => {
+            const sb = createSandbox();
+            await sb.start();
+            const input = sb.elements['sync-refresh-interval'];
+            input.value = '20';
+            await input.fire('input');
+            await new Promise(r => setTimeout(r, 600)); // past the 500ms debounce
+            expect('syncRefreshInterval' in sb.syncData).toBe(false);
+            input.value = '30';
+            await input.fire('input');
+            await new Promise(r => setTimeout(r, 600));
+            expect(sb.syncData.syncRefreshInterval).toBe(30);
         });
     });
 });

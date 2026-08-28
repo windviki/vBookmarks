@@ -638,6 +638,37 @@ describe('editBookmarkFolder', () => {
         expect(calls.edit).toHaveLength(0);
     });
 
+    it('a rejected update (Chrome refuses a root-folder rename) no-ops instead of throwing on the undefined node', () => {
+        const li = makeEl();
+        const { actions, chrome, calls } = setup({
+            els: { 'neat-tree-item-9': li },
+            nodes: { '9': [{ id: '9', title: 'Old' }] }
+        });
+        // The update double answers like Chrome does on a root rename:
+        // lastError set, undefined node.
+        chrome.bookmarks.update = (id, props, cb) => {
+            chrome.runtime.lastError = { message: "Can't modify the root bookmark folders" };
+            if (cb) cb(undefined);
+            chrome.runtime.lastError = null;
+        };
+        actions.editBookmarkFolder('9');
+        expect(calls.edit).toHaveLength(1); // the dialog itself still opened…
+        expect(() => calls.edit[0].fn('New name', '')).not.toThrow(); // …but the failed save no-ops
+        expect(li.innerHTML).toBe('');
+    });
+
+    it('an update callback without a node (no lastError) is a silent no-op too', () => {
+        const li = makeEl();
+        const { actions, chrome, calls } = setup({
+            els: { 'neat-tree-item-9': li },
+            nodes: { '9': [{ id: '9', title: 'Old' }] }
+        });
+        chrome.bookmarks.update = (id, props, cb) => cb(undefined);
+        actions.editBookmarkFolder('9');
+        expect(() => calls.edit[0].fn('New name', '')).not.toThrow();
+        expect(li.innerHTML).toBe('');
+    });
+
     it('opens the bookmark edit dialog and re-renders the row on save', () => {
         const a = makeEl();
         a.style.cssText = 'padding-left: 16px';
@@ -945,6 +976,17 @@ describe('deleteBookmarks', () => {
         expect(calls.confirm).toEqual([]);
         expect(chrome.bookmarks.removeTreeCalls).toEqual(['9']);
         expect(ops).toEqual([['removeTree', '9']]);
+    });
+
+    it('no-ops without throwing when the tree row is absent (hidden root / stale palette index)', () => {
+        // No neat-tree-item-9 element: onlyShowBMBar can hide the Other
+        // bookmarks root, and the palette can act on a stale index — a
+        // missing row must never throw the global error dialog.
+        const { actions, calls, chrome, ops } = setup({});
+        expect(() => actions.deleteBookmarks('9', 3, 2)).not.toThrow();
+        expect(calls.confirm).toEqual([]);
+        expect(chrome.bookmarks.removeTreeCalls).toEqual([]);
+        expect(ops).toEqual([]);
     });
 });
 

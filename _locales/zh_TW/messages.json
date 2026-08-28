@@ -175,6 +175,9 @@
   "customIconDescription": {
     "message": "圖標必須為19*19像素，否則會被縮放至此大小"
   },
+  "customIconNotImage": {
+    "message": "不是圖片，請換一張。"
+  },
   "customIconPick": {
     "message": "選擇檔案…"
   },
@@ -1500,8 +1503,14 @@
   "resetSettings": {
     "message": "重置所有選項"
   },
+  "resetSettingsConfirm": {
+    "message": "要將所有 vBookmarks 設定重設為預設值嗎？這會影響所有同步裝置，並重新載入此頁面。"
+  },
   "resetSettingsDescription": {
     "message": "重置所有選項到默認值"
+  },
+  "resetSettingsDone": {
+    "message": "vBookmarks 已重設。"
   },
   "revealOutsideBarAction": {
     "message": "顯示全部並顯示目標"

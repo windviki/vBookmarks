@@ -175,6 +175,9 @@
   "customIconDescription": {
     "message": "アイコンは19* 19ピクセルのディメンションである必要があります。それ以外は、この寸法にリサイズされます。"
   },
+  "customIconNotImage": {
+    "message": "画像ではありません。別のものをお試しください。"
+  },
   "customIconPick": {
     "message": "ファイルを選択…"
   },
@@ -1500,8 +1503,14 @@
   "resetSettings": {
     "message": "設定をリセットします"
   },
+  "resetSettingsConfirm": {
+    "message": "vBookmarks のすべての設定をデフォルトに戻しますか？この操作は同期されたすべてのデバイスに影響し、このページを再読み込みします。"
+  },
   "resetSettingsDescription": {
     "message": "デフォルトの設定にvBookmarksをリセットします"
+  },
+  "resetSettingsDone": {
+    "message": "vBookmarks はリセットされました。"
   },
   "revealOutsideBarAction": {
     "message": "すべて表示して対象を表示"

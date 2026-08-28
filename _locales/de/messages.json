@@ -175,6 +175,9 @@
   "customIconDescription": {
     "message": "Das Symbol muss 19*19 Pixel groß sein. Andernfalls wird es auf diese Größe skaliert."
   },
+  "customIconNotImage": {
+    "message": "Kein Bild. Versuchen Sie ein anderes."
+  },
   "customIconPick": {
     "message": "Datei wählen…"
   },
@@ -1500,8 +1503,14 @@
   "resetSettings": {
     "message": "Einstellungen zurücksetzen"
   },
+  "resetSettingsConfirm": {
+    "message": "Alle vBookmarks-Einstellungen auf die Standardwerte zurücksetzen? Dies betrifft alle synchronisierten Geräte und lädt diese Seite neu."
+  },
   "resetSettingsDescription": {
     "message": "vBookmarks auf Standardeinstellungen zurücksetzen."
+  },
+  "resetSettingsDone": {
+    "message": "vBookmarks wurde zurückgesetzt."
   },
   "revealOutsideBarAction": {
     "message": "Alle anzeigen und einblenden"

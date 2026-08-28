@@ -175,6 +175,9 @@
   "customIconDescription": {
     "message": "Het pictogram moet 19*19 pixels groot zijn. Anders wordt het naar deze afmeting geschaald."
   },
+  "customIconNotImage": {
+    "message": "Geen afbeelding. Probeer een andere."
+  },
   "customIconPick": {
     "message": "Kies bestand…"
   },
@@ -1500,8 +1503,14 @@
   "resetSettings": {
     "message": "Instellingen resetten"
   },
+  "resetSettingsConfirm": {
+    "message": "Alle vBookmarks-instellingen terugzetten naar de standaardwaarden? Dit geldt voor alle gesynchroniseerde apparaten en herlaadt deze pagina."
+  },
   "resetSettingsDescription": {
     "message": "vBookmarks resetten naar standaardinstellingen."
+  },
+  "resetSettingsDone": {
+    "message": "vBookmarks is teruggezet."
   },
   "revealOutsideBarAction": {
     "message": "Alles tonen en onthullen"

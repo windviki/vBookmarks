@@ -175,6 +175,9 @@
   "customIconDescription": {
     "message": "آیکون باید ابعاد 19*19 پیکسل داشته باشد. در غیر این صورت به این اندازه تغییر اندازه داده خواهد شد."
   },
+  "customIconNotImage": {
+    "message": "تصویر نیست. تصویر دیگری را امتحان کنید."
+  },
   "customIconPick": {
     "message": "انتخاب فایل…"
   },
@@ -1500,8 +1503,14 @@
   "resetSettings": {
     "message": "بازنشانی تنظیمات"
   },
+  "resetSettingsConfirm": {
+    "message": "همه تنظیمات vBookmarks به حالت پیش‌فرض بازنشانی شوند؟ این کار روی همه دستگاه‌های همگام‌سازی‌شده تأثیر می‌گذارد و این صفحه را بارگذاری مجدد می‌کند."
+  },
   "resetSettingsDescription": {
     "message": "بازنشانی vBookmarks به تنظیمات پیش‌فرض."
+  },
+  "resetSettingsDone": {
+    "message": "vBookmarks بازنشانی شد."
   },
   "revealOutsideBarAction": {
     "message": "نمایش همه و آشکارسازی"

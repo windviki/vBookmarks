@@ -175,6 +175,9 @@
   "customIconDescription": {
     "message": "Ikona mora biti dimenzij 19*19 pikslov. V nasprotnem primeru bo spremenjena na to dimenzijo."
   },
+  "customIconNotImage": {
+    "message": "Ni slika. Poskusite drugo."
+  },
   "customIconPick": {
     "message": "Izberi datoteko…"
   },
@@ -1500,8 +1503,14 @@
   "resetSettings": {
     "message": "Ponastavi nastavitve"
   },
+  "resetSettingsConfirm": {
+    "message": "Ponastaviti vse nastavitve vBookmarks na privzete? To vpliva na vse sinhronizirane naprave in znova naloži to stran."
+  },
   "resetSettingsDescription": {
     "message": "Ponastavi vBookmarks na privzete nastavitve."
+  },
+  "resetSettingsDone": {
+    "message": "vBookmarks je bil ponastavljen."
   },
   "revealOutsideBarAction": {
     "message": "Prikaži vse in razkrij"

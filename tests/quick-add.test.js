@@ -118,6 +118,27 @@ describe('quickAddCurrentTab — bookmark a not-yet-saved tab', () => {
         expect(created).toEqual([]);
         expect(removed).toEqual([]);
     });
+
+    it('a failed create (deleted target folder) keeps the star hollow and shows no toast', async () => {
+        tabs = [{ id: 5, title: 'Page T', url: 'https://x.test/' }];
+        folderNodes = [{ id: '42', title: 'Work' }];
+        // Simulate Chrome rejecting the create (quickAddFolderId gone):
+        // runtime.lastError is set inside the callback, like the real API.
+        chrome.bookmarks.create = (node, cb) => {
+            created.push(node);
+            chrome.runtime.lastError = { message: "Can't find bookmark folder" };
+            if (cb) cb();
+            chrome.runtime.lastError = undefined;
+        };
+        quickAdd.quickAddCurrentTab();
+        await flush();
+        expect(created).toHaveLength(1); // the create was attempted…
+        // …but no false success: no star flip, no title change, no toast
+        expect(quickAddBtn.classList.contains('starred')).toBe(false);
+        expect(quickAddBtn.title).toBe('');
+        expect(quickAddToast.textContent).toBe('');
+        expect(quickAddToast.classList.contains('show')).toBe(false);
+    });
 });
 
 describe('quickAddCurrentTab — un-bookmark an already-saved tab', () => {

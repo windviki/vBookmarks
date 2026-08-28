@@ -175,6 +175,9 @@
   "customIconDescription": {
     "message": "El icono debe tener dimensiones de 19*19 píxeles. De lo contrario, se redimensionará a esta dimensión."
   },
+  "customIconNotImage": {
+    "message": "No es una imagen. Prueba con otra."
+  },
   "customIconPick": {
     "message": "Elegir archivo…"
   },
@@ -1500,8 +1503,14 @@
   "resetSettings": {
     "message": "Restablecer configuración"
   },
+  "resetSettingsConfirm": {
+    "message": "¿Restablecer todos los ajustes de vBookmarks a sus valores predeterminados? Esto afecta a todos los dispositivos sincronizados y recarga esta página."
+  },
   "resetSettingsDescription": {
     "message": "Restablecer vBookmarks a la configuración predeterminada."
+  },
+  "resetSettingsDone": {
+    "message": "vBookmarks se ha restablecido."
   },
   "revealOutsideBarAction": {
     "message": "Mostrar todo y revelar"

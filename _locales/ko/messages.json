@@ -175,6 +175,9 @@
   "customIconDescription": {
     "message": "아이콘은 19*19 픽셀 크기여야 합니다. 그렇지 않으면 이 크기로 조정됩니다."
   },
+  "customIconNotImage": {
+    "message": "이미지가 아닙니다. 다른 이미지를 선택하세요."
+  },
   "customIconPick": {
     "message": "파일 선택…"
   },
@@ -1500,8 +1503,14 @@
   "resetSettings": {
     "message": "설정 재설정"
   },
+  "resetSettingsConfirm": {
+    "message": "모든 vBookmarks 설정을 기본값으로 초기화하시겠습니까? 이 작업은 동기화된 모든 기기에 영향을 미치며 이 페이지를 다시 로드합니다."
+  },
   "resetSettingsDescription": {
     "message": "vBookmarks를 기본 설정으로 재설정합니다."
+  },
+  "resetSettingsDone": {
+    "message": "vBookmarks가 초기화되었습니다."
   },
   "revealOutsideBarAction": {
     "message": "모두 표시하고 나타내기"

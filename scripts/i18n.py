@@ -710,10 +710,15 @@ def llm_translate_chunk(items, language, cfg, template=PROMPT_USER_TEMPLATE,
                         extra_format=None):
     """One LLM request for a chunk of items; returns {key: translation}."""
     payload = json.dumps(items, ensure_ascii=False, indent=2)
-    user = template.format(language=language, items=payload,
-                           staging_term='(未在术语表中——按"暂存/准备区"概念意译并保持全批一致)',
-                           script_note='',
-                           **(extra_format or {}))
+    # Caller-supplied extra_format (per-locale staging term / script note)
+    # overrides these fallback defaults — passing both as explicit kwargs
+    # plus **extra_format raises "multiple values" TypeError.
+    fmt = {
+        'staging_term': '(未在术语表中——按"暂存/准备区"概念意译并保持全批一致)',
+        'script_note': '',
+    }
+    fmt.update(extra_format or {})
+    user = template.format(language=language, items=payload, **fmt)
     messages = [
         {'role': 'system', 'content': PROMPT_SYSTEM},
         {'role': 'user', 'content': user},

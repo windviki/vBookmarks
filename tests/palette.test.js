@@ -141,25 +141,27 @@ const getMessage = (key, subs) => {
 };
 
 // Root '0' (synthetic), two root folders, one nested folder with a bookmark.
+// Folder nodes carry parentId like Chrome's real getTree — the palette's
+// Delete/F2 root guards key off it.
 const makeTree = () => [{
     id: '0',
     title: '',
     children: [
         {
-            id: '1', title: 'Bookmarks bar', dateAdded: 10,
+            id: '1', title: 'Bookmarks bar', parentId: '0', dateAdded: 10,
             children: [
-                { id: '11', title: 'Gmail', url: 'https://mail.google.com/', dateAdded: 100 },
-                { id: '12', title: 'mail archive', url: 'https://gmail.com/inbox', dateAdded: 200 },
-                { id: '13', title: 'New bookmark ideas', url: 'https://example.com/ideas', dateAdded: 300 },
+                { id: '11', title: 'Gmail', url: 'https://mail.google.com/', dateAdded: 100, parentId: '1' },
+                { id: '12', title: 'mail archive', url: 'https://gmail.com/inbox', dateAdded: 200, parentId: '1' },
+                { id: '13', title: 'New bookmark ideas', url: 'https://example.com/ideas', dateAdded: 300, parentId: '1' },
                 {
-                    id: '14', title: 'Dev', dateAdded: 400,
+                    id: '14', title: 'Dev', parentId: '1', dateAdded: 400,
                     children: [
-                        { id: '15', title: 'GitHub', url: 'https://github.com/', dateAdded: 500 }
+                        { id: '15', title: 'GitHub', url: 'https://github.com/', dateAdded: 500, parentId: '14' }
                     ]
                 }
             ]
         },
-        { id: '2', title: 'Other bookmarks', dateAdded: 20, children: [] }
+        { id: '2', title: 'Other bookmarks', parentId: '0', dateAdded: 20, children: [] }
     ]
 }];
 
@@ -382,6 +384,8 @@ const setup = (opts = {}) => {
         addNewBookmarkNodeCalls: [],
         addSeparatorCalls: [],
         deleteBookmarkCalls: [],
+        deleteBookmarksCalls: [],
+        editBookmarkFolderCalls: [],
         openBookmark(url) {
             this.openBookmarkCalls.push(url);
         },
@@ -405,6 +409,12 @@ const setup = (opts = {}) => {
         },
         deleteBookmark(id) {
             this.deleteBookmarkCalls.push(id);
+        },
+        deleteBookmarks(id, bookmarkCount, folderCount) {
+            this.deleteBookmarksCalls.push([id, bookmarkCount, folderCount]);
+        },
+        editBookmarkFolder(id) {
+            this.editBookmarkFolderCalls.push(id);
         }
     };
     const treeView = {
@@ -1170,6 +1180,76 @@ describe('execution', () => {
         expect(ev.defaultPrevented).toBe(true);
         expect(ev.propagationStopped).toBe(true);
         expect(palette.isOpen()).toBe(false);
+    });
+});
+
+describe('row Delete/F2 — Chrome root-folder guards', () => {
+    // The tree view refuses delete/rename on the Chrome root folders
+    // (keyboard.js's parentid-'0' guard); the palette applies the same gate —
+    // Chrome rejects removeTree/update on roots, so acting on them used to
+    // crash (missing tree row / undefined update node) or no-op silently
+    // AFTER the user confirmed a destructive delete.
+    const folderRowIndex = ctx => ctx.rowClasses().indexOf('palette-row palette-folder');
+    const selectRow = (ctx, rowIdx) => {
+        // selected starts at -1; the first ArrowDown selects row 0
+        for (let n = 0; n <= rowIdx; n++)
+            ctx.keydown(ctx.input, { key: 'ArrowDown' });
+    };
+
+    it('Delete on a root folder row is refused — no getChildren, no delete, palette stays open', () => {
+        const ctx = setup({});
+        ctx.palette.open();
+        ctx.type('other bookmarks'); // hits the parentId-'0' root folder '2'
+        const idx = folderRowIndex(ctx);
+        expect(idx).toBeGreaterThanOrEqual(0);
+        selectRow(ctx, idx);
+        ctx.keydown(ctx.input, { key: 'Delete' });
+        expect(ctx.chrome.bookmarks.getChildrenCalls).toEqual([]);
+        expect(ctx.actions.deleteBookmarksCalls).toEqual([]);
+        expect(ctx.palette.isOpen()).toBe(true);
+    });
+
+    it('Delete on a regular folder row still runs the full delete flow', () => {
+        const ctx = setup({ children: { '14': [{ id: '15', title: 'GitHub', url: 'https://github.com/' }] } });
+        ctx.palette.open();
+        ctx.type('dev'); // nested folder '14' (parentId '1')
+        const idx = folderRowIndex(ctx);
+        expect(idx).toBeGreaterThanOrEqual(0);
+        selectRow(ctx, idx);
+        ctx.keydown(ctx.input, { key: 'Delete' });
+        expect(ctx.chrome.bookmarks.getChildrenCalls).toEqual(['14']);
+        expect(ctx.actions.deleteBookmarksCalls).toEqual([['14', 1, 0]]);
+        expect(ctx.palette.isOpen()).toBe(false);
+    });
+
+    it('F2 on a root folder row is refused — no rename flow, palette stays open', () => {
+        const ctx = setup({});
+        ctx.palette.open();
+        ctx.type('other bookmarks');
+        selectRow(ctx, folderRowIndex(ctx));
+        ctx.keydown(ctx.input, { key: 'F2' });
+        expect(ctx.actions.editBookmarkFolderCalls).toEqual([]);
+        expect(ctx.palette.isOpen()).toBe(true);
+    });
+
+    it('F2 on a regular folder row opens the rename flow and closes', () => {
+        const ctx = setup({});
+        ctx.palette.open();
+        ctx.type('dev');
+        selectRow(ctx, folderRowIndex(ctx));
+        ctx.keydown(ctx.input, { key: 'F2' });
+        expect(ctx.actions.editBookmarkFolderCalls).toEqual(['14']);
+        expect(ctx.palette.isOpen()).toBe(false);
+    });
+
+    it('Delete on a bookmark row is unaffected by the folder guard', () => {
+        const ctx = setup({});
+        ctx.palette.open();
+        ctx.type('gmail');
+        selectRow(ctx, ctx.rowClasses().indexOf('palette-row palette-bookmark'));
+        ctx.keydown(ctx.input, { key: 'Delete' });
+        expect(ctx.actions.deleteBookmarkCalls).toEqual(['11']);
+        expect(ctx.palette.isOpen()).toBe(false);
     });
 });
 

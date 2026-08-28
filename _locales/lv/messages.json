@@ -175,6 +175,9 @@
   "customIconDescription": {
     "message": "Ikonai jābūt 19*19 pikseļu izmērā. Pretējā gadījumā tā tiks mainīta uz šo izmēru."
   },
+  "customIconNotImage": {
+    "message": "Nav attēls. Mēģiniet citu."
+  },
   "customIconPick": {
     "message": "Izvēlēties failu…"
   },
@@ -1500,8 +1503,14 @@
   "resetSettings": {
     "message": "Atiestatīt iestatījumus"
   },
+  "resetSettingsConfirm": {
+    "message": "Atiestatīt visus vBookmarks iestatījumus uz noklusējuma vērtībām? Tas ietekmē visas sinhronizētās ierīces un pārlādē šo lapu."
+  },
   "resetSettingsDescription": {
     "message": "Atiestatīt vBookmarks uz noklusējuma iestatījumiem."
+  },
+  "resetSettingsDone": {
+    "message": "vBookmarks ir atiestatīts."
   },
   "revealOutsideBarAction": {
     "message": "Rādīt visu un atklāt"

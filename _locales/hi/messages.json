@@ -175,6 +175,9 @@
   "customIconDescription": {
     "message": "आइकन 19*19 पिक्सेल आयाम का होना चाहिए। अन्यथा इसे इस आयाम में रीसाइज़ किया जाएगा।"
   },
+  "customIconNotImage": {
+    "message": "यह छवि नहीं है। दूसरी कोशिश करें।"
+  },
   "customIconPick": {
     "message": "फ़ाइल चुनें…"
   },
@@ -1500,8 +1503,14 @@
   "resetSettings": {
     "message": "सेटिंग रीसेट करें"
   },
+  "resetSettingsConfirm": {
+    "message": "क्या सभी vBookmarks सेटिंग्स को डिफ़ॉल्ट पर रीसेट करें? यह सभी सिंक किए गए डिवाइसों को प्रभावित करेगा और यह पृष्ठ पुनः लोड करेगा।"
+  },
   "resetSettingsDescription": {
     "message": "vBookmarks को डिफ़ॉल्ट सेटिंग पर रीसेट करें।"
+  },
+  "resetSettingsDone": {
+    "message": "vBookmarks रीसेट हो गया है।"
   },
   "revealOutsideBarAction": {
     "message": "सभी दिखाएँ और प्रकट करें"

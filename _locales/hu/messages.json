@@ -175,6 +175,9 @@
   "customIconDescription": {
     "message": "Az ikonnak 19x19 pixel méretűnek kell lennie. Egyébként átméretezésre kerül erre a méretre."
   },
+  "customIconNotImage": {
+    "message": "Nem kép. Próbáljon másikat."
+  },
   "customIconPick": {
     "message": "Fájl kiválasztása…"
   },
@@ -1500,8 +1503,14 @@
   "resetSettings": {
     "message": "Beállítások visszaállítása"
   },
+  "resetSettingsConfirm": {
+    "message": "Visszaállítja az összes vBookmarks beállítást az alapértelmezettre? Ez minden szinkronizált eszközt érint, és újratölti ezt az oldalt."
+  },
   "resetSettingsDescription": {
     "message": "vBookmarks visszaállítása alapértelmezett beállításokra."
+  },
+  "resetSettingsDone": {
+    "message": "A vBookmarks visszaállítva."
   },
   "revealOutsideBarAction": {
     "message": "Mindent megmutat, és megjeleníti a célt"

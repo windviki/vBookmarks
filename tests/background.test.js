@@ -114,7 +114,15 @@ const buildChrome = () => {
             _searchResult: [],
             getTree(cb) { cb([]); },
             get(id, cb) { cb([]); },
-            search(q, cb) { cb(this._searchResult); },
+            search(q, cb) {
+                // Dual style: the omnibox + the quick-add MENU pass a
+                // callback, the quick-add COMMAND awaits the promise.
+                if (cb) {
+                    cb(this._searchResult);
+                    return undefined;
+                }
+                return Promise.resolve(this._searchResult);
+            },
             create(node, cb) {
                 calls.bookmarksCreate.push(node);
                 if (cb) {
@@ -430,6 +438,14 @@ describe('quick-add-bookmark command (final polish)', () => {
         expect(calls.bookmarksCreate).toEqual([]);
     });
 
+    it('skips the create when the URL is already bookmarked anywhere (dedup)', async () => {
+        localData.quickAddFolderId = '42';
+        chromeDouble.tabs._queryResult = [{ id: 5, title: 'Page T', url: 'https://x.test/' }];
+        chromeDouble.bookmarks._searchResult = [{ id: '77', title: 'Page T', url: 'https://x.test/' }];
+        await listeners.commands('quick-add-bookmark');
+        expect(calls.bookmarksCreate).toEqual([]);
+    });
+
     it('swallows lookup failures with a warning instead of rejecting', async () => {
         const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
         chromeDouble.tabs.query = () => Promise.reject(new Error('tabs gone'));
@@ -493,6 +509,15 @@ describe('quick-add page context menu (Phase 3)', () => {
     it('ignores other menu items and tab-less clicks', () => {
         listeners.contextMenuClicked({ menuItemId: 'something-else' }, { title: 'X', url: 'https://x/' });
         listeners.contextMenuClicked({ menuItemId: 'vbm-quick-add' }, null);
+        expect(calls.bookmarksCreate).toEqual([]);
+    });
+
+    it('skips the create when the URL is already bookmarked anywhere (dedup)', () => {
+        localData.quickAddFolderId = '9';
+        chromeDouble.bookmarks._searchResult = [{ id: '77', title: 'Ctx', url: 'https://ctx.test/' }];
+        listeners.contextMenuClicked(
+            { menuItemId: 'vbm-quick-add' },
+            { title: 'Ctx', url: 'https://ctx.test/' });
         expect(calls.bookmarksCreate).toEqual([]);
     });
 });

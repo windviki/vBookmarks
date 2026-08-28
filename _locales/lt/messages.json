@@ -175,6 +175,9 @@
   "customIconDescription": {
     "message": "Piktograma turi būti 19*19 pikselių dydžio. Kitaip ji bus pakeista į šį dydį."
   },
+  "customIconNotImage": {
+    "message": "Ne paveikslėlis. Bandykite kitą."
+  },
   "customIconPick": {
     "message": "Pasirinkti failą…"
   },
@@ -1500,8 +1503,14 @@
   "resetSettings": {
     "message": "Atstatyti nustatymus"
   },
+  "resetSettingsConfirm": {
+    "message": "Atstatyti visus vBookmarks nustatymus į numatytuosius? Tai paveiks visus sinchronizuotus įrenginius ir perkraus šį puslapį."
+  },
   "resetSettingsDescription": {
     "message": "Atstatyti vBookmarks į numatytuosius nustatymus."
+  },
+  "resetSettingsDone": {
+    "message": "vBookmarks buvo atstatytas."
   },
   "revealOutsideBarAction": {
     "message": "Rodyti viską ir atskleisti"

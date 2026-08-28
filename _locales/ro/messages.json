@@ -175,6 +175,9 @@
   "customIconDescription": {
     "message": "Iconița trebuie să aibă dimensiunea 19x19 pixeli. Altfel va fi redimensionată la această dimensiune."
   },
+  "customIconNotImage": {
+    "message": "Nu este o imagine. Încearcă alta."
+  },
   "customIconPick": {
     "message": "Alege fișier…"
   },
@@ -1500,8 +1503,14 @@
   "resetSettings": {
     "message": "Resetare setări"
   },
+  "resetSettingsConfirm": {
+    "message": "Resetezi toate setările vBookmarks la valorile implicite? Aceasta afectează toate dispozitivele sincronizate și reîncarcă această pagină."
+  },
   "resetSettingsDescription": {
     "message": "Resetează vBookmarks la setările implicite."
+  },
+  "resetSettingsDone": {
+    "message": "vBookmarks a fost resetat."
   },
   "revealOutsideBarAction": {
     "message": "Afișează tot și dezvăluie"
