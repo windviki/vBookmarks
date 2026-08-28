@@ -474,3 +474,221 @@ describe('paintListVirtual fold() — surgical folds under the windowed painter'
         expect(handle.fold(3, 5, false)).toBe(false); // cancelled
     });
 });
+
+// --- external geometry invalidation (zoom / popup resize / width reflow) ----
+// The audit regressions (tmp diag diag-vl-zoom-drag.js + the unit demos): a
+// stale prefix-sum model wedged the scroll range — at 120% zoom the deep
+// scroll left a growing blank wedge at the viewport top and the list's tail
+// became outright unreachable. relayout() (driven by two ResizeObservers in
+// the real DOM, by handle.relayout()/fake-observer deliveries here) is the
+// fresh-start recovery. This double models LIVE geometry: offsetHeight and
+// clientHeight read through getters, so a mid-session zoom or width flip
+// re-values existing rows exactly like real Chrome, and the ul's rect height
+// is steerable to whatever "layout" should report.
+const makeLiveList = ({ viewportRows = 20 } = {}) => {
+    const state = { rowH: 28, clientRows: viewportRows, ulRectH: null };
+    const listeners = {};
+    let ul;
+    const parseLis = html => (html.match(/<li[^>]*id="p(\d+)"/g) || [])
+        .map(m => makeChild(+m.match(/p(\d+)/)[1]));
+    const makeChild = piece => ({
+        piece,
+        parentNode: null,
+        get offsetHeight() { return state.rowH; },
+        insertAdjacentHTML(pos, html) {
+            if (pos !== 'beforebegin')
+                return;
+            const idx = ul.children.indexOf(this);
+            if (idx >= 0)
+                ul.children.splice(idx, 0, ...parseLis(html));
+        },
+        remove() {
+            const idx = ul.children.indexOf(this);
+            if (idx >= 0)
+                ul.children.splice(idx, 1);
+        }
+    });
+    ul = {
+        tagName: 'UL',
+        style: {},
+        _html: '',
+        children: [],
+        insertAdjacentHTML(pos, html) {
+            if (pos === 'beforeend')
+                ul.children.push(...parseLis(html));
+        },
+        insertBefore(frag, ref) {
+            const idx = ref ? ul.children.indexOf(ref) : ul.children.length;
+            if (idx < 0)
+                return;
+            const kids = frag.childNodes.slice();
+            ul.children.splice(idx, 0, ...kids);
+            frag._kids.length = 0;
+            for (const k of kids)
+                k.parentNode = ul;
+        },
+        appendChild(node) {
+            if (node && Array.isArray(node.childNodes)) {
+                const kids = node.childNodes.slice();
+                ul.children.push(...kids);
+                node._kids.length = 0;
+                for (const k of kids)
+                    k.parentNode = ul;
+            }
+        },
+        getBoundingClientRect() {
+            return { height: state.ulRectH == null ? Infinity : state.ulRectH };
+        }
+    };
+    Object.defineProperty(ul, 'innerHTML', {
+        get() { return this._html; },
+        set(v) {
+            this._html = v;
+            this.children = parseLis(v);
+            for (const c of this.children)
+                c.parentNode = ul;
+        }
+    });
+    Object.defineProperty(ul, 'firstElementChild', {
+        get() { return this.children[0] || null; }
+    });
+    Object.defineProperty(ul, 'lastElementChild', {
+        get() { return this.children[this.children.length - 1] || null; }
+    });
+    ul.contains = el => !!el && ul.children.some(c => c.piece === el.piece);
+    const list = {
+        _html: '',
+        ul,
+        listeners,
+        state,
+        _scrollTop: 0,
+        style: {},
+        get clientHeight() { return state.clientRows * state.rowH; },
+        get innerHTML() { return this._html; },
+        set innerHTML(v) { this._html = v; },
+        get lastElementChild() { return this._html.includes('<ul') ? ul : null; },
+        querySelector(sel) { return sel === 'ul' ? ul : null; },
+        insertAdjacentHTML() {},
+        // Real browsers clamp scrollTop to the RENDERED extent (paddings +
+        // painted rows) minus the viewport — the very clamp that governs
+        // reachability. Model it, or test inputs go unphysical.
+        get scrollTop() { return this._scrollTop; },
+        set scrollTop(v) {
+            const padT = parseFloat(ul.style.paddingTop) || 0;
+            const padB = parseFloat(ul.style.paddingBottom) || 0;
+            const extent = padT + ul.children.length * state.rowH + padB;
+            const max = Math.max(0, extent - this.clientHeight);
+            this._scrollTop = Math.max(0, Math.min(v, max));
+        },
+        addEventListener(type, fn) {
+            (listeners[type] = listeners[type] || []).push(fn);
+        },
+        removeEventListener(type, fn) {
+            const arr = listeners[type] || [];
+            const i = arr.indexOf(fn);
+            if (i >= 0)
+                arr.splice(i, 1);
+        },
+        fire(type) {
+            for (const fn of (listeners[type] || []).slice())
+                fn({ target: null });
+        },
+        renderedPieces() {
+            return ul.children.map(c => c.piece);
+        },
+        // ground truth: which pieces SHOULD be on screen at the live geometry
+        visibleRange() {
+            const top = this.scrollTop / state.rowH;
+            return [Math.floor(top), Math.ceil(top + state.clientRows)];
+        }
+    };
+    return list;
+};
+
+describe('paintListVirtual × external geometry invalidation', () => {
+    afterEach(() => {
+        delete globalThis.requestAnimationFrame;
+        delete globalThis.ResizeObserver;
+    });
+
+    it('regression: zoom 120% deep jump left a blank wedge — relayout() re-covers the viewport', () => {
+        const list = makeLiveList({ viewportRows: 20 });
+        const handle = paintListVirtual(list, { head: '<ul></ul>', pieces: pieces(300) });
+        // zoom in: every row now lays out at 33.6px (the model still holds 28)
+        list.state.rowH = 33.6;
+        handle.relayout();
+        list.scrollTop = 2400;
+        list.fire('scroll');
+        const rendered = list.renderedPieces();
+        const [visTop] = list.visibleRange();
+        expect(visTop).toBe(71);
+        expect(rendered[0]).toBeLessThanOrEqual(visTop);   // was 77 (blank top)
+        expect(rendered).toContain(visTop);
+    });
+
+    it('regression: zoom 120% bottom jump ran the window past the last piece — relayout() keeps the tail painted', () => {
+        const list = makeLiveList({ viewportRows: 20 });
+        const handle = paintListVirtual(list, { head: '<ul></ul>', pieces: pieces(300) });
+        list.state.rowH = 33.6;
+        handle.relayout();
+        list.scrollTop = 1e9;                              // clamped to the real bottom
+        list.fire('scroll');
+        const rendered = list.renderedPieces();
+        expect(rendered.length).toBeGreaterThan(0);          // was 0 (full blank)
+        expect(rendered[rendered.length - 1]).toBe(299);    // the tail is reachable
+        expect(parseInt(list.ul.style.paddingBottom, 10)).toBe(0);
+    });
+
+    it('regression: a popup height grow > overscan left the new bottom unpainted — a re-window delivery covers it', () => {
+        const list = makeLiveList({ viewportRows: 10 });
+        const handle = paintListVirtual(list, { head: '<ul></ul>', pieces: pieces(300) });
+        // the drag grows the popup: the list box change delivers via the
+        // observer → re-window with the LIVE viewport (heights still valid)
+        list.state.clientRows = 21;
+        list.state.ulRectH = Infinity;   // ul height matches totalH → rewindow
+        handle.relayout();               // direct stand-in for the delivery
+        const rendered = list.renderedPieces();
+        const needed = list.visibleRange()[1];
+        expect(rendered[rendered.length - 1]).toBeGreaterThanOrEqual(needed - 1);
+    });
+
+    it('ResizeObservers watch the list and the ul; a drifted ul height relayouts, a matching one only re-windows', () => {
+        const instances = [];
+        globalThis.ResizeObserver = class {
+            constructor(cb) { this.cb = cb; instances.push(this); }
+            observe(t) { this.target = t; }
+            disconnect() { this.disconnected = true; }
+        };
+        const list = makeLiveList({ viewportRows: 20 });
+        const handle = paintListVirtual(list, { head: '<ul></ul>', pieces: pieces(300) });
+        expect(instances).toHaveLength(2);
+        expect(instances[0].target).toBe(list);
+        expect(instances[1].target).toBe(list.ul);
+
+        // baseline delivery primes the guard; a delivery whose reported ul
+        // height matches totalH() (the paddings ARE the model — apply() left
+        // them equal) only re-windows, changing nothing at the top
+        instances[0].cb();
+        list.state.ulRectH = 300 * 28;   // == totalH()
+        instances[1].cb();
+        expect(list.renderedPieces()[0]).toBe(0);
+
+        // scroll mid-list, then the width flip: rows now lay out 44px and
+        // layout's ul height no longer matches the 28px model → the next
+        // delivery relayouts: model reset to estimates, the window around
+        // the live scrollTop re-applied (paddingTop = estimate-prefix)
+        list.scrollTop = 2800;
+        list.fire('scroll');
+        list.state.rowH = 44;
+        list.state.ulRectH = 300 * 44;   // the real two-line height
+        instances[0].cb();
+        const after = list.renderedPieces();
+        expect(after.length).toBeGreaterThan(0);
+        expect(after[0]).toBeGreaterThan(0);
+        expect(parseInt(list.ul.style.paddingTop, 10)).toBe(after[0] * 28);
+
+        handle.cancel();
+        expect(instances[0].disconnected).toBe(true);
+        expect(instances[1].disconnected).toBe(true);
+    });
+});

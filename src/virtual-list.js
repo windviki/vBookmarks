@@ -23,14 +23,17 @@
  * `partial` flag tells the caller).
  *
  * Known lab limitations (why this is behind a flag):
- *  - heights are ESTIMATES (28px/row): wide/panel two-line rows and
- *    wrapped titles drift the scrollbar; scrolling is stable but the
- *    thumb's size/position are approximate;
+ *  - heights are ESTIMATES (28px/row) for never-visited pieces: the
+ *    scrollbar thumb's size/position stay approximate between visits
+ *    (scrolling itself is exact — every applied window is measured);
  *  - keyboard End/Home land on the last/first RENDERED row; the focusin
  *    edge extension pages the window so ↓/↑ walks keep working, but End
  *    past the window's edge is a two-step;
  *  - anything keyed by clamped row index is approximate (id-based
  *    restores work — the dupes head-fold focus, the row park/restore).
+ * External geometry changes (extension zoom, popup resize, width reflow)
+ * DO invalidate the model — ResizeObservers watch for them and relayout()
+ * (below) rebuilds it; see that block for the audit history.
  */
 
 const ROW_H = 28;        // --vbm-row-h; keep in sync with css/neat.css
@@ -269,6 +272,85 @@ export const paintListVirtual = (list, opts = {}) => {
         list.addEventListener('focusin', onFocusIn);
     }
 
+    // --- external geometry changes (zoom / popup resize / width reflow) ----
+    // The cached prefix sums are only valid in the coordinate space they
+    // were measured in — and none of these fire `scroll`:
+    //  - the extension zoom rescales #container's internal layout space
+    //    (audit anatomy: used height 600→500px at 120%, the list viewport
+    //    350→235px);
+    //  - a popup height drag changes the viewport (a grow > OVERSCAN left
+    //    the new bottom unpainted until the next scroll);
+    //  - a width flip across the ≥480px container query turns rows
+    //    two-line (28px→40px measured).
+    // A stale model didn't just drift the scrollbar: at 120% zoom the scroll
+    // range stayed pinned to the old geometry and the list's TAIL became
+    // unreachable (diag-vl-zoom-drag.js: window wedged at ~88% with a 188px
+    // bottom padding; un-zoom and even a re-render with a real-px
+    // savedScroll didn't heal — only a paint from scratch did).
+    //
+    // relayout() is that fresh start minus the markup rebuild: heights go
+    // back to the 28px estimates, tops rebuild, and the window around the
+    // live scrollTop re-applies (whose measure pass re-collects the window
+    // exactly like a fresh paint's initial window). Two ResizeObservers
+    // feed it: the LIST's box (viewport change → re-window only, heights
+    // still valid) and the rows UL (its rendered height drifting from
+    // totalH() means ROW heights changed → full relayout). apply() always
+    // leaves ul height == totalH() — the paddings ARE the model — so the
+    // observers' own padding writes don't re-trigger them (only real
+    // geometry drift breaks the equality; a 2px epsilon absorbs float
+    // jitter).
+    const relayout = () => {
+        if (state.cancelled)
+            return;
+        for (let i = 0; i < pieces.length; i++)
+            heights[i] = liCounts[i] * ROW_H;
+        rebuildTops();
+        const [from, to] = windowFor(list.scrollTop || 0);
+        apply(from, to);
+        if (onChunk)
+            onChunk(list);
+    };
+    let roList = null, roUl = null;
+    if (typeof ResizeObserver === 'function') {
+        let primed = false;   // both observers deliver a baseline entry first
+        let roRaf = false;
+        const run = () => {
+            roRaf = false;
+            if (state.cancelled)
+                return;
+            if (!primed) {
+                primed = true;
+                return;
+            }
+            const r = typeof ul.getBoundingClientRect === 'function'
+                ? ul.getBoundingClientRect() : null;
+            if (!r || typeof r.height !== 'number'
+                || Math.abs(r.height - totalH()) > 2)
+                relayout();
+            else
+                scheduleRewindow();
+        };
+        const deliver = () => {
+            if (roRaf || state.cancelled)
+                return;
+            if (typeof requestAnimationFrame === 'function') {
+                roRaf = true;
+                requestAnimationFrame(run);
+            } else {
+                run();
+            }
+        };
+        try {
+            roList = new ResizeObserver(deliver);
+            roList.observe(list);
+            roUl = new ResizeObserver(deliver);
+            roUl.observe(ul);
+        } catch (_) {
+            roList = null;
+            roUl = null;
+        }
+    }
+
     // --- fold surgery (live group/window folds without a repaint) ---------
     // hide/show a CONTIGUOUS piece range: hidden pieces contribute zero
     // height but keep their last-measured height for the restore; the
@@ -411,6 +493,7 @@ export const paintListVirtual = (list, opts = {}) => {
         cancelled: false,
         partial: !(start === 0 && end >= pieces.length),
         fold,
+        relayout,
         cancel() {
             state.cancelled = true;
             this.cancelled = true;
@@ -418,6 +501,8 @@ export const paintListVirtual = (list, opts = {}) => {
                 list.removeEventListener('scroll', onScroll);
                 list.removeEventListener('focusin', onFocusIn);
             }
+            if (roList) { try { roList.disconnect(); } catch (_) {} }
+            if (roUl) { try { roUl.disconnect(); } catch (_) {} }
             nodeStash.clear();
             ul.style.paddingTop = '';
             ul.style.paddingBottom = '';

@@ -69,17 +69,48 @@ async function main() {
                 let ul = null;
                 for (let el = list.lastElementChild; el; el = el.previousElementSibling)
                     if (el.tagName === 'UL') { ul = el; break; }
-                const lr = list.getBoundingClientRect();
+                // getBoundingClientRect reports the zoomed subtree's INTERNAL
+                // space in this Chromium, so under body[data-zoom] it does not
+                // match screen coords. Locate the list's REAL screen span by
+                // walking the center column with elementFromPoint instead, and
+                // keep every sample inside it — no coordinate-space guessing.
+                const inList = el => {
+                    let n = el;
+                    while (n) { if (n.id === 'dupes-list') return true; n = n.parentNode; }
+                    return false;
+                };
+                const centerX = window.innerWidth / 2;
+                let topY = -1, botY = -1;
+                for (let y = 0; y < window.innerHeight; y += 8) {
+                    const hit = document.elementFromPoint(centerX, y);
+                    if (inList(hit)) {
+                        if (topY < 0) topY = y;
+                        botY = y;
+                    } else if (topY >= 0 && botY === topY + 0 && y > topY + 24) {
+                        break;   // past the bottom edge
+                    } else if (topY >= 0 && y > topY + 24 && !inList(hit)) {
+                        // allow small gaps (borders); a real exit stops the scan
+                        let any = false;
+                        for (let y2 = y; y2 < Math.min(y + 40, window.innerHeight); y2 += 8)
+                            if (inList(document.elementFromPoint(centerX, y2))) { any = true; break; }
+                        if (!any) break;
+                    }
+                }
                 const samples = [0.08, 0.3, 0.5, 0.7, 0.92];
                 let blanks = 0;
                 const blankHits = [];
-                for (const s of samples) {
-                    const el = document.elementFromPoint(lr.left + lr.width / 2, lr.top + lr.height * s);
-                    const li = el && el.closest ? el.closest('li') : null;
-                    if (!li || !list.contains(li)) {
-                        blanks++;
-                        blankHits.push(el ? el.tagName + '.' + (el.className || '') : 'null');
+                if (topY >= 0 && botY > topY) {
+                    for (const s of samples) {
+                        const y = topY + (botY - topY) * s;
+                        const el = document.elementFromPoint(centerX, y);
+                        const li = el && el.closest ? el.closest('li') : null;
+                        if (!li || !list.contains(li)) {
+                            blanks++;
+                            blankHits.push(el ? el.tagName + '.' + (el.className || '') : 'null');
+                        }
                     }
+                } else {
+                    blankHits.push('LIST-NOT-FOUND');
                 }
                 const rows = ul ? ul.children : [];
                 const mid = rows[Math.floor(rows.length / 2)];
@@ -93,6 +124,7 @@ async function main() {
                     rowsPainted: rows.length,
                     firstRow: rows[0] ? (rows[0].id || rows[0].className || '').slice(0, 40) : null,
                     pad: ul ? ul.style.paddingTop + '/' + ul.style.paddingBottom : null,
+                    span: topY + '-' + botY,
                     blank: blanks + '/5',
                     blankHits
                 };
@@ -172,11 +204,13 @@ async function main() {
         results.F_freshReload_bottom = await step('F-jump', () => inPage(() => window.__jump(1)));
 
         // Height drag simulation: the real resizer writes body.style.height.
+        // 400→600 stays inside the popup's real size range (the old 240px
+        // squeeze deformed the head toolbar and confounded the samples).
         await step('G-reset', () => inPage(() => { document.getElementById('dupes-list').scrollTop = 0; }));
         await inPage(() => window.__settle(6));
-        await step('G-240', () => inPage(() => { document.body.style.height = '240px'; }));
+        await step('G-400', () => inPage(() => { document.body.style.height = '400px'; }));
         await inPage(() => window.__settle(8));
-        results.G1_height240_top = await step('G-probe1', () => inPage(() => window.__probe()));
+        results.G1_height400_top = await step('G-probe1', () => inPage(() => window.__probe()));
         await step('G-600', () => inPage(() => { document.body.style.height = '600px'; }));
         await inPage(() => window.__settle(8));   // NO scroll in between — that IS the scenario
         results.G2_height600_noscroll = await step('G-probe2', () => inPage(() => window.__probe()));
