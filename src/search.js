@@ -51,7 +51,14 @@
  * document/window/chrome remain page globals, as in the rest of the popup.
  * No neatools helpers here: plain getElementById/classList/loops only.
  */
-import { FOLDER_ICON, VIEW_ICONS, TRASH_ICON, SELECT_ICON, STAGE_ICON, OPEN_ICON, TABS_ICON } from './icons.js';
+import { FOLDER_ICON, VIEW_ICONS, TRASH_ICON, SELECT_ICON, STAGE_ICON, OPEN_ICON, TABS_ICON, spriteIcon } from './icons.js';
+
+    // 2026-08-28 行级图标精灵化（perf 任务①）：结果行的暂存/删除尾对用文档级
+    // symbol；工具栏一次性注入保持内联。
+    const IC = {
+        trash: spriteIcon('trash'),
+        STAGE_RELAY: { off: spriteIcon('stage'), done: spriteIcon('stage-done') }
+    };
 import { fitToolbarLabels, watchToolbarFit } from './toolbar-fit.js';
 import { stageBtnHtml as relayStageBtnHtml, flipStageBtn, toggleStageItem } from './staging-relay.js';
 import { relTimeLabel } from './tree-render.js';
@@ -631,7 +638,7 @@ export function initSearch(ctx = {}) {
                         // — flip every result-row plane in place.
                         if ($results && $results.querySelectorAll)
                             for (const btn of $results.querySelectorAll('#results .staging-add-btn'))
-                                flipStageBtn(btn, true, _m);
+                                flipStageBtn(btn, true, _m, IC.STAGE_RELAY);
                     }
                 }
                 return;
@@ -947,8 +954,8 @@ export function initSearch(ctx = {}) {
                     if (!selecting) {
                         const relayOn = !ctx.stagingApi || !ctx.stagingApi.isEnabled || ctx.stagingApi.isEnabled();
                         const delLabel = htmlspecialchars(_m('rowActionDelete'));
-                        tail = (relayOn ? relayStageBtnHtml(ctx.stagingApi, { id, url: result.url }, _m) : '') +
-                            `<button type="button" class="row-btn search-row-del" aria-label="${delLabel}" title="${delLabel}">${TRASH_ICON}</button>`;
+                        tail = (relayOn ? relayStageBtnHtml(ctx.stagingApi, { id, url: result.url }, _m, IC.STAGE_RELAY) : '') +
+                            `<button type="button" class="row-btn search-row-del" aria-label="${delLabel}" title="${delLabel}">${IC.trash}</button>`;
                     }
                     // §3.6: rows carry their parent-folder path label + the
                     // unified 标题/URL/路径 tooltip (via the meta argument).

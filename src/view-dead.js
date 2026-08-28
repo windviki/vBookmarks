@@ -118,7 +118,15 @@
 import { filterScannable, collectDead, statusLabel } from './dead-links.js';
 import { parseProxyServer, formatProxyServer, DEFAULT_PROXY_TEST_URL, proxyPermission, requestProxyPermission, proxyControllable, testProxyReachable } from './dead-proxy.js';
 import { DEAD_SCAN_KEY, DEAD_LAST_KEY, DEAD_SCAN_MSG } from './dead-scan-sw.js';
-import { VIEW_ICONS, FLAG_ICON, FLAG_X_ICON, TRASH_ICON, CHEVRON_ICON, REDO_ICON, LIST_X_ICON, SELECT_ICON, STAGE_ICON } from './icons.js';
+import { VIEW_ICONS, FLAG_ICON, FLAG_X_ICON, TRASH_ICON, CHEVRON_ICON, REDO_ICON, LIST_X_ICON, SELECT_ICON, STAGE_ICON, spriteIcon } from './icons.js';
+
+    // 2026-08-28 行级图标精灵化（perf 任务①）：5154 判定行的 ⎷/暂存/删除
+    // 按钮用文档级 symbol；工具栏一次性注入保持内联。
+    const IC = {
+        flag: spriteIcon('flag'),
+        trash: spriteIcon('trash'),
+        STAGE_RELAY: { off: spriteIcon('stage'), done: spriteIcon('stage-done') }
+    };
 import { stageBtnHtml as relayStageBtnHtml, flipStageBtn, toggleStageItem } from './staging-relay.js';
 import { fitToolbarLabels, watchToolbarFit } from './toolbar-fit.js';
 import { makeRiskBanner, RISK_HELP_URL } from './risk-banner.js';
@@ -696,7 +704,7 @@ export function initViewDead(ctx = {}) {
     // the flip lands on the live button (this view does not re-render on
     // staging changes). Empty while the staging master switch is off.
     const relayOn = () => !ctx.staging || !ctx.staging.isEnabled || ctx.staging.isEnabled();
-    const stageBtnHtml = item => relayOn() ? relayStageBtnHtml(ctx.staging, item, _m) : '';
+    const stageBtnHtml = item => relayOn() ? relayStageBtnHtml(ctx.staging, item, _m, IC.STAGE_RELAY) : '';
 
     // The selecting action rung's progressive labels (shared fitter; the
     // dead-btn-label spans start hidden, the fit reveals them right-to-left
@@ -759,10 +767,10 @@ export function initViewDead(ctx = {}) {
                 `<button class="row-btn dead-mark-btn${marked ? ' marked' : ''}" ` +
                 `aria-pressed="${marked}" ` +
                 `aria-label="${marked ? L.unmark : L.mark}" ` +
-                `title="${marked ? L.unmark : L.mark}">${FLAG_ICON}</button>` +
+                `title="${marked ? L.unmark : L.mark}">${IC.flag}</button>` +
                 stageBtnHtml(item) +
                 `<button class="row-btn dead-del-btn" aria-label="${L.rowDelete}" ` +
-                `title="${L.rowDelete}">${TRASH_ICON}</button>`) +
+                `title="${L.rowDelete}">${IC.trash}</button>`) +
             '</li>';
     };
     const renderRows = (rows, L) => {
@@ -812,10 +820,10 @@ export function initViewDead(ctx = {}) {
             }) +
             (selecting ? '' :
                 `<button class="row-btn dead-mark-btn marked" aria-pressed="true" ` +
-                `aria-label="${L.unmark}" title="${L.unmark}">${FLAG_ICON}</button>` +
+                `aria-label="${L.unmark}" title="${L.unmark}">${IC.flag}</button>` +
                 stageBtnHtml(item) +
                 `<button class="row-btn dead-del-btn" aria-label="${L.rowDelete}" ` +
-                `title="${L.rowDelete}">${TRASH_ICON}</button>`) +
+                `title="${L.rowDelete}">${IC.trash}</button>`) +
             '</li>';
     };
     const renderMarkedRows = (rows, hasResults, L) => {
@@ -1997,7 +2005,7 @@ export function initViewDead(ctx = {}) {
                     api.addItems(rows);
                     if ($list.querySelectorAll)
                         for (const btn of $list.querySelectorAll('.staging-add-btn'))
-                            flipStageBtn(btn, true, _m);
+                            flipStageBtn(btn, true, _m, IC.STAGE_RELAY);
                 }
             }
             return;
@@ -2116,7 +2124,7 @@ export function initViewDead(ctx = {}) {
             const row = id ? [...allResultRows(), ...markedRows()].find(r => r.item.id === id) : null;
             const nowStaged = row ? toggleStageItem(ctx.staging, row.item) : null;
             if (nowStaged !== null)
-                flipStageBtn(stageBtn, nowStaged, _m);
+                flipStageBtn(stageBtn, nowStaged, _m, IC.STAGE_RELAY);
             return;
         }
         // plain row clicks open the bookmark like the tree does

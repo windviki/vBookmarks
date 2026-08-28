@@ -75,7 +75,7 @@
  */
 
 import { findDupes, pickKeeper, planDeletion } from './dupes.js';
-import { VIEW_ICONS, CHECK_ICON, CHEVRON_ICON, SELECT_ICON, TRASH_ICON, STAGE_ICON, STAGE_ICON_DONE, COLLAPSE_ALL_ICON, EXPAND_ALL_ICON } from './icons.js';
+import { VIEW_ICONS, CHECK_ICON, CHEVRON_ICON, SELECT_ICON, TRASH_ICON, STAGE_ICON, STAGE_ICON_DONE, COLLAPSE_ALL_ICON, EXPAND_ALL_ICON, spriteIcon } from './icons.js';
 import { stageBtnHtml as relayStageBtnHtml, flipStageBtn, toggleStageItem, isStagedUrl } from './staging-relay.js';
 import { initDropdowns } from './dropdown.js';
 import { makeRiskBanner, RISK_HELP_URL } from './risk-banner.js';
@@ -83,6 +83,15 @@ import { htmlspecialchars } from './escape.js';
 import { parkRowFocus, unparkRowFocus, parkToolbarFocus, restoreToolbarFocus } from './list-focus.js';
 import { paintListChunked } from './list-chunks.js';
 import { paintListVirtual } from './virtual-list.js';
+
+// 2026-08-28 行级图标精灵化（perf 任务①）：组头/行乘数大的按钮用文档级
+// symbol；工具栏一次性注入保持内联。
+const IC = {
+    check: spriteIcon('check'),
+    trash: spriteIcon('trash'),
+    stage: spriteIcon('stage'),
+    stageDone: spriteIcon('stage-done')
+};
 
 // Group-head URL display (view-system absorption): the normalized key's
 // discriminating part usually sits in the tail path, where CSS
@@ -451,7 +460,7 @@ export function initViewDupes(ctx = {}) {
         const label = _m(staged ? 'stagingRemove' : 'stagingAdd');
         return `<button type="button" class="row-btn staging-add-btn${staged ? ' staged' : ''}" ` +
             `aria-pressed="${staged}" aria-label="${htmlspecialchars(label)}" ` +
-            `title="${htmlspecialchars(label)}">${staged ? STAGE_ICON_DONE : STAGE_ICON}</button>`;
+            `title="${htmlspecialchars(label)}">${staged ? IC.stageDone : IC.stage}</button>`;
     };
 
     const groupHeadHtml = (group, L) => {
@@ -475,7 +484,7 @@ export function initViewDupes(ctx = {}) {
             // velvet staging relay: the whole group joins the workbench (all
             // members, not just the doomed — the strategy can change there).
             groupStageBtnHtml(group) +
-            `<button class="row-btn dupes-clean-rest" aria-label="${hint}" title="${hint}">${CHECK_ICON}</button>` +
+            `<button class="row-btn dupes-clean-rest" aria-label="${hint}" title="${hint}">${IC.check}</button>` +
             '</span></li>';
     };
 
@@ -509,7 +518,7 @@ export function initViewDupes(ctx = {}) {
                 }) +
                 stageBtnHtml(item) +
                 `<button class="row-btn dupes-member-del" aria-label="${L.rowDelete}" ` +
-                `title="${L.rowDelete}">${TRASH_ICON}</button>` +
+                `title="${L.rowDelete}">${IC.trash}</button>` +
                 '</li>';
         }
         return html;

@@ -33,7 +33,26 @@
  * dropping callbacks.
  */
 
-import { VIEW_ICONS, STAR_ICON, STAR_ICON_FILLED, SELECT_ICON, FOLDER_STAR_ICON, FOLDER_PLUS_ICON, EDIT_ICON, SLEEP_ICON, SLEEP_ICON_FILLED, ACTIVATE_ICON, TRASH_ICON, REDO_ICON, COLLAPSE_ALL_ICON, EXPAND_ALL_ICON, PIN_ICON, PIN_ICON_FILLED, STAGE_ICON, STAGE_ICON_DONE, TABS_ICON, WINDOW_PLUS_ICON, CHEVRON_ICON } from './icons.js';
+import { VIEW_ICONS, STAR_ICON, STAR_ICON_FILLED, SELECT_ICON, FOLDER_STAR_ICON, FOLDER_PLUS_ICON, EDIT_ICON, SLEEP_ICON, SLEEP_ICON_FILLED, ACTIVATE_ICON, TRASH_ICON, REDO_ICON, COLLAPSE_ALL_ICON, EXPAND_ALL_ICON, PIN_ICON, PIN_ICON_FILLED, STAGE_ICON, STAGE_ICON_DONE, TABS_ICON, WINDOW_PLUS_ICON, CHEVRON_ICON, spriteIcon } from './icons.js';
+
+    // 2026-08-28 行级图标精灵化（perf 任务①）：行/组头乘数大的按钮图标引用
+    // 文档级 <symbol>（icons.js ICON_SPRITE_SHEET，neat.js 启动注入），每行省
+    // ~1KB 内联 SVG；工具栏等每视图一次的注入保持内联不变。
+    const IC = {
+        activate: spriteIcon('activate'),
+        edit: spriteIcon('edit'),
+        sleep: spriteIcon('sleep'),
+        sleepFilled: spriteIcon('sleep-filled'),
+        star: spriteIcon('star'),
+        starFilled: spriteIcon('star-filled'),
+        stage: spriteIcon('stage'),
+        stageDone: spriteIcon('stage-done'),
+        trash: spriteIcon('trash'),
+        pin: spriteIcon('pin'),
+        pinFilled: spriteIcon('pin-filled'),
+        folderStar: spriteIcon('folder-star'),
+        STAGE_RELAY: { off: spriteIcon('stage'), done: spriteIcon('stage-done') }
+    };
 import { htmlspecialchars } from './escape.js';
 import { parkRowFocus, unparkRowFocus, parkToolbarFocus, restoreToolbarFocus } from './list-focus.js';
 import { paintListChunked } from './list-chunks.js';
@@ -600,12 +619,12 @@ export function initViewTabGroups(ctx = {}) {
             `<span class="tab-group-dot tg-${htmlspecialchars(color)}"></span>` +
             `<span class="tabgroups-group-title" dir="auto">${htmlspecialchars(title)}</span>` +
             `<span class="count-pill" aria-label="${htmlspecialchars(G.count(`${memberTabs.length}`))}">${memberTabs.length}</span>` +
-            `<button class="row-btn tabgroups-group-activate" aria-label="${htmlspecialchars(G.activate)}" title="${htmlspecialchars(G.activate)}">${ACTIVATE_ICON}</button>` +
-            `<button class="row-btn tabgroups-group-rename" aria-label="${htmlspecialchars(G.rename)}" title="${htmlspecialchars(G.rename)}">${EDIT_ICON}</button>` +
-            `<button class="row-btn tabgroups-group-sleep${allAsleep ? ' asleep' : ''}" aria-pressed="${allAsleep}" aria-label="${htmlspecialchars(sleepLabel)}" title="${htmlspecialchars(sleepLabel)}">${allAsleep ? SLEEP_ICON_FILLED : SLEEP_ICON}</button>` +
-            `<button class="row-btn tabgroups-group-save" aria-label="${htmlspecialchars(G.save)}" title="${htmlspecialchars(G.save)}">${FOLDER_STAR_ICON}</button>` +
-            (relayOn() ? `<button class="row-btn tabgroups-group-stage${groupStaged ? ' staged always-on' : ''}" aria-pressed="${groupStaged}" aria-label="${htmlspecialchars(groupStageLabel)}" title="${htmlspecialchars(groupStageLabel)}">${groupStaged ? STAGE_ICON_DONE : STAGE_ICON}</button>` : '') +
-            `<button class="row-btn tabgroups-group-close" aria-label="${htmlspecialchars(G.close)}" title="${htmlspecialchars(G.close)}">${TRASH_ICON}</button>` +
+            `<button class="row-btn tabgroups-group-activate" aria-label="${htmlspecialchars(G.activate)}" title="${htmlspecialchars(G.activate)}">${IC.activate}</button>` +
+            `<button class="row-btn tabgroups-group-rename" aria-label="${htmlspecialchars(G.rename)}" title="${htmlspecialchars(G.rename)}">${IC.edit}</button>` +
+            `<button class="row-btn tabgroups-group-sleep${allAsleep ? ' asleep' : ''}" aria-pressed="${allAsleep}" aria-label="${htmlspecialchars(sleepLabel)}" title="${htmlspecialchars(sleepLabel)}">${allAsleep ? IC.sleepFilled : IC.sleep}</button>` +
+            `<button class="row-btn tabgroups-group-save" aria-label="${htmlspecialchars(G.save)}" title="${htmlspecialchars(G.save)}">${IC.folderStar}</button>` +
+            (relayOn() ? `<button class="row-btn tabgroups-group-stage${groupStaged ? ' staged always-on' : ''}" aria-pressed="${groupStaged}" aria-label="${htmlspecialchars(groupStageLabel)}" title="${htmlspecialchars(groupStageLabel)}">${groupStaged ? IC.stageDone : IC.stage}</button>` : '') +
+            `<button class="row-btn tabgroups-group-close" aria-label="${htmlspecialchars(G.close)}" title="${htmlspecialchars(G.close)}">${IC.trash}</button>` +
             '</span></li>';
     };
 
@@ -633,16 +652,16 @@ export function initViewTabGroups(ctx = {}) {
         const stagedLabel = L.stage || _m('tabRowStage');
         if (selecting) {
             return (pinned
-                ? `<span class="tabgroups-status-icon pinned" aria-label="${htmlspecialchars(pinnedLabel)}" title="${htmlspecialchars(pinnedLabel)}">${PIN_ICON_FILLED}</span>`
+                ? `<span class="tabgroups-status-icon pinned" aria-label="${htmlspecialchars(pinnedLabel)}" title="${htmlspecialchars(pinnedLabel)}">${IC.pinFilled}</span>`
                 : emptySlot()) +
                 (discarded
-                    ? `<span class="tabgroups-status-icon discarded" aria-label="${htmlspecialchars(discardedLabel)}" title="${htmlspecialchars(discardedLabel)}">${SLEEP_ICON_FILLED}</span>`
+                    ? `<span class="tabgroups-status-icon discarded" aria-label="${htmlspecialchars(discardedLabel)}" title="${htmlspecialchars(discardedLabel)}">${IC.sleepFilled}</span>`
                     : emptySlot()) +
                 (bookmarked
-                    ? `<span class="tabgroups-star" aria-label="${htmlspecialchars(bookmarkedLabel)}" title="${htmlspecialchars(bookmarkedLabel)}">${STAR_ICON_FILLED}</span>`
+                    ? `<span class="tabgroups-star" aria-label="${htmlspecialchars(bookmarkedLabel)}" title="${htmlspecialchars(bookmarkedLabel)}">${IC.starFilled}</span>`
                     : emptySlot()) +
                 (relayOn() && staged
-                    ? `<span class="tabgroups-star staged" aria-label="${htmlspecialchars(stagedLabel)}" title="${htmlspecialchars(stagedLabel)}">${STAGE_ICON_DONE}</span>`
+                    ? `<span class="tabgroups-star staged" aria-label="${htmlspecialchars(stagedLabel)}" title="${htmlspecialchars(stagedLabel)}">${IC.stageDone}</span>`
                     : emptySlot()) +
                 emptySlot();
         }
@@ -652,28 +671,28 @@ export function initViewTabGroups(ctx = {}) {
         // hollow pin button in the same column (4.1.0 parity with the
         // sleep/star hover actions — pinning was context-menu-only).
         const pinHtml = pinned
-            ? `<button class="row-btn tabgroups-unpin always-on" aria-pressed="true" aria-label="${htmlspecialchars(L.unpin || _m('tabGroupsUnpinTab'))}" title="${htmlspecialchars(L.unpin || _m('tabGroupsUnpinTab'))}">${PIN_ICON_FILLED}</button>`
-            : `<button class="row-btn tabgroups-pin-tab" aria-label="${htmlspecialchars(L.pin || _m('tabGroupsPinTab'))}" title="${htmlspecialchars(L.pin || _m('tabGroupsPinTab'))}">${PIN_ICON}</button>`;
+            ? `<button class="row-btn tabgroups-unpin always-on" aria-pressed="true" aria-label="${htmlspecialchars(L.unpin || _m('tabGroupsUnpinTab'))}" title="${htmlspecialchars(L.unpin || _m('tabGroupsUnpinTab'))}">${IC.pinFilled}</button>`
+            : `<button class="row-btn tabgroups-pin-tab" aria-label="${htmlspecialchars(L.pin || _m('tabGroupsPinTab'))}" title="${htmlspecialchars(L.pin || _m('tabGroupsPinTab'))}">${IC.pin}</button>`;
         // Sleep: hollow crescent = awake (click sleeps), filled = sleeping
         // (always visible, click wakes the tab in place).
         const sleepLabel = discarded ? (L.wake || _m('tabGroupsWakeTab')) : (L.sleep || _m('tabGroupsSleepTab'));
         const sleepHtml = `<button class="row-btn tabgroups-sleep-tab${discarded ? ' asleep always-on' : ''}" ` +
             `aria-pressed="${discarded}" aria-label="${htmlspecialchars(sleepLabel)}" title="${htmlspecialchars(sleepLabel)}">` +
-            `${discarded ? SLEEP_ICON_FILLED : SLEEP_ICON}</button>`;
+            `${discarded ? IC.sleepFilled : IC.sleep}</button>`;
         // Bookmark state follows the stats-view recipe: an always-visible
         // filled ★ once bookmarked — clicking it now REMOVES the bookmark
         // (undo-captured) — and a hover-revealed hollow ☆ otherwise.
         const starHtml = bookmarked
-            ? `<button class="row-btn tabgroups-remove-bookmark always-on" aria-pressed="true" aria-label="${htmlspecialchars(L.removeBookmark || _m('tabGroupsRemoveBookmark'))}" title="${htmlspecialchars(L.removeBookmark || _m('tabGroupsRemoveBookmark'))}">${STAR_ICON_FILLED}</button>`
-            : `<button class="row-btn tabgroups-add-bookmark tabgroups-add-btn" aria-label="${htmlspecialchars(L.addBookmark || _m('tabGroupsAddBookmark'))}" title="${htmlspecialchars(L.addBookmark || _m('tabGroupsAddBookmark'))}">${STAR_ICON}</button>`;
+            ? `<button class="row-btn tabgroups-remove-bookmark always-on" aria-pressed="true" aria-label="${htmlspecialchars(L.removeBookmark || _m('tabGroupsRemoveBookmark'))}" title="${htmlspecialchars(L.removeBookmark || _m('tabGroupsRemoveBookmark'))}">${IC.starFilled}</button>`
+            : `<button class="row-btn tabgroups-add-bookmark tabgroups-add-btn" aria-label="${htmlspecialchars(L.addBookmark || _m('tabGroupsAddBookmark'))}" title="${htmlspecialchars(L.addBookmark || _m('tabGroupsAddBookmark'))}">${IC.star}</button>`;
         // Stage (发送到暂存): pure snapshot between the star and close
         // columns; staged → filled plane always on in accent.
         const stageHtml = !relayOn() ? '' : (staged
-            ? `<button class="row-btn tabgroups-stage staged always-on" aria-pressed="true" aria-label="${htmlspecialchars(stagedLabel)}" title="${htmlspecialchars(stagedLabel)}">${STAGE_ICON_DONE}</button>`
-            : `<button class="row-btn tabgroups-stage" aria-label="${htmlspecialchars(stagedLabel)}" title="${htmlspecialchars(stagedLabel)}">${STAGE_ICON}</button>`);
+            ? `<button class="row-btn tabgroups-stage staged always-on" aria-pressed="true" aria-label="${htmlspecialchars(stagedLabel)}" title="${htmlspecialchars(stagedLabel)}">${IC.stageDone}</button>`
+            : `<button class="row-btn tabgroups-stage" aria-label="${htmlspecialchars(stagedLabel)}" title="${htmlspecialchars(stagedLabel)}">${IC.stage}</button>`);
         // The rightmost hover action is close-tab (delete).
         const closeLabel = L.close || _m('tabGroupsSelectClose');
-        const closeHtml = `<button class="row-btn tabgroups-close-tab" aria-label="${htmlspecialchars(closeLabel)}" title="${htmlspecialchars(closeLabel)}">${TRASH_ICON}</button>`;
+        const closeHtml = `<button class="row-btn tabgroups-close-tab" aria-label="${htmlspecialchars(closeLabel)}" title="${htmlspecialchars(closeLabel)}">${IC.trash}</button>`;
         return pinHtml + sleepHtml + starHtml + stageHtml + closeHtml;
     };
 
@@ -733,8 +752,8 @@ export function initViewTabGroups(ctx = {}) {
             }
             : {};
         const firstBtn = standalone
-            ? `<button class="row-btn tabgroups-closed-reopen" aria-label="${htmlspecialchars(_m('tabGroupsReopenAction'))}" title="${htmlspecialchars(_m('tabGroupsReopenAction'))}">${ACTIVATE_ICON}</button>`
-            : `<button class="row-btn tabgroups-closed-add-bookmark" aria-label="${htmlspecialchars(_m('tabGroupsAddBookmark'))}" title="${htmlspecialchars(_m('tabGroupsAddBookmark'))}">${STAR_ICON}</button>`;
+            ? `<button class="row-btn tabgroups-closed-reopen" aria-label="${htmlspecialchars(_m('tabGroupsReopenAction'))}" title="${htmlspecialchars(_m('tabGroupsReopenAction'))}">${IC.activate}</button>`
+            : `<button class="row-btn tabgroups-closed-add-bookmark" aria-label="${htmlspecialchars(_m('tabGroupsAddBookmark'))}" title="${htmlspecialchars(_m('tabGroupsAddBookmark'))}">${IC.star}</button>`;
         // 发送到暂存 between the leading action and the trailing ×: staged →
         // the filled plane, always on in accent (the staging view's law).
         const closedStaged = isStagedUrl(tab.url);
@@ -742,13 +761,13 @@ export function initViewTabGroups(ctx = {}) {
         const stageBtn = relayOn()
             ? `<button class="row-btn tabgroups-closed-stage${closedStaged ? ' staged always-on' : ''}" ` +
               `aria-pressed="${closedStaged}" aria-label="${htmlspecialchars(closedStageLabel)}" title="${htmlspecialchars(closedStageLabel)}">` +
-              `${closedStaged ? STAGE_ICON_DONE : STAGE_ICON}</button>`
+              `${closedStaged ? IC.stageDone : IC.stage}</button>`
             : '';
         return `<li class="vbm-row tabgroups-closed-tab${opts.member ? ' tabgroups-closed-member' : ''}" data-closed-id="${htmlspecialchars(record.id)}" data-closed-tab="${idx}">` +
             treeRender.generateBookmarkHTML(title, tab.url || '', extras, null, null, meta) +
             firstBtn +
             stageBtn +
-            `<button class="row-btn tabgroups-closed-remove-tab" aria-label="${htmlspecialchars(removeLabel)}" title="${htmlspecialchars(removeLabel)}">${TRASH_ICON}</button>` +
+            `<button class="row-btn tabgroups-closed-remove-tab" aria-label="${htmlspecialchars(removeLabel)}" title="${htmlspecialchars(removeLabel)}">${IC.trash}</button>` +
             '</li>';
     };
 
@@ -763,7 +782,7 @@ export function initViewTabGroups(ctx = {}) {
         const label = _m('tabgroupStageAll');
         return `<button class="row-btn tabgroups-closed-stage-group${staged ? ' staged always-on' : ''}" ` +
             `aria-pressed="${staged}" aria-label="${htmlspecialchars(label)}" title="${htmlspecialchars(label)}">` +
-            `${staged ? STAGE_ICON_DONE : STAGE_ICON}</button>`;
+            `${staged ? IC.stageDone : IC.stage}</button>`;
     };
 
     const closedGroupHtml = record => {
@@ -782,9 +801,9 @@ export function initViewTabGroups(ctx = {}) {
             `<span class="tabgroups-group-title" dir="auto">${htmlspecialchars(title)}</span>` +
             `<span class="tabgroups-closed-meta" title="${htmlspecialchars(closedAtFull)}">${htmlspecialchars(closedAt)}</span>` +
             `<span class="count-pill" aria-label="${htmlspecialchars(_m('tabGroupsGroupCount', `${(record.tabs || []).length}`))}">${(record.tabs || []).length}</span>` +
-            `<button class="row-btn tabgroups-closed-open" aria-label="${htmlspecialchars(openLabel)}" title="${htmlspecialchars(openLabel)}">${ACTIVATE_ICON}</button>` +
+            `<button class="row-btn tabgroups-closed-open" aria-label="${htmlspecialchars(openLabel)}" title="${htmlspecialchars(openLabel)}">${IC.activate}</button>` +
             closedHeadStageBtn(record) +
-            `<button class="row-btn tabgroups-closed-delete" aria-label="${htmlspecialchars(deleteLabel)}" title="${htmlspecialchars(deleteLabel)}">${TRASH_ICON}</button>` +
+            `<button class="row-btn tabgroups-closed-delete" aria-label="${htmlspecialchars(deleteLabel)}" title="${htmlspecialchars(deleteLabel)}">${IC.trash}</button>` +
             '</span></li>';
         if (isExpanded) {
             const tabs = record.tabs || [];
@@ -879,7 +898,7 @@ export function initViewTabGroups(ctx = {}) {
                 // restores the window itself. Not rendered in selection mode
                 // (the head toggles the window's membership there).
                 const closeBtn = selecting ? '' :
-                    `<button class="row-btn tabgroups-window-close" aria-label="${htmlspecialchars(_m('tabGroupsCloseWindow'))}" title="${htmlspecialchars(_m('tabGroupsCloseWindow'))}">${TRASH_ICON}</button>`;
+                    `<button class="row-btn tabgroups-window-close" aria-label="${htmlspecialchars(_m('tabGroupsCloseWindow'))}" title="${htmlspecialchars(_m('tabGroupsCloseWindow'))}">${IC.trash}</button>`;
                 // 发送全部暂存 (left of close): every bookmarkable tab of
                 // the window joins the workbench; all-staged → the filled
                 // plane, always on. Off with the staging master switch.
@@ -891,7 +910,7 @@ export function initViewTabGroups(ctx = {}) {
                 const winStageBtn = (selecting || !relayOn()) ? '' :
                     `<button class="row-btn tabgroups-window-stage${winStaged ? ' staged always-on' : ''}" ` +
                     `aria-pressed="${winStaged}" aria-label="${winStageLabel}" title="${winStageLabel}">` +
-                    `${winStaged ? STAGE_ICON_DONE : STAGE_ICON}</button>`;
+                    `${winStaged ? IC.stageDone : IC.stage}</button>`;
                 return `<li class="tabgroups-window-head" data-window-id="${String(win.id)}">` +
                     `<span class="tabgroups-window-head-row" tabindex="-1" role="button" ` +
                     (selecting ? '' : 'draggable="true" ') +
@@ -1188,7 +1207,7 @@ export function initViewTabGroups(ctx = {}) {
             const btns = $list.querySelectorAll(
                 `li[data-closed-id="${esc}"] .tabgroups-closed-stage, li[data-closed-id="${esc}"] .tabgroups-closed-stage-group`);
             for (let i = 0, l = btns.length; i < l; i++)
-                flipStageBtn(btns[i], true, _m);
+                flipStageBtn(btns[i], true, _m, IC.STAGE_RELAY);
         }
     };
 
@@ -1206,7 +1225,7 @@ export function initViewTabGroups(ctx = {}) {
             const btn = $list.querySelector(
                 `li[data-closed-id="${esc}"][data-closed-tab="${idx}"] .tabgroups-closed-stage`);
             if (btn)
-                flipStageBtn(btn, true, _m);
+                flipStageBtn(btn, true, _m, IC.STAGE_RELAY);
         }
     };
 
@@ -1247,7 +1266,7 @@ export function initViewTabGroups(ctx = {}) {
                 const rows = $list.querySelectorAll(
                     `li[data-group-id="${esc}"] .tabgroups-stage, li[data-group-id="${esc}"] .tabgroups-group-stage`);
                 for (let i = 0, l = rows.length; i < l; i++)
-                    flipStageBtn(rows[i], true, _m);
+                    flipStageBtn(rows[i], true, _m, IC.STAGE_RELAY);
             }
         };
         if (groupTabs.length > STAGE_GROUP_CONFIRM_LIMIT && dialogs && dialogs.ConfirmDialog) {
@@ -2592,9 +2611,9 @@ export function initViewTabGroups(ctx = {}) {
                 if ($list.querySelectorAll) {
                     // every rendered row of this window flips to staged
                     for (const btn of $list.querySelectorAll(`li[data-window-id="${String(wid)}"] .staging-add-btn, li[data-window-id="${String(wid)}"] .tabgroups-stage`))
-                        flipStageBtn(btn, true, _m);
+                        flipStageBtn(btn, true, _m, IC.STAGE_RELAY);
                 }
-                flipStageBtn(winStageBtn2, true, _m);
+                flipStageBtn(winStageBtn2, true, _m, IC.STAGE_RELAY);
             }
             return;
         }

@@ -321,7 +321,15 @@ const readLongtasks = p => p.evaluate(() => {
             console.log('stage: cold run ' + (i + 1) + ' goto');
             if (PROFILE)
                 await cdp.send('Profiler.start');
+            // TTFP: time from navigation start until the first tree ROW is
+            // in the DOM (rAF-polled from the page side; the chunked tree
+            // paint lands the first ~3 viewports synchronously, the one-shot
+            // swap only after the whole 7MB string parses).
+            const ttfrP = p.waitForFunction(() =>
+                document.querySelectorAll('#tree li').length > 0, { polling: 'raf', timeout: 120000 })
+                .then(() => Date.now() - t0).catch(() => -1);
             await p.goto(`chrome-extension://${extId}/pages/popup.html`, { waitUntil: 'load', timeout: 120000 });
+            const ttfrMs = await ttfrP;
             console.log('stage: cold run ' + (i + 1) + ' loaded; settle ' + SETTLE_MS + 'ms');
             await sleep(SETTLE_MS);
             if (i === 0) {
@@ -381,14 +389,22 @@ const readLongtasks = p => p.evaluate(() => {
             const lt = await readLongtasks(p);
             const nav = await p.evaluate(() => {
                 const n = (performance.getEntriesByType('navigation') || [])[0] || {};
+                // slowest sub-resources (DCL-stall forensics): what the
+                // parser actually waited on before domContentLoaded
+                const res = (performance.getEntriesByType('resource') || [])
+                    .map(r => ({ name: r.name.replace(/^.*\//, '').slice(0, 60), start: Math.round(r.startTime), dur: Math.round(r.duration), end: Math.round(r.responseEnd) }))
+                    .sort((a, b) => b.end - a.end)
+                    .slice(0, 6);
                 return {
                     responseEnd: Math.round(n.responseEnd || 0),
                     dclEnd: Math.round(n.domContentLoadedEventEnd || 0),
-                    loadEnd: Math.round(n.loadEventEnd || 0)
+                    loadEnd: Math.round(n.loadEventEnd || 0),
+                    slowResources: res
                 };
             }).catch(() => ({}));
             cold.push({
                 wallMs: Date.now() - t0,
+                ttfrMs,
                 scriptingMs: +(pick('ScriptDuration') * 1000).toFixed(1),
                 renderingMs: +(pick('RenderingDuration') * 1000).toFixed(1),
                 paintingMs: +(pick('PaintingDuration') * 1000).toFixed(1),
@@ -398,7 +414,8 @@ const readLongtasks = p => p.evaluate(() => {
                 maxTaskMs: lt.maxMs,
                 responseEnd: nav.responseEnd,
                 dclEnd: nav.dclEnd,
-                loadEnd: nav.loadEnd
+                loadEnd: nav.loadEnd,
+                slowResources: nav.slowResources
             });
             p.close();
         }
@@ -407,11 +424,14 @@ const readLongtasks = p => p.evaluate(() => {
         }
         out.popupColdOpen = cold;
         console.log('\n== popup cold open, REAL tree fully expanded (ms) ==');
-        console.log('run | wall | scripting | rendering | painting | layouts | busy | longtasks | maxTask | respEnd | dclEnd | loadEnd');
-        cold.forEach((r, i) =>
-            console.log(`${i + 1}   | ${r.wallMs} | ${r.scriptingMs} | ${r.renderingMs} | ${r.paintingMs} | ${r.layoutCount} | ${r.busyMs} | ${r.longtasks} | ${r.maxTaskMs} | ${r.responseEnd} | ${r.dclEnd} | ${r.loadEnd}`));
+        console.log('run | wall | ttfr | scripting | rendering | painting | layouts | busy | longtasks | maxTask | respEnd | dclEnd | loadEnd');
+        cold.forEach((r, i) => {
+            console.log(`${i + 1}   | ${r.wallMs} | ${r.ttfrMs} | ${r.scriptingMs} | ${r.renderingMs} | ${r.paintingMs} | ${r.layoutCount} | ${r.busyMs} | ${r.longtasks} | ${r.maxTaskMs} | ${r.responseEnd} | ${r.dclEnd} | ${r.loadEnd}`);
+            if (r.slowResources && r.slowResources.length)
+                console.log('      slow-res: ' + r.slowResources.map(x => `${x.name}(end ${x.end}, dur ${x.dur})`).join(' | '));
+        });
         const med = k => median(cold.map(r => r[k]));
-        console.log(`med | ${med('wallMs')} | ${med('scriptingMs')} | ${med('renderingMs')} | ${med('paintingMs')} | ${med('layoutCount')} | ${med('busyMs')} | ${med('longtasks')} | ${med('maxTaskMs')} | ${med('responseEnd')} | ${med('dclEnd')} | ${med('loadEnd')}`);
+        console.log(`med | ${med('wallMs')} | ${med('ttfrMs')} | ${med('scriptingMs')} | ${med('renderingMs')} | ${med('paintingMs')} | ${med('layoutCount')} | ${med('busyMs')} | ${med('longtasks')} | ${med('maxTaskMs')} | ${med('responseEnd')} | ${med('dclEnd')} | ${med('loadEnd')}`);
 
         // --- Phase 2: dupes regroup on bookmark event ×DUPES_RUNS -------------
         const dupes = [];

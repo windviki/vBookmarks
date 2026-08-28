@@ -35,15 +35,17 @@ export const stageBtnHtml = (api, item, _m, icons) => {
 };
 
 // Reflect a toggle on the live button without a re-render.
-export const flipStageBtn = (btn, staged, _m) => {
+export const flipStageBtn = (btn, staged, _m, icons) => {
     if (!btn || !btn.classList || !btn.setAttribute)
         return; // hand-written test doubles carry innerHTML only
+    const off = (icons && icons.off) || STAGE_ICON;
+    const done = (icons && icons.done) || STAGE_ICON_DONE;
     const label = _m(staged ? 'stagingRemove' : 'stagingAdd');
     btn.classList.toggle('staged', !!staged);
     btn.setAttribute('aria-pressed', staged ? 'true' : 'false');
     btn.setAttribute('aria-label', label);
     btn.title = label;
-    btn.innerHTML = staged ? STAGE_ICON_DONE : STAGE_ICON;
+    btn.innerHTML = staged ? done : off;
 };
 
 // One click = one toggle for a SINGLE item; returns the new staged state,

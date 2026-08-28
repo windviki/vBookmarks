@@ -413,72 +413,88 @@ export function initTreeRender(ctx = {}) {
             return `<ul role="${group}" data-level="${level}"><li class="empty-folder" style="-webkit-padding-start: ${paddingStart + SLOT_WIDTH}px"><i>${_m('folderEmpty')}</i></li></ul>`;
         }
         let html = `<ul role="${group}" data-level="${level}">`;
-
-        for (let i = 0, l = data.length; i < l; i++) {
-            const d = data[i];
-            const children = d.children;
-            // Raw title: generateFolderHTML/generateBookmarkHTML escape their
-            // own titles (single responsibility — see generateFolderHTML).
-            // isSeparator below also needs the RAW title, not an escaped one.
-            const title = d.title;
-            const url = d.url;
-            const id = d.id;
-            const parentID = d.parentId;
-            const idHTML = id ? `id="neat-tree-item-${id}"` : '';
-            const isFolder = d.dateGroupModified || children || typeof url === 'undefined';
-            const stylePad = `style="-webkit-padding-start: ${paddingStart}px"`;
-            const classStr = isFolder ? 'parent' : 'child';
-            // syncing===false 的行打上标记：highlightUnsynced 开启时整棵本地
-            // 子树淡显（body.highlight-unsynced 规则在 neat.css），替代旧版
-            // 满树绿点的噪音式指示。
-            const unsyncedCls = (d.syncing === false) ? ' unsynced-subtree' : '';
-            const isOpen = getRememberState() && getOpens().includes(id);
-            const open = isOpen ? 'open' : '';
-            const ariaStr = isFolder ? `aria-expanded="${isOpen}"` : '';
-            html += `<li class="${classStr}${unsyncedCls} ${open}" ${idHTML} level="${level}" role="treeitem" ${ariaStr} data-parentid="${parentID}">`;
-            if (isFolder) { // folder node
-                html += generateFolderHTML(title, stylePad, id, d);
-                // only generate children for opened folder
-                if (isOpen) {
-                    if (children) {
-                        html += generateHTML(children, level + 1);
-                    } else {
-                        (_id => {
-                            chrome.bookmarks.getChildren(_id, children => {
-                                // A folder deleted/synced away between the last
-                                // getTree and this lazy expand fails getChildren
-                                // with lastError — read it to suppress the
-                                // warning; also the row may be gone from the DOM.
-                                if (chrome.runtime.lastError)
-                                    return;
-                                const html = generateHTML(children || [], level + 1);
-                                const div = document.createElement('div');
-                                div.innerHTML = html;
-                                const ul = div.querySelector('ul');
-                                const row = document.getElementById(`neat-tree-item-${_id}`);
-                                if (row)
-                                    row.appendChild(ul);
-                                div.remove();
-                            });
-                        })(id);
-                    }
-                }
-            } else { // bookmark node
-                if (separatorManager.isSeparator(title, url)) {
-                    html += generateSeparatorHTML(paddingStart);
-                    separatorManager.add(id);
-                } else {
-                    // tree rows carry their hover quick-action tail (the
-                    // shared generateBookmarkHTML appends meta.tailHtml
-                    // inside the anchor — hover reveal + focus ride the
-                    // anchor's own box, no ancestor-hover leakage).
-                    html += generateBookmarkHTML(title, url, stylePad, id, null, { tailHtml: treeRowTail(url, false) });
-                }
-            }
-            html += '</li>';
-        }
+        for (let i = 0, l = data.length; i < l; i++)
+            html += nodeHtml(data[i], level, paddingStart);
         html += '</ul>';
         return html;
+    };
+
+    // One node's full <li> (folder row + its rendered subtree, bookmark row
+    // or separator) — the piece generateHTML concatenates and the CHUNKED
+    // tree paint (2026-08-28 perf 任务④) streams per top-level node. The
+    // lazy-expand branch appends unloaded children asynchronously exactly as
+    // before (same code, just factored out — generateHTML's tests cover it).
+    const nodeHtml = (d, level, paddingStart) => {
+        const children = d.children;
+        // Raw title: generateFolderHTML/generateBookmarkHTML escape their
+        // own titles (single responsibility — see generateFolderHTML).
+        // isSeparator below also needs the RAW title, not an escaped one.
+        const title = d.title;
+        const url = d.url;
+        const id = d.id;
+        const parentID = d.parentId;
+        const idHTML = id ? `id="neat-tree-item-${id}"` : '';
+        const isFolder = d.dateGroupModified || children || typeof url === 'undefined';
+        const stylePad = `style="-webkit-padding-start: ${paddingStart}px"`;
+        const classStr = isFolder ? 'parent' : 'child';
+        // syncing===false 的行打上标记：highlightUnsynced 开启时整棵本地
+        // 子树淡显（body.highlight-unsynced 规则在 neat.css），替代旧版
+        // 满树绿点的噪音式指示。
+        const unsyncedCls = (d.syncing === false) ? ' unsynced-subtree' : '';
+        const isOpen = getRememberState() && getOpens().includes(id);
+        const open = isOpen ? 'open' : '';
+        const ariaStr = isFolder ? `aria-expanded="${isOpen}"` : '';
+        let html = `<li class="${classStr}${unsyncedCls} ${open}" ${idHTML} level="${level}" role="treeitem" ${ariaStr} data-parentid="${parentID}">`;
+        if (isFolder) { // folder node
+            html += generateFolderHTML(title, stylePad, id, d);
+            // only generate children for opened folder
+            if (isOpen) {
+                if (children) {
+                    html += generateHTML(children, level + 1);
+                } else {
+                    (_id => {
+                        chrome.bookmarks.getChildren(_id, children => {
+                            // A folder deleted/synced away between the last
+                            // getTree and this lazy expand fails getChildren
+                            // with lastError — read it to suppress the
+                            // warning; also the row may have gone from the DOM.
+                            if (chrome.runtime.lastError)
+                                return;
+                            const html = generateHTML(children || [], level + 1);
+                            const div = document.createElement('div');
+                            div.innerHTML = html;
+                            const ul = div.querySelector('ul');
+                            const row = document.getElementById(`neat-tree-item-${_id}`);
+                            if (row)
+                                row.appendChild(ul);
+                            div.remove();
+                        });
+                    })(id);
+                }
+            }
+        } else { // bookmark node
+            if (separatorManager.isSeparator(title, url)) {
+                html += generateSeparatorHTML(paddingStart);
+                separatorManager.add(id);
+            } else {
+                // tree rows carry their hover quick-action tail (the
+                // shared generateBookmarkHTML appends meta.tailHtml
+                // inside the anchor — hover reveal + focus ride the
+                // anchor's own box, no ancestor-hover leakage).
+                html += generateBookmarkHTML(title, url, stylePad, id, null, { tailHtml: treeRowTail(url, false) });
+            }
+        }
+        return html + '</li>';
+    };
+
+    // Top-level pieces for the chunked tree paint (perf 任务④): one string
+    // per top-level node; generateHTML(level 0) === wrapper + blocks joined.
+    const generateTreeBlocks = data => {
+        ensureIconSheet();
+        const blocks = [];
+        for (let i = 0, l = data.length; i < l; i++)
+            blocks.push(nodeHtml(data[i], 0, 0));
+        return blocks;
     };
 
     const generateNodeTrees = (data, list) => {
@@ -649,8 +665,15 @@ export function initTreeRender(ctx = {}) {
             }
         };
         walk(list, []);
-        const html = generateHTML(display);
-        return { html, nodeTrees, bookmarkIds, paths, ids, urlIndex };
+        // 2026-08-28 perf 任务④: top-level BLOCKS come out of the same render
+        // (html = wrapper + blocks.join) so the chunked painter and the
+        // one-shot swap share one code path — no duplicated walk. The EMPTY
+        // display keeps generateHTML's own "(Empty)" row branch.
+        const blocks = display && display.length ? generateTreeBlocks(display) : null;
+        const html = blocks
+            ? `<ul role="tree" data-level="0">${blocks.join('')}</ul>`
+            : generateHTML(display);
+        return { html, blocks, nodeTrees, bookmarkIds, paths, ids, urlIndex };
     };
 
     return {
@@ -660,6 +683,7 @@ export function initTreeRender(ctx = {}) {
         generateFolderHTML,
         generateSeparatorHTML,
         generateHTML,
+        generateTreeBlocks,
         generateNodeTrees,
         buildTreeSnapshot,
         getParentPath,

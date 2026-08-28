@@ -797,7 +797,7 @@ describe('tree-row quick actions (treeRowActions option)', () => {
 
     it('the sprite sheet symbols mirror the inline icons byte-for-byte', async () => {
         const icons = await import('../src/icons.js');
-        for (const [name, inline] of [['edit', icons.EDIT_ICON], ['trash', icons.TRASH_ICON], ['stage', icons.STAGE_ICON], ['stage-done', icons.STAGE_ICON_DONE]]) {
+        for (const [name, inline] of [['edit', icons.EDIT_ICON], ['trash', icons.TRASH_ICON], ['stage', icons.STAGE_ICON], ['stage-done', icons.STAGE_ICON_DONE], ['stage-remove', icons.STAGE_REMOVE_ICON], ['pin', icons.PIN_ICON], ['pin-filled', icons.PIN_ICON_FILLED], ['sleep', icons.SLEEP_ICON], ['sleep-filled', icons.SLEEP_ICON_FILLED], ['star', icons.STAR_ICON], ['star-filled', icons.STAR_ICON_FILLED], ['check', icons.CHECK_ICON], ['activate', icons.ACTIVATE_ICON], ['folder-star', icons.FOLDER_STAR_ICON], ['tabs', icons.TABS_ICON], ['open', icons.OPEN_ICON], ['ungroup', icons.UNGROUP_ICON], ['flag', icons.FLAG_ICON]]) {
             const inner = inline.slice(inline.indexOf('>') + 1, inline.lastIndexOf('</svg>'));
             expect(icons.ICON_SPRITE_SHEET, name).toContain(inner);
             // presentation attributes survived the move onto the <symbol>
@@ -805,7 +805,7 @@ describe('tree-row quick actions (treeRowActions option)', () => {
                 expect(icons.ICON_SPRITE_SHEET, `${name}:${attr}`).toContain(attr);
         }
         // the referencing button svg keeps the class hooks + a use per icon
-        for (const name of ['edit', 'trash', 'stage', 'stage-done'])
+        for (const name of ['edit', 'trash', 'stage', 'stage-done', 'stage-remove', 'pin', 'pin-filled', 'sleep', 'sleep-filled', 'star', 'star-filled', 'check', 'activate', 'folder-star', 'tabs', 'open', 'ungroup', 'flag'])
             expect(icons.spriteIcon(name)).toContain(`class="vbm-icon vbm-icon-${name}"`);
     });
 });
@@ -971,6 +971,35 @@ describe('generateNodeTrees', () => {
         tr.generateNodeTrees(null, list);
         tr.generateNodeTrees(undefined, list);
         expect(list).toEqual({});
+    });
+});
+
+describe('buildTreeSnapshot blocks (2026-08-28 chunked tree paint)', () => {
+    it('blocks join + wrapper === the one-shot html (same code path)', () => {
+        const tr = setup({});
+        const data = [
+            { id: 'a', parentId: '0', title: 'A', children: [
+                { id: 'a1', parentId: 'a', title: 'a1', url: 'http://e.com/1' },
+                { id: 'a2', parentId: 'a', title: 'a2', url: 'http://e.com/2' }
+            ] },
+            { id: 'b', parentId: '0', title: 'B', url: 'http://e.com/b' }
+        ];
+        const snap = tr.buildTreeSnapshot([{
+            id: '0', title: 'root', children: data
+        }]);
+        expect(snap.blocks.length).toBe(2);
+        expect(snap.html).toBe(`<ul role="tree" data-level="0">${snap.blocks.join('')}</ul>`);
+        // folders render closed without an opens seed — block 0 is A's own
+        // row (its children join once expanded), block 1 the bookmark row
+        expect(snap.blocks[0]).toContain('id="neat-tree-item-a"');
+        expect(snap.blocks[1]).toContain('id="neat-tree-item-b"');
+    });
+
+    it('empty display keeps the (Empty) row and blocks null', () => {
+        const tr = setup({});
+        const snap = tr.buildTreeSnapshot([]);
+        expect(snap.blocks).toBe(null);
+        expect(snap.html).toContain('empty-folder');
     });
 });
 

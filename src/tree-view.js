@@ -190,7 +190,33 @@ export function initTreeView(ctx = {}) {
         // the bookmark survives, else the clamped index of the row that took
         // its place.
         const parked = parkRowFocus($tree);
-        $tree.innerHTML = html;
+
+        // 2026-08-28 perf 任务④ — CHUNKED first paint for big, "shallow"
+        // renders: the one-shot swap parses the WHOLE 7MB tree string before
+        // the first row shows (the maintainer's real 5161-URL cold open).
+        // Gate (all must hold — every interactive restore path stays on the
+        // synchronous old road):
+        //   · the snapshot produced top-level blocks;
+        //   · the estimated row count clears CHUNK_MIN_ROWS;
+        //   · NO remembered deep scroll (scrollTop within the first
+        //     viewport) — a remembered position must restore instantly;
+        //   · NO focusID memory — the reveal/restore row may sit deep.
+        // Mechanics: first chunk (~3 viewports of rows) lands synchronously,
+        // the rest streams in per animation frame; scroll/focusin/dragstart
+        // FLUSH the remainder synchronously (nobody scrolls into missing
+        // rows); the focus/scroll restores run at settle (shallow by gate).
+        // Geometry-less doubles (unit tests) fall back to the sync swap.
+        let chunked = null;
+        if (snapshot && snapshot.blocks && snapshot.blocks.length > 4) {
+            const estRows = estimateTreeRows(snapshot.blocks);
+            const savedTop = parseInt(store.get('scrollTop') || '0', 10) || 0;
+            const viewH = ($tree.clientHeight || 620);
+            const hasFocusMemory = !!store.get('focusID');
+            if (estRows > CHUNK_MIN_ROWS && savedTop <= viewH && !hasFocusMemory)
+                chunked = paintTreeChunked(snapshot.blocks, tree, snapshot);
+        }
+        if (!chunked)
+            $tree.innerHTML = html;
 
         // v4 task-2 §3.6: the view layer rebuilds its shared id→parent-path
         // map from the same full tree (list-row path labels). AFTER the
@@ -204,7 +230,10 @@ export function initTreeView(ctx = {}) {
         }
         // after the scroll baseline is back, so focus() only scrolls the
         // minimal distance to reveal the restored row.
-        unparkRowFocus($tree, parked);
+        if (chunked)
+            chunked.settle(() => unparkRowFocus($tree, parked));
+        else
+            unparkRowFocus($tree, parked);
 
         // issue #58: the focusID restore (refocus + .focus highlight-flash,
         // which re-paints the last-focused row on every open) is part of
@@ -274,6 +303,124 @@ export function initTreeView(ctx = {}) {
 
     // 启动时生成整棵树（8b 起随本模块一并剥离）
     chrome.bookmarks.getTree(generateTree);
+
+    // ---- 2026-08-28 perf 任务④: chunked first paint for big shallow trees ----
+    // One <li>-counting helper + the painter itself. The painter lives at
+    // module scope (not inside generateTree) so a NEW generateTree can cancel
+    // an in-flight stream before parking/swapping over it.
+    const CHUNK_MIN_ROWS = 400;       // below this the sync swap wins outright
+    const CHUNK_FIRST_ROWS = 100;     // ~3 viewports land synchronously
+    const liOpenings = piece => {
+        let n = 0, at = -1;
+        while ((at = piece.indexOf('<li', at + 1)) !== -1) {
+            if (at + 3 >= piece.length || /[\s>]/.test(piece[at + 3]))
+                n++;
+        }
+        return n;
+    };
+    const estimateTreeRows = blocks => {
+        let n = 0;
+        for (let i = 0; i < blocks.length; i++)
+            n += liOpenings(blocks[i]);
+        return n;
+    };
+    let activeChunk = null;
+
+    // Streams the top-level blocks: first chunk synchronously (the caller
+    // then runs onTreeGenerated over it), the rest per animation frame.
+    // scroll/focusin/dragstart flush synchronously — nothing interactive
+    // ever meets a missing row. settle(fn) fires once the full tree is in
+    // (flush included). Returns null when the environment (or a tiny first
+    // chunk) can't stream — the caller falls back to the one-shot swap.
+    const paintTreeChunked = (blocks, tree, snapshot) => {
+        if (typeof requestAnimationFrame !== 'function' || !snapshot)
+            return null;
+        // first-chunk span: enough blocks to clear CHUNK_FIRST_ROWS
+        let firstCount = 0, rows = 0;
+        for (let i = 0; i < blocks.length && rows < CHUNK_FIRST_ROWS; i++) {
+            rows += liOpenings(blocks[i]);
+            firstCount++;
+        }
+        if (firstCount >= blocks.length)
+            return null; // the whole tree IS the first chunk — sync swap
+        if (activeChunk)
+            activeChunk.cancel();
+        const head = `<ul role="tree" data-level="0">${blocks.slice(0, firstCount).join('')}</ul>`;
+        $tree.innerHTML = head;
+        const ul = $tree.querySelector('ul');
+        if (!ul || typeof ul.insertAdjacentHTML !== 'function')
+            return null; // geometry-less double — the caller re-swaps html
+        let next = firstCount;
+        let done = false;
+        let raf = 0;
+        const settled = [];
+        const state = {
+            settle(fn) {
+                if (done)
+                    fn();
+                else
+                    settled.push(fn);
+            },
+            cancel() {
+                done = true;
+                if (raf)
+                    cancelAnimationFrame(raf);
+                detach();
+            }
+        };
+        const finish = () => {
+            if (done)
+                return;
+            done = true;
+            detach();
+            for (const fn of settled)
+                fn();
+            settled.length = 0;
+        };
+        const flush = () => {
+            if (done || next >= blocks.length)
+                return;
+            ul.insertAdjacentHTML('beforeend', blocks.slice(next).join(''));
+            next = blocks.length;
+            finish();
+        };
+        const step = () => {
+            if (done)
+                return;
+            if (next >= blocks.length) {
+                finish();
+                return;
+            }
+            // one frame ≈ a few blocks, capped by string weight (a top
+            // folder can be a megabyte of rows on its own)
+            let bytes = 0;
+            const upto = next;
+            while (next < blocks.length && (bytes < 262144 || next === upto)) {
+                bytes += blocks[next].length;
+                next++;
+            }
+            ul.insertAdjacentHTML('beforeend', blocks.slice(upto, next).join(''));
+            if (next >= blocks.length)
+                finish();
+            else
+                raf = requestAnimationFrame(step);
+        };
+        const onMaybeFlush = () => flush();
+        const attach = () => {
+            $tree.addEventListener('scroll', onMaybeFlush, { passive: true, capture: true });
+            $tree.addEventListener('focusin', onMaybeFlush, true);
+            document.addEventListener('dragstart', onMaybeFlush, true);
+        };
+        const detach = () => {
+            $tree.removeEventListener('scroll', onMaybeFlush, { capture: true });
+            $tree.removeEventListener('focusin', onMaybeFlush, true);
+            document.removeEventListener('dragstart', onMaybeFlush, true);
+        };
+        attach();
+        raf = requestAnimationFrame(step);
+        activeChunk = state;
+        return state;
+    };
 
     // Events for the tree
     $tree.addEventListener('scroll', () => {

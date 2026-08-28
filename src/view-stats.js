@@ -93,7 +93,14 @@
  */
 
 import { relTimeLabel } from './tree-render.js';
-import { VIEW_ICONS, STAR_ICON, STAR_ICON_FILLED, STAGE_ICON, STAGE_ICON_DONE, SELECT_ICON, OPEN_ICON, TABS_ICON, TRASH_ICON } from './icons.js';
+import { VIEW_ICONS, STAR_ICON, STAR_ICON_FILLED, STAGE_ICON, STAGE_ICON_DONE, SELECT_ICON, OPEN_ICON, TABS_ICON, TRASH_ICON, spriteIcon } from './icons.js';
+
+    // 2026-08-28 行级图标精灵化（perf 任务①）：行乘数大的按钮用文档级 symbol。
+    const IC = {
+        stage: spriteIcon('stage'),
+        stageDone: spriteIcon('stage-done'),
+        starFilled: spriteIcon('star-filled')
+    };
 import { fitToolbarLabels, watchToolbarFit } from './toolbar-fit.js';
 import { htmlspecialchars } from './escape.js';
 import { parkRowFocus, unparkRowFocus, parkToolbarFocus, restoreToolbarFocus } from './list-focus.js';
@@ -400,7 +407,7 @@ export function initViewStats(ctx = {}) {
         return `<button type="button" class="row-btn staging-add-btn${staged ? ' staged' : ''}" ` +
             `data-hist-idx="${row.histIdx}" aria-pressed="${staged ? 'true' : 'false'}" ` +
             `aria-label="${htmlspecialchars(label)}" title="${htmlspecialchars(label)}">` +
-            (staged ? STAGE_ICON_DONE : STAGE_ICON) + '</button>';
+            (staged ? IC.stageDone : IC.stage) + '</button>';
     };
 
     // Row pieces for the chunked painter (4.1.0 perf round 3): one <li>
@@ -441,7 +448,7 @@ export function initViewStats(ctx = {}) {
                     // ★: bookmarked-state marker (filled star), always visible,
                     // aligned with the unbookmarked rows' ☆ (hollow star) at
                     // the line end — one glyph, two states.
-                    `<span class="stats-star" aria-label="${_m('statsHistoryBookmarked')}">${STAR_ICON_FILLED}</span>` +
+                    `<span class="stats-star" aria-label="${_m('statsHistoryBookmarked')}">${IC.starFilled}</span>` +
                     // the same hover stage toggle the unbookmarked rows carry
                     // (both row kinds end with star + plane columns aligned)
                     stageBtnHtml(row) +

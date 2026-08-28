@@ -401,10 +401,63 @@ export const ICON_SPRITE_SHEET =
     '<path d="M4.4 4.5l.6 8.1a1.2 1.2 0 0 0 1.2 1.1h3.6a1.2 1.2 0 0 0 1.2-1.1l.6-8.1"/>' +
     '</symbol>' +
     '<symbol id="vbm-ic-stage" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">' +
-    `<path d="${STAGE_PLANE_PATH}"/>` +
+    '<path d="M14.7 1.3L1.3 6l6 2.7 2.7 6 4.7-13.4z"/>' +
     '<path d="M14.7 1.3L7.3 8.7"/>' +
     '</symbol>' +
     '<symbol id="vbm-ic-stage-done" viewBox="0 0 16 16" fill="currentColor" stroke="currentColor" stroke-width="1" stroke-linejoin="round">' +
-    `<path d="${STAGE_PLANE_PATH}"/>` +
+    '<path d="M14.7 1.3L1.3 6l6 2.7 2.7 6 4.7-13.4z"/>' +
+    '</symbol>' +
+    '<symbol id="vbm-ic-stage-remove" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">' +
+    '<path d="M14.7 1.3L1.3 6l6 2.7 2.7 6 4.7-13.4z"/>' +
+    '<path d="M10.8 10.8l3.2 3.2"/>' +
+    '<path d="M14 10.8l-3.2 3.2"/>' +
+    '</symbol>' +
+    '<symbol id="vbm-ic-pin" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">' +
+    '<path d="M6 7.2v4.3L4.8 13h6.4L10 11.5V7.2l3.2-3.2H2.8L6 7.2z"/>' +
+    '</symbol>' +
+    '<symbol id="vbm-ic-pin-filled" viewBox="0 0 16 16" fill="currentColor" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">' +
+    '<path d="M6 7.2v4.3L4.8 13h6.4L10 11.5V7.2l3.2-3.2H2.8L6 7.2z"/>' +
+    '</symbol>' +
+    '<symbol id="vbm-ic-sleep" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">' +
+    '<path d="M13.5 8.93A6 6 0 1 1 6.97 2.4 4.67 4.67 0 0 0 13.5 8.93z"/>' +
+    '</symbol>' +
+    '<symbol id="vbm-ic-sleep-filled" viewBox="0 0 16 16" fill="currentColor" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">' +
+    '<path d="M13.5 8.93A6 6 0 1 1 6.97 2.4 4.67 4.67 0 0 0 13.5 8.93z"/>' +
+    '</symbol>' +
+    '<symbol id="vbm-ic-star" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round">' +
+    '<path d="M8 1.7l1.9 3.9 4.3.6-3.1 3 .7 4.3-3.8-2-3.8 2 .7-4.3-3.1-3 4.3-.6z"/>' +
+    '</symbol>' +
+    '<symbol id="vbm-ic-star-filled" viewBox="0 0 16 16" fill="currentColor" stroke="currentColor" stroke-width="1" stroke-linejoin="round">' +
+    '<path d="M8 1.7l1.9 3.9 4.3.6-3.1 3 .7 4.3-3.8-2-3.8 2 .7-4.3-3.1-3 4.3-.6z"/>' +
+    '</symbol>' +
+    '<symbol id="vbm-ic-check" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">' +
+    '<circle cx="8" cy="8" r="5.6"/>' +
+    '<polyline points="5.4 8.2 7.1 9.9 10.7 6.1"/>' +
+    '</symbol>' +
+    '<symbol id="vbm-ic-activate" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">' +
+    '<path d="M2.5 8h11"/>' +
+    '<polyline points="9.5 4 13.5 8 9.5 12"/>' +
+    '</symbol>' +
+    '<symbol id="vbm-ic-folder-star" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round">' +
+    '<path d="M14.67 12.67a1.33 1.33 0 0 1-1.33 1.33H2.67a1.33 1.33 0 0 1-1.34-1.33V3.33a1.33 1.33 0 0 1 1.34-1.33h3.33l1.33 2h6a1.33 1.33 0 0 1 1.34 1.33z"/>' +
+    '<path d="M8 1.7l1.9 3.9 4.3.6-3.1 3 .7 4.3-3.8-2-3.8 2 .7-4.3-3.1-3 4.3-.6z" fill="currentColor" stroke="none" transform="translate(3.84 5.17) scale(0.52)"/>' +
+    '</symbol>' +
+    '<symbol id="vbm-ic-tabs" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">' +
+    '<path d="M6.5 2h5.83A1.67 1.67 0 0 1 14 3.67V5"/>' +
+    '<rect x="1" y="5" width="14" height="9.33" rx="1.2"/>' +
+    '</symbol>' +
+    '<symbol id="vbm-ic-open" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">' +
+    '<path d="M14.67 8v4.67a2 2 0 0 1-2 2H3.33a2 2 0 0 1-2-2V3.33a2 2 0 0 1 2-2H8"/>' +
+    '<polyline points="10 1.33 14.67 1.33 14.67 6"/>' +
+    '<line x1="7.33" y1="8.67" x2="14.67" y2="1.33"/>' +
+    '</symbol>' +
+    '<symbol id="vbm-ic-ungroup" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">' +
+    '<path d="M8 7V2.5"/>' +
+    '<polyline points="5.5 5 8 2.5 10.5 5"/>' +
+    '<path d="M2.5 7.5v4a1.5 1.5 0 0 0 1.5 1.5h8a1.5 1.5 0 0 0 1.5-1.5v-4"/>' +
+    '</symbol>' +
+    '<symbol id="vbm-ic-flag" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">' +
+    '<line x1="3.5" y1="1.5" x2="3.5" y2="14.5"/>' +
+    '<path d="M3.5 2.5h7.6l-1.8 2.1 1.8 2.1H3.5"/>' +
     '</symbol>' +
     '</svg>';

@@ -30,6 +30,7 @@ import { createToolButton } from './tool-button.js';
 import { initWakeUp } from './wake-up.js';
 import { shouldHighlightUnsynced, shouldRememberState } from './settings.js';
 import { deferIdle, mark as perfMark } from './idle.js';
+import { ICON_SPRITE_SHEET } from './icons.js';
 
 (window => {
     const store = window.store;
@@ -412,6 +413,13 @@ import { deferIdle, mark as perfMark } from './idle.js';
     // 4.0.8 adds the local what's-new banner beside it. Fire-and-forget: the
     // 6h cache avoids network, every fetch failure is silent, and when the
     // donation card claims this open the announcement defers to the next one.
+    // 2026-08-28 行级图标精灵化：文档级 <symbol> 表随启动注入一次（幂等——
+    // tree-render 的 ensureIconSheet 在测试环境里也会补种），行/组头按钮的
+    // <use> 引用才能解析。display:none 的 svg 不参与布局。
+    if (body && !document.getElementById('vbm-icon-sheet')
+        && typeof body.insertAdjacentHTML === 'function')
+        body.insertAdjacentHTML('afterbegin', ICON_SPRITE_SHEET);
+
     // P1-2: the remote announce fetch is not on the first-render path —
     // defer it to idle (requestIdleCallback with a timeout, or setTimeout 0).
     // The banner appearing a beat later is fine; failure semantics unchanged

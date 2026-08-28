@@ -37,7 +37,23 @@
 
 import { relTimeLabel } from './tree-render.js';
 import { paintListChunked } from './list-chunks.js';
-import { VIEW_ICONS, STAGE_ICON, STAGE_ICON_DONE, STAGE_REMOVE_ICON, STAR_ICON, STAR_ICON_FILLED, STAR_X_ICON, SELECT_ICON, FOLDER_STAR_ICON, FOLDER_PLUS_ICON, FOLDER_ICON, CLOCK_ICON, EDIT_ICON, TRASH_ICON, LIST_X_ICON, OPEN_ICON, TABS_ICON, GROUP_ICON, UNGROUP_ICON, SCISSORS_ICON, COLLAPSE_ALL_ICON, EXPAND_ALL_ICON, CHEVRON_ICON } from './icons.js';
+import { VIEW_ICONS, STAGE_ICON, STAGE_ICON_DONE, STAGE_REMOVE_ICON, STAR_ICON, STAR_ICON_FILLED, STAR_X_ICON, SELECT_ICON, FOLDER_STAR_ICON, FOLDER_PLUS_ICON, FOLDER_ICON, CLOCK_ICON, EDIT_ICON, TRASH_ICON, LIST_X_ICON, OPEN_ICON, TABS_ICON, GROUP_ICON, UNGROUP_ICON, SCISSORS_ICON, COLLAPSE_ALL_ICON, EXPAND_ALL_ICON, CHEVRON_ICON, spriteIcon } from './icons.js';
+
+    // 2026-08-28 行级图标精灵化（perf 任务①，同 view-tabgroups）：行/组头
+    // 乘数大的按钮用文档级 symbol；工具栏一次性注入保持内联。
+    const IC = {
+        star: spriteIcon('star'),
+        starFilled: spriteIcon('star-filled'),
+        stage: spriteIcon('stage'),
+        stageDone: spriteIcon('stage-done'),
+        stageRemove: spriteIcon('stage-remove'),
+        edit: spriteIcon('edit'),
+        folderStar: spriteIcon('folder-star'),
+        tabs: spriteIcon('tabs'),
+        open: spriteIcon('open'),
+        ungroup: spriteIcon('ungroup'),
+        STAGE_RELAY: { off: spriteIcon('stage'), done: spriteIcon('stage-done') }
+    };
 import { htmlspecialchars } from './escape.js';
 import { parkRowFocus, unparkRowFocus, parkToolbarFocus, restoreToolbarFocus } from './list-focus.js';
 import { flipStageBtn } from './staging-relay.js';
@@ -302,10 +318,10 @@ export function initViewRecent(ctx = {}) {
                 // URL IS a tree node; click performs the real create/remove.
                 `<button type="button" class="row-btn staging-star" aria-pressed="${it.id ? 'true' : 'false'}" ` +
                 `aria-label="${htmlspecialchars(starLabel)}" title="${htmlspecialchars(starLabel)}">` +
-                (it.id ? STAR_ICON_FILLED : STAR_ICON) + '</button>' +
+                (it.id ? IC.starFilled : IC.star) + '</button>' +
                 // Inline remove (§3.8): hover-revealed × — leaves the tree alone.
                 `<button type="button" class="row-btn staging-remove" ` +
-                `aria-label="${htmlspecialchars(removeLabel)}" title="${htmlspecialchars(removeLabel)}">${STAGE_REMOVE_ICON}</button>`) +
+                `aria-label="${htmlspecialchars(removeLabel)}" title="${htmlspecialchars(removeLabel)}">${IC.stageRemove}</button>`) +
             '</li>';
     };
 
@@ -333,17 +349,17 @@ export function initViewRecent(ctx = {}) {
             // CSS rotates it open like #tree); only the two BIG section
             // heads keep the solid ▾/▸ text glyph.
             `<span class="chevron${collapsed ? ' collapsed' : ''}" aria-hidden="true">${CHEVRON_ICON}</span>` +
-            `<i class="staging-bucket-star" aria-hidden="true">${STAR_ICON}</i>` +
+            `<i class="staging-bucket-star" aria-hidden="true">${IC.star}</i>` +
             `<span class="staging-section-title">${_m('stagingBucketTitle')}</span>` +
             `<span class="count-pill" aria-label="${count}">${countText}</span>` +
             (selecting ? '' :
                 `<span class="head-icon-cluster">` +
                 `<button type="button" class="row-btn staging-bucket-fav-all" tabindex="-1" ` +
-                `aria-label="${htmlspecialchars(favAllLabel)}" title="${htmlspecialchars(favAllLabel)}">${STAR_ICON_FILLED}</button>` +
+                `aria-label="${htmlspecialchars(favAllLabel)}" title="${htmlspecialchars(favAllLabel)}">${IC.starFilled}</button>` +
                 // 移除暂存 (rightmost): every bucket item leaves the workbench
                 // (tree untouched) — confirm + toast undo, on the rows' axis.
                 `<button type="button" class="row-btn staging-bucket-remove-all" tabindex="-1" ` +
-                `aria-label="${htmlspecialchars(removeAllLabel)}" title="${htmlspecialchars(removeAllLabel)}">${STAGE_REMOVE_ICON}</button>` +
+                `aria-label="${htmlspecialchars(removeAllLabel)}" title="${htmlspecialchars(removeAllLabel)}">${IC.stageRemove}</button>` +
                 `</span>`) +
             `</span></li>`;
     };
@@ -418,18 +434,18 @@ export function initViewRecent(ctx = {}) {
                 `<span class="head-icon-cluster">` +
                 (count ?
                     `<button type="button" class="row-btn staging-group-open-all" tabindex="-1" ` +
-                    `aria-label="${htmlspecialchars(openAllLabel)}" title="${htmlspecialchars(openAllLabel)}">${OPEN_ICON}</button>` +
+                    `aria-label="${htmlspecialchars(openAllLabel)}" title="${htmlspecialchars(openAllLabel)}">${IC.open}</button>` +
                     `<button type="button" class="row-btn staging-group-open-group" tabindex="-1" ` +
-                    `aria-label="${htmlspecialchars(openGroupLabel)}" title="${htmlspecialchars(openGroupLabel)}">${TABS_ICON}</button>`
+                    `aria-label="${htmlspecialchars(openGroupLabel)}" title="${htmlspecialchars(openGroupLabel)}">${IC.tabs}</button>`
                     : '') +
                 `<button type="button" class="row-btn staging-group-rename" tabindex="-1" ` +
-                `aria-label="${htmlspecialchars(renameLabel)}" title="${htmlspecialchars(renameLabel)}">${EDIT_ICON}</button>` +
+                `aria-label="${htmlspecialchars(renameLabel)}" title="${htmlspecialchars(renameLabel)}">${IC.edit}</button>` +
                 `<button type="button" class="row-btn staging-group-dissolve" tabindex="-1" ` +
-                `aria-label="${htmlspecialchars(dissolveLabel)}" title="${htmlspecialchars(dissolveLabel)}">${UNGROUP_ICON}</button>` +
+                `aria-label="${htmlspecialchars(dissolveLabel)}" title="${htmlspecialchars(dissolveLabel)}">${IC.ungroup}</button>` +
                 `<button type="button" class="row-btn staging-group-place" tabindex="-1" ` +
-                `aria-label="${htmlspecialchars(placeLabel)}" title="${htmlspecialchars(placeLabel)}">${FOLDER_STAR_ICON}</button>` +
+                `aria-label="${htmlspecialchars(placeLabel)}" title="${htmlspecialchars(placeLabel)}">${IC.folderStar}</button>` +
                 `<button type="button" class="row-btn staging-group-remove" tabindex="-1" ` +
-                `aria-label="${htmlspecialchars(removeLabel)}" title="${htmlspecialchars(removeLabel)}">${STAGE_REMOVE_ICON}</button>` +
+                `aria-label="${htmlspecialchars(removeLabel)}" title="${htmlspecialchars(removeLabel)}">${IC.stageRemove}</button>` +
                 `</span>`) +
             `</span></li>`;
     };
@@ -522,7 +538,7 @@ export function initViewRecent(ctx = {}) {
         return `<button type="button" class="row-btn staging-add-btn${staged ? ' staged' : ''}" ` +
             `aria-pressed="${staged ? 'true' : 'false'}" ` +
             `aria-label="${htmlspecialchars(label)}" title="${htmlspecialchars(label)}">` +
-            (staged ? STAGE_ICON_DONE : STAGE_ICON) + '</button>';
+            (staged ? IC.stageDone : IC.stage) + '</button>';
     };
 
     // Per-time-bucket urls of the last recent render — the bucket heads'
@@ -615,7 +631,7 @@ export function initViewRecent(ctx = {}) {
                     `<span class="head-icon-cluster">` +
                     `<button type="button" class="row-btn recent-group-stage" tabindex="-1" ` +
                     `data-recent-group="${g}" aria-label="${htmlspecialchars(stageGroupLabels[g])}" ` +
-                    `title="${htmlspecialchars(stageGroupLabels[g])}">${STAGE_ICON}</button>` +
+                    `title="${htmlspecialchars(stageGroupLabels[g])}">${IC.stage}</button>` +
                     `</span>`) +
                 '</span></li>');
             if (collapsed)
@@ -642,7 +658,7 @@ export function initViewRecent(ctx = {}) {
             (count ? `<span class="count-pill" aria-label="${htmlspecialchars(countLabel)}" ` +
                 `title="${htmlspecialchars(countLabel)}">${count}</span>` : '') +
             `<button type="button" class="row-btn recent-stage-all" tabindex="-1" ` +
-            `aria-label="${htmlspecialchars(stageAllLabel)}" title="${htmlspecialchars(stageAllLabel)}">${STAGE_ICON}</button>` +
+            `aria-label="${htmlspecialchars(stageAllLabel)}" title="${htmlspecialchars(stageAllLabel)}">${IC.stage}</button>` +
             `</div>`;
     };
 
@@ -1086,7 +1102,7 @@ export function initViewRecent(ctx = {}) {
             // the hollow plane — the filled-plane swap needs the icon
             // innerHTML, exactly like the row-click path (2026-08-26 report:
             // a bucket-head send left never-sent rows hollow but accent).
-            flipStageBtn(btn, staged, _m);
+            flipStageBtn(btn, staged, _m, IC.STAGE_RELAY);
         }
         // Bucket/region head planes follow the tabgroups group-head law
         // (state-not-truth glyphs): every member staged → the filled
@@ -1101,7 +1117,7 @@ export function initViewRecent(ctx = {}) {
                 return;
             btn.classList.toggle('staged', all);
             btn.setAttribute('aria-pressed', all ? 'true' : 'false');
-            btn.innerHTML = all ? STAGE_ICON_DONE : STAGE_ICON;
+            btn.innerHTML = all ? IC.stageDone : IC.stage;
         };
         for (const head of $list.querySelectorAll('.recent-group-stage')) {
             const g = parseInt(head.dataset ? head.dataset.recentGroup : '', 10);
@@ -2461,7 +2477,7 @@ export function initViewRecent(ctx = {}) {
                 // The recent region is deliberately untouched by staging
                 // repaints — flip the clicked plane in place (hollow → the
                 // always-on filled plane, one visual law with every relay).
-                flipStageBtn(e.target.closest('.staging-add-btn'), !existing, _m);
+                flipStageBtn(e.target.closest('.staging-add-btn'), !existing, _m, IC.STAGE_RELAY);
             }
             return;
         }
