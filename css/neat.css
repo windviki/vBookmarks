@@ -10,12 +10,20 @@
    Layer 2b z-index: 10  .sync-indicator (row overlay: sync dot; also the
                            stacking context for .sync-tooltip, so tooltips
                            stay below the palette globally)
+   Layer 2c z-index: 50  #bookmark-clone + #drop-overlay (dnd drag
+                           affordances — above rows & sync dots, below the
+                           palette, menus and dialogs)
    Layer 3  z-index: 100 #command-palette (Ctrl+K overlay)
    Layer 4  z-index: 200 #cover + .dialog (modal backdrop & dialogs)
                            → dialog must cover palette when a confirm/alert
                              pops over /dupes or /dead inside the panel
+   Layer 4a z-index: 210 picker-on-editor dialogs (#tab-group-dialog,
+                           #tab-group-pick-dialog, #copy-move-dialog,
+                           #bookmark-folder-pick-dialog)
    Layer 5  z-index: 300 menu[type=context] (right-click context menus),
                            .vbm-dropdown-list (toolbar dropdown listboxes)
+   Layer 5a z-index: 301 menu[type=context].submenu (flyout submenus —
+                           paint above their parent menu)
    Layer 6  z-index: 400 #undo-toast, #notice-toast (temporary toasts)
    ───────────────────────────────────────────────────────────────────── */
 :root {
@@ -623,12 +631,6 @@ body.width-dragging #search {
     display: block;
 }
 
-.chrome-536 #tree ul li span .twisty {
-    /* Chrome build 536 dev bug */
-    -webkit-transition-duration: 0s;
-    transition-duration: 0s;
-}
-
 .rtl #tree ul li span .twisty {
     -webkit-transform: scaleX(-1);
     transform: scaleX(-1);
@@ -869,6 +871,7 @@ menu[type=context] .menu-item:focus {
    CSS zoom applies to this element either way. */
 #bookmark-clone {
     position: fixed;
+    z-index: 50; /* Layer 2c: above rows & sync dots, below palette/menus */
     left: -999px;
     margin: -1em 0 0 -24px;
     white-space: nowrap;
@@ -901,6 +904,7 @@ menu[type=context] .menu-item:focus {
     /* fixed for the same overflow reason as #bookmark-clone (its left/width
        on a deeply indented row can poke past the body's right edge) */
     position: fixed;
+    z-index: 50; /* Layer 2c: same drag-affordance tier as #bookmark-clone */
     left: -999px;
     pointer-events: none;
     margin: -1px 0 0;
@@ -2090,9 +2094,10 @@ body.panel-mode .recent-group-head {
      level 1:  member rows indent to put their favicon LEFT edge on the
                head title axis (48 = parent text left edge), the
                TREE_INDENT child law.
-   A faint dashed trunk drops from the head's chevron center (16px) with a
-   per-member tick to the favicon column at 48; the last member closes the
-   trunk with an elbow. Dashes are 3px on / 3px off in a faint muted token. */
+   A faint dashed trunk drops from the head's ICON axis (the 24..44 well's
+   center, 34px — re-drawn 2026-08-27, see the connector block below) with a
+   per-member tick to the favicon left edge at 48; the last member closes the
+   trunk with an elbow. Dashes are 2px on / 3px pitch in a 30% muted token. */
 #staging-items li.vbm-row.staging-member {
     padding-inline-start: 24px; /* pre-restack value — kept as the
         SELECTION-MODE base (its geometry below assumes it); normal mode
@@ -2718,7 +2723,6 @@ li.staging-row.drag-over {
     flex-wrap: nowrap;
 }
 
-.staging-toolbar .staging-summary,
 .staging-toolbar .select-count,
 .search-toolbar .search-result-count {
     color: var(--vbm-muted);
@@ -2742,16 +2746,8 @@ li.staging-row.drag-over {
     margin-inline-end: auto;
 }
 
-/* The dead/dupes toolbar law: the summary fills the left, the action
-   cluster pins to the right — the staging view's select-mode entry (and the
-   新建分组 button beside it) right-align like every other view's. The
-   selection count reads with the same 500 weight as the dead/dupes
-   .select-count. */
-.staging-toolbar .staging-summary {
-    margin-inline-end: auto;
-    font-weight: 500;
-}
-
+/* The staging selection count reads with the same 500 weight as the
+   dead/dupes .select-count. */
 .staging-toolbar .select-count {
     font-weight: 500;
 }
@@ -2976,13 +2972,6 @@ li.staging-row.drag-over {
     top: 40px;
     opacity: 1;
     pointer-events: auto;
-}
-
-#mainSection {
-    margin: 0;
-    padding: 0;
-    overflow-y: auto;
-    /* The height will be defined in JS */
 }
 
 ::-webkit-scrollbar-track-piece {
@@ -3596,10 +3585,6 @@ body[data-theme="ink"].highlight-unsynced #tree li.unsynced-subtree > span.tree-
     color: var(--vbm-muted);
 }
 
-.palette-row .palette-icon {
-    flex: none;
-}
-
 .palette-row .vbm-icon {
     flex: none;
 }
@@ -3639,22 +3624,20 @@ body[data-theme="ink"].highlight-unsynced #tree li.unsynced-subtree > span.tree-
     color: var(--vbm-fg-selected);
 }
 
-.palette-row .palette-url {
-    flex: 1;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    color: var(--vbm-muted);
-    font-size: 85%;
-}
-
-/* Dead-link rows (P3.5): status chip next to the title ('404', 'timeout'). */
-.palette-row .palette-badge {
+/* Custom-command tag (v4 task-4 #6): a small muted chip marking user-defined
+   commands — neutral border + muted ink (metadata, not a warning); the
+   selected row recolors the ink like .palette-slash above. */
+.palette-row .palette-custom-tag {
     flex: none;
     padding: 0 4px;
     border: 1px solid var(--vbm-border);
     border-radius: 3px;
-    color: var(--vbm-danger);
+    color: var(--vbm-muted);
     font-size: 85%;
+}
+
+.palette-row.selected .palette-custom-tag {
+    color: var(--vbm-fg-selected);
 }
 
 .palette-row:hover {
@@ -3664,10 +3647,6 @@ body[data-theme="ink"].highlight-unsynced #tree li.unsynced-subtree > span.tree-
 .palette-row.selected,
 .palette-row.selected:hover {
     background-color: var(--vbm-bg-selected);
-    color: var(--vbm-fg-selected);
-}
-
-.palette-row.selected .palette-url {
     color: var(--vbm-fg-selected);
 }
 
@@ -3860,6 +3839,18 @@ body.no-view-tabs #view-tabs {
     }
     .favicon-enriched.favicon-pop {
         animation: none;
+    }
+    /* the fold chevrons — the tree twisty and the small group heads' unified
+       chevron (2026-08-27 two-tier unification) share the same .15s
+       transform transition, so both stand down together */
+    #tree ul li span .twisty,
+    .staging-bucket-head .chevron,
+    .staging-group-head .chevron,
+    .recent-group-head .chevron,
+    .dupes-group .chevron,
+    .tabgroups-group .chevron,
+    #tabgroups-list ul li.tabgroups-closed-group .tabgroups-closed-head .chevron {
+        transition: none;
     }
 }
 
@@ -6662,19 +6653,14 @@ body.panel-mode #dead-list .vbm-row .row-badge-slot {
 
 /* Destructive batch actions (delete all / delete selected) read as danger —
    the same cue as the context-menu delete entries, so the irreversible
-   control stands out from the mark/unmark pills. The hover is the danger
-   tint (same recipe as #search-history-clear / .dead-proxy-remove), not the
-   generic bg-hover the other flat toolbar buttons use. A disabled batch
-   action (empty selection) sheds the danger cue and its hover — it must
-   read inert, not urgent. */
+   control stands out from the mark/unmark pills. Their hover rides the
+   shared cross-toolbar danger-tint rule above (its cluster-safe specificity
+   outranks the generic .dead-icon-btn hover, which a plain (0,3,0) pair
+   here never would). A disabled batch action (empty selection) sheds the
+   danger cue and its hover — it must read inert, not urgent. */
 .dead-toolbar .dead-delete-all,
 .dead-toolbar .dead-delete-selected {
     color: var(--vbm-danger);
-}
-
-.dead-toolbar .dead-delete-all:hover,
-.dead-toolbar .dead-delete-selected:hover {
-    background: color-mix(in srgb, var(--vbm-danger) 12%, transparent);
 }
 
 .dead-toolbar .dead-delete-selected:disabled {
@@ -6908,18 +6894,10 @@ body.panel-mode #dead-list .vbm-row .row-badge-slot {
     visibility: visible;
 }
 
-/* 4.0.8 死链行右侧 icon 与工具栏右缘对齐：工具栏右缘距容器 8px（toolbar
-   padding 4px 8px）。行内最右一个 row-btn（删除）右缘补到 8px，与工具栏
-   最右 icon（选择模式）对齐；倒数右二（标记）补到 8px，与工具栏右二
-   （删除全部）对齐——两者都是 20px 按钮 + 8px 端距，正好落在工具栏
-   22px icon + 6px gap 的同一右缘列上（浮动的 hover 按钮与常驻的 marked
-   按钮同一右缘）。 */
-#dead-list ul li.vbm-row > .row-btn:last-child,
-#dead-list ul li.vbm-row > .row-btn:nth-last-child(2),
-#dead-list ul li.vbm-row > .row-btn:last-child {
-    margin-inline-end: 4px;
-}
-
+/* 死链行右缘 8px 轴（design-laws §2 的 20px/4px 终律）：行 padding 4px +
+   row-btn 基础 margin-inline-end 4px 合成 8px，与工具栏（padding 4px 8px）
+   最右 icon 落在同一右缘列——hover 浮现的按钮与常驻的 marked 按钮同一
+   右缘。 */
 #dead-list ul li.vbm-row {
     padding-inline-end: 4px;
 }

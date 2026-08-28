@@ -133,7 +133,10 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
             out.selectBtn = rect(selectBtn);
             out.newGroupBtn = rect(newGroupBtn);
             out.summaryRight = (() => {
-                const el = document.querySelector('.staging-summary');
+                // the head's count pill inherited the old left summary slot's
+                // role (view-recent.js) — the dead .staging-summary probe's
+                // live target
+                const el = document.querySelector('#staging-head .count-pill');
                 return el ? el.getBoundingClientRect().right : null;
             })();
             const listRect = document.getElementById('staging-list').getBoundingClientRect();
@@ -259,7 +262,7 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
         ck('group quick buttons vertically centered', vCenter(css.groupPlace, css.groupHead) && vCenter(css.groupRemove, css.groupHead));
         ck('bucket fav-all vertically centered', vCenter(css.bucketFav, css.bucketHead));
         ck('select-mode right-aligned inside the toolbar (8px inset)', css.selectBtn && Math.abs(css.selectBtn.right - (css.listRight - 8)) < 1.5);
-        ck('summary stays left of the action cluster', css.summaryRight < css.newGroupBtn.left);
+        ck('count pill stays left of the action cluster', css.summaryRight !== null && css.summaryRight < css.newGroupBtn.left);
         // TREE-LAW restack (2026-08-26): level-0 grid [chevron @8..24][icon
         // well @24..44][title @48]; members indent so their favicon LEFT
         // edge lands on the head title axis (the TREE_INDENT child law).

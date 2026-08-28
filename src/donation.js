@@ -131,6 +131,10 @@ export const createDonation = ({ store, $, chrome, _m, openNewTab }) => {
     if (shouldShow) {
         showDonation(true);
     } else {
+        // Write the inline display style even when hidden: the Esc layer
+        // (keyboard.js) reads `style.display !== 'none'` as "visible", so a
+        // CSS-only hidden card would eat the first Esc as a silent "Later".
+        showDonation(false);
         store.set('donationFactor', parseInt(store.get('donationFactor'), 10) + 1);
     }
 

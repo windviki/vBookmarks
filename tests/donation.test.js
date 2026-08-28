@@ -90,16 +90,18 @@ describe('donationSnoozeKey / guideV4UrlFor (pure helpers)', () => {
 describe('createDonation wiring', () => {
     let store, els, $, openNewTab, donation;
 
-    const boot = (storeData, { version = '4.0.1', lang = 'en' } = {}) => {
+    const boot = (storeData, { version = '4.0.1', lang = 'en', presetDonationDisplay = true } = {}) => {
         store = makeStore(storeData);
         ({ els, $ } = (() => {
             const elMap = Object.fromEntries(DOM_IDS.map(id => [id, makeEl(id)]));
             // match popup.html: v4-notice and whats-new carry `hidden`,
             // #donation is display:none via CSS until showDonation(true)
-            // reveals it
+            // reveals it (presetDonationDisplay:false simulates the pre-fix
+            // state where the hidden boot path left no inline style at all)
             elMap['v4-notice'].hidden = true;
             elMap['whats-new'].hidden = true;
-            elMap.donation.style.display = 'none';
+            if (presetDonationDisplay)
+                elMap.donation.style.display = 'none';
             return { els: elMap, $: id => elMap[id] || null };
         })());
         openNewTab = vi.fn();
@@ -137,6 +139,16 @@ describe('createDonation wiring', () => {
         expect(els.donation.style.display).toBe('none');
         expect(store.get('donationFactor')).toBe(6); // bumped toward the next ask
         expect(store.get('openCount')).toBe(1); // this boot is the first open
+    });
+
+    it('a hidden ask still writes inline display:none at boot (Esc-layer regression)', () => {
+        // Regression: pre-fix the hidden branch only bumped donationFactor,
+        // leaving #donation with NO inline display style — keyboard.js reads
+        // `style.display !== 'none'` as visible, so the first Esc on every
+        // popup open fired a silent "Later" and ratcheted the snooze.
+        boot({ currentVersion: '4.0.1', donationFactor: '5', donationKey: '30' }, { presetDonationDisplay: false });
+        expect(donation.shouldShow).toBe(false);
+        expect(els.donation.style.display).toBe('none');
     });
 
     it('a 3.x → 4.x crossing shows the card with the v4 identity line + guide link', () => {

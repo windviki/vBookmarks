@@ -187,19 +187,6 @@ import { ICON_SPRITE_SHEET } from './icons.js';
     const os = (navigator.platform.toLowerCase().match(/mac|win|linux/i) || ['other'])[0];
     body.classList.add(os);
 
-    // Chrome version detection
-    const version = (() => {
-        const v = {};
-        const keys = ['major', 'minor', 'build', 'patch'];
-        const matches = navigator.userAgent.match(/chrome\/([\d]+)\.([\d]+)\.([\d]+)\.([\d]+)/i);
-        if (!matches)
-            return null;
-        matches.slice(1).forEach((m, i) => {
-            v[keys[i]] = parseInt(m, 10);
-        });
-        return v;
-    })();
-
     // Some i18n
     $('search-input').placeholder = _m('searchBookmarks');
     $('edit-dialog-name').placeholder = _m('name');
@@ -1070,10 +1057,6 @@ import { ICON_SPRITE_SHEET } from './icons.js';
     setTimeout(() => {
         body.classList.add('transitional');
     }, 10);
-
-    // Fix stupid Chrome build 536 bug
-    if (version.build >= 536)
-        body.classList.add('chrome-536');
 
     // Fix stupid wrong offset of the page, on Chrome Mac
     if (os === 'mac') {

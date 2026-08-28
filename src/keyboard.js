@@ -1118,8 +1118,9 @@ export function initKeyboard(ctx = {}) {
         }
         // Transient banner (donation / what's-new — keyboard-model §4 layer
         // 3): dismiss it with the *Later* semantics, dispatched through the
-        // button itself so the snooze logic stays in neat.js. Visible means
-        // "not display:none" — neat.js always sets the inline style at boot.
+        // button itself so the snooze logic stays in donation.js. Visible
+        // means "not display:none" — donation.js always sets the inline style
+        // at boot.
         const banner = $('donation');
         if (banner && (!banner.style || banner.style.display !== 'none')) {
             const later = $('donation-later');

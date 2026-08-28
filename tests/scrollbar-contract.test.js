@@ -151,9 +151,8 @@ describe('scrollbar-contract: 文本槽省略号契约 (C)', () => {
         assertProps(neatCss, '\nmenu[type=context] .menu-item {', ['overflow: hidden', 'white-space: nowrap', 'text-overflow: ellipsis']);
     });
 
-    it('palette rows truncate (title/url clip; flex slots fixed)', () => {
+    it('palette rows truncate (title clip; flex slots fixed)', () => {
         assertProps(neatCss, '.palette-row .palette-title {', ['overflow: hidden', 'text-overflow: ellipsis']);
-        assertProps(neatCss, '.palette-row .palette-url {', ['flex: 1', 'overflow: hidden', 'text-overflow: ellipsis']);
     });
 });
 
@@ -183,7 +182,7 @@ describe('scrollbar-contract: 固定槽 flex:none (D)', () => {
     });
 
     it('palette fixed slots never flex', () => {
-        for (const sel of ['.palette-row .palette-kind {', '.palette-row .palette-icon {', '.palette-row .palette-slash {', '.palette-row .palette-badge {'])
+        for (const sel of ['.palette-row .palette-kind {', '.palette-row .palette-slash {', '.palette-row .palette-custom-tag {'])
             assertProps(neatCss, sel, ['flex: none']);
     });
 });

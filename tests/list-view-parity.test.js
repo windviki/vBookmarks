@@ -151,8 +151,10 @@ describe('v4.1 visual consistency: 左侧留白 + 删除类操作红色语义', 
     });
 
     it('红色文字删除按钮统一 danger 淡色 hover', () => {
-        for (const sel of ['.dead-toolbar .dead-delete-all:hover,',
-            '.dead-toolbar .dead-delete-selected:hover {',
+        // the dead pair's tint lives in the shared cross-toolbar rule (its
+        // cluster-safe specificity is the one that actually wins the hover)
+        for (const sel of ['.dead-toolbar .dead-icon-cluster button.dead-delete-all:hover:not([disabled]),',
+            '.dead-toolbar .dead-icon-btn.dead-delete-selected:hover:not([disabled]),',
             '.stats-toolbar .stats-clear:hover {'])
             expect(ruleBody(neatCss, sel))
                 .toContain('color-mix(in srgb, var(--vbm-danger) 12%, transparent)');
