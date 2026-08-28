@@ -229,6 +229,8 @@ python3 scripts/package.py         # → tmp/vBookmarks_<version>.zip
 - **Chunked list rendering + content-visibility for heavy views**: tab-groups first paint dropped from 1064 ms to 239 ms; the duplicates view regroups 57% faster; the dead-link scanner renders its results incrementally instead of in one blocking burst.
 - **Surgical fold/collapse updates**: folding or collapsing no longer rebuilds whole lists — only the affected rows change, so folding a big group stays instant.
 - **One-time favicon placeholder parsing**: the placeholder template is parsed once and reused, and i18n labels are hoisted per render instead of re-fetched for every row.
+- **Leaner cold open**: the popup no longer reads the entire local storage area (the multi-MB favicon cache included) into memory before first paint — only the keys the boot mirror serves are fetched, and the remembered popup size restores in a single read instead of two serialized ones.
+- **Idle and typing costs removed**: the sync engine skips its periodic full-tree scan when sync indicators are hidden, on Chrome builds without per-node sync state (< 138), and whenever the computed map is unchanged — bookmark event bursts now collapse into one batched recompute. Popup search typing is debounced like the omnibox always was, folder staging verdicts are computed once per render instead of re-walking every folder's subtree per row, and tree type-ahead no longer forces a layout read per keystroke.
 
 #### Polish
 
@@ -237,6 +239,9 @@ python3 scripts/package.py         # → tmp/vBookmarks_<version>.zip
 #### Fixed
 
 - **Favicon dark-chroma guard**: dark but vivid icons are no longer desaturated by the dark-mode contrast flip — only genuinely low-contrast icons get adjusted.
+- **The hidden donation card no longer eats the first Esc** on every popup open (it also silently extended the donation snooze) — the Esc layer cake follows the documented model again, and the tree's folder fold animation, accidentally frozen since a 2012 Chrome-dev-build workaround, plays once more.
+- **Quick-add dedup everywhere**: the Alt+Shift+S command and the page context menu no longer mint duplicate bookmarks when the URL is already saved, and the popup star no longer reports success when the add actually failed.
+- **Palette and options hardening**: F2/Delete on Chrome's root folders are refused the way the tree refuses them (previously an error dialog or a silent no-op after a confirmed delete), and the options page's Reset now asks before wiping every setting on every synced device.
 - **Keyboard row-selector regression** caused by chunked `<ul>` injection — keyboard navigation tracks the real row order again.
 - **Recent-list scrollbar regression** from content-visibility — the staging/recent view scrolls correctly to the end again.
 
