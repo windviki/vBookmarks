@@ -5,7 +5,7 @@ vBookmarks
 
 [![Donate me](https://img.shields.io/badge/donate-me-orange.svg)](../donation/donation.md) | [![捐赠](https://img.shields.io/badge/捐赠-支持-orange.svg)](../donation/donation.zh.md)
 
-![Image of vBookmarks](../assets/store/vbookmarks.png)
+![Image of vBookmarks](../assets/store/vBookmarks-marquee.png)
 
 [Chrome 应用商店安装](https://chrome.google.com/webstore/detail/vbookmarks/odhjcodnoebmndcihdedenkmdmklpihb) · [主页](http://windviki.github.com/vBookmarks/)
 
@@ -130,7 +130,7 @@ vBookmarks
 12. 克制的同步状态呈现：只有"仅本地"与"无法同步"才有标记。
 
 
-![vBookmarks 功能图](../assets/store/vbookmarks-menu.png)
+![vBookmarks 功能图](../assets/store/vBookmarks-promo.png)
 
 
 # 高级功能说明

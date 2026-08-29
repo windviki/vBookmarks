@@ -5,7 +5,7 @@ vBookmarks
 
 [![Donate me](https://img.shields.io/badge/donate-me-orange.svg)](../donation/donation.md) | [![捐赠](https://img.shields.io/badge/捐赠-支持-orange.svg)](../donation/donation.zh.md)
 
-![Image of vBookmarks](../assets/store/vbookmarks.png)
+![Image of vBookmarks](../assets/store/vBookmarks-marquee.png)
 
 [Available on WebStore](https://chrome.google.com/webstore/detail/vbookmarks/odhjcodnoebmndcihdedenkmdmklpihb) · [HomePage](http://windviki.github.com/vBookmarks/)
 
@@ -130,7 +130,7 @@ Licensed under the [MIT License](http://www.opensource.org/licenses/mit-license.
 12. Sync-status awareness with quiet visuals: only local-only and unsyncable rows are marked.
 
 
-![Image of vBookmarks features](../assets/store/vbookmarks-menu.png)
+![Image of vBookmarks features](../assets/store/vBookmarks-promo.png)
 
 
 # Notes for advanced features
