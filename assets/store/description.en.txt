@@ -5,14 +5,39 @@ Stop digging through Chrome's bookmark manager. vBookmarks puts your entire libr
 WHY YOU'LL LOVE IT
 
 • Instant fuzzy search over titles, URLs and folders — in the popup, the side panel, or Chrome's address bar (type * then Space). Match highlighting included, CJK-friendly.
-• Seven purpose-built views: the classic folder tree, search, tab groups, a staging workbench for newly added bookmarks, visit statistics, dead-link cleanup and duplicate cleanup.
+• Seven purpose-built views: the classic folder tree, search, tab groups, a staging workbench, visit statistics, dead-link cleanup and duplicate cleanup.
 • A command palette (Ctrl+K / Cmd+K) for everything: open, move, sort, jump between views, switch themes — plus your own custom slash commands, synced across devices.
-• Real maintenance tools: scan for dead links and tell "site is down" from "blocked on your network" with an optional proxy re-check; merge duplicates with six keeper strategies. Every batch action is undoable.
-• Save a whole window of tabs as a bookmark folder, and reopen it later as a named Chrome tab group.
-• Full keyboard model, right-click menus, drag and drop, custom separators, per-folder sorting — and quick-add from the star button, Ctrl+D, or the global Alt+Shift+S.
-• Four crafted themes — Light, Dark, Ink, Paper — plus follow-system, zoom, custom CSS, and your own toolbar icon.
-• Automatic favicon refresh keeps every row readable.
+
+ADDING AND ORGANIZING, EFFORTLESSLY
+
+• Save the current tab from the star button, Ctrl+D, the global Alt+Shift+S, or the right-click menu — always into the folder you chose.
+• Capture a whole window of tabs as a bookmark folder with one command, and reopen it later as a named Chrome tab group.
+• Organize at speed: drag and drop, multi-select batch actions, copy or move across folders, per-folder sorting, and edit dialogs that pre-fill everything for you.
+• Every deletion is undoable — one tap on the toast brings it all back, so cleanup never feels risky.
+
+A REAL KEYBOARD WORKFLOW
+
+• Every view works without a mouse: arrows, Home/End, PageUp/PageDown, Enter to open, F2 to rename, Delete to remove, and type-ahead jumps in the tree.
+• Alt+1…7 jumps straight to any view, Tab cycles the zones, and Esc unwinds menus, palette, selection and search — one clean layer at a time.
+• Shortcuts everywhere: Ctrl+K / Cmd+K in the popup, Ctrl+Shift+K globally, Alt+Shift+B for the side panel, Alt+Shift+S for quick add.
+
+THE STAGING WORKBENCH — A NEW WAY TO TRIAGE
+
+• New bookmarks land in a staging area instead of disappearing into the tree: group them, star them, file them into folders in batches, or let them flow into the recently-added timeline.
+• It turns "save now, organize someday" into a five-minute daily habit.
+
+BEYOND STOCK CHROME
+
+• Real separators — divider lines with custom colors and widths inside any folder, the feature Chrome's manager never had.
+• Automatic favicon refresh recovers missing site icons (direct fetch, proxy, or provider fallbacks, with a local cache), so every row stays readable.
+• Dead-link scan with an optional proxy re-check tells "site is down" from "blocked on your network"; duplicates merge with six keeper strategies.
 • Sync-status indicators show which bookmarks live only on this device (Chrome 138+).
+• Visit statistics stay 100% local: sort by count or recency, pause anytime, erase with one click.
+
+MAKE IT YOURS
+
+• Four crafted themes — Light, Dark, Ink, Paper — plus follow-system, zoom, custom CSS, and your own toolbar icon.
+• Popup or side panel: the panel turns vBookmarks into a permanent workspace column beside your pages — and the foundation for everything coming next.
 • Fully translated into 43 languages.
 
 FREE AND PRIVATE

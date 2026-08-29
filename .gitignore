@@ -10,3 +10,5 @@ dist/
 # Local font downloads for the store-shot pipeline (fetch via
 # scripts/screenshots/fonts/fetch.sh; OFL-licensed, not committed)
 scripts/screenshots/fonts/*.ttf
+scripts/screenshots/fonts/*.ttc
+scripts/screenshots/fonts/*.otf

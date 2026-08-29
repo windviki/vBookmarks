@@ -363,17 +363,21 @@ const SEED = `
 
     // --- 2. light-tree page keeps going: context menu overlay ----------------
     // The promo's main card: expanded tree with the bookmark context menu
-    // open and its collapsible entry expanded in place. The visibly rendered
-    // collapsible varies by build gating (the tab-group trigger is
+    // open and its collapsible entry expanded in place. The menu is triggered
+    // on the tree's LAST bookmark row so it drapes over the tree's lower
+    // blank area — the tree's upper body stays fully visible (right-clicking
+    // a top row used to bury the whole tree under the menu). The visibly
+    // rendered collapsible varies by build gating (the tab-group trigger is
     // display:none here), so pick whichever has-submenu entry is laid out;
-    // placement replicates positionMenu's stack-below fallback.
+    // placement replicates positionMenu's stack-below fallback, clamped to
+    // the viewport bottom.
     {
         const page = await openThemed('light', 2, 1000);
         await expandTree(page);
         const link = await page.evaluate(() => {
             const a = [...document.querySelectorAll('#tree a.tree-item-link')]
-                .find(a => (a.querySelector('i')?.textContent || '').includes('GitHub'));
-            if (!a) throw new Error('bookmark row not found: GitHub');
+                .find(a => (a.querySelector('i')?.textContent || '').includes('Archive Page'));
+            if (!a) throw new Error('bookmark row not found: Archive Page');
             const rect = a.getBoundingClientRect();
             a.dispatchEvent(new MouseEvent('contextmenu', {
                 bubbles: true, cancelable: true, view: window,
@@ -400,10 +404,13 @@ const SEED = `
                     const r = e.getBoundingClientRect();
                     sub.style.maxHeight = '';
                     sub.style.maxWidth = '';
-                    sub.style.left = `${r.left + window.scrollX}px`;
-                    sub.style.top = `${r.bottom + window.scrollY + 2}px`;
                     sub.style.opacity = '1';
                     sub.style.transform = 'scale(1)';
+                    // The menu sits near the viewport bottom now — keep the
+                    // flyout inside the frame (stack below, else pin up).
+                    const sh = sub.getBoundingClientRect().height;
+                    sub.style.left = `${r.left + window.scrollX}px`;
+                    sub.style.top = `${Math.min(r.bottom + window.scrollY + 2, innerHeight - sh - 8)}px`;
                     e.setAttribute('aria-expanded', 'true');
                     return id;
                 }
@@ -722,7 +729,18 @@ const SEED = `
                     clip-path:polygon(8% 28%,50% 62%,92% 28%,92% 46%,50% 80%,8% 46%);"></div>`;
 
     {
-        const cardW = 300, cardH = 442;
+        // 左侧品牌区 + 两排 chips:第一排是七个视图关键词(即功能集合),
+        // 第二排是资历/语言/面板入口。右侧产品卡做成小窗:标题栏(三圆点)
+        // 吃掉卡片圆角,popup 截图从标题栏下方开始、底部再补白边,卡片圆角
+        // 不再切到截图自身的角。
+        const cardW = 300;
+        const imgH = cardW / aspectOf('tree-light');
+        const dot = c => `<div style="width:11px;height:11px;border-radius:50%;background:${c};"></div>`;
+        const viewChip = t => `<div style="padding:6px 12px;border-radius:999px;background:rgba(255,255,255,.13);
+                    border:1px solid rgba(255,255,255,.30);font-size:15.5px;font-weight:600;
+                    color:rgba(255,255,255,.95);white-space:nowrap;">${t}</div>`;
+        const metaChip = t => `<div style="padding:9px 18px;border-radius:999px;background:rgba(255,255,255,.16);
+                    border:1px solid rgba(255,255,255,.35);font-size:18px;font-weight:600;color:#fff;">${t}</div>`;
         await compose('marquee.html', 1400, 560, `
 <div style="position:relative;height:100vh;overflow:hidden;${brandFont}
             background:linear-gradient(115deg,#EC6150 0%,#D94837 48%,#B43024 100%);">
@@ -732,18 +750,24 @@ const SEED = `
                     box-shadow:0 14px 34px rgba(80,15,8,.35);display:flex;align-items:center;justify-content:center;">
             <img src="${brandIcon}" style="width:74px;height:74px;">
         </div>
-        <div style="margin-top:30px;font-size:66px;font-weight:800;letter-spacing:-2px;color:#fff;">vBookmarks</div>
-        <div style="margin-top:14px;font-size:25px;font-weight:500;color:rgba(255,255,255,.92);">Your bookmarks, one keypress away.</div>
-        <div style="margin-top:32px;display:flex;gap:12px;">
-            ${['Since 2011', '43 languages', 'MV3 native', '⌘K palette'].map(c =>
-                `<div style="padding:9px 18px;border-radius:999px;background:rgba(255,255,255,.16);
-                             border:1px solid rgba(255,255,255,.35);font-size:18px;font-weight:600;color:#fff;">${c}</div>`).join('')}
+        <div style="margin-top:28px;font-size:66px;font-weight:800;letter-spacing:-2px;color:#fff;">vBookmarks</div>
+        <div style="margin-top:12px;font-size:25px;font-weight:500;color:rgba(255,255,255,.92);">Your bookmarks, one keypress away.</div>
+        <div style="margin-top:26px;display:flex;gap:10px;flex-wrap:wrap;max-width:780px;">
+            ${['Tree', 'Search', 'Tab groups', 'Staging', 'Stats', 'Dead links', 'Duplicates'].map(viewChip).join('')}
+        </div>
+        <div style="margin-top:16px;display:flex;gap:12px;">
+            ${['Since 2011', '43 languages', '⌘ + K palette'].map(metaChip).join('')}
         </div>
     </div>
     <div style="position:absolute;right:96px;top:0;bottom:0;display:flex;align-items:center;">
-        <div style="width:${cardW}px;height:${cardH}px;background:#fff;border-radius:16px;overflow:hidden;
+        <div style="width:${cardW}px;background:#fff;border-radius:16px;overflow:hidden;
                     box-shadow:0 26px 64px rgba(80,15,8,.42);border:1px solid rgba(255,255,255,.5);">
-            <img src="${rel('tree-light')}" style="width:${cardW}px;height:auto;display:block;">
+            <div style="height:36px;display:flex;align-items:center;gap:7px;padding-left:14px;
+                        background:#fff;border-bottom:1px solid rgba(15,23,42,.06);">
+                ${dot('#ED6A5E')}${dot('#F4BF4F')}${dot('#61C454')}
+            </div>
+            <img src="${rel('tree-light')}" style="width:${cardW}px;height:${imgH.toFixed(1)}px;display:block;">
+            <div style="height:16px;background:#fff;"></div>
         </div>
     </div>
 </div>`);

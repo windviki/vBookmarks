@@ -71,11 +71,15 @@ cover-cropped (the marquee product card is the single deliberate exception:
 a top-anchored crop showing the popup's first screen).
 
 Every capture is seeded and hermetic (non-extension requests are aborted), so
-re-runs are deterministic. Typography: Inter + Noto Sans SC (思源黑体) are
-installed by the Dockerfile from `scripts/screenshots/fonts/` (git-ignored;
-run `fonts/fetch.sh` once through the proxy) and forced via an injected
-stylesheet — without them the captures fall back to the base image's
-bitmap-ish CJK font. The composites are synced to
+re-runs are deterministic. Typography: Inter (static collection, `Inter.ttc`)
++ Noto Sans SC static OTF weights (Regular/Medium/Bold) are installed by the
+Dockerfile from `scripts/screenshots/fonts/` (git-ignored; run
+`fonts/fetch.sh` once through the proxy) and forced via an injected
+stylesheet. Static instances, not the variable builds — fontconfig/Chromium
+on Linux only resolves a variable font's default instance; and if the fonts
+are missing entirely (e.g. a worktree whose symlinks broke the context copy —
+the runners use `cp -rL` now) the captures silently fall back to the base
+image's WenQuanYi Zen Hei. The composites are synced to
 `assets/store/vBookmarks-{promo,promo2,promo3,strip,options,marquee,tile-small,themes}.png`
 by `update-store-assets.sh`, which then runs `normalize-store-assets.py`
 (Pillow on the host) — the spec gate that flattens alpha to RGB and hard-fails

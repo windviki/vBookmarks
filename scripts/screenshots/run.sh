@@ -46,7 +46,9 @@ cp "$REPO_ROOT"/scripts/harness/{Dockerfile,smoke.js,verify-keyboard.js,verify-s
 cp "$REPO_ROOT"/scripts/screenshots/{shots.js,shots-matrix.js,shots-i18n.js,shots-palette.js,shots-guide.js,shots-tabgroups.js,shots-tabgroups-view.js,shots-store.js} "$CTX/"
 mkdir -p "$CTX/fonts"
 if [ -d "$REPO_ROOT/scripts/screenshots/fonts" ]; then
-    cp -r "$REPO_ROOT"/scripts/screenshots/fonts/. "$CTX/fonts/"
+    # cp -rL: dereference symlinks — worktrees may symlink the shared font
+    # files (absolute targets don't exist inside the Docker context).
+    cp -rL "$REPO_ROOT"/scripts/screenshots/fonts/. "$CTX/fonts/"
 fi
 cp -r "$REPO_ROOT"/scripts/harness/diag "$CTX/diag"
 
