@@ -44,7 +44,12 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
 
 // Store typography (Inter + 思源黑体), installed OS-level by the Dockerfile
 // from scripts/screenshots/fonts/ (fetch.sh; git-ignored) and forced over the
-// containers' bare message-box stack.
+// containers' bare message-box stack. CJK reads as Noto Sans SC MEDIUM:
+// fetch.sh deliberately installs only the Medium/Bold static instances, so
+// fontconfig resolves regular-weight 'Noto Sans SC' to Medium — at tree row
+// sizes (12–13px, composited down to ~8px) Regular strokes go wispy.
+// (Naming 'Noto Sans SC Medium' as a family alias here does NOT resolve in
+// Chromium — the absence-of-Regular route is the one that works.)
 const FONT_CSS = "*{font-family:'Inter','Noto Sans SC','Noto Sans CJK SC',system-ui,sans-serif !important;}";
 
 // Column pairs per sheet: [normal tile, selection tile]. Capture order note:
@@ -210,12 +215,17 @@ const SEED = `
         watch(page, `tile-${theme}`);
         await page.setViewport({ width: 400, height: viewportHeight, deviceScaleFactor: dpr });
         await page.evaluateOnNewDocument((t, css) => {
-            try {
-                localStorage.setItem('theme', t);
+            try { localStorage.setItem('theme', t); } catch (e) {}
+            // FONT_CSS 注入:evaluateOnNewDocument 可能跑在 documentElement
+            // 存在之前 —— 直接 appendChild 会抛异常被静默吞掉,页面就一直用
+            // 默认字体渲染(截图字体丑的根因)。DOMContentLoaded 兜底必达。
+            const inject = () => {
                 const s = document.createElement('style');
                 s.textContent = css;
-                document.documentElement.appendChild(s);
-            } catch (e) {}
+                (document.head || document.documentElement).appendChild(s);
+            };
+            if (document.documentElement) inject();
+            else document.addEventListener('DOMContentLoaded', inject, { once: true });
             // Recent view: fudge dateAdded by index range so the coarse time
             // groups all render (bookmarks.create rejects past dateAdded).
             const DAY = 86400e3;
@@ -232,6 +242,12 @@ const SEED = `
         await page.evaluate(t => chrome.storage.sync.set({ theme: t }), theme);
         await page.reload({ waitUntil: 'domcontentloaded' });
         await sleep(1200);
+        // 字体注入必须真正落地(曾经静默失败整条套件都用默认字体)——
+        // 断言注入的 <style> 在场,失败即记入 errors 让本次运行红掉。
+        const fontCssLanded = await page.evaluate(() =>
+            [...document.querySelectorAll('style')]
+                .some(s => s.textContent.includes('Noto Sans SC')));
+        if (!fontCssLanded) errors.push(`tile-${theme}: FONT_CSS injection missing (default fonts would render)`);
         return page;
     };
 
@@ -351,6 +367,17 @@ const SEED = `
         });
         if (!sel.exit || !sel.ticked)
             errors.push(`${tile}: selection state wrong: ${JSON.stringify(sel)}`);
+        // 行必须带文本再拍 —— 选择模式会触发整表重渲染,过早截图会抓到
+        // 空行骨架(蓝条无字的 flake,曾在 view-tabgroups-sel 命中)。
+        try {
+            await page.waitForFunction(() => {
+                const root = document.querySelector('#views .view:not([hidden])');
+                return root && [...root.querySelectorAll('ul li')]
+                    .some(li => li.textContent.trim().length > 0);
+            }, { timeout: 5000 });
+        } catch {
+            errors.push(`${tile}: rows still empty 5s after select-all`);
+        }
     };
 
     // --- 1. the four theme tree tiles (strip sources) -----------------------
@@ -379,9 +406,11 @@ const SEED = `
                 .find(a => (a.querySelector('i')?.textContent || '').includes('Archive Page'));
             if (!a) throw new Error('bookmark row not found: Archive Page');
             const rect = a.getBoundingClientRect();
+            // 右键点取行右缘 —— 菜单落在右下空白(而非左下),与左上的树
+            // 形成对角构图。
             a.dispatchEvent(new MouseEvent('contextmenu', {
                 bubbles: true, cancelable: true, view: window,
-                clientX: rect.left + 20, clientY: rect.top + 8
+                clientX: rect.right - 24, clientY: rect.top + 8
             }));
             return true;
         });
@@ -729,16 +758,13 @@ const SEED = `
                     clip-path:polygon(8% 28%,50% 62%,92% 28%,92% 46%,50% 80%,8% 46%);"></div>`;
 
     {
-        // 左侧品牌区 + 两排 chips:第一排是七个视图关键词(即功能集合),
-        // 第二排是资历/语言/面板入口。右侧产品卡做成小窗:标题栏(三圆点)
-        // 吃掉卡片圆角,popup 截图从标题栏下方开始、底部再补白边,卡片圆角
-        // 不再切到截图自身的角。
+        // 左侧品牌区:七个视图关键词走一行低调文本(· 分隔,不会换行悬挂),
+        // 资历/语言/面板入口三个 pills 作视觉锚点,两行样式错开、留白充足。
+        // 右侧产品卡做成小窗:标题栏(三圆点)吃掉卡片圆角,popup 截图从
+        // 标题栏下方开始、底部再补白边,卡片圆角不再切到截图自身的角。
         const cardW = 300;
         const imgH = cardW / aspectOf('tree-light');
         const dot = c => `<div style="width:11px;height:11px;border-radius:50%;background:${c};"></div>`;
-        const viewChip = t => `<div style="padding:6px 12px;border-radius:999px;background:rgba(255,255,255,.13);
-                    border:1px solid rgba(255,255,255,.30);font-size:15.5px;font-weight:600;
-                    color:rgba(255,255,255,.95);white-space:nowrap;">${t}</div>`;
         const metaChip = t => `<div style="padding:9px 18px;border-radius:999px;background:rgba(255,255,255,.16);
                     border:1px solid rgba(255,255,255,.35);font-size:18px;font-weight:600;color:#fff;">${t}</div>`;
         await compose('marquee.html', 1400, 560, `
@@ -752,10 +778,9 @@ const SEED = `
         </div>
         <div style="margin-top:28px;font-size:66px;font-weight:800;letter-spacing:-2px;color:#fff;">vBookmarks</div>
         <div style="margin-top:12px;font-size:25px;font-weight:500;color:rgba(255,255,255,.92);">Your bookmarks, one keypress away.</div>
-        <div style="margin-top:26px;display:flex;gap:10px;flex-wrap:wrap;max-width:780px;">
-            ${['Tree', 'Search', 'Tab groups', 'Staging', 'Stats', 'Dead links', 'Duplicates'].map(viewChip).join('')}
-        </div>
-        <div style="margin-top:16px;display:flex;gap:12px;">
+        <div style="margin-top:26px;font-size:17.5px;font-weight:500;letter-spacing:.04em;
+                    color:rgba(255,255,255,.78);">Tree&ensp;·&ensp;Search&ensp;·&ensp;Tab groups&ensp;·&ensp;Staging&ensp;·&ensp;Stats&ensp;·&ensp;Dead links&ensp;·&ensp;Duplicates</div>
+        <div style="margin-top:20px;display:flex;gap:12px;">
             ${['Since 2011', '43 languages', '⌘ + K palette'].map(metaChip).join('')}
         </div>
     </div>

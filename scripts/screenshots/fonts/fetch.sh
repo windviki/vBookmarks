@@ -26,8 +26,12 @@ with open(f"{out_dir}/Inter.ttc", "wb") as f:
     f.write(data)
 EOF
 
-# Noto Sans SC static weights — UI 正文 Regular、强调 Medium、标题 Bold。
-for w in Regular Medium Bold; do
+# Noto Sans SC static weights — Medium 当正文、Bold 当标题粗体。刻意不装
+# Regular:UI 字号(12–13px,合成后再缩到 ~8px)下 Regular 笔画发虚,
+# 只装 Medium/Bold 后 fontconfig 对 'Noto Sans SC' 的常规字重请求会落到
+# 最接近的 Medium —— 中文正文因此更挺括。(试过 family 别名 'Noto Sans SC
+# Medium' 引用,Chromium 解析不到,等于没换 —— 只能用缺席 Regular 的方式。)
+for w in Medium Bold; do
     curl -fL --max-time 300 -o "$DIR/NotoSansSC-$w.otf" \
         "https://github.com/notofonts/noto-cjk/raw/main/Sans/SubsetOTF/SC/NotoSansSC-$w.otf"
 done
