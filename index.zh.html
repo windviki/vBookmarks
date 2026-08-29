@@ -72,6 +72,14 @@
                     <svg width="17" height="17" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 .75a7.25 7.25 0 0 0-2.29 14.13c.36.07.5-.16.5-.35v-1.22c-2.02.44-2.44-.97-2.44-.97-.33-.84-.8-1.06-.8-1.06-.66-.45.05-.44.05-.44.72.05 1.1.74 1.1.74.65 1.11 1.7.79 2.11.6.07-.47.25-.79.46-.97-1.61-.18-3.3-.8-3.3-3.58 0-.79.28-1.44.74-1.94-.07-.18-.32-.92.07-1.92 0 0 .61-.19 1.99.74a6.9 6.9 0 0 1 3.62 0c1.38-.93 1.98-.74 1.98-.74.4 1 .15 1.74.07 1.92.46.5.74 1.15.74 1.94 0 2.79-1.7 3.4-3.31 3.58.26.22.49.66.49 1.33v1.97c0 .19.13.42.5.35A7.25 7.25 0 0 0 8 .75Z"/></svg>
                     GitHub 加星
                 </a>
+                <a class="btn btn--ghost btn--rate" href="https://chromewebstore.google.com/detail/vbookmarks/odhjcodnoebmndcihdedenkmdmklpihb/reviews" rel="noopener">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.26 6.6 1.04-4.75 4.4 1.15 6.8L12 17.2l-5.9 3.3 1.15-6.8-4.75-4.4 6.6-1.04L12 2z"/></svg>
+                    五星好评
+                </a>
+                <button type="button" class="btn btn--ghost btn--donate" data-donate aria-haspopup="dialog" aria-controls="donate-dialog">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                    支持作者
+                </button>
             </div>
             <div class="hero-facts reveal" style="--d:240ms">
                 <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>永久免费</span>
@@ -368,6 +376,20 @@
         </div>
     </section>
 </main>
+
+<dialog class="donate-dialog" id="donate-dialog" aria-labelledby="donate-title">
+    <div class="donate-head">
+        <h3 id="donate-title">支持 vBookmarks</h3>
+        <button type="button" class="donate-close" data-close aria-label="关闭">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+    </div>
+    <div class="donate-body">
+        <p>开发维护不易。如果 vBookmarks 帮到了你，欢迎请作者喝杯咖啡 —— 微信、支付宝扫码即可，金额随意。</p>
+        <img src="assets/img/donate-qrcode.png" width="688" height="501" alt="支付宝与微信收款二维码">
+        <p class="donate-alt">海外用户也可通过 <a href="https://www.paypal.com/paypalme/windviki" target="_blank" rel="noopener">PayPal</a> 捐赠。</p>
+    </div>
+</dialog>
 
 <footer class="site-footer">
     <div class="wrap">

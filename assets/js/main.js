@@ -49,6 +49,18 @@
         if (next) next.addEventListener('click', () => track.scrollBy({ left: step(), behavior: 'smooth' }));
     }
 
+    // Donation dialog (Chinese page)
+    const donateBtn = document.querySelector('[data-donate]');
+    const dialog = document.getElementById('donate-dialog');
+    if (donateBtn && dialog && typeof dialog.showModal === 'function') {
+        donateBtn.addEventListener('click', () => dialog.showModal());
+        dialog.querySelector('[data-close]').addEventListener('click', () => dialog.close());
+        // click on the backdrop (outside the content box) closes too
+        dialog.addEventListener('click', e => {
+            if (e.target === dialog) dialog.close();
+        });
+    }
+
     // Current year
     document.querySelectorAll('[data-year]').forEach(el => {
         el.textContent = new Date().getFullYear();

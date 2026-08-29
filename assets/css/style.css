@@ -152,6 +152,72 @@ h2.section-title {
 
 .btn--sm { padding: 9px 16px; border-radius: 10px; font-size: 14px; }
 
+.btn--rate svg { color: #e8a33d; }
+.btn--donate svg { color: var(--red); }
+
+/* Donation dialog */
+.donate-dialog {
+    border: none;
+    border-radius: var(--radius-lg);
+    padding: 0;
+    max-width: min(92vw, 460px);
+    width: 100%;
+    background: var(--bg);
+    color: var(--text);
+    box-shadow: var(--shadow-lg);
+    overscroll-behavior: contain;
+}
+.donate-dialog::backdrop {
+    background: rgba(23, 24, 28, .55);
+    -webkit-backdrop-filter: blur(2px);
+    backdrop-filter: blur(2px);
+}
+@media (prefers-reduced-motion: no-preference) {
+    .donate-dialog[open] { animation: dialog-in .18s ease; }
+    .donate-dialog[open]::backdrop { animation: fade-in .18s ease; }
+    @keyframes dialog-in {
+        from { opacity: 0; transform: translateY(10px) scale(.97); }
+    }
+    @keyframes fade-in { from { opacity: 0; } }
+}
+.donate-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 20px 22px 0;
+}
+.donate-head h3 {
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: -.01em;
+    color: var(--ink);
+}
+.donate-close {
+    flex: none;
+    width: 34px;
+    height: 34px;
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    background: var(--bg);
+    color: var(--muted);
+    transition: background .12s ease, color .12s ease;
+}
+.donate-close:hover { background: var(--bg-soft); color: var(--ink); }
+.donate-body { padding: 8px 22px 22px; text-align: center; }
+.donate-body p { font-size: 14.5px; color: var(--muted); }
+.donate-body img {
+    margin-top: 14px;
+    width: 100%;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+}
+.donate-alt { margin-top: 14px; font-size: 14px; color: var(--muted); }
+.donate-alt a { color: var(--red); font-weight: 600; text-decoration: none; }
+.donate-alt a:hover { text-decoration: underline; }
+
 /* ---------- Header ---------- */
 .site-header {
     position: sticky;
@@ -282,8 +348,13 @@ h2.section-title {
     margin-top: 34px;
     display: flex;
     justify-content: center;
-    gap: 14px;
+    gap: 12px;
     flex-wrap: wrap;
+}
+.hero-cta .btn--ghost { padding-inline: 19px; }
+@media (min-width: 800px) {
+    /* widen the CTA strip past the text column so four buttons share one row */
+    .hero-cta { margin-inline: -26px; }
 }
 .hero-facts {
     margin-top: 26px;
