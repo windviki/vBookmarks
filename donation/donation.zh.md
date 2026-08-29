@@ -20,4 +20,4 @@
 
 ## Paypal
 
-链接 [paypal.me](paypal.me/windviki)
+链接 [paypal.me](https://www.paypal.com/paypalme/windviki)

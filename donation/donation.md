@@ -24,4 +24,4 @@ Scan the QRCode to pay. Any amount is welcome.
 
 ## Paypal
 
-Via [paypal.me](paypal.me/windviki)
+Via [paypal.me](https://www.paypal.com/paypalme/windviki)
