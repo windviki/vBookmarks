@@ -281,6 +281,69 @@ describe('store.js', () => {
         });
     });
 
+    describe('scrollTop localStorage shadow (issue #63)', () => {
+        it('writes the shadow synchronously on set — before any debounce fires', async () => {
+            const sb = createSandbox({ chromeLocalData: { __migrated_v1: '1' } });
+            await sb.window.store.ready;
+
+            vi.useFakeTimers();
+            sb.window.store.set('scrollTop', 314);
+            // the debounced chrome.storage write has not run…
+            expect(sb.localSetCalls).toHaveLength(0);
+            // …but the shadow already holds the value (a popup dying right
+            // here must not lose the position)
+            expect(sb.lsData.get('__scrollTopLS')).toBe('314');
+            vi.advanceTimersByTime(250);
+            expect(sb.localData.scrollTop).toBe(314);
+        });
+
+        it('clears the shadow on remove', async () => {
+            const sb = createSandbox({ chromeLocalData: { __migrated_v1: '1' } });
+            await sb.window.store.ready;
+
+            sb.window.store.set('scrollTop', 5);
+            expect(sb.lsData.get('__scrollTopLS')).toBe('5');
+            sb.window.store.remove('scrollTop');
+            expect(sb.lsData.has('__scrollTopLS')).toBe(false);
+        });
+
+        it('lets the shadow win over chrome.storage at init and reconciles the drift', async () => {
+            // fake timers FIRST: the reconciliation timer is created during
+            // init() itself
+            vi.useFakeTimers();
+            // previous session: shadow written at close, debounced write lost
+            const sb = createSandbox({
+                localStorageData: { __scrollTopLS: '2500' },
+                chromeLocalData: { scrollTop: 1800, __migrated_v1: '1' }
+            });
+            await sb.window.store.ready;
+
+            expect(sb.window.store.get('scrollTop')).toBe(2500);
+            // the stale chrome.storage copy is scheduled for reconciliation
+            vi.advanceTimersByTime(250);
+            expect(sb.localData.scrollTop).toBe(2500);
+        });
+
+        it('keeps the chrome.storage value when no shadow exists (first run after update)', async () => {
+            // the LEGACY plain-'scrollTop' localStorage copy must never win
+            const sb = createSandbox({
+                localStorageData: { scrollTop: '99' },
+                chromeLocalData: { scrollTop: 1800, __migrated_v1: '1' }
+            });
+            await sb.window.store.ready;
+            expect(sb.window.store.get('scrollTop')).toBe(1800);
+        });
+
+        it('refreshes the shadow when another context writes scrollTop (adopt)', async () => {
+            const sb = createSandbox({ chromeLocalData: { __migrated_v1: '1' } });
+            await sb.window.store.ready;
+
+            sb.window.store.set('scrollTop', 120);
+            sb.window.store.adopt('scrollTop', 240);
+            expect(sb.lsData.get('__scrollTopLS')).toBe('240');
+        });
+    });
+
     describe('remove', () => {
         it('removes from both mirror and chrome.storage.local', async () => {
             const sb = createSandbox({

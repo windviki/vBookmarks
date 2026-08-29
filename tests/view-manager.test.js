@@ -569,6 +569,24 @@ describe('activate', () => {
         expect(recent.listEl.scrollTop).toBe(42);
     });
 
+    // Issue #63: the tree scrolls too — the built-in tree registration carries
+    // persistScroll so a view round-trip doesn't strand the user back at the
+    // top (container.hidden's display:none wipe).
+    it('restores the TREE scroll across a view round-trip (issue #63)', () => {
+        const { views, store, addRecent } = setup({});
+        const recent = addRecent();
+        const tree = views.views().find(v => v.id === 'tree');
+        expect(tree.persistScroll).toBe(true);
+
+        tree.listEl.scrollTop = 2500;
+        views.activate('recent', { keepFocus: true });
+        expect(JSON.parse(store.get('viewState')).tree).toEqual({ scroll: 2500, focus: null });
+        // the display:none wipe drops scrollTop to 0 while hidden
+        tree.listEl.scrollTop = 0;
+        views.activate('tree', { keepFocus: true });
+        expect(tree.listEl.scrollTop).toBe(2500);
+    });
+
     it('runs the deactivate/activate hooks in order with the keepFocus flag', () => {
         const { views, addRecent } = setup({});
         const calls = [];

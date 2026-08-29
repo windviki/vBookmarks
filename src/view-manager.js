@@ -1206,9 +1206,14 @@ export function initViewManager(ctx = {}) {
     }
 
     // --- Structural views + startup --------------------------------------------
+    // Issue #63: the tree keeps its scroll across view switches too. Without
+    // persistScroll the container.hidden wipe (display:none resets scrollTop)
+    // silently dropped the user back to the top on every switch back to the
+    // tree — and the first scroll there overwrote the stored popup-reopen
+    // position with a near-top value.
     register({
         id: 'tree', titleKey: 'viewTree', icon: VIEW_ICONS.tree,
-        container: $('view-tree'), listEl: $('tree')
+        container: $('view-tree'), listEl: $('tree'), persistScroll: true
     });
     register({
         id: 'search', titleKey: 'viewSearch', icon: VIEW_ICONS.search,
