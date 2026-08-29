@@ -1058,6 +1058,9 @@
   "optionRememberView": {
     "message": "Husk siste aktive visning og åpne den igjen"
   },
+  "optionReverseItemPath": {
+    "message": "Vis radens sti med nærmeste mappe først"
+  },
   "optionSearchAfterEnter": {
     "message": "Søk bokmerker kun når ENTER trykkes (i stedet for øyeblikkelig søk)"
   },
@@ -2502,6 +2505,12 @@
   },
   "toolButtonTitle": {
     "message": "Verktøy (Ctrl+K)"
+  },
+  "tooltipAdded": {
+    "message": "Lagt til"
+  },
+  "tooltipPath": {
+    "message": "Sti"
   },
   "undoAction": {
     "message": "Angre"

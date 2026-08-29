@@ -1167,21 +1167,31 @@ export function initViewManager(ctx = {}) {
     // only fills from tree-view's LATER one — left restored results with bare
     // titles; renders can check readiness and re-run once the map lands.
     let pathMapReady = false;
+    let pathLabelMap = {};
     const buildPathMap = tree => {
-        // H5: computePathMap returns { paths, ids } — the ids feed
+        // H5: computePathMap returns { paths, pathLabels, ids } — the ids feed
         // visitStats.prune in neat.js's onTreeGenerated without a second walk.
         const result = computePathMap(tree);
         pathMap = result.paths;
+        pathLabelMap = result.pathLabels || {};
         pathMapReady = true;
         return result;
     };
     // P1-1: tree-view's buildTreeSnapshot already produced the path map in
     // its single walk — swap it in directly (no second traversal).
-    const setPathMap = paths => {
+    const setPathMap = (paths, labels) => {
         pathMap = paths || {};
+        pathLabelMap = labels || {};
         pathMapReady = true;
     };
     const pathOf = id => pathMap[id] || '';
+    // Issue #64: the meta-LINE path form. Under the reverseItemPath option
+    // (default off) row labels flip to NEAREST-parent-first with a depth cap
+    // (formatPathLabel); off keeps the canonical root-first form — tooltips
+    // always stay canonical either way.
+    const pathLabelOf = id => store.get('reverseItemPath')
+        ? (pathLabelMap[id] || '')
+        : (pathMap[id] || '');
     const pathsReady = () => pathMapReady;
 
     // --- Live storage sync ------------------------------------------------------
@@ -1270,6 +1280,7 @@ export function initViewManager(ctx = {}) {
         buildPathMap,
         setPathMap,
         pathOf,
+        pathLabelOf,
         pathsReady,
         updateBadges,
         showItemPath: () => !!store.get('showItemPath', '1'),

@@ -1058,6 +1058,9 @@
   "optionRememberView": {
     "message": "Ricorda l'ultima vista attiva e riaprila"
   },
+  "optionReverseItemPath": {
+    "message": "Mostra il percorso della riga con la cartella più vicina prima"
+  },
   "optionSearchAfterEnter": {
     "message": "Cerca nei segnalibri solo quando si preme INVIO (invece della ricerca istantanea)"
   },
@@ -2502,6 +2505,12 @@
   },
   "toolButtonTitle": {
     "message": "Strumenti (Ctrl+K)"
+  },
+  "tooltipAdded": {
+    "message": "Aggiunto"
+  },
+  "tooltipPath": {
+    "message": "Percorso"
   },
   "undoAction": {
     "message": "Annulla"

@@ -155,6 +155,9 @@ const $ = id => document.getElementById(id);
             // v4 task-3 #18: compulsive mode — no count badges on the tabs
             { id: 'show-tab-badges', key: 'showTabBadges', defaultValue: '1', inverted: false },
             { id: 'show-item-path', key: 'showItemPath', defaultValue: '1', inverted: false },
+            // issue #64: nearest-parent-first row path labels (default off —
+            // canonical root-first, as before)
+            { id: 'reverse-item-path', key: 'reverseItemPath', defaultValue: '', inverted: false },
             // The per-view show switches stay together in Views for unified
             // control; each view-specific group below only carries its other
             // behavior options.
@@ -928,6 +931,7 @@ const $ = id => document.getElementById(id);
         document.getElementById('option-remember-view').innerText = __m('optionRememberView');
         document.getElementById('option-show-tab-badges').innerText = __m('optionShowTabBadges');
         document.getElementById('option-show-item-path').innerText = __m('optionShowItemPath');
+        document.getElementById('option-reverse-item-path').innerText = __m('optionReverseItemPath');
         document.getElementById('option-show-recent-bookmarks').innerText = __m('optionShowRecentBookmarks');
         document.getElementById('option-show-tab-groups-view').innerText = __m('optionShowTabGroupsView');
         document.getElementById('option-tabgroups-color-style').innerText = __m('tabGroupsColorStyle');

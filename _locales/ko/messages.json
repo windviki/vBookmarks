@@ -1058,6 +1058,9 @@
   "optionRememberView": {
     "message": "마지막 활성 보기를 기억하고 다시 열기"
   },
+  "optionReverseItemPath": {
+    "message": "행 경로를 가장 가까운 폴더부터 표시"
+  },
   "optionSearchAfterEnter": {
     "message": "Enter 키를 누를 때만 북마크 검색 (즉시 검색 대신)"
   },
@@ -2502,6 +2505,12 @@
   },
   "toolButtonTitle": {
     "message": "도구 (Ctrl+K)"
+  },
+  "tooltipAdded": {
+    "message": "추가한 날짜"
+  },
+  "tooltipPath": {
+    "message": "경로"
   },
   "undoAction": {
     "message": "실행 취소"

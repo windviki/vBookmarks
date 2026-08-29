@@ -1058,6 +1058,9 @@
   "optionRememberView": {
     "message": "अंतिम सक्रिय दृश्य याद रखें और इसे फिर से खोलें"
   },
+  "optionReverseItemPath": {
+    "message": "पंक्ति पथ को निकटतम फ़ोल्डर पहले दिखाएं"
+  },
   "optionSearchAfterEnter": {
     "message": "केवल ENTER दबाने पर बुकमार्क खोजें (तत्काल खोज के बजाय)"
   },
@@ -2502,6 +2505,12 @@
   },
   "toolButtonTitle": {
     "message": "उपकरण (Ctrl+K)"
+  },
+  "tooltipAdded": {
+    "message": "जोड़ा गया"
+  },
+  "tooltipPath": {
+    "message": "पथ"
   },
   "undoAction": {
     "message": "पूर्ववत करें"

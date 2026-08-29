@@ -1058,6 +1058,9 @@
   "optionRememberView": {
     "message": "Zapomni si zadnji aktivni pogled in ga znova odpri"
   },
+  "optionReverseItemPath": {
+    "message": "Prikaži pot vrstice z najbližjo mapo najprej"
+  },
   "optionSearchAfterEnter": {
     "message": "Išči zaznamke samo, ko je pritisnjen ENTER (namesto takojšnjega iskanja)"
   },
@@ -2502,6 +2505,12 @@
   },
   "toolButtonTitle": {
     "message": "Orodja (Ctrl+K)"
+  },
+  "tooltipAdded": {
+    "message": "Dodano"
+  },
+  "tooltipPath": {
+    "message": "Pot"
   },
   "undoAction": {
     "message": "Razveljavi"

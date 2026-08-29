@@ -22,8 +22,8 @@
  * resize-core.js; this module is only the DOM/chrome wiring around them.
  *
  * initResize(ctx) is called once by neat.js where the auto-height code used
- * to live — store/body/tree/views/menus/search all exist by then; treeView
- * and dnd init further below and reach this module through ctx getters that
+ * to live — store/body/tree/views/menus/search all exist by then; dnd
+ * inits further below and reaches this module through ctx getters that
  * only run at event time (TDZ-safe, same pattern as the menus ctx).
  *
  * ctx.store      — settings store (autoResizePopup/zoom/popupWidth/
@@ -35,7 +35,6 @@
  * ctx.rtl        — right-to-left layout (drag delta mirroring)
  * ctx.search     — the search module API (isActive gates the initial call)
  * ctx.clearMenu  — menus.clearMenu (an open context menu closes on drag)
- * ctx.treeView   — lazy getter → treeView (adaptBookmarkTooltips at drag end;
  *                  may be absent in minimal test setups)
  * ctx.isDragging — lazy getter → dnd.isDragging() (the zoom guard; may be
  *                  absent in minimal test setups)
@@ -218,9 +217,8 @@ export function initResize(ctx = {}) {
         // the popup closes right after the drag (the "widened but next open is
         // the default width" half of the regression).
         store.flush();
-        const treeView = ctx.treeView;
-        if (treeView)
-            treeView.adaptBookmarkTooltips();
+        // (tooltips are baked into every row since the full-info round —
+        // issues #62/#64; no post-drag re-measurement pass remains)
     };
     const capturePointer = e => {
         if (e.target.setPointerCapture)

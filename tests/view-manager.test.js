@@ -1422,6 +1422,20 @@ describe('shared parent-path map (§3.6)', () => {
         views.setPathMap({ 11: 'Folder A' });
         expect(views.pathsReady()).toBe(true);
     });
+
+    // issue #64: meta-line path form — canonical by default (tooltips always
+    // canonical), nearest-first label map under the reverseItemPath option.
+    it('pathLabelOf keeps the canonical form by default and flips under reverseItemPath', () => {
+        const { views, store } = setup({ storeData: { reverseItemPath: '' } });
+        views.setPathMap(
+            { 11: 'Bookmarks Bar / Dev' },
+            { 11: 'Dev < Bookmarks Bar' });
+        expect(views.pathOf('11')).toBe('Bookmarks Bar / Dev'); // tooltip form
+        expect(views.pathLabelOf('11')).toBe('Bookmarks Bar / Dev'); // default: same
+        store._data.reverseItemPath = '1';
+        expect(views.pathLabelOf('11')).toBe('Dev < Bookmarks Bar');
+        expect(views.pathOf('11')).toBe('Bookmarks Bar / Dev'); // unchanged
+    });
 });
 
 describe('settings', () => {

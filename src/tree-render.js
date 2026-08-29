@@ -66,23 +66,57 @@ export const TREE_INDENT = 24;
 
 // v4 task-2 (docs/plan-4.0.0/v4task-2.md §3.6): build the id → containing-folder path
 // map every list view shares for its row path labels. For each node the map
-// holds the titles of its ancestor folders (untitled folders skipped).
-// Issue #64(iii): the label is NEAREST-FIRST — the immediate parent on the
-// left, climbing outward rightward — capped at PATH_DEPTH ancestors with a
-// trailing '…' when deeper ones were cut. In the narrow popup the CSS
-// truncation then eats the distant ancestors instead of the discriminating
-// near ones ("Frontend < Dev < …" rather than "Bookmarks Bar / De…").
-// Pure: no chrome/DOM access, so vitest exercises it directly.
+// holds the titles of its ancestor folders (untitled folders skipped), joined
+// root-first by ' / ' — the CANONICAL form used by tooltips (and by row meta
+// lines unless the reverseItemPath option flips them).
+// Issue #64: `formatPathLabel` is the meta-LINE form — NEAREST parent first
+// ("Frontend < Dev"), capped at PATH_DEPTH ancestors with a trailing '…' —
+// the row-label map (`pathLabels`) carries it; the option decides which form
+// a label shows (default: not reversed). Pure: no chrome/DOM access, so
+// vitest exercises both directly.
 export const PATH_DEPTH = 3;
-export const formatPath = ancestors => {
+export const formatPath = ancestors => ancestors.join(' / ');
+export const formatPathLabel = ancestors => {
     const near = ancestors.slice(-PATH_DEPTH).reverse().join(' < ');
     return ancestors.length > PATH_DEPTH ? `${near} < …` : near;
+};
+// The unified row tooltip (issues #62/#64): FULL info on hover in EVERY view,
+// one line per fact, extensible — future metadata appends labeled lines at
+// the end (before `append`). Native title tooltips are plain text:
+//   <标题>
+//   <url>
+//   Path: Bookmarks Bar / Dev        (canonical root-first, when known)
+//   Added: 2026/8/29 13:40           (toLocaleString, when known)
+//   <append>                         (view extras, e.g. dead-link marks)
+// Segments are escaped here — callers pass RAW values. Pure apart from the
+// i18n label lookup (resolved at call time so tests can stub chrome.i18n).
+const tooltipLabel = key => {
+    try {
+        if (typeof chrome !== 'undefined' && chrome.i18n && chrome.i18n.getMessage)
+            return chrome.i18n.getMessage(key) || '';
+    } catch (e) { /* no i18n host — English fallback below */ }
+    return '';
+};
+export const buildRowTooltip = parts => {
+    const lines = [];
+    if (parts.title)
+        lines.push(htmlspecialchars(parts.title));
+    if (parts.url)
+        lines.push(htmlspecialchars(parts.url));
+    if (parts.path)
+        lines.push(`${tooltipLabel('tooltipPath') || 'Path'}: ${htmlspecialchars(parts.path)}`);
+    if (parts.dateAdded)
+        lines.push(`${tooltipLabel('tooltipAdded') || 'Added'}: ${new Date(parts.dateAdded).toLocaleString()}`);
+    if (parts.append)
+        lines.push(htmlspecialchars(parts.append));
+    return lines.join('\n');
 };
 export const buildPathMap = tree => {
     // H5: one traversal produces both the id → folder-path map and the set of
     // live bookmark ids (previously neat.js walked the tree a second time to
     // collect ids for visitStats.prune). Pure: no chrome/DOM access.
     const paths = {};
+    const pathLabels = {};
     const ids = new Set();
     const walk = (nodes, ancestors) => {
         if (!nodes)
@@ -92,6 +126,7 @@ export const buildPathMap = tree => {
             // the invisible root has no parentId and contributes no title
             if (typeof node.parentId !== 'undefined') {
                 paths[node.id] = formatPath(ancestors);
+                pathLabels[node.id] = formatPathLabel(ancestors);
                 if (node.url)
                     ids.add(node.id);
             }
@@ -105,7 +140,7 @@ export const buildPathMap = tree => {
         }
     };
     walk(tree || [], []);
-    return { paths, ids };
+    return { paths, pathLabels, ids };
 };
 
 // v4 task-2 (docs/plan-4.0.0/v4task-2-list.md §3.3): relative-time buckets for the
@@ -306,7 +341,8 @@ export function initTreeRender(ctx = {}) {
             : `<img src="${getFaviconUrl(url)}" width="16" height="16" alt="" loading="lazy">`;
         if (isBookmarklet && url.length > 140)
             tooltipURL = `${url.slice(0, 140)}...`;
-        tooltipURL = htmlspecialchars(tooltipURL);
+        // tooltipURL stays RAW — buildRowTooltip escapes every segment it
+        // takes (double-escaping would corrupt & < > " in the tooltip).
         // The untitled fallback shows the scheme-stripped URL — escape it
         // too (the tooltip below escapes the same expression): a URL with
         // < > " would otherwise land raw in the innerHTML (v4.0 leftover).
@@ -316,31 +352,39 @@ export function initTreeRender(ctx = {}) {
 
         // v4 task-2 §3.6: list views (search/recent/…) pass meta.path — the
         // bookmark's containing-folder path from buildPathMap. The tooltip
-        // unifies to `标题 + URL + 路径` (absorbing the old async
-        // parent-folder tooltip), and the row gains path labels when the
-        // showItemPath setting is on: inline `.row-path` in the narrow popup,
-        // a second muted line `.row-sub` at ≥480px / in panel mode (CSS
-        // container query picks the form). Views with a custom meta slot
-        // (recent: relative time on the right, `path · absolute time` as the
-        // second line — docs/plan-4.0.0/v4task-2-list.md §3.3) override the two label
-        // slots wholesale via meta.rightText / meta.subText; both slots are
-        // escaped here, so callers compose them from raw text. A view badge
+        // (issues #62/#64) is the unified FULL-INFO block via buildRowTooltip
+        // (title + URL + path + dateAdded, extensible) in EVERY view — the
+        // tree passes the same fields since 4.1.1. The row gains path labels
+        // when the showItemPath setting is on: inline `.row-path` in the
+        // narrow popup, a second muted line `.row-sub` at ≥480px / in panel
+        // mode (CSS container query picks the form). Labels render
+        // meta.pathLabel when a view passes it (view-manager's
+        // reverseItemPath handling — nearest-first form), else the canonical
+        // meta.path. Views with a custom meta slot (recent: relative time on
+        // the right, `path · absolute time` as the second line —
+        // docs/plan-4.0.0/v4task-2-list.md §3.3) override the two label slots
+        // wholesale via meta.rightText / meta.subText; both slots are escaped
+        // here, so callers compose them from raw text. A view badge
         // (dead/blocked status pill, docs/plan-4.0.0/v4task-2-list.md §3.5) comes via
         // meta.badge = { text, cls } and sits left of the right slot; slice D
         // adds meta.badge.aria for pills whose bare text isn't self-explanatory
         // (the stats ×N count pill gets "Visited N times").
         const path = (meta && meta.path) ? String(meta.path) : '';
-        const tooltip = (path
-            ? `${htmlspecialchars(title || (httpsPattern.test(url) ? url.replace(httpsPattern, '') : _m('noTitle')))}\n${tooltipURL}\n${htmlspecialchars(path)}`
-            : tooltipURL) +
+        const tooltip = buildRowTooltip({
+            title: title || (httpsPattern.test(url) ? url.replace(httpsPattern, '') : _m('noTitle')),
+            url: tooltipURL,
+            path,
+            dateAdded: meta && meta.dateAdded,
             // meta.tooltipAppend（可选，死链视图追加标记/检测时间）：追加在
-            // tooltip 末行；其他视图不传 → 行为不变。escape 与其余 segment 一致。
-            (meta && meta.tooltipAppend ? `\n${htmlspecialchars(meta.tooltipAppend)}` : '');
-        const showPath = path && !!store.get('showItemPath', '1');
+            // tooltip 末行；其他视图不传 → 行为不变（builder 内统一 escape）。
+            append: meta && meta.tooltipAppend
+        });
+        const labelPath = (meta && meta.pathLabel) ? String(meta.pathLabel) : path;
+        const showPath = labelPath && !!store.get('showItemPath', '1');
         const rightText = meta && typeof meta.rightText === 'string'
-            ? meta.rightText : (showPath ? path : '');
+            ? meta.rightText : (showPath ? labelPath : '');
         const subText = meta && typeof meta.subText === 'string'
-            ? meta.subText : (showPath ? path : '');
+            ? meta.subText : (showPath ? labelPath : '');
         // meta.subRight（可选，死链视图宽/panel 第二行右侧的时间）：仅当其存在
         // 时第二行才改用"左子 + 右子"结构（左路径可截断、右时间推右对齐）；其他
         // 视图不传 → 保持纯文本 `.row-sub` 不变（tree-render.test.js 锁定结构）。
@@ -397,12 +441,12 @@ export function initTreeRender(ctx = {}) {
                 </a>`;
     };
 
-    const generateFolderHTML = (title, extras, folderId, folderNode) => {
+    const generateFolderHTML = (title, extras, folderId, folderNode, path) => {
         if (!extras)
             extras = '';
 
-        // Handle dual storage folders - localized suffix marks which root a
-        // folder belongs to (both roots are named alike by Chrome)
+        // Handle dual storage folders - localized suffix marks which
+        // root a folder belongs to (both roots are named alike by Chrome)
         // Escape the user-controlled title here (single responsibility): both
         // callers — generateHTML (main render) and actions.js add-node — pass
         // raw titles, matching generateBookmarkHTML's internal escaping.
@@ -427,7 +471,17 @@ export function initTreeRender(ctx = {}) {
             }
         }
 
-        return `<span tabindex="-1" ${extras} class="tree-item-span">
+        // Issues #62/#64: folders carry the full-info tooltip too — title +
+        // containing path + dateAdded (no URL line: folders have none). The
+        // 5th `path` param is the canonical ancestor path (the snapshot's
+        // full-tree map); callers without one (actions.js add-node) simply
+        // render without the path line.
+        const folderTooltip = buildRowTooltip({
+            title: title || _m('noTitle'),
+            path,
+            dateAdded: folderNode && folderNode.dateAdded
+        });
+        return `<span tabindex="-1" ${extras} class="tree-item-span" title="${folderTooltip}">
 		   <b class="twisty">${CHEVRON_ICON}</b>
 		   <div class="favicon-container">
 		       ${FOLDER_ICON}
@@ -447,7 +501,7 @@ export function initTreeRender(ctx = {}) {
                 </a>`;
     };
 
-    const generateHTML = (data, level) => {
+    const generateHTML = (data, level, pathsMap) => {
         ensureIconSheet();
         if (!level)
             level = 0;
@@ -469,7 +523,7 @@ export function initTreeRender(ctx = {}) {
         let html = `<ul role="${group}" data-level="${level}">`;
         withRenderPass(() => {
             for (let i = 0, l = data.length; i < l; i++)
-                html += nodeHtml(data[i], level, paddingStart);
+                html += nodeHtml(data[i], level, paddingStart, pathsMap);
         });
         html += '</ul>';
         return html;
@@ -480,7 +534,10 @@ export function initTreeRender(ctx = {}) {
     // tree paint (2026-08-28 perf 任务④) streams per top-level node. The
     // lazy-expand branch appends unloaded children asynchronously exactly as
     // before (same code, just factored out — generateHTML's tests cover it).
-    const nodeHtml = (d, level, paddingStart) => {
+    // pathsMap (optional): the snapshot's FULL-tree canonical path map — rows
+    // resolve their tooltip path O(1) instead of re-walking ancestors (nil
+    // for the legacy generateHTML entry points: no path line in the tooltip).
+    const nodeHtml = (d, level, paddingStart, pathsMap) => {
         const children = d.children;
         // Raw title: generateFolderHTML/generateBookmarkHTML escape their
         // own titles (single responsibility — see generateFolderHTML).
@@ -502,11 +559,11 @@ export function initTreeRender(ctx = {}) {
         const ariaStr = isFolder ? `aria-expanded="${isOpen}"` : '';
         let html = `<li class="${classStr}${unsyncedCls} ${open}" ${idHTML} level="${level}" role="treeitem" ${ariaStr} data-parentid="${parentID}">`;
         if (isFolder) { // folder node
-            html += generateFolderHTML(title, stylePad, id, d);
+            html += generateFolderHTML(title, stylePad, id, d, pathsMap ? (pathsMap[id] || '') : '');
             // only generate children for opened folder
             if (isOpen) {
                 if (children) {
-                    html += generateHTML(children, level + 1);
+                    html += generateHTML(children, level + 1, pathsMap);
                 } else {
                     (_id => {
                         chrome.bookmarks.getChildren(_id, children => {
@@ -516,7 +573,7 @@ export function initTreeRender(ctx = {}) {
                             // warning; also the row may have gone from the DOM.
                             if (chrome.runtime.lastError)
                                 return;
-                            const html = generateHTML(children || [], level + 1);
+                            const html = generateHTML(children || [], level + 1, pathsMap);
                             const div = document.createElement('div');
                             div.innerHTML = html;
                             const ul = div.querySelector('ul');
@@ -537,7 +594,13 @@ export function initTreeRender(ctx = {}) {
                 // shared generateBookmarkHTML appends meta.tailHtml
                 // inside the anchor — hover reveal + focus ride the
                 // anchor's own box, no ancestor-hover leakage).
-                html += generateBookmarkHTML(title, url, stylePad, id, null, { tailHtml: treeRowTail(url, false) });
+                html += generateBookmarkHTML(title, url, stylePad, id, null, {
+                    tailHtml: treeRowTail(url, false),
+                    // issues #62/#64: tree rows carry the full-info tooltip
+                    // (title + URL + path + dateAdded) like every list view
+                    path: pathsMap ? (pathsMap[id] || '') : '',
+                    dateAdded: d.dateAdded
+                });
             }
         }
         return html + '</li>';
@@ -545,12 +608,12 @@ export function initTreeRender(ctx = {}) {
 
     // Top-level pieces for the chunked tree paint (perf 任务④): one string
     // per top-level node; generateHTML(level 0) === wrapper + blocks joined.
-    const generateTreeBlocks = data => {
+    const generateTreeBlocks = (data, pathsMap) => {
         ensureIconSheet();
         const blocks = [];
         withRenderPass(() => {
             for (let i = 0, l = data.length; i < l; i++)
-                blocks.push(nodeHtml(data[i], 0, 0));
+                blocks.push(nodeHtml(data[i], 0, 0, pathsMap));
         });
         return blocks;
     };
@@ -668,6 +731,7 @@ export function initTreeRender(ctx = {}) {
         const ids = new Set();
         const nodeTrees = {};
         const bookmarkIds = new Set();
+        const pathLabels = {};
         // velvet staging §0.5: url → the FIRST tree node carrying it — the
         // staging anchors' relink index, built by the same single walk.
         const urlIndex = new Map();
@@ -696,6 +760,7 @@ export function initTreeRender(ctx = {}) {
                     continue;
                 if (typeof node.parentId !== 'undefined') {
                     paths[node.id] = formatPath(ancestors);
+                    pathLabels[node.id] = formatPathLabel(ancestors);
                     if (node.url) {
                         ids.add(node.id);
                         if (!urlIndex.has(node.url))
@@ -727,11 +792,11 @@ export function initTreeRender(ctx = {}) {
         // (html = wrapper + blocks.join) so the chunked painter and the
         // one-shot swap share one code path — no duplicated walk. The EMPTY
         // display keeps generateHTML's own "(Empty)" row branch.
-        const blocks = display && display.length ? generateTreeBlocks(display) : null;
+        const blocks = display && display.length ? generateTreeBlocks(display, paths) : null;
         const html = blocks
             ? `<ul role="tree" data-level="0">${blocks.join('')}</ul>`
             : generateHTML(display);
-        return { html, blocks, nodeTrees, bookmarkIds, paths, ids, urlIndex };
+        return { html, blocks, nodeTrees, bookmarkIds, paths, pathLabels, ids, urlIndex };
     };
 
     return {

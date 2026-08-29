@@ -61,7 +61,7 @@
         'dontConfirmOpenFolder', 'dontRememberState', 'onlyShowBMBar', 'searchAfterEnter',
         'autoResizePopup',
         // v4 task-2: view layer (slice A)
-        'activeView', 'viewState', 'showViewTabs', 'showItemPath',
+        'activeView', 'viewState', 'showViewTabs', 'showItemPath', 'reverseItemPath',
         // issue #64: hand the popup's startup focus to the search input
         'focusSearchOnOpen',
         // issue #64: folder rows in search results (reveal-in-tree click)
@@ -217,7 +217,9 @@
         // issue #64: popup startup focus preference (device-independent)
         'focusSearchOnOpen',
         // issue #64: folder rows in search results (device-independent)
-        'searchShowFolders'
+        'searchShowFolders',
+        // issue #64: nearest-first row path labels (device-independent)
+        'reverseItemPath'
     ];
     const SYNC_KEY_SET = new Set(SYNC_KEYS);
     const isSyncKey = key => SYNC_KEY_SET.has(key);

@@ -1058,6 +1058,9 @@
   "optionRememberView": {
     "message": "Husk den senest aktive visning og åbn den igen"
   },
+  "optionReverseItemPath": {
+    "message": "Vis rækkens sti med nærmeste mappe først"
+  },
   "optionSearchAfterEnter": {
     "message": "Søg bogmærker kun når ENTER trykkes (i stedet for øjeblikkelig søgning)"
   },
@@ -2502,6 +2505,12 @@
   },
   "toolButtonTitle": {
     "message": "Værktøjer (Ctrl+K)"
+  },
+  "tooltipAdded": {
+    "message": "Tilføjet"
+  },
+  "tooltipPath": {
+    "message": "Sti"
   },
   "undoAction": {
     "message": "Fortryd"

@@ -1058,6 +1058,9 @@
   "optionRememberView": {
     "message": "Zapamiętaj ostatnio aktywny widok i przywróć go"
   },
+  "optionReverseItemPath": {
+    "message": "Pokazuj ścieżkę wiersza od najbliższego folderu"
+  },
   "optionSearchAfterEnter": {
     "message": "Szukaj zakładek tylko po naciśnięciu ENTER (zamiast natychmiastowego wyszukiwania)"
   },
@@ -2502,6 +2505,12 @@
   },
   "toolButtonTitle": {
     "message": "Narzędzia (Ctrl+K)"
+  },
+  "tooltipAdded": {
+    "message": "Dodano"
+  },
+  "tooltipPath": {
+    "message": "Ścieżka"
   },
   "undoAction": {
     "message": "Cofnij"

@@ -1058,6 +1058,9 @@
   "optionRememberView": {
     "message": "จดจำมุมมองที่ใช้งานล่าสุดและเปิดกลับมาใหม่"
   },
+  "optionReverseItemPath": {
+    "message": "แสดงเส้นทางของแถวโดยโฟลเดอร์ที่ใกล้ที่สุดก่อน"
+  },
   "optionSearchAfterEnter": {
     "message": "ค้นหาที่คั่นหน้าเฉพาะเมื่อกด ENTER (แทนการค้นหาทันที)"
   },
@@ -2502,6 +2505,12 @@
   },
   "toolButtonTitle": {
     "message": "เครื่องมือ (Ctrl+K)"
+  },
+  "tooltipAdded": {
+    "message": "วันที่เพิ่ม"
+  },
+  "tooltipPath": {
+    "message": "เส้นทาง"
   },
   "undoAction": {
     "message": "เลิกทำ"

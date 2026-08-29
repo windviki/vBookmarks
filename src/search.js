@@ -61,7 +61,7 @@ import { FOLDER_ICON, VIEW_ICONS, TRASH_ICON, SELECT_ICON, STAGE_ICON, OPEN_ICON
     };
 import { fitToolbarLabels, watchToolbarFit } from './toolbar-fit.js';
 import { stageBtnHtml as relayStageBtnHtml, flipStageBtn, toggleStageItem } from './staging-relay.js';
-import { relTimeLabel } from './tree-render.js';
+import { relTimeLabel, buildRowTooltip } from './tree-render.js';
 import { htmlspecialchars } from './escape.js';
 import {
     parkRowFocus as sharedParkRowFocus,
@@ -966,7 +966,11 @@ export function initSearch(ctx = {}) {
                     // §3.6: rows carry their parent-folder path label + the
                     // unified 标题/URL/路径 tooltip (via the meta argument).
                     html += `<li class="vbm-row${sel ? ' sel' : ''}" data-parentid="${result.parentId}" data-node-id="${id}" data-url="${encodeURIComponent(result.url)}" id="results-item-${id}" role="listitem">
-                            ${generateBookmarkHTML(result.title, result.url, '', result.id, result.positions, { path: views.pathOf(id) })}${tail}</li>`;
+                            ${generateBookmarkHTML(result.title, result.url, '', result.id, result.positions, {
+                                path: views.pathOf(id),
+                                pathLabel: views.pathLabelOf ? views.pathLabelOf(id) : '',
+                                dateAdded: result.dateAdded
+                            })}${tail}</li>`;
                 } else {  // folder
                     // Add sync status indicator for folders in search results
                     let syncIndicator = '';
@@ -982,10 +986,14 @@ export function initSearch(ctx = {}) {
 
                     const folderTitle = result.title ?
                         highlightTitlePositions(result.title, result.positions) : _m('noTitle');
-                    // §3.6 tooltip unification for folder rows: 标题 + 路径
+                    // §3.6 tooltip unification (issues #62/#64): 标题+路径+时间
+                    // via the shared full-info builder (folders have no URL)
                     const folderPath = views.pathOf(id);
-                    const folderTip = htmlspecialchars(result.title || _m('noTitle'))
-                        + (folderPath ? `\n${htmlspecialchars(folderPath)}` : '');
+                    const folderTip = buildRowTooltip({
+                        title: result.title || _m('noTitle'),
+                        path: folderPath,
+                        dateAdded: result.dateAdded
+                    });
                     html += `<li id="results-item-${id}" role="listitem" data-parentid="${result.parentId}" data-node-id="${id}">
                             <a href="" class="link-folder tree-item-link" title="${folderTip}">
                             <div class="favicon-container">

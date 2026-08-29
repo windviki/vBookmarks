@@ -1058,6 +1058,9 @@
   "optionRememberView": {
     "message": "記住最後使用的檢視，並於重新開啟時還原"
   },
+  "optionReverseItemPath": {
+    "message": "行路徑以最接近的資料夾在前顯示（倒序）"
+  },
   "optionSearchAfterEnter": {
     "message": "僅當回車之後才進行書籤搜索（否則輸入字符立即搜索）"
   },
@@ -2502,6 +2505,12 @@
   },
   "toolButtonTitle": {
     "message": "工具 (Ctrl+K)"
+  },
+  "tooltipAdded": {
+    "message": "加入時間"
+  },
+  "tooltipPath": {
+    "message": "路徑"
   },
   "undoAction": {
     "message": "復原"

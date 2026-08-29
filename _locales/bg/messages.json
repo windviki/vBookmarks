@@ -1058,6 +1058,9 @@
   "optionRememberView": {
     "message": "Запомняне и повторно отваряне на последния активен изглед"
   },
+  "optionReverseItemPath": {
+    "message": "Показване на пътя на реда с най-близката папка първо"
+  },
   "optionSearchAfterEnter": {
     "message": "Търсене на отметки само при натискане на ENTER (вместо незабавно търсене)"
   },
@@ -2502,6 +2505,12 @@
   },
   "toolButtonTitle": {
     "message": "Инструменти (Ctrl+K)"
+  },
+  "tooltipAdded": {
+    "message": "Добавено"
+  },
+  "tooltipPath": {
+    "message": "Път"
   },
   "undoAction": {
     "message": "Отмяна"

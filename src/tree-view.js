@@ -125,43 +125,6 @@ export function initTreeView(ctx = {}) {
         }
     };
 
-    // Adaptive bookmark tooltips (H2): one row at a time, on demand. The old
-    // full pass (scrollWidth/offsetWidth on every row after every render or
-    // expand) forced a whole-tree layout; now only the hovered / focused row
-    // is measured, via delegated mouseover/focusin on $tree (below).
-    const adaptBookmarkTooltip = bookmark => {
-        if (bookmark.querySelector('hr')) {
-            bookmark.title = '';
-        } else {
-            // Truncation lives on the name <i> since the v4 flex rows
-            // (flex:1 + min-width:0 + overflow:hidden clip INSIDE it), so the
-            // <a> itself never overflows — measuring the anchor (the pre-v4
-            // basis) made every tooltip stay URL-only (issue #62). Measure
-            // the <i>; rows without one (test doubles, future row shapes)
-            // keep the URL-only tooltip.
-            const nameEl = bookmark.querySelector('i');
-            const truncated = !!nameEl && nameEl.scrollWidth > nameEl.offsetWidth;
-            if (bookmark.classList.contains('titled')) {
-                if (!truncated) {
-                    bookmark.title = bookmark.href;
-                    bookmark.classList.remove('titled');
-                }
-            } else if (truncated) {
-                const text = nameEl.textContent;
-                const title = bookmark.title;
-                if (text !== title) {
-                    bookmark.title = `${text}\n${title}`;
-                    bookmark.classList.add('titled');
-                }
-            }
-        }
-    };
-    const adaptBookmarkTooltips = () => {
-        const bookmarks = document.querySelectorAll('li.child a');
-        for (let i = 0, l = bookmarks.length; i < l; i++)
-            adaptBookmarkTooltip(bookmarks[i]);
-    };
-
     const generateTree = tree => {
         let subTree;
         if (onlyShowBMBar && !showAllOverride) {
@@ -447,21 +410,6 @@ export function initTreeView(ctx = {}) {
     $tree.addEventListener('scroll', () => {
         store.set('scrollTop', $tree.scrollTop);
     });
-    // H2: tooltips adapt lazily on the hovered/focused row only (mouseover
-    // bubbles; focusin covers keyboard walks). No whole-tree layout pass.
-    const adaptTooltipFromEvent = e => {
-        const t = e && e.target;
-        if (!t)
-            return;
-        const row = t.closest ? t.closest('li.child a') : null;
-        if (row) {
-            adaptBookmarkTooltip(row);
-        } else if (!t.closest && t.tagName === 'A' && t.classList && t.classList.contains('child')) {
-            adaptBookmarkTooltip(t);
-        }
-    };
-    $tree.addEventListener('mouseover', adaptTooltipFromEvent);
-    $tree.addEventListener('focusin', adaptTooltipFromEvent);
     $tree.addEventListener('focus', e => {
         const el = e.target;
         const tagName = el.tagName;
@@ -773,7 +721,6 @@ export function initTreeView(ctx = {}) {
 
     return {
         generateTree,
-        adaptBookmarkTooltips,
         revealFolder,
         revealInTree,
         // bound per list container: tree above, search results above, and the

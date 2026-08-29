@@ -428,6 +428,8 @@ export function initViewStats(ctx = {}) {
             const sel = selecting && selected.has(row.url);
             if (row.bookmarkId) {
                 const path = views.pathOf(row.bookmarkId);
+                // issue #64: meta lines take the label form (reverse option)
+                const labelPath = views.pathLabelOf ? views.pathLabelOf(row.bookmarkId) : path;
                 push(row, `<li class="vbm-row${sel ? ' sel' : ''}" id="stats-item-${row.bookmarkId}" role="listitem" ` +
                     `data-node-id="${row.bookmarkId}" data-parentid="${row.parentId || ''}" data-url="${encodeURIComponent(row.url)}">` +
                     treeRender.generateBookmarkHTML(row.title, row.url, 'data-virtual="1"', row.bookmarkId, null, {
@@ -440,9 +442,11 @@ export function initViewStats(ctx = {}) {
                         // path · absolute time — the same template as the
                         // recent/dupes views (aligned with the unbookmarked
                         // rows' bare absolute time when the path is off).
-                        rightText: (views.showItemPath() && path) ? path : '',
+                        pathLabel: labelPath,
+                        dateAdded: row.dateAdded,
+                        rightText: (views.showItemPath() && path) ? labelPath : '',
                         subText: (views.showItemPath() && path)
-                            ? `${path} · ${absTime}`
+                            ? `${labelPath} · ${absTime}`
                             : absTime
                     }) +
                     // ★: bookmarked-state marker (filled star), always visible,

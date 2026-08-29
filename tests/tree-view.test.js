@@ -436,7 +436,7 @@ describe('module API + startup wiring', () => {
     it('returns { generateTree, adaptBookmarkTooltips, revealFolder, revealInTree, bookmarkHandler } and wires the startup getTree to generateTree', () => {
         const { treeView, chrome } = setup({});
         expect(Object.keys(treeView).sort()).toEqual(
-            ['adaptBookmarkTooltips', 'bookmarkHandler', 'generateTree', 'revealFolder', 'revealInTree']);
+            ['bookmarkHandler', 'generateTree', 'revealFolder', 'revealInTree']);
         expect(chrome.bookmarks.getTreeCalls).toHaveLength(1);
         expect(chrome.bookmarks.getTreeCalls[0]).toBe(treeView.generateTree);
     });
@@ -697,53 +697,6 @@ describe('generateTree', () => {
         expect(ctx.refreshSyncCalls()).toBe(0);
     });
 
-    it('does NOT run a full tooltip pass on render (H2: rows adapt on hover/focus only)', () => {
-        const ctx = setup({});
-        const bm = ctx.el('A');
-        bm.classList.add('child');
-        bm.title = 'http://t/';
-        bm._qs['i'] = { textContent: 'Long title', scrollWidth: 200, offsetWidth: 100 };
-        ctx.doc._qsa['li.child a'] = [bm];
-        ctx.treeView.generateTree(['ROOT']);
-        expect(bm.title).toBe('http://t/');
-        tickAll();
-        expect(bm.title).toBe('http://t/'); // no scheduled full pass
-        expect(bm.classList.contains('titled')).toBe(false);
-    });
-
-    it('adapts the hovered row via delegated mouseover (H2)', () => {
-        const ctx = setup({});
-        const bm = ctx.el('A');
-        bm.classList.add('child');
-        bm.title = 'http://t/';
-        bm._qs['i'] = { textContent: 'Long title', scrollWidth: 200, offsetWidth: 100 };
-        ctx.treeView.generateTree(['ROOT']);
-        fire(ctx.tree, 'mouseover', makeEvent({ target: bm }));
-        expect(bm.title).toBe('Long title\nhttp://t/');
-        expect(bm.classList.contains('titled')).toBe(true);
-    });
-
-    it('adapts the focused row via delegated focusin (H2: keyboard walk)', () => {
-        const ctx = setup({});
-        const bm = ctx.el('A');
-        bm.classList.add('child');
-        bm.title = 'http://t/';
-        bm._qs['i'] = { textContent: 'Long title', scrollWidth: 200, offsetWidth: 100 };
-        ctx.treeView.generateTree(['ROOT']);
-        fire(ctx.tree, 'focusin', makeEvent({ target: bm }));
-        expect(bm.title).toBe('Long title\nhttp://t/');
-        expect(bm.classList.contains('titled')).toBe(true);
-    });
-});
-
-describe('tree events', () => {
-    it('persists scrollTop on scroll', () => {
-        const { tree, store } = setup({});
-        tree.scrollTop = 42;
-        fire(tree, 'scroll', makeEvent());
-        expect(store.sets).toContainEqual(['scrollTop', 42]);
-    });
-
     it('tracks focus on a row: clears the old .focus element and stores focusID', () => {
         const { tree, store, el, makeBookmark } = setup({});
         const old = el('SPAN');
@@ -807,9 +760,10 @@ describe('tree events', () => {
         expect(div.removed).toBe(true);
         expect(wrapUl.dataset.level).toBe('1');
         tick(100);
-        expect(bm.classList.contains('titled')).toBe(false); // no full pass after expand
+        // (the adaptive-tooltip pass is retired — full-info tooltips are
+        // baked into every row at render time since the issues #62/#64 round)
         fire(ctx.tree, 'mouseover', makeEvent({ target: bm }));
-        expect(bm.classList.contains('titled')).toBe(true); // delegated adaptation
+        expect(bm.title).toBe('http://t/'); // untouched by hover now
     });
 
     it('lazy expand fires onRowsRendered after the fresh rows land (item: dead-mark overlays)', () => {
@@ -1230,89 +1184,3 @@ describe('revealInTree + onlyShowBMBar (v4 task-3 #14)', () => {
     });
 });
 
-describe('adaptBookmarkTooltips', () => {
-    it('clears the title of separator rows (an <a> containing an <hr>)', () => {
-        const ctx = setup({});
-        const a = ctx.el('A');
-        a.title = 'keep?';
-        a._qs['hr'] = ctx.el('HR');
-        ctx.doc._qsa['li.child a'] = [a];
-        ctx.treeView.adaptBookmarkTooltips();
-        expect(a.title).toBe('');
-    });
-
-    it('adds a combined title and the titled class when the text overflows', () => {
-        const ctx = setup({});
-        const a = ctx.el('A');
-        a.title = 'http://t/';
-        a._qs['i'] = { textContent: 'Long title', scrollWidth: 200, offsetWidth: 100 };
-        ctx.doc._qsa['li.child a'] = [a];
-        ctx.treeView.adaptBookmarkTooltips();
-        expect(a.title).toBe('Long title\nhttp://t/');
-        expect(a.classList.contains('titled')).toBe(true);
-    });
-
-    it('restores title=href and drops the titled class once the row fits again', () => {
-        const ctx = setup({});
-        const a = ctx.el('A');
-        a.classList.add('titled');
-        a.title = 'Long title\nhttp://t/';
-        a.href = 'http://t/';
-        a._qs['i'] = { textContent: 'Long title', scrollWidth: 50, offsetWidth: 100 };
-        ctx.doc._qsa['li.child a'] = [a];
-        ctx.treeView.adaptBookmarkTooltips();
-        expect(a.title).toBe('http://t/');
-        expect(a.classList.contains('titled')).toBe(false);
-    });
-
-    it('keeps a titled row untouched while it still overflows', () => {
-        const ctx = setup({});
-        const a = ctx.el('A');
-        a.classList.add('titled');
-        a.title = 'Long title\nhttp://t/';
-        a._qs['i'] = { textContent: 'Long title', scrollWidth: 200, offsetWidth: 100 };
-        ctx.doc._qsa['li.child a'] = [a];
-        ctx.treeView.adaptBookmarkTooltips();
-        expect(a.title).toBe('Long title\nhttp://t/');
-        expect(a.classList.contains('titled')).toBe(true);
-    });
-
-    it('does not add a title when the visible text already equals the title', () => {
-        const ctx = setup({});
-        const a = ctx.el('A');
-        a.title = 'Same';
-        a._qs['i'] = { textContent: 'Same', scrollWidth: 200, offsetWidth: 100 };
-        ctx.doc._qsa['li.child a'] = [a];
-        ctx.treeView.adaptBookmarkTooltips();
-        expect(a.title).toBe('Same');
-        expect(a.classList.contains('titled')).toBe(false);
-    });
-
-    // Issue #62: since the v4 flex rows the ellipsis clips inside the name
-    // <i>, so the <a> itself never reports scrollWidth > offsetWidth — the
-    // anchor-based measurement left every tree tooltip URL-only. The <i>
-    // geometry must drive the decision even when the anchor "fits".
-    it('applies the combined tooltip when only the inner <i> overflows (issue #62 flex rows)', () => {
-        const ctx = setup({});
-        const a = ctx.el('A');
-        a.scrollWidth = 100;
-        a.offsetWidth = 100; // the anchor never overflows…
-        a.title = 'http://t/';
-        a._qs['i'] = { textContent: 'Long title', scrollWidth: 200, offsetWidth: 100 }; // …the name does
-        ctx.doc._qsa['li.child a'] = [a];
-        ctx.treeView.adaptBookmarkTooltips();
-        expect(a.title).toBe('Long title\nhttp://t/');
-        expect(a.classList.contains('titled')).toBe(true);
-    });
-
-    it('keeps the URL-only tooltip when neither the anchor nor the <i> overflows', () => {
-        const ctx = setup({});
-        const a = ctx.el('A');
-        a.title = 'http://t/';
-        a._qs['i'] = { textContent: 'Short', scrollWidth: 40, offsetWidth: 100 };
-        ctx.doc._qsa['li.child a'] = [a];
-        ctx.treeView.adaptBookmarkTooltips();
-        expect(a.title).toBe('http://t/');
-        expect(a.classList.contains('titled')).toBe(false);
-    });
-});

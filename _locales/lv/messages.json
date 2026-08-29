@@ -1058,6 +1058,9 @@
   "optionRememberView": {
     "message": "Atcerēties pēdējo aktīvo skatu un atvērt to vēlreiz"
   },
+  "optionReverseItemPath": {
+    "message": "Rādīt rindas ceļu ar tuvāko mapi vispirms"
+  },
   "optionSearchAfterEnter": {
     "message": "Meklēt grāmatzīmes tikai, kad tiek nospiests ENTER (nevis tūlītēja meklēšana)"
   },
@@ -2502,6 +2505,12 @@
   },
   "toolButtonTitle": {
     "message": "Rīki (Ctrl+K)"
+  },
+  "tooltipAdded": {
+    "message": "Pievienots"
+  },
+  "tooltipPath": {
+    "message": "Ceļš"
   },
   "undoAction": {
     "message": "Atsaukt"

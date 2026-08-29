@@ -1058,6 +1058,9 @@
   "optionRememberView": {
     "message": "Onthoud de laatste actieve weergave en open deze opnieuw"
   },
+  "optionReverseItemPath": {
+    "message": "Het pad van de regel weergeven met de dichtstbijzijnde map eerst"
+  },
   "optionSearchAfterEnter": {
     "message": "Bladwijzers alleen zoeken wanneer ENTER wordt ingedrukt (in plaats van direct zoeken)"
   },
@@ -2502,6 +2505,12 @@
   },
   "toolButtonTitle": {
     "message": "Hulpmiddelen (Ctrl+K)"
+  },
+  "tooltipAdded": {
+    "message": "Toegevoegd"
+  },
+  "tooltipPath": {
+    "message": "Pad"
   },
   "undoAction": {
     "message": "Ongedaan maken"

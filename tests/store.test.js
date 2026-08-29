@@ -439,8 +439,9 @@ describe('store.js', () => {
                 'tabGroupsSyncCollapse', 'tabGroupsColorStyle', 'tabGroupsColorBorder', 'tabGroupsClosedLimit',
                 // staging master switch + tree-row hover actions
                 'stagingEnabled', 'treeRowActions',
-                // issue #64: popup startup focus + folder rows in search results
-                'focusSearchOnOpen', 'searchShowFolders'
+                // issue #64: popup startup focus, folder rows in search
+                // results, nearest-first row path labels
+                'focusSearchOnOpen', 'searchShowFolders', 'reverseItemPath'
             ]);
         });
 

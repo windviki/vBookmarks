@@ -1163,6 +1163,9 @@
   "optionRememberView": {
     "message": "Remember the last active view and reopen it"
   },
+  "optionReverseItemPath": {
+    "message": "Show the row path nearest folder first"
+  },
   "optionSearchAfterEnter": {
     "message": "Search bookmarks only when ENTER is pressed (instead of instant search)"
   },
@@ -2751,6 +2754,12 @@
   "toolButtonTitle": {
     "description": "Tooltip of the toolbar button that opens the command palette for duplicate cleanup, dead-link scan, session save, etc.",
     "message": "Tools (Ctrl+K)"
+  },
+  "tooltipAdded": {
+    "message": "Added"
+  },
+  "tooltipPath": {
+    "message": "Path"
   },
   "undoAction": {
     "description": "Label of the undo button on the deletion toast.",

@@ -639,7 +639,6 @@ import { ICON_SPRITE_SHEET } from './icons.js';
         rtl,
         search,
         clearMenu: menus.clearMenu,
-        get treeView() { return treeView; },
         get isDragging() { return dnd.isDragging(); }
     });
 
@@ -755,7 +754,7 @@ import { ICON_SPRITE_SHEET } from './icons.js';
             const hasSnapshot = !!(snapshot && snapshot.paths && snapshot.ids);
             const ids = hasSnapshot ? snapshot.ids : views.buildPathMap(t).ids;
             if (hasSnapshot && views.setPathMap)
-                views.setPathMap(snapshot.paths);
+                views.setPathMap(snapshot.paths, snapshot.pathLabels);
             // Issue #64(i): a saved-query restore rendered before this map
             // existed — heal its bare-titled rows now that pathOf resolves.
             if (search.refreshPaths)

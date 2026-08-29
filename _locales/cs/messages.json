@@ -1058,6 +1058,9 @@
   "optionRememberView": {
     "message": "Pamatovat si poslední aktivní zobrazení a znovu jej otevřít"
   },
+  "optionReverseItemPath": {
+    "message": "Zobrazit cestu řadu s nejbližší složkou jako první"
+  },
   "optionSearchAfterEnter": {
     "message": "Hledat záložky pouze při stisknutí ENTER (místo okamžitého hledání)"
   },
@@ -2502,6 +2505,12 @@
   },
   "toolButtonTitle": {
     "message": "Nástroje (Ctrl+K)"
+  },
+  "tooltipAdded": {
+    "message": "Přidáno"
+  },
+  "tooltipPath": {
+    "message": "Cesta"
   },
   "undoAction": {
     "message": "Zpět"

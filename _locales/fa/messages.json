@@ -1058,6 +1058,9 @@
   "optionRememberView": {
     "message": "به‌خاطر سپردن آخرین نمای فعال و بازگشایی آن"
   },
+  "optionReverseItemPath": {
+    "message": "نمایش مسیر ردیف با نزدیک‌ترین پوشه در ابتدا"
+  },
   "optionSearchAfterEnter": {
     "message": "جستجوی نشانک‌ها فقط زمانی که ENTER فشار داده می‌شود (به جای جستجوی فوری)"
   },
@@ -2502,6 +2505,12 @@
   },
   "toolButtonTitle": {
     "message": "ابزارها (Ctrl+K)"
+  },
+  "tooltipAdded": {
+    "message": "تاریخ افزودن"
+  },
+  "tooltipPath": {
+    "message": "مسیر"
   },
   "undoAction": {
     "message": "بازگردانی"

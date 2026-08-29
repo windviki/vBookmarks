@@ -1058,6 +1058,9 @@
   "optionRememberView": {
     "message": "Ghi nhớ chế độ xem cuối cùng và mở lại"
   },
+  "optionReverseItemPath": {
+    "message": "Hiển thị đường dẫn của hàng với thư mục gần nhất trước"
+  },
   "optionSearchAfterEnter": {
     "message": "Tìm kiếm dấu trang chỉ khi nhấn ENTER (thay vì tìm kiếm tức thì)"
   },
@@ -2502,6 +2505,12 @@
   },
   "toolButtonTitle": {
     "message": "Công cụ (Ctrl+K)"
+  },
+  "tooltipAdded": {
+    "message": "Đã thêm"
+  },
+  "tooltipPath": {
+    "message": "Đường dẫn"
   },
   "undoAction": {
     "message": "Hoàn tác"

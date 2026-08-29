@@ -1058,6 +1058,9 @@
   "optionRememberView": {
     "message": "Zapamti posljednji aktivni prikaz i ponovno ga otvori"
   },
+  "optionReverseItemPath": {
+    "message": "Prikaži put retka s najbližom mapom prvo"
+  },
   "optionSearchAfterEnter": {
     "message": "Traži oznake samo kada se pritisne ENTER (umjesto trenutnog pretraživanja)"
   },
@@ -2502,6 +2505,12 @@
   },
   "toolButtonTitle": {
     "message": "Alati (Ctrl+K)"
+  },
+  "tooltipAdded": {
+    "message": "Dodano"
+  },
+  "tooltipPath": {
+    "message": "Putanja"
   },
   "undoAction": {
     "message": "Poništi"

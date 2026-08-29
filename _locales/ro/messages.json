@@ -1058,6 +1058,9 @@
   "optionRememberView": {
     "message": "Reține ultima vizualizare activă și redeschide-o"
   },
+  "optionReverseItemPath": {
+    "message": "Afișează calea rândului cu dosarul cel mai apropiat primul"
+  },
   "optionSearchAfterEnter": {
     "message": "Caută semne de carte doar când este apăsat ENTER (în loc de căutare instantă)"
   },
@@ -2502,6 +2505,12 @@
   },
   "toolButtonTitle": {
     "message": "Unelte (Ctrl+K)"
+  },
+  "tooltipAdded": {
+    "message": "Adăugat"
+  },
+  "tooltipPath": {
+    "message": "Cale"
   },
   "undoAction": {
     "message": "Anulare"

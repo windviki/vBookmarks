@@ -1058,6 +1058,9 @@
   "optionRememberView": {
     "message": "Να θυμάται την τελευταία ενεργή προβολή και να την ανοίγει ξανά"
   },
+  "optionReverseItemPath": {
+    "message": "Εμφάνιση της διαδρομής γραμμής με τον πλησιέστερο φάκελο πρώτα"
+  },
   "optionSearchAfterEnter": {
     "message": "Αναζήτηση σελιδοδεικτών μόνο όταν πατηθεί το ENTER (αντί για άμεση αναζήτηση)"
   },
@@ -2502,6 +2505,12 @@
   },
   "toolButtonTitle": {
     "message": "Εργαλεία (Ctrl+K)"
+  },
+  "tooltipAdded": {
+    "message": "Προστέθηκε"
+  },
+  "tooltipPath": {
+    "message": "Διαδρομή"
   },
   "undoAction": {
     "message": "Αναίρεση"

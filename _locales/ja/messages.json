@@ -1058,6 +1058,9 @@
   "optionRememberView": {
     "message": "最後にアクティブだったビューを記憶して再度開く"
   },
+  "optionReverseItemPath": {
+    "message": "行のパスを最も近いフォルダーから表示する"
+  },
   "optionSearchAfterEnter": {
     "message": "Enter キーが押されたときにのみブックマークを検索する (インスタント検索ではなく)"
   },
@@ -2502,6 +2505,12 @@
   },
   "toolButtonTitle": {
     "message": "ツール (Ctrl+K)"
+  },
+  "tooltipAdded": {
+    "message": "追加日時"
+  },
+  "tooltipPath": {
+    "message": "パス"
   },
   "undoAction": {
     "message": "元に戻す"

@@ -1058,6 +1058,9 @@
   "optionRememberView": {
     "message": "Запоминать последний активный вид и открывать его заново"
   },
+  "optionReverseItemPath": {
+    "message": "Показывать путь в строке с ближайшей папкой первой"
+  },
   "optionSearchAfterEnter": {
     "message": "Поиск в закладках только при нажатии Enter (вместо мгновенного поиска)"
   },
@@ -2502,6 +2505,12 @@
   },
   "toolButtonTitle": {
     "message": "Инструменты (Ctrl+K)"
+  },
+  "tooltipAdded": {
+    "message": "Добавлено"
+  },
+  "tooltipPath": {
+    "message": "Путь"
   },
   "undoAction": {
     "message": "Отменить"

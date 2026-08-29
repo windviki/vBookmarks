@@ -1074,6 +1074,9 @@
   "optionRememberView": {
     "message": "记住上次所在的视图并在打开时恢复"
   },
+  "optionReverseItemPath": {
+    "message": "行路径就近文件夹在先显示（倒序）"
+  },
   "optionSearchAfterEnter": {
     "message": "仅在按下回车键时搜索书签（而非即时搜索）"
   },
@@ -2554,6 +2557,12 @@
   },
   "toolButtonTitle": {
     "message": "工具 (Ctrl+K)"
+  },
+  "tooltipAdded": {
+    "message": "添加时间"
+  },
+  "tooltipPath": {
+    "message": "路径"
   },
   "undoAction": {
     "message": "撤销"

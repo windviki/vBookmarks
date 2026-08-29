@@ -1058,6 +1058,9 @@
   "optionRememberView": {
     "message": "Az utolsó aktív nézet megjegyzése és újranyitása"
   },
+  "optionReverseItemPath": {
+    "message": "A sor útvonalának megjelenítése a legközelebbi mappával elöl"
+  },
   "optionSearchAfterEnter": {
     "message": "Könyvjelzők keresése csak az ENTER lenyomásakor (azonnali keresés helyett)"
   },
@@ -2502,6 +2505,12 @@
   },
   "toolButtonTitle": {
     "message": "Eszközök (Ctrl+K)"
+  },
+  "tooltipAdded": {
+    "message": "Hozzáadva"
+  },
+  "tooltipPath": {
+    "message": "Elérési út"
   },
   "undoAction": {
     "message": "Visszavonás"

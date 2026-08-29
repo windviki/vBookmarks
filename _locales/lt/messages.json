@@ -1058,6 +1058,9 @@
   "optionRememberView": {
     "message": "Įsiminti paskutinį aktyvų rodinį ir atidaryti jį iš naujo"
   },
+  "optionReverseItemPath": {
+    "message": "Rodyti eilutės kelią nuo artimiausio aplanko"
+  },
   "optionSearchAfterEnter": {
     "message": "Ieškoti žymelių tik paspaudus ENTER (vietoj momentinės paieškos)"
   },
@@ -2502,6 +2505,12 @@
   },
   "toolButtonTitle": {
     "message": "Įrankiai (Ctrl+K)"
+  },
+  "tooltipAdded": {
+    "message": "Pridėta"
+  },
+  "tooltipPath": {
+    "message": "Kelias"
   },
   "undoAction": {
     "message": "Atšaukti"

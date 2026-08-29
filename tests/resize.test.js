@@ -64,10 +64,8 @@ const mount = (opts = {}) => {
     const getZoom = vi.fn(cb => cb(opts.zoomFactor ?? 1));
     const store = { ...makeStoreDouble(opts.storeData || {}), flush: vi.fn() };
     const clearMenu = vi.fn();
-    const adaptTooltips = vi.fn();
     const isDragging = vi.fn(() => false);
     const search = { isActive: vi.fn(() => opts.searchActive ?? false) };
-    const treeView = { adaptBookmarkTooltips: adaptTooltips };
 
     globalThis.window = win;
     globalThis.document = doc;
@@ -83,7 +81,6 @@ const mount = (opts = {}) => {
         rtl: opts.rtl ?? false,
         search,
         clearMenu,
-        treeView,
         isDragging
     });
 
@@ -104,7 +101,7 @@ const mount = (opts = {}) => {
     const pointerdown = (el, props) =>
         el.fire('pointerdown', { target: el, preventDefault: vi.fn(), stopPropagation: vi.fn(), ...props });
     return { api, body, tree, resizerX, resizerY, store, getZoom, clearMenu,
-        adaptTooltips, isDragging, search, win, fireDoc, fireWin, pointerdown,
+        isDragging, search, win, fireDoc, fireWin, pointerdown,
         searchEl, created };
 };
 
@@ -195,7 +192,8 @@ describe('height drag (resizer-y)', () => {
 
         m.fireDoc('pointerup', { screenY: 600 });
         expect(m.store.flush).toHaveBeenCalledTimes(2);
-        expect(m.adaptTooltips).toHaveBeenCalledTimes(1);
+        // (the post-drag tooltip re-measurement pass is retired — full-info
+        // tooltips are baked at render; only the flush contract remains)
     });
 
     it('clamps the dragged height into [maxHeight/2, maxHeight]', () => {
@@ -323,7 +321,6 @@ describe('width drag (resizer-x)', () => {
         move(m, 500, 1016);
         m.fireWin('blur', {});
         expect(m.store.flush).toHaveBeenCalled();
-        expect(m.adaptTooltips).toHaveBeenCalled();
         expect(m.body.classList.contains('width-dragging')).toBe(false); // pin released
 
         const stray = m.fireDoc('pointermove', { screenX: 100 });

@@ -1058,6 +1058,9 @@
   "optionRememberView": {
     "message": "Letzte aktive Ansicht merken und wieder öffnen"
   },
+  "optionReverseItemPath": {
+    "message": "Den Zeilenpfad mit dem nächstgelegenen Ordner zuerst anzeigen"
+  },
   "optionSearchAfterEnter": {
     "message": "Lesezeichen nur bei Drücken von ENTER suchen (statt Sofortsuche)"
   },
@@ -2502,6 +2505,12 @@
   },
   "toolButtonTitle": {
     "message": "Werkzeuge (Strg+K)"
+  },
+  "tooltipAdded": {
+    "message": "Hinzugefügt"
+  },
+  "tooltipPath": {
+    "message": "Pfad"
   },
   "undoAction": {
     "message": "Rückgängig"

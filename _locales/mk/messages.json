@@ -1057,6 +1057,9 @@
   "optionRememberView": {
     "message": "Запомни го последниот активен приказ и отвори го повторно"
   },
+  "optionReverseItemPath": {
+    "message": "Прикажи ја патеката на редот со најблиската папка прво"
+  },
   "optionSearchAfterEnter": {
     "message": "Пребарувај обележувачи само кога е притиснато ENTER (наместо инстантно пребарување)"
   },
@@ -2501,6 +2504,12 @@
   },
   "toolButtonTitle": {
     "message": "Алатки (Ctrl+K)"
+  },
+  "tooltipAdded": {
+    "message": "Додадено"
+  },
+  "tooltipPath": {
+    "message": "Патека"
   },
   "undoAction": {
     "message": "Врати"

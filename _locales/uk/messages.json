@@ -1058,6 +1058,9 @@
   "optionRememberView": {
     "message": "Запам'ятовувати останній активний перегляд і відновлювати його"
   },
+  "optionReverseItemPath": {
+    "message": "Показувати шлях у рядку з найближчою текою першою"
+  },
   "optionSearchAfterEnter": {
     "message": "Шукати закладки тільки при натисканні ENTER (замість миттєвого пошуку)"
   },
@@ -2502,6 +2505,12 @@
   },
   "toolButtonTitle": {
     "message": "Інструменти (Ctrl+K)"
+  },
+  "tooltipAdded": {
+    "message": "Додано"
+  },
+  "tooltipPath": {
+    "message": "Шлях"
   },
   "undoAction": {
     "message": "Скасувати"

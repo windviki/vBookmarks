@@ -1058,6 +1058,9 @@
   "optionRememberView": {
     "message": "Recordar la última vista activa y volver a abrirla"
   },
+  "optionReverseItemPath": {
+    "message": "Mostrar la ruta de la fila con la carpeta más cercana primero"
+  },
   "optionSearchAfterEnter": {
     "message": "Buscar marcadores solo cuando se presiona ENTER (en lugar de búsqueda instantánea)"
   },
@@ -2502,6 +2505,12 @@
   },
   "toolButtonTitle": {
     "message": "Herramientas (Ctrl+K)"
+  },
+  "tooltipAdded": {
+    "message": "Añadido"
+  },
+  "tooltipPath": {
+    "message": "Ruta"
   },
   "undoAction": {
     "message": "Deshacer"

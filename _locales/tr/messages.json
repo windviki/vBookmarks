@@ -1058,6 +1058,9 @@
   "optionRememberView": {
     "message": "Son etkin görünümü hatırla ve onu yeniden aç"
   },
+  "optionReverseItemPath": {
+    "message": "Satır yolunu en yakın klasörden başlayarak göster"
+  },
   "optionSearchAfterEnter": {
     "message": "Yer imlerini sadece ENTER basıldığında ara (anlık arama yerine)"
   },
@@ -2502,6 +2505,12 @@
   },
   "toolButtonTitle": {
     "message": "Araçlar (Ctrl+K)"
+  },
+  "tooltipAdded": {
+    "message": "Eklendi"
+  },
+  "tooltipPath": {
+    "message": "Yol"
   },
   "undoAction": {
     "message": "Geri Al"

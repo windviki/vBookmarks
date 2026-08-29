@@ -12,6 +12,8 @@ import { FOLDER_ICON, DOCUMENT_CODE_ICON, CHEVRON_ICON } from '../src/icons.js';
 
 const MESSAGES = {
     noTitle: '(No title)',
+    tooltipPath: 'Path',
+    tooltipAdded: 'Added',
     folderEmpty: '(Empty)',
     syncSuffixLocal: '(Local)',
     syncSuffixSynced: '(Synced)'
@@ -169,7 +171,7 @@ describe('generateBookmarkHTML', () => {
     it('produces the exact row HTML for a plain bookmark (no extras, no sync)', () => {
         const tr = setup();
         const expected = [
-            `<a href="http://e.com/" title="http://e.com/" tabindex="-1"  class="tree-item-link">`,
+            `<a href="http://e.com/" title="T\nhttp://e.com/" tabindex="-1"  class="tree-item-link">`,
             `                <div class="favicon-container">`,
             `                    <img src="${FAV_E}" width="16" height="16" alt="" loading="lazy">`,
             `                    `,
@@ -184,7 +186,7 @@ describe('generateBookmarkHTML', () => {
         const tr = setup();
         const html = tr.generateBookmarkHTML('<b>"x"', 'http://e.com/?q="1"', '', '1');
         expect(html).toContain('href="http://e.com/?q=&quot;1&quot;"');
-        expect(html).toContain('title="http://e.com/?q=&quot;1&quot;"');
+        expect(html).toContain('title="&lt;b&gt;&quot;x&quot;\nhttp://e.com/?q=&quot;1&quot;"');
         expect(html).toContain('<i>&lt;b&gt;&quot;x&quot;</i>');
     });
 
@@ -192,7 +194,7 @@ describe('generateBookmarkHTML', () => {
         const tr = setup();
         const html = tr.generateBookmarkHTML('R&D', 'http://e.com/?a=1&b=2', '', '1');
         expect(html).toContain('href="http://e.com/?a=1&amp;b=2"');
-        expect(html).toContain('title="http://e.com/?a=1&amp;b=2"');
+        expect(html).toContain('title="R&amp;D\nhttp://e.com/?a=1&amp;b=2"');
         expect(html).toContain('<i>R&amp;D</i>');
     });
 
@@ -212,8 +214,10 @@ describe('generateBookmarkHTML', () => {
         const html = tr.generateBookmarkHTML('', 'https://e.com/<b>?q="1"&r=2', '', '1');
         expect(html).toContain('<i>e.com/&lt;b&gt;?q=&quot;1&quot;&amp;r=2</i>');
         expect(html).not.toContain('<i>e.com/<b>');
-        // the tooltip escapes the same expression (whole url, scheme kept)
-        expect(html).toContain('title="https://e.com/&lt;b&gt;?q=&quot;1&quot;&amp;r=2"');
+        // the tooltip's title line = the same stripped fallback (escaped);
+        // the URL line keeps the scheme
+        expect(html).toContain(
+            'title="e.com/&lt;b&gt;?q=&quot;1&quot;&amp;r=2\nhttps://e.com/&lt;b&gt;?q=&quot;1&quot;&amp;r=2"');
     });
 
     it('falls back to the noTitle message for non-http(s) urls', () => {
@@ -227,14 +231,14 @@ describe('generateBookmarkHTML', () => {
         const html = tr.generateBookmarkHTML('JS', 'javascript:alert(1)', '', '1');
         expect(html).toContain(DOCUMENT_CODE_ICON);
         expect(html).not.toContain('.png');
-        expect(html).toContain('title="javascript:alert(1)"');
+        expect(html).toContain('title="JS\njavascript:alert(1)"');
     });
 
     it('truncates javascript: tooltips beyond 140 chars with an ellipsis', () => {
         const tr = setup();
         const url = `javascript:${'x'.repeat(200)}`;
         const html = tr.generateBookmarkHTML('JS', url, '', '1');
-        expect(html).toContain(`title="${`javascript:${'x'.repeat(129)}`}..."`);
+        expect(html).toContain(`title="JS\n${`javascript:${'x'.repeat(129)}`}..."`);
     });
 
     it('highlights title positions with <mark> when provided', () => {
@@ -288,7 +292,7 @@ describe('generateBookmarkHTML', () => {
     it('meta.path unifies the tooltip and adds row path labels (showItemPath on)', () => {
         const tr = setup({ store: makeStore({ showItemPath: '1' }) });
         const html = tr.generateBookmarkHTML('T', 'http://e.com/', '', '1', null, { path: 'Folder A' });
-        expect(html).toContain('title="T\nhttp://e.com/\nFolder A"');
+        expect(html).toContain('title="T\nhttp://e.com/\nPath: Folder A"');
         expect(html).toContain(
             '<span class="row-main"><i>T</i><span class="row-sub" dir="auto">Folder A</span></span>');
         expect(html).toContain('<span class="row-path" dir="auto">Folder A</span>');
@@ -297,24 +301,41 @@ describe('generateBookmarkHTML', () => {
     it('meta.path escapes all three tooltip segments', () => {
         const tr = setup({ store: makeStore({ showItemPath: '1' }) });
         const html = tr.generateBookmarkHTML('<b>', 'http://e.com/?q="1"', '', '1', null, { path: 'A<B' });
-        expect(html).toContain('title="&lt;b&gt;\nhttp://e.com/?q=&quot;1&quot;\nA&lt;B"');
+        expect(html).toContain('title="&lt;b&gt;\nhttp://e.com/?q=&quot;1&quot;\nPath: A&lt;B"');
         expect(html).toContain('<span class="row-sub" dir="auto">A&lt;B</span>');
     });
 
     it('meta.path only sets the tooltip when showItemPath is off', () => {
         const tr = setup({ store: makeStore({ showItemPath: '' }) });
         const html = tr.generateBookmarkHTML('T', 'http://e.com/', '', '1', null, { path: 'Folder A' });
-        expect(html).toContain('title="T\nhttp://e.com/\nFolder A"');
+        expect(html).toContain('title="T\nhttp://e.com/\nPath: Folder A"');
         expect(html).toContain('<i>T</i>'); // plain name slot
         expect(html).not.toContain('row-path');
     });
 
-    it('empty/missing meta.path keeps the legacy URL-only tooltip', () => {
+    it('empty/missing meta.path keeps the tooltip without a Path line', () => {
         const tr = setup({ store: makeStore({ showItemPath: '1' }) });
         expect(tr.generateBookmarkHTML('T', 'http://e.com/', '', '1', null, { path: '' }))
-            .toContain('title="http://e.com/"');
+            .toContain('title="T\nhttp://e.com/"');
         expect(tr.generateBookmarkHTML('T', 'http://e.com/', '', '1', null, {}))
             .not.toContain('row-path');
+    });
+
+    // issues #62/#64: the full-info tooltip — every row, every view.
+    it('meta.dateAdded appends a localized Added line', () => {
+        const tr = setup();
+        const ts = new Date('2026-08-14T12:34:00').getTime();
+        const html = tr.generateBookmarkHTML('T', 'http://e.com/', '', '1', null, { dateAdded: ts });
+        expect(html).toContain(`title="T\nhttp://e.com/\nAdded: ${new Date(ts).toLocaleString()}"`);
+    });
+
+    it('meta.pathLabel drives the label slots while the tooltip stays canonical', () => {
+        const tr = setup({ store: makeStore({ showItemPath: '1' }) });
+        const html = tr.generateBookmarkHTML('T', 'http://e.com/', '', '1', null, {
+            path: 'Bookmarks Bar / Dev', pathLabel: 'Dev < Bookmarks Bar'
+        });
+        expect(html).toContain('title="T\nhttp://e.com/\nPath: Bookmarks Bar / Dev"');
+        expect(html).toContain('<span class="row-path" dir="auto">Dev &lt; Bookmarks Bar</span>');
     });
 
     // v4 task-2 slice B (docs/plan-4.0.0/v4task-2-list.md §3.3): meta.rightText/subText
@@ -357,7 +378,7 @@ describe('generateBookmarkHTML', () => {
         const html = tr.generateBookmarkHTML('T', 'http://e.com/', '', '1', null, {
             path: 'Folder A', tooltipAppend: 'Marked at 8/16/2026 "10:00"'
         });
-        expect(html).toContain('title="T\nhttp://e.com/\nFolder A\nMarked at 8/16/2026 &quot;10:00&quot;"');
+        expect(html).toContain('title="T\nhttp://e.com/\nPath: Folder A\nMarked at 8/16/2026 &quot;10:00&quot;"');
     });
 
     it('meta.subRight renders a two-child row-sub (left path, right time)', () => {
@@ -592,7 +613,7 @@ describe('relTimeLabel (shared bucket → label helper)', () => {
 
 describe('buildPathMap (v4 task-2 §3.6)', () => {
     it('maps each node to its ancestor folder path, skipping the invisible root and untitled folders', () => {
-        const { paths } = buildPathMap([{
+        const { paths, pathLabels: labels } = buildPathMap([{
             id: '0', title: '', children: [
                 {
                     id: '1', parentId: '0', title: 'Folder A', children: [
@@ -612,19 +633,22 @@ describe('buildPathMap (v4 task-2 §3.6)', () => {
                 { id: '4', parentId: '0', title: 'Top', url: 'https://t.com/' }
             ]
         }]);
-        expect(paths['0']).toBeUndefined(); // invisible root contributes nothing
-        expect(paths['1']).toBe(''); // sits at the root
+
         expect(paths['11']).toBe('Folder A');
         expect(paths['21']).toBe('Folder A'); // untitled folder adds no segment
-        // issue #64(iii): nearest-first — the immediate parent leads, deeper
-        // ancestors climb rightward (was "Folder A / Sub B" root-first)
-        expect(paths['31']).toBe('Sub B < Folder A');
+        // canonical root-first (tooltips, and labels unless reversed)
+        expect(paths['31']).toBe('Folder A / Sub B');
         expect(paths['4']).toBe('');
+        // issue #64: the parallel pathLabels map carries the nearest-first
+        // meta-line form for the reverseItemPath option
+        expect(labels['31']).toBe('Sub B < Folder A');
+        expect(labels['11']).toBe('Folder A');
+        expect(labels['4']).toBe('');
     });
 
-    it('caps the path at PATH_DEPTH ancestors, nearest-first with a trailing … (issue #64)', () => {
+    it('pathLabels caps at PATH_DEPTH ancestors, nearest-first with a trailing … (issue #64)', () => {
         // root > L1 > L2 > L3 > L4 > bookmark — 4 ancestors, one over the cap
-        const { paths } = buildPathMap([{
+        const { paths, pathLabels: labels } = buildPathMap([{
             id: '0', title: '', children: [{
                 id: '1', parentId: '0', title: 'L1', children: [{
                     id: '2', parentId: '1', title: 'L2', children: [{
@@ -637,9 +661,11 @@ describe('buildPathMap (v4 task-2 §3.6)', () => {
                 }]
             }]
         }]);
-        // the three NEAREST ancestors survive, farthest-cut side marked by …
-        expect(paths['5']).toBe('L4 < L3 < L2 < …');
-        expect(paths['4']).toBe('L3 < L2 < L1');
+        // canonical stays root-first and unlimited…
+        expect(paths['5']).toBe('L1 / L2 / L3 / L4');
+        // …the label form keeps the three NEAREST, farthest-cut side marked …
+        expect(labels['5']).toBe('L4 < L3 < L2 < …');
+        expect(labels['4']).toBe('L3 < L2 < L1');
     });
 
     it('collects the live bookmark ids in the same walk (H5: feeds visitStats.prune)', () => {
@@ -674,7 +700,7 @@ describe('generateFolderHTML', () => {
     it('produces the exact row HTML for a plain folder', () => {
         const tr = setup();
         const expected = [
-            `<span tabindex="-1" style="-webkit-padding-start: 0px" class="tree-item-span">`,
+            `<span tabindex="-1" style="-webkit-padding-start: 0px" class="tree-item-span" title="F">`,
             `\t\t   <b class="twisty">${CHEVRON_ICON}</b>`,
             `\t\t   <div class="favicon-container">`,
             `\t\t       ${FOLDER_ICON}`,
@@ -1111,8 +1137,11 @@ describe('buildTreeSnapshot (P1-1: single-walk tree snapshot)', () => {
         ];
         const subTree = tr.getEffectiveSubTree(tree);
         const snap = tr.buildTreeSnapshot(tree, subTree);
-        expect(snap.html).toBe(tr.generateHTML(subTree));
+        // blocks and the one-shot swap share one code path — WITH the same
+        // paths map (rows carry full-info tooltips in both)
+        expect(snap.html).toBe(tr.generateHTML(subTree, undefined, snap.paths));
         expect(snap.paths).toEqual(buildPathMap(tree).paths);
+        expect(snap.pathLabels).toEqual(buildPathMap(tree).pathLabels);
         expect([...snap.ids].sort()).toEqual([...buildPathMap(tree).ids].sort());
         // nodeTrees/bookmarkIds cover the DISPLAYED subtree only
         expect(snap.nodeTrees['10']).toBe('bar');
@@ -1166,7 +1195,7 @@ describe('buildTreeSnapshot (P1-1: single-walk tree snapshot)', () => {
         ];
         const barSub = tree[0].children; // onlyShowBMBar: the bar subtree renders
         const snap = tr.buildTreeSnapshot(tree, barSub);
-        expect(snap.html).toBe(tr.generateHTML(barSub));
+        expect(snap.html).toBe(tr.generateHTML(barSub, undefined, snap.paths));
         expect(snap.html).not.toContain('https://o.com/'); // bar-only render
         expect(snap.nodeTrees['10']).toBe('bar');
         expect(snap.nodeTrees['11']).toBe('10');

@@ -1058,6 +1058,9 @@
   "optionRememberView": {
     "message": "Kom ihåg den senast aktiva vyn och öppna den igen"
   },
+  "optionReverseItemPath": {
+    "message": "Visa radens sökväg med närmaste mappen först"
+  },
   "optionSearchAfterEnter": {
     "message": "Sök bokmärken endast när ENTER trycks (istället för omedelbar sökning)"
   },
@@ -2502,6 +2505,12 @@
   },
   "toolButtonTitle": {
     "message": "Verktyg (Ctrl+K)"
+  },
+  "tooltipAdded": {
+    "message": "Tillagt"
+  },
+  "tooltipPath": {
+    "message": "Sökväg"
   },
   "undoAction": {
     "message": "Ångra"

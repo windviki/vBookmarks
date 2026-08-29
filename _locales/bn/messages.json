@@ -1058,6 +1058,9 @@
   "optionRememberView": {
     "message": "শেষ সক্রিয় ভিউটি মনে রাখুন এবং এটি পুনরায় খুলুন"
   },
+  "optionReverseItemPath": {
+    "message": "সারির পাথে নিকটতম ফোল্ডার আগে দেখান"
+  },
   "optionSearchAfterEnter": {
     "message": "শুধু ENTER চাপলে বুকমার্ক খোঁজুন (তাত্ক্ষণিক অনুসন্ধানের পরিবর্তে)"
   },
@@ -2502,6 +2505,12 @@
   },
   "toolButtonTitle": {
     "message": "সরঞ্জাম (Ctrl+K)"
+  },
+  "tooltipAdded": {
+    "message": "যোগ করা হয়েছে"
+  },
+  "tooltipPath": {
+    "message": "পাথ"
   },
   "undoAction": {
     "message": "পূর্বাবস্থায় ফিরুন"

@@ -1058,6 +1058,9 @@
   "optionRememberView": {
     "message": "Ingat tampilan aktif terakhir dan buka kembali"
   },
+  "optionReverseItemPath": {
+    "message": "Tampilkan jalur baris dengan folder terdekat lebih dulu"
+  },
   "optionSearchAfterEnter": {
     "message": "Cari markah hanya saat ENTER ditekan (bukan pencarian instan)"
   },
@@ -2502,6 +2505,12 @@
   },
   "toolButtonTitle": {
     "message": "Alat (Ctrl+K)"
+  },
+  "tooltipAdded": {
+    "message": "Ditambahkan"
+  },
+  "tooltipPath": {
+    "message": "Jalur"
   },
   "undoAction": {
     "message": "Urungkan"

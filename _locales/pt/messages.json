@@ -1058,6 +1058,9 @@
   "optionRememberView": {
     "message": "Lembrar a última visualização ativa e reabri-la"
   },
+  "optionReverseItemPath": {
+    "message": "Mostrar o caminho da linha com a pasta mais próxima primeiro"
+  },
   "optionSearchAfterEnter": {
     "message": "Pesquisar favoritos apenas quando ENTER for pressionado (em vez de pesquisa instantânea)"
   },
@@ -2502,6 +2505,12 @@
   },
   "toolButtonTitle": {
     "message": "Ferramentas (Ctrl+K)"
+  },
+  "tooltipAdded": {
+    "message": "Adicionado"
+  },
+  "tooltipPath": {
+    "message": "Caminho"
   },
   "undoAction": {
     "message": "Desfazer"
