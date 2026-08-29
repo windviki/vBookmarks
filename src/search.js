@@ -158,6 +158,11 @@ export function initSearch(ctx = {}) {
     const searchInput = $('search-input');
     const searchClearBtn = $('search-clear');
     let prevValue = '';
+    // Issue #64(i): set when a render ran before view-manager's path map
+    // landed (the boot-order gap — the saved-query restore renders from its
+    // own getTree callback, the map only fills from tree-view's later one).
+    // neat.js's onTreeGenerated heals it through refreshPaths().
+    let stalePaths = false;
 
     // The custom clear button (native webkit cancel glyph removed in CSS):
     // visible only while the field has text, toggled from every path that
@@ -933,6 +938,7 @@ export function initSearch(ctx = {}) {
         const renderResults = results => {
             lastResultCount = results.length;
             lastResults = results;
+            stalePaths = !!(views.pathsReady && !views.pathsReady());
             let html = '<ul role="list" id="results-ul">';
             if (!results.length) {
                 // Phase 2b: no-results empty state (no a/span inside, so
@@ -1047,15 +1053,35 @@ export function initSearch(ctx = {}) {
             onRowsRendered();
         };
 
-        // Fuzzy-rank the flat index; rebuild it lazily when bookmarks changed
+        // Fuzzy-rank the flat index; rebuild it lazily when bookmarks changed.
+        // searchShowFolders (issue #64(ii), default on) — folder rows ride the
+        // results with a reveal-in-tree click; turned off they are dropped
+        // BEFORE the 100-row cut so hidden folders can't eat its budget.
+        const rankAll = v => {
+            const ranked = window.VBMFuzzy.rank(v, searchIndex);
+            return store.get('searchShowFolders', '1')
+                ? ranked.slice(0, 100)
+                : ranked.filter(r => !r.isFolder).slice(0, 100); // 100 is enough
+        };
         if (searchIndex && !searchIndexDirty) {
-            renderResults(window.VBMFuzzy.rank(value, searchIndex).slice(0, 100)); // 100 is enough
+            renderResults(rankAll(value));
         } else {
             chrome.bookmarks.getTree(tree => {
                 buildSearchIndex(tree);
-                renderResults(window.VBMFuzzy.rank(value, searchIndex).slice(0, 100)); // 100 is enough
+                renderResults(rankAll(value));
             });
         }
+    };
+
+    // Issue #64(i) heal: re-run the CURRENT query once the path map lands.
+    // search(true) mirrors runHistoryQuery's explicit-pick semantics (it
+    // passes the searchAfterEnter guard); prevValue reset forces the re-rank.
+    const refreshPaths = () => {
+        if (!stalePaths || !searchMode || !searchInput.value.trim())
+            return;
+        stalePaths = false;
+        prevValue = '';
+        search(true);
     };
 
     // 2026-08 perf audit — keystroke debounce state. Every keystroke used to
@@ -1272,6 +1298,9 @@ export function initSearch(ctx = {}) {
         // records its query here — the same "open a result" timing the
         // search view itself uses (resetSearchState).
         record: recordHistory,
-        updateIndex: buildSearchIndex
+        updateIndex: buildSearchIndex,
+        // issue #64(i): neat.js's onTreeGenerated calls this after the path
+        // map lands, healing a boot-order render that lacked path labels.
+        refreshPaths
     };
 }

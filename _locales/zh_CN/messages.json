@@ -1087,6 +1087,9 @@
   "optionSearchHistoryHint": {
     "message": "隐藏结果区上方的最近搜索区域——已记录的查询会保留。"
   },
+  "optionSearchShowFolders": {
+    "message": "在搜索结果中显示文件夹（点击定位到树中位置）"
+  },
   "optionShowDeadView": {
     "message": "显示死链视图标签"
   },

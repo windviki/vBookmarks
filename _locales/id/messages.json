@@ -1008,7 +1008,7 @@
     "message": "Untuk situs yang ditandai yang tidak memiliki ikon cache di Chrome, ambil ikon asli langsung dari situs (/favicon.ico, lalu ikon yang dideklarasikan halaman). Permintaan hanya dikirim ke situs yang Anda tandai."
   },
   "optionFocusSearchOnOpen": {
-    "message": "[TODO:optionFocusSearchOnOpen]"
+    "message": "Fokuskan kotak pencarian saat popup dibuka"
   },
   "optionHighlightUnsynced": {
     "message": "Redupkan bookmark yang tidak tersinkronisasi"
@@ -1069,6 +1069,9 @@
   },
   "optionSearchHistoryHint": {
     "message": "Sembunyikan area pencarian terbaru di atas hasil — kueri yang tersimpan tetap dipertahankan"
+  },
+  "optionSearchShowFolders": {
+    "message": "Tampilkan folder dalam hasil pencarian (klik menunjukkan lokasi folder di pohon)"
   },
   "optionShowDeadView": {
     "message": "Tampilkan tab tautan mati"

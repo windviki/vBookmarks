@@ -1008,7 +1008,7 @@
     "message": "Svetainėms, kurioms Chrome neturi išsaugotos piktogramos, gaukite tikrą piktogramą tiesiogiai iš svetainės (/favicon.ico, tada svetainės deklaruotos piktogramos). Užklausos siunčiamos tik į jūsų įsimintas svetaines."
   },
   "optionFocusSearchOnOpen": {
-    "message": "[TODO:optionFocusSearchOnOpen]"
+    "message": "Fokusuoti paieškos lauką atidarius iššokantįjį langą"
   },
   "optionHighlightUnsynced": {
     "message": "Pritemdyti nesinchronizuotas žymes"
@@ -1069,6 +1069,9 @@
   },
   "optionSearchHistoryHint": {
     "message": "Slėpti naujausių paieškų sritį virš rezultatų — įrašytos užklausos išlieka"
+  },
+  "optionSearchShowFolders": {
+    "message": "Rodyti aplankus paieškos rezultatuose (spustelėjimas atveria aplanką medyje)"
   },
   "optionShowDeadView": {
     "message": "Rodyti negyvų nuorodų rodinio skirtuką"

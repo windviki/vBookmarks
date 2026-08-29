@@ -1008,7 +1008,7 @@
     "message": "Za zaznamovana spletišča, za katera Chrome nima predpomnjene ikone, pridobi dejansko ikono neposredno s spletišča (/favicon.ico, nato deklarirane ikone strani). Zahteve gredo le na spletišča, ki ste jih dodali med zaznamke."
   },
   "optionFocusSearchOnOpen": {
-    "message": "[TODO:optionFocusSearchOnOpen]"
+    "message": "Ob odpiranju pojavnega okna fokusiraj iskalno polje"
   },
   "optionHighlightUnsynced": {
     "message": "Zatemnjaj nesinhronizirane zaznamke"
@@ -1069,6 +1069,9 @@
   },
   "optionSearchHistoryHint": {
     "message": "Skrij območje nedavnih iskanj nad rezultati — zabeležena poizvedovanja ostanejo"
+  },
+  "optionSearchShowFolders": {
+    "message": "Prikaži mape v rezultatih iskanja (klik razkrije mapo v drevesu)"
   },
   "optionShowDeadView": {
     "message": "Prikaži zavihek mrtvih povezav"

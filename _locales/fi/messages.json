@@ -1008,7 +1008,7 @@
     "message": "Niille kirjanmerkeissä oleville sivustoille, joille Chromella ei ole välimuistissa kuvaketta, hae oikea kuvake suoraan sivustolta (/favicon.ico, sitten sivun ilmoittamat kuvakkeet). Pyynnöt lähetetään vain sivustoille, jotka olet lisännyt kirjanmerkkeihin."
   },
   "optionFocusSearchOnOpen": {
-    "message": "[TODO:optionFocusSearchOnOpen]"
+    "message": "Kohdista hakukenttä, kun ponnahdusikkuna avautuu"
   },
   "optionHighlightUnsynced": {
     "message": "Himmennä synkronoimattomat kirjanmerkit"
@@ -1069,6 +1069,9 @@
   },
   "optionSearchHistoryHint": {
     "message": "Piilota viimeaikaisten hakujen alue tulosten yläpuolelta — tallennetut kyselyt säilyvät"
+  },
+  "optionSearchShowFolders": {
+    "message": "Näytä kansiot hakutuloksissa (napsautus paljastaa kansion sijainnin puussa)"
   },
   "optionShowDeadView": {
     "message": "Näytä kuolleet linkit -välilehti"

@@ -1413,6 +1413,15 @@ describe('shared parent-path map (§3.6)', () => {
         expect(views.pathOf('11')).toBe('Folder A');
         expect(views.pathOf('unknown')).toBe('');
     });
+
+    // issue #64(i): renders before the first map exist can check pathsReady
+    // and re-run once it flips — the boot-order heal contract.
+    it('pathsReady flips only after the first map lands (buildPathMap or setPathMap)', () => {
+        const { views } = setup({});
+        expect(views.pathsReady()).toBe(false);
+        views.setPathMap({ 11: 'Folder A' });
+        expect(views.pathsReady()).toBe(true);
+    });
 });
 
 describe('settings', () => {

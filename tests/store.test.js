@@ -439,8 +439,8 @@ describe('store.js', () => {
                 'tabGroupsSyncCollapse', 'tabGroupsColorStyle', 'tabGroupsColorBorder', 'tabGroupsClosedLimit',
                 // staging master switch + tree-row hover actions
                 'stagingEnabled', 'treeRowActions',
-                // issue #64: popup startup focus preference
-                'focusSearchOnOpen'
+                // issue #64: popup startup focus + folder rows in search results
+                'focusSearchOnOpen', 'searchShowFolders'
             ]);
         });
 

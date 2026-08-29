@@ -129,6 +129,9 @@ const $ = id => document.getElementById(id);
             // autofocus attribute) instead of restoring focus to the last
             // tree row — typing can start immediately.
             { id: 'focus-search-on-open', key: 'focusSearchOnOpen', defaultValue: '', inverted: false },
+            // issue #64: folder rows ride the search results (click =
+            // reveal-in-tree); off keeps the list to bookmarks only.
+            { id: 'search-show-folders', key: 'searchShowFolders', defaultValue: '1', inverted: false },
             // v3 carry-over: rank/search only after Enter, not on every keystroke.
             { id: 'search-after-enter', key: 'searchAfterEnter', defaultValue: '', inverted: false }
         ];
@@ -896,6 +899,8 @@ const $ = id => document.getElementById(id);
         document.getElementById('option-only-show-bmbar').innerText = __m('optionOnlyShowBookmarkBar');
         // issue #64: popup startup focus goes to the search input
         document.getElementById('option-focus-search-on-open').innerText = __m('optionFocusSearchOnOpen');
+        // issue #64: folder rows in search results (reveal-in-tree click)
+        document.getElementById('option-search-show-folders').innerText = __m('optionSearchShowFolders');
         document.getElementById('option-search-after-enter').innerText = __m('optionSearchAfterEnter');
         document.getElementById('option-auto-resize-popup').innerText = __m('optionAutoResizePopup');
         document.getElementById('option-open-in-side-panel').innerText = __m('optionOpenInSidePanel');

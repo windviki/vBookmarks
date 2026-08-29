@@ -1008,7 +1008,7 @@
     "message": "針對 Chrome 沒有快取圖示的書籤網站，直接從網站取得實際圖示（依序嘗試 /favicon.ico 與網頁宣告的圖示）。請求只會傳送至您已加入書籤的網站。"
   },
   "optionFocusSearchOnOpen": {
-    "message": "[TODO:optionFocusSearchOnOpen]"
+    "message": "開啟彈出視窗時聚焦搜尋框"
   },
   "optionHighlightUnsynced": {
     "message": "變淡顯示未同步的書籤"
@@ -1069,6 +1069,9 @@
   },
   "optionSearchHistoryHint": {
     "message": "隱藏結果區上方的最近搜索區域——已記錄的查詢會保留。"
+  },
+  "optionSearchShowFolders": {
+    "message": "在搜尋結果中顯示資料夾（點擊即定位至樹狀結構中的資料夾）"
   },
   "optionShowDeadView": {
     "message": "顯示失效連結檢視分頁"

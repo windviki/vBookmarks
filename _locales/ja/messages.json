@@ -1008,7 +1008,7 @@
     "message": "Chrome にキャッシュアイコンがないブックマーク済みサイトでは、実際のアイコンをサイトから直接取得します（/favicon.ico、次にページで宣言されたアイコン）。リクエストはブックマークしたサイトにのみ送信されます。"
   },
   "optionFocusSearchOnOpen": {
-    "message": "[TODO:optionFocusSearchOnOpen]"
+    "message": "ポップアップを開いたときに検索ボックスにフォーカスする"
   },
   "optionHighlightUnsynced": {
     "message": "未同期ブックマークを暗く表示"
@@ -1069,6 +1069,9 @@
   },
   "optionSearchHistoryHint": {
     "message": "結果の上の最近の検索エリアを非表示 — 記録されたクエリは保持されます"
+  },
+  "optionSearchShowFolders": {
+    "message": "検索結果にフォルダーを表示する（クリックでツリー内のフォルダーへ移動）"
   },
   "optionShowDeadView": {
     "message": "デッドリンクビュータブを表示"

@@ -1008,7 +1008,7 @@
     "message": "Chrome에 캐시된 아이콘이 없는 북마크 사이트의 경우 사이트에서 실제 아이콘을 직접 가져옵니다(/favicon.ico, 이어서 페이지에 선언된 아이콘). 요청은 사용자가 북마크한 사이트에만 전송됩니다."
   },
   "optionFocusSearchOnOpen": {
-    "message": "[TODO:optionFocusSearchOnOpen]"
+    "message": "팝업을 열 때 검색 상자에 포커스"
   },
   "optionHighlightUnsynced": {
     "message": "동기화되지 않은 북마크를 흐리게 표시"
@@ -1069,6 +1069,9 @@
   },
   "optionSearchHistoryHint": {
     "message": "결과 위의 최근 검색 영역 숨기기 — 기록된 쿼리는 유지됩니다"
+  },
+  "optionSearchShowFolders": {
+    "message": "검색 결과에 폴더 표시 (클릭하면 트리에서 폴더 위치로 이동)"
   },
   "optionShowDeadView": {
     "message": "끊긴 링크 보기 탭 표시"

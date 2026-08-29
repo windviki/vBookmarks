@@ -1008,7 +1008,7 @@
     "message": "उन बुकमार्क की गई साइटों के लिए जिनका आइकन Chrome कैश में नहीं है, साइट से सीधे असली आइकन लाएँ (/favicon.ico, फिर पृष्ठ द्वारा घोषित आइकन)। अनुरोध केवल आपकी बुकमार्क की गई साइटों को भेजे जाते हैं।"
   },
   "optionFocusSearchOnOpen": {
-    "message": "[TODO:optionFocusSearchOnOpen]"
+    "message": "पॉपअप खुलने पर खोज बॉक्स पर फ़ोकस दें"
   },
   "optionHighlightUnsynced": {
     "message": "सिंक न किए गए बुकमार्क मंद करें"
@@ -1069,6 +1069,9 @@
   },
   "optionSearchHistoryHint": {
     "message": "परिणामों के ऊपर हाल की खोज क्षेत्र छिपाएँ — रिकॉर्ड किए गए क्वेरी रखे जाते हैं"
+  },
+  "optionSearchShowFolders": {
+    "message": "खोज परिणामों में फ़ोल्डर दिखाएं (क्लिक करने पर फ़ोल्डर ट्री में मिल जाता है)"
   },
   "optionShowDeadView": {
     "message": "मृत लिंक दृश्य टैब दिखाएँ"

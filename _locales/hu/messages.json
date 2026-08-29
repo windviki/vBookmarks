@@ -1008,7 +1008,7 @@
     "message": "Azon könyvjelzőzött webhelyeknél, amelyekhez a Chrome nem rendelkezik gyorsítótárazott ikonnal, töltse le a tényleges ikont közvetlenül a webhelyről (/favicon.ico, majd az oldal által deklarált ikonok). A kérések csak az Ön által könyvjelzőzött webhelyekre irányulnak."
   },
   "optionFocusSearchOnOpen": {
-    "message": "[TODO:optionFocusSearchOnOpen]"
+    "message": "Keresőmező fókuszba hozása a felugró ablak megnyitásakor"
   },
   "optionHighlightUnsynced": {
     "message": "Szinkronizálatlan könyvjelzők halványítása"
@@ -1069,6 +1069,9 @@
   },
   "optionSearchHistoryHint": {
     "message": "Az eredmények feletti közelmúltbeli keresések területének elrejtése — a rögzített lekérdezések megmaradnak"
+  },
+  "optionSearchShowFolders": {
+    "message": "Mappák megjelenítése a találatok között (kattintás a mappa helyére ugrik a fában)"
   },
   "optionShowDeadView": {
     "message": "Hibás hivatkozások nézet fül megjelenítése"

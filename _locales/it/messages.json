@@ -1008,7 +1008,7 @@
     "message": "Per i siti preferiti di cui Chrome non ha un'icona in cache, recupera l'icona reale direttamente dal sito (/favicon.ico, poi le icone dichiarate nella pagina). Le richieste vanno solo ai siti che hai salvato."
   },
   "optionFocusSearchOnOpen": {
-    "message": "[TODO:optionFocusSearchOnOpen]"
+    "message": "Attiva la casella di ricerca all'apertura del popup"
   },
   "optionHighlightUnsynced": {
     "message": "Oscura i segnalibri non sincronizzati"
@@ -1069,6 +1069,9 @@
   },
   "optionSearchHistoryHint": {
     "message": "Nascondi l'area delle ricerche recenti sopra i risultati — le query registrate vengono conservate"
+  },
+  "optionSearchShowFolders": {
+    "message": "Mostra le cartelle nei risultati di ricerca (un clic individua la cartella nell'albero)"
   },
   "optionShowDeadView": {
     "message": "Mostra la scheda dei collegamenti morti"

@@ -1175,6 +1175,9 @@
   "optionSearchHistoryHint": {
     "message": "Hide the recent-search area above the results — the recorded queries are kept."
   },
+  "optionSearchShowFolders": {
+    "message": "Show folders in search results (click reveals the folder in the tree)"
+  },
   "optionShowDeadView": {
     "message": "Show the dead-links view tab"
   },

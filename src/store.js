@@ -64,6 +64,8 @@
         'activeView', 'viewState', 'showViewTabs', 'showItemPath',
         // issue #64: hand the popup's startup focus to the search input
         'focusSearchOnOpen',
+        // issue #64: folder rows in search results (reveal-in-tree click)
+        'searchShowFolders',
         // per-view tab visibility (feature views + the structural tree/search tabs)
         'showRecentBookmarks', 'showStatsView', 'showDeadView', 'showDupesView', 'showTabGroupsView',
         // 4.0.8: per-view disable switches (feature views only)
@@ -213,7 +215,9 @@
         // 暂存和最近添加 / 书签树 — device-independent preferences)
         'stagingEnabled', 'treeRowActions',
         // issue #64: popup startup focus preference (device-independent)
-        'focusSearchOnOpen'
+        'focusSearchOnOpen',
+        // issue #64: folder rows in search results (device-independent)
+        'searchShowFolders'
     ];
     const SYNC_KEY_SET = new Set(SYNC_KEYS);
     const isSyncKey = key => SYNC_KEY_SET.has(key);

@@ -1008,7 +1008,7 @@
     "message": "עבור אתרים בסימניות שאין ל-Chrome אייקון שמור עבורם, אחזר את האייקון האמיתי ישירות מהאתר (/favicon.ico, ולאחר מכן האייקונים המוצהרים של הדף). בקשות נשלחות רק לאתרים שבסימניות."
   },
   "optionFocusSearchOnOpen": {
-    "message": "[TODO:optionFocusSearchOnOpen]"
+    "message": "מיקוד בתיבת החיפוש בפתיחת החלונית"
   },
   "optionHighlightUnsynced": {
     "message": "עמעם סימניות לא מסונכרנות"
@@ -1069,6 +1069,9 @@
   },
   "optionSearchHistoryHint": {
     "message": "הסתרת אזור החיפושים האחרונים מעל התוצאות — השאילתות שנשמרו נשמרות"
+  },
+  "optionSearchShowFolders": {
+    "message": "הצגת תיקיות בתוצאות החיפוש (לחיצה מאתרת את התיקייה בעץ)"
   },
   "optionShowDeadView": {
     "message": "הצג לשונית תצוגת קישורים מתים"

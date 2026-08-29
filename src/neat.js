@@ -756,6 +756,10 @@ import { ICON_SPRITE_SHEET } from './icons.js';
             const ids = hasSnapshot ? snapshot.ids : views.buildPathMap(t).ids;
             if (hasSnapshot && views.setPathMap)
                 views.setPathMap(snapshot.paths);
+            // Issue #64(i): a saved-query restore rendered before this map
+            // existed — heal its bare-titled rows now that pathOf resolves.
+            if (search.refreshPaths)
+                search.refreshPaths();
             deadOverlayRefresh();
             visitStats.prune(ids);
             stagingTreeSync(t, snapshot);

@@ -1008,7 +1008,7 @@
     "message": "যে বুকমার্ক করা সাইটগুলির জন্য Chrome-এ কোনো ক্যাশ করা আইকন নেই, সাইট থেকে সরাসরি আসল আইকন আনুন (/favicon.ico, তারপর পেজের ঘোষিত আইকন)। অনুরোধ শুধুমাত্র আপনার বুকমার্ক করা সাইটগুলিতে যায়।"
   },
   "optionFocusSearchOnOpen": {
-    "message": "[TODO:optionFocusSearchOnOpen]"
+    "message": "পপআপ খোলা হলে সার্চ বক্সে ফোকাস দিন"
   },
   "optionHighlightUnsynced": {
     "message": "সিঙ্কহীন বুকমার্ক ম্লান করুন"
@@ -1069,6 +1069,9 @@
   },
   "optionSearchHistoryHint": {
     "message": "ফলাফলের উপরের সাম্প্রতিক অনুসন্ধান এলাকা লুকান — রেকর্ড করা প্রশ্ন সংরক্ষিত থাকে"
+  },
+  "optionSearchShowFolders": {
+    "message": "সার্চ রেজাল্টে ফোল্ডার দেখান (ক্লিক করলে ট্রিতে ফোল্ডারটির অবস্থান দেখায়)"
   },
   "optionShowDeadView": {
     "message": "মৃত-লিঙ্ক ভিউ ট্যাব দেখান"

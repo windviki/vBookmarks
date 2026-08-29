@@ -1008,7 +1008,7 @@
     "message": "Für Lesezeichen-Websites, für die Chrome kein Icon zwischengespeichert hat, wird das echte Icon direkt von der Website abgerufen (/favicon.ico, danach die in der Seite angegebenen Icons). Anfragen gehen nur an Websites, die Sie mit einem Lesezeichen versehen haben."
   },
   "optionFocusSearchOnOpen": {
-    "message": "[TODO:optionFocusSearchOnOpen]"
+    "message": "Suchfeld beim Öffnen des Popups fokussieren"
   },
   "optionHighlightUnsynced": {
     "message": "Nicht synchronisierte Lesezeichen ausgrauen"
@@ -1069,6 +1069,9 @@
   },
   "optionSearchHistoryHint": {
     "message": "Den Bereich für letzte Suchanfragen über den Ergebnissen ausblenden — aufgezeichnete Anfragen bleiben erhalten"
+  },
+  "optionSearchShowFolders": {
+    "message": "Ordner in den Suchergebnissen anzeigen (Klick zeigt den Ordner im Baum)"
   },
   "optionShowDeadView": {
     "message": "Tote-Links-Ansicht-Tab anzeigen"

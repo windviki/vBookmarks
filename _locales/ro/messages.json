@@ -1008,7 +1008,7 @@
     "message": "Pentru site-urile marcate pentru care Chrome nu are nicio pictogramă în cache, preia pictograma reală direct de pe site (/favicon.ico, apoi pictogramele declarate ale paginii). Cererile sunt trimise doar către site-urile pe care le-ați marcat."
   },
   "optionFocusSearchOnOpen": {
-    "message": "[TODO:optionFocusSearchOnOpen]"
+    "message": "Focalizează caseta de căutare la deschiderea pop-up-ului"
   },
   "optionHighlightUnsynced": {
     "message": "Atenuează marcajele nesincronizate"
@@ -1069,6 +1069,9 @@
   },
   "optionSearchHistoryHint": {
     "message": "Ascunde zona căutărilor recente deasupra rezultatelor — interogările înregistrate sunt păstrate"
+  },
+  "optionSearchShowFolders": {
+    "message": "Afișează dosarele în rezultatele căutării (clicul localizează dosarul în arbore)"
   },
   "optionShowDeadView": {
     "message": "Afișează fila de linkuri moarte"

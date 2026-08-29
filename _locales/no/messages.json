@@ -1008,7 +1008,7 @@
     "message": "For bokmerkede nettsteder uten bufret ikon i Chrome, hent det faktiske ikonet direkte fra nettstedet (/favicon.ico, deretter sidens deklarerte ikoner). Forespørsler går bare til nettsteder du har bokmerket."
   },
   "optionFocusSearchOnOpen": {
-    "message": "[TODO:optionFocusSearchOnOpen]"
+    "message": "Fokuser søkefeltet når sprettoppvinduet åpnes"
   },
   "optionHighlightUnsynced": {
     "message": "Demp usynkroniserte bokmerker"
@@ -1069,6 +1069,9 @@
   },
   "optionSearchHistoryHint": {
     "message": "Skjul området for nylige søk over resultatene — lagrede spørringer beholdes"
+  },
+  "optionSearchShowFolders": {
+    "message": "Vis mapper i søkeresultater (klikk viser mappen i treet)"
   },
   "optionShowDeadView": {
     "message": "Vis døde-lenker-fanen"

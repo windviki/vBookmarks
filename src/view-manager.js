@@ -1162,19 +1162,27 @@ export function initViewManager(ctx = {}) {
     // --- Shared parent-path map (docs/plan-4.0.0/v4task-2.md §3.6) -------------------------
     // Rebuilt from every tree regeneration (neat.js hooks it into tree-view's
     // generateTree); list rows read it synchronously through pathOf.
+    // pathsReady (issue #64): the boot-order gap — initSearch's saved-query
+    // restore ranks and renders from ITS OWN getTree callback while this map
+    // only fills from tree-view's LATER one — left restored results with bare
+    // titles; renders can check readiness and re-run once the map lands.
+    let pathMapReady = false;
     const buildPathMap = tree => {
         // H5: computePathMap returns { paths, ids } — the ids feed
         // visitStats.prune in neat.js's onTreeGenerated without a second walk.
         const result = computePathMap(tree);
         pathMap = result.paths;
+        pathMapReady = true;
         return result;
     };
     // P1-1: tree-view's buildTreeSnapshot already produced the path map in
     // its single walk — swap it in directly (no second traversal).
     const setPathMap = paths => {
         pathMap = paths || {};
+        pathMapReady = true;
     };
     const pathOf = id => pathMap[id] || '';
+    const pathsReady = () => pathMapReady;
 
     // --- Live storage sync ------------------------------------------------------
     // show*/disable* view keys are written by the options page (and by the
@@ -1262,6 +1270,7 @@ export function initViewManager(ctx = {}) {
         buildPathMap,
         setPathMap,
         pathOf,
+        pathsReady,
         updateBadges,
         showItemPath: () => !!store.get('showItemPath', '1'),
         isAvailable: id => {

@@ -616,8 +616,30 @@ describe('buildPathMap (v4 task-2 §3.6)', () => {
         expect(paths['1']).toBe(''); // sits at the root
         expect(paths['11']).toBe('Folder A');
         expect(paths['21']).toBe('Folder A'); // untitled folder adds no segment
-        expect(paths['31']).toBe('Folder A / Sub B');
+        // issue #64(iii): nearest-first — the immediate parent leads, deeper
+        // ancestors climb rightward (was "Folder A / Sub B" root-first)
+        expect(paths['31']).toBe('Sub B < Folder A');
         expect(paths['4']).toBe('');
+    });
+
+    it('caps the path at PATH_DEPTH ancestors, nearest-first with a trailing … (issue #64)', () => {
+        // root > L1 > L2 > L3 > L4 > bookmark — 4 ancestors, one over the cap
+        const { paths } = buildPathMap([{
+            id: '0', title: '', children: [{
+                id: '1', parentId: '0', title: 'L1', children: [{
+                    id: '2', parentId: '1', title: 'L2', children: [{
+                        id: '3', parentId: '2', title: 'L3', children: [{
+                            id: '4', parentId: '3', title: 'L4', children: [
+                                { id: '5', parentId: '4', title: 'Deep', url: 'https://d.com/' }
+                            ]
+                        }]
+                    }]
+                }]
+            }]
+        }]);
+        // the three NEAREST ancestors survive, farthest-cut side marked by …
+        expect(paths['5']).toBe('L4 < L3 < L2 < …');
+        expect(paths['4']).toBe('L3 < L2 < L1');
     });
 
     it('collects the live bookmark ids in the same walk (H5: feeds visitStats.prune)', () => {

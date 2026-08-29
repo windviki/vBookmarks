@@ -66,10 +66,18 @@ export const TREE_INDENT = 24;
 
 // v4 task-2 (docs/plan-4.0.0/v4task-2.md §3.6): build the id → containing-folder path
 // map every list view shares for its row path labels. For each node the map
-// holds the titles of its ancestor folders (top-down, untitled folders
-// skipped) joined by ' / ' — for a bookmark that reads as "where it lives",
-// for a folder as "where it sits". Pure: no chrome/DOM access, so vitest
-// exercises it directly.
+// holds the titles of its ancestor folders (untitled folders skipped).
+// Issue #64(iii): the label is NEAREST-FIRST — the immediate parent on the
+// left, climbing outward rightward — capped at PATH_DEPTH ancestors with a
+// trailing '…' when deeper ones were cut. In the narrow popup the CSS
+// truncation then eats the distant ancestors instead of the discriminating
+// near ones ("Frontend < Dev < …" rather than "Bookmarks Bar / De…").
+// Pure: no chrome/DOM access, so vitest exercises it directly.
+export const PATH_DEPTH = 3;
+export const formatPath = ancestors => {
+    const near = ancestors.slice(-PATH_DEPTH).reverse().join(' < ');
+    return ancestors.length > PATH_DEPTH ? `${near} < …` : near;
+};
 export const buildPathMap = tree => {
     // H5: one traversal produces both the id → folder-path map and the set of
     // live bookmark ids (previously neat.js walked the tree a second time to
@@ -83,7 +91,7 @@ export const buildPathMap = tree => {
             const node = nodes[i];
             // the invisible root has no parentId and contributes no title
             if (typeof node.parentId !== 'undefined') {
-                paths[node.id] = ancestors.join(' / ');
+                paths[node.id] = formatPath(ancestors);
                 if (node.url)
                     ids.add(node.id);
             }
@@ -687,7 +695,7 @@ export function initTreeRender(ctx = {}) {
                 if (!node)
                     continue;
                 if (typeof node.parentId !== 'undefined') {
-                    paths[node.id] = ancestors.join(' / ');
+                    paths[node.id] = formatPath(ancestors);
                     if (node.url) {
                         ids.add(node.id);
                         if (!urlIndex.has(node.url))

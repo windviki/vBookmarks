@@ -1005,7 +1005,7 @@
     "message": "Para sites marcados sem ícone em cache no Chrome, obtenha o ícone real diretamente do site (/favicon.ico e, depois, os ícones declarados na página). Os pedidos são feitos apenas para sites que marcou."
   },
   "optionFocusSearchOnOpen": {
-    "message": "[TODO:optionFocusSearchOnOpen]"
+    "message": "Focar a caixa de pesquisa ao abrir o pop-up"
   },
   "optionHighlightUnsynced": {
     "message": "Escurecer marcadores não sincronizados"
@@ -1066,6 +1066,9 @@
   },
   "optionSearchHistoryHint": {
     "message": "Ocultar a área de pesquisas recentes acima dos resultados — as consultas registadas são mantidas"
+  },
+  "optionSearchShowFolders": {
+    "message": "Mostrar pastas nos resultados da pesquisa (clicar mostra a pasta na árvore)"
   },
   "optionShowDeadView": {
     "message": "Mostrar o separador de links mortos"

@@ -1023,7 +1023,7 @@
     "message": "对 Chrome 尚未缓存图标的收藏网站，直接从站点获取真实图标（/favicon.ico → 页面图标声明）。请求只发往你已收藏的网站。"
   },
   "optionFocusSearchOnOpen": {
-    "message": "[TODO:optionFocusSearchOnOpen]"
+    "message": "打开弹窗时聚焦搜索框"
   },
   "optionHighlightUnsynced": {
     "message": "变淡显示未同步的书签"
@@ -1085,6 +1085,9 @@
   },
   "optionSearchHistoryHint": {
     "message": "隐藏结果区上方的最近搜索区域——已记录的查询会保留。"
+  },
+  "optionSearchShowFolders": {
+    "message": "在搜索结果中显示文件夹（点击定位到树中位置）"
   },
   "optionShowDeadView": {
     "message": "显示死链视图标签"
