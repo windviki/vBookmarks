@@ -157,6 +157,8 @@ export function initViewTabGroups(ctx = {}) {
     const windowChoice = new Map();
     const expandedClosed = new Set();   // closed-record ids (view-local expand)
     let bookmarkedUrls = new Set(); // tab URLs that already exist as bookmarks
+    // url → { id, dateAdded } of that bookmark (tooltip source, collectTreeSets)
+    let bookmarksByUrl = new Map();
     let closedRecords = [];       // saved closed tab groups (our own records)
     let dragTabId = null;
     // First-activation scroll (design §7): the current tab's row scrolls into
@@ -274,6 +276,10 @@ export function initViewTabGroups(ctx = {}) {
     const collectTreeSets = tree => {
         const urls = new Set();
         const folderIds = new Set();
+        // url → the FIRST tree node carrying it (id + dateAdded) — feeds the
+        // full-info tooltip of BOOKMARKED tab rows (issues #62/#64: a tab
+        // that exists as a bookmark shows 标题+URL+路径+收藏时间 on hover).
+        const bms = new Map();
         const walk = nodes => {
             for (let i = 0, l = (nodes || []).length; i < l; i++) {
                 const node = nodes[i];
@@ -283,11 +289,13 @@ export function initViewTabGroups(ctx = {}) {
                     walk(node.children);
                 } else if (node.url) {
                     urls.add(node.url);
+                    if (!bms.has(node.url))
+                        bms.set(node.url, { id: node.id, dateAdded: node.dateAdded });
                 }
             }
         };
         walk(tree || []);
-        return { urls, folderIds };
+        return { urls, folderIds, bms };
     };
 
     // --- Data -----------------------------------------------------------------
@@ -451,6 +459,7 @@ export function initViewTabGroups(ctx = {}) {
             if (treeWanted) {
                 const sets = collectTreeSets(tree);
                 bookmarkedUrls = sets.urls;
+                bookmarksByUrl = sets.bms;
                 bookmarksRev++;
                 pruneTabGroupFolderMeta(store, sets.folderIds);
                 bookmarksDirty = false;
@@ -745,7 +754,15 @@ export function initViewTabGroups(ctx = {}) {
             `${winId !== undefined && winId !== null ? ` data-window-id="${String(winId)}"` : ''}` +
             `${inGroup ? ` data-group-id="${String(tab.groupId)}"` : ''}>` +
             connector +
-            treeRender.generateBookmarkHTML(tab.title || tab.url || L.noTitle || _m('noTitle'), tab.url || '', extras, null, null, { badge }) +
+            treeRender.generateBookmarkHTML(tab.title || tab.url || L.noTitle || _m('noTitle'), tab.url || '', extras, null, null,
+                // bookmarked tabs hover the FULL info (path + dateAdded from
+                // the bookmark node); plain tabs show 标题+URL. Tooltip-only —
+                // tab rows stay compact single-line data rows.
+                Object.assign({ badge }, (function (bm) {
+                    return bm
+                        ? { tooltipOnlyPath: true, path: views.pathOf(bm.id), dateAdded: bm.dateAdded }
+                        : {};
+                })(bookmarksByUrl.get(tab.url || '')))) +
             rowIcons(tab, L) +
             '</li>';
     };
@@ -769,12 +786,18 @@ export function initViewTabGroups(ctx = {}) {
         const removeLabel = _m('tabGroupsRemoveClosedTab');
         const standalone = record.type === 'tab';
         const savedAt = record.savedAt || 0;
+        const bm = bookmarksByUrl.get(tab.url || '');
+        // bookmarked records hover the full info too (path + dateAdded from
+        // the bookmark node); tooltip-only — rows keep their compact form.
+        const bmMeta = bm
+            ? { tooltipOnlyPath: true, path: views.pathOf(bm.id), dateAdded: bm.dateAdded }
+            : {};
         const meta = (standalone && savedAt)
-            ? {
+            ? Object.assign({
                 rightText: relTimeLabel(savedAt, _m),
                 tooltipAppend: `${_m('tabGroupsClosedTimeLabel')} ${new Date(savedAt).toLocaleString()}`
-            }
-            : {};
+            }, bmMeta)
+            : bmMeta;
         const firstBtn = standalone
             ? `<button class="row-btn tabgroups-closed-reopen" aria-label="${htmlspecialchars(_m('tabGroupsReopenAction'))}" title="${htmlspecialchars(_m('tabGroupsReopenAction'))}">${IC.activate}</button>`
             : `<button class="row-btn tabgroups-closed-add-bookmark" aria-label="${htmlspecialchars(_m('tabGroupsAddBookmark'))}" title="${htmlspecialchars(_m('tabGroupsAddBookmark'))}">${IC.star}</button>`;

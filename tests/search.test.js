@@ -361,6 +361,22 @@ describe('search execution + rendering', () => {
         expect(store.get('searchQuery')).toBe('git');
     });
 
+    // 2026-08-29 修复:纯文件夹命中(无书签行)时组头仍在——计数条常在,
+    // 只有「暂存全部/选择模式」两个按钮按需出现(它们只作用于书签行)。
+    it('keeps the result-count toolbar for an all-folder result set (buttons drop, header stays)', () => {
+        const ctx = setup({
+            fuzzyResults: [
+                { id: '1', parentId: '0', title: 'Folder A', isFolder: true, positions: [] }
+            ]
+        });
+        type(ctx.els, 'fold');
+        const html = ctx.els.results.innerHTML;
+        expect(html).toContain('search-result-count');
+        expect(html).toContain('link-folder');
+        expect(html).not.toContain('search-select-mode');
+        expect(html).not.toContain('search-stage-all');
+    });
+
     // issue #64(ii): folders ride the results by default; the independent
     // option (searchShowFolders, default on) drops them BEFORE the 100-row cut.
     it('drops folder rows from the results when searchShowFolders is off (issue #64)', () => {

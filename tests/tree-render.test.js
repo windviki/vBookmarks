@@ -329,6 +329,20 @@ describe('generateBookmarkHTML', () => {
         expect(html).toContain(`title="T\nhttp://e.com/\nAdded: ${new Date(ts).toLocaleString()}"`);
     });
 
+    // 2026-08-29 regression (tree rows grew a second line): rows that pass
+    // tooltipOnlyPath (tree rows, tabgroups tab rows) keep the full-info
+    // tooltip but NEVER render path label slots.
+    it('meta.tooltipOnlyPath feeds the tooltip while suppressing every label slot (showItemPath on)', () => {
+        const tr = setup({ store: makeStore({ showItemPath: '1' }) });
+        const html = tr.generateBookmarkHTML('T', 'http://e.com/', '', '1', null, {
+            tooltipOnlyPath: true, path: 'Folder A', dateAdded: 1700000000000
+        });
+        expect(html).toContain('title="T\nhttp://e.com/\nPath: Folder A\nAdded: ');
+        expect(html).toContain('<i>T</i>'); // the plain name slot — no .row-main wrap
+        expect(html).not.toContain('row-path');
+        expect(html).not.toContain('row-sub');
+    });
+
     it('meta.pathLabel drives the label slots while the tooltip stays canonical', () => {
         const tr = setup({ store: makeStore({ showItemPath: '1' }) });
         const html = tr.generateBookmarkHTML('T', 'http://e.com/', '', '1', null, {

@@ -379,7 +379,11 @@ export function initTreeRender(ctx = {}) {
             // tooltip 末行；其他视图不传 → 行为不变（builder 内统一 escape）。
             append: meta && meta.tooltipAppend
         });
-        const labelPath = (meta && meta.pathLabel) ? String(meta.pathLabel) : path;
+        // meta.tooltipOnlyPath（树行/标签组 tab 行）:路径只进 tooltip——树本身
+        // 就是层级、tab 行是紧凑单行,都不渲染 meta 行标签(showItemPath 对它们
+        // 无效;2026-08-29 回归修复:树行曾因带 path 被当成列表行渲染出第二行)。
+        const labelPath = (meta && meta.tooltipOnlyPath) ? ''
+            : ((meta && meta.pathLabel) ? String(meta.pathLabel) : path);
         const showPath = labelPath && !!store.get('showItemPath', '1');
         const rightText = meta && typeof meta.rightText === 'string'
             ? meta.rightText : (showPath ? labelPath : '');
@@ -597,7 +601,10 @@ export function initTreeRender(ctx = {}) {
                 html += generateBookmarkHTML(title, url, stylePad, id, null, {
                     tailHtml: treeRowTail(url, false),
                     // issues #62/#64: tree rows carry the full-info tooltip
-                    // (title + URL + path + dateAdded) like every list view
+                    // (title + URL + path + dateAdded) like every list view —
+                    // but TOOLTIP-ONLY: the tree IS the hierarchy, its rows
+                    // never grow path labels / a second line
+                    tooltipOnlyPath: true,
                     path: pathsMap ? (pathsMap[id] || '') : '',
                     dateAdded: d.dateAdded
                 });

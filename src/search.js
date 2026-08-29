@@ -1036,14 +1036,18 @@ export function initSearch(ctx = {}) {
                     iconBtn('search-delete', 'deleteSelected', TRASH_ICON) +
                     '</div>';
                 html = bar + html;
-            } else if (searchMode && bookmarkRows.length) {
+            } else if (searchMode && results.length) {
                 // 暂存全部 (2026-08-26): the whole result list lands in one
                 // staging group NAMED after the query — one icon button left
                 // of the select entry, on the same 20px/4px cluster (the
                 // every-view vertical-axis law). Off with the staging master
                 // switch.
-                const idleStageOn = !ctx.stagingApi || !ctx.stagingApi.isEnabled
-                    || ctx.stagingApi.isEnabled();
+                // 2026-08-29 修复:组头随任何非空结果集存在——纯文件夹命中
+                // (bookmarkRows 为空)也保留计数条,只有"暂存全部/选择模式"
+                // 两个按钮按需出现(它们只作用于书签行)。
+                const hasBookmarkRows = bookmarkRows.length > 0;
+                const idleStageOn = hasBookmarkRows &&
+                    (!ctx.stagingApi || !ctx.stagingApi.isEnabled || ctx.stagingApi.isEnabled());
                 const idleStageTip = _m('searchStageAllGroup', [value]);
                 html = '<div class="search-toolbar vbm-toolbar">' +
                     `<span class="search-result-count">${_m('searchResultCount', `${results.length}`)}</span>` +
@@ -1052,8 +1056,11 @@ export function initSearch(ctx = {}) {
                         ? `<button class="search-stage-all" aria-label="${htmlspecialchars(idleStageTip)}" ` +
                           `title="${htmlspecialchars(idleStageTip)}">${STAGE_ICON}</button>`
                         : '') +
-                    `<button class="search-select-mode" aria-label="${_m('selectModeEnter')}" ` +
-                    `title="${_m('selectModeEnter')}">${SELECT_ICON}</button></span></div>` + html;
+                    (hasBookmarkRows
+                        ? `<button class="search-select-mode" aria-label="${_m('selectModeEnter')}" ` +
+                          `title="${_m('selectModeEnter')}">${SELECT_ICON}</button>`
+                        : '') +
+                    `</span></div>` + html;
             }
             $results.innerHTML = html;
             // The fresh result list may have just grown/dropped its scrollbar.

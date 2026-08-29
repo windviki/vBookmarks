@@ -722,6 +722,32 @@ describe('closed groups and window folding', () => {
         expect($list.innerHTML).not.toContain('id="tabgroups-item-1"');
     });
 
+    // 2026-08-29 (issues #62/#64): a tab that exists as a bookmark hovers the
+    // FULL info — the row meta carries the bookmark's path + dateAdded
+    // (tooltip-only: tab rows stay compact single-line data rows).
+    it('bookmarked tab rows carry path + dateAdded in the tooltip meta (tooltip-only)', () => {
+        const metas = [];
+        const ts = 1750000000000;
+        const { def, $list } = setup({
+            tabs: [makeTab(1, 0, { active: true, url: 'https://t1.example/' })],
+            bookmarkTree: [{
+                id: '0', title: '', children: [
+                    { id: 'f1', parentId: '0', title: 'Dev', children: [
+                        { id: 'bm1', parentId: 'f1', url: 'https://t1.example/', dateAdded: ts }
+                    ] }
+                ]
+            }],
+            pathOf: id => (id === 'bm1' ? 'Dev' : ''),
+            metaSink: metas
+        });
+        def().activate();
+        expect($list.innerHTML).toContain('id="tabgroups-item-1"');
+        const bmMeta = metas.find(m => m && m.path === 'Dev');
+        expect(bmMeta).toBeTruthy();
+        expect(bmMeta.tooltipOnlyPath).toBe(true);
+        expect(bmMeta.dateAdded).toBe(ts);
+    });
+
     it('window fold choices persist as an explicit map, never as a default snapshot', () => {
         const { def, store, clickOn } = setup({
             windows: [

@@ -107,6 +107,13 @@ export function initTreeView(ctx = {}) {
     // onlyShowBMBar setting itself is never touched.
     let showAllOverride = false;
 
+    // 4.1.1 full-info tooltip: the LAST snapshot's canonical path map — the
+    // lazy folder-expand below renders rows OUTSIDE generateTree and needs it
+    // for the rows' Path tooltip line (stale only for nodes created after the
+    // last full render; every bookmark event re-runs generateTree and
+    // refreshes it).
+    let lastPathsMap = null;
+
     // Round-4 item 4: generateNodeTrees maps folders only, so a bookmark id
     // never resolved an ancestor chain in revealFolder — "在树中定位" opened
     // nothing and the target row was never rendered. generateTree therefore
@@ -150,6 +157,8 @@ export function initTreeView(ctx = {}) {
         if (treeRender.buildTreeSnapshot) {
             snapshot = treeRender.buildTreeSnapshot(tree, subTree);
             html = snapshot.html;
+            if (snapshot.paths)
+                lastPathsMap = snapshot.paths;
             for (const [id, parentId] of Object.entries(snapshot.nodeTrees))
                 nodeTrees[id] = parentId;
             for (const id of snapshot.bookmarkIds)
@@ -529,7 +538,8 @@ export function initTreeView(ctx = {}) {
                     return;
                 // same undefined-guard as bookmarkHandler's folder branch
                 children = children || [];
-                const html = treeRender.generateHTML(children, parseInt(parent.parentNode.dataset.level) + 1);
+                // lastPathsMap: the lazy rows carry the full-info tooltip too
+                const html = treeRender.generateHTML(children, parseInt(parent.parentNode.dataset.level) + 1, lastPathsMap);
                 const div = document.createElement('div');
                 div.innerHTML = html;
                 const ul = div.querySelector('ul');
