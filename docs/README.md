@@ -210,6 +210,28 @@ python3 scripts/package.py         # → tmp/vBookmarks_<version>.zip
 
 # Changelogs
 
+### v4.1.1
+
+*2026-08-29*
+
+#### New
+
+- **Full-info tooltips in every view** (#62, #64): hovering a row — tree bookmarks *and folders*, search results, tab-group tabs, staging/recent, stats, dead links, duplicates — always tells the whole story now: title, URL, the labeled containing path and the date the bookmark was added, one fact per line. The tree's old "only when the title is truncated" adaptive tooltip is retired; the full block is simply always there.
+- **Three new preferences**: *Focus the search field when the popup opens* (Search group, off by default — start typing the moment it opens; the remembered-row focus restore stands down), *Show folder rows in search results* (Search group, on by default — turning it off drops folders *before* the 100-result cap so they can't spend it), and *Show row paths with the nearest folder first* (Views group, off by default) — row path labels flip to nearest-parent-first with a three-level depth cap (`Frontend < Dev < …`), while tooltips always keep the canonical root-first form.
+
+#### Performance
+
+- **The tab-groups view no longer flickers on sites that animate their tab title** (glyph-flipping "live" titles): a title flip used to rebuild the whole list on a 300 ms debounce; now exactly the one affected row is patched in place (hover, focus and drag marks survive), and refreshes whose data changes nothing rendered — favicon or audible-notification churn included — paint nothing at all.
+
+#### Fixed
+
+- **The tree remembers where you were — again, in both places** (#63): a popup closed mid-scroll no longer loses its final position (the last write was debounced and could die with the popup — a v4.0 storage-migration regression; a synchronous local shadow restores the old guarantee), and switching away from the tree and back no longer snaps to the top (a hidden container silently zeroes its scroll offset, and the first scroll after that overwrote the remembered deep position with a near-top value).
+- **Reopened searches show their paths** (#64): restoring a saved query on popup open used to render results with bare titles — the search painted before the shared path map existed; the results heal themselves the moment the map lands.
+
+#### Polish
+
+- **Staging selection mode, re-anchored**: the small group heads drop their fold chevron while selecting (folds are disabled there — it was dead chrome), and the dashed hierarchy lines now descend from the head icon's center axis through the clear gutter beside member favicons — the same icon-axis law as normal mode, no longer cutting through icon ink.
+
 ### v4.1.0
 
 *2026-08-28*
