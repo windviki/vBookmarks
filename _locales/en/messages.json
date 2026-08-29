@@ -1164,7 +1164,7 @@
     "message": "Remember the last active view and reopen it"
   },
   "optionReverseItemPath": {
-    "message": "Show the row path nearest folder first"
+    "message": "Show row paths with the nearest folder first"
   },
   "optionSearchAfterEnter": {
     "message": "Search bookmarks only when ENTER is pressed (instead of instant search)"
