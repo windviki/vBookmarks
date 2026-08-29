@@ -92,6 +92,11 @@ export function initTreeView(ctx = {}) {
     const views = ctx.views;
     // v4 task-3 #14: generic action toast (undo.toastAction in neat.js).
     const toastAction = ctx.toastAction;
+    // issue #64: "open with the search field activated" — the option hands
+    // the popup's startup focus to the search input (its autofocus
+    // attribute), so the focusID row re-focus below must stand down (it
+    // fires after the autofocus and would steal the focus right back).
+    const getFocusSearchOnOpen = ctx.getFocusSearchOnOpen || (() => false);
 
     // 树视图状态：folder id -> parent id 映射（每次 generateTree 重建）与
     // onlyShowBMBar 启动开关（只有 generateTree 读取）。
@@ -118,35 +123,6 @@ export function initTreeView(ctx = {}) {
             if (d.children)
                 addBookmarkParents(d.children);
         }
-    };
-
-    // Adaptive bookmark tooltips (H2): one row at a time, on demand. The old
-    // full pass (scrollWidth/offsetWidth on every row after every render or
-    // expand) forced a whole-tree layout; now only the hovered / focused row
-    // is measured, via delegated mouseover/focusin on $tree (below).
-    const adaptBookmarkTooltip = bookmark => {
-        if (bookmark.querySelector('hr')) {
-            bookmark.title = '';
-        } else {
-            if (bookmark.classList.contains('titled')) {
-                if (bookmark.scrollWidth <= bookmark.offsetWidth) {
-                    bookmark.title = bookmark.href;
-                    bookmark.classList.remove('titled');
-                }
-            } else if (bookmark.scrollWidth > bookmark.offsetWidth) {
-                const text = bookmark.querySelector('i').textContent;
-                const title = bookmark.title;
-                if (text !== title) {
-                    bookmark.title = `${text}\n${title}`;
-                    bookmark.classList.add('titled');
-                }
-            }
-        }
-    };
-    const adaptBookmarkTooltips = () => {
-        const bookmarks = document.querySelectorAll('li.child a');
-        for (let i = 0, l = bookmarks.length; i < l; i++)
-            adaptBookmarkTooltip(bookmarks[i]);
     };
 
     const generateTree = tree => {
@@ -242,7 +218,11 @@ export function initTreeView(ctx = {}) {
         // opened folders AND the focus highlight), instead of only the first
         // two. revealFolder/revealInTree force rememberState=true on purpose,
         // so explicit "reveal in tree" keeps working with the option off.
-        if (getRememberState()) {
+        // issue #64: focusSearchOnOpen stands the row re-focus down (the
+        // search input's autofocus owns the startup focus); the stale
+        // focusID is dropped so a later bookmark-event re-render doesn't
+        // scrollIntoView a row the user never restored to.
+        if (getRememberState() && !getFocusSearchOnOpen()) {
             const focusID = store.get('focusID');
             // The park/restore law above may already have re-focused a live
             // row. The reveal treatment (width/overflow + .focus flash) is
@@ -283,6 +263,10 @@ export function initTreeView(ctx = {}) {
                     }, 4000);
                 }
             }
+        } else if (getRememberState() && getFocusSearchOnOpen()) {
+            // issue #64: no row re-focus — drop the stale focusID eagerly
+            // (the 4s delayed cleanup above belongs to the restore branch).
+            store.remove('focusID');
         }
 
         // try to load local separator list used in last version
@@ -426,21 +410,6 @@ export function initTreeView(ctx = {}) {
     $tree.addEventListener('scroll', () => {
         store.set('scrollTop', $tree.scrollTop);
     });
-    // H2: tooltips adapt lazily on the hovered/focused row only (mouseover
-    // bubbles; focusin covers keyboard walks). No whole-tree layout pass.
-    const adaptTooltipFromEvent = e => {
-        const t = e && e.target;
-        if (!t)
-            return;
-        const row = t.closest ? t.closest('li.child a') : null;
-        if (row) {
-            adaptBookmarkTooltip(row);
-        } else if (!t.closest && t.tagName === 'A' && t.classList && t.classList.contains('child')) {
-            adaptBookmarkTooltip(t);
-        }
-    };
-    $tree.addEventListener('mouseover', adaptTooltipFromEvent);
-    $tree.addEventListener('focusin', adaptTooltipFromEvent);
     $tree.addEventListener('focus', e => {
         const el = e.target;
         const tagName = el.tagName;
@@ -752,7 +721,6 @@ export function initTreeView(ctx = {}) {
 
     return {
         generateTree,
-        adaptBookmarkTooltips,
         revealFolder,
         revealInTree,
         // bound per list container: tree above, search results above, and the

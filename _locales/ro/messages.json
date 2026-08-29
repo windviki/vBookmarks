@@ -1007,6 +1007,9 @@
   "optionFaviconEnrichHint": {
     "message": "Pentru site-urile marcate pentru care Chrome nu are nicio pictogramă în cache, preia pictograma reală direct de pe site (/favicon.ico, apoi pictogramele declarate ale paginii). Cererile sunt trimise doar către site-urile pe care le-ați marcat."
   },
+  "optionFocusSearchOnOpen": {
+    "message": "Focalizează caseta de căutare la deschiderea pop-up-ului"
+  },
   "optionHighlightUnsynced": {
     "message": "Atenuează marcajele nesincronizate"
   },
@@ -1055,6 +1058,9 @@
   "optionRememberView": {
     "message": "Reține ultima vizualizare activă și redeschide-o"
   },
+  "optionReverseItemPath": {
+    "message": "Afișează calea rândului cu dosarul cel mai apropiat primul"
+  },
   "optionSearchAfterEnter": {
     "message": "Caută semne de carte doar când este apăsat ENTER (în loc de căutare instantă)"
   },
@@ -1066,6 +1072,9 @@
   },
   "optionSearchHistoryHint": {
     "message": "Ascunde zona căutărilor recente deasupra rezultatelor — interogările înregistrate sunt păstrate"
+  },
+  "optionSearchShowFolders": {
+    "message": "Afișează dosarele în rezultatele căutării (clicul localizează dosarul în arbore)"
   },
   "optionShowDeadView": {
     "message": "Afișează fila de linkuri moarte"
@@ -2496,6 +2505,12 @@
   },
   "toolButtonTitle": {
     "message": "Unelte (Ctrl+K)"
+  },
+  "tooltipAdded": {
+    "message": "Adăugat"
+  },
+  "tooltipPath": {
+    "message": "Cale"
   },
   "undoAction": {
     "message": "Anulare"

@@ -229,7 +229,9 @@ const setup = (opts = {}) => {
         ...(opts.withFocusTop ? {
             focusTopCalls: 0,
             focusTop() { this.focusTopCalls++; }
-        } : {})
+        } : {}),
+        // issue #64(i): opt-in pathsReady double — the boot-order heal reads it
+        ...(opts.extraViews || {})
     };
     const s = initSearch({
         store,
@@ -344,7 +346,10 @@ describe('search execution + rendering', () => {
         expect(html).toContain('href="https://github.com/"');
         expect(calls.generateBookmarkHTML[0]).toEqual({
             title: 'GitHub', url: 'https://github.com/', extras: '', id: '11',
-            positions: [0, 1], meta: { path: '' }
+            positions: [0, 1],
+            // issue #64: rows also carry the label-form path + dateAdded for
+            // the full-info tooltip (empty path map / undated double here)
+            meta: { path: '', pathLabel: '', dateAdded: undefined }
         });
         expect(html).toContain('class="link-folder tree-item-link"');
         expect(html).toContain('id="results-item-1"');
@@ -354,6 +359,68 @@ describe('search execution + rendering', () => {
         expect(viewCalls).toEqual([['search', { keepFocus: true }]]);
         expect(calls.switchBookmarkMenu).toEqual([true]);
         expect(store.get('searchQuery')).toBe('git');
+    });
+
+    // issue #64(ii): folders ride the results by default; the independent
+    // option (searchShowFolders, default on) drops them BEFORE the 100-row cut.
+    it('drops folder rows from the results when searchShowFolders is off (issue #64)', () => {
+        const withOff = setup({
+            storeData: { searchShowFolders: '' },
+            fuzzyResults: [
+                { id: '11', parentId: '1', title: 'GitHub', url: 'https://github.com/', isFolder: false, positions: [0, 1] },
+                { id: '1', parentId: '0', title: 'Folder A', isFolder: true, positions: [] }
+            ]
+        });
+        type(withOff.els, 'git');
+        expect(withOff.els.results.innerHTML).toContain('results-item-11');
+        expect(withOff.els.results.innerHTML).not.toContain('link-folder');
+        expect(withOff.els.results.innerHTML).not.toContain('id="results-item-1"');
+    });
+
+    // issue #64(i): the boot-order gap — the saved-query restore renders from
+    // its own getTree callback before view-manager's path map exists. The
+    // render marks itself stale and refreshPaths() re-runs the query once
+    // neat.js's onTreeGenerated reports the map landed.
+    it('re-renders the bare-titled restore with path labels once the path map lands (issue #64 boot-order heal)', () => {
+        let ready = false;
+        const paths = { 11: 'Dev < Bookmarks Bar' };
+        const ctx = setup({
+            fuzzyResults: [
+                { id: '11', parentId: '1', title: 'GitHub', url: 'https://github.com/', isFolder: false, positions: [] }
+            ],
+            pathOf: id => (ready ? (paths[id] || '') : ''),
+            extraViews: { pathsReady: () => ready }
+        });
+        type(ctx.els, 'git');
+        // rendered before the map: no path in the row or the tooltip source
+        expect(ctx.calls.generateBookmarkHTML[ctx.calls.generateBookmarkHTML.length - 1].meta.path).toBe('');
+        const rendersBefore = ctx.calls.generateBookmarkHTML.length;
+
+        ready = true;
+        ctx.s.refreshPaths();
+        const healed = ctx.calls.generateBookmarkHTML[ctx.calls.generateBookmarkHTML.length - 1];
+        expect(ctx.calls.generateBookmarkHTML.length).toBe(rendersBefore + 1);
+        expect(healed.meta.path).toBe('Dev < Bookmarks Bar');
+
+        // clean renders (map already up) never flag stale — no re-rank churn
+        ctx.s.refreshPaths();
+        expect(ctx.calls.generateBookmarkHTML.length).toBe(rendersBefore + 1);
+    });
+
+    it('refreshPaths is a no-op without an active search (nothing to heal)', () => {
+        const ctx = setup({
+            fuzzyResults: [
+                { id: '11', parentId: '1', title: 'GitHub', url: 'https://github.com/', isFolder: false, positions: [] }
+            ],
+            extraViews: { pathsReady: () => false }
+        });
+        type(ctx.els, 'git');
+        ctx.els['search-input'].value = '';
+        ctx.els['search-input'].trigger('input'); // quit search mode
+        vi.advanceTimersByTime(100);
+        const before = ctx.calls.generateBookmarkHTML.length;
+        ctx.s.refreshPaths();
+        expect(ctx.calls.generateBookmarkHTML.length).toBe(before);
     });
 
     it('trims the query before persisting and ranking', () => {
@@ -401,9 +468,10 @@ describe('search execution + rendering', () => {
         type(els, 'git');
         // bookmark rows: the path flows into the row meta (tooltip + label
         // are rendered inside tree-render's generateBookmarkHTML)
-        expect(calls.generateBookmarkHTML[0].meta).toEqual({ path: 'path-of-11' });
-        // folder rows: tooltip unifies to 标题 + 路径
-        expect(els.results.innerHTML).toContain('title="Folder A\npath-of-1"');
+        expect(calls.generateBookmarkHTML[0].meta).toEqual({ path: 'path-of-11', pathLabel: '', dateAdded: undefined });
+        // folder rows: tooltip unifies to 标题 + 路径 + 添加时间 (the shared
+        // full-info builder; the double's folder has no dateAdded)
+        expect(els.results.innerHTML).toContain('title="Folder A\ntooltipPath: path-of-1"'); // key-echo i18n double
         // the async per-row parent-folder tooltip fetch is retired — the
         // path map covers it in one tree walk
         expect(chrome.bookmarks.getCalls).toEqual([]);

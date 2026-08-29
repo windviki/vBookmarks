@@ -61,7 +61,7 @@ import { FOLDER_ICON, VIEW_ICONS, TRASH_ICON, SELECT_ICON, STAGE_ICON, OPEN_ICON
     };
 import { fitToolbarLabels, watchToolbarFit } from './toolbar-fit.js';
 import { stageBtnHtml as relayStageBtnHtml, flipStageBtn, toggleStageItem } from './staging-relay.js';
-import { relTimeLabel } from './tree-render.js';
+import { relTimeLabel, buildRowTooltip } from './tree-render.js';
 import { htmlspecialchars } from './escape.js';
 import {
     parkRowFocus as sharedParkRowFocus,
@@ -158,6 +158,11 @@ export function initSearch(ctx = {}) {
     const searchInput = $('search-input');
     const searchClearBtn = $('search-clear');
     let prevValue = '';
+    // Issue #64(i): set when a render ran before view-manager's path map
+    // landed (the boot-order gap — the saved-query restore renders from its
+    // own getTree callback, the map only fills from tree-view's later one).
+    // neat.js's onTreeGenerated heals it through refreshPaths().
+    let stalePaths = false;
 
     // The custom clear button (native webkit cancel glyph removed in CSS):
     // visible only while the field has text, toggled from every path that
@@ -933,6 +938,7 @@ export function initSearch(ctx = {}) {
         const renderResults = results => {
             lastResultCount = results.length;
             lastResults = results;
+            stalePaths = !!(views.pathsReady && !views.pathsReady());
             let html = '<ul role="list" id="results-ul">';
             if (!results.length) {
                 // Phase 2b: no-results empty state (no a/span inside, so
@@ -960,7 +966,11 @@ export function initSearch(ctx = {}) {
                     // §3.6: rows carry their parent-folder path label + the
                     // unified 标题/URL/路径 tooltip (via the meta argument).
                     html += `<li class="vbm-row${sel ? ' sel' : ''}" data-parentid="${result.parentId}" data-node-id="${id}" data-url="${encodeURIComponent(result.url)}" id="results-item-${id}" role="listitem">
-                            ${generateBookmarkHTML(result.title, result.url, '', result.id, result.positions, { path: views.pathOf(id) })}${tail}</li>`;
+                            ${generateBookmarkHTML(result.title, result.url, '', result.id, result.positions, {
+                                path: views.pathOf(id),
+                                pathLabel: views.pathLabelOf ? views.pathLabelOf(id) : '',
+                                dateAdded: result.dateAdded
+                            })}${tail}</li>`;
                 } else {  // folder
                     // Add sync status indicator for folders in search results
                     let syncIndicator = '';
@@ -976,10 +986,14 @@ export function initSearch(ctx = {}) {
 
                     const folderTitle = result.title ?
                         highlightTitlePositions(result.title, result.positions) : _m('noTitle');
-                    // §3.6 tooltip unification for folder rows: 标题 + 路径
+                    // §3.6 tooltip unification (issues #62/#64): 标题+路径+时间
+                    // via the shared full-info builder (folders have no URL)
                     const folderPath = views.pathOf(id);
-                    const folderTip = htmlspecialchars(result.title || _m('noTitle'))
-                        + (folderPath ? `\n${htmlspecialchars(folderPath)}` : '');
+                    const folderTip = buildRowTooltip({
+                        title: result.title || _m('noTitle'),
+                        path: folderPath,
+                        dateAdded: result.dateAdded
+                    });
                     html += `<li id="results-item-${id}" role="listitem" data-parentid="${result.parentId}" data-node-id="${id}">
                             <a href="" class="link-folder tree-item-link" title="${folderTip}">
                             <div class="favicon-container">
@@ -1047,15 +1061,35 @@ export function initSearch(ctx = {}) {
             onRowsRendered();
         };
 
-        // Fuzzy-rank the flat index; rebuild it lazily when bookmarks changed
+        // Fuzzy-rank the flat index; rebuild it lazily when bookmarks changed.
+        // searchShowFolders (issue #64(ii), default on) — folder rows ride the
+        // results with a reveal-in-tree click; turned off they are dropped
+        // BEFORE the 100-row cut so hidden folders can't eat its budget.
+        const rankAll = v => {
+            const ranked = window.VBMFuzzy.rank(v, searchIndex);
+            return store.get('searchShowFolders', '1')
+                ? ranked.slice(0, 100)
+                : ranked.filter(r => !r.isFolder).slice(0, 100); // 100 is enough
+        };
         if (searchIndex && !searchIndexDirty) {
-            renderResults(window.VBMFuzzy.rank(value, searchIndex).slice(0, 100)); // 100 is enough
+            renderResults(rankAll(value));
         } else {
             chrome.bookmarks.getTree(tree => {
                 buildSearchIndex(tree);
-                renderResults(window.VBMFuzzy.rank(value, searchIndex).slice(0, 100)); // 100 is enough
+                renderResults(rankAll(value));
             });
         }
+    };
+
+    // Issue #64(i) heal: re-run the CURRENT query once the path map lands.
+    // search(true) mirrors runHistoryQuery's explicit-pick semantics (it
+    // passes the searchAfterEnter guard); prevValue reset forces the re-rank.
+    const refreshPaths = () => {
+        if (!stalePaths || !searchMode || !searchInput.value.trim())
+            return;
+        stalePaths = false;
+        prevValue = '';
+        search(true);
     };
 
     // 2026-08 perf audit — keystroke debounce state. Every keystroke used to
@@ -1272,6 +1306,9 @@ export function initSearch(ctx = {}) {
         // records its query here — the same "open a result" timing the
         // search view itself uses (resetSearchState).
         record: recordHistory,
-        updateIndex: buildSearchIndex
+        updateIndex: buildSearchIndex,
+        // issue #64(i): neat.js's onTreeGenerated calls this after the path
+        // map lands, healing a boot-order render that lacked path labels.
+        refreshPaths
     };
 }

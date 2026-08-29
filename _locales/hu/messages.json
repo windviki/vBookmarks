@@ -1007,6 +1007,9 @@
   "optionFaviconEnrichHint": {
     "message": "Azon könyvjelzőzött webhelyeknél, amelyekhez a Chrome nem rendelkezik gyorsítótárazott ikonnal, töltse le a tényleges ikont közvetlenül a webhelyről (/favicon.ico, majd az oldal által deklarált ikonok). A kérések csak az Ön által könyvjelzőzött webhelyekre irányulnak."
   },
+  "optionFocusSearchOnOpen": {
+    "message": "Keresőmező fókuszba hozása a felugró ablak megnyitásakor"
+  },
   "optionHighlightUnsynced": {
     "message": "Szinkronizálatlan könyvjelzők halványítása"
   },
@@ -1055,6 +1058,9 @@
   "optionRememberView": {
     "message": "Az utolsó aktív nézet megjegyzése és újranyitása"
   },
+  "optionReverseItemPath": {
+    "message": "A sor útvonalának megjelenítése a legközelebbi mappával elöl"
+  },
   "optionSearchAfterEnter": {
     "message": "Könyvjelzők keresése csak az ENTER lenyomásakor (azonnali keresés helyett)"
   },
@@ -1066,6 +1072,9 @@
   },
   "optionSearchHistoryHint": {
     "message": "Az eredmények feletti közelmúltbeli keresések területének elrejtése — a rögzített lekérdezések megmaradnak"
+  },
+  "optionSearchShowFolders": {
+    "message": "Mappák megjelenítése a találatok között (kattintás a mappa helyére ugrik a fában)"
   },
   "optionShowDeadView": {
     "message": "Hibás hivatkozások nézet fül megjelenítése"
@@ -2496,6 +2505,12 @@
   },
   "toolButtonTitle": {
     "message": "Eszközök (Ctrl+K)"
+  },
+  "tooltipAdded": {
+    "message": "Hozzáadva"
+  },
+  "tooltipPath": {
+    "message": "Elérési út"
   },
   "undoAction": {
     "message": "Visszavonás"

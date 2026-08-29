@@ -1007,6 +1007,9 @@
   "optionFaviconEnrichHint": {
     "message": "Đối với các trang đã đánh dấu mà Chrome không có biểu tượng trong bộ nhớ cache, hãy tải trực tiếp biểu tượng thực từ trang web (/favicon.ico, sau đó là các biểu tượng được khai báo của trang). Yêu cầu chỉ gửi đến các trang bạn đã đánh dấu."
   },
+  "optionFocusSearchOnOpen": {
+    "message": "Tập trung vào ô tìm kiếm khi mở cửa sổ bật lên"
+  },
   "optionHighlightUnsynced": {
     "message": "Làm mờ dấu trang chưa đồng bộ"
   },
@@ -1055,6 +1058,9 @@
   "optionRememberView": {
     "message": "Ghi nhớ chế độ xem cuối cùng và mở lại"
   },
+  "optionReverseItemPath": {
+    "message": "Hiển thị đường dẫn của hàng với thư mục gần nhất trước"
+  },
   "optionSearchAfterEnter": {
     "message": "Tìm kiếm dấu trang chỉ khi nhấn ENTER (thay vì tìm kiếm tức thì)"
   },
@@ -1066,6 +1072,9 @@
   },
   "optionSearchHistoryHint": {
     "message": "Ẩn khu vực tìm kiếm gần đây phía trên kết quả — các truy vấn đã lưu được giữ lại"
+  },
+  "optionSearchShowFolders": {
+    "message": "Hiển thị thư mục trong kết quả tìm kiếm (nhấp để định vị thư mục trong cây)"
   },
   "optionShowDeadView": {
     "message": "Hiển thị tab xem liên kết chết"
@@ -2496,6 +2505,12 @@
   },
   "toolButtonTitle": {
     "message": "Công cụ (Ctrl+K)"
+  },
+  "tooltipAdded": {
+    "message": "Đã thêm"
+  },
+  "tooltipPath": {
+    "message": "Đường dẫn"
   },
   "undoAction": {
     "message": "Hoàn tác"

@@ -1007,6 +1007,9 @@
   "optionFaviconEnrichHint": {
     "message": "Järjehoidjatesse lisatud saitide puhul, mille jaoks Chrome'il pole vahemällu salvestatud ikooni, laadi tegelik ikoon otse saidilt (/favicon.ico, seejärel lehel deklareeritud ikoonid). Päringud lähevad ainult teie järjehoidjatesse lisatud saitidele."
   },
+  "optionFocusSearchOnOpen": {
+    "message": "Fokuseeri otsinguväli hüpikakna avamisel"
+  },
   "optionHighlightUnsynced": {
     "message": "Tuhmista sünkroonimata järjehoidjad"
   },
@@ -1055,6 +1058,9 @@
   "optionRememberView": {
     "message": "Jäta meelde viimane aktiivne vaade ja ava see uuesti"
   },
+  "optionReverseItemPath": {
+    "message": "Kuva rea tee lähima kaustaga eespool"
+  },
   "optionSearchAfterEnter": {
     "message": "Otsi järjehoidjaid ainult ENTERi vajutamisel (mitte kohene otsing)"
   },
@@ -1066,6 +1072,9 @@
   },
   "optionSearchHistoryHint": {
     "message": "Peida hiljutiste otsingute ala tulemuste kohal — salvestatud päringud säilivad"
+  },
+  "optionSearchShowFolders": {
+    "message": "Kuva otsingutulemustes kaustad (klõps avab kausta puus)"
   },
   "optionShowDeadView": {
     "message": "Näita surnud linkide vahekaarti"
@@ -2496,6 +2505,12 @@
   },
   "toolButtonTitle": {
     "message": "Tööriistad (Ctrl+K)"
+  },
+  "tooltipAdded": {
+    "message": "Lisatud"
+  },
+  "tooltipPath": {
+    "message": "Tee"
   },
   "undoAction": {
     "message": "Tagasi võtmine"

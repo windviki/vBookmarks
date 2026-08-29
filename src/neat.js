@@ -358,6 +358,10 @@ import { ICON_SPRITE_SHEET } from './icons.js';
     // Init some variables
     let opens = store.get('opens') ? JSON.parse(store.get('opens')) : [];
     let rememberState = shouldRememberState(store.get('dontRememberState'));
+    // issue #64: "open with the search field activated" — the search input's
+    // autofocus owns the startup focus; tree-view's focusID re-focus and
+    // view-manager's focusSpot restore stand down while this is on.
+    const focusSearchOnOpen = () => !!store.get('focusSearchOnOpen');
     const httpsPattern = /^https?:\/\//i;
     // onlyShowBMBar 与 adaptBookmarkTooltips 已剥离至 src/tree-view.js（P1，8b）
 
@@ -577,6 +581,9 @@ import { ICON_SPRITE_SHEET } from './icons.js';
         // The "记住之前的状态" flag: view-manager's focusSpot capture/persist/
         // restore follow it, the same way tree-view's focusID restore does.
         getRememberState: () => rememberState,
+        // issue #64: with the option on, restoreFocusSpot stands down so the
+        // search input keeps the autofocus.
+        getFocusSearchOnOpen: focusSearchOnOpen,
         // 4.0.8: the hidden-tab-strip view hint rides the undo toast bar,
         // and any real view switch dismisses a lingering toast (ea78d89).
         // undo inits above — plain values (the first activation reads
@@ -632,7 +639,6 @@ import { ICON_SPRITE_SHEET } from './icons.js';
         rtl,
         search,
         clearMenu: menus.clearMenu,
-        get treeView() { return treeView; },
         get isDragging() { return dnd.isDragging(); }
     });
 
@@ -727,6 +733,9 @@ import { ICON_SPRITE_SHEET } from './icons.js';
         refreshSyncIndicators: syncUi.refreshSyncIndicators,
         getOpens: () => opens,
         getRememberState: () => rememberState,
+        // issue #64: the focusID row re-focus stands down while the option
+        // hands the startup focus to the search input.
+        getFocusSearchOnOpen: focusSearchOnOpen,
         setOpens: v => { opens = v; },
         setRememberState: v => { rememberState = v; },
         middleClickBgTab,
@@ -745,7 +754,11 @@ import { ICON_SPRITE_SHEET } from './icons.js';
             const hasSnapshot = !!(snapshot && snapshot.paths && snapshot.ids);
             const ids = hasSnapshot ? snapshot.ids : views.buildPathMap(t).ids;
             if (hasSnapshot && views.setPathMap)
-                views.setPathMap(snapshot.paths);
+                views.setPathMap(snapshot.paths, snapshot.pathLabels);
+            // Issue #64(i): a saved-query restore rendered before this map
+            // existed — heal its bare-titled rows now that pathOf resolves.
+            if (search.refreshPaths)
+                search.refreshPaths();
             deadOverlayRefresh();
             visitStats.prune(ids);
             stagingTreeSync(t, snapshot);

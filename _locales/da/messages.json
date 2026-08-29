@@ -1007,6 +1007,9 @@
   "optionFaviconEnrichHint": {
     "message": "For bogmærkede websteder, som Chrome ikke har et cachelagret ikon for, hentes det faktiske ikon direkte fra webstedet (/favicon.ico, derefter sidens erklærede ikoner). Forespørgsler går kun til websteder, du har bogmærket."
   },
+  "optionFocusSearchOnOpen": {
+    "message": "Fokuser søgefeltet, når pop op-vinduet åbnes"
+  },
   "optionHighlightUnsynced": {
     "message": "Dæmp usynkroniserede bogmærker"
   },
@@ -1055,6 +1058,9 @@
   "optionRememberView": {
     "message": "Husk den senest aktive visning og åbn den igen"
   },
+  "optionReverseItemPath": {
+    "message": "Vis rækkens sti med nærmeste mappe først"
+  },
   "optionSearchAfterEnter": {
     "message": "Søg bogmærker kun når ENTER trykkes (i stedet for øjeblikkelig søgning)"
   },
@@ -1066,6 +1072,9 @@
   },
   "optionSearchHistoryHint": {
     "message": "Skjul området for nylige søgninger over resultaterne — gemte forespørgsler bevares"
+  },
+  "optionSearchShowFolders": {
+    "message": "Vis mapper i søgeresultaterne (klik viser mappen i træet)"
   },
   "optionShowDeadView": {
     "message": "Vis fanen til døde links"
@@ -2496,6 +2505,12 @@
   },
   "toolButtonTitle": {
     "message": "Værktøjer (Ctrl+K)"
+  },
+  "tooltipAdded": {
+    "message": "Tilføjet"
+  },
+  "tooltipPath": {
+    "message": "Sti"
   },
   "undoAction": {
     "message": "Fortryd"

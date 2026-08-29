@@ -1007,6 +1007,9 @@
   "optionFaviconEnrichHint": {
     "message": "W przypadku zakładek, dla których Chrome nie ma ikony w pamięci podręcznej, pobierz prawdziwą ikonę bezpośrednio z witryny (/favicon.ico, a następnie ikony zadeklarowane na stronie). Żądania trafiają tylko do witryn, które dodałeś do zakładek."
   },
+  "optionFocusSearchOnOpen": {
+    "message": "Fokusuj pole wyszukiwania po otwarciu okna"
+  },
   "optionHighlightUnsynced": {
     "message": "Przyciemniaj niezsynchronizowane zakładki"
   },
@@ -1055,6 +1058,9 @@
   "optionRememberView": {
     "message": "Zapamiętaj ostatnio aktywny widok i przywróć go"
   },
+  "optionReverseItemPath": {
+    "message": "Pokazuj ścieżkę wiersza od najbliższego folderu"
+  },
   "optionSearchAfterEnter": {
     "message": "Szukaj zakładek tylko po naciśnięciu ENTER (zamiast natychmiastowego wyszukiwania)"
   },
@@ -1066,6 +1072,9 @@
   },
   "optionSearchHistoryHint": {
     "message": "Ukryj obszar ostatnich wyszukiwań nad wynikami — zapisane zapytania zostają zachowane"
+  },
+  "optionSearchShowFolders": {
+    "message": "Pokazuj foldery w wynikach wyszukiwania (kliknięcie przenosi do folderu w drzewie)"
   },
   "optionShowDeadView": {
     "message": "Pokaż kartę widoku martwych linków"
@@ -2496,6 +2505,12 @@
   },
   "toolButtonTitle": {
     "message": "Narzędzia (Ctrl+K)"
+  },
+  "tooltipAdded": {
+    "message": "Dodano"
+  },
+  "tooltipPath": {
+    "message": "Ścieżka"
   },
   "undoAction": {
     "message": "Cofnij"

@@ -61,7 +61,11 @@
         'dontConfirmOpenFolder', 'dontRememberState', 'onlyShowBMBar', 'searchAfterEnter',
         'autoResizePopup',
         // v4 task-2: view layer (slice A)
-        'activeView', 'viewState', 'showViewTabs', 'showItemPath',
+        'activeView', 'viewState', 'showViewTabs', 'showItemPath', 'reverseItemPath',
+        // issue #64: hand the popup's startup focus to the search input
+        'focusSearchOnOpen',
+        // issue #64: folder rows in search results (reveal-in-tree click)
+        'searchShowFolders',
         // per-view tab visibility (feature views + the structural tree/search tabs)
         'showRecentBookmarks', 'showStatsView', 'showDeadView', 'showDupesView', 'showTabGroupsView',
         // 4.0.8: per-view disable switches (feature views only)
@@ -209,7 +213,13 @@
         'tabGroupsSyncCollapse', 'tabGroupsColorStyle', 'tabGroupsColorBorder', 'tabGroupsClosedLimit',
         // staging master switch + tree-row hover actions (options
         // 暂存和最近添加 / 书签树 — device-independent preferences)
-        'stagingEnabled', 'treeRowActions'
+        'stagingEnabled', 'treeRowActions',
+        // issue #64: popup startup focus preference (device-independent)
+        'focusSearchOnOpen',
+        // issue #64: folder rows in search results (device-independent)
+        'searchShowFolders',
+        // issue #64: nearest-first row path labels (device-independent)
+        'reverseItemPath'
     ];
     const SYNC_KEY_SET = new Set(SYNC_KEYS);
     const isSyncKey = key => SYNC_KEY_SET.has(key);
@@ -258,6 +268,27 @@
             delete timers[key];
             chrome.storage.local.set({ [key]: v }).catch(() => {});
         }, 200);
+    };
+
+    // Issue #63: scrollTop is the one high-churn "where I was" key whose LAST
+    // write must survive a popup close. The scroll listener fires on every
+    // scroll event, the 200ms trailing debounce coalesces them, and a popup
+    // that closes before the timer fires (pagehide is not guaranteed on every
+    // close path — see the flush() note below) loses the final position, so
+    // the popup "often" reopens at the top. localStorage is the only
+    // synchronous store available, so scrollTop additionally shadows there
+    // under a dedicated key no older build ever wrote — the legacy plain
+    // `scrollTop` localStorage copy frozen at the v4 migration must never
+    // win. init() lets the shadow override the chrome.storage value whenever
+    // present: by construction it is at least as fresh on this device.
+    const SCROLL_TOP_SHADOW = '__scrollTopLS';
+    const shadowScrollTop = value => {
+        try {
+            if (value === null || value === undefined)
+                localStorage.removeItem(SCROLL_TOP_SHADOW);
+            else
+                localStorage.setItem(SCROLL_TOP_SHADOW, String(value));
+        } catch (e) { /* quota/unavailable — the debounced write still runs */ }
     };
 
     // Sync-area persistence uses a longer debounce: chrome.storage.sync is
@@ -309,6 +340,8 @@
                 return;
             }
             mirror[key] = value;
+            if (key === 'scrollTop')
+                shadowScrollTop(value);
             schedulePersist(key, value);
         },
         // Update the mirror WITHOUT persisting. chrome.storage.onChanged
@@ -330,6 +363,8 @@
                 return;
             }
             mirror[key] = value;
+            if (key === 'scrollTop')
+                shadowScrollTop(value);
         },
         // Mirror + persistent removal
         remove(key) {
@@ -345,6 +380,8 @@
                 return;
             }
             delete mirror[key];
+            if (key === 'scrollTop')
+                shadowScrollTop(null);
             if (key in pendingWrites) {
                 clearTimeout(timers[key]);
                 delete timers[key];
@@ -555,6 +592,25 @@
         } catch (error) {
             console.warn('store: failed to load chrome.storage.local:', error);
         }
+        // Issue #63 shadow adoption (runs after the local load filled the
+        // mirror): a scrollTop shadow written by a previous session's scroll
+        // listener is fresher than whatever the debounced persistence managed
+        // to flush before the popup died — let it win, and reconcile the
+        // chrome.storage copy so the drift doesn't outlive one debounce.
+        // Absent shadow (first run after the update) leaves the loaded value
+        // untouched.
+        try {
+            const shadow = localStorage.getItem(SCROLL_TOP_SHADOW);
+            if (shadow !== null) {
+                const parsed = Number(shadow);
+                if (!Number.isNaN(parsed)) {
+                    const loaded = mirror.scrollTop;
+                    mirror.scrollTop = parsed;
+                    if (String(loaded) !== shadow)
+                        schedulePersist('scrollTop', parsed);
+                }
+            }
+        } catch (e) { /* localStorage unavailable — chrome.storage stands */ }
         resolveReady();
     };
 

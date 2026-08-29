@@ -1007,6 +1007,9 @@
   "optionFaviconEnrichHint": {
     "message": "Chrome'un önbelleğinde simgesi olmayan yer imlerindeki siteler için gerçek simgeyi doğrudan siteden alın (/favicon.ico, ardından sayfanın bildirdiği simgeler). İstekler yalnızca yer imlerinize eklediğiniz sitelere gönderilir."
   },
+  "optionFocusSearchOnOpen": {
+    "message": "Açılır pencere açıldığında arama kutusuna odaklan"
+  },
   "optionHighlightUnsynced": {
     "message": "Senkronize edilmemiş yer imlerini karart"
   },
@@ -1055,6 +1058,9 @@
   "optionRememberView": {
     "message": "Son etkin görünümü hatırla ve onu yeniden aç"
   },
+  "optionReverseItemPath": {
+    "message": "Satır yolunu en yakın klasörden başlayarak göster"
+  },
   "optionSearchAfterEnter": {
     "message": "Yer imlerini sadece ENTER basıldığında ara (anlık arama yerine)"
   },
@@ -1066,6 +1072,9 @@
   },
   "optionSearchHistoryHint": {
     "message": "Sonuçların üzerindeki son aramalar alanını gizle — kaydedilen sorgular korunur"
+  },
+  "optionSearchShowFolders": {
+    "message": "Arama sonuçlarında klasörleri göster (tıklamak klasörü ağaçta konumlandırır)"
   },
   "optionShowDeadView": {
     "message": "Ölü bağlantılar görünümü sekmesini göster"
@@ -2496,6 +2505,12 @@
   },
   "toolButtonTitle": {
     "message": "Araçlar (Ctrl+K)"
+  },
+  "tooltipAdded": {
+    "message": "Eklendi"
+  },
+  "tooltipPath": {
+    "message": "Yol"
   },
   "undoAction": {
     "message": "Geri Al"

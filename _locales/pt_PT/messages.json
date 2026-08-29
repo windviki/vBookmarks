@@ -1004,6 +1004,9 @@
   "optionFaviconEnrichHint": {
     "message": "Para sites marcados sem ícone em cache no Chrome, obtenha o ícone real diretamente do site (/favicon.ico e, depois, os ícones declarados na página). Os pedidos são feitos apenas para sites que marcou."
   },
+  "optionFocusSearchOnOpen": {
+    "message": "Focar a caixa de pesquisa ao abrir o pop-up"
+  },
   "optionHighlightUnsynced": {
     "message": "Escurecer marcadores não sincronizados"
   },
@@ -1052,6 +1055,9 @@
   "optionRememberView": {
     "message": "Lembrar a última vista ativa e reabri-la."
   },
+  "optionReverseItemPath": {
+    "message": "Mostrar o caminho da linha com a pasta mais próxima primeiro"
+  },
   "optionSearchAfterEnter": {
     "message": "Pesquisar marcadores apenas ao pressionar ENTER (em vez de pesquisa instantânea)"
   },
@@ -1063,6 +1069,9 @@
   },
   "optionSearchHistoryHint": {
     "message": "Ocultar a área de pesquisas recentes acima dos resultados — as consultas registadas são mantidas"
+  },
+  "optionSearchShowFolders": {
+    "message": "Mostrar pastas nos resultados da pesquisa (clicar mostra a pasta na árvore)"
   },
   "optionShowDeadView": {
     "message": "Mostrar o separador de links mortos"
@@ -2492,6 +2501,12 @@
   },
   "toolButtonTitle": {
     "message": "Ferramentas (Ctrl+K)"
+  },
+  "tooltipAdded": {
+    "message": "Adicionado"
+  },
+  "tooltipPath": {
+    "message": "Caminho"
   },
   "undoAction": {
     "message": "Anular"

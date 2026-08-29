@@ -1007,6 +1007,9 @@
   "optionFaviconEnrichHint": {
     "message": "Grāmatzīmētām vietnēm, kurām Chrome nav kešotu ikonu, iegūstiet īsto ikonu tieši no vietnes (/favicon.ico, pēc tam lapas deklarētās ikonas). Pieprasījumi tiek nosūtīti tikai uz vietnēm, kuras esat atzīmējis grāmatzīmēs."
   },
+  "optionFocusSearchOnOpen": {
+    "message": "Fokusēt meklēšanas lodziņu, atverot uznirstošo logu"
+  },
   "optionHighlightUnsynced": {
     "message": "Aptumšot nesinhronizētās grāmatzīmes"
   },
@@ -1055,6 +1058,9 @@
   "optionRememberView": {
     "message": "Atcerēties pēdējo aktīvo skatu un atvērt to vēlreiz"
   },
+  "optionReverseItemPath": {
+    "message": "Rādīt rindas ceļu ar tuvāko mapi vispirms"
+  },
   "optionSearchAfterEnter": {
     "message": "Meklēt grāmatzīmes tikai, kad tiek nospiests ENTER (nevis tūlītēja meklēšana)"
   },
@@ -1066,6 +1072,9 @@
   },
   "optionSearchHistoryHint": {
     "message": "Paslēpt pēdējo meklējumu apgabalu virs rezultātiem — saglabātie vaicājumi tiek paturēti"
+  },
+  "optionSearchShowFolders": {
+    "message": "Rādīt mapes meklēšanas rezultātos (klikšķis atver mapi kokā)"
   },
   "optionShowDeadView": {
     "message": "Rādīt mirušo saišu skata cilni"
@@ -2496,6 +2505,12 @@
   },
   "toolButtonTitle": {
     "message": "Rīki (Ctrl+K)"
+  },
+  "tooltipAdded": {
+    "message": "Pievienots"
+  },
+  "tooltipPath": {
+    "message": "Ceļš"
   },
   "undoAction": {
     "message": "Atsaukt"

@@ -1007,6 +1007,9 @@
   "optionFaviconEnrichHint": {
     "message": "สำหรับเว็บไซต์ที่บุ๊กมาร์กไว้ซึ่ง Chrome ไม่มีไอคอนในแคช ให้ดึงไอคอนจริงจากเว็บไซต์นั้นโดยตรง (/favicon.ico แล้วจึงใช้ไอคอนที่ประกาศไว้ในหน้า) คำขอจะส่งไปยังเว็บไซต์ที่คุณบุ๊กมาร์กไว้เท่านั้น"
   },
+  "optionFocusSearchOnOpen": {
+    "message": "โฟกัสที่ช่องค้นหาเมื่อเปิดป๊อปอัป"
+  },
   "optionHighlightUnsynced": {
     "message": "ทำให้บุ๊กมาร์กที่ไม่ซิงก์มืดลง"
   },
@@ -1055,6 +1058,9 @@
   "optionRememberView": {
     "message": "จดจำมุมมองที่ใช้งานล่าสุดและเปิดกลับมาใหม่"
   },
+  "optionReverseItemPath": {
+    "message": "แสดงเส้นทางของแถวโดยโฟลเดอร์ที่ใกล้ที่สุดก่อน"
+  },
   "optionSearchAfterEnter": {
     "message": "ค้นหาที่คั่นหน้าเฉพาะเมื่อกด ENTER (แทนการค้นหาทันที)"
   },
@@ -1066,6 +1072,9 @@
   },
   "optionSearchHistoryHint": {
     "message": "ซ่อนพื้นที่การค้นหาล่าสุดเหนือผลลัพธ์ — คิวรีที่บันทึกไว้ยังคงอยู่"
+  },
+  "optionSearchShowFolders": {
+    "message": "แสดงโฟลเดอร์ในผลการค้นหา (คลิกเพื่อไปยังตำแหน่งโฟลเดอร์ในโครงสร้างต้นไม้)"
   },
   "optionShowDeadView": {
     "message": "แสดงแท็บมุมมองลิงก์เสีย"
@@ -2496,6 +2505,12 @@
   },
   "toolButtonTitle": {
     "message": "เครื่องมือ (Ctrl+K)"
+  },
+  "tooltipAdded": {
+    "message": "วันที่เพิ่ม"
+  },
+  "tooltipPath": {
+    "message": "เส้นทาง"
   },
   "undoAction": {
     "message": "เลิกทำ"

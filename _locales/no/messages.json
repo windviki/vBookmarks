@@ -1007,6 +1007,9 @@
   "optionFaviconEnrichHint": {
     "message": "For bokmerkede nettsteder uten bufret ikon i Chrome, hent det faktiske ikonet direkte fra nettstedet (/favicon.ico, deretter sidens deklarerte ikoner). Forespørsler går bare til nettsteder du har bokmerket."
   },
+  "optionFocusSearchOnOpen": {
+    "message": "Fokuser søkefeltet når sprettoppvinduet åpnes"
+  },
   "optionHighlightUnsynced": {
     "message": "Demp usynkroniserte bokmerker"
   },
@@ -1055,6 +1058,9 @@
   "optionRememberView": {
     "message": "Husk siste aktive visning og åpne den igjen"
   },
+  "optionReverseItemPath": {
+    "message": "Vis radens sti med nærmeste mappe først"
+  },
   "optionSearchAfterEnter": {
     "message": "Søk bokmerker kun når ENTER trykkes (i stedet for øyeblikkelig søk)"
   },
@@ -1066,6 +1072,9 @@
   },
   "optionSearchHistoryHint": {
     "message": "Skjul området for nylige søk over resultatene — lagrede spørringer beholdes"
+  },
+  "optionSearchShowFolders": {
+    "message": "Vis mapper i søkeresultater (klikk viser mappen i treet)"
   },
   "optionShowDeadView": {
     "message": "Vis døde-lenker-fanen"
@@ -2496,6 +2505,12 @@
   },
   "toolButtonTitle": {
     "message": "Verktøy (Ctrl+K)"
+  },
+  "tooltipAdded": {
+    "message": "Lagt til"
+  },
+  "tooltipPath": {
+    "message": "Sti"
   },
   "undoAction": {
     "message": "Angre"

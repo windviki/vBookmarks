@@ -1007,6 +1007,9 @@
   "optionFaviconEnrichHint": {
     "message": "Za web stranice dodane u zabilješke za koje Chrome nema predmemoriranu ikonu, dohvati stvarnu ikonu izravno s web stranice (/favicon.ico, zatim deklarirane ikone stranice). Zahtjevi se šalju samo na web stranice dodane u zabilješke."
   },
+  "optionFocusSearchOnOpen": {
+    "message": "Fokusiraj okvir za pretraživanje pri otvaranju skočnog prozora"
+  },
   "optionHighlightUnsynced": {
     "message": "Zatamni nesinkronizirane oznake"
   },
@@ -1055,6 +1058,9 @@
   "optionRememberView": {
     "message": "Zapamti posljednji aktivni prikaz i ponovno ga otvori"
   },
+  "optionReverseItemPath": {
+    "message": "Prikaži put retka s najbližom mapom prvo"
+  },
   "optionSearchAfterEnter": {
     "message": "Traži oznake samo kada se pritisne ENTER (umjesto trenutnog pretraživanja)"
   },
@@ -1066,6 +1072,9 @@
   },
   "optionSearchHistoryHint": {
     "message": "Sakrij područje nedavnih pretraga iznad rezultata — zabilježeni upiti ostaju"
+  },
+  "optionSearchShowFolders": {
+    "message": "Prikaži mape u rezultatima pretraživanja (klik otkriva mapu u stablu)"
   },
   "optionShowDeadView": {
     "message": "Prikaži karticu prikaza mrtvih veza"
@@ -2496,6 +2505,12 @@
   },
   "toolButtonTitle": {
     "message": "Alati (Ctrl+K)"
+  },
+  "tooltipAdded": {
+    "message": "Dodano"
+  },
+  "tooltipPath": {
+    "message": "Putanja"
   },
   "undoAction": {
     "message": "Poništi"

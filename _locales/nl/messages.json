@@ -1007,6 +1007,9 @@
   "optionFaviconEnrichHint": {
     "message": "Voor gebookmarkte sites waarvoor Chrome geen gecachet pictogram heeft, wordt het echte pictogram rechtstreeks van de site opgehaald (/favicon.ico, daarna de gedeclareerde pictogrammen van de pagina). Verzoeken gaan alleen naar sites die u hebt gebookmarkt."
   },
+  "optionFocusSearchOnOpen": {
+    "message": "Zoekvak focussen wanneer de pop-up opent"
+  },
   "optionHighlightUnsynced": {
     "message": "Niet-gesynchroniseerde bladwijzers dimmen"
   },
@@ -1055,6 +1058,9 @@
   "optionRememberView": {
     "message": "Onthoud de laatste actieve weergave en open deze opnieuw"
   },
+  "optionReverseItemPath": {
+    "message": "Het pad van de regel weergeven met de dichtstbijzijnde map eerst"
+  },
   "optionSearchAfterEnter": {
     "message": "Bladwijzers alleen zoeken wanneer ENTER wordt ingedrukt (in plaats van direct zoeken)"
   },
@@ -1066,6 +1072,9 @@
   },
   "optionSearchHistoryHint": {
     "message": "Het gebied met recente zoekopdrachten boven de resultaten verbergen — opgeslagen zoekopdrachten blijven bewaard"
+  },
+  "optionSearchShowFolders": {
+    "message": "Mappen tonen in de zoekresultaten (klik toont de map in de structuur)"
   },
   "optionShowDeadView": {
     "message": "Toon het tabblad voor dode links"
@@ -2496,6 +2505,12 @@
   },
   "toolButtonTitle": {
     "message": "Hulpmiddelen (Ctrl+K)"
+  },
+  "tooltipAdded": {
+    "message": "Toegevoegd"
+  },
+  "tooltipPath": {
+    "message": "Pad"
   },
   "undoAction": {
     "message": "Ongedaan maken"

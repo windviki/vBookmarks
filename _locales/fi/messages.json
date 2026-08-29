@@ -1007,6 +1007,9 @@
   "optionFaviconEnrichHint": {
     "message": "Niille kirjanmerkeissä oleville sivustoille, joille Chromella ei ole välimuistissa kuvaketta, hae oikea kuvake suoraan sivustolta (/favicon.ico, sitten sivun ilmoittamat kuvakkeet). Pyynnöt lähetetään vain sivustoille, jotka olet lisännyt kirjanmerkkeihin."
   },
+  "optionFocusSearchOnOpen": {
+    "message": "Kohdista hakukenttä, kun ponnahdusikkuna avautuu"
+  },
   "optionHighlightUnsynced": {
     "message": "Himmennä synkronoimattomat kirjanmerkit"
   },
@@ -1055,6 +1058,9 @@
   "optionRememberView": {
     "message": "Muista viimeisin aktiivinen näkymä ja avaa se uudelleen"
   },
+  "optionReverseItemPath": {
+    "message": "Näytä rivin polku lähimmästä kansiosta alkaen"
+  },
   "optionSearchAfterEnter": {
     "message": "Etsi kirjanmerkkejä vain kun ENTERiä painetaan (sen sijaan että etsisi heti)"
   },
@@ -1066,6 +1072,9 @@
   },
   "optionSearchHistoryHint": {
     "message": "Piilota viimeaikaisten hakujen alue tulosten yläpuolelta — tallennetut kyselyt säilyvät"
+  },
+  "optionSearchShowFolders": {
+    "message": "Näytä kansiot hakutuloksissa (napsautus paljastaa kansion sijainnin puussa)"
   },
   "optionShowDeadView": {
     "message": "Näytä kuolleet linkit -välilehti"
@@ -2496,6 +2505,12 @@
   },
   "toolButtonTitle": {
     "message": "Työkalut (Ctrl+K)"
+  },
+  "tooltipAdded": {
+    "message": "Lisätty"
+  },
+  "tooltipPath": {
+    "message": "Polku"
   },
   "undoAction": {
     "message": "Kumoa"

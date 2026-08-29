@@ -1007,6 +1007,9 @@
   "optionFaviconEnrichHint": {
     "message": "Chrome にキャッシュアイコンがないブックマーク済みサイトでは、実際のアイコンをサイトから直接取得します（/favicon.ico、次にページで宣言されたアイコン）。リクエストはブックマークしたサイトにのみ送信されます。"
   },
+  "optionFocusSearchOnOpen": {
+    "message": "ポップアップを開いたときに検索ボックスにフォーカスする"
+  },
   "optionHighlightUnsynced": {
     "message": "未同期ブックマークを暗く表示"
   },
@@ -1055,6 +1058,9 @@
   "optionRememberView": {
     "message": "最後にアクティブだったビューを記憶して再度開く"
   },
+  "optionReverseItemPath": {
+    "message": "行のパスを最も近いフォルダーから表示する"
+  },
   "optionSearchAfterEnter": {
     "message": "Enter キーが押されたときにのみブックマークを検索する (インスタント検索ではなく)"
   },
@@ -1066,6 +1072,9 @@
   },
   "optionSearchHistoryHint": {
     "message": "結果の上の最近の検索エリアを非表示 — 記録されたクエリは保持されます"
+  },
+  "optionSearchShowFolders": {
+    "message": "検索結果にフォルダーを表示する（クリックでツリー内のフォルダーへ移動）"
   },
   "optionShowDeadView": {
     "message": "デッドリンクビュータブを表示"
@@ -2496,6 +2505,12 @@
   },
   "toolButtonTitle": {
     "message": "ツール (Ctrl+K)"
+  },
+  "tooltipAdded": {
+    "message": "追加日時"
+  },
+  "tooltipPath": {
+    "message": "パス"
   },
   "undoAction": {
     "message": "元に戻す"

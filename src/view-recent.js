@@ -307,8 +307,10 @@ export function initViewRecent(ctx = {}) {
             (inGroup ? '<span class="staging-connector" aria-hidden="true"></span>' : '') +
             treeRender.generateBookmarkHTML(it.title, it.url, 'data-virtual="1" draggable="false"', it.id || null, null, {
                 path,
+                pathLabel: views.pathLabelOf ? views.pathLabelOf(it.id) : '',
+                dateAdded: it.id ? undefined : it.ts,
                 badge: { text: rel, cls: 'time' },
-                rightText: (views.showItemPath() && path) ? path : '',
+                rightText: (views.showItemPath() && path) ? (views.pathLabelOf ? views.pathLabelOf(it.id) : path) : '',
                 subText
             }) +
             // Selection mode shows only the checkbox affordance (§3.1 — the
@@ -348,7 +350,9 @@ export function initViewRecent(ctx = {}) {
             // 2026-08-27: the SMALL heads carry the tree's twisty SVG (the
             // CSS rotates it open like #tree); only the two BIG section
             // heads keep the solid ▾/▸ text glyph.
-            `<span class="chevron${collapsed ? ' collapsed' : ''}" aria-hidden="true">${CHEVRON_ICON}</span>` +
+            // 2026-08-29: 选择模式不渲染(折叠禁用,死装饰;连接线改锚图标中心轴)
+            (selecting ? '' :
+                `<span class="chevron${collapsed ? ' collapsed' : ''}" aria-hidden="true">${CHEVRON_ICON}</span>`) +
             `<i class="staging-bucket-star" aria-hidden="true">${IC.star}</i>` +
             `<span class="staging-section-title">${_m('stagingBucketTitle')}</span>` +
             `<span class="count-pill" aria-label="${count}">${countText}</span>` +
@@ -420,7 +424,10 @@ export function initViewRecent(ctx = {}) {
         return `<li class="staging-group${selCls}${count ? ' has-members' : ''}" data-group-id="${g.id}" role="presentation">` +
             `<span class="group-head staging-group-head" tabindex="-1" role="button" ` +
             `aria-expanded="${collapsed ? 'false' : 'true'}" title="${gname}"${dragAttr}>` +
-            `<span class="chevron${collapsed ? ' collapsed' : ''}" aria-hidden="true">${CHEVRON_ICON}</span>` +
+            // 选择模式不渲染 chevron(折叠在选择模式下本就禁用,是死装饰)——
+            // 连接线改锚头图标中心轴,checkbox 之后 glyph 直接领位(2026-08-29)
+            (selecting ? '' :
+                `<span class="chevron${collapsed ? ' collapsed' : ''}" aria-hidden="true">${CHEVRON_ICON}</span>`) +
             // 2026-08-25 icon round: the tree's folder glyph leads the title
             // on the bucket star's slot — every fold head reads glyph-then-
             // title, and the glyph column stacks on the member favicon column.
@@ -568,16 +575,21 @@ export function initViewRecent(ctx = {}) {
         for (let i = 0, l = rows.length; i < l; i++) {
             const d = rows[i];
             const path = views.pathOf(d.id);
+            // issue #64: the meta-line path follows the reverseItemPath option
+            // (nearest-first label form); the tooltip stays canonical.
+            const labelPath = views.pathLabelOf ? views.pathLabelOf(d.id) : path;
             // §3.3: narrow right slot = relative time; wide second line =
             // `路径 · 绝对时间` (the path half follows showItemPath).
             const absTime = new Date(d.dateAdded || 0).toLocaleString();
-            const subText = (showPath && path) ? `${path} · ${absTime}` : absTime;
+            const subText = (showPath && path) ? `${labelPath} · ${absTime}` : absTime;
             html += `<li class="vbm-row" id="recent-item-${d.id}" role="listitem" ` +
                 `data-node-id="${d.id}" data-parentid="${d.parentId}" data-recent-group="${g}">` +
                 treeRender.generateBookmarkHTML(d.title, d.url, 'data-virtual="1"', d.id, null, {
                     path,
+                    pathLabel: labelPath,
+                    dateAdded: d.dateAdded,
                     badge: { text: relTimeLabel(d.dateAdded, _m), cls: 'time' },
-                    rightText: (showPath && path) ? path : '',
+                    rightText: (showPath && path) ? labelPath : '',
                     subText
                 }) +
                 stageBtnHtml(d.url) +
@@ -620,7 +632,9 @@ export function initViewRecent(ctx = {}) {
                 // the SMALL time-bucket head carries the tree twisty SVG
                 // (2026-08-27 small-head restyle); the big #recent-head
                 // below keeps the solid triangle.
-                `<span class="chevron${collapsed ? ' collapsed' : ''}" aria-hidden="true">${CHEVRON_ICON}</span>` +
+                // 2026-08-29: 选择模式不渲染 chevron(折叠禁用;与暂存组头一致)
+                (selecting ? '' :
+                    `<span class="chevron${collapsed ? ' collapsed' : ''}" aria-hidden="true">${CHEVRON_ICON}</span>`) +
                 // 2026-08-25 icon round: the clock glyph leads on the bucket
                 // star's slot — the time buckets read glyph-then-title like
                 // the staging heads above (folder / hollow star).

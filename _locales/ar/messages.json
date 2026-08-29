@@ -1007,6 +1007,9 @@
   "optionFaviconEnrichHint": {
     "message": "بالنسبة للمواقع المفضلة التي لا يحتوي Chrome على أيقونة مخبأة لها، يتم جلب الأيقونة الفعلية مباشرة من الموقع (/favicon.ico، ثم الأيقونات المعلنة في الصفحة). تُرسل الطلبات فقط إلى المواقع التي أضفتها إلى المفضلة."
   },
+  "optionFocusSearchOnOpen": {
+    "message": "تركيز مربع البحث عند فتح النافذة المنبثقة"
+  },
   "optionHighlightUnsynced": {
     "message": "تعتيم الإشارات المرجعية غير المتزامنة"
   },
@@ -1055,6 +1058,9 @@
   "optionRememberView": {
     "message": "تذكر آخر عرض نشط وأعد فتحه"
   },
+  "optionReverseItemPath": {
+    "message": "إظهار مسار الصف بالمجلد الأقرب أولاً"
+  },
   "optionSearchAfterEnter": {
     "message": "البحث عن العلامات المرجعية فقط عند الضغط على ENTER (بدلاً من البحث الفوري)"
   },
@@ -1066,6 +1072,9 @@
   },
   "optionSearchHistoryHint": {
     "message": "إخفاء منطقة البحث الحديثة أعلى النتائج — تبقى الاستعلامات المسجلة محفوظة"
+  },
+  "optionSearchShowFolders": {
+    "message": "إظهار المجلدات في نتائج البحث (النقر يحدد موقع المجلد في الشجرة)"
   },
   "optionShowDeadView": {
     "message": "إظهار علامة تبويب الروابط المعطلة"
@@ -2496,6 +2505,12 @@
   },
   "toolButtonTitle": {
     "message": "أدوات (Ctrl+K)"
+  },
+  "tooltipAdded": {
+    "message": "تاريخ الإضافة"
+  },
+  "tooltipPath": {
+    "message": "المسار"
   },
   "undoAction": {
     "message": "تراجع"

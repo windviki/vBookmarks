@@ -1007,6 +1007,9 @@
   "optionFaviconEnrichHint": {
     "message": "För bokmärkta webbplatser där Chrome inte har någon cachad ikon, hämta den faktiska ikonen direkt från webbplatsen (/favicon.ico, sedan sidans deklarerade ikoner). Förfrågningar skickas endast till webbplatser du har bokmärkt."
   },
+  "optionFocusSearchOnOpen": {
+    "message": "Fokusera sökrutan när popupfönstret öppnas"
+  },
   "optionHighlightUnsynced": {
     "message": "Dämpa osynkroniserade bokmärken"
   },
@@ -1055,6 +1058,9 @@
   "optionRememberView": {
     "message": "Kom ihåg den senast aktiva vyn och öppna den igen"
   },
+  "optionReverseItemPath": {
+    "message": "Visa radens sökväg med närmaste mappen först"
+  },
   "optionSearchAfterEnter": {
     "message": "Sök bokmärken endast när ENTER trycks (istället för omedelbar sökning)"
   },
@@ -1066,6 +1072,9 @@
   },
   "optionSearchHistoryHint": {
     "message": "Dölj området för senaste sökningar ovanför resultaten — sparade frågor behålls"
+  },
+  "optionSearchShowFolders": {
+    "message": "Visa mappar i sökresultaten (klick visar mappen i trädet)"
   },
   "optionShowDeadView": {
     "message": "Visa fliken för döda länkar"
@@ -2496,6 +2505,12 @@
   },
   "toolButtonTitle": {
     "message": "Verktyg (Ctrl+K)"
+  },
+  "tooltipAdded": {
+    "message": "Tillagt"
+  },
+  "tooltipPath": {
+    "message": "Sökväg"
   },
   "undoAction": {
     "message": "Ångra"

@@ -1380,6 +1380,30 @@ describe('staging selection mode + group homing (velvet staging ST5)', () => {
         expect(viewRecent.api.selectedUrls()).toEqual([]);
     });
 
+    // 2026-08-29 maintainer call: the small heads carry NO chevron in
+    // selection mode (folds are disabled there — dead chrome), and the
+    // dashed connector re-anchors to the head icon's center axis (CSS).
+    it('selection mode renders the small heads WITHOUT chevrons (connector re-anchors to the icon axis)', () => {
+        const { viewRecent, $list } = setup({});
+        viewRecent.api.addItems([
+            { id: null, url: 'http://h1/', title: 'H1' },
+            { id: '5', url: 'http://k/', title: 'K' }
+        ]);
+        viewRecent.api.addItemsToNamedGroup('G', [{ url: 'http://g1/', title: 'G1' }]);
+        viewRecent.api.setSelecting(true);
+        const html = $list.innerHTML;
+        // the SMALL heads (bucket/group/time-bucket) drop their twisty-SVG
+        // chevron; the two BIG section heads keep their empty CSS-glyph
+        // chevron span (solid triangle) — assert on the svg, not the class
+        expect(html).not.toContain('vbm-icon-chevron');
+        // the glyph wells still lead (icon-axis connector anchor points)
+        expect(html).toContain('staging-bucket-star');
+        expect(html).toContain('staging-group-folder');
+        // exiting restores the fold chevrons
+        viewRecent.api.setSelecting(false);
+        expect($list.innerHTML).toContain('vbm-icon-chevron');
+    });
+
     it('row click and Space toggle membership; group/bucket heads select all', () => {
         const { viewRecent, $list, click, def } = setup({});
         def().activate();

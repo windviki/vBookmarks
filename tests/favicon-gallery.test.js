@@ -157,7 +157,7 @@ describe('buildGallery', () => {
         expect(eleven.visits).toBe(0);
         // The docs bookmark carries its nested folder path.
         const docs = cards.find(c => c.host === 'docs.github.com');
-        expect(docs.bookmarks[0].path).toBe('Bookmarks bar / Dev');
+        expect(docs.bookmarks[0].path).toBe('Bookmarks bar / Dev'); // canonical (the gallery page predates the reverse option)
         expect(docs.kind).toBe('agg');
         expect(docs.source).toBe('duckduckgo');
         // example.com has no cached icon → no card.

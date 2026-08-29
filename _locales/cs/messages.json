@@ -1007,6 +1007,9 @@
   "optionFaviconEnrichHint": {
     "message": "Pokud Chrome nemá pro webovou stránku ikonu v mezipaměti, načte skutečnou ikonu přímo z webu (/favicon.ico, pak deklarované ikony stránky). Požadavky jsou odesílány pouze na weby, které máte v záložkách."
   },
+  "optionFocusSearchOnOpen": {
+    "message": "Po otevření vyskakovacího okna zaměřit vyhledávací pole"
+  },
   "optionHighlightUnsynced": {
     "message": "Ztlumit nesynchronizované záložky"
   },
@@ -1055,6 +1058,9 @@
   "optionRememberView": {
     "message": "Pamatovat si poslední aktivní zobrazení a znovu jej otevřít"
   },
+  "optionReverseItemPath": {
+    "message": "Zobrazit cestu řadu s nejbližší složkou jako první"
+  },
   "optionSearchAfterEnter": {
     "message": "Hledat záložky pouze při stisknutí ENTER (místo okamžitého hledání)"
   },
@@ -1066,6 +1072,9 @@
   },
   "optionSearchHistoryHint": {
     "message": "Skrýt oblast nedávných hledání nad výsledky — zaznamenané dotazy zůstávají"
+  },
+  "optionSearchShowFolders": {
+    "message": "Zobrazovat složky ve výsledcích vyhledávání (kliknutím složku najdete ve stromu)"
   },
   "optionShowDeadView": {
     "message": "Zobrazit kartu mrtvých odkazů"
@@ -2496,6 +2505,12 @@
   },
   "toolButtonTitle": {
     "message": "Nástroje (Ctrl+K)"
+  },
+  "tooltipAdded": {
+    "message": "Přidáno"
+  },
+  "tooltipPath": {
+    "message": "Cesta"
   },
   "undoAction": {
     "message": "Zpět"

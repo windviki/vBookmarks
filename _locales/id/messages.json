@@ -1007,6 +1007,9 @@
   "optionFaviconEnrichHint": {
     "message": "Untuk situs yang ditandai yang tidak memiliki ikon cache di Chrome, ambil ikon asli langsung dari situs (/favicon.ico, lalu ikon yang dideklarasikan halaman). Permintaan hanya dikirim ke situs yang Anda tandai."
   },
+  "optionFocusSearchOnOpen": {
+    "message": "Fokuskan kotak pencarian saat popup dibuka"
+  },
   "optionHighlightUnsynced": {
     "message": "Redupkan bookmark yang tidak tersinkronisasi"
   },
@@ -1055,6 +1058,9 @@
   "optionRememberView": {
     "message": "Ingat tampilan aktif terakhir dan buka kembali"
   },
+  "optionReverseItemPath": {
+    "message": "Tampilkan jalur baris dengan folder terdekat lebih dulu"
+  },
   "optionSearchAfterEnter": {
     "message": "Cari markah hanya saat ENTER ditekan (bukan pencarian instan)"
   },
@@ -1066,6 +1072,9 @@
   },
   "optionSearchHistoryHint": {
     "message": "Sembunyikan area pencarian terbaru di atas hasil — kueri yang tersimpan tetap dipertahankan"
+  },
+  "optionSearchShowFolders": {
+    "message": "Tampilkan folder dalam hasil pencarian (klik menunjukkan lokasi folder di pohon)"
   },
   "optionShowDeadView": {
     "message": "Tampilkan tab tautan mati"
@@ -2496,6 +2505,12 @@
   },
   "toolButtonTitle": {
     "message": "Alat (Ctrl+K)"
+  },
+  "tooltipAdded": {
+    "message": "Ditambahkan"
+  },
+  "tooltipPath": {
+    "message": "Jalur"
   },
   "undoAction": {
     "message": "Urungkan"

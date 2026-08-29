@@ -229,6 +229,7 @@ const setup = (opts = {}) => {
         rtl: !!opts.rtl,
         clearMenu: opts.noClearMenu ? undefined : () => clearMenuCalls.push(1),
         getRememberState: opts.getRememberState,
+        getFocusSearchOnOpen: opts.getFocusSearchOnOpen,
         toastAction: opts.toastAction,
         dismissToast: opts.dismissToast
     });
@@ -567,6 +568,24 @@ describe('activate', () => {
         recent.listEl.scrollTop = 0;
         views.activate('recent', { keepFocus: true });
         expect(recent.listEl.scrollTop).toBe(42);
+    });
+
+    // Issue #63: the tree scrolls too — the built-in tree registration carries
+    // persistScroll so a view round-trip doesn't strand the user back at the
+    // top (container.hidden's display:none wipe).
+    it('restores the TREE scroll across a view round-trip (issue #63)', () => {
+        const { views, store, addRecent } = setup({});
+        const recent = addRecent();
+        const tree = views.views().find(v => v.id === 'tree');
+        expect(tree.persistScroll).toBe(true);
+
+        tree.listEl.scrollTop = 2500;
+        views.activate('recent', { keepFocus: true });
+        expect(JSON.parse(store.get('viewState')).tree).toEqual({ scroll: 2500, focus: null });
+        // the display:none wipe drops scrollTop to 0 while hidden
+        tree.listEl.scrollTop = 0;
+        views.activate('tree', { keepFocus: true });
+        expect(tree.listEl.scrollTop).toBe(2500);
     });
 
     it('runs the deactivate/activate hooks in order with the keepFocus flag', () => {
@@ -1394,6 +1413,29 @@ describe('shared parent-path map (§3.6)', () => {
         expect(views.pathOf('11')).toBe('Folder A');
         expect(views.pathOf('unknown')).toBe('');
     });
+
+    // issue #64(i): renders before the first map exist can check pathsReady
+    // and re-run once it flips — the boot-order heal contract.
+    it('pathsReady flips only after the first map lands (buildPathMap or setPathMap)', () => {
+        const { views } = setup({});
+        expect(views.pathsReady()).toBe(false);
+        views.setPathMap({ 11: 'Folder A' });
+        expect(views.pathsReady()).toBe(true);
+    });
+
+    // issue #64: meta-line path form — canonical by default (tooltips always
+    // canonical), nearest-first label map under the reverseItemPath option.
+    it('pathLabelOf keeps the canonical form by default and flips under reverseItemPath', () => {
+        const { views, store } = setup({ storeData: { reverseItemPath: '' } });
+        views.setPathMap(
+            { 11: 'Bookmarks Bar / Dev' },
+            { 11: 'Dev < Bookmarks Bar' });
+        expect(views.pathOf('11')).toBe('Bookmarks Bar / Dev'); // tooltip form
+        expect(views.pathLabelOf('11')).toBe('Bookmarks Bar / Dev'); // default: same
+        store._data.reverseItemPath = '1';
+        expect(views.pathLabelOf('11')).toBe('Dev < Bookmarks Bar');
+        expect(views.pathOf('11')).toBe('Bookmarks Bar / Dev'); // unchanged
+    });
 });
 
 describe('settings', () => {
@@ -1507,6 +1549,20 @@ describe('focusSpot — unified popup-reopen focus memory', () => {
             byId['tool-btn'] = tool;
             views.restoreFocusSpot();
             expect(doc.activeElement).toBe(tool);
+        });
+
+        it('stands down under focusSearchOnOpen — the search input keeps the autofocus (issue #64)', () => {
+            const { views, doc, byId, makeEl, store } = setup({
+                storeData: { focusSpot: JSON.stringify({ zone: 'header', key: 'tool-btn' }) },
+                getFocusSearchOnOpen: () => true
+            });
+            const tool = makeEl('button');
+            tool.id = 'tool-btn';
+            byId['tool-btn'] = tool;
+            views.restoreFocusSpot();
+            expect(doc.activeElement).toBe(null); // never stole the focus
+            // the spot is consumed/cleared, not left armed for a later call
+            expect(store.setCalls.filter(([k]) => k === 'focusSpot')).toEqual([['focusSpot', null]]);
         });
 
         it('returns focus to the exact remembered toolbar control', () => {

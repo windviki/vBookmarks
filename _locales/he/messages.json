@@ -1007,6 +1007,9 @@
   "optionFaviconEnrichHint": {
     "message": "עבור אתרים בסימניות שאין ל-Chrome אייקון שמור עבורם, אחזר את האייקון האמיתי ישירות מהאתר (/favicon.ico, ולאחר מכן האייקונים המוצהרים של הדף). בקשות נשלחות רק לאתרים שבסימניות."
   },
+  "optionFocusSearchOnOpen": {
+    "message": "מיקוד בתיבת החיפוש בפתיחת החלונית"
+  },
   "optionHighlightUnsynced": {
     "message": "עמעם סימניות לא מסונכרנות"
   },
@@ -1055,6 +1058,9 @@
   "optionRememberView": {
     "message": "זכור את התצוגה הפעילה האחרונה ופתח אותה מחדש"
   },
+  "optionReverseItemPath": {
+    "message": "הצגת נתיב השורה עם התיקייה הקרובה קודם"
+  },
   "optionSearchAfterEnter": {
     "message": "חפש סימניות רק כאשר לוחצים ENTER (במקום חיפוש מיידי)"
   },
@@ -1066,6 +1072,9 @@
   },
   "optionSearchHistoryHint": {
     "message": "הסתרת אזור החיפושים האחרונים מעל התוצאות — השאילתות שנשמרו נשמרות"
+  },
+  "optionSearchShowFolders": {
+    "message": "הצגת תיקיות בתוצאות החיפוש (לחיצה מאתרת את התיקייה בעץ)"
   },
   "optionShowDeadView": {
     "message": "הצג לשונית תצוגת קישורים מתים"
@@ -2496,6 +2505,12 @@
   },
   "toolButtonTitle": {
     "message": "כלים (Ctrl+K)"
+  },
+  "tooltipAdded": {
+    "message": "נוסף"
+  },
+  "tooltipPath": {
+    "message": "נתיב"
   },
   "undoAction": {
     "message": "בטל"

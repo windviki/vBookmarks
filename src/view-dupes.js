@@ -497,6 +497,7 @@ export function initViewDupes(ctx = {}) {
             const item = group.items[i];
             const isKeeper = item === keeper;
             const path = views.pathOf(item.id);
+            const labelPath = views.pathLabelOf ? views.pathLabelOf(item.id) : path;
             // §3.6: member rows carry path + dateAdded only — never the URL.
             const shortDate = new Date(item.dateAdded || 0).toLocaleDateString();
             const fullTime = new Date(item.dateAdded || 0).toLocaleString();
@@ -507,14 +508,16 @@ export function initViewDupes(ctx = {}) {
                 `aria-label="${L.keepThis}" title="${L.keepThis}"></button>` +
                 treeRender.generateBookmarkHTML(item.title, item.url, 'data-virtual="1"', item.id, null, {
                     path,
+                    pathLabel: labelPath,
+                    dateAdded: item.dateAdded,
                     // §3.6 unified meta: the date rides the left-aligned time
                     // slot (first column), the path the right-aligned row-path
                     // (second column); wide/panel keeps the date and moves path
                     // to the second line (`路径 · 时间`, same template as the
                     // recent view). The path half follows showItemPath.
                     badge: { text: shortDate, cls: 'time' },
-                    rightText: (showPath && path) ? path : '',
-                    subText: (showPath && path) ? `${path} · ${fullTime}` : fullTime
+                    rightText: (showPath && path) ? labelPath : '',
+                    subText: (showPath && path) ? `${labelPath} · ${fullTime}` : fullTime
                 }) +
                 stageBtnHtml(item) +
                 `<button class="row-btn dupes-member-del" aria-label="${L.rowDelete}" ` +

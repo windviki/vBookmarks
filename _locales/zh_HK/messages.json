@@ -1007,6 +1007,9 @@
   "optionFaviconEnrichHint": {
     "message": "對於 Chrome 沒有快取圖示的書籤網站，直接從網站擷取真實圖示（/favicon.ico，然後是頁面宣告的圖示）。要求只會傳送到您已書籤的網站。"
   },
+  "optionFocusSearchOnOpen": {
+    "message": "開啟彈出視窗時聚焦搜尋框"
+  },
   "optionHighlightUnsynced": {
     "message": "變淡顯示未同步的書籤"
   },
@@ -1055,6 +1058,9 @@
   "optionRememberView": {
     "message": "記住最後使用的檢視，並於重新開啟時還原"
   },
+  "optionReverseItemPath": {
+    "message": "行路徑以最接近的資料夾在前顯示（倒序）"
+  },
   "optionSearchAfterEnter": {
     "message": "僅當回車之後才進行書籤搜索（否則輸入字符立即搜索）"
   },
@@ -1066,6 +1072,9 @@
   },
   "optionSearchHistoryHint": {
     "message": "隱藏結果區上方的最近搜索區域——已記錄的查詢會保留。"
+  },
+  "optionSearchShowFolders": {
+    "message": "在搜尋結果中顯示資料夾（點擊即定位至樹狀結構中的資料夾）"
   },
   "optionShowDeadView": {
     "message": "顯示失效連結檢視標籤"
@@ -2496,6 +2505,12 @@
   },
   "toolButtonTitle": {
     "message": "工具 (Ctrl+K)"
+  },
+  "tooltipAdded": {
+    "message": "加入時間"
+  },
+  "tooltipPath": {
+    "message": "路徑"
   },
   "undoAction": {
     "message": "復原"

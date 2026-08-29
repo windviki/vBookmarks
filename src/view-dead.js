@@ -737,12 +737,14 @@ export function initViewDead(ctx = {}) {
             `id="dead-item-${item.id}" role="listitem" data-node-id="${item.id}">` +
             treeRender.generateBookmarkHTML(item.title, item.url, 'data-virtual="1"', item.id, null, {
                 path,
+                pathLabel: views.pathLabelOf ? views.pathLabelOf(item.id) : '',
+                dateAdded: item.dateAdded,
                 // Intentional exception: the path labels are NOT gated
                 // by showItemPath here (the dupes/recent rows are) —
                 // locating a dead bookmark needs its containing folder
                 // to be visible (docs/plan-4.0.0/v4task-2-list.md §3.5 row spec:
                 // "[icon][title ……] [×dead | ⇄直连×] [path]").
-                rightText: path,
+                rightText: views.pathLabelOf ? views.pathLabelOf(item.id) : path,
                 // 宽/panel 第二行：路径左对齐（subText）+ 时间右对齐（subRight）。
                 // 窄视口 row-sub 隐藏、右侧槽只显示 path（rightText）→ 时间仅
                 // 存 tooltip（追加在下方）。
@@ -811,8 +813,10 @@ export function initViewDead(ctx = {}) {
             `role="listitem" data-node-id="${item.id}">` +
             treeRender.generateBookmarkHTML(item.title, item.url, 'data-virtual="1"', item.id, null, {
                 path,
-                rightText: path,
-                subText: path,
+                pathLabel: views.pathLabelOf ? views.pathLabelOf(item.id) : '',
+                dateAdded: item.dateAdded,
+                rightText: views.pathLabelOf ? views.pathLabelOf(item.id) : path,
+                subText: views.pathLabelOf ? views.pathLabelOf(item.id) : path,
                 subRight: fmtTime(markTime),
                 tooltipAppend: tip,
                 badgeSlot: true,

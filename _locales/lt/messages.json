@@ -1007,6 +1007,9 @@
   "optionFaviconEnrichHint": {
     "message": "Svetainėms, kurioms Chrome neturi išsaugotos piktogramos, gaukite tikrą piktogramą tiesiogiai iš svetainės (/favicon.ico, tada svetainės deklaruotos piktogramos). Užklausos siunčiamos tik į jūsų įsimintas svetaines."
   },
+  "optionFocusSearchOnOpen": {
+    "message": "Fokusuoti paieškos lauką atidarius iššokantįjį langą"
+  },
   "optionHighlightUnsynced": {
     "message": "Pritemdyti nesinchronizuotas žymes"
   },
@@ -1055,6 +1058,9 @@
   "optionRememberView": {
     "message": "Įsiminti paskutinį aktyvų rodinį ir atidaryti jį iš naujo"
   },
+  "optionReverseItemPath": {
+    "message": "Rodyti eilutės kelią nuo artimiausio aplanko"
+  },
   "optionSearchAfterEnter": {
     "message": "Ieškoti žymelių tik paspaudus ENTER (vietoj momentinės paieškos)"
   },
@@ -1066,6 +1072,9 @@
   },
   "optionSearchHistoryHint": {
     "message": "Slėpti naujausių paieškų sritį virš rezultatų — įrašytos užklausos išlieka"
+  },
+  "optionSearchShowFolders": {
+    "message": "Rodyti aplankus paieškos rezultatuose (spustelėjimas atveria aplanką medyje)"
   },
   "optionShowDeadView": {
     "message": "Rodyti negyvų nuorodų rodinio skirtuką"
@@ -2496,6 +2505,12 @@
   },
   "toolButtonTitle": {
     "message": "Įrankiai (Ctrl+K)"
+  },
+  "tooltipAdded": {
+    "message": "Pridėta"
+  },
+  "tooltipPath": {
+    "message": "Kelias"
   },
   "undoAction": {
     "message": "Atšaukti"

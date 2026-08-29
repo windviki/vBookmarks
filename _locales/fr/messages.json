@@ -1007,6 +1007,9 @@
   "optionFaviconEnrichHint": {
     "message": "Pour les sites mis en favoris pour lesquels Chrome n'a pas d'icône en cache, récupérer l'icône réelle directement depuis le site (/favicon.ico, puis les icônes déclarées par la page). Les requêtes ne sont envoyées qu'aux sites que vous avez mis en favoris."
   },
+  "optionFocusSearchOnOpen": {
+    "message": "Activer la zone de recherche à l'ouverture du popup"
+  },
   "optionHighlightUnsynced": {
     "message": "Atténuer les signets non synchronisés"
   },
@@ -1055,6 +1058,9 @@
   "optionRememberView": {
     "message": "Mémoriser la dernière vue active et la rouvrir"
   },
+  "optionReverseItemPath": {
+    "message": "Afficher le chemin de la ligne avec le dossier le plus proche en premier"
+  },
   "optionSearchAfterEnter": {
     "message": "Rechercher des signets uniquement lorsque vous appuyez sur ENTER (au lieu d'une recherche instantanée)"
   },
@@ -1066,6 +1072,9 @@
   },
   "optionSearchHistoryHint": {
     "message": "Masquer la zone de recherches récentes au-dessus des résultats — les requêtes enregistrées sont conservées"
+  },
+  "optionSearchShowFolders": {
+    "message": "Afficher les dossiers dans les résultats de recherche (un clic localise le dossier dans l'arborescence)"
   },
   "optionShowDeadView": {
     "message": "Afficher l'onglet des liens morts"
@@ -2496,6 +2505,12 @@
   },
   "toolButtonTitle": {
     "message": "Outils (Ctrl+K)"
+  },
+  "tooltipAdded": {
+    "message": "Ajouté"
+  },
+  "tooltipPath": {
+    "message": "Chemin"
   },
   "undoAction": {
     "message": "Annuler"

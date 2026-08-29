@@ -1007,6 +1007,9 @@
   "optionFaviconEnrichHint": {
     "message": "Para sitios marcados de los que Chrome no tiene icono en caché, obtén el icono real directamente del sitio (/favicon.ico, luego los iconos declarados de la página). Las solicitudes solo van a los sitios que marcaste."
   },
+  "optionFocusSearchOnOpen": {
+    "message": "Enfocar el cuadro de búsqueda al abrir la ventana emergente"
+  },
   "optionHighlightUnsynced": {
     "message": "Atenuar marcadores no sincronizados"
   },
@@ -1055,6 +1058,9 @@
   "optionRememberView": {
     "message": "Recordar la última vista activa y volver a abrirla"
   },
+  "optionReverseItemPath": {
+    "message": "Mostrar la ruta de la fila con la carpeta más cercana primero"
+  },
   "optionSearchAfterEnter": {
     "message": "Buscar marcadores solo cuando se presiona ENTER (en lugar de búsqueda instantánea)"
   },
@@ -1066,6 +1072,9 @@
   },
   "optionSearchHistoryHint": {
     "message": "Ocultar el área de búsquedas recientes sobre los resultados — las consultas registradas se conservan"
+  },
+  "optionSearchShowFolders": {
+    "message": "Mostrar carpetas en los resultados de búsqueda (al hacer clic se localiza la carpeta en el árbol)"
   },
   "optionShowDeadView": {
     "message": "Mostrar la pestaña de vista de enlaces muertos"
@@ -2496,6 +2505,12 @@
   },
   "toolButtonTitle": {
     "message": "Herramientas (Ctrl+K)"
+  },
+  "tooltipAdded": {
+    "message": "Añadido"
+  },
+  "tooltipPath": {
+    "message": "Ruta"
   },
   "undoAction": {
     "message": "Deshacer"

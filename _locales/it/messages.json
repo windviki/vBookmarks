@@ -1007,6 +1007,9 @@
   "optionFaviconEnrichHint": {
     "message": "Per i siti preferiti di cui Chrome non ha un'icona in cache, recupera l'icona reale direttamente dal sito (/favicon.ico, poi le icone dichiarate nella pagina). Le richieste vanno solo ai siti che hai salvato."
   },
+  "optionFocusSearchOnOpen": {
+    "message": "Attiva la casella di ricerca all'apertura del popup"
+  },
   "optionHighlightUnsynced": {
     "message": "Oscura i segnalibri non sincronizzati"
   },
@@ -1055,6 +1058,9 @@
   "optionRememberView": {
     "message": "Ricorda l'ultima vista attiva e riaprila"
   },
+  "optionReverseItemPath": {
+    "message": "Mostra il percorso della riga con la cartella più vicina prima"
+  },
   "optionSearchAfterEnter": {
     "message": "Cerca nei segnalibri solo quando si preme INVIO (invece della ricerca istantanea)"
   },
@@ -1066,6 +1072,9 @@
   },
   "optionSearchHistoryHint": {
     "message": "Nascondi l'area delle ricerche recenti sopra i risultati — le query registrate vengono conservate"
+  },
+  "optionSearchShowFolders": {
+    "message": "Mostra le cartelle nei risultati di ricerca (un clic individua la cartella nell'albero)"
   },
   "optionShowDeadView": {
     "message": "Mostra la scheda dei collegamenti morti"
@@ -2496,6 +2505,12 @@
   },
   "toolButtonTitle": {
     "message": "Strumenti (Ctrl+K)"
+  },
+  "tooltipAdded": {
+    "message": "Aggiunto"
+  },
+  "tooltipPath": {
+    "message": "Percorso"
   },
   "undoAction": {
     "message": "Annulla"

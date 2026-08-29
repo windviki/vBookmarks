@@ -125,6 +125,13 @@ const $ = id => document.getElementById(id);
             { id: 'tree-row-actions', key: 'treeRowActions', defaultValue: '1', inverted: false }
         ];
         const searchSettings = [
+            // issue #64: the popup opens with the search input focused (its
+            // autofocus attribute) instead of restoring focus to the last
+            // tree row — typing can start immediately.
+            { id: 'focus-search-on-open', key: 'focusSearchOnOpen', defaultValue: '', inverted: false },
+            // issue #64: folder rows ride the search results (click =
+            // reveal-in-tree); off keeps the list to bookmarks only.
+            { id: 'search-show-folders', key: 'searchShowFolders', defaultValue: '1', inverted: false },
             // v3 carry-over: rank/search only after Enter, not on every keystroke.
             { id: 'search-after-enter', key: 'searchAfterEnter', defaultValue: '', inverted: false }
         ];
@@ -148,6 +155,9 @@ const $ = id => document.getElementById(id);
             // v4 task-3 #18: compulsive mode — no count badges on the tabs
             { id: 'show-tab-badges', key: 'showTabBadges', defaultValue: '1', inverted: false },
             { id: 'show-item-path', key: 'showItemPath', defaultValue: '1', inverted: false },
+            // issue #64: nearest-parent-first row path labels (default off —
+            // canonical root-first, as before)
+            { id: 'reverse-item-path', key: 'reverseItemPath', defaultValue: '', inverted: false },
             // The per-view show switches stay together in Views for unified
             // control; each view-specific group below only carries its other
             // behavior options.
@@ -890,6 +900,10 @@ const $ = id => document.getElementById(id);
         document.getElementById('option-confirm-delete-folder').innerText = __m('optionConfirmDeleteFolder');
         document.getElementById('option-remember-prev-state').innerText = __m('optionRememberPrevState');
         document.getElementById('option-only-show-bmbar').innerText = __m('optionOnlyShowBookmarkBar');
+        // issue #64: popup startup focus goes to the search input
+        document.getElementById('option-focus-search-on-open').innerText = __m('optionFocusSearchOnOpen');
+        // issue #64: folder rows in search results (reveal-in-tree click)
+        document.getElementById('option-search-show-folders').innerText = __m('optionSearchShowFolders');
         document.getElementById('option-search-after-enter').innerText = __m('optionSearchAfterEnter');
         document.getElementById('option-auto-resize-popup').innerText = __m('optionAutoResizePopup');
         document.getElementById('option-open-in-side-panel').innerText = __m('optionOpenInSidePanel');
@@ -917,6 +931,7 @@ const $ = id => document.getElementById(id);
         document.getElementById('option-remember-view').innerText = __m('optionRememberView');
         document.getElementById('option-show-tab-badges').innerText = __m('optionShowTabBadges');
         document.getElementById('option-show-item-path').innerText = __m('optionShowItemPath');
+        document.getElementById('option-reverse-item-path').innerText = __m('optionReverseItemPath');
         document.getElementById('option-show-recent-bookmarks').innerText = __m('optionShowRecentBookmarks');
         document.getElementById('option-show-tab-groups-view').innerText = __m('optionShowTabGroupsView');
         document.getElementById('option-tabgroups-color-style').innerText = __m('tabGroupsColorStyle');
