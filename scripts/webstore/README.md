@@ -102,9 +102,11 @@ node scripts/webstore/publish.js listing            # dry-run 打印将抓取的
 node scripts/webstore/publish.js listing --yes      # 真正抓取
 
 # 9) listing 元信息·更新草稿(纯离线):名称/简介(_locales extName/extDesc)+
-#    详述(docs/README pitch 段)+ What's new(changelog 当前版本节)+ 上传图片
-#    清单门禁(五张 1280×800 截图 + 440×280 小图块 + 1400×560 marquee,逐张核对
-#    存在性/尺寸/alpha)→ listing-proposal.{en,zh-CN}.md + .json
+#    说明全文(assets/store/description.{en,zh-CN}.txt 规范文案,纯文本无
+#    markdown —— CWS 详情页不渲染标记;缺失时回退 docs/README pitch 段)+
+#    What's new(changelog 当前版本节)+ 上传图片清单门禁(五张 1280×800 截图
+#    + 440×280 小图块 + 1400×560 marquee,逐张核对存在性/尺寸/alpha)
+#    → listing-proposal.{en,zh-CN}.md + .json
 node scripts/webstore/publish.js listing-draft
 ```
 
@@ -125,8 +127,12 @@ cookie 且无法离线验证,本仓库不采用。因此本目录对 listing 的
 - **更新**(`listing-draft`):从仓库规范源生成可粘贴的双语草稿 + 上传图片
   清单门禁(尺寸/alpha,对齐 `scripts/screenshots/normalize-store-assets.py`),
   人工核对后粘贴进 Developer Dashboard → 包 → Store listing,图片按清单手动
-  上传 —— 与商店素材「人工挑选、手动上传」同一纪律。规范源改动(改 extDesc、
-  发新版)后重跑一次即得最新草稿;线上现值用 `listing --yes` 快照做 diff。
+  上传 —— 与商店素材「人工挑选、手动上传」同一纪律。规范源:名称/简介取
+  `_locales` 的 extName/extDesc,**说明全文取 `assets/store/description.
+  {en,zh-CN}.txt`**(纯文本,不含 markdown 标记 —— CWS 详情页不渲染;
+  草稿对标记符号有警告;文件缺失时回退 docs/README pitch 段),What's new
+  取 changelog 当前版本节。规范源改动后重跑一次即得最新草稿;线上现值用
+  `listing --yes` 快照做 diff。
 - 若未来 Google 为 V2 开放 listing 端点,接入点就是本文件里已隔离的
   `runListing` / `runListingDraft`(纯函数部分在 `parseDetailPage` /
   `extractInitData` / `buildProposal`,均有离线单测)。

@@ -464,8 +464,11 @@ function specMatch({ width, height }) {
 /**
  * 生成 listing 更新草稿。输入全部来自仓库规范源;输出 JSON + 双语 Markdown
  * (可直接贴进 Dashboard 的 Store listing 标签)。
+ * detailedEn/detailedZh: 商店「说明全文」的规范文案(assets/store/
+ * description.{en,zh-CN}.txt,纯文本无 markdown —— CWS 详情页不渲染标记);
+ * 缺省时回退 README pitch 段。
  */
-export function buildProposal({ version, en, zh, changelogEn, changelogZh, pitchEn, pitchZh, assets }) {
+export function buildProposal({ version, en, zh, changelogEn, changelogZh, pitchEn, pitchZh, assets, detailedEn = '', detailedZh = '' }) {
     const shots = assets.map(a => ({
         file: a.file,
         width: a.size?.width ?? null,
@@ -477,10 +480,11 @@ export function buildProposal({ version, en, zh, changelogEn, changelogZh, pitch
         version,
         en,
         zh,
+        detailedDescription: { en: detailedEn, 'zh-CN': detailedZh },
         whatsNew: { en: changelogEn, 'zh-CN': changelogZh },
         screenshots: shots
     };
-    const fmt = (title, copy, changelog, pitch) => `# vBookmarks — Store listing proposal (${title}, v${version})
+    const fmt = (title, copy, changelog, pitch, detailed) => `# vBookmarks — Store listing proposal (${title}, v${version})
 
 > 由 \`node scripts/webstore/publish.js listing-draft\` 生成。核对后把下列各栏
 > 粘贴进 Developer Dashboard → 包 → Store listing;图片按清单手动上传。
@@ -494,11 +498,11 @@ ${copy.name}
 
 ${copy.description}
 
-## Detailed description
+## Detailed description${detailed ? '(规范源 assets/store/description.' + (title === 'EN' ? 'en' : 'zh-CN') + '.txt,纯文本直贴)' : ''}
 
-**${pitch.lead}**
+${detailed || `**${pitch.lead}**
 
-${pitch.bullets.map(b => `- ${b}`).join('\n')}
+${pitch.bullets.map(b => `- ${b}`).join('\n')}`}
 
 ## What's new (v${version})
 
@@ -507,13 +511,13 @@ ${changelog || '_(docs README 中未找到该版本的 changelog 节)_'}
     const roster = shots.length
         ? shots.map(s => `- \`${s.file}\` — ${s.width ?? '?'}×${s.height ?? '?'}${s.spec ? ` ✓ ${s.spec}` : ' ⚠ 非标准尺寸'}`).join('\n')
         : '- _(assets/store/ 下没有图片)_';
-    const mdEn = `${fmt('EN', en, changelogEn, pitchEn)}
+    const mdEn = `${fmt('EN', en, changelogEn, pitchEn, detailedEn)}
 
 ## Screenshots to attach (assets/store/)
 
 ${roster}
 `;
-    const mdZh = `${fmt('zh-CN', zh, changelogZh, pitchZh)}
+    const mdZh = `${fmt('zh-CN', zh, changelogZh, pitchZh, detailedZh)}
 
 ## 截图清单(assets/store/)
 
@@ -761,6 +765,10 @@ function runListingDraft() {
     const changelogZh = extractChangelogSection(readmeZh, version);
     const pitchEn = extractReadmePitch(readmeEn);
     const pitchZh = extractReadmePitch(readmeZh);
+    // 说明全文规范文案(assets/store/description.*.txt,纯文本无 markdown ——
+    // CWS 详情页不渲染标记;缺失时 buildProposal 回退 README pitch 段)。
+    const detailedEn = read(`${REPO_ROOT}assets/store/description.en.txt`).trim();
+    const detailedZh = read(`${REPO_ROOT}assets/store/description.zh-CN.txt`).trim();
     const assets = fs.readdirSync(`${REPO_ROOT}assets/store`, { withFileTypes: true })
         .filter(e => e.isFile() && e.name.toLowerCase().endsWith('.png'))
         .map(e => {
@@ -768,7 +776,7 @@ function runListingDraft() {
             return { file: e.name, size };
         });
 
-    const { json, mdEn, mdZh } = buildProposal({ version, en, zh, changelogEn, changelogZh, pitchEn, pitchZh, assets });
+    const { json, mdEn, mdZh } = buildProposal({ version, en, zh, changelogEn, changelogZh, pitchEn, pitchZh, assets, detailedEn, detailedZh });
 
     fs.mkdirSync(LISTING_DIR, { recursive: true });
     fs.writeFileSync(`${LISTING_DIR}/listing-proposal.json`, JSON.stringify(json, null, 2) + '\n');
@@ -781,6 +789,15 @@ function runListingDraft() {
     console.log(`  ${LISTING_DIR}/listing-proposal.json`);
     if (manifestCopy.description.length > 132)
         console.error(`⚠ extDesc ${manifestCopy.description.length}/132 字符,超出 manifest/CWS 上限 — 先修 _locales。`);
+    if (detailedEn || detailedZh) {
+        console.log(`  说明全文: 规范文案 description.{en,zh-CN}.txt(en ${detailedEn.length} / zh-CN ${detailedZh.length} 字符)`);
+        // CWS 详情页不渲染 markdown —— 文案里出现标记符号即警告(** / # 标题 /
+        // - 列表 / [文字](链接) / 反引号)。
+        const mdMarks = /(\*\*|^#{1,6}\s|^- |\[.+\]\(.+\)|`)/m;
+        for (const [lang, text] of [['en', detailedEn], ['zh-CN', detailedZh]])
+            if (text && mdMarks.test(text))
+                console.error(`  ⚠ description.${lang}.txt 含 markdown 标记 —— CWS 详情页不渲染,请改纯文本。`);
+    }
 
     // 上传清单门禁:本次要传到商店的七张图,逐张核对存在性/尺寸/alpha。
     // 不合规时用 scripts/screenshots/update-store-assets.sh 重生成(内含 normalize)。

@@ -338,4 +338,29 @@ describe('buildProposal', () => {
         assert.match(proposal.mdZh, /中文简介/);
         assert.match(proposal.mdZh, /- 功能 A/);
     });
+
+    test('给了 detailed 文案则原样进草稿(缺省回退 README pitch)', () => {
+        const p2 = buildProposal({
+            version: '4.1.0',
+            en: { name: 'vBookmarks', description: 'D' },
+            zh: { name: 'vBookmarks', description: '中文简介' },
+            changelogEn: '', changelogZh: '',
+            pitchEn: { lead: 'Lead.', bullets: ['b1'] },
+            pitchZh: { lead: '导语。', bullets: ['条 1'] },
+            assets: [],
+            detailedEn: 'Plain text detailed description.\n\n• no markdown here',
+            detailedZh: '纯文本详情。\n\n• 没有标记'
+        });
+        // 规范文案原样出现,pitch 内容不再出现;json 携带 detailedDescription
+        assert.match(p2.mdEn, /Plain text detailed description\./);
+        assert.match(p2.mdEn, /• no markdown here/);
+        assert.doesNotMatch(p2.mdEn, /\*\*Lead\.\*\*/);
+        assert.match(p2.mdZh, /纯文本详情。/);
+        assert.doesNotMatch(p2.mdZh, /导语。/);
+        assert.equal(p2.json.detailedDescription.en, 'Plain text detailed description.\n\n• no markdown here');
+        assert.equal(p2.json.detailedDescription['zh-CN'], '纯文本详情。\n\n• 没有标记');
+        // 缺省路径不受影响(上面的 proposal 无 detailed,仍渲染 pitch)
+        assert.match(proposal.mdEn, /\*\*Lead\.\*\*/);
+        assert.deepEqual(proposal.json.detailedDescription, { en: '', 'zh-CN': '' });
+    });
 });

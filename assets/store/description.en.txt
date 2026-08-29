@@ -1,0 +1,22 @@
+vBookmarks — your bookmarks, one keypress away.
+
+Stop digging through Chrome's bookmark manager. vBookmarks puts your entire library in a fast, keyboard-friendly popup: click the toolbar icon (or press Ctrl+Shift+V), type a few letters, hit Enter, and you're there. It's the actively maintained successor of the classic Neat Bookmarks — free, lightweight, and polished since 2011.
+
+WHY YOU'LL LOVE IT
+
+• Instant fuzzy search over titles, URLs and folders — in the popup, the side panel, or Chrome's address bar (type * then Space). Match highlighting included, CJK-friendly.
+• Seven purpose-built views: the classic folder tree, search, tab groups, a staging workbench for newly added bookmarks, visit statistics, dead-link cleanup and duplicate cleanup.
+• A command palette (Ctrl+K / Cmd+K) for everything: open, move, sort, jump between views, switch themes — plus your own custom slash commands, synced across devices.
+• Real maintenance tools: scan for dead links and tell "site is down" from "blocked on your network" with an optional proxy re-check; merge duplicates with six keeper strategies. Every batch action is undoable.
+• Save a whole window of tabs as a bookmark folder, and reopen it later as a named Chrome tab group.
+• Full keyboard model, right-click menus, drag and drop, custom separators, per-folder sorting — and quick-add from the star button, Ctrl+D, or the global Alt+Shift+S.
+• Four crafted themes — Light, Dark, Ink, Paper — plus follow-system, zoom, custom CSS, and your own toolbar icon.
+• Automatic favicon refresh keeps every row readable.
+• Sync-status indicators show which bookmarks live only on this device (Chrome 138+).
+• Fully translated into 43 languages.
+
+FREE AND PRIVATE
+
+Free forever. No ads, no tracking, no accounts — your data never leaves your browser. Open source under the MIT license, maintained by a developer who still answers every issue.
+
+Give it a week — your bookmarks will feel organized for the first time in years.
