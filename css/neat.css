@@ -2192,53 +2192,47 @@ body.panel-mode .recent-group-head {
 #staging-items li.staging-bucket.has-members:has(.chevron.collapsed)::after {
     display: none;
 }
-/* Selection mode keeps its own checkbox-axis calibration (round 3), which
-   stays CHEVRON-anchored by design: there the head's glyph well re-docks
-   ONTO the member favicon column (both at 52..72 — center-on-center per
-   the round-3 report), so an icon-axis trunk would have nothing to run
-   through but favicon ink. The chevron still owns a clear gutter column
-   @32..48 in this mode (its center 40 = 8 lead + 14 checkbox + 6 margin +
-   4 gap + 16 ÷ 2), the member rows keep a bare 28..52 lead, and the tick
-   runs from the trunk to the favicon column at 52. The small-head twisty
-   restyle doesn't move any of those boxes — only the glyph inside changed
-   — so these constants carry over untouched. */
+/* Selection-mode connector (2026-08-29, maintainer call): the small heads
+   render NO chevron while selecting (folds are disabled there — it was dead
+   chrome), so the checkbox owns the lead and the head's glyph well docks
+   right after it: [checkbox @8..22 + 6 margin + 4 gap][well 20 @32..52,
+   center 42]. The trunk drops from the HEAD ICON's center axis (41.5 = 42
+   − 0.5) — the same icon-axis law as normal mode's 33.5 — and runs in the
+   clear gutter BESIDE the member favicons (their left edge stays at 52),
+   each row adding a 10.5px tick out to that column. No chevron in the DOM
+   also means the :has(.chevron.collapsed) trunk suppression above can
+   never match in this mode — correct, selection expands every fold. */
 #staging-list ul.selecting li.vbm-row.staging-member > .staging-connector {
-    inset-inline-start: 39.5px;
-    width: 12.5px;
+    inset-inline-start: 41.5px;
+    width: 10.5px;
 }
 #staging-list ul.selecting li.vbm-row.staging-member > .staging-connector::after {
-    width: 12.5px;
+    width: 10.5px;
 }
 #staging-list ul.selecting li.staging-group.has-members::after,
 #staging-list ul.selecting li.staging-bucket.has-members::after {
-    inset-inline-start: 39.5px;
+    inset-inline-start: 41.5px;
 }
 
 /* Selection mode keeps the hierarchy WITHOUT moving the checkbox off the
    8px axis (the tabgroups law): the base #staging-list ul.selecting rule
    already gives every row the 8px lead, so every checkbox shares one
    column; the member CONTENT then steps right via the anchor margin.
-   2026-08-26 report round 3 (measured narrow + wide): the three alignment
-   laws re-anchor on the CHECKBOX axis — the member anchor margin (28px
-   checkbox zone + 24px narrow / + 30px wide) puts the member favicon LEFT
-   edge on the LOOSE row's TITLE axis (52px narrow / 58px wide), the head's
-   glyph well re-docks to the member favicon START (same x — center-on-
-   center with the member favicon's own well), and the head title lands on
-   the member title axis. The chevron's 12px tail margin is normal-mode
-   chrome — under selection the checkbox owns the lead. */
+   2026-08-26 report round 3, re-anchored 2026-08-29 (chevron removed in
+   this mode): the member anchor margin (28px checkbox zone + 24px narrow /
+   + 30px wide) keeps the member favicon LEFT edge on the LOOSE row's TITLE
+   axis (52px narrow / 58px wide); the head's glyph well now leads right
+   after the checkbox (the TREE's folder-column law — head glyph column
+   sits LEFT of the member favicon column, connector between them) and the
+   head title follows its own glyph directly. */
 #staging-list ul.selecting li.vbm-row.staging-member > a.tree-item-link {
     margin-inline-start: 24px;
 }
 
-#staging-list ul.selecting .staging-group-head .chevron,
-#staging-list ul.selecting .staging-bucket-head .chevron {
-    margin-inline-end: 0;
-}
-
 #staging-list ul.selecting .staging-group-head .staging-group-folder,
 #staging-list ul.selecting .staging-bucket-head .staging-bucket-star {
-    /* 0: the head's 4px flex gap (checkbox→chevron→well) already steps the
-       well onto the member favicon START (48 + 0 + 4 gap = 52px narrow) */
+    /* 0: no chevron in this mode — the well follows the checkbox's own
+       6px margin + the head's 4px flex gap directly (32..52 narrow) */
     margin-inline-start: 0;
 }
 
@@ -2271,21 +2265,25 @@ body.panel-mode .recent-group-head {
         --stg-trunk-x: 34.5px;
         --stg-tick-w: 15.5px;
     }
-    /* selecting twin (round 3): the checkbox axis (28px) + the 30px step
-       put the member favicon on the wide loose title axis (58px); the head
-       well follows (+10px margin, 22px) and its 4px tail keeps the title
-       on the member title axis */
+    /* selecting twin (2026-08-29 icon-axis round): the member favicon keeps
+       its wide loose title axis (58px, 30px step); the chevron-less head
+       well (22px) docks right after the checkbox @32..54 (center 43), so
+       the trunk column moves to 42.5 and the tick grows to still reach 58 */
     #staging-list ul.selecting li.vbm-row.staging-member > a.tree-item-link {
         margin-inline-start: 30px;
     }
     #staging-list ul.selecting .staging-group-head .staging-group-folder,
     #staging-list ul.selecting .staging-group-head .staging-bucket-star {
-        margin-inline-start: 6px;
-        margin-inline-end: 4px;
+        margin-inline-start: 0;
     }
     #staging-list ul.selecting li.vbm-row.staging-member > .staging-connector,
     #staging-list ul.selecting li.vbm-row.staging-member > .staging-connector::after {
-        width: 18.5px;
+        inset-inline-start: 42.5px;
+        width: 15.5px;
+    }
+    #staging-list ul.selecting li.staging-group.has-members::after,
+    #staging-list ul.selecting li.staging-bucket.has-members::after {
+        inset-inline-start: 42.5px;
     }
 }
 

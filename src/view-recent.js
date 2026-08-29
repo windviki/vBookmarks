@@ -350,7 +350,9 @@ export function initViewRecent(ctx = {}) {
             // 2026-08-27: the SMALL heads carry the tree's twisty SVG (the
             // CSS rotates it open like #tree); only the two BIG section
             // heads keep the solid ▾/▸ text glyph.
-            `<span class="chevron${collapsed ? ' collapsed' : ''}" aria-hidden="true">${CHEVRON_ICON}</span>` +
+            // 2026-08-29: 选择模式不渲染(折叠禁用,死装饰;连接线改锚图标中心轴)
+            (selecting ? '' :
+                `<span class="chevron${collapsed ? ' collapsed' : ''}" aria-hidden="true">${CHEVRON_ICON}</span>`) +
             `<i class="staging-bucket-star" aria-hidden="true">${IC.star}</i>` +
             `<span class="staging-section-title">${_m('stagingBucketTitle')}</span>` +
             `<span class="count-pill" aria-label="${count}">${countText}</span>` +
@@ -422,7 +424,10 @@ export function initViewRecent(ctx = {}) {
         return `<li class="staging-group${selCls}${count ? ' has-members' : ''}" data-group-id="${g.id}" role="presentation">` +
             `<span class="group-head staging-group-head" tabindex="-1" role="button" ` +
             `aria-expanded="${collapsed ? 'false' : 'true'}" title="${gname}"${dragAttr}>` +
-            `<span class="chevron${collapsed ? ' collapsed' : ''}" aria-hidden="true">${CHEVRON_ICON}</span>` +
+            // 选择模式不渲染 chevron(折叠在选择模式下本就禁用,是死装饰)——
+            // 连接线改锚头图标中心轴,checkbox 之后 glyph 直接领位(2026-08-29)
+            (selecting ? '' :
+                `<span class="chevron${collapsed ? ' collapsed' : ''}" aria-hidden="true">${CHEVRON_ICON}</span>`) +
             // 2026-08-25 icon round: the tree's folder glyph leads the title
             // on the bucket star's slot — every fold head reads glyph-then-
             // title, and the glyph column stacks on the member favicon column.
@@ -627,7 +632,9 @@ export function initViewRecent(ctx = {}) {
                 // the SMALL time-bucket head carries the tree twisty SVG
                 // (2026-08-27 small-head restyle); the big #recent-head
                 // below keeps the solid triangle.
-                `<span class="chevron${collapsed ? ' collapsed' : ''}" aria-hidden="true">${CHEVRON_ICON}</span>` +
+                // 2026-08-29: 选择模式不渲染 chevron(折叠禁用;与暂存组头一致)
+                (selecting ? '' :
+                    `<span class="chevron${collapsed ? ' collapsed' : ''}" aria-hidden="true">${CHEVRON_ICON}</span>`) +
                 // 2026-08-25 icon round: the clock glyph leads on the bucket
                 // star's slot — the time buckets read glyph-then-title like
                 // the staging heads above (folder / hollow star).
