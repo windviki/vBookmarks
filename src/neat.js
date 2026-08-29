@@ -363,7 +363,8 @@ import { ICON_SPRITE_SHEET } from './icons.js';
     // view-manager's focusSpot restore stand down while this is on.
     const focusSearchOnOpen = () => !!store.get('focusSearchOnOpen');
     const httpsPattern = /^https?:\/\//i;
-    // onlyShowBMBar 与 adaptBookmarkTooltips 已剥离至 src/tree-view.js（P1，8b）
+    // onlyShowBMBar 已剥离至 src/tree-view.js（P1，8b）；自适应 tooltip 机制
+    // 已随 4.1.1 全信息 tooltip 轮退役——各行渲染时即烤入完整 title
 
     // addSeparator / deleteSeparator 已剥离至 src/actions.js（P1，经 actions 表调用）
 

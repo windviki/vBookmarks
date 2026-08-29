@@ -130,7 +130,7 @@ check(srcLocales.length > 0 && srcLocales.length === distLocales.length && srcLo
 // ---------- 5) 汇总 ----------
 const totalFiles = walkRel(DIST, DIST).length;
 console.log(`dist built: ${totalFiles} files, ${allJs.size} JS (${files.esmEntries.length} bundles + ${files.classicJs.length} classic)`);
-if (totalFiles !== 78) console.log(`note: dist total files = ${totalFiles} (zip budget 78)`);
+if (totalFiles !== 79) console.log(`note: dist total files = ${totalFiles} (zip budget 79)`);
 
 if (failures.length) {
   console.error(`\nBUILD SELF-CHECK FAILED (${failures.length}):`);

@@ -45,14 +45,14 @@
  *                             tree. Missing → the guard silently falls back
  *                             to the plain reveal (minimal setups).
  *
- * Returns { generateTree, adaptBookmarkTooltips, revealFolder, revealInTree,
+ * Returns { generateTree, revealFolder, revealInTree,
  * bookmarkHandler }: neat.js's sortFolderContents rebuilds via
- * treeView.generateTree, the resizer re-fits tooltips via
- * treeView.adaptBookmarkTooltips, the command palette (P2) jumps to a folder
+ * treeView.generateTree, the command palette (P2) jumps to a folder
  * via treeView.revealFolder (the search-result link-folder branch of
  * bookmarkHandler runs the same chain), and src/view-recent.js binds its
  * list clicks to treeView.bookmarkHandler and its R key to
- * treeView.revealInTree.
+ * treeView.revealInTree. (The adaptive-tooltip pass was retired by the
+ * 4.1.1 full-info tooltip round — every row bakes its tooltip at render.)
  * chrome.bookmarks.*, chrome.i18n.getMessage, document and setTimeout remain
  * page globals. No neatools helpers: hasClass/addClass/removeClass/toggleClass
  * → classList.* (the removeClass('open').setAttribute(...) chain became two
