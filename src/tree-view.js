@@ -128,13 +128,21 @@ export function initTreeView(ctx = {}) {
         if (bookmark.querySelector('hr')) {
             bookmark.title = '';
         } else {
+            // Truncation lives on the name <i> since the v4 flex rows
+            // (flex:1 + min-width:0 + overflow:hidden clip INSIDE it), so the
+            // <a> itself never overflows — measuring the anchor (the pre-v4
+            // basis) made every tooltip stay URL-only (issue #62). Measure
+            // the <i>; rows without one (test doubles, future row shapes)
+            // keep the URL-only tooltip.
+            const nameEl = bookmark.querySelector('i');
+            const truncated = !!nameEl && nameEl.scrollWidth > nameEl.offsetWidth;
             if (bookmark.classList.contains('titled')) {
-                if (bookmark.scrollWidth <= bookmark.offsetWidth) {
+                if (!truncated) {
                     bookmark.title = bookmark.href;
                     bookmark.classList.remove('titled');
                 }
-            } else if (bookmark.scrollWidth > bookmark.offsetWidth) {
-                const text = bookmark.querySelector('i').textContent;
+            } else if (truncated) {
+                const text = nameEl.textContent;
                 const title = bookmark.title;
                 if (text !== title) {
                     bookmark.title = `${text}\n${title}`;
