@@ -22,15 +22,19 @@
  *   node scripts/webstore/publish.js listing-draft        依据仓库规范源生成 listing 更新草稿(离线)
  *   node scripts/webstore/publish.js help
  *
- * listing 说明(为什么是「快照 + 草稿」而不是直接改线上):
+ * listing 说明(为什么是「全量快照 + 草稿」而不是直接改线上):
  *   CWS API V2 的 REST 面只有 upload/publish/fetchStatus/cancelSubmission/
- *   setPublishedDeployPercentage —— 官方不提供 listing(名称/简介/详述/截图)
- *   的读写端点,DashBoard 内部接口也未开放。因此本脚本对 listing 的能力是:
- *   - listing       「取回」:抓取公开详情页(?hl= 按语言)解析 ld+json/og 元信息
- *                   存快照(tmp/webstore/),与 item 状态一并打印,供比对审查;
+ *   setPublishedDeployPercentage(2025-10-15 版官方 reference 核实)—— 官方
+ *   不提供 listing(名称/简介/详述/截图/宣传图块)的读写端点,Dashboard 内部
+ *   接口未公开(cookie 鉴权,无法离线验证,不采用)。因此本脚本对 listing 的能力是:
+ *   - listing       「取回」:抓公开详情页(?hl= 按语言),解析页面内嵌的
+ *                   AF_initDataCallback ds:0 数据块 —— 说明全文/类别/截图/
+ *                   小型宣传图块/版本/评分/语言等全量读出(2026-08-28 实测,
+ *                   无需凭据);ds:0 缺失时回退 og/ld+json(字段相应变少)。
+ *                   存快照(tmp/webstore/),与 item 状态、仓库规范源一并比对;
  *   - listing-draft 「更新」:从仓库规范源(_locales extName/extDesc、docs/README
- *                   pitch 与 changelog、assets/store 图册)生成可粘贴的双语草稿,
- *                   人工核对后贴进 Dashboard —— 与「人工挑选、手动上传」同一纪律。
+ *                   pitch 与 changelog、assets/store 图册)生成可粘贴的双语草稿
+ *                   + 上传图片清单(尺寸/alpha 门禁),人工核对后贴进 Dashboard。
  *
  * 凭据来源(优先级从高到低):
  *   1) 真实环境变量  CWS_* (GitHub Actions secrets 等)
@@ -47,6 +51,7 @@
 
 import { execSync } from 'node:child_process';
 import fs from 'node:fs';
+import vm from 'node:vm';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import chromeWebstoreUpload from 'chrome-webstore-upload';
 
@@ -244,13 +249,88 @@ function metaContent(html, key) {
 }
 
 /**
- * 解析 CWS 公开详情页 HTML → listing 元信息快照。
- * 现状(2026-08 实测):详情页无 ld+json、无 itemprop,名称/简介来自 og meta,
- * 图片是 lh3.googleusercontent.com 直链(截图/评分/版本由 XHR 渲染,静态
- * HTML 拿不到 —— 对应字段留空,不硬猜)。拿不到任何字段时返回 null。
+ * 提取详情页 AF_initDataCallback 内嵌数据块(按 key,默认 'ds:0')。
+ * CWS 详情页(BOQ 应用)把条目全量数据内嵌在
+ * <script>AF_initDataCallback({key:'ds:0',…,data:[…]});</script> ——
+ * 名称/简介/说明全文/类别/截图/小型宣传图块/版本/评分/语言均可匿名读出。
+ * blob 是 JS 字面量(无引号键、单引号字符串),JSON.parse 不适用 ——
+ * 用 node:vm 在空沙箱求值(纯数据,带超时保护)。结构不符/求值失败返回 null。
  */
-export function parseDetailPage(html) {
+export function extractInitData(html, key = 'ds:0') {
     if (!html) return null;
+    // 终结符是 `);</script>` —— 字符串内容里的 `</script>` 必被转义为 <\/script>,
+    // 否则页面自身解析早已断裂,所以非贪婪匹配不会中途截断。
+    const re = /AF_initDataCallback\(([\s\S]*?)\)\s*;\s*<\/script>/g;
+    for (let m; (m = re.exec(html));) {
+        if (!m[1].includes(`key: '${key}'`)) continue;
+        try {
+            const obj = vm.runInNewContext(`(${m[1]})`, Object.create(null), { timeout: 1000 });
+            // 沙箱 realm 的数组/对象原型与主 realm 不同(deepStrictEqual 会误判),
+            // 纯数据经 JSON round-trip 转回主 realm;undefined 洞位归一为 null,无妨。
+            if (obj && obj.key === key && obj.data != null)
+                return JSON.parse(JSON.stringify(obj.data));
+        } catch { /* 结构变化/页面噪声,试下一块 */ }
+    }
+    return null;
+}
+
+/**
+ * ds:0 位置字段映射(2026-08-28 实测 chromewebstore.google.com/detail 页,en/zh-CN 同构):
+ *   data[0]  = 条目核心数组 [0]id [1]icon [2]name [3]rating [4]ratingCount
+ *              [5]小型宣传图块(440×280 lh3) [6]简介 [7]主页 [11]类别([0]=路径如
+ *              "productivity/workflow") [14]用户数 [16]feature graphic
+ *              [17]首发时间戳 [18]已发布 manifest JSON 串
+ *   data[5]  = 截图列表(每项 [1]=lh3 直链)   data[6]  = 说明全文(含 markdown)
+ *   data[10] = 开发者([0]邮箱 [5]名)         data[13] = 线上版本
+ *   data[14] = 更新时间戳 [sec,nsec]          data[15] = 体积("1.02MiB")
+ *   data[27] = 最低 Chrome 版本               data[38] = 语言代码数组
+ * 宣传图块里的 marquee(1400×560)不在公开页展示,读不到 —— 唯一缺口。
+ */
+const tsSeconds = v => (Array.isArray(v) && typeof v[0] === 'number'
+    ? new Date(v[0] * 1000).toISOString() : '');
+
+function parseInitSnapshot(data) {
+    const item = data[0];
+    const str = v => (typeof v === 'string' ? v : '');
+    let publishedManifestVersion = '';
+    try { publishedManifestVersion = JSON.parse(item[18]).version ?? ''; } catch { /* 非 JSON 则留空 */ }
+    return {
+        source: 'ds:0',
+        id: str(item[0]),
+        icon: str(item[1]),
+        name: str(item[2]),
+        ratingValue: typeof item[3] === 'number' ? item[3] : null,
+        ratingCount: typeof item[4] === 'number' ? item[4] : null,
+        smallPromoTile: str(item[5]),
+        summary: str(item[6]),
+        homepage: str(item[7]),
+        category: Array.isArray(item[11]) ? str(item[11][0]) : '',
+        users: typeof item[14] === 'number' ? item[14] : null,
+        featureGraphic: str(item[16]),
+        publishedAt: tsSeconds(item[17]),
+        publishedManifestVersion,
+        screenshots: (Array.isArray(data[5]) ? data[5] : [])
+            .map(r => str(Array.isArray(r) ? r[1] : '')).filter(Boolean),
+        description: str(data[6]),
+        developer: {
+            email: str(Array.isArray(data[10]) ? data[10][0] : ''),
+            name: str(Array.isArray(data[10]) ? data[10][5] : '')
+        },
+        version: str(data[13]),
+        updatedAt: tsSeconds(data[14]),
+        size: str(data[15]),
+        minChrome: str(data[27]),
+        languages: Array.isArray(data[38]) ? data[38].filter(x => typeof x === 'string') : [],
+        imageUrls: [],
+        parsedAt: new Date().toISOString()
+    };
+}
+
+/**
+ * og/ld+json 兜底快照(ds:0 消失时的降级路径)。字段与 ds:0 快照同形,
+ * 拿不到的留空 —— 注意 og:description 是商店「简介」而非说明全文。
+ */
+function parseOgSnapshot(html) {
     const nodes = [];
     for (const blob of extractJsonLdObjects(html))
         nodes.push(...collectByType(blob, /SoftwareApplication|WebApplication/i));
@@ -264,23 +344,43 @@ export function parseDetailPage(html) {
         .replace(/\s*-\s*Chrome Web Store\s*$/i, '')
         .replace(/\s*-\s*Chrome 应用商店\s*$/, '');
     const name = stripSuffix(app?.name ?? metaContent(html, 'og:title'));
-    const description = String(app?.description ?? metaContent(html, 'og:description') ?? '');
-    if (!name && !description) return null;
+    const summary = String(app?.description ?? metaContent(html, 'og:description') ?? '');
+    if (!name && !summary) return null;
     // 页面里的图片直链(图标与截图混排,无法从静态 HTML 区分,单独列出不冒名 screenshots)。
     const imageUrls = [...new Set(
         [...html.matchAll(/https:\/\/lh3\.googleusercontent\.com\/[A-Za-z0-9_\-]+/g)].map(m => m[0])
     )].slice(0, 12);
     return {
+        source: 'og',
+        id: '', icon: '',
         name,
-        description,
-        version: app?.softwareVersion ? String(app.softwareVersion) : '',
-        url: app?.url ? String(app.url) : '',
-        screenshots,
-        imageUrls,
         ratingValue: app?.aggregateRating?.ratingValue ?? null,
         ratingCount: app?.aggregateRating?.ratingCount ?? app?.aggregateRating?.reviewCount ?? null,
+        smallPromoTile: '',
+        summary,
+        homepage: app?.url ? String(app.url) : '',
+        category: '', users: null, featureGraphic: '',
+        publishedAt: '', publishedManifestVersion: '',
+        screenshots,
+        description: '',
+        developer: { email: '', name: '' },
+        version: app?.softwareVersion ? String(app.softwareVersion) : '',
+        updatedAt: '', size: '', minChrome: '', languages: [],
+        imageUrls,
         parsedAt: new Date().toISOString()
     };
+}
+
+/**
+ * 解析 CWS 公开详情页 HTML → listing 元信息快照。
+ * 优先 ds:0 内嵌数据(2026-08-28 起实测可用,字段全);缺失时回退 og/ld+json。
+ * 兜底路径也拿不到名称与简介时返回 null(反爬墙信号)。
+ */
+export function parseDetailPage(html) {
+    if (!html) return null;
+    const data = extractInitData(html, 'ds:0');
+    if (Array.isArray(data) && Array.isArray(data[0])) return parseInitSnapshot(data);
+    return parseOgSnapshot(html);
 }
 
 /** 读取 messages.json 里的商店文案(extName/extDesc —— manifest i18n 的规范源)。 */
@@ -324,12 +424,29 @@ export function extractReadmePitch(readme) {
     return { lead, bullets };
 }
 
-/** PNG 尺寸读取(IHDR 定长头);非 PNG 返回 null。 */
-export function pngSize(buf) {
-    if (!buf || buf.length < 24) return null;
+/**
+ * PNG 头信息读取(IHDR 定长头);非 PNG 返回 null。
+ * colorType: 0 灰度 / 2 RGB / 3 调色板 / 4 灰度+alpha / 6 RGBA。
+ * CWS 要求 24 位 PNG 无 alpha(colorType 2)或 JPEG —— hasAlpha 标记 4/6。
+ */
+export function pngInfo(buf) {
+    if (!buf || buf.length < 26) return null;
     const sig = Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]);
     if (!buf.subarray(0, 8).equals(sig)) return null;
-    return { width: buf.readUInt32BE(16), height: buf.readUInt32BE(20) };
+    const colorType = buf[25];
+    return {
+        width: buf.readUInt32BE(16),
+        height: buf.readUInt32BE(20),
+        bitDepth: buf[24],
+        colorType,
+        hasAlpha: colorType === 4 || colorType === 6
+    };
+}
+
+/** PNG 尺寸读取(兼容签名,等价于 pngInfo 的 width/height 子集)。 */
+export function pngSize(buf) {
+    const info = pngInfo(buf);
+    return info ? { width: info.width, height: info.height } : null;
 }
 
 /** WebStore 图片规格(官方:截图 1280×800 或 640×400,marquee 1400×560)。 */
@@ -528,8 +645,9 @@ function localeCopy(lang) {
 }
 
 /**
- * listing — 「取回」:抓公开详情页(?hl=en / ?hl=zh-CN)解析 ld+json/og 元信息
- * 存快照;凭据齐时附带官方 item 状态;与仓库规范源(extName/extDesc)比对提示。
+ * listing — 「取回」:抓公开详情页(?hl=en / ?hl=zh-CN),解析内嵌
+ * AF_initDataCallback ds:0 全量数据(缺失回退 og/ld+json)存快照;
+ * 凭据齐时附带官方 item 状态;与仓库规范源(extName/extDesc)比对提示。
  * --yes 才联网;默认 dry-run 只打印将抓取的 URL。
  */
 async function runListing(yes) {
@@ -540,8 +658,8 @@ async function runListing(yes) {
     console.log(`vBookmarks v${version} | extensionId=${extensionId}`);
     if (!yes) {
         console.log('\n[dry-run] 将执行:');
-        console.log(`  - GET https://chromewebstore.google.com/detail/${extensionId}?hl=en    → 解析 → ${LISTING_DIR}/listing-current.en.json`);
-        console.log(`  - GET https://chromewebstore.google.com/detail/${extensionId}?hl=zh-CN → 解析 → ${LISTING_DIR}/listing-current.zh-CN.json`);
+        console.log(`  - GET https://chromewebstore.google.com/detail/${extensionId}?hl=en    → 解析 ds:0 → ${LISTING_DIR}/listing-current.en.json`);
+        console.log(`  - GET https://chromewebstore.google.com/detail/${extensionId}?hl=zh-CN → 解析 ds:0 → ${LISTING_DIR}/listing-current.zh-CN.json`);
         console.log('  - (凭据齐备时)items.fetchStatus 官方状态');
         console.log('加 --yes 真正执行。');
         return;
@@ -561,9 +679,17 @@ async function runListing(yes) {
             parsed.fetchedUrl = url;
             const out = `${LISTING_DIR}/listing-current.${hl}.json`;
             fs.writeFileSync(out, JSON.stringify(parsed, null, 2) + '\n');
-            console.log(`\n[${hl}] ${parsed.name}`);
-            console.log(`  描述(${parsed.description.length} 字符): ${parsed.description.slice(0, 100)}${parsed.description.length > 100 ? '…' : ''}`);
-            console.log(`  版本: ${parsed.version || '?'} | 评分: ${parsed.ratingValue ?? '?'}(${parsed.ratingCount ?? '?'} 条)| 官方截图 ${parsed.screenshots.length} 张 · 页面图片直链 ${parsed.imageUrls.length} 条`);
+            console.log(`\n[${hl}] ${parsed.name}(数据源 ${parsed.source})`);
+            console.log(`  简介(${parsed.summary.length} 字符): ${parsed.summary.slice(0, 100)}${parsed.summary.length > 100 ? '…' : ''}`);
+            if (parsed.description)
+                console.log(`  说明全文(${parsed.description.length} 字符): ${parsed.description.slice(0, 100).replace(/\n/g, ' ')}…`);
+            if (parsed.source === 'ds:0') {
+                console.log(`  版本: 线上 ${parsed.version || '?'}(仓库 ${version}) | 类别: ${parsed.category || '?'} | 体积: ${parsed.size || '?'}`);
+                console.log(`  评分: ${parsed.ratingValue ? parsed.ratingValue.toFixed(1) : '?'}(${parsed.ratingCount ?? '?'} 条)| 用户: ${parsed.users ?? '?'} | 语言: ${parsed.languages.length} 种 | 更新: ${(parsed.updatedAt || '').slice(0, 10) || '?'}`);
+                console.log(`  截图 ${parsed.screenshots.length} 张 · 小型宣传图块 ${parsed.smallPromoTile ? '✓' : '—'} · 顶部宣传图块(marquee 公开页不展示,读不到)`);
+            } else {
+                console.log(`  版本: ${parsed.version || '?'} | 评分: ${parsed.ratingValue ?? '?'}(${parsed.ratingCount ?? '?'} 条)| 官方截图 ${parsed.screenshots.length} 张 · 页面图片直链 ${parsed.imageUrls.length} 条`);
+            }
             console.log(`  → 快照 ${out.replace(REPO_ROOT, '')}`);
         } catch (err) {
             console.error(`⚠ ${hl}:抓取失败: ${err.message}`);
@@ -586,21 +712,40 @@ async function runListing(yes) {
     }
 
     // 与仓库规范源比对 — 名称/简介不一致即提示(发版常忘改商店文案)。
+    // 比的是「简介」(summary ↔ extDesc);说明全文在 Dashboard 单独维护,
+    // 更新草稿见 listing-draft 的 Detailed description 栏。
     const repo = localeCopy('en');
     const snapPath = `${LISTING_DIR}/listing-current.en.json`;
     if (fs.existsSync(snapPath)) {
         const live = JSON.parse(fs.readFileSync(snapPath, 'utf8'));
         if (live.name && repo.name && live.name !== repo.name)
             console.log(`\n[diff] 名称不一致:线上「${live.name}」≠ 仓库 extName「${repo.name}」。`);
-        if (live.description && repo.description && live.description !== repo.description)
-            console.log(`[diff] 简介不一致:线上 ${live.description.length} 字符 ≠ 仓库 extDesc ${repo.description.length} 字符 — 若本次发版改了文案,记得同步 Dashboard(草稿见 listing-draft)。`);
+        if (live.summary && repo.description && live.summary !== repo.description)
+            console.log(`[diff] 简介不一致:线上 ${live.summary.length} 字符 ≠ 仓库 extDesc ${repo.description.length} 字符 — 若本次发版改了文案,记得同步 Dashboard(草稿见 listing-draft)。`);
+        if (live.version && live.version !== version)
+            console.log(`[diff] 线上版本 ${live.version} ≠ 仓库 ${version} — 本次发版 upload/publish 后此处应收敛。`);
     }
     console.log('\n完成。官方 API 不提供 listing 写端点 —— 更新请核对 listing-draft 产出后到 Dashboard 手动粘贴。');
 }
 
 /**
+ * 商店上传图片清单(CWS 官方规格;与 scripts/screenshots/normalize-store-assets.py
+ * 的门禁一致 —— 五张 1280×800 截图 + 小型宣传图块 + 顶部宣传图块,全部 RGB 无 alpha)。
+ */
+export const UPLOAD_ROSTER = [
+    { file: 'vBookmarks-promo.png', label: '截图 1 · 入口总览', width: 1280, height: 800 },
+    { file: 'vBookmarks-promo2.png', label: '截图 2 · 暂存工作台', width: 1280, height: 800 },
+    { file: 'vBookmarks-promo3.png', label: '截图 3 · 清理(死链/重复)', width: 1280, height: 800 },
+    { file: 'vBookmarks-strip.png', label: '截图 4 · 四主题', width: 1280, height: 800 },
+    { file: 'vBookmarks-options.png', label: '截图 5 · 设置全景', width: 1280, height: 800 },
+    { file: 'vBookmarks-tile-small.png', label: '小型宣传图块', width: 440, height: 280 },
+    { file: 'vBookmarks-marquee.png', label: '顶部宣传图块', width: 1400, height: 560 }
+];
+
+/**
  * listing-draft — 「更新准备」(纯离线):从仓库规范源汇总双语文案 + 版本
- * what's-new + 截图册(带尺寸规格核对),生成可直接对照粘贴的草稿。
+ * what's-new + 截图册(带尺寸规格核对)+ 上传图片清单门禁(尺寸/alpha),
+ * 生成可直接对照粘贴的草稿。
  */
 function runListingDraft() {
     const manifestCopy = {
@@ -636,10 +781,32 @@ function runListingDraft() {
     console.log(`  ${LISTING_DIR}/listing-proposal.json`);
     if (manifestCopy.description.length > 132)
         console.error(`⚠ extDesc ${manifestCopy.description.length}/132 字符,超出 manifest/CWS 上限 — 先修 _locales。`);
-    for (const s of json.screenshots.filter(x => x.spec))
-        console.log(`  ✓ ${s.file} ${s.width}×${s.height}(${s.spec})`);
-    for (const s of json.screenshots.filter(x => !x.spec))
-        console.log(`  ⚠ ${s.file} ${s.width ?? '?'}×${s.height ?? '?'} 非标准尺寸(截图规格 1280×800 / 640×400;marquee 1400×560;小图 440×280)`);
+
+    // 上传清单门禁:本次要传到商店的七张图,逐张核对存在性/尺寸/alpha。
+    // 不合规时用 scripts/screenshots/update-store-assets.sh 重生成(内含 normalize)。
+    console.log('\n上传图片清单(Dashboard → Store listing 逐张上传):');
+    let rosterIssues = 0;
+    for (const item of UPLOAD_ROSTER) {
+        const p = `${REPO_ROOT}assets/store/${item.file}`;
+        const info = fs.existsSync(p) ? pngInfo(fs.readFileSync(p)) : null;
+        if (!info) {
+            console.log(`  ✗ ${item.file} — 缺失(${item.label},需 ${item.width}×${item.height})`);
+            rosterIssues++;
+            continue;
+        }
+        const badSize = info.width !== item.width || info.height !== item.height;
+        if (badSize || info.hasAlpha) {
+            console.log(`  ⚠ ${item.file} — ${info.width}×${info.height}${badSize ? ` ≠ ${item.width}×${item.height}` : ''}${info.hasAlpha ? ' 含 alpha(CWS 要求无 alpha)' : ''} — 跑 scripts/screenshots/update-store-assets.sh 重生成`);
+            rosterIssues++;
+            continue;
+        }
+        console.log(`  ✓ ${item.file} — ${info.width}×${info.height} RGB(${item.label})`);
+    }
+    const extras = json.screenshots.filter(x => !UPLOAD_ROSTER.some(r => r.file === x.file));
+    for (const s of extras)
+        console.log(`  · ${s.file} ${s.width ?? '?'}×${s.height ?? '?'}(候选,不在本次上传清单)`);
+    if (rosterIssues)
+        console.log(`\n⚠ ${rosterIssues} 张不合规 — 先跑 scripts/screenshots/update-store-assets.sh。`);
     console.log('\n人工核对后粘贴到 Developer Dashboard → Store listing;线上现值可用 listing --yes 快照比对。');
 }
 
@@ -742,11 +909,17 @@ async function helpText() {
   node scripts/webstore/publish.js help
 
 listing(元信息):
-  官方 CWS API V2 不提供 listing(名称/简介/详述/截图)读写端点,因此:
-  - listing       抓公开详情页(?hl=en / zh-CN)解析快照到 tmp/webstore/,
-                  附官方 item 状态(需凭据),并与仓库 extName/extDesc 比对;
+  官方 CWS API V2 不提供 listing(名称/简介/详述/截图)写端点(读端点也没有,
+  2025-10-15 版官方 reference 核实),因此:
+  - listing       抓公开详情页(?hl=en / zh-CN),解析页面内嵌 ds:0 数据块
+                  (说明全文/类别/截图/小型宣传图块/版本/评分/语言全量读出,
+                  无需凭据;marquee 顶部图块公开页不展示,是唯一缺口),
+                  快照存 tmp/webstore/,附官方 item 状态(需凭据),
+                  并与仓库 extName/extDesc/manifest version 比对;
   - listing-draft 从规范源(_locales、docs README、assets/store)生成
-                  listing-proposal.{en,zh-CN}.md + .json,人工核对后粘贴进
+                  listing-proposal.{en,zh-CN}.md + .json,并逐张核对
+                  上传图片清单(五张 1280×800 截图 + 440×280 小图 +
+                  1400×560 marquee,RGB 无 alpha),人工核对后粘贴进
                   Developer Dashboard → Store listing。
 
 参数:

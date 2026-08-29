@@ -1,7 +1,8 @@
 // vBookmarks store-asset composer (velvet §6.3 F / task-1 N7) — the WebStore
 // image specs, produced from live popup states instead of hand assembly.
-// The store shows at most FIVE screenshots; this suite emits six candidates
-// covering all seven views — pick the five keepers at upload time:
+// The store shows at most FIVE screenshots; this suite emits the five-keeper
+// set (all 1280×800, per the global-screenshot spec) plus the two promo
+// tiles and one spare candidate:
 //
 //   promo    1280×800 — sheet 1, entry points: main popup (tree + fully
 //                       expanded context menu) left; right two columns of
@@ -12,9 +13,13 @@
 //                       staging selection, staging recent region + stats
 //   promo3   1280×800 — sheet 3, cleanup: dead-links and duplicates, each as
 //                       normal + selection stacked pairs
-//   strip    1400×560 — four theme tiles (light/dark/ink/paper) in a band
-//   themes   1280×800 — the two crafted themes split (ink | paper)
+//   strip    1280×800 — the four themes (light/dark/ink/paper), full tiles in
+//                       a captioned band (was 1400×560 until the 1280×800-only
+//                       screenshot discipline)
 //   options  1280×800 — the whole options page in one panorama
+//   themes   1280×800 — spare candidate: the two crafted themes split
+//   marquee  1400×560 — 顶部宣传图块: brand gradient + wordmark + live tile
+//   tile-small 440×280 — 小型宣传图块: brand mark + wordmark + tagline
 //
 // Clipping discipline (no blind crops anywhere):
 //   - width always the live #container box, widened for visible overlays;
@@ -24,9 +29,10 @@
 //   - composites pre-read every tile's PNG size and derive box geometry from
 //     the tile's own aspect — a tile is never stretched or cover-cropped.
 //
-// Output: /tmp/shots/store/{promo,promo2,promo3,strip,themes,options}.png,
-// plus the raw tiles under tiles/ for manual re-mixing. Keepers are synced to
-// assets/store/ by a human and uploaded via the Developer Dashboard.
+// Output: /tmp/shots/store/{promo,promo2,promo3,strip,themes,options,marquee,
+// tile-small}.png, plus the raw tiles under tiles/ for manual re-mixing.
+// Keepers are synced to assets/store/ by update-store-assets.sh (which also
+// flattens alpha to RGB) and uploaded via the Developer Dashboard.
 const puppeteer = require('puppeteer');
 const fs = require('fs');
 const path = require('path');
@@ -663,23 +669,29 @@ const SEED = `
                         background:#f4f6f9; align-items:center; justify-content:center;">${columns}</div>`);
     }
 
-    // strip 1400×560: the four themes in a centered band sized by their own
-    // aspect (full width visible); leftover canvas height = neutral margins.
+    // strip 1280×800(全球通用截图规格,只留 1280×800):四个主题完整 tile
+    // 横排(各按自身 aspect 等比,不裁不拉伸),每张下面挂主题名小标注。
+    // 曾是 1400×560 的横带 —— 该画布只够 marquee,截图一律 1280×800。
     {
-        const W = 1400, H = 560, GAP = 12;
+        const W = 1280, H = 800, PAD = 44, GAP = 30, LABELH = 42;
         const tiles = STRIP_THEMES.map(t => `tree-${t}`);
         const sumA = tiles.reduce((t, n) => t + aspectOf(n), 0);
-        const bandH = Math.min(H, (W - GAP * (tiles.length - 1)) / sumA);
-        const cards = tiles.map(n => {
+        const bandH = Math.min(H - PAD * 2 - LABELH, (W - PAD * 2 - GAP * (tiles.length - 1)) / sumA);
+        const cells = tiles.map((n, i) => {
             const a = aspectOf(n);
-            return `<div class="card" style="flex:none;width:${(a * bandH).toFixed(1)}px;height:${bandH.toFixed(1)}px;
-                        border-radius:0;border-width:0 1px 0 0;box-shadow:none;">
-                    ${tileImg(n, a * bandH, bandH)}
+            const w = a * bandH;
+            const label = STRIP_THEMES[i][0].toUpperCase() + STRIP_THEMES[i].slice(1);
+            return `<div style="flex:none;display:flex;flex-direction:column;align-items:center;gap:14px;">
+                    <div class="card" style="width:${w.toFixed(1)}px;height:${bandH.toFixed(1)}px;">
+                        ${tileImg(n, w, bandH)}
+                    </div>
+                    <div style="font:600 19px Inter,system-ui,sans-serif;color:#5b6472;
+                                letter-spacing:.14em;text-transform:uppercase;">${label}</div>
                 </div>`;
         }).join('\n');
         await compose('strip.html', W, H, `
             <div style="display:flex; gap:${GAP}px; height:100vh; background:#f4f6f9;
-                        align-items:center; justify-content:center;">${cards}</div>`);
+                        align-items:center; justify-content:center;">${cells}</div>`);
     }
 
     // themes 1280×800: ink | paper pair, aspect-derived, centered.
@@ -696,6 +708,60 @@ const SEED = `
         await compose('themes.html', 1280, 800, `
             <div style="height:100vh; background:#f4f6f9; display:flex; gap:20px;
                         align-items:center; justify-content:center;">${cards}</div>`);
+    }
+
+    // marquee 1400×560(顶部宣传图块)与 tile-small 440×280(小型宣传图块):
+    // 品牌红渐变 + 词标 + 真实 popup tile(marquee 里展示 tile 顶部首屏,
+    // 是设计性顶裁,非规格截图)。图标取容器内 /ext 的扩展图标(file:// 直引)。
+    const brandIcon = 'file:///ext/assets/icons/icon128.png';
+    const brandFont = "font-family:'Inter',system-ui,sans-serif;";
+    // 超大型「V」勾角水印(图标 chevron 的抽象),右下出血。
+    const chevronMark = size => `
+        <div style="position:absolute;right:-${Math.round(size * 0.22)}px;bottom:-${Math.round(size * 0.3)}px;
+                    width:${size}px;height:${size}px;background:rgba(255,255,255,.09);
+                    clip-path:polygon(8% 28%,50% 62%,92% 28%,92% 46%,50% 80%,8% 46%);"></div>`;
+
+    {
+        const cardW = 300, cardH = 442;
+        await compose('marquee.html', 1400, 560, `
+<div style="position:relative;height:100vh;overflow:hidden;${brandFont}
+            background:linear-gradient(115deg,#EC6150 0%,#D94837 48%,#B43024 100%);">
+    ${chevronMark(540)}
+    <div style="position:absolute;left:84px;top:0;bottom:0;display:flex;flex-direction:column;justify-content:center;">
+        <div style="width:92px;height:92px;background:#fff;border-radius:24px;
+                    box-shadow:0 14px 34px rgba(80,15,8,.35);display:flex;align-items:center;justify-content:center;">
+            <img src="${brandIcon}" style="width:74px;height:74px;">
+        </div>
+        <div style="margin-top:30px;font-size:66px;font-weight:800;letter-spacing:-2px;color:#fff;">vBookmarks</div>
+        <div style="margin-top:14px;font-size:25px;font-weight:500;color:rgba(255,255,255,.92);">Your bookmarks, one keypress away.</div>
+        <div style="margin-top:32px;display:flex;gap:12px;">
+            ${['Since 2011', '43 languages', 'MV3 native', '⌘K palette'].map(c =>
+                `<div style="padding:9px 18px;border-radius:999px;background:rgba(255,255,255,.16);
+                             border:1px solid rgba(255,255,255,.35);font-size:18px;font-weight:600;color:#fff;">${c}</div>`).join('')}
+        </div>
+    </div>
+    <div style="position:absolute;right:96px;top:0;bottom:0;display:flex;align-items:center;">
+        <div style="width:${cardW}px;height:${cardH}px;background:#fff;border-radius:16px;overflow:hidden;
+                    box-shadow:0 26px 64px rgba(80,15,8,.42);border:1px solid rgba(255,255,255,.5);">
+            <img src="${rel('tree-light')}" style="width:${cardW}px;height:auto;display:block;">
+        </div>
+    </div>
+</div>`);
+    }
+
+    {
+        await compose('tile-small.html', 440, 280, `
+<div style="position:relative;height:100vh;overflow:hidden;${brandFont}
+            background:linear-gradient(115deg,#EC6150 0%,#D94837 48%,#B43024 100%);
+            display:flex;flex-direction:column;align-items:center;justify-content:center;">
+    ${chevronMark(300)}
+    <div style="width:68px;height:68px;background:#fff;border-radius:18px;
+                box-shadow:0 10px 24px rgba(80,15,8,.32);display:flex;align-items:center;justify-content:center;">
+        <img src="${brandIcon}" style="width:54px;height:54px;">
+    </div>
+    <div style="margin-top:18px;font-size:40px;font-weight:800;letter-spacing:-1.2px;color:#fff;">vBookmarks</div>
+    <div style="margin-top:8px;font-size:15.5px;font-weight:500;color:rgba(255,255,255,.92);">Your bookmarks, one keypress away.</div>
+</div>`);
     }
 
     // options 1280×800: the whole options page in one frame. The wide-viewport

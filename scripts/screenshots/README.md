@@ -17,7 +17,8 @@ scripts/screenshots/
 ├── shots-guide.js      # guide-only states for docs/guide-v4*.md
 ├── shots-tabgroups.js       # tab-group menus & dialogs, SW-side verified
 ├── shots-tabgroups-view.js   # tab-groups view: tabs/groups, selection, group menu
-└── shots-store.js      # WebStore specs: 1400×560 theme strip + 1280×800 promo
+└── shots-store.js      # WebStore assets: 5× 1280×800 screenshots + themes spare
+                        # + brand marquee (1400×560) + small tile (440×280)
 ```
 
 ## Usage
@@ -30,12 +31,11 @@ scripts/screenshots/update-store-assets.sh   # re-shoot shots-store + sync asset
 
 ## Store assets (shots-store)
 
-The store shows at most FIVE screenshots; `shots-store.js` emits six
-candidates covering all seven views, all from live states instead of hand
-assembly (velvet §6.3 F) — pick the five keepers at upload time (`themes`
-folds into `strip` if a slot is needed):
+The store shows at most FIVE screenshots (global spec: 1280×800 or 640×400,
+JPEG or 24-bit PNG without alpha — we standardize on 1280×800 RGB).
+`shots-store.js` emits the five-keeper set plus one spare candidate and the
+two promo tiles, all from live states instead of hand assembly (velvet §6.3 F):
 
-- `store/strip.png` — 1400×560, the four explicit themes side by side;
 - `store/promo.png` — 1280×800, sheet 1 (entry points): left the main popup
   with the context menu and its collapsible entry expanded in place; right
   two columns of stacked pairs — search (normal over selection, the
@@ -45,13 +45,21 @@ folds into `strip` if a slot is needed):
   staging selection, staging recent region + stats;
 - `store/promo3.png` — 1280×800, sheet 3 (cleanup): dead-links and
   duplicates, each normal over selection;
-- `store/themes.png` — 1280×800, the two crafted themes split full-bleed
-  (ink | paper);
+- `store/strip.png` — 1280×800, the four explicit themes (light/dark/ink/
+  paper) as full tiles in a captioned band (was a 1400×560 band until the
+  1280×800-only screenshot discipline);
 - `store/options.png` — 1280×800, the whole options page in one frame: a
   wide-viewport capture with the multicol grid forced to six columns
   (`.options-page{max-width:none}` + `column-count:6`), scaled into the
   frame — a true panorama, unlike the hand-made options shot that shows only
-  half the groups.
+  half the groups;
+- `store/themes.png` — 1280×800 spare candidate: the two crafted themes
+  split full-bleed (ink | paper);
+- `store/marquee.png` — 1400×560 顶部宣传图块: brand-red gradient, icon chip
+  + wordmark + tagline + feature chips, and the live tree tile as the product
+  card (a deliberate top-anchored design crop, not a spec screenshot);
+- `store/tile-small.png` — 440×280 小型宣传图块: same brand system, icon
+  chip + wordmark + tagline centered.
 
 Every popup tile is clipped to the live `#container` box (overlays may extend
 it downward), so no tile carries the viewport's dead right margin. Plain tiles
@@ -59,7 +67,8 @@ trim trailing dead space to the measured content bottom; selection tiles start
 below the view-tab strip. Popup width is pinned to 400px via the `popupWidth`
 setting so overlays (palette) compose inside the frame. Composite geometry is
 pre-calculated from each tile's measured PNG aspect — tiles are never
-cover-cropped.
+cover-cropped (the marquee product card is the single deliberate exception:
+a top-anchored crop showing the popup's first screen).
 
 Every capture is seeded and hermetic (non-extension requests are aborted), so
 re-runs are deterministic. Typography: Inter + Noto Sans SC (思源黑体) are
@@ -67,8 +76,11 @@ installed by the Dockerfile from `scripts/screenshots/fonts/` (git-ignored;
 run `fonts/fetch.sh` once through the proxy) and forced via an injected
 stylesheet — without them the captures fall back to the base image's
 bitmap-ish CJK font. The composites are synced to
-`assets/store/vBookmarks-{strip,promo,promo2,promo3,themes,options}.png`
-(excluded from the package zip like every store asset — `package.py`
+`assets/store/vBookmarks-{promo,promo2,promo3,strip,options,marquee,tile-small,themes}.png`
+by `update-store-assets.sh`, which then runs `normalize-store-assets.py`
+(Pillow on the host) — the spec gate that flattens alpha to RGB and hard-fails
+on any size mismatch (CWS requires exact sizes, 24-bit PNG without alpha or
+JPEG). Store assets are excluded from the package zip (`package.py`
 EXCLUDE_FILES); re-run the suite after visual changes and re-copy the keepers.
 Upload happens via the Developer Dashboard (the store listing itself is not
 API-managed; see `scripts/webstore/README.md` for what the `listing` commands
@@ -89,10 +101,12 @@ tmp/shots/
 ├── tabgroups/NN-<name>.png              # shots-tabgroups (30-33)
 ├── tabgroups-view/NN-<name>.png          # shots-tabgroups-view (34-36)
 ├── guide/<name>.png                     # shots-guide
-├── store/strip.png                      # shots-store — 1400×560, 4 theme tiles
+├── store/strip.png                      # shots-store — 1280×800, 4 theme tiles + captions
 ├── store/promo.png                      # shots-store — 1280×800 collage
 ├── store/themes.png                     # shots-store — 1280×800 ink|paper split
 ├── store/options.png                    # shots-store — 1280×800 options panorama
+├── store/marquee.png                    # shots-store — 1400×560 顶部宣传图块(品牌)
+├── store/tile-small.png                 # shots-store — 440×280 小型宣传图块(品牌)
 ├── store/tiles/<name>.png               # shots-store — raw capture tiles
 ├── smoke/                               # harness smoke.js diagnostic shots
 ├── verify-menu/                         # verify-menu-overflow/collapse captures

@@ -39,7 +39,7 @@ scripts/harness/run.sh --dist                # full dist harness — 4.1.0 发�
 
 **Step 1 — git发布**(repo-side: version bump → changelog → commit → tag → package → push):
 
-- **商店图重拍(视觉有改动时必跑)**: `scripts/screenshots/update-store-assets.sh` — Docker 重跑 `shots-store.js` 并把六张候选(strip / promo×3 / themes / options,覆盖全部 7 视图)同步进 `assets/store/`,随本次发版一起提交。上传时从 6 张里挑 5 张(themes 可并入 strip 腾位)。字体前提:`scripts/screenshots/fonts/fetch.sh` 一次性拉取(本地,git-ignored)。
+- **商店图重拍(视觉有改动时必跑)**: `scripts/screenshots/update-store-assets.sh` — Docker 重跑 `shots-store.js`,同步八张产物进 `assets/store/`(五张 1280×800 截图固定清单 promo / promo2 / promo3 / strip / options + 候选 themes + 品牌宣传图块 marquee 1400×560 与 tile-small 440×280),随后 `normalize-store-assets.py` 做规格门禁(尺寸精确 + RGB 无 alpha,Pillow;不合格即 fail)。随本次发版一起提交。字体前提:`scripts/screenshots/fonts/fetch.sh` 一次性拉取(本地,git-ignored)。
 
 1. **Version check**: `git tag --sort=-v:refname | head -1` gives the highest tag (format `v<version>`, e.g. `v4.0.3`). The current version — authoritative source is `manifest.json`, mirrored in `package.json` — must be **greater** than the highest tag; if development did not bump it, bump it first.
 2. **Changelog basis**: every commit between the current version and the previous version tag.
@@ -56,5 +56,5 @@ scripts/harness/run.sh --dist                # full dist harness — 4.1.0 发�
 - **凭据**: 只存于 git-ignored 的仓库根 `.env`(`CWS_PUBLISHER_ID` / `CWS_CLIENT_ID` / `CWS_CLIENT_SECRET` / `CWS_REFRESH_TOKEN`;`extensionId` 自动从 manifest 推导),真实环境变量优先;获取步骤见 `scripts/webstore/README.md`。仓库内文件不得出现真实凭据。
 - **测试用户灰度**: `publish --type TRUSTED_TESTERS --yes` 只发布给指定测试者,`publish --type DEFAULT_PUBLISH --yes` 恢复全量;测试用户列表取 `CWS_TRUSTED_TESTERS`(逗号分隔,留空默认 `windviki@gmail.com`),发布时脚本打印列表供核对 — CWS API 无法代管测试者邮箱,列表须在 Dashboard → Users and permissions → Testers 手动维护。
 - **流程**: `upload --yes` → `publish --yes`(或 `all --yes` 一次完成);`--file` 指定 zip,`--type STAGED_PUBLISH`/`TRUSTED_TESTERS` 走分阶段/预发布,`--deploy N` 灰度。全部 dry-run 默认,`--yes` 才联网执行。
-- **listing 元信息(商店文案/截图)**: 官方 CWS API V2 **没有** listing 的读写 REST 端点,自动化边界是「快照 + 草稿」—— `listing --yes` 抓公开详情页存快照并与仓库文案比对;`listing-draft` 离线从规范源(`_locales` / docs README / `assets/store` 图册规格核对)生成可粘贴双语草稿,人工核对后粘贴进 Dashboard(命令与边界详情:`scripts/webstore/README.md`「listing 元信息」节)。商店图片素材由 `scripts/screenshots/shots-store.js` 自动拼图产出(见 testing.md 截图套件清单)。
+- **listing 元信息(商店文案/截图)**: 官方 CWS API V2 **没有** listing 的读写 REST 端点(2025-10-15 版 reference 核实),自动化边界是「全量快照 + 草稿」—— `listing --yes` 抓公开详情页并解析内嵌 ds:0 数据块(名称/简介/说明全文/类别/截图/小型宣传图块/版本/评分/语言,无需凭据;唯一缺口是公开页不展示的 marquee),与仓库文案和版本比对;`listing-draft` 离线从规范源(`_locales` / docs README)生成可粘贴双语草稿,并逐张核对上传图片清单(五张 1280×800 截图 + 两张宣传图块,尺寸/alpha 门禁)(命令与边界详情:`scripts/webstore/README.md`「listing 元信息」节)。商店图片素材由 `scripts/screenshots/shots-store.js` 自动拼图产出(见 testing.md 截图套件清单)。
 - **测试**: `npm run test:webstore`(全离线,验证 V2 请求契约 + 打包产物 CWS 结构合规 + listing 纯函数)。
