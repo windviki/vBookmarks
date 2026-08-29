@@ -1,114 +1,407 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>vBookmarks — 一键即达的书签管理器 · Chrome 扩展</title>
+    <meta name="description" content="vBookmarks 把整个书签库装进一个极速弹窗：模糊搜索、七个专用视图、⌘K 命令面板、暂存工作台、死链与重复清理。免费开源、无广告，Neat Bookmarks 的活跃续作，自 2011 年持续打磨至今。">
+    <meta name="google-site-verification" content="ciFlpDtIyGYqbkzVEgTjZHmtkM38LQY4Ls0mhL58ZZU">
+    <link rel="icon" type="image/svg+xml" href="assets/img/icon.svg">
+    <link rel="icon" type="image/png" sizes="48x48" href="assets/img/icon48.png">
+    <link rel="canonical" href="https://windviki.github.io/vBookmarks/index.zh.html">
+    <link rel="alternate" hreflang="en" href="https://windviki.github.io/vBookmarks/">
+    <link rel="alternate" hreflang="zh-CN" href="https://windviki.github.io/vBookmarks/index.zh.html">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="vBookmarks">
+    <meta property="og:title" content="vBookmarks — 一键即达的书签管理器">
+    <meta property="og:description" content="模糊搜索、七个专用视图、⌘K 命令面板与暂存工作台 —— 免费开源，自 2011 年持续打磨。">
+    <meta property="og:url" content="https://windviki.github.io/vBookmarks/index.zh.html">
+    <meta property="og:image" content="https://windviki.github.io/vBookmarks/assets/img/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<a class="skip-link" href="#main">跳到正文</a>
 
-  <head>
-    <meta charset='utf-8' />
-    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
-    <meta name="description" content="vBookmarks : A mod of Neat Bookmarks" />
-    <meta name="google-site-verification" content="ciFlpDtIyGYqbkzVEgTjZHmtkM38LQY4Ls0mhL58ZZU" />
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
-
-    <title>vBookmarks</title>
-  </head>
-
-  <body>
-
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-          <a id="forkme_banner" href="https://github.com/windviki/vBookmarks">在GitHub上查看</a>
-
-          <h1 id="project_title">vBookmarks</h1>
-          <h2 id="project_tagline">A successor of Neat Bookmarks since 2011</h2>
-
-        </header>
+<header class="site-header">
+    <div class="wrap nav">
+        <a class="brand" href="index.zh.html">
+            <img src="assets/img/icon.svg" alt="" width="28" height="28">
+            vBookmarks
+        </a>
+        <nav class="nav-links" aria-label="页面导航">
+            <a href="#features">功能</a>
+            <a href="#views">视图</a>
+            <a href="#keyboard">键盘流</a>
+            <a href="#themes">主题</a>
+            <a href="#faq">常见问题</a>
+        </nav>
+        <div class="nav-actions">
+            <a class="nav-lang" lang="en" href="./" hreflang="en">English</a>
+            <a class="nav-gh" href="https://github.com/windviki/vBookmarks" aria-label="GitHub 仓库">
+                <svg width="21" height="21" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+            </a>
+            <a class="btn btn--primary btn--sm" href="https://chromewebstore.google.com/detail/vbookmarks/odhjcodnoebmndcihdedenkmdmklpihb" rel="noopener">安装到 Chrome</a>
+            <button class="nav-toggle" aria-expanded="false" aria-label="菜单">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+            </button>
+        </div>
     </div>
+</header>
 
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
-        <h1>vBookmarks</h1>
-        <p><span><a href="index.html">English</a></span> | <span><a href="index.zh.html">中文主页</a></span></p>
+<main id="main">
 
-<h1></h1>
+    <!-- ============ 首屏 ============ -->
+    <section class="hero">
+        <div class="hero-inner">
+            <p class="hero-badge reveal">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.26L21.5 9.3l-4.75 4.4 1.15 6.8L12 17.2l-5.9 3.3 1.15-6.8L2.5 9.3l6.6-1.04L12 2z"/></svg>
+                经典 Neat Bookmarks 的活跃续作
+            </p>
+            <h1 class="reveal" style="--d:60ms">你的书签库，<br><em>一键</em>即达。</h1>
+            <p class="hero-sub reveal" style="--d:120ms">
+                vBookmarks 把整个书签库装进一个极速弹窗：毫秒级模糊搜索、七个专用视图、⌘K 命令面板。
+                免费开源，自 2011 年持续打磨至今。
+            </p>
+            <div class="hero-cta reveal" style="--d:180ms">
+                <a class="btn btn--primary" href="https://chromewebstore.google.com/detail/vbookmarks/odhjcodnoebmndcihdedenkmdmklpihb" rel="noopener">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14"/></svg>
+                    免费安装到 Chrome
+                </a>
+                <a class="btn btn--ghost" href="https://github.com/windviki/vBookmarks" rel="noopener">
+                    <svg width="17" height="17" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 .75a7.25 7.25 0 0 0-2.29 14.13c.36.07.5-.16.5-.35v-1.22c-2.02.44-2.44-.97-2.44-.97-.33-.84-.8-1.06-.8-1.06-.66-.45.05-.44.05-.44.72.05 1.1.74 1.1.74.65 1.11 1.7.79 2.11.6.07-.47.25-.79.46-.97-1.61-.18-3.3-.8-3.3-3.58 0-.79.28-1.44.74-1.94-.07-.18-.32-.92.07-1.92 0 0 .61-.19 1.99.74a6.9 6.9 0 0 1 3.62 0c1.38-.93 1.98-.74 1.98-.74.4 1 .15 1.74.07 1.92.46.5.74 1.15.74 1.94 0 2.79-1.7 3.4-3.31 3.58.26.22.49.66.49 1.33v1.97c0 .19.13.42.5.35A7.25 7.25 0 0 0 8 .75Z"/></svg>
+                    GitHub 加星
+                </a>
+            </div>
+            <div class="hero-facts reveal" style="--d:240ms">
+                <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>永久免费</span>
+                <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>无广告 · 无追踪</span>
+                <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>43 种语言</span>
+                <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Chrome 与 Edge · MIT 协议</span>
+            </div>
+        </div>
+        <div class="hero-board reveal" style="--d:300ms">
+            <div class="hero-frame">
+                <img src="assets/img/hero-board.png" width="1280" height="800" alt="vBookmarks 弹窗：模糊搜索结果、标签页组视图与多选批量操作" fetchpriority="high">
+            </div>
+        </div>
+    </section>
 
-<hr>
+    <!-- ============ 功能 ============ -->
+    <section class="section" id="features">
+        <div class="wrap">
+            <div class="section-head section-head--center reveal">
+                <p class="eyebrow">为什么是 vBookmarks</p>
+                <h2 class="section-title">Chrome 一直欠你一个这样的书签管理器</h2>
+                <p class="section-sub">它管理的正是你现有的那些书签 —— 补上的只是官方管理器始终没做的速度、结构与清理能力。</p>
+            </div>
+            <div class="bento">
+                <div class="bento-card reveal">
+                    <span class="bento-icon" aria-hidden="true">
+                        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.8-3.8"/></svg>
+                    </span>
+                    <h3>毫秒级模糊搜索</h3>
+                    <p>标题、网址、文件夹皆可匹配 —— 弹窗、侧边栏、地址栏（输入 <code>*</code> 再按空格）皆可唤起。匹配高亮，中日韩友好。</p>
+                </div>
+                <div class="bento-card bento-card--span4 reveal" style="--d:60ms">
+                    <span class="bento-icon" aria-hidden="true">
+                        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17V7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><path d="M8 10l2.2 2L8 14M12.5 14H16"/></svg>
+                    </span>
+                    <h3>⌘K 命令面板</h3>
+                    <p>打开、移动、排序、切视图、换主题 —— 每个操作都有斜杠命令。还支持自定义命令，跨设备同步。</p>
+                </div>
+                <div class="bento-card bento-card--wide reveal" style="--d:120ms">
+                    <span class="bento-icon" aria-hidden="true">
+                        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 13l2.4-7A2 2 0 0 1 8.3 4.6h7.4a2 2 0 0 1 1.9 1.4L20 13v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-4z"/><path d="M4 13h5a3 3 0 0 0 6 0h5"/></svg>
+                    </span>
+                    <h3>暂存工作台</h3>
+                    <p>新书签先落进暂存区，而不是直接淹没进书签树：随手分组、加星、批量归档，或者任它们流进「最近添加」时间线。</p>
+                </div>
+                <div class="bento-card reveal">
+                    <span class="bento-icon" aria-hidden="true">
+                        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="13" height="13" rx="2"/><path d="M8 5V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-1"/></svg>
+                    </span>
+                    <h3>窗口 → 文件夹 → 标签页组</h3>
+                    <p>一条命令把整个窗口的标签页存成书签文件夹，日后作为命名标签页组整体重开。</p>
+                </div>
+                <div class="bento-card reveal" style="--d:60ms">
+                    <span class="bento-icon" aria-hidden="true">
+                        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M18.84 12.25l1.72-1.71a5 5 0 0 0-7.09-7.07l-1.72 1.71"/><path d="M6.17 11.75l-1.72 1.71a5 5 0 0 0 7.09 7.07l1.72-1.71"/><path d="M8 2v3M2 8h3M16 19v3M19 16h3"/></svg>
+                    </span>
+                    <h3>死链扫描</h3>
+                    <p>批量检测，支持代理复检 —— 分得清「网站挂了」和「你的网络访问不了」。</p>
+                </div>
+                <div class="bento-card reveal" style="--d:120ms">
+                    <span class="bento-icon" aria-hidden="true">
+                        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h3a1 1 0 0 1 1 1v3M8 4H5a1 1 0 0 0-1 1v3M16 20h3a1 1 0 0 0 1-1v-3M8 20H5a1 1 0 0 1-1-1v-3"/><path d="M9.5 12.5l1.8 1.8 3.4-3.8"/></svg>
+                    </span>
+                    <h3>重复合并</h3>
+                    <p>重复书签按网址分组、批量合并，六种保留策略任选 —— 最旧、最新、访问最多等等。</p>
+                </div>
+                <div class="bento-card reveal" style="--d:180ms">
+                    <span class="bento-icon" aria-hidden="true">
+                        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M3 12h2.5M8 12h2.5M13.5 12H16M18.5 12H21"/></svg>
+                    </span>
+                    <h3>真正的分割线</h3>
+                    <p>任意文件夹里插入可自定义颜色与粗细的分隔线 —— 这是 Chrome 从未有过的能力。</p>
+                </div>
+                <div class="bento-card bento-card--full reveal" style="--d:240ms">
+                    <span class="bento-icon" aria-hidden="true">
+                        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>
+                    </span>
+                    <h3>每次删除都能撤销</h3>
+                    <p>清理从此没有心理负担 —— 轻点提示条，整个删除的子树原样找回。</p>
+                </div>
+            </div>
+            <div class="feature-chips reveal">
+                <span><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.4 5.2 5.6.6-4.2 3.8 1.2 5.6L12 14.9 7 17.2l1.2-5.6L4 7.8l5.6-.6L12 2z"/></svg>图标自动补齐</span>
+                <span><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.4 5.2 5.6.6-4.2 3.8 1.2 5.6L12 14.9 7 17.2l1.2-5.6L4 7.8l5.6-.6L12 2z"/></svg>同步状态指示</span>
+                <span><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.4 5.2 5.6.6-4.2 3.8 1.2 5.6L12 14.9 7 17.2l1.2-5.6L4 7.8l5.6-.6L12 2z"/></svg>访问统计全本地</span>
+                <span><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.4 5.2 5.6.6-4.2 3.8 1.2 5.6L12 14.9 7 17.2l1.2-5.6L4 7.8l5.6-.6L12 2z"/></svg>拖拽整理</span>
+                <span><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.4 5.2 5.6.6-4.2 3.8 1.2 5.6L12 14.9 7 17.2l1.2-5.6L4 7.8l5.6-.6L12 2z"/></svg>多选批量操作</span>
+                <span><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.4 5.2 5.6.6-4.2 3.8 1.2 5.6L12 14.9 7 17.2l1.2-5.6L4 7.8l5.6-.6L12 2z"/></svg>按文件夹排序</span>
+                <span><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.4 5.2 5.6.6-4.2 3.8 1.2 5.6L12 14.9 7 17.2l1.2-5.6L4 7.8l5.6-.6L12 2z"/></svg>侧边栏模式</span>
+                <span><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.4 5.2 5.6.6-4.2 3.8 1.2 5.6L12 14.9 7 17.2l1.2-5.6L4 7.8l5.6-.6L12 2z"/></svg>自定义 CSS 与缩放</span>
+                <span><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.4 5.2 5.6.6-4.2 3.8 1.2 5.6L12 14.9 7 17.2l1.2-5.6L4 7.8l5.6-.6L12 2z"/></svg>支持书签小脚本</span>
+                <span><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.4 5.2 5.6.6-4.2 3.8 1.2 5.6L12 14.9 7 17.2l1.2-5.6L4 7.8l5.6-.6L12 2z"/></svg>43 种语言</span>
+            </div>
+        </div>
+    </section>
 
-<h2>如何获取</h2>
+    <!-- ============ 视图 ============ -->
+    <section class="section section--soft" id="views">
+        <div class="wrap views-strip">
+            <div class="section-head reveal">
+                <p class="eyebrow">七个视图</p>
+                <h2 class="section-title">一个弹窗，看全你的书签库</h2>
+                <p class="section-sub">Alt+1…7 或 ⌘K 面板直达。每个视图只做一件事，并且全部支持纯键盘操作。</p>
+            </div>
+            <div class="views-nav reveal">
+                <button type="button" data-gallery-prev aria-label="向左滚动画廊">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+                </button>
+                <button type="button" data-gallery-next aria-label="向右滚动画廊">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+                </button>
+            </div>
+            <div class="views-track" tabindex="0" aria-label="视图画廊，可横向滚动">
+                <article class="view-card">
+                    <img src="assets/img/view-tree.png" width="594" height="766" alt="树视图：带文件夹与分割线的书签层级" loading="lazy">
+                    <div class="view-card-body">
+                        <h3>书签树</h3>
+                        <p>经典层级结构 —— 输入字母直达、悬停快捷操作、拖拽、按文件夹排序。</p>
+                    </div>
+                </article>
+                <article class="view-card">
+                    <img src="assets/img/view-search.png" width="400" height="640" alt="搜索视图：最近搜索与即时结果" loading="lazy">
+                    <div class="view-card-body">
+                        <h3>搜索</h3>
+                        <p>双区搜索：上方最近搜索，下方带路径面包屑的模糊结果。</p>
+                    </div>
+                </article>
+                <article class="view-card">
+                    <img class="is-wide" src="assets/img/view-tabgroups.png" width="406" height="398" alt="标签页组视图：列出窗口、标签页与分组" loading="lazy">
+                    <div class="view-card-body">
+                        <h3>标签页组</h3>
+                        <p>每个窗口的标签页一目了然 —— 存成文件夹，再作为命名分组重开。</p>
+                    </div>
+                </article>
+                <article class="view-card">
+                    <img src="assets/img/view-staging.png" width="400" height="640" alt="暂存工作台：待整理区与最近添加时间线" loading="lazy">
+                    <div class="view-card-body">
+                        <h3>暂存工作台</h3>
+                        <p>新书签的待整理区，加上「最近添加」时间线。每天五分钟，整理完毕。</p>
+                    </div>
+                </article>
+                <article class="view-card">
+                    <img src="assets/img/view-stats.png" width="400" height="640" alt="访问统计视图：按访问次数排序书签" loading="lazy">
+                    <div class="view-card-body">
+                        <h3>访问统计</h3>
+                        <p>你最常访问的书签，计数完全在本地。按次数或最近排序，随时暂停。</p>
+                    </div>
+                </article>
+                <article class="view-card">
+                    <img src="assets/img/view-dead.png" width="400" height="640" alt="死链视图：扫描结果与状态筛选" loading="lazy">
+                    <div class="view-card-body">
+                        <h3>死链清理</h3>
+                        <p>批量扫描、按状态筛选、标记复核或删除 —— 对被墙站点支持代理复检。</p>
+                    </div>
+                </article>
+                <article class="view-card">
+                    <img src="assets/img/view-dupes.png" width="400" height="640" alt="重复视图：按网址分组相同书签" loading="lazy">
+                    <div class="view-card-body">
+                        <h3>重复清理</h3>
+                        <p>按网址分组、批量合并。选好保留策略，一键找回清爽的书签树。</p>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
 
-<h3>vBookmarks已经在WebStore上架:</h3>
-<p><a href="https://chrome.google.com/webstore/detail/odhjcodnoebmndcihdedenkmdmklpihb">获取vBookmarks</a></p>
+    <!-- ============ 键盘流 ============ -->
+    <section class="section keyboard" id="keyboard">
+        <div class="wrap">
+            <div class="section-head section-head--center reveal">
+                <p class="eyebrow">全键盘流</p>
+                <h2 class="section-title">全程不必碰鼠标</h2>
+                <p class="section-sub">方向键、Home/End、PageUp/PageDown、输入字母直达。Enter 打开，F2 重命名，Delete 删除 —— Esc 一层层退出菜单、面板、多选与搜索，干净利落。</p>
+            </div>
+            <dl class="kbd-grid">
+                <div class="kbd-row reveal">
+                    <dt><kbd class="wide">Ctrl</kbd><kbd class="wide">Shift</kbd><kbd>V</kbd></dt>
+                    <dd>打开弹窗；<kbd class="wide">Ctrl</kbd><kbd class="wide">Shift</kbd><kbd>K</kbd> 全局呼出命令面板</dd>
+                </div>
+                <div class="kbd-row reveal" style="--d:60ms">
+                    <dt><kbd>*</kbd><kbd class="wide">空格</kbd></dt>
+                    <dd>直接在地址栏搜索你的书签</dd>
+                </div>
+                <div class="kbd-row reveal" style="--d:120ms">
+                    <dt><kbd class="wide">Alt</kbd><kbd>1</kbd>…<kbd>7</kbd></dt>
+                    <dd>直达任意视图</dd>
+                </div>
+                <div class="kbd-row reveal" style="--d:180ms">
+                    <dt><kbd class="wide">Alt</kbd><kbd class="wide">Shift</kbd><kbd>B</kbd></dt>
+                    <dd>开合侧边栏 —— 页面旁常驻的工作台</dd>
+                </div>
+                <div class="kbd-row reveal" style="--d:240ms">
+                    <dt><kbd class="wide">Alt</kbd><kbd class="wide">Shift</kbd><kbd>S</kbd></dt>
+                    <dd>快速保存当前标签页到你指定的文件夹</dd>
+                </div>
+                <div class="kbd-row reveal" style="--d:300ms">
+                    <dt><kbd class="wide">F2</kbd><kbd class="wide">Del</kbd><kbd class="wide">Esc</kbd></dt>
+                    <dd>重命名、删除、逐层退出 —— 整个弹窗都听键盘的</dd>
+                </div>
+            </dl>
+        </div>
+    </section>
 
-<h3>上架之前的历史版本:</h3>
+    <!-- ============ 主题 ============ -->
+    <section class="section" id="themes">
+        <div class="wrap">
+            <div class="section-head section-head--center reveal">
+                <p class="eyebrow">打造成你的样子</p>
+                <h2 class="section-title">四套精制主题，久看不累</h2>
+            </div>
+            <div class="themes-frame reveal">
+                <img src="assets/img/themes.png" width="1240" height="468" alt="同一个书签树的四套主题：亮色、暗色、墨色、纸感" loading="lazy">
+            </div>
+            <div class="themes-pills reveal" style="--d:80ms">
+                <span><i class="sw-light"></i>亮色</span>
+                <span><i class="sw-dark"></i>暗色</span>
+                <span><i class="sw-ink"></i>墨色</span>
+                <span><i class="sw-paper"></i>纸感</span>
+            </div>
+            <p class="themes-note reveal" style="--d:140ms">另有跟随系统、界面缩放、自定义 CSS 和自定义工具栏图标。弹窗或侧边栏，随你选。</p>
+        </div>
+    </section>
 
-<p><a href="https://github.com/windviki/vBookmarks/blob/master/release/">下载旧版本</a></p>
+    <!-- ============ 隐私 ============ -->
+    <section class="section section--soft" id="privacy">
+        <div class="wrap">
+            <div class="section-head section-head--center reveal">
+                <p class="eyebrow">免费且安心</p>
+                <h2 class="section-title">你的书签只属于你。</h2>
+            </div>
+            <div class="trio">
+                <div class="trio-card reveal">
+                    <span class="bento-icon" aria-hidden="true">
+                        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.6-3 8.4-7 10-4-1.6-7-5.4-7-10V6l7-3z"/><path d="M9.5 12l1.8 1.8 3.4-3.8"/></svg>
+                    </span>
+                    <h3>无广告、无追踪、无需账号</h3>
+                    <p>没有需要注册的账号，没有任何数据外发。扩展不带统计 —— 这个主页同样不带。</p>
+                </div>
+                <div class="trio-card reveal" style="--d:60ms">
+                    <span class="bento-icon" aria-hidden="true">
+                        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+                    </span>
+                    <h3>数据从不离开浏览器</h3>
+                    <p>vBookmarks 通过官方接口管理 Chrome 已有的书签 —— 走 Chrome 同步的照常同步。访问统计与扫描结果只留在这台设备上。</p>
+                </div>
+                <div class="trio-card reveal" style="--d:120ms">
+                    <span class="bento-icon" aria-hidden="true">
+                        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.6-3 8.4-7 10-4-1.6-7-5.4-7-10V6l7-3z"/><path d="M12 8v4M12 15.5v.5"/></svg>
+                    </span>
+                    <h3>MIT 协议开源</h3>
+                    <p>每一行代码都在 GitHub 上，由一位至今亲自回复每个 issue 的开发者维护。欢迎 fork、审计、学习。</p>
+                </div>
+            </div>
+            <div class="closing reveal">
+                <p>用上一周，你会第一次觉得书签是整齐的。</p>
+                <a class="btn btn--primary" href="https://chromewebstore.google.com/detail/vbookmarks/odhjcodnoebmndcihdedenkmdmklpihb" rel="noopener">把 vBookmarks 装进 Chrome</a>
+            </div>
+        </div>
+    </section>
 
-<hr>
+    <!-- ============ 常见问题 ============ -->
+    <section class="section" id="faq">
+        <div class="wrap">
+            <div class="section-head section-head--center reveal">
+                <p class="eyebrow">常见问题</p>
+                <h2 class="section-title">你可能想问</h2>
+            </div>
+            <div class="faq reveal">
+                <details open>
+                    <summary>vBookmarks 真的免费吗？</summary>
+                    <p>是的 —— 永久免费，没有广告、没有订阅、没有高级版。MIT 协议开源，你也可以直接从 GitHub 自行构建。</p>
+                </details>
+                <details>
+                    <summary>支持哪些浏览器？</summary>
+                    <p>桌面版 Chrome 114 及以上。同一套 Manifest V3 包也可以直接装在 Microsoft Edge 等支持 MV3 扩展的 Chromium 内核浏览器上。</p>
+                </details>
+                <details>
+                    <summary>它会改变书签的存储方式吗？</summary>
+                    <p>不会。它通过官方书签 API 管理 Chrome 现有的书签 —— 在 vBookmarks 里的整理会随 Chrome 同步走。偏好设置与设备级数据留在本地。</p>
+                </details>
+                <details>
+                    <summary>怎么在地址栏里搜索书签？</summary>
+                    <p>在地址栏输入 <code>*</code>，按空格，然后开始输入。结果与弹窗用的是同一套模糊排序 —— 标题、网址、文件夹都能命中。</p>
+                </details>
+                <details>
+                    <summary>暂存工作台是什么？</summary>
+                    <p>新书签的待整理区。书签不再直接塞进书签树，而是先落在暂存区：随手分组、加星、批量归档 —— 或者不管它，等你每天那五分钟的整理时间。</p>
+                </details>
+                <details>
+                    <summary>Neat Bookmarks 怎么了？</summary>
+                    <p>那款经典的极简书签弹窗，在 Chrome 移除旧 API 后停止了更新。vBookmarks 从 2011 年起作为它的直系继任者持续维护至今 —— 同样的克制，强得多的能力。历史与更新日志见 <a href="https://github.com/windviki/vBookmarks#readme" rel="noopener">GitHub README</a>。</p>
+                </details>
+            </div>
+        </div>
+    </section>
+</main>
 
-<h2>功能介绍</h2>
-
-<p><a href="https://github.com/cheeaun/neat-bookmarks">Neat Bookmarks</a> 是 Chrome 上面一个比较著名的书签插件，本插件是它的继任者，自2011年以来持续更新。 </p>
-
-<p>受到 Firefox 上的书签扩展 AddBookmarkHere 的启发，我追加了许多新的功能，以使 Chrome 上的书签管理更为方便。在这过程中，Neat Bookmarks 旧有的 Bug 和 Chrome 更新换代带来的 Bug 都得到了修复。经过几年的进化，最终成为现在全新的 vBookmarks 扩展。</p>
-
-<p>1.在选中的书签/文件夹之前/之后添加当前tab为新书签</p>
-
-<p>2.在选中的文件夹顶部/底部添加当前tab为新书签</p>
-
-<p>3.在选中的文件夹中添加子文件夹</p>
-
-<p>4.替换选中的书签的URL为当前tab的URL</p>
-
-<p>5.拷贝选中书签的标题和URL到剪贴板</p>
-
-<p>6.增加选项：仅在插件里显示书签工具栏中的书签</p>
-
-<p>7.可同步的书签分隔符</p>
-
-<p>8.内建的新版本提醒</p>
-
-<p>9.修正Neat Bookmarks中的已知BUG</p>
-
-<p>License: <a href="http://www.opensource.org/licenses/mit-license.php">MIT License</a>.</p>
-
-<hr>
-
-<h2>使用说明：</h2>
-
-<p>1.扩展支持地址栏搜索，地址栏里敲*，然后空格，就可以输入关键词进行书签内的检索。</p>
-
-<p>2.（popup打开的时候）扩展支持键盘方向键（↑↓←→）进行书签/文件夹的选择，空格键或者回车键打开选中书签或者文件夹，HOME/END跳到开头或者结尾。
-PAGE DOWN/UP翻页，DELETE键删除书签。</p>
-
-<p>3.选中书签，文件夹的时候，F2键可编辑。</p>
-
-<p>4.鼠标中键打开目录下所有书签。</p>
-
-<p>5.（popup打开的时候）Ctrl+F定位到搜索栏进行书签搜索。</p>
-
-<p>6.支持书签拖放进行移动。</p>
-
-<p>7.选项里可选打开书签链接后popup是否关闭。是否只显示书签栏中的书签。后台打开。书签树缩放等。</p>
-
-<p>8.定制分隔符颜色（高级选项）支持十六进制颜色或者RGB颜色。#00FF00和RGB(255,0,0)都是合法的。</p>
-
-<p>9.请用高级选项里的定制CSS获取更丰富的外观呈现。如改变书签树的字体。* {font-family: 微软雅黑;}</p>
-
-<p>10.高级选项里可定制程序图标。</p>
-
-
-      </section>
+<footer class="site-footer">
+    <div class="wrap">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <img src="assets/img/icon.svg" alt="" width="30" height="30">
+                <div class="brand-name">vBookmarks</div>
+                <p>一键即达的书签管理器。Chrome 上的免费开源书签扩展 —— 自 2011 年活跃维护至今。</p>
+            </div>
+            <div class="footer-col">
+                <h4>产品</h4>
+                <a href="https://chromewebstore.google.com/detail/vbookmarks/odhjcodnoebmndcihdedenkmdmklpihb" rel="noopener">Chrome 应用商店</a>
+                <a href="https://github.com/windviki/vBookmarks/blob/master/docs/guide-v4.zh.md" rel="noopener">v4 功能指南</a>
+                <a href="https://github.com/windviki/vBookmarks/releases" rel="noopener">更新日志</a>
+            </div>
+            <div class="footer-col">
+                <h4>项目</h4>
+                <a href="https://github.com/windviki/vBookmarks" rel="noopener">GitHub 仓库</a>
+                <a href="https://github.com/windviki/vBookmarks/issues" rel="noopener">Issue 与反馈</a>
+                <a href="https://github.com/windviki/vBookmarks/blob/master/license.txt" rel="noopener">MIT 协议</a>
+            </div>
+            <div class="footer-col">
+                <h4>本页</h4>
+                <a href="./" hreflang="en" lang="en">English</a>
+                <a href="index.zh.html" hreflang="zh-CN">简体中文</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>© 2011–<span data-year>2026</span> windviki · vBookmarks · <a href="https://github.com/cheeaun/neat-bookmarks" rel="noopener">Neat Bookmarks</a> 的续作</span>
+            <span>本页不加载任何外部资源 —— 无字体、无统计、无追踪。</span>
+        </div>
     </div>
+</footer>
 
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <p class="copyright">vBookmarks maintained by <a href="https://github.com/windviki">windviki</a></p>
-        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
-      </footer>
-    </div>
-
-    
-
-  </body>
+<script src="assets/js/main.js" defer></script>
+</body>
 </html>

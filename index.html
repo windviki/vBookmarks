@@ -1,126 +1,408 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>vBookmarks — Your bookmarks, one keypress away. A Chrome extension</title>
+    <meta name="description" content="vBookmarks puts your entire bookmark library in a fast, keyboard-friendly popup: fuzzy search, seven purpose-built views, a ⌘K command palette, staging triage, dead-link and duplicate cleanup. Free, open source, no ads — the actively maintained successor of Neat Bookmarks since 2011.">
+    <meta name="google-site-verification" content="ciFlpDtIyGYqbkzVEgTjZHmtkM38LQY4Ls0mhL58ZZU">
+    <link rel="icon" type="image/svg+xml" href="assets/img/icon.svg">
+    <link rel="icon" type="image/png" sizes="48x48" href="assets/img/icon48.png">
+    <link rel="canonical" href="https://windviki.github.io/vBookmarks/">
+    <link rel="alternate" hreflang="en" href="https://windviki.github.io/vBookmarks/">
+    <link rel="alternate" hreflang="zh-CN" href="https://windviki.github.io/vBookmarks/index.zh.html">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="vBookmarks">
+    <meta property="og:title" content="vBookmarks — Your bookmarks, one keypress away.">
+    <meta property="og:description" content="Fuzzy search, seven purpose-built views, a ⌘K command palette and a staging workbench — in a free, open-source popup that has been polished since 2011.">
+    <meta property="og:url" content="https://windviki.github.io/vBookmarks/">
+    <meta property="og:image" content="https://windviki.github.io/vBookmarks/assets/img/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
 
-  <head>
-    <meta charset='utf-8' />
-    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
-    <meta name="description" content="vBookmarks : A mod of Neat Bookmarks" />
-    <meta name="google-site-verification" content="ciFlpDtIyGYqbkzVEgTjZHmtkM38LQY4Ls0mhL58ZZU" />
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
-
-    <title>vBookmarks</title>
-  </head>
-
-  <body>
-
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-          <a id="forkme_banner" href="https://github.com/windviki/vBookmarks">View on GitHub</a>
-
-          <h1 id="project_title">vBookmarks</h1>
-          <h2 id="project_tagline">A successor of Neat Bookmarks since 2011</h2>
-
-        </header>
+<header class="site-header">
+    <div class="wrap nav">
+        <a class="brand" href="./">
+            <img src="assets/img/icon.svg" alt="" width="28" height="28">
+            vBookmarks
+        </a>
+        <nav class="nav-links" aria-label="Sections">
+            <a href="#features">Features</a>
+            <a href="#views">Views</a>
+            <a href="#keyboard">Keyboard</a>
+            <a href="#themes">Themes</a>
+            <a href="#faq">FAQ</a>
+        </nav>
+        <div class="nav-actions">
+            <a class="nav-lang" lang="zh-CN" href="index.zh.html" hreflang="zh-CN">中文</a>
+            <a class="nav-gh" href="https://github.com/windviki/vBookmarks" aria-label="GitHub repository">
+                <svg width="21" height="21" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+            </a>
+            <a class="btn btn--primary btn--sm" href="https://chromewebstore.google.com/detail/vbookmarks/odhjcodnoebmndcihdedenkmdmklpihb" rel="noopener">Add to Chrome</a>
+            <button class="nav-toggle" aria-expanded="false" aria-label="Menu">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+            </button>
+        </div>
     </div>
+</header>
 
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
-        <h1>vBookmarks</h1>
-        <p><span><a href="index.html">English</a></span> | <span><a href="index.zh.html">中文主页</a></span></p>
+<main id="main">
 
-<h1></h1>
+    <!-- ============ Hero ============ -->
+    <section class="hero">
+        <div class="hero-inner">
+            <p class="hero-badge reveal">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.26L21.5 9.3l-4.75 4.4 1.15 6.8L12 17.2l-5.9 3.3 1.15-6.8L2.5 9.3l6.6-1.04L12 2z"/></svg>
+                The actively maintained successor of Neat Bookmarks
+            </p>
+            <h1 class="reveal" style="--d:60ms">Your bookmarks,<br>one keypress <em>away.</em></h1>
+            <p class="hero-sub reveal" style="--d:120ms">
+                vBookmarks puts your whole library in a fast, keyboard-friendly popup:
+                instant fuzzy search, seven purpose-built views and a ⌘K command palette.
+                Free, open source, and polished since 2011.
+            </p>
+            <div class="hero-cta reveal" style="--d:180ms">
+                <a class="btn btn--primary" href="https://chromewebstore.google.com/detail/vbookmarks/odhjcodnoebmndcihdedenkmdmklpihb" rel="noopener">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14"/></svg>
+                    Add to Chrome — it's free
+                </a>
+                <a class="btn btn--ghost" href="https://github.com/windviki/vBookmarks" rel="noopener">
+                    <svg width="17" height="17" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 .75a7.25 7.25 0 0 0-2.29 14.13c.36.07.5-.16.5-.35v-1.22c-2.02.44-2.44-.97-2.44-.97-.33-.84-.8-1.06-.8-1.06-.66-.45.05-.44.05-.44.72.05 1.1.74 1.1.74.65 1.11 1.7.79 2.11.6.07-.47.25-.79.46-.97-1.61-.18-3.3-.8-3.3-3.58 0-.79.28-1.44.74-1.94-.07-.18-.32-.92.07-1.92 0 0 .61-.19 1.99.74a6.9 6.9 0 0 1 3.62 0c1.38-.93 1.98-.74 1.98-.74.4 1 .15 1.74.07 1.92.46.5.74 1.15.74 1.94 0 2.79-1.7 3.4-3.31 3.58.26.22.49.66.49 1.33v1.97c0 .19.13.42.5.35A7.25 7.25 0 0 0 8 .75Z"/></svg>
+                    Star on GitHub
+                </a>
+            </div>
+            <div class="hero-facts reveal" style="--d:240ms">
+                <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Free forever</span>
+                <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>No ads · no tracking</span>
+                <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>43 languages</span>
+                <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Chrome &amp; Edge · MIT license</span>
+            </div>
+        </div>
+        <div class="hero-board reveal" style="--d:300ms">
+            <div class="hero-frame">
+                <img src="assets/img/hero-board.png" width="1280" height="800" alt="vBookmarks popup showing fuzzy search results, a tab-groups view and multi-select batch actions" fetchpriority="high">
+            </div>
+        </div>
+    </section>
 
-<hr>
+    <!-- ============ Features bento ============ -->
+    <section class="section" id="features">
+        <div class="wrap">
+            <div class="section-head section-head--center reveal">
+                <p class="eyebrow">Why vBookmarks</p>
+                <h2 class="section-title">The bookmark manager Chrome forgot to build</h2>
+                <p class="section-sub">It manages the same bookmarks you already have — but adds the speed, structure and cleanup tools the built-in manager never shipped.</p>
+            </div>
+            <div class="bento">
+                <div class="bento-card reveal">
+                    <span class="bento-icon" aria-hidden="true">
+                        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.8-3.8"/></svg>
+                    </span>
+                    <h3>Instant fuzzy search</h3>
+                    <p>Titles, URLs and folders — matched in milliseconds from the popup, the side panel, or the address bar (type <code>*</code> then Space). Highlighted matches, CJK-friendly.</p>
+                </div>
+                <div class="bento-card bento-card--span4 reveal" style="--d:60ms">
+                    <span class="bento-icon" aria-hidden="true">
+                        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17V7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><path d="M8 10l2.2 2L8 14M12.5 14H16"/></svg>
+                    </span>
+                    <h3>A ⌘K command palette</h3>
+                    <p>Open, move, sort, switch views, change themes — every action has a slash command. Add your own; they sync across devices.</p>
+                </div>
+                <div class="bento-card bento-card--wide reveal" style="--d:120ms">
+                    <span class="bento-icon" aria-hidden="true">
+                        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 13l2.4-7A2 2 0 0 1 8.3 4.6h7.4a2 2 0 0 1 1.9 1.4L20 13v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-4z"/><path d="M4 13h5a3 3 0 0 0 6 0h5"/></svg>
+                    </span>
+                    <h3>A staging workbench</h3>
+                    <p>New saves land in a triage inbox instead of vanishing into the tree: group them, star them, batch-file them — or let them flow into the recently-added timeline.</p>
+                </div>
+                <div class="bento-card reveal">
+                    <span class="bento-icon" aria-hidden="true">
+                        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="13" height="13" rx="2"/><path d="M8 5V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-1"/></svg>
+                    </span>
+                    <h3>Window → folder → tab group</h3>
+                    <p>Capture a whole window of tabs as a bookmark folder, reopen it later as a named Chrome tab group.</p>
+                </div>
+                <div class="bento-card reveal" style="--d:60ms">
+                    <span class="bento-icon" aria-hidden="true">
+                        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M18.84 12.25l1.72-1.71a5 5 0 0 0-7.09-7.07l-1.72 1.71"/><path d="M6.17 11.75l-1.72 1.71a5 5 0 0 0 7.09 7.07l1.72-1.71"/><path d="M8 2v3M2 8h3M16 19v3M19 16h3"/></svg>
+                    </span>
+                    <h3>Dead-link scan</h3>
+                    <p>Bulk-check with an optional proxy re-check — it tells "site is down" from "blocked on your network".</p>
+                </div>
+                <div class="bento-card reveal" style="--d:120ms">
+                    <span class="bento-icon" aria-hidden="true">
+                        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h3a1 1 0 0 1 1 1v3M8 4H5a1 1 0 0 0-1 1v3M16 20h3a1 1 0 0 0 1-1v-3M8 20H5a1 1 0 0 1-1-1v-3"/><path d="M9.5 12.5l1.8 1.8 3.4-3.8"/></svg>
+                    </span>
+                    <h3>Duplicate merge</h3>
+                    <p>Duplicates grouped by URL, merged in bulk with six keeper strategies — oldest, newest, most-visited and more.</p>
+                </div>
+                <div class="bento-card reveal" style="--d:180ms">
+                    <span class="bento-icon" aria-hidden="true">
+                        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M3 12h2.5M8 12h2.5M13.5 12H16M18.5 12H21"/></svg>
+                    </span>
+                    <h3>Real separators</h3>
+                    <p>Divider lines with custom colors and widths, inside any folder — the feature Chrome's manager never had.</p>
+                </div>
+                <div class="bento-card bento-card--full reveal" style="--d:240ms">
+                    <span class="bento-icon" aria-hidden="true">
+                        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>
+                    </span>
+                    <h3>Every deletion is undoable</h3>
+                    <p>Cleanup never feels risky — one tap on the toast brings back whole deleted subtrees.</p>
+                </div>
+            </div>
+            <div class="feature-chips reveal">
+                <span><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.4 5.2 5.6.6-4.2 3.8 1.2 5.6L12 14.9 7 17.2l1.2-5.6L4 7.8l5.6-.6L12 2z"/></svg>Favicon auto-recovery</span>
+                <span><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.4 5.2 5.6.6-4.2 3.8 1.2 5.6L12 14.9 7 17.2l1.2-5.6L4 7.8l5.6-.6L12 2z"/></svg>Sync-status indicators</span>
+                <span><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.4 5.2 5.6.6-4.2 3.8 1.2 5.6L12 14.9 7 17.2l1.2-5.6L4 7.8l5.6-.6L12 2z"/></svg>100% local visit stats</span>
+                <span><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.4 5.2 5.6.6-4.2 3.8 1.2 5.6L12 14.9 7 17.2l1.2-5.6L4 7.8l5.6-.6L12 2z"/></svg>Drag &amp; drop</span>
+                <span><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.4 5.2 5.6.6-4.2 3.8 1.2 5.6L12 14.9 7 17.2l1.2-5.6L4 7.8l5.6-.6L12 2z"/></svg>Multi-select batch actions</span>
+                <span><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.4 5.2 5.6.6-4.2 3.8 1.2 5.6L12 14.9 7 17.2l1.2-5.6L4 7.8l5.6-.6L12 2z"/></svg>Per-folder sorting</span>
+                <span><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.4 5.2 5.6.6-4.2 3.8 1.2 5.6L12 14.9 7 17.2l1.2-5.6L4 7.8l5.6-.6L12 2z"/></svg>Side panel mode</span>
+                <span><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.4 5.2 5.6.6-4.2 3.8 1.2 5.6L12 14.9 7 17.2l1.2-5.6L4 7.8l5.6-.6L12 2z"/></svg>Custom CSS &amp; zoom</span>
+                <span><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.4 5.2 5.6.6-4.2 3.8 1.2 5.6L12 14.9 7 17.2l1.2-5.6L4 7.8l5.6-.6L12 2z"/></svg>Bookmarklets</span>
+                <span><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.4 5.2 5.6.6-4.2 3.8 1.2 5.6L12 14.9 7 17.2l1.2-5.6L4 7.8l5.6-.6L12 2z"/></svg>43 languages</span>
+            </div>
+        </div>
+    </section>
 
-<h2>Get the extension</h2>
+    <!-- ============ Views ============ -->
+    <section class="section section--soft" id="views">
+        <div class="wrap views-strip">
+            <div class="section-head reveal">
+                <p class="eyebrow">Seven views</p>
+                <h2 class="section-title">One popup, every way of looking at your library</h2>
+                <p class="section-sub">Switch views with Alt+1…7 or the ⌘K palette. Each one is built for a single job — and every one works fully from the keyboard.</p>
+            </div>
+            <div class="views-nav reveal">
+                <button type="button" data-gallery-prev aria-label="Scroll gallery back">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+                </button>
+                <button type="button" data-gallery-next aria-label="Scroll gallery forward">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+                </button>
+            </div>
+            <div class="views-track" tabindex="0" aria-label="View gallery, scroll horizontally">
+                <article class="view-card">
+                    <img src="assets/img/view-tree.png" width="594" height="766" alt="Tree view: the bookmark hierarchy with folders and separators" loading="lazy">
+                    <div class="view-card-body">
+                        <h3>Tree</h3>
+                        <p>The classic hierarchy — type-ahead jumps, hover actions, drag &amp; drop, per-folder sort.</p>
+                    </div>
+                </article>
+                <article class="view-card">
+                    <img src="assets/img/view-search.png" width="400" height="640" alt="Search view with recent searches and instant results" loading="lazy">
+                    <div class="view-card-body">
+                        <h3>Search</h3>
+                        <p>Dual-zone search: recent searches above, fuzzy results with path breadcrumbs below.</p>
+                    </div>
+                </article>
+                <article class="view-card">
+                    <img class="is-wide" src="assets/img/view-tabgroups.png" width="406" height="398" alt="Tab groups view listing windows, tabs and groups" loading="lazy">
+                    <div class="view-card-body">
+                        <h3>Tab groups</h3>
+                        <p>Every window's tabs at a glance — save them as a folder, reopen them as named groups.</p>
+                    </div>
+                </article>
+                <article class="view-card">
+                    <img src="assets/img/view-staging.png" width="400" height="640" alt="Staging workbench with a triage inbox and recently-added timeline" loading="lazy">
+                    <div class="view-card-body">
+                        <h3>Staging</h3>
+                        <p>A triage inbox for new saves, plus the recently-added timeline. Five minutes a day, done.</p>
+                    </div>
+                </article>
+                <article class="view-card">
+                    <img src="assets/img/view-stats.png" width="400" height="640" alt="Visit statistics view ranking bookmarks by visit count" loading="lazy">
+                    <div class="view-card-body">
+                        <h3>Stats</h3>
+                        <p>Your most-visited bookmarks, counted 100% locally. Sort by count or recency; pause anytime.</p>
+                    </div>
+                </article>
+                <article class="view-card">
+                    <img src="assets/img/view-dead.png" width="400" height="640" alt="Dead links view with scan results and status filters" loading="lazy">
+                    <div class="view-card-body">
+                        <h3>Dead links</h3>
+                        <p>Bulk-scan, filter by status, mark for review or delete — with proxy re-checks for blocked sites.</p>
+                    </div>
+                </article>
+                <article class="view-card">
+                    <img src="assets/img/view-dupes.png" width="400" height="640" alt="Duplicates view grouping identical bookmarks by URL" loading="lazy">
+                    <div class="view-card-body">
+                        <h3>Duplicates</h3>
+                        <p>Grouped by URL, merged in bulk. Pick a keeper strategy and reclaim your tree.</p>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
 
-<h3>vBookmarks has been released to WebStore:</h3>
-<p><a href="https://chrome.google.com/webstore/detail/odhjcodnoebmndcihdedenkmdmklpihb">vBookmarks on WebStore</a></p>
+    <!-- ============ Keyboard ============ -->
+    <section class="section keyboard" id="keyboard">
+        <div class="wrap">
+            <div class="section-head section-head--center reveal">
+                <p class="eyebrow">Keyboard-first</p>
+                <h2 class="section-title">Never touch the mouse</h2>
+                <p class="section-sub">Arrows, Home/End, PageUp/PageDown, type-ahead. Enter opens, F2 renames, Delete removes — and Esc unwinds menus, palette, selection and search, one clean layer at a time.</p>
+            </div>
+            <dl class="kbd-grid">
+                <div class="kbd-row reveal">
+                    <dt><kbd class="wide">Ctrl</kbd><kbd class="wide">Shift</kbd><kbd>V</kbd></dt>
+                    <dd>Open the popup — or <kbd class="wide">Ctrl</kbd><kbd class="wide">Shift</kbd><kbd>K</kbd> for the palette from anywhere</dd>
+                </div>
+                <div class="kbd-row reveal" style="--d:60ms">
+                    <dt><kbd>*</kbd><kbd class="wide">Space</kbd></dt>
+                    <dd>Search your bookmarks straight from the address bar</dd>
+                </div>
+                <div class="kbd-row reveal" style="--d:120ms">
+                    <dt><kbd class="wide">Alt</kbd><kbd>1</kbd>…<kbd>7</kbd></dt>
+                    <dd>Jump straight to any view</dd>
+                </div>
+                <div class="kbd-row reveal" style="--d:180ms">
+                    <dt><kbd class="wide">Alt</kbd><kbd class="wide">Shift</kbd><kbd>B</kbd></dt>
+                    <dd>Toggle the side panel — a permanent workspace column</dd>
+                </div>
+                <div class="kbd-row reveal" style="--d:240ms">
+                    <dt><kbd class="wide">Alt</kbd><kbd class="wide">Shift</kbd><kbd>S</kbd></dt>
+                    <dd>Quick-save the current tab into the folder you choose</dd>
+                </div>
+                <div class="kbd-row reveal" style="--d:300ms">
+                    <dt><kbd class="wide">F2</kbd><kbd class="wide">Del</kbd><kbd class="wide">Esc</kbd></dt>
+                    <dd>Rename, delete, unwind — the whole popup obeys the keyboard</dd>
+                </div>
+            </dl>
+        </div>
+    </section>
 
-<h3>All legacy versions:</h3>
+    <!-- ============ Themes ============ -->
+    <section class="section" id="themes">
+        <div class="wrap">
+            <div class="section-head section-head--center reveal">
+                <p class="eyebrow">Make it yours</p>
+                <h2 class="section-title">Four crafted themes, zero glare</h2>
+            </div>
+            <div class="themes-frame reveal">
+                <img src="assets/img/themes.png" width="1240" height="468" alt="The same bookmark tree in four themes: Light, Dark, Ink and Paper" loading="lazy">
+            </div>
+            <div class="themes-pills reveal" style="--d:80ms">
+                <span><i class="sw-light"></i>Light</span>
+                <span><i class="sw-dark"></i>Dark</span>
+                <span><i class="sw-ink"></i>Ink</span>
+                <span><i class="sw-paper"></i>Paper</span>
+            </div>
+            <p class="themes-note reveal" style="--d:140ms">Plus follow-system, UI zoom, custom CSS and your own toolbar icon. Popup or side panel — your call.</p>
+        </div>
+    </section>
 
-<p><a href="https://github.com/windviki/vBookmarks/blob/master/release/">Download old versions</a></p>
+    <!-- ============ Privacy / free ============ -->
+    <section class="section section--soft" id="privacy">
+        <div class="wrap">
+            <div class="section-head section-head--center reveal">
+                <p class="eyebrow">Free &amp; private</p>
+                <h2 class="section-title">Your bookmarks are yours. Full stop.</h2>
+            </div>
+            <div class="trio">
+                <div class="trio-card reveal">
+                    <span class="bento-icon" aria-hidden="true">
+                        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.6-3 8.4-7 10-4-1.6-7-5.4-7-10V6l7-3z"/><path d="M9.5 12l1.8 1.8 3.4-3.8"/></svg>
+                    </span>
+                    <h3>No ads, no tracking, no accounts</h3>
+                    <p>Nothing to sign up for, nothing phoning home. The extension doesn't even have analytics — and neither does this page.</p>
+                </div>
+                <div class="trio-card reveal" style="--d:60ms">
+                    <span class="bento-icon" aria-hidden="true">
+                        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+                    </span>
+                    <h3>Data never leaves your browser</h3>
+                    <p>vBookmarks manages the bookmarks Chrome already syncs. Visit stats and scans stay 100% on this device.</p>
+                </div>
+                <div class="trio-card reveal" style="--d:120ms">
+                    <span class="bento-icon" aria-hidden="true">
+                        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.6-3 8.4-7 10-4-1.6-7-5.4-7-10V6l7-3z"/><path d="M12 8v4M12 15.5v.5"/></svg>
+                    </span>
+                    <h3>Open source, MIT licensed</h3>
+                    <p>Every line is on GitHub, maintained by a developer who still answers every issue. Fork it, audit it, learn from it.</p>
+                </div>
+            </div>
+            <div class="closing reveal">
+                <p>Give it a week — your bookmarks will feel organized for the first time in years.</p>
+                <a class="btn btn--primary" href="https://chromewebstore.google.com/detail/vbookmarks/odhjcodnoebmndcihdedenkmdmklpihb" rel="noopener">Add vBookmarks to Chrome</a>
+            </div>
+        </div>
+    </section>
 
-<hr>
+    <!-- ============ FAQ ============ -->
+    <section class="section" id="faq">
+        <div class="wrap">
+            <div class="section-head section-head--center reveal">
+                <p class="eyebrow">FAQ</p>
+                <h2 class="section-title">Good questions</h2>
+            </div>
+            <div class="faq reveal">
+                <details open>
+                    <summary>Is vBookmarks really free?</summary>
+                    <p>Yes — free forever, with no ads, no subscriptions and no premium tier. It's MIT-licensed open source, so you can also build it yourself from GitHub.</p>
+                </details>
+                <details>
+                    <summary>Which browsers does it support?</summary>
+                    <p>Chrome 114 and newer, on desktop. The same package runs on Microsoft Edge and other Chromium browsers that support Manifest V3 extensions.</p>
+                </details>
+                <details>
+                    <summary>Does it change how my bookmarks are stored?</summary>
+                    <p>No. It manages your existing Chrome bookmarks through the official bookmarks API — anything you organize in vBookmarks syncs wherever Chrome sync does. Preferences and per-device data stay local.</p>
+                </details>
+                <details>
+                    <summary>How do I search from the address bar?</summary>
+                    <p>Type <code>*</code> in the omnibox, press Space, then start typing. Results come from the same fuzzy ranker the popup uses — titles, URLs and folders.</p>
+                </details>
+                <details>
+                    <summary>What is the staging workbench?</summary>
+                    <p>A triage inbox for new bookmarks. Instead of dumping saves straight into the tree, vBookmarks holds them in a staging area where you can group, star and batch-file them — or ignore them until your daily five-minute cleanup.</p>
+                </details>
+                <details>
+                    <summary>What happened to Neat Bookmarks?</summary>
+                    <p>Neat Bookmarks, the beloved minimalist popup, stopped working when Chrome dropped the APIs it relied on. vBookmarks began in 2011 as its direct successor and has been continuously maintained ever since — same spirit, vastly more capability. See the <a href="https://github.com/windviki/vBookmarks#readme" rel="noopener">full history and changelog</a>.</p>
+                </details>
+            </div>
+        </div>
+    </section>
+</main>
 
-<h2>Introduction</h2>
-
-<p>Origined from <a href="https://github.com/cheeaun/neat-bookmarks">Neat Bookmarks</a>, an excellent bookmark extension for Google Chrome.</p>
-
-<p>Inspired by "AddBookmarkHere" extension of Firefox, I added some new features to Neat Bookmarks, to provide more convenient way to manage booksmarks. 
-  
-  After this, more other features are added. Many bugs found during the update of Chrome are solved. After years of evolution since 2011, now it has a new name "vBookmarks".</p>
-
-  <p>New features compared to Neat Bookmarks:</p>
-
-<p>1.Bookmark current tab before selected bookmark/folder.</p>
-
-<p>2.Bookmark current tab after selected bookmark/folder.</p>
-
-<p>3.Bookmark current tab to the top of selected folder.</p>
-
-<p>4.Bookmark current tab to the bottom of selected folder.</p>
-
-<p>5.Add a sub-folder into selected folder.</p>
-
-<p>6.Update URL of selected bookmark with current URL.</p>
-
-<p>7.Copy title and URL information for selected bookmarks into clipboard.</p>
-
-<p>8.Add an option: only show the nodes of the Bookmark Bar.</p>
-
-<p>9.Add: Synchronizable bookmark separators.</p>
-
-<p>10.Add: update checking and notification based on github. A tricky solution.</p>
-
-<p>11.Fix bugs in Neat Bookmarks.</p>
-
-<p>Licensed under the <a href="http://www.opensource.org/licenses/mit-license.php">MIT License</a>.</p>
-
-<hr>
-
-<h2>Notes for Advanced Features</h2>
-
-<p>1. Search in Omnibox. Type * in your browser address bar, then press space key. Now you can input keyword to search in your bookmarks.</p>
-
-<p>2. Full keyboard support. When the popup is open, you can change the selected bookmark/folder by using ↑↓←→, and you can open the focused one by SPACE or ENTER. Use ← key to unfold folder. Use HOME/END to go to the beginning or the end. PAGE DOWN/UP, DELETE are also supported just as their original meaning.</p>
-
-<p>3. When the bookmark/folder is selected, press F2 to rename it.</p>
-
-<p>4. Press middle button of mouse to open all bookmarks in focused folder.</p>
-
-<p>5. When the popup is open, use Ctrl+F to show the search bar.</p>
-
-<p>6. Darg & drop is supported. So you can rearrange your bookmarks.</p>
-
-<p>7. You can decide whether to close popup after click-and-open the bookmark. You can found this option in settings.</p>
-
-<p>8. You can only show bookmarks in Chrome bookmark bar. Also has a option to in settings.</p>
-   
-<p>9. Open bookmark in background. Also has a option to in settings.</p>
-    
-<p>10. Control the zoom level of bookmark popup in settings.</p>
-    
-<p>11. Advanced Settings: Custom the style of separators. The option is in "Advanced Settings", you can found the entry at the right top of settings page.</p>
-
-<p>12. Advanced Settings: More flexible customization for the whole popup. CSS skill is required. e.g. You can change the font of the bookmark tree by: * {font-family: Consolas;}</p>
-
-<p>13. Advanced Settings: Custom the icon of this extension.</p>
-
-      </section>
+<footer class="site-footer">
+    <div class="wrap">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <img src="assets/img/icon.svg" alt="" width="30" height="30">
+                <div class="brand-name">vBookmarks</div>
+                <p>Your bookmarks, one keypress away. A free, open-source bookmark manager for Chrome — actively maintained since 2011.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Product</h4>
+                <a href="https://chromewebstore.google.com/detail/vbookmarks/odhjcodnoebmndcihdedenkmdmklpihb" rel="noopener">Chrome Web Store</a>
+                <a href="https://github.com/windviki/vBookmarks/blob/master/docs/guide-v4.md" rel="noopener">v4 feature guide</a>
+                <a href="https://github.com/windviki/vBookmarks/releases" rel="noopener">Release notes</a>
+            </div>
+            <div class="footer-col">
+                <h4>Project</h4>
+                <a href="https://github.com/windviki/vBookmarks" rel="noopener">GitHub repository</a>
+                <a href="https://github.com/windviki/vBookmarks/issues" rel="noopener">Issues &amp; feedback</a>
+                <a href="https://github.com/windviki/vBookmarks/blob/master/license.txt" rel="noopener">MIT license</a>
+            </div>
+            <div class="footer-col">
+                <h4>This page</h4>
+                <a href="./" hreflang="en">English</a>
+                <a href="index.zh.html" hreflang="zh-CN" lang="zh-CN">简体中文</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>© 2011–<span data-year>2026</span> windviki · vBookmarks · successor of <a href="https://github.com/cheeaun/neat-bookmarks" rel="noopener">Neat Bookmarks</a></span>
+            <span>This page loads nothing external — no fonts, no analytics, no trackers.</span>
+        </div>
     </div>
+</footer>
 
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <p class="copyright">vBookmarks maintained by <a href="https://github.com/windviki">windviki</a></p>
-        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
-      </footer>
-    </div>
-
-    
-
-  </body>
+<script src="assets/js/main.js" defer></script>
+</body>
 </html>
