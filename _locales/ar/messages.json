@@ -1007,6 +1007,9 @@
   "optionFaviconEnrichHint": {
     "message": "بالنسبة للمواقع المفضلة التي لا يحتوي Chrome على أيقونة مخبأة لها، يتم جلب الأيقونة الفعلية مباشرة من الموقع (/favicon.ico، ثم الأيقونات المعلنة في الصفحة). تُرسل الطلبات فقط إلى المواقع التي أضفتها إلى المفضلة."
   },
+  "optionFocusSearchOnOpen": {
+    "message": "[TODO:optionFocusSearchOnOpen]"
+  },
   "optionHighlightUnsynced": {
     "message": "تعتيم الإشارات المرجعية غير المتزامنة"
   },

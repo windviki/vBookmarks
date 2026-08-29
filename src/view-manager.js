@@ -76,6 +76,10 @@ export function initViewManager(ctx = {}) {
     // focusSpot capture/persist/restore below, the same way it gates the
     // tree's focusID and scroll restore.
     const remember = ctx.getRememberState || (() => true);
+    // issue #64: "open with the search field activated" — with the option on
+    // the search input's autofocus owns the startup focus; restoreFocusSpot
+    // must not steal it back to the remembered row/spot.
+    const focusSearchOnOpen = !!(ctx.getFocusSearchOnOpen && ctx.getFocusSearchOnOpen());
     // The undo toast bar (neat.js injects it lazily — undo inits after the
     // view manager). Used for the hidden-tab-strip view hint below.
     const showToast = (...args) => {
@@ -851,7 +855,7 @@ export function initViewManager(ctx = {}) {
     // startup refocus, this never steals focus from a user who already began
     // typing or clicking (keydown/mousedown bail mid-retry).
     const restoreFocusSpot = () => {
-        if (!remember()) {
+        if (!remember() || focusSearchOnOpen) {
             store.set('focusSpot', null);
             pendingSpot = null;
             return;

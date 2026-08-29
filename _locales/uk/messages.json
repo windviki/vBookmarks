@@ -1007,6 +1007,9 @@
   "optionFaviconEnrichHint": {
     "message": "Для сайтів із закладок, для яких Chrome не має кешованого значка, отримуйте справжній значок безпосередньо з сайту (/favicon.ico, а потім значки, зазначені на сторінці). Запити надсилаються лише до сайтів, які ви додали в закладки."
   },
+  "optionFocusSearchOnOpen": {
+    "message": "[TODO:optionFocusSearchOnOpen]"
+  },
   "optionHighlightUnsynced": {
     "message": "Затемнити несинхронізовані закладки"
   },

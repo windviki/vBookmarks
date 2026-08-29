@@ -1004,6 +1004,9 @@
   "optionFaviconEnrichHint": {
     "message": "Para sites favoritados sem ícone em cache no Chrome, busque o ícone real diretamente do site (/favicon.ico e, em seguida, os ícones declarados na página). As solicitações vão apenas para sites que você marcou."
   },
+  "optionFocusSearchOnOpen": {
+    "message": "[TODO:optionFocusSearchOnOpen]"
+  },
   "optionHighlightUnsynced": {
     "message": "Esmaecer favoritos não sincronizados"
   },

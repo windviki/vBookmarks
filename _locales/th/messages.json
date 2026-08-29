@@ -1007,6 +1007,9 @@
   "optionFaviconEnrichHint": {
     "message": "สำหรับเว็บไซต์ที่บุ๊กมาร์กไว้ซึ่ง Chrome ไม่มีไอคอนในแคช ให้ดึงไอคอนจริงจากเว็บไซต์นั้นโดยตรง (/favicon.ico แล้วจึงใช้ไอคอนที่ประกาศไว้ในหน้า) คำขอจะส่งไปยังเว็บไซต์ที่คุณบุ๊กมาร์กไว้เท่านั้น"
   },
+  "optionFocusSearchOnOpen": {
+    "message": "[TODO:optionFocusSearchOnOpen]"
+  },
   "optionHighlightUnsynced": {
     "message": "ทำให้บุ๊กมาร์กที่ไม่ซิงก์มืดลง"
   },

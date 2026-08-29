@@ -380,6 +380,7 @@ const setup = (opts = {}) => {
         refreshSyncIndicators: () => { refreshSyncCalls++; },
         getOpens: () => state.opens,
         getRememberState: () => state.rememberState,
+        getFocusSearchOnOpen: () => !!opts.focusSearchOnOpen,
         setOpens: v => { state.opens = v; },
         setRememberState: v => { state.rememberState = v; },
         middleClickBgTab: !!opts.middleClickBgTab,
@@ -568,6 +569,22 @@ describe('generateTree', () => {
         expect(timeouts.filter(t => t[1] === 1 || t[1] === 4000)).toEqual([]);
         tickAll();
         expect(ctx.store.removes).toEqual([]);
+    });
+
+    it('stands the row re-focus down under focusSearchOnOpen and drops the stale focusID (issue #64)', () => {
+        // The option hands the startup focus to the search input's autofocus;
+        // the row re-focus would fire after it and steal the focus right
+        // back. The stale focusID is dropped eagerly instead of on the 4s
+        // timer so a bookmark-event re-render never scrollIntoViews it.
+        const ctx = setup({ storeData: { focusID: '5' }, rememberState: true, focusSearchOnOpen: true });
+        const { span } = ctx.makeFolder('5');
+        ctx.tree.style.overflow = 'auto';
+        ctx.treeView.generateTree(['ROOT']);
+        expect(span.classList.contains('focus')).toBe(false);
+        expect(span.focused).toBe(false);
+        expect(ctx.tree.style.overflow).toBe('auto');
+        expect(timeouts.filter(t => t[1] === 1 || t[1] === 4000)).toEqual([]);
+        expect(ctx.store.removes).toEqual(['focusID']);
     });
 
     it('schedules no focus timers when the focusID row is missing', () => {

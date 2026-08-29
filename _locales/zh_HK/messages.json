@@ -1007,6 +1007,9 @@
   "optionFaviconEnrichHint": {
     "message": "對於 Chrome 沒有快取圖示的書籤網站，直接從網站擷取真實圖示（/favicon.ico，然後是頁面宣告的圖示）。要求只會傳送到您已書籤的網站。"
   },
+  "optionFocusSearchOnOpen": {
+    "message": "[TODO:optionFocusSearchOnOpen]"
+  },
   "optionHighlightUnsynced": {
     "message": "變淡顯示未同步的書籤"
   },

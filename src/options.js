@@ -125,6 +125,10 @@ const $ = id => document.getElementById(id);
             { id: 'tree-row-actions', key: 'treeRowActions', defaultValue: '1', inverted: false }
         ];
         const searchSettings = [
+            // issue #64: the popup opens with the search input focused (its
+            // autofocus attribute) instead of restoring focus to the last
+            // tree row — typing can start immediately.
+            { id: 'focus-search-on-open', key: 'focusSearchOnOpen', defaultValue: '', inverted: false },
             // v3 carry-over: rank/search only after Enter, not on every keystroke.
             { id: 'search-after-enter', key: 'searchAfterEnter', defaultValue: '', inverted: false }
         ];
@@ -890,6 +894,8 @@ const $ = id => document.getElementById(id);
         document.getElementById('option-confirm-delete-folder').innerText = __m('optionConfirmDeleteFolder');
         document.getElementById('option-remember-prev-state').innerText = __m('optionRememberPrevState');
         document.getElementById('option-only-show-bmbar').innerText = __m('optionOnlyShowBookmarkBar');
+        // issue #64: popup startup focus goes to the search input
+        document.getElementById('option-focus-search-on-open').innerText = __m('optionFocusSearchOnOpen');
         document.getElementById('option-search-after-enter').innerText = __m('optionSearchAfterEnter');
         document.getElementById('option-auto-resize-popup').innerText = __m('optionAutoResizePopup');
         document.getElementById('option-open-in-side-panel').innerText = __m('optionOpenInSidePanel');

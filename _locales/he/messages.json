@@ -1007,6 +1007,9 @@
   "optionFaviconEnrichHint": {
     "message": "עבור אתרים בסימניות שאין ל-Chrome אייקון שמור עבורם, אחזר את האייקון האמיתי ישירות מהאתר (/favicon.ico, ולאחר מכן האייקונים המוצהרים של הדף). בקשות נשלחות רק לאתרים שבסימניות."
   },
+  "optionFocusSearchOnOpen": {
+    "message": "[TODO:optionFocusSearchOnOpen]"
+  },
   "optionHighlightUnsynced": {
     "message": "עמעם סימניות לא מסונכרנות"
   },

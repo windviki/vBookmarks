@@ -229,6 +229,7 @@ const setup = (opts = {}) => {
         rtl: !!opts.rtl,
         clearMenu: opts.noClearMenu ? undefined : () => clearMenuCalls.push(1),
         getRememberState: opts.getRememberState,
+        getFocusSearchOnOpen: opts.getFocusSearchOnOpen,
         toastAction: opts.toastAction,
         dismissToast: opts.dismissToast
     });
@@ -1525,6 +1526,20 @@ describe('focusSpot — unified popup-reopen focus memory', () => {
             byId['tool-btn'] = tool;
             views.restoreFocusSpot();
             expect(doc.activeElement).toBe(tool);
+        });
+
+        it('stands down under focusSearchOnOpen — the search input keeps the autofocus (issue #64)', () => {
+            const { views, doc, byId, makeEl, store } = setup({
+                storeData: { focusSpot: JSON.stringify({ zone: 'header', key: 'tool-btn' }) },
+                getFocusSearchOnOpen: () => true
+            });
+            const tool = makeEl('button');
+            tool.id = 'tool-btn';
+            byId['tool-btn'] = tool;
+            views.restoreFocusSpot();
+            expect(doc.activeElement).toBe(null); // never stole the focus
+            // the spot is consumed/cleared, not left armed for a later call
+            expect(store.setCalls.filter(([k]) => k === 'focusSpot')).toEqual([['focusSpot', null]]);
         });
 
         it('returns focus to the exact remembered toolbar control', () => {

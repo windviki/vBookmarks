@@ -438,7 +438,9 @@ describe('store.js', () => {
                 // 4.1.0 tab-groups view prefs
                 'tabGroupsSyncCollapse', 'tabGroupsColorStyle', 'tabGroupsColorBorder', 'tabGroupsClosedLimit',
                 // staging master switch + tree-row hover actions
-                'stagingEnabled', 'treeRowActions'
+                'stagingEnabled', 'treeRowActions',
+                // issue #64: popup startup focus preference
+                'focusSearchOnOpen'
             ]);
         });
 

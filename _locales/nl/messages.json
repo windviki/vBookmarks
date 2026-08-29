@@ -1007,6 +1007,9 @@
   "optionFaviconEnrichHint": {
     "message": "Voor gebookmarkte sites waarvoor Chrome geen gecachet pictogram heeft, wordt het echte pictogram rechtstreeks van de site opgehaald (/favicon.ico, daarna de gedeclareerde pictogrammen van de pagina). Verzoeken gaan alleen naar sites die u hebt gebookmarkt."
   },
+  "optionFocusSearchOnOpen": {
+    "message": "[TODO:optionFocusSearchOnOpen]"
+  },
   "optionHighlightUnsynced": {
     "message": "Niet-gesynchroniseerde bladwijzers dimmen"
   },

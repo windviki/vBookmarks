@@ -1007,6 +1007,9 @@
   "optionFaviconEnrichHint": {
     "message": "Для сайтов из закладок, для которых Chrome не имеет кэшированного значка, загружать настоящий значок напрямую с сайта (/favicon.ico, затем объявленные страницей значки). Запросы отправляются только на сайты из ваших закладок."
   },
+  "optionFocusSearchOnOpen": {
+    "message": "[TODO:optionFocusSearchOnOpen]"
+  },
   "optionHighlightUnsynced": {
     "message": "Затемнять несинхронизированные закладки"
   },

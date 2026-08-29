@@ -1007,6 +1007,9 @@
   "optionFaviconEnrichHint": {
     "message": "Đối với các trang đã đánh dấu mà Chrome không có biểu tượng trong bộ nhớ cache, hãy tải trực tiếp biểu tượng thực từ trang web (/favicon.ico, sau đó là các biểu tượng được khai báo của trang). Yêu cầu chỉ gửi đến các trang bạn đã đánh dấu."
   },
+  "optionFocusSearchOnOpen": {
+    "message": "[TODO:optionFocusSearchOnOpen]"
+  },
   "optionHighlightUnsynced": {
     "message": "Làm mờ dấu trang chưa đồng bộ"
   },

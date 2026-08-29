@@ -1007,6 +1007,9 @@
   "optionFaviconEnrichHint": {
     "message": "Za zaznamovana spletišča, za katera Chrome nima predpomnjene ikone, pridobi dejansko ikono neposredno s spletišča (/favicon.ico, nato deklarirane ikone strani). Zahteve gredo le na spletišča, ki ste jih dodali med zaznamke."
   },
+  "optionFocusSearchOnOpen": {
+    "message": "[TODO:optionFocusSearchOnOpen]"
+  },
   "optionHighlightUnsynced": {
     "message": "Zatemnjaj nesinhronizirane zaznamke"
   },

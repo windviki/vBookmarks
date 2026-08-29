@@ -1007,6 +1007,9 @@
   "optionFaviconEnrichHint": {
     "message": "যে বুকমার্ক করা সাইটগুলির জন্য Chrome-এ কোনো ক্যাশ করা আইকন নেই, সাইট থেকে সরাসরি আসল আইকন আনুন (/favicon.ico, তারপর পেজের ঘোষিত আইকন)। অনুরোধ শুধুমাত্র আপনার বুকমার্ক করা সাইটগুলিতে যায়।"
   },
+  "optionFocusSearchOnOpen": {
+    "message": "[TODO:optionFocusSearchOnOpen]"
+  },
   "optionHighlightUnsynced": {
     "message": "সিঙ্কহীন বুকমার্ক ম্লান করুন"
   },

@@ -1007,6 +1007,9 @@
   "optionFaviconEnrichHint": {
     "message": "За отбелязани сайтове, за които Chrome няма кеширана икона, извлича действителната икона директно от сайта (/favicon.ico, а след това и обявените от страницата икони). Заявките отиват само към сайтове, които сте отбелязали."
   },
+  "optionFocusSearchOnOpen": {
+    "message": "[TODO:optionFocusSearchOnOpen]"
+  },
   "optionHighlightUnsynced": {
     "message": "Затъмняване на несинхронизираните отметки"
   },

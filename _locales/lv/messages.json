@@ -1007,6 +1007,9 @@
   "optionFaviconEnrichHint": {
     "message": "Grāmatzīmētām vietnēm, kurām Chrome nav kešotu ikonu, iegūstiet īsto ikonu tieši no vietnes (/favicon.ico, pēc tam lapas deklarētās ikonas). Pieprasījumi tiek nosūtīti tikai uz vietnēm, kuras esat atzīmējis grāmatzīmēs."
   },
+  "optionFocusSearchOnOpen": {
+    "message": "[TODO:optionFocusSearchOnOpen]"
+  },
   "optionHighlightUnsynced": {
     "message": "Aptumšot nesinhronizētās grāmatzīmes"
   },

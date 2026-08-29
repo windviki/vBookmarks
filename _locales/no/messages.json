@@ -1007,6 +1007,9 @@
   "optionFaviconEnrichHint": {
     "message": "For bokmerkede nettsteder uten bufret ikon i Chrome, hent det faktiske ikonet direkte fra nettstedet (/favicon.ico, deretter sidens deklarerte ikoner). Forespørsler går bare til nettsteder du har bokmerket."
   },
+  "optionFocusSearchOnOpen": {
+    "message": "[TODO:optionFocusSearchOnOpen]"
+  },
   "optionHighlightUnsynced": {
     "message": "Demp usynkroniserte bokmerker"
   },

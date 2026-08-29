@@ -1007,6 +1007,9 @@
   "optionFaviconEnrichHint": {
     "message": "Niille kirjanmerkeissä oleville sivustoille, joille Chromella ei ole välimuistissa kuvaketta, hae oikea kuvake suoraan sivustolta (/favicon.ico, sitten sivun ilmoittamat kuvakkeet). Pyynnöt lähetetään vain sivustoille, jotka olet lisännyt kirjanmerkkeihin."
   },
+  "optionFocusSearchOnOpen": {
+    "message": "[TODO:optionFocusSearchOnOpen]"
+  },
   "optionHighlightUnsynced": {
     "message": "Himmennä synkronoimattomat kirjanmerkit"
   },

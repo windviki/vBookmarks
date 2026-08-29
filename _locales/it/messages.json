@@ -1007,6 +1007,9 @@
   "optionFaviconEnrichHint": {
     "message": "Per i siti preferiti di cui Chrome non ha un'icona in cache, recupera l'icona reale direttamente dal sito (/favicon.ico, poi le icone dichiarate nella pagina). Le richieste vanno solo ai siti che hai salvato."
   },
+  "optionFocusSearchOnOpen": {
+    "message": "[TODO:optionFocusSearchOnOpen]"
+  },
   "optionHighlightUnsynced": {
     "message": "Oscura i segnalibri non sincronizzati"
   },

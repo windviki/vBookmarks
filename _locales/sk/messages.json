@@ -1007,6 +1007,9 @@
   "optionFaviconEnrichHint": {
     "message": "Pre záložky, pre ktoré Chrome nemá v medzipamäti ikonu, načíta skutočnú ikonu priamo zo stránky (/favicon.ico, potom deklarované ikony stránky). Požiadavky smerujú iba na stránky, ktoré máte v záložkách."
   },
+  "optionFocusSearchOnOpen": {
+    "message": "[TODO:optionFocusSearchOnOpen]"
+  },
   "optionHighlightUnsynced": {
     "message": "Stlmiť nesynchronizované záložky"
   },

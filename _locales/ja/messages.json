@@ -1007,6 +1007,9 @@
   "optionFaviconEnrichHint": {
     "message": "Chrome にキャッシュアイコンがないブックマーク済みサイトでは、実際のアイコンをサイトから直接取得します（/favicon.ico、次にページで宣言されたアイコン）。リクエストはブックマークしたサイトにのみ送信されます。"
   },
+  "optionFocusSearchOnOpen": {
+    "message": "[TODO:optionFocusSearchOnOpen]"
+  },
   "optionHighlightUnsynced": {
     "message": "未同期ブックマークを暗く表示"
   },

@@ -1109,6 +1109,9 @@
     "description": "Hint under the favicon enrich checkbox.",
     "message": "For bookmarked sites Chrome has no cached icon for, fetch the real icon directly from the site (/favicon.ico, then the page’s declared icons). Requests only go to sites you bookmarked."
   },
+  "optionFocusSearchOnOpen": {
+    "message": "Focus the search box when the popup opens"
+  },
   "optionHighlightUnsynced": {
     "message": "Dim unsynced bookmarks"
   },

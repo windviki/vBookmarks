@@ -1007,6 +1007,9 @@
   "optionFaviconEnrichHint": {
     "message": "Chrome'un önbelleğinde simgesi olmayan yer imlerindeki siteler için gerçek simgeyi doğrudan siteden alın (/favicon.ico, ardından sayfanın bildirdiği simgeler). İstekler yalnızca yer imlerinize eklediğiniz sitelere gönderilir."
   },
+  "optionFocusSearchOnOpen": {
+    "message": "[TODO:optionFocusSearchOnOpen]"
+  },
   "optionHighlightUnsynced": {
     "message": "Senkronize edilmemiş yer imlerini karart"
   },

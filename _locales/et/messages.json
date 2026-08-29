@@ -1007,6 +1007,9 @@
   "optionFaviconEnrichHint": {
     "message": "Järjehoidjatesse lisatud saitide puhul, mille jaoks Chrome'il pole vahemällu salvestatud ikooni, laadi tegelik ikoon otse saidilt (/favicon.ico, seejärel lehel deklareeritud ikoonid). Päringud lähevad ainult teie järjehoidjatesse lisatud saitidele."
   },
+  "optionFocusSearchOnOpen": {
+    "message": "[TODO:optionFocusSearchOnOpen]"
+  },
   "optionHighlightUnsynced": {
     "message": "Tuhmista sünkroonimata järjehoidjad"
   },

@@ -1007,6 +1007,9 @@
   "optionFaviconEnrichHint": {
     "message": "Pokud Chrome nemá pro webovou stránku ikonu v mezipaměti, načte skutečnou ikonu přímo z webu (/favicon.ico, pak deklarované ikony stránky). Požadavky jsou odesílány pouze na weby, které máte v záložkách."
   },
+  "optionFocusSearchOnOpen": {
+    "message": "[TODO:optionFocusSearchOnOpen]"
+  },
   "optionHighlightUnsynced": {
     "message": "Ztlumit nesynchronizované záložky"
   },

@@ -1006,6 +1006,9 @@
   "optionFaviconEnrichHint": {
     "message": "За обележани сајтови за кои Chrome нема кеширана икона, преземете ја вистинската икона директно од сајтот (/favicon.ico, а потоа и декларираните икони на страницата). Барањата одат само до сајтовите што сте ги обележале."
   },
+  "optionFocusSearchOnOpen": {
+    "message": "[TODO:optionFocusSearchOnOpen]"
+  },
   "optionHighlightUnsynced": {
     "message": "Затемни несинхронизирани обележувачи"
   },

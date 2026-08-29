@@ -1007,6 +1007,9 @@
   "optionFaviconEnrichHint": {
     "message": "Azon könyvjelzőzött webhelyeknél, amelyekhez a Chrome nem rendelkezik gyorsítótárazott ikonnal, töltse le a tényleges ikont közvetlenül a webhelyről (/favicon.ico, majd az oldal által deklarált ikonok). A kérések csak az Ön által könyvjelzőzött webhelyekre irányulnak."
   },
+  "optionFocusSearchOnOpen": {
+    "message": "[TODO:optionFocusSearchOnOpen]"
+  },
   "optionHighlightUnsynced": {
     "message": "Szinkronizálatlan könyvjelzők halványítása"
   },

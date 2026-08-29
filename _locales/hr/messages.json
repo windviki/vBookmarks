@@ -1007,6 +1007,9 @@
   "optionFaviconEnrichHint": {
     "message": "Za web stranice dodane u zabilješke za koje Chrome nema predmemoriranu ikonu, dohvati stvarnu ikonu izravno s web stranice (/favicon.ico, zatim deklarirane ikone stranice). Zahtjevi se šalju samo na web stranice dodane u zabilješke."
   },
+  "optionFocusSearchOnOpen": {
+    "message": "[TODO:optionFocusSearchOnOpen]"
+  },
   "optionHighlightUnsynced": {
     "message": "Zatamni nesinkronizirane oznake"
   },

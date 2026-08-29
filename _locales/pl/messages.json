@@ -1007,6 +1007,9 @@
   "optionFaviconEnrichHint": {
     "message": "W przypadku zakładek, dla których Chrome nie ma ikony w pamięci podręcznej, pobierz prawdziwą ikonę bezpośrednio z witryny (/favicon.ico, a następnie ikony zadeklarowane na stronie). Żądania trafiają tylko do witryn, które dodałeś do zakładek."
   },
+  "optionFocusSearchOnOpen": {
+    "message": "[TODO:optionFocusSearchOnOpen]"
+  },
   "optionHighlightUnsynced": {
     "message": "Przyciemniaj niezsynchronizowane zakładki"
   },

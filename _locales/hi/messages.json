@@ -1007,6 +1007,9 @@
   "optionFaviconEnrichHint": {
     "message": "उन बुकमार्क की गई साइटों के लिए जिनका आइकन Chrome कैश में नहीं है, साइट से सीधे असली आइकन लाएँ (/favicon.ico, फिर पृष्ठ द्वारा घोषित आइकन)। अनुरोध केवल आपकी बुकमार्क की गई साइटों को भेजे जाते हैं।"
   },
+  "optionFocusSearchOnOpen": {
+    "message": "[TODO:optionFocusSearchOnOpen]"
+  },
   "optionHighlightUnsynced": {
     "message": "सिंक न किए गए बुकमार्क मंद करें"
   },

@@ -92,6 +92,11 @@ export function initTreeView(ctx = {}) {
     const views = ctx.views;
     // v4 task-3 #14: generic action toast (undo.toastAction in neat.js).
     const toastAction = ctx.toastAction;
+    // issue #64: "open with the search field activated" — the option hands
+    // the popup's startup focus to the search input (its autofocus
+    // attribute), so the focusID row re-focus below must stand down (it
+    // fires after the autofocus and would steal the focus right back).
+    const getFocusSearchOnOpen = ctx.getFocusSearchOnOpen || (() => false);
 
     // 树视图状态：folder id -> parent id 映射（每次 generateTree 重建）与
     // onlyShowBMBar 启动开关（只有 generateTree 读取）。
@@ -250,7 +255,11 @@ export function initTreeView(ctx = {}) {
         // opened folders AND the focus highlight), instead of only the first
         // two. revealFolder/revealInTree force rememberState=true on purpose,
         // so explicit "reveal in tree" keeps working with the option off.
-        if (getRememberState()) {
+        // issue #64: focusSearchOnOpen stands the row re-focus down (the
+        // search input's autofocus owns the startup focus); the stale
+        // focusID is dropped so a later bookmark-event re-render doesn't
+        // scrollIntoView a row the user never restored to.
+        if (getRememberState() && !getFocusSearchOnOpen()) {
             const focusID = store.get('focusID');
             // The park/restore law above may already have re-focused a live
             // row. The reveal treatment (width/overflow + .focus flash) is
@@ -291,6 +300,10 @@ export function initTreeView(ctx = {}) {
                     }, 4000);
                 }
             }
+        } else if (getRememberState() && getFocusSearchOnOpen()) {
+            // issue #64: no row re-focus — drop the stale focusID eagerly
+            // (the 4s delayed cleanup above belongs to the restore branch).
+            store.remove('focusID');
         }
 
         // try to load local separator list used in last version

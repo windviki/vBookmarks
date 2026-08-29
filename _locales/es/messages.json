@@ -1007,6 +1007,9 @@
   "optionFaviconEnrichHint": {
     "message": "Para sitios marcados de los que Chrome no tiene icono en caché, obtén el icono real directamente del sitio (/favicon.ico, luego los iconos declarados de la página). Las solicitudes solo van a los sitios que marcaste."
   },
+  "optionFocusSearchOnOpen": {
+    "message": "[TODO:optionFocusSearchOnOpen]"
+  },
   "optionHighlightUnsynced": {
     "message": "Atenuar marcadores no sincronizados"
   },

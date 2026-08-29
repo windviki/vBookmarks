@@ -1007,6 +1007,9 @@
   "optionFaviconEnrichHint": {
     "message": "Pentru site-urile marcate pentru care Chrome nu are nicio pictogramă în cache, preia pictograma reală direct de pe site (/favicon.ico, apoi pictogramele declarate ale paginii). Cererile sunt trimise doar către site-urile pe care le-ați marcat."
   },
+  "optionFocusSearchOnOpen": {
+    "message": "[TODO:optionFocusSearchOnOpen]"
+  },
   "optionHighlightUnsynced": {
     "message": "Atenuează marcajele nesincronizate"
   },

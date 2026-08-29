@@ -358,6 +358,10 @@ import { ICON_SPRITE_SHEET } from './icons.js';
     // Init some variables
     let opens = store.get('opens') ? JSON.parse(store.get('opens')) : [];
     let rememberState = shouldRememberState(store.get('dontRememberState'));
+    // issue #64: "open with the search field activated" — the search input's
+    // autofocus owns the startup focus; tree-view's focusID re-focus and
+    // view-manager's focusSpot restore stand down while this is on.
+    const focusSearchOnOpen = () => !!store.get('focusSearchOnOpen');
     const httpsPattern = /^https?:\/\//i;
     // onlyShowBMBar 与 adaptBookmarkTooltips 已剥离至 src/tree-view.js（P1，8b）
 
@@ -577,6 +581,9 @@ import { ICON_SPRITE_SHEET } from './icons.js';
         // The "记住之前的状态" flag: view-manager's focusSpot capture/persist/
         // restore follow it, the same way tree-view's focusID restore does.
         getRememberState: () => rememberState,
+        // issue #64: with the option on, restoreFocusSpot stands down so the
+        // search input keeps the autofocus.
+        getFocusSearchOnOpen: focusSearchOnOpen,
         // 4.0.8: the hidden-tab-strip view hint rides the undo toast bar,
         // and any real view switch dismisses a lingering toast (ea78d89).
         // undo inits above — plain values (the first activation reads
@@ -727,6 +734,9 @@ import { ICON_SPRITE_SHEET } from './icons.js';
         refreshSyncIndicators: syncUi.refreshSyncIndicators,
         getOpens: () => opens,
         getRememberState: () => rememberState,
+        // issue #64: the focusID row re-focus stands down while the option
+        // hands the startup focus to the search input.
+        getFocusSearchOnOpen: focusSearchOnOpen,
         setOpens: v => { opens = v; },
         setRememberState: v => { rememberState = v; },
         middleClickBgTab,

@@ -1007,6 +1007,9 @@
   "optionFaviconEnrichHint": {
     "message": "Untuk situs yang ditandai yang tidak memiliki ikon cache di Chrome, ambil ikon asli langsung dari situs (/favicon.ico, lalu ikon yang dideklarasikan halaman). Permintaan hanya dikirim ke situs yang Anda tandai."
   },
+  "optionFocusSearchOnOpen": {
+    "message": "[TODO:optionFocusSearchOnOpen]"
+  },
   "optionHighlightUnsynced": {
     "message": "Redupkan bookmark yang tidak tersinkronisasi"
   },

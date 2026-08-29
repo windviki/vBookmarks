@@ -62,6 +62,8 @@
         'autoResizePopup',
         // v4 task-2: view layer (slice A)
         'activeView', 'viewState', 'showViewTabs', 'showItemPath',
+        // issue #64: hand the popup's startup focus to the search input
+        'focusSearchOnOpen',
         // per-view tab visibility (feature views + the structural tree/search tabs)
         'showRecentBookmarks', 'showStatsView', 'showDeadView', 'showDupesView', 'showTabGroupsView',
         // 4.0.8: per-view disable switches (feature views only)
@@ -209,7 +211,9 @@
         'tabGroupsSyncCollapse', 'tabGroupsColorStyle', 'tabGroupsColorBorder', 'tabGroupsClosedLimit',
         // staging master switch + tree-row hover actions (options
         // 暂存和最近添加 / 书签树 — device-independent preferences)
-        'stagingEnabled', 'treeRowActions'
+        'stagingEnabled', 'treeRowActions',
+        // issue #64: popup startup focus preference (device-independent)
+        'focusSearchOnOpen'
     ];
     const SYNC_KEY_SET = new Set(SYNC_KEYS);
     const isSyncKey = key => SYNC_KEY_SET.has(key);

@@ -1007,6 +1007,9 @@
   "optionFaviconEnrichHint": {
     "message": "For bogmærkede websteder, som Chrome ikke har et cachelagret ikon for, hentes det faktiske ikon direkte fra webstedet (/favicon.ico, derefter sidens erklærede ikoner). Forespørgsler går kun til websteder, du har bogmærket."
   },
+  "optionFocusSearchOnOpen": {
+    "message": "[TODO:optionFocusSearchOnOpen]"
+  },
   "optionHighlightUnsynced": {
     "message": "Dæmp usynkroniserede bogmærker"
   },

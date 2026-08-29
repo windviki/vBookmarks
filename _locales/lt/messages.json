@@ -1007,6 +1007,9 @@
   "optionFaviconEnrichHint": {
     "message": "Svetainėms, kurioms Chrome neturi išsaugotos piktogramos, gaukite tikrą piktogramą tiesiogiai iš svetainės (/favicon.ico, tada svetainės deklaruotos piktogramos). Užklausos siunčiamos tik į jūsų įsimintas svetaines."
   },
+  "optionFocusSearchOnOpen": {
+    "message": "[TODO:optionFocusSearchOnOpen]"
+  },
   "optionHighlightUnsynced": {
     "message": "Pritemdyti nesinchronizuotas žymes"
   },
