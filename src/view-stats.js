@@ -165,7 +165,9 @@ export function initViewStats(ctx = {}) {
                         id: node.id,
                         title: node.title || '',
                         url: node.url,
-                        parentId: node.parentId
+                        parentId: node.parentId,
+                        // 4.1.1 full-info tooltip: the node's dateAdded
+                        dateAdded: node.dateAdded
                     });
                 }
             }
@@ -334,7 +336,9 @@ export function initViewStats(ctx = {}) {
             const { item, stat } = rows[i];
             const r = {
                 kind: 'bm', id: item.id, title: item.title, url: item.url,
-                c: stat.c, t: stat.t, bookmarkId: item.id, parentId: item.parentId
+                c: stat.c, t: stat.t, bookmarkId: item.id, parentId: item.parentId,
+                // 4.1.1 full-info tooltip: the bookmark node's dateAdded
+                dateAdded: item.dateAdded
             };
             byId.set(item.id, r);
             out.push(r);
@@ -359,6 +363,7 @@ export function initViewStats(ctx = {}) {
                         title: (treeItem && treeItem.title) || h.title,
                         url: (treeItem && treeItem.url) || h.url,
                         parentId: treeItem && treeItem.parentId,
+                        dateAdded: treeItem && treeItem.dateAdded,
                         c: h.visitCount, t: h.t, bookmarkId: h.bookmarkId
                     });
                 }

@@ -1429,12 +1429,16 @@ describe('shared parent-path map (§3.6)', () => {
         const { views, store } = setup({ storeData: { reverseItemPath: '' } });
         views.setPathMap(
             { 11: 'Bookmarks Bar / Dev' },
-            { 11: 'Dev < Bookmarks Bar' });
+            { 11: 'Dev < Bookmarks Bar' },
+            { 11: 1750000000000 });
         expect(views.pathOf('11')).toBe('Bookmarks Bar / Dev'); // tooltip form
         expect(views.pathLabelOf('11')).toBe('Bookmarks Bar / Dev'); // default: same
         store._data.reverseItemPath = '1';
         expect(views.pathLabelOf('11')).toBe('Dev < Bookmarks Bar');
         expect(views.pathOf('11')).toBe('Bookmarks Bar / Dev'); // unchanged
+        // the dates map rides along — the Added tooltip line's source
+        expect(views.dateAddedOf('11')).toBe(1750000000000);
+        expect(views.dateAddedOf('unknown')).toBe(0);
     });
 });
 

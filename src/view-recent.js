@@ -308,7 +308,12 @@ export function initViewRecent(ctx = {}) {
             treeRender.generateBookmarkHTML(it.title, it.url, 'data-virtual="1" draggable="false"', it.id || null, null, {
                 path,
                 pathLabel: views.pathLabelOf ? views.pathLabelOf(it.id) : '',
-                dateAdded: it.id ? undefined : it.ts,
+                // bookmarked rows read the node's dateAdded from the
+                // shared dates map (the staging model only carries ts);
+                // id-less snapshots show their collection time
+                dateAdded: it.id
+                    ? (views.dateAddedOf ? views.dateAddedOf(it.id) : undefined)
+                    : it.ts,
                 badge: { text: rel, cls: 'time' },
                 rightText: (views.showItemPath() && path) ? (views.pathLabelOf ? views.pathLabelOf(it.id) : path) : '',
                 subText

@@ -627,7 +627,7 @@ describe('relTimeLabel (shared bucket → label helper)', () => {
 
 describe('buildPathMap (v4 task-2 §3.6)', () => {
     it('maps each node to its ancestor folder path, skipping the invisible root and untitled folders', () => {
-        const { paths, pathLabels: labels } = buildPathMap([{
+        const { paths, pathLabels: labels, dates } = buildPathMap([{
             id: '0', title: '', children: [
                 {
                     id: '1', parentId: '0', title: 'Folder A', children: [
@@ -658,6 +658,23 @@ describe('buildPathMap (v4 task-2 §3.6)', () => {
         expect(labels['31']).toBe('Sub B < Folder A');
         expect(labels['11']).toBe('Folder A');
         expect(labels['4']).toBe('');
+        // 4.1.1: the dates map (id → dateAdded) feeds the Added tooltip line
+        // for views whose own model lacks it (staging, visit-stats)
+        expect(dates['11']).toBe(0); // fixture nodes carry no dateAdded → 0
+        expect(dates['31']).toBe(0);
+        expect(dates['4']).toBe(0);
+    });
+
+    it('collects the id → dateAdded map in the same walk (Added tooltip line)', () => {
+        const { dates } = buildPathMap([{
+            id: '0', title: '', children: [{
+                id: '1', parentId: '0', title: 'F', children: [
+                    { id: '11', parentId: '1', title: 'BM', url: 'https://x/', dateAdded: 1750000000000 }
+                ]
+            }]
+        }]);
+        expect(dates['11']).toBe(1750000000000);
+        expect(dates['1']).toBe(0); // folders without dateAdded read 0
     });
 
     it('pathLabels caps at PATH_DEPTH ancestors, nearest-first with a trailing … (issue #64)', () => {

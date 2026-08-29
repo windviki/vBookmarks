@@ -1168,20 +1168,23 @@ export function initViewManager(ctx = {}) {
     // titles; renders can check readiness and re-run once the map lands.
     let pathMapReady = false;
     let pathLabelMap = {};
+    let dateMap = {};
     const buildPathMap = tree => {
         // H5: computePathMap returns { paths, pathLabels, ids } — the ids feed
         // visitStats.prune in neat.js's onTreeGenerated without a second walk.
         const result = computePathMap(tree);
         pathMap = result.paths;
         pathLabelMap = result.pathLabels || {};
+        dateMap = result.dates || {};
         pathMapReady = true;
         return result;
     };
     // P1-1: tree-view's buildTreeSnapshot already produced the path map in
     // its single walk — swap it in directly (no second traversal).
-    const setPathMap = (paths, labels) => {
+    const setPathMap = (paths, labels, dates) => {
         pathMap = paths || {};
         pathLabelMap = labels || {};
+        dateMap = dates || {};
         pathMapReady = true;
     };
     const pathOf = id => pathMap[id] || '';
@@ -1192,6 +1195,9 @@ export function initViewManager(ctx = {}) {
     const pathLabelOf = id => store.get('reverseItemPath')
         ? (pathLabelMap[id] || '')
         : (pathMap[id] || '');
+    // id → the node's dateAdded (0 when unknown) — the Added tooltip line's
+    // data source for views whose own model lacks it (staging, visit-stats).
+    const dateAddedOf = id => dateMap[id] || 0;
     const pathsReady = () => pathMapReady;
 
     // --- Live storage sync ------------------------------------------------------
@@ -1281,6 +1287,7 @@ export function initViewManager(ctx = {}) {
         setPathMap,
         pathOf,
         pathLabelOf,
+        dateAddedOf,
         pathsReady,
         updateBadges,
         showItemPath: () => !!store.get('showItemPath', '1'),

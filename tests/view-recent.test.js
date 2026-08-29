@@ -154,6 +154,8 @@ const setup = (opts = {}) => {
         register(def) { this.def = def; },
         isActive(id) { return id === 'recent' && this.active; },
         pathOf: opts.pathOf || (() => ''),
+        pathLabelOf: opts.pathLabelOf,
+        dateAddedOf: opts.dateAddedOf,
         showItemPath: opts.showItemPath || (() => true),
         activateCalls: [],
         activate(...args) { this.activateCalls.push(args); },
@@ -1352,6 +1354,21 @@ describe('staging groups + bucket + inline actions (velvet staging ST4)', () => 
         expect(viewRecent.api.isGroupCollapsed('g1')).toBe(true);
         viewRecent.api.toggleGroupFold('g1');
         expect(viewRecent.api.isGroupCollapsed('g1')).toBe(false);
+    });
+});
+
+describe('staging row full-info tooltip (2026-08-29 audit)', () => {
+    it('bookmarked staging rows read dateAdded from views.dateAddedOf; snapshots keep their ts', () => {
+        const { viewRecent, treeRender } = setup({
+            dateAddedOf: id => (id === '7' ? 1750000000000 : 0)
+        });
+        viewRecent.api.addItems([
+            { id: '7', url: 'http://k/', title: 'K', ts: 1000 },
+            { id: null, url: 'http://h/', title: 'H', ts: 2000 }
+        ]);
+        const byUrl = u => treeRender.calls.find(c => c.url === u).meta;
+        expect(byUrl('http://k/').dateAdded).toBe(1750000000000);
+        expect(byUrl('http://h/').dateAdded).toBe(2000);
     });
 });
 

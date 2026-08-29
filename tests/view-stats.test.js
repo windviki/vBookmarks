@@ -143,6 +143,7 @@ const setup = (opts = {}) => {
         register(def) { this.def = def; },
         isActive(id) { return id === 'stats' && this.active; },
         pathOf: opts.pathOf || (id => (id === '7' ? 'bar' : '')),
+        dateAddedOf: opts.dateAddedOf,
         showItemPath: () => true,
         badgeCalls: 0,
         updateBadges() { this.badgeCalls++; }
@@ -308,6 +309,16 @@ describe('sort switching', () => {
         expect(first.badge[0]).toEqual({ text: 'timeJustNow', cls: 'time' });
         expect(first.badge[1]).toEqual({ text: '×2', cls: 'count', aria: 'statsVisitCount[2]' });
         expect(first.rightText).toBe('bar'); // 7's parent path in the narrow slot
+    });
+
+    it("rows carry the bookmark node's dateAdded (the Added tooltip line)", () => {
+        const s = setup({
+            statsData: { '7': { c: 2, t: NOW - 1000 }, '8': { c: 5, t: NOW - 2000 } }
+        });
+        s.def().activate();
+        // 8 first (5 opens) — TREE nodes carry dateAdded 2 / 1
+        expect(s.treeRender.calls[0].meta.dateAdded).toBe(2);
+        expect(s.treeRender.calls[1].meta.dateAdded).toBe(1);
     });
 
     it('clicking the recent segment persists statsSort and re-renders', () => {

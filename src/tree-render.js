@@ -117,6 +117,10 @@ export const buildPathMap = tree => {
     // collect ids for visitStats.prune). Pure: no chrome/DOM access.
     const paths = {};
     const pathLabels = {};
+    // id → the node's dateAdded (bookmarks AND folders) — the Added tooltip
+    // line's data source for views whose own model lacks it (staging items,
+    // visit-stats rows).
+    const dates = {};
     const ids = new Set();
     const walk = (nodes, ancestors) => {
         if (!nodes)
@@ -127,6 +131,7 @@ export const buildPathMap = tree => {
             if (typeof node.parentId !== 'undefined') {
                 paths[node.id] = formatPath(ancestors);
                 pathLabels[node.id] = formatPathLabel(ancestors);
+                dates[node.id] = node.dateAdded || 0;
                 if (node.url)
                     ids.add(node.id);
             }
@@ -140,7 +145,7 @@ export const buildPathMap = tree => {
         }
     };
     walk(tree || [], []);
-    return { paths, pathLabels, ids };
+    return { paths, pathLabels, dates, ids };
 };
 
 // v4 task-2 (docs/plan-4.0.0/v4task-2-list.md §3.3): relative-time buckets for the
@@ -739,6 +744,7 @@ export function initTreeRender(ctx = {}) {
         const nodeTrees = {};
         const bookmarkIds = new Set();
         const pathLabels = {};
+        const dates = {};
         // velvet staging §0.5: url → the FIRST tree node carrying it — the
         // staging anchors' relink index, built by the same single walk.
         const urlIndex = new Map();
@@ -768,6 +774,7 @@ export function initTreeRender(ctx = {}) {
                 if (typeof node.parentId !== 'undefined') {
                     paths[node.id] = formatPath(ancestors);
                     pathLabels[node.id] = formatPathLabel(ancestors);
+                    dates[node.id] = node.dateAdded || 0;
                     if (node.url) {
                         ids.add(node.id);
                         if (!urlIndex.has(node.url))
@@ -803,7 +810,7 @@ export function initTreeRender(ctx = {}) {
         const html = blocks
             ? `<ul role="tree" data-level="0">${blocks.join('')}</ul>`
             : generateHTML(display);
-        return { html, blocks, nodeTrees, bookmarkIds, paths, pathLabels, ids, urlIndex };
+        return { html, blocks, nodeTrees, bookmarkIds, paths, pathLabels, dates, ids, urlIndex };
     };
 
     return {

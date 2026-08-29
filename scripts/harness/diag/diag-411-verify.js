@@ -46,8 +46,9 @@ const ck = (name, ok, extra) => {
             const bar = tree[0].children.find(c => c.id && !c.url && c.children);
             const root = await create({ parentId: bar.id, title: '__verify__' });
             const sub = await create({ parentId: root.id, title: 'ZZSubFolderZZ' });
-            await create({ parentId: sub.id, title: 'Verify BM', url: 'https://verify.example/page' });
+            const bm = await create({ parentId: sub.id, title: 'Verify BM', url: 'https://verify.example/page' });
             const now = Date.now();
+            window.__vbmVerifyBmId = bm.id;
             const items = [
                 { id: null, url: 'https://verify.example/page', title: 'Verify BM', ts: now, group: 'g1' },
                 { id: null, url: 'https://stg.example/x', title: 'Staged Item', ts: now - 5000, group: null }
@@ -61,6 +62,18 @@ const ck = (name, ok, extra) => {
         // exists with the requested URL the moment navigation starts.
         const tab = await browser.newPage();
         await Promise.race([tab.goto('https://verify.example/page').catch(() => {}), sleep(4000)]);
+
+        const bmId = await page.evaluate(() => window.__vbmVerifyBmId);
+
+        // ---- I0. seed visit stats for the bookmarked row (stats view) ----
+        await page.evaluate(id => {
+            chrome.storage.local.get('visitStats', r => {
+                const d = JSON.parse(r.visitStats || '{}');
+                d[id] = { c: 3, t: Date.now() };
+                chrome.storage.local.set({ visitStats: JSON.stringify(d) });
+            });
+        }, bmId);
+        await sleep(400);
 
         await page.reload({ waitUntil: 'load' });
         await sleep(1500);
@@ -170,6 +183,42 @@ const ck = (name, ok, extra) => {
             JSON.stringify(tl));
 
         console.log('[step] F. staging selecting');
+        // ---- F0. staging view (normal mode): bookmarked row + recent row
+        //      hovers the FULL info incl. the date-added line ----
+        await page.evaluate(() => {
+            const tab = [...document.querySelectorAll('[role="tab"]')].find(t => (t.id || '').includes('recent'));
+            if (tab) tab.click();
+        });
+        await sleep(1200);
+        const stgRows = await page.evaluate(url => {
+            const read = a => (a ? (a.getAttribute('title') || '').split('\n') : []);
+            const stg = [...document.querySelectorAll('#staging-items li.staging-row a.tree-item-link')]
+                .find(a => a.getAttribute('href') === url);
+            const rec = document.querySelector('#recent-list li.vbm-row a.tree-item-link');
+            return { stg: read(stg), rec: read(rec) };
+        }, 'https://verify.example/page');
+        ck('F0a staging BOOKMARKED row tooltip has Added line',
+            stgRows.stg.length >= 4 && /: \d/.test(stgRows.stg[stgRows.stg.length - 1] || ''),
+            JSON.stringify(stgRows.stg));
+        ck('F0b recent-region row tooltip has Added line',
+            stgRows.rec.length >= 4 && /: \d/.test(stgRows.rec[stgRows.rec.length - 1] || ''),
+            JSON.stringify(stgRows.rec));
+
+        // ---- I. stats view: bookmarked stats row hovers the FULL info ----
+        await page.evaluate(() => {
+            const tab = [...document.querySelectorAll('[role="tab"]')].find(t => (t.id || '').includes('stats'));
+            if (tab) tab.click();
+        });
+        await sleep(1500);
+        const statsRow = await page.evaluate(url => {
+            const a = [...document.querySelectorAll('#stats-list a.tree-item-link, [id^=view-stats] a.tree-item-link')]
+                .find(x => x.getAttribute('href') === url);
+            return a ? (a.getAttribute('title') || '').split('\n') : [];
+        }, 'https://verify.example/page');
+        ck('I stats BOOKMARKED row tooltip full info + Added',
+            statsRow.length >= 4 && statsRow[1] === 'https://verify.example/page' && /: \d/.test(statsRow[statsRow.length - 1]),
+            JSON.stringify(statsRow));
+
         // ---- F. staging selection mode: no chevron + icon-axis connector ----
         await page.evaluate(() => {
             const tab = [...document.querySelectorAll('[role="tab"]')].find(t => (t.id || '').includes('recent'));

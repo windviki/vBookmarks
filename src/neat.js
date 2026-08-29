@@ -755,7 +755,7 @@ import { ICON_SPRITE_SHEET } from './icons.js';
             const hasSnapshot = !!(snapshot && snapshot.paths && snapshot.ids);
             const ids = hasSnapshot ? snapshot.ids : views.buildPathMap(t).ids;
             if (hasSnapshot && views.setPathMap)
-                views.setPathMap(snapshot.paths, snapshot.pathLabels);
+                views.setPathMap(snapshot.paths, snapshot.pathLabels, snapshot.dates);
             // Issue #64(i): a saved-query restore rendered before this map
             // existed — heal its bare-titled rows now that pathOf resolves.
             if (search.refreshPaths)
