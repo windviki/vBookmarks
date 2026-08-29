@@ -63,6 +63,8 @@ const makeEl = id => {
         focus() { this.focused = true; },
         select() {},
         appendChild(child) { this.children.push(child); child.parentNode = this; },
+        replaceWithCalls: [],
+        replaceWith(next) { this.replaceWithCalls.push(next); },
         querySelector(sel) {
             if (sel === 'a, span') {
                 const a = this.children.find(c => c.tagName === 'A');
@@ -71,10 +73,27 @@ const makeEl = id => {
                 const span = this.children.find(c => c.tagName === 'SPAN');
                 return span || null;
             }
+            // The row-surgery tests hand-place fake rows: match the patch
+            // selector (li.tabgroups-row[data-tab-id="N"]), bare class and
+            // tag.class forms.
+            const row = /^li\.tabgroups-row\[data-tab-id="(.*)"\]$/.exec(sel);
+            if (row)
+                return this.children.find(c => c.dataset && String(c.dataset.tabId) === row[1]) || null;
+            const cls = /^\.([.\w-]+)$/.exec(sel);
+            if (cls)
+                return this.children.find(c => c.classList && c.classList.contains(cls[1])) || null;
+            const tagCls = /^(\w+)\.([.\w-]+)$/.exec(sel);
+            if (tagCls)
+                return this.children.find(c => c.tagName === tagCls[1].toUpperCase()
+                    && c.classList && c.classList.contains(tagCls[2])) || null;
             return this.children.find(c => c.tagName === sel.toUpperCase()) || null;
         },
         querySelectorAll(sel) {
-            // The focus-park helpers only need a list; no live DOM rows.
+            // The focus-park helpers only need a list; no live DOM rows. The
+            // row surgery additionally walks fold-stash holder heads.
+            if (sel === 'li.tabgroups-group, li.tabgroups-window-head')
+                return this.children.filter(c => c.classList
+                    && (c.classList.contains('tabgroups-group') || c.classList.contains('tabgroups-window-head')));
             return [];
         }
     };
@@ -108,7 +127,25 @@ const setup = (opts = {}) => {
     const doc = {
         getElementById: id => byId[id] || null,
         activeElement: null,
-        body: { classList: makeClassList(['rtl']) }
+        body: { classList: makeClassList(['rtl']) },
+        // <template> double for the row surgery: innerHTML hands the string
+        // to the fresh node verbatim (tests assert on it).
+        createElement(tag) {
+            const fresh = makeEl(`tpl-${tag}`);
+            const tpl = {
+                tagName: String(tag).toUpperCase(),
+                content: { firstElementChild: null }
+            };
+            Object.defineProperty(tpl, 'innerHTML', {
+                configurable: true,
+                get: () => fresh._innerHTML,
+                set: v => {
+                    fresh._innerHTML = v;
+                    tpl.content.firstElementChild = fresh;
+                }
+            });
+            return tpl;
+        }
     };
     globalThis.document = doc;
 
@@ -2353,5 +2390,248 @@ describe('staging interop (velvet staging §2.5, pure-snapshot revision)', () =>
         ctx.viewTabGroups.addBookmark('2');
         expect(creates).toHaveLength(1);
         expect(creates[0].url).toBe('https://t2.example/');
+    });
+});
+
+describe('title-churn row surgery (2026-08-29 report: sites animating document.title)', () => {
+    const fakeRow = (tabId, classes = []) => {
+        const el = makeEl(`row-${tabId}`);
+        el.dataset = { tabId: String(tabId) };
+        for (const c of classes)
+            el.classList.add(c);
+        return el;
+    };
+    // The double's innerHTML is a parallel string model — children are never
+    // derived from it, so rendered rows are hand-placed where a test needs
+    // them found.
+    const placeRows = ($list, rows) => { for (const r of rows) $list.children.push(r); };
+    const typeFilter = (fire, text) => fire('input', {
+        target: { classList: { contains: c => c === 'tabgroups-filter-input' }, value: text }
+    });
+
+    it('a title-only onUpdated patches the one row in place — no repaint, no refresh reads', () => {
+        const onRowsRendered = vi.fn();
+        const ctx = setup({ onRowsRendered });
+        const { def, $list, tabsListeners, chrome } = ctx;
+        def().activate();
+        const htmlBefore = $list.innerHTML;
+        const readsBefore = chrome.windows.getAllCalls.length;
+        const row1 = fakeRow('1');
+        const row2 = fakeRow('2');
+        placeRows($list, [row1, row2]);
+        const overlaysBefore = onRowsRendered.mock.calls.length;
+
+        tabsListeners.onUpdated[0](1, { title: '✦ Animated' });
+
+        expect($list.innerHTML).toBe(htmlBefore);                 // the list never repainted
+        expect(chrome.windows.getAllCalls.length).toBe(readsBefore); // no debounced refresh fired
+        expect(row1.replaceWithCalls).toHaveLength(1);            // surgery hit row 1 only
+        expect(row1.replaceWithCalls[0]._innerHTML).toContain('✦ Animated');
+        expect(row1.replaceWithCalls[0]._innerHTML).toContain('https://t1.example/');
+        expect(row2.replaceWithCalls).toHaveLength(0);
+        expect(onRowsRendered.mock.calls.length).toBe(overlaysBefore + 1); // overlays re-laid
+    });
+
+    it('memory is patched too — a direct render (no re-query) shows the new title', () => {
+        const ctx = setup({});
+        const { def, $list, tabsListeners, chrome, fire } = ctx;
+        def().activate();
+        tabsListeners.onUpdated[0](2, { title: 'Renamed' });
+        const readsBefore = chrome.windows.getAllCalls.length;
+        // a keystroke renders straight from memory — the refresh path never runs
+        typeFilter(fire, 'Renamed');
+        expect(chrome.windows.getAllCalls.length).toBe(readsBefore);
+        expect($list.innerHTML).toContain('Renamed');
+    });
+
+    it('a repeated identical title is swallowed whole — no DOM work at all', () => {
+        const ctx = setup({});
+        const { def, $list, tabsListeners } = ctx;
+        def().activate();
+        const row1 = fakeRow('1');
+        placeRows($list, [row1]);
+        const htmlBefore = $list.innerHTML;
+        tabsListeners.onUpdated[0](1, { title: 'Tab 1' }); // same as the query result
+        expect(row1.replaceWithCalls).toHaveLength(0);
+        expect($list.innerHTML).toBe(htmlBefore);
+    });
+
+    it('favIconUrl-only churn is swallowed whole — not even a refresh is scheduled', () => {
+        vi.useFakeTimers();
+        try {
+            const ctx = setup({});
+            const { def, tabsListeners, chrome } = ctx;
+            def().activate();
+            const readsBefore = chrome.windows.getAllCalls.length;
+            tabsListeners.onUpdated[0](1, { favIconUrl: 'https://f/' });
+            vi.advanceTimersByTime(3000);
+            expect(chrome.windows.getAllCalls.length).toBe(readsBefore);
+        } finally {
+            vi.useRealTimers();
+        }
+    });
+
+    it('any other changeInfo field (url) keeps the debounced full refresh', () => {
+        vi.useFakeTimers();
+        try {
+            const ctx = setup({});
+            const { def, $list, tabsListeners, chrome } = ctx;
+            def().activate();
+            const row1 = fakeRow('1');
+            placeRows($list, [row1]);
+            const readsBefore = chrome.windows.getAllCalls.length;
+            tabsListeners.onUpdated[0](1, { title: 'Nav', url: 'https://other/' });
+            vi.advanceTimersByTime(299);
+            expect(chrome.windows.getAllCalls.length).toBe(readsBefore); // still debounced
+            vi.advanceTimersByTime(1);
+            expect(chrome.windows.getAllCalls.length).toBe(readsBefore + 1); // full refresh ran
+            expect(row1.replaceWithCalls).toHaveLength(0);                  // no surgery
+            void $list;
+        } finally {
+            vi.useRealTimers();
+        }
+    });
+
+    it('an unknown tab id falls back to the full refresh', () => {
+        vi.useFakeTimers();
+        try {
+            const ctx = setup({});
+            const { def, tabsListeners, chrome } = ctx;
+            def().activate();
+            const readsBefore = chrome.windows.getAllCalls.length;
+            tabsListeners.onUpdated[0](99, { title: 'Who' });
+            vi.advanceTimersByTime(300);
+            expect(chrome.windows.getAllCalls.length).toBe(readsBefore + 1);
+        } finally {
+            vi.useRealTimers();
+        }
+    });
+
+    it('filter active → title churn falls back to the full refresh (matches change)', () => {
+        vi.useFakeTimers();
+        try {
+            const ctx = setup({});
+            const { def, $list, tabsListeners, chrome, fire } = ctx;
+            def().activate();
+            typeFilter(fire, 'Dev');
+            const row2 = fakeRow('2');
+            placeRows($list, [row2]);
+            const readsBefore = chrome.windows.getAllCalls.length;
+            tabsListeners.onUpdated[0](2, { title: 'Animated' });
+            vi.advanceTimersByTime(300);
+            expect(chrome.windows.getAllCalls.length).toBe(readsBefore + 1);
+            expect(row2.replaceWithCalls).toHaveLength(0);
+        } finally {
+            vi.useRealTimers();
+        }
+    });
+});
+
+describe('refresh fingerprint skip (2026-08-29)', () => {
+    const trackPaints = $list => {
+        const state = { count: 0 };
+        let inner = $list._innerHTML;
+        Object.defineProperty($list, 'innerHTML', {
+            configurable: true,
+            get: () => inner,
+            set: v => {
+                state.count++;
+                inner = v;
+                if (v === '')
+                    $list.children = [];
+            }
+        });
+        return state;
+    };
+    // The first-activation scroll only clears once the current row is in
+    // the DOM — hand-place one so the gate tests run past it.
+    const placeCurrentRow = $list => {
+        const cur = makeEl('fake-current');
+        cur.classList.add('tabgroups-current');
+        cur.scrollIntoView = () => {};
+        $list.children.push(cur);
+    };
+
+    it('identical render inputs paint nothing — the reads and the badge still run', () => {
+        const ctx = setup({});
+        const { def, $list, chrome, views, viewTabGroups } = ctx;
+        placeCurrentRow($list);
+        const paints = trackPaints($list);
+        def().activate();
+        expect(paints.count).toBe(1);
+        const reads = chrome.windows.getAllCalls.length;
+        const badges = views.updateBadgesCalls;
+        viewTabGroups.refresh();
+        expect(chrome.windows.getAllCalls.length).toBe(reads + 1); // re-queried…
+        expect(paints.count).toBe(1);                              // …but painted nothing
+        expect(views.updateBadgesCalls).toBe(badges + 1);          // badge still updates
+    });
+
+    it('a real data change paints', () => {
+        const ctx = setup({});
+        const { def, $list, viewTabGroups } = ctx;
+        placeCurrentRow($list);
+        const paints = trackPaints($list);
+        def().activate();
+        expect(paints.count).toBe(1);
+        // the browser's query now reports a different title
+        ctx.chrome.windows.getAll = (qi, cb) => cb([{
+            id: 1, focused: true, tabs: [makeTab(1, 0, { active: true, title: 'Changed' })]
+        }]);
+        viewTabGroups.refresh();
+        expect(paints.count).toBe(2);
+        expect($list.innerHTML).toContain('Changed');
+    });
+
+    it('entering the view always paints (cross-view state the digest cannot see)', () => {
+        const ctx = setup({});
+        const { def, $list } = ctx;
+        placeCurrentRow($list);
+        const paints = trackPaints($list);
+        def().activate();
+        expect(paints.count).toBe(1);
+        def().activate(); // same data, but entry forces the paint
+        expect(paints.count).toBe(2);
+    });
+
+    it('a bookmarks event re-walks the tree and paints (bookmarksRev in the digest)', () => {
+        vi.useFakeTimers();
+        try {
+            const ctx = setup({});
+            const { def, $list, bookmarksListeners, chrome } = ctx;
+            placeCurrentRow($list);
+            const paints = trackPaints($list);
+            def().activate();
+            expect(paints.count).toBe(1);
+            const walks = chrome.bookmarks.getTreeCalls;
+            bookmarksListeners.onCreated[0]({ id: '9', title: 'New', url: 'https://new/' });
+            vi.advanceTimersByTime(300);
+            expect(chrome.bookmarks.getTreeCalls).toBe(walks + 1); // dirty → re-walked
+            expect(paints.count).toBe(2);                          // rev moved → painted
+        } finally {
+            vi.useRealTimers();
+        }
+    });
+
+    it('non-rendered churn (audible) refreshes but paints nothing', () => {
+        vi.useFakeTimers();
+        try {
+            const ctx = setup({});
+            const { def, $list, tabsListeners, chrome } = ctx;
+            placeCurrentRow($list);
+            const paints = trackPaints($list);
+            def().activate();
+            expect(paints.count).toBe(1);
+            const readsBefore = chrome.windows.getAllCalls.length;
+            // audible is not in the patch-safe set → full refresh path; the
+            // query comes back with every RENDERED field identical → digest
+            // equal → nothing painted
+            tabsListeners.onUpdated[0](1, { audible: true });
+            vi.advanceTimersByTime(300);
+            expect(chrome.windows.getAllCalls.length).toBe(readsBefore + 1); // refresh ran…
+            expect(paints.count).toBe(1);                                    // …painted nothing
+        } finally {
+            vi.useRealTimers();
+        }
     });
 });

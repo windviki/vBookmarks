@@ -63,6 +63,7 @@ import { saveSession, sessionFolderName, tabsToBookmarks } from './session.js';
 import { relTimeLabel } from './tree-render.js';
 import { pickGroupColor, saveTabGroupFolderMeta, pruneTabGroupFolderMeta } from './tab-group-utils.js';
 import { TAB_GROUP_MSG } from './tab-groups-sw.js';
+import { isTitleOnlyChange, renderInputsFingerprint, replaceTabRowNode } from './tabgroups-patch.js';
 
 export function initViewTabGroups(ctx = {}) {
     const $ = id => document.getElementById(id);
@@ -131,6 +132,16 @@ export function initViewTabGroups(ctx = {}) {
     // refresh at 6000 bookmarks. Tab-only churn (the common storm while the
     // view is open) cannot change it: re-walk only after a bookmarks event.
     let bookmarksDirty = true;
+    // Bumped on every bookmarkedUrls mutation — the refresh fingerprint
+    // below must see star-state changes without hashing the whole URL set.
+    let bookmarksRev = 0;
+    // Render-input fingerprint stored at the last render() entry: a refresh
+    // computing the same string paints nothing (see the join() skip gate).
+    let lastRenderFp = null;
+    // Set on view activation: entering the view always paints once —
+    // cross-view state (the staging workbench, options written while the
+    // view slept) isn't captured by the fingerprint.
+    let forceNextRender = false;
     let currentWindowId = null;
     let currentTabId = null;
     let selecting = false;
@@ -440,13 +451,26 @@ export function initViewTabGroups(ctx = {}) {
             if (treeWanted) {
                 const sets = collectTreeSets(tree);
                 bookmarkedUrls = sets.urls;
+                bookmarksRev++;
                 pruneTabGroupFolderMeta(store, sets.folderIds);
                 bookmarksDirty = false;
             }
             views.updateBadges();
             if (!views.isActive('tabgroups'))
                 return;
-            render();
+            // §perf (refresh fingerprint, 2026-08-29 report): identical
+            // render inputs paint nothing. The whole-list innerHTML rebuild
+            // is the flicker the title surgery patches row-by-row; this
+            // gate kills the storms that change NOTHING rendered
+            // (onUpdated fields the rows never show, service-worker ops
+            // echoing back). Entering the view and the first-activation
+            // scroll always paint — the badge above still updates either
+            // way, and the IPC reads already ran.
+            const fp = renderFingerprint();
+            if (fp === lastRenderFp && !forceNextRender && !pendingScrollToCurrent)
+                return;
+            forceNextRender = false;
+            render(fp);
         };
         const step = () => {
             if (++landed === need)
@@ -813,7 +837,27 @@ export function initViewTabGroups(ctx = {}) {
         return html;
     };
 
-    const render = () => {
+    // Everything render() reads, as one digestable snapshot — the join()
+    // skip gate compares it against the digest stored at the last render()
+    // entry (src/tabgroups-patch.js documents the field-for-field contract).
+    const renderFingerprint = () => renderInputsFingerprint({
+        windows,
+        groups,
+        collapsed: [...collapsed],
+        collapsedWindows: [...collapsedWindows],
+        selecting,
+        selected: [...selected],
+        filterText,
+        bookmarksRev,
+        closedRecords,
+        colorStyle: colorStyle(),
+        virtual: virtualLab(),
+        relay: relayOn(),
+        staged: url => isStagedUrl(url)
+    });
+
+    const render = (fpIn) => {
+        lastRenderFp = fpIn !== undefined ? fpIn : renderFingerprint();
         // Prune selected ids whose tab vanished.
         const alive = new Set(tabs.map(t => String(t.id)));
         for (const id of [...selected])
@@ -1144,6 +1188,7 @@ export function initViewTabGroups(ctx = {}) {
                 // last refresh and the click): flip the state silently, the
                 // same way the stats view's ☆ handles a duplicate.
                 bookmarkedUrls.add(tab.url);
+                bookmarksRev++;
                 if (views.isActive('tabgroups'))
                     render();
                 return;
@@ -1153,6 +1198,7 @@ export function initViewTabGroups(ctx = {}) {
                 if (!created || created.id === undefined || created.id === null)
                     return;
                 bookmarkedUrls.add(tab.url);
+                bookmarksRev++;
                 onChanged();
                 if (views.isActive('tabgroups'))
                     render();
@@ -1294,6 +1340,7 @@ export function initViewTabGroups(ctx = {}) {
             const nodes = (existing || []).filter(n => n && n.id && !n.children);
             if (!nodes.length) {
                 bookmarkedUrls.delete(tab.url);
+                bookmarksRev++;
                 if (views.isActive('tabgroups'))
                     render();
                 return;
@@ -1303,6 +1350,7 @@ export function initViewTabGroups(ctx = {}) {
             const step = i => {
                 if (i >= nodes.length) {
                     bookmarkedUrls.delete(tab.url);
+                    bookmarksRev++;
                     onChanged();
                     if (views.isActive('tabgroups'))
                         render();
@@ -2384,6 +2432,96 @@ export function initViewTabGroups(ctx = {}) {
         }
     };
 
+    // --- Title-churn row surgery (2026-08-29 report) ---------------------------
+    // Sites that animate document.title fire tabs.onUpdated every few
+    // hundred milliseconds; the old blanket listener turned each flip into
+    // a 300 ms-debounced FULL refresh — two IPC reads plus an innerHTML
+    // rebuild of the whole list, which reads as the entire view flickering
+    // at the flip rate. A title flip changes ONE rendered string on ONE
+    // row (favicons key on the URL; group/window heads show their own
+    // titles and counts), so it is patched in place: memory first (render
+    // walks the windows[] originals — the flat copies in `tabs`/tabMap are
+    // separate objects), then the row's <li> is regenerated and swapped,
+    // in the live list or inside a fold stash (a replaceWith works
+    // detached the same; unfold reinserts the ORIGINAL nodes, so the
+    // stash must not go stale). Everything else about the update keeps
+    // the debounced full refresh, as do all the states where surgery is
+    // unsafe — the preconditions mirror the fold surgery's.
+    const canPatchTitleRow = () => views.isActive('tabgroups')
+        && !selecting                // selection rows are inert markers
+        && !filterNeedle()           // a title change alters filter matches
+        && !virtualLab()             // the windowed painter owns row lifecycle
+        && paintSettled              // surgery assumes a settled DOM
+        && dragTabId === null && dragWindowId === null; // no drag marks to lose
+
+    const cssEsc = s => (typeof CSS !== 'undefined' && CSS.escape)
+        ? CSS.escape(String(s)) : String(s);
+
+    const patchTabRow = (tabId, changeInfo) => {
+        if (!canPatchTitleRow() || !isTitleOnlyChange(changeInfo))
+            return false;
+        const mem = tabById(tabId);
+        if (!mem)
+            return false; // not in memory (pre-first-refresh) — full path
+        const hadTitle = Object.prototype.hasOwnProperty.call(changeInfo, 'title');
+        const prevTitle = mem.title;
+        const apply = t => {
+            if (hadTitle)
+                t.title = changeInfo.title;
+            if (changeInfo.favIconUrl !== undefined)
+                t.favIconUrl = changeInfo.favIconUrl; // kept honest; not rendered
+            if (changeInfo.status !== undefined)
+                t.status = changeInfo.status;
+        };
+        apply(mem);
+        for (const w of windows) {
+            const orig = (w.tabs || []).find(t => String(t.id) === String(tabId));
+            if (orig)
+                apply(orig);
+        }
+        if (!hadTitle || changeInfo.title === prevTitle)
+            return true; // nothing rendered changed — swallow the event whole
+        const html = tabRowHtml(mem, { L: tabgroupsLabels() });
+        const sel = `li.tabgroups-row[data-tab-id="${cssEsc(tabId)}"]`;
+        // The row sits in the live list, or detached inside a fold stash.
+        // Not found anywhere → it simply isn't rendered right now; memory
+        // is updated and the next render/unfold shows the new title.
+        const targets = [];
+        if ($list.querySelector) {
+            const live = $list.querySelector(sel);
+            if (live)
+                targets.push(live);
+            const heads = $list.querySelectorAll
+                ? $list.querySelectorAll('li.tabgroups-group, li.tabgroups-window-head') : [];
+            for (let i = 0; i < heads.length; i++) {
+                const stash = foldStash.get(heads[i]);
+                const stashed = stash && stash.querySelector
+                    ? stash.querySelector(sel) : null;
+                if (stashed)
+                    targets.push(stashed);
+            }
+        }
+        let patched = false;
+        for (const old of targets) {
+            const fresh = replaceTabRowNode(old, html, {
+                document: typeof document !== 'undefined' ? document : null,
+                activeElement: typeof document !== 'undefined' ? document.activeElement : null,
+                cssEscape: cssEsc
+            });
+            if (fresh)
+                patched = true;
+        }
+        if (patched) {
+            onRowsRendered(); // rebuilt rows carry no overlays — repaint them
+            // The DOM matches memory again — keep the refresh skip gate
+            // truthful, or the next no-op refresh would rebuild the list.
+            // A failed swap leaves it stale on purpose: the next refresh
+            // sees the title in the digest and heals the row.
+            lastRenderFp = renderFingerprint();
+        }
+        return true;
+    };
+
     // --- Events ------------------------------------------------------------------
     // H9 follow-up (4.1.0 收尾): the 300 ms debounce is for ACTIVE re-renders
     // (title/order/active-marker churn). The inactive path only serves the
@@ -2415,11 +2553,21 @@ export function initViewTabGroups(ctx = {}) {
             if (chrome.tabs && chrome.tabs[ev] && chrome.tabs[ev].addListener)
                 chrome.tabs[ev].addListener(scheduleRefresh);
         }
-        // Everything else is render input: active view only.
-        for (const ev of ['onMoved', 'onUpdated', 'onActivated', 'onAttached', 'onDetached']) {
+        // Everything else is render input: active view only. onUpdated is
+        // special-cased below — title churn patches its row in place
+        // (2026-08-29 report).
+        for (const ev of ['onMoved', 'onActivated', 'onAttached', 'onDetached']) {
             if (chrome.tabs && chrome.tabs[ev] && chrome.tabs[ev].addListener)
                 chrome.tabs[ev].addListener(scheduleActiveRefresh);
         }
+        // Title-only churn (sites animating their document.title) patches
+        // the one affected row in place — no debounced full refresh, no IPC
+        // reads. Any other changeInfo field falls back to it.
+        if (chrome.tabs && chrome.tabs.onUpdated && chrome.tabs.onUpdated.addListener)
+            chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
+                if (!patchTabRow(tabId, changeInfo))
+                    scheduleActiveRefresh();
+            });
         for (const ev of ['onCreated', 'onRemoved', 'onUpdated', 'onMoved']) {
             if (chrome.tabGroups && chrome.tabGroups[ev] && chrome.tabGroups[ev].addListener)
                 chrome.tabGroups[ev].addListener(scheduleActiveRefresh);
@@ -3334,7 +3482,10 @@ export function initViewTabGroups(ctx = {}) {
         activate: () => {
             // Always revalidate on entry: tabs change behind the popup. The
             // first activation of this page session also scrolls the current
-            // tab into view once its render lands (design §7).
+            // tab into view once its render lands (design §7). Entry always
+            // paints too (forceNextRender): cross-view state the refresh
+            // fingerprint can't see must not survive a view switch.
+            forceNextRender = true;
             if (!initialScrollDone) {
                 initialScrollDone = true;
                 pendingScrollToCurrent = true;
