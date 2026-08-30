@@ -2268,18 +2268,27 @@ body.panel-mode .recent-group-head {
     /* selecting twin (2026-08-29 icon-axis round): the member favicon keeps
        its wide loose title axis (58px, 30px step); the chevron-less head
        well (22px) docks right after the checkbox @32..54 (center 43), so
-       the trunk column moves to 42.5 and the tick grows to still reach 58 */
-    #staging-list ul.selecting li.vbm-row.staging-member > a.tree-item-link {
-        margin-inline-start: 30px;
-    }
+       the trunk column moves to 42.5 and the tick grows to still reach 58.
+       2026-08-30 fix: the ::after is positioned RELATIVE TO THE CONNECTOR
+       BOX — its inset-inline-start must stay 0 (the narrow twin's shape).
+       The old rule also pushed the tick itself to 42.5px, painting it at
+       42.5+42.5=85px — into the title text, far right of the favicon. The
+       head well also grows to 22px here so its center (43) really is the
+       trunk axis the 42.5 constant was derived from. */
     #staging-list ul.selecting .staging-group-head .staging-group-folder,
     #staging-list ul.selecting .staging-group-head .staging-bucket-star {
         margin-inline-start: 0;
+        width: 22px;
     }
-    #staging-list ul.selecting li.vbm-row.staging-member > .staging-connector,
-    #staging-list ul.selecting li.vbm-row.staging-member > .staging-connector::after {
+    #staging-list ul.selecting li.vbm-row.staging-member > a.tree-item-link {
+        margin-inline-start: 30px;
+    }
+    #staging-list ul.selecting li.vbm-row.staging-member > .staging-connector {
         inset-inline-start: 42.5px;
         width: 15.5px;
+    }
+    #staging-list ul.selecting li.vbm-row.staging-member > .staging-connector::after {
+        width: 15.5px; /* left stays 0 — box-relative, like the narrow twin */
     }
     #staging-list ul.selecting li.staging-group.has-members::after,
     #staging-list ul.selecting li.staging-bucket.has-members::after {

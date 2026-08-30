@@ -346,6 +346,9 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
                 const groupGlyph = document.querySelector('li.staging-group .staging-group-folder') ||
                     document.querySelector('li.staging-group .staging-section-title');
                 const bucketStar = document.querySelector('li.staging-bucket .staging-bucket-star');
+                const groupTitle = document.querySelector('li.staging-group .staging-group-head .staging-section-title');
+                const bucketTitle = document.querySelector('li.staging-bucket .staging-bucket-head .staging-section-title');
+                const right = el => { const b = el ? el.getBoundingClientRect() : null; return b ? b.right : null; };
                 r({
                     listLeft: list.left,
                     memberCheck: boxLeft(member),
@@ -356,8 +359,12 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
                     looseFavX: favX(loose),
                     g1FavX: favX(g1member),
                     groupGlyphX: groupGlyph ? groupGlyph.getBoundingClientRect().left : null,
+                    groupGlyphR: right(groupGlyph),
+                    groupTitleX: groupTitle ? groupTitle.getBoundingClientRect().left : null,
                     bucketFavX: favX(bucketMember),
                     bucketStarX: bucketStar ? bucketStar.getBoundingClientRect().left : null,
+                    bucketStarR: right(bucketStar),
+                    bucketTitleX: bucketTitle ? bucketTitle.getBoundingClientRect().left : null,
                     actionIcons: document.querySelectorAll('.staging-actions-toolbar .staging-icon-btn').length,
                     shortcutChips: document.querySelectorAll('.staging-shortcuts-toolbar .staging-shortcut').length,
                     shortcutAdd: !!document.querySelector('.staging-shortcuts-toolbar .staging-shortcut-add'),
@@ -372,11 +379,15 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
         ck('selection checkboxes share one 8px axis (row/head/bucket)',
             [selGeo.memberCheck, selGeo.looseCheck, selGeo.groupCheck, selGeo.bucketCheck]
                 .every(x => x !== null && Math.abs(x - checkAxis) < 1.5));
-        ck('selection member content hangs under its head glyph (group folder / bucket star)',
-            selGeo.g1FavX !== null && selGeo.groupGlyphX !== null &&
-            Math.abs(selGeo.g1FavX - selGeo.groupGlyphX) < 1.5 &&
-            selGeo.bucketFavX !== null && selGeo.bucketStarX !== null &&
-            Math.abs(selGeo.bucketFavX - selGeo.bucketStarX) < 1.5);
+        // 2026-08-29 icon-axis law: the head glyph column sits LEFT of the
+        // member favicon column and ends exactly where the favicon begins
+        // (connector between); the member favicon itself hangs on the LOOSE
+        // row's title axis — the 24px step check below pins that side
+        ck('selection: head glyph column ends where the member favicon begins (connector between)',
+            selGeo.groupGlyphR !== null && selGeo.g1FavX !== null &&
+            Math.abs(selGeo.groupGlyphR - selGeo.g1FavX) < 1.5 &&
+            selGeo.bucketStarR !== null && selGeo.bucketFavX !== null &&
+            Math.abs(selGeo.bucketStarR - selGeo.bucketFavX) < 1.5);
         ck('selection member content keeps the 24px level step off the loose baseline (same tree-law step as normal mode)',
             selGeo.g1FavX !== null && selGeo.looseFavX !== null &&
             Math.abs((selGeo.g1FavX - selGeo.looseFavX) - 24) < 1.5);
@@ -443,6 +454,15 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
             openLabel: getComputedStyle(document.querySelector('.staging-open .staging-btn-label')).display,
             barLabel: getComputedStyle(document.querySelector('.staging-shortcuts-label')).display
         }));
+        // leave selection mode first: the selGeo round entered it, and the
+        // selecting head renders NO chevron (2026-08-29) — the wide checks
+        // below (and the open-as-tab-group row clicks further down) were
+        // written for normal mode
+        await page.evaluate(() => {
+            const exit = document.querySelector('.staging-select-exit');
+            if (exit) exit.click();
+        });
+        await sleep(600);
         // wide (two-line) vertical axis: the fold head stands exactly as
         // tall as the two-line member rows, and its glyph + title ink stay
         // vertically centered in the taller row
@@ -487,6 +507,10 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
         // crash read as a popup error toast). The runtime message is
         // stubbed here — the probe checks the POPUP-side path, not the
         // real tab open (which would flip the headless target away).
+        // this flow is a SELECTING one: click-select a row, then open-group
+        // sends the SELECTED urls — re-enter the mode the wide round exited
+        await page.evaluate(() => { document.querySelector('.staging-select-mode').click(); });
+        await sleep(500);
         await page.evaluate(() => document.querySelector('li.staging-row[data-url="http://127.0.0.1:9/anchored/2"]').click());
         await sleep(200);
         const errsBefore = pageErrors;

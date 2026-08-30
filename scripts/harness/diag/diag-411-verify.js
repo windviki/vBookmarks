@@ -239,6 +239,40 @@ const ck = (name, ok, extra) => {
         ck('F1 selecting: small heads carry NO chevron', sel.headChev === 0, `chevrons=${sel.headChev} members=${sel.members}`);
         ck('F2 connector on the icon center axis (~41.5px)', Math.abs(sel.left - 41.5) < 1.5, `left=${sel.left}`);
 
+        // F3 (user report 2026-08-30): the WIDE-grid selecting twin used to
+        // push the tick's ::after to inset-inline-start: 42.5px — but the
+        // pseudo is BOX-RELATIVE, so the horizontal line painted at
+        // 42.5+42.5=85px, floating inside the title text far right of the
+        // favicon. The tick must stay at left 0 and span the whole box.
+        await page.evaluate(() => { document.getElementById('container').style.width = '560px'; });
+        await sleep(600);
+        const wideSel = await page.evaluate(() => {
+            const member = document.querySelector('#staging-items li.staging-member');
+            const conn = member && member.querySelector(':scope > .staging-connector');
+            const fav = member && member.querySelector('.favicon-container');
+            const well = document.querySelector('#staging-items .staging-group-head .staging-group-folder');
+            if (!conn || !fav)
+                return null;
+            const tick = getComputedStyle(conn, '::after');
+            const cr = conn.getBoundingClientRect();
+            const fr = fav.getBoundingClientRect();
+            const wr = well ? well.getBoundingClientRect() : null;
+            return {
+                boxL: +(cr.left).toFixed(1), boxR: +cr.right.toFixed(1), favL: +fr.left.toFixed(1),
+                tickLeft: tick.left, tickW: tick.width,
+                wellL: wr ? +wr.left.toFixed(1) : null, wellR: wr ? +wr.right.toFixed(1) : null
+            };
+        });
+        ck('F3 wide selecting: tick stays box-relative (left 0), box spans trunk→favicon, well center = trunk axis',
+            wideSel && wideSel.tickLeft === '0px'
+            && Math.abs(wideSel.boxR - wideSel.favL) < 1
+            && Math.abs(wideSel.boxL - 42.5) < 1
+            && wideSel.wellL === 32 && wideSel.wellR === 54,
+            JSON.stringify(wideSel));
+        // restore the popup to its natural narrow size for the later sections
+        await page.evaluate(() => { document.getElementById('container').style.width = ''; });
+        await sleep(400);
+
         console.log('[step] G. options page');
         // ---- G. options page: the three new checkboxes ----
         const opt = await browser.newPage();

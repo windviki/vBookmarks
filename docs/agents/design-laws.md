@@ -41,6 +41,7 @@ danger 红只给破坏性动作，且放**行的最右 / 图标条的最后**。
 - **大区头一级三头同源（2026-08-27）**：三个大头的 chevron 共享 body→view 同一条继承链，构造上恒等（大头上任何容器字号钉都会让 chevron 与窗口头产生平台漂移——两个暂存大头原 12px 容器钉已退役，需要小字号的子孙单独钉回）。窗口头标题直接采用暂存大组头语言（14px/600）；三多大头 chevron→标题一律紧凑（尾距负 margin 抵消自身 flex gap：暂存 -4、窗口头 -6），标题落在**下方 icon 列左缘 24px**，不留空图标位（用户实测空槽读作大段空白）。
 - 树形虚线连接线（2026-08-27 重画）：干从**父节点 icon 中轴**垂下（头字形井中心：窄 34 / 宽 35 = `--stg-trunk-x`），**不从 chevron 下起笔**；起点在 icon 下方留白处（top +12px，不描画父节点图标本体），tick 从干走到成员 favicon 左缘（48 / 50 = `--stg-tick-w`），末成员弯肘收口；细虚线 2px 笔画 / 3px 步距 / 30% muted（原 3/3 @42% 显眼粗糙）。**选择模式例外**：头井与成员 favicon 在该模式同柱（52..72 center-on-center），icon 轴无布线空间——保持复选框轴的自有校准常数（trunk 39.5，chevron 锚定；diag-staging-verify）。
 - 宽视图（≥480 容器 / panel-mode）井 +2px（22），标题轴 50，成员缩进 34；选择模式的宽档常数独立、勿混用。
+- **伪元素盒相对陷阱（2026-08-30 暂存选择态横线错位）**：`.staging-connector::after/::before` 相对**连接器盒子**定位——栅格常数（`inset-inline-start: 42.5` 之类）只能进盒子规则，伪元素只改 `width`；把盒子常数复制进伪元素选择器组会让 tick 画到 42.5+42.5=85px 的标题文字里（宽栅格/侧面板下用户可见）。宽/窄双栅格都要实测 `getComputedStyle(conn, '::after').left === '0px'`（diag-411 F3）。
 - 任何新改动必须重跑 `diag/diag-hierarchy-probe.js`（实测坐标）+ `diag/diag-staging-verify.js`（ALL-PASS 门禁）。
 
 ## 8. 悬浮浮现只作用于所在行
