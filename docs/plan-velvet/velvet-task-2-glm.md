@@ -1,214 +1,238 @@
-# velvet-task-2 · GLM 重审定稿（4.1.0 head 基线 · 融合暂存区版本）
+# velvet-task-2 · GLM 融合定稿（4.1.1 基线 · 色温体系合流）
 
-> 基准：[`velvet-task-1-final.md`](velvet-task-1-final.md)（ds 基底 + k3/glm53 融合定稿，基于 4.0.5 前后状态）。**其引用的 velvet-task-1-ds/-k3/-glm53 设计源头不再翻阅**；task-2-k3 亦不引入。本文 = task-1-final 在 **4.1.0 HEAD**（实测：80 测试套件 / ~2664 用例；en 560 i18n 键；`manifest.json` 4.1.0；release 走 dist/ esbuild+terser 构建；七视图含 4.1.0 新增的 tab-groups）上的逐项重审 + 暂存区版本（[`velvet-feat-staging-glm.md`](velvet-feat-staging-glm.md)，下称「staging 文档」）的合流。
->
-> **本文只做设计，不实施。** task-1-final 的设计体系（三平面、4px 网格、半径阶梯、Calm Instrument 语言、裁决表 F1–F14）经 4.1.0 复核**全部仍然成立**——4.1.0 的变更（tab-groups 视图、dist 构建、性能改造、favicon 画廊）没有推翻任何一条，反而补强了部分先例。本文的工作是：①逐项标注落地状态（§0.3）；②按 4.1.0 现状刷新全部触点与门禁；③把 staging 版本的新 UI 元素纳入视觉契约（§5）；④补一轮「丝滑温润」向的细节打磨清单（§6）。
->
-> velvet 版本主题不变：**视觉成熟 + 细节跃升**——丝滑流畅、迅捷如飞、视觉温润柔和如同丝缎。staging 功能版先行落地（视觉沿用现行语言），velvet 随后以 CSS/token 层收敛全局面貌，DOM/类名不改。
+> **血缘**：[`velvet-task-1-final.md`](velvet-task-1-final.md)（设计源头）→ [`velvet-task-2-k3.md`](velvet-task-2-k3.md)（4.1.0 重订的任务书，**本文的结构底座**）→ 本文。
+> **理念源**：《你的UI廉价，错在颜色》（mp.weixin.qq.com/s/ACpAuaNIxIJH0kXYe1MrQQ，2026-08 读入）——高级感不来自 accent，来自**中性色层的品牌色温**；外加 [`velvet-theme-manager.md`](velvet-theme-manager.md)（Dracula 样本解剖 + 镜鉴九条 + 附录 B token 缺口）。
+> **本文 = k3 任务书 ⊕ 色温体系 ⊕ 4.1.1 基线刷新**。k3 的全部裁决、切片与门禁**维持有效**，除非本文显式修订（修订集中在 §1 色温章与 §2 修订表，冲突处以本文为准）。旧版 glm 文稿（2026-08-22）的「task-2-k3 亦不引入」声明作废——本文直接建在 k3 之上。
+> **代码基线**：**4.1.1 HEAD**（2026-08-30 实测：90 测试套件 / 3147 用例；en 717 i18n 键；neat.css 7325 行；暂存区功能版**已落地**；velvet token 仍零落地——`--vbm-canvas`/`--vbm-radius-*` 档位/`--vbm-space-*`/`--vbm-dur-*`/`--vbm-elev-*`/`--vbm-temper` 全部 0 命中，S1 起步面干净）。
+> **本文只做设计，不实施。** 版本主题不变：丝滑流畅、迅捷如飞、视觉温润柔和如同丝缎。
 
-## 0. 现状审计与决策框架
+---
 
-### 0.1 版本主题（承 task-1-final §0.1）
+## 0. 融合总纲
 
-velvet = 「视觉成熟」版本。功能面收窄为：内置命令补全、输入栏实用扩展、独立大屏页（未落地部分）、暂存区视觉收敛（staging 已定义功能）。主力工程量投向视觉系统的体系化落地——task-1-final 的整套设计 token 在 4.1.0 head **一个都还没进**（`--vbm-canvas`/`--vbm-radius-*` 档位/`--vbm-space-*`/`--vbm-dur-*`/`--vbm-ease`/`--vbm-elev-*`/`--vbm-text-*`/`--vbm-slot-*` 全部零命中，`css/themes/` 目录不存在），因此 task-1-final §1 的视觉体系**原样有效**，本文只做基线刷新，不重开设计。
+### 0.1 为什么是色温：给「丝缎」补上操作性定义
 
-### 0.2 4.0.5 → 4.1.0 的基线变化（影响 velvet 的部分）
+velvet 的三支柱（材质/动效/性能）里，「温润柔和如同丝缎」一直是最含糊的一条——k3 §1.0 把它解释为「表面有呼吸、边界不刺眼」，仍是描述而非**操作**。文章补上了这块缺口：
+
+> 真正拉开质感差距的不是最亮眼的主色，而是藏在背景、边框、弱化文字、阴影里的色温。打开任何一个看起来「很贵」的产品（Linear、Stripe、Vercel、Raycast），每一个中性色都带一点品牌色的色相偏移——品牌色不是「盖在」界面上，是「流进」界面里。
+
+velvet 的操作性定义由此成立：**丝缎的温润来自纤维染色，不是表面印花**。accent 孤立地站在纯灰世界上 = 印花；每一层中性色（底、边、影、弱文、滚动条）都浸着同一瓶染料 = 染色。velvet 要的是染。
+
+**现状测温（4.1.1 HEAD，neat.css:29-175 逐值核过）**：
+
+| 主题 | 现状 | 判定 |
+|---|---|---|
+| light | bg `#ffffff`、border `rgba(0,0,0,.10)`、hover `rgba(0,0,0,.05)`、shadow `rgba(0,0,0,.2)`、muted `#5f6368`——**全部纯灰零色相** | **白坯布，待染** |
+| dark | bg `#1b1c1f`（色相仅 ±1°）、border 白 alpha、shadow 纯黑 | **白坯布（黑版），待染** |
+| ink | bg `#0e1118` 蓝黑、border `rgba(148,163,205,.16)` 蓝白、muted `#8b93a9` 蓝灰 | **满分染色样本——参照系** |
+| paper | bg `#f6f2e9` 暖、border `rgba(74,63,48,.16)` 暖、muted `#756c5d` 暖 | **满分染色样本——参照系** |
+| classic（k3 S5 未落） | v3 记忆 = 灰白世界 | **豁免**（见 §1.1） |
+
+一个佐证色温体系「本来就是我们的语言」的事实：light 的选中色 `#d3e3fd`、flash `rgba(43,93,205,.2)`、focus-ring 全是 accent 蓝染过的——Google 的现值里已经有人在做色温实践，只是没人把它**体系化**。体系化正是 velvet 的事。
+
+### 0.2 色温三律（文章十律的 velvet 工程化）
+
+文章约十条实操律，收拢为三条工程律写进 velvet（其余各律已散落 k3 既有裁决：图标=currentColor 文字层级即 k3 §1.8 纪律；语义色纪律即 k3 §1.7；深色反向即逐主题独立 token 的现行模式）：
+
+1. **灰阶先于色相**。亮度阶梯是结构（三平面、文字层级），色温是氛围。每个 token 先定明度、再染——染料永远不许改动亮度次序。这是「色温建立在稳固灰阶之上，不是替代品」的 velvet 版。
+2. **色温不承担结构**（灰度测试门）。任何新增颜色先问：去饱和后还剩什么？层级若靠色相才能读出 = 色相越权 = 违律。落成可执行门禁（§1.7）。此律同时是吸收 Dracula 镜鉴多通道反馈的**总量控制阀**——通道可以加（光条/辉光/呼吸），但每个通道都必须灰度可弃、reduced-motion 可弃。
+3. **一源派生**。每主题一个色温母色 `--vbm-temper`，全部中性层由它经 `color-mix` 派生；**禁止平行手写中性色**（平行手写 = 漂移的起点，light 现值的五个纯灰就是各自为政的证据）。`color-mix()` Chrome 111+ 支持、我们底线 114，且 neat.css 已有 25 处在用——机制原生，零新增成本。
+
+**工程约束（三条，随律走）**：
+- **hex 锚点契约**：`--vbm-bg` 与 `--vbm-canvas` 保持**字面 `#rrggbb`**（`themeIsDark()` 只认 hex，neat.js:94-103；theme-manager §3.1-7 同款警告）；`color-mix` 只用于派生层。
+- **AA 预算**：染后 fg ≥7:1、muted ≥4.5:1（paper muted 曾因 3.9:1 被修到 4.6:1，先例在此）；染量纪律见 §1.3。
+- **性能零增量**：色温全部是 token/color-mix 层工作，零几何回流（k3 §6.2 硬约束不破）。
+
+### 0.3 基线刷新 4.1.0 → 4.1.1（k3 §0 的增量修正）
+
+k3 的 §0 盘点表按 4.1.0 核实，本文只记增量：
 
 | 变化 | 对 velvet 的影响 |
 |---|---|
-| **tab-groups 第七视图**（view-tabgroups.js 2269 行 + tab-groups-sw.js + tab-group-utils.js） | tab 条从 6 tab 变 **7 tab**：分段软填充的宽度预算更紧（§1.5.2 复核）；选择模式先例从 2 套变 3 套（+staging 将是第 4 套）；`LIST_SEL`/`menuContainers` 等清单已扩容，行号全面漂移——task-1-final 附录 B 的行号作废，以本文附录为准 |
-| **dist 构建**（esbuild+terser；`scripts/runtime-files.json` 为单一事实源；package.py 读 HTML_PAGES/CSS_FILES） | `css/themes/*.css` 六个新文件**必须登记 runtime-files.json 的 CSS 清单**才能进包——task-1-final 只说「package.py 改清单」，现机制是 runtime-files.json，触点更新 |
-| **性能改造系列**（buildTreeSnapshot 单遍快照、lazy 索引、badge 同步去全量刷新、tooltip 惰性、dupes memo、dead overlay 定点更新） | velvet 的「迅捷如飞」有一半已被 4.1.0 兑现；velvet 视觉层不得引入回归（卡片化重绘路径要过 perf 既有断言） |
-| **favicon 栈**（fallback/enrich/画廊页 pages/favicons.html） | velvet 图标系统（§1.8）与 favicon 栈解耦，零交集 |
-| **AGENTS.md 分层**（19KB 主文档 + docs/agents/{modules,testing,release,i18n,quirks}.md） | velvet 落地时的文档同步落点改为 docs/agents/modules.md |
-| **announce 层已上线**（src/announce.js + docs/announce.json + announceEnabled，store.js:96/:151） | task-1-final §4 整章**已实现**——velvet 只剩首发 tip 内容（§4） |
-| **tab indicator clamp 修复**（4.0.8，3088de1） | 修的是「滑动底条圆角溢出 1px」——进一步佐证 F2 移除 `.tab-indicator` 的决策（修了还是会对不齐，删了才干净） |
-| **dead blocked 琥珀标已实现**（view-dead.js:652/:726 + `.dead-indicator.blocked`，neat.css:4752） | task-1-final §1.9 的「× 场景着色 D1」**已实现**，从待办划除 |
-| **tabular-nums 部分在用**（options.css:214/:715、neat.css:3543/:4331，共 4 处） | task-1-final §1.4 的全局纪律**部分实现**：剩 `.tab-badge`/`.row-badge`/`.history-meta`/`.history-time`/各计数扩展 |
-| **store.js:67 已有 classic-experience 预设**（「一键恢复经典界面」功能集开关） | 与 classic 主题的正交关系（task-1-final §1.5.3）在代码里已有另一半——两开 = 完整 v3 体验的设计成立 |
-
-### 0.3 task-1-final 逐项落地状态（4.1.0 HEAD 实测）
-
-**✅ 已实现（从 velvet 待办划除，只余打磨）**
-- D 公告层：`src/announce.js`、`docs/announce.json`、`announceEnabled` 设置、ETag/TTL/静态 JSON 决策（F4）全部上线。velvet 仅追加首发 tip 消息（§4）。
-- D1 dead × 场景着色（blocked 琥珀标）：已实现，全链路（行 badge、li 橙旗、`.dead-indicator.blocked`）。
-- `tabular-nums`：4 处在用，待按 §1.4 扩全。
-- favicon 反色/补全/画廊（task-1-final 前置项 ①）：4.0.8 已全落地。
-- palette 自定义命令框架、Tab 两停圈禁、`<mark>` 高亮等 4.0.5 回填项：均已在。
-
-**🔶 部分实现（velvet 补完）**
-- **`/theme`**：命令存在（palette.js:370-398 内建 17 条之一）但是**参数化前缀匹配**（`themeFromRest`，palette.js:35-38），非 F3 的列表模式——velvet 补 `/theme` 无参列表模式 + `themeClassic` + `/theme classic` 直选（§3.2）。
-- **多词搜索**：仅 omnibox 高亮的 matcher 按词拆（search-core.js:70-75）；`fuzzy-core.js rank()`（:158-170）仍是整串打分——C2 多词 AND 分词**未做**；`src/search-tokens.js` 不存在，C1 **未做**。
-- **图标系统**：icons.js 常量库成熟（FOLDER/DOCUMENT_CODE/DEFAULT_BOOKMARK/CHECK/STAR/FLAG/TRASH/PIN/EDIT/SLEEP/COLLAPSE/EXPAND/REDO/LIST_X/FLAG_X/SELECT/CHEVRON/VIEW_ICONS），但 A4 清单的 `CLOSE_ICON`/`EMPTY_ICON`/`OPEN_EXTERNAL_ICON` 缺；A3 折角现为直角 polyline（icons.js:39 `9.33,1.33→13.33,5.33`），圆弧化未做。
-- **右缘动作槽**：`.row-btn` hover/focus 揭示体系已在（neat.css:3097-3102），但 V6 的 `--vbm-slot-action` 槽位契约与「视图内不变量」断言未做。
-
-**❌ 未实现（velvet 主力）**
-- 全部设计 token（§1.1–1.4）与 `css/themes/` 解耦（§1.11）；options.css 仍有 193 处 token 副本（含独立 `:root`/dark/auto/ink 四套）。
-- 三平面 canvas（body 仍 `var(--vbm-bg)`，neat.css:164/:490/:2008/:2526 四处）。
-- 卡片化（#view-tabs 仍裸 flex + border-bottom，neat.css:2236-2242）；`.tab-indicator` 仍在（CSS :2317 + view-manager.js:248/:334）。
-- classic 主题（theme 合法值仅 auto/light/dark/ink/paper，options.html:52）。
-- C1/C2/C3 全部（search-tokens、多词 rank、URL 直开、`/copy`）。
-- B 系列新命令：`/open` `/open-all` `/sort` `/panel` `/popup` `/onlybar` `/all` 零命中；`paletteCustomsTop`/`paletteHideBuiltin`/`paletteBuiltinOrder` 设置键零命中。
-- `pages/standalone.html` 不存在（E1）。
-- 商店素材自动化（F）。
-
-### 0.4 范围红黑榜（承 task-1-final §0.3，按 0.3 状态刷新）
-
-**进 velvet**：视觉 V 全系（token/三平面/卡片化/tab 重绘/classic/主题材质/状态语言/图标/对齐/选项页/CSS 解耦）、staging 视觉收敛（§5）、B1/B2/B4/B5 + `/open-all`·`/sort`、C1/C2/C3、`/theme` 列表模式补完、E1 standalone、D 剩余（首发 tip + 发布流程增补）、F 商店素材、细节打磨清单（§6）。
-
-**不进 velvet**：与 task-1-final §0.3 红榜完全一致（B3 macro、C4 中成本、E2 双栏、计算器、`/toggle`、`visited:N`、`#标签`、`/next-theme`、`chrome.theme` 跟随、弧形 tab 等），不再复述。
+| **暂存区功能版已落地**（staging.js/staging-relay.js + view-recent 工作台 + 分层记忆组 + 宽栅格连接线体系） | k3 §1.14 的措辞「staging 落地后」全部变为「已落地」；契约对象是**真实 DOM**（`#staging-list`/`#recent-head`/`#recent-list`/`.staging-section-head`/`.staging-group-head`，neat.css:1775-2089 已核）；2026-08-27 连接线体系（`--stg-trunk-x`/`--stg-tick-w`）成为 §1.6 连接线活性的施加面 |
+| **自定义 CSS 工作台落地**（pages/custom-css.html + userstyles 多样式模型） | theme-manager 路径 A（Dracula 预设）的前置已就绪；velvet 色温 token 发布时，「主题受影响变更」节照 theme-manager §4.7-3 纪律写 |
+| **`--vbm-pill-warning-fg` token 先例**（on-color 双编码纪律，浅色 pill 白字） | 语义色 on-color 家族已是事实词表——§1.4 语义色轻推必须连带核对 on-color 对（AA 预算的一部分） |
+| **测试/i18n 基线**：80→**90 套件**（3147 用例）；en 560→**717 键** | k3 §7.2/§7.3 的基线引用按此刷新；velvet 净增 key 数不变（约 20） |
+| **行号漂移**：neat.css 4.1.0 → 7325 行（`.tab-indicator` 2317→**3814**；reduced-motion **3849**；行静态 554-577；scrollbar **2998**） | k3 附录 B 行号以本文 §5.B 与 theme-manager 附录 A（4.1.1 实核）为准 |
+| **两份新设计输入**：theme-manager（附录 B 四 token + 镜鉴九条） | §1.6/§2 正式收编——本文是它们的 velvet 侧归宿 |
 
 ---
 
-## 1. 视觉体系（V 系列 · task-1-final §1 全量有效，以下为 4.1.0 刷新点）
+## 1. 色温体系（新增章，S1 的地基）
 
-> task-1-final §1.0–§1.12 的设计（Calm Instrument 三原则、三平面、4px 网格与豁免清单、半径阶梯与同心律、排印两档、卡片化与焊接卡、tab 分段软填充、classic token 覆盖、五主题材质、状态语言表、图标纪律、左右缘槽位、`/theme` 列表、CSS 解耦目录结构）**逐条保留，本文不重述**。只列基线刷新与新增裁决：
+### 1.1 五主题的温度方向（§1.6 材质的重排）
 
-### 1.1 七 tab 的分段软填充复核（F2 在 4.1.0 的重验）
+每主题一个性格不变（k3 §1.6 的 Modern/仪器/纸器分野维持），温度是性格的**底色层**：
 
-- 4.1.0 的 tab 条已从 6 tab 变 7 tab（+tabgroups）。400px 弹窗下每 tab ≈55px（原 67px），2px 底条滑动的可感知性进一步下降——**移除 `.tab-indicator` 的论证更强了**。4.0.8 的 clamp 修复（3088de1）证明底条在圆角边界上持续产生对齐问题；删除后 view-manager.js 的 indicator 定位/滑动逻辑（:248/:334 一带）同步删除，`aria-selected` 语义不变。
-- 分段软填充在 55px 宽度下仍然成立：12% accent 底 + accent 文字的对比不依赖宽度；badge 药丸（tab-groups/dead 等视图徽标）与填充并存时保持 `--vbm-danger` 现值（task-1-final §1.5.2 已论证对比充足）。
-- **容器查询标签显隐机制照旧**（窄宽度下 tab 标签退化图标态）；7 tab 下的显隐断点随实施实测微调，不破契约。
-- **staging 合流**：staging 落地后 `recent` tab 标题变「暂存区」且带 `badge()`（暂存条数）——badge 药丸 + active 填充的同现样式进 velvet 截图回归（§7.2）。
+- **light/dark「Modern」**——冷蓝染。temper = accent（light `#0b57d0` / dark `#a8c7fa`），全部中性从纯灰换成本色染。这是 velvet 对 light/dark 最大的一笔视觉投资：从「Google 缺省」到「被蓝浸过的白/黑」，Linear 式的安静贵气。染量克制在「说不出来哪里不同，但更贵」的档位（§1.3 染量表）。
+- **ink「仪器」**——已是满分样本，**零改动**。velvet 把 ink 现值追认为色温体系的第一个落地实现（磷光晕在 §1.5 统一进 glow token 家族）。
+- **paper「纸器」**——暖染维持，但 **temper 与 accent 解耦**：paper 中性是黄暖（bg `#f6f2e9` hue≈39°、muted hue≈40°），朱砂 accent 是红（hue≈9°）——若用 accent 直染，纸面会偏粉。故 paper 的 temper = 墨暖赭（草稿 `#6b5b45`，hue≈38°，与现中性同向）。paper 现值基本已达，落 §1.3 表时微调即可；canvas（k3 定的 `#efe9dc`）同温落位。
+- **classic**——**温度豁免**。classic 的角色是 v3 记忆，v3 就是灰白世界；temper = none、全部中性纯灰，是 classic 的性格而不是欠账。豁免写进 theme.test.js 契约（classic 块断言中性零色相），防止后人「顺手补染」。
+- **auto**——映射 light/dark，无独立温度。
 
-### 1.2 CSS 解耦与 dist 构建的合流（task-1-final §1.11 刷新）
+### 1.2 token 层：`--vbm-temper` 与派生链
 
-- 目录结构与加载顺序不变（`css/themes/{light,dark,auto,ink,paper,classic}.css`）；**新增触点**：六个文件全部登记 `scripts/runtime-files.json` 的 CSS 清单（4.1.0 起 package.py:37-46 从该文件读 CSS_FILES，漏登记 = dist 包缺主题 = 线上白坏）；CI dist harness 的产物校验补「六主题文件在包内」断言。
-- 搬移纪律不变：先加文件与 link、逐块搬移、每步全量 vitest + smoke、搬移期不改视觉值；解耦放视觉定稿后一次性做（S8）。
-- options.css 的 193 处 token 副本与四套主题块随解耦一并收敛为引共享 token 源。
+```
+--vbm-temper（每主题唯一染料源）
+    light #0b57d0 · dark #a8c7fa · ink #8b9cff · paper #6b5b45（草稿） · classic 无
+        │  color-mix 各浓度派生（in srgb；语义色用 in oklab）
+        ├─ 平面：canvas 2-3% / surface 1% / elev 顶光档（§1.3 光方向律）
+        ├─ 边界：hairline 4-6%（border / 分隔线 / 滚动条轨道）
+        ├─ 交互：hover 3-4% / selected 10-15% / accent-subtle 8%（统一淡底档）
+        ├─ 文字：fg 3-5%（向 temper 微偏的近黑/近白）/ muted 6-8%（带温灰）
+        ├─ 投影：温影 = color-mix(temper 10-15%, #0d1220)——蓝黑，非纯黑
+        └─ 滚动条 thumb：muted 同源
+```
 
-### 1.3 状态语言与 staging 新状态的合流
+- **fallback 链**：所有派生式写 `var(--vbm-temper, var(--vbm-accent))`——用户主题只给 accent 也自动获得整条色温（theme-manager token 层「新 token 自动落默认」降级语义的天然兼容，§5.C 接口）。
+- **派生 vs 字面**：平面两锚点（bg/canvas）字面 hex（§0.2 hex 契约）；交互态、边、影、淡底、文字**一律派生式**，主题文件里不再出现手写中性灰。
+- **词表登记**：`--vbm-temper` 进 theme-manager §4.7-2 的 Tier 1 词表（颜色/材质 token，minor 只增不改）。
 
-task-1-final §1.7 的状态 token 表扩展以下 staging 新状态（几何全主题统一、材质按主题）：
+### 1.3 逐层染色表（草稿值；实施时四主题并排截图 + AA 复测定稿）
 
-| 状态 | 载体 | light/dark | ink | paper |
-|---|---|---|---|---|
-| `.cut` 剪切淡化 | 树行 | `opacity` 减半 + 保留行内容 | 同左 | 同左 |
-| `.staged` 已暂存 | recent 区上箭头按钮 | 实心/打勾态，只动 `opacity`/fill | 同左 | 同左 |
-| 组头 hover/折叠 | staging 组头 | `--vbm-bg-hover` + `aria-expanded` 箭头旋转（transform，dur-1） | 同左 + 磷光叠底 | 暖灰 |
-| 选择条双 rung | staging/搜索选择工具条 | 与 tabgroups 既有双 rung 同款卡片化（surface 底 + `--vbm-radius`） | 同左 | 同左 |
+**染量纪律**（先于数值的规则）：中性平面 1-4%、hairline 4-6%、hover 3-4%、selected 10-15%、muted 6-8%——总量以「灰度测试下与纯灰版不可分先后、肉眼并排可感『更贵』」为准；超过即越权。
 
-`.cut` 淡化在 velvet 落地时收口为 token（`--vbm-cut-dim` 或复用现有 muted 通道，实施时定），staging 文档 §5.2 的临时 opacity 写法随之替换。
-
-### 1.4 排印纪律扩展（部分实现的收口）
-
-`tabular-nums` 从现有 4 处扩至 task-1-final §1.4 全清单：`.tab-badge`（7 tab 徽标，数字抖动直接影响 tab 宽稳定）、`.row-badge`、`.history-meta`/`.history-time`、staging 组头条数 pill、`.select-count`、stats/dead/dupes 计数、扫描进度。一处全局规则（`body { font-variant-numeric: tabular-nums }` 不可取——正文非数字文本无益且字体回退风险；按选择器清单收口）+ `design-system.test.js` 断言清单完备。
-
----
-
-## 2. 命令面板（B 系列 · 承 task-1-final §2，状态刷新）
-
-全部条目设计不变（B1 `paletteCustomsTop`、B2 一开一序、B4 `/panel`·`/popup` toggle 语义 + `paletteAlreadyPopup`、B5 `/onlybar`·`/all` 会话级不改设置、`/open-all`·`/sort` 先行版、`/copy` 含 markdown、F5/F6/F7/F14 否决维持）。刷新点：
-
-- 现有内建 17 条命令（palette.js:370-398）+ `/recent` 的 `staging` alias（staging 文档 §0.1）——velvet 的命令表增量在 17 条基础上排（`/open` `/open-all` `/sort` `/panel` `/popup` `/onlybar` `/all` `/copy`），全部走 palette-commands.js 注册三件套（命令表 + i18n + 测试）。
-- `/open` 视图名清单按七视图（tree/search/tabgroups/recent(staging)/stats/dead/dupes）；staging 大屏是 E1 的主场景之一（§4）。
-- B2 `paletteBuiltinUses` 计数挂 `fn` 执行路径——注意 `/recent` alias 命中也要计入同一命令的使用数。
-
-## 3. 输入栏扩展（C 系列 · 承 task-1-final §3，未实现确认）
-
-C1 六 token（site/folder/title/url/dead/blocked）、C2 多词 AND、C3 URL 直开 + `/copy`，设计不变。刷新点：
-
-- C2 落点精确化：`fuzzy-core.js rank()`（:158-170）现整串 `scoreLower`——分词改造在该函数内做，**单词查询路径逐字节一致**的回归锁死（task-1-final §3.2）在 4.1.0 的 2664 用例基线上补 fuzzy-core/search/omnibox parity 三处。
-- C1 的 `dead:`/`blocked:` 数据源 `deadLastScan` 在 4.1.0 已含 blocked 语义（D1 已实现），token 落地无额外数据工作。
-- staging 合流：搜索视图选择模式（staging 文档 §3.6）是**功能版先行**的 C4 近亲（结果批量操作的最小集）；C4 其余（作用域搜索、参数化 `/add`）仍留 4.2。
-
-## 4. 通知与独立页（D/E · 状态刷新）
-
-- **D**：整章已实现。velvet 剩余：①首发 tip 消息（`kind:"tip"`，内容 = `/theme` 列表 + 新视觉引导，与 whats-new 合并一条，频率纪律照 task-1-final §4.4 写死）；②发布流程增补「更新 announce.json」进 docs/agents/release.md；③若 velvet 分多个 minor 发版，`minVersion`/`maxVersion` 区间相应分段。
-- **E1 standalone**：未实现，设计不变（完整壳、隐捐赠卡+快加星、`?view=` 参数、1200px 居中、`--vbm-shell` 12px、palette `/open` 入口、三重数据视图工具行 `OPEN_EXTERNAL_ICON`、package.py HTML_PAGES 白名单）。刷新：①视图清单含 staging（`?view=recent` 即暂存区大屏——批量整理 500 条的上限场景，是 standalone 的高价值形态，`/open` 无参 = 当前视图大屏对 staging 同样可用）；②`scripts/runtime-files.json` 的 HTML_PAGES（非旧 package.py 硬编码）登记；③velvet 卡片化后的 standalone 布局 = 卡片在 1200px 画布上仍居中限宽（`max-width` 收敛卡片自身，不拉伸全宽——丝缎感来自约束而非铺满）。
-
-## 5. 暂存区视觉契约（staging 合流 · 新增）
-
-staging 功能版以 4.1.0 现行语言先行；velvet 落地时其新元素随全局 token 收敛，**DOM/类名不变**，契约如下（承接 task-1-final §1 体系）：
-
-| 元素 | velvet 契约 |
-|---|---|
-| 双区域（`#staging-items` / `#recent-head` / `#recent-list`） | 同居一张视图卡（surface）；区域头 `#recent-head` = 卡内分区条：muted 标题 + 条数 pill + 动作钮，高度入 4px 网（28px），折叠箭头 transform 旋转 dur-1 |
-| 组头（真实组） | 与 dupes/tabgroups 组头同款模板收敛为**唯一组头样式**（现状三视图组头已有细微分叉，velvet 一并统一）：折叠箭头 + 名称 + 条数 pill（tabular-nums）、hover 走 `--vbm-bg-hover` + hover「归位」按钮（`.row-btn` 槽位）、选中三态（选择模式）走状态表 |
-| 「未收藏」桶头（迭代 C 恢复） | 真实态收件箱分区的头：空心星图标（muted）+ 「未收藏」+ 条数 pill + 「新 N」pill（accent 淡底）+「收藏全部」行内按钮；同组头折叠交互与状态表 |
-| 星标行（真实双态） | `.row-btn` 槽位恒可见星标，`aria-pressed` 随真实收藏态切换：已收藏 = 实心（quick-add `starred` 同源）/ 未收藏 = 空心 muted；星标色 = `--vbm-accent`（非语义色——收藏是主动作不是警示），切换只动 opacity/fill |
-| 上箭头 `.staging-add-btn` / `.staged` | `.row-btn` 体系；`.staged` 实心态 fill 过渡 dur-1；无位移 |
-| 选择工具条（staging 双 rung / 搜索与 stats 单 rung） | 与 tabgroups 选择条同款卡片化工具条（surface + `--vbm-radius` + elev-1 若浮层化；嵌卡内则无阴影——层级靠表面）；图标全部 16px/1.5px 描边纪律 |
-| `BookmarkFolderPickDialog` 三按钮形态 | 卡片化对话框（surface + `--vbm-radius` + elev-2）；顶部**快选 chips 行**（pin + 最近，pill 圆钮、图标 + 名称）与过滤输入（与搜索框同款）；文件夹缩进列表行高入网、行尾 PIN_ICON pin 按钮；[移动到此处]/[复制到此处] 主按钮 = accent 填充，取消 = ghost |
-| `.cut` 剪切态 | token 收口（§1.3），prefers-reduced-motion 下无闪烁 |
-| 暂存空态 | 「16px muted 图标 + 一行 muted 文案」空态模板（A4）首个新应用 |
-| badge 药丸 + active tab 填充同现 | 截图回归项（§1.1） |
-
-## 6. 细节打磨清单（velvet「丝滑温润」跃升 · 新增）
-
-在体系化之外，对**既有功能**的一轮精修（每条小、合起来是手感差）：
-
-1. **对话框开合动效**：dialogs（含 folder-pick/new-folder/confirm）进出统一 dur-2 + `--vbm-ease` 的 opacity/scale(0.98→1) 组合（只 transform/opacity）；现状多为瞬切。`prefers-reduced-motion` 收口。
-2. **右键菜单开合**：菜单 `positionMenu` 后淡入 dur-1； submenu flyout 滑出 4px + 淡入。不加位移编排到主菜单（工具不做秀）。
-3. **toast 进出**：`undo` toast 当前直进直出——底部滑入 4px + 淡入 dur-2，栈叠时位移过渡。
-4. **视图切换**：视图区内容切换 dur-1 淡入（不位移、不 crossfade 双帧——400px 弹窗里 crossfade 会闪）；`views.activate` 路径加一次性 class 后自动移除。
-5. **行 hover 揭示的统一节奏**：`.row-btn` 的 hover/focus-within 揭示时长统一 dur-1（现状各处 0.1s/0.15s 混写）；焦点环随控件半径（`--vbm-radius-sm`）。
-6. **滚动条材质**：thumb 色 token 化（`--vbm-scrollbar`，按主题），hover 态加深一档；卡片 `overflow:hidden` 裁切后 thumb 内缩关系过 verify-scrollbars 全矩阵。
-7. **focus-visible 全覆盖复查**：4.1.0 新增元素（tab-groups 行、staging 元素、新命令的 palette 行）逐个过一遍键盘焦点环；`design-system.test.js` 加「交互元素必有 focus-visible 规则」的静态断言（按选择器清单）。
-8. **数字抖动**：§1.4 tabular-nums 收口（badge/计数/相对时间）。
-9. **空态统一**：A4 的「图标 + 一行 muted 文案」模板铺到全部空态（无结果/未扫描/无重复/空文件夹/暂存空/搜索历史空），一处 CSS 类（`.empty-hint`）收敛，文案 i18n 复用。
-10. **quick-add 星与捐赠卡**：quick-add 星的按下反馈（scale 0.92 + dur-1）对齐 tab 分段填充的按压语言；捐赠卡卡面随三平面迁移（canvas 底 + surface 卡），不动内容。
-11. **性能不回退门**：以上全部动效只 opacity/transform；`perf` 既有断言（badge 去全量刷新、lazy 索引、tooltip 惰性）在 velvet 分支全程跑绿；卡片化后首帧渲染路径加一次 harness 计时对照（预算：激活视图渲染耗时相对 4.1.0 基线劣化 ≤10%）。
-
-## 7. 实施切片与回归门禁
-
-### 7.1 切片顺序（在 task-1-final §7.1 基础上刷新；每片独立提交 + 全绿）
-
-| Slice | 内容 | 依赖 | 状态标注 |
+| token | light 现值 → 染后（草稿） | dark 现值 → 染后（草稿） | 备注 |
 |---|---|---|---|
-| S1 | token 铺底（§1.2–1.4 网格/半径/排印/动效/投影）+ `design-system.test.js` + tabular-nums 收口（§1.4） | 无 | 未实施 |
-| S2 | 三平面 `--vbm-canvas` + body 迁移（neat.css 四处）+ dark 卡面色 | S1 | 未实施 |
-| S3 | 卡片化 + tab 分段重绘 + **删除 `.tab-indicator`**（CSS + view-manager 逻辑）+ 七 tab 断点实测 | S1/S2 | 未实施 |
-| S4 | 左右缘槽位系统（`--vbm-slot-*` + 右缘不变量断言） | S3 | 未实施 |
-| S5 | classic 主题 + `/theme` 列表模式（补完 F3） | S3 | `/theme` 命令已在，列表模式未实施 |
-| S6 | 状态语言按主题 token 表 + staging 新状态（§1.3） | S3（staging 功能版落地后含其状态） | 未实施 |
-| S7 | 图标 A3 圆弧折角 + A4 清单（CLOSE/EMPTY/OPEN_EXTERNAL）+ 标记同现 + 空态统一（§6.9） | S3 | 未实施 |
-| S8 | CSS 解耦 `css/themes/` + **runtime-files.json CSS 清单登记 + dist 产物断言** + options 单源化 | S5/S6/S7 定稿后 | 未实施 |
-| S9 | B1/B2 + B4/B5 + `/open-all`·`/sort` + `/recent` alias | 无（可并行） | 未实施 |
-| S10 | C1 search-tokens / C2 多词 rank / C3 URL 直开 + `/copy` | 无（可并行） | C2 仅 omnibox 高亮分词，其余未实施 |
-| S11 | E1 standalone（含 `/open`、`?view=` 七视图、runtime-files HTML_PAGES） | 无（可并行） | 未实施 |
-| S12 | D 剩余：velvet 首发 tip + release.md 流程增补 | 无 | announce 主体已上线 |
-| S13 | §6 细节打磨清单 1–10 + perf 对照门（§6.11） | S3 起分批 | 未实施 |
-| S14 | F shots-store.js 商店素材重拍 | S8（视觉终态） | 未实施 |
-| S15 | staging 视觉收敛（§5 契约，若 staging 功能版先发则随 velvet 一片落地；若同期开发则并入 S3–S8 各片） | staging 功能版 | 视 staging 进度 |
+| canvas | （新增）`#f6f8fb` | （新增）`#12141b` | k3 值 `#f6f7f9`/`#141518` 的同亮度蓝染版；比 k3 蓝三倍但仍是「隐形」级 |
+| bg（卡片面） | `#ffffff` → `#fdfeff` | `#1b1c1f` → `#22252d`（含 k3 调亮半档） | 1% 染 |
+| bg-elev | `#ffffff`（顶光，不染） | `#26282c` → `#262a34` | **光方向律**：冷品牌光源在上——light 平面越高越冷越白（elev 纯白 = 最接近光源）；warm 品牌（paper）反之，越低越暖越深 |
+| border/hairline | `rgba(0,0,0,.10)` → `#e3e7ee` | `rgba(255,255,255,.10)` → `rgba(168,199,250,.13)` | dark 发丝 = 亮度边框 + accent 微温（文章「dark 下 0 0 0 1px 从深度边框变亮度边框」律） |
+| bg-hover | `rgba(0,0,0,.05)` → `#eef2f8` | `rgba(255,255,255,.07)` → `rgba(168,199,250,.08)` | **交互态禁平灰 overlay**——hover 即染（文章交互染色律） |
+| bg-selected | `#d3e3fd` **维持** | `#2c3f5e` **维持** | 已是 12-15% temper wash，追认进体系；值类型放开的修平见 §1.6 |
+| fg | `#202124` → `#1e232b` | `#e3e5e8` → `#e5e8f0` | 3-5% 偏温；AA 富余量大 |
+| muted | `#5f6368` → `#5b6472` | `#9aa0a6` → `#99a1b0` | 6-8% 带温灰；AA ≥4.5:1 复测（paper 先例） |
+| 温影 | `rgba(0,0,0,.2)` → `rgba(16,27,48,.20)` | 投影禁用维持（§1.5） | 温影 = 蓝黑；**阴影不许纯黑**（文章带温度的阴影律） |
+| scrollbar | `rgba(95,99,104,.5)` → `rgba(91,100,118,.5)` | `rgba(154,160,166,.5)` → `rgba(150,158,178,.5)` | 与 muted 同源 |
 
-### 7.2 回归门禁
+ink/paper 两列**不进此表**（零改动/微调，参照系地位）；classic 全表纯灰豁免。
 
-- vitest 全量（基线 80 套件 / ~2664 例）+ 新增 `design-system`（token/网格/半径/tabular-nums/focus-visible 清单）、`search-tokens`、`row-alignment`；扩展 `theme`（六主题 token 完备性 + classic 覆盖 + 无裸半径残留）、`palette`（新命令 + `/theme` 列表 + alias）、`fuzzy`/`search-core`（多词 parity + 单词逐字节回归）、`popup`/`panel-behavior`。
-- Docker：smoke 零 console 错误；verify-keyboard 全矩阵（tab 重绘不影响键盘模型；staging 双区域步行）；**verify-scrollbars 全矩阵（卡片化最关键的门）**；diag 视觉矩阵 + classic 态 + **staging 视图态**（badge+active 同现、组头折叠、选择双 rung）。
-- dist：CI harness 断言六主题 CSS 与 standalone.html 在包内（S8/S11）。
-- 截图：shots-themes 补 classic + 卡片对照 + 状态三态 + staging；shots-store 首产（1400×560 strip + 1280×800 promo，ink/paper 必现）。
-- i18n：新增 key 走 `i18n.py` 全流程（基线 en 560 键）；`/open` 视图名复用 tab 键；净增约 24 key（task-1-final §7.3 清单有效，另加 staging alias 若需可复用零新键）。
+### 1.4 语义色：同象限轻推 + 小面积强度管理
 
-### 7.3 风险与回退（承 task-1-final §7.4，刷新）
+- **轻推规则**：danger/warning/success 的 hue 只在**与品牌同温的象限内**轻推 ≤5°（冷品牌：红向品红、绿向青、琥珀偏冷各半档），推后必须过「语义猜色」测试（并排三色，语义仍然秒读）；**不达标即保留现值**——语义清晰 > 色温统一，这是对文章语义染色律的 velvet 式收紧（文章案例是暖品牌；冷品牌语义色轻推空间天然更小，强推会伤红绿可辨性）。light 现值 `#d93025`/`#188038`/`#f9ab00` 的候选微调在 S1 实施时并排定稿，预期改动量 ≤ 一档色相。
+- **subtle 底同温**：语义淡底（blocked 琥珀叠标、dead pill 底等）落在染过的表面上自然同温——这正是「色温流进每一层」的红利：底面染了，语义淡底不再需要各自的粉/黄/绿纯中性版本。
+- **小面积满填纪律**（镜鉴⑨吸收为规则）：accent/语义色**满填**只保留给主动作按钮与语义 pill；徽章类（`.row-badge.current`、tabgroups current 徽章）从满填降为 **`--vbm-accent-subtle` 底 + accent 文字**——「局部强度管理」，让满填重新变稀有、变响亮。S6 状态表复核时按此规则过一遍全部小 pill。
+- **on-color 家族**（`--vbm-danger-fg`/`--vbm-warning-fg`/`--vbm-pill-warning-fg`）：轻推后连带复测 on-color 对的 AA（`--vbm-pill-warning-fg` 的双编码实践维持）。
+
+### 1.5 投影与发丝：`--vbm-elev-*` 的温影形态（k3 §1.1 修订）
+
+k3 的两档投影维持，**值形态升级为「温影 + 发丝合一」**（文章 `0 0 0 1px` 律）：
+
+```css
+/* light（示例值，S1 定稿） */
+--vbm-elev-1: 0 0 0 1px var(--vbm-border), 0 2px 8px var(--vbm-shadow);
+--vbm-elev-2: 0 0 0 1px var(--vbm-border), 0 8px 24px var(--vbm-shadow);
+/* dark：投影禁用维持，elev = 亮度发丝（带 accent 微温） */
+--vbm-elev-1: 0 0 0 1px var(--vbm-border);
+```
+
+- **归属分工**：浮层（菜单/对话框/palette/toast/dropdown）用 elev 档——发丝与温影同一声明、布局零参与、hover 可加深不发 layout；**卡片（静态几何）仍用 `border`** 参与盒模型（k3 §1.5.1 卡片 border 结构不变，只是 border 的色值来自 §1.3 染色）。
+- **温影色禁纯黑**：`--vbm-shadow` 语义改为温影色（light `rgba(16,27,48,.20)` 之类）——「阴影带色温」是文章全部十律里性价比最高的一条，一行 token 全局生效。
+- **ink 磷光 = 温影的发光态**：`--vbm-glow-hover`/`--vbm-glow-focus`（shadow 列表或 none，默认 none）收编 theme-manager 附录 B 立项——ink 的磷光晕从 §1.6.2 的专属写法升格为通用 token，dark 的「shadow→glow」反转律与 ink 共用此槽位。
+
+### 1.6 交互状态染色（k3 §1.7 材质列升级 + 镜鉴收编）
+
+k3 §1.7 状态语言表的几何列全部维持；**材质列按温度重写**，并收编 theme-manager 附录 B 四 token 与镜鉴相关条目：
+
+| 状态 | light/dark（染后） | ink | paper | 新通道 token（默认 none） |
+|---|---|---|---|---|
+| hover | temper wash（`#eef2f8` / `rgba(168,199,250,.08)`） | 同左 + 0.5 档磷光 | 暖灰 wash | `--vbm-row-hover-rule`（::after 光条；paper 朱砂选中条同族槽位） |
+| selected | temper 10-15% wash（现值追认） | 深蓝 + 磷光细边 | 朱砂竖条 + 暖 wash | `--vbm-bg-selected` 值类型放开为任意 background（**17 处 `background:` / 10 处 `background-color:` 分裂在 S1 修平**，k3 未涉及、theme-manager 附录 B 首案） |
+| focus-visible | accent ring（维持） | ring + 磷光晕 | ring（暖） | `--vbm-glow-focus` |
+| 行呼吸 | 无 | 无 | 无 | `--vbm-row-focus-animation`（`filter: brightness` 呼吸——恰是 k3 §6.2 合法属性；默认 none；**强制 reduced-motion 尊重**） |
+
+- **收编裁决——多通道的总量控制**：光条/辉光/呼吸/连接线活性（镜鉴③④⑤）四条全部进 token 词表但**默认 none/whisper**，内置主题只由 ink（磷光）、paper（朱砂条）按性格启用。理由回到色温第二律：**通道可以更丰富，不许更吵**——每个通道都必须灰度可弃（结构不依赖它）、reduced-motion 可弃（前庭安全）。Dracula 的五通道并发证明了上限在哪，velvet 取其纪律不取其音量。
+- **连接线活性**（镜鉴⑤，S6 候选·建议采纳）：folder/staging 组头 hover 时其后代 trunk/tick 连接段增强（2026-08-27 连接线体系的颜色通道，`--staging-line` 家族提浓度）——纯色相通道、几何零动、灰度下退化为现状。这是「悬停点亮我所在子树」的范围感知，深树里的高价值反馈。
+- **reduced-motion 默认拒绝**（镜鉴⑥，采纳为契约）：k3 §1.0 的「全局通收」落为机制——`@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } }` 全局钳制（.01ms 保 transitionend 仍触发），替代 neat.css:3849 的枚举登记制；需要例外的动画走白名单豁免并写明理由。新增动画天然被兜住——默认拒绝比登记制健壮。
+- **`--vbm-fg-folder`**（镜鉴②，S1 词表评审）：默认 = `--vbm-fg` 零变化；ink/paper 可按性格启用（色相快于图标的一级扫描线索）。classic 不启用。
+
+### 1.7 灰度测试门（色温第二律的可执行化）
+
+- **harness**：新增 `diag-grayscale` 探针——注入 `filter: grayscale(1)` 后四主题全视图截图 + 像素采样（diag-411 的 PNG 逐像素扫描先例直接复用），断言：文字三级（fg/muted/accent-subtle 上的文字）灰度下仍可辨、平面三级（canvas/bg/elev）亮度差仍单调、hover/selected 与静态行灰度下仍可分。**任何一个层级灰度下塌掉 = 该 token 的染量越权 = 整片回退。**
+- **theme.test.js 纯数学断言**：每主题①平面亮度阶梯单调（light 升序 / dark 降序）；②fg ≥7:1、muted ≥4.5:1；③classic 中性零色相（豁免契约）。染色值进 token 的同时进测试——「先定灰阶再染色」由 CI 执行，不靠自觉。
+- **设计时规约**：评审任何新颜色，第一问「去饱和后还剩什么」；答不出结构职责的颜色不许进词表。
+
+### 1.8 排印：文字染色与状态字重
+
+- 文字染色（§1.3 fg/muted 行）+ 既有纪律维持（`font: menu` 正文、两档字号、tabular-nums 全数字收口照 k3 §1.4）。
+- **状态字重 500 档**（镜鉴⑦，审慎采纳）：字重是灰度可存活的通道（去饱和后状态仍可读）——这正是它过色温第二律的原因。采纳范围窄化：mark（600 维持）、主按钮（600 维持）之外，**仅** selected 行标题可升 500（S7 排印评审实测宽度后定稿）；**tab 明确不加**（k3 §1.5.2 宽度抖动裁决维持——400→500 同样改字宽）。
+- 排印微调包（letter-spacing 0.1px / line-height 1.35 / antialiased）不采纳：零问题报告、macOS-only 一条记档备忘。
+
+---
+
+## 2. 对 k3 各节的修订清单（🎯 汇总）
+
+| k3 节 | 动作 | 修订内容 |
+|---|---|---|
+| §1.0 总纲 | 补强 | 材质支柱获得操作定义（染不是印，§0.1）；三律入纲（§0.2）；reduced-motion 通收落为默认拒绝机制（§1.6） |
+| §1.1 三平面 | 修订 | 五主题色值表按 §1.3 染色表重定；elev 值形态升级温影+发丝（§1.5）；dark 禁投影维持 |
+| §1.2/1.3 网格半径 | 不变 | 色温零几何参与 |
+| §1.4 排印 | 扩展 | 文字染色 + 字重 500 窄采纳（§1.8） |
+| §1.5 卡片化/tab | 微调 | 卡片 border 结构不变、色值改染；浮层投影改 elev 温影发丝；其余照 k3 |
+| §1.6 主题材质 | 重排 | light/dark 首要材质工作 = 补染（§1.1）；ink 零改动升参照系；paper temper 解耦朱砂；classic 温度豁免入契约 |
+| §1.7 状态语言 | 修订 | 材质列按 §1.6 重写；四 token 收编；连接线活性、fg-folder 入评审 |
+| §1.8 图标 | 确认 | currentColor = 图标色即文字 token（文章图标律我们已达标）；空态图标板用 accent-subtle |
+| §1.9 槽位 | 不变 | 镜鉴①行物件感、⑧滚动条 13px **不进 velvet 裁决**——移交 density 正交设置评审（theme-manager §4.8），与 k3 范围一致 |
+| §1.10–1.12 | 不变 | 选项页/历史区/`/theme` 照 k3（options.css token 副本随 S8 单源化时同染） |
+| §1.13/1.14 | 刷新 | staging 已落地：契约对象 = 真实 DOM（`#staging-list` 等，§0.3）；组头/星标/双区域契约照 k3 §1.14 执行，材质列随 §1.6 |
+| §2–§5（B/C/D/E） | 不变 | 全部裁决维持；基线引用刷新（90 套件/717 键） |
+| §6.2 性能 | 确认 | 色温零几何回流；color-mix 样式解析成本可忽略（25 处在用先例）；perf 门照跑 |
+| §6.3/§7 | 修订 | S1 扩色温链（§3）；门禁增 diag-grayscale + theme 亮度单调断言 |
+
+---
+
+## 3. 切片与门禁修订（k3 §7 的增量）
+
+| Slice | 相对 k3 的变化 |
+|---|---|
+| **S1** | 扩入色温链全量：`--vbm-temper` + 派生式改写五主题中性层 + 温影发丝 elev + `--vbm-accent-subtle` + selected 值类型修平（17/10 分裂）+ glow/rule/animation 三 token 入词表（默认 none）+ theme.test 亮度单调/AA/classic 豁免断言。S1 变重了，理由：色温是其后一切材质的地基，拆开做 = 平行手写中性色的窗口期 |
+| S2 | 三平面迁移与染色同片（k3 原案 + §1.3 染色表） |
+| S3–S7 | 照 k3；材质列一律按 §1.6 染色版执行；S6 增连接线活性候选与 current 徽章降档复核；S7 增字重 500 实测 |
+| S8 | 照 k3（themes/ 六文件；token 块迁移时派生式随之单源化） |
+| S9–S13 | 照 k3 |
+
+**门禁增量**：①`diag-grayscale`（harness，§1.7）；②theme.test 三断言（亮度单调/AA/classic 零色相）；③四主题并排染色对照截图进 shots-themes（染前/染后/灰度三联，裁决染量的依据留档）；④reduced-motion 全局钳制后 `verify-keyboard` 复跑（transitionend 时序敏感性核查）。
+
+**风险表增列**：
 
 | 风险 | 缓解 |
 |---|---|
-| light canvas 灰底观感变化 | `#f6f7f9` 最浅可辨；classic + `/theme` 列表提供纯白出口 |
-| 七 tab + 分段填充在 400px 拥挤 | S3 单独提交实测断点；必要时窄宽下填充内缩 2px（登记豁免） |
-| 卡片化翻红 verify-scrollbars | S3 独立提交，翻红即回退该 slice |
-| dist 漏登记主题文件（线上白坏） | runtime-files.json 登记 + CI 产物断言双保险 |
-| 删 `.tab-indicator` 动摇 4.0.8 修复 | 该修复随删除一并消解（clamp 的对象不复存在）；verify-keyboard 证明键盘导航无感 |
-| staging 与 velvet 并行的样式冲突 | staging 用现行类名，velvet 只动 token/CSS 层；S15 单独切片合并其契约 |
-
-## 8. 附录 · 关键代码定位（4.1.0 HEAD 刷新 task-1-final 附录 B）
-
-| 关注点 | 定位 |
-|---|---|
-| 主题应用 | popup.js（dataset.theme）；token 块 neat.css 头部（S8 迁 `css/themes/`）；store.js theme 合法值 + options.html:52 下拉加 classic |
-| tab 条 / indicator | neat.css:2236-2242（裸条）、:2317（indicator）；view-manager.js:248/:334（indicator 逻辑，S3 删） |
-| 三平面迁移点 | neat.css:164/:490/:2008/:2526（body 底色四处） |
-| options token 副本 | css/options.css（193 处 `--vbm-*`、四套主题块）——S8 收敛 |
-| 右缘揭示体系 | neat.css:3097-3102（`.row-btn` hover/focus）——S4 槽位化 |
-| 选择模式先例 | view-dead / view-dupes / view-tabgroups:1205-1227（+staging 第 4 套） |
-| 命令面板 | palette.js:370-398（17 内建）、:35-38（`/theme` 前缀式，S5 改列表）；palette-commands.js（注册三件套） |
-| fuzzy 多词落点 | fuzzy-core.js:158-170（rank 分词）；omnibox parity search-core.js:70-75 |
-| 构建清单 | scripts/runtime-files.json（CSS/HTML/入口，S8/S11 登记）；package.py:37-46 消费 |
-| announce（已上线） | src/announce.js、docs/announce.json、store.js:96/:151 |
-| staging（功能版） | 见 velvet-feat-staging-glm.md §8 触点清单 |
-| 文档同步落点 | AGENTS.md + docs/agents/{modules,testing,release}.md |
-| 测试基线 | 80 套件 / ~2664 例；harness：verify-keyboard / verify-scrollbars / diag 系列（run.sh Docker 门禁） |
+| 老用户感知「白变灰蓝」 | 染量 1-4% 隐形级 + 灰度门双保险；比 k3 已评估的 canvas 灰底风险更弱；classic = 零温出口 |
+| 语义色轻推伤红绿可辨 | 同象限 ≤5° + 语义猜色测试；不达标保留现值（§1.4） |
+| 染量漂移（后人手改单 token 出温） | 一源派生 + 词表纪律：中性层禁止手写 hex（契约测试扫主题文件里的裸中性色） |
+| color-mix 与用户主题旧 token 的相容 | fallback 链 `var(--vbm-temper, var(--vbm-accent))`；theme-manager 导入校验同步加 temper 白名单 |
 
 ---
 
-*本文为 [`velvet-task-1-final.md`](velvet-task-1-final.md) 在 4.1.0 HEAD 的重审定稿：§0.3 逐项标注已实现/部分/未实现，§1–§4 刷新触点与基线，§5 合入暂存区视觉契约（[`velvet-feat-staging-glm.md`](velvet-feat-staging-glm.md)），§6 新增细节打磨清单，§7 切片与门禁按 dist 构建与七视图现状更新。task-1-final 的设计体系与 F1–F14 裁决全部维持。*
+## 4. 维持声明（k3 未修订部分）
+
+k3 §2（B 系列命令）、§3（C 系列输入栏）、§4（通知）、§5（E1 standalone）、§6.3（F 商店素材）的**全部设计、裁决与触点维持原文有效**，仅基线数字引用按 §0.3 刷新。velvet 目标版本维持待定（staging 已占 4.1.1，velvet 以发布时为准）。
+
+---
+
+## 5. 附录
+
+### A. 色温 token 总表（k3 附录 A 的增量行）
+
+| token | 值 | 说明 |
+|---|---|---|
+| `--vbm-temper` | 每主题一个颜色（classic 缺省） | 色温母色；fallback = accent；Tier 1 词表 |
+| `--vbm-accent-subtle` | `color-mix(in srgb, var(--vbm-accent) 8%, var(--vbm-bg))` | 统一淡底档：「新 N」pill/mark 底/空态图标板/徽章降档（§1.4）；现有 25 处 color-mix 中的 accent 淡底模式收敛于此 |
+| `--vbm-shadow`（语义升级） | 温影色（禁纯黑） | elev 档的影色源 |
+| `--vbm-elev-1/2` | 温影 + `0 0 0 1px` 发丝合一 | 浮层专属；dark = 仅亮度发丝 |
+| `--vbm-glow-hover` / `--vbm-glow-focus` | shadow 列表或 none | ink 磷光升格；theme-manager 附录 B 首案 |
+| `--vbm-row-hover-rule` | none 或颜色 | hover 光条；paper 朱砂条同族 |
+| `--vbm-row-focus-animation` | none 或动画 | filter:brightness 呼吸；强制 reduced-motion |
+| `--vbm-fg-folder` | 默认 = `--vbm-fg` | 零变化默认；主题性格 opt-in |
+
+### B. 4.1.1 行号锚（替换 k3 附录 B 的漂移行号）
+
+token 块 neat.css:29-63（:root）/ :65-89（dark）/ :91-117（auto）/ :123-147（ink）/ :152+（paper）；`.tab-indicator` **3814**（S3 删）；reduced-motion **3849**（S1 改全局钳制）；行静态透明平面 **554-577**（镜鉴①证据）；scrollbar **2998**；staging 连接线/组头 **1775-2089**；options/favicons token 副本 options.css:1 / favicons.css:1（S8 消）。其余见 theme-manager 附录 A（4.1.1 逐条实核）。
+
+### C. 与 theme-manager 的接口
+
+①P1 四 token（glow×2/rule/animation + selected 值类型）由本文 §1.5/§1.6 **正式收编**——theme-manager §4.9 的 P1 行就此闭环；②`--vbm-temper` 进 Tier 1 词表 + theme-pkg.js 白名单；③作者指南（theme-manager §4.7）增「色温」一节：temper 用法、派生式范例、「灰阶先于色相」义务、语义色不侵蚀条款；④镜鉴①⑧（行物件感/滚动条）的 density 评审结论若采纳「材质档」，回来修订本文 §1.6 而非绕开。
+
+---
+
+*本文（2026-08-30）= velvet-task-2-k3 的色温融合层：k3 管几何与秩序，本文管温度与染料；丝是染成的，不是印花的。实施从 S1 起（色温链与 token 铺底同片），灰度测试门与并排三联截图是染量的唯一裁决机制。*
