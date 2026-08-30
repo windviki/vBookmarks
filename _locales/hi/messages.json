@@ -190,6 +190,12 @@
   "customCssEnabled": {
     "message": "सक्षम करें"
   },
+  "customCssMoveLeft": {
+    "message": "बाएँ ले जाएँ (पहले लागू)"
+  },
+  "customCssMoveRight": {
+    "message": "दाएँ ले जाएँ (बाद में लागू)"
+  },
   "customCssName": {
     "message": "नाम"
   },

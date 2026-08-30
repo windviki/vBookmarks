@@ -190,6 +190,12 @@
   "customCssEnabled": {
     "message": "Omogući"
   },
+  "customCssMoveLeft": {
+    "message": "Pomakni lijevo (primijenjeno ranije)"
+  },
+  "customCssMoveRight": {
+    "message": "Pomakni desno (primijenjeno kasnije)"
+  },
   "customCssName": {
     "message": "Naziv"
   },

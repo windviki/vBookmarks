@@ -190,6 +190,12 @@
   "customCssEnabled": {
     "message": "Aktiver"
   },
+  "customCssMoveLeft": {
+    "message": "Flytt til venstre (brukt tidligere)"
+  },
+  "customCssMoveRight": {
+    "message": "Flytt til høyre (brukt senere)"
+  },
   "customCssName": {
     "message": "Navn"
   },

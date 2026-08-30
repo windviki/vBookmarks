@@ -190,6 +190,12 @@
   "customCssEnabled": {
     "message": "تفعيل"
   },
+  "customCssMoveLeft": {
+    "message": "تحريك لليسار (يُطبَّق مبكرًا)"
+  },
+  "customCssMoveRight": {
+    "message": "تحريك لليمين (يُطبَّق لاحقًا)"
+  },
   "customCssName": {
     "message": "الاسم"
   },

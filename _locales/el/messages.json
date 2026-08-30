@@ -190,6 +190,12 @@
   "customCssEnabled": {
     "message": "Ενεργοποίηση"
   },
+  "customCssMoveLeft": {
+    "message": "Μετακίνηση αριστερά (εφαρμόζεται νωρίτερα)"
+  },
+  "customCssMoveRight": {
+    "message": "Μετακίνηση δεξιά (εφαρμόζεται αργότερα)"
+  },
   "customCssName": {
     "message": "Όνομα"
   },

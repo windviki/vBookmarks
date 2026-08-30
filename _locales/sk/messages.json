@@ -190,6 +190,12 @@
   "customCssEnabled": {
     "message": "Zapnúť"
   },
+  "customCssMoveLeft": {
+    "message": "Presunúť doľava (aplikované skôr)"
+  },
+  "customCssMoveRight": {
+    "message": "Presunúť doprava (aplikované neskôr)"
+  },
   "customCssName": {
     "message": "Názov"
   },

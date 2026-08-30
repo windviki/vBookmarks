@@ -7,23 +7,34 @@
 <script src="/src/i18n-live.js"></script>
 <script type="module" src="/src/custom-css.js"></script>
 <div id="custom-css-page">
-<h1 id="custom-css-title"></h1>
+<header class="custom-css-head">
+    <h1 id="custom-css-title"></h1>
+    <a id="custom-css-back" href="/pages/options.html"></a>
+</header>
 <p id="custom-css-desc" class="custom-css-desc"></p>
-<p id="custom-css-order-note" class="custom-css-desc"></p>
-<div class="custom-css-toolbar">
+<div class="custom-css-tabs-row">
+    <div id="custom-css-tabs" role="tablist" aria-label="Custom CSS styles"></div>
     <button id="custom-css-new" type="button"></button>
+    <span class="custom-css-order-cluster">
+        <button id="custom-css-move-left" type="button" class="custom-css-move"></button>
+        <button id="custom-css-move-right" type="button" class="custom-css-move"></button>
+    </span>
 </div>
-<ul id="custom-css-list"></ul>
-<p id="custom-css-empty" class="custom-css-desc"></p>
+<p id="custom-css-empty" class="custom-css-desc" hidden></p>
 <div id="custom-css-editor" hidden>
-    <div class="custom-css-meta">
+    <div class="custom-css-meta-row">
+        <label class="custom-css-enable">
+            <input id="custom-css-enabled" type="checkbox">
+            <span id="custom-css-enabled-text"></span>
+        </label>
         <input id="custom-css-name" type="text">
-        <input id="custom-css-desc-input" type="text">
+        <button id="custom-css-del" type="button" class="custom-css-del"></button>
     </div>
+    <input id="custom-css-desc-input" type="text">
     <textarea id="custom-css-css" spellcheck="false"></textarea>
 </div>
 <p class="custom-css-status-row">
+    <span id="custom-css-order-note" class="custom-css-desc"></span>
     <span id="custom-css-status" class="custom-css-status" aria-live="polite"></span>
-    <a id="custom-css-back" href="/pages/options.html"></a>
 </p>
 </div>

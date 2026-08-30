@@ -190,6 +190,12 @@
   "customCssEnabled": {
     "message": "Etkinleştir"
   },
+  "customCssMoveLeft": {
+    "message": "Sola taşı (daha önce uygulanır)"
+  },
+  "customCssMoveRight": {
+    "message": "Sağa taşı (daha sonra uygulanır)"
+  },
   "customCssName": {
     "message": "Ad"
   },

@@ -325,42 +325,108 @@ const ck = (name, ok, extra) => {
         ck('N1 options: editor LINK present, inline textarea gone',
             optRow.link && !optRow.textarea && optRow.linkText.length > 0, JSON.stringify(optRow));
 
-        // N2: the standalone page — legacy migration + live editing
+        // N2: the standalone page — legacy migration + live editing (4.1.1
+        // rework: TAB workbench — one .custom-css-tab per style, the enable
+        // checkbox lives in the editor header)
         await page.evaluate(() => {
             chrome.storage.local.set({ userstyle: 'body { color: red; }' });
             chrome.storage.local.remove('userstyles');
         });
         const cssPage = await browser.newPage();
+        await cssPage.setViewport({ width: 420, height: 640 });
         await cssPage.goto('chrome-extension://' + extId + '/pages/custom-css.html', { waitUntil: 'load' });
         await sleep(1000);
         const migrated = await cssPage.evaluate(() => ({
-            items: document.querySelectorAll('#custom-css-list .custom-css-item').length,
+            tabs: document.querySelectorAll('#custom-css-tabs .custom-css-tab').length,
+            active: document.querySelectorAll('#custom-css-tabs .custom-css-tab.active').length,
             css: (window.__vbmCustomCss && window.__vbmCustomCss.editor.get()) || ''
         }));
-        ck('N2 custom-css page: legacy userstyle migrated into one style',
-            migrated.items === 1 && migrated.css.includes('color: red'), JSON.stringify(migrated));
+        ck('N2 custom-css page: legacy userstyle migrated into one selected tab',
+            migrated.tabs === 1 && migrated.active === 1 && migrated.css.includes('color: red'),
+            JSON.stringify(migrated));
 
-        // N3: create a second style, type CSS, toggle the first off — the
-        // materialized userstyle must equal the enabled concatenation
-        const mat = await cssPage.evaluate(async () => {
+        // N3: create a second style, type CSS — two tabs, second selected
+        await cssPage.evaluate(async () => {
             document.getElementById('custom-css-new').click();
             await new Promise(r => setTimeout(r, 200));
-            // drive whichever editor is live (CodeMirror hides the textarea)
             window.__vbmCustomCss.editor.set('body { color: blue; }');
-            // the CodeMirror path persists via onChange; the native path via change
             const ev = document.getElementById('custom-css-css');
             ev.dispatchEvent(new Event('change', { bubbles: true }));
             await new Promise(r => setTimeout(r, 300));
-            const first = document.querySelector('.custom-css-item input[type=checkbox]');
-            first.checked = false;
-            first.dispatchEvent(new Event('change', { bubbles: true }));
+        });
+
+        // N4 (user report): the enable checkbox unchecks cleanly — the first
+        // style drops out of the materialized cascade (the first cut's
+        // label-in-row checkbox raced its own re-render and could swallow it)
+        const uncheck = await cssPage.evaluate(async () => {
+            // switch back to the first tab, then uncheck enable
+            document.querySelector('#custom-css-tabs .custom-css-tab').click();
+            await new Promise(r => setTimeout(r, 200));
+            const cb = document.getElementById('custom-css-enabled');
+            cb.checked = false;
+            cb.dispatchEvent(new Event('change', { bubbles: true }));
             await new Promise(r => setTimeout(r, 300));
             return await new Promise(res => chrome.storage.local.get(['userstyles', 'userstyle'], res));
         });
-        const stylesNow = JSON.parse(mat.userstyles || '[]');
-        ck('N3 two styles persisted; materialization = enabled-only concatenation',
-            stylesNow.length === 2 && mat.userstyle === 'body { color: blue; }',
-            JSON.stringify({ n: stylesNow.length, eff: mat.userstyle }));
+        const stylesNow = JSON.parse(uncheck.userstyles || '[]');
+        ck('N4 enable checkbox unchecked: first style disabled, materialization = enabled-only',
+            stylesNow.length === 2 && stylesNow[0].enabled === false && uncheck.userstyle === 'body { color: blue; }',
+            JSON.stringify({ n: stylesNow.length, enabled: stylesNow.map(s => s.enabled), eff: uncheck.userstyle }));
+
+        // N5 (user report): layout — full-width inputs, editor fills the page
+        const layout = await cssPage.evaluate(() => {
+            const page = document.getElementById('custom-css-page');
+            const box = el => { const r = el.getBoundingClientRect(); return { w: Math.round(r.width), h: Math.round(r.height) }; };
+            const name = box(document.getElementById('custom-css-name'));
+            const desc = box(document.getElementById('custom-css-desc-input'));
+            const editor = document.querySelector('#custom-css-page .CodeMirror') || document.getElementById('custom-css-css');
+            const ed = box(editor);
+            const pageW = page.getBoundingClientRect().width - 40; // 20px page padding both sides
+            return {
+                nameW: name.w, descW: desc.w, edW: ed.w, edH: ed.h, pageW: Math.round(pageW),
+                // header row = enable label + name + delete only (◀▶ moved to
+                // the tab strip) — the name gets everything beyond that
+                nameFull: name.w >= pageW - 200,
+                descFull: Math.abs(desc.w - pageW) <= 2,
+                edFull: Math.abs(ed.w - pageW) <= 2,
+                edTall: ed.h >= 240 // 640px viewport minus header/tabs/meta/footer
+            };
+        });
+        ck('N5 layout: name/description/CSS editor full width, editor fills the viewport',
+            layout.nameFull && layout.descFull && layout.edFull && layout.edTall,
+            JSON.stringify(layout));
+
+        // N6: tab switching swaps the editor content; ◀/▶ reorder the cascade
+        const tabflow = await cssPage.evaluate(async () => {
+            const out = {};
+            const tabs = () => [...document.querySelectorAll('#custom-css-tabs .custom-css-tab')];
+            // re-enable style 1, then check cascade = tab order
+            const cb = document.getElementById('custom-css-enabled');
+            cb.checked = true;
+            cb.dispatchEvent(new Event('change', { bubbles: true }));
+            await new Promise(r => setTimeout(r, 200));
+            out.before = (await new Promise(res => chrome.storage.local.get('userstyle', res))).userstyle;
+            // move the first tab right → order flips → later tab wins
+            document.getElementById('custom-css-move-right').click();
+            await new Promise(r => setTimeout(r, 200));
+            out.order = tabs().map(t => t.textContent.trim());
+            out.after = (await new Promise(res => chrome.storage.local.get('userstyle', res))).userstyle;
+            // click the (new) first tab → editor shows its css
+            tabs()[0].click();
+            await new Promise(r => setTimeout(r, 200));
+            out.editorCss = window.__vbmCustomCss.editor.get();
+            return out;
+        });
+        ck('N6 tab flow: ◀▶ reorder flips the cascade; tab click swaps the editor',
+            tabflow.before === 'body { color: red; }\n\nbody { color: blue; }'
+            && tabflow.after === 'body { color: blue; }\n\nbody { color: red; }'
+            && tabflow.editorCss.includes('color: blue'),
+            JSON.stringify(tabflow));
+
+        // visual capture for review (rerun.sh copies /tmp/shots → tmp/shots)
+        require('fs').mkdirSync('/tmp/shots', { recursive: true });
+        await cssPage.screenshot({ path: '/tmp/shots/custom-css-workbench.png' });
+
         await optPage.close();
         await cssPage.close();
         // restore a clean css state for any later runs

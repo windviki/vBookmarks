@@ -190,6 +190,12 @@
   "customCssEnabled": {
     "message": "Aktifkan"
   },
+  "customCssMoveLeft": {
+    "message": "Geser kiri (diterapkan lebih awal)"
+  },
+  "customCssMoveRight": {
+    "message": "Geser kanan (diterapkan kemudian)"
+  },
   "customCssName": {
     "message": "Nama"
   },

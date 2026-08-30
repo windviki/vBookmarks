@@ -190,6 +190,12 @@
   "customCssEnabled": {
     "message": "Увімкнути"
   },
+  "customCssMoveLeft": {
+    "message": "Перемістити ліворуч (застосовується раніше)"
+  },
+  "customCssMoveRight": {
+    "message": "Перемістити праворуч (застосовується пізніше)"
+  },
   "customCssName": {
     "message": "Назва"
   },

@@ -1027,12 +1027,28 @@ button:focus-visible{
 }
 
 /* ===== 4.1.1 standalone custom-CSS editor page (pages/custom-css.html) =====
-   The options page's inline textarea is gone — the editor gets a full-page
-   multi-style workbench: heading + two description lines, a style list
-   (enable checkbox + name + description + delete per row, click to select),
-   a new-style toolbar, and the selected style's editor (name/description
-   inputs + a monospace CSS area that fills the remaining viewport). Shares
-   this stylesheet for the theme tokens and base typography. */
+   The options page's inline textarea is gone — the editor is a full-page TAB
+   workbench: one tab per style (click = select; the dot marks enabled), a
+   trailing ＋ to mint a style, and the active style's editor below — enable
+   checkbox + full-width name + ◀/▶ cascade reorder + delete (danger,
+   rightmost) on the first row, a full-width description input, then the
+   monospace CSS editor filling the remaining viewport. No interactive
+   control nests inside another (the first cut's label-in-row checkbox raced
+   its own re-render). Shares this stylesheet for the theme tokens. */
+/* the workbench is an exactly-one-viewport app, not a scrolling form: drop
+   the options body's 2em padding/shadow so 100vh truly fits, and re-enable
+   text selection inside the editors (the options body disables it) */
+body:has(#custom-css-page) {
+    padding: 0;
+    overflow: hidden;
+    box-shadow: none;
+}
+#custom-css-page input,
+#custom-css-page textarea,
+#custom-css-page .CodeMirror {
+    -webkit-user-select: text;
+    user-select: text;
+}
 #custom-css-page {
     display: flex;
     flex-direction: column;
@@ -1045,71 +1061,105 @@ button:focus-visible{
     font-size: 18px;
     margin: 0;
 }
+.custom-css-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
 .custom-css-desc {
     margin: 0;
     opacity: 0.75;
     font-size: 13px;
 }
-#custom-css-order-note {
-    opacity: 0.6;
-    margin-top: -4px;
-}
-.custom-css-toolbar {
+/* tab strip: ＋ sits right after the last tab, like a browser tab bar */
+.custom-css-tabs-row {
     display: flex;
-}
-#custom-css-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    max-height: 32vh;
-    overflow: auto;
-}
-.custom-css-item {
-    display: flex;
-    align-items: center;
+    align-items: flex-end;
     gap: 8px;
-    padding: 6px 10px;
-    border: 1px solid var(--vbm-border, #ccc);
-    border-radius: 6px;
-    cursor: pointer;
+    border-bottom: 1px solid var(--vbm-border);
+    padding-bottom: 0;
 }
-.custom-css-item.selected {
-    border-color: var(--vbm-accent, #4a90d9);
-}
-.custom-css-item > label {
+#custom-css-tabs {
     display: flex;
-    align-items: center;
-    gap: 8px;
+    align-items: flex-end;
+    gap: 2px;
+    overflow-x: auto;
+    min-width: 0;
     flex: 1;
-    min-width: 0;
+}
+.custom-css-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    line-height: 1;
+    max-width: 180px;
+    padding: 7px 12px;
+    border: none;
+    border-bottom: 2px solid transparent;
+    border-radius: 6px 6px 0 0;
+    background: transparent;
+    color: var(--vbm-fg);
+    opacity: 0.7;
     cursor: pointer;
-    margin: 0;
+    margin-bottom: -1px;
 }
-.custom-css-item-text {
-    display: flex;
-    flex-direction: column;
-    min-width: 0;
+.custom-css-tab:hover {
+    background: var(--vbm-bg-hover);
 }
-.custom-css-item-name {
-    font-weight: 600;
-    font-size: 13px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+.custom-css-tab.active {
+    opacity: 1;
+    border-bottom-color: var(--vbm-accent);
+    color: var(--vbm-fg);
 }
-.custom-css-item-desc {
-    font-size: 12px;
-    opacity: 0.65;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+/* disabled style: the tab stays clickable (select to edit) but reads muted */
+.custom-css-tab.off {
+    opacity: 0.45;
 }
-.custom-css-del {
+.custom-css-tab.active.off {
+    opacity: 0.7;
+}
+.custom-css-tab-dot {
     flex: none;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--vbm-accent);
 }
+.custom-css-tab.off .custom-css-tab-dot {
+    background: transparent;
+    box-shadow: inset 0 0 0 1.5px var(--vbm-border);
+}
+.custom-css-tab-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 13px;
+}
+#custom-css-new {
+    flex: none;
+    min-width: 32px;
+    padding: .25em .6em;
+    margin-bottom: 4px;
+}
+/* ◀/▶ reorder the ACTIVE tab within the cascade — strip operations, so they
+   live on the tab strip's right end (one right axis), not in the editor row */
+.custom-css-order-cluster {
+    display: inline-flex;
+    gap: 4px;
+    flex: none;
+    margin-inline-start: auto;
+    margin-bottom: 4px;
+}
+.custom-css-move {
+    min-width: 26px;
+    padding: .2em .4em;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+/* editor card: header row + description + the CSS editor eating the rest */
 #custom-css-editor {
     display: flex;
     flex-direction: column;
@@ -1120,12 +1170,32 @@ button:focus-visible{
 #custom-css-editor[hidden] {
     display: none;
 }
-.custom-css-meta {
+.custom-css-meta-row {
     display: flex;
+    align-items: center;
     gap: 8px;
 }
-.custom-css-meta input {
+.custom-css-enable {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    flex: none;
+    margin: 0;
+    cursor: pointer;
+    font-size: 13px;
+    white-space: nowrap;
+}
+#custom-css-name {
     flex: 1;
+    min-width: 0;
+}
+#custom-css-desc-input {
+    width: 100%;
+    box-sizing: border-box;
+}
+.custom-css-del {
+    flex: none;
+    color: var(--vbm-danger);
 }
 #custom-css-css {
     flex: 1;
@@ -1141,19 +1211,23 @@ button:focus-visible{
 #custom-css-page .CodeMirror {
     flex: 1;
     height: auto;
+    box-sizing: border-box;
     border: 1px solid var(--vbm-border, #ccc);
 }
 .custom-css-status-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 12px;
     margin: 0;
     font-size: 12.5px;
 }
 .custom-css-status {
     opacity: 0;
     transition: opacity 0.2s;
+    color: var(--vbm-accent);
+    white-space: nowrap;
 }
 .custom-css-status:not(:empty) {
-    opacity: 0.85;
+    opacity: 0.95;
 }

@@ -4,11 +4,20 @@
  * whole options layout — so the editor moved to its own page
  * (pages/custom-css.html), linked from the options page's custom-styles row.
  *
- * 4.1.1 final shape (maintainer call): MULTIPLE named styles, each with a
- * description and an enable checkbox. Enabled styles apply IN LIST ORDER as
+ * 4.1.1 shape (maintainer call): MULTIPLE named styles, each with a
+ * description and an enable switch. Enabled styles apply IN TAB ORDER as
  * plain CSS cascade — a later enabled style overrides earlier ones — so
  * "conflict resolution" is the cascade itself (deterministic, explainable,
  * and composable: a base theme + a tweak patch stack cleanly).
+ *
+ * 4.1.1 rework (maintainer feedback): the first cut rendered the styles as a
+ * selectable list above the editor — cramped layout, half-width inputs, and a
+ * label-in-clickable-row checkbox whose activation raced the row re-render
+ * (toggling enable via the label text could swallow the click). The rework is
+ * a TAB workbench: one tab per style (enable shown as a dot on the tab, click
+ * = select only), full-width name/description inputs, ◀/▶ buttons that
+ * reorder the cascade, and the enable checkbox living in the editor header —
+ * no interactive control is ever nested inside another one.
  *
  * Storage: `userstyles` (local, JSON array of {id,name,desc,css,enabled}) is
  * the source of truth; every change ALSO materializes the concatenation of
@@ -61,6 +70,25 @@ export const materialize = styles =>
         .map(s => String(s.css))
         .join('\n\n');
 
+// pure reorder for the cascade: moves the style one slot along the list,
+// returns null when the move would fall out of bounds (button disabled state)
+export const moveStyle = (styles, id, delta) => {
+    const i = (styles || []).findIndex(s => s.id === id);
+    const j = i + delta;
+    if (i < 0 || j < 0 || j >= styles.length)
+        return null;
+    const out = styles.slice();
+    [out[i], out[j]] = [out[j], out[i]];
+    return out;
+};
+
+// after deleting styles[index], which style takes over the editor: the one
+// that slid into its slot, else the previous tail, else nothing
+export const pickNeighborId = (styles, index) =>
+    (styles.length === 0)
+        ? null
+        : (styles[Math.min(index, styles.length - 1)] || {}).id || null;
+
 export function initCustomCss(ctx = {}) {
     const doc = ctx.document || (typeof document !== 'undefined' ? document : null);
     const store = ctx.store || (typeof window !== 'undefined' ? window.store : null);
@@ -76,9 +104,28 @@ export function initCustomCss(ctx = {}) {
     setText('custom-css-order-note', 'customCssOrderNote');
     setText('custom-css-back', 'customCssBackToOptions');
     setText('custom-css-empty', 'customCssEmpty');
+    setText('custom-css-enabled-text', 'customCssEnabled');
     const newBtn = $('custom-css-new');
-    if (newBtn)
-        newBtn.textContent = _m('customCssNewStyle');
+    if (newBtn) {
+        newBtn.textContent = '+';
+        newBtn.title = _m('customCssNewStyle') || 'New style';
+        newBtn.setAttribute('aria-label', _m('customCssNewStyle') || 'New style');
+    }
+    const delBtn = $('custom-css-del');
+    if (delBtn)
+        delBtn.textContent = _m('customCssDelete') || 'Delete';
+    const moveL = $('custom-css-move-left');
+    const moveR = $('custom-css-move-right');
+    if (moveL) {
+        moveL.textContent = '◀';
+        moveL.title = _m('customCssMoveLeft') || 'Move left (applied earlier)';
+        moveL.setAttribute('aria-label', moveL.title);
+    }
+    if (moveR) {
+        moveR.textContent = '▶';
+        moveR.title = _m('customCssMoveRight') || 'Move right (applied later)';
+        moveR.setAttribute('aria-label', moveR.title);
+    }
     if (doc.title !== undefined)
         doc.title = _m('customCssTitle') || 'Custom CSS';
     if (doc.body && doc.body.dataset)
@@ -119,71 +166,75 @@ export function initCustomCss(ctx = {}) {
             flashSaved();
     }
 
-    // ---- list ----
-    const listEl = $('custom-css-list');
+    const selected = () => styles.find(s => s.id === selectedId) || null;
+    const selectedIndex = () => styles.findIndex(s => s.id === selectedId);
+    // tab lookup that tolerates DOM doubles without querySelector (tests)
+    const qTab = id => (tabsEl && typeof tabsEl.querySelector === 'function')
+        ? tabsEl.querySelector(`[data-style-id="${id}"]`)
+        : null;
+
+    // ---- tabs ----
+    const tabsEl = $('custom-css-tabs');
     const emptyEl = $('custom-css-empty');
-    function renderList() {
-        if (!listEl)
+    function renderTabs() {
+        if (!tabsEl)
             return;
-        listEl.innerHTML = '';
+        tabsEl.innerHTML = '';
         if (emptyEl)
             emptyEl.hidden = styles.length > 0;
         for (const st of styles) {
-            const li = doc.createElement('li');
-            li.className = 'custom-css-item' + (st.id === selectedId ? ' selected' : '');
-            li.dataset.styleId = st.id;
+            const tab = doc.createElement('button');
+            tab.type = 'button';
+            tab.className = 'custom-css-tab' + (st.id === selectedId ? ' active' : '')
+                + (st.enabled ? '' : ' off');
+            tab.dataset.styleId = st.id;
+            tab.setAttribute('role', 'tab');
+            tab.setAttribute('aria-selected', st.id === selectedId ? 'true' : 'false');
 
-            const label = doc.createElement('label');
-            const cb = doc.createElement('input');
-            cb.type = 'checkbox';
-            cb.checked = st.enabled;
-            cb.setAttribute('aria-label', _m('customCssEnabled') || 'Enable');
-            cb.addEventListener('click', e => e.stopPropagation());
-            cb.addEventListener('change', () => {
-                st.enabled = cb.checked;
-                persist();
-            });
-            label.appendChild(cb);
+            const dot = doc.createElement('span');
+            dot.className = 'custom-css-tab-dot';
+            dot.title = _m('customCssEnabled') || 'Enable';
+            tab.appendChild(dot);
 
             const nameSpan = doc.createElement('span');
-            nameSpan.className = 'custom-css-item-name';
+            nameSpan.className = 'custom-css-tab-name';
             nameSpan.textContent = st.name || (_m('customCssUntitled') || 'My style');
-            const descSpan = doc.createElement('span');
-            descSpan.className = 'custom-css-item-desc';
-            descSpan.textContent = st.desc || '';
-            const textWrap = doc.createElement('span');
-            textWrap.className = 'custom-css-item-text';
-            textWrap.appendChild(nameSpan);
-            if (st.desc)
-                textWrap.appendChild(descSpan);
-            label.appendChild(textWrap);
-            li.appendChild(label);
+            tab.appendChild(nameSpan);
 
-            const del = doc.createElement('button');
-            del.type = 'button';
-            del.className = 'custom-css-del';
-            del.textContent = _m('customCssDelete') || 'Delete';
-            del.addEventListener('click', e => {
-                e.stopPropagation();
-                if (!(typeof confirm === 'function' ? confirm(_m('customCssDeleteConfirm') || 'Delete this style?') : true))
-                    return;
-                styles = styles.filter(x => x.id !== st.id);
-                if (selectedId === st.id)
-                    selectedId = styles.length ? styles[0].id : null;
-                persist();
-                renderList();
-                renderEditor();
+            tab.addEventListener('click', () => {
+                if (selectedId !== st.id)
+                    select(st.id);
             });
-            li.appendChild(del);
-
-            // selecting a row loads it into the editor
-            li.addEventListener('click', () => {
-                selectedId = st.id;
-                renderList();
-                renderEditor();
-            });
-            listEl.appendChild(li);
+            tabsEl.appendChild(tab);
         }
+    }
+
+    // arrow-key tab navigation (the tab strip is one tablist)
+    if (tabsEl) {
+        tabsEl.addEventListener('keydown', e => {
+            const delta = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1
+                : e.key === 'Home' ? -Infinity : e.key === 'End' ? Infinity : 0;
+            if (!delta || !styles.length)
+                return;
+            e.preventDefault();
+            let i = selectedIndex();
+            if (delta === -Infinity)
+                i = 0;
+            else if (delta === Infinity)
+                i = styles.length - 1;
+            else
+                i = Math.min(styles.length - 1, Math.max(0, i + delta));
+            select(styles[i].id);
+            const btn = qTab(styles[i].id);
+            if (btn && btn.focus)
+                btn.focus();
+        });
+    }
+
+    function select(id) {
+        selectedId = id;
+        renderTabs();
+        renderEditor();
     }
 
     // ---- editor ----
@@ -191,12 +242,14 @@ export function initCustomCss(ctx = {}) {
     const nameInput = $('custom-css-name');
     const descInput = $('custom-css-desc-input');
     const cssArea = $('custom-css-css');
-    const selected = () => styles.find(s => s.id === selectedId) || null;
+    const enableCb = $('custom-css-enabled');
 
     let cm = null;
     if (typeof window !== 'undefined' && window.CodeMirror && cssArea) {
         cm = window.CodeMirror.fromTextArea(cssArea, {
             onChange: c => {
+                if (editorSync)
+                    return;
                 const st = selected();
                 if (st) {
                     st.css = c.getValue();
@@ -211,6 +264,7 @@ export function initCustomCss(ctx = {}) {
         const st = selected();
         if (editorEl)
             editorEl.hidden = !st;
+        syncHeaderButtons(st);
         if (!st)
             return;
         editorSync = true;
@@ -222,6 +276,8 @@ export function initCustomCss(ctx = {}) {
             descInput.value = st.desc;
             descInput.placeholder = _m('customCssDescLabel') || 'Description';
         }
+        if (enableCb)
+            enableCb.checked = st.enabled;
         if (cm)
             cm.setValue(st.css);
         else if (cssArea)
@@ -229,13 +285,36 @@ export function initCustomCss(ctx = {}) {
         editorSync = false;
     }
 
+    function syncHeaderButtons(st) {
+        const i = st ? styles.indexOf(st) : -1;
+        if (moveL)
+            moveL.disabled = i <= 0;
+        if (moveR)
+            moveR.disabled = i < 0 || i >= styles.length - 1;
+    }
+
+    if (enableCb)
+        enableCb.addEventListener('change', () => {
+            const st = selected();
+            if (st) {
+                st.enabled = enableCb.checked;
+                persist();
+                renderTabs();
+            }
+        });
+
     if (nameInput)
         nameInput.addEventListener('input', () => {
             const st = selected();
             if (st && !editorSync) {
                 st.name = nameInput.value;
                 persist();
-                renderList();
+                // update the active tab label in place — no re-render while typing
+                const span = qTab(st.id);
+                const nameEl = span && span.querySelector
+                    ? span.querySelector('.custom-css-tab-name') : null;
+                if (nameEl)
+                    nameEl.textContent = st.name || (_m('customCssUntitled') || 'My style');
             }
         });
     if (descInput)
@@ -255,6 +334,41 @@ export function initCustomCss(ctx = {}) {
             }
         });
 
+    if (moveL)
+        moveL.addEventListener('click', () => {
+            const next = moveStyle(styles, selectedId, -1);
+            if (next) {
+                styles = next;
+                persist();
+                renderTabs();
+                syncHeaderButtons(selected());
+            }
+        });
+    if (moveR)
+        moveR.addEventListener('click', () => {
+            const next = moveStyle(styles, selectedId, 1);
+            if (next) {
+                styles = next;
+                persist();
+                renderTabs();
+                syncHeaderButtons(selected());
+            }
+        });
+
+    if (delBtn)
+        delBtn.addEventListener('click', () => {
+            const i = selectedIndex();
+            if (i < 0)
+                return;
+            if (!(typeof confirm === 'function' ? confirm(_m('customCssDeleteConfirm') || 'Delete this style?') : true))
+                return;
+            styles = styles.filter(x => x.id !== selectedId);
+            selectedId = pickNeighborId(styles, i);
+            persist();
+            renderTabs();
+            renderEditor();
+        });
+
     if (newBtn)
         newBtn.addEventListener('click', () => {
             const st = normEntry({
@@ -265,18 +379,19 @@ export function initCustomCss(ctx = {}) {
             styles.push(st);
             selectedId = st.id;
             persist();
-            renderList();
+            renderTabs();
             renderEditor();
             if (nameInput)
                 nameInput.focus();
         });
 
-    renderList();
+    renderTabs();
     renderEditor();
     return {
         get styles() { return styles; },
         get selectedId() { return selectedId; },
         persist,
+        select,
         // editor bridge: reads/writes whichever editor is live (CodeMirror
         // hides the native textarea, so probes/tools must go through this)
         editor: {

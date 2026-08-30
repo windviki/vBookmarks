@@ -190,6 +190,12 @@
   "customCssEnabled": {
     "message": "Luba"
   },
+  "customCssMoveLeft": {
+    "message": "Liiguta vasakule (rakendatud varem)"
+  },
+  "customCssMoveRight": {
+    "message": "Liiguta paremale (rakendatud hiljem)"
+  },
   "customCssName": {
     "message": "Nimi"
   },

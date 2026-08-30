@@ -190,6 +190,12 @@
   "customCssEnabled": {
     "message": "Ota käyttöön"
   },
+  "customCssMoveLeft": {
+    "message": "Siirrä vasemmalle (sovellettu aiemmin)"
+  },
+  "customCssMoveRight": {
+    "message": "Siirrä oikealle (sovellettu myöhemmin)"
+  },
   "customCssName": {
     "message": "Nimi"
   },

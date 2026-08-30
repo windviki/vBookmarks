@@ -190,6 +190,12 @@
   "customCssEnabled": {
     "message": "Bật"
   },
+  "customCssMoveLeft": {
+    "message": "Di chuyển sang trái (áp dụng trước)"
+  },
+  "customCssMoveRight": {
+    "message": "Di chuyển sang phải (áp dụng sau)"
+  },
   "customCssName": {
     "message": "Tên"
   },

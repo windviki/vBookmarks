@@ -190,6 +190,12 @@
   "customCssEnabled": {
     "message": "הפעלה"
   },
+  "customCssMoveLeft": {
+    "message": "הזז שמאלה (יושם מוקדם יותר)"
+  },
+  "customCssMoveRight": {
+    "message": "הזז ימינה (יושם מאוחר יותר)"
+  },
   "customCssName": {
     "message": "שם"
   },

@@ -190,6 +190,12 @@
   "customCssEnabled": {
     "message": "Įjungti"
   },
+  "customCssMoveLeft": {
+    "message": "Perkelti į kairę (taikoma anksčiau)"
+  },
+  "customCssMoveRight": {
+    "message": "Perkelti į dešinę (taikoma vėliau)"
+  },
   "customCssName": {
     "message": "Pavadinimas"
   },

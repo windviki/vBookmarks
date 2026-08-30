@@ -190,6 +190,12 @@
   "customCssEnabled": {
     "message": "فعال‌سازی"
   },
+  "customCssMoveLeft": {
+    "message": "انتقال به چپ (اعمال زودتر)"
+  },
+  "customCssMoveRight": {
+    "message": "انتقال به راست (اعمال دیرتر)"
+  },
   "customCssName": {
     "message": "نام"
   },

@@ -190,6 +190,12 @@
   "customCssEnabled": {
     "message": "Активиран"
   },
+  "customCssMoveLeft": {
+    "message": "Премести наляво (прилага се по-рано)"
+  },
+  "customCssMoveRight": {
+    "message": "Премести надясно (прилага се по-късно)"
+  },
   "customCssName": {
     "message": "Име"
   },

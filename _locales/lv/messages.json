@@ -190,6 +190,12 @@
   "customCssEnabled": {
     "message": "Ieslēgt"
   },
+  "customCssMoveLeft": {
+    "message": "Pārvietot pa kreisi (lietots agrāk)"
+  },
+  "customCssMoveRight": {
+    "message": "Pārvietot pa labi (lietots vēlāk)"
+  },
   "customCssName": {
     "message": "Nosaukums"
   },

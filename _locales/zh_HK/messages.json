@@ -190,6 +190,12 @@
   "customCssEnabled": {
     "message": "啟用"
   },
+  "customCssMoveLeft": {
+    "message": "向左移動（較早套用）"
+  },
+  "customCssMoveRight": {
+    "message": "向右移動（較遲套用）"
+  },
   "customCssName": {
     "message": "名稱"
   },

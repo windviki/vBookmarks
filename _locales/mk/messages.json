@@ -189,6 +189,12 @@
   "customCssEnabled": {
     "message": "Овозможи"
   },
+  "customCssMoveLeft": {
+    "message": "Помести лево (применето порано)"
+  },
+  "customCssMoveRight": {
+    "message": "Помести десно (применето подоцна)"
+  },
   "customCssName": {
     "message": "Име"
   },

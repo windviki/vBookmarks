@@ -190,6 +190,12 @@
   "customCssEnabled": {
     "message": "เปิดใช้งาน"
   },
+  "customCssMoveLeft": {
+    "message": "เลื่อนซ้าย (ใช้ก่อนหน้า)"
+  },
+  "customCssMoveRight": {
+    "message": "เลื่อนขวา (ใช้ทีหลัง)"
+  },
   "customCssName": {
     "message": "ชื่อ"
   },

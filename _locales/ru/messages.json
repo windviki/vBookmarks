@@ -190,6 +190,12 @@
   "customCssEnabled": {
     "message": "Включить"
   },
+  "customCssMoveLeft": {
+    "message": "Переместить влево (применяется раньше)"
+  },
+  "customCssMoveRight": {
+    "message": "Переместить вправо (применяется позже)"
+  },
   "customCssName": {
     "message": "Название"
   },

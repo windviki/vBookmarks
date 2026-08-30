@@ -190,6 +190,12 @@
   "customCssEnabled": {
     "message": "Aktivera"
   },
+  "customCssMoveLeft": {
+    "message": "Flytta vänster (tillämpas tidigare)"
+  },
+  "customCssMoveRight": {
+    "message": "Flytta höger (tillämpas senare)"
+  },
   "customCssName": {
     "message": "Namn"
   },

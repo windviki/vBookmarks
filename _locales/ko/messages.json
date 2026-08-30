@@ -190,6 +190,12 @@
   "customCssEnabled": {
     "message": "사용"
   },
+  "customCssMoveLeft": {
+    "message": "왼쪽으로 이동 (먼저 적용됨)"
+  },
+  "customCssMoveRight": {
+    "message": "오른쪽으로 이동 (나중에 적용됨)"
+  },
   "customCssName": {
     "message": "이름"
   },

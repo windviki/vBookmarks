@@ -190,6 +190,12 @@
   "customCssEnabled": {
     "message": "Activer"
   },
+  "customCssMoveLeft": {
+    "message": "Déplacer à gauche (appliqué plus tôt)"
+  },
+  "customCssMoveRight": {
+    "message": "Déplacer à droite (appliqué plus tard)"
+  },
   "customCssName": {
     "message": "Nom"
   },

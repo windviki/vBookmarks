@@ -190,6 +190,12 @@
   "customCssEnabled": {
     "message": "有効化"
   },
+  "customCssMoveLeft": {
+    "message": "左に移動（先に適用）"
+  },
+  "customCssMoveRight": {
+    "message": "右に移動（後に適用）"
+  },
   "customCssName": {
     "message": "名前"
   },

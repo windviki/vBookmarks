@@ -190,6 +190,12 @@
   "customCssEnabled": {
     "message": "Povolit"
   },
+  "customCssMoveLeft": {
+    "message": "Přesunout doleva (použito dříve)"
+  },
+  "customCssMoveRight": {
+    "message": "Přesunout doprava (použito později)"
+  },
   "customCssName": {
     "message": "Název"
   },

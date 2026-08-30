@@ -190,6 +190,12 @@
   "customCssEnabled": {
     "message": "Activează"
   },
+  "customCssMoveLeft": {
+    "message": "Mută la stânga (aplicat mai devreme)"
+  },
+  "customCssMoveRight": {
+    "message": "Mută la dreapta (aplicat mai târziu)"
+  },
   "customCssName": {
     "message": "Nume"
   },

@@ -190,6 +190,12 @@
   "customCssEnabled": {
     "message": "Omogoči"
   },
+  "customCssMoveLeft": {
+    "message": "Premakni levo (uporabljeno prej)"
+  },
+  "customCssMoveRight": {
+    "message": "Premakni desno (uporabljeno pozneje)"
+  },
   "customCssName": {
     "message": "Ime"
   },

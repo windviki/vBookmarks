@@ -189,6 +189,12 @@
   "customCssEnabled": {
     "message": "启用"
   },
+  "customCssMoveLeft": {
+    "message": "左移（更早应用）"
+  },
+  "customCssMoveRight": {
+    "message": "右移（更晚应用）"
+  },
   "customCssName": {
     "message": "名称"
   },

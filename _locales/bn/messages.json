@@ -190,6 +190,12 @@
   "customCssEnabled": {
     "message": "সক্রিয়"
   },
+  "customCssMoveLeft": {
+    "message": "বামে সরান (আগে প্রয়োগ করা হয়েছে)"
+  },
+  "customCssMoveRight": {
+    "message": "ডানে সরান (পরে প্রয়োগ করা হয়েছে)"
+  },
   "customCssName": {
     "message": "নাম"
   },
