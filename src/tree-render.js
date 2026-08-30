@@ -70,16 +70,14 @@ export const TREE_INDENT = 24;
 // root-first by ' / ' — the CANONICAL form used by tooltips (and by row meta
 // lines unless the reverseItemPath option flips them).
 // Issue #64: `formatPathLabel` is the meta-LINE form — NEAREST parent first
-// ("Frontend < Dev"), capped at PATH_DEPTH ancestors with a trailing '…' —
-// the row-label map (`pathLabels`) carries it; the option decides which form
+// ("Frontend < Dev") with NO depth cap: overflow is left to the SAME CSS
+// ellipsis truncation the canonical order uses (which then eats the distant
+// ancestors — the least discriminating half — instead of the near ones).
+// The row-label map (`pathLabels`) carries it; the option decides which form
 // a label shows (default: not reversed). Pure: no chrome/DOM access, so
 // vitest exercises both directly.
-export const PATH_DEPTH = 3;
 export const formatPath = ancestors => ancestors.join(' / ');
-export const formatPathLabel = ancestors => {
-    const near = ancestors.slice(-PATH_DEPTH).reverse().join(' < ');
-    return ancestors.length > PATH_DEPTH ? `${near} < …` : near;
-};
+export const formatPathLabel = ancestors => ancestors.slice().reverse().join(' < ');
 // The unified row tooltip (issues #62/#64): FULL info on hover in EVERY view,
 // one line per fact, extensible — future metadata appends labeled lines at
 // the end (before `append`). Native title tooltips are plain text:

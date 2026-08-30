@@ -677,7 +677,7 @@ describe('buildPathMap (v4 task-2 §3.6)', () => {
         expect(dates['1']).toBe(0); // folders without dateAdded read 0
     });
 
-    it('pathLabels caps at PATH_DEPTH ancestors, nearest-first with a trailing … (issue #64)', () => {
+    it('pathLabels is the FULL reversal, no depth cap — CSS truncates like the canonical order (issue #64)', () => {
         // root > L1 > L2 > L3 > L4 > bookmark — 4 ancestors, one over the cap
         const { paths, pathLabels: labels } = buildPathMap([{
             id: '0', title: '', children: [{
@@ -694,8 +694,10 @@ describe('buildPathMap (v4 task-2 §3.6)', () => {
         }]);
         // canonical stays root-first and unlimited…
         expect(paths['5']).toBe('L1 / L2 / L3 / L4');
-        // …the label form keeps the three NEAREST, farthest-cut side marked …
-        expect(labels['5']).toBe('L4 < L3 < L2 < …');
+        // …the label form is the SAME chain fully reversed — no hard cap;
+        // a too-narrow row truncates via the shared CSS ellipsis (which
+        // then eats the distant ancestors, not the near ones)
+        expect(labels['5']).toBe('L4 < L3 < L2 < L1');
         expect(labels['4']).toBe('L3 < L2 < L1');
     });
 
