@@ -1741,3 +1741,119 @@ describe('focusSpot — unified popup-reopen focus memory', () => {
         });
     });
 });
+
+// 4.1.1 分层记忆组合矩阵: the switches compose — viewState's field-level
+// split (scroll × highlight), the master's precedence over every restore,
+// the focusSpot capture gate, and rememberView's deliberate independence.
+describe('memory layer combinations (view-manager)', () => {
+    describe('viewState write on switch-away: scroll × highlight field split', () => {
+        // previous entry {scroll:7}; the live session scrolls to 42 and
+        // focuses row 2 — each field persists only under its own layer
+        const COMBOS = [
+            // [scrollLayer, highlightLayer, expectScroll, expectFocus]
+            ['1', '1', 42, 'recent-item-2'],
+            ['', '1', 7, 'recent-item-2'], // scroll layer off → previous scroll preserved
+            ['1', '', 42, null],           // highlight layer off → focus never recorded
+            ['', '', 7, null]
+        ];
+        for (const [scrollLayer, highlightLayer, wantScroll, wantFocus] of COMBOS) {
+            it(`scroll ${scrollLayer ? 'on' : 'off'} × highlight ${highlightLayer ? 'on' : 'off'} → {scroll:${wantScroll}, focus:${wantFocus}}`, () => {
+                const { views, store, addRecent, makeEl } = setup({
+                    storeData: {
+                        viewState: '{"recent":{"scroll":7,"focus":null}}',
+                        rememberScroll: scrollLayer,
+                        rememberHighlight: highlightLayer
+                    }
+                });
+                const recent = addRecent({ persistScroll: true });
+                const li1 = makeEl('li');
+                li1.id = 'recent-item-1';
+                const li2 = makeEl('li');
+                li2.id = 'recent-item-2';
+                const a2 = makeEl('a');
+                li2.appendChild(a2);
+                recent.listEl.appendChild(li1);
+                recent.listEl.appendChild(li2);
+                views.activate('recent', { keepFocus: true });
+                recent.listEl.scrollTop = 42;
+                a2.focus();
+                views.activate('tree', { keepFocus: true });
+                expect(JSON.parse(store.get('viewState')).recent)
+                    .toEqual({ scroll: wantScroll, focus: wantFocus });
+            });
+        }
+    });
+
+    it('master off × highlight on: the stale viewState is cleared at startup and no row re-marks (master wins)', () => {
+        const { views, store, addRecent, makeEl } = setup({
+            getRememberState: () => false,
+            storeData: { viewState: '{"recent":{"scroll":0,"focus":"recent-item-2"}}', rememberHighlight: '1' }
+        });
+        expect(store.get('viewState')).toBe(null); // dropped once, at startup
+        const recent = addRecent();
+        const li = makeEl('li');
+        li.id = 'recent-item-2';
+        const a = makeEl('a');
+        li.appendChild(a);
+        recent.listEl.appendChild(li);
+        views.activate('recent', { keepFocus: true });
+        expect(a.classList.contains('focus')).toBe(false);
+    });
+
+    describe('focusSpot capture: master × highlight', () => {
+        const COMBOS = [
+            // [master, highlightLayer, expectStored]
+            [true, '1', true],
+            [true, '', false],
+            [false, '1', false], // master off wins over the layer on
+            [false, '', false]
+        ];
+        for (const [master, highlightLayer, expectStored] of COMBOS) {
+            it(`master ${master ? 'on' : 'off'} × highlight ${highlightLayer ? 'on' : 'off'} → spot ${expectStored ? 'persisted' : 'not persisted'}`, () => {
+                const { views, store, makeEl, fireDoc, addRecent } = setup({
+                    getRememberState: () => master,
+                    storeData: { rememberHighlight: highlightLayer }
+                });
+                const recent = addRecent();
+                const li = makeEl('li');
+                li.id = 'recent-item-2';
+                const a = makeEl('a');
+                li.appendChild(a);
+                recent.listEl.appendChild(li);
+                views.activate('recent', { keepFocus: true }); // rows classify into the ACTIVE view
+                fireDoc('focusin', { target: a });
+                if (expectStored)
+                    expect(JSON.parse(store.get('focusSpot')))
+                        .toEqual({ zone: 'row', view: 'recent', key: 'recent-item-2' });
+                else
+                    expect(store._data.focusSpot).toBeUndefined();
+            });
+        }
+    });
+
+    it('restoreFocusSpot: highlight layer off clears the stored spot without stealing focus', () => {
+        const { views, doc, byId, makeEl, store } = setup({
+            storeData: {
+                focusSpot: JSON.stringify({ zone: 'header', key: 'tool-btn' }),
+                rememberHighlight: ''
+            }
+        });
+        const tool = makeEl('button');
+        tool.id = 'tool-btn';
+        byId['tool-btn'] = tool;
+        views.restoreFocusSpot();
+        expect(doc.activeElement).toBe(null);
+        expect(store.setCalls.filter(([k]) => k === 'focusSpot')).toEqual([['focusSpot', null]]);
+    });
+
+    it('startup view: master off × rememberView on → the stored view STILL opens (deliberate independence)', () => {
+        const { views, addRecent } = setup({
+            isPanel: false,
+            getRememberState: () => false,
+            storeData: { activeView: 'recent', rememberView: '1' }
+        });
+        expect(views.activeId()).toBe('tree'); // not registered yet at startup
+        addRecent();
+        expect(views.activeId()).toBe('recent'); // the view layer has its own switch
+    });
+});

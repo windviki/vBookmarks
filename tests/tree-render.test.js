@@ -1379,3 +1379,31 @@ describe('isRootFolder', () => {
         expect(tr.isRootFolder({ id: '1', parentId: '0', url: 'http://e.com/' })).toBe(true);
     });
 });
+
+// 4.1.1 分层记忆组合: rememberOpens only refines the master — the full
+// master × opens matrix, one parameterized path.
+describe('rememberOpens × master combinations', () => {
+    const NODE = [{
+        id: '10', parentId: '0', title: 'F', children: [
+            { id: '11', parentId: '10', title: 'BM', url: 'https://e.com/' }
+        ]
+    }];
+    // [master, opensLayer, expectOpen]
+    const COMBOS = [
+        [true, '1', true],
+        [true, '', false],
+        [false, '1', false], // master off wins over the sub-layer on
+        [false, '', false]
+    ];
+    for (const [master, opensLayer, expectOpen] of COMBOS) {
+        it(`master ${master ? 'on' : 'off'} × opens ${opensLayer ? 'on' : 'off'} → folder ${expectOpen ? 'open' : 'collapsed'}`, () => {
+            const tr = setup({
+                store: makeStore({ rememberOpens: opensLayer }),
+                getOpens: () => ['10'],
+                getRememberState: () => master
+            });
+            const html = tr.generateHTML(NODE);
+            expect(html.includes('class="parent open')).toBe(expectOpen);
+        });
+    }
+});

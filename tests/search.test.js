@@ -1789,3 +1789,25 @@ describe('search selection mode (velvet staging §3.6)', () => {
         ]);
     });
 });
+
+// 4.1.1 分层记忆组合: rememberSearchQuery only refines the master — the
+// full master × query-layer matrix through the real init path.
+describe('rememberSearchQuery × master combinations', () => {
+    // [master, queryLayer, expectRestored]
+    const COMBOS = [
+        [true, '1', true],
+        [true, '', false],
+        [false, '1', false], // master off wins over the sub-layer on
+        [false, '', false]
+    ];
+    for (const [master, queryLayer, expectRestored] of COMBOS) {
+        it(`master ${master ? 'on' : 'off'} × query ${queryLayer ? 'on' : 'off'} → query ${expectRestored ? 'restored and searched' : 'ignored'}`, () => {
+            const { els, fuzzy } = setup({
+                rememberState: master,
+                storeData: { searchQuery: 'git', rememberSearchQuery: queryLayer }
+            });
+            expect(els['search-input'].value).toBe(expectRestored ? 'git' : '');
+            expect(fuzzy.calls).toHaveLength(expectRestored ? 1 : 0);
+        });
+    }
+});

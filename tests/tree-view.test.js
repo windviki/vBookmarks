@@ -1203,3 +1203,49 @@ describe('revealInTree + onlyShowBMBar (v4 task-3 #14)', () => {
     });
 });
 
+
+// 4.1.1 分层记忆组合矩阵: the switches never stand alone — master ×
+// rememberScroll × rememberHighlight must compose. One parameterized path,
+// every combo asserts BOTH restore outcomes plus the eager-vs-delayed
+// focusID cleanup, so a regression in any combination fails its own case.
+describe('memory layer combinations (master × scroll × highlight)', () => {
+    // cleanup: 'delayed' = the restore branch owns the 4s cleanup;
+    // 'eager' = the highlight layer stood down, focusID dropped at once;
+    // 'none' = master off skips the whole restore (no timers at all)
+    const COMBOS = [
+        // [name, master, scroll, highlight, expectScroll, expectFocus, cleanup]
+        ['all on: scroll restored AND row highlighted (delayed 4s cleanup)', true, '1', '1', 555, true, 'delayed'],
+        ['scroll off, highlight on: position ignored, highlight INDEPENDENT', true, '', '1', 0, true, 'delayed'],
+        ['scroll on, highlight off: position restored, no re-highlight', true, '1', '', 555, false, 'eager'],
+        ['both off: neither restores', true, '', '', 0, false, 'eager'],
+        ['master off wins over both sub-layers on: nothing restores at all', false, '1', '1', 0, false, 'none']
+    ];
+    for (const [name, master, scroll, highlight, wantScroll, wantFocus, cleanup] of COMBOS) {
+        it(name, () => {
+            const ctx = setup({
+                storeData: {
+                    scrollTop: 555,
+                    focusID: '5',
+                    rememberScroll: scroll,
+                    rememberHighlight: highlight
+                },
+                rememberState: master
+            });
+            const { span } = ctx.makeFolder('5');
+            ctx.tree.style.overflow = 'auto';
+            ctx.tree.scrollTop = 0;
+            ctx.treeView.generateTree(['ROOT']);
+            expect(ctx.tree.scrollTop).toBe(wantScroll);
+            expect(span.classList.contains('focus')).toBe(wantFocus);
+            expect(span.focused).toBe(wantFocus);
+            if (cleanup === 'eager')
+                expect(ctx.store.removes).toEqual(['focusID']);
+            else
+                expect(ctx.store.removes).toEqual([]);
+            if (cleanup === 'delayed') {
+                tick(4000);
+                expect(ctx.store.removes).toEqual(['focusID']);
+            }
+        });
+    }
+});

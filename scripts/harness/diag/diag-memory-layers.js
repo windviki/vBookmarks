@@ -37,7 +37,7 @@ const ck = (name, ok, extra) => {
             const f1 = await create({ parentId: bar.id, title: '__verify__' });
             const f2 = await create({ parentId: f1.id, title: 'ZZSubFolderZZ' });
             const bm = await create({ parentId: f2.id, title: 'Verify BM', url: 'https://verify.example/page' });
-            return { folder: f1.id, sub: f2.id, bm: bm.id };
+            return { root: bar.id, folder: f1.id, sub: f2.id, bm: bm.id };
         });
         // clean-slate memory state (defaults ON = keys absent)
         await seed.evaluate(() => new Promise(res => chrome.storage.local.remove(
@@ -271,6 +271,87 @@ const ck = (name, ok, extra) => {
             }, ids.bm);
             ck('P10 recent-view row memory: the focused list row re-highlights on reopen',
                 st.recentActive && st.rowFocused, JSON.stringify(st));
+            await sleep(400); // let debounced writes land before the next load
+        }
+
+        // ---- 11. COMBINATION: heterogeneous sub-layer states at once (master
+        // on; scroll+query off, opens+highlight+view on) — each layer keeps
+        // its own verdict, no cross-talk ----
+        {
+            const p = await openPopup();
+            await p.evaluate(({ root, folder, sub, bm }) => Promise.all([
+                // activeView is a LOCAL key (only the switches are sync)
+                new Promise(res => chrome.storage.local.set({
+                    scrollTop: 150,
+                    // the whole ancestor chain, or the collapsed parents
+                    // never render the rows the other layers must restore
+                    opens: JSON.stringify([root, folder, sub]),
+                    focusID: bm,
+                    searchQuery: 'verify',
+                    activeView: 'tree'
+                }, res)),
+                new Promise(res => chrome.storage.sync.set({
+                    dontRememberState: '',
+                    rememberScroll: '',
+                    rememberOpens: '1',
+                    rememberHighlight: '1',
+                    rememberSearchQuery: '',
+                    rememberView: '1'
+                }, res))
+            ]), ids);
+            await p.reload({ waitUntil: 'load' });
+            await sleep(1800);
+            const st = await p.evaluate(({ folder, bm }) => ({
+                scrollTop: document.getElementById('tree').scrollTop,
+                openFolders: [...document.querySelectorAll('#tree li.open')].map(e => e.id.replace('neat-tree-item-', '')),
+                focusRows: [...document.querySelectorAll('#tree .focus')].map(e => e.closest('li').id.replace('neat-tree-item-', '')),
+                query: document.getElementById('search-input').value,
+                active: (document.querySelector('#view-tabs .view-tab[aria-selected="true"]') || {}).id || ''
+            }), ids);
+            ck('P11 mixed sub-layers: off-scroll ignored + off-query ignored, on-opens/on-highlight/on-view all restore',
+                st.scrollTop === 0
+                && st.openFolders.includes(ids.folder)
+                && st.focusRows.includes(ids.bm)
+                && st.query === '' && st.active === 'view-tab-tree',
+                JSON.stringify(st));
+            await sleep(400); // let debounced writes land before the next load
+        }
+
+        // ---- 12. COMBINATION: master off suppresses all four subordinate
+        // layers even with every sub-layer on ----
+        {
+            const p = await openPopup();
+            await p.evaluate(({ folder, bm }) => Promise.all([
+                new Promise(res => chrome.storage.local.set({
+                    scrollTop: 150,
+                    opens: JSON.stringify([folder]),
+                    focusID: bm,
+                    searchQuery: 'verify',
+                    activeView: 'tree'
+                }, res)),
+                new Promise(res => chrome.storage.sync.set({
+                    dontRememberState: '1',
+                    rememberScroll: '1',
+                    rememberOpens: '1',
+                    rememberHighlight: '1',
+                    rememberSearchQuery: '1',
+                    rememberView: '1'
+                }, res))
+            ]), ids);
+            await p.reload({ waitUntil: 'load' });
+            await sleep(1800);
+            const st = await p.evaluate(() => ({
+                scrollTop: document.getElementById('tree').scrollTop,
+                open: document.querySelectorAll('#tree li.open').length,
+                focus: document.querySelectorAll('#tree .focus').length,
+                query: document.getElementById('search-input').value,
+                viewState: (window.store && window.store.get('viewState')) || null,
+                active: (document.querySelector('#view-tabs .view-tab[aria-selected="true"]') || {}).id || ''
+            }));
+            ck('P12 master off × all sub-layers on: nothing subordinate restores, view layer stays independent',
+                st.scrollTop === 0 && st.open === 0 && st.focus === 0 && st.query === ''
+                && st.viewState === null && st.active === 'view-tab-tree',
+                JSON.stringify(st));
             await sleep(400); // let debounced writes land before the next load
         }
 
