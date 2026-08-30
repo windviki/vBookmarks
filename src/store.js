@@ -285,12 +285,30 @@
     // win. init() lets the shadow override the chrome.storage value whenever
     // present: by construction it is at least as fresh on this device.
     const SCROLL_TOP_SHADOW = '__scrollTopLS';
+    // 4.1.1: the highlight layer's two carriers get the same treatment. The
+    // focusID/focusSpot writes ride the very focusin that precedes a popup
+    // close (open a bookmark → window.close ~200ms later) — inside the
+    // debounce window, on a close path where pagehide is not guaranteed —
+    // so the last "where I was" write could die with the page and the next
+    // open showed no highlight (the intermittent "高亮上次的书签不生效").
+    // Dedicated shadow keys (no older build ever wrote them); init() lets a
+    // present shadow override the chrome.storage copy — at least as fresh by
+    // construction, exactly like scrollTop.
+    const SHADOWED_WHERE_WAS = { focusID: '__focusIDLS', focusSpot: '__focusSpotLS' };
     const shadowScrollTop = value => {
         try {
             if (value === null || value === undefined)
                 localStorage.removeItem(SCROLL_TOP_SHADOW);
             else
                 localStorage.setItem(SCROLL_TOP_SHADOW, String(value));
+        } catch (e) { /* quota/unavailable — the debounced write still runs */ }
+    };
+    const shadowWhereWas = (key, value) => {
+        try {
+            if (value === null || value === undefined)
+                localStorage.removeItem(SHADOWED_WHERE_WAS[key]);
+            else
+                localStorage.setItem(SHADOWED_WHERE_WAS[key], String(value));
         } catch (e) { /* quota/unavailable — the debounced write still runs */ }
     };
 
@@ -345,6 +363,8 @@
             mirror[key] = value;
             if (key === 'scrollTop')
                 shadowScrollTop(value);
+            else if (key in SHADOWED_WHERE_WAS)
+                shadowWhereWas(key, value);
             schedulePersist(key, value);
         },
         // Update the mirror WITHOUT persisting. chrome.storage.onChanged
@@ -368,6 +388,8 @@
             mirror[key] = value;
             if (key === 'scrollTop')
                 shadowScrollTop(value);
+            else if (key in SHADOWED_WHERE_WAS)
+                shadowWhereWas(key, value);
         },
         // Mirror + persistent removal
         remove(key) {
@@ -385,6 +407,8 @@
             delete mirror[key];
             if (key === 'scrollTop')
                 shadowScrollTop(null);
+            else if (key in SHADOWED_WHERE_WAS)
+                shadowWhereWas(key, null);
             if (key in pendingWrites) {
                 clearTimeout(timers[key]);
                 delete timers[key];
@@ -614,6 +638,20 @@
                 }
             }
         } catch (e) { /* localStorage unavailable — chrome.storage stands */ }
+        // the "where I was" shadows: same override semantics (a present
+        // shadow is at least as fresh as the loaded copy). Values are raw
+        // strings (focusID bookmark id / focusSpot JSON) — no parsing.
+        for (const key in SHADOWED_WHERE_WAS) {
+            try {
+                const shadow = localStorage.getItem(SHADOWED_WHERE_WAS[key]);
+                if (shadow === null)
+                    continue;
+                const loaded = mirror[key];
+                mirror[key] = shadow;
+                if (String(loaded) !== shadow)
+                    schedulePersist(key, shadow);
+            } catch (e) { /* localStorage unavailable — chrome.storage stands */ }
+        }
         resolveReady();
     };
 

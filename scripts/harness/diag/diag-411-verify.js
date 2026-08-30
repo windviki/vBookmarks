@@ -423,6 +423,32 @@ const ck = (name, ok, extra) => {
             && tabflow.editorCss.includes('color: blue'),
             JSON.stringify(tabflow));
 
+        // N5b (user report): a LONG stylesheet scrolls INSIDE the editor slot
+        // — the vendored CM v2 css (height:auto + overflow-y:hidden) used to
+        // grow past the wrapper and overlap the footer text
+        const longCssOk = await cssPage.evaluate(async () => {
+            const big = Array.from({ length: 200 }, (_, i) => `.r${i} { color: rgb(${i % 255},64,128); }`).join('\n');
+            window.__vbmCustomCss.editor.set(big);
+            const ev = document.getElementById('custom-css-css');
+            ev.dispatchEvent(new Event('change', { bubbles: true }));
+            await new Promise(r => setTimeout(r, 300));
+            const wrap = document.querySelector('#custom-css-page .CodeMirror');
+            const inner = (wrap && wrap.querySelector('.CodeMirror-scroll')) || document.getElementById('custom-css-css');
+            const footer = document.querySelector('.custom-css-status-row');
+            if (!inner || !footer)
+                return { ok: false, why: 'missing elements' };
+            const ir = inner.getBoundingClientRect();
+            const fr = footer.getBoundingClientRect();
+            const cs = getComputedStyle(inner);
+            return {
+                ok: ir.bottom <= fr.top + 1 && cs.overflowY !== 'hidden' && inner.scrollHeight > inner.clientHeight,
+                innerH: Math.round(ir.height), footerTop: Math.round(fr.top), ovY: cs.overflowY,
+                scrolls: inner.scrollHeight > inner.clientHeight
+            };
+        });
+        ck('N5b long stylesheet: editor scrolls internally, footer never overlapped',
+            longCssOk.ok, JSON.stringify(longCssOk));
+
         // visual capture for review (rerun.sh copies /tmp/shots → tmp/shots)
         require('fs').mkdirSync('/tmp/shots', { recursive: true });
         await cssPage.screenshot({ path: '/tmp/shots/custom-css-workbench.png' });

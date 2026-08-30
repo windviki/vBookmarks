@@ -324,6 +324,43 @@ describe('store.js', () => {
             expect(sb.localData.scrollTop).toBe(2500);
         });
 
+        it('shadows the highlight carriers focusID/focusSpot the same way (4.1.1: pagehide is not guaranteed on popup close, the last focusin write died with the page)', async () => {
+            const sb = createSandbox({ chromeLocalData: { __migrated_v1: '1' } });
+            await sb.window.store.ready;
+            vi.useFakeTimers();
+
+            sb.window.store.set('focusID', 'bm-42');
+            // synchronous — survives a popup dying before the debounce fires
+            expect(sb.lsData.get('__focusIDLS')).toBe('bm-42');
+            const spot = JSON.stringify({ zone: 'row', view: 'recent', key: 'recent-item-7' });
+            sb.window.store.set('focusSpot', spot);
+            expect(sb.lsData.get('__focusSpotLS')).toBe(spot);
+            vi.advanceTimersByTime(250);
+            expect(sb.localData.focusID).toBe('bm-42');
+            expect(sb.localData.focusSpot).toBe(spot);
+
+            // null clears both shadow and storage (focus left the rows)
+            sb.window.store.set('focusID', null);
+            sb.window.store.set('focusSpot', null);
+            expect(sb.lsData.has('__focusIDLS')).toBe(false);
+            expect(sb.lsData.has('__focusSpotLS')).toBe(false);
+        });
+
+        it('lets a where-was shadow win over chrome.storage at init and reconciles', async () => {
+            vi.useFakeTimers();
+            const spot = JSON.stringify({ zone: 'row', view: 'recent', key: 'recent-item-7' });
+            const sb = createSandbox({
+                localStorageData: { __focusIDLS: 'bm-42', __focusSpotLS: spot },
+                chromeLocalData: { focusID: 'bm-old', focusSpot: 'stale', __migrated_v1: '1' }
+            });
+            await sb.window.store.ready;
+            expect(sb.window.store.get('focusID')).toBe('bm-42');
+            expect(sb.window.store.get('focusSpot')).toBe(spot);
+            vi.advanceTimersByTime(250);
+            expect(sb.localData.focusID).toBe('bm-42');
+            expect(sb.localData.focusSpot).toBe(spot);
+        });
+
         it('keeps the chrome.storage value when no shadow exists (first run after update)', async () => {
             // the LEGACY plain-'scrollTop' localStorage copy must never win
             const sb = createSandbox({

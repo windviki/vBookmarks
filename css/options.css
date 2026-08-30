@@ -1207,12 +1207,22 @@ body:has(#custom-css-page) {
     line-height: 1.5;
     padding: 10px 12px;
 }
-/* CodeMirror primary editor fills the same slot when it loads */
+/* CodeMirror primary editor fills the same slot when it loads. The vendor
+   stylesheet ships .CodeMirror-scroll { height:auto; overflow-y:hidden } and
+   no wrapper overflow — a long stylesheet grew the scroller past the flexed
+   wrapper (min-height:auto trap) and overlapped the footer. Constrain the
+   wrapper to its flex slot and make the scroller the scrolling element. */
 #custom-css-page .CodeMirror {
     flex: 1;
+    min-height: 0;
     height: auto;
     box-sizing: border-box;
     border: 1px solid var(--vbm-border, #ccc);
+}
+#custom-css-page .CodeMirror-scroll {
+    height: 100%;
+    min-height: 0;
+    overflow-y: auto;
 }
 .custom-css-status-row {
     display: flex;

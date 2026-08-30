@@ -407,7 +407,19 @@ export function initCustomCss(ctx = {}) {
 }
 
 if (typeof document !== 'undefined' && typeof window !== 'undefined') {
-    const boot = () => { window.__vbmCustomCss = initCustomCss(); };
+    // Gate the whole init on store.ready: the store mirror loads
+    // chrome.storage asynchronously, and reading it at DOMContentLoaded can
+    // catch it empty — the unconditional boot persist would then write the
+    // empty list back and WIPE the user's styles (a slow cold load lost the
+    // race exactly that way in the real-browser repro).
+    const boot = () => {
+        const start = () => { window.__vbmCustomCss = initCustomCss(); };
+        const ready = window.store && window.store.ready;
+        if (ready && typeof ready.then === 'function')
+            ready.then(start);
+        else
+            start();
+    };
     if (document.readyState === 'loading')
         document.addEventListener('DOMContentLoaded', boot, { once: true });
     else
