@@ -1124,7 +1124,7 @@
     "message": "记住展开的文件夹"
   },
   "optionRememberPrevState": {
-    "message": "记住之前的状态（滚动位置、已打开的文件夹和上次聚焦的书签）。"
+    "message": "记住之前的状态"
   },
   "optionRememberScroll": {
     "message": "记住滚动位置"

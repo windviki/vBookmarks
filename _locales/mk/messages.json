@@ -1100,7 +1100,7 @@
     "message": "Број на неодамна додадени обележувачи за прикажување"
   },
   "optionRememberHighlight": {
-    "message": "Истакни ја последната отворена обележувача"
+    "message": "Истакни го последниот отворен обележувач"
   },
   "optionRememberOpens": {
     "message": "Запомни ги отворените папки"
@@ -1244,7 +1244,7 @@
     "message": "Лабораторија"
   },
   "optionsGroupMemory": {
-    "message": "Меморија"
+    "message": "Памет"
   },
   "optionsGroupPalette": {
     "message": "Командна палета"

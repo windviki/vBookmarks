@@ -1212,7 +1212,7 @@
     "message": "Remember opened folders"
   },
   "optionRememberPrevState": {
-    "message": "Remember previous state (scroll position, opened folders and the last focused item)."
+    "message": "Remember previous state"
   },
   "optionRememberScroll": {
     "message": "Remember the scroll position"

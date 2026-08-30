@@ -77,6 +77,7 @@ const createSandbox = ({
         tagName,
         value: '',
         checked: false,
+        disabled: false,
         innerText: '',
         innerHTML: '',
         textContent: '',
@@ -1292,5 +1293,67 @@ describe('issue #48 collapse switches (tab-group default off, sort default on)',
             await sb.start();
             expect(sb.elements['collapse-tab-group-menu'].checked, `stored ${JSON.stringify(stored)}`).toBe(expected);
         }
+    });
+});
+
+// 4.1.1 分层记忆组: the options-page wiring the memory commit shipped
+// without — master off greys out exactly the four sub-layers (记住视图
+// keeps its own semantics), and the inverted dontRememberState key persists
+// in the 1/empty model.
+describe('memory group wiring (4.1.1)', () => {
+    const SUBS = ['remember-scroll', 'remember-opens', 'remember-highlight', 'remember-search-query'];
+
+    it('defaults: master on, sub-layers live, remember-view independent', async () => {
+        const sb = createSandbox();
+        await sb.start();
+        expect(sb.elements['remember-prev-state'].checked).toBe(true); // inverted key absent → on
+        for (const id of [...SUBS, 'remember-view'])
+            expect(sb.elements[id].disabled, id).toBe(false);
+        expect(sb.elements['remember-scroll'].checked).toBe(true);
+    });
+
+    it('master off disables exactly the four sub-layers — remember-view never greys out', async () => {
+        const sb = createSandbox({ chromeLocalData: { dontRememberState: '1' } });
+        await sb.start();
+        expect(sb.elements['remember-prev-state'].checked).toBe(false);
+        for (const id of SUBS)
+            expect(sb.elements[id].disabled, id).toBe(true);
+        expect(sb.elements['remember-view'].disabled).toBe(false);
+
+        // flipping the master live re-enables them without touching storage of the subs
+        sb.elements['remember-prev-state'].checked = true;
+        await sb.elements['remember-prev-state'].fire('change');
+        for (const id of SUBS)
+            expect(sb.elements[id].disabled, id).toBe(false);
+        expect(sb.syncData.dontRememberState).toBe(''); // inverted: checked → ''
+    });
+
+    it('the master persists through the inverted dontRememberState key (sync area)', async () => {
+        const sb = createSandbox();
+        await sb.start();
+        sb.elements['remember-prev-state'].checked = false;
+        await sb.elements['remember-prev-state'].fire('change');
+        expect(sb.syncData.dontRememberState).toBe('1');
+        sb.elements['remember-prev-state'].checked = true;
+        await sb.elements['remember-prev-state'].fire('change');
+        expect(sb.syncData.dontRememberState).toBe('');
+    });
+
+    it('sub-layer switches persist 1/empty and remember-view keeps its own key', async () => {
+        const sb = createSandbox();
+        await sb.start();
+        for (const id of SUBS) {
+            sb.elements[id].checked = false;
+            await sb.elements[id].fire('change');
+        }
+        expect(sb.syncData.rememberScroll).toBe('');
+        expect(sb.syncData.rememberOpens).toBe('');
+        expect(sb.syncData.rememberHighlight).toBe('');
+        expect(sb.syncData.rememberSearchQuery).toBe('');
+        sb.elements['remember-view'].checked = false;
+        await sb.elements['remember-view'].fire('change');
+        expect(sb.syncData.rememberView).toBe('');
+        // the master is untouched by sub-layer flips
+        expect(sb.syncData.dontRememberState).toBeUndefined();
     });
 });

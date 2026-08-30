@@ -119,3 +119,34 @@ describe('makeI18n 边界', () => {
         expect(_m('confirmDeleteFolder')).toBe('This folder contains $count$ item(s). You can undo the deletion.');
     });
 });
+
+// 4.1.1 记忆组文案契约: the split into master + sub-layers simplified the
+// master label in every locale — except en/zh_CN, which shipped still carrying
+// the pre-split parenthetical (caught in review). These pin the two baseline
+// locales so the simplified copy cannot silently regress, and pin the zh
+// alias to zh_CN (they must never drift on the memory keys).
+import zhCnMessages from '../_locales/zh_CN/messages.json';
+import zhMessages from '../_locales/zh/messages.json';
+
+describe('记忆组文案 (en/zh_CN 基准)', () => {
+    it('主标签是简化后的短文案, 不再带拆分前的括号说明', () => {
+        expect(_m('optionRememberPrevState')).toBe('Remember previous state');
+        expect(zhCnMessages.optionRememberPrevState.message).toBe('记住之前的状态');
+    });
+
+    it('四个子层与组名的基准文案', () => {
+        expect(_m('optionsGroupMemory')).toBe('Memory');
+        expect(_m('optionRememberScroll')).toBe('Remember the scroll position');
+        expect(_m('optionRememberOpens')).toBe('Remember opened folders');
+        expect(_m('optionRememberHighlight')).toBe('Highlight the last opened bookmark');
+        expect(_m('optionRememberSearchQuery')).toBe('Remember the last search');
+        expect(zhCnMessages.optionsGroupMemory.message).toBe('记忆');
+        expect(zhCnMessages.optionRememberSearchQuery.message).toBe('记住上次的搜索词');
+    });
+
+    it('zh 别名与 zh_CN 在记忆组键上不漂移', () => {
+        for (const k of ['optionRememberPrevState', 'optionRememberScroll', 'optionRememberOpens',
+            'optionRememberHighlight', 'optionRememberSearchQuery', 'optionsGroupMemory'])
+            expect(zhMessages[k].message, k).toBe(zhCnMessages[k].message);
+    });
+});
