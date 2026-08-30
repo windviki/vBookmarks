@@ -1052,8 +1052,20 @@
   "optionRecentCount": {
     "message": "Aantal recent toegevoegde bladwijzers om weer te geven"
   },
+  "optionRememberHighlight": {
+    "message": "Markeer de laatst geopende bladwijzer"
+  },
+  "optionRememberOpens": {
+    "message": "Geopende mappen onthouden"
+  },
   "optionRememberPrevState": {
-    "message": "Onthoud vorige status (scrollpositie, geopende mappen en het laatst gefocuste item)."
+    "message": "Vorige status onthouden"
+  },
+  "optionRememberScroll": {
+    "message": "Scrollpositie onthouden"
+  },
+  "optionRememberSearchQuery": {
+    "message": "Laatste zoekopdracht onthouden"
   },
   "optionRememberView": {
     "message": "Onthoud de laatste actieve weergave en open deze opnieuw"
@@ -1183,6 +1195,9 @@
   },
   "optionsGroupLabs": {
     "message": "Labs"
+  },
+  "optionsGroupMemory": {
+    "message": "Geheugen"
   },
   "optionsGroupPalette": {
     "message": "Opdrachtenpalet"

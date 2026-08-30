@@ -1052,8 +1052,20 @@
   "optionRecentCount": {
     "message": "Počet nedávno pridaných záložiek na zobrazenie"
   },
+  "optionRememberHighlight": {
+    "message": "Zvýrazniť naposledy otvorenú záložku"
+  },
+  "optionRememberOpens": {
+    "message": "Zapamätať si otvorené priečinky"
+  },
   "optionRememberPrevState": {
-    "message": "Zapamätať predchádzajúci stav (pozíciu posúvania, otvorené priečinky a poslednú zameranú položku)."
+    "message": "Zapamätať si predchádzajúci stav"
+  },
+  "optionRememberScroll": {
+    "message": "Zapamätať si pozíciu posúvania"
+  },
+  "optionRememberSearchQuery": {
+    "message": "Zapamätať si posledné vyhľadávanie"
   },
   "optionRememberView": {
     "message": "Zapamätať si posledné aktívne zobrazenie a znovu ho otvoriť"
@@ -1183,6 +1195,9 @@
   },
   "optionsGroupLabs": {
     "message": "Laboratórium"
+  },
+  "optionsGroupMemory": {
+    "message": "Pamäť"
   },
   "optionsGroupPalette": {
     "message": "Paleta príkazov"

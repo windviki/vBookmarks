@@ -1051,8 +1051,20 @@
   "optionRecentCount": {
     "message": "Број на неодамна додадени обележувачи за прикажување"
   },
+  "optionRememberHighlight": {
+    "message": "Истакни ја последната отворена обележувача"
+  },
+  "optionRememberOpens": {
+    "message": "Запомни ги отворените папки"
+  },
   "optionRememberPrevState": {
-    "message": "Запомни ја претходната состојба (позиција на лизгање, отворени папки и последната фокусирана ставка)."
+    "message": "Запамети ја претходната состојба"
+  },
+  "optionRememberScroll": {
+    "message": "Запомни ја позицијата на лизгање"
+  },
+  "optionRememberSearchQuery": {
+    "message": "Запомни го последното пребарување"
   },
   "optionRememberView": {
     "message": "Запомни го последниот активен приказ и отвори го повторно"
@@ -1182,6 +1194,9 @@
   },
   "optionsGroupLabs": {
     "message": "Лабораторија"
+  },
+  "optionsGroupMemory": {
+    "message": "Меморија"
   },
   "optionsGroupPalette": {
     "message": "Командна палета"

@@ -1052,8 +1052,20 @@
   "optionRecentCount": {
     "message": "Jumlah bookmark yang baru ditambahkan untuk ditampilkan"
   },
+  "optionRememberHighlight": {
+    "message": "Sorot bookmark yang terakhir dibuka"
+  },
+  "optionRememberOpens": {
+    "message": "Ingat folder yang terbuka"
+  },
   "optionRememberPrevState": {
-    "message": "Ingat keadaan sebelumnya (posisi gulir, folder yang dibuka, dan item terakhir yang difokuskan)."
+    "message": "Ingat status sebelumnya"
+  },
+  "optionRememberScroll": {
+    "message": "Ingat posisi gulir"
+  },
+  "optionRememberSearchQuery": {
+    "message": "Ingat pencarian terakhir"
   },
   "optionRememberView": {
     "message": "Ingat tampilan aktif terakhir dan buka kembali"
@@ -1183,6 +1195,9 @@
   },
   "optionsGroupLabs": {
     "message": "Laboratorium"
+  },
+  "optionsGroupMemory": {
+    "message": "Ingatan"
   },
   "optionsGroupPalette": {
     "message": "Palet perintah"

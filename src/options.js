@@ -102,7 +102,6 @@ const $ = id => document.getElementById(id);
             { id: 'confirm-open-folder', key: 'dontConfirmOpenFolder', defaultValue: '', inverted: true },
             // v4 task-2 (§5.7): non-empty folder delete confirmation, default on
             { id: 'confirm-delete-folder', key: 'confirmDeleteFolder', defaultValue: '1', inverted: false },
-            { id: 'remember-prev-state', key: 'dontRememberState', defaultValue: '', inverted: true },
             { id: 'auto-resize-popup', key: 'autoResizePopup', defaultValue: 'true', inverted: false },
             { id: 'open-in-side-panel', key: 'openInSidePanel', defaultValue: '', inverted: false },
             // 4.0.8: remote announcements (docs/announce.json) — on by default;
@@ -136,6 +135,21 @@ const $ = id => document.getElementById(id);
             { id: 'search-after-enter', key: 'searchAfterEnter', defaultValue: '', inverted: false }
         ];
 
+        // 4.1.1 分层记忆组: the master flag + its four sub-layers + the
+        // (independent, previously Views-hosted) last-view memory. Sub-layers
+        // only refine the master: master off = nothing remembered (the row
+        // grey-out below shows that visually).
+        const memorySettings = [
+            { id: 'remember-prev-state', key: 'dontRememberState', defaultValue: '', inverted: true },
+            { id: 'remember-scroll', key: 'rememberScroll', defaultValue: '1', inverted: false },
+            { id: 'remember-opens', key: 'rememberOpens', defaultValue: '1', inverted: false },
+            { id: 'remember-highlight', key: 'rememberHighlight', defaultValue: '1', inverted: false },
+            { id: 'remember-search-query', key: 'rememberSearchQuery', defaultValue: '1', inverted: false },
+            // independent semantics (which VIEW reopens), hosted here for
+            // discoverability — never greyed by the master
+            { id: 'remember-view', key: 'rememberView', defaultValue: '1', inverted: false }
+        ];
+
         // Configuration for sync settings
         const syncSettings = [
             { id: 'show-sync-status', key: 'showSyncStatus', defaultValue: 'true', inverted: false },
@@ -151,7 +165,6 @@ const $ = id => document.getElementById(id);
         const viewSettings = [
             { id: 'show-view-tabs', key: 'showViewTabs', defaultValue: '1', inverted: false },
             // v4 task-3 #6: reopen on the view the popup was left on
-            { id: 'remember-view', key: 'rememberView', defaultValue: '1', inverted: false },
             // v4 task-3 #18: compulsive mode — no count badges on the tabs
             { id: 'show-tab-badges', key: 'showTabBadges', defaultValue: '1', inverted: false },
             { id: 'show-item-path', key: 'showItemPath', defaultValue: '1', inverted: false },
@@ -223,6 +236,23 @@ const $ = id => document.getElementById(id);
             { id: 'virtual-scroll-lab', key: 'virtualScrollLab', defaultValue: '', inverted: false }
         ];
         await bindSettingsList(viewSettings);
+        await bindSettingsList(memorySettings);
+        // master off → the four sub-layer rows grey out (记住视图 stays live)
+        {
+            const master = $('remember-prev-state');
+            const subs = ['remember-scroll', 'remember-opens', 'remember-highlight', 'remember-search-query']
+                .map(id => $(id));
+            const syncSubs = () => {
+                const off = !(master && master.checked);
+                for (const el of subs)
+                    if (el)
+                        el.disabled = off;
+            };
+            if (master) {
+                master.addEventListener('change', syncSubs);
+                syncSubs();
+            }
+        }
         await bindSettingsList(treeSettings);
         await bindSettingsList(searchSettings);
         await bindSettingsList(iconsSettings);
@@ -914,6 +944,11 @@ const $ = id => document.getElementById(id);
         // per-view groups in tab order (tree/search/tab groups/recent/stats/
         // dead/dupes), then Icons and the rest. Tab groups is a real group
         // since 4.1.0 (color style + closed-history depth).
+        document.getElementById('memory-options').innerText = __m('optionsGroupMemory');
+        document.getElementById('option-remember-scroll').innerText = __m('optionRememberScroll');
+        document.getElementById('option-remember-opens').innerText = __m('optionRememberOpens');
+        document.getElementById('option-remember-highlight').innerText = __m('optionRememberHighlight');
+        document.getElementById('option-remember-search-query').innerText = __m('optionRememberSearchQuery');
         document.getElementById('views-options').innerText = __m('optionsGroupViews');
         document.getElementById('tree-options').innerText = __m('viewTree');
         document.getElementById('search-options').innerText = __m('viewSearch');

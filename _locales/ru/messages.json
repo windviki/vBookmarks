@@ -1052,8 +1052,20 @@
   "optionRecentCount": {
     "message": "Количество недавно добавленных закладок для отображения"
   },
+  "optionRememberHighlight": {
+    "message": "Выделять последнюю открытую закладку"
+  },
+  "optionRememberOpens": {
+    "message": "Запоминать открытые папки"
+  },
   "optionRememberPrevState": {
-    "message": "Запоминать предыдущее состояние (позицию прокрутки, открытые папки и последний сфокусированный элемент)."
+    "message": "Запоминать предыдущее состояние"
+  },
+  "optionRememberScroll": {
+    "message": "Запоминать позицию прокрутки"
+  },
+  "optionRememberSearchQuery": {
+    "message": "Запоминать последний поиск"
   },
   "optionRememberView": {
     "message": "Запоминать последний активный вид и открывать его заново"
@@ -1183,6 +1195,9 @@
   },
   "optionsGroupLabs": {
     "message": "Лаборатория"
+  },
+  "optionsGroupMemory": {
+    "message": "Память"
   },
   "optionsGroupPalette": {
     "message": "Палитра команд"

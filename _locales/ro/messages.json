@@ -1052,8 +1052,20 @@
   "optionRecentCount": {
     "message": "Numărul de marcaje recent adăugate de afișat"
   },
+  "optionRememberHighlight": {
+    "message": "Evidențiază ultimul semn de carte deschis"
+  },
+  "optionRememberOpens": {
+    "message": "Reține dosarele deschise"
+  },
   "optionRememberPrevState": {
-    "message": "Reține starea anterioară (poziția de derulare, folderele deschise și ultimul element focalizat)."
+    "message": "Reține starea anterioară"
+  },
+  "optionRememberScroll": {
+    "message": "Reține poziția de derulare"
+  },
+  "optionRememberSearchQuery": {
+    "message": "Reține ultima căutare"
   },
   "optionRememberView": {
     "message": "Reține ultima vizualizare activă și redeschide-o"
@@ -1183,6 +1195,9 @@
   },
   "optionsGroupLabs": {
     "message": "Laborator"
+  },
+  "optionsGroupMemory": {
+    "message": "Memorie"
   },
   "optionsGroupPalette": {
     "message": "Paletă de comenzi"

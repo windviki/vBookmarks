@@ -1052,8 +1052,20 @@
   "optionRecentCount": {
     "message": "จำนวนบุ๊กมาร์กที่เพิ่มล่าสุดที่จะแสดง"
   },
+  "optionRememberHighlight": {
+    "message": "ไฮไลต์บุ๊กมาร์กที่เปิดล่าสุด"
+  },
+  "optionRememberOpens": {
+    "message": "จำโฟลเดอร์ที่เปิดไว้"
+  },
   "optionRememberPrevState": {
-    "message": "จดจำสถานะก่อนหน้า (ตำแหน่งการเลื่อน โฟลเดอร์ที่เปิดอยู่ และรายการที่โฟกัสล่าสุด)"
+    "message": "จำสถานะก่อนหน้า"
+  },
+  "optionRememberScroll": {
+    "message": "จำตำแหน่งการเลื่อน"
+  },
+  "optionRememberSearchQuery": {
+    "message": "จำการค้นหาล่าสุด"
   },
   "optionRememberView": {
     "message": "จดจำมุมมองที่ใช้งานล่าสุดและเปิดกลับมาใหม่"
@@ -1183,6 +1195,9 @@
   },
   "optionsGroupLabs": {
     "message": "ห้องทดลอง"
+  },
+  "optionsGroupMemory": {
+    "message": "ความจำ"
   },
   "optionsGroupPalette": {
     "message": "พาเลตต์คำสั่ง"

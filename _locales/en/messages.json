@@ -1157,8 +1157,20 @@
   "optionRecentCount": {
     "message": "Number of recently added bookmarks to show"
   },
+  "optionRememberHighlight": {
+    "message": "Highlight the last opened bookmark"
+  },
+  "optionRememberOpens": {
+    "message": "Remember opened folders"
+  },
   "optionRememberPrevState": {
     "message": "Remember previous state (scroll position, opened folders and the last focused item)."
+  },
+  "optionRememberScroll": {
+    "message": "Remember the scroll position"
+  },
+  "optionRememberSearchQuery": {
+    "message": "Remember the last search"
   },
   "optionRememberView": {
     "message": "Remember the last active view and reopen it"
@@ -1292,6 +1304,9 @@
   },
   "optionsGroupLabs": {
     "message": "Labs"
+  },
+  "optionsGroupMemory": {
+    "message": "Memory"
   },
   "optionsGroupPalette": {
     "message": "Command palette"

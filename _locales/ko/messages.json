@@ -1052,8 +1052,20 @@
   "optionRecentCount": {
     "message": "최근 추가된 북마크 표시 개수"
   },
+  "optionRememberHighlight": {
+    "message": "마지막으로 연 북마크 강조"
+  },
+  "optionRememberOpens": {
+    "message": "연 폴더 기억"
+  },
   "optionRememberPrevState": {
-    "message": "이전 상태 기억(스크롤 위치, 열린 폴더 및 마지막으로 포커스된 항목)"
+    "message": "이전 상태 기억"
+  },
+  "optionRememberScroll": {
+    "message": "스크롤 위치 기억"
+  },
+  "optionRememberSearchQuery": {
+    "message": "마지막 검색 기억"
   },
   "optionRememberView": {
     "message": "마지막 활성 보기를 기억하고 다시 열기"
@@ -1183,6 +1195,9 @@
   },
   "optionsGroupLabs": {
     "message": "실험실"
+  },
+  "optionsGroupMemory": {
+    "message": "기억"
   },
   "optionsGroupPalette": {
     "message": "명령 팔레트"

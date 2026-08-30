@@ -1052,8 +1052,20 @@
   "optionRecentCount": {
     "message": "Antall nylig lagt til bokmerker å vise"
   },
+  "optionRememberHighlight": {
+    "message": "Fremhev sist åpnede bokmerke"
+  },
+  "optionRememberOpens": {
+    "message": "Husk åpne mapper"
+  },
   "optionRememberPrevState": {
-    "message": "Husk forrige tilstand (rulleposisjon, åpnede mapper og sist fokuserte element)."
+    "message": "Husk forrige tilstand"
+  },
+  "optionRememberScroll": {
+    "message": "Husk rulleposisjonen"
+  },
+  "optionRememberSearchQuery": {
+    "message": "Husk siste søk"
   },
   "optionRememberView": {
     "message": "Husk siste aktive visning og åpne den igjen"
@@ -1183,6 +1195,9 @@
   },
   "optionsGroupLabs": {
     "message": "Laboratorier"
+  },
+  "optionsGroupMemory": {
+    "message": "Hukommelse"
   },
   "optionsGroupPalette": {
     "message": "Kommando-palett"

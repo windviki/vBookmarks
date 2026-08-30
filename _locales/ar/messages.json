@@ -1052,8 +1052,20 @@
   "optionRecentCount": {
     "message": "عدد الإشارات المرجعية المضافة حديثًا للعرض"
   },
+  "optionRememberHighlight": {
+    "message": "تمييز آخر إشارة مرجعية تم فتحها"
+  },
+  "optionRememberOpens": {
+    "message": "تذكر المجلدات المفتوحة"
+  },
   "optionRememberPrevState": {
-    "message": "تذكر الحالة السابقة (موضع التمرير، المجلدات المفتوحة، وآخر عنصر تم التركيز عليه)."
+    "message": "تذكر الحالة السابقة"
+  },
+  "optionRememberScroll": {
+    "message": "تذكر موضع التمرير"
+  },
+  "optionRememberSearchQuery": {
+    "message": "تذكر آخر عملية بحث"
   },
   "optionRememberView": {
     "message": "تذكر آخر عرض نشط وأعد فتحه"
@@ -1183,6 +1195,9 @@
   },
   "optionsGroupLabs": {
     "message": "المختبرات"
+  },
+  "optionsGroupMemory": {
+    "message": "الذاكرة"
   },
   "optionsGroupPalette": {
     "message": "لوحة الأوامر"

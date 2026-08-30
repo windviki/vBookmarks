@@ -1052,8 +1052,20 @@
   "optionRecentCount": {
     "message": "Antal nyligt tilføjede bogmærker, der skal vises"
   },
+  "optionRememberHighlight": {
+    "message": "Fremhæv det senest åbnede bogmærke"
+  },
+  "optionRememberOpens": {
+    "message": "Husk åbnede mapper"
+  },
   "optionRememberPrevState": {
-    "message": "Husk tidligere tilstand (rulposition, åbnede mapper og det sidste fokuserede element)."
+    "message": "Husk forrige tilstand"
+  },
+  "optionRememberScroll": {
+    "message": "Husk rullepositionen"
+  },
+  "optionRememberSearchQuery": {
+    "message": "Husk den seneste søgning"
   },
   "optionRememberView": {
     "message": "Husk den senest aktive visning og åbn den igen"
@@ -1183,6 +1195,9 @@
   },
   "optionsGroupLabs": {
     "message": "Laboratorier"
+  },
+  "optionsGroupMemory": {
+    "message": "Hukommelse"
   },
   "optionsGroupPalette": {
     "message": "Kommandopalet"

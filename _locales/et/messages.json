@@ -1052,8 +1052,20 @@
   "optionRecentCount": {
     "message": "Näidatavate hiljuti lisatud järjehoidjate arv"
   },
+  "optionRememberHighlight": {
+    "message": "Tõsta esile viimati avatud järjehoidja"
+  },
+  "optionRememberOpens": {
+    "message": "Jäta avatud kaustad meelde"
+  },
   "optionRememberPrevState": {
-    "message": "Jäta meelde eelmine olek (kerimisasend, avatud kaustad ja viimati fookustatud üksus)."
+    "message": "Jäta eelmine olek meelde"
+  },
+  "optionRememberScroll": {
+    "message": "Jäta kerimisasend meelde"
+  },
+  "optionRememberSearchQuery": {
+    "message": "Jäta viimane otsing meelde"
   },
   "optionRememberView": {
     "message": "Jäta meelde viimane aktiivne vaade ja ava see uuesti"
@@ -1183,6 +1195,9 @@
   },
   "optionsGroupLabs": {
     "message": "Laborid"
+  },
+  "optionsGroupMemory": {
+    "message": "Mälu"
   },
   "optionsGroupPalette": {
     "message": "Käsupalett"

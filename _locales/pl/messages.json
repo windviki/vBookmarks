@@ -1052,8 +1052,20 @@
   "optionRecentCount": {
     "message": "Liczba ostatnio dodanych zakładek do wyświetlenia"
   },
+  "optionRememberHighlight": {
+    "message": "Wyróżnij ostatnio otwartą zakładkę"
+  },
+  "optionRememberOpens": {
+    "message": "Zapamiętuj otwarte foldery"
+  },
   "optionRememberPrevState": {
-    "message": "Zapamiętaj poprzedni stan (pozycję przewijania, otwarte foldery i ostatnio zaznaczony element)."
+    "message": "Zapamiętuj poprzedni stan"
+  },
+  "optionRememberScroll": {
+    "message": "Zapamiętuj pozycję przewijania"
+  },
+  "optionRememberSearchQuery": {
+    "message": "Zapamiętuj ostatnie wyszukiwanie"
   },
   "optionRememberView": {
     "message": "Zapamiętaj ostatnio aktywny widok i przywróć go"
@@ -1183,6 +1195,9 @@
   },
   "optionsGroupLabs": {
     "message": "Laboratorium"
+  },
+  "optionsGroupMemory": {
+    "message": "Pamięć"
   },
   "optionsGroupPalette": {
     "message": "Paleta poleceń"

@@ -1052,8 +1052,20 @@
   "optionRecentCount": {
     "message": "Rādāmo nesen pievienoto grāmatzīmju skaits"
   },
+  "optionRememberHighlight": {
+    "message": "Iezīmēt pēdējo atvērto grāmatzīmi"
+  },
+  "optionRememberOpens": {
+    "message": "Atcerēties atvērtās mapes"
+  },
   "optionRememberPrevState": {
-    "message": "Atcerēties iepriekšējo stāvokli (ritināšanas pozīciju, atvērtās mapes un pēdējo fokusēto vienumu)."
+    "message": "Atcerēties iepriekšējo stāvokli"
+  },
+  "optionRememberScroll": {
+    "message": "Atcerēties ritināšanas pozīciju"
+  },
+  "optionRememberSearchQuery": {
+    "message": "Atcerēties pēdējo meklēšanu"
   },
   "optionRememberView": {
     "message": "Atcerēties pēdējo aktīvo skatu un atvērt to vēlreiz"
@@ -1183,6 +1195,9 @@
   },
   "optionsGroupLabs": {
     "message": "Laboratorija"
+  },
+  "optionsGroupMemory": {
+    "message": "Atmiņa"
   },
   "optionsGroupPalette": {
     "message": "Komandu palete"

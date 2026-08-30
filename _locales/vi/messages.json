@@ -1052,8 +1052,20 @@
   "optionRecentCount": {
     "message": "Số lượng bookmark mới thêm vào để hiển thị"
   },
+  "optionRememberHighlight": {
+    "message": "Đánh dấu dấu trang mở gần nhất"
+  },
+  "optionRememberOpens": {
+    "message": "Ghi nhớ thư mục đang mở"
+  },
   "optionRememberPrevState": {
-    "message": "Ghi nhớ trạng thái trước đó (vị trí cuộn, thư mục đã mở và mục được tập trung cuối cùng)."
+    "message": "Ghi nhớ trạng thái trước"
+  },
+  "optionRememberScroll": {
+    "message": "Ghi nhớ vị trí cuộn"
+  },
+  "optionRememberSearchQuery": {
+    "message": "Ghi nhớ tìm kiếm gần nhất"
   },
   "optionRememberView": {
     "message": "Ghi nhớ chế độ xem cuối cùng và mở lại"
@@ -1183,6 +1195,9 @@
   },
   "optionsGroupLabs": {
     "message": "Thử nghiệm"
+  },
+  "optionsGroupMemory": {
+    "message": "Bộ nhớ"
   },
   "optionsGroupPalette": {
     "message": "Bảng lệnh"

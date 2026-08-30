@@ -1052,8 +1052,20 @@
   "optionRecentCount": {
     "message": "Αριθμός πρόσφατων σελιδοδεικτών προς εμφάνιση"
   },
+  "optionRememberHighlight": {
+    "message": "Επισήμανση του τελευταίου ανοιγμένου σελιδοδείκτη"
+  },
+  "optionRememberOpens": {
+    "message": "Απομνημόνευση των ανοιχτών φακέλων"
+  },
   "optionRememberPrevState": {
-    "message": "Απομνημόνευση της προηγούμενης κατάστασης (θέση κύλισης, ανοιχτοί φάκελοι και το τελευταίο εστιασμένο στοιχείο)."
+    "message": "Απομνημόνευση της προηγούμενης κατάστασης"
+  },
+  "optionRememberScroll": {
+    "message": "Απομνημόνευση της θέσης κύλισης"
+  },
+  "optionRememberSearchQuery": {
+    "message": "Απομνημόνευση της τελευταίας αναζήτησης"
   },
   "optionRememberView": {
     "message": "Να θυμάται την τελευταία ενεργή προβολή και να την ανοίγει ξανά"
@@ -1183,6 +1195,9 @@
   },
   "optionsGroupLabs": {
     "message": "Εργαστήρια"
+  },
+  "optionsGroupMemory": {
+    "message": "Μνήμη"
   },
   "optionsGroupPalette": {
     "message": "Παλέτα εντολών"

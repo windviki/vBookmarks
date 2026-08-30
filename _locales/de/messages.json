@@ -1052,8 +1052,20 @@
   "optionRecentCount": {
     "message": "Anzahl der anzuzeigenden kürzlich hinzugefügten Lesezeichen"
   },
+  "optionRememberHighlight": {
+    "message": "Zuletzt geöffnetes Lesezeichen hervorheben"
+  },
+  "optionRememberOpens": {
+    "message": "Geöffnete Ordner merken"
+  },
   "optionRememberPrevState": {
-    "message": "Vorherigen Zustand merken (Scrollposition, geöffnete Ordner und zuletzt fokussiertes Element)."
+    "message": "Vorherigen Zustand merken"
+  },
+  "optionRememberScroll": {
+    "message": "Scrollposition merken"
+  },
+  "optionRememberSearchQuery": {
+    "message": "Letzte Suche merken"
   },
   "optionRememberView": {
     "message": "Letzte aktive Ansicht merken und wieder öffnen"
@@ -1183,6 +1195,9 @@
   },
   "optionsGroupLabs": {
     "message": "Labore"
+  },
+  "optionsGroupMemory": {
+    "message": "Speicherung"
   },
   "optionsGroupPalette": {
     "message": "Befehlspalette"

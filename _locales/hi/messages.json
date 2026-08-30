@@ -1052,8 +1052,20 @@
   "optionRecentCount": {
     "message": "हाल ही में जोड़े गए बुकमार्क की संख्या दिखाएं"
   },
+  "optionRememberHighlight": {
+    "message": "अंतिम खोले गए बुकमार्क को हाइलाइट करें"
+  },
+  "optionRememberOpens": {
+    "message": "खुले फ़ोल्डर याद रखें"
+  },
   "optionRememberPrevState": {
-    "message": "पिछली स्थिति याद रखें (स्क्रॉल स्थिति, खुले फ़ोल्डर और अंतिम फ़ोकस किया गया आइटम)।"
+    "message": "पिछली स्थिति याद रखें"
+  },
+  "optionRememberScroll": {
+    "message": "स्क्रॉल स्थिति याद रखें"
+  },
+  "optionRememberSearchQuery": {
+    "message": "अंतिम खोज याद रखें"
   },
   "optionRememberView": {
     "message": "अंतिम सक्रिय दृश्य याद रखें और इसे फिर से खोलें"
@@ -1183,6 +1195,9 @@
   },
   "optionsGroupLabs": {
     "message": "प्रयोगशाला"
+  },
+  "optionsGroupMemory": {
+    "message": "स्मृति"
   },
   "optionsGroupPalette": {
     "message": "कमांड पैलेट"

@@ -423,6 +423,8 @@ describe('store.js', () => {
                 'theme', 'uiLanguage',
                 'leftClickNewTab', 'middleClickBgTab', 'closeUnusedFolders', 'bookmarkClickStayOpen',
                 'dontConfirmOpenFolder', 'confirmDeleteFolder', 'dontRememberState',
+                // 4.1.1 分层记忆 sub-layers
+                'rememberScroll', 'rememberOpens', 'rememberHighlight', 'rememberSearchQuery',
                 'onlyShowBMBar', 'searchAfterEnter', 'announceEnabled',
                 'showViewTabs', 'rememberView', 'showTabBadges', 'showItemPath',
                 'showRecentBookmarks', 'showStatsView', 'showDeadView', 'showDupesView', 'showTabGroupsView',

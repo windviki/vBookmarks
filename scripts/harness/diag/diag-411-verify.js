@@ -276,6 +276,42 @@ const ck = (name, ok, extra) => {
         });
         ck('H reverseItemPath on: meta line nearest-first', /ZZSubFolderZZ\s*<\s*__verify__/.test(meta), JSON.stringify(meta));
 
+        // ---- M. 4.1.1 分层记忆 end-to-end ----
+        // M1: highlight layer off — a stored focusID never re-highlights
+        await page.evaluate(id => {
+            chrome.storage.local.set({ focusID: id });
+            chrome.storage.sync.set({ rememberHighlight: '' });
+        }, bmId);
+        await page.reload({ waitUntil: 'load' });
+        await sleep(1500);
+        const hl = await page.evaluate(() => ({
+            marked: document.querySelectorAll('#tree .focus').length,
+            inputFocused: document.activeElement && document.activeElement.id === 'search-input'
+        }));
+        ck('M1 rememberHighlight off: no re-highlighted row on open', hl.marked === 0, JSON.stringify(hl));
+
+        // M2: opens layer off — every folder renders collapsed
+        await page.evaluate(() => {
+            chrome.storage.sync.set({ rememberHighlight: '1', rememberOpens: '' });
+        });
+        await page.reload({ waitUntil: 'load' });
+        await sleep(1500);
+        const op = await page.evaluate(() => ({
+            open: document.querySelectorAll('#tree li.open').length
+        }));
+        ck('M2 rememberOpens off: every folder collapsed on open', op.open === 0, JSON.stringify(op));
+
+        // M3: query layer off — a stored searchQuery never renders
+        await page.evaluate(() => {
+            chrome.storage.local.set({ searchQuery: 'verify' });
+            chrome.storage.sync.set({ rememberOpens: '1', rememberSearchQuery: '' });
+        });
+        await page.reload({ waitUntil: 'load' });
+        await sleep(1500);
+        const qv = await page.evaluate(() => document.getElementById('search-input').value);
+        ck('M3 rememberSearchQuery off: the box opens empty', qv === '', JSON.stringify(qv));
+        await page.evaluate(() => new Promise(res => chrome.storage.sync.set({ rememberSearchQuery: '1' }, res)));
+
         console.log(`\n==== ${pass} passed, ${fail} failed ====`);
         process.exit(fail ? 1 : 0);
     } finally { await browser.close(); }

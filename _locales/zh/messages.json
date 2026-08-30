@@ -1068,8 +1068,20 @@
   "optionRecentCount": {
     "message": "最近添加书签的显示条数"
   },
+  "optionRememberHighlight": {
+    "message": "高亮上次打开的书签"
+  },
+  "optionRememberOpens": {
+    "message": "记住展开的文件夹"
+  },
   "optionRememberPrevState": {
-    "message": "记住之前的状态（滚动位置、已打开的文件夹和上次聚焦的书签）。"
+    "message": "记住之前的状态"
+  },
+  "optionRememberScroll": {
+    "message": "记住滚动位置"
+  },
+  "optionRememberSearchQuery": {
+    "message": "记住上次的搜索词"
   },
   "optionRememberView": {
     "message": "记住上次所在的视图并在打开时恢复"
@@ -1200,6 +1212,9 @@
   },
   "optionsGroupLabs": {
     "message": "实验室"
+  },
+  "optionsGroupMemory": {
+    "message": "记忆"
   },
   "optionsGroupPalette": {
     "message": "命令面板"

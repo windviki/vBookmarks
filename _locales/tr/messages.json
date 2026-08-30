@@ -1052,8 +1052,20 @@
   "optionRecentCount": {
     "message": "Gösterilecek yeni eklenen yer imi sayısı"
   },
+  "optionRememberHighlight": {
+    "message": "Son açılan yer imini vurgula"
+  },
+  "optionRememberOpens": {
+    "message": "Açık klasörleri hatırla"
+  },
   "optionRememberPrevState": {
-    "message": "Önceki durumu hatırla (kaydırma konumu, açık klasörler ve son odaklanan öğe)."
+    "message": "Önceki durumu hatırla"
+  },
+  "optionRememberScroll": {
+    "message": "Kaydırma konumunu hatırla"
+  },
+  "optionRememberSearchQuery": {
+    "message": "Son aramayı hatırla"
   },
   "optionRememberView": {
     "message": "Son etkin görünümü hatırla ve onu yeniden aç"
@@ -1183,6 +1195,9 @@
   },
   "optionsGroupLabs": {
     "message": "Laboratuvarlar"
+  },
+  "optionsGroupMemory": {
+    "message": "Hafıza"
   },
   "optionsGroupPalette": {
     "message": "Komut paleti"

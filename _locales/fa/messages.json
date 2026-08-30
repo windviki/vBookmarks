@@ -1052,8 +1052,20 @@
   "optionRecentCount": {
     "message": "تعداد بوکمارک‌های اخیر برای نمایش"
   },
+  "optionRememberHighlight": {
+    "message": "برجسته کردن آخرین نشانک باز شده"
+  },
+  "optionRememberOpens": {
+    "message": "به خاطر سپردن پوشه‌های باز"
+  },
   "optionRememberPrevState": {
-    "message": "به خاطر سپردن وضعیت قبلی (موقعیت اسکرول، پوشه‌های باز و آخرین مورد متمرکز شده)."
+    "message": "به خاطر سپردن وضعیت قبلی"
+  },
+  "optionRememberScroll": {
+    "message": "به خاطر سپردن موقعیت پیمایش"
+  },
+  "optionRememberSearchQuery": {
+    "message": "به خاطر سپردن آخرین جستجو"
   },
   "optionRememberView": {
     "message": "به‌خاطر سپردن آخرین نمای فعال و بازگشایی آن"
@@ -1183,6 +1195,9 @@
   },
   "optionsGroupLabs": {
     "message": "آزمایشگاه"
+  },
+  "optionsGroupMemory": {
+    "message": "حافظه"
   },
   "optionsGroupPalette": {
     "message": "پالت فرمان"

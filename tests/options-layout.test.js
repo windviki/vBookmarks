@@ -30,7 +30,7 @@ describe('options page group structure (round-6 item 5, v4 task-3 #17 merge)', (
         // custom styles / backup+reset / labs — advanced-options merged in.
         // 4.1.0: the tab-groups group is live; only dupes stays a placeholder.
         // 4.1.0: the Labs group (experimental features, default-off switches).
-        expect(count(optionsHtml, '<section class="options-group">')).toBe(20);
+        expect(count(optionsHtml, '<section class="options-group">')).toBe(21);
         expect(count(optionsHtml, '<section class="options-group" hidden>')).toBe(1);
         expect(optionsHtml).toContain('<main class="options-grid">');
         for (const id of ['general', 'views-options', 'tree-options', 'search-options', 'tabgroups-options',
@@ -96,7 +96,8 @@ describe('options page group structure (round-6 item 5, v4 task-3 #17 merge)', (
         };
         // Views carries the display items AND every per-view show switch.
         const views = bodyOf('views-options');
-        for (const id of ['show-view-tabs', 'remember-view', 'show-tab-badges', 'show-item-path',
+        // 4.1.1: remember-view moved to the memory group
+        for (const id of ['show-view-tabs', 'show-tab-badges', 'show-item-path',
                 'show-tab-groups-view', 'show-recent-bookmarks', 'show-stats-view', 'show-dead-view', 'show-dupes-view'])
             expect(views).toContain(`id="${id}"`);
         for (const id of ['recent-count', 'only-show-bmbar', 'search-after-enter'])

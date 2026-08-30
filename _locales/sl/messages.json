@@ -1052,8 +1052,20 @@
   "optionRecentCount": {
     "message": "Število nedavno dodanih zaznamkov za prikaz"
   },
+  "optionRememberHighlight": {
+    "message": "Poudari zadnji odprti zaznamek"
+  },
+  "optionRememberOpens": {
+    "message": "Zapomni si odprte mape"
+  },
   "optionRememberPrevState": {
-    "message": "Zapomni si prejšnje stanje (položaj drsnika, odprte mape in zadnji osredotočeni element)."
+    "message": "Zapomni si prejšnje stanje"
+  },
+  "optionRememberScroll": {
+    "message": "Zapomni si položaj pomika"
+  },
+  "optionRememberSearchQuery": {
+    "message": "Zapomni si zadnje iskanje"
   },
   "optionRememberView": {
     "message": "Zapomni si zadnji aktivni pogled in ga znova odpri"
@@ -1183,6 +1195,9 @@
   },
   "optionsGroupLabs": {
     "message": "Laboratorij"
+  },
+  "optionsGroupMemory": {
+    "message": "Spomin"
   },
   "optionsGroupPalette": {
     "message": "Ukazna paleta"

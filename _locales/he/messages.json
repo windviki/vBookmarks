@@ -1052,8 +1052,20 @@
   "optionRecentCount": {
     "message": "מספר הסימניות שנוספו לאחרונה להצגה"
   },
+  "optionRememberHighlight": {
+    "message": "הדגשת הסימנייה האחרונה שנפתחה"
+  },
+  "optionRememberOpens": {
+    "message": "זכירת התיקיות הפתוחות"
+  },
   "optionRememberPrevState": {
-    "message": "זכור מצב קודם (מיקום גלילה, תיקיות פתוחות והפריט האחרון בפוקוס)."
+    "message": "זכירת המצב הקודם"
+  },
+  "optionRememberScroll": {
+    "message": "זכירת מקום הגלילה"
+  },
+  "optionRememberSearchQuery": {
+    "message": "זכירת החיפוש האחרון"
   },
   "optionRememberView": {
     "message": "זכור את התצוגה הפעילה האחרונה ופתח אותה מחדש"
@@ -1183,6 +1195,9 @@
   },
   "optionsGroupLabs": {
     "message": "מעבדות"
+  },
+  "optionsGroupMemory": {
+    "message": "זיכרון"
   },
   "optionsGroupPalette": {
     "message": "פלטת פקודות"

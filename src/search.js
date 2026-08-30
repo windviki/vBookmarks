@@ -1291,7 +1291,8 @@ export function initSearch(ctx = {}) {
     });
 
     // Saved search query
-    if (ctx.rememberState && store.get('searchQuery')) {
+    // 分层记忆: rememberSearchQuery off → every open starts with an empty box
+    if (ctx.rememberState && store.get('rememberSearchQuery', '1') && store.get('searchQuery')) {
         searchInput.value = store.get('searchQuery');
         search();
         searchInput.select();

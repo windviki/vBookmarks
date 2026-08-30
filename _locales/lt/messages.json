@@ -1052,8 +1052,20 @@
   "optionRecentCount": {
     "message": "Neseniai pridėtų žymių rodymo skaičius"
   },
+  "optionRememberHighlight": {
+    "message": "Paryškinti paskutinį atvertą žymelę"
+  },
+  "optionRememberOpens": {
+    "message": "Atsiminti atvertus aplankus"
+  },
   "optionRememberPrevState": {
-    "message": "Prisiminti ankstesnę būseną (slinkties padėtis, atidaryti aplankai ir paskutinis fokusuotas elementas)."
+    "message": "Atsiminti ankstesnę būseną"
+  },
+  "optionRememberScroll": {
+    "message": "Atsiminti slinkimo vietą"
+  },
+  "optionRememberSearchQuery": {
+    "message": "Atsiminti paskutinę paiešką"
   },
   "optionRememberView": {
     "message": "Įsiminti paskutinį aktyvų rodinį ir atidaryti jį iš naujo"
@@ -1183,6 +1195,9 @@
   },
   "optionsGroupLabs": {
     "message": "Laboratorija"
+  },
+  "optionsGroupMemory": {
+    "message": "Atmintis"
   },
   "optionsGroupPalette": {
     "message": "Komandų paletė"

@@ -59,6 +59,8 @@
         // general options
         'leftClickNewTab', 'middleClickBgTab', 'closeUnusedFolders', 'bookmarkClickStayOpen',
         'dontConfirmOpenFolder', 'dontRememberState', 'onlyShowBMBar', 'searchAfterEnter',
+        // 4.1.1 分层记忆: the master flag's four sub-layers (master off wins all)
+        'rememberScroll', 'rememberOpens', 'rememberHighlight', 'rememberSearchQuery',
         'autoResizePopup',
         // v4 task-2: view layer (slice A)
         'activeView', 'viewState', 'showViewTabs', 'showItemPath', 'reverseItemPath',
@@ -192,6 +194,7 @@
         // general behavior
         'leftClickNewTab', 'middleClickBgTab', 'closeUnusedFolders', 'bookmarkClickStayOpen',
         'dontConfirmOpenFolder', 'confirmDeleteFolder', 'dontRememberState',
+        'rememberScroll', 'rememberOpens', 'rememberHighlight', 'rememberSearchQuery',
         'onlyShowBMBar', 'searchAfterEnter', 'announceEnabled',
         // views: tab strip, per-view visibility/disable, badges, path labels
         'showViewTabs', 'rememberView', 'showTabBadges', 'showItemPath',

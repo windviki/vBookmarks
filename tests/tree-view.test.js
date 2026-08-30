@@ -571,6 +571,25 @@ describe('generateTree', () => {
         expect(ctx.store.removes).toEqual([]);
     });
 
+    // 4.1.1 分层记忆: the master's sub-layers refine the restore.
+    it('rememberScroll off keeps the tree at the top despite a stored scrollTop', () => {
+        const ctx = setup({ storeData: { scrollTop: 555, rememberScroll: '' }, rememberState: true });
+        ctx.tree.scrollTop = 0;
+        ctx.treeView.generateTree(['ROOT']);
+        expect(ctx.tree.scrollTop).toBe(0);
+        tickAll();
+    });
+
+    it('rememberHighlight off skips the row re-highlight and drops the stale focusID', () => {
+        const ctx = setup({ storeData: { focusID: '5', rememberHighlight: '' }, rememberState: true });
+        const { span } = ctx.makeFolder('5');
+        ctx.tree.style.overflow = 'auto';
+        ctx.treeView.generateTree(['ROOT']);
+        expect(span.classList.contains('focus')).toBe(false);
+        expect(span.focused).toBe(false);
+        expect(ctx.store.removes).toEqual(['focusID']);
+    });
+
     it('stands the row re-focus down under focusSearchOnOpen and drops the stale focusID (issue #64)', () => {
         // The option hands the startup focus to the search input's autofocus;
         // the row re-focus would fire after it and steal the focus right

@@ -194,7 +194,9 @@ export function initTreeView(ctx = {}) {
         let chunked = null;
         if (snapshot && snapshot.blocks && snapshot.blocks.length > 4) {
             const estRows = estimateTreeRows(snapshot.blocks);
-            const savedTop = parseInt(store.get('scrollTop') || '0', 10) || 0;
+            // 分层记忆: scroll layer off → no restore target, gate reads 0
+            const savedTop = store.get('rememberScroll', '1')
+                ? (parseInt(store.get('scrollTop') || '0', 10) || 0) : 0;
             const viewH = ($tree.clientHeight || 620);
             const hasFocusMemory = !!store.get('focusID');
             if (estRows > CHUNK_MIN_ROWS && savedTop <= viewH && !hasFocusMemory)
@@ -210,7 +212,7 @@ export function initTreeView(ctx = {}) {
         if (onTreeGenerated)
             onTreeGenerated(tree, snapshot);
 
-        if (getRememberState()) {
+        if (getRememberState() && store.get('rememberScroll', '1')) {
             $tree.scrollTop = store.get('scrollTop') ? store.get('scrollTop') : 0;
         }
         // after the scroll baseline is back, so focus() only scrolls the
@@ -231,7 +233,11 @@ export function initTreeView(ctx = {}) {
         // search input's autofocus owns the startup focus); the stale
         // focusID is dropped so a later bookmark-event re-render doesn't
         // scrollIntoView a row the user never restored to.
-        if (getRememberState() && !getFocusSearchOnOpen()) {
+        // 分层记忆: rememberHighlight off → no row re-highlight/refocus (the
+        // user-requested "disable the last-opened bookmark highlight");
+        // the stale focusID is dropped either way so a later bookmark-event
+        // re-render never scrollIntoViews an unrestored row.
+        if (getRememberState() && store.get('rememberHighlight', '1') && !getFocusSearchOnOpen()) {
             const focusID = store.get('focusID');
             // The park/restore law above may already have re-focused a live
             // row. The reveal treatment (width/overflow + .focus flash) is
@@ -272,7 +278,7 @@ export function initTreeView(ctx = {}) {
                     }, 4000);
                 }
             }
-        } else if (getRememberState() && getFocusSearchOnOpen()) {
+        } else if (getRememberState() && (getFocusSearchOnOpen() || !store.get('rememberHighlight', '1'))) {
             // issue #64: no row re-focus — drop the stale focusID eagerly
             // (the 4s delayed cleanup above belongs to the restore branch).
             store.remove('focusID');

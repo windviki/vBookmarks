@@ -1052,8 +1052,20 @@
   "optionRecentCount": {
     "message": "Numero di segnalibri aggiunti di recente da mostrare"
   },
+  "optionRememberHighlight": {
+    "message": "Evidenzia l'ultimo segnalibro aperto"
+  },
+  "optionRememberOpens": {
+    "message": "Ricorda le cartelle aperte"
+  },
   "optionRememberPrevState": {
-    "message": "Ricorda lo stato precedente (posizione di scorrimento, cartelle aperte e ultimo elemento selezionato)."
+    "message": "Ricorda lo stato precedente"
+  },
+  "optionRememberScroll": {
+    "message": "Ricorda la posizione di scorrimento"
+  },
+  "optionRememberSearchQuery": {
+    "message": "Ricorda l'ultima ricerca"
   },
   "optionRememberView": {
     "message": "Ricorda l'ultima vista attiva e riaprila"
@@ -1183,6 +1195,9 @@
   },
   "optionsGroupLabs": {
     "message": "Laboratori"
+  },
+  "optionsGroupMemory": {
+    "message": "Memoria"
   },
   "optionsGroupPalette": {
     "message": "Palette dei comandi"

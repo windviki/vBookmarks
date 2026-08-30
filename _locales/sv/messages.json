@@ -1052,8 +1052,20 @@
   "optionRecentCount": {
     "message": "Antal nyligen tillagda bokmärken att visa"
   },
+  "optionRememberHighlight": {
+    "message": "Markera senast öppnade bokmärke"
+  },
+  "optionRememberOpens": {
+    "message": "Kom ihåg öppnade mappar"
+  },
   "optionRememberPrevState": {
-    "message": "Kom ihåg föregående tillstånd (rullningsposition, öppnade mappar och senast fokuserade objekt)."
+    "message": "Kom ihåg föregående tillstånd"
+  },
+  "optionRememberScroll": {
+    "message": "Kom ihåg rullningsläget"
+  },
+  "optionRememberSearchQuery": {
+    "message": "Kom ihåg senaste sökningen"
   },
   "optionRememberView": {
     "message": "Kom ihåg den senast aktiva vyn och öppna den igen"
@@ -1183,6 +1195,9 @@
   },
   "optionsGroupLabs": {
     "message": "Labb"
+  },
+  "optionsGroupMemory": {
+    "message": "Minne"
   },
   "optionsGroupPalette": {
     "message": "Kommandopalett"

@@ -1052,8 +1052,20 @@
   "optionRecentCount": {
     "message": "顯示最近新增書籤的數量"
   },
+  "optionRememberHighlight": {
+    "message": "高亮上次開啟的書籤"
+  },
+  "optionRememberOpens": {
+    "message": "記住展開的資料夾"
+  },
   "optionRememberPrevState": {
-    "message": "記住之前的狀態（滾動位置、已開啟的資料夾及最後聚焦的項目）。"
+    "message": "記住之前的狀態"
+  },
+  "optionRememberScroll": {
+    "message": "記住捲動位置"
+  },
+  "optionRememberSearchQuery": {
+    "message": "記住上次的搜尋字詞"
   },
   "optionRememberView": {
     "message": "記住最後使用的檢視，並於重新開啟時還原"
@@ -1183,6 +1195,9 @@
   },
   "optionsGroupLabs": {
     "message": "實驗室"
+  },
+  "optionsGroupMemory": {
+    "message": "記憶"
   },
   "optionsGroupPalette": {
     "message": "指令面板"

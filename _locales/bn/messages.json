@@ -1052,8 +1052,20 @@
   "optionRecentCount": {
     "message": "প্রদর্শনের জন্য সম্প্রতি যোগ করা বুকমার্কের সংখ্যা"
   },
+  "optionRememberHighlight": {
+    "message": "সর্বশেষ খোলা বুকমার্ক হাইলাইট করুন"
+  },
+  "optionRememberOpens": {
+    "message": "খোলা ফোল্ডার মনে রাখুন"
+  },
   "optionRememberPrevState": {
-    "message": "পূর্ববর্তী অবস্থা মনে রাখুন (স্ক্রোল অবস্থান, খোলা ফোল্ডার এবং শেষ ফোকাস করা আইটেম)।"
+    "message": "পূর্ববর্তী অবস্থা মনে রাখুন"
+  },
+  "optionRememberScroll": {
+    "message": "স্ক্রল অবস্থান মনে রাখুন"
+  },
+  "optionRememberSearchQuery": {
+    "message": "সর্বশেষ অনুসন্ধান মনে রাখুন"
   },
   "optionRememberView": {
     "message": "শেষ সক্রিয় ভিউটি মনে রাখুন এবং এটি পুনরায় খুলুন"
@@ -1183,6 +1195,9 @@
   },
   "optionsGroupLabs": {
     "message": "ল্যাব"
+  },
+  "optionsGroupMemory": {
+    "message": "স্মৃতি"
   },
   "optionsGroupPalette": {
     "message": "কমান্ড প্যালেট"

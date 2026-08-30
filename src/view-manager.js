@@ -621,7 +621,7 @@ export function initViewManager(ctx = {}) {
     // Gated by the same remember option as the focusSpot memory (off: the
     // stored viewState rows are neither written nor restored).
     const restoreFocusRow = def => {
-        if (!def.listEl || !remember())
+        if (!def.listEl || !remember() || !store.get('rememberHighlight', '1'))
             return;
         const entry = readViewState()[def.id];
         const rowId = (entry && typeof entry === 'object') ? entry.focus : null;
@@ -770,7 +770,7 @@ export function initViewManager(ctx = {}) {
         if (id === currentSpot)
             return; // identity unchanged — no store churn
         currentSpot = id;
-        if (remember())
+        if (remember() && store.get('rememberHighlight', '1'))
             store.set('focusSpot', id);
     };
     document.addEventListener('focusin', onFocusIn, true);
@@ -855,7 +855,7 @@ export function initViewManager(ctx = {}) {
     // startup refocus, this never steals focus from a user who already began
     // typing or clicking (keydown/mousedown bail mid-retry).
     const restoreFocusSpot = () => {
-        if (!remember() || focusSearchOnOpen) {
+        if (!remember() || focusSearchOnOpen || !store.get('rememberHighlight', '1')) {
             store.set('focusSpot', null);
             pendingSpot = null;
             return;
@@ -945,8 +945,11 @@ export function initViewManager(ctx = {}) {
             if (prev.listEl && remember()) {
                 const state = readViewState();
                 state[prev.id] = {
-                    scroll: prev.persistScroll ? prev.listEl.scrollTop : scrollOf(state[prev.id]),
-                    focus: focusedRowId(prev.listEl)
+                    // 分层记忆: scroll rides the rememberScroll layer; the
+                    // remembered row rides rememberHighlight
+                    scroll: (prev.persistScroll && store.get('rememberScroll', '1'))
+                        ? prev.listEl.scrollTop : scrollOf(state[prev.id]),
+                    focus: store.get('rememberHighlight', '1') ? focusedRowId(prev.listEl) : null
                 };
                 store.set('viewState', JSON.stringify(state));
             }
@@ -963,7 +966,7 @@ export function initViewManager(ctx = {}) {
         }
         activeId = id;
         def.container.hidden = false;
-        if (def.persistScroll && def.listEl && remember()) {
+        if (def.persistScroll && def.listEl && remember() && store.get('rememberScroll', '1')) {
             const scroll = scrollOf(readViewState()[id]);
             if (scroll)
                 def.listEl.scrollTop = scroll;

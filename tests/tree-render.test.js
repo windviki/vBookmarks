@@ -68,7 +68,8 @@ afterAll(() => {
 });
 
 const makeStore = (data = {}, sync = { showSyncStatus: 'false' }) => ({
-    get: key => data[key],
+    // real store contract: get(key, defaultValue) falls back to the default
+    get: (key, def) => (key in data ? data[key] : def),
     getSyncSetting: (key, def) => (key in sync ? sync[key] : def)
 });
 
@@ -729,9 +730,29 @@ describe('buildPathMap (v4 task-2 §3.6)', () => {
     });
 });
 
+// 4.1.1 分层记忆: rememberOpens off — every folder renders collapsed,
+// even one listed in the persisted opens array.
+describe('rememberOpens layer', () => {
+    it('renders an opens-listed folder collapsed when the layer is off', () => {
+        const tr = setup({
+            store: makeStore({ rememberOpens: '' }),
+            getOpens: () => ['10']
+        });
+        const html = tr.generateHTML([{
+            id: '10', parentId: '0', title: 'F', children: [
+                { id: '11', parentId: '10', title: 'BM', url: 'https://e.com/' }
+            ]
+        }]);
+        expect(html).not.toContain('class="parent open');
+        expect(html).not.toContain('class="child');
+    });
+});
+
 describe('generateFolderHTML', () => {
     it('produces the exact row HTML for a plain folder', () => {
-        const tr = setup();
+        // treeRowActions off: the hover-quick-action tail stays out of the
+        // exact-HTML comparison (its own tests cover it separately)
+        const tr = setup({ store: makeStore({ treeRowActions: '' }) });
         const expected = [
             `<span tabindex="-1" style="-webkit-padding-start: 0px" class="tree-item-span" title="F">`,
             `\t\t   <b class="twisty">${CHEVRON_ICON}</b>`,

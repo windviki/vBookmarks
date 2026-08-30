@@ -1052,8 +1052,20 @@
   "optionRecentCount": {
     "message": "Megjelenítendő legutóbb hozzáadott könyvjelzők száma"
   },
+  "optionRememberHighlight": {
+    "message": "Utoljára megnyitott könyvjelző kiemelése"
+  },
+  "optionRememberOpens": {
+    "message": "Megnyitott mappák megjegyzése"
+  },
   "optionRememberPrevState": {
-    "message": "Emlékezzen az előző állapotra (görgetési pozíció, megnyitott mappák és az utoljára fókuszált elem)."
+    "message": "Előző állapot megjegyzése"
+  },
+  "optionRememberScroll": {
+    "message": "Görgetési pozíció megjegyzése"
+  },
+  "optionRememberSearchQuery": {
+    "message": "Utolsó keresés megjegyzése"
   },
   "optionRememberView": {
     "message": "Az utolsó aktív nézet megjegyzése és újranyitása"
@@ -1183,6 +1195,9 @@
   },
   "optionsGroupLabs": {
     "message": "Laboratórium"
+  },
+  "optionsGroupMemory": {
+    "message": "Memória"
   },
   "optionsGroupPalette": {
     "message": "Parancspaletta"

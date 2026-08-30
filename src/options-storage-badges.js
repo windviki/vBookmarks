@@ -42,16 +42,23 @@ export const OPTIONS_STORAGE_GROUPS = {
         { row: 'popup-stay-open', key: 'bookmarkClickStayOpen' },
         { row: 'confirm-open-folder', key: 'dontConfirmOpenFolder' },
         { row: 'confirm-delete-folder', key: 'confirmDeleteFolder' },
-        { row: 'remember-prev-state', key: 'dontRememberState' },
         { row: 'auto-resize-popup', key: 'autoResizePopup' },
         { row: 'open-in-side-panel', key: 'openInSidePanel' },
         { row: 'theme-select', key: 'theme' },
         { row: 'language-select', key: 'uiLanguage' },
         { row: 'announce-enabled', key: 'announceEnabled' }
     ],
+    // 4.1.1 分层记忆组 (all sync-routed → the cloud group badge)
+    'memory-options': [
+        { row: 'remember-prev-state', key: 'dontRememberState' },
+        { row: 'remember-scroll', key: 'rememberScroll' },
+        { row: 'remember-opens', key: 'rememberOpens' },
+        { row: 'remember-highlight', key: 'rememberHighlight' },
+        { row: 'remember-search-query', key: 'rememberSearchQuery' },
+        { row: 'remember-view', key: 'rememberView' }
+    ],
     'views-options': [
         { row: 'show-view-tabs', key: 'showViewTabs' },
-        { row: 'remember-view', key: 'rememberView' },
         { row: 'show-tab-badges', key: 'showTabBadges' },
         { row: 'show-item-path', key: 'showItemPath' },
         { row: 'show-tab-groups-view', key: 'showTabGroupsView' },

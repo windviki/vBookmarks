@@ -935,6 +935,18 @@ describe('input listeners', () => {
     });
 });
 
+// 4.1.1 分层记忆: rememberSearchQuery off — a stored query never renders.
+describe('rememberSearchQuery layer', () => {
+    it('a stored searchQuery is ignored when the layer is off', () => {
+        const { els, fuzzy } = setup({
+            rememberState: true,
+            storeData: { searchQuery: 'git', rememberSearchQuery: '' }
+        });
+        expect(els['search-input'].value).toBe('');
+        expect(fuzzy.calls).toHaveLength(0);
+    });
+});
+
 describe('saved query restore', () => {
     it('restores and searches the persisted query when rememberState is on', () => {
         const { s, els, fuzzy } = setup({ storeData: { searchQuery: 'git' }, rememberState: true });

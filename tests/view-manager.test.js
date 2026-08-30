@@ -1423,6 +1423,28 @@ describe('shared parent-path map (§3.6)', () => {
         expect(views.pathsReady()).toBe(true);
     });
 
+    // 4.1.1 分层记忆: viewState scroll rides rememberScroll, the remembered
+    // row rides rememberHighlight.
+    it('rememberScroll off: a persistScroll view restores no scrollTop', () => {
+        const { views, addRecent } = setup({
+            storeData: { viewState: '{"recent":{"scroll":42,"focus":null}}', rememberScroll: '' }
+        });
+        const recent = addRecent({ persistScroll: true });
+        views.activate('recent', { keepFocus: true });
+        expect(recent.listEl.scrollTop).toBe(0);
+    });
+
+    it('rememberHighlight off: the remembered row is never re-marked', () => {
+        const { views } = setup({
+            storeData: { viewState: '{"tree":{"scroll":0,"focus":"neat-tree-item-5"}}', rememberHighlight: '' }
+        });
+        views.activate('tree', { keepFocus: true });
+        const marked = views.views().find(v => v.id === 'tree').listEl.querySelector
+            ? views.views().find(v => v.id === 'tree').listEl.querySelector('.focus')
+            : null;
+        expect(marked).toBeFalsy();
+    });
+
     // issue #64: meta-line path form — canonical by default (tooltips always
     // canonical), nearest-first label map under the reverseItemPath option.
     it('pathLabelOf keeps the canonical form by default and flips under reverseItemPath', () => {

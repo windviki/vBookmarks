@@ -1052,8 +1052,20 @@
   "optionRecentCount": {
     "message": "表示する最近追加したブックマークの数"
   },
+  "optionRememberHighlight": {
+    "message": "最後に開いたブックマークを強調表示する"
+  },
+  "optionRememberOpens": {
+    "message": "開いたフォルダーを記憶する"
+  },
   "optionRememberPrevState": {
-    "message": "前回の状態（スクロール位置、開いているフォルダー、最後にフォーカスした項目）を記憶する。"
+    "message": "前回の状態を記憶する"
+  },
+  "optionRememberScroll": {
+    "message": "スクロール位置を記憶する"
+  },
+  "optionRememberSearchQuery": {
+    "message": "最後の検索を記憶する"
   },
   "optionRememberView": {
     "message": "最後にアクティブだったビューを記憶して再度開く"
@@ -1183,6 +1195,9 @@
   },
   "optionsGroupLabs": {
     "message": "ラボ"
+  },
+  "optionsGroupMemory": {
+    "message": "記憶"
   },
   "optionsGroupPalette": {
     "message": "コマンドパレット"

@@ -1052,8 +1052,20 @@
   "optionRecentCount": {
     "message": "Брой наскоро добавени отметки за показване"
   },
+  "optionRememberHighlight": {
+    "message": "Открояване на последната отворена отметка"
+  },
+  "optionRememberOpens": {
+    "message": "Запомняне на отворените папки"
+  },
   "optionRememberPrevState": {
-    "message": "Запомняне на предишното състояние (позиция на превъртане, отворени папки и последния фокусиран елемент)."
+    "message": "Запомняне на предишното състояние"
+  },
+  "optionRememberScroll": {
+    "message": "Запомняне на позицията при превъртане"
+  },
+  "optionRememberSearchQuery": {
+    "message": "Запомняне на последното търсене"
   },
   "optionRememberView": {
     "message": "Запомняне и повторно отваряне на последния активен изглед"
@@ -1183,6 +1195,9 @@
   },
   "optionsGroupLabs": {
     "message": "Лаборатории"
+  },
+  "optionsGroupMemory": {
+    "message": "Памет"
   },
   "optionsGroupPalette": {
     "message": "Командна палитра"

@@ -1052,8 +1052,20 @@
   "optionRecentCount": {
     "message": "Äskettäin lisättyjen kirjanmerkkien määrä"
   },
+  "optionRememberHighlight": {
+    "message": "Korosta viimeksi avattu kirjanmerkki"
+  },
+  "optionRememberOpens": {
+    "message": "Muista avoinna olevat kansiot"
+  },
   "optionRememberPrevState": {
-    "message": "Muista edellinen tila (vierityssijainti, avatut kansiot ja viimeksi kohdistettu kohde)."
+    "message": "Muista edellinen tila"
+  },
+  "optionRememberScroll": {
+    "message": "Muista vierityssijainti"
+  },
+  "optionRememberSearchQuery": {
+    "message": "Muista viimeisin haku"
   },
   "optionRememberView": {
     "message": "Muista viimeisin aktiivinen näkymä ja avaa se uudelleen"
@@ -1183,6 +1195,9 @@
   },
   "optionsGroupLabs": {
     "message": "Laboratorio"
+  },
+  "optionsGroupMemory": {
+    "message": "Muisti"
   },
   "optionsGroupPalette": {
     "message": "Komentopaletti"

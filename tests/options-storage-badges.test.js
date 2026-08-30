@@ -107,7 +107,7 @@ describe('storage badges: real store.js consistency', () => {
             'labs-options', 'separator-options'
         ]);
         expect([...allSync].sort()).toEqual([
-            'context-menu-options', 'icons-options', 'palette-cmd-options',
+            'context-menu-options', 'icons-options', 'memory-options', 'palette-cmd-options',
             'recent-options', 'search-options', 'sort-options', 'stats-options',
             'sync-options', 'tabgroups-options', 'tools-options', 'tree-options',
             'views-options'

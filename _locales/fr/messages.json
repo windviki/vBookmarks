@@ -1052,8 +1052,20 @@
   "optionRecentCount": {
     "message": "Nombre de marque-pages récents à afficher"
   },
+  "optionRememberHighlight": {
+    "message": "Mettre en surbrillance le dernier signet ouvert"
+  },
+  "optionRememberOpens": {
+    "message": "Mémoriser les dossiers ouverts"
+  },
   "optionRememberPrevState": {
-    "message": "Mémoriser l'état précédent (position de défilement, dossiers ouverts et dernier élément ciblé)."
+    "message": "Mémoriser l'état précédent"
+  },
+  "optionRememberScroll": {
+    "message": "Mémoriser la position de défilement"
+  },
+  "optionRememberSearchQuery": {
+    "message": "Mémoriser la dernière recherche"
   },
   "optionRememberView": {
     "message": "Mémoriser la dernière vue active et la rouvrir"
@@ -1183,6 +1195,9 @@
   },
   "optionsGroupLabs": {
     "message": "Laboratoires"
+  },
+  "optionsGroupMemory": {
+    "message": "Mémoire"
   },
   "optionsGroupPalette": {
     "message": "Palette de commandes"

@@ -1052,8 +1052,20 @@
   "optionRecentCount": {
     "message": "Кількість нещодавно доданих закладок для відображення"
   },
+  "optionRememberHighlight": {
+    "message": "Виділяти останню відкриту закладку"
+  },
+  "optionRememberOpens": {
+    "message": "Запам'ятовувати відкриті теки"
+  },
   "optionRememberPrevState": {
-    "message": "Запам'ятовувати попередній стан (позицію прокрутки, відкриті теки та останній зосереджений елемент)."
+    "message": "Запам'ятовувати попередній стан"
+  },
+  "optionRememberScroll": {
+    "message": "Запам'ятовувати позицію прокручування"
+  },
+  "optionRememberSearchQuery": {
+    "message": "Запам'ятовувати останній пошук"
   },
   "optionRememberView": {
     "message": "Запам'ятовувати останній активний перегляд і відновлювати його"
@@ -1183,6 +1195,9 @@
   },
   "optionsGroupLabs": {
     "message": "Лабораторія"
+  },
+  "optionsGroupMemory": {
+    "message": "Пам'ять"
   },
   "optionsGroupPalette": {
     "message": "Палітра команд"

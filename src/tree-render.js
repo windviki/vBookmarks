@@ -561,7 +561,8 @@ export function initTreeRender(ctx = {}) {
         // 子树淡显（body.highlight-unsynced 规则在 neat.css），替代旧版
         // 满树绿点的噪音式指示。
         const unsyncedCls = (d.syncing === false) ? ' unsynced-subtree' : '';
-        const isOpen = getRememberState() && opensHas(id);
+        // 分层记忆: rememberOpens off → every folder renders collapsed
+        const isOpen = getRememberState() && store.get('rememberOpens', '1') && opensHas(id);
         const open = isOpen ? 'open' : '';
         const ariaStr = isFolder ? `aria-expanded="${isOpen}"` : '';
         let html = `<li class="${classStr}${unsyncedCls} ${open}" ${idHTML} level="${level}" role="treeitem" ${ariaStr} data-parentid="${parentID}">`;

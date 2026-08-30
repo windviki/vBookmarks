@@ -1049,8 +1049,20 @@
   "optionRecentCount": {
     "message": "Número de favoritos adicionados recentemente a exibir"
   },
+  "optionRememberHighlight": {
+    "message": "Destacar o último favorito aberto"
+  },
+  "optionRememberOpens": {
+    "message": "Memorizar as pastas abertas"
+  },
   "optionRememberPrevState": {
-    "message": "Lembrar estado anterior (posição de rolagem, pastas abertas e o último item focado)."
+    "message": "Memorizar o estado anterior"
+  },
+  "optionRememberScroll": {
+    "message": "Memorizar a posição de rolagem"
+  },
+  "optionRememberSearchQuery": {
+    "message": "Memorizar a última pesquisa"
   },
   "optionRememberView": {
     "message": "Lembrar a última visualização ativa e reabri-la"
@@ -1180,6 +1192,9 @@
   },
   "optionsGroupLabs": {
     "message": "Laboratório"
+  },
+  "optionsGroupMemory": {
+    "message": "Memória"
   },
   "optionsGroupPalette": {
     "message": "Paleta de comandos"
