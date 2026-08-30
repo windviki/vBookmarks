@@ -164,7 +164,9 @@ describe('theme parity & badge contrast (third-round item 5)', () => {
         expect(fillRules.length).toBeGreaterThanOrEqual(4); // tab-badge, row-badge ×2, dead-indicator
         for (const rule of fillRules) {
             expect(rule).not.toMatch(/color:\s*#(fff|000|ffffff|000000)\b/);
-            expect(rule).toMatch(/color:\s*var\(--vbm-(danger|warning)-fg\)/);
+            // the blocked pill reads its dedicated token first (light theme
+            // whitened it 2026-08-30) with the shared on-color as the fallback
+            expect(rule).toMatch(/color:\s*var\(--vbm-(pill-)?(danger|warning)-fg(?:,\s*var\(--vbm-(danger|warning)-fg\))?\)/);
         }
     });
 });

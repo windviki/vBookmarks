@@ -54,10 +54,17 @@
        dark maroon on the pale dark-theme dangers (see theme blocks) */
     --vbm-danger-fg: #ffffff;
     --vbm-warning-fg: #000000;
+    /* 受限 pill 专用 on-color(维护者 2026-08-30):浅色主题琥珀底 #f9ab00 上
+       黑字读感是一团暗黄,与死链红 pill 的白字等量齐观改白字;暗色系主题
+       (dark/auto-dark/ink)的浅琥珀底保持黑字,各自显式声明。仅 pill 用——
+       受限 × 叠标等其余 warning 消费方仍走 --vbm-warning-fg。语义可辨性
+       由 pill 文本双编码兜底(§3.5),不单靠颜色。 */
+    --vbm-pill-warning-fg: #ffffff;
 }
 
 body[data-theme="dark"] {
     color-scheme: dark;
+    --vbm-pill-warning-fg: #000000;
     --vbm-bg: #1b1c1f;
     --vbm-bg-elev: #26282c;
     --vbm-bg-hover: rgba(255, 255, 255, 0.07);
@@ -84,6 +91,7 @@ body[data-theme="dark"] {
 @media (prefers-color-scheme: dark) {
     body[data-theme="auto"] {
         color-scheme: dark;
+        --vbm-pill-warning-fg: #000000;
         --vbm-bg: #1b1c1f;
         --vbm-bg-elev: #26282c;
         --vbm-bg-hover: rgba(255, 255, 255, 0.07);
@@ -113,6 +121,7 @@ body[data-theme="dark"] {
    phosphor glow, like magnetic field lines on an oscilloscope.
    Explicit theme only — "auto" never maps here. */
 body[data-theme="ink"] {
+    --vbm-pill-warning-fg: #000000;
     color-scheme: dark;
     --vbm-bg: #0e1118;
     --vbm-bg-elev: #171c28;
@@ -6381,7 +6390,7 @@ li.tabgroups-row.tabgroups-current {
 
 .vbm-row .row-badge.blocked {
     background: var(--vbm-warning);
-    color: var(--vbm-warning-fg);
+    color: var(--vbm-pill-warning-fg, var(--vbm-warning-fg));
 }
 
 /* 死链视图状态 pill 的外层槽（.row-badge-slot，经 tree-render meta.badgeSlot
