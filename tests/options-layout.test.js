@@ -197,9 +197,18 @@ describe('options page responsive layout rules (v4 task-3 #17)', () => {
         expect(card).toContain('break-inside: avoid');
     });
 
-    it('CodeMirror fits its column instead of forcing 40em', () => {
+    it('CodeMirror carries NO width cap — the retired inline editor\'s 40em ceiling is gone, only the custom-css workbench hosts it', () => {
+        // 4.1.1: pages/custom-css.html is the only CodeMirror host, and its
+        // editor must follow the browser width (diag-411 N5c). The old
+        // min(40em,100%) pinned wide windows at 560px; the base rule now
+        // only themes the surface, geometry belongs to the host page.
         const cm = ruleBody(optionsCss, '.CodeMirror{');
-        expect(cm).toContain('width: min(40em, 100%)');
+        expect(cm).not.toContain('width');
+        expect(cm).not.toContain('inline-block');
+        // the workbench's scoped geometry rule owns the sizing instead (the
+        // first .CodeMirror hit is the user-select group rule — anchor past it)
+        const geo = '#custom-css-page .CodeMirror {\n    flex: 1;';
+        expect(optionsCss).toContain(geo);
     });
 });
 

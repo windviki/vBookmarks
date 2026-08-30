@@ -449,9 +449,30 @@ const ck = (name, ok, extra) => {
         ck('N5b long stylesheet: editor scrolls internally, footer never overlapped',
             longCssOk.ok, JSON.stringify(longCssOk));
 
+        // N5c (user report): on a WIDE browser window the editor must follow
+        // the viewport — a stale global `.CodeMirror { width: min(40em,100%) }`
+        // (a 560px ceiling at 14px font, written for the retired inline
+        // editor) used to pin it while every other control stretched
+        await cssPage.setViewport({ width: 1280, height: 800 });
+        await sleep(400);
+        const wide = await cssPage.evaluate(() => {
+            const page = document.getElementById('custom-css-page');
+            const editor = document.querySelector('#custom-css-page .CodeMirror') || document.getElementById('custom-css-css');
+            const name = document.getElementById('custom-css-name');
+            const pageW = Math.round(page.getBoundingClientRect().width - 40);
+            return {
+                vw: window.innerWidth, pageW,
+                edW: Math.round(editor.getBoundingClientRect().width),
+                nameW: Math.round(name.getBoundingClientRect().width)
+            };
+        });
+        ck('N5c wide viewport: the editor and inputs track the browser width (no 40em cap)',
+            Math.abs(wide.edW - wide.pageW) <= 2 && wide.nameW >= wide.pageW - 220,
+            JSON.stringify(wide));
+
         // visual capture for review (rerun.sh copies /tmp/shots → tmp/shots)
         require('fs').mkdirSync('/tmp/shots', { recursive: true });
-        await cssPage.screenshot({ path: '/tmp/shots/custom-css-workbench.png' });
+        await cssPage.screenshot({ path: '/tmp/shots/custom-css-workbench-wide.png' });
 
         await optPage.close();
         await cssPage.close();

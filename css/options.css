@@ -674,15 +674,16 @@ fieldset p{
    the classic light editor; dark themes (dark/ink, or "auto" under a
    dark OS) get the token-driven surface and dark-friendly syntax palette
    below. These rules must out-specificity vendor/codemirror.css, which
-   loads after this file. */
+   loads after this file. Geometry note: only pages/custom-css.html still
+   hosts CodeMirror (since the advanced page retired) — the old inline
+   editor's width cap (min(40em,100%), a 560px ceiling at 14px font) and
+   inline-block are GONE; sizing belongs to the host page. */
 .CodeMirror{
 	-webkit-box-shadow: inset 0 1px 5px rgba(0,0,0,.1);
 	box-shadow: inset 0 1px 5px rgba(0,0,0,.1);
 	border: 1px solid #aaa;
 	background: #fff;
-	display: inline-block;
 	border-radius: 3px;
-	width: min(40em, 100%); /* round-6: fit the column when the grid narrows */
 	cursor: text;
 	text-shadow: none;
 }
