@@ -169,6 +169,45 @@
     "description": "嘗試跨儲存類型移動書籤時的警告訊息",
     "message": "無法在同步和本地儲存空間之間移動書籤。請使用複製/貼上功能。"
   },
+  "customCssBackToOptions": {
+    "message": "返回設定"
+  },
+  "customCssDelete": {
+    "message": "刪除"
+  },
+  "customCssDeleteConfirm": {
+    "message": "刪除這個樣式？"
+  },
+  "customCssDesc": {
+    "message": "這些樣式會應用到彈出視窗與側邊欄。修改會自動儲存，下次開啟彈出視窗時生效。"
+  },
+  "customCssDescLabel": {
+    "message": "描述"
+  },
+  "customCssEmpty": {
+    "message": "還沒有樣式，新增一個開始。"
+  },
+  "customCssEnabled": {
+    "message": "啟用"
+  },
+  "customCssName": {
+    "message": "名稱"
+  },
+  "customCssNewStyle": {
+    "message": "新增樣式"
+  },
+  "customCssOrderNote": {
+    "message": "啟用的樣式按列表順序依次應用，後啟用的覆蓋先啟用的。"
+  },
+  "customCssSaved": {
+    "message": "已儲存"
+  },
+  "customCssTitle": {
+    "message": "自訂 CSS"
+  },
+  "customCssUntitled": {
+    "message": "我的樣式"
+  },
   "customIcon": {
     "message": "個性化圖標"
   },
@@ -965,6 +1004,9 @@
   },
   "optionDeadScanTimeout": {
     "message": "失效連結掃描逾時秒數 (2-30)"
+  },
+  "optionEditCustomCSS": {
+    "message": "編輯你的 CSS…"
   },
   "optionFaviconBackup": {
     "message": "備份時包含圖示快取"

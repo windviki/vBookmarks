@@ -140,7 +140,11 @@ export const OPTIONS_STORAGE_GROUPS = {
         { row: 'sort-options-title', key: 'sortOptions' }
     ],
     'custom-styles': [
-        { row: 'userstyle', key: 'userstyle' }
+        // 4.1.1: the userstyle textarea became the standalone-editor LINK
+        // row — the keys stay grouped here (the multi-style dataset joined
+        // its legacy twin), just without a settings row of their own
+        { row: 'edit-custom-css', key: 'userstyle' },
+        { key: 'userstyles' }
     ],
     'labs-options': [
         { row: 'virtual-scroll-lab', key: 'virtualScrollLab' }

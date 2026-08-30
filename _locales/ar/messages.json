@@ -169,6 +169,45 @@
     "description": "تحذير عند محاولة نقل الإشارات المرجعية عبر أنواع التخزين",
     "message": "لا يمكن نقل الإشارات المرجعية بين التخزين المتزامن والتخزين المحلي. استخدم النسخ/اللصق بدلاً من ذلك."
   },
+  "customCssBackToOptions": {
+    "message": "العودة إلى الإعدادات"
+  },
+  "customCssDelete": {
+    "message": "حذف"
+  },
+  "customCssDeleteConfirm": {
+    "message": "حذف هذا النمط؟"
+  },
+  "customCssDesc": {
+    "message": "تُطبَّق هذه الأنماط على النافذة المنبثقة والشريط الجانبي. تُحفظ التعديلات تلقائيًا وتسري عند فتح النافذة مرة أخرى."
+  },
+  "customCssDescLabel": {
+    "message": "الوصف"
+  },
+  "customCssEmpty": {
+    "message": "لا أنماط بعد — أنشئ نمطًا للبدء."
+  },
+  "customCssEnabled": {
+    "message": "تفعيل"
+  },
+  "customCssName": {
+    "message": "الاسم"
+  },
+  "customCssNewStyle": {
+    "message": "نمط جديد"
+  },
+  "customCssOrderNote": {
+    "message": "تُطبَّق الأنماط المفعَّلة بترتيب القائمة — النمط اللاحق يتجاوز السابق."
+  },
+  "customCssSaved": {
+    "message": "تم الحفظ"
+  },
+  "customCssTitle": {
+    "message": "CSS مخصص"
+  },
+  "customCssUntitled": {
+    "message": "نمطي"
+  },
   "customIcon": {
     "message": "أيقونة مخصصة"
   },
@@ -965,6 +1004,9 @@
   },
   "optionDeadScanTimeout": {
     "message": "مهلة فحص الروابط المعطلة بالثواني (2-30)"
+  },
+  "optionEditCustomCSS": {
+    "message": "تحرير CSS الخاص بك…"
   },
   "optionFaviconBackup": {
     "message": "تضمين كاش الأيقونات في النسخ الاحتياطية"

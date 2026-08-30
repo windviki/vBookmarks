@@ -169,6 +169,45 @@
     "description": "Warning when trying to move bookmarks across storage types",
     "message": "सिंक किए गए और स्थानीय स्टोरेज के बीच बुकमार्क नहीं ले जाए जा सकते। कॉपी/पेस्ट का उपयोग करें।"
   },
+  "customCssBackToOptions": {
+    "message": "सेटिंग्स पर वापस"
+  },
+  "customCssDelete": {
+    "message": "हटाएं"
+  },
+  "customCssDeleteConfirm": {
+    "message": "यह स्टाइल हटाएं?"
+  },
+  "customCssDesc": {
+    "message": "ये स्टाइल पॉपअप और साइड पैनल पर लागू होते हैं। बदलाव अपने आप सहेजे जाते हैं और अगली बार खोलने पर लागू होते हैं।"
+  },
+  "customCssDescLabel": {
+    "message": "विवरण"
+  },
+  "customCssEmpty": {
+    "message": "अभी कोई स्टाइल नहीं — शुरू करने के लिए एक बनाएं।"
+  },
+  "customCssEnabled": {
+    "message": "सक्षम करें"
+  },
+  "customCssName": {
+    "message": "नाम"
+  },
+  "customCssNewStyle": {
+    "message": "नया स्टाइल"
+  },
+  "customCssOrderNote": {
+    "message": "सक्षम स्टाइल सूची के क्रम में लागू होते हैं — बाद वाला पहले वाले को ओवरराइड करता है।"
+  },
+  "customCssSaved": {
+    "message": "सहेजा गया"
+  },
+  "customCssTitle": {
+    "message": "कस्टम CSS"
+  },
+  "customCssUntitled": {
+    "message": "मेरा स्टाइल"
+  },
   "customIcon": {
     "message": "कस्टम आइकन"
   },
@@ -965,6 +1004,9 @@
   },
   "optionDeadScanTimeout": {
     "message": "मृत-लिंक स्कैन टाइमआउट सेकंड में (2-30)"
+  },
+  "optionEditCustomCSS": {
+    "message": "अपना CSS संपादित करें…"
   },
   "optionFaviconBackup": {
     "message": "बैकअप में आइकन कैश शामिल करें"

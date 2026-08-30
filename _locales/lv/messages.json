@@ -169,6 +169,45 @@
     "description": "Warning when trying to move bookmarks across storage types",
     "message": "Grāmatzīmes nevar pārvietot starp sinhronizēto un vietējo krātuvi. Tā vietā izmantojiet kopēt/ielīmēt."
   },
+  "customCssBackToOptions": {
+    "message": "Atpakaļ uz iestatījumiem"
+  },
+  "customCssDelete": {
+    "message": "Dzēst"
+  },
+  "customCssDeleteConfirm": {
+    "message": "Dzēst šo stilu?"
+  },
+  "customCssDesc": {
+    "message": "Šie stili tiek piemēroti uznirstošajam logam un sānu panelim. Izmaiņas saglabājas automātiski un stājas spēkā nākamajā atvēršanā."
+  },
+  "customCssDescLabel": {
+    "message": "Apraksts"
+  },
+  "customCssEmpty": {
+    "message": "Vēl nav stilu — izveido vienu, lai sāktu."
+  },
+  "customCssEnabled": {
+    "message": "Ieslēgt"
+  },
+  "customCssName": {
+    "message": "Nosaukums"
+  },
+  "customCssNewStyle": {
+    "message": "Jauns stils"
+  },
+  "customCssOrderNote": {
+    "message": "Ieslēgtie stili tiek piemēroti saraksta secībā — vēlākais stils pārraksta agrāko."
+  },
+  "customCssSaved": {
+    "message": "Saglabāts"
+  },
+  "customCssTitle": {
+    "message": "Pielāgots CSS"
+  },
+  "customCssUntitled": {
+    "message": "Mans stils"
+  },
   "customIcon": {
     "message": "Pielāgota ikona"
   },
@@ -965,6 +1004,9 @@
   },
   "optionDeadScanTimeout": {
     "message": "Nedarbojošos saišu skenēšanas taimauts sekundēs (2-30)"
+  },
+  "optionEditCustomCSS": {
+    "message": "Rediģēt savu CSS…"
   },
   "optionFaviconBackup": {
     "message": "Iekļaut ikonu kešu dublējumos"

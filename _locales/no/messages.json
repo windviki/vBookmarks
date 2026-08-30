@@ -169,6 +169,45 @@
     "description": "Warning when trying to move bookmarks across storage types",
     "message": "Bokmerkene kan ikke flyttes mellom synkronisert og lokal lagring. Bruk kopier/lim inn i stedet."
   },
+  "customCssBackToOptions": {
+    "message": "Tilbake til innstillinger"
+  },
+  "customCssDelete": {
+    "message": "Slett"
+  },
+  "customCssDeleteConfirm": {
+    "message": "Slette denne stilen?"
+  },
+  "customCssDesc": {
+    "message": "Disse stilene brukes på sprettoppvinduet og sidepanelet. Endringer lagres automatisk og trer i kraft ved neste åpning."
+  },
+  "customCssDescLabel": {
+    "message": "Beskrivelse"
+  },
+  "customCssEmpty": {
+    "message": "Ingen stiler ennå — opprett en for å begynne."
+  },
+  "customCssEnabled": {
+    "message": "Aktiver"
+  },
+  "customCssName": {
+    "message": "Navn"
+  },
+  "customCssNewStyle": {
+    "message": "Ny stil"
+  },
+  "customCssOrderNote": {
+    "message": "Aktiverte stiler brukes i listerekkefølge — en senere stil overstyrer tidligere."
+  },
+  "customCssSaved": {
+    "message": "Lagret"
+  },
+  "customCssTitle": {
+    "message": "Egendefinert CSS"
+  },
+  "customCssUntitled": {
+    "message": "Min stil"
+  },
   "customIcon": {
     "message": "Egendefinert ikon"
   },
@@ -965,6 +1004,9 @@
   },
   "optionDeadScanTimeout": {
     "message": "Dødlenke-skann tidsavbrudd i sekunder (2-30)"
+  },
+  "optionEditCustomCSS": {
+    "message": "Rediger CSS-en din…"
   },
   "optionFaviconBackup": {
     "message": "Inkluder ikonbuffer i sikkerhetskopier"

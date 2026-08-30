@@ -169,6 +169,45 @@
     "description": "Warning when trying to move bookmarks across storage types",
     "message": "Semnele de carte nu pot fi mutate între stocarea sincronizată și cea locală. Utilizați copiere/lipire."
   },
+  "customCssBackToOptions": {
+    "message": "Înapoi la opțiuni"
+  },
+  "customCssDelete": {
+    "message": "Șterge"
+  },
+  "customCssDeleteConfirm": {
+    "message": "Ștergi acest stil?"
+  },
+  "customCssDesc": {
+    "message": "Aceste stiluri se aplică pop-up-ului și panoului lateral. Modificările se salvează automat și intră în vigoare la următoarea deschidere."
+  },
+  "customCssDescLabel": {
+    "message": "Descriere"
+  },
+  "customCssEmpty": {
+    "message": "Nu există încă stiluri — creează unul. "
+  },
+  "customCssEnabled": {
+    "message": "Activează"
+  },
+  "customCssName": {
+    "message": "Nume"
+  },
+  "customCssNewStyle": {
+    "message": "Stil nou"
+  },
+  "customCssOrderNote": {
+    "message": "Stilurile activate se aplică în ordinea listei — unul ulterior le suprascrie pe cele anterioare."
+  },
+  "customCssSaved": {
+    "message": "Salvat"
+  },
+  "customCssTitle": {
+    "message": "CSS personalizat"
+  },
+  "customCssUntitled": {
+    "message": "Stilul meu"
+  },
   "customIcon": {
     "message": "Iconiță personalizată"
   },
@@ -965,6 +1004,9 @@
   },
   "optionDeadScanTimeout": {
     "message": "Timeout scanare linkuri moarte în secunde (2-30)"
+  },
+  "optionEditCustomCSS": {
+    "message": "Editează-ți CSS-ul…"
   },
   "optionFaviconBackup": {
     "message": "Include cache-ul de pictograme în copiile de rezervă"

@@ -169,6 +169,45 @@
     "description": "Warning when trying to move bookmarks across storage types",
     "message": "ไม่สามารถย้ายที่คั่นหน้าระหว่างที่จัดเก็บที่ซิงค์และที่จัดเก็บในเครื่องได้ โปรดใช้คัดลอก/วาง"
   },
+  "customCssBackToOptions": {
+    "message": "กลับไปที่การตั้งค่า"
+  },
+  "customCssDelete": {
+    "message": "ลบ"
+  },
+  "customCssDeleteConfirm": {
+    "message": "ลบสไตล์นี้?"
+  },
+  "customCssDesc": {
+    "message": "สไตล์เหล่านี้จะถูกใช้กับป๊อปอัปและแถบข้าง การแก้ไขจะบันทึกอัตโนมัติและมีผลเมื่อเปิดครั้งถัดไป"
+  },
+  "customCssDescLabel": {
+    "message": "คำอธิบาย"
+  },
+  "customCssEmpty": {
+    "message": "ยังไม่มีสไตล์ — สร้างหนึ่งรายการเพื่อเริ่มต้น"
+  },
+  "customCssEnabled": {
+    "message": "เปิดใช้งาน"
+  },
+  "customCssName": {
+    "message": "ชื่อ"
+  },
+  "customCssNewStyle": {
+    "message": "สไตล์ใหม่"
+  },
+  "customCssOrderNote": {
+    "message": "สไตล์ที่เปิดใช้งานจะถูกใช้ตามลำดับรายการ — รายการทีหลังจะแทนที่รายการก่อนหน้า"
+  },
+  "customCssSaved": {
+    "message": "บันทึกแล้ว"
+  },
+  "customCssTitle": {
+    "message": "CSS ที่กำหนดเอง"
+  },
+  "customCssUntitled": {
+    "message": "สไตล์ของฉัน"
+  },
   "customIcon": {
     "message": "ไอคอนที่กำหนดเอง"
   },
@@ -965,6 +1004,9 @@
   },
   "optionDeadScanTimeout": {
     "message": "หมดเวลาสแกนลิงก์เสียเป็นวินาที (2-30)"
+  },
+  "optionEditCustomCSS": {
+    "message": "แก้ไข CSS ของคุณ…"
   },
   "optionFaviconBackup": {
     "message": "รวมแคชไอคอนในการสำรองข้อมูล"

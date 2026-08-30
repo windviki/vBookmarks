@@ -169,6 +169,45 @@
     "description": "Warning when trying to move bookmarks across storage types",
     "message": "Nie można przenosić zakładek między pamięcią synchronizowaną a lokalną. Użyj funkcji kopiuj/wklej."
   },
+  "customCssBackToOptions": {
+    "message": "Wróć do opcji"
+  },
+  "customCssDelete": {
+    "message": "Usuń"
+  },
+  "customCssDeleteConfirm": {
+    "message": "Usunąć ten styl?"
+  },
+  "customCssDesc": {
+    "message": "Te style są stosowane w oknie pop-up i panelu bocznym. Zmiany zapisują się automatycznie i obowiązują przy następnym otwarciu."
+  },
+  "customCssDescLabel": {
+    "message": "Opis"
+  },
+  "customCssEmpty": {
+    "message": "Nie ma jeszcze stylów — utwórz pierwszy."
+  },
+  "customCssEnabled": {
+    "message": "Włącz"
+  },
+  "customCssName": {
+    "message": "Nazwa"
+  },
+  "customCssNewStyle": {
+    "message": "Nowy styl"
+  },
+  "customCssOrderNote": {
+    "message": "Włączone style stosują się w kolejności listy — późniejszy zastępuje wcześniejszy."
+  },
+  "customCssSaved": {
+    "message": "Zapisano"
+  },
+  "customCssTitle": {
+    "message": "Niestandardowy CSS"
+  },
+  "customCssUntitled": {
+    "message": "Mój styl"
+  },
   "customIcon": {
     "message": "Niestandardowa ikona"
   },
@@ -965,6 +1004,9 @@
   },
   "optionDeadScanTimeout": {
     "message": "Limit czasu skanowania martwych linków w sekundach (2-30)"
+  },
+  "optionEditCustomCSS": {
+    "message": "Edytuj swój CSS…"
   },
   "optionFaviconBackup": {
     "message": "Uwzględnij pamięć podręczną ikon w kopiach zapasowych"

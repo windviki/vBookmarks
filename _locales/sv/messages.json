@@ -169,6 +169,45 @@
     "description": "Warning when trying to move bookmarks across storage types",
     "message": "Bokmärken kan inte flyttas mellan synkroniserad och lokal lagring. Använd kopiera/klistra in i stället."
   },
+  "customCssBackToOptions": {
+    "message": "Tillbaka till alternativ"
+  },
+  "customCssDelete": {
+    "message": "Ta bort"
+  },
+  "customCssDeleteConfirm": {
+    "message": "Ta bort denna stil?"
+  },
+  "customCssDesc": {
+    "message": "Dessa stilar tillämpas på popupfönstret och sidopanelen. Ändringar sparas automatiskt och börjar gälla nästa gång."
+  },
+  "customCssDescLabel": {
+    "message": "Beskrivning"
+  },
+  "customCssEmpty": {
+    "message": "Inga stilar ännu — skapa en för att börja."
+  },
+  "customCssEnabled": {
+    "message": "Aktivera"
+  },
+  "customCssName": {
+    "message": "Namn"
+  },
+  "customCssNewStyle": {
+    "message": "Ny stil"
+  },
+  "customCssOrderNote": {
+    "message": "Aktiverade stilar tillämpas i listordning — en senare stil åsidosätter tidigare."
+  },
+  "customCssSaved": {
+    "message": "Sparat"
+  },
+  "customCssTitle": {
+    "message": "Anpassad CSS"
+  },
+  "customCssUntitled": {
+    "message": "Min stil"
+  },
   "customIcon": {
     "message": "Anpassad ikon"
   },
@@ -965,6 +1004,9 @@
   },
   "optionDeadScanTimeout": {
     "message": "Timeout för sökning döda länkar i sekunder (2-30)"
+  },
+  "optionEditCustomCSS": {
+    "message": "Redigera din CSS…"
   },
   "optionFaviconBackup": {
     "message": "Inkludera ikoncache i säkerhetskopior"

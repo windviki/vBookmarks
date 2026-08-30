@@ -169,6 +169,45 @@
     "description": "Warning when trying to move bookmarks across storage types",
     "message": "Lesezeichen können nicht zwischen synchronisiertem und lokalem Speicher verschoben werden. Verwenden Sie stattdessen Kopieren/Einfügen."
   },
+  "customCssBackToOptions": {
+    "message": "Zurück zu den Einstellungen"
+  },
+  "customCssDelete": {
+    "message": "Löschen"
+  },
+  "customCssDeleteConfirm": {
+    "message": "Diesen Stil löschen?"
+  },
+  "customCssDesc": {
+    "message": "Diese Stile werden auf Popup und Seitenleiste angewandt. Änderungen werden automatisch gespeichert und gelten beim nächsten Öffnen."
+  },
+  "customCssDescLabel": {
+    "message": "Beschreibung"
+  },
+  "customCssEmpty": {
+    "message": "Noch keine Stile — lege einen an."
+  },
+  "customCssEnabled": {
+    "message": "Aktivieren"
+  },
+  "customCssName": {
+    "message": "Name"
+  },
+  "customCssNewStyle": {
+    "message": "Neuer Stil"
+  },
+  "customCssOrderNote": {
+    "message": "Aktivierte Stile werden in Listenreihenfolge angewandt — ein späterer Stil überschreibt frühere."
+  },
+  "customCssSaved": {
+    "message": "Gespeichert"
+  },
+  "customCssTitle": {
+    "message": "Eigenes CSS"
+  },
+  "customCssUntitled": {
+    "message": "Mein Stil"
+  },
   "customIcon": {
     "message": "Benutzerdefiniertes Symbol"
   },
@@ -965,6 +1004,9 @@
   },
   "optionDeadScanTimeout": {
     "message": "Zeitüberschreitung für Dead-Link-Scans in Sekunden (2-30)"
+  },
+  "optionEditCustomCSS": {
+    "message": "Eigenes CSS bearbeiten…"
   },
   "optionFaviconBackup": {
     "message": "Favicon-Cache in Backups einbeziehen"

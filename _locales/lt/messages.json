@@ -169,6 +169,45 @@
     "description": "Warning when trying to move bookmarks across storage types",
     "message": "Žymelių perkelti iš sinchronizuotos į vietinę saugyklą negalima. Vietoj to naudokite kopijavimą/įkėlimą."
   },
+  "customCssBackToOptions": {
+    "message": "Atgal į nustatymus"
+  },
+  "customCssDelete": {
+    "message": "Pašalinti"
+  },
+  "customCssDeleteConfirm": {
+    "message": "Pašalinti šį stilių?"
+  },
+  "customCssDesc": {
+    "message": "Šie stiliai taikomi iššokančiajam langui ir šoniniam skydeliui. Pakeitimai išsaugomi automatiškai ir įsigalioja kitą atidarymo kartą."
+  },
+  "customCssDescLabel": {
+    "message": "Aprašymas"
+  },
+  "customCssEmpty": {
+    "message": "Kol kas nėra stilių — sukurkite pirmąjį."
+  },
+  "customCssEnabled": {
+    "message": "Įjungti"
+  },
+  "customCssName": {
+    "message": "Pavadinimas"
+  },
+  "customCssNewStyle": {
+    "message": "Naujas stilius"
+  },
+  "customCssOrderNote": {
+    "message": "Įjungti stiliai taikomi sąrašo tvarka — vėlesnis stilius perrašo ankstesnįjį."
+  },
+  "customCssSaved": {
+    "message": "Išsaugota"
+  },
+  "customCssTitle": {
+    "message": "Tinkintas CSS"
+  },
+  "customCssUntitled": {
+    "message": "Mano stilius"
+  },
   "customIcon": {
     "message": "Tinkinta piktograma"
   },
@@ -965,6 +1004,9 @@
   },
   "optionDeadScanTimeout": {
     "message": "Neveikiančių nuorodų nuskaitymo skirtasis laikas sekundėmis (2–30)"
+  },
+  "optionEditCustomCSS": {
+    "message": "Redaguoti savo CSS…"
   },
   "optionFaviconBackup": {
     "message": "Įtraukti piktogramų talpyklą į atsargines kopijas"

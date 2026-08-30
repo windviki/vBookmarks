@@ -1246,55 +1246,14 @@ describe('Sorting group (issue #33)', () => {
     });
 });
 
-// Custom styles (userstyle) save contract — the options page binds the
-// #userstyle textarea. Two input paths must persist to store + storage:
-//  (1) CodeMirror onChange (primary, vendored editor), and
-//  (2) the native textarea change event (fallback when CodeMirror is absent —
-//      the fix for "custom CSS silently stops saving if CodeMirror fails to
-//      load"). The APPLY side (popup/panel injection) is src/userstyle.js.
-describe('custom styles userstyle save', () => {
-    it('pre-fills the userstyle textarea from storage', async () => {
-        const sb = createSandbox({ chromeLocalData: { userstyle: 'body { color: red; }' } });
-        await sb.start();
-        expect(sb.elements.userstyle.value).toBe('body { color: red; }');
-    });
-
-    it('saves via the native change fallback when CodeMirror is unavailable', async () => {
-        const sb = createSandbox(); // no window.CodeMirror → fallback path
-        await sb.start();
-        const ta = sb.elements.userstyle;
-        ta.value = 'body { color: red; }';
-        await ta.fire('change');
-        expect(sb.window.store.get('userstyle')).toBe('body { color: red; }');
-        sb.window.store.flush(); // force the debounced persist
-        expect(sb.localData.userstyle).toBe('body { color: red; }');
-    });
-
-    it('saves via CodeMirror onChange when the editor is present', async () => {
-        let fromTextAreaOpts = null;
-        const fakeCodeMirror = {
-            fromTextArea: vi.fn((ta, opts) => { fromTextAreaOpts = opts; return {}; })
-        };
-        const sb = createSandbox({ windowExtras: { CodeMirror: fakeCodeMirror } });
-        await sb.start();
-        expect(fakeCodeMirror.fromTextArea).toHaveBeenCalledTimes(1);
-        // the editor wiring hands over an onChange handler (the persistence path
-        // asserted right below) — a bare truthiness check would pass for any stub
-        expect(typeof fromTextAreaOpts.onChange).toBe('function');
-        // simulate an editor edit → the onChange handler persists
-        fromTextAreaOpts.onChange({ getValue: () => 'body { color: blue; }' });
-        expect(sb.window.store.get('userstyle')).toBe('body { color: blue; }');
-        sb.window.store.flush();
-        expect(sb.localData.userstyle).toBe('body { color: blue; }');
-    });
-
-    it('loads CodeMirror before options.js in the options page', () => {
-        const cmAt = optionsHtml.indexOf('<script src="/vendor/codemirror.js"></script>');
-        const optionsAt = optionsHtml.indexOf('<script src="/src/options.js"></script>');
-        expect(cmAt).toBeGreaterThan(-1);
-        expect(optionsAt).toBeGreaterThan(-1);
-        expect(cmAt).toBeLessThan(optionsAt);
-    });
+// Custom styles: the inline textarea moved to the standalone editor page
+// (4.1.1) — the save contract lives in tests/custom-css.test.js now. The
+// options page only carries the outbound link.
+it('custom styles row links out to the standalone editor instead of a textarea', async () => {
+    const sb = createSandbox();
+    await sb.start();
+    expect(sb.elements['edit-custom-css'].textContent).toBe('optionEditCustomCSS');
+    expect(sb.elements['edit-custom-css'].href).toContain('pages/custom-css.html');
 });
 
 describe('issue #48 collapse switches (tab-group default off, sort default on)', () => {

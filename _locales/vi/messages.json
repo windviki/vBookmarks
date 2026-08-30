@@ -169,6 +169,45 @@
     "description": "Warning when trying to move bookmarks across storage types",
     "message": "Không thể di chuyển dấu trang giữa lưu trữ đã đồng bộ hóa và lưu trữ cục bộ. Hãy sử dụng sao chép/dán."
   },
+  "customCssBackToOptions": {
+    "message": "Quay lại cài đặt"
+  },
+  "customCssDelete": {
+    "message": "Xóa"
+  },
+  "customCssDeleteConfirm": {
+    "message": "Xóa kiểu này?"
+  },
+  "customCssDesc": {
+    "message": "Các kiểu này được áp dụng cho cửa sổ bật lên và panel bên. Chỉnh sửa được tự động lưu và có hiệu lực ở lần mở tiếp theo."
+  },
+  "customCssDescLabel": {
+    "message": "Mô tả"
+  },
+  "customCssEmpty": {
+    "message": "Chưa có kiểu nào — hãy tạo một kiểu để bắt đầu."
+  },
+  "customCssEnabled": {
+    "message": "Bật"
+  },
+  "customCssName": {
+    "message": "Tên"
+  },
+  "customCssNewStyle": {
+    "message": "Kiểu mới"
+  },
+  "customCssOrderNote": {
+    "message": "Các kiểu đang bật được áp dụng theo thứ tự danh sách — kiểu đứng sau ghi đè kiểu trước."
+  },
+  "customCssSaved": {
+    "message": "Đã lưu"
+  },
+  "customCssTitle": {
+    "message": "CSS tùy chỉnh"
+  },
+  "customCssUntitled": {
+    "message": "Kiểu của tôi"
+  },
   "customIcon": {
     "message": "Biểu tượng tùy chỉnh"
   },
@@ -965,6 +1004,9 @@
   },
   "optionDeadScanTimeout": {
     "message": "Thời gian chờ quét liên kết chết (giây) (2-30)"
+  },
+  "optionEditCustomCSS": {
+    "message": "Sửa CSS của bạn…"
   },
   "optionFaviconBackup": {
     "message": "Bao gồm cache biểu tượng trong bản sao lưu"

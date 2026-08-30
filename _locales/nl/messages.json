@@ -169,6 +169,45 @@
     "description": "Warning when trying to move bookmarks across storage types",
     "message": "Bladwijzers kunnen niet worden verplaatst tussen gesynchroniseerde en lokale opslag. Gebruik in plaats daarvan kopiëren/plakken."
   },
+  "customCssBackToOptions": {
+    "message": "Terug naar opties"
+  },
+  "customCssDelete": {
+    "message": "Verwijderen"
+  },
+  "customCssDeleteConfirm": {
+    "message": "Deze stijl verwijderen?"
+  },
+  "customCssDesc": {
+    "message": "Deze stijlen worden toegepast op de pop-up en het zijpaneel. Wijzigingen worden automatisch opgeslagen en gelden bij de volgende opening."
+  },
+  "customCssDescLabel": {
+    "message": "Beschrijving"
+  },
+  "customCssEmpty": {
+    "message": "Nog geen stijlen — maak er een aan."
+  },
+  "customCssEnabled": {
+    "message": "Inschakelen"
+  },
+  "customCssName": {
+    "message": "Naam"
+  },
+  "customCssNewStyle": {
+    "message": "Nieuwe stijl"
+  },
+  "customCssOrderNote": {
+    "message": "Ingeschakelde stijlen gelden in lijstvolgorde — een latere stijl overschrijft eerdere."
+  },
+  "customCssSaved": {
+    "message": "Opgeslagen"
+  },
+  "customCssTitle": {
+    "message": "Aangepaste CSS"
+  },
+  "customCssUntitled": {
+    "message": "Mijn stijl"
+  },
   "customIcon": {
     "message": "Aangepast pictogram"
   },
@@ -965,6 +1004,9 @@
   },
   "optionDeadScanTimeout": {
     "message": "Dode-link scan time-out in seconden (2-30)"
+  },
+  "optionEditCustomCSS": {
+    "message": "Je CSS bewerken…"
   },
   "optionFaviconBackup": {
     "message": "Pictogramcache opnemen in back-ups"

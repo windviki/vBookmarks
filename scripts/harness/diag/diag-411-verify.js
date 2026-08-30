@@ -312,6 +312,63 @@ const ck = (name, ok, extra) => {
         ck('M3 rememberSearchQuery off: the box opens empty', qv === '', JSON.stringify(qv));
         await page.evaluate(() => new Promise(res => chrome.storage.sync.set({ rememberSearchQuery: '1' }, res)));
 
+        // ---- N. 4.1.1 custom-CSS standalone editor ----
+        // N1: the options page carries the link, not the textarea
+        const optPage = await browser.newPage();
+        await optPage.goto('chrome-extension://' + extId + '/pages/options.html', { waitUntil: 'load' });
+        await sleep(800);
+        const optRow = await optPage.evaluate(() => ({
+            link: !!document.getElementById('edit-custom-css'),
+            linkText: (document.getElementById('edit-custom-css') || {}).textContent || '',
+            textarea: !!document.getElementById('userstyle')
+        }));
+        ck('N1 options: editor LINK present, inline textarea gone',
+            optRow.link && !optRow.textarea && optRow.linkText.length > 0, JSON.stringify(optRow));
+
+        // N2: the standalone page — legacy migration + live editing
+        await page.evaluate(() => {
+            chrome.storage.local.set({ userstyle: 'body { color: red; }' });
+            chrome.storage.local.remove('userstyles');
+        });
+        const cssPage = await browser.newPage();
+        await cssPage.goto('chrome-extension://' + extId + '/pages/custom-css.html', { waitUntil: 'load' });
+        await sleep(1000);
+        const migrated = await cssPage.evaluate(() => ({
+            items: document.querySelectorAll('#custom-css-list .custom-css-item').length,
+            css: (window.__vbmCustomCss && window.__vbmCustomCss.editor.get()) || ''
+        }));
+        ck('N2 custom-css page: legacy userstyle migrated into one style',
+            migrated.items === 1 && migrated.css.includes('color: red'), JSON.stringify(migrated));
+
+        // N3: create a second style, type CSS, toggle the first off — the
+        // materialized userstyle must equal the enabled concatenation
+        const mat = await cssPage.evaluate(async () => {
+            document.getElementById('custom-css-new').click();
+            await new Promise(r => setTimeout(r, 200));
+            // drive whichever editor is live (CodeMirror hides the textarea)
+            window.__vbmCustomCss.editor.set('body { color: blue; }');
+            // the CodeMirror path persists via onChange; the native path via change
+            const ev = document.getElementById('custom-css-css');
+            ev.dispatchEvent(new Event('change', { bubbles: true }));
+            await new Promise(r => setTimeout(r, 300));
+            const first = document.querySelector('.custom-css-item input[type=checkbox]');
+            first.checked = false;
+            first.dispatchEvent(new Event('change', { bubbles: true }));
+            await new Promise(r => setTimeout(r, 300));
+            return await new Promise(res => chrome.storage.local.get(['userstyles', 'userstyle'], res));
+        });
+        const stylesNow = JSON.parse(mat.userstyles || '[]');
+        ck('N3 two styles persisted; materialization = enabled-only concatenation',
+            stylesNow.length === 2 && mat.userstyle === 'body { color: blue; }',
+            JSON.stringify({ n: stylesNow.length, eff: mat.userstyle }));
+        await optPage.close();
+        await cssPage.close();
+        // restore a clean css state for any later runs
+        await page.evaluate(() => {
+            chrome.storage.local.remove('userstyle');
+            chrome.storage.local.remove('userstyles');
+        });
+
         console.log(`\n==== ${pass} passed, ${fail} failed ====`);
         process.exit(fail ? 1 : 0);
     } finally { await browser.close(); }

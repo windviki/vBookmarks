@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="/css/options.css">
+<link rel="stylesheet" href="/vendor/codemirror.css">
+<script src="/vendor/codemirror.js"></script>
+<script src="/src/store.js"></script>
+<script src="/src/i18n-live.js"></script>
+<script type="module" src="/src/custom-css.js"></script>
+<div id="custom-css-page">
+<h1 id="custom-css-title"></h1>
+<p id="custom-css-desc" class="custom-css-desc"></p>
+<p id="custom-css-order-note" class="custom-css-desc"></p>
+<div class="custom-css-toolbar">
+    <button id="custom-css-new" type="button"></button>
+</div>
+<ul id="custom-css-list"></ul>
+<p id="custom-css-empty" class="custom-css-desc"></p>
+<div id="custom-css-editor" hidden>
+    <div class="custom-css-meta">
+        <input id="custom-css-name" type="text">
+        <input id="custom-css-desc-input" type="text">
+    </div>
+    <textarea id="custom-css-css" spellcheck="false"></textarea>
+</div>
+<p class="custom-css-status-row">
+    <span id="custom-css-status" class="custom-css-status" aria-live="polite"></span>
+    <a id="custom-css-back" href="/pages/options.html"></a>
+</p>
+</div>

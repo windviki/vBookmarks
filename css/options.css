@@ -1025,3 +1025,135 @@ button:focus-visible{
 #memory-options input:disabled + span {
     opacity: 0.5;
 }
+
+/* ===== 4.1.1 standalone custom-CSS editor page (pages/custom-css.html) =====
+   The options page's inline textarea is gone — the editor gets a full-page
+   multi-style workbench: heading + two description lines, a style list
+   (enable checkbox + name + description + delete per row, click to select),
+   a new-style toolbar, and the selected style's editor (name/description
+   inputs + a monospace CSS area that fills the remaining viewport). Shares
+   this stylesheet for the theme tokens and base typography. */
+#custom-css-page {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    box-sizing: border-box;
+    padding: 16px 20px;
+    gap: 10px;
+}
+#custom-css-page h1 {
+    font-size: 18px;
+    margin: 0;
+}
+.custom-css-desc {
+    margin: 0;
+    opacity: 0.75;
+    font-size: 13px;
+}
+#custom-css-order-note {
+    opacity: 0.6;
+    margin-top: -4px;
+}
+.custom-css-toolbar {
+    display: flex;
+}
+#custom-css-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    max-height: 32vh;
+    overflow: auto;
+}
+.custom-css-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 10px;
+    border: 1px solid var(--vbm-border, #ccc);
+    border-radius: 6px;
+    cursor: pointer;
+}
+.custom-css-item.selected {
+    border-color: var(--vbm-accent, #4a90d9);
+}
+.custom-css-item > label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+    min-width: 0;
+    cursor: pointer;
+    margin: 0;
+}
+.custom-css-item-text {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+.custom-css-item-name {
+    font-weight: 600;
+    font-size: 13px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.custom-css-item-desc {
+    font-size: 12px;
+    opacity: 0.65;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.custom-css-del {
+    flex: none;
+}
+#custom-css-editor {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 160px;
+    gap: 8px;
+}
+#custom-css-editor[hidden] {
+    display: none;
+}
+.custom-css-meta {
+    display: flex;
+    gap: 8px;
+}
+.custom-css-meta input {
+    flex: 1;
+}
+#custom-css-css {
+    flex: 1;
+    width: 100%;
+    box-sizing: border-box;
+    resize: none;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 12.5px;
+    line-height: 1.5;
+    padding: 10px 12px;
+}
+/* CodeMirror primary editor fills the same slot when it loads */
+#custom-css-page .CodeMirror {
+    flex: 1;
+    height: auto;
+    border: 1px solid var(--vbm-border, #ccc);
+}
+.custom-css-status-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0;
+    font-size: 12.5px;
+}
+.custom-css-status {
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+.custom-css-status:not(:empty) {
+    opacity: 0.85;
+}

@@ -169,6 +169,45 @@
     "description": "Warning when trying to move bookmarks across storage types",
     "message": "Не можна переміщувати закладки між синхронізованим і локальним сховищем. Використовуйте копіювання/вставлення."
   },
+  "customCssBackToOptions": {
+    "message": "Назад до налаштувань"
+  },
+  "customCssDelete": {
+    "message": "Видалити"
+  },
+  "customCssDeleteConfirm": {
+    "message": "Видалити цей стиль?"
+  },
+  "customCssDesc": {
+    "message": "Ці стилі застосовуються до спливного вікна та бічної панелі. Зміни зберігаються автоматично й набувають чинності під час наступного відкриття."
+  },
+  "customCssDescLabel": {
+    "message": "Опис"
+  },
+  "customCssEmpty": {
+    "message": "Стилів ще немає — створіть перший."
+  },
+  "customCssEnabled": {
+    "message": "Увімкнути"
+  },
+  "customCssName": {
+    "message": "Назва"
+  },
+  "customCssNewStyle": {
+    "message": "Новий стиль"
+  },
+  "customCssOrderNote": {
+    "message": "Увімкнені стилі застосовуються в порядку списку — наступний перевизначає попередні."
+  },
+  "customCssSaved": {
+    "message": "Збережено"
+  },
+  "customCssTitle": {
+    "message": "Користувацький CSS"
+  },
+  "customCssUntitled": {
+    "message": "Мій стиль"
+  },
   "customIcon": {
     "message": "Користувацька іконка"
   },
@@ -965,6 +1004,9 @@
   },
   "optionDeadScanTimeout": {
     "message": "Час очікування сканування мертвих посилань (сек., 2-30)"
+  },
+  "optionEditCustomCSS": {
+    "message": "Редагувати свій CSS…"
   },
   "optionFaviconBackup": {
     "message": "Включати кеш іконок у резервні копії"

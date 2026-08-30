@@ -169,6 +169,45 @@
     "description": "Warning when trying to move bookmarks across storage types",
     "message": "לא ניתן להעביר סימניות בין אחסון מסונכרן למקומי. השתמש בהעתקה/הדבקה במקום זאת."
   },
+  "customCssBackToOptions": {
+    "message": "חזרה להגדרות"
+  },
+  "customCssDelete": {
+    "message": "מחיקה"
+  },
+  "customCssDeleteConfirm": {
+    "message": "למחוק את הסגנון הזה?"
+  },
+  "customCssDesc": {
+    "message": "הסגנונות האלה חלים על החלונית ועל סרגל הצד. העריכות נשמרות אוטומטית ונכנסות לתוקף בפתיחה הבאה."
+  },
+  "customCssDescLabel": {
+    "message": "תיאור"
+  },
+  "customCssEmpty": {
+    "message": "אין עדיין סגנונות — צרו אחד כדי להתחיל."
+  },
+  "customCssEnabled": {
+    "message": "הפעלה"
+  },
+  "customCssName": {
+    "message": "שם"
+  },
+  "customCssNewStyle": {
+    "message": "סגנון חדש"
+  },
+  "customCssOrderNote": {
+    "message": "סגנונות פעילים חלים לפי סדר הרשימה — סגנון מאוחר גובר על קודם."
+  },
+  "customCssSaved": {
+    "message": "נשמר"
+  },
+  "customCssTitle": {
+    "message": "CSS מותאם אישית"
+  },
+  "customCssUntitled": {
+    "message": "הסגנון שלי"
+  },
   "customIcon": {
     "message": "אייקון מותאם אישית"
   },
@@ -965,6 +1004,9 @@
   },
   "optionDeadScanTimeout": {
     "message": "זמן קצוב לסריקת קישורים מתים בשניות (2-30)"
+  },
+  "optionEditCustomCSS": {
+    "message": "עריכת ה-CSS שלך…"
   },
   "optionFaviconBackup": {
     "message": "כלול מטמון אייקונים בגיבויים"

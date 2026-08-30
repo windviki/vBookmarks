@@ -169,6 +169,45 @@
     "description": "Avviso quando si tenta di spostare i segnalibri tra tipi di archiviazione",
     "message": "Non è possibile spostare i segnalibri tra l'archiviazione sincronizzata e quella locale. Utilizza invece copia/incolla."
   },
+  "customCssBackToOptions": {
+    "message": "Torna alle opzioni"
+  },
+  "customCssDelete": {
+    "message": "Elimina"
+  },
+  "customCssDeleteConfirm": {
+    "message": "Eliminare questo stile?"
+  },
+  "customCssDesc": {
+    "message": "Questi stili si applicano al popup e al pannello laterale. Le modifiche si salvano automaticamente e hanno effetto alla prossima apertura."
+  },
+  "customCssDescLabel": {
+    "message": "Descrizione"
+  },
+  "customCssEmpty": {
+    "message": "Nessuno stile per ora — creane uno."
+  },
+  "customCssEnabled": {
+    "message": "Attiva"
+  },
+  "customCssName": {
+    "message": "Nome"
+  },
+  "customCssNewStyle": {
+    "message": "Nuovo stile"
+  },
+  "customCssOrderNote": {
+    "message": "Gli stili attivi si applicano in ordine di elenco — uno successivo prevale sui precedenti."
+  },
+  "customCssSaved": {
+    "message": "Salvato"
+  },
+  "customCssTitle": {
+    "message": "CSS personalizzato"
+  },
+  "customCssUntitled": {
+    "message": "Il mio stile"
+  },
   "customIcon": {
     "message": "Icona personalizzata"
   },
@@ -965,6 +1004,9 @@
   },
   "optionDeadScanTimeout": {
     "message": "Timeout scansione link morti in secondi (2-30)"
+  },
+  "optionEditCustomCSS": {
+    "message": "Modifica il tuo CSS…"
   },
   "optionFaviconBackup": {
     "message": "Includi la cache delle icone nei backup"

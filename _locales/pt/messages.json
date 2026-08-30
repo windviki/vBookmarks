@@ -169,6 +169,45 @@
     "description": "Warning when trying to move bookmarks across storage types",
     "message": "Os marcadores não podem ser movidos entre o armazenamento sincronizado e o local. Use copiar/colar."
   },
+  "customCssBackToOptions": {
+    "message": "Voltar às opções"
+  },
+  "customCssDelete": {
+    "message": "Eliminar"
+  },
+  "customCssDeleteConfirm": {
+    "message": "Eliminar este estilo?"
+  },
+  "customCssDesc": {
+    "message": "Estes estilos aplicam-se ao pop-up e ao painel lateral. As alterações guardam-se automaticamente e surtem efeito na próxima abertura."
+  },
+  "customCssDescLabel": {
+    "message": "Descrição"
+  },
+  "customCssEmpty": {
+    "message": "Ainda sem estilos — crie um para começar."
+  },
+  "customCssEnabled": {
+    "message": "Ativar"
+  },
+  "customCssName": {
+    "message": "Nome"
+  },
+  "customCssNewStyle": {
+    "message": "Novo estilo"
+  },
+  "customCssOrderNote": {
+    "message": "Os estilos ativados aplicam-se pela ordem da lista — um posterior sobrepõe os anteriores."
+  },
+  "customCssSaved": {
+    "message": "Guardado"
+  },
+  "customCssTitle": {
+    "message": "CSS personalizado"
+  },
+  "customCssUntitled": {
+    "message": "O meu estilo"
+  },
   "customIcon": {
     "message": "Ícone personalizado"
   },
@@ -965,6 +1004,9 @@
   },
   "optionDeadScanTimeout": {
     "message": "Tempo limite de verificação de links mortos em segundos (2-30)"
+  },
+  "optionEditCustomCSS": {
+    "message": "Editar o seu CSS…"
   },
   "optionFaviconBackup": {
     "message": "Incluir cache de ícones nos backups"

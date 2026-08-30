@@ -169,6 +169,45 @@
     "description": "Warning when trying to move bookmarks across storage types",
     "message": "Zabilješke nije moguće premjestiti između sinkroniziranog i lokalnog pohranjivanja. Koristite kopiraj/zalijepi."
   },
+  "customCssBackToOptions": {
+    "message": "Natrag na postavke"
+  },
+  "customCssDelete": {
+    "message": "Izbriši"
+  },
+  "customCssDeleteConfirm": {
+    "message": "Izbrisati ovaj stil?"
+  },
+  "customCssDesc": {
+    "message": "Ti se stilovi primjenjuju na skočni prozor i bočnu traku. Izmjene se automatski spremaju i stupaju na snagu pri sljedećem otvaranju."
+  },
+  "customCssDescLabel": {
+    "message": "Opis"
+  },
+  "customCssEmpty": {
+    "message": "Još nema stilova — stvorite jedan za početak."
+  },
+  "customCssEnabled": {
+    "message": "Omogući"
+  },
+  "customCssName": {
+    "message": "Naziv"
+  },
+  "customCssNewStyle": {
+    "message": "Novi stil"
+  },
+  "customCssOrderNote": {
+    "message": "Omogućeni stilovi primjenjuju se redoslijedom popisa — kasniji stil nadjačava raniji."
+  },
+  "customCssSaved": {
+    "message": "Spremljeno"
+  },
+  "customCssTitle": {
+    "message": "Prilagođeni CSS"
+  },
+  "customCssUntitled": {
+    "message": "Moj stil"
+  },
   "customIcon": {
     "message": "Prilagođena ikona"
   },
@@ -965,6 +1004,9 @@
   },
   "optionDeadScanTimeout": {
     "message": "Vremensko ograničenje skeniranja mrtvih poveznica u sekundama (2-30)"
+  },
+  "optionEditCustomCSS": {
+    "message": "Uredi svoj CSS…"
   },
   "optionFaviconBackup": {
     "message": "Uključi predmemoriju ikona u sigurnosne kopije"

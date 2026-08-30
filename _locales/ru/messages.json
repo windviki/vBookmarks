@@ -169,6 +169,45 @@
     "description": "Warning when trying to move bookmarks across storage types",
     "message": "Нельзя перемещать закладки между синхронизированным и локальным хранилищем. Используйте копирование/вставку."
   },
+  "customCssBackToOptions": {
+    "message": "Назад к настройкам"
+  },
+  "customCssDelete": {
+    "message": "Удалить"
+  },
+  "customCssDeleteConfirm": {
+    "message": "Удалить этот стиль?"
+  },
+  "customCssDesc": {
+    "message": "Эти стили применяются во всплывающем окне и боковой панели. Изменения сохраняются автоматически и вступают в силу при следующем открытии."
+  },
+  "customCssDescLabel": {
+    "message": "Описание"
+  },
+  "customCssEmpty": {
+    "message": "Стилей пока нет — создайте первый."
+  },
+  "customCssEnabled": {
+    "message": "Включить"
+  },
+  "customCssName": {
+    "message": "Название"
+  },
+  "customCssNewStyle": {
+    "message": "Новый стиль"
+  },
+  "customCssOrderNote": {
+    "message": "Включённые стили применяются в порядке списка — последующий переопределяет предыдущие."
+  },
+  "customCssSaved": {
+    "message": "Сохранено"
+  },
+  "customCssTitle": {
+    "message": "Пользовательский CSS"
+  },
+  "customCssUntitled": {
+    "message": "Мой стиль"
+  },
   "customIcon": {
     "message": "Кастомная иконка"
   },
@@ -965,6 +1004,9 @@
   },
   "optionDeadScanTimeout": {
     "message": "Тайм-аут сканирования битых ссылок в секундах (2-30)"
+  },
+  "optionEditCustomCSS": {
+    "message": "Редактировать свой CSS…"
   },
   "optionFaviconBackup": {
     "message": "Включать кэш значков в резервные копии"

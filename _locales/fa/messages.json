@@ -169,6 +169,45 @@
     "description": "Warning when trying to move bookmarks across storage types",
     "message": "نمی‌توان نشانک‌ها را بین حافظه همگام‌سازی شده و محلی جابجا کرد. از کپی/چسباندن استفاده کنید."
   },
+  "customCssBackToOptions": {
+    "message": "بازگشت به تنظیمات"
+  },
+  "customCssDelete": {
+    "message": "حذف"
+  },
+  "customCssDeleteConfirm": {
+    "message": "این استایل حذف شود؟"
+  },
+  "customCssDesc": {
+    "message": "این استایل‌ها روی پنجره بازشو و نوار کناری اعمال می‌شوند. تغییرات خودکار ذخیره می‌شوند و در باز شدن بعدی اعمال می‌گردند."
+  },
+  "customCssDescLabel": {
+    "message": "توضیحات"
+  },
+  "customCssEmpty": {
+    "message": "هنوز استایلی نیست — برای شروع یکی بسازید."
+  },
+  "customCssEnabled": {
+    "message": "فعال‌سازی"
+  },
+  "customCssName": {
+    "message": "نام"
+  },
+  "customCssNewStyle": {
+    "message": "استایل جدید"
+  },
+  "customCssOrderNote": {
+    "message": "استایل‌های فعال به ترتیب فهرست اعمال می‌شوند — مورد بعدی مورد قبلی را بازنویسی می‌کند."
+  },
+  "customCssSaved": {
+    "message": "ذخیره شد"
+  },
+  "customCssTitle": {
+    "message": "CSS سفارشی"
+  },
+  "customCssUntitled": {
+    "message": "استایل من"
+  },
   "customIcon": {
     "message": "آیکون سفارشی"
   },
@@ -965,6 +1004,9 @@
   },
   "optionDeadScanTimeout": {
     "message": "مهلت اسکن لینک مرده بر حسب ثانیه (۲-۳۰)"
+  },
+  "optionEditCustomCSS": {
+    "message": "ویرایش CSS شما…"
   },
   "optionFaviconBackup": {
     "message": "شامل کردن کش آیکون در پشتیبانگیری"

@@ -169,6 +169,45 @@
     "description": "Warning when trying to move bookmarks across storage types",
     "message": "Bookmark tidak dapat dipindahkan antara penyimpanan yang disinkronkan dan lokal. Gunakan salin/tempel sebagai gantinya."
   },
+  "customCssBackToOptions": {
+    "message": "Kembali ke opsi"
+  },
+  "customCssDelete": {
+    "message": "Hapus"
+  },
+  "customCssDeleteConfirm": {
+    "message": "Hapus gaya ini?"
+  },
+  "customCssDesc": {
+    "message": "Gaya ini diterapkan pada popup dan panel samping. Perubahan tersimpan otomatis dan berlaku saat popup dibuka berikutnya."
+  },
+  "customCssDescLabel": {
+    "message": "Deskripsi"
+  },
+  "customCssEmpty": {
+    "message": "Belum ada gaya — buat satu untuk mulai."
+  },
+  "customCssEnabled": {
+    "message": "Aktifkan"
+  },
+  "customCssName": {
+    "message": "Nama"
+  },
+  "customCssNewStyle": {
+    "message": "Gaya baru"
+  },
+  "customCssOrderNote": {
+    "message": "Gaya yang diaktifkan diterapkan sesuai urutan daftar — gaya yang lebih belakang menimpa yang lebih dulu."
+  },
+  "customCssSaved": {
+    "message": "Tersimpan"
+  },
+  "customCssTitle": {
+    "message": "CSS kustom"
+  },
+  "customCssUntitled": {
+    "message": "Gaya saya"
+  },
   "customIcon": {
     "message": "Ikon kustom"
   },
@@ -965,6 +1004,9 @@
   },
   "optionDeadScanTimeout": {
     "message": "Batas waktu pemindaian tautan mati dalam detik (2-30)"
+  },
+  "optionEditCustomCSS": {
+    "message": "Edit CSS Anda…"
   },
   "optionFaviconBackup": {
     "message": "Sertakan cache ikon dalam cadangan"

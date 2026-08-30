@@ -168,6 +168,45 @@
   "crossStorageMoveWarning": {
     "message": "Не може да се преместуваат обележувачи помеѓу синхронизирано и локално складирање. Користете копирај/залепи наместо тоа."
   },
+  "customCssBackToOptions": {
+    "message": "Назад на поставките"
+  },
+  "customCssDelete": {
+    "message": "Избриши"
+  },
+  "customCssDeleteConfirm": {
+    "message": "Да се избрише овој стил?"
+  },
+  "customCssDesc": {
+    "message": "Овие стилови се применуваат на контекстното прозорче и страничната лента. Измените се зачувуваат автоматски и стапуваат на сила при следното отворање."
+  },
+  "customCssDescLabel": {
+    "message": "Опис"
+  },
+  "customCssEmpty": {
+    "message": "Сè уште нема стилови — создадете еден за почеток."
+  },
+  "customCssEnabled": {
+    "message": "Овозможи"
+  },
+  "customCssName": {
+    "message": "Име"
+  },
+  "customCssNewStyle": {
+    "message": "Нов стил"
+  },
+  "customCssOrderNote": {
+    "message": "Овозможените стилови се применуваат по редослед на листата — подоцнежниот стил го надвладува претходниот."
+  },
+  "customCssSaved": {
+    "message": "Зачувано"
+  },
+  "customCssTitle": {
+    "message": "Прилагоден CSS"
+  },
+  "customCssUntitled": {
+    "message": "Мојот стил"
+  },
   "customIcon": {
     "message": "Своја икона"
   },
@@ -964,6 +1003,9 @@
   },
   "optionDeadScanTimeout": {
     "message": "Време на истек при скенирање на мртви врски во секунди (2-30)"
+  },
+  "optionEditCustomCSS": {
+    "message": "Уреди го својот CSS…"
   },
   "optionFaviconBackup": {
     "message": "Вклучи го кешот на икони во резервните копии"

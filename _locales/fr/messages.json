@@ -169,6 +169,45 @@
     "description": "Warning when trying to move bookmarks across storage types",
     "message": "Les signets ne peuvent pas être déplacés entre le stockage synchronisé et local. Utilisez plutôt copier/coller."
   },
+  "customCssBackToOptions": {
+    "message": "Retour aux options"
+  },
+  "customCssDelete": {
+    "message": "Supprimer"
+  },
+  "customCssDeleteConfirm": {
+    "message": "Supprimer ce style ?"
+  },
+  "customCssDesc": {
+    "message": "Ces styles s’appliquent à la fenêtre pop-up et au panneau latéral. Les modifications sont enregistrées automatiquement et prennent effet à la prochaine ouverture."
+  },
+  "customCssDescLabel": {
+    "message": "Description"
+  },
+  "customCssEmpty": {
+    "message": "Aucun style pour l’instant — créez-en un."
+  },
+  "customCssEnabled": {
+    "message": "Activer"
+  },
+  "customCssName": {
+    "message": "Nom"
+  },
+  "customCssNewStyle": {
+    "message": "Nouveau style"
+  },
+  "customCssOrderNote": {
+    "message": "Les styles activés s’appliquent dans l’ordre de la liste — un style ultérieur remplace les précédents."
+  },
+  "customCssSaved": {
+    "message": "Enregistré"
+  },
+  "customCssTitle": {
+    "message": "CSS personnalisé"
+  },
+  "customCssUntitled": {
+    "message": "Mon style"
+  },
   "customIcon": {
     "message": "Icône personnalisée"
   },
@@ -965,6 +1004,9 @@
   },
   "optionDeadScanTimeout": {
     "message": "Délai d'analyse des liens morts en secondes (2-30)"
+  },
+  "optionEditCustomCSS": {
+    "message": "Modifier votre CSS…"
   },
   "optionFaviconBackup": {
     "message": "Inclure le cache d'icônes dans les sauvegardes"

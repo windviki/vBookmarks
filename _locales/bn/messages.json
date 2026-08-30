@@ -169,6 +169,45 @@
     "description": "Warning when trying to move bookmarks across storage types",
     "message": "সিঙ্ক করা এবং লোকাল স্টোরেজের মধ্যে বুকমার্ক সরানো যাবে না। অনুলিপি/পেস্ট ব্যবহার করুন।"
   },
+  "customCssBackToOptions": {
+    "message": "সেটিংসে ফিরে যান"
+  },
+  "customCssDelete": {
+    "message": "মুছুন"
+  },
+  "customCssDeleteConfirm": {
+    "message": "এই স্টাইলটি মুছে ফেলবেন?"
+  },
+  "customCssDesc": {
+    "message": "এই স্টাইলগুলো পপআপ ও সাইড প্যানেলে প্রয়োগ হয়। পরিবর্তন স্বয়ংক্রিয়ভাবে সংরক্ষিত হয় এবং পরের বার খোলার সময় কার্যকর হয়।"
+  },
+  "customCssDescLabel": {
+    "message": "বিবরণ"
+  },
+  "customCssEmpty": {
+    "message": "এখনও কোনো স্টাইল নেই — শুরু করতে একটি তৈরি করুন।"
+  },
+  "customCssEnabled": {
+    "message": "সক্রিয়"
+  },
+  "customCssName": {
+    "message": "নাম"
+  },
+  "customCssNewStyle": {
+    "message": "নতুন স্টাইল"
+  },
+  "customCssOrderNote": {
+    "message": "সক্রিয় স্টাইলগুলো তালিকার ক্রমানুসারে প্রয়োগ হয় — পরেরটি আগেরটিকে ওভাররাইড করে।"
+  },
+  "customCssSaved": {
+    "message": "সংরক্ষিত"
+  },
+  "customCssTitle": {
+    "message": "কাস্টম CSS"
+  },
+  "customCssUntitled": {
+    "message": "আমার স্টাইল"
+  },
   "customIcon": {
     "message": "কাস্টম আইকন"
   },
@@ -965,6 +1004,9 @@
   },
   "optionDeadScanTimeout": {
     "message": "মৃত লিঙ্ক স্ক্যান টাইমআউট সেকেন্ডে (২-৩০)"
+  },
+  "optionEditCustomCSS": {
+    "message": "আপনার CSS সম্পাদনা করুন…"
   },
   "optionFaviconBackup": {
     "message": "ব্যাকআপে আইকন ক্যাশ অন্তর্ভুক্ত করুন"

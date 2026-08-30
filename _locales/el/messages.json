@@ -169,6 +169,45 @@
     "description": "Warning when trying to move bookmarks across storage types",
     "message": "Δεν είναι δυνατή η μετακίνηση σελιδεδεικτών μεταξύ συγχρονισμένης και τοπικής αποθήκευσης. Χρησιμοποιήστε αντιγραφή/επικόλληση."
   },
+  "customCssBackToOptions": {
+    "message": "Πίσω στις ρυθμίσεις"
+  },
+  "customCssDelete": {
+    "message": "Διαγραφή"
+  },
+  "customCssDeleteConfirm": {
+    "message": "Διαγραφή αυτού του στυλ;"
+  },
+  "customCssDesc": {
+    "message": "Αυτά τα στυλ εφαρμόζονται στο αναδυόμενο παράθυρο και την πλευρική γραμμή. Οι αλλαγές αποθηκεύονται αυτόματα και ισχύουν στο επόμενο άνοιγμα."
+  },
+  "customCssDescLabel": {
+    "message": "Περιγραφή"
+  },
+  "customCssEmpty": {
+    "message": "Δεν υπάρχουν στυλ ακόμα — δημιουργήστε ένα."
+  },
+  "customCssEnabled": {
+    "message": "Ενεργοποίηση"
+  },
+  "customCssName": {
+    "message": "Όνομα"
+  },
+  "customCssNewStyle": {
+    "message": "Νέο στυλ"
+  },
+  "customCssOrderNote": {
+    "message": "Τα ενεργοποιημένα στυλ εφαρμόζονται με τη σειρά λίστας — ένα μεταγενέστερο στυλ υπερισχύει."
+  },
+  "customCssSaved": {
+    "message": "Αποθηκεύτηκε"
+  },
+  "customCssTitle": {
+    "message": "Προσαρμοσμένο CSS"
+  },
+  "customCssUntitled": {
+    "message": "Το στυλ μου"
+  },
   "customIcon": {
     "message": "Προσαρμοσμένο εικονίδιο"
   },
@@ -965,6 +1004,9 @@
   },
   "optionDeadScanTimeout": {
     "message": "Χρονικό όριο σάρωσης νεκρών συνδέσμων σε δευτερόλεπτα (2-30)"
+  },
+  "optionEditCustomCSS": {
+    "message": "Επεξεργασία του CSS σας…"
   },
   "optionFaviconBackup": {
     "message": "Συμπερίληψη προσωρινής μνήμης εικονιδίων στα αντίγραφα ασφαλείας"

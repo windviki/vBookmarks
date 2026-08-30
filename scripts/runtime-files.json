@@ -1,10 +1,11 @@
 {
   "html": [
-    "pages/popup.html",
-    "pages/sidepanel.html",
-    "pages/options.html",
     "pages/advanced-options.html",
-    "pages/favicons.html"
+    "pages/custom-css.html",
+    "pages/favicons.html",
+    "pages/options.html",
+    "pages/popup.html",
+    "pages/sidepanel.html"
   ],
   "css": [
     "css/neat.css",
@@ -27,15 +28,16 @@
     "docs/README.zh.md"
   ],
   "classicJs": [
-    "vendor/codemirror.js",
-    "src/store.js",
+    "src/advanced-options.js",
+    "src/custom-css.js",
     "src/i18n-live.js",
+    "src/options.js",
     "src/popup.js",
-    "src/sync-manager.js",
     "src/sort-utils.js",
     "src/storage-usage.js",
-    "src/options.js",
-    "src/advanced-options.js"
+    "src/store.js",
+    "src/sync-manager.js",
+    "vendor/codemirror.js"
   ],
   "esmEntries": [
     "src/background.js",

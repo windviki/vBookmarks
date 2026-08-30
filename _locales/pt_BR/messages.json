@@ -168,6 +168,45 @@
   "crossStorageMoveWarning": {
     "message": "Não é possível mover favoritos entre armazenamento sincronizado e local. Use copiar/colar."
   },
+  "customCssBackToOptions": {
+    "message": "Voltar às opções"
+  },
+  "customCssDelete": {
+    "message": "Excluir"
+  },
+  "customCssDeleteConfirm": {
+    "message": "Excluir este estilo?"
+  },
+  "customCssDesc": {
+    "message": "Estes estilos se aplicam ao pop-up e ao painel lateral. As alterações são salvas automaticamente e vigoram na próxima abertura."
+  },
+  "customCssDescLabel": {
+    "message": "Descrição"
+  },
+  "customCssEmpty": {
+    "message": "Ainda não há estilos — crie um para começar."
+  },
+  "customCssEnabled": {
+    "message": "Ativar"
+  },
+  "customCssName": {
+    "message": "Nome"
+  },
+  "customCssNewStyle": {
+    "message": "Novo estilo"
+  },
+  "customCssOrderNote": {
+    "message": "Os estilos ativados são aplicados na ordem da lista — um posterior sobrepõe os anteriores."
+  },
+  "customCssSaved": {
+    "message": "Salvo"
+  },
+  "customCssTitle": {
+    "message": "CSS personalizado"
+  },
+  "customCssUntitled": {
+    "message": "Meu estilo"
+  },
   "customIcon": {
     "message": "Ícone personalizado"
   },
@@ -962,6 +1001,9 @@
   },
   "optionDeadScanTimeout": {
     "message": "Tempo limite de verificação de links mortos em segundos (2-30)"
+  },
+  "optionEditCustomCSS": {
+    "message": "Editar seu CSS…"
   },
   "optionFaviconBackup": {
     "message": "Incluir cache de ícones nos backups"

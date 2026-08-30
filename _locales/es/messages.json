@@ -169,6 +169,45 @@
     "description": "Warning when trying to move bookmarks across storage types",
     "message": "No se pueden mover marcadores entre el almacenamiento sincronizado y local. Use copiar/pegar en su lugar."
   },
+  "customCssBackToOptions": {
+    "message": "Volver a opciones"
+  },
+  "customCssDelete": {
+    "message": "Eliminar"
+  },
+  "customCssDeleteConfirm": {
+    "message": "¿Eliminar este estilo?"
+  },
+  "customCssDesc": {
+    "message": "Estos estilos se aplican a la ventana emergente y al panel lateral. Los cambios se guardan automáticamente y surten efecto la próxima vez que se abra."
+  },
+  "customCssDescLabel": {
+    "message": "Descripción"
+  },
+  "customCssEmpty": {
+    "message": "Aún no hay estilos: crea uno para empezar."
+  },
+  "customCssEnabled": {
+    "message": "Habilitar"
+  },
+  "customCssName": {
+    "message": "Nombre"
+  },
+  "customCssNewStyle": {
+    "message": "Nuevo estilo"
+  },
+  "customCssOrderNote": {
+    "message": "Los estilos habilitados se aplican en orden de lista: uno posterior prevalece sobre los anteriores."
+  },
+  "customCssSaved": {
+    "message": "Guardado"
+  },
+  "customCssTitle": {
+    "message": "CSS personalizado"
+  },
+  "customCssUntitled": {
+    "message": "Mi estilo"
+  },
   "customIcon": {
     "message": "Icono personalizado"
   },
@@ -965,6 +1004,9 @@
   },
   "optionDeadScanTimeout": {
     "message": "Tiempo de espera de escaneo de enlaces muertos en segundos (2-30)"
+  },
+  "optionEditCustomCSS": {
+    "message": "Editar tu CSS…"
   },
   "optionFaviconBackup": {
     "message": "Incluir caché de iconos en las copias de seguridad"

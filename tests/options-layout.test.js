@@ -61,14 +61,15 @@ describe('options page group structure (round-6 item 5, v4 task-3 #17 merge)', (
                 'custom-separator-url', 'custom-separator-string'])
             expect(sep).toContain(`id="${id}"`);
         expect(styles).not.toContain('custom-separator');
-        expect(styles).toContain('id="userstyle"'); // userstyle stays behind
+        expect(styles).toContain('id="edit-custom-css"'); // 4.1.1: links to the standalone editor
+        expect(styles).not.toContain('id="userstyle"'); // the inline textarea is gone
     });
 
     it('absorbed the advanced controls (icon, separators, userstyle, dead scan, reset)', () => {
         for (const id of ['custom-icon-preview', 'custom-icon-file', 'default-icon-button',
                 'custom-icon-pick',
                 'custom-separator-color', 'custom-separator-title', 'custom-separator-url',
-                'custom-separator-string', 'userstyle',
+                'custom-separator-string', 'edit-custom-css',
                 // the retired relay-template input is gone; the proxy server row
                 // (input + test-save + clear + hint) and the strip-visibility
                 // checkbox own the dead-scan proxy surface now
@@ -78,8 +79,7 @@ describe('options page group structure (round-6 item 5, v4 task-3 #17 merge)', (
                 'reset-button'])
             expect(optionsHtml).toContain(`id="${id}"`);
         // CodeMirror ships with the merged page now
-        expect(optionsHtml).toContain('/vendor/codemirror.js');
-        expect(optionsHtml).toContain('/vendor/codemirror.css');
+        // 4.1.1: CodeMirror moved with the editor to pages/custom-css.html
         // the merged page no longer links away to an advanced page
         expect(optionsHtml).not.toContain('advanced-options.html');
     });

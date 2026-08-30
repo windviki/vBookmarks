@@ -169,6 +169,45 @@
     "description": "Warning when trying to move bookmarks across storage types",
     "message": "同期済みとローカルストレージの間でブックマークを移動できません。コピー/貼り付けを使用してください。"
   },
+  "customCssBackToOptions": {
+    "message": "設定に戻る"
+  },
+  "customCssDelete": {
+    "message": "削除"
+  },
+  "customCssDeleteConfirm": {
+    "message": "このスタイルを削除しますか？"
+  },
+  "customCssDesc": {
+    "message": "これらのスタイルはポップアップとサイドパネルに適用されます。編集は自動保存され、次回の起動時に反映されます。"
+  },
+  "customCssDescLabel": {
+    "message": "説明"
+  },
+  "customCssEmpty": {
+    "message": "まだスタイルがありません — 新規作成から始めましょう。"
+  },
+  "customCssEnabled": {
+    "message": "有効化"
+  },
+  "customCssName": {
+    "message": "名前"
+  },
+  "customCssNewStyle": {
+    "message": "新しいスタイル"
+  },
+  "customCssOrderNote": {
+    "message": "有効なスタイルはリスト順に適用され、後のスタイルが前のスタイルを上書きします。"
+  },
+  "customCssSaved": {
+    "message": "保存しました"
+  },
+  "customCssTitle": {
+    "message": "カスタム CSS"
+  },
+  "customCssUntitled": {
+    "message": "マイスタイル"
+  },
   "customIcon": {
     "message": "カスタムアイコン"
   },
@@ -965,6 +1004,9 @@
   },
   "optionDeadScanTimeout": {
     "message": "デッドリンクスキャンのタイムアウト秒数 (2-30)"
+  },
+  "optionEditCustomCSS": {
+    "message": "CSS を編集…"
   },
   "optionFaviconBackup": {
     "message": "バックアップにアイコンキャッシュを含める"

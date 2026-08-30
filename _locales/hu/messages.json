@@ -169,6 +169,45 @@
     "description": "Warning when trying to move bookmarks across storage types",
     "message": "A könyvjelzők nem helyezhetők át a szinkronizált és a helyi tárhely között. Használja a másolás/beillesztés funkciót."
   },
+  "customCssBackToOptions": {
+    "message": "Vissza a beállításokhoz"
+  },
+  "customCssDelete": {
+    "message": "Törlés"
+  },
+  "customCssDeleteConfirm": {
+    "message": "Törlöd ezt a stílust?"
+  },
+  "customCssDesc": {
+    "message": "Ezek a stílusok a felugró ablakra és az oldalsávra érvényesek. A módosítások automatikusan mentődnek és a következő megnyitáskor lépnek érvénybe."
+  },
+  "customCssDescLabel": {
+    "message": "Leírás"
+  },
+  "customCssEmpty": {
+    "message": "Még nincs stílus — hozz létre egyet."
+  },
+  "customCssEnabled": {
+    "message": "Engedélyezés"
+  },
+  "customCssName": {
+    "message": "Név"
+  },
+  "customCssNewStyle": {
+    "message": "Új stílus"
+  },
+  "customCssOrderNote": {
+    "message": "A engedélyezett stílusok listabeli sorrendben érvényesülnek — a későbbi felülírja a korábbit."
+  },
+  "customCssSaved": {
+    "message": "Mentve"
+  },
+  "customCssTitle": {
+    "message": "Egyéni CSS"
+  },
+  "customCssUntitled": {
+    "message": "Saját stílusom"
+  },
   "customIcon": {
     "message": "Egyéni ikon"
   },
@@ -965,6 +1004,9 @@
   },
   "optionDeadScanTimeout": {
     "message": "Holt hivatkozás vizsgálat időtúllépés másodpercben (2-30)"
+  },
+  "optionEditCustomCSS": {
+    "message": "Saját CSS szerkesztése…"
   },
   "optionFaviconBackup": {
     "message": "Ikon-gyorsítótár belefoglalása a biztonsági mentésekbe"

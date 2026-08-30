@@ -169,6 +169,45 @@
     "description": "Warning when trying to move bookmarks across storage types",
     "message": "Nelze přesouvat záložky mezi synchronizovaným a místním úložištěm. Použijte kopírování/vkládání."
   },
+  "customCssBackToOptions": {
+    "message": "Zpět na nastavení"
+  },
+  "customCssDelete": {
+    "message": "Odstranit"
+  },
+  "customCssDeleteConfirm": {
+    "message": "Odstranit tento styl?"
+  },
+  "customCssDesc": {
+    "message": "Tyto styly se aplikují na vyskakovací okno a boční panel. Úpravy se ukládají automaticky a projeví se při příštím otevření."
+  },
+  "customCssDescLabel": {
+    "message": "Popis"
+  },
+  "customCssEmpty": {
+    "message": "Zatím žádné styly — vytvořte první."
+  },
+  "customCssEnabled": {
+    "message": "Povolit"
+  },
+  "customCssName": {
+    "message": "Název"
+  },
+  "customCssNewStyle": {
+    "message": "Nový styl"
+  },
+  "customCssOrderNote": {
+    "message": "Povolené styly se aplikují v pořadí seznamu — pozdější styl přepisuje dřívější."
+  },
+  "customCssSaved": {
+    "message": "Uloženo"
+  },
+  "customCssTitle": {
+    "message": "Vlastní CSS"
+  },
+  "customCssUntitled": {
+    "message": "Můj styl"
+  },
   "customIcon": {
     "message": "Vlastní ikona"
   },
@@ -965,6 +1004,9 @@
   },
   "optionDeadScanTimeout": {
     "message": "Časový limit skenování mrtvých odkazů v sekundách (2-30)"
+  },
+  "optionEditCustomCSS": {
+    "message": "Upravit vlastní CSS…"
   },
   "optionFaviconBackup": {
     "message": "Zahrnout mezipaměť ikon do záloh"

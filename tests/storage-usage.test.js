@@ -82,7 +82,7 @@ const EXPECTED = {
     autoResizePopup: 'other', activeView: 'other', viewState: 'other',
     searchHistory: 'other', searchHistoryEnabled: 'other', searchHistoryCount: 'other', separators: 'other',
     separatorTitle: 'other', separatorURL: 'other', separatorUrl: 'other',
-    separatorString: 'other', separatorcolor: 'other', userstyle: 'other',
+    separatorString: 'other', separatorcolor: 'other', userstyle: 'other', userstyles: 'other',
     customIcon: 'other', currentVersion: 'other',
     openCount: 'other', donationKey: 'other', donationCountDown: 'other',
     donationFactor: 'other', openInSidePanel: 'other', quickAddFolderId: 'other',

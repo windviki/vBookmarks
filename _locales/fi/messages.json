@@ -169,6 +169,45 @@
     "description": "Warning when trying to move bookmarks across storage types",
     "message": "Kirjanmerkkejä ei voi siirtää synkronoidun ja paikallisen tallennustilan välillä. Käytä sen sijaan kopioi/liitä -toimintoa."
   },
+  "customCssBackToOptions": {
+    "message": "Takaisin asetuksiin"
+  },
+  "customCssDelete": {
+    "message": "Poista"
+  },
+  "customCssDeleteConfirm": {
+    "message": "Poistetaanko tämä tyyli?"
+  },
+  "customCssDesc": {
+    "message": "Nämä tyylit vaikuttavat ponnahdusikkunaan ja sivupaneeliin. Muutokset tallentuvat automaattisesti ja astuvat voimaan seuraavalla avauskerralla."
+  },
+  "customCssDescLabel": {
+    "message": "Kuvaus"
+  },
+  "customCssEmpty": {
+    "message": "Ei vielä tyylejä — luo ensimmäinen."
+  },
+  "customCssEnabled": {
+    "message": "Ota käyttöön"
+  },
+  "customCssName": {
+    "message": "Nimi"
+  },
+  "customCssNewStyle": {
+    "message": "Uusi tyyli"
+  },
+  "customCssOrderNote": {
+    "message": "Käytössä olevat tyylit toteutuvat listan järjestyksessä — myöhempi tyyli ohittaa aiemman."
+  },
+  "customCssSaved": {
+    "message": "Tallennettu"
+  },
+  "customCssTitle": {
+    "message": "Mukautettu CSS"
+  },
+  "customCssUntitled": {
+    "message": "Tyylini"
+  },
   "customIcon": {
     "message": "Mukautettu kuvake"
   },
@@ -965,6 +1004,9 @@
   },
   "optionDeadScanTimeout": {
     "message": "Kuolleen linkin skannauksen aikakatkaisu sekunteina (2-30)"
+  },
+  "optionEditCustomCSS": {
+    "message": "Muokkaa CSS:ääsi…"
   },
   "optionFaviconBackup": {
     "message": "Sisällytä favicon-välimuisti varmuuskopioihin"

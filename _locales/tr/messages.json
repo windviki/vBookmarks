@@ -169,6 +169,45 @@
     "description": "Warning when trying to move bookmarks across storage types",
     "message": "Yer imleri eşitlenen ve yerel depolama alanı arasında taşınamaz. Bunun yerine kopyala/yapıştır kullanın."
   },
+  "customCssBackToOptions": {
+    "message": "Ayarlara dön"
+  },
+  "customCssDelete": {
+    "message": "Sil"
+  },
+  "customCssDeleteConfirm": {
+    "message": "Bu stil silinsin mi?"
+  },
+  "customCssDesc": {
+    "message": "Bu stiller açılır pencereye ve yan panele uygulanır. Düzenlemeler otomatik kaydedilir ve bir sonraki açılışta etkili olur."
+  },
+  "customCssDescLabel": {
+    "message": "Açıklama"
+  },
+  "customCssEmpty": {
+    "message": "Henüz stil yok — başlamak için bir tane oluşturun."
+  },
+  "customCssEnabled": {
+    "message": "Etkinleştir"
+  },
+  "customCssName": {
+    "message": "Ad"
+  },
+  "customCssNewStyle": {
+    "message": "Yeni stil"
+  },
+  "customCssOrderNote": {
+    "message": "Etkin stiller liste sırasına göre uygulanır — sonraki stil öncekini geçersiz kılar."
+  },
+  "customCssSaved": {
+    "message": "Kaydedildi"
+  },
+  "customCssTitle": {
+    "message": "Özel CSS"
+  },
+  "customCssUntitled": {
+    "message": "Stilim"
+  },
   "customIcon": {
     "message": "Özel simge"
   },
@@ -965,6 +1004,9 @@
   },
   "optionDeadScanTimeout": {
     "message": "Ölü bağlantı tarama zaman aşımı (saniye) (2-30)"
+  },
+  "optionEditCustomCSS": {
+    "message": "CSS’ini düzenle…"
   },
   "optionFaviconBackup": {
     "message": "Yedeklere simge önbelleğini ekle"

@@ -169,6 +169,45 @@
     "description": "Warning when trying to move bookmarks across storage types",
     "message": "Bogmærker kan ikke flyttes mellem synkroniseret og lokal lagring. Brug kopier/indsæt i stedet."
   },
+  "customCssBackToOptions": {
+    "message": "Tilbage til indstillinger"
+  },
+  "customCssDelete": {
+    "message": "Slet"
+  },
+  "customCssDeleteConfirm": {
+    "message": "Slet denne typografi?"
+  },
+  "customCssDesc": {
+    "message": "Disse typografier anvendes på pop op-vinduet og sidepanelet. Redigeringer gemmes automatisk og træder i kraft næste gang."
+  },
+  "customCssDescLabel": {
+    "message": "Beskrivelse"
+  },
+  "customCssEmpty": {
+    "message": "Ingen typografier endnu — opret en for at begynde."
+  },
+  "customCssEnabled": {
+    "message": "Aktivér"
+  },
+  "customCssName": {
+    "message": "Navn"
+  },
+  "customCssNewStyle": {
+    "message": "Ny typografi"
+  },
+  "customCssOrderNote": {
+    "message": "Aktiverede typografier anvendes i listerækkefølge — en senere typografi tilsidesætter tidligere."
+  },
+  "customCssSaved": {
+    "message": "Gemt"
+  },
+  "customCssTitle": {
+    "message": "Brugerdefineret CSS"
+  },
+  "customCssUntitled": {
+    "message": "Min typografi"
+  },
   "customIcon": {
     "message": "Brugerdefineret ikon"
   },
@@ -965,6 +1004,9 @@
   },
   "optionDeadScanTimeout": {
     "message": "Timeout for scanning af døde links i sekunder (2-30)"
+  },
+  "optionEditCustomCSS": {
+    "message": "Redigér din CSS…"
   },
   "optionFaviconBackup": {
     "message": "Medtag ikoncache i sikkerhedskopier"

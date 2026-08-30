@@ -169,6 +169,45 @@
     "description": "Warning when trying to move bookmarks across storage types",
     "message": "Не може да се преместват отметките между синхронизираното и локалното хранилище. Използвайте копиране/поставяне."
   },
+  "customCssBackToOptions": {
+    "message": "Обратно към настройките"
+  },
+  "customCssDelete": {
+    "message": "Изтриване"
+  },
+  "customCssDeleteConfirm": {
+    "message": "Изтриване на този стил?"
+  },
+  "customCssDesc": {
+    "message": "Тези стилове се прилагат към изскачащия прозорец и страничния панел. Промените се запазват автоматично и вступват в сила при следващото отваряне."
+  },
+  "customCssDescLabel": {
+    "message": "Описание"
+  },
+  "customCssEmpty": {
+    "message": "Още няма стилове — създайте първия."
+  },
+  "customCssEnabled": {
+    "message": "Активиран"
+  },
+  "customCssName": {
+    "message": "Име"
+  },
+  "customCssNewStyle": {
+    "message": "Нов стил"
+  },
+  "customCssOrderNote": {
+    "message": "Активираните стилове се прилагат в реда на списъка — по-късният стил има приоритет над по-ранния."
+  },
+  "customCssSaved": {
+    "message": "Запазено"
+  },
+  "customCssTitle": {
+    "message": "Персонален CSS"
+  },
+  "customCssUntitled": {
+    "message": "Моят стил"
+  },
   "customIcon": {
     "message": "Персонализирана икона"
   },
@@ -965,6 +1004,9 @@
   },
   "optionDeadScanTimeout": {
     "message": "Таймаут на сканиране за мъртви връзки в секунди (2-30)"
+  },
+  "optionEditCustomCSS": {
+    "message": "Редактирай своя CSS…"
   },
   "optionFaviconBackup": {
     "message": "Включване на кеша на иконите в резервните копия"

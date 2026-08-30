@@ -867,20 +867,17 @@ const $ = id => document.getElementById(id);
         bindText('custom-separator-url', 'separatorURL', 'http://separatethis.com/');
         bindText('custom-separator-string', 'separatorString', 'separatethis.com;');
 
-        // Custom styles: saved on every edit. CodeMirror (vendored) is the
-        // primary input; if it fails to load, fall back to the native
-        // textarea's change event so the feature never silently stops
-        // persisting (the popup/panel apply side lives in src/userstyle.js).
-        const textareaUserstyle = $('userstyle');
-        if (store.get('userstyle')) textareaUserstyle.value = store.get('userstyle');
-        if (window.CodeMirror) {
-            window.CodeMirror.fromTextArea(textareaUserstyle, {
-                onChange: c => store.set('userstyle', c.getValue())
-            });
-        } else {
-            textareaUserstyle.addEventListener('change', () => {
-                store.set('userstyle', textareaUserstyle.value);
-            });
+        // Custom styles: the inline textarea moved to its own page (4.1.1 —
+        // pasting a large stylesheet deformed the options layout). The row
+        // links out; the editor + its dual-path save live in src/custom-css.js.
+        {
+            const editLink = $('edit-custom-css');
+            if (editLink) {
+                editLink.href = (chrome.runtime && chrome.runtime.getURL)
+                    ? chrome.runtime.getURL('pages/custom-css.html')
+                    : '/pages/custom-css.html';
+                editLink.textContent = __m('optionEditCustomCSS');
+            }
         }
 
         // Dead-link scan tuning, clamped to the ranges the scanner supports

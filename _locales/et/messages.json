@@ -169,6 +169,45 @@
     "description": "Warning when trying to move bookmarks across storage types",
     "message": "Järjehoidjaid ei saa teisaldada sünkroniseeritud ja kohaliku salvesti vahel. Kasutage selle asemel kopeerimist/kleepimist."
   },
+  "customCssBackToOptions": {
+    "message": "Tagasi seadetesse"
+  },
+  "customCssDelete": {
+    "message": "Kustuta"
+  },
+  "customCssDeleteConfirm": {
+    "message": "Kustutada see stiil?"
+  },
+  "customCssDesc": {
+    "message": "Need stiilid rakenduvad hüpikaknale ja külgpaneelile. Muudatused salvestuvad automaatselt ja jõustuvad järgmisel avamisel."
+  },
+  "customCssDescLabel": {
+    "message": "Kirjeldus"
+  },
+  "customCssEmpty": {
+    "message": "Stiile pole veel — alustamiseks loo üks."
+  },
+  "customCssEnabled": {
+    "message": "Luba"
+  },
+  "customCssName": {
+    "message": "Nimi"
+  },
+  "customCssNewStyle": {
+    "message": "Uus stiil"
+  },
+  "customCssOrderNote": {
+    "message": "Lubatud stiilid rakenduvad loendi järjekorras — hilisem stiil kirjutab varasema üle."
+  },
+  "customCssSaved": {
+    "message": "Salvestatud"
+  },
+  "customCssTitle": {
+    "message": "Kohandatud CSS"
+  },
+  "customCssUntitled": {
+    "message": "Minu stiil"
+  },
   "customIcon": {
     "message": "Kohandatud ikoon"
   },
@@ -965,6 +1004,9 @@
   },
   "optionDeadScanTimeout": {
     "message": "Surnud linkide skannimise ajalõpp sekundites (2-30)"
+  },
+  "optionEditCustomCSS": {
+    "message": "Muuda oma CSS-i…"
   },
   "optionFaviconBackup": {
     "message": "Kaasa ikoonide vahemälu varukoopiatesse"

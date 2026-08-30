@@ -173,6 +173,45 @@
     "description": "Warning when trying to move bookmarks across storage types",
     "message": "Cannot move bookmarks between synced and local storage. Use copy/paste instead."
   },
+  "customCssBackToOptions": {
+    "message": "Back to options"
+  },
+  "customCssDelete": {
+    "message": "Delete"
+  },
+  "customCssDeleteConfirm": {
+    "message": "Delete this style?"
+  },
+  "customCssDesc": {
+    "message": "These styles are applied to the popup and the side panel. Edits save automatically and take effect the next time the popup opens."
+  },
+  "customCssDescLabel": {
+    "message": "Description"
+  },
+  "customCssEmpty": {
+    "message": "No styles yet — create one to start."
+  },
+  "customCssEnabled": {
+    "message": "Enable"
+  },
+  "customCssName": {
+    "message": "Name"
+  },
+  "customCssNewStyle": {
+    "message": "New style"
+  },
+  "customCssOrderNote": {
+    "message": "Enabled styles apply in list order — a later style overrides earlier ones."
+  },
+  "customCssSaved": {
+    "message": "Saved"
+  },
+  "customCssTitle": {
+    "message": "Custom CSS"
+  },
+  "customCssUntitled": {
+    "message": "My style"
+  },
   "customIcon": {
     "message": "Custom icon"
   },
@@ -1056,6 +1095,9 @@
   "optionDeadScanTimeout": {
     "description": "Advanced options label for the per-request dead-link probe timeout.",
     "message": "Dead-link scan timeout in seconds (2-30)"
+  },
+  "optionEditCustomCSS": {
+    "message": "Edit your CSS…"
   },
   "optionFaviconBackup": {
     "description": "Options checkbox (Icons group): whether the settings export/import also carries the enriched favicon cache (per-site data, potentially large). Off by default to keep backups small.",

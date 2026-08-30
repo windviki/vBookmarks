@@ -168,6 +168,45 @@
   "crossStorageMoveWarning": {
     "message": "无法在同步存储和本地存储之间移动书签，请改用复制/粘贴。"
   },
+  "customCssBackToOptions": {
+    "message": "返回设置"
+  },
+  "customCssDelete": {
+    "message": "删除"
+  },
+  "customCssDeleteConfirm": {
+    "message": "删除这个样式？"
+  },
+  "customCssDesc": {
+    "message": "这些样式会应用到弹窗与侧边栏。修改自动保存，下次打开弹窗时生效。"
+  },
+  "customCssDescLabel": {
+    "message": "描述"
+  },
+  "customCssEmpty": {
+    "message": "还没有样式，新建一个开始。"
+  },
+  "customCssEnabled": {
+    "message": "启用"
+  },
+  "customCssName": {
+    "message": "名称"
+  },
+  "customCssNewStyle": {
+    "message": "新建样式"
+  },
+  "customCssOrderNote": {
+    "message": "启用的样式按列表顺序依次应用，后启用的覆盖先启用的。"
+  },
+  "customCssSaved": {
+    "message": "已保存"
+  },
+  "customCssTitle": {
+    "message": "自定义 CSS"
+  },
+  "customCssUntitled": {
+    "message": "我的样式"
+  },
   "customIcon": {
     "message": "自定义图标"
   },
@@ -979,6 +1018,9 @@
   },
   "optionDeadScanTimeout": {
     "message": "死链扫描超时秒数（2-30）"
+  },
+  "optionEditCustomCSS": {
+    "message": "编辑你的 CSS…"
   },
   "optionFaviconBackup": {
     "message": "备份时包含图标缓存"
