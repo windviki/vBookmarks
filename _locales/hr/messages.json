@@ -53,6 +53,12 @@
   "announceV410Title": {
     "message": "Novosti u v4.1.0"
   },
+  "announceV411Text": {
+    "message": "v4.1.1 donosi potpune informativne opise u svim prikazima, novu grupu opcija Memorija (isključite isticanje zadnjeg otvorenog bookmarka, pomicanje, mape ili memoriju pretraživanja — svaku zasebno) i radni prostor za višestruke stilove Custom CSS."
+  },
+  "announceV411Title": {
+    "message": "Što je novo u v4.1.1"
+  },
   "bookmarkFolderNoFolders": {
     "message": "Nema mapa oznaka"
   },
@@ -2688,6 +2694,14 @@
   },
   "whatsNewTabGroups": {
     "message": "v$1$ dodaje prikaz grupa kartica i područje za pripremu: upravljajte karticama svakog prozora pored svojih oznaka i prikupljajte oznake s bilo kojeg mjesta u radni prostor za masovno organiziranje.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "whatsNewV411": {
+    "message": "v$1$ donosi potpune opise u svim prikazima, novu grupu opcija Memorija (isključite isticanje zadnjeg otvorenog bookmarka, pomicanje, mape ili memoriju pretraživanja — svaku zasebno) i radnu površinu za Custom CSS s više stilova.",
     "placeholders": {
       "1": {
         "content": "$1"

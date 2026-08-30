@@ -53,6 +53,12 @@
   "announceV410Title": {
     "message": "Mis on uut versioonis v4.1.0"
   },
+  "announceV411Text": {
+    "message": "v4.1.1 toob igasse vaatesse täisinfo kohtspikrid, uue mäluvalikute rühma (lülita viimati avatud järjehoidja esiletõst, kerimine, kaustad või mälupäring eraldi välja) ning mitmestiilse kohandatud CSS-i töölaua."
+  },
+  "announceV411Title": {
+    "message": "Mis on uut versioonis v4.1.1"
+  },
   "bookmarkFolderNoFolders": {
     "message": "Järjehoidjate kaustu pole"
   },
@@ -2688,6 +2694,14 @@
   },
   "whatsNewTabGroups": {
     "message": "v$1$ lisab vahekaartide rühmade vaate ja ettevalmistusala: hallake kõigi akende vahekaarte järjehoidjate kõrval ning koguge järjehoidjaid kõikjalt ettevalmistustöölauale hulgi korrastamiseks.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "whatsNewV411": {
+    "message": "v$1$ toob igasse vaatesse täisinfo hüpikaknad, uue mäluvalikute rühma (lülita viimati avatud järjehoidja esiletõst, kerimine, kaustad või otsingumälu välja — igaüks eraldi) ning mitmestiilse kohandatud CSS-i töölaua.",
     "placeholders": {
       "1": {
         "content": "$1"

@@ -53,6 +53,12 @@
   "announceV410Title": {
     "message": "Có gì mới trong v4.1.0"
   },
+  "announceV411Text": {
+    "message": "v4.1.1 cung cấp chú giải đầy đủ thông tin trong mọi chế độ xem, nhóm tùy chọn Bộ nhớ mới (tắt tô sáng dấu trang mở gần nhất, cuộn, thư mục hoặc bộ nhớ tìm kiếm — mỗi tùy chọn riêng biệt), và bàn làm việc CSS tùy chỉnh đa phong cách."
+  },
+  "announceV411Title": {
+    "message": "Có gì mới trong v4.1.1"
+  },
   "bookmarkFolderNoFolders": {
     "message": "Không có thư mục dấu trang"
   },
@@ -2688,6 +2694,14 @@
   },
   "whatsNewTabGroups": {
     "message": "v$1$ bổ sung chế độ xem Nhóm tab và Khu vực tạm: quản lý tab của mọi cửa sổ bên cạnh dấu trang, và thu thập dấu trang từ mọi nơi vào bàn làm việc tạm để tổ chức hàng loạt.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "whatsNewV411": {
+    "message": "v$1$ cung cấp chú giải đầy đủ thông tin trong mọi chế độ xem, nhóm tùy chọn Bộ nhớ mới (tắt đánh dấu bookmark mở gần nhất, cuộn, thư mục hoặc bộ nhớ tìm kiếm — mỗi tùy chọn riêng biệt), và bàn làm việc CSS tùy chỉnh đa phong cách.",
     "placeholders": {
       "1": {
         "content": "$1"

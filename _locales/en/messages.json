@@ -53,6 +53,12 @@
   "announceV410Title": {
     "message": "What's new in v4.1.0"
   },
+  "announceV411Text": {
+    "message": "v4.1.1 ships full-info tooltips in every view, a new Memory options group (turn off the last-opened bookmark highlight, scroll, folders or search memory — each on its own), and a multi-style Custom CSS workbench."
+  },
+  "announceV411Title": {
+    "message": "What's new in v4.1.1"
+  },
   "bookmarkFolderNoFolders": {
     "message": "No bookmark folders"
   },
@@ -2944,6 +2950,14 @@
   },
   "whatsNewTabGroups": {
     "message": "v$1$ adds the Tab groups view and the Staging area: manage every window's tabs next to your bookmarks, and collect bookmarks from anywhere into a staging workbench for bulk organizing.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "whatsNewV411": {
+    "message": "v$1$ ships full-info tooltips in every view, a new Memory options group (turn off the last-opened bookmark highlight, scroll, folders or search memory — each on its own), and a multi-style Custom CSS workbench.",
     "placeholders": {
       "1": {
         "content": "$1"

@@ -53,6 +53,12 @@
   "announceV410Title": {
     "message": "A v4.1.0 újdonságai"
   },
+  "announceV411Text": {
+    "message": "A v4.1.1 teljes körű infó tippeket hoz minden nézetben, egy új Memória beállításcsoportot (a legutóbb megnyitott könyvjelző kiemelés, görgetés, mappák vagy keresési memória kikapcsolása — mindegyik külön-külön), valamint egy többstílusú Egyéni CSS előkészítő területet."
+  },
+  "announceV411Title": {
+    "message": "Újdonságok a v4.1.1-ben"
+  },
   "bookmarkFolderNoFolders": {
     "message": "Nincs könyvjelzőmappa"
   },
@@ -2688,6 +2694,14 @@
   },
   "whatsNewTabGroups": {
     "message": "A v$1$ új lapcsoport-nézetet és előkészítő területet ad hozzá: kezelje minden ablak lapjait a könyvjelzők mellett, és gyűjtsön könyvjelzőket bárhonnan egy előkészítő munkafelületre tömeges rendezéshez.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "whatsNewV411": {
+    "message": "A v$1$ teljes körű infó tippeket hoz minden nézetben, egy új Memória beállításcsoportot (kikapcsolható a legutóbb megnyitott könyvjelző kiemelése, görgetés, mappák vagy keresési memória – mindegyik külön-külön), valamint egy többstílusú Egyedi CSS munkafelületet.",
     "placeholders": {
       "1": {
         "content": "$1"

@@ -53,6 +53,12 @@
   "announceV410Title": {
     "message": "Jaunumi versijā v4.1.0"
   },
+  "announceV411Text": {
+    "message": "v4.1.1 piedāvā pilnas informācijas rīka padomus katrā skatā, jaunu Atmiņas opciju grupu (izslēdziet pēdējās atvērtās grāmatzīmes izcelšanu, ritināšanu, mapes vai meklēšanas atmiņu — katru atsevišķi), un daudzstilu Custom CSS darbvietu."
+  },
+  "announceV411Title": {
+    "message": "Jaunumi v4.1.1"
+  },
   "bookmarkFolderNoFolders": {
     "message": "Nav grāmatzīmju mapju"
   },
@@ -2688,6 +2694,14 @@
   },
   "whatsNewTabGroups": {
     "message": "v$1$ pievieno cilņu grupu skatu un sagatavošanas zonu: pārvaldiet katra loga cilnes blakus grāmatzīmēm un vāciet grāmatzīmes no jebkuras vietas sagatavošanas darbvirsmā masveida organizēšanai.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "whatsNewV411": {
+    "message": "v$1$ piedāvā pilnas informācijas rīka padomus katrā skatā, jaunu Atmiņas opciju grupu (izslēdziet pēdējās atvērtās grāmatzīmes izcelšanu, ritināšanu, mapes vai meklēšanas atmiņu — katru atsevišķi), un daudzstilu Custom CSS darbvietu.",
     "placeholders": {
       "1": {
         "content": "$1"

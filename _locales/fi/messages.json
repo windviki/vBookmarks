@@ -53,6 +53,12 @@
   "announceV410Title": {
     "message": "Uutta v4.1.0:ssa"
   },
+  "announceV411Text": {
+    "message": "v4.1.1 tuo täydet tietovihjeet kaikkiin näkymiin, uuden Muisti-asetusryhmän (sammuta viimeksi avatun kirjanmerkin korostus, vieritys, kansiot tai hakumuisti — jokainen erikseen) sekä monityylisen Mukautetun CSS-työpöydän."
+  },
+  "announceV411Title": {
+    "message": "Mitä uutta v4.1.1:ssä"
+  },
   "bookmarkFolderNoFolders": {
     "message": "Ei kirjanmerkkejä"
   },
@@ -2688,6 +2694,14 @@
   },
   "whatsNewTabGroups": {
     "message": "v$1$ lisää välilehtiryhmien näkymän ja työtilan: hallinnoi kaikkien ikkunoiden välilehtiä kirjanmerkkiesi vieressä ja kerää kirjanmerkkejä mistä tahansa työtilaan joukkokäsittelyä varten.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "whatsNewV411": {
+    "message": "v$1$ tuo täydet tietovihjeet jokaiseen näkymään, uuden Muisti-asetusryhmän (sammuta viimeksi avatun kirjanmerkin korostus, vieritys, kansiot tai hakumuisti — kukin erikseen) sekä monityylisen Custom CSS -työpöydän.",
     "placeholders": {
       "1": {
         "content": "$1"

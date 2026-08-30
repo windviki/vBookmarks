@@ -53,6 +53,12 @@
   "announceV410Title": {
     "message": "Nouveautés de v4.1.0"
   },
+  "announceV411Text": {
+    "message": "La v4.1.1 apporte des infobulles complètes dans chaque vue, un nouveau groupe d'options Mémoire (désactivez la mise en évidence du dernier signet ouvert, le défilement, les dossiers ou la mémoire de recherche — chacun séparément), et un atelier CSS personnalisé multi-styles."
+  },
+  "announceV411Title": {
+    "message": "Nouveautés de la v4.1.1"
+  },
   "bookmarkFolderNoFolders": {
     "message": "Aucun dossier de favoris"
   },
@@ -2688,6 +2694,14 @@
   },
   "whatsNewTabGroups": {
     "message": "v$1$ ajoute la vue des groupes d'onglets et la zone de préparation : gérez les onglets de chaque fenêtre à côté de vos favoris, et collectez des favoris de n'importe où dans un espace de travail pour un classement en masse.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "whatsNewV411": {
+    "message": "v$1$ propose des infobulles complètes dans chaque vue, un nouveau groupe d’options Mémoire (désactivez la mise en surbrillance du dernier signet ouvert, le défilement, les dossiers ou la mémoire de recherche — chacun séparément), et un atelier CSS personnalisé multi-styles.",
     "placeholders": {
       "1": {
         "content": "$1"

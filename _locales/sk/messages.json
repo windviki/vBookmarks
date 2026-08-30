@@ -53,6 +53,12 @@
   "announceV410Title": {
     "message": "Čo je nové vo v4.1.0"
   },
+  "announceV411Text": {
+    "message": "v4.1.1 prináša v každom zobrazení tooltipy s úplnými informáciami, novú skupinu možností Pamäť (vypnite zvýraznenie naposledy otvorenej záložky, posúvanie, priečinky alebo pamäť vyhľadávania — každú samostatne) a viacštýlové pracovisko Custom CSS."
+  },
+  "announceV411Title": {
+    "message": "Čo je nové vo v4.1.1"
+  },
   "bookmarkFolderNoFolders": {
     "message": "Žiadne priečinky záložiek"
   },
@@ -2688,6 +2694,14 @@
   },
   "whatsNewTabGroups": {
     "message": "v$1$ pridáva zobrazenie skupín kariet a pracovnú oblasť: spravujte karty každého okna vedľa svojich záložiek a zhromažďujte záložky odkiaľkoľvek do pracovnej oblasti na hromadné usporiadanie.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "whatsNewV411": {
+    "message": "v$1$ prináša úplné informačné tipy vo všetkých zobrazeniach, novú skupinu možností Pamäť (vypnite zvýraznenie posledného otvoreného záložky, posúvanie, priečinky alebo pamäť vyhľadávania — každú samostatne) a viacštýlový pracovný stôl Custom CSS.",
     "placeholders": {
       "1": {
         "content": "$1"

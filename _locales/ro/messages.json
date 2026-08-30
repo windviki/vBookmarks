@@ -53,6 +53,12 @@
   "announceV410Title": {
     "message": "Noutăți în v4.1.0"
   },
+  "announceV411Text": {
+    "message": "v4.1.1 aduce tooltip-uri complete în fiecare vizualizare, un nou grup de opțiuni Memorie (dezactivați evidențierea ultimului marcaj deschis, derularea, folderele sau memoria de căutare — fiecare separat) și un mediu de lucru Custom CSS multi-stil."
+  },
+  "announceV411Title": {
+    "message": "Ce este nou în v4.1.1"
+  },
   "bookmarkFolderNoFolders": {
     "message": "Niciun dosar de marcaje"
   },
@@ -2688,6 +2694,14 @@
   },
   "whatsNewTabGroups": {
     "message": "v$1$ adaugă vizualizarea grupurilor de file și zona de pregătire: gestionați filele fiecărei ferestre lângă marcaje și colectați marcaje de oriunde într-un spațiu de lucru pentru organizare în masă.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "whatsNewV411": {
+    "message": "v$1$ include sfaturi complete în fiecare vizualizare, un nou grup de opțiuni Memorie (dezactivați evidențierea ultimului marcaj deschis, derularea, folderele sau memoria de căutare — fiecare separat) și un atelier CSS personalizat cu mai multe stiluri.",
     "placeholders": {
       "1": {
         "content": "$1"

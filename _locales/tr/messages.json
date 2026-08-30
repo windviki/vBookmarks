@@ -53,6 +53,12 @@
   "announceV410Title": {
     "message": "v4.1.0'daki yenilikler"
   },
+  "announceV411Text": {
+    "message": "v4.1.1, tüm görünümlerde tam bilgi içeren araç ipuçları, yeni bir Bellek seçenekleri grubu (son açılan yer imi vurgusunu, kaydırmayı, klasörleri veya bellek aramasını ayrı ayrı kapatma) ve çok stilli bir Özel CSS çalışma alanı sunar."
+  },
+  "announceV411Title": {
+    "message": "v4.1.1'deki yenilikler"
+  },
   "bookmarkFolderNoFolders": {
     "message": "Yer imi klasörü yok"
   },
@@ -2688,6 +2694,14 @@
   },
   "whatsNewTabGroups": {
     "message": "v$1$ sekme grupları görünümünü ve Hazırlık alanını ekler: her pencerenin sekmelerini yer imlerinizin yanında yönetin ve yer imlerini her yerden toplu düzenleme için bir hazırlık tezgahında toplayın.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "whatsNewV411": {
+    "message": "v$1$, tüm görünümlerde tam bilgi ipuçları, yeni bir Bellek seçenek grubu (son açılan yer imi vurgusunu, kaydırmayı, klasörleri veya arama belleğini ayrı ayrı kapatın) ve çok stilli bir Özel CSS hazırlık alanı sunar.",
     "placeholders": {
       "1": {
         "content": "$1"

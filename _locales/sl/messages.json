@@ -53,6 +53,12 @@
   "announceV410Title": {
     "message": "Novosti v v4.1.0"
   },
+  "announceV411Text": {
+    "message": "Različica v4.1.1 prinaša celovite opise v vseh pogledih, novo skupino možnosti Memory (izklop poudarjanja zadnjih odprtih zaznamkov, drsenja, map ali pomnilnika iskanja — vsako posebej) ter večstilno delovno mizo Custom CSS."
+  },
+  "announceV411Title": {
+    "message": "Kaj je novega v v4.1.1"
+  },
   "bookmarkFolderNoFolders": {
     "message": "Ni map zaznamkov"
   },
@@ -2688,6 +2694,14 @@
   },
   "whatsNewTabGroups": {
     "message": "v$1$ doda pogled skupin zavihkov in območje za pripravo: upravljajte zavihke vsakega okna poleg svojih zaznamkov ter zbirajte zaznamke od koder koli v delovno površino za množično organiziranje.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "whatsNewV411": {
+    "message": "Različica v$1$ prinaša celovite namige v vseh pogledih, novo skupino možnosti Pomnilnik (izklop označevanja zadnjega odprtega zaznamka, drsenja, map ali iskanja po pomnilniku – vsako posebej) ter delovno mizo Custom CSS z več slogi.",
     "placeholders": {
       "1": {
         "content": "$1"

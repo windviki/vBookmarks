@@ -53,6 +53,12 @@
   "announceV410Title": {
     "message": "Nyheder i v4.1.0"
   },
+  "announceV411Text": {
+    "message": "v4.1.1 leverer værktøjstip med fuld information i alle visninger, en ny gruppe med hukommelsesindstillinger (slå fremhævning af sidst åbnede bogmærke, rulning, mapper eller hukommelse fra — hver for sig) og en arbejdsplads til brugerdefineret CSS med flere stilarter."
+  },
+  "announceV411Title": {
+    "message": "Nyt i v4.1.1"
+  },
   "bookmarkFolderNoFolders": {
     "message": "Ingen bogmærkemapper"
   },
@@ -2688,6 +2694,14 @@
   },
   "whatsNewTabGroups": {
     "message": "v$1$ tilføjer fanegruppevisningen og arbejdsområdet: administrer alle vinduers faner ved siden af dine bogmærker, og saml bogmærker fra hvor som helst i et arbejdsområde til masseorganisering.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "whatsNewV411": {
+    "message": "v$1$ leverer fuld-info værktøjstip i alle visninger, en ny gruppe med hukommelsesindstillinger (slå fremhævning af sidst åbnede bogmærke, rulning, mapper eller søgehukommelse fra — hver for sig), og en multi-stil Custom CSS-arbejdsplads.",
     "placeholders": {
       "1": {
         "content": "$1"

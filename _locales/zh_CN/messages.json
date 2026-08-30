@@ -53,6 +53,12 @@
   "announceV410Title": {
     "message": "v4.1.0 新变化"
   },
+  "announceV411Text": {
+    "message": "v4.1.1 带来全视图完整信息悬浮提示、全新「记忆」选项组（高亮上次书签、滚动位置、文件夹、搜索记忆可各自单独关闭）以及多样式自定义 CSS 工作台。"
+  },
+  "announceV411Title": {
+    "message": "v4.1.1 新变化"
+  },
   "bookmarkFolderNoFolders": {
     "message": "没有书签文件夹"
   },
@@ -2745,6 +2751,14 @@
   },
   "whatsNewTabGroups": {
     "message": "v$1$ 新增标签组视图与暂存区：在书签旁管理各窗口的标签页，并从任意入口收集书签到暂存工作台批量整理。",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "whatsNewV411": {
+    "message": "v$1$ 带来全视图完整信息悬浮提示、全新「记忆」选项组（高亮上次书签、滚动位置、文件夹、搜索记忆可各自单独关闭）以及多样式自定义 CSS 工作台。",
     "placeholders": {
       "1": {
         "content": "$1"

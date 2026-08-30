@@ -59,3 +59,36 @@ describe('applyUserStyle', () => {
         expect(doc.body.children[0].textContent).toBe(css);
     });
 });
+
+// CSP diagnosis: a remote @import inside the pasted CSS is blocked by the
+// manifest's style-src — applyUserStyle must say so instead of failing
+// silently (the block itself stays: CSP is doing its job).
+describe('applyUserStyle remote @import diagnosis', () => {
+    it('warns once for a remote @import and still injects the style', () => {
+        const warnings = [];
+        const origWarn = console.warn;
+        console.warn = (...args) => warnings.push(args.join(' '));
+        try {
+            const css = "@import url('https://fonts.googleapis.com/css?family=Rubik');\nbody { color: red; }";
+            const el = applyUserStyle(makeDoc(), css);
+            expect(el).toBeTruthy();
+            expect(warnings).toHaveLength(1);
+            expect(warnings[0]).toContain('remote @import');
+        } finally {
+            console.warn = origWarn;
+        }
+    });
+
+    it('no warning for local/data imports or plain css', () => {
+        const warnings = [];
+        const origWarn = console.warn;
+        console.warn = (...args) => warnings.push(args);
+        try {
+            applyUserStyle(makeDoc(), "body { color: red; }");
+            applyUserStyle(makeDoc(), "@import url('data:text/css,body{}');");
+            expect(warnings).toHaveLength(0);
+        } finally {
+            console.warn = origWarn;
+        }
+    });
+});

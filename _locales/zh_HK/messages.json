@@ -53,6 +53,12 @@
   "announceV410Title": {
     "message": "v4.1.0 新功能"
   },
+  "announceV411Text": {
+    "message": "v4.1.1 帶來全檢視完整資訊懸浮提示、全新「記憶」選項組（高亮上次書籤、捲動位置、資料夾、搜尋記憶可各自單獨關閉）以及多樣式自訂 CSS 工作台。"
+  },
+  "announceV411Title": {
+    "message": "v4.1.1 新變化"
+  },
   "bookmarkFolderNoFolders": {
     "message": "沒有書籤資料夾"
   },
@@ -2688,6 +2694,14 @@
   },
   "whatsNewTabGroups": {
     "message": "v$1$ 新增分頁群組檢視及暫存區：在書籤旁管理每個視窗的分頁，並可從任何地方收集書籤至暫存工作區，進行批量整理。",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "whatsNewV411": {
+    "message": "v$1$ 帶來全檢視完整資訊懸浮提示、全新「記憶」選項組（高亮上次書籤、捲動位置、資料夾、搜尋記憶可各自單獨關閉）以及多樣式自訂 CSS 工作台。",
     "placeholders": {
       "1": {
         "content": "$1"

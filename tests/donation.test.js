@@ -209,12 +209,12 @@ describe('createDonation wiring', () => {
         expect(openNewTab).toHaveBeenCalledWith(guideV4UrlFor('en'), true, true);
     });
 
-    describe('whats-new (4.1.0 local banner)', () => {
-        it('a 4.0.x → 4.1.0 crossing shows the banner with the version summary + changelog link', () => {
-            boot({ currentVersion: '4.0.8' }, { version: '4.1.0', lang: 'zh-CN' });
+    describe('whats-new (4.1.1 local banner)', () => {
+        it('a 4.0.x → 4.1.1 crossing shows the banner with the version summary + changelog link', () => {
+            boot({ currentVersion: '4.0.8' }, { version: '4.1.1', lang: 'zh-CN' });
             expect(donation.whatsNewShown).toBe(true);
             expect(els['whats-new'].hidden).toBe(false);
-            expect(els['whats-new-text'].textContent).toBe('whatsNewTabGroups[4.1.0]');
+            expect(els['whats-new-text'].textContent).toBe('whatsNewV411[4.1.1]');
             expect(els['whats-new-changelog'].textContent).toBe('whatsNewChangelog');
             expect(els['whats-new-changelog'].href).toBe(CHANGELOG_URL);
         });
@@ -267,7 +267,7 @@ describe('banner markup contract (audit T8)', () => {
     });
 
     it('the whats-new changelog link points at the docs/README.md changelog anchor (audit B3/O13)', () => {
-        expect(CHANGELOG_URL).toBe('https://github.com/windviki/vBookmarks/blob/master/docs/README.md#v410');
+        expect(CHANGELOG_URL).toBe('https://github.com/windviki/vBookmarks/blob/master/docs/README.md#v411');
     });
 
     it('the rate button points at the Chrome Web Store listing', () => {

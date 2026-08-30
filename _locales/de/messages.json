@@ -53,6 +53,12 @@
   "announceV410Title": {
     "message": "Neuerungen in v4.1.0"
   },
+  "announceV411Text": {
+    "message": "v4.1.1 bietet in jeder Ansicht Tooltips mit vollständigen Informationen, eine neue Optionsgruppe „Speicher“ (deaktivieren Sie die Hervorhebung zuletzt geöffneter Lesezeichen, Scrollen, Ordner oder Speicherverlauf – jeweils einzeln) sowie eine Werkbank für benutzerdefiniertes CSS mit mehreren Stilen."
+  },
+  "announceV411Title": {
+    "message": "Neu in v4.1.1"
+  },
   "bookmarkFolderNoFolders": {
     "message": "Keine Lesezeichenordner"
   },
@@ -2688,6 +2694,14 @@
   },
   "whatsNewTabGroups": {
     "message": "v$1$ fügt die Tab-Gruppen-Ansicht und den Staging-Bereich hinzu: Verwalten Sie die Tabs jedes Fensters neben Ihren Lesezeichen und sammeln Sie Lesezeichen von überall in einer Staging-Workbench für die Massenorganisation.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "whatsNewV411": {
+    "message": "v$1$ bietet vollständige Info-Tooltips in jeder Ansicht, eine neue Gruppe „Speicheroptionen“ (letzte geöffnete Lesezeichen-Hervorhebung, Scrollen, Ordner oder Suchspeicher je einzeln abschaltbar) und eine Multi-Stil-Werkbank für benutzerdefiniertes CSS.",
     "placeholders": {
       "1": {
         "content": "$1"

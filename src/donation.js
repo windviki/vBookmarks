@@ -34,7 +34,7 @@ export const DONATION_URL = 'https://github.com/windviki/vBookmarks/blob/master/
 export const STORE_URL = 'https://chromewebstore.google.com/detail/vbookmarks/odhjcodnoebmndcihdedenkmdmklpihb';
 // Point at the changelog file explicitly, not the repo root: the root anchor
 // breaks the moment a top-level README appears (audit B3/O13).
-export const CHANGELOG_URL = 'https://github.com/windviki/vBookmarks/blob/master/docs/README.md#v410';
+export const CHANGELOG_URL = 'https://github.com/windviki/vBookmarks/blob/master/docs/README.md#v411';
 
 // The ask shows unless permanently disabled, and when this open is an
 // upgrade (newOrUpgrade) OR the accumulated opens have crossed the key.
@@ -151,7 +151,7 @@ export const createDonation = ({ store, $, chrome, _m, openNewTab }) => {
     const whatsNewShown = !!whatsNew && upgradedToAnnounced && !upgradedToV4;
     if (whatsNew) {
         if (whatsNewShown) {
-            $('whats-new-text').textContent = _m('whatsNewTabGroups', [mf['version']]);
+            $('whats-new-text').textContent = _m('whatsNewV411', [mf['version']]);
             const changelogLink = $('whats-new-changelog');
             changelogLink.textContent = _m('whatsNewChangelog');
             changelogLink.href = CHANGELOG_URL;

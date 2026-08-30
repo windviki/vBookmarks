@@ -53,6 +53,12 @@
   "announceV410Title": {
     "message": "v4.1.0의 새로운 기능"
   },
+  "announceV411Text": {
+    "message": "v4.1.1은 모든 보기에서 전체 정보 툴팁, 새로운 메모리 옵션 그룹(마지막으로 연 북마크 강조, 스크롤, 폴더 또는 검색 메모리를 각각 끌 수 있음), 다중 스타일 Custom CSS 워크벤치를 제공합니다."
+  },
+  "announceV411Title": {
+    "message": "v4.1.1의 새로운 기능"
+  },
   "bookmarkFolderNoFolders": {
     "message": "북마크 폴더가 없습니다"
   },
@@ -2688,6 +2694,14 @@
   },
   "whatsNewTabGroups": {
     "message": "v$1$에 탭 그룹 보기와 스테이징 영역이 추가되었습니다: 모든 창의 탭을 북마크 옆에서 관리하고, 어디서든 북마크를 스테이징 작업대에 모아 대량 정리할 수 있습니다.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "whatsNewV411": {
+    "message": "v$1$는 모든 보기에 전체 정보 툴팁, 새 메모리 옵션 그룹(마지막으로 연 북마크 강조, 스크롤, 폴더 또는 검색 메모리를 각각 끌 수 있음), 다중 스타일 사용자 지정 CSS 작업대를 제공합니다.",
     "placeholders": {
       "1": {
         "content": "$1"

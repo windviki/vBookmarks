@@ -53,6 +53,12 @@
   "announceV410Title": {
     "message": "Co je nového ve v4.1.0"
   },
+  "announceV411Text": {
+    "message": "v4.1.1 přináší plné informační tipy ve všech zobrazeních, novou skupinu možností Paměť (vypněte zvýraznění posledního otevřeného záložky, posouvání, složky nebo paměť vyhledávání — každou zvlášť) a multi-stylový pracovní stůl Custom CSS."
+  },
+  "announceV411Title": {
+    "message": "Co je nového ve v4.1.1"
+  },
   "bookmarkFolderNoFolders": {
     "message": "Žádné složky záložek"
   },
@@ -2688,6 +2694,14 @@
   },
   "whatsNewTabGroups": {
     "message": "v$1$ přidává zobrazení skupin karet a pracovní oblast: spravujte karty každého okna vedle svých záložek a shromažďujte záložky odkudkoli do pracovní oblasti pro hromadné uspořádání.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "whatsNewV411": {
+    "message": "v$1$ přináší podrobné popisky ve všech zobrazeních, novou skupinu možností Paměť (vypněte zvýraznění naposledy otevřené záložky, posouvání, složky nebo paměť vyhledávání – každou zvlášť) a více stylů v pracovní ploše Custom CSS.",
     "placeholders": {
       "1": {
         "content": "$1"

@@ -53,6 +53,12 @@
   "announceV410Title": {
     "message": "Novità in v4.1.0"
   },
+  "announceV411Text": {
+    "message": "La v4.1.1 introduce suggerimenti completi in ogni vista, un nuovo gruppo di opzioni Memoria (disattiva l'evidenziazione dell'ultimo segnalibro aperto, lo scorrimento, le cartelle o la memoria di ricerca — ciascuno separatamente) e un'area di lavoro CSS personalizzato multi-stile."
+  },
+  "announceV411Title": {
+    "message": "Novità della v4.1.1"
+  },
   "bookmarkFolderNoFolders": {
     "message": "Nessuna cartella di segnalibri"
   },
@@ -2688,6 +2694,14 @@
   },
   "whatsNewTabGroups": {
     "message": "v$1$ aggiunge la vista dei gruppi di schede e l'area di staging: gestisci le schede di ogni finestra accanto ai tuoi segnalibri e raccogli segnalibri da qualsiasi luogo in un banco di lavoro di staging per l'organizzazione in blocco.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "whatsNewV411": {
+    "message": "v$1$ introduce descrizioni complete in ogni vista, un nuovo gruppo di opzioni Memoria (disattiva l'evidenziazione dell'ultimo segnalibro aperto, lo scorrimento, le cartelle o la memoria di ricerca — ciascuna separatamente) e un banco di lavoro CSS personalizzato multi-stile.",
     "placeholders": {
       "1": {
         "content": "$1"

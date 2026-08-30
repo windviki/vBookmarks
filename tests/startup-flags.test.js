@@ -61,28 +61,28 @@ describe('applyVersionGate', () => {
         expect(store.get('currentVersion')).toBe('4.0.1');
     });
 
-    it('a 4.0.x → 4.1.0 crossing arms the what\'s-new announce flag', () => {
+    it('a 4.0.x → 4.1.1 crossing arms the what\'s-new announce flag', () => {
         const store = makeStoreDouble({ currentVersion: '4.0.8' });
-        const flags = applyVersionGate(store, '4.1.0');
-        // a minor bump — sameOrNewerMinor(4.0.8, 4.1.0) is false, so the
+        const flags = applyVersionGate(store, '4.1.1');
+        // a minor bump — sameOrNewerMinor(4.0.8, 4.1.1) is false, so the
         // upgrade flag re-arms too; not the v4 crossing, but it DID cross
-        // the 4.1.0 announce threshold
+        // the 4.1.1 announce threshold
         expect(flags.newOrUpgrade).toBe(true);
         expect(flags.upgradedToV4).toBe(false);
         expect(flags.upgradedToAnnounced).toBe(true);
-        expect(store.get('currentVersion')).toBe('4.1.0'); // recorded → fires once
+        expect(store.get('currentVersion')).toBe('4.1.1'); // recorded → fires once
     });
 
-    it('a 3.x → 4.1.0 crossing arms both the v4 flag and the announce flag', () => {
+    it('a 3.x → 4.1.1 crossing arms both the v4 flag and the announce flag', () => {
         const store = makeStoreDouble({ currentVersion: '3.3.0' });
-        const flags = applyVersionGate(store, '4.1.0');
+        const flags = applyVersionGate(store, '4.1.1');
         expect(flags.upgradedToV4).toBe(true);
         expect(flags.upgradedToAnnounced).toBe(true);
     });
 
-    it('once recorded as 4.1.0, later opens never re-arm the announce flag', () => {
-        const store = makeStoreDouble({ currentVersion: '4.1.0' });
-        const flags = applyVersionGate(store, '4.1.0');
+    it('once recorded as 4.1.1, later opens never re-arm the announce flag', () => {
+        const store = makeStoreDouble({ currentVersion: '4.1.1' });
+        const flags = applyVersionGate(store, '4.1.1');
         expect(flags.upgradedToAnnounced).toBe(false);
         expect(flags.newOrUpgrade).toBe(false);
     });
@@ -110,7 +110,7 @@ describe('V4_THRESHOLD', () => {
 });
 
 describe('ANNOUNCED_THRESHOLD', () => {
-    it('is the 4.1.0 announce threshold', () => {
-        expect(ANNOUNCED_THRESHOLD).toEqual({ major: 4, minor: 1, patch: 0 });
+    it('is the 4.1.1 announce threshold (re-armed for the 4.1.1 release)', () => {
+        expect(ANNOUNCED_THRESHOLD).toEqual({ major: 4, minor: 1, patch: 1 });
     });
 });

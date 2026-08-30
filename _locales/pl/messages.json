@@ -53,6 +53,12 @@
   "announceV410Title": {
     "message": "Co nowego w v4.1.0"
   },
+  "announceV411Text": {
+    "message": "Wersja 4.1.1 wprowadza pełne informacje w dymkach we wszystkich widokach, nową grupę opcji Pamięć (wyłącz podświetlanie ostatnio otwartych zakładek, przewijanie, foldery lub pamięć wyszukiwania — każdą osobno) oraz wielostylowe środowisko pracy Custom CSS."
+  },
+  "announceV411Title": {
+    "message": "Co nowego w wersji 4.1.1"
+  },
   "bookmarkFolderNoFolders": {
     "message": "Brak folderów zakładek"
   },
@@ -2688,6 +2694,14 @@
   },
   "whatsNewTabGroups": {
     "message": "v$1$ dodaje widok grup kart oraz obszar roboczy: zarządzaj kartami każdego okna obok zakładek i zbieraj zakładki z dowolnego miejsca do obszaru roboczego w celu masowej organizacji.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "whatsNewV411": {
+    "message": "Wersja v$1$ wprowadza pełne etykiety w każdym widoku, nową grupę opcji Pamięć (wyłącz podświetlanie ostatnio otwartej zakładki, przewijanie, foldery lub pamięć wyszukiwania — każdą osobno) oraz wielostylowe stanowisko Custom CSS.",
     "placeholders": {
       "1": {
         "content": "$1"

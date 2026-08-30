@@ -43,7 +43,7 @@ scripts/harness/run.sh --dist                # full dist harness — 4.1.0 发�
 
 1. **Version check**: `git tag --sort=-v:refname | head -1` gives the highest tag (format `v<version>`, e.g. `v4.0.3`). The current version — authoritative source is `manifest.json`, mirrored in `package.json` — must be **greater** than the highest tag; if development did not bump it, bump it first.
 2. **Changelog basis**: every commit between the current version and the previous version tag.
-3. **Bilingual changelog**: update `docs/README.md` (English) + `docs/README.zh.md` (Chinese) — the repo convention is symmetric bilingual entries.
+3. **Bilingual changelog**: update `docs/README.md` (English) + `docs/README.zh.md` (Chinese) — the repo convention is symmetric bilingual entries. Since 2026-08-30 the READMEs keep full text for **4.0-and-later** entries only; every pre-4.0 release note lives in its own file under `docs/changelog/` (`vX.Y.md` EN / `vX.Y.zh.md` ZH, README carries the version/date/link table). When an entry eventually migrates out of the README too, update every live link pointing at its old anchor — the known consumers are `docs/announce.json` (per-message `link[].url`) and `src/donation.js` `CHANGELOG_URL`.
 4. **Gap-fill, don't rewrite**: if the working version already has changelog entries accumulated during development, reconcile them against the commit list rather than rewriting from scratch.
 5. **Commit** the documentation work (only the files involved).
 6. **Tag**: `git tag v<version>` (e.g. `v4.0.3`).

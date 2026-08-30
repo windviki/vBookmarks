@@ -53,6 +53,12 @@
   "announceV410Title": {
     "message": "Nyheter i v4.1.0"
   },
+  "announceV411Text": {
+    "message": "v4.1.1 levererar fullständiga verktygstips i alla vyer, en ny minnesalternativgrupp (stäng av senast öppnade bokmärkesmarkering, rullning, mappar eller bokmärkesminne — var och en för sig), och en arbetsbänk för anpassad CSS med flera stilar."
+  },
+  "announceV411Title": {
+    "message": "Nyheter i v4.1.1"
+  },
   "bookmarkFolderNoFolders": {
     "message": "Inga bokmärkesmappar"
   },
@@ -2688,6 +2694,14 @@
   },
   "whatsNewTabGroups": {
     "message": "v$1$ lägger till vy för tabbgrupper och arbetsyta: hantera alla fönsters tabbar bredvid dina bokmärken och samla bokmärken från var som helst till en arbetsyta för massorganisering.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "whatsNewV411": {
+    "message": "v$1$ levererar fullständiga verktygstips i alla vyer, en ny minnesalternativgrupp (stäng av senast öppnade bokmärkesmarkering, rullning, mappar eller sökminne — var för sig), och en multi-stil Custom CSS-arbetsbänk.",
     "placeholders": {
       "1": {
         "content": "$1"

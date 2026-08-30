@@ -210,10 +210,12 @@ const waitForPalette = async (page, ms = 15000) => {
 
     // 2d3. The local what's-new banner (4.0.8's mechanism, re-armed for
     // 4.1.0): the network-independent twin of the remote announce — a 4.0.x →
-    // 4.1.0 crossing (version gate, fires once) shows it even when the
+    // 4.1.1 crossing (version gate, fires once) shows it even when the
     // raw.githubusercontent.com fetch fails (offline DinD, or a proxy that
     // blocks it). A minor-release banner carries only the version summary +
-    // the changelog link (docs/README.md anchor, audit B3/O13).
+    // the changelog link (docs/README.md anchor, audit B3/O13). Re-armed
+    // every announced release — keep the text keyword + anchor in sync with
+    // ANNOUNCED_THRESHOLD and whatsNewV<version> in src/donation.js.
     await page.evaluate(() => chrome.storage.local.set({ currentVersion: '4.0.8' }));
     await page.reload({ waitUntil: 'load' });
     await sleep(900);
@@ -224,9 +226,9 @@ const waitForPalette = async (page, ms = 15000) => {
         guideGone: !document.getElementById('whats-new-guide'),
         changelog: document.getElementById('whats-new-changelog').href
     }));
-    console.log('whats-new 4.1.0 banner:', JSON.stringify(whatsNew));
-    if (!whatsNew.shown || !whatsNew.text.includes('Tab groups') || !whatsNew.icon
-        || !whatsNew.guideGone || !whatsNew.changelog.includes('README.md#v'))
+    console.log('whats-new 4.1.1 banner:', JSON.stringify(whatsNew));
+    if (!whatsNew.shown || !whatsNew.text.includes('Memory options group') || !whatsNew.icon
+        || !whatsNew.guideGone || !whatsNew.changelog.includes('README.md#v411'))
         errors.push(`whats-new banner broken: ${JSON.stringify(whatsNew)}`);
     await page.screenshot({ path: '/tmp/shots/smoke/popup-whats-new.png' });
     await page.evaluate(() => chrome.storage.local.remove('currentVersion'));

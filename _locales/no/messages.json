@@ -53,6 +53,12 @@
   "announceV410Title": {
     "message": "Nyheter i v4.1.0"
   },
+  "announceV411Text": {
+    "message": "v4.1.1 leverer fullstendige verktøytips i alle visninger, en ny minneinnstillingsgruppe (slå av sist åpnede bokmerke-utheving, rulling, mapper eller minne for søk — hver for seg), og en multi-stil tilpasset CSS-arbeidsbenk."
+  },
+  "announceV411Title": {
+    "message": "Hva er nytt i v4.1.1"
+  },
   "bookmarkFolderNoFolders": {
     "message": "Ingen bokmerkemapper"
   },
@@ -2688,6 +2694,14 @@
   },
   "whatsNewTabGroups": {
     "message": "v$1$ legger til fanegruppevisningen og arbeidsområdet: administrer alle vinduers faner ved siden av bokmerkene dine, og samle bokmerker fra hvor som helst inn i et arbeidsområde for masseorganisering.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "whatsNewV411": {
+    "message": "v$1$ leverer fullinformasjonsverktøytips i alle visninger, en ny Minne-innstillingsgruppe (slå av sist åpne bokmerke-utheving, rulling, mapper eller søkeminne — hver for seg), og en multistil Custom CSS-arbeidsbenk.",
     "placeholders": {
       "1": {
         "content": "$1"

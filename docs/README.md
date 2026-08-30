@@ -194,8 +194,10 @@ python3 scripts/i18n.py verify     # gate: alignment, TODOs, menu lengths
 #   VBM_LLM_API_KEY=...  VBM_LLM_BASE_URL=...  VBM_LLM_MODEL=...
 #   VBM_LLM_API_TYPE=openai|anthropic_messages
 
-# Release zip (version read from manifest.json)
-python3 scripts/package.py         # → tmp/vBookmarks_<version>.zip
+# Release build & store zip (version read from manifest.json; esbuild bundle + Terser into dist/)
+npm run build                     # → dist/ (build-time self-checks included)
+npm run package                   # build + zip → tmp/vBookmarks_<version>.zip
+python3 scripts/package.py --root dist   # zip an existing dist/ (no rebuild)
 ```
 
 `tmp/` and `.env` are git-ignored. When adding runtime files, keep the include list in `scripts/package.py` in sync; see `AGENTS.md` for the full contributor guide.
@@ -212,10 +214,12 @@ python3 scripts/package.py         # → tmp/vBookmarks_<version>.zip
 
 ### v4.1.1
 
-*2026-08-29*
+*2026-08-30*
 
 #### New
 
+- **A layered Memory options group** (#65): "remember previous state" is no longer all-or-nothing. A master *Remember previous state* switch now heads a dedicated Memory group with four independent sub-toggles — *Highlight the last opened bookmark* (the most-requested off-switch, on by default), *Remember the scroll position*, *Remember opened folders*, and *Remember the last search* — while *Remember the last active view* keeps its own semantics beside them. Defaults change nothing; turning one layer off leaves the others intact, in the tree and the list views alike.
+- **A multi-style Custom CSS workbench**: custom CSS moved out of the cramped options textarea into its own editor page — one tab per style with its own name, description and enable switch, ◀/▶ buttons that reorder the cascade (later styles override earlier ones), and a full-width editor that scrolls long stylesheets internally. The concatenated enabled styles keep feeding the very same apply pipeline, and the old single-stylesheet setting migrates in as one entry automatically.
 - **Full-info tooltips in every view** (#62, #64): hovering a row — tree bookmarks *and folders*, search results, tab-group tabs, staging/recent, stats, dead links, duplicates — always tells the whole story now: title, URL, the labeled containing path and the date the bookmark was added, one fact per line. The tree's old "only when the title is truncated" adaptive tooltip is retired; the full block is simply always there.
 - **Three new preferences**: *Focus the search field when the popup opens* (Search group, off by default — start typing the moment it opens; the remembered-row focus restore stands down), *Show folder rows in search results* (Search group, on by default — turning it off drops folders *before* the 100-result cap so they can't spend it), and *Show row paths with the nearest folder first* (Views group, off by default) — row path labels flip to nearest-parent-first with a three-level depth cap (`Frontend < Dev < …`), while tooltips always keep the canonical root-first form.
 
@@ -227,10 +231,17 @@ python3 scripts/package.py         # → tmp/vBookmarks_<version>.zip
 
 - **The tree remembers where you were — again, in both places** (#63): a popup closed mid-scroll no longer loses its final position (the last write was debounced and could die with the popup — a v4.0 storage-migration regression; a synchronous local shadow restores the old guarantee), and switching away from the tree and back no longer snaps to the top (a hidden container silently zeroes its scroll offset, and the first scroll after that overwrote the remembered deep position with a near-top value).
 - **Reopened searches show their paths** (#64): restoring a saved query on popup open used to render results with bare titles — the search painted before the shared path map existed; the results heal themselves the moment the map lands.
+- **The last-bookmark highlight no longer fades away intermittently**: opening a bookmark and closing the popup could kill the final "where I was" write (the debounced store write raced the popup teardown, the same close-path class as the scroll fix above) — the highlight now survives every close via a synchronous shadow, and the same guarantee covers the remembered row in list views.
+- **Staging selection mode on wide popups and the side panel**: the dashed group connector's horizontal tick painted ~27px to the right of its trunk, floating inside the title text (a wide-grid-only double offset), and the group-head glyph well sat half a pixel off the trunk axis — both re-anchored to the icon-axis law.
+- **The Custom CSS editor geometry**: a long stylesheet now scrolls inside the editor instead of growing past it and overlapping the page footer, and the editor follows the browser window width (a leftover 560px ceiling from the retired inline editor used to pin it).
 
 #### Polish
 
 - **Staging selection mode, re-anchored**: the small group heads drop their fold chevron while selecting (folds are disabled there — it was dead chrome), and the dashed hierarchy lines now descend from the head icon's center axis through the clear gutter beside member favicons — the same icon-axis law as normal mode, no longer cutting through icon ink.
+
+#### Engineering
+
+- The memory switches are pinned by a combination test matrix (master × every sub-layer × the view switch, both restore polarities, unit and real-browser E2E), and six locale translations of the new strings were corrected against their baselines; pre-4.0 release notes moved from the README into per-version files under `docs/changelog/`.
 
 ### v4.1.0
 
@@ -574,331 +585,37 @@ Rollback to 4.0.4 — 4.0.5 shipped with two regressions (zoomed context menus, 
 - The `proxy` permission is declared at install time (Chrome refuses it as an optional permission) and is exercised only while a configured proxy serves a running scan or the add-flow reachability probe — never when no proxy server is set or dead-link scanning is unused.
 
 
-### v3.7
+### Earlier versions (pre-4.0)
+
+Each release note lives in its own file under [`docs/changelog/`](changelog/) (Chinese: the `.zh.md` twin). Newer entries may migrate into that table over time — the files are the permalink home for shipped release notes.
+
+| Version | Date | Changelog |
+| --- | --- | --- |
+| v3.7 | 2026-05-10 | [Changelog](changelog/v3.7.md) |
+| v3.6 | 2024-01-08 | [Changelog](changelog/v3.6.md) |
+| v3.5 | 2023-09-04 | [Changelog](changelog/v3.5.md) |
+| v3.4 | 2023-02-14 | [Changelog](changelog/v3.4.md) |
+| v3.3 | 2023-02-02 | [Changelog](changelog/v3.3.md) |
+| v3.2 | 2020-09-12 | [Changelog](changelog/v3.2.md) |
+| v3.1 | 2020-07-03 | [Changelog](changelog/v3.1.md) |
+| v3.0 | 2019-08-22 | [Changelog](changelog/v3.0.md) |
+| v2.9 | 2019-08-22 | [Changelog](changelog/v2.9.md) |
+| v2.8 | 2019-05-06 | [Changelog](changelog/v2.8.md) |
+| v2.6 | 2013-10-21 | [Changelog](changelog/v2.6.md) |
+| v2.5 | 2013-08-30 | [Changelog](changelog/v2.5.md) |
+| v2.4 | 2013-08-29 | [Changelog](changelog/v2.4.md) |
+| v2.3 | 2013-04-09 | [Changelog](changelog/v2.3.md) |
+| v2.2 | 2013-04-02 | [Changelog](changelog/v2.2.md) |
+| v2.1 | 2012-12-12 | [Changelog](changelog/v2.1.md) |
+| v2.0 | 2012-11-01 | [Changelog](changelog/v2.0.md) |
+| v1.9 | 2012-08-19 | [Changelog](changelog/v1.9.md) |
+| v1.8 | 2012-08-01 | [Changelog](changelog/v1.8.md) |
+| v1.7 | 2012-06-26 | [Changelog](changelog/v1.7.md) |
+| v1.6 | 2012-06-24 | [Changelog](changelog/v1.6.md) |
+| v1.5 | 2012-06-21 | [Changelog](changelog/v1.5.md) |
+| v1.4 | 2012-06-20 | [Changelog](changelog/v1.4.md) |
+| v1.3 | 2012-05-25 | [Changelog](changelog/v1.3.md) |
+| v1.2 | 2011-11-30 | [Changelog](changelog/v1.2.md) |
+| v1.1 | 2011-11-16 | [Changelog](changelog/v1.1.md) |
+| v1.0 | 2011-11-15 | [Changelog](changelog/v1.0.md) |
 
-*2026-05-10*
-
-#### New
-
-- **New**: [#36](https://github.com/windviki/vBookmarks/issues/36): Add auto-resize popup toggle option. Enable/disable automatic popup height adjustment in General settings.
-- **New**: Full 42-language support synced from cc-dev branch, all aligned with English baseline (75 keys). Languages: ar, bg, bn, cs, da, de, el, en, es, et, fa, fi, fr, he, hi, hr, hu, id, it, ja, ko, lt, lv, mk, nl, no, pl, pt, pt_BR, pt_PT, ro, ru, sk, sl, sv, th, tr, uk, vi, zh, zh_HK, zh_TW.
-
-#### Fixed
-
-- **Fixed**: [#42](https://github.com/windviki/vBookmarks/issues/42): Extension broken in Chrome 148 due to deprecated `<command>` HTML element. Replaced with `<div>` elements for full compatibility.
-
-### v3.6
-
-*2024-01-08*
-
-#### Fixed
-
-- **Fixed**: [#31](https://github.com/windviki/vBookmarks/issues/31): Custom icon not working.
-
-### v3.5
-
-*2023-09-04*
-
-#### Fixed
-
-- **Fixed**: [#29](https://github.com/windviki/vBookmarks/issues/29): cursor focus doesn't stay in search bar after clearing the search text.
-- Fix shortcut in manifest. Now the default shortcut is Ctrl+Shift+V (Ctrl+Shift+B cannot work in new Chrome.)
-
-### v3.4
-
-*2023-02-14*
-
-#### New
-
-- **New**: Key Right to open context menu (when focus on an opened dir or a bookmark) and key Left to close it (when context menu is showing).
-
-#### Polish
-
-- Remove timeout of height reset. Speed up the popup.
-
-#### Fixed
-
-- **Fixed**: [#26](https://github.com/windviki/vBookmarks/issues/26): open directory in the background.
-
-### v3.3
-
-*2023-02-02*
-
-#### New
-
-- **New**: [#24](https://github.com/windviki/vBookmarks/issues/24): Add new option to disable incremental search (use ENTER to search).
-
-#### Fixed
-
-- **Fixed**: [#23](https://github.com/windviki/vBookmarks/issues/23): Incorrect link on the options page.
-- **Fixed**: [#26](https://github.com/windviki/vBookmarks/issues/26): Middle/Ctrl click no longer opens bookmarks in the background in Chrome 107.
-- **Fixed**: The stupid double scroll bar (finally).
-- **Fixed**: Focus lost when quit from search mode.
-- **Fixed**: Arrow down triggers an error in search mode.
-- Fix some undefined errors.
-
-#### Changed
-
-- Update code to manifest V3. minimum_chrome_version = 88.
-
-### v3.2
-
-*2020-09-12*
-
-#### New
-
-- **New**: [#15](https://github.com/windviki/vBookmarks/issues/15): Search for folders in bookmark search bar.
-- **New**: Resize the height of popup.
-- **Added**: Italy language.
-- **Added**: Russian language. Thanks for @Stanislav .
-
-#### Fixed
-
-- **Fixed**: [#19](https://github.com/windviki/vBookmarks/issues/19): "Add to the end of folder" feature does not work bugs.
-- Fix some undefined errors.
-
-#### Changed
-
-- Update code to ecmascript version 6. minimum_chrome_version = 61.
-
-### v3.1
-
-*2020-07-03*
-
-#### New
-
-- **Added**: France language. Thanks for @Fab-fr.
-- **Added**: Chinese Hong Kong language.
-
-#### Fixed
-
-- **Fixed**: [#12](https://github.com/windviki/vBookmarks/issues/12): Focus lost when clear the menu.
-- **Fixed**: [#18](https://github.com/windviki/vBookmarks/issues/18): Tree does not scroll when drag to top or bottom.
-- Fix an undefined error when pressing key DOWN.
-- Fix the support of bookmarklet. Thanks for @ZG-nico.
-
-### v3.0
-
-*2019-08-22*
-
-#### Fixed
-
-- **Fixed**: New icons.
-
-### v2.9
-
-*2019-08-22*
-
-#### Fixed
-
-- **Fixed**: Double scrollbar since Chrome version 77+.
-
-### v2.8
-
-*2019-05-06*
-
-#### New
-
-- **Added**: Placeholder "\_\_VBM_CURRENT_TAB_URL\_\_" in bookmark URL to make some bookmarklets work (Chrome does not allow _document.location.href_ in BMlet). It will be replaced with URL of current active tab when you click BMlet from vBookmarks.
-
-#### Polish
-
-- **Improved**: Scrollbar CSS style.
-
-#### Fixed
-
-- **Fixed**: Open URL twice when clicked by middle button of mouse. https://github.com/windviki/vBookmarks/issues/9
-- **Fixed**: Sometimes search will fail. https://github.com/windviki/vBookmarks/issues/7
-- **Fixed**: Context menu position.
-
-### v2.6
-
-*2013-10-21*
-
-#### Fixed
-
-- **Fixed**: Remove double scroll bars.
-
-### v2.5
-
-*2013-08-30*
-
-#### Fixed
-
-- **Fixed**: Remove HTML notifications because it is not available now. https://bugs.webkit.org/show_bug.cgi?id=98388.
-
-### v2.4
-
-*2013-08-29*
-
-#### Fixed
-
-- **Fixed**: "Unexpected end of input" in js.
-
-### v2.3
-
-*2013-04-09*
-
-#### Fixed
-
-- **Fixed**: Context menu will be dismissed when scrolling up/down (broken again in previous version).
-- **Fixed**: Remember position of scroll bar (broken again in previous version).
-
-### v2.2
-
-*2013-04-02*
-
-#### Fixed
-
-- **Fixed**: Scroll bar does not work above chrome 26+ (not well tested).
-
-### v2.1
-
-*2012-12-12*
-
-#### New
-
-- **Added**: Cancel button for dialogs in vbookmarks.
-
-#### Polish
-
-- **Improved**: Position of context menu. And context menu will be dismissed when scrolling up/down.
-
-#### Fixed
-
-- **Fixed**: Now it can remember and restore position of scroll bar correctly.
-
-### v2.0
-
-*2012-11-01*
-
-#### New
-
-- **Added**: Advanced options for separator.
-
-#### Polish
-
-- **Improved**: Synchronizable separators.
-
-#### Fixed
-
-- **Fixed**: Version checking in background.js.
-- "The real title of bookmark which is shown as a separator": By default it is "|". That means the separators you added in vbookmarks will be shown as a normal bookmark in Chrome bookmark manager or bookmark menu, with this title value. You can modify it to "------------" so that you can split your bookmarks horizontally even if you check your bookmarks in Chrome bookmark menu.
-- "The real URL of bookmark which is shown as a separator": By default it is "http://separatethis.com/". It's a "online separator". The separators you added in vbookmarks will be shown as a normal bookmark in Chrome bookmark manager or bookmark menu, with this URL value.
-- "If URL of a bookmark contains this string, it will be shown as a separator": If you set this value (you can set several URLs joined by ";"), all bookmarks whose URL contains any of them will be shown as real separators in vbookmarks. e.g. if you set it to google.com, all google services in your bookmarks will be shown as separators.
-
-### v1.9
-
-*2012-08-19*
-
-#### Polish
-
-- **Updated**: Color of ICON.
-- **Updated**: Style of separator.
-
-#### Fixed
-
-- **Fixed**: Neatbookmarks bug: Scrollbar will be reset to the top when opening and scrolling the popup down.
-
-### v1.8
-
-*2012-08-01*
-
-#### New
-
-- **Added**: Separators for bookmarks/folders. But it is a local record and cannot be synchronized between different devices. see https://github.com/windviki/vBookmarks/issues/3
-- **Added**: Color of icon is changed to red.
-- **Added**: Simple update checking and desktop notification.
-
-#### Fixed
-
-- **Fixed**: Neatbookmarks bug: Wrong position of dragged bookmark when vertical scrollbar is scrolled down (since Chrome18).
-
-#### Changed
-
-- **Removed**: Several languages. Only 4 locales are left: en, ja, zh, zh_TW. Cannot maintain many translations any more.
-
-### v1.7
-
-*2012-06-26*
-
-#### Fixed
-
-- **Fixed**: Double scrollbars in Chrome 19. Sorry for the previous untest release. I do not have many different Chromes in different versions :)
-- **Fixed**: Width resetting occured when expanding root folder. https://github.com/windviki/vBookmarks/issues/2
-
-### v1.6
-
-*2012-06-24*
-
-#### Fixed
-
-- **Fixed**: Cannot search bookmarks in Omnibox (*+space). [Content Security Policy]
-- **Fixed**: Restore width of the popup window. [Content Security Policy]
-- **Fixed**: Dialogs cannot submit their forms. [Content Security Policy]
-
-### v1.5
-
-*2012-06-21*
-
-#### Fixed
-
-- **Fixed**: manifest problem in Chrome 20+.
-- **Fixed**: separated script file instead of inline scripts. see Content Security Policy http://code.google.com/chrome/extensions/contentSecurityPolicy.html
-
-### v1.4
-
-*2012-06-20*
-
-#### Fixed
-
-- **Fixed**: Scrollbar problem in Chrome 18,19. https://github.com/windviki/vBookmarks/issues/2
-
-### v1.3
-
-*2012-05-25*
-
-#### Fixed
-
-- **Fixed**: Scrollbar glitch in Chrome 18,19. https://github.com/windviki/vBookmarks/issues/1
-
-### v1.2
-
-*2011-11-30*
-
-#### New
-
-- **Added**: update selected bookmark with current URL.
-- **Added**: copy title and URL of selected bookmark to clipboard.
-
-#### Fixed
-
-- **Fixed**: after adding new bookmark or folder to a closed folder, its original children cannot be shown correctly.
-- **Fixed**: make up some missing translations for cs(Czech).
-
-### v1.1
-
-*2011-11-16*
-
-#### New
-
-- **Added**: option for only displaying bookmarks in Bookmark Bar.
-- **Added**: context menu for adding folder before/after bookmark/folder.
-
-#### Fixed
-
-- **Fixed**: some translations in multi-language support.
-
-### v1.0
-
-*2011-11-15*
-
-#### New
-
-- First version.
-
-# Attentions
-
-Installing from source ("Load unpacked") or the Web Store build is recommended. Legacy crx sideloading notes: above Chrome 20+, drag the crx file to `chrome://chrome/extensions/`; above Chrome 22+, add `--enable-easy-off-store-extension-install` to accept extensions from outside the Web Store (see [details](http://www.howtogeek.com/120743/how-to-install-extensions-from-outside-the-chrome-web-store/)).
-
-Available on [WebStore](https://chrome.google.com/webstore/detail/vbookmarks/odhjcodnoebmndcihdedenkmdmklpihb) — the recommended way to use this extension.

@@ -53,6 +53,12 @@
   "announceV410Title": {
     "message": "Kas naujo v4.1.0"
   },
+  "announceV411Text": {
+    "message": "v4.1.1 pristato pilnos informacijos įrankių užuominas visose rodiniuose, naują parinkčių grupę „Atmintis“ (galite išjungti paskutinės atidarytos žymės paryškinimą, slinkimą, aplankus ar paieškos atmintį — kiekvieną atskirai) ir kelių stilių „Custom CSS“ darbo stalą."
+  },
+  "announceV411Title": {
+    "message": "Kas naujo v4.1.1"
+  },
   "bookmarkFolderNoFolders": {
     "message": "Nėra žymių aplankų"
   },
@@ -2688,6 +2694,14 @@
   },
   "whatsNewTabGroups": {
     "message": "v$1$ prideda skirtukų grupių rodinį ir parengiamąją sritį: valdykite kiekvieno lango skirtukus šalia žymių ir rinkite žymes iš bet kur į parengiamąją darbo sritį masiniam tvarkymui.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "whatsNewV411": {
+    "message": "v$1$ pristato pilnos informacijos užuominas kiekviename rodinyje, naują Atminties parinkčių grupę (išjunkite paskutinio atidaryto žymės paryškinimą, slinkimą, aplankus ar paieškos atmintį — kiekvieną atskirai) ir kelių stilių Custom CSS darbo stalą.",
     "placeholders": {
       "1": {
         "content": "$1"

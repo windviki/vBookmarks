@@ -53,6 +53,12 @@
   "announceV410Title": {
     "message": "Novidades na v4.1.0"
   },
+  "announceV411Text": {
+    "message": "A v4.1.1 inclui dicas completas em todas as vistas, um novo grupo de opções de Memória (desative o destaque do último marcador aberto, a rolagem, as pastas ou a memória de pesquisa — cada um separadamente) e uma bancada de trabalho CSS personalizada com vários estilos."
+  },
+  "announceV411Title": {
+    "message": "Novidades na v4.1.1"
+  },
   "bookmarkFolderNoFolders": {
     "message": "Sem pastas de marcadores"
   },
@@ -2684,6 +2690,14 @@
   },
   "whatsNewTabGroups": {
     "message": "v$1$ adiciona a vista de grupos de separadores e a área de preparação: gerencie os separadores de cada janela junto dos seus marcadores e reúna marcadores de qualquer lugar numa bancada de preparação para organização em massa.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "whatsNewV411": {
+    "message": "A v$1$ inclui dicas completas em todas as vistas, um novo grupo de opções Memória (desative o destaque do último marcador aberto, rolagem, pastas ou memória de pesquisa — cada um separadamente) e uma bancada de trabalho CSS personalizada multi-estilo.",
     "placeholders": {
       "1": {
         "content": "$1"

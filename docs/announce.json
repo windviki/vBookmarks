@@ -1,49 +1,81 @@
 {
   "version": 1,
-  "messages": [{
-    "id": "v410-whats-new",
-    "version": ">=4.1.0",
-    "channel": "all",
-    "once": true,
-    "display": "banner",
-    "kind": "tip",
-    "titleKey": "announceV410Title",
-    "textKey": "announceV410Text",
-    "textFallback": {
-      "en": "v4.1.0 adds the Tab groups view and the Staging area: manage every window's tabs next to your bookmarks, and collect bookmarks from anywhere into a staging workbench for bulk organizing."
+  "messages": [
+    {
+      "id": "v411-whats-new",
+      "version": ">=4.1.1",
+      "channel": "all",
+      "once": true,
+      "display": "banner",
+      "kind": "tip",
+      "titleKey": "announceV411Title",
+      "textKey": "announceV411Text",
+      "textFallback": {
+        "en": "v4.1.1 ships full-info tooltips in every view, a new Memory options group (turn off the last-opened bookmark highlight on its own), and a multi-style Custom CSS workbench."
+      },
+      "link": [
+        {
+          "labelKey": "whatsNewChangelog",
+          "url": "https://github.com/windviki/vBookmarks/blob/master/docs/README.md#v411"
+        }
+      ]
     },
-    "link": [
-      { "labelKey": "whatsNewChangelog", "url": "https://github.com/windviki/vBookmarks/blob/master/docs/README.md#v410" }
-    ]
-  }, {
-    "id": "v408-whats-new",
-    "version": ">=4.0.8 <4.1.0",
-    "channel": "all",
-    "once": true,
-    "display": "banner",
-    "kind": "tip",
-    "titleKey": "announceV408Title",
-    "textKey": "announceV408Text",
-    "textFallback": {
-      "en": "v4.0.8 is the favicon-enhanced release: real site icons are fetched automatically for bookmarks Chrome hasn't cached yet."
+    {
+      "id": "v410-whats-new",
+      "version": ">=4.1.0",
+      "channel": "all",
+      "once": true,
+      "display": "banner",
+      "kind": "tip",
+      "titleKey": "announceV410Title",
+      "textKey": "announceV410Text",
+      "textFallback": {
+        "en": "v4.1.0 adds the Tab groups view and the Staging area: manage every window's tabs next to your bookmarks, and collect bookmarks from anywhere into a staging workbench for bulk organizing."
+      },
+      "link": [
+        {
+          "labelKey": "whatsNewChangelog",
+          "url": "https://github.com/windviki/vBookmarks/blob/master/docs/README.md#v410"
+        }
+      ]
     },
-    "link": [
-      { "labelKey": "whatsNewChangelog", "url": "https://github.com/windviki/vBookmarks/blob/master/docs/README.md#v408" }
-    ]
-  }, {
-    "id": "v407-whats-new",
-    "version": ">=4.0.7 <4.0.8",
-    "channel": "all",
-    "once": true,
-    "display": "banner",
-    "kind": "tip",
-    "titleKey": "announceV407Title",
-    "textKey": "announceV407Text",
-    "textFallback": {
-      "en": "v4.0.7 delivers the fully-featured dead-link view: scan, mark, filter and sort dead and restricted links, with past marks and per-row timestamps."
+    {
+      "id": "v408-whats-new",
+      "version": ">=4.0.8 <4.1.0",
+      "channel": "all",
+      "once": true,
+      "display": "banner",
+      "kind": "tip",
+      "titleKey": "announceV408Title",
+      "textKey": "announceV408Text",
+      "textFallback": {
+        "en": "v4.0.8 is the favicon-enhanced release: real site icons are fetched automatically for bookmarks Chrome hasn't cached yet."
+      },
+      "link": [
+        {
+          "labelKey": "whatsNewChangelog",
+          "url": "https://github.com/windviki/vBookmarks/blob/master/docs/README.md#v408"
+        }
+      ]
     },
-    "link": [
-      { "labelKey": "whatsNewChangelog", "url": "https://github.com/windviki/vBookmarks/blob/master/docs/README.md#v407" }
-    ]
-  }]
+    {
+      "id": "v407-whats-new",
+      "version": ">=4.0.7 <4.0.8",
+      "channel": "all",
+      "once": true,
+      "display": "banner",
+      "kind": "tip",
+      "titleKey": "announceV407Title",
+      "textKey": "announceV407Text",
+      "textFallback": {
+        "en": "v4.0.7 delivers the fully-featured dead-link view: scan, mark, filter and sort dead and restricted links, with past marks and per-row timestamps."
+      },
+      "link": [
+        {
+          "labelKey": "whatsNewChangelog",
+          "url": "https://github.com/windviki/vBookmarks/blob/master/docs/README.md#v407"
+        }
+      ]
+    }
+  ]
 }

@@ -53,6 +53,12 @@
   "announceV410Title": {
     "message": "Novedades en v4.1.0"
   },
+  "announceV411Text": {
+    "message": "v4.1.1 incluye información completa en todos los tooltips, un nuevo grupo de opciones de Memoria (desactive el resaltado del último marcador abierto, el desplazamiento, las carpetas o la memoria de búsqueda, cada uno por separado) y un banco de trabajo CSS personalizado con múltiples estilos."
+  },
+  "announceV411Title": {
+    "message": "Novedades en v4.1.1"
+  },
   "bookmarkFolderNoFolders": {
     "message": "No hay carpetas de marcadores"
   },
@@ -2688,6 +2694,14 @@
   },
   "whatsNewTabGroups": {
     "message": "v$1$ añade la vista de grupos de pestañas y el área de preparación: gestiona las pestañas de cada ventana junto a tus marcadores y recopila marcadores de cualquier lugar en un banco de trabajo para organizarlos en masa.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "whatsNewV411": {
+    "message": "v$1$ incluye información completa en la información sobre herramientas de cada vista, un nuevo grupo de opciones de Memoria (desactive el resaltado del último marcador abierto, el desplazamiento, las carpetas o la memoria de búsqueda, cada uno por separado) y un banco de trabajo CSS personalizado de varios estilos.",
     "placeholders": {
       "1": {
         "content": "$1"

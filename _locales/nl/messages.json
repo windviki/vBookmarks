@@ -53,6 +53,12 @@
   "announceV410Title": {
     "message": "Nieuw in v4.1.0"
   },
+  "announceV411Text": {
+    "message": "v4.1.1 biedt in elke weergave tooltips met volledige informatie, een nieuwe groep Geheugenopties (schakel de markering van laatst geopende bladwijzers, scrollen, mappen of zoekgeheugen af — elk afzonderlijk), en een werkbank voor aangepaste CSS met meerdere stijlen."
+  },
+  "announceV411Title": {
+    "message": "Nieuw in v4.1.1"
+  },
   "bookmarkFolderNoFolders": {
     "message": "Geen bladwijzermappen"
   },
@@ -2688,6 +2694,14 @@
   },
   "whatsNewTabGroups": {
     "message": "v$1$ voegt de tabgroepenweergave en het staginggebied toe: beheer de tabbladen van elk venster naast uw bladwijzers en verzamel bladwijzers van overal in een stagingwerkbank voor bulkorganisatie.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "whatsNewV411": {
+    "message": "v$1$ biedt tooltips met volledige informatie in elke weergave, een nieuwe optiegroep Geheugen (schakel de markering van laatst geopende bladwijzers, scrollen, mappen of zoekgeheugen afzonderlijk uit) en een werkbank voor aangepaste CSS met meerdere stijlen.",
     "placeholders": {
       "1": {
         "content": "$1"
