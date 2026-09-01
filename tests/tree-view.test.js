@@ -1220,8 +1220,8 @@ describe('memory layer combinations (master × scroll × highlight)', () => {
         ['both off: neither restores', true, '', '', 0, false, 'eager'],
         ['master off wins over both sub-layers on: nothing restores at all', false, '1', '1', 0, false, 'none']
     ];
-    for (const [name, master, scroll, highlight, wantScroll, wantFocus, cleanup] of COMBOS) {
-        it(name, () => {
+    for (const [combo, master, scroll, highlight, wantScroll, wantFocus, cleanup] of COMBOS) {
+        it(`master ${master ? 'on' : 'off'} × scroll ${scroll ? 'on' : 'off'} × highlight ${highlight ? 'on' : 'off'} → ${combo}`, () => {
             const ctx = setup({
                 storeData: {
                     scrollTop: 555,
