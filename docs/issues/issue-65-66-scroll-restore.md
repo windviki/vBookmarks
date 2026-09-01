@@ -51,8 +51,31 @@ Chromium 的程序化 `focus()` 默认会把焦点元素滚动进可视区(实�
 - **分层记忆契约回归**(`diag-memory-layers.js`):14/14 PASS——preventScroll 未伤 P1(重开行重亮+焦点接管)/P4(反复重开仍高亮)/P10(列表行记忆)。
 - **smoke 门**:`scripts/harness/run.sh --smoke-only` PASS,NO PAGE ERRORS。
 
+## 对外回复(草稿,待随版本发布)· Public replies (drafted, post with the release)
+
+两份均为英文(报告人均英文用户),语气与此前 #65 首轮回复一致;发布前若版本号确定,把 "the next release" 替换为具体版本。
+
+**→ issue #65**(@Ownsin,回复其 2026-08-30 的"关闭高亮后不再记住位置"反馈):
+
+> Thanks for the follow-up — I could reproduce exactly what you described, and you were right that something was broken.
+>
+> The scroll position was in fact being saved correctly, but two separate things could throw it away on reopen. First, the restore ran before the freshly rendered tree had finished laying out, so the stored position got silently clamped back to the top. Second, the "last opened bookmark" highlight could scroll the view back to the highlighted row and override your scroll position — which is why turning the highlight off changed the symptom rather than fixing it.
+>
+> Both are fixed now: the scroll restore retries until the tree is actually ready, and the highlight/focus restore no longer moves the scroll position at all — it only marks the row and keeps the keyboard working from it. Your exact case (scroll somewhere, select nothing, with the highlight off) now reopens exactly where you left it, verified in a real browser.
+>
+> This will ship in the next release — keeping the issue open until then. Thanks for the clear report!
+
+**→ issue #66**(@leungwh):
+
+> Thanks — your reproduction ("change the scroll position only, without selecting any particular bookmark") was spot on, and it led straight to the cause.
+>
+> The position was stored correctly, but the restore ran before the freshly rendered tree had finished laying out, so it got clamped back to the top; and a hidden "where was I" focus memory — which outlives the highlight even when no bookmark is visibly highlighted — could also scroll the view back to the row it remembered. Both are fixed: the restore now retries until the tree can hold the position, and focus restores no longer move the scroll at all. Verified in a real browser with your exact steps, including the case with a highlighted bookmark.
+>
+> This will ship in the next release — keeping the issue open until then.
+
 ## 记录 · Record
 
 - 修复提交:`fix(memory): issues #65/#66 …`(src/tree-view.js + src/view-manager.js + src/list-focus.js + 三测试套件 + diag 探针 + modules.md 契约同步 + 本文档);另有一枚先行小提交修复 df9617af 遗留的 `vitest/valid-title` lint 门(组合矩阵参数化标题改为模板字面量,与本 issue 无关)。
-- issue 状态:**保持 OPEN**——等随版本发布、用户复验后再关闭(维护者指示)。
+- issue 状态:**保持 OPEN**——等随版本发布、用户复验后再关闭(维护者指示);上节回复草稿随发布一并贴出。
+- 回复命令(发布日执行,windviki 授权账户):`gh issue comment 65 --repo windviki/vBookmarks --body-file <file>` 与 `gh issue comment 66 --repo windviki/vBookmarks --body-file <file>`(正文取上节对应段落)。
 - 关联:#63(关窗丢写,scrollTop localStorage 影子,已修,本案存储侧由此免疫)、#58(高亮恢复的原始设计)、4.1.1 分层记忆(`docs/issues/issue-65-highlight-toggle.md`)。
