@@ -32,14 +32,14 @@ const makeRow = (doc, list, { id = '', tabindex = null, withAnchor = true } = {}
     const a = withAnchor ? {
         tagName: 'A',
         focused: false,
-        focus() { this.focused = true; doc.activeElement = this; }
+        focus(opts) { this.focused = true; this._focusArgs = opts; doc.activeElement = this; }
     } : null;
     const li = {
         tagName: 'LI',
         id,
         parentNode: list,
         focused: false,
-        focus() { this.focused = true; doc.activeElement = this; },
+        focus(opts) { this.focused = true; this._focusArgs = opts; doc.activeElement = this; },
         getAttribute: name => (name === 'tabindex' ? tabindex : null),
         querySelector: sel => (sel === 'a, span' ? a : null)
     };
@@ -97,6 +97,10 @@ describe('parkRowFocus / unparkRowFocus', () => {
         const newRow = makeRow(doc, newList, { id: 'item-1' });
         unparkRowFocus(newList, parked);
         expect(doc.activeElement).toBe(newRow.a);
+        // issues #65/#66: the restore is about not LOSING focus across the
+        // swap — it must never scroll the row into view either (that would
+        // yank the user's scroll position to a row they scrolled away from).
+        expect(newRow.a._focusArgs).toEqual({ preventScroll: true });
     });
 
     it('an emptied list parks on the container by default', () => {

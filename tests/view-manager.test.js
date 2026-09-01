@@ -132,9 +132,10 @@ const setup = (opts = {}) => {
                     width: this.offsetWidth
                 };
             },
-            focus() {
+            focus(opts) {
                 this.focused = true;
                 this.focusCount++;
+                this._focusArgs = opts; // preventScroll contract (issues #65/#66)
                 doc.activeElement = this;
             },
             // Minimal Element.closest: tag selectors plus the leading-dot
@@ -1668,6 +1669,10 @@ describe('focusSpot — unified popup-reopen focus memory', () => {
             views.activate('recent', { keepFocus: true });
             views.restoreFocusSpot();
             expect(doc.activeElement).toBe(a);
+            // issues #65/#66: the spot row and the restored scroll position
+            // are two separate memories — the focus must never scroll the
+            // row into view and override where the user left the view.
+            expect(a._focusArgs).toEqual({ preventScroll: true });
         });
 
         it('restores the anchor of a button-led row (the dupes member shape)', () => {

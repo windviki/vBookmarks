@@ -213,10 +213,35 @@ export function initTreeView(ctx = {}) {
             onTreeGenerated(tree, snapshot);
 
         if (getRememberState() && store.get('rememberScroll', '1')) {
-            $tree.scrollTop = store.get('scrollTop') ? store.get('scrollTop') : 0;
+            const savedTop = parseInt(store.get('scrollTop') || '0', 10) || 0;
+            $tree.scrollTop = savedTop;
+            // issues #65/#66: on freshly parsed big trees the nested
+            // `#tree ul ul` height:0→auto layout settles only some frames
+            // later (measured in the real popup: scrollHeight still equals
+            // clientHeight for up to ~250ms after the innerHTML swap), so
+            // the assignment above silently clamps to 0 and the popup
+            // "reopens at the top despite remembering the position". Re-apply
+            // per frame until the position takes; any scroll that happens in
+            // between — the user, a reveal's scrollIntoView — changes
+            // scrollTop out from under the rescue and cancels it.
+            if (savedTop > 0 && $tree.scrollTop < savedTop
+                && typeof requestAnimationFrame === 'function') {
+                let applied = $tree.scrollTop;
+                let frames = 0;
+                const rescue = () => {
+                    if ($tree.scrollTop !== applied)
+                        return; // scrolled since — leave it to the scroller
+                    $tree.scrollTop = savedTop;
+                    applied = $tree.scrollTop;
+                    if (applied < savedTop && ++frames < 30)
+                        requestAnimationFrame(rescue);
+                };
+                requestAnimationFrame(rescue);
+            }
         }
-        // after the scroll baseline is back, so focus() only scrolls the
-        // minimal distance to reveal the restored row.
+        // after the scroll baseline is back — the focusID reveal below must
+        // never move it (preventScroll): the remembered position is where the
+        // user left the view, the highlight only marks the row.
         if (chunked)
             chunked.settle(() => unparkRowFocus($tree, parked));
         else
@@ -248,13 +273,10 @@ export function initTreeView(ctx = {}) {
             if (typeof focusID !== 'undefined' && focusID !== null && `${focusID}` !== parkedId) {
                 const focusEl = document.getElementById(`neat-tree-item-${focusID}`);
                 if (focusEl) {
-                    const oriOverflow = $tree.style.overflow;
-                    $tree.style.overflow = 'hidden';
-                    focusEl.style.width = '100%';
                     const focusTarget = focusEl.firstElementChild;
                     // A row without a focusable child (detached/mid-render) has
-                    // no reveal target — skip the highlight; the cleanup timers
-                    // below still run.
+                    // no reveal target — skip the highlight; the cleanup timer
+                    // below still runs.
                     if (focusTarget) {
                         focusTarget.classList.add('focus');
                         // The blueFade class only paints the reveal highlight — the
@@ -266,13 +288,17 @@ export function initTreeView(ctx = {}) {
                         // listener removes the .focus class on its event — re-apply it
                         // after focus() so the reveal highlight is not wiped by the
                         // very focus we just granted.
+                        // issues #65/#66: preventScroll — a bare focus() scrolls the
+                        // row into view and overrides the restored scroll position
+                        // (the user scrolled away from the row before closing: the
+                        // reopen then "resets to the top"). The old overflow:hidden
+                        // dance around this call (Neat-era) never actually stopped
+                        // focus-scrolling in Chromium; the option does. Arrow keys
+                        // still reveal the focused row the moment the user walks.
                         if (focusTarget.focus)
-                            focusTarget.focus();
+                            focusTarget.focus({ preventScroll: true });
                         focusTarget.classList.add('focus');
                     }
-                    setTimeout(() => {
-                        $tree.style.overflow = oriOverflow;
-                    }, 1);
                     setTimeout(() => {
                         store.remove('focusID');
                     }, 4000);

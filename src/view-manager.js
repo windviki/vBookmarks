@@ -878,7 +878,12 @@ export function initViewManager(ctx = {}) {
             }
             const target = focusSpotTarget(spot);
             if (target && spotVisible(target) && !target.disabled) {
-                target.focus();
+                // issues #65/#66: preventScroll — the spot row and the restored
+                // scroll position are two separate memories ("what I focused"
+                // vs "where I scrolled to"); a bare focus() scrolls the row
+                // into view and silently overrides the position the user
+                // actually left the view on.
+                target.focus({ preventScroll: true });
                 document.removeEventListener('keydown', onUserInput, true);
                 document.removeEventListener('mousedown', onUserInput, true);
                 return;

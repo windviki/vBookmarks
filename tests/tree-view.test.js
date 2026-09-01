@@ -136,8 +136,9 @@ const setup = (opts = {}) => {
             remove() {
                 this.removed = true;
             },
-            focus() {
+            focus(opts) {
                 this.focused = true;
+                this._focusArgs = opts; // preventScroll contract (issues #65/#66)
             },
             scrollIntoView() {
                 this._scrolledIntoView++;
@@ -536,7 +537,85 @@ describe('generateTree', () => {
         expect(tree.scrollTop).toBe(5);
     });
 
-    it('focuses the stored focusID row, restores overflow after 1ms and clears focusID after 4s', () => {
+    // issues #65/#66: on freshly parsed big trees the nested `#tree ul ul`
+    // height:0→auto layout settles only some frames after the innerHTML swap,
+    // so the restore assignment silently clamps to 0 and the popup "reopens
+    // at the top despite remembering". The rescue re-applies the stored
+    // position per frame until the layout can hold it.
+    describe('scroll restore clamp rescue (issues #65/#66)', () => {
+        let frames;
+        const flushFrame = () => frames.splice(0).forEach(fn => fn());
+
+        beforeEach(() => {
+            frames = [];
+            globalThis.requestAnimationFrame = fn => {
+                frames.push(fn);
+                return frames.length;
+            };
+        });
+        afterAll(() => {
+            delete globalThis.requestAnimationFrame;
+        });
+
+        // A scrollTop double that clamps like a real scroll container while
+        // the deferred layout is shorter than the restored position; returns
+        // the "layout settles" knob.
+        const clampingTree = tree => {
+            let cur = 0;
+            const layout = { max: 0 };
+            Object.defineProperty(tree, 'scrollTop', {
+                configurable: true,
+                get: () => cur,
+                set(v) {
+                    cur = Math.max(0, Math.min(Number(v) || 0, layout.max));
+                }
+            });
+            return max => { layout.max = max; };
+        };
+
+        it('re-applies the stored scrollTop once the layout can hold it', () => {
+            const ctx = setup({ rememberState: true, storeData: { scrollTop: 900 } });
+            const settle = clampingTree(ctx.tree);
+            ctx.treeView.generateTree(['ROOT']);
+            expect(ctx.tree.scrollTop).toBe(0); // clamped: layout not ready
+            settle(2000); // the nested ul heights settle a few frames later
+            flushFrame();
+            expect(ctx.tree.scrollTop).toBe(900);
+        });
+
+        it('stands down when something scrolled in between (the user, a reveal)', () => {
+            const ctx = setup({ rememberState: true, storeData: { scrollTop: 900 } });
+            const settle = clampingTree(ctx.tree);
+            ctx.treeView.generateTree(['ROOT']);
+            settle(2000);
+            ctx.tree.scrollTop = 300; // e.g. generateTreeForTarget's reveal
+            flushFrame();
+            flushFrame();
+            expect(ctx.tree.scrollTop).toBe(300); // the rescue never fought it
+        });
+
+        it('keeps retrying for a bounded window, then gives up quietly', () => {
+            const ctx = setup({ rememberState: true, storeData: { scrollTop: 900 } });
+            clampingTree(ctx.tree); // layout NEVER grows tall enough
+            ctx.treeView.generateTree(['ROOT']);
+            let guard = 0;
+            while (frames.length && guard++ < 100)
+                flushFrame();
+            expect(guard).toBeLessThan(100); // the retry chain terminated
+            expect(ctx.tree.scrollTop).toBe(0);
+        });
+
+        it('does not arm without requestAnimationFrame (geometry-less doubles)', () => {
+            delete globalThis.requestAnimationFrame;
+            const ctx = setup({ rememberState: true, storeData: { scrollTop: 900 } });
+            const settle = clampingTree(ctx.tree);
+            ctx.treeView.generateTree(['ROOT']);
+            settle(2000);
+            expect(ctx.tree.scrollTop).toBe(0); // old synchronous behavior
+        });
+    });
+
+    it('focuses the stored focusID row without scrolling it into view, clears focusID after 4s', () => {
         const ctx = setup({ storeData: { focusID: '5' }, rememberState: true });
         const { li, span } = ctx.makeFolder('5');
         ctx.tree.style.overflow = 'auto';
@@ -545,12 +624,14 @@ describe('generateTree', () => {
         // the reveal must ALSO take keyboard focus — the blueFade class alone
         // strands the user (arrow keys do nothing until they click)
         expect(span.focused).toBe(true);
-        expect(li.style.width).toBe('100%');
-        expect(ctx.tree.style.overflow).toBe('hidden');
-        expect(ctx.store.removes).toEqual([]);
-        tick(1);
+        // issues #65/#66: the row re-focus must never move the restored
+        // scroll — a bare focus() scrolls the row into view and "resets the
+        // tree to the top". The Neat-era overflow:hidden/width dance never
+        // actually stopped Chromium's focus-scrolling; preventScroll does.
+        expect(span._focusArgs).toEqual({ preventScroll: true });
+        expect(li.style.width).toBeUndefined();
         expect(ctx.tree.style.overflow).toBe('auto');
-        expect(ctx.store.removes).toEqual([]); // not yet
+        expect(ctx.store.removes).toEqual([]);
         tick(4000);
         expect(ctx.store.removes).toEqual(['focusID']);
     });
@@ -558,7 +639,7 @@ describe('generateTree', () => {
     it('skips the whole focus restore when rememberState is off (issue #58)', () => {
         // issue #58: with "remember previous state" unchecked, the last-focused
         // row must NOT be refocused/re-highlighted on open — no .focus class,
-        // no focus(), no overflow pinning, no focusID cleanup timers.
+        // no focus(), no focusID cleanup timers.
         const ctx = setup({ storeData: { focusID: '5' }, rememberState: false });
         const { span } = ctx.makeFolder('5');
         ctx.tree.style.overflow = 'auto';
@@ -566,7 +647,7 @@ describe('generateTree', () => {
         expect(span.classList.contains('focus')).toBe(false);
         expect(span.focused).toBe(false);
         expect(ctx.tree.style.overflow).toBe('auto');
-        expect(timeouts.filter(t => t[1] === 1 || t[1] === 4000)).toEqual([]);
+        expect(timeouts.filter(t => t[1] === 4000)).toEqual([]);
         tickAll();
         expect(ctx.store.removes).toEqual([]);
     });
@@ -602,28 +683,26 @@ describe('generateTree', () => {
         expect(span.classList.contains('focus')).toBe(false);
         expect(span.focused).toBe(false);
         expect(ctx.tree.style.overflow).toBe('auto');
-        expect(timeouts.filter(t => t[1] === 1 || t[1] === 4000)).toEqual([]);
+        expect(timeouts.filter(t => t[1] === 4000)).toEqual([]);
         expect(ctx.store.removes).toEqual(['focusID']);
     });
 
     it('schedules no focus timers when the focusID row is missing', () => {
         const { treeView, store } = setup({ storeData: { focusID: '5' }, rememberState: true });
         treeView.generateTree(['ROOT']);
-        expect(timeouts.filter(t => t[1] === 1 || t[1] === 4000)).toEqual([]);
+        expect(timeouts.filter(t => t[1] === 4000)).toEqual([]);
         tickAll();
         expect(store.removes).toEqual([]);
     });
 
     it('a focusID row without a focusable child skips the highlight but keeps the cleanup timers (K12)', () => {
         // A detached/mid-render row has firstElementChild === null — the reveal
-        // must not throw, and the overflow/focusID cleanup must still run.
+        // must not throw, and the focusID cleanup must still run.
         const ctx = setup({ storeData: { focusID: '5' }, rememberState: true });
         const { li } = ctx.makeFolder('5');
         li.firstElementChild = null;
         ctx.tree.style.overflow = 'auto';
         expect(() => ctx.treeView.generateTree(['ROOT'])).not.toThrow();
-        expect(ctx.tree.style.overflow).toBe('hidden');
-        tick(1);
         expect(ctx.tree.style.overflow).toBe('auto');
         tick(4000);
         expect(ctx.store.removes).toEqual(['focusID']);

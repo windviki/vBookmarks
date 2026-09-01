@@ -69,7 +69,12 @@ export const unparkRowFocus = (list, parked, emptyFocus) => {
         return;
     const target = rowFocusTarget(li);
     if (target && target.focus)
-        target.focus();
+        // preventScroll (issues #65/#66): the park/restore law is about not
+        // LOSING focus across an innerHTML swap; a bare focus() would also
+        // scroll the row into view, yanking the user's scroll position to a
+        // row they may have deliberately scrolled away from before the
+        // re-render. Keyboard walking reveals the focused row on its own.
+        target.focus({ preventScroll: true });
 };
 
 // --- Toolbar focus park/restore (B2, shared by stats/dead/dupes) -------------
