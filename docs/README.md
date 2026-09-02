@@ -212,6 +212,19 @@ python3 scripts/package.py --root dist   # zip an existing dist/ (no rebuild)
 
 # Changelogs
 
+### v4.1.2
+
+*2026-09-02*
+
+#### Fixed
+
+- **The tree reopens exactly where you left it** (#65, #66): the scroll position was being saved correctly all along, but two bugs could throw it away when the popup reopened. The restore ran before the freshly rendered tree had finished laying out, so the stored position was silently clamped back to the top — with or without the highlight enabled, and even when you had only scrolled without opening anything. The restore now retries until the tree can actually hold it.
+- **The last-bookmark highlight no longer shifts your position** (#65, #66): the highlight restore — and the hidden focus-row memory that outlives it — used to scroll the view back to the row it remembered, overriding (and eventually overwriting) the saved position after you had scrolled elsewhere, e.g. after visiting a bookmark's page. Highlight and focus restores now never move the scroll position at all; the race between the two bugs is also why the position "often" came back either shifted or reset to the top.
+
+#### Engineering
+
+- A real-browser regression gate covers all four repro shapes (highlight on/off, after the 4s highlight cleanup, and the click-a-bookmark-then-return flow) plus unit contracts for the clamp rescue and the `preventScroll` focus law; the two issue reports are archived under `docs/issues/issues-65-66-memory-scroll.md`.
+
 ### v4.1.1
 
 *2026-08-30*

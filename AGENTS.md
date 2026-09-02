@@ -14,7 +14,7 @@ Guidance for AI coding agents working on this repository. Assumes no prior knowl
 
 **vBookmarks** is a Google Chrome extension (Manifest V3) that provides an enhanced bookmark manager in a toolbar popup: hierarchical bookmark tree, in-popup and omnibox search, context menus, keyboard navigation, drag & drop, bookmark separators, and bookmark sync-status indicators. It is a fork/successor of [Neat Bookmarks](https://github.com/cheeaun/neat-bookmarks), maintained by `windviki` and distributed via the Chrome Web Store. Licensed under MIT (`license.txt`).
 
-- Current version: **4.1.0** (see `manifest.json`; `package.json` tracks the same version for dev tooling)
+- Current version: **4.1.2** (see `manifest.json`; `package.json` tracks the same version for dev tooling)
 - Minimum Chrome version: **114** (Manifest V3)
 - Tech stack: **plain ES6+ JavaScript — no framework, no bundler, no dev build step**. The repository root is the extension root (what "Load unpacked" points at). Since 4.1.0 the **release** is built and packaged from `dist/` (`npm run build` → `npm run package`; see `docs/plan-4.1.0/build-and-performance-plan.md`) — dev stays build-free.
 
