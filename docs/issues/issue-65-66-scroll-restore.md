@@ -48,6 +48,7 @@ Chromium 的程序化 `focus()` 默认会把焦点元素滚动进可视区(实�
 
 - **单元**:三个套件更新+新增 7 个断言场景(clamp 补写的落地/让位/有界放弃/无 rAF 回退,三处 preventScroll 契约);全量 `npm run test:run` **90 套件 / 3151 用例全绿**,`npm run lint` 通过。
 - **真浏览器 E2E**(`scripts/harness/diag/diag-issue65-66-scroll.js`,本轮新增,可作回归门):A 高亮开+点击顶部行后滚深处、B 4s 清理后无可见高亮(#66 精确)、C 高亮关(#65 精确)——修复前三场景重开全部 scrollTop=0,修复后**全部 2200**,且 A 场景高亮+键盘焦点照常落在目标行、C 场景无任何行高亮(层关语义不变)。5/5 PASS。
+- **#66 最新评论的精确复现验证(2026-09-02,leungwh:"点击书签访问 URL → 在网页上滚动 → 回到弹窗,位置经常漂移或回顶,高亮开着也一样")**:diag 增设 D 场景(真实点击中段行 → 弹窗关闭 → 模拟浏览网页 → 重开;随后"滚离高亮行再重开"变体),修复版 7/7 PASS。**修复前(df9617af)对照**:字面点击流程"碰巧"通过——关闭位置==高亮行位置时,clamp(回顶)与 yank(拉回行)两缺陷恰好互相抵消,但结果取决于 focus() 轮询(100ms)与布局 settle(~250-450ms)的**竞速**,跑输即回顶——这正是他 "**often** ... **either** shifted **or** reset to the top" 的成因;而"滚离后重开"变体确定性失败:存 2200 → 重开 1360(被高亮行拉回),且滚动监听把拉坏的 1360 **回写覆盖了存储的 2200**(记忆本身被污染)。修复后两条流程确定性通过、存储不再被污染。
 - **分层记忆契约回归**(`diag-memory-layers.js`):14/14 PASS——preventScroll 未伤 P1(重开行重亮+焦点接管)/P4(反复重开仍高亮)/P10(列表行记忆)。
 - **smoke 门**:`scripts/harness/run.sh --smoke-only` PASS,NO PAGE ERRORS。
 
@@ -65,13 +66,15 @@ Chromium 的程序化 `focus()` 默认会把焦点元素滚动进可视区(实�
 >
 > This will ship in the next release — keeping the issue open until then. Thanks for the clear report!
 
-**→ issue #66**(@leungwh):
+**→ issue #66**(@leungwh,含 2026-09-02 最新评论的精确复现步骤):
 
-> Thanks — your reproduction ("change the scroll position only, without selecting any particular bookmark") was spot on, and it led straight to the cause.
+> Thanks — your reproduction steps were exactly right, and they led straight to the cause.
 >
-> The position was stored correctly, but the restore ran before the freshly rendered tree had finished laying out, so it got clamped back to the top; and a hidden "where was I" focus memory — which outlives the highlight even when no bookmark is visibly highlighted — could also scroll the view back to the row it remembered. Both are fixed: the restore now retries until the tree can hold the position, and focus restores no longer move the scroll at all. Verified in a real browser with your exact steps, including the case with a highlighted bookmark.
+> The position was being saved correctly all along, but two things could throw it away when the popup reopened. The restore ran before the freshly rendered tree had finished laying out, so the stored position could get silently clamped back to the top; and the remembered focus row — which outlives the visible highlight — could also scroll the view back to the row it remembered, overwriting your position (and even the saved one) with the row's position.
 >
-> This will ship in the next release — keeping the issue open until then.
+> That also explains the "often / either shifted or reset" behavior you saw: which of the two won was a timing race on every reopen. Both are fixed now — the restore retries until the tree can actually hold the position, and the highlight/focus restore no longer moves the scroll at all (it only marks the row; arrow keys still work from it). I re-verified in a real browser with your exact steps — click a bookmark, scroll around the page, come back — including the case with "Highlight the last opened bookmark" enabled: the popup now reopens exactly where you left it, every time.
+>
+> This will ship in the next release — keeping the issue open until then. Thanks for the clear report!
 
 ## 记录 · Record
 

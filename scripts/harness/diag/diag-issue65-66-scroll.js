@@ -11,7 +11,7 @@
 //     the restored position — including the invisible focusSpot that
 //     survives the 4s focusID cleanup (#66's "no bookmark highlighted" repro).
 //
-// The probe drives the real write paths (clicks/focus/scroll) through three
+// The probe drives the real write paths (clicks/focus/scroll) through four
 // reopen scenarios and asserts the remembered position survives all of them:
 //   A highlight ON  — focus a top-area row, scroll deep, reopen
 //   B after the 4s focusID cleanup — scroll deep, reopen (#66 exact repro:
@@ -137,6 +137,60 @@ const ck = (name, ok, extra) => {
                 st.scrollTop === 2200, JSON.stringify(st));
             ck('C highlight OFF: no row re-highlight (the layer stays off)',
                 st.focusRows.length === 0 && st.activeRow === '', JSON.stringify(st));
+        }
+        await page.evaluate(() => new Promise(res => chrome.storage.sync.remove(['rememberHighlight'], res)));
+        await page.reload({ waitUntil: 'load' });
+        await sleep(1500);
+
+        // ---- D: issue #66's literal repro (2026-09-02 comment) — click a
+        // bookmark (the popup closes), scroll around the visited page, come
+        // back. Pre-fix this flow is racy: the clamp (→ top) and the focus
+        // yank (→ the clicked row) can cancel out or land either way —
+        // "often either shifted or reset to the top". The click target is a
+        // MID-tree row so the close-time position is non-trivial; the follow-up
+        // reopen-after-scrolling-away (the "shifted" half) is the deterministic
+        // pre-fix failure: saved 2200, reopened at the clicked row's position.
+        {
+            // idempotent re-expand (opens memory may have restored it)
+            await page.evaluate(() => {
+                for (const li of document.querySelectorAll('#tree > ul > li.parent:not(.open)'))
+                    (li.querySelector(':scope > span') || li.firstElementChild).click();
+            });
+            await page.evaluate(f => {
+                const li = document.getElementById(`neat-tree-item-${f}`);
+                if (li && !li.classList.contains('open'))
+                    (li.querySelector(':scope > span') || li.firstElementChild).click();
+            }, ids.folder);
+            await page.waitForFunction(() => document.querySelectorAll('#tree li').length > 50, { timeout: 5000 });
+            const mid = await page.evaluate(() => {
+                const lis = [...document.querySelectorAll('#tree li.child')]
+                    .filter(li => (li.querySelector('a') || {}).href || '');
+                const li = lis[Math.floor(lis.length / 2)];
+                const tree = document.getElementById('tree');
+                li.scrollIntoView({ block: 'center' });
+                return { id: li.id.replace('neat-tree-item-', ''), closePos: Math.round(tree.scrollTop) };
+            });
+            await sleep(700);
+            await page.click(`#neat-tree-item-${mid.id} > a`); // real click → open + close
+            await sleep(1500);
+            const webTab = await browser.newPage();            // "scroll around the URL page"
+            await webTab.setContent('<div style="height:8000px">page</div>').catch(() => {});
+            await webTab.evaluate(() => window.scrollTo(0, 3000)).catch(() => {});
+            await sleep(400);
+            await webTab.close().catch(() => {});
+            await openPopup();
+            const d1 = await snap();
+            ck('D literal click flow (#66 comment): reopen keeps the close-time position',
+                Math.abs(d1.scrollTop - mid.closePos) <= 3, `closePos=${mid.closePos} ${JSON.stringify(d1)}`);
+            // then scroll away from the highlighted row, close, reopen
+            await page.evaluate(() => { document.getElementById('tree').scrollTop = 2200; });
+            await sleep(700);
+            await page.goto('about:blank');
+            await sleep(400);
+            await openPopup();
+            const d2 = await snap();
+            ck('D literal click flow, shifted variant: reopen keeps 2200 (the highlight does not yank)',
+                d2.scrollTop === 2200, JSON.stringify(d2));
         }
 
         // cleanup + restore defaults
