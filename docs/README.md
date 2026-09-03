@@ -220,6 +220,7 @@ python3 scripts/package.py --root dist   # zip an existing dist/ (no rebuild)
 
 - **The tree reopens exactly where you left it** (#65, #66): the scroll position was being saved correctly all along, but two bugs could throw it away when the popup reopened. The restore ran before the freshly rendered tree had finished laying out, so the stored position was silently clamped back to the top — with or without the highlight enabled, and even when you had only scrolled without opening anything. The restore now retries until the tree can actually hold it.
 - **The last-bookmark highlight no longer shifts your position** (#65, #66): the highlight restore — and the hidden focus-row memory that outlives it — used to scroll the view back to the row it remembered, overriding (and eventually overwriting) the saved position after you had scrolled elsewhere, e.g. after visiting a bookmark's page. Highlight and focus restores now never move the scroll position at all; the race between the two bugs is also why the position "often" came back either shifted or reset to the top.
+- **Stale release announcements no longer queue up on the newest version**: the v4.1.0/v4.1.1 what's-new banners in the remote announcement feed declared open-ended version ranges that never expire, so a client on the latest release was drip-fed each past release's news banner one popup open at a time (after the donation card's deferral). Both banners are now bounded to their own minor era, and a live-file contract test pins the rule for future releases.
 
 #### Engineering
 
