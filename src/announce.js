@@ -27,6 +27,10 @@
  *      (neither):  every version — a general push (release news, appeals)
  *    intersected with channel ∩ once+not-dismissed; array order = priority.
  *    A stale-scope message simply matches nothing — never a wrong-audience push.
+ *    Release what's-news bound their range to the minor era (">=4.1.1 <4.1.2",
+ *    the v408 precedent) so they go stale at the next minor — an open-ended
+ *    ">=X" would drip every past release's news to newest-release clients,
+ *    one popup open at a time (pinned by the live-file contract test).
  *  - schedule: the donation card wins the same frame; the announcement defers
  *  - dismiss: id into `vbmAnnounceSeen` (cap 100, LRU, once semantics)
  *  - privacy switch `announceEnabled` (default on) — off means zero network

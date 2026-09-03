@@ -3,7 +3,7 @@
   "messages": [
     {
       "id": "v411-whats-new",
-      "version": ">=4.1.1",
+      "version": ">=4.1.1 <4.1.2",
       "channel": "all",
       "once": true,
       "display": "banner",
@@ -22,7 +22,7 @@
     },
     {
       "id": "v410-whats-new",
-      "version": ">=4.1.0",
+      "version": ">=4.1.0 <4.1.1",
       "channel": "all",
       "once": true,
       "display": "banner",

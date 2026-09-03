@@ -44,11 +44,12 @@ scripts/harness/run.sh --dist                # full dist harness — 4.1.0 发�
 1. **Version check**: `git tag --sort=-v:refname | head -1` gives the highest tag (format `v<version>`, e.g. `v4.0.3`). The current version — authoritative source is `manifest.json`, mirrored in `package.json` — must be **greater** than the highest tag; if development did not bump it, bump it first.
 2. **Changelog basis**: every commit between the current version and the previous version tag.
 3. **Bilingual changelog**: update `docs/README.md` (English) + `docs/README.zh.md` (Chinese) — the repo convention is symmetric bilingual entries. Since 2026-08-30 the READMEs keep full text for **4.0-and-later** entries only; every pre-4.0 release note lives in its own file under `docs/changelog/` (`vX.Y.md` EN / `vX.Y.zh.md` ZH, README carries the version/date/link table). When an entry eventually migrates out of the README too, update every live link pointing at its old anchor — the known consumers are `docs/announce.json` (per-message `link[].url`) and `src/donation.js` `CHANGELOG_URL`.
-4. **Gap-fill, don't rewrite**: if the working version already has changelog entries accumulated during development, reconcile them against the commit list rather than rewriting from scratch.
-5. **Commit** the documentation work (only the files involved).
-6. **Tag**: `git tag v<version>` (e.g. `v4.0.3`).
-7. **Package**: `npm run package` (builds dist, then `python3 scripts/package.py --root dist`; version read from `manifest.json`; produces `tmp/vBookmarks_<version>.zip`).
-8. **Push** commits + tag.
+4. **Remote announce bump** (`docs/announce.json` — the popup fetches it from raw master, so the push in step 8 is what ships it): minor releases add their `v<version>-whats-new` message with a **bounded** minor-era range (`">=4.1.1 <4.1.2"`) and **close the previous banner's open upper edge**; patch fix releases stay bannerless (the 4.0.1 silence rule). An open-ended `>=X` never goes stale — newest-release clients get every past release's news drip-fed one popup open at a time (the 4.1.0/4.1.1 slip-up, pinned by the live-file contract test in `tests/announce.test.js`).
+5. **Gap-fill, don't rewrite**: if the working version already has changelog entries accumulated during development, reconcile them against the commit list rather than rewriting from scratch.
+6. **Commit** the documentation work (only the files involved).
+7. **Tag**: `git tag v<version>` (e.g. `v4.0.3`).
+8. **Package**: `npm run package` (builds dist, then `python3 scripts/package.py --root dist`; version read from `manifest.json`; produces `tmp/vBookmarks_<version>.zip`).
+9. **Push** commits + tag.
 
 **Step 2 — 商店发布**(store publish via `scripts/webstore/publish.js`): uploads `tmp/vBookmarks_<version>.zip` and submits for review.
 

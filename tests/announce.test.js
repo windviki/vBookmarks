@@ -1,4 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
+import { readFileSync } from 'node:fs';
 import {
     ANNOUNCE_URL, ANN_CACHE_KEY, ANN_SEEN_KEY, ANN_TTL_MS, ANN_MAX_MESSAGES, ANN_TEXT_MAX, ANN_SEEN_MAX,
     sanitizeAnnounce, parseVersionCondition, versionSatisfies, announceMatch, firstAnnouncement,
@@ -385,4 +386,53 @@ describe('initAnnounce wiring', () => {
         expect(cache.etag).toBe('W/"new"');
         expect(bannerEl.innerHTML).toContain('announceV409Text'); // the fresh payload renders
     });
+});
+
+// Live-file contract over the payload this repo actually ships: targeting is
+// declared entirely in docs/announce.json (the code never second-guesses it),
+// so the JSON itself needs a guard. A release what's-new banner owns its
+// MINOR era — it must match the release it names and go stale at the next
+// minor (the v408 precedent: ">=4.0.8 <4.1.0"). An open-ended ">=X" condition
+// never goes stale, and since once-semantics only apply after a dismissal, a
+// newest-release client gets every past release's news drip-fed one popup
+// open at a time — the 4.1.2 dev regression (donation card defers open 1,
+// then the v4.1.1 banner, then the v4.1.0 banner) this contract pins.
+describe("docs/announce.json what's-new targeting contract", () => {
+    const live = sanitizeAnnounce(JSON.parse(
+        readFileSync(new URL('../docs/announce.json', import.meta.url), 'utf8')));
+
+    it('the shipped payload passes sanitizeAnnounce', () => {
+        expect(live).not.toBeNull();
+    });
+
+    const whatsNew = live.messages.filter(m => /-whats-new$/.test(m.id));
+    // Ids compress the release number ("v408" = 4.0.8); accept the dotted
+    // form too so a future id-convention change degrades to fewer checks,
+    // never a false pass of an unbounded range (the upper-bound rule below
+    // applies regardless of decodability).
+    const RELEASE_ID = [/^v(\d)(\d)(\d)-whats-new$/, /^v(\d+)\.(\d+)(?:\.(\d+))-whats-new$/];
+
+    it('names at least one release banner (id convention intact)', () => {
+        expect(whatsNew.length).toBeGreaterThan(0);
+    });
+
+    it('every what\'s-new banner carries an explicit upper bound', () => {
+        for (const msg of whatsNew) {
+            const terms = parseVersionCondition(msg.version);
+            expect(terms).not.toBeNull();
+            expect(terms.some(t => t.op === '<' || t.op === '<=')).toBe(true);
+        }
+    });
+
+    for (const msg of whatsNew) {
+        const m = RELEASE_ID.map(re => re.exec(msg.id)).find(Boolean);
+        if (!m)
+            continue;
+        const own = `${m[1]}.${m[2]}.${m[3] || 0}`;
+        const nextMinor = `${m[1]}.${Number(m[2]) + 1}.0`;
+        it(`${msg.id}: matches ${own}, stale from ${nextMinor} on`, () => {
+            expect(versionSatisfies(own, msg.version)).toBe(true);
+            expect(versionSatisfies(nextMinor, msg.version)).toBe(false);
+        });
+    }
 });
