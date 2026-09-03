@@ -42,19 +42,32 @@
 - 真浏览器回归门 `scripts/harness/diag/diag-issue65-66-scroll.js`:A 高亮开滚深处、B 4s 清理后无可见高亮(#66)、C 高亮关(#65)、D leungwh 字面点击流程+滚离变体(#66 最新评论)——修复前三场景重开全 0、D 变体存 2200 重开 1360 且存储被污染;修复后 **7/7 PASS**(D 关闭位 1380→重开 1380,高亮+键盘焦点保留;滚离后重开 2200)。
 - 分层记忆契约 `diag-memory-layers.js` 14/14、`run.sh --smoke-only` 与 `--dist` 全量 harness PASS。
 
-## 对外回复(草稿,随 4.1.2 发布时贴出,请用户复验后再关)· Public replies (drafted)
+## 对外回复(已发布,issues 已关闭)· Public replies (posted 2026-09-03, issues closed as completed)
 
-**→ issue #65**(@Ownsin,回复其"关闭高亮后不再记住位置"反馈):
+**→ issue #65**(@Ownsin,回复其"关闭高亮后不再记住位置"反馈;[评论链接](https://github.com/windviki/vBookmarks/issues/65#issuecomment-5526103389)):
 
-> Reproduced and fixed — thanks for the clear follow-up. The position was being saved correctly, but the restore could be clamped back to the top before the freshly rendered tree was ready, and the highlight could scroll the view back to its row — turning the highlight off changed the symptom, not the cause. **v4.1.2** fixes both: the popup reopens exactly where you left it, and the highlight stays without ever moving the position. Could you confirm after the update?
+> Reproduced and fixed — thanks for the clear follow-up.
+>
+> The position was being saved correctly, but two bugs could throw it away when the popup reopened: the restore ran before the freshly rendered tree was ready (clamping the position back to the top), and the highlight could scroll the view back to its row — turning the highlight off changed the symptom, not the cause.
+>
+> Both are fixed in **v4.1.2**, now live on the Chrome Web Store: the popup reopens exactly where you left it, and the highlight stays without ever moving the position.
+>
+> Closing as fixed — if you still see it after updating to 4.1.2, please comment and reopen. Thanks again!
 
-**→ issue #66**(@leungwh):
+**→ issue #66**(@leungwh;[评论链接](https://github.com/windviki/vBookmarks/issues/66#issuecomment-5526104180)):
 
-> Thanks — your steps reproduced it exactly. Two bugs fought over the saved position on reopen: a restore that ran before the tree finished rendering (reset to the top), and the remembered row scrolling the view back to itself (shifted). The race between them is why it "often" landed either way. Both are fixed in **v4.1.2**, verified in a real browser with your exact steps. Could you confirm after the update?
+> Thanks — your steps reproduced it exactly.
+>
+> Two bugs fought over the saved position on reopen: a restore that ran before the freshly rendered tree finished rendering (reset to the top), and the remembered row scrolling the view back to itself (shifted). The race between them is why it "often" landed either way.
+>
+> Both are fixed in **v4.1.2**, now live on the Chrome Web Store, verified in a real browser with your exact steps — including the click-a-bookmark, scroll-around-the-page, come-back flow.
+>
+> Closing as fixed — if anything is still off after updating, please comment and reopen. Thanks for the precise report!
 
 ## 记录 · Record
 
 - 修复提交:`9c705125`(src×3 + 测试×3 + diag + modules.md 契约同步)→ `87c7c677`(diag 增 D 场景 + 前后对照);先行 `a6a95292`(df9617af 遗留的 `vitest/valid-title` lint 门,与本 issue 无关);`5a1e6576`(文档)。v4.1.2 版本提交与 changelog 见 git发布序列。
 - 本文档由 `issue-65-highlight-toggle.md`(首轮开关实现档案)+ `issue-65-66-scroll-restore.md`(回归分析档案)于 2026-09-02 合并;首轮回复命令与授权记录见 git 历史(2026-08-30)。
-- issue 状态:**保持 OPEN**——4.1.2 发布、贴出上节回复、用户复验后再关闭;回复命令:`gh issue comment 65/66 --repo windviki/vBookmarks --body-file <file>`(对应段落,windviki 授权账户)。
+- issue 状态:**已关闭(completed,2026-09-03)**——v4.1.2 已推送并上架,上节回复随关贴出(`gh issue comment` + `gh issue close --reason completed`,windviki 授权账户);留 reopen 通道,用户若复现异常可再开。
+- 版本实情:v4.1.2 最终还并入维护者的 announce 区间修正(`10f8b03b`,过期版本新闻不再排队补放,+7 契约测试,changelog 双语已补 `a413e4ab`)——与本 issue 无关,记录于此备查。
 - 关联:#63(关窗丢写→localStorage 影子,本案存储侧免疫的基础)、#58(高亮恢复原始设计)、4.1.1 分层记忆设计(`docs/issues/issues-62-64-2026-08-29.md`)。
