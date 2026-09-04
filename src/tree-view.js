@@ -132,22 +132,6 @@ export function initTreeView(ctx = {}) {
         }
     };
 
-    // issues #65/#66 (residual round): the scroll-restore campaign. Owns the
-    // tree's scrollTop until the stored position actually lands (the fresh
-    // tree's layout settles late); rescueApplied ≥ 0 while a campaign is
-    // live and equals the last value IT applied — the scroll listener uses
-    // it to tell campaign intermediates (never persisted) from real scrolls
-    // (persisted, and they cancel the campaign). 30 rAFs + a 40×100ms tail
-    // ≈ 4.5s worst case — slow machines with big trees outlast a
-    // frames-only budget.
-    //
-    // While a campaign is live, body carries data-vbm-tree-settling and the
-    // reveal/spot focus grants wait for the landing (whenTreeScrollSettled):
-    // Chromium's scroll anchoring PREFERS the focused row as its anchor, and
-    // an off-viewport focused anchor makes the settle's height growth jump
-    // the viewport toward that row (probe-verified: scrollTop 400 → 0).
-    // Focusing after the settle keeps the anchor in-viewport, where the
-    // anchoring compensation PROTECTS the restored view instead.
     let rescueApplied = -1;
     let rescueSeq = 0;
     let settleWaiters = [];
@@ -172,11 +156,47 @@ export function initTreeView(ctx = {}) {
                 delete body.dataset.vbmTreeSettling;
         }
     };
+
+    // issues #65/#66 (residual round): the scroll-restore campaign. Owns the
+    // tree's scrollTop until the stored position actually lands (the fresh
+    // tree's layout settles late); rescueApplied ≥ 0 while a campaign is
+    // live and equals the last value IT applied — the scroll listener uses
+    // it to tell campaign intermediates (never persisted) from real scrolls
+    // (persisted, and they cancel the campaign). 30 rAFs + a 40×100ms tail
+    // ≈ 4.5s worst case — slow machines with big trees outlast a
+    // frames-only budget.
+    //
+    // While a campaign is live, body carries data-vbm-tree-settling and the
+    // reveal/spot focus grants wait for the landing (whenTreeScrollSettled):
+    // Chromium's scroll anchoring PREFERS the focused row as its anchor, and
+    // an off-viewport focused anchor makes the settle's height growth jump
+    // the viewport toward that row (probe-verified: scrollTop 400 → 0).
+    // Focusing after the settle keeps the anchor in-viewport, where the
+    // anchoring compensation PROTECTS the restored view instead.
+    //
+    // issues #67/#68 (diag-68-slow-settle-duel): a clamped restore can
+    // DEADLOCK. Since 4.1.0 the tree rows carry content-visibility:auto, so
+    // an off-viewport band never lays out until the viewport visits it (the
+    // probe froze folders' uls and proved both directions stall: a style
+    // change on a far-off band leaves scrollHeight stale even under forced
+    // reads). Re-assigning savedTop chases growth only at/below the clamped
+    // view; growth needed ABOVE the frontier never comes — the campaign
+    // would sit at the frontier until its budget ran out. After STALL_LIMIT
+    // progressless steps the campaign therefore WALKS the bands: scrollTop
+    // from the top in viewport steps, never outrunning the band that just
+    // landed — every visited band renders, so the walk forces the settle
+    // AND breaks the deadlock (the principled form of the pre-4.1.2
+    // focus-yank that used to mask this class by dragging the viewport to
+    // the highlight row).
     const scrollRescue = savedTop => {
         const seq = ++rescueSeq;
         let applied = $tree.scrollTop;
         let rafFrames = 0;
         let tailTicks = 0;
+        let stallSteps = 0;
+        let walkPos = -1; // < 0: climbing; ≥ 0: walking, the next band target
+        let walkTicks = 0;
+        const viewStep = () => ($tree.clientHeight || 600);
         setSettlingFlag(true);
         const done = () => {
             rescueApplied = -1;
@@ -192,12 +212,35 @@ export function initTreeView(ctx = {}) {
                 done(); // taken over — the scroller owns it now
                 return;
             }
-            $tree.scrollTop = savedTop;
+            if (walkPos >= 0 && ++walkTicks > 80) {
+                done(); // pathological walk — bounded like the climb
+                return;
+            }
+            const target = walkPos >= 0 ? Math.min(walkPos, savedTop) : savedTop;
+            const prev = applied;
+            $tree.scrollTop = target;
             applied = $tree.scrollTop;
             rescueApplied = applied;
             if (applied >= savedTop) {
                 done(); // landed
                 return;
+            }
+            if (walkPos >= 0) {
+                if (applied >= target - 1) {
+                    // the band landed — visit the next one; the walk must
+                    // never outrun the frontier it is forcing
+                    walkPos += viewStep();
+                } else {
+                    // the band did NOT land — the frontier stalled behind
+                    // the walk (a band rendered a frame late, or the tree
+                    // can never hold the target). Re-walk from band zero;
+                    // walkTicks bounds the passes.
+                    walkPos = 0;
+                }
+            } else {
+                stallSteps = applied > prev ? 0 : stallSteps + 1;
+                if (stallSteps >= 2)
+                    walkPos = 0; // frontier stalled — walk from band zero
             }
             if (++rafFrames <= 30)
                 requestAnimationFrame(step);

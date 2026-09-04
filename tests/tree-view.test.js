@@ -573,6 +573,29 @@ describe('generateTree', () => {
             return max => { layout.max = max; };
         };
 
+        // issues #67/#68 (diag-68-slow-settle-duel): since 4.1.0 the tree
+        // rows are content-visibility:auto — an off-viewport band only lays
+        // out when the viewport walks into it. A scroll double whose
+        // scrollable extent unlocks per BAND: a jump further than one
+        // viewport skips the bands in between (they never lay out), while
+        // short hops extend the frontier past the visited band. Returns the
+        // "total content" knob (full).
+        const lazyFrontierTree = tree => {
+            let cur = 0;
+            const layout = { max: 700, full: 3300 };
+            Object.defineProperty(tree, 'scrollTop', {
+                configurable: true,
+                get: () => cur,
+                set(v) {
+                    v = Math.max(0, Number(v) || 0);
+                    if (Math.abs(v - cur) <= 620)
+                        layout.max = Math.max(layout.max, Math.min(layout.full, v + 700));
+                    cur = Math.min(v, layout.max);
+                }
+            });
+            return full => { layout.full = full; };
+        };
+
         it('re-applies the stored scrollTop once the layout can hold it', () => {
             const ctx = setup({ rememberState: true, storeData: { scrollTop: 900 } });
             const settle = clampingTree(ctx.tree);
@@ -659,6 +682,58 @@ describe('generateTree', () => {
             expect(ctx.store.get('scrollTop')).toBe(300);
             flushFrame(); // the canceled campaign must not drag it back
             expect(ctx.tree.scrollTop).toBe(300);
+        });
+
+        it('walks the bands to break the lazy-layout deadlock (issues #67/#68)', () => {
+            // The direct jump clamps at the frontier and the frontier only
+            // grows where the viewport has BEEN — climbing re-assigns the
+            // same unreachable target and stalls. The campaign must switch
+            // to walking viewport-sized bands from the top; every visited
+            // band lays out, so the walk reaches the stored position.
+            const ctx = setup({ rememberState: true, storeData: { scrollTop: 2600 } });
+            lazyFrontierTree(ctx.tree);
+            ctx.treeView.generateTree(['ROOT']);
+            expect(ctx.tree.scrollTop).toBe(700); // first jump clamped
+            let guard = 0;
+            while (frames.length && ctx.tree.scrollTop !== 2600 && guard++ < 60)
+                flushFrame();
+            expect(ctx.tree.scrollTop).toBe(2600); // the walk landed exactly
+            // campaign over — a later scroll persists normally again
+            ctx.tree.scrollTop = 400;
+            fire(ctx.tree, 'scroll');
+            expect(ctx.store.get('scrollTop')).toBe(400);
+        });
+
+        it('never persists walk intermediates — a mid-walk close cannot corrupt the saved position', () => {
+            const ctx = setup({ rememberState: true, storeData: { scrollTop: 2600 } });
+            lazyFrontierTree(ctx.tree);
+            ctx.treeView.generateTree(['ROOT']);
+            let guard = 0;
+            while (frames.length && ctx.tree.scrollTop !== 600 && guard++ < 20)
+                flushFrame(); // stall → arm → band zero → band one (600)
+            expect(ctx.tree.scrollTop).toBe(600);
+            fire(ctx.tree, 'scroll'); // the walk's own scroll event
+            expect(ctx.store.get('scrollTop')).toBe(2600); // NOT corrupted to 600
+            guard = 0;
+            while (frames.length && ctx.tree.scrollTop !== 2600 && guard++ < 60)
+                flushFrame();
+            expect(ctx.tree.scrollTop).toBe(2600);
+        });
+
+        it('gives up quietly at the best position when the tree can never hold the target', () => {
+            const ctx = setup({ rememberState: true, storeData: { scrollTop: 2600 } });
+            const setFull = lazyFrontierTree(ctx.tree);
+            setFull(1800); // content shrank — the frontier can never reach 2600
+            ctx.treeView.generateTree(['ROOT']);
+            let guard = 0;
+            while (frames.length && guard++ < 200)
+                flushFrame();
+            for (let i = 0; i < 41; i++)
+                tick(100);
+            expect(ctx.tree.scrollTop).toBe(1800); // the walk forced every band — the true bottom
+            ctx.tree.scrollTop = 300; // campaign over — scrolls persist again
+            fire(ctx.tree, 'scroll');
+            expect(ctx.store.get('scrollTop')).toBe(300);
         });
 
         it('does not arm without requestAnimationFrame (geometry-less doubles)', () => {
