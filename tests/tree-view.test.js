@@ -594,15 +594,51 @@ describe('generateTree', () => {
             expect(ctx.tree.scrollTop).toBe(300); // the rescue never fought it
         });
 
-        it('keeps retrying for a bounded window, then gives up quietly', () => {
+        it('keeps retrying through the bounded campaign, then gives up quietly', () => {
             const ctx = setup({ rememberState: true, storeData: { scrollTop: 900 } });
-            clampingTree(ctx.tree); // layout NEVER grows tall enough
+            const settle = clampingTree(ctx.tree); // layout NEVER grows tall enough
             ctx.treeView.generateTree(['ROOT']);
             let guard = 0;
-            while (frames.length && guard++ < 100)
+            while (frames.length && guard++ < 200)
                 flushFrame();
-            expect(guard).toBeLessThan(100); // the retry chain terminated
+            // 30 rAF steps, then the campaign switches to the 100ms tail
+            expect(guard).toBe(31);
+            for (let i = 0; i < 41; i++)
+                tick(100);
             expect(ctx.tree.scrollTop).toBe(0);
+            // campaign over — a later scroll persists normally again
+            settle(2000);
+            ctx.tree.scrollTop = 250;
+            fire(ctx.tree, 'scroll');
+            expect(ctx.store.get('scrollTop')).toBe(250);
+        });
+
+        it('never persists climb intermediates — a mid-climb close cannot corrupt the saved position', () => {
+            const ctx = setup({ rememberState: true, storeData: { scrollTop: 900 } });
+            const settle = clampingTree(ctx.tree);
+            ctx.treeView.generateTree(['ROOT']);
+            settle(400); // layout partially settles: the climb reaches 400
+            flushFrame();
+            fire(ctx.tree, 'scroll'); // the intermediate's own scroll event
+            expect(ctx.store.get('scrollTop')).toBe(900); // NOT corrupted to 400
+            // the campaign still finishes once the layout can hold it
+            settle(2000);
+            flushFrame();
+            expect(ctx.tree.scrollTop).toBe(900);
+        });
+
+        it('a real scroll mid-campaign takes over, cancels it and persists', () => {
+            const ctx = setup({ rememberState: true, storeData: { scrollTop: 900 } });
+            const settle = clampingTree(ctx.tree);
+            ctx.treeView.generateTree(['ROOT']);
+            settle(400);
+            flushFrame(); // the campaign reached 400
+            settle(2000);
+            ctx.tree.scrollTop = 300; // the user scrolls — not the campaign
+            fire(ctx.tree, 'scroll');
+            expect(ctx.store.get('scrollTop')).toBe(300);
+            flushFrame(); // the canceled campaign must not drag it back
+            expect(ctx.tree.scrollTop).toBe(300);
         });
 
         it('does not arm without requestAnimationFrame (geometry-less doubles)', () => {

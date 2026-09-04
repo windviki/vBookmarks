@@ -440,7 +440,13 @@ export function initViewManager(ctx = {}) {
             ? marked
             : def.listEl.querySelector(ROW_SEL);
         if (row) {
-            row.focus();
+            // issues #65/#66 (residual round): focus-landing must never move
+            // the scroll. This path serves the spot-restore's give-up and
+            // view switches — the view's scroll was just restored, and a
+            // bare focus() on an off-screen remembered row yanks the
+            // viewport to it ("the exact position is not remembered"). The
+            // keyboard's own arrow walk still scrolls on purpose.
+            row.focus({ preventScroll: true });
             return;
         }
         // The view's activate hook may render its rows asynchronously (stats

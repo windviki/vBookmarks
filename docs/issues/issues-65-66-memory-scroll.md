@@ -42,6 +42,23 @@
 - 真浏览器回归门 `scripts/harness/diag/diag-issue65-66-scroll.js`:A 高亮开滚深处、B 4s 清理后无可见高亮(#66)、C 高亮关(#65)、D leungwh 字面点击流程+滚离变体(#66 最新评论)——修复前三场景重开全 0、D 变体存 2200 重开 1360 且存储被污染;修复后 **7/7 PASS**(D 关闭位 1380→重开 1380,高亮+键盘焦点保留;滚离后重开 2200)。
 - 分层记忆契约 `diag-memory-layers.js` 14/14、`run.sh --smoke-only` 与 `--dist` 全量 harness PASS。
 
+## 残余轮 · Residual round(2026-09-03,#66 关闭后的新反馈)
+
+**反馈**(leungwh,#66 关闭后):v4.1.2 在**关闭**「高亮上次打开的书签」时滚动位置已正常;**开启**时又失效。维护者亦复现("highlight 开启的时候不能保存精确的位置")。
+
+**本地复现尝试(全部未能复现,逐一排除)**:真实 action 弹窗(`chrome.action.openPopup` + CDP,`diag-openpopup-probe4` 手法)× 树规模 150/1200/4000/5000 行 × 高亮开/关 × 多轮变位重开 × 4s 清理窗口前后 × 真实点击流程 × 折叠高亮行所在文件夹 × 4×/20× CPU 节流——全部精确恢复。tag 页环境同理。
+
+**代码审计锁定的残余路径(防御性全封,即本轮修复)**:
+1. **预算不足**:climb 补写仅 30 帧(≈500ms)。高亮 ON 时 focusID 存在使 chunk 门退让(`!hasFocusMemory`),**强制同步整树解析**;高亮 OFF + 浅滚动走分块渲染(快而准)——这正构成反馈中的开/关不对称。慢机器+大树可能超出帧预算 → 补写耗尽 → 回顶。
+2. **climb 中间值污染存储**:补写爬升过程会触发 scroll 事件,滚动监听把 clamp 中间值(如 400)回写覆盖存储的精确值——用户在爬升中途关窗即触发"**不能保存精确的位置**"。
+3. **`focusDefault` 裸 `row.focus()`**:restoreFocusSpot 放弃路径(2s 轮询失败,如 spot 行未渲染)与视图切换落焦,会把视口拉向被标记行——最后一个未加 preventScroll 的行落焦点。
+
+**修复**:滚动恢复改为 **campaign**(30 rAF + 40×100ms 尾段 ≈4.5s 墙钟;`rescueApplied` 握手——滚动监听跳过 campaign 自身应用的中间值、真实滚动立即接管并正常持久化);`focusDefault` 行落焦加 `{preventScroll:true}`(键盘箭头行走仍按设计滚动)。
+
+**验证**:tree-view rescue 测试组重写+3 新契约(中间值不落盘/接管持久化/有界放弃含尾段),全量 90 套件/3160 用例+lint 绿;diag-issue65-66-scroll 7/7、真弹窗矩阵全过、memory-layers 14/14、smoke PASS。
+
+**诚实记录**:本环境始终未能复现维护者所见症状;上述三路径是从代码审计推出的全部残余可能,均已封闭。若用户更新后仍复现,下一步应获取其复现条件(环境/关闭方式/症状形态/树规模/zoom),必要时出带 `__scrollTopLS` 写踪迹的诊断构建。
+
 ## 对外回复(已发布,issues 已关闭)· Public replies (posted 2026-09-03, issues closed as completed)
 
 **→ issue #65**(@Ownsin,回复其"关闭高亮后不再记住位置"反馈;[评论链接](https://github.com/windviki/vBookmarks/issues/65#issuecomment-5526103389)):
@@ -68,6 +85,6 @@
 
 - 修复提交:`9c705125`(src×3 + 测试×3 + diag + modules.md 契约同步)→ `87c7c677`(diag 增 D 场景 + 前后对照);先行 `a6a95292`(df9617af 遗留的 `vitest/valid-title` lint 门,与本 issue 无关);`5a1e6576`(文档)。v4.1.2 版本提交与 changelog 见 git发布序列。
 - 本文档由 `issue-65-highlight-toggle.md`(首轮开关实现档案)+ `issue-65-66-scroll-restore.md`(回归分析档案)于 2026-09-02 合并;首轮回复命令与授权记录见 git 历史(2026-08-30)。
-- issue 状态:**已关闭(completed,2026-09-03)**——v4.1.2 已推送并上架,上节回复随关贴出(`gh issue comment` + `gh issue close --reason completed`,windviki 授权账户);留 reopen 通道,用户若复现异常可再开。
+- issue 状态:#65/#66 已关闭(completed,2026-09-03);**残余轮跟进中**(见上节,随下一版本发布后可在 #66 追加评论请用户复验)——v4.1.2 已推送并上架,上节回复随关贴出(`gh issue comment` + `gh issue close --reason completed`,windviki 授权账户);留 reopen 通道,用户若复现异常可再开。
 - 版本实情:v4.1.2 最终还并入维护者的 announce 区间修正(`10f8b03b`,过期版本新闻不再排队补放,+7 契约测试,changelog 双语已补 `a413e4ab`)——与本 issue 无关,记录于此备查。
 - 关联:#63(关窗丢写→localStorage 影子,本案存储侧免疫的基础)、#58(高亮恢复原始设计)、4.1.1 分层记忆设计(`docs/issues/issues-62-64-2026-08-29.md`)。

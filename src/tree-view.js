@@ -132,6 +132,42 @@ export function initTreeView(ctx = {}) {
         }
     };
 
+    // issues #65/#66 (residual round): the scroll-restore campaign. Owns the
+    // tree's scrollTop until the stored position actually lands (the fresh
+    // tree's layout settles late); rescueApplied ≥ 0 while a campaign is
+    // live and equals the last value IT applied — the scroll listener uses
+    // it to tell campaign intermediates (never persisted) from real scrolls
+    // (persisted, and they cancel the campaign). 30 rAFs + a 40×100ms tail
+    // ≈ 4.5s worst case — slow machines with big trees outlast a
+    // frames-only budget.
+    let rescueApplied = -1;
+    const scrollRescue = savedTop => {
+        let applied = $tree.scrollTop;
+        let rafFrames = 0;
+        let tailTicks = 0;
+        const step = () => {
+            if ($tree.scrollTop !== applied) {
+                rescueApplied = -1; // taken over — the scroller owns it now
+                return;
+            }
+            $tree.scrollTop = savedTop;
+            applied = $tree.scrollTop;
+            rescueApplied = applied;
+            if (applied >= savedTop) {
+                rescueApplied = -1; // landed
+                return;
+            }
+            if (++rafFrames <= 30)
+                requestAnimationFrame(step);
+            else if (++tailTicks <= 40)
+                setTimeout(step, 100);
+            else
+                rescueApplied = -1; // never fit — give up quietly
+        };
+        rescueApplied = applied;
+        requestAnimationFrame(step);
+    };
+
     const generateTree = tree => {
         let subTree;
         if (onlyShowBMBar && !showAllOverride) {
@@ -220,23 +256,19 @@ export function initTreeView(ctx = {}) {
             // later (measured in the real popup: scrollHeight still equals
             // clientHeight for up to ~250ms after the innerHTML swap), so
             // the assignment above silently clamps to 0 and the popup
-            // "reopens at the top despite remembering the position". Re-apply
-            // per frame until the position takes; any scroll that happens in
-            // between — the user, a reveal's scrollIntoView — changes
-            // scrollTop out from under the rescue and cancels it.
+            // "reopens at the top despite remembering the position".
+            // Residual round (#66 follow-up): highlight-on forces the SYNC
+            // full parse (the chunk gate defers to the focusID memory), so
+            // slow machines with big trees can outlast a frames-only budget
+            // — the campaign now runs 30 rAFs then a 100ms-interval tail
+            // (≈4.5s total) — and the scroll listener no longer persists
+            // climb intermediates (a popup closed mid-climb used to corrupt
+            // the SAVED position: "the exact position is not remembered").
+            // Any scroll that is not the campaign's own applied value — the
+            // user, a reveal's scrollIntoView — takes over and cancels it.
             if (savedTop > 0 && $tree.scrollTop < savedTop
                 && typeof requestAnimationFrame === 'function') {
-                let applied = $tree.scrollTop;
-                let frames = 0;
-                const rescue = () => {
-                    if ($tree.scrollTop !== applied)
-                        return; // scrolled since — leave it to the scroller
-                    $tree.scrollTop = savedTop;
-                    applied = $tree.scrollTop;
-                    if (applied < savedTop && ++frames < 30)
-                        requestAnimationFrame(rescue);
-                };
-                requestAnimationFrame(rescue);
+                scrollRescue(savedTop);
             }
         }
         // after the scroll baseline is back — the focusID reveal below must
@@ -265,8 +297,9 @@ export function initTreeView(ctx = {}) {
         if (getRememberState() && store.get('rememberHighlight', '1') && !getFocusSearchOnOpen()) {
             const focusID = store.get('focusID');
             // The park/restore law above may already have re-focused a live
-            // row. The reveal treatment (width/overflow + .focus flash) is
-            // for the reopen case — skip it when the restored row IS the
+            // row. The reveal treatment (.focus flash + keyboard focus,
+            // never a scroll — preventScroll) is for the reopen case — skip
+            // it when the restored row IS the
             // focusID row; a DIFFERENT focusID means an explicit reveal
             // (revealFolder ran while a tree row still held focus) and wins.
             const parkedId = parked ? `${parked.id || ''}`.replace('neat-tree-item-', '') : '';
@@ -449,6 +482,14 @@ export function initTreeView(ctx = {}) {
 
     // Events for the tree
     $tree.addEventListener('scroll', () => {
+        // A live rescue campaign's intermediates are layout artifacts, not
+        // the user's position — persisting them corrupted the saved value
+        // whenever the popup closed mid-climb (#66 residual). Any value the
+        // campaign did NOT apply is a real scroll: it takes over, cancels
+        // the campaign and persists normally.
+        if (rescueApplied >= 0 && $tree.scrollTop === rescueApplied)
+            return;
+        rescueApplied = -1;
         store.set('scrollTop', $tree.scrollTop);
     });
     $tree.addEventListener('focus', e => {

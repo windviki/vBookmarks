@@ -789,6 +789,10 @@ describe('activate', () => {
         views.activate('recent');
         expect(option.focused).toBe(false); // never the hidden option
         expect(a.focused).toBe(true); // the first real row instead
+        // issues #65/#66 (residual): focus-landing must never move the scroll
+        // — a bare focus() on an off-screen row yanks the just-restored
+        // viewport to it.
+        expect(a._focusArgs).toEqual({ preventScroll: true });
     });
 
     it('reads legacy numeric viewState entries as scroll-only', () => {
