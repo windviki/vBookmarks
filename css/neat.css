@@ -526,6 +526,17 @@ body.width-dragging #search {
 #tree {
     background-color: var(--vbm-bg);
     overflow: auto;
+    /* issues #65/#66 (residual round): Chrome's scroll anchoring stays ON on
+       purpose — after the restore campaign lands it is what keeps the view
+       stable through late content growth (favicon materialization &c). The
+       drift itself came from the ANCHOR HIJACK: anchoring prefers the
+       FOCUSED row as its anchor, so focusing the far-away highlight row
+       while the fresh render's nested ul heights were still settling made
+       the compensation jump the viewport toward that row (probe-verified:
+       scrollTop 400 → 0). The fix defers the focus grant until the settle
+       is done (tree-view coordinates via body[data-vbm-tree-settling]), so
+       during the settle the anchor is an ordinary in-viewport row and the
+       compensation protects the restored view. */
     outline: 0;
     padding: 3px 0;
     -webkit-box-shadow: inset 0 4px 4px -4px var(--vbm-border);

@@ -57,6 +57,8 @@
 
 **验证**:tree-view rescue 测试组重写+3 新契约(中间值不落盘/接管持久化/有界放弃含尾段),全量 90 套件/3160 用例+lint 绿;diag-issue65-66-scroll 7/7、真弹窗矩阵全过、memory-layers 14/14、smoke PASS。
 
+**根因实锤(维护者给出精确复现步骤后)**:步骤=高亮开→点开一个非空文件夹(焦点落文件夹行)→重开(文件夹高亮,正常)→滚到深处→重开→漂移。隔离探针(anchor-probe)实证 Chromium **滚动锚定(overflow-anchor)的锚点选择优先聚焦元素**:视口外的聚焦行会成为锚点,布局 settle 期间的高度增长触发锚定补偿时**把视口直接拽向焦点行**(探针:scrollTop 400→0,标记行被推离 900px)——这就是"漂移"的真身,也是 preventScroll 挡不住的原因(focus() 自身不滚了,但锚定补偿是布局变更触发的另一机制)。高亮关时无焦点行→锚点在视口内→补偿反而在**保护**视野,故无恙——开/关不对称彻底闭环。本地 harness 无法复现是因为其布局瞬间就绪、锚定无从介入。**修复**:高亮/焦点的**授予**等待树布局 settle 完成(campaign 期间 body 置 `data-vbm-tree-settling`,tree-view 的 reveal 焦点与 view-manager 的 restoreFocusSpot 均等待落地后再 focus(preventScroll);.focus 闪烁照常立即绘制);锚定本身**保留**(落地后它继续保护视野抵御迟到的内容增长)——注意 `overflow-anchor:none` 是错误方向(会连高亮关时的保护一起废掉),已论证并弃用。
+
 **诚实记录**:本环境始终未能复现维护者所见症状;上述三路径是从代码审计推出的全部残余可能,均已封闭。若用户更新后仍复现,下一步应获取其复现条件(环境/关闭方式/症状形态/树规模/zoom),必要时出带 `__scrollTopLS` 写踪迹的诊断构建。
 
 ## 对外回复(已发布,issues 已关闭)· Public replies (posted 2026-09-03, issues closed as completed)

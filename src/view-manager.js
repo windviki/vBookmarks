@@ -882,6 +882,18 @@ export function initViewManager(ctx = {}) {
                 document.removeEventListener('mousedown', onUserInput, true);
                 return;
             }
+            // issues #65/#66 (residual round): the tree signals an in-flight
+            // scroll-restore campaign via body[data-vbm-tree-settling]. A row
+            // focused while the fresh render's layout still settles hijacks
+            // Chrome's scroll anchor, and the compensation jumps the viewport
+            // toward the focused row (the reported "drift") — wait it out
+            // without burning retry attempts.
+            if (spot.zone === 'row'
+                && document.body && document.body.dataset
+                && document.body.dataset.vbmTreeSettling) {
+                setTimeout(tryRestore, 100);
+                return;
+            }
             const target = focusSpotTarget(spot);
             if (target && spotVisible(target) && !target.disabled) {
                 // issues #65/#66: preventScroll — the spot row and the restored

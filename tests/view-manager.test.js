@@ -1679,6 +1679,33 @@ describe('focusSpot — unified popup-reopen focus memory', () => {
             expect(a._focusArgs).toEqual({ preventScroll: true });
         });
 
+        it('waits out the tree settle before focusing a row spot (issues #65/#66 anchor-hijack law)', async () => {
+            // body[data-vbm-tree-settling] marks tree-view's in-flight
+            // scroll-restore campaign; a row focused during the settle
+            // hijacks Chrome's scroll anchor and the layout growth jumps
+            // the viewport toward the row. The spot restore must idle
+            // (without burning attempts) until the flag clears.
+            const { views, doc, makeEl, addRecent } = setup({
+                storeData: { focusSpot: JSON.stringify({ zone: 'row', view: 'recent', key: 'recent-item-5' }) }
+            });
+            const listEl = makeEl('ul');
+            const li = makeEl('li');
+            li.id = 'recent-item-5';
+            const a = makeEl('a');
+            li.appendChild(a);
+            listEl.appendChild(li);
+            addRecent({ container: makeEl(), listEl });
+            views.activate('recent', { keepFocus: true });
+            doc.body.dataset.vbmTreeSettling = '1';
+            views.restoreFocusSpot();
+            await new Promise(r => setTimeout(r, 40));
+            expect(doc.activeElement).toBe(null); // still waiting out the settle
+            delete doc.body.dataset.vbmTreeSettling;
+            await new Promise(r => setTimeout(r, 180)); // the retry cadence
+            expect(doc.activeElement).toBe(a);
+            expect(a._focusArgs).toEqual({ preventScroll: true });
+        });
+
         it('restores the anchor of a button-led row (the dupes member shape)', () => {
             // Regression: the dupes member row leads with <button.keeper-radio>;
             // resolving the spot to the bare li made .focus() a silent no-op

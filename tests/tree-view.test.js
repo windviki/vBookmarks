@@ -583,6 +583,26 @@ describe('generateTree', () => {
             expect(ctx.tree.scrollTop).toBe(900);
         });
 
+        it('defers the reveal focus until the campaign lands (anchor-hijack law)', () => {
+            // issues #65/#66 (residual round): Chromium's scroll anchoring
+            // prefers the FOCUSED row as its anchor — a far-away highlight
+            // row focused while the layout still settles makes the height
+            // growth jump the viewport toward it (the reported "drift"). The
+            // .focus flash paints immediately; the focus GRANT waits for the
+            // campaign's landing.
+            const ctx = setup({ rememberState: true, storeData: { focusID: '5', scrollTop: 900 } });
+            const settle = clampingTree(ctx.tree);
+            const { span } = ctx.makeFolder('5');
+            ctx.treeView.generateTree(['ROOT']);
+            expect(span.classList.contains('focus')).toBe(true); // flash now
+            expect(span.focused).toBe(false); // the focus grant waits
+            settle(2000);
+            flushFrame(); // campaign lands → the waiter grants focus
+            expect(ctx.tree.scrollTop).toBe(900);
+            expect(span.focused).toBe(true);
+            expect(span._focusArgs).toEqual({ preventScroll: true });
+        });
+
         it('stands down when something scrolled in between (the user, a reveal)', () => {
             const ctx = setup({ rememberState: true, storeData: { scrollTop: 900 } });
             const settle = clampingTree(ctx.tree);

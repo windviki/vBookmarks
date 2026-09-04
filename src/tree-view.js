@@ -140,21 +140,63 @@ export function initTreeView(ctx = {}) {
     // (persisted, and they cancel the campaign). 30 rAFs + a 40×100ms tail
     // ≈ 4.5s worst case — slow machines with big trees outlast a
     // frames-only budget.
+    //
+    // While a campaign is live, body carries data-vbm-tree-settling and the
+    // reveal/spot focus grants wait for the landing (whenTreeScrollSettled):
+    // Chromium's scroll anchoring PREFERS the focused row as its anchor, and
+    // an off-viewport focused anchor makes the settle's height growth jump
+    // the viewport toward that row (probe-verified: scrollTop 400 → 0).
+    // Focusing after the settle keeps the anchor in-viewport, where the
+    // anchoring compensation PROTECTS the restored view instead.
     let rescueApplied = -1;
+    let rescueSeq = 0;
+    let settleWaiters = [];
+    const treeSettling = () => rescueApplied >= 0;
+    const whenTreeScrollSettled = fn => {
+        settleWaiters.push(fn);
+    };
+    const flushSettleWaiters = () => {
+        if (settleWaiters.length) {
+            const waiters = settleWaiters;
+            settleWaiters = [];
+            for (const fn of waiters)
+                fn();
+        }
+    };
+    const setSettlingFlag = on => {
+        const body = document.body;
+        if (body && body.dataset) {
+            if (on)
+                body.dataset.vbmTreeSettling = '1';
+            else
+                delete body.dataset.vbmTreeSettling;
+        }
+    };
     const scrollRescue = savedTop => {
+        const seq = ++rescueSeq;
         let applied = $tree.scrollTop;
         let rafFrames = 0;
         let tailTicks = 0;
+        setSettlingFlag(true);
+        const done = () => {
+            rescueApplied = -1;
+            if (seq === rescueSeq) {
+                setSettlingFlag(false);
+                flushSettleWaiters();
+            }
+        };
         const step = () => {
+            if (seq !== rescueSeq)
+                return; // superseded — the newer campaign owns state and waiters
             if ($tree.scrollTop !== applied) {
-                rescueApplied = -1; // taken over — the scroller owns it now
+                done(); // taken over — the scroller owns it now
                 return;
             }
             $tree.scrollTop = savedTop;
             applied = $tree.scrollTop;
             rescueApplied = applied;
             if (applied >= savedTop) {
-                rescueApplied = -1; // landed
+                done(); // landed
                 return;
             }
             if (++rafFrames <= 30)
@@ -162,7 +204,7 @@ export function initTreeView(ctx = {}) {
             else if (++tailTicks <= 40)
                 setTimeout(step, 100);
             else
-                rescueApplied = -1; // never fit — give up quietly
+                done(); // never fit — give up quietly
         };
         rescueApplied = applied;
         requestAnimationFrame(step);
@@ -328,8 +370,21 @@ export function initTreeView(ctx = {}) {
                         // dance around this call (Neat-era) never actually stopped
                         // focus-scrolling in Chromium; the option does. Arrow keys
                         // still reveal the focused row the moment the user walks.
-                        if (focusTarget.focus)
-                            focusTarget.focus({ preventScroll: true });
+                        // Residual round: the focus GRANT waits for a live scroll
+                        // campaign to land — an off-viewport focused row hijacks
+                        // Chrome's scroll anchor during the layout settle and the
+                        // compensation jumps the viewport toward the row (the
+                        // "drift"); after the settle the anchor stays in-viewport
+                        // and the compensation protects the restored view instead.
+                        const grantFocus = () => {
+                            if (focusTarget.focus)
+                                focusTarget.focus({ preventScroll: true });
+                            focusTarget.classList.add('focus');
+                        };
+                        if (treeSettling())
+                            whenTreeScrollSettled(grantFocus);
+                        else
+                            grantFocus();
                         focusTarget.classList.add('focus');
                     }
                     setTimeout(() => {
