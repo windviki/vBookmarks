@@ -1211,6 +1211,12 @@
   "optionTreeRowActions": {
     "message": "Darbības, virzot kursoru pār koka rindām (rediģēt / staging / dzēst)"
   },
+  "optionTreeCvLab": {
+    "message": "Milzīgs grāmatzīmju koka paātrinājums (eksperimentāls)"
+  },
+  "optionTreeCvLabHint": {
+    "message": "Izlaiz grāmatzīmju rindu renderēšanu ārpus skata apgabala, tāpēc uznirstošie logi ar tūkstošiem grāmatzīmju atveras ievērojami ātrāk. Kad ieslēgts, dziļa ritināšanas pozīcija tiek atjaunota pa rindām ar īsu skenēšanu, kas ļoti lēnās ierīcēs var aizņemt dažas sekundes."
+  },
   "optionVirtualScrollLab": {
     "message": "Virtuālā ritināšana (eksperimentāla)"
   },

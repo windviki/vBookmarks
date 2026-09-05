@@ -1211,6 +1211,12 @@
   "optionTreeRowActions": {
     "message": "Hover-acties op boomrijen (bewerken / stagen / verwijderen)"
   },
+  "optionTreeCvLab": {
+    "message": "Enorme snelheidswinst voor bladwijzerboom (experimenteel)"
+  },
+  "optionTreeCvLabHint": {
+    "message": "Slaat het renderen van bladwijzerrijen buiten het zichtbare gebied over, waardoor pop-ups met duizenden bladwijzers merkbaar sneller openen. Wanneer ingeschakeld, wordt een diepe scrollpositie per rij hersteld met een korte stabilisatiescan, wat op zeer trage machines enkele seconden kan duren."
+  },
   "optionVirtualScrollLab": {
     "message": "Virtueel scrollen (experimenteel)"
   },

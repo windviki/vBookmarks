@@ -1211,6 +1211,12 @@
   "optionTreeRowActions": {
     "message": "Aksi saat melayang pada baris pohon (sunting / tampung / hapus)"
   },
+  "optionTreeCvLab": {
+    "message": "Percepatan pohon bookmark besar (eksperimental)"
+  },
+  "optionTreeCvLabHint": {
+    "message": "Melewati rendering baris bookmark di luar area tampilan, sehingga popup dengan ribuan bookmark terbuka jauh lebih cepat. Saat aktif, posisi gulir yang dalam dipulihkan per baris dengan pemindaian penyesuaian singkat, yang dapat memakan beberapa detik pada mesin yang sangat lambat."
+  },
   "optionVirtualScrollLab": {
     "message": "Gulir virtual (eksperimental)"
   },

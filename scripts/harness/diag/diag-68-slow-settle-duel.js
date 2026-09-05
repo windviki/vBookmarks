@@ -30,6 +30,13 @@
 const puppeteer = require('puppeteer');
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 const SAVED = 2600;
+// 4.1.4 tree-cv lab knobs: this probe's freeze model only exists under cv,
+// so treeCvLab defaults ON here (VBM_TREE_CV=0 forces it off).
+// VBM_TREE_CV_REVEAL=1 picks the scrollIntoView reveal transport (PK vs the
+// band walk).
+const CV_ON = process.env.VBM_TREE_CV !== '0';
+const CV_REVEAL = process.env.VBM_TREE_CV_REVEAL === '1';
+console.log(`tree-cv mode: ${CV_ON ? (CV_REVEAL ? 'cv+reveal' : 'cv+walk') : 'cv-off'}`);
 (async () => {
     const browser = await puppeteer.launch({
         executablePath: process.env.CHROME_BIN || '/usr/bin/chromium-browser',
@@ -62,6 +69,8 @@ const SAVED = 2600;
         // #68 config: highlight OFF, scroll + opens memory ON
         await seed.evaluate(() => new Promise(res => chrome.storage.sync.set(
             { rememberHighlight: '0', rememberScroll: '1', rememberOpens: '1' }, res)));
+        await seed.evaluate(([cv, reveal]) => new Promise(res => chrome.storage.local.set(
+            { treeCvLab: cv ? '1' : '', treeCvRevealLab: reveal ? '1' : '' }, res)), [CV_ON, CV_REVEAL]);
         await seed.evaluate(() => new Promise(res => chrome.storage.local.remove('userstyle', res)));
         await seed.evaluate(() => new Promise(res => chrome.storage.local.remove(
             ['focusID', 'scrollTop', 'opens', 'searchQuery', 'viewState', 'focusSpot', 'activeView'], res)));

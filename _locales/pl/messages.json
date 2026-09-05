@@ -1211,6 +1211,12 @@
   "optionTreeRowActions": {
     "message": "Akcje po najechaniu na wiersze drzewa (edytuj / przechowaj / usuń)"
   },
+  "optionTreeCvLab": {
+    "message": "Duże przyspieszenie drzewa zakładek (eksperymentalne)"
+  },
+  "optionTreeCvLabHint": {
+    "message": "Pomija renderowanie wierszy zakładek poza obszarem widoku, dzięki czemu wyskakujące okna z tysiącami zakładek otwierają się zauważalnie szybciej. Gdy włączone, głęboka pozycja przewijania jest przywracana wiersz po wierszu z krótkim skanowaniem stabilizującym, co na bardzo wolnych maszynach może zająć kilka sekund."
+  },
   "optionVirtualScrollLab": {
     "message": "Wirtualne przewijanie (eksperymentalne)"
   },

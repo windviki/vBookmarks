@@ -1211,6 +1211,12 @@
   "optionTreeRowActions": {
     "message": "Azioni al passaggio del mouse sulle righe dell'albero (modifica / staging / elimina)"
   },
+  "optionTreeCvLab": {
+    "message": "Grande accelerazione dell'albero dei segnalibri (sperimentale)"
+  },
+  "optionTreeCvLabHint": {
+    "message": "Salta il rendering delle righe dei segnalibri fuori dall'area visibile, così i popup con migliaia di segnalibri si aprono notevolmente più velocemente. Quando attivo, una posizione di scorrimento profonda viene ripristinata per riga con una breve scansione di assestamento, che può richiedere alcuni secondi su macchine molto lente."
+  },
   "optionVirtualScrollLab": {
     "message": "Scorrimento virtuale (sperimentale)"
   },

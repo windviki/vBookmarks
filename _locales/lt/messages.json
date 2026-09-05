@@ -1211,6 +1211,12 @@
   "optionTreeRowActions": {
     "message": "Veiksmai užvedus pelę ant medžio eilučių (redaguoti / prelaida / ištrinti)"
   },
+  "optionTreeCvLab": {
+    "message": "Didelio medžio spartinimas (eksperimentinis)"
+  },
+  "optionTreeCvLabHint": {
+    "message": "Praleidžia knygų žymių eilučių, esančių už matymo srities, atvaizdavimą, todėl iššokantys langai su tūkstančiais žymių atsidaro pastebimai greičiau. Įjungus, gili slinkties padėtis atkuriama eilutėmis su trumpu nusistovėjimo skenavimu, kuris labai lėtuose kompiuteriuose gali užtrukti kelias sekundes."
+  },
   "optionVirtualScrollLab": {
     "message": "Virtualus slinkimas (eksperimentinis)"
   },

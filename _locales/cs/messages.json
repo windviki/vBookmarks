@@ -1211,6 +1211,12 @@
   "optionTreeRowActions": {
     "message": "Akce při najetí na řádky stromu (upravit / připravit / smazat)"
   },
+  "optionTreeCvLab": {
+    "message": "Velké zrychlení stromu záložek (experimentální)"
+  },
+  "optionTreeCvLabHint": {
+    "message": "Přeskočí vykreslování řádků záložek mimo zobrazenou oblast, takže se vyskakovací okna s tisíci záložkami otevírají znatelně rychleji. Když je zapnuto, hluboká pozice posouvání se obnoví po řádcích s krátkým vyrovnávacím skenem, což může na velmi pomalých počítačích trvat několik sekund."
+  },
   "optionVirtualScrollLab": {
     "message": "Virtuální posouvání (experimentální)"
   },

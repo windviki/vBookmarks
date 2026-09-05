@@ -1211,6 +1211,12 @@
   "optionTreeRowActions": {
     "message": "Műveletek a fa sorokon (szerkesztés / staging / törlés)"
   },
+  "optionTreeCvLab": {
+    "message": "Hatalmas könyvjelzőfa-gyorsítás (kísérleti)"
+  },
+  "optionTreeCvLabHint": {
+    "message": "Kihagyja a könyvjelzősorok megjelenítését a látható területen kívül, így a több ezer könyvjelzőt tartalmazó felugró ablakok észrevehetően gyorsabban nyílnak meg. Bekapcsolásakor a mély görgetési pozíció soronként kerül visszaállításra egy rövid beállítási vizsgálattal, ami nagyon lassú gépeken néhány másodpercig is eltarthat."
+  },
   "optionVirtualScrollLab": {
     "message": "Virtuális görgetés (kísérleti)"
   },

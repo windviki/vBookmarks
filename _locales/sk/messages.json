@@ -1211,6 +1211,12 @@
   "optionTreeRowActions": {
     "message": "Akcie pri prejdení myšou na riadky stromu (upraviť / stage / odstrániť)"
   },
+  "optionTreeCvLab": {
+    "message": "Veľké zrýchlenie stromu záložiek (experimentálne)"
+  },
+  "optionTreeCvLabHint": {
+    "message": "Preskočí vykresľovanie riadkov záložiek mimo viditeľnej oblasti, takže kontextové okná s tisíckami záložiek sa otvárajú výrazne rýchlejšie. Keď je zapnuté, hlboká pozícia posúvania sa obnoví po riadkoch s krátkym skenovaním, čo môže na veľmi pomalých počítačoch trvať niekoľko sekúnd."
+  },
   "optionVirtualScrollLab": {
     "message": "Virtuálne posúvanie (experimentálne)"
   },

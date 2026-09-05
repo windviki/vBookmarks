@@ -105,14 +105,15 @@ const setup = (opts = {}) => {
                 add: c => classes.add(c),
                 remove: c => classes.delete(c),
                 contains: c => classes.has(c),
-                toggle: c => {
-                    // DOMTokenList.toggle returns the new presence state
-                    if (classes.has(c)) {
+                toggle: (c, force) => {
+                    // DOMTokenList.toggle(token[, force]) returns the new
+                    // presence state; an explicit force is honored.
+                    const on = force === undefined ? !classes.has(c) : !!force;
+                    if (on)
+                        classes.add(c);
+                    else
                         classes.delete(c);
-                        return false;
-                    }
-                    classes.add(c);
-                    return true;
+                    return on;
                 }
             },
             addEventListener(type, fn) {
@@ -557,6 +558,14 @@ describe('generateTree', () => {
             delete globalThis.requestAnimationFrame;
         });
 
+        // The campaign machinery is the treeCvLab (opt-in cv) path — the
+        // 4.1.4 default (cv off) restores in one shot and never arms it.
+        // Every test in this block therefore turns the lab on explicitly.
+        const rescue = opts => setup({
+            ...opts,
+            storeData: Object.assign({ treeCvLab: '1' }, opts.storeData || {})
+        });
+
         // A scrollTop double that clamps like a real scroll container while
         // the deferred layout is shorter than the restored position; returns
         // the "layout settles" knob.
@@ -597,7 +606,7 @@ describe('generateTree', () => {
         };
 
         it('re-applies the stored scrollTop once the layout can hold it', () => {
-            const ctx = setup({ rememberState: true, storeData: { scrollTop: 900 } });
+            const ctx = rescue({ rememberState: true, storeData: { scrollTop: 900 } });
             const settle = clampingTree(ctx.tree);
             ctx.treeView.generateTree(['ROOT']);
             expect(ctx.tree.scrollTop).toBe(0); // clamped: layout not ready
@@ -616,7 +625,7 @@ describe('generateTree', () => {
             // landing includes the stabilization watch (three stable
             // scrollHeight checks) so the grant only fires on a settled
             // geometry, where the (re-enabled) anchoring protects the view.
-            const ctx = setup({ rememberState: true, storeData: { focusID: '5', scrollTop: 900 } });
+            const ctx = rescue({ rememberState: true, storeData: { focusID: '5', scrollTop: 900 } });
             const settle = clampingTree(ctx.tree);
             const { span } = ctx.makeFolder('5');
             ctx.treeView.generateTree(['ROOT']);
@@ -632,7 +641,7 @@ describe('generateTree', () => {
         });
 
         it('stands down when something scrolled in between (the user, a reveal)', () => {
-            const ctx = setup({ rememberState: true, storeData: { scrollTop: 900 } });
+            const ctx = rescue({ rememberState: true, storeData: { scrollTop: 900 } });
             const settle = clampingTree(ctx.tree);
             ctx.treeView.generateTree(['ROOT']);
             settle(2000);
@@ -643,7 +652,7 @@ describe('generateTree', () => {
         });
 
         it('keeps retrying through the bounded campaign, then gives up quietly', () => {
-            const ctx = setup({ rememberState: true, storeData: { scrollTop: 900 } });
+            const ctx = rescue({ rememberState: true, storeData: { scrollTop: 900 } });
             const settle = clampingTree(ctx.tree); // layout NEVER grows tall enough
             ctx.treeView.generateTree(['ROOT']);
             // climb (rAF) → stall → walk (16ms track) → walk cap → park at 0
@@ -657,7 +666,7 @@ describe('generateTree', () => {
         });
 
         it('never persists climb intermediates — a mid-climb close cannot corrupt the saved position', () => {
-            const ctx = setup({ rememberState: true, storeData: { scrollTop: 900 } });
+            const ctx = rescue({ rememberState: true, storeData: { scrollTop: 900 } });
             const settle = clampingTree(ctx.tree);
             ctx.treeView.generateTree(['ROOT']);
             settle(400); // layout partially settles: the climb reaches 400
@@ -671,7 +680,7 @@ describe('generateTree', () => {
         });
 
         it('a real scroll mid-campaign takes over, cancels it and persists', () => {
-            const ctx = setup({ rememberState: true, storeData: { scrollTop: 900 } });
+            const ctx = rescue({ rememberState: true, storeData: { scrollTop: 900 } });
             const settle = clampingTree(ctx.tree);
             ctx.treeView.generateTree(['ROOT']);
             settle(400);
@@ -704,7 +713,7 @@ describe('generateTree', () => {
             // same unreachable target and stalls. The campaign must switch
             // to walking viewport-sized bands from the top; every visited
             // band lays out, so the walk reaches the stored position.
-            const ctx = setup({ rememberState: true, storeData: { scrollTop: 2600 } });
+            const ctx = rescue({ rememberState: true, storeData: { scrollTop: 2600 } });
             lazyFrontierTree(ctx.tree);
             ctx.treeView.generateTree(['ROOT']);
             expect(ctx.tree.scrollTop).toBe(700); // first jump clamped
@@ -717,7 +726,7 @@ describe('generateTree', () => {
         });
 
         it('never persists walk intermediates — a mid-walk close cannot corrupt the saved position', () => {
-            const ctx = setup({ rememberState: true, storeData: { scrollTop: 2600 } });
+            const ctx = rescue({ rememberState: true, storeData: { scrollTop: 2600 } });
             lazyFrontierTree(ctx.tree);
             ctx.treeView.generateTree(['ROOT']);
             drive(ctx, () => ctx.tree.scrollTop === 600, 40);
@@ -729,7 +738,7 @@ describe('generateTree', () => {
         });
 
         it('gives up quietly at the best position when the tree can never hold the target', () => {
-            const ctx = setup({ rememberState: true, storeData: { scrollTop: 2600 } });
+            const ctx = rescue({ rememberState: true, storeData: { scrollTop: 2600 } });
             const setFull = lazyFrontierTree(ctx.tree);
             setFull(1800); // content shrank — the frontier can never reach 2600
             ctx.treeView.generateTree(['ROOT']);
@@ -746,7 +755,7 @@ describe('generateTree', () => {
             // AFTER done() — the handshake holds the value through a short
             // grace so the stored position survives a give-up (the v4.1.3
             // field report's corrupted mirror).
-            const ctx = setup({ rememberState: true, storeData: { scrollTop: 2600 } });
+            const ctx = rescue({ rememberState: true, storeData: { scrollTop: 2600 } });
             const setFull = lazyFrontierTree(ctx.tree);
             setFull(1800);
             ctx.treeView.generateTree(['ROOT']);
@@ -774,7 +783,7 @@ describe('generateTree', () => {
             });
 
             it('persists the row anchor with every real scroll', () => {
-                const ctx = setup({ rememberState: true, storeData: { scrollTop: 0 } });
+                const ctx = rescue({ rememberState: true, storeData: { scrollTop: 0 } });
                 const { li } = ctx.makeFolder('42');
                 ctx.tree.getBoundingClientRect = () => ({ top: 0, left: 0 });
                 li.getBoundingClientRect = () => ({ top: 0 });
@@ -791,7 +800,7 @@ describe('generateTree', () => {
                 // 100px lower (a band above it grew after the save) — the
                 // anchor re-verification moves the view to the ROW, and the
                 // stabilization watch holds it there.
-                const ctx = setup({ rememberState: true, storeData: { scrollTop: 2600, scrollAnchor: '42@0' } });
+                const ctx = rescue({ rememberState: true, storeData: { scrollTop: 2600, scrollAnchor: '42@0' } });
                 const settle = clampingTree(ctx.tree);
                 const { li } = ctx.makeFolder('42');
                 ctx.tree.getBoundingClientRect = () => ({ top: 0, left: 0 });
@@ -817,7 +826,7 @@ describe('generateTree', () => {
                 // An instant pixel landing is not trusted either: transient
                 // geometry can satisfy the pixel while the row sits
                 // elsewhere — the anchor re-verification runs regardless.
-                const ctx = setup({ rememberState: true, storeData: { scrollTop: 100, scrollAnchor: '7@0' } });
+                const ctx = rescue({ rememberState: true, storeData: { scrollTop: 100, scrollAnchor: '7@0' } });
                 const { li } = ctx.makeFolder('7');
                 ctx.tree.getBoundingClientRect = () => ({ top: 0, left: 0 });
                 li.getBoundingClientRect = () => ({ top: 40 - (ctx.tree.scrollTop - 100) });
@@ -831,14 +840,81 @@ describe('generateTree', () => {
             });
         });
 
+        it('reveal transport (treeCvRevealLab): scrollIntoView hops to the anchor row, then stabilizes', () => {
+            // The platform reveal must land WITHOUT the band walk: the
+            // scrollTop double still clamps (cv geometry), but the row's
+            // scrollIntoView models the platform hop that renders + scrolls
+            // the target band in one call — the "visit the target band"
+            // property the walk re-implements by hand.
+            const ctx = rescue({ rememberState: true, storeData: { scrollTop: 2600, scrollAnchor: '42@0', treeCvRevealLab: '1' } });
+            const settle = clampingTree(ctx.tree);
+            const { li } = ctx.makeFolder('42');
+            ctx.tree.getBoundingClientRect = () => ({ top: 0, left: 0 });
+            li.getBoundingClientRect = () => ({ top: 0 }); // post-reveal: row at its saved offset
+            li.scrollIntoView = o => {
+                li._scrolledIntoView++;
+                li._sivArgs = o;
+                settle(3000); // the platform hop unlocks the layout
+                ctx.tree.scrollTop = 2600;
+            };
+            ctx.treeView.generateTree(['ROOT']);
+            expect(ctx.tree.scrollTop).toBe(0); // the initial assignment clamped
+            flushFrame(); // step 1: the reveal hop
+            expect(li._scrolledIntoView).toBe(1);
+            expect(li._sivArgs).toEqual({ block: 'start', behavior: 'instant' });
+            expect(ctx.tree.scrollTop).toBe(2600); // one hop, no band walk
+            tick(100); tick(100); tick(100); // the shared stabilization watch
+            expect(ctx.tree.scrollTop).toBe(2600);
+            expect(ctx.store.get('scrollTop')).toBe(2600); // mirror never corrupted
+        });
+
+        it('reveal transport falls back to the walk when the anchor row is missing', () => {
+            const ctx = rescue({ rememberState: true, storeData: { scrollTop: 2600, scrollAnchor: '404@0', treeCvRevealLab: '1' } });
+            lazyFrontierTree(ctx.tree);
+            ctx.treeView.generateTree(['ROOT']);
+            drive(ctx, () => ctx.tree.scrollTop === 2600);
+            expect(ctx.tree.scrollTop).toBe(2600); // the walk still reaches it
+        });
+
         it('does not arm without requestAnimationFrame (geometry-less doubles)', () => {
             delete globalThis.requestAnimationFrame;
-            const ctx = setup({ rememberState: true, storeData: { scrollTop: 900 } });
+            const ctx = rescue({ rememberState: true, storeData: { scrollTop: 900 } });
             const settle = clampingTree(ctx.tree);
             ctx.treeView.generateTree(['ROOT']);
             settle(2000);
             expect(ctx.tree.scrollTop).toBe(0); // old synchronous behavior
         });
+    });
+
+    // 4.1.4 lab gate: tree-row content-visibility is opt-in (treeCvLab,
+    // default off). Off = ≤4.0.8 one-shot restore (no campaign, no timers);
+    // on = the cv-tree class + the rescue machinery above.
+    describe('tree cv lab gate (4.1.4)', () => {
+        it('cv OFF (default): no cv-tree class, one-shot restore, no campaign', () => {
+            const ctx = setup({ rememberState: true, storeData: { scrollTop: 900 } });
+            ctx.treeView.generateTree(['ROOT']);
+            expect(ctx.tree.scrollTop).toBe(900); // the one-shot assignment held
+            expect(ctx.tree.classList.contains('cv-tree')).toBe(false);
+            expect(timeouts).toEqual([]); // no campaign timers scheduled
+        });
+
+        it('cv OFF + anchor: one-shot row re-assert, still no timers', () => {
+            const ctx = setup({ rememberState: true, storeData: { scrollTop: 2600, scrollAnchor: '42@0' } });
+            const { li } = ctx.makeFolder('42');
+            ctx.tree.getBoundingClientRect = () => ({ top: 0, left: 0 });
+            li.getBoundingClientRect = () => ({ top: 100 });
+            ctx.treeView.generateTree(['ROOT']);
+            expect(ctx.tree.scrollTop).toBe(2700); // += (100 - 0) — the row landed
+            expect(timeouts).toEqual([]); // no stabilization timers under cv-off
+            expect(ctx.store.get('scrollTop')).toBe(2600); // memory untouched (no scroll event fired)
+        });
+
+        it('cv ON: the cv-tree class rides the swap', () => {
+            const ctx = setup({ rememberState: true, storeData: { scrollTop: 0, treeCvLab: '1' } });
+            ctx.treeView.generateTree(['ROOT']);
+            expect(ctx.tree.classList.contains('cv-tree')).toBe(true);
+        });
+
     });
 
     it('focuses the stored focusID row without scrolling it into view, clears focusID after 4s', () => {

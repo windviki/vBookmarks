@@ -1211,6 +1211,12 @@
   "optionTreeRowActions": {
     "message": "Hover-handlinger på trærækker (rediger / stage / slet)"
   },
+  "optionTreeCvLab": {
+    "message": "Hurtigere bogmærketræ (eksperimentel)"
+  },
+  "optionTreeCvLabHint": {
+    "message": "Springer gengivelse af bogmærkerækker uden for visningsområdet over, så popups med tusindvis af bogmærker åbner mærkbart hurtigere. Når aktiveret, gendannes en dyb rulleposition række for række med en kort stabiliseringsscanning, hvilket kan tage et par sekunder på meget langsomme maskiner."
+  },
   "optionVirtualScrollLab": {
     "message": "Virtuel rulning (eksperimentel)"
   },

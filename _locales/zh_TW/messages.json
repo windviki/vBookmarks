@@ -1211,6 +1211,12 @@
   "optionTreeRowActions": {
     "message": "樹狀列上的懸停操作（編輯／暫存／刪除）"
   },
+  "optionTreeCvLab": {
+    "message": "大幅加速書籤樹（實驗性）"
+  },
+  "optionTreeCvLabHint": {
+    "message": "略過視窗外的書籤列渲染，讓含數千個書籤的彈出視窗開啟速度明顯提升。開啟時，深層捲動位置會以短暫掃描逐列還原，在極慢的機器上可能需要數秒。"
+  },
   "optionVirtualScrollLab": {
     "message": "虛擬捲動（實驗性）"
   },

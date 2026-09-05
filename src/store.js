@@ -136,7 +136,13 @@
         'showSyncStatus',
         // 4.1.0 实验室: virtual scrolling for the tab-groups/dupes views
         // (options Labs group; local — a per-device experiment, default off)
-        'virtualScrollLab'
+        'virtualScrollLab',
+        // 4.1.4 实验室: tree-row content-visibility (options Labs group;
+        // local, default off — off = the ≤4.0.8 one-shot scroll restore).
+        // treeCvRevealLab is the PK knob for the scrollIntoView reveal
+        // transport (no UI row; set programmatically), meaningful only when
+        // treeCvLab is on.
+        'treeCvLab', 'treeCvRevealLab'
     ];
 
     // Data keys the mirror must serve at boot beyond KNOWN_KEYS (2026-08 perf

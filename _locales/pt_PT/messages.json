@@ -1208,6 +1208,12 @@
   "optionTreeRowActions": {
     "message": "Ações ao passar o rato nas linhas da árvore (editar / stage / eliminar)"
   },
+  "optionTreeCvLab": {
+    "message": "Aceleração enorme da árvore de marcadores (experimental)"
+  },
+  "optionTreeCvLabHint": {
+    "message": "Ignora a renderização das linhas de marcadores fora da área visível, fazendo com que popups com milhares de marcadores abram visivelmente mais rápido. Quando ativado, uma posição de rolagem profunda é restaurada por linha com uma breve varredura de estabilização, o que pode levar alguns segundos em máquinas muito lentas."
+  },
   "optionVirtualScrollLab": {
     "message": "Rolagem virtual (experimental)"
   },

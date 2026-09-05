@@ -1228,6 +1228,12 @@
   "optionTreeRowActions": {
     "message": "书签行悬浮快捷按钮（编辑/暂存/删除）"
   },
+  "optionTreeCvLab": {
+    "message": "大幅加速书签树（实验性）"
+  },
+  "optionTreeCvLabHint": {
+    "message": "跳过视口外书签行的渲染，因此包含数千条书签的弹窗打开速度显著提升。开启后，深层滚动位置会通过短暂扫描逐行恢复，在极慢的机器上可能需要几秒钟。"
+  },
   "optionVirtualScrollLab": {
     "message": "虚拟滚动（实验性）"
   },

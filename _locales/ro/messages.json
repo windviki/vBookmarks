@@ -1211,6 +1211,12 @@
   "optionTreeRowActions": {
     "message": "Acțiuni la hover pe rândurile din arbore (editare / staging / ștergere)"
   },
+  "optionTreeCvLab": {
+    "message": "Accelerare masivă a arborelui de marcaje (experimental)"
+  },
+  "optionTreeCvLabHint": {
+    "message": "Omite randarea rândurilor de marcaje în afara zonei vizibile, astfel încât popup-urile cu mii de marcaje se deschid vizibil mai repede. Când este activat, o poziție de derulare adâncă este restaurată pe rând cu o scanare scurtă de stabilizare, care poate dura câteva secunde pe mașini foarte lente."
+  },
   "optionVirtualScrollLab": {
     "message": "Derulare virtuală (experimental)"
   },

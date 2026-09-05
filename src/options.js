@@ -232,8 +232,13 @@ const $ = id => document.getElementById(id);
         // to their real groups only after real-world soak. virtualScrollLab —
         // the tab-groups/dupes views keep only the viewport window in the DOM
         // (src/virtual-list.js; off = the chunked streaming painter).
+        // treeCvLab — tree-row content-visibility (off = ≤4.0.8 one-shot
+        // scroll restore; on = the 4.1.x fast path + the scroll-rescue
+        // campaign, issues #65-#68 machinery). treeCvRevealLab has no row:
+        // it is the PK knob for the restore transport under cv.
         const labsSettings = [
-            { id: 'virtual-scroll-lab', key: 'virtualScrollLab', defaultValue: '', inverted: false }
+            { id: 'virtual-scroll-lab', key: 'virtualScrollLab', defaultValue: '', inverted: false },
+            { id: 'tree-cv-lab', key: 'treeCvLab', defaultValue: '', inverted: false }
         ];
         await bindSettingsList(viewSettings);
         await bindSettingsList(memorySettings);
@@ -1061,6 +1066,8 @@ const $ = id => document.getElementById(id);
         document.getElementById('labs-options').innerText = __m('optionsGroupLabs');
         document.getElementById('option-virtual-scroll-lab').innerText = __m('optionVirtualScrollLab');
         document.getElementById('option-virtual-scroll-lab-hint').innerText = __m('optionVirtualScrollLabHint');
+        document.getElementById('option-tree-cv-lab').innerText = __m('optionTreeCvLab');
+        document.getElementById('option-tree-cv-lab-hint').innerText = __m('optionTreeCvLabHint');
 
         // Sync settings labels
         document.getElementById('sync-options').innerText = __m('syncOptions');

@@ -1211,6 +1211,12 @@
   "optionTreeRowActions": {
     "message": "Acciones al pasar el cursor sobre filas del árbol (editar / preparar / eliminar)"
   },
+  "optionTreeCvLab": {
+    "message": "Gran aceleración del árbol de marcadores (experimental)"
+  },
+  "optionTreeCvLabHint": {
+    "message": "Omite el renderizado de las filas de marcadores fuera del área visible, por lo que las ventanas emergentes con miles de marcadores se abren notablemente más rápido. Cuando está activado, la posición de desplazamiento profundo se restaura por fila con un breve escaneo de ajuste, que puede tardar unos segundos en máquinas muy lentas."
+  },
   "optionVirtualScrollLab": {
     "message": "Desplazamiento virtual (experimental)"
   },

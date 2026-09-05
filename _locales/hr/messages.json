@@ -1211,6 +1211,12 @@
   "optionTreeRowActions": {
     "message": "Radnje pri lebdenju na redovima stabla (uredi / pripremi / obriši)"
   },
+  "optionTreeCvLab": {
+    "message": "Veliko ubrzanje stabla oznaka (eksperimentalno)"
+  },
+  "optionTreeCvLabHint": {
+    "message": "Preskače prikazivanje redaka oznaka izvan vidnog područja, pa se skočni prozori s tisućama oznaka otvaraju znatno brže. Kad je uključeno, duboka pozicija pomicanja vraća se po retku s kratkim skeniranjem, što na vrlo sporim računalima može potrajati nekoliko sekundi."
+  },
   "optionVirtualScrollLab": {
     "message": "Virtualno pomicanje (eksperimentalno)"
   },

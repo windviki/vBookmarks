@@ -1211,6 +1211,12 @@
   "optionTreeRowActions": {
     "message": "Thao tác khi rê chuột trên dòng cây (sửa / gửi chờ / xóa)"
   },
+  "optionTreeCvLab": {
+    "message": "Tăng tốc cây dấu trang lớn (thử nghiệm)"
+  },
+  "optionTreeCvLabHint": {
+    "message": "Bỏ qua việc hiển thị các hàng dấu trang ngoài vùng nhìn, giúp các cửa sổ bật lên với hàng nghìn dấu trang mở nhanh hơn đáng kể. Khi bật, vị trí cuộn sâu được khôi phục theo hàng với một lần quét ổn định ngắn, có thể mất vài giây trên máy rất chậm."
+  },
   "optionVirtualScrollLab": {
     "message": "Cuộn ảo (thử nghiệm)"
   },

@@ -1211,6 +1211,12 @@
   "optionTreeRowActions": {
     "message": "Hõljumistoimingud puuridade puhul (muuda / stage / kustuta)"
   },
+  "optionTreeCvLab": {
+    "message": "Suure järjehoidjapuu kiirendus (katsetuslik)"
+  },
+  "optionTreeCvLabHint": {
+    "message": "Jätab vaateväljast väljapoole jäävate järjehoidjate ridade renderdamise vahele, nii et tuhandete järjehoidjatega hüpikaknad avanevad märgatavalt kiiremini. Kui see on sisse lülitatud, taastatakse sügav kerimisasend rea kaupa lühikese skaneerimisega, mis võib väga aeglastes masinates võtta mõne sekundi."
+  },
   "optionVirtualScrollLab": {
     "message": "Virtuaalne kerimine (eksperimentaalne)"
   },

@@ -1318,6 +1318,12 @@
   "optionTreeRowActions": {
     "message": "Hover actions on tree rows (edit / stage / delete)"
   },
+  "optionTreeCvLab": {
+    "message": "Huge bookmark tree speed-up (experimental)"
+  },
+  "optionTreeCvLabHint": {
+    "message": "Skips rendering the bookmark rows outside the viewport, so popups with thousands of bookmarks open noticeably faster. When on, a deep scroll position is restored by row with a short settling scan, which can take a few seconds on very slow machines."
+  },
   "optionVirtualScrollLab": {
     "message": "Virtual scrolling (experimental)"
   },

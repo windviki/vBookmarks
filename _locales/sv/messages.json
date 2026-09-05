@@ -1211,6 +1211,12 @@
   "optionTreeRowActions": {
     "message": "Hovringsåtgärder på trädrader (redigera / stage / ta bort)"
   },
+  "optionTreeCvLab": {
+    "message": "Snabbare bokmärkesträd (experimentellt)"
+  },
+  "optionTreeCvLabHint": {
+    "message": "Hoppar över rendering av bokmärkesrader utanför visningsområdet, så att popupfönster med tusentals bokmärken öppnas märkbart snabbare. När aktiverat återställs en djup rullningsposition rad för rad med en kort stabiliseringsskanning, vilket kan ta några sekunder på mycket långsamma datorer."
+  },
   "optionVirtualScrollLab": {
     "message": "Virtuell rullning (experimentell)"
   },

@@ -1211,6 +1211,12 @@
   "optionTreeRowActions": {
     "message": "Viehiöt puuriveillä (muokkaa / vaiheista / poista)"
   },
+  "optionTreeCvLab": {
+    "message": "Valtavan kirjanmerkkipuun nopeutus (kokeellinen)"
+  },
+  "optionTreeCvLabHint": {
+    "message": "Ohittaa kirjanmerkkirivien renderöinnin näkymän ulkopuolella, joten ponnahdusikkunat, joissa on tuhansia kirjanmerkkejä, avautuvat huomattavasti nopeammin. Kun käytössä, syvä vierityspaikka palautetaan rivikohtaisesti lyhyellä tasaantumisskannauksella, joka voi kestää muutaman sekunnin hyvin hitailla koneilla."
+  },
   "optionVirtualScrollLab": {
     "message": "Virtuaalinen vieritys (kokeellinen)"
   },

@@ -1211,6 +1211,12 @@
   "optionTreeRowActions": {
     "message": "Dejanja ob prehodu miške nad vrsticami drevesa (uredi / staging / izbriši)"
   },
+  "optionTreeCvLab": {
+    "message": "Hitro odpiranje velikega drevesa zaznamkov (eksperimentalno)"
+  },
+  "optionTreeCvLabHint": {
+    "message": "Preskoči prikazovanje vrstic zaznamkov zunaj vidnega območja, zato se pojavna okna s tisoči zaznamkov odprejo opazno hitreje. Ko je vklopljeno, se globok položaj drsenja obnovi po vrsticah s kratkim skeniranjem, kar lahko na zelo počasnih računalnikih traja nekaj sekund."
+  },
   "optionVirtualScrollLab": {
     "message": "Navidezno drsenje (eksperimentalno)"
   },

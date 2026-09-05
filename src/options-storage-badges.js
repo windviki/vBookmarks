@@ -147,7 +147,8 @@ export const OPTIONS_STORAGE_GROUPS = {
         { key: 'userstyles' }
     ],
     'labs-options': [
-        { row: 'virtual-scroll-lab', key: 'virtualScrollLab' }
+        { row: 'virtual-scroll-lab', key: 'virtualScrollLab' },
+        { row: 'tree-cv-lab', key: 'treeCvLab' }
     ]
     // deliberately unmapped (no badge): backup-options (buttons only, no
     // settings) and dupes-options (hidden placeholder group)

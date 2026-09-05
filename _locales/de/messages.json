@@ -1211,6 +1211,12 @@
   "optionTreeRowActions": {
     "message": "Hover-Aktionen auf Baumzeilen (Bearbeiten / Staging / Löschen)"
   },
+  "optionTreeCvLab": {
+    "message": "Große Lesezeichenbaum-Beschleunigung (experimentell)"
+  },
+  "optionTreeCvLabHint": {
+    "message": "Überspringt das Rendern der Lesezeichenzeilen außerhalb des sichtbaren Bereichs, sodass sich Popups mit Tausenden von Lesezeichen spürbar schneller öffnen. Wenn aktiviert, wird eine tiefe Scrollposition zeilenweise mit einem kurzen Beruhigungsscan wiederhergestellt, was auf sehr langsamen Rechnern einige Sekunden dauern kann."
+  },
   "optionVirtualScrollLab": {
     "message": "Virtuelles Scrollen (experimentell)"
   },

@@ -1211,6 +1211,12 @@
   "optionTreeRowActions": {
     "message": "Actions au survol des lignes de l'arborescence (modifier / préparer / supprimer)"
   },
+  "optionTreeCvLab": {
+    "message": "Accélération massive de l'arborescence de signets (expérimental)"
+  },
+  "optionTreeCvLabHint": {
+    "message": "Ignore le rendu des lignes de signets hors de la zone visible, ce qui accélère nettement l'ouverture des popups contenant des milliers de signets. Lorsque cette option est activée, une position de défilement profonde est restaurée ligne par ligne avec un bref balayage de stabilisation, ce qui peut prendre quelques secondes sur des machines très lentes."
+  },
   "optionVirtualScrollLab": {
     "message": "Défilement virtuel (expérimental)"
   },

@@ -1211,6 +1211,12 @@
   "optionTreeRowActions": {
     "message": "Ağaç satırlarında üzerine gelme eylemleri (düzenle / hazırla / sil)"
   },
+  "optionTreeCvLab": {
+    "message": "Devasa yer imi ağacı hızlandırması (deneysel)"
+  },
+  "optionTreeCvLabHint": {
+    "message": "Görünüm alanı dışındaki yer imi satırlarının işlenmesini atlar; böylece binlerce yer imi içeren açılır pencereler belirgin şekilde daha hızlı açılır. Etkinleştirildiğinde, derin kaydırma konumu kısa bir tarama ile satır bazında geri yüklenir; bu, çok yavaş makinelerde birkaç saniye sürebilir."
+  },
   "optionVirtualScrollLab": {
     "message": "Sanal kaydırma (deneysel)"
   },

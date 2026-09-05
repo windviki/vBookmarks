@@ -1211,6 +1211,12 @@
   "optionTreeRowActions": {
     "message": "Handlinger ved hover på tre-rader (rediger / stage / slett)"
   },
+  "optionTreeCvLab": {
+    "message": "Stor bokmerk-tre-økning (eksperimentell)"
+  },
+  "optionTreeCvLabHint": {
+    "message": "Hopper over gjengivelse av bokmerk-rader utenfor visningsområdet, så popup-vinduer med tusenvis av bokmerker åpnes merkbart raskere. Når dette er på, gjenopprettes en dyp rulleposisjon rad for rad med en kort stabiliseringsskanning, som kan ta noen sekunder på svært trege maskiner."
+  },
   "optionVirtualScrollLab": {
     "message": "Virtuell rulling (eksperimentell)"
   },
