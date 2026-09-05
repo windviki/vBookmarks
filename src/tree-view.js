@@ -227,7 +227,7 @@ export function initTreeView(ctx = {}) {
         return { id: String(v).slice(0, at), off };
     };
 
-    // 4.1.4 实验室 gate: tree-row content-visibility is opt-in (treeCvLab,
+    // 4.1.3 实验室 gate: tree-row content-visibility is opt-in (treeCvLab,
     // default off). Off = ≤4.0.8 semantics — the swap lays the whole tree
     // out synchronously and the one-shot scrollTop assignment lands exactly
     // (issues #65-#68's whole problem class only exists under cv). On = the
@@ -478,7 +478,7 @@ export function initTreeView(ctx = {}) {
             if (estRows > CHUNK_MIN_ROWS && savedTop <= viewH && !hasFocusMemory)
                 chunked = paintTreeChunked(snapshot.blocks, tree, snapshot);
         }
-        // 4.1.4 实验室 gate: the cv:auto fast path applies to the freshly
+        // 4.1.3 实验室 gate: the cv:auto fast path applies to the freshly
         // swapped rows only while treeCvLab is on (default off). The class
         // must land BEFORE the swap so the inserted rows inherit the rule.
         if ($tree.classList)

@@ -214,7 +214,11 @@ python3 scripts/package.py --root dist   # zip an existing dist/ (no rebuild)
 
 ### v4.1.3
 
-*2026-09-04*
+*2026-09-05*
+
+#### New
+
+- **The huge-bookmark-tree speedup now lives in Labs** (off by default): the tree-row rendering acceleration introduced in v4.1.0 was the upstream cause of this release's scroll-position troubles (its estimated placeholder heights and lazy off-screen layout are exactly what the fix chain below had to outgun). Most users do not have thousands of bookmarks, so the default path returns to the classic fully-laid-out tree with a one-shot, exact position restore — no rescue machinery, nothing to go wrong. If your tree is genuinely huge, enable *Huge-bookmark-tree speedup* in the Labs section of the options page; the position restore there lands on the remembered row and may run a brief top-down scan while the tree finishes laying out.
 
 #### Fixed
 

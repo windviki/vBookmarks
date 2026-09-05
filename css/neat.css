@@ -7313,7 +7313,7 @@ body.panel-mode #stats-list ul li.vbm-row > a.tree-item-link .row-badge.time {
    树全展开的冷开 trace 显示 UpdateLayoutTree+2.0s / Layout+0.4s / Paint
    +0.8s 全在屏外行上。2026-09 审计（issues #65-#68）实证：cv 对树行的
    滚动位置记忆代价过高（占位≠实际高度 → 惰性死锁/锚定决斗/像素随机游走
-   共七轮修复），故自 4.1.4 起树行 cv 改为实验室开关 treeCvLab（默认关），
+   共七轮修复），故自 4.1.3 起树行 cv 改为实验室开关 treeCvLab（默认关），
    只在 #tree.cv-tree 上生效——关=≤4.0.8 语义（换树全量同步布局，一次性
    scrollTop 赋值天然精确）；开=4.1.x 快速路径 + scroll-rescue campaign。 */
 #tabgroups-list ul li.vbm-row,
@@ -7332,7 +7332,7 @@ body.panel-mode #stats-list ul li.vbm-row > a.tree-item-link .row-badge.time {
 }
 /* 树行没有 --vbm-row-h 的 28px 高度——其行盒 = .tree-item-link 的行高
    1.67em（继承 body 字号），intrinsic 估算用同一公式而不是列表行的 28。
-   树行 cv 自 4.1.4 起只在实验室开关 treeCvLab 打开（#tree.cv-tree）时生效。 */
+   树行 cv 自 4.1.3 起只在实验室开关 treeCvLab 打开（#tree.cv-tree）时生效。 */
 #tree.cv-tree ul li {
     content-visibility: auto;
     contain-intrinsic-size: auto 1.67em;

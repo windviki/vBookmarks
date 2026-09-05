@@ -137,7 +137,7 @@
         // 4.1.0 实验室: virtual scrolling for the tab-groups/dupes views
         // (options Labs group; local — a per-device experiment, default off)
         'virtualScrollLab',
-        // 4.1.4 实验室: tree-row content-visibility (options Labs group;
+        // 4.1.3 实验室: tree-row content-visibility (options Labs group;
         // local, default off — off = the ≤4.0.8 one-shot scroll restore).
         'treeCvLab'
     ];
