@@ -196,14 +196,47 @@ export function initTreeView(ctx = {}) {
         let stallSteps = 0;
         let walkPos = -1; // < 0: climbing; ≥ 0: walking, the next band target
         let walkTicks = 0;
+        let walkClock = 0; // virtual ms the walk has spent (its own delays)
+        let bestApplied = $tree.scrollTop;
+        let passBest = -1; // bestApplied when the current walk pass started
+        let stalledPasses = 0; // consecutive passes with zero frontier progress
+        let stableSteps = 0; // stabilization watch: consecutive equal scrollHeights
+        let lastSh = -1;
         const viewStep = () => ($tree.clientHeight || 600);
+        // The walk runs on its own bounded track with an ADAPTIVE cadence:
+        // landed bands advance at 16ms (a deep restore must not starve on
+        // the climb's 30 rAF + 40×100ms budget — the v4.1.3 field report:
+        // a long folder's deep position gave up mid-walk), while a stalled
+        // band re-walks on the 100ms settle clock (a staged settle window
+        // can be seconds wide; a fast cadence would burn the walk cap
+        // before the frontier starts growing). Two consecutive passes with
+        // no frontier progress at all mean the tree can never hold the
+        // target — park at the best reachable position and end quietly.
+        const walkCap = () => Math.min(2000, Math.ceil(savedTop / viewStep()) * 4 + 150);
         setSettlingFlag(true);
         const done = () => {
-            rescueApplied = -1;
+            // The campaign's last assignment fires its scroll event only
+            // after this point — hold the handshake value briefly so a
+            // give-up is not persisted over the saved position (#67/#68:
+            // the trailing event used to corrupt the stored scrollTop).
+            const last = rescueApplied;
+            const lastSeq = seq;
+            setTimeout(() => {
+                if (seq === lastSeq && rescueApplied === last) {
+                    rescueApplied = -1;
+                    flushSettleWaiters(); // waiters that arrived during the grace
+                }
+            }, 350);
             if (seq === rescueSeq) {
                 setSettlingFlag(false);
                 flushSettleWaiters();
             }
+        };
+        const parkAndEnd = () => {
+            $tree.scrollTop = savedTop; // clamps to the true bottom — deterministic
+            applied = $tree.scrollTop;
+            rescueApplied = applied;
+            done();
         };
         const step = () => {
             if (seq !== rescueSeq)
@@ -212,8 +245,28 @@ export function initTreeView(ctx = {}) {
                 done(); // taken over — the scroller owns it now
                 return;
             }
-            if (walkPos >= 0 && ++walkTicks > 80) {
-                done(); // pathological walk — bounded like the climb
+            if (applied >= savedTop) {
+                // Pixel-landing is not the end: the geometry may still be
+                // settling (cv bands render late; a fast walk can land in
+                // the middle of the growth). Hold the position — with the
+                // campaign-scoped overflow-anchor suppression nothing moves
+                // scrollTop but the user — until the scrollHeight has held
+                // still for three checks, THEN end: the anchoring resumes
+                // on a final view and its compensation protects it, instead
+                // of dragging it (diag-68/diag-413 probes: restored 2600,
+                // anchored away to 7561 within the settle window).
+                const sh = $tree.scrollHeight;
+                stableSteps = sh === lastSh ? stableSteps + 1 : 0;
+                lastSh = sh;
+                if (stableSteps >= 3) {
+                    done();
+                    return;
+                }
+                setTimeout(step, 100);
+                return;
+            }
+            if (walkPos >= 0 && ++walkTicks > walkCap()) {
+                parkAndEnd(); // pathological walk — bounded like the climb
                 return;
             }
             const target = walkPos >= 0 ? Math.min(walkPos, savedTop) : savedTop;
@@ -221,11 +274,17 @@ export function initTreeView(ctx = {}) {
             $tree.scrollTop = target;
             applied = $tree.scrollTop;
             rescueApplied = applied;
+            if (applied > bestApplied)
+                bestApplied = applied;
             if (applied >= savedTop) {
-                done(); // landed
+                // landed — enter the stabilization watch
+                stableSteps = 0;
+                lastSh = $tree.scrollHeight;
+                setTimeout(step, 100);
                 return;
             }
             if (walkPos >= 0) {
+                let delay = 16;
                 if (applied >= target - 1) {
                     // the band landed — visit the next one; the walk must
                     // never outrun the frontier it is forcing
@@ -233,14 +292,32 @@ export function initTreeView(ctx = {}) {
                 } else {
                     // the band did NOT land — the frontier stalled behind
                     // the walk (a band rendered a frame late, or the tree
-                    // can never hold the target). Re-walk from band zero;
-                    // walkTicks bounds the passes.
+                    // cannot hold the target). Re-walk from band zero on
+                    // the settle clock; only after the walk has outlived a
+                    // full settle window AND two passes made no frontier
+                    // progress at all may it park — a staged settle keeps
+                    // the frontier dead for seconds before the first band
+                    // renders (the probes: ~1.5-1.8s of dead phase).
+                    if (bestApplied > passBest)
+                        stalledPasses = 0;
+                    else
+                        stalledPasses++;
+                    passBest = bestApplied;
+                    if (stalledPasses >= 2 && walkClock >= 3000) {
+                        parkAndEnd();
+                        return;
+                    }
                     walkPos = 0;
+                    delay = 100;
                 }
-            } else {
-                stallSteps = applied > prev ? 0 : stallSteps + 1;
-                if (stallSteps >= 2)
-                    walkPos = 0; // frontier stalled — walk from band zero
+                walkClock += delay;
+                setTimeout(step, delay);
+                return;
+            }
+            stallSteps = applied > prev ? 0 : stallSteps + 1;
+            if (stallSteps >= 2) {
+                walkPos = 0; // frontier stalled — walk from band zero
+                passBest = bestApplied;
             }
             if (++rafFrames <= 30)
                 requestAnimationFrame(step);

@@ -536,13 +536,29 @@ body.width-dragging #search {
        scrollTop 400 → 0). The fix defers the focus grant until the settle
        is done (tree-view coordinates via body[data-vbm-tree-settling]), so
        during the settle the anchor is an ordinary in-viewport row and the
-       compensation protects the restored view. */
+       compensation protects the restored view.
+       2026-09-05 #67/#68 final round (diag-68/diag-413 probes): during the
+       CAMPAIGN the anchoring is suppressed outright — a fast-landing walk
+       left the view alive mid-settle and the compensation for later band
+       growth dragged the viewport past the restored position (probe:
+       restored 2600, anchored to 7561). Suppression scoped to
+       body[data-vbm-tree-settling] — the campaign now ends only after the
+       geometry has been stable for several checks, so when the anchoring
+       resumes the view is already final and the compensation protects a
+       stable view, as originally intended. A permanent overflow-anchor:none
+       was rejected (it would also kill the steady-state protection). */
     outline: 0;
     padding: 3px 0;
     -webkit-box-shadow: inset 0 4px 4px -4px var(--vbm-border);
     box-shadow: inset 0 4px 4px -4px var(--vbm-border);
     flex: 1;
     position: relative;
+}
+
+/* issues #67/#68: scroll-anchoring suppression scoped to the restore
+   campaign — see the comment block above. */
+body[data-vbm-tree-settling] #tree {
+    overflow-anchor: none;
 }
 
 /* 树视图标题已用省略号截断，不需要横向滚动；overflow-x:hidden

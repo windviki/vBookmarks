@@ -89,6 +89,20 @@
 
 **对外口径**:#67 = 1e4ef0a7 修复、随下版发布;#68 = 44f3a517(预算+握手,斩断 v4.1.2 污染级联)+ 本轮 walk(封死锁),同版发布;两 issue 待发版后一并回复请用户复验。
 
+## 4.1.3 实测残余轮(2026-09-05,维护者真机复现:"高亮开+两次弹窗之间展开很长文件夹+滚到深处→下次必漂移")
+
+**headless 与真机的鸿沟**:此前全部探针在 headless 下首次 tick 时 scrollHeight 即为真实全量(整树在恢复赋值前已布局完),占位→真实的修正阶段在 headless 不存在——这正是六维矩阵全绿而真机必漂的原因。真机证据:维护者早前实测"换树后 ~250ms 内 scrollHeight 从 clientHeight 长到全量"。
+
+**确定性复现**(`diag-413-highlight-drift.js`,真实 action 弹窗):种子=900 行长文件夹、每 5 行一条换行长标题(占位 1.67em ≠ 实际多行高),弹窗#1 真实点击展开(焦点=文件夹行)+分步滚轮式深滚;弹窗#2 用 userstyle 预置 `#tree ul li{height:17px!important}`(行冻结=占位几何)+Node 侧延迟释放(=修正涌现)。**修复前(88ca5bfc 的 walk v1)**:赋值被 clamp→campaign 启动→walk 每 ~100ms 一带健康推进(sh 早已全量、内容行同步)——**但共享预算(30 rAF+40×100ms)被前 1.6s 死锁期耗掉大半,第 30 带处(10500/13325)中途放弃,且放弃后迟到的 scroll 事件把镜像污染为 10500**(像素+内容+镜像三重漂移,与"一定发生"吻合:长文件夹越深越必现)。
+
+**终局修复(三层)**:
+1. **walk v4——自适应节奏+独立预算**:带落地前进 16ms 快轨,带停滞回卷时走 100ms settle 时钟(分步收敛窗口可达秒级,纯快轨会在前沿苏醒前烧尽预算——diag-68 回归实证);预算按深度缩放(⌈savedTop/视口⌉×4+150,封顶 2000);连续两趟零前沿进展且已存活 ≥3s(虚拟时钟)才"泊"在最佳可达位收尾——不足场景快速退出,分步场景活过死锁窗。
+2. **campaign 作用域锚定压制**:快 walk 提前落地后,迟到的带增长触发滚动锚定补偿,把已落地视口拽走(时间线实锤:2600 落地后 2753→5157→7561 随 sh 攀升,非 campaign 赋值)——`body[data-vbm-tree-settling] #tree{overflow-anchor:none}`(neat.css;1e4ef0a7 弃用的方向错在"全局永久",作用域化只灭 campaign 期间的补偿决斗,稳态保护完好在恢复后继续)。压制期间 scrollTop 物理上只剩用户能动,接管判定从此只对真实滚动生效。
+3. **稳定化门**:像素落地≠结束——campaign 以 100ms 节奏盯 scrollHeight,连续 3 次不变才算完成(期间接管判定照常);结束时几何已定型,锚定恢复时守护的就是最终视野。焦点授予(waiters)与锚定恢复都发生在稳定之后。
+另:**give-up 宽限**——done() 后握手值保留 350ms,放弃自身迟到的 scroll 事件不再污染存储(修复前实测:存 13325→被改写 10500)。
+
+**验证**:tree-view 78 用例(walk 组改写+稳定化门+宽限契约);全量 90 套件/3166+lint 绿;E2E 差分——diag-413 FREEZE(维护者复现)**修复前三重漂移→修复后 13322 像素精确+行 670 内容精确+镜像干净 PASS**;diag-68 双阶段 2600 精确 PASS;diag-issue65-66 7/7、66-drift 2/2、memory-layers 14/14、diag-413 默认模式 4/4、smoke PASS。探针旋钮(VBM_DIAG_THROTTLE/ROWS/FREEZE)入 rerun.sh 转发清单。
+
 ## 对外回复(已发布,issues 已关闭)· Public replies (posted 2026-09-03, issues closed as completed)
 
 **→ issue #65**(@Ownsin,回复其"关闭高亮后不再记住位置"反馈;[评论链接](https://github.com/windviki/vBookmarks/issues/65#issuecomment-5526103389)):

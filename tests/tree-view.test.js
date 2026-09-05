@@ -612,7 +612,10 @@ describe('generateTree', () => {
             // row focused while the layout still settles makes the height
             // growth jump the viewport toward it (the reported "drift"). The
             // .focus flash paints immediately; the focus GRANT waits for the
-            // campaign's landing.
+            // campaign's landing — and since the #67/#68 final round the
+            // landing includes the stabilization watch (three stable
+            // scrollHeight checks) so the grant only fires on a settled
+            // geometry, where the (re-enabled) anchoring protects the view.
             const ctx = setup({ rememberState: true, storeData: { focusID: '5', scrollTop: 900 } });
             const settle = clampingTree(ctx.tree);
             const { span } = ctx.makeFolder('5');
@@ -620,7 +623,9 @@ describe('generateTree', () => {
             expect(span.classList.contains('focus')).toBe(true); // flash now
             expect(span.focused).toBe(false); // the focus grant waits
             settle(2000);
-            flushFrame(); // campaign lands → the waiter grants focus
+            flushFrame(); // pixel landing → stabilization watch begins
+            expect(span.focused).toBe(false); // still waiting for stability
+            tick(100); tick(100); tick(100); // three stable checks
             expect(ctx.tree.scrollTop).toBe(900);
             expect(span.focused).toBe(true);
             expect(span._focusArgs).toEqual({ preventScroll: true });
@@ -641,13 +646,8 @@ describe('generateTree', () => {
             const ctx = setup({ rememberState: true, storeData: { scrollTop: 900 } });
             const settle = clampingTree(ctx.tree); // layout NEVER grows tall enough
             ctx.treeView.generateTree(['ROOT']);
-            let guard = 0;
-            while (frames.length && guard++ < 200)
-                flushFrame();
-            // 30 rAF steps, then the campaign switches to the 100ms tail
-            expect(guard).toBe(31);
-            for (let i = 0; i < 41; i++)
-                tick(100);
+            // climb (rAF) → stall → walk (16ms track) → walk cap → park at 0
+            drive(ctx, () => false, 400);
             expect(ctx.tree.scrollTop).toBe(0);
             // campaign over — a later scroll persists normally again
             settle(2000);
@@ -684,6 +684,20 @@ describe('generateTree', () => {
             expect(ctx.tree.scrollTop).toBe(300);
         });
 
+        // The walk runs on its own track with an adaptive cadence (16ms for
+        // landed bands, 100ms at stall wraps) — drive both timer queues and
+        // the rAF queue until the campaign ends.
+        const drive = (ctx2, until, limit = 400) => {
+            let guard = 0;
+            while (guard++ < limit && !until()) {
+                if (frames.length)
+                    flushFrame();
+                tick(16);
+                tick(100);
+            }
+            return guard;
+        };
+
         it('walks the bands to break the lazy-layout deadlock (issues #67/#68)', () => {
             // The direct jump clamps at the frontier and the frontier only
             // grows where the viewport has BEEN — climbing re-assigns the
@@ -694,9 +708,7 @@ describe('generateTree', () => {
             lazyFrontierTree(ctx.tree);
             ctx.treeView.generateTree(['ROOT']);
             expect(ctx.tree.scrollTop).toBe(700); // first jump clamped
-            let guard = 0;
-            while (frames.length && ctx.tree.scrollTop !== 2600 && guard++ < 60)
-                flushFrame();
+            drive(ctx, () => ctx.tree.scrollTop === 2600);
             expect(ctx.tree.scrollTop).toBe(2600); // the walk landed exactly
             // campaign over — a later scroll persists normally again
             ctx.tree.scrollTop = 400;
@@ -708,15 +720,11 @@ describe('generateTree', () => {
             const ctx = setup({ rememberState: true, storeData: { scrollTop: 2600 } });
             lazyFrontierTree(ctx.tree);
             ctx.treeView.generateTree(['ROOT']);
-            let guard = 0;
-            while (frames.length && ctx.tree.scrollTop !== 600 && guard++ < 20)
-                flushFrame(); // stall → arm → band zero → band one (600)
+            drive(ctx, () => ctx.tree.scrollTop === 600, 40);
             expect(ctx.tree.scrollTop).toBe(600);
             fire(ctx.tree, 'scroll'); // the walk's own scroll event
             expect(ctx.store.get('scrollTop')).toBe(2600); // NOT corrupted to 600
-            guard = 0;
-            while (frames.length && ctx.tree.scrollTop !== 2600 && guard++ < 60)
-                flushFrame();
+            drive(ctx, () => ctx.tree.scrollTop === 2600);
             expect(ctx.tree.scrollTop).toBe(2600);
         });
 
@@ -725,13 +733,29 @@ describe('generateTree', () => {
             const setFull = lazyFrontierTree(ctx.tree);
             setFull(1800); // content shrank — the frontier can never reach 2600
             ctx.treeView.generateTree(['ROOT']);
-            let guard = 0;
-            while (frames.length && guard++ < 200)
-                flushFrame();
-            for (let i = 0; i < 41; i++)
-                tick(100);
-            expect(ctx.tree.scrollTop).toBe(1800); // the walk forced every band — the true bottom
+            // walk cap: ceil(2600/600)*4 + 150 = 170 ticks — drive past it
+            drive(ctx, () => false, 250);
+            expect(ctx.tree.scrollTop).toBe(1800); // parked at the true bottom, deterministically
             ctx.tree.scrollTop = 300; // campaign over — scrolls persist again
+            fire(ctx.tree, 'scroll');
+            expect(ctx.store.get('scrollTop')).toBe(300);
+        });
+
+        it('a give-up is not persisted over the saved position by its own trailing scroll event', () => {
+            // The campaign's last assignment fires its scroll event only
+            // AFTER done() — the handshake holds the value through a short
+            // grace so the stored position survives a give-up (the v4.1.3
+            // field report's corrupted mirror).
+            const ctx = setup({ rememberState: true, storeData: { scrollTop: 2600 } });
+            const setFull = lazyFrontierTree(ctx.tree);
+            setFull(1800);
+            ctx.treeView.generateTree(['ROOT']);
+            drive(ctx, () => false, 250); // walk cap → park at 1800 → done
+            expect(ctx.tree.scrollTop).toBe(1800);
+            fire(ctx.tree, 'scroll'); // the trailing event of the park assignment
+            expect(ctx.store.get('scrollTop')).toBe(2600); // NOT corrupted to 1800
+            tick(350); // grace expires — the handshake lets go
+            ctx.tree.scrollTop = 300;
             fire(ctx.tree, 'scroll');
             expect(ctx.store.get('scrollTop')).toBe(300);
         });
