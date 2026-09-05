@@ -364,7 +364,23 @@ const THROTTLE = parseFloat(process.env.VBM_DIAG_THROTTLE || '0', 10);
                     }
                 return 0;
             })()`);
-            await sleep(3000); // the campaign walks, lands, anchor-verifies, stabilizes, ends
+            // The campaign walks, lands, anchor-verifies and stabilizes;
+            // its wall time is machine-dependent (a slow machine legitimately
+            // walks past ANY fixed window — audit 2026-09-05: the walk clock
+            // cannot park before ~3s and this box needed ~4-5s), so WAIT for
+            // the settling flag to clear instead of a fixed sleep.
+            const settleDeadline = Date.now() + 20000;
+            let settledAt = -1;
+            while (Date.now() < settleDeadline) {
+                if (!(await evalIn(`!!document.body.dataset.vbmTreeSettling`))) {
+                    settledAt = Date.now();
+                    break;
+                }
+                await sleep(100);
+            }
+            if (settledAt < 0)
+                throw new Error('LATE campaign did not settle within 20s');
+            await sleep(200); // margin: the final assignment's scroll event / 350ms grace
             const before = await topRowProbe();
             console.log('LATE popup3 landed (held subfolder collapsed, campaign over):', JSON.stringify(before));
             {

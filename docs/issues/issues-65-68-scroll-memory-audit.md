@@ -114,3 +114,4 @@
 - R4:`498e0bc7`(diag-68 PHASE A 2199/2600 差分);R5:`88ca5bfc`(PHASE A 翻 PASS 时间线:350→2199→回卷→2600)。
 - R6:`4da97b5a`(diag-413 FREEZE 三重漂移→三精确;2600→7561 拖拽时间线);R7:`bba9127c`(LATE 六断言;8331→10334 行不动实测)。
 - 全量:每轮 90 套件全绿(3165→3169 递增)+lint+smoke/dist-smoke;4.1.3 打包 `tmp/vBookmarks_4.1.3.zip`(81 文件)。
+- **复查补记(2026-09-05 审计复跑)**:上条 LATE 六断言中的 `row-landing` 原以固定 3s 睡眠判定 campaign 结束,属时序敏感门——本机复跑 5/6(campaign 仍在走,`settling:true`,落点 630 未及保存行 596),但 3.5s 后波释放、campaign 完成,**终态与其余五断言全部正确**(落保存行 596、`scrollAnchor` 稳在 594@-14、镜像未被污染、popup4 再开同行)。结论不变(终态不变式成立),证据门已加固:探针改为轮询 `data-vbm-tree-settling` 消失后再断言(见 `diag-413-highlight-drift.js`)。
