@@ -17,12 +17,10 @@ const puppeteer = require('puppeteer');
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 const ROWS = parseInt(process.env.VBM_DIAG_ROWS || '900', 10);
 const THROTTLE = parseFloat(process.env.VBM_DIAG_THROTTLE || '0', 10);
-// 4.1.4 tree-cv lab knobs: VBM_TREE_CV=1 turns treeCvLab on (the probe's
-// FREEZE/LATE models only exist under cv); VBM_TREE_CV_REVEAL=1 picks the
-// scrollIntoView reveal transport (PK vs the band walk).
+// 4.1.4 tree-cv lab knob: VBM_TREE_CV=1 turns treeCvLab on (the probe's
+// FREEZE/LATE models only exist under cv).
 const CV_ON = process.env.VBM_TREE_CV === '1';
-const CV_REVEAL = process.env.VBM_TREE_CV_REVEAL === '1';
-console.log(`tree-cv mode: ${CV_ON ? (CV_REVEAL ? 'cv+reveal' : 'cv+walk') : 'cv-off (4.1.4 default)'}`);
+console.log(`tree-cv mode: ${CV_ON ? 'cv+walk' : 'cv-off (4.1.4 default)'}`);
 (async () => {
     const browser = await puppeteer.launch({
         executablePath: process.env.CHROME_BIN || '/usr/bin/chromium-browser',
@@ -65,8 +63,8 @@ console.log(`tree-cv mode: ${CV_ON ? (CV_REVEAL ? 'cv+reveal' : 'cv+walk') : 'cv
         // maintainer config: highlight ON (default), scroll/opens memory on
         await seed.evaluate(() => new Promise(res => chrome.storage.sync.set(
             { rememberHighlight: '1', rememberScroll: '1', rememberOpens: '1' }, res)));
-        await seed.evaluate(([cv, reveal]) => new Promise(res => chrome.storage.local.set(
-            { treeCvLab: cv ? '1' : '', treeCvRevealLab: reveal ? '1' : '' }, res)), [CV_ON, CV_REVEAL]);
+        await seed.evaluate(cv => new Promise(res => chrome.storage.local.set(
+            { treeCvLab: cv ? '1' : '' }, res)), CV_ON);
         await seed.evaluate(() => new Promise(res => chrome.storage.local.remove(
             ['focusID', 'scrollTop', 'opens', 'searchQuery', 'viewState', 'focusSpot', 'activeView'], res)));
         await seed.close();
@@ -451,7 +449,7 @@ console.log(`tree-cv mode: ${CV_ON ? (CV_REVEAL ? 'cv+reveal' : 'cv+walk') : 'cv
         await fin.evaluate(f => new Promise(res => chrome.bookmarks.removeTree(f, res)), fid);
         await fin.evaluate(() => new Promise(res => chrome.storage.local.remove(
             ['focusID', 'scrollTop', 'opens', 'searchQuery', 'viewState', 'focusSpot', 'activeView',
-                'treeCvLab', 'treeCvRevealLab'], res)));
+                'treeCvLab'], res)));
         await fin.evaluate(() => new Promise(res => chrome.storage.sync.remove(
             ['rememberScroll', 'rememberOpens', 'rememberHighlight', 'rememberSearchQuery',
                 'rememberView', 'dontRememberState'], res)));

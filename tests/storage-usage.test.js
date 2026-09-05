@@ -99,9 +99,9 @@ const EXPECTED = {
     stagingShortcuts: 'other', stagingGuideDismissed: 'other',
     // 4.1.0 实验室: the virtual-scroll experiment switch (local, default off)
     virtualScrollLab: 'other',
-    // 4.1.4 实验室: tree-row content-visibility + its PK transport knob
-    // (local experiment switches, default off)
-    treeCvLab: 'other', treeCvRevealLab: 'other'
+    // 4.1.4 实验室: tree-row content-visibility (local experiment switch,
+    // default off)
+    treeCvLab: 'other'
 };
 
 describe('storage-usage categorization (real src/storage-usage.js)', () => {

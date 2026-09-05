@@ -139,10 +139,7 @@
         'virtualScrollLab',
         // 4.1.4 实验室: tree-row content-visibility (options Labs group;
         // local, default off — off = the ≤4.0.8 one-shot scroll restore).
-        // treeCvRevealLab is the PK knob for the scrollIntoView reveal
-        // transport (no UI row; set programmatically), meaningful only when
-        // treeCvLab is on.
-        'treeCvLab', 'treeCvRevealLab'
+        'treeCvLab'
     ];
 
     // Data keys the mirror must serve at boot beyond KNOWN_KEYS (2026-08 perf

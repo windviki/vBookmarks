@@ -234,8 +234,7 @@ const $ = id => document.getElementById(id);
         // (src/virtual-list.js; off = the chunked streaming painter).
         // treeCvLab — tree-row content-visibility (off = ≤4.0.8 one-shot
         // scroll restore; on = the 4.1.x fast path + the scroll-rescue
-        // campaign, issues #65-#68 machinery). treeCvRevealLab has no row:
-        // it is the PK knob for the restore transport under cv.
+        // campaign, issues #65-#68 machinery).
         const labsSettings = [
             { id: 'virtual-scroll-lab', key: 'virtualScrollLab', defaultValue: '', inverted: false },
             { id: 'tree-cv-lab', key: 'treeCvLab', defaultValue: '', inverted: false }

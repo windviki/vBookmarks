@@ -103,8 +103,8 @@
 | `scripts/harness/diag/diag-issue65-66-scroll.js` | R1 回归门(A/B/C/D 四形态,7 断言) | — |
 | `scripts/harness/diag/diag-66-folder-highlight-drift.js` | 维护者字面步骤(高亮开+文件夹焦点+深滚重开) | — |
 | `scripts/harness/diag/diag-memory-layers.js` | 记忆分层契约(14 断言) | — |
-| `scripts/harness/diag/diag-68-slow-settle-duel.js` | cv 惰性布局死锁(冻结 ul 分步解冻,对抗/良性双序) | — |
-| `scripts/harness/diag/diag-413-highlight-drift.js` | 真机占位几何+迟到波全模型(默认/FREEZE/LATE 三模式) | `VBM_DIAG_ROWS`(树规模)/`VBM_DIAG_FREEZE=1`(占位模型)/`VBM_DIAG_LATE=1`(迟到波+多次重开)/`VBM_DIAG_THROTTLE`(CPU 节流) |
+| `scripts/harness/diag/diag-68-slow-settle-duel.js` | cv 惰性布局死锁(冻结 ul 分步解冻,对抗/良性双序) | `VBM_TREE_CV=1`(默认,冻结模型只在 cv 下存在)/`VBM_TREE_CV=0`(cv 关) |
+| `scripts/harness/diag/diag-413-highlight-drift.js` | 真机占位几何+迟到波全模型(默认/FREEZE/LATE 三模式) | `VBM_DIAG_ROWS`(树规模)/`VBM_DIAG_FREEZE=1`(占位模型)/`VBM_DIAG_LATE=1`(迟到波+多次重开)/`VBM_DIAG_THROTTLE`(CPU 节流)/`VBM_TREE_CV=1`(cv 开,默认关) |
 | `scripts/harness/rerun.sh` | 探针运行器(上述旋钮已入转发清单) | — |
 
 ## 7. 验证证据索引
@@ -115,3 +115,34 @@
 - R6:`4da97b5a`(diag-413 FREEZE 三重漂移→三精确;2600→7561 拖拽时间线);R7:`bba9127c`(LATE 六断言;8331→10334 行不动实测)。
 - 全量:每轮 90 套件全绿(3165→3169 递增)+lint+smoke/dist-smoke;4.1.3 打包 `tmp/vBookmarks_4.1.3.zip`(81 文件)。
 - **复查补记(2026-09-05 审计复跑)**:上条 LATE 六断言中的 `row-landing` 原以固定 3s 睡眠判定 campaign 结束,属时序敏感门——本机复跑 5/6(campaign 仍在走,`settling:true`,落点 630 未及保存行 596),但 3.5s 后波释放、campaign 完成,**终态与其余五断言全部正确**(落保存行 596、`scrollAnchor` 稳在 594@-14、镜像未被污染、popup4 再开同行)。结论不变(终态不变式成立),证据门已加固:探针改为轮询 `data-vbm-tree-settling` 消失后再断言(见 `diag-413-highlight-drift.js`)。
+
+## 8. 4.1.4:方案 A 默认化 + 实验室 gate + 传送方式 PK(2026-09-05)
+
+**维护者决策**:树深恢复回归方案 A 并设为默认(绝大多数用户没有上千书签);cv:auto 机制降为实验室选项(Labs 组 `treeCvLab`,默认关,文案「巨量书签树优化」+ 小字说明效果与代价);开关打开时=当时 master 方案(R7 全套),并与替代方案 B(平台 `scrollIntoView` 直达)PK,胜者保留。
+
+### 8.1 实现
+
+- css:树行 cv 规则改挂 `#tree.cv-tree`(列表视图 cv 不变);`generateTree` 换树前按 `treeCvLab` 挂/摘类。
+- 恢复路径分叉(`src/tree-view.js`):
+  - **cv 关(默认)**:≤4.0.8 语义——换树全量同步布局,一次性 `scrollTop = saved` 落地;随后做一次(无定时器)锚点行校正,覆盖唯一的跨几何情形(上次在 cv 开时保存的像素/占位镶嵌、或书签变动);无 campaign、无 settling 期、焦点立即授予。
+  - **cv 开**:4.1.x 快速路径 + R7 campaign 全套(行为与 4.1.3 一致)。
+- `scrollAnchor` 两种模式都照常持久化(它是 cv 关时跨模式校正的输入)。
+- i18n 2 键 ×43 locale(en/zh_CN 实译+41 locale LLM 译);单元 +3(关态一次性恢复/关态锚点校正/挂类契约);全量 90 套件/3174+lint 0。
+
+### 8.2 PK:方案 B(`scrollIntoView` 直达)vs 现有 walk
+
+方案 B 实现(临时旋钮 `treeCvRevealLab`):campaign 增 reveal 分支——`scrollIntoView({block:'start',behavior:'instant'})` 一跳直达锚行(平台强制目标带渲染,即旧 focus 拽动的规范形态)+ 共享锚点复校/稳定化门/握手;锚行缺失回退 walk。PK 矩阵(Docker 真浏览器,`scripts/harness/rerun.sh`):
+
+| 模式 | diag-65-66 | memory-layers | diag-413 默认 | diag-413 FREEZE | diag-413 LATE | diag-68 A/B |
+|---|---|---|---|---|---|---|
+| A:cv 关(新默认) | 7/7 | 14/14 | PASS 且**像素精确**(13337==13337,sh 18133==18133,行 671 同) | 不适用(冻结模型只存在于 cv) | 不适用 | 不适用 |
+| B:cv+walk(4.1.3 现状) | 7/7 | — | — | PASS | 6/6 | PHASE A/B 均 2600,镜像未污染 |
+| C:cv+reveal(方案 B) | — | — | — | PASS | 6/6 | **FAIL**(STEP2 2599;PHASE A 终态 7408 且镜像被污染为 7408) |
+
+**裁决:walk 胜出,reveal 移除**。失败机理(PHASE A 时间线实证):reveal 在占位几何上一跳即"落地"(t≈365ms 落 196),稳定化门(3×100ms)在相邻解冻波之间 ~450ms 的静默间隙里提前判稳、campaign 收兵(t≈1016 落 2600 后结束);随后 F2/F3 解冻的迟到波在 campaign 结束后到达,原生锚定补偿把视口 2600→5004→7408 拖走,滚动监听当作真实滚动持久化——正是 R3/R6 的迟到波污染复活。walk 全过的原因恰恰是它的慢:逐带物理访问使它不可能在所有波到齐之前"落地",稳定化门永远在末态几何上起判。**教训:cv 惰性布局下,"送达目标"与"不提前判稳"是同一件事的两面——方案 B 省掉了前者,连带丢掉了后者。** 1px 级偏差(STEP2 2599)本身在边界②允许范围内,但镜像污染是硬失败。
+
+### 8.3 本版本现状
+
+- 默认用户(绝大多数,无上千书签)得到 ≤4.0.8 的一次性精确恢复,零 campaign;深滚场景像素+行双重精确(A 模式实测跨会话 sh/像素完全一致)。
+- 巨量树用户打开 Labs 开关后得到 4.1.x 快速路径 + 完整 R7 修复,代价写入选项小字文案。
+- 其余已知边界同 §5(列表视图 viewState 仍为像素记忆等)。

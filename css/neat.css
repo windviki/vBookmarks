@@ -7315,8 +7315,7 @@ body.panel-mode #stats-list ul li.vbm-row > a.tree-item-link .row-badge.time {
    滚动位置记忆代价过高（占位≠实际高度 → 惰性死锁/锚定决斗/像素随机游走
    共七轮修复），故自 4.1.4 起树行 cv 改为实验室开关 treeCvLab（默认关），
    只在 #tree.cv-tree 上生效——关=≤4.0.8 语义（换树全量同步布局，一次性
-   scrollTop 赋值天然精确）；开=4.1.x 快速路径 + scroll-rescue campaign。
-   treeCvRevealLab（PK 旋钮）只切换恢复传送方式，不改变本规则。 */
+   scrollTop 赋值天然精确）；开=4.1.x 快速路径 + scroll-rescue campaign。 */
 #tabgroups-list ul li.vbm-row,
 #tabgroups-list ul li.tabgroups-group,
 #tabgroups-list ul li.tabgroups-window-head,

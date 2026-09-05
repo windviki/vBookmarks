@@ -840,42 +840,6 @@ describe('generateTree', () => {
             });
         });
 
-        it('reveal transport (treeCvRevealLab): scrollIntoView hops to the anchor row, then stabilizes', () => {
-            // The platform reveal must land WITHOUT the band walk: the
-            // scrollTop double still clamps (cv geometry), but the row's
-            // scrollIntoView models the platform hop that renders + scrolls
-            // the target band in one call — the "visit the target band"
-            // property the walk re-implements by hand.
-            const ctx = rescue({ rememberState: true, storeData: { scrollTop: 2600, scrollAnchor: '42@0', treeCvRevealLab: '1' } });
-            const settle = clampingTree(ctx.tree);
-            const { li } = ctx.makeFolder('42');
-            ctx.tree.getBoundingClientRect = () => ({ top: 0, left: 0 });
-            li.getBoundingClientRect = () => ({ top: 0 }); // post-reveal: row at its saved offset
-            li.scrollIntoView = o => {
-                li._scrolledIntoView++;
-                li._sivArgs = o;
-                settle(3000); // the platform hop unlocks the layout
-                ctx.tree.scrollTop = 2600;
-            };
-            ctx.treeView.generateTree(['ROOT']);
-            expect(ctx.tree.scrollTop).toBe(0); // the initial assignment clamped
-            flushFrame(); // step 1: the reveal hop
-            expect(li._scrolledIntoView).toBe(1);
-            expect(li._sivArgs).toEqual({ block: 'start', behavior: 'instant' });
-            expect(ctx.tree.scrollTop).toBe(2600); // one hop, no band walk
-            tick(100); tick(100); tick(100); // the shared stabilization watch
-            expect(ctx.tree.scrollTop).toBe(2600);
-            expect(ctx.store.get('scrollTop')).toBe(2600); // mirror never corrupted
-        });
-
-        it('reveal transport falls back to the walk when the anchor row is missing', () => {
-            const ctx = rescue({ rememberState: true, storeData: { scrollTop: 2600, scrollAnchor: '404@0', treeCvRevealLab: '1' } });
-            lazyFrontierTree(ctx.tree);
-            ctx.treeView.generateTree(['ROOT']);
-            drive(ctx, () => ctx.tree.scrollTop === 2600);
-            expect(ctx.tree.scrollTop).toBe(2600); // the walk still reaches it
-        });
-
         it('does not arm without requestAnimationFrame (geometry-less doubles)', () => {
             delete globalThis.requestAnimationFrame;
             const ctx = rescue({ rememberState: true, storeData: { scrollTop: 900 } });

@@ -231,11 +231,8 @@ export function initTreeView(ctx = {}) {
     // default off). Off = ≤4.0.8 semantics — the swap lays the whole tree
     // out synchronously and the one-shot scrollTop assignment lands exactly
     // (issues #65-#68's whole problem class only exists under cv). On = the
-    // 4.1.x fast path plus the scroll-rescue campaign. treeCvRevealLab is
-    // the PK knob choosing the restore transport under cv (the band walk vs
-    // the platform's scrollIntoView reveal).
+    // 4.1.x fast path plus the scroll-rescue campaign.
     const treeCvOn = () => !!store.get('treeCvLab', '');
-    const treeCvRevealOn = () => !!store.get('treeCvRevealLab', '');
     // One-shot row re-assert (no timers): measures the anchor row against
     // the saved offset and moves by the exact delta. With cv off the swap
     // laid everything out, so one pass is final; under cv the campaign
@@ -268,15 +265,6 @@ export function initTreeView(ctx = {}) {
         let stableSteps = 0; // stabilization watch: consecutive equal scrollHeights
         let lastSh = -1;
         let landedOnce = false;
-        // reveal transport (treeCvRevealLab PK knob, needs a live anchor
-        // row): the platform's scrollIntoView is the principled form of the
-        // pre-4.1.2 focus-yank — ONE hop to the target row, which forces
-        // its cv band to render, then the shared anchor-verify +
-        // stabilization watch. A missing anchor row falls back to the walk
-        // (deleted bookmark).
-        const revealMode = treeCvRevealOn() && !!anchor
-            && !!document.getElementById(`neat-tree-item-${anchor.id}`);
-        let revealed = false;
         // Re-assert the remembered ROW: once the pixel has landed, the
         // anchor decides — a shifted settle geometry (a collapsed-then-
         // released band, differing placeholder sums) maps the saved pixel
@@ -351,25 +339,6 @@ export function initTreeView(ctx = {}) {
                     done();
                     return;
                 }
-                setTimeout(step, 100);
-                return;
-            }
-            if (revealMode && !revealed) {
-                // Platform hop: scrollIntoView renders + scrolls to the
-                // remembered row (the "visit the target band" property the
-                // band walk re-implements by hand), then the handshake owns
-                // the resulting scroll event and the shared stabilization
-                // watch takes over.
-                const row = document.getElementById(`neat-tree-item-${anchor.id}`);
-                if (row && typeof row.scrollIntoView === 'function')
-                    row.scrollIntoView({ block: 'start', behavior: 'instant' });
-                else
-                    $tree.scrollTop = savedTop; // no platform — plain re-assert
-                applied = $tree.scrollTop;
-                rescueApplied = applied;
-                anchorAdjust(); // restore the saved sub-row offset (post-reveal measure)
-                revealed = true;
-                landedOnce = true; // subsequent steps: the shared stabilization watch
                 setTimeout(step, 100);
                 return;
             }
@@ -541,9 +510,8 @@ export function initTreeView(ctx = {}) {
                 && ($tree.scrollTop < savedTop || scrollAnchor)
                 && typeof requestAnimationFrame === 'function') {
                 // cv on (lab): the 4.1.x campaign owns the restore — see
-                // the scrollRescue contract above (clamp retry, walk,
-                // handshake, stabilization; or the reveal transport when
-                // treeCvRevealLab is on).
+                // the scrollRescue contract above (clamp retry, band walk,
+                // handshake, stabilization).
                 scrollRescue(savedTop, scrollAnchor);
             }
         }
