@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeAll, beforeEach, afterAll } from 'vitest';
+import { describe, it, expect, beforeAll, beforeEach, afterEach, afterAll } from 'vitest';
 
 // tree-view.js touches page globals (document/chrome/setTimeout) only inside
 // initTreeView and its handlers, so the real module imports cleanly in node
@@ -758,6 +758,77 @@ describe('generateTree', () => {
             ctx.tree.scrollTop = 300;
             fire(ctx.tree, 'scroll');
             expect(ctx.store.get('scrollTop')).toBe(300);
+        });
+
+        // issues #67/#68 (final round — the maintainer's "every reopen lands
+        // somewhere different"): the PIXEL memory random-walks. Real machines
+        // deliver late correction waves that trigger Chromium's
+        // content-stable anchoring compensation — the view looks identical
+        // while scrollTop quietly changes — and the persisted pixel then
+        // restores against a different settle pattern each session. The row
+        // at the top of the viewport is the real memory: it is persisted
+        // (`scrollAnchor` = "id@offset") and the campaign lands by ROW.
+        describe('row-anchored restore (issues #67/#68 final round)', () => {
+            afterEach(() => {
+                delete globalThis.document.elementFromPoint;
+            });
+
+            it('persists the row anchor with every real scroll', () => {
+                const ctx = setup({ rememberState: true, storeData: { scrollTop: 0 } });
+                const { li } = ctx.makeFolder('42');
+                ctx.tree.getBoundingClientRect = () => ({ top: 0, left: 0 });
+                li.getBoundingClientRect = () => ({ top: 0 });
+                globalThis.document.elementFromPoint = () => ({ parentElement: li });
+                ctx.treeView.generateTree(['ROOT']);
+                ctx.tree.scrollTop = 300; // a real scroll
+                fire(ctx.tree, 'scroll');
+                expect(ctx.store.get('scrollTop')).toBe(300);
+                expect(ctx.store.get('scrollAnchor')).toBe('42@0');
+            });
+
+            it('lands on the remembered row when the settle geometry shifted the pixel', () => {
+                // The saved pixel lands, but the remembered row now sits
+                // 100px lower (a band above it grew after the save) — the
+                // anchor re-verification moves the view to the ROW, and the
+                // stabilization watch holds it there.
+                const ctx = setup({ rememberState: true, storeData: { scrollTop: 2600, scrollAnchor: '42@0' } });
+                const settle = clampingTree(ctx.tree);
+                const { li } = ctx.makeFolder('42');
+                ctx.tree.getBoundingClientRect = () => ({ top: 0, left: 0 });
+                // dynamic: the row's viewport offset tracks the scroll
+                li.getBoundingClientRect = () => ({ top: 100 - (ctx.tree.scrollTop - 2600) });
+                ctx.treeView.generateTree(['ROOT']);
+                settle(3000); // the pixel lands immediately
+                flushFrame(); // landing → stabilization begins
+                tick(100); // anchorAdjust: += (100 - 0) → 2700
+                expect(ctx.tree.scrollTop).toBe(2700);
+                tick(100); tick(100); // stability holds the row-accurate view
+                expect(ctx.tree.scrollTop).toBe(2700);
+                expect(li.getBoundingClientRect().top).toBe(0); // row at its saved offset
+                // a real user scroll still takes over and persists both memories
+                globalThis.document.elementFromPoint = () => ({ parentElement: li });
+                ctx.tree.scrollTop = 500;
+                fire(ctx.tree, 'scroll');
+                expect(ctx.store.get('scrollTop')).toBe(500);
+                expect(ctx.store.get('scrollAnchor')).toBe('42@' + (100 - (500 - 2600)));
+            });
+
+            it('arms the campaign for anchor verification even without a clamp', () => {
+                // An instant pixel landing is not trusted either: transient
+                // geometry can satisfy the pixel while the row sits
+                // elsewhere — the anchor re-verification runs regardless.
+                const ctx = setup({ rememberState: true, storeData: { scrollTop: 100, scrollAnchor: '7@0' } });
+                const { li } = ctx.makeFolder('7');
+                ctx.tree.getBoundingClientRect = () => ({ top: 0, left: 0 });
+                li.getBoundingClientRect = () => ({ top: 40 - (ctx.tree.scrollTop - 100) });
+                ctx.treeView.generateTree(['ROOT']);
+                // no clamp — the assignment held; the campaign still armed
+                flushFrame(); // step 1: pixel "landing" → stabilization begins
+                tick(100); // anchorAdjust: += (40 - 0) → 140
+                expect(ctx.tree.scrollTop).toBe(140); // adjusted to the row
+                drive(ctx, () => false, 20); // finish the stabilization
+                expect(ctx.tree.scrollTop).toBe(140);
+            });
         });
 
         it('does not arm without requestAnimationFrame (geometry-less doubles)', () => {

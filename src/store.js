@@ -53,7 +53,7 @@
     // (read by separators.js), so both spellings stay listed here.
     const KNOWN_KEYS = [
         // popup state
-        'opens', 'popupHeight', 'popupWidth', 'zoom', 'searchQuery', 'scrollTop', 'focusID',
+        'opens', 'popupHeight', 'popupWidth', 'zoom', 'searchQuery', 'scrollTop', 'scrollAnchor', 'focusID',
         // unified "where I was" focus spot (view-manager, popup reopen restore)
         'focusSpot',
         // general options

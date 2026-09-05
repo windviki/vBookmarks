@@ -78,7 +78,7 @@ const EXPECTED = {
     // explicitly so a KNOWN_KEYS addition without a decision fails the
     // census below.
     opens: 'other', popupHeight: 'other', popupWidth: 'other', zoom: 'other',
-    searchQuery: 'other', scrollTop: 'other', focusID: 'other', focusSpot: 'other',
+    searchQuery: 'other', scrollTop: 'other', scrollAnchor: 'other', focusID: 'other', focusSpot: 'other',
     autoResizePopup: 'other', activeView: 'other', viewState: 'other',
     searchHistory: 'other', searchHistoryEnabled: 'other', searchHistoryCount: 'other', separators: 'other',
     separatorTitle: 'other', separatorURL: 'other', separatorUrl: 'other',

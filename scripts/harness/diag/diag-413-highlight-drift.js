@@ -32,22 +32,30 @@ const THROTTLE = parseFloat(process.env.VBM_DIAG_THROTTLE || '0', 10);
         const seed = await browser.newPage();
         await seed.goto('chrome-extension://' + extId + '/pages/popup.html', { waitUntil: 'load' });
         await sleep(1200);
-        const fid = await seed.evaluate(async n => {
+        const seedInfo = await seed.evaluate(async n => {
             const create = props => new Promise(res => chrome.bookmarks.create(props, res));
             const tree = await new Promise(res => chrome.bookmarks.getTree(res));
             const bar = tree[0].children.find(c => c.title === 'Bookmarks bar' || c.id === '1');
             const f = await create({ parentId: bar.id, title: '__LONG__' });
-            for (let i = 1; i <= n; i++) {
-                // every 5th title wraps to 2-3 lines at the 320px popup width
-                const long = i % 5 === 0;
-                const title = long
-                    ? `Wrapped ${String(i).padStart(3, '0')} — a realistically long bookmark title that certainly wraps to multiple lines in the narrow popup`
-                    : `BM ${String(i).padStart(3, '0')}`;
-                await create({ parentId: f.id, title, url: `https://ex${i}.example/x` });
-            }
-            return f.id;
+            const mk = async (i0, i1) => {
+                for (let i = i0; i <= i1; i++) {
+                    // every 5th title wraps to 2-3 lines at the 320px popup width
+                    const long = i % 5 === 0;
+                    const title = long
+                        ? `Wrapped ${String(i).padStart(3, '0')} — a realistically long bookmark title that certainly wraps to multiple lines in the narrow popup`
+                        : `BM ${String(i).padStart(3, '0')}`;
+                    await create({ parentId: f.id, title, url: `https://ex${i}.example/x` });
+                }
+            };
+            await mk(1, 400);
+            const held = await create({ parentId: f.id, title: '__HELD__' });
+            for (let i = 401; i <= 500; i++)
+                await create({ parentId: held.id, title: `Held ${String(i).padStart(3, '0')}`, url: `https://h${i}.example/x` });
+            await mk(501, n);
+            return { fid: f.id, hid: held.id };
         }, ROWS);
-        console.log(`seeded folder ${fid} with ${ROWS} rows (1 in 5 wraps)`);
+        const fid = seedInfo.fid;
+        console.log(`seeded folder ${fid} with ${ROWS} rows (1 in 5 wraps; __HELD__=${seedInfo.hid} mid-list for the LATE mode)`);
         // maintainer config: highlight ON (default), scroll/opens memory on
         await seed.evaluate(() => new Promise(res => chrome.storage.sync.set(
             { rememberHighlight: '1', rememberScroll: '1', rememberOpens: '1' }, res)));
@@ -122,7 +130,8 @@ const THROTTLE = parseFloat(process.env.VBM_DIAG_THROTTLE || '0', 10);
                 label: el ? (el.textContent || '').trim().slice(0, 26) : '',
                 focusRow: (document.activeElement && document.activeElement.closest && document.activeElement.closest('#tree li') || {id: ''}).id || '',
                 settling: !!document.body.dataset.vbmTreeSettling,
-                mirror: window.store.get('scrollTop')
+                mirror: window.store.get('scrollTop'),
+                anchor: window.store.get('scrollAnchor')
             };
         })()`);
         const startTimeline = () => evalIn(`(() => {
@@ -159,6 +168,13 @@ const THROTTLE = parseFloat(process.env.VBM_DIAG_THROTTLE || '0', 10);
                 span.focus(); // a REAL click focuses the folder span — focusID = folder row
                 span.click();
             }
+        })(); 0`);
+        // LATE mode: the held subfolder must be part of the SAVED geometry
+        // (popup #1 opens it too, so its ~1900px is inside the saved offset)
+        await evalIn(`(() => {
+            const li = document.getElementById('neat-tree-item-${seedInfo.hid}');
+            if (li && !li.classList.contains('open'))
+                (li.querySelector(':scope > span') || li.firstElementChild).click();
         })(); 0`);
         for (let i = 0; i < 80; i++) { if (await evalIn(`document.querySelectorAll('#tree li').length`) >= ROWS) break; await sleep(100); }
         await sleep(400);
@@ -239,11 +255,14 @@ const THROTTLE = parseFloat(process.env.VBM_DIAG_THROTTLE || '0', 10);
         };
         if (process.env.VBM_DIAG_FREEZE !== '1') {
             const tabRes = await runReopenTab();
-            const pixelOk = tabRes.top === atClose.top;
+            // Row-anchored contract: two sessions' placeholder mosaics above
+            // the viewport differ (cv laziness — even the wheel hops of the
+            // saving session skip bands), so the pixel is informational;
+            // the ROW is the memory.
             const contentOk = tabRes.row === atClose.row;
-            console.log((pixelOk ? 'PASS' : 'FAIL') + `  TAB pixel: reopen top ${tabRes.top} === close ${atClose.top}`);
+            console.log(`INFO  TAB pixel: reopen top ${tabRes.top} (saved ${atClose.top} — placeholder mosaics differ)`);
             console.log((contentOk ? 'PASS' : 'FAIL') + `  TAB content: reopen top row ${tabRes.row || '(none)'} === close ${atClose.row}`);
-            process.exitCode = (pixelOk && contentOk) ? process.exitCode : 1;
+            process.exitCode = contentOk ? process.exitCode : 1;
         }
 
         // popup #2 as the real action popup. VBM_DIAG_FREEZE=1 models the
@@ -307,15 +326,99 @@ const THROTTLE = parseFloat(process.env.VBM_DIAG_THROTTLE || '0', 10);
         for (const row of JSON.parse(await readTimeline()))
             console.log('   ', JSON.stringify(row));
         {
-            const pixelOk = atOpen.top === atClose.top;
+            // Row-anchored contract (see the TAB block note): the pixel is
+            // informational across differing placeholder mosaics; the ROW
+            // is the memory.
             const contentOk = atOpen.row === atClose.row;
-            console.log((pixelOk ? 'PASS' : 'FAIL') + `  pixel: reopen top ${atOpen.top} === close ${atClose.top}`);
+            console.log(`INFO  pixel: reopen top ${atOpen.top} (saved ${atClose.top})`);
             console.log((contentOk ? 'PASS' : 'FAIL') + `  content: reopen top row ${atOpen.row || '(none)'} === close ${atClose.row}`);
-            process.exitCode = (pixelOk && contentOk) ? process.exitCode : 1;
+            process.exitCode = contentOk ? process.exitCode : 1;
         }
         await closeRealPopup();
         if (FREEZE)
             await setUserstyle(null);
+
+        // VBM_DIAG_LATE=1 — the maintainer's follow-up report (2026-09-05):
+        // "the FIRST reopen remembers and never moves, but every subsequent
+        // open lands somewhere different." Model: popup #3 restores under a
+        // frozen geometry, the bulk releases, the campaign stabilizes and
+        // ENDS (anchoring re-enabled, focus granted) — and only then a held
+        // band ABOVE the restored view releases: the trailing correction
+        // wave real machines deliver after any fixed stabilization window.
+        // If the re-enabled anchoring compensates that growth around the
+        // off-viewport focused highlight row, the view moves, the scroll
+        // listener persists the moved value, and every subsequent reopen
+        // starts from a different number.
+        if (process.env.VBM_DIAG_LATE === '1') {
+            const heldSel = `#neat-tree-item-${seedInfo.hid} ul{height:0!important;overflow:hidden!important}`;
+            await setUserstyle('/*vbm-freeze-rows*/#tree ul li{height:17px!important;overflow:hidden!important}');
+            await openRealPopup();
+            await startTimeline();
+            await sleep(900); // bulk release — every row unfreezes EXCEPT the held subfolder stays collapsed
+            const heldCss = '/*vbm-freeze-rows*/' + heldSel;
+            await evalIn(`(() => {
+                for (const s of document.body.querySelectorAll('style'))
+                    if (s.textContent.includes('vbm-freeze-rows')) {
+                        s.textContent = ${JSON.stringify(heldCss)};
+                        return 1;
+                    }
+                return 0;
+            })()`);
+            await sleep(3000); // the campaign walks, lands, anchor-verifies, stabilizes, ends
+            const before = await topRowProbe();
+            console.log('LATE popup3 landed (held subfolder collapsed, campaign over):', JSON.stringify(before));
+            {
+                // row-anchored contract: even with the held band collapsed
+                // (a DIFFERENT settle geometry than the save), the restore
+                // lands on the remembered ROW — the pixel alone would land
+                // 1900px of content short (the wrong row).
+                const rowOk = before.row === atClose.row;
+                console.log((rowOk ? 'PASS' : 'FAIL') + `  LATE row-landing: popup3 top row ${before.row} === saved ${atClose.row}`);
+                process.exitCode = rowOk ? process.exitCode : 1;
+            }
+            const waveAt = await evalIn(`(() => {
+                for (const s of document.body.querySelectorAll('style'))
+                    if (s.textContent.includes('vbm-freeze-rows')) { s.textContent = ''; return 1; }
+                return 0;
+            })()`);
+            console.log(`LATE: held band released (${waveAt}) — the trailing correction wave arrives AFTER the campaign`);
+            await sleep(3500);
+            const after = await topRowProbe();
+            const heldState = await evalIn(`JSON.stringify({
+                ulH: (() => { const li = document.getElementById('neat-tree-item-${seedInfo.hid}');
+                    const ul = li && li.querySelector('ul'); return ul ? Math.round(ul.getBoundingClientRect().height) : -1; })(),
+                open: !!document.getElementById('neat-tree-item-${seedInfo.hid}').classList.contains('open'),
+                sheets: [...document.body.querySelectorAll('style')].map(s => s.textContent.slice(0, 60))
+            })`);
+            console.log('LATE popup3 after the wave:', JSON.stringify(after), 'held:', heldState);
+            {
+                // the wave must not move the restored ROW, and the memory
+                // must stay row-anchored (the pixel may legitimately drift —
+                // content-stable compensation — the ROW is the invariant;
+                // the anchor samples the viewport's top edge, so compare
+                // against the close-time anchor, not the +40px probe row)
+                const rowStill = after.row === atClose.row;
+                const anchorRow = String(after.anchor || '').split('@')[0];
+                const savedAnchorRow = String(atClose.anchor || '').split('@')[0];
+                const anchorOk = anchorRow === savedAnchorRow && !!anchorRow;
+                console.log((rowStill ? 'PASS' : 'FAIL') + `  LATE hold: the wave did not move the restored row (${before.row} → ${after.row})`);
+                console.log((anchorOk ? 'PASS' : 'FAIL') + `  LATE memory: the stored anchor still points at the saved row (${after.anchor} ~ ${atClose.anchor})`);
+                process.exitCode = (rowStill && anchorOk) ? process.exitCode : 1;
+            }
+            await closeRealPopup();
+            await setUserstyle(null);
+            // the next open must land on the SAME row as every time
+            await openRealPopup();
+            await sleep(3500);
+            const reopen = await topRowProbe();
+            console.log('LATE popup4 (plain reopen):', JSON.stringify(reopen));
+            {
+                const rowOk = reopen.row === atClose.row;
+                console.log((rowOk ? 'PASS' : 'FAIL') + `  LATE reopen: popup4 top row ${reopen.row} === saved ${atClose.row}`);
+                process.exitCode = rowOk ? process.exitCode : 1;
+            }
+            await closeRealPopup();
+        }
 
         // cleanup
         const fin = await browser.newPage();

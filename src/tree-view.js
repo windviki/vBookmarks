@@ -188,7 +188,46 @@ export function initTreeView(ctx = {}) {
     // AND breaks the deadlock (the principled form of the pre-4.1.2
     // focus-yank that used to mask this class by dragging the viewport to
     // the highlight row).
-    const scrollRescue = savedTop => {
+    // issues #67/#68 (final round, the maintainer's "every reopen lands
+    // somewhere different"): the PIXEL memory random-walks. On real machines
+    // late correction waves trigger Chromium's content-stable anchoring
+    // compensation — the view looks identical while scrollTop quietly
+    // changes — and the scroll listener persists the new pixel; the next
+    // session restores it against a different settle pattern, its own wave
+    // drifts it again. The row at the top of the viewport is what the user
+    // actually perceives: persist it (`scrollAnchor` = "id@offset") and the
+    // restore lands by ROW — the pixel may wander, the memory does not.
+    const treeAnchor = () => {
+        if (typeof document.elementFromPoint !== 'function'
+            || !$tree.getBoundingClientRect)
+            return '';
+        const base = $tree.getBoundingClientRect();
+        for (let dy = 1; dy <= 12; dy += 3) {
+            const hit = document.elementFromPoint(base.left + 12, base.top + dy);
+            let node = hit;
+            while (node && node !== $tree
+                && !(node.id && String(node.id).startsWith('neat-tree-item-')))
+                node = node.parentElement;
+            if (node && node !== $tree && node.id) {
+                const r = node.getBoundingClientRect();
+                return `${node.id.replace('neat-tree-item-', '')}@${Math.round(r.top - base.top)}`;
+            }
+        }
+        return '';
+    };
+    const parseScrollAnchor = v => {
+        if (!v)
+            return null;
+        const at = String(v).indexOf('@');
+        if (at < 1)
+            return null;
+        const off = parseInt(String(v).slice(at + 1), 10);
+        if (!Number.isFinite(off))
+            return null;
+        return { id: String(v).slice(0, at), off };
+    };
+
+    const scrollRescue = (savedTop, anchor) => {
         const seq = ++rescueSeq;
         let applied = $tree.scrollTop;
         let rafFrames = 0;
@@ -202,6 +241,26 @@ export function initTreeView(ctx = {}) {
         let stalledPasses = 0; // consecutive passes with zero frontier progress
         let stableSteps = 0; // stabilization watch: consecutive equal scrollHeights
         let lastSh = -1;
+        let landedOnce = false;
+        // Re-assert the remembered ROW: once the pixel has landed, the
+        // anchor decides — a shifted settle geometry (a collapsed-then-
+        // released band, differing placeholder sums) maps the saved pixel
+        // to the wrong row; the row is the invariant. Returns true when it
+        // moved the view (the stabilization restarts its stability count).
+        const anchorAdjust = () => {
+            if (!anchor)
+                return false;
+            const row = document.getElementById(`neat-tree-item-${anchor.id}`);
+            if (!row || !row.getBoundingClientRect || !$tree.getBoundingClientRect)
+                return false;
+            const dr = row.getBoundingClientRect().top - $tree.getBoundingClientRect().top;
+            if (Math.abs(dr - anchor.off) <= 1)
+                return false;
+            $tree.scrollTop += dr - anchor.off;
+            applied = $tree.scrollTop;
+            rescueApplied = applied;
+            return true;
+        };
         const viewStep = () => ($tree.clientHeight || 600);
         // The walk runs on its own bounded track with an ADAPTIVE cadence:
         // landed bands advance at 16ms (a deep restore must not starve on
@@ -236,6 +295,7 @@ export function initTreeView(ctx = {}) {
             $tree.scrollTop = savedTop; // clamps to the true bottom — deterministic
             applied = $tree.scrollTop;
             rescueApplied = applied;
+            anchorAdjust(); // the remembered row is the better "best position"
             done();
         };
         const step = () => {
@@ -245,16 +305,17 @@ export function initTreeView(ctx = {}) {
                 done(); // taken over — the scroller owns it now
                 return;
             }
-            if (applied >= savedTop) {
+            if (landedOnce) {
                 // Pixel-landing is not the end: the geometry may still be
                 // settling (cv bands render late; a fast walk can land in
-                // the middle of the growth). Hold the position — with the
+                // the middle of the growth), and the remembered ROW is the
+                // real target — re-verify it, then hold until the
+                // scrollHeight has held still for three checks. With the
                 // campaign-scoped overflow-anchor suppression nothing moves
-                // scrollTop but the user — until the scrollHeight has held
-                // still for three checks, THEN end: the anchoring resumes
-                // on a final view and its compensation protects it, instead
-                // of dragging it (diag-68/diag-413 probes: restored 2600,
-                // anchored away to 7561 within the settle window).
+                // scrollTop but the user; when the anchoring resumes at the
+                // end it protects a final, row-accurate view.
+                if (anchorAdjust())
+                    stableSteps = 0;
                 const sh = $tree.scrollHeight;
                 stableSteps = sh === lastSh ? stableSteps + 1 : 0;
                 lastSh = sh;
@@ -278,6 +339,7 @@ export function initTreeView(ctx = {}) {
                 bestApplied = applied;
             if (applied >= savedTop) {
                 // landed — enter the stabilization watch
+                landedOnce = true;
                 stableSteps = 0;
                 lastSh = $tree.scrollHeight;
                 setTimeout(step, 100);
@@ -428,9 +490,16 @@ export function initTreeView(ctx = {}) {
             // the SAVED position: "the exact position is not remembered").
             // Any scroll that is not the campaign's own applied value — the
             // user, a reveal's scrollIntoView — takes over and cancels it.
-            if (savedTop > 0 && $tree.scrollTop < savedTop
+            // Residual + final rounds: the campaign also arms WITHOUT a
+            // clamp when a row anchor exists — the pixel fast-path lands
+            // against transient geometry, and the anchor re-verification
+            // (plus the stabilization watch) is what pins the restored view
+            // to the remembered row before the anchoring resumes.
+            const scrollAnchor = parseScrollAnchor(store.get('scrollAnchor'));
+            if (savedTop > 0
+                && ($tree.scrollTop < savedTop || scrollAnchor)
                 && typeof requestAnimationFrame === 'function') {
-                scrollRescue(savedTop);
+                scrollRescue(savedTop, scrollAnchor);
             }
         }
         // after the scroll baseline is back — the focusID reveal below must
@@ -657,16 +726,17 @@ export function initTreeView(ctx = {}) {
 
     // Events for the tree
     $tree.addEventListener('scroll', () => {
-        // A live rescue campaign's intermediates are layout artifacts, not
-        // the user's position — persisting them corrupted the saved value
-        // whenever the popup closed mid-climb (#66 residual). Any value the
-        // campaign did NOT apply is a real scroll: it takes over, cancels
-        // the campaign and persists normally.
-        if (rescueApplied >= 0 && $tree.scrollTop === rescueApplied)
-            return;
-        rescueApplied = -1;
-        store.set('scrollTop', $tree.scrollTop);
-    });
+            // Any scroll that is not the campaign's own applied value — the
+            // user, a reveal's scrollIntoView — takes over, cancels the
+            // campaign and persists normally: the pixel AND the row anchor
+            // (the anchor is what survives content-stable compensation —
+            // the view does not move, but the pixel does).
+            if (rescueApplied >= 0 && $tree.scrollTop === rescueApplied)
+                return;
+            rescueApplied = -1;
+            store.set('scrollTop', $tree.scrollTop);
+            store.set('scrollAnchor', treeAnchor());
+        });
     $tree.addEventListener('focus', e => {
         const el = e.target;
         const tagName = el.tagName;
@@ -836,6 +906,7 @@ export function initTreeView(ctx = {}) {
             }
         }
         store.set('scrollTop', $tree.scrollTop);
+        store.set('scrollAnchor', treeAnchor());
     }
 
     // Reveal a folder in the tree: quit search, open its ancestor chain,
