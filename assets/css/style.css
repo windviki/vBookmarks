@@ -24,6 +24,7 @@
     --shadow-md: 0 2px 6px rgba(23, 24, 28, .05), 0 12px 32px rgba(23, 24, 28, .09);
     --shadow-lg: 0 4px 12px rgba(23, 24, 28, .07), 0 24px 64px rgba(23, 24, 28, .13);
     --wrap: 1120px;
+    --pad: 24px;
     --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
         Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC",
         sans-serif;
@@ -75,9 +76,11 @@ button { font: inherit; cursor: pointer; }
 .wrap {
     max-width: var(--wrap);
     margin: 0 auto;
-    padding: 0 24px;
+    padding: 0 var(--pad);
 }
 .section { padding: 88px 0; }
+/* keep anchored sections clear of the sticky header when navigated to */
+section[id] { scroll-margin-top: 76px; }
 .section--soft { background: var(--bg); border-block: 1px solid var(--border); }
 
 .section-head { max-width: 640px; margin-bottom: 48px; }
@@ -292,6 +295,8 @@ h2.section-title {
     padding: 9px;
     color: var(--ink);
 }
+/* language switch lives in the burger menu on phones */
+.nav-links .nav-lang-link { display: none; }
 
 /* ---------- Hero ---------- */
 .hero {
@@ -305,7 +310,7 @@ h2.section-title {
 .hero-inner {
     max-width: 780px;
     margin: 0 auto;
-    padding: 0 24px;
+    padding: 0 var(--pad);
     text-align: center;
     position: relative;
     z-index: 1;
@@ -372,7 +377,7 @@ h2.section-title {
 .hero-board {
     max-width: var(--wrap);
     margin: 60px auto 0;
-    padding: 0 24px;
+    padding: 0 var(--pad);
     position: relative;
 }
 .hero-board::before {
@@ -489,11 +494,11 @@ h2.section-title {
     grid-auto-columns: 258px;
     gap: 20px;
     overflow-x: auto;
-    padding: 6px 24px 26px;
+    padding: 6px var(--pad) 26px;
     scroll-snap-type: x mandatory;
     scrollbar-width: thin;
     scrollbar-color: #d3d3d9 transparent;
-    margin-inline: -24px;
+    margin-inline: calc(var(--pad) * -1);
 }
 .views-track::-webkit-scrollbar { height: 8px; }
 .views-track::-webkit-scrollbar-thumb { background: #d3d3d9; border-radius: 8px; }
@@ -820,8 +825,10 @@ html.js .reveal.in { opacity: 1; transform: none; }
         box-shadow: var(--shadow-md);
     }
     .nav.is-open .nav-links a { padding: 12px; font-size: 16px; }
+    .nav-links .nav-lang-link { display: block; margin-top: 4px; border-top: 1px solid var(--border); padding-top: 14px; }
     .nav-gh { display: none; }
-    .hero { padding-top: 56px; }
+    .hero { padding-top: 56px; padding-bottom: 56px; }
+    .hero-board { margin-top: 44px; }
     .bento { grid-template-columns: 1fr; }
     .bento-card, .bento-card--wide, .bento-card--span4, .bento-card--full { grid-column: auto; }
     .bento-card--full { flex-direction: column; align-items: flex-start; }
@@ -830,4 +837,36 @@ html.js .reveal.in { opacity: 1; transform: none; }
     .trio { grid-template-columns: 1fr; }
     .footer-grid { grid-template-columns: 1fr; gap: 24px; }
     .views-track { grid-auto-columns: 236px; }
+}
+
+/* ---------- Phones ---------- */
+@media (max-width: 480px) {
+    :root { --pad: 18px; }
+    .section { padding: 56px 0; }
+    .section-head { margin-bottom: 36px; }
+
+    /* keep brand + store CTA + burger on one line at 360px */
+    .nav { gap: 12px; }
+    .brand { font-size: 17px; gap: 8px; }
+    .nav-actions { gap: 8px; }
+    .nav .btn--sm { padding: 8px 12px; font-size: 13.5px; }
+
+    .hero { padding-top: 44px; }
+    .hero-badge { font-size: 12px; padding: 6px 12px; gap: 6px; white-space: normal; }
+    .hero h1 { font-size: clamp(30px, 9.6vw, 38px); }
+    .hero-sub { font-size: 16px; }
+    .hero-cta { margin-top: 28px; flex-direction: column; align-items: stretch; }
+    .hero-cta .btn { width: 100%; }
+    .hero-facts { margin-top: 22px; gap: 8px 16px; font-size: 13px; }
+
+    .bento-card { padding: 22px 20px; }
+    .trio-card { padding: 24px 20px; }
+    .views-track { grid-auto-columns: 232px; }
+
+    /* keys above description: side-by-side runs out of width below ~430px */
+    .kbd-row { flex-direction: column; align-items: flex-start; gap: 10px; padding: 16px 18px; }
+    .kbd-row dt { min-width: 0; }
+
+    .faq summary { padding: 16px 18px; }
+    .faq details p { padding: 0 18px 18px; }
 }
