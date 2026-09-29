@@ -20,7 +20,7 @@
     "eslint-plugin-vitest": "^0.5.4",
     "globals": "^17.11.0",
     "terser": "5.50.0",
-    "undici": "^8.10.0",
+    "undici": "^8.10.2",
     "vitest": "^3.2.7",
     "yauzl": "^3.4.0"
   }
