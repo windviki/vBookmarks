@@ -1,6 +1,25 @@
 {
-  "version": 1,
+  "version": 2,
   "messages": [
+    {
+      "id": "v420-whats-new",
+      "version": ">=4.2.0",
+      "channel": "all",
+      "once": true,
+      "display": "banner",
+      "kind": "tip",
+      "titleKey": "announceV420Title",
+      "textKey": "announceV420Text",
+      "textFallback": {
+        "en": "v4.2.0: a brand-new tag system grown into the search view — colored chips on rows, #tag search, a tag manager page — plus a real theme system (thirteen built-ins, importable packages) and the standalone desktop workbench."
+      },
+      "link": [
+        {
+          "labelKey": "whatsNewChangelog",
+          "url": "https://github.com/windviki/vBookmarks/blob/master/docs/README.md#v420"
+        }
+      ]
+    },
     {
       "id": "v411-whats-new",
       "version": ">=4.1.1 <4.1.2",
