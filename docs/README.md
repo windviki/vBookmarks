@@ -212,6 +212,14 @@ python3 scripts/package.py --root dist   # zip an existing dist/ (no rebuild)
 
 # Changelogs
 
+### v4.2.3
+
+*2026-10-13*
+
+#### Fixed
+
+- **Command-palette commands out of reach at any zoom above 100%** (zoom clipping — the bottom commands and the close bar sat past the popup edge with nothing left to scroll): the palette scales with the extension zoom (Ctrl+wheel / Ctrl +/−), but its height budget mixed viewport units that paint multiplied-by-zoom inside the scaled panel — at 120% the last commands and the Esc bar were pushed out of the window while the list's internal scroll range sat below the fold, so rows like Version info / Switch language / Open options page were unreachable (every zoom level above 100% was affected, by however much). The palette is now sized in zoom-proof viewport bands: at every zoom level it ends inside the window, the close bar stays clickable, and the full command table scrolls internally — with the default-zoom proportions unchanged. The same overflow class is fixed in the standalone workbench (its full-window canvas and the floating details pane could paint past the window edge at high zoom). A new real-browser gate sweeps every zoom level and popup height (verify-palette-fit).
+
 ### v4.2.2
 
 *2026-10-13*
