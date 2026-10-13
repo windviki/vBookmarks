@@ -212,6 +212,14 @@ python3 scripts/package.py --root dist   # zip an existing dist/ (no rebuild)
 
 # Changelogs
 
+### v4.2.2
+
+*2026-10-13*
+
+#### Fixed
+
+- **Truncated toolbar labels in longer translations, with no hover fallback** (#74 — most visible in Italian): the duplicates view's strategy/scope/order dropdowns, the stats view's sort buttons and the dead-link view's filter segments put full sentences into a toolbar that only has room for a few words, so in many languages they were cut off mid-word with nothing to hover for the full text. Every such control now carries the full wording as a hover tooltip (the same channel the icon buttons always had), and all 43 languages got compact center-word labels for these controls (e.g. "Più vecchi" instead of "Mantieni il più vecchio", "Dead" instead of "Dead only") — sized to the toolbar so nothing truncates in the first place; the full sentences remain on hover and for screen readers.
+
 ### v4.2.1
 
 *2026-10-13*
