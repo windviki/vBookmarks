@@ -212,6 +212,14 @@ python3 scripts/package.py --root dist   # zip an existing dist/ (no rebuild)
 
 # Changelogs
 
+### v4.2.1
+
+*2026-10-13*
+
+#### Fixed
+
+- **The popup & workbench font regression** (#73/#75 — for some users the whole UI fell back to Times/serif): tokenizing the body font in 4.2.0 kept the system-font keyword `menu` as the default value — CSS system-font keywords are only parsed inside the `font` shorthand; as a `font-family` value it is an unknown family name and the browser falls back to its standard font (Times New Roman on stock Windows). The default is now the supported `system-ui, sans-serif` (the OS UI face — the same face 4.1.3's `font: menu` resolved to). Instant workaround on 4.2.0: Options → Advanced → Custom CSS workbench, add `:root { --vbm-font-ui: system-ui, sans-serif; }`.
+
 ### v4.2.0
 
 *2026-10-11*

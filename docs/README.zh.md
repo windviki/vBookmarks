@@ -212,6 +212,14 @@ python3 scripts/package.py --root dist   # 对已有 dist/ 直接打 zip（不�
 
 # 更新日志
 
+### v4.2.1
+
+*2026-10-13*
+
+#### 修复
+
+- **弹窗与工作台的字体回归**（#73/#75，部分用户整界面回落 Times/衬线体）：4.2.0 把正文字体 token 化时，默认值沿用了系统字体关键字 `menu`——CSS 系统字体关键字只在 `font` 简写里被解析，作为 `font-family` 值是未知族名，浏览器回落「标准字体」（Windows 出厂 = Times New Roman）。默认改为受支持的 `system-ui, sans-serif`（OS UI 字面，与 4.1.3 的 `font: menu` 同面）。存量 4.2.0 的即时自救：选项 → 高级 → 自定义 CSS 工作台，新建一条 `:root { --vbm-font-ui: system-ui, sans-serif; }`。
+
 ### v4.2.0
 
 *2026-10-11*
